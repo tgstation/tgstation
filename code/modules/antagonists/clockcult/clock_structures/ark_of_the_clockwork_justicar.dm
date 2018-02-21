@@ -100,8 +100,8 @@
 			R.time *= 2 //Building walls becomes slower when the Ark activates
 	mass_recall()
 	recalls_remaining++ //So it doesn't use up a charge
-	
-	var/turf/T = get_turf(src) 
+
+	var/turf/T = get_turf(src)
 	var/list/open_turfs = list()
 	for(var/turf/open/OT in orange(1, T))
 		if(!is_blocked_turf(OT, TRUE))
@@ -128,7 +128,7 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/mass_recall()
 	for(var/V in SSticker.mode.servants_of_ratvar)
 		var/datum/mind/M = V
-		if(!M || !M.current)
+		if(!M || !M.current || M.current.restrained() || M.current.stat)
 			continue
 		if(isliving(M.current) && M.current.stat != DEAD)
 			if(isAI(M.current))
@@ -184,7 +184,7 @@
 			for(var/mob/M in GLOB.player_list)
 				var/turf/T = get_turf(M)
 				if((T && T.z == z) || is_servant_of_ratvar(M))
-					M.playsound_local(M, 'sound/machines/clockcult/ark_deathrattle.ogg', 100, FALSE, pressure_affected = FALSE)
+					M.playsound_local(M, 'sound/machines/clockcult/ark_deathrattle.ogg', 60, FALSE, pressure_affected = FALSE)
 			make_glow()
 			glow.icon_state = "clockwork_gateway_disrupted"
 			resistance_flags |= INDESTRUCTIBLE

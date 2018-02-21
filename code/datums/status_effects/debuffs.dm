@@ -507,3 +507,18 @@
 	desc = "Your body is covered in blue ichor! You can't be revived by vitality matrices."
 	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"
+
+
+//Destabilized: Applied to servants who abscond to signal that they can be yanked through their abscondence breach.
+/datum/status_effect/destabilized
+	id = "destabilized"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 100
+	examine_text = "<span class='warning'>SUBJECTPRONOUN is flickering, as if they're not all there.</span>"
+	alert_type = /obj/screen/alert/status_effect/destabilized
+
+/obj/screen/alert/status_effect/destabilized
+	name = "Destabilized"
+	desc = "Your abscondence has left behind a breach. Anyone can interact with it to pull you back."
+	icon_state = "destabilized"
+	alerttooltipstyle = "clockcult"

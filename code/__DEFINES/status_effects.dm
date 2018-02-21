@@ -70,6 +70,8 @@
 
 #define STATUS_EFFECT_ICHORIAL_STAIN /datum/status_effect/ichorial_stain //Prevents a servant from being revived by vitality matrices for one minute.
 
+#define STATUS_EFFECT_DESTABILIZED /datum/status_effect/destabilized //Cosmetic effect that indicates that the servant can be pulled through a breach.
+
 /////////////
 // NEUTRAL //
 /////////////

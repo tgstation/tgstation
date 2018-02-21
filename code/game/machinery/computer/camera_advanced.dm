@@ -326,7 +326,7 @@
 		to_chat(user, "<span class='sevtug_small'>[prob(1) ? "Servant cannot into space." : "You can't teleport into space."]</span>")
 		return
 	else if(T.flags_1 & NOJAUNT_1)
-		to_chat(user, "<span class='sevtug_small'>This tile is blessed by holy water and deflects the warp.</span>")
+		to_chat(user, "<span class='sevtug_small'>This tile is shielded from teleportation and deflects the warp.</span>")
 		return
 	var/area/AR = get_area(T)
 	if(!AR.clockwork_warp_allowed)
@@ -340,7 +340,7 @@
 	user.visible_message("<span class='warning'>[user]'s [target.name] flares!</span>", "<span class='bold sevtug_small'>You begin warping to [AR]...</span>")
 	button_icon_state = "warp_cancel"
 	owner.update_action_buttons()
-	if(!do_after(user, 50, target = warping, extra_checks = CALLBACK(src, .proc/is_canceled)))
+	if(!do_after(user, 50, target = warping, extra_checks = CALLBACK(src, .proc/is_canceled, T)))
 		to_chat(user, "<span class='bold sevtug_small'>Warp interrupted.</span>")
 		QDEL_NULL(warping)
 		button_icon_state = "warp_down"
@@ -358,5 +358,5 @@
 	R.remove_eye_control(user)
 	QDEL_NULL(warping)
 
-/datum/action/innate/servant_warp/proc/is_canceled()
-	return !cancel
+/datum/action/innate/servant_warp/proc/is_canceled(turf/T)
+	return !cancel || T.flags_1 & NOJAUNT_1

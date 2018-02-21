@@ -5772,7 +5772,7 @@
 	height = 5;
 	id = "laborcamp_home";
 	name = "fore bay 1";
-	roundstart_template = /datum/map_template/shuttle/labour/box;
+	roundstart_template = !INVALID_VALUE!;
 	width = 9
 	},
 /turf/open/space/basic,
@@ -35020,7 +35020,7 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/box;
+	roundstart_template = !INVALID_VALUE!;
 	width = 7
 	},
 /turf/open/space/basic,
@@ -51941,6 +51941,7 @@
 /obj/item/clothing/under/burial,
 /obj/item/clothing/under/burial,
 /obj/item/clothing/under/burial,
+/obj/item/reagent_containers/food/drinks/bottle/anointing_oil,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cCa" = (
@@ -53567,7 +53568,7 @@
 	height = 15;
 	id = "arrivals_stationary";
 	name = "arrivals";
-	roundstart_template = /datum/map_template/shuttle/arrival/box;
+	roundstart_template = !INVALID_VALUE!;
 	width = 7
 	},
 /turf/open/space/basic,

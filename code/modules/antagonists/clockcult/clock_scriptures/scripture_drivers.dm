@@ -177,7 +177,7 @@
 	power_cost = 5
 	special_power_text = "POWERCOST to bring pulled creature"
 	special_power_cost = ABSCOND_ABDUCTION_COST
-	usage_tip = "This can't be used while on Reebe, for obvious reasons."
+	usage_tip = "You will leave behind a rip in spacetime for several seconds that anyone can interact with to yank you back to the station."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 8
@@ -189,6 +189,9 @@
 	if(is_reebe(invoker.z))
 		to_chat(invoker, "<span class='danger'>You're already at Reebe.</span>")
 		return
+	if(invoker.has_status_effect(STATUS_EFFECT_DESTABILIZED))
+		to_chat(invoker, "<span class='danger'>You're still destabilized and cannot abscond again.</span>")
+		return
 	return TRUE
 
 /datum/clockwork_scripture/abscond/recital()
@@ -198,6 +201,7 @@
 /datum/clockwork_scripture/abscond/scripture_effects()
 	var/take_pulling = invoker.pulling && isliving(invoker.pulling) && get_clockwork_power(ABSCOND_ABDUCTION_COST)
 	var/turf/T
+	var/turf/T2 = get_turf(invoker)
 	if(GLOB.ark_of_the_clockwork_justiciar)
 		T = get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH)
 	else
@@ -207,7 +211,7 @@
 	T.visible_message("<span class='warning'>[invoker] flickers and phases into existence!</span>")
 	playsound(invoker, 'sound/magic/magic_missile.ogg', 50, TRUE)
 	playsound(T, 'sound/magic/magic_missile.ogg', 50, TRUE)
-	do_sparks(5, TRUE, invoker)
+	do_sparks(5, TRUE, T2)
 	do_sparks(5, TRUE, T)
 	if(take_pulling)
 		adjust_clockwork_power(-special_power_cost)
@@ -215,6 +219,8 @@
 	invoker.forceMove(T)
 	if(invoker.client)
 		animate(invoker.client, color = initial(invoker.client.color), time = 25)
+	new/obj/effect/temp_visual/ratvar/abscondence_breach(T2, invoker)
+	invoker.apply_status_effect(STATUS_EFFECT_DESTABILIZED)
 
 /datum/clockwork_scripture/abscond/scripture_fail()
 	if(invoker && invoker.client)

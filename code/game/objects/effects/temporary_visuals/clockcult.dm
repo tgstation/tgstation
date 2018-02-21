@@ -267,3 +267,38 @@
 /obj/effect/temp_visual/ratvar/command_point/Initialize(mapload, appearance)
 	. = ..()
 	icon_state = appearance
+
+//Left behind by Abscond, and can be interacted with to yank you back through
+/obj/effect/temp_visual/ratvar/abscondence_breach
+	name = "abscondence breach"
+	desc = "A shimmering rip in time. You feel strangely compelled to reach in."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "rift"
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	duration = 100
+	light_color = "#AF0AAF"
+	light_range = 2
+	light_power = 0.7
+	var/mob/living/creator
+
+/obj/effect/temp_visual/ratvar/abscondence_breach/Initialize(mapload, _creator)
+	. = ..()
+	if(!_creator)
+		return INITIALIZE_HINT_QDEL
+	else
+		creator = _creator
+		animate(src, alpha = 30, time = 100)
+
+/obj/effect/temp_visual/ratvar/abscondence_breach/attack_hand(mob/living/user)
+	if(is_servant_of_ratvar(user) || QDELETED(creator))
+		return
+	user.visible_message("<span class='boldwarning'>[user] reaches into [src] and yanks out [creator]!</span>", \
+	"<span class='boldannounce'>You shove your arm into [src] and yank [creator] back through!</span>") //where tf you goin boi
+	playsound(src, 'sound/magic/magic_missile.ogg', 50, TRUE, frequency = -1)
+	creator.visible_message("<span class='warning'>[creator] suddenly jerks as they're yanked back through their abscondence breach!</span>", \
+	"<span class='boldwarning'>Someone yanks you through your abscondence breach!</span>")
+	playsound(creator, 'sound/magic/magic_missile.ogg', 50, TRUE, frequency = -1)
+	creator.forceMove(get_turf(src))
+	creator.Knockdown(40)
+	flash_color(creator, flash_color = light_color, flash_time = 10)
+	qdel(src)

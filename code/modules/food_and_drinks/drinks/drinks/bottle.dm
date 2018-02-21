@@ -185,6 +185,26 @@
 	list_reagents = list("holywater" = 100)
 	foodtype = NONE
 
+/obj/item/reagent_containers/food/drinks/bottle/anointing_oil
+	name = "flask of anointment oil"
+	desc = "A flask of anointment oil for sacred rites. It's made of pink glass!"
+	icon_state = "holyflask"
+	list_reagents = list("anointment_oil" = 100)
+	foodtype = NONE
+	color = "#FF86EF"
+
+/obj/item/reagent_containers/food/drinks/bottle/anointing_oil/attack_hand(mob/living/user)
+	if(iscultist(user) || is_servant_of_ratvar(user))
+		to_chat(user, "<span class='warning'>[src]'s surface is weirdly slippery, and you can't get a grip on it!</span>") //magical pink anti cult glass
+		return
+	..()
+
+/obj/item/reagent_containers/food/drinks/bottle/anointing_oil/can_be_pulled(mob/living/user)
+	if(iscultist(user) || is_servant_of_ratvar(user))
+		to_chat(user, "<span class='warning'>[src]'s surface is too slippery to pull!</span>")
+		return
+	return TRUE
+
 /obj/item/reagent_containers/food/drinks/bottle/holywater/hell
 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
 	list_reagents = list("hell_water" = 100)

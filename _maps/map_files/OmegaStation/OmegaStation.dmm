@@ -7942,7 +7942,7 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/delta;
+	roundstart_template = !INVALID_VALUE!;
 	width = 7
 	},
 /turf/open/space/basic,
@@ -29877,6 +29877,7 @@
 /obj/structure/table/wood,
 /obj/item/folder,
 /obj/item/pen/fourcolor,
+/obj/item/reagent_containers/food/drinks/bottle/anointing_oil,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
 "bjk" = (
@@ -31131,7 +31132,7 @@
 	height = 17;
 	id = "arrivals_stationary";
 	name = "omega arrivals";
-	roundstart_template = /datum/map_template/shuttle/arrival/delta;
+	roundstart_template = !INVALID_VALUE!;
 	width = 9
 	},
 /turf/open/space/basic,

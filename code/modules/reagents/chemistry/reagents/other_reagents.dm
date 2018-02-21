@@ -191,14 +191,21 @@
 	glass_desc = "A glass of holy water."
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(is_servant_of_ratvar(M))
+	if(iscultist(M))
+		to_chat(M, "<span class='userdanger'>Hideous light screams through your mind and begins cleansing the Geometer's influence!</span>")
+	else if(is_servant_of_ratvar(M))
 		to_chat(M, "<span class='userdanger'>A darkness begins to spread its unholy tendrils through your mind, purging the Justiciar's influence!</span>")
 	..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/M)
 	if(!data)
-		data = 1
-	data++
+		data = 0
+	if(M.reagents.has_reagent("anointment_oil") && (iscultist(M) || is_servant_of_ratvar(M)))
+		if(prob(25))
+			M.visible_message("<span class='warning'>[M] writhes in pain!</span>", "<span class='userdanger'>The [iscultist(M) ? "light" : "dark"] scorches your mind like fire!</span>")
+		data += 10
+	else
+		data++
 	M.jitteriness = min(M.jitteriness+4,10)
 	if(iscultist(M))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
@@ -210,9 +217,9 @@
 			M.stuttering = 1
 		M.stuttering = min(M.stuttering+4, 10)
 		M.Dizzy(5)
-		if(iscultist(M) && prob(5))
+		if(iscultist(M) && (prob(5) || M.reagents.has_reagent("anointment_oil")))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
-		else if(is_servant_of_ratvar(M) && prob(8))
+		else if(is_servant_of_ratvar(M) && (prob(8) || M.reagents.has_reagent("anointment_oil")))
 			switch(pick("speech", "message", "emote"))
 				if("speech")
 					clockwork_say(M, "...[text2ratvar(pick("Engine... your light grows dark...", "Where are you, master?", "He lies rusting in Error...", "Purge all untruths and... and... something..."))]")
@@ -230,6 +237,7 @@
 			M.jitteriness = 0
 			M.stuttering = 0
 			holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
+			holder.del_reagent("anointment_oil")
 			return
 	holder.remove_reagent(id, 0.4)	//fixed consumption to prevent balancing going out of whack
 
@@ -1778,7 +1786,7 @@
 	id = "synthpax"
 	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-  
+
 /datum/reagent/bz_metabolites
 	name = "BZ metabolites"
 	id = "bz_metabolites"
@@ -1801,3 +1809,56 @@
 		if(changeling)
 			changeling.chem_charges = max(changeling.chem_charges-2, 0)
 	return ..()
+
+/datum/reagent/anointment_oil
+	name = "Anointment Oil"
+	id = "anointment_oil"
+	description = "A bright pink oil used by chaplains and other people of the faith to bless certain things. It metabolizes very slowly, and brings one closer to the gods."
+	color = "#FF86EF"
+	taste_description = "soothing sweetness"
+	glass_icon_state = "anointment_oil"
+	glass_name = "glass of anointment oil"
+	glass_desc = "Bright pink and very thick. It has the consistency of bubblegum medicine, but it's surprisingly sweet."
+	metabolization_rate = 0.05 * REAGENTS_METABOLISM
+
+/datum/reagent/anointment_oil/on_mob_add(mob/living/L)
+	..()
+	if(iscultist(L))
+		to_chat(L, "<span class='boldannounce'>You feel distant from the Geometer...</span>")
+		metabolization_rate = 0.33 * REAGENTS_METABOLISM //make it weaker for cultists and servants, so it isn't grossly powerful
+	else if(is_servant_of_ratvar(L))
+		to_chat(L, "<span class='boldannounce'>Your connection to the Hierophant Network wavers...</span>")
+		metabolization_rate = 0.33 * REAGENTS_METABOLISM
+	else
+		to_chat(L, "<span class='notice'>You feel closer to... something.</span>")
+		for(var/datum/atom_hud/alternate_appearance/basic/blessedAware/B in GLOB.active_alternate_appearances)
+			if(!B.hudusers[L])
+				B.add_hud_to(L)
+
+/datum/reagent/anointment_oil/on_mob_delete(mob/living/L)
+	..()
+	if(iscultist(L) || is_servant_of_ratvar(L))
+		to_chat(L, "<span class='notice'>Your distance from your deity returns to normal.</span>")
+	else
+		to_chat(L, "<span class='danger'>Whatever you were closer to, your connection to it fades.</span>")
+		for(var/datum/atom_hud/alternate_appearance/basic/blessedAware/B in GLOB.active_alternate_appearances)
+			B.remove_hud_from(L)
+
+/datum/reagent/anointment_oil/reaction_obj(obj/O, reac_volume) //anointment oil can bless holy water and anoint more of itself, but inefficiently
+	if(O.reagents)
+		var/datum/water2holy = O.reagents.get_reagent_amount("water") * 0.5
+		var/datum/oil2anoint = O.reagents.get_reagent_amount("oil") * 0.5
+		if(water2holy)
+			O.reagents.del_reagent("water")
+			O.reagents.add_reagent("holywater", water2holy)
+			O.visible_message("<span class='notice'>[O] briefly shimmers with dim light.</span>")
+			playsound(O, 'sound/magic/staff_healing.ogg', 50, TRUE)
+		if(oil2anoint)
+			O.reagents.del_reagent("oil")
+			O.reagents.add_reagent("anointment_oil", oil2anoint)
+			O.visible_message("<span class='notice'>[O] turns pink for a second.</span>")
+			playsound(O, 'sound/effects/bubbles.ogg', 50, TRUE)
+
+/datum/reagent/anointment_oil/reaction_mob(mob/living/L, reac_volume)
+	if(reac_volume >= 5)
+		reaction_obj(L, reac_volume)

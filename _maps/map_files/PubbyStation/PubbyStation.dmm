@@ -8082,7 +8082,7 @@
 	height = 5;
 	id = "laborcamp_home";
 	name = "fore bay 1";
-	roundstart_template = /datum/map_template/shuttle/labour/box;
+	roundstart_template = !INVALID_VALUE!;
 	width = 9
 	},
 /turf/open/space/basic,
@@ -22902,7 +22902,7 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/delta;
+	roundstart_template = !INVALID_VALUE!;
 	width = 7
 	},
 /turf/open/space/basic,
@@ -23280,7 +23280,7 @@
 	height = 13;
 	id = "arrivals_stationary";
 	name = "pubby arrivals";
-	roundstart_template = /datum/map_template/shuttle/arrival/pubby;
+	roundstart_template = !INVALID_VALUE!;
 	width = 6
 	},
 /turf/open/space/basic,
@@ -50035,6 +50035,11 @@
 	},
 /turf/open/floor/plating,
 /area/chapel/dock)
+"qai" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/anointing_oil,
+/turf/open/floor/carpet,
+/area/chapel/office)
 "sQt" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
@@ -61543,7 +61548,7 @@ bZY
 bZY
 bZY
 cBM
-csd
+qai
 cdo
 csB
 cdo

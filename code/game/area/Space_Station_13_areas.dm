@@ -22,6 +22,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/arrival
 	requires_power = FALSE
+	clockwork_warp_allowed = TRUE
 
 /area/arrival/start
 	name = "Arrival Area"
@@ -103,6 +104,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance
 	ambientsounds = MAINTENANCE
 	valid_territory = FALSE
+	clockwork_warp_allowed = TRUE
 
 
 //Departments
@@ -254,6 +256,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Hallway
 
+/area/hallway
+	clockwork_warp_allowed = TRUE
+
 /area/hallway/primary/aft
 	name = "Aft Primary Hallway"
 	icon_state = "hallA"
@@ -394,6 +399,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Crew
 
+/area/crew_quarters
+	clockwork_warp_allowed = TRUE
+
 /area/crew_quarters/dorms
 	name = "Dormitories"
 	icon_state = "Sleep"
@@ -516,7 +524,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "chapel"
 	ambientsounds = HOLY
 	flags_1 = NONE
-	clockwork_warp_allowed = FALSE
 	clockwork_warp_fail = "The consecration here prevents you from warping in."
 
 /area/chapel/main
@@ -578,7 +585,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/gravity_generator
 	name = "Gravity Generator Room"
 	icon_state = "grav_gen"
-	clockwork_warp_allowed = FALSE
 	clockwork_warp_fail = "The gravitons generated here could throw off your warp's destination and possibly throw you into deep space."
 
 /area/engine/secure_construction
@@ -719,6 +725,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Medical"
 	icon_state = "medbay3"
 	ambientsounds = MEDICAL
+	clockwork_warp_allowed = TRUE
 
 /area/medical/abandoned
 	name = "Abandoned Medbay"
@@ -1082,6 +1089,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science/research/lobby
 	name = "Research Division Lobby"
 	icon_state = "medresearch"
+	clockwork_warp_allowed = TRUE
 
 /area/science/research/abandoned
 	name = "Abandoned Research Lab"
@@ -1092,22 +1100,27 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/storage/tools
 	name = "Auxiliary Tool Storage"
 	icon_state = "storage"
+	clockwork_warp_allowed = TRUE
 
 /area/storage/primary
 	name = "Primary Tool Storage"
 	icon_state = "primarystorage"
+	clockwork_warp_allowed = TRUE
 
 /area/storage/autolathe
 	name = "Autolathe Storage"
 	icon_state = "storage"
+	clockwork_warp_allowed = TRUE
 
 /area/storage/art
 	name = "Art Supply Storage"
 	icon_state = "storage"
+	clockwork_warp_allowed = TRUE
 
 /area/storage/auxiliary
 	name = "Auxiliary Storage"
 	icon_state = "auxstorage"
+	clockwork_warp_allowed = TRUE
 
 /area/storage/atmos
 	name = "Atmospherics Storage"
@@ -1122,20 +1135,20 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
-	clockwork_warp_allowed = FALSE
 
 /area/storage/secure
 	name = "Secure Storage"
 	icon_state = "storage"
-	clockwork_warp_allowed = FALSE
 
 /area/storage/emergency/starboard
 	name = "Starboard Emergency Storage"
 	icon_state = "emergencystorage"
+	clockwork_warp_allowed = TRUE
 
 /area/storage/emergency/port
 	name = "Port Emergency Storage"
 	icon_state = "emergencystorage"
+	clockwork_warp_allowed = TRUE
 
 /area/storage/tech
 	name = "Technical Storage"
@@ -1153,6 +1166,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Construction Area"
 	icon_state = "yellow"
 	ambientsounds = ENGINEERING
+	clockwork_warp_allowed = TRUE
 
 /area/construction/minisat_exterior
 	name = "Minisat Exterior"
@@ -1281,7 +1295,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 // Telecommunications Satellite
 
 /area/tcommsat
-	clockwork_warp_allowed = FALSE
 	clockwork_warp_fail = "For safety reasons, warping here is disallowed; the radio and bluespace noise could cause catastrophic results."
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
 	 										'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
