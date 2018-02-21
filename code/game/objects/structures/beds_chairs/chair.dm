@@ -391,3 +391,17 @@
 		user.visible_message("<span class='notice'>[user] stops [src]'s uncontrollable spinning.</span>", \
 		"<span class='notice'>You grab [src] and stop its wild spinning.</span>")
 		STOP_PROCESSING(SSfastprocess, src)
+
+/obj/structure/chair/bronze
+	name = "brass chair"
+	desc = "A spinny chair made of bronze. It has little cogs for wheels!"
+	anchored = FALSE
+	icon_state = "brass_chair"
+	buildstacktype = /obj/item/stack/tile/bronze
+	buildstackamount = 1
+	item_chair = null
+
+/obj/structure/chair/bronze/Moved()
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)

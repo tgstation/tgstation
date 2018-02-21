@@ -667,6 +667,13 @@
 	color = "#6E3B08" // rgb: 110, 59, 8
 	taste_description = "metal"
 
+/datum/reagent/copper/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/stack/sheet/metal))
+		var/obj/item/stack/sheet/metal/M = O
+		reac_volume = min(reac_volume, M.amount)
+		new/obj/item/stack/tile/bronze(get_turf(M), reac_volume)
+		M.use(reac_volume)
+
 /datum/reagent/nitrogen
 	name = "Nitrogen"
 	id = "nitrogen"
@@ -1778,7 +1785,7 @@
 	id = "synthpax"
 	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-  
+
 /datum/reagent/bz_metabolites
 	name = "BZ metabolites"
 	id = "bz_metabolites"
