@@ -685,24 +685,23 @@
 				return
 
 			if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/cable = W
-				if(cable.get_amount() < 5)
-					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the air alarm!</span>")
+				if(!W.tool_start_check(user, amount=5))
 					return
-				user.visible_message("[user.name] wires the air alarm.", \
+				user.visible_message("[user.name] wires the air alarm.",
 									"<span class='notice'>You start wiring the air alarm...</span>")
-				if (do_after(user, 20, target = src))
-					if (cable.get_amount() >= 5 && buildstage == 1)
-						cable.use(5)
-						to_chat(user, "<span class='notice'>You wire the air alarm.</span>")
-						wires.repair()
-						aidisabled = 0
-						locked = FALSE
-						mode = 1
-						shorted = 0
-						post_alert(0)
-						buildstage = 2
-						update_icon()
+
+				if(W.use_tool(src, user, 20, volume=50, amount=5))
+					if(buildstage != 1)
+						return
+					to_chat(user, "<span class='notice'>You wire the air alarm.</span>")
+					wires.repair()
+					aidisabled = 0
+					locked = FALSE
+					mode = 1
+					shorted = 0
+					post_alert(0)
+					buildstage = 2
+					update_icon()
 				return
 		if(0)
 			if(istype(W, /obj/item/electronics/airalarm))

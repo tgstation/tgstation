@@ -317,85 +317,74 @@
 				qdel(src)
 				return
 			if(istype(C, /obj/item/stack/sheet/plasteel))
-				var/obj/item/stack/sheet/plasteel/P = C
 				if(reinforced)
 					to_chat(user, "<span class='warning'>[src] is already reinforced.</span>")
 					return
-				if(P.get_amount() < 2)
-					to_chat(user, "<span class='warning'>You need more plasteel to reinforce [src].</span>")
+
+				if(!C.tool_start_check(user, amount=2))
 					return
+
 				user.visible_message("<span class='notice'>[user] begins reinforcing [src]...</span>", \
 									 "<span class='notice'>You begin reinforcing [src]...</span>")
-				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
-				if(do_after(user, 60, target = src))
-					if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || P.get_amount() < 2 || !P)
+
+				if(C.use_tool(src, user, 60, volume=50, amount=2))
+					if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced)
 						return
 					user.visible_message("<span class='notice'>[user] reinforces [src].</span>", \
 										 "<span class='notice'>You reinforce [src].</span>")
-					playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
-					P.use(2)
 					reinforced = 1
 				return
 
 		if(CONSTRUCTION_WIRES_EXPOSED)
 			if(istype(C, /obj/item/wirecutters))
-				C.play_tool_sound(src)
 				user.visible_message("<span class='notice'>[user] starts cutting the wires from [src]...</span>", \
 									 "<span class='notice'>You begin removing [src]'s wires...</span>")
-				if(!C.use_tool(src, user, 60))
-					return
-				if(constructionStep != CONSTRUCTION_WIRES_EXPOSED)
-					return
-				user.visible_message("<span class='notice'>[user] removes the wires from [src].</span>", \
-									 "<span class='notice'>You remove the wiring from [src], exposing the circuit board.</span>")
-				var/obj/item/stack/cable_coil/B = new(get_turf(src))
-				B.amount = 5
-				constructionStep = CONSTRUCTION_GUTTED
-				update_icon()
+				if(C.use_tool(src, user, 60, volume=50))
+					if(constructionStep != CONSTRUCTION_WIRES_EXPOSED)
+						return
+					user.visible_message("<span class='notice'>[user] removes the wires from [src].</span>", \
+										 "<span class='notice'>You remove the wiring from [src], exposing the circuit board.</span>")
+					new /obj/item/stack/cable_coil(drop_location(), 5)
+					constructionStep = CONSTRUCTION_GUTTED
+					update_icon()
 				return
 			if(istype(C, /obj/item/crowbar))
 				C.play_tool_sound(src)
 				user.visible_message("<span class='notice'>[user] starts prying a metal plate into [src]...</span>", \
 									 "<span class='notice'>You begin prying the cover plate back onto [src]...</span>")
-				if(!C.use_tool(src, user, 80))
-					return
-				if(constructionStep != CONSTRUCTION_WIRES_EXPOSED)
-					return
-				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
-				user.visible_message("<span class='notice'>[user] pries the metal plate into [src].</span>", \
-									 "<span class='notice'>You pry [src]'s cover plate into place, hiding the wires.</span>")
-				constructionStep = CONSTRUCTION_PANEL_OPEN
-				update_icon()
+				if(C.use_tool(src, user, 80))
+					if(constructionStep != CONSTRUCTION_WIRES_EXPOSED)
+						return
+					playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
+					user.visible_message("<span class='notice'>[user] pries the metal plate into [src].</span>", \
+										 "<span class='notice'>You pry [src]'s cover plate into place, hiding the wires.</span>")
+					constructionStep = CONSTRUCTION_PANEL_OPEN
+					update_icon()
 				return
 		if(CONSTRUCTION_GUTTED)
 			if(istype(C, /obj/item/crowbar))
 				user.visible_message("<span class='notice'>[user] begins removing the circuit board from [src]...</span>", \
 									 "<span class='notice'>You begin prying out the circuit board from [src]...</span>")
-				if(!C.use_tool(src, user, 50, volume=50))
+				if(C.use_tool(src, user, 50, volume=50))
+					if(constructionStep != CONSTRUCTION_GUTTED)
+						return
+					user.visible_message("<span class='notice'>[user] removes [src]'s circuit board.</span>", \
+										 "<span class='notice'>You remove the circuit board from [src].</span>")
+					new /obj/item/electronics/firelock(drop_location())
+					constructionStep = CONSTRUCTION_NOCIRCUIT
+					update_icon()
 					return
-				if(constructionStep != CONSTRUCTION_GUTTED)
-					return
-				user.visible_message("<span class='notice'>[user] removes [src]'s circuit board.</span>", \
-									 "<span class='notice'>You remove the circuit board from [src].</span>")
-				new /obj/item/electronics/firelock(drop_location())
-				constructionStep = CONSTRUCTION_NOCIRCUIT
-				update_icon()
-				return
 			if(istype(C, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/B = C
-				if(B.get_amount() < 5)
-					to_chat(user, "<span class='warning'>You need more wires to add wiring to [src].</span>")
+				if(!C.tool_start_check(user, amount=5))
 					return
+
 				user.visible_message("<span class='notice'>[user] begins wiring [src]...</span>", \
 									 "<span class='notice'>You begin adding wires to [src]...</span>")
-				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
-				if(do_after(user, 60, target = src))
-					if(constructionStep != CONSTRUCTION_GUTTED || B.get_amount() < 5 || !B)
+				if(C.use_tool(src, user, 60, volume=50, amount=5))
+					if(constructionStep != CONSTRUCTION_GUTTED)
 						return
 					user.visible_message("<span class='notice'>[user] adds wires to [src].</span>", \
 										 "<span class='notice'>You wire [src].</span>")
-					playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
-					B.use(5)
 					constructionStep = CONSTRUCTION_WIRES_EXPOSED
 					update_icon()
 				return
@@ -412,10 +401,10 @@
 						return
 					user.visible_message("<span class='notice'>[user] cuts apart [src]!</span>", \
 										 "<span class='notice'>You cut [src] into metal.</span>")
-					var/turf/T = get_turf(src)
-					new /obj/item/stack/sheet/metal(T, 3)
+					var/atom/drop_loc = drop_location()
+					new /obj/item/stack/sheet/metal(drop_loc, 3)
 					if(reinforced)
-						new /obj/item/stack/sheet/plasteel(T, 2)
+						new /obj/item/stack/sheet/plasteel(drop_loc, 2)
 					qdel(src)
 				return
 			if(istype(C, /obj/item/electronics/firelock))

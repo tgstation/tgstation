@@ -183,17 +183,13 @@
 				else if (istype(W, /obj/item/wirecutters))
 					buildstage = 1
 					W.play_tool_sound(src)
-					new /obj/item/stack/cable_coil(user.loc, 5)
+					new /obj/item/stack/cable_coil(drop_location(), 5)
 					to_chat(user, "<span class='notice'>You cut the wires from \the [src].</span>")
 					update_icon()
 					return
 			if(1)
 				if(istype(W, /obj/item/stack/cable_coil))
-					var/obj/item/stack/cable_coil/coil = W
-					if(coil.get_amount() < 5)
-						to_chat(user, "<span class='warning'>You need more cable for this!</span>")
-					else
-						coil.use(5)
+					if(W.use_tool(src, user, 0, volume=50, amount=5))
 						buildstage = 2
 						to_chat(user, "<span class='notice'>You wire \the [src].</span>")
 						update_icon()
@@ -209,7 +205,7 @@
 								stat &= ~BROKEN
 							else
 								to_chat(user, "<span class='notice'>You pry out the circuit.</span>")
-								new /obj/item/electronics/firealarm(user.loc)
+								new /obj/item/electronics/firealarm(drop_location())
 							buildstage = 0
 							update_icon()
 					return
@@ -234,10 +230,7 @@
 				else if(istype(W, /obj/item/wrench))
 					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
-					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
-					frame.forceMove(user.drop_location())
-					W.play_tool_sound(src)
-					qdel(src)
+					deconstruct()
 					return
 	return ..()
 
@@ -245,7 +238,7 @@
 /obj/machinery/firealarm/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(.) //damage received
-		if(obj_integrity > 0 && !(stat & BROKEN) && buildstage != 0)
+		if(obj_integrity > 0 && !(stat & BROKEN) && buildstage == 2)
 			if(prob(33))
 				alarm()
 
@@ -262,12 +255,14 @@
 
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 1)
-		if(!(stat & BROKEN))
-			var/obj/item/I = new /obj/item/electronics/firealarm(loc)
+		new /obj/item/wallframe/firealarm(drop_location())
+		if(buildstage > 0 && !(stat & BROKEN))
+			var/obj/item/I = new /obj/item/electronics/firealarm(drop_location())
 			if(!disassembled)
 				I.obj_integrity = I.max_integrity * 0.5
-		new /obj/item/stack/cable_coil(loc, 3)
+
+		if(buildstage > 1)
+			new /obj/item/stack/cable_coil(drop_location(), 5)
 	qdel(src)
 
 
