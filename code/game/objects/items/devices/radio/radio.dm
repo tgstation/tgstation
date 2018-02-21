@@ -208,7 +208,7 @@
 		spans |= SPAN_COMMAND
 
 	/*
-	Roughly speaking, radios attempt to make a subspace transmittion (which
+	Roughly speaking, radios attempt to make a subspace transmission (which
 	is received, processed, and rebroadcast by the telecomms satellite) and
 	if that fails, they send a mundane radio transmission.
 
