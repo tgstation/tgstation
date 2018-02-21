@@ -112,28 +112,12 @@
 		return amount
 
 /datum/reagents/proc/get_master_reagent_name()
-	var/list/cached_reagents = reagent_list
-	var/name
-	var/max_volume = 0
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
-		if(R.volume > max_volume)
-			max_volume = R.volume
-			name = R.name
-
-	return name
+	var/datum/reagent/R = get_master_reagent()
+	return R && R.name
 
 /datum/reagents/proc/get_master_reagent_id()
-	var/list/cached_reagents = reagent_list
-	var/id
-	var/max_volume = 0
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
-		if(R.volume > max_volume)
-			max_volume = R.volume
-			id = R.id
-
-	return id
+	var/datum/reagent/R = get_master_reagent()
+	return R && R.id
 
 /datum/reagents/proc/get_master_reagent()
 	var/list/cached_reagents = reagent_list

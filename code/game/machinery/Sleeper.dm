@@ -18,6 +18,10 @@
 	var/min_health = -25
 	var/list/available_chems
 	var/controls_inside = FALSE
+	var/obj/item/reagent_containers/list/chem_stores
+	var/list/chem_store_names
+	var/selected_store = 0
+	var/list/possible_chem_stores = list(1, 2, 4, 6)
 	var/list/possible_chems
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
@@ -30,11 +34,16 @@
 		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
 		list("omnizine")
 	)
+	possible_chem_stores = null
 
 /obj/machinery/sleeper/Initialize()
 	. = ..()
 	update_icon()
 	reset_chem_buttons()
+
+/obj/machinery/sleeper/Destroy()
+	drop_stores()
+	..()
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
@@ -52,7 +61,15 @@
 		adding_chems = LAZYACCESS(possible_chems, i)
 		if(adding_chems) //With LAZYACCESS, adding_chems can be null, so |= will add nulls, and we don't want nulls.
 			available_chems |= adding_chems
+	var/new_stores_len = LAZYACCESS(possible_chem_stores, E)
+	var/obj/item/reagent_containers/list/new_stores_list = list()
+	for(var/i in 1 to new_stores_len)
+		var/obj/item/reagent_containers/C = LAZYACCESS(chem_stores, i)
+		new_stores_list[i] = C
+	drop_stores(new_stores_len)
+	chem_stores = new_stores_list
 	reset_chem_buttons()
+
 
 
 /obj/machinery/sleeper/update_icon()
@@ -77,6 +94,42 @@
 		var/mob/living/L = occupant
 		L.SetStasis(FALSE)
 	..()
+
+/obj/machinery/sleeper/drop_stores(from_index = 1)
+	var/stores_len = LAZYLEN(chem_stores)
+	if(from_index <= stores_len)
+		for(var/i in from_index to stores_len)
+			eject_store(i)
+	UNSETEMPTY(chem_stores)
+
+/obj/machinery/sleeper/add_store(obj/item/reagent_containers/C, store_index)
+	store_index = store_index || selected_store
+	if(store_index && LAZYLEN(chem_stores) >= store_index && !chem_stores[store_index] && istype(C, /obj/item/reagent_containers))
+		chem_stores[store_index] = C
+		C.moveToNullspace()
+		return TRUE
+
+/obj/machinery/sleeper/eject_store(store_index)
+	var/obj/item/reagent_containers/C = LAZYACCESS(chem_stores, store_index)
+	if(C)
+		var/atom/L = drop_location()
+		if(L)
+			C.forceMove(L)
+		chem_stores[store_index] = null //if L is null then the sleeper is probably in nullspace so we still want to null this ref
+
+#define SLEEPER_STORE_INJECT_AMT 10
+/obj/machinery/sleeper/inject_store(store_index)
+	var/obj/item/reagent_containers/C = LAZYACCESS(chem_stores, store_index)
+	var/datum/reagents/R = C.reagents
+	if(C && R && R.total_volume)
+		if(isliving(occupant))
+			var/mob/living/L = occupant
+			if(!L.is_injectable())
+				return
+		var/coeff = min(SLEEPER_STORE_INJECT_AMT/R.total_volume, 1)
+		R.reaction(occupant, INJECT, coeff)
+		R.trans_to(occupant, SLEEPER_STORE_INJECT_AMT)
+#undef SLEEPER_STORE_INJECT_AMT
 
 /obj/machinery/sleeper/close_machine(mob/living/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
@@ -110,6 +163,8 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
+	if(add_store(I))
+		return
 	return ..()
 
 /obj/machinery/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -132,6 +187,13 @@
 	for(var/chem in available_chems)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
 		data["chems"] += list(list("name" = R.name, "id" = R.id, "allowed" = chem_allowed(chem)))
+
+	data["chemStores"] = list()
+	for(var/i in 1 to LAZYLEN(chem_stores))
+		var/obj/item/reagent_containers/C = chem_stores[i]
+		data["chemStores"] += (C && C.reagents) ? C.reagents.total_volume : FALSE
+
+	data["chemStoreNames"] = list(SANITIZELIST(chem_store_names).Copy())
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
@@ -187,6 +249,27 @@
 				. = TRUE
 				if(scrambled_chems && prob(5))
 					to_chat(usr, "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>")
+		if("injectstore")
+			var/store = text2num(params["store"])
+			if(!is_operational() || !mob_occupant || !store)
+				return
+			if(store && (LAZYLEN(chem_stores) >= store) && chem_stores[store])
+				inject_store(store)
+		if("invstore")
+			var/store = text2num(params["store"])
+			if(store && (LAZYLEN(chem_stores) >= store))
+				selected_store = store
+		if("storename")
+			var/store = text2num(params["store"])
+			var/name = params["name"]
+			var/chem_stores_len = LAZYLEN(chem_stores)
+			if(store && chem_stores_len && chem_stores_len >= store)
+				name = sanitize(trim(name, 25))
+				var/chem_store_names_len = LAZYLEN(chem_store_names)
+				if(!chem_store_names || chem_store_names_len < chem_stores_len)
+					LAZYINITLIST(chem_store_names)
+					chem_store_names.len = chem_stores_len
+					chem_store_names[store] = name
 
 /obj/machinery/sleeper/emag_act(mob/user)
 	if(LAZYLEN(available_chems))
