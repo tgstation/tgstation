@@ -21,15 +21,14 @@
 	var/mob/camera/blob/overmind
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
-	. = ..()
-	if(owner_overmind)
-		overmind = owner_overmind
-		var/area/Ablob = get_area(src)
-		if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
-			overmind.blobs_legit += src
+	overmind = owner_overmind
+	var/area/Ablob = get_area(loc)
+	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
+		overmind.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
 	update_icon()
+	.= ..()
 	if(atmosblock)
 		air_update_turf(1)
 	ConsumeTile()
@@ -231,11 +230,8 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
-		if(overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
-			chemeffectreport(user)
-		else
-			to_chat(user, "<b>Blob core neutralized. Critical mass no longer attainable.</b>")
+		to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
+		chemeffectreport(user)
 		typereport(user)
 	else
 		return ..()
@@ -311,14 +307,11 @@
 	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	if(user.research_scanner || hud_to_check.hudusers[user])
 		to_chat(user, "<b>Your HUD displays an extensive report...</b><br>")
-		if(overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
-		else
-			to_chat(user, "<b>Core neutralized. Critical mass no longer attainable.</b>")
+		to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
 		chemeffectreport(user)
 		typereport(user)
 	else
-		if(isobserver(user) && overmind)
+		if(isobserver(user))
 			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
 		to_chat(user, "It seems to be made of [get_chem_name()].")
 

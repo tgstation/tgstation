@@ -14,16 +14,15 @@
 	ventcrawler = VENTCRAWLER_NONE
 	density = TRUE
 	pass_flags =  0
+	var/ascended = FALSE
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = CANPUSH
 	spacewalk = TRUE
 	mob_size = MOB_SIZE_LARGE
-	held_items = list(null, null)
-	bodyparts = list(/obj/item/bodypart/chest/devil, /obj/item/bodypart/head/devil, /obj/item/bodypart/l_arm/devil,
-					 /obj/item/bodypart/r_arm/devil, /obj/item/bodypart/r_leg/devil, /obj/item/bodypart/l_leg/devil)
-	var/ascended = FALSE
 	var/mob/living/oldform
 	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
+	bodyparts = list(/obj/item/bodypart/chest/devil, /obj/item/bodypart/head/devil, /obj/item/bodypart/l_arm/devil,
+					 /obj/item/bodypart/r_arm/devil, /obj/item/bodypart/r_leg/devil, /obj/item/bodypart/l_leg/devil)
 
 /mob/living/carbon/true_devil/Initialize()
 	create_bodyparts() //initialize bodyparts

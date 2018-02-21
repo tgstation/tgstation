@@ -46,7 +46,6 @@
 /obj/machinery/chem_dispenser/scp_294/ui_act(action, params)
 	if(..())
 		return
-	update_icon()
 	switch(action)
 		if("ejectBeaker")
 			if(beaker)
@@ -54,6 +53,7 @@
 				if(Adjacent(usr) && !issilicon(usr))
 					usr.put_in_hands(beaker)
 				beaker = null
+				cut_overlays()
 				. = TRUE
 		if("input")
 			var/input_reagent = replacetext(lowertext(input("Enter the name of any liquid", "Input") as text), " ", "") //95% of the time, the reagent id is a lowercase/no spaces version of the name

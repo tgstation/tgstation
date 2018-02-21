@@ -505,7 +505,7 @@
 			H.update_icon()
 
 /mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE)
-	. = ..(I, del_on_fail, merge_stacks)
+	..(I, del_on_fail, merge_stacks)
 	update_inv_hands()
 
 /mob/living/simple_animal/update_inv_hands()
@@ -574,5 +574,5 @@
 /mob/living/simple_animal/onTransitZ(old_z, new_z)
 	..()
 	if (AIStatus == AI_Z_OFF)
-		SSidlenpcpool.idle_mobs_by_zlevel[old_z] -= src
+		SSidlenpcpool[old_z] -= src
 		toggle_ai(initial(AIStatus))

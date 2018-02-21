@@ -133,12 +133,9 @@
 			if(1 to 9)
 				var/turf/here = get_turf(src)
 				for(var/turf/closed/T in range(2, src))
-					here.PlaceOnTop(T.type)
-					qdel(src)
-					return
+					here.ChangeTurf(T.type)
+					return INITIALIZE_HINT_QDEL
 				here.PlaceOnTop(/turf/closed/wall)
-				qdel(src)
-				return
 			if(9 to 11)
 				lights = FALSE
 				locked = TRUE

@@ -666,11 +666,3 @@
 		M.adjustFireLoss(-1*REM, 0)
 		. = TRUE
 	..()
-
-/datum/reagent/consumable/clownstears
-	name = "Clown's Tears"
-	id = "clownstears"
-	description = "The sorrow and melancholy of a thousand bereaved clowns, forever denied their Honkmechs."
-	nutriment_factor = 5 * REAGENTS_METABOLISM
-	color = "#eef442" // rgb: 238, 244, 66
-	taste_description = "mournful honking"

@@ -64,7 +64,7 @@
 	required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
 
 /datum/chemical_reaction/mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v
-	name = "Mute Toxin"
+	name = "Mute toxin"
 	id = "mutetoxin"
 	results = list("mutetoxin" = 2)
 	required_reagents = list("uranium" = 2, "water" = 1, "carbon" = 1)
@@ -107,9 +107,3 @@
 	id = "anacea"
 	results = list("anacea" = 3)
 	required_reagents = list("haloperidol" = 1, "impedrezene" = 1, "radium" = 1)
-
-/datum/chemical_reaction/mimesbane
-	name = "Mime's Bane"
-	id = "mimesbane"
-	results = list("mimesbane" = 3)
-	required_reagents = list("radium" = 1, "mutetoxin" = 1, "nothing" = 1)
