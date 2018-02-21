@@ -30,3 +30,22 @@
 	faction = list("cat", "syndicate")
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 5
+
+/mob/living/simple_animal/hostile/feral_cat/feral_mime_cat
+	name = "Feral Mime Cat"
+	maxHealth = 75
+	health = 75
+	desc = "Punished mime cat.. This one has been tampered with, its vow of silence broken."
+	speak_emote = list("purrs", "meows", "screeches", "yells", "babbles incoherently")
+	icon = 'hippiestation/icons/mob/pets.dmi'
+	icon_state = "catmime2"
+	icon_living = "catmime2"
+	icon_dead = "catmime_defeated"
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/clothing/mask/gas/mime = 1)
+	var/static/meows = list("hippiestation/sound/creatures/mimeCatScream.ogg", "hippiestation/sound/creatures/mimeCatScream2.ogg")
+
+/mob/living/simple_animal/hostile/feral_cat/feral_mime_cat/Life()
+	..()
+	if(prob(50) && stat != DEAD)
+		playsound(src, pick(meows), 100, 1)
+		visible_message("[name] lets out an unearthly howl!")

@@ -15476,6 +15476,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/mob/living/simple_animal/pet/cat/mime,
 /turf/open/floor/plasteel/white,
 /area/hippie/mime)
 "aIi" = (
