@@ -85,5 +85,12 @@
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
 #define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"	//Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
 
+#define COMSIG_SHUTTLE_ROADKILL "shuttle_roadkill"
+// from obj/docking_port/mobile: (mob)
+
+#define COMSIG_SHUTTLE_DOCKING_START "shuttle_dock_start"
+#define COMSIG_SHUTTLE_DOCKING_SUCCESS "shuttle_dock_complete"
+// from obj/docking_port/mobile/proc/initiate_docking()
+
 #define CALTROP_BYPASS_SHOES 1
 #define CALTROP_IGNORE_WALKERS 2
