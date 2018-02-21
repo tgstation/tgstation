@@ -67,7 +67,6 @@
 
 	ComponentInitialize()
 
-
 	return INITIALIZE_HINT_NORMAL
 
 /turf/proc/Initalize_Atmos(times_fired)
