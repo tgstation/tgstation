@@ -256,7 +256,7 @@
 /obj/item/integrated_circuit/output/video_camera/New()
 	..()
 	camera = new(src)
-	camera.network = list("RD")
+	camera.network = list("rd")
 	on_data_written()
 
 /obj/item/integrated_circuit/output/video_camera/Destroy()
