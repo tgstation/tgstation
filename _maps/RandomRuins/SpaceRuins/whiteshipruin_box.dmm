@@ -294,20 +294,6 @@
 /obj/structure/light_construct,
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
-"Bc" = (
-/obj/machinery/door/airlock/titanium,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium,
-/area/ruin/space/has_grav/whiteship/box)
-"ML" = (
-/obj/machinery/door/airlock/titanium,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
-/area/ruin/space/has_grav/whiteship/box)
 
 (1,1,1) = {"
 aa
@@ -320,7 +306,7 @@ aa
 aa
 ab
 ab
-Bc
+ac
 ab
 ab
 aa
@@ -550,7 +536,7 @@ aa
 aa
 ab
 ab
-ML
+ac
 ab
 ab
 aa
