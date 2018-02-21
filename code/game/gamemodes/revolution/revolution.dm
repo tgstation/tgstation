@@ -196,3 +196,26 @@
 	name = "extended_revolution"
 	config_tag = "extended_revolution"
 	end_when_heads_dead = FALSE
+
+/datum/game_mode/revolution/speedy
+	name = "speedy_revolution"
+	config_tag = "speedy_revolution"
+	end_when_heads_dead = FALSE
+	var/endtime = null
+	var/fuckingdone = FALSE
+	end_when_heads_dead = FALSE
+
+/datum/game_mode/revolution/speedy/pre_setup()
+	endtime = world.time + 20 MINUTES
+	return ..()
+
+/datum/game_mode/revolution/speedy/process()
+	. = ..()
+	if(check_counter == 0)
+		if (world.time > endtime && !fuckingdone)
+			fuckingdone = TRUE
+			for (var/obj/machinery/nuclearbomb/N in GLOB.nuke_list)
+				if (!N.timing)
+					N.timer_set = 200
+					N.set_safety()
+					N.set_active()
