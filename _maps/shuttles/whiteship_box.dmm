@@ -314,6 +314,20 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
+"Ur" = (
+/obj/machinery/door/airlock/titanium,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+"Zp" = (
+/obj/machinery/door/airlock/titanium,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
 
 (1,1,1) = {"
 aa
@@ -326,7 +340,7 @@ aa
 aa
 ac
 ac
-af
+Ur
 ac
 ac
 aa
@@ -566,7 +580,7 @@ aa
 aa
 ac
 ac
-af
+Zp
 ac
 ac
 aa
