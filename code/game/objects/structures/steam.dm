@@ -63,7 +63,7 @@
 
 /obj/machinery/steam_switch/Initialize()
 	..()
-	for(var/obj/structure/destructible/steam_vent/SV in range(src, 7))
+	for(var/obj/structure/destructible/steam_vent/SV in range(src, 10))
 		vents += SV
 
 /obj/machinery/steam_switch/attack_hand(mob/user)

@@ -54,9 +54,12 @@
 
 /obj/item/photo/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
+			return
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
 		txt = copytext(txt, 1, 128)
-		if(loc == user && user.stat == CONSCIOUS)
+		if(user.canUseTopic(src, BE_CLOSE))
 			scribble = txt
 	..()
 
@@ -671,10 +674,13 @@
 	. = ..()
 	var/note = stripped_input(user, "What would you like the plaque to say? Default value is item's description.", "Frame Plaque")
 	if(note)
-		if(user.Adjacent(src))
-			desc = note + "<br>This masterpiece was created by [user.real_name]."
+		if(user.canUseTopic(src, BE_CLOSE))
+			if(user.is_literate())
+				desc = note + "<br>This masterpiece was created by [user.real_name]."
+
+			else
+				desc = "[user.real_name] has left an incoherent string of half-words, scribbles, and emojis to describe this piece."
 			to_chat(user, "You update the frame's plaque.")
-		else
-			to_chat(user, "You are too far to set the plaque's text.")
+
 
 

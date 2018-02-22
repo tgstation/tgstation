@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(persistence)
 		old_secret_satchels.Cut(pos, pos+1 % old_secret_satchels.len)
 		F.x = old_secret_satchels[pos]["x"]
 		F.y = old_secret_satchels[pos]["y"]
-		F.z = ZLEVEL_STATION_PRIMARY
+		F.z = SSmapping.station_start
 		path = text2path(old_secret_satchels[pos]["saved_obj"])
 
 	if(F)
@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(persistence)
 			spawned_objects[spawned_item] = TRUE
 		placed_satchel++
 	var/free_satchels = 0
-	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY)))) //Nontrivially expensive but it's roundstart only
+	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,SSmapping.station_start), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,SSmapping.station_start)))) //Nontrivially expensive but it's roundstart only
 		if(isfloorturf(T) && !isplatingturf(T))
 			new /obj/item/storage/backpack/satchel/flat/secret(T)
 			free_satchels++
@@ -228,7 +228,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/satchels_to_add = list()
 	for(var/A in new_secret_satchels)
 		var/obj/item/storage/backpack/satchel/flat/F = A
-		if(QDELETED(F) || F.z != ZLEVEL_STATION_PRIMARY || F.invisibility != INVISIBILITY_MAXIMUM)
+		if(QDELETED(F) || F.z != SSmapping.station_start || F.invisibility != INVISIBILITY_MAXIMUM)
 			continue
 		var/list/savable_obj = list()
 		for(var/obj/O in F)
@@ -276,13 +276,14 @@ SUBSYSTEM_DEF(persistence)
 	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/CollectFrames()
-	for(var/F in GLOB.persist_frames)
-		SaveFrame(F)
-	var/json_file = file("data/npc_saves/frames.json")
-	var/list/file_data = list()
-	file_data["data"] = saved_frames
-	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+	if(LAZYLEN(GLOB.persist_frames)) //So maps without frames don't automatically clear the list
+		for(var/F in GLOB.persist_frames)
+			SaveFrame(F)
+		var/json_file = file("data/npc_saves/frames.json")
+		var/list/file_data = list()
+		file_data["data"] = saved_frames
+		fdel(json_file)
+		WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/SaveTrophy(obj/structure/displaycase/trophy/T)
 	if(!T.added_roundstart && T.showpiece)

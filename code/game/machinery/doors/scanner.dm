@@ -1,11 +1,3 @@
-/area/greytopia
-	name = "\improper Greytopia"
-	icon_state = "away"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	requires_power = FALSE
-	has_gravity = TRUE
-	valid_territory = FALSE
-
 /obj/machinery/scannerright
 	name = "mysterious scanner"
 	desc = "Why would this level of security be justified?"
@@ -33,7 +25,7 @@
 	dir = 1
 
 /obj/machinery/doorscanner/Initialize()
-	..()
+	. = ..()
 	for(var/obj/machinery/door/airlock/vault/scanner/check in range(3, loc))
 		gate = check
 		break
@@ -131,49 +123,3 @@
 	icon_state = "scanray"
 	pixel_x = -32
 	pixel_y = -8
-
-
-/datum/map_template/shelter/greytopia
-	name = "Greytopia"
-	shelter_id = "shelter_grey"
-	description = "Greyshirt legends tells of a place where assistants \
-		can roam freely and unoppressed. They say it is the place where \
-		the chosen one will rise and usher in a grey tide that will topple \
-		the galactic kleptocracy and all who serve it."
-	mappath = "_maps/templates/greytopia.dmm"
-
-/datum/map_template/shelter/greytopia/New()
-	..()
-	blacklisted_turfs = list()
-
-/datum/map_template/shelter/greytopia/supplies
-	name = "Supply Pod"
-	shelter_id = "shelter_supplies"
-	description = "There are rumors of a forgotten storage facility, \
-		not found on any map, that contains a wealth of survival provisions."
-	mappath = "_maps/templates/storagepod.dmm"
-
-/obj/effect/landmark/greytopia
-	name = "Greytopia spawner"
-	var/datum/map_template/shelter/greytopia/template
-	var/static/spawned = FALSE
-
-/obj/effect/landmark/greytopia/Initialize()
-	. = ..()
-	if(prob(9) && !spawned)
-		spawned = TRUE
-		addtimer(CALLBACK(src, /obj/effect/landmark/greytopia.proc/latespawn), 600)
-	else
-		return INITIALIZE_HINT_QDEL
-
-/obj/effect/landmark/greytopia/proc/latespawn()
-	if(prob(40))
-		template = SSmapping.shelter_templates["shelter_grey"]
-	else
-		template = SSmapping.shelter_templates["shelter_supplies"]
-	if(!template)
-		throw EXCEPTION("Shelter template (shelter_grey) not found!")
-		qdel(src)
-		return
-	template.load(get_turf(src), centered = TRUE, orientation = dir)
-	qdel(src)

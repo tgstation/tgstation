@@ -75,21 +75,20 @@
 "n" = (
 /obj/structure/rack,
 /obj/item/storage/firstaid/regular{
-	step_x = -2;
+	pixel_x = -2;
 	pixel_x = -2;
 	pixel_y = 6
 	},
 /obj/item/storage/firstaid/brute{
-	step_x = -1;
-	pixel_x = 0;
+	pixel_x = -1;
 	pixel_y = 3
 	},
 /obj/item/storage/firstaid/fire{
-	step_x = -1;
+	pixel_x = -1;
 	pixel_x = 5
 	},
 /obj/item/storage/firstaid/toxin{
-	step_x = -1;
+	pixel_x = -1;
 	pixel_x = 9;
 	pixel_y = -3
 	},
@@ -127,22 +126,20 @@
 "s" = (
 /obj/structure/rack,
 /obj/item/device/flashlight/flare/torch{
-	step_x = -4;
+	pixel_x = -4;
 	pixel_x = -2;
 	pixel_y = 7
 	},
 /obj/item/device/flashlight/flare/torch{
-	step_x = 0;
 	pixel_x = 3;
 	pixel_y = 5
 	},
 /obj/item/device/flashlight/flare/torch{
-	step_x = 0;
 	pixel_x = 3;
 	pixel_y = 5
 	},
 /obj/item/device/flashlight/flare/torch{
-	step_x = -3;
+	pixel_x = -3;
 	pixel_x = 9;
 	pixel_y = -3
 	},
@@ -174,7 +171,7 @@
 	pixel_y = -5
 	},
 /obj/item/storage/belt/utility/full/engi{
-	step_x = -3;
+	pixel_x = -3;
 	pixel_x = -2;
 	pixel_y = 3
 	},
@@ -194,12 +191,11 @@
 "x" = (
 /obj/structure/rack,
 /obj/item/storage/belt/mining{
-	step_x = -1;
-	pixel_x = 0;
+	pixel_x = -1;
 	pixel_y = -4
 	},
 /obj/item/storage/belt/mining{
-	step_x = -3;
+	pixel_x = -3;
 	pixel_x = -3;
 	pixel_y = 4
 	},
@@ -218,13 +214,13 @@
 "y" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/cloth/ten{
-	step_x = -2;
+	pixel_x = -2;
 	pixel_x = -2;
 	pixel_y = 6
 	},
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/metal/fifty{
-	step_x = -1;
+	pixel_x = -1;
 	pixel_x = 5;
 	pixel_y = -6
 	},

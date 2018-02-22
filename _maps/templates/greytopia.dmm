@@ -15,14 +15,12 @@
 /obj/item/cardboard_cutout/adaptive{
 	name = "Nameless Hero";
 	icon_state = "cutout_viva";
-	step_y = 0;
 	pixel_y = -5
 	},
 /turf/closed/wall/r_wall,
 /area/greytopia)
 "e" = (
 /obj/structure/statue/sandstone/assistant{
-	step_y = 0;
 	pixel_y = -5
 	},
 /turf/closed/wall/r_wall,
@@ -66,7 +64,7 @@
 "l" = (
 /obj/item/target,
 /obj/item/gun/energy/laser/chameleon{
-	step_y = -8
+	pixel_y = -8
 	},
 /turf/open/floor/plating{
 	luminosity = 2
@@ -97,8 +95,7 @@
 /area/greytopia)
 "p" = (
 /obj/structure/mirror{
-	pixel_x = 5;
-	pixel_y = 0
+	pixel_x = 5
 	},
 /turf/closed/wall/r_wall,
 /area/greytopia)
@@ -126,15 +123,15 @@
 "t" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/salad/validsalad{
-	step_x = -9;
-	step_y = 2
+	pixel_x = -9;
+	pixel_y = 2
 	},
 /obj/item/reagent_containers/food/snacks/salad/validsalad{
-	step_x = 7;
-	step_y = 1
+	pixel_x = 7;
+	pixel_y = 1
 	},
 /obj/item/candle/infinite{
-	step_y = 9
+	pixel_y = 9
 	},
 /turf/open/floor/plating{
 	luminosity = 2
@@ -162,12 +159,12 @@
 	throwforce = 15
 	},
 /obj/item/clothing/under/color/grey/glorf{
-	step_x = -6;
-	step_y = 4
+	pixel_x = -6;
+	pixel_y = 4
 	},
 /obj/item/candle/infinite{
-	step_x = 11;
-	step_y = -2
+	pixel_x = 11;
+	pixel_y = -2
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -226,13 +223,10 @@
 	w_class = 3
 	},
 /obj/item/stock_parts/cell/high{
-	step_x = 6;
-	step_y = -3
+	pixel_x = 6;
+	pixel_y = -3
 	},
-/obj/item/stock_parts/cell/high{
-	step_x = 0;
-	step_y = 0
-	},
+/obj/item/stock_parts/cell/high,
 /obj/item/restraints/legcuffs/bola/tactical,
 /obj/item/restraints/legcuffs/bola/tactical,
 /turf/open/floor/plating,
@@ -248,15 +242,14 @@
 "F" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/salad/validsalad{
-	step_x = 5;
-	step_y = 10
+	pixel_x = 5;
+	pixel_y = 10
 	},
 /obj/item/reagent_containers/food/snacks/salad/validsalad{
-	step_x = 0;
-	step_y = -2
+	pixel_y = -2
 	},
 /obj/item/reagent_containers/food/snacks/salad/validsalad{
-	step_x = -2;
+	pixel_x = -2;
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -271,19 +264,19 @@
 "H" = (
 /obj/structure/rack,
 /obj/item/twohanded/spear{
-	step_x = 7
+	pixel_x = 7
 	},
 /obj/item/twohanded/spear{
-	step_x = -5
+	pixel_x = -5
 	},
 /obj/item/twohanded/spear{
-	step_x = 2
+	pixel_x = 2
 	},
 /obj/item/twohanded/spear/grey_tide{
-	step_x = -2
+	pixel_x = -2
 	},
 /obj/item/twohanded/spear{
-	step_x = 2
+	pixel_x = 2
 	},
 /obj/item/restraints/handcuffs/cable,
 /obj/item/restraints/handcuffs/cable,
@@ -307,17 +300,17 @@
 "L" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/glass/beaker/synthflesh{
-	step_x = -5
+	pixel_x = -5
 	},
 /obj/item/reagent_containers/glass/beaker/synthflesh{
-	step_x = 2
+	pixel_x = 2
 	},
 /obj/item/reagent_containers/spray/medical/sterilizer{
-	step_x = 8
+	pixel_x = 8
 	},
 /obj/item/candle/infinite{
-	step_x = -3;
-	step_y = 9
+	pixel_x = -3;
+	pixel_y = 9
 	},
 /turf/open/floor/plating,
 /area/greytopia)
@@ -326,7 +319,7 @@
 /obj/item/screwdriver/caravan,
 /obj/item/crowbar/red/caravan,
 /obj/item/wirecutters/caravan{
-	step_y = 6
+	pixel_y = 6
 	},
 /obj/item/wrench/caravan,
 /obj/item/weldingtool/experimental,
@@ -349,9 +342,9 @@
 /area/greytopia)
 "P" = (
 /obj/structure/table/reinforced,
-/obj/item/surgical_drapes,
-/obj/item/soap{
-	step_y = 9
+/obj/item/soap,
+/obj/item/surgical_drapes{
+	pixel_z = 8
 	},
 /turf/open/floor/plating,
 /area/greytopia)
@@ -376,7 +369,7 @@
 /area/greytopia)
 "U" = (
 /obj/machinery/scannerright{
-	step_x = -4;
+	pixel_x = -4;
 	pixel_x = -3
 	},
 /turf/closed/wall/r_wall,

@@ -100,7 +100,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 			var/zcrd = text2num(dmmRegex.group[5]) + z_offset - 1
 
 			var/zexpansion = zcrd > world.maxz
-			if(zexpansion)
+			if(zexpansion && !measureOnly)
 				if(cropMap)
 					continue
 				else
@@ -172,6 +172,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 									maxx = max(maxx, xcrd)
 									++xcrd
 							--ycrd
+						bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
 					if(2)
 						ycrd -= gridLines.len - 1 //Had to find the top for bounds, but we work from the bottom for this "upside down" load
 						for(var/line in gridLines)
@@ -205,6 +206,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 									maxx = max(maxx, xcrd)
 									++xcrd
 							++ycrd
+						bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
 					if(4)
 						xcrd = firstx + gridLines.len - 1 // Facing east means the "end" of the X-row is now as "deep" as the height of the Y-column
 						ycrd -= gridLines.len - 1
@@ -240,6 +242,10 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 										CHECK_TICK
 									--ycrd
 							--xcrd
+						bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
+						var/tempnum = bounds[MAP_MAXX]
+						bounds[MAP_MAXX] = bounds[MAP_MAXY]
+						bounds[MAP_MAXY] = tempnum
 					if(8)
 						xcrd = firstx // Facing west
 						ycrd -= gridLines.len - 1
@@ -275,7 +281,10 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 										CHECK_TICK
 									++ycrd
 							++xcrd
-			bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
+						bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
+						var/tempnum = bounds[MAP_MAXX]
+						bounds[MAP_MAXX] = bounds[MAP_MAXY]
+						bounds[MAP_MAXY] = tempnum
 
 		CHECK_TICK
 
@@ -287,7 +296,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 				for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
 					var/turf/T = t
 					//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
-					T.AfterChange(TRUE)
+					T.AfterChange(CHANGETURF_IGNORE_AIR)
 		return bounds
 
 /**
