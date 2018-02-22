@@ -1344,21 +1344,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
-"pI" = (
+"un" = (
 /obj/machinery/door/airlock,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
-"Qt" = (
-/obj/machinery/door/airlock,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
-"WT" = (
+"xS" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -1368,6 +1361,13 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
+"Mj" = (
+/obj/machinery/door/airlock,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 
 (1,1,1) = {"
 aa
@@ -2788,7 +2788,7 @@ ad
 ad
 aj
 aj
-WT
+xS
 aj
 aj
 aj
@@ -3498,7 +3498,7 @@ by
 by
 cn
 by
-Qt
+Mj
 by
 cn
 by
@@ -3606,7 +3606,7 @@ ad
 ad
 ad
 by
-pI
+un
 by
 ad
 ad

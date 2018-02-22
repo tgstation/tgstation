@@ -421,3 +421,113 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.ruin_landmarks -= src
 	ruin_template = null
 	. = ..()
+
+/obj/effect/landmark/maintblock // Should be mapped in sets by child-number, where placement of a blockage won't completely impede use of that maint segment
+	name = "potential maint blockage"
+	icon_state = "generic_event"
+
+/obj/effect/landmark/maintblock/one
+	var/static/spawned
+
+/obj/effect/landmark/maintblock/one/Initialize(mapload)
+	. = ..()
+	if(spawned)
+		return INITIALIZE_HINT_QDEL
+	else if(prob(30))
+		var/turf/T = get_turf(src)
+		T.ChangeTurf(/turf/closed/wall, null, CHANGETURF_IGNORE_AIR)
+
+/obj/effect/landmark/maintblock/two
+	var/static/spawned
+
+/obj/effect/landmark/maintblock/two/Initialize(mapload)
+	. = ..()
+	if(spawned)
+		return INITIALIZE_HINT_QDEL
+	else if(prob(30))
+		var/turf/T = get_turf(src)
+		T.ChangeTurf(/turf/closed/wall, null, CHANGETURF_IGNORE_AIR)
+
+/obj/effect/landmark/maintblock/three
+	var/static/spawned
+
+/obj/effect/landmark/maintblock/three/Initialize(mapload)
+	. = ..()
+	if(spawned)
+		return INITIALIZE_HINT_QDEL
+	else if(prob(30))
+		var/turf/T = get_turf(src)
+		T.ChangeTurf(/turf/closed/wall, null, CHANGETURF_IGNORE_AIR)
+
+/obj/effect/landmark/maintblock/four
+	var/static/spawned
+
+/obj/effect/landmark/maintblock/four/Initialize(mapload)
+	. = ..()
+	if(spawned)
+		return INITIALIZE_HINT_QDEL
+	else if(prob(30))
+		var/turf/T = get_turf(src)
+		T.ChangeTurf(/turf/closed/wall, null, CHANGETURF_IGNORE_AIR)
+
+/obj/effect/landmark/maintblock/five
+	var/static/spawned
+
+/obj/effect/landmark/maintblock/five/Initialize(mapload)
+	. = ..()
+	if(spawned)
+		return INITIALIZE_HINT_QDEL
+	else if(prob(30))
+		var/turf/T = get_turf(src)
+		T.ChangeTurf(/turf/closed/wall, null, CHANGETURF_IGNORE_AIR)
+
+/obj/effect/landmark/pod_spawn
+	name = "supply pod spawner"
+	var/datum/map_template/random_room/template
+	var/static/spawned = FALSE
+	invisibility = 0
+
+/obj/effect/landmark/pod_spawn/Initialize()
+	. = ..()
+	if(!spawned)
+		spawned = TRUE
+		addtimer(CALLBACK(src, /obj/effect/landmark/pod_spawn.proc/LateSpawn), 600)
+	else
+		return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/pod_spawn/proc/LateSpawn()
+	if(prob(100))
+		template = SSmapping.random_room_templates["pod_grey"]
+	else
+		template = SSmapping.random_room_templates["pod_supplies"]
+	if(!template)
+		throw EXCEPTION("Random pod template not found!")
+		qdel(src)
+		return
+	template.load(get_turf(src), centered = TRUE, orientation = dir)
+	qdel(src)
+
+
+/obj/effect/landmark/fivebyfour
+	name = "random 5x4 maint room spawner"
+	icon_state = "generic_event"
+	var/datum/map_template/random_room/fivebyfour/template
+	var/static/list/templates = list()
+	invisibility = 0
+
+/obj/effect/landmark/fivebyfour/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, /obj/effect/landmark/fivebyfour.proc/LateSpawn), 600)
+
+/obj/effect/landmark/fivebyfour/proc/LateSpawn()
+	. = ..()
+	if(!LAZYLEN(templates))
+		for(var/datum/map_template/random_room/fivebyfour/FF in subtypesof(/datum/map_template/random_room/fivebyfour))
+			templates += FF.room_id
+	var/ID = pick_n_take(templates)
+	template = SSmapping.random_room_templates[ID]
+	if(prob(50))
+		dir = 1 //50% chance of room loading upside down, cant load sideways because it would mess with surrounding maint
+	if(template)
+		template.load(get_turf(src), centered = FALSE, orientation = dir)
+	qdel(src)

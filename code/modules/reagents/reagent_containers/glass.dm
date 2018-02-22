@@ -398,3 +398,7 @@
 /obj/item/reagent_containers/glass/beaker/large/bromine
 	name = "bromine beaker"
 	list_reagents = list("bromine" = 50)
+
+/obj/item/reagent_containers/glass/beaker/large/stable_plasma
+	name = "stable plasma beaker"
+	list_reagents = list("stable_plasma" = 50)

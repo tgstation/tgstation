@@ -26805,10 +26805,6 @@
 	dir = 4
 	},
 /area/medical/chemistry)
-"bpX" = (
-/obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
-/area/medical/chemistry)
 "bpY" = (
 /turf/closed/wall,
 /area/medical/chemistry)
@@ -29979,6 +29975,10 @@
 	},
 /turf/open/floor/plasteel/whiteblue/corner,
 /area/medical/medbay/central)
+"bwR" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/closed/wall,
+/area/medical/chemistry)
 "bwS" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -40644,18 +40644,6 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
-"bVq" = (
-/obj/machinery/door/airlock/external{
-	name = "Construction Zone";
-	req_access = null;
-	req_access_txt = "0";
-	req_one_access_txt = "0"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/engine)
 "bVr" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
@@ -49916,16 +49904,35 @@
 "cDa" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
-"izB" = (
-/obj/machinery/door/airlock/external{
-	name = "Escape Pod"
+"dGv" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Door"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
+"fgY" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Library"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel/dark,
+/area/library)
+"gqW" = (
+/obj/machinery/door/airlock/external{
+	name = "Supply Dock Airlock";
+	req_access_txt = "31"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/dorms)
-"jgr" = (
+/area/quartermaster/storage)
+"jtU" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Library"
 	},
@@ -49935,7 +49942,39 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
-"kjK" = (
+"lrQ" = (
+/obj/machinery/door/airlock/external{
+	name = "Mining Dock Airlock";
+	req_access = null;
+	req_access_txt = "48"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/miningdock)
+"lBf" = (
+/obj/machinery/door/airlock/external{
+	name = "Construction Zone";
+	req_access = null;
+	req_access_txt = "0";
+	req_one_access_txt = "0"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
+"sGP" = (
+/obj/machinery/door/airlock/external{
+	name = "Pod Docking Bay"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/chapel/dock)
+"tPR" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Maintenance";
 	req_access_txt = "65"
@@ -49948,55 +49987,16 @@
 	},
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAP)
-"lqy" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Library"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plasteel/dark,
-/area/library)
-"oPy" = (
+"uqU" = (
 /obj/machinery/door/airlock/external{
-	name = "Mining Dock Airlock";
-	req_access = null;
-	req_access_txt = "48"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/quartermaster/miningdock)
-"pbm" = (
-/obj/machinery/door/airlock/external{
-	name = "Pod Docking Bay"
+	name = "Escape Pod"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/chapel/dock)
-"sQt" = (
-/obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock";
-	req_access_txt = "31"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/quartermaster/storage)
-"vzz" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Holodeck Door"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
-"vOw" = (
+/area/crew_quarters/dorms)
+"uTX" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Library"
 	},
@@ -66601,7 +66601,7 @@ aaa
 bFE
 bGF
 bHJ
-pbm
+sGP
 bKa
 cqH
 bLn
@@ -67678,13 +67678,13 @@ cjQ
 cjQ
 cxn
 cjQ
-lqy
+fgY
 cxC
 cxK
 cxX
 cyl
 cyz
-jgr
+jtU
 cjQ
 cjQ
 cjQ
@@ -67941,7 +67941,7 @@ cxL
 cxY
 cym
 cyA
-vOw
+uTX
 ckm
 ckm
 ckm
@@ -75357,7 +75357,7 @@ bPA
 bSw
 bSw
 bDi
-bVq
+lBf
 bZt
 cac
 cac
@@ -80469,7 +80469,7 @@ bpV
 bpY
 bpY
 bvq
-bpX
+bwR
 bpY
 bpY
 bpY
@@ -81235,7 +81235,7 @@ bke
 bkh
 cqf
 boN
-bpX
+bwR
 brl
 bsL
 bul
@@ -81419,7 +81419,7 @@ aee
 aee
 aee
 aev
-kjK
+tPR
 aeZ
 afu
 afL
@@ -89669,7 +89669,7 @@ aoF
 aqY
 asi
 atk
-izB
+uqU
 avk
 awv
 axt
@@ -92007,9 +92007,9 @@ aaa
 aaa
 aLg
 aTr
-sQt
+gqW
 aPd
-sQt
+gqW
 aXz
 aLg
 aaa
@@ -92018,7 +92018,7 @@ aaa
 aaa
 aaa
 bdI
-oPy
+lrQ
 bdI
 aaa
 aEj
@@ -93527,10 +93527,10 @@ atn
 atn
 avm
 avm
-vzz
+dGv
 avm
 avm
-vzz
+dGv
 avm
 avm
 atn

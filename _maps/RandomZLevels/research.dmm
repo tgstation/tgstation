@@ -4278,7 +4278,16 @@
 "nf" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/research/interior/engineering)
-"pt" = (
+"oE" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/escapepods)
+"rM" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Three";
 	req_access_txt = "0"
@@ -4288,16 +4297,85 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
-"su" = (
+"tE" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medical"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side,
 /area/awaymission/research/interior)
-"tE" = (
+"vH" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room";
+	req_access_txt = "10"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel/whiteyellow/side{
+	dir = 8
+	},
+/area/awaymission/research/interior)
+"xs" = (
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "outerbrig";
+	name = "Brig";
+	req_access_txt = "63"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel/whitered/side{
+	dir = 1
+	},
+/area/awaymission/research/interior)
+"DF" = (
+/obj/machinery/door/airlock/research{
+	name = "Cryogenetics Research";
+	req_access_txt = "9"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel/whitepurple/side,
+/area/awaymission/research/interior)
+"Ji" = (
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "outerbrig";
+	name = "Brig";
+	req_access_txt = "63"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plasteel/whitered/side{
+	dir = 1
+	},
+/area/awaymission/research/interior)
+"KK" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room";
+	req_access_txt = "10"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel/whiteyellow/side{
+	dir = 4
+	},
+/area/awaymission/research/interior)
+"KS" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod One"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/escapepods)
+"Nk" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medical"
 	},
@@ -4308,26 +4386,18 @@
 	dir = 1
 	},
 /area/awaymission/research/interior)
-"va" = (
-/obj/machinery/door/airlock/research{
-	name = "Cryogenetics Research";
-	req_access_txt = "9"
+"OP" = (
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "outerbrig";
+	name = "Brig";
+	req_access_txt = "63"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/turf/open/floor/plasteel/whitepurple/side,
+/turf/open/floor/plasteel/whitered/side,
 /area/awaymission/research/interior)
-"wM" = (
-/obj/machinery/door/airlock/medical{
-	name = "Medical"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plasteel/whiteblue/side,
-/area/awaymission/research/interior)
-"xG" = (
+"Qc" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Two"
 	},
@@ -4336,7 +4406,16 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
-"zn" = (
+"Qy" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/awaymission/research/interior/maint)
+"RU" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access_txt = "12"
 	},
@@ -4348,39 +4427,7 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
-"Bx" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Engine Room";
-	req_access_txt = "10"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plasteel/whiteyellow/side{
-	dir = 4
-	},
-/area/awaymission/research/interior)
-"Do" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "12"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/maint)
-"Km" = (
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "outerbrig";
-	name = "Brig";
-	req_access_txt = "63"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plasteel/whitered/side,
-/area/awaymission/research/interior)
-"Qd" = (
+"SH" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medical"
 	},
@@ -4391,52 +4438,7 @@
 	dir = 1
 	},
 /area/awaymission/research/interior)
-"Qz" = (
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "outerbrig";
-	name = "Brig";
-	req_access_txt = "63"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plasteel/whitered/side{
-	dir = 1
-	},
-/area/awaymission/research/interior)
-"TD" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Engine Room";
-	req_access_txt = "10"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plasteel/whiteyellow/side{
-	dir = 8
-	},
-/area/awaymission/research/interior)
-"TE" = (
-/obj/machinery/door/airlock/external{
-	name = "Escape Pod One"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/escapepods)
-"Uu" = (
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "outerbrig";
-	name = "Brig";
-	req_access_txt = "63"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plasteel/whitered/side,
-/area/awaymission/research/interior)
-"UA" = (
+"Un" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access_txt = "12"
 	},
@@ -4445,28 +4447,26 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
-"WR" = (
+"UL" = (
+/obj/machinery/door/airlock/medical{
+	name = "Medical"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plasteel/whiteblue/side,
+/area/awaymission/research/interior)
+"WV" = (
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
 	name = "Brig";
 	req_access_txt = "63"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
+	dir = 4
 	},
-/turf/open/floor/plasteel/whitered/side{
-	dir = 1
-	},
+/turf/open/floor/plasteel/whitered/side,
 /area/awaymission/research/interior)
-"XE" = (
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/research/interior/escapepods)
 
 (1,1,1) = {"
 aa
@@ -35176,7 +35176,7 @@ fC
 gs
 fC
 fC
-zn
+RU
 dZ
 cc
 aH
@@ -38803,15 +38803,15 @@ iX
 cd
 ma
 mb
-TE
+KS
 mb
 mb
 mb
-xG
+Qc
 mb
 mb
 mb
-pt
+rM
 mb
 mb
 ad
@@ -39843,7 +39843,7 @@ mE
 mZ
 mv
 mv
-XE
+oE
 aa
 aa
 aa
@@ -41083,9 +41083,9 @@ cp
 cp
 eH
 cp
-va
+DF
 gB
-va
+DF
 cp
 eH
 cp
@@ -41848,7 +41848,7 @@ cp
 cp
 cM
 cp
-UA
+Un
 cp
 cp
 ej
@@ -42104,7 +42104,7 @@ cf
 cq
 cA
 cN
-Bx
+KK
 dl
 dz
 cZ
@@ -42156,7 +42156,7 @@ mE
 mZ
 mv
 mv
-XE
+oE
 aa
 aa
 aa
@@ -42618,7 +42618,7 @@ bd
 cs
 cC
 cP
-TD
+vH
 dn
 dB
 da
@@ -42876,7 +42876,7 @@ cp
 cp
 cp
 cp
-Do
+Qy
 cp
 cp
 ei
@@ -43155,9 +43155,9 @@ bD
 bD
 cc
 cp
-su
+UL
 jK
-tE
+Nk
 cp
 cd
 dC
@@ -43653,9 +43653,9 @@ cp
 cp
 cp
 cp
-Km
+WV
 cp
-Qz
+Ji
 cp
 cp
 cp
@@ -43926,9 +43926,9 @@ ad
 aH
 cd
 cp
-wM
+tE
 cp
-Qd
+SH
 cp
 cd
 aH
@@ -44424,9 +44424,9 @@ aH
 aH
 eP
 cp
-Uu
+OP
 cp
-WR
+xs
 cp
 hD
 aH

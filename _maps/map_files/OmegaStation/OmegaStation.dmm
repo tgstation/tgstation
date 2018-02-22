@@ -31688,7 +31688,29 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
 /area/security/checkpoint)
-"cmp" = (
+"dtb" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch";
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"guI" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port"
 	},
@@ -31703,7 +31725,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"csX" = (
+"hOq" = (
+/obj/machinery/door/airlock/atmos/glass{
+	name = "Supermatter Chamber";
+	req_access_txt = "24"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"jaJ" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
@@ -31723,7 +31755,54 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/central)
-"cRz" = (
+"jqE" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	name = "Mining Dock Airlock";
+	req_access = null;
+	req_access_txt = "48"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"kov" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Atrium"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar/atrium)
+"lCd" = (
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port";
+	req_access_txt = "63"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit)
+"mqr" = (
 /obj/machinery/button/door{
 	id = "supplybridge";
 	name = "Shuttle Bay Space Bridge Control";
@@ -31748,60 +31827,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"dfP" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
-"fWz" = (
-/obj/machinery/door/airlock/external{
-	name = "External Docking Port";
-	req_access_txt = "63"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit)
-"kKd" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	name = "Mining Dock Airlock";
-	req_access = null;
-	req_access_txt = "48"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/miningdock)
-"lCg" = (
+"mGq" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
 	req_access_txt = "31"
@@ -31817,7 +31843,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"nKi" = (
+"nuy" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
 	req_access_txt = "12"
@@ -34295,23 +34321,7 @@
 "sPY" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"uxJ" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Atrium"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/bar/atrium)
-"uxM" = (
+"wES" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port"
 	},
@@ -34323,16 +34333,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
-"wUF" = (
-/obj/machinery/door/airlock/atmos/glass{
-	name = "Supermatter Chamber";
-	req_access_txt = "24"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 
 (1,1,1) = {"
 aaa
@@ -65806,7 +65806,7 @@ aHo
 aIl
 aLR
 aMU
-wUF
+hOq
 aMU
 aOa
 aMU
@@ -72233,7 +72233,7 @@ aJM
 aKU
 aMj
 aNo
-csX
+jaJ
 aOY
 aQf
 abt
@@ -73551,14 +73551,14 @@ bgP
 bgP
 bjX
 bgU
-cmp
+guI
 bgU
 bkt
 bky
 bkB
 bkE
 bgU
-cmp
+guI
 bgU
 bjY
 sLm
@@ -76065,7 +76065,7 @@ anb
 anS
 aoP
 apV
-uxJ
+kov
 asg
 asg
 auc
@@ -78678,7 +78678,7 @@ aZe
 bdp
 aZe
 beL
-nKi
+nuy
 bfP
 bgp
 bhb
@@ -79449,7 +79449,7 @@ baa
 bds
 baa
 aZl
-dfP
+dtb
 bfP
 bgs
 bhb
@@ -81996,7 +81996,7 @@ sIw
 axW
 aRz
 sJN
-cRz
+mqr
 abN
 aaa
 bte
@@ -82733,9 +82733,9 @@ aaa
 aaa
 ado
 aeh
-lCg
+mGq
 ado
-lCg
+mGq
 ahq
 ado
 aaa
@@ -84030,7 +84030,7 @@ aaa
 aaa
 amD
 amD
-kKd
+jqE
 amD
 amD
 aaa
@@ -85584,17 +85584,17 @@ aaa
 aaa
 aaa
 azb
-fWz
+lCd
 azb
-uxM
+wES
 azb
 aaa
 aaa
 aaa
 azb
-uxM
+wES
 azb
-uxM
+wES
 azb
 aaa
 aaa

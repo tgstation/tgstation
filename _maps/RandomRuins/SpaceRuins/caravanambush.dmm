@@ -3912,7 +3912,7 @@
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/ruin/unpowered)
-"vE" = (
+"GO" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "13"
 	},
@@ -3921,7 +3921,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
-"GL" = (
+"LC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
 	req_access_txt = "13"
@@ -6564,7 +6564,7 @@ bg
 jv
 jN
 kb
-GL
+LC
 aa
 aa
 aa
@@ -8277,7 +8277,7 @@ aO
 if
 iF
 je
-vE
+GO
 aa
 aa
 aa

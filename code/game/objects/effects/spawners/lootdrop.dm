@@ -205,3 +205,30 @@
 				/obj/item/aiModule/core/full/thermurderdynamic,
 				/obj/item/aiModule/core/full/damaged
 				)
+
+/obj/effect/spawner/lootdrop/plushies
+	name = "single plushy spawner"
+	loot = list(
+			/obj/item/toy/plush/narplush,
+			/obj/item/toy/plush/snakeplushie,
+			/obj/item/toy/plush/nukeplushie,
+			/obj/item/toy/plush/slimeplushie,
+			/obj/item/toy/plush/lizardplushie,
+			/obj/item/toy/plush/plushvar,
+			/obj/item/toy/plush/carpplushie,
+			/obj/item/toy/plush/bubbleplush
+			)
+
+/obj/effect/spawner/lootdrop/instruments
+	name = "single musical instrument spawner"
+	loot = list(
+			/obj/item/device/instrument/violin,
+			/obj/item/device/instrument/guitar,
+			/obj/item/device/instrument/glockenspiel,
+			/obj/item/device/instrument/accordion,
+			/obj/item/device/instrument/saxophone,
+			/obj/item/device/instrument/trombone,
+			/obj/item/device/instrument/recorder,
+			/obj/item/device/instrument/harmonica,
+			/obj/structure/piano/unanchored
+			)

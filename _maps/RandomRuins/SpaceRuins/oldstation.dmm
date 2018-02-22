@@ -4426,14 +4426,13 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/sec)
-"nk" = (
-/obj/machinery/door/airlock/highsecurity,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
+"Dj" = (
+/obj/structure/transit_tube{
+	dir = 4
 	},
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/hivebot)
-"oM" = (
+/turf/template_noop,
+/area/space/nearstation)
+"Fh" = (
 /obj/machinery/door/airlock/external{
 	name = "Engineering External Access";
 	req_access = null;
@@ -4451,20 +4450,21 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/engi)
-"Dj" = (
-/obj/structure/transit_tube{
-	dir = 4
-	},
-/turf/template_noop,
-/area/space/nearstation)
 "Ga" = (
 /obj/structure/transit_tube/crossing/horizontal,
 /turf/template_noop,
 /area/space/nearstation)
-"MZ" = (
+"VG" = (
 /obj/machinery/door/airlock/highsecurity,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation/hivebot)
+"Wg" = (
+/obj/machinery/door/airlock/highsecurity,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/hivebot)
@@ -5548,7 +5548,7 @@ dl
 dl
 fb
 fD
-oM
+Fh
 gV
 hk
 dl
@@ -7548,8 +7548,8 @@ ad
 ad
 ad
 ad
-MZ
-MZ
+VG
+VG
 ad
 ad
 ad
@@ -7692,8 +7692,8 @@ ad
 ad
 ad
 ad
-nk
-nk
+Wg
+Wg
 ad
 ad
 ad

@@ -2131,33 +2131,7 @@
 	icon_state = "ironsand1"
 	},
 /area/awaymission/wildwest/mines)
-"pD" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plasteel,
-/area/awaymission/wildwest/refine)
-"Gh" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/grass,
-/area/awaymission/wildwest/gov)
-"Kh" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/wildwest/refine)
-"RN" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/wildwest/refine)
-"Ua" = (
+"ti" = (
 /obj/machinery/door/airlock/sandstone,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -2166,6 +2140,32 @@
 	icon_state = "ironsand1"
 	},
 /area/awaymission/wildwest/gov)
+"zp" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/wildwest/refine)
+"Fk" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/awaymission/wildwest/gov)
+"LD" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/wildwest/refine)
+"SB" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel,
+/area/awaymission/wildwest/refine)
 
 (1,1,1) = {"
 aa
@@ -21354,7 +21354,7 @@ eN
 eg
 ex
 eg
-Ua
+ti
 fL
 fL
 fL
@@ -21611,7 +21611,7 @@ eh
 fc
 eh
 es
-Ua
+ti
 fL
 fL
 fL
@@ -23414,7 +23414,7 @@ bv
 fM
 fW
 gb
-Gh
+Fk
 go
 fW
 fW
@@ -28033,7 +28033,7 @@ et
 et
 eJ
 eR
-RN
+zp
 fj
 fo
 fA
@@ -29073,10 +29073,10 @@ eu
 eu
 eu
 eu
-pD
+SB
 eu
 eu
-Kh
+LD
 gL
 gQ
 gQ

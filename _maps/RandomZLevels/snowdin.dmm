@@ -14137,62 +14137,62 @@
 /obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plating/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
-"Lw" = (
-/obj/machinery/door/airlock/external/glass,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/awaymission/snowdin/post/minipost)
-"Lx" = (
-/obj/machinery/door/airlock/external/glass,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/snowdin/post/mining_dock)
-"OF" = (
-/obj/machinery/door/airlock/external{
-	name = "Ready Room";
-	req_access_txt = "150"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/awaymission/snowdin/cave)
-"PR" = (
-/obj/machinery/door/airlock/external{
-	name = "Ready Room";
-	req_access_txt = "150"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/awaymission/snowdin/cave)
-"SX" = (
-/obj/machinery/door/airlock/external/glass,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/snowdin/post/mining_main)
-"VW" = (
-/obj/machinery/door/airlock/external/glass,
-/obj/structure/fans/tiny,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/post/mining_dock)
-"Yn" = (
+"Nq" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
+"Ob" = (
+/obj/machinery/door/airlock/external{
+	name = "Ready Room";
+	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/awaymission/snowdin/cave)
+"Pr" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/awaymission/snowdin/post/mining_main)
+"Qa" = (
+/obj/machinery/door/airlock/external{
+	name = "Ready Room";
+	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/awaymission/snowdin/cave)
+"Te" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/awaymission/snowdin/post/minipost)
+"UU" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/post/mining_dock)
+"Xr" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/awaymission/snowdin/post/mining_dock)
 
 (1,1,1) = {"
 aa
@@ -25650,7 +25650,7 @@ yW
 yW
 Ah
 Av
-Lw
+Te
 yX
 AY
 Be
@@ -25736,7 +25736,7 @@ dX
 Gb
 Gq
 Gq
-SX
+Pr
 GR
 HW
 Gq
@@ -25993,7 +25993,7 @@ dX
 Gb
 Gq
 GR
-SX
+Pr
 HG
 HX
 HX
@@ -31706,7 +31706,7 @@ kU
 lM
 mx
 mS
-Yn
+Nq
 dX
 dX
 af
@@ -31963,7 +31963,7 @@ kV
 lN
 my
 mT
-Yn
+Nq
 dX
 dX
 af
@@ -34947,11 +34947,11 @@ wS
 an
 an
 Dy
-PR
+Qa
 CX
 CX
 CX
-OF
+Ob
 En
 Es
 Dp
@@ -60680,10 +60680,10 @@ oZ
 Fk
 oZ
 oZ
-VW
+UU
 FH
 wL
-Lx
+Xr
 xy
 Gj
 xy
@@ -60937,10 +60937,10 @@ sY
 oZ
 oZ
 oZ
-VW
+UU
 wL
 FK
-Lx
+Xr
 xy
 xy
 wL

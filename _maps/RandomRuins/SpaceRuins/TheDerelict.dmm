@@ -4485,15 +4485,6 @@
 	icon_state = "damaged3"
 	},
 /area/space/nearstation)
-"DE" = (
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/ruin/space/derelict/arrival)
 "Ev" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
@@ -4517,6 +4508,15 @@
 	icon_state = "floorscorched2"
 	},
 /area/space/nearstation)
+"Jt" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict/arrival)
 "KN" = (
 /turf/closed/wall,
 /area/ruin/space/derelict/hallway/primary/port)
@@ -4526,18 +4526,17 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
-"Le" = (
-/obj/machinery/door/airlock/external{
-	name = "Arrivals Docking Bay 1"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/ruin/space/derelict/arrival)
 "Lv" = (
 /turf/closed/wall,
 /area/space/nearstation)
+"LC" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering Access";
+	req_access_txt = "10"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/gravity_generator)
 "Oj" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/bridge/access)
@@ -4550,20 +4549,21 @@
 	icon_state = "damaged4"
 	},
 /area/ruin/space/derelict/singularity_engine)
-"RF" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Engineering Access";
-	req_access_txt = "10"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plasteel,
-/area/ruin/space/derelict/gravity_generator)
 "Sv" = (
 /turf/closed/wall/r_wall,
 /area/space/nearstation)
 "Tm" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
+"Tz" = (
+/obj/machinery/door/airlock/external{
+	name = "Arrivals Docking Bay 1"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict/arrival)
 "Uz" = (
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -8683,7 +8683,7 @@ cw
 cH
 cO
 cO
-RF
+LC
 dh
 dt
 dC
@@ -13021,7 +13021,7 @@ kM
 hf
 lZ
 hP
-DE
+Jt
 aa
 aa
 aa
@@ -13913,7 +13913,7 @@ aa
 aa
 aa
 jK
-Le
+Tz
 jK
 aa
 aa

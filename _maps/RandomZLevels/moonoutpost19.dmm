@@ -6820,23 +6820,7 @@
 /obj/effect/mapping_helpers/planet_z,
 /turf/open/space,
 /area/space)
-"vV" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/arrivals)
-"zZ" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/arrivals)
-"Mm" = (
+"Hi" = (
 /obj/machinery/door/airlock/medical{
 	id_tag = "";
 	name = "Research Division";
@@ -6850,10 +6834,26 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"Wf" = (
+"Lt" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/arrivals)
+"WP" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
+	},
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/arrivals)
+"WV" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -36314,10 +36314,10 @@ jG
 lF
 lF
 no
-zZ
+Lt
 nA
 nK
-Wf
+WP
 dM
 ba
 ba
@@ -36558,7 +36558,7 @@ hN
 ie
 hj
 hj
-Mm
+Hi
 jy
 jU
 jE
@@ -36571,10 +36571,10 @@ mN
 mg
 mg
 mg
-zZ
+Lt
 lM
 lN
-Wf
+WP
 dM
 ba
 ba
@@ -41709,7 +41709,7 @@ hI
 hJ
 hI
 hI
-vV
+WV
 hI
 hI
 nJ

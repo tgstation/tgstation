@@ -43,3 +43,7 @@
 	name = "sparkles"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldsparkles"
+
+/obj/effect/overlay/small_smoke
+	name = "steam"
+	icon_state = "smoke"

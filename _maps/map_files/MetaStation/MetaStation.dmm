@@ -77186,16 +77186,16 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"dIs" = (
+"dGX" = (
 /obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock";
-	req_access_txt = "31"
+	name = "Departure Lounge Airlock"
 	},
+/obj/effect/turf_decal/delivery,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
+	dir = 1
 	},
-/turf/open/floor/plating,
-/area/quartermaster/storage)
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "dLK" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -77205,15 +77205,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"dYu" = (
-/obj/machinery/door/airlock/external{
-	name = "Auxiliary Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "eoK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -77362,15 +77353,15 @@
 /obj/machinery/autolathe,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"hyP" = (
+"ihU" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Pod Two"
+	name = "Auxiliary Escape Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/security/prison)
+/area/maintenance/aft)
 "ioI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -77414,29 +77405,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"jyQ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/external{
-	name = "Solar Maintenance";
-	req_access = null;
-	req_access_txt = "10; 13"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/solars/port/aft)
-"jKK" = (
-/obj/machinery/door/airlock/external{
-	req_access_txt = "13"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "kfu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -77444,6 +77412,15 @@
 "krD" = (
 /turf/closed/wall,
 /area/science/circuit)
+"krF" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "kys" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
@@ -77460,17 +77437,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
-"kzn" = (
-/obj/machinery/door/airlock/external{
-	name = "Departure Lounge Airlock"
-	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit/departure_lounge)
-"kDM" = (
+"kFk" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -77494,6 +77461,20 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"kOP" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access = null;
+	req_access_txt = "10; 13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/port/aft)
 "kVo" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -77502,12 +77483,31 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"kXP" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "lal" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"lbE" = (
+/obj/machinery/door/airlock/external{
+	name = "Security External Airlock";
+	req_access_txt = "1"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/security/prison)
 "llb" = (
 /obj/structure/table/reinforced,
 /obj/item/device/integrated_circuit_printer,
@@ -77550,28 +77550,6 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
-"lNZ" = (
-/obj/machinery/door/airlock/external{
-	req_access_txt = "13"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"lWY" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Telecomms Server Room"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/tcommsat/server)
 "mjJ" = (
 /obj/structure/reagent_dispensers/beerkeg{
 	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back.";
@@ -77641,19 +77619,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"nIb" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/mining{
-	name = "Cargo Bay";
-	req_access_txt = "0";
-	req_one_access_txt = "48;50"
-	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/construction/storage/wing)
 "obb" = (
 /obj/structure/target_stake,
 /turf/open/floor/plasteel/white,
@@ -77688,6 +77653,17 @@
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall,
 /area/hydroponics)
+"oDk" = (
+/obj/machinery/door/airlock/engineering/glass{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_access_txt = "10"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
 "oLW" = (
 /obj/structure/table/reinforced,
 /obj/structure/cable/yellow{
@@ -77724,6 +77700,32 @@
 /obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"oVY" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/mining{
+	name = "Cargo Bay";
+	req_access_txt = "0";
+	req_one_access_txt = "48;50"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/construction/storage/wing)
+"ptk" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Telecomms Server Room"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/tcommsat/server)
 "pvA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -77740,13 +77742,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"pzj" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "pCV" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -77756,15 +77751,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"pSX" = (
-/obj/machinery/door/airlock/external{
-	name = "Auxiliary Escape Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "qnJ" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -77809,6 +77795,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"rjA" = (
+/obj/machinery/door/airlock/external{
+	name = "Transport Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "rzX" = (
 /obj/structure/chair/office/light{
 	dir = 1;
@@ -77847,29 +77842,16 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"sGh" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+"syy" = (
 /obj/machinery/door/airlock/external{
-	name = "Solar Maintenance";
-	req_access = null;
-	req_access_txt = "10; 13"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/solars/starboard/fore)
-"sIA" = (
-/obj/machinery/door/airlock/external{
-	name = "Transport Airlock"
+	req_access_txt = "24";
+	req_one_access_txt = "0"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/entry)
+/area/engine/atmos)
 "sJW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/engine/break_room)
@@ -77893,23 +77875,22 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"tDM" = (
-/obj/machinery/door/airlock/engineering/glass{
-	heat_proof = 1;
-	name = "Supermatter Chamber";
-	req_access_txt = "10"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
 "tFJ" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"tRo" = (
+/obj/machinery/door/airlock/external{
+	name = "Supply Dock Airlock";
+	req_access_txt = "31"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
 "tVY" = (
 /obj/structure/closet/crate,
 /obj/item/target/alien,
@@ -77935,6 +77916,15 @@
 /obj/machinery/vending/assist,
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"uzf" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod Two"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/security/prison)
 "uGW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -77988,30 +77978,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"vGt" = (
+/obj/machinery/door/airlock/external{
+	name = "Auxiliary Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "vLD" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space)
-"wiZ" = (
-/obj/machinery/door/airlock/external{
-	name = "Security External Airlock";
-	req_access_txt = "1"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/security/prison)
-"wxc" = (
-/obj/machinery/door/airlock/external{
-	req_access_txt = "24";
-	req_one_access_txt = "0"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/engine/atmos)
 "wFH" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -78042,25 +78021,18 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"wVq" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "xkG" = (
 /obj/item/device/integrated_electronics/wirer,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
-"xse" = (
-/obj/machinery/door/airlock/external{
-	name = "Solar Maintenance";
-	req_access = null;
-	req_access_txt = "10; 13"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/solars/starboard/aft)
 "xyp" = (
 /obj/docking_port/stationary{
 	dheight = 1;
@@ -78078,6 +78050,20 @@
 /obj/structure/chair/comfy,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"xIg" = (
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access = null;
+	req_access_txt = "10; 13"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/aft)
 "xVl" = (
 /turf/closed/wall,
 /area/hallway/secondary/service)
@@ -78097,6 +78083,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"ygO" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/external{
+	name = "Solar Maintenance";
+	req_access = null;
+	req_access_txt = "10; 13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/solars/starboard/fore)
 "ykE" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
@@ -87749,7 +87749,7 @@ btS
 aWU
 bOd
 bPA
-dYu
+vGt
 aaa
 aaa
 aaa
@@ -88006,7 +88006,7 @@ aVw
 aWU
 bOd
 aZZ
-dYu
+vGt
 oRL
 aaa
 aaa
@@ -90825,7 +90825,7 @@ bxz
 aRA
 bBc
 aVs
-sIA
+rjA
 aVs
 bHH
 aRA
@@ -91042,7 +91042,7 @@ aaa
 aaf
 dne
 dne
-pzj
+wVq
 dne
 dne
 aip
@@ -91869,7 +91869,7 @@ bVR
 bXu
 bYD
 bZN
-jyQ
+kOP
 cda
 cej
 cfz
@@ -94910,9 +94910,9 @@ ayj
 aIg
 aIg
 aKN
-dIs
+tRo
 aIg
-dIs
+tRo
 aQg
 aIg
 aIg
@@ -98505,7 +98505,7 @@ aaa
 aaa
 aFN
 aHm
-nIb
+oVY
 dne
 aLc
 dne
@@ -103105,7 +103105,7 @@ abL
 adf
 adz
 acf
-hyP
+uzf
 aeY
 afG
 agL
@@ -103222,7 +103222,7 @@ cQm
 cQJ
 cQY
 cRs
-kzn
+dGX
 aaa
 aaa
 aaa
@@ -103736,7 +103736,7 @@ cQo
 cQL
 cQY
 cQK
-kzn
+dGX
 aaa
 aaa
 aaa
@@ -104384,7 +104384,7 @@ aaf
 aaf
 aaf
 abe
-wiZ
+lbE
 aax
 aax
 aaL
@@ -105278,7 +105278,7 @@ cQp
 cQN
 cQY
 cQK
-kzn
+dGX
 cYJ
 aaa
 aaa
@@ -105792,7 +105792,7 @@ cQq
 cQP
 cQY
 cRt
-kzn
+dGX
 aaa
 aaa
 aaa
@@ -107584,7 +107584,7 @@ gNe
 cwc
 cNe
 cNT
-pSX
+ihU
 ack
 ack
 aaf
@@ -114517,11 +114517,11 @@ aaf
 aaa
 aaf
 dvY
-kDM
+kFk
 dvY
 aaa
 dbN
-xse
+xIg
 dbN
 aaf
 aaf
@@ -120866,7 +120866,7 @@ deD
 dlI
 aJv
 aKI
-tDM
+oDk
 dfb
 dfj
 dlI
@@ -122389,7 +122389,7 @@ abR
 ake
 alw
 amN
-sGh
+ygO
 apo
 aqz
 arU
@@ -123223,7 +123223,7 @@ bFZ
 bAR
 aaf
 bxc
-wxc
+syy
 bxc
 aaf
 aaa
@@ -123937,7 +123937,7 @@ aaf
 aaa
 dnh
 dnh
-jKK
+kXP
 dqT
 aaf
 aaa
@@ -124451,7 +124451,7 @@ aaf
 aaf
 dnh
 dnh
-lNZ
+krF
 dqT
 aaf
 aaa
@@ -132973,7 +132973,7 @@ bzq
 bAX
 bCF
 bEi
-lWY
+ptk
 bHE
 bKM
 bKO

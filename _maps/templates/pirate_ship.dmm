@@ -916,6 +916,13 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"cf" = (
+/obj/machinery/porta_turret/syndicate{
+	dir = 1;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
 "cg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/public/glass{
@@ -1793,13 +1800,6 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
-"dV" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 1;
-	faction = list("pirate")
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/pirate)
 
 (1,1,1) = {"
 aa
@@ -1815,7 +1815,7 @@ aj
 aj
 bF
 aj
-dV
+cf
 aj
 aj
 aj
@@ -2335,7 +2335,7 @@ aj
 aj
 bW
 aj
-dV
+cf
 aj
 aj
 aj

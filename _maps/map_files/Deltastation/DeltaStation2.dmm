@@ -100855,115 +100855,72 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
-"eCM" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
+"eFM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
+/turf/open/floor/plasteel,
+/area/science/circuit)
+"eXh" = (
+/turf/closed/wall,
+/area/science/circuit)
+"fnl" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/misc_lab)
-"eMD" = (
+"fqa" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/science/research/abandoned)
-"faI" = (
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/obj/item/twohanded/required/kirbyplants/random,
-/obj/machinery/camera{
-	c_tag = "MiniSat Service Bay";
-	dir = 8;
-	network = list("minisat");
-	start_active = 1
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/whitepurple/side{
-	dir = 4
-	},
-/area/science/misc_lab)
-"fGq" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"fRT" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plating,
-/area/maintenance/port)
-"gmj" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"gKr" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/plasteel/neutral,
 /area/science/research/abandoned)
-"gNw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/table/glass,
-/turf/open/floor/plasteel/whitepurple/side{
-	dir = 8
+"fwh" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
-/area/science/misc_lab)
-"gQS" = (
+/obj/effect/landmark/xeno_spawn,
 /turf/open/floor/plasteel/white/side{
-	dir = 9
+	dir = 6
 	},
 /area/science/circuit)
-"gSi" = (
-/turf/closed/wall/r_wall,
-/area/science/misc_lab)
-"gUH" = (
-/obj/machinery/light,
-/obj/structure/table/reinforced,
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/turf/open/floor/plasteel/white/side{
-	dir = 1
-	},
-/area/science/circuit)
-"hic" = (
-/obj/structure/table/reinforced,
-/obj/item/device/integrated_electronics/analyzer,
-/obj/item/device/integrated_electronics/debugger,
-/obj/item/device/integrated_electronics/wirer,
+"gjv" = (
 /turf/open/floor/plasteel/white/side{
 	dir = 10
 	},
 /area/science/circuit)
-"hrP" = (
+"gIn" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
 /obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/port/aft)
-"hGT" = (
+/area/science/research/abandoned)
+"hrB" = (
+/obj/structure/table/reinforced,
+/obj/machinery/camera{
+	c_tag = "Science - Experimentation Lab";
+	dir = 2;
+	name = "science camera";
+	network = list("ss13","rd")
+	},
+/obj/machinery/requests_console{
+	department = "Circuitry Lab";
+	name = "Circuitry Lab RC";
+	pixel_y = 32;
+	receive_ore_updates = 1
+	},
+/obj/item/device/integrated_circuit_printer,
+/turf/open/floor/plasteel/white/side,
+/area/science/circuit)
+"hGt" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
 	icon_state = "2-8"
@@ -100986,15 +100943,62 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
-"hNZ" = (
-/obj/structure/chair/office/light{
-	dir = 8
+"iCk" = (
+/obj/structure/target_stake,
+/turf/open/floor/plasteel/white/side{
+	dir = 1
 	},
+/area/science/circuit)
+"jvz" = (
+/obj/structure/table/reinforced,
+/obj/item/device/integrated_electronics/analyzer,
+/obj/item/device/integrated_electronics/debugger,
+/obj/item/device/integrated_electronics/wirer,
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
 /area/science/circuit)
-"iQh" = (
+"jNO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
+"jWd" = (
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel/whitepurple/corner,
+/area/science/research)
+"kdU" = (
+/obj/structure/table/reinforced,
+/obj/machinery/newscaster{
+	pixel_y = -32
+	},
+/obj/item/device/integrated_circuit_printer,
+/turf/open/floor/plasteel/white/side{
+	dir = 1
+	},
+/area/science/circuit)
+"kge" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Science - Lab Access";
+	dir = 8;
+	name = "science camera";
+	network = list("ss13","rd")
+	},
+/obj/structure/sign/departments/science{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel,
+/area/science/circuit)
+"kiB" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/bodycontainer/morgue{
 	dir = 1
 	},
@@ -101002,36 +101006,125 @@
 	dir = 8
 	},
 /area/medical/morgue)
-"jeu" = (
+"ksD" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/neutral,
+/area/medical/morgue)
+"kEx" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 9
+	},
+/area/science/circuit)
+"kJT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/circuit)
+"kNG" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/whitepurple/side,
+/area/science/misc_lab)
+"lfB" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/science/circuit)
+"lGa" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch";
+	req_access_txt = "12"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
-/obj/structure/cable/white{
-	icon_state = "1-4"
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/science/research/abandoned)
-"jjN" = (
-/obj/structure/table/reinforced,
-/obj/machinery/camera{
-	c_tag = "Science - Experimentation Lab";
-	dir = 2;
-	name = "science camera";
-	network = list("ss13","rd")
+/area/maintenance/port/aft)
+"lHi" = (
+/obj/machinery/door/airlock/atmos/glass{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_access_txt = "0";
+	req_one_access_txt = "24;10"
 	},
-/obj/machinery/requests_console{
-	department = "Circuitry Lab";
-	name = "Circuitry Lab RC";
-	pixel_y = 32;
-	receive_ore_updates = 1
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
-/obj/item/device/integrated_circuit_printer,
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"lMM" = (
+/turf/open/floor/plasteel/white/side{
+	dir = 5
+	},
+/area/science/circuit)
+"mvb" = (
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel/white/side,
 /area/science/circuit)
-"jqM" = (
+"mDR" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Access"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
+"mXR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/neutral/side,
+/area/maintenance/port)
+"ntz" = (
+/obj/machinery/autolathe,
+/obj/machinery/door/window/southleft{
+	name = "Research Lab Desk";
+	req_access_txt = "7"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "rndlab1";
+	name = "Research and Development Shutter"
+	},
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 4
+	},
+/area/science/lab)
+"nNE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -101048,15 +101141,140 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
-"jBE" = (
+"nVP" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/item/twohanded/required/kirbyplants/random,
+/obj/machinery/camera{
+	c_tag = "MiniSat Service Bay";
+	dir = 8;
+	network = list("minisat");
+	start_active = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 4
+	},
+/area/science/misc_lab)
+"nWT" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Access"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
+"ovs" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/white{
+	icon_state = "1-4"
+	},
 /turf/open/floor/plasteel/neutral,
+/area/science/research/abandoned)
+"oNj" = (
+/turf/closed/wall,
+/area/science/misc_lab)
+"oQD" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
 /area/medical/morgue)
-"kwx" = (
-/obj/effect/turf_decal/loading_area,
-/turf/open/floor/plasteel/whitepurple/corner,
-/area/science/research)
-"kyo" = (
+"oQO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/science/research/abandoned)
+"oYR" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/science/circuit)
+"pEf" = (
+/turf/closed/wall/r_wall,
+/area/science/misc_lab)
+"pKo" = (
+/turf/open/floor/plasteel/white/side{
+	dir = 6
+	},
+/area/science/circuit)
+"pWg" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 9
+	},
+/area/science/circuit)
+"rbj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/medical/morgue)
+"rur" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/circuit/green,
+/area/science/research/abandoned)
+"rxR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/table/glass,
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 8
+	},
+/area/science/misc_lab)
+"rRT" = (
+/obj/machinery/light,
+/obj/structure/table/reinforced,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/turf/open/floor/plasteel/white/side{
+	dir = 1
+	},
+/area/science/circuit)
+"sAD" = (
+/turf/open/floor/plasteel/white/side{
+	dir = 10
+	},
+/area/science/misc_lab)
+"teq" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/r_wall,
+/area/science/circuit)
+"tgh" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/science/circuit)
+"tvx" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/circuit/green,
+/area/science/research/abandoned)
+"twv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -101066,82 +101284,39 @@
 	dir = 8
 	},
 /area/maintenance/port)
-"lak" = (
-/turf/open/floor/plasteel/white/side{
-	dir = 10
+"twW" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
 	},
-/area/science/circuit)
-"loI" = (
-/obj/machinery/autolathe,
-/obj/machinery/door/window/southleft{
-	name = "Research Lab Desk";
-	req_access_txt = "7"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "rndlab1";
-	name = "Research and Development Shutter"
-	},
-/turf/open/floor/plasteel/whitepurple/side{
-	dir = 4
-	},
-/area/science/lab)
-"lEl" = (
+/turf/open/floor/plasteel/whitepurple/corner,
+/area/science/misc_lab)
+"uIU" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
-"lEm" = (
-/obj/effect/decal/cleanable/dirt,
+"vcz" = (
+/obj/machinery/power/apc{
+	areastring = "/area/science/research/abandoned";
+	dir = 1;
+	name = "Abandoned Research Lab APC";
+	pixel_y = 24
+	},
 /obj/structure/cable/white{
-	icon_state = "4-8"
+	icon_state = "0-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/neutral/side,
-/area/maintenance/port)
-"lKu" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/plasteel,
-/area/science/circuit)
-"lOY" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/plasteel/white/side{
-	dir = 6
-	},
-/area/science/circuit)
-"lXM" = (
-/obj/structure/target_stake,
-/turf/open/floor/plasteel/white/side{
-	dir = 1
-	},
-/area/science/circuit)
-"mvm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/neutral,
+/turf/open/floor/plating,
 /area/science/research/abandoned)
-"mxm" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/circuit/green,
-/area/science/research/abandoned)
-"oZC" = (
+"vgz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	name = "Corporate Lounge";
@@ -101154,206 +101329,31 @@
 	},
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
-"pmQ" = (
-/obj/structure/table/reinforced,
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
-/obj/item/device/integrated_circuit_printer,
-/turf/open/floor/plasteel/white/side{
-	dir = 1
-	},
-/area/science/circuit)
-"psi" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/bodycontainer/morgue{
-	dir = 1
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/medical/morgue)
-"ptI" = (
+"vhO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/science/research/abandoned)
-"pQm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/white{
-	icon_state = "1-4"
+"vFz" = (
+/turf/open/floor/plasteel/white/side{
+	dir = 9
 	},
-/turf/open/floor/plasteel/neutral,
-/area/science/research/abandoned)
-"qhc" = (
+/area/science/circuit)
+"xcs" = (
 /obj/structure/table/reinforced,
 /obj/item/device/integrated_electronics/analyzer,
 /obj/item/device/integrated_electronics/debugger,
 /obj/item/device/integrated_electronics/wirer,
 /turf/open/floor/plasteel/white/side{
-	dir = 9
-	},
-/area/science/circuit)
-"qpq" = (
-/turf/open/floor/plasteel/white/side{
-	dir = 5
-	},
-/area/science/circuit)
-"rhO" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white/side{
-	dir = 9
-	},
-/area/science/circuit)
-"rCv" = (
-/turf/open/floor/plasteel/white/side{
-	dir = 6
-	},
-/area/science/circuit)
-"saw" = (
-/turf/closed/wall,
-/area/science/circuit)
-"tmi" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/science/circuit)
-"tCh" = (
-/turf/closed/wall,
-/area/science/misc_lab)
-"tMk" = (
-/turf/open/floor/plasteel/white/side{
 	dir = 10
 	},
-/area/science/misc_lab)
-"upk" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Holodeck Access"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
-"upw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/light,
-/obj/structure/reagent_dispensers/water_cooler,
-/turf/open/floor/plasteel/whitepurple/side,
-/area/science/misc_lab)
-"uYS" = (
-/obj/machinery/door/airlock/atmos/glass{
-	heat_proof = 1;
-	name = "Supermatter Chamber";
-	req_access_txt = "0";
-	req_one_access_txt = "24;10"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/engine/supermatter)
-"vqd" = (
+/area/science/circuit)
+"ykL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/bodycontainer/morgue{
-	dir = 2
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/medical/morgue)
-"wei" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
-/area/science/circuit)
-"wAA" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/r_wall,
-/area/science/circuit)
-"wBO" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/plasteel/whitepurple/corner,
-/area/science/misc_lab)
-"xaf" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Holodeck Access"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
-"xwK" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Science - Lab Access";
-	dir = 8;
-	name = "science camera";
-	network = list("ss13","rd")
-	},
-/obj/structure/sign/departments/science{
-	pixel_x = 32
-	},
-/turf/open/floor/plasteel,
-/area/science/circuit)
-"xze" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/science/research/abandoned)
-"xMn" = (
-/obj/structure/disposalpipe/trunk,
-/obj/machinery/disposal/bin,
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/turf/open/floor/plasteel/white/side,
-/area/science/circuit)
-"yjc" = (
-/obj/machinery/power/apc{
-	areastring = "/area/science/research/abandoned";
-	dir = 1;
-	name = "Abandoned Research Lab APC";
-	pixel_y = 24
-	},
-/obj/structure/cable/white{
-	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
 /area/science/research/abandoned)
@@ -125939,14 +125939,14 @@ cLs
 cJT
 caE
 caE
-saw
-saw
-saw
-saw
-saw
-saw
-saw
-saw
+eXh
+eXh
+eXh
+eXh
+eXh
+eXh
+eXh
+eXh
 dhQ
 dhQ
 dhQ
@@ -126454,12 +126454,12 @@ ddP
 deW
 cKk
 dhR
-jjN
-hNZ
-hic
-qhc
+hrB
+pWg
+xcs
+jvz
 dpX
-pmQ
+kdU
 dhR
 djs
 dlf
@@ -126712,10 +126712,10 @@ cCM
 dgm
 dhR
 djp
-qpq
+lMM
 dmt
 doh
-rCv
+pKo
 drA
 dhR
 dum
@@ -126966,19 +126966,19 @@ cNd
 cNd
 cMY
 cLO
-lEm
-gmj
+mXR
+lfB
 djq
-rhO
-lak
-gQS
-tMk
+kEx
+gjv
+vFz
+sAD
 drB
 dhR
-yjc
-jeu
-mxm
-gKr
+vcz
+gIn
+rur
+tvx
 dxJ
 dBV
 dlg
@@ -127141,7 +127141,7 @@ ayK
 axz
 aAW
 axz
-uYS
+lHi
 aEr
 aFB
 aHd
@@ -127226,14 +127226,14 @@ deX
 dgn
 dhR
 djr
-qpq
+lMM
 dmv
 doj
-lOY
-lXM
+fwh
+iCk
 dhR
 dun
-lEl
+oQO
 dxK
 dzg
 dAr
@@ -127482,7 +127482,7 @@ cMY
 deX
 dgo
 dhR
-xMn
+mvb
 dok
 dmw
 dok
@@ -127491,8 +127491,8 @@ drC
 dhR
 duo
 dmu
-eMD
-pQm
+ykL
+ovs
 dxM
 doi
 dun
@@ -127747,9 +127747,9 @@ dqb
 drD
 dhR
 dup
-ptI
+vhO
 dxL
-mvm
+fqa
 dAs
 dpY
 dDi
@@ -127999,9 +127999,9 @@ dhR
 dju
 dlj
 dlj
-wei
+oYR
 dqc
-gUH
+rRT
 dhR
 duq
 dlh
@@ -128256,12 +128256,12 @@ dhR
 djv
 dlj
 dlj
-wei
+oYR
 dqb
 drE
 dhR
 dur
-xze
+uIU
 dxN
 dzj
 don
@@ -128510,9 +128510,9 @@ cMY
 deX
 dgo
 dhR
-lKu
-tmi
-xwK
+eFM
+kJT
+kge
 doo
 dqd
 drF
@@ -128766,11 +128766,11 @@ dce
 cMY
 dfa
 dgp
-fGq
-fGq
+tgh
+tgh
 dll
 dhR
-wAA
+teq
 dqe
 dhR
 dhR
@@ -129026,11 +129026,11 @@ dgq
 dhT
 djx
 dlm
-gNw
+rxR
 dop
 dqf
 drG
-tCh
+oNj
 dhQ
 dhS
 dhQ
@@ -129282,16 +129282,16 @@ cMY
 cMY
 cMY
 djy
-eCM
+kNG
 dmA
 doq
 dqg
-upw
+fnl
 dtd
 duu
-kyo
+twv
 djw
-fRT
+jNO
 dAu
 caE
 aaa
@@ -129540,10 +129540,10 @@ cNd
 cMY
 djz
 dln
-faI
+nVP
 dor
 dqh
-wBO
+twW
 dhT
 duv
 dwc
@@ -129800,8 +129800,8 @@ djA
 djA
 dos
 dqi
-gSi
-gSi
+pEf
+pEf
 djA
 djA
 djA
@@ -129965,7 +129965,7 @@ aqV
 aqV
 alT
 ayR
-jqM
+nNE
 aBf
 alT
 alf
@@ -131870,7 +131870,7 @@ dFG
 dHf
 dIr
 dJR
-hrP
+lGa
 dLQ
 dNu
 dOi
@@ -139296,8 +139296,8 @@ cQQ
 cSw
 cUl
 cQP
-kwx
-loI
+jWd
+ntz
 daV
 dcJ
 dei
@@ -141085,7 +141085,7 @@ cBv
 cDc
 cBv
 cBv
-oZC
+vgz
 cIP
 cKC
 cMa
@@ -142145,10 +142145,10 @@ dzR
 dAU
 dCA
 dDM
-jBE
+ksD
 dGl
 dHH
-iQh
+oQD
 dCy
 dKZ
 dMy
@@ -142401,7 +142401,7 @@ dym
 dzS
 dAV
 dCB
-vqd
+rbj
 dEV
 dGm
 dHH
@@ -142662,7 +142662,7 @@ dDN
 dEW
 dGl
 dHH
-psi
+kiB
 dCy
 dKX
 dMA
@@ -142915,7 +142915,7 @@ dyo
 dzU
 dAX
 dCB
-vqd
+rbj
 dEW
 dGn
 dHI
@@ -157995,7 +157995,7 @@ aSO
 aUJ
 aWr
 aFm
-hGT
+hGt
 bbo
 aFm
 aKV
@@ -159590,10 +159590,10 @@ cuM
 cuM
 cuM
 cuM
-xaf
+mDR
 cuM
 cuM
-upk
+nWT
 cuM
 cuM
 cuM

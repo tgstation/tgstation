@@ -6060,7 +6060,7 @@
 /obj/structure/sign/departments/chemistry,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
-"EZ" = (
+"uN" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
 	},
@@ -6068,7 +6068,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
-"St" = (
+"Qf" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
@@ -6869,10 +6869,10 @@ mt
 mU
 np
 nP
-EZ
+uN
 oI
 oD
-St
+Qf
 ab
 ab
 ab

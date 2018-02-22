@@ -3961,7 +3961,7 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
-"LW" = (
+"rz" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -3971,7 +3971,7 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
-"Tk" = (
+"MF" = (
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -10947,7 +10947,7 @@ gq
 hb
 hc
 hc
-LW
+rz
 hc
 hc
 hc
@@ -11207,7 +11207,7 @@ bE
 bE
 hc
 hc
-Tk
+MF
 hc
 hc
 hc
