@@ -90664,7 +90664,7 @@
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "dJJ" = (
-/obj/machinery/doppler_array{
+/obj/machinery/doppler_array/research/science{
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet{
