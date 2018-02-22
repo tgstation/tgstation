@@ -16085,7 +16085,7 @@
 /turf/open/floor/plasteel/brown{
 	dir = 4
 	},
-/area/maintenance/port/aft)
+/area/quartermaster/storage)
 "aLs" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/firecloset,
@@ -24673,7 +24673,7 @@
 	dir = 8
 	},
 /turf/closed/wall,
-/area/quartermaster/storage)
+/area/maintenance/disposal)
 "bxG" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall,
@@ -56619,7 +56619,7 @@ aHe
 aIe
 nHX
 aFh
-aNH
+aFX
 aLX
 oqg
 kej
