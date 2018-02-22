@@ -583,9 +583,7 @@
 		return 0
 
 	activate_pin(3)
-
-	for(var/mob/O in hearers(1, get_turf(src)))
-		audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
 
 /obj/item/integrated_circuit/input/ntnet_packet
 	name = "NTNet networking circuit"

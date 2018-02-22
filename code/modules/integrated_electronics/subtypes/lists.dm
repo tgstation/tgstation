@@ -29,7 +29,7 @@
 		"on failure" = IC_PINTYPE_PULSE_OUT,
 		)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	cooldown_per_use =
+	cooldown_per_use = 1
 
 /obj/item/integrated_circuit/lists/pick/do_work()
 	var/list/input_list = get_pin_data(IC_INPUT, 1) // List pins guarantee that there is a list inside, even if just an empty one.

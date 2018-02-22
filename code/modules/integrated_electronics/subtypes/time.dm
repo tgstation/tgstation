@@ -102,6 +102,23 @@
 			activate_pin(1)
 
 
+/obj/item/integrated_circuit/time/ticker/custom
+	name = "fast ticker"
+	desc = "This advanced circuit sends an automatic pulse every two seconds."
+	icon_state = "tick-f"
+	complexity = 16
+	delay = 2 SECONDS
+	inputs = list("enable ticking" = IC_PINTYPE_BOOLEAN,"delay time" = IC_PINTYPE_NUMBER)
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 8
+
+/obj/item/integrated_circuit/time/ticker/custom/on_data_written()
+	var/delay_input = get_pin_data(IC_INPUT, 2)
+	if(delay_input && isnum(delay_input) )
+		var/new_delay = CLAMP(delay_input ,1 ,36000) //An hour.
+		delay = new_delay
+	..()
+
 /obj/item/integrated_circuit/time/ticker/fast
 	name = "fast ticker"
 	desc = "This advanced circuit sends an automatic pulse every two seconds."

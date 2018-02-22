@@ -99,9 +99,12 @@
 	var/volume = 60
 	var/list/fuel = list("plasma" = 50000, "welding_fuel" = 15000, "carbon" = 10000, "ethanol" = 10000, "nutriment" = 8000)
 	var/multi = 1
+	var/lfwb
 
 /obj/item/integrated_circuit/passive/power/chemical_cell/New()
 	..()
+	//if(!CONFIG_GET(flag/disable_human_mood))
+	//	lfwb=1
 	create_reagents(volume)
 
 /obj/item/integrated_circuit/passive/power/chemical_cell/interact(mob/user)
@@ -117,12 +120,13 @@
 	if(assembly)
 		if(assembly.battery)
 			var/bp = 5000
-			if(reagents.get_reagent_amount("blood")) //only it's powerful enough to power the station(c)
+			if(reagents.get_reagent_amount("blood")) //only blood is powerful enough to power the station(c)
 				var/datum/reagent/blood/B = locate() in reagents.reagent_list
-				if(B && B.data["cloneable"])
-					var/mob/M = B.data["donor"]
-					if(M && M.stat != DEAD && M.client)
-						bp = 500000
+				if(lfwb)
+					if(B && B.data["cloneable"])
+						var/mob/M = B.data["donor"]
+						if(M && M.stat != DEAD && M.client)
+							bp = 500000
 				if(reagents.remove_reagent("blood", 1))
 					assembly.give_power(bp)
 			for(var/I in fuel)

@@ -3,6 +3,7 @@
 
 /obj/item/device/electronic_assembly
 	name = "electronic assembly"
+	obj_flags = CAN_BE_HIT
 	desc = "It's a case, for building small electronics with."
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/assemblies/electronic_setups.dmi'

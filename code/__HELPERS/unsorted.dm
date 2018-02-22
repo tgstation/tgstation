@@ -518,7 +518,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	Gets all contents of contents and returns them all in a list.
 */
 
-/atom/proc/GetAllContents(var/type/T)
+/atom/proc/GetAllContents(var/T)
 	var/list/processing_list = list(src)
 	var/list/assembled = list()
 	while(processing_list.len)
@@ -527,9 +527,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 		//This is also why we don't need to check against assembled as we go along
 		processing_list += A.contents
-		if(T)
-			if(A.istype(T))
-				assembled += A
+		if(!T || istype(A,T))
+			assembled += A
 	return assembled
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
