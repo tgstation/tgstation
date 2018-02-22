@@ -447,8 +447,7 @@ GAS ANALYZER
 				to_chat(user, "<span class='warning'>[src]'s barometer function can't trace anything while the storm is [ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]</span>")
 				return
 
-			var/time = butchertime((ongoing_weather.next_hit_time - world.time)/10)
-			to_chat(user, "<span class='notice'>The next [ongoing_weather] will hit in [DisplayTimeText(round(time)*10)] seconds.</span>")
+			to_chat(user, "<span class='notice'>The next [ongoing_weather] will hit in [butchertime(ongoing_weather.next_hit_time - world.time)].</span>")
 			if(ongoing_weather.aesthetic)
 				to_chat(user, "<span class='warning'>[src]'s barometer function says that the next storm will breeze on by.</span>")
 		else
@@ -457,8 +456,7 @@ GAS ANALYZER
 			if(fixed < 0)
 				to_chat(user, "<span class='warning'>[src]'s barometer function was unable to trace any weather patterns.</span>")
 			else
-				fixed = butchertime(round(fixed / 10))
-				to_chat(user, "<span class='warning'>[src]'s barometer function says a storm will land in approximately [fixed] seconds.</span>")
+				to_chat(user, "<span class='warning'>[src]'s barometer function says a storm will land in approximately [butchertime(fixed)].</span>")
 		cooldown = TRUE
 		addtimer(CALLBACK(src,/obj/item/device/analyzer/proc/ping), cooldown_time)
 
@@ -474,15 +472,12 @@ GAS ANALYZER
 	if(!amount)
 		return
 	if(accuracy)
-		var/time = amount
 		var/inaccurate = round(accuracy*(1/3))
 		if(prob(50))
-			time -= inaccurate
+			amount -= inaccurate
 		if(prob(50))
-			time += inaccurate
-		return time
-	else
-		return amount
+			amount += inaccurate
+	return DisplayTimeText(max(1,amount))
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"
