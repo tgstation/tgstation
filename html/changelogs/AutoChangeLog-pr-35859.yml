@@ -1,0 +1,4 @@
+author: "MetroidLover"
+delete-after: True
+changes: 
+  - balance: "rebalanced Ninja event to allow it to happen earlier."
