@@ -2,19 +2,6 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
-"aab" = (
-/obj/docking_port/stationary{
-	dheight = 1;
-	dir = 8;
-	dwidth = 12;
-	height = 17;
-	id = "syndicate_nw";
-	name = "northwest of station";
-	turf_type = /turf/open/space;
-	width = 23
-	},
-/turf/open/space/basic,
-/area/space)
 "aac" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
@@ -24198,19 +24185,6 @@
 	},
 /turf/open/floor/plating,
 /area/tcommsat/server)
-"bez" = (
-/obj/docking_port/stationary{
-	dheight = 1;
-	dir = 8;
-	dwidth = 12;
-	height = 17;
-	id = "syndicate_se";
-	name = "southeast of station";
-	turf_type = /turf/open/space;
-	width = 23
-	},
-/turf/open/space/basic,
-/area/space)
 "beD" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "13"
@@ -48628,7 +48602,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aaa
 aaa
 aaa
@@ -73683,7 +73657,7 @@ aaa
 aaa
 aaa
 aaa
-bez
+aaa
 aaa
 aaa
 aaa
