@@ -340,7 +340,7 @@
 	return ..()
 	
 /obj/structure/table/reinforced/brass/tablepush(mob/living/user, mob/living/pushed_mob)
-	.
+	.= ..()
 	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
 /obj/structure/table/reinforced/brass/narsie_act()
