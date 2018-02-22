@@ -114,7 +114,7 @@
 			breathes = FALSE
 		if(NOBLOOD in dna.species.species_traits)
 			blooded = FALSE
-		var/has_liver = (!(NOLIVER in dna.species.species_traits))
+		var/has_liver = (!(NOLIVER in dna.species.species_traits) || !(TOXINLOVER in dna.species.species_traits))
 		var/has_stomach = (!(NOSTOMACH in dna.species.species_traits))
 
 		if(has_liver && !getorganslot(ORGAN_SLOT_LIVER))

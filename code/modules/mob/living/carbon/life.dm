@@ -405,7 +405,7 @@
 
 /mob/living/carbon/proc/handle_liver()
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
+	if((!dna && !liver) || (NOLIVER in dna.species.species_traits) || (TOXINLOVER in dna.species.species_traits))
 		return
 	if(liver)
 		if(liver.damage >= 100)
