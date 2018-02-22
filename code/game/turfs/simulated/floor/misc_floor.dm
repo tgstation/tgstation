@@ -196,6 +196,9 @@
 		flick_overlay(I, viewing, 8)
 		L.adjustToxLoss(-3, TRUE, TRUE)
 
+/turf/open/floor/clockwork/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
+
 /turf/open/floor/clockwork/crowbar_act(mob/living/user, obj/item/I)
 	if(baseturfs == type)
 		return TRUE
@@ -231,9 +234,14 @@
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds."
 	floor_tile = /obj/item/stack/tile/bluespace
 
+/turf/open/floor/bluespace/notile
+	floor_tile = null
 
 /turf/open/floor/sepia
 	slowdown = 2
 	icon_state = "sepia"
 	desc = "Time seems to flow very slowly around these tiles."
 	floor_tile = /obj/item/stack/tile/sepia
+
+/turf/open/floor/sepia/notile
+	floor_tile = null
