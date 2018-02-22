@@ -13,7 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\_basemap.dm"
+#include "_maps\runtimestation.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
@@ -1937,6 +1937,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\eyeballs.dm"
 #include "code\modules\mob\living\simple_animal\hostile\faithless.dm"
 #include "code\modules\mob\living\simple_animal\hostile\giant_spider.dm"
+#include "code\modules\mob\living\simple_animal\hostile\grue.dm"
 #include "code\modules\mob\living\simple_animal\hostile\headcrab.dm"
 #include "code\modules\mob\living\simple_animal\hostile\hivebot.dm"
 #include "code\modules\mob\living\simple_animal\hostile\hostile.dm"
@@ -2316,6 +2317,7 @@
 #include "code\modules\spells\spell_types\forcewall.dm"
 #include "code\modules\spells\spell_types\genetic.dm"
 #include "code\modules\spells\spell_types\godhand.dm"
+#include "code\modules\spells\spell_types\grue_walk.dm"
 #include "code\modules\spells\spell_types\infinite_guns.dm"
 #include "code\modules\spells\spell_types\inflict_handler.dm"
 #include "code\modules\spells\spell_types\knock.dm"

@@ -377,6 +377,9 @@ h1.alert, h2.alert		{color: #000000;}
 
 .spider					{color: #4d004d;}
 
+.grue					{color: #ffffff; background-color: #000000; display: block; font-family: "Courier New", cursive, sans-serif;}
+.gruehunt				{color: #960000; background-color: #000000; display: block; font-family: "Courier New", cursive, sans-serif;}
+
 .interface				{color: #330033;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
