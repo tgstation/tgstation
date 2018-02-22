@@ -16352,6 +16352,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable/white{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aLY" = (
@@ -16367,6 +16370,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aMa" = (
@@ -16374,6 +16380,9 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -16384,6 +16393,9 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -24782,6 +24794,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"cOT" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
 "cRt" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -24891,6 +24910,9 @@
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
@@ -25041,6 +25063,9 @@
 	dir = 4;
 	pixel_x = 28
 	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
 	},
@@ -25066,6 +25091,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
+"eZA" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/closed/wall,
+/area/quartermaster/miningdock)
 "feM" = (
 /obj/machinery/computer/monitor{
 	name = "backup power monitoring console"
@@ -26384,6 +26415,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"oXn" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
 "oZR" = (
 /obj/structure/sign/warning/electricshock,
 /turf/closed/wall,
@@ -27155,6 +27196,9 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/brown{
 	icon_state = "brown";
 	dir = 5
@@ -27601,6 +27645,9 @@
 	dir = 8;
 	network = list("SS13")
 	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
 	},
@@ -27665,6 +27712,7 @@
 	pixel_y = -32;
 	supply_display = 1
 	},
+/obj/structure/cable/white,
 /turf/open/floor/plasteel/brown{
 	dir = 4
 	},
@@ -56364,11 +56412,11 @@ rwP
 aKs
 aLo
 aLX
-aLn
-aLn
-aLn
-aLn
-aNE
+cOT
+cOT
+cOT
+cOT
+eZA
 uoz
 dKZ
 eQJ
@@ -56620,7 +56668,7 @@ aIe
 nHX
 aFh
 aFX
-aLX
+oXn
 oqg
 kej
 mnn
