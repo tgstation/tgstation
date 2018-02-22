@@ -1828,11 +1828,11 @@
 	taste_description = "spinning gears"
 
 /datum/reagent/kindleium/on_mob_add(mob/living/M)
-	kindle(M)
+	M.kindle()
 
 /datum/reagent/kindleium/on_mob_life(mob/living/M)
 	if(prob(5) && !(M.has_status_effect(STATUS_EFFECT_KINDLE)))
-		kindle(M)
+		M.kindle()
 	if(prob(20))
 		to_chat(M, "<span class='notice'>[pick("A jolt goes down your spine.", "Your hair stands on-end.", "You see flashes at the edge of your vision.")]</span>")
 
