@@ -1,4 +1,0 @@
-author: "Repukan"
-delete-after: True
-changes: 
-  - bugfix: "fixed windoors dropping more cable than what was used to build them."
