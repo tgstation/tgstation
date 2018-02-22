@@ -104,6 +104,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambientsounds = MAINTENANCE
 	valid_territory = FALSE
 
+/area/maintenance/arena
+	name = "The Arena"
+
+/area/greytopia
+	name = "Greytopia"
+	ambientsounds = MAINTENANCE
+	icon_state = "away"
+	requires_power = FALSE
+	has_gravity = TRUE
 
 //Departments
 
