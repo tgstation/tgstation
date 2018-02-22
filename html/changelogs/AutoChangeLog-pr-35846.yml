@@ -1,5 +1,0 @@
-author: "kevinz000, Denton"
-delete-after: True
-changes: 
-  - rscadd: "Nanotrasen's RnD division has integrated all stationary tachyon doppler arrays into the techweb system. Record increasingly large explosions with them and you will generate research points!"
-  - spellcheck: "Fixed a few typos in the RnD doppler array name/description."
