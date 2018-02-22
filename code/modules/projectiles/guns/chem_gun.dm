@@ -1,4 +1,4 @@
-//this isn't a subtype of the syringe gun because the syringegun subtype is made to hold syringes
+//his isn't a subtype of the syringe gun because the syringegun subtype is made to hold syringes
 //this is meant to hold reagents/obj/item/gun/syringe
 /obj/item/gun/chem
 	name = "reagent gun"
@@ -28,6 +28,13 @@
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 
+/obj/item/gun/chem/can_shoot()
+	return syringes_left
+
+/obj/item/gun/chem/process_chamber()
+	if(chambered && !chambered.BB && syringes_left)
+		chambered.newshot()
+
 /obj/item/gun/chem/process()
 	if(syringes_left >= max_syringes)
 		return
@@ -35,4 +42,6 @@
 		return
 	to_chat(loc, "<span class='warning'>You hear a click as [src] synthesizes a new dart.</span>")
 	syringes_left++
+	if(chambered && !chambered.BB)
+		chambered.newshot()
 	last_synth = world.time
