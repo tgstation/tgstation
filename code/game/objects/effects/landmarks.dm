@@ -522,8 +522,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/fivebyfour/proc/LateSpawn()
 	. = ..()
 	if(!LAZYLEN(templates))
-		for(var/datum/map_template/random_room/fivebyfour/temp in subtypesof(/datum/map_template/random_room/fivebyfour))
-			templates += temp.room_id
+		for(var/datum/map_template/random_room/fivebyfour/FF in subtypesof(/datum/map_template/random_room/fivebyfour))
+			templates += FF.room_id
 	var/ID = pick_n_take(templates)
 	template = SSmapping.random_room_templates[ID]
 	if(prob(50))
