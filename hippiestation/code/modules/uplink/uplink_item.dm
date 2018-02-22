@@ -158,7 +158,7 @@
 	player_minimum = 0
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
-	item = /obj/item/clothing/shoes/chameleon
+	item = /obj/item/clothing/shoes/chameleon/noslip // you have to be a real doofus to forget to add the /noslip part
 	cost = 2
 	player_minimum = 0
 
