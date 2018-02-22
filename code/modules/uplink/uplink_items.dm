@@ -1279,7 +1279,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Reagent Dartgun"
 	desc = "A heavily modified syringe gun which is capable of synthesizing its own chemical darts using input reagents. Can hold 100u of reagents."
 	item = /obj/item/gun/chem
-	cost = 16
+	cost = 12
 	restricted_roles = list("Chemist", "Chief Medical Officer")
 
 /datum/uplink_item/role_restricted/magillitis_serum
