@@ -507,3 +507,32 @@
 	desc = "Your body is covered in blue ichor! You can't be revived by vitality matrices."
 	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"
+
+//Grue is coming: Obtained by a grue being near you, and you have no light. Removes your night vision until you enter the light.
+/datum/status_effect/grue_is_coming
+	id = "gruehunt"
+	duration = 600
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /obj/screen/alert/status_effect/grue_is_coming
+
+///datum/status_effect/grue_is_coming/on_apply()
+	//if(iscarbon(owner))
+		//var/mob/living/carbon/C = owner
+		//C.clear_fullscreen("see_through_darkness")
+
+///datum/status_effect/grue_is_coming/on_remove()
+	//if(iscarbon(owner))
+		//var/mob/living/carbon/C = owner
+		 //C.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
+
+/datum/status_effect/grue_is_coming/tick()
+	var/L = owner.loc
+	var/turf/T = get_turf(L)
+	var/light_amount = T.get_lumcount()
+	if(light_amount > 0.2)
+		owner.remove_status_effect(STATUS_EFFECT_GRUE_IS_COMING)
+
+/obj/screen/alert/status_effect/grue_is_coming
+	name = "???"
+	desc = "You are likely to be eaten by a grue."
+	alerttooltipstyle = "gruewarn"

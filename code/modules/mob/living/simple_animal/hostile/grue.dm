@@ -47,6 +47,12 @@
 /mob/living/simple_animal/hostile/grue/Move()
 	. = ..()
 	check_light_level()
+	for(var/mob/living/M in range(7, src))
+		var/turf/T = get_turf(M)
+		var/light_amount = T.get_lumcount()
+		if(light_amount > 0.1)
+			return
+		M.apply_status_effect(STATUS_EFFECT_GRUE_IS_COMING)
 
 /mob/living/simple_animal/hostile/grue/proc/check_light_level()
 	var/turf/T = get_turf(src)
@@ -99,7 +105,7 @@
 	var/L = owner.loc
 	var/turf/T = get_turf(owner)
 	var/light_amount = T.get_lumcount()
-	if(istype(owner.loc, /obj/effect/dummy/grue) && light_amount < 0.2)
+	if(istype(owner.loc, /obj/effect/dummy/grue) && !light_amount > 0.1)
 		var/obj/effect/dummy/grue/G = L
 		G.end_jaunt()
 		to_chat(owner, "<span class='grue'>I'm now out of hiding...</span>")
