@@ -593,7 +593,7 @@
 
 	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
 	if(LAZYLEN(candidates))
-		var/client/C = pick(candidates)
+		var/mob/dead/observer/C = pick(candidates)
 		SM.key = C.key
 		SM.mind.enslave_mind_to_creator(user)
 		SM.sentience_act()
@@ -823,6 +823,26 @@
 		L.gender = MALE
 		L.visible_message("<span class='boldnotice'>[L] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
 	L.regenerate_icons()
+	qdel(src)
+
+/obj/item/slimepotion/slimeradio
+	name = "bluespace radio potion"
+	desc = "A strange chemical that grants those who ingest it the ability to broadcast and recieve subscape radio waves."
+
+/obj/item/slimepotion/slime/slimeradio/attack(mob/living/M, mob/user)
+	if(!ismob(M))
+		return
+	if(!isanimal(M))
+		to_chat(user, "<span class='warning'>[M] is too complex for the potion!</span>")
+		return
+	if(M.stat)
+		to_chat(user, "<span class='warning'>[M] is dead!</span>")
+		return
+
+	to_chat(user, "<span class='notice'>You feed the potion to [M].</span>")
+	to_chat(M, "<span class='notice'>Your mind tingles as you are fed the potion. You can hear radio waves now!</span>")
+	var/obj/item/implant/radio/slime/imp = new(src)
+	imp.implant(M, user)
 	qdel(src)
 
 /obj/item/stack/tile/bluespace

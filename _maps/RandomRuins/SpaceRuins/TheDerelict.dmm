@@ -1096,6 +1096,9 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/gravity_generator)
 "dD" = (
@@ -2983,6 +2986,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Arrivals Docking Bay 1"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
 "jV" = (
@@ -3590,6 +3596,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
 "ma" = (
@@ -4501,6 +4508,15 @@
 	icon_state = "floorscorched2"
 	},
 /area/space/nearstation)
+"Jt" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict/arrival)
 "KN" = (
 /turf/closed/wall,
 /area/ruin/space/derelict/hallway/primary/port)
@@ -4513,6 +4529,14 @@
 "Lv" = (
 /turf/closed/wall,
 /area/space/nearstation)
+"LC" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering Access";
+	req_access_txt = "10"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/gravity_generator)
 "Oj" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/bridge/access)
@@ -4531,6 +4555,15 @@
 "Tm" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
+"Tz" = (
+/obj/machinery/door/airlock/external{
+	name = "Arrivals Docking Bay 1"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict/arrival)
 "Uz" = (
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -8650,7 +8683,7 @@ cw
 cH
 cO
 cO
-da
+LC
 dh
 dt
 dC
@@ -12988,7 +13021,7 @@ kM
 hf
 lZ
 hP
-lZ
+Jt
 aa
 aa
 aa
@@ -13880,7 +13913,7 @@ aa
 aa
 aa
 jK
-jU
+Tz
 jK
 aa
 aa

@@ -17,12 +17,8 @@
 	..()
 	to_chat(user, "<span class='notice'>There's a few <b>screws</b> and a <b>small crack</b> visible.</span>")
 
-/turf/open/floor/wood/attackby(obj/item/C, mob/user, params)
-	if(..())
-		return
-	if(istype(C, /obj/item/screwdriver))
-		pry_tile(C, user)
-		return
+/turf/open/floor/wood/screwdriver_act(mob/living/user, obj/item/I)
+	return pry_tile(I, user)
 
 /turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
@@ -38,9 +34,8 @@
 	P.attackby(T, user, params)
 
 /turf/open/floor/wood/pry_tile(obj/item/C, mob/user, silent = FALSE)
-	var/is_screwdriver = istype(C, /obj/item/screwdriver)
 	C.play_tool_sound(src, 80)
-	return remove_tile(user, silent, make_tile = is_screwdriver)
+	return remove_tile(user, silent, (C.tool_behaviour == TOOL_SCREWDRIVER))
 
 /turf/open/floor/wood/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
 	if(broken || burnt)
@@ -80,7 +75,7 @@
 	update_icon()
 
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
-	if(istype(C, /obj/item/shovel) && params)
+	if((C.tool_behaviour == TOOL_SHOVEL) && params)
 		new ore_type(src, 2)
 		user.visible_message("[user] digs up [src].", "<span class='notice'>You [turfverb] [src].</span>")
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
@@ -99,10 +94,11 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	slowdown = 2
 
-/turf/open/floor/grass/snow/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/crowbar))//You need to dig this turf out instead of crowbarring it
-		return
-	..()
+/turf/open/floor/grass/snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
+
+/turf/open/floor/grass/snow/crowbar_act(mob/living/user, obj/item/I)
+	return
 
 /turf/open/floor/grass/snow/basalt //By your powers combined, I am captain planet
 	name = "volcanic floor"

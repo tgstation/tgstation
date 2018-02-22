@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Transference potions now just rename the mob that you are transferring into with your name, rather than your name plus the old name of the mob."

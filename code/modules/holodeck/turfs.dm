@@ -6,6 +6,9 @@
 /turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK
 
+/turf/open/floor/holofloor/tool_act(mob/living/user, obj/item/I, tool_type)
+	return
+
 /turf/open/floor/holofloor/burn_tile()
 	return //you can't burn a hologram!
 

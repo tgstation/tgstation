@@ -39,7 +39,6 @@
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
 	preferred_direction = 4;
-	timid = 1;
 	width = 28
 	},
 /turf/open/floor/mineral/titanium/blue,

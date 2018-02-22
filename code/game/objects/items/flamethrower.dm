@@ -224,7 +224,7 @@
 			ptank = new /obj/item/tank/internals/plasma/full(src)
 		update_icon()
 
-/obj/item/flamethrower/full/tank
+/obj/item/flamethrower/full
 	create_full = TRUE
 
 /obj/item/flamethrower/full/tank

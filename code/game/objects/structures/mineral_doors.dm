@@ -15,7 +15,7 @@
 	var/isSwitchingStates = 0
 	var/close_delay = -1 //-1 if does not auto close.
 	max_integrity = 200
-	armor = list(melee = 10, bullet = 0, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 50, acid = 50)
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 50, "acid" = 50)
 	var/sheetType = /obj/item/stack/sheet/metal
 	var/sheetAmount = 7
 	var/openSound = 'sound/effects/stonedoor_openclose.ogg'

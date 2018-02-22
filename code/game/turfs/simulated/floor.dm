@@ -139,11 +139,12 @@
 		return 1
 	if(..())
 		return 1
-	if(intact && istype(C, /obj/item/crowbar))
-		return pry_tile(C, user)
 	if(intact && istype(C, /obj/item/stack/tile))
 		try_replace_tile(C, user, params)
 	return 0
+
+/turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
+	return intact ? pry_tile(I, user) : FALSE
 
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)

@@ -245,7 +245,6 @@ BLIND     // can't see anything
 		return 1
 
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	else
 		if(attached_accessory)
