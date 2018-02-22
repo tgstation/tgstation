@@ -1110,7 +1110,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	id = "hearty_punch"
 	description = "Brave bull/syndicate bomb/absinthe mixture resulting in an energizing beverage. A potent, spiced alcohol."
 	color = rgb(140, 0, 0)
-	boozepwr = 50
+	boozepwr = 90
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	taste_description = "bravado in the face of disaster"
 	glass_icon_state = "hearty_punch"
