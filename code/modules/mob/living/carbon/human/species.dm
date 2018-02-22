@@ -150,7 +150,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/should_have_eyes = TRUE
 	var/should_have_ears = TRUE
 	var/should_have_tongue = TRUE
-	var/should_have_liver = !(NOLIVER in species_traits)
+	var/should_have_liver = (!(NOLIVER in species_traits) || !(TOXINLOVER in species_traits))
 	var/should_have_stomach = !(NOSTOMACH in species_traits)
 	var/should_have_tail = mutanttail
 
