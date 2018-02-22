@@ -1217,6 +1217,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	restricted_roles = list("Mime")
 	surplus = 0
 
+/datum/uplink_item/role_restricted/fluorite
+	name = "Fluorite Octet"
+	desc = "Rolling the dice will execute a wide range of highly unpredictable effects. Infinite uses."
+	cost = 8
+	item = /obj/item/dice/fluorite
+	restricted_roles = list("Mime")
+	surplus = 0
+
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
 	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. The acid only affects carbon-based creatures."
