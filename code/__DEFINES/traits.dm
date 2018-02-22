@@ -1,6 +1,7 @@
 //mob traits
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
+#define TRAIT_EMOTEMUTE			"emotemute"
 #define TRAIT_DEAF				"deaf"
 #define TRAIT_NEARSIGHT			"nearsighted"
 #define TRAIT_FAT				"fat"
@@ -22,7 +23,8 @@
 #define TRAIT_SHOCKIMMUNE		"shock_immunity"
 #define TRAIT_RESISTHEAT		"resist_heat"
 #define TRAIT_RESISTCOLD		"resist_cold"
-#define TRAIT_RESISTPRESSURE	"resist_pressure"
+#define TRAIT_RESISTHIGHPRESSURE	"resist_high_pressure"
+#define TRAIT_RESISTLOWPRESSURE	"resist_low_pressure"
 #define TRAIT_RADIMMUNE			"rad_immunity"
 #define TRAIT_VIRUSIMMUNE		"virus_immunity"
 #define TRAIT_PIERCEIMMUNE		"pierce_immunity"

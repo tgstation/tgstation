@@ -152,7 +152,8 @@
 		/obj/item/storage/bag/chemistry,
 		/obj/item/storage/bag/bio,
 		/obj/item/reagent_containers/blood,
-		/obj/item/tank/internals/emergency_oxygen
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/pinpointer/crew
 		)
 
 

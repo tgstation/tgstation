@@ -714,6 +714,24 @@
 	construction_time = 50
 	category = list("Misc")
 
+/datum/design/borg_upgrade_rped
+	name = "Cyborg Upgrade (RPED)"
+	id = "borg_upgrade_rped"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/rped
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_pinpointer
+	name = "Cyborg Upgrade (Crew pinpointer)"
+	id = "borg_upgrade_pinpointer"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/pinpointer
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"

@@ -1,4 +1,0 @@
-author: "DaedalusGame"
-delete-after: True
-changes: 
-  - code_imp: "made powercell rigging no longer set rigged to the plasma reagent datum what the hell and makes it use TRUE/FALSE defines"

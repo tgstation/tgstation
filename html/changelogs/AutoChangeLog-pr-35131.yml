@@ -1,7 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - tweak: "Removing and printing integrated circuits will now attempt to place them into a free hand."
-  - tweak: "You can now hit an integrated circuit printer with an unsecured electronic assembly to recycle all of the parts in the assembly en masse."
-  - tweak: "You can now recycle empty electronic assemblies in an integrated circuit printer!"
-  - soundadd: "Integrated circuit printers now have sounds for printing circuits and assemblies."

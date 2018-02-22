@@ -101,8 +101,8 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	use_power = NO_POWER_USE
 
 /obj/machinery/doppler_array/research
-	name = "tachyon-dopplar research array"
-	desc = "A specialized tacyhon-dopplar bomb detection array that uses the results of the highest yield of explosions for research."
+	name = "tachyon-doppler research array"
+	desc = "A specialized tachyon-doppler bomb detection array that uses the results of the highest yield of explosions for research."
 	var/datum/techweb/linked_techweb
 
 /obj/machinery/doppler_array/research/sense_explosion(turf/epicenter, dev, heavy, light, time, orig_dev, orig_heavy, orig_light)	//probably needs a way to ignore admin explosives later on

@@ -73,20 +73,20 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/I, mob/user, params)
-	if(!(on || state_open))
+	if(!on)
 		if(default_deconstruction_screwdriver(user, icon_state_open, initial(icon_state), I))
-			return
-		if(exchange_parts(user, I))
 			return
 	if(default_change_direction_wrench(user, I))
 		return
 	if(default_deconstruction_crowbar(I))
 		return
+	if(exchange_parts(user, I))
+		return
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/wrench/W)
+/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/I)
 	if(!..())
-		return 0
+		return FALSE
 	SetInitDirections()
 	var/obj/machinery/atmospherics/node = nodes[1]
 	if(node)
@@ -100,7 +100,7 @@
 		node.atmosinit()
 		node.addMember(src)
 	build_network()
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_status(mob/user)
 	if(interactive)
