@@ -15,7 +15,7 @@
 
 /obj/effect/spawner/room/pod_spawn/Initialize()
 	. = ..()
-	if(!spawned && prob(9))
+	if(!spawned && prob(10))
 		spawned = TRUE
 		if(prob(50))
 			template = SSmapping.random_room_templates["pod_grey"]
@@ -45,7 +45,7 @@
 		if(istype(template, /datum/map_template/random_room/fivebyfour))
 			if(!template.spawned)
 				template.spawned = TRUE
-				if(prob(50))//50% chance of room loading flipped
+				if(prob(50) && template.flippable)//50% chance of room loading flipped
 					if(dir == 1)
 						dir = 2
 					else if(dir == 4)

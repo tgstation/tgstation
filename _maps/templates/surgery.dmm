@@ -77,10 +77,8 @@
 /area/template_noop)
 "F" = (
 /obj/structure/mirror{
-	broken = 1;
 	icon_state = "mirror_broke";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plating,
 /area/template_noop)

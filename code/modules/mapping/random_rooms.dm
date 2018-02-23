@@ -1,6 +1,7 @@
 /datum/map_template/random_room
 	var/room_id //The SSmapping random_room_template list is ordered by this var
 	var/spawned //Whether this template (on the random_room template list) has been spawned
+	var/flippable //Whether this room can function when flipped (i.e. not block doors)
 
 /datum/map_template/random_room/pod/greytopia
 	name = "Greytopia"
@@ -55,3 +56,19 @@
 	name = "Wild Garden"
 	room_id = "garden"
 	mappath = "_maps/templates/garden.dmm"
+
+/datum/map_template/random_room/fivebyfour/dance
+	name = "Dance Hall"
+	room_id = "dance"
+	mappath = "_maps/templates/dance.dmm"
+
+/datum/map_template/random_room/fivebyfour/bathroom
+	name = "Maint Bathroom"
+	room_id = "bathroom"
+	mappath = "_maps/templates/bathroom.dmm"
+	flippable = FALSE
+
+/datum/map_template/random_room/fivebyfour/emergency
+	name = "Emergency Storage"
+	room_id = "emergency"
+	mappath = "_maps/templates/emergency.dmm"

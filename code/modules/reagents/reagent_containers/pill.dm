@@ -158,3 +158,10 @@
 	icon_state = "pill9"
 	color = "#454545"
 	list_reagents = list("shadowmutationtoxin" = 1)
+
+/obj/item/reagent_containers/pill/bathsalt
+	name = "bath salts"
+	desc = "NOT FOR CONSUMPTION."
+	icon_state = "potlightpink"
+	list_reagents = list("bath_salts" = 20)
+	roundstart = 1
