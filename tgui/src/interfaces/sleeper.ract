@@ -1,3 +1,34 @@
+<script>
+	import { act } from 'util/byond'
+	component.exports = {
+		oninit() {
+			this.on({
+				editName(event, chemIndex) {
+					this.set({
+						editingIndex: chemIndex,
+						editingName: ((data.chemStoreNames.length >= chemIndex && this.get(data.chemStoreNames[chemIndex])) || "Chemical Store #"+(chemIndex+1))
+					})
+				},
+				submitName(event, chemIndex) {
+					var newName = this.get('editingName')
+					var sanitizedName = newName.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+					act(this.get('config.ref'), "storename", {"store": chemIndex+1, "name": sanitizedName})
+				}
+			})
+		},
+		oncomplete() {
+			var inputField = document.getElementById('storeNameInput')
+			if (inputField != document.activeElement) {
+				inputField.focus()
+				inputField
+			}
+		},
+		data: {
+			editingIndex: null,
+			editingName: ""
+		}
+	}
+</script>
 <ui-display title='Occupant'>
   <ui-section label='Occupant'>
 	 <span>{{data.occupant.name ? data.occupant.name : "No Occupant"}}</span>
@@ -39,6 +70,14 @@
     {{#each data.chems}}
       <ui-button icon='flask' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}"}'>{{name}}</ui-button><br/>
     {{/each}}
+	{{#each data.chemStores}}
+		{{#if editingIndex == @index}}
+			<input type='text' value='{{editingName}}' id='storeNameInput' on-enter-blur='submitName:{{@index}}'/>
+		{{else}}
+			<ui-button icon='flask' state='{{!this && "disabled"}}' action='injectstore' params='{"store": "{{@index+1}}"}'>{{(data.chemStoreNames.length >= @index && data.chemStoreNames[@index]) || "Chemical Store #{{@index+1}}"}}</ui-button>
+		{{/if}}
+		<ui-button icon='pencil' tooltip='Edit' tooltip-side='right' on-click-enter='editName:{{@index}}'></ui-button><ui-button icon='eject' tooltip='Eject' tooltip-side='right' action='ejectstore' params='{"store": "{{@index+1}}"}'></ui-button><ui-button icon='sign-in' tooltip='Select' tooltip-side='right' state='{{data.selectedStore == (@index+1) && "selected"}}' action='invstore' params='{"store": "{{@index+1}}"}'></ui-button><span class='{{!this && "bad"}}'>	: {{this || "Missing"}}</span>
+	{{/each}}
   </ui-section>
   {{/if}}
 </ui-display>

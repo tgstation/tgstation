@@ -102,11 +102,18 @@
 			eject_store(i)
 	UNSETEMPTY(chem_stores)
 
-/obj/machinery/sleeper/add_store(obj/item/reagent_containers/C, store_index)
+/obj/machinery/sleeper/add_store(obj/item/reagent_containers/C, store_index, mob/user)
 	store_index = store_index || selected_store
-	if(store_index && LAZYLEN(chem_stores) >= store_index && !chem_stores[store_index] && istype(C, /obj/item/reagent_containers))
-		chem_stores[store_index] = C
-		C.moveToNullspace()
+	var/chem_stores_len = LAZYLEN(chem_stores)
+	if(!store_index && && chem_stores_len && istype(C, /obj/item/reagent_containers))
+		to_chat(user, "<span class='warning'>There doesn't seem to be any where to put this, select a store first!</span>")
+		return TRUE
+	if(chem_stores_len >= store_index && istype(C, /obj/item/reagent_containers))
+		if(!chem_stores[store_index])
+			chem_stores[store_index] = C
+			C.moveToNullspace()
+		else
+			to_chat(user, "<span class='warning'>There's already a container in this store, eject it first or select another one!</span>")
 		return TRUE
 
 /obj/machinery/sleeper/eject_store(store_index)
@@ -163,7 +170,7 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
-	if(add_store(I))
+	if(add_store(I, null, user))
 		return
 	return ..()
 
@@ -192,8 +199,9 @@
 	for(var/i in 1 to LAZYLEN(chem_stores))
 		var/obj/item/reagent_containers/C = chem_stores[i]
 		data["chemStores"] += (C && C.reagents) ? C.reagents.total_volume : FALSE
-
 	data["chemStoreNames"] = list(SANITIZELIST(chem_store_names).Copy())
+	if(selected_store)
+		data["selectedStore"] = selected_store
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
@@ -253,8 +261,12 @@
 			var/store = text2num(params["store"])
 			if(!is_operational() || !mob_occupant || !store)
 				return
-			if(store && (LAZYLEN(chem_stores) >= store) && chem_stores[store])
+			if(LAZYLEN(chem_stores) >= store && chem_stores[store])
 				inject_store(store)
+		if("ejectstore")
+			var/store = text2num(params["store"]
+			if(LAZYLEN(chem_stores) >= store && chem_stores[store])
+				eject_store(store)
 		if("invstore")
 			var/store = text2num(params["store"])
 			if(store && (LAZYLEN(chem_stores) >= store))
@@ -264,7 +276,7 @@
 			var/name = params["name"]
 			var/chem_stores_len = LAZYLEN(chem_stores)
 			if(store && chem_stores_len && chem_stores_len >= store)
-				name = sanitize(trim(name, 25))
+				name = sanitize(trim(name, 30))
 				var/chem_store_names_len = LAZYLEN(chem_store_names)
 				if(!chem_store_names || chem_store_names_len < chem_stores_len)
 					LAZYINITLIST(chem_store_names)
