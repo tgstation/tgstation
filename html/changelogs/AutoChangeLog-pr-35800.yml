@@ -1,0 +1,4 @@
+author: "DaedalusGame"
+delete-after: True
+changes: 
+  - code_imp: "removes input/output plates and changes autogibbers to use input dir"
