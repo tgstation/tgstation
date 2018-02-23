@@ -152,7 +152,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 				L.apply_damage(invoke_damage, BRUTE)
 				to_chat(L, "<span class='cult italic'>[src] saps your strength!</span>")
 		else if(istype(M, /obj/item/toy/plush/narplush))
-			M.visible_message("<span class='cult italic'>[M] squeaks loudly!</span>")
+			var/obj/item/toy/plush/narplush/P = M
+			P.visible_message("<span class='cult italic'>[P] squeaks loudly!</span>")
 	do_invoke_glow()
 
 /obj/effect/rune/proc/do_invoke_glow()
