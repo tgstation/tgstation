@@ -1,0 +1,5 @@
+author: "DaedalusGame"
+delete-after: True
+changes: 
+  - bugfix: "shivering symptom now works properly instead of only cooling you if you're already cold"
+  - bugfix: "fixed bodytemp going negative in a few cases"
