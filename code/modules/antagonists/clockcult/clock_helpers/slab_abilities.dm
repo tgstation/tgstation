@@ -180,11 +180,11 @@
 /obj/item/projectile/kindle/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/mob/living/L = target
-		L.kindle()
+		L.kindle(FALSE)
 	..()
 	
-/mob/living/proc/kindle() //I HAVE NO IDEA WHAT I'M DOING
-	if(is_servant_of_ratvar(src) || stat || has_status_effect(STATUS_EFFECT_KINDLE))
+/mob/living/proc/kindle(friendlyfire = FALSE) //I HAVE NO IDEA WHAT I'M DOING
+	if((is_servant_of_ratvar(src) && !friendlyfire) || stat || has_status_effect(STATUS_EFFECT_KINDLE))
 		return
 	var/obj/O = null_rod_check()
 	playsound(src, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
