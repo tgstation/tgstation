@@ -327,12 +327,16 @@
 	rods = 0
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/made_glow = FALSE
+	var/all_access = FALSE
 
 /obj/machinery/door/window/clockwork/Initialize(mapload, set_dir)
 	. = ..()
 	for(var/i in 1 to 2)
 		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit/large(src)
 	change_construction_value(2)
+	for(var/mob/living/M in orange(1,loc)
+	if(is_servant_of_ratvar(M))
+		all_access = TRUE //SNOWFLAKE CODE? NO IDEA WHAT YOU'RE TALKING ABOUT.
 
 /obj/machinery/door/window/clockwork/setDir(direct)
 	if(!made_glow)
@@ -365,7 +369,7 @@
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /obj/machinery/door/window/clockwork/allowed(mob/M)
-	if(is_servant_of_ratvar(M))
+	if(is_servant_of_ratvar(M) || all_access)
 		return 1
 	return 0
 
