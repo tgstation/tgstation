@@ -213,10 +213,10 @@
 		return
 	var/brainloss = getBrainLoss()
 	if(brainloss > BRAIN_DAMAGE_MILD)
-		if(prob((amount * 2) + ((brainloss - BRAIN_DAMAGE_MILD - (20 * LAZYLEN(get_traumas())) / 5))) //1 damage|50 brain damage = 4% chance
+		if(prob((amount * 2) + (brainloss - BRAIN_DAMAGE_MILD - (20 * LAZYLEN(get_traumas())) / 5))) //1 damage|50 brain damage = 4% chance
 			gain_trauma_type(BRAIN_TRAUMA_MILD)
 	if(brainloss > BRAIN_DAMAGE_SEVERE)
-		if(prob(amount + ((brainloss - BRAIN_DAMAGE_SEVERE - (20 * LAZYLEN(get_traumas())) / 15))) //1 damage|150 brain damage = 3% chance
+		if(prob(amount + (brainloss - BRAIN_DAMAGE_SEVERE - (20 * LAZYLEN(get_traumas())) / 15))) //1 damage|150 brain damage = 3% chance
 			if(prob(20))
 				gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 			else
