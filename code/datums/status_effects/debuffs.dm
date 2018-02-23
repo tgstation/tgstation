@@ -515,15 +515,15 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /obj/screen/alert/status_effect/grue_is_coming
 
-///datum/status_effect/grue_is_coming/on_apply()
-	//if(iscarbon(owner))
-		//var/mob/living/carbon/C = owner
-		//C.clear_fullscreen("see_through_darkness")
+/datum/status_effect/grue_is_coming/on_apply()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		C.clear_fullscreen("see_through_darkness")
 
-///datum/status_effect/grue_is_coming/on_remove()
-	//if(iscarbon(owner))
-		//var/mob/living/carbon/C = owner
-		 //C.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
+/datum/status_effect/grue_is_coming/on_remove()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		C.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
 
 /datum/status_effect/grue_is_coming/tick()
 	var/L = owner.loc
@@ -535,4 +535,4 @@
 /obj/screen/alert/status_effect/grue_is_coming
 	name = "???"
 	desc = "You are likely to be eaten by a grue."
-	alerttooltipstyle = "gruewarn"
+	icon_state = "gruewarn"
