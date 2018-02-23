@@ -227,6 +227,7 @@
 	id = "powerlock"
 
 /obj/machinery/button/door/engistorage/allowed(mob/user)
+	. = ..()
 	for(var/V in GLOB.apcs_list)
 		var/obj/machinery/power/apc/APC = V
 		if(APC.charging == 0)

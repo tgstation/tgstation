@@ -1,6 +1,6 @@
-#define LOG_BURN_TIMER 150
-#define PAPER_BURN_TIMER 5
-#define MAXIMUM_BURN_TIMER 3000
+#define LOG_BURN_TIMER 300
+#define PAPER_BURN_TIMER 20
+#define MAXIMUM_BURN_TIMER 6000
 
 /obj/structure/fireplace
 	name = "fireplace"

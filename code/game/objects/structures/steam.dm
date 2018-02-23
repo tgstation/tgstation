@@ -66,7 +66,7 @@
 	anchored = TRUE
 	use_power = NO_POWER_USE
 	var/activated = FALSE
-	var/list/vents = list() // the list of converyors that are controlled by this switch
+	var/list/vents = list() // the list of vents that are controlled by this switch
 
 /obj/machinery/steam_switch/Initialize()
 	..()
