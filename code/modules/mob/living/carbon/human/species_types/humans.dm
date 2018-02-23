@@ -35,3 +35,8 @@ datum/species/human/on_species_gain(mob/living/carbon/human/H, datum/species/old
 	if(H.dna.features["tail_human"] == "Cat")
 		mutanttail = /obj/item/organ/tail/cat
 	..()
+
+/datum/species/human/after_equip_job(datum/job/J, mob/living/carbon/human/H)
+	//check for high latin being enabled in config
+	//check for mind's role being a head, a member of centcom (ERT, official/inspector, deathsquad)
+	H.grant_language(/datum/language/highlatin)
