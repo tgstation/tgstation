@@ -60,8 +60,11 @@
 	if(!storedorgan)
 		to_chat(user, "<span class='notice'>There's no implant in [src] for you to remove.</span>")
 	else
-		var/turf/open/floorloc = get_turf(user)
-		floorloc.contents += contents
+		var/atom/drop_loc = user.drop_location()
+		for(var/I in src)
+			var/atom/movable/AM = I
+			AM.forceMove(drop_loc)
+
 		to_chat(user, "<span class='notice'>You remove the [storedorgan] from [src].</span>")
 		I.play_tool_sound(src)
 		storedorgan = null
