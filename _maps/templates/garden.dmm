@@ -7,7 +7,6 @@
 /area/template_noop)
 "b" = (
 /obj/structure/flora/junglebush/large,
-/obj/item/kitchen/knife/combat/bone,
 /turf/open/floor/grass,
 /area/template_noop)
 "c" = (

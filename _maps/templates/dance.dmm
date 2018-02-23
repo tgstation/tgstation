@@ -18,7 +18,7 @@
 /area/template_noop)
 "e" = (
 /obj/machinery/disco/indestructible,
-/turf/open/floor/light/colour_cycle/dancefloor_b,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/template_noop)
 "f" = (
 /obj/item/bikehorn/airhorn,
@@ -51,7 +51,7 @@ b
 b
 c
 b
-b
+c
 "}
 (5,1,1) = {"
 d

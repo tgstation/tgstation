@@ -8307,8 +8307,8 @@
 /obj/item/stack/sheet/cardboard{
 	amount = 10
 	},
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged3"
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
 	},
 /area/maintenance/port/fore)
 "avc" = (
@@ -8663,9 +8663,7 @@
 /area/space/nearstation)
 "avU" = (
 /obj/item/picket_sign,
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged2"
-	},
+/turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "avV" = (
 /obj/structure/table,
@@ -37053,9 +37051,7 @@
 /area/engine/atmos)
 "bOi" = (
 /obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "bOj" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -53581,7 +53577,7 @@
 /obj/item/reagent_containers/glass/beaker/large/chlorine{
 	pixel_x = 5
 	},
-/turf/open/floor/plating/ice/colder{
+/turf/open/floor/plating/ice/smooth{
 	planetary_atmos = 0
 	},
 /area/maintenance/starboard/aft)
@@ -54658,7 +54654,7 @@
 /obj/item/wrench/caravan,
 /obj/machinery/portable_atmospherics/pump,
 /obj/machinery/portable_atmospherics/pump,
-/turf/open/floor/plating/ice/colder{
+/turf/open/floor/plating/ice/smooth{
 	planetary_atmos = 0
 	},
 /area/maintenance/starboard/aft)
@@ -54971,7 +54967,7 @@
 	pixel_x = 3;
 	pixel_y = 9
 	},
-/turf/open/floor/plating/ice/colder{
+/turf/open/floor/plating/ice/smooth{
 	planetary_atmos = 0
 	},
 /area/maintenance/starboard/aft)
@@ -55033,8 +55029,8 @@
 /area/maintenance/starboard/fore)
 "jOj" = (
 /obj/item/hot_potato/harmless,
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged5"
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
 	},
 /area/maintenance/port/fore)
 "jSO" = (
@@ -55209,7 +55205,7 @@
 /area/hallway/secondary/service)
 "kPX" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
-/turf/open/floor/plating/ice/colder{
+/turf/open/floor/plating/ice/smooth{
 	planetary_atmos = 0
 	},
 /area/maintenance/starboard/aft)
@@ -55291,9 +55287,7 @@
 /area/maintenance/aft)
 "lHM" = (
 /obj/item/melee/skateboard,
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged5"
-	},
+/turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "lIa" = (
 /obj/item/stock_parts/capacitor{
@@ -55916,9 +55910,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"qfY" = (
-/turf/open/floor/plating/ice/colder,
-/area/maintenance/starboard/aft)
 "qgq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/poster/contraband/punch_shit,
@@ -56034,7 +56025,7 @@
 /obj/item/clothing/head/drfreezehat,
 /obj/item/clothing/under/drfreeze,
 /obj/item/clothing/glasses/cold,
-/turf/open/floor/plating/ice/colder{
+/turf/open/floor/plating/ice/smooth{
 	planetary_atmos = 0
 	},
 /area/maintenance/starboard/aft)
@@ -56205,7 +56196,7 @@
 /area/maintenance/port/aft)
 "rXw" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell,
-/turf/open/floor/plating/ice/colder{
+/turf/open/floor/plating/ice/smooth{
 	planetary_atmos = 0
 	},
 /area/maintenance/starboard/aft)
@@ -56523,11 +56514,6 @@
 /obj/item/toy/plush/narplush,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"ure" = (
-/turf/open/floor/plating/ice/colder{
-	planetary_atmos = 0
-	},
-/area/maintenance/starboard/aft)
 "uwP" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -56684,8 +56670,8 @@
 /turf/open/floor/plating,
 /area/maintenance/arena)
 "voF" = (
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged3"
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
 	},
 /area/maintenance/port/fore)
 "vxh" = (
@@ -108446,7 +108432,7 @@ rmX
 cNW
 vxh
 cPK
-ure
+lvY
 oLW
 cNW
 cOe
@@ -108703,8 +108689,8 @@ cNW
 cNW
 fER
 qTw
-ure
-qfY
+lvY
+lvY
 iTn
 cOe
 hnb
@@ -108960,7 +108946,7 @@ aaf
 cNW
 jbH
 jGC
-ure
+lvY
 rPe
 cNW
 cOe
