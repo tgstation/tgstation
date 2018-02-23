@@ -117,7 +117,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(req_cultists > 1 || allow_excess_invokers)
 		var/list/things_in_range = range(1, src)
 		var/obj/item/toy/plush/narplush/plushsie = locate() in things_in_range
-		if(istype(plushsie))
+		if(istype(plushsie) && plushsie.is_invoker)
 			invokers += plushsie
 		for(var/mob/living/L in things_in_range)
 			if(iscultist(L))
