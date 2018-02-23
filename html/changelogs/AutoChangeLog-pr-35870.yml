@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "The outer airlocks of most space ruin airlocks are now cycle linked."

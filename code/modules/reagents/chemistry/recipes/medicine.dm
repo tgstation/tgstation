@@ -245,3 +245,10 @@
 	results = list("morphine" = 2)
 	required_reagents = list("carbon" = 2, "hydrogen" = 2, "ethanol" = 1, "oxygen" = 1)
 	required_temp = 480
+
+/datum/chemical_reaction/modafinil
+	name = "Modafinil"
+	id = "modafinil"
+	results = list("modafinil" = 5)
+	required_reagents = list("diethylamine" = 1, "ammonia" = 1, "phenol" = 1, "acetone" = 1, "sacid" = 1)
+	required_catalysts = list("bromine" = 1) // as close to the real world synthesis as possible

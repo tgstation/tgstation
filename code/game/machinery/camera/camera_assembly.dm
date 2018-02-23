@@ -99,6 +99,9 @@
 	if(tempnetwork.len < 1)
 		to_chat(user, "<span class='warning'>No network found, please hang up and try your call again!</span>")
 		return
+	for(var/i in tempnetwork)
+		tempnetwork -= i
+		tempnetwork += lowertext(i)
 	state = 4
 	var/obj/machinery/camera/C = new(loc, src)
 	forceMove(C)
