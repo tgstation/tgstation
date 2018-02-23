@@ -416,6 +416,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 30
 	var/radius = 1
+	cooldown_per_use = 10
 
 /obj/item/integrated_circuit/input/advanced_locator_list/on_data_written()
 	var/rad = get_pin_data(IC_INPUT, 2)

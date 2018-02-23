@@ -103,9 +103,13 @@
 
 /obj/item/integrated_circuit/passive/power/chemical_cell/New()
 	..()
-	//if(!CONFIG_GET(flag/disable_human_mood))
-	//	lfwb=1
 	create_reagents(volume)
+	var/p = text2path("/datum/config_entry/flag/disable_human_mood")
+	if(p)
+		if(!global.config.Get(p))
+			lfwb = TRUE
+			extended_desc +="But no fuel can be compared with blood of living human."
+
 
 /obj/item/integrated_circuit/passive/power/chemical_cell/interact(mob/user)
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
@@ -127,8 +131,9 @@
 						var/mob/M = B.data["donor"]
 						if(M && M.stat != DEAD && M.client)
 							bp = 500000
-				if(reagents.remove_reagent("blood", 1))
-					assembly.give_power(bp)
+				if((assembly.battery.maxcharge-assembly.battery.charge) / GLOB.CELLRATE > bp)
+					if(reagents.remove_reagent("blood", 1))
+						assembly.give_power(bp)
 			for(var/I in fuel)
 				if((assembly.battery.maxcharge-assembly.battery.charge) / GLOB.CELLRATE > fuel[I])
 					if(reagents.remove_reagent(I, 1))

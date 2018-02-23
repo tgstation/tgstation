@@ -1,7 +1,7 @@
 /obj/item/integrated_circuit/time
 	name = "time circuit"
 	desc = "Now you can build your own clock!"
-	complexity = 2
+	complexity = 1
 	inputs = list()
 	outputs = list()
 	category_text = "Time"
@@ -71,7 +71,7 @@
 	name = "ticker circuit"
 	desc = "This circuit sends an automatic pulse every four seconds."
 	icon_state = "tick-m"
-	complexity = 8
+	complexity = 4
 	var/delay = 4 SECONDS
 	var/next_fire = 0
 	var/is_running = FALSE
@@ -103,10 +103,10 @@
 
 
 /obj/item/integrated_circuit/time/ticker/custom
-	name = "fast ticker"
-	desc = "This advanced circuit sends an automatic pulse every two seconds."
+	name = "custom ticker"
+	desc = "This advanced circuit sends an automatic pulse every given interval."
 	icon_state = "tick-f"
-	complexity = 16
+	complexity = 8
 	delay = 2 SECONDS
 	inputs = list("enable ticking" = IC_PINTYPE_BOOLEAN,"delay time" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_RESEARCH
@@ -123,7 +123,7 @@
 	name = "fast ticker"
 	desc = "This advanced circuit sends an automatic pulse every two seconds."
 	icon_state = "tick-f"
-	complexity = 12
+	complexity = 6
 	delay = 2 SECONDS
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 8
@@ -132,7 +132,7 @@
 	name = "slow ticker"
 	desc = "This simple circuit sends an automatic pulse every six seconds."
 	icon_state = "tick-s"
-	complexity = 4
+	complexity = 2
 	delay = 6 SECONDS
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 2

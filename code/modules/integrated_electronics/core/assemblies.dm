@@ -22,6 +22,7 @@
 	var/charge_delay = 4
 	var/use_cyborg_cell = TRUE
 	var/ext_next_use = 0
+	var/atom/movable/collw
 	var/allowed_circuit_action_flags = IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE //which circuit flags are allowed
 	var/combat_circuits = 0 //number of combat cicuits in the assembly, used for diagnostic hud
 	var/long_range_circuits = 0 //number of long range cicuits in the assembly, used for diagnostic hud
@@ -33,6 +34,9 @@
 /obj/item/device/electronic_assembly/proc/check_interactivity(mob/user)
 	return user.canUseTopic(src, BE_CLOSE)
 
+/obj/item/device/electronic_assembly/CollidedWith(atom/movable/AM)
+	collw = AM
+	..()
 
 /obj/item/device/electronic_assembly/Initialize()
 	.=..()

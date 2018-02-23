@@ -143,7 +143,7 @@
 	cooldown_per_use = 8
 	ext_cooldown = 1
 	inputs = list("direction" = IC_PINTYPE_DIR)
-	outputs = list()
+	outputs = list("obstacle" = IC_PINTYPE_REF)
 	activators = list("step towards dir" = IC_PINTYPE_PULSE_IN,"on step"=IC_PINTYPE_PULSE_OUT,"blocked"=IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	action_flags = IC_ACTION_MOVEMENT
@@ -162,6 +162,7 @@
 					activate_pin(2)
 					return
 				else
+					set_pin_data(IC_OUTPUT, 1, WEAKREF(assembly.collw))
 					activate_pin(3)
 					return FALSE
 	return FALSE
