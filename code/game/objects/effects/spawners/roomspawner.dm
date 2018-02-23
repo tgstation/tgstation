@@ -5,7 +5,7 @@
 	var/datum/map_template/random_room/template
 
 /obj/effect/spawner/room/proc/LateSpawn()
-	template.load(get_turf(src), centered = FALSE, orientation = dir)
+	template.load(get_turf(src), centered = template.centerspawner, orientation = dir)
 	qdel(src)
 
 /obj/effect/spawner/room/pod_spawn

@@ -2,6 +2,7 @@
 	var/room_id //The SSmapping random_room_template list is ordered by this var
 	var/spawned //Whether this template (on the random_room template list) has been spawned
 	var/flippable //Whether this room can function when flipped (i.e. not block doors)
+	var/centerspawner = TRUE
 
 /datum/map_template/random_room/pod/greytopia
 	name = "Greytopia"
@@ -16,6 +17,7 @@
 
 
 /datum/map_template/random_room/fivebyfour // As a general rule keep the middle 3 tiles of the long edges clear for doors
+	centerspawner = FALSE
 
 /datum/map_template/random_room/fivebyfour/dark
 	name = "Dark Room"
