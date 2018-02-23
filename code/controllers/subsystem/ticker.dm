@@ -43,12 +43,8 @@ SUBSYSTEM_DEF(ticker)
 	var/timeLeft						//pregame timer
 	var/start_at
 
-<<<<<<< HEAD
-	var/gametime_offset = 432000 // equal to 12 hours, making gametime at roundstart 12:00:00
-=======
 	var/gametime_offset = 432000		//Deciseconds to add to world.time for station time.
 	var/station_time_rate_multiplier = 12		//factor of station time progressal vs real time.
->>>>>>> e666bc63e1... 24x --> 12x station time rate (#35886)
 
 	var/totalPlayers = 0					//used for pregame stats on statpanel
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
