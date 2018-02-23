@@ -23,6 +23,8 @@
 /area/template_noop)
 "f" = (
 /obj/item/device/camera,
+/obj/structure/rack,
+/obj/item/shovel,
 /turf/open/floor/wood,
 /area/template_noop)
 "g" = (
@@ -60,7 +62,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/piano,
+/obj/structure/piano{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	icon_state = "wood-broken2"
@@ -85,6 +89,15 @@
 	dir = 5
 	},
 /area/template_noop)
+"W" = (
+/obj/item/melee/skateboard,
+/turf/open/floor/plating,
+/area/template_noop)
+"X" = (
+/obj/item/sharpener,
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/wood,
+/area/template_noop)
 
 (1,1,1) = {"
 a
@@ -94,8 +107,8 @@ k
 "}
 (2,1,1) = {"
 c
-c
-d
+W
+X
 l
 "}
 (3,1,1) = {"

@@ -359,9 +359,10 @@
 /area/greytopia)
 "S" = (
 /obj/structure/falsewall{
-	layer = 4
+	layer = 3.3
 	},
 /obj/machinery/door/password/voice/greytopia,
+/obj/structure/sign/poster/contraband/random,
 /turf/open/floor/plating,
 /area/greytopia)
 "T" = (

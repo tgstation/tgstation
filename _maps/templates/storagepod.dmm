@@ -61,7 +61,8 @@
 /obj/structure/table/reinforced,
 /obj/effect/spawner/lootdrop/three_course_meal,
 /obj/item/candle/infinite{
-	pixel_y = -3
+	pixel_x = -11;
+	pixel_y = 7
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -105,7 +106,7 @@
 	},
 /area/greytopia)
 "p" = (
-/obj/structure/closet/firecloset,
+/obj/structure/closet/firecloset/full,
 /turf/open/floor/plating,
 /area/greytopia)
 "q" = (
@@ -119,6 +120,7 @@
 /obj/structure/table/reinforced,
 /obj/effect/spawner/lootdrop/three_course_meal,
 /obj/item/candle/infinite{
+	pixel_x = 9;
 	pixel_y = -3
 	},
 /turf/open/floor/plating,
@@ -175,6 +177,13 @@
 	pixel_x = -2;
 	pixel_y = 3
 	},
+/obj/item/kitchen/knife/combat/survival{
+	pixel_y = 7
+	},
+/obj/item/kitchen/knife/combat/survival{
+	pixel_x = 3;
+	pixel_y = -1
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -199,14 +208,15 @@
 	pixel_x = -3;
 	pixel_y = 4
 	},
-/obj/item/clothing/suit/armor/vest/old{
-	pixel_x = 3;
-	pixel_y = 4
+/obj/item/tank/jetpack/void{
+	pixel_x = 6;
+	pixel_y = 2
 	},
-/obj/item/clothing/suit/armor/vest/old{
-	pixel_x = 3;
-	pixel_y = 4
+/obj/item/tank/jetpack/void{
+	pixel_x = 6;
+	pixel_y = 2
 	},
+/obj/item/tank/jetpack/void,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -252,7 +262,21 @@
 /area/greytopia)
 "E" = (
 /obj/structure/falsewall{
-	layer = 4
+	layer = 3.4
+	},
+/obj/structure/sign/poster/contraband/random,
+/turf/open/floor/plating,
+/area/greytopia)
+"K" = (
+/obj/structure/closet/l3closet/virology,
+/turf/open/floor/plating,
+/area/greytopia)
+"M" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/lootdrop/three_course_meal,
+/obj/item/candle/infinite{
+	pixel_x = -9;
+	pixel_y = -3
 	},
 /turf/open/floor/plating,
 /area/greytopia)
@@ -333,7 +357,7 @@ e
 h
 l
 r
-r
+M
 h
 h
 h
@@ -388,9 +412,9 @@ a
 b
 b
 o
-h
+K
 w
-h
+K
 A
 b
 b

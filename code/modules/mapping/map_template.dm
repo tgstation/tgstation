@@ -25,7 +25,6 @@
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
-
 	var/list/turfs = block(	locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
 	var/list/border = block(locate(max(bounds[MAP_MINX]-1, 1),			max(bounds[MAP_MINY]-1, 1),			 bounds[MAP_MINZ]),
@@ -72,14 +71,20 @@
 	log_game("Z-level [name] loaded at at [x],[y],[world.maxz]")
 
 /datum/map_template/proc/load(turf/T, centered = FALSE, orientation = 1)
+	var/loadwidth = width
+	var/loadheight = height
+	if(orientation > 2) // Its sideways so flip the dimensions
+		loadwidth = height
+		loadheight = width
 	if(centered)
-		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
+		T = locate(T.x - round(loadwidth/2) , T.y - round(loadheight/2) , T.z)
 	if(!T)
 		return
-	if(T.x+width > world.maxx)
+	if(T.x+loadwidth > world.maxx)
 		return
-	if(T.y+height > world.maxy)
+	if(T.y+loadheight > world.maxy)
 		return
+
 
 	var/list/bounds = maploader.load_map(file(mappath), T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE, dir = orientation)
 	if(!bounds)

@@ -106,6 +106,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/maintenance/arena
 	name = "The Arena"
+	icon_state = "maint_bar"
 
 /area/greytopia
 	name = "Greytopia"
@@ -113,6 +114,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "away"
 	requires_power = FALSE
 	has_gravity = TRUE
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 //Departments
 

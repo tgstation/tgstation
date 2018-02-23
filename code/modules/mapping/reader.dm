@@ -61,7 +61,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 
 	var/firstx = -1
 	var/finalx = 1
-	if(dir != 1)
+	if(dir > 1)
 		var/max_index = 1
 		while(dmmRegex.Find(tfile, max_index))
 			if(firstx<0 && dmmRegex.group[3])
@@ -127,20 +127,25 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 				gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
 
 			bounds[MAP_MINY] = min(bounds[MAP_MINY], CLAMP(ycrd, y_lower, y_upper))
-			ycrd += gridLines.len - 1 // Start at the top and work down
-			if(!cropMap && ycrd > world.maxy)
-				if(!measureOnly)
-					world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
-				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
-			else
-				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
-			var/maxx = xcrdStart
+			var/maxx = 1
 			if(measureOnly)
+				maxx = xcrdStart
+				ycrd += gridLines.len - 1
+				if(!cropMap && ycrd > world.maxy)
+					bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
+				else
+					bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
 				for(var/line in gridLines)
 					maxx = max(maxx, xcrdStart + length(line) / key_len - 1)
 			else
-				switch(dir)
+				switch(dir) //WARNING: Dir = 1 represents the DEFAULT mapload, any other direction will ONLY work for .tgm files
 					if(1)
+						ycrd += gridLines.len - 1 // Start at the top and work down
+						if(!cropMap && ycrd > world.maxy)
+							world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
+						else
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
 						for(var/line in gridLines)
 							if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
 								--ycrd
@@ -172,11 +177,16 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 									maxx = max(maxx, xcrd)
 									++xcrd
 							--ycrd
-						bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
 					if(2)
+						ycrd += gridLines.len - 1
+						if(!cropMap && ycrd > world.maxy)
+							world.maxy = ycrd
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
+						else
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
 						ycrd -= gridLines.len - 1 //Had to find the top for bounds, but we work from the bottom for this "upside down" load
 						for(var/line in gridLines)
-							if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
+							if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)
 								++ycrd
 								continue
 							if(ycrd <= world.maxy && ycrd >= 1)
@@ -206,11 +216,14 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 									maxx = max(maxx, xcrd)
 									++xcrd
 							++ycrd
-						bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
 					if(4)
 						xcrd = firstx + gridLines.len - 1 // Facing east means the "end" of the X-row is now as "deep" as the height of the Y-column
-						ycrd -= gridLines.len - 1
 						ycrd += finalx - xcrdStart  // Oh shit we're facing east now, the top of the Y-column is now as "tall" as the width of the X-row
+						if(!cropMap && ycrd > world.maxy)
+							world.maxy = ycrd
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
+						else
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
 						var/ycrdStart = ycrd
 						for(var/line in gridLines)
 							if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)
@@ -242,14 +255,14 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 										CHECK_TICK
 									--ycrd
 							--xcrd
-						bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
-						var/tempnum = bounds[MAP_MAXX]
-						bounds[MAP_MAXX] = bounds[MAP_MAXY]
-						bounds[MAP_MAXY] = tempnum
 					if(8)
 						xcrd = firstx // Facing west
-						ycrd -= gridLines.len - 1
 						ycrd += xcrdStart - firstx
+						if(!cropMap && ycrd > world.maxy)
+							world.maxy = ycrd
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
+						else
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
 						var/ycrdStart = ycrd
 						for(var/line in gridLines)
 							if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)
@@ -281,10 +294,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 										CHECK_TICK
 									++ycrd
 							++xcrd
-						bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
-						var/tempnum = bounds[MAP_MAXX]
-						bounds[MAP_MAXX] = bounds[MAP_MAXY]
-						bounds[MAP_MAXY] = tempnum
+			bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
 
 		CHECK_TICK
 

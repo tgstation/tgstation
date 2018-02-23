@@ -514,6 +514,12 @@
 	var/range = null
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/item/device/flashlight/spotlight/dark
+	name = "sinister aura"
+	desc = "A chill runs down your spine, you shouldn't be here."
+	brightness_on = 4
+	flashlight_power = -5
+
 /obj/item/device/flashlight/flashdark
 	name = "flashdark"
 	desc = "A strange device manufactured with mysterious elements that somehow emits darkness. Or maybe it just sucks in light? Nobody knows for sure."

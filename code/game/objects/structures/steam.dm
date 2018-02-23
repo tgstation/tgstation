@@ -10,6 +10,13 @@
 	layer = BELOW_OBJ_LAYER
 	var/obj/effect/overlay/small_smoke/steam
 
+/obj/structure/destructible/steam_vent/active
+	max_integrity = 100
+
+/obj/structure/destructible/steam_vent/active/Initialize()
+	. = ..()
+	toggle()
+
 /obj/structure/destructible/steam_vent/proc/toggle()
 	if(!anchored)
 		return

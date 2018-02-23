@@ -221,3 +221,14 @@
 	icon_state = "button"
 	result_path = /obj/machinery/button
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+/obj/machinery/button/door/engistorage
+	name = "storage facility access"
+	desc = "Only functional when the station's power needs are being met - to prevent premature relaxation among engineers."
+	id = "powerlock"
+
+/obj/machinery/button/door/engistorage/allowed(mob/user)
+	for(var/V in GLOB.apcs_list)
+		var/obj/machinery/power/apc/APC = V
+		if(APC.charging == 0)
+			var/area/A = get_area(get_turf(APC))
+			to_chat(user, "<span class='danger'>Uncharged APC detected in [A.name] - Access Denied until all power systems are nominal.</span>")
