@@ -1272,4 +1272,4 @@
 			M.adjustStaminaLoss(1.5*REM, 0)
 	..()
 	. = 1
-  
+
