@@ -505,12 +505,16 @@
 	damage_deflection = 30
 	normal_integrity = 240
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
+	var/all_access = FALSE
 
 /obj/machinery/door/airlock/clockwork/Initialize()
 	. = ..()
 	new /obj/effect/temp_visual/ratvar/door(loc)
 	new /obj/effect/temp_visual/ratvar/beam/door(loc)
 	change_construction_value(5)
+	for(var/mob/living/M in orange(1,loc)
+		if(is_servant_of_ratvar(M))
+			all_access = TRUE //SNOWFLAKE CODE? NO IDEA WHAT YOU'RE TALKING ABOUT.
 
 /obj/machinery/door/airlock/clockwork/Destroy()
 	change_construction_value(-5)
@@ -531,7 +535,7 @@
 		open()
 
 /obj/machinery/door/airlock/clockwork/canAIControl(mob/user)
-	return (is_servant_of_ratvar(user) && !isAllPowerCut())
+	return ((is_servant_of_ratvar(user) || all_access) && !isAllPowerCut())
 
 /obj/machinery/door/airlock/clockwork/ratvar_act()
 	return 0
@@ -549,7 +553,7 @@
 		return ..()
 
 /obj/machinery/door/airlock/clockwork/allowed(mob/M)
-	if(is_servant_of_ratvar(M))
+	if(is_servant_of_ratvar(M) || all_access)
 		return 1
 	return 0
 
