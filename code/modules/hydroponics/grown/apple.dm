@@ -31,7 +31,7 @@
 	bitesize = 0.01
 	var/list/eaters = list()
 	
-/obj/item/reagent_containers/food/snacks/grown/apple/poisoned/on_bite(mob/living/carbon/biter)
+/obj/item/reagent_containers/food/snacks/grown/apple/poisoned/on_bite(mob/living/carbon/human/biter)
 	..()
 	var/bite_times = eaters[biter]
 	if(!bite_times)
