@@ -43,7 +43,7 @@
 	..()
 	if(display_timer)
 		if(det_time > 1)
-			to_chat(user, "The timer is set to [det_time/10] second\s.")
+			to_chat(user, "The timer is set to [DisplayTimeText(det_time)].")
 		else
 			to_chat(user, "\The [src] is set for instant detonation.")
 
@@ -68,7 +68,7 @@
 			var/mob/living/carbon/C = user
 			C.throw_mode_on()
 		if(msg)
-			to_chat(user, "<span class='warning'>You prime \the [src]! [det_time/10] seconds!</span>")
+			to_chat(user, "<span class='warning'>You prime [src]! [DisplayTimeText(det_time)]!</span>")
 	playsound(src, 'sound/weapons/armbomb.ogg', volume, 1)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
