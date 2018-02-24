@@ -23,29 +23,14 @@
 
 /datum/surgery_step/viral_bond
 	name = "viral bond"
-	implements = list(/obj/item/cautery = 100, /obj/item/weldingtool = 50,
-		/obj/item/lighter = 35, /obj/item/match = 30)
+	implements = list(/obj/item/cautery = 100, TOOL_WELDER = 50, /obj/item = 30) // 30% success with any hot item.
 	time = 100
 
 /datum/surgery_step/viral_bond/tool_check(mob/user, obj/item/tool)
-	if(istype(tool, /obj/item/cautery))
-		return TRUE
+	if(implement_type == TOOL_WELDER || implement_type == /obj/item)
+		return tool.is_hot()
 
-	if(istype(tool, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = tool
-		if(WT.isOn())
-			return TRUE
-
-	else if(istype(tool, /obj/item/lighter))
-		var/obj/item/lighter/L = tool
-		if(L.lit)
-			return TRUE
-
-	else if(istype(tool, /obj/item/match))
-		var/obj/item/match/M = tool
-		if(M.lit)
-			return TRUE
-	return FALSE
+	return TRUE
 
 /datum/surgery_step/viral_bond/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] starts heating [target]'s bone marrow with [tool]...", "<span class='notice'>You start heating [target]'s bone marrow with [tool]...</span>")
