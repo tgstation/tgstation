@@ -38,7 +38,6 @@
 	if(affected_mob)
 		remove_disease()
 	SSdisease.active_diseases.Remove(src)
-	return ..()
 
 //add this disease if the host does not already have too many
 /datum/disease/proc/try_infect(var/mob/living/infectee, make_copy = TRUE)
@@ -123,7 +122,6 @@
 	if(affected_mob)
 		if(add_resistance && (disease_flags & CAN_RESIST))
 			affected_mob.disease_resistances |= GetDiseaseID()
-		remove_disease()
 	qdel(src)
 
 /datum/disease/proc/IsSame(datum/disease/D)

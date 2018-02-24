@@ -15,6 +15,11 @@
 	required_organs = list(/obj/item/organ/heart)
 	var/sound = FALSE
 
+/datum/disease/heart_failure/Copy()
+	var/datum/disease/heart_failure/D = ..()
+	D.sound = sound
+	return D
+
 /datum/disease/heart_failure/stage_act()
 	..()
 	var/obj/item/organ/heart/O = affected_mob.getorgan(/obj/item/organ/heart)

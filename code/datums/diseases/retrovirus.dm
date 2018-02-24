@@ -11,10 +11,7 @@
 	severity = DISEASE_SEVERITY_HARMFUL
 	permeability_mod = 0.4
 	stage_prob = 2
-	var/SE
-	var/UI
 	var/restcure = 0
-
 
 /datum/disease/dna_retrovirus/New()
 	..()
@@ -24,6 +21,10 @@
 	else
 		restcure = 1
 
+/datum/disease/dna_retrovirus/Copy()
+	var/datum/disease/dna_retrovirus/D = ..()
+	D.restcure = restcure
+	return D
 
 /datum/disease/dna_retrovirus/stage_act()
 	..()
