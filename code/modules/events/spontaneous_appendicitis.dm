@@ -18,7 +18,7 @@
 		if(!H.getorgan(/obj/item/organ/appendix)) //Don't give the disease to some who lacks it, only for it to be auto-cured
 			continue
 		var/foundAlready = FALSE	//don't infect someone that already has appendicitis
-		for(var/datum/disease/appendicitis/A in H.viruses)
+		for(var/datum/disease/appendicitis/A in H.diseases)
 			foundAlready = TRUE
 			break
 		if(foundAlready)

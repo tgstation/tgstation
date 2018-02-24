@@ -48,7 +48,7 @@
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
-	QDEL_LIST(viruses)
+	QDEL_LIST(diseases)
 	return ..()
 
 /mob/living/ghostize(can_reenter_corpse = 1)
@@ -115,12 +115,12 @@
 	if(isliving(M))
 		var/mob/living/L = M
 		//Also spread diseases
-		for(var/thing in viruses)
+		for(var/thing in diseases)
 			var/datum/disease/D = thing
 			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
 				L.ContactContractDisease(D)
 
-		for(var/thing in L.viruses)
+		for(var/thing in L.diseases)
 			var/datum/disease/D = thing
 			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
 				ContactContractDisease(D)
@@ -268,12 +268,12 @@
 		if(isliving(M))
 			var/mob/living/L = M
 			//Share diseases that are spread by touch
-			for(var/thing in viruses)
+			for(var/thing in diseases)
 				var/datum/disease/D = thing
 				if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
 					L.ContactContractDisease(D)
 
-			for(var/thing in L.viruses)
+			for(var/thing in L.diseases)
 				var/datum/disease/D = thing
 				if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
 					ContactContractDisease(D)
@@ -1145,13 +1145,13 @@
 	return TRUE
 
 /mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
-	if(!LAZYLEN(viruses))
+	if(!LAZYLEN(diseases))
 		return
-	var/list/datum/disease/diseases = list()
-	for(var/datum/disease/D in viruses)
+	var/list/datum/disease/result = list()
+	for(var/datum/disease/D in diseases)
 		var/static_virus = D.Copy()
-		diseases += static_virus
-	return diseases
+		result += static_virus
+	return result
 
 /mob/living/reset_perspective(atom/A)
 	if(..())

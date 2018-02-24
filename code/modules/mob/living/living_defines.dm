@@ -104,5 +104,5 @@
 	var/losebreath = 0
 
 	//List of active diseases
-	var/list/viruses = list() // list of all diseases in a mob
-	var/list/resistances = list()
+	var/list/diseases = list() // list of all diseases in a mob
+	var/list/disease_resistances = list()

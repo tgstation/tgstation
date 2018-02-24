@@ -1,6 +1,6 @@
 
 /mob/living/proc/HasDisease(datum/disease/D)
-	for(var/thing in viruses)
+	for(var/thing in diseases)
 		var/datum/disease/DD = thing
 		if(D.IsSame(DD))
 			return TRUE
@@ -11,7 +11,7 @@
 	if(stat == DEAD)
 		return FALSE
 
-	if(D.GetDiseaseID() in resistances)
+	if(D.GetDiseaseID() in disease_resistances)
 		return FALSE
 
 	if(HasDisease(D))

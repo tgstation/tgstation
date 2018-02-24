@@ -32,7 +32,7 @@
 
 	if(isliving(user))
 		var/mob/living/L = user
-		for(var/thing in L.viruses)
+		for(var/thing in L.diseases)
 			var/datum/disease/D = thing
 			if(D.severity == VIRUS_SEVERITY_POSITIVE)
 				continue

@@ -42,7 +42,7 @@
 		if(VIRUSIMMUNE in H.dna.species.species_traits) //Don't pick someone who's virus immune, only for it to not do anything.
 			continue
 		var/foundAlready = FALSE	// don't infect someone that already has a disease
-		for(var/thing in H.viruses)
+		for(var/thing in H.diseases)
 			foundAlready = TRUE
 			break
 		if(foundAlready)

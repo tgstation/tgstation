@@ -36,13 +36,13 @@
 /datum/disease/Destroy()
 	. = ..()
 	if(affected_mob)
-		remove_virus()
+		remove_disease()
 	SSdisease.active_diseases.Remove(src)
 	return ..()
 
 //add this disease if the host does not already have too many
 /datum/disease/proc/try_infect(var/mob/living/infectee, make_copy = TRUE)
-	if(infectee.viruses.len < DISEASE_LIMIT)
+	if(infectee.diseases.len < DISEASE_LIMIT)
 		infect(infectee, make_copy)
 		return TRUE
 	return FALSE
@@ -50,7 +50,7 @@
 //add the disease with no checks
 /datum/disease/proc/infect(var/mob/living/infectee, make_copy = TRUE)
 	var/datum/disease/D = make_copy ? Copy() : src
-	infectee.viruses += D
+	infectee.diseases += D
 	D.affected_mob = infectee
 	SSdisease.active_diseases += D //Add it to the active diseases list, now that it's actually in a mob and being processed.
 
@@ -122,8 +122,8 @@
 /datum/disease/proc/cure(add_resistance = TRUE)
 	if(affected_mob)
 		if(add_resistance && (disease_flags & CAN_RESIST))
-			affected_mob.resistances |= GetDiseaseID()
-		remove_virus()
+			affected_mob.disease_resistances |= GetDiseaseID()
+		remove_disease()
 	qdel(src)
 
 /datum/disease/proc/IsSame(datum/disease/D)
@@ -154,7 +154,7 @@
 /datum/disease/proc/GetDiseaseID()
 	return "[type]"
 
-/datum/disease/proc/remove_virus()
-	affected_mob.viruses -= src		//remove the datum from the list
+/datum/disease/proc/remove_disease()
+	affected_mob.diseases -= src		//remove the datum from the list
 	affected_mob.med_hud_set_status()
 	affected_mob = null

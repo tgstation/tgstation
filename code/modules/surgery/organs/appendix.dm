@@ -14,7 +14,7 @@
 		name = "appendix"
 
 /obj/item/organ/appendix/Remove(mob/living/carbon/M, special = 0)
-	for(var/datum/disease/appendicitis/A in M.viruses)
+	for(var/datum/disease/appendicitis/A in M.diseases)
 		A.cure()
 		inflamed = 1
 	update_icon()

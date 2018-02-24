@@ -365,7 +365,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if("monkey")
 				if(isliving(M))
 					var/mob/living/L = M
-					if(L.viruses && (locate(/datum/disease/transformation/jungle_fever) in L.viruses))
+					if(L.diseases && (locate(/datum/disease/transformation/jungle_fever) in L.diseases))
 						return 2
 		return TRUE
 	if(M.mind && LAZYLEN(M.mind.antag_datums)) //they have an antag datum!

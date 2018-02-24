@@ -55,12 +55,12 @@
 	return ..()
 
 /datum/disease/advance/try_infect(var/mob/living/infectee, make_copy = TRUE)
-	var/replace_num = infectee.viruses.len + 1 - DISEASE_LIMIT
+	var/replace_num = infectee.diseases.len + 1 - DISEASE_LIMIT
 	if(replace_num > 0)
 		//see if we are more transmittable than enough diseases to replace them
 		//diseases replaced in this way do not confer immunity
 		var/list/L = list()
-		for(var/datum/disease/advance/P in infectee.viruses)
+		for(var/datum/disease/advance/P in infectee.diseases)
 			L += P
 		sortTim(L, /proc/cmp_advdisease_resistance_asc)
 		var/datum/disease/advance/competition = L[replace_num]

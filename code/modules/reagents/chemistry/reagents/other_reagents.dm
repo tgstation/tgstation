@@ -103,11 +103,11 @@
 		return
 	var/mob/living/L = M
 	if(islist(data) && (method == INGEST || method == INJECT))
-		for(var/thing in L.viruses)
+		for(var/thing in L.diseases)
 			var/datum/disease/D = thing
 			if(D.GetDiseaseID() in data)
 				D.cure()
-		L.resistances |= data
+		L.disease_resistances |= data
 
 /datum/reagent/vaccine/on_merge(list/data)
 	if(istype(data))

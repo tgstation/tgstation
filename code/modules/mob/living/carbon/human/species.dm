@@ -282,7 +282,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				C.put_in_hands(new mutanthands())
 
 	if(VIRUSIMMUNE in species_traits)
-		for(var/datum/disease/A in C.viruses)
+		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
 
 

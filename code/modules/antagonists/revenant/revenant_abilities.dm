@@ -343,7 +343,7 @@
 				if(H.dna && H.dna.species)
 					H.dna.species.handle_hair(H,"#1d2953") //will be reset when blight is cured
 				var/blightfound = FALSE
-				for(var/datum/disease/revblight/blight in H.viruses)
+				for(var/datum/disease/revblight/blight in H.diseases)
 					blightfound = TRUE
 					if(blight.stage < 5)
 						blight.stage++
