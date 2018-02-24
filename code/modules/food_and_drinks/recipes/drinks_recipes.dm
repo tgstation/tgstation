@@ -583,3 +583,17 @@
 	required_reagents = list("quadruple_sec" = 5, "clownstears" = 5, "syndicatebomb" = 5)
 	mix_message = "Judgement is upon you."
 	mix_message = 'sound/items/airhorn2.ogg'
+
+/datum/chemical_reaction/bastion_bourbon
+	name = "Bastion Bourbon"
+	id = "bastion_bourbon"
+	results = list("bastion_bourbon" = 2)
+	required_reagents = list("tea" = 1, "creme_de_menthe" = 1, "triple_citrus" = 1, "berryjuice" = 1) //herbal and minty, with a hint of citrus and berry
+	mix_message = "You catch an aroma of hot tea and fruits as the mix blends into a blue-green color."
+
+/datum/chemical_reaction/squirt_cider
+	name = "Squirt Cider"
+	id = "squirt_cider"
+	results = list("squirt_cider" = 1)
+	required_reagents = list("water" = 1, "tomatojuice" = 1, "nutriment" = 1)
+	mix_message = "The mix swirls and turns a bright red that reminds you of an apple's skin."
