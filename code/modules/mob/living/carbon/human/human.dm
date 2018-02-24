@@ -22,6 +22,7 @@
 
 	//initialise organs
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
+	physiology = new()
 
 	handcrafting = new()
 
@@ -29,9 +30,15 @@
 
 	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
 
+
 /mob/living/carbon/human/ComponentInitialize()
 	if(!CONFIG_GET(flag/disable_human_mood))
 		AddComponent(/datum/component/mood)
+
+/mob/living/carbon/human/Destroy()
+	QDEL_NULL(physiology)
+	return ..()
+
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
@@ -72,7 +79,7 @@
 		var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
 		if(statpanel("SpiderOS"))
 			stat("SpiderOS Status:","[SN.s_initialized ? "Initialized" : "Disabled"]")
-			stat("Current Time:", "[worldtime2text()]")
+			stat("Current Time:", "[station_time_timestamp()]")
 			if(SN.s_initialized)
 				//Suit gear
 				stat("Energy Charge:", "[round(SN.cell.charge/100)]%")
@@ -425,7 +432,7 @@
 														return
 													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot(ORGAN_SLOT_HUD), /obj/item/organ/cyberimp/eyes/hud/security))
 														return
-													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
+													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, station_time_timestamp())
 													GLOB.data_core.addMinorCrime(R.fields["id"], crime)
 													to_chat(usr, "<span class='notice'>Successfully added a minor crime.</span>")
 													return
@@ -440,7 +447,7 @@
 														return
 													else if (!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot(ORGAN_SLOT_HUD), /obj/item/organ/cyberimp/eyes/hud/security))
 														return
-													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
+													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, station_time_timestamp())
 													GLOB.data_core.addMajorCrime(R.fields["id"], crime)
 													to_chat(usr, "<span class='notice'>Successfully added a major crime.</span>")
 									return
@@ -472,7 +479,7 @@
 											var/counter = 1
 											while(R.fields[text("com_[]", counter)])
 												counter++
-											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, worldtime2text(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 											to_chat(usr, "<span class='notice'>Successfully added comment.</span>")
 											return
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")

@@ -1,0 +1,4 @@
+author: "Astral"
+delete-after: True
+changes: 
+  - rscadd: "Traitor CMOs and Chemists, for 12 TC, can now get a reagent dartgun, which is capable of synthesizing it's own syringes, but does so slowly, and can be easily identified as syndicate by anyone who isn't blind!"

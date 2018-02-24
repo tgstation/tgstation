@@ -597,7 +597,7 @@ function checkchangelog($payload, $compile = true) {
 	$foundcltag = false;
 	foreach ($body as $line) {
 		$line = trim($line);
-		if (substr($line,0,4) == ':cl:' || substr($line,0,4) == '🆑') {
+		if (substr($line,0,4) == ':cl:' || substr($line,0,1) == '🆑') {
 			$incltag = true;
 			$foundcltag = true;
 			$pos = strpos($line, " ");

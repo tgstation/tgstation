@@ -20,13 +20,17 @@
 	if(..())
 		if(!target.mind)
 			return TRUE
+
+		if(target.mind.has_antag_datum(/datum/antagonist/brainwashed))
+			target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
+
 		if(target.mind.has_antag_datum(/datum/antagonist/rev/head) || target.mind.unconvertable)
 			if(!silent)
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			removed(target, 1)
 			qdel(src)
 			return FALSE
-		
+
 		var/datum/antagonist/rev/rev = target.mind.has_antag_datum(/datum/antagonist/rev)
 		if(rev)
 			rev.remove_revolutionary(FALSE, user)

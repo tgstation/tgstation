@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Species with RESISTHOT (golems, skeletons) can extinguish burning
-items as if they were wearing fireproof gloves."

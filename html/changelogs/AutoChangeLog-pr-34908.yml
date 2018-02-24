@@ -1,4 +1,0 @@
-author: "Modafinil"
-delete-after: True
-changes: 
-  - rscadd: "Adds new medicine chem that suppresses sleep and very lightly reduces stunrates, has a very low metabolic rate which is randomized and a low overdose treshold. Overdosing is a lethal oxyloss unless treated. (With epipen urgently and with charcoal/calomel before it puts you to sleep)"

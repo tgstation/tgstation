@@ -440,7 +440,7 @@
 	if(reagents.get_reagent_amount("corazone"))//corazone is processed here an not in the liver because a failing liver can't metabolize reagents
 		reagents.remove_reagent("corazone", 0.4) //corazone slowly deletes itself.
 		return
-	adjustToxLoss(8)
+	adjustToxLoss(8, TRUE, TRUE)
 	if(prob(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
 

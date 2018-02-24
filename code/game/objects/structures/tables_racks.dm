@@ -348,7 +348,10 @@
 /obj/structure/table/reinforced/brass/Destroy()
 	change_construction_value(-2)
 	return ..()
-
+	
+/obj/structure/table/reinforced/brass/tablepush(mob/living/user, mob/living/pushed_mob)
+	.= ..()
+	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
 /obj/structure/table/reinforced/brass/narsie_act()
 	take_damage(rand(15, 45), BRUTE)

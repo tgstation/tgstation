@@ -9,7 +9,7 @@
 	desc = "Apply crowbar."
 	icon = 'icons/obj/doors/Doorfireglass.dmi'
 	icon_state = "door_open"
-	opacity = 0
+	opacity = FALSE
 	density = FALSE
 	max_integrity = 300
 	resistance_flags = FIRE_PROOF
@@ -71,7 +71,7 @@
 		return
 	if(!density)
 		return ..()
-	return 0
+	return FALSE
 
 
 /obj/machinery/door/firedoor/power_change()
@@ -217,25 +217,25 @@
 
 /obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
 		return !density
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/door/firedoor/border_only/CheckExit(atom/movable/mover as mob|obj, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(loc, target) == dir)
 		return !density
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/door/firedoor/border_only/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/door/firedoor/heavy
 	name = "heavy firelock"
@@ -407,7 +407,6 @@
 									 "<span class='notice'>You begin slicing [src] apart...</span>")
 
 				if(C.use_tool(src, user, 40, volume=50, amount=1))
-					return
 					if(constructionStep != CONSTRUCTION_NOCIRCUIT)
 						return
 					user.visible_message("<span class='notice'>[user] cuts apart [src]!</span>", \
@@ -446,7 +445,7 @@
 
 /obj/structure/firelock_frame/heavy
 	name = "heavy firelock frame"
-	reinforced = 1
+	reinforced = TRUE
 
 #undef CONSTRUCTION_COMPLETE
 #undef CONSTRUCTION_PANEL_OPEN

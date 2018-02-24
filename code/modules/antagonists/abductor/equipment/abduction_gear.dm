@@ -327,7 +327,7 @@
 			return
 
 		var/command = stripped_input(user, "Enter the command for your target to follow.\
-											Uses Left: [G.mind_control_uses], Duration: [G.mind_control_duration / 10] seconds","Enter command")
+											Uses Left: [G.mind_control_uses], Duration: [DisplayTimeText(G.mind_control_duration)]","Enter command")
 
 		if(!command)
 			return

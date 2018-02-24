@@ -202,6 +202,9 @@
 /obj/proc/check_uplink_validity()
 	return 1
 
+/obj/proc/intercept_user_move(dir, mob, newLoc, oldLoc)
+	return
+
 /obj/vv_get_dropdown()
 	. = ..()
 	.["Delete all of type"] = "?_src_=vars;[HrefToken()];delall=[REF(src)]"
@@ -223,6 +226,11 @@
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
 		return
+	to_chat(M, "<b>Reskin options for [name]:</b>")
+	for(var/V in unique_reskin)
+		var/output = icon2html(src, M, unique_reskin[V])
+		to_chat(M, "[V]: <span class='reallybig'>[output]</span>")
+
 	var/choice = input(M,"Warning, you can only reskin [src] once!","Reskin Object") as null|anything in unique_reskin
 	if(!QDELETED(src) && choice && !current_skin && !M.incapacitated() && in_range(M,src))
 		if(!unique_reskin[choice])
