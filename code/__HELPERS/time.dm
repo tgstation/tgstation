@@ -47,7 +47,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 
 //Takes a value of time in deciseconds.
 //Returns a text value of that number in hours, minutes, or seconds.
-/proc/DisplayTimeText(time_value)
+/proc/DisplayTimeText(time_value, truncate = FALSE)
 	var/second = time_value*0.1
 	var/second_adjusted = null
 	var/second_rounded = FALSE
@@ -75,7 +75,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 					second = " and [round(second, 0.1)] seconds"
 		else
 			if(second_adjusted == 1 && second >= 1)
-				second = "1 second"
+				second = "[truncate ? "second" : "1 second"]"
 			else if(second > 1)
 				second = "[second_adjusted] seconds"
 			else
@@ -105,7 +105,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 			else if((day || hour) && !second)
 				minute = " and 1 minute"
 			else
-				minute = "1 minute"
+				minute = "[truncate ? "minute" : "1 minute"]"
 	else
 		minute = null
 
@@ -128,7 +128,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 			else if(day && (!minute || !second))
 				hour = " and 1 hour"
 			else
-				hour = "1 hour"
+				day = "[truncate ? "hour" : "1 hour"]"
 	else
 		hour = null
 
@@ -137,6 +137,6 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 	if(day > 1)
 		day = "[day] days"
 	else
-		day = "1 day"
+		day = "[truncate ? "day" : "1 day"]"
 
 	return "[day][hour][minute][second]"
