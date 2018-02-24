@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - tweak: "Silicons no longer have to be adjacent to morguetrays to disable the alarms on then."

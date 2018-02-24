@@ -10,6 +10,11 @@
 #define IC_SPAWN_DEFAULT			1 // If the circuit comes in the default circuit box and able to be printed in the IC printer.
 #define IC_SPAWN_RESEARCH 			2 // If the circuit design will be available in the IC printer after upgrading it.
 
+// Categories that help differentiate circuits that can do different tipes of actions
+#define IC_ACTION_MOVEMENT			1 // If the circuit can move the assembly
+#define IC_ACTION_COMBAT			2 // If the circuit can cause harm
+#define IC_ACTION_LONG_RANGE		4 // If the circuit communicate with something outside of the assembly
+
 // Displayed along with the pin name to show what type of pin it is.
 #define IC_FORMAT_ANY			"\<ANY\>"
 #define IC_FORMAT_STRING		"\<TEXT\>"

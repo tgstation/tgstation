@@ -11,33 +11,33 @@
 	name = "rock"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
+	item_state = "ore"
 	full_w_class = WEIGHT_CLASS_BULKY
 	singular_name = "ore chunk"
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
-	novariants = FALSE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
+	novariants = TRUE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
 	var/list/stack_overlays
 
-/obj/item/stack/ore/add(amount)
-	var/amount_added = 0
-	while (amount_added < amount && LAZYLEN(stack_overlays) < ORESTACK_OVERLAYS_MAX)
-		var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
-		newore.pixel_x = rand(-8,8)
-		newore.pixel_y = rand(-8,8)
-		LAZYADD(stack_overlays, newore)
-		amount_added++
-	return ..()
-
-/obj/item/stack/ore/use(amount)
-	var/newamount = src.amount - amount
-	if (newamount <= ORESTACK_OVERLAYS_MAX)
-		if (LAZYLEN(stack_overlays))
-			stack_overlays.len = newamount-1
-	return ..()
-
 /obj/item/stack/ore/update_icon()
-	. = ..()
-	add_overlay(stack_overlays)
+	var/difference = min(ORESTACK_OVERLAYS_MAX, amount) - (LAZYLEN(stack_overlays)+1)
+	if(difference == 0)
+		return
+	else if(difference < 0 && LAZYLEN(stack_overlays))			//amount < stack_overlays, remove excess.
+		cut_overlays()
+		if (LAZYLEN(stack_overlays)-difference <= 0)
+			stack_overlays = null;
+		else
+			stack_overlays.len += difference
+	else if(difference > 0)			//amount > stack_overlays, add some.
+		cut_overlays()
+		for(var/i in 1 to difference)
+			var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
+			newore.pixel_x = rand(-8,8)
+			newore.pixel_y = rand(-8,8)
+			LAZYADD(stack_overlays, newore)
+	if (stack_overlays)
+		add_overlay(stack_overlays)
 
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
 	if(!refined_type)
@@ -52,6 +52,7 @@
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
+	item_state = "Uranium ore"
 	singular_name = "uranium ore chunk"
 	points = 30
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
@@ -60,6 +61,7 @@
 /obj/item/stack/ore/iron
 	name = "iron ore"
 	icon_state = "Iron ore"
+	item_state = "Iron ore"
 	singular_name = "iron ore chunk"
 	points = 1
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
@@ -68,6 +70,7 @@
 /obj/item/stack/ore/glass
 	name = "sand pile"
 	icon_state = "Glass ore"
+	item_state = "Glass ore"
 	singular_name = "sand pile"
 	points = 1
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
@@ -104,11 +107,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"
 	icon_state = "volcanic_sand"
+	icon_state = "volcanic_sand"
 	singular_name = "volcanic ash pile"
 
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
 	icon_state = "Plasma ore"
+	item_state = "Plasma ore"
 	singular_name = "plasma ore chunk"
 	points = 15
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
@@ -122,6 +127,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/silver
 	name = "silver ore"
 	icon_state = "Silver ore"
+	item_state = "Silver ore"
 	singular_name = "silver ore chunk"
 	points = 16
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
@@ -129,6 +135,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/gold
 	name = "gold ore"
+	icon_state = "Gold ore"
 	icon_state = "Gold ore"
 	singular_name = "gold ore chunk"
 	points = 18
@@ -138,6 +145,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/diamond
 	name = "diamond ore"
 	icon_state = "Diamond ore"
+	item_state = "Diamond ore"
 	singular_name = "diamond ore chunk"
 	points = 50
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
@@ -146,6 +154,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
 	icon_state = "Bananium ore"
+	item_state = "Bananium ore"
 	singular_name = "bananium ore chunk"
 	points = 60
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
@@ -154,6 +163,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
 	icon_state = "Titanium ore"
+	item_state = "Titanium ore"
 	singular_name = "titanium ore chunk"
 	points = 50
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
@@ -163,6 +173,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "slag"
 	desc = "Completely useless."
 	icon_state = "slag"
+	item_state = "slag"
 	singular_name = "slag chunk"
 
 /obj/item/twohanded/required/gibtonite

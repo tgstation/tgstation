@@ -54,6 +54,8 @@
 	GLOB.poi_list -= src
 	var/list/spawners = GLOB.mob_spawners[name]
 	LAZYREMOVE(spawners, src)
+	if(!LAZYLEN(spawners))
+		LAZYREMOVE(GLOB.mob_spawners,name)
 	return ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
@@ -184,8 +186,8 @@
 				PDA.toff = TRUE
 		if(disable_sensors)
 			// Using crew monitors to find corpses while creative makes finding certain ruins too easy.
-			var/obj/item/clothing/under/C = H.wear_suit
-			if(C)
+			var/obj/item/clothing/under/C = H.w_uniform
+			if(istype(C))
 				C.sensor_mode = NO_SENSORS
 
 	var/obj/item/card/id/W = H.wear_id
