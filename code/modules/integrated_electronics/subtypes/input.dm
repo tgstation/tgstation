@@ -629,7 +629,6 @@
 
 	var/datum/netdata/data = new
 	data.recipient_ids = splittext(target_address, ";")
-	data.sender_id = address
 	data.plaintext_data = message
 	data.plaintext_data_secondary = text
 	data.plaintext_passkey = key

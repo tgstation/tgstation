@@ -88,6 +88,9 @@
 		return FALSE
 	return TRUE
 
+/obj/proc/check_access_ntnet(datum/netdata/data)
+	return check_access_list(data.passkey)
+
 /proc/get_centcom_access(job)
 	switch(job)
 		if("VIP Guest")
