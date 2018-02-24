@@ -1392,3 +1392,58 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "glass_white"
 	glass_name = "Stinger"
 	glass_desc = "You wonder what would happen if you pointed this at a heat source..."
+
+/datum/reagent/consumable/ethanol/bastion_bourbon
+	name = "Bastion Bourbon"
+	id = "bastion_bourbon"
+	description = "Soothing hot herbal brew with restorative properties. Hints of citrus and berry flavors."
+	color = "#00FFFF"
+	boozepwr = 30
+	taste_description = "hot herbal brew with a hint of fruit"
+	metabolization_rate = 2 * REAGENTS_METABOLISM //0.8u per tick
+	glass_icon_state = "bastion_bourbon"
+	glass_name = "Bastion Bourbon"
+	glass_desc = "If you're feeling low, count on the buttery flavor of our own bastion bourbon."
+	shot_glass_icon_state = "shotglassgreen"
+
+/datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_add(mob/living/L)
+	var/heal_points = 10
+	if(L.health <= 0)
+		heal_points = 20 //heal more if we're in softcrit
+	for(var/i in 1 to min(volume, heal_points)) //only heals 1 point of damage per unit on add, for balance reasons
+		L.adjustBruteLoss(-1)
+		L.adjustFireLoss(-1)
+		L.adjustToxLoss(-1)
+		L.adjustOxyLoss(-1)
+		L.adjustStaminaLoss(-1)
+	L.visible_message("<span class='warning'>[L] shivers with renewed vigor!</span>", "<span class='notice'>One taste of [lowertext(name)] fills you with energy!</span>")
+	if(!L.stat && heal_points == 20) //brought us out of softcrit
+		L.visible_message("<span class='danger'>[L] lurches to their feet!</span>", "<span class='boldnotice'>Up and at 'em, kid.</span>")
+
+/datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_life(mob/living/L)
+	if(L.health > 0)
+		L.adjustBruteLoss(-1)
+		L.adjustFireLoss(-1)
+		L.adjustToxLoss(-0.5)
+		L.adjustOxyLoss(-3)
+		L.adjustStaminaLoss(-5)
+		. = TRUE
+	..()
+
+/datum/reagent/consumable/ethanol/squirt_cider
+	name = "Squirt Cider"
+	id = "squirt_cider"
+	description = "Fermented squirt extract with a nose of stale bread and ocean water. Whatever a squirt is."
+	color = "#FF0000"
+	boozepwr = 40
+	taste_description = "stale bread with a staler aftertaste"
+	nutriment_factor = 2 * REAGENTS_METABOLISM
+	glass_icon_state = "squirt_cider"
+	glass_name = "Squirt Cider"
+	glass_desc = "Squirt cider will toughen you right up. Too bad about the musty aftertaste."
+	shot_glass_icon_state = "shotglassgreen"
+
+/datum/reagent/consumable/ethanol/squirt_cider/on_mob_life(mob/living/M)
+	M.satiety += 5 //for context, vitamins give 30 satiety per tick
+	..()
+	. = TRUE
