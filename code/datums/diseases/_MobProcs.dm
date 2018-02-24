@@ -29,7 +29,7 @@
 	AddDisease(D)
 
 
-/mob/proc/AddDisease(datum/disease/D)
+/mob/proc/AddDisease(datum/disease/D, copy = TRUE)
 	for(var/datum/disease/advance/P in viruses)
 		if(istype(D, /datum/disease/advance))
 			var/datum/disease/advance/DD = D
@@ -37,7 +37,7 @@
 				P.remove_virus()
 
 	if (!viruses.len) //Only add the new virus if it defeated the existing one
-		var/datum/disease/DD = new D.type(1, D, 0)
+		var/datum/disease/DD = copy ? new D.type(1, D, 0) : D
 		viruses += DD
 		DD.affected_mob = src
 		SSdisease.active_diseases += DD //Add it to the active diseases list, now that it's actually in a mob and being processed.

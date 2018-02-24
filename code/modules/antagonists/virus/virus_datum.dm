@@ -17,13 +17,12 @@
 /datum/antagonist/virus/on_gain()
 	var/mob/camera/virus/V
 	if(!istype(owner.current, /mob/camera/virus))
-		V = new /mob/camera/virus()
+		V = new /mob/camera/virus(get_turf(owner.current))
 		owner.transfer_to(V, TRUE)
 	else
 		V = owner.current
 
-	var/mob/living/carbon/C = pick(GLOB.carbon_list)
-	V.force_infect(C)
+	V.infect_patient_zero()
 
 	var/datum/objective/virus_infect/O = new/datum/objective/virus_infect()
 	O.owner = owner
