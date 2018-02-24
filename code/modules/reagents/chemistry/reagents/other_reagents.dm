@@ -1816,19 +1816,18 @@
 	description = "A bright pink oil used by chaplains and other people of the faith to bless certain things. It metabolizes very slowly, and brings one closer to the gods."
 	color = "#FF86EF"
 	taste_description = "soothing sweetness"
-	glass_icon_state = "anointment_oil"
 	glass_name = "glass of anointment oil"
 	glass_desc = "Bright pink and very thick. It has the consistency of bubblegum medicine, but it's surprisingly sweet."
-	metabolization_rate = 0.05 * REAGENTS_METABOLISM
+	metabolization_rate = 0.02
 
 /datum/reagent/anointment_oil/on_mob_add(mob/living/L)
 	..()
 	if(iscultist(L))
 		to_chat(L, "<span class='boldannounce'>You feel distant from the Geometer...</span>")
-		metabolization_rate = 0.33 * REAGENTS_METABOLISM //make it weaker for cultists and servants, so it isn't grossly powerful
+		metabolization_rate = 0.33 //make it weaker for cultists and servants, so it isn't grossly powerful
 	else if(is_servant_of_ratvar(L))
 		to_chat(L, "<span class='boldannounce'>Your connection to the Hierophant Network wavers...</span>")
-		metabolization_rate = 0.33 * REAGENTS_METABOLISM
+		metabolization_rate = 0.33
 	else
 		to_chat(L, "<span class='notice'>You feel closer to... something.</span>")
 		for(var/datum/atom_hud/alternate_appearance/basic/blessedAware/B in GLOB.active_alternate_appearances)
