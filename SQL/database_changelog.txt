@@ -10,7 +10,7 @@ In any query remember to add a prefix to the table names if you use one.
 
 ----------------------------------------------------
 
-3 February 2018, by Jordie0608
+Version 4.1, 3 February 2018, by Jordie0608
 Modified tables 'admin', 'admin_log' and 'admin_rank', removing unnecessary columns and adding support for excluding rights flags from admin ranks.
 This change was made to enable use of sql-based admin loading.
 To import your existing admins and ranks run the included script 'admin_import_2018-02-03.py', see the file for use instructions.
@@ -35,8 +35,8 @@ ALTER TABLE `admin_log`
 ALTER TABLE `admin_ranks`
 	CHANGE COLUMN `rank` `rank` VARCHAR(32) NOT NULL FIRST,
 	CHANGE COLUMN `flags` `flags` SMALLINT UNSIGNED NOT NULL AFTER `rank`,
-	ADD COLUMN `exclude_flags` SMALLINT UNSIGNED NOT NULL AFTER `flags,`
-	ADD COLUMN `can_edit_flags` SMALLINT(5) UNSIGNED NOT NULL AFTER `exclude_flags`
+	ADD COLUMN `exclude_flags` SMALLINT UNSIGNED NOT NULL AFTER `flags`,
+	ADD COLUMN `can_edit_flags` SMALLINT(5) UNSIGNED NOT NULL AFTER `exclude_flags`,
 	DROP COLUMN `id`,
 	DROP PRIMARY KEY,
 	ADD PRIMARY KEY (`rank`);
@@ -44,7 +44,7 @@ ALTER TABLE `admin_ranks`
 
 ----------------------------------------------------
 
-12 November 2017, by Jordie0608
+Version 4.0, 12 November 2017, by Jordie0608
 Modified feedback table to use json, a python script is used to migrate data to this new format.
 
 See the file 'feedback_conversion_2017-11-12.py' for instructions on how to use the script.
@@ -63,7 +63,7 @@ CREATE TABLE `feedback` (
 
 ----------------------------------------------------
 
-28 August 2017, by MrStonedOne
+Version 3.4, 28 August 2017, by MrStonedOne
 Modified table 'messages', adding a deleted column and editing all indexes to include it
 
 ALTER TABLE `messages`
@@ -77,7 +77,7 @@ ADD INDEX `idx_msg_type_ckey_time_odr` (`type`,`targetckey`,`timestamp`, `delete
 
 ----------------------------------------------------
 
-25 August 2017, by Jordie0608
+Version 3.3, 25 August 2017, by Jordie0608
 
 Modified tables 'connection_log', 'legacy_population', 'library', 'messages' and 'player' to add additional 'round_id' tracking in various forms and 'server_ip' and 'server_port' to the table 'messages'.
 
@@ -89,7 +89,7 @@ ALTER TABLE `player` ADD COLUMN `firstseen_round_id` INT(11) UNSIGNED NOT NULL A
 
 ----------------------------------------------------
 
-18 August 2017, by Cyberboss and nfreader
+Version 3.2, 18 August 2017, by Cyberboss and nfreader
 
 Modified table 'death', adding the columns `last_words` and 'suicide'.
 
@@ -101,7 +101,7 @@ Remember to add a prefix to the table name if you use them.
 
 ----------------------------------------------------
 
-20th July 2017, by Shadowlight213
+Version 3.1, 20th July 2017, by Shadowlight213
 Added role_time table to track time spent playing departments.
 Also, added flags column to the player table.
 
@@ -113,7 +113,7 @@ Remember to add a prefix to the table name if you use them.
 
 ----------------------------------------------------
 
-28 June 2017, by oranges
+Version 3.0, 28 June 2017, by oranges
 Added schema_revision to store the current db revision, why start at 3.0?
 
 because:
