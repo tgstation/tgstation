@@ -23,27 +23,38 @@ def parse_text_flags(text, previous):
     flag_values = {"BUILDMODE":1, "BUILD":1, "ADMIN":2, "REJUVINATE":2, "REJUV":2, "BAN":4, "FUN":8, "SERVER":16, "DEBUG":32, "POSSESS":64, "PERMISSIONS":128, "RIGHTS":128, "STEALTH":256, "POLL":512, "VAREDIT":1024, "SOUNDS":2048, "SOUND":2048, "SPAWN":4096, "CREATE":4096, "AUTOLOGIN":8192, "AUTOADMIN":8192, "DBRANKS":16384}
     flags_int = 8192
     exclude_flags_int = 0
+    can_edit_flags_int = 0
     flags = text.split(" ")
     if flags:
         for flag in flags:
-            if flag[1:] in ("@", "prev"):
-                flags_int = previous
-                continue
             sign = flag[:1]
+            if flag[1:] in ("@", "prev"):
+                if sign is "+":
+                    flags_int = previous[0]
+                elif sign is "-":
+                    exclude_flags_int = previous[1]
+                elif sign is "*":
+                    can_edit_flags_int = previous[2]
+                continue
             if flag[1:] in ("EVERYTHING", "HOST", "ALL"):
                 if sign is "+":
                     flags_int = 65535
-                else:
+                elif sign is "-":
                     exclude_flags_int = 65535
+                elif sign is "*":
+                    can_edit_flags_int = 65535
                 continue
             if flag[1:] in flag_values:
                 if sign is "+":
                     flags_int += flag_values[flag[1:]]
-                else:
+                elif sign is "-":
                     exclude_flags_int += flag_values[flag[1:]]
+                elif sign is "*":
+                    can_edit_flags_int += flag_values[flag[1:]]
     flags_int = max(min(65535, flags_int), 0)
     exclude_flags_int = max(min(65535, exclude_flags_int), 0)
-    return flags_int, exclude_flags_int
+    can_edit_flags_int = max(min(65535, can_edit_flags_int), 0)
+    return flags_int, exclude_flags_int, can_edit_flags_int
 
 if sys.version_info[0] < 3:
     raise Exception("Python must be at least version 3 for this script.")
@@ -67,8 +78,8 @@ with open("..\\config\\admin_ranks.txt") as rank_file:
                 continue
             matches = re.match("(.+)\\b\\s+=\\s*(.*)", line)
             flags = parse_text_flags(matches.group(2), previous)
-            previous = flags[0]
-            cursor.execute("INSERT INTO {0} (rank, flags, exclude_flags, can_edit_flags) VALUES ('{1}', {2}, {3}, 0)".format(ranks_table, matches.group(1), flags[0], flags[1]))
+            previous = flags
+            cursor.execute("INSERT INTO {0} (rank, flags, exclude_flags, can_edit_flags) VALUES ('{1}', {2}, {3}, {4})".format(ranks_table, matches.group(1), flags[0], flags[1], flags[2]))
 with open("..\\config\\admins.txt") as admins_file:
     previous = 0
     for line in admins_file:
@@ -79,3 +90,4 @@ with open("..\\config\\admins.txt") as admins_file:
         cursor.execute("INSERT INTO {0} (ckey, rank) VALUES ('{1}', '{2}')".format(admin_table, matches.group(1).lower(), matches.group(2)))
 db.commit()
 cursor.close()
+print("Import complete.")
