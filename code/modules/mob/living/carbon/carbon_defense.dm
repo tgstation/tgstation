@@ -112,12 +112,12 @@
 
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
-		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			user.ContactContractDisease(D)
 
 	for(var/thing in user.diseases)
 		var/datum/disease/D = thing
-		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
 	if(lying && surgeries.len)
@@ -133,12 +133,12 @@
 	if(can_inject(M, TRUE))
 		for(var/thing in diseases)
 			var/datum/disease/D = thing
-			if((D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN) && prob(85))
+			if((D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN) && prob(85))
 				M.ContactContractDisease(D)
 
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
-		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
 	if(M.a_intent == INTENT_HELP)

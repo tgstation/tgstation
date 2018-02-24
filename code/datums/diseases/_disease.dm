@@ -2,7 +2,7 @@
 	//Flags
 	var/visibility_flags = 0
 	var/disease_flags = CURABLE|CAN_CARRY|CAN_RESIST
-	var/spread_flags = VIRUS_SPREAD_AIRBORNE | VIRUS_SPREAD_CONTACT_FLUIDS | VIRUS_SPREAD_CONTACT_SKIN
+	var/spread_flags = DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
 
 	//Fluff
 	var/form = "Virus"
@@ -26,7 +26,7 @@
 	var/carrier = FALSE //If our host is only a carrier
 	var/bypasses_immunity = FALSE //Does it skip species virus immunity check? Some things may diseases and not viruses
 	var/permeability_mod = 1
-	var/severity = VIRUS_SEVERITY_NONTHREAT
+	var/severity = DISEASE_SEVERITY_NONTHREAT
 	var/list/required_organs = list()
 	var/needs_all_cures = TRUE
 	var/list/strain_data = list() //dna_spread special bullshit
@@ -38,7 +38,6 @@
 	if(affected_mob)
 		remove_disease()
 	SSdisease.active_diseases.Remove(src)
-	return ..()
 
 //add this disease if the host does not already have too many
 /datum/disease/proc/try_infect(var/mob/living/infectee, make_copy = TRUE)
@@ -93,7 +92,7 @@
 	if(!affected_mob)
 		return
 
-	if(!(spread_flags & VIRUS_SPREAD_AIRBORNE) && !force_spread)
+	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return
 
 	if(affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
@@ -123,7 +122,6 @@
 	if(affected_mob)
 		if(add_resistance && (disease_flags & CAN_RESIST))
 			affected_mob.disease_resistances |= GetDiseaseID()
-		remove_disease()
 	qdel(src)
 
 /datum/disease/proc/IsSame(datum/disease/D)
@@ -133,6 +131,7 @@
 
 
 /datum/disease/proc/Copy()
+	//note that stage is not copied over - the copy starts over at stage 1
 	var/static/list/copy_vars = list("name", "visibility_flags", "disease_flags", "spread_flags", "form", "desc", "agent", "spread_text",
 									"cure_text", "max_stages", "stage_prob", "viable_mobtypes", "cures", "infectivity", "cure_chance",
 									"bypasses_immunity", "permeability_mod", "severity", "required_organs", "needs_all_cures", "strain_data",

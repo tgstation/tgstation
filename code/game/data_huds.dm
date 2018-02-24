@@ -175,19 +175,19 @@
 		holder.icon_state = "huddead"
 	else
 		switch(virus_threat)
-			if(VIRUS_SEVERITY_BIOHAZARD)
+			if(DISEASE_SEVERITY_BIOHAZARD)
 				holder.icon_state = "hudill5"
-			if(VIRUS_SEVERITY_DANGEROUS)
+			if(DISEASE_SEVERITY_DANGEROUS)
 				holder.icon_state = "hudill4"
-			if(VIRUS_SEVERITY_HARMFUL)
+			if(DISEASE_SEVERITY_HARMFUL)
 				holder.icon_state = "hudill3"
-			if(VIRUS_SEVERITY_MEDIUM)
+			if(DISEASE_SEVERITY_MEDIUM)
 				holder.icon_state = "hudill2"
-			if(VIRUS_SEVERITY_MINOR)
+			if(DISEASE_SEVERITY_MINOR)
 				holder.icon_state = "hudill1"
-			if(VIRUS_SEVERITY_NONTHREAT)
+			if(DISEASE_SEVERITY_NONTHREAT)
 				holder.icon_state = "hudill0"
-			if(VIRUS_SEVERITY_POSITIVE)
+			if(DISEASE_SEVERITY_POSITIVE)
 				holder.icon_state = "hudbuff"
 			if(null)
 				holder.icon_state = "hudhealthy"
