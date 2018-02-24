@@ -41,16 +41,15 @@
 	..()
 	to_chat(user, "<span class='info'>[src] is assembled in the [zone == "r_arm" ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.</span>")
 
-/obj/item/organ/cyberimp/arm/attackby(obj/item/W, mob/user, params)
-	..()
-	if(istype(W, /obj/item/screwdriver))
-		if(zone == "r_arm")
-			zone = "l_arm"
-		else
-			zone = "r_arm"
-		SetSlotFromZone()
-		to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == "r_arm" ? "right" : "left"] arm.</span>")
-		update_icon()
+/obj/item/organ/cyberimp/arm/screwdriver_act(mob/living/user, obj/item/I)
+	I.play_tool_sound(src)
+	if(zone == "r_arm")
+		zone = "l_arm"
+	else
+		zone = "r_arm"
+	SetSlotFromZone()
+	to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == "r_arm" ? "right" : "left"] arm.</span>")
+	update_icon()
 
 /obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/M, special = 0)
 	Retract()
