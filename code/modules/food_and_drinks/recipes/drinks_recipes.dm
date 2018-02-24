@@ -504,7 +504,6 @@
 	results = list("whiskey_sour" = 3)
 	required_reagents = list("whiskey" = 1, "lemonjuice" = 1, "sugar" = 1)
 	mix_message = "The mixture darkens to a rich gold hue."
-	mix_sound = null
 
 /datum/chemical_reaction/fetching_fizz
 	name = "Fetching Fizz"
@@ -519,7 +518,6 @@
 	results = list("hearty_punch" = 1)  //Very little, for balance reasons
 	required_reagents = list("bravebull" = 5, "syndicatebomb" = 5, "absinthe" = 5)
 	mix_message = "The mixture darkens to a healthy crimson."
-	mix_sound = null
 	required_temp = 315 //Piping hot!
 
 /datum/chemical_reaction/bacchus_blessing
