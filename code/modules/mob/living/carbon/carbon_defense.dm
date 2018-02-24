@@ -110,20 +110,20 @@
 
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
 
-	for(var/thing in viruses)
+	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
 			user.ContactContractDisease(D)
 
-	for(var/thing in user.viruses)
+	for(var/thing in user.diseases)
 		var/datum/disease/D = thing
 		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
 	if(lying && surgeries.len)
-		if(user.a_intent == INTENT_HELP)
+		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user))
+				if(S.next_step(user, user.a_intent))
 					return 1
 	return 0
 
@@ -131,12 +131,12 @@
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
 
 	if(can_inject(M, TRUE))
-		for(var/thing in viruses)
+		for(var/thing in diseases)
 			var/datum/disease/D = thing
 			if((D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN) && prob(85))
 				M.ContactContractDisease(D)
 
-	for(var/thing in M.viruses)
+	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
 		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
@@ -146,7 +146,7 @@
 		return 0
 
 	if(..()) //successful monkey bite.
-		for(var/thing in M.viruses)
+		for(var/thing in M.diseases)
 			var/datum/disease/D = thing
 			ForceContractDisease(D)
 		return 1

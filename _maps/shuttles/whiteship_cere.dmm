@@ -23,7 +23,6 @@
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
 	preferred_direction = 1;
-	timid = 1;
 	width = 16
 	},
 /turf/open/floor/plating,

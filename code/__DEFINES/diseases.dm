@@ -1,3 +1,7 @@
+
+#define DISEASE_LIMIT		1
+#define VIRUS_SYMPTOM_LIMIT	6
+
 //Visibility Flags
 #define HIDDEN_SCANNER	1
 #define HIDDEN_PANDEMIC	2
@@ -14,7 +18,6 @@
 #define VIRUS_SPREAD_CONTACT_FLUIDS 8
 #define VIRUS_SPREAD_CONTACT_SKIN 16
 #define VIRUS_SPREAD_AIRBORNE 32
-
 
 //Severity Defines
 #define VIRUS_SEVERITY_POSITIVE		"Positive"  //Diseases that buff, heal, or at least do nothing at all

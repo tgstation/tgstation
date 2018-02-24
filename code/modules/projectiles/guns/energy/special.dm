@@ -127,7 +127,7 @@
 	can_charge = 0
 
 	heat = 3800
-	usesound = 'sound/items/welder.ogg'
+	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
 

@@ -103,7 +103,7 @@
 							"<span class='userdanger'>[name] bites [ML]!</span>")
 			if(armor >= 2)
 				return
-			for(var/thing in viruses)
+			for(var/thing in diseases)
 				var/datum/disease/D = thing
 				ML.ForceContractDisease(D)
 		else

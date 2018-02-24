@@ -6,7 +6,7 @@
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
 	anchored = TRUE
 	density = TRUE
-	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
 	interact_open = TRUE
@@ -82,16 +82,15 @@
 	if(!pressure_charging && !full_pressure && !flush)
 		if(istype(I, /obj/item/screwdriver))
 			panel_open = !panel_open
-			playsound(get_turf(src), I.usesound, 50, 1)
+			I.play_tool_sound(src)
 			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
 			return
 		else if(istype(I, /obj/item/weldingtool) && panel_open)
 			if(!I.tool_start_check(user, amount=0))
 				return
 
-			playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
 			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
-			if(I.use_tool(src, user, 20) && panel_open)
+			if(I.use_tool(src, user, 20, volume=100) && panel_open)
 				to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
 				deconstruct()
 			return

@@ -190,7 +190,8 @@
 				. = TRUE
 		if("create_culture_bottle")
 			var/id = get_virus_id_by_index(text2num(params["index"]))
-			var/datum/disease/advance/A = new(FALSE, SSdisease.archive_diseases[id])
+			var/datum/disease/advance/A = SSdisease.archive_diseases[id]
+			A = A.Copy()
 			var/list/data = list("viruses" = list(A))
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[A.name] culture bottle"

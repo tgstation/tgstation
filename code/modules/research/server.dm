@@ -52,7 +52,7 @@
 
 /obj/machinery/rnd/server/proc/mine()
 	. = base_mining_income
-	var/penalty = max((get_env_temp() - temp_tolerance_low), 0) / temp_penalty_coefficient
+	var/penalty = max((get_env_temp() - temp_tolerance_high), 0) * temp_penalty_coefficient
 	. = max(. - penalty, 0)
 
 /obj/machinery/rnd/server/proc/get_env_temp()
@@ -167,4 +167,4 @@
 		return
 	playsound(src, "sparks", 75, 1)
 	obj_flags |= EMAGGED
-	to_chat(user, "<span class='notice'>You you disable the security protocols.</span>")
+	to_chat(user, "<span class='notice'>You disable the security protocols.</span>")

@@ -86,12 +86,10 @@
 			user.visible_message("[user] is repairing [src].", \
 							"<span class='notice'>You begin repairing [src]...</span>", \
 							"<span class='italics'>You hear welding.</span>")
-			playsound(loc, O.usesound, 40, 1)
-			if(O.use_tool(src, user, 40))
+			if(O.use_tool(src, user, 40, volume=50))
 				if(!(stat & BROKEN))
 					return
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
-				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 				stat &= ~BROKEN
 				obj_integrity = max_integrity
 				update_icon()

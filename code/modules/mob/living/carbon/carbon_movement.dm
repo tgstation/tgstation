@@ -56,13 +56,3 @@
 			nutrition -= HUNGER_FACTOR/10
 			if(m_intent == MOVE_INTENT_RUN)
 				nutrition -= HUNGER_FACTOR/10
-
-/mob/living/carbon/Moved(oldLoc, Dir)
-	. = ..()
-	for(var/obj/O in internal_organs)
-		O.on_mob_move(dir, src, oldLoc)
-
-/mob/living/carbon/setDir(newdir)
-	. = ..()
-	for(var/obj/O in internal_organs)
-		O.on_mob_turn(newdir, src)

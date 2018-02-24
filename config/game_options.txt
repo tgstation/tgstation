@@ -487,3 +487,12 @@ MICE_ROUNDSTART 10
 
 ## Determines if players are allowed to print integrated circuits, uncomment to allow.
 #IC_PRINTING
+
+## Enable night shifts ##
+ENABLE_NIGHT_SHIFTS
+
+## Enable randomized shift start times##
+RANDOMIZE_SHIFT_TIME
+
+## Sets shift time to server time at roundstart. Overridden by RANDOMIZE_SHIFT_TIME ##
+#SHIFT_TIME_REALTIME

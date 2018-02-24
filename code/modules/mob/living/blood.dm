@@ -98,6 +98,7 @@
 				add_splatter_floor(src.loc, 1)
 
 /mob/living/carbon/human/bleed(amt)
+	amt *= physiology.bleed_mod
 	if(!(NOBLOOD in dna.species.species_traits))
 		..()
 
@@ -163,13 +164,13 @@
 		blood_data["donor"] = src
 		blood_data["viruses"] = list()
 
-		for(var/thing in viruses)
+		for(var/thing in diseases)
 			var/datum/disease/D = thing
 			blood_data["viruses"] += D.Copy()
 
 		blood_data["blood_DNA"] = copytext(dna.unique_enzymes,1,0)
-		if(resistances && resistances.len)
-			blood_data["resistances"] = resistances.Copy()
+		if(disease_resistances && disease_resistances.len)
+			blood_data["resistances"] = disease_resistances.Copy()
 		var/list/temp_chem = list()
 		for(var/datum/reagent/R in reagents.reagent_list)
 			temp_chem[R.id] = R.volume

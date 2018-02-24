@@ -180,6 +180,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aD" = (
@@ -312,6 +315,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aV" = (
@@ -337,6 +343,9 @@
 	name = "Gravity Generator";
 	req_access_txt = "11";
 	req_one_access_txt = "0"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
@@ -1335,6 +1344,30 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"pI" = (
+/obj/machinery/door/airlock,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"Qt" = (
+/obj/machinery/door/airlock,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
+"WT" = (
+/obj/machinery/door/airlock,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aa
@@ -2755,7 +2788,7 @@ ad
 ad
 aj
 aj
-aC
+WT
 aj
 aj
 aj
@@ -3465,7 +3498,7 @@ by
 by
 cn
 by
-cn
+Qt
 by
 cn
 by
@@ -3573,7 +3606,7 @@ ad
 ad
 ad
 by
-cn
+pI
 by
 ad
 ad

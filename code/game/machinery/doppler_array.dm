@@ -29,8 +29,8 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 /obj/machinery/doppler_array/process()
 	return PROCESS_KILL
 
-/obj/machinery/doppler_array/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/wrench))
+/obj/machinery/doppler_array/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/wrench))
 		if(!anchored && !isinspace())
 			anchored = TRUE
 			power_change()
@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 			anchored = FALSE
 			power_change()
 			to_chat(user, "<span class='notice'>You unfasten [src].</span>")
-		playsound(loc, O.usesound, 50, 1)
+		I.play_tool_sound(src)
 	else
 		return ..()
 

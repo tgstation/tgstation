@@ -54,6 +54,8 @@
 	var/list/obj/item/projectile/frozen_projectiles = list()
 	var/list/atom/movable/frozen_throws = list()
 
+	var/static/list/global_frozen_atoms = list()
+
 /datum/proximity_monitor/advanced/timestop/Destroy()
 	unfreeze_all()
 	return ..()
@@ -62,7 +64,7 @@
 	freeze_atom(AM)
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/movable/A)
-	if(immune[A] || !istype(A))
+	if(immune[A] || global_frozen_atoms[A] || !istype(A))
 		return FALSE
 	if(A.throwing)
 		freeze_throwing(A)
@@ -89,11 +91,13 @@
 	var/datum/thrownthing/T = AM.throwing
 	T.paused = TRUE
 	frozen_throws[AM] = T
+	global_frozen_atoms[AM] = TRUE
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_throw(atom/movable/AM)
 	var/datum/thrownthing/T = frozen_throws[AM]
 	T.paused = FALSE
 	frozen_throws -= AM
+	global_frozen_atoms -= AM
 
 /datum/proximity_monitor/advanced/timestop/process()
 	for(var/i in frozen_mobs)
@@ -112,15 +116,18 @@
 	escape_the_negative_zone(P)
 	frozen_projectiles -= P
 	P.paused = FALSE
+	global_frozen_atoms -= P
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_projectile(obj/item/projectile/P)
 	frozen_projectiles[P] = TRUE
 	P.paused = TRUE
+	global_frozen_atoms[P] = TRUE
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/L)
 	L.Stun(20, 1, 1)
 	frozen_mobs[L] = L.anchored
 	L.anchored = TRUE
+	global_frozen_atoms[L] = TRUE
 	if(ishostile(L))
 		var/mob/living/simple_animal/hostile/H = L
 		H.toggle_ai(AI_OFF)
@@ -131,6 +138,7 @@
 	L.AdjustStun(-20, 1, 1)
 	L.anchored = frozen_mobs[L]
 	frozen_mobs -= L
+	global_frozen_atoms -= L
 	if(ishostile(L))
 		var/mob/living/simple_animal/hostile/H = L
 		H.toggle_ai(initial(H.AIStatus))

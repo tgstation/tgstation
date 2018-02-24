@@ -176,6 +176,10 @@
 	toggle_on()
 	add_fingerprint(usr)
 
+/* Holopads */
+/obj/machinery/holopad/AIAltClick(mob/living/silicon/ai/user)
+	hangup_all_calls()
+
 //
 // Override TurfAdjacent for AltClicking
 //

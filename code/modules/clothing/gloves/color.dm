@@ -49,12 +49,12 @@
 /obj/item/clothing/gloves/color/black/ce
 	item_color = "chief"		//Exists for washing machines. Is not different from black gloves in any way.
 
-/obj/item/clothing/gloves/color/black/attackby(obj/item/W as obj, mob/user as mob, params)
-	if(istype(W, /obj/item/wirecutters))
+/obj/item/clothing/gloves/color/black/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/wirecutters))
 		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
 			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
-			playsound(user.loc, W.usesound, rand(10,50), 1)
-			new /obj/item/clothing/gloves/fingerless(user.loc)
+			I.play_tool_sound(src)
+			new /obj/item/clothing/gloves/fingerless(drop_location())
 			qdel(src)
 	..()
 
@@ -154,7 +154,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 60
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 70, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 50)
 
 /obj/item/clothing/gloves/color/latex
 	name = "latex gloves"

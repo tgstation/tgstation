@@ -126,7 +126,7 @@
 			to_chat(user, "<span class='notice'>You insert the flash into the eye socket.</span>")
 	else if(istype(W, /obj/item/crowbar))
 		if(flash1 || flash2)
-			playsound(src.loc, W.usesound, 50, 1)
+			W.play_tool_sound(src)
 			to_chat(user, "<span class='notice'>You remove the flash from [src].</span>")
 			if(flash1)
 				flash1.forceMove(user.loc)

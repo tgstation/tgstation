@@ -1,5 +1,3 @@
-
-#define MEDAL_PREFIX "Colossus"
 /*
 
 COLOSSUS
@@ -44,7 +42,7 @@ Difficulty: Very Hard
 	ranged = 1
 	pixel_x = -32
 	del_on_death = 1
-	medal_type = MEDAL_PREFIX
+	medal_type = BOSS_MEDAL_COLOSSUS
 	score_type = COLOSSUS_SCORE
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
