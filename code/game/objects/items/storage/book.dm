@@ -85,6 +85,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 				H.update_damage_overlays()
 		H.visible_message("<span class='notice'>[user] heals [H] with the power of [deity_name]!</span>")
 		to_chat(H, "<span class='boldnotice'>May the power of [deity_name] compel you to be healed!</span>")
+		if(!H.reagents.has_reagent("anointment_oil"))
+			H.reagents.add_reagent("anointment_oil", 1)
 		playsound(src.loc, "punch", 25, 1, -1)
 	return 1
 

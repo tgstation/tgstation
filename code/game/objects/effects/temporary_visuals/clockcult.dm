@@ -292,6 +292,8 @@
 /obj/effect/temp_visual/ratvar/abscondence_breach/attack_hand(mob/living/user)
 	if(is_servant_of_ratvar(user) || QDELETED(creator))
 		return
+	if(!do_after(user, 15, target = src))
+		return
 	user.visible_message("<span class='boldwarning'>[user] reaches into [src] and yanks out [creator]!</span>", \
 	"<span class='boldannounce'>You shove your arm into [src] and yank [creator] back through!</span>") //where tf you goin boi
 	playsound(src, 'sound/magic/magic_missile.ogg', 50, TRUE, frequency = -1)
