@@ -8,7 +8,7 @@
 	chemical_cost = 0
 	dna_cost = 1
 	req_human = 1
-	var/stacks = 0 //Increments every 5 seconds; damage increases over time
+	var/stacks = 0 //Increments every 4 seconds; damage increases over time
 	active = 0 //Whether or not you are a hedgehog
 
 /obj/effect/proc_holder/changeling/strained_muscles/sting_action(mob/living/carbon/user)
@@ -38,8 +38,11 @@
 			break
 
 		stacks++
-		//user.take_bodypart_damage(stacks * 0.03, 0)
-		user.staminaloss += stacks * 1.3 //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
+		if(!user.on_fire)
+			user.staminaloss += stacks * 1.3 //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
+		else //faster fatigue and higher damage from being on fire
+			stacks++
+			user.staminaloss += stacks * 2.6
 
 		if(stacks == 11) //Warning message that the stacks are getting too high
 			to_chat(user, "<span class='warning'>Our legs are really starting to hurt...</span>")

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/revive
 	name = "Revive"
-	desc = "We regenerate, healing all damage from our form."
+	desc = "We regenerate, healing all damage from our form. Fire will impair this ability and make it much less effective."
 	helptext = "Does not regrow lost organs or a missing head."
 	req_stat = DEAD
 	always_keep = TRUE
@@ -8,8 +8,16 @@
 
 //Revive from revival stasis
 /obj/effect/proc_holder/changeling/revive/sting_action(mob/living/carbon/user)
+	var/fire
+	if(user.on_fire)
+		to_chat(user, "<span class='userdanger'>Flames engulf our body, preventing our flesh from fully regenerating!</span>")
+		fire = user.fire_stacks
 	user.cure_fakedeath("changeling")
 	user.revive(full_heal = 1)
+	if(fire)
+		user.adjust_fire_stacks(fire)
+		user.IgniteMob(TRUE)
+		user.adjustFireLoss(50)
 	var/list/missing = user.get_missing_limbs()
 	missing -= "head" // headless changelings are funny
 	if(missing.len)
