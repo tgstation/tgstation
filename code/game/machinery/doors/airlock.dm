@@ -153,6 +153,7 @@
 
 /obj/machinery/door/airlock/ComponentInitialize()
 	. = ..()
+	AddComponent(/datum/component/ntnet_interface)
 	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
 /obj/machinery/door/airlock/proc/update_other_id()
@@ -189,6 +190,58 @@
 		if ("cyclelinkeddir")
 			cyclelinkairlock()
 
+/obj/machinery/door/airlock/check_access_ntnet(datum/netdata/data)
+	return !requiresID() || ..()
+
+/obj/machinery/door/airlock/ntnet_recieve(datum/netdata/data)
+	// Check if the airlock is powered and can accept control packets.
+	if(!hasPower() || !canAIControl())
+		return
+
+	// Check packet access level.
+	if(!check_access_ntnet(data))
+		return
+
+	// Handle recieved packet.
+	var/command = lowertext(data.plaintext_data)
+	var/command_value = lowertext(data.plaintext_data_secondary)
+	switch(command)
+		if("open")
+			if(command_value == "on" && !density)
+				return
+
+			else if(command_value == "off" && density)
+				return
+
+			if(density)
+				open()
+			else
+				close()
+
+		if("bolt")
+			if(command_value == "on" && locked)
+				return
+
+			else if(command_value == "off" && !locked)
+				return
+
+			if(locked)
+				unbolt()
+			else
+				bolt()
+
+		if("emergency")
+			if(command_value == "on" && emergency)
+				return
+
+			else if(command_value == "off" && !emergency)
+				return
+
+			if(emergency)
+				emergency = FALSE
+			else
+				emergency = TRUE
+			update_icon()
 
 /obj/machinery/door/airlock/lock()
 	bolt()
@@ -321,7 +374,7 @@
 	return FALSE
 
 /obj/machinery/door/airlock/proc/canAIControl(mob/user)
-	return ((aiControlDisabled != 1) && (!isAllPowerCut()));
+	return ((aiControlDisabled != 1) && !isAllPowerCut())
 
 /obj/machinery/door/airlock/proc/canAIHack()
 	return ((aiControlDisabled==1) && (!hackProof) && (!isAllPowerCut()));
