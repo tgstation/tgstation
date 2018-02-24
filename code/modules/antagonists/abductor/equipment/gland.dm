@@ -199,10 +199,9 @@
 	owner.med_hud_set_status()
 
 /obj/item/organ/heart/gland/viral/proc/random_virus(max_symptoms, max_level)
-	if(max_symptoms > SYMPTOM_LIMIT)
-		max_symptoms = SYMPTOM_LIMIT
-	var/datum/disease/advance/A = new(FALSE, null)
-	A.symptoms = list()
+	if(max_symptoms > VIRUS_SYMPTOM_LIMIT)
+		max_symptoms = VIRUS_SYMPTOM_LIMIT
+	var/datum/disease/advance/A = new /datum/disease/advance()
 	var/list/datum/symptom/possible_symptoms = list()
 	for(var/symptom in subtypesof(/datum/symptom))
 		var/datum/symptom/S = symptom

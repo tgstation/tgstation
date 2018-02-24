@@ -48,6 +48,6 @@
 				to_chat(affected_mob, "<span class='danger'>Mucous runs down the back of your throat.</span>")
 			if(prob(1) && prob(50))
 				if(!affected_mob.resistances.Find(/datum/disease/flu))
-					var/datum/disease/Flu = new /datum/disease/flu(0)
-					affected_mob.ForceContractDisease(Flu)
+					var/datum/disease/Flu = new /datum/disease/flu()
+					affected_mob.ForceContractDisease(Flu, FALSE, TRUE)
 					cure()

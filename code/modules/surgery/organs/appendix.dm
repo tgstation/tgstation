@@ -23,7 +23,7 @@
 /obj/item/organ/appendix/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(inflamed)
-		M.AddDisease(new /datum/disease/appendicitis)
+		M.ForceContractDisease(new /datum/disease/appendicitis(), FALSE, TRUE)
 
 /obj/item/organ/appendix/prepare_eat()
 	var/obj/S = ..()

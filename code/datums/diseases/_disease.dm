@@ -26,7 +26,7 @@
 	var/carrier = FALSE //If our host is only a carrier
 	var/bypasses_immunity = FALSE //Does it skip species virus immunity check? Some things may diseases and not viruses
 	var/permeability_mod = 1
-	var/severity = VIRUS_SEVERITY_POSITIVE
+	var/severity = VIRUS_SEVERITY_NONTHREAT
 	var/list/required_organs = list()
 	var/needs_all_cures = TRUE
 	var/list/strain_data = list() //dna_spread special bullshit
@@ -34,9 +34,28 @@
 	var/process_dead = FALSE //if this ticks while the host is dead
 
 /datum/disease/Destroy()
-	affected_mob = null
+	. = ..()
+	if(affected_mob)
+		remove_virus()
 	SSdisease.active_diseases.Remove(src)
 	return ..()
+
+//add this disease if the host does not already have too many
+/datum/disease/proc/try_infect(var/mob/living/infectee, make_copy = TRUE)
+	if(infectee.viruses.len < DISEASE_LIMIT)
+		infect(infectee, make_copy)
+		return TRUE
+	return FALSE
+
+//add the disease with no checks
+/datum/disease/proc/infect(var/mob/living/infectee, make_copy = TRUE)
+	var/datum/disease/D = make_copy ? Copy() : src
+	infectee.viruses += D
+	D.affected_mob = infectee
+	SSdisease.active_diseases += D //Add it to the active diseases list, now that it's actually in a mob and being processed.
+
+	D.after_add()
+	infectee.med_hud_set_status()
 
 /datum/disease/proc/stage_act()
 	var/cure = has_cure()
@@ -102,10 +121,8 @@
 
 /datum/disease/proc/cure(add_resistance = TRUE)
 	if(affected_mob)
-		if(disease_flags & CAN_RESIST)
-			var/id = GetDiseaseID()
-			if(add_resistance && !(id in affected_mob.resistances))
-				affected_mob.resistances += id
+		if(add_resistance && (disease_flags & CAN_RESIST))
+			affected_mob.resistances |= GetDiseaseID()
 		remove_virus()
 	qdel(src)
 
@@ -116,8 +133,18 @@
 
 
 /datum/disease/proc/Copy()
+	var/static/list/copy_vars = list("name", "visibility_flags", "disease_flags", "spread_flags", "form", "desc", "agent", "spread_text",
+									"cure_text", "max_stages", "stage_prob", "viable_mobtypes", "cures", "infectivity", "cure_chance",
+									"bypasses_immunity", "permeability_mod", "severity", "required_organs", "needs_all_cures", "strain_data",
+									"infectable_hosts", "process_dead")
+
 	var/datum/disease/D = new type()
-	D.strain_data = strain_data.Copy()
+	for(var/V in copy_vars)
+		var/val = vars[V]
+		if(islist(val))
+			var/list/L = val
+			val = L.Copy()
+		D.vars[V] = val
 	return D
 
 /datum/disease/proc/after_add()
@@ -127,7 +154,7 @@
 /datum/disease/proc/GetDiseaseID()
 	return "[type]"
 
-//don't use this proc directly. this should only ever be called by cure()
 /datum/disease/proc/remove_virus()
 	affected_mob.viruses -= src		//remove the datum from the list
 	affected_mob.med_hud_set_status()
+	affected_mob = null

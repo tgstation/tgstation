@@ -24,6 +24,6 @@
 		if(foundAlready)
 			continue
 
-		var/datum/disease/D = new /datum/disease/appendicitis
-		H.ForceContractDisease(D)
+		var/datum/disease/D = new /datum/disease/appendicitis()
+		H.ForceContractDisease(D, FALSE, TRUE)
 		break

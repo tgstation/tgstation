@@ -7,7 +7,6 @@
 
 */
 
-#define SYMPTOM_LIMIT 6
 
 
 
@@ -46,29 +45,34 @@
 
  */
 
-/datum/disease/advance/New(var/process = 1, var/datum/disease/advance/D)
-	if(!istype(D))
-		D = null
-	// Generate symptoms if we weren't given any.
-
-	if(!symptoms || !symptoms.len)
-
-		if(!D || !D.symptoms || !D.symptoms.len)
-			symptoms = GenerateSymptoms(0, 2)
-		else
-			for(var/datum/symptom/S in D.symptoms)
-				var/datum/symptom/new_symp = S.Copy()
-				symptoms += new_symp
-
+/datum/disease/advance/New()
 	Refresh()
-	..(process, D)
-	return
 
 /datum/disease/advance/Destroy()
 	if(processing)
 		for(var/datum/symptom/S in symptoms)
 			S.End(src)
 	return ..()
+
+/datum/disease/advance/try_infect(var/mob/living/infectee, make_copy = TRUE)
+	var/replace_num = infectee.viruses.len + 1 - DISEASE_LIMIT
+	if(replace_num > 0)
+		//see if we are more transmittable than enough diseases to replace them
+		//diseases replaced in this way do not confer immunity
+		var/list/L = list()
+		for(var/datum/disease/advance/P in infectee.viruses)
+			L += P
+		sortTim(L, /proc/cmp_advdisease_resistance_asc)
+		var/datum/disease/advance/competition = L[replace_num]
+		if(totalTransmittable() > competition.totalResistance())
+			for(var/i in 1 to replace_num)
+				var/datum/disease/advance/A = L[replace_num]
+				A.cure(FALSE)
+		else
+			//we are not strong enough to bully our way in
+			return FALSE
+	infect(infectee, make_copy)
+	return TRUE
 
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act()
@@ -99,8 +103,11 @@
 	return 1
 
 // Returns the advance disease with a different reference memory.
-/datum/disease/advance/Copy(process = 0)
-	return new /datum/disease/advance(process, src, 1)
+/datum/disease/advance/Copy()
+	var/datum/disease/advance/A = ..()
+	for(var/datum/symptom/S in symptoms)
+		A.symptoms += S.Copy()
+	return A
 
 /*
 
@@ -154,22 +161,18 @@
 	AssignProperties()
 	id = null
 
-	if(!SSdisease.archive_diseases[GetDiseaseID()])
+	var/the_id = GetDiseaseID()
+	if(!SSdisease.archive_diseases[the_id])
 		if(new_name)
 			AssignName()
-		SSdisease.archive_diseases[GetDiseaseID()] = src // So we don't infinite loop
-		SSdisease.archive_diseases[GetDiseaseID()] = new /datum/disease/advance(0, src, 1)
+		SSdisease.archive_diseases[the_id] = src // So we don't infinite loop
+		SSdisease.archive_diseases[the_id] = Copy()
 
-	var/datum/disease/advance/A = SSdisease.archive_diseases[GetDiseaseID()]
+	var/datum/disease/advance/A = SSdisease.archive_diseases[the_id]
 	AssignName(A.name)
 
 //Generate disease properties based on the effects. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()
-
-	if(!symptoms || !symptoms.len)
-		CRASH("We did not have any symptoms before generating properties.")
-		return
-
 	properties = list("resistance" = 0, "stealth" = 0, "stage_rate" = 0, "transmittable" = 0, "severity" = 0)
 
 	for(var/datum/symptom/S in symptoms)
@@ -179,7 +182,6 @@
 		properties["transmittable"] += S.transmittable
 		if(!S.neutered)
 			properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity non-neutered symptom
-	return
 
 // Assign the properties that are in the list.
 /datum/disease/advance/proc/AssignProperties()
@@ -253,9 +255,6 @@
 		var/datum/reagent/D = GLOB.chemical_reagents_list[cures[1]]
 		cure_text = D.name
 
-
-	return
-
 // Randomly generate a symptom, has a chance to lose or gain a symptom.
 /datum/disease/advance/proc/Evolve(min_level, max_level)
 	var/s = safepick(GenerateSymptoms(min_level, max_level, 1))
@@ -271,7 +270,6 @@
 		if(s)
 			RemoveSymptom(s)
 			Refresh(TRUE)
-	return
 
 // Randomly neuter a symptom.
 /datum/disease/advance/proc/Neuter()
@@ -280,12 +278,10 @@
 		if(s)
 			NeuterSymptom(s)
 			Refresh(TRUE)
-	return
 
 // Name the disease.
 /datum/disease/advance/proc/AssignName(name = "Unknown")
 	src.name = name
-	return
 
 // Return a unique ID of the disease.
 /datum/disease/advance/GetDiseaseID()
@@ -309,17 +305,15 @@
 	if(HasSymptom(S))
 		return
 
-	if(symptoms.len < (SYMPTOM_LIMIT - 1) + rand(-1, 1))
+	if(symptoms.len < (VIRUS_SYMPTOM_LIMIT - 1) + rand(-1, 1))
 		symptoms += S
 	else
 		RemoveSymptom(pick(symptoms))
 		symptoms += S
-	return
 
 // Simply removes the symptom.
 /datum/disease/advance/proc/RemoveSymptom(datum/symptom/S)
 	symptoms -= S
-	return
 
 // Neuter a symptom, so it will only affect stats
 /datum/disease/advance/proc/NeuterSymptom(datum/symptom/S)
@@ -377,7 +371,7 @@
 	if(!user)
 		return
 
-	var/i = SYMPTOM_LIMIT
+	var/i = VIRUS_SYMPTOM_LIMIT
 
 	var/datum/disease/advance/D = new(0, null)
 	D.symptoms = list()
@@ -434,5 +428,3 @@
 
 /datum/disease/advance/proc/totalTransmittable()
 	return properties["transmittable"]
-
-#undef RANDOM_STARTING_LEVEL

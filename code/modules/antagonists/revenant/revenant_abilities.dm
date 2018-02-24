@@ -348,7 +348,7 @@
 					if(blight.stage < 5)
 						blight.stage++
 				if(!blightfound)
-					H.AddDisease(new /datum/disease/revblight)
+					H.ForceContractDisease(new /datum/disease/revblight(), FALSE, TRUE)
 					to_chat(H, "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")].</span>")
 			else
 				if(mob.reagents)
