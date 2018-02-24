@@ -36,6 +36,8 @@
 	var/bite_times = eaters[biter]
 	if(!bite_times)
 		bite_times = 1
+	else
+		bite_times++
 	switch(bite_times)
 		if(1)
 			B.say("Haugh!")
