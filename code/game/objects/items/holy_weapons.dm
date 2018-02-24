@@ -445,3 +445,19 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("bashes", "smacks", "whacks")
+
+/obj/item/nullrod/attack(mob/living/carbon/C, mob/user)
+	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/restraints/handcuffs/energy/cult))
+		user.visible_message("<span class='notice'>[user] cuts [C]'s magical restraints with [src]'s holy powers!</span>")
+		qdel(C.handcuffed)
+		return
+	else
+		..()
+
+/obj/item/nullrod/attack(mob/living/carbon/C, mob/user)
+	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/restraints/handcuffs/clockwork))
+		user.visible_message("<span class='notice'>[user] cuts [C]'s replica menacles with [src]'s holy powers!</span>")
+		qdel(C.handcuffed)
+		return
+	else
+		..()
