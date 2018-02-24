@@ -226,28 +226,30 @@
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
 	if(default_unfasten_wrench(user, I))
 		return
-
 	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)
 			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
 			return
-
 		if(!user.transferItemToLoc(B, src))
 			return
-
 		beaker = B
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
-
-		beaker_overlay = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
-		beaker_overlay.pixel_x = rand(-10, 5)//randomize beaker overlay position.
+		beaker_overlay = display_beaker()
 		add_overlay(beaker_overlay)
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/card/emag))
 		to_chat(user, "<span class='warning'>You can't load [I] into [src]!</span>")
 		return ..()
 	else
 		return ..()
+
+/obj/machinery/chem_dispenser/proc/display_beaker()
+	..()
+	var/mutable_appearance/b_o = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
+	b_o.pixel_y = -7
+	b_o.pixel_x = rand(-1, 0)//randomize beaker overlay position.
+	return b_o
 
 /obj/machinery/chem_dispenser/get_cell()
 	return cell
@@ -362,6 +364,28 @@
 		final_list += list(avoid_assoc_duplicate_keys(fuck[1],key_list) = text2num(fuck[2]))
 	return final_list
 
+/obj/machinery/chem_dispenser/drinks/
+	dir = WEST
+	pixel_y = 6
+	layer = WALL_OBJ_LAYER
+
+/obj/machinery/chem_dispenser/drinks/display_beaker()
+	var/mutable_appearance/b_o = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
+	switch(dir)
+		if(NORTH)
+			b_o.pixel_y = 7
+			b_o.pixel_x = rand(-9, 9)
+		if(EAST)
+			b_o.pixel_x = 4
+			b_o.pixel_y = rand(-5, 7)
+		if(WEST)
+			b_o.pixel_x = -5
+			b_o.pixel_y = rand(-5, 7)
+		else//SOUTH
+			b_o.pixel_y = -7
+			b_o.pixel_x = rand(-9, 9)
+	return b_o
+
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"
 	desc = "Contains a large reservoir of soft drinks."
@@ -397,8 +421,6 @@
 		"mindbreaker",
 		"tirizene"
 	)
-
-
 
 /obj/machinery/chem_dispenser/drinks/beer
 	name = "booze dispenser"
