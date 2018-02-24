@@ -33,7 +33,7 @@
 	process_dead = FALSE
 	mutable = FALSE
 
-/datum/disease/advance/sentient_virus/New(process = 1, datum/disease/advance/D, master_virus)
+/datum/disease/advance/sentient_virus/New(master_virus)
 	..()
 	my_virus = master_virus
 
@@ -49,7 +49,7 @@
 /datum/disease/advance/sentient_virus/stage_act()
 	return
 
-/datum/disease/advance/sentient_virus/cure(add_resistance = TRUE)
+/datum/disease/advance/sentient_virus/remove_disease()
 	..()
 	if(my_virus)
 		my_virus.remove_infection(src)
@@ -63,8 +63,7 @@
 
 
 /datum/disease/advance/sentient_virus/Copy()
-	var/datum/disease/advance/sentient_virus/D = new type()
-	D.strain_data = strain_data.Copy()
+	var/datum/disease/advance/sentient_virus/D = ..()
 	D.my_virus = my_virus
 	return D
 

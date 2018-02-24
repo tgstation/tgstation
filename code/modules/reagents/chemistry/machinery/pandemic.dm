@@ -180,6 +180,8 @@
 		if("rename_disease")
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = SSdisease.archive_diseases[id]
+			if(!A.mutable)
+				return
 			if(A)
 				var/new_name = stripped_input(usr, "Name the disease", "New name", "", MAX_NAME_LEN)
 				if(!new_name || ..())

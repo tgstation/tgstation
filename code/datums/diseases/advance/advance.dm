@@ -30,6 +30,7 @@
 	var/list/symptoms = list() // The symptoms of the disease.
 	var/id = ""
 	var/processing = FALSE
+	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
 
 	// The order goes from easy to cure to hard to cure.
 	var/static/list/advance_cures = 	list(
@@ -256,7 +257,9 @@
 		cure_text = D.name
 
 // Randomly generate a symptom, has a chance to lose or gain a symptom.
-/datum/disease/advance/proc/Evolve(min_level, max_level)
+/datum/disease/advance/proc/Evolve(min_level, max_level, ignore_mutable = FALSE)
+	if(!mutable && !ignore_mutable)
+		return
 	var/s = safepick(GenerateSymptoms(min_level, max_level, 1))
 	if(s)
 		AddSymptom(s)
@@ -264,7 +267,9 @@
 	return
 
 // Randomly remove a symptom.
-/datum/disease/advance/proc/Devolve()
+/datum/disease/advance/proc/Devolve(ignore_mutable = FALSE)
+	if(!mutable && !ignore_mutable)
+		return
 	if(symptoms.len > 1)
 		var/s = safepick(symptoms)
 		if(s)
@@ -272,7 +277,9 @@
 			Refresh(TRUE)
 
 // Randomly neuter a symptom.
-/datum/disease/advance/proc/Neuter()
+/datum/disease/advance/proc/Neuter(ignore_mutable = FALSE)
+	if(!mutable && !ignore_mutable)
+		return
 	if(symptoms.len)
 		var/s = safepick(symptoms)
 		if(s)

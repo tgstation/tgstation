@@ -24,7 +24,7 @@
 
 	V.infect_patient_zero()
 
-	var/datum/objective/virus_infect/O = new/datum/objective/virus_infect()
+	var/datum/objective/virus_infect/O = new /datum/objective/virus_infect()
 	O.owner = owner
 	objectives += O
 	owner.objectives += O

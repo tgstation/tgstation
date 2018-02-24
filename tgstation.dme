@@ -1198,6 +1198,7 @@
 #include "code\modules\antagonists\valentines\heartbreaker.dm"
 #include "code\modules\antagonists\valentines\valentine.dm"
 #include "code\modules\antagonists\virus\virus_datum.dm"
+#include "code\modules\antagonists\virus\virus_event.dm"
 #include "code\modules\antagonists\virus\virus_mob.dm"
 #include "code\modules\antagonists\virus\virus_virus.dm"
 #include "code\modules\antagonists\wishgranter\wishgranter.dm"

@@ -218,9 +218,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [rendered]")
 
-/mob/camera/blob/emote(act,m_type=1,message = null)
-	return
-
 /mob/camera/blob/blob_act(obj/structure/blob/B)
 	return
 

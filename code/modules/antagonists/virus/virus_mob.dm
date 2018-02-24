@@ -38,10 +38,7 @@
 
 /mob/camera/virus/say(message)
 
-/*
-/mob/camera/virus/emote(act,m_type=1,message = null)
-	return
-*/
+
 /mob/camera/virus/Stat()
 	..()
 	//if(statpanel("Status"))
@@ -68,14 +65,15 @@
 		if(H.CanContractDisease(V))
 			possible_hosts += H
 	if(!possible_hosts.len)
-		to_chat(src, "Cannot infect host")
-		return
+		return FALSE
 	var/mob/living/carbon/human/H = pick(possible_hosts)
-	H.ForceContractDisease(V, FALSE)
+	if(H.ForceContractDisease(V, FALSE))
+		return TRUE
+	return FALSE
 
 /mob/camera/virus/proc/force_infect(mob/living/L)
-	var/datum/disease/advance/sentient_virus/V = new /datum/disease/advance/sentient_virus(null, null, src)
-	L.ForceContractDisease(V, FALSE)
+	var/datum/disease/advance/sentient_virus/V = new /datum/disease/advance/sentient_virus(src)
+	L.ForceContractDisease(V, FALSE, TRUE)
 
 /mob/camera/virus/proc/add_infection(datum/disease/advance/sentient_virus/V)
 	virus_instances += V
