@@ -70,7 +70,7 @@
 
 #define STATUS_EFFECT_ICHORIAL_STAIN /datum/status_effect/ichorial_stain //Prevents a servant from being revived by vitality matrices for one minute.
 
-#define STATUS_EFFECT_GRUE_IS_COMING /datum/status_effect/grue_is_coming //A grue is near you, and you have no light. you're likely to be eaten by a grue. (takes away their night vision until they enter the light.)
+#define STATUS_EFFECT_GRUEHUNT /datum/status_effect/gruehunt //A grue is near you, and you have no light. you're likely to be eaten by a grue. (takes away their night vision until they enter the light.)
 
 /////////////
 // NEUTRAL //

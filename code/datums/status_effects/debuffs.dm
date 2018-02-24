@@ -508,31 +508,31 @@
 	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"
 
-//Grue is coming: Obtained by a grue being near you, and you have no light. Removes your night vision until you enter the light.
-/datum/status_effect/grue_is_coming
+//Grue hunt: Obtained by a grue being near you, and you have no light. Removes your night vision until you enter the light.
+/datum/status_effect/gruehunt
 	id = "gruehunt"
 	duration = 600
 	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = /obj/screen/alert/status_effect/grue_is_coming
+	alert_type = /obj/screen/alert/status_effect/gruehunt
 
-/datum/status_effect/grue_is_coming/on_apply()
+/datum/status_effect/gruehunt/on_apply()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.clear_fullscreen("see_through_darkness")
 
-/datum/status_effect/grue_is_coming/on_remove()
+/datum/status_effect/gruehunt/on_remove()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
 
-/datum/status_effect/grue_is_coming/tick()
+/datum/status_effect/gruehunt/tick()
 	var/L = owner.loc
 	var/turf/T = get_turf(L)
 	var/light_amount = T.get_lumcount()
 	if(light_amount > 0.2)
-		owner.remove_status_effect(STATUS_EFFECT_GRUE_IS_COMING)
+		owner.remove_status_effect(STATUS_EFFECT_GRUEHUNT)
 
-/obj/screen/alert/status_effect/grue_is_coming
+/obj/screen/alert/status_effect/gruehunt
 	name = "???"
 	desc = "You are likely to be eaten by a grue."
 	icon_state = "gruewarn"

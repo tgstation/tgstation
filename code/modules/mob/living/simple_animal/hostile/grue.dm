@@ -52,14 +52,16 @@
 /mob/living/simple_animal/hostile/grue/Move()
 	. = ..()
 	check_light_level()
-	for(var/mob/living/M in range(7, src))
-		if(istype(M, src)) //no spooking yourself
+	for(var/mob/living/M in range(2, src))
+		if(istype(src, src)) //grue must be not jaunted
+			return
+		if(istype(M, src)) //grue must not spook himself
 			return
 		var/turf/T = get_turf(M)
 		var/light_amount = T.get_lumcount()
 		if(light_amount > 0.1)
 			return
-		M.apply_status_effect(STATUS_EFFECT_GRUE_IS_COMING)
+		M.apply_status_effect(STATUS_EFFECT_GRUEHUNT)
 
 /mob/living/simple_animal/hostile/grue/proc/check_light_level()
 	var/turf/T = get_turf(src)
@@ -79,25 +81,20 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "gruesight1"
 
-/datum/action/innate/grue/gruesight/Activate()
+/datum/action/innate/grue/gruesight/Trigger()
 	switch(owner.lighting_alpha)
 		if(LIGHTING_PLANE_ALPHA_VISIBLE)
 			owner.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-			button_icon_state = "gruesight2"
-			name = "Grue Sight \[More]"
 		if(LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 			owner.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-			button_icon_state = "gruesight3"
-			name = "Grue Sight \[Full]"
 		if(LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
 			owner.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
-			button_icon_state = "gruesight4"
-			name = "Grue Sight \[OFF]"
 		else
 			owner.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
-			button_icon_state = "gruesight1"
-			name = "Grue Sight \[ON]"
 	owner.update_sight()
+
+///datum/action/innate/grue/gruesight/Activate()
+
 
 /datum/action/innate/grue/gruewalk
 	name = "Grue Walk"
@@ -111,6 +108,7 @@
 	var/light_amount = T.get_lumcount()
 	if(!istype(owner.loc, /obj/effect/dummy/grue))
 		var/mob/living/simple_animal/hostile/grue/grue = owner
+		to_chat(grue, "<span class='grue'>Back into the ether!</span>")
 		grue.SetStun(0, FALSE)
 		grue.SetKnockdown(0, FALSE)
 		grue.setStaminaLoss(0, 0)
