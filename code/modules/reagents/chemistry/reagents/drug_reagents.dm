@@ -260,7 +260,7 @@
 		L.add_trait(TRAIT_SLEEPIMMUNE, id)
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
-			C.gain_trauma(/datum/brain_trauma/special/psychotic_brawling, TRAUMA_RESILIENCE_LOBOTOMY)
+			C.gain_trauma(/datum/brain_trauma/special/psychotic_brawling/bath_salts, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/reagent/drug/bath_salts/on_mob_delete(mob/M)
 	if(isliving(M))
@@ -269,9 +269,8 @@
 		L.remove_trait(TRAIT_SLEEPIMMUNE, id)
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
-			for(var/datum/brain_trauma/special/psychotic_brawling/T in C.get_traumas())
-				if(T.resilience == TRAUMA_RESILIENCE_LOBOTOMY)
-					qdel(T)
+			for(var/datum/brain_trauma/special/psychotic_brawling/bath_salts/T in C.get_traumas())
+				qdel(T)
 	..()
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/M)
