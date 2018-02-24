@@ -44,7 +44,9 @@
 		var/obj/item/trash_item = generate_trash(usr)
 		qdel(src)
 		usr.put_in_hands(trash_item)
-
+		
+/obj/item/reagent_containers/food/snacks/proc/on_bite()
+	return
 
 /obj/item/reagent_containers/food/snacks/attack_self(mob/user)
 	return
