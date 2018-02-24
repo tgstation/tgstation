@@ -183,8 +183,9 @@
 /obj/machinery/light
 	name = "light fixture"
 	icon = 'icons/obj/lighting.dmi'
+	var/overlayicon = 'icons/obj/lighting_overlay.dmi'
 	var/base_state = "tube"		// base description and icon_state
-	icon_state = "tube1"
+	icon_state = "tube"
 	desc = "A lighting fixture."
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
@@ -224,7 +225,7 @@
 // the smaller bulb light fixture
 
 /obj/machinery/light/small
-	icon_state = "bulb1"
+	icon_state = "bulb"
 	base_state = "bulb"
 	fitting = "bulb"
 	brightness = 4
@@ -286,12 +287,17 @@
 	return ..()
 
 /obj/machinery/light/update_icon()
+	cut_overlays()
 	switch(status)		// set icon_states
 		if(LIGHT_OK)
 			if(emergency_mode)
 				icon_state = "[base_state]_emergency"
 			else
-				icon_state = "[base_state][on]"
+				icon_state = "[base_state]"
+				if(on)
+					var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
+					glowybit.alpha = CLAMP(light_power*250, 30, 200)
+					add_overlay(glowybit)
 		if(LIGHT_EMPTY)
 			icon_state = "[base_state]-empty"
 		if(LIGHT_BURNED)
@@ -791,7 +797,7 @@
 	name = "floor light"
 	icon = 'icons/obj/lighting.dmi'
 	base_state = "floor"		// base description and icon_state
-	icon_state = "floor1"
+	icon_state = "floor"
 	brightness = 4
 	layer = 2.5
 	light_type = /obj/item/light/bulb
