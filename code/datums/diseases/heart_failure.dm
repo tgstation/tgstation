@@ -10,7 +10,7 @@
 	desc = "If left untreated the subject will die!"
 	severity = "Dangerous!"
 	disease_flags = CAN_CARRY|CAN_RESIST
-	spread_flags = VIRUS_SPREAD_NON_CONTAGIOUS
+	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	visibility_flags = HIDDEN_PANDEMIC
 	required_organs = list(/obj/item/organ/heart)
 	var/sound = FALSE

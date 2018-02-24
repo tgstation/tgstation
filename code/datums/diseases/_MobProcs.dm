@@ -99,7 +99,7 @@
 		D.try_infect(src)
 
 /mob/living/proc/AirborneContractDisease(datum/disease/D)
-	if((D.spread_flags & VIRUS_SPREAD_AIRBORNE) && prob((50*D.permeability_mod) - 1))
+	if((D.spread_flags & DISEASE_SPREAD_AIRBORNE) && prob((50*D.permeability_mod) - 1))
 		ForceContractDisease(D)
 
 /mob/living/carbon/AirborneContractDisease(datum/disease/D)

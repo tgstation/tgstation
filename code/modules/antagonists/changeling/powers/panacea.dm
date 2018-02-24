@@ -34,7 +34,7 @@
 		var/mob/living/L = user
 		for(var/thing in L.diseases)
 			var/datum/disease/D = thing
-			if(D.severity == VIRUS_SEVERITY_POSITIVE)
+			if(D.severity == DISEASE_SEVERITY_POSITIVE)
 				continue
 			D.cure()
 	return TRUE
