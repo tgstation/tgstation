@@ -105,8 +105,12 @@
 // Returns the advance disease with a different reference memory.
 /datum/disease/advance/Copy()
 	var/datum/disease/advance/A = ..()
+	QDEL_LIST(A.symptoms)
 	for(var/datum/symptom/S in symptoms)
 		A.symptoms += S.Copy()
+	A.properties = properties.Copy()
+	A.id = id
+	//this is a new disease starting over at stage 1, so processing is not copied
 	return A
 
 /*
