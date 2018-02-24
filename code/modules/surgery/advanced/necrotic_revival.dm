@@ -21,7 +21,7 @@
 
 /datum/surgery_step/bionecrosis
 	name = "start bionecrosis"
-	implements = list(/obj/item/hemostat = 100, /obj/item/screwdriver = 35, /obj/item/pen = 15)
+	implements = list(/obj/item/hemostat = 100, TOOL_SCREWDRIVER = 35, /obj/item/pen = 15)
 	time = 50
 
 /datum/surgery_step/bionecrosis/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
