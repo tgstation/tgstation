@@ -414,7 +414,7 @@ GLOBAL_LIST_INIT(brass_recipes_nonservant, list ( \
 	novariants = FALSE
 	grind_results = list("brass" = 20)
 
-/obj/item/stack//tile/brass/interact(mob/user, recipes_sublist)
+/obj/item/stack/tile/brass/interact(mob/user, recipes_sublist)
 	if(is_servant_of_ratvar(user))
 		recipes_sublist = GLOB.brass_recipes_nonservant
 	..()
