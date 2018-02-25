@@ -371,7 +371,7 @@
 	return 0
 
 /obj/machinery/door/window/clockwork/general
-	all_access = true
+	all_access = TRUE
 
 /obj/machinery/door/window/northleft
 	dir = NORTH
