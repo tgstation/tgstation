@@ -496,3 +496,7 @@ RANDOMIZE_SHIFT_TIME
 
 ## Sets shift time to server time at roundstart. Overridden by RANDOMIZE_SHIFT_TIME ##
 #SHIFT_TIME_REALTIME
+
+## Language and Communication ##
+HIGH_LATIN
+#COMMAND_CHANNEL

@@ -37,6 +37,18 @@ datum/species/human/on_species_gain(mob/living/carbon/human/H, datum/species/old
 	..()
 
 /datum/species/human/after_equip_job(datum/job/J, mob/living/carbon/human/H)
-	//check for high latin being enabled in config
-	//check for mind's role being a head, a member of centcom (ERT, official/inspector, deathsquad)
-	H.grant_language(/datum/language/highlatin)
+	if(CONFIG_GET(flag/high_latin))	//a language for head rank and above Nanotrasen personnel, nuthin personnel, greyshirt
+		if(H.mind && (
+			H.mind.assigned_role in
+			list("Captain",
+			"Head of Personnel",
+			"Head of Security",
+			"Chief Engineer",
+			"Research Director",
+			"Chief Medical Officer")
+			||
+			H.mind.has_antag_datum(/datum/antagonist/official)
+			||
+			H.mind.has_antag_datum(/datum/antagonist/ert)
+			))
+			H.grant_language(/datum/language/highlatin)
