@@ -373,6 +373,8 @@
 	var/list/msg = list("<span class='boldnotice'>Roundstart logout report\n\n</span>")
 	for(var/i in GLOB.mob_living_list)
 		var/mob/living/L = i
+		if (!L.last_mind)
+			continue  // never had a client
 
 		if(L.ckey && !GLOB.directory[L.ckey])
 			msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Disconnected</b></font>)\n"
