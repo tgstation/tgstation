@@ -22,6 +22,7 @@
 	var/ini_dir
 	var/obj/item/electronics/airlock/electronics = null
 	var/created_name = null
+	var/constructor = null
 
 	//Vars to help with the icon's name
 	var/facing = "l"	//Does the windoor open to the left or right?
@@ -31,6 +32,8 @@
 
 /obj/structure/windoor_assembly/New(loc, set_dir)
 	..()
+	if(constructor)
+		ini_dir = constructor.dir
 	if(set_dir)
 		dir = set_dir
 	ini_dir = dir

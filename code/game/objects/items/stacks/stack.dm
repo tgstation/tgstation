@@ -187,16 +187,9 @@
 		else
 			O = new R.result_type(usr.drop_location())
 		O.setDir(usr.dir)
+		if(O.constructor)
+			O.constructor = usr
 		use(R.req_amount * multiplier)
-
-		//START: oh fuck i'm so sorry
-		if(istype(O, /obj/structure/windoor_assembly))
-			var/obj/structure/windoor_assembly/W = O
-			W.ini_dir = W.dir
-		else if(istype(O, /obj/structure/window))
-			var/obj/structure/window/W = O
-			W.ini_dir = W.dir
-		//END: oh fuck i'm so sorry
 
 		else if(istype(O, /obj/item/restraints/handcuffs/cable))
 			var/obj/item/cuffs = O
