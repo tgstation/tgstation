@@ -512,9 +512,6 @@
 	new /obj/effect/temp_visual/ratvar/door(loc)
 	new /obj/effect/temp_visual/ratvar/beam/door(loc)
 	change_construction_value(5)
-	for(var/mob/living/M in orange(1,loc)
-		if(!is_servant_of_ratvar(M) && isliving(M))
-			all_access = TRUE //SNOWFLAKE CODE? NO IDEA WHAT YOU'RE TALKING ABOUT.
 
 /obj/machinery/door/airlock/clockwork/Destroy()
 	change_construction_value(-5)
@@ -607,9 +604,15 @@
 		return 1
 	return 0
 
+/obj/machinery/door/airlock/clockwork/general
+	all_access = TRUE
+
 /obj/machinery/door/airlock/clockwork/brass
 	glass = TRUE
 	opacity = 0
+	
+/obj/machinery/door/airlock/clockwork/brass/general
+	all_access = TRUE
 
 //////////////////////////////////
 /*
