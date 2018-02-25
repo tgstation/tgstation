@@ -40,7 +40,7 @@
 		bite_times++
 	switch(bite_times)
 		if(1)
-			B.say("Haugh!")
+			biter.say("Haugh!")
 		if(2)
 			biter.say("Aurl!")
 		if(3)
