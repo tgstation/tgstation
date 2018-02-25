@@ -180,7 +180,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			if(!autorank)
 				to_chat(world, "Autoadmin rank not found")
 			else
-				new /datum/admins(autorank, ckey, 1)
+				new /datum/admins(autorank, ckey)
 	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin)
 		var/localhost_addresses = list("127.0.0.1", "::1")
 		if(address && (address in localhost_addresses))
