@@ -247,8 +247,8 @@
 /obj/machinery/chem_dispenser/proc/display_beaker()
 	..()
 	var/mutable_appearance/b_o = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
-	b_o.pixel_y = -7
-	b_o.pixel_x = rand(-1, 0)//randomize beaker overlay position.
+	b_o.pixel_y = -4
+	b_o.pixel_x = -7
 	return b_o
 
 /obj/machinery/chem_dispenser/get_cell()
@@ -364,10 +364,11 @@
 		final_list += list(avoid_assoc_duplicate_keys(fuck[1],key_list) = text2num(fuck[2]))
 	return final_list
 
-/obj/machinery/chem_dispenser/drinks/
-	dir = WEST
-	pixel_y = 6
-	layer = WALL_OBJ_LAYER
+/obj/machinery/chem_dispenser/constructable/display_beaker()
+	var/mutable_appearance/b_o = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
+	b_o.pixel_y = -4
+	b_o.pixel_x = -4
+	return b_o
 
 /obj/machinery/chem_dispenser/drinks/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
@@ -393,6 +394,9 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "soda_dispenser"
 	amount = 10
+	dir = WEST
+	pixel_y = 6
+	layer = WALL_OBJ_LAYER
 	dispensable_reagents = list(
 		"water",
 		"ice",
