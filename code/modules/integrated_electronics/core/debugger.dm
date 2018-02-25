@@ -59,4 +59,3 @@
 		io.holder.check_then_do_work(io.ord,ignore_power = TRUE)
 		to_chat(user, "<span class='notice'>You pulse \the [io.holder]'s [io].</span>")
 
-	io.holder.interact(user) // This is to update the UI.

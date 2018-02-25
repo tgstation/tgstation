@@ -23,6 +23,11 @@
 	var/category_text = "NO CATEGORY THIS IS A BUG"	// To show up on circuit printer, and perhaps other places.
 	var/removable = TRUE 			// Determines if a circuit is removable from the assembly.
 	var/displayed_name = ""
+	var/can_be_asked_input = FALSE
+	// vars for prefab
+	var/list/priority_inputs = list()
+	var/list/priority_outputs = list()
+	var/list/priority_activators = list()
 
 /*
 	Integrated circuits are essentially modular machines.  Each circuit has a specific function, and combining them inside Electronic Assemblies allows
@@ -116,7 +121,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		to_chat(M, "<span class='notice'>The circuit '[name]' is now labeled '[input]'.</span>")
 		displayed_name = input
 
-/obj/item/integrated_circuit/interact(mob/user)
+/obj/item/integrated_circuit/interact(mob/user, HTML = "")
 	if(!check_interactivity(user))
 		return
 
@@ -126,7 +131,6 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	var/table_edge_width = "30%"
 	var/table_middle_width = "40%"
 
-	var/HTML = ""
 	HTML += "<html><head><title>[src.displayed_name]</title></head><body>"
 	HTML += "<div align='center'>"
 	HTML += "<table border='1' style='undefined;table-layout: fixed; width: 80%'>"
@@ -162,6 +166,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 					if(io)
 						words += "<b><a href='?src=[REF(src)];act=wire;pin=[REF(io)]'>[io.display_pin_type()] [io.name]</a> \
 						<a href='?src=[REF(src)];act=data;pin=[REF(io)]'>[io.display_data(io.data)]</a></b><br>"
+						words += (io in priority_inputs) ? "<b>Prioritized</b>" : ""
 						if(io.linked.len)
 							for(var/k in 1 to io.linked.len)
 								var/datum/integrated_io/linked = io.linked[k]
@@ -181,6 +186,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 					if(io)
 						words += "<b><a href='?src=[REF(src)];act=wire;pin=[REF(io)]'>[io.display_pin_type()] [io.name]</a> \
 						<a href='?src=[REF(src)];act=data;pin=[REF(io)]'>[io.display_data(io.data)]</a></b><br>"
+						words += (io in priority_outputs) ? "<b>Prioritized</b>" : ""
 						if(io.linked.len)
 							for(var/k in 1 to io.linked.len)
 								var/datum/integrated_io/linked = io.linked[k]
@@ -198,6 +204,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 		words += "<b><a href='?src=[REF(src)];act=wire;pin=[REF(io)]'><font color='FF0000'>[io]</font></a> "
 		words += "<a href='?src=[REF(src)];act=data;pin=[REF(io)]'><font color='FF0000'>[io.data?"\<PULSE OUT\>":"\<PULSE IN\>"]</font></a></b><br>"
+		words += (io in priority_activators) ? "<b>Prioritized</b>" : ""
 		if(io.linked.len)
 			for(var/k in 1 to io.linked.len)
 				var/datum/integrated_io/linked = io.linked[k]
@@ -249,6 +256,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 			if(istype(held_item, /obj/item/device/integrated_electronics) || istype(held_item, /obj/item/device/multitool))
 				pin.handle_wire(linked, held_item, href_list["act"], usr)
+
 			else
 				to_chat(usr, "<span class='warning'>You can't do a whole lot without the proper tools.</span>")
 
@@ -289,6 +297,10 @@ a creative player the means to solve many problems.  Circuits are held inside an
 // Override this for special behaviour when there's no power left.
 /obj/item/integrated_circuit/proc/power_fail()
 	return
+
+/obj/item/integrated_circuit/proc/on_attack_self(mob/user) // mainly used for input types
+	return
+
 
 // Returns true if there's enough power to work().
 /obj/item/integrated_circuit/proc/check_power()
@@ -377,3 +389,11 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return TRUE
 
 	return FALSE
+
+// Called when the circuit is inserted into an assembly. Used by prefab.
+/obj/item/integrated_circuit/proc/on_insert()
+	return
+
+// Called when the circuit is removed from an assembly. Used by prefab.
+/obj/item/integrated_circuit/proc/on_remove()
+	return

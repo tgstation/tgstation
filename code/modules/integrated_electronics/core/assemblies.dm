@@ -83,7 +83,7 @@
 
 	HTML += "<html><head><title>[name]</title></head><body>"
 
-	HTML += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  <a href='?src=[REF(src)];rename=1'>\[Rename\]</a><br>"
+	HTML += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  <a href='?src=[REF(src)];rename=1'>\[Rename\]</a>  |  <a href='?src=[REF(src)];compact=1'>\[Compact\]</a><br>"
 	HTML += "[total_part_size]/[max_components] ([round((total_part_size / max_components) * 100, 0.1)]%) space taken up in the assembly.<br>"
 	HTML += "[total_complexity]/[max_complexity] ([round((total_complexity / max_complexity) * 100, 0.1)]%) maximum complexity.<br>"
 	if(battery)
@@ -138,6 +138,11 @@
 
 	if(href_list["rename"])
 		rename(usr)
+
+	if(href_list["compact"])
+		usr << browse(null, "window=assembly-[REF(src)]")
+		compact()
+		return
 
 	if(href_list["remove_cell"])
 		if(!battery)
@@ -287,6 +292,7 @@
 /obj/item/device/electronic_assembly/proc/add_component(obj/item/integrated_circuit/component)
 	component.forceMove(get_object())
 	component.assembly = src
+	component.on_insert()
 	assembly_components |= component
 
 	//increment numbers for diagnostic hud
@@ -321,6 +327,7 @@
 
 // Actually removes the component, doesn't perform any checks.
 /obj/item/device/electronic_assembly/proc/remove_component(obj/item/integrated_circuit/component)
+	component.on_remove()
 	component.disconnect_all()
 	component.forceMove(drop_location())
 	component.assembly = null
@@ -336,6 +343,12 @@
 	diag_hud_set_circuitstat()
 	diag_hud_set_circuittracking()
 
+// Converts the assembly into an integrated_circuit. This is used to compact several circuits into one.
+/obj/item/device/electronic_assembly/proc/compact()
+	new /obj/item/integrated_circuit/prefab(get_turf(src), src)
+	if(battery)
+		battery.forceMove(get_turf(src))
+	qdel(src)
 
 /obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
 	for(var/obj/item/integrated_circuit/input/S in assembly_components)
@@ -389,10 +402,11 @@
 		return
 	if(opened)
 		interact(user)
+		return
 
 	var/list/input_selection = list()
 	var/list/available_inputs = list()
-	for(var/obj/item/integrated_circuit/input/input in assembly_components)
+	for(var/obj/item/integrated_circuit/input in assembly_components)
 		if(input.can_be_asked_input)
 			available_inputs.Add(input)
 			var/i = 0
@@ -404,7 +418,7 @@
 				disp_name += " ([i+1])"
 			input_selection.Add(disp_name)
 
-	var/obj/item/integrated_circuit/input/choice
+	var/obj/item/integrated_circuit/choice
 	if(available_inputs)
 		if(available_inputs.len ==1)
 			choice = available_inputs[1]
@@ -417,7 +431,7 @@
 				choice = available_inputs[index]
 
 	if(choice)
-		choice.ask_for_input(user)
+		choice.on_attack_self(user)
 
 /obj/item/device/electronic_assembly/emp_act(severity)
 	..()
