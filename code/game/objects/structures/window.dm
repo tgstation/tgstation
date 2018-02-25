@@ -30,7 +30,7 @@
 	var/spawn_cleanable_shards = TRUE
 	var/constructor = null
 
-/ojb/structure/window/new()
+/obf/structure/window/new()
 	..()
 	if(constructor)
 		ini_dir = constructor.dir
