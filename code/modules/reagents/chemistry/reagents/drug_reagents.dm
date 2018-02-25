@@ -435,7 +435,7 @@
 		playsound(get_turf(H), 'sound/effects/meow1.ogg', 65, 1, -1)
 		M.visible_message("<span class='warning bold'>[H] meows loudly!</span>")
 	else if(prob(25))
-		playsound(get_turf(H, 'goon/sound/effects/cat_hiss.ogg', 65, 1, -1)
+		playsound(get_turf(H), 'goon/sound/effects/cat_hiss.ogg', 65, 1, -1)
 		H.visible_message("<span class='warning bold'>[H] hisses!</span>")
 	return ..()
 
