@@ -6,6 +6,8 @@
 	max_integrity = 5
 	icon_state = "pressure_sensor"
 	alpha = 50
+	var/see_safe = FALSE
+	var/list/seen = list()
 
 /obj/structure/destructible/clockwork/trap/trigger/Initialize()
 	. = ..()
@@ -14,12 +16,20 @@
 			wired_to += T
 			T.wired_to += src
 			to_chat(usr, "<span class='alloy'>[src] automatically links with [T] beneath it.</span>")
+	if(see_safe)
+		for(var/mob/living/M in orange(7,affected_mob)) //hey that guy set up a trap over there i saw it
+			seen += M //i probably shouldn't step on it
+			
 
 /obj/structure/destructible/clockwork/trap/trigger/pressure_sensor/Crossed(atom/movable/AM)
-	if(isliving(AM) && !is_servant_of_ratvar(AM))
-		var/mob/living/L = AM
-		if(L.stat || L.m_intent == MOVE_INTENT_WALK || L.lying)
-			return
-		audible_message("<i>*click*</i>")
-		playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
-		activate()
+	if(isliving(AM)
+		if(!is_servant_of_ratvar(AM) || (see_safe && !(AM in seen)))
+			var/mob/living/L = AM
+			if(L.stat || L.m_intent == MOVE_INTENT_WALK || L.lying)
+				return
+			audible_message("<i>*click*</i>")
+			playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
+			activate()
+
+/obj/structure/destructible/clockwork/trap/trigger/pressure_sensor/general
+	see_safe = TRUE
