@@ -358,3 +358,34 @@
 		M.adjustOxyLoss(1, 0)
 	..()
 	. = 1
+
+/datum/reagent/drug/catnip
+	name = "Nepetalactone"
+	id = "catnip"
+	description = "On non-mutant humans, acts as a mild relaxant. When exposed to mutant genes, has some... interesting effects."
+	reagent_state = LIQUID
+	color = "#b3ff99"
+
+/datum/reagent/drug/catnip/on_mob_life(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(iscatperson(H)) //oh boy it's time for fun
+			if(prob(5))
+				playsound(get_turf(H), 'sound/effects/meow1.ogg', 65, 1, -1)
+				H.visible_message("<span class='warning bold'>[H] meows loudly!</span>")
+			else if(prob(5))
+				playsound(get_turf(H), 'goon/sound/effects/cat_hiss.ogg', 65, 1, -1)
+				H.visible_message("<span class='warning bold'>[H] hisses!</span>")
+			else if(prob(2.5))
+				H.Stun(25)
+				to_chat(H, "<span class='notice'>You think you saw a light in the distance... but it fades away as soon as you notice it.</span>")
+			else if(prob(7.5))
+				H.Knockdown(37.5)
+				H.spin(30, 1)
+				H.visible_message("<span class='warning'>[H] rolls around on the floor!</span>", "<span class='notice'>Ahhh... rolling... feels nice.... ahhhhhh....</span>")
+		else
+			if(prob(10))
+				to_chat(H, "<span class='notice'>[pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")]</span>")
+			H.adjustStaminaLoss(-rand(0.1, 0.45)*REM, 0)
+	..()
+	. = 1

@@ -69,6 +69,10 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+		if(iscatperson(H) && H.reagents.has_reagent("catnip")) //to prevent catnip high catpeople from abusing this to throw themselves places
+			H.visible_message("<span class='danger'>[H] tries to point [src], but stares into it instead!</span>", "<span class='danger bold'>Ooh... pretty light.....</span>")
+			H.Stun(10)
+			return
 		if(H.dna.check_mutation(HULK) || (NOGUNS in H.dna.species.species_traits))
 			to_chat(user, "<span class='warning'>Your fingers can't press the button!</span>")
 			return
@@ -126,7 +130,7 @@
 
 	//catpeople
 	for(var/mob/living/carbon/human/H in view(1,targloc))
-		if(!iscatperson(H) || H.incapacitated() || H.eye_blind )
+		if(!iscatperson(H) || H.incapacitated() || H.eye_blind || H.reagents.has_reagent("catnip")) //catnip-high catpeople get their own effects
 			continue
 		if(!H.lying)
 			H.setDir(get_dir(H,targloc)) // kitty always looks at the light
@@ -138,6 +142,12 @@
 				H.visible_message("<span class='notice'>[H] looks briefly distracted by the light.</span>","<span class = 'warning'> You're briefly tempted by the shiny light... </span>")
 		else
 			H.visible_message("<span class='notice'>[H] stares at the light</span>","<span class = 'warning'> You stare at the light... </span>")
+
+	for(var/mob/living/carbon/human/H in view(6,targloc))
+		if(!iscatperson(H) || H.incapacitated() || H.eye_blind || !H.reagents.has_reagent("catnip"))
+			continue
+		H.visible_message("<span class='warning'>[H] leaps for the light!</span>","<span class='userdanger'>OHMYGOD LIGHT! MUST GET THE LIGHT!</span>")
+		H.throw_at(targloc, 6, 2)
 
 	//cats!
 	for(var/mob/living/simple_animal/pet/cat/C in view(1,targloc))
