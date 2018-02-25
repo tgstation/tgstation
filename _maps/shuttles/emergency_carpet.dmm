@@ -1,0 +1,19 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/open/floor/carpet/magic,/area/shuttle/escape)
+"c" = (/obj/structure/chair/comfy/brown{dir = 4},/turf/open/floor/carpet/magic,/area/shuttle/escape)
+"d" = (/obj/machinery/computer/emergency_shuttle{dir = 8},/turf/open/floor/carpet/magic,/area/shuttle/escape)
+"e" = (/obj/docking_port/mobile/emergency{dheight = 0; dir = 2; dwidth = 9; name = "Magic Carpet"; width = 19},/turf/open/floor/carpet/magic,/area/shuttle/escape)
+
+(1,1,1) = {"
+aaaaaaabbebaaaaaaaa
+abbbbbbbbbbbbbbbbba
+bcbccbccbccbccbcbbb
+bcbccbccbccbccbcbbb
+bcbccbccbccbccbcbbb
+bcbbbbbbbbbbbbbcdbb
+bcbccbccbccbccbcbbb
+bcbccbccbccbccbcbbb
+bcbccbccbccbccbcbbb
+abbbbbbbbbbbbbbbbba
+aaaaaaaaaaaaaaaaaaa
+"}
