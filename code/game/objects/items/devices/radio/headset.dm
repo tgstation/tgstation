@@ -24,6 +24,8 @@
 /obj/item/device/radio/headset/Initialize()
 	. = ..()
 	recalculateChannels()
+	if(keyslot)	//can't have channels without a key!
+		desc = desc + keyslot.available_channels
 
 /obj/item/device/radio/headset/Destroy()
 	QDEL_NULL(keyslot2)
@@ -70,12 +72,12 @@
 /obj/item/device/radio/headset/headset_sec
 	keyslot = new /obj/item/device/encryptionkey/headset_sec
 	name = "security radio headset"
-	desc = "This is used by your elite security force.\n" + keyslot.available_channels
+	desc = "This is used by your elite security force.\n"
 	icon_state = "sec_headset"
 
 /obj/item/device/radio/headset/headset_sec/alt
 	name = "security bowman headset"
-	desc = "This is used by your elite security force. Protects ears from flashbangs.\n" + keyslot.available_channels
+	desc = "This is used by your elite security force. Protects ears from flashbangs.\n"
 	icon_state = "sec_headset_alt"
 	item_state = "sec_headset_alt"
 	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
@@ -83,37 +85,37 @@
 /obj/item/device/radio/headset/headset_eng
 	keyslot = new /obj/item/device/encryptionkey/headset_eng
 	name = "engineering radio headset"
-	desc = "When the engineers wish to chat like girls.\n" + keyslot.available_channels
+	desc = "When the engineers wish to chat like girls.\n"
 	icon_state = "eng_headset"
 
 /obj/item/device/radio/headset/headset_rob
 	keyslot = new /obj/item/device/encryptionkey/headset_rob
 	name = "robotics radio headset"
-	desc = "Made specifically for the roboticists, who cannot decide between departments.\n" + keyslot.available_channels
+	desc = "Made specifically for the roboticists, who cannot decide between departments.\n"
 	icon_state = "rob_headset"
 
 /obj/item/device/radio/headset/headset_med
 	keyslot = new /obj/item/device/encryptionkey/headset_med
 	name = "medical radio headset"
-	desc = "A headset for the trained staff of the medbay.\n" + keyslot.available_channels
+	desc = "A headset for the trained staff of the medbay.\n"
 	icon_state = "med_headset"
 
 /obj/item/device/radio/headset/headset_sci
 	keyslot = new /obj/item/device/encryptionkey/headset_sci
 	name = "science radio headset"
-	desc = "A sciency headset. Like usual.\n" + keyslot.available_channels
+	desc = "A sciency headset. Like usual.\n"
 	icon_state = "sci_headset"
 
 /obj/item/device/radio/headset/headset_medsci
 	keyslot = new /obj/item/device/encryptionkey/headset_medsci
 	name = "medical research radio headset"
-	desc = "A headset that is a result of the mating between medical and science.\n" + keyslot.available_channels
+	desc = "A headset that is a result of the mating between medical and science.\n"
 	icon_state = "medsci_headset"
 
 /obj/item/device/radio/headset/headset_com
 	keyslot = new /obj/item/device/encryptionkey/headset_com
 	name = "command radio headset"
-	desc = "A headset with a commanding channel.\n" + keyslot.available_channels
+	desc = "A headset with a commanding channel.\n"
 	icon_state = "com_headset"
 
 /obj/item/device/radio/headset/heads
@@ -122,12 +124,12 @@
 /obj/item/device/radio/headset/heads/captain
 	keyslot = new /obj/item/device/encryptionkey/heads/captain
 	name = "\proper the captain's headset"
-	desc = "The headset of the king.\n" + keyslot.available_channels
+	desc = "The headset of the king.\n"
 	icon_state = "com_headset"
 
 /obj/item/device/radio/headset/heads/captain/alt
 	name = "\proper the captain's bowman headset"
-	desc = "The headset of the boss. Protects ears from flashbangs.\n" + keyslot.available_channels
+	desc = "The headset of the boss. Protects ears from flashbangs.\n"
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
 	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
@@ -135,18 +137,18 @@
 /obj/item/device/radio/headset/heads/rd
 	keyslot = new /obj/item/device/encryptionkey/heads/rd
 	name = "\proper the research director's headset"
-	desc = "Headset of the fellow who keeps society marching towards technological singularity.\n" + keyslot.available_channels
+	desc = "Headset of the fellow who keeps society marching towards technological singularity.\n"
 	icon_state = "com_headset"
 
 /obj/item/device/radio/headset/heads/hos
 	keyslot = new /obj/item/device/encryptionkey/heads/hos
 	name = "\proper the head of security's headset"
-	desc = "The headset of the man in charge of keeping order and protecting the station.\n" + keyslot.available_channels
+	desc = "The headset of the man in charge of keeping order and protecting the station.\n"
 	icon_state = "com_headset"
 
 /obj/item/device/radio/headset/heads/hos/alt
 	name = "\proper the head of security's bowman headset"
-	desc = "The headset of the man in charge of keeping order and protecting the station. Protects ears from flashbangs.\n" + keyslot.available_channels
+	desc = "The headset of the man in charge of keeping order and protecting the station. Protects ears from flashbangs.\n"
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
 	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
@@ -154,44 +156,44 @@
 /obj/item/device/radio/headset/heads/ce
 	keyslot = new /obj/item/device/encryptionkey/heads/ce
 	name = "\proper the chief engineer's headset"
-	desc = "The headset of the guy in charge of keeping the station powered and undamaged.\n" + keyslot.available_channels
+	desc = "The headset of the guy in charge of keeping the station powered and undamaged.\n"
 	icon_state = "com_headset"
 
 /obj/item/device/radio/headset/heads/cmo
 	keyslot = new /obj/item/device/encryptionkey/heads/cmo
 	name = "\proper the chief medical officer's headset"
-	desc = "The headset of the highly trained medical chief.\n" + keyslot.available_channels
+	desc = "The headset of the highly trained medical chief.\n"
 	icon_state = "com_headset"
 
 /obj/item/device/radio/headset/heads/hop
 	keyslot = new /obj/item/device/encryptionkey/heads/hop
 	name = "\proper the head of personnel's headset"
-	desc = "The headset of the guy who will one day be captain.\n" + keyslot.available_channels
+	desc = "The headset of the guy who will one day be captain.\n"
 	icon_state = "com_headset"
 
 /obj/item/device/radio/headset/headset_cargo
 	keyslot = new /obj/item/device/encryptionkey/headset_cargo
 	name = "supply radio headset"
-	desc = "A headset used by the QM and his slaves.\n" + keyslot.available_channels
+	desc = "A headset used by the QM and his slaves.\n"
 	icon_state = "cargo_headset"
 
 /obj/item/device/radio/headset/headset_cargo/mining
 	keyslot = new /obj/item/device/encryptionkey/headset_mining
 	name = "mining radio headset"
-	desc = "Headset used by shaft miners.\n" + keyslot.available_channels
+	desc = "Headset used by shaft miners.\n"
 	icon_state = "mine_headset"
 
 /obj/item/device/radio/headset/headset_srv
 	keyslot = new /obj/item/device/encryptionkey/headset_service
 	name = "service radio headset"
-	desc = "Headset used by the service staff, tasked with keeping the station full, happy and clean.\n" + keyslot.available_channels
+	desc = "Headset used by the service staff, tasked with keeping the station full, happy and clean.\n"
 	icon_state = "srv_headset"
 
 /obj/item/device/radio/headset/headset_cent
-	keyslot = new /obj/item/device/encryptionkey/headset_com
-	keyslot2 = new /obj/item/device/encryptionkey/headset_cent
+	keyslot = new /obj/item/device/encryptionkey/headset_cent	//reordered for inherited Initialize desc from
+	keyslot2 = new /obj/item/device/encryptionkey/headset_com
 	name = "\improper CentCom headset"
-	desc = "A headset used by the upper echelons of Nanotrasen.\n" + keyslot2.available_channels
+	desc = "A headset used by the upper echelons of Nanotrasen.\n"
 	icon_state = "cent_headset"
 
 /obj/item/device/radio/headset/headset_cent/empty
@@ -203,10 +205,10 @@
 
 /obj/item/device/radio/headset/headset_cent/alt
 	name = "\improper CentCom bowman headset"
-	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs.\n" + keyslot2.available_channels
+	desc = "A headset especially for emergency response personnel. Protects ears from flashbangs.\n"
 	icon_state = "cent_headset_alt"
 	item_state = "cent_headset_alt"
-	keyslot = null
+	keyslot2 = null
 	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
 
 /obj/item/device/radio/headset/ai

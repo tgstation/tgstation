@@ -2,7 +2,6 @@
 	name = "standard encryption key"
 	var/standard_description = "An encryption key for a radio headset."
 	var/available_channels = "Has no special codes in it. WHY DOES IT EXIST? ASK NANOTRASEN."
-	desc = standard_description + " " + available_channels
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey"
 	w_class = WEIGHT_CLASS_TINY
@@ -11,10 +10,13 @@
 	var/independent = FALSE
 	var/list/channels = list()
 
+/obj/item/device/encryptionkey/Initialize()
+ 	. = ..()	//I'm assuming this is right and necessary
+	desc = standard_description + " " + available_channels
+
 /obj/item/device/encryptionkey/syndicate
 	name = "syndicate encryption key"
 	available_channels = "To access the syndicate channel, use :t."
-	desc = standard_description + " " + available_channels
 	icon_state = "syn_cypherkey"
 	channels = list("Syndicate" = 1)
 	syndie = 1//Signifies that it de-crypts Syndicate transmissions
@@ -22,49 +24,42 @@
 /obj/item/device/encryptionkey/binary
 	name = "binary translator key"
 	available_channels = "To access the binary channel, use :b."
-	desc = standard_description + " " + available_channels
 	icon_state = "bin_cypherkey"
 	translate_binary = TRUE
 
 /obj/item/device/encryptionkey/headset_sec
 	name = "security radio encryption key"
 	available_channels = "To access the security channel, use :s."
-	desc = standard_description + " " + available_channels
 	icon_state = "sec_cypherkey"
 	channels = list("Security" = 1)
 
 /obj/item/device/encryptionkey/headset_eng
 	name = "engineering radio encryption key"
 	available_channels = "To access the engineering channel, use :e."
-	desc = standard_description + " " + available_channels
 	icon_state = "eng_cypherkey"
 	channels = list("Engineering" = 1)
 
 /obj/item/device/encryptionkey/headset_rob
 	name = "robotics radio encryption key"
 	available_channels = "To access the engineering channel, use :e. For research, use :n."
-	desc = standard_description + " " + available_channels
 	icon_state = "rob_cypherkey"
 	channels = list("Science" = 1, "Engineering" = 1)
 
 /obj/item/device/encryptionkey/headset_med
 	name = "medical radio encryption key"
 	available_channels = "To access the medical channel, use :m."
-	desc = standard_description + " " + available_channels
 	icon_state = "med_cypherkey"
 	channels = list("Medical" = 1)
 
 /obj/item/device/encryptionkey/headset_sci
 	name = "science radio encryption key"
 	available_channels = "To access the science channel, use :n."
-	desc = standard_description + " " + available_channels
 	icon_state = "sci_cypherkey"
 	channels = list("Science" = 1)
 
 /obj/item/device/encryptionkey/headset_medsci
 	name = "medical research radio encryption key"
 	available_channels = "To access the medical channel, use :m. For science, use :n."
-	desc = standard_description + " " + available_channels
 	icon_state = "medsci_cypherkey"
 	channels = list("Science" = 1, "Medical" = 1)
 
@@ -73,7 +68,6 @@
 	if(CONFIG_GET(flag/command_channel))	//uses the default channel description otherwise
 		available_channels = "To access the command channel, use :c."
 		channels = list("Command" = 1)
-	desc = standard_description + " " + available_channels
 	icon_state = "com_cypherkey"
 
 /obj/item/device/encryptionkey/heads/captain
@@ -84,7 +78,6 @@
 	else
 		available_channels = "Channels are as follows: :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 		channels = list("Security" = 1, "Engineering" = 0, "Science" = 0, "Medical" = 0, "Supply" = 0, "Service" = 0)
-	desc = standard_description + " " + available_channels
 	icon_state = "cap_cypherkey"
 
 /obj/item/device/encryptionkey/heads/rd
@@ -95,7 +88,6 @@
 	else
 		available_channels = "To access the science channel, use :n."
 		channels = list("Science" = 1)
-	desc = standard_description + " " + available_channels
 	icon_state = "rd_cypherkey"
 
 /obj/item/device/encryptionkey/heads/hos
@@ -106,7 +98,6 @@
 	else
 		available_channels = "To access the security channel, use :s."
 		channels = list("Security" = 1)
-	desc = standard_description + " " + available_channels
 	icon_state = "hos_cypherkey"
 
 /obj/item/device/encryptionkey/heads/ce
@@ -117,7 +108,6 @@
 	else
 		available_channels = "To access the engineering channel, use :e."
 		channels = list("Engineering" = 1)
-	desc = standard_description + " " + available_channels
 	icon_state = "ce_cypherkey"
 
 /obj/item/device/encryptionkey/heads/cmo
@@ -128,7 +118,6 @@
 	else
 		available_channels = "To access the medical channel, use :m."
 		channels = list("Medical" = 1)
-	desc = standard_description + " " + available_channels
 	icon_state = "cmo_cypherkey"
 
 /obj/item/device/encryptionkey/heads/hop
@@ -139,34 +128,29 @@
 	else
 		available_channels = "Channels are as follows: :u - supply, :v - service."
 		channels = list("Supply" = 1, "Service" = 1)
-	desc = standard_description + " " + available_channels
 	icon_state = "hop_cypherkey"
 
 /obj/item/device/encryptionkey/headset_cargo
 	name = "supply radio encryption key"
 	available_channels = "To access the supply channel, use :u."
-	desc = standard_description + " " + available_channels
 	icon_state = "cargo_cypherkey"
 	channels = list("Supply" = 1)
 
 /obj/item/device/encryptionkey/headset_mining
 	name = "mining radio encryption key"
 	available_channels = "To access the supply channel, use :u. For science, use :n."
-	desc = standard_description + " " + available_channels
 	icon_state = "cargo_cypherkey"
 	channels = list("Supply" = 1, "Science" = 1)
 
 /obj/item/device/encryptionkey/headset_service
 	name = "service radio encryption key"
 	available_channels = "To access the service channel, use :v."
-	desc = standard_description + " " + available_channels
 	icon_state = "srv_cypherkey"
 	channels = list("Service" = 1)
 
 /obj/item/device/encryptionkey/headset_cent
 	name = "\improper CentCom radio encryption key"
 	available_channels = "To access the CentCom channel, use :y."
-	desc = standard_description + " " + available_channels
 	icon_state = "cent_cypherkey"
 	independent = TRUE
 	channels = list("CentCom" = 1)
