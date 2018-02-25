@@ -24,7 +24,7 @@
 /obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(src.loc, I.usesound, 50, 1)
+		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
 			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			deconstruct(TRUE)

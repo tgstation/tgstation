@@ -113,14 +113,7 @@
 			if("To Kill")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 				to_chat(user, "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart.")
-				user.mind.special_role = ROLE_TRAITOR
-				
-				var/datum/objective/hijack/hijack = new
-				hijack.owner = user.mind
-				user.mind.objectives += hijack
-				user.mind.add_antag_datum(/datum/antagonist/auto_custom)
-				to_chat(user, "<B>Your inhibitions are swept away, the bonds of loyalty broken, you are free to murder as you please!</B>")
-				user.mind.announce_objectives()
+				user.mind.add_antag_datum(/datum/antagonist/wishgranter)
 				user.set_species(/datum/species/shadow)
 			if("Peace")
 				to_chat(user, "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>")

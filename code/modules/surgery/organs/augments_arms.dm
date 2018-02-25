@@ -41,25 +41,19 @@
 	..()
 	to_chat(user, "<span class='info'>[src] is assembled in the [zone == "r_arm" ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.</span>")
 
-/obj/item/organ/cyberimp/arm/attackby(obj/item/W, mob/user, params)
-	..()
-	if(istype(W, /obj/item/screwdriver))
-		if(zone == "r_arm")
-			zone = "l_arm"
-		else
-			zone = "r_arm"
-		SetSlotFromZone()
-		to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == "r_arm" ? "right" : "left"] arm.</span>")
-		update_icon()
-	else if(istype(W, /obj/item/card/emag))
-		emag_act()
+/obj/item/organ/cyberimp/arm/screwdriver_act(mob/living/user, obj/item/I)
+	I.play_tool_sound(src)
+	if(zone == "r_arm")
+		zone = "l_arm"
+	else
+		zone = "r_arm"
+	SetSlotFromZone()
+	to_chat(user, "<span class='notice'>You modify [src] to be installed on the [zone == "r_arm" ? "right" : "left"] arm.</span>")
+	update_icon()
 
 /obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/M, special = 0)
 	Retract()
 	..()
-
-/obj/item/organ/cyberimp/arm/emag_act()
-	return 0
 
 /obj/item/organ/cyberimp/arm/emp_act(severity)
 	if(prob(15/severity) && owner)
@@ -126,10 +120,6 @@
 		to_chat(owner, "<span class='warning'>The implant doesn't respond. It seems to be broken...</span>")
 		return
 
-	// You can emag the arm-mounted implant by activating it while holding emag in it's hand.
-	if(istype(owner.get_active_held_item(), /obj/item/card/emag) && emag_act())
-		return
-
 	if(!holder || (holder in src))
 		holder = null
 		if(contents.len == 1)
@@ -175,7 +165,6 @@
 
 /obj/item/organ/cyberimp/arm/gun/taser/l
 	zone = "l_arm"
-
 
 /obj/item/organ/cyberimp/arm/toolset
 	name = "integrated toolset implant"

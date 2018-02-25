@@ -7,7 +7,7 @@
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 350
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 30, "acid" = 30)
 	layer = ABOVE_WINDOW_LAYER
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
@@ -219,7 +219,7 @@
 			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * temperature_delta * (air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
 
 			air1.temperature = max(air1.temperature - heat / air_heat_capacity, TCMB)
-			mob_occupant.bodytemperature = max(mob_occupant.bodytemperature + heat / heat_capacity, TCMB)
+			mob_occupant.adjust_bodytemperature(heat / heat_capacity, TCMB)
 
 		air1.gases[/datum/gas/oxygen][MOLES] = max(0,air1.gases[/datum/gas/oxygen][MOLES] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
 		air1.garbage_collect()

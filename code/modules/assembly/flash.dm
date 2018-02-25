@@ -245,7 +245,7 @@
 	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
 	attack_verb = list("shoved", "bashed")
 	block_chance = 50
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 80, acid = 70)
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 
 /obj/item/device/assembly/flash/shield/flash_recharge(interval=10)
 	if(times_used >= 4)

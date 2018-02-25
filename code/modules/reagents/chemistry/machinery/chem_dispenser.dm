@@ -7,7 +7,7 @@
 	icon_state = "dispenser"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
-	interact_offline = 1
+	interact_offline = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/cell_type = /obj/item/stock_parts/cell/high
 	var/obj/item/stock_parts/cell/cell
@@ -419,7 +419,10 @@
 		"cognac",
 		"ale",
 		"absinthe",
-		"hcider"
+		"hcider",
+		"creme_de_menthe",
+		"creme_de_cacao",
+		"triple_sec"
 	)
 	emagged_reagents = list(
 		"ethanol",

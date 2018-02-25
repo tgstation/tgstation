@@ -373,20 +373,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
 
-// Medal names
-#define BOSS_KILL_MEDAL "Killer"
-#define ALL_KILL_MEDAL "Exterminator"	//Killing all of x type
-
-// Score names
-#define LEGION_SCORE "Legion Killed"
-#define COLOSSUS_SCORE "Colossus Killed"
-#define BUBBLEGUM_SCORE "Bubblegum Killed"
-#define DRAKE_SCORE "Drakes Killed"
-#define BIRD_SCORE "Hierophants Killed"
-#define SWARMER_BEACON_SCORE "Swarmer Beacons Killed"
-#define BOSS_SCORE "Bosses Killed"
-#define TENDRIL_CLEAR_SCORE "Tendrils Killed"
-
 //TODO Move to a pref
 #define STATION_GOAL_BUDGET  1
 

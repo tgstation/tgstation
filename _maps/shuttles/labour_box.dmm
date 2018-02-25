@@ -111,7 +111,6 @@
 	id = "laborcamp";
 	name = "labor camp shuttle";
 	port_direction = 4;
-	timid = 1;
 	width = 9
 	},
 /turf/open/floor/mineral/titanium/blue,

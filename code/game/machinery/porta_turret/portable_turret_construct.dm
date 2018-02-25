@@ -23,14 +23,14 @@
 	switch(build_step)
 		if(PTURRET_UNSECURED)	//first step
 			if(istype(I, /obj/item/wrench) && !anchored)
-				playsound(loc, I.usesound, 100, 1)
+				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You secure the external bolts.</span>")
 				anchored = TRUE
 				build_step = PTURRET_BOLTED
 				return
 
 			else if(istype(I, /obj/item/crowbar) && !anchored)
-				playsound(loc, I.usesound, 75, 1)
+				I.play_tool_sound(src, 75)
 				to_chat(user, "<span class='notice'>You dismantle the turret construction.</span>")
 				new /obj/item/stack/sheet/metal( loc, 5)
 				qdel(src)
@@ -48,7 +48,7 @@
 				return
 
 			else if(istype(I, /obj/item/wrench))
-				playsound(loc, I.usesound, 75, 1)
+				I.play_tool_sound(src, 75)
 				to_chat(user, "<span class='notice'>You unfasten the external bolts.</span>")
 				anchored = FALSE
 				build_step = PTURRET_UNSECURED
@@ -57,7 +57,7 @@
 
 		if(PTURRET_START_INTERNAL_ARMOUR)
 			if(istype(I, /obj/item/wrench))
-				playsound(loc, I.usesound, 100, 1)
+				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You bolt the metal armor into place.</span>")
 				build_step = PTURRET_INTERNAL_ARMOUR_ON
 				return
@@ -86,7 +86,7 @@
 				return
 
 			else if(istype(I, /obj/item/wrench))
-				playsound(loc, I.usesound, 100, 1)
+				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You remove the turret's metal armor bolts.</span>")
 				build_step = PTURRET_START_INTERNAL_ARMOUR
 				return
@@ -103,7 +103,7 @@
 
 		if(PTURRET_SENSORS_ON)
 			if(istype(I, /obj/item/screwdriver))
-				playsound(loc, I.usesound, 100, 1)
+				I.play_tool_sound(src, 100)
 				build_step = PTURRET_CLOSED
 				to_chat(user, "<span class='notice'>You close the internal access hatch.</span>")
 				return
@@ -120,7 +120,7 @@
 				return
 
 			else if(istype(I, /obj/item/screwdriver))
-				playsound(loc, I.usesound, 100, 1)
+				I.play_tool_sound(src, 100)
 				build_step = PTURRET_SENSORS_ON
 				to_chat(user, "<span class='notice'>You open the internal access hatch.</span>")
 				return
@@ -149,7 +149,7 @@
 					qdel(src)
 
 			else if(istype(I, /obj/item/crowbar))
-				playsound(loc, I.usesound, 75, 1)
+				I.play_tool_sound(src, 75)
 				to_chat(user, "<span class='notice'>You pry off the turret's exterior armor.</span>")
 				new /obj/item/stack/sheet/metal(loc, 2)
 				build_step = PTURRET_CLOSED

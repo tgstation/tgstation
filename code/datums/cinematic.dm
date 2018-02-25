@@ -57,8 +57,6 @@ GLOBAL_LIST_EMPTY(cinematics)
 
 	//Close all open windows if global
 	if(is_global)
-		for (var/datum/html_interface/hi in GLOB.html_interfaces)
-			hi.closeAll()
 		SStgui.close_all_uis()
 
 

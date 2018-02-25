@@ -95,6 +95,49 @@
 	..()
 	return INITIALIZE_HINT_QDEL
 
+
+//airlock helpers
+/obj/effect/mapping_helpers/airlock
+	layer = DOOR_HELPER_LAYER
+
+/obj/effect/mapping_helpers/airlock/cyclelink_helper
+	name = "airlock cyclelink helper"
+	icon_state = "airlock_cyclelink_helper"
+
+/obj/effect/mapping_helpers/airlock/cyclelink_helper/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_world("### MAP WARNING, [src] spawned outside of mapload!")
+		return
+	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
+	if(airlock)
+		if(airlock.cyclelinkeddir)
+			log_world("### MAP WARNING, [src] at [COORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
+		else
+			airlock.cyclelinkeddir = dir
+	else
+		log_world("### MAP WARNING, [src] failed to find an airlock at [COORD(src)]")		
+
+
+/obj/effect/mapping_helpers/airlock/locked
+	name = "airlock lock helper"
+	icon_state = "airlock_locked_helper"
+
+/obj/effect/mapping_helpers/airlock/locked/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_world("### MAP WARNING, [src] spawned outside of mapload!")
+		return
+	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
+	if(airlock)
+		if(airlock.locked)
+			log_world("### MAP WARNING, [src] at [COORD(src)] tried to bolt [airlock] but it's already locked!")
+		else
+			airlock.locked = TRUE
+	else
+		log_world("### MAP WARNING, [src] failed to find an airlock at [COORD(src)]")
+
+
 //needs to do its thing before spawn_rivers() is called
 INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 

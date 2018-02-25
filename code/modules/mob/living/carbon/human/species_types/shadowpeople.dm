@@ -200,7 +200,7 @@
 	if(istype(O, /obj/item/device/pda))
 		var/obj/item/device/pda/PDA = O
 		PDA.set_light(0)
-		PDA.fon = 0
+		PDA.fon = FALSE
 		PDA.f_lum = 0
 		PDA.update_icon()
 		visible_message("<span class='danger'>The light in [PDA] shorts out!</span>")

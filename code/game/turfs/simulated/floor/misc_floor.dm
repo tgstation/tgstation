@@ -196,6 +196,9 @@
 		flick_overlay(I, viewing, 8)
 		L.adjustToxLoss(-3, TRUE, TRUE)
 
+/turf/open/floor/clockwork/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
+
 /turf/open/floor/clockwork/crowbar_act(mob/living/user, obj/item/I)
 	if(baseturfs == type)
 		return TRUE
