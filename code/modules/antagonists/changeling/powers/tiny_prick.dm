@@ -244,3 +244,29 @@
 	if(target.reagents)
 		target.reagents.add_reagent("frostoil", 30)
 	return TRUE
+
+/obj/effect/proc_holder/changeling/sting/thoughtsteal
+	name = "Thoughtsteal"
+	desc = "We silently read the brain impulses and biology of a human nearby, revealing their memories to us."
+	helptext = "The victim has no immediate effects, but will feel side effects within one minute."
+	sting_icon = "sting_thoughtsteal"
+	chemical_cost = 15
+	dna_cost = 1
+
+/obj/effect/proc_holder/changeling/sting/thoughtsteal/sting_action(mob/living/user, mob/living/target)
+	add_logs(user, target, "stung", "thoughtsteal sting")
+	to_chat(user, "<span class='notice'>[target]'s memories slowly flit through our mind.</span>")
+	target.mind.show_memory(user, 0)
+	addtimer(CALLBACK(src, .proc/thoughtstolen, target), rand(300, 600))
+	return TRUE
+
+/obj/effect/proc_holder/changeling/sting/thoughtsteal/proc/thoughtstolen(mob/living/victim)
+	switch(rand(1, 3))
+		if(1) //fluff message
+			to_chat(victim, "<span class='boldwarning'>You suddenly realize that you can't clearly remember the details of the past few minutes...</span>")
+		if(2) //blurred vision
+			to_chat(victim, "<span class='boldwarning'>Your head pounds. Thinking is hard.</span>")
+			victim.blur_eyes(5)
+		if(3) //hallucinations
+			to_chat(victim, "<span class='boldwarning'>Your vision swims. You feel as though you're trying to remember something that doesn't exist.</span>")
+			victim.hallucination += 10

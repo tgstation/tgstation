@@ -109,7 +109,10 @@
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 50, 1)
+	if(mind && mind.has_antag_datum(/datum/antagonist/changeling)) //changelings burn more prettily
+		location.hotspot_expose(1000, 50, 1)
+	else
+		location.hotspot_expose(700, 50, 1)
 
 /mob/living/proc/handle_stomach()
 	return

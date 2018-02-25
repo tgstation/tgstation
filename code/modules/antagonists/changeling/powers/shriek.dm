@@ -6,7 +6,7 @@
 	dna_cost = 1
 	req_human = 1
 
-//A flashy ability, good for crowd control and sewing chaos.
+//A flashy ability, good for crowd control and sewing chaos. //it's SOWING
 /obj/effect/proc_holder/changeling/resonant_shriek/sting_action(mob/user)
 	for(var/mob/living/M in get_hearers_in_view(4, user))
 		if(iscarbon(M))
@@ -33,7 +33,7 @@
 	chemical_cost = 20
 	dna_cost = 1
 
-//A flashy ability, good for crowd control and sewing chaos.
+//A flashy ability, good for crowd control and sewing chaos. //see above
 /obj/effect/proc_holder/changeling/dissonant_shriek/sting_action(mob/user)
 	for(var/obj/machinery/light/L in range(5, usr))
 		L.on = 1

@@ -9,7 +9,11 @@
 
 //Recover from stuns.
 /obj/effect/proc_holder/changeling/adrenaline/sting_action(mob/living/user)
-	to_chat(user, "<span class='notice'>Energy rushes through us.[user.lying ? " We arise." : ""]</span>")
+	if(!user.on_fire)
+		to_chat(user, "<span class='notice'>Energy rushes through us.[user.lying ? " We arise." : ""]</span>")
+	else
+		to_chat(user, "<span class='danger'>Terror and adrenaline howl through us. [user.lying ? " We stagger to our feet." : ""]</span>")
+		user.confused += 10
 	user.SetSleeping(0)
 	user.SetUnconscious(0)
 	user.SetStun(0)

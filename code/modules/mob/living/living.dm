@@ -879,11 +879,16 @@
 
 
 //Mobs on Fire
-/mob/living/proc/IgniteMob()
+/mob/living/proc/IgniteMob(silent)
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
-		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
-						"<span class='userdanger'>You're set on fire!</span>")
+		if(!silent)
+			if(!mind || !mind.has_antag_datum(/datum/antagonist/changeling))
+				visible_message("<span class='warning'>[src] catches fire!</span>", "<span class='userdanger'>You're set on fire!</span>")
+			else
+				visible_message("<span class='warning'>[src] catches fire!</span>", "<span class='boldannounce reallybig'>FIRE! OUR SKIN! PUT IT OUT! <i>PUT IT OOOUT!</i></span>")
+				playsound_local(src, 'sound/creatures/changeling_ignite.ogg', 75, TRUE)
+			playsound(src, 'sound/effects/ignite.ogg', 50, TRUE)
 		new/obj/effect/dummy/fire(src)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()

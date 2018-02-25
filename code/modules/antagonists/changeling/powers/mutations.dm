@@ -21,10 +21,13 @@
 	var/weapon_type
 	var/weapon_name_simple
 
-/obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/living/user, mob/target)
 	for(var/obj/item/I in user.held_items)
 		if(check_weapon(user, I))
 			return
+	if(user.on_fire)
+		to_chat(user, "<span class='userdanger'>Our flesh cries out from the flames! It will not respond to our commands!</span>")
+		return
 	..(user, target)
 
 /obj/effect/proc_holder/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item)
@@ -75,10 +78,13 @@
 	var/recharge_slowdown = 0
 	var/blood_on_castoff = 0
 
-/obj/effect/proc_holder/changeling/suit/try_to_sting(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/suit/try_to_sting(mob/living/user, mob/target)
 	if(check_suit(user))
 		return
 	var/mob/living/carbon/human/H = user
+	if(user.on_fire)
+		to_chat(user, "<span class='userdanger'>Our flesh cries out from the flames! It will not respond to our commands!</span>")
+		return
 	..(H, target)
 
 //checks if we already have an organic suit and casts it off.
