@@ -35,9 +35,3 @@ datum/species/human/on_species_gain(mob/living/carbon/human/H, datum/species/old
 	if(H.dna.features["tail_human"] == "Cat")
 		mutanttail = /obj/item/organ/tail/cat
 	..()
-
-/datum/species/human/after_equip_job(datum/job/J, mob/living/carbon/human/H)
-	if(CONFIG_GET(flag/high_latin))	//a language for head rank and above Nanotrasen personnel, nuthin personnel, greyshirt
-		var/list/heads = list("Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
-		if(H.mind && (H.mind.assigned_role in heads || H.mind.has_antag_datum(/datum/antagonist/official) || H.mind.has_antag_datum(/datum/antagonist/ert)))
-			H.grant_language(/datum/language/highlatin)
