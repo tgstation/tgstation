@@ -266,3 +266,5 @@
 /datum/config_entry/flag/shift_time_realtime
 
 /datum/config_entry/flag/high_latin
+
+/datum/config_entry/flag/command_channel
