@@ -29,6 +29,7 @@
 	var/datum/mind/clonemind
 	var/grab_ghost_when = CLONER_MATURE_CLONE
 
+	var/internal_radio = TRUE
 	var/obj/item/device/radio/radio
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
 	var/radio_channel = "Medical"
@@ -38,24 +39,17 @@
 	var/list/unattached_flesh
 	var/flesh_number = 0
 
-	// The "brine" is the reagents that are automatically added in small
-	// amounts to the occupant.
-	var/static/list/brine_types = list(
-		"salbutamol", // anti-oxyloss
-		"bicaridine", // NOBREATHE species take brute in crit
-		"corazone", // prevents cardiac arrest and liver failure damage
-		"mimesbane", // stops them gasping from lack of air.
-		"mutetoxin") // stops them from killing themselves BY DEATHWHISPERING INSIDE A CLONE POD NICE JOB BREAKING IT HERO
 /obj/machinery/clonepod/Initialize()
 	. = ..()
 
 	countdown = new(src)
 
-	radio = new(src)
-	radio.keyslot = new radio_key
-	radio.subspace_transmission = TRUE
-	radio.canhear_range = 0
-	radio.recalculateChannels()
+	if(internal_radio)
+		radio = new(src)
+		radio.keyslot = new radio_key
+		radio.subspace_transmission = TRUE
+		radio.canhear_range = 0
+		radio.recalculateChannels()
 
 /obj/machinery/clonepod/Destroy()
 	go_out()
@@ -218,8 +212,9 @@
 	else if(mob_occupant && (mob_occupant.loc == src))
 		if((mob_occupant.stat == DEAD) || (mob_occupant.suiciding) || mob_occupant.hellbound)  //Autoeject corpses and suiciding dudes.
 			connected_message("Clone Rejected: Deceased.")
-			SPEAK("The cloning of [mob_occupant.real_name] has been \
-				aborted due to unrecoverable tissue failure.")
+			if(internal_radio)
+				SPEAK("The cloning of [mob_occupant.real_name] has been \
+					aborted due to unrecoverable tissue failure.")
 			go_out()
 
 		else if(mob_occupant.cloneloss > (100 - heal_level))
@@ -252,7 +247,8 @@
 
 		else if((mob_occupant.cloneloss <= (100 - heal_level)))
 			connected_message("Cloning Process Complete.")
-			SPEAK("The cloning cycle of [mob_occupant.real_name] is complete.")
+			if(internal_radio)
+				SPEAK("The cloning cycle of [mob_occupant.real_name] is complete.")
 
 			// If the cloner is upgraded to debugging high levels, sometimes
 			// organs and limbs can be missing.
@@ -457,13 +453,10 @@
 	flesh_number = unattached_flesh.len
 
 /obj/machinery/clonepod/proc/check_brine()
-	// Clones are in a pickled bath of mild chemicals, keeping
+	// Clones are in a pickled bath of stasis brine, keeping
 	// them alive, despite their lack of internal organs
-	for(var/bt in brine_types)
-		if(bt == "corazone" && occupant.reagents.get_reagent_amount(bt) < 2)
-			occupant.reagents.add_reagent(bt, 2)//pump it full of extra corazone as a safety, you can't OD on corazone.
-		else if(occupant.reagents.get_reagent_amount(bt) < 1)
-			occupant.reagents.add_reagent(bt, 1)
+	if(occupant.reagents.get_reagent_amount("stasis_brine") < 2)
+		occupant.reagents.add_reagent("stasis_brine", 2)
 
 /*
  *	Manual -- A big ol' manual.

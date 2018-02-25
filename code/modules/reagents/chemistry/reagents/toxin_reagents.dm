@@ -810,6 +810,7 @@
 	toxpwr = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
+	self_consuming = TRUE
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))

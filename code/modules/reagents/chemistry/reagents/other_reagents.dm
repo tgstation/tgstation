@@ -1778,7 +1778,7 @@
 	id = "synthpax"
 	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-  
+
 /datum/reagent/bz_metabolites
 	name = "BZ metabolites"
 	id = "bz_metabolites"
@@ -1801,3 +1801,33 @@
 		if(changeling)
 			changeling.chem_charges = max(changeling.chem_charges-2, 0)
 	return ..()
+
+/datum/reagent/stasis_brine
+	name = "Stasis Brine"
+	description = "Used inside cloning pods to sustain the growing body."
+	color = "#09999"
+	id = "stasis_brine"
+	metabolization_rate = REAGENTS_METABOLISM
+	self_consuming = TRUE
+
+/datum/reagent/stasis_brine/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_STABLEHEART, id)
+		L.add_trait(TRAIT_EMOTEMUTE, id)
+		L.add_trait(TRAIT_MUTE, id)
+
+/datum/reagent/stasis_brine/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_STABLEHEART, id)
+		L.remove_trait(TRAIT_EMOTEMUTE, id)
+		L.remove_trait(TRAIT_MUTE, id)
+	..()
+
+/datum/reagent/stasis_brine/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(-3*REM, 0)
+	M.adjustOxyLoss(-6*REM, 0)
+	M.losebreath = 0
+	..()
