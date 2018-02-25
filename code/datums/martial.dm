@@ -20,6 +20,9 @@
 /datum/martial_art/proc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
 
+/datum/martial_art/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+	return
+
 /datum/martial_art/proc/add_to_streak(element,mob/living/carbon/human/D)
 	if(D != current_target)
 		current_target = D
