@@ -62,7 +62,7 @@
 /obj/item/bodypart/attack(mob/living/carbon/C, mob/user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(EASYLIMBATTACHMENT in H.dna.species.species_traits)
+		if(C.has_trait(TRAIT_LIMBATTACHMENT))
 			if(!H.get_bodypart(body_zone) && !animal_origin)
 				if(H == user)
 					H.visible_message("<span class='warning'>[H] jams [src] into [H.p_their()] empty socket!</span>",\
