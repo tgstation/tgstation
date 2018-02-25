@@ -302,6 +302,7 @@
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut
 	name = "Gauntlet Echo"
+	alpha = 180
 	amt_dam_brute = 30
 	amt_knockdown = 50
 	sound = 'sound/weapons/punch3.ogg'
