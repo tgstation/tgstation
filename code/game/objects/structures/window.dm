@@ -30,8 +30,8 @@
 	var/spawn_cleanable_shards = TRUE
 	var/constructor = null
 
-/obf/structure/window/new()
-	..()
+/obj/structure/window/Initialize()
+	. = ..()
 	if(constructor)
 		ini_dir = constructor.dir
 
