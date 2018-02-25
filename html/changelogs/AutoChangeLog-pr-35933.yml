@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - tweak: "Operating computers now display the chemicals required to complete a surgery step, if there are any."
+  - tweak: "Completing a surgery without the required chems will always result in failure, instead of a success with no effect."

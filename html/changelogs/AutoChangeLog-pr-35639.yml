@@ -1,0 +1,9 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - balance: "Wizard spells and items can now be resisted/ignored with anti-magic items/clothing such as null rods!"
+  - balance: "Revenant spells can now be resisted with \"holy\" items like null rods and bibles."
+  - balance: "Wizard hardsuits are now magic immune, but not holy."
+  - balance: "Immortality Talismans now grant both spell and holy immunity."
+  - tweak: "Inquisitor Hardsuits already granted spell and holy immunity, but now they do it properly instead of having a null rod embedded inside."
+  - tweak: "Holy Melons now grant holy immunity."

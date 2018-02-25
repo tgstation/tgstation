@@ -195,6 +195,8 @@
 			continue
 		if(locate(/datum/objective/sintouched) in H.mind.objectives)
 			continue
+		if(H.anti_magic_check(FALSE, TRUE))
+			continue
 		H.influenceSin()
 		H.Knockdown(400)
 

@@ -329,10 +329,10 @@
 
 //Outdated but still in use apparently. This should at least be a human proc.
 //Daily reminder to murder this - Remie.
-/mob/living/proc/get_equipped_items()
+/mob/living/proc/get_equipped_items(include_pockets = FALSE)
 	return
 
-/mob/living/carbon/get_equipped_items()
+/mob/living/carbon/get_equipped_items(include_pockets = FALSE)
 	var/list/items = list()
 	if(back)
 		items += back
@@ -344,7 +344,7 @@
 		items += wear_neck
 	return items
 
-/mob/living/carbon/human/get_equipped_items()
+/mob/living/carbon/human/get_equipped_items(include_pockets = FALSE)
 	var/list/items = ..()
 	if(belt)
 		items += belt
@@ -362,6 +362,13 @@
 		items += wear_suit
 	if(w_uniform)
 		items += w_uniform
+	if(include_pockets)
+		if(l_store)
+			items += l_store
+		if(r_store)
+			items += r_store
+		if(s_store)
+			items += s_store
 	return items
 
 /mob/living/proc/unequip_everything()

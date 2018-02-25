@@ -67,13 +67,16 @@
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
+	if(user.has_trait(TRAIT_NOGUNS))
+		to_chat(user, "<span class='warning'>Your fingers can't press the button!</span>")
+		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(iscatperson(H) && H.reagents.has_reagent("catnip")) //to prevent catnip high catpeople from abusing this to throw themselves places
 			H.visible_message("<span class='danger'>[H] tries to point [src], but stares into it instead!</span>", "<span class='danger bold'>Ooh... pretty light.....</span>")
 			H.Stun(10)
 			return
-		if(H.dna.check_mutation(HULK) || (NOGUNS in H.dna.species.species_traits))
+		else if(H.dna.check_mutation(HULK))
 			to_chat(user, "<span class='warning'>Your fingers can't press the button!</span>")
 			return
 
