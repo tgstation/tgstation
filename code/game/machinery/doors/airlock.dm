@@ -101,8 +101,6 @@
 /obj/machinery/door/airlock/Initialize()
 	. = ..()
 	wires = new /datum/wires/airlock(src)
-	if (cyclelinkeddir)
-		cyclelinkairlock()
 	if(frequency)
 		set_frequency(frequency)
 
@@ -127,15 +125,20 @@
 
 /obj/machinery/door/airlock/LateInitialize()
 	. = ..()
+	if (cyclelinkeddir)
+		cyclelinkairlock()
 	if(abandoned)
 		var/outcome = rand(1,100)
 		switch(outcome)
 			if(1 to 9)
 				var/turf/here = get_turf(src)
 				for(var/turf/closed/T in range(2, src))
-					here.ChangeTurf(T.type)
-					return INITIALIZE_HINT_QDEL
+					here.PlaceOnTop(T.type)
+					qdel(src)
+					return
 				here.PlaceOnTop(/turf/closed/wall)
+				qdel(src)
+				return
 			if(9 to 11)
 				lights = FALSE
 				locked = TRUE
@@ -175,6 +178,7 @@
 		limit--
 	while(!FoundDoor && limit)
 	if (!FoundDoor)
+		log_world("### MAP WARNING, [src] at [get_area_name(src, TRUE)] [COORD(src)] failed to find a valid airlock to cyclelink with!")
 		return
 	FoundDoor.cyclelinkedairlock = src
 	cyclelinkedairlock = FoundDoor
@@ -869,11 +873,11 @@
 			return
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the airlock.</span>")
-		playsound(src.loc, C.usesound, 50, 1)
+		C.play_tool_sound(src)
 		src.update_icon()
 	else if(istype(C, /obj/item/wirecutters) && note)
 		user.visible_message("<span class='notice'>[user] cuts down [note] from [src].</span>", "<span class='notice'>You remove [note] from [src].</span>")
-		playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
+		C.play_tool_sound(src)
 		note.forceMove(get_turf(user))
 		note = null
 		update_icon()
@@ -923,9 +927,7 @@
 			user.visible_message("[user] is [welded ? "unwelding":"welding"] the airlock.", \
 							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
 							"<span class='italics'>You hear welding.</span>")
-			playsound(loc, W.usesound, 40, 1)
-			if(W.use_tool(src, user, 40, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
-				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+			if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 				welded = !welded
 				user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
 									"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
@@ -937,9 +939,7 @@
 				user.visible_message("[user] is welding the airlock.", \
 								"<span class='notice'>You begin repairing the airlock...</span>", \
 								"<span class='italics'>You hear welding.</span>")
-				playsound(loc, W.usesound, 40, 1)
-				if(W.use_tool(src, user, 40, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
-					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+				if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 					obj_integrity = max_integrity
 					stat &= ~BROKEN
 					user.visible_message("[user.name] has repaired [src].", \
@@ -959,8 +959,7 @@
 		beingcrowbarred = 0
 	if(panel_open && charge)
 		to_chat(user, "<span class='notice'>You carefully start removing [charge] from [src]...</span>")
-		playsound(get_turf(src), I.usesound, 50, 1)
-		if(!I.use_tool(src, user, 150))
+		if(!I.use_tool(src, user, 150, volume=50))
 			to_chat(user, "<span class='warning'>You slip and [charge] detonates!</span>")
 			charge.ex_act(EXPLODE_DEVASTATE)
 			user.Knockdown(60)
@@ -971,10 +970,9 @@
 		charge = null
 		return
 	if(beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked)))
-		playsound(src.loc, I.usesound, 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
-		if(I.use_tool(src, user, 40))
+		if(I.use_tool(src, user, 40, volume=100))
 			deconstruct(TRUE, user)
 			return
 	else if(hasPower())

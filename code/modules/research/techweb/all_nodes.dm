@@ -26,7 +26,7 @@
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-	design_ids = list("piercesyringe", "plasmarefiller", "limbgrower")
+	design_ids = list("piercesyringe", "plasmarefiller", "limbgrower", "defibrillator")
 	research_cost = 2500
 	export_price = 5000
 
@@ -35,8 +35,36 @@
 	display_name = "Biological Processing"
 	description = "From slimes to kitchens."
 	prereq_ids = list("biotech")
-	design_ids = list("smartfridge", "gibber", "deepfryer", "monkey_recycler", "processor", "gibber", "microwave")
+	design_ids = list("smartfridge", "gibber", "deepfryer", "monkey_recycler", "processor", "gibber", "microwave", "reagentgrinder", "dish_drive")
 	research_cost = 2500
+	export_price = 5000
+
+/////////////////////////Advanced Surgery/////////////////////////
+/datum/techweb_node/adv_surgery
+	id = "adv_surgery"
+	display_name = "Advanced Surgery"
+	description = "When simple medicine doesn't cut it."
+	prereq_ids = list("adv_biotech")
+	design_ids = list("surgery_lobotomy", "surgery_reconstruction")
+	research_cost = 2500
+	export_price = 5000
+
+/datum/techweb_node/exp_surgery
+	id = "exp_surgery"
+	display_name = "Experimental Surgery"
+	description = "When evolution isn't fast enough."
+	prereq_ids = list("adv_surgery")
+	design_ids = list("surgery_revival","surgery_pacify","surgery_vein_thread","surgery_nerve_splice","surgery_nerve_ground","surgery_viral_bond")
+	research_cost = 5000
+	export_price = 5000
+
+/datum/techweb_node/alien_surgery
+	id = "alien_surgery"
+	display_name = "Alien Surgery"
+	description = "Abductors did nothing wrong."
+	prereq_ids = list("exp_surgery", "alientech")
+	design_ids = list("surgery_brainwashing","surgery_zombie")
+	research_cost = 10000
 	export_price = 5000
 
 /////////////////////////data theory tech/////////////////////////
@@ -64,7 +92,7 @@
 	description = "A refresher course on modern engineering technology."
 	prereq_ids = list("base")
 	design_ids = list("solarcontrol", "recharger", "powermonitor", "rped", "pacman", "adv_capacitor", "adv_scanning", "emitter", "high_cell", "adv_matter_bin",
-	"atmosalerts", "atmos_control", "recycler", "autolathe", "high_micro_laser", "nano_mani", "weldingmask", "mesons", "thermomachine", "tesla_coil", "grounding_rod", "apc_control")
+	"atmosalerts", "atmos_control", "recycler", "autolathe", "high_micro_laser", "nano_mani", "weldingmask", "mesons", "thermomachine", "tesla_coil", "grounding_rod", "apc_control", "cell_charger")
 	research_cost = 2500
 	export_price = 5000
 
@@ -214,7 +242,7 @@
 	display_name = "Cyborg Upgrades: Utility"
 	description = "Utility upgrades for cybogs."
 	prereq_ids = list("engineering", "cyborg")
-	design_ids = list("borg_upgrade_holding", "borg_upgrade_lavaproof", "borg_upgrade_thrusters", "borg_upgrade_selfrepair", "borg_upgrade_expand")
+	design_ids = list("borg_upgrade_holding", "borg_upgrade_lavaproof", "borg_upgrade_thrusters", "borg_upgrade_selfrepair", "borg_upgrade_expand", "borg_upgrade_rped")
 	research_cost = 2500
 	export_price = 5000
 
@@ -223,7 +251,7 @@
 	display_name = "Cyborg Upgrades: Medical"
 	description = "Medical upgrades for cyborgs."
 	prereq_ids = list("adv_biotech", "cyborg")
-	design_ids = list("borg_upgrade_defibrillator", "borg_upgrade_piercinghypospray", "borg_upgrade_highstrengthsynthesiser", "borg_upgrade_expandedsynthesiser")
+	design_ids = list("borg_upgrade_defibrillator", "borg_upgrade_piercinghypospray", "borg_upgrade_highstrengthsynthesiser", "borg_upgrade_expandedsynthesiser", "borg_upgrade_pinpointer")
 	research_cost = 2500
 	export_price = 5000
 
@@ -514,7 +542,7 @@
 	display_name = "Medical Weaponry"
 	description = "Weapons using medical technology."
 	prereq_ids = list("adv_biotech", "adv_weaponry")
-	design_ids = list("rapidsyringe")
+	design_ids = list("rapidsyringe", "shotgundartcryostatis")
 	research_cost = 2500
 	export_price = 5000
 
@@ -846,11 +874,11 @@
 /datum/techweb_node/syndicate_basic/New()		//Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()
 	boost_item_paths = list()
-	for(var/cat in GLOB.uplink_items)
-		var/list/l = cat
-		for(var/i in l)
-			var/datum/uplink_item/UI = i
-			boost_item_paths[UI.item] = 0	//allows deconning to unlock.
+	for(var/path in GLOB.uplink_items)
+		var/datum/uplink_item/UI = new path
+		if(!UI.item)
+			continue
+		boost_item_paths[UI.item] = 0	//allows deconning to unlock.
 
 //HELPERS
 /proc/total_techweb_exports()

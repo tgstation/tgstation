@@ -363,7 +363,7 @@
 	name = "detective's flask"
 	desc = "The detective's only true friend."
 	icon_state = "detflask"
-	list_reagents = list("hearty_punch" = 30)
+	list_reagents = list("whiskey" = 30)
 
 /obj/item/reagent_containers/food/drinks/britcup
 	name = "cup"
@@ -371,18 +371,6 @@
 	icon_state = "britcup"
 	volume = 30
 	spillable = TRUE
-
-///Lavaland bowls and bottles///
-
-/obj/item/reagent_containers/food/drinks/mushroom_bowl
-	name = "mushroom bowl"
-	desc = "A bowl made out of mushrooms. Not food, though it might have contained some at some point."
-	icon = 'icons/obj/lavaland/ash_flora.dmi'
-	icon_state = "mushroom_bowl"
-	w_class = WEIGHT_CLASS_SMALL
-	resistance_flags = NONE
-	isGlass = FALSE
-
 
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/grenade/ghettobomb.dm
@@ -394,8 +382,7 @@
 	container_type = NONE
 	spillable = FALSE
 	isGlass = FALSE
-	grind_results = list("aluminum" = 10)
-	
+
 /obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is trying to eat \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)

@@ -1900,7 +1900,7 @@
 /obj/machinery/computer/security/telescreen{
 	dir = 1;
 	name = "Bunker Entrance";
-	network = list("Bunker1");
+	network = list("bunker1");
 	pixel_y = 2
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -2413,7 +2413,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "fU" = (
 /obj/machinery/camera{
-	network = list("Bunker1")
+	network = list("bunker1")
 	},
 /obj/structure/sign/warning/securearea{
 	pixel_y = 32
@@ -2655,6 +2655,7 @@
 	name = "Inconspicuous Airlock";
 	req_access_txt = "200"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage)
 "gA" = (
@@ -2778,6 +2779,9 @@
 	req_access_txt = "200"
 	},
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage)
 "gR" = (

@@ -36,8 +36,7 @@
 	var/mob/living/L = user
 
 	if(istype(L))
-		if(!user.Adjacent(src) || user.incapacitated())
-			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 			return FALSE
 		else
 			return TRUE
@@ -73,7 +72,7 @@
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		deconstruct()
 	else if(istype(W, /obj/item/assembly/shock_kit))
 		if(!user.temporarilyRemoveItemFromInventory(W))
@@ -225,8 +224,7 @@
 	if(over_object == usr && Adjacent(usr))
 		if(!item_chair || !usr.can_hold_items() || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
 			return
-		if(usr.incapacitated())
-			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
+		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)
@@ -383,7 +381,7 @@
 
 /obj/structure/chair/brass/AltClick(mob/living/user)
 	turns = 0
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(!isprocessing)
 		user.visible_message("<span class='notice'>[user] spins [src] around, and Ratvarian technology keeps it spinning FOREVER.</span>", \

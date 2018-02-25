@@ -81,7 +81,7 @@
 	var/obj/U = locate(/obj) in upgrades
 	if(U)
 		to_chat(user, "<span class='notice'>You unattach an upgrade from the assembly.</span>")
-		playsound(src, tool.usesound, 50, 1)
+		tool.play_tool_sound(src)
 		U.forceMove(drop_location())
 		upgrades -= U
 	return TRUE
@@ -90,7 +90,7 @@
 	if(state != 3)
 		return FALSE
 
-	playsound(src, tool.usesound, 50, 1)
+	tool.play_tool_sound(src)
 	var/input = stripped_input(user, "Which networks would you like to connect this camera to? Separate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13")
 	if(!input)
 		to_chat(user, "<span class='warning'>No input found, please hang up and try your call again!</span>")
@@ -99,6 +99,9 @@
 	if(tempnetwork.len < 1)
 		to_chat(user, "<span class='warning'>No network found, please hang up and try your call again!</span>")
 		return
+	for(var/i in tempnetwork)
+		tempnetwork -= i
+		tempnetwork += lowertext(i)
 	state = 4
 	var/obj/machinery/camera/C = new(loc, src)
 	forceMove(C)
@@ -109,22 +112,22 @@
 	C.c_tag = "[A.name] ([rand(1, 999)])"
 	return TRUE
 
-/obj/structure/camera_assembly/wirecutter_act(mob/user, obj/item/tool)
+/obj/structure/camera_assembly/wirecutter_act(mob/user, obj/item/I)
 	if(state != 3)
 		return FALSE
 
-	new /obj/item/stack/cable_coil(get_turf(src), 2)
-	playsound(src, tool.usesound, 50, 1)
+	new /obj/item/stack/cable_coil(drop_location(), 2)
+	I.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You cut the wires from the circuits.</span>")
 	state = 2
 	return TRUE
 
-/obj/structure/camera_assembly/wrench_act(mob/user, obj/item/tool)
+/obj/structure/camera_assembly/wrench_act(mob/user, obj/item/I)
 	if(state != 1)
 		return FALSE
-	playsound(src, tool.usesound, 50, 1)
+	I.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You unattach the assembly from its place.</span>")
-	new /obj/item/wallframe/camera(get_turf(src))
+	new /obj/item/wallframe/camera(drop_location())
 	qdel(src)
 	return TRUE
 
@@ -132,9 +135,7 @@
 	if(!W.tool_start_check(user, amount=0))
 		return FALSE
 	to_chat(user, "<span class='notice'>You start to weld \the [src]...</span>")
-	playsound(src.loc, W.usesound, 50, 1)
-	if(W.use_tool(src, user, 20))
-		playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+	if(W.use_tool(src, user, 20, volume=50))
 		return TRUE
 	return FALSE
 

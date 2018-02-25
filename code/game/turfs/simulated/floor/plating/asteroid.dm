@@ -26,6 +26,10 @@
 	if(LAZYLEN(archdrops))
 		AddComponent(/datum/component/archaeology, 100, archdrops)
 
+
+/turf/open/floor/plating/asteroid/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
+
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
 

@@ -105,7 +105,7 @@
 /obj/structure/trap/chill/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>You're frozen solid!</B></span>")
 	L.Knockdown(20)
-	L.bodytemperature -= 300
+	L.adjust_bodytemperature(-300)
 	L.apply_status_effect(/datum/status_effect/freon)
 
 

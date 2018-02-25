@@ -83,17 +83,6 @@
 			assembly.set_light(0)
 	power_draw_idle = light_toggled ? light_brightness * 2 : 0
 
-/obj/item/integrated_circuit/output/light/advanced/update_lighting()
-	var/new_color = get_pin_data(IC_INPUT, 1)
-	var/brightness = get_pin_data(IC_INPUT, 2)
-
-	if(new_color && isnum(brightness))
-		brightness = CLAMP(brightness, 0, 6)
-		light_rgb = new_color
-		light_brightness = brightness
-
-	..()
-
 /obj/item/integrated_circuit/output/light/power_fail() // Turns off the flashlight if there's no power left.
 	light_toggled = FALSE
 	update_lighting()
@@ -112,6 +101,17 @@
 
 /obj/item/integrated_circuit/output/light/advanced/on_data_written()
 	update_lighting()
+
+/obj/item/integrated_circuit/output/light/advanced/update_lighting()
+	var/new_color = get_pin_data(IC_INPUT, 1)
+	var/brightness = get_pin_data(IC_INPUT, 2)
+
+	if(new_color && isnum(brightness))
+		brightness = CLAMP(brightness, 0, 6)
+		light_rgb = new_color
+		light_brightness = brightness
+
+	..()
 
 /obj/item/integrated_circuit/output/sound
 	name = "speaker circuit"
@@ -248,6 +248,7 @@
 	outputs = list()
 	activators = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_LONG_RANGE
 	power_draw_idle = 0 // Raises to 20 when on.
 	var/obj/machinery/camera/camera
 	var/updating = FALSE
@@ -255,7 +256,7 @@
 /obj/item/integrated_circuit/output/video_camera/New()
 	..()
 	camera = new(src)
-	camera.network = list("RD")
+	camera.network = list("rd")
 	on_data_written()
 
 /obj/item/integrated_circuit/output/video_camera/Destroy()
@@ -336,3 +337,32 @@
 		text_output += "\an ["\improper[name]"] labeled '[displayed_name]'"
 	text_output += " which is currently [get_pin_data(IC_INPUT, 1) ? "lit <font color=[led_color]>*</font>" : "unlit"]."
 	to_chat(user, text_output)
+
+/obj/item/integrated_circuit/output/diagnostic_hud
+	name = "AR interface"
+	desc = "Takes an icon name as an input, and will update the status hud when data is written to it."
+	extended_desc = "Takes an icon name as an input, and will update the status hud when data is written to it, this means it can change the icon and have the icon stay that way even if the circuit is removed. The acceptable inputs are 'alert' and 'move'. Any input other than that will return the icon to its default state. The danger warning and offline status will appear over any input from this circuit."
+	var/list/icons = list(
+		"alert" = "hudalert",
+		"move" = "hudmove"
+		)
+	complexity = 1
+	icon_state = "led"
+	inputs = list(
+		"icon" = IC_PINTYPE_STRING
+	)
+	outputs = list()
+	activators = list()
+	power_draw_idle = 0
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/output/diagnostic_hud/on_data_written()
+	var/ID = get_pin_data(IC_INPUT, 1)
+	var/selected_icon = icons[ID]
+	if(assembly)
+		if(selected_icon)
+			assembly.prefered_hud_icon = selected_icon
+		else
+			assembly.prefered_hud_icon = "hudstat"
+		//update the diagnostic hud
+		assembly.diag_hud_set_circuitstat()

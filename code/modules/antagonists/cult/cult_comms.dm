@@ -80,8 +80,10 @@
 	return ..()
 
 /datum/action/innate/cult/mastervote/Activate()
-	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-	pollCultists(owner,C.cult_team)
+	var/choice = alert(owner, "The mantle of leadership is a heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, "Yes", "No")
+	if(choice == "Yes" && IsAvailable())
+		var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+		pollCultists(owner,C.cult_team)
 
 /proc/pollCultists(var/mob/living/Nominee,datum/team/cult/team) //Cult Master Poll
 	if(world.time < CULT_POLL_WAIT)
@@ -362,7 +364,7 @@
 			to_chat(B.current, "<span class='cultlarge'><b>[owner] has marked [C.cult_team.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b></span>")
 			SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
 			B.current.client.images += C.cult_team.blood_target_image
-	to_chat(owner,"<span class='cultbold'>You have marked the [target] for the cult! It will last for [base_cooldown/10] seconds.</span>")
+	to_chat(owner,"<span class='cultbold'>You have marked the [target] for the cult! It will last for [DisplayTimeText(base_cooldown)].</span>")
 	name = "Clear the Blood Mark"
 	desc = "Remove the Blood Mark you previously set."
 	button_icon_state = "emp"

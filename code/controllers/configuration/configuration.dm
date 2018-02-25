@@ -236,9 +236,10 @@
 
 		switch (command)
 			if ("map")
-				currentmap = new ("_maps/[data].json")
+				currentmap = load_map_config("_maps/[data].json")
 				if(currentmap.defaulted)
 					log_config("Failed to load map config for [data]!")
+					currentmap = null
 			if ("minplayers","minplayer")
 				currentmap.config_min_users = text2num(data)
 			if ("maxplayers","maxplayer")

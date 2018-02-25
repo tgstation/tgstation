@@ -143,7 +143,7 @@ GLOBAL_PROTECT(exp_to_update)
 		L.update_exp_list(mins,ann)
 
 /datum/controller/subsystem/blackbox/proc/update_exp_db()
-	SSdbcore.MassInsert(format_table_name("role_time"), GLOB.exp_to_update, "ON DUPLICATE KEY UPDATE minutes += VALUES(minutes)")
+	SSdbcore.MassInsert(format_table_name("role_time"), GLOB.exp_to_update, "ON DUPLICATE KEY UPDATE minutes = minutes + VALUES(minutes)")
 	LAZYCLEARLIST(GLOB.exp_to_update)
 
 //resets a client's exp to what was in the db.
