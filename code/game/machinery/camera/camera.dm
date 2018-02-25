@@ -14,10 +14,10 @@
 
 	resistance_flags = FIRE_PROOF
 
-	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 50)
+	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 50)
 	max_integrity = 100
 	integrity_failure = 50
-	var/list/network = list("SS13")
+	var/list/network = list("ss13")
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/status = TRUE
@@ -44,6 +44,9 @@
 
 /obj/machinery/camera/Initialize(mapload, obj/structure/camera_assembly/CA)
 	. = ..()
+	for(var/i in network)
+		network -= i
+		network += lowertext(i)
 	if(CA)
 		assembly = CA
 	else
@@ -139,7 +142,7 @@
 	if(istype(W, /obj/item/screwdriver))
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
-		playsound(src.loc, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		return
 
 	if(panel_open)

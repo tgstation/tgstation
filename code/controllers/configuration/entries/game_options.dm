@@ -260,3 +260,9 @@
 /datum/config_entry/flag/ic_printing
 
 /datum/config_entry/flag/roundstart_traits
+
+/datum/config_entry/flag/enable_night_shifts
+
+/datum/config_entry/flag/randomize_shift_time
+
+/datum/config_entry/flag/shift_time_realtime

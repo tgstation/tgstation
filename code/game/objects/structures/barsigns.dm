@@ -6,7 +6,7 @@
 	req_access = list(ACCESS_BAR)
 	max_integrity = 500
 	integrity_failure = 250
-	armor = list(melee = 20, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	buildable_sign = 0
 	var/list/barsigns=list()
 	var/list/hiddensigns

@@ -13,7 +13,7 @@
 	layer = BELOW_MOB_LAYER
 	can_be_held = TRUE
 
-	var/network = "SS13"
+	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
 	var/ram = 100	// Used as currency to purchase different abilities
@@ -186,6 +186,7 @@
 
 /mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(be_close && !in_range(M, src))
+		to_chat(src, "<span class='warning'>You are too far away!</span>")
 		return FALSE
 	return TRUE
 

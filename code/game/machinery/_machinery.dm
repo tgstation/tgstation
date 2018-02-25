@@ -114,7 +114,7 @@ Class Procs:
 
 /obj/machinery/Initialize()
 	if(!armor)
-		armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	. = ..()
 	GLOB.machines += src
 
@@ -391,9 +391,9 @@ Class Procs:
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/W)
 	if(!istype(W))
-		return
+		return FALSE
 	if((flags_1 & NODECONSTRUCT_1) && !W.works_from_distance)
-		return
+		return FALSE
 	var/shouldplaysound = 0
 	if(component_parts)
 		if(panel_open || W.works_from_distance)
@@ -401,19 +401,28 @@ Class Procs:
 			var/P
 			if(W.works_from_distance)
 				display_parts(user)
-			for(var/obj/item/stock_parts/A in component_parts)
+			for(var/obj/item/A in component_parts)
 				for(var/D in CB.req_components)
 					if(ispath(A.type, D))
 						P = D
 						break
-				for(var/obj/item/stock_parts/B in W.contents)
+				for(var/obj/item/B in W.contents)
 					if(istype(B, P) && istype(A, P))
-						if(B.rating > A.rating)
-							W.remove_from_storage(B, src)
+						if(B.get_part_rating() > A.get_part_rating())
+							if(istype(B,/obj/item/stack)) //conveniently this will mean A is also a stack and I will kill the first person to prove me wrong
+								var/obj/item/stack/SA = A
+								var/obj/item/stack/SB = B
+								var/used_amt = SA.get_amount()
+								if(!SB.use(used_amt))
+									continue //if we don't have the exact amount to replace we don't
+								var/obj/item/stack/SN = new SB.merge_type(null,used_amt)
+								component_parts += SN
+							else
+								W.remove_from_storage(B, src)
+								component_parts += B
+								B.moveToNullspace()
 							W.handle_item_insertion(A, 1)
 							component_parts -= A
-							component_parts += B
-							B.moveToNullspace()
 							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
 							break
@@ -455,21 +464,6 @@ Class Procs:
 //called on deconstruction before the final deletion
 /obj/machinery/proc/on_deconstruction()
 	return
-
-// Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
-/obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
-	if (hclient.client.mob && (hclient.client.mob.stat == 0 || IsAdminGhost(hclient.client.mob)))
-		if (isAI(hclient.client.mob) || IsAdminGhost(hclient.client.mob))
-			return TRUE
-		else
-			return hclient.client.mob.machine == src && Adjacent(hclient.client.mob)
-	else
-		return FALSE
-
-// Hook for html_interface module to unset the active machine when the window is closed by the player.
-/obj/machinery/proc/hiOnHide(datum/html_interface_client/hclient)
-	if (hclient.client.mob && hclient.client.mob.machine == src)
-		hclient.client.mob.unset_machine()
 
 /obj/machinery/proc/can_be_overridden()
 	. = 1

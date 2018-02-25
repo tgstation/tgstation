@@ -65,9 +65,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/BMPship/Midship)
 "ar" = (
-/obj/machinery/door/airlock/silver{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/silver,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -1784,15 +1783,13 @@
 	},
 /area/awaymission/BMPship/Midship)
 "fY" = (
-/obj/machinery/door/airlock/silver{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/silver,
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "fZ" = (
-/obj/machinery/door/airlock/silver{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/silver,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},

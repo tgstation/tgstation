@@ -112,6 +112,13 @@
 	radio_key = /obj/item/device/encryptionkey/syndicate
 	subspace_transmission = TRUE
 
+/obj/item/implant/radio/slime
+	name = "slime radio"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "adamantine_resonator"
+	radio_key = /obj/item/device/encryptionkey/headset_sci
+	subspace_transmission = TRUE
+
 /obj/item/implant/radio/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Internal Radio Implant<BR>
@@ -126,3 +133,4 @@
 /obj/item/implanter/radio/syndicate
 	name = "implanter (internal syndicate radio)"
 	imp_type = /obj/item/implant/radio/syndicate
+

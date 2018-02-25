@@ -19,7 +19,7 @@
 	icon_state = FLIGHTPACK_SPRITE_BASE
 	item_state = FLIGHTPACK_SPRITE_BASE
 	actions_types = list(/datum/action/item_action/flightpack/toggle_flight, /datum/action/item_action/flightpack/engage_boosters, /datum/action/item_action/flightpack/toggle_stabilizers, /datum/action/item_action/flightpack/change_power, /datum/action/item_action/flightpack/toggle_airbrake)
-	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 75)
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 10, "bomb" = 30, "bio" = 100, "rad" = 75, "fire" = 100, "acid" = 75)
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	resistance_flags = FIRE_PROOF
@@ -97,16 +97,19 @@
 
 	var/atom/movable/cached_pull		//recipe for disaster again.
 	var/afterForceMove = FALSE
+	var/datum/component/mobhook
 
 /obj/item/device/flightpack/proc/changeWearer(mob/changeto)
 	if(wearer)
 		LAZYREMOVE(wearer.user_movement_hooks, src)
 	wearer = null
+	QDEL_NULL(mobhook)
 	cached_pull = null
 	if(istype(changeto))
 		wearer = changeto
 		LAZYADD(wearer.user_movement_hooks, src)
 		cached_pull = changeto.pulling
+		mobhook = changeto.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/on_mob_move, changeto))
 
 /obj/item/device/flightpack/Initialize()
 	ion_trail = new
@@ -180,6 +183,7 @@
 	QDEL_NULL(part_laser)
 	QDEL_NULL(part_bin)
 	QDEL_NULL(ion_trail)
+	QDEL_NULL(mobhook)
 	STOP_PROCESSING(SSflightpacks, src)
 	. = ..()
 
@@ -204,27 +208,6 @@
 	momentum_x = CLAMP(momentum_x + amountx, -momentum_max, momentum_max)
 	momentum_y = CLAMP(momentum_y + amounty, -momentum_max, momentum_max)
 	calculate_momentum_speed()
-
-/obj/item/device/flightpack/intercept_user_move(dir, mob, newLoc, oldLoc)
-	if(!flight)
-		return
-	var/momentum_increment = momentum_gain
-	if(boost)
-		momentum_increment = boost_power
-	if(brake)
-		momentum_increment = 0
-	if(!gravity && !pressure)
-		momentum_increment -= 10
-	switch(dir)
-		if(NORTH)
-			adjust_momentum(0, momentum_increment)
-		if(SOUTH)
-			adjust_momentum(0, -momentum_increment)
-		if(EAST)
-			adjust_momentum(momentum_increment, 0)
-		if(WEST)
-			adjust_momentum(-momentum_increment, 0)
-	return ..()
 
 //The wearer has momentum left. Move them and take some away, while negating the momentum that moving the wearer would gain. Or force the wearer to lose control if they are incapacitated.
 /obj/item/device/flightpack/proc/momentum_drift()
@@ -252,7 +235,7 @@
 	if(prob(emp_damage * 15))
 		step(wearer, pick(GLOB.alldirs))
 
-/obj/item/device/flightpack/on_mob_move(dir, mob/mob, turf/oldLoc, forced)
+/obj/item/device/flightpack/proc/on_mob_move(mob/mob, turf/oldLoc, dir, forced)
 	if(forced)
 		if(cached_pull && istype(oldLoc) && (get_dist(oldLoc, loc) <= 1) && !oldLoc.density)
 			cached_pull.forceMove(oldLoc)
@@ -270,7 +253,26 @@
 		afterForceMove = FALSE
 	if(flight)
 		ion_trail.generate_effect()
-	. = ..()
+
+/obj/item/device/flightpack/intercept_user_move(dir, mob, newLoc, oldLoc)
+	if(!flight)
+		return
+	var/momentum_increment = momentum_gain
+	if(boost)
+		momentum_increment = boost_power
+	if(brake)
+		momentum_increment = 0
+	if(!gravity && !pressure)
+		momentum_increment -= 10
+	switch(dir)
+		if(NORTH)
+			adjust_momentum(0, momentum_increment)
+		if(SOUTH)
+			adjust_momentum(0, -momentum_increment)
+		if(EAST)
+			adjust_momentum(momentum_increment, 0)
+		if(WEST)
+			adjust_momentum(-momentum_increment, 0)
 
 //Make the wearer lose some momentum.
 /obj/item/device/flightpack/proc/momentum_decay()
@@ -758,7 +760,7 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/flightsuit
 	jetpack = null
 	actions_types = list(/datum/action/item_action/flightsuit/toggle_helmet, /datum/action/item_action/flightsuit/toggle_boots, /datum/action/item_action/flightsuit/toggle_flightpack, /datum/action/item_action/flightsuit/lock_suit)
-	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 10, "bomb" = 30, "bio" = 100, "rad" = 75, "fire" = 100, "acid" = 100)
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	var/locked_strip_delay = 80
 	var/obj/item/device/flightpack/pack = null
@@ -1078,7 +1080,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	brightness_on = 7
 	light_color = "#30ffff"
-	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 10, "bomb" = 30, "bio" = 100, "rad" = 75, "fire" = 100, "acid" = 100)
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_BASIC)
 	var/zoom_range = 12

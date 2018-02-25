@@ -94,7 +94,7 @@
 
 /datum/reagent/proc/addiction_act_stage1(mob/living/M)
 	if(prob(30))
-		to_chat(M, "<span class='notice'>You feel like some [name] right about now.</span>")
+		to_chat(M, "<span class='notice'>You feel like having some [name] right about now.</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage2(mob/living/M)

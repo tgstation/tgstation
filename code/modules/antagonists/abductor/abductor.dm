@@ -11,7 +11,7 @@
 	var/outfit
 	var/landmark_type
 	var/greet_text
-	
+
 
 /datum/antagonist/abductor/agent
 	name = "Abductor Agent"
@@ -167,7 +167,7 @@
 /datum/antagonist/abductee/proc/give_objective()
 	var/mob/living/carbon/human/H = owner.current
 	if(istype(H))
-		H.gain_trauma_type(BRAIN_TRAUMA_MILD)
+		H.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_LOBOTOMY)
 	var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
 	var/datum/objective/abductee/O = new objtype()
 	objectives += O
