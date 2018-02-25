@@ -12,8 +12,8 @@ env:
     - BUILD_TESTING=false
     - DM_MAPFILE="loadallmaps"
     matrix:
-    - BUILD_TOOLS=true
-    - BUILD_TESTING=true
+    - BUILD_TOOLS=false
+    - BUILD_TESTING=false
     - BUILD_TESTING=false
 
 cache:
