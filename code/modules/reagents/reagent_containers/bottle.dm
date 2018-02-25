@@ -184,6 +184,21 @@
 	name = "coniine bottle"
 	desc = "A small bottle. Contains coniine."
 	list_reagents = list("coniine" = 30)
+	
+/obj/item/reagent_containers/glass/bottle/neurotoxin
+	name = "neurotoxin bottle"
+	desc = "A small bottle. Contains neurotoxin."
+	list_reagents = list("neurotoxin" = 30)
+	
+/obj/item/reagent_containers/glass/bottle/entpoly
+	name = "entropic polypnium bottle"
+	desc = "A small bottle. Contains entropic polypnium."
+	list_reagents = list("entpoly" = 30)
+	
+/obj/item/reagent_containers/glass/bottle/krokodil
+	name = "krokodil bottle"
+	desc = "A small bottle. Contains krokodil."
+	list_reagents = list("krokodil" = 30)
 
 /obj/item/reagent_containers/glass/bottle/curare
 	name = "curare bottle"
