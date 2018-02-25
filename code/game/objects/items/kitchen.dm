@@ -73,6 +73,10 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	var/bayonet = FALSE	//Can this be attached to a gun?
 
+/obj/item/kitchen/knife/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 80 - force, 100, force - 10) //bonus chance increases depending on force
+
 /obj/item/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_selected == "eyes")
 		if(user.has_trait(TRAIT_CLUMSY) && prob(50))

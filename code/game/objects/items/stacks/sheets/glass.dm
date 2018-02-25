@@ -251,6 +251,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 /obj/item/shard/Initialize()
 	. = ..()
 	AddComponent(/datum/component/caltrop, force)
+	AddComponent(/datum/component/butchering, 150, 65)
 	icon_state = pick("large", "medium", "small")
 	switch(icon_state)
 		if("small")

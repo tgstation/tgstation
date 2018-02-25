@@ -323,6 +323,10 @@
 	actions_types = list(/datum/action/item_action/immortality)
 	var/cooldown = 0
 
+/obj/item/device/immortality_talisman/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
 /datum/action/item_action/immortality
 	name = "Immortality"
 
@@ -671,6 +675,7 @@
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
+	AddComponent(/datum/component/butchering, 150, 90)
 
 /obj/item/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
