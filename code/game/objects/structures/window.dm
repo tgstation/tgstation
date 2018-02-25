@@ -28,6 +28,12 @@
 	var/hitsound = 'sound/effects/Glasshit.ogg'
 	var/rad_insulation = RAD_VERY_LIGHT_INSULATION
 	var/spawn_cleanable_shards = TRUE
+	var/constructor = null
+
+/ojb/structure/window/new()
+	..()
+	if(constructor)
+		ini_dir = constructor.dir
 
 /obj/structure/window/examine(mob/user)
 	..()
