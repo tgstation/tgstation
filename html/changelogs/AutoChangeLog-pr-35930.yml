@@ -1,0 +1,5 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - bugfix: "Twisted Construction will now consume ALL available plasteel in a stack."
+  - bugfix: "Runes will no longer count the original invoker more than once."
