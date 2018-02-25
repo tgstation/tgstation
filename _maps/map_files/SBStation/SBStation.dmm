@@ -13824,9 +13824,7 @@
 	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aGk" = (
 /obj/structure/closet/crate/rcd{
 	pixel_y = 4
@@ -13841,9 +13839,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aGl" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/stripes/line{
@@ -13857,9 +13853,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aGm" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/stripes/line{
@@ -13874,9 +13868,7 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aGn" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/electrical{
@@ -13906,15 +13898,11 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aGo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aGp" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -14218,9 +14206,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aHn" = (
 /obj/effect/turf_decal/stripes/line{
 	icon_state = "warningline";
@@ -14230,9 +14216,7 @@
 	icon_state = "blue";
 	dir = 8
 	},
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aHo" = (
 /obj/effect/turf_decal/stripes/line{
 	icon_state = "warningline";
@@ -14242,9 +14226,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aHp" = (
 /obj/effect/turf_decal/stripes/line{
 	icon_state = "warningline";
@@ -14254,9 +14236,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aHq" = (
 /obj/machinery/button/door{
 	id = "evashutters";
@@ -14274,18 +14254,14 @@
 /turf/open/floor/plasteel/blue/side{
 	dir = 4
 	},
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aHr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aHs" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -14713,18 +14689,14 @@
 	layer = 3.3
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aIq" = (
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/blue/side{
 	icon_state = "blue";
 	dir = 8
 	},
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aIr" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/belt/utility,
@@ -14736,16 +14708,12 @@
 /obj/item/stock_parts/cell/high,
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aIs" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aIt" = (
 /obj/structure/cable/white{
 	icon_state = "2-4"
@@ -14753,9 +14721,7 @@
 /turf/open/floor/plasteel/blue/side{
 	dir = 4
 	},
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aIu" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -15189,18 +15155,14 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aJt" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/blue/side{
 	icon_state = "blue";
 	dir = 8
 	},
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aJu" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -15208,18 +15170,14 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aJv" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aJw" = (
 /obj/machinery/power/apc{
 	areastring = "/area/ai_monitored/storage/eva";
@@ -15235,17 +15193,13 @@
 /turf/open/floor/plasteel/blue/side{
 	dir = 4
 	},
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aJx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aJy" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
@@ -15720,9 +15674,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/white,
 /turf/open/floor/plating,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aKB" = (
 /obj/structure/table/reinforced,
 /obj/item/tank/jetpack/carbondioxide{
@@ -15736,9 +15688,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aKC" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/stripes/line{
@@ -15753,18 +15703,14 @@
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aKD" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aKE" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/plasteel{
@@ -15779,14 +15725,10 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aKF" = (
 /turf/closed/wall/r_wall,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aKG" = (
 /obj/effect/turf_decal/stripes/line{
 	icon_state = "warningline";
@@ -16095,9 +16037,7 @@
 "aLv" = (
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
-/area/ai_monitored/storage/eva{
-	name = "E.V.A. Storage"
-	})
+/area/ai_monitored/storage/eva)
 "aLw" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable/white{
