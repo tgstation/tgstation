@@ -365,6 +365,7 @@
 	description = "On non-mutant humans, acts as a mild relaxant. When exposed to mutant genes, has some... interesting effects."
 	reagent_state = LIQUID
 	color = "#b3ff99"
+	addiction_threshold = 30
 
 /datum/reagent/drug/catnip/on_mob_life(mob/living/M)
 	if(ishuman(M))
@@ -389,3 +390,75 @@
 			H.adjustStaminaLoss(-rand(0.1, 0.45)*REM, 0)
 	..()
 	. = 1
+
+/datum/reagent/drug/catnip/addiction_act_stage1(mob/living/M)
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	if(!iscatperson(H))
+		return
+	if(prob(7.5))
+		playsound(get_turf(M), 'sound/effects/meow1.ogg', 65, 1, -1)
+		M.visible_message("<span class='warning bold'>[M] meows loudly!</span>")
+	else if(prob(9))
+		playsound(get_turf(M), 'goon/sound/effects/cat_hiss.ogg', 65, 1, -1)
+		M.visible_message("<span class='warning bold'>[M] hisses!</span>")
+	return ..()
+
+/datum/reagent/drug/catnip/addiction_act_stage2(mob/living/M)
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	if(!iscatperson(H))
+		return
+	if(prob(10))
+		M.visible_message("<span class='warning bold'>[M] coughs up a hairball!</span>")
+		M.vomit(lost_nutrition = 0, message = FALSE, distance = rand(1,3))
+	else if(prob(7.5))
+		playsound(get_turf(M), 'sound/effects/meow1.ogg', 65, 1, -1)
+		M.visible_message("<span class='warning bold'>[M] meows loudly!</span>")
+	else if(prob(9))
+		playsound(get_turf(M), 'goon/sound/effects/cat_hiss.ogg', 65, 1, -1)
+		M.visible_message("<span class='warning bold'>[M] hisses!</span>")
+	return ..()
+
+/datum/reagent/drug/catnip/addiction_act_stage2(mob/living/M)
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	if(!iscatperson(H))
+		return
+	if(prob(15))
+		M.visible_message("<span class='warning bold'>[M] coughs up a hairball!</span>")
+		M.vomit(lost_nutrition = 0, message = FALSE, distance = rand(1,3))
+	if(prob(45))
+		playsound(get_turf(M), 'sound/effects/meow1.ogg', 65, 1, -1)
+		M.visible_message("<span class='warning bold'>[M] meows loudly!</span>")
+	else if(prob(25))
+		playsound(get_turf(M), 'goon/sound/effects/cat_hiss.ogg', 65, 1, -1)
+		M.visible_message("<span class='warning bold'>[M] hisses!</span>")
+	return ..()
+
+/datum/reagent/drug/catnip/addiction_act_stage3(mob/living/M)
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	if(!iscatperson(H))
+		return
+	if(prob(32.5))
+		H.Knockdown(75)
+		H.spin(75, 2)
+		M.visible_message("<span class='warning bold'>[M] starts rolling around on the floor!</span>")
+	else if(prob(25))
+		M.visible_message("<span class='warning bold'>[M] coughs up a hairball!</span>")
+		M.vomit(lost_nutrition = 0, message = FALSE, distance = rand(1,3))
+	if(prob(45))
+		playsound(get_turf(M), 'sound/effects/meow1.ogg', 65, 1, -1)
+		M.visible_message("<span class='warning bold'>[M] meows loudly!</span>")
+	else if(prob(25))
+		playsound(get_turf(M), 'goon/sound/effects/cat_hiss.ogg', 65, 1, -1)
+		M.visible_message("<span class='warning bold'>[M] hisses!</span>")
+	return ..()
+
+/datum/reagent/drug/catnip/addiction_act_stage4(mob/living/M)
+	return addiction_act_stage3(M)

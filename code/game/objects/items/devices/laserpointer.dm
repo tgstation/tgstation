@@ -146,8 +146,9 @@
 	for(var/mob/living/carbon/human/H in view(6,targloc))
 		if(!iscatperson(H) || H.incapacitated() || H.eye_blind || !H.reagents.has_reagent("catnip"))
 			continue
-		H.visible_message("<span class='warning'>[H] leaps for the light!</span>","<span class='userdanger'>OHMYGOD LIGHT! MUST GET THE LIGHT!</span>")
+		H.visible_message("<span class='warning bold'>[H] leaps for the light!</span>","<span class='userdanger'>OHMYGOD LIGHT! MUST GET THE LIGHT!</span>")
 		H.throw_at(targloc, 6, 2)
+		H.Knockdown(50)
 
 	//cats!
 	for(var/mob/living/simple_animal/pet/cat/C in view(1,targloc))
