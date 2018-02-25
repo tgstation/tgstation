@@ -16,6 +16,9 @@
 			wired_to += T
 			T.wired_to += src
 			to_chat(usr, "<span class='alloy'>[src] automatically links with [T] beneath it.</span>")
+
+/obj/structure/destructible/clockwork/trap/trigger/pressure_sensor/Initialize()
+	. = ..()
 	if(see_safe)
 		for(var/mob/living/M in orange(7,loc)) //hey that guy set up a trap over there i saw it
 			seen += M //i probably shouldn't step on it
