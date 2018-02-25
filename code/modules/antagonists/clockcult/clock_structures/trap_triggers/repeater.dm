@@ -5,7 +5,7 @@
 	clockwork_desc = "A repeater that will send an activation signal every second."
 	max_integrity = 15 //Fragile!
 	icon_state = "repeater"
-	/var/alluse = FALSE
+	var/alluse = FALSE
 
 /obj/structure/destructible/clockwork/trap/trigger/repeater/attack_hand(mob/living/user)
 	if(!is_servant_of_ratvar(user) && !alluse)
