@@ -370,7 +370,7 @@
 		return 1
 	return 0
 
-/obj/machinery/door/window/clockwork
+/obj/machinery/door/window/clockwork/general
 	all_access = true
 
 /obj/machinery/door/window/northleft
