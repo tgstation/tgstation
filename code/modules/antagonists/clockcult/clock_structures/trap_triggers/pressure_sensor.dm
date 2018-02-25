@@ -22,7 +22,7 @@
 			
 
 /obj/structure/destructible/clockwork/trap/trigger/pressure_sensor/Crossed(atom/movable/AM)
-	if(isliving(AM)
+	if(isliving(AM))
 		if(!is_servant_of_ratvar(AM) || (see_safe && !(AM in seen)))
 			var/mob/living/L = AM
 			if(L.stat || L.m_intent == MOVE_INTENT_WALK || L.lying)
