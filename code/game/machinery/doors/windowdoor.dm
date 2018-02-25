@@ -334,9 +334,6 @@
 	for(var/i in 1 to 2)
 		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit/large(src)
 	change_construction_value(2)
-	for(var/mob/living/M in orange(1,loc)
-		if(!is_servant_of_ratvar(M) && isliving(M))
-			all_access = TRUE //SNOWFLAKE CODE? NO IDEA WHAT YOU'RE TALKING ABOUT.
 
 /obj/machinery/door/window/clockwork/setDir(direct)
 	if(!made_glow)
@@ -372,6 +369,9 @@
 	if(is_servant_of_ratvar(M) || all_access)
 		return 1
 	return 0
+
+/obj/machinery/door/window/clockwork
+	all_access = true
 
 /obj/machinery/door/window/northleft
 	dir = NORTH
