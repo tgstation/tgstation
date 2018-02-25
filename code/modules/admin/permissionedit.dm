@@ -59,8 +59,8 @@
 
 /datum/admins/proc/edit_rights_topic(list/href_list)
 	if(!check_rights(R_PERMISSIONS))
-		message_admins("[key_name_admin(usr)] attempted to edit the admin permissions without sufficient rights.")
-		log_admin("[key_name(usr)] attempted to edit the admin permissions without sufficient rights.")
+		message_admins("[key_name_admin(usr)] attempted to edit admin permissions without sufficient rights.")
+		log_admin("[key_name(usr)] attempted to edit admin permissions without sufficient rights.")
 		return
 	if(IsAdminAdvancedProcCall())
 		to_chat(usr, "<span class='admin prefix'>Admin Edit blocked: Advanced ProcCall detected.</span>")
@@ -74,11 +74,11 @@
 	var/skip
 	if(task == "activate" || task == "deactivate")
 		skip = 1
-	if(CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_admins) && task == "rank")
+	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_admins) && task == "rank")
 		if(admin_ckey in GLOB.protected_admins)
 			to_chat(usr, "<span class='admin prefix'>Editing the rank of this admin is blocked by server configuration.</span>")
 			return
-	if(CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_ranks) && task == "permissions")
+	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_ranks) && task == "permissions")
 		if(D.rank in GLOB.protected_ranks)
 			to_chat(usr, "<span class='admin prefix'>Editing the flags of this rank is blocked by server configuration.</span>")
 			return

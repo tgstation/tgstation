@@ -116,7 +116,7 @@ GLOBAL_PROTECT(protected_ranks)
 		return ((rank.rights & flag) == flag) //true only if right has everything in flag
 
 //load our rank - > rights associations
-/proc/load_admin_ranks()
+/proc/load_admin_ranks(dbfail)
 	if(IsAdminAdvancedProcCall())
 		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>")
 		return
@@ -139,27 +139,12 @@ GLOBAL_PROTECT(protected_ranks)
 			R.process_keyword(copytext(line, prev, next), previous_rights)
 			prev = next
 		previous_rights = R.rights
-	if(!CONFIG_GET(flag/admin_legacy_system))
+	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
 		var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
 		if(!query_load_admin_ranks.Execute())
 			message_admins("Error loading admin ranks from database. Loading from backup.")
 			log_sql("Error loading admin ranks from database. Loading from backup.")
-			CONFIG_SET(flag/admin_legacy_system, TRUE)
-			//load ranks from backup file
-			var/backup_file = file("data/admins_backup.json")
-			if(!fexists(backup_file))
-				log_world("Unable to locate admins backup file.")
-				return
-			var/list/json = json_decode(file2text(backup_file))
-			for(var/J in json["ranks"])
-				for(var/datum/admin_rank/R in GLOB.admin_ranks)
-					if(R.name == "[J]") //this rank was already loaded from txt override
-						continue
-				var/datum/admin_rank/R = new("[J]", json["ranks"]["[J]"]["include rights"], json["ranks"]["[J]"]["exclude rights"], json["ranks"]["[J]"]["can edit rights"])
-				if(!R)
-					continue
-				GLOB.admin_ranks += R
-			return 1
+			dbfail = 1
 		else
 			while(query_load_admin_ranks.NextRow())
 				var/skip
@@ -176,6 +161,22 @@ GLOBAL_PROTECT(protected_ranks)
 					if(!R)
 						continue
 					GLOB.admin_ranks += R
+	//load ranks from backup file
+	if(dbfail)
+		var/backup_file = file("data/admins_backup.json")
+		if(!fexists(backup_file))
+			log_world("Unable to locate admins backup file.")
+			return
+		var/list/json = json_decode(file2text(backup_file))
+		for(var/J in json["ranks"])
+			for(var/datum/admin_rank/R in GLOB.admin_ranks)
+				if(R.name == "[J]") //this rank was already loaded from txt override
+					continue
+			var/datum/admin_rank/R = new("[J]", json["ranks"]["[J]"]["include rights"], json["ranks"]["[J]"]["exclude rights"], json["ranks"]["[J]"]["can edit rights"])
+			if(!R)
+				continue
+			GLOB.admin_ranks += R
+		return 1
 	#ifdef TESTING
 	var/msg = "Permission Sets Built:\n"
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
@@ -188,10 +189,9 @@ GLOBAL_PROTECT(protected_ranks)
 
 /proc/load_admins()
 	var/dbfail
-	if(CONFIG_GET(flag/admin_legacy_system) && !SSdbcore.Connect())
+	if(!CONFIG_GET(flag/admin_legacy_system) && !SSdbcore.Connect())
 		message_admins("Failed to connect to database while loading admins. Loading from backup.")
 		log_sql("Failed to connect to database while loading admins. Loading from backup.")
-		CONFIG_SET(flag/admin_legacy_system, TRUE)
 		dbfail = 1
 	//clear the datums references
 	GLOB.admin_datums.Cut()
@@ -201,7 +201,7 @@ GLOBAL_PROTECT(protected_ranks)
 	GLOB.admins.Cut()
 	GLOB.protected_admins.Cut()
 	GLOB.deadmins.Cut()
-	dbfail = load_admin_ranks()
+	dbfail = load_admin_ranks(dbfail)
 	//Clear profile access
 	for(var/A in world.GetConfig("admin"))
 		world.SetConfig("APP/admin", A, null)
@@ -221,17 +221,11 @@ GLOBAL_PROTECT(protected_ranks)
 		if(!ckey || !rank)
 			continue
 		new /datum/admins(rank_names[rank], ckey, 0, 1)
-	if(!CONFIG_GET(flag/admin_legacy_system))
-		if(!SSdbcore.Connect())
-			message_admins("Failed to connect to database while loading admins. Loading from backup.")
-			log_sql("Failed to connect to database while loading admins. Loading from backup.")
-			CONFIG_SET(flag/admin_legacy_system, TRUE)
-			dbfail = 1
+	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
 		var/datum/DBQuery/query_load_admins = SSdbcore.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
 		if(!query_load_admins.Execute())
 			message_admins("Error loading admins from database. Loading from backup.")
 			log_sql("Error loading admins from database. Loading from backup.")
-			CONFIG_SET(flag/admin_legacy_system, TRUE)
 			dbfail = 1
 		else
 			while(query_load_admins.NextRow())
