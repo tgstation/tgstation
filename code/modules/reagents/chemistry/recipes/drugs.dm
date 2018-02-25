@@ -40,3 +40,10 @@
 	id = "aranesp"
 	results = list("aranesp" = 3)
 	required_reagents = list("epinephrine" = 1, "atropine" = 1, "morphine" = 1)
+
+
+/datum/chemical_reaction/catnip
+	name = "nepetalactone"
+	id = "catnip"
+	results = list("catnip" = 4)
+	required_reagents = list("carbon" = 2, "morphine" = 1, "mercury" = 1, "sugar" = 1)
