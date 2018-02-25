@@ -45,7 +45,7 @@
 			biter.say("Aurl!")
 		if(3)
 			biter.say("Hurgh!")
-			biter.die()
+			biter.death()
 	eaters[biter] = bite_times
 	
 
