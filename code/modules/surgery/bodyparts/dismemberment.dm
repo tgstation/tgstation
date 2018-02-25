@@ -6,16 +6,14 @@
 //Dismember a limb
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE)
 	if(!owner)
-		return 0
+		return FALSE
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
-		return 0
+		return FALSE
 	if(C.status_flags & GODMODE)
-		return 0
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(NODISMEMBER in H.dna.species.species_traits) // species don't allow dismemberment
-			return 0
+		return FALSE
+	if(C.has_trait(TRAIT_NODISMEMBER))
+		return FALSE
 
 	var/obj/item/bodypart/affecting = C.get_bodypart("chest")
 	affecting.receive_damage(CLAMP(brute_dam/2, 15, 50), CLAMP(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
@@ -46,14 +44,12 @@
 
 /obj/item/bodypart/chest/dismember()
 	if(!owner)
-		return 0
+		return FALSE
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
-		return 0
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(NODISMEMBER in H.dna.species.species_traits) // species don't allow dismemberment
-			return 0
+		return FALSE
+	if(C.has_trait(TRAIT_NODISMEMBER))
+		return FALSE
 
 	var/organ_spilled = 0
 	var/turf/T = get_turf(C)
