@@ -15,6 +15,8 @@
 	var/duration = 140
 	var/datum/proximity_monitor/advanced/timestop/chronofield
 	alpha = 125
+	var/check_anti_magic = FALSE
+	var/check_holy = FALSE
 
 /obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE)	//Immune atoms assoc list atom = TRUE
 	. = ..()
@@ -38,10 +40,11 @@
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
 	playsound(src, 'sound/magic/timeparadox2.ogg', 75, 1, -1)
-	chronofield = make_field(/datum/proximity_monitor/advanced/timestop, list("current_range" = freezerange, "host" = src, "immune" = immune))
+	chronofield = make_field(/datum/proximity_monitor/advanced/timestop, list("current_range" = freezerange, "host" = src, "immune" = immune, "check_anti_magic" = check_anti_magic, "check_holy" = check_holy))
 	QDEL_IN(src, duration)
 
 /obj/effect/timestop/wizard
+	check_anti_magic = TRUE
 	duration = 100
 
 /datum/proximity_monitor/advanced/timestop
@@ -53,6 +56,8 @@
 	var/list/mob/living/frozen_mobs = list()
 	var/list/obj/item/projectile/frozen_projectiles = list()
 	var/list/atom/movable/frozen_throws = list()
+	var/check_anti_magic = FALSE
+	var/check_holy = FALSE
 
 	var/static/list/global_frozen_atoms = list()
 
@@ -124,6 +129,8 @@
 	global_frozen_atoms[P] = TRUE
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/L)
+	if(L.anti_magic_check(check_anti_magic, check_holy))
+		return
 	L.Stun(20, 1, 1)
 	frozen_mobs[L] = L.anchored
 	L.anchored = TRUE
