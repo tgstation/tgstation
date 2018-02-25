@@ -163,6 +163,8 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/logic/binary/and/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
+	if(!isnum(A.data) || !isnum(B.data))
+		return FALSE
 	return A.data && B.data
 
 /obj/item/integrated_circuit/logic/binary/or
@@ -172,6 +174,8 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/logic/binary/or/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
+	if(!isnum(A.data) || !isnum(B.data))
+		return FALSE
 	return A.data || B.data
 
 /obj/item/integrated_circuit/logic/binary/less_than
@@ -181,6 +185,8 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/logic/binary/less_than/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
+	if(!isnum(A.data) || !isnum(B.data))
+		return FALSE
 	return A.data < B.data
 
 /obj/item/integrated_circuit/logic/binary/less_than_or_equal
@@ -190,6 +196,8 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/logic/binary/less_than_or_equal/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
+	if(!isnum(A.data) || !isnum(B.data))
+		return FALSE
 	return A.data <= B.data
 
 /obj/item/integrated_circuit/logic/binary/greater_than
@@ -199,6 +207,8 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/logic/binary/greater_than/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
+	if(!isnum(A.data) || !isnum(B.data))
+		return FALSE
 	return A.data > B.data
 
 /obj/item/integrated_circuit/logic/binary/greater_than_or_equal
@@ -208,6 +218,8 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/logic/binary/greater_than_or_equal/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
+	if(!isnum(A.data) || !isnum(B.data))
+		return FALSE
 	return A.data >= B.data
 
 /obj/item/integrated_circuit/logic/unary/not
