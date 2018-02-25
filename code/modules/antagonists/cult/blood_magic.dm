@@ -525,7 +525,7 @@
 	. = ..()
 
 
-//Construction: Creates a construct shell out of 25 metal sheets, or converts plasteel into runed metal
+//Construction: Creates a construct shell out of 50 metal sheets, or converts plasteel into runed metal
 /obj/item/melee/blood_magic/construction
 	name = "Corrupting Aura"
 	desc = "Corrupts metal and plasteel into more sinister forms."
@@ -546,12 +546,12 @@
 				to_chat(user, "<span class='warning'>You need 50 metal to produce a construct shell!</span>")
 		else if(istype(target, /obj/item/stack/sheet/plasteel))
 			var/obj/item/stack/sheet/plasteel/candidate = target
-			var/quantity = min(candidate.amount, uses)
-			uses -= quantity
-			new /obj/item/stack/sheet/runed_metal(T,quantity)
-			candidate.use(quantity)
-			to_chat(user, "<span class='warning'>A dark cloud eminates from you hand and swirls around the plasteel, transforming it into runed metal!</span>")
-			SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+			var/quantity = candidate.amount
+			if(candidate.use(quantity))
+				uses --
+				new /obj/item/stack/sheet/runed_metal(T,quantity)
+				to_chat(user, "<span class='warning'>A dark cloud eminates from you hand and swirls around the plasteel, transforming it into runed metal!</span>")
+				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else if(istype(target,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/candidate = target
 			if(candidate.mmi)
