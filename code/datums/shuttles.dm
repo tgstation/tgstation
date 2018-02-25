@@ -199,6 +199,12 @@
 	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
 	credit_cost = 1000
 
+/datum/map_template/shuttle/emergency/carpet
+	suffix = "carpet"
+	name = "Magic Carpet"
+	description = "Shadala, we're off!"
+	credit_cost = -1000
+
 /datum/map_template/shuttle/emergency/cere
 	suffix = "cere"
 	name = "Cere Station Emergency Shuttle"
