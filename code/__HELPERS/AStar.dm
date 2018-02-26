@@ -87,8 +87,9 @@ Actual Adjacent procs :
 
 	return path
 
-/proc/AStar(caller, var/turf/end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = 1)
+/proc/AStar(caller, _end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = 1)
 	//sanitation
+	var/turf/end = get_turf(_end)
 	var/turf/start = get_turf(caller)
 	if((!start)||(start.z != end.z)||(start == end)) //no pathfinding between z levels
 		return 0
