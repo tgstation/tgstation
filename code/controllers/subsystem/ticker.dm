@@ -32,8 +32,6 @@ SUBSYSTEM_DEF(ticker)
 	SCRIPTURE_SCRIPT = FALSE, \
 	SCRIPTURE_APPLICATION = FALSE) //list of clockcult scripture states for announcements
 
-	var/list/first_death = list()			//contains info about the first player to die; ckey, name, location, and last words
-
 	var/delay_end = 0						//if set true, the round will not restart on it's own
 	var/admin_delay_notice = ""				//a message to display to anyone who tries to restart the world after a delay
 	var/ready_for_reboot = FALSE			//all roundend preparation done with, all that's left is reboot
@@ -45,7 +43,8 @@ SUBSYSTEM_DEF(ticker)
 	var/timeLeft						//pregame timer
 	var/start_at
 
-	var/gametime_offset = 432000 // equal to 12 hours, making gametime at roundstart 12:00:00
+	var/gametime_offset = 432000		//Deciseconds to add to world.time for station time.
+	var/station_time_rate_multiplier = 12		//factor of station time progressal vs real time.
 
 	var/totalPlayers = 0					//used for pregame stats on statpanel
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
@@ -131,6 +130,10 @@ SUBSYSTEM_DEF(ticker)
 
 	..()
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
+	if(CONFIG_GET(flag/randomize_shift_time))
+		gametime_offset = rand(0, 23) HOURS
+	else if(CONFIG_GET(flag/shift_time_realtime))
+		gametime_offset = world.timeofday
 
 /datum/controller/subsystem/ticker/fire()
 	switch(current_state)
@@ -591,7 +594,7 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
 		return
 
-	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
+	to_chat(world, "<span class='boldannounce'>Rebooting World in [DisplayTimeText(delay)]. [reason]</span>")
 
 	var/start_wait = world.time
 	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2))	//don't wait forever
