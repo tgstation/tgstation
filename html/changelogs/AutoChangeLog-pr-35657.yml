@@ -1,7 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - balance: "Instead of starting unable to clone circuits at all, circuit printers can now print circuits over time from roundstart. The formula for this is equal to (metal cost / 150) seconds, with a maximum of 3 minutes. You can see printing progress by using the printer's interface, and you can print normal components during this time."
-  - balance: "If circuit printing is disabled in the config, cloning remains unavailable."
-  - balance: "The upgrade disk to allow circuit printers to clone circuits has been replaced with an upgrade disk to make circuit cloning instant."
-  - balance: "Both circuit printer upgrade disks now cost 5000 metal and glass, down from 10000."

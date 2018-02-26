@@ -1,6 +1,0 @@
-author: "DaedalusGame"
-delete-after: True
-changes: 
-  - balance: "livers don't unfail automatically every second life cycle you have to get a new one or get some corazone stat"
-  - balance: "increased liver damage from alcohol significantly because apparently your liver regenerates faster than you can chug unless you drink 100 liters of bacchus blessing"
-  - bugfix: "fixed cyber livers thinking they should fail at half durability"
