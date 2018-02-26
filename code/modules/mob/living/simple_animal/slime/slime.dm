@@ -74,6 +74,12 @@
 	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
 	"cerulean", "sepia", "black", "pyrite")
 
+	///////////CORE-CROSSING CODE
+
+	var/effectmod //What core modification is being used.
+	var/applied = 0 //How many extracts of the modtype have been applied.
+
+
 /mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
@@ -319,6 +325,8 @@
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user))
 					return 1
+	if(istype(W, /obj/item/slime_extract/) //Lets you feed slimes cores for crossbreeding.
+		return
 	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)
 			++Friends[user]

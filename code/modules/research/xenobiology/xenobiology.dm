@@ -1,4 +1,4 @@
-
+#define EXTRACT_CROSSING_REQUIRED 20
 /// Slime Extracts ///
 
 /obj/item/slime_extract
@@ -15,6 +15,7 @@
 	grind_results = list()
 	var/Uses = 1 // uses before it goes inert
 	var/qdel_timer = null // deletion timer, for delayed reactions
+	var/effectmod
 
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/slimepotion/enhancer))
@@ -39,9 +40,42 @@
 	to_chat(user, "<span class='notice'>Nothing happened... This slime extract cannot be activated this way.</span>")
 	return 0
 
+//Core-crossing: Feeding adult slimes extracts to obtain a much more powerful, single extract.
+/obj/item/slime_extract/attack(mob/living/simple_animal/slime/M, mob/user)
+	if(!isslime(M))
+		return ..()
+	if(M.stat)
+		to_chat(user, "<span class='warning'>The slime is dead!</span>")
+		return
+	if(!M.is_adult)
+		to_chat(user, "<span class='warning'>The slime must be an adult to cross it's core!</span>")
+		return
+	if(M.effectmod && M.effectmod != effectmod)
+		to_chat(user, "<span class='warning'>The slime is already being crossed with a different extract!</span>")
+		return
+
+	if(!M.effectmod)
+		M.effectmod = effectmod
+
+	M.applied++
+	qdel(src)
+	to_chat(user, "<span class='notice'>You feed the slime the [src].</span>")
+
+	if(M.applied >= EXTRACT_CROSSING_REQUIRED)
+		M.visible_message("<span class='danger'>The [M] shudders, it's mutated core consuming the rest of it's body!</span>")
+		var/sanitizedcolour = replacetext(M.colour, " ", "")
+		var/corecross = effectmod + "/" + sanitizedcolour
+		var/crosspath = text2path("/obj/item/slimecross/"+corecross)
+		if(ispath(crosspath))
+			new crosspath(M.loc)
+		else
+			M.visible_message("<span class='warning'>The mutated core shudders, and collapses into a puddle, unable to maintain its' form.</span>")
+		qdel(M)
+
 /obj/item/slime_extract/grey
 	name = "grey slime extract"
 	icon_state = "grey slime extract"
+	effectmod = "reproductive"
 
 /obj/item/slime_extract/grey/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -65,6 +99,7 @@
 /obj/item/slime_extract/gold
 	name = "gold slime extract"
 	icon_state = "gold slime extract"
+	effectmod = "symbiont"
 
 /obj/item/slime_extract/gold/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -92,6 +127,7 @@
 /obj/item/slime_extract/silver
 	name = "silver slime extract"
 	icon_state = "silver slime extract"
+	effectmod = "consuming"
 
 /obj/item/slime_extract/silver/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -115,6 +151,7 @@
 /obj/item/slime_extract/metal
 	name = "metal slime extract"
 	icon_state = "metal slime extract"
+	effectmod = "industrial"
 
 /obj/item/slime_extract/metal/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -137,6 +174,7 @@
 /obj/item/slime_extract/purple
 	name = "purple slime extract"
 	icon_state = "purple slime extract"
+	effectmod = "regenerative"
 
 /obj/item/slime_extract/purple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -154,6 +192,7 @@
 /obj/item/slime_extract/darkpurple
 	name = "dark purple slime extract"
 	icon_state = "dark purple slime extract"
+	effectmod = "self-sustaining"
 
 /obj/item/slime_extract/darkpurple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -175,6 +214,7 @@
 /obj/item/slime_extract/orange
 	name = "orange slime extract"
 	icon_state = "orange slime extract"
+	effectmod = "burning"
 
 /obj/item/slime_extract/orange/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -193,6 +233,7 @@
 /obj/item/slime_extract/yellow
 	name = "yellow slime extract"
 	icon_state = "yellow slime extract"
+	effectmod = "charged"
 
 /obj/item/slime_extract/yellow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -214,6 +255,7 @@
 /obj/item/slime_extract/red
 	name = "red slime extract"
 	icon_state = "red slime extract"
+	effectmod = "sanguine"
 
 /obj/item/slime_extract/red/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -232,6 +274,7 @@
 /obj/item/slime_extract/blue
 	name = "blue slime extract"
 	icon_state = "blue slime extract"
+	effectmod = "stabilized"
 
 /obj/item/slime_extract/blue/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -254,6 +297,7 @@
 /obj/item/slime_extract/darkblue
 	name = "dark blue slime extract"
 	icon_state = "dark blue slime extract"
+	effectmod = "chilling"
 
 /obj/item/slime_extract/darkblue/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -275,6 +319,7 @@
 /obj/item/slime_extract/pink
 	name = "pink slime extract"
 	icon_state = "pink slime extract"
+	effectmod = "gentle"
 
 /obj/item/slime_extract/pink/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -301,6 +346,7 @@
 /obj/item/slime_extract/green
 	name = "green slime extract"
 	icon_state = "green slime extract"
+	effectmod = "mutative"
 
 /obj/item/slime_extract/green/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -323,6 +369,7 @@
 /obj/item/slime_extract/lightpink
 	name = "light pink slime extract"
 	icon_state = "light pink slime extract"
+	effectmod = "loyal"
 
 /obj/item/slime_extract/lightpink/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -345,6 +392,7 @@
 /obj/item/slime_extract/black
 	name = "black slime extract"
 	icon_state = "black slime extract"
+	effectmod = "transformative"
 
 /obj/item/slime_extract/black/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -364,6 +412,7 @@
 /obj/item/slime_extract/oil
 	name = "oil slime extract"
 	icon_state = "oil slime extract"
+	effectmod = "detonating"
 
 /obj/item/slime_extract/oil/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -385,6 +434,7 @@
 /obj/item/slime_extract/adamantine
 	name = "adamantine slime extract"
 	icon_state = "adamantine slime extract"
+	effectmod = "crystalline"
 
 /obj/item/slime_extract/adamantine/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -412,6 +462,7 @@
 /obj/item/slime_extract/bluespace
 	name = "bluespace slime extract"
 	icon_state = "bluespace slime extract"
+	effectmod = "warping"
 	var/teleport_ready = FALSE
 	var/teleport_x = 0
 	var/teleport_y = 0
@@ -446,6 +497,7 @@
 /obj/item/slime_extract/pyrite
 	name = "pyrite slime extract"
 	icon_state = "pyrite slime extract"
+	effectmod = "prismatic"
 
 /obj/item/slime_extract/pyrite/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -470,6 +522,7 @@
 /obj/item/slime_extract/cerulean
 	name = "cerulean slime extract"
 	icon_state = "cerulean slime extract"
+	effectmod = "recurring"
 
 /obj/item/slime_extract/cerulean/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -488,6 +541,7 @@
 /obj/item/slime_extract/sepia
 	name = "sepia slime extract"
 	icon_state = "sepia slime extract"
+	effectmod = "lengthened"
 
 /obj/item/slime_extract/sepia/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -508,6 +562,7 @@
 /obj/item/slime_extract/rainbow
 	name = "rainbow slime extract"
 	icon_state = "rainbow slime extract"
+	effectmod = "hyperchromatic"
 
 /obj/item/slime_extract/rainbow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -890,3 +945,5 @@
 		T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
 	A.xenobiology_compatible = TRUE
 	qdel(src)
+
+#undef EXTRACT_CROSSING_REQUIRED
