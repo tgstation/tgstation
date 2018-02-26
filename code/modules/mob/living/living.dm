@@ -456,7 +456,6 @@
 			return 0
 
 	var/old_direction = dir
-	var/turf/T = loc
 	. = ..()
 
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
@@ -465,8 +464,11 @@
 	if (s_active && !(CanReach(s_active,view_only = TRUE)))
 		s_active.close(src)
 
-	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
-		makeTrail(newloc, T, old_direction)
+	on_drag(newloc, old_direction)
+
+/mob/living/proc/on_drag(newloc, dir)
+	if(prob(getBruteLoss()*200/maxHealth) && lying && !buckled && isturf(loc) && has_gravity())
+		makeTrail(newloc, loc, dir)
 
 /mob/living/movement_delay(ignorewalk = 0)
 	. = 0
