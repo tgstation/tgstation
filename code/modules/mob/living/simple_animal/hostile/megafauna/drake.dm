@@ -61,7 +61,7 @@ Difficulty: Medium
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite()
+	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/drake()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	smallsprite.Grant(src)

@@ -22,7 +22,7 @@
 	maxHealth = 400
 	health = 400
 	icon_state = "alienq"
-	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite()
+	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/queen()
 
 /mob/living/carbon/alien/humanoid/royal/queen/Initialize()
 	//there should only be one queen

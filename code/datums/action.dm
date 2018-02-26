@@ -610,14 +610,16 @@
 	var/small_icon
 	var/small_icon_state
 
+/datum/action/small_sprite/queen
+	small_icon = 'icons/mob/alien.dmi'
+	small_icon_state = "alienq"
+
+/datum/action/small_sprite/drake
+	small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	small_icon_state = "dragon_humanoid"
+
 /datum/action/small_sprite/Trigger()
 	..()
-	if(istype(owner, /mob/living/carbon/alien/humanoid/royal/queen))
-		small_icon = 'icons/mob/alien.dmi'
-		small_icon_state = "alienq"
-	if(istype(owner, /mob/living/simple_animal/hostile/megafauna/dragon))
-		small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-		small_icon_state = "dragon_humanoid"
 	if(!small)
 		var/image/I = image(icon = small_icon, icon_state = small_icon_state, loc = owner)
 		I.override = 1
