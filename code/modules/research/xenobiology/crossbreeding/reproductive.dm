@@ -18,7 +18,7 @@ Reproductive extracts:
 		to_chat(user, "<span class='notice'>You feed the [O] to the [src], and it pulses gently.</span>")
 	if(cubes_eaten >= 3)
 		var/cores = rand(1,4)
-		src.visible_message("<span class='notice'>[src] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "":"s"]!</span>")
+		src.visible_message("<span class='notice'>[src] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!</span>")
 		for(var/i = 0, i < cores, i++)
 			new extract_type(src.loc)
 		cubes_eaten = 0

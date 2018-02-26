@@ -2260,6 +2260,7 @@
 #include "code\modules\research\techweb\all_nodes.dm"
 #include "code\modules\research\xenobiology\xenobio_camera.dm"
 #include "code\modules\research\xenobiology\xenobiology.dm"
+#include "code\modules\research\xenobiology\crossbreeding\consuming.dm"
 #include "code\modules\research\xenobiology\crossbreeding\corecross.dm"
 #include "code\modules\research\xenobiology\crossbreeding\prismatic.dm"
 #include "code\modules\research\xenobiology\crossbreeding\reproductive.dm"
