@@ -104,6 +104,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambientsounds = MAINTENANCE
 	valid_territory = FALSE
 
+/area/maintenance/arena
+	name = "The Arena"
+	icon_state = "maint_bar"
 
 //Departments
 
