@@ -22,15 +22,15 @@
 	maxHealth = 400
 	health = 400
 	icon_state = "alienq"
-	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite()
+	var/datum/action/small_sprite/queen/smallsprite = new/datum/action/small_sprite/queen()
 
-/datum/action/small_sprite
+/datum/action/small_sprite/queen
 	name = "Toggle Giant Sprite - Others will always see you as giant"
 	button_icon_state = "smallqueen"
 	background_icon_state = "bg_alien"
 	var/queen_small = 0
 
-/datum/action/small_sprite/Trigger()
+/datum/action/small_sprite/queen/Trigger()
 	..()
 	if(!queen_small)
 		var/image/I = image(icon = 'icons/mob/alien.dmi', icon_state = "alienq", loc = owner)

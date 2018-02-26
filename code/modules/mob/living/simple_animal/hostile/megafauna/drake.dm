@@ -61,14 +61,15 @@ Difficulty: Medium
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
+	var/datum/action/small_sprite/drake/smallsprite = new/datum/action/small_sprite/drake()
 
-/datum/action/small_sprite
+/datum/action/small_sprite/drake
 	name = "Toggle Giant Sprite - Others will always see you as giant"
 	button_icon_state = "smallqueen"
 	background_icon_state = "bg_alien"
 	var/drake_small = 0
 
-/datum/action/small_sprite/Trigger()
+/datum/action/small_sprite/drake/Trigger()
 	..()
 	if(!drake_small)
 		var/image/I = image(icon = 'icons/mob/lavaland/lavaland_monsters.dmi', icon_state = "dragon_humanoid", loc = owner)
