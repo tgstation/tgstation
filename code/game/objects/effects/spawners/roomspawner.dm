@@ -17,10 +17,7 @@
 	. = ..()
 	if(!spawned && prob(10))
 		spawned = TRUE
-		if(prob(50))
-			template = SSmapping.random_room_templates["pod_grey"]
-		else
-			template = SSmapping.random_room_templates["pod_supplies"]
+		template = SSmapping.random_room_templates["pod_supplies"]
 		if(!template)
 			throw EXCEPTION("Random pod template not found!")
 			qdel(src)
