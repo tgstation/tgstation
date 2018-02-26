@@ -37,6 +37,9 @@
 	var/probability = 0 // Weight amongst other eligible weather. If zero, will never happen randomly.
 	var/target_trait = ZTRAIT_STATION // The z-level trait to affect when run randomly or when not overridden.
 
+	var/barometer_predictable = FALSE
+	var/next_hit_time = 0 //For barometers to know when the next storm will hit
+
 /datum/weather/New(z_levels)
 	..()
 	impacted_z_levels = z_levels

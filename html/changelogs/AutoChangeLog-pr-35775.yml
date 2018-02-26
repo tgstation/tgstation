@@ -1,6 +1,0 @@
-author: "Kevinz000 & Deathride58"
-delete-after: True
-changes: 
-  - rscadd: "A separate round time has been added to status panel. This will start at 00:00:00."
-  - rscadd: "Night shift lighting [if enabled in the same configuration] will activate between station time 7:30 PM and 7:30 AM. This will dim all lights affected, but they will still have the same range."
-  - rscadd: "APCs now have an option to set night lighting mode on or off, regardless of time."

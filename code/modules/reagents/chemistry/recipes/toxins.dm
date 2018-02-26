@@ -6,10 +6,10 @@
 	required_reagents = list("ethanol" = 1, "oxygen" = 1, "silver" = 1)
 	required_temp = 420
 
-/datum/chemical_reaction/neurotoxin2
-	name = "neurotoxin2"
-	id = "neurotoxin2"
-	results = list("neurotoxin2" = 1)
+/datum/chemical_reaction/fentanyl
+	name = "fentanyl"
+	id = "fentanyl"
+	results = list("fentanyl" = 1)
 	required_reagents = list("space_drugs" = 1)
 	required_temp = 674
 
@@ -92,7 +92,7 @@
 	name = "Rotatium"
 	id = "Rotatium"
 	results = list("rotatium" = 3)
-	required_reagents = list("mindbreaker" = 1, "teslium" = 1, "neurotoxin2" = 1)
+	required_reagents = list("mindbreaker" = 1, "teslium" = 1, "fentanyl" = 1)
 	mix_message = "<span class='danger'>After sparks, fire, and the smell of mindbreaker, the mix is constantly spinning with no stop in sight.</span>"
 
 /datum/chemical_reaction/skewium

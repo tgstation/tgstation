@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - code_imp: "Renamed the IDs of various reagents to be more descriptive."
-  - spellcheck: "Fixed the descriptions of changeling adrenaling reagents."
