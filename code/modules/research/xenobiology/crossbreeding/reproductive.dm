@@ -10,7 +10,6 @@ Reproductive extracts:
 	icon_state = "plushie_slime"
 	var/extract_type = /obj/item/slime_extract/
 	var/cubes_eaten = 0
-	var/colour = "null"
 
 /obj/item/slimecross/reproductive/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/reagent_containers/food/snacks/monkeycube))
@@ -23,10 +22,6 @@ Reproductive extracts:
 		for(var/i = 0, i < cores, i++)
 			new extract_type(src.loc)
 		cubes_eaten = 0
-
-/obj/item/slimecross/reproductive/Initialize()
-	..()
-	name = colour + " " + name
 
 /obj/item/slimecross/reproductive/grey
 	extract_type = /obj/item/slime_extract/grey
