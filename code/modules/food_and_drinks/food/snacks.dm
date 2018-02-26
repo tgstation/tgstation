@@ -44,7 +44,9 @@
 		var/obj/item/trash_item = generate_trash(usr)
 		qdel(src)
 		usr.put_in_hands(trash_item)
-
+		
+/obj/item/reagent_containers/food/snacks/proc/on_bite(mob/biter)
+	return
 
 /obj/item/reagent_containers/food/snacks/attack_self(mob/user)
 	return
@@ -101,7 +103,7 @@
 			else
 				to_chat(user, "<span class='warning'>[M] doesn't seem to have a mouth!</span>")
 				return
-
+		on_bite(M)
 		if(reagents)								//Handle ingestion of the reagent.
 			if(M.satiety > -200)
 				M.satiety -= junkiness

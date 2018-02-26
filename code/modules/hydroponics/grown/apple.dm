@@ -26,6 +26,28 @@
 	foodtype = FRUIT
 	juice_results = list("applejuice" = 0)
 	tastes = list("apple" = 1)
+	
+/obj/item/reagent_containers/food/snacks/grown/apple/poisoned
+	bitesize = 0.01
+	var/list/eaters = list()
+	
+/obj/item/reagent_containers/food/snacks/grown/apple/poisoned/on_bite(mob/living/carbon/biter)
+	..()
+	var/bite_times = eaters[biter]
+	if(!bite_times)
+		bite_times = 1
+	else
+		bite_times++
+	switch(bite_times)
+		if(1)
+			biter.say("Haugh!")
+		if(2)
+			biter.say("Aurl!")
+		if(3)
+			biter.say("Hurgh!")
+			biter.death()
+	eaters[biter] = bite_times
+	
 
 // Gold Apple
 /obj/item/seeds/apple/gold

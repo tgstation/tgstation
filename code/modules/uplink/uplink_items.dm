@@ -1233,6 +1233,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	restricted_roles = list("Cook", "Botanist", "Clown", "Mime")
 
+/datum/uplink_item/role_restricted/poisoned_apple
+	name = "Poisoned Apple"
+	desc = "A deadly apple. Can't be reproduced from seeds. Nanotrasen Botanists are all the same, all flash and no fury."
+	item = /obj/item/reagent_containers/food/snacks/grown/apple/poisoned
+	cost = 4
+	surplus = 0
+	restricted_roles = list("Botanist")
+
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"
 	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, He will thirst for blood and must be used to kill to sate that thirst. \
