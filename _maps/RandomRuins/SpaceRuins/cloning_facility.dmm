@@ -71,7 +71,6 @@
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "q" = (
 /obj/structure/sign/directions/science{
-	icon_state = "direction_sci";
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
@@ -104,29 +103,24 @@
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "v" = (
 /turf/open/floor/plasteel/whiteblue/corner{
-	icon_state = "whitebluecorner";
 	dir = 4
 	},
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "w" = (
 /obj/structure/chair/office{
-	icon_state = "chair";
 	dir = 1
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "x" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "y" = (
 /obj/structure/chair/office{
-	icon_state = "chair";
 	dir = 1
 	},
 /turf/open/floor/plasteel/whiteblue,
@@ -136,7 +130,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
-	icon_state = "whitebluecorner";
 	dir = 1
 	},
 /area/ruin/space/has_grav/powered/ancient_shuttle)
@@ -152,7 +145,6 @@
 /area/space/nearstation)
 "D" = (
 /obj/structure/chair/comfy{
-	icon_state = "comfychair";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
