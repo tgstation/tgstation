@@ -595,14 +595,15 @@
 	if(SSticker.current_state > GAME_STATE_PREGAME)
 		return alert("Too late... The game has already started!")
 	if(newtime)
-		SSticker.SetTimeLeft(newtime * 10)
+		newtime = newtime*10
+		SSticker.SetTimeLeft(newtime)
 		if(newtime < 0)
 			to_chat(world, "<b>The game start has been delayed.</b>")
 			log_admin("[key_name(usr)] delayed the round start.")
 		else
-			to_chat(world, "<b>The game will start in [newtime] seconds.</b>")
+			to_chat(world, "<b>The game will start in [DisplayTimeText(newtime)].</b>")
 			SEND_SOUND(world, sound('sound/ai/attention.ogg'))
-			log_admin("[key_name(usr)] set the pre-game delay to [newtime] seconds.")
+			log_admin("[key_name(usr)] set the pre-game delay to [DisplayTimeText(newtime)].")
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delay Game Start") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/unprison(mob/M in GLOB.mob_list)

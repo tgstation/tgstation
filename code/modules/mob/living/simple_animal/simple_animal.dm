@@ -89,7 +89,7 @@
 	//domestication
 	var/tame = 0
 
-	var/my_z // I don't want to confuse this with client registered_z 
+	var/my_z // I don't want to confuse this with client registered_z
 
 /mob/living/simple_animal/Initialize()
 	. = ..()
@@ -231,7 +231,7 @@
 		if( abs(areatemp - bodytemperature) > 5)
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
-			bodytemperature += diff
+			adjust_bodytemperature(diff)
 
 	if(!environment_is_safe(environment))
 		adjustHealth(unsuitable_atmos_damage)

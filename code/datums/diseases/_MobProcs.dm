@@ -105,28 +105,26 @@
 /mob/living/carbon/AirborneContractDisease(datum/disease/D)
 	if(internal)
 		return
-	..()
-
-/mob/living/carbon/human/AirborneContractDisease(datum/disease/D)
-	if(dna && (NOBREATH in dna.species.species_traits))
+	if(has_trait(TRAIT_NOBREATH))
 		return
 	..()
 
-
-//Proc to use when you 100% want to try to infect someone (ignoreing protective clothing and such), as long as they aren't immune
+//Proc to use when you 100% want to try to infect someone (ignoring protective clothing and such), as long as they aren't immune
 /mob/living/proc/ForceContractDisease(datum/disease/D, make_copy = TRUE, del_on_fail = FALSE)
 	if(!CanContractDisease(D))
 		if(del_on_fail)
 			qdel(D)
 		return FALSE
-	if(!D.try_infect(src, make_copy) && del_on_fail)
-		qdel(D)
+	if(!D.try_infect(src, make_copy))
+		if(del_on_fail)
+			qdel(D)
+		return FALSE
 	return TRUE
 
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
 	if(dna)
-		if((VIRUSIMMUNE in dna.species.species_traits) && !D.bypasses_immunity)
+		if(has_trait(TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
 			return FALSE
 
 		var/can_infect = FALSE

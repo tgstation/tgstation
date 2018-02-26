@@ -79,6 +79,9 @@
 #define LIGHTING_PLANE 15
 #define LIGHTING_LAYER 15
 
+#define ABOVE_LIGHTING_PLANE 16
+#define ABOVE_LIGHTING_LAYER 16
+
 //HUD layer defines
 
 #define FULLSCREEN_PLANE 18

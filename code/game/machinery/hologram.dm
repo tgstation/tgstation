@@ -58,6 +58,7 @@ Possible to do for anyone motivated enough:
 	var/static/force_answer_call = FALSE	//Calls will be automatically answered after a couple rings, here for debugging
 	var/static/list/holopads = list()
 	var/obj/effect/overlay/holoray/ray
+	var/ringing = FALSE
 	var/offset = FALSE
 	var/on_network = TRUE
 
@@ -367,6 +368,8 @@ Possible to do for anyone motivated enough:
 	if(outgoing_call)
 		outgoing_call.Check()
 
+	ringing = FALSE
+
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		if(HC.connected_holopad != src)
@@ -377,7 +380,9 @@ Possible to do for anyone motivated enough:
 				HC.Disconnect(src)//can't answer calls while calling
 			else
 				playsound(src, 'sound/machines/twobeep.ogg', 100)	//bring, bring!
+				ringing = TRUE
 
+	update_icon()
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
@@ -447,7 +452,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/holopad/update_icon()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
-	if(total_users || replay_mode)
+	if(ringing)
+		icon_state = "holopad_ringing"
+	else if(total_users || replay_mode)
 		icon_state = "holopad1"
 	else
 		icon_state = "holopad0"
