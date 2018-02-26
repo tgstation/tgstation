@@ -25,6 +25,7 @@
 
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/slimepotion/enhancer))
+		if(Uses >= 5 || recurring)
 			to_chat(user, "<span class='warning'>You cannot enhance this extract further!</span>")
 			return ..()
 		to_chat(user, "<span class='notice'>You apply the enhancer to the slime extract. It may now be reused one more time.</span>")
