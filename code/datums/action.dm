@@ -615,7 +615,7 @@
 	small_icon_state = "alienq"
 
 /datum/action/small_sprite/drake
-	small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	small_icon = 'icons/mob/mob.dmi'
 	small_icon_state = "dragon_humanoid"
 
 /datum/action/small_sprite/Trigger()
