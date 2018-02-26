@@ -16,6 +16,8 @@
 	var/recharged = 0
 	var/recharge_delay = 5
 	var/mutable_appearance/beaker_overlay
+	var/working_state = "dispenser_working"
+	var/nopower_state = "dispenser_nopower"
 	var/obj/item/reagent_containers/beaker = null
 	var/list/dispensable_reagents = list(
 		"hydrogen",
@@ -60,6 +62,7 @@
 	cell = new cell_type
 	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
+	update_icon()
 
 /obj/machinery/chem_dispenser/Destroy()
 	QDEL_NULL(beaker)
@@ -67,12 +70,35 @@
 	return ..()
 
 /obj/machinery/chem_dispenser/process()
-
 	if(recharged < 0)
 		recharge()
 		recharged = recharge_delay
 	else
 		recharged -= 1
+
+/obj/machinery/chem_dispenser/proc/display_beaker()
+	..()
+	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
+	b_o.pixel_y = -4
+	b_o.pixel_x = -7
+	return b_o
+
+obj/machinery/chem_dispenser/proc/work_animation()
+	if(working_state)
+		flick(working_state,src)
+
+/obj/machinery/chem_dispenser/power_change()
+	..()
+	if(!powered() && nopower_state)
+		icon_state = nopower_state
+	else
+		icon_state = initial(icon_state)
+
+obj/machinery/chem_dispenser/update_icon()
+	cut_overlays()
+	if(beaker)
+		beaker_overlay = display_beaker()
+		add_overlay(beaker_overlay)
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER))
@@ -163,6 +189,7 @@
 			var/target = text2num(params["target"])
 			if(target in beaker.possible_transfer_amounts)
 				amount = target
+				work_animation()
 				. = TRUE
 		if("dispense")
 			var/reagent = params["reagent"]
@@ -173,11 +200,13 @@
 
 				R.add_reagent(reagent, actual)
 				cell.use((actual / 10) / powerefficiency)
+				work_animation()
 				. = TRUE
 		if("remove")
 			var/amount = text2num(params["amount"])
 			if(beaker && amount in beaker.possible_transfer_amounts)
 				beaker.reagents.remove_all(amount)
+				work_animation()
 				. = TRUE
 		if("eject")
 			if(beaker)
@@ -185,7 +214,7 @@
 				if(Adjacent(usr) && !issilicon(usr))
 					usr.put_in_hands(beaker)
 				beaker = null
-				cut_overlays()
+				update_icon()
 				. = TRUE
 		if("dispense_recipe")
 			var/recipe_to_use = params["recipe"]
@@ -200,6 +229,7 @@
 					if(actual)
 						R.add_reagent(r_id, actual)
 						cell.use((actual / 10) / powerefficiency)
+						work_animation()
 		if("clear_recipes")
 			var/yesno = alert("Clear all recipes?",, "Yes","No")
 			if(yesno == "Yes")
@@ -236,20 +266,12 @@
 			return
 		beaker = B
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
-		beaker_overlay = display_beaker()
-		add_overlay(beaker_overlay)
+		update_icon()
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/card/emag))
 		to_chat(user, "<span class='warning'>You can't load [I] into [src]!</span>")
 		return ..()
 	else
 		return ..()
-
-/obj/machinery/chem_dispenser/proc/display_beaker()
-	..()
-	var/mutable_appearance/b_o = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
-	b_o.pixel_y = -4
-	b_o.pixel_x = -7
-	return b_o
 
 /obj/machinery/chem_dispenser/get_cell()
 	return cell
@@ -268,6 +290,7 @@
 		beaker.reagents.remove_all()
 	cell.use(total/powerefficiency)
 	cell.emp_act(severity)
+	work_animation()
 	visible_message("<span class='danger'>[src] malfunctions, spraying chemicals everywhere!</span>")
 	..()
 
@@ -280,6 +303,8 @@
 	recharge_delay = 20
 	dispensable_reagents = list()
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
+	working_state = "minidispenser_working"
+	nopower_state = "minidispenser_nopower"
 	var/static/list/dispensable_reagent_tiers = list(
 		list(
 			"hydrogen",
@@ -365,13 +390,13 @@
 	return final_list
 
 /obj/machinery/chem_dispenser/constructable/display_beaker()
-	var/mutable_appearance/b_o = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
+	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	b_o.pixel_y = -4
 	b_o.pixel_x = -4
 	return b_o
 
 /obj/machinery/chem_dispenser/drinks/display_beaker()
-	var/mutable_appearance/b_o = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
+	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	switch(dir)
 		if(NORTH)
 			b_o.pixel_y = 7
@@ -397,6 +422,8 @@
 	dir = WEST
 	pixel_y = 6
 	layer = WALL_OBJ_LAYER
+	working_state = null
+	nopower_state = null
 	dispensable_reagents = list(
 		"water",
 		"ice",

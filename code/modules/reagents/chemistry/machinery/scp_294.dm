@@ -14,6 +14,8 @@
 	icon_state = "294_bottom"
 	amount = 10
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	working_state = null
+	nopower_state = null
 	var/static/list/shortcuts = list(
 		"meth" = "methamphetamine",
 		"tricord" = "tricordrazine"
@@ -25,7 +27,7 @@
 	GLOB.poi_list += src
 	top_overlay = mutable_appearance(icon, "294_top", layer = ABOVE_MOB_LAYER)
 	update_icon()
-	
+
 
 /obj/machinery/chem_dispenser/scp_294/update_icon()
 	cut_overlays()
@@ -35,6 +37,9 @@
 	. = ..()
 	GLOB.poi_list -= src
 	QDEL_NULL(top_overlay)
+
+/obj/machinery/chem_dispenser/scp_294/display_beaker()
+	return
 
 /obj/machinery/chem_dispenser/scp_294/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
