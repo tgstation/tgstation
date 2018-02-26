@@ -1,3 +1,7 @@
+/*
+Prismatic extracts:
+	Becomes an infinite-use paintbrush.
+*/
 /obj/item/slimecross/prismatic
 	name = "prismatic extract"
 	desc = "It's constantly wet with a semi-transparent, colored goo."

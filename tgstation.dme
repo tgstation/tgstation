@@ -2263,6 +2263,7 @@
 #include "code\modules\research\xenobiology\crossbreeding\consuming.dm"
 #include "code\modules\research\xenobiology\crossbreeding\corecross.dm"
 #include "code\modules\research\xenobiology\crossbreeding\prismatic.dm"
+#include "code\modules\research\xenobiology\crossbreeding\recurring.dm"
 #include "code\modules\research\xenobiology\crossbreeding\reproductive.dm"
 #include "code\modules\research\xenobiology\crossbreeding\selfsustaining.dm"
 #include "code\modules\ruins\lavaland_ruin_code.dm"

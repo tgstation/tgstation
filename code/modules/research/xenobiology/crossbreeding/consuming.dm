@@ -1,3 +1,8 @@
+/*
+Consuming extracts:
+	Holds potentially infinite normal extracts.
+	Allows easy feeding of extracts to slimes.
+*/
 /obj/item/slimecross/consuming
 	name = "consuming extract"
 	desc = "It hungers... for <i>more</i>." //My slimecross has finally decided to eat... my extract!
@@ -26,7 +31,7 @@
 		stored++
 		to_chat(user,"<span class='warning'>The [src] splits in half like an opening mouth and swallows the extract!</span>")
 	else
-		to_chat(user,"<span class='warning'>You can only feed the [src] slime extracts of its' color.</span>")
+		to_chat(user,"<span class='warning'>You can only feed the [src] [colour] extracts!</span>")
 
 /obj/item/slimecross/consuming/afterattack(turf/target, mob/user, proximity)
 	if(!proximity)
@@ -41,7 +46,7 @@
 			stored++
 
 	if(foundsome)
-		to_chat(user,"<span class='warning'>The [src] eagerly consumes all of the extracts of its' color!</span>")
+		to_chat(user,"<span class='warning'>The [src] eagerly consumes all of the [colour] extracts!</span>")
 
 /obj/item/slimecross/consuming/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(stored > 0)

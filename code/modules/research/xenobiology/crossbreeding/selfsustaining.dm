@@ -1,3 +1,7 @@
+/*
+Self-sustaining extracts:
+	Produces 4 extracts that do not need reagents.
+*/
 /obj/item/slimecross/selfsustaining
 	name = "self-sustaining extract"
 	var/extract_type = /obj/item/slime_extract

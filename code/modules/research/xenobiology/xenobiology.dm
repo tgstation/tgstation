@@ -16,10 +16,15 @@
 	var/qdel_timer = null // deletion timer, for delayed reactions
 	var/effectmod
 	var/list/activate_reagents = list() //Reagents required for activation
+	var/recurring = FALSE
+
+/obj/item/slime_extract/examine(mob/user)
+	..()
+	if(Uses > 1)
+		to_chat(user,"It has [Uses] use[Uses > 1 ? "s":""] remaining.")
 
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/slimepotion/enhancer))
-		if(Uses >= 5)
 			to_chat(user, "<span class='warning'>You cannot enhance this extract further!</span>")
 			return ..()
 		to_chat(user, "<span class='notice'>You apply the enhancer to the slime extract. It may now be reused one more time.</span>")
