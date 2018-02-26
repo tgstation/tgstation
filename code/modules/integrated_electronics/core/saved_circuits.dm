@@ -103,7 +103,6 @@
 			// TODO: support for special input types, such as internal refs and maybe typepaths
 
 
-
 // Saves type and modified name (if any) to a list
 // The list is converted to JSON down the line.
 /obj/item/device/electronic_assembly/proc/save()
@@ -142,8 +141,6 @@
 	if(assembly_params["opened"])
 		opened = TRUE
 		update_icon()
-
-
 
 // Attempts to save an assembly into a save file format.
 // Returns null if assembly is not complete enough to be saved.
@@ -197,6 +194,20 @@
 
 	if(wires.len)
 		blocks["wires"] = wires
+
+	var/list/prioritized_ios = list()
+	// Block 4. Prioritized IOs.
+	for(var/c in assembly.assembly_components)
+		var/obj/item/integrated_circuit/component = c
+		var/list/pio = component.priority_inputs + component.priority_outputs + component.priority_activators
+		if(pio.len)
+			for(var/i in pio)
+				var/datum/integrated_io/pin = i
+				var/list/params = pin.get_pin_parameters()
+				prioritized_ios.Add(list(params))
+
+	if(prioritized_ios.len)
+		blocks["prioritized_io"] = prioritized_ios
 
 	return json_encode(blocks)
 
@@ -338,6 +349,19 @@
 			var/datum/integrated_io/IO = assembly.get_pin_ref_list(wire[1])
 			var/datum/integrated_io/IO2 = assembly.get_pin_ref_list(wire[2])
 			IO.connect_pin(IO2)
+
+	// Block 4. Prioritized IOs.
+	if(blocks["prioritized_io"])
+		for(var/pio in blocks["prioritized_io"])
+			var/datum/integrated_io/IO = assembly.get_pin_ref_list(pio)
+			if(IO)
+				switch(IO.pin_type)
+					if(IC_INPUT)
+						IO.holder.priority_inputs += IO
+					if(IC_OUTPUT)
+						IO.holder.priority_outputs += IO
+					if(IC_ACTIVATOR)
+						IO.holder.priority_activators += IO
 
 	assembly.forceMove(loc)
 	return assembly
