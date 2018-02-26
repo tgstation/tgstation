@@ -90,8 +90,6 @@
 
 		for(var/datum/symptom/S in symptoms)
 			S.Activate(src)
-	else
-		CRASH("We do not have any symptoms during stage_act()!")
 
 // Compares type then ID.
 /datum/disease/advance/IsSame(datum/disease/advance/D)
@@ -142,7 +140,7 @@
 	var/list/possible_symptoms = list()
 	for(var/symp in SSdisease.list_symptoms)
 		var/datum/symptom/S = new symp
-		if(S.level >= level_min && S.level <= level_max)
+		if(S.naturally_occuring && S.level >= level_min && S.level <= level_max)
 			if(!HasSymptom(S))
 				possible_symptoms += S
 
@@ -174,7 +172,7 @@
 		SSdisease.archive_diseases[the_id] = Copy()
 
 	var/datum/disease/advance/A = SSdisease.archive_diseases[the_id]
-	AssignName(A.name)
+	name = A.name
 
 //Generate disease properties based on the effects. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()
@@ -292,7 +290,11 @@
 
 // Name the disease.
 /datum/disease/advance/proc/AssignName(name = "Unknown")
-	src.name = name
+	Refresh()
+	var/datum/disease/advance/A = SSdisease.archive_diseases[GetDiseaseID()]
+	A.name = name
+	for(var/datum/disease/advance/AD in SSdisease.active_diseases)
+		AD.Refresh()
 
 // Return a unique ID of the disease.
 /datum/disease/advance/GetDiseaseID()

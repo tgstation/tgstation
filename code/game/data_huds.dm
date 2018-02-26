@@ -63,6 +63,9 @@
 /datum/atom_hud/abductor
 	hud_icons = list(GLAND_HUD)
 
+/datum/atom_hud/sentient_disease
+	hud_icons = list(SENTIENT_DISEASE_HUD)
+
 /* MED/SEC/DIAG HUD HOOKS */
 
 /*

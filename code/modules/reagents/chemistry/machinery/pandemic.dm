@@ -187,12 +187,13 @@
 				if(!new_name || ..())
 					return
 				A.AssignName(new_name)
-				for(var/datum/disease/advance/AD in SSdisease.active_diseases)
-					AD.Refresh()
 				. = TRUE
 		if("create_culture_bottle")
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = SSdisease.archive_diseases[id]
+			if(!A.mutable)
+				to_chat(usr, "<span class='warning'>ERROR: Cannot replicate virus strain.</span>")
+				return
 			A = A.Copy()
 			var/list/data = list("viruses" = list(A))
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())

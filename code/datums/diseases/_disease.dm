@@ -107,15 +107,19 @@
 	if(istype(T))
 		for(var/mob/living/carbon/C in oview(spread_range, affected_mob))
 			var/turf/V = get_turf(C)
-			if(V)
-				while(TRUE)
-					if(V == T)
-						C.AirborneContractDisease(src)
-						break
-					var/turf/Temp = get_step_towards(V, T)
-					if(!CANATMOSPASS(V, Temp))
-						break
-					V = Temp
+			if(disease_air_spread_walk(T, V))
+				C.AirborneContractDisease(src, force_spread)
+
+/proc/disease_air_spread_walk(turf/start, turf/end)
+	if(!start || !end)
+		return FALSE
+	while(TRUE)
+		if(end == start)
+			return TRUE
+		var/turf/Temp = get_step_towards(end, start)
+		if(!CANATMOSPASS(end, Temp))
+			return FALSE
+		end = Temp
 
 
 /datum/disease/proc/cure(add_resistance = TRUE)

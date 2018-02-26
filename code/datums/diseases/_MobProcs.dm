@@ -98,16 +98,16 @@
 	if(passed)
 		D.try_infect(src)
 
-/mob/living/proc/AirborneContractDisease(datum/disease/D)
-	if((D.spread_flags & DISEASE_SPREAD_AIRBORNE) && prob((50*D.permeability_mod) - 1))
+/mob/living/proc/AirborneContractDisease(datum/disease/D, force_spread)
+	if( ((D.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob((50*D.permeability_mod) - 1))
 		ForceContractDisease(D)
 
-/mob/living/carbon/AirborneContractDisease(datum/disease/D)
+/mob/living/carbon/AirborneContractDisease(datum/disease/D, force_spread)
 	if(internal)
 		return
 	..()
 
-/mob/living/carbon/human/AirborneContractDisease(datum/disease/D)
+/mob/living/carbon/human/AirborneContractDisease(datum/disease/D, force_spread)
 	if(dna && (NOBREATH in dna.species.species_traits))
 		return
 	..()
@@ -119,8 +119,10 @@
 		if(del_on_fail)
 			qdel(D)
 		return FALSE
-	if(!D.try_infect(src, make_copy) && del_on_fail)
-		qdel(D)
+	if(!D.try_infect(src, make_copy))
+		if(del_on_fail)
+			qdel(D)
+		return FALSE
 	return TRUE
 
 
