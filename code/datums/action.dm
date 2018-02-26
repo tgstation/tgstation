@@ -600,3 +600,31 @@
 		var/datum/language_holder/H = M.get_language_holder()
 		H.open_language_menu(usr)
 
+
+//Small sprites
+/datum/action/small_sprite
+	name = "Toggle Giant Sprite - Others will always see you as giant"
+	button_icon_state = "smallqueen"
+	background_icon_state = "bg_alien"
+	var/small = 0
+	var/small_icon
+	var/small_icon_state
+
+/datum/action/small_sprite/Trigger()
+	..()
+	if(istype(owner, /mob/living/carbon/alien/humanoid/royal/queen))
+		small_icon = 'icons/mob/alien.dmi'
+		small_icon_state = "alienq"
+	if(istype(owner, /mob/living/simple_animal/hostile/megafauna/dragon))
+		small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+		small_icon_state = "dragon_humanoid"
+	if(!small)
+		var/image/I = image(icon = small_icon, icon_state = small_icon_state, loc = owner)
+		I.override = 1
+		I.pixel_x -= owner.pixel_x
+		I.pixel_y -= owner.pixel_y
+		owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic, "smallsprite", I)
+		small = 1
+	else
+		owner.remove_alt_appearance("smallsprite")
+		small = 0

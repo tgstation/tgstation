@@ -22,26 +22,7 @@
 	maxHealth = 400
 	health = 400
 	icon_state = "alienq"
-	var/datum/action/small_sprite/queen/smallsprite = new/datum/action/small_sprite/queen()
-
-/datum/action/small_sprite/queen
-	name = "Toggle Giant Sprite - Others will always see you as giant"
-	button_icon_state = "smallqueen"
-	background_icon_state = "bg_alien"
-	var/queen_small = 0
-
-/datum/action/small_sprite/queen/Trigger()
-	..()
-	if(!queen_small)
-		var/image/I = image(icon = 'icons/mob/alien.dmi', icon_state = "alienq", loc = owner)
-		I.override = 1
-		I.pixel_x -= owner.pixel_x
-		I.pixel_y -= owner.pixel_y
-		owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic, "smallqueen", I)
-		queen_small = 1
-	else
-		owner.remove_alt_appearance("smallqueen")
-		queen_small = 0
+	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite()
 
 /mob/living/carbon/alien/humanoid/royal/queen/Initialize()
 	//there should only be one queen

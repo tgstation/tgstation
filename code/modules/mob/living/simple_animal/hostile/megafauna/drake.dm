@@ -38,11 +38,11 @@ Difficulty: Medium
 	spacewalk = TRUE
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
+	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
 	friendly = "stares down"
-	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -61,26 +61,7 @@ Difficulty: Medium
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	var/datum/action/small_sprite/drake/smallsprite = new/datum/action/small_sprite/drake()
-
-/datum/action/small_sprite/drake
-	name = "Toggle Giant Sprite - Others will always see you as giant"
-	button_icon_state = "smallqueen"
-	background_icon_state = "bg_alien"
-	var/drake_small = 0
-
-/datum/action/small_sprite/drake/Trigger()
-	..()
-	if(!drake_small)
-		var/image/I = image(icon = 'icons/mob/lavaland/lavaland_monsters.dmi', icon_state = "dragon_humanoid", loc = owner)
-		I.override = 1
-		I.pixel_x -= owner.pixel_x
-		I.pixel_y -= owner.pixel_y
-		owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic, "smalldrake", I)
-		drake_small = 1
-	else
-		owner.remove_alt_appearance("smalldrake")
-		drake_small = 0
+	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	smallsprite.Grant(src)
