@@ -12,7 +12,8 @@
 //Returns an integer given a hex input, supports negative values "-ff"
 //skips preceding invalid characters
 //breaks when hittin invalid characters thereafter
-/proc/hex2num(hex)
+// If safe=TRUE, returns null on incorrect input strings instead of CRASHing
+/proc/hex2num(hex, safe=FALSE)
 	. = 0
 	var/place = 1
 	for(var/i in length(hex) to 1 step -1)
@@ -27,7 +28,10 @@
 			if(45)
 				return . * -1 // -
 			else
-				CRASH("Malformed hex number")
+				if(safe)
+					return null
+				else
+					CRASH("Malformed hex number")
 
 		. += num * place
 		place *= 16
@@ -582,12 +586,16 @@
 		r+= num2hex(c)
 	return r
 
-/proc/hextostr(str)
+// Decodes hex to raw byte string.
+// If safe=TRUE, returns null on incorrect input strings instead of CRASHing
+/proc/hextostr(str, safe=FALSE)
 	if(!istext(str)||!str)
 		return
 	var/r
 	var/c
 	for(var/i = 1 to length(str)/2)
-		c= hex2num(copytext(str,i*2-1,i*2+1))
-		r+= ascii2text(c)
+		c = hex2num(copytext(str,i*2-1,i*2+1), safe)
+		if(isnull(c))
+			return null
+		r += ascii2text(c)
 	return r

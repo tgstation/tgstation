@@ -152,6 +152,7 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "aB" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "aC" = (
@@ -201,6 +202,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "aL" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "aM" = (
@@ -2126,6 +2128,20 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
+"uV" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictoutpost/powerstorage)
+"LB" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictoutpost)
 
 (1,1,1) = {"
 aa
@@ -2209,7 +2225,7 @@ aa
 aa
 aB
 aM
-aB
+uV
 ba
 bq
 bH
@@ -3181,7 +3197,7 @@ aa
 aa
 aL
 aR
-aL
+LB
 bj
 bl
 bn
@@ -3397,7 +3413,7 @@ aa
 aa
 aL
 aR
-aL
+LB
 bn
 bF
 bl

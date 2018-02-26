@@ -185,9 +185,43 @@
 		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience))
 			return BT
 
+/obj/item/organ/brain/proc/can_gain_trauma(datum/brain_trauma/trauma, resilience)
+	if(!ispath(trauma))
+		trauma = trauma.type
+	if(!initial(trauma.can_gain))
+		return FALSE
+	if(!resilience)
+		resilience = initial(trauma.resilience)
+
+	var/resilience_tier_count = 0
+	for(var/X in traumas)
+		if(istype(X, trauma))
+			return FALSE
+		var/datum/brain_trauma/T = X
+		if(resilience == T.resilience)
+			resilience_tier_count++
+
+	var/max_traumas
+	switch(resilience)
+		if(TRAUMA_RESILIENCE_BASIC)
+			max_traumas = TRAUMA_LIMIT_BASIC
+		if(TRAUMA_RESILIENCE_SURGERY)
+			max_traumas = TRAUMA_LIMIT_SURGERY
+		if(TRAUMA_RESILIENCE_LOBOTOMY)
+			max_traumas = TRAUMA_LIMIT_LOBOTOMY
+		if(TRAUMA_RESILIENCE_MAGIC)
+			max_traumas = TRAUMA_LIMIT_MAGIC
+		if(TRAUMA_RESILIENCE_ABSOLUTE)
+			max_traumas = TRAUMA_LIMIT_ABSOLUTE
+
+	if(resilience_tier_count >= max_traumas)
+		return FALSE
+	return TRUE
 
 //Add a specific trauma
 /obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
+	if(!can_gain_trauma(trauma, resilience))
+		return
 	var/trauma_type
 	if(ispath(trauma))
 		trauma_type = trauma
@@ -204,8 +238,11 @@
 	var/list/datum/brain_trauma/possible_traumas = list()
 	for(var/T in subtypesof(brain_trauma_type))
 		var/datum/brain_trauma/BT = T
-		if(initial(BT.can_gain))
+		if(can_gain_trauma(BT, resilience))
 			possible_traumas += BT
+
+	if(!LAZYLEN(possible_traumas))
+		return
 
 	var/trauma_type = pick(possible_traumas)
 	SSblackbox.record_feedback("tally", "traumas", 1, trauma_type)

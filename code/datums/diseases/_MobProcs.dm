@@ -105,10 +105,7 @@
 /mob/living/carbon/AirborneContractDisease(datum/disease/D, force_spread)
 	if(internal)
 		return
-	..()
-
-/mob/living/carbon/human/AirborneContractDisease(datum/disease/D, force_spread)
-	if(dna && (NOBREATH in dna.species.species_traits))
+	if(has_trait(TRAIT_NOBREATH))
 		return
 	..()
 
@@ -128,7 +125,7 @@
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
 	if(dna)
-		if((VIRUSIMMUNE in dna.species.species_traits) && !D.bypasses_immunity)
+		if(has_trait(TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
 			return FALSE
 
 		var/can_infect = FALSE

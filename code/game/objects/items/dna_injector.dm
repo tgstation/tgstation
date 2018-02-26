@@ -31,7 +31,7 @@
 /obj/item/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	prepare()
 
-	if(M.has_dna() && !(RADIMMUNE in M.dna.species.species_traits) && !(M.has_trait(TRAIT_NOCLONE)))
+	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_NOCLONE))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)

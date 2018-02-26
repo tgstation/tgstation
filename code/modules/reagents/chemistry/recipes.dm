@@ -34,7 +34,7 @@
 			message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
 
 		message_admins(message, 0, 1)
-		log_game("[reaction_name] chemical mob spawn reaction occuring at [COORD(T)]([get_area_name(T)]) carried by [M]([M.ckey]) with last fingerprint [A.fingerprintslast? A.fingerprintslast : "N/A"]")
+		log_game("[reaction_name] chemical mob spawn reaction occuring at [COORD(T)]([get_area_name(T)]) carried by [key_name(M)] with last fingerprint [A.fingerprintslast? A.fingerprintslast : "N/A"]")
 
 		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
