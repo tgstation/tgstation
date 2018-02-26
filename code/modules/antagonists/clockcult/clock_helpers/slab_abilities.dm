@@ -195,7 +195,7 @@
 	else if(ismob(O))
 		visible_message("<span class='warning'>[src]'s eyes flare with dim light!</span>")
 		playsound(src, 'sound/weapons/sear.ogg', 50, TRUE)
-  	else
+	else
 		visible_message("<span class='warning'>[src]'s eyes blaze with brilliant light!</span>", \
 		"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
 		Knockdown(15)
