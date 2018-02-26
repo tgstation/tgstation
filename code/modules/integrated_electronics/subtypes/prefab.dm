@@ -152,8 +152,12 @@
 	if(..())
 		return TRUE
 	if(href_list["prefab"])
-		var/obj/item/integrated_circuit/circuitToView = input("Select a prefab component", "Prefab") as null|anything in circuit_components
+		var/list/inputList = list()
+		for(var/i in 1 to circuit_components.len) // all this shit is to avoid input() not displaying items with the same name
+			inputList["([i+1]) [circuit_components[i]]"] = circuit_components[i]
+		var/circuitToView = input("Select a prefab component", "Prefab") as null|anything in inputList
 		if(circuitToView)
-			circuitToView.interact(usr)
+			var/obj/item/integrated_circuit/C = inputList[circuitToView]
+			C.interact(usr)
 
 // all the procs like do_work, on_data_written etc should be automatically called since the pins are owned by the circuit themselves.
