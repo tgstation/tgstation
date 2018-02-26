@@ -190,11 +190,11 @@
 	playsound(src, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
 	if(O)
 		if(isitem(O))
-		visible_message("<span class='warning'>[src]'s eyes flare with dim light!</span>", \
-		"<span class='userdanger'>Your [O] glows white-hot against you as it absorbs the blinding light!</span>")
-	else if(ismob(O))
-		visible_message("<span class='warning'>[src]'s eyes flare with dim light!</span>")
-		playsound(src, 'sound/weapons/sear.ogg', 50, TRUE)
+			visible_message("<span class='warning'>[src]'s eyes flare with dim light!</span>", \
+			"<span class='userdanger'>Your [O] glows white-hot against you as it absorbs the blinding light!</span>")
+		else if(ismob(O))
+			visible_message("<span class='warning'>[src]'s eyes flare with dim light!</span>")
+			playsound(src, 'sound/weapons/sear.ogg', 50, TRUE)
 	else
 		visible_message("<span class='warning'>[src]'s eyes blaze with brilliant light!</span>", \
 		"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
