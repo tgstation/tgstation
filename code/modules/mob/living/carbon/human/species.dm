@@ -287,7 +287,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.add_trait(X, SPECIES_TRAIT)
 
 	if(TRAIT_VIRUSIMMUNE in inherent_traits)
-		for(var/datum/disease/A in C.viruses)
+		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
 
 
