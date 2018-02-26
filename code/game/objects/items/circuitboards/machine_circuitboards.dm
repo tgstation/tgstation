@@ -530,7 +530,7 @@
 			name = "Tesla Coil (Machine Board)"
 			build_path = PATH_POWERCOIL
 		else
-			name = "Tesla Aurora Researcher (Machine Board)"
+			name = "Tesla Corona Researcher (Machine Board)"
 			build_path = PATH_RPCOIL
 
 /obj/item/circuitboard/machine/tesla_coil/attackby(obj/item/I, mob/user, params)
@@ -556,7 +556,7 @@
 	build_path = PATH_POWERCOIL
 
 /obj/item/circuitboard/machine/tesla_coil/research
-	name = "Tesla Aurora Researcher (Machine Board)"
+	name = "Tesla Corona Researcher (Machine Board)"
 	build_path = PATH_RPCOIL
 
 #undef PATH_POWERCOIL
