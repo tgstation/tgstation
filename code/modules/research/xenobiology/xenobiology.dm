@@ -1,4 +1,3 @@
-#define EXTRACT_CROSSING_REQUIRED 20
 /// Slime Extracts ///
 
 /obj/item/slime_extract
@@ -61,10 +60,11 @@
 	qdel(src)
 	to_chat(user, "<span class='notice'>You feed the slime the [src].</span>")
 
-	if(M.applied >= EXTRACT_CROSSING_REQUIRED)
+	if(M.applied >= SLIME_EXTRACT_CROSSING_REQUIRED)
 		M.visible_message("<span class='danger'>The [M] shudders, it's mutated core consuming the rest of it's body!</span>")
 		var/sanitizedcolour = replacetext(M.colour, " ", "")
-		var/corecross = effectmod + "/" + sanitizedcolour
+		var/sanitizedeffect = replacetext(effectmod, "-","")
+		var/corecross = sanitizedeffect + "/" + sanitizedcolour
 		var/crosspath = text2path("/obj/item/slimecross/"+corecross)
 		if(ispath(crosspath))
 			new crosspath(M.loc)
@@ -945,5 +945,3 @@
 		T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
 	A.xenobiology_compatible = TRUE
 	qdel(src)
-
-#undef EXTRACT_CROSSING_REQUIRED

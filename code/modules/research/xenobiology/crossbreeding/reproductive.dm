@@ -3,7 +3,7 @@ Reproductive extracts:
 	When fed three monkey cubes, produces between
 	1 and 4 normal slime extracts of the same colour.
 */
-/obj/item/slimecross/reproductive/
+/obj/item/slimecross/reproductive
 	name = "reproductive extract"
 	desc = "It pulses with a strange hunger."
 	icon = 'icons/obj/plushes.dmi' //WIP - Get sprites!

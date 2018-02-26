@@ -1,4 +1,4 @@
-/obj/item/slimecross/prismatic/
+/obj/item/slimecross/prismatic
 	name = "prismatic extract"
 	desc = "It's constantly wet with a semi-transparent, colored goo."
 	var/paintcolor = "#FFFFFF"
