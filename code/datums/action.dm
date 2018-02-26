@@ -606,7 +606,7 @@
 	name = "Toggle Giant Sprite - Others will always see you as giant"
 	button_icon_state = "smallqueen"
 	background_icon_state = "bg_alien"
-	var/small = 0
+	var/small = FALSE
 	var/small_icon
 	var/small_icon_state
 
@@ -622,11 +622,11 @@
 	..()
 	if(!small)
 		var/image/I = image(icon = small_icon, icon_state = small_icon_state, loc = owner)
-		I.override = 1
+		I.override = TRUE
 		I.pixel_x -= owner.pixel_x
 		I.pixel_y -= owner.pixel_y
 		owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic, "smallsprite", I)
-		small = 1
+		small = TRUE
 	else
 		owner.remove_alt_appearance("smallsprite")
-		small = 0
+		small = FALSE

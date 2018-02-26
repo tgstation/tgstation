@@ -65,9 +65,8 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	smallsprite.Grant(src)
-	..()
+	. = ..()
 	internal = new/obj/item/device/gps/internal/dragon(src)
-
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity == 3)
