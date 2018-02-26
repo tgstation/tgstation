@@ -1,3 +1,5 @@
+#define FILE_ANTAG_REP "data/AntagReputation.json"
+
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
 	init_order = INIT_ORDER_PERSISTENCE
@@ -156,14 +158,13 @@ SUBSYSTEM_DEF(persistence)
 	saved_modes = json["data"]
 
 /datum/controller/subsystem/persistence/proc/LoadAntagReputation()
-	var/json_file = file("data/AntagReputation.json")
+	var/json_file = file(FILE_ANTAG_REP)
 	if(!fexists(json_file))
 		return
 	var/list/json = json_decode(file2text(json_file))
 	if(!json)
 		return
 	antag_rep = json["data"]
-
 
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
@@ -269,9 +270,6 @@ SUBSYSTEM_DEF(persistence)
 	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/CollectAntagReputation()
-	var/json_file = file("data/AntagReputation.json")
-	var/list/file_data = list()
-	file_data["data"] = antag_rep
-	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+	fdel(FILE_ANTAG_REP)
+	text2file(json_encode(antag_rep), FILE_ANTAG_REP)
 

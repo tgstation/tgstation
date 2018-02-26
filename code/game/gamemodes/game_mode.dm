@@ -326,7 +326,7 @@
 			// WARNING("Player [mind.key] won spending [subtract] tickets from starting value [start]")
 
 			if(SSpersistence.antag_rep[p_ckey] <= 0)
-				SSpersistence.antag_rep.Remove(p_ckey)
+				SSpersistence.antag_rep -= p_ckey
 
 			return mind
 

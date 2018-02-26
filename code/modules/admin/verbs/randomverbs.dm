@@ -51,8 +51,7 @@
 	set category = "Special Verbs"
 	set name = "Modify Antagonist Reputation"
 
-	if (!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/msg = ""
@@ -60,7 +59,7 @@
 
 	if(operation == "zero")
 		log_text = "Set to 0"
-		SSpersistence.antag_rep.Remove(C.ckey)
+		SSpersistence.antag_rep -= C.ckey
 	else
 		var/prompt = "Please enter the amount of reputation to [operation]:"
 
@@ -88,7 +87,7 @@
 			return
 
 		if(SSpersistence.antag_rep[C.ckey] <= 0)
-			SSpersistence.antag_rep.Remove(C.ckey)
+			SSpersistence.antag_rep -= C.ckey
 
 	log_admin("[key_name(usr)]: Modified [key_name(C)]'s antagonist reputation [log_text]")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)]: Modified [key_name(C)]'s antagonist reputation ([log_text])</span>")
