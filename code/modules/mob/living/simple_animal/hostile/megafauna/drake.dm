@@ -62,6 +62,25 @@ Difficulty: Medium
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 
+/datum/action/small_sprite
+	name = "Toggle Giant Sprite - Others will always see you as giant"
+	button_icon_state = "smallqueen"
+	background_icon_state = "bg_alien"
+	var/small = 0
+
+/datum/action/small_sprite/Trigger()
+	..()
+	if(!small)
+		var/image/I = image(icon = 'icons/mob/lavaland/lavaland_monsters.dmi', icon_state = "dragon_humanoid", loc = owner)
+		I.override = 1
+		I.pixel_x -= owner.pixel_x
+		I.pixel_y -= owner.pixel_y
+		owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic, "smalldrake", I)
+		small = 1
+	else
+		owner.remove_alt_appearance("smalldrake")
+		small = 0
+
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	. = ..()
 	internal = new/obj/item/device/gps/internal/dragon(src)
