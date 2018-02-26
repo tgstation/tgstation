@@ -1,5 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - rscadd: "Added Bastion Bourbon, which you can mix with tea, creme de menthe, triple citrus, and berry juice. When it's in your system, it will very slowly heal you as long as you're not in critical. When it's first added to your system, you heal an amount of each damage type equal to the volume taken in, with a max of 10. This is turned to a max of 20 for anyone in critical."
-  - rscadd: "Added Squirt Cider, which you can mix with water, tomato juice, and nutriment. It's nutritious and healthy!"
