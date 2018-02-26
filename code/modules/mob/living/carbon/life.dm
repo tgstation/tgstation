@@ -98,7 +98,9 @@
 		air_update_turf()
 
 /mob/living/carbon/proc/has_smoke_protection()
-	return 0
+	if(has_trait(TRAIT_NOBREATH))
+		return TRUE
+	return FALSE
 
 
 //Third link in a breath chain, calls handle_breath_temperature()
@@ -408,11 +410,9 @@
 	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
 		return
 	if(liver)
-		if(liver.damage >= 100)
+		if(liver.damage >= liver.maxHealth)
 			liver.failing = TRUE
 			liver_failure()
-		else
-			liver.failing = FALSE
 	else
 		liver_failure()
 

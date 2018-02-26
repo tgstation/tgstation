@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - admin: "Admins can now start the game as extended revs, a version of revs that doesn't end when head(rev)s are dead. Admins can also use the speedy mode, which nukes the station after 20 minutes."

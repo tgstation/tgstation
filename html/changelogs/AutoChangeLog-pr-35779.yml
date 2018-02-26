@@ -1,5 +1,0 @@
-author: "DaedalusGame"
-delete-after: True
-changes: 
-  - bugfix: "enables the RPED to construct/replace other parts commonly used in machines (igniters, beakers, bs crystals)"
-  - bugfix: "fixes part ratings of cells so slime cells are correctly more desirable than bluespace cells and other such nonsense"
