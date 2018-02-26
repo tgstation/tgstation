@@ -146,6 +146,8 @@
 		if(iscarbon(L))
 			var/mob/living/carbon/M = L
 			M.uncuff()
+			new/obj/item/clockwork/slab(get_turf(src))
+			M.reagents.del_reagent("anointment_oil")
 	L.Knockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L

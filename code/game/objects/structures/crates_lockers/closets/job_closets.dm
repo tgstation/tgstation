@@ -121,9 +121,9 @@
 	new /obj/item/storage/backpack/cultpack (src)
 	new /obj/item/clothing/head/helmet/knight/templar(src)
 	new /obj/item/clothing/suit/armor/riot/knight/templar(src)
+	new /obj/item/reagent_containers/food/drinks/bottle/anointing_oil(src)
 	new /obj/item/storage/fancy/candle_box(src)
 	new /obj/item/storage/fancy/candle_box(src)
-	return
 
 /obj/structure/closet/coffin
 	name = "coffin"

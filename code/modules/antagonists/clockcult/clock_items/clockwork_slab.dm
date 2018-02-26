@@ -145,18 +145,21 @@
 		user.emote("scream")
 		user.apply_damage(5, BURN, "l_arm")
 		user.apply_damage(5, BURN, "r_arm")
-		return 0
+		return FALSE
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>")
 		user.confused += 5
 		user.dizziness += 5
-		return 0
+		return FALSE
+	if(user.reagents && user.reagents.has_reagent("anointment_oil"))
+		to_chat(user, "<span class='warning'>You attempt to listen to the Hierophant network, but something is distorting the signal.</span>")
+		return FALSE
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>")
-		return 0
+		return FALSE
 	if(!no_cost && !can_recite_scripture(user))
 		to_chat(user, "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>")
-		return 0
+		return FALSE
 	access_display(user)
 
 /obj/item/clockwork/slab/AltClick(mob/living/user)
@@ -189,6 +192,9 @@
 		if(!GLOB.ratvar_awakens && !no_cost && !SSticker.scripture_states[initial_tier])
 			to_chat(user, "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>")
 			return FALSE
+	if(user.reagents && user.reagents.has_reagent("anointment_oil"))
+		to_chat(user, "<span class='warning'>You begin speaking the words, but can't stop fumbling over them!</span>")
+		return FALSE
 	var/datum/clockwork_scripture/scripture_to_recite = new scripture
 	scripture_to_recite.slab = src
 	scripture_to_recite.invoker = user

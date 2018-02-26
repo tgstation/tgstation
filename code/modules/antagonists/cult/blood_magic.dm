@@ -32,6 +32,9 @@
 			B.button.moved = B.button.screen_loc
 
 /datum/action/innate/cult/blood_magic/Activate()
+	if(owner.reagents.has_reagent("anointment_oil"))
+		to_chat(owner, "<span class='warning'>You try to call on the Geometer, but something in your body stifles it...</span>")
+		return
 	var/rune = FALSE
 	var/limit = RUNELESS_MAX_BLOODCHARGE
 	for(var/obj/effect/rune/empower/R in range(1, owner))

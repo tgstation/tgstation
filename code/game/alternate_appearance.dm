@@ -166,4 +166,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	if(isrevenant(M) || iseminence(M) || iswizard(M))
 		return TRUE
+	if(M.reagents && M.reagents.has_reagent("anointment_oil"))
+		return TRUE
 	return FALSE
