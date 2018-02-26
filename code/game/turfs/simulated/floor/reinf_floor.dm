@@ -105,7 +105,7 @@
 
 /turf/open/floor/engine/air
 	name = "air floor"
-	initial_gas_mix = "o2=79000;n2=21000;TEMP=293.15"
+	initial_gas_mix = "o2=21000;n2=79000;TEMP=293.15"
 
 
 
