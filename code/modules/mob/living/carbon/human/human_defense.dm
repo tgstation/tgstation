@@ -136,7 +136,7 @@
 	else if(I)
 		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 			if(can_embed(I))
-				if(prob(I.embedding.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.species_traits)))
+				if(prob(I.embedding.embed_chance) && !has_trait(TRAIT_PIERCEIMMUNE))
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 					var/obj/item/bodypart/L = pick(bodyparts)
 					L.embedded_objects |= I

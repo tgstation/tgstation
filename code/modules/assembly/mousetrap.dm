@@ -44,7 +44,7 @@
 	var/obj/item/bodypart/affecting = null
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(PIERCEIMMUNE in H.dna.species.species_traits)
+		if(H.has_trait(TRAIT_PIERCEIMMUNE))
 			playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 			armed = 0
 			update_icon()
