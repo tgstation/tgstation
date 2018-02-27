@@ -1,6 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - bugfix: "The heart attack event will now actually make the victim acquire the heart disease"
-  - bugfix: "Clicking the chatbox link will let you orbit the victim"
-  - tweak: "The event is now significantly more sensitive to junk food. Recent consumption of multiple junk food items will triple your chances of having a heart attack (exercise will still block it)."
