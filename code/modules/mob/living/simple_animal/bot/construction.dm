@@ -305,6 +305,8 @@
 		A.skin = "o2"
 	else if(istype(src, /obj/item/storage/firstaid/brute))
 		A.skin = "brute"
+	else if(istype(src, /obj/item/storage/firstaid/tactical))
+		A.skin = "bezerk"
 	user.put_in_hands(A)
 	to_chat(user, "<span class='notice'>You add [S] to [src].</span>")
 	A.robot_arm = S.type
