@@ -1,6 +1,8 @@
 /obj/item/device/encryptionkey
 	name = "standard encryption key"
-	desc = "An encryption key for a radio headset.  Has no special codes in it.  WHY DOES IT EXIST?  ASK NANOTRASEN."
+	var/standard_description = "An encryption key for a radio headset."
+	var/available_channels = "Has no special codes in it. WHY DOES IT EXIST? ASK NANOTRASEN."
+	var/command_channel_included
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey"
 	w_class = WEIGHT_CLASS_TINY
@@ -9,124 +11,139 @@
 	var/independent = FALSE
 	var/list/channels = list()
 
+/obj/item/device/encryptionkey/Initialize()
+	. = ..()	//I'm assuming this is right and necessary
+	
+	if(CONFIG_GET(flag/command_channel) && command_channel_included)	//set yourself before you wreck yourself
+		available_channels = command_channel_included
+		channels += list("Command" = 1)
+	
+	desc = standard_description + " " + available_channels
+
 /obj/item/device/encryptionkey/syndicate
 	name = "syndicate encryption key"
-	desc = "An encryption key for a radio headset. To access the syndicate channel, use :t."
+	available_channels = "To access the syndicate channel, use :t."
 	icon_state = "syn_cypherkey"
 	channels = list("Syndicate" = 1)
 	syndie = 1//Signifies that it de-crypts Syndicate transmissions
 
 /obj/item/device/encryptionkey/binary
 	name = "binary translator key"
-	desc = "An encryption key for a radio headset.  To access the binary channel, use :b."
+	available_channels = "To access the binary channel, use :b."
 	icon_state = "bin_cypherkey"
 	translate_binary = TRUE
 
 /obj/item/device/encryptionkey/headset_sec
 	name = "security radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the security channel, use :s."
+	available_channels = "To access the security channel, use :s."
 	icon_state = "sec_cypherkey"
 	channels = list("Security" = 1)
 
 /obj/item/device/encryptionkey/headset_eng
 	name = "engineering radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the engineering channel, use :e."
+	available_channels = "To access the engineering channel, use :e."
 	icon_state = "eng_cypherkey"
 	channels = list("Engineering" = 1)
 
 /obj/item/device/encryptionkey/headset_rob
 	name = "robotics radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the engineering channel, use :e. For research, use :n."
+	available_channels = "To access the engineering channel, use :e. For research, use :n."
 	icon_state = "rob_cypherkey"
 	channels = list("Science" = 1, "Engineering" = 1)
 
 /obj/item/device/encryptionkey/headset_med
 	name = "medical radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the medical channel, use :m."
+	available_channels = "To access the medical channel, use :m."
 	icon_state = "med_cypherkey"
 	channels = list("Medical" = 1)
 
 /obj/item/device/encryptionkey/headset_sci
 	name = "science radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the science channel, use :n."
+	available_channels = "To access the science channel, use :n."
 	icon_state = "sci_cypherkey"
 	channels = list("Science" = 1)
 
 /obj/item/device/encryptionkey/headset_medsci
 	name = "medical research radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the medical channel, use :m. For science, use :n."
+	available_channels = "To access the medical channel, use :m. For science, use :n."
 	icon_state = "medsci_cypherkey"
 	channels = list("Science" = 1, "Medical" = 1)
 
 /obj/item/device/encryptionkey/headset_com
 	name = "command radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the command channel, use :c."
+	command_channel_included = "To access the command channel, use :c."
 	icon_state = "com_cypherkey"
-	channels = list("Command" = 1)
 
 /obj/item/device/encryptionkey/heads/captain
 	name = "\proper the captain's encryption key"
-	desc = "An encryption key for a radio headset.  Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
+	command_channel_included = "Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
+	available_channels = "Channels are as follows: :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
+	channels = list("Security" = 1, "Engineering" = 0, "Science" = 0, "Medical" = 0, "Supply" = 0, "Service" = 0)
 	icon_state = "cap_cypherkey"
-	channels = list("Command" = 1, "Security" = 1, "Engineering" = 0, "Science" = 0, "Medical" = 0, "Supply" = 0, "Service" = 0)
 
 /obj/item/device/encryptionkey/heads/rd
 	name = "\proper the research director's encryption key"
-	desc = "An encryption key for a radio headset.  To access the science channel, use :n. For command, use :c."
+	command_channel_included = "To access the science channel, use :n. For command, use :c."
+	available_channels = "To access the science channel, use :n."
+	channels = list("Science" = 1)
 	icon_state = "rd_cypherkey"
-	channels = list("Science" = 1, "Command" = 1)
 
 /obj/item/device/encryptionkey/heads/hos
 	name = "\proper the head of security's encryption key"
-	desc = "An encryption key for a radio headset.  To access the security channel, use :s. For command, use :c."
+	command_channel_included = "To access the security channel, use :s. For command, use :c."
+	available_channels = "To access the security channel, use :s."
+	channels = list("Security" = 1)
 	icon_state = "hos_cypherkey"
-	channels = list("Security" = 1, "Command" = 1)
 
 /obj/item/device/encryptionkey/heads/ce
 	name = "\proper the chief engineer's encryption key"
-	desc = "An encryption key for a radio headset.  To access the engineering channel, use :e. For command, use :c."
+	command_channel_included = "To access the engineering channel, use :e. For command, use :c."
+	available_channels = "To access the engineering channel, use :e."
+	channels = list("Engineering" = 1)
 	icon_state = "ce_cypherkey"
-	channels = list("Engineering" = 1, "Command" = 1)
 
 /obj/item/device/encryptionkey/heads/cmo
 	name = "\proper the chief medical officer's encryption key"
-	desc = "An encryption key for a radio headset.  To access the medical channel, use :m. For command, use :c."
+	command_channel_included = "To access the medical channel, use :m. For command, use :c."
+	available_channels = "To access the medical channel, use :m."
+	channels = list("Medical" = 1)
 	icon_state = "cmo_cypherkey"
-	channels = list("Medical" = 1, "Command" = 1)
 
 /obj/item/device/encryptionkey/heads/hop
 	name = "\proper the head of personnel's encryption key"
-	desc = "An encryption key for a radio headset.  Channels are as follows: :u - supply, :v - service, :c - command."
+	command_channel_included = "Channels are as follows: :u - supply, :v - service, :c - command."
+	available_channels = "Channels are as follows: :u - supply, :v - service."
+	channels = list("Supply" = 1, "Service" = 1)
 	icon_state = "hop_cypherkey"
-	channels = list("Supply" = 1, "Service" = 1, "Command" = 1)
 
 /obj/item/device/encryptionkey/headset_cargo
 	name = "supply radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the supply channel, use :u."
+	available_channels = "To access the supply channel, use :u."
 	icon_state = "cargo_cypherkey"
 	channels = list("Supply" = 1)
 
 /obj/item/device/encryptionkey/headset_mining
 	name = "mining radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the supply channel, use :u. For science, use :n."
+	available_channels = "To access the supply channel, use :u. For science, use :n."
 	icon_state = "cargo_cypherkey"
 	channels = list("Supply" = 1, "Science" = 1)
 
 /obj/item/device/encryptionkey/headset_service
 	name = "service radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the service channel, use :v."
+	available_channels = "To access the service channel, use :v."
 	icon_state = "srv_cypherkey"
 	channels = list("Service" = 1)
 
 /obj/item/device/encryptionkey/headset_cent
 	name = "\improper CentCom radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the CentCom channel, use :y."
+	available_channels = "To access the CentCom channel, use :y."
 	icon_state = "cent_cypherkey"
 	independent = TRUE
 	channels = list("CentCom" = 1)
 
 /obj/item/device/encryptionkey/ai //ported from NT, this goes 'inside' the AI.
-	channels = list("Command" = 1, "Security" = 1, "Engineering" = 1, "Science" = 1, "Medical" = 1, "Supply" = 1, "Service" = 1, "AI Private" = 1)
+	command_channel_included = "Normally this goes on the inside of an AI. Try to stay calm as you are obviously on the inside of an irreplaceable machine."
+	channels = list("Security" = 1, "Engineering" = 1, "Science" = 1, "Medical" = 1, "Supply" = 1, "Service" = 1, "AI Private" = 1)
 
 /obj/item/device/encryptionkey/secbot
 	channels = list("AI Private"=1,"Security"=1)
