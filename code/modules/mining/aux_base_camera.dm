@@ -174,7 +174,7 @@
 		return
 
 	var/turf/target_turf = get_turf(remote_eye)
-	var/atom/movable/rcd_target = target_turf
+	var/atom/rcd_target = target_turf
 
 	//Find airlocks and other shite
 	for(var/obj/S in target_turf)
