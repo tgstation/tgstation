@@ -1,4 +1,0 @@
-author: "Jittai"
-delete-after: True
-changes: 
-  - tweak: "Ctrl+Clicking progresses through grab cycle on living mobs (not just humans)"

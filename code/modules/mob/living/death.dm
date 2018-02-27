@@ -47,7 +47,7 @@
 	stat = DEAD
 	unset_machine()
 	timeofdeath = world.time
-	tod = worldtime2text()
+	tod = station_time_timestamp()
 	var/turf/T = get_turf(src)
 	for(var/obj/item/I in contents)
 		I.on_mob_death(src, gibbed)
@@ -74,16 +74,6 @@
 
 	if (client)
 		client.move_delay = initial(client.move_delay)
-		if(!suiciding && !SSticker.first_death.len) //suicides don't clog up the list, only BRUTAL deaths here
-			var/list/L = list()
-			L["name"] = name
-			L["role"] = null
-			if(mind.assigned_role)
-				L["role"] = mind.assigned_role
-			L["area"] = "[get_area_name(src, TRUE)] [COORD(src)]"
-			L["damage"] = "<font color='#FF5555'>[bruteloss]</font>/<font color='orange'>[fireloss]</font>/<font color='lightgreen'>[toxloss]</font>/<font color='lightblue'>[oxyloss]</font>/<font color='pink'>[cloneloss]</font>"
-			L["last_words"] = last_words
-			SSticker.first_death = L
 
 	for(var/s in ownedSoullinks)
 		var/datum/soullink/S = s

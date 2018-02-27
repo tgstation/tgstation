@@ -15,6 +15,9 @@
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return
 		M.death(0)
 
 /obj/item/projectile/magic/resurrection
@@ -29,6 +32,8 @@
 	if(isliving(target))
 		if(target.hellbound)
 			return
+		if(target.anti_magic_check())
+			target.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.regenerate_limbs()
@@ -50,6 +55,11 @@
 
 /obj/item/projectile/magic/teleport/on_hit(mob/target)
 	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
+			return
 	var/teleammount = 0
 	var/teleloc = target
 	if(!isturf(target))
@@ -100,6 +110,12 @@
 
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	. = ..()
+	if(ismob(change))
+		var/mob/M = change
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] fizzles on contact with [M]!</span>")
+			qdel(src)
+			return
 	wabbajack(change)
 	qdel(src)
 
@@ -292,6 +308,15 @@
 	dismemberment = 50
 	nodamage = 0
 
+/obj/item/projectile/magic/spellblade/on_hit(target)
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			qdel(src)
+			return
+	. = ..()
+
 /obj/item/projectile/magic/arcane_barrage
 	name = "arcane bolt"
 	icon_state = "arcane_barrage"
@@ -300,6 +325,15 @@
 	nodamage = 0
 	armour_penetration = 0
 	flag = "magic"
+
+/obj/item/projectile/magic/arcane_barrage/on_hit(target)
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			qdel(src)
+			return
+	. = ..()
 
 /obj/item/projectile/magic/aoe
 	name = "Area Bolt"
@@ -310,7 +344,7 @@
 /obj/item/projectile/magic/aoe/Range()
 	if(proxdet)
 		for(var/mob/living/L in range(1, get_turf(src)))
-			if(L.stat != DEAD && L != firer)
+			if(L.stat != DEAD && L != firer && !L.anti_magic_check())
 				return Collide(L)
 	..()
 
@@ -336,6 +370,12 @@
 
 /obj/item/projectile/magic/aoe/lightning/on_hit(target)
 	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
+			qdel(src)
+			return
 	tesla_zap(src, tesla_range, tesla_power, tesla_boom)
 	qdel(src)
 
@@ -358,11 +398,14 @@
 
 /obj/item/projectile/magic/aoe/fireball/on_hit(target)
 	. = ..()
+	if(ismob(target))
+		var/mob/living/M = target
+		if(M.anti_magic_check())
+			visible_message("<span class='warning'>[src] vanishes into smoke on contact with [target]!</span>")
+			return
+		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
 	var/turf/T = get_turf(target)
 	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
-	if(ismob(target)) //multiple flavors of pain
-		var/mob/living/M = target
-		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
 
 /obj/item/projectile/magic/aoe/fireball/infernal
 	name = "infernal fireball"
@@ -373,6 +416,10 @@
 
 /obj/item/projectile/magic/aoe/fireball/infernal/on_hit(target)
 	. = ..()
+	if(ismob(target))
+		var/mob/living/M = target
+		if(M.anti_magic_check())
+			return
 	var/turf/T = get_turf(target)
 	for(var/i=0, i<50, i+=10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)

@@ -2068,7 +2068,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Xenobiology Containment North";
-	network = list("MO19X")
+	network = list("mo19x")
 	},
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
@@ -2133,7 +2133,7 @@
 	desc = "Used for watching the contents of the xenobiology containment pen.";
 	dir = 8;
 	name = "xenobiology monitor";
-	network = list("MO19X")
+	network = list("mo19x")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2209,7 +2209,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology";
 	dir = 4;
-	network = list("MO19","MO19R")
+	network = list("mo19","mo19r")
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 6;
@@ -2750,7 +2750,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Containment East";
 	dir = 8;
-	network = list("MO19X")
+	network = list("mo19x")
 	},
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
@@ -3326,7 +3326,7 @@
 /obj/machinery/computer/security{
 	desc = "Used to access the various cameras on the outpost.";
 	dir = 4;
-	network = list("MO19R","MO19")
+	network = list("mo19r","mo19")
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8;
@@ -3461,7 +3461,7 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Containment South";
 	dir = 1;
-	network = list("MO19X")
+	network = list("mo19x")
 	},
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
@@ -3759,7 +3759,7 @@
 /obj/machinery/camera{
 	c_tag = "Research Division";
 	dir = 1;
-	network = list("MO19","MO19R")
+	network = list("mo19","mo19r")
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 8;
@@ -3956,7 +3956,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for monitoring the research division and the labs within.";
 	name = "research monitor";
-	network = list("MO19X","MO19R")
+	network = list("mo19x","mo19r")
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -4306,7 +4306,7 @@
 /obj/machinery/camera{
 	c_tag = "Research Director's Office";
 	dir = 1;
-	network = list("MO19","MO19R")
+	network = list("mo19","mo19r")
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -5163,7 +5163,7 @@
 /obj/machinery/camera{
 	c_tag = "Arrivals North";
 	dir = 1;
-	network = list("MO19")
+	network = list("mo19")
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 2;
@@ -5447,7 +5447,7 @@
 /obj/machinery/camera{
 	c_tag = "Kitchen";
 	dir = 8;
-	network = list("MO19")
+	network = list("mo19")
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -5593,7 +5593,7 @@
 /obj/machinery/camera{
 	c_tag = "Bar";
 	dir = 8;
-	network = list("MO19")
+	network = list("mo19")
 	},
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
@@ -6136,7 +6136,7 @@
 /obj/machinery/camera{
 	c_tag = "Arrivals South";
 	dir = 8;
-	network = list("MO19")
+	network = list("mo19")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -6379,7 +6379,7 @@
 /obj/machinery/camera{
 	c_tag = "Dormitories";
 	dir = 4;
-	network = list("MO19")
+	network = list("mo19")
 	},
 /turf/open/floor/plasteel{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
