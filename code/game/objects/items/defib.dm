@@ -307,6 +307,8 @@
 	check_range()
 
 /obj/item/twohanded/shockpaddles/proc/check_range()
+	if(req_defib)
+		return
 	if(!in_range(src,defib))
 		var/mob/living/L = loc
 		if(istype(L))
@@ -624,9 +626,6 @@
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = FALSE
-
-/obj/item/twohanded/shockpaddles/cyborg/check_range() //We don't have a defib unit, remember?
-	return
 	
 /obj/item/twohanded/shockpaddles/cyborg/attack(mob/M, mob/user)
 	if(iscyborg(user))
