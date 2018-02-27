@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
-if command -v python3 >/dev/null 2>&1; then
+if command -v python3.6 >/dev/null 2>&1; then
+    PY=python3.6
+elif command -v python3 >/dev/null 2>&1; then
 	PY=python3
 else
 	PY=python
