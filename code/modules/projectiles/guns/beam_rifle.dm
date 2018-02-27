@@ -484,11 +484,9 @@
 	if(!do_pierce)
 		return FALSE
 	if(pierced[target])		//we already pierced them go away
-		forceMove(get_turf(target))
 		return TRUE
 	if(isclosedturf(target))
 		if(wall_pierce++ < wall_pierce_amount)
-			forceMove(target)
 			if(prob(wall_devastate))
 				if(iswallturf(target))
 					var/turf/closed/wall/W = target
@@ -504,7 +502,6 @@
 					var/obj/O = AM
 					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(AM), BURN, "energy", FALSE)
 				pierced[AM] = TRUE
-				forceMove(AM.drop_location())
 				structure_pierce++
 				return TRUE
 	return FALSE
@@ -539,6 +536,9 @@
 /obj/item/projectile/beam/beam_rifle/Collide(atom/target)
 	if(check_pierce(target))
 		permutated += target
+		trajectory_ignore_forcemove = TRUE
+		forceMove(target)
+		trajectory_ignore_forcemove = FALSE
 		return FALSE
 	if(!QDELETED(target))
 		cached = get_turf(target)
@@ -556,7 +556,7 @@
 	tracer_type = /obj/effect/projectile/tracer/tracer/beam_rifle
 	var/constant_tracer = FALSE
 
-/obj/item/projectile/beam/beam_rifle/hitscan/generate_hitscan_tracers(cleanup = TRUE, duration = 5, highlander)
+/obj/item/projectile/beam/beam_rifle/hitscan/generate_hitscan_tracers(cleanup = TRUE, duration = 5, impacting = TRUE, highlander)
 	set waitfor = FALSE
 	if(isnull(highlander))
 		highlander = constant_tracer

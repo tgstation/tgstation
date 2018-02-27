@@ -12192,7 +12192,6 @@
 /area/hallway/primary/central)
 "aEY" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)

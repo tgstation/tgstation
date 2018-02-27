@@ -1,0 +1,6 @@
+author: "selea"
+delete-after: True
+changes: 
+  - bugfix: "fixed floorbot"
+  - bugfix: "fixed cleanbot"
+  - refactor: "improved pathiding in case of given minimal distance;improved sanitation"
