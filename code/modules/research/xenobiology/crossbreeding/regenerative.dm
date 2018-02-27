@@ -129,12 +129,17 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/bluespace
 	colour = "bluespace"
+	var/turf/open/T
 
 /obj/item/slimecross/regenerative/bluespace/core_effect(mob/living/target, mob/user) //WIP - Actually make this work.
-	target.visible_message("<span class='warning'>[src] disappears in a shower of sparks!</span>","<span class='danger'>The milky goo teleports you somewhere familiar!</span>")
+	target.visible_message("<span class='warning'>[src] disappears in a shower of sparks!</span>","<span class='danger'>The milky goo teleports you somewhere it remembers!</span>")
 	do_sparks(5,FALSE,target)
-	target.forceMove(initial(target.loc))
+	target.forceMove(T)
 	do_sparks(5,FALSE,target)
+
+/obj/item/slimecross/regenerative/bluespace/Initialize()
+	..()
+	T = get_turf(src)
 
 /obj/item/slimecross/regenerative/sepia
 	colour = "sepia"

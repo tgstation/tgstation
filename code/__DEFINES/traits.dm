@@ -38,6 +38,8 @@
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
+#define TRAIT_NOSLIPWATER		"noslip_water"
+#define TRAIT_NOSLIPALL			"noslip_all"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

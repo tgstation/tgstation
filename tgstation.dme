@@ -2267,6 +2267,7 @@
 #include "code\modules\research\xenobiology\crossbreeding\regenerative.dm"
 #include "code\modules\research\xenobiology\crossbreeding\reproductive.dm"
 #include "code\modules\research\xenobiology\crossbreeding\selfsustaining.dm"
+#include "code\modules\research\xenobiology\crossbreeding\stabilized.dm"
 #include "code\modules\research\xenobiology\crossbreeding\status_effects.dm"
 #include "code\modules\ruins\lavaland_ruin_code.dm"
 #include "code\modules\ruins\lavalandruin_code\biodome_clown_planet.dm"
