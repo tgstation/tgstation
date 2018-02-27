@@ -54841,6 +54841,10 @@
 	},
 /turf/open/floor/plasteel/hydrofloor,
 /area/hallway/secondary/service)
+"jbi" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/wood,
+/area/maintenance/disposal)
 "jbm" = (
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/wood,
@@ -71174,7 +71178,7 @@ wvs
 wvs
 vzM
 hlM
-wvs
+jbi
 mJO
 sWy
 aaa
