@@ -232,6 +232,6 @@
 		var/obj/machinery/power/apc/APC = V
 		if(APC.charging != 2 && is_station_level(APC.z))
 			var/area/A = get_area(get_turf(APC))
-			to_chat(user, "<span class='danger'>APC detected in [A.name] is not fully charged - Access Denied until all power systems are nominal.</span>")
+			to_chat(user, "<span class='danger'>Detected APC in [A.name] that is not fully charged - Access Denied until all APC's are at 100% charge.</span>")
 			return FALSE
 	. = ..()
