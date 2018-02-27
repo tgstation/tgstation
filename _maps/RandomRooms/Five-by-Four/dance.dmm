@@ -13,27 +13,20 @@
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/instruments,
 /obj/effect/spawner/lootdrop/instruments,
-/obj/effect/spawner/lootdrop/instruments,
+/obj/item/bikehorn/airhorn,
+/obj/item/bikehorn/golden,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/template_noop)
 "e" = (
 /obj/machinery/disco/indestructible,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/template_noop)
-"f" = (
-/obj/item/bikehorn/airhorn,
-/turf/open/floor/light/colour_cycle/dancefloor_b,
-/area/template_noop)
-"g" = (
-/obj/item/bikehorn/golden,
-/turf/open/floor/light/colour_cycle/dancefloor_b,
-/area/template_noop)
 
 (1,1,1) = {"
 a
 b
 c
-f
+b
 "}
 (2,1,1) = {"
 b
@@ -57,5 +50,5 @@ c
 d
 b
 c
-g
+b
 "}

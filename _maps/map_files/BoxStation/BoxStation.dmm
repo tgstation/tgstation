@@ -7601,6 +7601,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/punching_bag,
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -8944,7 +8945,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "awB" = (
-/obj/effect/landmark/start/assistant,
+/obj/structure/stacklifter,
 /turf/open/floor/plasteel/green/side{
 	dir = 4
 	},
@@ -9939,6 +9940,7 @@
 /area/crew_quarters/dorms)
 "azf" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "azg" = (
@@ -9956,6 +9958,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/stacklifter,
 /turf/open/floor/plasteel/green/side{
 	dir = 4
 	},
@@ -21631,14 +21634,15 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "bdO" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0";
+	req_one_access_txt = "12;5;39;25;28"
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bdP" = (
@@ -32074,13 +32078,14 @@
 /turf/closed/wall,
 /area/janitor)
 "bCz" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0";
+	req_one_access_txt = "12;5;39;25;28"
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bCA" = (
@@ -35010,11 +35015,12 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0";
+	req_one_access_txt = "12;5;39;25;28"
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -45942,7 +45948,8 @@
 "ckm" = (
 /obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Biohazard Disposals";
-	req_access_txt = "12"
+	req_access_txt = "0";
+	req_one_access_txt = "12;5;39;25;28"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -53506,6 +53513,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cNY" = (
@@ -53898,14 +53908,15 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cTJ" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0";
+	req_one_access_txt = "12;5;39;25;28"
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
 "cTK" = (
@@ -54799,6 +54810,12 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"iWj" = (
+/obj/structure/stacklifter,
+/turf/open/floor/plasteel/red/side{
+	dir = 4
+	},
+/area/crew_quarters/fitness)
 "iXF" = (
 /obj/structure/chair/wood{
 	dir = 1
@@ -55842,6 +55859,12 @@
 /obj/effect/landmark/start/maintblock/three,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"pvl" = (
+/turf/closed/wall/mineral/wood{
+	desc = "A wall with faux-wooden plating. The faux-wood is actually a dense synthetic composite that is as airtight as the logic of everything else on this station.";
+	name = "faux-wooden wall"
+	},
+/area/maintenance/starboard/fore)
 "pvr" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/darkred/side{
@@ -56227,8 +56250,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table,
 /obj/item/storage/book/bible{
-	pixel_x = -1;
-	pixel_x = 6;
+	pixel_x = 11;
 	pixel_y = -2
 	},
 /obj/item/storage/fancy/candle_box{
@@ -56511,7 +56533,10 @@
 "uoL" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/toy/plush/narplush,
+/obj/item/toy/plush/narplush{
+	is_invoker = 0;
+	name = "old nar'sie plushie"
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "uwP" = (
@@ -73007,7 +73032,7 @@ bCq
 dNM
 rHv
 odj
-bCq
+aDu
 aDu
 aDu
 aDu
@@ -76863,14 +76888,14 @@ uPA
 uPA
 uPA
 uPA
+aaf
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -77115,19 +77140,19 @@ aaa
 aaa
 aaa
 aaa
+aaf
+aaa
+aaa
+aaa
+aaf
+aaf
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -77372,19 +77397,19 @@ aaa
 aaa
 aaa
 aaa
+aaf
+aaa
+aaa
+aaa
+aaf
+aaf
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -92955,7 +92980,7 @@ arj
 arj
 asZ
 aua
-aua
+iWj
 awB
 axY
 azh
@@ -97833,7 +97858,7 @@ amw
 aof
 aof
 aof
-alO
+aof
 anf
 arq
 asv
@@ -101674,8 +101699,8 @@ aaa
 aaa
 aaa
 alO
-gjH
-gjH
+pvl
+pvl
 alO
 aaa
 aaa
@@ -102194,11 +102219,11 @@ qTc
 gjH
 alO
 aaa
-gjH
-gjH
-gjH
-gjH
-gjH
+pvl
+pvl
+pvl
+pvl
+pvl
 alP
 alP
 alP
@@ -102451,7 +102476,7 @@ gmQ
 syj
 alO
 alO
-gjH
+pvl
 oVW
 wwg
 iIR
@@ -104250,7 +104275,7 @@ gmQ
 uQW
 alO
 alO
-gjH
+pvl
 dgM
 xxm
 lXh
@@ -104507,11 +104532,11 @@ qTc
 gjH
 alO
 aaa
-gjH
-gjH
-gjH
-gjH
-gjH
+pvl
+pvl
+pvl
+pvl
+pvl
 alP
 alP
 alP
@@ -105015,8 +105040,8 @@ aaa
 aaa
 aaa
 alO
-gjH
-gjH
+pvl
+pvl
 alO
 aaa
 aaa

@@ -10,10 +10,10 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/electronic_marketing_den)
+/area/template_noop)
 "b" = (
 /turf/open/floor/plating,
-/area/crew_quarters/electronic_marketing_den)
+/area/template_noop)
 "c" = (
 /obj/item/electronics/apc,
 /obj/structure/table/reinforced,
@@ -22,7 +22,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/electronic_marketing_den)
+/area/template_noop)
 "d" = (
 /obj/item/stack/cable_coil/white,
 /obj/item/stack/cable_coil/white,
@@ -34,22 +34,22 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/electronic_marketing_den)
+/area/template_noop)
 "e" = (
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/electronic_marketing_den)
+/area/template_noop)
 "f" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plating,
-/area/crew_quarters/electronic_marketing_den)
+/area/template_noop)
 "g" = (
 /obj/structure/frame/computer,
 /obj/item/stack/cable_coil/white,
 /turf/open/floor/plating,
-/area/crew_quarters/electronic_marketing_den)
+/area/template_noop)
 "h" = (
 /obj/item/electronics/airalarm,
 /obj/item/electronics/airlock,
@@ -59,7 +59,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/electronic_marketing_den)
+/area/template_noop)
 "i" = (
 /obj/item/electronics/firelock,
 /obj/item/electronics/airlock,
@@ -69,34 +69,34 @@
 	pixel_y = 8
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/electronic_marketing_den)
+/area/template_noop)
 "j" = (
 /obj/machinery/autolathe{
 	name = "public autolathe"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/electronic_marketing_den)
+/area/template_noop)
 "k" = (
 /obj/structure/chair/office/dark{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/electronic_marketing_den)
+/area/template_noop)
 "l" = (
 /obj/structure/frame/computer,
 /obj/item/circuitboard/computer/secure_data,
 /turf/open/floor/plating,
-/area/crew_quarters/electronic_marketing_den)
+/area/template_noop)
 "m" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/metal/twenty,
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/plating,
-/area/crew_quarters/electronic_marketing_den)
+/area/template_noop)
 "n" = (
 /obj/structure/frame/machine,
 /turf/open/floor/plating,
-/area/crew_quarters/electronic_marketing_den)
+/area/template_noop)
 
 (1,1,1) = {"
 a

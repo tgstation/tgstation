@@ -72,9 +72,8 @@
 /obj/machinery/newscaster{
 	pixel_y = -32
 	},
-/obj/structure/toilet/secret{
-	dir = 1;
-	secret_type = /obj/item/device/assembly/flash/memorizer
+/obj/structure/toilet{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/template_noop)
