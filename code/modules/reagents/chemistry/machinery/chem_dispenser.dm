@@ -419,7 +419,6 @@ obj/machinery/chem_dispenser/update_icon()
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "soda_dispenser"
 	amount = 10
-	dir = WEST
 	pixel_y = 6
 	layer = WALL_OBJ_LAYER
 	working_state = null
