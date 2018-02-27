@@ -1136,6 +1136,18 @@
 	for(var/i in 1 to 49)
 		new /mob/living/simple_animal/butterfly(.)
 
+/datum/supply_pack/organic/critter/crab
+	name = "Crab Rocket"
+	cost = 5000
+	contains = list(/mob/living/simple_animal/crab)
+	crate_name = "look sir free crabs"
+	DropPodOnly = TRUE
+
+/datum/supply_pack/organic/critter/crab/generate()
+	. = ..()
+	for(var/i in 1 to 49)
+		new /mob/living/simple_animal/crab(.)
+
 /datum/supply_pack/organic/hydroponics
 	name = "Hydroponics Crate"
 	cost = 1500

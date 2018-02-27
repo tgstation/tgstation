@@ -1,4 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - bugfix: "The clock cult's marauder limit now works properly, temporarily lower the marauder limit when one has recently been summoned."

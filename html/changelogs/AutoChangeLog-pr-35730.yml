@@ -1,5 +1,0 @@
-author: "Super3222, TheMythicGhost, DaedalusGame"
-delete-after: True
-changes: 
-  - rscadd: "Adds a barometer function to the standard atmos analyzer."
-  - imageadd: "Adds a new sprite for the atmos analyzer to resemble a barometer."
