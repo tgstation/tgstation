@@ -112,6 +112,10 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
 
+/obj/item/scalpel/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
+
 /obj/item/scalpel/augment
 	name = "toolarm scalpel"
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
@@ -152,6 +156,10 @@
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
+
+/obj/item/circular_saw/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
 
 /obj/item/circular_saw/augment
 	name = "toolarm circular saw"

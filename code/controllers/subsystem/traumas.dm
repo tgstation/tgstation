@@ -28,7 +28,8 @@ SUBSYSTEM_DEF(traumas)
 						"authority"	= strings(PHOBIA_FILE, "authority"),
 						"the supernatural"	= strings(PHOBIA_FILE, "the supernatural"),
 						"aliens"	= strings(PHOBIA_FILE, "aliens"),
-						"strangers"	= strings(PHOBIA_FILE, "strangers")
+						"strangers"	= strings(PHOBIA_FILE, "strangers"),
+						"conspiracies" = strings(PHOBIA_FILE, "conspiracies")
 					   )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
@@ -42,7 +43,8 @@ SUBSYSTEM_DEF(traumas)
 					   "the supernatural"   = typecacheof(list(/mob/living/simple_animal/hostile/construct, 
 					   /mob/living/simple_animal/hostile/clockwork, /mob/living/simple_animal/drone/cogscarab, 
 					   /mob/living/simple_animal/revenant, /mob/living/simple_animal/shade)),
-					   "aliens"   = typecacheof(list(/mob/living/carbon/alien, /mob/living/simple_animal/slime))
+					   "aliens"   = typecacheof(list(/mob/living/carbon/alien, /mob/living/simple_animal/slime)),
+					   "conspiracies" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/bot/ed209, /mob/living/simple_animal/drone))
 					   )
 
 	phobia_objs = list("spiders"   = typecacheof(list(/obj/structure/spider)),
@@ -65,7 +67,19 @@ SUBSYSTEM_DEF(traumas)
 					  "skeletons" = typecacheof(list(/obj/item/organ/tongue/bone, /obj/item/clothing/suit/armor/bone, /obj/item/stack/sheet/bone,
 												 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
 												 /obj/effect/decal/remains/human)),
-						
+				   "conspiracies" = typecacheof(list(/obj/item/clothing/under/rank/captain, /obj/item/clothing/under/rank/head_of_security,
+												 /obj/item/clothing/under/rank/chief_engineer, /obj/item/clothing/under/rank/chief_medical_officer,
+												 /obj/item/clothing/under/rank/head_of_personnel, /obj/item/clothing/under/rank/research_director,
+												 /obj/item/clothing/under/rank/head_of_security/grey, /obj/item/clothing/under/rank/head_of_security/alt,
+												 /obj/item/clothing/under/rank/research_director/alt, /obj/item/clothing/under/rank/research_director/turtleneck,
+												 /obj/item/clothing/under/captainparade, /obj/item/clothing/under/hosparademale, /obj/item/clothing/under/hosparadefem,
+												 /obj/item/clothing/head/helmet/abductor, /obj/item/clothing/suit/armor/abductor/vest, /obj/item/abductor_baton,
+												 /obj/item/storage/belt/military/abductor, /obj/item/gun/energy/alien, /obj/item/device/abductor/silencer,
+												 /obj/item/device/abductor/gizmo, /obj/item/clothing/under/rank/centcom_officer,
+												 /obj/item/clothing/suit/space/hardsuit/ert, /obj/item/clothing/suit/space/hardsuit/ert/sec,
+												 /obj/item/clothing/suit/space/hardsuit/ert/engi, /obj/item/clothing/suit/space/hardsuit/ert/med,
+												 /obj/item/clothing/suit/space/hardsuit/deathsquad, /obj/item/clothing/head/helmet/space/hardsuit/deathsquad,
+												 /obj/machinery/door/airlock/centcom)),						
 						"robots"   = typecacheof(list(/obj/machinery/computer/upload, /obj/item/aiModule/, /obj/machinery/recharge_station, 
 						/obj/item/device/aicard, /obj/item/device/deactivated_swarmer, /obj/effect/mob_spawn/swarmer)),
 						
@@ -118,6 +132,7 @@ SUBSYSTEM_DEF(traumas)
 
 	phobia_species = list("lizards"   = typecacheof(list(/datum/species/lizard)),
 						  "skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman)),
+						  "conspiracies" = typecacheof(list(/datum/species/abductor, /datum/species/lizard, /datum/species/synth)),
 						  "robots"   = typecacheof(list(/datum/species/android)),
 						  "the supernatural" = typecacheof(list(/datum/species/golem/clockwork, /datum/species/golem/runic)),
 						  "aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod, 

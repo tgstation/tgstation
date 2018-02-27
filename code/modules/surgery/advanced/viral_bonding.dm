@@ -25,6 +25,7 @@
 	name = "viral bond"
 	implements = list(/obj/item/cautery = 100, TOOL_WELDER = 50, /obj/item = 30) // 30% success with any hot item.
 	time = 100
+	chems_needed = list("spaceacillin","virusfood","formaldehyde")
 
 /datum/surgery_step/viral_bond/tool_check(mob/user, obj/item/tool)
 	if(implement_type == TOOL_WELDER || implement_type == /obj/item)
@@ -36,9 +37,6 @@
 	user.visible_message("[user] starts heating [target]'s bone marrow with [tool]...", "<span class='notice'>You start heating [target]'s bone marrow with [tool]...</span>")
 
 /datum/surgery_step/viral_bond/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(!target.reagents.has_reagent("spaceacillin", 5) || !target.reagents.has_reagent("virusfood", 5) || !target.reagents.has_reagent("formaldehyde", 5))
-		user.visible_message("[target]'s seems unaffected.", "<span class='notice'>[target]'s body must be dosed with spaceacillin, virus food and formaldehyde to complete the surgery!</span>")
-		return FALSE
 	user.visible_message("[target]'s bone marrow begins pulsing slowly.", "<span class='notice'>[target]'s bone marrow begins pulsing slowly. The viral bonding is complete.</span>")
 	for(var/X in target.viruses)
 		var/datum/disease/D = X
