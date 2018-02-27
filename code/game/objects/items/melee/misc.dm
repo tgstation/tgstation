@@ -315,3 +315,104 @@
 		H.drop_all_held_items()
 		H.visible_message("<span class='danger'>[user] disarms [H]!</span>", "<span class='userdanger'>[user] disarmed you!</span>")
 	..()
+
+/obj/item/melee/roastingstick
+	name = "advanced roasting stick"
+	desc = "A telescopic roasting stick with a miniature shield generator designed to ensure entry into various high-tech shielded cooking ovens and firepits."
+	icon_state = "roastingstick_0"
+	item_state = "null"
+	slot_flags = SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	item_flags = NONE
+	force = 0
+	attack_verb = list("hit", "poked")
+	var/obj/item/reagent_containers/food/snacks/sausage/held_sausage
+	var/static/list/ovens
+	var/on = FALSE
+
+/obj/item/melee/roastingstick/Initialize()
+	. = ..()
+	if (!ovens)
+		ovens = typecacheof(list(/obj/singularity, /obj/machinery/power/supermatter_shard/crystal))
+
+/obj/item/melee/roastingstick/attack_self(mob/user)
+	on = !on
+	if(on)
+		extend(user)
+	else
+		if (held_sausage)
+			to_chat(user, "<span class='warning'>You can't retract [src] while [held_sausage] is attached!</span>")
+			return
+		retract(user)
+
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	add_fingerprint(user)
+
+/obj/item/melee/roastingstick/attackby(atom/target, mob/user)
+	warning("[src] attackby on [target]")
+	..()
+	if (istype(target, /obj/item/reagent_containers/food/snacks/sausage))
+		if (!on)
+			to_chat(user, "<span class='warning'>You must extend [src] to attach anything to it!</span>")
+			return
+		if (held_sausage)
+			to_chat(user, "<span class='warning'>[held_sausage] is already attached to [src]!</span>")
+			return
+		if (user.transferItemToLoc(target, src))
+			held_sausage = target
+		else
+			to_chat(user, "<span class='warning'>[target] doesn't seem to want to get on [src]!</span>")
+	update_icon()
+
+/obj/item/melee/roastingstick/attack_hand(mob/user)
+	..()
+	if (held_sausage)
+		user.put_in_hands(held_sausage)
+		held_sausage = null
+	update_icon()
+
+/obj/item/melee/roastingstick/update_icon()
+	. = ..()
+	cut_overlays()
+	if (held_sausage)
+		var/mutable_appearance/sausage = mutable_appearance(icon, "roastingstick_sausage")
+		overlays += sausage
+
+/obj/item/melee/roastingstick/proc/extend(user)
+	to_chat(user, "<span class ='warning'>You extend [src].</span>")
+	icon_state = "roastingstick_1"
+	item_state = "nullrod"
+	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/melee/roastingstick/proc/retract(user)
+	to_chat(user, "<span class ='notice'>You collapse [src].</span>")
+	icon_state = "roastingstick_0"
+	item_state = null
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/melee/roastingstick/handle_atom_del(atom/target)
+	if (target == held_sausage)
+		held_sausage = null
+		update_icon()
+
+/obj/item/melee/roastingstick/afterattack(atom/target, mob/user, proximity)
+	warning("[src] afterattack on [target]")
+	if (!on)
+		return
+	if (is_type_in_typecache(target, ovens) && get_dist(user, target) < 10)
+		to_chat(user, "You extend [src] towards [target].")
+		playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+		var/datum/beam/beam_effect = new(user,target,time=100,beam_icon_state="medbeam",btype=/obj/effect/ebeam/medical)
+		INVOKE_ASYNC(beam_effect, /datum/beam.proc/Start)
+		if(do_after(user, 100, target = user))
+			if (!QDELETED(target) && get_dist(user, target) < 10)
+				finish_roasting(user, target)
+		else
+			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+			qdel(beam_effect)
+
+/obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
+	to_chat(user, "You finish roasting the [held_sausage]")
+	held_sausage.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
+	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
+	held_sausage.desc = "[held_sausage.desc] Basking in the rays of the mighty [target.name] has cooked it to perfection."
