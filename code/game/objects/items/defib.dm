@@ -625,6 +625,9 @@
 	item_state = "defibpaddles0"
 	req_defib = FALSE
 
+/obj/item/twohanded/shockpaddles/cyborg/check_range() //We don't have a defib unit, remember?
+	return
+	
 /obj/item/twohanded/shockpaddles/cyborg/attack(mob/M, mob/user)
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
