@@ -146,6 +146,9 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 	var/mob/living/L = D.following_host
 	if(!L)
 		return FALSE
+	if(L.stat != CONSCIOUS)
+		to_chat(D, "<span class='warning'>Your host must be concious to cough.</span>")
+		return FALSE
 	to_chat(D, "<span class='notice'>You force [L.real_name] to cough.</span>")
 	L.emote("cough")
 	var/datum/disease/advance/sentient_disease/SD = D.hosts[L]
@@ -176,6 +179,9 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 	var/mob/camera/disease/D = owner
 	var/mob/living/L = D.following_host
 	if(!L)
+		return FALSE
+	if(L.stat != CONSCIOUS)
+		to_chat(D, "<span class='warning'>Your host must be concious to sneeze.</span>")
 		return FALSE
 	to_chat(D, "<span class='notice'>You force [L.real_name] to sneeze.</span>")
 	L.emote("sneeze")

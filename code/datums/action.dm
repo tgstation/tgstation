@@ -600,6 +600,9 @@
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/action/cooldown/process()
+	if(!owner)
+		button.maptext = ""
+		STOP_PROCESSING(SSfastprocess, src)
 	var/timeleft = max(next_use_time - world.time, 0)
 	if(timeleft == 0)
 		button.maptext = ""
@@ -607,6 +610,14 @@
 		STOP_PROCESSING(SSfastprocess, src)
 	else
 		button.maptext = "<b>[round(timeleft/10, 0.1)]</b>"
+
+/datum/action/cooldown/Grant(mob/M)
+	..()
+	if(owner)
+		UpdateButtonIcon()
+		if(next_use_time > world.time)
+			START_PROCESSING(SSfastprocess, src)
+
 
 //Stickmemes
 /datum/action/item_action/stickmen

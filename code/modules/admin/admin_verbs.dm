@@ -595,7 +595,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed the spell [S] from [key_name(T)].</span>")
 			SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/give_disease(mob/living/T in GLOB.mob_list)
+/client/proc/give_disease(mob/living/T in GLOB.mob_living_list)
 	set category = "Fun"
 	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."

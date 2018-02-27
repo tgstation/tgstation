@@ -22,8 +22,11 @@ the new instance inside the host to be updated to the template's stats.
 
 	var/datum/action/innate/disease_adapt/adaptation_menu_action
 	var/datum/disease_ability/examining_ability
+	var/datum/browser/browser
+	var/browser_open = FALSE
 
 	var/mob/living/following_host
+	var/datum/component/redirect/move_listener
 	var/list/disease_instances
 	var/list/hosts //this list is associative, affected_mob -> disease_instance
 	var/datum/disease/advance/sentient_disease/disease_template
@@ -63,11 +66,11 @@ the new instance inside the host to be updated to the template's stats.
 
 	var/datum/atom_hud/my_hud = GLOB.huds[DATA_HUD_SENTIENT_DISEASE]
 	my_hud.add_hud_to(src)
-	START_PROCESSING(SSfastprocess, src)
+
+	browser = new /datum/browser(src, "disease_menu", "Adaptation Menu", 1000, 770, src)
 
 /mob/camera/disease/Destroy()
 	. = ..()
-	STOP_PROCESSING(SSfastprocess, src)
 	for(var/V in GLOB.sentient_disease_instances)
 		var/datum/disease/advance/sentient_disease/S = V
 		if(S.overmind == src)
@@ -81,9 +84,6 @@ the new instance inside the host to be updated to the template's stats.
 		var/adapt_ready = next_adaptation_time - world.time
 		if(adapt_ready > 0)
 			stat("Adaptation Ready: [round(adapt_ready/10, 0.1)]s")
-
-/mob/camera/disease/process()
-	follow_tick()
 
 /mob/camera/disease/say(message)
 	return
@@ -159,6 +159,7 @@ the new instance inside the host to be updated to the template's stats.
 
 	if(!following_host)
 		set_following(V.affected_mob)
+	refresh_adaptation_menu()
 
 /mob/camera/disease/proc/remove_infection(datum/disease/advance/sentient_disease/V)
 	if(QDELETED(src))
@@ -181,10 +182,17 @@ the new instance inside the host to be updated to the template's stats.
 			to_chat(src, "<span class='userdanger'>The last of your infection has disappeared.</span>")
 			set_following(null)
 			qdel(src)
+		refresh_adaptation_menu()
 
 /mob/camera/disease/proc/set_following(mob/living/L)
 	following_host = L
-	follow_tick()
+	if(!move_listener)
+		move_listener = L.AddComponent(/datum/component/redirect, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/follow_mob))
+	else
+		L.TakeComponent(move_listener)
+		if(QDELING(move_listener))
+			move_listener = null
+	follow_mob()
 
 /mob/camera/disease/proc/follow_next(reverse = FALSE)
 	var/index = hosts.Find(following_host)
@@ -195,10 +203,10 @@ the new instance inside the host to be updated to the template's stats.
 			index = index == hosts.len ? 1 : index + 1
 		set_following(hosts[index])
 
-/mob/camera/disease/proc/follow_tick()
-	var/turf/host_turf = get_turf(following_host)
-	if(host_turf)
-		forceMove(host_turf)
+/mob/camera/disease/proc/follow_mob(newloc, dir)
+	var/turf/T = get_turf(following_host)
+	if(T)
+		forceMove(T)
 
 /mob/camera/disease/DblClickOn(var/atom/A, params)
 	if(hosts[A])
@@ -213,6 +221,11 @@ the new instance inside the host to be updated to the template's stats.
 
 /mob/camera/disease/proc/notify_adapt_ready()
 	to_chat(src, "<span class='notice'>You are now ready to adapt again.</span>")
+	refresh_adaptation_menu()
+
+/mob/camera/disease/proc/refresh_adaptation_menu()
+	if(browser_open)
+		adaptation_menu()
 
 /mob/camera/disease/proc/adaptation_menu()
 	var/datum/disease/advance/sentient_disease/DT = disease_template
@@ -253,12 +266,14 @@ the new instance inside the host to be updated to the template's stats.
 			var/mob/living/L = V
 			dat += "<br><a href='byond://?src=[REF(src)];follow_instance=[REF(L)]'>[L.real_name]</a>"
 
-	var/datum/browser/popup = new /datum/browser(src, "disease_menu", "Adaptation Menu", 1000, 770)
-	popup.set_content(dat.Join())
-	popup.open(FALSE)
+	browser.set_content(dat.Join())
+	browser.open()
+	browser_open = TRUE
 
 /mob/camera/disease/Topic(href, list/href_list)
 	..()
+	if(href_list["close"])
+		browser_open = FALSE
 	if(usr != src)
 		return
 	if(href_list["follow_instance"])
