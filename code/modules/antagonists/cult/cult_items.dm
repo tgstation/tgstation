@@ -45,6 +45,9 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
 
+/obj/item/melee/cultblade/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 40, 100)
 
 /obj/item/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!iscultist(user))
@@ -112,6 +115,7 @@
 	set_light(4)
 	jaunt = new(src)
 	linked_action = new(src)
+	AddComponent(/datum/component/butchering, 50, 80)
 
 /obj/item/twohanded/required/cult_bastard/examine(mob/user)
 	if(contents.len)
@@ -662,6 +666,10 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/spear/spear_act
 
+/obj/item/twohanded/cult_spear/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 100, 90)
+
 /obj/item/twohanded/cult_spear/Destroy()
 	if(spear_act)
 		qdel(spear_act)
@@ -681,7 +689,7 @@
 			else
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
-			if(!L.null_rod_check())
+			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
 					L.Knockdown(100)
 				else
@@ -974,7 +982,7 @@
 			else
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
-			if(!L.null_rod_check())
+			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
 					L.Knockdown(60)
 				else

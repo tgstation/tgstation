@@ -251,6 +251,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 /obj/item/shard/Initialize()
 	. = ..()
 	AddComponent(/datum/component/caltrop, force)
+	AddComponent(/datum/component/butchering, 150, 65)
 	icon_state = pick("large", "medium", "small")
 	switch(icon_state)
 		if("small")
@@ -273,13 +274,14 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/hit_hand = ((user.active_hand_index % 2 == 0) ? "r_" : "l_") + "arm"
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.species_traits)) // golems, etc
+		if(!H.gloves && !H.has_trait(TRAIT_PIERCEIMMUNE)) // golems, etc
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			H.apply_damage(force*0.5, BRUTE, hit_hand)
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
-		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
-		M.apply_damage(force*0.5, BRUTE, hit_hand)
+		if(!M.has_trait(TRAIT_PIERCEIMMUNE))
+			to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
+			M.apply_damage(force*0.5, BRUTE, hit_hand)
 
 
 /obj/item/shard/attackby(obj/item/I, mob/user, params)

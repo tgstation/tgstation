@@ -35,7 +35,7 @@
 	display_name = "Biological Processing"
 	description = "From slimes to kitchens."
 	prereq_ids = list("biotech")
-	design_ids = list("smartfridge", "gibber", "deepfryer", "monkey_recycler", "processor", "gibber", "microwave", "reagentgrinder")
+	design_ids = list("smartfridge", "gibber", "deepfryer", "monkey_recycler", "processor", "gibber", "microwave", "reagentgrinder", "dish_drive")
 	research_cost = 2500
 	export_price = 5000
 
@@ -874,11 +874,11 @@
 /datum/techweb_node/syndicate_basic/New()		//Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()
 	boost_item_paths = list()
-	for(var/cat in GLOB.uplink_items)
-		var/list/l = cat
-		for(var/i in l)
-			var/datum/uplink_item/UI = i
-			boost_item_paths[UI.item] = 0	//allows deconning to unlock.
+	for(var/path in GLOB.uplink_items)
+		var/datum/uplink_item/UI = new path
+		if(!UI.item)
+			continue
+		boost_item_paths[UI.item] = 0	//allows deconning to unlock.
 
 //HELPERS
 /proc/total_techweb_exports()

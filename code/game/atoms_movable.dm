@@ -74,9 +74,12 @@
 		if(gs==0)
 			stop_pulling()
 			return FALSE
-		// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
+		// Are we trying to pull something we are already pulling? Then enter grab cycle and end.
 		if(AM == pulling)
 			grab_state = gs
+			if(istype(AM,/mob/living))
+				var/mob/living/AMob = AM
+				AMob.grabbedby(src)
 			return TRUE
 		stop_pulling()
 	if(AM.pulledby)

@@ -23,6 +23,7 @@
 	)
 	var/obj/item/gun/energy/installed_gun = null
 	spawn_flags = IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_COMBAT
 	power_draw_per_use = 0
 	var/mode = FALSE
 
@@ -142,6 +143,7 @@
 	outputs = list()
 	activators = list("step towards dir" = IC_PINTYPE_PULSE_IN,"on step"=IC_PINTYPE_PULSE_OUT,"blocked"=IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_MOVEMENT
 	power_draw_per_use = 100
 
 /obj/item/integrated_circuit/manipulation/locomotion/do_work()
@@ -163,7 +165,7 @@
 
 /obj/item/integrated_circuit/manipulation/grenade
 	name = "grenade primer"
-	desc = "This circuit comes with the ability to attach most types of grenades at prime them at will."
+	desc = "This circuit comes with the ability to attach most types of grenades and prime them at will."
 	extended_desc = "Time between priming and detonation is limited to between 1 to 12 seconds but is optional. \
 					If unset, not a number, or a number less than 1 then the grenade's built-in timing will be used. \
 					Beware: Once primed there is no aborting the process!"
@@ -173,6 +175,7 @@
 	outputs = list()
 	activators = list("prime grenade" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_COMBAT
 	var/obj/item/grenade/attached_grenade
 	var/pre_attached_grenade_type
 
@@ -410,6 +413,7 @@
 		"fire" = IC_PINTYPE_PULSE_IN
 	)
 	spawn_flags = IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_COMBAT
 	power_draw_per_use = 50
 
 /obj/item/integrated_circuit/manipulation/thrower/do_work()

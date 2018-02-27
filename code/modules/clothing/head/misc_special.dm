@@ -218,3 +218,16 @@
 	hair_style = pick(GLOB.hair_styles_list - "Bald") //Don't want invisible wig
 	hair_color = "#[random_short_color()]"
 	. = ..()
+
+/obj/item/clothing/head/foilhat
+	name = "tinfoil hat"
+	desc = "Thought control rays, psychotronic scanning. Don't mind that, I'm protected cause I made this hat."
+	icon_state = "foilhat"
+	item_state = "foilhat"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = -5,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = -5, "fire" = 0, "acid" = 0)
+
+/obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
+	if(slot == slot_head)
+		user.gain_trauma(/datum/brain_trauma/mild/phobia, FALSE, "conspiracies")
+		to_chat(user, "<span class='warning'>As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. </span>")
+		flags_1 |= NODROP_1

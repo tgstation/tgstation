@@ -193,7 +193,7 @@
 			activate_pin(3)
 			return
 
-		var/tramount = CLAMP(transfer_amount, 0, AM.reagents.total_volume)
+		var/tramount = abs(transfer_amount)
 
 		if(isliving(AM))
 			var/mob/living/L = AM
@@ -202,13 +202,15 @@
 			busy = TRUE
 			if(do_atom(src, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,null,0)))
 				if(L.transfer_blood_to(src, tramount))
-					L.visible_message("[acting_object] takes a blood sample from [L].")
+					L.visible_message("<span class='danger'>[acting_object] takes a blood sample from [L]!</span>", \
+					"<span class='userdanger'>[acting_object] takes a blood sample from you!</span>")
 				else
 					busy = FALSE
 					activate_pin(3)
 					return
 			busy = FALSE
 		else
+			tramount = min(tramount, AM.reagents.total_volume)
 			if(!AM.reagents.total_volume)
 				activate_pin(3)
 				return

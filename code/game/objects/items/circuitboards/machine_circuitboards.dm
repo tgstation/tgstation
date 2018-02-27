@@ -515,9 +515,52 @@
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high/empty)
 
 /obj/item/circuitboard/machine/tesla_coil
-	name = "Tesla Coil (Machine Board)"
+	name = "Tesla Controller (Machine Board)"
+	desc = "You can use a screwdriver to switch between Research and Power Generation"
 	build_path = /obj/machinery/power/tesla_coil
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
+
+#define PATH_POWERCOIL /obj/item/circuitboard/machine/tesla_coil/power
+#define PATH_RPCOIL /obj/item/circuitboard/machine/tesla_coil/research
+
+/obj/item/circuitboard/machine/tesla_coil/Initialize()
+	. = ..()
+	if(!build_path)
+		if(prob(50))
+			name = "Tesla Coil (Machine Board)"
+			build_path = PATH_POWERCOIL
+		else
+			name = "Tesla Corona Researcher (Machine Board)"
+			build_path = PATH_RPCOIL
+
+/obj/item/circuitboard/machine/tesla_coil/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/screwdriver))
+		var/obj/item/circuitboard/new_type
+		var/new_setting
+		switch(build_path)
+			if(PATH_POWERCOIL)
+				new_type = /obj/item/circuitboard/machine/tesla_coil/research
+				new_setting = "Research"
+			if(PATH_RPCOIL)
+				new_type = /obj/item/circuitboard/machine/tesla_coil/power
+				new_setting = "Power"
+		name = initial(new_type.name)
+		build_path = initial(new_type.build_path)
+		I.play_tool_sound(src)
+		to_chat(user, "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>")
+	else
+		return ..()
+
+/obj/item/circuitboard/machine/tesla_coil/power
+	name = "Tesla Coil (Machine Board)"
+	build_path = PATH_POWERCOIL
+
+/obj/item/circuitboard/machine/tesla_coil/research
+	name = "Tesla Corona Researcher (Machine Board)"
+	build_path = PATH_RPCOIL
+
+#undef PATH_POWERCOIL
+#undef PATH_RPCOIL
 
 /obj/item/circuitboard/machine/grounding_rod
 	name = "Grounding Rod (Machine Board)"
@@ -718,3 +761,28 @@
 	req_components = list(
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/vending_refill/donksoft = 3)
+
+/obj/item/circuitboard/machine/dish_drive
+	name = "Dish Drive (Machine Board)"
+	build_path = /obj/machinery/dish_drive
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/matter_bin = 2)
+	var/suction = TRUE
+	var/transmit = TRUE
+
+/obj/item/circuitboard/machine/dish_drive/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Its suction function is [suction ? "enabled" : "disabled"]. Use it in-hand to switch.</span>")
+	to_chat(user, "<span class='notice'>Its disposal auto-transmit function is [transmit ? "enabled" : "disabled"]. Alt-click it to switch.</span>")
+
+/obj/item/circuitboard/machine/dish_drive/attack_self(mob/living/user)
+	suction = !suction
+	to_chat(user, "<span class='notice'>You [suction ? "enable" : "disable"] the board's suction function.</span>")
+
+/obj/item/circuitboard/machine/dish_drive/AltClick(mob/living/user)
+	if(!user.Adjacent(src))
+		return
+	transmit = !transmit
+	to_chat(user, "<span class='notice'>You [transmit ? "enable" : "disable"] the board's automatic disposal transmission.</span>")
