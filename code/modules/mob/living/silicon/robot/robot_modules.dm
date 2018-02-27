@@ -207,7 +207,7 @@
 		R.hat = null
 	R.update_headlamp()
 	R.alpha = 0
-	animate(R, alpha = 255, time = 50)
+	animate(R, alpha = 255, time = 30)
 	do_transform_delay()
 
 /obj/item/robot_module/proc/do_transform_delay()
@@ -218,7 +218,7 @@
 	sleep(2)
 	for(var/i in 1 to 3)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
-		sleep(10)
+		sleep(5)
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
 	R.anchored = FALSE
