@@ -2658,6 +2658,7 @@
 #include "hippiestation\code\modules\clothing\shoes\magboots.dm"
 #include "hippiestation\code\modules\clothing\spacesuits\hardsuit.dm"
 #include "hippiestation\code\modules\clothing\suits\cloaks.dm"
+#include "hippiestation\code\modules\clothing\suits\utility.dm"
 #include "hippiestation\code\modules\crafting\recipies.dm"
 #include "hippiestation\code\modules\crafts\shield.dm"
 #include "hippiestation\code\modules\crafts\vest.dm"
