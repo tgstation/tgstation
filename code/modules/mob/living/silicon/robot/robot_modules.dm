@@ -198,31 +198,28 @@
 
 /obj/item/robot_module/proc/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
-	R.notransform = TRUE
-	var/obj/effect/temp_visual/decoy/fading/fivesecond/ANM = new /obj/effect/temp_visual/decoy/fading/fivesecond(R.loc, R)
-	ANM.layer = R.layer - 0.01
-	new /obj/effect/temp_visual/small_smoke(R.loc)
 	if(R.hat)
 		R.hat.forceMove(get_turf(R))
 		R.hat = null
-	R.update_headlamp()
-	R.alpha = 0
-	animate(R, alpha = 255, time = 30)
+	R.cut_overlays()
+	R.setDir(SOUTH)
 	do_transform_delay()
 
 /obj/item/robot_module/proc/do_transform_delay()
 	var/mob/living/silicon/robot/R = loc
 	var/prev_lockcharge = R.lockcharge
+	R.notransform = TRUE
 	R.SetLockdown(1)
 	R.anchored = TRUE
 	sleep(2)
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 4)
 		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
-		sleep(5)
+		sleep(8)
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
 	R.anchored = FALSE
 	R.notransform = FALSE
+	R.update_headlamp()
 	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
@@ -287,11 +284,8 @@
 
 /obj/item/robot_module/medical/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
-	R.cut_overlays()
-	R.setDir(SOUTH)
 	flick("mediborg_transform", R)
-	do_transform_delay()
-	R.update_headlamp()
+	..()
 
 /obj/item/robot_module/engineering
 	name = "Engineering"
@@ -330,11 +324,8 @@
 
 /obj/item/robot_module/engineering/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
-	R.cut_overlays()
-	R.setDir(SOUTH)
 	flick("engiborg_transform", R)
-	do_transform_delay()
-	R.update_headlamp()
+	..()
 
 /obj/item/robot_module/security
 	name = "Security"
@@ -354,11 +345,8 @@
 
 /obj/item/robot_module/security/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
-	R.cut_overlays()
-	R.setDir(SOUTH)
 	flick("secborg_transform", R)
-	do_transform_delay()
-	R.update_headlamp()
+	..()
 	to_chat(loc, "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. \
 	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
 
@@ -395,11 +383,8 @@
 
 /obj/item/robot_module/peacekeeper/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
-	R.cut_overlays()
-	R.setDir(SOUTH)
 	flick("peace_transform", R)
-	do_transform_delay()
-	R.update_headlamp()
+	..()
 	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
 	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
 
@@ -428,11 +413,8 @@
 
 /obj/item/robot_module/janitor/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
-	R.cut_overlays()
-	R.setDir(SOUTH)
 	flick("janiborg_transform", R)
-	do_transform_delay()
-	R.update_headlamp()
+	..()
 
 /obj/item/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"
@@ -517,11 +499,8 @@
 
 /obj/item/robot_module/butler/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
-	R.cut_overlays()
-	R.setDir(SOUTH)
 	flick("maximillion", R)
-	do_transform_delay()
-	R.update_headlamp()
+	..()
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
@@ -577,11 +556,8 @@
 
 /obj/item/robot_module/miner/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
-	R.cut_overlays()
-	R.setDir(SOUTH)
 	flick("miner_transform", R)
-	do_transform_delay()
-	R.update_headlamp()
+	..()
 
 /obj/item/robot_module/syndicate
 	name = "Syndicate Assault"
