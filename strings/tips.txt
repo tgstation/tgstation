@@ -19,7 +19,7 @@ Maintenance is full of equipment that is randomized every round. Look around and
 Some roles cannot be antagonists by default, but antag selection is decided first. For instance, you can set Security Officer to High without affecting your chances of becoming an antag -- the game will just select a different role.
 There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
 On some maps, you can use a machine in the vault to deposit space cash for cargo points or rob cargo blind.
-As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your unique laser gun or your life are things to worry about.
+As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your unique lasgun or your life are things to worry about.
 As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head you can trust with keeping it safe, such as the Head of Security.
 As the Captain, you have absolute access and control over the station, but this does not mean that being a horrible person won't result in mutiny and a ban.
 As the Captain, you can purchase a new emergency shuttle using a communications console. Some require credits, while others give you credits in exchange.
