@@ -1137,6 +1137,190 @@
 					/obj/item/clothing/suit/beekeeper_suit)
 	crate_name = "beekeeper suits"
 	
+/datum/supply_pack/organic/food
+	name = "Food Crate"
+	cost = 1000
+	contains = list(/obj/item/reagent_containers/food/condiment/flour,
+					/obj/item/reagent_containers/food/condiment/rice,
+					/obj/item/reagent_containers/food/condiment/milk,
+					/obj/item/reagent_containers/food/condiment/soymilk,
+					/obj/item/reagent_containers/food/condiment/saltshaker,
+					/obj/item/reagent_containers/food/condiment/peppermill,
+					/obj/item/storage/fancy/egg_box,
+					/obj/item/reagent_containers/food/condiment/enzyme,
+					/obj/item/reagent_containers/food/condiment/sugar,
+					/obj/item/reagent_containers/food/snacks/meat/slab/monkey,
+					/obj/item/reagent_containers/food/snacks/grown/banana,
+					/obj/item/reagent_containers/food/snacks/grown/banana,
+					/obj/item/reagent_containers/food/snacks/grown/banana)
+	crate_name = "food crate"
+
+/datum/supply_pack/organic/pizza
+	name = "Pizza Crate"
+	cost = 6000 // Best prices this side of the galaxy.
+	contains = list(/obj/item/pizzabox/margherita,
+					/obj/item/pizzabox/mushroom,
+					/obj/item/pizzabox/meat,
+					/obj/item/pizzabox/vegetable,
+					/obj/item/pizzabox/pineapple)
+	crate_name = "pizza crate"
+	var/static/anomalous_box_provided = FALSE
+
+/datum/supply_pack/organic/pizza/fill(obj/structure/closet/crate/C)
+	. = ..()
+	if(!anomalous_box_provided)
+		for(var/obj/item/pizzabox/P in C)
+			if(prob(1)) //1% chance for each box, so 4% total chance per order
+				var/obj/item/pizzabox/infinite/fourfiveeight = new(C)
+				fourfiveeight.boxtag = P.boxtag
+				qdel(P)
+				anomalous_box_provided = TRUE
+				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery")
+				if(prob(50))
+					addtimer(CALLBACK(src, .proc/anomalous_pizza_report), rand(300, 1800))
+				else
+					message_admins("An anomalous pizza box was silently created with no command report in a pizza crate delivery.")
+				break
+
+/datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
+	print_command_report("[station_name()], our anomalous materials divison has reported a missing object that is highly likely to have been sent to your station during a routine cargo \
+	delivery. Please search all crates and manifests provided with the delivery and return the object if is located. The object resembles a standard <b>\[DATA EXPUNGED\]</b> and is to be \
+	considered <b>\[REDACTED\]</b> and returned at your leisure. Note that objects the anomaly produces are specifically attuned exactly to the individual opening the anomaly; regardless \
+	of species, the individual will find the object edible and it will taste great according to their personal definitions, which vary significantly based on person and species.")
+
+/datum/supply_pack/organic/cream_piee
+	name = "High-yield Clown-grade Cream Pie Crate"
+	cost = 6000
+	contains = list(/obj/item/storage/backpack/duffelbag/clown/cream_pie)
+	crate_name = "party equipment crate"
+	contraband = TRUE
+	access = ACCESS_THEATRE
+	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/organic/monkey
+	name = "Monkey Crate"
+	cost = 2000
+	contains = list (/obj/item/storage/box/monkeycubes)
+	crate_name = "monkey crate"
+
+/datum/supply_pack/organic/party
+	name = "Party Equipment"
+	cost = 2000
+	contains = list(/obj/item/storage/box/drinkingglasses,
+					/obj/item/reagent_containers/food/drinks/shaker,
+					/obj/item/reagent_containers/food/drinks/bottle/patron,
+					/obj/item/reagent_containers/food/drinks/bottle/goldschlager,
+					/obj/item/reagent_containers/food/drinks/ale,
+					/obj/item/reagent_containers/food/drinks/ale,
+					/obj/item/reagent_containers/food/drinks/beer,
+					/obj/item/reagent_containers/food/drinks/beer,
+					/obj/item/reagent_containers/food/drinks/beer,
+					/obj/item/reagent_containers/food/drinks/beer,
+					/obj/item/device/flashlight/glowstick,
+					/obj/item/device/flashlight/glowstick/red,
+					/obj/item/device/flashlight/glowstick/blue,
+					/obj/item/device/flashlight/glowstick/cyan,
+					/obj/item/device/flashlight/glowstick/orange,
+					/obj/item/device/flashlight/glowstick/yellow,
+					/obj/item/device/flashlight/glowstick/pink)
+	crate_name = "party equipment crate"
+
+/datum/supply_pack/organic/critter
+	crate_type = /obj/structure/closet/crate/critter
+
+/datum/supply_pack/organic/critter/cow
+	name = "Cow Crate"
+	cost = 3000
+	contains = list(/mob/living/simple_animal/cow)
+	crate_name = "cow crate"
+
+/datum/supply_pack/organic/critter/goat
+	name = "Goat Crate"
+	cost = 2500
+	contains = list(/mob/living/simple_animal/hostile/retaliate/goat)
+	crate_name = "goat crate"
+
+/datum/supply_pack/organic/critter/snake
+    name = "Snake Crate"
+    cost = 3000
+    contains = list(/mob/living/simple_animal/hostile/retaliate/poison/snake,
+    				/mob/living/simple_animal/hostile/retaliate/poison/snake,
+    				/mob/living/simple_animal/hostile/retaliate/poison/snake)
+    crate_name = "snake crate"
+
+/datum/supply_pack/organic/critter/chick
+	name = "Chicken Crate"
+	cost = 2000
+	contains = list( /mob/living/simple_animal/chick)
+	crate_name = "chicken crate"
+
+/datum/supply_pack/organic/critter/corgi
+	name = "Corgi Crate"
+	cost = 5000
+	contains = list(/mob/living/simple_animal/pet/dog/corgi,
+					/obj/item/clothing/neck/petcollar)
+	crate_name = "corgi crate"
+
+/datum/supply_pack/organic/critter/corgi/generate()
+	. = ..()
+	if(prob(50))
+		var/mob/living/simple_animal/pet/dog/corgi/D = locate() in .
+		qdel(D)
+		new /mob/living/simple_animal/pet/dog/corgi/Lisa(.)
+
+/datum/supply_pack/organic/critter/cat
+	name = "Cat Crate"
+	cost = 5000 //Cats are worth as much as corgis.
+	contains = list(/mob/living/simple_animal/pet/cat,
+					/obj/item/clothing/neck/petcollar,
+                    /obj/item/toy/cattoy)
+	crate_name = "cat crate"
+
+/datum/supply_pack/organic/critter/cat/generate()
+	. = ..()
+	if(prob(50))
+		var/mob/living/simple_animal/pet/cat/C = locate() in .
+		qdel(C)
+		new /mob/living/simple_animal/pet/cat/Proc(.)
+    
+/datum/supply_pack/organic/critter/crab
+	name = "Crab Rocket"
+	cost = 5000
+	contains = list(/mob/living/simple_animal/crab)
+	crate_name = "look sir free crabs"
+	DropPodOnly = TRUE
+
+/datum/supply_pack/organic/critter/crab/generate()
+	. = ..()
+	for(var/i in 1 to 49)
+		new /mob/living/simple_animal/crab(.)
+
+/datum/supply_pack/organic/critter/pug
+	name = "Pug Crate"
+	cost = 5000
+	contains = list(/mob/living/simple_animal/pet/dog/pug,
+					/obj/item/clothing/neck/petcollar)
+	crate_name = "pug crate"
+
+/datum/supply_pack/organic/critter/fox
+	name = "Fox Crate"
+	cost = 5000
+	contains = list(/mob/living/simple_animal/pet/fox,
+					/obj/item/clothing/neck/petcollar)
+	crate_name = "fox crate"
+
+/datum/supply_pack/organic/critter/butterfly
+	name = "Butterflies Crate"
+	contraband = TRUE
+	cost = 5000
+	contains = list(/mob/living/simple_animal/butterfly)
+	crate_name = "entomology samples crate"
+
+/datum/supply_pack/organic/critter/butterfly/generate()
+	. = ..()
+	for(var/i in 1 to 49)
+		new /mob/living/simple_animal/butterfly(.)
+
 /datum/supply_pack/organic/hydroponics
 	name = "Hydroponics Crate"
 	cost = 1500
