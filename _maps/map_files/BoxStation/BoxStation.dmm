@@ -4276,6 +4276,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "ajZ" = (
@@ -4789,6 +4790,9 @@
 	name = "Solar Maintenance";
 	req_access = null;
 	req_access_txt = "10; 13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
@@ -5769,7 +5773,7 @@
 	height = 5;
 	id = "laborcamp_home";
 	name = "fore bay 1";
-	roundstart_template = /datum/map_template/shuttle/labour/box;
+	roundstart_template = !INVALID_VALUE!;
 	width = 9
 	},
 /turf/open/space/basic,
@@ -21733,6 +21737,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bdP" = (
@@ -28786,6 +28793,9 @@
 	name = "Genetics Research Access";
 	req_access_txt = "9"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "buH" = (
@@ -28801,6 +28811,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -34969,7 +34982,7 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/box;
+	roundstart_template = !INVALID_VALUE!;
 	width = 7
 	},
 /turf/open/space/basic,
@@ -53493,7 +53506,7 @@
 	height = 15;
 	id = "arrivals_stationary";
 	name = "arrivals";
-	roundstart_template = /datum/map_template/shuttle/arrival/box;
+	roundstart_template = !INVALID_VALUE!;
 	width = 7
 	},
 /turf/open/space/basic,
@@ -54609,6 +54622,18 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
+"rXY" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
 "saK" = (
 /obj/structure/closet/crate,
 /obj/item/target/alien,
@@ -96591,7 +96616,7 @@ cTS
 cTK
 bpQ
 cTK
-cTJ
+rXY
 btm
 buy
 bvz
