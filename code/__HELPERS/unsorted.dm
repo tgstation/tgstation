@@ -521,13 +521,20 @@ Turf and target are separate in case you want to teleport some distance from a t
 /atom/proc/GetAllContents(var/T)
 	var/list/processing_list = list(src)
 	var/list/assembled = list()
-	while(processing_list.len)
-		var/atom/A = processing_list[1]
-		processing_list.Cut(1, 2)
-		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
-		//This is also why we don't need to check against assembled as we go along
-		processing_list += A.contents
-		if(!T || istype(A,T))
+	if(T)
+		while(processing_list.len)
+			var/atom/A = processing_list[1]
+			processing_list.Cut(1, 2)
+			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
+			//This is also why we don't need to check against assembled as we go along
+			processing_list += A.contents
+			if(istype(A,T))
+				assembled += A
+	else
+		while(processing_list.len)
+			var/atom/A = processing_list[1]
+			processing_list.Cut(1, 2)
+			processing_list += A.contents
 			assembled += A
 	return assembled
 
