@@ -603,7 +603,8 @@
 
 //Small sprites
 /datum/action/small_sprite
-	name = "Toggle Giant Sprite - Others will always see you as giant"
+	name = "Toggle Giant Sprite"
+	desc = "Others will always see you as giant"
 	button_icon_state = "smallqueen"
 	background_icon_state = "bg_alien"
 	var/small = FALSE
