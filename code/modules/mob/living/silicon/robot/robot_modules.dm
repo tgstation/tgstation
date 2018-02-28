@@ -531,11 +531,6 @@
 	moduleselect_icon = "miner"
 	hat_offset = 0
 
-/obj/item/robot_module/miner/do_transform_animation()
-	var/mob/living/silicon/robot/R = loc
-	flick("miner_transform", R)
-	..()
-
 /obj/item/robot_module/syndicate
 	name = "Syndicate Assault"
 	basic_modules = list(
