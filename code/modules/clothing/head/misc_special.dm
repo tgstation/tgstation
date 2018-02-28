@@ -236,6 +236,6 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.head)
-			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
+			to_chat(user, "<span class='userdanger'>Why would you want to take this off? Do you want them to get into your mind?!</span>") 
 			return
 	..()
