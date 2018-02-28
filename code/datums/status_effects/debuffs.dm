@@ -507,3 +507,19 @@
 	desc = "Your body is covered in blue ichor! You can't be revived by vitality matrices."
 	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"
+
+//Soulless: Applied when someone uses the soul projector. Continuosly casues minor brain damage until the user returns to their body.
+/datum/status_effect/soulless
+	id = "soulless"
+	status_type = STATUS_EFFECT_UNIQUE
+	tick_interval = 50
+	duration = -1
+	examine_text = "<span class='warning'>SUBJECTPRONOUN has eyes that seem earily soulless. Their mind can't possibly be in a good place right now...</span>"
+	alert_type = null
+
+/datum/status_effect/soulless/tick()
+	if(owner.ckey != null)
+		qdel(src)
+		return
+	var/brainLossAmount = rand(0,10)
+	owner.adjustBrainLoss(brainLossAmount)
