@@ -275,7 +275,7 @@ SUBSYSTEM_DEF(persistence)
 	var/ANTAG_REP_MAXIMUM = CONFIG_GET(number/antag_rep_maximum)
 	
 	for(var/p_ckey in antag_rep_change)
-		var/start = antag_rep[p_ckey]
+//		var/start = antag_rep[p_ckey]
 		antag_rep[p_ckey] = max(0, min(antag_rep[p_ckey]+antag_rep_change[p_ckey], ANTAG_REP_MAXIMUM))
 
 //		WARNING("AR_DEBUG: [p_ckey]: Committed [antag_rep_change[p_ckey]] reputation, going from [start] to [antag_rep[p_ckey]]")
