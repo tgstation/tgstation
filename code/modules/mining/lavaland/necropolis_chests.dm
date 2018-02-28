@@ -33,7 +33,7 @@
 			else
 				new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
 		if(9)
-			new /obj/item/organ/brain/alien(src)
+			new /obj/item/soul_projector(src)
 		if(10)
 			new /obj/item/organ/heart/cursed/wizard(src)
 		if(11)
@@ -533,6 +533,20 @@
 	name = "jacob's ladder"
 	desc = "An indestructible celestial ladder that violates the laws of physics."
 
+//Soul Projector
+/obj/item/soul_projector
+	name = "Soul Projector"
+	desc = "What appears to be the dormant mind of some incomprehensible and ethereal entity, this mysterious artifact is capable of projecting one's soul out of their body. Surely though, a mind without a soul is subject to decay..."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state ="soul_projector"
+
+/obj/item/soul_projector/attack_self(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/itemUser = user
+		itemUser.ghostize(1)
+		itemUser.apply_status_effect(STATUS_EFFECT_SOULLESS)
+	else
+		to_chat(user, "<span class='warning'>Your mind is to simple to understand the complex workings of this device.</span>")
 ///Bosses
 
 //Miniboss Miner
@@ -1240,3 +1254,4 @@
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
 		B.damage = 15 //keeps monster damage boost due to lower damage
+
