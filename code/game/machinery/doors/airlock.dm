@@ -210,7 +210,7 @@
 			if(command_value == "on" && !density)
 				return
 
-			else if(command_value == "off" && density)
+			if(command_value == "off" && density)
 				return
 
 			if(density)
@@ -222,7 +222,7 @@
 			if(command_value == "on" && locked)
 				return
 
-			else if(command_value == "off" && !locked)
+			if(command_value == "off" && !locked)
 				return
 
 			if(locked)
@@ -234,13 +234,10 @@
 			if(command_value == "on" && emergency)
 				return
 
-			else if(command_value == "off" && !emergency)
+			if(command_value == "off" && !emergency)
 				return
 
-			if(emergency)
-				emergency = FALSE
-			else
-				emergency = TRUE
+			emergency = !emergency
 			update_icon()
 
 /obj/machinery/door/airlock/lock()
