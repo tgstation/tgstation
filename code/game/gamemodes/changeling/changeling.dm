@@ -14,7 +14,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 15
 	required_enemies = 1
-	recommended_enemies = 4
+	recommended_enemies = 2
 	reroll_friendly = 1
 
 	announce_span = "green"
@@ -22,7 +22,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	<span class='green'>Changelings</span>: Accomplish the objectives assigned to you.\n\
 	<span class='notice'>Crew</span>: Root out and eliminate the changeling menace."
 
-	var/const/changeling_amount = 4 //hard limit on changelings if scaling is turned off
+	var/const/changeling_amount = 2 //hard limit on changelings if scaling is turned off
 	var/list/changelings = list()
 
 /datum/game_mode/changeling/pre_setup()
