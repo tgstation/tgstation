@@ -39720,7 +39720,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/landmark/maintblock{
-	id = 5
+	id = "engimaint"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -48103,7 +48103,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/landmark/maintblock{
-	id = 5
+	id = "engimaint"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -54116,7 +54116,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/maintblock{
-	id = 3
+	id = "servmaint"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -54948,7 +54948,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/landmark/maintblock{
-	id = 4
+	id = "medmaint"
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -55107,7 +55107,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/maintblock{
-	id = 2
+	id = "secmaint"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
@@ -55390,7 +55390,7 @@
 /area/hallway/secondary/service)
 "maq" = (
 /obj/effect/landmark/maintblock{
-	id = 3
+	id = "servmaint"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -55425,7 +55425,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/maintblock,
+/obj/effect/landmark/maintblock{
+	id = "arrivalmaint"
+	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "mzL" = (
@@ -55873,7 +55875,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/maintblock{
-	id = 4
+	id = "medmaint"
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -56807,7 +56809,7 @@
 /area/maintenance/starboard/fore)
 "vJS" = (
 /obj/effect/landmark/maintblock{
-	id = 2
+	id = "secmaint"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
@@ -56896,7 +56898,9 @@
 /area/hallway/secondary/service)
 "wrW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/maintblock,
+/obj/effect/landmark/maintblock{
+	id = "arrivalmaint"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "wvs" = (

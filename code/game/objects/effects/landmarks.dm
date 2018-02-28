@@ -427,7 +427,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x"
 	var/static/list/spawned = list()
-	var/id = 1
+	var/id = "1"
 
 /obj/effect/landmark/maintblock/Initialize()
 	. = ..()
