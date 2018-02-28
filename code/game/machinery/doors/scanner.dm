@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/greytopia.dmi'
 	icon_state = "right"
 	anchored = TRUE
-	dir = 1
+	dir = NORTH
 
 /obj/machinery/scannerleft
 	name = "mysterious scanner"
@@ -12,7 +12,7 @@
 	icon = 'icons/obj/machines/greytopia.dmi'
 	icon_state = "left"
 	anchored = TRUE
-	dir = 1
+	dir = NORTH
 
 /obj/machinery/doorscanner
 	name = "mysterious scanner"
@@ -22,22 +22,20 @@
 	anchored = TRUE
 	var/obj/machinery/door/airlock/vault/scanner/gate
 	var/working = FALSE
-	dir = 1
+	dir = NORTH
 
 /obj/machinery/doorscanner/Initialize()
 	. = ..()
-	for(var/obj/machinery/door/airlock/vault/scanner/check in range(3, loc))
-		gate = check
-		break
+	gate = locate(/obj/machinery/door/airlock/vault/scanner) in range(2, loc)
 	if(!gate)
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/machinery/doorscanner/Crossed(atom/movable/AM)
 	if(!gate)
 		return
 	if(ishuman(AM) && !working)
 		var/mob/living/carbon/human/H = AM
-		if(gate.approved.Find(H))
+		if(H in gate.approved)
 			playsound(src, 'sound/machines/synth_yes.ogg', 50, 0)
 			return
 		working = TRUE
@@ -57,7 +55,7 @@
 
 /obj/machinery/door/airlock/vault/scanner
 	name = "inner gate of greytopia"
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 100)
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	heat_proof = TRUE
 	air_tight = TRUE
@@ -75,6 +73,7 @@
 /obj/machinery/door/airlock/vault/scanner/try_to_activate_door(mob/living/user)
 	if(approved.Find(user))
 		open()
+		return
 	else
 		do_animate("deny")
 		var/atom/throwtarget

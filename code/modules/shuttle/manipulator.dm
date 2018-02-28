@@ -320,4 +320,5 @@
 		hologram_ship.pixel_y = 27
 		add_overlay(hologram_projection)
 		add_overlay(hologram_ship)
-	icon_state = "holograph_off"
+	else
+		icon_state = "holograph_off"

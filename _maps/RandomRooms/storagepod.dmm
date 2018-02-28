@@ -280,6 +280,14 @@
 	},
 /turf/open/floor/plating,
 /area/greytopia)
+"X" = (
+/obj/machinery/power/apc{
+	cell_type = /obj/item/stock_parts/cell/high/slime;
+	name = "storage area power controller";
+	pixel_y = -24
+	},
+/turf/open/floor/plating,
+/area/greytopia)
 
 (1,1,1) = {"
 a
@@ -388,7 +396,7 @@ s
 v
 h
 z
-h
+X
 b
 b
 a

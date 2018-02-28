@@ -282,8 +282,7 @@ SUBSYSTEM_DEF(persistence)
 		var/json_file = file("data/npc_saves/frames.json")
 		var/list/file_data = list()
 		file_data["data"] = saved_frames
-		fdel(json_file)
-		WRITE_FILE(json_file, json_encode(file_data))
+		text2file(json_encode(file_data), json_file)
 
 /datum/controller/subsystem/persistence/proc/SaveTrophy(obj/structure/displaycase/trophy/T)
 	if(!T.added_roundstart && T.showpiece)

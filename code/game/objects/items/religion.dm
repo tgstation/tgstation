@@ -30,7 +30,7 @@
 	"<span class='notice'>You raise [src] skywards, inspiring your allies!</span>")
 	playsound(src, "rustle", 100, FALSE)
 	if(warcry)
-		user.say("[warcry]")
+		user.say(warcry)
 	var/old_transform = user.transform
 	user.transform *= 1.2
 	animate(user, transform = old_transform, time = 10)
@@ -90,7 +90,7 @@
 	if(prob(5))
 		H.say("CAPS A CONDOM!!")
 	else
-		H.say("[warcry]")
+		H.say(warcry)
 
 /datum/crafting_recipe/greytide_banner
 	name = "Greytide Banner"

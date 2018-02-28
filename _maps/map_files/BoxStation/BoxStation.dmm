@@ -39719,7 +39719,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/start/maintblock/five,
+/obj/effect/landmark/maintblock{
+	id = 5
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bUx" = (
@@ -48100,7 +48102,9 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/maintblock/five,
+/obj/effect/landmark/maintblock{
+	id = 5
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cqz" = (
@@ -54111,7 +54115,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/start/maintblock/two,
+/obj/effect/landmark/maintblock{
+	id = 3
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "dUY" = (
@@ -54941,7 +54947,9 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/maintblock/three,
+/obj/effect/landmark/maintblock{
+	id = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "jyR" = (
@@ -55098,7 +55106,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/landmark/start/maintblock/one,
+/obj/effect/landmark/maintblock{
+	id = 2
+	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "kbp" = (
@@ -55379,7 +55389,9 @@
 /turf/open/floor/plasteel/hydrofloor,
 /area/hallway/secondary/service)
 "maq" = (
-/obj/effect/landmark/start/maintblock/two,
+/obj/effect/landmark/maintblock{
+	id = 3
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "maE" = (
@@ -55413,7 +55425,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/start/maintblock/four,
+/obj/effect/landmark/maintblock,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "mzL" = (
@@ -55860,7 +55872,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/landmark/start/maintblock/three,
+/obj/effect/landmark/maintblock{
+	id = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "pvl" = (
@@ -56792,7 +56806,9 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "vJS" = (
-/obj/effect/landmark/start/maintblock/one,
+/obj/effect/landmark/maintblock{
+	id = 2
+	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "vKN" = (
@@ -56880,7 +56896,7 @@
 /area/hallway/secondary/service)
 "wrW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/start/maintblock/four,
+/obj/effect/landmark/maintblock,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "wvs" = (

@@ -422,67 +422,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	ruin_template = null
 	. = ..()
 
-/obj/effect/landmark/start/maintblock // Should be mapped in sets by child-number, where placement of a blockage won't completely impede use of that maint segment
+/obj/effect/landmark/maintblock // Should be mapped in sets by child-number, where placement of a blockage won't completely impede use of that maint segment
 	name = "potential maint blockage"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x"
+	var/static/list/spawned = list()
+	var/id = 1
 
-/obj/effect/landmark/start/maintblock/one
-	var/static/spawned
-
-/obj/effect/landmark/start/maintblock/one/Initialize(mapload)
+/obj/effect/landmark/maintblock/Initialize(mapload)
 	. = ..()
 	if(prob(10))
 		new /obj/structure/destructible/steam_vent/active(get_turf(src))
-	else if(!spawned && prob(30))
-		spawned = TRUE
+	else if(!spawned[id] && prob(30))
+		spawned[id] = TRUE
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(/turf/closed/wall, null, CHANGETURF_IGNORE_AIR)
-
-/obj/effect/landmark/start/maintblock/two
-	var/static/spawned
-
-/obj/effect/landmark/start/maintblock/two/Initialize(mapload)
-	. = ..()
-	if(prob(10))
-		new /obj/structure/destructible/steam_vent/active(get_turf(src))
-	else if(!spawned && prob(30))
-		spawned = TRUE
-		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/closed/wall, null, CHANGETURF_IGNORE_AIR)
-
-/obj/effect/landmark/start/maintblock/three
-	var/static/spawned
-
-/obj/effect/landmark/start/maintblock/three/Initialize(mapload)
-	. = ..()
-	if(prob(10))
-		new /obj/structure/destructible/steam_vent/active(get_turf(src))
-	else if(!spawned && prob(30))
-		spawned = TRUE
-		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/closed/wall, null, CHANGETURF_IGNORE_AIR)
-
-/obj/effect/landmark/start/maintblock/four
-	var/static/spawned
-
-/obj/effect/landmark/start/maintblock/four/Initialize(mapload)
-	. = ..()
-	if(prob(10))
-		new /obj/structure/destructible/steam_vent/active(get_turf(src))
-	else if(!spawned && prob(30))
-		spawned = TRUE
-		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/closed/wall, null, CHANGETURF_IGNORE_AIR)
-
-/obj/effect/landmark/start/maintblock/five
-	var/static/spawned
-
-/obj/effect/landmark/start/maintblock/five/Initialize(mapload)
-	. = ..()
-	if(prob(10))
-		new /obj/structure/destructible/steam_vent/active(get_turf(src))
-	else if(!spawned && prob(30))
-		spawned = TRUE
-		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/closed/wall, null, CHANGETURF_IGNORE_AIR)
+	return INITIALIZE_HINT_QDEL

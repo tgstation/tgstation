@@ -19,20 +19,19 @@
 		spawned = TRUE
 		template = SSmapping.random_room_templates["pod_supplies"]
 		if(!template)
-			throw EXCEPTION("Random pod template not found!")
-			qdel(src)
-			return
+			. = INITIALIZE_HINT_QDEL
+			CRASH("Supply pod template not found!")
 		addtimer(CALLBACK(src, /obj/effect/spawner/room.proc/LateSpawn), 600)
 	else
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 
 /obj/effect/spawner/room/fivebyfour
 	name = "random 5x4 maint room spawner"
-	dir = 1
+	dir = NORTH
 
 /obj/effect/spawner/room/fivebyfour/Initialize()
-	. = ..()
+	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/spawner/room/fivebyfour/LateInitialize()
@@ -43,10 +42,10 @@
 			if(!template.spawned)
 				template.spawned = TRUE
 				if(prob(50) && template.flippable)//50% chance of room loading flipped
-					if(dir == 1)
-						dir = 2
-					else if(dir == 4)
-						dir = 8
+					if(dir == NORTH)
+						dir = SOUTH
+					else if(dir == EAST)
+						dir = WEST
 				addtimer(CALLBACK(src, /obj/effect/spawner/room.proc/LateSpawn), 600)
 				break
 		template = null

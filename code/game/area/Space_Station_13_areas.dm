@@ -112,7 +112,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Greytopia"
 	ambientsounds = MAINTENANCE
 	icon_state = "away"
-	requires_power = FALSE
+	valid_territory = FALSE
 	has_gravity = TRUE
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 

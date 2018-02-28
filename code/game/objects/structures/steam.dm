@@ -81,8 +81,5 @@
 	update_icon()
 
 /obj/machinery/steam_switch/update_icon()
-	if(activated)
-		icon_state = "switch-rev"
-	else
-		icon_state = "switch-off"
+	icon_state = activated ? "switch-rev" : "switch-off"
 	. = ..()
