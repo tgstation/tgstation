@@ -597,3 +597,10 @@
 	results = list("squirt_cider" = 1)
 	required_reagents = list("water" = 1, "tomatojuice" = 1, "nutriment" = 1)
 	mix_message = "The mix swirls and turns a bright red that reminds you of an apple's skin."
+
+datum/chemical_reaction/stabsinthe
+	name = "Stabsinthe"
+	id = "stabsinthe"
+	results = list("stabsinthe" = 5)
+	required_reagents = list("absinthe" = 5, "acidspit" = 1)
+	mix_message = "The absinthe darkens, and needles float up to the surface"

@@ -112,6 +112,10 @@
 	return 0
 
 /mob/living/carbon/human/proc/check_block()
+	if(reagents)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			R.on_mob_attacked(src)
+
 	if(mind)
 		if(mind.martial_art && prob(mind.martial_art.block_chance) && in_throw_mode && !stat && !IsKnockdown() && !IsStun())
 			return TRUE
