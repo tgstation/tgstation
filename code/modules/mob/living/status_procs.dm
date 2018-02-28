@@ -174,6 +174,8 @@
 	. = FALSE
 
 	if(LAZYLEN(sources))
+		if(!islist(sources))
+			sources = list(sources)
 		for(var/S in sources)
 			if(S in status_traits[trait])
 				return TRUE
