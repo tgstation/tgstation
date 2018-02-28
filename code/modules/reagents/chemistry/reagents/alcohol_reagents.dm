@@ -1465,3 +1465,4 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.a_intent_change(INTENT_HARM)
 		M.click_random_mob()
 		M.visible_message("<span class='warning'>[M] furiously retaliates!","<span class='warning'>You furiously retaliate!")
+		retaliated = TRUE
