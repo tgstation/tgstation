@@ -56,19 +56,19 @@
 	return (OXYLOSS)
 
 /obj/item/dice/d1
-	name = "d1"
-	desc = "A die with one side. Deterministic!"
+	name = "d1 die"
+	desc = "A spherical die with only one side. Deterministic!"
 	icon_state = "d1"
 	sides = 1
 
 /obj/item/dice/d2
-	name = "d2"
+	name = "d2 die"
 	desc = "A die with two sides. Coins are undignified!"
 	icon_state = "d2"
 	sides = 2
 
 /obj/item/dice/d4
-	name = "d4"
+	name = "d4 die"
 	desc = "A die with four sides. The nerd's caltrop."
 	icon_state = "d4"
 	sides = 4
@@ -78,7 +78,7 @@
 	AddComponent(/datum/component/caltrop, 4)
 
 /obj/item/dice/d6
-	name = "d6"
+	name = "d6 die"
 
 /obj/item/dice/d6/space
 	name = "space cube"
@@ -98,47 +98,47 @@
 	special_faces = list("minus","blank","plus")
 
 /obj/item/dice/d8
-	name = "d8"
+	name = "d8 die"
 	desc = "A die with eight sides. It feels... lucky."
 	icon_state = "d8"
 	sides = 8
 
 /obj/item/dice/d10
-	name = "d10"
+	name = "d10 die"
 	desc = "A die with ten sides. Useful for percentages."
 	icon_state = "d10"
 	sides = 10
 
 /obj/item/dice/d00
-	name = "d00"
+	name = "d00 die"
 	desc = "A die with ten sides. Works better for d100 rolls than a golfball."
 	icon_state = "d00"
 	sides = 10
 
 /obj/item/dice/d12
-	name = "d12"
+	name = "d12 die"
 	desc = "A die with twelve sides. There's an air of neglect about it."
 	icon_state = "d12"
 	sides = 12
 
 /obj/item/dice/d20
-	name = "d20"
+	name = "d20 die"
 	desc = "A die with twenty sides. The prefered die to throw at the GM."
 	icon_state = "d20"
 	sides = 20
 
 /obj/item/dice/d100
-	name = "d100"
+	name = "d100 die"
 	desc = "A die with one hundred sides! Probably not fairly weighted..."
 	icon_state = "d100"
-	w_class = WEIGHT_CLASS_SMALL	
+	w_class = WEIGHT_CLASS_SMALL
 	sides = 100
 
 /obj/item/dice/d100/update_icon()
 	return
 
 /obj/item/dice/eightbd20
-	name = "strange d20"
+	name = "strange d20 die"
 	desc = "A weird die with raised text printed on the faces. Everything's white on white so reading it is a struggle. What poor design!"
 	icon_state = "8bd20"
 	sides = 20
@@ -148,7 +148,7 @@
 	return
 
 /obj/item/dice/fourdd6
-	name = "4d d6"
+	name = "4D die"
 	desc = "A die that exists in four dimensional space. Properly interpreting them can only be properly done with the help of a mathematician, a physicist, and a priest."
 	icon_state = "4dd6"
 	sides = 48
@@ -189,7 +189,7 @@
 
 /obj/item/dice/update_icon()
 	cut_overlays()
-	add_overlay("[src.icon_state][src.result]")
+	add_overlay("[src.icon_state]-[src.result]")
 
 /obj/item/dice/microwave_act(obj/machinery/microwave/M)
 	if(can_be_rigged)
