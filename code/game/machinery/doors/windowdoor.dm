@@ -327,7 +327,6 @@
 	rods = 0
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/made_glow = FALSE
-	var/all_access = FALSE
 
 /obj/machinery/door/window/clockwork/Initialize(mapload, set_dir)
 	. = ..()
@@ -366,12 +365,12 @@
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /obj/machinery/door/window/clockwork/allowed(mob/M)
-	if(is_servant_of_ratvar(M) || all_access)
+	if(is_servant_of_ratvar(M))
 		return 1
 	return 0
 
-/obj/machinery/door/window/clockwork/general
-	all_access = TRUE
+/obj/machinery/door/window/clockwork/general/allowed(mob/M)
+	return TRUE
 
 /obj/machinery/door/window/northleft
 	dir = NORTH
