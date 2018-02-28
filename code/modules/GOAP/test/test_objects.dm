@@ -32,7 +32,6 @@
 	set category = "GOAP TESTS"
 	new /obj/fire(get_turf(src))
 
-
 /mob/verb/make_firemaker()
 	set category = "GOAP TESTS"
-	new /mob/living/carbon/firemaker(get_turf(src))
+	new /mob/firemaker(get_turf(src))

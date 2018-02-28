@@ -1,15 +1,5 @@
-GLOBAL_LIST_INIT(goap_smashable_objs, typecacheof(list(
-	/obj/machinery,
-	/obj/structure/window,
-	/obj/structure/closet,
-	/obj/structure/table,
-	/obj/structure/grille,
-	/obj/structure/girder,
-	/obj/structure/rack,
-	/obj/structure/barricade)))
-
 GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
-	/turf/open/floor/plating/lava,
+	/turf/open/lava,
 	/turf/open/chasm)))
 
 
@@ -18,11 +8,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 #define STATE_ACTING	2
 
 #define GOAP_DEBUG_ENABLE 0
-
-#if GOAP_DEBUG_ENABLE
-	#define goap_debug(X) world.log << "GOAP: [X]"
-#else
-	#define goap_debug(X) ;
+#define goap_debug(X) ;
 
 /datum/goap_agent
 	var/brain_state = STATE_IDLE
@@ -41,8 +27,8 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 	var/turf/dest
 	var/turf/last_node
 	var/tries = 0
-	var/obj/item/weapon/card/id/given_pathfind_access
-	var/movement_type = 1 // 1 = normal A*(expensive but near perfect), 2 = Fake A*(rarely works), 3 = Dumb Movement(cheapest), 4 = A* for Lavaland Mobs(use if Enviro-Smash + advanced pathfinding is needed)
+	var/obj/item/card/id/given_pathfind_access
+	var/movement_type = 1 // 1 = normal A*(expensive but near perfect), 2 = Fake A*(rarely works), 3 = Dumb Movement(cheapest)
 	var/turf/current_loc
 	var/is_megafauna = FALSE
 	var/actions_halted = FALSE
@@ -84,10 +70,10 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 		QDEL_NULL(src)
 		. = FALSE
 		return
-	for(var/I in GLOB.living_mob_list)
+	for(var/I in GLOB.mob_list)
 		var/mob/M = I
 		if(M != null)
-			if(M.z == agent.z && M.client && get_dist(M, agent) <= 14)
+			if(M.z == agent.z && M.client && istype(M, /mob/living) && get_dist(M, agent) <= 14)
 				. = TRUE
 				return
 	. = FALSE
@@ -97,7 +83,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 		return FALSE
 	if(actions_halted)
 		return FALSE
-	goap_debug("GOAP Processing: [agent]")
+	goap_debug("GOAP Processing: [agent] State: [brain_state]")
 	switch(brain_state)
 		if(STATE_IDLE)
 			idle_state()
@@ -134,6 +120,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 							path = list()
 							already_acting = FALSE
 							return
+						path = list()
 						already_acting = FALSE
 
 			else
@@ -153,9 +140,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 			if(I.density)
 				dense_garbage = 1
 				break
-		var/proc_to_use = /turf/proc/reachableAdjacentTurfs
-		if(movement_type == 4)
-			proc_to_use = /turf/proc/reachableSmashAdjacentTurfs
+		var/proc_to_use = /turf/proc/reachableTurftest
 		switch(movement_type)
 			if(1, 4) // AStar, Full
 				if(!path || !path.len)
