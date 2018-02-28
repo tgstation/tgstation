@@ -930,21 +930,94 @@
 		playsound(holder, 'sound/items/bikehorn.ogg', 50, 1)
 		user.visible_message("HONK!")
 
+/datum/construction/unordered/mecha_chassis/reticence
+	result = /datum/construction/mecha/reticence
+	steps = list(
+		/obj/item/mecha_parts/part/reticence_torso,
+		/obj/item/mecha_parts/part/reticence_left_arm,
+		/obj/item/mecha_parts/part/reticence_right_arm,
+		/obj/item/mecha_parts/part/reticence_left_leg,
+		/obj/item/mecha_parts/part/reticence_right_leg,
+		/obj/item/mecha_parts/part/reticence_head
+	)
+
+
+/datum/construction/mecha/reticence
+	result = /obj/mecha/combat/reticence
+	steps = list(
+		//1
+		list(
+			"key" = /obj/item/circuitboard/mecha/reticence/main,
+			"action" = ITEM_DELETE
+		),
+
+		//2
+		list(
+			"key" = /obj/item/circuitboard/mecha/reticence/peripherals,
+			"action" = ITEM_DELETE
+		),
+
+		//3
+		list(
+			"key" = /obj/item/circuitboard/mecha/reticence/targeting,
+			"action" = ITEM_DELETE
+		),
+
+		//4
+		list(
+			"key" = /obj/item/stock_parts/cell,
+			"action" = ITEM_MOVE_INSIDE
+		),
+
+		//5
+		list(
+			"key" = /obj/item/clothing/suit/suspenders,
+			"action" = ITEM_DELETE
+		),
+
+		//6
+		list(
+			"key" = /obj/item/clothing/mask/gas/mime,
+			"action" = ITEM_DELETE
+		),
+
+		//7
+		list(
+			"key" = /obj/item/clothing/head/beret,
+			"action" = ITEM_DELETE
+		),
+	)
+
+// Reticence doesn't have any construction step icons, so we just set an icon once.
+/datum/construction/mecha/reticence/update_holder(step_index)
+	..()
+	holder.icon = 'icons/mecha/mecha.dmi'
+	holder.icon_state = "reticence" //oh like anyone is going to be able to tell. Blame paradise for not having the sprites.
+	holder.color = "#87878715"
+
+/datum/construction/mecha/firefighter/custom_action(obj/item/I, mob/living/user, diff)
+	if(!..())
+		return FALSE
+
 	//TODO: better messages.
 	switch(index)
-		if(2)
+		if(1)
 			user.visible_message("[user] installs the central control module into [holder].", "<span class='notice'>You install the central control module into [holder].</span>")
-		if(4)
+		if(2)
 			user.visible_message("[user] installs the peripherals control module into [holder].", "<span class='notice'>You install the peripherals control module into [holder].</span>")
-		if(6)
+		if(3)
 			user.visible_message("[user] installs the weapon control module into [holder].", "<span class='notice'>You install the weapon control module into [holder].</span>")
-		if(8)
+		if(4)
 			user.visible_message("[user] installs the power cell into [holder].", "<span class='notice'>You install the power cell into [holder].</span>")
-		if(10)
-			user.visible_message("[user] puts clown wig and mask on [holder].", "<span class='notice'>You put clown wig and mask on [holder].</span>")
-		if(12)
-			user.visible_message("[user] puts clown boots on [holder].", "<span class='notice'>You put clown boots on [holder].</span>")
+		if(5)
+			user.visible_message("[user] puts suspenders on [holder].", "<span class='notice'>You put suspenders on [holder].</span>")
+		if(6)
+			user.visible_message("[user] puts mime mask on [holder].", "<span class='notice'>You put mime mask on [holder].</span>")
+		if(7)
+			user.visible_message("[user] puts the beret on [holder].", "<span class='notice'>You put the beret on [holder].</span>")
 	return TRUE
+
+
 
 /datum/construction/unordered/mecha_chassis/durand
 	result = /datum/construction/mecha/durand

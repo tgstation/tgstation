@@ -19,7 +19,7 @@
 	var/item_recycle_sound = 'sound/items/welder.ogg'
 
 /obj/machinery/recycler/Initialize()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
+	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TRANQUILLITE, MAT_TITANIUM))
 	. = ..()
 	update_icon()
 

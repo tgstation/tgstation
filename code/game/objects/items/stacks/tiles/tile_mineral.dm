@@ -52,6 +52,15 @@
 	mineralType = "bananium"
 	materials = list(MAT_BANANIUM=500)
 
+/obj/item/stack/tile/mineral/tranquillite
+	name = "tranquillite tile"
+	singular_name = "tranquillite floor tile"
+	desc = "A tile made out of tranquillite. Quiet."
+	icon_state = "tile_tranquillite"
+	turf_type = /turf/open/floor/mineral/tranquillite
+	mineralType = "tranquillite"
+	materials = list(MAT_TRANQUILLITE=500)
+
 /obj/item/stack/tile/mineral/abductor
 	name = "alien floor tile"
 	singular_name = "alien floor tile"

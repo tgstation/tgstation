@@ -151,6 +151,12 @@
 	message = "- HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONK HONKHONKHONKHONK"
 	export_types = list(/obj/mecha/combat/honker)
 
+/datum/export/large/mech/sellable/retiencemech
+	cost = 80000 // The tranquillite alone is worth around 64887 credits
+	unit_name = "Reticence"
+	message = "......................................................................................................................!"
+	export_types = list(/obj/mecha/combat/reticence)
+
 /datum/export/large/mech/sellable/durand
 	cost = 12000 // 7586 worth of material. That's less than a gygax. Players will be disappointed by the durand's comparative lack of worth but oh well. Still a large premium because this requires significant cooperation between R&D, robotics, and cargo.
 	unit_name = "durand"

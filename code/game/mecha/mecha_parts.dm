@@ -222,6 +222,35 @@
 	desc = "A H.O.N.K right leg. The foot appears just large enough to fully accommodate a clown shoe."
 	icon_state = "honker_r_leg"
 
+////////// Reticence
+
+/obj/item/mecha_parts/chassis/reticence
+	name = "\improper Reticence chassis"
+	construct_type = /datum/construction/unordered/mecha_chassis/reticence
+
+/obj/item/mecha_parts/part/reticence_torso
+	name = "\improper Reticence torso"
+	icon_state = "reticence_harness"
+
+/obj/item/mecha_parts/part/reticence_head
+	name = "\improper Reticence head"
+	icon_state = "reticence_head"
+
+/obj/item/mecha_parts/part/reticence_left_arm
+	name = "\improper Reticence left arm"
+	icon_state = "reticence_l_arm"
+
+/obj/item/mecha_parts/part/reticence_right_arm
+	name = "\improper Reticence right arm"
+	icon_state = "reticence_r_arm"
+
+/obj/item/mecha_parts/part/reticence_left_leg
+	name = "\improper Reticence left leg"
+	icon_state = "reticence_l_leg"
+
+/obj/item/mecha_parts/part/reticence_right_leg
+	name = "\improper Reticence right leg"
+	icon_state = "reticence_r_leg"
 
 ////////// Phazon
 
@@ -324,6 +353,18 @@
 
 /obj/item/circuitboard/mecha/honker/main
 	name = "H.O.N.K Central Control module (Exosuit Board)"
+	icon_state = "mainboard"
+
+/obj/item/circuitboard/mecha/reticence/peripherals
+	name = "Reticence Peripherals Control module (Exosuit Board)"
+	icon_state = "mcontroller"
+
+/obj/item/circuitboard/mecha/reticence/targeting
+	name = "Reticence Weapon Control and Targeting module (Exosuit Board)"
+	icon_state = "mcontroller"
+
+/obj/item/circuitboard/mecha/reticence/main
+	name = "Reticence Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
 /obj/item/circuitboard/mecha/odysseus/peripherals

@@ -42,6 +42,17 @@
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	canSmoothWith = list(/turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium)
 
+/turf/closed/wall/mineral/tranquillite
+	name = "tranquillite wall"
+	desc = "A wall with tranquillite plating. Nearly invisible."
+	icon = 'icons/effects/water.dmi'
+	icon_state = "wet_floor_static"
+	sheet_type = /obj/item/stack/sheet/mineral/tranquillite
+	canSmoothWith = list(/turf/closed/wall/mineral/tranquillite, /obj/structure/falsewall/tranquillite)
+	layer = TURF_LAYER
+	opacity = 0 //actually invisible
+
+
 /turf/closed/wall/mineral/sandstone
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating. Rough."
@@ -250,7 +261,7 @@
 /turf/closed/wall/mineral/plastitanium/overspace
 	icon_state = "map-overspace"
 	fixed_underlay = list("space"=1)
-	
+
 /turf/closed/wall/mineral/plastitanium/explosive/ex_act(severity)
 	var/datum/explosion/acted_explosion = null
 	for(var/datum/explosion/E in GLOB.explosions)

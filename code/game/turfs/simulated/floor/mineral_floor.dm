@@ -4,6 +4,7 @@
  * Gold floor
  * Silver floor
  * Bananium floor
+ * Tranquillite floor
  * Diamond floor
  * Uranium floor
  * Shuttle floor (Titanium)
@@ -162,6 +163,14 @@
 
 /turf/open/floor/mineral/bananium/airless
 	initial_gas_mix = "TEMP=2.7"
+
+//TRANQUILLITE
+
+/turf/open/floor/mineral/tranquillite
+	name = "tranquillite floor"
+	icon_state = "tranquillite"
+	floor_tile = /obj/item/stack/tile/mineral/tranquillite
+	icons = list("tranquillite","tranquillite_dam")
 
 //DIAMOND
 

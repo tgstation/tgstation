@@ -233,6 +233,15 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_bananium
 	doorOpen = 'sound/items/bikehorn.ogg'
 
+/obj/machinery/door/airlock/tranquillite
+	name = "tranquillite airlock"
+	icon = 'icons/obj/doors/airlocks/station/freezer.dmi'
+	doorOpen = null // it's silent!
+	doorClose = null
+	doorDeni = null
+	boltUp = null
+	boltDown = null
+
 /obj/machinery/door/airlock/bananium/glass
 	opacity = 0
 	glass = TRUE
