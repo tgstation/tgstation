@@ -62,10 +62,12 @@
 		if(adding_chems) //With LAZYACCESS, adding_chems can be null, so |= will add nulls, and we don't want nulls.
 			available_chems |= adding_chems
 	var/new_stores_len = LAZYACCESS(possible_chem_stores, E)
-	var/obj/item/reagent_containers/list/new_stores_list = list()
-	for(var/i in 1 to new_stores_len)
-		var/obj/item/reagent_containers/C = LAZYACCESS(chem_stores, i)
-		new_stores_list[i] = C
+	var/list/obj/item/reagent_containers/new_stores_list = list()
+	if(new_stores_len)
+		new_stores_list.len = new_stores_len
+		for(var/i in 1 to new_stores_len)
+			var/obj/item/reagent_containers/C = LAZYACCESS(chem_stores, i)
+			new_stores_list[i] = C
 	drop_stores(new_stores_len)
 	chem_stores = new_stores_list
 	reset_chem_buttons()
@@ -95,28 +97,35 @@
 		L.SetStasis(FALSE)
 	..()
 
-/obj/machinery/sleeper/drop_stores(from_index = 1)
+/obj/machinery/sleeper/proc/drop_stores(from_index = 1)
 	var/stores_len = LAZYLEN(chem_stores)
 	if(from_index <= stores_len)
 		for(var/i in from_index to stores_len)
 			eject_store(i)
 	UNSETEMPTY(chem_stores)
 
-/obj/machinery/sleeper/add_store(obj/item/reagent_containers/C, store_index, mob/user)
-	store_index = store_index || selected_store
-	var/chem_stores_len = LAZYLEN(chem_stores)
-	if(!store_index && && chem_stores_len && istype(C, /obj/item/reagent_containers))
-		to_chat(user, "<span class='warning'>There doesn't seem to be any where to put this, select a store first!</span>")
+/obj/machinery/sleeper/proc/try_add_container(obj/item/I, mob/user)
+	if(istype(I, /obj/item/reagent_containers))
+		var/chem_stores_len = LAZYLEN(chem_stores)
+		if(!chem_stores_len)
+			to_chat(user, "<span class='warning'>[src] doesn't have any chemical storage slots.</span>")
+		else if(!selected_store || chem_stores_len > selected_store)
+			to_chat(user, "<span class='warning'>There doesn't seem to be any where to put this, select a slot first!</span>")
+		else if(chem_stores[selected_store])
+			to_chat(user, "<span class='warning'>There's already a container in this slot, eject it first or select another one!</span>")
+		else
+			user.dropItemToGround(I)
+			add_store(I)
 		return TRUE
-	if(chem_stores_len >= store_index && istype(C, /obj/item/reagent_containers))
+
+/obj/machinery/sleeper/proc/add_store(obj/item/reagent_containers/C, store_index)
+	store_index = store_index || selected_store
+	if(store_index && LAZYLEN(chem_stores) >= store_index)
 		if(!chem_stores[store_index])
 			chem_stores[store_index] = C
 			C.moveToNullspace()
-		else
-			to_chat(user, "<span class='warning'>There's already a container in this store, eject it first or select another one!</span>")
-		return TRUE
 
-/obj/machinery/sleeper/eject_store(store_index)
+/obj/machinery/sleeper/proc/eject_store(store_index)
 	var/obj/item/reagent_containers/C = LAZYACCESS(chem_stores, store_index)
 	if(C)
 		var/atom/L = drop_location()
@@ -125,7 +134,7 @@
 		chem_stores[store_index] = null //if L is null then the sleeper is probably in nullspace so we still want to null this ref
 
 #define SLEEPER_STORE_INJECT_AMT 10
-/obj/machinery/sleeper/inject_store(store_index)
+/obj/machinery/sleeper/proc/inject_store(store_index)
 	var/obj/item/reagent_containers/C = LAZYACCESS(chem_stores, store_index)
 	var/datum/reagents/R = C.reagents
 	if(C && R && R.total_volume)
@@ -170,7 +179,7 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
-	if(add_store(I, null, user))
+	if(try_add_container(I, user))
 		return
 	return ..()
 
@@ -199,7 +208,8 @@
 	for(var/i in 1 to LAZYLEN(chem_stores))
 		var/obj/item/reagent_containers/C = chem_stores[i]
 		data["chemStores"] += (C && C.reagents) ? C.reagents.total_volume : FALSE
-	data["chemStoreNames"] = list(SANITIZELIST(chem_store_names).Copy())
+	var/list/chem_store_names_data = SANITIZE_LIST(chem_store_names)
+	data["chemStoreNames"] = list(chem_store_names_data.Copy())
 	if(selected_store)
 		data["selectedStore"] = selected_store
 
@@ -233,6 +243,7 @@
 		if(occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
 				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
+	send_to_playing_players(english_list(data))
 	return data
 
 /obj/machinery/sleeper/ui_act(action, params)
@@ -264,7 +275,7 @@
 			if(LAZYLEN(chem_stores) >= store && chem_stores[store])
 				inject_store(store)
 		if("ejectstore")
-			var/store = text2num(params["store"]
+			var/store = text2num(params["store"])
 			if(LAZYLEN(chem_stores) >= store && chem_stores[store])
 				eject_store(store)
 		if("invstore")

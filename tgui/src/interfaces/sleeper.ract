@@ -1,34 +1,41 @@
 <script>
 	import { act } from 'util/byond'
 	component.exports = {
-		oninit() {
+		oninit () {
 			this.on({
-				editName(event, chemIndex) {
+				editName (event) {
+					var chemIndex = event.context.params.chemIndex
 					this.set({
 						editingIndex: chemIndex,
-						editingName: ((data.chemStoreNames.length >= chemIndex && this.get(data.chemStoreNames[chemIndex])) || "Chemical Store #"+(chemIndex+1))
+						editingName: ((data.chemStoreNames.length >= chemIndex && this.get(data.chemStoreNames[chemIndex])) || "Chemical Store #"+(chemIndex+1)),
+						rEmOVeThIs: this.get('rEmOVeThIs') + 1
 					})
 				},
-				submitName(event, chemIndex) {
+				submitName (event) {
 					var newName = this.get('editingName')
 					var sanitizedName = newName.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-					act(this.get('config.ref'), "storename", {"store": chemIndex+1, "name": sanitizedName})
+					act(this.get('config.ref'), "storename", {"store": editingIndex+1, "name": sanitizedName})
+					this.set('editingIndex', null)
 				}
 			})
 		},
-		oncomplete() {
+		oncomplete () {
 			var inputField = document.getElementById('storeNameInput')
 			if (inputField != document.activeElement) {
 				inputField.focus()
-				inputField
+				inputField.select()
 			}
 		},
 		data: {
 			editingIndex: null,
-			editingName: ""
+			editingName: "",
+			rEmOVeThIs: 0
 		}
 	}
 </script>
+{{rEmOVeThIs}}
+{{editingIndex}}
+{{editingName}}
 <ui-display title='Occupant'>
   <ui-section label='Occupant'>
 	 <span>{{data.occupant.name ? data.occupant.name : "No Occupant"}}</span>
@@ -65,18 +72,19 @@
 	<ui-section label='Door'>
     <ui-button icon='{{data.open ? "unlock" : "lock"}}' action='door'>{{data.open ? "Open" : "Closed"}}</ui-button>
 	</ui-section>
-  {{#if data.chems.length}}
+  {{#if data.chems.length || data.chemStores.length}}
   <ui-section label='Inject'>
     {{#each data.chems}}
       <ui-button icon='flask' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}"}'>{{name}}</ui-button><br/>
     {{/each}}
-	{{#each data.chemStores}}
-		{{#if editingIndex == @index}}
-			<input type='text' value='{{editingName}}' id='storeNameInput' on-enter-blur='submitName:{{@index}}'/>
+	{{#each data.chemStores:chemIndex}}
+		{{chemIndex}}
+		{{#if editingIndex == chemIndex}}
+			<input type='text' value='{{editingName}}' id='storeNameInput' on-enter-blur='submitName'/>
 		{{else}}
-			<ui-button icon='flask' state='{{!this && "disabled"}}' action='injectstore' params='{"store": "{{@index+1}}"}'>{{(data.chemStoreNames.length >= @index && data.chemStoreNames[@index]) || "Chemical Store #{{@index+1}}"}}</ui-button>
+			<ui-button icon='flask' state='{{!this && "disabled"}}' action='injectstore' params='{"store": "{{chemIndex+1}}"}'>{{data.chemStoreNames.length >= chemIndex+1 && data.chemStoreNames[chemIndex] ? data.chemStoreNames[chemIndex] : "Chemical Store #{{chemIndex+1}}"}}</ui-button>
 		{{/if}}
-		<ui-button icon='pencil' tooltip='Edit' tooltip-side='right' on-click-enter='editName:{{@index}}'></ui-button><ui-button icon='eject' tooltip='Eject' tooltip-side='right' action='ejectstore' params='{"store": "{{@index+1}}"}'></ui-button><ui-button icon='sign-in' tooltip='Select' tooltip-side='right' state='{{data.selectedStore == (@index+1) && "selected"}}' action='invstore' params='{"store": "{{@index+1}}"}'></ui-button><span class='{{!this && "bad"}}'>	: {{this || "Missing"}}</span>
+		<ui-button icon='pencil' tooltip='Edit' tooltip-side='bottom' raction='editName' params='{"chemIndex": "{{chemIndex}}"}'></ui-button><ui-button icon='eject' tooltip='Eject' tooltip-side='bottom' action='ejectstore' params='{"store": "{{chemIndex+1}}"}'></ui-button><ui-button icon='sign-in' tooltip='Select' tooltip-side='bottom' state='{{data.selectedStore == (chemIndex+1) && "selected"}}' action='invstore' params='{"store": "{{chemIndex+1}}"}'></ui-button><span class='{{!this && "bad"}}'>	{{this || "Missing"}}</span>
 	{{/each}}
   </ui-section>
   {{/if}}
