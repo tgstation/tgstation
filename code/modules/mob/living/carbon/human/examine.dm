@@ -251,15 +251,7 @@
 			if(InCritical())
 				msg += "[t_He] [t_is] barely conscious.\n"
 		if(getorgan(/obj/item/organ/brain))
-			if(istype(src, /mob/living/carbon/human/interactive))
-				var/mob/living/carbon/human/interactive/auto = src
-				if(auto.showexaminetext)
-					msg += "<span class='deadsay'>[t_He] appear[p_s()] to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
-				if(auto.debugexamine)
-					var/dodebug = auto.doing2string(auto.doing)
-					var/interestdebug = auto.interest2string(auto.interest)
-					msg += "<span class='deadsay'>[t_He] [t_is] appears to be [interestdebug] and [dodebug].</span>\n"
-			else if(!key)
+			if(!key)
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)
 				msg += "[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon.\n"

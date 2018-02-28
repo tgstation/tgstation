@@ -64,8 +64,6 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/toggle_antag_hud, 	/*toggle display of the admin antag hud*/
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
-	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
-	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
 	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
@@ -231,9 +229,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/toggle_nuke,
 	/client/proc/cmd_display_del_log,
 	/client/proc/toggle_antag_hud,
-	/client/proc/debug_huds,
-	/client/proc/customiseSNPC,
-	/client/proc/resetSNPC,
+	/client/proc/debug_huds
 	))
 
 /client/proc/add_admin_verbs()
@@ -703,7 +699,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 						while ((!tile || !istype(tile)) && --k > 0)
 
 						if (tile)
-							new/mob/living/carbon/human/interactive(tile)
+							var/mob/living/carbon/human/hooman = new(tile)
+							hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
 							testing("Spawned test mob at [tile.x],[tile.y],[tile.z]")
 			while (!area && --j > 0)
 
