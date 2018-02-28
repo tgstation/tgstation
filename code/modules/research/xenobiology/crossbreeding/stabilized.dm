@@ -10,24 +10,32 @@ Stabilized extracts:
 	name = "stabilized extract"
 	desc = "It seems inert, but anything it touches glows softly..."
 	var/datum/status_effect/linked_effect
+	var/mob/living/owner
 
 /obj/item/slimecross/stabilized/Initialize()
 	..()
 	START_PROCESSING(SSobj,src)
 
 /obj/item/slimecross/stabilized/Destroy()
-	..()
 	STOP_PROCESSING(SSobj,src)
+	return ..()
 
 /obj/item/slimecross/stabilized/process()
+	var/humanfound = null
 	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		var/sanitizedcolour = replacetext(colour, " ", "")
-		var/effectpath = text2path("/datum/status_effect/stabilized/[sanitizedcolour]")
-		if(!H.has_status_effect(effectpath))
-			var/datum/status_effect/stabilized/S = H.apply_status_effect(effectpath)
-			S.linked_extract = src
-			STOP_PROCESSING(SSobj,src)
+		humanfound = loc
+	if(ishuman(loc.loc)) //Check if in backpack.
+		humanfound = (loc.loc)
+	if(!humanfound)
+		return
+	var/mob/living/carbon/human/H = humanfound
+	var/sanitizedcolour = replacetext(colour, " ", "")
+	var/effectpath = text2path("/datum/status_effect/stabilized/[sanitizedcolour]")
+	if(!H.has_status_effect(effectpath))
+		var/datum/status_effect/stabilized/S = H.apply_status_effect(effectpath)
+		owner = H
+		S.linked_extract = src
+		STOP_PROCESSING(SSobj,src)
 
 //Colors and subtypes:
 /obj/item/slimecross/stabilized/grey

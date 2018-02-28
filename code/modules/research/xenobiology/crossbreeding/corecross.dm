@@ -24,10 +24,15 @@ To add a crossbreed:
 	get around to the crossbreeds eventually!
 \*==========================================*/
 
-/obj/item/slimecross //The base type for crossbred extracts. Mostly here for posterity, and to do
+/obj/item/slimecross //The base type for crossbred extracts. Mostly here for posterity, and to set base case things.
 	name = "crossbred slime extract"
 	desc = "An extremely potent slime extract, formed through crossbreeding."
 	var/colour = "null"
+	force = 0
+	w_class = WEIGHT_CLASS_TINY
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 6
 
 /obj/item/slimecross/Initialize()
 	..()

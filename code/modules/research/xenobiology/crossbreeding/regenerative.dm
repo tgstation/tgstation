@@ -123,8 +123,8 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/silver
 	colour = "silver"
 
-/obj/item/slimecross/regenerative/cerulean/core_effect(mob/living/target, mob/user)
-	target.nutrition = NUTRITION_LEVEL_WELL_FED
+/obj/item/slimecross/regenerative/silver/core_effect(mob/living/target, mob/user)
+	target.nutrition = NUTRITION_LEVEL_FULL - 1
 	to_chat(target, "<span class='notice'>You feel satiated.</span>")
 
 /obj/item/slimecross/regenerative/bluespace
@@ -195,7 +195,7 @@ Regenerative extracts:
 	colour = "gold"
 
 /obj/item/slimecross/regenerative/gold/core_effect(mob/living/target, mob/user)
-	var/newcoin = pick(/obj/item/coin/silver, /obj/item/coin/silver, /obj/item/coin/silver, /obj/item/coin/iron, /obj/item/coin/iron, /obj/item/coin/iron, /obj/item/coin/gold, /obj/item/coin/diamond, /obj/item/coin/plasma, /obj/item/coin/uranium)
+	var/newcoin = pick(/obj/item/coin/silver, /obj/item/coin/iron, /obj/item/coin/gold, /obj/item/coin/diamond, /obj/item/coin/plasma, /obj/item/coin/uranium)
 	var/obj/item/coin/C = new newcoin(target.loc)
 	playsound(C.loc, 'sound/items/coinflip.ogg', 50, 1)
 	target.put_in_hand(C)
@@ -218,7 +218,7 @@ Regenerative extracts:
 	if(ishuman(target))
 		var/mob/living/carbon/human/T = target
 		var/mob/living/carbon/human/D = dummy
-		D.hardset_dna(T.dna.unique_enzymes, T.dna.struc_enzymes, T.real_name, null, T.dna.species, T.dna.features)
+		T.dna.copy_dna(D.dna)
 	dummy.adjustBruteLoss(target.getBruteLoss())
 	dummy.adjustFireLoss(target.getFireLoss())
 	dummy.adjustToxLoss(target.getToxLoss())
