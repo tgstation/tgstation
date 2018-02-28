@@ -505,7 +505,6 @@
 	damage_deflection = 30
 	normal_integrity = 240
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
-	var/all_access = FALSE
 
 /obj/machinery/door/airlock/clockwork/Initialize()
 	. = ..()
@@ -532,7 +531,7 @@
 		open()
 
 /obj/machinery/door/airlock/clockwork/canAIControl(mob/user)
-	return ((is_servant_of_ratvar(user) || all_access) && !isAllPowerCut())
+	return (is_servant_of_ratvar(user) && !isAllPowerCut())
 
 /obj/machinery/door/airlock/clockwork/ratvar_act()
 	return 0
@@ -550,7 +549,7 @@
 		return ..()
 
 /obj/machinery/door/airlock/clockwork/allowed(mob/M)
-	if(is_servant_of_ratvar(M) || all_access)
+	if(is_servant_of_ratvar(M))
 		return 1
 	return 0
 
@@ -604,15 +603,23 @@
 		return 1
 	return 0
 
-/obj/machinery/door/airlock/clockwork/general
-	all_access = TRUE
+/obj/machinery/door/airlock/clockwork/generalcanAIControl(mob/user)
+	return (!isAllPowerCut())
+
+
+/obj/machinery/door/airlock/clockwork/general/allowed(mob/M)
+	return TRUE
 
 /obj/machinery/door/airlock/clockwork/brass
 	glass = TRUE
 	opacity = 0
 	
-/obj/machinery/door/airlock/clockwork/brass/general
-	all_access = TRUE
+/obj/machinery/door/airlock/clockwork/brass/generalcanAIControl(mob/user)
+	return (!isAllPowerCut())
+
+
+/obj/machinery/door/airlock/clockwork/brass/general/allowed(mob/M)
+	return TRUE
 
 //////////////////////////////////
 /*
