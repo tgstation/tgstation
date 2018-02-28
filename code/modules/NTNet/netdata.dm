@@ -6,18 +6,19 @@
 
 	var/plaintext_data
 	var/plaintext_data_secondary
-	var/plaintext_passkey
+	var/encrypted_passkey
+
 	var/list/passkey
 
 // Process data before sending it
 /datum/netdata/proc/pre_send(datum/component/ntnet_interface/interface)
-	// Decode the passkey, if any.
-	if(plaintext_passkey && !passkey)
-		passkey = json_decode(XorEncrypt(hextostr(plaintext_passkey, TRUE), SScircuit.cipherkey))
+	// Decrypt the passkey.
+	if(encrypted_passkey && !passkey)
+		passkey = json_decode(XorEncrypt(hextostr(encrypted_passkey, TRUE), SScircuit.cipherkey))
 
-	// Encode the passkey, if any.
-	if(!plaintext_passkey && passkey)
-		plaintext_passkey = strtohex(XorEncrypt(json_encode(passkey), SScircuit.cipherkey))
+	// Encrypt the passkey.
+	if(!encrypted_passkey && passkey)
+		encrypted_passkey = strtohex(XorEncrypt(json_encode(passkey), SScircuit.cipherkey))
 
 	// If there is no sender ID, set the default one.
 	if(!sender_id && interface)
@@ -39,7 +40,7 @@
 	.["sender_id"] = sender_id
 	.["data"] = plaintext_data
 	.["data_secondary"] = plaintext_data_secondary
-	.["passkey"] = plaintext_passkey
+	.["passkey"] = encrypted_passkey
 
 /datum/netdata/proc/generate_netlog()
 	return "[json_encode(json_list_generation_netlog())]"
