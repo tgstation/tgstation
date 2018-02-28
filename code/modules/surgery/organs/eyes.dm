@@ -161,6 +161,7 @@
 	var/list/obj/effect/abstract/eye_lighting/eye_lighting
 	var/obj/effect/abstract/eye_lighting/on_mob
 	var/image/mob_overlay
+	var/datum/component/mobhook
 
 /obj/item/organ/eyes/robotic/glow/Initialize()
 	. = ..()
@@ -194,7 +195,7 @@
 		activate()
 
 /obj/item/organ/eyes/robotic/glow/proc/prompt_for_controls(mob/user)
-	var/C = input(owner, "Select Color", "Select color", "#ffffff") as null|color
+	var/C = input(owner, "Select Color", "Select color", "#ffffff") as color|null
 	if(!C || QDELETED(src) || QDELETED(user) || QDELETED(owner) || owner != user)
 		return
 	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
@@ -227,15 +228,20 @@
 	if(active)
 		deactivate(silent = TRUE)
 
-/obj/item/organ/eyes/robotic/glow/on_mob_move()
-	if(QDELETED(owner) || !active)
-		return
-	update_visuals()
+/obj/item/organ/eyes/robotic/glow/Insert(var/mob/living/carbon/M)
+	. = ..()
+	if (mobhook && mobhook.parent != M)
+		QDEL_NULL(mobhook)
+	if (!mobhook)
+		mobhook = M.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_DIR_CHANGE), CALLBACK(src, .proc/update_visuals))
 
-/obj/item/organ/eyes/robotic/glow/on_mob_turn()
-	if(QDELETED(owner) || !active)
-		return
-	update_visuals()
+/obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M)
+	. = ..()
+	QDEL_NULL(mobhook)
+
+/obj/item/organ/eyes/robotic/glow/Destroy()
+	QDEL_NULL(mobhook) // mobhook is not our component
+	return ..()
 
 /obj/item/organ/eyes/robotic/glow/proc/activate(silent = FALSE)
 	start_visuals()
@@ -251,11 +257,13 @@
 	active = FALSE
 	remove_mob_overlay()
 
-/obj/item/organ/eyes/robotic/glow/proc/update_visuals()
+/obj/item/organ/eyes/robotic/glow/proc/update_visuals(olddir, newdir)
 	if((LAZYLEN(eye_lighting) < light_beam_distance) || !on_mob)
 		regenerate_light_effects()
 	var/turf/scanfrom = get_turf(owner)
 	var/scandir = owner.dir
+	if (newdir && scandir != newdir) // COMSIG_ATOM_DIR_CHANGE happens before the dir change, but with a reference to the new direction.
+		scandir = newdir
 	if(!istype(scanfrom))
 		clear_visuals()
 	var/turf/scanning = scanfrom
@@ -316,3 +324,8 @@
 	parent = loc
 	if(!istype(parent))
 		return INITIALIZE_HINT_QDEL
+
+/obj/item/organ/eyes/moth
+	name = "moth eyes"
+	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
+	flash_protect = -1

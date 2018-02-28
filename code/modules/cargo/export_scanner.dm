@@ -29,7 +29,7 @@
 	else
 		// Before you fix it:
 		// yes, checking manifests is a part of intended functionality.
-		var/price = export_item_and_contents(O, cargo_console.contraband, cargo_console.emagged, dry_run=TRUE)
+		var/price = export_item_and_contents(O, cargo_console.contraband, (cargo_console.obj_flags & EMAGGED), dry_run=TRUE)
 
 		if(price)
 			to_chat(user, "<span class='notice'>Scanned [O], value: <b>[price]</b> credits[O.contents.len ? " (contents included)" : ""].</span>")

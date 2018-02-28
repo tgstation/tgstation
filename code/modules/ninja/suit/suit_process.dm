@@ -1,6 +1,4 @@
 /obj/item/clothing/suit/space/space_ninja/proc/ntick(mob/living/carbon/human/U = affecting)
-	set background = BACKGROUND_ENABLED
-
 	//Runs in the background while the suit is initialized.
 	//Requires charge or stealth to process.
 	spawn while(s_initialized)

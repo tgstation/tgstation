@@ -53,6 +53,10 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered)
+"Q" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 
 (1,1,1) = {"
 a
@@ -61,7 +65,7 @@ a
 a
 a
 a
-b
+Q
 a
 a
 a
@@ -76,12 +80,12 @@ a
 a
 a
 a
-b
-b
-b
+Q
+Q
+Q
 a
 a
-b
+Q
 a
 a
 a
@@ -92,23 +96,23 @@ a
 a
 a
 a
-b
+Q
 a
 a
-b
+Q
 i
 i
-b
+Q
 a
 a
 a
-b
+Q
 a
 "}
 (4,1,1) = {"
 a
-b
-b
+Q
+Q
 c
 c
 c
@@ -124,7 +128,7 @@ a
 "}
 (5,1,1) = {"
 a
-b
+Q
 c
 c
 c
@@ -137,7 +141,7 @@ c
 c
 c
 c
-b
+Q
 "}
 (6,1,1) = {"
 a
@@ -154,7 +158,7 @@ l
 c
 c
 c
-b
+Q
 "}
 (7,1,1) = {"
 a
@@ -192,7 +196,7 @@ a
 "}
 (9,1,1) = {"
 a
-b
+Q
 c
 c
 d
@@ -226,7 +230,7 @@ a
 "}
 (11,1,1) = {"
 a
-b
+Q
 c
 c
 f
@@ -277,7 +281,7 @@ a
 "}
 (14,1,1) = {"
 a
-b
+Q
 c
 c
 c
@@ -312,17 +316,17 @@ a
 (16,1,1) = {"
 a
 a
-b
+Q
 a
-b
-b
-b
+Q
+Q
+Q
 a
-b
-b
-b
+Q
+Q
+Q
 a
-b
+Q
 a
 a
 "}
@@ -332,12 +336,12 @@ a
 a
 a
 a
-b
-b
+Q
+Q
 a
-b
-b
-b
+Q
+Q
+Q
 a
 a
 a

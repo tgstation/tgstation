@@ -1,65 +1,51 @@
-GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
+GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
-/proc/initialize_global_uplink_items()
-	GLOB.uplink_items = list()
-	for(var/item in subtypesof(/datum/uplink_item))
-		var/datum/uplink_item/I = new item()
-		if(!I.item)
-			continue
-		if(!GLOB.uplink_items[I.category])
-			GLOB.uplink_items[I.category] = list()
-		GLOB.uplink_items[I.category][I.name] = I
-
-/proc/get_uplink_items(var/datum/game_mode/gamemode = null)
-	if(!GLOB.uplink_items.len)
-		initialize_global_uplink_items()
-
+/proc/get_uplink_items(var/datum/game_mode/gamemode = null, allow_sales = TRUE)
 	var/list/filtered_uplink_items = list()
 	var/list/sale_items = list()
 
-	for(var/category in GLOB.uplink_items)
-		for(var/item in GLOB.uplink_items[category])
-			var/datum/uplink_item/I = GLOB.uplink_items[category][item]
-			if(!istype(I))
+	for(var/path in GLOB.uplink_items)
+		var/datum/uplink_item/I = new path
+		if(!I.item)
+			continue
+		if(I.include_modes.len)
+			if(!gamemode && SSticker.mode && !(SSticker.mode.type in I.include_modes))
 				continue
-			if(I.include_modes.len)
-				if(!gamemode && SSticker && SSticker.mode && !(SSticker.mode.type in I.include_modes))
-					continue
-				if(gamemode && !(gamemode in I.include_modes))
-					continue
-			if(I.exclude_modes.len)
-				if(!gamemode && SSticker && SSticker.mode && (SSticker.mode.type in I.exclude_modes))
-					continue
-				if(gamemode && (gamemode in I.exclude_modes))
-					continue
-			if(I.player_minimum && I.player_minimum > GLOB.joined_player_list.len)
+			if(gamemode && !(gamemode in I.include_modes))
 				continue
+		if(I.exclude_modes.len)
+			if(!gamemode && SSticker.mode && (SSticker.mode.type in I.exclude_modes))
+				continue
+			if(gamemode && (gamemode in I.exclude_modes))
+				continue
+		if(I.player_minimum && I.player_minimum > GLOB.joined_player_list.len)
+			continue
 
-			if(!filtered_uplink_items[category])
-				filtered_uplink_items[category] = list()
-			filtered_uplink_items[category][item] = I
-			if(I.limited_stock < 0 && !I.cant_discount && I.item && I.cost > 1)
-				sale_items += I
+		if(!filtered_uplink_items[I.category])
+			filtered_uplink_items[I.category] = list()
+		filtered_uplink_items[I.category][I.name] = I
+		if(I.limited_stock < 0 && !I.cant_discount && I.item && I.cost > 1)
+			sale_items += I
+	if(allow_sales)
+		for(var/i in 1 to 3)
+			var/datum/uplink_item/I = pick_n_take(sale_items)
+			var/datum/uplink_item/A = new I.type
+			var/discount = A.get_discount()
+			var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
+			A.limited_stock = 1
+			I.refundable = FALSE //THIS MAN USES ONE WEIRD TRICK TO GAIN FREE TC, CODERS HATES HIM!
+			A.refundable = FALSE
+			if(A.cost >= 20) //Tough love for nuke ops
+				discount *= 0.5
+			A.cost = max(round(A.cost * discount),1)
+			A.category = "Discounted Gear"
+			A.name += " ([round(((initial(A.cost)-A.cost)/initial(A.cost))*100)]% off!)"
+			A.desc += " Normally costs [initial(A.cost)] TC. All sales final. [pick(disclaimer)]"
+			A.item = I.item
 
-	for(var/i in 1 to 3)
-		var/datum/uplink_item/I = pick_n_take(sale_items)
-		var/datum/uplink_item/A = new I.type
-		var/discount = A.get_discount()
-		var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
-		A.limited_stock = 1
-		I.refundable = FALSE //THIS MAN USES ONE WEIRD TRICK TO GAIN FREE TC, CODERS HATES HIM!
-		A.refundable = FALSE
-		if(A.cost >= 20) //Tough love for nuke ops
-			discount *= 0.5
-		A.cost = max(round(A.cost * discount),1)
-		A.category = "Discounted Gear"
-		A.name += " ([round(((initial(A.cost)-A.cost)/initial(A.cost))*100)]% off!)"
-		A.desc += " Normally costs [initial(A.cost)] TC. All sales final. [pick(disclaimer)]"
-		A.item = I.item
-
-		if(!filtered_uplink_items[A.category])
-			filtered_uplink_items[A.category] = list()
-		filtered_uplink_items[A.category][A.name] = A
+			if(!filtered_uplink_items[A.category])
+				filtered_uplink_items[A.category] = list()
+			filtered_uplink_items[A.category][A.name] = A
 	return filtered_uplink_items
 
 
@@ -89,14 +75,26 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/proc/get_discount()
 	return pick(4;0.75,2;0.5,1;0.25)
 
-/datum/uplink_item/proc/spawn_item(turf/loc, datum/component/uplink/U, mob/user)
-	if(item)
-		return new item(loc)
+/datum/uplink_item/proc/purchase(mob/user, datum/component/uplink/U)
+	var/atom/A = spawn_item(item, user)
+	if(purchase_log_vis && U.purchase_log)
+		U.purchase_log.LogPurchase(A, src, cost)
 
-/datum/uplink_item/Destroy()
-	if(src in GLOB.uplink_items)
-		GLOB.uplink_items -= src	//Take us out instead of leaving a null!
-	return ..()
+/datum/uplink_item/proc/spawn_item(spawn_item, mob/user)
+	if(!spawn_item)
+		return
+	var/atom/A
+	if(ispath(spawn_item))
+		A = new spawn_item(get_turf(user))
+	else
+		A = spawn_item
+	if(ishuman(user) && istype(A, /obj/item))
+		var/mob/living/carbon/human/H = user
+		if(H.put_in_hands(A))
+			to_chat(H, "[A] materializes into your hands!")
+			return A
+	to_chat(user, "[A] materializes onto the floor.")
+	return A
 
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
@@ -693,22 +691,23 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
 	item = /obj/item/storage/box/syndie_kit/chameleon
-	cost = 4
+	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear)
-	player_minimum = 20
-
-/datum/uplink_item/stealthy_tools/chameleon/nuke
-	cost = 6
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
 	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
 			They do not work on heavily lubricated surfaces."
-	item = /obj/item/clothing/shoes/chameleon
+	item = /obj/item/clothing/shoes/chameleon/noslip
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear)
 	player_minimum = 20
+
+/datum/uplink_item/stealthy_tools/syndigaloshes/nuke
+	item = /obj/item/clothing/shoes/chameleon/noslip
+	cost = 4
+	exclude_modes = list()
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/frame
 	name = "F.R.A.M.E. PDA Cartridge"
@@ -718,15 +717,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			telecrystals normally."
 	item = /obj/item/cartridge/virus/frame
 	cost = 4
-
-/datum/uplink_item/stealthy_tools/syndigaloshes/nuke
-	name = "Stealthy No-Slip Chameleon Shoes"
-	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
-			They do not work on heavily lubricated surfaces. The manufacturer claims they are much more stealthy than the normal brand."
-	item = /obj/item/clothing/shoes/chameleon
-	cost = 4
-	exclude_modes = list()
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"
@@ -797,8 +787,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/stealthy_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
-	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny. Don't try to give this to us to complete your objective, we know better!"
-	item = /obj/item/disk/fakenucleardisk
+	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny by the Captain. Don't try to give this to us to complete your objective, we know better!"
+	item = /obj/item/disk/nuclear/fake
 	cost = 1
 	surplus = 1
 
@@ -869,6 +859,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			a Syndicate brand MMI, a straitjacket, and a muzzle."
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
 	cost = 3
+
+/datum/uplink_item/device_tools/brainwash_disk
+	name = "Brainwashing Surgery Program"
+	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
+	Insert into an Operating Console to enable the procedure."
+	item = /obj/item/disk/surgery/brainwashing
+	restricted_roles = list("Medical Doctor")
+	cost = 5
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Chest Rig"
@@ -943,15 +941,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/briefcase_launchpad
 	cost = 6
 
-/datum/uplink_item/device_tools/briefcase_launchpad/spawn_item(turf/loc, datum/component/uplink/U, mob/user)
-	var/obj/item/device/launchpad_remote/L = new(loc) //free remote
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.put_in_hands(L))
-			to_chat(H, "[L] materializes into your hands!")
-		else
-			to_chat(H, "\The [L] materializes onto the floor.")
-	return ..()
+/datum/uplink_item/device_tools/briefcase_launchpad/purchase(mob/user, datum/component/uplink/U)
+	spawn_item(/obj/item/device/launchpad_remote, user) //free remote
+	..()
 
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"
@@ -1058,8 +1050,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/device_tools/potion
 	name = "Syndicate Sentience Potion"
-	item = /obj/item/slimepotion/sentience/nuclear
-	desc = "A potion recovered at great risk by undercover syndicate operatives and then subsequently modified with syndicate technology. Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication."
+	item = /obj/item/slimepotion/slime/sentience/nuclear
+	desc = "A potion recovered at great risk by undercover syndicate operatives and then subsequently modified with syndicate technology. Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication and an internal ID card for opening doors."
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -1163,15 +1155,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
-	if(item)
-		if(istype(item, /obj/item/organ))
-			SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(name)]", "[cost]"))
-			return new /obj/item/storage/box/cyber_implants(loc, item)
-		else
-			return ..()
-
-
 /datum/uplink_item/cyber_implants/thermals
 	name = "Thermal Eyes"
 	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
@@ -1217,6 +1200,15 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/storage/box/hug/reverse_revolver
 	restricted_roles = list("Clown")
 
+/datum/uplink_item/role_restricted/reverse_bear_trap
+	name = "Reverse Bear Trap"
+	desc = "An ingenious execution device worn on (or forced onto) the head. Arming it starts a 1-minute kitchen timer mounted on the bear trap. When it goes off, the trap's jaws will \
+	violently open, instantly killing anyone wearing it by tearing their jaws in half. To arm, attack someone with it while they're not wearing headgear, and you will force it onto their \
+	head after three seconds uninterrupted."
+	cost = 5
+	item = /obj/item/device/reverse_bear_trap
+	restricted_roles = list("Clown")
+
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
 	desc = "The classical two part series on how to further hone your mime skills. Upon studying the series, the user should be able to make 3x1 invisible walls, and shoot bullets out of their fingers. Obviously only works for Mimes."
@@ -1232,6 +1224,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 6
 	surplus = 20
 	restricted_roles = list("Janitor")
+
+/datum/uplink_item/role_restricted/explosive_hot_potato
+	name = "Exploding Hot Potato"
+	desc = "A potato rigged with explosives. On activation, a special mechanism is activated that prevents it from being dropped. The only way to get rid of it if you are holding it is to attack someone else with it, causing it to latch to that person instead."
+	item = /obj/item/hot_potato/syndicate
+	cost = 4
+	surplus = 0
+	restricted_roles = list("Cook", "Botanist", "Clown", "Mime")
 
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"
@@ -1275,6 +1275,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 14
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
+/datum/uplink_item/role_restricted/chemical_gun
+	name = "Reagent Dartgun"
+	desc = "A heavily modified syringe gun which is capable of synthesizing its own chemical darts using input reagents. Can hold 100u of reagents."
+	item = /obj/item/gun/chem
+	cost = 12
+	restricted_roles = list("Chemist", "Chief Medical Officer")
+
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
@@ -1289,6 +1296,17 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 5 //you need two for full damage, so total of 10 for maximum damage
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
+
+/datum/uplink_item/device_tools/clown_bomb
+	name = "Clown Bomb"
+	desc = "The Clown bomb is a hilarious device capable of massive pranks. It has an adjustable timer, \
+			with a minimum of 60 seconds, and can be bolted to the floor with a wrench to prevent \
+			movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
+			transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
+			be defused, and some crew may attempt to do so."
+	item = /obj/item/device/sbeacondrop/clownbomb
+	cost = 15
+	restricted_roles = list("Clown")
 
 // Pointless
 /datum/uplink_item/badass
@@ -1326,6 +1344,27 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 20
 	cant_discount = TRUE
 
+/datum/uplink_item/badass/costumes
+	surplus = 0
+	include_modes = list(/datum/game_mode/nuclear)
+	cost = 4
+	cant_discount = TRUE
+
+/datum/uplink_item/badass/costumes/centcom_official
+	name = "Centcom Official Costume"
+	desc = "Ask the crew to \"inspect\" their nuclear disk and weapons system, and then when they decline, pull out a fully automatic rifle and gun down the Captain. Radio headset does not include key. No gun included."
+	item = /obj/item/storage/box/syndie_kit/centcom_costume
+
+/datum/uplink_item/badass/costumes/clown
+	name = "Clown Costume"
+	desc = "Nothing is more terrifying than clowns with fully automatic weaponry."
+	item = /obj/item/storage/backpack/duffelbag/clown/syndie
+
+/datum/uplink_item/badass/costumes/obvious_chameleon
+	name = "Broken Chameleon Kit"
+	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! Please note that this kit did NOT pass quality control."
+	item = /obj/item/storage/box/syndie_kit/chameleon/broken
+
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
 	desc = "Syndicate Bundles are specialized groups of items that arrive in a plain box. \
@@ -1345,12 +1384,23 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	player_minimum = 25
 	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
+	var/starting_crate_value = 50
 
-/datum/uplink_item/badass/surplus/spawn_item(turf/loc, datum/component/uplink/U)
-	var/list/uplink_items = get_uplink_items(SSticker && SSticker.mode? SSticker.mode : null)
+/datum/uplink_item/badass/surplus/super
+	name = "Super Surplus Crate"
+	desc = "A dusty SUPER-SIZED from the back of the Syndicate warehouse. Rumored to contain a valuable assortment of items, \
+			but you never know. Contents are sorted to always be worth 125 TC."
+	cost = 40
+	player_minimum = 40
+	starting_crate_value = 125
 
-	var/crate_value = 50
-	var/obj/structure/closet/crate/C = new(loc)
+/datum/uplink_item/badass/surplus/purchase(mob/user, datum/component/uplink/U)
+	var/list/uplink_items = get_uplink_items(SSticker && SSticker.mode? SSticker.mode : null, FALSE)
+
+	var/crate_value = starting_crate_value
+	var/obj/structure/closet/crate/C = spawn_item(/obj/structure/closet/crate, user)
+	if(U.purchase_log)
+		U.purchase_log.LogPurchase(C, src, cost)
 	while(crate_value)
 		var/category = pick(uplink_items)
 		var/item = pick(uplink_items[category])
@@ -1362,9 +1412,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			continue
 		crate_value -= I.cost
 		var/obj/goods = new I.item(C)
-		U.purchase_log.LogPurchase(goods, I.cost)
-
-	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(name)]", "[cost]"))
+		if(U.purchase_log)
+			U.purchase_log.LogPurchase(goods, I, 0)
 	return C
 
 /datum/uplink_item/badass/random
@@ -1374,8 +1423,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 0
 	cant_discount = TRUE
 
-/datum/uplink_item/badass/random/spawn_item(turf/loc, datum/component/uplink/U)
-	var/list/uplink_items = get_uplink_items(SSticker && SSticker.mode? SSticker.mode : null)
+/datum/uplink_item/badass/random/purchase(mob/user, datum/component/uplink/U)
+	var/list/uplink_items = U.uplink_items
 	var/list/possible_items = list()
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])
@@ -1384,12 +1433,11 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 				continue
 			if(U.telecrystals < I.cost)
 				continue
+			if(I.limited_stock == 0)
+				continue
 			possible_items += I
 
 	if(possible_items.len)
 		var/datum/uplink_item/I = pick(possible_items)
-		U.telecrystals -= I.cost
-		U.purchase_log.total_spent += I.cost
-		SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(I.name)]", "[cost]"))
 		SSblackbox.record_feedback("tally", "traitor_random_uplink_items_gotten", 1, initial(I.name))
-		return new I.item(loc)
+		U.MakePurchase(user, I)

@@ -18,6 +18,7 @@
 	var/charge_tick = 0
 	var/charge_delay = 4
 	var/use_cyborg_cell = 0 //whether the gun's cell drains the cyborg user's cell to recharge
+	var/dead_cell = FALSE //set to true so the gun is given an empty cell
 
 /obj/item/gun/energy/emp_act(severity)
 	cell.use(round(cell.charge / severity))
@@ -34,7 +35,8 @@
 		cell = new cell_type(src)
 	else
 		cell = new(src)
-	cell.give(cell.maxcharge)
+	if(!dead_cell)
+		cell.give(cell.maxcharge)
 	update_ammo_types()
 	recharge_newshot(1)
 	if(selfcharge)
@@ -102,12 +104,12 @@
 	chambered = null //either way, released the prepared shot
 	recharge_newshot() //try to charge a new shot
 
-/obj/item/gun/energy/process_fire()
+/obj/item/gun/energy/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(!chambered && can_shoot())
 		process_chamber()	// If the gun was drained and then recharged, load a new shot.
 	return ..()
 
-/obj/item/gun/energy/process_burst()
+/obj/item/gun/energy/process_burst(mob/living/user, atom/target, message = TRUE, params = null, zone_override="", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
 	if(!chambered && can_shoot())
 		process_chamber()	// Ditto.
 	return ..()

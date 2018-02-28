@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -146,7 +146,7 @@
 /area/ruin/powered/beach)
 "aF" = (
 /obj/machinery/vending/boozeomat{
-	emagged = 1;
+	set_obj_flags = "EMAGGED";
 	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
@@ -457,11 +457,6 @@
 "ct" = (
 /obj/machinery/light,
 /turf/open/floor/plating/beach/water,
-/area/ruin/powered/beach)
-"cz" = (
-/obj/effect/turf_decal/sand,
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "cR" = (
 /obj/structure/table/wood,
@@ -1029,7 +1024,7 @@ aK
 aK
 aK
 aK
-cz
+aA
 ar
 ar
 ar

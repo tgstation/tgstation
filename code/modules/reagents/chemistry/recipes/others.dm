@@ -125,96 +125,12 @@
 	required_reagents = list("ammonia" = 2, "nitrogen" = 1, "oxygen" = 2)
 	required_temp = 525
 
-////////////////////////////////// Mutation Toxins ///////////////////////////////////
-
-/datum/chemical_reaction/stable_mutation_toxin
-	name = "Stable Mutation Toxin"
-	id = "stablemutationtoxin"
-	results = list("stablemutationtoxin" = 1)
-	required_reagents = list("unstablemutationtoxin" = 1, "blood" = 1) //classic
-
-/datum/chemical_reaction/lizard_mutation_toxin
-	name = "Lizard Mutation Toxin"
-	id = "lizardmutationtoxin"
-	results = list("lizardmutationtoxin" = 1)
-	required_reagents = list("unstablemutationtoxin" = 1, "radium" = 1) //mutant
-
-/datum/chemical_reaction/fly_mutation_toxin
-	name = "Fly Mutation Toxin"
-	id = "flymutationtoxin"
-	results = list("flymutationtoxin" = 1)
-	required_reagents = list("unstablemutationtoxin" = 1, "mutagen" = 1) //VERY mutant
-
-/datum/chemical_reaction/jelly_mutation_toxin
-	name = "Imperfect Mutation Toxin"
-	id = "jellymutationtoxin"
-	results = list("jellymutationtoxin" = 1)
-	required_reagents = list("unstablemutationtoxin" = 1, "slimejelly" = 1) //why would you even make this
-
-/datum/chemical_reaction/abductor_mutation_toxin
-	name = "Abductor Mutation Toxin"
-	id = "abductormutationtoxin"
-	results = list("abductormutationtoxin" = 1)
-	required_reagents = list("unstablemutationtoxin" = 1, "morphine" = 1)
-
-/datum/chemical_reaction/android_mutation_toxin
-	name = "Android Mutation Toxin"
-	id = "androidmutationtoxin"
-	results = list("androidmutationtoxin" = 1)
-	required_reagents = list("unstablemutationtoxin" = 1, "teslium" = 1) //beep boop
-
-/datum/chemical_reaction/pod_mutation_toxin
-	name = "Podperson Mutation Toxin"
-	id = "podmutationtoxin"
-	results = list("podmutationtoxin" = 1)
-	required_reagents = list("unstablemutationtoxin" = 1, "eznutriment" = 1) //plant food
-
-/datum/chemical_reaction/golem_mutation_toxin
-	name = "Golem Mutation Toxin"
-	id = "golemmutationtoxin"
-	results = list("golemmutationtoxin" = 1)
-	required_reagents = list("unstablemutationtoxin" = 1, "silver" = 1) //not too hard to get but also not just there in xenobio
-
-
-//BLACKLISTED RACES
-/datum/chemical_reaction/skeleton_mutation_toxin
-	name = "Skeleton Mutation Toxin"
-	id = "skeletonmutationtoxin"
-	results = list("skeletonmutationtoxin" = 1)
-	required_reagents = list("amutationtoxin" = 1, "milk" = 1) //good for yer bones
-
-/datum/chemical_reaction/zombie_mutation_toxin
-	name = "Zombie Mutation Toxin"
-	id = "zombiemutationtoxin"
-	results = list("zombiemutationtoxin" = 1)
-	required_reagents = list("amutationtoxin" = 1, "toxin" = 1)
-
-/datum/chemical_reaction/ash_mutation_toxin //ash lizard
-	name = "Ash Mutation Toxin"
-	id = "ashmutationtoxin"
-	results = list("ashmutationtoxin" = 1)
-	required_reagents = list("amutationtoxin" = 1, "lizardmutationtoxin" = 1, "ash" = 1)
-
-
-//DANGEROUS RACES
-/datum/chemical_reaction/plasma_mutation_toxin
-	name = "Plasma Mutation Toxin"
-	id = "plasmamutationtoxin"
-	results = list("plasmamutationtoxin" = 1)
-	required_reagents = list("skeletonmutationtoxin" = 1, "plasma" = 1, "uranium" = 1) //this is very fucking powerful, so it's hard to make
-
-/datum/chemical_reaction/shadow_mutation_toxin
-	name = "Shadow Mutation Toxin"
-	id = "shadowmutationtoxin"
-	results = list("shadowmutationtoxin" = 1)
-	required_reagents = list("amutationtoxin" = 1, "liquid_dark_matter" = 1, "holywater" = 1)
-
 //Technically a mutation toxin
 /datum/chemical_reaction/mulligan
 	name = "Mulligan"
 	id = "mulligan"
 	results = list("mulligan" = 1)
-	required_reagents = list("stablemutationtoxin" = 1, "mutagen" = 1)
+	required_reagents = list("slime_toxin" = 1, "mutagen" = 1)
 
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
@@ -407,7 +323,6 @@
 			D.Devolve()
 
 /datum/chemical_reaction/mix_virus/neuter_virus
-
 	name = "Neuter Virus"
 	id = "neutervirus"
 	required_reagents = list("formaldehyde" = 1)
@@ -647,7 +562,7 @@
 	name = "lye"
 	id = "lye"
 	results = list("lye" = 2)
-	required_reagents = list("ash" = 1, "water" = 1)
+	required_reagents = list("ash" = 1, "water" = 1, "carbon" = 1)
 
 /datum/chemical_reaction/royal_bee_jelly
 	name = "royal bee jelly"
@@ -664,7 +579,7 @@
 /datum/chemical_reaction/plastic_polymers
 	name = "plastic polymers"
 	id = "plastic_polymers"
-	required_reagents = list("oil" = 5, "sodiumchloride" = 2, "ash" = 3)
+	required_reagents = list("oil" = 5, "sacid" = 2, "ash" = 3)
 	required_temp = 374 //lazily consistent with soap & other crafted objects generically created with heat.
 
 /datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, created_volume)

@@ -88,7 +88,7 @@
 	stage5	= list("<span class='warning'>You feel like monkeying around.</span>")
 
 /datum/disease/transformation/jungle_fever/do_disease_transformation(mob/living/carbon/affected_mob)
-	if(affected_mob.mind && !is_monkey(affected_mob))
+	if(affected_mob.mind && !is_monkey(affected_mob.mind))
 		add_monkey(affected_mob.mind)
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/monkey/M = affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
@@ -204,12 +204,13 @@
 	..()
 	switch(stage)
 		if(1)
-			if(ishuman(affected_mob) && affected_mob.dna && affected_mob.dna.species.id == "slime")
-				stage = 5
+			if(ishuman(affected_mob) && affected_mob.dna)
+				if(affected_mob.dna.species.id == "slime" || affected_mob.dna.species.id == "stargazer" || affected_mob.dna.species.id == "lum")
+					stage = 5
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(human.dna.species.id != "slime")
+				if(human.dna.species.id != "slime" && affected_mob.dna.species.id != "stargazer" && affected_mob.dna.species.id != "lum")
 					human.set_species(/datum/species/jelly/slime)
 
 /datum/disease/transformation/corgi

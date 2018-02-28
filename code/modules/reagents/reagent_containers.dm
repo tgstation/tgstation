@@ -79,7 +79,11 @@
 	SplashReagents(target, TRUE)
 
 /obj/item/reagent_containers/proc/bartender_check(atom/target)
-	return (target.CanPass(src, get_turf(src)) && thrownby && thrownby.mind && thrownby.mind.assigned_role == "Bartender")
+	. = FALSE
+	if(target.CanPass(src, get_turf(src)) && thrownby && thrownby.actions)
+		for(var/datum/action/innate/drink_fling/D in thrownby.actions)
+			if(D.active)
+				return TRUE
 
 /obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
 	if(!reagents || !reagents.total_volume || !spillable)

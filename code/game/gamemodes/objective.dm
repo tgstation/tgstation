@@ -214,8 +214,9 @@
 		explanation_text = "Free Objective"
 
 /datum/objective/protect//The opposite of killing a dude.
-	var/target_role_type=0
 	martyr_compatible = 1
+	var/target_role_type = 0
+	var/human_check = TRUE
 
 /datum/objective/protect/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
@@ -224,7 +225,7 @@
 	return target
 
 /datum/objective/protect/check_completion()
-	return !target || considered_alive(target)
+	return !target || considered_alive(target, enforce_human = human_check)
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -232,6 +233,9 @@
 		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
+
+/datum/objective/protect/nonhuman
+	human_check = FALSE
 
 /datum/objective/hijack
 	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."
@@ -687,7 +691,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		if("Chief Medical Officer")
 			department_string = "medical"
 
-	var/list/lings = get_antagonists(/datum/antagonist/changeling,TRUE)
+	var/list/lings = get_antag_minds(/datum/antagonist/changeling,TRUE)
 	var/ling_count = lings.len
 
 	for(var/datum/mind/M in SSticker.minds)
@@ -715,7 +719,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	//Needed heads is between min_lings and the maximum possible amount of command roles
 	//So at the time of writing, rand(3,6), it's also capped by the amount of lings there are
 	//Because you can't fill 6 head roles with 3 lings
-	var/list/lings = get_antagonists(/datum/antagonist/changeling,TRUE)
+	var/list/lings = get_antag_minds(/datum/antagonist/changeling,TRUE)
 	var/needed_heads = rand(min_lings,GLOB.command_positions.len)
 	needed_heads = min(lings.len,needed_heads)
 
@@ -792,7 +796,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	//Check each staff member has been replaced, by cross referencing changeling minds, changeling current dna, the staff minds and their original DNA names
 	var/success = 0
 	changelings:
-		for(var/datum/mind/changeling in get_antagonists(/datum/antagonist/changeling,TRUE))
+		for(var/datum/mind/changeling in get_antag_minds(/datum/antagonist/changeling,TRUE))
 			if(success >= department_minds.len) //We did it, stop here!
 				return TRUE
 			if(ishuman(changeling.current))

@@ -24,7 +24,7 @@
 	var/current_cycle = 0
 	var/volume = 0
 	var/color = "#000000" // rgb: 0, 0, 0
-	var/can_synth = 1
+	var/can_synth = TRUE
 	var/metabolization_rate = REAGENTS_METABOLISM //how fast the reagent is metabolized by the mob
 	var/overrides_metab = 0
 	var/overdose_threshold = 0
@@ -94,7 +94,7 @@
 
 /datum/reagent/proc/addiction_act_stage1(mob/living/M)
 	if(prob(30))
-		to_chat(M, "<span class='notice'>You feel like some [name] right about now.</span>")
+		to_chat(M, "<span class='notice'>You feel like having some [name] right about now.</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage2(mob/living/M)

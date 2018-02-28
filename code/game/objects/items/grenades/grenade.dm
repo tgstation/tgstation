@@ -17,6 +17,14 @@
 	var/det_time = 50
 	var/display_timer = 1
 
+/obj/item/grenade/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(src, 'sound/items/eatfood.ogg', 50, 1)
+	preprime(user, det_time)
+	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
+	sleep(det_time)//so you dont die instantly
+	return BRUTELOSS
+
 /obj/item/grenade/deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		prime()
@@ -24,7 +32,7 @@
 		qdel(src)
 
 /obj/item/grenade/proc/clown_check(mob/living/carbon/human/user)
-	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
 		preprime(user, 5, FALSE)
 		return FALSE
@@ -35,7 +43,7 @@
 	..()
 	if(display_timer)
 		if(det_time > 1)
-			to_chat(user, "The timer is set to [det_time/10] second\s.")
+			to_chat(user, "The timer is set to [DisplayTimeText(det_time)].")
 		else
 			to_chat(user, "\The [src] is set for instant detonation.")
 
@@ -46,11 +54,10 @@
 			preprime(user)
 
 /obj/item/grenade/proc/log_grenade(mob/user, turf/T)
-	var/area/A = get_area(T)
 	var/message = "[ADMIN_LOOKUPFLW(user)]) has primed \a [src] for detonation at [ADMIN_COORDJMP(T)]"
 	GLOB.bombers += message
 	message_admins(message)
-	log_game("[key_name(user)] has primed \a [src] for detonation at [A.name] [COORD(T)].")
+	log_game("[key_name(user)] has primed \a [src] for detonation at [get_area_name(T, TRUE)] [COORD(T)].")
 
 /obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
 	var/turf/T = get_turf(src)
@@ -61,7 +68,7 @@
 			var/mob/living/carbon/C = user
 			C.throw_mode_on()
 		if(msg)
-			to_chat(user, "<span class='warning'>You prime \the [src]! [det_time/10] seconds!</span>")
+			to_chat(user, "<span class='warning'>You prime [src]! [DisplayTimeText(det_time)]!</span>")
 	playsound(src, 'sound/weapons/armbomb.ogg', volume, 1)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"

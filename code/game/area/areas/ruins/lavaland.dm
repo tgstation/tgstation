@@ -32,9 +32,44 @@
 /area/ruin/powered/seedvault
 	icon_state = "dk_yellow"
 
-/area/ruin/powered/syndicate_lava_base
+/area/ruin/unpowered/syndicate_lava_base
 	name = "Secret Base"
 	icon_state = "dk_yellow"
+	ambientsounds = HIGHSEC
+
+/area/ruin/unpowered/syndicate_lava_base/engineering
+	name = "Syndicate Lavaland Engineering"
+
+/area/ruin/unpowered/syndicate_lava_base/medbay
+	name = "Syndicate Lavaland Medbay"
+
+/area/ruin/unpowered/syndicate_lava_base/arrivals
+	name = "Syndicate Lavaland Arrivals"
+
+/area/ruin/unpowered/syndicate_lava_base/bar
+	name = "Syndicate Lavaland Bar"
+
+/area/ruin/unpowered/syndicate_lava_base/main
+	name = "Syndicate Lavaland Primary Hallway"
+
+/area/ruin/unpowered/syndicate_lava_base/cargo
+	name = "Syndicate Lavaland Cargo Bay"
+
+/area/ruin/unpowered/syndicate_lava_base/chemistry
+	name = "Syndicate Lavaland Chemistry"
+
+/area/ruin/unpowered/syndicate_lava_base/virology
+	name = "Syndicate Lavaland Virology"
+
+/area/ruin/unpowered/syndicate_lava_base/testlab
+	name = "Syndicate Lavaland Experimentation Lab"
+
+/area/ruin/unpowered/syndicate_lava_base/dormitories
+	name = "Syndicate Lavaland Dormitories"
+
+/area/ruin/unpowered/syndicate_lava_base/telecomms
+	name = "Syndicate Lavaland Telecommunications"
+
 
 //Xeno Nest
 

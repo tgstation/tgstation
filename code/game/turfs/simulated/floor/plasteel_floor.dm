@@ -318,6 +318,8 @@
 
 /turf/open/floor/plasteel/freezer
 	icon_state = "freezerfloor"
+/turf/open/floor/plasteel/freezer/airless
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plasteel/bar
 	icon_state = "bar"
@@ -340,6 +342,8 @@
 	icon_state = "vault"
 /turf/open/floor/plasteel/vault/corner
 	icon_state = "vaultcorner"
+/turf/open/floor/plasteel/vault/airless
+	initial_gas_mix = "TEMP=2.7"
 /turf/open/floor/plasteel/vault/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/vault/telecomms/mainframe

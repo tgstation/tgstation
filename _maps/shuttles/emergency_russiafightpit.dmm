@@ -277,8 +277,7 @@
 "aW" = (
 /obj/docking_port/mobile/emergency{
 	height = 15;
-	name = "Box emergency shuttle";
-	timid = 1
+	name = "Box emergency shuttle"
 	},
 /obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Airlock"

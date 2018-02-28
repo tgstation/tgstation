@@ -27,6 +27,14 @@ GLOBAL_PROTECT(href_token)
 	var/deadmined
 
 /datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE)
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		if (!target) //only del if this is a true creation (and not just a New() proc call), other wise trialmins/coders could abuse this to deadmin other admins
+			QDEL_IN(src, 0)
+			CRASH("Admin proc call creation of admin datum")
+		return
 	if(!ckey)
 		QDEL_IN(src, 0)
 		throw EXCEPTION("Admin datum created without a ckey")
@@ -48,8 +56,20 @@ GLOBAL_PROTECT(href_token)
 	else
 		deactivate()
 
+/datum/admins/Destroy()
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		return QDEL_HINT_LETMELIVE
+	. = ..()
 
 /datum/admins/proc/activate()
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		return
 	GLOB.deadmins -= target
 	GLOB.admin_datums[target] = src
 	deadmined = FALSE
@@ -58,6 +78,11 @@ GLOBAL_PROTECT(href_token)
 
 
 /datum/admins/proc/deactivate()
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		return
 	GLOB.deadmins[target] = src
 	GLOB.admin_datums -= target
 	deadmined = TRUE
@@ -70,14 +95,14 @@ GLOBAL_PROTECT(href_token)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"
 		message_admins("[key_name_admin(usr)][msg]")
-		log_admin_private("[key_name(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
 		return
 
 	if(istype(C))
 		if(C.ckey != target)
 			var/msg = " has attempted to associate with [target]'s admin datum"
 			message_admins("[key_name_admin(C)][msg]")
-			log_admin_private("[key_name(C)][msg]")
+			log_admin("[key_name(C)][msg]")
 			return
 		if (deadmined)
 			activate()
@@ -88,6 +113,11 @@ GLOBAL_PROTECT(href_token)
 		GLOB.admins |= C
 
 /datum/admins/proc/disassociate()
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin("[key_name(usr)][msg]")
+		return
 	if(owner)
 		GLOB.admins -= owner
 		owner.remove_admin_verbs()

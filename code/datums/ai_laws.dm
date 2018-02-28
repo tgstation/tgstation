@@ -190,7 +190,7 @@
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
 	..()
-	for(var/line in world.file2list("config/silicon_laws.txt"))
+	for(var/line in world.file2list("[global.config.directory]/silicon_laws.txt"))
 		if(!line)
 			continue
 		if(findtextEx(line,"#",1,2))
@@ -295,7 +295,7 @@
 	supplied[number + 1] = law
 
 /datum/ai_laws/proc/replace_random_law(law,groups)
-	var/replaceable_groups = list(LAW_ZEROTH = 0,LAW_ION = 0,LAW_SUPPLIED = 0,LAW_INHERENT = 0)
+	var/replaceable_groups = list()
 	if(zeroth && (LAW_ZEROTH in groups))
 		replaceable_groups[LAW_ZEROTH] = 1
 	if(ion.len && (LAW_ION in groups))
@@ -383,7 +383,7 @@
 		zeroth_borg = null
 		return
 	else
-		if(owner && owner.mind.special_role)
+		if(owner && owner.mind && owner.mind.special_role)
 			return
 		else
 			zeroth = null

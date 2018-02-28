@@ -41,10 +41,14 @@
 /datum/component/decal/proc/apply(atom/thing)
 	var/atom/master = thing || parent
 	master.add_overlay(pic, TRUE)
+	if(isitem(master))
+		addtimer(CALLBACK(master, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
 
 /datum/component/decal/proc/remove(atom/thing)
 	var/atom/master = thing || parent
 	master.cut_overlay(pic, TRUE)
+	if(isitem(master))
+		addtimer(CALLBACK(master, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
 
 /datum/component/decal/proc/rotate_react(old_dir, new_dir)
 	if(old_dir == new_dir)

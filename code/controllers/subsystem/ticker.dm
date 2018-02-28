@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/login_music							//music played in pregame lobby
 	var/round_end_sound						//music/jingle played when the world reboots
-	var/round_end_sound_sent = FALSE			//If all clients have loaded it
+	var/round_end_sound_sent = TRUE			//If all clients have loaded it
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
@@ -43,7 +43,8 @@ SUBSYSTEM_DEF(ticker)
 	var/timeLeft						//pregame timer
 	var/start_at
 
-	var/gametime_offset = 432000 // equal to 12 hours, making gametime at roundstart 12:00:00
+	var/gametime_offset = 432000		//Deciseconds to add to world.time for station time.
+	var/station_time_rate_multiplier = 12		//factor of station time progressal vs real time.
 
 	var/totalPlayers = 0					//used for pregame stats on statpanel
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
@@ -61,13 +62,65 @@ SUBSYSTEM_DEF(ticker)
 
 	var/round_start_time = 0
 	var/list/round_start_events
+	var/list/round_end_events
 	var/mode_result = "undefined"
 	var/end_state = "undefined"
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 
-	login_music = choose_sound(CONFIG_GET(string/lobby_music_folder), trim(file2text("data/last_round_lobby_music.txt")))
+	var/list/byond_sound_formats = list(
+		"mid"  = TRUE,
+		"midi" = TRUE,
+		"mod"  = TRUE,
+		"it"   = TRUE,
+		"s3m"  = TRUE,
+		"xm"   = TRUE,
+		"oxm"  = TRUE,
+		"wav"  = TRUE,
+		"ogg"  = TRUE,
+		"raw"  = TRUE,
+		"wma"  = TRUE,
+		"aiff" = TRUE
+	)
+
+	var/list/provisional_title_music = flist("[global.config.directory]/title_music/sounds/")
+	var/list/music = list()
+	var/use_rare_music = prob(1)
+
+	for(var/S in provisional_title_music)
+		var/lower = lowertext(S)
+		var/list/L = splittext(lower,"+")
+		switch(L.len)
+			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
+				if(use_rare_music)
+					if(L[1] == "rare" && L[2] == SSmapping.config.map_name)
+						music += S
+					else if(L[2] == "rare" && L[1] == SSmapping.config.map_name)
+						music += S
+			if(2) //rare+sound.ogg or MAP+sound.ogg -- Rare sounds or Map-specific sounds
+				if((use_rare_music && L[1] == "rare") || (L[1] == SSmapping.config.map_name))
+					music += S
+			if(1) //sound.ogg -- common sound
+				music += S
+
+	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
+	if(music.len > 1)
+		music -= old_login_music
+
+	for(var/S in music)
+		var/list/L = splittext(S,".")
+		if(L.len >= 2)
+			var/ext = lowertext(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
+			if(byond_sound_formats[ext])
+				continue
+		music -= S
+
+	if(isemptylist(music))
+		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+		login_music = pick(music)
+	else
+		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
 
 
 	if(!GLOB.syndicate_code_phrase)
@@ -77,6 +130,10 @@ SUBSYSTEM_DEF(ticker)
 
 	..()
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
+	if(CONFIG_GET(flag/randomize_shift_time))
+		gametime_offset = rand(0, 23) HOURS
+	else if(CONFIG_GET(flag/shift_time_realtime))
+		gametime_offset = world.timeofday
 
 /datum/controller/subsystem/ticker/fire()
 	switch(current_state)
@@ -258,11 +315,19 @@ SUBSYSTEM_DEF(ticker)
 	send2irc("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 	setup_done = TRUE
 
+//These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
 	if(!HasRoundStarted())
 		LAZYADD(round_start_events, cb)
 	else
 		cb.InvokeAsync()
+
+//These callbacks will fire before roundend report
+/datum/controller/subsystem/ticker/proc/OnRoundend(datum/callback/cb)
+	if(current_state >= GAME_STATE_FINISHED)
+		cb.InvokeAsync()
+	else
+		LAZYADD(round_end_events, cb)
 
 /datum/controller/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
 	if(bomb)	//BOOM
@@ -509,7 +574,11 @@ SUBSYSTEM_DEF(ticker)
 	set waitfor = FALSE
 	round_end_sound_sent = FALSE
 	round_end_sound = fcopy_rsc(the_sound)
-	load_rsc_on_all_clients(round_end_sound)
+	for(var/thing in GLOB.clients)
+		var/client/C = thing
+		if (!C)
+			continue
+		C.Export("##action=load_rsc", round_end_sound)
 	round_end_sound_sent = TRUE
 
 /datum/controller/subsystem/ticker/proc/Reboot(reason, end_string, delay)
@@ -517,11 +586,6 @@ SUBSYSTEM_DEF(ticker)
 	if(usr && !check_rights(R_SERVER, TRUE))
 		return
 
-	if(!round_end_sound)
-		round_end_sound_sent = FALSE
-		round_end_sound = fcopy_rsc(choose_sound(CONFIG_GET(string/roundend_sound_folder)))
-		load_rsc_on_all_clients(round_end_sound)
-		round_end_sound_sent = TRUE
 	if(!delay)
 		delay = CONFIG_GET(number/round_end_countdown) * 10
 
@@ -530,7 +594,7 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
 		return
 
-	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
+	to_chat(world, "<span class='boldannounce'>Rebooting World in [DisplayTimeText(delay)]. [reason]</span>")
 
 	var/start_wait = world.time
 	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2))	//don't wait forever
@@ -548,55 +612,16 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
+	if(!round_end_sound)
+		round_end_sound = pick(\
+		'sound/roundend/newroundsexy.ogg',
+		'sound/roundend/apcdestroyed.ogg',
+		'sound/roundend/bangindonk.ogg',
+		'sound/roundend/leavingtg.ogg',
+		'sound/roundend/its_only_game.ogg',
+		'sound/roundend/yeehaw.ogg',
+		'sound/roundend/disappointed.ogg'\
+		)
 
-	SEND_SOUND(world, round_end_sound)
+	SEND_SOUND(world, sound(round_end_sound))
 	text2file(login_music, "data/last_round_lobby_music.txt")
-
-/datum/controller/subsystem/ticker/proc/choose_sound(folder, dont_use = "", sound_prob = 1)
-	var/list/sound_list = flist(folder)
-	var/list/sounds = list()
-	var/use_rare_sound = prob(sound_prob)
-
-	var/list/byond_sound_formats = list(
-		"mid"  = TRUE,
-		"midi" = TRUE,
-		"mod"  = TRUE,
-		"it"   = TRUE,
-		"s3m"  = TRUE,
-		"xm"   = TRUE,
-		"oxm"  = TRUE,
-		"wav"  = TRUE,
-		"ogg"  = TRUE,
-		"raw"  = TRUE,
-		"wma"  = TRUE,
-		"aiff" = TRUE
-	)
-
-	for(var/S in sound_list)
-		var/lower = lowertext(S)
-		var/list/L = splittext(lower,"+")
-		switch(L.len)
-			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
-				if(use_rare_sound)
-					if(L[1] == "rare" && L[2] == SSmapping.config.map_name)
-						sounds += S
-					else if(L[2] == "rare" && L[1] == SSmapping.config.map_name)
-						sounds += S
-			if(2) //rare+sound.ogg or MAP+sound.ogg -- Rare sounds or Map-specific sounds
-				if((use_rare_sound && L[1] == "rare") || (L[1] == SSmapping.config.map_name))
-					sounds += S
-			if(1) //sound.ogg -- common sound
-				sounds += S
-
-	if(dont_use && lentext(dont_use) > 1)
-		sounds -= dont_use
-
-	for(var/S in sounds)
-		var/list/L = splittext(S,".")
-		if(L.len >= 2)
-			var/ext = lowertext(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
-			if(byond_sound_formats[ext])
-				continue
-		sounds -= S
-
-	return "[folder][pick(sounds)]"

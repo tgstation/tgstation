@@ -98,11 +98,11 @@
 	var/list/new_overlay_types = tile_graphic()
 	var/list/atmos_overlay_types = src.atmos_overlay_types // Cache for free performance
 
-	#if DM_VERSION >= 513
+	/*#if DM_VERSION >= 513
 	#warning 512 is stable now for sure, remove the old code
-	#endif
+	#endif*/
 
-	#if DM_VERSION >= 512
+	/*#if DM_VERSION >= 512
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
 			vars["vis_contents"] -= overlay
@@ -112,7 +112,7 @@
 			vars["vis_contents"] += new_overlay_types - atmos_overlay_types //don't add overlays that already exist
 		else
 			vars["vis_contents"] += new_overlay_types
-	#else
+	#else*/
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
 			cut_overlay(overlay)
@@ -122,7 +122,7 @@
 			add_overlay(new_overlay_types - atmos_overlay_types) //don't add overlays that already exist
 		else
 			add_overlay(new_overlay_types)
-	#endif
+	//#endif
 
 	UNSETEMPTY(new_overlay_types)
 	src.atmos_overlay_types = new_overlay_types

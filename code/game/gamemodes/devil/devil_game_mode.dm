@@ -64,18 +64,18 @@
 	add_devil_objectives(devil,2)
 
 /proc/is_devil(mob/living/M)
-	return M && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	return M && M.mind && M.mind.has_antag_datum(/datum/antagonist/devil)
 
 /proc/add_devil(mob/living/L, ascendable = FALSE)
 	if(!L || !L.mind)
 		return FALSE
-	var/datum/antagonist/devil/devil_datum = L.mind.add_antag_datum(ANTAG_DATUM_DEVIL)
+	var/datum/antagonist/devil/devil_datum = L.mind.add_antag_datum(/datum/antagonist/devil)
 	devil_datum.ascendable = ascendable
 	return devil_datum
 
 /proc/remove_devil(mob/living/L)
 	if(!L || !L.mind)
 		return FALSE
-	var/datum/antagonist/devil_datum = L.mind.has_antag_datum(ANTAG_DATUM_DEVIL)
+	var/datum/antagonist/devil_datum = L.mind.has_antag_datum(/datum/antagonist/devil)
 	devil_datum.on_removal()
 	return TRUE

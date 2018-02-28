@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -97,7 +97,6 @@
 "s" = (
 /obj/structure/table/optable/abductor,
 /obj/item/cautery/alien,
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},

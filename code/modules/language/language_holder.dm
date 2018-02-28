@@ -31,8 +31,11 @@
 	copy.omnitongue = src.omnitongue
 	return copy
 
-/datum/language_holder/proc/grant_language(datum/language/dt)
-	languages[dt] = TRUE
+/datum/language_holder/proc/grant_language(datum/language/dt, shadow = FALSE)
+	if(shadow)
+		shadow_languages[dt] = TRUE
+	else
+		languages[dt] = TRUE
 
 /datum/language_holder/proc/grant_all_languages(omnitongue=FALSE)
 	for(var/la in GLOB.all_languages)
@@ -47,8 +50,11 @@
 		possible += dt
 	. = safepick(possible)
 
-/datum/language_holder/proc/remove_language(datum/language/dt)
-	languages -= dt
+/datum/language_holder/proc/remove_language(datum/language/dt, shadow = FALSE)
+	if(shadow)
+		shadow_languages -= dt
+	else
+		languages -= dt
 
 /datum/language_holder/proc/remove_all_languages()
 	languages.Cut()
@@ -120,6 +126,7 @@
 
 /datum/language_holder/slime
 	languages = list(/datum/language/common, /datum/language/slime)
+	only_speaks_language = /datum/language/slime
 
 /datum/language_holder/lightbringer
 	// TODO change to a lightbringer specific sign language

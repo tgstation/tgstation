@@ -1,5 +1,5 @@
 /obj/item/melee
-	needs_permit = 1
+	item_flags = NEEDS_PERMIT
 
 /obj/item/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(target.check_block())
@@ -44,6 +44,10 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP
 
+/obj/item/melee/synthetic_arm_blade/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 60, 80) //very imprecise
+
 /obj/item/melee/sabre
 	name = "officer's sabre"
 	desc = "An elegant weapon, its monomolecular edge is capable of cutting through flesh and bone with ease."
@@ -52,7 +56,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
-	unique_rename = 1
+	obj_flags = UNIQUE_RENAME
 	force = 15
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
@@ -62,6 +66,10 @@
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
+
+/obj/item/melee/sabre/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
@@ -99,7 +107,7 @@
 		return ..()
 
 	add_fingerprint(user)
-	if((user.has_disability(DISABILITY_CLUMSY)) && prob(50))
+	if((user.has_trait(TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
 		user.Knockdown(60 * force)
 		if(ishuman(user))
@@ -148,7 +156,7 @@
 	item_state = null
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	needs_permit = 0
+	item_flags = NONE
 	force = 0
 	on = FALSE
 

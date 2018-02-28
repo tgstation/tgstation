@@ -38,8 +38,7 @@
 		if(11 to 15)
 			new /obj/item/reagent_containers/glass/beaker/bluespace(src)
 		if(16 to 20)
-			for(var/i in 1 to 10)
-				new /obj/item/ore/diamond(src)
+			new /obj/item/stack/ore/diamond(src, 10)
 		if(21 to 25)
 			for(var/i in 1 to 5)
 				new /obj/item/poster/random_contraband(src)
@@ -86,8 +85,7 @@
 				var/newitem = pick(subtypesof(/obj/item/stock_parts) - /obj/item/stock_parts/subspace)
 				new newitem(src)
 		if(69 to 70)
-			for(var/i in 1 to 5)
-				new /obj/item/ore/bluespace_crystal(src)
+			new /obj/item/stack/ore/bluespace_crystal(src, 5)
 		if(71 to 72)
 			new /obj/item/pickaxe/drill(src)
 		if(73 to 74)
@@ -156,7 +154,7 @@
 	if(locked)
 		to_chat(user, "<span class='notice'>The crate is locked with a Deca-code lock.</span>")
 		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text
-		if(user.canUseTopic(src, 1))
+		if(user.canUseTopic(src, BE_CLOSE))
 			var/list/sanitised = list()
 			var/sanitycheck = 1
 			for(var/i=1,i<=length(input),i++) //put the guess into a list
@@ -182,21 +180,18 @@
 		return ..()
 
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
-	if(!user.canUseTopic(src))
+	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)
-		if(istype(W, /obj/item/card/emag))
-			boom(user)
-			return
-		else if(istype(W, /obj/item/device/multitool))
+		if(istype(W, /obj/item/device/multitool))
 			to_chat(user, "<span class='notice'>DECA-CODE LOCK REPORT:</span>")
 			if(attempts == 1)
 				to_chat(user, "<span class='warning'>* Anti-Tamper Bomb will activate on next failed access attempt.</span>")
 			else
-				to_chat(user, "<span class='notice'>* Anti-Tamper Bomb will activate after [src.attempts] failed access attempts.</span>")
+				to_chat(user, "<span class='notice'>* Anti-Tamper Bomb will activate after [attempts] failed access attempts.</span>")
 			if(lastattempt != null)
 				var/list/guess = list()
 				var/list/answer = list()
@@ -216,6 +211,10 @@
 				to_chat(user, "<span class='notice'>Last code attempt, [lastattempt], had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions.</span>")
 			return
 	return ..()
+
+/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
+	if(locked)
+		boom(user)
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user)
 	if(locked)

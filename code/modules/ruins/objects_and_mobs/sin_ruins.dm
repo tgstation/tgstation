@@ -12,9 +12,9 @@
 /obj/structure/cursed_slot_machine/attack_hand(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
-	if(in_use)
+	if(obj_flags & IN_USE)
 		return
-	in_use = TRUE
+	obj_flags |= IN_USE
 	user.adjustCloneLoss(20)
 	if(user.stat)
 		to_chat(user, "<span class='userdanger'>No... just one more try...</span>")
@@ -28,7 +28,7 @@
 
 /obj/structure/cursed_slot_machine/proc/determine_victor(mob/living/user)
 	icon_state = "slots1"
-	in_use = FALSE
+	obj_flags &= ~IN_USE
 	if(prob(win_prob))
 		playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, 0)
 		new/obj/structure/cursed_money(get_turf(src))
@@ -100,9 +100,16 @@
 /obj/structure/mirror/magic/pride/curse(mob/user)
 	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B></span>", \
 	"<span class='notice'>Perfect. Much better! Now <i>nobody</i> will be able to resist yo-</span>")
+
 	var/turf/T = get_turf(user)
-	T.ChangeTurf(/turf/open/chasm/straight_down)
+	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS)
+	var/turf/dest
+	if (levels.len)
+		dest = locate(T.x, T.y, pick(levels))
+
+	T.ChangeTurf(/turf/open/chasm)
 	var/turf/open/chasm/C = T
+	C.set_target(dest)
 	C.drop(user)
 
 //can't be bothered to do sloth right now, will make later

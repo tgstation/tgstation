@@ -78,9 +78,6 @@
 		O.setBrainLoss(getBrainLoss(), 0)
 		O.updatehealth()
 		O.radiation = radiation
-		for(var/T in get_traumas())
-			var/datum/brain_trauma/BT = T
-			O.gain_trauma(BT.type, BT.permanent)
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
@@ -238,9 +235,6 @@
 		O.setBrainLoss(getBrainLoss(), 0)
 		O.updatehealth()
 		O.radiation = radiation
-		for(var/T in get_traumas())
-			var/datum/brain_trauma/BT = T
-			O.gain_trauma(BT.type, BT.permanent)
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
@@ -329,30 +323,31 @@
 	return ..()
 
 /mob/proc/AIize(transfer_after = TRUE)
-	if(client)
-		stop_sound_channel(CHANNEL_LOBBYMUSIC)
-
-	var/turf/loc_landmark
-	for(var/obj/effect/landmark/start/sloc in GLOB.landmarks_list)
-		if(sloc.name != "AI")
-			continue
+	var/list/turf/landmark_loc = list()
+	for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
 		if(locate(/mob/living/silicon/ai) in sloc.loc)
 			continue
-		loc_landmark = sloc.loc
-	if(!loc_landmark)
-		for(var/obj/effect/landmark/tripai/L in GLOB.landmarks_list)
-			if(locate(/mob/living/silicon/ai) in L.loc)
-				continue
-			loc_landmark = L.loc
-	if(!loc_landmark)
+		if(sloc.primary_ai)
+			LAZYCLEARLIST(landmark_loc)
+			landmark_loc += sloc.loc
+			break
+		landmark_loc += sloc.loc
+	if(!landmark_loc.len)
 		to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
 		for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
-			loc_landmark = sloc.loc
+			landmark_loc += sloc.loc
+
+	if(!landmark_loc.len)
+		message_admins("Could not find ai landmark for [src]. Yell at a mapper! We are spawning them at their current location.")
+		landmark_loc += loc
+
+	if(client)
+		stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 	if(!transfer_after)
 		mind.active = FALSE
 
-	. = new /mob/living/silicon/ai(loc_landmark, null, src)
+	. = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
 
 	qdel(src)
 
@@ -373,9 +368,6 @@
 		qdel(t)
 
 	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot(loc)
-
-	// cyborgs produced by Robotize get an automatic power cell
-	R.cell = new /obj/item/stock_parts/cell/high(R, 7500)
 
 	R.gender = gender
 	R.invisibility = 0

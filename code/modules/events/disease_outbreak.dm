@@ -39,7 +39,7 @@
 			continue
 		if(H.stat == DEAD)
 			continue
-		if(VIRUSIMMUNE in H.dna.species.species_traits) //Don't pick someone who's virus immune, only for it to not do anything.
+		if(H.has_trait(TRAIT_VIRUSIMMUNE)) //Don't pick someone who's virus immune, only for it to not do anything.
 			continue
 		var/foundAlready = FALSE	// don't infect someone that already has a disease
 		for(var/thing in H.viruses)
@@ -51,7 +51,7 @@
 		var/datum/disease/D
 		if(!advanced_virus)
 			if(virus_type == /datum/disease/dnaspread)		//Dnaspread needs strain_data set to work.
-				if(!H.dna || (H.has_disability(DISABILITY_BLIND)))	//A blindness disease would be the worst.
+				if(!H.dna || (H.has_trait(TRAIT_BLIND)))	//A blindness disease would be the worst.
 					continue
 				D = new virus_type()
 				var/datum/disease/dnaspread/DS = D

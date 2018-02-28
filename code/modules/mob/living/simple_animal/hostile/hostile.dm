@@ -170,6 +170,11 @@
 	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
 		return FALSE
 
+	if(ismob(the_target)) //Target is in godmode, ignore it.
+		var/mob/M = the_target
+		if(M.status_flags & GODMODE)
+			return FALSE
+
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return FALSE
 	if(search_objects < 2)
@@ -319,14 +324,18 @@
 			else
 				M.Goto(src,M.move_to_delay,M.minimum_distance)
 
-/mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
+/mob/living/simple_animal/hostile/proc/CheckFriendlyFire(atom/A)
 	if(check_friendly_fire)
 		for(var/turf/T in getline(src,A)) // Not 100% reliable but this is faster than simulating actual trajectory
 			for(var/mob/living/L in T)
 				if(L == src || L == A)
 					continue
 				if(faction_check_mob(L) && !attack_same)
-					return
+					return TRUE
+
+/mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
+	if(CheckFriendlyFire(A))
+		return
 	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
 
 	if(rapid)
@@ -346,7 +355,7 @@
 	if(casingtype)
 		var/obj/item/ammo_casing/casing = new casingtype(startloc)
 		playsound(src, projectilesound, 100, 1)
-		casing.fire_casing(targeted_atom, src, null, null, null, zone_override = ran_zone())
+		casing.fire_casing(targeted_atom, src, null, null, null, ran_zone())
 	else if(projectiletype)
 		var/obj/item/projectile/P = new projectiletype(startloc)
 		playsound(src, projectilesound, 100, 1)
@@ -476,12 +485,15 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 		toggle_ai(AI_Z_OFF)
 		return
 
-	if (isturf(T) && !is_station_level(T.z))
+	var/cheap_search = isturf(T) && !is_station_level(T.z)
+	if (cheap_search)
 		tlist = ListTargetsLazy(T.z)
 	else
 		tlist = ListTargets()
 
 	if(AIStatus == AI_IDLE && FindTarget(tlist, 1))
+		if(cheap_search) //Try again with full effort
+			FindTarget()
 		toggle_ai(AI_ON)
 
 /mob/living/simple_animal/hostile/proc/ListTargetsLazy(var/_Z)//Step 1, find out what we can see

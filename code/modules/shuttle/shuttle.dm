@@ -167,6 +167,9 @@
 
 	var/last_dock_time
 
+	var/datum/map_template/shuttle/roundstart_template
+	var/json_key
+
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
 	SSshuttle.stationary += src
@@ -183,6 +186,22 @@
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#f00")
 	#endif
+
+/obj/docking_port/stationary/proc/load_roundstart()
+	if(json_key)
+		var/sid = SSmapping.config.shuttles[json_key]
+		roundstart_template = SSmapping.shuttle_templates[sid]
+		if(!roundstart_template)
+			CRASH("json_key:[json_key] value \[[sid]\] resulted in a null shuttle template for [src]")
+	else if(roundstart_template) // passed a PATH
+		var/sid = "[initial(roundstart_template.port_id)]_[initial(roundstart_template.suffix)]"
+
+		roundstart_template = SSmapping.shuttle_templates[sid]
+		if(!roundstart_template)
+			CRASH("Invalid path ([roundstart_template]) passed to docking port.")
+
+	if(roundstart_template)
+		SSshuttle.manipulator.action_load(roundstart_template, src)
 
 //returns first-found touching shuttleport
 /obj/docking_port/stationary/get_docked()
@@ -234,7 +253,6 @@
 	var/mode = SHUTTLE_IDLE			//current shuttle mode
 	var/callTime = 100				//time spent in transit (deciseconds). Should not be lower then 10 seconds without editing the animation of the hyperspace ripples.
 	var/ignitionTime = 55			// time spent "starting the engines". Also rate limits how often we try to reserve transit space if its ever full of transiting shuttles.
-	var/roundstart_move				//id of port to send shuttle to at roundstart
 
 	// The direction the shuttle prefers to travel in
 	var/preferred_direction = NORTH
@@ -248,11 +266,12 @@
 
 	var/launch_status = NOLAUNCH
 
-	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
+	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 	// A timid shuttle will not register itself with the shuttle subsystem
-	// All shuttle templates are timid
-	var/timid = FALSE
+	// All shuttle templates MUST be timid, imports will fail if they're not
+	// Shuttle defined already on the map MUST NOT be timid, or they won't work
+	var/timid = TRUE
 
 	var/list/ripples = list()
 	var/engine_coeff = 1 //current engine coeff
@@ -335,17 +354,16 @@
 
 	return SHUTTLE_CAN_DOCK
 
-/obj/docking_port/mobile/proc/check_dock(obj/docking_port/stationary/S)
+/obj/docking_port/mobile/proc/check_dock(obj/docking_port/stationary/S, silent=FALSE)
 	var/status = canDock(S)
 	if(status == SHUTTLE_CAN_DOCK)
 		return TRUE
-	else if(status == SHUTTLE_ALREADY_DOCKED)
+	else
+		if(status != SHUTTLE_ALREADY_DOCKED && !silent) // SHUTTLE_ALREADY_DOCKED is no cause for error
+			var/msg = "Shuttle [src] cannot dock at [S], error: [status]"
+			message_admins(msg)
 		// We're already docked there, don't need to do anything.
 		// Triggering shuttle movement code in place is weird
-		return FALSE
-	else
-		var/msg = "Shuttle [src] cannot dock at [S], error: [status]"
-		message_admins(msg)
 		return FALSE
 
 /obj/docking_port/mobile/proc/transit_failure()
@@ -474,12 +492,6 @@
 	for(var/obj/machinery/door/poddoor/shuttledock/pod in GLOB.airlocks)
 		pod.check()
 
-/obj/docking_port/mobile/proc/findRoundstartDock()
-	return SSshuttle.getDock(roundstart_move)
-
-/obj/docking_port/mobile/proc/dockRoundstart()
-	. = dock_id(roundstart_move)
-
 /obj/docking_port/mobile/proc/dock_id(id)
 	var/port = SSshuttle.getDock(id)
 	if(port)
@@ -489,6 +501,10 @@
 
 /obj/effect/landmark/shuttle_import
 	name = "Shuttle Import"
+
+// Never move the shuttle import landmark, otherwise things get WEIRD
+/obj/effect/landmark/shuttle_import/onShuttleMove()
+	return FALSE
 
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()

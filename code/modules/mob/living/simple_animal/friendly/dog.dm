@@ -31,6 +31,7 @@
 	var/nofur = 0 		//Corgis that have risen past the material plane of existence.
 	gold_core_spawnable = FRIENDLY_SPAWN
 	can_be_held = TRUE
+	collar_type = "corgi"
 
 /mob/living/simple_animal/pet/dog/pug
 	name = "\improper pug"
@@ -42,6 +43,7 @@
 	icon_dead = "pug_dead"
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/pug = 3)
 	gold_core_spawnable = FRIENDLY_SPAWN
+	collar_type = "pug"
 
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
@@ -85,16 +87,16 @@
 	if(def_zone)
 		if(def_zone == "head")
 			if(inventory_head)
-				armorval = inventory_head.armor[type]
+				armorval = inventory_head.armor.getRating(type)
 		else
 			if(inventory_back)
-				armorval = inventory_back.armor[type]
+				armorval = inventory_back.armor.getRating(type)
 		return armorval
 	else
 		if(inventory_head)
-			armorval += inventory_head.armor[type]
+			armorval += inventory_head.armor.getRating(type)
 		if(inventory_back)
-			armorval += inventory_back.armor[type]
+			armorval += inventory_back.armor.getRating(type)
 	return armorval*0.5
 
 /mob/living/simple_animal/pet/dog/corgi/attackby(obj/item/O, mob/user, params)
@@ -295,6 +297,7 @@
 	response_disarm = "bops"
 	response_harm   = "kicks"
 	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
 	var/age = 0
 	var/record_age = 1
 	var/memory_saved = FALSE
@@ -444,6 +447,7 @@
 	faction = list("dog", "cult")
 	gold_core_spawnable = NO_SPAWN
 	nofur = TRUE
+	unique_pet = TRUE
 
 /mob/living/simple_animal/pet/dog/corgi/narsie/Life()
 	..()
@@ -467,7 +471,7 @@
 
 
 /mob/living/simple_animal/pet/dog/corgi/regenerate_icons()
-	cut_overlays()
+	..()
 	if(inventory_head)
 		var/image/head_icon
 		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
@@ -507,10 +511,6 @@
 			back_icon = DF.get_overlay()
 		add_overlay(back_icon)
 
-	if(pcollar)
-		add_overlay(collar)
-		add_overlay(pettag)
-
 	return
 
 
@@ -525,6 +525,7 @@
 	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
+	collar_type = "puppy"
 
 //puppies cannot wear anything.
 /mob/living/simple_animal/pet/dog/corgi/puppy/Topic(href, href_list)
@@ -556,6 +557,8 @@
 	real_name = "Lisa"
 	gender = FEMALE
 	desc = "It's a corgi with a cute pink bow."
+	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
 	icon_state = "lisa"
 	icon_living = "lisa"
 	icon_dead = "lisa_dead"
@@ -564,7 +567,6 @@
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/puppies = 0
-	gold_core_spawnable = NO_SPAWN
 
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)

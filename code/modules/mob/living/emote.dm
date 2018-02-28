@@ -193,6 +193,7 @@
 	key = "laugh"
 	key_third_person = "laughs"
 	message = "laughs."
+	message_mime = "laughs silently!"
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE)
@@ -205,7 +206,7 @@
 	. = ..()
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human")
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
 			if(user.gender == FEMALE)
 				playsound(H, 'sound/voice/human/womanlaugh.ogg', 50, 1)
 			else
@@ -229,6 +230,19 @@
 	message = "points."
 	message_param = "points at %t."
 	restraint_check = TRUE
+
+/datum/emote/living/point/run_emote(mob/user, params)
+	message_param = initial(message_param) // reset
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.get_num_arms() == 0)
+			if(H.get_num_legs() != 0)
+				message_param = "tries to point at %t with a leg, <span class='userdanger'>falling down</span> in the process!"
+				H.Knockdown(20)
+			else
+				message_param = "<span class='userdanger'>bumps their head on the ground</span> trying to motion towards %t."
+				H.adjustBrainLoss(5)
+	..()
 
 /datum/emote/living/pout
 	key = "pout"

@@ -103,6 +103,10 @@
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
+/obj/machinery/suit_storage_unit/open
+	state_open = TRUE
+	density = FALSE
+
 /obj/machinery/suit_storage_unit/Initialize()
 	. = ..()
 	wires = new /datum/wires/suit_storage_unit(src)

@@ -4,7 +4,7 @@
 	var/list/datum/mind/cult = list()
 
 /proc/iscultist(mob/living/M)
-	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CULT)
+	return istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/cult)
 
 /datum/team/cult/proc/is_sacrifice_target(datum/mind/mind)
 	for(var/datum/objective/sacrifice/sac_objective in objectives)
@@ -77,9 +77,10 @@
 		var/datum/mind/cultist = pick(antag_candidates)
 		antag_candidates -= cultist
 		cultists_to_cult += cultist
-		cultist.special_role = "Cultist"
+		cultist.special_role = ROLE_CULTIST
 		cultist.restricted_roles = restricted_jobs
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
+	
 
 	return (cultists_to_cult.len>=required_enemies)
 
@@ -87,6 +88,10 @@
 /datum/game_mode/cult/post_setup()
 	for(var/datum/mind/cult_mind in cultists_to_cult)
 		add_cultist(cult_mind, 0, equip=TRUE)
+		if(!main_cult)
+			var/datum/antagonist/cult/C = cult_mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+			if(C && C.cult_team)
+				main_cult = C.cult_team
 	..()
 
 
@@ -94,7 +99,7 @@
 	if (!istype(cult_mind))
 		return 0
 
-	var/datum/antagonist/cult/new_cultist = new(cult_mind)
+	var/datum/antagonist/cult/new_cultist = new()
 	new_cultist.give_equipment = equip
 
 	if(cult_mind.add_antag_datum(new_cultist))
@@ -104,7 +109,7 @@
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, silent, stun)
 	if(cult_mind.current)
-		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(ANTAG_DATUM_CULT)
+		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(/datum/antagonist/cult)
 		if(!cult_datum)
 			return FALSE
 		cult_datum.silent = silent

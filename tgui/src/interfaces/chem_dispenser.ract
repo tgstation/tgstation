@@ -3,6 +3,15 @@
     <ui-bar min='0' max='{{data.maxEnergy}}' value='{{data.energy}}'>{{Math.fixed(adata.energy)}} Units</ui-bar>
   </ui-section>
 </ui-display>
+<ui-display title='Saved Recipes' button>
+  <ui-section>
+    <ui-button icon='plus' action='add_recipe'>Add Recipe</ui-button>
+	<ui-button icon='minus' action='clear_recipes'>Clear Recipes</ui-button>
+    {{#each data.recipes}}
+      <ui-button grid icon='tint' action='dispense_recipe' params='{"recipe": "{{contents}}"}'>{{recipe_name}}</ui-button>
+    {{/each}}
+  </ui-section>
+</ui-display>
 <ui-display title='Dispense' button>
   {{#partial button}}
     {{#each data.beakerTransferAmounts}}

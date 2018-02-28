@@ -44,8 +44,8 @@
 		"salbutamol", // anti-oxyloss
 		"bicaridine", // NOBREATHE species take brute in crit
 		"corazone", // prevents cardiac arrest and liver failure damage
-		"mimesbane") // stops them gasping from lack of air.
-
+		"mimesbane", // stops them gasping from lack of air.
+		"mutetoxin") // stops them from killing themselves BY DEATHWHISPERING INSIDE A CLONE POD NICE JOB BREAKING IT HERO
 /obj/machinery/clonepod/Initialize()
 	. = ..()
 
@@ -88,8 +88,8 @@
 	var/read_only = 0 //Well,it's still a floppy disk
 
 //Disk stuff.
-/obj/item/disk/data/New()
-	..()
+/obj/item/disk/data/Initialize()
+	. = ..()
 	icon_state = "datadisk[rand(0,6)]"
 	add_overlay("datadisk_gene")
 
@@ -434,14 +434,17 @@
 	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
 	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
 	// In addition to being cellularly damaged and having barely any
+
 	// brain function, they also have no limbs or internal organs.
-	var/static/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
-	for(var/zone in zones)
-		var/obj/item/bodypart/BP = H.get_bodypart(zone)
-		if(BP)
-			BP.drop_limb()
-			BP.forceMove(src)
-			unattached_flesh += BP
+
+	if(!H.has_trait(TRAIT_NODISMEMBER))
+		var/static/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
+		for(var/zone in zones)
+			var/obj/item/bodypart/BP = H.get_bodypart(zone)
+			if(BP)
+				BP.drop_limb()
+				BP.forceMove(src)
+				unattached_flesh += BP
 
 	for(var/o in H.internal_organs)
 		var/obj/item/organ/organ = o

@@ -19,8 +19,8 @@
 	name = "smoke generator"
 	desc = "Unlike most electronics, creating smoke is completely intentional."
 	icon_state = "smoke"
-	extended_desc = "This smoke generator creates clouds of smoke on command.  It can also hold liquids inside, which will go \
-	into the smoke clouds when activated.  The reagents are consumed when smoke is made."
+	extended_desc = "This smoke generator creates clouds of smoke on command. It can also hold liquids inside, which will go \
+	into the smoke clouds when activated. The reagents are consumed when smoke is made."
 
 	container_type = OPENCONTAINER
 	volume = 100
@@ -72,7 +72,7 @@
 	name = "integrated hypo-injector"
 	desc = "This scary looking thing is able to pump liquids into whatever it's pointed at."
 	icon_state = "injector"
-	extended_desc = "This autoinjector can push reagents into another container or someone else outside of the machine.  The target \
+	extended_desc = "This autoinjector can push reagents into another container or someone else outside of the machine. The target \
 	must be adjacent to the machine, and if it is a person, they cannot be wearing thick clothing. Negative given amount makes injector suck out reagents."
 
 	container_type = OPENCONTAINER
@@ -193,7 +193,7 @@
 			activate_pin(3)
 			return
 
-		var/tramount = CLAMP(transfer_amount, 0, reagents.total_volume)
+		var/tramount = abs(transfer_amount)
 
 		if(isliving(AM))
 			var/mob/living/L = AM
@@ -202,13 +202,15 @@
 			busy = TRUE
 			if(do_atom(src, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,null,0)))
 				if(L.transfer_blood_to(src, tramount))
-					L.visible_message("[acting_object] takes a blood sample from [L].")
+					L.visible_message("<span class='danger'>[acting_object] takes a blood sample from [L]!</span>", \
+					"<span class='userdanger'>[acting_object] takes a blood sample from you!</span>")
 				else
 					busy = FALSE
 					activate_pin(3)
 					return
 			busy = FALSE
 		else
+			tramount = min(tramount, AM.reagents.total_volume)
 			if(!AM.reagents.total_volume)
 				activate_pin(3)
 				return
@@ -222,7 +224,7 @@
 	name = "reagent pump"
 	desc = "Moves liquids safely inside a machine, or even nearby it."
 	icon_state = "reagent_pump"
-	extended_desc = "This is a pump, which will move liquids from the source ref to the target ref. The third pin determines \
+	extended_desc = "This is a pump which will move liquids from the source ref to the target ref. The third pin determines \
 	how much liquid is moved per pulse, between 0 and 50. The pump can move reagents to any open container inside the machine, or \
 	outside the machine if it is next to the machine."
 
@@ -280,7 +282,7 @@
 
 /obj/item/integrated_circuit/reagent/storage
 	name = "reagent storage"
-	desc = "Stores liquid inside, and away from electrical components. Can store up to 60u."
+	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u."
 	icon_state = "reagent_storage"
 	extended_desc = "This is effectively an internal beaker."
 
@@ -297,6 +299,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 
+
 /obj/item/integrated_circuit/reagent/storage/do_work()
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
 	push_data()
@@ -304,9 +307,19 @@
 /obj/item/integrated_circuit/reagent/storage/on_reagent_change(changetype)
 	push_vol()
 
+/obj/item/integrated_circuit/reagent/storage/big
+	name = "big reagent storage"
+	icon_state = "reagent_storage_big"
+	desc = "Stores liquid inside the device away from electrical components. Can store up to 180u."
+
+	volume = 180
+
+	complexity = 16
+	spawn_flags = IC_SPAWN_RESEARCH
+
 /obj/item/integrated_circuit/reagent/storage/cryo
 	name = "cryo reagent storage"
-	desc = "Stores liquid inside, and away from electrical components. Can store up to 60u. This will also suppress reactions."
+	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u. This will also suppress reactions."
 	icon_state = "reagent_storage_cryo"
 	extended_desc = "This is effectively an internal cryo beaker."
 
@@ -317,21 +330,9 @@
 	. = ..()
 	reagents.set_reacting(FALSE)
 
-
-/obj/item/integrated_circuit/reagent/storage/big
-	name = "big reagent storage"
-	desc = "Stores liquid inside, and away from electrical components. Can store up to 180u."
-	icon_state = "reagent_storage_big"
-	extended_desc = "This is effectively an internal beaker."
-
-	volume = 180
-
-	complexity = 16
-	spawn_flags = IC_SPAWN_RESEARCH
-
 /obj/item/integrated_circuit/reagent/storage/grinder
 	name = "reagent grinder"
-	desc = "This is reagent grinder.It accepts ref to something and refines it into reagents. Can store up to 100u."
+	desc = "This is reagent grinder. It accepts a ref to something and refines it into reagents. It can store up to 100u."
 	icon_state = "blender"
 	extended_desc = ""
 	inputs = list(
@@ -378,7 +379,7 @@
 
 obj/item/integrated_circuit/reagent/storage/juicer
 	name = "reagent juicer"
-	desc = "This is reagent juicer.It accepts ref to something and refines it into reagents. Can store up to 100u."
+	desc = "This is reagent juicer. It accepts a ref to something and refines it into reagents. It can store up to 100u."
 	icon_state = "blender"
 	extended_desc = ""
 	inputs = list(
@@ -424,7 +425,7 @@ obj/item/integrated_circuit/reagent/storage/juicer
 
 /obj/item/integrated_circuit/reagent/storage/scan
 	name = "reagent scanner"
-	desc = "Stores liquid inside, and away from electrical components. Can store up to 60u. On pulse this beaker will send list of contained reagents."
+	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u. On pulse this beaker will send list of contained reagents."
 	icon_state = "reagent_scan"
 	extended_desc = "Mostly useful for reagent filter."
 
@@ -456,9 +457,9 @@ obj/item/integrated_circuit/reagent/storage/juicer
 	name = "reagent filter"
 	desc = "Filtering liquids by list of desired or unwanted reagents."
 	icon_state = "reagent_filter"
-	extended_desc = "This is a filter, which will move liquids from the source to the target. \
-	It will move all reagents, except list, given in fourth pin if amount value is positive.\
-	Or it will move only desired reagents if amount is negative, The third pin determines \
+	extended_desc = "This is a filter which will move liquids from the source to the target. \
+	It will move all reagents, except those in the unwanted list, given the fourth pin if amount value is positive, \
+	or it will move only desired reagents if amount is negative. The third pin determines \
 	how much reagent is moved per pulse, between 0 and 50. Amount is given for each separate reagent."
 
 	complexity = 8
@@ -523,8 +524,8 @@ obj/item/integrated_circuit/reagent/storage/juicer
 
 /obj/item/integrated_circuit/reagent/storage/heater
 	name = "chemical heater"
-	desc = "Stores liquid inside, and away from electrical components.  Can store up to 60u.  Will heat or freeze reagents \
-	to target temperature, when turned on."
+	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u. It will heat or cool the reagents \
+	to the target temperature when turned on."
 	icon_state = "heater"
 	container_type = OPENCONTAINER
 	complexity = 8

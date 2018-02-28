@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -83,7 +83,6 @@
 /area/ruin/unpowered)
 "n" = (
 /turf/open/floor/plating{
-	broken = 1;
 	icon_state = "platingdmg2"
 	},
 /area/ruin/unpowered)
@@ -95,7 +94,6 @@
 	broken = 1
 	},
 /turf/open/floor/plating{
-	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/ruin/unpowered)
@@ -103,10 +101,10 @@
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"r" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall/rust,
-/area/ruin/unpowered)
+"A" = (
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 a
@@ -162,7 +160,7 @@ d
 d
 d
 d
-r
+d
 d
 d
 d
@@ -215,7 +213,7 @@ i
 i
 i
 d
-a
+A
 a
 "}
 (6,1,1) = {"
@@ -237,7 +235,7 @@ i
 i
 i
 p
-a
+A
 a
 "}
 (7,1,1) = {"

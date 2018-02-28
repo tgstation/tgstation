@@ -88,8 +88,6 @@
 		if(!canMove())
 			return DOCKING_IMMOBILIZED
 
-	CHECK_TICK
-
 	takeoff(old_turfs, new_turfs, moved_atoms, rotation, movement_direction, old_dock, underlying_old_area)
 
 	CHECK_TICK

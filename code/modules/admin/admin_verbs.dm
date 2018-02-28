@@ -64,8 +64,6 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/toggle_antag_hud, 	/*toggle display of the admin antag hud*/
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
-	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
-	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
 	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
@@ -231,9 +229,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/toggle_nuke,
 	/client/proc/cmd_display_del_log,
 	/client/proc/toggle_antag_hud,
-	/client/proc/debug_huds,
-	/client/proc/customiseSNPC,
-	/client/proc/resetSNPC,
+	/client/proc/debug_huds
 	))
 
 /client/proc/add_admin_verbs()
@@ -530,8 +526,10 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	set desc = "Get the estimated range of a bomb, using explosive power."
 
 	var/ex_power = input("Explosive Power:") as null|num
+	if (isnull(ex_power))
+		return
 	var/range = round((2 * ex_power)**GLOB.DYN_EX_SCALE)
-	to_chat(usr, "Estimated Explosive Range: (Devestation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])")
+	to_chat(usr, "Estimated Explosive Range: (Devastation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])")
 
 /client/proc/get_dynex_power()
 	set category = "Debug"
@@ -539,6 +537,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	set desc = "Get the estimated required power of a bomb, to reach a specific range."
 
 	var/ex_range = input("Light Explosion Range:") as null|num
+	if (isnull(ex_range))
+		return
 	var/power = (0.5 * ex_range)**(1/GLOB.DYN_EX_SCALE)
 	to_chat(usr, "Estimated Explosive Power: [power]")
 
@@ -699,7 +699,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 						while ((!tile || !istype(tile)) && --k > 0)
 
 						if (tile)
-							new/mob/living/carbon/human/interactive(tile)
+							var/mob/living/carbon/human/hooman = new(tile)
+							hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
 							testing("Spawned test mob at [tile.x],[tile.y],[tile.z]")
 			while (!area && --j > 0)
 

@@ -46,7 +46,7 @@
 	if(!isnull(target) && !target.toff)
 		charges--
 		to_chat(U, "<span class='notice'>Virus Sent!</span>")
-		target.silent = 1
+		target.silent = TRUE
 		target.ttone = "silence"
 	else
 		to_chat(U, "PDA not found.")
@@ -67,10 +67,10 @@
 		var/difficulty = 0
 		if(target.cartridge)
 			difficulty += BitCount(target.cartridge.access&(CART_MEDICAL | CART_SECURITY | CART_ENGINE | CART_CLOWN | CART_JANITOR | CART_MANIFEST))
-		if(target.cartridge.access & CART_MANIFEST)
-			difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
-		else
-			difficulty += 2
+			if(target.cartridge.access & CART_MANIFEST)
+				difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
+			else
+				difficulty += 2
 		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, target)
 		if(!target.detonatable || prob(difficulty * 15) || (hidden_uplink))
 			U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)

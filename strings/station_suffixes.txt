@@ -5,6 +5,7 @@ Death-trap
 Space-hulk
 Lab
 Hazard
+Academy
 Spess Junk
 Fishery
 No-Moon

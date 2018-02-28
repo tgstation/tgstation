@@ -137,7 +137,7 @@
 
 /datum/status_effect/belligerent/proc/do_movement_toggle(force_damage)
 	var/number_legs = owner.get_num_legs()
-	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.null_rod_check() && number_legs)
+	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check() && number_legs)
 		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
 			if(GLOB.ratvar_awakens)
 				owner.Knockdown(20)
@@ -230,7 +230,7 @@
 		if(owner.confused)
 			owner.confused = 0
 		severity = 0
-	else if(!owner.null_rod_check() && owner.stat != DEAD && severity)
+	else if(!owner.anti_magic_check() && owner.stat != DEAD && severity)
 		var/static/hum = get_sfx('sound/effects/screech.ogg') //same sound for every proc call
 		if(owner.getToxLoss() > MANIA_DAMAGE_TO_CONVERT)
 			if(is_eligible_servant(owner))
@@ -256,6 +256,10 @@
 	id = "cult_ghost"
 	duration = -1
 	alert_type = null
+
+/datum/status_effect/cultghost/on_apply()
+	owner.see_invisible = SEE_INVISIBLE_OBSERVER
+	owner.see_in_dark = 2
 
 /datum/status_effect/cultghost/tick()
 	if(owner.reagents)
@@ -490,4 +494,28 @@
 	name = "Dazzling Lights"
 	desc = "Blinding light dances in your vision, stunning and silencing you. <i>Any damage taken will shorten the light's effects!</i>"
 	icon_state = "kindle"
+	alerttooltipstyle = "clockcult"
+
+
+//Ichorial Stain: Applied to servants revived by a vitality matrix. Prevents them from being revived by one again until the effect fades.
+/datum/status_effect/ichorial_stain
+	id = "ichorial_stain"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 600
+	examine_text = "<span class='warning'>SUBJECTPRONOUN is drenched in thick, blue ichor!</span>"
+	alert_type = /obj/screen/alert/status_effect/ichorial_stain
+
+/datum/status_effect/ichorial_stain/on_apply()
+	owner.visible_message("<span class='danger'>[owner] gets back up, [owner.p_their()] body dripping blue ichor!</span>", \
+	"<span class='userdanger'>Thick blue ichor covers your body; you can't be revived like this again until it dries!</span>")
+	return TRUE
+
+/datum/status_effect/ichorial_stain/on_remove()
+	owner.visible_message("<span class='danger'>The blue ichor on [owner]'s body dries out!</span>", \
+	"<span class='boldnotice'>The ichor on your body is dry - you can now be revived by vitality matrices again!</span>")
+
+/obj/screen/alert/status_effect/ichorial_stain
+	name = "Ichorial Stain"
+	desc = "Your body is covered in blue ichor! You can't be revived by vitality matrices."
+	icon_state = "ichorial_stain"
 	alerttooltipstyle = "clockcult"

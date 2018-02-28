@@ -16,7 +16,7 @@
 
 
 /mob/living/carbon/monkey/handle_blood()
-	if(bodytemperature >= 225 && !(has_disability(DISABILITY_NOCLONE))) //cryosleep or husked people do not pump the blood.
+	if(bodytemperature >= TCRYO && !(has_trait(TRAIT_NOCLONE))) //cryosleep or husked people do not pump the blood.
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL)
 			blood_volume += 0.1 // regenerate blood VERY slowly
@@ -28,10 +28,10 @@
 		bleed_rate = 0
 		return
 
-	if(bodytemperature >= 225 && !(has_disability(DISABILITY_NOCLONE))) //cryosleep or husked people do not pump the blood.
+	if(bodytemperature >= TCRYO && !(has_trait(TRAIT_NOCLONE))) //cryosleep or husked people do not pump the blood.
 
 		//Blood regeneration if there is some space
-		if(blood_volume < BLOOD_VOLUME_NORMAL && !(NOHUNGER in dna.species.species_traits))
+		if(blood_volume < BLOOD_VOLUME_NORMAL && !has_trait(TRAIT_NOHUNGER))
 			var/nutrition_ratio = 0
 			switch(nutrition)
 				if(0 to NUTRITION_LEVEL_STARVING)
@@ -84,7 +84,7 @@
 
 		bleed_rate = max(bleed_rate - 0.5, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
 
-		if(bleed_rate && !bleedsuppress && !(status_flags & FAKEDEATH))
+		if(bleed_rate && !bleedsuppress && !(has_trait(TRAIT_FAKEDEATH)))
 			bleed(bleed_rate)
 
 //Makes a blood drop, leaking amt units of blood from the mob
@@ -98,6 +98,7 @@
 				add_splatter_floor(src.loc, 1)
 
 /mob/living/carbon/human/bleed(amt)
+	amt *= physiology.bleed_mod
 	if(!(NOBLOOD in dna.species.species_traits))
 		..()
 
@@ -201,13 +202,13 @@
 		return "blood"
 
 /mob/living/carbon/monkey/get_blood_id()
-	if(!(has_disability(DISABILITY_NOCLONE)))
+	if(!(has_trait(TRAIT_NOCLONE)))
 		return "blood"
 
 /mob/living/carbon/human/get_blood_id()
 	if(dna.species.exotic_blood)
 		return dna.species.exotic_blood
-	else if((NOBLOOD in dna.species.species_traits) || (has_disability(DISABILITY_NOCLONE)))
+	else if((NOBLOOD in dna.species.species_traits) || (has_trait(TRAIT_NOCLONE)))
 		return
 	return "blood"
 

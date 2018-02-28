@@ -12,7 +12,7 @@
 /obj/item/integrated_circuit/passive/power/solar_cell
 	name = "tiny photovoltaic cell"
 	desc = "It's a very tiny solar cell, generally used in calculators."
-	extended_desc = "The cell generates 1 W of power in optimal lighting conditions.  Less light will result in less power being generated."
+	extended_desc = "This cell generates 1 W of power in optimal lighting conditions. Less light will result in less power being generated."
 	icon_state = "solar_cell"
 	complexity = 8
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -29,7 +29,7 @@
 
 /obj/item/integrated_circuit/passive/power/starter
 	name = "starter"
-	desc = "This tiny circuit will send pulse right after device is turned on. Or when power is restored."
+	desc = "This tiny circuit will send a pulse right after the device is turned on, or when power is restored to it."
 	icon_state = "led"
 	complexity = 1
 	activators = list("pulse out" = IC_PINTYPE_PULSE_OUT)
@@ -53,7 +53,7 @@
 	name = "tesla power relay"
 	desc = "A seemingly enigmatic device which connects to nearby APCs wirelessly and draws power from them."
 	w_class = WEIGHT_CLASS_SMALL
-	extended_desc = "The siphon generates 50 W of energy, so long as an APC is in the same room, with a cell that has energy. It will always drain \
+	extended_desc = "The siphon drains 50 W of power from an APC in the same room as it as long as it has charge remaining. It will always drain \
 	from the 'equipment' power channel."
 	icon_state = "power_relay"
 	complexity = 7
@@ -75,8 +75,8 @@
 	name = "large tesla power relay"
 	desc = "A seemingly enigmatic device which connects to nearby APCs wirelessly and draws power from them, now in industiral size!"
 	w_class = WEIGHT_CLASS_BULKY
-	extended_desc = "The siphon generates 2 kW of energy, so long as an APC is in the same room, with a cell that has energy. It will always drain \
-	from the 'equipment' power channel."
+	extended_desc = "The siphon drains 2 kW of power from an APC in the same room as it as long as it has charge remaining. It will always drain \
+ 	from the 'equipment' power channel."
 	icon_state = "power_relay"
 	complexity = 15
 	spawn_flags = IC_SPAWN_RESEARCH
@@ -89,7 +89,7 @@
 	desc = "Produces electricity from chemicals."
 	icon_state = "chemical_cell"
 	extended_desc = "This is effectively an internal beaker. It will consume and produce power from plasma, slime jelly, welding fuel, carbon,\
-	 ethanol, nutriments and blood , in order of decreasing efficiency. It will consume fuel only if the battery can take more energy."
+	 ethanol, nutriments, and blood in order of decreasing efficiency. It will consume fuel only if the battery can take more energy."
 	container_type = OPENCONTAINER
 	complexity = 4
 	inputs = list()

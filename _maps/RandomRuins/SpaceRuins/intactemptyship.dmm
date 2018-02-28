@@ -80,10 +80,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/authorship)
-"q" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/powered/authorship)
 "r" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -259,9 +255,9 @@ d
 c
 c
 c
-q
+p
 u
-q
+p
 c
 c
 c

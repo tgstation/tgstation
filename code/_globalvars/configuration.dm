@@ -3,7 +3,6 @@ GLOBAL_REAL(config, /datum/controller/configuration)
 GLOBAL_DATUM_INIT(revdata, /datum/getrev, new)
 
 GLOBAL_VAR(host)
-GLOBAL_VAR(join_motd)
 GLOBAL_VAR(station_name)
 GLOBAL_VAR_INIT(game_version, "/tg/ Station 13")
 GLOBAL_VAR_INIT(changelog_hash, "")

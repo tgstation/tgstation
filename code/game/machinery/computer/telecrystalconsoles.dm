@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	var/list/transferlog = list()
 
 /obj/machinery/computer/telecrystals/boss/proc/logTransfer(logmessage)
-	transferlog += ("<b>[worldtime2text()]</b> [logmessage]")
+	transferlog += ("<b>[station_time_timestamp()]</b> [logmessage]")
 
 /obj/machinery/computer/telecrystals/boss/proc/scanUplinkers()
 	for(var/obj/machinery/computer/telecrystals/uplinker/A in urange(scanrange, src.loc))
@@ -154,7 +154,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
 	..()
-	var/list/nukeops = get_antagonists(/datum/antagonist/nukeop)
+	var/list/nukeops = get_antag_minds(/datum/antagonist/nukeop)
 	var/danger = GLOB.joined_player_list.len - nukeops.len
 	danger = CEILING(danger, 10)
 	scaleTC(danger)

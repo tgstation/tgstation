@@ -38,8 +38,8 @@
 	maptext_height = 26
 	maptext_width = 32
 
-/obj/machinery/door_timer/New()
-	..()
+/obj/machinery/door_timer/Initialize()
+	. = ..()
 
 	Radio = new/obj/item/device/radio(src)
 	Radio.listening = 0
