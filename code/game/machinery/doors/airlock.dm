@@ -214,9 +214,9 @@
 				return
 
 			if(density)
-				open()
+				INVOKE_ASYNC(src, .proc/open)
 			else
-				close()
+				INVOKE_ASYNC(src, .proc/close)
 
 		if("bolt")
 			if(command_value == "on" && locked)
@@ -251,6 +251,7 @@
 		return
 	locked = TRUE
 	playsound(src,boltDown,30,0,3)
+	audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null,  1)
 	update_icon()
 
 /obj/machinery/door/airlock/unlock()
@@ -261,6 +262,7 @@
 		return
 	locked = FALSE
 	playsound(src,boltUp,30,0,3)
+	audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null,  1)
 	update_icon()
 
 /obj/machinery/door/airlock/narsie_act()
