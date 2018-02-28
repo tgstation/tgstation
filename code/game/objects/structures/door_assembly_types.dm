@@ -210,6 +210,15 @@
 	mineral = "bananium"
 	glass_type = /obj/machinery/door/airlock/bananium/glass
 
+/obj/structure/door_assembly/door_assembly_tranquillite
+	name = "tranquillite airlock assembly"
+	desc = "Completely silent."
+	icon = 'icons/obj/doors/airlocks/station/freezer.dmi'
+	base_name = "tranquillite airlock"
+	airlock_type = /obj/machinery/door/airlock/tranquillite
+	mineral = "tranquillite"
+	noglass = TRUE
+
 /obj/structure/door_assembly/door_assembly_sandstone
 	name = "sandstone airlock assembly"
 	icon = 'icons/obj/doors/airlocks/station/sandstone.dmi'

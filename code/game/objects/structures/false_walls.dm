@@ -266,6 +266,15 @@
 	walltype = /turf/closed/wall/mineral/bananium
 	canSmoothWith = list(/obj/structure/falsewall/bananium, /turf/closed/wall/mineral/bananium)
 
+/obj/structure/falsewall/tranquillite
+	name = "tranquillite wall"
+	desc = "A wall with tranquillite plating. Nearly invisible."
+	icon = 'icons/turf/walls/tranquillite_wall.dmi'
+	icon_state = "tranquillite"
+	mineral = /obj/item/stack/sheet/mineral/tranquillite
+	walltype = /turf/closed/wall/mineral/tranquillite
+	canSmoothWith = list(/obj/structure/falsewall/tranquillite, /turf/closed/wall/mineral/tranquillite)
+
 
 /obj/structure/falsewall/sandstone
 	name = "sandstone wall"

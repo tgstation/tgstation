@@ -354,6 +354,13 @@
 	spread = 0
 	scan_state = "rock_Bananium"
 
+/turf/closed/mineral/tranquillite
+	mineralType = /obj/item/stack/ore/tranquillite
+	mineralAmt = 3
+	spreadChance = 0
+	spread = 0
+	scan_state = "rock_Tranquillite"
+
 
 /turf/closed/mineral/bscrystal
 	mineralType = /obj/item/stack/ore/bluespace_crystal

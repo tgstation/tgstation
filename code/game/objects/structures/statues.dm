@@ -276,6 +276,17 @@
 		spawn(20)
 			spam_flag = 0
 
+////////////////////////tranquillite///////////////////////////////////////
+
+/obj/structure/statue/tranquillite
+	max_integrity = 300
+	material_drop_type = /obj/item/stack/sheet/mineral/tranquillite
+	desc = "A tranquillite statue with a small engraving plate. Curiously, it is completely blank."
+
+/obj/structure/statue/tranquillite/mime
+	name = "statue of a mime"
+	icon_state = "mime"
+
 /////////////////////sandstone/////////////////////////////////////////
 
 /obj/structure/statue/sandstone

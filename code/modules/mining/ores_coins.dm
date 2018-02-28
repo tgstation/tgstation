@@ -160,6 +160,15 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
+/obj/item/stack/ore/tranquillite
+	name = "tranquillite ore"
+	icon_state = "tranquillite ore"
+	item_state = "tranquillite ore"
+	singular_name = "tranquillite ore chunk"
+	points = 60
+	materials = list(MAT_TRANQUILLITE=MINERAL_MATERIAL_AMOUNT)
+	refined_type = /obj/item/stack/sheet/mineral/tranquillite
+
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
 	icon_state = "Titanium ore"
@@ -387,6 +396,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_bananium_heads"
 	value = 1000 //makes the clown cry
 	materials = list(MAT_BANANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
+
+/obj/item/coin/tranquillite
+	name = "tranquillite coin"
+	cmineral = "tranquillite"
+	icon_state = "coin_tranquillite_heads"
+	value = 1000 //makes the mime cry
+	materials = list(MAT_TRANQUILLITE = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/coin/adamantine
 	name = "adamantine coin"

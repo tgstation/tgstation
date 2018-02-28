@@ -342,6 +342,12 @@
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	coin_type = /obj/item/coin/bananium
 
+/datum/material/tranquillite
+	name = "Tranquillite"
+	id = MAT_TRANQUILLITE
+	sheet_type = /obj/item/stack/sheet/mineral/tranquillite
+	coin_type = /obj/item/coin/tranquillite
+
 /datum/material/titanium
 	name = "Titanium"
 	id = MAT_TITANIUM
