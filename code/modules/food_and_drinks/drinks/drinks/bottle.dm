@@ -300,7 +300,7 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/stabsinthe
 	name = "Caelondia Special Stabsinthe"
-	desc = "A axy, thirst-quenching drink refined from ground nettle needles. Spitting up the needles is considered rude, but effective."
+	desc = "A waxy, thirst-quenching drink refined from ground nettle needles. Spitting up the needles is considered rude, but effective."
 	icon_state = "stabsinthe"
 	list_reagents = list("stabsinthe" = 100)
 

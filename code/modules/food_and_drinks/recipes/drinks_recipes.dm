@@ -603,4 +603,4 @@ datum/chemical_reaction/stabsinthe
 	id = "stabsinthe"
 	results = list("stabsinthe" = 5)
 	required_reagents = list("absinthe" = 5, "acidspit" = 1)
-	mix_message = "The absinthe darkens, and needles float up to the surface"
+	mix_message = "The absinthe darkens, and needles float up to the surface."
