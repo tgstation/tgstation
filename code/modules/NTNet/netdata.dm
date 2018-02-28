@@ -7,7 +7,7 @@
 	var/plaintext_data
 	var/plaintext_data_secondary
 	var/plaintext_passkey
-	var/passkey
+	var/list/passkey
 
 // Process data before sending it
 /datum/netdata/proc/pre_send(datum/component/ntnet_interface/interface)

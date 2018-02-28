@@ -1,9 +1,4 @@
 
-/obj/var/list/req_access = null
-/obj/var/req_access_txt = "0"
-/obj/var/list/req_one_access = null
-/obj/var/req_one_access_txt = "0"
-
 //returns TRUE if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
@@ -68,13 +63,13 @@
 /obj/proc/check_access_list(list/access_list)
 	gen_access()
 
-	if(!istype(req_access, /list)) //something's very wrong
+	if(!islist(req_access)) //something's very wrong
 		return TRUE
 
-	if(!length(req_access) && !length(req_one_access))
+	if(!req_access.len && !length(req_one_access))
 		return TRUE
 
-	if(!length(access_list) || !istype(access_list, /list))
+	if(!length(access_list) || !islist(access_list))
 		return FALSE
 
 	for(var/req in req_access)
