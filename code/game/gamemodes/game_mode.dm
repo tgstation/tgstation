@@ -296,7 +296,7 @@
 //     Player A: 150 / 250 = 0.6 = 60%
 //     Player B: 100 / 250 = 0.4 = 40%
 /datum/game_mode/proc/antag_pick(list/datum/candidates)
-	if(!CONFIG_GET(flag/use_antag_rep) || candidates.len <= 1)
+	if(!CONFIG_GET(flag/use_antag_rep)) // || candidates.len <= 1)
 		return pick(candidates)
 
 	// Tickets start at 100
@@ -310,27 +310,30 @@
 
 	MAX_TICKETS_PER_ROLL += DEFAULT_ANTAG_TICKETS
 
+	var/p_ckey
+	var/p_rep
+
 	for(var/datum/mind/mind in candidates)
-		total_tickets += min(SSpersistence.antag_rep[ckey(mind.key)] + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
+		p_ckey = ckey(mind.key)
+		total_tickets += min(SSpersistence.antag_rep[p_ckey] + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
 
 	var/antag_select = rand(1,total_tickets)
 	var/current = 1
 
 	for(var/datum/mind/mind in candidates)
-		var/p_ckey = ckey(mind.key)
+		p_ckey = ckey(mind.key)
+		p_rep = SSpersistence.antag_rep[p_ckey]
+		p_rep = p_rep == null ? 0 : p_rep
 
 		if(current <= antag_select)
-			var/subtract = min(SSpersistence.antag_rep[p_ckey] + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL) - DEFAULT_ANTAG_TICKETS
-			// var/start = SSpersistence.antag_rep[p_ckey]
-			SSpersistence.antag_rep[p_ckey] = max(0, SSpersistence.antag_rep[p_ckey] - subtract)
-			// WARNING("Player [mind.key] won spending [subtract] tickets from starting value [start]")
+			var/subtract = min(p_rep + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL) - DEFAULT_ANTAG_TICKETS
+			SSpersistence.antag_rep_change[p_ckey] = -subtract
 
-			if(SSpersistence.antag_rep[p_ckey] <= 0)
-				SSpersistence.antag_rep -= p_ckey
+//			WARNING("AR_DEBUG: Player [mind.key] won spending [subtract] tickets from starting value [SSpersistence.antag_rep[p_ckey]]")
 
 			return mind
 
-		current += min(SSpersistence.antag_rep[p_ckey] + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
+		current += min(p_rep + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
 
 	WARNING("Something has gone terribly wrong. /datum/game_mode/proc/antag_pick failed to select a candidate. Falling back to pick()")
 	return pick(candidates)
@@ -431,19 +434,29 @@
 
 
 		if(L.ckey && L.client)
+			var/failed = FALSE
 			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2))	//Connected, but inactive (alt+tabbed or something)
 				msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
-				continue //AFK client
-			if(L.stat)
+				failed = TRUE //AFK client
+			if(!failed && L.stat)
 				if(L.suiciding)	//Suicider
 					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<span class='boldannounce'>Suicide</span>)\n"
-					continue //Disconnected client
-				if(L.stat == UNCONSCIOUS)
+					failed = TRUE //Disconnected client
+				if(!failed && L.stat == UNCONSCIOUS)
 					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (Dying)\n"
-					continue //Unconscious
-				if(L.stat == DEAD)
+					failed = TRUE //Unconscious
+				if(!failed && L.stat == DEAD)
 					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (Dead)\n"
-					continue //Dead
+					failed = TRUE //Dead
+
+			var/p_ckey = L.client.ckey
+//			WARNING("AR_DEBUG: [p_ckey]: failed - [failed], antag_rep_change: [SSpersistence.antag_rep_change[p_ckey]]")
+
+			// people who died or left should not gain any reputation
+			// people who rolled antagonist still lose it
+			if(failed && SSpersistence.antag_rep_change[p_ckey] > 0)
+//				WARNING("AR_DEBUG: Zeroed [p_ckey]'s antag_rep_change")
+				SSpersistence.antag_rep_change[p_ckey] = 0
 
 			continue //Happy connected client
 		for(var/mob/dead/observer/D in GLOB.mob_list)

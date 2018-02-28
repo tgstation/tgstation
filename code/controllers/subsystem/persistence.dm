@@ -14,6 +14,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/saved_trophies = list()
 	var/list/spawned_objects = list()
 	var/list/antag_rep = list()
+	var/list/antag_rep_change = list()
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()
@@ -158,13 +159,14 @@ SUBSYSTEM_DEF(persistence)
 	saved_modes = json["data"]
 
 /datum/controller/subsystem/persistence/proc/LoadAntagReputation()
-	var/json_file = file(FILE_ANTAG_REP)
-	if(!fexists(json_file))
-		return
-	var/list/json = json_decode(file2text(json_file))
+	var/json = file2text(FILE_ANTAG_REP)
 	if(!json)
+		var/json_file = file(FILE_ANTAG_REP)
+		if(!fexists(json_file))
+			WARNING("Failed to load antag reputation. File likely corrupt.")
+			return
 		return
-	antag_rep = json["data"]
+	antag_rep = json_decode(json)
 
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
@@ -270,6 +272,16 @@ SUBSYSTEM_DEF(persistence)
 	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/CollectAntagReputation()
+	var/ANTAG_REP_MAXIMUM = CONFIG_GET(number/antag_rep_maximum)
+	
+	for(var/p_ckey in antag_rep_change)
+		var/start = antag_rep[p_ckey]
+		antag_rep[p_ckey] = max(0, min(antag_rep[p_ckey]+antag_rep_change[p_ckey], ANTAG_REP_MAXIMUM))
+
+//		WARNING("AR_DEBUG: [p_ckey]: Committed [antag_rep_change[p_ckey]] reputation, going from [start] to [antag_rep[p_ckey]]")
+
+	antag_rep_change = list()
+
 	fdel(FILE_ANTAG_REP)
 	text2file(json_encode(antag_rep), FILE_ANTAG_REP)
 
