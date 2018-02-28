@@ -429,7 +429,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	var/static/list/spawned = list()
 	var/id = 1
 
-/obj/effect/landmark/maintblock/Initialize(mapload)
+/obj/effect/landmark/maintblock/Initialize()
 	. = ..()
 	if(prob(10))
 		new /obj/structure/destructible/steam_vent/active(get_turf(src))
