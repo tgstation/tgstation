@@ -333,7 +333,7 @@
 /obj/item/melee/roastingstick/Initialize()
 	. = ..()
 	if (!ovens)
-		ovens = typecacheof(list(/obj/singularity, /obj/machinery/power/supermatter_shard/crystal))
+		ovens = typecacheof(list(/obj/singularity, /obj/machinery/power/supermatter_shard/crystal, /obj/structure/bonfire))
 
 /obj/item/melee/roastingstick/attack_self(mob/user)
 	on = !on
@@ -349,7 +349,6 @@
 	add_fingerprint(user)
 
 /obj/item/melee/roastingstick/attackby(atom/target, mob/user)
-	warning("[src] attackby on [target]")
 	..()
 	if (istype(target, /obj/item/reagent_containers/food/snacks/sausage))
 		if (!on)
@@ -376,7 +375,7 @@
 	cut_overlays()
 	if (held_sausage)
 		var/mutable_appearance/sausage = mutable_appearance(icon, "roastingstick_sausage")
-		overlays += sausage
+		add_overlay(sausage)
 
 /obj/item/melee/roastingstick/proc/extend(user)
 	to_chat(user, "<span class ='warning'>You extend [src].</span>")
@@ -396,23 +395,30 @@
 		update_icon()
 
 /obj/item/melee/roastingstick/afterattack(atom/target, mob/user, proximity)
-	warning("[src] afterattack on [target]")
 	if (!on)
 		return
-	if (is_type_in_typecache(target, ovens) && get_dist(user, target) < 10)
-		to_chat(user, "You extend [src] towards [target].")
-		playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
-		var/datum/beam/beam_effect = new(user,target,time=100,beam_icon_state="medbeam",btype=/obj/effect/ebeam/medical)
-		INVOKE_ASYNC(beam_effect, /datum/beam.proc/Start)
-		if(do_after(user, 100, target = user))
-			if (!QDELETED(target) && get_dist(user, target) < 10)
-				finish_roasting(user, target)
-		else
+	if (is_type_in_typecache(target, ovens))
+		if (held_sausage && held_sausage.roasted)
+			to_chat("Your [held_sausage] has already been cooked.")
+			return
+		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
+			to_chat(user, "You send [held_sausage] towards [target].")
+			playsound(src, 'sound/items/rped.ogg', 50, 1)
+			user.Beam(target,icon_state="rped_upgrade",time=100)
+		else if (user.Adjacent(target))
+			to_chat(user, "You extend [src] towards [target].")
 			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
-			qdel(beam_effect)
+		else
+			return
+		if(do_after(user, 100, target = user))
+			finish_roasting(user, target)
+		else
+			playsound(src, 'sound/weapons/batonextend.ogg', 50, 1)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
-	to_chat(user, "You finish roasting the [held_sausage]")
+	to_chat(user, "You finish roasting [held_sausage]")
+	playsound(src,'sound/items/welder2.ogg',50,1)
 	held_sausage.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
 	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
-	held_sausage.desc = "[held_sausage.desc] Basking in the rays of the mighty [target.name] has cooked it to perfection."
+	held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
+	update_icon()
