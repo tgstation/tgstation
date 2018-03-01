@@ -202,7 +202,7 @@
 /datum/map_template/shuttle/emergency/carpet
 	suffix = "carpet"
 	name = "Magic Carpet"
-	description = "Shadala, we're off!"
+	description = "Squadala, we're off!"
 	credit_cost = -1000
 
 /datum/map_template/shuttle/emergency/cere
