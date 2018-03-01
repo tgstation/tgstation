@@ -15,9 +15,17 @@
 	var/openable = TRUE
 	var/obj/item/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
+	var/list/start_showpieces = list()
+	var/trophy_message = ""
 
 /obj/structure/displaycase/Initialize()
 	. = ..()
+	if(start_showpieces.len) 
+		var/list/showpiece_entry = pick(start_showpieces)
+		if (showpiece_entry && showpiece_entry.len)
+			start_showpiece_type = showpiece_entry[1]
+			if (showpiece_entry.len >= 2)
+				trophy_message = showpiece_entry[2]
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
 	update_icon()
@@ -35,6 +43,9 @@
 		to_chat(user, "<span class='notice'>Hooked up with an anti-theft system.</span>")
 	if(showpiece)
 		to_chat(user, "<span class='notice'>There's [showpiece] inside.</span>")
+	if(trophy_message)
+		to_chat(user, "The plaque reads:")
+		to_chat(user, trophy_message)
 
 
 /obj/structure/displaycase/proc/dump()
@@ -213,7 +224,7 @@
 //The captains display case requiring specops ID access is intentional.
 //The lab cage and captains display case do not spawn with electronics, which is why req_access is needed.
 /obj/structure/displaycase/captain
-	alert = 1
+	alert = TRUE
 	start_showpiece_type = /obj/item/gun/energy/laser/captain
 	req_access = list(ACCESS_CENT_SPECOPS)
 
@@ -223,12 +234,9 @@
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(ACCESS_RD)
 
-
-
 /obj/structure/displaycase/trophy
 	name = "trophy display case"
 	desc = "Store your trophies of accomplishment in here, and they will stay forever."
-	var/trophy_message = ""
 	var/placer_key = ""
 	var/added_roundstart = TRUE
 	var/is_locked = TRUE
@@ -244,12 +252,6 @@
 /obj/structure/displaycase/trophy/Destroy()
 	GLOB.trophy_cases -= src
 	return ..()
-
-/obj/structure/displaycase/trophy/examine(mob/user)
-	..()
-	if(trophy_message)
-		to_chat(user, "The plaque reads:")
-		to_chat(user, trophy_message)
 
 /obj/structure/displaycase/trophy/attackby(obj/item/W, mob/user, params)
 
