@@ -51,7 +51,7 @@
 	if(href_list["move"])
 		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 		if(M.launch_status == ENDGAME_LAUNCHED)
-			to_chat(usr, "<span class='warning'>You've already escaped. Never going back to that place again!</span>")
+			to_chat(usr, "<span class='warning'>You've already escaped. Not going back to that place again!</span>")
 			return
 		if(no_destination_swap)
 			if(M.mode != SHUTTLE_IDLE)
