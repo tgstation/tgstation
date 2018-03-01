@@ -267,7 +267,7 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	name = "tranquillite"
 	icon_state = "sheet-tranquillite"
 	item_state = "sheet-tranquillite"
-	singular_name = "tranquillite sheet"
+	singular_name = "beret"
 	sheettype = "tranquillite"
 	materials = list(MAT_TRANQUILLITE=MINERAL_MATERIAL_AMOUNT)
 	novariants = TRUE
