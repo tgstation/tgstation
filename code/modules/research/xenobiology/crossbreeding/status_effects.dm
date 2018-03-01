@@ -107,13 +107,13 @@
 /datum/status_effect/stabilized/purple/tick()
 	var/is_healing = FALSE
 	if(owner.getBruteLoss() > 0)
-		owner.adjustBruteLoss(-0.5)
+		owner.adjustBruteLoss(-0.2)
 		is_healing = TRUE
 	if(owner.getFireLoss() > 0)
-		owner.adjustFireLoss(-0.5)
+		owner.adjustFireLoss(-0.2)
 		is_healing = TRUE
 	if(owner.getToxLoss() > 0)
-		owner.adjustToxLoss(-0.5, forced = TRUE) //Slimepeople should also get healed.
+		owner.adjustToxLoss(-0.2, forced = TRUE) //Slimepeople should also get healed.
 		is_healing = TRUE
 	if(is_healing)
 		examine_text = "<span class='warning'>SUBJECTPRONOUN is regenerating slowly, purplish goo filling in small injuries!</span>"
@@ -178,6 +178,11 @@ datum/status_effect/stabilized/blue/on_remove()
 	id = "stabilizeddarkpurple"
 
 /datum/status_effect/stabilized/darkpurple/tick()
+	var/obj/item/reagent_containers/food/snacks/F = owner.get_active_held_item()
+	if(istype(F))
+		if(F.cooked_type)
+			to_chat(owner, "<span class='warning'>[linked_extract] flares up brightly, and your hands alone are enough cook [F]!</span>")
+			F.microwave_act()
 	return ..()
 
 /datum/status_effect/stabilized/darkblue
@@ -267,9 +272,59 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/sepia
 	id = "stabilizedsepia"
+	var/mod = 0
+
+/datum/status_effect/stabilized/sepia/tick()
+	if(prob(50) && mod > -1)
+		mod--
+		var/mob/living/carbon/human/H = owner
+		if(istype(H))
+			H.physiology.speed_mod--
+	else if(mod < 1)
+		mod++
+		var/mob/living/carbon/human/H = owner
+		if(istype(H))
+			H.physiology.speed_mod++
+	return ..()
+
+/datum/status_effect/stabilized/sepia/on_remove()
+	var/mob/living/carbon/human/H = owner
+	if(istype(H))
+		H.physiology.speed_mod += -mod //Reset the changes.
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"
+	var/mob/living/clone //WIP - Figure out why this isn't saving.
+
+/datum/status_effect/stabilized/cerulean/on_apply()
+	var/typepath = owner.type
+	clone = new typepath(owner.loc)
+	var/mob/living/carbon/O = owner
+	var/mob/living/carbon/C = owner
+	if(istype(C) && istype(O))
+		C.real_name = O.real_name
+		O.dna.transfer_identity(C)
+		C.updateappearance(mutcolor_update=1)
+	return ..()
+
+/datum/status_effect/stabilized/cerulean/tick()
+	if(owner.stat == DEAD)
+		if(clone && clone.stat != DEAD)
+			owner.visible_message("<span class='warning'>[owner] blazes with brilliant light, [src] whisking [owner.p_their()] soul away.</span>",
+				"<span class='notice'>You feel a warm glow from [linked_extract], and you open your eyes... elsewhere.</span>")
+			clone.mind = owner.mind
+			owner.mind = null
+			clone = null
+			qdel(linked_extract)
+		if(!clone || clone.stat == DEAD)
+			to_chat(owner, "<span class='notice'>[linked_extract] desperately tries to move your soul to a living body, but can't find one!</span>")
+			qdel(linked_extract)
+	..()
+
+/datum/status_effect/stabilized/cerulean/on_remove()
+	if(clone)
+		clone.visible_message("<span class='warning'>[clone] dissolves into a puddle of goo!</span>")
+		qdel(clone)
 
 /datum/status_effect/stabilized/pyrite
 	id = "stabilizedpyrite"
@@ -298,17 +353,14 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/green
 	id = "stabilizedgreen"
-	var/originalUI
-	var/originalname
+	var/datum/dna/originalDNA = new /datum/dna()
 
 /datum/status_effect/stabilized/green/on_apply()
 	to_chat(owner, "<span class='warning'>You feel different...</span>")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		originalUI = H.dna.uni_identity
-		originalname = H.real_name
-		H.dna.generate_uni_identity()
-		H.real_name = random_unique_name(H.gender)
+		H.dna.copy_dna(originalDNA) //WIP - Fix this!
+		randomize_human(H)
 	return ..()
 
 /datum/status_effect/stabilized/green/tick() //Only occasionally give examiners a warning.
@@ -322,11 +374,68 @@ datum/status_effect/stabilized/blue/on_remove()
 	to_chat(owner, "<span class='notice'>You feel more like yourself.</span>")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.dna.uni_identity = originalUI
-		H.real_name = originalname
+		H.dna = originalDNA
+
+/datum/status_effect/brokenpeace
+	id = "brokenpeace"
+	duration = 1200
+	alert_type = null
+
+/datum/status_effect/pinkdamagetracker
+	id = "pinkdamagetracker"
+	duration = -1
+	alert_type = null
+	var/damage = 0
+	var/lasthealth
+
+/datum/status_effect/pinkdamagetracker/tick()
+	if((lasthealth - owner.health) > 0)
+		damage += (lasthealth - owner.health)
+	lasthealth = owner.health
 
 /datum/status_effect/stabilized/pink
 	id = "stabilizedpink"
+	var/list/mobs = list()
+	var/faction_name
+
+/datum/status_effect/stabilized/pink/on_apply()
+	faction_name = owner.real_name
+	return ..()
+
+/datum/status_effect/stabilized/pink/tick() //WIP - Fix this!
+	for(var/mob/living/simple_animal/M in view(7,get_turf(owner)))
+		if(!(M in mobs))
+			mobs += M
+			M.apply_status_effect(/datum/status_effect/pinkdamagetracker)
+			M.faction |= faction_name
+	for(var/mob/living/simple_animal/M in mobs)
+		if(!(M in view(7,get_turf(owner))))
+			M.faction &= ~faction_name
+			M.remove_status_effect(/datum/status_effect/pinkdamagetracker)
+		var/datum/status_effect/pinkdamagetracker/C = M.has_status_effect(/datum/status_effect/pinkdamagetracker)
+		if(C & C.damage > 0)
+			C.damage = 0
+			owner.apply_status_effect(/datum/status_effect/brokenpeace)
+	var/HasFaction = FALSE
+	for(var/i in owner.faction)
+		if(i == faction_name)
+			HasFaction = TRUE
+
+	if(HasFaction && owner.has_status_effect(/datum/status_effect/brokenpeace))
+		owner.faction &= ~faction_name
+		to_chat(owner, "<span class='userdanger'>The peace has been broken! Hostile creatures will now react to you!</span>")
+	if(!HasFaction && !owner.has_status_effect(/datum/status_effect/brokenpeace))
+		to_chat(owner, "<span class='notice'>[linked_extract] pulses, generating a fragile aura of peace.</span>")
+		owner.faction |= faction_name
+	return ..()
+
+/datum/status_effect/stabilized/pink/on_remove()
+	for(var/mob/living/simple_animal/M in mobs)
+		M.faction &= ~faction_name
+		M.remove_status_effect(/datum/status_effect/pinkdamagetracker)
+	for(var/i in owner.faction)
+		if(i == faction_name)
+			owner.faction &= ~faction_name
 
 /datum/status_effect/stabilized/oil
 	id = "stabilizedoil"
@@ -339,6 +448,36 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/black
 	id = "stabilizedblack"
+	var/messagedelivered = FALSE
+	var/heal_amount = 1
+
+/datum/status_effect/stabilized/black/tick()
+	if(owner.pulling && isliving(owner.pulling) && owner.grab_state == GRAB_KILL)
+		var/mob/living/M = owner.pulling
+		if(M.stat == DEAD)
+			return
+		if(!messagedelivered)
+			to_chat(owner,"<span class='notice'>You feel your hands melt around [M]'s neck and start to drain them of life.</span>")
+			to_chat(owner.pulling, "<span class='userdanger'>[owner]'s hands melt around your neck, and you can feel your life starting to drain away!</span>")
+			messagedelivered = TRUE
+		examine_text = "<span class='warning'>SUBJECTPRONOUN is draining health from [owner.pulling]!</span>"
+		var/list/healing_types = list()
+		if(owner.getBruteLoss() > 0)
+			healing_types += BRUTE
+		if(owner.getFireLoss() > 0)
+			healing_types += BURN
+		if(owner.getToxLoss() > 0)
+			healing_types += TOX
+		if(owner.getCloneLoss() > 0)
+			healing_types += CLONE
+
+		owner.apply_damage_type(-heal_amount, damagetype=pick(healing_types))
+		owner.nutrition += 3
+		M.adjustCloneLoss(heal_amount * 1.2) //This way, two people can't just convert each other's damage away.
+	else
+		messagedelivered = FALSE
+		examine_text = null
+	return ..()
 
 /datum/status_effect/stabilized/lightpink
 	id = "stabilizedlightpink"
@@ -361,6 +500,20 @@ datum/status_effect/stabilized/blue/on_remove()
 	id = "stabilizedadamantine"
 	examine_text = "<span class='warning'>SUBJECTPRONOUN has a strange metallic coating on their skin.</span>"
 
+/datum/status_effect/stabilized/gold
+	id = "stabilizedgold"
+	var/mob/living/simple_animal/familiar
+
+/datum/status_effect/stabilized/gold/tick()
+	if(!familiar)
+		familiar = create_random_mob(get_turf(owner.loc), FRIENDLY_SPAWN)
+		familiar.del_on_death = TRUE
+	return ..()
+
+/datum/status_effect/stabilized/gold/on_remove()
+	if(familiar)
+		qdel(familiar)
+
 /datum/status_effect/stabilized/adamantine/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
@@ -374,21 +527,13 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/rainbow
 	id = "stabilizedrainbow"
-	var/obj/item/slimecross/stabilized/current
-	var/cooldown = 30
-	var/max_cooldown = 30
 
 /datum/status_effect/stabilized/rainbow/tick()
-	if(cooldown > 0)
-		cooldown--
-		return ..()
-	cooldown = max_cooldown
-	var/extracttype = pick(subtypesof(/obj/item/slimecross/stabilized) - /obj/item/slimecross/stabilized/rainbow)
-	if(istype(current))
-		qdel(current)
-	current = new extracttype(owner)
-	..()
-
-/datum/status_effect/stabilized/rainbow/on_remove()
-	if(current)
-		qdel(current)
+	if(owner.health <= 0)
+		var/obj/item/slimecross/stabilized/rainbow/X = linked_extract
+		if(istype(X))
+			if(X.regencore)
+				X.regencore.afterattack(owner,owner,TRUE)
+				X.regencore = null
+				owner.visible_message("<span class='warning'>[owner] flashes a rainbow of colors, and [owner.p_their()] skin is coated in a milky regenerative goo!</span>")
+	return ..()
