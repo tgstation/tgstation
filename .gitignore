@@ -192,3 +192,7 @@ Temporary Items
 
 #Visual studio stuff
 *.vscode/*
+tools/MapAtmosFixer/MapAtmosFixer/obj/x86/Debug/MapAtmosFixer.csproj.CoreCompileInputs.cache
+
+#GitHub Atom
+.atom-build.json

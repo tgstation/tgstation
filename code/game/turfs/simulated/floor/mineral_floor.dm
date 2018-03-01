@@ -42,7 +42,7 @@
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
-/turf/open/floor/mineral/plasma/attackby(obj/item/W as obj, mob/user as mob, params)
+/turf/open/floor/mineral/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma flooring was ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
 		log_game("Plasma flooring was ignited by [key_name(user)] in [COORD(src)]")
@@ -129,10 +129,10 @@
 	icons = list("bananium","bananium_dam")
 	var/spam_flag = 0
 
-/turf/open/floor/mineral/bananium/Entered(var/mob/AM)
+/turf/open/floor/mineral/bananium/Entered(var/mob/living/L)
 	.=..()
 	if(!.)
-		if(istype(AM))
+		if(istype(L))
 			squeek()
 
 /turf/open/floor/mineral/bananium/attackby(obj/item/W, mob/user, params)

@@ -6,6 +6,7 @@
 	var/obj/act_module = get_active_held_item()
 	if(act_module)
 		msg += "It is holding [icon2html(act_module, user)] \a [act_module].\n"
+	msg += status_effect_examines()
 	msg += "<span class='warning'>"
 	if (src.getBruteLoss())
 		if (src.getBruteLoss() < maxHealth*0.5)

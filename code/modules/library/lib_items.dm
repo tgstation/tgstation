@@ -20,7 +20,7 @@
 	opacity = 0
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	var/state = 0
 	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
 
@@ -49,7 +49,7 @@
 	anchored = TRUE
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/book))
-			I.loc = src
+			I.forceMove(src)
 	update_icon()
 
 
@@ -57,14 +57,12 @@
 	switch(state)
 		if(0)
 			if(istype(I, /obj/item/wrench))
-				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user, 20*I.toolspeed, target = src))
+				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					anchored = TRUE
 					state = 1
 			if(istype(I, /obj/item/crowbar))
-				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user, 20*I.toolspeed, target = src))
+				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You pry the frame apart.</span>")
 					deconstruct(TRUE)
 
@@ -77,7 +75,7 @@
 					state = 2
 					icon_state = "book-0"
 			if(istype(I, /obj/item/wrench))
-				playsound(loc, I.usesound, 100, 1)
+				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You unwrench the frame.</span>")
 				anchored = FALSE
 				state = 0
@@ -95,18 +93,23 @@
 				to_chat(user, "<span class='notice'>You empty \the [I] into \the [src].</span>")
 				update_icon()
 			else if(istype(I, /obj/item/pen))
+				if(!user.is_literate())
+					to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
+					return
 				var/newname = stripped_input(user, "What would you like to title this bookshelf?")
+				if(!user.canUseTopic(src, BE_CLOSE))
+					return
 				if(!newname)
 					return
 				else
-					name = ("bookcase ([sanitize(newname)])")
+					name = "bookcase ([sanitize(newname)])"
 			else if(istype(I, /obj/item/crowbar))
 				if(contents.len)
 					to_chat(user, "<span class='warning'>You need to remove the books first!</span>")
 				else
-					playsound(loc, I.usesound, 100, 1)
+					I.play_tool_sound(src, 100)
 					to_chat(user, "<span class='notice'>You pry the shelf out.</span>")
-					new /obj/item/stack/sheet/mineral/wood(loc, 2)
+					new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)
 					state = 1
 					icon_state = "bookempty"
 			else
@@ -123,7 +126,7 @@
 				if(!user.get_active_held_item())
 					user.put_in_hands(choice)
 			else
-				choice.loc = get_turf(src)
+				choice.forceMove(drop_location())
 			update_icon()
 
 
@@ -144,8 +147,8 @@
 /obj/structure/bookcase/manuals/medical
 	name = "medical manuals bookcase"
 
-/obj/structure/bookcase/manuals/medical/New()
-	..()
+/obj/structure/bookcase/manuals/medical/Initialize()
+	. = ..()
 	new /obj/item/book/manual/medical_cloning(src)
 	update_icon()
 
@@ -153,8 +156,8 @@
 /obj/structure/bookcase/manuals/engineering
 	name = "engineering manuals bookcase"
 
-/obj/structure/bookcase/manuals/engineering/New()
-	..()
+/obj/structure/bookcase/manuals/engineering/Initialize()
+	. = ..()
 	new /obj/item/book/manual/wiki/engineering_construction(src)
 	new /obj/item/book/manual/engineering_particle_accelerator(src)
 	new /obj/item/book/manual/wiki/engineering_hacking(src)
@@ -167,8 +170,8 @@
 /obj/structure/bookcase/manuals/research_and_development
 	name = "\improper R&D manuals bookcase"
 
-/obj/structure/bookcase/manuals/research_and_development/New()
-	..()
+/obj/structure/bookcase/manuals/research_and_development/Initialize()
+	. = ..()
 	new /obj/item/book/manual/research_and_development(src)
 	update_icon()
 
@@ -216,30 +219,42 @@
 		if(unique)
 			to_chat(user, "<span class='warning'>These pages don't seem to take the ink well! Looks like you can't modify it.</span>")
 			return
+		var/literate = user.is_literate()
+		if(!literate)
+			to_chat(user, "<span class='notice'>You scribble illegibly on the cover of [src]!</span>")
+			return
 		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
+		if(!user.canUseTopic(src, BE_CLOSE, literate))
+			return
 		switch(choice)
 			if("Title")
-				var/newtitle = reject_bad_text(stripped_input(usr, "Write a new title:"))
+				var/newtitle = reject_bad_text(stripped_input(user, "Write a new title:"))
+				if(!user.canUseTopic(src, BE_CLOSE, literate))
+					return
 				if (length(newtitle) > 20)
-					to_chat(usr, "That title won't fit on the cover!")
+					to_chat(user, "That title won't fit on the cover!")
 					return
 				if(!newtitle)
-					to_chat(usr, "That title is invalid.")
+					to_chat(user, "That title is invalid.")
 					return
 				else
 					name = newtitle
 					title = newtitle
 			if("Contents")
-				var/content = stripped_input(usr, "Write your book's contents (HTML NOT allowed):","","",8192)
+				var/content = stripped_input(user, "Write your book's contents (HTML NOT allowed):","","",8192)
+				if(!user.canUseTopic(src, BE_CLOSE, literate))
+					return
 				if(!content)
-					to_chat(usr, "The content is invalid.")
+					to_chat(user, "The content is invalid.")
 					return
 				else
 					dat += content
 			if("Author")
-				var/newauthor = stripped_input(usr, "Write the author's name:")
+				var/newauthor = stripped_input(user, "Write the author's name:")
+				if(!user.canUseTopic(src, BE_CLOSE, literate))
+					return
 				if(!newauthor)
-					to_chat(usr, "The name is invalid.")
+					to_chat(user, "The name is invalid.")
 					return
 				else
 					author = newauthor
@@ -289,7 +304,7 @@
 				user.put_in_hands(B)
 				return
 			else
-				B.loc = src.loc
+				B.forceMove(drop_location())
 				qdel(src)
 				return
 		return

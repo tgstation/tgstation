@@ -73,11 +73,13 @@
 /datum/reagent/toxin/plasma/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air("plasma=[reac_volume];TEMP=[T20C]")
+	var/temp = holder ? holder.chem_temp : T20C
+	O.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 
 /datum/reagent/toxin/plasma/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air("plasma=[reac_volume];TEMP=[T20C]")
+		var/temp = holder ? holder.chem_temp : T20C
+		T.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 	return
 
 /datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
@@ -98,16 +100,14 @@
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/M)
 	. = TRUE
-	var/mob/living/carbon/C
-	if(iscarbon(M))
-		C = M
-		CHECK_DNA_AND_SPECIES(C)
-		if(NOBREATH in C.dna.species.species_traits)
-			. = FALSE
+
+	if(M.has_trait(TRAIT_NOBREATH))
+		. = FALSE
 
 	if(.)
 		M.adjustOxyLoss(5, 0)
-		if(C)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
 			C.losebreath += 2
 		if(prob(20))
 			M.emote("gasp")
@@ -141,7 +141,7 @@
 	taste_description = "mint"
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/M)
-	if(M.disabilities & FAT)
+	if(M.has_trait(TRAIT_FAT))
 		M.gib()
 	return ..()
 
@@ -162,18 +162,22 @@
 	toxpwr = 0.5
 	taste_description = "death"
 
-/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
-	M.status_flags |= FAKEDEATH
-	M.adjustOxyLoss(0.5*REM, 0)
-	M.Knockdown(100, 0)
-	M.silent = max(M.silent, 5)
-	M.tod = worldtime2text()
+/datum/reagent/toxin/zombiepowder/on_mob_add(mob/M)
 	..()
-	. = 1
+	if(isliving(M))
+		var/mob/living/L = M
+		L.fakedeath(id)
 
 /datum/reagent/toxin/zombiepowder/on_mob_delete(mob/M)
-	M.status_flags &= ~FAKEDEATH
+	if(isliving(M))
+		var/mob/living/L = M
+		L.cure_fakedeath(id)
 	..()
+
+/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
+	M.adjustOxyLoss(0.5*REM, 0)
+	..()
+	. = 1
 
 /datum/reagent/toxin/mindbreaker
 	name = "Mindbreaker Toxin"
@@ -242,8 +246,10 @@
 	toxpwr = 1
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/M)
-	M.damageoverlaytemp = 60
-	M.update_damage_hud()
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.damageoverlaytemp = 60
+		C.update_damage_hud()
 	M.blur_eyes(3)
 	return ..()
 
@@ -283,9 +289,9 @@
 			. = 1
 	..()
 
-/datum/reagent/toxin/chloralhydratedelayed
+/datum/reagent/toxin/chloralhydratedelayed //sedates half as quickly and does not cause toxloss. same name/desc so it doesn't give away sleepypens
 	name = "Chloral Hydrate"
-	id = "chloralhydrate2"
+	id = "chloralhydratedelayed"
 	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
@@ -301,9 +307,9 @@
 			M.Sleeping(40, 0)
 	..()
 
-/datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
+/datum/reagent/toxin/fakebeer	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
-	id = "beer2"
+	id = "fakebeer"
 	description = "A specially-engineered sedative disguised as beer. It induces instant sleep in its target."
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
@@ -312,7 +318,7 @@
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
 
-/datum/reagent/toxin/beer2/on_mob_life(mob/living/M)
+/datum/reagent/toxin/fakebeer/on_mob_life(mob/living/M)
 	switch(current_cycle)
 		if(1 to 50)
 			M.Sleeping(40, 0)
@@ -445,23 +451,22 @@
 	else
 		..()
 
-/datum/reagent/toxin/neurotoxin2
-	name = "Neurotoxin"
-	id = "neurotoxin2"
-	description = "Neurotoxin will inhibit brain function and cause toxin damage before eventually knocking out its victim."
+/datum/reagent/toxin/fentanyl
+	name = "Fentanyl"
+	id = "fentanyl"
+	description = "Fentanyl will inhibit brain function and cause toxin damage before eventually knocking out its victim."
 	reagent_state = LIQUID
 	color = "#64916E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/neurotoxin2/on_mob_life(mob/living/M)
-	if(M.brainloss + M.toxloss <= 60)
-		M.adjustBrainLoss(1*REM)
+/datum/reagent/toxin/fentanyl/on_mob_life(mob/living/M)
+	M.adjustBrainLoss(3*REM, 150)
+	. = 1
+	if(M.toxloss <= 60)
 		M.adjustToxLoss(1*REM, 0)
-		. = 1
 	if(current_cycle >= 18)
 		M.Sleeping(40, 0)
-		. = 1
 	..()
 
 /datum/reagent/toxin/cyanide
@@ -851,9 +856,9 @@
 
 /datum/reagent/toxin/peaceborg/confuse/on_mob_life(mob/living/M)
 	if(M.confused < 6)
-		M.confused = Clamp(M.confused + 3, 0, 5)
+		M.confused = CLAMP(M.confused + 3, 0, 5)
 	if(M.dizziness < 6)
-		M.dizziness = Clamp(M.dizziness + 3, 0, 5)
+		M.dizziness = CLAMP(M.dizziness + 3, 0, 5)
 	if(prob(20))
 		to_chat(M, "You feel confused and disorientated.")
 	..()
@@ -901,3 +906,9 @@
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "stillness"
+
+/datum/reagent/toxin/mimesbane/on_mob_add(mob/living/L)
+	L.add_trait(TRAIT_EMOTEMUTE, id)
+
+/datum/reagent/toxin/mimesbane/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_EMOTEMUTE, id)

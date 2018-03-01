@@ -30,7 +30,7 @@
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/crowbar))
 		if(!moving)
-			playsound(src.loc, I.usesound, 50, 1)
+			I.play_tool_sound(src)
 			if(contents.len)
 				user.visible_message("[user] empties \the [src].", "<span class='notice'>You empty \the [src].</span>")
 				empty_pod()
@@ -136,7 +136,7 @@
 		last_delay = current_tube.enter_delay(src, next_dir)
 		sleep(last_delay)
 		setDir(next_dir)
-		loc = next_loc // When moving from one tube to another, skip collision and such.
+		forceMove(next_loc) // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
 		if(current_tube && current_tube.should_stop_pod(src, next_dir))

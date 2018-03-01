@@ -73,6 +73,9 @@
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act()
 	..()
+	if(carrier)
+		return
+
 	if(symptoms && symptoms.len)
 
 		if(!processing)
@@ -94,15 +97,6 @@
 	if(GetDiseaseID() != D.GetDiseaseID())
 		return 0
 	return 1
-
-// To add special resistances.
-/datum/disease/advance/cure(resistance=1)
-	if(affected_mob)
-		var/id = "[GetDiseaseID()]"
-		if(resistance && !(id in affected_mob.resistances))
-			affected_mob.resistances[id] = id
-		remove_virus()
-	qdel(src)	//delete the datum to stop it processing
 
 // Returns the advance disease with a different reference memory.
 /datum/disease/advance/Copy(process = 0)
@@ -194,10 +188,10 @@
 		if(properties["stealth"] >= 2)
 			visibility_flags = HIDDEN_SCANNER
 
-		SetSpread(Clamp(2 ** (properties["transmittable"] - symptoms.len), VIRUS_SPREAD_BLOOD, VIRUS_SPREAD_AIRBORNE))
+		SetSpread(CLAMP(2 ** (properties["transmittable"] - symptoms.len), VIRUS_SPREAD_BLOOD, VIRUS_SPREAD_AIRBORNE))
 
-		permeability_mod = max(Ceiling(0.4 * properties["transmittable"]), 1)
-		cure_chance = 15 - Clamp(properties["resistance"], -5, 5) // can be between 10 and 20
+		permeability_mod = max(CEILING(0.4 * properties["transmittable"], 1), 1)
+		cure_chance = 15 - CLAMP(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
 		GenerateCure(properties)
@@ -252,7 +246,7 @@
 // Will generate a random cure, the less resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure()
 	if(properties && properties.len)
-		var/res = Clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
+		var/res = CLAMP(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
 		cures = list(advance_cures[res])
 
 		// Get the cure name from the cure_id
@@ -416,8 +410,8 @@
 		for(var/datum/disease/advance/AD in SSdisease.active_diseases)
 			AD.Refresh()
 
-		for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
-			if(!(H.z in GLOB.station_z_levels))
+		for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
+			if(!is_station_level(H.z))
 				continue
 			if(!H.HasDisease(D))
 				H.ForceContractDisease(D)

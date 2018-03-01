@@ -90,7 +90,7 @@
 	return ..()
 
 /obj/item/clothing/AltClick(mob/user)
-	if(pockets && pockets.quickdraw && pockets.contents.len && !user.incapacitated())
+	if(istype(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)) && pockets && pockets.quickdraw && pockets.contents.len)
 		var/obj/item/I = pockets.contents[1]
 		if(!I)
 			return
@@ -106,8 +106,6 @@
 
 
 /obj/item/clothing/Destroy()
-	if(isliving(loc))
-		dropped(loc)
 	if(pockets)
 		qdel(pockets)
 		pockets = null
@@ -246,8 +244,7 @@ BLIND     // can't see anything
 	if(..())
 		return 1
 
-	if(!user.canUseTopic(src, be_close=TRUE))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	else
 		if(attached_accessory)

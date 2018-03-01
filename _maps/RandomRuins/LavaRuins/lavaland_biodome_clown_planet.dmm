@@ -1,36 +1,28 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
 "am" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 6
 	},
 /turf/closed/wall/r_wall,
 /area/ruin/powered/clownplanet)
 "an" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 10
 	},
 /turf/closed/wall/r_wall,
 /area/ruin/powered/clownplanet)
 "ao" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 6
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
 "ap" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 10
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
@@ -63,9 +55,7 @@
 /area/ruin/powered/clownplanet)
 "at" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 6
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
@@ -79,10 +69,8 @@
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
 "av" = (
-/obj/structure/disposalpipe/sortjunction{
+/obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 1;
-	icon_state = "pipe-j2s";
-	invisibility = 101;
 	sortType = 3
 	},
 /turf/closed/wall/r_wall,
@@ -106,9 +94,7 @@
 /area/ruin/powered/clownplanet)
 "ay" = (
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible{
@@ -139,9 +125,7 @@
 /area/ruin/powered/clownplanet)
 "aB" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 9
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
@@ -183,9 +167,7 @@
 /area/ruin/powered/clownplanet)
 "aG" = (
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 5
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
@@ -194,9 +176,7 @@
 /area/ruin/powered/clownplanet)
 "aH" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible{
@@ -206,9 +186,7 @@
 /area/ruin/powered/clownplanet)
 "aI" = (
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 5
 	},
 /obj/item/bikehorn,
 /turf/open/indestructible{
@@ -218,9 +196,7 @@
 /area/ruin/powered/clownplanet)
 "aJ" = (
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 5
 	},
 /turf/closed/wall/r_wall,
 /area/ruin/powered/clownplanet)
@@ -244,9 +220,7 @@
 /area/ruin/powered/clownplanet)
 "aM" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 10
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
@@ -273,9 +247,7 @@
 /area/ruin/powered/clownplanet)
 "aS" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 9
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
@@ -295,9 +267,7 @@
 /area/ruin/powered/clownplanet)
 "aV" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible{
@@ -362,9 +332,7 @@
 /area/ruin/powered/clownplanet)
 "bc" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible{
@@ -397,9 +365,7 @@
 /area/ruin/powered/clownplanet)
 "bf" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 10
 	},
 /obj/effect/decal/cleanable/pie_smudge,
 /turf/open/indestructible{
@@ -419,9 +385,7 @@
 /area/ruin/powered/clownplanet)
 "bh" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 6
 	},
 /turf/open/indestructible{
 	icon_state = "white"
@@ -429,9 +393,7 @@
 /area/ruin/powered/clownplanet)
 "bi" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 10
 	},
 /turf/open/indestructible{
 	icon_state = "white"
@@ -465,9 +427,7 @@
 /area/ruin/powered/clownplanet)
 "bm" = (
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 5
 	},
 /turf/open/indestructible{
 	icon_state = "white"
@@ -475,16 +435,14 @@
 /area/ruin/powered/clownplanet)
 "bn" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 9
 	},
 /turf/open/indestructible{
 	icon_state = "white"
 	},
 /area/ruin/powered/clownplanet)
 "bp" = (
-/turf/closed/mineral/clown,
+/turf/closed/mineral/bananium,
 /area/ruin/powered/clownplanet)
 "bq" = (
 /obj/item/pickaxe,
@@ -499,9 +457,7 @@
 /area/ruin/powered/clownplanet)
 "bs" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 6
 	},
 /turf/open/indestructible{
 	icon_state = "darkredfull"
@@ -509,18 +465,14 @@
 /area/ruin/powered/clownplanet)
 "bt" = (
 /obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 5
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
 "bu" = (
 /obj/item/bikehorn,
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 10
 	},
 /turf/open/indestructible{
 	icon_state = "darkyellowfull";
@@ -565,9 +517,8 @@
 	},
 /area/ruin/powered/clownplanet)
 "bC" = (
-/obj/structure/disposalpipe/junction{
+/obj/structure/disposalpipe/junction/yjunction{
 	dir = 1;
-	icon_state = "pipe-y";
 	invisibility = 101
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -587,9 +538,7 @@
 "bE" = (
 /obj/effect/decal/cleanable/oil,
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 10
 	},
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
@@ -633,9 +582,7 @@
 /area/ruin/powered/clownplanet)
 "bK" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 9
 	},
 /turf/open/indestructible{
 	icon_state = "darkredfull";
@@ -681,10 +628,10 @@
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bS" = (
-/obj/item/coin/clown,
-/obj/item/coin/clown,
-/obj/item/coin/clown,
-/obj/item/coin/clown,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -724,7 +671,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "bZ" = (
-/obj/machinery/door/airlock/clown,
+/obj/machinery/door/airlock/bananium,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
 	name = "bananium floor";
@@ -781,9 +728,7 @@
 /area/ruin/powered/clownplanet)
 "dD" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 10
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -795,9 +740,7 @@
 /area/ruin/powered/clownplanet)
 "dE" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -835,9 +778,7 @@
 /area/ruin/powered/clownplanet)
 "dH" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c";
-	invisibility = 101
+	dir = 9
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -862,10 +803,10 @@
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "dL" = (
-/obj/item/coin/clown,
-/obj/item/coin/clown,
-/obj/item/coin/clown,
-/obj/item/coin/clown,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -891,26 +832,19 @@
 	wet = 5
 	},
 /area/ruin/powered/clownplanet)
-"dR" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/indestructible/sound{
-	icon_state = "bananium";
-	name = "bananium floor";
-	sound = 'sound/effects/clownstep1.ogg';
-	wet = 5
-	},
-/area/ruin/powered/clownplanet)
 "eX" = (
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors/explored)
 "gX" = (
-/turf/open/chasm/straight_down/lava_land_surface,
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/chasm/lavaland,
 /area/lavaland/surface/outdoors/explored)
 "hY" = (
 /obj/machinery/light,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/clownplanet)
 "pv" = (
@@ -925,6 +859,7 @@
 "CB" = (
 /obj/item/paper/crumpled/bloody/ruins/lavaland/clown_planet/hope,
 /obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -934,6 +869,7 @@
 	color = "#2F3000";
 	name = "stealth banana peel"
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "LH" = (
@@ -943,11 +879,13 @@
 	name = "THE TRIAL OF HONKITUDE"
 	},
 /obj/structure/disposalpipe/trunk,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered/clownplanet)
 "Mv" = (
+/obj/effect/mapping_helpers/no_lava,
 /mob/living/simple_animal/hostile/retaliate/clown,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
@@ -955,6 +893,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/clownplanet)
 "TD" = (
@@ -962,27 +901,32 @@
 /obj/structure/disposaloutlet{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered/clownplanet)
 "Xm" = (
 /obj/item/clothing/head/cone,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors/explored)
 "XO" = (
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "Yf" = (
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/clownplanet)
 "YI" = (
 /obj/machinery/light/small,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -1212,7 +1156,7 @@ bx
 bA
 bB
 bH
-dR
+bH
 bB
 bH
 bB
@@ -2029,40 +1973,6 @@ gX
 XO
 XO
 XO
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(32,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa

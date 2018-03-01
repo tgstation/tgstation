@@ -8,6 +8,14 @@
 
 	light_color = LIGHT_COLOR_CYAN
 
+/obj/machinery/computer/station_alert/Initialize()
+	. = ..()
+	GLOB.alert_consoles += src
+
+/obj/machinery/computer/station_alert/Destroy()
+	GLOB.alert_consoles -= src
+	return ..()
+
 /obj/machinery/computer/station_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -16,15 +24,13 @@
 		ui.open()
 
 /obj/machinery/computer/station_alert/ui_data(mob/user)
-	var/list/data = list()
+	. = list()
 
-	data["alarms"] = list()
+	.["alarms"] = list()
 	for(var/class in alarms)
-		data["alarms"][class] = list()
+		.["alarms"][class] = list()
 		for(var/area in alarms[class])
-			data["alarms"][class] += area
-
-	return data
+			.["alarms"][class] += area
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, obj/source)
 	if(source.z != z)
@@ -67,10 +73,6 @@
 				cleared = 1
 				L -= I
 	return !cleared
-
-
-/obj/machinery/computer/station_alert/process()
-	..()
 
 /obj/machinery/computer/station_alert/update_icon()
 	..()

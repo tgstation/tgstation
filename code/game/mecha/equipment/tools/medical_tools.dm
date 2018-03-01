@@ -2,10 +2,9 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical
 
-/obj/item/mecha_parts/mecha_equipment/medical/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/medical/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
-
 
 /obj/item/mecha_parts/mecha_equipment/medical/can_attach(obj/mecha/medical/M)
 	if(..() && istype(M))
@@ -32,9 +31,8 @@
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper
 	name = "mounted sleeper"
 	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents in the exosuit's reserves."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	origin_tech = "engineering=3;biotech=3;plasmatech=2"
 	energy_drain = 20
 	range = MELEE
 	equip_cooldown = 20
@@ -169,6 +167,7 @@
 				<font color="[patient.getFireLoss() < 60 ? "blue" : "red"]"><b>Burn Severity:</b> [patient.getFireLoss()]%</font><br />
 				<font color="red">[patient.getCloneLoss() ? "Subject appears to have cellular damage." : ""]</font><br />
 				<font color="red">[patient.getBrainLoss() ? "Significant brain damage detected." : ""]</font><br />
+				<font color="red">[length(patient.get_traumas()) ? "Brain Traumas detected." : ""]</font><br />
 				"}
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_reagents()
@@ -255,10 +254,9 @@
 	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
 	range = MELEE|RANGED
 	equip_cooldown = 10
-	origin_tech = "materials=3;biotech=4;magnets=4"
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Initialize()
+	. = ..()
 	create_reagents(max_volume)
 	reagents.set_reacting(FALSE)
 	syringes = new
@@ -504,7 +502,7 @@
 		return 1
 	return
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/on_reagent_change()
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/on_reagent_change(changetype)
 	..()
 	update_equip_info()
 	return
@@ -532,12 +530,11 @@
 	energy_drain = 10
 	range = MELEE|RANGED
 	equip_cooldown = 0
-	origin_tech = "combat=5;materials=6;powerstorage=7;biotech=6"
 	var/obj/item/gun/medbeam/mech/medigun
 	materials = list(MAT_METAL = 15000, MAT_GLASS = 8000, MAT_PLASMA = 3000, MAT_GOLD = 8000, MAT_DIAMOND = 2000)
 
-/obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/Initialize()
+	. = ..()
 	medigun = new(src)
 
 

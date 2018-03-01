@@ -88,7 +88,7 @@
 		return 1
 	switch(action)
 		if("PRG_downloadfile")
-			for(var/datum/computer_file/program/nttransfer/P in GLOB.ntnet_global.fileservers)
+			for(var/datum/computer_file/program/nttransfer/P in SSnetworks.station_network.fileservers)
 				if("[P.unique_token]" == params["id"])
 					remote = P
 					break
@@ -106,8 +106,8 @@
 			error = ""
 			upload_menu = 0
 			finalize_download()
-			if(src in GLOB.ntnet_global.fileservers)
-				GLOB.ntnet_global.fileservers.Remove(src)
+			if(src in SSnetworks.station_network.fileservers)
+				SSnetworks.station_network.fileservers.Remove(src)
 			for(var/datum/computer_file/program/nttransfer/T in connected_clients)
 				T.crash_download("Remote server has forcibly closed the connection")
 			provided_file = null
@@ -133,7 +133,7 @@
 						if(!P.can_run(usr,transfer = 1))
 							error = "Access Error: Insufficient rights to upload file."
 					provided_file = F
-					GLOB.ntnet_global.fileservers.Add(src)
+					SSnetworks.station_network.fileservers.Add(src)
 					return
 			error = "I/O Error: Unable to locate file on hard drive."
 			return 1
@@ -171,7 +171,7 @@
 		data["upload_filelist"] = all_files
 	else
 		var/list/all_servers[0]
-		for(var/datum/computer_file/program/nttransfer/P in GLOB.ntnet_global.fileservers)
+		for(var/datum/computer_file/program/nttransfer/P in SSnetworks.station_network.fileservers)
 			all_servers.Add(list(list(
 			"uid" = P.unique_token,
 			"filename" = "[P.provided_file.filename].[P.provided_file.filetype]",

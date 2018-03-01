@@ -197,7 +197,7 @@
 
 /obj/item/twohanded/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
-	if((CLUMSY in user.disabilities) && prob(50))
+	if((user.has_trait(TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
 		user.Knockdown(60)
 		if(ishuman(user))
@@ -240,7 +240,7 @@
 				H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking them out cold!</span>", \
 									   "<span class='userdanger'>[user] knocks you unconscious!</span>")
 				H.SetSleeping(600)
-				H.adjustBrainLoss(25)
+				H.adjustBrainLoss(15, 150)
 	else
 		return ..()
 

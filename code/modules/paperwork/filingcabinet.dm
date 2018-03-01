@@ -36,7 +36,7 @@
 	if(mapload)
 		for(var/obj/item/I in loc)
 			if(istype(I, /obj/item/paper) || istype(I, /obj/item/folder) || istype(I, /obj/item/photo))
-				I.loc = src
+				I.forceMove(src)
 
 /obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -56,8 +56,7 @@
 		updateUsrDialog()
 	else if(istype(P, /obj/item/wrench))
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
-		playsound(loc, P.usesound, 50, 1)
-		if(do_after(user, 20, target = src))
+		if(P.use_tool(src, user, 20, volume=50))
 			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
 			anchored = !anchored
 	else if(user.a_intent != INTENT_HARM)
@@ -90,7 +89,7 @@
 	if(contents.len)
 		if(prob(40 + contents.len * 5))
 			var/obj/item/I = pick(contents)
-			I.loc = loc
+			I.forceMove(loc)
 			if(prob(25))
 				step_rand(I)
 			to_chat(user, "<span class='notice'>You pull \a [I] out of [src] at random.</span>")
@@ -101,7 +100,6 @@
 	if(href_list["retrieve"])
 		usr << browse("", "window=filingcabinet") // Close the menu
 
-		//var/retrieveindex = text2num(href_list["retrieve"])
 		var/obj/item/P = locate(href_list["retrieve"])//contents[retrieveindex]
 		if(istype(P) && P.loc == src && in_range(src, usr))
 			usr.put_in_hands(P)
@@ -185,9 +183,9 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 	icon_state = "employmentcabinet"
 	var/virgin = 1
 
-/obj/structure/filingcabinet/employment/New()
+/obj/structure/filingcabinet/employment/Initialize()
+	. = ..()
 	GLOB.employmentCabinets += src
-	return ..()
 
 /obj/structure/filingcabinet/employment/Destroy()
 	GLOB.employmentCabinets -= src

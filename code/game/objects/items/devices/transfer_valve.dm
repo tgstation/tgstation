@@ -6,13 +6,13 @@
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	desc = "Regulates the transfer of air between two tanks."
+	w_class = WEIGHT_CLASS_BULKY
 	var/obj/item/tank/tank_one
 	var/obj/item/tank/tank_two
 	var/obj/item/device/assembly/attached_device
 	var/mob/attacher = null
 	var/valve_open = FALSE
 	var/toggle = 1
-	origin_tech = "materials=1;engineering=1"
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
 	return TRUE
@@ -28,15 +28,11 @@
 				return
 			tank_one = item
 			to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
-			if(item.w_class > w_class)
-				w_class = item.w_class
 		else if(!tank_two)
 			if(!user.transferItemToLoc(item, src))
 				return
 			tank_two = item
 			to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
-			if(item.w_class > w_class)
-				w_class = item.w_class
 
 		update_icon()
 //TODO: Have this take an assemblyholder
@@ -57,7 +53,7 @@
 
 		GLOB.bombers += "[key_name(user)] attached a [item] to a transfer valve."
 		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve.")
-		log_game("[key_name_admin(user)] attached a [item] to a transfer valve.")
+		log_game("[key_name(user)] attached a [item] to a transfer valve.")
 		attacher = user
 	return
 
@@ -84,16 +80,12 @@
 		tank_one.forceMove(drop_location())
 		tank_one = null
 		update_icon()
-		if((!tank_two || tank_two.w_class < WEIGHT_CLASS_BULKY) && (w_class > WEIGHT_CLASS_NORMAL))
-			w_class = WEIGHT_CLASS_NORMAL
 	else if(tank_two && href_list["tanktwo"])
 		split_gases()
 		valve_open = FALSE
 		tank_two.forceMove(drop_location())
 		tank_two = null
 		update_icon()
-		if((!tank_one || tank_one.w_class < WEIGHT_CLASS_BULKY) && (w_class > WEIGHT_CLASS_NORMAL))
-			w_class = WEIGHT_CLASS_NORMAL
 	else if(href_list["open"])
 		toggle_valve()
 	else if(attached_device)

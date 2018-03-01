@@ -19,6 +19,13 @@
 	LAZYREMOVE(AllTeleporters, src)
 	return ..()
 
+
+/obj/effect/bump_teleporter/singularity_act()
+	return
+
+/obj/effect/bump_teleporter/singularity_pull()
+	return
+
 /obj/effect/bump_teleporter/CollidedWith(atom/movable/AM)
 	if(!ismob(AM))
 		return

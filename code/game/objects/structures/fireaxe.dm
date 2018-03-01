@@ -6,7 +6,7 @@
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
-	armor = list(melee = 50, bullet = 20, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 90, acid = 50)
+	armor = list("melee" = 50, "bullet" = 20, "laser" = 0, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 50)
 	var/locked = TRUE
 	var/open = FALSE
 	max_integrity = 150
@@ -25,13 +25,13 @@
 	if(iscyborg(user) || istype(I, /obj/item/device/multitool))
 		toggle_lock(user)
 	else if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP && !broken)
-		var/obj/item/weldingtool/WT = I
-		if(obj_integrity < max_integrity && WT.remove_fuel(2, user))
+		if(obj_integrity < max_integrity)
+			if(!I.tool_start_check(user, amount=2))
+				return
+
 			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
-			playsound(loc, WT.usesound, 40, 1)
-			if(do_after(user, 40*I.toolspeed, target = src))
+			if(I.use_tool(src, user, 40, volume=50, amount=2))
 				obj_integrity = max_integrity
-				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 				update_icon()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else

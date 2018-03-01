@@ -59,7 +59,7 @@
 	friendly = "grooms"
 	mob_size = MOB_SIZE_SMALL
 	movement_type = FLYING
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 	var/parrot_damage_upper = 10
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
@@ -68,8 +68,6 @@
 	var/parrot_dam_zone = list("chest", "head", "l_arm", "l_leg", "r_arm", "r_leg") //For humans, select a bodypart to attack
 
 	var/parrot_speed = 5 //"Delay in world ticks between movement." according to byond. Yeah, that's BS but it does directly affect movement. Higher number = slower.
-	//var/parrot_been_shot = 0 this wasn't working right, and parrots don't survive bullets.((Parrots get a speed bonus after being shot. This will deincrement every Life() and at 0 the parrot will return to regular speed.))
-
 	var/parrot_lastmove = null //Updates/Stores position of the parrot while it's moving
 	var/parrot_stuck = 0	//If parrot_lastmove hasnt changed, this will increment until it reaches parrot_stuck_threshold
 	var/parrot_stuck_threshold = 10 //if this == parrot_stuck, it'll force the parrot back to wandering
@@ -127,7 +125,7 @@
 
 /mob/living/simple_animal/parrot/death(gibbed)
 	if(held_item)
-		held_item.loc = src.loc
+		held_item.forceMove(drop_location())
 		held_item = null
 	walk(src,0)
 
@@ -213,7 +211,7 @@
 								src.say("[pick(available_channels)] BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
 							else
 								src.say("BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
-						ears.loc = src.loc
+						ears.forceMove(src.loc)
 						ears = null
 						for(var/possible_phrase in speak)
 							if(copytext(possible_phrase,1,3) in GLOB.department_radio_keys)
@@ -368,10 +366,14 @@
 	..()
 
 	//Sprite update for when a parrot gets pulled
-	if(pulledby && stat == CONSCIOUS)
+	if(pulledby && !stat && parrot_state != PARROT_WANDER)
+		if(buckled)
+			buckled.unbuckle_mob(src, TRUE)
+			buckled = null
 		icon_state = icon_living
-		if(!client)
-			parrot_state = PARROT_WANDER
+		parrot_state = PARROT_WANDER
+		pixel_x = initial(pixel_x)
+		pixel_y = initial(pixel_y)
 		return
 
 
@@ -504,7 +506,7 @@
 			else //This should ensure that we only grab the item we want, and make sure it's not already collected on our perch
 				if(!parrot_perch || parrot_interest.loc != parrot_perch.loc)
 					held_item = parrot_interest
-					parrot_interest.loc = src
+					parrot_interest.forceMove(src)
 					visible_message("[src] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
 
 			parrot_interest = null
@@ -526,7 +528,7 @@
 			return
 
 		if(Adjacent(parrot_perch))
-			src.loc = parrot_perch.loc
+			forceMove(parrot_perch.loc)
 			drop_held_item()
 			parrot_state = PARROT_PERCH
 			icon_state = icon_sit
@@ -545,8 +547,6 @@
 			parrot_state = PARROT_WANDER
 
 		walk_away(src, parrot_interest, 1, parrot_speed)
-		/*if(parrot_been_shot > 0)
-			parrot_been_shot--  didn't work anyways, and besides, any bullet poly survives isn't worth the speed boost.*/
 		if(isStuck())
 			return
 
@@ -704,7 +704,7 @@
 				continue
 
 			held_item = I
-			I.loc = src
+			I.forceMove(src)
 			visible_message("[src] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
 			return held_item
 
@@ -779,7 +779,7 @@
 	if(!drop_gently)
 		if(istype(held_item, /obj/item/grenade))
 			var/obj/item/grenade/G = held_item
-			G.loc = src.loc
+			G.forceMove(drop_location())
 			G.prime()
 			to_chat(src, "You let go of [held_item]!")
 			held_item = null
@@ -787,7 +787,7 @@
 
 	to_chat(src, "You drop [held_item].")
 
-	held_item.loc = src.loc
+	held_item.forceMove(drop_location())
 	held_item = null
 	return 1
 
@@ -803,12 +803,20 @@
 		for(var/atom/movable/AM in view(src,1))
 			for(var/perch_path in desired_perches)
 				if(istype(AM, perch_path))
-					src.loc = AM.loc
+					src.forceMove(AM.loc)
 					icon_state = icon_sit
+					parrot_state = PARROT_PERCH
 					return
 	to_chat(src, "<span class='warning'>There is no perch nearby to sit on!</span>")
 	return
 
+/mob/living/simple_animal/parrot/Moved(oldLoc, dir)
+	. = ..()
+	if(. && !stat && client && parrot_state == PARROT_PERCH)
+		parrot_state = PARROT_WANDER
+		icon_state = icon_living
+		pixel_x = initial(pixel_x)
+		pixel_y = initial(pixel_y)
 
 /mob/living/simple_animal/parrot/proc/perch_mob_player()
 	set name = "Sit on Human's Shoulder"
@@ -818,7 +826,7 @@
 	if(stat || !client)
 		return
 
-	if(icon_state == icon_living)
+	if(!buckled)
 		for(var/mob/living/carbon/human/H in view(src,1))
 			if(H.has_buckled_mobs() && H.buckled_mobs.len >= H.max_buckled_mobs) //Already has a parrot, or is being eaten by a slime
 				continue
@@ -830,7 +838,7 @@
 		parrot_state = PARROT_WANDER
 		if(buckled)
 			to_chat(src, "<span class='notice'>You are no longer sitting on [buckled]'s shoulder.</span>")
-			buckled.unbuckle_mob(src,force=1)
+			buckled.unbuckle_mob(src, TRUE)
 		buckled = null
 		pixel_x = initial(pixel_x)
 		pixel_y = initial(pixel_y)
@@ -840,13 +848,13 @@
 /mob/living/simple_animal/parrot/proc/perch_on_human(mob/living/carbon/human/H)
 	if(!H)
 		return
-	loc = get_turf(H)
-	H.buckle_mob(src, force=1)
-	pixel_y = 9
-	pixel_x = pick(-8,8) //pick left or right shoulder
-	icon_state = icon_sit
-	parrot_state = PARROT_PERCH
-	to_chat(src, "<span class='notice'>You sit on [H]'s shoulder.</span>")
+	forceMove(get_turf(H))
+	if(H.buckle_mob(src, TRUE))
+		pixel_y = 9
+		pixel_x = pick(-8,8) //pick left or right shoulder
+		icon_state = icon_sit
+		parrot_state = PARROT_PERCH
+		to_chat(src, "<span class='notice'>You sit on [H]'s shoulder.</span>")
 
 
 /mob/living/simple_animal/parrot/proc/toggle_mode()
@@ -857,13 +865,13 @@
 	if(stat || !client)
 		return
 
-	if(melee_damage_upper)
+	if(a_intent != INTENT_HELP)
 		melee_damage_upper = 0
 		a_intent = INTENT_HELP
 	else
 		melee_damage_upper = parrot_damage_upper
 		a_intent = INTENT_HARM
-	to_chat(src, "You will now [a_intent] others...")
+	to_chat(src, "You will now [a_intent] others.")
 	return
 
 /*
@@ -873,7 +881,7 @@
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	speak = list("Poly wanna cracker!", ":e Check the crystal, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE")
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 	speak_chance = 3
 	var/memory_saved = FALSE
 	var/rounds_survived = 0
@@ -964,7 +972,7 @@
 	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 75, TRUE)
 	var/mob/living/simple_animal/parrot/clock_hawk/H = new(loc)
 	H.setDir(dir)
-	dust()
+	qdel(src)
 
 /mob/living/simple_animal/parrot/Poly/ghost
 	name = "The Ghost of Poly"
@@ -998,7 +1006,7 @@
 		return
 	var/datum/disease/parrot_possession/P = new
 	P.parrot = src
-	loc = H
+	forceMove(H)
 	H.ForceContractDisease(P)
 	parrot_interest = null
 	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
@@ -1015,7 +1023,7 @@
 	emote_hear = list("squawks rustily.", "bawks metallically!")
 	emote_see = list("flutters its metal wings.")
 	faction = list("ratvar")
-	gold_core_spawnable = FALSE
+	gold_core_spawnable = NO_SPAWN
 	del_on_death = TRUE
 	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 

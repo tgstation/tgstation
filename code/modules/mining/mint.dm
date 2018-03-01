@@ -11,7 +11,7 @@
 	var/processing = FALSE
 	var/chosen = MAT_METAL //which material will be used to make coins
 	var/coinsToProduce = 10
-	speed_process = 1
+	speed_process = TRUE
 
 
 /obj/machinery/mineral/mint/Initialize()
@@ -22,7 +22,7 @@
 	var/turf/T = get_step(src, input_dir)
 	if(!T)
 		return
-	
+
 	GET_COMPONENT(materials, /datum/component/material_container)
 	for(var/obj/item/stack/sheet/O in T)
 		materials.insert_stack(O, O.amount)
@@ -68,7 +68,7 @@
 		if(materials.materials[href_list["choose"]])
 			chosen = href_list["choose"]
 	if(href_list["chooseAmt"])
-		coinsToProduce = Clamp(coinsToProduce + text2num(href_list["chooseAmt"]), 0, 1000)
+		coinsToProduce = CLAMP(coinsToProduce + text2num(href_list["chooseAmt"]), 0, 1000)
 	if(href_list["makeCoins"])
 		var/temp_coins = coinsToProduce
 		processing = TRUE
@@ -100,4 +100,4 @@
 		if(!M)
 			M = new /obj/item/storage/bag/money(src)
 			unload_mineral(M)
-		O.loc = M
+		O.forceMove(M)

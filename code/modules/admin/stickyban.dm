@@ -142,8 +142,8 @@
 				to_chat(usr, "<span class='adminnotice'>Error: No cached sticky ban for [ckey] found!</span>")
 			world.SetConfig("ban",ckey,null)
 
-			log_admin_private("[key_name(usr)] has reverted [ckey]'s sticky ban to it's state at round start.")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has reverted [ckey]'s sticky ban to it's state at round start.</span>")
+			log_admin_private("[key_name(usr)] has reverted [ckey]'s sticky ban to its state at round start.")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has reverted [ckey]'s sticky ban to its state at round start.</span>")
 			//revert is mostly used when shit goes rouge, so we have to set it to null
 			//	and wait a byond tick before assigning it to ensure byond clears its shit.
 			sleep(world.tick_lag)

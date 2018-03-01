@@ -49,6 +49,7 @@
 	max_integrity = 200
 	integrity_failure = 50
 	resistance_flags = FIRE_PROOF
+	interact_open = TRUE
 
 	var/lon_range = 1.5
 	var/area/area
@@ -88,6 +89,9 @@
 	var/auto_name = 0
 	var/failure_timer = 0
 	var/force_update = 0
+	var/emergency_lights = FALSE
+	var/nightshift_lights = FALSE
+	var/last_nightshift_switch = 0
 	var/update_state = -1
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
@@ -114,7 +118,7 @@
 	if (!req_access)
 		req_access = list(ACCESS_ENGINE_EQUIP)
 	if (!armor)
-		armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
+		armor = list("melee" = 20, "bullet" = 20, "laser" = 10, "energy" = 100, "bomb" = 30, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 50)
 	..()
 	GLOB.apcs_list += src
 
@@ -151,7 +155,7 @@
 	GLOB.apcs_list -= src
 
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
 	area.power_light = FALSE
 	area.power_equip = FALSE
 	area.power_environ = FALSE
@@ -313,7 +317,7 @@
 			update_state |= UPSTATE_OPENED1
 		if(opened==2)
 			update_state |= UPSTATE_OPENED2
-	else if(emagged || malfai)
+	else if((obj_flags & EMAGGED) || malfai)
 		update_state |= UPSTATE_BLUESCREEN
 	else if(panel_open)
 		update_state |= UPSTATE_WIREEXP
@@ -381,9 +385,9 @@
 				if (terminal)
 					to_chat(user, "<span class='warning'>Disconnect the wires first!</span>")
 					return
-				playsound(src.loc, W.usesound, 50, 1)
+				W.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You are trying to remove the power control board...</span>" )
-				if(do_after(user, 50*W.toolspeed, target = src))
+				if(W.use_tool(src, user, 50))
 					if (has_electronics==1)
 						has_electronics = 0
 						if (stat & BROKEN)
@@ -393,8 +397,8 @@
 								"<span class='italics'>You hear a crack.</span>")
 							return
 							//SSticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
-						else if (emagged) // We emag board, not APC's frame
-							emagged = FALSE
+						else if (obj_flags & EMAGGED) // We emag board, not APC's frame
+							obj_flags &= ~EMAGGED
 							user.visible_message(\
 								"[user.name] has discarded emaged power control board from [src.name]!",\
 								"<span class='notice'>You discarded shorten board.</span>")
@@ -415,13 +419,12 @@
 			else if(integration_cog)
 				user.visible_message("<span class='notice'>[user] starts prying [integration_cog] from [src]...</span>", \
 				"<span class='notice'>You painstakingly start tearing [integration_cog] out of [src]'s guts...</span>")
-				playsound(src, W.usesound, 50, TRUE)
-				if(!do_after(user, 100 * W.toolspeed, target = src))
-					return
-				user.visible_message("<span class='notice'>[user] destroys [integration_cog] in [src]!</span>", \
-				"<span class='notice'>[integration_cog] comes free with a clank and snaps in two as the machinery returns to normal!</span>")
-				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-				QDEL_NULL(integration_cog)
+				W.play_tool_sound(src)
+				if(W.use_tool(src, user, 100))
+					user.visible_message("<span class='notice'>[user] destroys [integration_cog] in [src]!</span>", \
+					"<span class='notice'>[integration_cog] comes free with a clank and snaps in two as the machinery returns to normal!</span>")
+					playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+					QDEL_NULL(integration_cog)
 				return
 			else if (opened!=2) //cover isn't removed
 				opened = 0
@@ -466,18 +469,18 @@
 				if (has_electronics==1)
 					has_electronics = 2
 					stat &= ~MAINT
-					playsound(src.loc, W.usesound, 50, 1)
+					W.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You screw the circuit electronics into place.</span>")
 				else if (has_electronics==2)
 					has_electronics = 1
 					stat |= MAINT
-					playsound(src.loc, W.usesound, 50, 1)
+					W.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You unfasten the electronics.</span>")
 				else /* has_electronics==0 */
 					to_chat(user, "<span class='warning'>There is nothing to secure!</span>")
 					return
 				update_icon()
-		else if(emagged)
+		else if(obj_flags & EMAGGED)
 			to_chat(user, "<span class='warning'>The interface is broken!</span>")
 		else if((stat & MAINT) && !opened)
 			..() //its an empty closed frame... theres no wires to expose!
@@ -487,21 +490,7 @@
 			update_icon()
 
 	else if (W.GetID())			// trying to unlock the interface with an ID card
-		if(emagged)
-			to_chat(user, "<span class='warning'>The interface is broken!</span>")
-		else if(opened)
-			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
-		else if(panel_open)
-			to_chat(user, "<span class='warning'>You must close the panel!</span>")
-		else if(stat & (BROKEN|MAINT))
-			to_chat(user, "<span class='warning'>Nothing happens!</span>")
-		else
-			if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack)
-				locked = !locked
-				to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>")
-				update_icon()
-			else
-				to_chat(user, "<span class='warning'>Access denied.</span>")
+		togglelock(user)
 
 	else if (istype(W, /obj/item/stack/cable_coil) && opened)
 		var/turf/host_turf = get_turf(src)
@@ -556,7 +545,7 @@
 		if(do_after(user, 10, target = src))
 			if(has_electronics==0)
 				has_electronics = 1
-				locked = TRUE //We placed new, locked board in
+				locked = FALSE
 				to_chat(user, "<span class='notice'>You place the power control board inside the frame.</span>")
 				qdel(W)
 
@@ -571,7 +560,7 @@
 			user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
 			"<span class='notice'>You adapt a power control board and click it into place in [src]'s guts.</span>")
 			has_electronics = TRUE
-			locked = TRUE
+			locked = FALSE
 		else if(!cell)
 			if(stat & MAINT)
 				to_chat(user, "<span class='warning'>There's no connector for a power cell.</span>")
@@ -590,17 +579,12 @@
 			return
 
 	else if (istype(W, /obj/item/weldingtool) && opened && has_electronics==0 && !terminal)
-		var/obj/item/weldingtool/WT = W
-		if (WT.get_fuel() < 3)
-			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task!</span>")
+		if(!W.tool_start_check(user, amount=3))
 			return
 		user.visible_message("[user.name] welds [src].", \
 							"<span class='notice'>You start welding the APC frame...</span>", \
 							"<span class='italics'>You hear welding.</span>")
-		playsound(src.loc, WT.usesound, 50, 1)
-		if(do_after(user, 50*W.toolspeed, target = src))
-			if(!src || !WT.remove_fuel(3, user))
-				return
+		if(W.use_tool(src, user, 50, volume=50, amount=3))
 			if ((stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\
@@ -672,6 +656,30 @@
 	else
 		return ..()
 
+/obj/machinery/power/apc/AltClick(mob/user)
+	..()
+	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
+		return
+	else
+		togglelock(user)
+
+/obj/machinery/power/apc/proc/togglelock(mob/living/user)
+	if(obj_flags & EMAGGED)
+		to_chat(user, "<span class='warning'>The interface is broken!</span>")
+	else if(opened)
+		to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
+	else if(panel_open)
+		to_chat(user, "<span class='warning'>You must close the panel!</span>")
+	else if(stat & (BROKEN|MAINT))
+		to_chat(user, "<span class='warning'>Nothing happens!</span>")
+	else
+		if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN) && !malfhack)
+			locked = !locked
+			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>")
+			update_icon()
+		else
+			to_chat(user, "<span class='warning'>Access denied.</span>")
+
 /obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 15 && (!(stat & BROKEN) || malfai))
 		return 0
@@ -692,7 +700,7 @@
 			update_icon()
 
 /obj/machinery/power/apc/emag_act(mob/user)
-	if(!emagged && !malfhack)
+	if(!(obj_flags & EMAGGED) && !malfhack)
 		if(opened)
 			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
 		else if(panel_open)
@@ -702,7 +710,7 @@
 		else
 			flick("apc-spark", src)
 			playsound(src, "sparks", 75, 1)
-			emagged = TRUE
+			obj_flags |= EMAGGED
 			locked = FALSE
 			to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
 			update_icon()
@@ -748,6 +756,8 @@
 		"coverLocked" = coverlocked,
 		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console(),
 		"malfStatus" = get_malf_status(user),
+		"emergencyLights" = !emergency_lights,
+		"nightshiftLights" = nightshift_lights,
 
 		"powerChannels" = list(
 			list(
@@ -838,7 +848,7 @@
 	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
-				if(emagged || (stat & (BROKEN|MAINT)))
+				if((obj_flags & EMAGGED) || (stat & (BROKEN|MAINT)))
 					to_chat(usr, "The APC does not respond to the command.")
 				else
 					locked = !locked
@@ -849,6 +859,13 @@
 			. = TRUE
 		if("breaker")
 			toggle_breaker()
+			. = TRUE
+		if("toggle_nightshift")
+			if(last_nightshift_switch > world.time + 100)			//don't spam..
+				to_chat(usr, "<span class='warning'>[src]'s night lighting circuit breaker is still cycling!</span>")
+				return
+			last_nightshift_switch = world.time
+			set_nightshift(!nightshift_lights)
 			. = TRUE
 		if("charge")
 			chargemode = !chargemode
@@ -887,9 +904,19 @@
 			failure_timer = 0
 			update_icon()
 			update()
+		if("emergency_lighting")
+			emergency_lights = !emergency_lights
+			for(var/area/A in area.related)
+				for(var/obj/machinery/light/L in A)
+					if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
+						L.no_emergency = emergency_lights
+						INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
+					CHECK_TICK
 	return 1
 
 /obj/machinery/power/apc/proc/toggle_breaker()
+	if(!is_operational() || failure_timer)
+		return
 	operating = !operating
 	update()
 	update_icon()
@@ -919,7 +946,7 @@
 	if(!malf.can_shunt)
 		to_chat(malf, "<span class='warning'>You cannot shunt!</span>")
 		return
-	if(!(src.z in GLOB.station_z_levels))
+	if(!is_station_level(z))
 		return
 	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?	//IKR????
 	occupier.adjustOxyLoss(malf.getOxyLoss())
@@ -950,7 +977,7 @@
 	else
 		to_chat(occupier, "<span class='danger'>Primary core damaged, unable to return core processes.</span>")
 		if(forced)
-			occupier.loc = src.loc
+			occupier.forceMove(drop_location())
 			occupier.death()
 			occupier.gib()
 			for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
@@ -1041,15 +1068,6 @@
 		force_update = 1
 		return
 
-	/*
-	if (equipment > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.equip_consumption, EQUIP)
-	if (lighting > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.light_consumption, LIGHT)
-	if (environ > 1) // off=0, off auto=1, on=2, on auto=3
-		use_power(src.environ_consumption, ENVIRON)
-
-	area.calc_lighting() */
 	lastused_light = area.usage(STATIC_LIGHT)
 	lastused_light += area.usage(LIGHT)
 	lastused_equip = area.usage(EQUIP)
@@ -1240,7 +1258,7 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
 	stat |= BROKEN
 	operating = FALSE
 	if(occupier)
@@ -1295,6 +1313,16 @@
 			return
 
 	failure_timer = max(failure_timer, round(duration))
+
+/obj/machinery/power/apc/proc/set_nightshift(on)
+	set waitfor = FALSE
+	nightshift_lights = on
+	for(var/area/A in area.related)
+		for(var/obj/machinery/light/L in A)
+			if(L.nightshift_allowed)
+				L.nightshift_enabled = nightshift_lights
+				L.update(FALSE)
+			CHECK_TICK
 
 #undef UPSTATE_CELL_IN
 #undef UPSTATE_OPENED1

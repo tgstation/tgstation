@@ -65,8 +65,8 @@
 
 /datum/disease/transformation/jungle_fever
 	name = "Jungle Fever"
-	cure_text = "Bananas"
-	cures = list("banana")
+	cure_text = "Death."
+	cures = list("adminordrazine")
 	spread_text = "Monkey Bites"
 	spread_flags = VIRUS_SPREAD_SPECIAL
 	viable_mobtypes = list(/mob/living/carbon/monkey, /mob/living/carbon/human)
@@ -88,9 +88,12 @@
 	stage5	= list("<span class='warning'>You feel like monkeying around.</span>")
 
 /datum/disease/transformation/jungle_fever/do_disease_transformation(mob/living/carbon/affected_mob)
-	if(!ismonkey(affected_mob))
-		SSticker.mode.add_monkey(affected_mob.mind)
-		affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+	if(affected_mob.mind && !is_monkey(affected_mob.mind))
+		add_monkey(affected_mob.mind)
+	if(ishuman(affected_mob))
+		var/mob/living/carbon/monkey/M = affected_mob.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+		M.ventcrawler = VENTCRAWLER_ALWAYS
+
 
 /datum/disease/transformation/jungle_fever/stage_act()
 	..()
@@ -107,8 +110,17 @@
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."))
 
 /datum/disease/transformation/jungle_fever/cure()
-	SSticker.mode.remove_monkey(affected_mob.mind)
+	remove_monkey(affected_mob.mind)
 	..()
+
+/datum/disease/transformation/jungle_fever/monkeymode
+	visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
+	disease_flags = CAN_CARRY //no vaccines! no cure!
+
+/datum/disease/transformation/jungle_fever/monkeymode/after_add()
+	if(affected_mob && !is_monkey_leader(affected_mob.mind))
+		visibility_flags = NONE
+
 
 
 /datum/disease/transformation/robot
@@ -127,7 +139,7 @@
 	stage4	= list("<span class='danger'>Your skin feels very loose.</span>", "<span class='danger'>You can feel... something...inside you.</span>")
 	stage5	= list("<span class='danger'>Your skin feels as if it's about to burst off!</span>")
 	new_form = /mob/living/silicon/robot
-
+	infectable_hosts = list(SPECIES_ORGANIC, SPECIES_UNDEAD, SPECIES_ROBOTIC)
 
 /datum/disease/transformation/robot/stage_act()
 	..()
@@ -192,12 +204,13 @@
 	..()
 	switch(stage)
 		if(1)
-			if(ishuman(affected_mob) && affected_mob.dna && affected_mob.dna.species.id == "slime")
-				stage = 5
+			if(ishuman(affected_mob) && affected_mob.dna)
+				if(affected_mob.dna.species.id == "slime" || affected_mob.dna.species.id == "stargazer" || affected_mob.dna.species.id == "lum")
+					stage = 5
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(human.dna.species.id != "slime")
+				if(human.dna.species.id != "slime" && affected_mob.dna.species.id != "stargazer" && affected_mob.dna.species.id != "lum")
 					human.set_species(/datum/species/jelly/slime)
 
 /datum/disease/transformation/corgi
@@ -240,3 +253,4 @@
 	stage4	= list("<span class='danger'>You're ravenous.</span>")
 	stage5	= list("<span class='danger'>You have become a morph.</span>")
 	new_form = /mob/living/simple_animal/hostile/morph
+	infectable_hosts = list(SPECIES_ORGANIC, SPECIES_INORGANIC, SPECIES_UNDEAD) //magic!

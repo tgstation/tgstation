@@ -6,7 +6,7 @@
 	max_integrity = 140
 	deflect_chance = 60
 	internal_damage_threshold = 60
-	armor = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	max_temperature = 25000
 	infra_luminosity = 5
 	operation_req_access = list(ACCESS_THEATRE)
@@ -14,17 +14,6 @@
 	add_req_access = 0
 	max_equip = 3
 	var/squeak = 0
-
-/*
-/obj/mecha/combat/honker/New()
-	..()
-
-	weapons += new /datum/mecha_weapon/honker(src)
-	weapons += new /datum/mecha_weapon/missile_rack/banana_mortar(src)
-	weapons += new /datum/mecha_weapon/missile_rack/mousetrap_mortar(src)
-	selected_weapon = weapons[1]
-	return
-*/
 
 /obj/mecha/combat/honker/get_stats_part()
 	var/integrity = obj_integrity/max_integrity*100

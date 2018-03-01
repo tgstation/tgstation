@@ -28,12 +28,6 @@ Class Variables:
    component_parts (list)
       A list of component parts of machine used by frame based machines.
 
-   uid (num)
-      Unique id of machine across all machines.
-
-   gl_uid (global num)
-      Next uid value in sequence
-
    stat (bitflag)
       Machine status bit flags.
       Possible bit flags:
@@ -77,9 +71,6 @@ Class Procs:
 
       Default definition does nothing.
 
-   assign_uid()               'game/machinery/machine.dm'
-      Called by machine to assign a value to the uid variable.
-
    process()                  'game/machinery/machine.dm'
       Called by the 'machinery subsystem' once per machinery tick for each machine that is listed in its 'machines' list.
 
@@ -102,7 +93,6 @@ Class Procs:
 	max_integrity = 200
 
 	var/stat = 0
-	var/emagged = FALSE
 	var/use_power = IDLE_POWER_USE
 		//0 = dont run the auto
 		//1 = run auto, use idle
@@ -112,22 +102,19 @@ Class Procs:
 	var/power_channel = EQUIP
 		//EQUIP,ENVIRON or LIGHT
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
-	var/uid
-	var/global/gl_uid = 1
 	var/panel_open = FALSE
 	var/state_open = FALSE
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
 	var/atom/movable/occupant = null
-	var/unsecuring_tool = /obj/item/wrench
 	var/interact_open = FALSE // Can the machine be interacted with when in maint/when the panel is open.
-	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
-	var/speed_process = 0 // Process as fast as possible?
+	var/interact_offline = FALSE // Can the machine be interacted with while de-powered.
+	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
 /obj/machinery/Initialize()
 	if(!armor)
-		armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	. = ..()
 	GLOB.machines += src
 
@@ -197,7 +184,7 @@ Class Procs:
 				continue
 			if(isliving(AM))
 				var/mob/living/L = am
-				if(L.buckled)
+				if(L.buckled || L.mob_size >= MOB_SIZE_LARGE)
 					continue
 			target = am
 
@@ -303,22 +290,17 @@ Class Procs:
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
 	return
 
-/obj/machinery/proc/assign_uid()
-	uid = gl_uid
-	gl_uid++
-
-/obj/machinery/proc/default_pry_open(obj/item/crowbar/C)
-	. = !(state_open || panel_open || is_operational() || (flags_1 & NODECONSTRUCT_1)) && istype(C)
+/obj/machinery/proc/default_pry_open(obj/item/I)
+	. = !(state_open || panel_open || is_operational() || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
-		playsound(loc, C.usesound, 50, 1)
+		I.play_tool_sound(src, 50)
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
-		return 1
 
-/obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar/C, ignore_panel = 0)
-	. = istype(C) && (panel_open || ignore_panel) &&  !(flags_1 & NODECONSTRUCT_1)
+/obj/machinery/proc/default_deconstruction_crowbar(obj/item/I, ignore_panel = 0)
+	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
-		playsound(loc, C.usesound, 50, 1)
+		I.play_tool_sound(src, 50)
 		deconstruct(TRUE)
 
 /obj/machinery/deconstruct(disassembled = TRUE)
@@ -354,9 +336,9 @@ Class Procs:
 		update_icon()
 		updateUsrDialog()
 
-/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver/S)
-	if(istype(S) &&  !(flags_1 & NODECONSTRUCT_1))
-		playsound(loc, S.usesound, 50, 1)
+/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
+	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER)
+		I.play_tool_sound(src, 50)
 		if(!panel_open)
 			panel_open = TRUE
 			icon_state = icon_state_open
@@ -368,9 +350,9 @@ Class Procs:
 		return 1
 	return 0
 
-/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/wrench/W)
-	if(panel_open && istype(W))
-		playsound(loc, W.usesound, 50, 1)
+/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/I)
+	if(panel_open && I.tool_behaviour == TOOL_WRENCH)
+		I.play_tool_sound(src, 50)
 		setDir(turn(dir,-90))
 		to_chat(user, "<span class='notice'>You rotate [src].</span>")
 		return 1
@@ -382,20 +364,20 @@ Class Procs:
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
-/obj/proc/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
-	if(istype(W) && !(flags_1 & NODECONSTRUCT_1))
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/I, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
+	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_WRENCH)
 		var/can_be_unfasten = can_be_unfasten_wrench(user)
 		if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
 			return can_be_unfasten
 		if(time)
 			to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [src]...</span>")
-		playsound(loc, W.usesound, 50, 1)
+		I.play_tool_sound(src, 50)
 		var/prev_anchored = anchored
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
-		if(!time || do_after(user, time*W.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
+		if(I.use_tool(src, user, time, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
 			anchored = !anchored
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			return SUCCESSFUL_UNFASTEN
 		return FAILED_UNFASTEN
 	return CANT_UNFASTEN
@@ -409,9 +391,9 @@ Class Procs:
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/W)
 	if(!istype(W))
-		return
+		return FALSE
 	if((flags_1 & NODECONSTRUCT_1) && !W.works_from_distance)
-		return
+		return FALSE
 	var/shouldplaysound = 0
 	if(component_parts)
 		if(panel_open || W.works_from_distance)
@@ -419,19 +401,28 @@ Class Procs:
 			var/P
 			if(W.works_from_distance)
 				display_parts(user)
-			for(var/obj/item/stock_parts/A in component_parts)
+			for(var/obj/item/A in component_parts)
 				for(var/D in CB.req_components)
 					if(ispath(A.type, D))
 						P = D
 						break
-				for(var/obj/item/stock_parts/B in W.contents)
+				for(var/obj/item/B in W.contents)
 					if(istype(B, P) && istype(A, P))
-						if(B.rating > A.rating)
-							W.remove_from_storage(B, src)
+						if(B.get_part_rating() > A.get_part_rating())
+							if(istype(B,/obj/item/stack)) //conveniently this will mean A is also a stack and I will kill the first person to prove me wrong
+								var/obj/item/stack/SA = A
+								var/obj/item/stack/SB = B
+								var/used_amt = SA.get_amount()
+								if(!SB.use(used_amt))
+									continue //if we don't have the exact amount to replace we don't
+								var/obj/item/stack/SN = new SB.merge_type(null,used_amt)
+								component_parts += SN
+							else
+								W.remove_from_storage(B, src)
+								component_parts += B
+								B.moveToNullspace()
 							W.handle_item_insertion(A, 1)
 							component_parts -= A
-							component_parts += B
-							B.moveToNullspace()
 							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
 							break
@@ -474,21 +465,6 @@ Class Procs:
 /obj/machinery/proc/on_deconstruction()
 	return
 
-// Hook for html_interface module to prevent updates to clients who don't have this as their active machine.
-/obj/machinery/proc/hiIsValidClient(datum/html_interface_client/hclient, datum/html_interface/hi)
-	if (hclient.client.mob && (hclient.client.mob.stat == 0 || IsAdminGhost(hclient.client.mob)))
-		if (isAI(hclient.client.mob) || IsAdminGhost(hclient.client.mob))
-			return TRUE
-		else
-			return hclient.client.mob.machine == src && Adjacent(hclient.client.mob)
-	else
-		return FALSE
-
-// Hook for html_interface module to unset the active machine when the window is closed by the player.
-/obj/machinery/proc/hiOnHide(datum/html_interface_client/hclient)
-	if (hclient.client.mob && hclient.client.mob.machine == src)
-		hclient.client.mob.unset_machine()
-
 /obj/machinery/proc/can_be_overridden()
 	. = 1
 
@@ -496,7 +472,7 @@ Class Procs:
 /obj/machinery/tesla_act(power, explosive = FALSE)
 	..()
 	if(prob(85) && explosive)
-		explosion(src.loc,1,2,4,flame_range = 2, adminlog = 0, smoke = 0)
+		explosion(src.loc, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
 	else if(prob(50))
 		emp_act(EMP_LIGHT)
 	else
@@ -509,11 +485,16 @@ Class Procs:
 
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
 	var/md5 = md5(AM.name)										// Oh, and it's deterministic too. A specific item will always drop from the same slot.
-#if DM_VERSION > 511
-#warn Refactor the loop in /obj/machinery/proc/adjust_item_drop_location() to make use of 512's list-like access to characters in a string
-#endif
 	for (var/i in 1 to 32)
+		#if DM_VERSION >= 513
+		#warning 512 is definitely stable now, remove the old code
+		#endif
+
+		#if DM_VERSION >= 512
+		. += hex2num(md5[i])
+		#else
 		. += hex2num(copytext(md5,i,i+1))
+		#endif
 	. = . % 9
 	AM.pixel_x = -8 + ((.%3)*8)
 	AM.pixel_y = -8 + (round( . / 3)*8)

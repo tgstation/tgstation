@@ -13,7 +13,7 @@
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = TRUE
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "pod_0"
 	req_access = list(ACCESS_CLONING) //FOR PREMATURE UNLOCKING.
 	verb_say = "states"
@@ -44,8 +44,8 @@
 		"salbutamol", // anti-oxyloss
 		"bicaridine", // NOBREATHE species take brute in crit
 		"corazone", // prevents cardiac arrest and liver failure damage
-		"mimesbane") // stops them gasping from lack of air.
-
+		"mimesbane", // stops them gasping from lack of air.
+		"mutetoxin") // stops them from killing themselves BY DEATHWHISPERING INSIDE A CLONE POD NICE JOB BREAKING IT HERO
 /obj/machinery/clonepod/Initialize()
 	. = ..()
 
@@ -53,7 +53,7 @@
 
 	radio = new(src)
 	radio.keyslot = new radio_key
-	radio.subspace_transmission = 1
+	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
@@ -88,8 +88,8 @@
 	var/read_only = 0 //Well,it's still a floppy disk
 
 //Disk stuff.
-/obj/item/disk/data/New()
-	..()
+/obj/item/disk/data/Initialize()
+	. = ..()
 	icon_state = "datadisk[rand(0,6)]"
 	add_overlay("datadisk_gene")
 
@@ -161,11 +161,6 @@
 	countdown.start()
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
-
-	if(clonemind.changeling)
-		var/obj/item/organ/brain/B = H.getorganslot(ORGAN_SLOT_BRAIN)
-		B.vital = FALSE
-		B.decoy_override = TRUE
 
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 
@@ -439,14 +434,17 @@
 	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
 	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
 	// In addition to being cellularly damaged and having barely any
+
 	// brain function, they also have no limbs or internal organs.
-	var/static/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
-	for(var/zone in zones)
-		var/obj/item/bodypart/BP = H.get_bodypart(zone)
-		if(BP)
-			BP.drop_limb()
-			BP.forceMove(src)
-			unattached_flesh += BP
+
+	if(!H.has_trait(TRAIT_NODISMEMBER))
+		var/static/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
+		for(var/zone in zones)
+			var/obj/item/bodypart/BP = H.get_bodypart(zone)
+			if(BP)
+				BP.drop_limb()
+				BP.forceMove(src)
+				unattached_flesh += BP
 
 	for(var/o in H.internal_organs)
 		var/obj/item/organ/organ = o

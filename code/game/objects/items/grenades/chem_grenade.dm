@@ -30,23 +30,11 @@
 
 
 /obj/item/grenade/chem_grenade/attack_self(mob/user)
-	if(stage == READY &&  !active)
+	if(stage == READY && !active)
 		if(nadeassembly)
 			nadeassembly.attack_self(user)
-		else if(clown_check(user))
-			var/turf/bombturf = get_turf(src)
-			var/area/A = get_area(bombturf)
-			message_admins("[ADMIN_LOOKUPFLW(usr)] has primed a [name] for detonation at [A.name][ADMIN_JMP(bombturf)].")
-			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] [COORD(bombturf)].")
-			to_chat(user, "<span class='warning'>You prime the [name]! [det_time / 10] second\s!</span>")
-			playsound(user.loc, 'sound/weapons/armbomb.ogg', 60, 1)
-			active = 1
-			icon_state = initial(icon_state) + "_active"
-			if(iscarbon(user))
-				var/mob/living/carbon/C = user
-				C.throw_mode_on()
-
-			addtimer(CALLBACK(src, .proc/prime), det_time)
+		else
+			..()
 
 
 /obj/item/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
@@ -55,12 +43,12 @@
 			if(beakers.len)
 				stage_change(READY)
 				to_chat(user, "<span class='notice'>You lock the [initial(name)] assembly.</span>")
-				playsound(loc, I.usesound, 25, -3)
+				I.play_tool_sound(src, 25)
 			else
 				to_chat(user, "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>")
 		else if(stage == READY && !nadeassembly)
 			det_time = det_time == 50 ? 30 : 50	//toggle between 30 and 50
-			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [det_time / 10] second\s.</span>")
+			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
 		else if(stage == EMPTY)
 			to_chat(user, "<span class='warning'>You need to add an activation mechanism!</span>")
 
@@ -110,12 +98,12 @@
 	else if(stage == WIRED && istype(I, /obj/item/wrench))
 		if(beakers.len)
 			for(var/obj/O in beakers)
-				O.loc = get_turf(src)
+				O.forceMove(drop_location())
 			beakers = list()
 			to_chat(user, "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>")
 			return // First use of the wrench remove beakers, then use the wrench to remove the activation mechanism.
 		if(nadeassembly)
-			nadeassembly.loc = get_turf(src)
+			nadeassembly.forceMove(drop_location())
 			nadeassembly.master = null
 			nadeassembly = null
 		else // If "nadeassembly = null && stage == WIRED", then it most have been cable_coil that was used.
@@ -167,7 +155,7 @@
 		playsound(loc, 'sound/items/screwdriver2.ogg', 50, 1)
 		if(beakers.len)
 			for(var/obj/O in beakers)
-				O.loc = get_turf(src)
+				O.forceMove(drop_location())
 			beakers = list()
 		stage_change(EMPTY)
 		return
@@ -195,7 +183,6 @@
 	icon_state = "large_grenade"
 	allowed_containers = list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/condiment,
 								/obj/item/reagent_containers/food/drinks)
-	origin_tech = "combat=3;engineering=3"
 	affected_area = 5
 	ignition_temp = 25 // Large grenades are slightly more effective at setting off heat-sensitive mixtures than smaller grenades.
 	threatscale = 1.1	// 10% more effective.
@@ -245,7 +232,6 @@
 	name = "pyro grenade"
 	desc = "A custom made pyrotechnical grenade. It heats up and ignites its contents upon detonation."
 	icon_state = "pyrog"
-	origin_tech = "combat=4;engineering=4"
 	affected_area = 3
 	ignition_temp = 500 // This is enough to expose a hotspot.
 
@@ -253,7 +239,6 @@
 	name = "advanced release grenade"
 	desc = "A custom made advanced release grenade. It is able to be detonated more than once. Can be configured using a multitool."
 	icon_state = "timeg"
-	origin_tech = "combat=3;engineering=4"
 	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
 
 /obj/item/grenade/chem_grenade/adv_release/attackby(obj/item/I, mob/user, params)

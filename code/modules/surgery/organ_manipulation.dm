@@ -67,32 +67,13 @@
 	name = "manipulate organs"
 	repeatable = 1
 	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100)
-	var/implements_extract = list(/obj/item/hemostat = 100, /obj/item/crowbar = 55)
+	var/implements_extract = list(/obj/item/hemostat = 100, TOOL_CROWBAR = 55)
 	var/current_type
 	var/obj/item/organ/I = null
 
 /datum/surgery_step/manipulate_organs/New()
 	..()
 	implements = implements + implements_extract
-
-/datum/surgery_step/manipulate_organs/tool_check(mob/user, obj/item/tool)
-	if(istype(tool, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = tool
-		if(!WT.isOn())
-			return 0
-
-	else if(istype(tool, /obj/item/lighter))
-		var/obj/item/lighter/L = tool
-		if(!L.lit)
-			return 0
-
-	else if(istype(tool, /obj/item/match))
-		var/obj/item/match/M = tool
-		if(!M.lit)
-			return 0
-
-	return 1
-
 
 /datum/surgery_step/manipulate_organs/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	I = null
@@ -145,8 +126,8 @@
 	if(current_type == "insert")
 		if(istype(tool, /obj/item/organ_storage))
 			I = tool.contents[1]
-			tool.icon_state = "evidenceobj"
-			tool.desc = "A container for holding body parts."
+			tool.icon_state = initial(tool.icon_state)
+			tool.desc = initial(tool.desc)
 			tool.cut_overlays()
 			tool = I
 		else
@@ -162,7 +143,7 @@
 				"<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>")
 			add_logs(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
 			I.Remove(target)
-			I.loc = get_turf(target)
+			I.forceMove(get_turf(target))
 		else
 			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>")

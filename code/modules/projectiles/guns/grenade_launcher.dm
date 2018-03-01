@@ -42,7 +42,7 @@
 						"<span class='danger'>You fire the grenade launcher!</span>")
 	var/obj/item/grenade/F = grenades[1] //Now with less copypasta!
 	grenades -= F
-	F.loc = user.loc
+	F.forceMove(user.loc)
 	F.throw_at(target, 30, 2, user)
 	message_admins("[key_name_admin(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]).")
 	log_game("[key_name(user)] fired a grenade ([F.name]) from a grenade launcher ([src.name]).")

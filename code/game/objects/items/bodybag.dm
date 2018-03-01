@@ -21,6 +21,16 @@
 	R.add_fingerprint(user)
 	qdel(src)
 
+/obj/item/bodybag/suicide_act(mob/user)
+	if(isopenturf(user.loc))
+		user.visible_message("<span class='suicide'>[user] is crawling into [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
+		R.add_fingerprint(user)
+		qdel(src)
+		user.forceMove(R)
+		playsound(src, 'sound/items/zip.ogg', 15, 1, -3)
+		return (OXYLOSS)
+	..()	
 
 // Bluespace bodybag
 
@@ -32,7 +42,7 @@
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
 	w_class = WEIGHT_CLASS_SMALL
 	flags_2 = NO_MAT_REDEMPTION_2
-	origin_tech = "bluespace=4;materials=4;plasmatech=4"
+
 
 /obj/item/bodybag/bluespace/examine(mob/user)
 	..()

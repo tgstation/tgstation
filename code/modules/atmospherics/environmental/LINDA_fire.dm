@@ -1,3 +1,5 @@
+
+
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return null
 
@@ -48,17 +50,19 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = GASFIRE_LAYER
 	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
+	blend_mode = BLEND_ADD
 
 	var/volume = 125
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
-	var/just_spawned = 1
-	var/bypassing = 0
+	var/just_spawned = TRUE
+	var/bypassing = FALSE
+	var/visual_update_tick = 0
 
-/obj/effect/hotspot/New()
-	..()
+/obj/effect/hotspot/Initialize()
+	. = ..()
 	SSair.hotspots += src
 	perform_exposure()
 	setDir(pick(GLOB.cardinals))
@@ -67,14 +71,14 @@
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/open/location = loc
 	if(!istype(location) || !(location.air))
-		return 0
+		return
 
 	location.active_hotspot = src
 
 	if(volume > CELL_VOLUME*0.95)
-		bypassing = 1
+		bypassing = TRUE
 	else
-		bypassing = 0
+		bypassing = FALSE
 
 	if(bypassing)
 		if(!just_spawned)
@@ -88,17 +92,75 @@
 		volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
 		location.assume_air(affected)
 
-	for(var/A in loc)
+	for(var/A in location)
 		var/atom/AT = A
 		if(AT && AT != src) // It's possible that the item is deleted in temperature_expose
 			AT.fire_act(temperature, volume)
-	return 0
+	return
 
+/obj/effect/hotspot/proc/gauss_lerp(x, x1, x2)
+	var/b = (x1 + x2) * 0.5
+	var/c = (x2 - x1) / 6
+	return NUM_E ** -((x - b) ** 2 / (2 * c) ** 2)
 
+/obj/effect/hotspot/proc/update_color()
+	cut_overlays()
+
+	var/heat_r = heat2colour_r(temperature)
+	var/heat_g = heat2colour_g(temperature)
+	var/heat_b = heat2colour_b(temperature)
+	var/heat_a = 255
+	var/greyscale_fire = 1 //This determines how greyscaled the fire is.
+
+	if(temperature < 5000) //This is where fire is very orange, we turn it into the normal fire texture here.
+		var/normal_amt = gauss_lerp(temperature, 1000, 3000)
+		heat_r = LERP(heat_r,255,normal_amt)
+		heat_g = LERP(heat_g,255,normal_amt)
+		heat_b = LERP(heat_b,255,normal_amt)
+		heat_a -= gauss_lerp(temperature, -5000, 5000) * 128
+		greyscale_fire -= normal_amt
+	if(temperature > 40000) //Past this temperature the fire will gradually turn a bright purple
+		var/purple_amt = temperature < LERP(40000,200000,0.5) ? gauss_lerp(temperature, 40000, 200000) : 1
+		heat_r = LERP(heat_r,255,purple_amt)
+	if(temperature > 200000 && temperature < 500000) //Somewhere at this temperature nitryl happens.
+		var/sparkle_amt = gauss_lerp(temperature, 200000, 500000)
+		var/mutable_appearance/sparkle_overlay = mutable_appearance('icons/effects/effects.dmi', "shieldsparkles")
+		sparkle_overlay.blend_mode = BLEND_ADD
+		sparkle_overlay.alpha = sparkle_amt * 255
+		add_overlay(sparkle_overlay)
+	if(temperature > 400000 && temperature < 1500000) //Lightning because very anime.
+		var/mutable_appearance/lightning_overlay = mutable_appearance(icon, "overcharged")
+		lightning_overlay.blend_mode = BLEND_ADD
+		add_overlay(lightning_overlay)
+	if(temperature > 4500000) //This is where noblium happens. Some fusion-y effects.
+		var/fusion_amt = temperature < LERP(4500000,12000000,0.5) ? gauss_lerp(temperature, 4500000, 12000000) : 1
+		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/tile_effects.dmi', "chem_gas")
+		fusion_overlay.blend_mode = BLEND_ADD
+		fusion_overlay.alpha = fusion_amt * 255
+		var/mutable_appearance/rainbow_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "druggy")
+		rainbow_overlay.blend_mode = BLEND_ADD
+		rainbow_overlay.alpha = fusion_amt * 255
+		rainbow_overlay.appearance_flags = RESET_COLOR
+		heat_r = LERP(heat_r,150,fusion_amt)
+		heat_g = LERP(heat_g,150,fusion_amt)
+		heat_b = LERP(heat_b,150,fusion_amt)
+		add_overlay(fusion_overlay)
+		add_overlay(rainbow_overlay)
+
+	set_light(l_color = rgb(LERP(250,heat_r,greyscale_fire),LERP(160,heat_g,greyscale_fire),LERP(25,heat_b,greyscale_fire)))
+
+	heat_r /= 255
+	heat_g /= 255
+	heat_b /= 255
+
+	color = list(LERP(0.3, 1, 1-greyscale_fire) * heat_r,0.3 * heat_g * greyscale_fire,0.3 * heat_b * greyscale_fire, 0.59 * heat_r * greyscale_fire,LERP(0.59, 1, 1-greyscale_fire) * heat_g,0.59 * heat_b * greyscale_fire, 0.11 * heat_r * greyscale_fire,0.11 * heat_g * greyscale_fire,LERP(0.11, 1, 1-greyscale_fire) * heat_b, 0,0,0)
+	alpha = heat_a
+
+#define INSUFFICIENT(path) (!location.air.gases[path] || location.air.gases[path][MOLES] < 0.5)
 /obj/effect/hotspot/process()
 	if(just_spawned)
-		just_spawned = 0
-		return 0
+		just_spawned = FALSE
+		return
 
 	var/turf/open/location = loc
 	if(!istype(location))
@@ -111,8 +173,12 @@
 	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
 		qdel(src)
 		return
+	if(!location.air || (INSUFFICIENT(/datum/gas/plasma) && INSUFFICIENT(/datum/gas/tritium)) || INSUFFICIENT(/datum/gas/oxygen))
+		qdel(src)
+		return
 
-	if(!(location.air) || !(location.air.gases[/datum/gas/plasma] || location.air.gases[/datum/gas/tritium]) || !location.air.gases[/datum/gas/oxygen] || (location.air.gases[/datum/gas/plasma][MOLES] < 0.5 && location.air.gases[/datum/gas/tritium][MOLES] < 0.5) || location.air.gases[/datum/gas/oxygen][MOLES] < 0.5)
+	//Not enough to burn
+	if(((!location.air.gases[/datum/gas/plasma] || location.air.gases[/datum/gas/plasma][MOLES] < 0.5) && (!location.air.gases[/datum/gas/tritium] || location.air.gases[/datum/gas/tritium][MOLES] < 0.5)) || location.air.gases[/datum/gas/oxygen][MOLES] < 0.5)
 		qdel(src)
 		return
 
@@ -136,15 +202,15 @@
 		else
 			icon_state = "1"
 
+	if((visual_update_tick++ % 7) == 0)
+		update_color()
+
 	if(temperature > location.max_fire_temperature_sustained)
 		location.max_fire_temperature_sustained = temperature
 
 	if(location.heat_capacity && temperature > location.heat_capacity)
-		location.to_be_destroyed = 1
-		/*if(prob(25))
-			location.ReplaceWithSpace()
-			return 0*/
-	return 1
+		location.to_be_destroyed = TRUE
+	return TRUE
 
 /obj/effect/hotspot/Destroy()
 	set_light(0)
@@ -153,8 +219,7 @@
 	if(istype(T) && T.active_hotspot == src)
 		T.active_hotspot = null
 	DestroyTurf()
-	loc = null
-	. = ..()
+	return ..()
 
 /obj/effect/hotspot/proc/DestroyTurf()
 	if(isturf(loc))
@@ -166,15 +231,19 @@
 			else
 				chance_of_deletion = 100
 			if(prob(chance_of_deletion))
-				T.ChangeTurf(T.baseturf)
+				T.ScrapeAway()
 			else
-				T.to_be_destroyed = 0
+				T.to_be_destroyed = FALSE
 				T.max_fire_temperature_sustained = 0
 
-/obj/effect/hotspot/Crossed(mob/living/L)
+/obj/effect/hotspot/Crossed(atom/movable/AM, oldLoc)
 	..()
-	if(isliving(L))
+	if(isliving(AM))
+		var/mob/living/L = AM
 		L.fire_act(temperature, volume)
+
+/obj/effect/hotspot/singularity_pull()
+	return
 
 /obj/effect/dummy/fire
 	name = "fire"
@@ -186,4 +255,5 @@
 /obj/effect/dummy/fire/Initialize()
 	. = ..()
 	if(!isliving(loc))
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
+#undef INSUFFICIENT

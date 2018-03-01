@@ -24,7 +24,7 @@
 	if(!turf_test.len)
 		setup(safety_loop)
 
-/datum/round_event/anomaly/announce()
+/datum/round_event/anomaly/announce(fake)
 	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/start()

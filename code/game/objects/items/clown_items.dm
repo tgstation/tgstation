@@ -16,11 +16,14 @@
 	gender = PLURAL
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "soap"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = NOBLUDGEON_1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	grind_results = list("lye" = 10)
 	var/cleanspeed = 50 //slower than mop
 	force_string = "robust... against germs"
 
@@ -85,7 +88,7 @@
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			target.clean_blood()
+			target.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			target.wash_cream()
 	return
 
@@ -123,7 +126,6 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-	origin_tech = "materials=4;engineering=4"
 
 /obj/item/bikehorn/airhorn/Initialize()
 	. = ..()

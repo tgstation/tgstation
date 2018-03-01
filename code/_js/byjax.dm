@@ -42,9 +42,7 @@ Be sure to include required js functions in your page, or it'll raise an excepti
 			if(callback_args)
 				argums += callback_args
 		argums = list2params(argums)
-/*		if(callback_args)
-			argums += "&[list2params(callback_args)]"
-*/
+
 		receiver << output(argums,"[control_id]:replaceContent")
 	return
 

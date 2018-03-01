@@ -21,14 +21,14 @@
 
 /datum/status_effect/freon/tick()
 	owner.update_canmove()
-	if(can_melt && owner.bodytemperature >= 310.055)
+	if(can_melt && owner.bodytemperature >= BODYTEMP_NORMAL)
 		qdel(src)
 
 /datum/status_effect/freon/on_remove()
 	if(!owner.stat)
 		to_chat(owner, "The cube melts!")
 	owner.cut_overlay(cube)
-	owner.bodytemperature += 100
+	owner.adjust_bodytemperature(100)
 	owner.update_canmove()
 
 /datum/status_effect/freon/watcher

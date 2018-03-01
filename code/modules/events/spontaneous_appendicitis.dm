@@ -3,11 +3,14 @@
 	typepath = /datum/round_event/spontaneous_appendicitis
 	weight = 20
 	max_occurrences = 4
-	earliest_start = 6000
+	earliest_start = 10 MINUTES
 	min_players = 5 // To make your chance of getting help a bit higher.
 
+/datum/round_event/spontaneous_appendicitis
+	fakeable = FALSE
+
 /datum/round_event/spontaneous_appendicitis/start()
-	for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
+	for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
 		if(!H.client)
 			continue
 		if(H.stat == DEAD)

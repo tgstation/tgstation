@@ -9,9 +9,8 @@
 	force = 10
 	throwforce = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "combat=2"
 	attack_verb = list("beaten")
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 80, acid = 80)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
 	var/stunforce = 140
 	var/status = 0
@@ -64,9 +63,9 @@
 /obj/item/melee/baton/examine(mob/user)
 	..()
 	if(cell)
-		to_chat(user, "<span class='notice'>The baton is [round(cell.percent())]% charged.</span>")
+		to_chat(user, "<span class='notice'>\The [src] is [round(cell.percent())]% charged.</span>")
 	else
-		to_chat(user, "<span class='warning'>The baton does not have a power source installed.</span>")
+		to_chat(user, "<span class='warning'>\The [src] does not have a power source installed.</span>")
 
 /obj/item/melee/baton/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell))
@@ -109,7 +108,7 @@
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
-	if(status && user.disabilities & CLUMSY && prob(50))
+	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		user.Knockdown(stunforce*3)

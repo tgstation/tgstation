@@ -1,4 +1,4 @@
-/obj/item/melee/transforming //TODO: make transforming energy weapons a subtype of this
+/obj/item/melee/transforming
 	var/active = FALSE
 	var/force_on = 30 //force when active
 	var/faction_bonus_force = 0 //Bonus force dealt against certain factions
@@ -21,6 +21,8 @@
 	else
 		if(attack_verb_off.len)
 			attack_verb = attack_verb_off
+	if(is_sharp())
+		AddComponent(/datum/component/butchering, 50, 100, 0, hitsound, active)
 
 /obj/item/melee/transforming/attack_self(mob/living/carbon/user)
 	if(transform_weapon(user))
@@ -59,6 +61,8 @@
 			attack_verb = attack_verb_off
 		icon_state = initial(icon_state)
 		w_class = initial(w_class)
+	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	butchering.butchering_enabled = active
 	transform_messages(user, supress_message_text)
 	add_fingerprint(user)
 	return TRUE
@@ -72,6 +76,6 @@
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
 /obj/item/melee/transforming/proc/clumsy_transform_effect(mob/living/user)
-	if(user.disabilities & CLUMSY && prob(50))
+	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(5,5)

@@ -58,7 +58,7 @@
 	if(src.l_arm && src.r_arm)
 		if(src.l_leg && src.r_leg)
 			if(src.chest && src.head)
-				SSblackbox.inc("cyborg_frames_built",1)
+				SSblackbox.record_feedback("amount", "cyborg_frames_built", 1)
 				return 1
 	return 0
 
@@ -68,8 +68,8 @@
 		var/obj/item/stack/sheet/metal/M = W
 		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 			if (M.use(1))
-				var/obj/item/ed209_assembly/B = new /obj/item/ed209_assembly
-				B.loc = get_turf(src)
+				var/obj/item/bot_assembly/ed209/B = new
+				B.forceMove(drop_location())
 				to_chat(user, "<span class='notice'>You arm the robot frame.</span>")
 				var/holding_this = user.get_inactive_held_item()==src
 				qdel(src)
@@ -227,16 +227,14 @@
 			O.job = "Cyborg"
 
 			O.cell = chest.cell
-			chest.cell.loc = O
+			chest.cell.forceMove(O)
 			chest.cell = null
 			W.forceMove(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			if(O.mmi) //we delete the mmi created by robot/New()
 				qdel(O.mmi)
 			O.mmi = W //and give the real mmi to the borg.
 			O.updatename()
-
-			SSblackbox.inc("cyborg_birth",1)
-
+			SSblackbox.record_feedback("amount", "cyborg_birth", 1)
 			forceMove(O)
 			O.robot_suit = src
 
@@ -273,7 +271,7 @@
 
 
 			O.cell = chest.cell
-			chest.cell.loc = O
+			chest.cell.forceMove(O)
 			chest.cell = null
 			O.locked = panel_locked
 			O.job = "Cyborg"
@@ -335,4 +333,3 @@
 
 	add_fingerprint(usr)
 	Interact(usr)
-

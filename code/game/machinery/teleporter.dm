@@ -35,14 +35,14 @@
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
 		return
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		power_station = locate(/obj/machinery/teleport/station, get_step(src, dir))
+	for(var/direction in GLOB.cardinals)
+		power_station = locate(/obj/machinery/teleport/station, get_step(src, direction))
 		if(power_station)
 			break
 	return power_station
 
 /obj/machinery/teleport/hub/CollidedWith(atom/movable/AM)
-	if(z == ZLEVEL_CENTCOM)
+	if(is_centcom_level(z))
 		to_chat(AM, "You can't use this here.")
 		return
 	if(is_ready())
@@ -127,13 +127,13 @@
 	efficiency = E - 1
 
 /obj/machinery/teleport/station/proc/link_console_and_hub()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		teleporter_hub = locate(/obj/machinery/teleport/hub, get_step(src, dir))
+	for(var/direction in GLOB.cardinals)
+		teleporter_hub = locate(/obj/machinery/teleport/hub, get_step(src, direction))
 		if(teleporter_hub)
 			teleporter_hub.link_power_station()
 			break
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		teleporter_console = locate(/obj/machinery/computer/teleporter, get_step(src, dir))
+	for(var/direction in GLOB.cardinals)
+		teleporter_console = locate(/obj/machinery/computer/teleporter, get_step(src, direction))
 		if(teleporter_console)
 			teleporter_console.link_power_station()
 			break

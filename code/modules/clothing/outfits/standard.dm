@@ -78,19 +78,37 @@
 	suit_store = /obj/item/gun/energy/laser/bluetag
 
 /datum/outfit/pirate
-	name = "Pirate"
+	name = "Space Pirate"
 
 	uniform = /obj/item/clothing/under/pirate
 	shoes = /obj/item/clothing/shoes/sneakers/brown
+	suit = /obj/item/clothing/suit/pirate
 	head = /obj/item/clothing/head/bandana
 	glasses = /obj/item/clothing/glasses/eyepatch
-	r_hand = /obj/item/melee/transforming/energy/sword/pirate
 
 /datum/outfit/pirate/space
-	name = "Space Pirate"
-
 	suit = /obj/item/clothing/suit/space/pirate
+	head = /obj/item/clothing/head/helmet/space/pirate/bandana
+	mask = /obj/item/clothing/mask/breath
+	suit_store = /obj/item/tank/internals/oxygen
+	ears = /obj/item/device/radio/headset/syndicate
+	id = /obj/item/card/id
+
+/datum/outfit/pirate/space/captain
 	head = /obj/item/clothing/head/helmet/space/pirate
+
+/datum/outfit/pirate/post_equip(mob/living/carbon/human/H)
+	H.faction |= "pirate"
+
+	var/obj/item/device/radio/R = H.ears
+	if(R)
+		R.set_frequency(FREQ_SYNDICATE)
+		R.freqlock = TRUE
+
+	var/obj/item/card/id/W = H.wear_id
+	if(W)
+		W.registered_name = H.real_name
+		W.update_label(H.real_name)
 
 /datum/outfit/tunnel_clown
 	name = "Tunnel Clown"
@@ -239,8 +257,8 @@
 	W.update_label()
 
 	var/obj/item/device/radio/headset/R = H.ears
-	R.set_frequency(GLOB.CENTCOM_FREQ)
-	R.freqlock = 1
+	R.set_frequency(FREQ_CENTCOM)
+	R.freqlock = TRUE
 
 /datum/outfit/ghost_cultist
 	name = "Cultist Ghost"
@@ -378,8 +396,8 @@
 		return
 
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(GLOB.CENTCOM_FREQ)
-	R.freqlock = 1
+	R.set_frequency(FREQ_CENTCOM)
+	R.freqlock = TRUE
 
 	var/obj/item/implant/mindshield/L = new/obj/item/implant/mindshield(H)//Here you go Deuryn
 	L.implant(H, null, 1)

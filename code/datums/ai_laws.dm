@@ -190,7 +190,7 @@
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
 	..()
-	for(var/line in world.file2list("config/silicon_laws.txt"))
+	for(var/line in world.file2list("[global.config.directory]/silicon_laws.txt"))
 		if(!line)
 			continue
 		if(findtextEx(line,"#",1,2))
@@ -295,7 +295,7 @@
 	supplied[number + 1] = law
 
 /datum/ai_laws/proc/replace_random_law(law,groups)
-	var/replaceable_groups = list(LAW_ZEROTH = 0,LAW_ION = 0,LAW_SUPPLIED = 0,LAW_INHERENT = 0)
+	var/replaceable_groups = list()
 	if(zeroth && (LAW_ZEROTH in groups))
 		replaceable_groups[LAW_ZEROTH] = 1
 	if(ion.len && (LAW_ION in groups))
@@ -373,32 +373,9 @@
 	ion = list()
 
 /datum/ai_laws/proc/show_laws(who)
-
-	if (devillaws && devillaws.len) //Yes, devil laws go in FRONT of zeroth laws, as the devil must still obey it's ban/obligation.
-		for(var/i in devillaws)
-			to_chat(who, "666. [i]")
-
-	if (zeroth)
-		to_chat(who, "0. [zeroth]")
-
-	for (var/index = 1, index <= ion.len, index++)
-		var/law = ion[index]
-		var/num = ionnum()
-		to_chat(who, "[num]. [law]")
-
-	var/number = 1
-	for (var/index = 1, index <= inherent.len, index++)
-		var/law = inherent[index]
-
-		if (length(law) > 0)
-			to_chat(who, "[number]. [law]")
-			number++
-
-	for (var/index = 1, index <= supplied.len, index++)
-		var/law = supplied[index]
-		if (length(law) > 0)
-			to_chat(who, "[number]. [law]")
-			number++
+	var/list/printable_laws = get_law_list(include_zeroth = TRUE)
+	for(var/law in printable_laws)
+		to_chat(who,law)
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
 	if(force)
@@ -406,7 +383,7 @@
 		zeroth_borg = null
 		return
 	else
-		if(owner && owner.mind.special_role)
+		if(owner && owner.mind && owner.mind.special_role)
 			return
 		else
 			zeroth = null

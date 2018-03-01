@@ -34,12 +34,13 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Lazy associated list of type -> component/list of components.
 1. `/datum/component/var/enabled` (protected, boolean)
     * If the component is enabled. If not, it will not react to signals
-    * `TRUE` by default
+    * `FALSE` by default, set to `TRUE` when a signal is registered
 1. `/datum/component/var/dupe_mode` (protected, enum)
     * How duplicate component types are handled when added to the datum.
         * `COMPONENT_DUPE_HIGHLANDER` (default): Old component will be deleted, new component will first have `/datum/component/proc/InheritComponent(datum/component/old, FALSE)` on it
         * `COMPONENT_DUPE_ALLOWED`: The components will be treated as separate, `GetComponent()` will return the first added
         * `COMPONENT_DUPE_UNIQUE`: New component will be deleted, old component will first have `/datum/component/proc/InheritComponent(datum/component/new, TRUE)` on it
+        * `COMPONENT_DUPE_UNIQUE_PASSARGS`: New component will never exist and instead its initialization arguments will be passed on to the old component.
 1. `/datum/component/var/dupe_type` (protected, type)
     * Definition of a duplicate component type
         * `null` means exact match on `type` (default)
@@ -66,6 +67,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * All components a datum owns are deleted with the datum
     * Returns the component that was created. Or the old component in a dupe situation where `COMPONENT_DUPE_UNIQUE` was set
     * If this tries to add an component to an incompatible type, the component will be deleted and the result will be `null`. This is very unperformant, try not to do it
+    * Properly handles duplicate situations based on the `dupe_mode` var
 1. `/datum/proc/LoadComponent(component_type(type), ...) -> datum/component` (public, final)
     * Equivalent to calling `GetComponent(component_type)` where, if the result would be `null`, returns `AddComponent(component_type, ...)` instead
 1. `/datum/proc/ComponentActivated(datum/component/C)` (abstract, async)
@@ -78,6 +80,7 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
 1. `/datum/proc/SendSignal(signal, ...)` (public, final)
     * Call to send a signal to the components of the target datum
     * Extra arguments are to be specified in the signal definition
+    * Returns a bitflag with signal specific information assembled from all activated components
 1. `/datum/component/New(datum/parent, ...)` (private, final)
     * Runs internal setup for the component
     * Extra arguments are passed to `Initialize()`
@@ -87,9 +90,11 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Signals will not be recieved while this function is running
     * Component may be deleted after this function completes without being attached
     * Do not call `qdel(src)` from this function
-1. `/datum/component/Destroy()` (virtual, no-sleep)
+1. `/datum/component/Destroy(force(bool), silent(bool))` (virtual, no-sleep)
     * Sends the `COMSIG_COMPONENT_REMOVING` signal to the parent datum if the `parent` isn't being qdeleted
     * Properly removes the component from `parent` and cleans up references
+    * Setting `force` makes it not check for and remove the component from the parent
+    * Setting `silent` deletes the component without sending a `COMSIG_COMPONENT_REMOVING` signal
 1. `/datum/component/proc/InheritComponent(datum/component/C, i_am_original(boolean))` (abstract, no-sleep)
     * Called on a component when a component of the same type was added to the same parent
     * See `/datum/component/var/dupe_mode`
@@ -101,9 +106,8 @@ Stands have a lot of procs which mimic mob procs. Rather than inserting hooks fo
     * Allows the component to react to ownership transfers
 1. `/datum/component/proc/_RemoveFromParent()` (private, final)
     * Clears `parent` and removes the component from it's component list
-1. `/datum/component/proc/_CheckDupesAndJoinParent` (private, final)
+1. `/datum/component/proc/_JoinParent` (private, final)
     * Tries to add the component to it's `parent`s `datum_components` list
-    * Properly handles duplicate situations based on the `dupe_mode` var
 1. `/datum/component/proc/RegisterSignal(signal(string/list of strings), proc_ref(type), override(boolean))` (protected, final) (Consider removing for performance gainz)
     * If signal is a list it will be as if RegisterSignal was called for each of the entries with the same following arguments
     * Makes a component listen for the specified `signal` on it's `parent` datum.

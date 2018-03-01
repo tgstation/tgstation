@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
@@ -12,13 +12,13 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "d" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Shuttle Airlock"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "e" = (
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "f" = (
 /turf/open/floor/plasteel,
@@ -81,7 +81,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "o" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Shuttle Airlock"
 	},
 /obj/docking_port/mobile{
@@ -94,11 +94,9 @@
 	name = "White Ship";
 	port_direction = 4;
 	preferred_direction = 1;
-	roundstart_move = "whiteship_away";
-	timid = 1;
 	width = 9
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/shuttle/abandoned)
 "p" = (
 /obj/structure/window/reinforced{

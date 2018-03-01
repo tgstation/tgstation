@@ -9,7 +9,7 @@
 	anchored = TRUE
 	var/obj/machinery/mineral/stacking_machine/machine = null
 	var/machinedir = SOUTHEAST
-	speed_process = 1
+	speed_process = TRUE
 
 /obj/machinery/mineral/stacking_unit_console/Initialize()
 	. = ..()
@@ -88,7 +88,7 @@
 		stack_list[inp.type] = s
 	var/obj/item/stack/sheet/storage = stack_list[inp.type]
 	storage.amount += inp.amount //Stack the sheets
-	inp.loc = null //Let the old sheet garbage collect
+	qdel(inp) //Let the old sheet garbage collect
 	while(storage.amount > stack_amt) //Get rid of excessive stackage
 		var/obj/item/stack/sheet/out = new inp.type()
 		out.amount = stack_amt

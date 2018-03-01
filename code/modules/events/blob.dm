@@ -11,14 +11,15 @@
 /datum/round_event/ghost_role/blob
 	announceWhen	= -1
 	role_name = "blob overmind"
+	fakeable = TRUE
 
-/datum/round_event/ghost_role/blob/announce()
+/datum/round_event/ghost_role/blob/announce(fake)
 	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak5.ogg')
 
 /datum/round_event/ghost_role/blob/spawn_role()
 	if(!GLOB.blobstart.len)
 		return MAP_ERROR
-	var/list/candidates = get_candidates("blob", null, ROLE_BLOB)
+	var/list/candidates = get_candidates(ROLE_BLOB, null, ROLE_BLOB)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 	var/mob/dead/observer/new_blob = pick(candidates)

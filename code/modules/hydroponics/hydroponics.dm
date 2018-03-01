@@ -5,7 +5,7 @@
 	density = TRUE
 	anchored = TRUE
 	pixel_y = 8
-	unique_rename = 1
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
@@ -108,7 +108,7 @@
 	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
 
 	if(myseed && (myseed.loc != src))
-		myseed.loc = src
+		myseed.forceMove(src)
 
 	if(self_sustaining)
 		adjustNutri(1)
@@ -527,8 +527,8 @@
 	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
 	if(S.has_reagent("fluorine", 1))
 		adjustHealth(-round(S.get_reagent_amount("fluorine") * 2))
-		adjustToxic(round(S.get_reagent_amount("flourine") * 2.5))
-		adjustWater(-round(S.get_reagent_amount("flourine") * 0.5))
+		adjustToxic(round(S.get_reagent_amount("fluorine") * 2.5))
+		adjustWater(-round(S.get_reagent_amount("fluorine") * 0.5))
 		adjustWeeds(-rand(1,4))
 
 	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
@@ -712,8 +712,8 @@
 			else if(transfer_amount) // Droppers, cans, beakers, what have you.
 				visi_msg="[user] uses [reagent_source] on [target]"
 				irrigate = 1
-			// Beakers, bottles, buckets, etc.  Can't use is_open_container though.
-			if(istype(reagent_source, /obj/item/reagent_containers/glass/))
+			// Beakers, bottles, buckets, etc.
+			if(reagent_source.is_drainable())
 				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
 		if(irrigate && transfer_amount > 30 && reagent_source.reagents.total_volume >= 30 && using_irrigation)
@@ -801,8 +801,7 @@
 		if(!anchored && !isinspace())
 			user.visible_message("[user] begins to wrench [src] into place.", \
 								"<span class='notice'>You begin to wrench [src] in place...</span>")
-			playsound(loc, O.usesound, 50, 1)
-			if (do_after(user, 20*O.toolspeed, target = src))
+			if (O.use_tool(src, user, 20, volume=50))
 				if(anchored)
 					return
 				anchored = TRUE
@@ -811,8 +810,7 @@
 		else if(anchored)
 			user.visible_message("[user] begins to unwrench [src].", \
 								"<span class='notice'>You begin to unwrench [src]...</span>")
-			playsound(loc, O.usesound, 50, 1)
-			if (do_after(user, 20*O.toolspeed, target = src))
+			if (O.use_tool(src, user, 20, volume=50))
 				if(!anchored)
 					return
 				anchored = FALSE
@@ -821,7 +819,7 @@
 
 	else if(istype(O, /obj/item/wirecutters) && unwrenchable)
 		using_irrigation = !using_irrigation
-		playsound(src, O.usesound, 50, 1)
+		O.play_tool_sound(src)
 		user.visible_message("<span class='notice'>[user] [using_irrigation ? "" : "dis"]connects [src]'s irrigation hoses.</span>", \
 		"<span class='notice'>You [using_irrigation ? "" : "dis"]connect [src]'s irrigation hoses.</span>")
 		for(var/obj/machinery/hydroponics/h in range(1,src))
@@ -831,21 +829,19 @@
 		if(!myseed && !weedlevel)
 			to_chat(user, "<span class='warning'>[src] doesn't have any plants or weeds!</span>")
 			return
-		user.visible_message("<span class='notice'>[user] starts digging out [src]'s plants...</span>", "<span class='notice'>You start digging out [src]'s plants...</span>")
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
-		if(!do_after(user, 50, target = src) || (!myseed && !weedlevel))
-			return
-		user.visible_message("<span class='notice'>[user] digs out the plants in [src]!</span>", "<span class='notice'>You dig out all of [src]'s plants!</span>")
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
-		if(myseed) //Could be that they're just using it as a de-weeder
-			age = 0
-			plant_health = 0
-			if(harvest)
-				harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
-			qdel(myseed)
-			myseed = null
-		weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
-		update_icon()
+		user.visible_message("<span class='notice'>[user] starts digging out [src]'s plants...</span>",
+			"<span class='notice'>You start digging out [src]'s plants...</span>")
+		if(O.use_tool(src, user, 50, volume=50) || (!myseed && !weedlevel))
+			user.visible_message("<span class='notice'>[user] digs out the plants in [src]!</span>", "<span class='notice'>You dig out all of [src]'s plants!</span>")
+			if(myseed) //Could be that they're just using it as a de-weeder
+				age = 0
+				plant_health = 0
+				if(harvest)
+					harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
+				qdel(myseed)
+				myseed = null
+			weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
+			update_icon()
 
 	else
 		return ..()
@@ -881,26 +877,26 @@
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
 /obj/machinery/hydroponics/proc/adjustNutri(adjustamt)
-	nutrilevel = Clamp(nutrilevel + adjustamt, 0, maxnutri)
+	nutrilevel = CLAMP(nutrilevel + adjustamt, 0, maxnutri)
 
 /obj/machinery/hydroponics/proc/adjustWater(adjustamt)
-	waterlevel = Clamp(waterlevel + adjustamt, 0, maxwater)
+	waterlevel = CLAMP(waterlevel + adjustamt, 0, maxwater)
 
 	if(adjustamt>0)
 		adjustToxic(-round(adjustamt/4))//Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
 
 /obj/machinery/hydroponics/proc/adjustHealth(adjustamt)
 	if(myseed && !dead)
-		plant_health = Clamp(plant_health + adjustamt, 0, myseed.endurance)
+		plant_health = CLAMP(plant_health + adjustamt, 0, myseed.endurance)
 
 /obj/machinery/hydroponics/proc/adjustToxic(adjustamt)
-	toxic = Clamp(toxic + adjustamt, 0, 100)
+	toxic = CLAMP(toxic + adjustamt, 0, 100)
 
 /obj/machinery/hydroponics/proc/adjustPests(adjustamt)
-	pestlevel = Clamp(pestlevel + adjustamt, 0, 10)
+	pestlevel = CLAMP(pestlevel + adjustamt, 0, 10)
 
 /obj/machinery/hydroponics/proc/adjustWeeds(adjustamt)
-	weedlevel = Clamp(weedlevel + adjustamt, 0, 10)
+	weedlevel = CLAMP(weedlevel + adjustamt, 0, 10)
 
 /obj/machinery/hydroponics/proc/spawnplant() // why would you put strange reagent in a hydro tray you monster I bet you also feed them blood
 	var/list/livingplants = list(/mob/living/simple_animal/hostile/tree, /mob/living/simple_animal/hostile/killertomato)

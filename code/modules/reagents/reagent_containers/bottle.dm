@@ -15,7 +15,7 @@
 		icon_state = "bottle"
 	update_icon()
 
-/obj/item/reagent_containers/glass/bottle/on_reagent_change()
+/obj/item/reagent_containers/glass/bottle/on_reagent_change(changetype)
 	update_icon()
 
 /obj/item/reagent_containers/glass/bottle/update_icon()
@@ -73,8 +73,8 @@
 	list_reagents = list("chloralhydrate" = 15)
 
 /obj/item/reagent_containers/glass/bottle/charcoal
-	name = "antitoxin bottle"
-	desc = "A small bottle of charcoal."
+	name = "charcoal bottle"
+	desc = "A small bottle of charcoal, which removes toxins and other chemicals from the bloodstream."
 	list_reagents = list("charcoal" = 30)
 
 /obj/item/reagent_containers/glass/bottle/mutagen
@@ -137,7 +137,7 @@
 
 /obj/item/reagent_containers/glass/bottle/traitor/Initialize()
 	. = ..()
-	extra_reagent = pick("polonium", "histamine", "formaldehyde", "venom", "neurotoxin2", "cyanide")
+	extra_reagent = pick("polonium", "histamine", "formaldehyde", "venom", "fentanyl", "cyanide")
 	reagents.add_reagent("[extra_reagent]", 3)
 
 /obj/item/reagent_containers/glass/bottle/polonium
@@ -155,10 +155,10 @@
 	desc = "A small bottle. Contains Venom."
 	list_reagents = list("venom" = 30)
 
-/obj/item/reagent_containers/glass/bottle/neurotoxin2
-	name = "neurotoxin bottle"
-	desc = "A small bottle. Contains Neurotoxin."
-	list_reagents = list("neurotoxin2" = 30)
+/obj/item/reagent_containers/glass/bottle/fentanyl
+	name = "fentanyl bottle"
+	desc = "A small bottle. Contains Fentanyl."
+	list_reagents = list("fentanyl" = 30)
 
 /obj/item/reagent_containers/glass/bottle/formaldehyde
 	name = "formaldehyde bottle"

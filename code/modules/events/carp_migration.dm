@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/carp_migration
 	weight = 15
 	min_players = 2
-	earliest_start = 6000
+	earliest_start = 10 MINUTES
 	max_occurrences = 6
 
 /datum/round_event/carp_migration
@@ -13,7 +13,7 @@
 /datum/round_event/carp_migration/setup()
 	startWhen = rand(40, 60)
 
-/datum/round_event/carp_migration/announce()
+/datum/round_event/carp_migration/announce(fake)
 	priority_announce("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 
 

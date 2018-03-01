@@ -106,7 +106,7 @@
 				return
 			if(!new_goal)
 				new_goal = default_goal
-			id.goal = Clamp(new_goal, 0, 1000) //maximum 1000 points
+			id.goal = CLAMP(new_goal, 0, 1000) //maximum 1000 points
 		if("toggle_open")
 			if(teleporter.locked)
 				to_chat(usr, "The teleporter is locked")
@@ -129,8 +129,8 @@
 /obj/machinery/computer/gulag_teleporter_computer/proc/findteleporter()
 	var/obj/machinery/gulag_teleporter/teleporterf = null
 
-	for(dir in GLOB.cardinals)
-		teleporterf = locate(/obj/machinery/gulag_teleporter, get_step(src, dir))
+	for(var/direction in GLOB.cardinals)
+		teleporterf = locate(/obj/machinery/gulag_teleporter, get_step(src, direction))
 		if(teleporterf && teleporterf.is_operational())
 			return teleporterf
 

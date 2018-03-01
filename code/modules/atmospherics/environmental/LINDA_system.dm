@@ -43,7 +43,7 @@
 		var/turf/T = get_step(src, direction)
 		if(!T)
 			continue
-		if(CANATMOSPASS(T, src))
+		if( !(blocks_air || T.blocks_air) && CANATMOSPASS(T, src) )
 			LAZYINITLIST(atmos_adjacent_turfs)
 			LAZYINITLIST(T.atmos_adjacent_turfs)
 			atmos_adjacent_turfs[T] = TRUE

@@ -35,9 +35,9 @@
 	cut_overlays()
 
 	//Add non-broken pieces
-	for(DEVICE_TYPE_LOOP)
-		if(NODE_I)
-			add_overlay(getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", get_dir(src, NODE_I)))
+	for(var/i in 1 to device_type)
+		if(nodes[i])
+			add_overlay(getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", get_dir(src, nodes[i])))
 
 //Colored pipes, use these for mapping
 /obj/machinery/atmospherics/pipe/manifold/general
@@ -75,8 +75,8 @@
 
 /obj/machinery/atmospherics/pipe/manifold/supplymain
 	name="main air supply pipe"
-	pipe_color=rgb(130,43,272)
-	color=rgb(130,43,272)
+	pipe_color=rgb(130,43,255)
+	color=rgb(130,43,255)
 
 /obj/machinery/atmospherics/pipe/manifold/supplymain/visible
 	level = PIPE_VISIBLE_LEVEL
@@ -97,8 +97,8 @@
 	level = PIPE_HIDDEN_LEVEL
 
 /obj/machinery/atmospherics/pipe/manifold/cyan
-	pipe_color=rgb(0,256,249)
-	color=rgb(0,256,249)
+	pipe_color=rgb(0,255,249)
+	color=rgb(0,255,249)
 
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible
 	level = PIPE_VISIBLE_LEVEL
@@ -108,8 +108,8 @@
 	level = PIPE_HIDDEN_LEVEL
 
 /obj/machinery/atmospherics/pipe/manifold/green
-	pipe_color=rgb(30,256,0)
-	color=rgb(30,256,0)
+	pipe_color=rgb(30,255,0)
+	color=rgb(30,255,0)
 
 /obj/machinery/atmospherics/pipe/manifold/green/visible
 	level = PIPE_VISIBLE_LEVEL

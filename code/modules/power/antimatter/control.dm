@@ -159,14 +159,14 @@
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wrench))
 		if(!anchored)
-			playsound(src.loc, W.usesound, 75, 1)
+			W.play_tool_sound(src, 75)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
 				"<span class='notice'>You secure the anchor bolts to the floor.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
 			src.anchored = TRUE
 			connect_to_network()
 		else if(!linked_shielding.len > 0)
-			playsound(src.loc, W.usesound, 75, 1)
+			W.play_tool_sound(src, 75)
 			user.visible_message("[user.name] unsecures the [src.name].", \
 				"<span class='notice'>You remove the anchor bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
@@ -339,7 +339,7 @@
 
 	if(href_list["ejectjar"])
 		if(fueljar)
-			fueljar.loc = src.loc
+			fueljar.forceMove(drop_location())
 			fueljar = null
 			//fueljar.control_unit = null currently it does not care where it is
 			//update_icon() when we have the icon for it

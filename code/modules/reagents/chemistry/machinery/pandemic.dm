@@ -25,6 +25,12 @@
 	QDEL_NULL(beaker)
 	return ..()
 
+/obj/machinery/computer/pandemic/handle_atom_del(atom/A)
+	. = ..()
+	if(A == beaker)
+		beaker = null
+		update_icon()
+
 /obj/machinery/computer/pandemic/proc/get_by_index(thing, index)
 	if(!beaker || !beaker.reagents)
 		return
@@ -121,9 +127,10 @@
 		add_overlay("waitlight")
 
 /obj/machinery/computer/pandemic/proc/eject_beaker()
-	beaker.forceMove(get_turf(src))
-	beaker = null
-	update_icon()
+	if(beaker)
+		beaker.forceMove(drop_location())
+		beaker = null
+		update_icon()
 
 /obj/machinery/computer/pandemic/ui_interact(mob/user, ui_key = "main", datum/tgui/ui, force_open = FALSE, datum/tgui/master_ui, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -159,8 +166,7 @@
 		return
 	switch(action)
 		if("eject_beaker")
-			if(beaker)
-				eject_beaker()
+			eject_beaker()
 			. = TRUE
 		if("empty_beaker")
 			if(beaker)
@@ -186,7 +192,7 @@
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = new(FALSE, SSdisease.archive_diseases[id])
 			var/list/data = list("viruses" = list(A))
-			var/obj/item/reagent_containers/glass/bottle/B = new(get_turf(src))
+			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[A.name] culture bottle"
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
 			B.reagents.add_reagent("blood", 20, data)
@@ -197,7 +203,7 @@
 		if("create_vaccine_bottle")
 			var/id = params["index"]
 			var/datum/disease/D = SSdisease.archive_diseases[id]
-			var/obj/item/reagent_containers/glass/bottle/B = new(get_turf(src))
+			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[D.name] vaccine bottle"
 			B.reagents.add_reagent("vaccine", 15, list(id))
 			wait = TRUE
@@ -219,7 +225,7 @@
 
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers) && (I.container_type & OPENCONTAINER_1))
+	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
 		. = TRUE //no afterattack
 		if(stat & (NOPOWER|BROKEN))
 			return
@@ -236,7 +242,5 @@
 		return ..()
 
 /obj/machinery/computer/pandemic/on_deconstruction()
-	if(beaker)
-		beaker.forceMove(get_turf(src))
-		beaker = null
+	eject_beaker()
 	. = ..()

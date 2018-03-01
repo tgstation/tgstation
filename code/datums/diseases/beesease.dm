@@ -10,6 +10,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	desc = "If left untreated subject will regurgitate bees."
 	severity = VIRUS_SEVERITY_MEDIUM
+	infectable_hosts = list(SPECIES_ORGANIC, SPECIES_UNDEAD) //bees nesting in corpses
 
 /datum/disease/beesease/stage_act()
 	..()
@@ -35,6 +36,4 @@
 				affected_mob.visible_message("<span class='danger'>[affected_mob] coughs up a swarm of bees!</span>", \
 													"<span class='userdanger'>You cough up a swarm of bees!</span>")
 				new /mob/living/simple_animal/hostile/poison/bees(affected_mob.loc)
-		//if(5)
-		//Plus if you die, you explode into bees
 	return

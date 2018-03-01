@@ -20,6 +20,8 @@
  *		Toy xeno
  *      Kitty toys!
  *		Snowballs
+ *		Clockwork Watches
+ *		Toy Daggers
  */
 
 
@@ -182,7 +184,7 @@
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
 		user.show_message("<span class='warning'>*click*</span>", 2)
-		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(src, "gun_dry_fire", 30, 1)
 		return
 	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
 	src.bullets--
@@ -322,7 +324,6 @@
 	throw_range = 5
 	force_unwielded = 0
 	force_wielded = 0
-	origin_tech = null
 	attack_verb = list("attacked", "struck", "hit")
 
 /obj/item/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -607,6 +608,11 @@
 	var/card_throw_range = 7
 	var/list/card_attack_verb = list("attacked")
 
+/obj/item/toy/cards/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!</span>")
+	playsound(src, 'sound/items/cardshuffle.ogg', 50, 1)
+	return BRUTELOSS
+
 /obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj) // Applies variables for supporting multiple types of card deck
 	if(!istype(sourceobj))
 		return
@@ -682,7 +688,7 @@
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
 		cards = shuffle(cards)
-		playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
+		playsound(src, 'sound/items/cardshuffle.ogg', 50, 1)
 		user.visible_message("[user] shuffles the deck.", "<span class='notice'>You shuffle the deck.</span>")
 		cooldown = world.time
 
@@ -850,7 +856,7 @@
 	set name = "Flip Card"
 	set category = "Object"
 	set src in range(1)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
 		return
 	if(!flipped)
 		src.flipped = 1
@@ -939,7 +945,7 @@
 	card_throw_speed = 3
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /*
  * Fake nuke
@@ -1044,6 +1050,45 @@
 /obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	if(user.dropItemToGround(src))
 		throw_at(target, throw_range, throw_speed)
+
+/*
+ * Clockwork Watch
+ */
+
+/obj/item/toy/clockwork_watch
+	name = "steampunk watch"
+	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "dread_ipad"
+	slot_flags = SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	var/cooldown = 0
+
+/obj/item/toy/clockwork_watch/attack_self(mob/user)
+	if (cooldown < world.time)
+		cooldown = world.time + 1800 //3 minutes
+		user.visible_message("<span class='warning'>[user] rotates a cogwheel on [src].</span>", "<span class='notice'>You rotate a cogwheel on [src], it plays a loud noise!</span>", "<span class='italics'>You hear cogwheels turning.</span>")
+		playsound(src, 'sound/magic/clockwork/ark_activation.ogg', 50, 0)
+	else
+		to_chat(user, "<span class='alert'>The cogwheels are already turning!</span>")
+
+/obj/item/toy/clockwork_watch/examine(mob/user)
+	..()
+	to_chat(user, "<span class='info'>Station Time: [station_time_timestamp()]")
+
+/*
+ * Toy Dagger
+ */
+
+/obj/item/toy/toy_dagger
+	name = "toy dagger"
+	desc = "A cheap plastic replica of a dagger. Produced by THE ARM Toys, Inc."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "render"
+	item_state = "cultdagger"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 
 /*
  * Xenomorph action figure

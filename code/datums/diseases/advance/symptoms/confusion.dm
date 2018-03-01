@@ -54,8 +54,8 @@ Bonus
 		else
 			to_chat(M, "<span class='userdanger'>You can't think straight!</span>")
 			M.confused = min(100 * power, M.confused + 8)
-			if(brain_damage && M.getBrainLoss()<=80)
-				M.adjustBrainLoss(5 * power)
+			if(brain_damage)
+				M.adjustBrainLoss(3 * power, 80)
 				M.updatehealth()
 
 	return

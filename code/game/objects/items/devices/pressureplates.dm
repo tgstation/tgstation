@@ -11,7 +11,7 @@
 	var/sound/trigger_sound = 'sound/effects/pressureplate.ogg'
 	var/obj/item/device/assembly/signaler/sigdev = null
 	var/roundstart_signaller = FALSE
-	var/roundstart_signaller_freq = 1447
+	var/roundstart_signaller_freq = FREQ_PRESSURE_PLATE
 	var/roundstart_signaller_code = 30
 	var/roundstart_hide = FALSE
 	var/removable_signaller = TRUE

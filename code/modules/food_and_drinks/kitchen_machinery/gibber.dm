@@ -1,4 +1,3 @@
-
 /obj/machinery/gibber
 	name = "gibber"
 	desc = "The name isn't descriptive enough?"
@@ -12,10 +11,10 @@
 	circuit = /obj/item/circuitboard/machine/gibber
 
 	var/operating = FALSE //Is it on?
-	var/dirty = 0 // Does it need cleaning?
+	var/dirty = FALSE // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
 	var/meat_produced = 0
-	var/ignore_clothing = 0
+	var/ignore_clothing = FALSE
 
 
 /obj/machinery/gibber/Initialize()
@@ -30,7 +29,7 @@
 		gib_time -= 5 * M.rating
 		gibtime = gib_time
 		if(M.rating >= 2)
-			ignore_clothing = 1
+			ignore_clothing = TRUE
 
 /obj/machinery/gibber/update_icon()
 	cut_overlays()
@@ -61,6 +60,10 @@
 		to_chat(user, "<span class='danger'>It's locked and running.</span>")
 		return
 
+	if(!anchored)
+		to_chat(user, "<span class='notice'>[src] cannot be used unless bolted to the ground.</span>")
+		return
+
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
@@ -70,12 +73,17 @@
 		if(C.buckled ||C.has_buckled_mobs())
 			to_chat(user, "<span class='warning'>[C] is attached to something!</span>")
 			return
-		if(C.abiotic(1) && !ignore_clothing)
-			to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
-			return
+
+		if(!ignore_clothing)
+			for(var/obj/item/I in C.held_items + C.get_equipped_items())
+				if(!(I.flags_1 & NODROP_1))
+					to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
+					return
 
 		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
-		src.add_fingerprint(user)
+
+		add_fingerprint(user)
+
 		if(do_after(user, gibtime, target = src))
 			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
 				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
@@ -206,29 +214,13 @@
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
-	var/turf/input_plate
-
-/obj/machinery/gibber/autogibber/Initialize()
-	. = ..()
-	for(var/i in GLOB.cardinals)
-		var/obj/machinery/mineral/input/input_obj = locate() in get_step(loc, i)
-		if(input_obj)
-			if(isturf(input_obj.loc))
-				input_plate = input_obj.loc
-				qdel(input_obj)
-				break
-
-	if(!input_plate)
-		CRASH("Didn't find an input plate.")
-		return
+	var/input_dir = NORTH
 
 /obj/machinery/gibber/autogibber/CollidedWith(atom/movable/AM)
-	if(!input_plate)
-		return
-
+	var/atom/input = get_step(src, input_dir)
 	if(ismob(AM))
 		var/mob/M = AM
 
-		if(M.loc == input_plate)
+		if(M.loc == input)
 			M.forceMove(src)
 			M.gib()

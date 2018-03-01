@@ -20,7 +20,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	var/list/arguments = args.Copy(2)
 	new type(arglist(arguments))
 
-
 /datum/atom_hud/alternate_appearance
 	var/appearance_key
 
@@ -30,10 +29,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	appearance_key = key
 
 /datum/atom_hud/alternate_appearance/Destroy()
-	for(var/v in hudusers)
-		remove_hud_from(v)
-	for(var/v in hudatoms)
-		remove_from_hud(v)
 	GLOB.active_alternate_appearances -= src
 	return ..()
 
@@ -83,6 +78,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		QDEL_NULL(ghost_appearance)
 
 /datum/atom_hud/alternate_appearance/basic/add_to_hud(atom/A)
+	LAZYINITLIST(A.hud_list)
 	A.hud_list[appearance_key] = theImage
 	. = ..()
 
@@ -128,3 +124,46 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/observers/mobShouldSee(mob/M)
 	return isobserver(M)
+
+/datum/atom_hud/alternate_appearance/basic/noncult
+
+/datum/atom_hud/alternate_appearance/basic/noncult/New()
+	..()
+	for(var/mob in GLOB.player_list)
+		if(mobShouldSee(mob))
+			add_hud_to(mob)
+
+/datum/atom_hud/alternate_appearance/basic/noncult/mobShouldSee(mob/M)
+	if(!iscultist(M))
+		return TRUE
+	return FALSE
+
+/datum/atom_hud/alternate_appearance/basic/cult
+
+/datum/atom_hud/alternate_appearance/basic/cult/New()
+	..()
+	for(var/mob in GLOB.player_list)
+		if(mobShouldSee(mob))
+			add_hud_to(mob)
+
+/datum/atom_hud/alternate_appearance/basic/cult/mobShouldSee(mob/M)
+	if(iscultist(M))
+		return TRUE
+	return FALSE
+
+/datum/atom_hud/alternate_appearance/basic/blessedAware
+
+/datum/atom_hud/alternate_appearance/basic/blessedAware/New()
+	..()
+	for(var/mob in GLOB.mob_list)
+		if(mobShouldSee(mob))
+			add_hud_to(mob)
+
+/datum/atom_hud/alternate_appearance/basic/blessedAware/mobShouldSee(mob/M)
+	if(M.mind && (M.mind.assigned_role == "Chaplain"))
+		return TRUE
+	if (istype(M, /mob/living/simple_animal/hostile/construct/wraith))
+		return TRUE
+	if(isrevenant(M) || iseminence(M) || iswizard(M))
+		return TRUE
+	return FALSE

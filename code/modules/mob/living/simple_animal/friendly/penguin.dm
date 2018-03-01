@@ -9,6 +9,7 @@
 	emote_hear = list("squawk!", "gakkers!", "noots.","NOOTS!")
 	emote_see = list("shakes its beak.", "flaps it's wings.","preens itself.")
 	faction = list("penguin")
+	minbodytemp = 0
 	see_in_dark = 5
 	speak_chance = 1
 	turns_per_move = 10
@@ -22,13 +23,15 @@
 	icon_living = "penguin"
 	icon_dead = "penguin_dead"
 	butcher_results = list()
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/simple_animal/pet/penguin/emperor/shamebrero
 	name = "Shamebrero penguin"
 	desc = "Shameful of all he surveys."
 	icon_state = "penguin_shamebrero"
 	icon_living = "penguin_shamebrero"
+	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
 
 /mob/living/simple_animal/pet/penguin/baby
 	speak = list("gah", "noot noot", "noot!", "noot", "squeee!", "noo!")

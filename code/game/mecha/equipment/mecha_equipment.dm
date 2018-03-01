@@ -6,7 +6,6 @@
 	icon = 'icons/mecha/mecha_equipment.dmi'
 	icon_state = "mecha_equip"
 	force = 5
-	origin_tech = "materials=2;engineering=2"
 	max_integrity = 300
 	var/equip_cooldown = 0 // cooldown after use
 	var/equip_ready = 1 //whether the equipment is ready for use. (or deactivated/activated for static stuff)
@@ -105,7 +104,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M)
 	M.equipment += src
 	chassis = M
-	src.loc = M
+	forceMove(M)
 	M.log_message("[src] initialized.")
 	if(!M.selected && selectable)
 		M.selected = src

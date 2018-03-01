@@ -23,7 +23,7 @@
 	friendly = "pinches"
 	a_intent = INTENT_HELP
 	ventcrawler = VENTCRAWLER_ALWAYS
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	stat_attack = UNCONSCIOUS
 	gender = NEUTER
 	stop_automated_movement = FALSE
@@ -123,7 +123,8 @@
 /obj/item/udder/gutlunch
 	name = "nutrient sac"
 
-/obj/item/udder/gutlunch/New()
+/obj/item/udder/gutlunch/Initialize()
+	. = ..()
 	reagents = new(50)
 	reagents.my_atom = src
 

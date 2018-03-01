@@ -28,10 +28,6 @@
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/engine/cult,
 /area/ruin/unpowered)
-"i" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/engine/cult,
-/area/ruin/unpowered)
 
 (1,1,1) = {"
 a
@@ -95,7 +91,7 @@ f
 f
 f
 f
-i
+f
 f
 f
 f

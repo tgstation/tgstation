@@ -14,8 +14,8 @@ Object.assign(Math, require('util/math'))
 // inline, or called by the server if it was not.
 import TGUI from 'tgui.ract'
 window.initialize = (dataString) => {
-  if (window.tgui) return // Don't run twice.
-  window.tgui = new TGUI({
+  // Don't run twice.
+  window.tgui = window.tgui || new TGUI({
     el: '#container',
     data () {
       const initial = JSON.parse(dataString)

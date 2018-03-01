@@ -142,9 +142,12 @@
 	name = "clockwork floor"
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
 	icon_state = "plating"
-	baseturf = /turf/open/floor/clockwork
+	baseturfs = /turf/open/floor/clockwork
 	var/uses_overlay = TRUE
 	var/obj/effect/clockwork/overlay/floor/realappearence
+
+/turf/open/floor/clockwork/Bless() //Who needs holy blessings when you have DADDY RATVAR?
+	return
 
 /turf/open/floor/clockwork/Initialize()
 	. = ..()
@@ -161,9 +164,7 @@
 	return ..()
 
 /turf/open/floor/clockwork/ReplaceWithLattice()
-	if(baseturf == type)
-		return
-	..()
+	. = ..()
 	for(var/obj/structure/lattice/L in src)
 		L.ratvar_act()
 
@@ -195,19 +196,17 @@
 		flick_overlay(I, viewing, 8)
 		L.adjustToxLoss(-3, TRUE, TRUE)
 
-/turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
-	if(baseturf == type)
-		return
-	if(istype(I, /obj/item/crowbar))
-		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
-		playsound(src, I.usesound, 20, 1)
-		if(!do_after(user, 70*I.toolspeed, target = src))
-			return 0
+/turf/open/floor/clockwork/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
+
+/turf/open/floor/clockwork/crowbar_act(mob/living/user, obj/item/I)
+	if(baseturfs == type)
+		return TRUE
+	user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
+	if(I.use_tool(src, user, 70, volume=80))
 		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src]!</span>")
-		playsound(src, I.usesound, 80, 1)
 		make_plating()
-		return 1
-	return ..()
+	return TRUE
 
 /turf/open/floor/clockwork/make_plating()
 	new /obj/item/stack/tile/brass(src)
@@ -225,8 +224,9 @@
 	name = "cogplate"
 	desc = "Warm brass plating. You can feel it gently vibrating, as if machinery is on the other side."
 	icon_state = "reebe"
-	baseturf = /turf/open/floor/clockwork/reebe
+	baseturfs = /turf/open/floor/clockwork/reebe
 	uses_overlay = FALSE
+	planetary_atmos = TRUE
 
 /turf/open/floor/bluespace
 	slowdown = -1

@@ -3,7 +3,6 @@
 	icon = 'icons/obj/surgery.dmi'
 	var/mob/living/carbon/owner = null
 	var/status = ORGAN_ORGANIC
-	origin_tech = "biotech=3"
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	var/zone = "chest"
@@ -12,6 +11,7 @@
 	var/vital = 0
 	//Was this organ implanted/inserted/etc, if true will not be removed during species change.
 	var/external = FALSE
+	var/synthetic = FALSE // To distinguish between organic and synthetic organs
 
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
@@ -29,7 +29,7 @@
 	owner = M
 	M.internal_organs |= src
 	M.internal_organs_slot[slot] = src
-	loc = null
+	moveToNullspace()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
@@ -66,7 +66,6 @@
 	S.desc = desc
 	S.icon = icon
 	S.icon_state = icon_state
-	S.origin_tech = origin_tech
 	S.w_class = w_class
 
 	return S
@@ -111,7 +110,7 @@
 	var/breathes = TRUE
 	var/blooded = TRUE
 	if(dna && dna.species)
-		if(NOBREATH in dna.species.species_traits)
+		if(has_trait(TRAIT_NOBREATH, SPECIES_TRAIT))
 			breathes = FALSE
 		if(NOBLOOD in dna.species.species_traits)
 			blooded = FALSE
@@ -173,3 +172,9 @@
 			ears = new
 
 		ears.Insert(src)
+
+	if(!getorganslot(ORGAN_SLOT_TAIL))
+		var/obj/item/organ/tail/tail
+		if(dna && dna.species && dna.species.mutanttail)
+			tail = new dna.species.mutanttail
+			tail.Insert(src)

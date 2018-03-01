@@ -75,14 +75,14 @@
 		C.AnnouncePR(final_composed)
 
 /datum/world_topic/ahelp_relay
-	keyword = "ahelp_relay"
+	keyword = "Ahelp"
 	require_comms_key = TRUE
 
 /datum/world_topic/ahelp_relay/Run(list/input)
 	relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b></span>")
 
 /datum/world_topic/comms_console
-	keyword = "comms_console"
+	keyword = "Comms_Console"
 	require_comms_key = TRUE
 
 /datum/world_topic/comms_console/Run(list/input)
@@ -91,7 +91,7 @@
 		CM.overrideCooldown()
 
 /datum/world_topic/news_report
-	keyword = "news_report"
+	keyword = "News_Report"
 	require_comms_key = TRUE
 
 /datum/world_topic/news_report/Run(list/input)
@@ -142,6 +142,7 @@
 	.["vote"] = CONFIG_GET(flag/allow_vote_mode)
 	.["ai"] = CONFIG_GET(flag/allow_ai)
 	.["host"] = world.host ? world.host : null
+	.["round_id"] = GLOB.round_id
 	.["players"] = GLOB.clients.len
 	.["revision"] = GLOB.revdata.commit
 	.["revision_date"] = GLOB.revdata.date

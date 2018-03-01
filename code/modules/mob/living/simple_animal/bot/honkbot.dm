@@ -18,6 +18,7 @@
 	window_id = "autohonk"
 	window_name = "Honkomatic Bike Horn Unit v1.0.7"
 	data_hud_type = DATA_HUD_SECURITY_BASIC // show jobs
+	path_image_color = "#FF69B4"
 
 	var/honksound = 'sound/items/bikehorn.ogg' //customizable sound
 	var/spam_flag = FALSE
@@ -34,6 +35,7 @@
 	var/check_records = TRUE
 	var/arrest_type = FALSE
 	var/weaponscheck = TRUE
+	var/bikehorn = /obj/item/bikehorn
 
 /mob/living/simple_animal/bot/honkbot/Initialize()
 	. = ..()
@@ -101,7 +103,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	var/final = NONE
 	if(check_records)
 		final = final|JUDGE_RECORDCHECK
-	if(emagged)
+	if(emagged == 2)
 		final = final|JUDGE_EMAGGED
 	return final
 
@@ -327,14 +329,14 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 	walk_to(src,0)
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/turf/Tsec = get_turf(src)
+	var/atom/Tsec = drop_location()
 	//doesn't drop cardboard nor its assembly, since its a very frail material.
 	if(prob(50))
-		new /obj/item/bodypart/l_arm/robot/(Tsec)
-	new /obj/item/bikehorn(Tsec)
+		drop_part(robot_arm, Tsec)
+	new bikehorn(Tsec)
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	var/datum/effect_system/spark_spread/s = new
 	s.set_up(3, 1, src)
 	s.start()
 

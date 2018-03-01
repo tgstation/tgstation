@@ -240,18 +240,17 @@
 
 	else if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
 		user.changeNext_move(CLICK_CD_MELEE)
-		var/obj/item/weldingtool/WT = W
-		if(obj_integrity<max_integrity)
-			if (WT.remove_fuel(0,user))
+		if(obj_integrity < max_integrity)
+			if(W.use_tool(src, user, 0, volume=50, amount=1))
 				if (internal_damage & MECHA_INT_TANK_BREACH)
 					clearInternalDamage(MECHA_INT_TANK_BREACH)
 					to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
 				else
-					user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>")
+					user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to [src].</span>")
 					obj_integrity += min(10, max_integrity-obj_integrity)
-			else
-				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
-				return 1
+					if(obj_integrity == max_integrity)
+						to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
+			return 1
 		else
 			to_chat(user, "<span class='warning'>The [name] is at full integrity!</span>")
 		return 1

@@ -20,7 +20,7 @@
 	start_sound = 'sound/weather/ashstorm/inside/active_start.ogg'
 	start_length = 130
 	end_sound = 'sound/weather/ashstorm/inside/active_end.ogg'
-	volume = 80
+	volume = 60
 
 /datum/looping_sound/weak_outside_ashstorm
 	mid_sounds = list(
@@ -44,4 +44,4 @@
 	start_sound = 'sound/weather/ashstorm/inside/weak_start.ogg'
 	start_length = 130
 	end_sound = 'sound/weather/ashstorm/inside/weak_end.ogg'
-	volume = 50
+	volume = 30

@@ -1,14 +1,14 @@
 /obj/item/stack/sheet/animalhide
 	name = "hide"
 	desc = "Something went wrong."
-	origin_tech = "biotech=3"
+	icon_state = "sheet-hide"
+	item_state = "sheet-hide"
 	novariants = TRUE
 
 /obj/item/stack/sheet/animalhide/human
 	name = "human skin"
 	desc = "The by-product of human farming."
 	singular_name = "human skin piece"
-	icon_state = "sheet-hide"
 	novariants = FALSE
 
 GLOBAL_LIST_INIT(human_recipes, list( \
@@ -23,7 +23,6 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 	name = "skin"
 	desc = "A piece of skin."
 	singular_name = "skin piece"
-	icon_state = "sheet-hide"
 	novariants = FALSE
 
 /obj/item/stack/sheet/animalhide/corgi
@@ -31,12 +30,14 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 	desc = "The by-product of corgi farming."
 	singular_name = "corgi hide piece"
 	icon_state = "sheet-corgi"
+	item_state = "sheet-corgi"
 
 /obj/item/stack/sheet/animalhide/gondola
 	name = "gondola hide"
 	desc = "The extremely valuable by-product of gondola hunting."
 	singular_name = "gondola hide piece"
 	icon_state = "sheet-gondola"
+	item_state = "sheet-gondola"
 
 
 GLOBAL_LIST_INIT(corgi_recipes, list ( \
@@ -52,11 +53,13 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	desc = "The by-product of cat farming."
 	singular_name = "cat hide piece"
 	icon_state = "sheet-cat"
+	item_state = "sheet-cat"
 
 /obj/item/stack/sheet/animalhide/monkey
 	name = "monkey hide"
 	desc = "The by-product of monkey farming."
 	singular_name = "monkey hide piece"
+	icon_state = "sheet-monkey"
 	icon_state = "sheet-monkey"
 
 GLOBAL_LIST_INIT(monkey_recipes, list ( \
@@ -73,12 +76,14 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	desc = "Sssssss..."
 	singular_name = "lizard skin piece"
 	icon_state = "sheet-lizard"
+	item_state = "sheet-lizard"
 
 /obj/item/stack/sheet/animalhide/xeno
 	name = "alien hide"
 	desc = "The skin of a terrible creature."
 	singular_name = "alien hide piece"
 	icon_state = "sheet-xeno"
+	item_state = "sheet-xeno"
 
 GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/xenos, 1), \
@@ -96,7 +101,6 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	singular_name = "alien hide piece"
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "chitin"
-	origin_tech = null
 	novariants = TRUE
 
 /obj/item/xenos_claw
@@ -104,28 +108,26 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	desc = "The claw of a terrible creature."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "claw"
-	origin_tech = null
 
 /obj/item/weed_extract
 	name = "weed extract"
 	desc = "A piece of slimy, purplish weed."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "weed_extract"
-	origin_tech = null
 
 /obj/item/stack/sheet/hairlesshide
 	name = "hairless hide"
 	desc = "This hide was stripped of its hair, but still needs washing and tanning."
 	singular_name = "hairless hide piece"
 	icon_state = "sheet-hairlesshide"
-	origin_tech = null
+	item_state = "sheet-hairlesshide"
 
 /obj/item/stack/sheet/wetleather
 	name = "wet leather"
 	desc = "This leather has been cleaned but still needs to be dried."
 	singular_name = "wet leather piece"
 	icon_state = "sheet-wetleather"
-	origin_tech = null
+	item_state = "sheet-wetleather"
 	var/wetness = 30 //Reduced when exposed to high temperautres
 	var/drying_threshold_temperature = 500 //Kelvin to start drying
 
@@ -137,7 +139,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	desc = "The by-product of mob grinding."
 	singular_name = "leather piece"
 	icon_state = "sheet-leather"
-	origin_tech = "materials=2"
+	item_state = "sheet-leather"
 
 GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1), \
@@ -163,7 +165,6 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	desc = "Long stringy filaments which presumably came from a watcher's wings."
 	singular_name = "watcher sinew"
 	icon_state = "sinew"
-	origin_tech = "biotech=4"
 	novariants = TRUE
 
 

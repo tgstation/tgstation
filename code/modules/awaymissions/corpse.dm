@@ -4,6 +4,8 @@
 
 /obj/effect/mob_spawn
 	name = "Unknown"
+	density = TRUE
+	anchored = TRUE
 	var/mob_type = null
 	var/mob_name = ""
 	var/mob_gender = null
@@ -22,8 +24,7 @@
 	var/datum/disease/disease = null //Do they start with a pre-spawned disease?
 	var/mob_color //Change the mob's color
 	var/assignedrole
-	density = TRUE
-	anchored = TRUE
+	var/show_flavour = TRUE
 	var/banType = "lavaland"
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
@@ -53,6 +54,8 @@
 	GLOB.poi_list -= src
 	var/list/spawners = GLOB.mob_spawners[name]
 	LAZYREMOVE(spawners, src)
+	if(!LAZYLEN(spawners))
+		LAZYREMOVE(GLOB.mob_spawners,name)
 	return ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
@@ -61,7 +64,7 @@
 /obj/effect/mob_spawn/proc/equip(mob/M)
 	return
 
-/obj/effect/mob_spawn/proc/create(ckey, flavour = TRUE, name)
+/obj/effect/mob_spawn/proc/create(ckey, name)
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
@@ -83,7 +86,7 @@
 
 	if(ckey)
 		M.ckey = ckey
-		if(flavour)
+		if(show_flavour)
 			to_chat(M, "[flavour_text]")
 		var/datum/mind/MM = M.mind
 		if(objectives)
@@ -105,6 +108,7 @@
 	var/mob_species = null		//Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
 	var/datum/outfit/outfit = /datum/outfit	//If this is a path, it will be instanced in Initialize()
 	var/disable_pda = TRUE
+	var/disable_sensors = TRUE
 	//All of these only affect the ID that the outfit has placed in the ID slot
 	var/id_job = null			//Such as "Clown" or "Chef." This just determines what the ID reads as, not their access
 	var/id_access = null		//This is for access. See access.dm for which jobs give what access. Use "Captain" if you want it to be all access.
@@ -180,6 +184,12 @@
 			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H
 			if(PDA)
 				PDA.toff = TRUE
+		if(disable_sensors)
+			// Using crew monitors to find corpses while creative makes finding certain ruins too easy.
+			var/obj/item/clothing/under/C = H.w_uniform
+			if(istype(C))
+				C.sensor_mode = NO_SENSORS
+
 	var/obj/item/card/id/W = H.wear_id
 	if(W)
 		if(id_access)
@@ -206,7 +216,7 @@
 	brute_damage = 1000
 
 /obj/effect/mob_spawn/human/alive
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	death = FALSE
 	roundstart = FALSE //you could use these for alive fake humans on roundstart but this is more common scenario
@@ -221,7 +231,7 @@
 	var/mob/living/silicon/ai/spawned/M = new(loc) //spawn new AI at landmark as var M
 	M.name = src.name
 	M.real_name = src.name
-	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs
+	M.aiPDA.toff = TRUE //turns the AI's PDA messenger off, stopping it showing up on player PDAs
 	M.death() //call the AI's death proc
 	qdel(src)
 
@@ -245,7 +255,7 @@
 	mob_type = 	/mob/living/simple_animal/mouse
 	death = FALSE
 	roundstart = FALSE
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 
 /obj/effect/mob_spawn/cow
@@ -254,7 +264,7 @@
 	death = FALSE
 	roundstart = FALSE
 	mob_gender = FEMALE
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
@@ -274,6 +284,10 @@
 /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection
 	disease = /datum/disease/fluspanish
 
+/obj/effect/mob_spawn/human/corpse/cargo_tech
+	name = "Cargo Tech"
+	outfit = /datum/outfit/job/cargo_tech
+
 /obj/effect/mob_spawn/human/cook
 	name = "Cook"
 	outfit = /datum/outfit/job/cook
@@ -289,9 +303,9 @@
 	roundstart = FALSE
 	random = TRUE
 	name = "sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	flavour_text = "You are a space doctor!"
+	flavour_text = "<span class='big bold'>You are a space doctor!</span>"
 	assignedrole = "Space Doctor"
 
 /obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/H)
@@ -344,9 +358,9 @@
 	roundstart = FALSE
 	random = TRUE
 	name = "bartender sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	flavour_text = "You are a space bartender!"
+	flavour_text = "<span class='big bold'>You are a space bartender!</span>"
 	assignedrole = "Space Bartender"
 
 /datum/outfit/spacebartender
@@ -368,9 +382,9 @@
 	random = TRUE
 	mob_name = "Beach Bum"
 	name = "beach bum sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	flavour_text = "You are a beach bum!"
+	flavour_text = "<span class='big bold'>You are a beach bum!</span>"
 	assignedrole = "Beach Bum"
 
 /datum/outfit/beachbum
@@ -446,19 +460,19 @@
 	roundstart = FALSE
 	mob_name = "Nanotrasen Commander"
 	name = "sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-	flavour_text = "You are a Nanotrasen Commander!"
+	flavour_text = "<span class='big bold'>You are a Nanotrasen Commander!</span>"
 
 /obj/effect/mob_spawn/human/nanotrasensoldier/alive
 	death = FALSE
 	roundstart = FALSE
 	mob_name = "Private Security Officer"
 	name = "sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	faction = "nanotrasenprivate"
-	flavour_text = "You are a Nanotrasen Private Security Officer!"
+	flavour_text = "<span class='big bold'>You are a Nanotrasen Private Security Officer!</span>"
 
 
 /////////////////Spooky Undead//////////////////////
@@ -474,7 +488,7 @@
 	roundstart = FALSE
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
-	flavour_text = "By unknown powers, your skeletal remains have been reanimated! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
+	flavour_text = "<span class='big bold'>By unknown powers, your skeletal remains have been reanimated!</span><b> Walk this mortal plain and terrorize all living adventurers who dare cross your path.</b>"
 	assignedrole = "Skeleton"
 
 /obj/effect/mob_spawn/human/zombie
@@ -488,7 +502,7 @@
 	roundstart = FALSE
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
-	flavour_text = "By unknown powers, your rotting remains have been resurrected! Walk this mortal plain and terrorize all living adventurers who dare cross your path."
+	flavour_text = "<span class='big bold'>By unknown powers, your rotting remains have been resurrected!</span><b> Walk this mortal plain and terrorize all living adventurers who dare cross your path.</b>"
 
 
 /obj/effect/mob_spawn/human/abductor

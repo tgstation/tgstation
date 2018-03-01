@@ -19,13 +19,13 @@
 	area_type = /area
 	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer,
 	/area/ai_monitored/turret_protected/ai, /area/storage/emergency/starboard, /area/storage/emergency/port, /area/shuttle)
-	target_z = ZLEVEL_STATION_PRIMARY
+	target_trait = ZTRAIT_STATION
 
 	immunity_type = "rad"
 
 /datum/weather/rad_storm/telegraph()
 	..()
-	status_alarm("alert")
+	status_alarm(TRUE)
 
 
 /datum/weather/rad_storm/weather_act(mob/living/L)
@@ -33,38 +33,34 @@
 	if(prob(40))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
-			if(H.dna && H.dna.species)
-				if(!(RADIMMUNE in H.dna.species.species_traits))
-					if(prob(max(0,100-resist)))
-						H.randmuti()
-						if(prob(50))
-							if(prob(90))
-								H.randmutb()
-							else
-								H.randmutg()
-							H.domutcheck()
+			if(H.dna && !H.has_trait(TRAIT_RADIMMUNE))
+				if(prob(max(0,100-resist)))
+					H.randmuti()
+					if(prob(50))
+						if(prob(90))
+							H.randmutb()
+						else
+							H.randmutg()
+						H.domutcheck()
 		L.rad_act(20)
 
 /datum/weather/rad_storm/end()
 	if(..())
 		return
 	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
-	status_alarm()
+	status_alarm(FALSE)
 
-/datum/weather/rad_storm/proc/status_alarm(command)	//Makes the status displays show the radiation warning for those who missed the announcement.
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
-
+/datum/weather/rad_storm/proc/status_alarm(active)	//Makes the status displays show the radiation warning for those who missed the announcement.
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 	if(!frequency)
 		return
 
-	var/datum/signal/status_signal = new
-	var/atom/movable/virtualspeaker/virt = new /atom/movable/virtualspeaker(null)
-	status_signal.source = virt
-	status_signal.transmission_method = 1
-	status_signal.data["command"] = "shuttle"
+	var/datum/signal/signal = new
+	if (active)
+		signal.data["command"] = "alert"
+		signal.data["picture_state"] = "radiation"
+	else
+		signal.data["command"] = "shuttle"
 
-	if(command == "alert")
-		status_signal.data["command"] = "alert"
-		status_signal.data["picture_state"] = "radiation"
-
-	frequency.post_signal(src, status_signal)
+	var/atom/movable/virtualspeaker/virt = new(null)
+	frequency.post_signal(virt, signal)

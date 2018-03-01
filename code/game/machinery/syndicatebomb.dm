@@ -116,14 +116,14 @@
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>")
 			else
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor.</span>")
-				playsound(loc, I.usesound, 50, 1)
+				I.play_tool_sound(src)
 				anchored = TRUE
 				if(active)
 					to_chat(user, "<span class='notice'>The bolts lock in place.</span>")
 		else
 			if(!active)
 				to_chat(user, "<span class='notice'>You wrench the bomb from the floor.</span>")
-				playsound(loc, I.usesound, 50, 1)
+				I.play_tool_sound(src)
 				anchored = FALSE
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
@@ -159,18 +159,12 @@
 	else if(istype(I, /obj/item/weldingtool))
 		if(payload || !wires.is_all_cut() || !open_panel)
 			return
-		var/obj/item/weldingtool/WT = I
-		if(!WT.isOn())
-			return
-		if(WT.get_fuel() < 5) //uses up 5 fuel.
-			to_chat(user, "<span class='warning'>You need more fuel to complete this task!</span>")
+
+		if(!I.tool_start_check(user, amount=5))  //uses up 5 fuel
 			return
 
-		playsound(loc, WT.usesound, 50, 1)
 		to_chat(user, "<span class='notice'>You start to cut [src] apart...</span>")
-		if(do_after(user, 20*I.toolspeed, target = src))
-			if(!WT.isOn() || !WT.remove_fuel(5, user))
-				return
+		if(I.use_tool(src, user, 20, volume=50, amount=5)) //uses up 5 fuel
 			to_chat(user, "<span class='notice'>You cut [src] apart.</span>")
 			new /obj/item/stack/sheet/plasteel( loc, 5)
 			qdel(src)
@@ -205,7 +199,7 @@
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/new_timer = input(user, "Please set the timer.", "Timer", "[timer_set]") as num
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
-		timer_set = Clamp(new_timer, minimum_timer, maximum_timer)
+		timer_set = CLAMP(new_timer, minimum_timer, maximum_timer)
 		loc.visible_message("<span class='notice'>[icon2html(src, viewers(src))] timer set for [timer_set] seconds.</span>")
 	if(alert(user,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
 		if(defused || active)
@@ -253,8 +247,8 @@
 	open_panel = TRUE
 	timer_set = 120
 
-/obj/machinery/syndicatebomb/empty/New()
-	..()
+/obj/machinery/syndicatebomb/empty/Initialize()
+	. = ..()
 	wires.cut_all()
 
 /obj/machinery/syndicatebomb/self_destruct
@@ -274,7 +268,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "syndicate=5;combat=6"
 	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
 	var/range_heavy = 3
@@ -294,7 +287,7 @@
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
-	explosion(get_turf(src), range_heavy, range_medium, range_light, flame_range = range_flame)
+	explosion(src, range_heavy, range_medium, range_light, flame_range = range_flame)
 	if(loc && istype(loc, /obj/machinery/syndicatebomb/))
 		qdel(loc)
 	qdel(src)
@@ -308,7 +301,6 @@
 /obj/item/bombcore/training
 	name = "dummy payload"
 	desc = "A Nanotrasen replica of a syndicate payload. Its not intended to explode but to announce that it WOULD have exploded, then rewire itself to allow for more training."
-	origin_tech = null
 	var/defusals = 0
 	var/attempts = 0
 
@@ -347,7 +339,6 @@
 /obj/item/bombcore/badmin
 	name = "badmin payload"
 	desc = "If you're seeing this someone has either made a mistake or gotten dangerously savvy with var editing!"
-	origin_tech = null
 
 /obj/item/bombcore/badmin/defuse() //because we wouldn't want them being harvested by players
 	var/obj/machinery/syndicatebomb/B = loc
@@ -366,7 +357,7 @@
 
 /obj/item/bombcore/badmin/summon/clown
 	summon_path = /mob/living/simple_animal/hostile/retaliate/clown
-	amt_summon 	= 100
+	amt_summon 	= 50
 
 /obj/item/bombcore/badmin/summon/clown/defuse()
 	playsound(src, 'sound/misc/sadtrombone.ogg', 50)
@@ -390,7 +381,6 @@
 /obj/item/bombcore/chemical
 	name = "chemical payload"
 	desc = "An explosive payload designed to spread chemicals, dangerous or otherwise, across a large area. Properties of the core may vary with grenade casing type, and must be loaded before use."
-	origin_tech = "combat=4;materials=3"
 	icon_state = "chemcore"
 	var/list/beakers = list()
 	var/max_beakers = 1 // Read on about grenade casing properties below
@@ -452,7 +442,7 @@
 
 /obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/crowbar) && beakers.len > 0)
-		playsound(loc, I.usesound, 50, 1)
+		I.play_tool_sound(src)
 		for (var/obj/item/B in beakers)
 			B.forceMove(drop_location())
 			beakers -= B
@@ -522,7 +512,6 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "syndicate=3"
 	var/timer = 0
 	var/detonated =	0
 	var/existant =	0

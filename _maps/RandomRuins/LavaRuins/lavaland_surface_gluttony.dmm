@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -82,10 +82,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/freezer,
-/area/ruin/powered/gluttony)
-"D" = (
-/obj/effect/baseturf_helper/lava_land/surface,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/gluttony)
 "R" = (
@@ -218,7 +214,7 @@ b
 c
 R
 i
-D
+i
 v
 R
 c

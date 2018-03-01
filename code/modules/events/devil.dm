@@ -6,6 +6,7 @@
 /datum/round_event/ghost_role/devil
 	var/success_spawn = 0
 	role_name = "devil"
+	fakeable = FALSE
 
 /datum/round_event/ghost_role/devil/kill()
 	if(!success_spawn && control)
@@ -18,7 +19,7 @@
 		return MAP_ERROR
 
 	//selecting a candidate player
-	var/list/candidates = get_candidates("devil", null, ROLE_DEVIL)
+	var/list/candidates = get_candidates(ROLE_DEVIL, null, ROLE_DEVIL)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
@@ -52,7 +53,7 @@
 
 /proc/create_devil_mind(key)
 	var/datum/mind/Mind = new /datum/mind(key)
-	Mind.assigned_role = "devil"
-	Mind.special_role = "devil"
+	Mind.assigned_role = ROLE_DEVIL
+	Mind.special_role = ROLE_DEVIL
 	SSticker.mode.devils |= Mind
 	return Mind

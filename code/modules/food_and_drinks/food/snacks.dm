@@ -5,7 +5,8 @@
 	icon_state = null
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	unique_rename = 1
+	obj_flags = UNIQUE_RENAME
+	grind_results = list() //To let them be ground up to transfer their reagents
 	var/bitesize = 2
 	var/bitecount = 0
 	var/trash = null
@@ -93,7 +94,7 @@
 
 				if(!do_mob(user, M))
 					return
-				add_logs(user, M, "fed", reagentlist(src))
+				add_logs(user, M, "fed", reagents.log_list())
 				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
 									"<span class='userdanger'>[user] forces [M] to eat [src].</span>")
 
@@ -172,7 +173,7 @@
 					if(istype(A, B))
 						continue contents_loop
 				qdel(A)
-	SSblackbox.add_details("food_made","[type]")
+	SSblackbox.record_feedback("tally", "food_made", 1, type)
 
 	if(bonus_reagents && bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
@@ -222,6 +223,8 @@
 		slice.name = "slice of [name]"
 	if(desc != initial(desc))
 		slice.desc = "[desc]"
+	if(foodtype != initial(foodtype))
+		slice.foodtype = foodtype //if something happens that overrode our food type, make sure the slice carries that over
 
 /obj/item/reagent_containers/food/snacks/proc/generate_trash(atom/location)
 	if(trash)
@@ -266,7 +269,7 @@
 			initialize_cooked_food(S, M.efficiency)
 		else
 			initialize_cooked_food(S, 1)
-		SSblackbox.add_details("food_made","[type]")
+		SSblackbox.record_feedback("tally", "food_made", 1, type)
 	else
 		new /obj/item/reagent_containers/food/snacks/badrecipe(src)
 		if(M && M.dirty < 100)
@@ -276,7 +279,7 @@
 /obj/item/reagent_containers/food/snacks/Destroy()
 	if(contents)
 		for(var/atom/movable/something in contents)
-			something.loc = get_turf(src)
+			something.forceMove(drop_location())
 	return ..()
 
 /obj/item/reagent_containers/food/snacks/attack_animal(mob/M)
@@ -315,10 +318,10 @@
 //	name = "Xenoburger"													//Name that displays in the UI.
 //	desc = "Smells caustic. Tastes like heresy."						//Duh
 //	icon_state = "xburger"												//Refers to an icon in food.dmi
-///obj/item/reagent_containers/food/snacks/xenoburger/New()		//Don't mess with this.
-//		..()															//Same here.
+///obj/item/reagent_containers/food/snacks/xenoburger/Initialize()		//Don't mess with this. | nO I WILL MESS WITH THIS
+//		. = ..()														//Same here.
 //		reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
-//		reagents.add_reagent("nutriment", 2)							//	this line of code for all the contents.
+//		reagents.add_reagent("nutriment", 2)							//this line of code for all the contents.
 //		bitesize = 3													//This is the amount each bite consumes.
 
 //All foods are distributed among various categories. Use common sense.

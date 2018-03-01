@@ -1,15 +1,32 @@
 /datum/component/thermite
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/amount
 	var/overlay
 
-	var/static/list/blacklist = typecacheof(/turf/closed/wall/mineral/diamond)
-	var/static/list/resistlist = typecacheof(/turf/closed/wall/r_wall)
+	var/static/list/blacklist = typecacheof(
+		/turf/open/lava,
+		/turf/open/space,
+		/turf/open/water,
+		/turf/open/chasm,
+		)
+
+	var/static/list/immunelist = typecacheof(
+		/turf/closed/wall/mineral/diamond,
+		/turf/closed/indestructible,
+		/turf/open/indestructible,
+		)
+	
+	var/static/list/resistlist = typecacheof(
+		/turf/closed/wall/r_wall,
+		)
 
 /datum/component/thermite/Initialize(_amount)
 	if(!istype(parent, /turf))
-		return COMPONENT_INCOMPATIBLE
+		. = COMPONENT_INCOMPATIBLE
+		CRASH("A thermite component has been applied to an incorrect object. parent: [parent]")
 	if(blacklist[parent.type])
+		return COMPONENT_INCOMPATIBLE
+	if(immunelist[parent.type])
 		_amount*=0 //Yeah the overlay can still go on it and be cleaned but you arent burning down a diamond wall
 	if(resistlist[parent.type])
 		_amount*=0.25
@@ -29,10 +46,13 @@
 	master.cut_overlay(overlay)
 	return ..()
 
-/datum/component/thermite/InheritComponent(datum/component/thermite/newC, i_am_original)
+/datum/component/thermite/InheritComponent(datum/component/thermite/newC, i_am_original, list/arguments)
 	if(!i_am_original)
 		return
-	amount += newC.amount
+	if(newC)
+		amount += newC.amount
+	else
+		amount += arguments[1]
 
 /datum/component/thermite/proc/thermite_melt(mob/user)
 	var/turf/master = parent
@@ -43,7 +63,7 @@
 
 	if(amount >= 50)
 		var/burning_time = max(100, 100-amount)
-		master = master.ChangeTurf(master.baseturf)
+		master = master.ScrapeAway()
 		master.burn_tile()
 		if(user)
 			master.add_hiddenprint(user)

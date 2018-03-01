@@ -15,7 +15,6 @@
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 7
-	origin_tech = "magnets=1;engineering=1"
 
 	var/secured = TRUE
 	var/list/attached_overlays = null
@@ -25,6 +24,9 @@
 	var/datum/wires/connected = null
 
 	var/next_activate = 0 //When we're next allowed to activate - for spam control
+
+/obj/item/device/assembly/get_part_rating()
+	return 1
 
 /obj/item/device/assembly/proc/on_attach()
 

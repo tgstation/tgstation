@@ -7,7 +7,7 @@
 	var/volume_rate = 1000
 	volume = 1000
 
-	var/list/scrubbing = list(/datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/brown_gas, /datum/gas/tritium, /datum/gas/hypernoblium, /datum/gas/water_vapor)
+	var/list/scrubbing = list(/datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitryl, /datum/gas/tritium, /datum/gas/hypernoblium, /datum/gas/water_vapor)
 
 /obj/machinery/portable_atmospherics/scrubber/Destroy()
 	var/turf/T = get_turf(src)
@@ -45,7 +45,7 @@
 
 	filtered.temperature = filtering.temperature
 	for(var/gas in filtering.gases & scrubbing)
-		ADD_GAS(gas, filtered.gases)
+		filtered.add_gas(gas)
 		filtered.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
 		filtering.gases[gas][MOLES] = 0
 	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.
@@ -66,7 +66,7 @@
 														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "portable_scrubber", name, 420, 335, master_ui, state)
+		ui = new(user, src, ui_key, "portable_scrubber", name, 420, 435, master_ui, state)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/scrubber/ui_data()
@@ -74,6 +74,12 @@
 	data["on"] = on
 	data["connected"] = connected_port ? 1 : 0
 	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
+
+	data["id_tag"] = -1 //must be defined in order to reuse code between portable and vent scrubbers
+	data["filter_types"] = list()
+	for(var/path in GLOB.meta_gas_info)
+		var/list/gas = GLOB.meta_gas_info[path]
+		data["filter_types"] += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in scrubbing)))
 
 	if(holding)
 		data["holding"] = list()
@@ -90,9 +96,12 @@
 			. = TRUE
 		if("eject")
 			if(holding)
-				holding.loc = get_turf(src)
+				holding.forceMove(drop_location())
 				holding = null
 				. = TRUE
+		if("toggle_filter")
+			scrubbing ^= gas_id2path(params["val"])
+			. = TRUE
 	update_icon()
 
 /obj/machinery/portable_atmospherics/scrubber/huge

@@ -15,7 +15,7 @@
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	max_integrity = 200
 	integrity_failure = 50
-	armor = list(melee = 20, bullet = 10, laser = 10, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 70, acid = 60)
+	armor = list("melee" = 20, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
 	var/breakout_time = 1200
 	var/message_cooldown
 	var/can_weld_shut = TRUE
@@ -29,7 +29,6 @@
 	var/cutting_tool = /obj/item/weldingtool
 	var/open_sound = 'sound/machines/click.ogg'
 	var/close_sound = 'sound/machines/click.ogg'
-	var/cutting_sound = 'sound/items/welder.ogg'
 	var/material_drop = /obj/item/stack/sheet/metal
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
@@ -61,14 +60,11 @@
 			add_overlay("[icon_state]_door")
 		if(welded)
 			add_overlay("welded")
-		if(secure)
-			if(!broken)
-				if(locked)
-					add_overlay("locked")
-				else
-					add_overlay("unlocked")
+		if(secure && !broken)
+			if(locked)
+				add_overlay("locked")
 			else
-				add_overlay("off")
+				add_overlay("unlocked")
 
 	else
 		layer = BELOW_OBJ_LAYER
@@ -135,7 +131,7 @@
 	if(opened || !can_open(user))
 		return
 	playsound(loc, open_sound, 15, 1, -3)
-	opened = 1
+	opened = TRUE
 	if(!dense_when_open)
 		density = FALSE
 	climb_time *= 0.5 //it's faster to climb onto an open thing
@@ -188,7 +184,7 @@
 	take_contents()
 	playsound(loc, close_sound, 15, 1, -3)
 	climb_time = initial(climb_time)
-	opened = 0
+	opened = FALSE
 	density = TRUE
 	update_icon()
 	return 1
@@ -211,58 +207,59 @@
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)
 	if(user in src)
 		return
+	if(!src.tool_interact(W,user))
+		return ..()
+
+/obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldnt be continued (because tool was used/closet was of wrong type), FALSE if otherwise
+	. = TRUE
 	if(opened)
 		if(istype(W, cutting_tool))
 			if(istype(W, /obj/item/weldingtool))
-				var/obj/item/weldingtool/WT = W
-				if(WT.remove_fuel(0, user))
-					to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
-					playsound(loc, cutting_sound, 40, 1)
-					if(do_after(user, 40*WT.toolspeed, 1, target = src))
-						if(!opened || !WT.isOn())
-							return
-						playsound(loc, cutting_sound, 50, 1)
-						user.visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
-										"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
-										"<span class='italics'>You hear welding.</span>")
-						deconstruct(TRUE)
-					return 0
+				if(!W.tool_start_check(user, amount=0))
+					return
+
+				to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
+				if(W.use_tool(src, user, 40, volume=50))
+					if(!opened)
+						return
+					user.visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
+									"<span class='notice'>You cut \the [src] apart with \the [W].</span>",
+									"<span class='italics'>You hear welding.</span>")
+					deconstruct(TRUE)
+				return
 			else // for example cardboard box is cut with wirecutters
 				user.visible_message("<span class='notice'>[user] cut apart \the [src].</span>", \
 									"<span class='notice'>You cut \the [src] apart with \the [W].</span>")
 				deconstruct(TRUE)
-				return 0
-		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
-			return 1
-	else if(istype(W, /obj/item/weldingtool) && can_weld_shut)
-		var/obj/item/weldingtool/WT = W
-		if(!WT.remove_fuel(0, user))
-			return
-		to_chat(user, "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>")
-		playsound(loc, 'sound/items/welder2.ogg', 40, 1)
-		if(do_after(user, 40*WT.toolspeed, 1, target = src))
-			if(opened || !WT.isOn())
 				return
-			playsound(loc, WT.usesound, 50, 1)
+		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
+			return
+	else if(istype(W, /obj/item/weldingtool) && can_weld_shut)
+		if(!W.tool_start_check(user, amount=0))
+			return
+
+		to_chat(user, "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>")
+		if(W.use_tool(src, user, 40, volume=50))
+			if(opened)
+				return
 			welded = !welded
 			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unweldeds"] \the [src].</span>",
-							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
+							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [W].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
 	else if(istype(W, /obj/item/wrench) && anchorable)
 		if(isinspace() && !anchored)
 			return
 		anchored = !anchored
-		playsound(src.loc, W.usesound, 75, 1)
+		W.play_tool_sound(src, 75)
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='italics'>You hear a ratchet.</span>")
 	else if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
-		return 1
 	else
-		return ..()
+		return FALSE
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O) || O.anchored || istype(O, /obj/screen))
@@ -393,8 +390,7 @@
 
 /obj/structure/closet/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, be_close=TRUE) || !isturf(loc))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
 	if(opened || !secure)
 		return

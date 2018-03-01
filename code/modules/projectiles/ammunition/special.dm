@@ -3,6 +3,7 @@
 	desc = "I didn't even know magic needed ammo..."
 	projectile_type = /obj/item/projectile/magic
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/magic
+	heavy_metal = FALSE
 
 /obj/item/ammo_casing/magic/change
 	projectile_type = /obj/item/projectile/magic/change
@@ -62,6 +63,24 @@
 		D.piercing = S.proj_piercing
 		SG.syringes.Remove(S)
 		qdel(S)
+	..()
+
+/obj/item/ammo_casing/chemgun
+	name = "dart synthesiser"
+	desc = "A high-power spring, linked to an energy-based dart synthesiser."
+	projectile_type = /obj/item/projectile/bullet/dart
+	firing_effect_type = null
+
+/obj/item/ammo_casing/chemgun/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+	if(!BB)
+		return
+	if(istype(loc, /obj/item/gun/chem))
+		var/obj/item/gun/chem/CG = loc
+		if(CG.syringes_left <= 0)
+			return
+		CG.reagents.trans_to(BB, 15)
+		BB.name = "chemical dart"
+		CG.syringes_left--
 	..()
 
 /obj/item/ammo_casing/dnainjector
