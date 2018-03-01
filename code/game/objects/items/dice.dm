@@ -57,7 +57,7 @@
 
 /obj/item/dice/d1
 	name = "d1"
-	desc = "A spherical die with only one side. Deterministic!"
+	desc = "A die with only one side. Deterministic!"
 	icon_state = "d1"
 	sides = 1
 
@@ -148,7 +148,7 @@
 	return
 
 /obj/item/dice/fourdd6
-	name = "4D die"
+	name = "4d d6"
 	desc = "A die that exists in four dimensional space. Properly interpreting them can only be done with the help of a mathematician, a physicist, and a priest."
 	icon_state = "4dd6"
 	sides = 48
