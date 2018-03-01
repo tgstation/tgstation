@@ -3,7 +3,6 @@
 	.["cleanedMess"] = FALSE
 	.["foamSpewed"] = FALSE
 	.["cleanFaces"] = FALSE
-	.["patrolStation"] = FALSE
 
 /datum/goap_info_provider/cleanbot/GetGoal(datum/goap_agent/agent)
 	. = list()
@@ -13,12 +12,9 @@
 		P = locate(/obj/item/trash) in viewl
 		if(!P)
 			P = locate(/obj/effect/decal/cleanable) in viewl
-			if(!P)
-				.["patrolStation"] = TRUE
-				return .
 	var/mob/living/simple_animal/bot/B = agent.agent
 	.["cleanedMess"] = TRUE
-	if(B.emagged == 2)
+	if(B.emagged)
 		if(prob(15))
 			.["foamSpewed"] = TRUE
 

@@ -112,7 +112,6 @@ MAKE THAT FOAM
 /datum/goap_action/cleanbot/foam/New()
 	..()
 	preconditions = list()
-	preconditions["foamSpewed"] = FALSE
 	effects = list()
 	effects["foamSpewed"] = TRUE
 
@@ -148,7 +147,6 @@ MAKE THAT FOAM
 /datum/goap_action/cleanbot/clean_faces/New()
 	..()
 	preconditions = list()
-	preconditions["cleanFaces"] = FALSE
 	effects = list()
 	effects["cleanFaces"] = TRUE
 
