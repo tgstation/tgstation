@@ -105,7 +105,6 @@
 			purchasedpowers -= p
 			p.Remove(owner.current)
 
-	//MOVE THIS
 	if(owner.current.hud_used)
 		owner.current.hud_used.lingstingdisplay.icon_state = null
 		owner.current.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
@@ -120,6 +119,12 @@
 			if(!has_sting(S))
 				purchasedpowers += S
 				S.on_purchase(owner.current,TRUE)
+
+/datum/antagonist/changeling/proc/regain_powers()//for when action buttons are lost and need to be regained, such as when the mind enters a new mob
+	emporium_action.Grant(owner.current)
+	for(var/path in purchasedpowers)
+		var/datum/action/changeling/S = new path()
+			S.Grant(owner.current)
 
 /datum/antagonist/changeling/proc/has_sting(datum/action/changeling/power)
 	for(var/P in purchasedpowers)

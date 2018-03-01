@@ -81,7 +81,7 @@
 
 		var/datum/action/changeling/humanform/hf = new
 		C.purchasedpowers += hf
-		hf.Grant(C)
+		C.regain_powers()
 		M.key = origin.key
 	owner.gib()
 

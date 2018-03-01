@@ -100,7 +100,7 @@
 			if(changeling)
 				var/datum/action/changeling/humanform/hf = new
 				changeling.purchasedpowers += hf
-				hf.Grant(changeling)
+				changeling.regain_powers()
 
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
@@ -135,7 +135,7 @@
 		if(changeling)
 			var/datum/action/changeling/humanform/hf = new
 			changeling.purchasedpowers += hf
-			hf.Grant(changeling)
+			changeling.regain_powers()
 
 
 	if (tr_flags & TR_DEFAULTMSG)
@@ -263,7 +263,7 @@
 			if(changeling)
 				for(var/datum/action/changeling/humanform/HF in changeling.purchasedpowers)
 					changeling.purchasedpowers -= HF
-					HF.Remove(changeling)
+					changeling.regain_powers()
 
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
@@ -298,7 +298,7 @@
 		if(changeling)
 			for(var/datum/action/changeling/humanform/HF in changeling.purchasedpowers)
 				changeling.purchasedpowers -= HF
-				HF.Remove(changeling)
+				changeling.regain_powers()
 
 	O.a_intent = INTENT_HELP
 	if (tr_flags & TR_DEFAULTMSG)
