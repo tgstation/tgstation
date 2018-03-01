@@ -2553,6 +2553,7 @@
 #include "hippiestation\code\game\objects\effects\effect_system\effects_vapour.dm"
 #include "hippiestation\code\game\objects\items\apc_frame.dm"
 #include "hippiestation\code\game\objects\items\butterfly_knives.dm"
+#include "hippiestation\code\game\objects\items\cheapcuisine.dm"
 #include "hippiestation\code\game\objects\items\cigs_lighters.dm"
 #include "hippiestation\code\game\objects\items\clown_items.dm"
 #include "hippiestation\code\game\objects\items\ducttape.dm"
