@@ -995,6 +995,10 @@
 		holder.icon_state = "reticence_chassis"
 	..()
 
+/datum/construction/mecha/firefighter/custom_action(obj/item/I, mob/living/user, diff)
+	if(!..())
+		return FALSE
+
 	//TODO: better messages.
 	switch(index)
 		if(1)
