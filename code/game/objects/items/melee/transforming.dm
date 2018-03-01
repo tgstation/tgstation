@@ -61,8 +61,9 @@
 			attack_verb = attack_verb_off
 		icon_state = initial(icon_state)
 		w_class = initial(w_class)
-	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
-	butchering.butchering_enabled = active
+	GET_COMPONENT(butchering, /datum/component/butchering)
+	if(butchering)
+		butchering.butchering_enabled = active
 	transform_messages(user, supress_message_text)
 	add_fingerprint(user)
 	return TRUE
