@@ -314,6 +314,17 @@
 	research_cost = 2500
 	export_price = 5000
 
+/////////////////////////Mime tech/////////////////////////
+/datum/techweb_node/mime
+	id = "mime"
+	display_name = "Mime Technology"
+	description = "..."
+	prereq_ids = list("base")
+	design_ids = list("reticence_main", "reticence_peri", "reticence_targ", "reticence_chassis", "reticence_head", "reticence_torso", "reticence_left_arm", "reticence_right_arm",
+	"reticence_left_leg", "reticence_right_leg")
+	research_cost = 2500
+	export_price = 5000
+
 ////////////////////////Computer tech////////////////////////
 /datum/techweb_node/comptech
 	id = "comptech"
