@@ -5334,6 +5334,24 @@
 	dir = 8
 	},
 /area/centcom/control)
+"oS" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/tdome/tdomeobserve)
+"oT" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/tdome/tdomeobserve)
 "oW" = (
 /obj/structure/flora/bush,
 /obj/effect/light_emitter{
@@ -11837,13 +11855,6 @@
 	},
 /turf/open/floor/plasteel/bar,
 /area/tdome/tdomeobserve)
-"HE" = (
-/obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/tdome/tdomeobserve)
 "HF" = (
 /obj/structure/sink{
 	dir = 4;
@@ -11937,13 +11948,6 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/tdome/tdomeobserve)
-"HQ" = (
-/obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
 /area/tdome/tdomeobserve)
 "HR" = (
 /obj/structure/sink{
@@ -59892,8 +59896,8 @@ Ep
 GU
 GM
 Hw
-HE
-HQ
+oS
+oT
 HX
 Ie
 Iq
