@@ -34,7 +34,7 @@
 
 /mob/living/simple_animal/fly
 	name = "swarm of flies"
-	desc = "You're the worst if you unironically swat other people."
+	desc = "[health = 1 ? "A single brave little fly, ready to take what the world throws at it." : "A swarm of flies, because the Janitor just isn't doing a good enough job."]"
 	icon_state = "fly-10"
 	icon_living = "fly-10"
 	icon_dead = "fly_dead"
@@ -66,3 +66,5 @@
 
 /mob/living/simple_animal/fly/time
 	name = "swarm of time flies"
+	desc = "Radiation seems to have given this [health = 1 ? "fly" : "swarm of flies"] time bending powers."
+	
