@@ -188,6 +188,10 @@
 /turf/open/floor/carpet/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
 
+/turf/open/floor/carpet/magic
+	name = "magic carpet"
+	blocks_air = TRUE
+
 
 /turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."
