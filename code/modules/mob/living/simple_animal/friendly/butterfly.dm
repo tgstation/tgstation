@@ -88,9 +88,9 @@
 
 
 
-/obj/effect/proc_holder/spell/targeted/shadowwalk
-	name = "Shadow Walk"
-	desc = "Grants unlimited movement in darkness."
+/obj/effect/proc_holder/spell/targeted/timewarp
+	name = "Time Warp!"
+	desc = "Warps you 10 seconds into the future! If, for some reason, you wanted to teleport yourself 10 seconds into the future."
 	charge_max = 0
 	clothes_req = 0
 	phase_allowed = 1
@@ -103,26 +103,17 @@
 	action_icon_state = "ninja_cloak"
 	action_background_icon_state = "bg_alien"
 
-/obj/effect/proc_holder/spell/targeted/shadowwalk/cast(list/targets,mob/living/user = usr)
-	var/L = user.loc
-	if(istype(user.loc, /obj/effect/dummy/shadow))
-		var/obj/effect/dummy/shadow/S = L
-		S.end_jaunt(FALSE)
-		return
+/obj/effect/proc_holder/spell/targeted/timewarp/cast(list/targets,mob/living/user = usr)
+	playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
+	visible_message("<span class='boldwarning'>[user] melts into the shadows!</span>")
+	user.SetStun(0, FALSE)
+	user.SetKnockdown(0, FALSE)
+	user.setStaminaLoss(0, 0)
+	var/obj/effect/dummy/shadow/S2 = new(get_turf(user.loc))
+	user.forceMove(S2)
+	S2.jaunter = user
 	else
-		var/turf/T = get_turf(user)
-		var/light_amount = T.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
-			visible_message("<span class='boldwarning'>[user] melts into the shadows!</span>")
-			user.SetStun(0, FALSE)
-			user.SetKnockdown(0, FALSE)
-			user.setStaminaLoss(0, 0)
-			var/obj/effect/dummy/shadow/S2 = new(get_turf(user.loc))
-			user.forceMove(S2)
-			S2.jaunter = user
-		else
-			to_chat(user, "<span class='warning'>It isn't dark enough here!</span>")
+		to_chat(user, "<span class='warning'>It isn't dark enough here!</span>")
 
 /obj/effect/dummy/timewarp
 	name = "distortion in spacetime"
