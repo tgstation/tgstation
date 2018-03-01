@@ -351,6 +351,18 @@
 	name = "H.O.N.K Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
+/obj/item/circuitboard/mecha/reticence/peripherals
+	name = "Reticence Peripherals Control module (Exosuit Board)"
+	icon_state = "mcontroller"
+
+/obj/item/circuitboard/mecha/reticence/targeting
+	name = "Reticence Weapon Control and Targeting module (Exosuit Board)"
+	icon_state = "mcontroller"
+
+/obj/item/circuitboard/mecha/reticence/main
+	name = "Reticence Central Control module (Exosuit Board)"
+	icon_state = "mainboard"
+
 /obj/item/circuitboard/mecha/odysseus/peripherals
 	name = "Odysseus Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
