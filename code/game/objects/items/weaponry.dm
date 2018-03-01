@@ -564,6 +564,8 @@
 	strong_against = typecacheof(list(
 					/mob/living/simple_animal/hostile/poison/bees/,
 					/mob/living/simple_animal/butterfly,
+					/mob/living/simple_animal/fly
+					/mob/living/simple_animal/fly/time
 					/mob/living/simple_animal/cockroach,
 					/obj/item/queen_bee
 	))
