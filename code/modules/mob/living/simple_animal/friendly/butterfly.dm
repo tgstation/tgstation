@@ -31,3 +31,38 @@
 
 /mob/living/simple_animal/butterfly/bee_friendly()
 	return TRUE //treaty signed at the Beeneeva convention
+
+/mob/living/simple_animal/fly
+	name = "swarm of flies"
+	desc = "You're the worst if you unironically swat other people."
+	icon_state = "fly-10"
+	icon_living = "fly-10"
+	icon_dead = "fly_dead"
+	turns_per_move = 1
+	response_help = "shoos"
+	response_disarm = "shoos"
+	response_harm = "splats"
+	speak_emote = list("buzzes")
+	maxHealth = 10 //it's a swarm!!
+	health = 10
+	harm_intent_damage = 3 //you can only kill one of the flies in the swarm at a time
+	friendly = "nudges"
+	density = FALSE
+	movement_type = FLYING
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	ventcrawler = VENTCRAWLER_ALWAYS
+	mob_size = MOB_SIZE_TINY
+	gold_core_spawnable = FRIENDLY_SPAWN
+	verb_say = "buzzes"
+	verb_ask = "buzzes inquisitively"
+	verb_exclaim = "buzzes intensely"
+	verb_yell = "buzzes intensely"
+
+/mob/living/simple_animal/fly/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	health --
+	visible_message("the fly stops moving...")
+	icon_state = "fly-[health]"
+	maxHealth = health //can't revive flies.
+
+/mob/living/simple_animal/fly/time
+	name = "swarm of time flies"
