@@ -4276,6 +4276,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "ajZ" = (
@@ -4789,6 +4790,9 @@
 	name = "Solar Maintenance";
 	req_access = null;
 	req_access_txt = "10; 13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
@@ -21733,6 +21737,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bdP" = (
@@ -28786,6 +28793,9 @@
 	name = "Genetics Research Access";
 	req_access_txt = "9"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "buH" = (
@@ -28801,6 +28811,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -54621,6 +54634,18 @@
 /obj/item/gun/energy/laser/practice,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"slk" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
 "sxs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table,
@@ -96591,7 +96616,7 @@ cTS
 cTK
 bpQ
 cTK
-cTJ
+slk
 btm
 buy
 bvz
