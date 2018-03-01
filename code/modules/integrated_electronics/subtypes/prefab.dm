@@ -143,9 +143,27 @@
 		var/obj/item/integrated_circuit/circuit = i
 		circuit.on_attack_self(user) // this won't ask you which inner circuit to trigger, it'll trigger them all.
 
+/obj/item/integrated_circuit/prefab/external_examine(mob/user)
+	..()
+	for(var/i in circuit_components)
+		var/obj/item/integrated_circuit/circuit = i
+		circuit.any_examine(user)
+
+/obj/item/integrated_circuit/prefab/attackby_react(atom/movable/A,mob/user)
+	..()
+	for(var/i in circuit_components)
+		var/obj/item/integrated_circuit/circuit = i
+		circuit.attackby_react(A,user)
+
+/obj/item/integrated_circuit/prefab/sense(atom/A,mob/user,prox)
+	..()
+	for(var/i in circuit_components)
+		var/obj/item/integrated_circuit/circuit = i
+		circuit.sense(A,user,prox)
+
 /obj/item/integrated_circuit/prefab/interact(mob/user, HTML)
-	HTML += "<table border='1' style='undefined;table-layout: fixed; width: 80%'>"
-	HTML += "<a href='?src=[REF(src)];prefab=1'>\[Check internal components\]</a><br></table>"
+	HTML += "<table border='1' style='undefined;table-layout: fixed; width: 80%'><div align='center'>"
+	HTML += "<a href='?src=[REF(src)];prefab=1'>\[Check internal components\]</a><br></div></table>"
 	..(user, HTML)
 
 /obj/item/integrated_circuit/prefab/Topic(href, href_list)
