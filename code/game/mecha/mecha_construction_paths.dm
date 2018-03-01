@@ -1006,7 +1006,7 @@
 		if(4)
 			user.visible_message("[user] installs the power cell into [holder].", "<span class='notice'>You install the power cell into [holder].</span>")
 		if(5)
-			user.visible_message("[user] puts suspenders on [holder].", "<span class='notice'>You put suspenders on [holder].</span>"
+			user.visible_message("[user] puts suspenders on [holder].", "<span class='notice'>You put suspenders on [holder].</span>")
 		if(6)
 			user.visible_message("[user] puts mime mask on [holder].", "<span class='notice'>You put mime mask on [holder].</span>")
 		if(7)
