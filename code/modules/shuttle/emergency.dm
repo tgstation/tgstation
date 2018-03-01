@@ -150,7 +150,7 @@
 	log_game("[key_name(user)] has emagged the emergency shuttle in \
 		[COORD(src)] [time] seconds before launch.")
 	obj_flags |= EMAGGED
-	SSshuttle.emergency.movement_force = list("KNOCKDOWN" = 3, "THROW" = 20)
+	SSshuttle.emergency.movement_force = list("KNOCKDOWN" = 3, "THROW" = 20, "IGNOREBUCKLE" = TRUE)//YOUR PUNY SEATBELTS CANNOT SAVE YOU NOW, MORTAL
 	var/datum/species/S = new
 	for(var/i in 1 to 10)
 		// the shuttle system doesn't know who these people are, but they
