@@ -346,12 +346,11 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		icon_state = "runed_sense2"
 		desc = "You can no longer sense your target's presence."
 		return
-	var/targetname
 	if(isliving(blood_target))
-		targetname = blood_target.real_name
+		var/mob/living/real_target = blood_target
+		desc = "You are currently tracking [real_target.real_name] in [get_area_name(blood_target)]."
 	else
-		targetname = blood_target.name
-	desc = "You are currently tracking [targetname] in [get_area_name(blood_target)]."
+		desc = "You are currently tracking [blood_target] in [get_area_name(blood_target)]."
 	var/target_angle = Get_Angle(Q, P)
 	var/target_dist = get_dist(P, Q)
 	cut_overlays()
