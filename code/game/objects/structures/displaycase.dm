@@ -15,17 +15,17 @@
 	var/openable = TRUE
 	var/obj/item/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
-	var/list/start_showpieces = list()
+	var/list/start_showpieces = list() //Takes sublists in the form of list("type" = /obj/item/bikehorn, "trophy_message" = "henk")
 	var/trophy_message = ""
 
 /obj/structure/displaycase/Initialize()
 	. = ..()
-	if(start_showpieces.len) 
+	if(start_showpieces.len && !start_showpiece_type) 
 		var/list/showpiece_entry = pick(start_showpieces)
-		if (showpiece_entry && showpiece_entry.len)
-			start_showpiece_type = showpiece_entry[1]
-			if (showpiece_entry.len >= 2)
-				trophy_message = showpiece_entry[2]
+		if (showpiece_entry && showpiece_entry["type"])
+			start_showpiece_type = showpiece_entry["type"]
+			if (showpiece_entry["trophy_message"])
+				trophy_message = showpiece_entry["trophy_message"]
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
 	update_icon()
