@@ -59,17 +59,13 @@
 	if(istype(I, /obj/item/screwdriver))
 		if(unfastened)
 			user.visible_message("<span class='notice'>[user] starts tightening [src]'s screws...</span>", "<span class='notice'>You start screwing in [src]...</span>")
-			playsound(src, I.usesound, 50, 1)
-			if(I.use_tool(src, user, 30))
+			if(I.use_tool(src, user, 30, volume=50))
 				user.visible_message("<span class='notice'>[user] tightens [src]'s screws!</span>", "<span class='notice'>You tighten [src]'s screws.</span>")
-				playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 				unfastened = FALSE
 		else
 			user.visible_message("<span class='notice'>[user] starts loosening [src]'s screws...</span>", "<span class='notice'>You start unscrewing [src]...</span>")
-			playsound(src, I.usesound, 50, 1)
-			if(I.use_tool(src, user, 40))
+			if(I.use_tool(src, user, 40, volume=50))
 				user.visible_message("<span class='notice'>[user] loosens [src]'s screws!</span>", "<span class='notice'>You unscrew [src], loosening it from the wall.</span>")
-				playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 				unfastened = TRUE
 		return
 	else if(istype(I, /obj/item/wrench))
@@ -77,7 +73,7 @@
 			to_chat(user, "<span class='warning'>You need to unscrew [src] from the wall first!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] starts unsecuring [src]...</span>", "<span class='notice'>You start unsecuring [src]...</span>")
-		playsound(src, I.usesound, 50, 1)
+		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 80))
 			user.visible_message("<span class='notice'>[user] unsecures [src]!</span>", "<span class='notice'>You detach [src] from the wall.</span>")
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)

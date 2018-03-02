@@ -272,97 +272,94 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		// Pass all the gas related code an empty gas container
 		removed = new()
 
+	damage_archived = damage
 	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
 		if(takes_damage)
-			damage += max((power-1600)/10, 0)
-		return 1
+			damage += max((power / 1000) * DAMAGE_INCREASE_MULTIPLIER, 0.1) // always does at least some damage
+	else 
+		if(takes_damage)
+			//causing damage
+			damage = max(damage + (max(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
+			damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD, 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
+			damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
 
-	damage_archived = damage
-	if(takes_damage)
-		//causing damage
-		damage = max(damage + (max(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
-		damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD, 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
-		damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
+			//healing damage
+			if(combined_gas < MOLE_PENALTY_THRESHOLD)
+				damage = max(damage + (min(removed.temperature - (T0C + HEAT_PENALTY_THRESHOLD), 0) / 150 ), 0)
 
-		//healing damage
-		if(combined_gas < MOLE_PENALTY_THRESHOLD)
-			damage = max(damage + (min(removed.temperature - (T0C + HEAT_PENALTY_THRESHOLD), 0) / 150 ), 0)
+			//capping damage
+			damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
+			if(damage > damage_archived && prob(10))
+				playsound(get_turf(src), 'sound/effects/empulse.ogg', 50, 1)
 
-		//capping damage
-		damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
-		if(damage > damage_archived && prob(10))
-			playsound(get_turf(src), 'sound/effects/empulse.ogg', 50, 1)
+		removed.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/nitrogen)
+		//calculating gas related values
+		combined_gas = max(removed.total_moles(), 0)
 
-	removed.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/nitrogen)
-	//calculating gas related values
-	combined_gas = max(removed.total_moles(), 0)
+		plasmacomp = max(removed.gases[/datum/gas/plasma][MOLES]/combined_gas, 0)
+		o2comp = max(removed.gases[/datum/gas/oxygen][MOLES]/combined_gas, 0)
+		co2comp = max(removed.gases[/datum/gas/carbon_dioxide][MOLES]/combined_gas, 0)
 
-	plasmacomp = max(removed.gases[/datum/gas/plasma][MOLES]/combined_gas, 0)
-	o2comp = max(removed.gases[/datum/gas/oxygen][MOLES]/combined_gas, 0)
-	co2comp = max(removed.gases[/datum/gas/carbon_dioxide][MOLES]/combined_gas, 0)
+		n2ocomp = max(removed.gases[/datum/gas/nitrous_oxide][MOLES]/combined_gas, 0)
+		n2comp = max(removed.gases[/datum/gas/nitrogen][MOLES]/combined_gas, 0)
 
-	n2ocomp = max(removed.gases[/datum/gas/nitrous_oxide][MOLES]/combined_gas, 0)
-	n2comp = max(removed.gases[/datum/gas/nitrogen][MOLES]/combined_gas, 0)
+		gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp - n2comp, 0), 1)
 
-	gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp - n2comp, 0), 1)
+		dynamic_heat_modifier = max((plasmacomp * PLASMA_HEAT_PENALTY)+(o2comp * OXYGEN_HEAT_PENALTY)+(co2comp * CO2_HEAT_PENALTY)+(n2comp * NITROGEN_HEAT_MODIFIER), 0.5)
+		dynamic_heat_resistance = max(n2ocomp * N2O_HEAT_RESISTANCE, 1)
 
-	dynamic_heat_modifier = max((plasmacomp * PLASMA_HEAT_PENALTY)+(o2comp * OXYGEN_HEAT_PENALTY)+(co2comp * CO2_HEAT_PENALTY)+(n2comp * NITROGEN_HEAT_MODIFIER), 0.5)
-	dynamic_heat_resistance = max(n2ocomp * N2O_HEAT_RESISTANCE, 1)
+		power_transmission_bonus = max((plasmacomp * PLASMA_TRANSMIT_MODIFIER) + (o2comp * OXYGEN_TRANSMIT_MODIFIER), 0)
 
-	power_transmission_bonus = max((plasmacomp * PLASMA_TRANSMIT_MODIFIER) + (o2comp * OXYGEN_TRANSMIT_MODIFIER), 0)
+		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
+		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
 
+		if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && co2comp > POWERLOSS_INHIBITION_GAS_THRESHOLD)
+			powerloss_dynamic_scaling = CLAMP(powerloss_dynamic_scaling + CLAMP(co2comp - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
+		else
+			powerloss_dynamic_scaling = CLAMP(powerloss_dynamic_scaling - 0.05,0, 1)
+		powerloss_inhibitor = CLAMP(1-(powerloss_dynamic_scaling * CLAMP(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD,1 ,1.5)),0 ,1)
 
+		if(matter_power)
+			var/removed_matter = max(matter_power/MATTER_POWER_CONVERSION, 40)
+			power = max(power + removed_matter, 0)
+			matter_power = max(matter_power - removed_matter, 0)
 
-	//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
-	mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
+		var/temp_factor = 50
 
-	if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && co2comp > POWERLOSS_INHIBITION_GAS_THRESHOLD)
-		powerloss_dynamic_scaling = CLAMP(powerloss_dynamic_scaling + CLAMP(co2comp - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
-	else
-		powerloss_dynamic_scaling = CLAMP(powerloss_dynamic_scaling - 0.05,0, 1)
-	powerloss_inhibitor = CLAMP(1-(powerloss_dynamic_scaling * CLAMP(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD,1 ,1.5)),0 ,1)
+		if(gasmix_power_ratio > 0.8)
+			// with a perfect gas mix, make the power less based on heat
+			icon_state = "[base_icon_state]_glow"
+		else
+			// in normal mode, base the produced energy around the heat
+			temp_factor = 30
+			icon_state = base_icon_state
 
-	if(matter_power)
-		var/removed_matter = max(matter_power/MATTER_POWER_CONVERSION, 40)
-		power = max(power + removed_matter, 0)
-		matter_power = max(matter_power - removed_matter, 0)
+		power = max( (removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0) //Total laser power plus an overload
 
-	var/temp_factor = 50
+		if(prob(50))
+			radiation_pulse(src, power * (1 + power_transmission_bonus/10))
 
-	if(gasmix_power_ratio > 0.8)
-		// with a perfect gas mix, make the power less based on heat
-		icon_state = "[base_icon_state]_glow"
-	else
-		// in normal mode, base the produced energy around the heat
-		temp_factor = 30
-		icon_state = base_icon_state
+		var/device_energy = power * REACTION_POWER_MODIFIER
 
-	power = max( (removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0) //Total laser power plus an overload
+		//To figure out how much temperature to add each tick, consider that at one atmosphere's worth
+		//of pure oxygen, with all four lasers firing at standard energy and no N2 present, at room temperature
+		//that the device energy is around 2140. At that stage, we don't want too much heat to be put out
+		//Since the core is effectively "cold"
 
-	if(prob(50))
-		radiation_pulse(src, power * (1 + power_transmission_bonus/10))
+		//Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
+		//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
+		removed.temperature += ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER)
 
-	var/device_energy = power * REACTION_POWER_MODIFIER
+		removed.temperature = max(0, min(removed.temperature, 2500 * dynamic_heat_modifier))
 
-	//To figure out how much temperature to add each tick, consider that at one atmosphere's worth
-	//of pure oxygen, with all four lasers firing at standard energy and no N2 present, at room temperature
-	//that the device energy is around 2140. At that stage, we don't want too much heat to be put out
-	//Since the core is effectively "cold"
+		//Calculate how much gas to release
+		removed.gases[/datum/gas/plasma][MOLES] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0)
 
-	//Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
-	//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
-	removed.temperature += ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER)
+		removed.gases[/datum/gas/oxygen][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 
-	removed.temperature = max(0, min(removed.temperature, 2500 * dynamic_heat_modifier))
-
-	//Calculate how much gas to release
-	removed.gases[/datum/gas/plasma][MOLES] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0)
-
-	removed.gases[/datum/gas/oxygen][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
-
-	if(produces_gas)
-		env.merge(removed)
-		air_update_turf()
+		if(produces_gas)
+			env.merge(removed)
+			air_update_turf()
 
 	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
@@ -373,6 +370,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
 		l.rad_act(rads)
+
+	power -= ((power/500)**3) * powerloss_inhibitor
 
 	if(power > POWER_PENALTY_THRESHOLD || damage > damage_penalty_point)
 
@@ -396,8 +395,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 			supermatter_anomaly_gen(src, GRAVITATIONAL_ANOMALY, rand(5, 10))
 		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(2) || prob(0.3) && power > POWER_PENALTY_THRESHOLD)
 			supermatter_anomaly_gen(src, PYRO_ANOMALY, rand(5, 10))
-
-
 
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
 		if((REALTIMEOFDAY - lastwarning) / 10 >= WARNING_DELAY)
@@ -438,17 +435,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 					L.rad_act(rads)
 
 			explode()
-
-
-	power -= ((power/500)**3) * powerloss_inhibitor
-
+			
 	return 1
 
 /obj/machinery/power/supermatter_shard/bullet_act(obj/item/projectile/Proj)
 	var/turf/L = loc
-	if(!istype(L) || isspaceturf(L))		// We don't run process() when we are in space
-		return FALSE	// This stops people from being able to really power up the supermatter
-				// Then bring it inside to explode instantly upon landing on a valid turf.
+	if(!istype(L))
+		return FALSE
 	if(!istype(Proj.firer, /obj/machinery/power/emitter))
 		investigate_log("has been hit by [Proj] fired by [Proj.firer]", INVESTIGATE_SUPERMATTER)
 	if(Proj.flag != "bullet")

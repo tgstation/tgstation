@@ -36,8 +36,7 @@
 /area/ruin/unpowered)
 "j" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,

@@ -214,8 +214,9 @@
 		explanation_text = "Free Objective"
 
 /datum/objective/protect//The opposite of killing a dude.
-	var/target_role_type=0
 	martyr_compatible = 1
+	var/target_role_type = 0
+	var/human_check = TRUE
 
 /datum/objective/protect/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
@@ -224,7 +225,7 @@
 	return target
 
 /datum/objective/protect/check_completion()
-	return !target || considered_alive(target)
+	return !target || considered_alive(target, enforce_human = human_check)
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -232,6 +233,9 @@
 		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
+
+/datum/objective/protect/nonhuman
+	human_check = FALSE
 
 /datum/objective/hijack
 	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."

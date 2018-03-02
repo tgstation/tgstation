@@ -125,19 +125,19 @@
 	response_harm = "harmlessly punches"
 	harm_intent_damage = 0
 	obj_damage = 90
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage_lower = 25
+	melee_damage_upper = 25
 	attacktext = "smashes their armored gauntlet into"
 	speed = 2.5
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
 	mob_size = MOB_SIZE_LARGE
-	force_threshold = 11
+	force_threshold = 10
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/forcewall/cult,
 							/obj/effect/proc_holder/spell/dumbfire/juggernaut)
 	runetype = /datum/action/innate/cult/create_rune/wall
-	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, \
+	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand heavy punishment, \
 						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</b>"
 
 /mob/living/simple_animal/hostile/construct/armored/hostile //actually hostile, will move around, hit things
@@ -146,7 +146,7 @@
 
 /mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-		var/reflectchance = 80 - round(P.damage/3)
+		var/reflectchance = 60 - round(P.damage/3)
 		if(prob(reflectchance))
 			apply_damage(P.damage * 0.5, P.damage_type)
 			visible_message("<span class='danger'>The [P.name] is reflected by [src]'s armored shell!</span>", \
@@ -184,8 +184,8 @@
 	icon_living = "floating"
 	maxHealth = 65
 	health = 65
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 20
+	melee_damage_upper = 20
 	retreat_distance = 2 //AI wraiths will move in and out of combat
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -340,12 +340,9 @@
 
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(iscarbon(target))
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(H.dna && H.dna.species)
-				if(NODISMEMBER in H.dna.species.species_traits)
-					return ..()		//ATTACK!
 		var/mob/living/carbon/C = target
+		if(C.has_trait(TRAIT_NODISMEMBER))
+			return ..()		//ATTACK!
 		var/list/parts = list()
 		var/undismembermerable_limbs = 0
 		for(var/X in C.bodyparts)

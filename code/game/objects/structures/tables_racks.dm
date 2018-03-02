@@ -162,7 +162,7 @@
 	canSmoothWith = null
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	var/list/debris = list()
 
 /obj/structure/table/glass/New()
@@ -263,24 +263,17 @@
 /obj/structure/table/wood/fancy
 	name = "fancy table"
 	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/smooth_structures/fancy_table.dmi'
 	icon_state = "fancy_table"
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
 	canSmoothWith = list(/obj/structure/table/wood/fancy, /obj/structure/table/wood/fancy/black)
 
-/obj/structure/table/wood/fancy/New()
-	icon = 'icons/obj/smooth_structures/fancy_table.dmi' //so that the tables place correctly in the map editor
-	..()
-
 /obj/structure/table/wood/fancy/black
+	icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
 	icon_state = "fancy_table_black"
 	buildstack = /obj/item/stack/tile/carpet/black
-
-/obj/structure/table/wood/fancy/black/New()
-	..()
-	icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
 
 /*
  * Reinforced tables
@@ -295,7 +288,7 @@
 	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table)
 	max_integrity = 200
 	integrity_failure = 50
-	armor = list(melee = 10, bullet = 30, laser = 30, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 80, acid = 70)
+	armor = list("melee" = 10, "bullet" = 30, "laser" = 30, "energy" = 100, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 
 /obj/structure/table/reinforced/deconstruction_hints(mob/user)
 	if(deconstruction_ready)
@@ -332,7 +325,7 @@
 	buildstack = /obj/item/stack/tile/brass
 	framestackamount = 1
 	buildstackamount = 1
-	canSmoothWith = list(/obj/structure/table/reinforced/brass)
+	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
 
 /obj/structure/table/reinforced/brass/New()
 	change_construction_value(2)
@@ -342,6 +335,9 @@
 	change_construction_value(-2)
 	return ..()
 
+/obj/structure/table/reinforced/brass/tablepush(mob/living/user, mob/living/pushed_mob)
+	.= ..()
+	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
 /obj/structure/table/reinforced/brass/narsie_act()
 	take_damage(rand(15, 45), BRUTE)
@@ -353,6 +349,19 @@
 
 /obj/structure/table/reinforced/brass/ratvar_act()
 	obj_integrity = max_integrity
+
+/obj/structure/table/bronze
+	name = "brass table"
+	desc = "A solid table made out of bronze."
+	icon = 'icons/obj/smooth_structures/brass_table.dmi'
+	icon_state = "brass_table"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	buildstack = /obj/item/stack/tile/bronze
+	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
+
+/obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
+	..()
+	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
 /*
  * Surgery Tables
@@ -441,7 +450,7 @@
 
 /obj/structure/rack/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		deconstruct(TRUE)
 		return
 	if(user.a_intent == INTENT_HARM)

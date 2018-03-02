@@ -60,7 +60,25 @@
 #define BRAIN_TRAUMA_SEVERE /datum/brain_trauma/severe
 #define BRAIN_TRAUMA_SPECIAL /datum/brain_trauma/special
 
+#define TRAUMA_RESILIENCE_BASIC 1      //Curable with chems
+#define TRAUMA_RESILIENCE_SURGERY 2    //Curable with brain surgery
+#define TRAUMA_RESILIENCE_LOBOTOMY 3   //Curable with lobotomy
+#define TRAUMA_RESILIENCE_MAGIC 4      //Curable only with magic
+#define TRAUMA_RESILIENCE_ABSOLUTE 5   //This is here to stay
+
+//Limit of traumas for each resilience tier
+#define TRAUMA_LIMIT_BASIC 3
+#define TRAUMA_LIMIT_SURGERY 2
+#define TRAUMA_LIMIT_LOBOTOMY 3
+#define TRAUMA_LIMIT_MAGIC 3
+#define TRAUMA_LIMIT_ABSOLUTE INFINITY
+
 #define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
+
+//Surgery Defines
+#define BIOWARE_GENERIC "generic"
+#define BIOWARE_NERVES "nerves"
+#define BIOWARE_CIRCULATION "circulation"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
@@ -139,11 +157,6 @@
 #define FUZZY_CHANCE_HIGH 85
 #define FUZZY_CHANCE_LOW 50
 #define CHANCE_TALK 1
-//Traitor type defines
-#define SNPC_BRUTE 1
-#define SNPC_STEALTH 2
-#define SNPC_MARTYR 3
-#define SNPC_PSYCHO 4
 
 #define TK_MAXRANGE 15
 
@@ -202,6 +215,10 @@
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
+
+// Roundstart trait system
+
+#define MAX_TRAITS 6 //The maximum amount of traits one character can have at roundstart
 
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5

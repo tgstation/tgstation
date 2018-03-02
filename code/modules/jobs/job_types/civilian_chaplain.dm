@@ -12,6 +12,7 @@ Chaplain
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	antag_rep = 4
 
 	outfit = /datum/outfit/job/chaplain
 
@@ -52,7 +53,7 @@ Chaplain
 			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
 		if("satanism")
 			B.name = "The Unholy Bible"
-		if("cthulu")
+		if("cthulhu")
 			B.name = "The Necronomicon"
 		if("islam")
 			B.name = "Quran"
@@ -90,6 +91,5 @@ Chaplain
 	belt = /obj/item/device/pda/chaplain
 	uniform = /obj/item/clothing/under/rank/chaplain
 	backpack_contents = list(/obj/item/device/camera/spooky = 1)
-	accessory = /obj/item/clothing/accessory/pocketprotector/cosmetology
 	backpack = /obj/item/storage/backpack/cultpack
 	satchel = /obj/item/storage/backpack/cultpack

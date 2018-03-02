@@ -409,6 +409,7 @@
 	damage_deflection = 10
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
 	var/friendly = FALSE
+	var/stealthy = FALSE
 
 /obj/machinery/door/airlock/cult/Initialize()
 	. = ..()
@@ -421,17 +422,35 @@
 	if(!density)
 		return 1
 	if(friendly || iscultist(L) || istype(L, /mob/living/simple_animal/shade) || isconstruct(L))
-		new openingoverlaytype(loc)
+		if(!stealthy)
+			new openingoverlaytype(loc)
 		return 1
 	else
-		new /obj/effect/temp_visual/cult/sac(loc)
-		var/atom/throwtarget
-		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-		SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
-		flash_color(L, flash_color="#960000", flash_time=20)
-		L.Knockdown(40)
-		L.throw_at(throwtarget, 5, 1,src)
+		if(!stealthy)
+			new /obj/effect/temp_visual/cult/sac(loc)
+			var/atom/throwtarget
+			throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
+			SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
+			flash_color(L, flash_color="#960000", flash_time=20)
+			L.Knockdown(40)
+			L.throw_at(throwtarget, 5, 1,src)
 		return 0
+
+/obj/machinery/door/airlock/cult/proc/conceal()
+	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+	name = "airlock"
+	desc = "It opens and closes."
+	stealthy = TRUE
+	update_icon()
+
+/obj/machinery/door/airlock/cult/proc/reveal()
+	icon = initial(icon)
+	overlays_file = initial(overlays_file)
+	name = initial(name)
+	desc = initial(desc)
+	stealthy = initial(stealthy)
+	update_icon()
 
 /obj/machinery/door/airlock/cult/narsie_act()
 	return
@@ -470,7 +489,7 @@
 	desc = "An airlock hastily corrupted by blood magic, it is unusually brittle in this state."
 	normal_integrity = 180
 	damage_deflection = 5
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 //Pinion airlocks: Clockwork doors that only let servants of Ratvar through.
 /obj/machinery/door/airlock/clockwork

@@ -2,7 +2,7 @@
 	if(stat == DEAD)
 		return
 
-	silent = 0
+	silent = FALSE
 	losebreath = 0
 
 	if(!gibbed)

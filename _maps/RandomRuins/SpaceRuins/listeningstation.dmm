@@ -14,7 +14,8 @@
 	},
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -103,8 +104,10 @@
 	},
 /area/ruin/space/has_grav/listeningstation)
 "an" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 4;
 	id_tag = "syndie_listeningpost_external";
 	req_access_txt = "150"
 	},
@@ -119,8 +122,10 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "ap" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 8;
 	id_tag = "syndie_listeningpost_external";
 	req_access_txt = "150"
 	},
@@ -208,7 +213,8 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
@@ -513,7 +519,8 @@
 "aU" = (
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -636,7 +643,8 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -808,7 +816,8 @@
 	dir = 4;
 	name = "Syndicate Listening Post APC";
 	pixel_x = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,

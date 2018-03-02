@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/ghost_role/slaughter
 	weight = 1 //Very rare
 	max_occurrences = 1
-	earliest_start = 36000 //1 hour
+	earliest_start = 1 HOURS
 	min_players = 20
 
 
@@ -37,7 +37,7 @@
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Slaughter Demon"
 	player_mind.special_role = "Slaughter Demon"
-	player_mind.add_antag_datum(/datum/antagonist/auto_custom)
+	player_mind.add_antag_datum(/datum/antagonist/slaughter)
 	to_chat(S, S.playstyle_string)
 	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. Blood Crawl near a blood pool to manifest.</B>")
 	SEND_SOUND(S, 'sound/magic/demon_dies.ogg')

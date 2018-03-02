@@ -98,7 +98,9 @@
 		air_update_turf()
 
 /mob/living/carbon/proc/has_smoke_protection()
-	return 0
+	if(has_trait(TRAIT_NOBREATH))
+		return TRUE
+	return FALSE
 
 
 //Third link in a breath chain, calls handle_breath_temperature()
@@ -250,7 +252,7 @@
 		if(prob(D.infectivity))
 			D.spread()
 
-		if(stat != DEAD && !D.process_dead)
+		if(stat != DEAD || D.process_dead)
 			D.stage_act()
 
 //todo generalize this and move hud out
@@ -408,11 +410,9 @@
 	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
 		return
 	if(liver)
-		if(liver.damage >= 100)
+		if(liver.damage >= liver.maxHealth)
 			liver.failing = TRUE
 			liver_failure()
-		else
-			liver.failing = FALSE
 	else
 		liver_failure()
 
@@ -435,7 +435,7 @@
 	if(reagents.get_reagent_amount("corazone"))//corazone is processed here an not in the liver because a failing liver can't metabolize reagents
 		reagents.remove_reagent("corazone", 0.4) //corazone slowly deletes itself.
 		return
-	adjustToxLoss(8)
+	adjustToxLoss(8, TRUE, TRUE)
 	if(prob(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
 
@@ -462,6 +462,9 @@
 
 /mob/living/carbon/proc/can_heartattack()
 	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
+		return FALSE
+	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	if(!heart || heart.synthetic)
 		return FALSE
 	return TRUE
 

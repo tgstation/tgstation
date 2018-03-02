@@ -21,7 +21,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/machinery/autolathe, //same
 		/obj/item/projectile/beam/wormhole,
 		/obj/effect/portal,
-		/obj/item/device/shared_storage
+		/obj/item/device/shared_storage,
+		/obj/structure/extraction_point
 	)))
 
 /obj/docking_port/mobile/supply

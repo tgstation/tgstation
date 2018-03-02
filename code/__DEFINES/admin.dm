@@ -34,6 +34,7 @@
 #define R_SOUNDS		0x800
 #define R_SPAWN			0x1000
 #define R_AUTOLOGIN		0x2000
+#define R_DBRANKS		0x4000
 
 #define R_DEFAULT R_AUTOLOGIN
 

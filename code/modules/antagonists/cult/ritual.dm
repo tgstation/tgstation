@@ -68,6 +68,9 @@ This file contains the cult dagger and rune list code
 	A = get_area(src)
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
+	if(ispath(rune_to_scribe, /obj/effect/rune/summon) && (!is_station_level(Turf.z) || A.map_name == "Space"))
+		to_chat(user, "<span class='cultitalic'><b>The veil is not weak enough here to summon a cultist, you must be on station!</b></span>")
+		return
 	if(ispath(rune_to_scribe, /obj/effect/rune/apocalypse))
 		if((world.time - SSticker.round_start_time) <= 6000)
 			var/wait = 6000 - (world.time - SSticker.round_start_time)
@@ -138,21 +141,10 @@ This file contains the cult dagger and rune list code
 	if(isspaceturf(T))
 		to_chat(user, "<span class='warning'>You cannot scribe runes in space!</span>")
 		return FALSE
-
 	if(locate(/obj/effect/rune) in T)
 		to_chat(user, "<span class='cult'>There is already a rune here.</span>")
 		return FALSE
-
-
 	if(!is_station_level(T.z) && !is_mining_level(T.z))
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
-
 		return FALSE
-
-	var/area/A = get_area(T)
-	if(A && !A.blob_allowed)
-		to_chat(user, "<span class='warning'>There's a passage in [src] specifically forbidding oyster consumption, triple-frying, and building outside of designated cult zones.</span>")
-		return FALSE
-
-
 	return TRUE

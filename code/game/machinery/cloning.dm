@@ -44,8 +44,8 @@
 		"salbutamol", // anti-oxyloss
 		"bicaridine", // NOBREATHE species take brute in crit
 		"corazone", // prevents cardiac arrest and liver failure damage
-		"mimesbane") // stops them gasping from lack of air.
-
+		"mimesbane", // stops them gasping from lack of air.
+		"mutetoxin") // stops them from killing themselves BY DEATHWHISPERING INSIDE A CLONE POD NICE JOB BREAKING IT HERO
 /obj/machinery/clonepod/Initialize()
 	. = ..()
 
@@ -437,7 +437,7 @@
 
 	// brain function, they also have no limbs or internal organs.
 
-	if(!NODISMEMBER in H.dna.species.species_traits)
+	if(!H.has_trait(TRAIT_NODISMEMBER))
 		var/static/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
 		for(var/zone in zones)
 			var/obj/item/bodypart/BP = H.get_bodypart(zone)

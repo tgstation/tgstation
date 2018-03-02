@@ -113,10 +113,6 @@
 			S.materials = list()
 			S.is_cyborg = 1
 
-	if(istype(I, /obj/item/restraints/handcuffs/cable))
-		var/obj/item/restraints/handcuffs/cable/C = I
-		C.wirestorage = get_or_create_estorage(/datum/robot_energy_storage/wire)
-
 	if(I.loc != src)
 		I.forceMove(src)
 	modules += I
@@ -243,7 +239,7 @@
 		/obj/item/extinguisher,
 		/obj/item/pickaxe,
 		/obj/item/device/t_scanner/adv_mining_scanner,
-		/obj/item/restraints/handcuffs/cable/zipties/cyborg,
+		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/soap/nanotrasen,
 		/obj/item/borg/cyborghug)
 	emag_modules = list(/obj/item/melee/transforming/energy/sword/cyborg)
@@ -301,7 +297,7 @@
 		/obj/item/device/multitool/cyborg,
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
-		/obj/item/device/geiger_counter,
+		/obj/item/device/geiger_counter/cyborg,
 		/obj/item/device/assembly/signaler/cyborg,
 		/obj/item/areaeditor/blueprints/cyborg,
 		/obj/item/device/electroadaptive_pseudocircuit,
@@ -324,7 +320,7 @@
 	name = "Security"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
-		/obj/item/restraints/handcuffs/cable/zipties/cyborg,
+		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/melee/baton/loaded,
 		/obj/item/gun/energy/disabler/cyborg,
 		/obj/item/clothing/mask/gas/sechailer/cyborg)

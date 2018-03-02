@@ -12,7 +12,6 @@
 	id = "arcade_battle"
 	build_path = /obj/item/circuitboard/computer/arcade/battle
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/board/orion_trail
 	name = "Computer Design (Orion Trail Arcade Machine)"
@@ -20,7 +19,6 @@
 	id = "arcade_orion"
 	build_path = /obj/item/circuitboard/computer/arcade/orion_trail
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/board/seccamera
 	name = "Computer Design (Security Camera)"

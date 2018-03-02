@@ -20,11 +20,16 @@
 	var/charge_tick = FALSE
 	var/charge_delay = 4
 	var/use_cyborg_cell = TRUE
+	var/allowed_circuit_action_flags = IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE //which circuit flags are allowed
+	var/combat_circuits = 0 //number of combat cicuits in the assembly, used for diagnostic hud
+	var/long_range_circuits = 0 //number of long range cicuits in the assembly, used for diagnostic hud
+	var/prefered_hud_icon = "hudstat"		// Used by the AR circuit to change the hud icon.
+	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD, DIAG_CIRCUIT_HUD) //diagnostic hud overlays
 	max_integrity = 50
-	armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
+	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 
 /obj/item/device/electronic_assembly/proc/check_interactivity(mob/user)
-	return user.canUseTopic(src,be_close = TRUE)
+	return user.canUseTopic(src, BE_CLOSE)
 
 
 /obj/item/device/electronic_assembly/Initialize()
@@ -32,13 +37,28 @@
 	START_PROCESSING(SScircuit, src)
 	materials[MAT_METAL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
 
+	//sets up diagnostic hud view
+	prepare_huds()
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
+	diag_hud_set_circuithealth()
+	diag_hud_set_circuitcell()
+	diag_hud_set_circuitstat()
+	diag_hud_set_circuittracking()
+
 /obj/item/device/electronic_assembly/Destroy()
 	STOP_PROCESSING(SScircuit, src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.remove_from_hud(src)
 	return ..()
 
 /obj/item/device/electronic_assembly/process()
 	handle_idle_power()
 	check_pulling()
+
+	//updates diagnostic hud
+	diag_hud_set_circuithealth()
+	diag_hud_set_circuitcell()
 
 /obj/item/device/electronic_assembly/proc/handle_idle_power()
 	// First we generate power.
@@ -83,7 +103,7 @@
 		if(!circuit.removable)
 			builtin_components += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
 			builtin_components += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
-			builtin_components += "<a href='?src=[REF(circuit)];scan=1'>\[Scan with Debugger\]</a>"
+			builtin_components += "<a href='?src=[REF(circuit)];scan=1;return=1'>\[Copy Ref\]</a>"
 			builtin_components += "<br>"
 
 	// Put removable circuits (if any) in separate categories from non-removable
@@ -101,7 +121,7 @@
 		if(circuit.removable)
 			HTML += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
 			HTML += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
-			HTML += "<a href='?src=[REF(circuit)];scan=1'>\[Scan with Debugger\]</a> | "
+			HTML += "<a href='?src=[REF(circuit)];scan=1;return=1'>\[Copy Ref\]</a> | "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];remove=1'>\[Remove\]</a> | "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];up=1' style='text-decoration:none;'>&#8593;</a> "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];down=1' style='text-decoration:none;'>&#8595;</a>  "
@@ -110,7 +130,7 @@
 			HTML += "<br>"
 
 	HTML += "</body></html>"
-	user << browse(HTML, "window=assembly-[REF(src)];size=600x350;border=1;can_resize=1;can_close=1;can_minimize=1")
+	user << browse(HTML, "window=assembly-[REF(src)];size=655x350;border=1;can_resize=1;can_close=1;can_minimize=1")
 
 /obj/item/device/electronic_assembly/Topic(href, href_list)
 	if(..())
@@ -127,6 +147,7 @@
 			playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
 			to_chat(usr, "<span class='notice'>You pull \the [battery] out of \the [src]'s power supplier.</span>")
 			battery = null
+			diag_hud_set_circuitstat() //update diagnostic hud
 
 	if(href_list["component"])
 		var/obj/item/integrated_circuit/component = locate(href_list["component"]) in assembly_components
@@ -169,6 +190,22 @@
 				assembly_components.Insert(current_pos, component)
 
 	interact(usr) // To refresh the UI.
+
+/obj/item/device/electronic_assembly/pickup(mob/living/user)
+	. = ..()
+	//update diagnostic hud when picked up, true is used to force the hud to be hidden
+	diag_hud_set_circuithealth(TRUE)
+	diag_hud_set_circuitcell(TRUE)
+	diag_hud_set_circuitstat(TRUE)
+	diag_hud_set_circuittracking(TRUE)
+
+/obj/item/device/electronic_assembly/dropped(mob/user)
+	. = ..()
+	//update diagnostic hud when dropped
+	diag_hud_set_circuithealth()
+	diag_hud_set_circuitcell()
+	diag_hud_set_circuitstat()
+	diag_hud_set_circuittracking()
 
 /obj/item/device/electronic_assembly/proc/rename()
 	var/mob/M = usr
@@ -232,6 +269,9 @@
 	if((total_complexity + IC.complexity) > max_complexity)
 		to_chat(user, "<span class='warning'>You can't seem to add the '[IC]', since this setup's too complicated for the case.</span>")
 		return FALSE
+	if((allowed_circuit_action_flags & IC.action_flags) != IC.action_flags)
+		to_chat(user, "<span class='warning'>You can't seem to add the '[IC]', since the case doesn't support the circuit type.</span>")
+		return FALSE
 
 	if(!user.transferItemToLoc(IC, src))
 		return FALSE
@@ -249,20 +289,34 @@
 	component.assembly = src
 	assembly_components |= component
 
+	//increment numbers for diagnostic hud
+	if(component.action_flags & IC_ACTION_COMBAT)
+		combat_circuits += 1;
+	if(component.action_flags & IC_ACTION_LONG_RANGE)
+		long_range_circuits += 1;
 
-/obj/item/device/electronic_assembly/proc/try_remove_component(obj/item/integrated_circuit/IC, mob/user)
+	//diagnostic hud update
+	diag_hud_set_circuitstat()
+	diag_hud_set_circuittracking()
+
+
+/obj/item/device/electronic_assembly/proc/try_remove_component(obj/item/integrated_circuit/IC, mob/user, silent)
 	if(!opened)
-		to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't fiddle with the internal components.</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't fiddle with the internal components.</span>")
 		return FALSE
 
 	if(!IC.removable)
-		to_chat(user, "<span class='warning'>[src] is permanently attached to the case.</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>[src] is permanently attached to the case.</span>")
 		return FALSE
 
-	to_chat(user, "<span class='notice'>You pop \the [src] out of the case, and slide it out.</span>")
-	playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
-
 	remove_component(IC)
+	if(!silent)
+		to_chat(user, "<span class='notice'>You pop \the [IC] out of the case, and slide it out.</span>")
+		playsound(src, 'sound/items/crowbar.ogg', 50, 1)
+		user.put_in_hands(IC)
+
 	return TRUE
 
 // Actually removes the component, doesn't perform any checks.
@@ -272,6 +326,16 @@
 	component.assembly = null
 	assembly_components.Remove(component)
 
+	//decriment numbers for diagnostic hud
+	if(component.action_flags & IC_ACTION_COMBAT)
+		combat_circuits -= 1;
+	if(component.action_flags & IC_ACTION_LONG_RANGE)
+		long_range_circuits -= 1;
+
+	//diagnostic hud update
+	diag_hud_set_circuitstat()
+	diag_hud_set_circuittracking()
+
 
 /obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
 	for(var/obj/item/integrated_circuit/input/S in assembly_components)
@@ -279,8 +343,8 @@
 			visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
 
 
-/obj/item/device/electronic_assembly/screwdriver_act(mob/living/user, obj/item/S)
-	playsound(src, S.usesound, 50, 1)
+/obj/item/device/electronic_assembly/screwdriver_act(mob/living/user, obj/item/I)
+	I.play_tool_sound(src)
 	opened = !opened
 	to_chat(user, "<span class='notice'>You [opened ? "open" : "close"] the maintenance hatch of [src].</span>")
 	update_icon()
@@ -309,6 +373,7 @@
 		user.transferItemToLoc(I, loc)
 		cell.forceMove(src)
 		battery = cell
+		diag_hud_set_circuitstat() //update diagnostic hud
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You slot \the [cell] inside \the [src]'s power supplier.</span>")
 		interact(user)
@@ -491,9 +556,10 @@
 	name = "electronic drone"
 	icon_state = "setup_drone"
 	desc = "It's a case, for building mobile electronics with."
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_BULKY
 	max_components = IC_MAX_SIZE_BASE * 3
 	max_complexity = IC_COMPLEXITY_BASE * 3
+	allowed_circuit_action_flags = IC_ACTION_MOVEMENT | IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE
 
 /obj/item/device/electronic_assembly/drone/can_move()
 	return TRUE

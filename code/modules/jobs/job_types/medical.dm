@@ -17,6 +17,7 @@ Chief Medical Officer
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_MEDICAL
+	antag_rep = 16
 
 	outfit = /datum/outfit/job/cmo
 
@@ -59,6 +60,7 @@ Medical Doctor
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	antag_rep = 8
 
 	outfit = /datum/outfit/job/doctor
 
@@ -96,6 +98,7 @@ Chemist
 	selection_color = "#ffeef0"
 	exp_type = EXP_TYPE_CREW
 	exp_requirements = 60
+	antag_rep = 8
 
 	outfit = /datum/outfit/job/chemist
 
@@ -112,7 +115,6 @@ Chemist
 	uniform = /obj/item/clothing/under/rank/chemist
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat/chemist
-	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack = /obj/item/storage/backpack/chemistry
 	satchel = /obj/item/storage/backpack/satchel/chem
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
@@ -132,6 +134,7 @@ Geneticist
 	selection_color = "#ffeef0"
 	exp_type = EXP_TYPE_CREW
 	exp_requirements = 60
+	antag_rep = 8
 
 	outfit = /datum/outfit/job/geneticist
 
@@ -168,6 +171,7 @@ Virologist
 	selection_color = "#ffeef0"
 	exp_type = EXP_TYPE_CREW
 	exp_requirements = 60
+	antag_rep = 8
 
 	outfit = /datum/outfit/job/virologist
 

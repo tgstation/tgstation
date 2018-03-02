@@ -69,7 +69,7 @@
 	req_access = list(ACCESS_ATMOSPHERICS)
 	max_integrity = 250
 	integrity_failure = 80
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
 	var/danger_level = 0
@@ -653,14 +653,14 @@
 	switch(buildstage)
 		if(2)
 			if(istype(W, /obj/item/wirecutters) && panel_open && wires.is_all_cut())
-				playsound(src.loc, W.usesound, 50, 1)
+				W.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You cut the final wires.</span>")
 				new /obj/item/stack/cable_coil(loc, 5)
 				buildstage = 1
 				update_icon()
 				return
 			else if(istype(W, /obj/item/screwdriver))  // Opening that Air Alarm up.
-				playsound(src.loc, W.usesound, 50, 1)
+				W.play_tool_sound(src)
 				panel_open = !panel_open
 				to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 				update_icon()
@@ -674,7 +674,7 @@
 			if(istype(W, /obj/item/crowbar))
 				user.visible_message("[user.name] removes the electronics from [src.name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
-				playsound(src.loc, W.usesound, 50, 1)
+				W.play_tool_sound(src)
 				if (W.use_tool(src, user, 20))
 					if (buildstage == 1)
 						to_chat(user, "<span class='notice'>You remove the air alarm electronics.</span>")
@@ -725,7 +725,7 @@
 
 			if(istype(W, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You detach \the [src] from the wall.</span>")
-				playsound(src.loc, W.usesound, 50, 1)
+				W.play_tool_sound(src)
 				new /obj/item/wallframe/airalarm( user.loc )
 				qdel(src)
 				return
@@ -734,8 +734,7 @@
 
 /obj/machinery/airalarm/AltClick(mob/user)
 	..()
-	if(!issilicon(user) && (!user.canUseTopic(src, be_close=TRUE) || !isturf(loc)))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
 		return
 	else
 		togglelock(user)

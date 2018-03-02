@@ -9,17 +9,18 @@
 #define IMPLOYAL_HUD	"5" // loyality implant
 #define IMPCHEM_HUD		"6" // chemical implant
 #define IMPTRACK_HUD	"7" // tracking implant
-#define DIAG_STAT_HUD	"8" // Silicon/Mech Status
+#define DIAG_STAT_HUD	"8" // Silicon/Mech/Circuit Status
 #define DIAG_HUD		"9" // Silicon health bar
-#define DIAG_BATT_HUD	"10"// Borg/Mech power meter
+#define DIAG_BATT_HUD	"10"// Borg/Mech/Circutry power meter
 #define DIAG_MECH_HUD	"11"// Mech health bar
 #define DIAG_BOT_HUD	"12"// Bot HUDs
-#define DIAG_TRACK_HUD	"13"// Mech tracking beacon
-#define DIAG_AIRLOCK_HUD "14"//Airlock shock overlay
-#define DIAG_PATH_HUD "15"//Bot path indicators
-#define GLAND_HUD "16"//Gland indicators for abductors
+#define DIAG_CIRCUIT_HUD "13"// Circuit assembly health bar
+#define DIAG_TRACK_HUD	"14"// Mech/Silicon tracking beacon, Circutry long range icon
+#define DIAG_AIRLOCK_HUD "15"//Airlock shock overlay
+#define DIAG_PATH_HUD "16"//Bot path indicators
+#define GLAND_HUD "17"//Gland indicators for abductors
 //for antag huds. these are used at the /mob level
-#define ANTAG_HUD		"17"
+#define ANTAG_HUD		"18"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior

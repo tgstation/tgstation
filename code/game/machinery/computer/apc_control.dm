@@ -94,7 +94,7 @@
 /obj/machinery/computer/apc_control/Topic(href, href_list)
 	if(..())
 		return
-	if(!usr || !usr.canUseTopic(src) || usr.incapacitated() || stat || QDELETED(src))
+	if(!usr || !usr.canUseTopic(src) || stat || QDELETED(src))
 		return
 	if(href_list["authenticate"])
 		var/obj/item/card/id/ID = usr.get_active_held_item()
@@ -105,12 +105,6 @@
 				authenticated = TRUE
 				auth_id = "[ID.registered_name] ([ID.assignment])"
 				log_activity("logged in")
-		if(!authenticated) //Check for emags
-			var/obj/item/card/emag/E = usr.get_active_held_item()
-			if(E && istype(E) && usr.Adjacent(src))
-				to_chat(usr, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
-				authenticated = TRUE
-				log_activity("logged in") //Auth ID doesn't change, hinting that it was illicit
 	if(href_list["log_out"])
 		log_activity("logged out")
 		authenticated = FALSE
@@ -193,16 +187,19 @@
 	interact(usr) //Refresh the UI after a filter changes
 
 /obj/machinery/computer/apc_control/emag_act(mob/user)
-	if(obj_flags & EMAGGED)
-		return
-	user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
-	log_game("[key_name(user)] emagged [src] at [get_area(src)], disabling operator tracking.")
+	if(!authenticated)
+		to_chat(user, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
+		authenticated = TRUE
+		log_activity("logged in")
+	else if(!(obj_flags & EMAGGED))
+		user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
+		log_game("[key_name(user)] emagged [src] at [get_area(src)], disabling operator tracking.")
+		obj_flags |= EMAGGED
 	playsound(src, "sparks", 50, 1)
-	obj_flags |= EMAGGED
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	var/op_string = operator && !(obj_flags & EMAGGED) ? operator : "\[NULL OPERATOR\]"
-	LAZYADD(logs, "<b>([worldtime2text()])</b> [op_string] [log_text]")
+	LAZYADD(logs, "<b>([station_time_timestamp()])</b> [op_string] [log_text]")
 
 /mob/proc/using_power_flow_console()
 	for(var/obj/machinery/computer/apc_control/A in range(1, src))

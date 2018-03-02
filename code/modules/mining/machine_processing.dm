@@ -2,6 +2,16 @@
 
 /**********************Mineral processing unit console**************************/
 
+/obj/machinery/mineral
+	var/input_dir = NORTH
+	var/output_dir = SOUTH
+
+/obj/machinery/mineral/proc/unload_mineral(atom/movable/S)
+	S.forceMove(drop_location())
+	var/turf/T = get_step(src,output_dir)
+	if(T)
+		S.forceMove(T)
+
 /obj/machinery/mineral/processing_unit_console
 	name = "production machine console"
 	icon = 'icons/obj/machines/mining_machines.dmi'

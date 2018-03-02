@@ -9,7 +9,7 @@
 	desc = "Apply crowbar."
 	icon = 'icons/obj/doors/Doorfireglass.dmi'
 	icon_state = "door_open"
-	opacity = 0
+	opacity = FALSE
 	density = FALSE
 	max_integrity = 300
 	resistance_flags = FIRE_PROOF
@@ -71,7 +71,7 @@
 		return
 	if(!density)
 		return ..()
-	return 0
+	return FALSE
 
 
 /obj/machinery/door/firedoor/power_change()
@@ -100,7 +100,7 @@
 			if(boltslocked)
 				to_chat(user, "<span class='notice'>There are screws locking the bolts in place!</span>")
 				return
-			playsound(get_turf(src), C.usesound, 50, 1)
+			C.play_tool_sound(src)
 			user.visible_message("<span class='notice'>[user] starts undoing [src]'s bolts...</span>", \
 								 "<span class='notice'>You start unfastening [src]'s floor bolts...</span>")
 			if(!C.use_tool(src, user, 50))
@@ -113,7 +113,7 @@
 		if(istype(C, /obj/item/screwdriver))
 			user.visible_message("<span class='notice'>[user] [boltslocked ? "unlocks" : "locks"] [src]'s bolts.</span>", \
 								 "<span class='notice'>You [boltslocked ? "unlock" : "lock"] [src]'s floor bolts.</span>")
-			playsound(get_turf(src), C.usesound, 50, 1)
+			C.play_tool_sound(src)
 			boltslocked = !boltslocked
 			return
 
@@ -210,27 +210,32 @@
 	flags_1 = ON_BORDER_1
 	CanAtmosPass = ATMOS_PASS_PROC
 
+/obj/machinery/door/firedoor/border_only/closed
+	icon_state = "door_closed"
+	opacity = TRUE
+	density = TRUE
+
 /obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
 		return !density
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/door/firedoor/border_only/CheckExit(atom/movable/mover as mob|obj, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(loc, target) == dir)
 		return !density
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/door/firedoor/border_only/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/door/firedoor/heavy
 	name = "heavy firelock"
@@ -278,7 +283,7 @@
 	switch(constructionStep)
 		if(CONSTRUCTION_PANEL_OPEN)
 			if(istype(C, /obj/item/crowbar))
-				playsound(get_turf(src), C.usesound, 50, 1)
+				C.play_tool_sound(src)
 				user.visible_message("<span class='notice'>[user] starts prying something out from [src]...</span>", \
 									 "<span class='notice'>You begin prying out the wire cover...</span>")
 				if(!C.use_tool(src, user, 50))
@@ -295,7 +300,7 @@
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
 					to_chat(user, "<span class='warning'>There's already a firelock there.</span>")
 					return
-				playsound(get_turf(src), C.usesound, 50, 1)
+				C.play_tool_sound(src)
 				user.visible_message("<span class='notice'>[user] starts bolting down [src]...</span>", \
 									 "<span class='notice'>You begin bolting [src]...</span>")
 				if(!C.use_tool(src, user, 30))
@@ -334,7 +339,7 @@
 
 		if(CONSTRUCTION_WIRES_EXPOSED)
 			if(istype(C, /obj/item/wirecutters))
-				playsound(get_turf(src), C.usesound, 50, 1)
+				C.play_tool_sound(src)
 				user.visible_message("<span class='notice'>[user] starts cutting the wires from [src]...</span>", \
 									 "<span class='notice'>You begin removing [src]'s wires...</span>")
 				if(!C.use_tool(src, user, 60))
@@ -349,7 +354,7 @@
 				update_icon()
 				return
 			if(istype(C, /obj/item/crowbar))
-				playsound(get_turf(src), C.usesound, 50, 1)
+				C.play_tool_sound(src)
 				user.visible_message("<span class='notice'>[user] starts prying a metal plate into [src]...</span>", \
 									 "<span class='notice'>You begin prying the cover plate back onto [src]...</span>")
 				if(!C.use_tool(src, user, 80))
@@ -366,15 +371,13 @@
 			if(istype(C, /obj/item/crowbar))
 				user.visible_message("<span class='notice'>[user] begins removing the circuit board from [src]...</span>", \
 									 "<span class='notice'>You begin prying out the circuit board from [src]...</span>")
-				playsound(get_turf(src), C.usesound, 50, 1)
-				if(!C.use_tool(src, user, 50))
+				if(!C.use_tool(src, user, 50, volume=50))
 					return
 				if(constructionStep != CONSTRUCTION_GUTTED)
 					return
 				user.visible_message("<span class='notice'>[user] removes [src]'s circuit board.</span>", \
 									 "<span class='notice'>You remove the circuit board from [src].</span>")
-				new /obj/item/electronics/firelock(get_turf(src))
-				playsound(get_turf(src), C.usesound, 50, 1)
+				new /obj/item/electronics/firelock(drop_location())
 				constructionStep = CONSTRUCTION_NOCIRCUIT
 				update_icon()
 				return
@@ -400,17 +403,14 @@
 			if(istype(C, /obj/item/weldingtool))
 				if(!C.tool_start_check(user, amount=1))
 					return
-				playsound(get_turf(src), C.usesound, 50, 1)
 				user.visible_message("<span class='notice'>[user] begins cutting apart [src]'s frame...</span>", \
 									 "<span class='notice'>You begin slicing [src] apart...</span>")
 
-				if(C.use_tool(src, user, 40, amount=1))
-					return
+				if(C.use_tool(src, user, 40, volume=50, amount=1))
 					if(constructionStep != CONSTRUCTION_NOCIRCUIT)
 						return
 					user.visible_message("<span class='notice'>[user] cuts apart [src]!</span>", \
 										 "<span class='notice'>You cut [src] into metal.</span>")
-					playsound(get_turf(src), 'sound/items/welder2.ogg', 50, 1)
 					var/turf/T = get_turf(src)
 					new /obj/item/stack/sheet/metal(T, 3)
 					if(reinforced)
@@ -445,7 +445,7 @@
 
 /obj/structure/firelock_frame/heavy
 	name = "heavy firelock frame"
-	reinforced = 1
+	reinforced = TRUE
 
 #undef CONSTRUCTION_COMPLETE
 #undef CONSTRUCTION_PANEL_OPEN

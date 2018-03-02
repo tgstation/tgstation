@@ -66,7 +66,7 @@
 	name = "crushed can"
 	icon_state = "cola"
 	resistance_flags = NONE
-	grind_results = list("aluminum" = 10)
+	grind_results = list("aluminium" = 10)
 
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return

@@ -100,12 +100,8 @@
 			R.time *= 2 //Building walls becomes slower when the Ark activates
 	mass_recall()
 	recalls_remaining++ //So it doesn't use up a charge
-
-/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/open_portal(turf/T)
-	new/obj/effect/clockwork/city_of_cogs_rift(T)
-
-/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
-	var/turf/T = get_turf(src)
+	
+	var/turf/T = get_turf(src) 
 	var/list/open_turfs = list()
 	for(var/turf/open/OT in orange(1, T))
 		if(!is_blocked_turf(OT, TRUE))
@@ -113,6 +109,11 @@
 	if(open_turfs.len)
 		for(var/mob/living/L in T)
 			L.forceMove(pick(open_turfs))
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/open_portal(turf/T)
+	new/obj/effect/clockwork/city_of_cogs_rift(T)
+
+/obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
 	hierophant_message("<span class='bold large_brass'>The Ark has activated! [grace_period ? "You have [round(grace_period / 60)] minutes until the crew invades! " : ""]Defend it at all costs!</span>", FALSE, src)
 	sound_to_playing_players(volume = 10, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', TRUE))
 	seconds_until_activation = 0
@@ -130,7 +131,10 @@
 		if(!M || !M.current)
 			continue
 		if(isliving(M.current) && M.current.stat != DEAD)
-			M.current.forceMove(get_turf(src))
+			if(isAI(M.current))
+				M.current.forceMove(get_step(get_step(src, NORTH),NORTH)) // AI too fat, must make sure it always ends up a 2 tiles north instead of on the ark.
+			else
+				M.current.forceMove(get_turf(src))
 		M.current.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 		M.current.clear_fullscreen("flash", 5)
 	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 50, FALSE)

@@ -275,6 +275,7 @@
 	materials = list(MAT_METAL = 100, MAT_GOLD = 100, MAT_URANIUM = 100)
 	build_path = /obj/item/stock_parts/subspace/amplifier
 	category = list("Stock Parts")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/subspace_treatment
 	name = "Subspace Treatment Disk"
