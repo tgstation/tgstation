@@ -25,25 +25,29 @@
 	verb_yell = "buzzes intensely"
 
 /mob/living/simple_animal/fly/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	health --
-	visible_message("the fly stops moving...")
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
+	if(amount < 0)
+		health = max(health-1,0)
+		visible_message("<b>The fly</b> stops moving...")
+	if(updating_health)
+		updatehealth()
 	if(stat)
 		icon_state = "fly-[health]"
-		health = maxHealth
+		maxHealth = health
+	return max(-1,amount)
 
 /mob/living/simple_animal/fly/time
 	name = "swarm of time flies"
-	desc = "Radiation seems to have given this swarm of flies time bending powers."
+	desc = "Radiation seems to have given this swarm of flies a jump to the left and a step to the.... oh you get the idea!"
 	icon_state = "timefly-10"
 	icon_living = "timefly-10"
 	icon_dead = "timefly_dead"
 
 /mob/living/simple_animal/fly/time/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	health --
-	visible_message("the time fly stops moving...")
+	. = ..()
 	if(stat)
 		icon_state = "timefly-[health]"
-		maxHealth = health
 
 ///mob/living/simple_animal/fly/time/AttackingTarget()
 //	. = ..()

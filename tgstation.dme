@@ -1906,6 +1906,7 @@
 #include "code\modules\mob\living\simple_animal\friendly\lizard.dm"
 #include "code\modules\mob\living\simple_animal\friendly\mouse.dm"
 #include "code\modules\mob\living\simple_animal\friendly\penguin.dm"
+#include "code\modules\mob\living\simple_animal\friendly\pests.dm"
 #include "code\modules\mob\living\simple_animal\friendly\pet.dm"
 #include "code\modules\mob\living\simple_animal\friendly\sloth.dm"
 #include "code\modules\mob\living\simple_animal\friendly\snake.dm"
