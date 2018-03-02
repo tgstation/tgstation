@@ -375,12 +375,9 @@
 	var/msg = "<span class='boldnotice'>Roundstart logout report\n\n</span>"
 	for(var/i in GLOB.mob_living_list)
 		var/mob/living/L = i
-<<<<<<< HEAD
-=======
 		var/mob/living/carbon/C = L
 		if (istype(C) && !C.last_mind)
 			continue  // never had a client
->>>>>>> e8acf67d60... Fix bogus var access (#35977)
 
 		if(L.ckey && !GLOB.directory[L.ckey])
 			msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Disconnected</b></font>)\n"
