@@ -21,8 +21,6 @@
 #define TRAIT_SLEEPIMMUNE		"sleep_immunity"
 #define TRAIT_PUSHIMMUNE		"push_immunity"
 #define TRAIT_SHOCKIMMUNE		"shock_immunity"
-<<<<<<< HEAD
-=======
 #define TRAIT_RESISTHEAT		"resist_heat"
 #define TRAIT_RESISTCOLD		"resist_cold"
 #define TRAIT_RESISTHIGHPRESSURE	"resist_high_pressure"
@@ -40,7 +38,6 @@
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
->>>>>>> b49798c483... Converts several species traits into generic traits (#35743)
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
