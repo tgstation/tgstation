@@ -2262,6 +2262,7 @@
 #include "code\modules\research\xenobiology\xenobiology.dm"
 #include "code\modules\research\xenobiology\crossbreeding\consuming.dm"
 #include "code\modules\research\xenobiology\crossbreeding\corecross.dm"
+#include "code\modules\research\xenobiology\crossbreeding\industrial.dm"
 #include "code\modules\research\xenobiology\crossbreeding\prismatic.dm"
 #include "code\modules\research\xenobiology\crossbreeding\recurring.dm"
 #include "code\modules\research\xenobiology\crossbreeding\regenerative.dm"

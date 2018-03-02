@@ -236,7 +236,6 @@ Regenerative extracts:
 	U.revive(full_heal = 1)
 	to_chat(U, "<span class='notice'>Some of the milky goo sprays onto you, as well!</span>")
 
-
 /obj/item/slimecross/regenerative/adamantine
 	colour = "adamantine"
 
