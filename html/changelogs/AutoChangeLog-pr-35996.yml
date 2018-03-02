@@ -1,4 +1,0 @@
-author: "MoreRobustThanYou"
-delete-after: True
-changes: 
-  - bugfix: "SCP-294 should no longer have overlay problems"

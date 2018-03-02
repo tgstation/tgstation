@@ -1,7 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Cargo packs have been grouped and sorted alphabetically. Station goal crates are now in the Engineering section."
-  - tweak: "The cargo security section has been split into security/armory."
-  - tweak: "Grouped all gas canisters and fuel/water tanks together in one section with raw materials."
-  - spellcheck: "Fixed a few cargo pack descriptions."

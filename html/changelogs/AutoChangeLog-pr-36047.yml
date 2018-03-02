@@ -1,4 +1,0 @@
-author: "AlexTheSysop"
-delete-after: True
-changes: 
-  - bugfix: "C4 logging now shows correct location"
