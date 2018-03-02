@@ -1,0 +1,5 @@
+author: "uraniummeltdown"
+delete-after: True
+changes: 
+  - rscadd: "The chatbar now has OOC and Me buttons"
+  - tweak: "The chatbar font-size is smaller"
