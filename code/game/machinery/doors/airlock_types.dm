@@ -603,9 +603,23 @@
 		return 1
 	return 0
 
+/obj/machinery/door/airlock/clockwork/general/canAIControl(mob/user)
+	return (!isAllPowerCut())
+
+
+/obj/machinery/door/airlock/clockwork/general/allowed(mob/M)
+	return TRUE
+
 /obj/machinery/door/airlock/clockwork/brass
 	glass = TRUE
 	opacity = 0
+	
+/obj/machinery/door/airlock/clockwork/brass/general/canAIControl(mob/user)
+	return (!isAllPowerCut())
+
+
+/obj/machinery/door/airlock/clockwork/brass/general/allowed(mob/M)
+	return TRUE
 
 //////////////////////////////////
 /*

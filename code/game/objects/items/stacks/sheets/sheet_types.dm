@@ -378,6 +378,26 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	new/datum/stack_recipe("receiver - steam vent", /obj/structure/destructible/clockwork/trap/steam_vent, 3, time = 30, one_per_turf = TRUE, on_floor = TRUE, placement_checks = STACK_CHECK_CARDINALS), \
 ))
 
+GLOBAL_LIST_INIT(brass_recipes_nonservant, list ( \
+	new/datum/stack_recipe("wall gear", /obj/structure/destructible/clockwork/wall_gear, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
+	null,
+	new/datum/stack_recipe("pinion airlock", /obj/machinery/door/airlock/clockwork/general, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("brass pinion airlock", /obj/machinery/door/airlock/clockwork/brass/general, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("brass windoor", /obj/machinery/door/window/clockwork/general, 2, time = 30, on_floor = TRUE, window_checks = TRUE), \
+	null,
+	new/datum/stack_recipe("directional brass window", /obj/structure/window/reinforced/clockwork/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("fulltile brass window", /obj/structure/window/reinforced/clockwork/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
+	new/datum/stack_recipe("brass chair", /obj/structure/chair/brass, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = TRUE, on_floor = TRUE), \
+	null,
+	new/datum/stack_recipe("sender - pressure sensor", /obj/structure/destructible/clockwork/trap/trigger/pressure_sensor/general, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("sender - lever", /obj/structure/destructible/clockwork/trap/trigger/lever, 1, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("sender - repeater", /obj/structure/destructible/clockwork/trap/trigger/repeater/general, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
+	null,
+	new/datum/stack_recipe("receiver - brass skewer", /obj/structure/destructible/clockwork/trap/brass_skewer, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE, placement_checks = STACK_CHECK_ADJACENT), \
+	new/datum/stack_recipe("receiver - steam vent", /obj/structure/destructible/clockwork/trap/steam_vent, 3, time = 30, one_per_turf = TRUE, on_floor = TRUE, placement_checks = STACK_CHECK_CARDINALS), \
+))
+
 /obj/item/stack/tile/brass
 	name = "brass"
 	desc = "Sheets made out of brass."
@@ -392,17 +412,16 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	throw_range = 3
 	turf_type = /turf/open/floor/clockwork
 	novariants = FALSE
-	grind_results = list("iron" = 5, "teslium" = 15)
+	grind_results = list("brass" = 20)
+
+/obj/item/stack/tile/brass/interact(mob/user, recipes_sublist)
+	if(!is_servant_of_ratvar(user))
+		recipes_sublist = GLOB.brass_recipes_nonservant
+	..()
 
 /obj/item/stack/tile/brass/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
 	qdel(src)
-
-/obj/item/stack/tile/brass/attack_self(mob/living/user)
-	if(!is_servant_of_ratvar(user))
-		to_chat(user, "<span class='danger'>[src] seems far too fragile and rigid to build with.</span>") //haha that's because it's actually replicant alloy you DUMMY
-		return
-	..()
 
 /obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.brass_recipes

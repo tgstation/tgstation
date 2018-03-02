@@ -940,6 +940,24 @@
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/do_teleport, M, get_turf(M), 5, null, null, null, 'sound/effects/phasein.ogg'), 30)
 	..()
 
+/datum/reagent/brass
+	name = "Brass"
+	id = "brass"
+	description = "Brass is a alloy of Iron and Teslium. Popular among steampunk enthusiasts and cultists, who claim that it has divine properties."
+	reagent_state = SOLID
+	color = "#B5A642" // rgb: 181, 166, 66
+	taste_description = "gears"
+	var/initial = null
+	
+/datum/reagent/brass/on_mob_add(mob/living/carbon/human/M)
+	if(istype(M) && M.dna && M.dna.species)
+		initial = M.dna.species.say_mod
+		M.dna.species.say_mod = "clicks" //no way in hell this works
+
+/datum/reagent/brass/on_mob_delete(mob/living/carbon/human/M)
+	if(istype(M) && M.dna && M.dna.species)
+		M.dna.species.say_mod = initial
+
 /datum/reagent/aluminium
 	name = "Aluminium"
 	id = "aluminium"
@@ -1813,3 +1831,23 @@
 		if(changeling)
 			changeling.chem_charges = max(changeling.chem_charges-2, 0)
 	return ..()
+
+/datum/reagent/kindleium //works like if you get hit by kindle
+	name = "Kindleium"
+	id = "kindleium"
+	description = "Supposedly refined from the remains of a fallen god."
+	color = "#ffe74c" // rgb: 255, 231, 76
+	taste_description = "spinning gears"
+
+/datum/reagent/kindleium/on_mob_add(mob/living/M)
+	M.kindle(TRUE)
+
+/datum/reagent/kindleium/on_mob_life(mob/living/M)
+	if(prob(5) && !(M.has_status_effect(STATUS_EFFECT_KINDLE)))
+		M.kindle(TRUE)
+	if(prob(20))
+		to_chat(M, "<span class='notice'>[pick("A jolt goes down your spine.", "Your hair stands on-end.", "You see flashes at the edge of your vision.")]</span>")
+
+/datum/reagent/kindleium/on_mob_delete(mob/living/M)
+	if(M.has_status_effect(STATUS_EFFECT_KINDLE))
+		M.remove_status_effect(STATUS_EFFECT_KINDLE)

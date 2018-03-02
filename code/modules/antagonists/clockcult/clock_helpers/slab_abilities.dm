@@ -180,26 +180,29 @@
 /obj/item/projectile/kindle/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/mob/living/L = target
-		if(is_servant_of_ratvar(L) || L.stat || L.has_status_effect(STATUS_EFFECT_KINDLE))
-			return
-		var/atom/O = L.anti_magic_check()
-		playsound(L, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
-		if(O)
-			if(isitem(O))
-				L.visible_message("<span class='warning'>[L]'s eyes flare with dim light!</span>", \
-				"<span class='userdanger'>Your [O] glows white-hot against you as it absorbs [src]'s power!</span>")
-			else if(ismob(O))
-				L.visible_message("<span class='warning'>[L]'s eyes flare with dim light!</span>")
-			playsound(L, 'sound/weapons/sear.ogg', 50, TRUE)
-		else
-			L.visible_message("<span class='warning'>[L]'s eyes blaze with brilliant light!</span>", \
-			"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
-			L.Knockdown(15)
-			L.apply_status_effect(STATUS_EFFECT_KINDLE)
-			L.flash_act(1, 1)
-			if(iscultist(L))
-				L.adjustFireLoss(15)
+		L.kindle(FALSE)
 	..()
+	
+/mob/living/proc/kindle(friendlyfire = FALSE)
+	if((is_servant_of_ratvar(src) && !friendlyfire) || stat || has_status_effect(STATUS_EFFECT_KINDLE))
+		return
+	var/atom/O = anti_magic_check()
+	playsound(src, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
+	if(O)
+		if(isitem(O))
+			visible_message("<span class='warning'>[src]'s eyes flare with dim light!</span>", \
+			"<span class='userdanger'>Your [O] glows white-hot against you as it absorbs the blinding light!</span>")
+		else if(ismob(O))
+			visible_message("<span class='warning'>[src]'s eyes flare with dim light!</span>")
+			playsound(src, 'sound/weapons/sear.ogg', 50, TRUE)
+	else
+		visible_message("<span class='warning'>[src]'s eyes blaze with brilliant light!</span>", \
+		"<span class='userdanger'>Your vision suddenly screams with white-hot light!</span>")
+		Knockdown(15)
+		apply_status_effect(STATUS_EFFECT_KINDLE)
+		flash_act(1, 1)
+		if(iscultist(src))
+			adjustFireLoss(15)
 
 
 //For the cyborg Linked Vanguard scripture, grants you and a nearby ally Vanguard

@@ -369,6 +369,9 @@
 		return 1
 	return 0
 
+/obj/machinery/door/window/clockwork/general/allowed(mob/M)
+	return TRUE
+
 /obj/machinery/door/window/northleft
 	dir = NORTH
 
