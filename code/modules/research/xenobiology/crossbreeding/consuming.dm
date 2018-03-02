@@ -6,6 +6,7 @@ Consuming extracts:
 /obj/item/slimecross/consuming
 	name = "consuming extract"
 	desc = "It hungers... for <i>more</i>." //My slimecross has finally decided to eat... my extract!
+	icon_state = "consuming"
 	var/stored = 0
 	var/extract_type = /obj/item/slime_extract
 

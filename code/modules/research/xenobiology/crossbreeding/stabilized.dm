@@ -9,6 +9,7 @@ Stabilized extracts:
 /obj/item/slimecross/stabilized
 	name = "stabilized extract"
 	desc = "It seems inert, but anything it touches glows softly..."
+	icon_state = "stabilized"
 	var/datum/status_effect/linked_effect
 	var/mob/living/owner
 

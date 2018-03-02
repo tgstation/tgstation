@@ -6,6 +6,7 @@ Recurring extracts:
 /obj/item/slimecross/recurring
 	name = "recurring extract"
 	desc = "A tiny, glowing core, wrapped in several layers of goo."
+	icon_state = "recurring"
 	var/extract_type
 	var/obj/item/slime_extract/extract
 	var/cooldown = 0
@@ -17,6 +18,8 @@ Recurring extracts:
 	src.visible_message("<span class='notice'>[src] wraps a layer of goo around itself!</span>")
 	extract.name = name
 	extract.desc = desc
+	extract.icon = icon
+	extract.icon_state = icon_state
 	extract.recurring = TRUE
 	src.forceMove(extract)
 	START_PROCESSING(SSobj,src)
@@ -30,6 +33,7 @@ Recurring extracts:
 	else if(extract.Uses <= 0)
 		extract.visible_message("<span class='warning'>The light inside [extract] flickers and dies out.</span>")
 		extract.desc = "A tiny, inert core, bleeding dark, cerulean-colored goo."
+		extract.icon_state = "prismatic"
 		qdel(src)
 
 /obj/item/slimecross/recurring/Destroy()

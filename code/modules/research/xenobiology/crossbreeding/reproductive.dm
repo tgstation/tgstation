@@ -6,8 +6,7 @@ Reproductive extracts:
 /obj/item/slimecross/reproductive
 	name = "reproductive extract"
 	desc = "It pulses with a strange hunger."
-	icon = 'icons/obj/plushes.dmi' //WIP - Get sprites!
-	icon_state = "plushie_slime"
+	icon_state = "reproductive"
 	var/extract_type = /obj/item/slime_extract/
 	var/cubes_eaten = 0
 

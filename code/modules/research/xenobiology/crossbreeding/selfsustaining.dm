@@ -4,6 +4,7 @@ Self-sustaining extracts:
 */
 /obj/item/slimecross/selfsustaining
 	name = "self-sustaining extract"
+	icon_state = "selfsustaining"
 	var/extract_type = /obj/item/slime_extract
 
 /obj/item/autoslime
@@ -19,8 +20,9 @@ Self-sustaining extracts:
 		var/obj/item/autoslime/A = new /obj/item/autoslime(src.loc)
 		var/obj/item/slime_extract/X = new extract_type(A)
 		A.extract = X
+		A.icon = icon
+		A.icon_state = icon_state
 	qdel(src)
-
 
 /obj/item/autoslime/Initialize()
 	name = "self-sustaining " + extract.name

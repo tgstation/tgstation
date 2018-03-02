@@ -5,6 +5,7 @@ Prismatic extracts:
 /obj/item/slimecross/prismatic
 	name = "prismatic extract"
 	desc = "It's constantly wet with a semi-transparent, colored goo."
+	icon_state = "prismatic"
 	var/paintcolor = "#FFFFFF"
 
 /obj/item/slimecross/prismatic/afterattack(turf/target, mob/user, proximity)

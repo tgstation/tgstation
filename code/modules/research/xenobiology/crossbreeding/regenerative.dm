@@ -6,6 +6,7 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative
 	name = "regenerative extract"
 	desc = "It's filled with a milky substance, and pulses like a heartbeat."
+	icon_state = "regenerative"
 
 /obj/item/slimecross/regenerative/proc/core_effect(mob/living/carbon/human/target, mob/user)
 	return

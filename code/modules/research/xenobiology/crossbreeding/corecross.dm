@@ -27,6 +27,8 @@ To add a crossbreed:
 /obj/item/slimecross //The base type for crossbred extracts. Mostly here for posterity, and to set base case things.
 	name = "crossbred slime extract"
 	desc = "An extremely potent slime extract, formed through crossbreeding."
+	icon = 'icons/obj/slimecrossing.dmi'
+	icon_state = "base"
 	var/colour = "null"
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -41,6 +43,8 @@ To add a crossbreed:
 /obj/item/slimecrossbeaker //To be used as a result for extract reactions that make chemicals.
 	name = "result extract"
 	desc = "You shouldn't see this."
+	icon = 'icons/obj/slimecrossing.dmi'
+	icon_state = "base"
 	var/del_on_empty = TRUE
 	container_type = INJECTABLE | DRAWABLE
 	var/list/list_reagents

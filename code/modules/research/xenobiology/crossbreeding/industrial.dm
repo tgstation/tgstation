@@ -2,6 +2,7 @@
 	name = "industrial extract"
 	desc = "A gel-like, sturdy extract, fond of plasma and industry."
 	container_type = INJECTABLE | DRAWABLE
+	icon_state = "industrial_still"
 	var/plasmarequired = 2 //Units of plasma required to be consumed to produce item.
 	var/itempath = /obj/item //The item produced by the extract.
 	var/plasmaabsorbed = 0 //Units of plasma aborbed by the extract already. Absorbs at a rate of 2u/obj tick.
@@ -24,10 +25,13 @@
 	return ..()
 
 /obj/item/slimecross/industrial/process()
+	var/IsWorking = FALSE
 	if(reagents.has_reagent("plasma",amount = 2) && plasmarequired > 1) //Can absorb as much as 2
+		IsWorking = TRUE
 		reagents.remove_reagent("plasma",2)
 		plasmaabsorbed += 2
 	else if(reagents.has_reagent("plasma",amount = 1)) //Can absorb as little as 1
+		IsWorking = TRUE
 		reagents.remove_reagent("plasma",1)
 		plasmaabsorbed += 1
 
@@ -35,6 +39,11 @@
 		plasmaabsorbed -= plasmarequired
 		for(var/i = 0, i < itemamount, i++)
 			do_after_spawn(new itempath(get_turf(src)))
+
+	if(IsWorking)
+		icon_state = "industrial"
+	else
+		icon_state = "industrial_still"
 
 /obj/item/slimecross/industrial/grey
 	colour = "grey"
