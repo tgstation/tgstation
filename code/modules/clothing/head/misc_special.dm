@@ -240,8 +240,8 @@
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if(slot == slot_head)
-		paranoia = new(null, TRAUMA_RESILIENCE_MAGIC, "conspiracies")
-		user.gain_trauma(paranoia)
+		paranoia = new()
+		user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC, "conspiracies")
 		to_chat(user, "<span class='warning'>As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. </span>")
 		flags_1 |= NODROP_1
 

@@ -261,8 +261,8 @@
 		L.add_trait(TRAIT_SLEEPIMMUNE, id)
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
-			rage = new(null, TRAUMA_RESILIENCE_ABSOLUTE)
-			C.gain_trauma(rage)
+			rage = new()
+			C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/reagent/drug/bath_salts/on_mob_delete(mob/M)
 	if(isliving(M))
