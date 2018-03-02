@@ -124,7 +124,65 @@
 			var/follow_whispee = FOLLOW_LINK(ded, M)
 			to_chat(ded, "[follow_rev] <span class='revenboldnotice'>[user] Revenant Transmit:</span> <span class='revennotice'>\"[msg]\" to</span> [follow_whispee] <span class='name'>[M]</span>")
 
+/obj/effect/proc_holder/spell/targeted/revenant
+	clothes_req = 0
+	action_icon = 'icons/mob/actions/actions_revenant.dmi'
+	action_background_icon_state = "bg_revenant"
+	panel = "Revenant Abilities (Locked)"
+	name = "Report this to a coder"
+	var/reveal = 80 //How long it reveals the revenant in deciseconds
+	var/stun = 20 //How long it stuns the revenant in deciseconds
+	var/locked = TRUE //If it's locked and needs to be unlocked before use
+	var/unlock_amount = 100 //How much essence it costs to unlock
+	var/cast_amount = 50 //How much essence it costs to use
 
+/obj/effect/proc_holder/spell/targeted/revenant/New()
+	..()
+	if(locked)
+		name = "[initial(name)] ([unlock_amount]E)"
+	else
+		name = "[initial(name)] ([cast_amount]E)"
+
+/obj/effect/proc_holder/spell/targeted/revenant/can_cast(mob/living/simple_animal/revenant/user = usr)
+	if(charge_counter < charge_max)
+		return FALSE
+	if(!istype(user)) //Badmins, no. Badmins, don't do it.
+		return TRUE
+	if(user.inhibited)
+		return FALSE
+	if(locked)
+		if(user.essence <= unlock_amount)
+			return FALSE
+	if(user.essence <= cast_amount)
+		return FALSE
+	return TRUE
+
+/obj/effect/proc_holder/spell/targeted/revenant/proc/attempt_cast(mob/living/simple_animal/revenant/user = usr)
+	if(!istype(user)) //If you're not a revenant, it works. Please, please, please don't give this to a non-revenant.
+		name = "[initial(name)]"
+		if(locked)
+			panel = "Revenant Abilities"
+			locked = FALSE
+		return TRUE
+	if(locked)
+		if(!user.castcheck(-unlock_amount))
+			charge_counter = charge_max
+			return FALSE
+		name = "[initial(name)] ([cast_amount]E)"
+		to_chat(user, "<span class='revennotice'>You have unlocked [initial(name)]!</span>")
+		panel = "Revenant Abilities"
+		locked = FALSE
+		charge_counter = charge_max
+		return FALSE
+	if(!user.castcheck(-cast_amount))
+		charge_counter = charge_max
+		return FALSE
+	name = "[initial(name)] ([cast_amount]E)"
+	user.reveal(reveal)
+	user.stun(stun)
+	if(action)
+		action.UpdateButtonIcon()
+	return TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
 	clothes_req = 0
@@ -381,3 +439,77 @@
 		tray.toxic = rand(45, 55)
 
 /////POLTERGEIST (BRUTE GHOST)/////
+
+/obj/effect/proc_holder/spell/targeted/revenant/punch/proc/polter_warn(mob/living/target)
+	to_chat(target, "You feel like a very angry ghost is watching you.")
+
+/obj/effect/proc_holder/spell/targeted/revenant/punch
+	name = "Violent Urges"
+	desc = "Causes someone to attack someone else. Doesn't reveal you, but the attacker gets a hint of your existence."
+	charge_max = 10 //COOLDOWN. COOLDOWN.
+	range = 7
+	cast_amount = 30
+	unlock_amount = 80
+	action_icon_state = "blight"
+
+/obj/effect/proc_holder/spell/targeted/revenant/punch/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+	if(attempt_cast(user))
+		for(var/mob/living/A in targets)
+			to_chat(user, "<span class='revenboldnotice'>We have added a pinch of our unbound rage to [A]'s mind!</span>")
+			var/turf/T = get_step(user_turf, turn(A, GLOB.alldirs))
+			for(var/mob/living/D in T)
+				melee_attack_chain(A, D)
+			addtimer(CALLBACK(src, .proc/polter_warn, target), 100)
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/push
+	name = "Ethereal Cyclone"
+	desc = "Causes nearby objects to fly away from you."
+	charge_max = 50
+	range = 3
+	cast_amount = 50
+	unlock_amount = 75
+	action_icon_state = "blight"
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/push/cast()
+	var/list/thrownatoms = list()
+	var/atom/throwtarget
+	var/distfromcaster
+	playMagSound()
+	for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
+		for(var/atom/movable/AM in T)
+			thrownatoms += AM
+
+	for(var/am in thrownatoms)
+		var/atom/movable/AM = am
+		if(AM == user || AM.anchored)
+			continue
+
+		if(ismob(AM))
+			return FALSE
+
+		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
+		distfromcaster = get_dist(user, AM)
+		if(distfromcaster == 0)
+			if(isliving(AM))
+				var/mob/living/M = AM
+				M.Knockdown(100)
+				M.adjustBruteLoss(5)
+				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
+		else
+			new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
+			if(isliving(AM))
+				var/mob/living/M = AM
+				M.Knockdown(stun_amt)
+				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
+			AM.throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
+
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/pull
+	name = "Ghastly Taunt"
+	desc = "Causes nearby objects to fly towards you."
+	charge_max = 50
+	locked = FALSE
+	range = 3
+	cast_amount = 50
+	unlock_amount = 0
+	action_icon_state = "blight"
