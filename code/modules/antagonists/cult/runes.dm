@@ -113,8 +113,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(user)
 		chanters += user
 		invokers += user
+	
 	if(req_cultists > 1 || allow_excess_invokers)
-		for(var/mob/living/L in range(1, src))
+		var/list/things_in_range = range(1, src)
+		var/obj/item/toy/plush/narplush/plushsie = locate() in things_in_range
+		if(istype(plushsie) && plushsie.is_invoker)
+			invokers += plushsie
+		for(var/mob/living/L in things_in_range)
 			if(iscultist(L))
 				if(L == user)
 					continue
@@ -140,12 +145,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/proc/invoke(var/list/invokers)
 	//This proc contains the effects of the rune as well as things that happen afterwards. If you want it to spawn an object and then delete itself, have both here.
 	for(var/M in invokers)
-		var/mob/living/L = M
-		if(invocation)
-			L.say(invocation, language = /datum/language/common, ignore_spam = TRUE)
-		if(invoke_damage)
-			L.apply_damage(invoke_damage, BRUTE)
-			to_chat(L, "<span class='cult italic'>[src] saps your strength!</span>")
+		if(isliving(M))
+			var/mob/living/L = M
+			if(invocation)
+				L.say(invocation, language = /datum/language/common, ignore_spam = TRUE)
+			if(invoke_damage)
+				L.apply_damage(invoke_damage, BRUTE)
+				to_chat(L, "<span class='cult italic'>[src] saps your strength!</span>")
+		else if(istype(M, /obj/item/toy/plush/narplush))
+			var/obj/item/toy/plush/narplush/P = M
+			P.visible_message("<span class='cult italic'>[P] squeaks loudly!</span>")
 	do_invoke_glow()
 
 /obj/effect/rune/proc/do_invoke_glow()

@@ -402,6 +402,8 @@ SUBSYSTEM_DEF(job)
 			else
 				M = H
 
+	SSpersistence.antag_rep_change[M.client.ckey] += job.antag_rep
+
 	to_chat(M, "<b>You are the [rank].</b>")
 	to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
 	to_chat(M, "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>")
