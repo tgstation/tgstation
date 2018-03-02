@@ -46,9 +46,9 @@ SUBSYSTEM_DEF(nightshift)
 			priority_announce("Good evening, crew. To reduce power consumption and stimulate the circadian rhythms of some species, all of the lights aboard the station have been dimmed for the night.", sound='sound/misc/notice2.ogg', sender_override="Automated Lighting System Announcement")
 		nightshift_active = TRUE
 	var/list/area/affected = return_nightshift_area_types()
-	for(var/i in affected)
-		var/area/A = locate(i) in GLOB.sortedAreas
-		for(var/obj/machinery/power/apc/APC in A)
+	for(var/A in GLOB.apcs_list)
+		var/obj/machinery/power/apc/APC = A
+		if (APC.area.type in affected)
 			APC.set_nightshift(TRUE)
 			CHECK_TICK
 
@@ -58,11 +58,11 @@ SUBSYSTEM_DEF(nightshift)
 			priority_announce("Good morning, crew. As it is now day time, all of the lights aboard the station have been restored to their former brightness.", sound='sound/misc/notice2.ogg', sender_override="Automated Lighting System Announcement")
 		nightshift_active = FALSE
 	var/list/area/affected = return_nightshift_area_types()
-	for(var/i in affected)
-		var/area/A = locate(i) in GLOB.sortedAreas
-		for(var/obj/machinery/power/apc/APC in A)
+	for(var/A in GLOB.apcs_list)
+		var/obj/machinery/power/apc/APC = A
+		if (APC.area.type in affected)
 			APC.set_nightshift(FALSE)
 			CHECK_TICK
 
 /datum/controller/subsystem/nightshift/proc/return_nightshift_area_types()
-	return GLOB.the_station_areas.Copy()
+	return GLOB.the_station_areas
