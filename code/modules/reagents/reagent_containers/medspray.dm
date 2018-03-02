@@ -32,7 +32,7 @@
 	to_chat(user, "<span class='notice'>You will now apply the medspray's contents in [squirt_mode ? "short bursts":"extended sprays"]. You'll now use [amount_per_transfer_from_this] units per use.</span>")
 
 /obj/item/reagent_containers/medspray/attack(mob/M, mob/user, def_zone)
-	if(!reagents || !reagents.total_volume || reagents.total_volume < amount_per_transfer_from_this)
+	if(!reagents || !reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
 
