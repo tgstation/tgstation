@@ -10,6 +10,7 @@
 	var/help_verb
 	var/no_guns = FALSE
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
+	var/mob/living/carbon/human/owner = null
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -47,6 +48,29 @@
 			A.do_attack_animation(D, ATTACK_EFFECT_SMASH)
 		else
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+
+	if(D.mind && istype(D.mind.martial_art, /datum/martial_art/monk))
+		var/datum/martial_art/monk/M = D.mind.martial_art
+		var/defense_roll = M.defense_roll(0)
+		if(defense_roll)
+			playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
+			if(defense_roll == 2)
+				damage *= 2
+				D.visible_message("<span class='danger'>[A] has critically [atk_verb]ed [D]!</span>", \
+				"<span class='userdanger'>[A] has critically [atk_verb]ed [D]!</span>", null, COMBAT_MESSAGE_RANGE)
+				add_logs(A, D, "critically punched")
+			else
+				D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
+				"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, COMBAT_MESSAGE_RANGE)
+				add_logs(A, D, "punched")
+			D.apply_damage(damage, BRUTE)
+			return 1
+		else
+			playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
+			D.visible_message("<span class='warning'>[A] has attempted to [atk_verb] [D]!</span>", \
+				"<span class='userdanger'>[A] has attempted to [atk_verb] [D]!</span>", null, COMBAT_MESSAGE_RANGE)
+			add_logs(A, D, "attempted to [atk_verb]")
+			return 0
 
 	if(!damage)
 		playsound(D.loc, A.dna.species.miss_sound, 25, 1, -1)
@@ -90,6 +114,7 @@
 	if(help_verb)
 		H.verbs += help_verb
 	H.mind.martial_art = src
+	owner = H
 	return TRUE
 
 /datum/martial_art/proc/store(datum/martial_art/M,mob/living/carbon/human/H)
@@ -102,6 +127,7 @@
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
 	if(!istype(H) || !H.mind || H.mind.martial_art != src)
 		return
+	owner = null
 	on_remove(H)
 	if(base)
 		base.teach(H)
