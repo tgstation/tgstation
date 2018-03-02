@@ -263,24 +263,17 @@
 /obj/structure/table/wood/fancy
 	name = "fancy table"
 	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/smooth_structures/fancy_table.dmi'
 	icon_state = "fancy_table"
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
 	canSmoothWith = list(/obj/structure/table/wood/fancy, /obj/structure/table/wood/fancy/black)
 
-/obj/structure/table/wood/fancy/New()
-	icon = 'icons/obj/smooth_structures/fancy_table.dmi' //so that the tables place correctly in the map editor
-	..()
-
 /obj/structure/table/wood/fancy/black
+	icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
 	icon_state = "fancy_table_black"
 	buildstack = /obj/item/stack/tile/carpet/black
-
-/obj/structure/table/wood/fancy/black/New()
-	..()
-	icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
 
 /*
  * Reinforced tables
@@ -341,7 +334,7 @@
 /obj/structure/table/reinforced/brass/Destroy()
 	change_construction_value(-2)
 	return ..()
-	
+
 /obj/structure/table/reinforced/brass/tablepush(mob/living/user, mob/living/pushed_mob)
 	.= ..()
 	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
