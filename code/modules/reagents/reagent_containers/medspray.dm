@@ -18,11 +18,18 @@
 	var/apply_type = PATCH
 	var/apply_method = "spray"
 	var/self_delay = 30
+	var/squirt_mode = 0
+	var/squirt_amount = 5
 	amount_per_transfer_from_this = 10
-	volume = 100
+	volume = 60
 
 /obj/item/reagent_containers/medspray/attack_self(mob/user)
-	return
+	squirt_mode = !squirt_mode
+	if(squirt_mode)
+		amount_per_transfer_from_this = squirt_amount
+	else
+		amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
+	to_chat(user, "<span class='notice'>You will now apply the medspray's contents in [squirt_mode ? "short bursts":"extended sprays"]. You'll now use [amount_per_transfer_from_this] units per use.</span>")
 
 /obj/item/reagent_containers/medspray/attack(mob/M, mob/user, def_zone)
 	if(!reagents || !reagents.total_volume || reagents.total_volume < amount_per_transfer_from_this)
@@ -62,19 +69,19 @@
 /obj/item/reagent_containers/medspray/styptic
 	name = "medical spray (styptic powder)"
 	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap. This one contains styptic powder, for treating cuts and bruises."
-	list_reagents = list("styptic_powder" = 100)
+	list_reagents = list("styptic_powder" = 60)
 
 /obj/item/reagent_containers/medspray/silver_sulf
 	name = "medical spray (silver sulfadiazine)"
 	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap. This one contains silver sulfadiazine, useful for treating burns."
-	list_reagents = list("silver_sulfadiazine" = 100)
+	list_reagents = list("silver_sulfadiazine" = 60)
 
 /obj/item/reagent_containers/medspray/synthflesh
 	name = "medical spray (synthflesh)"
 	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap. This one contains synthflesh, an apex brute and burn healing agent."
-	list_reagents = list("synthflesh" = 100)
+	list_reagents = list("synthflesh" = 60)
 
 /obj/item/reagent_containers/medspray/sterilizine
 	name = "sterilizer spray"
 	desc = "Spray bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
-	list_reagents = list("sterilizine" = 100)
+	list_reagents = list("sterilizine" = 60)
