@@ -23,6 +23,7 @@
 	var/selected_store = 0
 	var/list/possible_chem_stores = list(1, 2, 4, 6)
 	var/list/possible_chems
+	var/stasis_enabled = TRUE //Stores whether stasis is turned on, isn't intended to disable stasis for a subtype
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
@@ -61,7 +62,7 @@
 		adding_chems = LAZYACCESS(possible_chems, i)
 		if(adding_chems) //With LAZYACCESS, adding_chems can be null, so |= will add nulls, and we don't want nulls.
 			available_chems |= adding_chems
-	var/new_stores_len = LAZYACCESS(possible_chem_stores, E)
+	var/new_stores_len = LAZYACCESS(possible_chem_stores, min(E, LAZYLEN(possible_chem_stores)))
 	var/list/obj/item/reagent_containers/new_stores_list = list()
 	if(new_stores_len)
 		new_stores_list.len = new_stores_len
@@ -92,9 +93,9 @@
 		..()
 
 /obj/machinery/sleeper/dropContents()
-	if(occupant && isliving(occupant))
-		var/mob/living/L = occupant
-		L.SetStasis(FALSE)
+	if(occupant)
+		var/mob/living/mob_occupant = occupant
+		mob_occupant.SetStasis(FALSE)
 	..()
 
 /obj/machinery/sleeper/proc/drop_stores(from_index = 1)
@@ -109,7 +110,7 @@
 		var/chem_stores_len = LAZYLEN(chem_stores)
 		if(!chem_stores_len)
 			to_chat(user, "<span class='warning'>[src] doesn't have any chemical storage slots.</span>")
-		else if(!selected_store || chem_stores_len > selected_store)
+		else if(!selected_store || chem_stores_len < selected_store)
 			to_chat(user, "<span class='warning'>There doesn't seem to be any where to put this, select a slot first!</span>")
 		else if(chem_stores[selected_store])
 			to_chat(user, "<span class='warning'>There's already a container in this slot, eject it first or select another one!</span>")
@@ -132,28 +133,42 @@
 		if(L)
 			C.forceMove(L)
 		chem_stores[store_index] = null //if L is null then the sleeper is probably in nullspace so we still want to null this ref
+		return C
 
-#define SLEEPER_STORE_INJECT_AMT 10
 /obj/machinery/sleeper/proc/inject_store(store_index)
 	var/obj/item/reagent_containers/C = LAZYACCESS(chem_stores, store_index)
 	var/datum/reagents/R = C.reagents
 	if(C && R && R.total_volume)
-		if(isliving(occupant))
-			var/mob/living/L = occupant
-			if(!L.is_injectable())
-				return
-		var/coeff = min(SLEEPER_STORE_INJECT_AMT/R.total_volume, 1)
-		R.reaction(occupant, INJECT, coeff)
-		R.trans_to(occupant, SLEEPER_STORE_INJECT_AMT)
-#undef SLEEPER_STORE_INJECT_AMT
+		var/mob/living/mob_occupant = occupant
+		if(!mob_occupant.is_injectable())
+			return
+		var/coeff = min(C.amount_per_transfer_from_this/R.total_volume, 1)
+		R.reaction(mob_occupant, INJECT, coeff)
+		R.trans_to(mob_occupant, C.amount_per_transfer_from_this)
+
+/obj/machinery/sleeper/proc/chill_out(mob/living/target)
+	var/freq = rand(24750, 26550)
+	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = freq)
+	target.SetStasis(TRUE)
+	target.ExtinguishMob()
+
+/obj/machinery/sleeper/proc/set_stasis(enabled)
+	stasis_enabled = enabled
+	var/mob/living/mob_occupant = occupant
+	if(!mob_occupant)
+		return
+	if(enabled)
+		chill_out(mob_occupant)
+	else
+		mob_occupant.SetStasis(FALSE)
 
 /obj/machinery/sleeper/close_machine(mob/living/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant)
-			mob_occupant.SetStasis(TRUE)
-			mob_occupant.ExtinguishMob()
+			if(stasis_enabled)
+				chill_out(mob_occupant)
 			if(mob_occupant.stat != DEAD)
 				to_chat(occupant, "[enter_message]")
 
@@ -191,13 +206,14 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "sleeper", name, 375, 550, master_ui, state)
+		ui = new(user, src, ui_key, "sleeper", name, 420, 620, master_ui, state)
 		ui.open()
 
 /obj/machinery/sleeper/ui_data()
 	var/list/data = list()
-	data["occupied"] = occupant ? 1 : 0
+	data["occupied"] = occupant ? TRUE : FALSE
 	data["open"] = state_open
+	data["stasisEnabled"] = stasis_enabled
 
 	data["chems"] = list()
 	for(var/chem in available_chems)
@@ -207,9 +223,8 @@
 	data["chemStores"] = list()
 	for(var/i in 1 to LAZYLEN(chem_stores))
 		var/obj/item/reagent_containers/C = chem_stores[i]
-		data["chemStores"] += (C && C.reagents) ? C.reagents.total_volume : FALSE
-	var/list/chem_store_names_data = SANITIZE_LIST(chem_store_names)
-	data["chemStoreNames"] = list(chem_store_names_data.Copy())
+		data["chemStores"] += (C && C.reagents) ? C.reagents.total_volume : null
+	data["chemStoreNames"] = chem_store_names ? chem_store_names.Copy() : list()
 	if(selected_store)
 		data["selectedStore"] = selected_store
 
@@ -230,6 +245,7 @@
 			if(DEAD)
 				data["occupant"]["stat"] = "Dead"
 				data["occupant"]["statstate"] = "bad"
+		data["occupant"]["stasis"] = mob_occupant.IsInStasis() ? TRUE : FALSE
 		data["occupant"]["health"] = mob_occupant.health
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
 		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
@@ -243,7 +259,6 @@
 		if(occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
 				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
-	send_to_playing_players(english_list(data))
 	return data
 
 /obj/machinery/sleeper/ui_act(action, params)
@@ -274,25 +289,35 @@
 				return
 			if(LAZYLEN(chem_stores) >= store && chem_stores[store])
 				inject_store(store)
+				. = TRUE
 		if("ejectstore")
 			var/store = text2num(params["store"])
 			if(LAZYLEN(chem_stores) >= store && chem_stores[store])
-				eject_store(store)
+				var/obj/item/I = eject_store(store)
+				if(I && Adjacent(usr) && !issilicon(usr))
+					usr.put_in_hands(I)
+				. = TRUE
 		if("invstore")
 			var/store = text2num(params["store"])
 			if(store && (LAZYLEN(chem_stores) >= store))
-				selected_store = store
+				selected_store = (selected_store != store) ? store : 0
+				. = TRUE
 		if("storename")
 			var/store = text2num(params["store"])
 			var/name = params["name"]
 			var/chem_stores_len = LAZYLEN(chem_stores)
 			if(store && chem_stores_len && chem_stores_len >= store)
-				name = sanitize(trim(name, 30))
+				name = sanitize(trim(name, 21))
 				var/chem_store_names_len = LAZYLEN(chem_store_names)
 				if(!chem_store_names || chem_store_names_len < chem_stores_len)
 					LAZYINITLIST(chem_store_names)
 					chem_store_names.len = chem_stores_len
-					chem_store_names[store] = name
+				chem_store_names[store] = name
+				. = TRUE
+		if("togglestasis")
+			send_to_playing_players(stasis_enabled)
+			set_stasis(!stasis_enabled)
+			. = TRUE
 
 /obj/machinery/sleeper/emag_act(mob/user)
 	if(LAZYLEN(available_chems))
@@ -306,7 +331,7 @@
 
 /obj/machinery/sleeper/proc/chem_allowed(chem)
 	var/mob/living/mob_occupant = occupant
-	if(!mob_occupant || !isliving(mob_occupant) || !mob_occupant.is_injectable())
+	if(!mob_occupant || !mob_occupant.is_injectable())
 		return
 	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
 	var/occ_health = mob_occupant.health > min_health || chem == "epinephrine"
@@ -337,7 +362,7 @@
 	possible_chems = list(list("epinephrine", "salbutamol", "bicaridine", "kelotane", "oculine", "inacusiate", "mannitol"))
 
 /obj/machinery/sleeper/clockwork/process()
-	if(occupant && isliving(occupant))
+	if(occupant)
 		var/mob/living/L = occupant
 		if(GLOB.clockwork_vitality) //If there's Vitality, the sleeper has passive healing
 			GLOB.clockwork_vitality = max(0, GLOB.clockwork_vitality - 1)

@@ -255,7 +255,7 @@ GAS ANALYZER
 
 	// Time of death
 	if(M.tod && (M.stat == DEAD || ((M.has_trait(TRAIT_FAKEDEATH)) && !advanced)))
-		to_chat(user, "<span class='info'>Time of Death:</span> [M.tod]")
+		to_chat(user, "<span class='info'>Time of Death:</span> [time2text(M.tod, "hh:mm:ss")]")
 		var/tdelta = round(world.time - M.timeofdeath)
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
 			to_chat(user, "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</span>")

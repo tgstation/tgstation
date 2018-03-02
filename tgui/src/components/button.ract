@@ -39,12 +39,8 @@
 		},
     oninit () {
       this.on('press', (event) => {
-		const { action, params, raction } = this.get()
-		if (raction) {
-			this.fire(raction)
-		} else {
-			act(this.get('config.ref'), action, params)
-		}
+        const { action, params } = this.get()
+        act(this.get('config.ref'), action, params)
         event.node.blur()
       })
     },

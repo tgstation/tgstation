@@ -5,87 +5,88 @@
 			this.on({
 				editName (event) {
 					var chemIndex = event.context.params.chemIndex
+					var chemStoreNames = this.get('data.chemStoreNames')
 					this.set({
 						editingIndex: chemIndex,
-						editingName: ((data.chemStoreNames.length >= chemIndex && this.get(data.chemStoreNames[chemIndex])) || "Chemical Store #"+(chemIndex+1)),
-						rEmOVeThIs: this.get('rEmOVeThIs') + 1
+						editingName: ((chemStoreNames.length >= chemIndex && chemStoreNames[chemIndex]) || "Slot "+(chemIndex+1))
 					})
 				},
 				submitName (event) {
 					var newName = this.get('editingName')
-					var sanitizedName = newName.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-					act(this.get('config.ref'), "storename", {"store": editingIndex+1, "name": sanitizedName})
+					var sanitizedName = newName.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+					var store = this.get('editingIndex')+1
+					act(this.get('config.ref'), 'storename', {'store': store, 'name': sanitizedName})
 					this.set('editingIndex', null)
+				},
+				inputFocus (event) {
+					event.node.select()
 				}
 			})
-		},
-		oncomplete () {
-			var inputField = document.getElementById('storeNameInput')
-			if (inputField != document.activeElement) {
-				inputField.focus()
-				inputField.select()
-			}
 		},
 		data: {
 			editingIndex: null,
 			editingName: "",
-			rEmOVeThIs: 0
 		}
 	}
 </script>
-{{rEmOVeThIs}}
-{{editingIndex}}
-{{editingName}}
 <ui-display title='Occupant'>
-  <ui-section label='Occupant'>
-	 <span>{{data.occupant.name ? data.occupant.name : "No Occupant"}}</span>
-  </ui-section>
-  {{#if data.occupied}}
-    <ui-section label='State'>
-      <span class='{{data.occupant.statstate}}'>{{data.occupant.stat}}</span>
-  	</ui-section>
-    <ui-section label='Health'>
-      <ui-bar min='{{data.occupant.minHealth}}' max='{{data.occupant.maxHealth}}' value='{{data.occupant.health}}'
-        state='{{data.occupant.health >= 0 ? "good" : "average"}}'>{{Math.round(adata.occupant.health)}}</ui-bar>
-    </ui-section>
-    {{#each [{label: "Brute", type: "bruteLoss"}, {label: "Respiratory", type: "oxyLoss"}, {label: "Toxin", type: "toxLoss"}, {label: "Burn", type: "fireLoss"}]}}
-      <ui-section label='{{label}}'>
-        <ui-bar min='0' max='{{data.occupant.maxHealth}}' value='{{data.occupant[type]}}' state='bad'>{{Math.round(adata.occupant[type])}}</ui-bar>
-      </ui-section>
-    {{/each}}
-    <ui-section label='Cells'>
-        <span class='{{data.occupant.cloneLoss ? "bad" : "good"}}'>{{data.occupant.cloneLoss ? "Damaged" : "Healthy"}}</span>
-    </ui-section>
-    <ui-section label='Brain'>
-        <span class='{{data.occupant.brainLoss ? "bad" : "good"}}'>{{data.occupant.brainLoss ? "Abnormal" : "Healthy"}}</span>
-    </ui-section>
-    <ui-section label='Bloodstream'>
-        {{#each adata.occupant.reagents}}
-          <span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 1)}} units of {{name}}</span><br/>
-        {{else}}
-          <span class='good'>Pure</span>
-        {{/each}}
-    </ui-section>
-  {{/if}}
+	<ui-section label='Occupant'>
+		<span>{{data.occupant.name ? data.occupant.name : "No Occupant"}}</span>
+	</ui-section>
+	{{#if data.occupied}}
+		<ui-section label='State'>
+			<span class='{{data.occupant.statstate}}'>{{data.occupant.stat}}</span>
+			{{#if data.occupant.stasis}}
+				<span class='highlight'>In Stasis</span>
+			{{/if}}
+		</ui-section>
+		<ui-section label='Health'>
+			<ui-bar min='{{data.occupant.minHealth}}' max='{{data.occupant.maxHealth}}' value='{{data.occupant.health}}'
+				state='{{data.occupant.health >= 0 ? "good" : "average"}}'>{{Math.round(adata.occupant.health)}}</ui-bar>
+		</ui-section>
+		{{#each [{label: "Brute", type: "bruteLoss"}, {label: "Respiratory", type: "oxyLoss"}, {label: "Toxin", type: "toxLoss"}, {label: "Burn", type: "fireLoss"}]}}
+			<ui-section label='{{label}}'>
+				<ui-bar min='0' max='{{data.occupant.maxHealth}}' value='{{data.occupant[type]}}' state='bad'>{{Math.round(adata.occupant[type])}}</ui-bar>
+			</ui-section>
+		{{/each}}
+		<ui-section label='Cells'>
+				<span class='{{data.occupant.cloneLoss ? "bad" : "good"}}'>{{data.occupant.cloneLoss ? "Damaged" : "Healthy"}}</span>
+		</ui-section>
+		<ui-section label='Brain'>
+				<span class='{{data.occupant.brainLoss ? "bad" : "good"}}'>{{data.occupant.brainLoss ? "Abnormal" : "Healthy"}}</span>
+		</ui-section>
+		<ui-section label='Bloodstream'>
+				{{#each adata.occupant.reagents}}
+					<span class='highlight' intro-outro='fade'>{{Math.fixed(volume, 1)}} units of {{name}}</span><br/>
+				{{else}}
+					<span class='good'>Pure</span>
+				{{/each}}
+		</ui-section>
+	{{/if}}
 </ui-display>
 <ui-display title='Controls'>
 	<ui-section label='Door'>
-    <ui-button icon='{{data.open ? "unlock" : "lock"}}' action='door'>{{data.open ? "Open" : "Closed"}}</ui-button>
+	<ui-button icon='{{data.open ? "unlock" : "lock"}}' action='door'>{{data.open ? "Open" : "Closed"}}</ui-button>
 	</ui-section>
-  {{#if data.chems.length || data.chemStores.length}}
-  <ui-section label='Inject'>
-    {{#each data.chems}}
-      <ui-button icon='flask' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}"}'>{{name}}</ui-button><br/>
-    {{/each}}
+	<ui-section label='Stasis'>
+		<ui-button icon='power-off' style='{{data.stasisEnabled && "selected"}}' action='togglestasis'>{{data.stasisEnabled ? "Enabled" : "Disabled"}}</ui-button>{{#if data.stasisEnabled && data.occupied}}<span class='good'>Active</span>{{/if}}
+	</ui-section>
+	{{#if data.chems.length || data.chemStores.length}}
+	<ui-section label='Inject'>
+		{{#each data.chems}}
+			<ui-button icon='flask' state='{{data.occupied ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}"}'>{{name}}</ui-button><br/>
+		{{/each}}
 	{{#each data.chemStores:chemIndex}}
-		{{chemIndex}}
+		<ui-button icon='{{data.selectedStore == (chemIndex+1) ? "check-square-o" : "square-o"}}' style='{{data.selectedStore == (chemIndex+1) && "selected"}}' action='invstore' params='{"store": "{{chemIndex+1}}"}'></ui-button>
 		{{#if editingIndex == chemIndex}}
-			<input type='text' value='{{editingName}}' id='storeNameInput' on-enter-blur='submitName'/>
+			<input type='text' value='{{editingName}}' id='storeNameInput' on-enter-blur='submitName' on-focus='inputFocus' autofocus/>
 		{{else}}
-			<ui-button icon='flask' state='{{!this && "disabled"}}' action='injectstore' params='{"store": "{{chemIndex+1}}"}'>{{data.chemStoreNames.length >= chemIndex+1 && data.chemStoreNames[chemIndex] ? data.chemStoreNames[chemIndex] : "Chemical Store #{{chemIndex+1}}"}}</ui-button>
+			<ui-button icon='flask' state='{{(!this || !data.occupied) && "disabled"}}' action='injectstore' params='{"store": "{{chemIndex+1}}"}'>{{((data.chemStoreNames.length >= (chemIndex+1)) && data.chemStoreNames[chemIndex]) || "Slot "+(chemIndex+1)}}</ui-button>
 		{{/if}}
-		<ui-button icon='pencil' tooltip='Edit' tooltip-side='bottom' raction='editName' params='{"chemIndex": "{{chemIndex}}"}'></ui-button><ui-button icon='eject' tooltip='Eject' tooltip-side='bottom' action='ejectstore' params='{"store": "{{chemIndex+1}}"}'></ui-button><ui-button icon='sign-in' tooltip='Select' tooltip-side='bottom' state='{{data.selectedStore == (chemIndex+1) && "selected"}}' action='invstore' params='{"store": "{{chemIndex+1}}"}'></ui-button><span class='{{!this && "bad"}}'>	{{this || "Missing"}}</span>
+		<ui-button icon='pencil' on-press='editName' params='{"chemIndex": {{chemIndex}}}'></ui-button>
+		<ui-button icon='eject' action='ejectstore' params='{"store": "{{chemIndex+1}}"}' state='{{!this && "disabled"}}'></ui-button>
+		<span class='{{this === null && "bad"}}'>	{{(this !== null) ? (Math.fixed(this, 1)+" units") : "Missing"}}</span><br/>
 	{{/each}}
-  </ui-section>
-  {{/if}}
+	</ui-section>
+	{{/if}}
 </ui-display>

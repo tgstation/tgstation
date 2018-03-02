@@ -11,8 +11,8 @@
 		wtime = world.time
 	return time2text(wtime - GLOB.timezoneOffset, format)
 
-/proc/station_time()
-	return ((((world.time - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % 864000) - GLOB.timezoneOffset
+/proc/station_time(wtime=world.time)
+	return ((((wtime - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % 864000) - GLOB.timezoneOffset
 
 /proc/station_time_timestamp(format = "hh:mm:ss")
 	return time2text(station_time(), format)

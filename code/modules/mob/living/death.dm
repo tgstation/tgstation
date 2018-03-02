@@ -47,7 +47,7 @@
 	stat = DEAD
 	unset_machine()
 	timeofdeath = world.time
-	tod = station_time_timestamp()
+	tod = station_time()
 	var/turf/T = get_turf(src)
 	for(var/obj/item/I in contents)
 		I.on_mob_death(src, gibbed)
@@ -55,7 +55,7 @@
 		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[get_area_name(T)]</b>.</span>"
 		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
-		mind.store_memory("Time of death: [tod]", 0)
+		mind.store_memory("Time of death: [time2text(tod, "hh:mm:ss")]", 0)
 	GLOB.alive_mob_list -= src
 	if(!gibbed)
 		GLOB.dead_mob_list += src
