@@ -10,7 +10,7 @@
 	anchored = TRUE
 	input_dir = NORTH
 	output_dir = SOUTH
-	req_access = list(ACCESS_MINERAL_STOREROOM)
+	req_access = list(ACCESS_MINERAL_STOREROOM, ACCESS_MEDICAL, ACCESS_ARMORY, ACCESS_CONSTRUCTION)
 	speed_process = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_redemption
 	var/req_access_reclaim = ACCESS_MINING_STATION
