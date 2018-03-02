@@ -99,16 +99,13 @@
 	var/volume = 60
 	var/list/fuel = list("plasma" = 50000, "welding_fuel" = 15000, "carbon" = 10000, "ethanol" = 10000, "nutriment" = 8000)
 	var/multi = 1
-	var/lfwb
+	var/lfwb =TRUE
 
 /obj/item/integrated_circuit/passive/power/chemical_cell/New()
 	..()
 	create_reagents(volume)
 	var/p = text2path("/datum/config_entry/flag/disable_human_mood")
-	if(p)
-		if(!global.config.Get(p))
-			lfwb = TRUE
-			extended_desc +="But no fuel can be compared with blood of living human."
+	extended_desc +="But no fuel can be compared with blood of living human."
 
 
 /obj/item/integrated_circuit/passive/power/chemical_cell/interact(mob/user)
