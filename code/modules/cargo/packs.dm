@@ -982,6 +982,7 @@
 					/obj/item/reagent_containers/pill/insulin,
 					/obj/item/stack/medical/gauze,
 					/obj/item/storage/box/beakers,
+					/obj/item/storage/box/medsprays,
 					/obj/item/storage/box/syringes,
 				    /obj/item/storage/box/bodybags)
 	crate_name = "medical supplies crate"
