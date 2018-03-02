@@ -258,3 +258,14 @@
 	integer = FALSE
 
 /datum/config_entry/flag/ic_printing
+<<<<<<< HEAD
+=======
+
+/datum/config_entry/flag/roundstart_traits
+
+/datum/config_entry/flag/enable_night_shifts
+
+/datum/config_entry/flag/randomize_shift_time
+
+/datum/config_entry/flag/shift_time_realtime
+>>>>>>> ab9e2e8902... Adds minor roundstart traits! (ala CDDA, etc.) (#35440)

@@ -6,8 +6,14 @@
 	var/t_him = p_them()
 	var/t_has = p_have()
 	var/t_is = p_are()
+	var/obscure_name
 
-	var/msg = "<span class='info'>*---------*\nThis is <EM>[name]</EM>!\n"
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.has_trait(TRAIT_PROSOPAGNOSIA))
+			obscure_name = TRUE
+
+	var/msg = "<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!\n"
 
 	var/is_ghost = isobserver(user) // hippie: added this var back
 
@@ -269,9 +275,13 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
+<<<<<<< HEAD
 	if((!skipface || is_ghost) && is_thrall(src) && (in_range(user,src) || is_ghost))
 		msg += "Their features seem unnaturally tight and drawn.\n"
 
+=======
+	var/traitstring = get_trait_string()
+>>>>>>> ab9e2e8902... Adds minor roundstart traits! (ala CDDA, etc.) (#35440)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/cyberimp/eyes/hud/CIH = H.getorgan(/obj/item/organ/cyberimp/eyes/hud)
@@ -299,6 +309,10 @@
 					R = find_record("name", perpname, GLOB.data_core.medical)
 					if(R)
 						msg += "<a href='?src=[REF(src)];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
+					if(traitstring)
+						msg += "<span class='info'>Detected physiological traits:<br></span>"
+						msg += "<span class='info'>[traitstring]</span><br>"
+
 
 
 				if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH, /obj/item/organ/cyberimp/eyes/hud/security))
@@ -315,6 +329,8 @@
 						msg += "<a href='?src=[REF(src)];hud=s;add_crime=1'>\[Add crime\]</a> "
 						msg += "<a href='?src=[REF(src)];hud=s;view_comment=1'>\[View comment log\]</a> "
 						msg += "<a href='?src=[REF(src)];hud=s;add_comment=1'>\[Add comment\]</a>\n"
+	else if(isobserver(user) && traitstring)
+		msg += "<span class='info'><b>Traits:</b> [traitstring]</span><br>"
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)
