@@ -39,6 +39,49 @@ To add a crossbreed:
 /obj/item/slimecross/Initialize()
 	..()
 	name = colour + " " + name
+	var/itemcolor = "#FFFFFF"
+	switch(colour)
+		if("orange")
+			itemcolor = "#FFA500"
+		if("purple")
+			itemcolor = "#B19CD9"
+		if("blue")
+			itemcolor = "#ADD8E6"
+		if("metal")
+			itemcolor = "#7E7E7E"
+		if("yellow")
+			itemcolor = "#FFFF00"
+		if("dark purple")
+			itemcolor = "#551A8B"
+		if("dark blue")
+			itemcolor = "#0000FF"
+		if("silver")
+			itemcolor = "#D3D3D3"
+		if("bluespace")
+			itemcolor = "#32CD32"
+		if("sepia")
+			itemcolor = "#704214"
+		if("cerulean")
+			itemcolor = "#2956B2"
+		if("pyrite")
+			itemcolor = "#FAFAD2"
+		if("red")
+			itemcolor = "#FF0000"
+		if("green")
+			itemcolor = "#00FF00"
+		if("pink")
+			itemcolor = "#FF69B4"
+		if("gold")
+			itemcolor = "#FFD700"
+		if("oil")
+			itemcolor = "#505050"
+		if("black")
+			itemcolor = "#000000"
+		if("light pink")
+			itemcolor = "#FFB6C1"
+		if("adamantine")
+			itemcolor = "#008B8B"
+	add_atom_colour(itemcolor, FIXED_COLOUR_PRIORITY)
 
 /obj/item/slimecrossbeaker //To be used as a result for extract reactions that make chemicals.
 	name = "result extract"
