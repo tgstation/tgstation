@@ -83,17 +83,6 @@
 /area/crew_quarters/heads/hos)
 "aar" = (
 /obj/machinery/computer/card/minor/hos,
-/obj/item/clothing/accessory/medal/service_star{
-	name = "Service Star - Lt. Cordelia Knight";
-	commended = 1;
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/clothing/accessory/medal/guardians_cross{
-	name = "Guardian's Cross - Lt. Cordelia Knight";
-	commended = 1;
-	pixel_y = 5
-	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "aas" = (
@@ -3317,10 +3306,6 @@
 /obj/item/stamp/cmo,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/folder/white,
-/obj/item/clothing/accessory/medal/cross_of_sacrifice{
-	name = "Cross of Sacrifice - Bridget Jenner PhD";
-	commended = 1
-	},
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/heads/cmo)
 "aic" = (
@@ -8896,14 +8881,6 @@
 /obj/structure/table/reinforced,
 /obj/item/device/assembly/timer,
 /obj/item/device/aicard,
-/obj/item/clothing/accessory/medal/service_star{
-	name = "Service Star - Vanca Lacunae";
-	commended = 1
-	},
-/obj/item/clothing/accessory/medal/silver/security{
-	name = "Robust Security Award - Vanca Lacunae";
-	commended = 1
-	},
 /turf/open/floor/plasteel,
 /area/bridge)
 "avr" = (
@@ -15480,16 +15457,6 @@
 	pixel_x = 26;
 	req_access_txt = "47"
 	},
-/obj/item/clothing/accessory/medal/service_star{
-	name = "Service Star - Quam Jublia PhD";
-	commended = 1;
-	pixel_x = 4;
-	pixel_y = 5
-	},
-/obj/item/clothing/accessory/medal/plasma/nobel_science{
-	name = "Nobel Sciences Award - Quam Jublia PhD";
-	commended = 1
-	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "aJY" = (
@@ -17284,10 +17251,6 @@
 	},
 /obj/item/lighter,
 /obj/item/storage/fancy/cigarettes,
-/obj/item/clothing/accessory/medal/silver/security{
-	name = "Robust Security Award - Detective Marcus Capitani";
-	commended = 1
-	},
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "aOK" = (
@@ -21594,7 +21557,9 @@
 "aYa" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
-/mob/living/simple_animal/parrot/Poly,
+/mob/living/simple_animal/parrot/Poly{
+	name = "Skittles"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
 "aYb" = (
@@ -27664,7 +27629,9 @@
 /area/crew_quarters/bar)
 "yfb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/mob/living/carbon/monkey/punpun,
+/mob/living/carbon/monkey/punpun{
+	name = "Gil"
+	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "yiz" = (
