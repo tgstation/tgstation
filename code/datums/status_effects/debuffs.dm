@@ -93,7 +93,7 @@
 		var/delta = world.time - last_dead_time
 		var/new_timeofdeath = owner.timeofdeath + delta
 		owner.timeofdeath = new_timeofdeath
-		owner.tod = station_time(new_timeofdeath)
+		owner.tod = station_time(wtime=new_timeofdeath)
 		last_dead_time = null
 	if(owner.stat == DEAD)
 		last_dead_time = world.time

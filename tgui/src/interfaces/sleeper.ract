@@ -84,7 +84,7 @@
 			<ui-button icon='flask' state='{{(!this || !data.occupied) && "disabled"}}' action='injectstore' params='{"store": "{{chemIndex+1}}"}'>{{((data.chemStoreNames.length >= (chemIndex+1)) && data.chemStoreNames[chemIndex]) || "Slot "+(chemIndex+1)}}</ui-button>
 		{{/if}}
 		<ui-button icon='pencil' on-press='editName' params='{"chemIndex": {{chemIndex}}}'></ui-button>
-		<ui-button icon='eject' action='ejectstore' params='{"store": "{{chemIndex+1}}"}' state='{{!this && "disabled"}}'></ui-button>
+		<ui-button icon='eject' action='ejectstore' params='{"store": "{{chemIndex+1}}"}' state='{{this === null && "disabled"}}'></ui-button>
 		<span class='{{this === null && "bad"}}'>	{{(this !== null) ? (Math.fixed(this, 1)+" units") : "Missing"}}</span><br/>
 	{{/each}}
 	</ui-section>

@@ -112,6 +112,18 @@
 /obj/structure/cable,
 /turf/open/space,
 /area/solar/starboard/fore)
+"aap" = (
+/obj/machinery/light/small,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
+/obj/structure/table/wood/poker,
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = -32
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
 "aas" = (
 /obj/docking_port/stationary/random{
 	id = "pod_lavaland1";
@@ -86890,16 +86902,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/starboard/aft)
-"dBP" = (
-/obj/machinery/light/small,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/chem_dispenser/drinks/beer,
-/obj/structure/table/wood/poker,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/abandoned_gambling_den)
 "dBQ" = (
 /obj/structure/table/wood/poker,
 /obj/item/reagent_containers/food/drinks/bottle/rum{
@@ -123896,7 +123898,7 @@ dod
 dxE
 dyY
 dAo
-dBP
+aap
 dfY
 aad
 abj
