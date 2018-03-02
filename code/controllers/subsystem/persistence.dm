@@ -1,3 +1,5 @@
+#define FILE_ANTAG_REP "data/AntagReputation.json"
+
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
 	init_order = INIT_ORDER_PERSISTENCE
@@ -12,6 +14,8 @@ SUBSYSTEM_DEF(persistence)
 	var/list/saved_trophies = list()
 	var/list/spawned_objects = list()
 	var/list/saved_frames = list()
+	var/list/antag_rep = list()
+	var/list/antag_rep_change = list()
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadSatchels()
@@ -20,6 +24,8 @@ SUBSYSTEM_DEF(persistence)
 	LoadTrophies()
 	LoadFrames()
 	LoadRecentModes()
+	if(CONFIG_GET(flag/use_antag_rep))
+		LoadAntagReputation()
 	..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
@@ -164,6 +170,15 @@ SUBSYSTEM_DEF(persistence)
 		return
 	saved_modes = json["data"]
 
+/datum/controller/subsystem/persistence/proc/LoadAntagReputation()
+	var/json = file2text(FILE_ANTAG_REP)
+	if(!json)
+		var/json_file = file(FILE_ANTAG_REP)
+		if(!fexists(json_file))
+			WARNING("Failed to load antag reputation. File likely corrupt.")
+			return
+		return
+	antag_rep = json_decode(json)
 
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
@@ -222,6 +237,8 @@ SUBSYSTEM_DEF(persistence)
 	CollectTrophies()
 	CollectFrames()
 	CollectRoundtype()
+	if(CONFIG_GET(flag/use_antag_rep))
+		CollectAntagReputation()
 
 /datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/crowbar))
@@ -329,3 +346,18 @@ SUBSYSTEM_DEF(persistence)
 	file_data["data"] = saved_modes
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/CollectAntagReputation()
+	var/ANTAG_REP_MAXIMUM = CONFIG_GET(number/antag_rep_maximum)
+
+	for(var/p_ckey in antag_rep_change)
+//		var/start = antag_rep[p_ckey]
+		antag_rep[p_ckey] = max(0, min(antag_rep[p_ckey]+antag_rep_change[p_ckey], ANTAG_REP_MAXIMUM))
+
+//		WARNING("AR_DEBUG: [p_ckey]: Committed [antag_rep_change[p_ckey]] reputation, going from [start] to [antag_rep[p_ckey]]")
+
+	antag_rep_change = list()
+
+	fdel(FILE_ANTAG_REP)
+	text2file(json_encode(antag_rep), FILE_ANTAG_REP)
+

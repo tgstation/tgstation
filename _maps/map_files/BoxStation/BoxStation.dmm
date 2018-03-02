@@ -5231,6 +5231,7 @@
 	req_access = null;
 	req_access_txt = "10; 13"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "amw" = (
@@ -16435,7 +16436,9 @@
 	pixel_x = 24
 	},
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
@@ -17551,7 +17554,9 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aTb" = (
@@ -21643,6 +21648,9 @@
 	req_access_txt = "0";
 	req_one_access_txt = "12;5;39;25;28"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bdP" = (
@@ -22916,9 +22924,7 @@
 /area/medical/medbay/central)
 "bhf" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -2
-	},
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bhg" = (
@@ -28698,6 +28704,9 @@
 	name = "Genetics Research Access";
 	req_access_txt = "9"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "buH" = (
@@ -28713,6 +28722,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -50544,6 +50556,9 @@
 	req_access = null;
 	req_access_txt = "10; 13"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "cxP" = (
@@ -54752,6 +54767,19 @@
 /obj/structure/sign/poster/contraband/pwr_game,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"ixX" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0";
+	req_one_access_txt = "12;5;39;25;28"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
 "iEJ" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod One"
@@ -98953,7 +98981,7 @@ cTS
 cTK
 bpQ
 cTK
-cTJ
+ixX
 btm
 buy
 bvz

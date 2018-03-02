@@ -10447,7 +10447,9 @@
 /area/crew_quarters/bar/atrium)
 "auh" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = 28;
@@ -10970,7 +10972,9 @@
 /area/crew_quarters/bar/atrium)
 "avm" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},

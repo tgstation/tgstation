@@ -1258,30 +1258,8 @@
 /area/shuttle/pirate)
 "cP" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
-/obj/item/storage/fancy/cigarettes{
-	pixel_x = -6;
-	pixel_y = -8
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_carp{
-	pixel_x = 1;
-	pixel_y = -8
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_midori{
-	pixel_x = 8;
-	pixel_y = -8
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_robust{
-	pixel_x = -6;
-	pixel_y = -14
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_shadyjims{
-	pixel_x = 1;
-	pixel_y = -14
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_uplift{
-	pixel_x = 8;
-	pixel_y = -14
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 4
 	},
 /obj/machinery/light/small{
 	brightness = 3;
@@ -1424,13 +1402,36 @@
 /area/shuttle/pirate)
 "dd" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/pirate)
 "de" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/fancy/cigarettes/cigpack_uplift{
+	pixel_x = 8;
+	pixel_y = -14
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_shadyjims{
+	pixel_x = 1;
+	pixel_y = -14
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_robust{
+	pixel_x = -6;
+	pixel_y = -14
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_midori{
+	pixel_x = 8;
+	pixel_y = -8
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_carp{
+	pixel_x = 1;
+	pixel_y = -8
+	},
+/obj/item/storage/fancy/cigarettes,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/pirate)
 "df" = (

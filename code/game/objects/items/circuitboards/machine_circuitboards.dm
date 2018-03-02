@@ -53,6 +53,7 @@
 	name = "AI Holopad (Machine Board)"
 	build_path = /obj/machinery/holopad
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
+	needs_anchored = FALSE //wew lad
 
 /obj/item/circuitboard/machine/launchpad
 	name = "Bluespace Launchpad (Machine Board)"
@@ -84,11 +85,13 @@
 	name = "Weapon Recharger (Machine Board)"
 	build_path = /obj/machinery/recharger
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/cell_charger
 	name = "Cell Charger (Machine Board)"
 	build_path = /obj/machinery/cell_charger
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/cyborgrecharger
 	name = "Cyborg Recharger (Machine Board)"
@@ -105,6 +108,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/space_heater
 	name = "Space Heater (Machine Board)"
@@ -113,6 +117,7 @@
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/capacitor = 1,
 		/obj/item/stack/cable_coil = 3)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/telecomms/broadcaster
 	name = "Subspace Broadcaster (Machine Board)"
@@ -209,6 +214,7 @@
 							/obj/machinery/vending/clothing = "ClothesMate",
 							/obj/machinery/vending/medical = "NanoMed Plus",
 							/obj/machinery/vending/wallmed = "NanoMed")
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
@@ -312,6 +318,7 @@
 	name = "circuit board (Deep Fryer)"
 	build_path = /obj/machinery/deepfryer
 	req_components = list(/obj/item/stock_parts/micro_laser = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/gibber
 	name = "Gibber (Machine Board)"
@@ -319,6 +326,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/monkey_recycler
 	name = "Monkey Recycler (Machine Board)"
@@ -326,6 +334,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/processor
 	name = "Food Processor (Machine Board)"
@@ -333,6 +342,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
@@ -362,6 +372,7 @@
 		/obj/machinery/smartfridge/chemistry = "chems",
 		/obj/machinery/smartfridge/chemistry/virology = "viruses",
 		/obj/machinery/smartfridge/disks = "disks")
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/smartfridge/Initialize(mapload, new_type)
 	if(new_type)
@@ -416,6 +427,7 @@
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/seed_extractor
 	name = "Seed Extractor (Machine Board)"
@@ -423,6 +435,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/ore_redemption
 	name = "Ore Redemption (Machine Board)"
@@ -433,6 +446,7 @@
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/device/assembly/igniter = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/mining_equipment_vendor
 	name = "Mining Equipment Vendor (Machine Board)"
@@ -460,6 +474,7 @@
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stock_parts/capacitor = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/pacman/super
 	name = "SUPERPACMAN-type Generator (Machine Board)"
@@ -504,6 +519,7 @@
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/manipulator = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/smes
 	name = "SMES (Machine Board)"
@@ -519,6 +535,7 @@
 	desc = "You can use a screwdriver to switch between Research and Power Generation"
 	build_path = /obj/machinery/power/tesla_coil
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
+	needs_anchored = FALSE
 
 #define PATH_POWERCOIL /obj/item/circuitboard/machine/tesla_coil/power
 #define PATH_RPCOIL /obj/item/circuitboard/machine/tesla_coil/research
@@ -566,6 +583,7 @@
 	name = "Grounding Rod (Machine Board)"
 	build_path = /obj/machinery/power/grounding_rod
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/power_compressor
 	name = "Power Compressor (Machine Board)"
@@ -591,6 +609,7 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/cell = 1)
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/smoke_machine
 	name = "Smoke Machine (Machine Board)"
@@ -601,6 +620,7 @@
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/cell = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/chem_heater
 	name = "Chemical Heater (Machine Board)"
@@ -616,6 +636,7 @@
 		/obj/item/reagent_containers/glass/beaker = 2,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/chem_master/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
@@ -637,6 +658,7 @@
 	build_path = /obj/machinery/reagentgrinder/constructed
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/chem_master/condi
 	name = "CondiMaster 3000 (Machine Board)"
@@ -754,6 +776,7 @@
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stack/sheet/glass = 2)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/vending/donksofttoyvendor
 	name = "Donksoft Toy Vendor (Machine Board)"
@@ -771,6 +794,7 @@
 		/obj/item/stock_parts/matter_bin = 2)
 	var/suction = TRUE
 	var/transmit = TRUE
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/dish_drive/examine(mob/user)
 	..()

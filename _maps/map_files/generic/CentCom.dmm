@@ -8538,7 +8538,8 @@
 	dwidth = 3;
 	name = "steel rain";
 	port_direction = 4;
-	preferred_direction = 4
+	preferred_direction = 4;
+	timid = 0
 	},
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)
@@ -11839,7 +11840,9 @@
 /area/tdome/tdomeobserve)
 "HE" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -11940,7 +11943,9 @@
 /area/tdome/tdomeobserve)
 "HQ" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
