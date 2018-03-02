@@ -11,11 +11,11 @@
 		wtime = world.time
 	return time2text(wtime - GLOB.timezoneOffset, format)
 
-/proc/station_time()
-	return ((((world.time - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % 864000) - GLOB.timezoneOffset
+/proc/station_time(display_only = FALSE)
+	return ((((world.time - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % 864000) - (display_only? GLOB.timezoneOffset : 0)
 
 /proc/station_time_timestamp(format = "hh:mm:ss")
-	return time2text(station_time(), format)
+	return time2text(station_time(TRUE), format)
 
 /proc/station_time_debug(force_set)
 	if(isnum(force_set))
