@@ -1,0 +1,4 @@
+author: "DaedalusGame"
+delete-after: True
+changes: 
+  - tweak: "Machines can now be constructed anchored or unanchored, if the resultant machine could be unanchored."
