@@ -97,7 +97,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	if(!verify) // Can't access the asset cache browser, rip.
 		client.cache += unreceived
 		return 1
-		
+
 	client.sending |= unreceived
 	var/job = ++client.last_asset_job
 
@@ -135,7 +135,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		else
 			concurrent_tracker++
 			send_asset(client, file, verify=FALSE)
-			
+
 		stoplag(0) //queuing calls like this too quickly can cause issues in some client versions
 
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
@@ -348,6 +348,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
 		"font-awesome.css"	       = 'code/modules/goonchat/browserassets/css/font-awesome.css',
 		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
+	)
+
+/datum/asset/simple/permissions
+	assets = list(
+		"padlock.png"	= 'html/padlock.png'
 	)
 
 //this exists purely to avoid meta by pre-loading all language icons.
