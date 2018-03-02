@@ -115,7 +115,7 @@
 /obj/item/integrated_circuit/time/ticker/custom/on_data_written()
 	var/delay_input = get_pin_data(IC_INPUT, 2)
 	if(delay_input && isnum(delay_input) )
-		var/new_delay = CLAMP(delay_input ,1 ,36000) //An hour.
+		var/new_delay = CLAMP(delay_input ,1 ,1 HOURS) 
 		delay = new_delay
 	..()
 
