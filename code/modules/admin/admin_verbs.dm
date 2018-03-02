@@ -265,11 +265,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		if(rights & R_SPAWN)
 			verbs += GLOB.admin_verbs_spawn
 
-		for(var/path in holder.rank.adds)
-			verbs += path
-		for(var/path in holder.rank.subs)
-			verbs -= path
-
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
 		GLOB.admin_verbs_default,
@@ -304,8 +299,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		/client/proc/cmd_admin_areatest_station,
 		/client/proc/readmin
 		)
-	if(holder)
-		verbs.Remove(holder.rank.adds)
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 	set name = "Adminverbs - Hide Most"

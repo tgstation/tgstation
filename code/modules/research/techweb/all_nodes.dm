@@ -93,7 +93,7 @@
 	prereq_ids = list("base")
 	design_ids = list("solarcontrol", "recharger", "powermonitor", "rped", "pacman", "adv_capacitor", "adv_scanning", "emitter", "high_cell", "adv_matter_bin",
 	"atmosalerts", "atmos_control", "recycler", "autolathe", "high_micro_laser", "nano_mani", "weldingmask", "mesons", "thermomachine", "tesla_coil", "grounding_rod", "apc_control", "cell_charger")
-	research_cost = 2500
+	research_cost = 7500
 	export_price = 5000
 
 /datum/techweb_node/adv_engi
@@ -111,7 +111,7 @@
 	description = "Finely-tooled manufacturing techniques allowing for picometer-perfect precision levels."
 	prereq_ids = list("engineering", "datatheory")
 	design_ids = list("pico_mani", "super_matter_bin")
-	research_cost = 2500
+	research_cost = 7500
 	export_price = 5000
 
 /datum/techweb_node/adv_power
@@ -140,7 +140,7 @@
 	prereq_ids = list("practical_bluespace", "high_efficiency")
 	design_ids = list("bluespace_matter_bin", "femto_mani", "triphasic_scanning", "tele_station", "tele_hub", "quantumpad", "launchpad", "launchpad_console",
 	"teleconsole", "bag_holding", "bluespace_crystal", "wormholeprojector", "bluespace_pod")
-	research_cost = 2500
+	research_cost = 15000
 	export_price = 5000
 
 /datum/techweb_node/practical_bluespace
@@ -149,7 +149,7 @@
 	description = "Using bluespace to make things faster and better."
 	prereq_ids = list("bluespace_basic", "engineering")
 	design_ids = list("bs_rped","minerbag_holding", "telesci_gps", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning")
-	research_cost = 2500
+	research_cost = 5000
 	export_price = 5000
 
 
@@ -291,7 +291,7 @@
 	description = "Determining whether reversing the polarity will actually help in a given situation."
 	prereq_ids = list("emp_basic")
 	design_ids = list("ultra_micro_laser")
-	research_cost = 2500
+	research_cost = 3000
 	export_price = 5000
 
 /datum/techweb_node/emp_super
@@ -300,7 +300,7 @@
 	description = "Even better electromagnetic technology."
 	prereq_ids = list("emp_adv")
 	design_ids = list("quadultra_micro_laser")
-	research_cost = 2500
+	research_cost = 3000
 	export_price = 5000
 
 /////////////////////////Clown tech/////////////////////////
