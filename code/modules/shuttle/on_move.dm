@@ -292,7 +292,7 @@ All ShuttleMove procs go here
 /mob/living/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	if(movement_force["IGNOREBUCKLE"] && buckled)//GET READY FOR A WILD RIDE
-		src.buckled.unbuckle_mob(src)
+		buckled.unbuckle_mob(src)
 		src.visible_message(\
 		"<span class='warning'>[src] is torn from the buckle by the force of the movement!</span>",\
 		"<span class='warning'>You're torn from the buckle by the force of the movement!'.</span>",\
