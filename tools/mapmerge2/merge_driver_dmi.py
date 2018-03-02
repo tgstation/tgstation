@@ -9,31 +9,40 @@ def images_equal(left, right):
     left_load, right_load = left.load(), right.load()
     for y in range(0, h):
         for x in range(0, w):
-            if left_load[x,y] != right_load[x,y]:
-                print(x, y)
+            lpixel, rpixel = left_load[x, y], right_load[x, y]
+            # quietly ignore changes where both pixels are fully transparent
+            if lpixel != rpixel and (lpixel[3] != 0 or rpixel[3] != 0):
                 return False
     return True
 
 def states_equal(left, right):
+    result = True
+
     # basic properties
-    if (left.loop != right.loop
-            or left.rewind != right.rewind
-            or left.movement != right.movement
-            or left.dirs != right.dirs
-            or left.delays != right.delays
-            or left.hotspots != right.hotspots):
-        print("properties")
-        return False
+    for attr in ('loop', 'rewind', 'movement', 'dirs', 'delays', 'hotspots', 'framecount'):
+        lval, rval = getattr(left, attr), getattr(right, attr)
+        if lval != rval:
+            print(f"    {attr}: {lval!r} != {rval!r}")
+            result = False
 
     # frames
-    if len(left.frames) != len(right.frames):
-        print("len frames")
-        return False
     for (left_frame, right_frame) in zip(left.frames, right.frames):
         if not images_equal(left_frame, right_frame):
-            return False
+            result = False
 
-    return True
+    return result
+
+def key_of(state):
+    return (state.name, state.movement)
+
+def dictify(sheet):
+    result = {}
+    for state in sheet.states:
+        k = key_of(state)
+        if k in result:
+            print(f"    duplicate {k!r}")
+        result[k] = state
+    return result
 
 def three_way_merge(base, left, right):
     base_dims = base.width, base.height
@@ -44,49 +53,45 @@ def three_way_merge(base, left, right):
         print(f"    Theirs: {right.width} x {right.height}")
         return None
 
-    base_states = {state.name: state for state in base.states}
-    left_states = {state.name: state for state in left.states}
-    right_states = {state.name: state for state in right.states}
-
-    if len(base_states) != len(base.states) or len(left_states) != len(left.states) or len(right_states) != len(right.states):
-        # TODO: take the "movement" flag into account here
-        print("Duplicate state names not yet supported")
-        return None
+    base_states, left_states, right_states = dictify(base), dictify(left), dictify(right)
 
     new_left = {k: v for k, v in left_states.items() if k not in base_states}
     new_right = {k: v for k, v in right_states.items() if k not in base_states}
-    for key, state in new_left.items():
+    new_both = {}
+    for key, state in list(new_left.items()):
         in_right = new_right.get(key, None)
         if in_right:
             if states_equal(state, in_right):
                 # Allow it, but don't add it a second time
+                new_both[key] = state
+                del new_left[key]
                 del new_right[key]
             else:
-                print(f"Added in both: {key!r}")
+                print(f"    {state.name!r}: added different in both!")
                 return None
 
     final_states = []
     # add states that are currently in the base
     for state in base.states:
-        in_left = left_states.get(state.name, None)
-        in_right = right_states.get(state.name, None)
+        in_left = left_states.get(key_of(state), None)
+        in_right = right_states.get(key_of(state), None)
         left_equals = in_left and states_equal(state, in_left)
         right_equals = in_right and states_equal(state, in_right)
 
         if not in_left and not in_right:
             # deleted in both left and right, it's just deleted
-            print(f"Deleted in both: {state.name!r}")
+            print(f"    {state.name!r}: deleted in both")
         elif not in_left:
             # left deletes
-            print(f"Deleted in left: {state.name!r}")
+            print(f"    {state.name!r}: deleted in left")
             if not right_equals:
-                print(f"... but modified in right")
+                print(f"    ... but modified in right")
                 final_states.append(in_right)
         elif not in_right:
             # right deletes
-            print(f"Deleted in right: {state.name!r}")
+            print(f"    {state.name!r}: deleted in right")
             if not left_equals:
-                print(f"... but modified in left")
+                print(f"    ... but modified in left")
                 final_states.append(in_left)
         elif left_equals and right_equals:
             # changed in neither
@@ -94,25 +99,34 @@ def three_way_merge(base, left, right):
             final_states.append(state)
         elif left_equals:
             # changed only in right
-            print(f"Changed in left: {state.name!r}")
+            print(f"    {state.name!r}: changed in left")
             final_states.append(in_right)
         elif right_equals:
             # changed only in left
-            print(f"Changed in right: {state.name!r}")
+            print(f"    {state.name!r}: changed in right")
             final_states.append(in_left)
+        elif states_equal(in_left, in_right):
+            # changed in both, to the same thing
+            print(f"    {state.name!r}: changed same in both")
+            final_states.append(in_left)  # either or
         else:
             # changed in both
-            print(f"Changed in both: {state.name!r}")
+            print(f"    {state.name!r}: changed different in both!")
             return None
+
+    # add states which both left and right added the same
+    for key, state in new_both.items():
+        print(f"    {state.name!r}: added same in both")
+        final_states.append(state)
 
     # add states that are brand-new in the left
     for key, state in new_left.items():
-        #print(f"Added in left: {key!r}")
+        print(f"    {state.name!r}: added in left")
         final_states.append(state)
 
     # add states that are brand-new in the right
     for key, state in new_right.items():
-        #print(f"Added in right: {key!r}")
+        print(f"    {state.name!r}: added in right")
         final_states.append(state)
 
     merged = dmi.Dmi(base.width, base.height)
@@ -128,8 +142,7 @@ def main(path, original, left, right):
 
     merged = three_way_merge(icon_orig, icon_left, icon_right)
     if merged is None:
-        print("Manual merge required!")
-        print("    ")
+        print("!!! Manual merge required!")
         return 1
     else:
         merged.to_file(left)

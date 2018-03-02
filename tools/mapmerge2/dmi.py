@@ -140,7 +140,7 @@ class Dmi:
                 comment += "\trewind = 1\n"
             if state.movement:
                 comment += "\tmovement = 1\n"
-            if state.hotspots:
+            if state.hotspots and any(state.hotspots):
                 current = None
                 for i, value in enumerate(state.hotspots):
                     if value != current:
