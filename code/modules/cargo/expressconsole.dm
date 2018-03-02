@@ -57,7 +57,7 @@
 			continue // i'd be right happy to
 		meme_pack_data[P.group]["packs"] += list(list(
 			"name" = P.name,
-			"cost" = P.cost * 2, //displays twice the normal cost
+			"cost" = P.cost * 1.2, //displays twice the normal cost
 			"id" = pack
 		))
 
@@ -120,7 +120,7 @@
 						CHECK_TICK
 					if(empty_turfs && empty_turfs.len)
 						var/LZ = empty_turfs[rand(empty_turfs.len-1)]
-						SSshuttle.points -= SO.pack.cost * 2
+						SSshuttle.points -= SO.pack.cost * 1.2
 						new /obj/effect/DPtarget(LZ, SO, podID)
 						. = TRUE
 						update_icon()
