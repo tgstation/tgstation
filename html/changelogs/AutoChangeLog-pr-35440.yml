@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscadd: "Traits! You can now select up to three positive, negative, and neutral traits in the character setup. You can choose up to six traits based on combinations varying by the amount of points you earn with negative traits and spend with positive ones."
