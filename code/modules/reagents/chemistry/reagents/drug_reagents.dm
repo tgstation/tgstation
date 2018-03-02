@@ -251,6 +251,7 @@
 	overdose_threshold = 20
 	addiction_threshold = 10
 	taste_description = "salt" // because they're bathsalts?
+	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
 
 /datum/reagent/drug/bath_salts/on_mob_add(mob/M)
 	..()
@@ -260,17 +261,16 @@
 		L.add_trait(TRAIT_SLEEPIMMUNE, id)
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
-			C.gain_trauma(/datum/brain_trauma/special/psychotic_brawling/bath_salts, TRAUMA_RESILIENCE_ABSOLUTE)
+			rage = new(null, TRAUMA_RESILIENCE_ABSOLUTE)
+			C.gain_trauma(rage)
 
 /datum/reagent/drug/bath_salts/on_mob_delete(mob/M)
 	if(isliving(M))
 		var/mob/living/L = M
 		L.remove_trait(TRAIT_STUNIMMUNE, id)
 		L.remove_trait(TRAIT_SLEEPIMMUNE, id)
-		if(iscarbon(L))
-			var/mob/living/carbon/C = L
-			for(var/datum/brain_trauma/special/psychotic_brawling/bath_salts/T in C.get_traumas())
-				qdel(T)
+		if(rage)
+			QDEL_NULL(rage)
 	..()
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/M)
