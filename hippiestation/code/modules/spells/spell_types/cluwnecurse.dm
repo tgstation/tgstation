@@ -28,5 +28,7 @@
 	if(!(target in oview(range)))
 		to_chat(user, "<span class='notice'>They are too far away!</span>")
 		return
+	if (target.anti_magic_check())
+		return
 	var/mob/living/carbon/human/H = target
 	H.cluwneify()

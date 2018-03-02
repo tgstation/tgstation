@@ -21,6 +21,7 @@
 	if(ishuman(H) && !fly)
 		fly = new
 		fly.Grant(H)
+	H.add_trait(TRAIT_HOLY, SPECIES_TRAIT)
 
 /datum/species/angel/on_species_loss(mob/living/carbon/human/H)
 	if(fly)
@@ -31,6 +32,7 @@
 	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "None") && ("wings" in H.dna.species.mutant_bodyparts)))
 		H.dna.features["wings"] = "None"
 		H.update_body()
+	H.remove_trait(TRAIT_HOLY, SPECIES_TRAIT)
 	..()
 
 /datum/species/angel/spec_life(mob/living/carbon/human/H)
