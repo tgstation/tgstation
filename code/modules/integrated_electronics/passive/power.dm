@@ -104,7 +104,6 @@
 /obj/item/integrated_circuit/passive/power/chemical_cell/New()
 	..()
 	create_reagents(volume)
-	var/p = text2path("/datum/config_entry/flag/disable_human_mood")
 	extended_desc +="But no fuel can be compared with blood of living human."
 
 
