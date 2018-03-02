@@ -136,7 +136,7 @@
 	else if(I)
 		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 			if(can_embed(I))
-				if(prob(I.embedding.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.species_traits)))
+				if(prob(I.embedding.embed_chance) && !has_trait(TRAIT_PIERCEIMMUNE))
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 					var/obj/item/bodypart/L = pick(bodyparts)
 					L.embedded_objects |= I
@@ -655,24 +655,33 @@
 					if(prob(30))
 						burndamage += rand(30,40)
 
-				if(brutedamage > 0)
-					status = "bruised"
-				if(brutedamage > 20)
-					status = "battered"
-				if(brutedamage > 40)
-					status = "mangled"
-				if(brutedamage > 0 && burndamage > 0)
-					status += " and "
-				if(burndamage > 40)
-					status += "peeling away"
+				if(has_trait(TRAIT_SELF_AWARE))
+					status = "[brutedamage] brute damage and [burndamage] burn damage"
+					if(!brutedamage && !burndamage)
+						status = "no damage"
 
-				else if(burndamage > 10)
-					status += "blistered"
-				else if(burndamage > 0)
-					status += "numb"
-				if(status == "")
-					status = "OK"
-				to_chat(src, "\t <span class='[status == "OK" ? "notice" : "warning"]'>Your [LB.name] is [status].</span>")
+				else
+					if(brutedamage > 0)
+						status = "bruised"
+					if(brutedamage > 20)
+						status = "battered"
+					if(brutedamage > 40)
+						status = "mangled"
+					if(brutedamage > 0 && burndamage > 0)
+						status += " and "
+					if(burndamage > 40)
+						status += "peeling away"
+
+					else if(burndamage > 10)
+						status += "blistered"
+					else if(burndamage > 0)
+						status += "numb"
+					if(status == "")
+						status = "OK"
+				var/no_damage
+				if(status == "OK" || status == "no damage")
+					no_damage = TRUE
+				to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [has_trait(TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>")
 
 				for(var/obj/item/I in LB.embedded_objects)
 					to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
@@ -687,6 +696,23 @@
 					to_chat(src, "<span class='info'>You're completely exhausted.</span>")
 				else
 					to_chat(src, "<span class='info'>You feel fatigued.</span>")
+			if(has_trait(TRAIT_SELF_AWARE))
+				if(toxloss)
+					if(toxloss > 10)
+						to_chat(src, "<span class='danger'>You feel sick.</span>")
+					else if(toxloss > 20)
+						to_chat(src, "<span class='danger'>You feel nauseous.</span>")
+					else if(toxloss > 40)
+						to_chat(src, "<span class='danger'>You feel very unwell!</span>")
+				if(oxyloss)
+					if(oxyloss > 10)
+						to_chat(src, "<span class='danger'>You feel lightheaded.</span>")
+					else if(oxyloss > 20)
+						to_chat(src, "<span class='danger'>Your thinking is clouded and distant.</span>")
+					else if(oxyloss > 30)
+						to_chat(src, "<span class='danger'>You're choking!</span>")
+			if(roundstart_traits.len)
+				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
 		else
 			if(wear_suit)
 				wear_suit.add_fingerprint(M)

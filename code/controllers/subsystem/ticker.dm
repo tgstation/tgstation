@@ -544,7 +544,7 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
 		return
 
-	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
+	to_chat(world, "<span class='boldannounce'>Rebooting World in [DisplayTimeText(delay)]. [reason]</span>")
 
 	var/start_wait = world.time
 	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2))	//don't wait forever
@@ -563,6 +563,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
 
+	save_admin_data()
 	SEND_SOUND(world, round_end_sound)
 	text2file(login_music, "data/last_round_lobby_music.txt")
 

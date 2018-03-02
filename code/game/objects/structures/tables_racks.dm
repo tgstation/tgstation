@@ -65,6 +65,9 @@
 		if(pushed_mob.buckled)
 			to_chat(user, "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>")
 			return
+		if(user.grab_state < GRAB_AGGRESSIVE)
+			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
+			return
 		tablepush(user, pushed_mob)
 		user.stop_pulling()
 	else
@@ -260,7 +263,7 @@
 /obj/structure/table/wood/fancy
 	name = "fancy table"
 	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/smooth_structures/fancy_table.dmi'
 	icon_state = "fancy_table"
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
@@ -278,6 +281,7 @@
 	icon = 'icons/obj/smooth_structures/fancy_table.dmi'
 
 /obj/structure/table/wood/fancy/black
+	icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
 	icon_state = "fancy_table_black"
 	buildstack = /obj/item/stack/tile/carpet/black
 
@@ -336,7 +340,7 @@
 	buildstack = /obj/item/stack/tile/brass
 	framestackamount = 1
 	buildstackamount = 1
-	canSmoothWith = list(/obj/structure/table/reinforced/brass)
+	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
 
 /obj/structure/table/reinforced/brass/New()
 	change_construction_value(2)
@@ -360,6 +364,19 @@
 
 /obj/structure/table/reinforced/brass/ratvar_act()
 	obj_integrity = max_integrity
+
+/obj/structure/table/bronze
+	name = "brass table"
+	desc = "A solid table made out of bronze."
+	icon = 'icons/obj/smooth_structures/brass_table.dmi'
+	icon_state = "brass_table"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	buildstack = /obj/item/stack/tile/bronze
+	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
+
+/obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
+	..()
+	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
 /*
  * Surgery Tables

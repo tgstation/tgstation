@@ -222,11 +222,7 @@
 	return thermal_protection_flags
 
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
-
-	if(dna.check_mutation(COLDRES))
-		return TRUE //Fully protected from the cold.
-
-	if(RESISTCOLD in dna.species.species_traits)
+	if(has_trait(TRAIT_RESISTCOLD))
 		return TRUE
 
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
@@ -272,16 +268,14 @@
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
 		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
-			. = 1
+			return TRUE
 	if(glasses)
 		if(glasses.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
-			. = 1
+			return TRUE
 	if(head)
 		if(head.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
-			. = 1
-	if(NOBREATH in dna.species.species_traits)
-		. = 1
-	return .
+			return TRUE
+	return ..()
 
 
 /mob/living/carbon/human/proc/handle_embedded_objects()
@@ -308,7 +302,7 @@
 	if(!can_heartattack())
 		return
 
-	var/we_breath = (!(NOBREATH in dna.species.species_traits))
+	var/we_breath = !has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)
 
 
 	if(!undergoing_cardiac_arrest())

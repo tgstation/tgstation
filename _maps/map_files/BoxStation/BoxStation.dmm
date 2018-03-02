@@ -2,6 +2,44 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/obj/item/device/radio/intercom{
+	pixel_y = 25
+	},
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"aac" = (
+/obj/machinery/requests_console{
+	department = "Bar";
+	departmentType = 2;
+	pixel_x = 30;
+	receive_ore_updates = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Bar";
+	dir = 8
+	},
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
+"aad" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "aae" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
@@ -4276,6 +4314,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "ajZ" = (
@@ -4789,6 +4828,9 @@
 	name = "Solar Maintenance";
 	req_access = null;
 	req_access_txt = "10; 13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
@@ -16528,18 +16570,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
-"aPP" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
-/obj/item/device/radio/intercom{
-	pixel_y = 25
-	},
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
 "aPQ" = (
 /turf/closed/wall,
 /area/storage/tools)
@@ -17633,21 +17663,6 @@
 /area/crew_quarters/bar)
 "aSZ" = (
 /obj/effect/landmark/start/bartender,
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
-"aTa" = (
-/obj/machinery/requests_console{
-	department = "Bar";
-	departmentType = 2;
-	pixel_x = 30;
-	receive_ore_updates = 1
-	},
-/obj/machinery/camera{
-	c_tag = "Bar";
-	dir = 8
-	},
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aTb" = (
@@ -21733,6 +21748,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bdP" = (
@@ -28786,6 +28804,9 @@
 	name = "Genetics Research Access";
 	req_access_txt = "9"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "buH" = (
@@ -28801,6 +28822,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -38376,11 +38400,6 @@
 	icon_state = "wood-broken7"
 	},
 /area/maintenance/port/aft)
-"bRd" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
-/turf/open/floor/wood,
-/area/maintenance/port/aft)
 "bRe" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -40982,11 +41001,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science/circuit)
-"bXu" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "bXv" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -54621,6 +54635,18 @@
 /obj/item/gun/energy/laser/practice,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"slk" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
 "sxs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table,
@@ -74251,7 +74277,7 @@ aaa
 aaa
 bCq
 bPS
-bRd
+aad
 bPS
 bPS
 bCq
@@ -91943,10 +91969,10 @@ aKz
 aKR
 aND
 aJC
-aPP
+aab
 aRg
 aQc
-aTa
+aac
 aQc
 aXk
 aQc
@@ -96591,7 +96617,7 @@ cTS
 cTK
 bpQ
 cTK
-cTJ
+slk
 btm
 buy
 bvz
@@ -105096,7 +105122,7 @@ bTr
 bTr
 bTr
 bTr
-bXu
+bTr
 bTr
 bTr
 bTr
