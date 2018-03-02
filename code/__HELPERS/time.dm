@@ -9,7 +9,27 @@
 /proc/gameTimestamp(format = "hh:mm:ss", wtime=null)
 	if(!wtime)
 		wtime = world.time
+<<<<<<< HEAD
 	return time2text(wtime - GLOB.timezoneOffset + SSticker.gametime_offset - SSticker.round_start_time, format)
+=======
+	return time2text(wtime - GLOB.timezoneOffset, format)
+
+/proc/station_time(display_only = FALSE)
+	return ((((world.time - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % 864000) - (display_only? GLOB.timezoneOffset : 0)
+
+/proc/station_time_timestamp(format = "hh:mm:ss")
+	return time2text(station_time(TRUE), format)
+
+/proc/station_time_debug(force_set)
+	if(isnum(force_set))
+		SSticker.gametime_offset = force_set
+		return
+	SSticker.gametime_offset = rand(0, 864000)		//hours in day * minutes in hour * seconds in minute * deciseconds in second
+	if(prob(50))
+		SSticker.gametime_offset = FLOOR(SSticker.gametime_offset, 3600)
+	else
+		SSticker.gametime_offset = CEILING(SSticker.gametime_offset, 3600)
+>>>>>>> 19ba13a419... Merge pull request #35966 from kevinz000/patch-452
 
 /* Returns 1 if it is the selected month and day */
 /proc/isDay(month, day)
