@@ -60,10 +60,8 @@
 	attack_hand(user)
 
 /obj/structure/table/attack_hand(mob/living/user)
-	if(user.a_intent == INTENT_GRAB && user.pulling && isliving(user.pulling))
+	if(user.a_intent == INTENT_GRAB && Adjacent(user) && user.pulling && isliving(user.pulling))
 		var/mob/living/pushed_mob = user.pulling
-		if(!Adjacent(pushed_mob) && !Adjacent(user))
-			return
 		if(pushed_mob.buckled)
 			to_chat(user, "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>")
 			return
