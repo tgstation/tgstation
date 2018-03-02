@@ -21594,6 +21594,7 @@
 "aYa" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
+/mob/living/simple_animal/parrot/Poly,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
 "aYb" = (
@@ -26294,6 +26295,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"oKy" = (
+/mob/living/simple_animal/sloth/paperwork{
+	name = "Raumr"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "oNK" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -27654,6 +27661,11 @@
 	dir = 10
 	},
 /turf/closed/wall,
+/area/crew_quarters/bar)
+"yfb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/mob/living/carbon/monkey/punpun,
+/turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "yiz" = (
 /obj/structure/disposalpipe/segment{
@@ -55035,7 +55047,7 @@ aBI
 ayV
 aDT
 aFh
-aFX
+oKy
 rlL
 aFX
 nHX
@@ -58865,7 +58877,7 @@ aim
 aii
 ajx
 akj
-akj
+yfb
 akj
 akj
 ank
