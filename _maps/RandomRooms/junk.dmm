@@ -1,0 +1,181 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/table,
+/obj/item/stack/medical/ointment{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/stack/medical/bruise_pack{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/syringe/epinephrine,
+/obj/item/storage/secure/safe{
+	pixel_x = 6;
+	pixel_y = 28
+	},
+/obj/item/restraints/handcuffs/cable/pink,
+/turf/open/floor/plating,
+/area/template_noop)
+"b" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"c" = (
+/obj/item/soap/deluxe,
+/obj/item/kitchen/rollingpin,
+/obj/structure/closet/crate,
+/obj/item/clothing/suit/xenos,
+/obj/item/clothing/suit/monkeysuit,
+/obj/item/clothing/head/xenos,
+/obj/item/clothing/mask/gas/monkeymask,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+"d" = (
+/obj/item/device/multitool,
+/turf/open/floor/plating,
+/area/template_noop)
+"e" = (
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/turf/open/floor/plating,
+/area/template_noop)
+"f" = (
+/obj/structure/rack,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/mop,
+/obj/item/bikehorn/rubberducky,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"g" = (
+/obj/item/vending_refill/cola,
+/turf/open/floor/plating,
+/area/template_noop)
+"h" = (
+/obj/item/vending_refill/snack,
+/turf/open/floor/plating,
+/area/template_noop)
+"i" = (
+/obj/item/conveyor_construct,
+/obj/item/conveyor_construct,
+/obj/item/conveyor_construct,
+/obj/item/conveyor_construct,
+/obj/item/conveyor_construct,
+/obj/item/conveyor_construct,
+/obj/item/conveyor_construct,
+/obj/item/conveyor_construct,
+/obj/item/conveyor_construct,
+/obj/item/conveyor_switch_construct,
+/turf/open/floor/plating,
+/area/template_noop)
+"j" = (
+/obj/structure/rack,
+/obj/item/clothing/neck/tie/red{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/clothing/neck/tie/horrible,
+/obj/item/clothing/neck/tie/blue{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/dice/d8,
+/obj/item/device/healthanalyzer,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+"k" = (
+/obj/structure/table/reinforced,
+/obj/item/stock_parts/cell/crap,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+"l" = (
+/obj/item/bot_assembly/cleanbot,
+/turf/open/floor/plating,
+/area/template_noop)
+"m" = (
+/obj/item/grown/log,
+/turf/open/floor/plating,
+/area/template_noop)
+"n" = (
+/obj/item/stack/sheet/cardboard,
+/obj/structure/closet/crate,
+/obj/item/coin/silver,
+/obj/item/storage/box/lights/mixed,
+/obj/item/watertank,
+/obj/item/poster/random_contraband,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+"o" = (
+/obj/structure/light_construct/small{
+	dir = 4
+	},
+/obj/structure/rack,
+/obj/item/storage/secure/briefcase,
+/obj/item/disk/data,
+/obj/item/grenade/flashbang,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/grenade/smokebomb,
+/turf/open/floor/plating,
+/area/template_noop)
+"p" = (
+/obj/machinery/pipedispenser/disposal/transit_tube,
+/turf/open/floor/plating,
+/area/template_noop)
+"q" = (
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/food/drinks/bottle/tequila,
+/obj/item/reagent_containers/food/drinks/bottle/limejuice,
+/turf/open/floor/plating,
+/area/template_noop)
+"r" = (
+/obj/machinery/syndicatebomb/badmin/clown{
+	payload = /obj/item/bombcore/training
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"s" = (
+/obj/item/storage/box/drinkingglasses,
+/turf/open/floor/plating,
+/area/template_noop)
+"t" = (
+/obj/machinery/pipedispenser/disposal,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+f
+k
+p
+"}
+(2,1,1) = {"
+b
+g
+l
+q
+"}
+(3,1,1) = {"
+c
+h
+m
+r
+"}
+(4,1,1) = {"
+d
+i
+n
+s
+"}
+(5,1,1) = {"
+e
+j
+o
+t
+"}
