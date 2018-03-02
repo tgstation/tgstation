@@ -1014,7 +1014,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	set name = "Toggle AntagHUD"
 	set desc = "Toggles the Admin AntagHUD"
 
-	if(!holder)
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/adding_hud = !has_antag_hud()
@@ -1033,7 +1033,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	set name = "Toggle Combo HUD"
 	set desc = "Toggles the Admin Combo HUD (antag, sci, med, eng)"
 
-	if(!holder)
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/adding_hud = !has_antag_hud()
