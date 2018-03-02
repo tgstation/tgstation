@@ -6,7 +6,7 @@
 GLOBAL_LIST_INIT(blacklisted_builds, list(
 	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
 	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
-	
+
 	))
 
 #define LIMITER_SIZE	5
@@ -164,12 +164,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	GLOB.ahelp_tickets.ClientLogin(src)
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
-	var/localhost_addresses = list("127.0.0.1", "::1")
-	if(address && (address in localhost_addresses))
-		var/datum/admin_rank/localhost_rank = new("!localhost!", 65535)
-		if(localhost_rank)
-			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
-			localhost_holder.associate(src)
+	holder = GLOB.admin_datums[ckey]
+	if(holder)
+		GLOB.admins |= src
+		holder.owner = src
+		connecting_admin = TRUE
+	else if(GLOB.deadmins[ckey])
+		verbs += /client/proc/readmin
+		connecting_admin = TRUE
 	if(CONFIG_GET(flag/autoadmin))
 		if(!GLOB.admin_datums[ckey])
 			var/datum/admin_rank/autorank
@@ -180,6 +182,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			if(!autorank)
 				to_chat(world, "Autoadmin rank not found")
 			else
+<<<<<<< HEAD
 				var/datum/admins/D = new(autorank, ckey)
 				GLOB.admin_datums[ckey] = D
 	holder = GLOB.admin_datums[ckey]
@@ -191,6 +194,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		verbs += /client/proc/readmin
 		connecting_admin = TRUE
 	mentor_datum_set()// hippie - Hippie mentor_holder set
+=======
+				new /datum/admins(autorank, ckey)
+	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin)
+		var/localhost_addresses = list("127.0.0.1", "::1")
+		if(address && (address in localhost_addresses))
+			var/datum/admin_rank/localhost_rank = new("!localhost!", 65535, 16384, 65535) //+EVERYTHING -DBRANKS *EVERYTHING
+			new /datum/admins(localhost_rank, ckey, 1, 1)
+>>>>>>> 23a45889ed... Modernizes SQL admin loading (#35264)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(!prefs)
@@ -240,7 +251,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		to_chat(src, "<span class='danger'>Please download a new version of byond. if [byond_build] is the latest, you can go to http://www.byond.com/download/build/ to download other versions.</span>")
 		if(connecting_admin)
 			to_chat(src, "As an admin, you are being allowed to continue using this version, but please consider changing byond versions")
-		else 
+		else
 			qdel(src)
 			return
 	#endif
@@ -538,10 +549,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			tokens[ckey] = cid_check_reconnect()
 
 			sleep(15 SECONDS) //Longer sleep here since this would trigger if a client tries to reconnect manually because the inital reconnect failed
-			
+
 			 //we sleep after telling the client to reconnect, so if we still exist something is up
 			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
-			
+
 			qdel(src)
 			return TRUE
 
@@ -584,10 +595,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			tokens[ckey] = cid_check_reconnect()
 
 			sleep(5 SECONDS) //browse is queued, we don't want them to disconnect before getting the browse() command.
-			
+
 			//we sleep after telling the client to reconnect, so if we still exist something is up
 			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
-			
+
 			qdel(src)
 			return TRUE
 
