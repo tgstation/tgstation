@@ -55,7 +55,7 @@
 			continue// by using someone else's crate
 		if(!(obj_flags & EMAGGED) && P.contraband) // will you show me?
 			continue // i'd be right happy to
-		meme_pack_data[P.group]["packs"] += list(list(
+		meme_pack_data[P.group]["packs"] += list(list(//mfw goof sullies your nice cargo features with n a s t y and downright s i l l y comments^^^
 			"name" = P.name,
 			"cost" = P.cost * 1.2, //displays twice the normal cost
 			"id" = pack
