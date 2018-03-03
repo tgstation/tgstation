@@ -474,7 +474,7 @@ What a mess.*/
 				var/counter = 1
 				while(active2.fields[text("com_[]", counter)])
 					counter++
-				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 
 			if("Delete Record (ALL)")
 				if(active1)
@@ -616,7 +616,7 @@ What a mess.*/
 						if(active1.fields["photo_front"])
 							if(istype(active1.fields["photo_front"], /obj/item/photo))
 								var/obj/item/photo/P = active1.fields["photo_front"]
-								print_photo(P.img, active1.fields["name"])	
+								print_photo(P.img, active1.fields["name"])
 					if("show_photo_side")
 						if(active1.fields["photo_side"])
 							if(istype(active1.fields["photo_side"], /obj/item/photo))
@@ -631,14 +631,14 @@ What a mess.*/
 						if(active1.fields["photo_side"])
 							if(istype(active1.fields["photo_side"], /obj/item/photo))
 								var/obj/item/photo/P = active1.fields["photo_side"]
-								print_photo(P.img, active1.fields["name"])	
+								print_photo(P.img, active1.fields["name"])
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
 							var/t2 = stripped_input(usr, "Please input minor crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
+							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
 							GLOB.data_core.addMinorCrime(active1.fields["id"], crime)
 					if("mi_crim_delete")
 						if(istype(active1, /datum/data/record))
@@ -652,7 +652,7 @@ What a mess.*/
 							var/t2 = stripped_input(usr, "Please input major crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
+							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
 							GLOB.data_core.addMajorCrime(active1.fields["id"], crime)
 					if("ma_crim_delete")
 						if(istype(active1, /datum/data/record))
