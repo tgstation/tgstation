@@ -886,9 +886,9 @@
 
 	if(net)
 		set_pin_data(IC_OUTPUT, 1, net.hardware_id)
+		push_data()
 		activate_pin(2)
 	else
 		set_pin_data(IC_OUTPUT, 1, null)
+		push_data()
 		activate_pin(3)
-	push_data()
-	return
