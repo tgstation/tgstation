@@ -1,0 +1,619 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/door/airlock/wood,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"b" = (
+/obj/item/clothing/head/helmet/space/plasmaman,
+/obj/item/clothing/suit/space/eva/plasmaman,
+/obj/item/clothing/under/plasmaman,
+/obj/structure/closet/crate/wooden,
+/obj/item/clothing/head/helmet/space/plasmaman,
+/obj/item/clothing/suit/space/eva/plasmaman,
+/obj/item/clothing/under/plasmaman,
+/obj/item/tank/internals/plasmaman/full,
+/obj/item/tank/internals/plasmaman/full,
+/obj/item/tank/internals/plasmaman/belt/full,
+/obj/item/tank/internals/plasmaman/belt/full,
+/obj/item/tank/internals/plasma/full,
+/obj/item/tank/internals/plasma/full,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"c" = (
+/obj/machinery/computer/shuttle{
+	possible_destinations = "emergency_home;freighter_away;freighter_custom;whiteship_away;whiteship_home;whiteship_z4;whiteship_lavaland";
+	shuttleId = "propane"
+	},
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"d" = (
+/obj/structure/statue/plasma/scientist{
+	anchored = 1
+	},
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"e" = (
+/obj/item/organ/heart/gland/plasma,
+/obj/item/organ/alien/plasmavessel/large,
+/obj/item/organ/lungs/plasmaman,
+/obj/item/organ/liver/plasmaman,
+/obj/item/organ/stomach/plasmaman,
+/obj/item/organ/tongue/bone/plasmaman,
+/obj/structure/closet,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"f" = (
+/obj/machinery/light,
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"g" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	req_access_txt = "0";
+	use_power = 0
+	},
+/turf/closed/wall/mineral/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"h" = (
+/obj/structure/table/wood,
+/obj/machinery/recharger,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom";
+	pixel_x = -26
+	},
+/obj/item/device/radio/headset,
+/obj/item/tank/jetpack/void,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"i" = (
+/obj/structure/table/wood,
+/obj/item/gun/energy/plasmacutter,
+/obj/item/gun/energy/plasmacutter,
+/obj/item/gun/energy/plasmacutter/adv,
+/obj/item/gun/energy/plasmacutter/adv,
+/obj/item/flamethrower/full/tank,
+/obj/item/tank/internals/plasma/full,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"j" = (
+/obj/machinery/power/port_gen/pacman,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"k" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"l" = (
+/obj/structure/closet/crate/wooden,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 50
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 50
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 50
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 50
+	},
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"m" = (
+/obj/structure/tank_dispenser,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"n" = (
+/obj/structure/closet/crate/wooden,
+/obj/item/stack/sheet/plasmaglass{
+	amount = 50
+	},
+/obj/item/stack/sheet/plasmarglass{
+	amount = 50
+	},
+/obj/item/stack/tile/mineral/plasma{
+	amount = 50
+	},
+/obj/item/stack/tile/wood{
+	amount = 50
+	},
+/obj/item/stack/sheet/mineral/wood{
+	amount = 50
+	},
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"o" = (
+/obj/structure/chair/wood/wings{
+	icon_state = "wooden_chair_wings";
+	dir = 4
+	},
+/obj/effect/mob_spawn/human/plasmaman,
+/obj/item/card/id/away/old/eng{
+	desc = "A card providing access to the freighter.";
+	name = "Freighter ID"
+	},
+/obj/item/storage/belt/utility/chief/full,
+/obj/item/clothing/neck/tie/black,
+/obj/item/tank/internals/plasmaman/belt/full,
+/obj/item/storage/backpack/duffelbag/engineering,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"p" = (
+/obj/structure/chair/wood{
+	icon_state = "wooden_chair";
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"q" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/chair/wood{
+	icon_state = "wooden_chair";
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"r" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/plasma/reinforced/spawner/north,
+/turf/open/floor/plating/airless,
+/area/shuttle{
+	name = "Freighter"
+	})
+"s" = (
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"t" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"u" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/power/port_gen/pacman/mrs,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"v" = (
+/obj/machinery/vending/plasmaresearch,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"w" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"x" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker{
+	shuttleId = "propane";
+	shuttlePortId = "freighter_custom";
+	shuttlePortName = "navigation point"
+	},
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"y" = (
+/obj/item/stack/ore/plasma{
+	amount = 15
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"z" = (
+/obj/structure/table/wood,
+/obj/item/coin/plasma,
+/obj/item/coin/plasma,
+/obj/item/coin/plasma,
+/obj/item/coin/plasma,
+/obj/item/coin/plasma,
+/obj/item/coin/plasma,
+/obj/item/coin/plasma,
+/obj/item/coin/plasma,
+/obj/item/plasma_fist_scroll,
+/obj/item/device/pda/toxins,
+/obj/item/clothing/accessory/medal/plasma,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"A" = (
+/obj/structure/displaycase{
+	req_access_txt = "200";
+	start_showpiece_type = /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
+	},
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"B" = (
+/obj/structure/displaycase{
+	req_access_txt = "200";
+	start_showpiece_type = /obj/item/mecha_parts/mecha_equipment/generator
+	},
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"C" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 15
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"D" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"E" = (
+/obj/structure/table/wood,
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"F" = (
+/obj/item/storage/box/lights/mixed,
+/obj/item/device/lightreplacer,
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	pixel_y = 32;
+	req_access_txt = "0";
+	use_power = 0
+	},
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"G" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"H" = (
+/obj/item/reagent_containers/syringe/plasma,
+/obj/item/reagent_containers/syringe/plasma,
+/obj/item/reagent_containers/syringe/plasma,
+/obj/item/reagent_containers/syringe/plasma,
+/obj/item/reagent_containers/glass/bottle/plasma,
+/obj/item/reagent_containers/glass/bottle/plasma,
+/obj/item/reagent_containers/glass/bottle/plasma,
+/obj/item/reagent_containers/glass/bottle/plasma,
+/obj/structure/closet,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"I" = (
+/obj/machinery/door/window/eastleft{
+	req_access_txt = "200"
+	},
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"J" = (
+/obj/item/reagent_containers/glass/bottle/plasma,
+/obj/item/reagent_containers/glass/bottle/plasma,
+/obj/item/reagent_containers/syringe/plasma,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"K" = (
+/obj/docking_port/mobile{
+	dir = 8;
+	dwidth = 6;
+	height = 9;
+	id = "propane";
+	name = "Freighter";
+	port_direction = 4;
+	timid = 0;
+	width = 17
+	},
+/obj/machinery/door/airlock/wood,
+/obj/docking_port/stationary{
+	dheight = 0;
+	dir = 8;
+	dwidth = 11;
+	height = 20;
+	id = "freighter_away";
+	name = "deep space";
+	turf_type = /turf/open/space;
+	width = 25
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"L" = (
+/turf/closed/wall/mineral/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"M" = (
+/obj/machinery/door/airlock/wood{
+	req_access_txt = "200"
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"N" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"O" = (
+/obj/structure/table/wood,
+/obj/item/stack/ore/plasma,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"P" = (
+/mob/living/simple_animal/bot/medbot,
+/turf/open/floor/wood,
+/area/shuttle{
+	name = "Freighter"
+	})
+"Q" = (
+/turf/open/space/basic,
+/area/space)
+"R" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle{
+	name = "Freighter"
+	})
+
+(1,1,1) = {"
+Q
+Q
+Q
+L
+L
+L
+w
+w
+w
+L
+L
+L
+L
+L
+L
+L
+Q
+"}
+(2,1,1) = {"
+Q
+L
+L
+L
+y
+t
+s
+o
+s
+t
+m
+L
+G
+k
+m
+L
+L
+"}
+(3,1,1) = {"
+L
+L
+i
+L
+C
+I
+N
+N
+N
+D
+J
+L
+s
+s
+m
+r
+R
+"}
+(4,1,1) = {"
+w
+h
+s
+M
+s
+s
+p
+p
+p
+s
+s
+M
+s
+s
+b
+r
+R
+"}
+(5,1,1) = {"
+w
+c
+f
+L
+A
+s
+s
+d
+s
+s
+B
+L
+e
+s
+l
+r
+R
+"}
+(6,1,1) = {"
+w
+x
+s
+L
+E
+s
+s
+P
+s
+s
+O
+L
+H
+s
+n
+r
+R
+"}
+(7,1,1) = {"
+L
+L
+z
+g
+s
+s
+p
+p
+p
+s
+s
+L
+F
+s
+s
+r
+R
+"}
+(8,1,1) = {"
+Q
+L
+L
+L
+s
+q
+j
+j
+j
+q
+s
+L
+j
+u
+v
+L
+L
+"}
+(9,1,1) = {"
+Q
+Q
+Q
+L
+a
+L
+L
+L
+L
+L
+K
+L
+L
+L
+L
+L
+Q
+"}
