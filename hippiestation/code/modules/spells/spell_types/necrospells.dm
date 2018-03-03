@@ -25,6 +25,10 @@
 /obj/effect/proc_holder/spell/targeted/inflict_handler/soulflare/cast(list/targets, mob/user = usr)
 	var/obj/effect/proc_holder/spell/targeted/trigger/soulflare/SF = locate(/obj/effect/proc_holder/spell/targeted/trigger/soulflare, user.mind.spell_list)
 	var/mob/living/carbon/human/target = targets[1]
+	if (!istype(target))
+		return
+	if (target.anti_magic_check())
+		return
 	if(target.health <= 0)
 		if(!target.stat & DEAD)
 			target.adjustOxyLoss(500)
@@ -56,6 +60,8 @@
 	..()
 	var/mob/living/carbon/target = targets[1]
 	if(!target)
+		return
+	if (target.anti_magic_check())
 		return
 	if(target.stat & DEAD)
 		message_admins("[user] casted corpse explosion on [target]")
