@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - rscadd: "You can now hotswap tanks in a canister or gas pump by clicking it with a new tank!"
+  - rscadd: "You can now also close a canister's valve and remove the tank inside it by alt-clicking it."
