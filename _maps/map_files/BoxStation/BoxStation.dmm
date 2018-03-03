@@ -54791,17 +54791,9 @@
 /area/hallway/secondary/entry)
 "iIR" = (
 /obj/structure/table/wood,
-/obj/item/canvas/twentythreeXnineteen{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/canvas/twentythreeXnineteen{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/canvas/twentythreeXnineteen{
-	pixel_x = -1;
-	pixel_y = 2
+/obj/item/device/camera_film,
+/obj/item/device/camera_film{
+	pixel_x = 4
 	},
 /turf/open/floor/wood,
 /area/maintenance/starboard/fore)
@@ -55523,19 +55515,6 @@
 /obj/structure/sign/poster/contraband/robust_softdrinks,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"mTw" = (
-/obj/structure/table/wood,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/canvas/twentythreeXtwentythree{
-	pixel_x = -2;
-	pixel_y = -7
-	},
-/turf/open/floor/wood,
-/area/maintenance/starboard/fore)
 "mUM" = (
 /obj/machinery/computer/arcade,
 /turf/open/floor/carpet,
@@ -55840,17 +55819,6 @@
 /area/science/circuit)
 "oVW" = (
 /obj/structure/table/wood,
-/obj/item/canvas{
-	pixel_y = -3
-	},
-/obj/item/canvas{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/canvas{
-	pixel_x = 4;
-	pixel_y = 8
-	},
 /obj/item/candle/infinite{
 	pixel_x = 8;
 	pixel_y = -2
@@ -56944,19 +56912,7 @@
 /area/science/circuit)
 "wwg" = (
 /obj/structure/table/wood,
-/obj/item/canvas/nineteenXnineteen{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/canvas/nineteenXnineteen{
-	pixel_x = 6;
-	pixel_y = -3
-	},
-/obj/item/canvas/nineteenXnineteen{
-	pixel_x = 6;
-	pixel_y = -3
-	},
-/obj/item/canvas/nineteenXnineteen,
+/obj/item/device/camera,
 /turf/open/floor/wood,
 /area/maintenance/starboard/fore)
 "wzN" = (
@@ -102532,7 +102488,7 @@ pvl
 oVW
 wwg
 iIR
-mTw
+wwg
 alP
 aoP
 alP

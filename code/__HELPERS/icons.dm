@@ -756,7 +756,7 @@ The _flatIcons list is a cache for generated icon files.
 
 	var/curdir
 	var/base_icon_dir	//We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
-	
+
 	//These should use the parent's direction (most likely)
 	if(!A.dir || A.dir == SOUTH)
 		curdir = defdir
@@ -765,7 +765,7 @@ The _flatIcons list is a cache for generated icon files.
 
 	//Let's check if the icon actually contains any diagonals, just skip if it's south to save (lot of) time
 	if(curdir != SOUTH)
-		var/icon/test_icon 
+		var/icon/test_icon
 		var/directionals_exist = FALSE
 		var/list/dirs_to_check = GLOB.cardinals - SOUTH
 		outer:
@@ -1033,12 +1033,11 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 //Interface for easy drawing of one pixel on an atom.
 /atom/proc/DrawPixelOn(colour, drawX, drawY)
-	var/icon/I = new(icon)
+	var/icon/I = getFlatIcon(src)
 	var/icon/J = DrawPixel(I, colour, drawX, drawY)
 	if(J) //Only set the icon if it succeeded, the icon without the pixel is 1000x better than a black square.
-		icon = J
-		return J
-	return 0
+		I.Blend(J,function=ICON_OVERLAY)
+		icon = I
 
 //For creating consistent icons for human looking simple animals
 /proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key)
