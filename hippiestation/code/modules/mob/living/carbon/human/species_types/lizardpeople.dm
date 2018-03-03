@@ -39,7 +39,8 @@
 	name = "Ash Walker"
 	id = "ashlizard"
 	limbs_id = "lizard"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
+	inherent_traits = list(TRAIT_NOGUNS, TRAIT_NOBREATH)
 
 /datum/outfit/ashwalker/post_equip(mob/living/carbon/human/H)
 	H.remove_all_languages() //Ashwalkers can only speak Draconic
