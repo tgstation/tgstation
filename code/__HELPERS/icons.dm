@@ -1036,7 +1036,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	var/icon/I = getFlatIcon(src)
 	var/icon/J = DrawPixel(I, colour, drawX, drawY)
 	if(J) //Only set the icon if it succeeded, the icon without the pixel is 1000x better than a black square.
-		I.Blend(J,function=ICON_OVERLAY)
+		I.Blend(J,ICON_OVERLAY)
 		icon = I
 
 //For creating consistent icons for human looking simple animals
