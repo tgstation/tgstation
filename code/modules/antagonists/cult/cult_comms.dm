@@ -1,5 +1,4 @@
 // Contains cult communion, guide, and cult master abilities
-#define MARK_COOLDOWN
 
 /datum/action/innate/cult
 	icon_icon = 'icons/mob/actions/actions_cult.dmi'

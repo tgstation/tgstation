@@ -20,8 +20,8 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define THIS_PROC_TYPE_STR "[THIS_PROC_TYPE]" //Because you can only obtain a string of THIS_PROC_TYPE using "[]", and it's nice to just +/+= strings
 #define THIS_PROC_TYPE_STR_WITH_ARGS "[THIS_PROC_TYPE]([args.Join(",")])"
 #define THIS_PROC_TYPE_WEIRD ...... //This one is WEIRD, in some cases (When used in certain defines? (eg: ASSERT)) THIS_PROC_TYPE will fail to work, but THIS_PROC_TYPE_WEIRD will work instead
-#define THIS_PROC_TYPE_WEIRD_STR "[THIS_PROC_TYPE_WEIRD]" //Included for completeness
-#define THIS_PROC_TYPE_WEIRD_STR_WITH_ARGS "[THIS_PROC_TYPE_WEIRD]([args.Join(",")])" //Ditto
+//define THIS_PROC_TYPE_WEIRD_STR "[THIS_PROC_TYPE_WEIRD]" //Included for completeness
+//define THIS_PROC_TYPE_WEIRD_STR_WITH_ARGS "[THIS_PROC_TYPE_WEIRD]([args.Join(",")])" //Ditto
 
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
@@ -46,7 +46,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define HALLOWEEN				"Halloween"
 #define CHRISTMAS				"Christmas"
 #define FESTIVE_SEASON			"Festive Season"
-#define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
 #define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
@@ -301,10 +300,8 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 /////////////////////////////////////
 // atom.appearence_flags shortcuts //
 /////////////////////////////////////
-//this was added midway thru 510, so it might not exist in some versions, but we can't check by minor verison
-#ifndef TILE_BOUND
-#error this version of 510 is too old, You must use byond 510.1332 or later. (TILE_BOUND is not defined)
-#endif
+
+/*
 
 // Disabling certain features
 #define APPEARANCE_IGNORE_TRANSFORM			RESET_TRANSFORM
@@ -322,12 +319,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_CONSIDER_ALPHA			~RESET_ALPHA
 #define APPEARANCE_LONG_GLIDE				LONG_GLIDE
 
-#ifndef PIXEL_SCALE
-#define PIXEL_SCALE 0
-#if DM_VERSION >= 512
-#error HEY, PIXEL_SCALE probably exists now, remove this gross ass shim.
-#endif
-#endif
+*/
 
 // Consider these images/atoms as part of the UI/HUD
 #define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE
