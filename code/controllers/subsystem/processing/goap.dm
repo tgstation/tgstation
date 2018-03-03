@@ -13,8 +13,10 @@ PROCESSING_SUBSYSTEM_DEF(goap)
 	while(current_run.len)
 		var/datum/goap_agent/thing = current_run[current_run.len]
 		current_run.len--
-		if(thing && thing.able_to_run())
-			if(QDELETED(thing) || thing.process(wait) == PROCESS_KILL)
+		if(QDELETED(thing))
+			processing -= thing
+		else if(thing.able_to_run())
+			if(thing.process(wait) == PROCESS_KILL)
 				processing -= thing
-			if (MC_TICK_CHECK)
-				return
+		if(MC_TICK_CHECK)
+			return

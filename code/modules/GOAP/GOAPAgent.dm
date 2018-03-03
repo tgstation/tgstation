@@ -8,7 +8,10 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 #define STATE_ACTING	2
 
 #define GOAP_DEBUG_ENABLE 0
-#define goap_debug(X) ;
+
+/proc/goap_debug(var/string)
+	if(GOAP_DEBUG_ENABLE)
+		world.log << "GOAP: [string]"
 
 /datum/goap_agent
 	var/brain_state = STATE_IDLE
@@ -67,16 +70,14 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 /datum/goap_agent/proc/able_to_run()
 	if(!agent)
 		STOP_PROCESSING(SSgoap, src)
-		QDEL_NULL(src)
-		. = FALSE
-		return
+		qdel(src)
+		return FALSE
 	for(var/I in GLOB.mob_list)
 		var/mob/M = I
 		if(M != null)
 			if(M.z == agent.z && M.client && istype(M, /mob/living) && get_dist(M, agent) <= 14)
-				. = TRUE
-				return
-	. = FALSE
+				return TRUE
+	return FALSE
 
 /datum/goap_agent/process()
 	if(!agent)
@@ -97,34 +98,33 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 		brain_state = STATE_IDLE
 	else
 		var/datum/goap_action/curr_action = action_queue[action_queue.len]
+		curr_action = action_queue[action_queue.len]
+		var/range_check = curr_action.IsInRange(agent)
 		if(curr_action.CheckDone(agent))
 			action_queue.len--
-		if(LAZYLEN(action_queue)) //still got actions after removing the current one?
-			curr_action = action_queue[action_queue.len]
-			var/range_check = curr_action.IsInRange(agent)
-			if(range_check)
-				if(already_acting)
-					return
-				else
-					already_acting = TRUE
-					if(!curr_action.Perform(agent))
-						goap_debug("PERFORM FAILED [curr_action]")
-						brain_state = STATE_IDLE
-						path = list()
-						info.PlanAborted(curr_action)
-						already_acting = FALSE
-					else
-						goap_debug("PERFORMED [curr_action]")
-						if(action_queue.len == 1 && action_queue[1] == curr_action)
-							brain_state = STATE_IDLE
-							path = list()
-							already_acting = FALSE
-							return
-						path = list()
-						already_acting = FALSE
-
-			else
-				brain_state = STATE_MOVINGTO
+		if(already_acting)
+			return
+		if(!LAZYLEN(action_queue))
+			return
+		if(!range_check)
+			brain_state = STATE_MOVINGTO
+			return
+		already_acting = TRUE
+		if(!curr_action.Perform(agent))
+			goap_debug("PERFORM FAILED [curr_action]")
+			brain_state = STATE_IDLE
+			path = list()
+			info.PlanAborted(curr_action)
+			already_acting = FALSE
+		else
+			goap_debug("PERFORMED [curr_action]")
+			if(action_queue.len == 1 && action_queue[1] == curr_action)
+				brain_state = STATE_IDLE
+				path = list()
+				already_acting = FALSE
+				return
+			path = list()
+			already_acting = FALSE
 
 /datum/goap_agent/proc/moving_state()
 	if(fuck_you_astar)
@@ -134,37 +134,37 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 	if(curr_action.RequiresInRange(agent) && !curr_action.target)
 		goap_debug("An action ([curr_action]) requires a target, but did not get one set")
 		brain_state = STATE_IDLE
-	else
-		var/dense_garbage = null
-		for(var/obj/I in get_turf(curr_action.target))
-			if(I.density)
-				dense_garbage = 1
-				break
-		var/proc_to_use = /turf/proc/reachableTurftest
-		switch(movement_type)
-			if(1, 4) // AStar, Full
-				if(!path || !path.len)
-					fuck_you_astar = TRUE
-					if(!isturf(curr_action.target))
-						path = get_path_to(agent, get_turf(curr_action.target), /turf/proc/Distance_cardinal, 0, 200, adjacent = proc_to_use, id=given_pathfind_access, mintargetdist = dense_garbage)
-					else
-						path = get_path_to(agent, curr_action.target, /turf/proc/Distance_cardinal, 0, 200, adjacent = proc_to_use, id=given_pathfind_access, mintargetdist = dense_garbage)
-					if(!path || !path.len) // still can't path
-						goap_debug("Can't path to plan, giving up")
-						brain_state = STATE_IDLE
-						fuck_you_astar = FALSE
-						return 0
-				fuck_you_astar = FALSE
-				last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
-				current_loc = get_turf(agent)
-				curr_action.PerformWhileMoving(agent)
-				MoveTo_AStar(curr_action, path)
-			if(2) // AStar, Fake
-				curr_action.PerformWhileMoving(agent)
-				MoveTo_FakeStar(curr_action)
-			if(3) // No Pathfinding, Straight Line
-				curr_action.PerformWhileMoving(agent)
-				MoveTo(curr_action)
+		return
+	var/dense_garbage = null
+	for(var/obj/I in get_turf(curr_action.target))
+		if(I.density)
+			dense_garbage = 1
+			break
+	var/proc_to_use = /turf/proc/reachableTurftest
+	switch(movement_type)
+		if(1, 4) // AStar, Full
+			if(!path || !path.len)
+				fuck_you_astar = TRUE
+				if(!isturf(curr_action.target))
+					path = get_path_to(agent, get_turf(curr_action.target), /turf/proc/Distance_cardinal, 0, 200, adjacent = proc_to_use, id=given_pathfind_access, mintargetdist = dense_garbage)
+				else
+					path = get_path_to(agent, curr_action.target, /turf/proc/Distance_cardinal, 0, 200, adjacent = proc_to_use, id=given_pathfind_access, mintargetdist = dense_garbage)
+				if(!path || !path.len) // still can't path
+					goap_debug("Can't path to plan, giving up")
+					brain_state = STATE_IDLE
+					fuck_you_astar = FALSE
+					return 0
+			fuck_you_astar = FALSE
+			last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
+			current_loc = get_turf(agent)
+			curr_action.PerformWhileMoving(agent)
+			MoveTo_AStar(curr_action, path)
+		if(2) // AStar, Fake
+			curr_action.PerformWhileMoving(agent)
+			MoveTo_FakeStar(curr_action)
+		if(3) // No Pathfinding, Straight Line
+			curr_action.PerformWhileMoving(agent)
+			MoveTo(curr_action)
 
 /datum/goap_agent/proc/idle_state()
 	var/list/worldstate = info.GetWorldState(src)
@@ -172,18 +172,18 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 
 	var/list/plan = planner.Plan(agent, our_actions, worldstate, goal)
 
-	if(LAZYLEN(plan))
-		goap_debug("I am gonna act")
-		goap_debug(plan.len)
-
-		for(var/i in plan)
-			goap_debug(i)
-
-		action_queue = plan
-		info.PlanFound(goal, plan)
-		brain_state = STATE_ACTING
-	else
+	if(!LAZYLEN(plan))
 		info.PlanFailed(goal)
+		return
+	goap_debug("I am gonna act")
+	goap_debug(plan.len)
+
+	for(var/i in plan)
+		goap_debug(i)
+
+	action_queue = plan
+	info.PlanFound(goal, plan)
+	brain_state = STATE_ACTING
 
 /datum/goap_agent/proc/MoveTo_AStar(datum/goap_action/curr_action, list/path)
 	var/turf/dest = get_turf(curr_action.target)

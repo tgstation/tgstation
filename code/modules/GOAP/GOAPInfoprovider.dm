@@ -17,22 +17,12 @@
 //BEcause all comparisons between states are == (so no >= or > or < yet, sadly)
 /datum/goap_info_provider/proc/GetWorldState(datum/goap_agent/agent)
 	. = list()
-	if(agent.agent)
-		if(ismob(agent.agent))
-			var/mob/living/carbon/M = agent.agent
-			.["agent_alive"] = (M.health > 0)
-	.["hasFire"] = FALSE
-	.["hasWood"] = FALSE
 
 
 //Same as GetWorldState() but returns an -idealised- future-world
 //Eg: "my_enemy_is_dead" = TRUE
 /datum/goap_info_provider/proc/GetGoal(datum/goap_agent/agent)
 	. = list()
-	if(agent.agent)
-		if(ismob(agent.agent))
-			.["agent_alive"] = TRUE //we want to still be alive in the future, disable this if you want agents to perform potentially suicidal-acts (eg: act like lunatics)
-
 
 //Should we try again?
 //Checks if the current goal had previously failed, and if so, if the worldstate lines up

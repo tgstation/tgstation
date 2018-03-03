@@ -170,9 +170,10 @@ MAKE THAT FOAM
 		"THE CLEANBOTS WILL RISE.", "YOU ARE NO MORE THAN ANOTHER MESS THAT I MUST CLEANSE.", "FILTHY.", "DISGUSTING.", "PUTRID.",
 		"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.", "EXTERMINATING PESTS.")
 	B.say(phrase)
-	C.emote("scream")
+
 	playsound(B, 'sound/effects/spray2.ogg', 50, 1, -6)
-	C.acid_act(5, 2, 100)
+	if(C.acid_act(5, 2, 100))
+		C.emote("scream")
 	action_done = TRUE
 	return TRUE
 
