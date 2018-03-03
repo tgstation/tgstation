@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - admin: "Admins can now toggle antag, med, sci, engineering huds and maximum ghost brightness with just one button."
