@@ -190,7 +190,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define AI_MECH_HACK		3 //Malfunctioning AI hijacking mecha
 
 //check_target_facings() return defines
-#define FACING_FAILED											0
 #define FACING_SAME_DIR											1
 #define FACING_EACHOTHER										2
 #define FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR	3 //Do I win the most informative but also most stupid define award?
@@ -208,7 +207,6 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOOD_GAIN_PER_STEP			100
 #define BLOOD_LOSS_PER_STEP			5
 #define BLOOD_LOSS_IN_SPREAD		20
-#define BLOOD_FADEOUT_TIME			2
 
 //Bloody shoe blood states
 #define BLOOD_STATE_HUMAN			"blood"
@@ -236,7 +234,6 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define TURF_WET_LUBE	2
 #define TURF_WET_ICE	3
 #define TURF_WET_PERMAFROST 4
-#define TURF_WET_SLIDE	5
 
 //Maximum amount of time, (in approx. seconds.) a tile can be wet for.
 #define MAXIMUM_WET_TIME 300
@@ -419,7 +416,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 //Error handler defines
 #define ERROR_USEFUL_LEN 2
 
-#define NO_FIELD 0
 #define FIELD_TURF 1
 #define FIELD_EDGE 2
 

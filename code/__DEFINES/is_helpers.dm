@@ -1,7 +1,5 @@
 // simple is_type and similar inline helpers
 
-#define isdatum(D) (istype(D, /datum))
-
 #define islist(L) (istype(L, /list))
 
 #if DM_VERSION >= 512
@@ -118,15 +116,9 @@
 
 #define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
 
-#define isdog(A) (istype(A, /mob/living/simple_animal/pet/dog))
-
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/pet/dog/corgi))
 
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
-
-#define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
-
-#define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))
 
 #define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
 
