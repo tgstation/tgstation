@@ -9,10 +9,11 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 
 #define GOAP_DEBUG_ENABLE 0
 
-/proc/goap_debug(var/string)
-	if(GOAP_DEBUG_ENABLE)
-		world.log << "GOAP: [string]"
-
+#ifdef GOAP_DEBUG_ENABLE
+#define goap_debug(string) world.log << "GOAP: [string]"
+#else
+#define goap_debug(string) ;
+#endif
 /datum/goap_agent
 	var/brain_state = STATE_IDLE
 	var/list/our_actions //The actions available to us (/datum/goap_action)
@@ -74,9 +75,8 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 		return FALSE
 	for(var/I in GLOB.mob_list)
 		var/mob/M = I
-		if(M != null)
-			if(M.z == agent.z && M.client && istype(M, /mob/living) && get_dist(M, agent) <= 14)
-				return TRUE
+		if(M != null && M.z == agent.z && M.client && istype(M, /mob/living) && get_dist(M, agent) <= 14)
+			return TRUE
 	return FALSE
 
 /datum/goap_agent/process()
@@ -96,35 +96,35 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 /datum/goap_agent/proc/act_state()
 	if(!LAZYLEN(action_queue))
 		brain_state = STATE_IDLE
+		return
+	var/datum/goap_action/curr_action = action_queue[action_queue.len]
+	curr_action = action_queue[action_queue.len]
+	var/range_check = curr_action.IsInRange(agent)
+	if(curr_action.CheckDone(agent))
+		action_queue.len--
+	if(already_acting)
+		return
+	if(!LAZYLEN(action_queue))
+		return
+	if(!range_check)
+		brain_state = STATE_MOVINGTO
+		return
+	already_acting = TRUE
+	if(!curr_action.Perform(agent))
+		goap_debug("PERFORM FAILED [curr_action]")
+		brain_state = STATE_IDLE
+		path = list()
+		info.PlanAborted(curr_action)
+		already_acting = FALSE
 	else
-		var/datum/goap_action/curr_action = action_queue[action_queue.len]
-		curr_action = action_queue[action_queue.len]
-		var/range_check = curr_action.IsInRange(agent)
-		if(curr_action.CheckDone(agent))
-			action_queue.len--
-		if(already_acting)
-			return
-		if(!LAZYLEN(action_queue))
-			return
-		if(!range_check)
-			brain_state = STATE_MOVINGTO
-			return
-		already_acting = TRUE
-		if(!curr_action.Perform(agent))
-			goap_debug("PERFORM FAILED [curr_action]")
+		goap_debug("PERFORMED [curr_action]")
+		if(action_queue.len == 1 && action_queue[1] == curr_action)
 			brain_state = STATE_IDLE
 			path = list()
-			info.PlanAborted(curr_action)
 			already_acting = FALSE
-		else
-			goap_debug("PERFORMED [curr_action]")
-			if(action_queue.len == 1 && action_queue[1] == curr_action)
-				brain_state = STATE_IDLE
-				path = list()
-				already_acting = FALSE
-				return
-			path = list()
-			already_acting = FALSE
+			return
+		path = list()
+		already_acting = FALSE
 
 /datum/goap_agent/proc/moving_state()
 	if(fuck_you_astar)

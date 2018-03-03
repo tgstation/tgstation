@@ -13,9 +13,8 @@
 	for(var/a in actions)
 		var/datum/goap_action/GA = a
 		goap_debug("CHECKING ACTION [GA]")
-		if(GA.cooldown)
-			if(GA.OnCooldown(agent, worldstate))
-				continue
+		if(GA.cooldown && GA.OnCooldown(agent, worldstate))
+			continue
 		if(GA.AdvancedPreconditions(agent, worldstate))
 			usable_actions += GA
 			goap_debug("USABLE ACTION [GA]")
