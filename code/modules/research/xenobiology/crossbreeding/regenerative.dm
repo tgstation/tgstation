@@ -15,7 +15,7 @@ Regenerative extracts:
 
 
 /obj/item/slimecross/regenerative/afterattack(atom/target,mob/user,prox)
-	if(!prox && !isliving(target))
+	if(!prox || !isliving(target))
 		return
 	var/mob/living/H = target
 	if(H.stat == DEAD)
@@ -132,7 +132,7 @@ Regenerative extracts:
 	colour = "bluespace"
 	var/turf/open/T
 
-/obj/item/slimecross/regenerative/bluespace/core_effect(mob/living/target, mob/user) //WIP - Actually make this work.
+/obj/item/slimecross/regenerative/bluespace/core_effect(mob/living/target, mob/user)
 	target.visible_message("<span class='warning'>[src] disappears in a shower of sparks!</span>","<span class='danger'>The milky goo teleports you somewhere it remembers!</span>")
 	do_sparks(5,FALSE,target)
 	target.forceMove(T)
@@ -216,10 +216,12 @@ Regenerative extracts:
 	var/dummytype = target.type
 	var/mob/living/dummy = new dummytype(target.loc)
 	to_chat(target, "<span class='notice'>The milky goo flows from your skin, forming an imperfect copy of you.</span>")
-	if(ishuman(target))
-		var/mob/living/carbon/human/T = target
-		var/mob/living/carbon/human/D = dummy
-		T.dna.copy_dna(D.dna)
+	if(iscarbon(target))
+		var/mob/living/carbon/T = target
+		var/mob/living/carbon/D = dummy
+		T.dna.transfer_identity(D)
+		D.updateappearance(mutcolor_update=1)
+		D.real_name = T.real_name
 	dummy.adjustBruteLoss(target.getBruteLoss())
 	dummy.adjustFireLoss(target.getFireLoss())
 	dummy.adjustToxLoss(target.getToxLoss())

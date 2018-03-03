@@ -44,7 +44,7 @@
 	owner.color = "#3070CC"
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.physiology.armor += 10
+		H.physiology.damage_resistance += 10
 	owner.visible_message("<span class='warning'>[owner] is suddenly covered in a strange, blue-ish gel!</span>",
 		"<span class='notice'>You are covered in a thick, rubbery gel.</span>")
 	return ..()
@@ -53,7 +53,7 @@
 	owner.color = originalcolor
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.physiology.armor -= 10
+		H.physiology.damage_resistance -= 10
 	owner.visible_message("<span class='warning'>[owner]'s gel coating liquefies and dissolves away.</span>",
 		"<span class='notice'>Your gel second-skin dissolves!</span>")
 
@@ -67,10 +67,11 @@
 	alert_type = null
 	var/obj/item/slimecross/stabilized/linked_extract
 
-/datum/status_effect/stabilized/tick() //Removes the effect if the extract is no longer in the owner.
-	if(!istype(linked_extract))
+/datum/status_effect/stabilized/tick()
+	if(!linked_extract || !linked_extract.loc) //Sanity checking
 		qdel(src)
-	if(linked_extract.loc != owner && linked_extract.loc.loc != owner)
+		return
+	if(linked_extract && linked_extract.loc != owner && linked_extract.loc.loc != owner)
 		linked_extract.linked_effect = null
 		if(!QDELETED(linked_extract))
 			linked_extract.owner = null
@@ -255,7 +256,7 @@ datum/status_effect/stabilized/blue/on_remove()
 		linked_alert.desc = "The stabilized bluespace extract will try to redirect you from harm!"
 		linked_alert.icon_state = "slime_bluespace_on"
 
-	if(healthcheck & (healthcheck - owner.health) > 5)
+	if(healthcheck && (healthcheck - owner.health) > 5)
 		owner.visible_message("<span class='warning'>[linked_extract] notices the sudden change in [owner]'s physical health, and activates!</span>")
 		do_sparks(5,FALSE,owner)
 		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
@@ -294,13 +295,13 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"
-	var/mob/living/clone //WIP - Figure out why this isn't saving.
+	var/mob/living/clone
 
 /datum/status_effect/stabilized/cerulean/on_apply()
 	var/typepath = owner.type
 	clone = new typepath(owner.loc)
 	var/mob/living/carbon/O = owner
-	var/mob/living/carbon/C = owner
+	var/mob/living/carbon/C = clone
 	if(istype(C) && istype(O))
 		C.real_name = O.real_name
 		O.dna.transfer_identity(C)
@@ -312,8 +313,8 @@ datum/status_effect/stabilized/blue/on_remove()
 		if(clone && clone.stat != DEAD)
 			owner.visible_message("<span class='warning'>[owner] blazes with brilliant light, [src] whisking [owner.p_their()] soul away.</span>",
 				"<span class='notice'>You feel a warm glow from [linked_extract], and you open your eyes... elsewhere.</span>")
-			clone.mind = owner.mind
-			owner.mind = null
+			if(owner.mind)
+				owner.mind.transfer_to(clone)
 			clone = null
 			qdel(linked_extract)
 		if(!clone || clone.stat == DEAD)
@@ -353,19 +354,22 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/green
 	id = "stabilizedgreen"
-	var/datum/dna/originalDNA = new /datum/dna()
+	var/datum/dna/originalDNA
+	var/originalname
 
 /datum/status_effect/stabilized/green/on_apply()
 	to_chat(owner, "<span class='warning'>You feel different...</span>")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.dna.copy_dna(originalDNA) //WIP - Fix this!
+		originalDNA = new H.dna.type
+		originalname = H.real_name
+		H.dna.copy_dna(originalDNA)
 		randomize_human(H)
 	return ..()
 
 /datum/status_effect/stabilized/green/tick() //Only occasionally give examiners a warning.
 	if(prob(50))
-		examine_text = "<span class='warning'>SUBJECTPRONOUN looks a bit green...</span>"
+		examine_text = "<span class='warning'>SUBJECTPRONOUN looks a bit green and gooey...</span>"
 	else
 		examine_text = null
 	return ..()
@@ -374,7 +378,9 @@ datum/status_effect/stabilized/blue/on_remove()
 	to_chat(owner, "<span class='notice'>You feel more like yourself.</span>")
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.dna = originalDNA
+		originalDNA.transfer_identity(H)
+		H.real_name = originalname
+		H.updateappearance(mutcolor_update=1)
 
 /datum/status_effect/brokenpeace
 	id = "brokenpeace"
@@ -402,7 +408,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	faction_name = owner.real_name
 	return ..()
 
-/datum/status_effect/stabilized/pink/tick() //WIP - Fix this!
+/datum/status_effect/stabilized/pink/tick()
 	for(var/mob/living/simple_animal/M in view(7,get_turf(owner)))
 		if(!(M in mobs))
 			mobs += M
@@ -410,10 +416,11 @@ datum/status_effect/stabilized/blue/on_remove()
 			M.faction |= faction_name
 	for(var/mob/living/simple_animal/M in mobs)
 		if(!(M in view(7,get_turf(owner))))
-			M.faction &= ~faction_name
+			M.faction -= faction_name
 			M.remove_status_effect(/datum/status_effect/pinkdamagetracker)
+			mobs -= M
 		var/datum/status_effect/pinkdamagetracker/C = M.has_status_effect(/datum/status_effect/pinkdamagetracker)
-		if(C & C.damage > 0)
+		if(istype(C) && C.damage > 0)
 			C.damage = 0
 			owner.apply_status_effect(/datum/status_effect/brokenpeace)
 	var/HasFaction = FALSE
@@ -422,7 +429,7 @@ datum/status_effect/stabilized/blue/on_remove()
 			HasFaction = TRUE
 
 	if(HasFaction && owner.has_status_effect(/datum/status_effect/brokenpeace))
-		owner.faction &= ~faction_name
+		owner.faction -= faction_name
 		to_chat(owner, "<span class='userdanger'>The peace has been broken! Hostile creatures will now react to you!</span>")
 	if(!HasFaction && !owner.has_status_effect(/datum/status_effect/brokenpeace))
 		to_chat(owner, "<span class='notice'>[linked_extract] pulses, generating a fragile aura of peace.</span>")
@@ -431,11 +438,11 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/pink/on_remove()
 	for(var/mob/living/simple_animal/M in mobs)
-		M.faction &= ~faction_name
+		M.faction -= faction_name
 		M.remove_status_effect(/datum/status_effect/pinkdamagetracker)
 	for(var/i in owner.faction)
 		if(i == faction_name)
-			owner.faction &= ~faction_name
+			owner.faction -= faction_name
 
 /datum/status_effect/stabilized/oil
 	id = "stabilizedoil"

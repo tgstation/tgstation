@@ -113,6 +113,7 @@ To add a crossbreed:
 /obj/item/slimecrossbeaker/bloodpack //Pack of 50u blood. Deletes on empty.
 	name = "blood extract"
 	desc = "A sphere of liquid blood, somehow managing to stay together."
+	color = "#FF0000"
 	list_reagents = list("blood" = 50)
 
 /obj/item/slimecrossbeaker/autoinjector //As with the above, but automatically injects whomever it is used on with contents.
@@ -143,6 +144,7 @@ To add a crossbreed:
 	ignore_flags = TRUE //It is, after all, intended to heal.
 	name = "mending solution"
 	desc = "A strange glob of sweet-smelling semifluid, which seems to stick to skin rather easily."
+	color = "#FF00FF"
 	list_reagents = list("regen_jelly" = 20)
 
 /obj/item/slimecrossbeaker/autoinjector/slimejelly //Primarily for slimepeople, but you do you.
@@ -156,4 +158,5 @@ To add a crossbreed:
 	container_type = null //It won't be *that* easy to get your hands on pax.
 	name = "peaceful distillation"
 	desc = "A light pink gooey sphere. Simply touching it makes you a little dizzy."
+	color = "#DDAAAA"
 	list_reagents = list("synthpax" = 10, "space_drugs" = 15) //Peace, dudes
