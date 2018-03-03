@@ -55,9 +55,9 @@
 			continue// by using someone else's crate
 		if(!(obj_flags & EMAGGED) && P.contraband) // will you show me?
 			continue // i'd be right happy to
-		meme_pack_data[P.group]["packs"] += list(list(//mfw goof sullies your nice cargo features with n a s t y and downright s i l l y comments^^^
+		meme_pack_data[P.group]["packs"] += list(list(//remove comment, r e m o v e^^^
 			"name" = P.name,
-			"cost" = P.cost,//used to be cost*2
+			"cost" = P.cost,
 			"id" = pack
 		))
 
@@ -120,12 +120,12 @@
 						CHECK_TICK
 					if(empty_turfs && empty_turfs.len)
 						var/LZ = empty_turfs[rand(empty_turfs.len-1)]
-						SSshuttle.points -= SO.pack.cost * 1.2
+						SSshuttle.points -= SO.pack.cost
 						new /obj/effect/DPtarget(LZ, SO, podID)
 						. = TRUE
 						update_icon()
 			else
-				if(SO.pack.cost * (1.2*MAX_EMAG_ROCKETS) <= SSshuttle.points) // bulk discount :^)
+				if(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS) <= SSshuttle.points) // bulk discount :^)
 					landingzone = locate(pick(GLOB.the_station_areas)) in GLOB.sortedAreas
 					for(var/turf/open/floor/T in landingzone.contents)
 						if(is_blocked_turf(T))
