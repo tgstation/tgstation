@@ -9,9 +9,6 @@
 /proc/gameTimestamp(format = "hh:mm:ss", wtime=null)
 	if(!wtime)
 		wtime = world.time
-<<<<<<< HEAD
-	return time2text(wtime - GLOB.timezoneOffset + SSticker.gametime_offset - SSticker.round_start_time, format)
-=======
 	return time2text(wtime - GLOB.timezoneOffset, format)
 
 /proc/station_time(display_only = FALSE)
@@ -29,7 +26,6 @@
 		SSticker.gametime_offset = FLOOR(SSticker.gametime_offset, 3600)
 	else
 		SSticker.gametime_offset = CEILING(SSticker.gametime_offset, 3600)
->>>>>>> 19ba13a419... Merge pull request #35966 from kevinz000/patch-452
 
 /* Returns 1 if it is the selected month and day */
 /proc/isDay(month, day)
