@@ -69,16 +69,19 @@
 /obj/item/reagent_containers/medspray/styptic
 	name = "medical spray (styptic powder)"
 	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap. This one contains styptic powder, for treating cuts and bruises."
+	icon_state = "brutespray"
 	list_reagents = list("styptic_powder" = 60)
 
 /obj/item/reagent_containers/medspray/silver_sulf
 	name = "medical spray (silver sulfadiazine)"
 	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap. This one contains silver sulfadiazine, useful for treating burns."
+	icon_state = "burnspray"
 	list_reagents = list("silver_sulfadiazine" = 60)
 
 /obj/item/reagent_containers/medspray/synthflesh
 	name = "medical spray (synthflesh)"
 	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap. This one contains synthflesh, an apex brute and burn healing agent."
+	icon_state = "synthspray"
 	list_reagents = list("synthflesh" = 60)
 
 /obj/item/reagent_containers/medspray/sterilizine
