@@ -72564,15 +72564,9 @@
 "cXF" = (
 /obj/structure/table,
 /obj/item/paper_bin,
-/obj/item/pen,
 /obj/machinery/light,
-/turf/open/floor/plasteel/whiteblue/corner{
-	dir = 8
-	},
-/area/medical/medbay/central)
-"cXG" = (
-/obj/structure/table,
 /obj/item/folder/white,
+/obj/item/pen,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 8
 	},
@@ -73392,8 +73386,12 @@
 /area/medical/medbay/central)
 "cZw" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/smartfridge/chemistry/preloaded,
-/turf/closed/wall,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "chemistbot";
+	name = "Chemistry Side Shutters"
+	},
+/turf/open/floor/plating,
 /area/medical/medbay/central)
 "cZx" = (
 /obj/structure/table/reinforced,
@@ -74210,9 +74208,6 @@
 	},
 /area/medical/chemistry)
 "dbc" = (
-/obj/structure/table/glass,
-/obj/item/clipboard,
-/obj/item/toy/figure/chemist,
 /turf/open/floor/plasteel/whiteyellow/corner{
 	dir = 1
 	},
@@ -75057,6 +75052,7 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
+/obj/item/toy/figure/chemist,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 8
 	},
@@ -101143,6 +101139,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/circuit/green,
 /area/science/research/abandoned)
+"nAq" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/turf/closed/wall,
+/area/medical/medbay/central)
 "oZC" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -141354,8 +141354,8 @@ cQT
 cSE
 cUt
 cWj
-cXG
-cZt
+cXI
+nAq
 dbc
 dcO
 dem
