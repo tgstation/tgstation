@@ -49794,7 +49794,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cBQ" = (
-/obj/machinery/power/rad_collector/anchored,
+/obj/machinery/power/rad_collector,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cBR" = (
