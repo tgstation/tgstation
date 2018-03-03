@@ -78,11 +78,17 @@
 	results = list("gintonic" = 3)
 	required_reagents = list("gin" = 2, "tonic" = 1)
 
+/datum/chemical_reaction/rum_coke
+	name = "Rum and Coke"
+	id = "rumcoke"
+	results = list("rumcoke" = 3)
+	required_reagents = list("rum" = 2, "cola" = 1)
+
 /datum/chemical_reaction/cuba_libre
 	name = "Cuba Libre"
 	id = "cubalibre"
-	results = list("cubalibre" = 3)
-	required_reagents = list("rum" = 2, "cola" = 1)
+	results = list("cubalibre" = 4)
+	required_reagents = list("rumcoke" = 3, "limejuice" = 1)
 
 /datum/chemical_reaction/martini
 	name = "Classic Martini"
