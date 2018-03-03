@@ -123,7 +123,7 @@
 	else
 		..()
 
-/obj/machinery/power/tesla_coil/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
+/obj/machinery/power/tesla_coil/research/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(panel_open)
@@ -131,7 +131,7 @@
 		else
 			icon_state = "rpcoil[anchored]"
 
-/obj/machinery/power/tesla_coil/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/tesla_coil/research/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(default_deconstruction_screwdriver(user, "rpcoil_open[anchored]", "rpcoil[anchored]", W))
 		return
