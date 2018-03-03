@@ -45,8 +45,6 @@
 #define GENETIC_MUTATION "genetic"
 #define OBESITY "obesity"
 #define MAGIC_TRAIT "magic"
-#define STASIS_MUTE "stasis"
-#define GENETICS_SPELL "genetics_spell"
 #define TRAUMA_TRAIT "trauma"
 #define SPECIES_TRAIT "species"
 
@@ -57,3 +55,5 @@
 #define ABYSSAL_GAZE_BLIND "abyssal_gaze"
 #define HIGHLANDER "highlander"
 #define TRAIT_HULK "hulk"
+#define STASIS_MUTE "stasis"
+#define GENETICS_SPELL "genetics_spell"
