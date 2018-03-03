@@ -13,6 +13,7 @@
 	var/special = FALSE //Event/Station Goals/Admin enabled packs
 	var/special_enabled = FALSE
 	var/DropPodOnly = FALSE//only usable by the Bluespace Drop Pod via the express cargo console
+	var/admin_spawned = FALSE
 
 /datum/supply_pack/proc/generate(turf/T)
 	var/obj/structure/closet/crate/C = new crate_type(T)
@@ -27,8 +28,13 @@
 	return C
 
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
-	for(var/item in contains)
-		new item(C)
+	if (admin_spawned)
+		for(var/item in contains)
+			var/atom/A = new item(C)
+			A.admin_spawned = TRUE
+	else
+		for(var/item in contains)
+			new item(C)
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -58,7 +64,7 @@
 					/obj/item/drone_shell,
 					/obj/item/drone_shell)
 	crate_name = "drone shell crate"
-	
+
 /datum/supply_pack/emergency/equipment
 	name = "Emergency Bot/Internals Crate"
 	cost = 3500
@@ -78,7 +84,7 @@
 					/obj/item/clothing/mask/gas)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
-	
+
 /datum/supply_pack/emergency/firefighting
 	name = "Firefighting Crate"
 	cost = 1000
@@ -95,7 +101,7 @@
 					/obj/item/clothing/head/hardhat/red,
 					/obj/item/clothing/head/hardhat/red)
 	crate_name = "firefighting crate"
-	
+
 /datum/supply_pack/emergency/atmostank
 	name = "Firefighting Tank Backpack"
 	cost = 1000
@@ -103,7 +109,7 @@
 	contains = list(/obj/item/watertank/atmos)
 	crate_name = "firefighting backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
-		
+
 /datum/supply_pack/emergency/internals
 	name = "Internals Crate"
 	cost = 1000
@@ -121,13 +127,13 @@
 					/obj/item/tank/internals/air)
 	crate_name = "internals crate"
 	crate_type = /obj/structure/closet/crate/internals
-	
+
 /datum/supply_pack/emergency/metalfoam
 	name = "Metal Foam Grenade Crate"
 	cost = 1000
 	contains = list(/obj/item/storage/box/metalfoam)
 	crate_name = "metal foam grenade crate"
-	
+
 /datum/supply_pack/emergency/syndicate
 	name = "NULL_ENTRY"
 	hidden = TRUE
@@ -162,7 +168,7 @@
 					/obj/item/clothing/head/helmet/space/plasmaman,
 					/obj/item/clothing/head/helmet/space/plasmaman)
 	crate_name = "plasmaman supply kit"
-		
+
 /datum/supply_pack/emergency/radiation
 	name = "Radiation Protection Crate"
 	cost = 1000
@@ -177,7 +183,7 @@
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
 	crate_name = "radiation protection crate"
 	crate_type = /obj/structure/closet/crate/radiation
-	
+
 /datum/supply_pack/emergency/spacesuit
 	name = "Space Suit Crate"
 	cost = 3000
@@ -203,7 +209,7 @@
 					/obj/item/grenade/chem_grenade/incendiary)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
-	
+
 /datum/supply_pack/emergency/weedcontrol
 	name = "Weed Control Crate"
 	cost = 1500
@@ -231,7 +237,7 @@
 					/obj/item/clothing/suit/armor/vest,
 					/obj/item/clothing/suit/armor/vest)
 	crate_name = "armor crate"
-	
+
 /datum/supply_pack/security/disabler
 	name = "Disabler Crate"
 	cost = 1500
@@ -239,7 +245,7 @@
 					/obj/item/gun/energy/disabler,
 					/obj/item/gun/energy/disabler)
 	crate_name = "disabler crate"
-	
+
 /datum/supply_pack/security/forensics
 	name = "Forensics Crate"
 	cost = 2000
@@ -250,7 +256,7 @@
 	                /obj/item/toy/crayon/white,
 	                /obj/item/clothing/head/fedora/det_hat)
 	crate_name = "forensics crate"
-	
+
 /datum/supply_pack/security/helmets
 	name = "Helmets Crate"
 	cost = 1000
@@ -258,7 +264,7 @@
 					/obj/item/clothing/head/helmet/sec,
 					/obj/item/clothing/head/helmet/sec)
 	crate_name = "helmet crate"
-	
+
 /datum/supply_pack/security/laser
 	name = "Lasers Crate"
 	cost = 2000
@@ -266,7 +272,7 @@
 					/obj/item/gun/energy/laser,
 					/obj/item/gun/energy/laser)
 	crate_name = "laser crate"
-	
+
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barriers Crate"
 	contains = list(/obj/item/grenade/barrier,
@@ -275,7 +281,7 @@
 					/obj/item/grenade/barrier)
 	cost = 2000
 	crate_name = "security barriers crate"
-	
+
 /datum/supply_pack/security/securityclothes
 	name = "Security Clothing Crate"
 	cost = 3000
@@ -292,7 +298,7 @@
 					/obj/item/clothing/suit/security/hos,
 					/obj/item/clothing/head/beret/sec/navyhos)
 	crate_name = "security clothing crate"
-	
+
 /datum/supply_pack/security/supplies
 	name = "Security Supplies Crate"
 	cost = 1000
@@ -301,14 +307,14 @@
 					/obj/item/storage/box/flashes,
 					/obj/item/storage/box/handcuffs)
 	crate_name = "security supply crate"
-	
+
 /datum/supply_pack/security/firingpins
 	name = "Standard Firing Pins Crate"
 	cost = 2000
 	contains = list(/obj/item/storage/box/firingpins,
 					/obj/item/storage/box/firingpins)
 	crate_name = "firing pins crate"
-	
+
 /datum/supply_pack/security/justiceinbound
 	name = "Standard Justice Enforcer Crate"
 	cost = 6000 //justice comes at a price. An expensive, noisy price.
@@ -316,7 +322,7 @@
 	contains = list(/obj/item/clothing/head/helmet/justice,
 					/obj/item/clothing/mask/gas/sechailer)
 	crate_name = "security clothing crate"
-	
+
 /datum/supply_pack/security/baton
 	name = "Stun Batons Crate"
 	cost = 1000
@@ -324,7 +330,7 @@
 					/obj/item/melee/baton/loaded,
 					/obj/item/melee/baton/loaded)
 	crate_name = "stun baton crate"
-	
+
 /datum/supply_pack/security/taser
 	name = "Taser Crate"
 	cost = 3000
@@ -350,7 +356,7 @@
 	group = "Armory"
 	access = ACCESS_ARMORY
 	crate_type = /obj/structure/closet/crate/secure/weapon
-	
+
 /datum/supply_pack/security/armory/bulletarmor
 	name = "Bulletproof Armor Crate"
 	cost = 1500
@@ -358,7 +364,7 @@
 					/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/suit/armor/bulletproof)
 	crate_name = "bulletproof armor crate"
-	
+
 /datum/supply_pack/security/armory/combatknives
 	name = "Combat Knives Crate"
 	cost = 3000
@@ -366,7 +372,7 @@
 					/obj/item/kitchen/knife/combat,
 					/obj/item/kitchen/knife/combat)
 	crate_name = "combat knife crate"
-	
+
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
 	cost = 8000
@@ -377,7 +383,7 @@
 					/obj/item/storage/belt/bandolier,
 					/obj/item/storage/belt/bandolier)
 	crate_name = "combat shotguns crate"
-	
+
 /datum/supply_pack/security/armory/energy
 	name = "Energy Guns Crate"
 	cost = 2500
@@ -385,7 +391,7 @@
 					/obj/item/gun/energy/e_gun)
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
-	
+
 /datum/supply_pack/security/armory/chemimp
 	name = "Chemical Implants Crate"
 	cost = 2000
@@ -397,7 +403,7 @@
 	cost = 3000
 	contains = list(/obj/item/storage/box/exileimp)
 	crate_name = "exile implant crate"
-	
+
 /datum/supply_pack/security/armory/mindshield
 	name = "Mindshield Implants Crate"
 	cost = 4000
@@ -409,7 +415,7 @@
 	cost = 2000
 	contains = list(/obj/item/storage/box/trackimp)
 	crate_name = "tracking implant crate"
-	
+
 /datum/supply_pack/security/armory/fire
 	name = "Incendiary Weapons Crate"
 	cost = 1500
@@ -424,7 +430,7 @@
 	crate_name = "incendiary weapons crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
-	
+
 /datum/supply_pack/security/armory/laserarmor
 	name = "Reflector Vest Crate"
 	cost = 2000
@@ -440,7 +446,7 @@
 					/obj/item/clothing/suit/armor/riot,
 					/obj/item/clothing/suit/armor/riot)
 	crate_name = "riot armor crate"
-	
+
 /datum/supply_pack/security/armory/riothelmets
 	name = "Riot Helmets Crate"
 	cost = 1500
@@ -504,7 +510,7 @@
 	contains = list(/obj/machinery/shieldgen,
 					/obj/machinery/shieldgen)
 	crate_name = "anti-breach shield projector crate"
-	
+
 /datum/supply_pack/engineering/engiequipment
 	name = "Engineering Gear Crate"
 	cost = 1300
@@ -523,7 +529,7 @@
 					/obj/item/clothing/glasses/meson/engine,
 					/obj/item/clothing/glasses/meson/engine)
 	crate_name = "engineering gear crate"
-	
+
 /datum/supply_pack/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
 	cost = 2000	//Made of pure-grade bullshittinium
@@ -531,7 +537,7 @@
 					/obj/item/clothing/gloves/color/yellow,
 					/obj/item/clothing/gloves/color/yellow)
 	crate_name = "insulated gloves crate"
-	
+
 /obj/item/stock_parts/cell/inducer_supply
 	maxcharge = 5000
 	charge = 5000
@@ -542,14 +548,14 @@
 	contains = list(/obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell/inducer_supply; opened = 0}, /obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell/inducer_supply; opened = 0}) //FALSE doesn't work in modified type paths apparently.
 	crate_name = "inducer crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
-	
+
 /datum/supply_pack/engineering/pacman
 	name = "P.A.C.M.A.N Generator Crate"
 	cost = 2500
 	contains = list(/obj/machinery/power/port_gen/pacman)
 	crate_name = "PACMAN generator crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
-	
+
 /datum/supply_pack/engineering/power
 	name = "Power Cell Crate"
 	cost = 1000
@@ -558,7 +564,7 @@
 					/obj/item/stock_parts/cell/high)
 	crate_name = "power cell crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
-	
+
 /datum/supply_pack/engineering/shuttle_engine
 	name = "Shuttle Engine Crate"
 	cost = 5000
@@ -606,7 +612,7 @@
 					/obj/item/device/am_shielding_container,
 					/obj/item/device/am_shielding_container) //10 shields: 3x3 containment and a core
 	crate_name = "antimatter shielding crate"
-	
+
 /datum/supply_pack/engineering/engine
 	name = "Emitter Crate"
 	cost = 1500
@@ -616,14 +622,14 @@
 	crate_name = "emitter crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
-	
+
 /datum/supply_pack/engineering/engine/field_gen
 	name = "Field Generator Crate"
 	cost = 1500
 	contains = list(/obj/machinery/field/generator,
 					/obj/machinery/field/generator)
 	crate_name = "field generator crate"
-	
+
 /datum/supply_pack/engineering/grounding_rods
 	name = "Grounding Rod Crate"
 	cost = 1700
@@ -632,8 +638,8 @@
 					/obj/machinery/power/grounding_rod,
 					/obj/machinery/power/grounding_rod)
 	crate_name = "grounding rod crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical	
-	
+	crate_type = /obj/structure/closet/crate/engineering/electrical
+
 /datum/supply_pack/engineering/engine/PA
 	name = "Particle Accelerator Crate"
 	cost = 3000
@@ -645,7 +651,7 @@
 					/obj/structure/particle_accelerator/power_box,
 					/obj/structure/particle_accelerator/end_cap)
 	crate_name = "particle accelerator crate"
-	
+
 /datum/supply_pack/engineering/engine/collector
 	name = "Radiation Collector Crate"
 	cost = 2500
@@ -653,13 +659,13 @@
 					/obj/machinery/power/rad_collector,
 					/obj/machinery/power/rad_collector)
 	crate_name = "collector crate"
-	
+
 /datum/supply_pack/engineering/engine/sing_gen
 	name = "Singularity Generator Crate"
 	cost = 5000
 	contains = list(/obj/machinery/the_singularitygen)
 	crate_name = "singularity generator crate"
-	
+
 /datum/supply_pack/engineering/solar
 	name = "Solar Panel Crate"
 	cost = 2000
@@ -761,14 +767,14 @@
 	special = TRUE
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
-	
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////// Canisters & Materials////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-	
+
 /datum/supply_pack/materials
 	group = "Canisters & Materials"
-	
+
 /datum/supply_pack/materials/cardboard50
 	name = "50 Cardboard Sheets"
 	cost = 1000
@@ -780,7 +786,7 @@
 	cost = 1000
 	contains = list(/obj/item/stack/sheet/glass/fifty)
 	crate_name = "glass sheets crate"
-	
+
 /datum/supply_pack/materials/metal50
 	name = "50 Metal Sheets"
 	cost = 1000
@@ -810,13 +816,13 @@
 	cost = 1000
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 	crate_name = "sandstone blocks crate"
-	
+
 /datum/supply_pack/materials/wood50
 	name = "50 Wood Planks"
 	cost = 2000
 	contains = list(/obj/item/stack/sheet/mineral/wood/fifty)
 	crate_name = "wood planks crate"
-	
+
 /datum/supply_pack/materials/bz
 	name = "BZ Canister Crate"
 	cost = 4000
@@ -824,21 +830,21 @@
 	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
 	crate_name = "BZ canister crate"
 	crate_type = /obj/structure/closet/crate/secure/science
-	
+
 /datum/supply_pack/materials/carbon_dio
 	name = "Carbon Dioxide Canister"
 	cost = 3000
 	contains = list(/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
 	crate_name = "carbon dioxide canister crate"
 	crate_type = /obj/structure/closet/crate/large
-	
+
 /datum/supply_pack/materials/nitrogen
 	name = "Nitrogen Canister"
 	cost = 2000
 	contains = list(/obj/machinery/portable_atmospherics/canister/nitrogen)
 	crate_name = "nitrogen canister crate"
 	crate_type = /obj/structure/closet/crate/large
-	
+
 /datum/supply_pack/materials/nitrous_oxide_canister
 	name = "Nitrous Oxide Canister"
 	cost = 3000
@@ -846,28 +852,28 @@
 	contains = list(/obj/machinery/portable_atmospherics/canister/nitrous_oxide)
 	crate_name = "nitrous oxide canister crate"
 	crate_type = /obj/structure/closet/crate/secure
-	
+
 /datum/supply_pack/materials/oxygen
 	name = "Oxygen Canister"
 	cost = 1500
 	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
 	crate_name = "oxygen canister crate"
 	crate_type = /obj/structure/closet/crate/large
-	
+
 /datum/supply_pack/materials/water_vapor
 	name = "Water Vapor Canister"
 	cost = 2500
 	contains = list(/obj/machinery/portable_atmospherics/canister/water_vapor)
 	crate_name = "water vapor canister crate"
 	crate_type = /obj/structure/closet/crate/large
-	
+
 /datum/supply_pack/materials/fueltank
 	name = "Fuel Tank Crate"
 	cost = 800
 	contains = list(/obj/structure/reagent_dispensers/fueltank)
 	crate_name = "fuel tank crate"
 	crate_type = /obj/structure/closet/crate/large
-	
+
 /datum/supply_pack/materials/watertank
 	name = "Water Tank Crate"
 	cost = 600
@@ -890,7 +896,7 @@
 	group = "Medical"
 	crate_type = /obj/structure/closet/crate/medical
 
-	
+
 /datum/supply_pack/medical/firstaidbruises
 	name = "Bruise Treatment Kit Crate"
 	cost = 1000
@@ -906,7 +912,7 @@
 					/obj/item/storage/firstaid/fire,
 					/obj/item/storage/firstaid/fire)
 	crate_name = "burn treatment kit crate"
-	
+
 /datum/supply_pack/medical/firstaid
 	name = "First Aid Kit Crate"
 	cost = 1000
@@ -923,7 +929,7 @@
 					/obj/item/storage/firstaid/o2,
 					/obj/item/storage/firstaid/o2)
 	crate_name = "oxygen deprivation kit crate"
-	
+
 /datum/supply_pack/medical/firstaidtoxins
 	name = "Toxin Treatment Kit Crate"
 	cost = 1000
@@ -945,20 +951,20 @@
 					/obj/item/reagent_containers/blood/OMinus)
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
-	
+
 /datum/supply_pack/medical/defibs
 	name = "Defibrillator Crate"
 	cost = 2500
 	contains = list(/obj/item/defibrillator/loaded,
 					/obj/item/defibrillator/loaded)
 	crate_name = "defibrillator crate"
-	
+
 /datum/supply_pack/medical/iv_drip
 	name = "IV Drip Crate"
 	cost = 1000
 	contains = list(/obj/machinery/iv_drip)
 	crate_name = "iv drip crate"
-	
+
 /datum/supply_pack/medical/supplies
 	name = "Medical Supplies Crate"
 	cost = 2000
@@ -993,7 +999,7 @@
 					/obj/item/vending_refill/medical,
 					/obj/item/vending_refill/medical)
 	crate_name = "medical vending crate"
-	
+
 /datum/supply_pack/medical/virus
 	name = "Virus Crate"
 	cost = 2500
@@ -1015,7 +1021,7 @@
 	crate_name = "virus crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
-	
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1032,7 +1038,7 @@
 					/obj/item/circuitboard/mecha/odysseus/main)
 	crate_name = "\improper Odysseus circuit crate"
 	crate_type = /obj/structure/closet/crate/secure/science
-	
+
 /datum/supply_pack/science/robotics/mecha_ripley
 	name = "Circuit Crate (Ripley APLU)"
 	cost = 3000
@@ -1042,7 +1048,7 @@
 					/obj/item/circuitboard/mecha/ripley/peripherals)
 	crate_name = "\improper APLU Ripley circuit crate"
 	crate_type = /obj/structure/closet/crate/secure/science
-	
+
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
 	cost = 1000
@@ -1061,7 +1067,7 @@
 					/obj/item/device/assembly/timer)
 	crate_name = "plasma assembly crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
-	
+
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
 	cost = 1000
@@ -1096,7 +1102,7 @@
 					/obj/item/device/modular_computer/tablet/preset/cargo,
 					/obj/item/device/modular_computer/tablet/preset/cargo)
 	crate_name = "tablet crate"
-	
+
 /datum/supply_pack/science/transfer_valves
 	name = "Tank Transfer Valves Crate"
 	cost = 6000
@@ -1114,7 +1120,7 @@
 /datum/supply_pack/organic
 	group = "Food & Livestock"
 	crate_type = /obj/structure/closet/crate/freezer
-	
+
 /datum/supply_pack/organic/hydroponics/beekeeping_fullkit
 	name = "Beekeeping Starter Crate"
 	cost = 1500
@@ -1136,7 +1142,7 @@
 					/obj/item/clothing/head/beekeeper_head,
 					/obj/item/clothing/suit/beekeeper_suit)
 	crate_name = "beekeeper suits"
-	
+
 /datum/supply_pack/organic/food
 	name = "Food Crate"
 	cost = 1000
@@ -1249,7 +1255,7 @@
 		var/mob/living/simple_animal/pet/cat/C = locate() in .
 		qdel(C)
 		new /mob/living/simple_animal/pet/cat/Proc(.)
-    
+
 /datum/supply_pack/organic/critter/crab
 	name = "Crab Rocket"
 	cost = 5000
@@ -1310,7 +1316,7 @@
 	contains = list(/obj/item/watertank)
 	crate_name = "hydroponics backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
-	
+
 /datum/supply_pack/organic/food
 	name = "Food Crate"
 	cost = 1000
@@ -1328,7 +1334,7 @@
 					/obj/item/reagent_containers/food/snacks/grown/banana,
 					/obj/item/reagent_containers/food/snacks/grown/banana)
 	crate_name = "food crate"
-	
+
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
 	cost = 6000
@@ -1365,7 +1371,7 @@
 					/obj/item/device/flashlight/glowstick/yellow,
 					/obj/item/device/flashlight/glowstick/pink)
 	crate_name = "party equipment crate"
-	
+
 /datum/supply_pack/organic/pizza
 	name = "Pizza Crate"
 	cost = 6000 // Best prices this side of the galaxy.
@@ -1444,10 +1450,10 @@
 					/obj/item/seeds/random,
 					/obj/item/seeds/random)
 	crate_name = "exotic seeds crate"
-	
+
 /datum/supply_pack/organic/critter
 	crate_type = /obj/structure/closet/crate/critter
-	
+
 /datum/supply_pack/organic/critter/butterfly
 	name = "Butterflies Crate"
 	contraband = TRUE
@@ -1459,7 +1465,7 @@
 	. = ..()
 	for(var/i in 1 to 49)
 		new /mob/living/simple_animal/butterfly(.)
-		
+
 /datum/supply_pack/organic/critter/cat
 	name = "Cat Crate"
 	cost = 5000 //Cats are worth as much as corgis.
@@ -1474,7 +1480,7 @@
 		var/mob/living/simple_animal/pet/cat/C = locate() in .
 		qdel(C)
 		new /mob/living/simple_animal/pet/cat/Proc(.)
-		
+
 /datum/supply_pack/organic/critter/chick
 	name = "Chicken Crate"
 	cost = 2000
@@ -1507,7 +1513,7 @@
 	contains = list(/mob/living/simple_animal/pet/fox,
 					/obj/item/clothing/neck/petcollar)
 	crate_name = "fox crate"
-	
+
 /datum/supply_pack/organic/critter/goat
 	name = "Goat Crate"
 	cost = 2500
@@ -1520,7 +1526,7 @@
 	contains = list(/mob/living/simple_animal/pet/dog/pug,
 					/obj/item/clothing/neck/petcollar)
 	crate_name = "pug crate"
-	
+
 /datum/supply_pack/organic/critter/snake
     name = "Snake Crate"
     cost = 3000
@@ -1548,7 +1554,7 @@
 					/obj/item/vending_refill/cigarette,
 					/obj/item/vending_refill/cigarette)
 	crate_name = "cigarette supply crate"
-	
+
 /datum/supply_pack/organic/vending/games
 	name = "Games Supply Crate"
 	cost = 1000
@@ -1556,7 +1562,7 @@
 					/obj/item/vending_refill/games,
 					/obj/item/vending_refill/games)
 	crate_name = "games supply crate"
-	
+
 /datum/supply_pack/organic/vending/snack
 	name = "Snack Supply Crate"
 	cost = 1500
@@ -1579,7 +1585,7 @@
 
 /datum/supply_pack/misc
 	group = "Miscellaneous Supplies"
-	
+
 /datum/supply_pack/misc/artsupply
 	name = "Art Supplies"
 	cost = 800
@@ -1594,14 +1600,14 @@
 					/obj/item/toy/crayon/rainbow,
 					/obj/item/toy/crayon/rainbow)
 	crate_name = "art supply crate"
-	
+
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
 	cost = 1000000
 	contains = list(/obj/vehicle/ridden/bicycle)
 	crate_name = "Bicycle Crate"
 	crate_type = /obj/structure/closet/crate/large
-	
+
 /datum/supply_pack/misc/bigband
 	name = "Big Band Instrument Collection"
 	cost = 5000
@@ -1615,7 +1621,7 @@
 					/obj/item/device/instrument/recorder,
 					/obj/item/device/instrument/harmonica,
 					/obj/structure/piano/unanchored)
-	
+
 /datum/supply_pack/misc/book_crate
 	name = "Book Crate"
 	cost = 1500
@@ -1654,7 +1660,7 @@
 	cost = 700
 	contains = list(/obj/item/storage/box/fountainpens)
 	crate_type = /obj/structure/closet/crate/wooden
-	
+
 /datum/supply_pack/misc/randomised/contraband
 	name = "Contraband Crate"
 	contraband = TRUE
@@ -1666,7 +1672,7 @@
 					/obj/item/seeds/ambrosia/deus,
 					/obj/item/clothing/neck/necklace/dope)
 	crate_name = "crate"
-	
+
 /datum/supply_pack/misc/conveyor
 	name = "Conveyor Assembly Crate"
 	cost = 1500
@@ -1679,7 +1685,7 @@
 					/obj/item/conveyor_switch_construct,
 					/obj/item/paper/guides/conveyor)
 	crate_name = "conveyor assembly crate"
-	
+
 /datum/supply_pack/misc/foamforce
 	name = "Foam Force Crate"
 	cost = 1000
@@ -1702,13 +1708,13 @@
 					/obj/item/ammo_box/magazine/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol)
 	crate_name = "foam force crate"
-	
+
 /datum/supply_pack/misc/noslipfloor
 	name = "High-traction Floor Tiles"
 	cost = 2000
 	contains = list(/obj/item/stack/tile/noslip/thirty)
 	crate_name = "high-traction floor tiles crate"
-	
+
 /datum/supply_pack/misc/clownpin
 	name = "Hilarious Firing Pin Crate"
 	cost = 5000
@@ -1716,7 +1722,7 @@
 	contains = list(/obj/item/device/firing_pin/clown)
 	// It's /technically/ a toy. For the clown, at least.
 	crate_name = "toy crate"
-	
+
 /datum/supply_pack/misc/janitor
 	name = "Janitorial Supplies Crate"
 	cost = 1000
@@ -1750,7 +1756,7 @@
 	contains = list(/obj/item/watertank/janitor)
 	crate_name = "janitor backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
-	
+
 /datum/supply_pack/misc/lasertag
 	name = "Laser Tag Crate"
 	cost = 1500
@@ -1780,14 +1786,14 @@
 	contraband = TRUE
 	contains = list(/obj/item/storage/box/lasertagpins)
 	crate_name = "laser tag crate"
-	
+
 /datum/supply_pack/misc/mule
 	name = "MULEbot Crate"
 	cost = 2000
 	contains = list(/mob/living/simple_animal/bot/mulebot)
 	crate_name = "\improper MULEbot Crate"
 	crate_type = /obj/structure/closet/crate/large
-	
+
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
 	cost = 4000	// it costs so much because the Space Church is ran by Space Jews
@@ -1800,7 +1806,7 @@
 					/obj/item/clothing/under/burial,
 					/obj/item/clothing/under/burial)
 	crate_name = "religious supplies crate"
-	
+
 /datum/supply_pack/misc/janitor/lightbulbs
 	name = "Replacement Lights"
 	cost = 1000
@@ -1808,7 +1814,7 @@
 					/obj/item/storage/box/lights/mixed,
 					/obj/item/storage/box/lights/mixed)
 	crate_name = "replacement lights"
-	
+
 /datum/supply_pack/misc/minerkit
 	name = "Shaft Miner Starter Kit"
 	cost = 2500
@@ -1833,7 +1839,7 @@
 					/obj/item/device/toner,
 					/obj/item/device/toner)
 	crate_name = "toner crate"
-	
+
 /datum/supply_pack/misc/autodrobe
 	name = "Autodrobe Supply Crate"
 	cost = 1500
@@ -1878,7 +1884,7 @@
 					/obj/item/clothing/suit/hooded/carp_costume,
 					/obj/item/clothing/suit/hooded/bee_costume)
 	crate_name = "original costume crate"
-	
+
 /datum/supply_pack/misc/formalwear
 	name = "Formalwear Crate"
 	cost = 3000 //Lots of very expensive items. You gotta pay up to look good!
@@ -1910,7 +1916,7 @@
 					/obj/item/clothing/under/suit_jacket/tan,
 					/obj/item/lipstick/random)
 	crate_name = "formalwear crate"
-	
+
 /datum/supply_pack/misc/wizard
 	name = "Wizard Costume Crate"
 	cost = 2000
@@ -1951,8 +1957,8 @@
 					/obj/item/clothing/head/collectable/slime,
 					/obj/item/clothing/head/collectable/xenom,
 					/obj/item/clothing/head/collectable/petehat)
-	crate_name = "collectable hats crate"	
-	
+	crate_name = "collectable hats crate"
+
 /datum/supply_pack/misc/randomised/toys
 	name = "Toy Crate"
 	cost = 5000 // or play the arcade machines ya lazy bum
