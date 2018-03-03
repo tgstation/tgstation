@@ -7,7 +7,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 #define STATE_MOVINGTO	1
 #define STATE_ACTING	2
 
-#define GOAP_DEBUG_ENABLE 0
+//#define GOAP_DEBUG_ENABLE "fart"
 
 #ifdef GOAP_DEBUG_ENABLE
 #define goap_debug(string) world.log << "GOAP: [string]"
