@@ -37,6 +37,6 @@
 	imp_type = /obj/item/implant/spell
 
 /obj/item/implantcase/spell
-	name = "implant case - 'Krav Maga'"
+	name = "implant case - 'Wizardry'"
 	desc = "A glass case containing an implant that can teach the user the arts of Wizardry."
 	imp_type = /obj/item/implant/spell
