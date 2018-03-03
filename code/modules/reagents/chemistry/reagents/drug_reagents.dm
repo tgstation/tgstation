@@ -258,12 +258,19 @@
 		var/mob/living/L = M
 		L.add_trait(TRAIT_STUNIMMUNE, id)
 		L.add_trait(TRAIT_SLEEPIMMUNE, id)
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			C.gain_trauma(/datum/brain_trauma/special/psychotic_brawling/bath_salts, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/reagent/drug/bath_salts/on_mob_delete(mob/M)
 	if(isliving(M))
 		var/mob/living/L = M
 		L.remove_trait(TRAIT_STUNIMMUNE, id)
 		L.remove_trait(TRAIT_SLEEPIMMUNE, id)
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			for(var/datum/brain_trauma/special/psychotic_brawling/bath_salts/T in C.get_traumas())
+				qdel(T)
 	..()
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/M)
@@ -271,8 +278,7 @@
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.adjustStaminaLoss(-5, 0)
-	M.adjustBrainLoss(0.5)
-	M.adjustToxLoss(0.1, 0)
+	M.adjustBrainLoss(4)
 	M.hallucination += 10
 	if(M.canmove && !ismovableatom(M.loc))
 		step(M, pick(GLOB.cardinals))
