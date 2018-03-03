@@ -57,7 +57,6 @@
 	density = TRUE
 	opacity = 1
 	anchored = TRUE
-	canSmoothWith = list(/obj/structure/alien/resin)
 	max_integrity = 200
 	smooth = SMOOTH_TRUE
 	var/resintype = null

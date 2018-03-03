@@ -1,18 +1,33 @@
 /obj/structure/girder
 	name = "girder"
+	icon = 'icons/obj/smooth_structures/girder.dmi'
 	icon_state = "girder"
 	desc = "A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall."
 	anchored = TRUE
 	density = TRUE
 	layer = BELOW_OBJ_LAYER
 	var/state = GIRDER_NORMAL
-	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
 	max_integrity = 200
 
 /obj/structure/girder/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_VERY_LIGHT_INSULATION)
+
+/obj/structure/girder/Destroy()
+	if(state == GIRDER_NORMAL)
+		smooth = SMOOTH_FALSE
+		queue_smooth_neighbors(src)
+	return ..()
+
+/obj/structure/girder/update_icon()
+	if(!QDELETED(src) && state == GIRDER_NORMAL)
+		smooth = SMOOTH_TRUE
+		queue_smooth(src)
+		queue_smooth_neighbors(src)
+	else
+		smooth = SMOOTH_FALSE
+		clear_smooth_overlays()
 
 /obj/structure/girder/examine(mob/user)
 	. = ..()
@@ -265,27 +280,24 @@
 		to_chat(user, "<span class='notice'>You start securing the girder...</span>")
 		if(tool.use_tool(src, user, 40, volume=100))
 			to_chat(user, "<span class='notice'>You secure the girder.</span>")
-			var/obj/structure/girder/G = new (loc)
-			transfer_fingerprints_to(G)
-			qdel(src)
+			anchored = TRUE
+			state = GIRDER_NORMAL
+			update_icon()
 		return TRUE
 	else if(state == GIRDER_NORMAL && can_displace)
 		to_chat(user, "<span class='notice'>You start unsecuring the girder...</span>")
 		if(tool.use_tool(src, user, 40, volume=100))
 			to_chat(user, "<span class='notice'>You unsecure the girder.</span>")
-			var/obj/structure/girder/displaced/D = new (loc)
-			transfer_fingerprints_to(D)
-			qdel(src)
+			anchored = FALSE
+			state = GIRDER_DISPLACED
+			update_icon()
+			queue_smooth_neighbors(src)
 		return TRUE
 
 /obj/structure/girder/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
-		return prob(girderpasschance)
-	else
-		if(istype(mover, /obj/item/projectile))
-			return prob(girderpasschance)
-		else
-			return 0
+	if(istype(mover, /obj/item/projectile) || (istype(mover) && (mover.pass_flags & PASSGRILLE)))
+		return TRUE
+	return FALSE
 
 /obj/structure/girder/CanAStarPass(ID, dir, caller)
 	. = !density
@@ -310,20 +322,36 @@
 	new /obj/structure/girder/cult(loc)
 	qdel(src)
 
-/obj/structure/girder/displaced
-	name = "displaced girder"
-	icon_state = "displaced"
-	anchored = FALSE
-	state = GIRDER_DISPLACED
-	girderpasschance = 25
-	max_integrity = 120
+/obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_FLOORWALL)
+			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 8)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 13)
+	return FALSE
+
+/obj/structure/girder/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	var/turf/T = get_turf(src)
+	switch(passed_mode)
+		if(RCD_FLOORWALL)
+			to_chat(user, "<span class='notice'>You finish a wall.</span>")
+			T.PlaceOnTop(/turf/closed/wall)
+			qdel(src)
+			return TRUE
+		if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct the girder.</span>")
+			qdel(src)
+			return TRUE
+	return FALSE
 
 /obj/structure/girder/reinforced
 	name = "reinforced girder"
-	icon_state = "reinforced"
+	icon = 'icons/obj/smooth_structures/r_girder.dmi'
 	state = GIRDER_REINF
-	girderpasschance = 0
 	max_integrity = 350
+
+/obj/structure/girder/reinforced/CanPass(atom/movable/mover, turf/target)
+	return FALSE
 
 
 
@@ -335,6 +363,9 @@
 	icon = 'icons/obj/cult.dmi'
 	icon_state= "cultgirder"
 	can_displace = FALSE
+
+/obj/structure/girder/cult/update_icon()
+	return
 
 /obj/structure/girder/cult/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -386,25 +417,3 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
 	qdel(src)
-
-/obj/structure/girder/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	switch(the_rcd.mode)
-		if(RCD_FLOORWALL)
-			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 8)
-		if(RCD_DECONSTRUCT)
-			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 13)
-	return FALSE
-
-/obj/structure/girder/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	var/turf/T = get_turf(src)
-	switch(passed_mode)
-		if(RCD_FLOORWALL)
-			to_chat(user, "<span class='notice'>You finish a wall.</span>")
-			T.PlaceOnTop(/turf/closed/wall)
-			qdel(src)
-			return TRUE
-		if(RCD_DECONSTRUCT)
-			to_chat(user, "<span class='notice'>You deconstruct the girder.</span>")
-			qdel(src)
-			return TRUE
-	return FALSE

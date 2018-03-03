@@ -32,6 +32,18 @@
 /obj/structure/falsewall/Initialize()
 	. = ..()
 	air_update_turf(TRUE)
+	var/list/adjacents = list()
+	for(var/a_dir in GLOB.cardinals)
+		for(var/a_type in canSmoothWith)
+			if(istype(get_step(src, EAST), a_type))
+				adjacents.add(a_dir)
+				break
+	if((EAST in adjacents) && (WEST in adjacents))
+		dir = WEST
+	else if((SOUTH in adjacents) && (NORTH in adjacents))
+		dir = SOUTH
+	else
+		dir = adjacents[length(adjacents) - 1]
 
 /obj/structure/falsewall/ComponentInitialize()
 	. = ..()
@@ -83,7 +95,7 @@
 		else
 			icon_state = "fwall_open"
 
-/obj/structure/falsewall/proc/ChangeToWall(delete = 1)
+/obj/structure/falsewall/proc/ChangeToWall(delete = TRUE)
 	var/turf/T = get_turf(src)
 	T.PlaceOnTop(walltype)
 	if(delete)
