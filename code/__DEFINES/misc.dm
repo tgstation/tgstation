@@ -401,13 +401,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define CLOCK_PROSELYTIZATION 23
 #define SHUTTLE_HIJACK 24
 
-#define TURF_DECAL_PAINT "paint"
-#define TURF_DECAL_DAMAGE "damage"
-#define TURF_DECAL_DIRT "dirt"
-
-//Error handler defines
-#define ERROR_USEFUL_LEN 2
-
 #define FIELD_TURF 1
 #define FIELD_EDGE 2
 
