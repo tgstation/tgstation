@@ -173,13 +173,14 @@
 
 	. = FALSE
 
+	if(sources && !islist(sources))
+		sources = list(sources)
 	if(LAZYLEN(sources))
 		for(var/S in sources)
 			if(S in status_traits[trait])
 				return TRUE
-	else
-		if(LAZYLEN(status_traits[trait]))
-			return TRUE
+	else if(LAZYLEN(status_traits[trait]))
+		return TRUE
 
 /mob/living/proc/remove_all_traits()
 	status_traits = list()

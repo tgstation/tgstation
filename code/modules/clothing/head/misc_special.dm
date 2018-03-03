@@ -6,6 +6,8 @@
  *		Pumpkin head
  *		Kitty ears
  *		Cardborg disguise
+ *		Wig
+ *		Bronze hat
  */
 
 /*
@@ -218,6 +220,14 @@
 	hair_style = pick(GLOB.hair_styles_list - "Bald") //Don't want invisible wig
 	hair_color = "#[random_short_color()]"
 	. = ..()
+
+/obj/item/clothing/head/bronze
+	name = "bronze hat"
+	desc = "A crude helmet made out of bronze plates. It offers very little in the way of protection."
+	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon_state = "clockwork_helmet_old"
+	flags_inv = HIDEEARS|HIDEHAIR
+	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
 
 /obj/item/clothing/head/foilhat
 	name = "tinfoil hat"
