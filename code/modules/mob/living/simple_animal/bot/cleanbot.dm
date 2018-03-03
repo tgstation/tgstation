@@ -23,8 +23,8 @@
 	. = ..()
 	icon_state = "cleanbot[on]"
 
-	var/datum/job/captain/C = new/datum/job/captain
-	access_card.access += C.get_access()
+	var/datum/job/janitor/J = new/datum/job/janitor
+	access_card.access += J.get_access()
 	prev_access = access_card.access
 	goap_ai = new()
 	goap_ai.agent = src
