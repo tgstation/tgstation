@@ -1,0 +1,4 @@
+author: "Cebutris"
+delete-after: True
+changes: 
+  - bugfix: "Washing a glove with a white crayon will make it look like a white glove, instead of a latex glove. Instead, mime crayons make gloves look latex"
