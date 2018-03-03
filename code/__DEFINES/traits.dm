@@ -71,3 +71,4 @@
 #define TRAIT_HULK "hulk"
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
+#define EYES_COVERED "eyes_covered"
