@@ -1,8 +1,0 @@
-author: "Selea"
-delete-after: True
-changes: 
-  - balance: "reduce CD of all non manipulative non list output circuits to 0.1"
-  - balance: "add to locomotion circuit output ref with object, which assembly was bumped to."
-  - balance: "upgrade disks have multiuse.
-balance:iducer efficiency= efficiency/number of inducers on 1 tile."
-  - balance: "unnerf fuel cell.about 3-5 times.Make blood more powerful."
