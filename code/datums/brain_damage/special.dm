@@ -130,3 +130,6 @@
 	..()
 	psychotic_brawling.remove(owner)
 	QDEL_NULL(psychotic_brawling)
+
+/datum/brain_trauma/special/psychotic_brawling/bath_salts
+	name = "Chemical Violent Psychosis"

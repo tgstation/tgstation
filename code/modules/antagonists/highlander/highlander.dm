@@ -5,16 +5,12 @@
 	show_name_in_check_antagonists = TRUE
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/carbon/human/H = owner.current || mob_override
-	if(!istype(H))
-		return
-	H.dna.species.species_traits |= NOGUNS //nice try jackass
+	var/mob/living/L = owner.current || mob_override
+	L.add_trait(TRAIT_NOGUNS, "highlander")
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/carbon/human/H = owner.current || mob_override
-	if(!istype(H))
-		return
-	H.dna.species.species_traits &= ~NOGUNS
+	var/mob/living/L = owner.current || mob_override
+	L.remove_trait(TRAIT_NOGUNS, "highlander")
 
 /datum/antagonist/highlander/on_removal()
 	owner.objectives -= objectives
@@ -76,7 +72,7 @@
 		sword.admin_spawned = TRUE //To prevent announcing
 	sword.pickup(H) //For the stun shielding
 	H.put_in_hands(sword)
-	
+
 
 	var/obj/item/bloodcrawl/antiwelder = new(H)
 	antiwelder.name = "compulsion of honor"

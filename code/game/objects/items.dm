@@ -249,7 +249,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			can_handle_hot = TRUE
 		else if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
 			can_handle_hot = TRUE
-		else if(RESISTHOT in C.dna.species.species_traits)
+		else if(C.has_trait(TRAIT_RESISTHEAT))
 			can_handle_hot = TRUE
 
 		if(can_handle_hot)
@@ -436,7 +436,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/on_found(mob/finder)
 	return
 
-// called after an item is placed in an equipment slot //NOPE, for example, if you put a helmet in slot_head, it is NOT in user's head variable yet, how stupid.
+// called after an item is placed in an equipment slot
 // user is mob that equipped it
 // slot uses the slot_X defines found in setup.dm
 // for items that can be placed in multiple slots
@@ -831,3 +831,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
 	return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
+
+// Returns a numeric value for sorting items used as parts in machines, so they can be replaced by the rped
+/obj/item/proc/get_part_rating()
+	return 0
