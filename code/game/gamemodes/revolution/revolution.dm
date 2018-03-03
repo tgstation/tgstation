@@ -197,7 +197,7 @@
 	config_tag = "extended_revolution"
 	end_when_heads_dead = FALSE
 
-/datum/game_mode/revolution/speedy
+/datum/game_mode/revolution/speedy //Revs except if no one wins by the 20 minute mark the station explodes
 	name = "speedy_revolution"
 	config_tag = "speedy_revolution"
 	end_when_heads_dead = FALSE
