@@ -1,7 +1,7 @@
 //Update this whenever the db schema changes
 //make sure you add an update to the schema_version stable in the db changelog
 #define DB_MAJOR_VERSION 4
-#define DB_MINOR_VERSION 0
+#define DB_MINOR_VERSION 1
 
 //Timing subsystem
 //Don't run if there is an identical unique timer active
@@ -56,13 +56,14 @@
 #define INIT_ORDER_RESEARCH 14
 #define INIT_ORDER_EVENTS 13
 #define INIT_ORDER_JOBS 12
-#define INIT_ORDER_TICKER 11
-#define INIT_ORDER_MAPPING 10
-#define INIT_ORDER_ATOMS 9
-#define INIT_ORDER_NETWORKS 8
-#define INIT_ORDER_LANGUAGE 7
-#define INIT_ORDER_MACHINES 6
-#define INIT_ORDER_CIRCUIT 5
+#define INIT_ORDER_TRAITS 11
+#define INIT_ORDER_TICKER 10
+#define INIT_ORDER_MAPPING 9
+#define INIT_ORDER_ATOMS 8
+#define INIT_ORDER_NETWORKS 7
+#define INIT_ORDER_LANGUAGE 6
+#define INIT_ORDER_MACHINES 5
+#define INIT_ORDER_CIRCUIT 4
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
 #define INIT_ORDER_AIR -1
