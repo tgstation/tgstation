@@ -180,7 +180,7 @@
 			src.icon_state = "talisman"
 			src.activated = TRUE
 		else
-			to_chat(user, "<span class='warning'>The snake carving seems to come alive, if only for a moment, before returning to it's dormant state, almost as if it finds you incabable of holding it's oath.</span>")
+			to_chat(user, "<span class='warning'>The snake carving seems to come alive, if only for a moment, before returning to it's dormant state, almost as if it finds you incapable of holding it's oath.</span>")
 
 //Wisp Lantern
 /obj/item/device/wisp_lantern
