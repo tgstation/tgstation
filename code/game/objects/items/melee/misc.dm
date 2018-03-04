@@ -329,6 +329,7 @@
 	var/obj/item/reagent_containers/food/snacks/sausage/held_sausage
 	var/static/list/ovens
 	var/on = FALSE
+	var/datum/beam/beam
 
 /obj/item/melee/roastingstick/Initialize()
 	. = ..()
@@ -404,7 +405,7 @@
 		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
 			to_chat(user, "You send [held_sausage] towards [target].")
 			playsound(src, 'sound/items/rped.ogg', 50, 1)
-			user.Beam(target,icon_state="rped_upgrade",time=100)
+			beam = user.Beam(target,icon_state="rped_upgrade",time=100)
 		else if (user.Adjacent(target))
 			to_chat(user, "You extend [src] towards [target].")
 			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
@@ -413,6 +414,7 @@
 		if(do_after(user, 100, target = user))
 			finish_roasting(user, target)
 		else
+			QDEL_NULL(beam)
 			playsound(src, 'sound/weapons/batonextend.ogg', 50, 1)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
