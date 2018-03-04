@@ -110,7 +110,7 @@
 /obj/machinery/clonepod/return_air()
 	// We want to simulate the clone not being in contact with
 	// the atmosphere, so we'll put them in a constant pressure
-	// nitrogen. They'll breathe through the chemicals we pump into them.
+	// nitrogen. They don't need to breathe while cloning anyway.
 	var/static/datum/gas_mixture/immutable/cloner/GM //global so that there's only one instance made for all cloning pods
 	if(!GM)
 		GM = new
@@ -178,7 +178,11 @@
 	icon_state = "pod_1"
 	//Get the clone body ready
 	maim_clone(H)
-	check_brine() // put in chemicals NOW to stop death via cardiac arrest
+	H.add_trait(TRAIT_STABLEHEART, "cloning")
+	H.add_trait(TRAIT_EMOTEMUTE, "cloning")
+	H.add_trait(TRAIT_MUTE, "cloning")
+	H.add_trait(TRAIT_NOBREATH, "cloning")
+	H.add_trait(TRAIT_NOCRITDAMAGE, "cloning")
 	H.Unconscious(80)
 
 	clonemind.transfer_to(H)
@@ -240,8 +244,6 @@
 
 			//Premature clones may have brain damage.
 			mob_occupant.adjustBrainLoss(-((speed_coeff / 2) * dmg_mult))
-
-			check_brine()
 
 			use_power(7500) //This might need tweaking.
 
@@ -349,6 +351,11 @@
 	if(!mob_occupant)
 		return
 
+	H.remove_trait(TRAIT_STABLEHEART, "cloning")
+	H.remove_trait(TRAIT_EMOTEMUTE, "cloning")
+	H.remove_trait(TRAIT_MUTE, "cloning")
+	H.remove_trait(TRAIT_NOCRITDAMAGE, "cloning")
+	H.remove_trait(TRAIT_NOBREATH, "cloning")
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		mob_occupant.grab_ghost()
@@ -451,12 +458,6 @@
 		unattached_flesh += organ
 
 	flesh_number = unattached_flesh.len
-
-/obj/machinery/clonepod/proc/check_brine()
-	// Clones are in a pickled bath of stasis brine, keeping
-	// them alive, despite their lack of internal organs
-	if(occupant.reagents.get_reagent_amount("stasis_brine") < 2)
-		occupant.reagents.add_reagent("stasis_brine", 2)
 
 /*
  *	Manual -- A big ol' manual.

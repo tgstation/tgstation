@@ -39,6 +39,7 @@
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
+#define TRAIT_NOCRITDAMAGE		"no_crit"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

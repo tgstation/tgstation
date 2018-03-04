@@ -42,7 +42,11 @@
 	icon_state = "pod_1"
 	//Get the clone body ready
 	maim_clone(H)
-	check_brine() // put in chemicals NOW to stop death via cardiac arrest
+	H.add_trait(TRAIT_STABLEHEART, "cloning")
+	H.add_trait(TRAIT_EMOTEMUTE, "cloning")
+	H.add_trait(TRAIT_MUTE, "cloning")
+	H.add_trait(TRAIT_NOBREATH, "cloning")
+	H.add_trait(TRAIT_NOCRITDAMAGE, "cloning")
 	H.Unconscious(80)
 
 	var/list/candidates = pollCandidatesForMob("Do you want to play as [clonename]'s defective clone?", null, null, null, 100, H)

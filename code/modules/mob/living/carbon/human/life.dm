@@ -81,7 +81,7 @@
 	if(!L)
 		if(health >= HEALTH_THRESHOLD_CRIT)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
-		else if(!(NOCRITDAMAGE in dna.species.species_traits))
+		else if(!has_trait(TRAIT_NOCRITDAMAGE))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		failed_last_breath = 1

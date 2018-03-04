@@ -78,7 +78,7 @@
 			return
 		if(H.health >= HEALTH_THRESHOLD_CRIT)
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		else if(!(NOCRITDAMAGE in species_traits))
+		else if(!H.has_trait(TRAIT_NOCRITDAMAGE))
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		H.failed_last_breath = TRUE
