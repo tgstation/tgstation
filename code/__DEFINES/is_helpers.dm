@@ -62,7 +62,6 @@
 #define isjellyperson(A) (is_species(A, /datum/species/jelly))
 #define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
 #define isluminescent(A) (is_species(A, /datum/species/jelly/luminescent))
-#define isshadowperson(A) (is_species(A, /datum/species/shadow))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
 
@@ -103,8 +102,6 @@
 #define isrevenant(A) (istype(A, /mob/living/simple_animal/revenant))
 
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot))
-
-#define iscrab(A) (istype(A, /mob/living/simple_animal/crab))
 
 #define isshade(A) (istype(A, /mob/living/simple_animal/shade))
 
@@ -175,13 +172,9 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 
 #define isigniter(O) (istype(O, /obj/item/device/assembly/igniter))
 
-#define isinfared(O) (istype(O, /obj/item/device/assembly/infra))
-
 #define isprox(O) (istype(O, /obj/item/device/assembly/prox_sensor))
 
 #define issignaler(O) (istype(O, /obj/item/device/assembly/signaler))
-
-#define istimer(O) (istype(O, /obj/item/device/assembly/timer))
 
 GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 	/obj/item/stack/sheet/glass,
