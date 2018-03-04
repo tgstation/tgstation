@@ -13,7 +13,7 @@
 		P = locate(/obj/item/trash) in viewl
 	if(P)
 		.["cleanedMess"] = TRUE
-	if(B.emagged)
+	if(B.emagged == 2)
 		if(prob(15))
 			.["foamSpewed"] = TRUE
 
