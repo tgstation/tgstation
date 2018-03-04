@@ -507,10 +507,10 @@ MICE_ROUNDSTART 10
 ROUNDSTART_TRAITS
 
 ## Enable night shifts ##
-ENABLE_NIGHT_SHIFTS
+#ENABLE_NIGHT_SHIFTS
 
 ## Enable randomized shift start times##
-RANDOMIZE_SHIFT_TIME
+#RANDOMIZE_SHIFT_TIME
 
 ## Sets shift time to server time at roundstart. Overridden by RANDOMIZE_SHIFT_TIME ##
 #SHIFT_TIME_REALTIME

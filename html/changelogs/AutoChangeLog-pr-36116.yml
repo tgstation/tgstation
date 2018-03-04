@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - admin: "Admins can now grant spells via implants, using the spell implant. Some VV is required."

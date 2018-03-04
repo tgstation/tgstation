@@ -235,7 +235,8 @@
 	icon_state = "foilhat"
 	item_state = "foilhat"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = -5,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = -5, "fire" = 0, "acid" = 0)
-	var/datum/brain_trauma/mild/phobia/paranoia
+	equip_delay_other = 140
+  var/datum/brain_trauma/mild/phobia/paranoia
 
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
 	..()
@@ -243,10 +244,16 @@
 		paranoia = new()
 		user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC, "conspiracies")
 		to_chat(user, "<span class='warning'>As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. </span>")
-		flags_1 |= NODROP_1
 
 /obj/item/clothing/head/foilhat/dropped(mob/user)
 	..()
-	flags_1 &= ~NODROP_1
 	if(paranoia)
 		QDEL_NULL(paranoia)
+
+/obj/item/clothing/head/foilhat/attack_hand(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(src == C.head)
+			to_chat(user, "<span class='userdanger'>Why would you want to take this off? Do you want them to get into your mind?!</span>") 
+			return
+	..()
