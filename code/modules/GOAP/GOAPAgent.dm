@@ -145,15 +145,18 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 		if(1, 4) // AStar, Full
 			if(!path || !path.len)
 				fuck_you_astar = TRUE
-				if(!isturf(curr_action.target))
-					path = get_path_to(agent, get_turf(curr_action.target), /turf/proc/Distance_cardinal, 0, 200, adjacent = proc_to_use, id=given_pathfind_access, mintargetdist = dense_garbage)
+				if(!curr_action.path_to_use)
+					if(!isturf(curr_action.target))
+						path = get_path_to(agent, get_turf(curr_action.target), /turf/proc/Distance_cardinal, 0, 200, adjacent = proc_to_use, id=given_pathfind_access, mintargetdist = dense_garbage)
+					else
+						path = get_path_to(agent, curr_action.target, /turf/proc/Distance_cardinal, 0, 200, adjacent = proc_to_use, id=given_pathfind_access, mintargetdist = dense_garbage)
+					if(!path || !path.len) // still can't path
+						goap_debug("Can't path to plan, giving up")
+						brain_state = STATE_IDLE
+						fuck_you_astar = FALSE
+						return 0
 				else
-					path = get_path_to(agent, curr_action.target, /turf/proc/Distance_cardinal, 0, 200, adjacent = proc_to_use, id=given_pathfind_access, mintargetdist = dense_garbage)
-				if(!path || !path.len) // still can't path
-					goap_debug("Can't path to plan, giving up")
-					brain_state = STATE_IDLE
-					fuck_you_astar = FALSE
-					return 0
+					path = curr_action.path_to_use
 			fuck_you_astar = FALSE
 			last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
 			current_loc = get_turf(agent)

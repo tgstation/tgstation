@@ -1,8 +1,14 @@
 PROCESSING_SUBSYSTEM_DEF(goap)
 	name = "Goal Oriented Action Planning"
+	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING
 	wait = 2
 	stat_tag = "GP"
 	priority = 1
+	init_order = -101
+
+/datum/controller/subsystem/processing/goap/Initialize(timeofday)
+	..()
+	generate_pathfinding_list()
 
 /datum/controller/subsystem/processing/goap/fire(resumed = 0)
 	if (!resumed)

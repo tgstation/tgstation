@@ -9342,6 +9342,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "ayt" = (
@@ -9448,6 +9449,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayH" = (
@@ -9495,6 +9497,7 @@
 	codes_txt = "patrol;next_patrol=BrigP";
 	location = "BrigS1"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayO" = (
@@ -10661,6 +10664,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aBK" = (
@@ -12816,6 +12820,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aGH" = (
@@ -12896,11 +12901,6 @@
 /area/hallway/primary/central)
 "aGV" = (
 /obj/machinery/door/firedoor,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"aGW" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aGX" = (
@@ -13619,6 +13619,7 @@
 	codes_txt = "patrol;next_patrol=Dorms";
 	location = "Tool"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aIM" = (
@@ -13732,6 +13733,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aIY" = (
@@ -13778,6 +13780,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aJd" = (
@@ -13867,6 +13870,7 @@
 	codes_txt = "patrol;next_patrol=HoP";
 	location = "Dorms"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aJl" = (
@@ -18256,6 +18260,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aUn" = (
@@ -21185,6 +21190,7 @@
 /area/crew_quarters/bar)
 "bbq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -22174,6 +22180,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "beb" = (
@@ -23394,6 +23401,7 @@
 	codes_txt = "patrol;next_patrol=Bar1";
 	location = "Robo"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bhi" = (
@@ -23636,6 +23644,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bhL" = (
@@ -23664,6 +23673,7 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L7"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bhP" = (
@@ -25448,6 +25458,7 @@
 /area/medical/medbay/central)
 "bmy" = (
 /obj/machinery/holopad,
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bmz" = (
@@ -25477,6 +25488,7 @@
 /area/science/research/lobby)
 "bmH" = (
 /obj/machinery/holopad,
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/science/research/lobby)
 "bmI" = (
@@ -28568,6 +28580,7 @@
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
 	dir = 8
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/secondary/entry)
 "btO" = (
@@ -38599,6 +38612,7 @@
 	codes_txt = "patrol;next_patrol=Bar2";
 	location = "Eng"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bQD" = (
@@ -47030,6 +47044,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "coT" = (
 /obj/item/device/radio/beacon,
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "coV" = (
@@ -49939,6 +49954,16 @@
 "cDa" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
+"gXO" = (
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel/arrival,
+/area/hallway/secondary/entry)
+"hlA" = (
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel/arrival{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
 "izB" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod"
@@ -68652,7 +68677,7 @@ aHA
 aHA
 aHA
 aYG
-aZy
+hlA
 baJ
 aZx
 bcW
@@ -68667,7 +68692,7 @@ aZx
 aZx
 aZx
 baJ
-bon
+gXO
 aZx
 aaa
 aaa
@@ -74288,7 +74313,7 @@ aDv
 aBh
 aBh
 aGd
-aGW
+aEY
 aHG
 aIM
 aJG
@@ -85339,7 +85364,7 @@ aBI
 aES
 aBI
 aBI
-aGW
+aEY
 aHG
 aBI
 aJX
@@ -85362,7 +85387,7 @@ aMb
 aSX
 aMb
 aBI
-aGW
+aEY
 bgA
 bhe
 aDZ

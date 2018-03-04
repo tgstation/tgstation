@@ -3,6 +3,14 @@
 	.["cleanedMess"] = FALSE
 	.["foamSpewed"] = FALSE
 	.["cleanFaces"] = FALSE
+	.["atPatrolPoint"] = FALSE
+	.["isPatrolling"] = FALSE
+	var/mob/living/simple_animal/bot/B = agent.agent
+	for(var/A in B.loc)
+		if(istype(A, /obj/machinery/pathfinder_tile))
+			.["atPatrolPoint"] = TRUE
+			break
+
 
 /datum/goap_info_provider/cleanbot/GetGoal(datum/goap_agent/agent)
 	. = list()
@@ -20,3 +28,5 @@
 		var/mob/living/carbon/C = locate(/mob/living/carbon) in viewl
 		if(C)
 			.["cleanFaces"] = TRUE
+	if(!length(.))
+		.["isPatrolling"] = TRUE

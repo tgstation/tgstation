@@ -9,3 +9,5 @@
 	our_actions += new /datum/goap_action/cleanbot/clean_animal()
 	our_actions += new /datum/goap_action/cleanbot/foam()
 	our_actions += new /datum/goap_action/cleanbot/clean_faces()
+	our_actions += new /datum/goap_action/bot/move_to_pathfinder()
+	our_actions += new /datum/goap_action/bot/patrol()

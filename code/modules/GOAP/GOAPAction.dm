@@ -12,6 +12,7 @@
 	var/action_done = FALSE
 	var/cooldown
 	var/cooldown_time
+	var/list/path_to_use
 
 
 //Reset any state variables between uses
@@ -21,6 +22,7 @@
 	inn_range = FALSE
 	target = null
 	action_done = FALSE
+	path_to_use = null
 
 /datum/goap_action/proc/OnCooldown(atom/agent, list/worldstate)
 	if(cooldown)
