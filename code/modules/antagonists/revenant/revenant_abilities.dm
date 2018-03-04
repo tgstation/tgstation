@@ -441,25 +441,26 @@
 /////POLTERGEIST (BRUTE GHOST)/////
 
 /obj/effect/proc_holder/spell/targeted/revenant/punch/proc/polter_warn(mob/living/target)
-	to_chat(target, "You feel like a very angry ghost is watching you.")
+	to_chat(target, "You feel like a very angry ghost has left it's mark.")
 
 /obj/effect/proc_holder/spell/targeted/revenant/punch
 	name = "Violent Urges"
 	desc = "Causes someone to attack someone else. Doesn't reveal you, but the attacker gets a hint of your existence."
-	charge_max = 10 //COOLDOWN. COOLDOWN.
+	charge_max = 10
 	range = 7
 	cast_amount = 30
 	unlock_amount = 80
+	reveal = 0
+	stun = 0
 	action_icon_state = "blight"
 
 /obj/effect/proc_holder/spell/targeted/revenant/punch/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
-		for(var/mob/living/A in targets)
-			to_chat(user, "<span class='revenboldnotice'>We have added a pinch of our unbound rage to [A]'s mind!</span>")
-			var/turf/T = get_step(user_turf, turn(A, GLOB.alldirs))
-			for(var/mob/living/D in T)
-				melee_attack_chain(A, D)
-			addtimer(CALLBACK(src, .proc/polter_warn, target), 100)
+		for(var/mob/living/target in targets)
+			to_chat(user, "<span class='revenboldnotice'>We have added a pinch of unbound rage to [target]'s mind!</span>")
+			target.a_intent = INTENT_HARM
+			target.click_random_mob()
+			addtimer(CALLBACK(target, .proc/polter_warn, target), 100)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/push
 	name = "Ethereal Cyclone"
@@ -469,8 +470,15 @@
 	cast_amount = 50
 	unlock_amount = 75
 	action_icon_state = "blight"
+	sound = 'sound/magic/repulse.ogg'
+	reveal = 60
+	stun = 20
+	var/maxthrow = 5
+	var/sparkle_path = /obj/effect/temp_visual/gravpush
+	var/anti_magic_check = TRUE
+	action_icon_state = "repulse"
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/push/cast()
+/obj/effect/proc_holder/spell/aoe_turf/revenant/push/cast(list/targets,mob/user = usr, var/stun_amt = 40) //repulse does the exact same thing so who am i to not use it's code
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
@@ -485,7 +493,9 @@
 			continue
 
 		if(ismob(AM))
-			return FALSE
+			var/mob/M = AM
+			if(M.anti_magic_check(anti_magic_check, FALSE))
+				continue
 
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
@@ -501,15 +511,4 @@
 				var/mob/living/M = AM
 				M.Knockdown(stun_amt)
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
-			AM.throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
-
-
-/obj/effect/proc_holder/spell/aoe_turf/revenant/pull
-	name = "Ghastly Taunt"
-	desc = "Causes nearby objects to fly towards you."
-	charge_max = 50
-	locked = FALSE
-	range = 3
-	cast_amount = 50
-	unlock_amount = 0
-	action_icon_state = "blight"
+			AM.throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)
