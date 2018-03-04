@@ -3,8 +3,8 @@
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
-	canSmoothWith = null
-	smooth = SMOOTH_MORE
+	smoothWith = WALL_SMOOTH_LIST1(/turf/closed/wall/mineral/cult)
+	smooth = SMOOTH_TRUE
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/cult
@@ -155,7 +155,7 @@
 	icon = 'icons/turf/walls/icedmetal_wall.dmi'
 	icon_state = "iced"
 	desc = "A wall covered in a thick sheet of ice."
-	canSmoothWith = null
+	smoothWith = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
 
@@ -170,3 +170,23 @@
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
 	hardness = 15
+
+/turf/closed/wall/r_wall/rust/deconstruction_hints(mob/user)
+	to_chat(user, "<span class='notice'>Use a welding tool to wipe the rust.</span>")
+
+/turf/closed/wall/r_wall/rust/update_icon()
+	return
+
+/turf/closed/wall/r_wall/rust/try_decon(obj/item/W, mob/user, turf/T)
+	if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+		if(!W.tool_start_check(user, amount=0))
+			return
+		to_chat(user, "<span class='notice'>You begin wiping the rust...</span>")
+		if(W.use_tool(src, user, 60, volume=100))
+			if(!istype(src, /turf/closed/wall/r_wall/rust))
+				return 1
+			to_chat(user, "<span class='notice'>You wipe the rust.</span>")
+			new /turf/closed/wall/r_wall(loc)
+			qdel(src)
+		return 1
+	return 0

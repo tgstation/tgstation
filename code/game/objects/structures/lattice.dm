@@ -9,11 +9,10 @@
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	var/number_of_rods = 1
-	canSmoothWith = list(/obj/structure/lattice,
-	/turf/open/floor,
-	/turf/closed/wall,
-	/obj/structure/falsewall)
-	smooth = SMOOTH_MORE
+	smoothWith = list(/obj/structure/lattice = SMOOTH_SUBTYPES,
+	/turf/open/floor = SMOOTH_SUBTYPES,
+	/turf/closed/wall = SMOOTH_SUBTYPES,
+	/obj/structure/falsewall = SMOOTH_SUBTYPES)
 	//	flags = CONDUCT_1
 
 /obj/structure/lattice/examine(mob/user)
@@ -58,9 +57,13 @@
 	name = "cog lattice"
 	desc = "A lightweight support lattice. These hold the Justicar's station together."
 	icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
+	smoothWith = list(/obj/structure/lattice = SMOOTH_SUBTYPES,
+	/turf/open/floor = SMOOTH_SUBTYPES,
+	/turf/open/indestructible/clock_spawn_room = SMOOTH_SUBTYPES,
+	/turf/closed/wall = SMOOTH_SUBTYPES,
+	/obj/structure/falsewall = SMOOTH_SUBTYPES)
 
 /obj/structure/lattice/clockwork/Initialize(mapload)
-	canSmoothWith += /turf/open/indestructible/clock_spawn_room //list overrides are a terrible thing
 	. = ..()
 	ratvar_act()
 	if(is_reebe(z))
@@ -84,7 +87,7 @@
 	icon_state = "catwalk"
 	number_of_rods = 2
 	smooth = SMOOTH_TRUE
-	canSmoothWith = null
+	smoothWith = null
 
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
 	to_chat(user, "<span class='notice'>The supporting rods look like they could be <b>cut</b>.</span>")
@@ -107,12 +110,11 @@
 /obj/structure/lattice/catwalk/clockwork
 	name = "clockwork catwalk"
 	icon = 'icons/obj/smooth_structures/catwalk_clockwork.dmi'
-	canSmoothWith = list(/obj/structure/lattice,
-	/turf/open/floor,
-	/turf/open/indestructible/clock_spawn_room,
-	/turf/closed/wall,
-	/obj/structure/falsewall)
-	smooth = SMOOTH_MORE
+	smoothWith = list(/obj/structure/lattice = SMOOTH_SUBTYPES,
+	/turf/open/floor = SMOOTH_SUBTYPES,
+	/turf/open/indestructible/clock_spawn_room = SMOOTH_SUBTYPES,
+	/turf/closed/wall = SMOOTH_SUBTYPES,
+	/obj/structure/falsewall = SMOOTH_SUBTYPES)
 
 /obj/structure/lattice/catwalk/clockwork/Initialize(mapload)
 	. = ..()

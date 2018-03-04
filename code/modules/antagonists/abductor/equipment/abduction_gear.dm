@@ -720,7 +720,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	framestack = /obj/item/stack/sheet/mineral/abductor
 	buildstackamount = 1
 	framestackamount = 1
-	canSmoothWith = null
+	smoothWith = null
 	frame = /obj/structure/table_frame/abductor
 
 /obj/structure/table/optable/abductor

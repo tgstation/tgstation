@@ -92,7 +92,7 @@
 	icon_state = "carpet"
 	floor_tile = /obj/item/stack/tile/carpet
 	smooth = SMOOTH_TRUE
-	canSmoothWith = null
+	smoothWith = null
 
 /turf/open/floor/holofloor/carpet/Initialize()
 	. = ..()

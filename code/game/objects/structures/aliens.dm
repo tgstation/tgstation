@@ -78,7 +78,7 @@
 	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
 	icon_state = "wall0"	//same as resin, but consistency ho!
 	resintype = "wall"
-	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
+	smoothWith = list(/obj/structure/alien/resin/wall = SMOOTH_SUBTYPES, /obj/structure/alien/resin/membrane = SMOOTH_CONNECT)
 
 /obj/structure/alien/resin/wall/BlockSuperconductivity()
 	return 1
@@ -91,7 +91,7 @@
 	opacity = 0
 	max_integrity = 160
 	resintype = "membrane"
-	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
+	smoothWith = list(/obj/structure/alien/resin/wall = SMOOTH_CONNECT, /obj/structure/alien/resin/membrane = SMOOTH_SUBTYPES)
 
 /obj/structure/alien/resin/attack_paw(mob/user)
 	return attack_hand(user)
@@ -116,8 +116,8 @@
 	layer = TURF_LAYER
 	icon_state = "weeds"
 	max_integrity = 15
-	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
-	smooth = SMOOTH_MORE
+	smooth = SMOOTH_TRUE
+	smoothWith = list(/obj/structure/alien/weeds = SMOOTH_SUBTYPES, /turf/closed/wall = SMOOTH_SUBTYPES)
 	var/last_expand = 0 //last world.time this weed expanded
 	var/growth_cooldown_low = 150
 	var/growth_cooldown_high = 200

@@ -140,7 +140,7 @@
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/turf/open/floor/carpet)
+	smoothWith = null
 	flags_1 = NONE
 
 /turf/open/floor/carpet/examine(mob/user)
@@ -165,8 +165,6 @@
 /turf/open/floor/carpet/black
 	icon = 'icons/turf/floors/carpet_black.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/black
-	canSmoothWith = list(/turf/open/floor/carpet/black)
-
 
 /turf/open/floor/carpet/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
@@ -191,8 +189,7 @@
 
 /turf/open/floor/fakepit
 	desc = "A clever illusion designed to look like a bottomless pit."
-	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
-	canSmoothWith = list(/turf/open/floor/fakepit)
+	smoothWith = list(/turf/open/floor/fakepit = SMOOTH_SUBTYPES, /turf/open/chasm = SMOOTH_SUBTYPES)
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
 

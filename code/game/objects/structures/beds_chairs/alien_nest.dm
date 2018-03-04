@@ -8,7 +8,7 @@
 	max_integrity = 120
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = FALSE
-	canSmoothWith = null
+	smoothWith = null
 	buildstacktype = null
 	flags_1 = NODECONSTRUCT_1
 	bolts = FALSE

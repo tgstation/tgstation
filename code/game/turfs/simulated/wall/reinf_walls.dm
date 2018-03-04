@@ -1,10 +1,11 @@
 /turf/closed/wall/r_wall
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to separate rooms."
-	icon = 'icons/turf/walls/reinforced_wall.dmi'
+	icon = 'icons/turf/walls/reinforced_wall/0.dmi'
 	icon_state = "r_wall"
 	opacity = 1
 	density = TRUE
+	smoothWith = WALL_SMOOTH_LIST(/turf/closed/wall/r_wall, /obj/structure/falsewall/reinforced)
 
 	var/d_state = INTACT
 	hardness = 10
@@ -206,15 +207,21 @@
 	return 0
 
 /turf/closed/wall/r_wall/proc/update_icon()
-	if(d_state != INTACT)
-		smooth = SMOOTH_FALSE
-		clear_smooth_overlays()
-		icon_state = "r_wall-[d_state]"
-	else
-		smooth = SMOOTH_TRUE
-		queue_smooth_neighbors(src)
-		queue_smooth(src)
-		icon_state = "r_wall"
+	switch(d_state)
+		if(0)
+			icon = 'icons/turf/walls/reinforced_wall/0.dmi'
+		if(1)
+			icon = 'icons/turf/walls/reinforced_wall/1.dmi'
+		if(2)
+			icon = 'icons/turf/walls/reinforced_wall/2.dmi'
+		if(3)
+			icon = 'icons/turf/walls/reinforced_wall/3.dmi'
+		if(4)
+			icon = 'icons/turf/walls/reinforced_wall/4.dmi'
+		if(5)
+			icon = 'icons/turf/walls/reinforced_wall/5.dmi'
+		if(6)
+			icon = 'icons/turf/walls/reinforced_wall/6.dmi'
 
 /turf/closed/wall/r_wall/singularity_pull(S, current_size)
 	..()

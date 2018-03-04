@@ -18,15 +18,7 @@
 	var/sheet_amount = 2
 	var/girder_type = /obj/structure/girder
 
-	canSmoothWith = list(
-	/turf/closed/wall,
-	/turf/closed/wall/r_wall,
-	/obj/structure/falsewall,
-	/obj/structure/falsewall/brass,
-	/obj/structure/falsewall/reinforced,
-	/turf/closed/wall/rust,
-	/turf/closed/wall/r_wall/rust,
-	/turf/closed/wall/clockwork)
+	smoothWith = WALL_SMOOTH_LIST(/turf/closed/wall, /obj/structure/falsewall)
 	smooth = SMOOTH_TRUE
 
 	var/list/dent_decals
@@ -303,5 +295,5 @@
 	cut_overlay(dent_decals)
 	LAZYADD(dent_decals, decal)
 	add_overlay(dent_decals)
-	
+
 #undef MAX_DENT_DECALS

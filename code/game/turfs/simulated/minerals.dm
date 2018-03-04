@@ -5,8 +5,8 @@
 	icon = 'icons/turf/mining.dmi'
 	icon_state = "rock"
 	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
-	smooth = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	smoothWith = list(/turf/closed/mineral = SMOOTH_SUBTYPES, /turf/closed/indestructible = SMOOTH_SUBTYPES)
 	baseturfs = /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = "TEMP=2.7"
 	opacity = 1
@@ -25,8 +25,6 @@
 	var/defer_change = 0
 
 /turf/closed/mineral/Initialize()
-	if (!canSmoothWith)
-		canSmoothWith = list(/turf/closed/mineral, /turf/closed/indestructible)
 	pixel_y = -4
 	pixel_x = -4
 	icon = smooth_icon
@@ -387,8 +385,8 @@
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
 	icon_state = "rock2"
-	smooth = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed)
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	smoothWith = list(/turf/closed = SMOOTH_SUBTYPES)
 	baseturfs = /turf/open/floor/plating/ashplanet/wateryrock
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	environment_type = "waste"
@@ -400,8 +398,8 @@
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
 	icon_state = "mountainrock"
-	smooth = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed)
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	smoothWith = list(/turf/closed = SMOOTH_SUBTYPES)
 	baseturfs = /turf/open/floor/plating/asteroid/snow
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	environment_type = "snow"
@@ -413,8 +411,8 @@
 	icon = 'icons/turf/mining.dmi'
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
 	icon_state = "icerock"
-	smooth = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed)
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	smoothWith = list(/turf/closed = SMOOTH_SUBTYPES)
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	environment_type = "snow_cavern"
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice

@@ -133,7 +133,7 @@
 	desc = "A thick, seemingly indestructible stone wall."
 	icon = 'icons/turf/walls/boss_wall.dmi'
 	icon_state = "wall"
-	canSmoothWith = list(/turf/closed/indestructible/riveted/boss, /turf/closed/indestructible/riveted/boss/see_through)
+	smoothWith = list(/turf/closed/indestructible/riveted/boss = SMOOTH_SUBTYPES)
 	explosion_block = 50
 	baseturfs = /turf/closed/indestructible/riveted/boss
 

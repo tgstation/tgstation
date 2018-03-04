@@ -9,6 +9,14 @@
 	var/state = GIRDER_NORMAL
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
 	max_integrity = 200
+	smooth = SMOOTH_TRUE
+	smoothWith = list(/obj/structure/girder, /obj/structure/girder/reinforced)
+
+/obj/structure/girder/displaced
+	anchored = FALSE
+	state = GIRDER_DISPLACED
+	max_integrity = 100
+	smooth = SMOOTH_FALSE
 
 /obj/structure/girder/ComponentInitialize()
 	. = ..()
@@ -19,15 +27,6 @@
 		smooth = SMOOTH_FALSE
 		queue_smooth_neighbors(src)
 	return ..()
-
-/obj/structure/girder/update_icon()
-	if(!QDELETED(src) && state == GIRDER_NORMAL)
-		smooth = SMOOTH_TRUE
-		queue_smooth(src)
-		queue_smooth_neighbors(src)
-	else
-		smooth = SMOOTH_FALSE
-		clear_smooth_overlays()
 
 /obj/structure/girder/examine(mob/user)
 	. = ..()
@@ -280,18 +279,17 @@
 		to_chat(user, "<span class='notice'>You start securing the girder...</span>")
 		if(tool.use_tool(src, user, 40, volume=100))
 			to_chat(user, "<span class='notice'>You secure the girder.</span>")
-			anchored = TRUE
-			state = GIRDER_NORMAL
-			update_icon()
+			var/obj/structure/girder/G = new (loc)
+			transfer_fingerprints_to(G)
+			qdel(src)
 		return TRUE
 	else if(state == GIRDER_NORMAL && can_displace)
 		to_chat(user, "<span class='notice'>You start unsecuring the girder...</span>")
 		if(tool.use_tool(src, user, 40, volume=100))
 			to_chat(user, "<span class='notice'>You unsecure the girder.</span>")
-			anchored = FALSE
-			state = GIRDER_DISPLACED
-			update_icon()
-			queue_smooth_neighbors(src)
+			var/obj/structure/girder/displaced/D = new (loc)
+			transfer_fingerprints_to(D)
+			qdel(src)
 		return TRUE
 
 /obj/structure/girder/CanPass(atom/movable/mover, turf/target)
@@ -346,7 +344,7 @@
 
 /obj/structure/girder/reinforced
 	name = "reinforced girder"
-	icon = 'icons/obj/smooth_structures/r_girder.dmi'
+	icon = 'icons/obj/smooth_structures/reinforced_girder.dmi'
 	state = GIRDER_REINF
 	max_integrity = 350
 
@@ -363,9 +361,6 @@
 	icon = 'icons/obj/cult.dmi'
 	icon_state= "cultgirder"
 	can_displace = FALSE
-
-/obj/structure/girder/cult/update_icon()
-	return
 
 /obj/structure/girder/cult/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)

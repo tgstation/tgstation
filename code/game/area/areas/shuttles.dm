@@ -12,8 +12,8 @@
 	icon_state = "shuttle"
 
 /area/shuttle/Initialize()
-	if(!canSmoothWithAreas)
-		canSmoothWithAreas = type
+	if(!smoothWithAreas)
+		smoothWithAreas = type
 	. = ..()
 
 ////////////////////////////Multi-area shuttles////////////////////////////
@@ -24,7 +24,7 @@
 	name = "Syndicate Infiltrator"
 	blob_allowed = FALSE
 	ambientsounds = HIGHSEC
-	canSmoothWithAreas = /area/shuttle/syndicate
+	smoothWithAreas = /area/shuttle/syndicate
 
 /area/shuttle/syndicate/bridge
 	name = "Syndicate Infiltrator Control"
@@ -49,7 +49,7 @@
 	name = "Pirate Shuttle"
 	blob_allowed = FALSE
 	requires_power = TRUE
-	canSmoothWithAreas = /area/shuttle/pirate
+	smoothWithAreas = /area/shuttle/pirate
 
 /area/shuttle/pirate/vault
 	name = "Pirate Shuttle Vault"

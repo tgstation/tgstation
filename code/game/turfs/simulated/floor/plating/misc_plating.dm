@@ -36,7 +36,8 @@
 	icon = 'icons/turf/mining.dmi'
 	name = "ash"
 	icon_state = "ash"
-	smooth = SMOOTH_MORE|SMOOTH_BORDER
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	smoothWith = list(/turf/open/floor/plating/ashplanet = SMOOTH_SUBTYPES)
 	var/smooth_icon = 'icons/turf/floors/ash.dmi'
 	desc = "The ground is covered in volcanic ash."
 	baseturfs = /turf/open/floor/plating/ashplanet/wateryrock //I assume this will be a chasm eventually, once this becomes an actual surface
@@ -61,7 +62,7 @@
 	return
 
 /turf/open/floor/plating/ashplanet/ash
-	canSmoothWith = list(/turf/open/floor/plating/ashplanet/ash, /turf/closed)
+	smoothWith = list(/turf/open/floor/plating/ashplanet/ash = SMOOTH_SUBTYPES, /turf/closed = SMOOTH_SUBTYPES)
 	layer = HIGH_TURF_LAYER
 	slowdown = 1
 
@@ -70,11 +71,11 @@
 	icon_state = "rockyash"
 	smooth_icon = 'icons/turf/floors/rocky_ash.dmi'
 	layer = MID_TURF_LAYER
-	canSmoothWith = list(/turf/open/floor/plating/ashplanet/rocky, /turf/closed)
+	smoothWith = list(/turf/open/floor/plating/ashplanet/rocky = SMOOTH_SUBTYPES, /turf/closed = SMOOTH_SUBTYPES)
 
 /turf/open/floor/plating/ashplanet/wateryrock
 	name = "wet rocky ground"
-	smooth = null
+	smooth = SMOOTH_FALSE
 	icon_state = "wateryrock"
 	slowdown = 2
 
@@ -157,8 +158,8 @@
 
 /turf/open/floor/plating/ice/smooth
 	icon_state = "smooth"
-	smooth = SMOOTH_MORE | SMOOTH_BORDER
-	canSmoothWith = list(/turf/open/floor/plating/ice/smooth, /turf/open/floor/plating/ice)
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	smoothWith = list(/turf/open/floor/plating/ice/smooth = SMOOTH_SUBTYPES, /turf/open/floor/plating/ice = SMOOTH_SUBTYPES)
 	/turf/open/floor/plating/ice/colder
 
 /turf/open/floor/plating/ice/colder
@@ -188,8 +189,8 @@
 	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"
 
 /turf/open/floor/plating/snowed/smoothed
-	smooth = SMOOTH_MORE | SMOOTH_BORDER
-	canSmoothWith = list(/turf/open/floor/plating/snowed/smoothed, /turf/open/floor/plating/snowed)
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	smoothWith = list(/turf/open/floor/plating/snowed/smoothed = SMOOTH_SUBTYPES, /turf/open/floor/plating/snowed = SMOOTH_SUBTYPES)
 	planetary_atmos = TRUE
 	icon = 'icons/turf/floors/snow_turf.dmi'
 	icon_state = "smooth"
