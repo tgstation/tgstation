@@ -34,7 +34,7 @@
 
 	return path
 
-#define FTPDELAY 200	//200 tick delay to discourage spam
+#define FTPDELAY 100	//200 tick delay to discourage spam
 /*	This proc is a failsafe to prevent spamming of file requests.
 	It is just a timer that only permits a download every [FTPDELAY] ticks.
 	This can be changed by modifying FTPDELAY's value above.
