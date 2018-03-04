@@ -309,6 +309,102 @@
 	else
 		return
 
+/datum/browser/modal/preflikepicker
+	var/settings = list()
+	var/icon/preview_icon = null
+
+/datum/browser/modal/preflikepicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/settings,inputtype="checkbox", width, height, slidecolor)
+	if (!User)
+		return
+	src.settings = settings
+
+	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, width, height, src, StealFocus, Timeout)
+	set_content(ShowChoices(User))
+
+/datum/browser/modal/preflikepicker/proc/ShowChoices(mob/user)
+	//update_preview_icon()
+	//user << browse_rsc(preview_icon, "previewicon.png")
+	to_chat(usr, json_encode(settings))
+
+	var/dat = ""
+
+	for (var/setting in settings["mainsettings"])
+		if (setting["type"] == "datum")
+			dat += "<a href='?src=[REF(src)];setting=[setting["name"]];task=input;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
+		else
+			dat += "<a href='?src=[REF(src)];setting=[setting["name"]];task=input;type=[setting["type"]]'>[setting["value"]]</a><BR>"
+
+	if (preview_icon)
+		dat += "<td valign='center'>"
+
+		dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
+
+		dat += "</td>"
+
+	dat += "</tr></table>"
+
+	if (LAZYLEN(settings["advsettings"]))
+		dat += "<h2>Additional settings</h2>"
+
+		for(var/settingclass in settings["advsettings"])
+			dat += "<td valign='top' width='21%'>"
+
+			dat += "<h3>[settingclass["name"]]</h3>"
+			for (var/setting in settingclass["settings"])
+				if (setting["type"] == "datum")
+					dat += "<a href='?src=[REF(src)];setting=[setting["name"]];task=input;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
+				else
+					dat += "<a href='?src=[REF(src)];setting=[setting["name"]];task=input;type=[setting["type"]]'>[setting["value"]]</a><BR>"
+
+			dat += "</td>"
+
+	dat += "</tr></table>"
+
+	dat += "<hr><center>"
+
+	dat += "<a href='?src=[REF(src)];button=1'>Ok</a> "
+
+	/* if (Button2)
+		dat += "<a href='?src=[REF(src)];button=2'>[Button2]</a> "
+
+	if (Button3)
+		dat += "<a href='?src=[REF(src)];button=3'>[Button3]</a> " */
+
+	dat += "</center>"
+
+	return dat
+
+/datum/browser/modal/preflikepicker/Topic(href,href_list)
+	if (href_list["close"] || !user || !user.client)
+		opentime = 0
+		return
+	if (href_list["button"])
+		var/button = text2num(href_list["button"])
+		if (button <= 3 && button >= 1)
+			selectedbutton = button
+	if (selectedbutton != 1)
+		open()
+		return
+	for (var/item in href_list)
+		switch(item)
+			if ("close", "button", "src")
+				continue
+	opentime = 0
+	close()
+
+/proc/presentpreflikepicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/settings, width, height, slidecolor)
+	if (!istype(User))
+		if (istype(User, /client/))
+			var/client/C = User
+			User = C.mob
+		else
+			return
+	var/datum/browser/modal/preflikepicker/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus,Timeout, settings, width, height, slidecolor)
+	A.open()
+	A.wait()
+	if (A.selectedbutton)
+		return list("button" = A.selectedbutton, "settings" = A.settings)
+
 // This will allow you to show an icon in the browse window
 // This is added to mob so that it can be used without a reference to the browser object
 // There is probably a better place for this...
