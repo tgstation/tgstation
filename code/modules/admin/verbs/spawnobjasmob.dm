@@ -1,31 +1,67 @@
 /datum/admins/proc/spawn_objasmob(object as text)
 	set category = "Debug"
-	set desc = "(obj path) Spawn /obj as /mob"
-	set name = "Spawn obj as mob"
+	set desc = "(obj path) Spawn object-mob"
+	set name = "Spawn object-mob"
 
 	if(!check_rights(R_SPAWN))
 		return
 
 	var/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/obj)))
 
-	var/mob/living/simple_animal/hostile/mimic = /mob/living/simple_animal/hostile/mimic
+	if (!chosen)
+		return
+
+	var/mob/living/simple_animal/hostile/mimic/copy/basemob = /mob/living/simple_animal/hostile/mimic/copy
+
+	var/obj/chosen_obj = text2path(chosen)
 
 	var/list/settings = list(
     "mainsettings" = list(
-      list("name" = "name", "type" = "string", "value" = "[chosen]"),
-      list("name" = "access", "type" = "datum", "path" = "/obj/item/card/id", "value" = "[initial(mimic.access_card)]")
-    ),
-    "advsettings" = list(
-      list(
-        list("name" = "Spells", "settings" = list(
-          list("name" = "spell\[\]", "type" = "datum", "path" = "/obj/effect/proc_holder/spell", "value" = "/obj/effect/proc_holder/spell/aimed/fireball/fireball")
-        ))
-      )
-    ))
+      "name" = list("desc" = "Name", "type" = "string", "value" = "Bob"),
+			"maxhealth" = list("desc" = "Max. health", "type" = "number", "value" = 100),
+      "access" = list("desc" = "Access ID", "type" = "datum", "path" = "/obj/item/card/id", "value" = "Default"),
+			"objtype" = list("desc" = "Base obj type", "type" = "datum", "path" = "/obj", "value" = "[chosen]"),
+			"googlyeyes" = list("desc" = "Googly eyes", "type" = "boolean", "value" = "No"),
+			"disableai" = list("desc" = "Disable AI", "type" = "boolean", "value" = "Yes"),
+			"idledamage" = list("desc" = "Damaged while idle", "type" = "boolean", "value" = "No"),
+			"dropitem" = list("desc" = "Drop obj on death", "type" = "boolean", "value" = "Yes"),
+			"mobtype" = list("desc" = "Base mob type", "type" = "datum", "path" = "/mob/living/simple_animal/hostile/mimic/copy", "value" = "/mob/living/simple_animal/hostile/mimic/copy"),
+    )
+	)
 
-	var/list/prefreturn = presentpreflikepicker(usr,"Customize mob", "Customize mob", Button1="Ok", StealFocus = 1,Timeout = 6000, settings=settings)
-	to_chat(usr, json_encode(prefreturn))
+	var/list/prefreturn = presentpreflikepicker(usr,"Customize mob", "Customize mob", Button1="Ok", Width = 450, StealFocus = 1,Timeout = 0, settings=settings)
+	if (prefreturn["button"] == 1)
+		settings = prefreturn["settings"]
+		var/mainsettings = settings["mainsettings"]
+		chosen_obj = text2path(mainsettings["objtype"]["value"])
+
+		basemob = text2path(mainsettings["mobtype"]["value"])
+		if (!ispath(basemob, /mob/living/simple_animal/hostile/mimic/copy) || !ispath(chosen_obj, /obj))
+			to_chat(usr, "Mob or object path invalid")
+
+		basemob = new basemob(get_turf(usr), new chosen_obj(get_turf(usr)), usr, mainsettings["dropitem"]["value"] == "Yes" ? FALSE : TRUE, (mainsettings["googlyeyes"]["value"] == "Yes" ? FALSE : TRUE))
+
+		if (mainsettings["disableai"]["value"] == "Yes")
+			basemob.toggle_ai(AI_OFF)
+
+		if (mainsettings["idledamage"]["value"] == "No")
+			basemob.idledamage = FALSE
+
+		if (mainsettings["access"])
+			var/newaccess = text2path(mainsettings["access"]["value"])
+			if (ispath(newaccess))
+				basemob.access_card = new newaccess
+
+		if (mainsettings["maxhealth"]["value"])
+			if (!isnum(mainsettings["maxhealth"]["value"]))
+				mainsettings["maxhealth"]["value"] = text2num(mainsettings["maxhealth"]["value"])
+			if (mainsettings["maxhealth"]["value"] > 0)
+				basemob.maxHealth = basemob.maxHealth =  mainsettings["maxhealth"]["value"]
+
+		if (mainsettings["name"]["value"])
+			basemob.name = mainsettings["name"]["value"]
+			basemob.real_name = mainsettings["name"]["value"]
 
 
-//	log_admin("[key_name(usr)] spawned cargo pack [chosen] at ([usr.x],[usr.y],[usr.z])")
-//	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Cargo") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin("[key_name(usr)] spawned a sentient object-mob [basemob] from [chosen_obj] at ([usr.x],[usr.y],[usr.z])")
+		SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn object-mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
