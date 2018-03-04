@@ -2,7 +2,7 @@
 	name = "Clogged Vents"
 	typepath = /datum/round_event/vent_clog
 	weight = 25
-	max_occurrences = 1
+	max_occurrences = 0
 	min_players = 50
 
 /datum/round_event/vent_clog

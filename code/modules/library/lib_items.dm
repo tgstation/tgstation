@@ -20,7 +20,7 @@
 	opacity = 0
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	var/state = 0
 	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
 
@@ -75,7 +75,7 @@
 					state = 2
 					icon_state = "book-0"
 			if(istype(I, /obj/item/wrench))
-				playsound(loc, I.usesound, 100, 1)
+				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You unwrench the frame.</span>")
 				anchored = FALSE
 				state = 0
@@ -93,7 +93,12 @@
 				to_chat(user, "<span class='notice'>You empty \the [I] into \the [src].</span>")
 				update_icon()
 			else if(istype(I, /obj/item/pen))
+				if(!user.is_literate())
+					to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
+					return
 				var/newname = stripped_input(user, "What would you like to title this bookshelf?")
+				if(!user.canUseTopic(src, BE_CLOSE))
+					return
 				if(!newname)
 					return
 				else
@@ -102,9 +107,9 @@
 				if(contents.len)
 					to_chat(user, "<span class='warning'>You need to remove the books first!</span>")
 				else
-					playsound(loc, I.usesound, 100, 1)
+					I.play_tool_sound(src, 100)
 					to_chat(user, "<span class='notice'>You pry the shelf out.</span>")
-					new /obj/item/stack/sheet/mineral/wood(loc, 2)
+					new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)
 					state = 1
 					icon_state = "bookempty"
 			else
@@ -214,30 +219,42 @@
 		if(unique)
 			to_chat(user, "<span class='warning'>These pages don't seem to take the ink well! Looks like you can't modify it.</span>")
 			return
+		var/literate = user.is_literate()
+		if(!literate)
+			to_chat(user, "<span class='notice'>You scribble illegibly on the cover of [src]!</span>")
+			return
 		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
+		if(!user.canUseTopic(src, BE_CLOSE, literate))
+			return
 		switch(choice)
 			if("Title")
-				var/newtitle = reject_bad_text(stripped_input(usr, "Write a new title:"))
+				var/newtitle = reject_bad_text(stripped_input(user, "Write a new title:"))
+				if(!user.canUseTopic(src, BE_CLOSE, literate))
+					return
 				if (length(newtitle) > 20)
-					to_chat(usr, "That title won't fit on the cover!")
+					to_chat(user, "That title won't fit on the cover!")
 					return
 				if(!newtitle)
-					to_chat(usr, "That title is invalid.")
+					to_chat(user, "That title is invalid.")
 					return
 				else
 					name = newtitle
 					title = newtitle
 			if("Contents")
-				var/content = stripped_input(usr, "Write your book's contents (HTML NOT allowed):","","",8192)
+				var/content = stripped_input(user, "Write your book's contents (HTML NOT allowed):","","",8192)
+				if(!user.canUseTopic(src, BE_CLOSE, literate))
+					return
 				if(!content)
-					to_chat(usr, "The content is invalid.")
+					to_chat(user, "The content is invalid.")
 					return
 				else
 					dat += content
 			if("Author")
-				var/newauthor = stripped_input(usr, "Write the author's name:")
+				var/newauthor = stripped_input(user, "Write the author's name:")
+				if(!user.canUseTopic(src, BE_CLOSE, literate))
+					return
 				if(!newauthor)
-					to_chat(usr, "The name is invalid.")
+					to_chat(user, "The name is invalid.")
 					return
 				else
 					author = newauthor

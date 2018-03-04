@@ -552,7 +552,7 @@
 /obj/machinery/camera{
 	c_tag = "Arrivals";
 	dir = 8;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4;
@@ -2216,7 +2216,7 @@
 "eY" = (
 /obj/machinery/computer/security{
 	dir = 1;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 6;
@@ -2280,7 +2280,7 @@
 /obj/machinery/camera{
 	c_tag = "Hydroponics";
 	dir = 1;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 2;
@@ -2667,7 +2667,7 @@
 /obj/machinery/camera{
 	c_tag = "Central Hallway";
 	dir = 1;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -3113,7 +3113,7 @@
 /obj/machinery/camera{
 	c_tag = "Research Lab";
 	dir = 2;
-	network = list("UO45","UO45R")
+	network = list("uo45","uo45r")
 	},
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
@@ -3299,7 +3299,7 @@
 /obj/machinery/camera{
 	c_tag = "Kitchen";
 	dir = 8;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -4178,7 +4178,7 @@
 /obj/machinery/camera{
 	c_tag = "Gateway Chamber";
 	dir = 4;
-	network = list("UO45","UO45R")
+	network = list("uo45","uo45r")
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -4348,7 +4348,7 @@
 /obj/machinery/camera{
 	c_tag = "Bar";
 	dir = 8;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/bar{
@@ -5363,7 +5363,7 @@
 /obj/machinery/camera{
 	c_tag = "Gateway Ready Room";
 	dir = 2;
-	network = list("UO45","UO45R")
+	network = list("uo45","uo45r")
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -5480,7 +5480,7 @@
 /obj/machinery/camera{
 	c_tag = "Research Division West";
 	dir = 1;
-	network = list("UO45","UO45R")
+	network = list("uo45","uo45r")
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 2;
@@ -5662,7 +5662,7 @@
 /obj/machinery/camera{
 	c_tag = "Research Division East";
 	dir = 1;
-	network = list("UO45","UO45R")
+	network = list("uo45","uo45r")
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 2;
@@ -5784,7 +5784,7 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Secure Storage";
 	dir = 2;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -6466,7 +6466,7 @@
 "no" = (
 /obj/machinery/computer/security{
 	dir = 4;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8;
@@ -6487,7 +6487,7 @@
 	desc = "Used for monitoring the research division and the labs within.";
 	dir = 8;
 	name = "research monitor";
-	network = list("UO45R")
+	network = list("uo45r")
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/red/side{
@@ -6801,7 +6801,7 @@
 	desc = "Used for monitoring the research division and the labs within.";
 	dir = 2;
 	name = "research monitor";
-	network = list("UO45R")
+	network = list("uo45r")
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
@@ -6968,7 +6968,7 @@
 /obj/machinery/camera{
 	c_tag = "Dormitories";
 	dir = 2;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1;
@@ -8433,7 +8433,8 @@
 	layer = 2.9
 	},
 /obj/structure/closet/secure_closet/engineering_personal{
-	req_access = list(201)
+	req_access = null;
+	req_access_txt = "201"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/yellow/side{
@@ -8451,7 +8452,7 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics";
 	dir = 2;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /obj/structure/table,
 /obj/item/clothing/gloves/color/yellow,
@@ -8822,7 +8823,8 @@
 	locked = 1;
 	name = "UO45 Engineering APC";
 	pixel_x = -25;
-	req_access = list(201);
+	req_access = null;
+	req_access_txt = "201";
 	start_charge = 100
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -9084,7 +9086,7 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Hallway";
 	dir = 4;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -9418,7 +9420,8 @@
 	icon_state = "mining";
 	locked = 0;
 	name = "miner's equipment";
-	req_access = list(201)
+	req_access = null;
+	req_access_txt = "201"
 	},
 /obj/item/storage/backpack/satchel/eng,
 /obj/item/clothing/gloves/fingerless,
@@ -10111,7 +10114,7 @@
 "tz" = (
 /obj/machinery/computer/security{
 	dir = 1;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /obj/machinery/button/door{
 	desc = "A remote control-switch for the security privacy shutters.";
@@ -11386,7 +11389,7 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Foyer";
 	dir = 1;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -11959,7 +11962,8 @@
 	pixel_y = -24
 	},
 /obj/structure/closet/secure_closet/miner{
-	req_access = list(201)
+	req_access = null;
+	req_access_txt = "201"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -12254,7 +12258,7 @@
 /obj/machinery/camera{
 	c_tag = "Mining";
 	dir = 4;
-	network = list("UO45")
+	network = list("uo45")
 	},
 /turf/open/floor/plasteel/floorgrime{
 	heat_capacity = 1e+006

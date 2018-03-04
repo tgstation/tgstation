@@ -99,12 +99,9 @@
 		H.emote("scream")
 
 /obj/item/paper/AltClick(mob/living/carbon/user, obj/item/I)
-	if ( istype(user) )
-		if( (!in_range(src, user)) || user.stat || user.restrained() )
-			return
-		to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
-		user.temporarilyRemoveItemFromInventory(src)
-		I = new /obj/item/paperplane(user, src)
-		user.put_in_hands(I)
-	else
-		to_chat(user, "<span class='notice'> You lack the dexterity to fold \the [src]. </span>")
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
+	user.temporarilyRemoveItemFromInventory(src)
+	I = new /obj/item/paperplane(user, src)
+	user.put_in_hands(I)

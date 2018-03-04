@@ -85,6 +85,11 @@
 	build_path = /obj/machinery/recharger
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
 
+/obj/item/circuitboard/machine/cell_charger
+	name = "Cell Charger (Machine Board)"
+	build_path = /obj/machinery/cell_charger
+	req_components = list(/obj/item/stock_parts/capacitor = 1)
+
 /obj/item/circuitboard/machine/cyborgrecharger
 	name = "Cyborg Recharger (Machine Board)"
 	build_path = /obj/machinery/recharge_station
@@ -287,7 +292,7 @@
 				new_setting = "Freezer"
 		name = initial(new_type.name)
 		build_path = initial(new_type.build_path)
-		playsound(user, I.usesound, 50, 1)
+		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You change the circuitboard setting to \"[new_setting]\".</span>")
 	else
 		return ..()
@@ -584,6 +589,12 @@
 	else
 		return ..()
 
+/obj/item/circuitboard/machine/reagentgrinder
+	name = "Machine Design (All-In-One Grinder)"
+	build_path = /obj/machinery/reagentgrinder/constructed
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 1)
+
 /obj/item/circuitboard/machine/chem_master/condi
 	name = "CondiMaster 3000 (Machine Board)"
 	build_path = /obj/machinery/chem_master/condimaster
@@ -707,3 +718,28 @@
 	req_components = list(
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/vending_refill/donksoft = 3)
+
+/obj/item/circuitboard/machine/dish_drive
+	name = "Dish Drive (Machine Board)"
+	build_path = /obj/machinery/dish_drive
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/matter_bin = 2)
+	var/suction = TRUE
+	var/transmit = TRUE
+
+/obj/item/circuitboard/machine/dish_drive/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Its suction function is [suction ? "enabled" : "disabled"]. Use it in-hand to switch.</span>")
+	to_chat(user, "<span class='notice'>Its disposal auto-transmit function is [transmit ? "enabled" : "disabled"]. Alt-click it to switch.</span>")
+
+/obj/item/circuitboard/machine/dish_drive/attack_self(mob/living/user)
+	suction = !suction
+	to_chat(user, "<span class='notice'>You [suction ? "enable" : "disable"] the board's suction function.</span>")
+
+/obj/item/circuitboard/machine/dish_drive/AltClick(mob/living/user)
+	if(!user.Adjacent(src))
+		return
+	transmit = !transmit
+	to_chat(user, "<span class='notice'>You [transmit ? "enable" : "disable"] the board's automatic disposal transmission.</span>")

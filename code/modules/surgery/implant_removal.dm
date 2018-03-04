@@ -8,7 +8,7 @@
 //extract implant
 /datum/surgery_step/extract_implant
 	name = "extract implant"
-	implements = list(/obj/item/hemostat = 100, /obj/item/crowbar = 65)
+	implements = list(/obj/item/hemostat = 100, TOOL_CROWBAR = 65)
 	time = 64
 	var/obj/item/implant/I = null
 

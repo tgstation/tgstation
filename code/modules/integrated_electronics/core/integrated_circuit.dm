@@ -19,6 +19,7 @@
 	var/power_draw_per_use = 0 		// How much power is drawn when work()'d.
 	var/power_draw_idle = 0			// How much power is drawn when doing nothing.
 	var/spawn_flags					// Used for world initializing, see the #defines above.
+	var/action_flags = NONE			// Used for telling circuits that can do certain actions from other circuits.
 	var/category_text = "NO CATEGORY THIS IS A BUG"	// To show up on circuit printer, and perhaps other places.
 	var/removable = TRUE 			// Determines if a circuit is removable from the assembly.
 	var/displayed_name = ""
@@ -68,7 +69,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	if(assembly)
 		return assembly.check_interactivity(user)
 	else
-		return user.canUseTopic(src,be_close = TRUE)
+		return user.canUseTopic(src, BE_CLOSE)
 
 /obj/item/integrated_circuit/Initialize()
 	displayed_name = name
@@ -120,7 +121,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return
 
 	var/window_height = 350
-	var/window_width = 600
+	var/window_width = 655
 
 	var/table_edge_width = "30%"
 	var/table_middle_width = "40%"
@@ -135,7 +136,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 
 	HTML += "<a href='?src=[REF(src)]'>\[Refresh\]</a>  |  "
 	HTML += "<a href='?src=[REF(src)];rename=1'>\[Rename\]</a>  |  "
-	HTML += "<a href='?src=[REF(src)];scan=1'>\[Scan with Device\]</a>"
+	HTML += "<a href='?src=[REF(src)];scan=1'>\[Copy Ref\]</a>"
 	if(assembly && removable)
 		HTML += "  |  <a href='?src=[REF(assembly)];component=[REF(src)];remove=1'>\[Remove\]</a>"
 	HTML += "<br>"

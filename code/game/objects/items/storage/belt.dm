@@ -152,7 +152,8 @@
 		/obj/item/storage/bag/chemistry,
 		/obj/item/storage/bag/bio,
 		/obj/item/reagent_containers/blood,
-		/obj/item/tank/internals/emergency_oxygen
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/pinpointer/crew
 		)
 
 
@@ -511,7 +512,7 @@
 		to_chat(user, "<span class='notice'>Alt-click it to quickly draw the blade.</span>")
 
 /obj/item/storage/belt/sabre/AltClick(mob/user)
-	if(!ishuman(user) || !user.canUseTopic(src, be_close=TRUE))
+	if(!iscarbon(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(contents.len)
 		var/obj/item/I = contents[1]

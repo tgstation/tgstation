@@ -40,23 +40,18 @@
 				anchored = TRUE
 
 	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
-		if(!src.loc)
-			return
-		user.visible_message("[user] destroys the [name]!", \
+		user.visible_message("[user] destroys the [name]!",
 							 "<span class='notice'>You destroy the [name].</span>")
-		D.playDigSound()
+		W.play_tool_sound(src)
 		qdel(src)
 
 	else if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
 		if(!W.tool_start_check(user, amount=0))
 			return FALSE
 
-		playsound(loc, W.usesound, 40, 1)
 		user.visible_message("[user] is slicing apart the [name].", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(W.use_tool(src, user, 40))
-			playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+		if(W.use_tool(src, user, 40, volume=50))
 			user.visible_message("[user] slices apart the [name].", \
 								 "<span class='notice'>You slice apart the [name]!</span>")
 			deconstruct(TRUE)

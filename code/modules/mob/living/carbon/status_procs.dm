@@ -73,28 +73,28 @@
 	if(B)
 		. = B.traumas
 
-/mob/living/carbon/proc/has_trauma_type(brain_trauma_type, consider_permanent = FALSE)
+/mob/living/carbon/proc/has_trauma_type(brain_trauma_type, resilience)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
-		. = B.has_trauma_type(brain_trauma_type, consider_permanent)
+		. = B.has_trauma_type(brain_trauma_type, resilience)
 
-/mob/living/carbon/proc/gain_trauma(datum/brain_trauma/trauma, permanent = FALSE, list/arguments)
+/mob/living/carbon/proc/gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
-		. = B.gain_trauma(trauma, permanent, arguments)
+		. = B.gain_trauma(trauma, resilience, arguments)
 
-/mob/living/carbon/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, permanent = FALSE)
+/mob/living/carbon/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
-		. = B.gain_trauma_type(brain_trauma_type, permanent)
+		. = B.gain_trauma_type(brain_trauma_type, resilience)
 
-/mob/living/carbon/proc/cure_trauma_type(brain_trauma_type, cure_permanent = FALSE)
+/mob/living/carbon/proc/cure_trauma_type(resilience)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
-		. = B.cure_trauma_type(brain_trauma_type, cure_permanent)
+		. = B.cure_trauma_type(resilience)
 
-/mob/living/carbon/proc/cure_all_traumas(cure_permanent = FALSE)
+/mob/living/carbon/proc/cure_all_traumas(resilience)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
-		. = B.cure_all_traumas(cure_permanent)
+		. = B.cure_all_traumas(resilience)
 

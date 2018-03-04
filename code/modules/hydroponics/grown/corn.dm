@@ -26,6 +26,7 @@
 	bitesize_mod = 2
 	foodtype = VEGETABLES
 	juice_results = list("corn_starch" = 0)
+	tastes = list("corn" = 1)
 
 /obj/item/grown/corncob
 	name = "corn cob"
