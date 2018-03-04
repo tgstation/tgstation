@@ -86,3 +86,8 @@
 
 #define CALTROP_BYPASS_SHOES 1
 #define CALTROP_IGNORE_WALKERS 2
+
+//Component Specific Signals
+//Wet floors
+#define COMSIG_TURF_IS_WET "check_turf_wet"							//(): Returns bitflags of wet values.
+#define COMSIG_TURF_MAKE_DRY "make_turf_try"						//(max_strength, immediate, duration_decrease = INFINITY): Returns bool.
