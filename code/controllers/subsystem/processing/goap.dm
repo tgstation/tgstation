@@ -7,8 +7,8 @@ PROCESSING_SUBSYSTEM_DEF(goap)
 	init_order = -101
 
 /datum/controller/subsystem/processing/goap/Initialize(timeofday)
-	..()
 	generate_pathfinding_list()
+	..()
 
 /datum/controller/subsystem/processing/goap/fire(resumed = 0)
 	if (!resumed)
