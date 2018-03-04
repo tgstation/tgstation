@@ -55,6 +55,8 @@
 	if(QDELETED(trait_holder))
 		qdel(src)
 		return
+	if(trait_holder.stat == DEAD)
+		return
 	on_process()
 
 /mob/living/proc/get_trait_string(medical) //helper string. gets a string of all the traits the mob has
