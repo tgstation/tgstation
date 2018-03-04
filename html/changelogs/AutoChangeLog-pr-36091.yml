@@ -1,6 +1,0 @@
-author: "Jalleo"
-delete-after: True
-changes: 
-  - admin: "Added a cancel button to nuke timer (and others). You no longer have to make it 0 just a click to cancel."
-  - admin: "You can now easily set how many \"INSERT JOB ROLE HERE\" you want in the manage job selection in the admin panel. If you put zero in it will set it to the current amount of filled positions."
-  - bugfix: "moved a small amount of wording around in a admin browser to make it cleaner looking. Along with a few updated checks for certain things."
