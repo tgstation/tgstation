@@ -351,11 +351,11 @@
 	if(!mob_occupant)
 		return
 
-	H.remove_trait(TRAIT_STABLEHEART, "cloning")
-	H.remove_trait(TRAIT_EMOTEMUTE, "cloning")
-	H.remove_trait(TRAIT_MUTE, "cloning")
-	H.remove_trait(TRAIT_NOCRITDAMAGE, "cloning")
-	H.remove_trait(TRAIT_NOBREATH, "cloning")
+	mob_occupant.remove_trait(TRAIT_STABLEHEART, "cloning")
+	mob_occupant.remove_trait(TRAIT_EMOTEMUTE, "cloning")
+	mob_occupant.remove_trait(TRAIT_MUTE, "cloning")
+	mob_occupant.remove_trait(TRAIT_NOCRITDAMAGE, "cloning")
+	mob_occupant.remove_trait(TRAIT_NOBREATH, "cloning")
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		mob_occupant.grab_ghost()

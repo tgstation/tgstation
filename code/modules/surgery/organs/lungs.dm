@@ -68,10 +68,8 @@
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	if((H.status_flags & GODMODE))
 		return
-
-	var/species_traits = list()
-	if(H && H.dna && H.dna.species && H.dna.species.species_traits)
-		species_traits = H.dna.species.species_traits
+	if(H.has_trait(TRAIT_NOBREATH))
+		return
 
 	if(!breath || (breath.total_moles() == 0))
 		if(H.reagents.has_reagent(crit_stabilizing_reagent))
