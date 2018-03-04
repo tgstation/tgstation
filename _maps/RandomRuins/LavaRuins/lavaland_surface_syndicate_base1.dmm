@@ -5043,7 +5043,9 @@
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "mV" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
 /obj/structure/sign/barsign{
 	pixel_y = -32;
 	req_access = null;
@@ -5053,7 +5055,9 @@
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "mW" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "mX" = (

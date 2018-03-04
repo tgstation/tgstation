@@ -252,7 +252,9 @@
 /area/shuttle/escape)
 "aV" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aW" = (
@@ -283,7 +285,9 @@
 /area/shuttle/escape)
 "bb" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "bc" = (

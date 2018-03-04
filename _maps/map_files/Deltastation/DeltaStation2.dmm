@@ -86913,7 +86913,9 @@
 "dBP" = (
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
 /obj/structure/table/wood/poker,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
