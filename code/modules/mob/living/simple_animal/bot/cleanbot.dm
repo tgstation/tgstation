@@ -25,6 +25,7 @@
 
 	var/datum/job/janitor/J = new/datum/job/janitor
 	access_card.access += J.get_access()
+	access_card.access += list(ACCESS_MEDICAL, ACCESS_RESEARCH, ACCESS_ENGINE)
 	prev_access = access_card.access
 	goap_ai = new()
 	goap_ai.agent = src

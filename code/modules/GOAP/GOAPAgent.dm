@@ -7,7 +7,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 #define STATE_MOVINGTO	1
 #define STATE_ACTING	2
 
-//#define GOAP_DEBUG_ENABLE "fart"
+#define GOAP_DEBUG_ENABLE "fart"
 
 #ifdef GOAP_DEBUG_ENABLE
 #define goap_debug(string) world.log << "GOAP: [string]"
@@ -37,6 +37,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 	var/is_megafauna = FALSE
 	var/actions_halted = FALSE
 	var/already_acting = FALSE
+	var/works_when_alone = FALSE
 
 	var/fuck_you_astar = FALSE
 
@@ -73,6 +74,8 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 		STOP_PROCESSING(SSgoap, src)
 		qdel(src)
 		return FALSE
+	if(works_when_alone)
+		return TRUE
 	for(var/I in GLOB.mob_list)
 		var/mob/M = I
 		if(M != null && M.z == agent.z && M.client && istype(M, /mob/living) && get_dist(M, agent) <= 14)
