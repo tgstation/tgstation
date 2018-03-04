@@ -66,7 +66,7 @@
 #define ui_monkey_neck "CENTER-3:15,SOUTH:5"	//monkey
 #define ui_monkey_back "CENTER-2:16,SOUTH:5"	//monkey
 
-#define ui_alien_storage_l "CENTER-2:14,SOUTH:5"//alien
+//#define ui_alien_storage_l "CENTER-2:14,SOUTH:5"//alien
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"//alien
 #define ui_alien_language_menu "EAST-3:26,SOUTH:5" //alien
 

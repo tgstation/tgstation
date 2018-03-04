@@ -76,12 +76,12 @@
 	screen_loc = ui_building
 
 /obj/screen/area_creator/Click()
-	if(usr.incapacitated())
-		return 1
+	if(usr.incapacitated() || (isobserver(usr) && !IsAdminGhost(usr)))
+		return TRUE
 	var/area/A = get_area(usr)
 	if(!A.outdoors)
 		to_chat(usr, "<span class='warning'>There is already a defined structure here.</span>")
-		return 1
+		return TRUE
 	create_area(usr)
 
 /obj/screen/language_menu
