@@ -17,7 +17,7 @@
 	display_name = "Biological Technology"
 	description = "What makes us tick."	//the MC, silly!
 	prereq_ids = list("base")
-	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "sleeper", "pandemic", "defibmount")
+	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "sleeper", "pandemic", "defibmount", "operating")
 	research_cost = 2500
 	export_price = 5000
 
@@ -222,7 +222,7 @@
 	id = "posibrain"
 	display_name = "Positronic Brain"
 	description = "Applied usage of neural technology allowing for autonomous AI units based on special metallic cubes with conductive and processing circuits."
-	prereq_ids = list("neural_programming")
+	prereq_ids = list("neural_programming", "mmi")
 	design_ids = list("mmi_posi")
 	research_cost = 2500
 	export_price = 5000
@@ -320,7 +320,7 @@
 	display_name = "Computer Consoles"
 	description = "Computers and how they work."
 	prereq_ids = list("datatheory")
-	design_ids = list("cargo", "cargorequest", "stockexchange", "libraryconsole", "mining", "crewconsole", "comconsole", "idcardconsole", "operating", "seccamera")
+	design_ids = list("cargo", "cargorequest", "stockexchange", "libraryconsole", "mining", "crewconsole", "comconsole", "idcardconsole", "seccamera")
 	research_cost = 2000
 	export_price = 5000
 
