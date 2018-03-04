@@ -10,6 +10,7 @@ Mineral Sheets
 		- Gold
 		- Silver
 		- Clown
+		- Mime
 		- Titanium
 		- Plastitanium
 	Others:
@@ -257,6 +258,28 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/bananium/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.bananium_recipes
+	. = ..()
+
+/*
+ * Mime
+ */
+/obj/item/stack/sheet/mineral/tranquillite
+	name = "tranquillite"
+	icon_state = "sheet-tranquillite"
+	item_state = "sheet-tranquillite"
+	singular_name = "beret"
+	sheettype = "tranquillite"
+	materials = list(MAT_TRANQUILLITE=MINERAL_MATERIAL_AMOUNT)
+	novariants = TRUE
+	grind_results = list("nothing" = 20)
+
+GLOBAL_LIST_INIT(tranquillite_recipes, list ( \
+	new/datum/stack_recipe("tranquillite tile", /obj/item/stack/tile/mineral/tranquillite, 1, 4, 20), \
+	new/datum/stack_recipe("Mime Statue", /obj/structure/statue/tranquillite/mime, 5, one_per_turf = 1, on_floor = 1), \
+	))
+
+/obj/item/stack/sheet/mineral/tranquillite/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.tranquillite_recipes
 	. = ..()
 
 /*

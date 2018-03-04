@@ -35,6 +35,12 @@
 	material_id = MAT_BANANIUM
 	message = "cm3 of bananium"
 
+// Tranquillite. Exporting it makes the mime shed silent tears. You monster.
+/datum/export/material/tranquillite
+	cost = 5000
+	material_id = MAT_TRANQUILLITE
+	message = "cm3 of tranquillite"
+
 // Diamonds. Rare and expensive.
 /datum/export/material/diamond
 	cost = 2500

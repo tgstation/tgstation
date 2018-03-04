@@ -78,6 +78,7 @@
 #define MAT_PLASMA		"$plasma"
 #define MAT_BLUESPACE	"$bluespace"
 #define MAT_BANANIUM	"$bananium"
+#define MAT_TRANQUILLITE	"$tranquillite"
 #define MAT_TITANIUM	"$titanium"
 #define MAT_BIOMASS		"$biomass"
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
