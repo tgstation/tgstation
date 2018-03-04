@@ -209,6 +209,11 @@
 				return FALSE
 			return TRUE
 
+		if(istype(the_target, /obj/item/device/electronic_assembly))
+			var/obj/item/device/electronic_assembly/O = the_target
+			if(O.combat_circuits)
+				return TRUE
+
 		if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
 			var/obj/structure/destructible/clockwork/ocular_warden/OW = the_target
 			if(OW.target != src)
