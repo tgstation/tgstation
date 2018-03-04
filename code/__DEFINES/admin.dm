@@ -37,12 +37,6 @@
 
 #define R_DEFAULT R_AUTOLOGIN
 
-#if DM_VERSION > 512
-#error Remove the flag below , its been long enough
-#endif
-//legacy , remove post 512, it was replaced by R_POLL
-#define R_REJUVINATE	2
-
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
 #define ADMIN_QUE(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];adminmoreinfo=[REF(user)]'>?</a>)"
