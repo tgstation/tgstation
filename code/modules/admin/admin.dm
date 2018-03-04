@@ -647,6 +647,24 @@
 	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/spawn_cargo(object as text)
+	set category = "Debug"
+	set desc = "(atom path) Spawn a cargo crate"
+	set name = "Spawn Cargo"
+
+	if(!check_rights(R_SPAWN))
+		return
+
+	var/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/datum/supply_pack)))
+	if(!chosen)
+		return
+	var/datum/supply_pack/S = new chosen
+	S.admin_spawned = TRUE
+	S.generate(get_turf(usr))
+
+	log_admin("[key_name(usr)] spawned cargo pack [chosen] at ([usr.x],[usr.y],[usr.z])")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Cargo") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 
 /datum/admins/proc/show_traitor_panel(mob/M in GLOB.mob_list)
 	set category = "Admin"
@@ -751,13 +769,14 @@
 		dat += "<tr><td>[J_title]:</td> <td>[J_opPos]/[job.total_positions < 0 ? " (unlimited)" : J_totPos]"
 
 		if(job.title == "AI" || job.title == "Cyborg")
-			dat += " (Cannot Late Join)</td>"
+			dat += " </td><td>(Cannot Late Join)</td>"
 			continue
 		else
 			dat += "</td>"
 		dat += "<td>"
 		if(job.total_positions >= 0)
-			dat += "<A href='?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add</A> | "
+			dat += "<A href='?src=[REF(src)];[HrefToken()];customjobslot=[job.title]'>Custom</A> | "
+			dat += "<A href='?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add 1</A> | "
 			if(job.total_positions > job.current_positions)
 				dat += "<A href='?src=[REF(src)];[HrefToken()];removejobslot=[job.title]'>Remove</A> | "
 			else
