@@ -577,3 +577,20 @@
 	name = "type-b electronic drone"
 	icon_state = "setup_drone_arms"
 	desc = "It's a case, for building mobile electronics with. This one is armed and dangerous."
+
+/obj/item/device/electronic_assembly/attack_animal(mob/living/simple_animal/user)
+	if(!user.melee_damage_upper && !user.obj_damage)
+		user.emote("custom", message = "[user.friendly] [src].")
+		return 0
+	else
+		var/play_soundeffect = 1
+		if(user.environment_smash)
+			play_soundeffect = 0
+			playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		var/animal_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
+		if(user.obj_damage)
+			animal_damage = user.obj_damage
+		animal_damage = min(animal_damage, 20*user.environment_smash)
+		attack_generic(user, animal_damage, user.melee_damage_type, "melee", play_soundeffect)
+		add_logs(user, src, "attacked")
+		return 1
