@@ -588,6 +588,8 @@
 
 /datum/action/turret_toggle
 	name = "Toggle Mode"
+	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon_state = "mech_cycle_equip_off"
 
 /datum/action/turret_toggle/Trigger()
 	var/obj/machinery/porta_turret/P = target
@@ -597,6 +599,8 @@
 
 /datum/action/turret_quit
 	name = "Release Control"
+	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
+	button_icon_state = "mech_eject"
 
 /datum/action/turret_quit/Trigger()
 	var/obj/machinery/porta_turret/P = target
