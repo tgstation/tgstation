@@ -379,3 +379,5 @@
 		tray.pestlevel = rand(8, 10)
 		tray.weedlevel = rand(8, 10)
 		tray.toxic = rand(45, 55)
+
+/////POLTERGEIST (BRUTE GHOST)/////
