@@ -450,3 +450,79 @@
 /datum/status_effect/exercised/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSprocessing, src)
+
+//Hippocratic Oath: Applied when the Rod of Asclepius is activated.
+/datum/status_effect/hippocraticOath
+	id = "Hippocratic Oath"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = -1
+	tick_interval = 25
+	examine_text = "<span class='notice'>SUBJECTPRONOUN seems to have an aura of healing and helpfulness about them.</span>"
+	alert_type = null
+	var/hand = null
+
+/datum/status_effect/hippocraticOath/on_apply()
+	//Makes the user passive, it's in their oath not to harm!
+	owner.add_trait(TRAIT_PACIFISM, "hippocraticOath")
+	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	H.add_hud_to(owner)
+	return ..()
+
+/datum/status_effect/hippocraticOath/tick()
+	//Checks to make sure the rod is still in their hand
+	if(iscarbon(owner))
+		var/mob/living/carbon/itemUser = owner
+		var/obj/item/heldItem = itemUser.get_item_for_held_index(hand)
+		if(heldItem == null || heldItem.type != /obj/item/rod_of_asclepius)
+			var/obj/item/rod_of_asclepius/newRod = new /obj/item/rod_of_asclepius(itemUser.loc)
+			newRod.flags_1 = NODROP_1 | DROPDEL_1
+			newRod.desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that dsiperses amongst yourself and those around you. "
+			newRod.icon_state = "talisman"
+			newRod.activated = TRUE
+			if(!itemUser.has_hand_for_held_index(hand))
+				//If user does not have the corresponding hand anymore, give them one and return the rod to their hand
+				if(((hand % 2) == 0))
+					var/obj/item/bodypart/L = itemUser.newBodyPart("r_arm", FALSE, FALSE)
+					L.attach_limb(itemUser)
+					itemUser.put_in_r_hand(newRod)
+				else
+					var/obj/item/bodypart/L = itemUser.newBodyPart("l_arm", FALSE, FALSE)
+					L.attach_limb(itemUser)
+					itemUser.put_in_l_hand(newRod)
+				to_chat(itemUser, "<span class='notice'>Your arm suddenly grows back with the Rod of Asclepius still attached!</span>")
+			else
+				//Otherwise get rid of whatever else is in their hand and return the rod to said hand
+				itemUser.dropItemToGround(itemUser.get_item_for_held_index(hand))
+				if(((hand % 2) == 0))
+					itemUser.put_in_r_hand(newRod)
+				else
+					itemUser.put_in_l_hand(newRod)
+				to_chat(itemUser, "<span class='notice'>The Rod of Asclepius suddenly grows back out of your arm!</span>")
+		//Because a servant of medicines stops at nothing to help others, lets keep them on their toes.
+		if(itemUser.health < itemUser.maxHealth)
+			new /obj/effect/temp_visual/heal(get_turf(itemUser), "#80F5FF")
+		itemUser.adjustBruteLoss(-3.5)
+		itemUser.adjustFireLoss(-3.5)
+		itemUser.adjustToxLoss(-3.5)
+		itemUser.adjustStaminaLoss(-3.5)
+		itemUser.adjustBrainLoss(-3.5)
+		itemUser.adjustCloneLoss(-3.5)
+	//Heal all those around you, unbiased
+	for(var/mob/living/L in view(7, owner))
+		if(iscarbon(L))
+			var/mob/living/carbon/targetMob = L
+			if(targetMob.health < targetMob.maxHealth)
+				new /obj/effect/temp_visual/heal(get_turf(targetMob), "#80F5FF")
+			targetMob.adjustBruteLoss(-3.5)
+			targetMob.adjustFireLoss(-3.5)
+			targetMob.adjustToxLoss(-3.5)
+			targetMob.adjustStaminaLoss(-3.5)
+			targetMob.adjustBrainLoss(-3.5)
+			targetMob.adjustCloneLoss(-3.5)
+		else
+			//the Hippocratic Oath applies to Vetinarians too
+			if(isanimal(L))
+				var/mob/living/simple_animal/targetMob = L
+				if(targetMob.health < targetMob.maxHealth)
+					new /obj/effect/temp_visual/heal(get_turf(targetMob), "#80F5FF")
+				targetMob.adjustBruteLoss(-3.5)
