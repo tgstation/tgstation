@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - code_imp: "First pass on cleaning up junk defines and unused code"

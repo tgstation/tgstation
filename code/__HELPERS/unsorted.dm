@@ -920,7 +920,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	That said, this proc should not be used if the change facing proc of the click code is overriden at the same time*/
 	if(!ismob(target) || target.lying)
 	//Make sure we are not doing this for things that can't have a logical direction to the players given that the target would be on their side
-		return FACING_FAILED
+		return FALSE
 	if(initator.dir == target.dir) //mobs are facing the same direction
 		return FACING_SAME_DIR
 	if(is_A_facing_B(initator,target) && is_A_facing_B(target,initator)) //mobs are facing each other
