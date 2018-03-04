@@ -114,7 +114,7 @@
 	if(trait_holder.reagents.has_reagent("mindbreaker"))
 		trait_holder.hallucination = 0
 		return
-	if(prob(1)) //we'll all be mad soon enough
+	if(prob(2)) //we'll all be mad soon enough
 		madness()
 
 /datum/trait/insanity/proc/madness(mad_fools)
@@ -125,7 +125,7 @@
 		var/hallucination_type = pick(subtypesof(/datum/hallucination/rds))
 		new hallucination_type (trait_holder, FALSE)
 	else
-		trait_holder.hallucination += rand(10, 50)
+		trait_holder.hallucination += 50
 
 /datum/trait/insanity/post_add() //I don't /think/ we'll need this but for newbies who think "roleplay as insane" = "license to kill" it's probably a good thing to have
 	if(!trait_holder.mind || trait_holder.mind.special_role)

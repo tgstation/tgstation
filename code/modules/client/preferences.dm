@@ -1460,5 +1460,5 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_hair()
 		character.update_body_parts()
 
-	if(CONFIG_GET(flag/roundstart_traits))
+	if(CONFIG_GET(flag/roundstart_traits) && parent)
 		SStraits.AssignTraits(character, parent)
