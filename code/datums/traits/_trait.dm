@@ -48,7 +48,7 @@
 	if(QDELETED(trait_holder))
 		qdel(src)
 		return
-	if(istype(src, /mob/living/carbon/human/dummy))
+	if(istype(trait_holder, /mob/living/carbon/human/dummy))
 		return
 	on_process()
 
