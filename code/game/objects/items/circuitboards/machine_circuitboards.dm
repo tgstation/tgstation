@@ -537,8 +537,8 @@
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
 	needs_anchored = FALSE
 
-#define PATH_POWERCOIL /obj/item/circuitboard/machine/tesla_coil/power
-#define PATH_RPCOIL /obj/item/circuitboard/machine/tesla_coil/research
+#define PATH_POWERCOIL /obj/machinery/power/tesla_coil/power
+#define PATH_RPCOIL /obj/machinery/power/tesla_coil/research
 
 /obj/item/circuitboard/machine/tesla_coil/Initialize()
 	. = ..()
