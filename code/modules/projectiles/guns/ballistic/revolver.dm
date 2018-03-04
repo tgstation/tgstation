@@ -311,7 +311,7 @@
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
 	..()
-	if(istype(A, /obj/item/stack/cable_coil) && !sawn_state)
+	if(istype(A, /obj/item/stack/cable_coil) && !sawn_off)
 		var/obj/item/stack/cable_coil/C = A
 		if(C.use(10))
 			slot_flags = SLOT_BACK
@@ -339,7 +339,7 @@
 	icon_state = "ishotgun"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL
-	sawn_state = SAWN_OFF
+	sawn_off = TRUE
 	slot_flags = SLOT_BELT
 
 
