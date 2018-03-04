@@ -9484,6 +9484,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayH" = (
@@ -9531,6 +9532,7 @@
 	codes_txt = "patrol;next_patrol=BrigP";
 	location = "BrigS1"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayO" = (
@@ -10702,6 +10704,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aBK" = (
@@ -12857,6 +12860,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aGH" = (
@@ -13655,6 +13659,7 @@
 	codes_txt = "patrol;next_patrol=Dorms";
 	location = "Tool"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aIM" = (
@@ -13768,6 +13773,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aIY" = (
@@ -13814,6 +13820,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aJd" = (
@@ -13903,6 +13910,7 @@
 	codes_txt = "patrol;next_patrol=HoP";
 	location = "Dorms"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aJl" = (
@@ -18299,6 +18307,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aUn" = (
@@ -20990,6 +20999,7 @@
 /area/hallway/secondary/entry)
 "baL" = (
 /obj/machinery/holopad,
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "baM" = (
@@ -23441,6 +23451,7 @@
 	codes_txt = "patrol;next_patrol=Bar1";
 	location = "Robo"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bhi" = (
@@ -23683,6 +23694,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bhL" = (
@@ -23711,6 +23723,7 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L7"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bhP" = (
@@ -38709,6 +38722,7 @@
 	codes_txt = "patrol;next_patrol=Bar2";
 	location = "Eng"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bQD" = (
@@ -47155,6 +47169,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "coT" = (
 /obj/item/device/radio/beacon,
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "coV" = (
@@ -47530,6 +47545,7 @@
 /area/medical/medbay/central)
 "cqe" = (
 /obj/effect/turf_decal/plaque,
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/science/research/lobby)
 "cqf" = (
@@ -50208,6 +50224,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
+"kQN" = (
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "lqy" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Library"
@@ -50250,10 +50270,32 @@
 	},
 /turf/open/floor/plating,
 /area/security/checkpoint/engineering)
+"nQY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel/whiteblue/corner{
+	dir = 8
+	},
+/area/medical/medbay/central)
+"nSa" = (
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"ovu" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "oFd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
+"oNu" = (
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "oPy" = (
 /obj/machinery/door/airlock/external{
 	name = "Mining Dock Airlock";
@@ -50307,6 +50349,11 @@
 "vxn" = (
 /turf/closed/wall,
 /area/quartermaster/sorting)
+"vze" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "vzz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -72828,7 +72875,7 @@ aZG
 baR
 aXI
 bde
-baK
+kQN
 baN
 bga
 bgV
@@ -74359,7 +74406,7 @@ aDZ
 aDZ
 aQB
 aPR
-aPR
+vze
 aPR
 aUL
 aEa
@@ -76144,7 +76191,7 @@ awR
 aBj
 aCv
 aDz
-aDA
+oNu
 aDA
 aGh
 aBi
@@ -78229,7 +78276,7 @@ bem
 aDZ
 aDZ
 aJI
-aDZ
+nSa
 bik
 biY
 biY
@@ -80291,7 +80338,7 @@ bje
 bke
 blm
 bpT
-bpT
+nQY
 bpT
 bpT
 bpT
@@ -90274,7 +90321,7 @@ avk
 awv
 axu
 ays
-azA
+ovu
 avk
 avk
 aDj
