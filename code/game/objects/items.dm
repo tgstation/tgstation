@@ -673,7 +673,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return 0
 
 /obj/item/attack_animal(mob/living/simple_animal/M)
-	if (src.obj_flags & CAN_BE_HIT)
+	if (obj_flags & CAN_BE_HIT)
 		return ..()
 	return 0
 
