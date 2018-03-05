@@ -163,7 +163,7 @@
 	item_state = "lgloves"
 	siemens_coefficient = 0.3
 	permeability_coefficient = 0.01
-	item_color="white"
+	item_color="mime"
 	transfer_prints = TRUE
 	resistance_flags = NONE
 
@@ -180,7 +180,7 @@
 	desc = "These look pretty fancy."
 	icon_state = "white"
 	item_state = "wgloves"
-	item_color="mime"
+	item_color="white"
 
 /obj/item/clothing/gloves/color/white/redcoat
 	item_color = "redcoat"		//Exists for washing machines. Is not different from white gloves in any way.

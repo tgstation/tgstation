@@ -21,6 +21,7 @@
 #define TRAIT_SLEEPIMMUNE		"sleep_immunity"
 #define TRAIT_PUSHIMMUNE		"push_immunity"
 #define TRAIT_SHOCKIMMUNE		"shock_immunity"
+#define TRAIT_STABLEHEART		"stable_heart"
 #define TRAIT_RESISTHEAT		"resist_heat"
 #define TRAIT_RESISTCOLD		"resist_cold"
 #define TRAIT_RESISTHIGHPRESSURE	"resist_high_pressure"
@@ -38,6 +39,20 @@
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
+#define TRAIT_NOCRITDAMAGE		"no_crit"
+
+#define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
+#define TRAIT_AGEUSIA			"ageusia"
+#define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
+#define TRAIT_NIGHT_VISION		"night_vision"
+#define TRAIT_LIGHT_STEP		"light_step"
+#define TRAIT_SPIRITUAL			"spiritual"
+#define TRAIT_VORACIOUS			"voracious"
+#define TRAIT_SELF_AWARE		"self_aware"
+#define TRAIT_FREERUNNING		"freerunning"
+#define TRAIT_SKITTISH			"skittish"
+#define TRAIT_POOR_AIM			"poor_aim"
+#define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -47,6 +62,7 @@
 #define MAGIC_TRAIT "magic"
 #define TRAUMA_TRAIT "trauma"
 #define SPECIES_TRAIT "species"
+#define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
@@ -57,3 +73,4 @@
 #define TRAIT_HULK "hulk"
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
+#define EYES_COVERED "eyes_covered"

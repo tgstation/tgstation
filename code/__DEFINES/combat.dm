@@ -110,11 +110,7 @@
 #define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 8	//Coefficient of multiplication for the damage the item does when removed without a surgery (this*item.w_class)
 #define EMBEDDED_UNSAFE_REMOVAL_TIME			30	//A Time in ticks, total removal time = (this*item.w_class)
 
-//Gun Stuff
-#define SAWN_INTACT  0
-#define SAWN_OFF     1
 //Gun weapon weight
-#define WEAPON_DUAL_WIELD 0
 #define WEAPON_LIGHT 1
 #define WEAPON_MEDIUM 2
 #define WEAPON_HEAVY 3
