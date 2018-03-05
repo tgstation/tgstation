@@ -325,7 +325,7 @@
 		p_rep = SSpersistence.antag_rep[p_ckey]
 		p_rep = p_rep == null ? 0 : p_rep
 
-		if(current <= antag_select)
+		if(antag_select <= current)
 			var/subtract = min(p_rep + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL) - DEFAULT_ANTAG_TICKETS
 			SSpersistence.antag_rep_change[p_ckey] = -subtract
 
