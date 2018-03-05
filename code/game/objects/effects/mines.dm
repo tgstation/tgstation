@@ -127,7 +127,7 @@
 	var/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
 	
 	var/datum/mind/ragebrain = victim.mind //you have no allies while blinded by rage.
-	var/datum/atom_hud/antag/antag_hud/huds = ragebrain.antag_hud
+	var/datum/atom_hud/antag/huds = ragebrain.antag_hud
 	if(huds)
 		ragebrain.antag_hud = null //FRIENDS? I ONLY SEE DEMONS!
 	
@@ -149,7 +149,7 @@
 	animate(victim.client,color = old_color, time = duration)//, easing = SINE_EASING|EASE_OUT)
 	sleep(duration)
 	to_chat(victim, "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.</span>")
-	ragebrain.antag_hud = huds
+	ragebrain.antag_hud = huds //oh god what have I done?
 	qdel(chainsaw)
 	qdel(src)
 
