@@ -8,7 +8,7 @@
 /datum/round_event/heart_attack/start()
 	var/list/heart_attack_contestants = list()
 	for(var/mob/living/carbon/human/H in shuffle(GLOB.player_list))
-		if(!H.client || H.stat == DEAD || H.InCritical() || !H.can_heartattack() || H.has_status_effect(STATUS_EFFECT_EXERCISED) || (/datum/disease/heart_failure in H.viruses) || H.undergoing_cardiac_arrest())
+		if(!H.client || H.stat == DEAD || H.InCritical() || !H.can_heartattack() || H.has_status_effect(STATUS_EFFECT_EXERCISED) || (/datum/disease/heart_failure in H.diseases) || H.undergoing_cardiac_arrest())
 			continue
 		if(H.satiety <= -60) //Multiple junk food items recently
 			heart_attack_contestants[H] = 3
@@ -17,6 +17,6 @@
 
 	if(LAZYLEN(heart_attack_contestants))
 		var/mob/living/carbon/human/winner = pickweight(heart_attack_contestants)
-		var/datum/disease/D = new /datum/disease/heart_failure
-		winner.ForceContractDisease(D)
+		var/datum/disease/D = new /datum/disease/heart_failure()
+		winner.ForceContractDisease(D, FALSE, TRUE)
 		notify_ghosts("[winner] is beginning to have a heart attack!", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source=winner, action=NOTIFY_ORBIT)
