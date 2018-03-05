@@ -21,8 +21,9 @@
 	var/obj/item/reagent_containers/list/chem_stores
 	var/list/chem_store_names
 	var/selected_store = 0
-	var/list/possible_chem_stores = list(1, 2, 4, 6)
+	var/list/possible_chem_stores = list(3, 7, 12, 20)
 	var/list/possible_chems
+	var/list/mapload_containers = list(/obj/item/reagent_containers/glass/bottle/epinephrine, /obj/item/reagent_containers/glass/bottle/bicaridine, /obj/item/reagent_containers/glass/bottle/kelotane)
 	var/stasis_enabled = TRUE //Stores whether stasis is turned on, isn't intended to disable stasis for a subtype
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
@@ -37,10 +38,20 @@
 	)
 	possible_chem_stores = null
 
-/obj/machinery/sleeper/Initialize()
+/obj/machinery/sleeper/empty
+	mapload_containers = null
+
+/obj/machinery/sleeper/Initialize(mapload)
 	. = ..()
 	update_icon()
 	reset_chem_buttons()
+
+	if(mapload && mapload_containers && chem_stores)
+		for(var/i in 1 to min(chem_stores.len, mapload_containers.len))
+			var/container_path = mapload_containers[i]
+			var/obj/item/reagent_containers/container = new container_path()
+			add_store(container, i)
+			name_store(i, container.reagents.get_master_reagent_name())
 
 /obj/machinery/sleeper/Destroy()
 	drop_stores()
@@ -145,6 +156,16 @@
 		var/coeff = min(C.amount_per_transfer_from_this/R.total_volume, 1)
 		R.reaction(mob_occupant, INJECT, coeff)
 		R.trans_to(mob_occupant, C.amount_per_transfer_from_this)
+
+/obj/machinery/sleeper/proc/name_store(store_index, name)
+	var/chem_stores_len = LAZYLEN(chem_stores)
+	if(chem_stores_len && chem_stores_len >= store_index)
+		name = sanitize(trim(name, 21))
+		var/chem_store_names_len = LAZYLEN(chem_store_names)
+		if(!chem_store_names || chem_store_names_len < chem_stores_len)
+			LAZYINITLIST(chem_store_names)
+			chem_store_names.len = chem_stores_len
+		chem_store_names[store_index] = name
 
 /obj/machinery/sleeper/proc/chill_out(mob/living/target)
 	var/freq = rand(24750, 26550)
@@ -305,14 +326,8 @@
 		if("storename")
 			var/store = text2num(params["store"])
 			var/name = params["name"]
-			var/chem_stores_len = LAZYLEN(chem_stores)
-			if(store && chem_stores_len && chem_stores_len >= store)
-				name = sanitize(trim(name, 21))
-				var/chem_store_names_len = LAZYLEN(chem_store_names)
-				if(!chem_store_names || chem_store_names_len < chem_stores_len)
-					LAZYINITLIST(chem_store_names)
-					chem_store_names.len = chem_stores_len
-				chem_store_names[store] = name
+			if(store && name)
+				name_store(store, name)
 				. = TRUE
 		if("togglestasis")
 			send_to_playing_players(stasis_enabled)
@@ -352,6 +367,7 @@
 
 /obj/machinery/sleeper/chems/syndie
 	icon_state = "sleeper_s"
+	stasis_enabled = FALSE //You can still go in stasis, but it starts off because of controls_inside, and stasis would prevent use of that
 	controls_inside = TRUE
 
 /obj/machinery/sleeper/clockwork

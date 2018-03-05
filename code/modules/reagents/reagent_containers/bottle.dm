@@ -50,6 +50,16 @@
 	desc = "A small bottle of toxins. Do not drink, it is poisonous."
 	list_reagents = list("toxin" = 30)
 
+/obj/item/reagent_containers/glass/bottle/bicaridine
+	name = "bicaridine bottle"
+	desc = "A small bottle of bicaridine, used to treat brute trauma."
+	list_reagents = list("bicaridine" = 30)
+
+/obj/item/reagent_containers/glass/bottle/kelotane
+	name = "kelotane bottle"
+	desc = "A small bottle of kelotane, used to treat burns."
+	list_reagents = list("kelotane" = 30)
+
 /obj/item/reagent_containers/glass/bottle/cyanide
 	name = "cyanide bottle"
 	desc = "A small bottle of cyanide. Bitter almonds?"
