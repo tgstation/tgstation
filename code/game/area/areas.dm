@@ -148,7 +148,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(!areas_in_z["[z]"])
 			areas_in_z["[z]"] = list()
 		areas_in_z["[z]"] += src
-		update_area_size()
+	update_area_size()
 
 	return INITIALIZE_HINT_LATELOAD
 
