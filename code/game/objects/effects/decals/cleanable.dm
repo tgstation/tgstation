@@ -4,6 +4,7 @@
 	var/list/random_icon_states = list()
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
+	var/beauty = 0
 	var/mergeable_decal = TRUE //when two of these are on a same tile or do we need to merge them into just one?
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
@@ -16,6 +17,9 @@
 			if(C != src && C.type == src.type && !QDELETED(C))
 				if (replace_decal(C))
 					return INITIALIZE_HINT_QDEL
+		var/area/A = get_area(src)
+		A.beauty += beauty / A.areasize //Ensures that the effects scale with room size
+
 	if(LAZYLEN(diseases))
 		var/list/datum/disease/diseases_to_add = list()
 		for(var/datum/disease/D in diseases)
@@ -90,3 +94,7 @@
 		return bloodiness
 	else
 		return 0
+
+/obj/effect/decal/cleanable/Destroy()
+	var/area/A = get_area(src)
+	A.beauty -= beauty

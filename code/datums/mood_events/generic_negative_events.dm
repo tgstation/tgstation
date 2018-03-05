@@ -47,6 +47,11 @@
 	mood_change = -6
 	timeout = 3000
 
+/datum/mood_event/depression
+	description = "<span class='warning'>I feel sad for no particular reason.</span>\n"
+	mood_change = -6
+	timeout = 1200
+
 /datum/mood_event/shameful_suicide //suicide_acts that return SHAME, like sord
   description = "<span class='boldwarning'>I can't even end it all!</span>\n"
   mood_change = -10
@@ -90,6 +95,15 @@
   description = "<span class='warning'>I should have paid attention to the epilepsy warning.</span>\n"
   mood_change = -3
   timeout = 3000
+
+
+/datum/mood_event/grossroom
+	description = "<span class='warning'>This room is kind of dirty...</span>\n"
+	mood_change = -3
+
+/datum/mood_event/disgustingroom
+	description = "<span class='warning'>This room is disgusting!</span>\n"
+	mood_change = -5
 
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/cloned_corpse

@@ -42,6 +42,11 @@
 	mood_change = 2
 	timeout = 1200
 
+/datum/mood_event/jolly
+	description = "<span class='nicegreen'>I feel happy for no particular reason.</span>\n"
+	mood_change = 6
+	timeout = 1200
+
 /datum/mood_event/focused
 	description = "<span class='nicegreen'>I have a goal, and I will reach it, whatever it takes!</span>\n" //Used for syndies, nukeops etc so they can focus on their goals
 	mood_change = 12
@@ -56,3 +61,16 @@
 	description = "<span class='nicegreen'>I have seen the truth, praise the almighty one!</span>\n"
 	mood_change = 40 //maybe being a cultist isnt that bad after all
 	hidden = TRUE
+
+/datum/mood_event/cult
+	description = "<span class='nicegreen'>I have seen the truth, praise the almighty one!</span>\n"
+	mood_change = 40 //maybe being a cultist isnt that bad after all
+	hidden = TRUE
+
+/datum/mood_event/niceroom
+	description = "<span class='nicegreen'>This room looks really pretty!</span>\n"
+	mood_change = 4
+
+/datum/mood_event/greatroom
+	description = "<span class='nicegreen'>This room is beautiful!</span>\n"
+	mood_change = 7

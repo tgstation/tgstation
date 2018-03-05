@@ -1,14 +1,15 @@
 /datum/component/mood
 	var/mood //Real happiness
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
-	var/mood_level
+	var/mood_level //To track what stage of moodies they're on
+	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/datum/mood_event/list/mood_events = list()
-	var/mob/owner
+	var/mob/living/owner
 
 /datum/component/mood/Initialize()
-	if(!ismob(parent))
+	if(!isliving(parent))
 		. = COMPONENT_INCOMPATIBLE
-		CRASH("Some good for nothing loser put a mood component on something that isn't even a mob.")
+		CRASH("Some good for nothing loser put a mood component on something that isn't even a living mob.")
 	START_PROCESSING(SSmood, src)
 	owner = parent
 
@@ -31,6 +32,8 @@
 		mood += event.mood_change
 		if(!event.hidden)
 			shown_mood += event.mood_change
+		mood *= mood_modifier
+		shown_mood *= mood_modifier
 
 	switch(mood)
 		if(-INFINITY to MOOD_LEVEL_SAD4)
@@ -66,6 +69,15 @@
 		if(MOOD_LEVEL_SAD2 to INFINITY)
 			owner.clear_fullscreen("depression")
 
+	if(owner.has_trait(TRAIT_DEPRESSION))
+		if(prob(0.1))
+			add_event("depression", /datum/mood_event/depression)
+			clear_event("jolly")
+	if(owner.has_trait(TRAIT_JOLLY))
+		if(prob(0.1))
+			add_event("jolly", /datum/mood_event/jolly)
+			clear_event("depression")
+
 /datum/component/mood/proc/add_event(category, type, param) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 	var/datum/mood_event/the_event
 	if(mood_events[category])
@@ -92,3 +104,19 @@
 	mood_events -= category
 	qdel(event)
 	update_mood()
+
+/datum/component/mood/proc/update_beauty(var/area/A)
+	if(A.outdoors) //if we're outside, we don't care.
+		clear_event("area_beauty")
+		return FALSE
+	switch(A.beauty)
+		if(-INFINITY to BEAUTY_LEVEL_HORRID)
+			add_event("area_beauty", /datum/mood_event/disgustingroom)
+		if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
+			add_event("area_beauty", /datum/mood_event/grossroom)
+		if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_GOOD)
+			clear_event("area_beauty")
+		if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
+			add_event("area_beauty", /datum/mood_event/niceroom)
+		if(BEAUTY_LEVEL_GREAT to INFINITY)
+			add_event("area_beauty", /datum/mood_event/greatroom)

@@ -154,3 +154,12 @@
 	else if(prob(0.5) && dumb_thing)
 		to_chat(H, "<span class='danger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
 		dumb_thing = FALSE //only once per life
+
+/datum/trait/depression
+	name = "Depression"
+	desc = "You sometimes just hate life."
+	mob_trait = TRAIT_DEPRESSION
+	value = -1
+	gain_text = "<span class='danger'>You start feeling depressed.</span>"
+	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
+	medical_record_text = "Patient has a severe mood disorder causing them to experience sudden moments of sadness."

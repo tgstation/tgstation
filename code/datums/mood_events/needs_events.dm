@@ -13,11 +13,11 @@
 
 /datum/mood_event/nutrition/hungry
 	description = "<span class='warning'>I'm getting a bit hungry.</span>\n"
-	mood_change = -6
+	mood_change = -8
 
 /datum/mood_event/nutrition/starving
 	description = "<span class='boldwarning'>I'm starving!</span>\n"
-	mood_change = -12
+	mood_change = -15
 
 //Disgust
 /datum/mood_event/disgust/gross
@@ -36,6 +36,16 @@
 /datum/mood_event/favorite_food
 	description = "<span class='nicegreen'>I really enjoyed eating that.</span>\n"
 	mood_change = 3
+	timeout = 2400
+
+/datum/mood_event/gross_food
+	description = "<span class='nicegreen'>I really didn't like that food.</span>\n"
+	mood_change = -2
+	timeout = 2400
+
+/datum/mood_event/disgusting_food
+	description = "<span class='nicegreen'>That food was disgusting!</span>\n"
+	mood_change = -4
 	timeout = 2400
 
 /datum/mood_event/nice_shower

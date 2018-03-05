@@ -97,6 +97,14 @@
 #define MOOD_LEVEL_SAD3 -15
 #define MOOD_LEVEL_SAD4 -20
 
+//Beauty levels of areas for carbons
+#define BEAUTY_LEVEL_HORRID -50
+#define BEAUTY_LEVEL_BAD -25
+#define BEAUTY_LEVEL_GOOD 25
+#define BEAUTY_LEVEL_GREAT 50
+
+
+
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550
