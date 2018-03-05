@@ -667,7 +667,7 @@
 	var/list/report = list()
 
 	if(!owner)
-	CRASH("antagonist datum without owner")
+		CRASH("antagonist datum without owner")
 
 	report += printplayer(owner)
 
