@@ -26,10 +26,11 @@
 			"idledamage" = list("desc" = "Damaged while idle", "type" = "boolean", "value" = "No"),
 			"dropitem" = list("desc" = "Drop obj on death", "type" = "boolean", "value" = "Yes"),
 			"mobtype" = list("desc" = "Base mob type", "type" = "datum", "path" = "/mob/living/simple_animal/hostile/mimic/copy", "value" = "/mob/living/simple_animal/hostile/mimic/copy"),
+			"ckey" = list("desc" = "ckey", "type" = "ckey", "value" = "none"),
     )
 	)
 
-	var/list/prefreturn = presentpreflikepicker(usr,"Customize mob", "Customize mob", Button1="Ok", Width = 450, StealFocus = 1,Timeout = 0, settings=settings)
+	var/list/prefreturn = presentpreflikepicker(usr,"Customize mob", "Customize mob", Button1="Ok", width = 450, StealFocus = 1,Timeout = 0, settings=settings)
 	if (prefreturn["button"] == 1)
 		settings = prefreturn["settings"]
 		var/mainsettings = settings["mainsettings"]
@@ -61,6 +62,9 @@
 		if (mainsettings["name"]["value"])
 			basemob.name = mainsettings["name"]["value"]
 			basemob.real_name = mainsettings["name"]["value"]
+
+		if (mainsettings["ckey"]["value"] != "none")
+			basemob.ckey = mainsettings["ckey"]["value"]
 
 
 		log_admin("[key_name(usr)] spawned a sentient object-mob [basemob] from [chosen_obj] at ([usr.x],[usr.y],[usr.z])")
