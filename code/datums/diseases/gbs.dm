@@ -2,7 +2,7 @@
 	name = "GBS"
 	max_stages = 4
 	spread_text = "On contact"
-	spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_SKIN | VIRUS_SPREAD_CONTACT_FLUIDS
+	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
 	cure_text = "Synaptizine & Sulfur"
 	cures = list("synaptizine","sulfur")
 	cure_chance = 15//higher chance to cure, since two reagents are required
@@ -10,7 +10,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	permeability_mod = 1
-	severity = VIRUS_SEVERITY_BIOHAZARD
+	severity = DISEASE_SEVERITY_BIOHAZARD
 
 /datum/disease/gbs/stage_act()
 	..()

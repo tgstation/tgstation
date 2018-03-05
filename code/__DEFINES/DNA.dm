@@ -82,19 +82,18 @@
 #define NOBLOOD			6
 #define NOTRANSSTING	7
 #define MUTCOLORS_PARTSONLY	8	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
-#define NOCRITDAMAGE	9
-#define NOZOMBIE		10
-#define DIGITIGRADE		11	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
-#define NO_UNDERWEAR	12
-#define NOLIVER			13
-#define NOSTOMACH		14
-#define NO_DNA_COPY     15
-#define DRINKSBLOOD		16
-#define SPECIES_ORGANIC 17
-#define SPECIES_INORGANIC 18
-#define SPECIES_UNDEAD  19
-#define SPECIES_ROBOTIC 20
-#define NOEYES			21
+#define NOZOMBIE		9
+#define DIGITIGRADE		10	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
+#define NO_UNDERWEAR	11
+#define NOLIVER			12
+#define NOSTOMACH		13
+#define NO_DNA_COPY     14
+#define DRINKSBLOOD		15
+#define SPECIES_ORGANIC 16
+#define SPECIES_INORGANIC 17
+#define SPECIES_UNDEAD  18
+#define SPECIES_ROBOTIC 19
+#define NOEYES			20
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"
