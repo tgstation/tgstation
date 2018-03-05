@@ -126,7 +126,7 @@
 	var/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
 	var/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
 	
-	var/datun/mind/ragebrain = victim.mind //you have no allies while blinded by rage.
+	var/datum/mind/ragebrain = victim.mind //you have no allies while blinded by rage.
 	var/datum/atom_hud/antag/antag_hud/huds = ragebrain.antag_hud
 	if(huds)
 		ragebrain.antag_hud = null //FRIENDS? I ONLY SEE DEMONS!
