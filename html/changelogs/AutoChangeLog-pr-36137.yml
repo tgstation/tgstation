@@ -1,0 +1,4 @@
+author: "Jittai / ChuckTheSheep"
+delete-after: True
+changes: 
+  - tweak: "Adjusted the space parallax's contrast to be less vibrant."
