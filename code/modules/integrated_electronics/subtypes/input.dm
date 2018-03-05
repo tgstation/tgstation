@@ -1,23 +1,19 @@
 /obj/item/integrated_circuit/input
-	var/can_be_asked_input = 0
 	category_text = "Input"
 	power_draw_per_use = 5
-
-/obj/item/integrated_circuit/input/proc/ask_for_input(mob/user)
-	return
 
 /obj/item/integrated_circuit/input/button
 	name = "button"
 	desc = "This tiny button must do something, right?"
 	icon_state = "button"
 	complexity = 1
-	can_be_asked_input = 1
+	can_be_asked_input = TRUE
 	inputs = list()
 	outputs = list()
 	activators = list("on pressed" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/input/button/ask_for_input(mob/user) //Bit misleading name for this specific use.
+/obj/item/integrated_circuit/input/button/on_attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You press the button labeled '[displayed_name]'.</span>")
 	activate_pin(1)
 
@@ -26,13 +22,13 @@
 	desc = "It toggles on, off, on, off..."
 	icon_state = "toggle_button"
 	complexity = 1
-	can_be_asked_input = 1
+	can_be_asked_input = TRUE
 	inputs = list()
 	outputs = list("on" = IC_PINTYPE_BOOLEAN)
 	activators = list("on toggle" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/input/toggle_button/ask_for_input(mob/user) // Ditto.
+/obj/item/integrated_circuit/input/toggle_button/on_attack_self(mob/user) // Ditto.
 	set_pin_data(IC_OUTPUT, 1, !get_pin_data(IC_OUTPUT, 1))
 	push_data()
 	activate_pin(1)
@@ -43,14 +39,14 @@
 	desc = "This small number pad allows someone to input a number into the system."
 	icon_state = "numberpad"
 	complexity = 2
-	can_be_asked_input = 1
+	can_be_asked_input = TRUE
 	inputs = list()
 	outputs = list("number entered" = IC_PINTYPE_NUMBER)
 	activators = list("on entered" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 4
 
-/obj/item/integrated_circuit/input/numberpad/ask_for_input(mob/user)
+/obj/item/integrated_circuit/input/numberpad/on_attack_self(mob/user)
 	var/new_input = input(user, "Enter a number, please.",displayed_name) as null|num
 	if(isnum(new_input) && user.IsAdvancedToolUser())
 		set_pin_data(IC_OUTPUT, 1, new_input)
@@ -62,14 +58,14 @@
 	desc = "This small text pad allows someone to input a string into the system."
 	icon_state = "textpad"
 	complexity = 2
-	can_be_asked_input = 1
+	can_be_asked_input = TRUE
 	inputs = list()
 	outputs = list("string entered" = IC_PINTYPE_STRING)
 	activators = list("on entered" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 4
 
-/obj/item/integrated_circuit/input/textpad/ask_for_input(mob/user)
+/obj/item/integrated_circuit/input/textpad/on_attack_self(mob/user)
 	var/new_input = stripped_input(user, "Enter some words, please.",displayed_name)
 	if(istext(new_input) && user.IsAdvancedToolUser())
 		set_pin_data(IC_OUTPUT, 1, new_input)

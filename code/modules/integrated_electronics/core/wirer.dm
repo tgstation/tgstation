@@ -1,7 +1,9 @@
-#define WIRE		"wire"
-#define WIRING		"wiring"
-#define UNWIRE		"unwire"
-#define UNWIRING	"unwiring"
+#define WIRE			"wire"
+#define WIRING			"wiring"
+#define UNWIRE			"unwire"
+#define UNWIRING		"unwiring"
+#define PRIORITIZE		"prioritize"
+#define DEPRIORITIZE	"deprioritize"
 
 /obj/item/device/integrated_electronics/wirer
 	name = "circuit wirer"
@@ -27,7 +29,7 @@
 			selected_io = io
 			to_chat(user, "<span class='notice'>You attach a data wire to \the [selected_io.holder]'s [selected_io.name] data channel.</span>")
 			mode = WIRING
-			update_icon()		
+			update_icon()
 		if(WIRING)
 			if(io == selected_io)
 				to_chat(user, "<span class='warning'>Wiring \the [selected_io.holder]'s [selected_io.name] into itself is rather pointless.</span>")
@@ -76,6 +78,34 @@
 				[io.name] are not connected.</span>")
 				return
 
+		if(PRIORITIZE)
+			if(!io.holder)
+				return
+			switch(io.pin_type)
+				if(IC_INPUT)
+					io.holder.priority_inputs |= io
+				if(IC_OUTPUT)
+					io.holder.priority_outputs |= io
+				if(IC_ACTIVATOR)
+					io.holder.priority_activators |= io
+			to_chat(user, "<span class='notice'>You prioritize \the [io.name].</span>")
+			io.holder.interact(user) // This is to update the UI.
+			return
+
+		if(DEPRIORITIZE)
+			if(!io.holder)
+				return
+			switch(io.pin_type)
+				if(IC_INPUT)
+					io.holder.priority_inputs -= io
+				if(IC_OUTPUT)
+					io.holder.priority_outputs -= io
+				if(IC_ACTIVATOR)
+					io.holder.priority_activators -= io
+			to_chat(user, "<span class='notice'>You deprioritize \the [io.name].</span>")
+			io.holder.interact(user) // This is to update the UI.
+			return
+
 /obj/item/device/integrated_electronics/wirer/attack_self(mob/user)
 	switch(mode)
 		if(WIRE)
@@ -86,12 +116,16 @@
 			selected_io = null
 			mode = WIRE
 		if(UNWIRE)
-			mode = WIRE
+			mode = PRIORITIZE
 		if(UNWIRING)
 			if(selected_io)
 				to_chat(user, "<span class='notice'>You decide not to disconnect the data channel.</span>")
 			selected_io = null
 			mode = UNWIRE
+		if(PRIORITIZE)
+			mode = DEPRIORITIZE
+		if(DEPRIORITIZE)
+			mode = WIRE
 	update_icon()
 	to_chat(user, "<span class='notice'>You set \the [src] to [mode].</span>")
 
@@ -99,3 +133,5 @@
 #undef WIRING
 #undef UNWIRE
 #undef UNWIRING
+#undef PRIORITIZE
+#undef DEPRIORITIZE

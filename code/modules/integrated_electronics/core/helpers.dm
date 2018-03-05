@@ -107,7 +107,6 @@
 /obj/item/device/electronic_assembly/proc/get_pin_ref_list(list/parameters, list/components)
 	if(!components)
 		components = assembly_components
-
 	if(!islist(parameters) || parameters.len != 3)
 		return
 
