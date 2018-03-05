@@ -54,6 +54,25 @@
 	dir = 8
 	},
 /area/ruin/unpowered/syndicate_lava_base/main)
+"ah" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
+/obj/structure/sign/barsign{
+	pixel_y = -32;
+	req_access = null;
+	req_access_txt = "0"
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/syndicate_lava_base/bar)
+"ai" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/syndicate_lava_base/bar)
 "ap" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -5041,21 +5060,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/bar)
-"mV" = (
-/obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer,
-/obj/structure/sign/barsign{
-	pixel_y = -32;
-	req_access = null;
-	req_access_txt = "0"
-	},
-/turf/open/floor/wood,
-/area/ruin/unpowered/syndicate_lava_base/bar)
-"mW" = (
-/obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks,
-/turf/open/floor/wood,
-/area/ruin/unpowered/syndicate_lava_base/bar)
 "mX" = (
 /obj/structure/rack{
 	dir = 8
@@ -7054,7 +7058,7 @@ li
 lA
 lX
 mw
-mV
+ah
 jy
 nu
 oo
@@ -7101,7 +7105,7 @@ lj
 lB
 lY
 lA
-mW
+ai
 jP
 nT
 op

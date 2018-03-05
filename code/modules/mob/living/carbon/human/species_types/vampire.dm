@@ -2,7 +2,8 @@
 	name = "vampire"
 	id = "vampire"
 	default_color = "FFFFFF"
-	species_traits = list(SPECIES_UNDEAD,EYECOLOR,HAIR,FACEHAIR,LIPS,NOHUNGER,NOBREATH,DRINKSBLOOD)
+	species_traits = list(SPECIES_UNDEAD,EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD)
+	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	exotic_bloodtype = "U"
@@ -87,6 +88,10 @@
 				to_chat(H, "<span class='notice'>[victim] doesn't have blood!</span>")
 				return
 			V.drain_cooldown = world.time + 30
+			if(victim.anti_magic_check(FALSE, TRUE))
+				to_chat(victim, "<span class='warning'>[H] tries to bite you, but stops before touching you!</span>")
+				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
+				return
 			if(!do_after(H, 30, target = victim))
 				return
 			var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - H.blood_volume //How much capacity we have left to absorb blood

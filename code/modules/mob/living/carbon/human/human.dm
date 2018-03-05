@@ -90,10 +90,10 @@
 				stat("Radiation Levels:","[radiation] rad")
 				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
 
-				//Virsuses
-				if(viruses.len)
+				//Diseases
+				if(diseases.len)
 					stat("Viruses:", null)
-					for(var/thing in viruses)
+					for(var/thing in diseases)
 						var/datum/disease/D = thing
 						stat("*", "[D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]")
 
@@ -482,7 +482,7 @@
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_selected
-	if(dna && (PIERCEIMMUNE in dna.species.species_traits))
+	if(has_trait(TRAIT_PIERCEIMMUNE))
 		. = 0
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
@@ -638,7 +638,7 @@
 			to_chat(src, "<span class='warning'>You fail to perform CPR on [C]!</span>")
 			return 0
 
-		var/they_breathe = (!(NOBREATH in C.dna.species.species_traits))
+		var/they_breathe = !C.has_trait(TRAIT_NOBREATH)
 		var/they_lung = C.getorganslot(ORGAN_SLOT_LUNGS)
 
 		if(C.health > HEALTH_THRESHOLD_CRIT)

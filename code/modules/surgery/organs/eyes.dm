@@ -26,6 +26,8 @@
 			HMN.regenerate_icons()
 		else
 			eye_color = HMN.eye_color
+		if(HMN.has_trait(TRAIT_NIGHT_VISION) && !lighting_alpha)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
 	M.update_tint()
 	owner.update_sight()
 
@@ -128,12 +130,14 @@
 	eye.on = TRUE
 	eye.forceMove(M)
 	eye.update_brightness(M)
+	M.become_blind("flashlight_eyes")
 
 
 /obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
 	eye.on = FALSE
 	eye.update_brightness(M)
 	eye.forceMove(src)
+	M.cure_blind("flashlight_eyes")
 	..()
 
 // Welding shield implant

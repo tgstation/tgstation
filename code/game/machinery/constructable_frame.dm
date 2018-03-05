@@ -118,10 +118,10 @@
 				return
 
 			if(istype(P, /obj/item/circuitboard/machine))
-				if(!anchored)
+				var/obj/item/circuitboard/machine/B = P
+				if(!anchored && B.needs_anchored)
 					to_chat(user, "<span class='warning'>The frame needs to be secured first!</span>")
 					return
-				var/obj/item/circuitboard/machine/B = P
 				if(!user.transferItemToLoc(B, src))
 					return
 				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -174,6 +174,7 @@
 				if(component_check)
 					P.play_tool_sound(src)
 					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc, 1)
+					new_machine.anchored = anchored
 					new_machine.on_construction()
 					for(var/obj/O in new_machine.component_parts)
 						qdel(O)
