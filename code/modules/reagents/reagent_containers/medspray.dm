@@ -14,14 +14,14 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
+	amount_per_transfer_from_this = 10
+	volume = 60
 	var/can_fill_from_container = TRUE
 	var/apply_type = PATCH
 	var/apply_method = "spray"
 	var/self_delay = 30
 	var/squirt_mode = 0
 	var/squirt_amount = 5
-	amount_per_transfer_from_this = 10
-	volume = 60
 
 /obj/item/reagent_containers/medspray/attack_self(mob/user)
 	squirt_mode = !squirt_mode
@@ -88,3 +88,4 @@
 	name = "sterilizer spray"
 	desc = "Spray bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
 	list_reagents = list("sterilizine" = 60)
+	
