@@ -275,7 +275,7 @@ obj/item/clothing/mask/frog/cursed
 	
 /obj/item/clothing/mask/stone
 	name = "stone mask"
-	desc = "Ancient bandages."
+	desc = "This feels pretty nosferatu."
 	icon_state = "mummy_mask"
 	item_state = "mummy_mask"
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
@@ -288,5 +288,3 @@ obj/item/clothing/mask/frog/cursed
 			H.blood_volume = max(H.blood_volume - 100, 0)
 			H.set_species(/datum/species/vampire)
 			H.visible_message("<span class = 'danger'>[H] dons [src], and unleashes their true potential!</span>")
-		
-		
