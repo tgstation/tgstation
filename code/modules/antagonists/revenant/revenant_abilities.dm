@@ -618,6 +618,11 @@
 		to_chat(user, "<span class='revenwarning'>This isn't what it needs! I can examine the effigy to recall what it needs.</span>")
 	to_chat(user, "<span class='notice'>You don't know what to do with this... thing.</span>")
 
+/obj/structure/effigy/Destroy()
+	if(linkedthrall)
+		var/mob/living/carbon/human/thrall = linkedthrall
+		pretahunt(thrall)
+
 /datum/antagonist/thrall
 	name = "Thrall"
 	roundend_category = "thralls"
@@ -638,6 +643,13 @@
 	objectives += protecteffigy
 	owner.objectives |= objectives
 
+/datum/antagonist/thrall/proc/pretahunt()
+	owner.objectives -= objectives
+	var/datum/objective/escape/thrall/escape = new
+	escape.owner = owner
+	objectives += escape
+	owner.objectives |= objectives
+
 /datum/antagonist/thrall/greet()
 	playsound(owner, 'sound/spookoween/ghost_whisper.ogg', 50, 1, -1)
 	to_chat(owner, "<span class='revenboldnotice'> A painful chatter rushes through your skull as a dark presence focuses its attention on you. It <italics>wants</italics> one small task from you...</span>")
@@ -655,7 +667,7 @@
 	var/list/report = list()
 
 	if(!owner)
-		CRASH("antagonist datum without owner")
+	CRASH("antagonist datum without owner")
 
 	report += printplayer(owner)
 
