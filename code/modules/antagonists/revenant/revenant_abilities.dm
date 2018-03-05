@@ -620,7 +620,7 @@
 
 /obj/structure/effigy/Destroy()
 	if(linkedthrall)
-		var/mob/living/carbon/human/thrall = linkedthrall
+		var/datum/antagonist/thrall/thrall = linkedthrall
 		thrall.pretahunt()
 
 /datum/antagonist/thrall
