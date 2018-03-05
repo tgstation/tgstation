@@ -537,18 +537,13 @@
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
 	needs_anchored = FALSE
 
-#define PATH_POWERCOIL /obj/item/circuitboard/machine/tesla_coil/power
-#define PATH_RPCOIL /obj/item/circuitboard/machine/tesla_coil/research
+#define PATH_POWERCOIL /obj/machinery/power/tesla_coil/power
+#define PATH_RPCOIL /obj/machinery/power/tesla_coil/research
 
 /obj/item/circuitboard/machine/tesla_coil/Initialize()
 	. = ..()
-	if(!build_path)
-		if(prob(50))
-			name = "Tesla Coil (Machine Board)"
-			build_path = PATH_POWERCOIL
-		else
-			name = "Tesla Corona Researcher (Machine Board)"
-			build_path = PATH_RPCOIL
+	if(build_path)
+		build_path = PATH_POWERCOIL
 
 /obj/item/circuitboard/machine/tesla_coil/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
