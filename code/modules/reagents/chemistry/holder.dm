@@ -251,7 +251,7 @@
 	R.handle_reactions()
 	return amount
 
-/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = 0)
+/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = FALSE, liverless = FALSE)
 	var/list/cached_reagents = reagent_list
 	var/list/cached_addictions = addiction_list
 	if(C)
@@ -260,6 +260,8 @@
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(QDELETED(R.holder))
+			continue
+		if(liverless && !R.self_consuming) //need to be metabolized
 			continue
 		if(!C)
 			C = R.holder.my_atom

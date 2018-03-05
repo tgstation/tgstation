@@ -1,8 +1,12 @@
 //This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
-#define SAVEFILE_VERSION_MIN	15
+#define SAVEFILE_VERSION_MIN	18
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
+//	You do not need to raise this if you are adding new values that have sane defaults.
+//	Only raise this value when changing the meaning/format/name/layout of an existing value 
+//	where you would want the updater procs below to run
 #define SAVEFILE_VERSION_MAX	20
+
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -30,83 +34,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return savefile_version
 	return -1
 
-
-/datum/preferences/proc/update_antagchoices(current_version, savefile/S)
-	if((!islist(be_special) || old_be_special ) && current_version < 12)
-		//Archived values of when antag pref defines were a bitfield+fitflags
-		var/B_traitor = 1
-		var/B_operative = 2
-		var/B_changeling = 4
-		var/B_wizard = 8
-		var/B_malf = 16
-		var/B_rev = 32
-		var/B_alien = 64
-		var/B_pai = 128
-		var/B_cultist = 256
-		var/B_blob = 512
-		var/B_ninja = 1024
-		var/B_monkey = 2048
-		var/B_gang = 4096
-		var/B_abductor = 16384
-		var/B_brother = 32768
-
-		var/list/archived = list(B_traitor,B_operative,B_changeling,B_wizard,B_malf,B_rev,B_alien,B_pai,B_cultist,B_blob,B_ninja,B_monkey,B_gang,B_abductor,B_brother)
-
-		be_special = list()
-
-		for(var/flag in archived)
-			if(old_be_special & flag)
-				//this is shitty, but this proc should only be run once per player and then never again for the rest of eternity,
-				switch(flag)
-					if(1) //why aren't these the variables above? Good question, it's because byond complains the expression isn't constant, when it is.
-						be_special += ROLE_TRAITOR
-					if(2)
-						be_special += ROLE_OPERATIVE
-					if(4)
-						be_special += ROLE_CHANGELING
-					if(8)
-						be_special += ROLE_WIZARD
-					if(16)
-						be_special += ROLE_MALF
-					if(32)
-						be_special += ROLE_REV
-					if(64)
-						be_special += ROLE_ALIEN
-					if(128)
-						be_special += ROLE_PAI
-					if(256)
-						be_special += ROLE_CULTIST
-					if(512)
-						be_special += ROLE_BLOB
-					if(1024)
-						be_special += ROLE_NINJA
-					if(2048)
-						be_special += ROLE_MONKEY
-					if(16384)
-						be_special += ROLE_ABDUCTOR
-					if(32768)
-						be_special += ROLE_BROTHER
-
-
-/datum/preferences/proc/update_preferences(current_version, savefile/S)
-
-
-//should this proc get fairly long (say 3 versions long),
+//should these procs get fairly long 
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
 //SAVEFILE_VERSION_MAX and then delete any obsolete if clauses
-//from this proc.
-//It's only really meant to avoid annoying frequent players
+//from these procs.
+//This only really meant to avoid annoying frequent players
 //if your savefile is 3 months out of date, then 'tough shit'.
+
+/datum/preferences/proc/update_preferences(current_version, savefile/S)
+	return
+
 /datum/preferences/proc/update_character(current_version, savefile/S)
-	if(current_version < 16)
-		var/berandom
-		S["userandomjob"] >> berandom
-		if (berandom)
-			joblessrole = BERANDOMJOB
-		else
-			joblessrole = BEASSISTANT
-	if(current_version < 17)
-		features["legs"] = "Normal Legs"
 	if(current_version < 19)
 		pda_style = "mono"
 	if(current_version < 20)
@@ -168,7 +106,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_preferences(needs_update, S)		//needs_update = savefile_version if we need an update (positive integer)
-		update_antagchoices(needs_update, S)
 
 	//Sanitize
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
@@ -321,6 +258,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_med"]		>> job_engsec_med
 	S["job_engsec_low"]		>> job_engsec_low
 
+	//Traits
+	S["all_traits"]			>> all_traits
+	S["positive_traits"]	>> positive_traits
+	S["negative_traits"]	>> negative_traits
+	S["neutral_traits"]		>> neutral_traits
+
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_character(needs_update, S)		//needs_update == savefile_version if we need an update (positive integer)
@@ -375,6 +318,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	job_engsec_high = sanitize_integer(job_engsec_high, 0, 65535, initial(job_engsec_high))
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
+
+	all_traits = SANITIZE_LIST(all_traits)
+	positive_traits = SANITIZE_LIST(positive_traits)
+	negative_traits = SANITIZE_LIST(negative_traits)
+	neutral_traits = SANITIZE_LIST(neutral_traits)
 
 	return 1
 
@@ -438,6 +386,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["job_engsec_high"]	, job_engsec_high)
 	WRITE_FILE(S["job_engsec_med"]		, job_engsec_med)
 	WRITE_FILE(S["job_engsec_low"]		, job_engsec_low)
+
+	//Traits
+	WRITE_FILE(S["all_traits"]		, all_traits)
+	WRITE_FILE(S["positive_traits"]		, positive_traits)
+	WRITE_FILE(S["negative_traits"]		, negative_traits)
+	WRITE_FILE(S["neutral_traits"]		, neutral_traits)
 
 	return 1
 

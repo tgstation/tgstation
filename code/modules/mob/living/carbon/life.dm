@@ -98,7 +98,9 @@
 		air_update_turf()
 
 /mob/living/carbon/proc/has_smoke_protection()
-	return 0
+	if(has_trait(TRAIT_NOBREATH))
+		return TRUE
+	return FALSE
 
 
 //Third link in a breath chain, calls handle_breath_temperature()
@@ -245,7 +247,7 @@
 		O.on_life()
 
 /mob/living/carbon/handle_diseases()
-	for(var/thing in viruses)
+	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(prob(D.infectivity))
 			D.spread()
@@ -408,11 +410,9 @@
 	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
 		return
 	if(liver)
-		if(liver.damage >= 100)
+		if(liver.damage >= liver.maxHealth)
 			liver.failing = TRUE
 			liver_failure()
-		else
-			liver.failing = FALSE
 	else
 		liver_failure()
 
@@ -432,10 +432,10 @@
 		L.damage += d
 
 /mob/living/carbon/proc/liver_failure()
-	if(reagents.get_reagent_amount("corazone"))//corazone is processed here an not in the liver because a failing liver can't metabolize reagents
-		reagents.remove_reagent("corazone", 0.4) //corazone slowly deletes itself.
+	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
+	if(has_trait(TRAIT_STABLEHEART))
 		return
-	adjustToxLoss(8, TRUE, TRUE)
+	adjustToxLoss(8, TRUE,  TRUE)
 	if(prob(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
 

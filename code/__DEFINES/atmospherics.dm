@@ -28,7 +28,6 @@
 #define CELL_VOLUME				2500	//liters in a cell
 #define BREATH_VOLUME			0.5		//liters in a normal breath
 #define BREATH_PERCENTAGE		(BREATH_VOLUME/CELL_VOLUME)					//Amount of air to take a from a tile
-#define HUMAN_NEEDED_OXYGEN		(MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16)	//Amount of air needed before pass out/suffocation commences
 
 //EXCITED GROUPS
 #define EXCITED_GROUP_BREAKDOWN_CYCLES				4		//number of FULL air controller ticks before an excited group breaks down (averages gas contents across turfs)
@@ -46,10 +45,7 @@
 //HEAT TRANSFER COEFFICIENTS
 //Must be between 0 and 1. Values closer to 1 equalize temperature faster
 //Should not exceed 0.4 else strange heat flow occur
-#define FLOOR_HEAT_TRANSFER_COEFFICIENT		0.4
 #define WALL_HEAT_TRANSFER_COEFFICIENT		0.0
-#define DOOR_HEAT_TRANSFER_COEFFICIENT		0.0
-#define SPACE_HEAT_TRANSFER_COEFFICIENT		0.2		//a hack to partly simulate radiative heat
 #define OPEN_HEAT_TRANSFER_COEFFICIENT		0.4
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT	0.1		//a hack for now
 #define HEAT_CAPACITY_VACUUM				7000	//a hack to help make vacuums "cold", sacrificing realism for gameplay
@@ -59,8 +55,6 @@
 #define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	100+T0C
 #define FIRE_SPREAD_RADIOSITY_SCALE			0.85
 #define FIRE_GROWTH_RATE					40000	//For small fires
-#define CARBON_LIFEFORM_FIRE_RESISTANCE 	200+T0C	//Resistance to fire damage
-#define CARBON_LIFEFORM_FIRE_DAMAGE			4		//Fire damage
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
 
 //GASES
@@ -73,11 +67,6 @@
 #define NO_REACTION		0
 #define REACTING		1
 #define STOP_REACTIONS 	2
-
-//HUMANS
-//Hurty numbers
-#define FIRE_DAMAGE_MODIFIER	0.0215	//Higher values result in more external fire damage to the skin
-#define AIR_DAMAGE_MODIFIER		2.025	//More means less damage from hot air scalding lungs, less = more damage
 
 // Pressure limits.
 #define HAZARD_HIGH_PRESSURE				550		//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
@@ -196,4 +185,3 @@ GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"Violet" = rgb(64,0,128),
 		"Yellow" = rgb(255,198,0)
 		))
-

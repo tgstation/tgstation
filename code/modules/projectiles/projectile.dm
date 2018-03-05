@@ -347,7 +347,9 @@
 		var/matrix/M = new
 		M.Turn(Angle)
 		transform = M
+	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
+	trajectory_ignore_forcemove = FALSE
 	trajectory = new(starting.x, starting.y, starting.z, 0, 0, Angle, pixel_speed)
 	last_projectile_move = world.time
 	fired = TRUE
@@ -368,17 +370,19 @@
 	return TRUE
 
 /obj/item/projectile/forceMove(atom/target)
-	var/zc = target.z == z
+	if(!isloc(target) || !isloc(loc) || !z)
+		return ..()
+	var/zc = target.z != z
 	var/old = loc
 	if(zc)
 		before_z_change(old, target)
-	if(hitscan)
-		finalize_hitscan_and_generate_tracers(FALSE)
 	. = ..()
 	if(trajectory && !trajectory_ignore_forcemove && isturf(target))
+		if(hitscan)
+			finalize_hitscan_and_generate_tracers(FALSE)
 		trajectory.initialize_location(target.x, target.y, target.z, 0, 0)
-	if(hitscan)
-		record_hitscan_start(RETURN_PRECISE_POINT(src))
+		if(hitscan)
+			record_hitscan_start(RETURN_PRECISE_POINT(src))
 	if(zc)
 		after_z_change(old, target)
 
@@ -445,7 +449,9 @@
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = 0)
 	var/turf/curloc = get_turf(source)
 	var/turf/targloc = get_turf(target)
+	trajectory_ignore_forcemove = TRUE
 	forceMove(get_turf(source))
+	trajectory_ignore_forcemove = FALSE
 	starting = get_turf(source)
 	original = target
 	if(targloc || !params)
@@ -510,8 +516,8 @@
 	if(hitscan)
 		finalize_hitscan_and_generate_tracers()
 	STOP_PROCESSING(SSprojectiles, src)
-	qdel(trajectory)
 	cleanup_beam_segments()
+	qdel(trajectory)
 	return ..()
 
 /obj/item/projectile/proc/cleanup_beam_segments()

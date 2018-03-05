@@ -308,7 +308,7 @@
 			inv.hud = src
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
-	
+
 	update_locked_slots()
 
 /datum/hud/human/update_locked_slots()

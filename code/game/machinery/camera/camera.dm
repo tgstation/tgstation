@@ -134,78 +134,92 @@
 		toggle_cam(null, 0)
 	..()
 
-/obj/machinery/camera/attackby(obj/item/W, mob/living/user, params)
-	var/msg = "<span class='notice'>You attach [W] into the assembly's inner circuits.</span>"
-	var/msg2 = "<span class='notice'>[src] already has that upgrade!</span>"
+// Construction/Deconstruction
+/obj/machinery/camera/screwdriver_act(mob/living/user, obj/item/I)
+	panel_open = !panel_open
+	to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
+	I.play_tool_sound(src)
+	return TRUE
 
-	// DECONSTRUCTION
-	if(istype(W, /obj/item/screwdriver))
-		panel_open = !panel_open
-		to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
-		W.play_tool_sound(src)
-		return
+/obj/machinery/camera/wirecutter_act(mob/living/user, obj/item/I)
+	if(!panel_open)
+		return FALSE
+	toggle_cam(user, 1)
+	obj_integrity = max_integrity //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
+	I.play_tool_sound(src)
+	return TRUE
 
+/obj/machinery/camera/multitool_act(mob/living/user, obj/item/I)
+	if(!panel_open)
+		return FALSE
+
+	setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
+	to_chat(user, "<span class='notice'>You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus.</span>")
+	return
+
+/obj/machinery/camera/welder_act(mob/living/user, obj/item/I)
+	if(!panel_open)
+		return FALSE
+
+	if(!I.tool_start_check(user, amount=0))
+		return TRUE
+
+	to_chat(user, "<span class='notice'>You start to weld [src]...</span>")
+	if(I.use_tool(src, user, 100, volume=50))
+		user.visible_message("<span class='warning'>[user] unwelds [src], leaving it as just a frame bolted to the wall.</span>",
+			"<span class='warning'>You unweld [src], leaving it as just a frame bolted to the wall</span>")
+		deconstruct(TRUE)
+
+	return TRUE
+
+/obj/machinery/camera/attackby(obj/item/I, mob/living/user, params)
+	// UPGRADES
 	if(panel_open)
-		if(istype(W, /obj/item/wirecutters)) //enable/disable the camera
-			toggle_cam(user, 1)
-			obj_integrity = max_integrity //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
-			return
-
-		else if(istype(W, /obj/item/device/multitool)) //change focus
-			setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
-			to_chat(user, "<span class='notice'>You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus.</span>")
-			return
-
-		else if(istype(W, /obj/item/weldingtool))
-			if(weld(W, user))
-				visible_message("<span class='warning'>[user] unwelds [src], leaving it as just a frame bolted to the wall.</span>", "<span class='warning'>You unweld [src], leaving it as just a frame bolted to the wall</span>")
-				deconstruct(TRUE)
-			return
-
-		else if(istype(W, /obj/item/device/analyzer))
+		if(istype(I, /obj/item/device/analyzer))
 			if(!isXRay())
-				if(!user.temporarilyRemoveItemFromInventory(W))
+				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
-				qdel(W)
+				qdel(I)
 				upgradeXRay()
-				to_chat(user, "[msg]")
+				to_chat(user, "<span class='notice'>You attach [I] into the assembly's inner circuits.</span>")
 			else
-				to_chat(user, "[msg2]")
+				to_chat(user, "<span class='notice'>[src] already has that upgrade!</span>")
 			return
 
-		else if(istype(W, /obj/item/stack/sheet/mineral/plasma))
+		else if(istype(I, /obj/item/stack/sheet/mineral/plasma))
 			if(!isEmpProof())
-				var/obj/item/stack/sheet/mineral/plasma/P = W
-				upgradeEmpProof()
-				to_chat(user, "[msg]")
-				P.use(1)
+				if(I.use_tool(src, user, 0, amount=1))
+					upgradeEmpProof()
+					to_chat(user, "<span class='notice'>You attach [I] into the assembly's inner circuits.</span>")
 			else
-				to_chat(user, "[msg2]")
+				to_chat(user, "<span class='notice'>[src] already has that upgrade!</span>")
 			return
 
-		else if(istype(W, /obj/item/device/assembly/prox_sensor))
+		else if(istype(I, /obj/item/device/assembly/prox_sensor))
 			if(!isMotion())
+				if(!user.temporarilyRemoveItemFromInventory(I))
+					return
 				upgradeMotion()
-				to_chat(user, "[msg]")
-				qdel(W)
+				to_chat(user, "<span class='notice'>You attach [I] into the assembly's inner circuits.</span>")
+				qdel(I)
 			else
-				to_chat(user, "[msg2]")
+				to_chat(user, "<span class='notice'>[src] already has that upgrade!</span>")
 			return
 
 	// OTHER
-	if((istype(W, /obj/item/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
+	if((istype(I, /obj/item/paper) || istype(I, /obj/item/device/pda)) && isliving(user))
 		var/mob/living/U = user
 		var/obj/item/paper/X = null
 		var/obj/item/device/pda/P = null
 
 		var/itemname = ""
 		var/info = ""
-		if(istype(W, /obj/item/paper))
-			X = W
+		if(istype(I, /obj/item/paper))
+			X = I
 			itemname = X.name
 			info = X.info
 		else
-			P = W
+			P = I
 			itemname = P.name
 			info = P.notehtml
 		to_chat(U, "<span class='notice'>You hold \the [itemname] up to the camera...</span>")
@@ -225,7 +239,7 @@
 				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		return
 
-	else if(istype(W, /obj/item/device/camera_bug))
+	else if(istype(I, /obj/item/device/camera_bug))
 		if(!can_use())
 			to_chat(user, "<span class='notice'>Camera non-functional.</span>")
 			return
@@ -235,12 +249,12 @@
 			bug = null
 		else
 			to_chat(user, "<span class='notice'>Camera bugged.</span>")
-			bug = W
+			bug = I
 			bug.bugged_cameras[src.c_tag] = src
 		return
 
-	else if(istype(W, /obj/item/pai_cable))
-		var/obj/item/pai_cable/cable = W
+	else if(istype(I, /obj/item/pai_cable))
+		var/obj/item/pai_cable/cable = I
 		cable.plugin(src, user)
 		return
 
@@ -369,20 +383,6 @@
 			break
 
 	return null
-
-/obj/machinery/camera/proc/weld(obj/item/weldingtool/W, mob/living/user)
-	if(busy)
-		return FALSE
-	if(!W.tool_start_check(user, amount=0))
-		return FALSE
-
-	to_chat(user, "<span class='notice'>You start to weld [src]...</span>")
-	busy = TRUE
-	if(W.use_tool(src, user, 100, volume=50))
-		busy = FALSE
-		return TRUE
-	busy = FALSE
-	return FALSE
 
 /obj/machinery/camera/proc/Togglelight(on=0)
 	for(var/mob/living/silicon/ai/A in GLOB.ai_list)

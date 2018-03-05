@@ -330,6 +330,10 @@
 	actions_types = list(/datum/action/item_action/immortality)
 	var/cooldown = 0
 
+/obj/item/device/immortality_talisman/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
 /datum/action/item_action/immortality
 	name = "Immortality"
 
@@ -678,6 +682,7 @@
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
+	AddComponent(/datum/component/butchering, 150, 90)
 
 /obj/item/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
@@ -791,7 +796,7 @@
 	agent = "dragon's blood"
 	desc = "What do dragons have to do with Space Station 13?"
 	stage_prob = 20
-	severity = VIRUS_SEVERITY_BIOHAZARD
+	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
 	stage1	= list("Your bones ache.")
 	stage2	= list("Your skin feels scaly.")
@@ -947,7 +952,7 @@
 	survive.owner = L.mind
 	L.mind.objectives += survive
 	add_logs(user, L, "took out a blood contract on", src)
-	to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>")
+	to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you! KILL THEM ALL!</span>")
 	L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
 	var/obj/effect/mine/pickup/bloodbath/B = new(L)
 	INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, L)
@@ -955,7 +960,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H == L)
 			continue
-		to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>")
+		to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Whoever they were, friend or foe, go kill [L.p_them()]!</span>")
 		H.put_in_hands(new /obj/item/kitchen/knife/butcher(H), TRUE)
 
 	qdel(src)
