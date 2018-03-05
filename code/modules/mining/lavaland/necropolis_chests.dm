@@ -144,7 +144,7 @@
 	name = "Rod of Asclepius"
 	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding it's way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
-	icon_state = "legion_skull"
+	icon_state = "asclepius_dormant"
 	var/activated = FALSE
 
 /obj/item/rod_of_asclepius/attack_self(mob/user)
@@ -177,7 +177,7 @@
 			effect.hand = itemUser.get_held_index_of_item(src)
 			flags_1 = NODROP_1 | DROPDEL_1
 			desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
-			icon_state = "talisman"
+			icon_state = "asclepius_active"
 			activated = TRUE
 		else
 			to_chat(user, "<span class='warning'>The snake carving seems to come alive, if only for a moment, before returning to it's dormant state, almost as if it finds you incapable of holding it's oath.</span>")

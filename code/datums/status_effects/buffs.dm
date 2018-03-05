@@ -482,7 +482,7 @@
 			var/obj/item/rod_of_asclepius/newRod = new /obj/item/rod_of_asclepius(itemUser.loc)
 			newRod.flags_1 = NODROP_1 | DROPDEL_1
 			newRod.desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
-			newRod.icon_state = "talisman"
+			newRod.icon_state = "asclepius_active"
 			newRod.activated = TRUE
 			if(!itemUser.has_hand_for_held_index(hand))
 				//If user does not have the corresponding hand anymore, give them one and return the rod to their hand
