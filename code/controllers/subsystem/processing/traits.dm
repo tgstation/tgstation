@@ -9,7 +9,7 @@ PROCESSING_SUBSYSTEM_DEF(traits)
 	wait = 10
 	runlevels = RUNLEVEL_GAME
 
-	var/list/traits = list()		//Assoc. list of all roundstart trait datums; "name" = /path/
+	var/list/traits = list()		//Assoc. list of all roundstart trait datum types; "name" = /path/
 	var/list/trait_points = list()	//Assoc. list of trait names and their "point cost"; positive numbers are good traits, and negative ones are bad
 	var/list/trait_objects = list()	//A list of all trait objects in the game, since some may process
 

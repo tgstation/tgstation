@@ -885,6 +885,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				ShowChoices(user)
 			if("update")
 				var/trait = href_list["trait"]
+				if(!SStraits.traits[trait])
+					return
 				var/value = SStraits.trait_points[trait]
 				if(value == 0)
 					if(trait in neutral_traits)
