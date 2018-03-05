@@ -436,10 +436,10 @@
 		L.damage += d
 
 /mob/living/carbon/proc/liver_failure()
-	if(reagents.get_reagent_amount("corazone"))//corazone is processed here an not in the liver because a failing liver can't metabolize reagents
-		reagents.remove_reagent("corazone", 0.4) //corazone slowly deletes itself.
+	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
+	if(has_trait(TRAIT_STABLEHEART))
 		return
-	adjustToxLoss(8, TRUE, TRUE)
+	adjustToxLoss(8, TRUE,  TRUE)
 	if(prob(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
 

@@ -7,8 +7,6 @@
 
 #define STATUS_EFFECT_REPLACE 2 //if it allows only one, but new instances replace
 
-#define BASIC_STATUS_EFFECT /datum/status_effect //Has no effect.
-
 ///////////
 // BUFFS //
 ///////////
