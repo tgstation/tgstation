@@ -51,7 +51,7 @@
 
 /mob/living/carbon/proc/checkbuttinsert(obj/item/I, mob/living/carbon/user)
 	if(user.zone_selected == "groin")
-		if(user.a_intent == "grab")
+		if(user.a_intent == INTENT_GRAB)
 			var/mob/living/carbon/human/buttowner = src
 			if(!istype(buttowner))
 				return FALSE
