@@ -247,7 +247,7 @@
 		O.on_life()
 
 /mob/living/carbon/handle_diseases()
-	for(var/thing in viruses)
+	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(prob(D.infectivity))
 			D.spread()

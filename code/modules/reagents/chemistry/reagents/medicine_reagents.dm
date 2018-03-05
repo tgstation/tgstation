@@ -60,9 +60,9 @@
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
 	M.cure_all_traumas(TRUE, TRAUMA_RESILIENCE_MAGIC)
-	for(var/thing in M.viruses)
+	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
-		if(D.severity == VIRUS_SEVERITY_POSITIVE)
+		if(D.severity == DISEASE_SEVERITY_POSITIVE)
 			continue
 		D.cure()
 	..()
