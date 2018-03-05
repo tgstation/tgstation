@@ -141,7 +141,7 @@
 	T.add_overlay(current_overlay)
 
 /datum/component/wet_floor/proc/add_wet(type, duration_minimum = 0, duration_add = 0, duration_maximum = MAXIMUM_WET_TIME)
-	var/static/list/allowed_types = list(TURF_WET_WATER, TURF_WET_LUBE, TURF_WET_ICE, TURF_WET_PERMAFROST, TURF_WET_SLIDE)
+	var/static/list/allowed_types = list(TURF_WET_WATER, TURF_WET_LUBE, TURF_WET_ICE, TURF_WET_PERMAFROST)
 	if(!duration_minimum || duration_minimum < 0 || !type || !(type in allowed_types))
 		return FALSE
 	var/time = 0
