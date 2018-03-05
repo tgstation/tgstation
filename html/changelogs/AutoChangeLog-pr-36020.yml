@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - rscadd: "Medals now show the commendation text in the description."

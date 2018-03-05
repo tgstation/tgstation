@@ -36,6 +36,10 @@
 		zap_cooldown -= (C.rating * 20)
 	input_power_multiplier = power_multiplier
 
+/obj/machinery/power/tesla_coil/on_construction()
+	if(anchored)
+		connect_to_network()
+
 /obj/machinery/power/tesla_coil/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)

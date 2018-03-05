@@ -72570,13 +72570,6 @@
 	dir = 8
 	},
 /area/medical/medbay/central)
-"cXG" = (
-/obj/structure/table,
-/obj/item/folder/white,
-/turf/open/floor/plasteel/whiteblue/corner{
-	dir = 8
-	},
-/area/medical/medbay/central)
 "cXH" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -73381,12 +73374,11 @@
 	id = "chemisttop";
 	name = "Chemistry Lobby Shutters"
 	},
-/obj/machinery/door/window/southleft{
+/obj/item/folder/yellow,
+/obj/machinery/door/window/northleft{
 	name = "Chemistry Desk";
 	req_access_txt = "5; 33"
 	},
-/obj/item/folder/yellow,
-/obj/machinery/door/window/northleft,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
@@ -101339,6 +101331,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
+"xJl" = (
+/obj/structure/table,
+/obj/item/folder/white,
+/turf/open/floor/plasteel/whiteblue/corner{
+	dir = 8
+	},
+/area/medical/medbay/central)
 "xMn" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/bin,
@@ -141354,7 +141353,7 @@ cQT
 cSE
 cUt
 cWj
-cXG
+xJl
 cZt
 dbc
 dcO

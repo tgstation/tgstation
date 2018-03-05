@@ -1,5 +1,0 @@
-author: "Jittai / ChuckTheSheep"
-delete-after: True
-changes: 
-  - imageadd: "New chemdispenser (and minidispenser) sprites."
-  - imageadd: "New soda/beer dispenser sprites, with directional states."
