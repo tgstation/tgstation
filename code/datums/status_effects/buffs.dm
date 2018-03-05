@@ -468,6 +468,11 @@
 	H.add_hud_to(owner)
 	return ..()
 
+/datum/status_effect/hippocraticOath/on_remove()
+	owner.remove_trait(TRAIT_PACIFISM, "hippocraticOath")
+	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	H.remove_hud_from(owner)
+
 /datum/status_effect/hippocraticOath/tick()
 	//Checks to make sure the rod is still in their hand
 	if(iscarbon(owner))
@@ -498,31 +503,24 @@
 				else
 					itemUser.put_in_l_hand(newRod)
 				to_chat(itemUser, "<span class='notice'>The Rod of Asclepius suddenly grows back out of your arm!</span>")
-		//Because a servant of medicines stops at nothing to help others, lets keep them on their toes.
+		//Because a servant of medicines stops at nothing to help others, lets keep them on their toes and give them an additional boost.
 		if(itemUser.health < itemUser.maxHealth)
-			new /obj/effect/temp_visual/heal(get_turf(itemUser), "#80F5FF")
-		itemUser.adjustBruteLoss(-3.5)
-		itemUser.adjustFireLoss(-3.5)
-		itemUser.adjustToxLoss(-3.5)
-		itemUser.adjustStaminaLoss(-3.5)
-		itemUser.adjustBrainLoss(-3.5)
-		itemUser.adjustCloneLoss(-3.5)
+			new /obj/effect/temp_visual/heal(get_turf(itemUser), "#375637")
+		itemUser.adjustBruteLoss(-1.5)
+		itemUser.adjustFireLoss(-1.5)
+		itemUser.adjustToxLoss(-1.5)
+		itemUser.adjustOxyLoss(-1.5)
+		itemUser.adjustStaminaLoss(-1.5)
+		itemUser.adjustBrainLoss(-1.5)
+		itemUser.adjustCloneLoss(-1.5)
 	//Heal all those around you, unbiased
 	for(var/mob/living/L in view(7, owner))
-		if(iscarbon(L))
-			var/mob/living/carbon/targetMob = L
-			if(targetMob.health < targetMob.maxHealth)
-				new /obj/effect/temp_visual/heal(get_turf(targetMob), "#80F5FF")
-			targetMob.adjustBruteLoss(-3.5)
-			targetMob.adjustFireLoss(-3.5)
-			targetMob.adjustToxLoss(-3.5)
-			targetMob.adjustStaminaLoss(-3.5)
-			targetMob.adjustBrainLoss(-3.5)
-			targetMob.adjustCloneLoss(-3.5)
-		else
-			//the Hippocratic Oath applies to Vetinarians too
-			if(isanimal(L))
-				var/mob/living/simple_animal/targetMob = L
-				if(targetMob.health < targetMob.maxHealth)
-					new /obj/effect/temp_visual/heal(get_turf(targetMob), "#80F5FF")
-				targetMob.adjustBruteLoss(-3.5)
+		if(L.health < L.maxHealth)
+			new /obj/effect/temp_visual/heal(get_turf(L), "#375637")
+		L.adjustBruteLoss(-3.5)
+		L.adjustFireLoss(-3.5)
+		L.adjustToxLoss(-3.5)
+		L.adjustOxyLoss(-3.5)
+		L.adjustStaminaLoss(-3.5)
+		L.adjustBrainLoss(-3.5)
+		L.adjustCloneLoss(-3.5)
