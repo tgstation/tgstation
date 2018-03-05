@@ -303,5 +303,12 @@
 	cut_overlay(dent_decals)
 	LAZYADD(dent_decals, decal)
 	add_overlay(dent_decals)
-	
+
+/turf/closed/wall/Destroy()
+	location = src.loc
+	sleep(1)
+	var/turf/breakturf = get_turf(location)
+	if(breakturf = /turf/open/space)
+		explosion(location, 256, 512, 1024)
+
 #undef MAX_DENT_DECALS
