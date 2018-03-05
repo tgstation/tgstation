@@ -17,8 +17,6 @@
 			if(C != src && C.type == src.type && !QDELETED(C))
 				if (replace_decal(C))
 					return INITIALIZE_HINT_QDEL
-		var/area/A = get_area(src)
-		A.beauty += beauty / A.areasize //Ensures that the effects scale with room size
 
 	if(LAZYLEN(diseases))
 		var/list/datum/disease/diseases_to_add = list()
@@ -27,6 +25,11 @@
 				diseases_to_add += D
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
+
+/obj/effect/decal/cleanable/LateInitialize()
+	if(src.loc && isturf(src.loc))
+		var/area/A = get_area(src)
+		A.beauty += beauty / A.areasize //Ensures that the effects scale with room size
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
 	if(mergeable_decal)
