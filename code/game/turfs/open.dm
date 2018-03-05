@@ -269,9 +269,6 @@
 		if(TURF_WET_PERMAFROST)
 			intensity = 120
 			lube_flags = SLIDE_ICE | GALOSHES_DONT_HELP
-		if(TURF_WET_SLIDE)
-			intensity = 80
-			lube_flags = SLIDE | GALOSHES_DONT_HELP
 		else
 			qdel(GetComponent(/datum/component/slippery))
 			return
