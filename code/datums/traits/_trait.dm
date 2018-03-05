@@ -23,7 +23,7 @@
 		trait_holder.add_trait(mob_trait, ROUNDSTART_TRAIT)
 	START_PROCESSING(SStraits, src)
 	add()
-	if(!SSticker.HasRoundStarted()) //on roundstart or on latejoin; latejoin code is in new_player.dm
+	if(!SSticker.HasRoundStarted() && !istype(trait_mob, /mob/living/carbon/human/dummy)) //on roundstart or on latejoin; latejoin code is in new_player.dm
 		on_spawn()
 	addtimer(CALLBACK(src, .proc/post_add), 30)
 
@@ -47,6 +47,8 @@
 /datum/trait/process()
 	if(QDELETED(trait_holder))
 		qdel(src)
+		return
+	if(istype(trait_holder, /mob/living/carbon/human/dummy))
 		return
 	on_process()
 
