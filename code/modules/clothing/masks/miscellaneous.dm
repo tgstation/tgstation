@@ -272,3 +272,21 @@ obj/item/clothing/mask/frog/cursed
 	icon_state = "scarecrow_sack"
 	item_state = "scarecrow_sack"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	
+/obj/item/clothing/mask/stone
+	name = "stone mask"
+	desc = "Ancient bandages."
+	icon_state = "mummy_mask"
+	item_state = "mummy_mask"
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
+	
+/obj/item/clothing/mask/stone/equipped(mob/user, slot)
+	..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna && !istype(H.dna.species, /datum/species/vampire))
+			H.blood_volume = max(H.blood_volume - 100, 0)
+			H.set_species(/datum/species/vampire)
+			H.visible_message("<span class = 'danger'>[H] dons [src], and unleashes their true potential!</span>")
+		
+		
