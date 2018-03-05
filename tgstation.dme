@@ -808,6 +808,7 @@
 #include "code\game\objects\items\implants\implant_krav_maga.dm"
 #include "code\game\objects\items\implants\implant_loyality.dm"
 #include "code\game\objects\items\implants\implant_misc.dm"
+#include "code\game\objects\items\implants\implant_spell.dm"
 #include "code\game\objects\items\implants\implant_storage.dm"
 #include "code\game\objects\items\implants\implant_track.dm"
 #include "code\game\objects\items\implants\implantcase.dm"
