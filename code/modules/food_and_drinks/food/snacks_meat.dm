@@ -155,6 +155,26 @@
 	tastes = list("meat" = 8, "metal" = 4, "scales" = 1)
 	foodtype = MEAT
 
+/obj/item/reagent_containers/food/snacks/kebab/Initialize()
+	. = ..()
+	eatverb = pick("remove from premisis")
+
+/obj/item/reagent_containers/food/snacks/kebab/human/Initialize()
+	. = ..()
+	eatverb = pick("remove from premisis")
+
+/obj/item/reagent_containers/food/snacks/kebab/monkey/Initialize()
+	. = ..()
+	eatverb = pick("remove from premisis")
+
+/obj/item/reagent_containers/food/snacks/kebab/tofu/Initialize()
+	. = ..()
+	eatverb = pick("remove from premisis")
+
+/obj/item/reagent_containers/food/snacks/kebab/tail/Initialize()
+	. = ..()
+	eatverb = pick("remove from premisis")
+
 /obj/item/reagent_containers/food/snacks/rawkhinkali
 	name = "raw khinkali"
 	desc = "One hundred khinkalis? Do I look like a pig?"
