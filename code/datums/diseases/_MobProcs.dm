@@ -1,17 +1,22 @@
 
-/mob/proc/HasDisease(datum/disease/D)
-	for(var/thing in viruses)
+/mob/living/proc/HasDisease(datum/disease/D)
+	for(var/thing in diseases)
 		var/datum/disease/DD = thing
 		if(D.IsSame(DD))
 			return TRUE
 	return FALSE
 
+<<<<<<< HEAD
 // Hippie Start - mirrored this proc in the hippie _mobProcs.dm to allow for and cap at a maximum of three viruses.
 /mob/proc/CanContractDisease(datum/disease/D)
+=======
+
+/mob/living/proc/CanContractDisease(datum/disease/D)
+>>>>>>> dedf5f5ed9... Disease antagonist (#35988)
 	if(stat == DEAD)
 		return FALSE
 
-	if(D.GetDiseaseID() in resistances)
+	if(D.GetDiseaseID() in disease_resistances)
 		return FALSE
 
 	if(HasDisease(D))
@@ -23,9 +28,10 @@
 	return TRUE
 //Hippie End
 
-/mob/proc/ContactContractDisease(datum/disease/D)
+/mob/living/proc/ContactContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
 		return FALSE
+<<<<<<< HEAD
 	AddDisease(D)
 
 //Hippie Start - mirrored this proc in the hippie _mobProcs.dm to removed the "a new disease kills any old disease infecting the host based on stats
@@ -56,6 +62,10 @@
 		DD.after_add()
 		DD.affected_mob.med_hud_set_status()
 //Hippie end
+=======
+	D.try_infect(src)
+
+>>>>>>> dedf5f5ed9... Disease antagonist (#35988)
 
 /mob/living/carbon/ContactContractDisease(datum/disease/D, target_zone)
 	if(!CanContractDisease(D))
@@ -124,28 +134,34 @@
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 
 	if(passed)
-		AddDisease(D)
+		D.try_infect(src)
 
-/mob/proc/AirborneContractDisease(datum/disease/D)
-	if((D.spread_flags & VIRUS_SPREAD_AIRBORNE) && prob((50*D.permeability_mod) - 1))
+/mob/living/proc/AirborneContractDisease(datum/disease/D, force_spread)
+	if( ((D.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob((50*D.permeability_mod) - 1))
 		ForceContractDisease(D)
 
-/mob/living/carbon/AirborneContractDisease(datum/disease/D)
+/mob/living/carbon/AirborneContractDisease(datum/disease/D, force_spread)
 	if(internal)
 		return
 	if(has_trait(TRAIT_NOBREATH))
 		return
 	..()
 
-//Proc to use when you 100% want to infect someone, as long as they aren't immune
-/mob/proc/ForceContractDisease(datum/disease/D)
+
+//Proc to use when you 100% want to try to infect someone (ignoreing protective clothing and such), as long as they aren't immune
+/mob/living/proc/ForceContractDisease(datum/disease/D, make_copy = TRUE, del_on_fail = FALSE)
 	if(!CanContractDisease(D))
+		if(del_on_fail)
+			qdel(D)
 		return FALSE
-	AddDisease(D)
+	if(!D.try_infect(src, make_copy))
+		if(del_on_fail)
+			qdel(D)
+		return FALSE
+	return TRUE
 
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
-
 	if(dna)
 		if(has_trait(TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
 			return FALSE
