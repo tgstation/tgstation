@@ -175,6 +175,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater, /obj/structure/falsewall/titanium)
+	baseturfs = /turf/open/floor/plating //i'm sorry this is horrible but I don't understand why the fuck shuttle baseturfs are broken. Added march 5 2018, if you see this years later someone needs to be shot.
 
 /turf/closed/wall/mineral/titanium/nodiagonal
 	smooth = SMOOTH_MORE
