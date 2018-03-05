@@ -1,8 +1,7 @@
 /client/proc/cmd_admin_drop_everything(mob/M in GLOB.mob_list)
 	set category = null
 	set name = "Drop Everything"
-	if(!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/confirm = alert(src, "Make [M] drop everything?", "Message", "Yes", "No")
@@ -26,12 +25,11 @@
 
 	if(!ismob(M))
 		return
-	if (!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
 
 	message_admins("[key_name_admin(src)] has started answering [key_name(M.key, 0, 0)]'s prayer.")
-	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text
+	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text|null
 
 	if (!msg)
 		message_admins("[key_name_admin(src)] decided not to answer [key_name(M.key, 0, 0)]'s prayer")
@@ -66,7 +64,7 @@
 		if(operation == "set")
 			prompt = "Please enter the new reputation value:"
 
-		msg = input("Message:", prompt) as num
+		msg = input("Message:", prompt) as num|null
 
 		if (!msg)
 			return
@@ -97,11 +95,10 @@
 	set category = "Special Verbs"
 	set name = "Global Narrate"
 
-	if (!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone:")) as text
+	var/msg = input("Message:", text("Enter the text you wish to appear to everyone:")) as text|null
 
 	if (!msg)
 		return
@@ -114,8 +111,7 @@
 	set category = "Special Verbs"
 	set name = "Direct Narrate"
 
-	if(!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
 
 	if(!M)
@@ -124,7 +120,7 @@
 	if(!M)
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text
+	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text|null
 
 	if( !msg )
 		return
@@ -140,15 +136,14 @@
 	set category = "Special Verbs"
 	set name = "Local Narrate"
 
-	if (!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
 	if(!A)
 		return
-	var/range = input("Range:", "Narrate to mobs within how many tiles:", 7) as num
+	var/range = input("Range:", "Narrate to mobs within how many tiles:", 7) as num|null
 	if(!range)
 		return
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text
+	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text|null
 	if (!msg)
 		return
 	for(var/mob/M in view(range,A))
@@ -161,9 +156,9 @@
 /client/proc/cmd_admin_godmode(mob/M in GLOB.mob_list)
 	set category = "Special Verbs"
 	set name = "Godmode"
-	if(!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
+
 	M.status_flags ^= GODMODE
 	to_chat(usr, "<span class='adminnotice'>Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]</span>")
 
@@ -307,9 +302,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Respawn Character"
 	set desc = "Respawn a person that has been gibbed/dusted/killed. They must be a ghost for this to work and preferably should not have a body to go back into."
-	if(!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
+
 	var/input = ckey(input(src, "Please specify which key will be respawned.", "Key", ""))
 	if(!input)
 		return
@@ -474,9 +469,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_add_freeform_ai_law()
 	set category = "Fun"
 	set name = "Add Custom AI law"
-	if(!holder)
-		to_chat(src, "Only administrators may use this command.")
+
+	if(!check_rights(R_ADMIN))
 		return
+
 	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
 	if(!input)
 		return
@@ -496,9 +492,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_rejuvenate(mob/living/M in GLOB.mob_list)
 	set category = "Special Verbs"
 	set name = "Rejuvenate"
-	if(!holder)
-		to_chat(src, "Only administrators may use this command.")
+
+	if(!check_rights(R_ADMIN))
 		return
+
 	if(!mob)
 		return
 	if(!istype(M))
@@ -515,9 +512,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_create_centcom_report()
 	set category = "Special Verbs"
 	set name = "Create Command Report"
-	if(!holder)
-		to_chat(src, "Only administrators may use this command.")
+
+	if(!check_rights(R_ADMIN))
 		return
+
 	var/input = input(usr, "Enter a Command Report. Ensure it makes sense IC.", "What?", "") as message|null
 	if(!input)
 		return
@@ -540,9 +538,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_change_command_name()
 	set category = "Special Verbs"
 	set name = "Change Command Name"
-	if(!holder)
-		to_chat(src, "Only administrators may use this command.")
+
+	if(!check_rights(R_ADMIN))
 		return
+
 	var/input = input(usr, "Please input a new name for Central Command.", "What?", "") as text|null
 	if(!input)
 		return
@@ -554,8 +553,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Delete"
 
-	if (!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
 
 	admin_delete(A)
@@ -577,8 +575,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Manage Job Slots"
 
-	if (!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
 	holder.manage_free_slots()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Manage Job Slots") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -587,8 +584,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Explosion"
 
-	if (!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num|null
@@ -624,8 +620,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "EM Pulse"
 
-	if (!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
@@ -650,8 +645,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Gib"
 
-	if (!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/confirm = alert(src, "Drop a brain?", "Confirm", "Yes", "No","Cancel")
@@ -716,8 +710,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return
 
-	if (!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
@@ -801,8 +794,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set name = "Set Security Level"
 	set desc = "Changes the security level. Announcement only, i.e. setting to Delta won't activate nuke"
 
-	if (!holder)
-		to_chat(src, "Only administrators may use this command.")
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/level = input("Select security level to change to","Set Security Level") as null|anything in list("green","blue","red","delta")
@@ -821,7 +813,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	if(!N.timing)
-		var/newtime = input(usr, "Set activation timer.", "Activate Nuke", "[N.timer_set]") as num
+		var/newtime = input(usr, "Set activation timer.", "Activate Nuke", "[N.timer_set]") as num|null
 		if(!newtime)
 			return
 		N.timer_set = newtime
@@ -1075,7 +1067,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	set desc = "Infects all humans with a latent organ that will zombify \
 		them on death."
 
-	if(!holder)
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/confirm = alert(src, "Please confirm you want to add latent zombie organs in all humans?", "Confirm Zombies", "Yes", "No")
@@ -1093,7 +1085,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	set category = "Fun"
 	set name = "Mass Zombie Cure"
 	set desc = "Removes the zombie infection from all humans, returning them to normal."
-	if(!holder)
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/confirm = alert(src, "Please confirm you want to cure all zombies?", "Confirm Zombie Cure", "Yes", "No")
@@ -1112,7 +1104,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	set name = "Polymorph All"
 	set desc = "Applies the effects of the bolt of change to every single mob."
 
-	if(!holder)
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/confirm = alert(src, "Please confirm you want polymorph all mobs?", "Confirm Polymorph", "Yes", "No")
@@ -1146,7 +1138,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	set desc = "Sends a tip (that you specify) to all players. After all \
 		you're the experienced player here."
 
-	if(!holder)
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/input = input(usr, "Please specify your tip that you want to send to the players.", "Tip", "") as message|null
@@ -1279,7 +1271,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /client/proc/smite(mob/living/carbon/human/target as mob)
 	set name = "Smite"
 	set category = "Fun"
-	if(!holder)
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD)
@@ -1318,7 +1310,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 
 /client/proc/trigger_centcom_recall()
-	if(!holder)
+	if(!check_rights(R_ADMIN))
 		return
 	var/message = pick(GLOB.admiral_messages)
 	message = input("Enter message from the on-call admiral to be put in the recall report.", "Admiral Message", message) as text|null
