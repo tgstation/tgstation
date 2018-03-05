@@ -581,11 +581,11 @@
 /obj/item/device/electronic_assembly/attack_animal(mob/living/simple_animal/user)
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly] [src].")
-		return 0
+		return FALSE
 	else
-		var/play_soundeffect = 1
+		var/play_soundeffect = TRUE
 		if(user.environment_smash)
-			play_soundeffect = 0
+			play_soundeffect = FALSE
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		var/animal_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
 		if(user.obj_damage)
@@ -593,4 +593,4 @@
 		animal_damage = min(animal_damage, 20*user.environment_smash)
 		attack_generic(user, animal_damage, user.melee_damage_type, "melee", play_soundeffect)
 		add_logs(user, src, "attacked")
-		return 1
+		return TRUE
