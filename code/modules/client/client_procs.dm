@@ -621,7 +621,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(query_get_notes.NextRow())
 		if (query_get_notes.item[1] == system_ckey)
 			return
-	create_message("note", ckey, system-ckey, message, null, null, 0, 0)
+	create_message("note", ckey, system_ckey, message, null, null, 0, 0)
 
 
 /client/proc/check_ip_intel()
