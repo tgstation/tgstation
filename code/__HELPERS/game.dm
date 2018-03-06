@@ -328,6 +328,8 @@
 
 /proc/considered_alive(datum/mind/M, enforce_human = TRUE)
 	if(M && M.current)
+		if(M.has_antag_datum(/datum/antagonist/changeling))
+			return TRUE
 		if(enforce_human)
 			var/mob/living/carbon/human/H
 			if(ishuman(M.current))
