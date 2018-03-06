@@ -280,9 +280,9 @@ Versioning
 	var/y_coord = sanitizeSQL(L.y)
 	var/z_coord = sanitizeSQL(L.z)
 	var/last_words = sanitizeSQL(L.last_words)
-	var/suicide = sanitizeSQL(L.suiciding)
+	var/suicide = sanitizeSQL(L.has_trait(TRAIT_NOREVIVE, SUICIDING))
 	var/map = sanitizeSQL(SSmapping.config.map_name)
-	if(!L.suiciding && !first_death.len)
+	if(!L.has_trait(TRAIT_NOREVIVE, SUICIDING) && !first_death.len)
 		first_death["name"] = L.name
 		first_death["role"] = null
 		if(L.mind.assigned_role)

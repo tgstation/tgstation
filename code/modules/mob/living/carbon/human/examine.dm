@@ -106,9 +106,9 @@
 	var/appears_dead = 0
 	if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
 		appears_dead = 1
-		if(suiciding)
+		if(has_trait(TRAIT_NOREVIVE, SUICIDING))
 			msg += "<span class='warning'>[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.</span>\n"
-		if(hellbound)
+		if(has_trait(TRAIT_NOREVIVE, HELLBOUND))
 			msg += "<span class='warning'>[t_His] soul seems to have been ripped out of [t_his] body.  Revival is impossible.</span>\n"
 		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 		if(getorgan(/obj/item/organ/brain))

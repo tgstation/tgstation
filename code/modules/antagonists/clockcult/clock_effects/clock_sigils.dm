@@ -279,7 +279,7 @@
 			to_chat(user, "<span class='inathneq_small'>It can revive Servants at a cost of <b>[revive_cost]</b> vitality.</span>")
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
-	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
+	if((is_servant_of_ratvar(L) && L.has_trait(TRAIT_NOREVIVE)) || sigil_active)
 		return
 	animate(src, alpha = 255, time = 10, flags = ANIMATION_END_NOW) //we may have a previous animation going. finish it first, then do this one without delay.
 	sleep(10)
@@ -317,7 +317,7 @@
 		else
 			if(L.stat == DEAD)
 				var/revival_cost = revive_cost
-				if(GLOB.ratvar_awakens || L.suiciding) // No cost if Ratvar is summoned or if you're reviving a convert who suicided
+				if(GLOB.ratvar_awakens || L.has_trait(TRAIT_NOREVIVE)) // No cost if Ratvar is summoned or if you're reviving a convert who suicided
 					revival_cost = 0
 				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
 				if(GLOB.clockwork_vitality >= revival_cost && (ghost || (L.mind && L.mind.active)))

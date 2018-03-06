@@ -349,7 +349,7 @@
 	if(!(loc == C.loc) && !(isturf(C.loc) && isturf(loc)))
 		return FALSE
 
-	if(C.suiciding)
+	if(C.has_trait(TRAIT_NOREVIVE))
 		return FALSE //Kevorkian school of robotic medical assistants.
 
 	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)

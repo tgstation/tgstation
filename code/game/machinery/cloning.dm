@@ -203,7 +203,7 @@
 
 		H.set_cloned_appearance()
 
-		H.suiciding = FALSE
+		H.remove_trait(TRAIT_NOREVIVE, SUICIDING)
 	attempting = FALSE
 	return TRUE
 
@@ -217,7 +217,7 @@
 			connected_message("Clone Ejected: Loss of power.")
 
 	else if(mob_occupant && (mob_occupant.loc == src))
-		if((mob_occupant.stat == DEAD) || (mob_occupant.suiciding) || mob_occupant.hellbound)  //Autoeject corpses and suiciding dudes.
+		if((mob_occupant.stat == DEAD) || mob_occupant.has_trait(TRAIT_NOREVIVE))  //Autoeject corpses and suiciding dudes.
 			connected_message("Clone Rejected: Deceased.")
 			if(internal_radio)
 				SPEAK("The cloning of [mob_occupant.real_name] has been \

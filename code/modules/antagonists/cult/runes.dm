@@ -113,7 +113,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(user)
 		chanters += user
 		invokers += user
-	
+
 	if(req_cultists > 1 || allow_excess_invokers)
 		var/list/things_in_range = range(1, src)
 		var/obj/item/toy/plush/narplush/plushsie = locate() in things_in_range
@@ -313,7 +313,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				to_chat(M, "<span class='cultlarge'>\"I accept this meager sacrifice.\"</span>")
 
 	var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
-	if(sacrificial.mind && !sacrificial.suiciding)
+	if(sacrificial.mind && !sacrificial.has_trait(TRAIT_NOREVIVE))
 		stone.invisibility = INVISIBILITY_MAXIMUM //so it's not picked up during transfer_soul()
 		stone.transfer_soul("FORCE", sacrificial, usr)
 		stone.invisibility = 0

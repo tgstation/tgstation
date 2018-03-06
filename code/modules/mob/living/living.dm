@@ -444,7 +444,7 @@
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
 		GLOB.dead_mob_list -= src
 		GLOB.alive_mob_list += src
-		suiciding = 0
+		remove_trait(TRAIT_NOREVIVE)
 		stat = UNCONSCIOUS //the mob starts unconscious,
 		blind_eyes(1)
 		updatehealth() //then we check if the mob should wake up.
@@ -875,7 +875,7 @@
 	return TRUE
 
 /mob/living/proc/return_soul()
-	hellbound = 0
+	remove_trait(TRAIT_NOREVIVE, HELLBOUND)
 	if(mind)
 		var/datum/antagonist/devil/devilInfo = mind.soulOwner.has_antag_datum(/datum/antagonist/devil)
 		if(devilInfo)//Not sure how this could be null, but let's just try anyway.
