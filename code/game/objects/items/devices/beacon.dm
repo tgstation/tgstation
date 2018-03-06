@@ -34,6 +34,8 @@
 /obj/item/device/beacon/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/pen)) // needed for things that use custom names like the locator
 		var/new_name = stripped_input(user, "What would you like the name to be?")
+		if(!user.canUseTopic(src, BE_CLOSE))
+			return
 		if(new_name)
 			name = new_name
 			renamed = TRUE
