@@ -31,7 +31,6 @@
 	. = ..()
 	if(isliving(target))
 		if(target.hellbound)
-			target.visible_message("<span class='warning'>[src] dissapears in a red flash on contact with [target], doing nothing!</span>")
 			return
 		if(target.anti_magic_check())
 			target.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
