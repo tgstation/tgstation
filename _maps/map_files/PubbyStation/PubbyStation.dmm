@@ -33520,16 +33520,10 @@
 	dir = 5
 	},
 /area/science/mixing)
-"bEe" = (
-/turf/closed/wall,
-/area/science/mineral_storeroom)
 "bEf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/science/mineral_storeroom)
-"bEg" = (
-/turf/closed/wall/r_wall,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bEh" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -34150,7 +34144,7 @@
 	},
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bFs" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -34165,7 +34159,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bFt" = (
 /obj/machinery/suit_storage_unit/rd,
 /obj/structure/cable{
@@ -34178,7 +34172,7 @@
 	pixel_y = 22
 	},
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bFu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/power/apc{
@@ -34193,7 +34187,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bFv" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -34203,7 +34197,7 @@
 	},
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bFw" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -34246,7 +34240,7 @@
 "bFy" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Toxins Launch Room APC";
+	name = "Circuitry Lab APC";
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -34739,19 +34733,28 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bGy" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bGz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bGA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bGB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -35200,25 +35203,29 @@
 	name = "Incinerator Output Pump";
 	on = 0
 	},
+/obj/machinery/light_switch{
+	dir = 8;
+	pixel_x = -20
+	},
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bHC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bHD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bHE" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bHF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -35693,8 +35700,12 @@
 /area/science/mixing)
 "bIN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -27
+	},
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bIO" = (
 /obj/structure/window/reinforced,
 /obj/machinery/doppler_array/research/science{
@@ -35706,7 +35717,7 @@
 /turf/open/floor/plasteel{
 	dir = 2
 	},
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bIP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -36170,7 +36181,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bJU" = (
 /obj/machinery/button/massdriver{
 	dir = 2;
@@ -36181,7 +36192,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bJV" = (
 /obj/machinery/mass_driver{
 	id = "toxinsdriver"
@@ -36198,7 +36209,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bJW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -36699,7 +36710,7 @@
 	req_one_access_txt = "0"
 	},
 /turf/open/floor/plating,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bLh" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -36715,13 +36726,13 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bLi" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bLj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -37169,14 +37180,14 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bMp" = (
 /obj/structure/closet/emcloset/anchored,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bMq" = (
 /obj/machinery/door/poddoor{
 	id = "toxinsdriver";
@@ -37187,7 +37198,7 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bMr" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -37555,7 +37566,7 @@
 "bNq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/plating,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bNr" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -37970,7 +37981,7 @@
 	req_one_access_txt = "0"
 	},
 /turf/open/floor/plating,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "bOv" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -50178,6 +50189,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
+"dAF" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "dMB" = (
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
@@ -50241,6 +50256,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
+"fwr" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "fBm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/research{
@@ -50252,7 +50272,7 @@
 	},
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plasteel,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "fKj" = (
 /turf/closed/wall,
 /area/science/circuit)
@@ -50278,7 +50298,7 @@
 "gMm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
-/area/science/mineral_storeroom)
+/area/science/mixing)
 "htU" = (
 /obj/machinery/rnd/protolathe/department/science,
 /turf/open/floor/plasteel/purple/side{
@@ -50414,6 +50434,12 @@
 	dir = 8
 	},
 /area/science/circuit)
+"khk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "kjK" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Maintenance";
@@ -50433,6 +50459,9 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"kwI" = (
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "kAz" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -94195,12 +94224,12 @@ bzk
 bAH
 blX
 blX
-bEe
+bAF
 bFr
 bGx
 bHB
 bIN
-bIN
+dAF
 bLg
 bMo
 bNq
@@ -94452,16 +94481,16 @@ bzl
 blX
 bBU
 bDe
-bEe
+bAF
 bFs
 bGy
 bHC
-bGy
+kwI
 bJT
-bEe
+bAF
 bMp
-bEg
-bEg
+bHy
+bHy
 ahi
 aaa
 aaa
@@ -94709,15 +94738,15 @@ bzm
 blX
 blX
 blX
-bEe
+bAF
 bFt
-bGy
+khk
 bHD
-bGy
+kwI
 bJU
-bEe
-bEg
-bEg
+bAF
+bHy
+bHy
 abI
 abI
 abI
@@ -95223,15 +95252,15 @@ bzn
 bAH
 blX
 blX
-bEe
+bAF
 bFv
 bGA
 fBm
-bGA
+fwr
 gMm
 bLi
-bEg
-bEg
+bHy
+bHy
 aht
 abI
 abI
