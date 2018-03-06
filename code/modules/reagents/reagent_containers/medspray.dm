@@ -61,7 +61,7 @@
 
 	else
 		add_logs(user, M, "applied", src, reagents.log_list())
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 		reagents.reaction(M, apply_type, fraction)
 		reagents.trans_to(M, amount_per_transfer_from_this)
