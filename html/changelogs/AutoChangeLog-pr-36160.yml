@@ -1,8 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - code_imp: "Traits are now assigned in a way that should cause fewer edge cases and strangeness."
-  - bugfix: "Night Vision should now work."
-  - bugfix: "Traits no longer tick while dead."
-  - tweak: "RDS now triggers twice as often."
-  - tweak: "You can now modify your trait setup mid-round. Your character is locked to the traits you had selected when you spawned in, though."
