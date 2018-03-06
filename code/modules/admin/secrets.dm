@@ -175,13 +175,13 @@
 						SSnightshift.can_fire = TRUE
 						SSnightshift.fire()
 					else
-						SSnightshift.activate_nightshift(TRUE)
+						SSnightshift.update_nightshift(FALSE, TRUE)
 				if("On")
 					SSnightshift.can_fire = FALSE
-					SSnightshift.activate_nightshift(TRUE)
+					SSnightshift.update_nightshift(TRUE, TRUE)
 				if("Off")
 					SSnightshift.can_fire = FALSE
-					SSnightshift.deactivate_nightshift(TRUE)
+					SSnightshift.update_nightshift(FALSE, TRUE)
 
 		if("reset_name")
 			if(!check_rights(R_ADMIN))
