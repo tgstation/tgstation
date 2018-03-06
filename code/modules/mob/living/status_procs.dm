@@ -251,5 +251,5 @@
 	if(stat == DEAD)
 		return
 	add_trait(TRAIT_FAKEDEATH, source)
-	tod = station_time()
+	tod = station_time_timestamp()
 	update_stat()
