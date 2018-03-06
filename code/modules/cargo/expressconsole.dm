@@ -55,7 +55,7 @@
 			continue// by using someone else's crate
 		if(!(obj_flags & EMAGGED) && P.contraband) // will you show me?
 			continue // i'd be right happy to
-		meme_pack_data[P.group]["packs"] += list(list(//remove comment, r e m o v e^^^
+		meme_pack_data[P.group]["packs"] += list(list(
 			"name" = P.name,
 			"cost" = P.cost,
 			"id" = pack
