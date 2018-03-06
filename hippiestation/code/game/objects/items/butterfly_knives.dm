@@ -76,7 +76,7 @@
 	desc = "A vicious carbon fibre blade and plasma tip allow for unparelled precision strikes against fat Nanotrasen backsides"
 	force_on = 20
 	throwforce_on = 20
-	backstabforce = 80
+	backstabforce = 125
 	item_state_on = "balisong"
 	icon_state = "butterflyknife0"
 	icon_state_on = "butterflyknife_syndie"

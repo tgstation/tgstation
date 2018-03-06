@@ -127,7 +127,7 @@
 /datum/uplink_item/dangerous/butterfly
 	name = "Energy Butterfly Knife"
 	desc = "A highly lethal and concealable knife that causes critical backstab damage when used with harm intent."
-	cost = 8//80 backstab damage and armour pierce isn't a fucking joke
+	cost = 8
 	item = /obj/item/melee/transforming/butterfly/energy
 	surplus = 15
 
