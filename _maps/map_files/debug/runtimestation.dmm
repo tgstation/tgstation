@@ -1493,6 +1493,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"HY" = (
+/obj/structure/table,
+/obj/item/a_gift/anything,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "If" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -3370,7 +3375,7 @@ dB
 dl
 dE
 dJ
-dN
+HY
 cS
 af
 ad
