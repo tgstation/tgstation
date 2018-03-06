@@ -508,7 +508,7 @@
 			new /obj/effect/temp_visual/heal(get_turf(itemUser), "#375637")
 		itemUser.adjustBruteLoss(-1.5)
 		itemUser.adjustFireLoss(-1.5)
-		itemUser.adjustToxLoss(-1.5)
+		itemUser.adjustToxLoss(-1.5, forced = TRUE) //Because Slime People are people too
 		itemUser.adjustOxyLoss(-1.5)
 		itemUser.adjustStaminaLoss(-1.5)
 		itemUser.adjustBrainLoss(-1.5)
@@ -519,7 +519,7 @@
 			new /obj/effect/temp_visual/heal(get_turf(L), "#375637")
 		L.adjustBruteLoss(-3.5)
 		L.adjustFireLoss(-3.5)
-		L.adjustToxLoss(-3.5)
+		L.adjustToxLoss(-3.5, forced = TRUE) //Because Slime People are people too
 		L.adjustOxyLoss(-3.5)
 		L.adjustStaminaLoss(-3.5)
 		L.adjustBrainLoss(-3.5)
