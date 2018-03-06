@@ -7,6 +7,10 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 #define STATE_MOVINGTO	1
 #define STATE_ACTING	2
 
+#define MOVETYPE_ASTAR 1
+#define MOVETYPE_FAKESTAR 2
+#define MOVETYPE_DUMB 3
+
 //#define GOAP_DEBUG_ENABLE "fart"
 
 #ifdef GOAP_DEBUG_ENABLE
@@ -32,7 +36,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 	var/turf/last_node
 	var/tries = 0
 	var/obj/item/card/id/given_pathfind_access
-	var/movement_type = 1 // 1 = normal A*(expensive but near perfect), 2 = Fake A*(rarely works), 3 = Dumb Movement(cheapest)
+	var/movement_type = MOVETYPE_ASTAR
 	var/turf/current_loc
 	var/is_megafauna = FALSE
 	var/actions_halted = FALSE
@@ -54,13 +58,13 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 	if(ispath(info))
 		info = new info()
 	else
-		goap_debug("OH GOD HELP ME I DONT UNDERSTAND THE WORLD")
+		CRASH("OH GOD HELP ME I DONT UNDERSTAND THE WORLD")
 		return
 
 	if(ispath(planner))
 		planner = new planner()
 	else
-		goap_debug("OH GOD HELP ME I DONT KNOW HOW TO THINK STRAIGHT")
+		CRASH("OH GOD HELP ME I DONT KNOW HOW TO THINK STRAIGHT")
 		return
 
 	START_PROCESSING(SSgoap, src)
@@ -71,18 +75,17 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 
 /datum/goap_agent/proc/able_to_run()
 	if(!agent)
-		STOP_PROCESSING(SSgoap, src)
 		qdel(src)
 		return FALSE
 	if(works_when_alone)
 		return TRUE
-	for(var/I in GLOB.mob_list)
+	for(var/I in GLOB.alive_mob_list & SSmobs.clients_by_zlevel[agent.z])
 		var/mob/M = I
-		if(M != null && M.z == agent.z && M.client && istype(M, /mob/living) && get_dist(M, agent) <= 14)
+		if(get_dist(M, agent) <= 14)
 			return TRUE
 	return FALSE
 
-/datum/goap_agent/process()
+/datum/goap_agent/proc/goap_process()
 	if(!agent)
 		return FALSE
 	if(actions_halted)
@@ -105,10 +108,11 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 	var/range_check = curr_action.IsInRange(agent)
 	if(curr_action.CheckDone(agent))
 		action_queue.len--
+		if(!LAZYLEN(action_queue))
+			return
 	if(already_acting)
 		return
-	if(!LAZYLEN(action_queue))
-		return
+
 	if(!range_check)
 		brain_state = STATE_MOVINGTO
 		return
@@ -116,17 +120,17 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 	if(!curr_action.Perform(agent))
 		goap_debug("PERFORM FAILED [curr_action]")
 		brain_state = STATE_IDLE
-		path = list()
+		LAZYCLEARLIST(path)
 		info.PlanAborted(curr_action)
 		already_acting = FALSE
 	else
 		goap_debug("PERFORMED [curr_action]")
 		if(action_queue.len == 1 && action_queue[1] == curr_action)
 			brain_state = STATE_IDLE
-			path = list()
+			LAZYCLEARLIST(path)
 			already_acting = FALSE
 			return
-		path = list()
+		LAZYCLEARLIST(path)
 		already_acting = FALSE
 
 /datum/goap_agent/proc/moving_state()
@@ -138,14 +142,14 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 		goap_debug("An action ([curr_action]) requires a target, but did not get one set")
 		brain_state = STATE_IDLE
 		return
-	var/dense_garbage = null
+	var/dense_garbage
 	for(var/obj/I in get_turf(curr_action.target))
 		if(I.density)
-			dense_garbage = 1
+			dense_garbage = TRUE
 			break
 	var/proc_to_use = /turf/proc/reachableTurftest
 	switch(movement_type)
-		if(1, 4) // AStar, Full
+		if(MOVETYPE_ASTAR) // AStar, Full
 			if(!path || !path.len)
 				fuck_you_astar = TRUE
 				if(!curr_action.path_to_use)
@@ -157,7 +161,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 						goap_debug("Can't path to plan, giving up")
 						brain_state = STATE_IDLE
 						fuck_you_astar = FALSE
-						return 0
+						return
 				else
 					path = curr_action.path_to_use
 			fuck_you_astar = FALSE
@@ -165,10 +169,10 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 			current_loc = get_turf(agent)
 			curr_action.PerformWhileMoving(agent)
 			MoveTo_AStar(curr_action, path)
-		if(2) // AStar, Fake
+		if(MOVETYPE_FAKESTAR) // AStar, Fake
 			curr_action.PerformWhileMoving(agent)
 			MoveTo_FakeStar(curr_action)
-		if(3) // No Pathfinding, Straight Line
+		if(MOVETYPE_DUMB) // No Pathfinding, Straight Line
 			curr_action.PerformWhileMoving(agent)
 			MoveTo(curr_action)
 

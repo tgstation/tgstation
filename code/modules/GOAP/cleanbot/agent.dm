@@ -4,6 +4,6 @@
 
 
 /datum/goap_agent/cleanbot/New()
-	. = ..()
+	..()
 	our_actions += new /datum/goap_action/cleanbot/clean()
 	our_actions += new /datum/goap_action/bot/patrol()

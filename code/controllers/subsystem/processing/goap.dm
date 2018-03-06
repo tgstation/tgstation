@@ -4,7 +4,7 @@ PROCESSING_SUBSYSTEM_DEF(goap)
 	wait = 2
 	stat_tag = "GP"
 	priority = 1
-	init_order = -101
+	init_order = INIT_ORDER_GOAP
 
 /datum/controller/subsystem/processing/goap/Initialize(timeofday)
 	generate_pathfinding_list()
@@ -22,7 +22,7 @@ PROCESSING_SUBSYSTEM_DEF(goap)
 		if(QDELETED(thing))
 			processing -= thing
 		else if(thing.able_to_run())
-			if(thing.process(wait) == PROCESS_KILL)
+			if(thing.goap_process(wait) == PROCESS_KILL)
 				processing -= thing
 		if(MC_TICK_CHECK)
 			return
