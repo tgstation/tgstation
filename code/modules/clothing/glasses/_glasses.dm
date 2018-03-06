@@ -17,7 +17,7 @@
 	var/list/icon/current = list() //the current hud icons
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
 	var/glass_colour_type //colors your vision when worn
-	
+
 /obj/item/clothing/glasses/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is stabbing \the [src] into their eyes! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
@@ -261,6 +261,14 @@
 	item_state = "blindfold"
 	flash_protect = 2
 	tint = 3			// to make them blind
+
+/obj/item/clothing/glasses/sunglasses/blindfold/equipped(mob/living/carbon/human/user, slot)
+	..()
+	user.become_blind("blindfold")
+
+/obj/item/clothing/glasses/sunglasses/blindfold/dropped(mob/living/carbon/human/user)
+	..()
+	user.cure_blind("blindfold")
 
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks flashes."

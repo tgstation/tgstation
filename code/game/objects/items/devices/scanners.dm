@@ -172,6 +172,8 @@ GAS ANALYZER
 				trauma_desc += B.scan_desc
 				trauma_text += trauma_desc
 			to_chat(user, "\t<span class='alert'>Cerebral traumas detected: subjects appears to be suffering from [english_list(trauma_text)].</span>")
+		if(C.roundstart_traits.len)
+			to_chat(user, "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>")
 	if(advanced)
 		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>")
 	if (M.radiation)
@@ -260,7 +262,7 @@ GAS ANALYZER
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
 			to_chat(user, "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</span>")
 
-	for(var/thing in M.viruses)
+	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			to_chat(user, "<span class='alert'><b>Warning: [D.form] detected</b>\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</span>")

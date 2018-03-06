@@ -315,6 +315,16 @@
 		holding.forceMove(T)
 		holding = null
 
+/obj/machinery/portable_atmospherics/canister/replace_tank(mob/living/user, close_valve)
+	. = ..()
+	if(.)
+		if(close_valve)
+			valve_open = FALSE
+			update_icon()
+			investigate_log("Valve was <b>closed</b> by [key_name(user)].<br>", INVESTIGATE_ATMOS)
+		else if(valve_open && holding)
+			investigate_log("[key_name(user)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
+
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	..()
 	if(stat & BROKEN)
@@ -435,7 +445,7 @@
 							message_admins(msg)
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
-			investigate_log(logmsg, "atmos")
+			investigate_log(logmsg, INVESTIGATE_ATMOS)
 			release_log += logmsg
 			. = TRUE
 		if("timer")

@@ -152,12 +152,6 @@
 			continue
 
 		var/newstate = initial(L.icon_state)
-		if (animatedir)
-			if(animatedir == NORTH || animatedir == SOUTH)
-				newstate += "_vertical"
-			else
-				newstate += "_horizontal"
-
 		var/T = PARALLAX_LOOP_TIME / L.speed
 
 		if (newstate in icon_states(L.icon))

@@ -416,6 +416,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 30
 	var/radius = 1
+	cooldown_per_use = 10
 
 /obj/item/integrated_circuit/input/advanced_locator_list/on_data_written()
 	var/rad = get_pin_data(IC_INPUT, 2)
@@ -526,7 +527,7 @@
 	action_flags = IC_ACTION_LONG_RANGE
 	power_draw_idle = 5
 	power_draw_per_use = 40
-
+	cooldown_per_use = 5
 	var/frequency = FREQ_SIGNALER
 	var/code = DEFAULT_SIGNALER_CODE
 	var/datum/radio_frequency/radio_connection
@@ -583,9 +584,7 @@
 		return 0
 
 	activate_pin(3)
-
-	for(var/mob/O in hearers(1, get_turf(src)))
-		audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
 
 /obj/item/integrated_circuit/input/ntnet_packet
 	name = "NTNet networking circuit"
@@ -596,6 +595,7 @@
 	can be send to multiple recepients. Addresses must be separated with ; symbol."
 	icon_state = "signal"
 	complexity = 4
+	cooldown_per_use = 5
 	inputs = list(
 		"target NTNet addresses"= IC_PINTYPE_STRING,
 		"data to send"			= IC_PINTYPE_STRING,
@@ -886,9 +886,9 @@
 
 	if(net)
 		set_pin_data(IC_OUTPUT, 1, net.hardware_id)
+		push_data()
 		activate_pin(2)
 	else
 		set_pin_data(IC_OUTPUT, 1, null)
+		push_data()
 		activate_pin(3)
-	push_data()
-	return

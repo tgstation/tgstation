@@ -17,7 +17,7 @@
 /datum/surgery/advanced/viral_bonding/can_start(mob/user, mob/living/carbon/target)
 	if(!..())
 		return FALSE
-	if(!LAZYLEN(target.viruses))
+	if(!LAZYLEN(target.diseases))
 		return FALSE
 	return TRUE
 
@@ -38,7 +38,7 @@
 
 /datum/surgery_step/viral_bond/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[target]'s bone marrow begins pulsing slowly.", "<span class='notice'>[target]'s bone marrow begins pulsing slowly. The viral bonding is complete.</span>")
-	for(var/X in target.viruses)
+	for(var/X in target.diseases)
 		var/datum/disease/D = X
 		D.carrier = TRUE
 	return TRUE

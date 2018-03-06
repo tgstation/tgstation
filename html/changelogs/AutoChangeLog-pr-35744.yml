@@ -1,7 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - code_imp: "Butchering has been refactored."
-  - balance: "Some items now take longer to butcher, and have a chance to harvest fewer items, like spears. Others, however, are faster, like circular saws."
-  - balance: "Certain creatures will always drop certain items on butchering, regardless of butchering effectiveness or chances."
-  - balance: "Items that are very effective at butchering may yield bonus loot from butchered creatures!"

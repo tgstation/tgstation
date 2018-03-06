@@ -500,3 +500,28 @@
 			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
 		count++
 	return objective_parts.Join("<br>")
+
+/datum/controller/subsystem/ticker/proc/save_admin_data()
+	if(CONFIG_GET(flag/admin_legacy_system)) //we're already using legacy system so there's nothing to save
+		return
+	else if(load_admins()) //returns true if there was a database failure and the backup was loaded from
+		return
+	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
+	query_admin_rank_update.Execute()
+	//json format backup file generation stored per server
+	var/json_file = file("data/admins_backup.json")
+	var/list/file_data = list("ranks" = list(), "admins" = list())
+	for(var/datum/admin_rank/R in GLOB.admin_ranks)
+		file_data["ranks"]["[R.name]"] = list()
+		file_data["ranks"]["[R.name]"]["include rights"] = R.include_rights
+		file_data["ranks"]["[R.name]"]["exclude rights"] = R.exclude_rights
+		file_data["ranks"]["[R.name]"]["can edit rights"] = R.can_edit_rights
+	for(var/i in GLOB.admin_datums+GLOB.deadmins)
+		var/datum/admins/A = GLOB.admin_datums[i]
+		if(!A)
+			A = GLOB.deadmins[i]
+			if (!A)
+				continue
+		file_data["admins"]["[i]"] = A.rank.name
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))

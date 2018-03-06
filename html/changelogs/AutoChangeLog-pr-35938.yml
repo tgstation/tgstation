@@ -1,6 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - balance: "You can no longer gain the same trauma more than once."
-  - balance: "You can no longer gain more than a certain amount of brain traumas per resilience tier. (Example: You cannot gain 4 mild traumas, but you can gain 3 mild and 1 severe)"
-  - tweak: "Abductors' trauma gland now gives traumas of random resilience, instead of lobotomy every time."
