@@ -34748,7 +34748,6 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bGA" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
