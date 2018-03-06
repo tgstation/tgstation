@@ -1,0 +1,5 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - bugfix: "gas overlays once again no longer steal clicks"
+  - rscdel: "511 clients will be unable to see gases once again. the 512 client crashes are fixed so this shouldn't be that big of a deal."
