@@ -46,6 +46,7 @@
 		to_chat(M, "<span class='notice'>You [apply_method] yourself with [src].</span>")
 
 	else
+		add_logs(user, M, "attempted to apply", src, reagents.log_list())
 		M.visible_message("<span class='danger'>[user] attempts to [apply_method] [src] on [M].</span>", \
 							"<span class='userdanger'>[user] attempts to [apply_method] [src] on [M].</span>")
 		if(!do_mob(user, M))
@@ -59,7 +60,7 @@
 		return
 
 	else
-		add_logs(user, M, "fed", reagents.log_list())
+		add_logs(user, M, "applied", src, reagents.log_list())
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 		reagents.reaction(M, apply_type, fraction)
@@ -88,4 +89,3 @@
 	name = "sterilizer spray"
 	desc = "Spray bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
 	list_reagents = list("sterilizine" = 60)
-	
