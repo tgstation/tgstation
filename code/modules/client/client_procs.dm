@@ -233,6 +233,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 	. = ..()	//calls mob.Login()
 	#if DM_VERSION >= 512
+<<<<<<< HEAD
 	if (num2text(byond_build) in GLOB.blacklisted_builds)
 		log_access("Failed login: blacklisted byond version")
 		to_chat(src, "<span class='userdanger'>Your version of byond is blacklisted.</span>")
@@ -241,8 +242,25 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if(connecting_admin)
 			to_chat(src, "As an admin, you are being allowed to continue using this version, but please consider changing byond versions")
 		else 
+=======
+	if (byond_version >= 512)
+		if (!byond_build || byond_build < 1386)
+			message_admins("<span class='adminnotice'>[key_name(src)] has been detected as spoofing their byond version. Connection rejected.</span>")
+			add_system_note("Spoofed-Byond-Version", "Detected as using a spoofed byond version.")
+			log_access("Failed Login: [key] - Spoofed byond version")
+>>>>>>> 0e337c6489... [s]Adds detection for spoofed 512 clients (#36169)
 			qdel(src)
-			return
+
+		if (num2text(byond_build) in GLOB.blacklisted_builds)
+			log_access("Failed login: [key] - blacklisted byond version")
+			to_chat(src, "<span class='userdanger'>Your version of byond is blacklisted.</span>")
+			to_chat(src, "<span class='danger'>Byond build [byond_build] ([byond_version].[byond_build]) has been blacklisted for the following reason: [GLOB.blacklisted_builds[num2text(byond_build)]].</span>")
+			to_chat(src, "<span class='danger'>Please download a new version of byond. if [byond_build] is the latest, you can go to http://www.byond.com/download/build/ to download other versions.</span>")
+			if(connecting_admin)
+				to_chat(src, "As an admin, you are being allowed to continue using this version, but please consider changing byond versions")
+			else
+				qdel(src)
+				return
 	#endif
 	if(SSinput.initialized)
 		set_macros()
@@ -601,10 +619,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	to_chat(src, {"<a href="byond://[url]?token=[token]">You will be automatically taken to the game, if not, click here to be taken manually</a>"})
 
 /client/proc/note_randomizer_user()
-	var/const/adminckey = "CID-Error"
+	add_system_note("CID-Error", "Detected as using a cid randomizer.")
+	
+/client/proc/add_system_note(system_ckey, message)
+	var/sql_system_ckey = sanitizeSQL(system_ckey)
 	var/sql_ckey = sanitizeSQL(ckey)
 	//check to see if we noted them in the last day.
-	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[adminckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0")
+	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[sql_system_ckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0")
 	if(!query_get_notes.Execute())
 		return
 	if(query_get_notes.NextRow())
@@ -614,9 +635,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(!query_get_notes.Execute())
 		return
 	if(query_get_notes.NextRow())
-		if (query_get_notes.item[1] == adminckey)
+		if (query_get_notes.item[1] == system_ckey)
 			return
-	create_message("note", sql_ckey, adminckey, "Detected as using a cid randomizer.", null, null, 0, 0)
+	create_message("note", ckey, system_ckey, message, null, null, 0, 0)
 
 
 /client/proc/check_ip_intel()
