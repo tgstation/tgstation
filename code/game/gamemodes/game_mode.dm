@@ -324,7 +324,7 @@
 		p_ckey = ckey(mind.key)
 		p_rep = SSpersistence.antag_rep[p_ckey]
 
-		previous = current
+		var/previous = current
 		var/spend = min(p_rep + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
 		current += spend
 
