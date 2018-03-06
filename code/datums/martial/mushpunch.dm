@@ -16,8 +16,8 @@
 		D.Knockdown(20)
 		if(atk_verb)
 			add_logs(A, D, "[atk_verb] (Mushroom Punch)")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/mushpunch
 	name = "mysterious mushroom"
