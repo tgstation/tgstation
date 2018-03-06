@@ -154,3 +154,12 @@
 	else if(prob(0.5) && dumb_thing)
 		to_chat(H, "<span class='danger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
 		dumb_thing = FALSE //only once per life
+
+/datum/trait/dnr
+	name = "DNR"
+	desc = "Your genetic makeup is unstable, so much so that after death, you can't be revived through most methods"
+	value = -2
+	mob_trait = TRAIT_NOCLONE
+	gain_text = "<span class='danger'>You feel like this is your only chance at life!</span>"
+	lose_text = "<span class='notice'>You feel like you can be brought back again.</span>"
+	medical_record_text = "Patient's body is unstable, and unable to be revived should they die"
