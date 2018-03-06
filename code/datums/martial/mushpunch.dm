@@ -22,7 +22,7 @@
 /obj/item/mushpunch
 	name = "mysterious mushroom"
 	desc = "<I>Sapienza Ophioglossoides</I>:An odd mushroom from the flesh of a mushroom person. it has apparently retained some innate power of it's owner, as it quivers with barely-contained POWER!"
-	icon = 'icon/obj/hydroponics/growing_mushroom.dmi'
+	icon = 'icons/obj/hydroponics/growing_mushroom.dmi'
 	icon_state = "mycelium-angel"
 
 /obj/item/mushpunch/attack_self(mob/living/carbon/human/user)
