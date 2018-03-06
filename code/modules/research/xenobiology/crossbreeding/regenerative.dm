@@ -30,6 +30,7 @@ Regenerative extracts:
 	src.core_effect_before(H, user)
 	H.revive(full_heal = 1)
 	src.core_effect(H, user)
+	playsound(get_turf(target), 'sound/effects/splat.ogg', 40, 1)
 	qdel(src)
 
 /obj/item/slimecross/regenerative/grey

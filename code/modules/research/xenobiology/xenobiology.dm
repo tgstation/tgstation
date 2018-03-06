@@ -65,10 +65,12 @@
 
 	M.applied++
 	qdel(src)
-	to_chat(user, "<span class='notice'>You feed the slime the [src].</span>")
+	to_chat(user, "<span class='notice'>You feed the slime [src], [M.applied == 1 ? "starting to mutate its core." : "further mutating its core."]</span>")
+	playsound(get_turf(M), 'sound/effects/attackblob.ogg', 50, 1)
 
 	if(M.applied >= SLIME_EXTRACT_CROSSING_REQUIRED)
-		M.visible_message("<span class='danger'>The [M] shudders, it's mutated core consuming the rest of it's body!</span>")
+		M.visible_message("<span class='danger'>[M] shudders, its mutated core consuming the rest of it's body!</span>")
+		playsound(get_turf(src), 'sound/magic/smoke.ogg', 50, 1)
 		var/sanitizedcolour = replacetext(M.colour, " ", "")
 		var/sanitizedeffect = replacetext(effectmod, "-","")
 		var/corecross = sanitizedeffect + "/" + sanitizedcolour
@@ -76,7 +78,7 @@
 		if(ispath(crosspath))
 			new crosspath(M.loc)
 		else
-			M.visible_message("<span class='warning'>The mutated core shudders, and collapses into a puddle, unable to maintain its' form.</span>")
+			M.visible_message("<span class='warning'>The mutated core shudders, and collapses into a puddle, unable to maintain its form.</span>")
 		qdel(M)
 
 /obj/item/slime_extract/grey

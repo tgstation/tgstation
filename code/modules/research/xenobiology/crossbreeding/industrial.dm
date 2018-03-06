@@ -40,10 +40,12 @@ Industrial extracts:
 		plasmaabsorbed += 1
 
 	if(plasmaabsorbed >= plasmarequired)
+		playsound(get_turf(src), 'sound/effects/attackblob.ogg', 50, 1)
 		plasmaabsorbed -= plasmarequired
 		for(var/i = 0, i < itemamount, i++)
 			do_after_spawn(new itempath(get_turf(src)))
-
+	else
+		playsound(get_turf(src), 'sound/effects/bubbles.ogg', 20, 1)
 	if(IsWorking)
 		icon_state = "industrial"
 	else

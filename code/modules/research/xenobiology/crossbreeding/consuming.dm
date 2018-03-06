@@ -23,6 +23,7 @@ Consuming extracts:
 		var/obj/item/slime_extract/X = new extract_type(user.drop_location())
 		user.put_in_inactive_hand(X)
 		to_chat(user, "<span class='notice'>The [src] unhappily releases one of its consumed extracts as it is squeezed.</span>")
+		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, 1)
 	else
 		to_chat(user,"<span class='warning'>The [src] is empty!</span>")
 
@@ -31,6 +32,7 @@ Consuming extracts:
 		qdel(O)
 		stored++
 		to_chat(user,"<span class='warning'>The [src] splits in half like an opening mouth and swallows the extract!</span>")
+		playsound(get_turf(src), 'sound/effects/attackblob.ogg', 50, 1)
 	else
 		to_chat(user,"<span class='warning'>You can only feed the [src] [colour] extracts!</span>")
 
@@ -48,6 +50,7 @@ Consuming extracts:
 
 	if(foundsome)
 		to_chat(user,"<span class='warning'>The [src] eagerly consumes all of the [colour] extracts!</span>")
+		playsound(get_turf(src), 'sound/effects/attackblob.ogg', 50, 1)
 
 /obj/item/slimecross/consuming/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(stored > 0)

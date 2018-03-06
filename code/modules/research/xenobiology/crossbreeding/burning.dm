@@ -19,6 +19,7 @@ Burning extracts:
 		return
 	reagents.remove_reagent("plasma",10)
 	to_chat(user, "<span class='notice'>You squeeze the extract, and it absorbs the plasma!</span>")
+	playsound(get_turf(src), 'sound/effects/bubbles.ogg', 50, 1)
 	do_effect(user)
 
 /obj/item/slimecross/burning/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()
@@ -77,6 +78,7 @@ Burning extracts:
 /obj/item/slimecross/burning/metal/do_effect(mob/user)
 	for(var/turf/closed/wall/W in range(1,get_turf(user)))
 		W.dismantle_wall(1)
+		playsound(W, 'sound/effects/break_stone.ogg', 50, 1)
 	user.visible_message("<span class='danger'>[src] pulses violently, and shatters the walls around it!</span>")
 	..()
 
@@ -85,6 +87,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/yellow/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] explodes into an electrical field!</span>")
+	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, 1)
 	for(var/mob/living/M in range(4,get_turf(user)))
 		if(M != user)
 			var/mob/living/carbon/C = M

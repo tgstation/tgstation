@@ -15,9 +15,11 @@ Reproductive extracts:
 		qdel(O)
 		cubes_eaten++
 		to_chat(user, "<span class='notice'>You feed the [O] to the [src], and it pulses gently.</span>")
+		playsound(get_turf(src), 'sound/items/eatfood.ogg', 20, 1)
 	if(cubes_eaten >= 3)
 		var/cores = rand(1,4)
 		src.visible_message("<span class='notice'>[src] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!</span>")
+		playsound(get_turf(src), 'sound/effects/splat.ogg', 40, 1)
 		for(var/i = 0, i < cores, i++)
 			new extract_type(src.loc)
 		cubes_eaten = 0

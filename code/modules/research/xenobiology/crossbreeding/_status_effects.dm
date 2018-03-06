@@ -118,6 +118,7 @@
 		is_healing = TRUE
 	if(is_healing)
 		examine_text = "<span class='warning'>SUBJECTPRONOUN is regenerating slowly, purplish goo filling in small injuries!</span>"
+		new /obj/effect/temp_visual/heal(get_turf(owner), "#FF0000")
 	else
 		examine_text = null
 	..()
@@ -175,16 +176,37 @@ datum/status_effect/stabilized/blue/on_remove()
 		to_chat(owner, "<span class='notice'>[linked_extract] discharges some energy into a device you have.</span>")
 	return ..()
 
+/obj/item/hothands
+	name = "burning fingertips"
+	desc = "You shouldn't see this."
+
+/obj/item/hothands/is_hot()
+	return 290 //Below what's required to ignite plasma.
+
 /datum/status_effect/stabilized/darkpurple
 	id = "stabilizeddarkpurple"
+	var/obj/item/hothands/fire
+	examine_text = "<span class='notice'>Their fingertips burn brightly!</span>"
+
+/datum/status_effect/stabilized/darkpurple/on_apply()
+	owner.add_trait(TRAIT_RESISTHEATHANDS, "slimestatus")
+	fire = new(owner)
+	return ..()
 
 /datum/status_effect/stabilized/darkpurple/tick()
-	var/obj/item/reagent_containers/food/snacks/F = owner.get_active_held_item()
+	var/obj/item/I = owner.get_active_held_item()
+	var/obj/item/reagent_containers/food/snacks/F = I
 	if(istype(F))
 		if(F.cooked_type)
 			to_chat(owner, "<span class='warning'>[linked_extract] flares up brightly, and your hands alone are enough cook [F]!</span>")
 			F.microwave_act()
+	else
+		I.attackby(fire, owner)
 	return ..()
+
+/datum/status_effect/stabilized/darkpurple/on_remove()
+	owner.remove_trait(TRAIT_RESISTHEATHANDS, "slimestatus")
+	qdel(fire)
 
 /datum/status_effect/stabilized/darkblue
 	id = "stabilizeddarkblue"
