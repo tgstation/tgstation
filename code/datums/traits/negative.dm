@@ -159,7 +159,10 @@
 	name = "DNR"
 	desc = "Your genetic makeup is unstable, so much so that after death, you can't be revived through most methods"
 	value = -2
-	mob_trait = TRAIT_NOCLONE
 	gain_text = "<span class='danger'>You feel like this is your only chance at life!</span>"
 	lose_text = "<span class='notice'>You feel like you can be brought back again.</span>"
 	medical_record_text = "Patient's body is unstable, and unable to be revived should they die"
+
+/datum/trait/dnr/add()
+		var/mob/living/carbon/human/H = trait_holder
+		H.hellbound = 1
