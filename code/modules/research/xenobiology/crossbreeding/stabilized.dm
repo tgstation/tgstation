@@ -3,7 +3,7 @@ Stabilized extracts:
 	Provides a passive buff to the holder.
 */
 
-//To add: Create an effect in crossbreeding/status_effects.dm with the name "/datum/status_effect/stabilized/[color]"
+//To add: Create an effect in crossbreeding/_status_effects.dm with the name "/datum/status_effect/stabilized/[color]"
 //Status effect will automatically be applied while held, and lost on drop.
 
 /obj/item/slimecross/stabilized

@@ -1,3 +1,7 @@
+/*
+Industrial extracts:
+	Slowly consume plasma, produce items with it.
+*/
 /obj/item/slimecross/industrial
 	name = "industrial extract"
 	desc = "A gel-like, sturdy extract, fond of plasma and industry."

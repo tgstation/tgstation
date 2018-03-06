@@ -116,6 +116,12 @@ To add a crossbreed:
 	color = "#FF0000"
 	list_reagents = list("blood" = 50)
 
+/obj/item/slimecrossbeaker/pax //5u synthpax.
+	name = "peace-inducing extract"
+	desc = "A small blob of synthetic pax."
+	color = "#FFCCCC"
+	list_reagents = list("synthpax" = 5)
+
 /obj/item/slimecrossbeaker/autoinjector //As with the above, but automatically injects whomever it is used on with contents.
 	container_type = DRAWABLE //Cannot be refilled, since it's basically an autoinjector!
 	var/ignore_flags = FALSE
@@ -152,6 +158,7 @@ To add a crossbreed:
 	ignore_flags = TRUE
 	name = "slime jelly bubble"
 	desc = "A sphere of slime jelly. It seems to stick to your skin, but avoids other surfaces."
+	color = "#00FF00"
 	list_reagents = list("slimejelly" = 50)
 
 /obj/item/slimecrossbeaker/autoinjector/peaceandlove
@@ -160,3 +167,9 @@ To add a crossbreed:
 	desc = "A light pink gooey sphere. Simply touching it makes you a little dizzy."
 	color = "#DDAAAA"
 	list_reagents = list("synthpax" = 10, "space_drugs" = 15) //Peace, dudes
+
+/obj/item/slimecrossbeaker/autoinjector/slimestimulant
+	name = "stimulating gel"
+	desc = "A bubbling purple mixture, designed to heal and boost movement."
+	color = "#FF00FF"
+	list_reagents = list("regen_jelly" = 30, "methamphetamine" = 9)

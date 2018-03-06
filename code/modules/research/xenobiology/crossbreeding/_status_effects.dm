@@ -311,7 +311,7 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/cerulean/tick()
 	if(owner.stat == DEAD)
 		if(clone && clone.stat != DEAD)
-			owner.visible_message("<span class='warning'>[owner] blazes with brilliant light, [src] whisking [owner.p_their()] soul away.</span>",
+			owner.visible_message("<span class='warning'>[owner] blazes with brilliant light, [linked_extract] whisking [owner.p_their()] soul away.</span>",
 				"<span class='notice'>You feel a warm glow from [linked_extract], and you open your eyes... elsewhere.</span>")
 			if(owner.mind)
 				owner.mind.transfer_to(clone)
@@ -543,4 +543,6 @@ datum/status_effect/stabilized/blue/on_remove()
 				X.regencore.afterattack(owner,owner,TRUE)
 				X.regencore = null
 				owner.visible_message("<span class='warning'>[owner] flashes a rainbow of colors, and [owner.p_their()] skin is coated in a milky regenerative goo!</span>")
+				qdel(src)
+				qdel(linked_extract)
 	return ..()
