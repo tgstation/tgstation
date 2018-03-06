@@ -191,6 +191,10 @@
 		blood_data["real_name"] = real_name
 		blood_data["features"] = dna.features
 		blood_data["factions"] = faction
+		blood_data["traits"] = list()
+		for(var/V in roundstart_traits)
+			var/datum/trait/T = V
+			blood_data["traits"] += T.type
 		return blood_data
 
 //get the id of the substance this mob use as blood.

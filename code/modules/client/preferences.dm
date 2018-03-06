@@ -825,6 +825,66 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				SetChoices(user)
 		return 1
 
+<<<<<<< HEAD
+=======
+	else if(href_list["preference"] == "trait")
+		switch(href_list["task"])
+			if("close")
+				user << browse(null, "window=mob_occupation")
+				ShowChoices(user)
+			if("update")
+				var/trait = href_list["trait"]
+				if(!SStraits.traits[trait])
+					return
+				var/value = SStraits.trait_points[trait]
+				if(value == 0)
+					if(trait in neutral_traits)
+						neutral_traits -= trait
+						all_traits -= trait
+					else
+						if(all_traits.len >= MAX_TRAITS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+							return
+						neutral_traits += trait
+						all_traits += trait
+				else
+					var/balance = GetTraitBalance()
+					if(trait in positive_traits)
+						positive_traits -= trait
+						all_traits -= trait
+					else if(trait in negative_traits)
+						if(balance + value < 0)
+							to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
+							return
+						negative_traits -= trait
+						all_traits -= trait
+					else if(value > 0)
+						if(all_traits.len >= MAX_TRAITS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+							return
+						if(balance - value < 0)
+							to_chat(user, "<span class='warning'>You don't have enough balance to gain this trait!</span>")
+							return
+						positive_traits += trait
+						all_traits += trait
+					else
+						if(all_traits.len >= MAX_TRAITS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+							return
+						negative_traits += trait
+						all_traits += trait
+				SetTraits(user)
+			if("reset")
+				all_traits = list()
+				positive_traits = list()
+				negative_traits = list()
+				neutral_traits = list()
+				SetTraits(user)
+			else
+				SetTraits(user)
+		return TRUE
+
+>>>>>>> 5c8d845f56... [s] Improves and secures trait assignment code, allows their pref to be changed midround, tweaks RDS and Night Vision (#36160)
 	switch(href_list["task"])
 		if("random")
 			switch(href_list["preference"])
