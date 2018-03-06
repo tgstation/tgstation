@@ -6,7 +6,7 @@
 
 	fixed_mut_color = "DBBF92"
 	hair_color = "FF4B19" //cap color, spot color uses eye color
-	nojumpsuit = 1
+	nojumpsuit = TRUE
 
 	say_mod = "poofs" //what does a mushroom sound like
 	species_traits = list(MUTCOLORS, NOEYES, NO_UNDERWEAR)
