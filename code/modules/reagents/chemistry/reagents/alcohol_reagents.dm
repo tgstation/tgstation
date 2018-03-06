@@ -161,7 +161,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return ..()
 
 /datum/reagent/consumable/ethanol/thirteenloko/overdose_start(mob/living/M)
-	to_chat(M, "<span class='userdanger'>Your entire body violently jitters as you start to feel queasy. You really shouldn't of drank all of that [name]!</span>")
+	to_chat(M, "<span class='userdanger'>Your entire body violently jitters as you start to feel queasy. You really shouldn't have drank all of that [name]!</span>")
 	M.Jitter(20)
 	M.Stun(15)
 
@@ -186,7 +186,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				M.emote("scream")
 				M.adjustBruteLoss(15)
 		else
-			to_chat(M, "<span class='userdanger'>You sceam in terror as you go blind!</span>")
+			to_chat(M, "<span class='userdanger'>You scream in terror as you go blind!</span>")
 			M.become_blind(EYE_DAMAGE)
 			M.emote("scream")
 
