@@ -36,7 +36,7 @@
 	icon_state = "toyhammertagged"
 	throwforce = 20
 	force = 20
-	armour_penetration = 100 //Target will be downed in 5 hits before they knew what happened."
+	armour_penetration = 100 //Target will be downed in 5 hits before they know what happened.
 
 /obj/item/banhammer/syndicate/attack(mob/M, mob/user)
 	. = ..()
