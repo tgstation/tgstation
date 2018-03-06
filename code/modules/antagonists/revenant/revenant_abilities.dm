@@ -530,7 +530,7 @@
 	range = 7 //right next to em
 	cast_amount = 60 //it'll put you at 15 health so beware
 	unlock_amount = 80
-	reveal = 10
+	reveal = 0
 	stun = 0
 	action_icon_state = "blight"
 	locked = FALSE
@@ -540,7 +540,7 @@
 		if(!isrevenant(user))
 			return FALSE
 		var/mob/living/simple_animal/revenant/r = user
-		if(r.thrall)
+		if(length(r.thrall) > 0)
 			to_chat(r, "<span class='revenwarning'>You already have a thrall!</span>")
 			return FALSE
 		to_chat(r, "<span class='revenboldnotice'>Yes, a fine thrall! We need to brainwash them first...</span>")
@@ -556,6 +556,7 @@
 				return FALSE
 			qdel(B)
 			to_chat(H, "<span class='warning'>A horrible feeling decends upon you as your mind goes fuzzy...")
+
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/effigy
 	name = "Conjure Effigy"
@@ -576,6 +577,7 @@
 			to_chat(r, "<span class='revenwarning'>Get a thrall first!</span>")
 			return FALSE
 		to_chat(r, "<span class='revenboldnotice'>Fine place as any to prepare a feast!</span>")
+		//var/turf/placement = get_turf(user)
 		var/obj/structure/effigy/e = new(loc)
 		e.linkedpreta = r
 		e.linkedthrall = r.thrall
@@ -604,26 +606,29 @@
 	pickrare()
 
 /obj/structure/effigy/proc/pickcommon()
-	if(commonitem)
+	if(length(commonitem) > 0)
 		return FALSE
-	var/list/commonpicks = (/obj/item/bodypart/head, /obj/item/bodypart/l_arm, /obj/item/bodypart/r_arm, /obj/item/bodypart/l_leg, /obj/item/bodypart/r_leg, obj/item/organ/stomach, obj/item/organ/liver, obj/item/organ/ears, obj/item/organ/eyes, obj/item/organ/tongue, obj/item/organ/brain, obj/item/organ/heart, obj/item/organ/lungs)
+	var/list/commonpicks = list(/obj/item/bodypart/head, /obj/item/bodypart/l_arm, /obj/item/bodypart/r_arm, /obj/item/bodypart/l_leg, /obj/item/bodypart/r_leg, /obj/item/organ/stomach, /obj/item/organ/liver, /obj/item/organ/ears, /obj/item/organ/eyes, /obj/item/organ/tongue, /obj/item/organ/brain, /obj/item/organ/heart, /obj/item/organ/lungs)
 	for(var/i in 1 to 3)
 		commonitem += pick(commonpicks)
 
 /obj/structure/effigy/proc/pickrare()
-	if(rareitem)
+	if(length(rareitem) > 0)
 		return FALSE
-	var/list/rarepicks = (/obj/item/organ/heart/nightmare)
+	var/list/rarepicks = list(/obj/item/organ/heart/nightmare)
 	rareitem += pick(rarepicks)
 
 /obj/structure/effigy/examine(mob/user)
+	. = ..()
 	if(ishuman(user) && linkedthrall == user)
 		if(meatlevel > 0)
 			to_chat(user, "<span class='revenboldnotice'>Ah, it's wonderful... But it can be perfected. It just needs...</span>")
 		else
-			to_chat(user, "<span class='revenboldnotice'>Here's our effigy, granted by our master. We need to start building a wonderful feast for it!</span>")
-		to_chat(user, "<span class='revenwarning'>Of course! Nothing but a [commonitem] would do it justice!</span>")
-		to_chat(user, "<span class='revenwarning'>But... a [rareitem] would be exceptional if I could ever get my hands on it!</span>")
+			to_chat(user, "<span class='revenboldnotice'>Here's our effigy, granted by our master. We need to start building a wonderful feast for it, and that requires...</span>")
+		for(var/obj/item/item in commonitem)
+			to_chat(user, "<span class='revenwarning'>one [item]!</span>")
+		if(length(rareitem) > 0)
+			to_chat(user, "<span class='revenwarning'>And... a [rareitem] would be capable of granting unique powers if I could get my hands on it.</span>")
 	else
 		if(meatlevel > 0)
 			to_chat(user, "A hideous amalgamation of flesh and sinew that resembles a horrible creature... Who would build this?!")
@@ -632,29 +637,33 @@
 
 /obj/structure/effigy/attackby(obj/item/I, mob/user, params)
 	if(ishuman(user) && linkedthrall == user)
-		if(var/obj/item/requirement in commonitem == I)
-			to_chat(user, "<span class='revenboldnotice'YES! Now to add it on!</span>")
-			if(do_after(user, 20, target = src)
-				contents.Add(I)
-				qdel(requirement)
-				if(!commonitem)
-					pickcommon()
-					meatlevel ++
-					to_chat(user, "<span class='revenboldnotice'I have completed the checklist amd the effigy has grown stronger. Check the new requirements by examining the effigy.</span>")
-					if(!rareitem && rarelevel < 3)
-						to_chat(user, "<span class='revenwarning'As I have also completed the rare requirement, I have also been given a new rare item to find.
-						pickrare()	
-		else
-			if(var/obj/item/rarequirement in rareitem == I)
-				to_chat(user, "<span class='revenbignotice'I can't believe I actually fetched this thing. Now to add it on!</span>")
-				if(do_after(user, 20, target = src)
+		for(var/obj/item/requirement in commonitem)
+			if(requirement == I)
+				to_chat(user, "<span class='revenboldnotice'This will do nicely! Now to add it on...</span>")
+				if(do_after(user, 20, target = src))
+					contents.Add(I)
+					qdel(requirement)
+					if(length(commonitem) < 1) //level up!
+						pickcommon()
+						meatlevel ++
+						to_chat(user, "<span class='revenboldnotice'I have completed the checklist and the effigy has grown stronger. Check the new requirements by examining the effigy.</span>")
+						if(!rareitem && rarelevel < 3)
+							to_chat(user, "<span class='revenwarning'As I have also completed the rare requirement, I have also been given a new rare item to find.</span>")
+							pickrare()
+					return TRUE
+		for(var/obj/item/rarequirement in rareitem)
+			if(rarequirement == I)
+				to_chat(user, "<span class='revenbignotice'I can't believe I actually fetched this thing. Now to add it on...</span>")
+				if(do_after(user, 20, target = src))
 					contents.Add(I)
 					qdel(rarequirement)
 					rarelevel ++
+					return TRUE
 			else
 				to_chat(user, "<span class='revenwarning'>This isn't what it needs! I can examine the effigy to recall what it needs.</span>")
+				return FALSE //i think this prevents this from spamming the guy if it requires the thing
 	else
-		to_chat(user, "<span class='notice'>You don't know what to do wih this... thing.</span>")
+		to_chat(user, "<span class='notice'>You don't know what to do with this... thing.</span>")
 
 /obj/structure/effigy/Destroy()
 	if(linkedthrall)
