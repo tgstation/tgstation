@@ -157,7 +157,7 @@
 
 /datum/trait/dnr
 	name = "DNR"
-	desc = "Your genetic makeup is unstable, so much so that after death, you can't be revived through most methods"
+	desc = "Your genetic makeup is unstable, so much so that after death, you can't be revived through any known means"
 	value = -3
 	gain_text = "<span class='danger'>You feel like this is your only chance at life!</span>"
 	lose_text = "<span class='notice'>You feel like you can be brought back again.</span>"
