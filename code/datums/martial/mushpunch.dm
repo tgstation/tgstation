@@ -1,7 +1,7 @@
 /datum/martial_art/mushpunch
 	name = "Mushroom Punch"
 
-/datum/martial_art/mushpunch/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/mushpunch/basic_hit(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	var/atk_verb
 	to_chat(A, "<span class='spider'>You begin to wind up an attack...</span>")
 	if(do_after(A, 25, target = D))
@@ -22,8 +22,8 @@
 /obj/item/mushpunch
 	name = "mysterious mushroom"
 	desc = "<I>Sapienza Ophioglossoides</I>:An odd mushroom from the flesh of a mushroom person. it has apparently retained some innate power of it's owner, as it quivers with barely-contained POWER!"
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "scroll2"
+	icon = 'icon/obj/hydroponics/growing_mushroom.dmi'
+	icon_state = "mycelium-angel"
 
 /obj/item/mushpunch/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
