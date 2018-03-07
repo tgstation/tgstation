@@ -145,11 +145,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#102000" // rgb: 16, 32, 0
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	boozepwr = 80
+	overdose_threshold = 60
+	addiction_threshold = 30
 	taste_description = "jitters and death"
 	glass_icon_state = "thirteen_loko_glass"
 	glass_name = "glass of Thirteen Loko"
 	glass_desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass."
-
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-7)
@@ -158,6 +159,47 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
 		M.Jitter(5)
 	return ..()
+
+/datum/reagent/consumable/ethanol/thirteenloko/overdose_start(mob/living/M)
+	to_chat(M, "<span class='userdanger'>Your entire body violently jitters as you start to feel queasy. You really shouldn't have drank all of that [name]!</span>")
+	M.Jitter(20)
+	M.Stun(15)
+
+/datum/reagent/consumable/ethanol/thirteenloko/overdose_process(mob/living/M)
+	if(prob(7) && iscarbon(M))
+		var/obj/item/I = M.get_active_held_item()
+		if(I)
+			M.dropItemToGround(I)
+			to_chat(M, "<span class ='notice'>Your hands jitter and you drop what you were holding!</span>")
+			M.Jitter(10)
+
+	if(prob(7))
+		to_chat(M, "<span class='notice'>[pick("You have a really bad headache.", "Your eyes hurt.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]</span>")
+
+	if(prob(5) && iscarbon(M))
+		if(M.has_trait(TRAIT_BLIND))
+			var/obj/item/organ/eyes/eye = M.getorganslot(ORGAN_SLOT_EYES)
+			if(istype(eye))
+				eye.Remove(M)
+				eye.forceMove(get_turf(M))
+				to_chat(M, "<span class='userdanger'>You double over in pain as you feel your eyeballs liquify in your head!</span>")
+				M.emote("scream")
+				M.adjustBruteLoss(15)
+		else
+			to_chat(M, "<span class='userdanger'>You scream in terror as you go blind!</span>")
+			M.become_blind(EYE_DAMAGE)
+			M.emote("scream")
+
+	if(prob(3) && iscarbon(M))
+		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
+		M.Unconscious(100)
+		M.Jitter(350)
+
+	if(prob(1) && iscarbon(M))
+		var/datum/disease/D = new /datum/disease/heart_failure
+		M.ForceContractDisease(D)
+		to_chat(M, "<span class='userdanger'>You're pretty sure you just felt your heart stop for a second there..</span>")
+		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
 
 /datum/reagent/consumable/ethanol/vodka
 	name = "Vodka"
