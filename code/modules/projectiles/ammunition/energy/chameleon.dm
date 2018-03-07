@@ -10,6 +10,6 @@
 		newshot()
 	for(var/V in projectile_vars)
 		if(BB.vars.Find(V))
-			BB.vars[V] = projectile_vars[V]
+			BB.vv_edit_var(V, projectile_vars[V])
 	if(hitscan_mode)
 		BB.hitscan = TRUE

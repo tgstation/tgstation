@@ -97,7 +97,7 @@
 	if(!L)
 		if(health >= HEALTH_THRESHOLD_CRIT)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
-		else if(!(NOCRITDAMAGE in dna.species.species_traits))
+		else if(!has_trait(TRAIT_NOCRITDAMAGE))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		failed_last_breath = 1
@@ -324,8 +324,8 @@
 	if(!undergoing_cardiac_arrest())
 		return
 
-	// Cardiac arrest, unless corazone
-	if(reagents.get_reagent_amount("corazone"))
+	// Cardiac arrest, unless heart is stabilized
+	if(has_trait(TRAIT_STABLEHEART))
 		return
 
 	if(we_breath)
