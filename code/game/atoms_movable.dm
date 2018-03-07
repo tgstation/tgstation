@@ -698,8 +698,6 @@
 		return TRUE
 	if (is_transit_level(T.z))
 		var/area/A = T.loc
-		if (!istype(A, /area/shuttle)) // To pre-empt the next meme
-			return FALSE
 		if (is_type_in_typecache(A, allowed_shuttles))
 			return TRUE
 
