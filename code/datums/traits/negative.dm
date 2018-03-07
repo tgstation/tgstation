@@ -15,7 +15,7 @@
 
 /datum/trait/morerobustthanyou
 	name = "Brain Tumor"
-	desc = "You have a little friend going in your brain that is slowly destroying your brain. Better bring some mannitol!"
+	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
 	value = -2
 	gain_text = "<span class='danger'>You feel smooth.</span>"
 	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
