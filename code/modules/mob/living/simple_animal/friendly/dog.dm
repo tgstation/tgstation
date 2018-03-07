@@ -616,7 +616,7 @@
 			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
 				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "yaps happily!")
-				GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+				GET_COMPONENT_FROM(mood, /datum/component/mood, M)
 				if(mood)
 					mood.add_event("pet_corgi", /datum/mood_event/pet_corgi)
 		else
