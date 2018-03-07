@@ -57,7 +57,11 @@
 		if(istype(D, /datum/disease/advance))
 			var/datum/disease/advance/A = D
 			var/disease_name = SSdisease.get_disease_name(A.GetDiseaseID())
+<<<<<<< HEAD
 			if(disease_name == "Unknown")
+=======
+			if((disease_name == "Unknown") && A.mutable)
+>>>>>>> dd5b81c3db... Merge pull request #36198 from Cruix/disease_fixes
 				this["can_rename"] = TRUE
 			this["name"] = disease_name
 			this["is_adv"] = TRUE

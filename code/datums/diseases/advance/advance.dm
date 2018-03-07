@@ -99,8 +99,21 @@
 	return 1
 
 // Returns the advance disease with a different reference memory.
+<<<<<<< HEAD
 /datum/disease/advance/Copy(process = 0)
 	return new /datum/disease/advance(process, src, 1)
+=======
+/datum/disease/advance/Copy()
+	var/datum/disease/advance/A = ..()
+	QDEL_LIST(A.symptoms)
+	for(var/datum/symptom/S in symptoms)
+		A.symptoms += S.Copy()
+	A.properties = properties.Copy()
+	A.id = id
+	A.mutable = mutable
+	//this is a new disease starting over at stage 1, so processing is not copied
+	return A
+>>>>>>> dd5b81c3db... Merge pull request #36198 from Cruix/disease_fixes
 
 /*
 
@@ -154,6 +167,7 @@
 	AssignProperties()
 	id = null
 
+<<<<<<< HEAD
 	if(!SSdisease.archive_diseases[GetDiseaseID()])
 		if(new_name)
 			AssignName()
@@ -162,6 +176,14 @@
 
 	var/datum/disease/advance/A = SSdisease.archive_diseases[GetDiseaseID()]
 	AssignName(A.name)
+=======
+	var/the_id = GetDiseaseID()
+	if(!SSdisease.archive_diseases[the_id])
+		SSdisease.archive_diseases[the_id] = src // So we don't infinite loop
+		SSdisease.archive_diseases[the_id] = Copy()
+		if(new_name)
+			AssignName()
+>>>>>>> dd5b81c3db... Merge pull request #36198 from Cruix/disease_fixes
 
 //Generate disease properties based on the effects. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()
