@@ -13,6 +13,18 @@
 
 
 
+/datum/trait/morerobustthanyou
+	name = "Brain Tumor"
+	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
+	value = -2
+	gain_text = "<span class='danger'>You feel smooth.</span>"
+	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
+
+/datum/trait/morerobustthanyou/on_process()
+	trait_holder.adjustBrainLoss(1)
+
+
+
 /datum/trait/nearsighted //t. errorage
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
