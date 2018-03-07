@@ -459,7 +459,7 @@
 	tick_interval = 25
 	examine_text = "<span class='notice'>They seem to have an aura of healing and helpfulness about them.</span>"
 	alert_type = null
-	var/hand = null
+	var/hand
 	var/deathTick = 0
 
 /datum/status_effect/hippocraticOath/on_apply()
