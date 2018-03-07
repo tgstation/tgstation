@@ -5720,6 +5720,11 @@
 	dir = 5
 	},
 /area/centcom/ferry)
+"pT" = (
+/obj/structure/chair/comfy,
+/obj/effect/landmark/start/infiltrator,
+/turf/open/floor/plasteel/red/side,
+/area/infiltrator_base)
 "pX" = (
 /obj/item/storage/crayons,
 /obj/structure/table,
@@ -6537,6 +6542,10 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"sa" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/red,
+/area/infiltrator_base)
 "se" = (
 /obj/machinery/light{
 	dir = 8
@@ -7300,6 +7309,21 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"tY" = (
+/obj/machinery/computer/shuttle/syndicate/recall{
+	dir = 4;
+	icon_state = "computer";
+	shuttleId = "stealthcruiser"
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 10
+	},
+/area/infiltrator_base)
+"ub" = (
+/turf/open/floor/plasteel/red/corner{
+	dir = 8
+	},
+/area/infiltrator_base)
 "ud" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "nukeop_ready";
@@ -7530,6 +7554,11 @@
 /obj/structure/chair/wood/wings,
 /turf/open/floor/carpet,
 /area/wizard_station)
+"uH" = (
+/turf/open/floor/plasteel/red/side{
+	dir = 8
+	},
+/area/infiltrator_base)
 "uJ" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
@@ -9190,6 +9219,16 @@
 	},
 /turf/open/floor/grass,
 /area/wizard_station)
+"Aa" = (
+/obj/machinery/disco{
+	anchored = 1;
+	icon = 'icons/obj/machines/shuttle_manipulator.dmi';
+	icon_state = "holograph_on";
+	name = "holograph projector";
+	pixel_x = -16
+	},
+/turf/open/floor/plasteel/red,
+/area/infiltrator_base)
 "Ab" = (
 /obj/machinery/photocopier,
 /turf/open/floor/plasteel/grimy,
@@ -13502,6 +13541,12 @@
 	},
 /turf/open/floor/wood,
 /area/wizard_station)
+"Nb" = (
+/obj/machinery/computer/secure_data/syndie,
+/turf/open/floor/plasteel/red/side{
+	dir = 1
+	},
+/area/infiltrator_base)
 "Nk" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome";
@@ -13516,6 +13561,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
+"Nl" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plasteel/red,
+/area/infiltrator_base)
 "NG" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -13530,6 +13579,34 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"NM" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	pixel_y = 32;
+	req_access_txt = "0";
+	use_power = 0
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 1
+	},
+/area/infiltrator_base)
+"NN" = (
+/turf/open/floor/plasteel/red/side{
+	dir = 6
+	},
+/area/infiltrator_base)
+"NO" = (
+/obj/machinery/door/airlock/silver{
+	name = "bathroom"
+	},
+/turf/open/floor/plasteel,
+/area/infiltrator_base)
+"NS" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/plasteel/red/side{
+	dir = 1
+	},
+/area/infiltrator_base)
 "NU" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
@@ -13544,6 +13621,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"Oc" = (
+/turf/closed/indestructible/riveted,
+/area/infiltrator_base)
 "Oj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
@@ -13559,6 +13639,100 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"OL" = (
+/turf/open/floor/plasteel/red/corner,
+/area/infiltrator_base)
+"OR" = (
+/obj/machinery/vending/autodrobe,
+/turf/open/floor/plasteel/red/side{
+	dir = 1
+	},
+/area/infiltrator_base)
+"PD" = (
+/turf/open/floor/plasteel,
+/area/infiltrator_base)
+"PE" = (
+/obj/structure/chair/comfy{
+	dir = 1
+	},
+/obj/effect/landmark/start/infiltrator,
+/turf/open/floor/plasteel/red/side{
+	dir = 1
+	},
+/area/infiltrator_base)
+"QI" = (
+/obj/structure/toilet,
+/turf/open/floor/plasteel,
+/area/infiltrator_base)
+"QT" = (
+/obj/structure/curtain,
+/turf/open/floor/plasteel,
+/area/infiltrator_base)
+"Ra" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/infiltrator_base)
+"RC" = (
+/obj/structure/sink{
+	pixel_y = 12
+	},
+/turf/open/floor/plasteel,
+/area/infiltrator_base)
+"RS" = (
+/turf/open/floor/plasteel/red/side{
+	icon_state = "red";
+	dir = 5
+	},
+/area/infiltrator_base)
+"Sd" = (
+/obj/structure/chair/comfy{
+	icon_state = "comfychair";
+	dir = 4
+	},
+/obj/effect/landmark/start/infiltrator,
+/turf/open/floor/plasteel/red/side{
+	dir = 4
+	},
+/area/infiltrator_base)
+"SM" = (
+/obj/item/reagent_containers/food/urinalcake,
+/turf/open/floor/plasteel,
+/area/infiltrator_base)
+"Tl" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	pixel_y = 32;
+	req_access_txt = "0";
+	use_power = 0
+	},
+/obj/machinery/computer/atmos_alert,
+/turf/open/floor/plasteel/red/side{
+	dir = 1
+	},
+/area/infiltrator_base)
+"To" = (
+/obj/machinery/vending/snack/random,
+/turf/open/floor/plasteel/red/side{
+	dir = 1
+	},
+/area/infiltrator_base)
+"Tx" = (
+/turf/open/floor/plasteel/red/side{
+	dir = 1
+	},
+/area/infiltrator_base)
+"Tz" = (
+/obj/machinery/computer/camera_advanced/syndie,
+/turf/open/floor/plasteel/red/side{
+	icon_state = "red";
+	dir = 9
+	},
+/area/infiltrator_base)
+"Um" = (
+/turf/open/floor/plasteel/red/side,
+/area/infiltrator_base)
 "Un" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome";
@@ -13571,6 +13745,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
+"Uu" = (
+/turf/open/floor/plasteel/red,
+/area/infiltrator_base)
 "UO" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -13585,6 +13762,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"UW" = (
+/obj/machinery/shower,
+/turf/open/floor/plasteel,
+/area/infiltrator_base)
 "Wc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -13599,6 +13780,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+"WI" = (
+/obj/docking_port/stationary{
+	dheight = 14;
+	dir = 2;
+	height = 13;
+	id = "sit_away";
+	name = "syndicate infiltration base";
+	width = 22;
+	roundstart_template = /datum/map_template/shuttle/infiltrator/stealth
+	},
+/turf/open/space/basic,
+/area/space)
 "WJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Administration";
@@ -13628,6 +13821,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+"Xn" = (
+/obj/structure/table,
+/obj/item/soap/syndie,
+/turf/open/floor/plasteel,
+/area/infiltrator_base)
 "Xt" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -13653,6 +13851,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+"XH" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/plasteel/red/side{
+	dir = 1
+	},
+/area/infiltrator_base)
+"XW" = (
+/turf/open/floor/plasteel/red/side{
+	dir = 4
+	},
+/area/infiltrator_base)
 "Yt" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -13667,6 +13876,39 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
+"Yu" = (
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/infiltrator_base)
+"YE" = (
+/obj/machinery/vending/cola/random,
+/turf/open/floor/plasteel/red/side{
+	dir = 1
+	},
+/area/infiltrator_base)
+"Ze" = (
+/obj/machinery/shower{
+	icon_state = "shower";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/infiltrator_base)
+"ZD" = (
+/obj/structure/chair/comfy{
+	icon_state = "comfychair";
+	dir = 8
+	},
+/obj/effect/landmark/start/infiltrator,
+/turf/open/floor/plasteel/red/side{
+	dir = 8
+	},
+/area/infiltrator_base)
+"ZE" = (
+/turf/open/floor/plasteel/red/corner{
+	dir = 4
+	},
+/area/infiltrator_base)
 "ZJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -13681,6 +13923,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+"ZW" = (
+/obj/machinery/computer/crew/syndie,
+/turf/open/floor/plasteel/red/side{
+	dir = 1
+	},
+/area/infiltrator_base)
 "ZX" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -35579,17 +35827,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+Oc
+Oc
+Oc
+Oc
+Oc
+Oc
+Oc
+Oc
+Oc
+Oc
 aa
 aa
 aa
@@ -35836,17 +36084,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+Tz
+uH
+uH
+uH
+uH
+uH
+uH
+uH
+tY
+Oc
 aa
 aa
 aa
@@ -36093,17 +36341,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+Tl
+PD
+PD
+PD
+PD
+PD
+PD
+PD
+Um
+Oc
 aa
 aa
 aa
@@ -36350,17 +36598,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+ZW
+PD
+OL
+Sd
+Sd
+Sd
+ZE
+PD
+Um
+Oc
 aa
 aa
 aa
@@ -36607,17 +36855,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+Nb
+PD
+pT
+sa
+sa
+sa
+PE
+PD
+Um
+Oc
 aa
 aa
 aa
@@ -36864,17 +37112,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+Tx
+PD
+pT
+sa
+sa
+sa
+PE
+PD
+Um
+Oc
 aa
 aa
 aa
@@ -37121,17 +37369,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+NS
+PD
+pT
+sa
+sa
+sa
+PE
+PD
+Um
+Oc
 aa
 aa
 aa
@@ -37378,17 +37626,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+OR
+PD
+pT
+sa
+Uu
+sa
+PE
+PD
+Um
+Oc
 aa
 aa
 aa
@@ -37635,18 +37883,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+To
+PD
+pT
+sa
+Aa
+sa
+PE
+PD
+Um
+Nl
+WI
 aa
 aa
 aa
@@ -37892,17 +38140,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+XH
+PD
+pT
+sa
+Uu
+sa
+PE
+PD
+Um
+Oc
 aa
 aa
 aa
@@ -38149,17 +38397,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+YE
+PD
+pT
+sa
+sa
+sa
+PE
+PD
+Um
+Oc
 aa
 aa
 aa
@@ -38406,17 +38654,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+Tx
+PD
+pT
+sa
+sa
+sa
+PE
+PD
+Um
+Oc
 aa
 aa
 aa
@@ -38663,17 +38911,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+Tx
+PD
+pT
+sa
+sa
+sa
+PE
+PD
+Um
+Oc
 aa
 aa
 aa
@@ -38920,17 +39168,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+Tx
+PD
+ub
+ZD
+ZD
+ZD
+Yu
+PD
+Um
+Oc
 aa
 aa
 aa
@@ -39177,17 +39425,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+NM
+PD
+PD
+PD
+PD
+PD
+PD
+PD
+Um
+Oc
 aa
 aa
 aa
@@ -39434,17 +39682,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+RS
+XW
+XW
+XW
+XW
+XW
+XW
+XW
+NN
+Oc
 aa
 aa
 aa
@@ -39691,17 +39939,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Oc
+Oc
+NO
+Oc
+Oc
+Oc
+Oc
+Oc
+Oc
+Oc
+Oc
 aa
 aa
 aa
@@ -39948,11 +40196,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Oc
+QI
+PD
+Xn
+Oc
 aa
 aa
 aa
@@ -40205,11 +40453,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Oc
+RC
+PD
+SM
+Oc
 aa
 aa
 aa
@@ -40462,11 +40710,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Oc
+QT
+QT
+QT
+Oc
 aa
 aa
 aa
@@ -40719,11 +40967,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Oc
+UW
+Ra
+Ze
+Oc
 aa
 aa
 aa
@@ -40976,11 +41224,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Oc
+Oc
+Oc
+Oc
+Oc
 aa
 aa
 aa

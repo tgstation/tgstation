@@ -165,3 +165,8 @@
 
 /area/shuttle/caravan/freighter3
 	name = "Tiny Freighter"
+
+
+/area/shuttle/stealthcruiser
+	name = "Syndicate Infiltration Cruiser"
+	blob_allowed = FALSE

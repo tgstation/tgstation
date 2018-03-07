@@ -1,0 +1,1121 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ab" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/stealthcruiser)
+"ac" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 2
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/external{
+	id_tag = "sit_bolt_port"
+	},
+/obj/docking_port/mobile{
+	callTime = 150;
+	dir = 2;
+	dwidth = 14;
+	height = 13;
+	id = "stealthcruiser";
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "Syndicate Stealth Cruiser";
+	port_direction = 8;
+	preferred_direction = 4;
+	timid = 0;
+	width = 22
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"ad" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/stealthcruiser)
+"ae" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/sign/warning/vacuum{
+	pixel_x = -32
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"af" = (
+/obj/structure/grille,
+/obj/structure/window/plastitanium,
+/obj/machinery/door/poddoor{
+	id = "sit_bridge"
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"ag" = (
+/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"ah" = (
+/obj/machinery/suit_storage_unit/open,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"ai" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/external{
+	id_tag = "sit_bolt_port"
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"aj" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 5;
+	faction = list("syndicate")
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/stealthcruiser)
+"ak" = (
+/obj/structure/shuttle/engine/propulsion/burst/left{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/stealthcruiser)
+"al" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/stealthcruiser)
+"am" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/mop,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"an" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/machinery/meter,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"ao" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering"
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"ap" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 9
+	},
+/area/shuttle/stealthcruiser)
+"aq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 1
+	},
+/area/shuttle/stealthcruiser)
+"ar" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 1
+	},
+/area/shuttle/stealthcruiser)
+"as" = (
+/obj/machinery/button/door{
+	id = "sit_bolt_port";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = -4;
+	pixel_y = 25;
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 1
+	},
+/area/shuttle/stealthcruiser)
+"at" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 1
+	},
+/area/shuttle/stealthcruiser)
+"au" = (
+/obj/structure/sign/departments/medbay/alt,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/stealthcruiser)
+"av" = (
+/turf/open/floor/plasteel/dark/side{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"aw" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"ax" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/stealthcruiser)
+"ay" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"az" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"aA" = (
+/obj/structure/sign/departments/engineering,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/stealthcruiser)
+"aB" = (
+/obj/structure/table,
+/obj/item/circular_saw,
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/obj/item/cautery{
+	pixel_x = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white/side{
+	dir = 8
+	},
+/area/shuttle/stealthcruiser)
+"aC" = (
+/turf/open/floor/plasteel/floorgrime,
+/area/shuttle/stealthcruiser)
+"aD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/stealthcruiser)
+"aE" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/shuttle/stealthcruiser)
+"aF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay"
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/shuttle/stealthcruiser)
+"aG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark/side{
+	dir = 4
+	},
+/area/shuttle/stealthcruiser)
+"aH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"aI" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_y = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aJ" = (
+/obj/structure/shuttle/engine/propulsion/burst/right{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/stealthcruiser)
+"aK" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/space_heater,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"aL" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"aM" = (
+/obj/structure/table,
+/obj/item/retractor,
+/obj/item/hemostat,
+/turf/open/floor/plasteel/white,
+/area/shuttle/stealthcruiser)
+"aN" = (
+/obj/structure/table/optable,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/white,
+/area/shuttle/stealthcruiser)
+"aO" = (
+/obj/structure/table,
+/obj/item/storage/firstaid/brute{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/firstaid/fire,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/stealthcruiser)
+"aP" = (
+/obj/machinery/sleeper{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/airalarm/all_access{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/stealthcruiser)
+"aQ" = (
+/obj/structure/closet/crate/freezer/surplus_limbs,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/white,
+/area/shuttle/stealthcruiser)
+"aR" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel/dark/side{
+	dir = 6
+	},
+/area/shuttle/stealthcruiser)
+"aS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"aT" = (
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box{
+	pixel_y = 18
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = -6
+	},
+/obj/structure/sign/poster/contraband/red_rum{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aU" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/emergency,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aV" = (
+/obj/machinery/airalarm/all_access{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aW" = (
+/obj/structure/rack,
+/turf/open/floor/plasteel/darkred/corner{
+	dir = 4
+	},
+/area/shuttle/stealthcruiser)
+"aX" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/stealth,
+/turf/open/floor/plasteel/darkred/side{
+	dir = 1
+	},
+/area/shuttle/stealthcruiser)
+"aY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/airalarm/all_access{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"aZ" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"ba" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"bb" = (
+/turf/open/floor/plasteel/darkblue/side{
+	dir = 4
+	},
+/area/shuttle/stealthcruiser)
+"bc" = (
+/obj/structure/table,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bd" = (
+/obj/structure/chair/office/dark{
+	dir = 8
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"be" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"bf" = (
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"bg" = (
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/obj/machinery/turretid{
+	icon_state = "control_kill";
+	lethal = 1;
+	locked = 0;
+	pixel_y = -30;
+	req_access = null
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"bh" = (
+/obj/machinery/computer/shuttle/syndicate/stealth{
+	icon_state = "computer";
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 8
+	},
+/area/shuttle/stealthcruiser)
+"bi" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bj" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bk" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"bl" = (
+/obj/structure/table,
+/obj/machinery/airalarm/all_access{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"bm" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"bn" = (
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/window/southleft{
+	name = "Weapon Storage"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"bo" = (
+/obj/structure/table,
+/obj/machinery/door/window/southleft{
+	base_state = "right";
+	icon_state = "right";
+	name = "Weapon Storage"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"bp" = (
+/obj/machinery/airalarm/all_access{
+	dir = 4;
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel/darkred/corner{
+	dir = 8
+	},
+/area/shuttle/stealthcruiser)
+"bq" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"br" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkblue/side{
+	dir = 4
+	},
+/area/shuttle/stealthcruiser)
+"bs" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "Bridge"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"bt" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bu" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bv" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/open/floor/plasteel/darkred/corner,
+/area/shuttle/stealthcruiser)
+"bw" = (
+/obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	id = "sit_bridge";
+	name = "Bridge Blast Door Control";
+	pixel_x = -16
+	},
+/turf/open/floor/plasteel/darkred/side,
+/area/shuttle/stealthcruiser)
+"bx" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/metal/twenty,
+/obj/item/stack/sheet/glass{
+	amount = 10
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/device/flashlight{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 20
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"by" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 8
+	},
+/area/shuttle/stealthcruiser)
+"bz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/plasteel/floorgrime,
+/area/shuttle/stealthcruiser)
+"bA" = (
+/turf/open/floor/plasteel,
+/area/shuttle/stealthcruiser)
+"bB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/shuttle/stealthcruiser)
+"bC" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security,
+/turf/open/floor/plasteel/floorgrime,
+/area/shuttle/stealthcruiser)
+"bD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 8
+	},
+/area/shuttle/stealthcruiser)
+"bE" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"bF" = (
+/obj/structure/rack,
+/turf/open/floor/plasteel/darkblue/corner{
+	dir = 4
+	},
+/area/shuttle/stealthcruiser)
+"bG" = (
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/obj/item/wrench,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 10
+	},
+/area/shuttle/stealthcruiser)
+"bJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/side,
+/area/shuttle/stealthcruiser)
+"bK" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel/red/side,
+/area/shuttle/stealthcruiser)
+"bL" = (
+/obj/machinery/button/door{
+	id = "sit_bolt_starboard";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = -4;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/side,
+/area/shuttle/stealthcruiser)
+"bM" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/red/side,
+/area/shuttle/stealthcruiser)
+"bN" = (
+/turf/open/floor/plasteel/darkred/corner{
+	dir = 1
+	},
+/area/shuttle/stealthcruiser)
+"bO" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bP" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stack/cable_coil/yellow,
+/obj/item/stock_parts/cell/high,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bQ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 2
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/external{
+	id_tag = "sit_bolt_starboard"
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bR" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 6;
+	faction = list("syndicate")
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/stealthcruiser)
+"bS" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/external{
+	id_tag = "sit_bolt_starboard"
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bU" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/syndicate,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bV" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 4;
+	faction = list("syndicate")
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/stealthcruiser)
+
+(1,1,1) = {"
+aa
+aa
+aa
+ak
+ax
+aJ
+aa
+ak
+ax
+aJ
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+ab
+al
+al
+al
+ad
+al
+al
+al
+bV
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+ab
+ad
+am
+ay
+aK
+ad
+bi
+bx
+bG
+ad
+ab
+aa
+"}
+(4,1,1) = {"
+aa
+ad
+ag
+an
+az
+aL
+aY
+bj
+az
+bH
+bP
+ad
+aa
+"}
+(5,1,1) = {"
+aa
+ad
+ad
+ao
+aA
+ad
+ad
+ad
+aA
+ao
+ad
+ad
+aa
+"}
+(6,1,1) = {"
+aa
+ad
+ah
+ap
+aB
+aM
+ad
+bk
+by
+bI
+ah
+ad
+aa
+"}
+(7,1,1) = {"
+ab
+ad
+ad
+aq
+aC
+aN
+ad
+bl
+aC
+bJ
+ad
+ad
+ab
+"}
+(8,1,1) = {"
+ac
+ae
+ai
+ar
+aD
+aO
+ad
+bm
+bz
+bK
+bQ
+ae
+bS
+"}
+(9,1,1) = {"
+ab
+ad
+ad
+as
+aC
+aP
+ad
+bn
+bA
+bL
+ad
+ad
+ab
+"}
+(10,1,1) = {"
+aa
+af
+ah
+at
+aE
+aQ
+ad
+bo
+bB
+bM
+ah
+af
+aa
+"}
+(11,1,1) = {"
+aa
+ab
+ad
+au
+aF
+ad
+ad
+ad
+bC
+ad
+ad
+ab
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+ad
+av
+aG
+aR
+aZ
+bp
+bD
+bN
+ad
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+ad
+aw
+aH
+aS
+ba
+bq
+bE
+bO
+ad
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aj
+ad
+aI
+aT
+bb
+br
+bF
+ad
+bR
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+ab
+ad
+ad
+ad
+bs
+ad
+ab
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+ad
+aU
+bc
+bt
+ad
+aa
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+aa
+ad
+bU
+bd
+bt
+ad
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+ad
+aV
+be
+bu
+ad
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+ad
+aW
+bf
+bv
+ad
+aa
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aa
+af
+aX
+bg
+bw
+af
+aa
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+aa
+af
+af
+bh
+af
+af
+aa
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+af
+af
+af
+aa
+aa
+aa
+aa
+aa
+"}

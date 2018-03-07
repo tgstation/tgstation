@@ -108,6 +108,15 @@
 	icon_state = "syndie-elite"
 
 
+/area/infiltrator_base
+	name = "Syndicate Infiltrator Base"
+	icon_state = "red"
+	blob_allowed = FALSE
+	requires_power = FALSE
+	has_gravity = TRUE
+	noteleport = TRUE
+	flags_1 = NONE
+	ambientsounds = HIGHSEC
 
 //CAPTURE THE FLAG
 

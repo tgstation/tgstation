@@ -421,3 +421,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.ruin_landmarks -= src
 	ruin_template = null
 	. = ..()
+
+/obj/effect/landmark/start/infiltrator
+	name = "infiltrator"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "snukeop_spawn"
+
+/obj/effect/landmark/start/infiltrator/Initialize()
+	..()
+	GLOB.infiltrator_start += loc
+	return INITIALIZE_HINT_QDEL
