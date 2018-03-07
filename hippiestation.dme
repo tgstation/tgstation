@@ -2857,6 +2857,7 @@
 #include "hippiestation\code\modules\surgery\organs\ears.dm"
 #include "hippiestation\code\modules\surgery\organs\eyes.dm"
 #include "hippiestation\code\modules\surgery\organs\tails.dm"
+#include "hippiestation\code\modules\techweb\all_nodes.dm"
 #include "hippiestation\code\modules\teeth\misc.dm"
 #include "hippiestation\code\modules\teeth\teeth.dm"
 #include "hippiestation\code\modules\tts\tts.dm"
