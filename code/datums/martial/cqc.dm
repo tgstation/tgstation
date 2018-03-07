@@ -20,27 +20,21 @@
 /datum/martial_art/cqc/proc/drop_restraining()
 	restraining = 0
 
-/datum/martial_art/cqc/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/cqc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,SLAM_COMBO))
-		streak = ""
 		Slam(A,D)
-		return 1
-	if(findtext(streak,KICK_COMBO))
-		streak = ""
+	else if(findtext(streak,KICK_COMBO))
 		Kick(A,D)
-		return 1
-	if(findtext(streak,RESTRAIN_COMBO))
-		streak = ""
+	else if(findtext(streak,RESTRAIN_COMBO))
 		Restrain(A,D)
-		return 1
-	if(findtext(streak,PRESSURE_COMBO))
-		streak = ""
+	else if(findtext(streak,PRESSURE_COMBO))
 		Pressure(A,D)
-		return 1
-	if(findtext(streak,CONSECUTIVE_COMBO))
-		streak = ""
+	else if(findtext(streak,CONSECUTIVE_COMBO))
 		Consecutive(A,D)
-	return 0
+	else
+		return 0
+	streak = ""
+	return 1
 
 /datum/martial_art/cqc/proc/Slam(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat || !D.IsKnockdown())
@@ -194,7 +188,7 @@
 	to_chat(usr, "<span class='notice'>Restrain</span>: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold.")
 	to_chat(usr, "<span class='notice'>Pressure</span>: Disarm Grab. Decent stamina damage.")
 	to_chat(usr, "<span class='notice'>Consecutive CQC</span>: Disarm Disarm Harm. Mainly offensive move, huge damage and decent stamina damage.")
-		
+
 	to_chat(usr, "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>")
 
 /obj/item/cqc_manual

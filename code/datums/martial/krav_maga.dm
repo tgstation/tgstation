@@ -69,21 +69,18 @@
 	legsweep.Remove(H)
 	lungpunch.Remove(H)
 
-/datum/martial_art/krav_maga/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/krav_maga/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	switch(streak)
 		if("neck_chop")
-			streak = ""
 			neck_chop(A,D)
-			return 1
 		if("leg_sweep")
-			streak = ""
 			leg_sweep(A,D)
-			return 1
 		if("quick_choke")//is actually lung punch
-			streak = ""
 			quick_choke(A,D)
-			return 1
-	return 0
+		else
+			return 0
+	streak = ""
+	return 1
 
 /datum/martial_art/krav_maga/proc/leg_sweep(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(D.stat || D.IsKnockdown())

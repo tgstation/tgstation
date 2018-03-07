@@ -11,28 +11,21 @@
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 
-/datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/the_sleeping_carp/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,WRIST_WRENCH_COMBO))
-		streak = ""
 		wristWrench(A,D)
-		return 1
-	if(findtext(streak,BACK_KICK_COMBO))
-		streak = ""
+	else if(findtext(streak,BACK_KICK_COMBO))
 		backKick(A,D)
-		return 1
-	if(findtext(streak,STOMACH_KNEE_COMBO))
-		streak = ""
+	else if(findtext(streak,STOMACH_KNEE_COMBO))
 		kneeStomach(A,D)
-		return 1
-	if(findtext(streak,HEAD_KICK_COMBO))
-		streak = ""
+	else if(findtext(streak,HEAD_KICK_COMBO))
 		headKick(A,D)
-		return 1
-	if(findtext(streak,ELBOW_DROP_COMBO))
-		streak = ""
+	else if(findtext(streak,ELBOW_DROP_COMBO))
 		elbowDrop(A,D)
-		return 1
-	return 0
+	else
+		return 0
+	streak = ""
+	return 1
 
 /datum/martial_art/the_sleeping_carp/proc/wristWrench(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(!D.stat && !D.IsStun() && !D.IsKnockdown())

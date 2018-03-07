@@ -16,29 +16,22 @@
 	var/datum/action/strike/strike = new/datum/action/strike()
 	var/datum/action/drop/drop = new/datum/action/drop()
 
-/datum/martial_art/wrestling/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/wrestling/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	switch(streak)
 		if("drop")
-			streak = ""
 			drop(A,D)
-			return 1
 		if("strike")
-			streak = ""
 			strike(A,D)
-			return 1
 		if("kick")
-			streak = ""
 			kick(A,D)
-			return 1
 		if("throw")
-			streak = ""
 			throw_wrassle(A,D)
-			return 1
 		if("slam")
-			streak = ""
 			slam(A,D)
-			return 1
-	return 0
+		else
+			return 0
+	streak = ""
+	return 1
 
 /datum/action/slam
 	name = "Slam (Cinch) - Slam a grappled opponent into the floor."

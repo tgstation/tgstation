@@ -7,20 +7,17 @@
 	help_verb = /mob/living/carbon/human/proc/plasma_fist_help
 
 
-/datum/martial_art/plasma_fist/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
+/datum/martial_art/plasma_fist/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,TORNADO_COMBO))
-		streak = ""
 		Tornado(A,D)
-		return 1
-	if(findtext(streak,THROWBACK_COMBO))
-		streak = ""
+	else if(findtext(streak,THROWBACK_COMBO))
 		Throwback(A,D)
-		return 1
-	if(findtext(streak,PLASMA_COMBO))
-		streak = ""
+	else if(findtext(streak,PLASMA_COMBO))
 		Plasma(A,D)
-		return 1
-	return 0
+	else
+		return 0
+	streak = ""
+	return 1
 
 /datum/martial_art/plasma_fist/proc/TornadoAnimate(mob/living/carbon/human/A)
 	set waitfor = FALSE
