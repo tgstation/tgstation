@@ -400,10 +400,12 @@
 	name = "drying agent spray"
 	color = "#A000A0"
 	list_reagents = list("drying_agent" = 250)
+	volume = 250
 
 /obj/item/reagent_containers/spray/cyborg_lube
 	name = "lube spray"
 	list_reagents = list("lube" = 250)
+	volume = 250
 
 /obj/item/robot_module/janitor/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()

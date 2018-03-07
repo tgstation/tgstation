@@ -20,7 +20,7 @@
 	var/stream_amount = 10 //the amount of reagents transfered when in stream mode.
 	var/can_fill_from_container = TRUE
 	amount_per_transfer_from_this = 5
-	volume = 250
+	volume = 50
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 
 /obj/item/reagent_containers/spray/afterattack(atom/A, mob/user)
@@ -147,11 +147,13 @@
 /obj/item/reagent_containers/spray/cleaner
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
-	list_reagents = list("cleaner" = 250)
+	list_reagents = list("cleaner" = 50)
+	amount_per_transfer_from_this = 1
+	stream_amount = 5
 
 /obj/item/reagent_containers/spray/cleaner/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the nozzle of \the [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	if(do_mob(user,user,30))	
+	if(do_mob(user,user,30))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
 			user.visible_message("<span class='suicide'>[user] pulls the trigger!</span>")
 			src.spray(user)
