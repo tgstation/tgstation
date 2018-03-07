@@ -86,8 +86,8 @@
 		if(!skip)
 			if(!SSdbcore.Connect())
 				to_chat(usr, "<span class='danger'>Unable to connect to database, changes are temporary only.</span>")
-				use_db = "Temporary"
-			if(!use_db)
+				use_db = 0
+			else
 				use_db = alert("Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", "Permanent", "Temporary", "Cancel")
 				if(use_db == "Cancel")
 					return
@@ -124,13 +124,14 @@
 	edit_admin_permissions()
 
 /datum/admins/proc/add_admin(use_db)
-	. = sanitizeSQL(ckey(input("New admin's ckey","Admin ckey") as text|null))
+	. = ckey(input("New admin's ckey","Admin ckey") as text|null)
 	if(!.)
 		return 0
 	if(. in GLOB.admin_datums+GLOB.deadmins)
 		to_chat(usr, "<span class='danger'>[.] is already an admin.</span>")
 		return 0
 	if(use_db)
+		. = sanitizeSQL(.)
 		var/datum/DBQuery/query_add_admin = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin")] (ckey, rank) VALUES ('[.]', 'NEW ADMIN')")
 		if(!query_add_admin.warn_execute())
 			return 0
@@ -175,7 +176,7 @@
 			rank_names[R.name] = R
 	var/new_rank = input("Please select a rank", "New rank") as null|anything in rank_names
 	if(new_rank == "*New Rank*")
-		new_rank = sanitizeSQL(ckeyEx(input("Please input a new rank", "New custom rank") as text|null))
+		new_rank = ckeyEx(input("Please input a new rank", "New custom rank") as text|null)
 	if(!new_rank)
 		return
 	R = rank_names[new_rank]
@@ -186,6 +187,7 @@
 			R = new(new_rank) //blank new admin_rank
 		GLOB.admin_ranks += R
 	if(use_db)
+		new_rank = sanitizeSQL(new_rank)
 		if(!R)
 			var/datum/DBQuery/query_add_rank = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_ranks")] (rank, flags, exclude_flags, can_edit_rights) VALUES ('[new_rank]', '0', '0', '0')")
 			if(!query_add_rank.warn_execute())
@@ -208,7 +210,8 @@
 	if(D) //they were previously an admin
 		D.disassociate() //existing admin needs to be disassociated
 		D.rank = R //set the admin_rank as our rank
-		D.associate()
+		var/client/C = GLOB.directory[admin_ckey]
+		D.associate(C)
 	else
 		D = new(R, admin_ckey, TRUE) //new admin
 	message_admins("[key_name_admin(usr)] edited the admin rank of [admin_ckey] to [new_rank] [use_db ? "permanently" : "temporarily"]")
