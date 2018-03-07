@@ -62,11 +62,6 @@
 	mood_change = 40 //maybe being a cultist isnt that bad after all
 	hidden = TRUE
 
-/datum/mood_event/cult
-	description = "<span class='nicegreen'>I have seen the truth, praise the almighty one!</span>\n"
-	mood_change = 40 //maybe being a cultist isnt that bad after all
-	hidden = TRUE
-
 /datum/mood_event/niceroom
 	description = "<span class='nicegreen'>This room looks really pretty!</span>\n"
 	mood_change = 4
