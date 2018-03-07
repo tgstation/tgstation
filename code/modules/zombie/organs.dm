@@ -47,7 +47,7 @@
 
 	if(timer_id)
 		return
-	if(owner.suiciding)
+	if(owner.has_trait(TRAIT_NOREVIVE))
 		return
 	if(owner.stat != DEAD && !converts_living)
 		return

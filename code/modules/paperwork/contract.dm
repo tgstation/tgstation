@@ -254,7 +254,7 @@
 		var/datum/antagonist/devil/ownerDevilInfo = user.mind.soulOwner.has_antag_datum(/datum/antagonist/devil)
 		ownerDevilInfo.remove_soul(user.mind) //Then they lose their claim.
 	user.mind.soulOwner = owner
-	user.hellbound = contractType
+	user.add_trait(TRAIT_NOREVIVE, HELLBOUND)
 	user.mind.damnation_type = contractType
 	var/datum/antagonist/devil/devilInfo = owner.has_antag_datum(/datum/antagonist/devil)
 	devilInfo.add_soul(user.mind)

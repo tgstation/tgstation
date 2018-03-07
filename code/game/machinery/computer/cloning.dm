@@ -442,15 +442,15 @@
 		var/mob/living/brain/B = mob_occupant
 		dna = B.stored_dna
 
-	if(!istype(dna))
+	if(!istype(dna) || mob_occupant.has_trait(TRAIT_NOCLONE))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
-	if(mob_occupant.suiciding || mob_occupant.hellbound)
+	if(mob_occupant.has_trait(TRAIT_NOREVIVE))
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
-	if((mob_occupant.has_trait(TRAIT_NOCLONE)) && (src.scanner.scan_level < 2))
+	if((mob_occupant.has_trait(TRAIT_HUSK)) && (scanner.scan_level <= 2))
 		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return

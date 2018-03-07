@@ -67,7 +67,7 @@
 		return
 	if(owner.stat != UNCONSCIOUS)
 		return
-	if(owner.suiciding)
+	if(owner.has_trait(TRAIT_NOREVIVE))
 		return
 
 	revive_cost = 0

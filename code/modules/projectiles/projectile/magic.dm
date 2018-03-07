@@ -30,10 +30,11 @@
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
 	if(isliving(target))
-		if(target.hellbound)
+		if(target.has_trait(TRAIT_NOREVIVE))
 			return
 		if(target.anti_magic_check())
 			target.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.regenerate_limbs()
@@ -152,7 +153,7 @@
 			var/robot = pick(200;/mob/living/silicon/robot,
 							/mob/living/silicon/robot/modules/syndicate,
 							/mob/living/silicon/robot/modules/syndicate/medical,
-							200;/mob/living/simple_animal/drone/polymorphed)				
+							200;/mob/living/simple_animal/drone/polymorphed)
 			new_mob = new robot(M.loc)
 			if(issilicon(new_mob))
 				new_mob.gender = M.gender
@@ -163,10 +164,10 @@
 				Robot.clear_inherent_laws(0)
 				Robot.clear_zeroth_law(0, 0)
 				Robot.connected_ai = null
-		
+
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
-			
+
 		if("xeno")
 			var/Xe
 			if(M.ckey)
@@ -174,7 +175,7 @@
 			else
 				Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/simple_animal/hostile/alien/sentinel)
 			new_mob = new Xe(M.loc)
-			
+
 		if("animal")
 			var/path = pick(/mob/living/simple_animal/hostile/carp,
 							/mob/living/simple_animal/hostile/bear,

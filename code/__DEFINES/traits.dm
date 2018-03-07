@@ -7,6 +7,7 @@
 #define TRAIT_FAT				"fat"
 #define TRAIT_HUSK				"husk"
 #define TRAIT_NOCLONE			"noclone"
+#define TRAIT_NOREVIVE			"norevive"
 #define TRAIT_CLUMSY			"clumsy"
 #define TRAIT_DUMB				"dumb"
 #define TRAIT_MONKEYLIKE		"monkeylike" //sets IsAdvancedToolUser to FALSE
@@ -74,3 +75,5 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
+#define HELLBOUND "hellbound"
+#define SUICIDING "suiciding"

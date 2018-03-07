@@ -1,5 +1,3 @@
-/mob/var/suiciding = 0
-
 /mob/living/carbon/human/verb/suicide()
 	set hidden = 1
 	if(!canSuicide())
@@ -11,7 +9,7 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = TRUE
+		add_trait(TRAIT_NOREVIVE, SUICIDING)
 		log_game("[key_name(src)] (job: [job ? "[job]" : "None"]) committed suicide at [get_area(src)].")
 		var/obj/item/held_item = get_active_held_item()
 		if(held_item)
@@ -19,7 +17,7 @@
 			if(damagetype)
 				if(damagetype & SHAME)
 					adjustStaminaLoss(200)
-					suiciding = FALSE
+					remove_trait(TRAIT_NOREVIVE, SUICIDING)
 					return
 				var/damage_mod = 0
 				for(var/T in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
@@ -55,11 +53,11 @@
 			suicide_message = pick("[src] is attempting to push [p_their()] own head off [p_their()] shoulders! It looks like [p_theyre()] trying to commit suicide.", \
 								"[src] is pushing [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.", \
 								"[src] is ripping [p_their()] own arms off! It looks like [p_theyre()] trying to commit suicide.")//heheh get it?
-		if(a_intent == INTENT_GRAB)	
+		if(a_intent == INTENT_GRAB)
 			suicide_message = pick("[src] is attempting to pull [p_their()] own head off! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is aggressively grabbing [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is pulling [p_their()] eyes out of their sockets! It looks like [p_theyre()] trying to commit suicide.")
-		if(a_intent == INTENT_HELP)	
+		if(a_intent == INTENT_HELP)
 			suicide_message = pick("[src] is hugging [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is high-fiving [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is getting too high on life! It looks like [p_theyre()] trying to commit suicide.")
@@ -82,7 +80,7 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
+		add_trait(TRAIT_NOREVIVE, SUICIDING)
 		visible_message("<span class='danger'>[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live.</span>", \
 						"<span class='userdanger'>[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live.</span>")
 		death(0)
@@ -95,7 +93,7 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
+		add_trait(TRAIT_NOREVIVE, SUICIDING)
 		visible_message("<span class='danger'>[src] is attempting to bite [p_their()] tongue. It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is attempting to bite [p_their()] tongue. It looks like [p_theyre()] trying to commit suicide.</span>")
 		adjustOxyLoss(max(200- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
@@ -109,7 +107,7 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
+		add_trait(TRAIT_NOREVIVE, SUICIDING)
 		visible_message("<span class='danger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>")
 		//put em at -175
@@ -124,7 +122,7 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
+		add_trait(TRAIT_NOREVIVE, SUICIDING)
 		visible_message("<span class='danger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>")
 		//put em at -175
@@ -150,7 +148,7 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
+		add_trait(TRAIT_NOREVIVE, SUICIDING)
 		visible_message("<span class='danger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='italics'>You hear thrashing.</span>")
@@ -166,7 +164,7 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		suiciding = 1
+		add_trait(TRAIT_NOREVIVE, SUICIDING)
 		visible_message("<span class='danger'>[src] begins to fall down. It looks like [p_theyve()] lost the will to live.</span>", \
 						"<span class='userdanger'>[src] begins to fall down. It looks like [p_theyve()] lost the will to live.</span>")
 		death(0)
