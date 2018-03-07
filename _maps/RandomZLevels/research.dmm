@@ -1253,9 +1253,6 @@
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plasteel/darkpurple,
 /area/awaymission/research/interior/genetics)
-"dP" = (
-/turf/open/floor/plasteel/darkpurple,
-/area/awaymission/research/interior/genetics)
 "dQ" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -36977,7 +36974,7 @@ fc
 fE
 ea
 cK
-dP
+cK
 dt
 cK
 cK
@@ -37737,7 +37734,7 @@ cJ
 cK
 cK
 cK
-dP
+cK
 ea
 ez
 fg
@@ -38007,7 +38004,7 @@ ea
 hV
 cK
 cK
-dP
+cK
 iI
 cx
 cd

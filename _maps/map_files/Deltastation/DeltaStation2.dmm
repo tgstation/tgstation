@@ -112,18 +112,6 @@
 /obj/structure/cable,
 /turf/open/space,
 /area/solar/starboard/fore)
-"aap" = (
-/obj/machinery/light/small,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/chem_dispenser/drinks/beer{
-	dir = 1
-	},
-/obj/structure/table/wood/poker,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/abandoned_gambling_den)
 "aas" = (
 /obj/docking_port/stationary/random{
 	id = "pod_lavaland1";
@@ -2394,6 +2382,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/arrival{
 	dir = 1
 	},
@@ -6578,6 +6567,7 @@
 	codes_txt = "patrol;next_patrol=hall1";
 	location = "hall15"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/entry)
 "atl" = (
@@ -30166,6 +30156,7 @@
 	codes_txt = "patrol;next_patrol=hall3";
 	location = "hall2"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
 "bqG" = (
@@ -30298,6 +30289,7 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L7"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bqQ" = (
@@ -30400,6 +30392,7 @@
 	codes_txt = "patrol;next_patrol=hall14";
 	location = "hall13"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
 "brb" = (
@@ -31045,6 +31038,7 @@
 	codes_txt = "patrol;next_patrol=engi3";
 	location = "engi2"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/port)
 "bsr" = (
@@ -39941,6 +39935,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/starboard)
 "bJr" = (
@@ -46675,6 +46670,7 @@
 	codes_txt = "patrol;next_patrol=engi2";
 	location = "engi1"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/port)
 "bWB" = (
@@ -46756,6 +46752,7 @@
 	codes_txt = "patrol;next_patrol=hall5";
 	location = "hall4"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
 "bWN" = (
@@ -46981,6 +46978,7 @@
 	codes_txt = "patrol;next_patrol=hall13";
 	location = "hall12"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
 "bXl" = (
@@ -47123,6 +47121,7 @@
 	codes_txt = "patrol;next_patrol=hall12";
 	location = "hall11"
 	},
+/obj/machinery/pathfinder_tile,
 /mob/living/simple_animal/bot/secbot/beepsky{
 	desc = "It's Officer Beepsky! Powered by a potato and a shot of whiskey.";
 	name = "Officer Beepsky"
@@ -53835,6 +53834,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/grimy,
 /area/library)
 "ckR" = (
@@ -58072,6 +58072,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
 "ctQ" = (
@@ -58462,6 +58463,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
 "cuu" = (
@@ -58912,6 +58914,7 @@
 	},
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "cvw" = (
@@ -61556,6 +61559,7 @@
 /area/library)
 "cBf" = (
 /obj/effect/landmark/event_spawn,
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -63590,6 +63594,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -66347,6 +66352,7 @@
 	codes_txt = "patrol;next_patrol=hall6";
 	location = "hall5"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
 "cKv" = (
@@ -66400,6 +66406,7 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L8"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cKA" = (
@@ -66460,6 +66467,7 @@
 	codes_txt = "patrol;next_patrol=hall10";
 	location = "hall9"
 	},
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
 "cKF" = (
@@ -72566,6 +72574,13 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/light,
+/turf/open/floor/plasteel/whiteblue/corner{
+	dir = 8
+	},
+/area/medical/medbay/central)
+"cXG" = (
+/obj/structure/table,
+/obj/item/folder/white,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 8
 	},
@@ -86894,6 +86909,18 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/starboard/aft)
+"dBP" = (
+/obj/machinery/light/small,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
+/obj/structure/table/wood/poker,
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = -32
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
 "dBQ" = (
 /obj/structure/table/wood/poker,
 /obj/item/reagent_containers/food/drinks/bottle/rum{
@@ -93694,6 +93721,7 @@
 "dQb" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
+/obj/machinery/pathfinder_tile,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "dQc" = (
@@ -100862,6 +100890,16 @@
 	},
 /turf/open/floor/plating,
 /area/science/research/abandoned)
+"eWE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel/neutral,
+/area/crew_quarters/locker)
 "faI" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -100988,6 +101026,13 @@
 	dir = 9
 	},
 /area/science/circuit)
+"ipC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel/cmo,
+/area/medical/medbay/central)
 "iQh" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 1
@@ -101135,6 +101180,21 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/circuit/green,
 /area/science/research/abandoned)
+"nKZ" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel/grimy,
+/area/chapel/main)
+"oyO" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel/neutral,
+/area/hallway/secondary/exit/departure_lounge)
 "oZC" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -101181,6 +101241,10 @@
 	},
 /turf/open/floor/plasteel/neutral,
 /area/science/research/abandoned)
+"qgA" = (
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel/neutral,
+/area/hallway/secondary/entry)
 "qhc" = (
 /obj/structure/table/reinforced,
 /obj/item/device/integrated_electronics/analyzer,
@@ -101195,6 +101259,15 @@
 	dir = 5
 	},
 /area/science/circuit)
+"qEW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel/arrival{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
 "rhO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -101211,6 +101284,13 @@
 "saw" = (
 /turf/closed/wall,
 /area/science/circuit)
+"sxL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel/neutral,
+/area/hallway/primary/fore)
 "tmi" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -101225,6 +101305,15 @@
 	dir = 10
 	},
 /area/science/misc_lab)
+"udQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel/whitepurple/corner{
+	dir = 1
+	},
+/area/science/research)
 "upk" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Holodeck Access"
@@ -101249,6 +101338,16 @@
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/misc_lab)
+"uzK" = (
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/security/courtroom)
+"uTq" = (
+/obj/machinery/pathfinder_tile,
+/turf/open/floor/plasteel/redyellow,
+/area/crew_quarters/bar/atrium)
 "uYS" = (
 /obj/machinery/door/airlock/atmos/glass{
 	heat_proof = 1;
@@ -101331,13 +101430,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
-"xJl" = (
-/obj/structure/table,
-/obj/item/folder/white,
-/turf/open/floor/plasteel/whiteblue/corner{
-	dir = 8
-	},
-/area/medical/medbay/central)
 "xMn" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/bin,
@@ -123897,7 +123989,7 @@ dod
 dxE
 dyY
 dAo
-aap
+dBP
 dfY
 aad
 abj
@@ -136255,7 +136347,7 @@ dVd
 dVS
 dVd
 dVd
-dVd
+nKZ
 dVd
 dZT
 eaA
@@ -137753,7 +137845,7 @@ cNp
 cPa
 cQM
 cSs
-cUi
+udQ
 cQP
 cXv
 cZl
@@ -137896,7 +137988,7 @@ abs
 abF
 abP
 acb
-aco
+qgA
 aco
 aco
 aco
@@ -137916,7 +138008,7 @@ aco
 aco
 aiT
 abZ
-ajw
+qEW
 ajV
 akE
 akE
@@ -138717,7 +138809,7 @@ aLL
 aNh
 aOK
 aQt
-aLL
+uTq
 aTI
 aVs
 aNh
@@ -139598,7 +139690,7 @@ dUx
 dXN
 dYH
 dZp
-dZZ
+oyO
 dUx
 ebm
 dYH
@@ -141353,7 +141445,7 @@ cQT
 cSE
 cUt
 cWj
-xJl
+cXG
 cZt
 dbc
 dcO
@@ -142067,7 +142159,7 @@ baL
 bcr
 bdS
 bfo
-bgC
+sxL
 bib
 bfo
 blJ
@@ -142522,7 +142614,7 @@ abu
 abF
 abQ
 acb
-aco
+qgA
 aco
 aco
 aco
@@ -142893,7 +142985,7 @@ cNz
 cPs
 cQT
 cSF
-cUx
+ipC
 cQU
 cXM
 cPy
@@ -146467,7 +146559,7 @@ ccX
 ceO
 cgC
 cim
-cjV
+uzK
 clk
 cmS
 cou
@@ -150075,7 +150167,7 @@ csU
 cux
 cvV
 cxm
-cyS
+eWE
 cAr
 cBW
 cuy
