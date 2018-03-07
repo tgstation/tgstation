@@ -135,7 +135,7 @@
 
 
 /datum/antagonist/changeling/proc/purchase_power(sting_name)
-	var/datum/action/changeling/thepower = null
+	var/datum/action/changeling/thepower
 
 	for(var/path in all_powers)
 		var/datum/action/changeling/S = path
