@@ -34326,7 +34326,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/science/circuit)
+/area/maintenance/department/cargo)
 "bFE" = (
 /obj/docking_port/stationary{
 	dwidth = 2;
