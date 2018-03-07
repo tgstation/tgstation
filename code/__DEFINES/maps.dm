@@ -26,7 +26,6 @@ require only minor tweaks.
 #define MAP_REMOVE_JOB(jobpath) /datum/job/##jobpath/map_check() { return (SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) && ..() }
 
 #define SPACERUIN_MAP_EDGE_PAD 15
-#define ZLEVEL_SPACE_RUIN_COUNT 7
 
 // traits
 // boolean - marks a level as having that property if present
