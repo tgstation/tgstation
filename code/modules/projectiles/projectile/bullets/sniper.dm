@@ -37,10 +37,3 @@
 	dismemberment = 0 //It goes through you cleanly.
 	knockdown = 0
 	breakthings = FALSE
-
-/obj/item/projectile/bullet/p50/penetrator/turret
-	name =".50 annihilator bullet"
-	damage = 1000 //kills you dead
-	knockdown = 100 //dunno how you lived but stay down bitch
-	dismemberment = 100 //basically a miracle it doesn't completely gib you
-	armour_penetration = 100 //haha no

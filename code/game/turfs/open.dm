@@ -98,6 +98,19 @@
 			playsound(L, 'sound/magic/exit_blood.ogg', 50, TRUE)
 			flash_color(L, flash_color = "#C80000", flash_time = 10)
 
+/turf/open/indestructible/opshuttle
+	name = "shuttle floor"
+	icon_state = "shuttlefloor4"
+	
+/turf/open/indestructible/opshuttle/vault
+	icon_state = "vaultfull"
+
+/turf/open/indestructible/opshuttle/dark
+	icon_state = "darkfull"
+
+/turf/open/indestructible/opshuttle/vault/side
+	icon_state = "vault"
+
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0
 	update_visuals()

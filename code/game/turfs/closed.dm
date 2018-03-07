@@ -71,8 +71,26 @@
 	icon_state = "alien1"
 
 /turf/closed/indestructible/opshuttle
-	icon_state = "wall3"
+	name = "wall"
+	desc = "An evil wall of plasma and titanium."
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "map-shuttle"
+	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plastitanium, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium, /turf/closed/indestructible/opshuttle)
 
+/turf/closed/indestructible/opshuttle/nodiagonal
+	smooth = SMOOTH_MORE
+	icon_state = "map-shuttle_nd"
+	
+/turf/closed/indestructible/opshuttle/nosmooth
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall"
+	smooth = SMOOTH_FALSE
+
+/turf/closed/indestructible/opshuttle/overspace
+	icon_state = "map-overspace"
+	fixed_underlay = list("space"=1)
+	
 /turf/closed/indestructible/fakeglass
 	name = "window"
 	icon_state = "fake_window"
@@ -85,6 +103,11 @@
 	icon_state = null //set the icon state to null, so our base state isn't visible
 	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
+
+/turf/closed/indestructible/fakeglass/opshuttle
+	name = "plastitanium window"
+	desc = "An evil looking window of plasma and titanium."
+	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 
 /turf/closed/indestructible/fakedoor
 	name = "CentCom Access"
