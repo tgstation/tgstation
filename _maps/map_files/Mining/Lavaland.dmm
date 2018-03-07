@@ -587,7 +587,7 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "bO" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/purple/corner{
 	dir = 8
 	},
