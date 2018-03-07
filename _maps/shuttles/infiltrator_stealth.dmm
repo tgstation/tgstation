@@ -23,7 +23,6 @@
 	name = "Syndicate Stealth Cruiser";
 	port_direction = 8;
 	preferred_direction = 4;
-	timid = 0;
 	width = 22
 	},
 /turf/open/floor/plating,
@@ -477,6 +476,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/power/smes,
 /turf/open/floor/plating,
 /area/shuttle/stealthcruiser)
 "bj" = (
