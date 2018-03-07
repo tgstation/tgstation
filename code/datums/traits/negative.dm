@@ -15,14 +15,15 @@
 
 /datum/trait/morerobustthanyou
 	name = "Brain Tumor"
-	desc = "You got a little friend in yo head thats drivin you insane in the membrane."
+	desc = "You have a little friend going in your brain that is slowly destroying your brain. Better bring some mannitol!"
 	value = -2
-	mob_trait = TRAIT_BRAIN_TUMOR
 	gain_text = "<span class='danger'>You feel smooth.</span>"
 	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
 
 /datum/trait/morerobustthanyou/on_process()
 	trait_holder.adjustBrainLoss(1)
+
+
 
 /datum/trait/nearsighted //t. errorage
 	name = "Nearsighted"
