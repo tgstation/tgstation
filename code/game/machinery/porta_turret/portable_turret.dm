@@ -606,6 +606,14 @@
 	stun_projectile = /obj/item/projectile/bullet/syndicate_turret
 	lethal_projectile = /obj/item/projectile/bullet/syndicate_turret
 
+/obj/machinery/porta_turret/syndicate/cannon
+	name = "high-velocity cannon turret"
+	stun_projectile = /obj/item/projectile/bullet/p50/penetrator/turret
+	lethal_projectile = /obj/item/projectile/bullet/p50/penetrator/turret
+	desc = "You really don't want to be anywhere near this."
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //nope.
+	
+
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
 
