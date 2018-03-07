@@ -85,32 +85,33 @@
 
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
 	next_scare = world.time + 120
-	if(owner.stat != DEAD)
-		var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
-		if(reason)
-			to_chat(owner, "<span class='userdanger'>Seeing [reason] [message]!</span>")
-		else if(trigger_word)
-			to_chat(owner, "<span class='userdanger'>Hearing \"[trigger_word]\" [message]!</span>")
-		else
-			to_chat(owner, "<span class='userdanger'>Something [message]!</span>")
-		var/reaction = rand(1,4)
-		switch(reaction)
-			if(1)
-				to_chat(owner, "<span class='warning'>You are paralyzed with fear!</span>")
-				owner.Stun(70)
-				owner.Jitter(8)
-			if(2)
-				owner.emote("scream")
-				owner.Jitter(5)
-				owner.say("AAAAH!!")
-				if(reason)
-					owner.pointed(reason)
-			if(3)
-				to_chat(owner, "<span class='warning'>You shut your eyes in terror!</span>")
-				owner.Jitter(5)
-				owner.blind_eyes(10)
-			if(4)
-				owner.dizziness += 10
-				owner.confused += 10
-				owner.Jitter(10)
-				owner.stuttering += 10
+	if(owner.stat == DEAD)
+		return
+	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
+	if(reason)
+		to_chat(owner, "<span class='userdanger'>Seeing [reason] [message]!</span>")
+	else if(trigger_word)
+		to_chat(owner, "<span class='userdanger'>Hearing \"[trigger_word]\" [message]!</span>")
+	else
+		to_chat(owner, "<span class='userdanger'>Something [message]!</span>")
+	var/reaction = rand(1,4)
+	switch(reaction)
+		if(1)
+			to_chat(owner, "<span class='warning'>You are paralyzed with fear!</span>")
+			owner.Stun(70)
+			owner.Jitter(8)
+		if(2)
+			owner.emote("scream")
+			owner.Jitter(5)
+			owner.say("AAAAH!!")
+			if(reason)
+				owner.pointed(reason)
+		if(3)
+			to_chat(owner, "<span class='warning'>You shut your eyes in terror!</span>")
+			owner.Jitter(5)
+			owner.blind_eyes(10)
+		if(4)
+			owner.dizziness += 10
+			owner.confused += 10
+			owner.Jitter(10)
+			owner.stuttering += 10
