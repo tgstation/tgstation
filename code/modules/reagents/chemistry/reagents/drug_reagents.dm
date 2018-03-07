@@ -5,11 +5,6 @@
 	taste_description = "bitterness"
 	var/trippy = TRUE //Does this drug make you trip?
 
-/datum/reagent/drug/on_mob_life(mob/living/M)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
-	if(mood && trippy)
-		mood.add_event("[id]_high", /datum/mood_event/drugs/high, name)
-
 /datum/reagent/drug/on_mob_delete(mob/living/M)
 	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
 	if(mood && trippy)

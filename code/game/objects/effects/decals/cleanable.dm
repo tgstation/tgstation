@@ -100,4 +100,4 @@
 
 /obj/effect/decal/cleanable/Destroy()
 	var/area/A = get_area(src)
-	A.beauty -= beauty
+	A.beauty -= beauty / A.areasize

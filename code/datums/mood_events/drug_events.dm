@@ -35,5 +35,5 @@
 /datum/mood_event/drugs/withdrawal_critical
 	mood_change = -10
 
-/datum/mood_event/drugs/withdrawal_critical/New(drug_name)
+/datum/mood_event/drugs/withdrawal_critical/add_effects(drug_name)
 	description = "<span class='boldwarning'>[drug_name]! [drug_name]! [drug_name]!</span>\n"
