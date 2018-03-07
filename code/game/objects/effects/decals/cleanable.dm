@@ -29,7 +29,7 @@
 /obj/effect/decal/cleanable/LateInitialize()
 	if(src.loc && isturf(src.loc))
 		var/area/A = get_area(src)
-		A.beauty += beauty / min(1, A.areasize) //Ensures that the effects scale with room size
+		A.beauty += beauty / max(1, A.areasize) //Ensures that the effects scale with room size
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
 	if(mergeable_decal)
@@ -101,4 +101,4 @@
 /obj/effect/decal/cleanable/Destroy()
 	if(src.loc && isturf(src.loc))
 		var/area/A = get_area(src)
-		A.beauty -= beauty / min(1, A.areasize)
+		A.beauty -= beauty / max(1, A.areasize)
