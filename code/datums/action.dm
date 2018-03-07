@@ -617,7 +617,7 @@
 
 /datum/action/small_sprite/drake
 	small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-	small_icon_state = "dragon_humanoid"
+	small_icon_state = "ash_whelp"
 
 /datum/action/small_sprite/Trigger()
 	..()
