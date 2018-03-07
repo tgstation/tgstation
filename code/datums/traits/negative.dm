@@ -13,6 +13,17 @@
 
 
 
+/datum/trait/morerobustthanyou
+	name = "Brain Tumor"
+	desc = "You got a little friend in yo head thats drivin you insane in the membrane."
+	value = -2
+	mob_trait = TRAIT_HEAVY_SLEEPER
+	gain_text = "<span class='danger'>You feel smooth.</span>"
+	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
+
+/datum/trait/morerobustthanyou/on_process()
+	adjustBrainLoss(1)
+
 /datum/trait/nearsighted //t. errorage
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
