@@ -633,7 +633,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/MouseDrop(atom/over)
 	if(!usr || !over)
 		return
-	if (isobserver(usr) && usr.client.holder && isliving(over))
+	if (isobserver(usr) && usr.client.holder && (isliving(over) || iscameramob(over)) )
 		if (usr.client.holder.cmd_ghost_drag(src,over))
 			return
 
