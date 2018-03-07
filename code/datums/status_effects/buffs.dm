@@ -480,12 +480,12 @@
 			deathTick += 1
 		else
 			owner.visible_message("[owner]'s soul is absorbed into the rod, releaving the previous snake of it's duty.")
-			var/mob/living/simple_animal/hostile/retaliate/poison/snake/healSnake = new /mob/living/simple_animal/hostile/retaliate/poison/snake(owner.loc)
+			var/mob/living/simple_animal/hostile/retaliate/poison/snake/healSnake = new(owner.loc)
 			var/list/chems = list("bicaridine", "salbutamol", "kelotane", "antitoxin")
 			healSnake.poison_type = pick(chems)
 			healSnake.name = "Asclepius's Snake"
 			healSnake.real_name = "Asclepius's Snake"
-			healSnake.desc = "A mystical snake previously trapped upon the Rod of Asclepius, now freed of it's burden. Unlike the average snake, it's bites contain chemicals with minor healing properties."
+			healSnake.desc = "A mystical snake previously trapped upon the Rod of Asclepius, now freed of its burden. Unlike the average snake, its bites contain chemicals with minor healing properties."
 			new /obj/effect/decal/cleanable/ash(owner.loc)
 			new /obj/item/rod_of_asclepius(owner.loc)
 			qdel(owner)
@@ -494,11 +494,8 @@
 			var/mob/living/carbon/itemUser = owner
 			var/obj/item/heldItem = itemUser.get_item_for_held_index(hand)
 			if(heldItem == null || heldItem.type != /obj/item/rod_of_asclepius) //Checks to make sure the rod is still in their hand
-				var/obj/item/rod_of_asclepius/newRod = new /obj/item/rod_of_asclepius(itemUser.loc)
-				newRod.flags_1 = NODROP_1 | DROPDEL_1
-				newRod.desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
-				newRod.icon_state = "asclepius_active"
-				newRod.activated = TRUE
+				var/obj/item/rod_of_asclepius/newRod = new(itemUser.loc)
+				newRod.activated()
 				if(!itemUser.has_hand_for_held_index(hand))
 					//If user does not have the corresponding hand anymore, give them one and return the rod to their hand
 					if(((hand % 2) == 0))

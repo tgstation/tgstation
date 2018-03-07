@@ -176,12 +176,15 @@
 			to_chat(itemUser, "<span class='notice'>The snake, satisfied with your oath, attaches itself and the rod to your forearm with an inseparable grip. Your thoughts seem to only revolve around the core idea of helping others, and harm is nothing more than a distant, wicked memory...</span>")
 			var/datum/status_effect/hippocraticOath/effect = itemUser.apply_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH)
 			effect.hand = itemUser.get_held_index_of_item(src)
-			flags_1 = NODROP_1 | DROPDEL_1
-			desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
-			icon_state = "asclepius_active"
-			activated = TRUE
+			activated()
 		else
 			to_chat(user, "<span class='warning'>The snake carving seems to come alive, if only for a moment, before returning to it's dormant state, almost as if it finds you incapable of holding it's oath.</span>")
+
+/obj/item/rod_of_asclepius/proc/activated()
+	flags_1 = NODROP_1 | DROPDEL_1
+	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
+	icon_state = "asclepius_active"
+	activated = TRUE
 
 //Wisp Lantern
 /obj/item/device/wisp_lantern
