@@ -26,7 +26,7 @@
 	desc = "You walk with a gentle step, making stepping on sharp objects quieter and less painful."
 	value = 1
 	mob_trait = TRAIT_LIGHT_STEP
-	gain_text = "<span class='notice'>You walk with a little more lithenessk.</span>"
+	gain_text = "<span class='notice'>You walk with a little more litheness.</span>"
 	lose_text = "<span class='danger'>You start tromping around like a barbarian.</span>"
 
 

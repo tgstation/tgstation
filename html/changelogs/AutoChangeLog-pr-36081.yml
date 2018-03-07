@@ -1,0 +1,7 @@
+author: "CameronWoof & MrDoomBringer"
+delete-after: True
+changes: 
+  - rscadd: "Adds medical sprays, a new application method for touch chems"
+  - rscadd: "Pre-loaded medical sprays can be obtained from NanoMeds"
+  - rscadd: "Empty medical sprays can be found in boxes in chemistry and from cargo's medical crate"
+  - tweak: "Sterilizer spray has been migrated to be a medspray instead of being a spray bottle"

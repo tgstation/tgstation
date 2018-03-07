@@ -114,7 +114,7 @@
 	if(trait_holder.reagents.has_reagent("mindbreaker"))
 		trait_holder.hallucination = 0
 		return
-	if(prob(1)) //we'll all be mad soon enough
+	if(prob(2)) //we'll all be mad soon enough
 		madness()
 
 /datum/trait/insanity/proc/madness(mad_fools)
