@@ -7,6 +7,7 @@
 
 	var/omnitongue = FALSE
 	var/owner
+	var/can_learn = 0	//how many languages can be learned
 
 /datum/language_holder/New(owner)
 	src.owner = owner
@@ -100,6 +101,15 @@
 		var/datum/mind/M = owner
 		if(M.current)
 			. = M.current
+
+/datum/language_holder/proc/add_learn()
+	can_learn++
+
+/datum/language_holder/proc/remove_learn()
+	if(can_learn > 0)
+		can_learn--
+		return TRUE
+	return FALSE
 
 /datum/language_holder/alien
 	languages = list(/datum/language/xenocommon)

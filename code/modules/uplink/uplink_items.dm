@@ -1086,9 +1086,16 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/device_tools/codespeak_manual
 	name = "Codespeak Manual"
-	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited used."
-	item = /obj/item/codespeak_manual/unlimited
+	desc = "Unlimited use, read it and apply it to a friend's head! Anyone listening will think you're babbling about random concepts and drinks as you tell your friend to get ready, you're slipping the Captain, right now."
+	item = /obj/item/codespeak_manual/unlimited	//in modules/language/codespeak.dm
 	cost = 3
+
+/datum/uplink_item/device_tools/language_guide
+	name = "Language Guide"
+	desc = "Learn a language! One use! Comes free in the disguise kit!"
+	item = /obj/item/language_guidebook	//in modules/language/language_guidebook.dm
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear)	//operatives need to listen to and shoot each other, not lizards
 
 // Implants
 /datum/uplink_item/implants

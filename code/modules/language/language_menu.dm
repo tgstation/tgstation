@@ -93,6 +93,10 @@
 					message_admins("[key_name_admin(user)] removed the [language_name] language to [key_name_admin(AM)].")
 					log_admin("[key_name(user)] removed the language [language_name] to [key_name(AM)].")
 				. = TRUE
+		if("learn_language")
+			if(language_datum && language_holder.remove_learn())
+				language_holder.grant_language(language_datum)
+				. = TRUE
 		if("toggle_omnitongue")
 			if(is_admin || isobserver(AM))
 				language_holder.omnitongue = !language_holder.omnitongue
