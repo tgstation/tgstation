@@ -1,4 +1,0 @@
-author: "Astral"
-delete-after: True
-changes: 
-  - bugfix: "Lighting fixtures should no longer be visible in camera-less areas by cameras."
