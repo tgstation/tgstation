@@ -16,13 +16,7 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(default_unfasten_wrench(user, W))
 			return
-		else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-			user.visible_message("[user] destroys the [name]!",
-								"<span class='notice'>You destroy the [name].</span>")
-			W.play_tool_sound(src)
-			qdel(src)
-			return
-		else if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+		if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
 			if(!W.tool_start_check(user, amount=0))
 				return FALSE
 
