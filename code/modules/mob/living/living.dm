@@ -860,7 +860,7 @@
 			return TRUE
 		to_chat(src, "<span class='notice'>You don't want to risk harming anyone!</span>")
 		return FALSE
-return TRUE
+	return TRUE
 
 /mob/living/carbon/proc/update_stamina()
 	if(staminaloss)
