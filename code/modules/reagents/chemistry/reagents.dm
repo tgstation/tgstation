@@ -67,6 +67,10 @@
 /datum/reagent/proc/on_mob_delete(mob/M)
 	return
 
+//Called when the mob this reagent is inside is attacked
+/datum/reagent/proc/on_mob_attacked(mob/M)
+	return
+
 /datum/reagent/proc/on_move(mob/M)
 	return
 

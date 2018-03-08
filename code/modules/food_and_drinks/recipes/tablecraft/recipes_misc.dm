@@ -345,3 +345,13 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/salad/ricepudding
 	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/stabsinthe
+	name = "Stabsinthe"
+	time = 40
+	reqs = list(
+		/obj/item/grown/nettle/basic = 1,
+		/datum/reagent/consumable/ethanol/absinthe = 100
+	)
+	result = /obj/item/reagent_containers/food/drinks/bottle/stabsinthe
+	subcategory = CAT_MISCFOOD

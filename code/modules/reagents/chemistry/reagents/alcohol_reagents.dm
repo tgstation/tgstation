@@ -1505,3 +1505,27 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.satiety += 5 //for context, vitamins give 30 satiety per tick
 	..()
 	. = TRUE
+
+/datum/reagent/consumable/ethanol/stabsinthe
+	name = "Stabsinthe"
+	id = "stabsinthe"
+	description = "Waxy, thirst-quenching drink refined from ground nettle needles. Spitting up the needles is considered rude, but effective."
+	color = "#006400"
+	boozepwr = 95
+	taste_description = "refreshment, and some needles"
+	glass_name = "Stabsinthe"
+	glass_desc = "Stabsinthe's like drinkin' a cool breeze. Just don't go spittin' needles everywhere."
+	var/retaliated = FALSE
+
+/datum/reagent/consumable/ethanol/stabsinthe/on_mob_life(mob/living/M)
+	if(prob(2))
+		to_chat(M, "<span class='danger'>You feel a stabbing pain in your throat.</span>") //The drink is filled with needles. You might get poked!
+		M.adjustBruteLoss(5)
+	retaliated = FALSE
+
+/datum/reagent/consumable/ethanol/stabsinthe/on_mob_attacked(mob/living/M)
+	if(!retaliated)
+		M.a_intent_change(INTENT_HARM)
+		M.click_random_mob()
+		M.visible_message("<span class='warning'>[M] furiously retaliates!","<span class='warning'>You furiously retaliate!")
+		retaliated = TRUE

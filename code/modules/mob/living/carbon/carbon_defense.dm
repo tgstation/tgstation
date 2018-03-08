@@ -76,6 +76,9 @@
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
 	send_item_attack_message(I, user, affecting.name)
+	if(reagents)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			R.on_mob_attacked(src)
 	if(I.force)
 		apply_damage(I.force, I.damtype, affecting)
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
