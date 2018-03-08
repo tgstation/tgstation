@@ -62,7 +62,7 @@
 
 /obj/item/device/electronic_assembly/proc/handle_idle_power()
 	// First we generate power.
-	for(var/obj/item/integrated_circuit/passive/power/P in assembly_components)
+	for(var/obj/item/integrated_circuit/P in assembly_components)
 		P.make_energy()
 
 	// Now spend it.
@@ -351,7 +351,7 @@
 	qdel(src)
 
 /obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
-	for(var/obj/item/integrated_circuit/input/S in assembly_components)
+	for(var/obj/item/integrated_circuit/S in assembly_components)
 		if(S.sense(target,user,proximity))
 			visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
 
@@ -392,7 +392,7 @@
 		interact(user)
 		return TRUE
 	else
-		for(var/obj/item/integrated_circuit/input/S in assembly_components)
+		for(var/obj/item/integrated_circuit/S in assembly_components)
 			S.attackby_react(I,user,user.a_intent)
 		return ..()
 
@@ -406,14 +406,15 @@
 
 	var/list/input_selection = list()
 	var/list/available_inputs = list()
-	for(var/obj/item/integrated_circuit/input in assembly_components)
-		if(input.can_be_asked_input)
-			available_inputs.Add(input)
+	for(var/obj/item/integrated_circuit/inputC in assembly_components)
+		inputC.special_input(user, available_inputs, input_selection)
+		if(inputC.can_be_asked_input)
+			available_inputs.Add(inputC)
 			var/i = 0
 			for(var/obj/item/integrated_circuit/s in available_inputs)
-				if(s.name == input.name && s.displayed_name == input.displayed_name && s != input)
+				if(s.name == inputC.name && s.displayed_name == inputC.displayed_name && s != inputC)
 					i++
-			var/disp_name= "[input.displayed_name] \[[input]\]"
+			var/disp_name= "[inputC.displayed_name] \[[inputC]\]"
 			if(i)
 				disp_name += " ([i+1])"
 			input_selection.Add(disp_name)

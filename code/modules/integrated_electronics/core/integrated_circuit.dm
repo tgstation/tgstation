@@ -76,6 +76,9 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	else
 		return user.canUseTopic(src, BE_CLOSE)
 
+/obj/item/integrated_circuit/proc/make_energy()
+	return
+
 /obj/item/integrated_circuit/Initialize()
 	displayed_name = name
 	setup_io(inputs, /datum/integrated_io, inputs_default, IC_INPUT)
@@ -301,6 +304,8 @@ a creative player the means to solve many problems.  Circuits are held inside an
 /obj/item/integrated_circuit/proc/on_attack_self(mob/user) // mainly used for input types
 	return
 
+/obj/item/integrated_circuit/proc/special_input(mob/user, list/available_inputs, list/input_selection)
+	return
 
 // Returns true if there's enough power to work().
 /obj/item/integrated_circuit/proc/check_power()

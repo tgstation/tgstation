@@ -81,29 +81,45 @@
 		if(PRIORITIZE)
 			if(!io.holder)
 				return
+			var/obj/item/integrated_circuit/prefab/P
+			if(istype(io.holder.loc, /obj/item/integrated_circuit/prefab))
+				P = io.holder.loc
 			switch(io.pin_type)
 				if(IC_INPUT)
 					io.holder.priority_inputs |= io
+					if(P)
+						P.inputs |= io
 				if(IC_OUTPUT)
 					io.holder.priority_outputs |= io
+					if(P)
+						P.outputs |= io
 				if(IC_ACTIVATOR)
 					io.holder.priority_activators |= io
+					if(P)
+						P.activators |= io
 			to_chat(user, "<span class='notice'>You prioritize \the [io.name].</span>")
-			io.holder.interact(user) // This is to update the UI.
 			return
 
 		if(DEPRIORITIZE)
 			if(!io.holder)
 				return
+			var/obj/item/integrated_circuit/prefab/P
+			if(istype(io.holder.loc, /obj/item/integrated_circuit/prefab))
+				P = io.holder.loc
 			switch(io.pin_type)
 				if(IC_INPUT)
 					io.holder.priority_inputs -= io
+					if(P)
+						P.inputs -= io
 				if(IC_OUTPUT)
 					io.holder.priority_outputs -= io
+					if(P)
+						P.outputs -= io
 				if(IC_ACTIVATOR)
 					io.holder.priority_activators -= io
+					if(P)
+						P.activators -= io
 			to_chat(user, "<span class='notice'>You deprioritize \the [io.name].</span>")
-			io.holder.interact(user) // This is to update the UI.
 			return
 
 /obj/item/device/integrated_electronics/wirer/attack_self(mob/user)

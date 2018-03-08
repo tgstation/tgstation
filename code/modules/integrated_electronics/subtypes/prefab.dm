@@ -19,9 +19,11 @@
 		outputs += component.priority_outputs
 		activators += component.priority_activators
 		power_draw_per_use += component.power_draw_per_use
+		power_draw_idle += component.power_draw_idle
 		complexity += component.complexity
 		size += component.size
 		action_flags |= component.action_flags
+		materials[MAT_METAL] += component.materials[MAT_METAL]
 
 /obj/item/integrated_circuit/prefab/on_insert()
 	for(var/i in circuit_components)
@@ -34,7 +36,7 @@
 		component.assembly = null
 
 /obj/item/integrated_circuit/prefab/save() // Special json code to handle this
-	var/list/component_params = ..() //name and type
+	var/list/component_params = list()
 	component_params["circuits"] = list()
 	component_params["prioritized_io"] = list()
 	var/list/priority_io = list()
@@ -69,6 +71,7 @@
 		component_params["prioritized_io"] = priority_io
 	if(wires.len)
 		component_params["wires"] = wires
+	component_params += ..() //name, type and input values
 	return component_params
 
 
@@ -85,7 +88,6 @@
 		action_flags |= component.action_flags
 	if(component_params["prioritized_io"])
 		for(var/p in component_params["prioritized_io"])
-			to_chat(world, "[assembly]")
 			var/datum/integrated_io/IO = assembly.get_pin_ref_list(p,circuit_components)
 			switch(IO.pin_type)
 				if(IC_INPUT)
@@ -103,45 +105,7 @@
 	..()
 
 /obj/item/integrated_circuit/prefab/verify_save(list/component_params) // kind of a copypasta, with some checks removed since prefabs have no pins when created
-	var/init_name = initial(name)
-	// Validate name
-	if(component_params["name"] && !reject_bad_name(component_params["name"], TRUE))
-		return "Bad component name at [init_name]."
-
-	// Validate input values
-	if(component_params["inputs"])
-		var/list/loaded_inputs = component_params["inputs"]
-		if(!islist(loaded_inputs))
-			return "Malformed input values list at [init_name]."
-
-		var/inputs_amt = length(component_params["prioritized_io"])
-		to_chat(world, "[length(loaded_inputs)]")
-		to_chat(world, "[inputs_amt]")
-		// Too many inputs? Inputs for input-less component? This is not good.
-		if(!inputs_amt || inputs_amt < length(loaded_inputs))
-			return "Input values list out of bounds at [init_name]."
-
-		for(var/list/input in loaded_inputs)
-			if(input.len != 3)
-				return "Malformed input data at [init_name]."
-
-			var/input_id = input[1]
-			var/input_type = input[2]
-			//var/input_value = input[3]
-
-			// No special type support yet.
-			if(input_type)
-				return "Unidentified input type at [init_name]!"
-			// TODO: support for special input types, such as typepaths and internal refs
-
-			// Input ID is a list index, make sure it's sane.
-			if(!isnum(input_id) || input_id % 1 || input_id < 1)
-				return "Invalid input index at [init_name]."
-
-/obj/item/integrated_circuit/prefab/on_attack_self(mob/user)
-	for(var/i in circuit_components)
-		var/obj/item/integrated_circuit/circuit = i
-		circuit.on_attack_self(user) // this won't ask you which inner circuit to trigger, it'll trigger them all.
+	..()
 
 /obj/item/integrated_circuit/prefab/external_examine(mob/user)
 	..()
@@ -160,6 +124,29 @@
 	for(var/i in circuit_components)
 		var/obj/item/integrated_circuit/circuit = i
 		circuit.sense(A,user,prox)
+
+/obj/item/integrated_circuit/prefab/make_energy()
+	..()
+	for(var/i in circuit_components)
+		var/obj/item/integrated_circuit/circuit = i
+		circuit.make_energy()
+
+/obj/item/integrated_circuit/prefab/special_input(mob/user, list/available_inputs, list/input_selection)
+	..()
+	. = TRUE // to not add the prefab itself to the
+	for(var/c in circuit_components)
+		var/obj/item/integrated_circuit/circuit = c
+		if(circuit.can_be_asked_input)
+			available_inputs.Add(circuit)
+			var/i = 0
+			for(var/obj/item/integrated_circuit/s in available_inputs)
+				if(s.name == circuit.name && s.displayed_name == circuit.displayed_name && s != circuit)
+					i++
+			var/disp_name= "[circuit.displayed_name] \[[circuit]\]"
+			if(i)
+				disp_name += " ([i+1])"
+			disp_name += "(in [displayed_name])"
+			input_selection.Add(disp_name)
 
 /obj/item/integrated_circuit/prefab/interact(mob/user, HTML)
 	HTML += "<table border='1' style='undefined;table-layout: fixed; width: 80%'><div align='center'>"

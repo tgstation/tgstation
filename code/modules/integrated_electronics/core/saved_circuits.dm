@@ -56,8 +56,6 @@
 			return "Malformed input values list at [init_name]."
 
 		var/inputs_amt = length(inputs)
-		to_chat(world, "[inputs_amt]")
-		to_chat(world, "[length(loaded_inputs)]")
 
 		// Too many inputs? Inputs for input-less component? This is not good.
 		if(!inputs_amt || inputs_amt < length(loaded_inputs))

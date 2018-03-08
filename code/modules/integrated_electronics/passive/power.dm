@@ -5,9 +5,6 @@
 	complexity = 5
 	category_text = "Power - Passive"
 
-/obj/item/integrated_circuit/passive/power/proc/make_energy()
-	return
-
 // For calculators.
 /obj/item/integrated_circuit/passive/power/solar_cell
 	name = "tiny photovoltaic cell"
