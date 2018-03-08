@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ac" = (
-/obj/machinery/porta_turret/syndicate{
+/obj/machinery/porta_turret/syndicate/xray{
 	dir = 9
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -21,7 +21,7 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate/bridge)
 "af" = (
-/obj/machinery/porta_turret/syndicate{
+/obj/machinery/porta_turret/syndicate/xray{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -136,7 +136,7 @@
 	},
 /area/shuttle/syndicate/bridge)
 "aw" = (
-/obj/machinery/porta_turret/syndicate{
+/obj/machinery/porta_turret/syndicate/xray{
 	dir = 10
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -170,7 +170,7 @@
 	},
 /area/shuttle/syndicate/hallway)
 "aB" = (
-/obj/machinery/porta_turret/syndicate{
+/obj/machinery/porta_turret/syndicate/xray{
 	dir = 6
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -197,7 +197,7 @@
 	},
 /area/shuttle/syndicate/hallway)
 "aF" = (
-/obj/machinery/porta_turret/syndicate{
+/obj/machinery/porta_turret/syndicate/xray{
 	dir = 9
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -233,7 +233,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "aK" = (
-/obj/machinery/porta_turret/syndicate{
+/obj/machinery/porta_turret/syndicate/xray{
 	dir = 5
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -420,7 +420,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "bj" = (
-/obj/machinery/porta_turret/syndicate{
+/obj/machinery/porta_turret/syndicate/xray{
 	dir = 9
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -925,13 +925,13 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cC" = (
-/obj/machinery/porta_turret/syndicate{
+/obj/machinery/porta_turret/syndicate/xray{
 	dir = 6
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
 "cD" = (
-/obj/machinery/porta_turret/syndicate{
+/obj/machinery/porta_turret/syndicate/xray{
 	dir = 10
 	},
 /turf/closed/wall/mineral/plastitanium,
