@@ -25988,7 +25988,7 @@
 /turf/open/floor/plasteel,
 /area/science/research/lobby)
 "bnO" = (
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -28907,7 +28907,7 @@
 /area/science/lab)
 "bur" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/rnd/protolathe/department/science,
+/obj/machinery/rnd/production/protolathe/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bus" = (
@@ -29430,7 +29430,7 @@
 "bvy" = (
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/rnd/circuit_imprinter/department/science,
+/obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bvz" = (
@@ -33635,7 +33635,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/obj/machinery/rnd/protolathe/department/medical,
+/obj/machinery/rnd/production/techfab/department/medical,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -50075,7 +50075,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "cCD" = (
-/obj/machinery/rnd/protolathe/department/service,
+/obj/machinery/rnd/production/techfab/department/service,
 /turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "cCF" = (
@@ -50124,19 +50124,19 @@
 /turf/open/floor/plating/airless,
 /area/maintenance/department/chapel/monastery)
 "cCS" = (
-/obj/machinery/rnd/protolathe/department/security,
+/obj/machinery/rnd/production/techfab/department/security,
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "cCT" = (
-/obj/machinery/rnd/protolathe/department/cargo,
+/obj/machinery/rnd/production/techfab/department/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "cCU" = (
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cCV" = (
-/obj/machinery/rnd/protolathe/department/engineering,
+/obj/machinery/rnd/production/protolathe/department/engineering,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cCW" = (
