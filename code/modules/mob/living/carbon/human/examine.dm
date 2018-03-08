@@ -275,13 +275,10 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
-<<<<<<< HEAD
 	if((!skipface || is_ghost) && is_thrall(src) && (in_range(user,src) || is_ghost))
 		msg += "Their features seem unnaturally tight and drawn.\n"
 
-=======
 	var/traitstring = get_trait_string()
->>>>>>> ab9e2e8902... Adds minor roundstart traits! (ala CDDA, etc.) (#35440)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/cyberimp/eyes/hud/CIH = H.getorgan(/obj/item/organ/cyberimp/eyes/hud)
