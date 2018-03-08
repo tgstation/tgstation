@@ -40,11 +40,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(H.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
 			H.drunkenness = max((H.drunkenness + (sqrt(volume) * boozepwr * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
 			var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
-<<<<<<< HEAD
-			H.applyLiverDamage((max(sqrt(volume) * boozepwr * L.alcohol_tolerance, 0))/4)
-=======
 			H.applyLiverDamage((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/150)
->>>>>>> b95969475c... - Introduces a non-linear component to liver damage from alcohol so weak alcohol doesn't kill you instantly. (#36089)
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
