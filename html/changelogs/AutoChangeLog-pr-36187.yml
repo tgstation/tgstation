@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "The Shift Duration in the round-end report is no longer blank in rounds lasting between one and two hours."
