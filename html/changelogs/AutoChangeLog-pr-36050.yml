@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - tweak: "Emagging the emergency shuttle now fries the on-board acceleration governor. Better buckle up!"
