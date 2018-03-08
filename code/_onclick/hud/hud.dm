@@ -104,11 +104,8 @@
 	healths = null
 	healthdoll = null
 	internals = null
-<<<<<<< HEAD
 	staminas = null
-=======
 	mood = null
->>>>>>> 5140cff38c... [reviewpls] Adds moodlets to the game - [Please give suggestions for trait additions in comments] (#35475)
 	lingchemdisplay = null
 	devilsouldisplay = null
 	lingstingdisplay = null
