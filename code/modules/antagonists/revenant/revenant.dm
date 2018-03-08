@@ -83,7 +83,7 @@
 			icon_reveal = "poltergeist_revealed"
 			icon_stun = "poltergeist_stun"
 			icon_drain = "poltergeist_draining"
-			AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant/punch(null))
+			AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant/urges(null))
 			AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/push(null))
 		if(4 to 6) //burn
 			pickedghost = "Specter"
@@ -501,7 +501,7 @@
 	icon_reveal = "poltergeist_revealed"
 	icon_stun = "poltergeist_stun"
 	icon_drain = "poltergeist_draining"
-	AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant/punch(null))
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant/urges(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/push(null))
 
 /mob/living/simple_animal/revenant/specter

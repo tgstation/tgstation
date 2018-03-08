@@ -349,12 +349,12 @@
 
 /obj/effect/proc_holder/spell/targeted/revenant/urges
 	name = "Violent Urges"
-	desc = "Causes someone to attack someone else. You will be only quickly flashed."
-	charge_max = 100
+	desc = "Causes someone to attack someone else. You will be only quickly flashed. Cheap, but high cooldown."
+	charge_max = 300
 	range = 7
-	cast_amount = 40
+	cast_amount = 20
 	unlock_amount = 80
-	reveal = 50
+	reveal = 10
 	stun = 0
 	locked = FALSE
 	action_icon_state = "blight"
@@ -371,7 +371,7 @@
 	charge_max = 200
 	range = 2
 	cast_amount = 75
-	unlock_amount = 100
+	unlock_amount = 150
 	action_icon_state = "blight"
 	sound = 'sound/magic/repulse.ogg'
 	reveal = 70
@@ -417,7 +417,7 @@
 					to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
 				AM.throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)
 
-/obj/effect/proc_holder/spell/targeted/revenant/punch
+/obj/effect/proc_holder/spell/aoe_turf/revenant/punch
 	name = "Ethereal Uppercut"
 	desc = "Uppercut in a line facing you, causing a delayed throw."
 	charge_max = 200
@@ -429,8 +429,25 @@
 	reveal = 0
 	stun = 0
 
-///obj/effect/proc_holder/spell/targeted/revenant/punch/cast()
-//	if(attempt_cast(user))
+/obj/effect/proc_holder/spell/aoe_turf/revenant/punch/cast(list/targets,mob/user = usr)
+	if(attempt_cast(user))
+		if(!isrevenant(user))
+			return FALSE
+		var/mob/living/simple_animal/revenant/R = user
+		R.stun(40)
+		R.reveal(60)
+		if(!do_after(R, 20, 0, R))
+			to_chat(R, "<span class='userdanger'>Your attack was broken!</span>") //they're stunned, so this shouldn't happen but lets pretend it did
+			return FALSE
+		for(var/i in 1 to 4)
+			walk(R,0)
+			walk_towards(R, R.dir, 1)
+			var/turf/T = get_turf(R)
+			for(var/mob/living/L in T)
+				targets |= L
+			sleep(0.1) //wow, he's actually moving and stuff!
+		addtimer(CALLBACK(targets, .proc/polterthrow), 30)
+
 
 /////SPECTER (BURN GHOST)/////
 
