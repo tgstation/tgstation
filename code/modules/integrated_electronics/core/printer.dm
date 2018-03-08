@@ -273,11 +273,11 @@
 					if(!materials.use_amount_type(program["metal_cost"], MAT_METAL))
 						to_chat(usr, "<span class='warning'>You need [program["metal_cost"]] metal to build that!</span>")
 						return
-					var/cloning_time = program["metal_cost"] / 150
+					var/cloning_time = round(program["metal_cost"] / 150)
 					cloning_time = min(cloning_time, MAX_CIRCUIT_CLONE_TIME)
 					cloning = TRUE
 					clone_countdown = cloning_time
-					to_chat(usr, "<span class='notice'>You begin printing a custom assembly. This will take approximately [round(cloning_time / 60, 0.1)] minute(s). You can still print \
+					to_chat(usr, "<span class='notice'>You begin printing a custom assembly. This will take approximately [round(cloning_time / 60, 0.1)]. You can still print \
 					off normal parts during this time.</span>")
 					playsound(src, 'sound/items/poster_being_created.ogg', 50, TRUE)
 					START_PROCESSING(SSprocessing, src)
