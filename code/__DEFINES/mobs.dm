@@ -93,9 +93,9 @@
 #define MOOD_LEVEL_HAPPY1 2
 #define MOOD_LEVEL_NEUTRAL 0
 #define MOOD_LEVEL_SAD1 -3
-#define MOOD_LEVEL_SAD2 -10
-#define MOOD_LEVEL_SAD3 -15
-#define MOOD_LEVEL_SAD4 -20
+#define MOOD_LEVEL_SAD2 -12
+#define MOOD_LEVEL_SAD3 -18
+#define MOOD_LEVEL_SAD4 -26
 
 //Beauty levels of areas for carbons
 #define BEAUTY_LEVEL_HORRID -50
