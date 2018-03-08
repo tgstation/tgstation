@@ -26,6 +26,15 @@
 	. = ..()
 	GLOB.navigation_computers -= src
 
+<<<<<<< HEAD
+=======
+/obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user)
+	if(jammed)
+		to_chat(user, "<span class='warning'>The Syndicate is jamming the console!</span>")
+		return
+	return ..()
+
+>>>>>>> 2a007503ab... US english memes
 /obj/machinery/computer/camera_advanced/shuttle_docker/GrantActions(mob/living/user)
 	if(jumpto_ports.len)
 		jump_action = new /datum/action/innate/camera_jump/shuttle_docker
