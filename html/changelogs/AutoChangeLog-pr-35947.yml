@@ -1,7 +1,0 @@
-author: "ACCount"
-delete-after: True
-changes: 
-  - rscadd: "Station airlocks now support NTNet remote control. Door remotes now use NTNet."
-  - rscadd: "Don't worry, any non-public airlock is fully protected from unauthorized control attempts by NTNet PassKey system!"
-  - rscadd: "New integrated circuit component: card reader. Use it to read PassKeys from ID cards."
-  - bugfix: "Fixes a delay issue when airlocks are being opened/closed by signalers."
