@@ -28,8 +28,12 @@
 		if(Uses >= 5 || recurring)
 			to_chat(user, "<span class='warning'>You cannot enhance this extract further!</span>")
 			return ..()
-		to_chat(user, "<span class='notice'>You apply the enhancer to the slime extract. It may now be reused one more time.</span>")
-		Uses++
+		if(O.type == /obj/item/slimepotion/enhancer) //Seriously, why is this defined here...?
+			to_chat(user, "<span class='notice'>You apply the enhancer to the slime extract. It may now be reused one more time.</span>")
+			Uses++
+		if(O.type == /obj/item/slimepotion/enhancer/max)
+			to_chat(user, "<span class='notice'>You dump the maximizer on the slime extract. It can now be used a total of 5 times!</span>")
+			Uses = 5
 		qdel(O)
 	..()
 

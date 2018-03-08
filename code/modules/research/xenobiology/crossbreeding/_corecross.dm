@@ -122,6 +122,12 @@ To add a crossbreed:
 	color = "#FFCCCC"
 	list_reagents = list("synthpax" = 5)
 
+/obj/item/slimecrossbeaker/omnizine //15u omnizine.
+	name = "healing extract"
+	desc = "A gelatinous extract of pure omnizine."
+	color = "#FF00FF"
+	list_reagents = list("omnizine" = 15)
+
 /obj/item/slimecrossbeaker/autoinjector //As with the above, but automatically injects whomever it is used on with contents.
 	container_type = DRAWABLE //Cannot be refilled, since it's basically an autoinjector!
 	var/ignore_flags = FALSE
@@ -169,7 +175,7 @@ To add a crossbreed:
 	list_reagents = list("synthpax" = 10, "space_drugs" = 15) //Peace, dudes
 
 /obj/item/slimecrossbeaker/autoinjector/slimestimulant
-	name = "stimulating gel"
+	name = "invigorating gel"
 	desc = "A bubbling purple mixture, designed to heal and boost movement."
 	color = "#FF00FF"
 	list_reagents = list("regen_jelly" = 30, "methamphetamine" = 9)
