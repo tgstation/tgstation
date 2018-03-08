@@ -45,11 +45,8 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define TRAUMA_TRAIT "trauma"
-<<<<<<< HEAD
-=======
 #define SPECIES_TRAIT "species"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
->>>>>>> ab9e2e8902... Adds minor roundstart traits! (ala CDDA, etc.) (#35440)
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
