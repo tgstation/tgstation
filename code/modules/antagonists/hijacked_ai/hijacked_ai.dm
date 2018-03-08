@@ -40,3 +40,6 @@
 		A.malf_picker.remove_malf_verbs(A)
 		qdel(A.malf_picker)
 	..()
+
+/datum/antagonist/hijacked_ai/can_be_owned(datum/mind/new_owner)
+	return ..() && isAI(new_owner.current)

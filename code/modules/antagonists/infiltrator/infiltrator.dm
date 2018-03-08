@@ -31,6 +31,7 @@
 	to_chat(owner, "<span class='notice bold'>Your job is to infiltrate [station_name()], and complete our objectives.</span>")
 	to_chat(owner, "<span class='notice'>You have an uplink implant, precharged with 30 TC. Use it wisely.</span>")
 	to_chat(owner, "<span class='notice'>You also have an internal radio, for communicating with your team-mates at all times.</span>")
+	to_chat(owner, "<span class='notice bold'><font size=2>Do <B>NOT</B> kill needlessly, as this defeats the purpose of an 'infiltration'!</font></span>")
 	owner.announce_objectives()
 
 /datum/antagonist/infiltrator/on_gain()

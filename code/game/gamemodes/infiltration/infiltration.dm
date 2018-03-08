@@ -33,5 +33,5 @@
 		sit_mind.add_antag_datum(/datum/antagonist/infiltrator)
 	return ..()
 
-/datum/game_mode/infiltration/generate_report()
+/datum/game_mode/infiltration/generate_report() //make this less shit
 	return "Reports show that the Syndicate is rounding up it's elite agents, possibly for a raid on a NanoTrasen-controlled station. Keep an eye out for unusual people."
