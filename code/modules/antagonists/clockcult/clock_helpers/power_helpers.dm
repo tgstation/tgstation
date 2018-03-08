@@ -4,19 +4,20 @@
 	return amount ? GLOB.clockwork_power >= amount : GLOB.clockwork_power
 
 /proc/adjust_clockwork_power(amount) //Adjusts the global clockwork power by this amount (min 0.)
+	var/current_power
 	if(GLOB.ratvar_approaches)
 		amount *= 0.75 //The herald's beacon reduces power costs by 25% across the board!
 	if(GLOB.ratvar_awakens)
-		GLOB.clockwork_power = INFINITY
+		current_power = GLOB.clockwork_power = INFINITY
 	else
-		GLOB.clockwork_power = CLAMP(GLOB.clockwork_power + amount, 0, MAX_CLOCKWORK_POWER)
+		current_power = GLOB.clockwork_power = CLAMP(GLOB.clockwork_power + amount, 0, MAX_CLOCKWORK_POWER)
 	for(var/obj/effect/clockwork/sigil/transmission/T in GLOB.all_clockwork_objects)
 		T.update_icon()
 	var/unlock_message
-	if(GLOB.clockwork_power >= SCRIPT_UNLOCK_THRESHOLD && !GLOB.script_scripture_unlocked)
+	if(current_power >= SCRIPT_UNLOCK_THRESHOLD && !GLOB.script_scripture_unlocked)
 		GLOB.script_scripture_unlocked = TRUE
 		unlock_message = "<span class='large_brass bold'>The Ark swells as a key power threshold is reached. Script scriptures are now available.</span>"
-	if(GLOB.clockwork_power >= APPLICATION_UNLOCK_THRESHOLD && !GLOB.application_scripture_unlocked)
+	if(current_power >= APPLICATION_UNLOCK_THRESHOLD && !GLOB.application_scripture_unlocked)
 		GLOB.application_scripture_unlocked = TRUE
 		unlock_message = "<span class='large_brass bold'>The Ark surges as a key power threshold is reached. Application scriptures are now available.</span>"
 	if(unlock_message && GLOB.servants_active)
