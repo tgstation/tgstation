@@ -1,9 +1,0 @@
-author: "Floyd / Qustinnus (Sprites by Ausops, Some moodlets by Ike709)"
-delete-after: True
-changes: 
-  - rscadd: "Adds mood, which can be found by clicking on the face icon on your screen."
-  - rscadd: "Adds various moodlets which affect your mood. Try eating your favourite food, playing an arcade game, reading a book, or petting a doggo to increase your moo. Also be sure to take care of your hunger on a regular basis, like always."
-  - rscadd: "Adds config option to disable/enable mood."
-  - rscadd: "Indoor area's now have a beauty var defined by the amount of cleanables in them, (We can later expand this to something like rimworld, where structures could make rooms more beautiful). These also affect mood. (Janitor now has gameplay purpose besides slipping and removing useless decals)
-remove: Removes hunger slowdown, replacing it with slowdown by being depressed"
-  - imageadd: "Icons for mood states and depression states"

@@ -1,7 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - rscadd: "Beacons can now be toggled on and off."
-  - rscadd: "Mappers can now have beacons that default to off. Useful for ruins!"
-  - tweak: "Renaming replaces the snowflake locator frequency/code"
-  - refactor: "Beacons are no longer radios. Why were they radios in the first place? I don't know."
