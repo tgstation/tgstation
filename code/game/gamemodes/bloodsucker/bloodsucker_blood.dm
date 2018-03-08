@@ -190,7 +190,7 @@
 
 /datum/language/vampiric
 	name = "Blah-Sucker"
-	desc = "The native language of the Bloodsucker elders, learned intuitively by Fledglings as they pass from death into mortality."
+	desc = "The native language of the Bloodsucker elders, learned intuitively by Fledglings as they pass from death into immortality."
 	speech_verb = "growls"
 	ask_verb = "growls"
 	exclaim_verb = "snarls"

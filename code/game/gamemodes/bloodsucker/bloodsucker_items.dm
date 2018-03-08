@@ -233,10 +233,13 @@
 			user.visible_message("<span class='notice'>[user] puts the [src] up to their mouth.</span>", \
 		  		"<span class='notice'>You take a sip from the [src].</span>")
 
+		// Safety: In case you spam clicked the blood bag on yourself, and it is now empty (below will divide by zero)
+		if (reagents.total_volume <= 0)
+			return
 
 		// Taken from drinks.dm //
 		var/gulp_size = 5
-		var/fraction = min(gulp_size/reagents.total_volume, 1)
+		var/fraction = min(gulp_size / reagents.total_volume, 1)
 		//checkLiked(fraction, M) // Blood isn't food, sorry.
 		reagents.reaction(M, INGEST, fraction)
 		reagents.trans_to(M, gulp_size)
