@@ -1,3 +1,5 @@
+GLOBAL_LIST_INIT(minor_infiltrator_objectives, list(/datum/objective/assassinate, /datum/objective/steal))
+
 /datum/objective/infiltrator
 	explanation_text = "Generic Infiltrator Objective!"
 	martyr_compatible = FALSE
