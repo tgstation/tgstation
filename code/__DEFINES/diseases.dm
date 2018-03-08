@@ -1,5 +1,5 @@
 
-#define DISEASE_LIMIT		1
+#define DISEASE_LIMIT		3 //HIPPIE, we like to have three diseases
 #define VIRUS_SYMPTOM_LIMIT	6
 
 //Visibility Flags
