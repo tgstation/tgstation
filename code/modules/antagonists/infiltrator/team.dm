@@ -14,14 +14,15 @@
 	var/text = "<br><span class='header'>The syndicate infiltrators were:</span>"
 	var/purchases = ""
 	var/TC_uses = 0
-	for(var/I in members)
-		var/datum/mind/syndicate = I
-		if(!istype(syndicate) || !GLOB.uplink_purchase_logs_by_key[syndicate.key])
-			continue
-		var/datum/uplink_purchase_log/H = GLOB.uplink_purchase_logs_by_key[syndicate.key]
-		if(H)
-			TC_uses += H.total_spent
-			purchases += H.generate_render(show_key = FALSE)
+	if(LAZYLEN(uplink_purchase_logs_by_key))
+		for(var/I in members)
+			var/datum/mind/syndicate = I
+			if(!istype(syndicate) || !GLOB.uplink_purchase_logs_by_key[syndicate.key])
+				continue
+			var/datum/uplink_purchase_log/H = GLOB.uplink_purchase_logs_by_key[syndicate.key]
+			if(H)
+				TC_uses += H.total_spent
+				purchases += H.generate_render(show_key = FALSE)
 	text += printplayerlist(members)
 	text += "<br>"
 	text += "(Syndicates used [TC_uses] TC) [purchases]"
