@@ -1514,7 +1514,7 @@
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "NZ" = (
-/obj/machinery/rnd/protolathe,
+/obj/machinery/rnd/production/protolathe,
 /turf/open/floor/plasteel,
 /area/science)
 "Qt" = (
