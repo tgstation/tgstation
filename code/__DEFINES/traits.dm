@@ -42,7 +42,7 @@
 #define TRAIT_DEPRESSION			"depression"
 #define TRAIT_JOLLY				"jolly"
 #define TRAIT_NOCRITDAMAGE		"no_crit"
-
+#define TRAIT_HOMOSEXUAL	"gay"
 
 
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"

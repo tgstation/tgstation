@@ -3,6 +3,11 @@
 	mood_change = 1
 	timeout = 1200
 
+/datum/mood_event/gayhug
+	description = "<span class='nicegreen'>That was a great hug.</span>\n"
+	mood_change = 2
+	timeout = 1200
+
 /datum/mood_event/arcade
 	description = "<span class='nicegreen'>I beat the arcade game!</span>\n"
 	mood_change = 3
