@@ -11,6 +11,7 @@
 	var/processing = FALSE
 	var/obj/screen/movable/action_button/button = null
 	var/buttontooltipstyle = ""
+	var/transparent_when_unavailable = TRUE
 
 	var/button_icon = 'icons/mob/actions/backgrounds.dmi' //This is the file for the BACKGROUND icon
 	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND //And this is the state for the background icon
@@ -124,7 +125,7 @@
 			ApplyIcon(button, force)
 
 		if(!IsAvailable())
-			button.color = rgb(128,0,0,128)
+			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
 		else
 			button.color = rgb(255,255,255,255)
 			return 1
@@ -571,6 +572,52 @@
 	if(target && procname)
 		call(target, procname)(usr)
 	return 1
+
+
+//Preset for an action with a cooldown
+
+/datum/action/cooldown
+	check_flags = 0
+	transparent_when_unavailable = FALSE
+	var/cooldown_time = 0
+	var/next_use_time = 0
+
+/datum/action/cooldown/New()
+	..()
+	button.maptext = ""
+	button.maptext_x = 8
+	button.maptext_y = 0
+	button.maptext_width = 24
+	button.maptext_height = 12
+
+/datum/action/cooldown/IsAvailable()
+	return next_use_time <= world.time
+
+/datum/action/cooldown/proc/StartCooldown()
+	next_use_time = world.time + cooldown_time
+	button.maptext = "<b>[round(cooldown_time/10, 0.1)]</b>"
+	UpdateButtonIcon()
+	START_PROCESSING(SSfastprocess, src)
+
+/datum/action/cooldown/process()
+	if(!owner)
+		button.maptext = ""
+		STOP_PROCESSING(SSfastprocess, src)
+	var/timeleft = max(next_use_time - world.time, 0)
+	if(timeleft == 0)
+		button.maptext = ""
+		UpdateButtonIcon()
+		STOP_PROCESSING(SSfastprocess, src)
+	else
+		button.maptext = "<b>[round(timeleft/10, 0.1)]</b>"
+
+/datum/action/cooldown/Grant(mob/M)
+	..()
+	if(owner)
+		UpdateButtonIcon()
+		if(next_use_time > world.time)
+			START_PROCESSING(SSfastprocess, src)
+
 
 //Stickmemes
 /datum/action/item_action/stickmen
