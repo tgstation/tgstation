@@ -40,12 +40,17 @@
 		H.equipOutfit(/datum/outfit/infiltrator)
 		H.dna.species.random_name(H.gender, TRUE)
 		purrbation_remove(H, silent=TRUE)
+	owner.objectives |= infiltrator_team.objectives
+	. = ..()
+
+/datum/antagonist/infiltrator/on_removal()
+	owner.objectives -= infiltrator_team.objectives
 	. = ..()
 
 /datum/antagonist/infiltrator/get_team()
 	return infiltrator_team
 
-/datum/antagonist/infiltrator/create_team(datum/team/nuclear/new_team)
+/datum/antagonist/infiltrator/create_team(datum/team/infiltrator/new_team)
 	if(!new_team)
 		if(!always_new_team)
 			for(var/datum/antagonist/infiltrator/N in GLOB.antagonists)

@@ -1,3 +1,8 @@
+#define MIN_MAJOR_OBJECTIVES 1
+#define MAX_MAJOR_OBJECTIVES 2
+#define MIN_MINOR_OBJECTIVES 2
+#define MAX_MINOR_OBJECTIVES 3
+
 /datum/team/infiltrator
 	name = "syndicate infiltration unit"
 	member_name = "syndicate infiltrator"
@@ -24,4 +29,22 @@
 /datum/team/infiltrator/is_gamemode_hero()
 	return SSticker.mode.name == "infiltration"
 
+/datum/team/infiltrator/proc/add_objective(type)
+	var/datum/objective/O = new type
+	O.find_target()
+	O.team = src
+	objectives += O
+
 /datum/team/infiltrator/proc/update_objectives()
+	if(LAZYLEN(objectives))
+		return
+	var/list/major_objectives = subtypesof(/datum/objective/infiltrator)
+	var/list/minor_objectives = GLOB.minor_infiltrator_objectives.Copy()
+	var/major = max(rand(MIN_MAJOR_OBJECTIVES, MAX_MAJOR_OBJECTIVES), major_objectives.len)
+	var/minor = rand(MIN_MINOR_OBJECTIVES, MAX_MINOR_OBJECTIVES)
+	for(var/i in 1 to major)
+		add_objective(pick_n_take(major_objectives))
+	for(var/i in 1 to minor)
+		add_objective(pick(minor_objectives))
+	for(var/datum/mind/M in members)
+		M.objectives |= objectives
