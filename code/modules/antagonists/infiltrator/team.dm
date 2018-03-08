@@ -14,7 +14,7 @@
 	var/text = "<br><span class='header'>The syndicate infiltrators were:</span>"
 	var/purchases = ""
 	var/TC_uses = 0
-	if(LAZYLEN(uplink_purchase_logs_by_key))
+	if(LAZYLEN(GLOB.uplink_purchase_logs_by_key))
 		for(var/I in members)
 			var/datum/mind/syndicate = I
 			if(!istype(syndicate) || !GLOB.uplink_purchase_logs_by_key[syndicate.key])
@@ -36,7 +36,6 @@
 			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 		else
 			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-			win = FALSE
 		count++
 
 	parts += objectives_text
