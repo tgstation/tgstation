@@ -6,59 +6,53 @@
 /obj/machinery/porta_turret/syndicate{
 	dir = 9
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/bridge)
 "ad" = (
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/bridge)
 "ae" = (
-/obj/structure/window/plastitanium,
-/obj/machinery/door/poddoor/shutters{
-	id = "syndieshutters";
-	name = "blast shutters"
-	},
-/obj/structure/grille,
-/turf/open/floor/plating,
+/turf/closed/indestructible/fakeglass/opshuttle,
 /area/shuttle/syndicate/bridge)
 "af" = (
 /obj/machinery/porta_turret/syndicate{
 	dir = 5
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/bridge)
 "ag" = (
 /obj/machinery/computer/med_data/syndie,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/bridge)
 "ah" = (
 /obj/machinery/computer/crew/syndie,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/bridge)
 "ai" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/bridge)
 "aj" = (
 /obj/machinery/computer/shuttle/syndicate,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/bridge)
 "ak" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/bridge)
 "al" = (
 /obj/machinery/computer/camera_advanced/syndie,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/bridge)
 "am" = (
 /obj/machinery/computer/secure_data/syndie,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/bridge)
 "an" = (
 /obj/structure/table/reinforced,
@@ -71,7 +65,7 @@
 	},
 /obj/item/folder/red,
 /obj/item/toy/figure/syndie,
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate/bridge)
@@ -80,10 +74,10 @@
 	dir = 8;
 	name = "tactical swivel chair"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/bridge)
 "ap" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/bridge)
 "aq" = (
 /obj/structure/chair/office/dark{
@@ -97,14 +91,14 @@
 	pixel_y = 32;
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/bridge)
 "ar" = (
 /obj/structure/chair/office/dark{
 	dir = 4;
 	name = "tactical swivel chair"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/bridge)
 "as" = (
 /obj/structure/table/reinforced,
@@ -115,23 +109,23 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate/bridge)
 "at" = (
-/turf/open/floor/plasteel/vault/side,
+/turf/open/indestructible/opshuttle/vault/side,
 /area/shuttle/syndicate/bridge)
 "au" = (
 /obj/machinery/status_display,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/bridge)
 "av" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Cockpit";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate/bridge)
@@ -139,22 +133,22 @@
 /obj/machinery/porta_turret/syndicate{
 	dir = 10
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/hallway)
 "ax" = (
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/hallway)
 "ay" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/cable_coil/white,
 /obj/item/stack/cable_coil/white,
 /obj/item/crowbar/red,
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/hallway)
 "az" = (
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/hallway)
@@ -165,7 +159,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/zipties,
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/hallway)
@@ -173,26 +167,26 @@
 /obj/machinery/porta_turret/syndicate{
 	dir = 6
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/hallway)
 "aC" = (
 /obj/structure/chair{
 	dir = 4;
 	name = "tactical chair"
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/hallway)
 "aD" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/hallway)
 "aE" = (
 /obj/structure/chair{
 	dir = 8;
 	name = "tactical chair"
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/hallway)
@@ -200,10 +194,10 @@
 /obj/machinery/porta_turret/syndicate{
 	dir = 9
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/eva)
 "aG" = (
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/eva)
 "aH" = (
 /obj/structure/chair{
@@ -213,7 +207,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/hallway)
@@ -225,35 +219,35 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/hallway)
 "aJ" = (
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/airlock)
 "aK" = (
 /obj/machinery/porta_turret/syndicate{
 	dir = 5
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/armory)
 "aL" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/eva)
 "aM" = (
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/eva)
 "aN" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/eva)
 "aO" = (
 /obj/structure/chair{
@@ -261,10 +255,10 @@
 	name = "tactical chair"
 	},
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/airlock)
 "aP" = (
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/airlock)
@@ -275,25 +269,25 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/airlock)
 "aR" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/eva)
 "aS" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/eva)
 "aT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/airlock)
 "aU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -301,19 +295,17 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/eva)
 "aV" = (
-/obj/structure/grille,
-/obj/structure/window/plastitanium,
-/turf/open/floor/plating,
+/turf/closed/indestructible/fakeglass/opshuttle,
 /area/shuttle/syndicate/hallway)
 "aW" = (
 /obj/machinery/door/airlock/external{
 	name = "Ready Room";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate/hallway)
@@ -326,7 +318,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/airlock)
 "aY" = (
 /obj/machinery/door/poddoor{
@@ -355,17 +347,17 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/airlock)
 "aZ" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/eva)
 "ba" = (
 /obj/machinery/door/airlock/external{
 	name = "E.V.A. Gear Storage";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate/eva)
@@ -373,10 +365,10 @@
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/airlock)
 "bc" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/airlock)
 "bd" = (
 /obj/structure/sign/warning/securearea{
@@ -385,29 +377,25 @@
 	layer = 4;
 	name = "EXTERNAL AIRLOCK"
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/airlock)
 "be" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/eva)
 "bf" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/eva)
 "bg" = (
-/obj/structure/grille,
-/obj/structure/window/plastitanium,
-/turf/open/floor/plating,
+/turf/closed/indestructible/fakeglass/opshuttle,
 /area/shuttle/syndicate/eva)
 "bh" = (
-/obj/structure/grille,
-/obj/structure/window/plastitanium,
-/turf/open/floor/plating,
+/turf/closed/indestructible/fakeglass/opshuttle,
 /area/shuttle/syndicate/airlock)
 "bi" = (
 /obj/structure/rack,
@@ -417,49 +405,49 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/airlock)
 "bj" = (
 /obj/machinery/porta_turret/syndicate{
 	dir = 9
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/medical)
 "bk" = (
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/medical)
 "bl" = (
 /obj/machinery/ai_status_display,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/medical)
 "bm" = (
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/turf/closed/indestructible/opshuttle/nodiagonal,
 /area/shuttle/syndicate/medical)
 "bn" = (
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/turf/closed/indestructible/opshuttle/nodiagonal,
 /area/shuttle/syndicate/armory)
 "bo" = (
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/armory)
 "bp" = (
 /obj/machinery/status_display,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/armory)
 "bq" = (
 /obj/machinery/sleeper/syndie{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/medical)
 "br" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/medical)
 "bs" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/medical)
 "bt" = (
 /obj/item/reagent_containers/glass/bottle/epinephrine{
@@ -494,7 +482,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/medical)
 "bu" = (
 /obj/structure/table/reinforced,
@@ -502,17 +490,13 @@
 /obj/item/stack/medical/bruise_pack,
 /obj/item/stack/medical/ointment,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/medical)
 "bv" = (
-/obj/structure/grille,
-/obj/structure/window/plastitanium,
-/turf/open/floor/plating,
+/turf/closed/indestructible/fakeglass/opshuttle,
 /area/shuttle/syndicate/medical)
 "bw" = (
-/obj/structure/grille,
-/obj/structure/window/plastitanium,
-/turf/open/floor/plating,
+/turf/closed/indestructible/fakeglass/opshuttle,
 /area/shuttle/syndicate/armory)
 "bx" = (
 /obj/item/stock_parts/cell/high{
@@ -521,7 +505,7 @@
 	},
 /obj/item/stock_parts/cell/high,
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/armory)
 "by" = (
 /obj/item/screwdriver{
@@ -531,7 +515,7 @@
 	pixel_y = 3
 	},
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/armory)
 "bz" = (
 /obj/item/wrench,
@@ -540,7 +524,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/armory)
 "bA" = (
 /obj/item/device/assembly/signaler,
@@ -554,7 +538,7 @@
 	pixel_y = 4
 	},
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/armory)
 "bB" = (
 /obj/item/weldingtool/largetank{
@@ -562,22 +546,22 @@
 	},
 /obj/item/device/multitool,
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/armory)
 "bC" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/medical)
 "bD" = (
-/turf/open/floor/plasteel/vault/side,
+/turf/open/indestructible/opshuttle/vault/side,
 /area/shuttle/syndicate/medical)
 "bE" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/hallway)
@@ -585,15 +569,15 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/hallway)
 "bG" = (
-/turf/open/floor/plasteel/vault/side,
+/turf/open/indestructible/opshuttle/vault/side,
 /area/shuttle/syndicate/armory)
 "bH" = (
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/medical)
@@ -601,19 +585,19 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/medical)
 "bJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/medical)
 "bK" = (
 /obj/machinery/door/airlock/hatch{
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate/medical)
@@ -621,13 +605,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/hallway)
 "bM" = (
 /obj/machinery/door/airlock/hatch{
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 8
 	},
 /area/shuttle/syndicate/armory)
@@ -635,59 +619,59 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/armory)
 "bO" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/armory)
 "bP" = (
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/armory)
 "bQ" = (
 /obj/structure/closet/syndicate/personal,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/armory)
 "bR" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker,
 /obj/item/reagent_containers/dropper,
-/turf/open/floor/plasteel/vault/side,
+/turf/open/indestructible/opshuttle/vault/side,
 /area/shuttle/syndicate/medical)
 "bS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/medical)
 "bT" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/medical)
 "bU" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/hallway)
 "bV" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/armory)
 "bW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/indestructible/opshuttle,
 /area/shuttle/syndicate/armory)
 "bX" = (
 /obj/structure/closet/syndicate/nuclear,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/armory)
 "bY" = (
 /obj/structure/window/reinforced{
@@ -697,7 +681,7 @@
 /obj/item/bodypart/l_arm/robot,
 /obj/structure/table/reinforced,
 /obj/item/toy/plush/nukeplushie,
-/turf/open/floor/plasteel/vault/side,
+/turf/open/indestructible/opshuttle/vault/side,
 /area/shuttle/syndicate/medical)
 "bZ" = (
 /obj/machinery/door/window{
@@ -705,13 +689,13 @@
 	name = "Surgery";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/vault/side,
+/turf/open/indestructible/opshuttle/vault/side,
 /area/shuttle/syndicate/medical)
 "ca" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault/side,
+/turf/open/indestructible/opshuttle/vault/side,
 /area/shuttle/syndicate/medical)
 "cb" = (
 /obj/structure/window/reinforced{
@@ -727,7 +711,7 @@
 	pixel_y = -3
 	},
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault/side,
+/turf/open/indestructible/opshuttle/vault/side,
 /area/shuttle/syndicate/medical)
 "cc" = (
 /obj/item/storage/firstaid/regular{
@@ -740,10 +724,10 @@
 	pixel_y = -3
 	},
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault/side,
+/turf/open/indestructible/opshuttle/vault/side,
 /area/shuttle/syndicate/medical)
 "cd" = (
-/turf/open/floor/plasteel/vault,
+/turf/open/indestructible/opshuttle/vault,
 /area/shuttle/syndicate/hallway)
 "ce" = (
 /obj/item/device/sbeacondrop/bomb{
@@ -751,7 +735,7 @@
 	},
 /obj/item/device/sbeacondrop/bomb,
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault/side,
+/turf/open/indestructible/opshuttle/vault/side,
 /area/shuttle/syndicate/armory)
 "cf" = (
 /obj/item/grenade/syndieminibomb{
@@ -770,13 +754,13 @@
 /obj/item/grenade/plastic/c4,
 /obj/item/grenade/plastic/c4,
 /obj/item/grenade/plastic/c4,
-/turf/open/floor/plasteel/vault/side,
+/turf/open/indestructible/opshuttle/vault/side,
 /area/shuttle/syndicate/armory)
 "cg" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault/side,
+/turf/open/indestructible/opshuttle/vault/side,
 /area/shuttle/syndicate/armory)
 "ch" = (
 /obj/machinery/door/window{
@@ -784,7 +768,7 @@
 	name = "Technological Storage";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/vault/side,
+/turf/open/indestructible/opshuttle/vault/side,
 /area/shuttle/syndicate/armory)
 "ci" = (
 /obj/structure/window/reinforced{
@@ -792,7 +776,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/device/aicard,
-/turf/open/floor/plasteel/vault/side,
+/turf/open/indestructible/opshuttle/vault/side,
 /area/shuttle/syndicate/armory)
 "cj" = (
 /obj/item/surgicaldrill,
@@ -801,7 +785,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/medical)
@@ -813,7 +797,7 @@
 /obj/structure/mirror{
 	pixel_x = 30
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/medical)
@@ -834,7 +818,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/armory)
@@ -842,7 +826,7 @@
 /obj/item/cautery,
 /obj/item/scalpel,
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/medical)
@@ -850,13 +834,13 @@
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
+/turf/open/indestructible/opshuttle/dark,
 /area/shuttle/syndicate/medical)
 "cq" = (
 /obj/item/retractor,
 /obj/item/hemostat,
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
+/turf/open/indestructible/opshuttle/vault{
 	dir = 5
 	},
 /area/shuttle/syndicate/medical)
@@ -928,13 +912,13 @@
 /obj/machinery/porta_turret/syndicate{
 	dir = 6
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/medical)
 "cD" = (
 /obj/machinery/porta_turret/syndicate{
 	dir = 10
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate/armory)
 "cE" = (
 /obj/structure/shuttle/engine/propulsion/left,
