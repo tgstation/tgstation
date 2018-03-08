@@ -303,6 +303,9 @@
 							need_mob_update += R.addiction_act_stage4(C)
 						if(40 to INFINITY)
 							to_chat(C, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
+							GET_COMPONENT_FROM(mood, /datum/component/mood, C)
+							if(mood)
+								mood.clear_event("[R.id]_addiction")
 							cached_addictions.Remove(R)
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.

@@ -160,7 +160,7 @@
 	var/list/L = list()
 	var/list/areaindex = list()
 	if(regime_set == "Teleporter")
-		for(var/obj/item/device/radio/beacon/R in GLOB.teleportbeacons)
+		for(var/obj/item/device/beacon/R in GLOB.teleportbeacons)
 			if(is_eligible(R))
 				var/area/A = get_area(R)
 				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
