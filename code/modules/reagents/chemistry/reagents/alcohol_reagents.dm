@@ -42,11 +42,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				booze_power *= 0.7
 			H.drunkenness = max((H.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
 			var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
-<<<<<<< HEAD
-			H.applyLiverDamage((max(sqrt(volume) * boozepwr * L.alcohol_tolerance, 0))/10)
-=======
 			H.applyLiverDamage((max(sqrt(volume) * booze_power * L.alcohol_tolerance, 0))/4)
->>>>>>> ab9e2e8902... Adds minor roundstart traits! (ala CDDA, etc.) (#35440)
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
