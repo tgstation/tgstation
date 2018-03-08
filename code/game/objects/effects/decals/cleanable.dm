@@ -90,3 +90,12 @@
 		return bloodiness
 	else
 		return 0
+<<<<<<< HEAD
+=======
+
+/obj/effect/decal/cleanable/Destroy()
+	. = ..()
+	if(src.loc && isturf(src.loc))
+		var/area/A = get_area(src)
+		A.beauty -= beauty / max(1, A.areasize)
+>>>>>>> 0bc8550e1c... Small moodie balance changes (#36242)
