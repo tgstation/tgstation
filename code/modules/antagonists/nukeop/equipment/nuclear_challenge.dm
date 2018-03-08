@@ -3,8 +3,6 @@
 #define CHALLENGE_MIN_PLAYERS 50
 #define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
-GLOBAL_LIST_EMPTY(del_on_wardec)
-
 /obj/item/device/nuclear_challenge
 	name = "Declaration of War (Challenge Mode)"
 	icon_state = "gangtool-red"
@@ -55,9 +53,6 @@ GLOBAL_LIST_EMPTY(del_on_wardec)
 	for(var/V in GLOB.syndicate_shuttle_boards)
 		var/obj/item/circuitboard/computer/syndicate_shuttle/board = V
 		board.challenge = TRUE
-
-	for(var/atom/A in GLOB.del_on_wardec)
-		qdel(A)
 
 	new /obj/item/device/radio/uplink/nuclear(get_turf(user), user.key, CHALLENGE_TELECRYSTALS)
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))

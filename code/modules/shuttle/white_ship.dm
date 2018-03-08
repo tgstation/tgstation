@@ -17,11 +17,3 @@
 	x_offset = -6
 	y_offset = -10
 	designate_time = 100
-
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Initialize()
-	. = ..()
-	GLOB.del_on_wardec += src
-
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Destroy()
-	GLOB.del_on_wardec -= src
-	return ..()
