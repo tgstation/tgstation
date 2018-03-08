@@ -38,8 +38,6 @@
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
-<<<<<<< HEAD
-=======
 #define TRAIT_DEPRESSION			"depression"
 #define TRAIT_JOLLY				"jolly"
 #define TRAIT_NOCRITDAMAGE		"no_crit"
@@ -57,7 +55,6 @@
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
->>>>>>> 5140cff38c... [reviewpls] Adds moodlets to the game - [Please give suggestions for trait additions in comments] (#35475)
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
