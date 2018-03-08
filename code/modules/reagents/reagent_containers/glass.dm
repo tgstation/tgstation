@@ -118,6 +118,9 @@
 	. = ..()
 	update_icon()
 
+/obj/item/reagent_containers/glass/beaker/get_part_rating()
+	return reagents.maximum_volume
+
 /obj/item/reagent_containers/glass/beaker/on_reagent_change(changetype)
 	update_icon()
 

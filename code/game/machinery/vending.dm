@@ -244,32 +244,33 @@
 		dish_quants[S.name] = 1
 	sortList(dish_quants)
 
-/obj/machinery/vending/attackby(obj/item/W, mob/user, params)
+/obj/machinery/vending/crowbar_act(mob/living/user, obj/item/I)
+	if(!component_parts)
+		return FALSE
+	default_deconstruction_crowbar(I)
+	return TRUE
+
+/obj/machinery/vending/wrench_act(mob/living/user, obj/item/I)
 	if(panel_open)
-		if(default_unfasten_wrench(user, W, time = 60))
-			return
+		default_unfasten_wrench(user, I, time = 60)
+	return TRUE
 
-	if(component_parts)
-		if(default_deconstruction_crowbar(W))
-			return
-
-	if(istype(W, /obj/item/screwdriver))
-		if(anchored)
-			panel_open = !panel_open
-			to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>")
-			cut_overlays()
-			if(panel_open)
-				add_overlay("[initial(icon_state)]-panel")
-			W.play_tool_sound(src)
-			updateUsrDialog()
-		else
-			to_chat(user, "<span class='warning'>You must first secure [src].</span>")
-		return
-	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/wirecutters))
+/obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/I)
+	if(anchored)
+		default_deconstruction_screwdriver(user, icon_state, icon_state, I)
+		cut_overlays()
 		if(panel_open)
-			attack_hand(user)
+			add_overlay("[initial(icon_state)]-panel")
+		updateUsrDialog()
+	else
+		to_chat(user, "<span class='warning'>You must first secure [src].</span>")
+	return TRUE
+
+/obj/machinery/vending/attackby(obj/item/I, mob/user, params)
+	if(panel_open && is_wire_tool(I))
+		wires.interact(user)
 		return
-	else if(istype(W, /obj/item/coin))
+	else if(istype(I, /obj/item/coin))
 		if(coin)
 			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
 			return
@@ -279,32 +280,32 @@
 		if(!premium.len)
 			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(I, src))
 			return
-		coin = W
-		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
+		coin = I
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		return
-	else if(istype(W, /obj/item/stack/spacecash))
+	else if(istype(I, /obj/item/stack/spacecash))
 		if(coin)
 			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
 			return
 		if(bill)
 			to_chat(user, "<span class='warning'>[src] already has [bill] inserted</span>")
 			return
-		var/obj/item/stack/S = W
+		var/obj/item/stack/S = I
 		if(!premium.len)
 			to_chat(user, "<span class='warning'>[src] doesn't have a bill slot.</span>")
 			return
 		S.use(1)
-		bill = new S.type(src,1)
-		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
+		bill = new S.type(src, 1)
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		return
-	else if(istype(W, refill_canister) && refill_canister != null)
+	else if(istype(I, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
 			to_chat(user, "<span class='notice'>It does nothing.</span>")
 		else if(panel_open)
 			//if the panel is open we attempt to refill the machine
-			var/obj/item/vending_refill/canister = W
+			var/obj/item/vending_refill/canister = I
 			if(canister.charges[STANDARD_CHARGE] == 0)
 				to_chat(user, "<span class='notice'>This [canister.name] is empty!</span>")
 			else
@@ -849,7 +850,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	req_access_txt = "5"
 	products = list(/obj/item/reagent_containers/syringe = 12, /obj/item/reagent_containers/dropper = 3, /obj/item/stack/medical/gauze = 8, /obj/item/reagent_containers/pill/patch/styptic = 5, /obj/item/reagent_containers/pill/insulin = 10,
-				/obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/glass/bottle/charcoal = 4, /obj/item/reagent_containers/spray/medical/sterilizer = 1,
+				/obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/medspray/styptic = 2, /obj/item/reagent_containers/medspray/silver_sulf = 2, /obj/item/reagent_containers/glass/bottle/charcoal = 4, /obj/item/reagent_containers/medspray/sterilizine = 1,
 				/obj/item/reagent_containers/glass/bottle/epinephrine = 4, /obj/item/reagent_containers/glass/bottle/morphine = 4, /obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
 				/obj/item/reagent_containers/glass/bottle/toxin = 3, /obj/item/reagent_containers/syringe/antiviral = 6, /obj/item/reagent_containers/pill/salbutamol = 2, /obj/item/device/healthanalyzer = 4, /obj/item/device/sensor_device = 2, /obj/item/pinpointer/crew = 2)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 3, /obj/item/reagent_containers/pill/morphine = 4, /obj/item/reagent_containers/pill/charcoal = 6)
@@ -874,8 +875,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_deny = "wallmed-deny"
 	density = FALSE
 	products = list(/obj/item/reagent_containers/syringe = 3, /obj/item/reagent_containers/pill/patch/styptic = 5,
-					/obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/pill/charcoal = 2,
-					/obj/item/reagent_containers/spray/medical/sterilizer = 1)
+					/obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/medspray/styptic = 2, /obj/item/reagent_containers/medspray/silver_sulf = 2,
+					/obj/item/reagent_containers/pill/charcoal = 2, /obj/item/reagent_containers/medspray/sterilizine = 1)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 2, /obj/item/reagent_containers/pill/morphine = 2)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF

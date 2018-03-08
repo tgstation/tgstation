@@ -130,7 +130,24 @@
 		return
 
 	if(destination_z && destination_x && destination_y)
-		A.forceMove(locate(destination_x, destination_y, destination_z))
+		var/tx = destination_x
+		var/ty = destination_y
+		var/turf/DT = locate(tx, ty, destination_z)
+		var/itercount = 0
+		while(DT.density || istype(DT.loc,/area/shuttle)) // Extend towards the center of the map, trying to look for a better place to arrive
+			if (itercount++ >= 100)
+				log_game("SPACE Z-TRANSIT ERROR: Could not not find a safe place to land [A] within 100 iterations.")
+				break
+			if (tx < 128)
+				tx++
+			else
+				tx--
+			if (ty < 128)
+				ty++
+			else
+				ty--
+			DT = locate(tx, ty, destination_z)
+		A.forceMove(DT)
 
 		if(isliving(A))
 			var/mob/living/L = A

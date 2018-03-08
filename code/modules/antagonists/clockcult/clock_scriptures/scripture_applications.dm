@@ -100,13 +100,13 @@
 			human_servants++
 	construct_limit = round(CLAMP((human_servants / 4), 1, 3)) - recent_marauders //1 per 4 human servants, maximum of 3, reduced by recent marauder creation
 	if(recent_marauders)
-		to_chat(invoker, "<span class='warning'>The Hierophant Network is depleted by a summoning in the last [MARAUDER_SCRIPTURE_SCALING_THRESHOLD / 10] seconds - limiting the number of available marauders by [recent_marauders]!</span>")
+		to_chat(invoker, "<span class='warning'>The Hierophant Network is depleted by a summoning in the last [DisplayTimeText(MARAUDER_SCRIPTURE_SCALING_THRESHOLD, TRUE)] - limiting the number of available marauders by [recent_marauders]!</span>")
 
 /datum/clockwork_scripture/create_object/construct/clockwork_marauder/pre_recital()
 	channel_time = initial(channel_time)
 	if(recent_marauders)
 		scaled_recital_time = min(recent_marauders * MARAUDER_SCRIPTURE_SCALING_TIME, MARAUDER_SCRIPTURE_SCALING_MAX)
-		to_chat(invoker, "<span class='warning'>The Hierophant Network is under strain from repeated summoning, making this scripture [scaled_recital_time / 10] seconds slower!</span>")
+		to_chat(invoker, "<span class='warning'>The Hierophant Network is under strain from repeated summoning, making this scripture [DisplayTimeText(scaled_recital_time)] slower!</span>")
 		channel_time += scaled_recital_time
 	return TRUE
 

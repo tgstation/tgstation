@@ -33,12 +33,12 @@
 
 /datum/config_entry/can_vv_get(var_name)
 	. = ..()
-	if(var_name == "value" || var_name == "default")
+	if(var_name == NAMEOF(src, config_entry_value) || var_name == NAMEOF(src, default))
 		. &= !(protection & CONFIG_ENTRY_HIDDEN)
 
 /datum/config_entry/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list("name", "default", "resident_file", "protection", "abstract_type", "modified", "dupes_allowed")
-	if(var_name == "value")
+	var/static/list/banned_edits = list(NAMEOF(src, name), NAMEOF(src, default), NAMEOF(src, resident_file), NAMEOF(src, protection), NAMEOF(src, abstract_type), NAMEOF(src, modified), NAMEOF(src, dupes_allowed))
+	if(var_name == NAMEOF(src, config_entry_value))
 		if(protection & CONFIG_ENTRY_LOCKED)
 			return FALSE
 		. = ValidateAndSet("[var_value]")

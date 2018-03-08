@@ -3,6 +3,12 @@
 	id = "drug"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
+	var/trippy = TRUE //Does this drug make you trip?
+
+/datum/reagent/drug/on_mob_delete(mob/living/M)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	if(mood && trippy)
+		mood.clear_event("[id]_high")
 
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
@@ -23,7 +29,9 @@
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You start tripping hard!</span>")
-
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	if(mood)
+		mood.add_event("[id]_overdose", /datum/mood_event/drugs/overdose, name)
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
 	if(M.hallucination < volume && prob(20))
@@ -38,11 +46,15 @@
 	color = "#60A584" // rgb: 96, 165, 132
 	addiction_threshold = 30
 	taste_description = "smoke"
+	trippy = FALSE
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/M)
 	if(prob(1))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	if(mood)
+		mood.add_event("smoked", /datum/mood_event/drugs/smoked, name)
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
 	M.AdjustUnconscious(-20, 0)
@@ -57,6 +69,7 @@
 	taste_description = "mint"
 	reagent_state = LIQUID
 	color = "#80AF9C"
+	trippy = FALSE
 
 /datum/reagent/drug/crank
 	name = "Crank"
@@ -187,7 +200,7 @@
 	M.AdjustUnconscious(-40, 0)
 	M.adjustStaminaLoss(-2, 0)
 	M.Jitter(2)
-	M.adjustBrainLoss(0.25)
+	M.adjustBrainLoss(rand(1,4))
 	if(prob(5))
 		M.emote(pick("twitch", "shiver"))
 	..()
@@ -258,12 +271,19 @@
 		var/mob/living/L = M
 		L.add_trait(TRAIT_STUNIMMUNE, id)
 		L.add_trait(TRAIT_SLEEPIMMUNE, id)
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			C.gain_trauma(/datum/brain_trauma/special/psychotic_brawling/bath_salts, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/reagent/drug/bath_salts/on_mob_delete(mob/M)
 	if(isliving(M))
 		var/mob/living/L = M
 		L.remove_trait(TRAIT_STUNIMMUNE, id)
 		L.remove_trait(TRAIT_SLEEPIMMUNE, id)
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			for(var/datum/brain_trauma/special/psychotic_brawling/bath_salts/T in C.get_traumas())
+				qdel(T)
 	..()
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/M)
@@ -271,8 +291,7 @@
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.adjustStaminaLoss(-5, 0)
-	M.adjustBrainLoss(0.5)
-	M.adjustToxLoss(0.1, 0)
+	M.adjustBrainLoss(4)
 	M.hallucination += 10
 	if(M.canmove && !ismovableatom(M.loc))
 		step(M, pick(GLOB.cardinals))

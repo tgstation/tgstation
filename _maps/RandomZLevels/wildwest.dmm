@@ -1332,7 +1332,6 @@
 	},
 /area/awaymission/wildwest/gov)
 "ez" = (
-/obj/machinery/mineral/input,
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "eA" = (
@@ -1340,7 +1339,6 @@
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "eB" = (
-/obj/machinery/mineral/output,
 /turf/open/floor/plasteel,
 /area/awaymission/wildwest/refine)
 "eC" = (

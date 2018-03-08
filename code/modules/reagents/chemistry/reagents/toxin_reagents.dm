@@ -100,16 +100,14 @@
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/M)
 	. = TRUE
-	var/mob/living/carbon/C
-	if(iscarbon(M))
-		C = M
-		CHECK_DNA_AND_SPECIES(C)
-		if(NOBREATH in C.dna.species.species_traits)
-			. = FALSE
+
+	if(M.has_trait(TRAIT_NOBREATH))
+		. = FALSE
 
 	if(.)
 		M.adjustOxyLoss(5, 0)
-		if(C)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
 			C.losebreath += 2
 		if(prob(20))
 			M.emote("gasp")
@@ -184,7 +182,7 @@
 /datum/reagent/toxin/mindbreaker
 	name = "Mindbreaker Toxin"
 	id = "mindbreaker"
-	description = "A powerful hallucinogen. Not a thing to be messed with."
+	description = "A powerful hallucinogen. Not a thing to be messed with. For some mental patients. it counteracts their symptoms and anchors them to reality."
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
 	taste_description = "sourness"
@@ -453,16 +451,16 @@
 	else
 		..()
 
-/datum/reagent/toxin/neurotoxin2
-	name = "Neurotoxin"
-	id = "neurotoxin2"
-	description = "Neurotoxin will inhibit brain function and cause toxin damage before eventually knocking out its victim."
+/datum/reagent/toxin/fentanyl
+	name = "Fentanyl"
+	id = "fentanyl"
+	description = "Fentanyl will inhibit brain function and cause toxin damage before eventually knocking out its victim."
 	reagent_state = LIQUID
 	color = "#64916E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/neurotoxin2/on_mob_life(mob/living/M)
+/datum/reagent/toxin/fentanyl/on_mob_life(mob/living/M)
 	M.adjustBrainLoss(3*REM, 150)
 	. = 1
 	if(M.toxloss <= 60)
@@ -810,6 +808,7 @@
 	toxpwr = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
+	self_consuming = TRUE
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))

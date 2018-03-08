@@ -3,6 +3,7 @@
 
 /obj/item/integrated_circuit/output/screen
 	name = "small screen"
+	extended_desc = " use &lt;br&gt; to start a new line"
 	desc = "Takes any data type as an input, and displays it to the user upon examining."
 	icon_state = "screen"
 	inputs = list("displayed data" = IC_PINTYPE_ANY)
@@ -10,6 +11,8 @@
 	activators = list("load data" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 10
+	cooldown_per_use = 10
+	var/eol = "&lt;br&gt;"
 	var/stuff_to_display = null
 
 /obj/item/integrated_circuit/output/screen/disconnect_all()
@@ -30,7 +33,7 @@
 		if(d)
 			stuff_to_display = "[d]"
 	else
-		stuff_to_display = I.data
+		stuff_to_display = replacetext("[I.data]", eol , "<br>")
 
 /obj/item/integrated_circuit/output/screen/medium
 	name = "screen"
@@ -219,6 +222,7 @@
 	desc = "Takes any string as an input and will make the device say the string when pulsed."
 	extended_desc = "This unit is more advanced than the plain speaker circuit, able to transpose any valid text to speech."
 	icon_state = "speaker"
+	ext_cooldown = 2
 	complexity = 12
 	inputs = list("text" = IC_PINTYPE_STRING)
 	outputs = list()
