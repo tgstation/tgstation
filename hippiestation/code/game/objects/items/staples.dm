@@ -243,7 +243,7 @@
 					"<span class='italics'>You hear a ratchet.</span>")
 
 /mob/living/carbon/human/proc/try_to_embed(var/obj/item/I, var/obj/item/bodypart/L, var/message = FALSE)
-	if(dna && (PIERCEIMMUNE in dna.species.species_traits))
+	if(dna && has_trait(TRAIT_PIERCEIMMUNE))
 		return
 	throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 	L.embedded_objects |= I

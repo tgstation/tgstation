@@ -145,6 +145,12 @@
 			mode = BOT_IDLE
 			return
 
+		if(loc == get_turf(target))
+			if(!(check_bot(target) && prob(50)))	//Target is not defined at the parent. 50% chance to still try and clean so we dont get stuck on the last blood drop.
+				UnarmedAttack(target)	//Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
+			else
+				shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
+			path = list()
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
 			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
@@ -158,13 +164,6 @@
 			target = null
 			mode = BOT_IDLE
 			return
-
-	if(target && loc == target.loc)
-		if(!(check_bot(target) && prob(50)))	//Target is not defined at the parent. 50% chance to still try and clean so we dont get stuck on the last blood drop.
-			UnarmedAttack(target)	//Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
-		else
-			shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
-		path = list()
 
 	oldloc = loc
 

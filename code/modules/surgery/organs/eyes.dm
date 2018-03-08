@@ -130,12 +130,14 @@
 	eye.on = TRUE
 	eye.forceMove(M)
 	eye.update_brightness(M)
+	M.become_blind("flashlight_eyes")
 
 
 /obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
 	eye.on = FALSE
 	eye.update_brightness(M)
 	eye.forceMove(src)
+	M.cure_blind("flashlight_eyes")
 	..()
 
 // Welding shield implant

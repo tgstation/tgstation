@@ -192,13 +192,14 @@
 
 	. = FALSE
 
+	if(sources && !islist(sources))
+		sources = list(sources)
 	if(LAZYLEN(sources))
 		for(var/S in sources)
 			if(S in status_traits[trait])
 				return TRUE
-	else
-		if(LAZYLEN(status_traits[trait]))
-			return TRUE
+	else if(LAZYLEN(status_traits[trait]))
+		return TRUE
 
 /mob/living/proc/has_trait_datum(trait)
 	return roundstart_traits[trait]
@@ -250,5 +251,5 @@
 	if(stat == DEAD)
 		return
 	add_trait(TRAIT_FAKEDEATH, source)
-	tod = worldtime2text()
+	tod = station_time_timestamp()
 	update_stat()

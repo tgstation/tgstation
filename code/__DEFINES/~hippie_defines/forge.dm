@@ -304,7 +304,7 @@
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if(H.dna && H.dna.species)
-				if(PIERCEIMMUNE in H.dna.species.species_traits)
+				if(H.has_trait(TRAIT_PIERCEIMMUNE))
 					return
 		var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
 		var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)

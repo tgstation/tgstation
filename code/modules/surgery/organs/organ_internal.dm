@@ -110,7 +110,7 @@
 	var/breathes = TRUE
 	var/blooded = TRUE
 	if(dna && dna.species)
-		if(NOBREATH in dna.species.species_traits)
+		if(has_trait(TRAIT_NOBREATH, SPECIES_TRAIT))
 			breathes = FALSE
 		if(NOBLOOD in dna.species.species_traits)
 			blooded = FALSE
