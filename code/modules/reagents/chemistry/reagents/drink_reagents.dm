@@ -237,6 +237,12 @@
 	glass_icon_state = "glass_white"
 	glass_name = "glass of soy milk"
 	glass_desc = "White and nutritious soy goodness!"
+	overdose_threshold = 15
+
+/datum/reagent/consumable/soymilk/overdose_start(mob/living/M)
+	. = ..()
+	if(!M.has_trait(TRAIT_HOMOSEXUAL))
+		M.add_trait(TRAIT_HOMOSEXUAL)
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))

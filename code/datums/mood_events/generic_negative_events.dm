@@ -27,6 +27,11 @@
 	description = "<span class='warning'>It's getting hot in here.</span>\n"
 	mood_change = -2
 
+/datum/mood_event/badhug
+	description = "<span class='warning'>Ewww, I didn't want them to hug me!</span>\n"
+	mood_change = -1
+	timeout = 1200
+
 /datum/mood_event/creampie
 	description = "<span class='warning'>I've been creamed. Tastes like pie flavor.</span>\n"
 	mood_change = -2

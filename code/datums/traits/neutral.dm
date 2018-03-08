@@ -10,7 +10,13 @@
 	lose_text = "<span class='notice'>You can taste again!</span>"
 	medical_record_text = "Patient suffers from ageusia and is incapable of tasting food or reagents."
 
-
+/datum/trait/gay
+	name = "Homosexual"
+	desc = "You prefer people of your own gender."
+	value = 0
+	mob_trait = TRAIT_HOMOSEXUAL
+	gain_text = "<span class='notice'>You suddenly feel like you prefer your own gender.</span>"
+	lose_text = "<span class='notice'>You feel like you prefer other genders again.</span>"
 
 /datum/trait/deviant_tastes
 	name = "Deviant Tastes"

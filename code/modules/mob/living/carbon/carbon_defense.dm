@@ -263,7 +263,13 @@
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
 			GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 			if(mood)
-				mood.add_event("hug", /datum/mood_event/hug)
+				if(src.has_trait(TRAIT_HOMOSEXUAL))
+					if(M.gender == src.gender)
+						mood.add_event("hug", /datum/mood_event/gayhug)
+					else
+						mood.add_event("hug", /datum/mood_event/badhug) //Gays are picky I guess?
+				else
+					mood.add_event("hug", /datum/mood_event/hug)
 		AdjustStun(-60)
 		AdjustKnockdown(-60)
 		AdjustUnconscious(-60)
