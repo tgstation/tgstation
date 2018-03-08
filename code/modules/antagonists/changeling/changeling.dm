@@ -129,9 +129,11 @@
 
 /datum/antagonist/changeling/proc/regain_powers()//for when action buttons are lost and need to be regained, such as when the mind enters a new mob
 	emporium_action.Grant(owner.current)
-	for(var/path in purchasedpowers)
-		var/datum/action/changeling/S = new path()
-			S.Grant(owner.current)
+//	for(var/path in purchasedpowers)
+//		var/datum/action/changeling/S = new path()
+//			S.Grant(owner.current)
+//throws compiler warning:warning: operation has no effect here
+//proc is used in headcrab.dm and in transform_procs.dm to try to fix the bug to no avail
 
 /datum/antagonist/changeling/proc/has_sting(datum/action/changeling/power)
 	for(var/P in purchasedpowers)
