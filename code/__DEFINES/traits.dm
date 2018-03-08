@@ -44,7 +44,6 @@
 #define TRAIT_NOCRITDAMAGE		"no_crit"
 #define TRAIT_HOMOSEXUAL	"gay"
 
-
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
 #define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
