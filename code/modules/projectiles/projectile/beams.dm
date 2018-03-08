@@ -64,6 +64,10 @@
 	muzzle_type = /obj/effect/projectile/muzzle/xray
 	impact_type = /obj/effect/projectile/impact/xray
 
+/obj/item/projectile/beam/xray/heavy
+	damage = 50
+	irradiate = 100
+
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"

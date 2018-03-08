@@ -593,6 +593,14 @@
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	desc = "An energy blaster auto-turret."
 
+/obj/machinery/porta_turret/syndicate/energy/xray
+	name = "x-ray turret"
+	stun_projectile = /obj/item/projectile/beam/xray/heavy
+	stun_projectile_sound = 'sound/weapons/laser3.ogg'
+	lethal_projectile = /obj/item/projectile/beam/xray/heavy
+	lethal_projectile_sound = 'sound/weapons/laser3.ogg'
+	desc = "An experimental x-ray blaster auto-turret."
+
 
 /obj/machinery/porta_turret/syndicate/setup()
 	return
