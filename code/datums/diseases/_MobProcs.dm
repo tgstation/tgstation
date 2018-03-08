@@ -6,13 +6,8 @@
 			return TRUE
 	return FALSE
 
-<<<<<<< HEAD
-// Hippie Start - mirrored this proc in the hippie _mobProcs.dm to allow for and cap at a maximum of three viruses.
-/mob/proc/CanContractDisease(datum/disease/D)
-=======
 
 /mob/living/proc/CanContractDisease(datum/disease/D)
->>>>>>> dedf5f5ed9... Disease antagonist (#35988)
 	if(stat == DEAD)
 		return FALSE
 
@@ -26,46 +21,13 @@
 		return FALSE
 
 	return TRUE
-//Hippie End
+
 
 /mob/living/proc/ContactContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
 		return FALSE
-<<<<<<< HEAD
-	AddDisease(D)
-
-//Hippie Start - mirrored this proc in the hippie _mobProcs.dm to removed the "a new disease kills any old disease infecting the host based on stats
-/mob/proc/AddDisease(datum/disease/D)
-	for(var/datum/disease/advance/P in viruses)
-		if(istype(D, /datum/disease/advance))
-			var/datum/disease/advance/DD = D
-			if (P.totalResistance() < DD.totalTransmittable()) //Overwrite virus if the attacker's Transmission is lower than the defender's Resistance. This does not grant immunity to the lost virus.
-				P.remove_virus()
-
-	if (!viruses.len) //Only add the new virus if it defeated the existing one
-		var/datum/disease/DD = new D.type(1, D, 0)
-		viruses += DD
-		DD.affected_mob = src
-		SSdisease.active_diseases += DD //Add it to the active diseases list, now that it's actually in a mob and being processed.
-
-		//Copy properties over. This is so edited diseases persist.
-		var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars","transformed","symptoms","processing")
-		for(var/V in DD.vars)
-			if(V in skipped)
-				continue
-			if(islist(DD.vars[V]))
-				var/list/L = D.vars[V]
-				DD.vars[V] = L.Copy()
-			else
-				DD.vars[V] = D.vars[V]
-
-		DD.after_add()
-		DD.affected_mob.med_hud_set_status()
-//Hippie end
-=======
 	D.try_infect(src)
 
->>>>>>> dedf5f5ed9... Disease antagonist (#35988)
 
 /mob/living/carbon/ContactContractDisease(datum/disease/D, target_zone)
 	if(!CanContractDisease(D))
