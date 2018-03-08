@@ -135,7 +135,7 @@
 			var/atom/movable/moving_atom = old_contents[k]
 			if(moving_atom.loc != oldT) //fix for multi-tile objects
 				continue
-			move_mode = moving_atom.beforeShuttleMove(newT, rotation, move_mode)							//atoms
+			move_mode = moving_atom.beforeShuttleMove(newT, rotation, move_mode, src)						//atoms
 
 		move_mode = oldT.fromShuttleMove(newT, underlying_turf_type, baseturf_cache, move_mode)				//turfs
 		move_mode = newT.toShuttleMove(oldT, move_mode , src)												//turfs
