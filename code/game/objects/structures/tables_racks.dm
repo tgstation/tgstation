@@ -73,6 +73,9 @@
 	else
 		..()
 
+/obj/structure/table/attack_tk()
+	return FALSE
+
 /obj/structure/table/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
 		return 1
