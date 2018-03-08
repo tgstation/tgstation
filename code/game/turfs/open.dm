@@ -199,6 +199,9 @@
 		if(!(lube&SLIDE_ICE))
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
+		GET_COMPONENT_FROM(mood, /datum/component/mood, C)
+		if(mood)
+			mood.add_event("slipped", /datum/mood_event/slipped)
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)
 
@@ -269,9 +272,6 @@
 		if(TURF_WET_PERMAFROST)
 			intensity = 120
 			lube_flags = SLIDE_ICE | GALOSHES_DONT_HELP
-		if(TURF_WET_SLIDE)
-			intensity = 80
-			lube_flags = SLIDE | GALOSHES_DONT_HELP
 		else
 			qdel(GetComponent(/datum/component/slippery))
 			return

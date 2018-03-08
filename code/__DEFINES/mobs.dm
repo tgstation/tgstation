@@ -86,6 +86,25 @@
 #define SCREWYHUD_DEAD 2
 #define SCREWYHUD_HEALTHY 3
 
+//Moods levels for humans
+#define MOOD_LEVEL_HAPPY4 15
+#define MOOD_LEVEL_HAPPY3 10
+#define MOOD_LEVEL_HAPPY2 6
+#define MOOD_LEVEL_HAPPY1 2
+#define MOOD_LEVEL_NEUTRAL 0
+#define MOOD_LEVEL_SAD1 -3
+#define MOOD_LEVEL_SAD2 -10
+#define MOOD_LEVEL_SAD3 -15
+#define MOOD_LEVEL_SAD4 -20
+
+//Beauty levels of areas for carbons
+#define BEAUTY_LEVEL_HORRID -50
+#define BEAUTY_LEVEL_BAD -25
+#define BEAUTY_LEVEL_GOOD 25
+#define BEAUTY_LEVEL_GREAT 50
+
+
+
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550
@@ -118,7 +137,7 @@
 //Sentience types, to prevent things like sentience potions from giving bosses sentience
 #define SENTIENCE_ORGANIC 1
 #define SENTIENCE_ARTIFICIAL 2
-#define SENTIENCE_OTHER 3
+// #define SENTIENCE_OTHER 3 unused
 #define SENTIENCE_MINEBOT 4
 #define SENTIENCE_BOSS 5
 
@@ -136,29 +155,6 @@
 #define ENVIRONMENT_SMASH_STRUCTURES 1 //crates, lockers, ect
 #define ENVIRONMENT_SMASH_WALLS 2   //walls
 #define ENVIRONMENT_SMASH_RWALLS 4  //rwalls
-
-
-//SNPCs
-//AI defines
-#define INTERACTING 2
-#define TRAVEL 4
-#define FIGHTING 8
-//Trait defines
-#define TRAIT_ROBUST 2
-#define TRAIT_UNROBUST 4
-#define TRAIT_SMART 8
-#define TRAIT_DUMB 16
-#define TRAIT_MEAN 32
-#define TRAIT_FRIENDLY 64
-#define TRAIT_THIEVING 128
-//Range/chance defines
-#define MAX_RANGE_FIND 32
-#define MIN_RANGE_FIND 16
-#define FUZZY_CHANCE_HIGH 85
-#define FUZZY_CHANCE_LOW 50
-#define CHANCE_TALK 1
-
-#define TK_MAXRANGE 15
 
 #define NO_SLIP_WHEN_WALKING 1
 #define SLIDE 2

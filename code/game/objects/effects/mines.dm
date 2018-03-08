@@ -136,6 +136,7 @@
 	chainsaw.attack_self(victim)
 	chainsaw.wield(victim)
 	victim.reagents.add_reagent("adminordrazine",25)
+	to_chat(victim, "<span class='warning'>KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!</span>")
 
 	victim.client.color = pure_red
 	animate(victim.client,color = red_splash, time = 10, easing = SINE_EASING|EASE_OUT)

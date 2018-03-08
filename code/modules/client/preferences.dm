@@ -879,15 +879,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return 1
 
 	else if(href_list["preference"] == "trait")
-		if(SSticker.HasRoundStarted() && !isnewplayer(user))
-			to_chat(user, "<span class='danger'>The round has already started. Please wait until next round to set up your traits!</span>")
-			return
 		switch(href_list["task"])
 			if("close")
 				user << browse(null, "window=mob_occupation")
 				ShowChoices(user)
 			if("update")
 				var/trait = href_list["trait"]
+				if(!SStraits.traits[trait])
+					return
 				var/value = SStraits.trait_points[trait]
 				if(value == 0)
 					if(trait in neutral_traits)
@@ -1459,6 +1458,3 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
-
-	if(CONFIG_GET(flag/roundstart_traits))
-		SStraits.AssignTraits(character, parent)
