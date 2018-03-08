@@ -328,15 +328,16 @@
 
 /proc/considered_alive(datum/mind/M, enforce_human = TRUE)
 	if(M && M.current)
-		if(M.has_antag_datum(/datum/antagonist/changeling))
-			return TRUE
+		var/is_cling = M.has_antag_datum(/datum/antagonist/changeling)
 		if(enforce_human)
 			var/mob/living/carbon/human/H
 			if(ishuman(M.current))
 				H = M.current
-			return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current) && (!H || H.dna.species.id != "memezombies")
+			return (!is_cling && M.current.stat != DEAD) && !issilicon(M.current) && !isbrain(M.current) && (!H || H.dna.species.id != "memezombies")
 		else if(isliving(M.current))
-			return M.current.stat != DEAD
+			return !is_cling && M.current.stat != DEAD
+		else if(is_cling)
+			return TRUE
 	return FALSE
 
 /proc/considered_afk(datum/mind/M)
