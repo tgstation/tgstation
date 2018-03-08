@@ -85,6 +85,17 @@ the new instance inside the host to be updated to the template's stats.
 		if(adapt_ready > 0)
 			stat("Adaptation Ready: [round(adapt_ready/10, 0.1)]s")
 
+
+/mob/camera/disease/examine(mob/user)
+	..()
+	if(isobserver(user))
+		to_chat(user, "<span class='notice'>[src] has [points]/[total_points] adaptation points.</span>")
+		to_chat(user, "<span class='notice'>[src] has the following unlocked:</span>")
+		for(var/A in purchased_abilities)
+			var/datum/disease_ability/B = A
+			if(istype(B))
+				to_chat(user, "<span class='notice'>[B.name]</span>")
+
 /mob/camera/disease/say(message)
 	return
 
