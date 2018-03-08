@@ -81,6 +81,20 @@
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50)
 
+/obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
+	. = ..()
+	if(user.mind && user.mind.assigned_role == "Clown")
+		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+		if(mood)
+			mood.clear_event("noshoes")
+
+/obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
+	. = ..()
+	if(user.mind && user.mind.assigned_role == "Clown")
+		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+		if(mood)
+			mood.add_event("noshoes", /datum/mood_event/noshoes)
+
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"
 	desc = "A court jesters shoes, updated with modern squeaking technology."

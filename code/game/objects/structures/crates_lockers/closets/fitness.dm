@@ -11,8 +11,7 @@
 	new /obj/item/clothing/under/shorts/red(src)
 	new /obj/item/clothing/under/shorts/blue(src)
 	new /obj/item/clothing/under/shorts/green(src)
-	if(prob(3))
-		new /obj/item/clothing/under/jabroni(src)
+	new /obj/item/clothing/under/jabroni(src)
 
 
 /obj/structure/closet/boxinggloves
