@@ -1,0 +1,6 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - balance: "The nuclear authentication disk no longer treats the transit space as a whole as being \"in bounds\", but instead checks whether it is in an approved shuttle type (syndicate shuttles, escape shuttles, pubbiestation's monastery shuttle, escape pods are allowed)"
+  - bugfix: "Blueprints can no longer be used to create areas inside shuttles. This fixes various exploits involving shuttles and areas."
+  - bugfix: "Moving across a space z-level border can no longer place you inside a shuttle or a dense turf such as an asteroid."
