@@ -197,6 +197,7 @@
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 			C.log_message("<font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>", INDIVIDUAL_ATTACK_LOG)
 		if(!(lube&SLIDE_ICE))
+<<<<<<< HEAD
 			// Hippie Start - custom sounds for slipping
 			var/slip_sound = 'sound/misc/slip.ogg'
 			if(prob(95))
@@ -211,6 +212,13 @@
 				slip_sound = 'hippiestation/sound/misc/oof.ogg'
 			playsound(C.loc, (slip_sound), 50, 1, -3)
 			// Hippie End
+=======
+			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+
+		GET_COMPONENT_FROM(mood, /datum/component/mood, C)
+		if(mood)
+			mood.add_event("slipped", /datum/mood_event/slipped)
+>>>>>>> 5140cff38c... [reviewpls] Adds moodlets to the game - [Please give suggestions for trait additions in comments] (#35475)
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)
 

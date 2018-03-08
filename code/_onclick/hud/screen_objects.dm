@@ -538,6 +538,16 @@
 	name = "health doll"
 	screen_loc = ui_healthdoll
 
+/obj/screen/mood
+	name = "mood"
+	icon_state = "mood5"
+	screen_loc = ui_mood
+
+/obj/screen/mood/Click()
+	GET_COMPONENT_FROM(mood, /datum/component/mood, usr)
+	if(mood)
+		mood.print_mood()
+
 /obj/screen/splash
 	icon = 'icons/blank_title.png'
 	icon_state = ""

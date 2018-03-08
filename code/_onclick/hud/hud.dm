@@ -43,6 +43,7 @@
 	var/obj/screen/healths
 	var/obj/screen/healthdoll
 	var/obj/screen/internals
+	var/obj/screen/mood
 
 	var/ui_style_icon = 'icons/mob/screen_midnight.dmi'
 
@@ -103,7 +104,11 @@
 	healths = null
 	healthdoll = null
 	internals = null
+<<<<<<< HEAD
 	staminas = null
+=======
+	mood = null
+>>>>>>> 5140cff38c... [reviewpls] Adds moodlets to the game - [Please give suggestions for trait additions in comments] (#35475)
 	lingchemdisplay = null
 	devilsouldisplay = null
 	lingstingdisplay = null
