@@ -249,7 +249,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			can_handle_hot = TRUE
 		else if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
 			can_handle_hot = TRUE
-		else if(RESISTHOT in C.dna.species.species_traits)
+		else if(C.has_trait(TRAIT_RESISTHEAT))
 			can_handle_hot = TRUE
 
 		if(can_handle_hot)
@@ -688,6 +688,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return 0
 
 /obj/item/attack_animal(mob/living/simple_animal/M)
+	if (obj_flags & CAN_BE_HIT)
+		return ..()
 	return 0
 
 /obj/item/mech_melee_attack(obj/mecha/M)

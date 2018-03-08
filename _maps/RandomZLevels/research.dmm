@@ -1254,7 +1254,6 @@
 /turf/open/floor/plasteel/darkpurple,
 /area/awaymission/research/interior/genetics)
 "dP" = (
-/mob/living/carbon/human/interactive/greytide,
 /turf/open/floor/plasteel/darkpurple,
 /area/awaymission/research/interior/genetics)
 "dQ" = (
