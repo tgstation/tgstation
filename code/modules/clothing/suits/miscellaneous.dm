@@ -38,7 +38,6 @@
 	icon_state = "flashsuit"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN
-	flags = THICKMATERIAL
 	hoodtype = /obj/item/clothing/head/hooded/flashsuit
 
 /obj/item/clothing/head/hooded/flashsuit
@@ -46,7 +45,6 @@
 	desc = "Flashing lights, lights, lights liiiiights..."
 	icon_state = "flashsuit"
 	body_parts_covered = HEAD
-	flags = THICKMATERIAL
 	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/suit/pirate
