@@ -17,14 +17,14 @@
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
-	C.remove_language(/datum/language/slime, TRUE)
+	C.remove_language(/datum/language/slime)
 	C.faction -= "slime"
 	..()
 	C.faction -= "slime"
 
 /datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C.grant_language(/datum/language/slime, TRUE)
+	C.grant_language(/datum/language/slime)
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
@@ -143,7 +143,7 @@
 			bodies = list(C)
 		else
 			bodies |= C
-      
+
 /datum/species/jelly/slime/spec_death(gibbed, mob/living/carbon/human/H)
 	if(slime_split)
 		if(!H.mind || !H.mind.active)
@@ -534,6 +534,7 @@
 	CHECK_DNA_AND_SPECIES(H)
 
 	if(species.current_extract)
+		species.extract_cooldown = world.time + 100
 		var/cooldown = species.current_extract.activate(H, species, activation_type)
 		species.extract_cooldown = world.time + cooldown
 

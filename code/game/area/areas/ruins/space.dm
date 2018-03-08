@@ -55,6 +55,9 @@
 /area/ruin/space/has_grav/powered/dinner_for_two
 	name = "Dinner for Two"
 
+/area/ruin/space/has_grav/powered/cat_man
+	name = "Kitty Den"
+
 /area/ruin/space/has_grav/powered/authorship
 	name = "Authorship"
 
@@ -459,4 +462,8 @@
 
 /area/ruin/space/has_grav/listeningstation
 	name = "Listening Post"
+	icon_state = "yellow"
+
+/area/ruin/space/has_grav/powered/scp_294
+	name = "Abandoned SCP-294 Containment"
 	icon_state = "yellow"

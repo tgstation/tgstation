@@ -21,8 +21,8 @@
 /datum/game_mode/wizard/pre_setup()
 	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
-	wizard.assigned_role = "Wizard"
-	wizard.special_role = "Wizard"
+	wizard.assigned_role = ROLE_WIZARD
+	wizard.special_role = ROLE_WIZARD
 	log_game("[wizard.key] (ckey) has been selected as a Wizard") //TODO: Move these to base antag datum
 	if(GLOB.wizardstart.len == 0)
 		to_chat(wizard.current, "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")

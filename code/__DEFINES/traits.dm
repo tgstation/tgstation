@@ -1,6 +1,7 @@
 //mob traits
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
+#define TRAIT_EMOTEMUTE			"emotemute"
 #define TRAIT_DEAF				"deaf"
 #define TRAIT_NEARSIGHT			"nearsighted"
 #define TRAIT_FAT				"fat"
@@ -20,6 +21,7 @@
 #define TRAIT_SLEEPIMMUNE		"sleep_immunity"
 #define TRAIT_PUSHIMMUNE		"push_immunity"
 #define TRAIT_SHOCKIMMUNE		"shock_immunity"
+
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

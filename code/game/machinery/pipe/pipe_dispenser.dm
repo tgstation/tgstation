@@ -64,34 +64,14 @@
 		to_chat(usr, "<span class='notice'>You put [W] back into [src].</span>")
 		qdel(W)
 		return
-	else if (istype(W, /obj/item/wrench))
-		if (!anchored && !isinspace())
-			playsound(src, W.usesound, 50, 1)
-			to_chat(user, "<span class='notice'>You begin to fasten \the [src] to the floor...</span>")
-			if (do_after(user, 40*W.toolspeed, target = src))
-				add_fingerprint(user)
-				user.visible_message( \
-					"[user] fastens \the [src].", \
-					"<span class='notice'>You fasten \the [src]. Now it can dispense pipes.</span>", \
-					"<span class='italics'>You hear ratchet.</span>")
-				anchored = TRUE
-				stat &= MAINT
-				if (usr.machine==src)
-					usr << browse(null, "window=pipedispenser")
-		else if(anchored)
-			playsound(src, W.usesound, 50, 1)
-			to_chat(user, "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>")
-			if (do_after(user, 20*W.toolspeed, target = src))
-				add_fingerprint(user)
-				user.visible_message( \
-					"[user] unfastens \the [src].", \
-					"<span class='notice'>You unfasten \the [src]. Now it can be pulled somewhere else.</span>", \
-					"<span class='italics'>You hear ratchet.</span>")
-				anchored = FALSE
-				stat |= ~MAINT
-				power_change()
 	else
 		return ..()
+
+/obj/machinery/pipedispenser/wrench_act(mob/living/user, obj/item/I)
+	if(default_unfasten_wrench(user, I, 40))
+		user << browse(null, "window=pipedispenser")
+
+	return TRUE
 
 
 /obj/machinery/pipedispenser/disposal

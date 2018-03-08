@@ -43,7 +43,7 @@
 
 /obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
 	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture."
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard)
+	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard)
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
@@ -160,7 +160,7 @@
 	access_display(user)
 
 /obj/item/clockwork/slab/AltClick(mob/living/user)
-	if(is_servant_of_ratvar(user) && linking)
+	if(is_servant_of_ratvar(user) && linking && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		linking = null
 		to_chat(user, "<span class='notice'>Object link canceled.</span>")
 

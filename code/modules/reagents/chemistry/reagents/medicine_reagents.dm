@@ -32,7 +32,7 @@
 	id = "adminordrazine"
 	description = "It's magic. We don't have to explain it."
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	can_synth = 0
+	can_synth = FALSE
 	taste_description = "badmins"
 
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/M)
@@ -50,7 +50,7 @@
 	M.SetKnockdown(0, 0)
 	M.SetStun(0, 0)
 	M.SetUnconscious(0, 0)
-	M.silent = 0
+	M.silent = FALSE
 	M.dizziness = 0
 	M.disgust = 0
 	M.drowsyness = 0
@@ -59,7 +59,7 @@
 	M.confused = 0
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
-	M.cure_all_traumas(TRUE, TRUE)
+	M.cure_all_traumas(TRUE, TRAUMA_RESILIENCE_MAGIC)
 	for(var/thing in M.viruses)
 		var/datum/disease/D = thing
 		if(D.severity == VIRUS_SEVERITY_POSITIVE)
@@ -832,10 +832,8 @@
 	M.adjustBrainLoss(-2*REM)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(prob(30) && C.has_trauma_type(BRAIN_TRAUMA_SPECIAL))
-			C.cure_trauma_type(BRAIN_TRAUMA_SPECIAL)
-		if(prob(10) && C.has_trauma_type(BRAIN_TRAUMA_MILD))
-			C.cure_trauma_type(BRAIN_TRAUMA_MILD)
+		if(prob(10))
+			C.cure_trauma_type(TRAUMA_RESILIENCE_BASIC)
 	..()
 
 /datum/reagent/medicine/mutadone
@@ -1128,7 +1126,7 @@
 	description = "It's mining magic. We don't have to explain it."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
-	can_synth = 0
+	can_synth = FALSE
 
 /datum/reagent/medicine/miningnanites/on_mob_life(mob/living/M)
 	M.heal_bodypart_damage(5,5, 0)
@@ -1143,14 +1141,14 @@
 	. = 1
 
 //used for changeling's adrenaline power
-/datum/reagent/medicine/changelingAdrenaline
-	name = "Adrenaline"
-	id = "changelingAdrenaline"
-	description = "Reduces stun times. Also deals toxin damage at high amounts."
+/datum/reagent/medicine/changelingadrenaline
+	name = "Changeling Adrenaline"
+	id = "changelingadrenaline"
+	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-/datum/reagent/medicine/changelingAdrenaline/on_mob_life(mob/living/M as mob)
+/datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/M as mob)
 	M.AdjustUnconscious(-20, 0)
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
@@ -1158,31 +1156,31 @@
 	. = 1
 	..()
 
-/datum/reagent/medicine/changelingAdrenaline/overdose_process(mob/living/M as mob)
+/datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/M as mob)
 	M.adjustToxLoss(1, 0)
 	. = 1
 	..()
 
-/datum/reagent/medicine/changelingAdrenaline2
-	name = "Adrenaline"
-	id = "changelingAdrenaline2"
-	description = "Drastically increases movement speed."
+/datum/reagent/medicine/changelinghaste
+	name = "Changeling Haste"
+	id = "changelinghaste"
+	description = "Drastically increases movement speed, but deals toxin damage."
 	color = "#C8A5DC"
 	metabolization_rate = 1
 
-/datum/reagent/medicine/changelingAdrenaline2/on_mob_add(mob/M)
+/datum/reagent/medicine/changelinghaste/on_mob_add(mob/M)
 	..()
 	if(isliving(M))
 		var/mob/living/L = M
 		L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
 
-/datum/reagent/medicine/changelingAdrenaline2/on_mob_delete(mob/M)
+/datum/reagent/medicine/changelinghaste/on_mob_delete(mob/M)
 	if(isliving(M))
 		var/mob/living/L = M
 		L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
 	..()
 
-/datum/reagent/medicine/changelingAdrenaline2/on_mob_life(mob/living/M as mob)
+/datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/M as mob)
 	M.adjustToxLoss(2, 0)
 	. = 1
 	..()
@@ -1195,126 +1193,83 @@
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
 
-/datum/reagent/medicine/ketrazine
-	name = "Ketrazine"
-	id = "ketrazine"
-	description = "A powerful and addictive combat stimulant, capable of healing grievous wounds and enabling the user to shrug off stuns and heavy weights by stimulating tendons and muscle groups; however the strain on the body causes severe lasting damage. Use only in life-or-death situations. Overdose is almost invariably fatal."
-	reagent_state = LIQUID
-	color = "#5F42F4"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 20
-	addiction_threshold = 5
+/datum/reagent/medicine/muscle_stimulant
+	name = "Muscle Stimulant"
+	id = "muscle_stimulant"
+	description = "A potent chemical that allows someone under its influence to be at full physical ability even when under massive amounts of pain."
 
-/datum/reagent/medicine/ketrazine/on_mob_add(mob/M)
-	..()
-	if(isliving(M))
-		var/mob/living/L = M
-		L.add_trait(TRAIT_SLEEPIMMUNE, id)
-		L.add_trait(TRAIT_IGNORESLOWDOWN, id)
-		L.add_trait(TRAIT_GOTTAGOFAST, id)
-
-/datum/reagent/medicine/ketrazine/on_mob_delete(mob/M)
-	if(isliving(M))
-		var/mob/living/L = M
-		L.remove_trait(TRAIT_SLEEPIMMUNE, id)
-		L.remove_trait(TRAIT_IGNORESLOWDOWN, id)
-		L.remove_trait(TRAIT_GOTTAGOFAST, id)
-	..()
-
-/datum/reagent/medicine/ketrazine/on_mob_life(mob/living/M)
-	M.adjustToxLoss(-3*REM, 0)
-	M.adjustBruteLoss(-5*REM, 0)
-	M.adjustFireLoss(-5*REM, 0)
-	M.adjustOxyLoss(-5*REM, 0)
-	M.AdjustStun(-80*REM, 0)
-	M.AdjustKnockdown(-70*REM, 0)
-	M.adjustStaminaLoss(-80*REM, 0)
-	M.AdjustUnconscious(-50*REM, 0)
-	M.adjustBrainLoss(0.5*REM,0)
-	switch(current_cycle)
-		if(2 to 12)
-			if(prob(15))
-				to_chat(M, "<span class='warning'>You feel incredibly powerful! Nothing can stop you! </span>")
-		if(12)
-			to_chat(M, "<span class='warning'>Your muscles begin to ache terribly... </span>" )
-		if(14)
-			to_chat(M, "<span class='warning'>You feel like your body is being ripped to shreds! </span>")
-		if(15 to 25)
-			M.drowsyness += 3
-			M.adjustBruteLoss(10*REM, 0)
-			M.adjustToxLoss(7*REM, 0)
-		if(25 to 30)
-			if(prob(33))
-				to_chat(M, "<span class='warning'>The pain is unbearable! You can barely stand! </span>")
-			M.Sleeping(40, 0)
-			M.AdjustKnockdown(40*REM,0)
-			M.drop_all_held_items()
-			M.Dizzy(3)
-			M.drowsyness +=4
-			M.adjustBruteLoss(15*REM,0)
-			M.adjustToxLoss(10*REM,0)
-			M.adjustStaminaLoss(30*REM,0)
-		if(30 to INFINITY)
-			if(prob(20))
-				to_chat(M, "<span class='warning'>Your body	can't handle the stress! </span>")
-			M.Sleeping(60, 0)
-			M.AdjustKnockdown(80*REM,0)
-			M.drop_all_held_items()
-			M.Dizzy(5)
-			M.drowsyness +=6
-			M.adjustBruteLoss(20*REM,0)
-			M.adjustToxLoss(15*REM,0)
-			M.adjustStaminaLoss(40*REM,0)
-			M.losebreath +=2
-
-
-	..()
-
-/datum/reagent/medicine/ketrazine/on_mob_add(mob/living/M)
+/datum/reagent/medicine/muscle_stimulant/on_mob_add(mob/living/M)
+	. = ..()
 	M.add_trait(TRAIT_IGNORESLOWDOWN, id)
-	M.add_trait(TRAIT_GOTTAGOFAST, id)
 
-/datum/reagent/medicine/ketrazine/on_mob_delete(mob/living/M)
+/datum/reagent/medicine/muscle_stimulant/on_mob_delete(mob/living/M)
+	. = ..()
 	M.remove_trait(TRAIT_IGNORESLOWDOWN, id)
-	M.remove_trait(TRAIT_GOTTAGOFAST, id)
 
-/datum/reagent/medicine/ketrazine/overdose_process(mob/living/M)
-	if(prob(66))
-		to_chat(M, "<span class='warning'> You feel a sense of impending doom. </span>")
-		M.drop_all_held_items()
-		M.Dizzy(6)
-		M.Jitter(7)
-		M.adjustOxyLoss(40*REM,0)
-		M.adjustBruteLoss(40*REM,0)
-		M.losebreath +=10
+/datum/reagent/medicine/modafinil
+	name = "Modafinil"
+	id = "modafinil"
+	description = "Long-lasting sleep suppressant that very slightly reduces stun and knockdown times. Overdosing has horrendous side effects and deals lethal oxygen damage, will knock you unconscious if not dealt with."
+	reagent_state = LIQUID
+	color = "#BEF7D8" // palish blue white
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+	overdose_threshold = 20 // with the random effects this might be awesome or might kill you at less than 10u (extensively tested)
+	taste_description = "salt" // it actually does taste salty
+	var/overdose_progress = 0 // to track overdose progress
+
+/datum/reagent/medicine/modafinil/on_mob_add(mob/living/M)
+	M.add_trait(TRAIT_SLEEPIMMUNE, id)
 	..()
 
-/datum/reagent/medicine/ketrazine/addiction_act_stage1(mob/living/M)
-	if(prob(33))
-		to_chat(M, "<span class='warning'>You feel like you need more power... </span>")
-		M.drop_all_held_items()
-		M.Jitter(2)
-		M.Dizzy(2)
+/datum/reagent/medicine/modafinil/on_mob_delete(mob/living/M)
+	M.remove_trait(TRAIT_SLEEPIMMUNE, id)
 	..()
 
-/datum/reagent/medicine/ketrazine/addiction_act_stage2(mob/living/M)
-	if(prob(50))
-		to_chat(M, "<span class='warning'>You feel weak and sore, you need something to amp you up! </span>")
-		M.drop_all_held_items()
-		M.adjustToxLoss(2*REM, 0)
-		M.adjustBruteLoss(4*REM,0)
-		M.adjustStaminaLoss(6*REM,0)
-		M.Dizzy(3)
-		M.Jitter(3)
+/datum/reagent/medicine/modafinil/on_mob_life(mob/living/M)
+	if(!overdosed) // We do not want any effects on OD
+		overdose_threshold = overdose_threshold + rand(-10,10)/10 // for extra fun
+		M.AdjustStun(-5, 0)
+		M.AdjustKnockdown(-5, 0)
+		M.AdjustUnconscious(-5, 0)
+		M.adjustStaminaLoss(-0.5*REM, 0)
+		M.Jitter(1)
+		metabolization_rate = 0.01 * REAGENTS_METABOLISM * rand(5,20) // randomizes metabolism between 0.02 and 0.08 per tick
+		. = 1
 	..()
 
-/datum/reagent/medicine/ketrazine/addiction_act_stage3(mob/living/M)
-	if(prob(66))
-		to_chat(M, "<span class='warning'> You need ketrazine! You need it badly! You need it now! </span>")
-		M.drop_all_held_items()
-		M.adjustToxLoss(4*REM, 0)
-		M.adjustBruteLoss(5*REM,0)
-		M.adjustStaminaLoss(7*REM,0)
-		M.Dizzy(7)
-		M.Jitter(7)
+/datum/reagent/medicine/modafinil/overdose_start(mob/living/M)
+	to_chat(M, "<span class='userdanger'>You feel awfully out of breath and jittery!</span>")
+	metabolization_rate = 0.025 * REAGENTS_METABOLISM // sets metabolism to 0.01 per tick on overdose
+
+/datum/reagent/medicine/modafinil/overdose_process(mob/living/M)
+	overdose_progress++
+	switch(overdose_progress)
+		if(1 to 40)
+			M.jitteriness = min(M.jitteriness+1, 10)
+			M.stuttering = min(M.stuttering+1, 10)
+			M.Dizzy(5)
+			if(prob(50))
+				M.losebreath++
+		if(41 to 80)
+			M.adjustOxyLoss(0.1*REM, 0)
+			M.adjustStaminaLoss(0.1*REM, 0)
+			M.jitteriness = min(M.jitteriness+1, 20)
+			M.stuttering = min(M.stuttering+1, 20)
+			M.Dizzy(10)
+			if(prob(50))
+				M.losebreath++
+			if(prob(20))
+				to_chat(M, "You have a sudden fit!")
+				M.emote("moan")
+				M.Knockdown(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
+		if(81)
+			to_chat(M, "You feel too exhausted to continue!") // at this point you will eventually die unless you get charcoal
+			M.adjustOxyLoss(0.1*REM, 0)
+			M.adjustStaminaLoss(0.1*REM, 0)
+		if(82 to INFINITY)
+			M.Sleeping(100, 0, TRUE)
+			M.adjustOxyLoss(1.5*REM, 0)
+			M.adjustStaminaLoss(1.5*REM, 0)
 	..()
+	. = 1
+  

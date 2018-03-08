@@ -126,6 +126,7 @@
 	form = null
 	alpha = initial(alpha)
 	color = initial(color)
+	maptext = null
 
 	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
 					"<span class='notice'>You reform to your normal body.</span>")
@@ -212,7 +213,7 @@
 	role_name = "morphling"
 
 /datum/round_event/ghost_role/morph/spawn_role()
-	var/list/candidates = get_candidates("alien", null, ROLE_ALIEN)
+	var/list/candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
@@ -226,7 +227,7 @@
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Morph"
 	player_mind.special_role = "Morph"
-	player_mind.add_antag_datum(/datum/antagonist/auto_custom)
+	player_mind.add_antag_datum(/datum/antagonist/morph)
 	to_chat(S, S.playstyle_string)
 	SEND_SOUND(S, sound('sound/magic/mutate.ogg'))
 	message_admins("[key_name_admin(S)] has been made into a morph by an event.")

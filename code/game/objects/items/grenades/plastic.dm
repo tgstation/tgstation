@@ -43,7 +43,7 @@
 		update_icon()
 		return
 	if(nadeassembly && istype(I, /obj/item/wirecutters))
-		playsound(src, I.usesound, 20, 1)
+		I.play_tool_sound(src, 20)
 		nadeassembly.forceMove(get_turf(src))
 		nadeassembly.master = null
 		nadeassembly = null
@@ -125,23 +125,29 @@
 		else
 			qdel(src)	//How?
 
+/obj/item/grenade/plastic/proc/shout_syndicate_crap(mob/M)
+	if(!M)
+		return
+	var/message_say = "FOR NO RAISIN!"
+	if(M.mind)
+		var/datum/mind/UM = M
+		if(UM.has_antag_datum(/datum/antagonist/nukeop) || UM.has_antag_datum(/datum/antagonist/traitor))
+			message_say = "FOR THE SYNDICATE!"
+		else if(UM.has_antag_datum(/datum/antagonist/changeling))
+			message_say = "FOR THE HIVE!"
+		else if(UM.has_antag_datum(/datum/antagonist/cult))
+			message_say = "FOR NAR-SIE!"
+		else if(UM.has_antag_datum(/datum/antagonist/clockcult))
+			message_say = "FOR RATVAR!"
+		else if(UM.has_antag_datum(/datum/antagonist/rev))
+			message_say = "VIVA LA REVOLUTION!"
+	M.say(message_say)
+
 /obj/item/grenade/plastic/suicide_act(mob/user)
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_COORDJMP(user)]",0,1)
 	log_game("[key_name(user)] suicided with [src] at [COORD(user)]")
 	user.visible_message("<span class='suicide'>[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
-	var/message_say = "FOR NO RAISIN!"
-	if(user.mind)
-		if(user.mind.special_role)
-			var/role = lowertext(user.mind.special_role)
-			if(role == "traitor" || role == "syndicate")
-				message_say = "FOR THE SYNDICATE!"
-			else if(role == "changeling")
-				message_say = "FOR THE HIVE!"
-			else if(role == "cultist")
-				message_say = "FOR NAR-SIE!"
-			else if(is_revolutionary(user))
-				message_say = "VIVA LA REVOLUTION!"
-	user.say(message_say)
+	shout_syndicate_crap(user)
 	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
 	user.gib(1, 1)
 	qdel(src)
@@ -176,19 +182,7 @@
 
 /obj/item/grenade/plastic/c4/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] activates the [src.name] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!</span>")
-	var/message_say = "FOR NO RAISIN!"
-	if(user.mind)
-		if(user.mind.special_role)
-			var/role = lowertext(user.mind.special_role)
-			if(role == "traitor" || role == "syndicate")
-				message_say = "FOR THE SYNDICATE!"
-			else if(role == "changeling")
-				message_say = "FOR THE HIVE!"
-			else if(role == "cultist")
-				message_say = "FOR NAR-SIE!"
-			else if(is_revolutionary(user))
-				message_say = "VIVA LA REVOLUTION!"
-	user.say(message_say)
+	shout_syndicate_crap(user)
 	target = user
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [name] at [ADMIN_COORDJMP(src)]",0,1)
 	message_admins("[key_name(user)] suicided with [name] at ([x],[y],[z])")

@@ -234,6 +234,11 @@
 /obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
+"T" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
 "U" = (
 /obj/effect/mob_spawn/human/golem/adamantine,
 /obj/machinery/light/small,
@@ -288,12 +293,12 @@ a
 a
 b
 b
-b
+H
 b
 r
 l
 G
-b
+T
 b
 b
 a
@@ -517,7 +522,7 @@ f
 b
 "}
 (16,1,1) = {"
-b
+T
 e
 I
 b
@@ -532,10 +537,10 @@ B
 b
 V
 f
-b
+T
 "}
 (17,1,1) = {"
-b
+T
 f
 f
 b
@@ -550,7 +555,7 @@ C
 b
 f
 f
-b
+T
 "}
 (18,1,1) = {"
 b

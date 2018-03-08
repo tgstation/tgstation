@@ -27,7 +27,7 @@
 	maxHealth = 30
 	unsuitable_atmos_damage = 0
 	wander = 0
-	speed = -1
+	speed = 0
 	ventcrawler = VENTCRAWLER_ALWAYS
 	healable = 0
 	density = FALSE
@@ -49,6 +49,7 @@
 	dextrous_hud_type = /datum/hud/dextrous/drone
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	can_be_held = TRUE
+	held_items = list(null, null)
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter", "animal")
 	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)

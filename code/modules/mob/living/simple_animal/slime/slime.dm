@@ -242,7 +242,7 @@
 		if(M == src)
 			return
 		if(buckled)
-			Feedstop(silent=1)
+			Feedstop(silent = TRUE)
 			visible_message("<span class='danger'>[M] pulls [src] off!</span>")
 			return
 		attacked += 5
@@ -400,7 +400,7 @@
 	if(Target)
 		Target = null
 	if(buckled)
-		Feedstop(silent=1) //we unbuckle the slime from the mob it latched onto.
+		Feedstop(silent = TRUE) //we unbuckle the slime from the mob it latched onto.
 
 	SStun = world.time + rand(20,60)
 	spawn(0)

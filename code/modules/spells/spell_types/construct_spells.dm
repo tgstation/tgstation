@@ -280,9 +280,9 @@
 
 /obj/effect/proc_holder/spell/dumbfire/juggernaut
 	name = "Gauntlet Echo"
-	desc = "Channels energy into your gauntlet - firing its essence forward in a slow-moving but devastating blow."
-	proj_icon_state = "cursehand0"
-	proj_name = "Shadowfist"
+	desc = "Channels energy into your gauntlet - firing its essence forward in a slow moving, yet devastating, attack."
+	proj_icon_state = "cultfist"
+	proj_name = "gauntlet echo"
 	proj_type = "/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut" //IMPORTANT use only subtypes of this
 	proj_lifespan = 15
 	proj_step_delay = 7
@@ -307,6 +307,6 @@
 	new /obj/effect/temp_visual/cult/sac(T)
 	for(var/obj/O in range(src,1))
 		if(O.density && !istype(O, /obj/structure/destructible/cult))
-			O.take_damage(90, BRUTE, "gauntlet echo", 0)
+			O.take_damage(90, BRUTE, "melee", 0)
 			new /obj/effect/temp_visual/cult/turf/floor
 	..()

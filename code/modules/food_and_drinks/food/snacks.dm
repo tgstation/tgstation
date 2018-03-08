@@ -223,6 +223,8 @@
 		slice.name = "slice of [name]"
 	if(desc != initial(desc))
 		slice.desc = "[desc]"
+	if(foodtype != initial(foodtype))
+		slice.foodtype = foodtype //if something happens that overrode our food type, make sure the slice carries that over
 
 /obj/item/reagent_containers/food/snacks/proc/generate_trash(atom/location)
 	if(trash)

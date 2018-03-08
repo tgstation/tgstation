@@ -11,7 +11,6 @@
 	weather_immunities = list("ash")
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 
-	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
@@ -30,6 +29,7 @@
 	var/ioncheck[1]
 	var/devillawcheck[5]
 
+	var/sensors_on = 0
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
 	var/d_hud = DATA_HUD_DIAGNOSTIC_BASIC //Determines the diag hud to use
@@ -37,6 +37,8 @@
 	var/law_change_counter = 0
 	var/obj/machinery/camera/builtInCamera = null
 	var/updating = FALSE //portable camera camerachunk update
+
+	var/hack_software = FALSE //Will be able to use hacking actions
 
 /mob/living/silicon/Initialize()
 	. = ..()
@@ -328,7 +330,7 @@
 /mob/living/silicon/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt silicon units
 	return -10
 
-/mob/living/silicon/proc/remove_med_sec_hud()
+/mob/living/silicon/proc/remove_sensors()
 	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
 	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
 	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
@@ -336,36 +338,24 @@
 	medsensor.remove_hud_from(src)
 	diagsensor.remove_hud_from(src)
 
-/mob/living/silicon/proc/add_sec_hud()
+/mob/living/silicon/proc/add_sensors()
 	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
-	secsensor.add_hud_to(src)
-
-/mob/living/silicon/proc/add_med_hud()
 	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
-	medsensor.add_hud_to(src)
-
-/mob/living/silicon/proc/add_diag_hud()
 	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
+	secsensor.add_hud_to(src)
+	medsensor.add_hud_to(src)
 	diagsensor.add_hud_to(src)
 
-/mob/living/silicon/proc/sensor_mode()
+/mob/living/silicon/proc/toggle_sensors()
 	if(incapacitated())
 		return
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Diagnostic","Disable")
-	remove_med_sec_hud()
-	switch(sensor_type)
-		if ("Security")
-			add_sec_hud()
-			to_chat(src, "<span class='notice'>Security records overlay enabled.</span>")
-		if ("Medical")
-			add_med_hud()
-			to_chat(src, "<span class='notice'>Life signs monitor overlay enabled.</span>")
-		if ("Diagnostic")
-			add_diag_hud()
-			to_chat(src, "<span class='notice'>Robotics diagnostic overlay enabled.</span>")
-		if ("Disable")
-			to_chat(src, "Sensor augmentations disabled.")
-
+	sensors_on = !sensors_on
+	if (!sensors_on)
+		to_chat(src, "Sensor overlay deactivated.")
+		remove_sensors()
+		return
+	add_sensors()
+	to_chat(src, "Sensor overlay activated.")
 
 /mob/living/silicon/proc/GetPhoto()
 	if (aicamera)

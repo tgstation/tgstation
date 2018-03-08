@@ -83,6 +83,8 @@ Buildable meters
 	var/obj/machinery/atmospherics/fakeA = pipe_type
 	name = "[initial(fakeA.name)] fitting"
 	icon_state = initial(fakeA.pipe_state)
+	if(ispath(pipe_type,/obj/machinery/atmospherics/pipe/heat_exchanging))
+		resistance_flags |= FIRE_PROOF | LAVA_PROOF
 
 /obj/item/pipe/verb/flip()
 	set category = "Object"
@@ -125,11 +127,10 @@ Buildable meters
 	setDir(turn(dir,-90))
 	fixdir()
 
-/obj/item/pipe/attackby(obj/item/W, mob/user, params)
-	if (!istype(W, /obj/item/wrench))
-		return ..()
-	if (!isturf(loc))
+/obj/item/pipe/wrench_act(mob/living/user, obj/item/wrench/W)
+	if(!isturf(loc))
 		return TRUE
+
 	add_fingerprint(user)
 
 	fixdir()
@@ -150,8 +151,9 @@ Buildable meters
 	var/obj/machinery/atmospherics/A = new pipe_type(loc)
 	build_pipe(A)
 	A.on_construction(color, piping_layer)
+	transfer_fingerprints_to(A)
 
-	playsound(src, W.usesound, 50, 1)
+	W.play_tool_sound(src)
 	user.visible_message( \
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \
@@ -205,7 +207,7 @@ Buildable meters
 		to_chat(user, "<span class='warning'>You need to fasten it to a pipe!</span>")
 		return TRUE
 	new /obj/machinery/meter(loc, piping_layer)
-	playsound(src, I.usesound, 50, 1)
+	I.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You fasten the meter to the pipe.</span>")
 	qdel(src)
 

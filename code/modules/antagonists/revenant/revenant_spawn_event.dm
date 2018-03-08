@@ -5,7 +5,6 @@
 	typepath = /datum/round_event/ghost_role/revenant
 	weight = 7
 	max_occurrences = 1
-	earliest_start = 12000 //Meant to mix things up early-game.
 	min_players = 5
 
 
@@ -26,7 +25,7 @@
 			message_admins("Event attempted to spawn a revenant, but there were only [deadMobs]/[REVENANT_SPAWN_THRESHOLD] dead mobs.")
 			return WAITING_FOR_SOMETHING
 
-	var/list/candidates = get_candidates("revenant", null, ROLE_REVENANT)
+	var/list/candidates = get_candidates(ROLE_REVENANT, null, ROLE_REVENANT)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

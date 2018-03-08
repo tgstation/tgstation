@@ -8,7 +8,8 @@
 	var/begin_week = FALSE //If set to a number, then this holiday will begin on certain week
 	var/begin_weekday = FALSE //If set to a weekday, then this will trigger the holiday on the above week
 	var/always_celebrate = FALSE // for christmas neverending, or testing.
-
+	var/current_year = 0
+	var/year_offset = 0
 	var/obj/item/drone_hat //If this is defined, drones without a default hat will spawn with this one during the holiday; check drones_as_items.dm to see this used
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
@@ -447,50 +448,12 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 	var/const/days_extra = 1
 
 /datum/holiday/easter/shouldCelebrate(dd, mm, yy, ww, ddd)
-// Easter's celebration day is as snowflakey as Uhangi's code
-
 	if(!begin_month)
+		current_year = text2num(time2text(world.timeofday, "YYYY"))
+		var/list/easterResults = EasterDate(current_year+year_offset)
 
-		var/yy_string = "[yy]"
-// year = days after March 22that Easter falls on that year.
-// For 2015 Easter is on April 5th, so 2015 = 14 since the 5th is 14 days past the 22nd
-// If it's 2040 and this is still in use, invent a time machine and teach me a better way to do this. Also tell us about HL3.
-		var/list/easters = list(
-		"15" = 14,\
-		"16" = 6,\
-		"17" = 25,\
-		"18" = 10,\
-		"19" = 30,\
-		"20" = 22,\
-		"21" = 13,\
-		"22" = 26,\
-		"23" = 18,\
-		"24" = 9,\
-		"25" = 29,\
-		"26" = 14,\
-		"27" = 6,\
-		"28" = 25,\
-		"29" = 10,\
-		"30" = 30,\
-		"31" = 23,\
-		"32" = 6,\
-		"33" = 26,\
-		"34" = 18,\
-		"35" = 3,\
-		"36" = 22,\
-		"37" = 14,\
-		"38" = 34,\
-		"39" = 19,\
-		"40" = 9,\
-		)
-
-		begin_day = easters[yy_string]
-		if(begin_day <= 9)
-			begin_day += 22
-			begin_month = MARCH
-		else
-			begin_day -= 9
-			begin_month = APRIL
+		begin_day = easterResults["day"]
+		begin_month = easterResults["month"]
 
 		end_day = begin_day + days_extra
 		end_month = begin_month
@@ -513,3 +476,9 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 	GLOB.maintenance_loot += list(
 		/obj/item/reagent_containers/food/snacks/egg/loaded = 15,
 		/obj/item/storage/bag/easterbasket = 15)
+
+/datum/holiday/easter/greet()
+	return "Greetings! Have a Happy Easter and keep an eye out for Easter Bunnies!"
+
+/datum/holiday/easter/getStationPrefix()
+	return pick("Fluffy","Bunny","Easter","Egg")

@@ -6,12 +6,14 @@
 
 //These are synced with the Database, if you change the values of the defines
 //then you MUST update the database!
+#define ROLE_SYNDICATE			"Syndicate"
 #define ROLE_TRAITOR			"traitor"
 #define ROLE_OPERATIVE			"operative"
 #define ROLE_CHANGELING			"changeling"
 #define ROLE_WIZARD				"wizard"
 #define ROLE_MALF				"malf AI"
 #define ROLE_REV				"revolutionary"
+#define ROLE_REV_HEAD			"Head Revolutionary"
 #define ROLE_ALIEN				"xenomorph"
 #define ROLE_PAI				"pAI"
 #define ROLE_CULTIST			"cultist"
@@ -23,6 +25,7 @@
 #define ROLE_DEVIL				"devil"
 #define ROLE_SERVANT_OF_RATVAR	"servant of Ratvar"
 #define ROLE_BROTHER			"blood brother"
+#define ROLE_BRAINWASHED		"brainwashed victim"
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough

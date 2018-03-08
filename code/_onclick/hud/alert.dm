@@ -101,7 +101,8 @@
 
 
 /obj/screen/alert/MouseEntered(location,control,params)
-	openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
+	if(!QDELETED(src))
+		openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
 
 
 /obj/screen/alert/MouseExited()

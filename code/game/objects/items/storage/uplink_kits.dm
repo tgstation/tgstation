@@ -307,7 +307,7 @@
 	new /obj/item/spellbook/oneuse/mimery_guns(src)
 
 /obj/item/storage/box/syndie_kit/imp_radio/PopulateContents()
-	new /obj/item/implanter/radio(src)
+	new /obj/item/implanter/radio/syndicate(src)
 
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom_officer(src)

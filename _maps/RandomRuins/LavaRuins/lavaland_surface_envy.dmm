@@ -101,6 +101,10 @@
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
+"A" = (
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 a
@@ -209,7 +213,7 @@ i
 i
 i
 d
-a
+A
 a
 "}
 (6,1,1) = {"
@@ -231,7 +235,7 @@ i
 i
 i
 p
-a
+A
 a
 "}
 (7,1,1) = {"

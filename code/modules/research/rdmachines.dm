@@ -108,7 +108,7 @@
 
 /obj/machinery/rnd/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
 	var/stack_name
-	if(ispath(type_inserted, /obj/item/ore/bluespace_crystal))
+	if(ispath(type_inserted, /obj/item/stack/ore/bluespace_crystal))
 		stack_name = "bluespace"
 		use_power(MINERAL_MATERIAL_AMOUNT / 10)
 	else

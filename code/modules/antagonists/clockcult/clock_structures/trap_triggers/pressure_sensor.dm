@@ -5,8 +5,7 @@
 	clockwork_desc = "A trigger that will activate when a non-servant runs across it."
 	max_integrity = 5
 	icon_state = "pressure_sensor"
-	alpha = 80
-	layer = LOW_ITEM_LAYER
+	alpha = 50
 
 /obj/structure/destructible/clockwork/trap/trigger/Initialize()
 	. = ..()

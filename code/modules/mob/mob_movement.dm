@@ -111,24 +111,12 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	if(LAZYLEN(mob.user_movement_hooks))
-		for(var/obj/O in mob.user_movement_hooks)
-			O.intercept_user_move(direct, mob, n, oldloc)
+	for(var/obj/O in mob.user_movement_hooks)
+		O.intercept_user_move(direct, mob, n, oldloc)
 
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
 		mob.dir = turn(mob.dir, 180)
-
-/mob/Moved(oldLoc, dir, Forced = FALSE)
-	. = ..()
-	for(var/obj/O in contents)
-		O.on_mob_move(dir, src, oldLoc, Forced)
-
-/mob/setDir(newDir)
-	. = ..()
-	for(var/obj/O in contents)
-		O.on_mob_turn(newDir, src)
-
 
 ///Process_Grab()
 ///Called by client/Move()

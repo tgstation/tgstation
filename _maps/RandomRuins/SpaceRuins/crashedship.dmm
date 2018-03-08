@@ -65,9 +65,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/BMPship/Midship)
 "ar" = (
-/obj/machinery/door/airlock/silver{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/silver,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -524,7 +523,7 @@
 	equipment = 3;
 	locked = 0;
 	pixel_y = 32;
-	req_access = ""
+	req_access = null
 	},
 /turf/open/floor/carpet,
 /area/awaymission/BMPship/Fore)
@@ -786,7 +785,7 @@
 	equipment = 3;
 	locked = 0;
 	pixel_y = 32;
-	req_access = ""
+	req_access = null
 	},
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
@@ -1054,7 +1053,7 @@
 	dir = 1;
 	locked = 0;
 	pixel_y = 28;
-	req_access = ""
+	req_access = null
 	},
 /turf/open/floor/plasteel/bar,
 /area/awaymission/BMPship/Midship)
@@ -1784,15 +1783,13 @@
 	},
 /area/awaymission/BMPship/Midship)
 "fY" = (
-/obj/machinery/door/airlock/silver{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/silver,
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "fZ" = (
-/obj/machinery/door/airlock/silver{
-	locked = 1
-	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/silver,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},

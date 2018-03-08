@@ -2,7 +2,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	var/used = 0
+	var/used = FALSE
 
 /obj/item/antag_spawner/proc/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
 	return
@@ -57,13 +57,13 @@
 				to_chat(H, "You already used this contract!")
 				return
 			var/list/candidates = pollCandidatesForMob("Do you want to play as a wizard's [href_list["school"]] apprentice?", ROLE_WIZARD, null, ROLE_WIZARD, 150, src)
-			if(candidates.len)
+			if(LAZYLEN(candidates))
 				if(used)
 					to_chat(H, "You already used this contract!")
 					return
-				used = 1
-				var/mob/dead/observer/theghost = pick(candidates)
-				spawn_antag(theghost.client, get_turf(src), href_list["school"],H.mind)
+				used = TRUE
+				var/mob/dead/observer/C = pick(candidates)
+				spawn_antag(C.client, get_turf(src), href_list["school"],H.mind)
 			else
 				to_chat(H, "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.")
 
@@ -120,12 +120,12 @@
 
 	to_chat(user, "<span class='notice'>You activate [src] and wait for confirmation.</span>")
 	var/list/nuke_candidates = pollGhostCandidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150, POLL_IGNORE_SYNDICATE)
-	if(nuke_candidates.len)
+	if(LAZYLEN(nuke_candidates))
 		if(!(check_usability(user)))
 			return
 		used = TRUE
-		var/mob/dead/observer/theghost = pick(nuke_candidates)
-		spawn_antag(theghost.client, get_turf(src), "syndieborg", user.mind)
+		var/mob/dead/observer/G = pick(nuke_candidates)
+		spawn_antag(G.client, get_turf(src), "syndieborg", user.mind)
 		do_sparks(4, TRUE, src)
 		qdel(src)
 	else
@@ -203,8 +203,8 @@
 
 	var/shatter_msg = "<span class='notice'>You shatter the bottle, no turning back now!</span>"
 	var/veil_msg = "<span class='warning'>You sense a dark presence lurking just beyond the veil...</span>"
-	var/objective_verb = "Kill"
 	var/mob/living/demon_type = /mob/living/simple_animal/slaughter
+	var/antag_type = /datum/antagonist/slaughter
 
 
 /obj/item/antag_spawner/slaughter_demon/attack_self(mob/user)
@@ -213,13 +213,13 @@
 		return
 	if(used)
 		return
-	var/list/demon_candidates = pollCandidatesForMob("Do you want to play as a [initial(demon_type.name)]?", null, null, ROLE_ALIEN, 50, src)
-	if(demon_candidates.len)
+	var/list/candidates = pollCandidatesForMob("Do you want to play as a [initial(demon_type.name)]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, src)
+	if(LAZYLEN(candidates))
 		if(used)
 			return
-		used = 1
-		var/mob/dead/observer/theghost = pick(demon_candidates)
-		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name),user.mind)
+		used = TRUE
+		var/mob/dead/observer/C = pick(candidates)
+		spawn_antag(C.client, get_turf(src), initial(demon_type.name),user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
@@ -235,24 +235,10 @@
 	S.key = C.key
 	S.mind.assigned_role = S.name
 	S.mind.special_role = S.name
-	var/datum/objective/assassinate/new_objective
-	if(user)
-		new_objective = new /datum/objective/assassinate
-		new_objective.owner = S.mind
-		new_objective.target = user
-		new_objective.explanation_text = "[objective_verb] [user.name], the one who summoned you."
-		S.mind.objectives += new_objective
-	var/datum/objective/new_objective2 = new /datum/objective
-	new_objective2.owner = S.mind
-	new_objective2.explanation_text = "[objective_verb] everyone[user ? " else while you're at it":""]."
-	S.mind.objectives += new_objective2
-	S.mind.add_antag_datum(/datum/antagonist/auto_custom)
+	S.mind.add_antag_datum(antag_type)
 	to_chat(S, S.playstyle_string)
 	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. \
 	Ctrl+Click a blood pool to manifest.</B>")
-	if(new_objective)
-		to_chat(S, "<B>Objective #[1]</B>: [new_objective.explanation_text]")
-	to_chat(S, "<B>Objective #[new_objective ? "[2]":"[1]"]</B>: [new_objective2.explanation_text]")
 
 /obj/item/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"
@@ -262,5 +248,5 @@
 	color = "#FF69B4" // HOT PINK
 
 	veil_msg = "<span class='warning'>You sense an adorable presence lurking just beyond the veil...</span>"
-	objective_verb = "Hug and Tickle"
 	demon_type = /mob/living/simple_animal/slaughter/laughter
+	antag_type = /datum/antagonist/slaughter/laughter

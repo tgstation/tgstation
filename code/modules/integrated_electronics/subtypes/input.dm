@@ -18,7 +18,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/input/button/ask_for_input(mob/user) //Bit misleading name for this specific use.
-	to_chat(user, "<span class='notice'>You press the button labeled '[src]'.</span>")
+	to_chat(user, "<span class='notice'>You press the button labeled '[displayed_name]'.</span>")
 	activate_pin(1)
 
 /obj/item/integrated_circuit/input/toggle_button
@@ -36,7 +36,7 @@
 	set_pin_data(IC_OUTPUT, 1, !get_pin_data(IC_OUTPUT, 1))
 	push_data()
 	activate_pin(1)
-	to_chat(user, "<span class='notice'>You toggle the button labeled '[src]' [get_pin_data(IC_OUTPUT, 1) ? "on" : "off"].</span>")
+	to_chat(user, "<span class='notice'>You toggle the button labeled '[displayed_name]' [get_pin_data(IC_OUTPUT, 1) ? "on" : "off"].</span>")
 
 /obj/item/integrated_circuit/input/numberpad
 	name = "number pad"
@@ -51,7 +51,7 @@
 	power_draw_per_use = 4
 
 /obj/item/integrated_circuit/input/numberpad/ask_for_input(mob/user)
-	var/new_input = input(user, "Enter a number, please.","Number pad") as null|num
+	var/new_input = input(user, "Enter a number, please.",displayed_name) as null|num
 	if(isnum(new_input) && user.IsAdvancedToolUser())
 		set_pin_data(IC_OUTPUT, 1, new_input)
 		push_data()
@@ -70,7 +70,7 @@
 	power_draw_per_use = 4
 
 /obj/item/integrated_circuit/input/textpad/ask_for_input(mob/user)
-	var/new_input = stripped_input(user, "Enter some words, please.","Text pad")
+	var/new_input = stripped_input(user, "Enter some words, please.",displayed_name)
 	if(istext(new_input) && user.IsAdvancedToolUser())
 		set_pin_data(IC_OUTPUT, 1, new_input)
 		push_data()
@@ -105,7 +105,7 @@
 	activate_pin(2)
 
 /obj/item/integrated_circuit/input/adv_med_scanner
-	name = "integrated advanced medical analyser"
+	name = "integrated adv. medical analyser"
 	desc = "A very small version of the medbot's medical analyser. This allows the machine to know how healthy someone is. \
 	This type is much more precise, allowing the machine to know much more about the target than a normal analyzer."
 	icon_state = "medscan_adv"
@@ -142,6 +142,11 @@
 
 	push_data()
 	activate_pin(2)
+
+//please delete at a later date after people stop using the old named circuit
+/obj/item/integrated_circuit/input/adv_med_scanner/old
+	name = "integrated advanced medical analyser"
+	spawn_flags = 0
 
 /obj/item/integrated_circuit/input/slime_scanner
 	name = "slime_scanner"
@@ -518,6 +523,7 @@
 		"on signal sent" = IC_PINTYPE_PULSE_OUT,
 		"on signal received" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_LONG_RANGE
 	power_draw_idle = 5
 	power_draw_per_use = 40
 
@@ -586,11 +592,12 @@
 	desc = "Enables the sending and receiving of messages on NTNet via packet data protocol."
 	extended_desc = "Data can be send or received using the second pin on each side, \
 	with additonal data reserved for the third pin. When a message is received, the second activation pin \
-	will pulse whatever's connected to it. Pulsing the first activation pin will send a message."
+	will pulse whatever's connected to it. Pulsing the first activation pin will send a message. Message \
+	can be send to multiple recepients. Addresses must be separated with ; symbol."
 	icon_state = "signal"
 	complexity = 4
 	inputs = list(
-		"target NTNet address"	= IC_PINTYPE_STRING,
+		"target NTNet addresses"= IC_PINTYPE_STRING,
 		"data to send"			= IC_PINTYPE_STRING,
 		"secondary text"		= IC_PINTYPE_STRING,
 		"passkey"				= IC_PINTYPE_STRING,							//No this isn't a real passkey encryption scheme but that's why you keep your nodes secure so no one can find it out!
@@ -599,17 +606,20 @@
 		"address received"			= IC_PINTYPE_STRING,
 		"data received"				= IC_PINTYPE_STRING,
 		"secondary text received"	= IC_PINTYPE_STRING,
-		"passkey"				= IC_PINTYPE_STRING
+		"passkey"					= IC_PINTYPE_STRING
 		)
 	activators = list("send data" = IC_PINTYPE_PULSE_IN, "on data received" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_LONG_RANGE
 	power_draw_per_use = 50
 	var/datum/ntnet_connection/exonet = null
+	var/address
 
 /obj/item/integrated_circuit/input/ntnet_packet/Initialize()
 	. = ..()
 	var/datum/component/ntnet_interface/net = LoadComponent(/datum/component/ntnet_interface)
-	desc += "<br>This circuit's NTNet hardware address is: [net.hardware_id]"
+	address = net.hardware_id
+	desc += "<br>This circuit's NTNet hardware address is: [address]"
 
 /obj/item/integrated_circuit/input/ntnet_packet/do_work()
 	var/target_address = get_pin_data(IC_INPUT, 1)
@@ -618,14 +628,15 @@
 	var/key = get_pin_data(IC_INPUT, 4)
 
 	var/datum/netdata/data = new
-	data.recipient_ids += target_address
+	data.recipient_ids = splittext(target_address, ";")
+	data.sender_id = address
 	data.plaintext_data = message
 	data.plaintext_data_secondary = text
 	data.plaintext_passkey = key
 	ntnet_send(data)
 
 /obj/item/integrated_circuit/input/ntnet_recieve(datum/netdata/data)
-	set_pin_data(IC_OUTPUT, 1, length(data.recipient_ids) >= 1? data.recipient_ids[1] : null)
+	set_pin_data(IC_OUTPUT, 1, data.sender_id)
 	set_pin_data(IC_OUTPUT, 2, data.plaintext_data)
 	set_pin_data(IC_OUTPUT, 3, data.plaintext_data_secondary)
 	set_pin_data(IC_OUTPUT, 4, data.plaintext_passkey)
@@ -752,7 +763,7 @@
 	activate_pin(1)
 	return TRUE
 
-/obj/item/integrated_circuit/input/objscaner
+/obj/item/integrated_circuit/input/obj_scanner
 	name = "scanner"
 	desc = "Scans and obtains a reference for any objects you use on the assembly."
 	extended_desc = "If the 'put down' pin is set to true, the assembly will take the scanned object from your hands to it's location. \
@@ -765,7 +776,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 20
 
-/obj/item/integrated_circuit/input/objscaner/attackby_react(var/atom/A,var/mob/user,intent)
+/obj/item/integrated_circuit/input/obj_scanner/attackby_react(var/atom/A,var/mob/user,intent)
 	if(intent!=INTENT_HELP)
 		return FALSE
 	if(!check_then_do_work())
@@ -846,8 +857,8 @@
 	return
 
 /obj/item/integrated_circuit/input/ntnetsc
-	name = "NTnet scaner"
-	desc = "This can return NTnet IDs of a component inside the given object, if there are any."
+	name = "NTNet scanner"
+	desc = "This can return NTNet IDs of a component inside the given object, if there are any."
 	icon_state = "signalsc"
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 2
@@ -860,22 +871,24 @@
 	power_draw_per_use = 1
 
 /obj/item/integrated_circuit/input/ntnetsc/do_work()
-
 	var/atom/AM = get_pin_data_as_type(IC_INPUT, 1, /atom)
-	var/list/processing_list = list(AM)
-	var/datum/component/ntnet_interface/net = null
-	set_pin_data(IC_OUTPUT, 1, null)
-	while(processing_list.len && !net)
-		var/atom/A = processing_list[1]
-		processing_list.Cut(1, 2)
-		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
-		//This is also why we don't need to check against assembled as we go along
-		processing_list += A.contents
-		net = A.GetComponent(/datum/component/ntnet_interface)
+	var/datum/component/ntnet_interface/net
+
+	if(AM)
+		var/list/processing_list = list(AM)
+		while(processing_list.len && !net)
+			var/atom/A = processing_list[1]
+			processing_list.Cut(1, 2)
+			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
+			//This is also why we don't need to check against assembled as we go along
+			processing_list += A.contents
+			net = A.GetComponent(/datum/component/ntnet_interface)
+
 	if(net)
 		set_pin_data(IC_OUTPUT, 1, net.hardware_id)
 		activate_pin(2)
 	else
+		set_pin_data(IC_OUTPUT, 1, null)
 		activate_pin(3)
 	push_data()
 	return

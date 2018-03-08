@@ -29,7 +29,7 @@
 	if(!..())
 		return
 	var/area/A = get_area(user)
-	if(A.dynamic_lighting != DYNAMIC_LIGHTING_ENABLED)
+	if(!IS_DYNAMIC_LIGHTING(A))
 		to_chat(user, "<span class='warning'>You cannot place [src] in this area!</span>")
 		return
 	return TRUE
@@ -43,7 +43,7 @@
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
 	max_integrity = 200
-	armor = list(melee = 50, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 50)
+	armor = list("melee" = 50, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
 
 	var/stage = 1
 	var/fixture_type = "tube"
@@ -109,25 +109,19 @@
 	switch(stage)
 		if(1)
 			if(istype(W, /obj/item/wrench))
-				playsound(src.loc, W.usesound, 75, 1)
 				to_chat(usr, "<span class='notice'>You begin deconstructing [src]...</span>")
-				if (!do_after(usr, 30*W.toolspeed, target = src))
-					return
-				new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
-				user.visible_message("[user.name] deconstructs [src].", \
-					"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
-				playsound(src.loc, 'sound/items/deconstruct.ogg', 75, 1)
-				qdel(src)
+				if (W.use_tool(src, user, 30, volume=50))
+					new /obj/item/stack/sheet/metal(drop_location(), sheets_refunded)
+					user.visible_message("[user.name] deconstructs [src].", \
+						"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
+					playsound(src.loc, 'sound/items/deconstruct.ogg', 75, 1)
+					qdel(src)
 				return
 
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
 				if(coil.use(1))
-					switch(fixture_type)
-						if ("tube")
-							icon_state = "tube-construct-stage2"
-						if("bulb")
-							icon_state = "bulb-construct-stage2"
+					icon_state = "[fixture_type]-construct-stage2"
 					stage = 2
 					user.visible_message("[user.name] adds wires to [src].", \
 						"<span class='notice'>You add wires to [src].</span>")
@@ -141,25 +135,21 @@
 
 			if(istype(W, /obj/item/wirecutters))
 				stage = 1
-				switch(fixture_type)
-					if ("tube")
-						icon_state = "tube-construct-stage1"
-					if("bulb")
-						icon_state = "bulb-construct-stage1"
-				new /obj/item/stack/cable_coil(get_turf(loc), 1, "red")
+				icon_state = "[fixture_type]-construct-stage1"
+				new /obj/item/stack/cable_coil(drop_location(), 1, "red")
 				user.visible_message("[user.name] removes the wiring from [src].", \
 					"<span class='notice'>You remove the wiring from [src].</span>", "<span class='italics'>You hear clicking.</span>")
-				playsound(loc, W.usesound, 100, 1)
+				W.play_tool_sound(src, 100)
 				return
 
 			if(istype(W, /obj/item/screwdriver))
 				user.visible_message("[user.name] closes [src]'s casing.", \
 					"<span class='notice'>You close [src]'s casing.</span>", "<span class='italics'>You hear screwing.</span>")
-				playsound(loc, W.usesound, 75, 1)
+				W.play_tool_sound(src, 75)
 				switch(fixture_type)
 					if("tube")
 						newlight = new /obj/machinery/light/built(loc)
-					if ("bulb")
+					if("bulb")
 						newlight = new /obj/machinery/light/small/built(loc)
 				newlight.setDir(dir)
 				transfer_fingerprints_to(newlight)
@@ -220,12 +210,23 @@
 
 	var/obj/item/stock_parts/cell/cell
 	var/start_with_cell = TRUE	// if true, this fixture generates a very weak cell at roundstart
+
+	var/nightshift_enabled = FALSE	//Currently in night shift mode?
+	var/nightshift_allowed = TRUE	//Set to FALSE to never let this light get switched to night mode.
+	var/nightshift_brightness = 8
+	var/nightshift_light_power = 0.45
+	var/nightshift_light_color = "#FFDDCC"
+
 	var/emergency_mode = FALSE	// if true, the light is in emergency mode
 	var/no_emergency = FALSE	// if true, this light cannot ever have an emergency mode
 	var/bulb_emergency_brightness_mul = 0.25	// multiplier for this light's base brightness in emergency power mode
 	var/bulb_emergency_colour = "#FF3232"	// determines the colour of the light while it's in emergency mode
 	var/bulb_emergency_pow_mul = 0.75	// the multiplier for determining the light's power in emergency mode
 	var/bulb_emergency_pow_min = 0.5	// the minimum value for the light's power in emergency mode
+
+/obj/machinery/light/broken
+	status = LIGHT_BROKEN
+	icon_state = "tube-broken"
 
 // the smaller bulb light fixture
 
@@ -237,7 +238,9 @@
 	desc = "A small lighting fixture."
 	light_type = /obj/item/light/bulb
 
-
+/obj/machinery/light/small/broken
+	status = LIGHT_BROKEN
+	icon_state = "bulb-broken"
 
 /obj/machinery/light/Move()
 	if(status != LIGHT_BROKEN)
@@ -305,23 +308,27 @@
 	return
 
 // update the icon_state and luminosity of the light depending on its state
-/obj/machinery/light/proc/update(trigger = 1)
+/obj/machinery/light/proc/update(trigger = TRUE)
 	switch(status)
 		if(LIGHT_BROKEN,LIGHT_BURNED,LIGHT_EMPTY)
 			on = FALSE
 	emergency_mode = FALSE
 	if(on)
-		if(!light || light.light_range != brightness)
+		var/BR = nightshift_enabled? nightshift_brightness : brightness
+		var/PO = nightshift_enabled? nightshift_light_power : bulb_power
+		var/CO = nightshift_enabled? nightshift_light_color : bulb_colour
+		var/matching = light && BR == light.light_range && PO == light.light_power && CO == light.light_color
+		if(!matching)
 			switchcount++
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 					explode()
-			else if( prob( min(60, switchcount*switchcount*0.01) ) )
+			else if( prob( min(60, (switchcount^2)*0.01) ) )
 				if(trigger)
 					burn_out()
 			else
 				use_power = ACTIVE_POWER_USE
-				set_light(brightness, bulb_power, bulb_colour)
+				set_light(BR, PO, CO)
 	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())
 		use_power = IDLE_POWER_USE
 		emergency_mode = TRUE
@@ -422,7 +429,7 @@
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
 		if(istype(W, /obj/item/screwdriver)) //If it's a screwdriver open it.
-			playsound(src.loc, W.usesound, 75, 1)
+			W.play_tool_sound(src, 75)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"<span class='notice'>You open [src]'s casing.</span>", "<span class='italics'>You hear a noise.</span>")
 			deconstruct()
@@ -689,7 +696,7 @@
 	grind_results = list("silicon" = 5, "nitrogen" = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 	var/rigged = 0		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
-	
+
 /obj/item/light/suicide_act(mob/living/carbon/user)
 	if (status == LIGHT_BROKEN)
 		user.visible_message("<span class='suicide'>[user] begins to stab [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

@@ -51,7 +51,7 @@
 	var/mob/living/current = owner.current
 	SSticker.mode.servants_of_ratvar += owner
 	SSticker.mode.update_servant_icons_added(owner)
-	owner.special_role = "Servant of Ratvar"
+	owner.special_role = ROLE_SERVANT_OF_RATVAR
 	owner.current.log_message("<font color=#BE8700>Has been converted to the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(issilicon(current))
 		if(iscyborg(current) && !silent)

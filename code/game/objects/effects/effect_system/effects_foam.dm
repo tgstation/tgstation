@@ -88,6 +88,8 @@
 	name = "resin foam"
 	metal = RESIN_FOAM
 
+/obj/effect/particle_effect/foam/long_life
+	lifetime = 150
 
 /obj/effect/particle_effect/foam/Initialize()
 	. = ..()
@@ -215,6 +217,9 @@
 	effect_type = /obj/effect/particle_effect/foam/smart
 
 
+/datum/effect_system/foam_spread/long
+	effect_type = /obj/effect/particle_effect/foam/long_life
+
 /datum/effect_system/foam_spread/New()
 	..()
 	chemholder = new /obj()
@@ -234,7 +239,7 @@
 		location = get_turf(loca)
 
 	amount = round(sqrt(amt / 2), 1)
-	carry.copy_to(chemholder, 4*carry.total_volume) //The foam holds 4 times the total reagents volume for balance purposes.
+	carry.copy_to(chemholder, carry.total_volume)
 
 /datum/effect_system/foam_spread/metal/set_up(amt=5, loca, datum/reagents/carry = null, metaltype)
 	..()

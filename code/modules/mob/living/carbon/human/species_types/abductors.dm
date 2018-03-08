@@ -3,7 +3,7 @@
 	id = "abductor"
 	say_mod = "gibbers"
 	sexes = FALSE
-	species_traits = list(SPECIES_ORGANIC,NOBLOOD,NOBREATH,VIRUSIMMUNE,NOGUNS,NOHUNGER)
+	species_traits = list(SPECIES_ORGANIC,NOBLOOD,NOBREATH,VIRUSIMMUNE,NOGUNS,NOHUNGER,NOEYES)
 	mutanttongue = /obj/item/organ/tongue/abductor
 	var/scientist = FALSE // vars to not pollute spieces list with castes
 

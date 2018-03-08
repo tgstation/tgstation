@@ -208,8 +208,7 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "aN" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -679,7 +678,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	icon_plating = "wall_thermite";
 	icon_state = "wall_thermite";
 	name = "melted wall"
 	},
@@ -1054,8 +1052,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cH" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -1712,7 +1709,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	icon_plating = "wall_thermite";
 	icon_state = "wall_thermite";
 	name = "melted wall"
 	},
@@ -1730,7 +1726,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	icon_plating = "wall_thermite";
 	icon_state = "wall_thermite";
 	name = "melted wall"
 	},
@@ -1812,8 +1807,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "dY" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/stack/sheet/plasteel/twenty,
 /obj/effect/turf_decal/delivery,
@@ -1917,8 +1911,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ek" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/stack/sheet/cardboard/fifty,
 /obj/effect/turf_decal/delivery,
@@ -1964,8 +1957,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eq" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/crowbar,
 /turf/open/floor/plasteel,
@@ -2049,8 +2041,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eB" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/device/paicard,
 /obj/machinery/light,

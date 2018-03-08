@@ -7,7 +7,7 @@
 /mob/living/simple_animal/hostile/blob
 	icon = 'icons/mob/blob.dmi'
 	pass_flags = PASSBLOB
-	faction = list("blob")
+	faction = list(ROLE_BLOB)
 	bubble_icon = "blob"
 	speak_emote = null //so we use verb_yell/verb_say/etc
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -148,7 +148,7 @@
 
 	// Attach the smoke spreader and setup/start it.
 	S.attach(location)
-	S.set_up(reagents, death_cloud_size, location, silent=1)
+	S.set_up(reagents, death_cloud_size, location, silent = TRUE)
 	S.start()
 	if(factory)
 		factory.spore_delay = world.time + factory.spore_cooldown //put the factory on cooldown

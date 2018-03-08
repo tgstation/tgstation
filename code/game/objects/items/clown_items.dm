@@ -16,6 +16,8 @@
 	gender = PLURAL
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "soap"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = NOBLUDGEON_1
 	throwforce = 0

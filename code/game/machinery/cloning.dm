@@ -434,14 +434,17 @@
 	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
 	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
 	// In addition to being cellularly damaged and having barely any
+
 	// brain function, they also have no limbs or internal organs.
-	var/static/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
-	for(var/zone in zones)
-		var/obj/item/bodypart/BP = H.get_bodypart(zone)
-		if(BP)
-			BP.drop_limb()
-			BP.forceMove(src)
-			unattached_flesh += BP
+
+	if(!NODISMEMBER in H.dna.species.species_traits)
+		var/static/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
+		for(var/zone in zones)
+			var/obj/item/bodypart/BP = H.get_bodypart(zone)
+			if(BP)
+				BP.drop_limb()
+				BP.forceMove(src)
+				unattached_flesh += BP
 
 	for(var/o in H.internal_organs)
 		var/obj/item/organ/organ = o

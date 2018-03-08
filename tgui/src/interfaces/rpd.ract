@@ -27,6 +27,8 @@
 			action='screen' params='{"screen": 0}'>Atmospherics</ui-button>
 		<ui-button icon='{{data.screen == 2 ? "check-square-o" : "square-o"}}' state='{{data.screen == 2 ? "selected" : null}}'
 			action='screen' params='{"screen": 2}'>Disposals</ui-button>
+		<ui-button icon='{{data.screen == 3 ? "check-square-o" : "square-o"}}' state='{{data.screen == 3 ? "selected" : null}}'
+			action='screen' params='{"screen": 3}'>Transit Tubes</ui-button>
 	</ui-section>
 	{{#if data.screen == 0}}
 		<ui-section label='Piping Layer'>

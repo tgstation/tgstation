@@ -890,7 +890,10 @@ The _flatIcons list is a cache for generated icon files.
 		flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 
 	if(no_anim)
-		return icon(flat, "", SOUTH, frame=1)
+		//Clean up repeated frames
+		var/icon/cleaned = new /icon()
+		cleaned.Insert(flat, "", SOUTH, 1, 0)
+		return cleaned
 	else
 		return icon(flat, "", SOUTH)
 

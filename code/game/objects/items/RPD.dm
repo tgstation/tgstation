@@ -8,9 +8,7 @@ RPD
 #define ATMOS_MODE 0
 #define METER_MODE 1
 #define DISPOSALS_MODE 2
-
-#define CATEGORY_ATMOS 0
-#define CATEGORY_DISPOSALS 1
+#define TRANSIT_MODE 3
 
 
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
@@ -56,6 +54,22 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	)
 ))
 
+GLOBAL_LIST_INIT(transit_tube_recipes, list(
+	"Transit Tubes" = list(
+		new /datum/pipe_info/transit("Straight Tube",				/obj/structure/c_transit_tube, PIPE_STRAIGHT),
+		new /datum/pipe_info/transit("Straight Tube with Crossing",	/obj/structure/c_transit_tube/crossing, PIPE_STRAIGHT),
+		new /datum/pipe_info/transit("Curved Tube",					/obj/structure/c_transit_tube/curved, PIPE_UNARY_FLIPPABLE),
+		new /datum/pipe_info/transit("Diagonal Tube",				/obj/structure/c_transit_tube/diagonal, PIPE_STRAIGHT),
+		new /datum/pipe_info/transit("Diagonal Tube with Crossing",	/obj/structure/c_transit_tube/diagonal/crossing, PIPE_STRAIGHT),
+		new /datum/pipe_info/transit("Junction",					/obj/structure/c_transit_tube/junction, PIPE_UNARY_FLIPPABLE),
+	),
+	"Station Equipment" = list(
+		new /datum/pipe_info/transit("Through Tube Station",		/obj/structure/c_transit_tube/station, PIPE_STRAIGHT),
+		new /datum/pipe_info/transit("Terminus Tube Station",		/obj/structure/c_transit_tube/station/reverse, PIPE_UNARY),
+		new /datum/pipe_info/transit("Transit Tube Pod",			/obj/structure/c_transit_tube_pod, PIPE_ONEDIR),
+	)
+))
+
 
 /datum/pipe_info
 	var/name
@@ -95,13 +109,18 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 			dirs = list("[NORTH]" = "North", "[EAST]" = "East", "[SOUTH]" = "South", "[WEST]" = "West")
 		if(PIPE_ONEDIR)
 			dirs = list("[SOUTH]" = name)
+		if(PIPE_UNARY_FLIPPABLE)
+			dirs = list("[NORTH]" = "North", "[NORTHEAST]" = "North Flipped", "[EAST]" = "East", "[SOUTHEAST]" = "East Flipped",
+						"[SOUTH]" = "South", "[SOUTHWEST]" = "South Flipped", "[WEST]" = "West", "[NORTHWEST]" = "West Flipped")
+
 
 	var/list/rows = list()
 	var/list/row = list("previews" = list())
 	var/i = 0
 	for(var/dir in dirs)
-		var/flipped = (dirtype == PIPE_TRIN_M) && (text2num(dir) in GLOB.diagonals)
-		row["previews"] += list(list("selected" = (text2num(dir) == selected_dir), "dir" = dir2text(text2num(dir)), "dir_name" = dirs[dir], "icon_state" = icon_state, "flipped" = flipped))
+		var/numdir = text2num(dir)
+		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE)) && (numdir in GLOB.diagonals)
+		row["previews"] += list(list("selected" = (numdir == selected_dir), "dir" = dir2text(numdir), "dir_name" = dirs[dir], "icon_state" = icon_state, "flipped" = flipped))
 		if(i++ || dirtype == PIPE_ONEDIR)
 			rows += list(row)
 			row = list("previews" = list())
@@ -142,6 +161,13 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 /datum/pipe_info/disposal/Params()
 	return "dmake=[id]&type=[dirtype]"
 
+/datum/pipe_info/transit/New(label, obj/path, dt=PIPE_UNARY)
+	name = label
+	id = path
+	dirtype = dt
+	icon_state = initial(path.icon_state)
+	if(dt == PIPE_UNARY_FLIPPABLE)
+		icon_state = "[icon_state]_preview"
 
 /obj/item/pipe_dispenser
 	name = "Rapid Piping Device (RPD)"
@@ -155,7 +181,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=75000, MAT_GLASS=37500)
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/working = 0
@@ -163,11 +189,12 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	var/p_dir = NORTH
 	var/p_flipped = FALSE
 	var/paint_color="Grey"
-	var/screen = CATEGORY_ATMOS //Starts on the atmos tab.
+	var/screen = ATMOS_MODE //Starts on the atmos tab.
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/datum/pipe_info/recipe
 	var/static/datum/pipe_info/first_atmos
 	var/static/datum/pipe_info/first_disposal
+	var/static/datum/pipe_info/first_transit
 
 /obj/item/pipe_dispenser/New()
 	. = ..()
@@ -178,6 +205,9 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 		first_atmos = GLOB.atmos_pipe_recipes[GLOB.atmos_pipe_recipes[1]][1]
 	if(!first_disposal)
 		first_disposal = GLOB.disposal_pipe_recipes[GLOB.disposal_pipe_recipes[1]][1]
+	if(!first_transit)
+		first_transit = GLOB.transit_tube_recipes[GLOB.transit_tube_recipes[1]][1]
+
 	recipe = first_atmos
 
 /obj/item/pipe_dispenser/Destroy()
@@ -215,10 +245,13 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	)
 
 	var/list/recipes
-	if(screen == ATMOS_MODE)
-		recipes = GLOB.atmos_pipe_recipes
-	else if(screen == DISPOSALS_MODE)
-		recipes = GLOB.disposal_pipe_recipes
+	switch(screen)
+		if(ATMOS_MODE)
+			recipes = GLOB.atmos_pipe_recipes
+		if(DISPOSALS_MODE)
+			recipes = GLOB.disposal_pipe_recipes
+		if(TRANSIT_MODE)
+			recipes = GLOB.transit_tube_recipes
 	for(var/c in recipes)
 		var/list/cat = recipes[c]
 		var/list/r = list()
@@ -248,7 +281,13 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 			if(mode == screen)
 				mode = text2num(params["screen"])
 			screen = text2num(params["screen"])
-			recipe = screen == DISPOSALS_MODE ? first_disposal : first_atmos
+			switch(screen)
+				if(DISPOSALS_MODE)
+					recipe = first_disposal
+				if(ATMOS_MODE)
+					recipe = first_atmos
+				if(TRANSIT_MODE)
+					recipe = first_transit
 			p_dir = NORTH
 			playeffect = FALSE
 		if("piping_layer")
@@ -257,7 +296,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 		if("pipe_type")
 			var/static/list/recipes
 			if(!recipes)
-				recipes = GLOB.disposal_pipe_recipes + GLOB.atmos_pipe_recipes
+				recipes = GLOB.disposal_pipe_recipes + GLOB.atmos_pipe_recipes + GLOB.transit_tube_recipes
 			recipe = recipes[params["category"]][text2num(params["pipe_type"])]
 			p_dir = NORTH
 		if("setdir")
@@ -302,7 +341,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 			return
 
 		if(EATING_MODE) //Eating pipes
-			if(!(istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct)))
+			if(!(istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod)))
 				return ..()
 			to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -365,6 +404,31 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 				C.update_icon()
 				return
 
+		if(TRANSIT_MODE) //Making transit tubes
+			if(!can_make_pipe)
+				return ..()
+			A = get_turf(A)
+			if(isclosedturf(A))
+				to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
+				return
+			to_chat(user, "<span class='notice'>You start building a transit tube...</span>")
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+			if(do_after(user, 4, target = A))
+				activate()
+				if(queued_p_type == /obj/structure/c_transit_tube_pod)
+					var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(A)
+					pod.add_fingerprint(usr)
+				else
+					var/obj/structure/c_transit_tube/tube = new queued_p_type(A)
+					tube.dir = queued_p_dir
+
+					if(queued_p_flipped)
+						tube.dir = turn(queued_p_dir, 45)
+						tube.simple_rotate_flip()
+
+					tube.add_fingerprint(usr)
+				return
+
 		else
 			return ..()
 
@@ -377,5 +441,3 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 #undef ATMOS_MODE
 #undef METER_MODE
 #undef DISPOSALS_MODE
-#undef CATEGORY_ATMOS
-#undef CATEGORY_DISPOSALS

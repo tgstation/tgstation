@@ -8,8 +8,8 @@
 	bloodiness = MAX_SHOE_BLOODINESS
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
-	add_blood_DNA(C.return_blood_DNA())
-	..()
+	C.add_blood_DNA(return_blood_DNA())
+	return ..()
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
@@ -17,9 +17,9 @@
 	bloodiness = 0
 
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
-	. = ..()
 	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
-	add_blood_DNA(list("Non-human DNA" = "A+"))
+	add_blood_DNA(list("Non-human DNA" = "A+")) // Needs to happen before ..()
+	return ..()
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
@@ -184,4 +184,3 @@
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
 		return 1
 	return 0
-

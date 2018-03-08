@@ -18,6 +18,7 @@
 	var/charge_tick = 0
 	var/charge_delay = 4
 	var/use_cyborg_cell = 0 //whether the gun's cell drains the cyborg user's cell to recharge
+	var/dead_cell = FALSE //set to true so the gun is given an empty cell
 
 /obj/item/gun/energy/emp_act(severity)
 	cell.use(round(cell.charge / severity))
@@ -34,7 +35,8 @@
 		cell = new cell_type(src)
 	else
 		cell = new(src)
-	cell.give(cell.maxcharge)
+	if(!dead_cell)
+		cell.give(cell.maxcharge)
 	update_ammo_types()
 	recharge_newshot(1)
 	if(selfcharge)

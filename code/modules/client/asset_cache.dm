@@ -338,7 +338,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/simple/goonchat
 	verify = FALSE
 	assets = list(
-		"jquery.min.js"            = 'code/modules/html_interface/js/jquery.min.js',
+		"jquery.min.js"            = 'code/modules/goonchat/browserassets/js/jquery.min.js',
 		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
 		"errorHandler.js"          = 'code/modules/goonchat/browserassets/js/errorHandler.js',
 		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
@@ -349,12 +349,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"font-awesome.css"	       = 'code/modules/goonchat/browserassets/css/font-awesome.css',
 		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
 	)
-
-//Registers HTML Interface assets.
-/datum/asset/HTML_interface/register()
-	for(var/path in typesof(/datum/html_interface))
-		var/datum/html_interface/hi = new path()
-		hi.registerResources()
 
 //this exists purely to avoid meta by pre-loading all language icons.
 /datum/asset/language/register()
@@ -368,7 +362,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	generic_icon_names = TRUE
 
 /datum/asset/simple/icon_states/multiple_icons/pipes
-	icons = list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi')
+	icons = list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi', 'icons/obj/atmospherics/pipes/transit_tube.dmi')
 	prefix = "pipe"
 
 /datum/asset/simple/icon_states/multiple_icons/pipes/New()

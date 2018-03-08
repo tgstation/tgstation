@@ -163,7 +163,7 @@ Bartender
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/bartender
 	suit = /obj/item/clothing/suit/armor/vest
-	backpack_contents = list(/obj/item/storage/box/beanbag=1)
+	backpack_contents = list(/obj/item/storage/box/beanbag=1,/obj/item/book/action_granting/drink_fling=1)
 	shoes = /obj/item/clothing/shoes/laceup
 
 /*
@@ -195,6 +195,7 @@ Cook
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
 	head = /obj/item/clothing/head/chefhat
+	mask = /obj/item/clothing/mask/fakemoustache/italian
 	backpack_contents = list(/obj/item/sharpener = 1)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -215,6 +216,8 @@ Cook
 	var/chosen_box = pick(possible_boxes)
 	var/obj/item/storage/box/I = new chosen_box(src)
 	H.equip_to_slot_or_del(I,slot_in_backpack)
+	var/datum/martial_art/cqc/under_siege/justacook = new
+	justacook.teach(H)
 
 /*
 Botanist

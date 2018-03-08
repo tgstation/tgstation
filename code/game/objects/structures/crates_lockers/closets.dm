@@ -15,7 +15,7 @@
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	max_integrity = 200
 	integrity_failure = 50
-	armor = list(melee = 20, bullet = 10, laser = 10, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 70, acid = 60)
+	armor = list("melee" = 20, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60)
 	var/breakout_time = 1200
 	var/message_cooldown
 	var/can_weld_shut = TRUE
@@ -29,7 +29,6 @@
 	var/cutting_tool = /obj/item/weldingtool
 	var/open_sound = 'sound/machines/click.ogg'
 	var/close_sound = 'sound/machines/click.ogg'
-	var/cutting_sound = 'sound/items/welder.ogg'
 	var/material_drop = /obj/item/stack/sheet/metal
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
@@ -216,19 +215,18 @@
 	if(opened)
 		if(istype(W, cutting_tool))
 			if(istype(W, /obj/item/weldingtool))
-				var/obj/item/weldingtool/WT = W
-				if(WT.remove_fuel(0, user))
-					to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
-					playsound(loc, cutting_sound, 40, 1)
-					if(do_after(user, 40*WT.toolspeed, 1, target = src))
-						if(!opened || !WT.isOn())
-							return
-						playsound(loc, cutting_sound, 50, 1)
-						user.visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
-										"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
-										"<span class='italics'>You hear welding.</span>")
-						deconstruct(TRUE)
+				if(!W.tool_start_check(user, amount=0))
 					return
+
+				to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
+				if(W.use_tool(src, user, 40, volume=50))
+					if(!opened)
+						return
+					user.visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
+									"<span class='notice'>You cut \the [src] apart with \the [W].</span>",
+									"<span class='italics'>You hear welding.</span>")
+					deconstruct(TRUE)
+				return
 			else // for example cardboard box is cut with wirecutters
 				user.visible_message("<span class='notice'>[user] cut apart \the [src].</span>", \
 									"<span class='notice'>You cut \the [src] apart with \the [W].</span>")
@@ -237,25 +235,23 @@
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return
 	else if(istype(W, /obj/item/weldingtool) && can_weld_shut)
-		var/obj/item/weldingtool/WT = W
-		if(!WT.remove_fuel(0, user))
+		if(!W.tool_start_check(user, amount=0))
 			return
+
 		to_chat(user, "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>")
-		playsound(loc, 'sound/items/welder2.ogg', 40, 1)
-		if(do_after(user, 40*WT.toolspeed, 1, target = src))
-			if(opened || !WT.isOn())
+		if(W.use_tool(src, user, 40, volume=50))
+			if(opened)
 				return
-			playsound(loc, WT.usesound, 50, 1)
 			welded = !welded
 			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unweldeds"] \the [src].</span>",
-							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
+							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [W].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
 	else if(istype(W, /obj/item/wrench) && anchorable)
 		if(isinspace() && !anchored)
 			return
 		anchored = !anchored
-		playsound(src.loc, W.usesound, 75, 1)
+		W.play_tool_sound(src, 75)
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='italics'>You hear a ratchet.</span>")
@@ -394,8 +390,7 @@
 
 /obj/structure/closet/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, be_close=TRUE) || !isturf(loc))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!user.canUseTopic(src, BE_CLOSE) || !isturf(loc))
 		return
 	if(opened || !secure)
 		return

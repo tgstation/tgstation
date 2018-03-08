@@ -42,7 +42,7 @@
 	flags_2 = NO_MAT_REDEMPTION_2
 	var/pshoom = 'sound/items/pshoom.ogg'
 	var/alt_sound = 'sound/items/pshoom_2.ogg'
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 60, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 50)
 
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
@@ -325,6 +325,12 @@
 		for(var/R in reward_all_of_these)
 			new R(src)
 		revealed = 1
+
+/obj/item/storage/backpack/satchel/flat/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
+	if(SSpersistence.spawned_objects[W])
+		to_chat(user, "<span class='warning'>[W] is unstable after its journey through space and time, it wouldn't survive another trip.</span>")
+		return FALSE
+	return ..()
 
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"

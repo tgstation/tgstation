@@ -20,16 +20,16 @@
 
 
 /obj/machinery/computer/cargo/express/attackby(obj/item/W, mob/living/user, params)
-	..()
 	if((istype(W, /obj/item/card/id) || istype(W, /obj/item/device/pda)) && allowed(user))
 		locked = !locked
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the interface.</span>")
-
+		return
 	else if(istype(W, /obj/item/disk/cargo/bluespace_pod))
 		podID = 1//doesnt effect circuit board, so that reversal is possible
 		to_chat(user, "<span class='notice'>You insert the disk into [src], allowing for advanced supply delivery vehicles.</span>")
 		qdel(W)
 		return TRUE
+	..()
 
 /obj/machinery/computer/cargo/express/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)

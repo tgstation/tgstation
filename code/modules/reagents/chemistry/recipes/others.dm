@@ -562,7 +562,7 @@
 	name = "lye"
 	id = "lye"
 	results = list("lye" = 2)
-	required_reagents = list("ash" = 1, "water" = 1)
+	required_reagents = list("ash" = 1, "water" = 1, "carbon" = 1)
 
 /datum/chemical_reaction/royal_bee_jelly
 	name = "royal bee jelly"
@@ -579,7 +579,7 @@
 /datum/chemical_reaction/plastic_polymers
 	name = "plastic polymers"
 	id = "plastic_polymers"
-	required_reagents = list("oil" = 5, "sodiumchloride" = 2, "ash" = 3)
+	required_reagents = list("oil" = 5, "sacid" = 2, "ash" = 3)
 	required_temp = 374 //lazily consistent with soap & other crafted objects generically created with heat.
 
 /datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, created_volume)

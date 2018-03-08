@@ -119,6 +119,8 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life()
 	. = ..()
+	if(!.) // dead
+		return
 	if(isturf(loc))
 		if(!LAZYLEN(cached_tentacle_turfs) || loc != last_location || tentacle_recheck_cooldown <= world.time)
 			LAZYCLEARLIST(cached_tentacle_turfs)

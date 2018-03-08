@@ -3,6 +3,12 @@
 
 GLOBAL_LIST_EMPTY(PDAs)
 
+#define PDA_SCANNER_NONE		0
+#define PDA_SCANNER_MEDICAL		1
+#define PDA_SCANNER_FORENSICS	2 //unused
+#define PDA_SCANNER_REAGENT		3
+#define PDA_SCANNER_HALOGEN		4
+#define PDA_SCANNER_GAS			5
 
 /obj/item/device/pda
 	name = "\improper PDA"
@@ -15,7 +21,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	flags_1 = NOBLUDGEON_1
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_ID | SLOT_BELT
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 
@@ -39,11 +45,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 	#define MODE_VT 3
 
 	//Secondary variables
-	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
-	var/fon = 0 //Is the flashlight function on?
+	var/scanmode = PDA_SCANNER_NONE
+	var/fon = FALSE //Is the flashlight function on?
 	var/f_lum = 2.3 //Luminosity for the flashlight function
-	var/silent = 0 //To beep or not to beep, that is the question
-	var/toff = 0 //If 1, messenger disabled
+	var/silent = FALSE //To beep or not to beep, that is the question
+	var/toff = FALSE //If TRUE, messenger disabled
 	var/tnote = null //Current Texts
 	var/last_text //No text spamming
 	var/last_noise //Also no honk spamming that's bad too
@@ -53,10 +59,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
 	var/notehtml = ""
-	var/notescanned = 0 // True if what is in the notekeeper was from a paper.
+	var/notescanned = FALSE // True if what is in the notekeeper was from a paper.
 	var/detonatable = TRUE // Can the PDA be blown up?
-	var/hidden = 0 // Is the PDA hidden from the PDA list?
-	var/emped = 0
+	var/hidden = FALSE // Is the PDA hidden from the PDA list?
+	var/emped = FALSE
 	var/equipped = FALSE  //used here to determine if this is the first time its been picked up
 
 	var/obj/item/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
@@ -206,7 +212,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += text("ID: <a href='?src=[REF(src)];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
 				dat += text("<br><a href='?src=[REF(src)];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
-				dat += "[worldtime2text()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
+				dat += "[station_time_timestamp()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
 				dat += "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer+540]"
 
 				dat += "<br><br>"
@@ -415,7 +421,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if (!isnull(cartridge))
 					U.put_in_hands(cartridge)
 					to_chat(U, "<span class='notice'>You remove [cartridge] from [src].</span>")
-					scanmode = 0
+					scanmode = PDA_SCANNER_NONE
 					cartridge.host_pda = null
 					cartridge = null
 					update_icon()
@@ -440,40 +446,40 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 			if("Light")
 				if(fon)
-					fon = 0
+					fon = FALSE
 					set_light(0)
 				else if(f_lum)
-					fon = 1
+					fon = TRUE
 					set_light(f_lum)
 				update_icon()
 			if("Medical Scan")
-				if(scanmode == 1)
-					scanmode = 0
+				if(scanmode == PDA_SCANNER_MEDICAL)
+					scanmode = PDA_SCANNER_NONE
 				else if((!isnull(cartridge)) && (cartridge.access & CART_MEDICAL))
-					scanmode = 1
+					scanmode = PDA_SCANNER_MEDICAL
 			if("Reagent Scan")
-				if(scanmode == 3)
-					scanmode = 0
+				if(scanmode == PDA_SCANNER_REAGENT)
+					scanmode = PDA_SCANNER_NONE
 				else if((!isnull(cartridge)) && (cartridge.access & CART_REAGENT_SCANNER))
-					scanmode = 3
+					scanmode = PDA_SCANNER_REAGENT
 			if("Halogen Counter")
-				if(scanmode == 4)
-					scanmode = 0
+				if(scanmode == PDA_SCANNER_HALOGEN)
+					scanmode = PDA_SCANNER_NONE
 				else if((!isnull(cartridge)) && (cartridge.access & CART_ENGINE))
-					scanmode = 4
+					scanmode = PDA_SCANNER_HALOGEN
 			if("Honk")
 				if ( !(last_noise && world.time < last_noise + 20) )
-					playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
+					playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 					last_noise = world.time
 			if("Trombone")
 				if ( !(last_noise && world.time < last_noise + 20) )
-					playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 1)
+					playsound(src, 'sound/misc/sadtrombone.ogg', 50, 1)
 					last_noise = world.time
 			if("Gas Scan")
-				if(scanmode == 5)
-					scanmode = 0
+				if(scanmode == PDA_SCANNER_GAS)
+					scanmode = PDA_SCANNER_NONE
 				else if((!isnull(cartridge)) && (cartridge.access & CART_ATMOS))
-					scanmode = 5
+					scanmode = PDA_SCANNER_GAS
 			if("Drone Phone")
 				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
 				var/area/A = get_area(U)
@@ -491,7 +497,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					if (mode == 1 && n)
 						note = n
 						notehtml = parsemarkdown(n, U)
-						notescanned = 0
+						notescanned = FALSE
 				else
 					U << browse(null, "window=pda")
 					return
@@ -571,7 +577,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
-		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
+		playsound(src, 'sound/items/bikehorn.ogg', 30, 1)
 
 	if(U.machine == src && href_list["skiprefresh"]!="1")//Final safety.
 		attack_self(U)//It auto-closes the menu prior if the user is not in range and so on.
@@ -656,7 +662,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=Message;target=[REF(signal.source)]'>[signal.data["name"]]</a> ([signal.data["job"]]):</b></i><br>[signal.format_message()]<br>"
 
 	if (!silent)
-		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+		playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
 		audible_message("[icon2html(src, hearers(src))] *[ttone]*", null, 3)
 	//Search for holder of the PDA.
 	var/mob/living/L = null
@@ -816,9 +822,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 				healthscan(user, C, 1)
 				add_fingerprint(user)
 
-			if(2)
-				// Unused
-
 			if(4)
 				C.visible_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>")
 
@@ -875,7 +878,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		note = replacetext(note, "<ul>", "\[list\]")
 		note = replacetext(note, "</ul>", "\[/list\]")
 		note = html_encode(note)
-		notescanned = 1
+		notescanned = TRUE
 		to_chat(user, "<span class='notice'>Paper scanned. Saved to PDA's notekeeper.</span>" )
 
 
@@ -996,3 +999,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(!P.owner || P.toff || P.hidden)
 			continue
 		. += P
+
+#undef PDA_SCANNER_NONE
+#undef PDA_SCANNER_MEDICAL
+#undef PDA_SCANNER_REAGENT
+#undef PDA_SCANNER_HALOGEN
+#undef PDA_SCANNER_GAS

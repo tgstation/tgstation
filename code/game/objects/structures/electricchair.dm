@@ -13,7 +13,7 @@
 /obj/structure/chair/e_chair/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wrench))
 		var/obj/structure/chair/C = new /obj/structure/chair(loc)
-		playsound(loc, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		C.setDir(dir)
 		part.forceMove(loc)
 		part.master = null

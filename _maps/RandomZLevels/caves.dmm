@@ -1724,8 +1724,7 @@
 /area/awaymission/caves/listeningpost)
 "fn" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
 /obj/item/paper/fluff/awaymissions/caves/shipment_receipt,
 /obj/item/organ/eyes/robotic/thermals,
