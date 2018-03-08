@@ -634,6 +634,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.legs_list[H.dna.features["legs"]]
 				if("moth_wings")
 					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
+<<<<<<< HEAD
 
 				if("moth_wings")
 					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
@@ -641,6 +642,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				else
 					S = hippie_mutant_bodyparts(bodypart, H)
 
+=======
+				if("caps")
+					S = GLOB.caps_list[H.dna.features["caps"]]
+>>>>>>> 84d4b3aae6... Mushroom people, revived! (#35858)
 			if(!S || S.icon_state == "none")
 				continue
 
