@@ -33,8 +33,8 @@
  */
 
 /obj/item/clothing/suit/hooded/flashsuit
-	name = "flash suit"
-	desc = "You're not a hero until you make it look good."
+	name = "flashy costume"
+	desc = "What did you expect?"
 	icon_state = "flashsuit"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN
@@ -42,7 +42,7 @@
 
 /obj/item/clothing/head/hooded/flashsuit
 	name = "flash button"
-	desc = "Flashing lights, lights, lights liiiiights..."
+	desc = "You will learn to fear the flash."
 	icon_state = "flashsuit"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
