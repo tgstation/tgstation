@@ -1588,6 +1588,7 @@
 #include "code\modules\integrated_electronics\core\special_pins\string_pin.dm"
 #include "code\modules\integrated_electronics\passive\passive.dm"
 #include "code\modules\integrated_electronics\passive\power.dm"
+#include "code\modules\integrated_electronics\subtypes\access.dm"
 #include "code\modules\integrated_electronics\subtypes\arithmetic.dm"
 #include "code\modules\integrated_electronics\subtypes\converters.dm"
 #include "code\modules\integrated_electronics\subtypes\data_transfer.dm"
