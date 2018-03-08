@@ -70,7 +70,7 @@
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
-  random_revenant_name()
+	random_revenant_name()
 	if(type=="/mob/living/simple_animal/revenant") //so not an admin spawned specific revenant, lets randomly pick one
 		pickghost()
 

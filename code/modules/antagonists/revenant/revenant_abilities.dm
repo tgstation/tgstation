@@ -347,35 +347,35 @@
 
 /////POLTERGEIST (BRUTE GHOST)/////
 
-/obj/effect/proc_holder/spell/targeted/revenant/punch
+/obj/effect/proc_holder/spell/targeted/revenant/urges
 	name = "Violent Urges"
 	desc = "Causes someone to attack someone else. You will be only quickly flashed."
 	charge_max = 100
 	range = 7
 	cast_amount = 40
 	unlock_amount = 80
-	reveal = 10
+	reveal = 50
 	stun = 0
 	locked = FALSE
 	action_icon_state = "blight"
 
-/obj/effect/proc_holder/spell/targeted/revenant/punch/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+/obj/effect/proc_holder/spell/targeted/revenant/urges/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/mob/living/target in targets)
 			target.a_intent = INTENT_HARM
 			target.click_random_mob()
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/push
-	name = "Ethereal Cyclone"
-	desc = "Causes nearby objects to fly away from you."
+	name = "Whirlwind"
+	desc = "Causes nearby objects and people to fly away from you."
 	charge_max = 200
-	range = 3
+	range = 2
 	cast_amount = 75
 	unlock_amount = 100
 	action_icon_state = "blight"
 	sound = 'sound/magic/repulse.ogg'
-	reveal = 60
-	stun = 20
+	reveal = 70
+	stun = 40
 	var/maxthrow = 5
 	var/sparkle_path = /obj/effect/temp_visual/gravpush
 	var/anti_magic_check = TRUE
@@ -416,6 +416,21 @@
 					M.Knockdown(stun_amt)
 					to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
 				AM.throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)
+
+/obj/effect/proc_holder/spell/targeted/revenant/punch
+	name = "Ethereal Uppercut"
+	desc = "Uppercut in a line facing you, causing a delayed throw."
+	charge_max = 200
+	range = 3
+	cast_amount = 75
+	unlock_amount = 100
+	action_icon_state = "blight"
+	sound = 'sound/magic/repulse.ogg'
+	reveal = 0
+	stun = 0
+
+///obj/effect/proc_holder/spell/targeted/revenant/punch/cast()
+//	if(attempt_cast(user))
 
 /////SPECTER (BURN GHOST)/////
 
