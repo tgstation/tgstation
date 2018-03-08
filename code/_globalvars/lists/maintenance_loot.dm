@@ -37,6 +37,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/clothing/mask/gas = 15,
 	/obj/item/clothing/suit/hazardvest = 1,
 	/obj/item/clothing/under/rank/vice = 1,
+	/obj/item/clothing/suit/hooded/flashsuit = 2,
 	/obj/item/device/assembly/prox_sensor = 4,
 	/obj/item/device/assembly/timer = 3,
 	/obj/item/device/flashlight = 4,
