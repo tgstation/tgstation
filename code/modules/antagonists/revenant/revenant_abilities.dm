@@ -460,7 +460,6 @@
 		do_sparks(4, FALSE, M)
 		playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 
-
 /////WIGHT (TOXIN GHOST)/////
 
 //Blight: Infects nearby humans and in general messes living stuff up.
