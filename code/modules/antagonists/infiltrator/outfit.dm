@@ -8,6 +8,7 @@
 	ears = /obj/item/device/radio/headset/chameleon
 	id = /obj/item/card/id/syndicate
 	mask = /obj/item/clothing/mask/chameleon
+	belt = /obj/item/device/pda/chameleon
 	backpack_contents = list(/obj/item/storage/box/syndie=1,\
 		/obj/item/kitchen/knife/combat/survival=1,\
 		/obj/item/gun/ballistic/automatic/pistol=1)
@@ -23,3 +24,10 @@
 	S.implant(H)
 	H.faction |= ROLE_SYNDICATE
 	H.update_icons()
+
+	var/obj/item/card/id/syndicate/card = H.wear_id
+	if(istype(card))
+		card.registered_name = H.real_name
+		card.assignment = "Assistant"
+		card.access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE)
+		card.update_label()

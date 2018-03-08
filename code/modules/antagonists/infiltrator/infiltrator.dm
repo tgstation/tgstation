@@ -43,6 +43,8 @@
 		purrbation_remove(H, silent=TRUE)
 	owner.objectives |= infiltrator_team.objectives
 	. = ..()
+	if(send_to_spawnpoint)
+		move_to_spawnpoint()
 
 /datum/antagonist/infiltrator/on_removal()
 	owner.objectives -= infiltrator_team.objectives
@@ -66,3 +68,22 @@
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
 	infiltrator_team = new_team
+
+/datum/antagonist/infiltrator/get_admin_commands()
+	. = ..()
+	.["Send to base"] = CALLBACK(src,.proc/admin_send_to_base)
+
+/datum/antagonist/infiltrator/admin_add(datum/mind/new_owner,mob/admin)
+	new_owner.assigned_role = ROLE_INFILTRATOR
+	new_owner.add_antag_datum(src)
+	message_admins("[key_name_admin(admin)] has infiltrator'ed [new_owner.current].")
+	log_admin("[key_name(admin)] has infiltrator'ed [new_owner.current].")
+
+/datum/antagonist/infiltrator/proc/admin_send_to_base(mob/admin)
+	owner.current.forceMove(pick(GLOB.infiltrator_start))
+
+/datum/antagonist/infiltrator/proc/move_to_spawnpoint()
+	var/team_number = 1
+	if(infiltrator_team)
+		team_number = infiltrator_team.members.Find(owner)
+	owner.current.forceMove(GLOB.infiltrator_start[((team_number - 1) % GLOB.infiltrator_start.len) + 1])

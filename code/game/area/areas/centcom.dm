@@ -118,6 +118,11 @@
 	flags_1 = NONE
 	ambientsounds = HIGHSEC
 
+//headcanon lore: this is some random snowy moon that the syndies use as a base
+/area/infiltrator_base/outside
+	name = "Syndicate Base X-77"
+	icon_state = "yellow"
+
 //CAPTURE THE FLAG
 
 /area/ctf
