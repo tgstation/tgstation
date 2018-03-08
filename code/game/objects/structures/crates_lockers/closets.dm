@@ -462,9 +462,6 @@
 
 
 /obj/structure/closet/return_temperature()
-<<<<<<< HEAD
-	return
-=======
 	return
 
 /obj/structure/closet/proc/dive_into(mob/living/user)
@@ -486,4 +483,3 @@
 		user.resting = FALSE
 		togglelock(user)
 		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")
->>>>>>> ab9e2e8902... Adds minor roundstart traits! (ala CDDA, etc.) (#35440)
