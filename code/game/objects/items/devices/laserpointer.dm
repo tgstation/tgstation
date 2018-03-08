@@ -67,9 +67,12 @@
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
+	if(user.has_trait(TRAIT_NOGUNS))
+		to_chat(user, "<span class='warning'>Your fingers can't press the button!</span>")
+		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.check_mutation(HULK) || (NOGUNS in H.dna.species.species_traits))
+		if(H.dna.check_mutation(HULK))
 			to_chat(user, "<span class='warning'>Your fingers can't press the button!</span>")
 			return
 

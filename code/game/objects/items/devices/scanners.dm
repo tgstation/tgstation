@@ -172,6 +172,8 @@ GAS ANALYZER
 				trauma_desc += B.scan_desc
 				trauma_text += trauma_desc
 			to_chat(user, "\t<span class='alert'>Cerebral traumas detected: subjects appears to be suffering from [english_list(trauma_text)].</span>")
+		if(C.roundstart_traits.len)
+			to_chat(user, "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>")
 	if(advanced)
 		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>")
 	if (M.radiation)
@@ -260,7 +262,7 @@ GAS ANALYZER
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
 			to_chat(user, "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</span>")
 
-	for(var/thing in M.viruses)
+	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			to_chat(user, "<span class='alert'><b>Warning: [D.form] detected</b>\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</span>")
@@ -431,6 +433,11 @@ GAS ANALYZER
 		playsound(src, 'sound/effects/pop.ogg', 100)
 		var/area/user_area = T.loc
 		var/datum/weather/ongoing_weather = null
+
+		if(!user_area.outdoors)
+			to_chat(user, "<span class='warning'>[src]'s barometer function won't work indoors!</span>")
+			return
+
 		for(var/V in SSweather.processing)
 			var/datum/weather/W = V
 			if(W.barometer_predictable && (T.z in W.impacted_z_levels) && W.area_type == user_area.type && !(W.stage == END_STAGE))
@@ -439,30 +446,27 @@ GAS ANALYZER
 
 		if(ongoing_weather)
 			if((ongoing_weather.stage == MAIN_STAGE) || (ongoing_weather.stage == WIND_DOWN_STAGE))
-				to_chat(user, "<span class='warning'>[src] can't trace anything while the storm is [ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]</span>")
+				to_chat(user, "<span class='warning'>[src]'s barometer function can't trace anything while the storm is [ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]</span>")
 				return
 
-			var/time = butchertime((ongoing_weather.next_hit_time - world.time)/10)
-			to_chat(user, "<span class='notice'>The next [ongoing_weather] will hit in [round(time)] seconds.</span>")
+			to_chat(user, "<span class='notice'>The next [ongoing_weather] will hit in [butchertime(ongoing_weather.next_hit_time - world.time)].</span>")
 			if(ongoing_weather.aesthetic)
-				to_chat(user, "<span class='warning'>[src] says that the next storm will breeze on by.</span>")
-		else if(user_area.outdoors)
+				to_chat(user, "<span class='warning'>[src]'s barometer function says that the next storm will breeze on by.</span>")
+		else
 			var/next_hit = SSweather.next_hit_by_zlevel["[T.z]"]
 			var/fixed = next_hit ? next_hit - world.time : -1
 			if(fixed < 0)
-				to_chat(user, "<span class='warning'>[src] was unable to trace any weather patterns.</span>")
+				to_chat(user, "<span class='warning'>[src]'s barometer function was unable to trace any weather patterns.</span>")
 			else
-				fixed = butchertime(round(fixed / 10))
-				to_chat(user, "<span class='warning'>A storm will land in approximately [fixed] seconds.</span>")
-		else
-			to_chat(user, "<span class='warning'>[src]'s barometer function won't work indoors!</span>")
+				to_chat(user, "<span class='warning'>[src]'s barometer function says a storm will land in approximately [butchertime(fixed)].</span>")
 		cooldown = TRUE
-		addtimer(src, /obj/item/device/analyzer/proc/ping, cooldown_time)
+		addtimer(CALLBACK(src,/obj/item/device/analyzer/proc/ping), cooldown_time)
+
 
 /obj/item/device/analyzer/proc/ping()
 	if(isliving(loc))
 		var/mob/living/L = loc
-		to_chat(L, "<span class='notice'>[src] is ready!</span>")
+		to_chat(L, "<span class='notice'>[src]'s barometer function is ready!</span>")
 	playsound(src, 'sound/machines/click.ogg', 100)
 	cooldown = FALSE
 
@@ -470,15 +474,12 @@ GAS ANALYZER
 	if(!amount)
 		return
 	if(accuracy)
-		var/time = amount
 		var/inaccurate = round(accuracy*(1/3))
 		if(prob(50))
-			time -= inaccurate
+			amount -= inaccurate
 		if(prob(50))
-			time += inaccurate
-		return time
-	else
-		return amount
+			amount += inaccurate
+	return DisplayTimeText(max(1,amount))
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"

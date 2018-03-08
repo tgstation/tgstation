@@ -13,6 +13,7 @@
 		)
 	category_text = "Lists"
 	power_draw_per_use = 20
+	cooldown_per_use = 10
 
 /obj/item/integrated_circuit/lists/pick
 	name = "pick circuit"
@@ -28,6 +29,7 @@
 		"on failure" = IC_PINTYPE_PULSE_OUT,
 		)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	cooldown_per_use = 1
 
 /obj/item/integrated_circuit/lists/pick/do_work()
 	var/list/input_list = get_pin_data(IC_INPUT, 1) // List pins guarantee that there is a list inside, even if just an empty one.
@@ -83,6 +85,7 @@
 		)
 	icon_state = "addition"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	cooldown_per_use = 1
 
 /obj/item/integrated_circuit/lists/search/do_work()
 	var/list/input_list = get_pin_data(IC_INPUT, 1)
@@ -115,6 +118,7 @@
 		)
 	icon_state = "addition"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	cooldown_per_use = 1
 
 /obj/item/integrated_circuit/lists/at/do_work()
 	var/list/input_list = get_pin_data(IC_INPUT, 1)
@@ -218,6 +222,7 @@
 	set_pin_data(IC_OUTPUT, 1, input_list.len)
 	push_data()
 	activate_pin(2)
+	cooldown_per_use = 1
 
 
 /obj/item/integrated_circuit/lists/jointext
@@ -240,6 +245,7 @@
 		)
 	icon_state = "addition"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	cooldown_per_use = 1
 
 /obj/item/integrated_circuit/lists/jointext/do_work()
 	var/list/input_list = get_pin_data(IC_INPUT, 1)
@@ -312,7 +318,7 @@
 		)
 	outputs = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	var/number_of_pins = 4
+	var/number_of_pins = 16
 
 /obj/item/integrated_circuit/lists/deconstructor/Initialize()
 	for(var/i = 1 to number_of_pins)

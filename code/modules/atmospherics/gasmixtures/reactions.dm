@@ -13,7 +13,8 @@
 #define NITRYL_FORMATION_ENERGY				100000
 #define TRITIUM_BURN_OXY_FACTOR				100
 #define TRITIUM_BURN_TRIT_FACTOR			10
-#define TRITIUM_BURN_RADIOACTIVITY_FACTOR	1000000 //The neutrons gotta go somewhere. Completely arbitrary number.
+#define TRITIUM_BURN_RADIOACTIVITY_FACTOR	50000 //The neutrons gotta go somewhere. Completely arbitrary number.
+#define TRITIUM_MINIMUM_RADIATION_ENERGY	0.1 //minimum 0.01 moles trit or 10 moles oxygen to start producing rads
 #define SUPER_SATURATION_THRESHOLD			96
 #define STIMULUM_HEAT_SCALE					100000
 #define STIMULUM_FIRST_RISE					0.65
@@ -123,6 +124,8 @@
 
 		if(burned_fuel)
 			energy_released += FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel
+			if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY) //woah there let's not crash the server
+				radiation_pulse(location, energy_released/TRITIUM_BURN_RADIOACTIVITY_FACTOR)
 
 			ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
 			cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel/TRITIUM_BURN_OXY_FACTOR

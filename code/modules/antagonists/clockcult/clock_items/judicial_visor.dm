@@ -189,10 +189,11 @@
 	for(var/mob/living/L in range(1, src))
 		if(is_servant_of_ratvar(L))
 			continue
-		if(L.null_rod_check())
-			var/obj/item/I = L.null_rod_check()
-			L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
-			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
+		if(L.anti_magic_check())
+			var/atom/I = L.anti_magic_check()
+			if(isitem(I))
+				L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
+				"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
 			continue
 		L.Knockdown(15) //knocks down briefly when exploding
 		if(!iscultist(L))

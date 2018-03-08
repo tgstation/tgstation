@@ -47,5 +47,5 @@
 			addtimer(CALLBACK(F, /turf/open/floor.proc/MakeDry, TURF_WET_PERMAFROST), rand(3000, 3100))
 			for(var/mob/living/carbon/L in T)
 				L.adjustStaminaLoss(stamina_damage)
-				L.bodytemperature -= 230
+				L.adjust_bodytemperature(-230)
 	qdel(src)

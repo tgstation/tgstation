@@ -34,6 +34,8 @@
 
 	var/list/status_traits = list()
 
+	var/list/roundstart_traits = list()
+
 	var/list/surgeries = list()	//a list of surgery datums. generally empty, they're added when the player wants them.
 
 	var/now_pushing = null //used by living/Collide() and living/PushAM() to prevent potential infinite loop.
@@ -65,7 +67,10 @@
 	var/last_bumped = 0
 	var/unique_name = 0 //if a mob's name should be appended with an id when created e.g. Mob (666)
 
-	var/list/butcher_results = null
+	var/list/butcher_results = null //these will be yielded from butchering with a probability chance equal to the butcher item's effectiveness
+	var/list/guaranteed_butcher_results = null //these will always be yielded from butchering
+	var/butcher_difficulty = 0 //effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
+
 	var/hellbound = 0 //People who've signed infernal contracts are unrevivable.
 
 	var/list/weather_immunities = list()
@@ -102,3 +107,7 @@
 	var/radiation = 0 //If the mob is irradiated.
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT
 	var/losebreath = 0
+
+	//List of active diseases
+	var/list/diseases = list() // list of all diseases in a mob
+	var/list/disease_resistances = list()

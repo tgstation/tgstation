@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - rscadd: "Sentient diseases now get two minutes to select an initial host before being assigned a random one."

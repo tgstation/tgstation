@@ -18,6 +18,11 @@ field_generator power level display
 #define FG_CHARGING 1
 #define FG_ONLINE 2
 
+//field generator construction defines
+#define FG_UNSECURED 0
+#define FG_SECURED 1
+#define FG_WELDED 2
+
 /obj/machinery/field/generator
 	name = "field generator"
 	desc = "A large thermal battery that projects a high amount of energy when powered."
@@ -89,7 +94,7 @@ field_generator power level display
 
 	return ..()
 
-/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
+/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
