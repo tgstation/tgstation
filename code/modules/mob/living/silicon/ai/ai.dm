@@ -87,6 +87,7 @@
 
 	var/obj/item/ai_hijack_device/hijacking
 	var/hijack_start = 0
+	var/mutable_appearance/hijack_overlay
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -1008,4 +1009,10 @@
 	..()
 	cut_overlays()
 	if(hijacking)
-		add_overlay(mutable_appearance(icon = 'icons/obj/module.dmi', "ai_hijack_overlay"))
+		if(!hijack_overlay)
+			hijack_overlay = mutable_appearance(icon = 'icons/obj/module.dmi', "ai_hijack_overlay")
+			hijack_overlay.pixel_x = 8
+		add_overlay(hijack_overlay)
+		icon_state = "ai-static"
+	else if(!hijacking && hijack_overlay)
+		QDEL_NULL(hijack_overlay)

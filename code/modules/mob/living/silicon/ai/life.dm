@@ -20,7 +20,9 @@
 				to_chat(src, "<span class='danger'>Warning! Exploitation detected at /dev/ttyS0!</span>")
 			if(world.time >= hijack_start+HIJACK_TIME && mind)
 				mind.add_antag_datum(/datum/antagonist/hijacked_ai)
+				icon_state = "ai-notmalf"
 				QDEL_NULL(hijacking)
+				cut_overlays()
 
 		if(malfhack && malfhack.aidisabled)
 			deltimer(malfhacking)
