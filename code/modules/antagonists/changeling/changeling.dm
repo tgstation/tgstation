@@ -382,7 +382,7 @@
 		else
 			var/datum/objective/download/download_objective = new
 			download_objective.owner = owner
-			download_objective.gen_amount_goal()
+			download_objective.find_target()
 			objectives += download_objective
 
 	var/list/active_ais = active_ais()

@@ -22,6 +22,7 @@
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=centcom'>Make CentCom Response Team (Requires Ghosts)</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=[REF(src)];[HrefToken()];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];makeAntag=infiltrator'>Make Infiltration Team (Requires Ghosts)</a><br>
 		"}
 
 	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)
@@ -249,11 +250,44 @@
 				nuke_team = N.nuke_team
 			else
 				new_character.mind.add_antag_datum(/datum/antagonist/nukeop,nuke_team)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 
+/datum/admins/proc/makeInfiltratorTeam()
+	var/datum/game_mode/infiltration/temp = new
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for a infiltration team being sent in?", ROLE_INFILTRATOR, temp)
+	var/list/mob/dead/observer/chosen = list()
+	var/mob/dead/observer/theghost = null
+
+	if(candidates.len)
+		var/numagents = 5
+		var/agentcount = 0
+
+		for(var/i = 0, i<numagents,i++)
+			shuffle_inplace(candidates) //More shuffles means more randoms
+			for(var/mob/j in candidates)
+				if(!j || !j.client)
+					candidates.Remove(j)
+					continue
+
+				theghost = j
+				candidates.Remove(theghost)
+				chosen += theghost
+				agentcount++
+				break
+		//Making sure we have atleast 3 Nuke agents, because less than that is kinda bad
+		if(agentcount < 3)
+			return FALSE
+
+		//Let's find the spawn locations
+		for(var/mob/c in chosen)
+			var/mob/living/carbon/human/new_character=makeBody(c)
+			new_character.mind.add_antag_datum(/datum/antagonist/infiltrator)
+		return TRUE
+	else
+		return FALSE
 
 
 
@@ -286,7 +320,7 @@
 		newmob.real_name = newmob.dna.species.random_name(newmob.gender,1)
 		newmob.dna.update_dna_identity()
 		newmob.key = chosen_candidate.key
-		
+
 
 		//Job
 		newmob.mind.assigned_role = "CentCom Official"
@@ -320,7 +354,7 @@
 			return
 	else
 		alert = alert_type
-	
+
 	var/teamsize = 0
 	var/deathsquad = FALSE
 
@@ -339,19 +373,19 @@
 			return makeOfficial()
 		else
 			return
-	
+
 	if(!teamsize)
 		var/teamcheck = input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num
 		if(isnull(teamcheck))
 			return
 		teamsize = min(7,teamcheck)
-	
-	
+
+
 	var/default_mission = deathsquad ? "Leave no witnesses." : "Assist the station."
 	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", default_mission) as null|text
 	if(!mission)
 		return
-	
+
 	var/prompt_name = deathsquad ? "an elite Nanotrasen Strike Team" : "a Code [alert] Nanotrasen Emergency Response Team"
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for [prompt_name] ?", "deathsquad", null)
 	var/teamSpawned = 0
@@ -364,7 +398,7 @@
 		var/datum/team/ert/ert_team = new
 		if(deathsquad)
 			ert_team.name = "Death Squad"
-		
+
 		//Asign team objective
 		var/datum/objective/missionobj = new
 		missionobj.team = ert_team
@@ -391,7 +425,7 @@
 			var/mob/living/carbon/human/ERTOperative = new(spawnloc)
 			chosen_candidate.client.prefs.copy_to(ERTOperative)
 			ERTOperative.key = chosen_candidate.key
-			
+
 			if(CONFIG_GET(flag/enforce_human_authority))
 				ERTOperative.set_species(/datum/species/human)
 
@@ -403,9 +437,9 @@
 			else
 				ert_antag.role = deathsquad ? DEATHSQUAD : role_order[WRAP(numagents,1,role_order.len + 1)]
 			ERTOperative.mind.add_antag_datum(ert_antag,ert_team)
-			
+
 			ERTOperative.mind.assigned_role = ert_antag.name
-			
+
 			//Logging and cleanup
 			log_game("[key_name(ERTOperative)] has been selected as an [ert_antag.name]")
 			numagents--
@@ -413,7 +447,7 @@
 
 		if (teamSpawned)
 			message_admins("[prompt_name] has spawned with the mission: [mission]")
-			
+
 			//Open the Armory doors
 			if(alert != ERT_BLUE)
 				for(var/obj/machinery/door/poddoor/ert/door in GLOB.airlocks)

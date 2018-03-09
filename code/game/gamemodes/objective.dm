@@ -509,7 +509,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/download
 
-/datum/objective/download/proc/gen_amount_goal()
+/datum/objective/download/find_target()
 	target_amount = rand(20,40)
 	explanation_text = "Download [target_amount] research node\s."
 	return target_amount

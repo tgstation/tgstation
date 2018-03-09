@@ -117,11 +117,13 @@
 	noteleport = TRUE
 	flags_1 = NONE
 	ambientsounds = HIGHSEC
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 //headcanon lore: this is some random snowy moon that the syndies use as a base
 /area/infiltrator_base/outside
 	name = "Syndicate Base X-77"
 	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 //CAPTURE THE FLAG
 

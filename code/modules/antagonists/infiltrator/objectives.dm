@@ -1,7 +1,7 @@
 #define MIN_POWER_DRAIN 25000000
 #define MAX_POWER_DRAIN 100000000
 
-GLOBAL_LIST_INIT(minor_infiltrator_objectives, list(/datum/objective/assassinate, /datum/objective/steal))
+GLOBAL_LIST_INIT(minor_infiltrator_objectives, list(/datum/objective/assassinate, /datum/objective/steal, /datum/objective/download))
 
 /datum/objective/infiltrator
 	explanation_text = "Generic Infiltrator Objective!"

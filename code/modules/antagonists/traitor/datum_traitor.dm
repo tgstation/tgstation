@@ -11,7 +11,7 @@
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
 
-	
+
 
 /datum/antagonist/traitor/human
 	show_in_antagpanel = FALSE
@@ -169,7 +169,7 @@
 		if(prob(15) && !(locate(/datum/objective/download in owner.objectives)))
 			var/datum/objective/download/download_objective = new
 			download_objective.owner = owner
-			download_objective.gen_amount_goal()
+			download_objective.find_target()
 			add_objective(download_objective)
 		else
 			var/datum/objective/steal/steal_objective = new
@@ -226,7 +226,7 @@
 	var/mob/living/silicon/ai/A = mob_override || owner.current
 	if(istype(A))
 		A.hack_software = TRUE
-	
+
 /datum/antagonist/traitor/AI/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/silicon/ai/A = mob_override || owner.current
@@ -343,7 +343,7 @@
 			var/static/icon/badass = icon('icons/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
 		result += uplink_text
-	
+
 	result += objectives_text
 
 	var/special_role_text = lowertext(name)

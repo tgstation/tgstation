@@ -132,6 +132,7 @@
 	name = "a functional AI."
 	targetitem = /obj/item/device/aicard
 	difficulty = 20 //beyond the impossible
+	excludefromjob = list(ROLE_INFILTRATOR)
 
 /datum/objective_item/steal/functionalai/check_special_completion(obj/item/device/aicard/C)
 	for(var/mob/living/silicon/ai/A in C)
