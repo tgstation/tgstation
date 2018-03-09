@@ -28,14 +28,15 @@
 	if(NewLoc && !istype(NewLoc, /turf/open/indestructible/reebe_void))
 		var/turf/T = get_turf(NewLoc)
 		if (locate(/obj/effect/blessing, T))
-			if(last_failed_turf != T)
-				T.visible_message("<span class='warning'>[T] suddenly emits a ringing sound!</span>", null, null, null, src)
-				playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
-				last_failed_turf = T
-			if ((world.time - lastWarning) >= 30) 
-				lastWarning = world.time
-				to_chat(src, "<span class='warning'>This turf is consecrated and can't be crossed!</span>")
-			return
+			if(!GLOB.ratvar_awakens)
+				if(last_failed_turf != T)
+					T.visible_message("<span class='warning'>[T] suddenly emits a ringing sound!</span>", null, null, null, src)
+					playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
+					last_failed_turf = T
+				if ((world.time - lastWarning) >= 30) 
+					lastWarning = world.time
+					to_chat(src, "<span class='warning'>This turf is consecrated and can't be crossed!</span>")
+				return
 		if(!GLOB.ratvar_awakens && istype(get_area(T), /area/chapel))
 			if ((world.time - lastWarning) >= 30) 
 				lastWarning = world.time
