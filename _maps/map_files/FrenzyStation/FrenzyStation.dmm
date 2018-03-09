@@ -1522,7 +1522,7 @@
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/storage)
 "dM" = (
-/obj/machinery/rnd/protolathe,
+/obj/machinery/rnd/production/protolathe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -1538,7 +1538,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /turf/open/floor/plasteel,
 /area/science/lab)
