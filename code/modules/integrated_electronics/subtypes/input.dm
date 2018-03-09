@@ -327,6 +327,13 @@
 	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
 		set_pin_data(IC_OUTPUT, 1, H.name)
 		set_pin_data(IC_OUTPUT, 2, H.desc)
+
+		if(istype(H, /mob/living/))
+			var/mob/living/M = H
+			var/msg = M.examine()
+			if(msg)
+				set_pin_data(IC_OUTPUT, 2, msg)
+
 		set_pin_data(IC_OUTPUT, 3, H.x-T.x)
 		set_pin_data(IC_OUTPUT, 4, H.y-T.y)
 		set_pin_data(IC_OUTPUT, 5, sqrt((H.x-T.x)*(H.x-T.x)+ (H.y-T.y)*(H.y-T.y)))
@@ -435,7 +442,7 @@
 	var/list/GI = list()
 	GI = I.data
 	for(var/G in GI)
-		if(isweakref(G))									//It should search by refs. But don't want.will fix it later.
+		if(isweakref(G))
 			var/datum/integrated_io/G1
 			G1.data = G
 			var/atom/A = G1.data.resolve()
@@ -447,6 +454,20 @@
 		else if(istext(G))
 			for(var/atom/thing in nearby_things)
 				if(findtext(addtext(thing.name," ",thing.desc), G, 1, 0) )
+	var/list/input_list = list()
+	input_list = I.data
+	for(var/item in input_list)
+		if(!isnull(item) && !isnum(item))
+			if(istext(item))
+				for(var/atom/thing in nearby_things)
+					if(findtext(addtext(thing.name," ",thing.desc), item, 1, 0) )
+						valid_things.Add(WEAKREF(thing))
+			else
+				var/atom/A = item
+				var/desired_type = A.type
+				for(var/atom/thing in nearby_things)
+					if(thing.type != desired_type)
+						continue
 					valid_things.Add(WEAKREF(thing))
 	if(valid_things.len)
 		O.data = valid_things

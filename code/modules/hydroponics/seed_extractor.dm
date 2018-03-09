@@ -1,5 +1,7 @@
 /proc/seedify(obj/item/O, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
 	var/t_amount = 0
+	var/list/seeds = list()
+
 	if(t_max == -1)
 		if(extractor)
 			t_max = rand(1,4) * extractor.seed_multiplier
@@ -17,10 +19,11 @@
 				return
 			while(t_amount < t_max)
 				var/obj/item/seeds/t_prod = F.seed.Copy()
+				seeds.Add(t_prod)
 				t_prod.forceMove(seedloc)
 				t_amount++
 			qdel(O)
-			return 1
+			return seeds
 
 	else if(istype(O, /obj/item/grown))
 		var/obj/item/grown/F = O
@@ -29,10 +32,11 @@
 				return
 			while(t_amount < t_max)
 				var/obj/item/seeds/t_prod = F.seed.Copy()
+				seeds.Add(t_prod)
 				t_prod.forceMove(seedloc)
 				t_amount++
 			qdel(O)
-		return 1
+		return seeds
 
 	return 0
 
@@ -186,6 +190,8 @@
 	else if(istype(O.loc, /obj/item/storage))
 		var/obj/item/storage/S = O.loc
 		S.remove_from_storage(O,src)
+	else
+		O.forceMove(src)
 
 	. = 1
 	for (var/datum/seed_pile/N in piles)

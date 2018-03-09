@@ -1,4 +1,8 @@
 /proc/WEAKREF(datum/input)
+	if(istext(input))
+		return input
+	if(isnum(input))
+		return input
 	if(istype(input) && !QDELETED(input))
 		if(istype(input, /datum/weakref))
 			return input

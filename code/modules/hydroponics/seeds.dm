@@ -136,7 +136,7 @@
 	return return_yield
 
 
-/obj/item/seeds/proc/harvest(mob/user = usr)
+/obj/item/seeds/proc/harvest(mob/user)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 	var/list/result = list()
@@ -151,7 +151,7 @@
 		product_name = t_prod.name
 	if(getYield() >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
-	parent.update_tray()
+	parent.update_tray(user)
 
 	return result
 

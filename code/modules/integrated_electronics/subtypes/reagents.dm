@@ -69,6 +69,34 @@
 			set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
 			push_data()
 
+// Hydroponics trays have no reagents holder and handle reagents in their own snowflakey way.
+// This is a dirty hack to make injecting reagents into them work.
+// TODO: refactor that.
+/obj/item/integrated_circuit/reagent/proc/inject_tray(obj/machinery/hydroponics/tray, atom/movable/source, amount)
+	var/atom/movable/acting_object = get_object()
+	var/list/trays = list(tray)
+	var/visi_msg = "[acting_object] transfers fluid into [tray]"
+
+	if(amount > 30 && source.reagents.total_volume >= 30 && tray.using_irrigation)
+		trays = tray.FindConnected()
+		if (trays.len > 1)
+			visi_msg += ", setting off the irrigation system"
+
+	acting_object.visible_message("<span class='notice'>[visi_msg].</span>")
+	playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+
+	var/split = round(amount/trays.len)
+
+	for(var/obj/machinery/hydroponics/H in trays)
+		var/datum/reagents/temp_reagents = new /datum/reagents()
+		temp_reagents.my_atom = H
+
+		source.reagents.trans_to(temp_reagents, split)
+		H.applyChemicals(temp_reagents)
+
+		temp_reagents.clear_reagents()
+		qdel(temp_reagents)
+
 /obj/item/integrated_circuit/reagent/injector
 	name = "integrated hypo-injector"
 	desc = "This scary looking thing is able to pump liquids into whatever it's pointed at."
@@ -119,18 +147,6 @@
 		new_amount = CLAMP(new_amount, 0, volume)
 		transfer_amount = new_amount
 
-// Hydroponics trays have no reagents holder and handle reagents in their own snowflakey way.
-// This is a dirty hack to make injecting reagents into them work.
-// TODO: refactor that.
-/obj/item/integrated_circuit/reagent/proc/inject_tray(obj/machinery/hydroponics/tray, atom/movable/source, amount)
-	var/datum/reagents/temp_reagents = new /datum/reagents()
-	temp_reagents.my_atom = tray
-
-	source.reagents.trans_to(temp_reagents, amount)
-	tray.applyChemicals(temp_reagents)
-
-	temp_reagents.clear_reagents()
-	qdel(temp_reagents)
 
 /obj/item/integrated_circuit/reagent/injector/do_work(ord)
 	switch(ord)
@@ -150,7 +166,7 @@
 		return
 
 	if(!AM.reagents)
-		if(istype(AM, /obj/machinery/hydroponics) && direction_mode == SYRINGE_INJECT && reagents.total_volume)//injection into tray.
+		if(istype(AM, /obj/machinery/hydroponics) && direction_mode == SYRINGE_INJECT && reagents.total_volume && transfer_amount)//injection into tray.
 			inject_tray(AM, src, transfer_amount)
 			activate_pin(2)
 			return
@@ -186,11 +202,13 @@
 				activate_pin(3)
 				return
 			busy = FALSE
+
 		else
 			reagents.trans_to(AM, transfer_amount)
 
-	else
-		if(!AM.is_drawable() || reagents.total_volume >= reagents.maximum_volume)
+	if(direction_mode == SYRINGE_DRAW)
+		if(reagents.total_volume >= reagents.maximum_volume)
+			acting_object.visible_message("[acting_object] tries to draw from [AM], but the injector is full.")
 			activate_pin(3)
 			return
 
@@ -206,16 +224,23 @@
 					L.visible_message("<span class='danger'>[acting_object] takes a blood sample from [L]!</span>", \
 					"<span class='userdanger'>[acting_object] takes a blood sample from you!</span>")
 				else
+					L.visible_message("<span class='warning'>[acting_object] fails to take a blood sample from [L].</span>", \
+								"<span class='userdanger'>[acting_object] fails to take a blood sample from you!</span>")
 					busy = FALSE
 					activate_pin(3)
 					return
 			busy = FALSE
+
 		else
-			tramount = min(tramount, AM.reagents.total_volume)
 			if(!AM.reagents.total_volume)
+				acting_object.visible_message("<span class='notice'>[acting_object] tries to draw from [AM], but it is empty!</span>")
 				activate_pin(3)
 				return
 
+			if(!AM.is_drawable())
+				activate_pin(3)
+				return
+			tramount = min(tramount, AM.reagents.total_volume)
 			AM.reagents.trans_to(src, tramount)
 	activate_pin(2)
 
