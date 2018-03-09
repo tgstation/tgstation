@@ -42,6 +42,7 @@
 				blood_type = B.data["blood_type"]
 				features = B.data["features"]
 				factions = B.data["factions"]
+				factions = B.data["traits"]
 				contains_sample = 1
 				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
 			else
