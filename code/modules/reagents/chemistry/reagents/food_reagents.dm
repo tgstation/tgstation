@@ -345,6 +345,9 @@
 	if(reac_volume < 1)
 		return
 	new/obj/effect/decal/cleanable/salt(T)
+	for(var/mob/living/simple_animal/slime/M in T)
+		M.adjustBruteLoss(reac_volume)
+		M.visible_message("<span class='warning'>[M] bubbles and froths, leaking liquid everywhere!","<span class='userdanger'>You feel an agonizing burning as you melt away!")
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
