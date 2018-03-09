@@ -3,6 +3,7 @@
 	desc = "An alarm which monitors host vital signs, transmitting a radio message and dusting the corpse on death."
 	actions_types = list(/datum/action/item_action/dusting_implant)
 	var/popup = FALSE // is the DOUWANNABLOWUP window open?
+	var/active = FALSE
 
 /obj/item/implant/dusting/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -17,7 +18,7 @@
 	return dat
 
 /obj/item/implant/dusting/activate(cause)
-	if(!cause || !imp_in || cause == "emp")
+	if(!cause || !imp_in || cause == "emp" || active)
 		return FALSE
 	if(cause == "action_button" && !popup)
 		popup = TRUE
@@ -25,6 +26,7 @@
 		popup = FALSE
 		if(response == "No")
 			return FALSE
+	active = TRUE //to avoid it triggering multiple times due to dying
 	to_chat(imp_in, "<span class='notice'>Your dusting implant activates!</span>")
 	imp_in.visible_message("<span class='warning'>[imp_in] burns up in a flash!</span>")
 	for(var/obj/item/I in imp_in.contents)
