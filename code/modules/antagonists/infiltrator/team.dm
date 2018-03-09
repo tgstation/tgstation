@@ -1,7 +1,7 @@
 #define MIN_MAJOR_OBJECTIVES 1
 #define MAX_MAJOR_OBJECTIVES 2
-#define MIN_MINOR_OBJECTIVES 2
-#define MAX_MINOR_OBJECTIVES 3
+#define MIN_MINOR_OBJECTIVES 3
+#define MAX_MINOR_OBJECTIVES 4
 
 /datum/team/infiltrator
 	name = "syndicate infiltration unit"
