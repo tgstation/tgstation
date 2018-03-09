@@ -16,9 +16,9 @@
 	return dat
 
 /obj/item/implant/dust/activate(cause)
-	if(!cause || !imp_in || cause == "emp")
+	if(!cause || !imp_in || cause != "action_button")
 		return FALSE
-	if(cause == "action_button" && alert(imp_in, "Are you sure you want to activate your dusting implant? This will turn you to ash!", "Dusting Confirmation", "Yes", "No") != "Yes")
+	if(alert(imp_in, "Are you sure you want to activate your dusting implant? This will turn you to ash!", "Dusting Confirmation", "Yes", "No") != "Yes")
 		return FALSE
 	to_chat(imp_in, "<span class='notice'>Your dusting implant activates!</span>")
 	imp_in.visible_message("<span class='warning'>[imp_in] burns up in a flash!</span>")
