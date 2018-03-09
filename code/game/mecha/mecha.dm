@@ -73,6 +73,7 @@
 	var/obj/item/mecha_parts/mecha_equipment/selected
 	var/max_equip = 3
 	var/datum/events/events
+	var/list = list("tase_cannon"=0)
 
 	var/stepsound = 'sound/mecha/mechstep.ogg'
 	var/turnsound = 'sound/mecha/mechturn.ogg'
@@ -440,6 +441,12 @@
 		target = safepick(view(3,target))
 		if(!target)
 			return
+
+	var/mob/living/L = user
+	if(L.has_trait(TRAIT_PACIFISM) && !selected.pacifist_safe)
+		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+		return
+
 	if(!Adjacent(target))
 		if(selected && selected.is_ranged())
 			if(selected.action(target,params))
