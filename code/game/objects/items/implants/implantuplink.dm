@@ -27,7 +27,7 @@
 
 	if(..())
 		if(hidden_uplink)
-			hidden_uplink.owner = "[user.key]"
+			hidden_uplink.owner = "[user ? user.key : target.key]"
 			return TRUE
 	return FALSE
 
