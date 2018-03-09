@@ -21,9 +21,9 @@
 /obj/item/gun/ballistic/update_icon()
 	..()
 	if(current_skin)
-		icon_state = "[unique_reskin[current_skin]][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
+		icon_state = "[unique_reskin[current_skin]][suppressed ? "-suppressed" : ""][sawn_off ? "-sawn" : ""]"
 	else
-		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
+		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_off ? "-sawn" : ""]"
 
 
 /obj/item/gun/ballistic/process_chamber(empty_chamber = 1)
@@ -185,7 +185,7 @@
 
 
 /obj/item/gun/ballistic/proc/sawoff(mob/user)
-	if(sawn_state == SAWN_OFF)
+	if(sawn_off)
 		to_chat(user, "<span class='warning'>\The [src] is already shortened!</span>")
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -197,7 +197,7 @@
 		return
 
 	if(do_after(user, 30, target = src))
-		if(sawn_state == SAWN_OFF)
+		if(sawn_off)
 			return
 		user.visible_message("[user] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>")
 		name = "sawn-off [src.name]"
@@ -206,7 +206,7 @@
 		item_state = "gun"
 		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
 		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
-		sawn_state = SAWN_OFF
+		sawn_off = TRUE
 		update_icon()
 		return 1
 

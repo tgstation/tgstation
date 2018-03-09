@@ -1,0 +1,5 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - tweak: "The smoke machine can now be deconstructed using a screwdriver and a crowbar"
+  - code_imp: "The smoke machine no longer calls update_icon every process()"

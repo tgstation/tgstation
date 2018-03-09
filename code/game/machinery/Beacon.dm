@@ -8,7 +8,7 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 0
-	var/obj/item/device/radio/beacon/beacon
+	var/obj/item/device/beacon/beacon
 
 /obj/machinery/bluespace_beacon/Initialize()
 	. = ..()

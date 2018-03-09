@@ -30,9 +30,11 @@
 	user.reagents.add_reagent("antihol", 10)
 	user.reagents.add_reagent("mannitol", 25)
 
-	for(var/thing in user.viruses)
-		var/datum/disease/D = thing
-		if(D.severity == VIRUS_SEVERITY_POSITIVE)
-			continue
-		D.cure()
+	if(isliving(user))
+		var/mob/living/L = user
+		for(var/thing in L.diseases)
+			var/datum/disease/D = thing
+			if(D.severity == DISEASE_SEVERITY_POSITIVE)
+				continue
+			D.cure()
 	return TRUE

@@ -154,6 +154,7 @@
 
 /obj/machinery/door/airlock/ComponentInitialize()
 	. = ..()
+	AddComponent(/datum/component/ntnet_interface)
 	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
 /obj/machinery/door/airlock/proc/update_other_id()
@@ -190,6 +191,55 @@
 		if ("cyclelinkeddir")
 			cyclelinkairlock()
 
+/obj/machinery/door/airlock/check_access_ntnet(datum/netdata/data)
+	return !requiresID() || ..()
+
+/obj/machinery/door/airlock/ntnet_recieve(datum/netdata/data)
+	// Check if the airlock is powered and can accept control packets.
+	if(!hasPower() || !canAIControl())
+		return
+
+	// Check packet access level.
+	if(!check_access_ntnet(data))
+		return
+
+	// Handle recieved packet.
+	var/command = lowertext(data.plaintext_data)
+	var/command_value = lowertext(data.plaintext_data_secondary)
+	switch(command)
+		if("open")
+			if(command_value == "on" && !density)
+				return
+
+			if(command_value == "off" && density)
+				return
+
+			if(density)
+				INVOKE_ASYNC(src, .proc/open)
+			else
+				INVOKE_ASYNC(src, .proc/close)
+
+		if("bolt")
+			if(command_value == "on" && locked)
+				return
+
+			if(command_value == "off" && !locked)
+				return
+
+			if(locked)
+				unbolt()
+			else
+				bolt()
+
+		if("emergency")
+			if(command_value == "on" && emergency)
+				return
+
+			if(command_value == "off" && !emergency)
+				return
+
+			emergency = !emergency
+			update_icon()
 
 /obj/machinery/door/airlock/lock()
 	bolt()
@@ -199,6 +249,7 @@
 		return
 	locked = TRUE
 	playsound(src,boltDown,30,0,3)
+	audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null,  1)
 	update_icon()
 
 /obj/machinery/door/airlock/unlock()
@@ -209,6 +260,7 @@
 		return
 	locked = FALSE
 	playsound(src,boltUp,30,0,3)
+	audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null,  1)
 	update_icon()
 
 /obj/machinery/door/airlock/narsie_act()
@@ -322,7 +374,7 @@
 	return FALSE
 
 /obj/machinery/door/airlock/proc/canAIControl(mob/user)
-	return ((aiControlDisabled != 1) && (!isAllPowerCut()));
+	return ((aiControlDisabled != 1) && !isAllPowerCut())
 
 /obj/machinery/door/airlock/proc/canAIHack()
 	return ((aiControlDisabled==1) && (!hackProof) && (!isAllPowerCut()));

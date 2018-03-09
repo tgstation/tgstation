@@ -171,6 +171,8 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
 		var/obj/structure/displaycase/trophy/T = A
+		if (T.showpiece) 
+			continue
 		T.added_roundstart = TRUE
 
 		var/trophy_data = pick_n_take(trophy_items)

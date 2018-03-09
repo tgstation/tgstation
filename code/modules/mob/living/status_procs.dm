@@ -146,13 +146,13 @@
 	else
 		status_traits[trait] |= list(source)
 
-/mob/living/proc/add_trait_datum(trait) //separate proc due to the way these ones are handled
+/mob/living/proc/add_trait_datum(trait, spawn_effects) //separate proc due to the way these ones are handled
 	if(has_trait(trait))
 		return
 	if(!SStraits || !SStraits.traits[trait])
 		return
 	var/datum/trait/T = SStraits.traits[trait]
-	new T (src)
+	new T (src, spawn_effects)
 	return TRUE
 
 /mob/living/proc/remove_trait(trait, list/sources, force)

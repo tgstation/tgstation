@@ -77,6 +77,10 @@
 	desc = "Even without their shadowy owner, looking at these eyes gives you a sense of dread."
 	icon_state = "burning_eyes"
 
+/obj/item/organ/eyes/night_vision/mushroom
+	name = "fung-eye"
+	desc = "While on the outside they look inert and dead, the eyes of mushroom people are actually very advanced."
+
 ///Robotic
 
 /obj/item/organ/eyes/robotic
@@ -130,12 +134,14 @@
 	eye.on = TRUE
 	eye.forceMove(M)
 	eye.update_brightness(M)
+	M.become_blind("flashlight_eyes")
 
 
 /obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
 	eye.on = FALSE
 	eye.update_brightness(M)
 	eye.forceMove(src)
+	M.cure_blind("flashlight_eyes")
 	..()
 
 // Welding shield implant

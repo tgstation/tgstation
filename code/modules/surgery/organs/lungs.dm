@@ -68,17 +68,15 @@
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
 	if((H.status_flags & GODMODE))
 		return
-
-	var/species_traits = list()
-	if(H && H.dna && H.dna.species && H.dna.species.species_traits)
-		species_traits = H.dna.species.species_traits
+	if(H.has_trait(TRAIT_NOBREATH))
+		return
 
 	if(!breath || (breath.total_moles() == 0))
 		if(H.reagents.has_reagent(crit_stabilizing_reagent))
 			return
 		if(H.health >= HEALTH_THRESHOLD_CRIT)
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		else if(!(NOCRITDAMAGE in species_traits))
+		else if(!H.has_trait(TRAIT_NOCRITDAMAGE))
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		H.failed_last_breath = TRUE

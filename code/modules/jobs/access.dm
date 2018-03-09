@@ -1,9 +1,4 @@
 
-/obj/var/list/req_access = null
-/obj/var/req_access_txt = "0" as text
-/obj/var/list/req_one_access = null
-/obj/var/req_one_access_txt = "0" as text
-
 //returns TRUE if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
@@ -60,48 +55,36 @@
 		for(var/b in text2access(req_one_access_txt))
 			req_one_access += b
 
+// Check if an item has access to this object
 /obj/proc/check_access(obj/item/I)
+	return check_access_list(I ? I.GetAccess() : null)
+
+
+/obj/proc/check_access_list(list/access_list)
 	gen_access()
 
-	if(!istype(src.req_access, /list)) //something's very wrong
+	if(!islist(req_access)) //something's very wrong
 		return TRUE
 
-	var/list/L = src.req_access
-	if(!L.len && (!src.req_one_access || !src.req_one_access.len)) //no requirements
+	if(!req_access.len && !length(req_one_access))
 		return TRUE
-	if(!I)
+
+	if(!length(access_list) || !islist(access_list))
 		return FALSE
-	for(var/req in src.req_access)
-		if(!(req in I.GetAccess())) //doesn't have this access
+
+	for(var/req in req_access)
+		if(!(req in access_list)) //doesn't have this access
 			return FALSE
-	if(src.req_one_access && src.req_one_access.len)
-		for(var/req in src.req_one_access)
-			if(req in I.GetAccess()) //has an access from the single access list
+
+	if(length(req_one_access))
+		for(var/req in req_one_access)
+			if(req in access_list) //has an access from the single access list
 				return TRUE
 		return FALSE
 	return TRUE
 
-
-/obj/proc/check_access_list(list/L)
-	if(!src.req_access  && !src.req_one_access)
-		return TRUE
-	if(!istype(src.req_access, /list))
-		return TRUE
-	if(!src.req_access.len && (!src.req_one_access || !src.req_one_access.len))
-		return TRUE
-	if(!L)
-		return FALSE
-	if(!istype(L, /list))
-		return FALSE
-	for(var/req in src.req_access)
-		if(!(req in L)) //doesn't have this access
-			return FALSE
-	if(src.req_one_access && src.req_one_access.len)
-		for(var/req in src.req_one_access)
-			if(req in L) //has an access from the single access list
-				return TRUE
-		return FALSE
-	return TRUE
+/obj/proc/check_access_ntnet(datum/netdata/data)
+	return check_access_list(data.passkey)
 
 /proc/get_centcom_access(job)
 	switch(job)

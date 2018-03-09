@@ -769,13 +769,14 @@
 		dat += "<tr><td>[J_title]:</td> <td>[J_opPos]/[job.total_positions < 0 ? " (unlimited)" : J_totPos]"
 
 		if(job.title == "AI" || job.title == "Cyborg")
-			dat += " (Cannot Late Join)</td>"
+			dat += " </td><td>(Cannot Late Join)</td>"
 			continue
 		else
 			dat += "</td>"
 		dat += "<td>"
 		if(job.total_positions >= 0)
-			dat += "<A href='?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add</A> | "
+			dat += "<A href='?src=[REF(src)];[HrefToken()];customjobslot=[job.title]'>Custom</A> | "
+			dat += "<A href='?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add 1</A> | "
 			if(job.total_positions > job.current_positions)
 				dat += "<A href='?src=[REF(src)];[HrefToken()];removejobslot=[job.title]'>Remove</A> | "
 			else
@@ -820,7 +821,7 @@
 
 //returns 1 to let the dragdrop code know we are trapping this event
 //returns 0 if we don't plan to trap the event
-/datum/admins/proc/cmd_ghost_drag(mob/dead/observer/frommob, mob/living/tomob)
+/datum/admins/proc/cmd_ghost_drag(mob/dead/observer/frommob, mob/tomob)
 
 	//this is the exact two check rights checks required to edit a ckey with vv.
 	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
