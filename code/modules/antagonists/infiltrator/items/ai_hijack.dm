@@ -13,5 +13,6 @@
 			A.hijacking = src
 			A.hijack_start = world.time
 			to_chat(src, "<span class='danger'>Unknown device connected to /dev/ttySL0</span>")
+			notify_ghosts("[user] has begun to hijack [A]!", source = A, action = NOTIFY_ORBIT, ghost_sound = 'sound/machines/chime.ogg')
 	else
 		return ..()
