@@ -15,15 +15,22 @@
 				"}
 	return dat
 
-/obj/item/implant/dust/activate(cause)
-	if(!cause || !imp_in || cause != "action_button")
+/obj/item/implant/dusting/activate(cause)
+	if(!cause || !imp_in || active)
 		return FALSE
-	if(alert(imp_in, "Are you sure you want to activate your dusting implant? This will turn you to ash!", "Dusting Confirmation", "Yes", "No") != "Yes")
-		return FALSE
+	if(cause == "action_button" && !popup)
+		popup = TRUE
+		var/response = alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to disintergrate!", "[name] Confirmation", "Yes", "No")
+		popup = FALSE
+		if(response == "No")
+			return FALSE
 	to_chat(imp_in, "<span class='notice'>Your dusting implant activates!</span>")
 	imp_in.visible_message("<span class='warning'>[imp_in] burns up in a flash!</span>")
 	for(var/obj/item/I in imp_in.contents)
-		if(I == src)
+		if(I == src || I == imp_in)
 			continue
 		 qdel(I)
 	imp_in.dust()
+
+/obj/item/implant/dusting/on_mob_death(mob/living/L, gibbed)
+	activate("death")
