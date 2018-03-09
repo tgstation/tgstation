@@ -8618,6 +8618,8 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/table/glass,
+/obj/effect/landmark/start/infiltrator_objective,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
@@ -14864,6 +14866,16 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
+/area/infiltrator_base)
+"Zf" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/table/glass,
+/obj/effect/landmark/start/infiltrator_objective,
+/turf/open/floor/plasteel/bar{
+	dir = 2
+	},
 /area/infiltrator_base)
 "Zk" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -40970,7 +40982,7 @@ Uz
 Pt
 Uk
 Tf
-Pm
+Zf
 Yn
 Zu
 PD

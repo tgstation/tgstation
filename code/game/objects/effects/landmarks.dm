@@ -431,3 +431,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	..()
 	GLOB.infiltrator_start += loc
 	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/start/infiltrator_objective
+	name = "infiltrator objective items"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "random_loot"
+
+/obj/effect/landmark/start/infiltrator_objective/Initialize()
+	..()
+	GLOB.infiltrator_objective_items += loc
+	return INITIALIZE_HINT_QDEL

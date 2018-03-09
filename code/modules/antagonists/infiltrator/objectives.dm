@@ -6,10 +6,18 @@ GLOBAL_LIST_INIT(minor_infiltrator_objectives, list(/datum/objective/assassinate
 /datum/objective/infiltrator
 	explanation_text = "Generic Infiltrator Objective!"
 	martyr_compatible = FALSE
+	var/item_type
 
+/datum/objective/infiltrator/New()
+	..()
+	if(item_type)
+		for(var/turf/T in GLOB.infiltrator_objective_items)
+			if(!(item_type in T.contents))
+				new item_type(T)
 
 /datum/objective/infiltrator/exploit
 	explanation_text = "Exploit the station's Nanotrasen AI and make it loyal to the Syndicate."
+	item_type = /obj/item/ai_hijack_device
 
 /datum/objective/infiltrator/exploit/find_target()
 	var/list/possible_targets = active_ais(1)
@@ -34,6 +42,7 @@ GLOBAL_LIST_INIT(minor_infiltrator_objectives, list(/datum/objective/assassinate
 
 /datum/objective/infiltrator/power
 	explanation_text = "Drain power from the station with a power sink."
+	item_type = /obj/item/device/powersink/infiltrator
 
 /datum/objective/infiltrator/power/New()
 	target_amount = rand(MIN_POWER_DRAIN, MAX_POWER_DRAIN)
