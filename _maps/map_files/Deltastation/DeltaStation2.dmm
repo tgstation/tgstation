@@ -9781,12 +9781,12 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/port/fore)
+/area/engine/atmospherics_engine)
 "aAa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/maintenance/port/fore)
+/area/engine/atmospherics_engine)
 "aAb" = (
 /turf/closed/wall,
 /area/hydroponics/garden/abandoned)
@@ -101047,7 +101047,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/port/fore)
+/area/engine/atmospherics_engine)
 "jBE" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral,
