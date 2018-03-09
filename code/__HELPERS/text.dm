@@ -598,29 +598,33 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return
 
 	//Regular expressions are, as usual, absolute magic
+	var/regex/is_website = regex_is_website()
+	var/regex/is_email = regex_is_email()
+	var/regex/alphanumeric = regex_is_alphanumeric()
+	var/regex/punctuation = regex_is_punctuation()
 	var/regex/all_invalid_symbols = new("\[^ -~]+")
 
 	var/list/accepted = list()
 	for(var/string in proposed)
-		if(findtext(string,GLOB.is_website) || findtext(string,GLOB.is_email) || findtext(string,all_invalid_symbols) || !findtext(string,GLOB.is_alphanumeric))
+		if(findtext(string,is_website) || findtext(string,is_email) || findtext(string,all_invalid_symbols) || !findtext(string,alphanumeric))
 			continue
 		var/buffer = ""
 		var/early_culling = TRUE
 		for(var/pos = 1, pos <= lentext(string), pos++)
 			var/let = copytext(string, pos, (pos + 1) % lentext(string))
-			if(early_culling && !findtext(let,GLOB.is_alphanumeric))
+			if(early_culling && !findtext(let,alphanumeric))
 				continue
 			early_culling = FALSE
 			buffer += let
-		if(!findtext(buffer,GLOB.is_alphanumeric))
+		if(!findtext(buffer,alphanumeric))
 			continue
 		var/punctbuffer = ""
 		var/cutoff = lentext(buffer)
 		for(var/pos = lentext(buffer), pos >= 0, pos--)
 			var/let = copytext(buffer, pos, (pos + 1) % lentext(buffer))
-			if(findtext(let,GLOB.is_alphanumeric))
+			if(findtext(let,alphanumeric))
 				break
-			if(findtext(let,GLOB.is_punctuation))
+			if(findtext(let,punctuation))
 				punctbuffer = let + punctbuffer //Note this isn't the same thing as using +=
 				cutoff = pos
 		if(punctbuffer) //We clip down excessive punctuation to get the letter count lower and reduce repeats. It's not perfect but it helps.
@@ -648,7 +652,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 				else
 					punctbuffer = "" //Grammer nazis be damned
 			buffer = copytext(buffer, 1, cutoff) + punctbuffer
-		if(!findtext(buffer,GLOB.is_alphanumeric))
+		if(!findtext(buffer,alphanumeric))
 			continue
 		if(!buffer || lentext(buffer) > 280 || lentext(buffer) <= cullshort || buffer in accepted)
 			continue
