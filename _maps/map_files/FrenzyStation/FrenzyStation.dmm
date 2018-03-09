@@ -1095,7 +1095,7 @@
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/storage)
 "cO" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/storage)
 "cP" = (

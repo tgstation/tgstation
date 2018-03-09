@@ -1010,7 +1010,7 @@
 	},
 /area/security/brig)
 "ace" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -1445,7 +1445,7 @@
 	},
 /area/security/courtroom)
 "add" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "ade" = (
@@ -3141,7 +3141,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "ahK" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -8916,7 +8916,7 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "avx" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel,
 /area/bridge)
 "avy" = (
@@ -11811,7 +11811,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "aBY" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -14129,7 +14129,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aHe" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aHg" = (
@@ -15881,7 +15881,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "aLa" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "aLb" = (
@@ -20467,7 +20467,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -20744,7 +20744,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aWn" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},

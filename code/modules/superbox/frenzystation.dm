@@ -209,7 +209,7 @@
 // Cargo computer which uses a nearby teleporter instead of a shuttle
 /obj/machinery/computer/cargo/frenzy
 	desc = "Used to order supplies, approve requests, and control the teleporter."
-	var/obj/item/device/radio/beacon/current_beacon = null
+	var/obj/item/device/beacon/current_beacon = null
 	var/list/queued_crates = null
 
 /obj/machinery/computer/cargo/frenzy/ui_data()
@@ -236,7 +236,7 @@
 		return ..()
 
 	// sending the shuttle insta-sells, insta-buys, and begins queueing delivery
-	var/obj/item/device/radio/beacon/B = findBeacon()
+	var/obj/item/device/beacon/B = findBeacon()
 	if (!B)
 		return TRUE
 
@@ -252,7 +252,7 @@
 	var/area/me = get_area(src)
 	if (!current_beacon || get_area(current_beacon) != me)
 		current_beacon = null
-		for (var/obj/item/device/radio/beacon/B in GLOB.teleportbeacons)
+		for (var/obj/item/device/beacon/B in GLOB.teleportbeacons)
 			if (get_area(B) == me)
 				current_beacon = B
 				break
@@ -287,7 +287,7 @@
 		else
 			return TRUE // probably like a decal or something, ignore it
 
-	var/obj/item/device/radio/beacon/B = findBeacon()
+	var/obj/item/device/beacon/B = findBeacon()
 	if (!B)
 		return FALSE // failure! try again soon
 	var/turf/T = get_turf(B)
@@ -339,7 +339,7 @@ GLOBAL_VAR(frenzy_exports)
 		return ..()
 
 	// Copypaste from parent
-	for(var/obj/item/device/radio/beacon/R in GLOB.teleportbeacons)
+	for(var/obj/item/device/beacon/R in GLOB.teleportbeacons)
 		var/turf/T = get_turf(R)
 		if(!T)
 			continue

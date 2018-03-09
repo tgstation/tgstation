@@ -1499,7 +1499,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -6024,7 +6024,7 @@
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "nP" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "nQ" = (
@@ -8229,7 +8229,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 10
 	},
