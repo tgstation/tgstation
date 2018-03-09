@@ -136,32 +136,123 @@ Charged extracts:
 /obj/item/slimecross/charged/pyrite
 	colour = "pyrite"
 
+/obj/item/slimecross/charged/pyrite/do_effect(mob/user)
+	var/obj/item/stack/sheet/mineral/bananium/M = new(get_turf(user))
+	M.amount = 10
+	user.visible_message("<span class='warning'>[src] solidifies with a horrifying banana stench!</span>")
+	..()
+
 /obj/item/slimecross/charged/red
 	colour = "red"
+
+/obj/item/slimecross/charged/red/do_effect(mob/user)
+	new /obj/item/slimepotion/lavaproof(get_turf(user))
+	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
+	..()
 
 /obj/item/slimecross/charged/green
 	colour = "green"
 
+/obj/item/slimecross/charged/green/do_effect(mob/user)
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		to_chat(user, "<span class='warning'>You must be a humanoid to use this!</span>")
+		return
+	var/racechoice = input(H, "Choose your slime subspecies.", "Slime Selection") as null|anything in subtypesof(/datum/species/jelly)
+	if(!racechoice)
+		to_chat(user, "<span class='notice'>You decide not to become a slime for now.</span>")
+		return
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	H.set_species(racechoice, icon_update=1)
+	H.visible_message("<span class='warning'>[H] suddenly shifts form as [src] dissolves into [H.p_their()] skin!</span>")
+	..()
+
 /obj/item/slimecross/charged/pink
 	colour = "pink"
 
+/obj/item/slimecross/charged/pink/do_effect(mob/user)
+	new /obj/item/slimepotion/lovepotion(get_turf(user))
+	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
+	..()
+
 /obj/item/slimecross/charged/gold
 	colour = "gold"
+	var/max_spawn = 10
+	var/spawned = 0
+
+/obj/item/slimecross/charged/gold/do_effect(mob/user)
+	user.visible_message("<span class='warning'>[src] starts shuddering violently!</span>")
+	addtimer(CALLBACK(src, .proc/startTimer), 50)
+
+/obj/item/slimecross/charged/gold/proc/startTimer()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/slimecross/charged/gold/process()
+	src.visible_message("<span class='warning'>[src] lets off a spark, and produces a living creature!</span>")
+	new /obj/effect/particle_effect/sparks(get_turf(src))
+	playsound(get_turf(src), "sparks", 50, 1)
+	create_random_mob(get_turf(src), HOSTILE_SPAWN)
+	spawned++
+	if(spawned >= max_spawn)
+		src.visible_message("<span class='warning'>[src] collapses into a puddle of goo.</span>")
+		qdel(src)
+
+/obj/item/slimecross/charged/gold/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	..()
 
 /obj/item/slimecross/charged/oil
 	colour = "oil"
 
+/obj/item/slimecross/charged/oil/do_effect(mob/user)
+	user.visible_message("<span class='danger'>[src] begins to shake with rapidly increasing force!</span>")
+	addtimer(CALLBACK(src, .proc/boom), 50)
+
+/obj/item/slimecross/charged/oil/proc/boom()
+	explosion(get_turf(src), 3, 2, 1) //Much smaller effect than normal oils, but devastatingly strong where it does hit.
+	qdel(src)
+
 /obj/item/slimecross/charged/black
 	colour = "black"
+
+/obj/item/slimecross/charged/black/do_effect(mob/user)
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		to_chat(user, "<span class='warning'>You have to be able to have a species to get your species changed.</span>")
+		return
+	var/list/allowed_species = list()
+	for(var/datum/species/S in subtypesof(/datum/species))
+		if(!S.blacklisted)
+			allowed_species += S
+	H.set_species(pick(allowed_species), icon_update = 1)
+	..()
 
 /obj/item/slimecross/charged/lightpink
 	colour = "light pink"
 
+/obj/item/slimecross/charged/lightpink/do_effect(mob/user)
+	new /obj/item/slimepotion/peacepotion(get_turf(user))
+	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
+	..()
+
 /obj/item/slimecross/charged/adamantine
 	colour = "adamantine"
 
+/obj/item/slimecross/charged/adamantine/do_effect(mob/user)
+	user.visible_message("<span class='notice'>[src] produces a fully formed golem shell!</span>")
+	new /obj/effect/mob_spawn/human/golem/servant(get_turf(src), /datum/species/golem/adamantine, user)
+	..()
+
 /obj/item/slimecross/charged/rainbow
 	colour = "rainbow"
+
+/obj/item/slimecross/charged/rainbow/do_effect(mob/user)
+	user.visible_message("<span class='warning'>[src] swells and splits into three new slimes!</span>")
+	for(var/i in 1 to 3)
+		var/mob/living/simple_animal/slime/S = new(get_turf(user))
+		S.random_colour()
+	..()
 
 ////////////Unique things.
 
@@ -185,27 +276,8 @@ Charged extracts:
 	M.visible_message("<span class='notice'>[M] is filled with renewed vigor and blinks awake!</span>")
 	M.maxHealth -= 10 //Revival isn't healthy.
 	M.health -= 10
-
-/obj/item/slimepotion/slime_reviver
-	name = "slime revival potion"
-	desc = "Infused with plasma and compressed gel, this brings dead slimes back to life."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "potsilver"
-
-/obj/item/slimepotion/slime_reviver/attack(mob/living/simple_animal/slime/M, mob/user)
-	if(!isslime(M))
-		to_chat(user, "<span class='warning'>The potion only works on slimes!</span>")
-		return ..()
-	if(M.stat != DEAD)
-		to_chat(user, "<span class='warning'>The slime is still alive!</span>")
-		return
-	if(M.maxHealth <= 0)
-		to_chat(user, "<span class='warning'>The slime is too unstable to return!</span>")
-	M.revive(full_heal = 1)
-	M.stat = CONSCIOUS
-	M.visible_message("<span class='notice'>[M] is filled with renewed vigor and blinks awake!</span>")
-	M.maxHealth -= 10 //Revival isn't healthy.
-	M.health -= 10
+	M.regenerate_icons()
+	qdel(src)
 
 /obj/item/slimepotion/slime/chargedstabilizer
 	name = "slime omnistabilizer"
@@ -242,10 +314,12 @@ Charged extracts:
 	icon_state = "potblue"
 	var/uses = 2
 
-/obj/item/slimepotion/spaceproof/afterattack(obj/item/clothing/C, mob/user)
+/obj/item/slimepotion/spaceproof/afterattack(obj/item/clothing/C, mob/user, proximity)
 	..()
 	if(!uses)
 		qdel(src)
+		return
+	if(!proximity)
 		return
 	if(!istype(C))
 		to_chat(user, "<span class='warning'>The potion can only be used on clothing!</span>")
@@ -260,7 +334,7 @@ Charged extracts:
 	C.min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	C.cold_protection = C.body_parts_covered
 	C.flags_1 |= STOPSPRESSUREDMAGE_1
-	uses --
+	uses--
 	if(!uses)
 		qdel(src)
 
@@ -269,3 +343,94 @@ Charged extracts:
 	desc = "An extremely potent chemical mix that will maximize a slime extract's uses."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potpurple"
+
+/obj/item/slimepotion/lavaproof
+	name = "slime lavaproofing potion"
+	desc = "A strange, reddish goo said to repel lava as if it were water, without reducing flammability. Has two uses."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "potred"
+	var/uses = 2
+
+/obj/item/slimepotion/lavaproof/afterattack(obj/item/C, mob/user, proximity)
+	..()
+	if(!uses)
+		qdel(src)
+		return ..()
+	if(!proximity)
+		return ..()
+	if(!istype(C))
+		to_chat(user, "<span class='warning'>You can't coat this with lavaproofing fluid!</span>")
+		return ..()
+	to_chat(user, "<span class='notice'>You slather the red gunk over the [C], making it lavaproof.</span>")
+	C.name = "lavaproof [C.name]"
+	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	C.add_atom_colour("#800000", FIXED_COLOUR_PRIORITY)
+	C.resistance_flags |= LAVA_PROOF
+	C.flags_2 |= LAVA_PROTECT_2
+	uses--
+	if(!uses)
+		qdel(src)
+
+/obj/item/slimepotion/lovepotion
+	name = "love potion"
+	desc = "A pink chemical mix thought to inspire feelings of love."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "potpink"
+
+/obj/item/slimepotion/lovepotion/attack(mob/living/M, mob/user)
+	if(!isliving(M) || M.stat == DEAD)
+		to_chat(user, "<span class='warning'>The love potion only works on living things, sicko!</span>")
+		return ..()
+	if(!M.mind)
+		to_chat(user, "<span class='warning'>[M] doesn't seem to be able to feel love...</span>")
+		return ..()
+	if(user == M)
+		to_chat(user, "<span class='warning'>You can't drink the love potion. What are you, a narcissist?</span>")
+		return ..()
+
+	M.visible_message("<span class='danger'>[user] starts to feed [M] a love potion!</span>",
+		"<span class='userdanger'>[user] starts to feed you a love potion!</span>")
+
+	if(!do_after(user, 50, target = M))
+		return
+	to_chat(user, "<span class='notice'>You feed [M] the love potion!</span>")
+	if(M.mind.special_role)
+		to_chat(M, "<span class'warning'>You start to reflect on your feelings for [user], but you're too focussed on the task at hand!</span>")
+	else
+		var/mob/living/L = user
+		if(istype(L))
+			forge_valentines_objective(M,user)
+			to_chat(M, "<span class='userdanger'>You fall madly in love with [user]!</span>")
+		else
+			to_chat(M, "<span class='warning'>You feel the spark of love between [user] and yourself, but you can't get over the differences between eachother!</span>")
+	qdel(src)
+
+/obj/item/slimepotion/peacepotion
+	name = "pacification potion"
+	desc = "A light pink solution of chemicals, smelling like liquid peace. And mercury salts."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "potlightpink"
+
+/obj/item/slimepotion/peacepotion/attack(mob/living/M, mob/user)
+	if(!isliving(M) || M.stat == DEAD)
+		to_chat(user, "<span class='warning'>The pacification potion only works on the living.</span>")
+		return ..()
+	if(M != user)
+		M.visible_message("<span class='danger'>[user] starts to feed [M] a pacification potion!</span>",
+			"<span class='userdanger'>[user] starts to feed you a love potion!</span>")
+	else
+		M.visible_message("<span class='danger'>[user] starts to drink the pacification potion!</span>",
+			"<span class='danger'>You start to drink the pacification potion!</span>")
+
+	if(!do_after(user, 100, target = M))
+		return
+	if(M != user)
+		to_chat(user, "<span class='notice'>You feed [M] the pacification potion!</span>")
+	else
+		to_chat(user, "<span class='warning'>You drink the pacification potion!</span>")
+	if(isanimal(M))
+		M.add_trait(TRAIT_PACIFISM, MAGIC_TRAIT)
+	else if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_SURGERY)
+	qdel(src)

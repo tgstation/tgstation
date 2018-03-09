@@ -43,6 +43,9 @@
 #define TRAIT_DEPRESSION			"depression"
 #define TRAIT_JOLLY				"jolly"
 #define TRAIT_NOCRITDAMAGE		"no_crit"
+#define TRAIT_NOSLIPWATER		"noslip_water"
+#define TRAIT_NOSLIPALL			"noslip_all"
+
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
 #define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
@@ -55,8 +58,6 @@
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
-#define TRAIT_NOSLIPWATER		"noslip_water"
-#define TRAIT_NOSLIPALL			"noslip_all"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
