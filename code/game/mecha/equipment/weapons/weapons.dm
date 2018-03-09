@@ -396,7 +396,6 @@
 	projectiles = 10
 	projectile_energy_cost = 500
 	diags_first = TRUE
-	pacifist_safe = 0 //Does this even do damage? need to test.
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/can_attach(obj/mecha/combat/honker/M)
 	if(..())

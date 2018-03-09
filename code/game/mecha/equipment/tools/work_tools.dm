@@ -10,6 +10,7 @@
 	energy_drain = 10
 	var/dam_force = 20
 	var/obj/mecha/working/ripley/cargo_holder
+	pacifist_safe = 0
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/mecha/working/ripley/M as obj)
 	if(..())
@@ -77,6 +78,7 @@
 	name = "\improper KILL CLAMP"
 	desc = "They won't know what clamped them!"
 	energy_drain = 0
+	pacifist_safe = 0
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/action(atom/target)
 	if(!action_checks(target))
