@@ -20,18 +20,9 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 
 	Initialize()
 
-/datum/controller/global_vars/Destroy(force)
-	stack_trace("Some fucker qdel'd the global holder!")
-	if(!force)
-		return QDEL_HINT_LETMELIVE
-	
-	QDEL_NULL(statclick)
-	gvars_datum_protected_varlist.Cut()
-	gvars_datum_in_built_vars.Cut()
-	
-	GLOB = null
-
-	return ..()
+/datum/controller/global_vars/Destroy()
+	//fuck off kevinz
+	return QDEL_HINT_IWILLGC
 
 /datum/controller/global_vars/stat_entry()
 	if(!statclick)
