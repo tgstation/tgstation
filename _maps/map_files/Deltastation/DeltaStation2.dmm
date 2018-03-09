@@ -9781,12 +9781,12 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/engine/atmospherics_engine)
+/area/maintenance/port/fore)
 "aAa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/engine/atmospherics_engine)
+/area/maintenance/port/fore)
 "aAb" = (
 /turf/closed/wall,
 /area/hydroponics/garden/abandoned)
@@ -49925,6 +49925,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/item/storage/secure/safe{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain/private)
 "ccT" = (
@@ -51613,6 +51616,9 @@
 /obj/item/storage/lockbox/loyalty,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
+	},
+/obj/item/storage/secure/safe{
+	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
@@ -101041,7 +101047,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/engine/atmospherics_engine)
+/area/maintenance/port/fore)
 "jBE" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral,
