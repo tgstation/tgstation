@@ -15,6 +15,14 @@
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
 
+/datum/species/jelly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "sodiumchloride")
+		H.adjustFireLoss(5)
+		H.blood_volume -= 10
+		H.visible_message("<span class='warning'>[H] bubbles and froths, leaking liquid everywhere!","<span class='userdanger'>You feel an agonizing burning as your jelly melts away!")
+		H.reagents.remove_reagent(chem.id, 10)
+		return 1
+
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
