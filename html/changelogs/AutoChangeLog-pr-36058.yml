@@ -1,0 +1,6 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - rscadd: "Display cases can now have a list where to randomly spawn items from."
+  - refactor: "Moved plaque code to main type."
+  - refactor: "Statues now use default unwrench and the tool interaction is now completely non existent when no deconstruct flag is available."
