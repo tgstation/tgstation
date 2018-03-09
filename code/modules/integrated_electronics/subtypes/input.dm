@@ -91,7 +91,7 @@
 	power_draw_per_use = 40
 
 /obj/item/integrated_circuit/input/med_scanner/do_work()
-	var/mob/living/carbon/human/H = get_pin_data_as_type(IC_INPUT, 1, /mob/living/carbon/human)
+	var/mob/living/H = get_pin_data_as_type(IC_INPUT, 1, /mob/living)
 	if(!istype(H)) //Invalid input
 		return
 	if(H.Adjacent(get_turf(src))) // Like normal analysers, it can't be used at range.
@@ -125,7 +125,7 @@
 	power_draw_per_use = 80
 
 /obj/item/integrated_circuit/input/adv_med_scanner/do_work()
-	var/mob/living/carbon/human/H = get_pin_data_as_type(IC_INPUT, 1, /mob/living/carbon/human)
+	var/mob/living/H = get_pin_data_as_type(IC_INPUT, 1, /mob/living)
 	if(!istype(H)) //Invalid input
 		return
 	if(H in view(get_turf(src))) // Like medbot's analyzer it can be used in range..
@@ -216,7 +216,8 @@
 		"Nutrition level"			= IC_PINTYPE_NUMBER,
 		"harvest"			= IC_PINTYPE_NUMBER,
 		"dead"			= IC_PINTYPE_NUMBER,
-		"plant health"			= IC_PINTYPE_NUMBER
+		"plant health"			= IC_PINTYPE_NUMBER,
+		"self sustaining"		= IC_PINTYPE_NUMBER
 	)
 	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
@@ -248,6 +249,7 @@
 		set_pin_data(IC_OUTPUT, 16, H.harvest)
 		set_pin_data(IC_OUTPUT, 17, H.dead)
 		set_pin_data(IC_OUTPUT, 18, H.plant_health)
+		set_pin_data(IC_OUTPUT, 19, H.self_sustaining)
 
 	push_data()
 	activate_pin(2)
@@ -439,21 +441,6 @@
 	var/turf/T = get_turf(src)
 	var/list/nearby_things = view(radius,T)
 	var/list/valid_things = list()
-	var/list/GI = list()
-	GI = I.data
-	for(var/G in GI)
-		if(isweakref(G))
-			var/datum/integrated_io/G1
-			G1.data = G
-			var/atom/A = G1.data.resolve()
-			var/desired_type = A.type
-			for(var/atom/thing in nearby_things)
-				if(thing.type != desired_type)
-					continue
-				valid_things.Add(WEAKREF(thing))
-		else if(istext(G))
-			for(var/atom/thing in nearby_things)
-				if(findtext(addtext(thing.name," ",thing.desc), G, 1, 0) )
 	var/list/input_list = list()
 	input_list = I.data
 	for(var/item in input_list)

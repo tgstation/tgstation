@@ -157,16 +157,16 @@
 				if(i1 == sample)
 					output += i1
 
-	output_list1.Add(output)
-	output_list2.Remove(output)
+	output_list1.Remove(output)
+	output_list2.Add(output)
 	set_pin_data(IC_OUTPUT, 1, output_list1)
 	set_pin_data(IC_OUTPUT, 2, output_list2)
 	push_data()
 
 	output_list1 ~! input_list ? activate_pin(2) : activate_pin(3)
 
-/obj/item/integrated_circuit/lists/set
-	name = "set circuit"
+/obj/item/integrated_circuit/lists/listset
+	name = "list set circuit"
 	desc = "This circuit will remove any duplicate entries from a list."
 	extended_desc = "If there are no duplicate entries, result list will be unchanged."
 	inputs = list(
@@ -178,7 +178,7 @@
 	icon_state = "addition"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-/obj/item/integrated_circuit/lists/set/do_work()
+/obj/item/integrated_circuit/lists/listset/do_work()
 	var/list/input_list = get_pin_data(IC_INPUT, 1)
 	input_list = uniqueList(input_list)
 
