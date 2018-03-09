@@ -42,6 +42,7 @@
 		H.equipOutfit(/datum/outfit/infiltrator)
 		H.dna.species.random_name(H.gender, TRUE)
 		purrbation_remove(H, silent=TRUE)
+	owner.store_memory("Do <B>NOT</B> kill or destroy needlessly, as this defeats the purpose of an 'infiltration'!")
 	owner.objectives |= infiltrator_team.objectives
 	. = ..()
 	if(send_to_spawnpoint)
@@ -88,3 +89,16 @@
 	if(infiltrator_team)
 		team_number = infiltrator_team.members.Find(owner)
 	owner.current.forceMove(GLOB.infiltrator_start[((team_number - 1) % GLOB.infiltrator_start.len) + 1])
+
+/datum/antagonist/infiltrator/antag_panel_objectives()
+	var/result = "<i><b>Objectives</b></i>:<br>"
+	if (objectives.len == 0)
+		result += "EMPTY<br>"
+	else
+		var/obj_count = 1
+		for(var/datum/objective/objective in infiltrator_team.objectives)
+			result += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=[REF(owner)];obj_edit=[REF(objective)]'>Edit</a> <a href='?src=[REF(owner)];obj_delete=[REF(objective)]'>Delete</a> <a href='?src=[REF(owner)];obj_completed=[REF(objective)]'><font color=[objective.completed ? "green" : "red"]>[objective.completed ? "Mark as incomplete" : "Mark as complete"]</font></a><br>"
+			obj_count++
+	result += "<a href='?src=[REF(owner)];obj_add=1;target_antag=[REF(src)]'>Add objective</a><br>"
+	result += "<a href='?src=[REF(owner)];obj_announce=1'>Announce objectives</a><br>"
+	return result
