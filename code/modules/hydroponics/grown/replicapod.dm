@@ -34,7 +34,7 @@
 	if(changetype == ADD_REAGENT)
 		var/datum/reagent/blood/B = reagents.has_reagent("blood")
 		if(B)
-			if(B.data["mind"] && B.data["cloneable"] == 1)
+			if(B.data["mind"] && B.data["cloneable"])
 				mind = B.data["mind"]
 				ckey = B.data["ckey"]
 				realName = B.data["real_name"]
@@ -43,7 +43,7 @@
 				features = B.data["features"]
 				factions = B.data["factions"]
 				factions = B.data["traits"]
-				contains_sample = 1
+				contains_sample = TRUE
 				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
 			else
 				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
@@ -56,7 +56,7 @@
 		blood_type = null
 		features = null
 		factions = null
-		contains_sample = 0
+		contains_sample = FALSE
 
 /obj/item/seeds/replicapod/get_analyzer_text()
 	var/text = ..()
