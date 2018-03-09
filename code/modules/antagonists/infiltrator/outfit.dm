@@ -16,7 +16,7 @@
 /datum/outfit/infiltrator/post_equip(mob/living/carbon/human/H)
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(H)
 	W.implant(H)
-	var/obj/item/implant/explosive/E = new/obj/item/implant/explosive(H)
+	var/obj/item/implant/dusting/E = new/obj/item/implant/dusting(H)
 	E.implant(H)
 	var/obj/item/implant/uplink/infiltrator/U = new/obj/item/implant/uplink/infiltrator(H)
 	U.implant(H)
@@ -25,7 +25,7 @@
 	H.faction |= ROLE_SYNDICATE
 	H.update_icons()
 
-	var/obj/item/card/id/syndicate/card = H.wear_id
+	var/obj/item/card/id/card = H.wear_id
 	if(istype(card))
 		card.registered_name = H.real_name
 		card.assignment = "Assistant"

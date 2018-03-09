@@ -31,6 +31,7 @@
 	to_chat(owner, "<span class='notice bold'>Your job is to infiltrate [station_name()], and complete our objectives.</span>")
 	to_chat(owner, "<span class='notice'>You have an uplink implant, precharged with 30 TC. Use it wisely.</span>")
 	to_chat(owner, "<span class='notice'>You also have an internal radio, for communicating with your team-mates at all times.</span>")
+	to_chat(owner, "<span class='notice'>You have a dusting implant, to ensure that Nanotrasen does not get their hands on Syndicate gear. Only activate it, if you are compromised.</span>")
 	to_chat(owner, "<font size=2><span class='notice bold'>Do NOT kill or destroy needlessly, as this defeats the purpose of an 'infiltration'!</span></font>")
 	owner.announce_objectives()
 
