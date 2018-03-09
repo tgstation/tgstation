@@ -57,7 +57,7 @@
 			continue // i'd be right happy to
 		meme_pack_data[P.group]["packs"] += list(list(
 			"name" = P.name,
-			"cost" = P.cost
+			"cost" = P.cost,
 			"id" = pack,
 			"desc" = P.desc ? P.desc : P.name // If there is a description, use it. Otherwise use the pack's name.
 		))
