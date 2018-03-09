@@ -19,6 +19,7 @@
 	var/burnstate = 0
 	var/brute_dam = 0
 	var/burn_dam = 0
+	var/stamina_dam = 0
 	var/max_damage = 0
 	var/list/embedded_objects = list()
 	var/held_index = 0 //are we a hand? if so, which one!
@@ -107,52 +108,54 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute, burn, updating_health = 1)
+/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
 	if(owner && (owner.status_flags & GODMODE))
-		return 0	//godmode
+		return FALSE	//godmode
 	var/dmg_mlt = CONFIG_GET(number/damage_multiplier)
 	brute = max(brute * dmg_mlt, 0)
 	burn = max(burn * dmg_mlt, 0)
-
-
+	stamina = max(stamina * dmg_mlt, 0)
 	if(status == BODYPART_ROBOTIC) //This makes robolimbs not damageable by chems and makes it stronger
 		brute = max(0, brute - 5)
 		burn = max(0, burn - 4)
+		//No stamina scaling.. for now..
+
+	if(!brute && !burn && !stamina)
+		return FALSE
 
 	switch(animal_origin)
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn
 			burn *= 2
 
 	var/can_inflict = max_damage - (brute_dam + burn_dam)
-	if(!can_inflict)
-		return 0
+	if(can_inflict <= 0)
+		return FALSE
 
-	if((brute + burn) < can_inflict)
-		brute_dam	+= brute
-		burn_dam	+= burn
-	else
-		if(brute > 0)
-			if(burn > 0)
-				brute	= round( (brute/(brute+burn)) * can_inflict, 1 )
-				burn	= can_inflict - brute	//gets whatever damage is left over
-				brute_dam	+= brute
-				burn_dam	+= burn
-			else
-				brute_dam	+= can_inflict
-		else
-			if(burn > 0)
-				burn_dam	+= can_inflict
-			else
-				return 0
+	var/total_damage = brute + burn
+
+	if(total_damage > can_inflict)
+		var/excess = total_damage - can_inflict
+		brute = brute * (excess / total_damage)
+		burn = burn * (excess / total_damage)
+
+	brute_dam += brute
+	burn_dam += burn
+
+	//We've dealt the physical damages, if there's room lets apply the stamina damage.
+	var/current_damage = brute_dam + burn_dam + stamina_dam		//This time around, count stamina loss too.
+	var/available_damage = max_damage - current_damage
+	stamina_dam += CLAMP(stamina, 0, available_damage)
+
 	if(owner && updating_health)
 		owner.updatehealth()
+		if(stamina)
+			owner.update_stamina()
 	return update_bodypart_damage_state()
-
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/bodypart/proc/heal_damage(brute, burn, only_robotic = 0, only_organic = 1, updating_health = 1)
+/obj/item/bodypart/proc/heal_damage(brute, burn, stamina, only_robotic = FALSE, only_organic = TRUE, updating_health = TRUE)
 
 	if(only_robotic && status != BODYPART_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
 		return
@@ -162,6 +165,7 @@
 
 	brute_dam	= max(brute_dam - brute, 0)
 	burn_dam	= max(burn_dam - burn, 0)
+	stamina_dam = max(stamina_dam - stamina, 0)
 	if(owner && updating_health)
 		owner.updatehealth()
 	return update_bodypart_damage_state()
@@ -180,8 +184,8 @@
 	if((tbrute != brutestate) || (tburn != burnstate))
 		brutestate = tbrute
 		burnstate = tburn
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 
