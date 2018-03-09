@@ -78,7 +78,6 @@
 	name = "\improper KILL CLAMP"
 	desc = "They won't know what clamped them!"
 	energy_drain = 0
-	pacifist_safe = 0
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/action(atom/target)
 	if(!action_checks(target))
