@@ -102,7 +102,7 @@
 	desc = "Telepathically transmits a message to the target."
 	panel = "Revenant Abilities"
 	charge_max = 0
-	clothes_req = 0
+	clothes_req = FALSE
 	range = 7
 	include_user = 0
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
@@ -127,7 +127,7 @@
 			to_chat(ded, "[follow_rev] <span class='revenboldnotice'>[user] Revenant Transmit:</span> <span class='revennotice'>\"[msg]\" to</span> [follow_whispee] <span class='name'>[M]</span>")
 
 /obj/effect/proc_holder/spell/targeted/revenant
-	clothes_req = 0
+	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_background_icon_state = "bg_revenant"
 	panel = "Revenant Abilities (Locked)"
@@ -187,7 +187,7 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
-	clothes_req = 0
+	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_background_icon_state = "bg_revenant"
 	panel = "Revenant Abilities (Locked)"
@@ -376,10 +376,10 @@
 	sound = 'sound/magic/repulse.ogg'
 	reveal = 70
 	stun = 40
+	action_icon_state = "repulse"
 	var/maxthrow = 5
 	var/sparkle_path = /obj/effect/temp_visual/gravpush
 	var/anti_magic_check = TRUE
-	action_icon_state = "repulse"
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/push/cast(list/targets,mob/user = usr, var/stun_amt = 40) //repulse does the exact same thing so who am i to not use it's code
 	if(attempt_cast(user))
@@ -421,7 +421,7 @@
 	name = "Ethereal Uppercut"
 	desc = "Uppercut in a line facing you, causing a delayed throw."
 	charge_max = 200
-	range = 3
+	range = 1
 	cast_amount = 75
 	unlock_amount = 100
 	action_icon_state = "blight"
@@ -448,7 +448,6 @@
 			sleep(0.1) //wow, he's actually moving and stuff!
 		addtimer(CALLBACK(targets, .proc/polterthrow), 30)
 
-
 /////SPECTER (BURN GHOST)/////
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
@@ -459,9 +458,9 @@
 	range = 5
 	stun = 30
 	cast_amount = 40
+	action_icon_state = "overload_lights"
 	var/shock_range = 2
 	var/shock_damage = 15
-	action_icon_state = "overload_lights"
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
@@ -470,7 +469,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload(turf/T, mob/user)
 	for(var/obj/machinery/light/L in T)
-		if(!L.on)
+		if(L.turned_off() || !(L.has_power() || L.has_emergency_power()))
 			return
 		L.visible_message("<span class='warning'><b>\The [L] suddenly flares brightly and begins to spark!</span>")
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
@@ -480,7 +479,7 @@
 		addtimer(CALLBACK(src, .proc/overload_shock, L, user), 20)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload_shock(obj/machinery/light/L, mob/user)
-	if(!L.on) //wait, wait, don't shock me
+	if(L.turned_off() || !(L.has_power() || L.has_emergency_power()))) //wait, wait, don't shock me
 		return
 	flick("[L.base_state]2", L)
 	for(var/mob/living/carbon/human/M in view(shock_range, L))
@@ -568,9 +567,8 @@
 
 /obj/effect/proc_holder/spell/targeted/revenant/enthrall/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
-		if(!isrevenant(user))
+		if(!istype(user))
 			return FALSE
-		var/mob/living/simple_animal/revenant/r = user
 		if(length(r.thrall) > 0)
 			to_chat(r, "<span class='revenwarning'>You already have a thrall!</span>")
 			return FALSE
@@ -608,8 +606,7 @@
 			to_chat(r, "<span class='revenwarning'>Get a thrall first!</span>")
 			return FALSE
 		to_chat(r, "<span class='revenboldnotice'>Fine place as any to prepare a feast!</span>")
-		//var/turf/placement = get_turf(user)
-		var/obj/structure/effigy/e = new(loc)
+		var/obj/structure/effigy/e = new(get_turf(user))
 		e.linkedpreta = r
 		e.linkedthrall = r.thrall
 		to_chat(r.thrall, "<span class='revenboldnotice'>Our master has placed the effigy in [get_area_name(e)]!</span>")
@@ -657,7 +654,7 @@
 		else
 			to_chat(user, "<span class='revenboldnotice'>Here's our effigy, granted by our master. We need to start building a wonderful feast for it, and that requires...</span>")
 		for(var/obj/item/item in commonitem)
-			to_chat(user, "<span class='revenwarning'>one [item]!</span>")
+			to_chat(user, "<span class='revenwarning'>One [item]!</span>")
 		if(length(rareitem) > 0)
 			to_chat(user, "<span class='revenwarning'>And... a [rareitem] would be capable of granting unique powers if I could get my hands on it.</span>")
 	else
@@ -772,10 +769,10 @@
 	return report.Join("<br>")
 
 /datum/objective/thrall
-	completed = 1
+	completed = TRUE
 
 /datum/objective/thrall/effigy
-	completed = 0
+	completed = FALSE
 	explanation_text = "Construct the perfect effigy to satisfy it's hunger."
 
 /datum/objective/thrall/protecteffigy
