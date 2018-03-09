@@ -31,6 +31,9 @@
 	var/mob/living/silicon/ai/A = mob_override || owner.current
 	if(istype(A))
 		A.hack_software = FALSE
+		if(A.radio)
+			QDEL_NULL(A.radio)
+			A.radio = new /obj/item/device/radio/headset/ai(A)
 
 /datum/antagonist/hijacked_ai/on_removal()
 	if(owner.current && isAI(owner.current))
