@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/stealt
 	explanation_text = "Drain power from the station with a power sink."
 	item_type = /obj/item/device/powersink/infiltrator
 
-/datum/objective/infiltrator/power/New()
+/datum/objective/infiltrator/power/find_target()
 	target_amount = rand(MIN_POWER_DRAIN, MAX_POWER_DRAIN)
 	update_explanation_text()
 
@@ -64,17 +64,13 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/stealt
 	explanation_text = "Kidnap a member of security or command"
 
 /datum/objective/infiltrator/kidnap/find_target()
-	var/list/heads = SSjob.get_living_heads()
-	if(heads && heads.len > 1 && prob(55)) //command
-		target = pick(heads)
-	else
-		var/security_staff = list()
-		for(var/datum/mind/M in SSticker.minds)
-			if(!M || !considered_alive(M) || considered_afk(M) || !M.current || !M.current.client)
-				continue
-			if("Head of Security" in get_department_heads(M.assigned_role))
-				security_staff += M
-		target = pick(security_staff)
+	var/list/possible_targets = SSjob.get_living_heads()
+	for(var/datum/mind/M in SSticker.minds)
+		if(!M || !considered_alive(M) || considered_afk(M) || !M.current || !M.current.client)
+			continue
+		if("Head of Security" in get_department_heads(M.assigned_role))
+			possible_targets += M
+	target = pick(possible_targets)
 	update_explanation_text()
 	return target
 
@@ -85,4 +81,4 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/stealt
 		explanation_text = "Free Objective"
 
 /datum/objective/infiltrator/kidnap/check_completion()
-	return (considered_alive(target) && is_type_in_typecache(get_area(target), GLOB.infiltrator_kidnap_areas))
+	return (considered_alive(target) || (target.current && target.current.suiciding)) && is_type_in_typecache(get_area(target), GLOB.infiltrator_kidnap_areas)

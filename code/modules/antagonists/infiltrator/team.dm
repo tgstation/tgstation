@@ -55,8 +55,8 @@
 		return
 	var/list/major_objectives = subtypesof(/datum/objective/infiltrator)
 	var/list/minor_objectives = GLOB.minor_infiltrator_objectives.Copy()
-	var/major = max(rand(MIN_MAJOR_OBJECTIVES, MAX_MAJOR_OBJECTIVES), major_objectives.len)
-	var/minor = max(rand(MIN_MINOR_OBJECTIVES, MAX_MINOR_OBJECTIVES), minor_objectives.len)
+	var/major = rand(MIN_MAJOR_OBJECTIVES, MAX_MAJOR_OBJECTIVES)
+	var/minor = rand(MIN_MINOR_OBJECTIVES, MAX_MINOR_OBJECTIVES)
 	for(var/i in 1 to major)
 		add_objective(pick_n_take(major_objectives))
 	for(var/i in 1 to minor)
