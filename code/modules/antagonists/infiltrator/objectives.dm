@@ -2,6 +2,7 @@
 #define MAX_POWER_DRAIN 100000000
 
 GLOBAL_LIST_INIT(minor_infiltrator_objectives, list(/datum/objective/assassinate, /datum/objective/steal, /datum/objective/download))
+GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/stealthcruiser, /area/infiltrator_base)))
 
 /datum/objective/infiltrator
 	explanation_text = "Generic Infiltrator Objective!"
@@ -51,9 +52,37 @@ GLOBAL_LIST_INIT(minor_infiltrator_objectives, list(/datum/objective/assassinate
 /datum/objective/infiltrator/power/update_explanation_text()
 	..()
 	if(target_amount)
-		explanation_text = "Drain [DisplayPower(target_amount)] from [station_name()]'s powernet with a special transmitter powersink."
+		explanation_text = "Drain [DisplayPower(target_amount)] from [station_name()]'s powernet with a special transmitter powersink. You do not need to bring the powersink back once the objective is complete."
 	else
 		explanation_text = "Free Objective"
 
 /datum/objective/infiltrator/power/check_completion()
 	return GLOB.powersink_transmitted >= target_amount
+
+
+/datum/objective/infiltrator/kidnap
+	explanation_text = "Kidnap a member of security or command"
+
+/datum/objective/infiltrator/kidnap/find_target()
+	var/list/heads = SSjob.get_living_heads()
+	if(heads && heads.len > 1 && prob(55)) //command
+		target = pick(heads)
+	else
+		var/security_staff = list()
+		for(var/datum/mind/M in SSticker.minds)
+			if(!M || !considered_alive(M) || considered_afk(M) || !M.current || !M.current.client)
+				continue
+			if("Head of Security" in get_department_heads(M.assigned_role))
+				security_staff += M
+		target = pick(security_staff)
+	update_explanation_text()
+	return target
+
+/datum/objective/infiltrator/kidnap/update_explanation_text()
+	if(target && target.current)
+		explanation_text = "Kidnap [target.name], the [target.assigned_role], and hold [target.current.p_them()] on the shuttle or base."
+	else
+		explanation_text = "Free Objective"
+
+/datum/objective/infiltrator/kidnap/check_completion()
+	return (considered_alive(target) && is_type_in_typecache(get_area(target), GLOB.infiltrator_kidnap_areas))

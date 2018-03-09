@@ -13722,6 +13722,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
+"Ml" = (
+/turf/open/floor/plasteel/darkred,
+/area/infiltrator_base/jail)
 "Mn" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 9
@@ -13735,6 +13738,9 @@
 /obj/machinery/recharger,
 /turf/open/floor/pod/light,
 /area/infiltrator_base)
+"Mw" = (
+/turf/closed/indestructible/riveted,
+/area/infiltrator_base/jail)
 "My" = (
 /obj/docking_port/stationary{
 	area_type = /area/syndicate_mothership;
@@ -14053,7 +14059,7 @@
 	dir = 4;
 	icon_state = "alarm0";
 	pixel_x = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /turf/open/floor/plasteel/dark,
 /area/infiltrator_base)
@@ -14182,11 +14188,37 @@
 	},
 /turf/open/floor/plasteel,
 /area/infiltrator_base)
+"Qi" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/snacks/customizable/sandwich,
+/obj/item/toy/cards/deck/syndicate{
+	icon_state = "deck_syndicate_full";
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/turf/open/floor/plasteel/darkred,
+/area/infiltrator_base/jail)
 "Qu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
+/area/infiltrator_base)
+"Qw" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/infiltrator_base/jail)
+"Qx" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Brig";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plasteel/dark,
 /area/infiltrator_base)
 "Qz" = (
 /obj/structure/curtain,
@@ -14204,6 +14236,9 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/defibrillator_mount/loaded{
+	pixel_y = 28
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/infiltrator_base)
 "QE" = (
@@ -14280,6 +14315,10 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/infiltrator_base)
+"QT" = (
+/obj/item/toy/plush/nukeplushie,
+/turf/open/floor/plasteel/darkred,
+/area/infiltrator_base/jail)
 "QV" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/small{
@@ -14295,6 +14334,10 @@
 /obj/item/device/flashlight,
 /turf/open/floor/mineral/plastitanium,
 /area/infiltrator_base)
+"QY" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plasteel/darkred,
+/area/infiltrator_base/jail)
 "Rh" = (
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 4
@@ -14363,10 +14406,22 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
 /area/infiltrator_base)
+"SH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/infiltrator_base/jail)
 "SW" = (
 /obj/structure/flora/grass/brown,
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/infiltrator_base/outside)
+"SZ" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/infiltrator_base/jail)
 "Tc" = (
 /obj/machinery/washing_machine,
 /obj/effect/decal/cleanable/dirt,
@@ -14461,11 +14516,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/infiltrator_base)
+"Uv" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/indestructible/riveted,
+/area/infiltrator_base/jail)
 "Uz" = (
 /obj/structure/chair/stool,
 /obj/machinery/airalarm{
 	pixel_y = 23;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/effect/landmark/start/infiltrator,
 /turf/open/floor/plasteel/bar{
@@ -14519,6 +14578,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"Vj" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Cell";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plasteel/darkred,
+/area/infiltrator_base/jail)
 "Vk" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
@@ -14605,6 +14674,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+"Wh" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/infiltrator_base/jail)
+"Wn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/infiltrator_base/jail)
 "Wo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/pod/dark,
@@ -14690,7 +14771,7 @@
 	dir = 4;
 	icon_state = "alarm0";
 	pixel_x = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -14711,6 +14792,12 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"Xv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/infiltrator_base/jail)
 "Xy" = (
 /obj/machinery/door/airlock/external{
 	name = "Ferry Airlock";
@@ -14724,6 +14811,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+"XC" = (
+/turf/open/floor/plasteel/dark,
+/area/infiltrator_base/jail)
 "XI" = (
 /obj/effect/light_emitter{
 	set_cap = 1;
@@ -14862,8 +14952,8 @@
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/infiltrator_base/outside)
 "Zd" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/infiltrator_base)
@@ -14934,6 +15024,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/infiltrator_base)
+"ZB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	pixel_y = 24;
+	req_access = list(150);
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel/dark,
+/area/infiltrator_base/jail)
 "ZJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -38662,11 +38763,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Uv
+Mw
+Mw
+Mw
+Mw
 aa
 aa
 aa
@@ -38919,11 +39020,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Mw
+Xv
+QT
+SZ
+Mw
 aa
 aa
 aa
@@ -39176,11 +39277,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Mw
+Wn
+Ml
+Qi
+Mw
 aa
 aa
 aa
@@ -39433,11 +39534,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+Mw
+Vj
+QY
+QY
+Mw
 aa
 aa
 aa
@@ -39690,10 +39791,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+Mw
+Qw
+Wh
+XC
 Pu
 Oc
 Oc
@@ -39947,10 +40048,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+Mw
+ZB
+XC
+XC
 Oc
 VD
 Oc
@@ -40204,9 +40305,9 @@ zv
 zv
 zv
 zv
-aa
-aa
-aa
+Mw
+SH
+XC
 Oc
 Oc
 TE
@@ -40462,7 +40563,7 @@ XI
 Wq
 Oc
 Oc
-Oc
+Qx
 Oc
 Oc
 AI

@@ -134,6 +134,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/defibrillator_mount/loaded{
+	pixel_y = 28
+	},
 /turf/open/floor/plasteel/dark/side,
 /area/shuttle/stealthcruiser)
 "ar" = (
@@ -620,7 +623,7 @@
 	dir = 4;
 	icon_state = "alarm0";
 	pixel_x = -24;
-	req_access = 150
+	req_access = list(150)
 	},
 /turf/open/floor/plasteel/darkred/corner{
 	dir = 8
