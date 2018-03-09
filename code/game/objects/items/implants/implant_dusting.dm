@@ -2,6 +2,7 @@
 	name = "duster implant"
 	desc = "An alarm which monitors host vital signs, transmitting a radio message and dusting the corpse on death."
 	actions_types = list(/datum/action/item_action/dusting_implant)
+	var/popup = FALSE // is the DOUWANNABLOWUP window open?
 
 /obj/item/implant/dusting/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -16,7 +17,7 @@
 	return dat
 
 /obj/item/implant/dusting/activate(cause)
-	if(!cause || !imp_in || active)
+	if(!cause || !imp_in || cause == "emp")
 		return FALSE
 	if(cause == "action_button" && !popup)
 		popup = TRUE
