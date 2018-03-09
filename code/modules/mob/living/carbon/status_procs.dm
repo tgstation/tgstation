@@ -42,12 +42,17 @@
 
 /mob/living/carbon/adjust_drugginess(amount)
 	druggy = max(druggy+amount, 0)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 	if(druggy)
 		overlay_fullscreen("high", /obj/screen/fullscreen/high)
 		throw_alert("high", /obj/screen/alert/high)
+		if(mood)
+			mood.add_event("high", /datum/mood_event/drugs/high)
 	else
 		clear_fullscreen("high")
 		clear_alert("high")
+		if(mood)
+			mood.clear_event("high")
 
 /mob/living/carbon/set_drugginess(amount)
 	druggy = max(amount, 0)
@@ -97,4 +102,3 @@
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.cure_all_traumas(resilience)
-

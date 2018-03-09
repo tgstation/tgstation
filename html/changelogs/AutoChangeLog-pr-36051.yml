@@ -1,0 +1,8 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - balance: "Harvesters now have 40hp, from 60."
+  - tweak: "The nuke will now detonate 2 minutes after Nar'sie is summoned, down from 2.5 minutes"
+  - tweak: "The \"ARM\" ending now requires 75% of the remaining souls aboard to be sacrificed before the nuke goes off, up from 60%."
+  - bugfix: "Drones can no longer be on the sacrifice list"
+  - bugfix: "Bloodsense will now show the true name of the target"
