@@ -217,7 +217,9 @@
 		"harvest"			= IC_PINTYPE_NUMBER,
 		"dead"			= IC_PINTYPE_NUMBER,
 		"plant health"			= IC_PINTYPE_NUMBER,
-		"self sustaining"		= IC_PINTYPE_NUMBER
+		"self sustaining"		= IC_PINTYPE_NUMBER,
+		"using irrigation" 		= IC_PINTYPE_NUMBER,
+		"connected trays"		= IC_PINTYPE_LIST
 	)
 	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
@@ -250,7 +252,8 @@
 		set_pin_data(IC_OUTPUT, 17, H.dead)
 		set_pin_data(IC_OUTPUT, 18, H.plant_health)
 		set_pin_data(IC_OUTPUT, 19, H.self_sustaining)
-
+		set_pin_data(IC_OUTPUT, 20, H.using_irrigation)
+		set_pin_data(IC_OUTPUT, 21, H.FindConnected())
 	push_data()
 	activate_pin(2)
 

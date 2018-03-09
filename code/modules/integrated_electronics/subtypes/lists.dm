@@ -84,7 +84,7 @@
 		"on failure" = IC_PINTYPE_PULSE_OUT,
 		)
 	icon_state = "addition"
-	complexity = 6
+	complexity = 2
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	cooldown_per_use = 1
 
