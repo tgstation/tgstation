@@ -12,6 +12,7 @@
 	backpack_contents = list(/obj/item/storage/box/syndie=1,\
 		/obj/item/kitchen/knife/combat/survival=1,\
 		/obj/item/gun/ballistic/automatic/pistol=1)
+	l_pocket = /obj/item/pinpointer/infiltrator
 
 /datum/outfit/infiltrator/post_equip(mob/living/carbon/human/H)
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(H)

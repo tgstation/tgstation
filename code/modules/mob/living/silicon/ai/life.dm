@@ -2,7 +2,7 @@
 #define POWER_RESTORATION_START 1
 #define POWER_RESTORATION_SEARCH_APC 2
 #define POWER_RESTORATION_APC_FOUND 3
-#define HIJACK_TIME 240
+#define HIJACK_TIME 2400
 
 /mob/living/silicon/ai/Life()
 	if (stat == DEAD)
