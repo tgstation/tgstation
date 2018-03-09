@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/gun/energy/kinetic_accelerator/crossbow
 	cost = 12
 	surplus = 50
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/infiltration)
 
 /datum/uplink_item/dangerous/flamethrower
 	name = "Flamethrower"
@@ -243,6 +243,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/melee/transforming/energy/sword/saber
 	cost = 8
+	exclude_modes = list(/datum/game_mode/infiltration)
 
 /datum/uplink_item/dangerous/doublesword
 	name = "Double-Bladed Energy Sword"
@@ -278,6 +279,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			in addition to dealing high amounts of damage to nearby personnel."
 	item = /obj/item/grenade/syndieminibomb
 	cost = 6
+	exclude_modes = list(/datum/game_mode/infiltration)
 
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
@@ -654,6 +656,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			them for longer. Beware, it has a chance to detonate your PDA."
 	item = /obj/item/cartridge/virus/syndicate
 	cost = 6
+	exclude_modes = list(/datum/game_mode/infiltration) //stealthhhh!
 
 /datum/uplink_item/stealthy_weapons/suppressor
 	name = "Universal Suppressor"
