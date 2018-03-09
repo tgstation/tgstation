@@ -370,15 +370,21 @@
 				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 3)
 			else
 				occupant.clear_alert("mech damage")
-		var/actual_loc = occupant.loc
-		if(istype(actual_loc, /obj/item/device/mmi))
-			var/obj/item/device/mmi/M = actual_loc
-			actual_loc = M.mecha
-		if(actual_loc != src) //something went wrong
-			occupant.clear_alert("charge")
-			occupant.clear_alert("mech damage")
-			RemoveActions(occupant, human_occupant=1)
-			occupant = null
+		var/atom/checking = occupant.loc
+		// recursive check to handle all cases regarding very nested occupants,
+		// such as brainmob inside brainitem inside MMI inside mecha
+		while (!isnull(checking))
+			if (isturf(checking))
+				// hit a turf before hitting the mecha, seems like they have
+				// been moved out
+				occupant.clear_alert("charge")
+				occupant.clear_alert("mech damage")
+				RemoveActions(occupant, human_occupant=1)
+				occupant = null
+				break
+			else if (checking == src)
+				break  // all good
+			checking = checking.loc
 
 	if(lights)
 		var/lights_energy_drain = 2
