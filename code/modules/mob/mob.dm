@@ -535,6 +535,7 @@
 			stat("Location:", COORD(T))
 			stat("CPU:", "[world.cpu]")
 			stat("Instances:", "[num2text(world.contents.len, 10)]")
+			stat("World Time:", "[world.time]")
 			GLOB.stat_entry()
 			config.stat_entry()
 			stat(null)
@@ -625,7 +626,6 @@
 	client.move_delay += movement_delay()
 	return 1
 
-
 /mob/verb/westface()
 	set hidden = 1
 	if(!canface())
@@ -634,7 +634,6 @@
 	client.move_delay += movement_delay()
 	return 1
 
-
 /mob/verb/northface()
 	set hidden = 1
 	if(!canface())
@@ -642,7 +641,6 @@
 	setDir(NORTH)
 	client.move_delay += movement_delay()
 	return 1
-
 
 /mob/verb/southface()
 	set hidden = 1
