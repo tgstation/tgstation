@@ -118,6 +118,7 @@
 	flags_1 = NONE
 	ambientsounds = HIGHSEC
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	disable_alerts = TRUE
 
 /area/infiltrator_base/jail
 	name = "Syndicate Infiltrator Base Brig"
