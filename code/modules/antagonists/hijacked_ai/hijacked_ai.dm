@@ -15,6 +15,16 @@
 	to_chat(owner, "<span class='userdanger'>System files cleaned. [rand(500, 1000)] malicious hooks removed.</span>")
 	to_chat(owner, "<span class='danger bold'>You cannot find the memory files of anything that happened while you were infected...</span>")
 
+datum/antagonist/hijacked_ai/proc/update_synd_icons_added(mob/living/M)
+	var/datum/atom_hud/antag/sithud = GLOB.huds[ANTAG_HUD_INFILTRATOR]
+	sithud.join_hud(M)
+	set_antag_hud(M, "synd")
+
+/datum/antagonist/hijacked_ai/proc/update_synd_icons_removed(mob/living/M)
+	var/datum/atom_hud/antag/sithud = GLOB.huds[ANTAG_HUD_INFILTRATOR]
+	sithud.leave_hud(M)
+	set_antag_hud(M, null)
+
 /datum/antagonist/hijacked_ai/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/silicon/ai/A = mob_override || owner.current
@@ -25,6 +35,7 @@
 		A.set_syndie_radio()
 		to_chat(A, "<span class='notice'>Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!</span>")
 		A.add_malf_picker()
+		update_synd_icons_added(A)
 
 /datum/antagonist/hijacked_ai/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -34,6 +45,7 @@
 		if(A.radio)
 			QDEL_NULL(A.radio)
 			A.radio = new /obj/item/device/radio/headset/ai(A)
+		update_synd_icons_removed(A)
 
 /datum/antagonist/hijacked_ai/on_removal()
 	if(owner.current && isAI(owner.current))
