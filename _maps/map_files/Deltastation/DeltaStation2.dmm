@@ -15007,7 +15007,9 @@
 /turf/open/space,
 /area/space/nearstation)
 "aLc" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "aLd" = (
@@ -15657,21 +15659,6 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "aMw" = (
-/obj/machinery/doorButtons/access_button{
-	idDoor = "incinerator_airlock_exterior";
-	idSelf = "incinerator_access_control";
-	layer = 3.1;
-	name = "Incinerator airlock control";
-	pixel_x = -24;
-	pixel_y = -8
-	},
-/obj/machinery/doorButtons/access_button{
-	idDoor = "incinerator_airlock_interior";
-	idSelf = "incinerator_access_control";
-	name = "Incinerator airlock control";
-	pixel_x = 24;
-	pixel_y = -8
-	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
 	},
@@ -15679,6 +15666,12 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/airlock_sensor{
+	id_tag = "incinerator_airlock_sensor";
+	master_tag = "incinerator_airlock_control";
+	pixel_y = 24
+	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "aMx" = (
@@ -16303,13 +16296,15 @@
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "aNT" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
+	dir = 2;
+	frequency = 1449;
+	id = "incinerator_airlock_pump"
+	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "aNU" = (
@@ -16977,8 +16972,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4;
 	frequency = 1441;
-	id = "mix_in";
-	pixel_y = 1
+	id = "mix_in"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine/vacuum,
@@ -16995,16 +16989,20 @@
 	dir = 8
 	},
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "aPA" = (
-/obj/machinery/doorButtons/airlock_controller{
-	idExterior = "incinerator_airlock_exterior";
-	idInterior = "incinerator_airlock_interior";
-	idSelf = "incinerator_access_control";
+/obj/machinery/embedded_controller/radio/airlock_controller{
 	name = "Incinerator Access Console";
+	airpump_tag = "incinerator_airlock_pump";
+	exterior_door_tag = "incinerator_airlock_exterior";
+	id_tag = "incinerator_access_control";
+	interior_door_tag = "incinerator_airlock_interior";
 	pixel_x = 8;
 	pixel_y = -24;
+	sanitize_external = 1;
+	sensor_tag = "incinerator_airlock_sensor";
 	req_access_txt = "12"
 	},
 /obj/machinery/button/ignition{
@@ -22380,8 +22378,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4;
 	frequency = 1441;
-	id = "co2_in";
-	pixel_y = 1
+	id = "co2_in"
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
@@ -25078,8 +25075,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4;
 	frequency = 1441;
-	id = "tox_in";
-	pixel_y = 1
+	id = "tox_in"
 	},
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
@@ -28194,8 +28190,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4;
 	frequency = 1441;
-	id = "n2o_in";
-	pixel_y = 1
+	id = "n2o_in"
 	},
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
@@ -29741,8 +29736,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4;
 	frequency = 1441;
-	id = "mix_in";
-	pixel_y = 1
+	id = "mix_in"
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
@@ -100883,6 +100877,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/science/circuit)
+"fLR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "fRT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -100956,6 +100956,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
+"hFo" = (
+/obj/structure/lattice,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/turf/open/space,
+/area/space/nearstation)
 "hGT" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
@@ -101134,6 +101142,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/circuit/green,
 /area/science/research/abandoned)
+"nSh" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "oZC" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -122264,12 +122276,12 @@ aFq
 aGO
 aIo
 aJG
-aFr
+fLR
 aMw
 aNT
 aPz
-aFr
-aSR
+nSh
+hFo
 aRF
 aWt
 aXV
