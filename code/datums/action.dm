@@ -653,6 +653,12 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "wheelys"
 
+/datum/action/item_action/kindleKicks
+	name = "Activate Kindle Kicks"
+	desc = "Kick you feet together, activating the lights in your Kindle Kicks."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "kindleKicks"
+
 //Small sprites
 /datum/action/small_sprite
 	name = "Toggle Giant Sprite"
