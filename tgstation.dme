@@ -1191,6 +1191,7 @@
 #include "code\modules\antagonists\infiltrator\outfit.dm"
 #include "code\modules\antagonists\infiltrator\team.dm"
 #include "code\modules\antagonists\infiltrator\items\ai_hijack.dm"
+#include "code\modules\antagonists\infiltrator\items\hardsuit.dm"
 #include "code\modules\antagonists\monkey\monkey.dm"
 #include "code\modules\antagonists\morph\morph.dm"
 #include "code\modules\antagonists\morph\morph_antag.dm"

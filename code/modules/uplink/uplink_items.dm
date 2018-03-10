@@ -821,6 +821,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
 
+/datum/uplink_item/suits/hardsuit/extra_stealthsuit
+	name = "Stealth Hardsuit"
+	desc = "An extra stealth hardsuit for infiltrators."
+	item = /obj/item/clothing/suit/space/hardsuit/infiltration
+	cost = 9
+	include_modes = list(/datum/game_mode/infiltration)
+
 /datum/uplink_item/suits/hardsuit/elite
 	name = "Elite Syndicate Hardsuit"
 	desc = "An upgraded, elite version of the syndicate hardsuit. It features fireproofing, and also \
@@ -1169,6 +1176,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
 	item = /obj/item/device/autosurgeon/thermal_eyes
 	cost = 8
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/infiltration)
 
 /datum/uplink_item/cyber_implants/xray
 	name = "X-Ray Vision Implant"
@@ -1382,7 +1390,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			you will receive."
 	item = /obj/item/storage/box/syndicate
 	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/infiltration)
 	cant_discount = TRUE
 
 /datum/uplink_item/badass/surplus

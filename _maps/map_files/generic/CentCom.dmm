@@ -14397,7 +14397,7 @@
 "RL" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/suit_storage_unit/syndicate,
+/obj/machinery/suit_storage_unit/infiltrator,
 /turf/open/floor/plasteel/floorgrime,
 /area/infiltrator_base)
 "RP" = (
