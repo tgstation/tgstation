@@ -43,7 +43,7 @@
 		var/datum/antagonist/infiltrator/DAI = user.mind.has_antag_datum(/datum/antagonist/infiltrator)
 		if(!DAI || !DAI.infiltrator_team)
 			return ..()
-		team = DAI. infiltrator_team
+		team = DAI.infiltrator_team
 		icon_state = "pinpointer_upgraded"
 		upgraded = TRUE
 		to_chat(user, "<span class='notice'>You attach the new antenna to [src].</span>")
