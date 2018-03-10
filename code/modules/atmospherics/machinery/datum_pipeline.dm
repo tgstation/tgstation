@@ -90,8 +90,7 @@
 		var/obj/machinery/atmospherics/pipe/P = A
 		if(P.parent)
 			merge(P.parent)
-		else
-			P.parent = src
+		P.parent = src
 		var/list/adjacent = P.pipeline_expansion()
 		for(var/obj/machinery/atmospherics/pipe/I in adjacent)
 			if(I.parent == src)
