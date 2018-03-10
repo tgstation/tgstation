@@ -218,6 +218,7 @@
 
 /obj/effect/particle_effect/smoke/chem
 	lifetime = 10
+	var/residue = TRUE // whether the smoke will affect Turf
 
 
 /obj/effect/particle_effect/smoke/chem/process()
@@ -230,8 +231,8 @@
 			if(T.intact && AM.level == 1) //hidden under the floor
 				continue
 			reagents.reaction(AM, TOUCH, fraction)
-
-		reagents.reaction(T, TOUCH, fraction)
+		if(residue)
+			reagents.reaction(T, TOUCH, fraction)
 		return 1
 
 /obj/effect/particle_effect/smoke/chem/smoke_mob(mob/living/carbon/M)

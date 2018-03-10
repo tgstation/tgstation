@@ -22989,6 +22989,7 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bha" = (
