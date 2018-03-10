@@ -1,0 +1,5 @@
+author: "The Dreamweaver (Sprites: Onule)"
+delete-after: True
+changes: 
+  - rscdel: "Nanotrasen's Lavaland research team has discovered that the alien brain has disappeared from necropolis chests."
+  - rscadd: "In it's place they have discovered a new artifact, the Rod of Asclepius, a strange rod with a magnitude of healing properties, and an even higher magnitude of responsibility..."
