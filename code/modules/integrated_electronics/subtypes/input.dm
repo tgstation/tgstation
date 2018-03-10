@@ -314,6 +314,7 @@
 		"amount of reagents"	= IC_PINTYPE_NUMBER,
 		"density"				= IC_PINTYPE_BOOLEAN,
 		"opacity"				= IC_PINTYPE_BOOLEAN,
+		"occupied turf"			= IC_PINTYPE_REF
 		)
 	activators = list(
 		"scan" = IC_PINTYPE_PULSE_IN,
@@ -324,7 +325,7 @@
 	power_draw_per_use = 80
 
 /obj/item/integrated_circuit/input/examiner/do_work()
-	var/atom/movable/H = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
+	var/atom/H = get_pin_data_as_type(IC_INPUT, 1, /atom)
 	var/turf/T = get_turf(src)
 	if(!istype(H)) //Invalid input
 		return
@@ -351,6 +352,7 @@
 		set_pin_data(IC_OUTPUT, 7, tr)
 		set_pin_data(IC_OUTPUT, 8, H.density)
 		set_pin_data(IC_OUTPUT, 9, H.opacity)
+		set_pin_data(IC_OUTPUT, 10, get_turf(H))
 		push_data()
 		activate_pin(2)
 	else
