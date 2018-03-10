@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscadd: "Oh hey guys, RND shows correct material values now, don't hurt me!"
