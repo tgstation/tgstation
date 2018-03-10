@@ -242,14 +242,17 @@
 	return TRUE
 
 /obj/effect/clockwork/sigil/transmission/update_icon()
+	var/power_charge = get_clockwork_power()
 	if(GLOB.ratvar_awakens)
 		alpha = 255
-	var/power_charge = get_clockwork_power()
-	alpha = min(initial(alpha) + power_charge * 0.02, 255)
-	if(!power_charge)
-		set_light(0)
 	else
-		set_light(max(alpha * 0.02, 1.4), max(alpha * 0.01, 0.1))
+		alpha = min(CEILING(initial(alpha) + power_charge * 0.02, 35), 255)
+	var/r = alpha * 0.02
+	var/p = max(alpha * 0.01, 0.1)
+	if(!power_charge && light_range != 0)
+		set_light(0)
+	else if(r != light_range || p != light_power)
+		set_light(r, p)
 
 //Vitality Matrix: Drains health from non-servants to heal or even revive servants.
 /obj/effect/clockwork/sigil/vitality
