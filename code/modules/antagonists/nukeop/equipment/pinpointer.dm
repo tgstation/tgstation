@@ -79,12 +79,3 @@
 	if(closest_operative)
 		target = closest_operative
 	..()
-
-
-/obj/item/pinpointer/infiltrator
-	name = "infiltration pinpointer"
-	flags_1 = NODROP_1
-
-/obj/item/pinpointer/infiltrator/scan_for_target()
-	target = SSshuttle.getShuttle("syndicatecutter")
-	..()
