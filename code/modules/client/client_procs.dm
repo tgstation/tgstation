@@ -182,26 +182,12 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			if(!autorank)
 				to_chat(world, "Autoadmin rank not found")
 			else
-<<<<<<< HEAD
-				var/datum/admins/D = new(autorank, ckey)
-				GLOB.admin_datums[ckey] = D
-	holder = GLOB.admin_datums[ckey]
-	if(holder)
-		GLOB.admins |= src
-		holder.owner = src
-		connecting_admin = TRUE
-	else if(GLOB.deadmins[ckey])
-		verbs += /client/proc/readmin
-		connecting_admin = TRUE
-	mentor_datum_set()// hippie - Hippie mentor_holder set
-=======
 				new /datum/admins(autorank, ckey)
 	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin)
 		var/localhost_addresses = list("127.0.0.1", "::1")
 		if(address && (address in localhost_addresses))
 			var/datum/admin_rank/localhost_rank = new("!localhost!", 65535, 16384, 65535) //+EVERYTHING -DBRANKS *EVERYTHING
 			new /datum/admins(localhost_rank, ckey, 1, 1)
->>>>>>> 23a45889ed... Modernizes SQL admin loading (#35264)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(!prefs)
