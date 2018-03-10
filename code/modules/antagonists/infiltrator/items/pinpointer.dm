@@ -28,6 +28,7 @@
 /obj/item/pinpointer/infiltrator/attack_self(mob/user)
 	if(!upgraded)
 		return ..()
+	active = TRUE
 	if(mode == MODE_CUTTER)
 		mode = MODE_TARGET
 		scan_for_target()
