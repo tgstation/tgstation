@@ -1,6 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Pubbystation: Added a missing APC to the cargo sorting room, a light fixture to the RnD security checkpoint and removed an overlooked firelock east of the bridge."
-  - rscadd: "Pubbystation: Added a spare RPD to the Atmospherics department. Replaced Engineering's outdated meson goggles with modern engineering scanners. Added a GPS device to the secure storage crate."
-  - tweak: "Moved Pubbystation's drone shell dispenser from the experimentation lab to Robotics maint."

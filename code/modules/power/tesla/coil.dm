@@ -87,7 +87,7 @@
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 5, power_produced)
 		if(istype(linked_techweb))
-			linked_techweb.research_points += min(power_produced, 10)
+			linked_techweb.research_points += min(power_produced, 1) // x4 coils = ~240/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 	else
 		..()
@@ -114,15 +114,13 @@
 /obj/machinery/power/tesla_coil/research/tesla_act(var/power)
 	if(anchored && !panel_open)
 		obj_flags |= BEING_SHOCKED
-		//don't lose arc power when it's not connected to anything
-		//please place tesla coils all around the station to maximize effectiveness
 		var/power_produced = powernet ? power / power_loss : power
 		add_avail(power_produced*input_power_multiplier)
 		flick("rpcoilhit", src)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 5, power_produced)
 		if(istype(linked_techweb))
-			linked_techweb.research_points += min(power_produced, 200)
+			linked_techweb.research_points += min(power_produced, 3) // x4 coils with a pulse per second or so = ~720/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 	else
 		..()
@@ -139,6 +137,10 @@
 	. = ..()
 	if(default_deconstruction_screwdriver(user, "rpcoil_open[anchored]", "rpcoil[anchored]", W))
 		return
+
+/obj/machinery/power/tesla_coil/research/on_construction()
+	if(anchored)
+		connect_to_network()
 
 /obj/machinery/power/grounding_rod
 	name = "grounding rod"

@@ -1,0 +1,4 @@
+author: "Irafas"
+delete-after: True
+changes: 
+  - rscadd: "Turrets can be set to shoot personnel without loyalty implants"

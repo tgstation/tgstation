@@ -107,3 +107,7 @@
 	var/radiation = 0 //If the mob is irradiated.
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT
 	var/losebreath = 0
+
+	//List of active diseases
+	var/list/diseases = list() // list of all diseases in a mob
+	var/list/disease_resistances = list()
