@@ -150,7 +150,14 @@ GLOBAL_VAR_INIT(powersink_transmitted, 0)
 
 /obj/item/device/powersink/infiltrator
 	desc = "A nulling power sink which drains energy from electrical systems. It appears to have some sort of bluespace antenna attached."
+	var/target
+	var/target_reached = FALSE
 
 /obj/item/device/powersink/infiltrator/on_drain(drained)
 	GLOB.powersink_transmitted += drained
+	if(GLOB.powersink_transmitted >= target && !target_reached)
+		visible_message("<span class='notice'>[src] beeps.</span>")
+		playsound('sound/machines/ping.ogg', 50, 1)
+		desc += " <b>An LED is blinking green on it.</b>"
+		target_reached = TRUE
 	return ..()

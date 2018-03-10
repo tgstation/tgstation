@@ -20,6 +20,7 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/stealt
 	explanation_text = "Ensure there is at least 1 hijacked AI."
 	item_type = /obj/item/ai_hijack_device
 
+
 /datum/objective/infiltrator/exploit/find_target()
 	var/list/possible_targets = active_ais(1)
 	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
@@ -45,10 +46,13 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/stealt
 
 /datum/objective/infiltrator/power
 	explanation_text = "Drain power from the station with a power sink."
-	item_type = /obj/item/device/powersink/infiltrator
 
-/datum/objective/infiltrator/power/find_target()
-	target_amount = rand(MIN_POWER_DRAIN, MAX_POWER_DRAIN)
+/datum/objective/infiltrator/power/New()
+	target_amount = rand(MIN_POWER_DRAIN, MAX_POWER_DRAIN) //I don't do this in find_target(), because that is done AFTER New().
+	for(var/turf/T in GLOB.infiltrator_objective_items)
+		if(!(item_type in T.contents))
+			var/obj/item/device/powersink/infiltrator/PS = new(T)
+			PS.target = target_amount
 	update_explanation_text()
 
 /datum/objective/infiltrator/power/update_explanation_text()
