@@ -856,7 +856,7 @@
 	set name = "Flip Card"
 	set category = "Object"
 	set src in range(1)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
 		return
 	if(!flipped)
 		src.flipped = 1
@@ -1074,7 +1074,7 @@
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
 	..()
-	to_chat(user, "<span class='info'>Station Time: [worldtime2text()]")
+	to_chat(user, "<span class='info'>Station Time: [station_time_timestamp()]")
 
 /*
  * Toy Dagger
@@ -1088,8 +1088,6 @@
 	item_state = "cultdagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	inhand_x_dimension = 32
-	inhand_y_dimension = 32
 	w_class = WEIGHT_CLASS_SMALL
 
 /*

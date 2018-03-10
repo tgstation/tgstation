@@ -83,6 +83,9 @@
 									to_chat(C, "<span class='warning'>The [item_to_retrieve] that was embedded in your [L] has mysteriously vanished. How fortunate!</span>")
 									if(!C.has_embedded_objects())
 										C.clear_alert("embeddedobject")
+										GET_COMPONENT_FROM(mood, /datum/component/mood, C)
+										if(mood)
+											mood.clear_event("embedded")
 									break
 
 					else
@@ -101,7 +104,7 @@
 			if(item_to_retrieve.loc)
 				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly disappears!</span>")
 			if(!L.put_in_hands(item_to_retrieve))
-				item_to_retrieve.forceMove(L.loc)
+				item_to_retrieve.forceMove(L.drop_location())
 				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears!</span>")
 				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, 1)
 			else

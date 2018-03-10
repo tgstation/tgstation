@@ -28,7 +28,7 @@
 	visor_flags_cover = MASKCOVERSMOUTH
 	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.01
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0, fire = 0, acid = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 25, "rad" = 0, "fire" = 0, "acid" = 0)
 	actions_types = list(/datum/action/item_action/adjust)
 
 /obj/item/clothing/mask/surgical/attack_self(mob/user)
@@ -44,58 +44,23 @@
 	name = "italian moustache"
 	desc = "Made from authentic Italian moustache hairs. Gives the wearer an irresistable urge to gesticulate wildly."
 
-/obj/item/clothing/mask/fakemoustache/italian/speechModification(message)
-	if(copytext(message, 1, 2) != "*")
-		message = " [message] "
-		message = replacetext(message," mom "," mamma ")
-		message = replacetext(message," dad "," pappa ")
-		message = replacetext(message," baby ",pick(" bambino "," little sausage roll "))
-		message = replacetext(message,"spicy","a-spicy")
-		message = replacetext(message,"I'm","I'm-a")
-		message = replacetext(message," friend "," enemy-a ")
-		message = replacetext(message," enemy "," friend-a ")
-		message = replacetext(message,"traitor","mafioso")
-		message = replacetext(message," operative "," greek ")
-		message = replacetext(message," op "," greek ")
-		message = replacetext(message," ops "," greeks")
-		message = replacetext(message," operative "," greek")
-		message = replacetext(message," operatives "," greeks")
-		message = replacetext(message," nuke"," spiciest-a meatball")
-		message = replacetext(message," good"," molto bene")
-		message = replacetext(message," why"," for-a what reason")
-		message = replacetext(message," my "," my-a ")
-		message = replacetext(message,"it's","it's-a")
-		message = replacetext(message," bad"," molto male")
-		message = replacetext(message," sing "," sing-a ")
-		message = replacetext(message," cook "," cook-a ")
-		message = replacetext(message," want "," want-a ")
-		message = replacetext(message," what's "," what's-a ")
-		message = replacetext(message," shitcurity"," carabinieri")
-		message = replacetext(message," shitsec"," carabinieri")
-		message = replacetext(message," and "," and-a ")
-		message = replacetext(message," am "," am-a ")
-		message = replacetext(message," assistant "," goombah ")
-		message = replacetext(message," greytide "," curvisti ")
-		message = replacetext(message," greytider "," curvisti ")
-		message = replacetext(message," captain "," capitano ")
-		message = replacetext(message," sec "," polizia ")
-		message = replacetext(message," security "," polizia ")
-		message = replacetext(message,"cheese",pick("parmesano","gorgonzola"))
-		message = replacetext(message," meat",pick(" pepperoni"," prosciutto"))
-		message = replacetext(message,"who's","who's-a")
-		message = replacetext(message,"hello",pick("ciao","buongiorno"))
-		message = replacetext(message," bye ",pick(" ciao "," arrivederci "))
-		message = replacetext(message,"thing","thing-a")
-		message = replacetext(message,"whose","whose-a")
-		message = replacetext(message,"thanks","grazie")
-		message = replacetext(message," wine"," vino")
-		message = replacetext(message,"could","could-a")
-		message = replacetext(message," use"," use-a")
-		message = replacetext(message," make"," make-a")
-		message = replacetext(message,"spaghetti", "SPAGHETT")
+/obj/item/clothing/mask/fakemoustache/italian/speechModification(M)
+	if(copytext(M, 1, 2) != "*")
+		M = " [M]"
+		var/list/italian_words = strings("word_replacement.json", "italian")
+
+		for(var/key in italian_words)
+			var/value = italian_words[key]
+			if(islist(value))
+				value = pick(value)
+
+			M = replacetextEx(M, " [uppertext(key)]", " [uppertext(value)]")
+			M = replacetextEx(M, " [capitalize(key)]", " [capitalize(value)]")
+			M = replacetextEx(M, " [key]", " [value]")
+
 		if(prob(3))
-			message += pick(" Ravioli, ravioli, give me the formuoli!"," Mamma-mia!"," Mamma-mia! That's a spicy meat-ball!", " La la la la la funiculi funicula!")
-	return trim(message)
+			M += pick(" Ravioli, ravioli, give me the formuoli!"," Mamma-mia!"," Mamma-mia! That's a spicy meat-ball!", " La la la la la funiculi funicula!")
+	return trim(M)
 
 /obj/item/clothing/mask/joy
 	name = "joy mask"

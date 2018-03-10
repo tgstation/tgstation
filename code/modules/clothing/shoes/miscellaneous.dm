@@ -13,7 +13,7 @@
 	item_state = "jackboots"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	armor = list(melee = 25, bullet = 25, laser = 25, energy = 25, bomb = 50, bio = 10, rad = 0, fire = 70, acid = 50)
+	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 10, "rad" = 0, "fire" = 70, "acid" = 50)
 	strip_delay = 70
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
@@ -24,7 +24,7 @@
 	desc = "High speed, no drag combat boots."
 	permeability_coefficient = 0.01
 	flags_1 = NOSLIP_1
-	armor = list(melee = 40, bullet = 30, laser = 25, energy = 25, bomb = 50, bio = 30, rad = 30, fire = 90, acid = 50)
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 90, "acid" = 50)
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -55,7 +55,7 @@
 	strip_delay = 50
 	equip_delay_other = 50
 	resistance_flags = NONE
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 40, acid = 75)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 75)
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
@@ -80,6 +80,20 @@
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50)
+
+/obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
+	. = ..()
+	if(user.mind && user.mind.assigned_role == "Clown")
+		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+		if(mood)
+			mood.clear_event("noshoes")
+
+/obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
+	. = ..()
+	if(user.mind && user.mind.assigned_role == "Clown")
+		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+		if(mood)
+			mood.add_event("noshoes", /datum/mood_event/noshoes)
 
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"
@@ -229,3 +243,13 @@
 	desc = "These boots were made for dancing."
 	icon_state = "bsing"
 	equip_delay_other = 50
+
+/obj/item/clothing/shoes/bronze
+	name = "bronze boots"
+	desc = "A giant, clunky pair of shoes crudely made out of bronze. Why would anyone wear these?"
+	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon_state = "clockwork_treads"
+
+/obj/item/clothing/shoes/bronze/Initialize()
+	. = ..()
+	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50)

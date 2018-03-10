@@ -98,11 +98,11 @@
 	var/list/new_overlay_types = tile_graphic()
 	var/list/atmos_overlay_types = src.atmos_overlay_types // Cache for free performance
 
-	/*#if DM_VERSION >= 513
+	#if DM_VERSION >= 513
 	#warning 512 is stable now for sure, remove the old code
-	#endif*/
+	#endif
 
-	/*#if DM_VERSION >= 512
+	#if DM_VERSION >= 512
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
 			vars["vis_contents"] -= overlay
@@ -112,7 +112,7 @@
 			vars["vis_contents"] += new_overlay_types - atmos_overlay_types //don't add overlays that already exist
 		else
 			vars["vis_contents"] += new_overlay_types
-	#else*/
+	#else
 	if (atmos_overlay_types)
 		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
 			cut_overlay(overlay)
@@ -122,7 +122,7 @@
 			add_overlay(new_overlay_types - atmos_overlay_types) //don't add overlays that already exist
 		else
 			add_overlay(new_overlay_types)
-	//#endif
+	#endif
 
 	UNSETEMPTY(new_overlay_types)
 	src.atmos_overlay_types = new_overlay_types
@@ -248,8 +248,11 @@
 		pressure_difference = difference
 
 /turf/open/proc/high_pressure_movements()
-	for(var/atom/movable/M in src)
-		M.experience_pressure_difference(pressure_difference, pressure_direction)
+	var/atom/movable/M
+	for(var/thing in src)
+		M = thing
+		if (!M.anchored && !M.pulledby && M.last_high_pressure_movement_air_cycle < SSair.times_fired)
+			M.experience_pressure_difference(pressure_difference, pressure_direction)
 
 /atom/movable/var/pressure_resistance = 10
 /atom/movable/var/last_high_pressure_movement_air_cycle = 0
@@ -258,17 +261,13 @@
 	var/const/PROBABILITY_OFFSET = 25
 	var/const/PROBABILITY_BASE_PRECENT = 75
 	set waitfor = 0
-	. = FALSE
-	if (!anchored && !pulledby)
-		. = TRUE
-		if (last_high_pressure_movement_air_cycle < SSair.times_fired)
-			var/move_prob = 100
-			if (pressure_resistance > 0)
-				move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
-			move_prob += pressure_resistance_prob_delta
-			if (move_prob > PROBABILITY_OFFSET && prob(move_prob))
-				step(src, direction)
-				last_high_pressure_movement_air_cycle = SSair.times_fired
+	var/move_prob = 100
+	if (pressure_resistance > 0)
+		move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
+	move_prob += pressure_resistance_prob_delta
+	if (move_prob > PROBABILITY_OFFSET && prob(move_prob))
+		step(src, direction)
+		last_high_pressure_movement_air_cycle = SSair.times_fired
 
 ///////////////////////////EXCITED GROUPS/////////////////////////////
 

@@ -1,5 +1,0 @@
-author: "Robustin and More Robust Than You"
-delete-after: True
-changes: 
-  - rscadd: "A heart disease event has been added. The cure is heart replacement surgery. Effects of cardiac arrest are halted by the chemical Corazone. Once cardiac arrest begins at Stage 5, the disease can be cured by a defibrillator or from a lucky electric shock."
-  - rscadd: "Using gym equipment will now grant a hidden exercise buff that prevents heart disease for 20 minutes."

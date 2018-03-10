@@ -95,7 +95,17 @@
 	pushed_mob.visible_message("<span class='danger'>[user] pushes [pushed_mob] onto [src].</span>", \
 								"<span class='userdanger'>[user] pushes [pushed_mob] onto [src].</span>")
 	add_logs(user, pushed_mob, "pushed")
-
+	if(!ishuman(pushed_mob))
+		return
+	var/mob/living/carbon/human/H = pushed_mob
+	GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+	if(mood)
+		if(iscatperson(H)) //Catpeople are a bit dumb and think its fun to be on a table
+			mood.add_event("table", /datum/mood_event/happytable)
+			H.startTailWag()
+			addtimer(CALLBACK(H, /mob/living/carbon/human.proc/endTailWag), 30)
+		else
+			mood.add_event("table", /datum/mood_event/table)
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -162,7 +172,7 @@
 	canSmoothWith = null
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	var/list/debris = list()
 
 /obj/structure/table/glass/New()
@@ -271,15 +281,22 @@
 	canSmoothWith = list(/obj/structure/table/wood/fancy, /obj/structure/table/wood/fancy/black)
 
 /obj/structure/table/wood/fancy/New()
-	icon = 'icons/obj/smooth_structures/fancy_table.dmi' //so that the tables place correctly in the map editor
-	..()
+	// New() is used so that the /black subtype can override `icon` easily and
+	// the correct value will be used by the smoothing subsystem.
+	. = ..()
+	// Needs to be set dynamically because table smooth sprites are 32x34,
+	// which the editor treats as a two-tile-tall object. The sprites are that
+	// size so that the north/south corners look nice - examine the detail on
+	// the sprites in the editor to see why.
+	icon = 'icons/obj/smooth_structures/fancy_table.dmi'
 
 /obj/structure/table/wood/fancy/black
 	icon_state = "fancy_table_black"
 	buildstack = /obj/item/stack/tile/carpet/black
 
 /obj/structure/table/wood/fancy/black/New()
-	..()
+	. = ..()
+	// Ditto above.
 	icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
 
 /*
@@ -295,7 +312,7 @@
 	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table)
 	max_integrity = 200
 	integrity_failure = 50
-	armor = list(melee = 10, bullet = 30, laser = 30, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 80, acid = 70)
+	armor = list("melee" = 10, "bullet" = 30, "laser" = 30, "energy" = 100, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 
 /obj/structure/table/reinforced/deconstruction_hints(mob/user)
 	if(deconstruction_ready)
@@ -332,7 +349,7 @@
 	buildstack = /obj/item/stack/tile/brass
 	framestackamount = 1
 	buildstackamount = 1
-	canSmoothWith = list(/obj/structure/table/reinforced/brass)
+	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
 
 /obj/structure/table/reinforced/brass/New()
 	change_construction_value(2)
@@ -342,6 +359,9 @@
 	change_construction_value(-2)
 	return ..()
 
+/obj/structure/table/reinforced/brass/tablepush(mob/living/user, mob/living/pushed_mob)
+	.= ..()
+	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
 /obj/structure/table/reinforced/brass/narsie_act()
 	take_damage(rand(15, 45), BRUTE)
@@ -353,6 +373,19 @@
 
 /obj/structure/table/reinforced/brass/ratvar_act()
 	obj_integrity = max_integrity
+
+/obj/structure/table/bronze
+	name = "brass table"
+	desc = "A solid table made out of bronze."
+	icon = 'icons/obj/smooth_structures/brass_table.dmi'
+	icon_state = "brass_table"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	buildstack = /obj/item/stack/tile/bronze
+	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
+
+/obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
+	..()
+	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
 /*
  * Surgery Tables
@@ -441,7 +474,7 @@
 
 /obj/structure/rack/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		deconstruct(TRUE)
 		return
 	if(user.a_intent == INTENT_HARM)

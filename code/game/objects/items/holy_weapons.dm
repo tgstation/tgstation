@@ -13,6 +13,10 @@
 	obj_flags = UNIQUE_RENAME
 	var/reskinned = FALSE
 
+/obj/item/nullrod/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!</span>")
 	return (BRUTELOSS|FIRELOSS)
@@ -197,6 +201,10 @@
 	sharpness = IS_SHARP
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
+/obj/item/nullrod/scythe/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 70, 110) //the harvest gives a high bonus chance
+
 /obj/item/nullrod/scythe/vibro
 	icon_state = "hfrequency0"
 	item_state = "hfrequency1"
@@ -243,7 +251,7 @@
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 
 	if(LAZYLEN(candidates))
-		var/client/C = pick(candidates)
+		var/mob/dead/observer/C = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name
 		S.name = name
@@ -289,6 +297,10 @@
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+
+/obj/item/nullrod/chainsaw/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
 
 /obj/item/nullrod/clown
 	icon = 'icons/obj/wizard.dmi'
@@ -356,6 +368,10 @@
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
 
+/obj/item/nullrod/armblade/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 80, 70)
+
 /obj/item/nullrod/armblade/tentacle
 	name = "unholy blessing"
 	icon_state = "tentacle"
@@ -414,7 +430,7 @@
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-
+	AddComponent(/datum/component/butchering, 50, 100)
 
 /obj/item/nullrod/tribal_knife/Destroy()
 	STOP_PROCESSING(SSobj, src)

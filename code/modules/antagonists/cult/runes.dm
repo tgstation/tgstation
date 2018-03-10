@@ -113,8 +113,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(user)
 		chanters += user
 		invokers += user
+	
 	if(req_cultists > 1 || allow_excess_invokers)
-		for(var/mob/living/L in range(1, src))
+		var/list/things_in_range = range(1, src)
+		var/obj/item/toy/plush/narplush/plushsie = locate() in things_in_range
+		if(istype(plushsie) && plushsie.is_invoker)
+			invokers += plushsie
+		for(var/mob/living/L in things_in_range)
 			if(iscultist(L))
 				if(L == user)
 					continue
@@ -133,18 +138,23 @@ structure_check() searches for nearby cultist structures required for the invoca
 					var/C = pick_n_take(invokers)
 					if(!C)
 						break
-					chanters += C
+					if(C != user)
+						chanters += C
 	return chanters
 
 /obj/effect/rune/proc/invoke(var/list/invokers)
 	//This proc contains the effects of the rune as well as things that happen afterwards. If you want it to spawn an object and then delete itself, have both here.
 	for(var/M in invokers)
-		var/mob/living/L = M
-		if(invocation)
-			L.say(invocation, language = /datum/language/common, ignore_spam = TRUE)
-		if(invoke_damage)
-			L.apply_damage(invoke_damage, BRUTE)
-			to_chat(L, "<span class='cult italic'>[src] saps your strength!</span>")
+		if(isliving(M))
+			var/mob/living/L = M
+			if(invocation)
+				L.say(invocation, language = /datum/language/common, ignore_spam = TRUE)
+			if(invoke_damage)
+				L.apply_damage(invoke_damage, BRUTE)
+				to_chat(L, "<span class='cult italic'>[src] saps your strength!</span>")
+		else if(istype(M, /obj/item/toy/plush/narplush))
+			var/obj/item/toy/plush/narplush/P = M
+			P.visible_message("<span class='cult italic'>[P] squeaks loudly!</span>")
 	do_invoke_glow()
 
 /obj/effect/rune/proc/do_invoke_glow()
@@ -177,18 +187,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/malformed/invoke(var/list/invokers)
 	..()
 	qdel(src)
-
-/mob/proc/null_rod_check() //The null rod, if equipped, will protect the holder from the effects of most runes
-	var/obj/item/nullrod/N = locate() in src
-	if(N && !GLOB.ratvar_awakens) //If Nar-Sie or Ratvar are alive, null rods won't protect you
-		return N
-	return 0
-
-/mob/proc/bible_check() //The bible, if held, might protect against certain things
-	var/obj/item/storage/book/bible/B = locate() in src
-	if(is_holding(B))
-		return B
-	return 0
 
 //Rite of Offering: Converts or sacrifices a target.
 /obj/effect/rune/convert
@@ -252,10 +250,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, "<span class='warning'>You need more invokers to convert [convertee]!</span>")
 		log_game("Offer rune failed - tried conversion with one invoker")
 		return 0
-	if(convertee.null_rod_check())
+	if(convertee.anti_magic_check(TRUE, TRUE))
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Something is shielding [convertee]'s mind!</span>")
-		log_game("Offer rune failed - convertee had null rod")
+		log_game("Offer rune failed - convertee had anti-magic")
 		return 0
 	var/brutedamage = convertee.getBruteLoss()
 	var/burndamage = convertee.getFireLoss()
@@ -425,22 +423,19 @@ structure_check() searches for nearby cultist structures required for the invoca
 		else
 			var/area/A = get_area(T)
 			if(A.map_name == "Space")
-				actual_selected_rune.handle_portal("space")
+				actual_selected_rune.handle_portal("space", T)
 		target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	else
 		fail_invoke()
 
-/obj/effect/rune/teleport/proc/handle_portal(portal_type)
+/obj/effect/rune/teleport/proc/handle_portal(portal_type, turf/origin)
 	var/turf/T = get_turf(src)
-	if(inner_portal)
-		qdel(inner_portal) //We need fresh effects/animations
-	if(outer_portal)
-		qdel(outer_portal)
+	close_portal() // To avoid stacking descriptions/animations
 	playsound(T, pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg'), 100, TRUE, 14)
 	inner_portal = new /obj/effect/temp_visual/cult/portal(T)
 	if(portal_type == "space")
-		light_color = RUNE_COLOR_TELEPORT
-		desc += "<br><b>A tear in reality reveals a black void interspersed with dots of light... something recently teleported here from space!</b>"
+		light_color = color
+		desc += "<br><b>A tear in reality reveals a black void interspersed with dots of light... something recently teleported here from space.<br><u>The void feels like it's trying to pull you to the [dir2text(get_dir(T, origin))]!</u></b>"
 	else
 		inner_portal.icon_state = "lava"
 		light_color = LIGHT_COLOR_FIRE
@@ -451,6 +446,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	addtimer(CALLBACK(src, .proc/close_portal), 600, TIMER_UNIQUE)
 
 /obj/effect/rune/teleport/proc/close_portal()
+	qdel(inner_portal)
+	qdel(outer_portal)
 	desc = initial(desc)
 	light_range = 0
 	update_light()
@@ -576,7 +573,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		set waitfor = FALSE
 		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [mob_to_revive.name], an inactive blood cultist?", ROLE_CULTIST, null, ROLE_CULTIST, 50, mob_to_revive)
 		if(LAZYLEN(candidates))
-			var/client/C = pick(candidates)
+			var/mob/dead/observer/C = pick(candidates)
 			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
 			message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
 			mob_to_revive.ghostize(0)
@@ -769,9 +766,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
-			var/obj/item/nullrod/N = L.null_rod_check()
-			if(N)
-				to_chat(L, "<span class='userdanger'>\The [N] suddenly burns hotly before returning to normal!</span>")
+			var/atom/I = L.anti_magic_check()
+			if(I)
+				if(isitem(I))
+					to_chat(L, "<span class='userdanger'>[I] suddenly burns hotly before returning to normal!</span>")
 				continue
 			to_chat(L, "<span class='cultlarge'>Your blood boils in your veins!</span>")
 			if(is_servant_of_ratvar(L))
@@ -798,8 +796,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/L in viewers(T))
 		if(!iscultist(L) && L.blood_volume)
-			var/obj/item/nullrod/N = L.null_rod_check()
-			if(N)
+			if(L.anti_magic_check())
 				continue
 			L.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
 			if(is_servant_of_ratvar(L))
@@ -841,9 +838,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/turf/T = get_turf(src)
 	var/choice = alert(user,"You tear open a connection to the spirit realm...",,"Summon a Cult Ghost","Ascend as a Dark Spirit","Cancel")
 	if(choice == "Summon a Cult Ghost")
+		var/area/A = get_area(T)
+		if(A.map_name == "Space" || is_mining_level(T.z))
+			to_chat(user, "<span class='cultitalic'><b>The veil is not weak enough here to manifest spirits, you must be on station!</b></span>")
+			return
 		notify_ghosts("Manifest rune invoked in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
 		var/list/ghosts_on_rune = list()
-		for(var/mob/dead/observer/O in get_turf(src))
+		for(var/mob/dead/observer/O in T)
 			if(O.client && !jobban_isbanned(O, ROLE_CULTIST))
 				ghosts_on_rune += O
 		if(!ghosts_on_rune.len)
@@ -852,7 +853,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			log_game("Manifest rune failed - no nearby ghosts")
 			return list()
 		var/mob/dead/observer/ghost_to_spawn = pick(ghosts_on_rune)
-		var/mob/living/carbon/human/cult_ghost/new_human = new(get_turf(src))
+		var/mob/living/carbon/human/cult_ghost/new_human = new(T)
 		new_human.real_name = ghost_to_spawn.real_name
 		new_human.alpha = 150 //Makes them translucent
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor

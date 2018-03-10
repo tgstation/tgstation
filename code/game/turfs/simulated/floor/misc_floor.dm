@@ -196,6 +196,9 @@
 		flick_overlay(I, viewing, 8)
 		L.adjustToxLoss(-3, TRUE, TRUE)
 
+/turf/open/floor/clockwork/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
+
 /turf/open/floor/clockwork/crowbar_act(mob/living/user, obj/item/I)
 	if(baseturfs == type)
 		return TRUE
@@ -237,3 +240,11 @@
 	icon_state = "sepia"
 	desc = "Time seems to flow very slowly around these tiles."
 	floor_tile = /obj/item/stack/tile/sepia
+
+
+/turf/open/floor/bronze
+	name = "clockwork floor"
+	desc = "Some heavy bronze tiles."
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "clockwork_floor"
+	floor_tile = /obj/item/stack/tile/bronze

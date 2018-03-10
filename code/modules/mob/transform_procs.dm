@@ -62,9 +62,9 @@
 
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/thing in O.viruses)
+		O.diseases = diseases
+		diseases = list()
+		for(var/thing in O.diseases)
 			var/datum/disease/D = thing
 			D.affected_mob = O
 
@@ -78,9 +78,6 @@
 		O.setBrainLoss(getBrainLoss(), 0)
 		O.updatehealth()
 		O.radiation = radiation
-		for(var/T in get_traumas())
-			var/datum/brain_trauma/BT = T
-			O.gain_trauma(BT.type, BT.permanent)
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
@@ -221,9 +218,9 @@
 
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/thing in O.viruses)
+		O.diseases = diseases
+		diseases = list()
+		for(var/thing in O.diseases)
 			var/datum/disease/D = thing
 			D.affected_mob = O
 		O.med_hud_set_status()
@@ -238,9 +235,6 @@
 		O.setBrainLoss(getBrainLoss(), 0)
 		O.updatehealth()
 		O.radiation = radiation
-		for(var/T in get_traumas())
-			var/datum/brain_trauma/BT = T
-			O.gain_trauma(BT.type, BT.permanent)
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
@@ -344,8 +338,8 @@
 			landmark_loc += sloc.loc
 
 	if(!landmark_loc.len)
-		message_admins("[src] cannot be made an AI as there are no valid spawn points. Yell at a mapper!")
-		return
+		message_admins("Could not find ai landmark for [src]. Yell at a mapper! We are spawning them at their current location.")
+		landmark_loc += loc
 
 	if(client)
 		stop_sound_channel(CHANNEL_LOBBYMUSIC)

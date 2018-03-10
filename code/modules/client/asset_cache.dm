@@ -97,7 +97,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	if(!verify) // Can't access the asset cache browser, rip.
 		client.cache += unreceived
 		return 1
-		
+
 	client.sending |= unreceived
 	var/job = ++client.last_asset_job
 
@@ -135,7 +135,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		else
 			concurrent_tracker++
 			send_asset(client, file, verify=FALSE)
-			
+
 		stoplag(0) //queuing calls like this too quickly can cause issues in some client versions
 
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
@@ -338,7 +338,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/simple/goonchat
 	verify = FALSE
 	assets = list(
-		"jquery.min.js"            = 'code/modules/html_interface/js/jquery.min.js',
+		"jquery.min.js"            = 'code/modules/goonchat/browserassets/js/jquery.min.js',
 		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
 		"errorHandler.js"          = 'code/modules/goonchat/browserassets/js/errorHandler.js',
 		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
@@ -350,11 +350,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
 	)
 
-//Registers HTML Interface assets.
-/datum/asset/HTML_interface/register()
-	for(var/path in typesof(/datum/html_interface))
-		var/datum/html_interface/hi = new path()
-		hi.registerResources()
+/datum/asset/simple/permissions
+	assets = list(
+		"padlock.png"	= 'html/padlock.png'
+	)
 
 //this exists purely to avoid meta by pre-loading all language icons.
 /datum/asset/language/register()

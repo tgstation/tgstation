@@ -134,13 +134,13 @@
 
 /obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/M, special = 0)
 	if(on)
-		toggle(silent=1)
+		toggle(silent = TRUE)
 	..()
 
 /obj/item/organ/cyberimp/chest/thrusters/ui_action_click()
 	toggle()
 
-/obj/item/organ/cyberimp/chest/thrusters/proc/toggle(silent=0)
+/obj/item/organ/cyberimp/chest/thrusters/proc/toggle(silent = FALSE)
 	if(!on)
 		if(crit_fail)
 			if(!silent)
@@ -196,6 +196,6 @@
 		else
 			T.assume_air(removed)
 
-	toggle(silent=1)
+	toggle(silent = TRUE)
 	return 0
 

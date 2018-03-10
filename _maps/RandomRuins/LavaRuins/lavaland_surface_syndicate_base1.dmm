@@ -10,10 +10,10 @@
 /area/lavaland/surface/outdoors)
 "ad" = (
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/virology{
 	frequency = 1449;
 	id_tag = "lavaland_syndie_virology_interior";
-	locked = 1;
 	name = "Virology Lab Interior Airlock";
 	req_access_txt = "150"
 	},
@@ -28,6 +28,9 @@
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered/syndicate_lava_base/virology)
@@ -44,12 +47,32 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
 /area/ruin/unpowered/syndicate_lava_base/main)
+"ah" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
+/obj/structure/sign/barsign{
+	pixel_y = -32;
+	req_access = null;
+	req_access_txt = "0"
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/syndicate_lava_base/bar)
+"ai" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered/syndicate_lava_base/bar)
 "ap" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -166,7 +189,8 @@
 	dir = 8;
 	name = "Chemistry APC";
 	pixel_x = -24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -263,7 +287,8 @@
 "dL" = (
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/structure/closet/crate,
 /obj/item/extinguisher{
@@ -413,7 +438,8 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white/side{
@@ -505,7 +531,8 @@
 	dir = 1;
 	name = "Cargo Bay APC";
 	pixel_y = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/structure/closet/emcloset/anchored,
 /obj/effect/decal/cleanable/dirt,
@@ -1168,7 +1195,8 @@
 	dir = 1;
 	name = "Virology APC";
 	pixel_y = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
@@ -1201,7 +1229,8 @@
 	dir = 2;
 	name = "Experimentation Lab APC";
 	pixel_y = -24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
@@ -1355,7 +1384,8 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/structure/table,
 /obj/item/clothing/suit/hazardvest,
@@ -1461,7 +1491,8 @@
 	},
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/main)
@@ -1577,6 +1608,9 @@
 	req_access_txt = "150"
 	},
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "gf" = (
@@ -1599,6 +1633,9 @@
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
@@ -1791,6 +1828,9 @@
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
@@ -2011,7 +2051,8 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/structure/sink{
 	dir = 8;
@@ -2277,13 +2318,15 @@
 	req_access_txt = "150"
 	},
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "hx" = (
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -2420,7 +2463,8 @@
 /obj/item/ammo_box/magazine/sniper_rounds,
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
@@ -2454,7 +2498,8 @@
 /obj/item/ammo_box/magazine/m10mm,
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
@@ -2503,6 +2548,9 @@
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "hY" = (
@@ -2511,6 +2559,9 @@
 	req_access_txt = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "hZ" = (
@@ -2776,7 +2827,8 @@
 "iB" = (
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
@@ -2843,9 +2895,9 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "iI" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/vault{
 	id_tag = "syndie_lavaland_vault";
-	locked = 1;
 	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/vault{
@@ -2865,7 +2917,8 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/circuit/red,
 /area/ruin/unpowered/syndicate_lava_base/main)
@@ -3002,7 +3055,8 @@
 	dir = 2;
 	name = "Dormitories APC";
 	pixel_y = -24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
@@ -3153,7 +3207,8 @@
 	dir = 8;
 	name = "Primary Hallway APC";
 	pixel_x = -24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -3187,7 +3242,8 @@
 	},
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
@@ -3222,7 +3278,8 @@
 	},
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
@@ -3417,7 +3474,8 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -3791,7 +3849,8 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/machinery/vending/coffee{
 	extended_inventory = 1
@@ -3894,7 +3953,8 @@
 	dir = 1;
 	name = "Engineering APC";
 	pixel_y = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -4459,7 +4519,8 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -4540,13 +4601,15 @@
 /obj/machinery/door/airlock/external{
 	req_access_txt = "150"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "lU" = (
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/vault{
@@ -4689,7 +4752,8 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/medbay)
@@ -4808,7 +4872,8 @@
 	dir = 2;
 	name = "Bar APC";
 	pixel_y = -24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
@@ -4981,6 +5046,9 @@
 	req_access_txt = "150"
 	},
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "mT" = (
@@ -4991,21 +5059,6 @@
 /obj/structure/window/plastitanium,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/ruin/unpowered/syndicate_lava_base/bar)
-"mV" = (
-/obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer,
-/obj/structure/sign/barsign{
-	pixel_y = -32;
-	req_access = null;
-	req_access_txt = "0"
-	},
-/turf/open/floor/wood,
-/area/ruin/unpowered/syndicate_lava_base/bar)
-"mW" = (
-/obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks,
-/turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "mX" = (
 /obj/structure/rack{
@@ -5257,7 +5310,8 @@
 	dir = 1;
 	name = "Arrival Hallway APC";
 	pixel_y = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
@@ -5395,15 +5449,16 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/glass{
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
 	id_tag = "syndie_lavaland_incinerator_interior";
-	locked = 1;
 	name = "Turbine Interior Airlock";
 	req_access_txt = "150"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "nE" = (
@@ -5430,7 +5485,8 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -5636,7 +5692,8 @@
 	},
 /obj/machinery/airalarm{
 	pixel_y = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -5706,7 +5763,8 @@
 	dir = 4;
 	name = "Medbay APC";
 	pixel_x = 24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white/side{
@@ -5790,7 +5848,8 @@
 	dir = 2;
 	name = "Telecommunications APC";
 	pixel_y = -24;
-	req_access = list(150)
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -5869,14 +5928,17 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/glass{
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
 	id_tag = "syndie_lavaland_incinerator_exterior";
-	locked = 1;
 	name = "Turbine Exterior Airlock";
 	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -6002,6 +6064,24 @@
 /obj/structure/sign/departments/chemistry,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
+"EZ" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "150"
+	},
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
+"St" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/external{
+	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered/syndicate_lava_base/arrivals)
 
 (1,1,1) = {"
 aa
@@ -6793,10 +6873,10 @@ mt
 mU
 np
 nP
-mS
+EZ
 oI
 oD
-lT
+St
 ab
 ab
 ab
@@ -6978,7 +7058,7 @@ li
 lA
 lX
 mw
-mV
+ah
 jy
 nu
 oo
@@ -7025,7 +7105,7 @@ lj
 lB
 lY
 lA
-mW
+ai
 jP
 nT
 op

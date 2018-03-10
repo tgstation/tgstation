@@ -221,13 +221,13 @@
 
 	return FALSE
 
-/turf/closed/wall/proc/try_decon(obj/item/W, mob/user, turf/T)
-	if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
-		if(!W.tool_start_check(user, amount=0))
+/turf/closed/wall/proc/try_decon(obj/item/I, mob/user, turf/T)
+	if(istype(I, /obj/item/weldingtool) || istype(I, /obj/item/gun/energy/plasmacutter))
+		if(!I.tool_start_check(user, amount=0))
 			return FALSE
 
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating...</span>")
-		if(W.use_tool(src, user, slicing_duration, volume=100))
+		if(I.use_tool(src, user, slicing_duration, volume=100))
 			if(iswallturf(src))
 				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
 				dismantle_wall()
@@ -236,15 +236,14 @@
 	return FALSE
 
 
-/turf/closed/wall/proc/try_destroy(obj/item/W, mob/user, turf/T)
-	if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
-		if(!iswallturf(src) || !user || !W || !T)
+/turf/closed/wall/proc/try_destroy(obj/item/I, mob/user, turf/T)
+	if(istype(I, /obj/item/pickaxe/drill/jackhammer))
+		if(!iswallturf(src))
 			return TRUE
-		if( user.loc == T && user.get_active_held_item() == W )
-			D.playDigSound()
+		if(user.loc == T)
+			I.play_tool_sound(src)
 			dismantle_wall()
-			visible_message("<span class='warning'>[user] smashes through the [name] with the [W.name]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
+			visible_message("<span class='warning'>[user] smashes through [src] with [I]!</span>", "<span class='italics'>You hear the grinding of metal.</span>")
 			return TRUE
 	return FALSE
 

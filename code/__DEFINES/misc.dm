@@ -20,8 +20,8 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define THIS_PROC_TYPE_STR "[THIS_PROC_TYPE]" //Because you can only obtain a string of THIS_PROC_TYPE using "[]", and it's nice to just +/+= strings
 #define THIS_PROC_TYPE_STR_WITH_ARGS "[THIS_PROC_TYPE]([args.Join(",")])"
 #define THIS_PROC_TYPE_WEIRD ...... //This one is WEIRD, in some cases (When used in certain defines? (eg: ASSERT)) THIS_PROC_TYPE will fail to work, but THIS_PROC_TYPE_WEIRD will work instead
-#define THIS_PROC_TYPE_WEIRD_STR "[THIS_PROC_TYPE_WEIRD]" //Included for completeness
-#define THIS_PROC_TYPE_WEIRD_STR_WITH_ARGS "[THIS_PROC_TYPE_WEIRD]([args.Join(",")])" //Ditto
+//define THIS_PROC_TYPE_WEIRD_STR "[THIS_PROC_TYPE_WEIRD]" //Included for completeness
+//define THIS_PROC_TYPE_WEIRD_STR_WITH_ARGS "[THIS_PROC_TYPE_WEIRD]([args.Join(",")])" //Ditto
 
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
@@ -46,7 +46,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define HALLOWEEN				"Halloween"
 #define CHRISTMAS				"Christmas"
 #define FESTIVE_SEASON			"Festive Season"
-#define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
 #define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
@@ -81,58 +80,11 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"
-#define UNDER_BODY_BEHIND_LAYER		BODY_BEHIND_LAYER+1
-#define UNDER_BODY_LAYER			BODY_LAYER+1
-#define UNDER_BODY_ADJ_LAYER		BODY_ADJ_LAYER+1
-#define UNDER_MUTATIONS_LAYER		MUTATIONS_LAYER+1
-#define UNDER_BODYPARTS_LAYER		BODYPARTS_LAYER+1
-#define UNDER_DAMAGE_LAYER			DAMAGE_LAYER+1
-#define UNDER_UNIFORM_LAYER			UNIFORM_LAYER+1
-#define UNDER_ID_LAYER				ID_LAYER+1
-#define UNDER_HANDS_PART_LAYER		HANDS_PART_LAYER+1
-#define UNDER_GLOVES_LAYER			GLOVES_LAYER+1
-#define UNDER_SHOES_LAYER			SHOES_LAYER+1
-#define UNDER_EARS_LAYER			EARS_LAYER+1
 #define UNDER_SUIT_LAYER			SUIT_LAYER+1
-#define UNDER_GLASSES_LAYER			GLASSES_LAYER+1
-#define UNDER_BELT_LAYER			BELT_LAYER+1
-#define UNDER_SUIT_STORE_LAYER		SUIT_STORE_LAYER+1
-#define UNDER_BACK_LAYER			BACK_LAYER+1
-#define UNDER_HAIR_LAYER			HAIR_LAYER+1
-#define UNDER_FACEMASK_LAYER		FACEMASK_LAYER+1
-#define UNDER_HEAD_LAYER			HEAD_LAYER+1
-#define UNDER_HANDCUFF_LAYER		HANDCUFF_LAYER+1
-#define UNDER_LEGCUFF_LAYER			LEGCUFF_LAYER+1
-#define UNDER_HANDS_LAYER			HANDS_LAYER+1
-#define UNDER_BODY_FRONT_LAYER		BODY_FRONT_LAYER+1
-#define UNDER_FIRE_LAYER			FIRE_LAYER+1
 
 //AND -1 MEANS "ABOVE", OK?, OK!?!
-#define ABOVE_BODY_BEHIND_LAYER		BODY_BEHIND_LAYER-1
-#define ABOVE_BODY_LAYER			BODY_LAYER-1
-#define ABOVE_BODY_ADJ_LAYER		BODY_ADJ_LAYER-1
-#define ABOVE_MUTATIONS_LAYER		MUTATIONS_LAYER-1
-#define ABOVE_BODYPARTS_LAYER		BODYPARTS_LAYER-1
-#define ABOVE_DAMAGE_LAYER			DAMAGE_LAYER-1
-#define ABOVE_UNIFORM_LAYER			UNIFORM_LAYER-1
-#define ABOVE_ID_LAYER				ID_LAYER-1
-#define ABOVE_HANDS_PART_LAYER		HANDS_PART_LAYER-1
-#define ABOVE_GLOVES_LAYER			GLOVES_LAYER-1
 #define ABOVE_SHOES_LAYER			SHOES_LAYER-1
-#define ABOVE_EARS_LAYER			EARS_LAYER-1
-#define ABOVE_SUIT_LAYER			SUIT_LAYER-1
-#define ABOVE_GLASSES_LAYER			GLASSES_LAYER-1
-#define ABOVE_BELT_LAYER			BELT_LAYER-1
-#define ABOVE_SUIT_STORE_LAYER		SUIT_STORE_LAYER-1
-#define ABOVE_BACK_LAYER			BACK_LAYER-1
-#define ABOVE_HAIR_LAYER			HAIR_LAYER-1
-#define ABOVE_FACEMASK_LAYER		FACEMASK_LAYER-1
-#define ABOVE_HEAD_LAYER			HEAD_LAYER-1
-#define ABOVE_HANDCUFF_LAYER		HANDCUFF_LAYER-1
-#define ABOVE_LEGCUFF_LAYER			LEGCUFF_LAYER-1
-#define ABOVE_HANDS_LAYER			HANDS_LAYER-1
 #define ABOVE_BODY_FRONT_LAYER		BODY_FRONT_LAYER-1
-#define ABOVE_FIRE_LAYER			FIRE_LAYER-1
 
 
 //Security levels
@@ -190,7 +142,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define AI_MECH_HACK		3 //Malfunctioning AI hijacking mecha
 
 //check_target_facings() return defines
-#define FACING_FAILED											0
 #define FACING_SAME_DIR											1
 #define FACING_EACHOTHER										2
 #define FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR	3 //Do I win the most informative but also most stupid define award?
@@ -208,7 +159,6 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOOD_GAIN_PER_STEP			100
 #define BLOOD_LOSS_PER_STEP			5
 #define BLOOD_LOSS_IN_SPREAD		20
-#define BLOOD_FADEOUT_TIME			2
 
 //Bloody shoe blood states
 #define BLOOD_STATE_HUMAN			"blood"
@@ -236,7 +186,6 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define TURF_WET_LUBE	2
 #define TURF_WET_ICE	3
 #define TURF_WET_PERMAFROST 4
-#define TURF_WET_SLIDE	5
 
 //Maximum amount of time, (in approx. seconds.) a tile can be wet for.
 #define MAXIMUM_WET_TIME 300
@@ -304,10 +253,8 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 /////////////////////////////////////
 // atom.appearence_flags shortcuts //
 /////////////////////////////////////
-//this was added midway thru 510, so it might not exist in some versions, but we can't check by minor verison
-#ifndef TILE_BOUND
-#error this version of 510 is too old, You must use byond 510.1332 or later. (TILE_BOUND is not defined)
-#endif
+
+/*
 
 // Disabling certain features
 #define APPEARANCE_IGNORE_TRANSFORM			RESET_TRANSFORM
@@ -325,12 +272,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_CONSIDER_ALPHA			~RESET_ALPHA
 #define APPEARANCE_LONG_GLIDE				LONG_GLIDE
 
-#ifndef PIXEL_SCALE
-#define PIXEL_SCALE 0
-#if DM_VERSION >= 512
-#error HEY, PIXEL_SCALE probably exists now, remove this gross ass shim.
-#endif
-#endif
+*/
 
 // Consider these images/atoms as part of the UI/HUD
 #define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE
@@ -373,20 +315,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
 
-// Medal names
-#define BOSS_KILL_MEDAL "Killer"
-#define ALL_KILL_MEDAL "Exterminator"	//Killing all of x type
-
-// Score names
-#define LEGION_SCORE "Legion Killed"
-#define COLOSSUS_SCORE "Colossus Killed"
-#define BUBBLEGUM_SCORE "Bubblegum Killed"
-#define DRAKE_SCORE "Drakes Killed"
-#define BIRD_SCORE "Hierophants Killed"
-#define SWARMER_BEACON_SCORE "Swarmer Beacons Killed"
-#define BOSS_SCORE "Bosses Killed"
-#define TENDRIL_CLEAR_SCORE "Tendrils Killed"
-
 //TODO Move to a pref
 #define STATION_GOAL_BUDGET  1
 
@@ -426,14 +354,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define CLOCK_PROSELYTIZATION 23
 #define SHUTTLE_HIJACK 24
 
-#define TURF_DECAL_PAINT "paint"
-#define TURF_DECAL_DAMAGE "damage"
-#define TURF_DECAL_DIRT "dirt"
-
-//Error handler defines
-#define ERROR_USEFUL_LEN 2
-
-#define NO_FIELD 0
 #define FIELD_TURF 1
 #define FIELD_EDGE 2
 

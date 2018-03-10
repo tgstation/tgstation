@@ -9,6 +9,7 @@
 	var/role = ERT_SEC
 	var/high_alert = FALSE
 	show_in_antagpanel = FALSE
+	antag_moodlet = /datum/mood_event/focused
 
 /datum/antagonist/ert/on_gain()
 	update_name()
@@ -46,6 +47,7 @@
 /datum/antagonist/ert/proc/forge_objectives()
 	if(ert_team)
 		objectives |= ert_team.objectives
+	owner.objectives |= objectives
 
 /datum/antagonist/ert/proc/equipERT()
 	var/mob/living/carbon/human/H = owner.current
@@ -70,11 +72,11 @@
 /datum/antagonist/ert/greet()
 	if(!ert_team)
 		return
-	
+
 	var/leader = role == ERT_LEADER || role == DEATHSQUAD_LEADER
-	
+
 	to_chat(owner, "<B><font size=3 color=red>You are the [name].</font></B>")
-	
+
 	var/missiondesc = "Your squad is being sent on a mission to [station_name()] by Nanotrasen's Security Division."
 	if(leader) //If Squad Leader
 		missiondesc += " Lead your squad to ensure the completion of the mission. Board the shuttle when your team is ready."
@@ -82,6 +84,6 @@
 		missiondesc += " Follow orders given to you by your squad leader."
 	if(role != DEATHSQUAD && role != DEATHSQUAD_LEADER)
 		missiondesc += "Avoid civilian casualites when possible."
-	
+
 	missiondesc += "<BR><B>Your Mission</B> : [ert_team.mission.explanation_text]"
 	to_chat(owner,missiondesc)

@@ -17,6 +17,7 @@
 	var/see_hidden = FALSE
 	var/designate_time = 0
 	var/turf/designating_target_loc
+	var/jammed = FALSE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
 	. = ..()
@@ -25,6 +26,12 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/Destroy()
 	. = ..()
 	GLOB.navigation_computers -= src
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/attack_hand(mob/user)
+	if(jammed)
+		to_chat(user, "<span class='warning'>The Syndicate is jamming the console!</span>")
+		return
+	return ..()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/GrantActions(mob/living/user)
 	if(jumpto_ports.len)
@@ -99,7 +106,7 @@
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	var/landing_clear = checkLandingSpot()
 	if(designate_time && (landing_clear != SHUTTLE_DOCKER_BLOCKED))
-		to_chat(current_user, "<span class='warning'>Targeting transit location, please wait [designate_time/10] seconds...</span>")
+		to_chat(current_user, "<span class='warning'>Targeting transit location, please wait [DisplayTimeText(designate_time)]...</span>")
 		designating_target_loc = the_eye.loc
 		var/wait_completed = do_after(current_user, designate_time, FALSE, designating_target_loc, TRUE, CALLBACK(src, /obj/machinery/computer/camera_advanced/shuttle_docker/proc/canDesignateTarget))
 		designating_target_loc = null

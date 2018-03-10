@@ -244,7 +244,8 @@
 
 /obj/item/paper/Topic(href, href_list)
 	..()
-	if(usr.stat || usr.restrained())
+	var/literate = usr.is_literate()
+	if(!usr.canUseTopic(src, BE_CLOSE, literate))
 		return
 
 	if(href_list["help"])
@@ -253,7 +254,7 @@
 	if(href_list["write"])
 		var/id = href_list["write"]
 		var/t =  stripped_multiline_input("Enter what you want to write:", "Write", no_trim=TRUE)
-		if(!t)
+		if(!t || !usr.canUseTopic(src, BE_CLOSE, literate))
 			return
 		var/obj/item/i = usr.get_active_held_item()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		var/iscrayon = 0

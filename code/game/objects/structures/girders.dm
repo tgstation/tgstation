@@ -41,10 +41,9 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
 		to_chat(user, "<span class='notice'>You smash through the girder!</span>")
 		new /obj/item/stack/sheet/metal(get_turf(src))
-		D.playDigSound()
+		W.play_tool_sound(src)
 		qdel(src)
 
 
@@ -167,7 +166,7 @@
 						qdel(src)
 					return
 
-		if(S.sheettype)
+		if(S.sheettype && S.sheettype != "runed")
 			var/M = S.sheettype
 			if(state == GIRDER_DISPLACED)
 				if(S.get_amount() < 2)
@@ -356,11 +355,10 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
 		to_chat(user, "<span class='notice'>Your jackhammer smashes through the girder!</span>")
 		var/obj/item/stack/sheet/runed_metal/R = new(drop_location(), 2)
 		transfer_fingerprints_to(R)
-		D.playDigSound()
+		W.play_tool_sound(src)
 		qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet/runed_metal))
@@ -410,3 +408,47 @@
 			qdel(src)
 			return TRUE
 	return FALSE
+
+/obj/structure/girder/bronze
+	name = "wall gear"
+	desc = "A girder made out of sturdy bronze, made to resemble a gear."
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "wall_gear"
+	can_displace = FALSE
+
+/obj/structure/girder/bronze/attackby(obj/item/W, mob/living/user, params)
+	add_fingerprint(user)
+	if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+		if(!W.tool_start_check(user, amount = 0))
+			return
+		to_chat(user, "<span class='notice'>You start slicing apart [src]...</span>")
+		if(W.use_tool(src, user, 40, volume=50))
+			to_chat(user, "<span class='notice'>You slice apart [src].</span>")
+			var/obj/item/stack/tile/bronze/B = new(drop_location(), 2)
+			transfer_fingerprints_to(B)
+			qdel(src)
+
+	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
+		to_chat(user, "<span class='notice'>Your jackhammer smashes through the girder!</span>")
+		var/obj/item/stack/tile/bronze/B = new(drop_location(), 2)
+		transfer_fingerprints_to(B)
+		W.play_tool_sound(src)
+		qdel(src)
+
+	else if(istype(W, /obj/item/stack/tile/bronze))
+		var/obj/item/stack/tile/bronze/B = W
+		if(B.get_amount() < 2)
+			to_chat(user, "<span class='warning'>You need at least two bronze sheets to build a bronze wall!</span>")
+			return 0
+		user.visible_message("<span class='notice'>[user] begins plating [src] with brozne...</span>", "<span class='notice'>You begin constructing a bronze wall...</span>")
+		if(do_after(user, 50, target = src))
+			if(B.get_amount() < 2)
+				return
+			user.visible_message("<span class='notice'>[user] plates [src] with bronze!</span>", "<span class='notice'>You construct a bronze wall.</span>")
+			B.use(2)
+			var/turf/T = get_turf(src)
+			T.PlaceOnTop(/turf/closed/wall/mineral/bronze)
+			qdel(src)
+
+	else
+		return ..()

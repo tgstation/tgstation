@@ -146,8 +146,7 @@
 		/area/centcom,
 		/area/asteroid,
 		/area/tdome,
-		/area/wizard_station,
-		/area/prison
+		/area/wizard_station
 	)
 	for (var/type in SPECIALS)
 		if ( istype(A,type) )
@@ -192,6 +191,7 @@
 				FD.CalculateAffectingAreas()
 	to_chat(usr, "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>")
 	log_game("[key_name(usr)] has renamed [prevname] to [str]")
+	A.update_area_size()
 	interact()
 	return 1
 

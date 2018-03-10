@@ -24,13 +24,14 @@
 	var/current_cycle = 0
 	var/volume = 0
 	var/color = "#000000" // rgb: 0, 0, 0
-	var/can_synth = 1
+	var/can_synth = TRUE
 	var/metabolization_rate = REAGENTS_METABOLISM //how fast the reagent is metabolized by the mob
 	var/overrides_metab = 0
 	var/overdose_threshold = 0
 	var/addiction_threshold = 0
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
+	var/self_consuming = FALSE
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -90,24 +91,39 @@
 
 /datum/reagent/proc/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You feel like you took too much of [name]!</span>")
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	if(mood)
+		mood.add_event("[id]_overdose", /datum/mood_event/drugs/overdose, name)
 	return
 
 /datum/reagent/proc/addiction_act_stage1(mob/living/M)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	if(mood)
+		mood.add_event("[id]_overdose", /datum/mood_event/drugs/withdrawal_light, name)
 	if(prob(30))
-		to_chat(M, "<span class='notice'>You feel like some [name] right about now.</span>")
+		to_chat(M, "<span class='notice'>You feel like having some [name] right about now.</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage2(mob/living/M)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	if(mood)
+		mood.add_event("[id]_overdose", /datum/mood_event/drugs/withdrawal_medium, name)
 	if(prob(30))
 		to_chat(M, "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage3(mob/living/M)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	if(mood)
+		mood.add_event("[id]_overdose", /datum/mood_event/drugs/withdrawal_severe, name)
 	if(prob(30))
 		to_chat(M, "<span class='danger'>You have an intense craving for [name].</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage4(mob/living/M)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	if(mood)
+		mood.add_event("[id]_overdose", /datum/mood_event/drugs/withdrawal_critical, name)
 	if(prob(30))
 		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
 	return
