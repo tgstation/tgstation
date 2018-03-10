@@ -121,40 +121,6 @@ GLOBAL_PROTECT(protected_ranks)
 		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>")
 		return
 	GLOB.admin_ranks.Cut()
-<<<<<<< HEAD
-
-	if(CONFIG_GET(flag/admin_legacy_system))
-		var/previous_rights = 0
-		//load text from file and process each line separately
-		for(var/line in world.file2list("[global.config.directory]/admin_ranks.txt"))
-			if(!line)
-				continue
-			if(findtextEx(line,"#",1,2))
-				continue
-
-			var/next = findtext(line, "=")
-			var/datum/admin_rank/R = new(ckeyEx(copytext(line, 1, next)))
-			if(!R)
-				continue
-			GLOB.admin_ranks += R
-
-			var/prev = findchar(line, "+-", next, 0)
-			while(prev)
-				next = findchar(line, "+-", prev + 1, 0)
-				R.process_keyword(copytext(line, prev, next), previous_rights)
-				prev = next
-
-			previous_rights = R.rights
-	else
-		if(!SSdbcore.Connect())
-			log_world("Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
-			WRITE_FILE(GLOB.world_game_log, "Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
-			CONFIG_SET(flag/admin_legacy_system, TRUE)
-			load_admin_ranks()
-			return
-
-		var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
-=======
 	GLOB.protected_ranks.Cut()
 	var/previous_rights = 0
 	//load text from file and process each line separately
@@ -175,7 +141,6 @@ GLOBAL_PROTECT(protected_ranks)
 		previous_rights = R.rights
 	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
 		var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
->>>>>>> 23a45889ed... Modernizes SQL admin loading (#35264)
 		if(!query_load_admin_ranks.Execute())
 			message_admins("Error loading admin ranks from database. Loading from backup.")
 			log_sql("Error loading admin ranks from database. Loading from backup.")
