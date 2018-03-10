@@ -56,6 +56,19 @@
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
 
+#define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
+#define TRAIT_AGEUSIA			"ageusia"
+#define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
+#define TRAIT_NIGHT_VISION		"night_vision"
+#define TRAIT_LIGHT_STEP		"light_step"
+#define TRAIT_SPIRITUAL			"spiritual"
+#define TRAIT_VORACIOUS			"voracious"
+#define TRAIT_SELF_AWARE		"self_aware"
+#define TRAIT_FREERUNNING		"freerunning"
+#define TRAIT_SKITTISH			"skittish"
+#define TRAIT_POOR_AIM			"poor_aim"
+#define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
+
 // common trait sources
 #define TRAIT_GENERIC "generic"
 #define EYE_DAMAGE "eye_damage"
@@ -64,6 +77,7 @@
 #define MAGIC_TRAIT "magic"
 #define TRAUMA_TRAIT "trauma"
 #define SPECIES_TRAIT "species"
+#define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"

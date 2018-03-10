@@ -82,7 +82,6 @@
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
 
-
 /datum/trait/jolly
 	name = "Jolly"
 	desc = "You sometimes just feel happy, for no reason at all."
