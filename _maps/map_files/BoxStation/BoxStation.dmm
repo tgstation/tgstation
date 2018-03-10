@@ -44250,12 +44250,10 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
 "cfZ" = (
@@ -44766,6 +44764,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
@@ -45288,10 +45289,7 @@
 "ciB" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/reagent_dispensers/watertank,
-/obj/item/extinguisher{
-	pixel_x = 6;
-	pixel_y = 5
-	},
+/obj/item/extinguisher,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "ciC" = (
@@ -45316,6 +45314,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "ciF" = (
@@ -45619,6 +45618,9 @@
 /area/maintenance/disposal/incinerator)
 "cjs" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "cjt" = (
@@ -45636,6 +45638,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "cjv" = (
@@ -45645,6 +45650,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "cjw" = (
@@ -45656,6 +45665,9 @@
 "cjx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
 	},
 /turf/closed/wall,
 /area/maintenance/disposal/incinerator)
@@ -45909,7 +45921,6 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "ckf" = (
-/obj/structure/disposalpipe/segment,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
@@ -45929,6 +45940,9 @@
 /area/maintenance/disposal/incinerator)
 "cki" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "ckj" = (
@@ -45946,6 +45960,7 @@
 	dir = 4;
 	name = "Incinerator to Space"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "ckl" = (
@@ -46335,6 +46350,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "clk" = (
@@ -46604,18 +46620,21 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "cmf" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
-	icon_state = "door_locked";
 	id_tag = "incinerator_airlock_interior";
-	locked = 1;
 	name = "Turbine Interior Airlock";
 	req_access_txt = "32"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
@@ -46840,19 +46859,20 @@
 	dir = 2;
 	on = 1
 	},
-/obj/machinery/doorButtons/access_button{
-	idDoor = "incinerator_airlock_exterior";
-	idSelf = "incinerator_access_control";
-	layer = 3.1;
-	name = "Incinerator airlock control";
-	pixel_x = 8;
-	pixel_y = -24
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/structure/sign/warning/fire{
 	pixel_x = -32
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/airlock_sensor{
+	id_tag = "incinerator_airlock_sensor";
+	master_tag = "incinerator_airlock_control";
+	pixel_x = 8;
+	pixel_y = 24
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
@@ -46864,14 +46884,10 @@
 /obj/structure/sign/warning/fire{
 	pixel_x = 32
 	},
-/obj/machinery/doorButtons/access_button{
-	idSelf = "incinerator_access_control";
-	idDoor = "incinerator_airlock_interior";
-	name = "Incinerator airlock control";
-	pixel_x = -8;
-	pixel_y = 24
-	},
 /obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -46879,6 +46895,11 @@
 "cna" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume{
+	dir = 8;
+	frequency = 1449;
+	id = "incinerator_airlock_pump"
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
@@ -47071,18 +47092,20 @@
 /turf/closed/wall,
 /area/construction)
 "cnC" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	autoclose = 0;
 	frequency = 1449;
 	heat_proof = 1;
-	icon_state = "door_locked";
 	id_tag = "incinerator_airlock_exterior";
-	locked = 1;
 	name = "Turbine Exterior Airlock";
 	req_access_txt = "32"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
@@ -47311,7 +47334,7 @@
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "coq" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 1
 	},
 /obj/structure/sign/warning/vacuum/external{
@@ -47823,10 +47846,10 @@
 /area/maintenance/disposal/incinerator)
 "cpO" = (
 /obj/structure/lattice,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 2;
 	name = "Incinerator Output Pump";
-	on = 1
+	target_pressure = 4500
 	},
 /turf/open/space,
 /area/maintenance/disposal/incinerator)
@@ -48652,13 +48675,16 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "csr" = (
-/obj/machinery/doorButtons/airlock_controller{
-	idExterior = "incinerator_airlock_exterior";
-	idSelf = "incinerator_access_control";
-	idInterior = "incinerator_airlock_interior";
+/obj/machinery/embedded_controller/radio/airlock_controller{
 	name = "Incinerator Access Console";
+	airpump_tag = "incinerator_airlock_pump";
+	exterior_door_tag = "incinerator_airlock_exterior";
+	id_tag = "incinerator_access_control";
+	interior_door_tag = "incinerator_airlock_interior";
 	pixel_x = 6;
 	pixel_y = -26;
+	sanitize_external = 1;
+	sensor_tag = "incinerator_airlock_sensor";
 	req_access_txt = "12"
 	},
 /obj/machinery/button/ignition{
@@ -54208,6 +54234,10 @@
 	},
 /turf/open/floor/plasteel/hydrofloor,
 /area/hallway/secondary/service)
+"epo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "evw" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
@@ -55259,6 +55289,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
+"loy" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel/floorgrime,
+/area/maintenance/disposal/incinerator)
 "lpP" = (
 /obj/machinery/door/airlock/abandoned{
 	name = "Storage Facility Access"
@@ -56336,6 +56370,12 @@
 	},
 /turf/open/floor/plasteel/hydrofloor,
 /area/hallway/secondary/service)
+"sTn" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/maintenance/disposal/incinerator)
 "sWy" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
@@ -56410,6 +56450,12 @@
 	planetary_atmos = 0
 	},
 /area/maintenance/starboard/aft)
+"tJN" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "tJS" = (
 /turf/closed/wall,
 /area/engine/gravity_generator)
@@ -56841,6 +56887,15 @@
 "wkN" = (
 /turf/closed/wall,
 /area/science/circuit)
+"wmh" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 2
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "wmE" = (
 /obj/machinery/light{
 	dir = 4
@@ -56936,6 +56991,12 @@
 /obj/item/tome,
 /turf/open/floor/wood,
 /area/library/abandoned)
+"wLS" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "wMR" = (
 /turf/open/floor/engine,
 /area/maintenance/port/aft)
@@ -57017,6 +57078,12 @@
 	dir = 4
 	},
 /area/maintenance/port/aft)
+"xws" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/turf/closed/wall/r_wall,
+/area/maintenance/disposal/incinerator)
 "xwy" = (
 /obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/darkred/side{
@@ -95060,11 +95127,11 @@ cfl
 cfZ
 cki
 cld
+sTn
 cjt
-cjr
 csq
-cmd
-cmd
+xws
+wLS
 cmd
 cmd
 cmd
@@ -95315,12 +95382,12 @@ cdF
 ceD
 cfk
 cfY
-cjr
+loy
 ckj
 cjs
 cle
 cli
-cmc
+wmh
 cmY
 cmc
 cop
@@ -96089,10 +96156,10 @@ cfj
 cfj
 cfj
 cjx
-cfj
-cfj
-cmd
-cmd
+cfl
+cfl
+epo
+tJN
 cmd
 cos
 cmd

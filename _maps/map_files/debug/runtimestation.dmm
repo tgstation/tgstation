@@ -1329,71 +1329,23 @@
 /obj/item/gun/magic/wand/resurrection,
 /turf/open/floor/plasteel,
 /area/storage/primary)
-"gk" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+"ei" = (
+/obj/machinery/light,
+/obj/machinery/computer/operating,
 /turf/open/floor/plasteel,
-/area/science)
-"ii" = (
-/obj/machinery/rnd/production/protolathe,
-/turf/open/floor/plasteel,
-/area/science)
-"iY" = (
+/area/maintenance/department/bridge)
+"fT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science)
-"kf" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/syndicate,
-/turf/open/floor/plasteel,
-/area/storage/primary)
-"kx" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"kZ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall/r_wall,
+"gd" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/science)
-"lc" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+"gY" = (
 /turf/open/floor/plasteel,
-/area/medical/chemistry)
-"lp" = (
-/obj/structure/closet/secure_closet/medical3,
-/turf/open/floor/plasteel,
-/area/medical/medbay)
-"lr" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/medical/chemistry)
-"oe" = (
-/obj/effect/landmark/observer_start,
-/turf/open/floor/plating,
-/area/storage/primary)
-"pI" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external/glass,
-/turf/open/floor/plating,
-/area/medical/medbay)
-"qg" = (
-/turf/open/floor/plasteel,
-/area/medical/chemistry)
-"qU" = (
+/area/science)
+"hD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/power/apc{
 	dir = 1;
@@ -1404,34 +1356,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
-"sB" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+"jb" = (
+/obj/machinery/door/airlock,
 /turf/open/floor/plasteel,
-/area/medical/chemistry)
-"sG" = (
-/obj/machinery/light,
-/obj/machinery/computer/operating,
+/area/science)
+"jU" = (
+/obj/structure/table,
+/obj/item/melee/transforming/energy/axe,
+/turf/open/floor/plasteel,
+/area/storage/primary)
+"kk" = (
+/obj/structure/table/optable,
 /turf/open/floor/plasteel,
 /area/maintenance/department/bridge)
-"xN" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"yI" = (
-/obj/machinery/door/airlock,
-/turf/open/floor/plating,
-/area/hallway/primary/central)
-"Aj" = (
-/obj/structure/closet/secure_closet/CMO,
-/turf/open/floor/plasteel/blue/side,
-/area/bridge)
-"Am" = (
-/obj/structure/closet/secure_closet/RD,
-/turf/open/floor/plasteel/blue/side,
-/area/bridge)
-"Bf" = (
+"kn" = (
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -1443,21 +1381,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"Eb" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/medical/chemistry)
-"Ei" = (
-/obj/machinery/door/airlock,
-/turf/open/floor/plasteel,
-/area/science)
-"EX" = (
-/obj/structure/table,
-/obj/item/ammo_box/c10mm,
-/obj/item/gun/ballistic/automatic/pistol,
-/turf/open/floor/plasteel,
-/area/bridge)
-"Gz" = (
+"kQ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
@@ -1470,61 +1394,51 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"GA" = (
+"lK" = (
+/obj/effect/landmark/observer_start,
+/turf/open/floor/plating,
+/area/storage/primary)
+"ny" = (
 /obj/structure/table,
-/obj/item/melee/transforming/energy/axe,
+/obj/item/storage/toolbox/syndicate,
 /turf/open/floor/plasteel,
 /area/storage/primary)
-"Ix" = (
+"oV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/medical/chemistry)
+"pA" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/science)
+"pI" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external/glass,
+/turf/open/floor/plating,
+/area/medical/medbay)
+"pQ" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/medical/chemistry)
+"vv" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/plating,
+/area/storage/primary)
+"vP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
-"IF" = (
-/obj/machinery/door/airlock,
-/turf/open/floor/plating,
-/area/storage/primary)
-"Ka" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plasteel,
-/area/medical/chemistry)
-"OX" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/science)
-"Qt" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external/glass,
-/turf/open/floor/plating,
-/area/medical/medbay)
-"Qv" = (
-/obj/item/disk/tech_disk/debug,
-/turf/open/floor/plasteel,
-/area/science)
-"RV" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/closed/wall/r_wall,
-/area/science)
-"WT" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external/glass,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"Xc" = (
+"wb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -1535,19 +1449,105 @@
 	dir = 1
 	},
 /area/hallway/primary/central)
-"Yw" = (
-/obj/structure/table/optable,
+"wS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel,
-/area/maintenance/department/bridge)
-"YG" = (
+/area/hallway/primary/central)
+"wT" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
-/area/science)
-"YI" = (
+/area/medical/chemistry)
+"BB" = (
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
 /obj/structure/table,
 /obj/item/disk/surgery/debug,
 /turf/open/floor/plasteel,
 /area/medical/medbay)
+"BD" = (
+/obj/structure/closet/secure_closet/CMO,
+/turf/open/floor/plasteel/blue/side,
+/area/bridge)
+"BG" = (
+/obj/structure/table,
+/obj/item/ammo_box/c10mm,
+/obj/item/gun/ballistic/automatic/pistol,
+/turf/open/floor/plasteel,
+/area/bridge)
+"Ce" = (
+/turf/open/floor/plasteel,
+/area/medical/chemistry)
+"Ct" = (
+/obj/item/disk/tech_disk/debug,
+/turf/open/floor/plasteel,
+/area/science)
+"CV" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/medical/chemistry)
+"If" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/science)
+"In" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/science)
+"Iy" = (
+/obj/structure/closet/secure_closet/RD,
+/turf/open/floor/plasteel/blue/side,
+/area/bridge)
+"JE" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/plating,
+/area/hallway/primary/central)
+"NZ" = (
+/obj/machinery/rnd/production/protolathe,
+/turf/open/floor/plasteel,
+/area/science)
+"Qt" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external/glass,
+/turf/open/floor/plating,
+/area/medical/medbay)
+"Ut" = (
+/obj/structure/closet/secure_closet/medical3,
+/turf/open/floor/plasteel,
+/area/medical/medbay)
+"Vg" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"WT" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external/glass,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"Xg" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/medical/chemistry)
 
 (1,1,1) = {"
 aa
@@ -2218,12 +2218,12 @@ ah
 ah
 ah
 bA
-OX
-OX
+gd
+gd
 bA
 bZ
 bZ
-yI
+JE
 cN
 cN
 cN
@@ -2273,9 +2273,9 @@ bj
 bs
 bB
 ca
-gk
-RV
-Bf
+If
+In
+kn
 bO
 bO
 cO
@@ -2327,9 +2327,9 @@ bk
 bt
 bC
 cb
-iY
-kZ
-Gz
+fT
+pA
+kQ
 bN
 bN
 cP
@@ -2381,8 +2381,8 @@ bl
 ah
 bD
 cc
-YG
-Ei
+gY
+jb
 cA
 bE
 bE
@@ -2433,10 +2433,10 @@ aO
 bc
 bm
 ah
-ii
+NZ
 cc
-Qv
-OX
+Ct
+gd
 cA
 bE
 bE
@@ -2491,7 +2491,7 @@ bF
 cc
 co
 bA
-kx
+wS
 bE
 bE
 cN
@@ -2703,9 +2703,9 @@ aR
 ai
 ab
 bv
-EX
+BG
 cf
-Aj
+BD
 bu
 dU
 bE
@@ -2813,7 +2813,7 @@ ac
 bv
 bK
 cf
-Am
+Iy
 bu
 cD
 bE
@@ -2923,7 +2923,7 @@ bM
 cg
 cr
 bu
-Xc
+wb
 bE
 bE
 cS
@@ -3027,10 +3027,10 @@ aS
 bd
 bo
 bw
-qU
+hD
 ci
 ct
-Eb
+wT
 cF
 bN
 bN
@@ -3081,11 +3081,11 @@ aT
 be
 be
 bx
-sB
+CV
 cj
-qg
-qg
-Ka
+Ce
+Ce
+oV
 bE
 bE
 cS
@@ -3136,10 +3136,10 @@ bf
 bp
 aj
 bP
-lc
-qg
-qg
-Ka
+pQ
+Ce
+Ce
+oV
 bE
 bE
 cS
@@ -3154,7 +3154,7 @@ dB
 dl
 dE
 dJ
-kf
+ny
 cS
 af
 bY
@@ -3190,12 +3190,12 @@ ak
 ak
 ak
 bQ
-lc
-qg
-qg
-Ix
+pQ
+Ce
+Ce
+vP
 bE
-xN
+Vg
 cS
 de
 dr
@@ -3244,10 +3244,10 @@ bg
 bq
 ak
 bR
-lc
-qg
-qg
-Ka
+pQ
+Ce
+Ce
+oV
 bE
 bE
 cV
@@ -3262,7 +3262,7 @@ dB
 dl
 dE
 dJ
-GA
+jU
 cS
 af
 bY
@@ -3298,17 +3298,17 @@ bh
 br
 ak
 bS
-lc
-qg
-qg
-Ka
+pQ
+Ce
+Ce
+oV
 bE
 bE
 cV
 dg
 dt
 dB
-oe
+lK
 dE
 dH
 dI
@@ -3352,10 +3352,10 @@ aI
 aI
 ak
 bT
-lc
-lr
-qg
-Ka
+pQ
+Xg
+Ce
+oV
 bE
 bE
 cV
@@ -3625,7 +3625,7 @@ bX
 cm
 cm
 cy
-lp
+Ut
 cm
 cM
 by
@@ -3681,7 +3681,7 @@ by
 Qt
 by
 cm
-YI
+BB
 by
 cS
 cS
@@ -3689,7 +3689,7 @@ cS
 cS
 cS
 cS
-IF
+vv
 cS
 cS
 cS
@@ -3734,8 +3734,8 @@ af
 by
 cz
 by
-Yw
-sG
+kk
+ei
 ad
 af
 af
