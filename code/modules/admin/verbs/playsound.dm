@@ -67,7 +67,6 @@
 		to_chat(src, "<span class='boldwarning'>Youtube-dl was not configured, action unavailable</span>") //Check config.txt for the INVOKE_YOUTUBEDL value
 		return
 
-	var/regex/is_http_protocol_regex = regex_is_http_protocol()
 	var/web_sound_input = input("Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound via youtube-dl") as text|null
 	if(istext(web_sound_input))
 		var/web_sound_url = ""
@@ -75,7 +74,7 @@
 		if(length(web_sound_input))
 
 			web_sound_input = trim(web_sound_input)
-			if(findtext(web_sound_input, ":") && !findtext(web_sound_input, is_http_protocol_regex))
+			if(findtext(web_sound_input, ":") && !findtext(web_sound_input, GLOB.is_http_protocol))
 				to_chat(src, "<span class='boldwarning'>Non-http(s) URIs are not allowed.</span>")
 				to_chat(src, "<span class='warning'>For youtube-dl shortcuts like ytsearch: please use the appropriate full url from the website.</span>")
 				return
@@ -124,7 +123,7 @@
 			web_sound_url = " "
 
 		if(web_sound_url)
-			if(web_sound_url != " " && !findtext(web_sound_url, is_http_protocol_regex))
+			if(web_sound_url != " " && !findtext(web_sound_url, GLOB.is_http_protocol))
 				to_chat(src, "<span class='boldwarning'>BLOCKED: Content URL not using http(s) protocol</span>")
 				to_chat(src, "<span class='warning'>The media provider returned a content URL that isn't using the HTTP or HTTPS protocol</span>")
 			for(var/m in GLOB.player_list)
