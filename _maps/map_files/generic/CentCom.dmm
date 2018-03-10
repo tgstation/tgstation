@@ -5352,19 +5352,6 @@
 	dir = 8
 	},
 /area/tdome/tdomeobserve)
-"oU" = (
-/obj/item/toy/plush/nukeplushie,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plasteel/darkred,
-/area/infiltrator_base/jail)
-"oV" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/infiltrator_base/jail)
 "oW" = (
 /obj/structure/flora/bush,
 /obj/effect/light_emitter{
@@ -6035,6 +6022,24 @@
 "qE" = (
 /turf/closed/indestructible/riveted/uranium,
 /area/wizard_station)
+"qI" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/machinery/turretid{
+	ailock = 1;
+	control_area = null;
+	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
+	icon_state = "control_stun";
+	name = "Security turret control";
+	pixel_x = 26;
+	req_access = 150
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/red/side{
+	dir = 4
+	},
+/area/infiltrator_base/jail)
 "qJ" = (
 /obj/machinery/computer/shuttle/syndicate/recall,
 /turf/open/floor/plasteel/bar{
@@ -6988,6 +6993,16 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"td" = (
+/obj/structure/bed,
+/obj/machinery/airalarm{
+	pixel_y = 24;
+	req_access = list(150);
+	req_access_txt = "0"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
+/area/infiltrator_base/jail)
 "te" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/pizzaslice/mushroom,
@@ -7343,6 +7358,11 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+"tW" = (
+/turf/open/floor/plasteel/red/side{
+	dir = 1
+	},
+/area/infiltrator_base/jail)
 "tX" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -8637,6 +8657,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/glass,
 /obj/effect/landmark/start/infiltrator_objective,
+/obj/machinery/light/small,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
@@ -9014,6 +9035,10 @@
 	dir = 5
 	},
 /area/infiltrator_base)
+"yN" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/infiltrator_base)
 "yO" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -9213,9 +9238,31 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/corgi,
 /turf/open/floor/grass,
 /area/wizard_station)
+"zu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/red/side{
+	dir = 5
+	},
+/area/infiltrator_base/jail)
 "zv" = (
-/turf/closed/indestructible/riveted,
-/area/infiltrator_base/outside)
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/machinery/flasher{
+	id = "syndicateinfiltrator_flash1";
+	pixel_y = 24
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
+/area/infiltrator_base/jail)
 "zx" = (
 /obj/structure/closet/syndicate/personal,
 /obj/effect/turf_decal/stripes/line{
@@ -13739,8 +13786,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena)
-"Ml" = (
-/turf/open/floor/plasteel/darkred,
+"Mm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/obj/machinery/light/small,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/red/side,
 /area/infiltrator_base/jail)
 "Mn" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -13783,6 +13839,15 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/infiltrator_base)
+"MC" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/red/side{
+	dir = 8
+	},
+/area/infiltrator_base/jail)
 "MD" = (
 /obj/effect/light_emitter{
 	set_cap = 1;
@@ -13801,6 +13866,14 @@
 	},
 /turf/open/floor/wood,
 /area/wizard_station)
+"MI" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel{
+	dir = 4
+	},
+/area/infiltrator_base/jail)
 "MN" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/floorgrime,
@@ -13813,31 +13886,11 @@
 /turf/open/floor/plating,
 /area/infiltrator_base)
 "Ne" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
-/obj/item/clothing/mask/gas/syndicate{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/gas/syndicate{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/gas/syndicate{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/clothing/mask/gas/syndicate{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/plasteel,
 /area/infiltrator_base)
 "Nj" = (
 /obj/structure/flora/tree/pine,
@@ -13874,6 +13927,11 @@
 	},
 /turf/open/floor/carpet/black,
 /area/infiltrator_base)
+"Ny" = (
+/turf/open/floor/plasteel/red/side{
+	dir = 4
+	},
+/area/infiltrator_base/jail)
 "Nz" = (
 /obj/structure/rack{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -13947,6 +14005,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"NW" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Cell 2";
+	req_access_txt = "150"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
+/area/infiltrator_base/jail)
+"NY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/infiltrator_base/jail)
 "NZ" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -13974,6 +14049,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"On" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	pixel_y = 24;
+	req_access = list(150);
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/infiltrator_base/jail)
 "Oo" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -14024,6 +14110,9 @@
 /area/infiltrator_base)
 "OJ" = (
 /obj/effect/turf_decal/stripes/corner,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/infiltrator_base)
 "OM" = (
@@ -14037,6 +14126,10 @@
 /obj/structure/flora/grass/both,
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/infiltrator_base/outside)
+"OY" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/infiltrator_base/jail)
 "OZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -14139,14 +14232,20 @@
 	dir = 8
 	},
 /area/infiltrator_base)
+"Pz" = (
+/obj/structure/bed,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
+/area/infiltrator_base/jail)
 "PD" = (
 /turf/open/floor/plasteel,
 /area/infiltrator_base)
 "PG" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/plastitanium,
 /area/infiltrator_base)
 "PJ" = (
@@ -14172,6 +14271,20 @@
 	dir = 2
 	},
 /area/infiltrator_base)
+"PS" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 8;
+	scan_range = 3
+	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'CAUTION: AUTOMATED TURRET'.";
+	name = "CAUTION: AUTOMATED TURRET";
+	pixel_x = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/infiltrator_base/jail)
 "PX" = (
 /turf/open/floor/plasteel/dark,
 /area/infiltrator_base)
@@ -14206,37 +14319,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/infiltrator_base)
-"Qi" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/snacks/customizable/sandwich,
-/obj/item/toy/cards/deck/syndicate{
-	icon_state = "deck_syndicate_full";
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/turf/open/floor/plasteel/darkred,
-/area/infiltrator_base/jail)
 "Qu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
-/area/infiltrator_base)
-"Qw" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/infiltrator_base/jail)
-"Qx" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Brig";
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/dark,
 /area/infiltrator_base)
 "Qz" = (
 /obj/structure/curtain,
@@ -14251,13 +14338,31 @@
 	},
 /area/infiltrator_base)
 "QD" = (
-/obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/defibrillator_mount/loaded{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/floorgrime,
+/obj/structure/rack{
+	dir = 8;
+	layer = 2.9
+	},
+/obj/item/clothing/mask/gas/syndicate{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/gas/syndicate{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/gas/syndicate{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/infiltrator_base)
 "QE" = (
 /obj/effect/decal/cleanable/dirt,
@@ -14348,10 +14453,6 @@
 /obj/item/device/flashlight,
 /turf/open/floor/mineral/plastitanium,
 /area/infiltrator_base)
-"QY" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plasteel/darkred,
-/area/infiltrator_base/jail)
 "Rh" = (
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 4
@@ -14408,6 +14509,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/infiltrator_base)
+"RQ" = (
+/turf/open/floor/plasteel/floorgrime,
+/area/infiltrator_base/jail)
 "Sa" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -14418,24 +14522,15 @@
 /area/infiltrator_base)
 "Sw" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/infiltrator_base)
-"SH" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/infiltrator_base/jail)
 "SW" = (
 /obj/structure/flora/grass/brown,
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/infiltrator_base/outside)
-"SZ" = (
-/obj/structure/toilet{
-	dir = 4
-	},
-/turf/open/floor/plasteel/darkred,
-/area/infiltrator_base/jail)
 "Tc" = (
 /obj/machinery/washing_machine,
 /obj/effect/decal/cleanable/dirt,
@@ -14459,6 +14554,11 @@
 /obj/structure/closet/syndicate/personal,
 /turf/open/floor/pod/light,
 /area/infiltrator_base)
+"TA" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Primary Hallway"
+	},
+/area/infiltrator_base/jail)
 "TC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -14481,11 +14581,28 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
 /area/infiltrator_base)
+"TI" = (
+/obj/machinery/door/airlock/external/glass{
+	name = "E.V.A. Equipment";
+	req_access_txt = "150"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/infiltrator_base/jail)
+"TJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/red/side{
+	dir = 6
+	},
+/area/infiltrator_base/jail)
 "Ub" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/pod/dark,
@@ -14557,10 +14674,6 @@
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/infiltrator_base/outside)
-"UJ" = (
-/obj/structure/chair/stool,
-/turf/open/floor/plasteel/floorgrime,
-/area/infiltrator_base)
 "UL" = (
 /obj/effect/turf_decal/stripes/white/corner,
 /turf/open/floor/pod/dark,
@@ -14592,15 +14705,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
-"Vj" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Cell";
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/darkred,
+"Vi" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
 /area/infiltrator_base/jail)
 "Vk" = (
 /obj/effect/turf_decal/stripes/line,
@@ -14635,6 +14742,21 @@
 	dir = 1
 	},
 /area/infiltrator_base)
+"Vv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/machinery/flasher{
+	id = "syndicateinfiltrator_flash2";
+	pixel_y = -24
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/floorgrime,
+/area/infiltrator_base/jail)
 "VB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
@@ -14661,6 +14783,20 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
 /area/infiltrator_base)
+"VK" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	pixel_y = 23;
+	req_access = 150
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/infiltrator_base/jail)
 "VY" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave{
@@ -14688,18 +14824,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
-"Wh" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/infiltrator_base/jail)
-"Wn" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/darkred,
-/area/infiltrator_base/jail)
 "Wo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/pod/dark,
@@ -14751,6 +14875,25 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
+"Xg" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/machinery/button/flasher{
+	id = "syndicateinfiltrator_flash1";
+	pixel_x = -24;
+	pixel_y = -6
+	},
+/obj/machinery/button/flasher{
+	id = "syndicateinfiltrator_flash2";
+	pixel_x = -24;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/red/side{
+	dir = 8
+	},
+/area/infiltrator_base/jail)
 "Xk" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small{
@@ -14806,12 +14949,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/centcom/control)
-"Xv" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/plasteel/darkred,
-/area/infiltrator_base/jail)
 "Xy" = (
 /obj/machinery/door/airlock/external{
 	name = "Ferry Airlock";
@@ -14828,6 +14965,14 @@
 "XC" = (
 /turf/open/floor/plasteel/dark,
 /area/infiltrator_base/jail)
+"XG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 9
+	},
+/area/infiltrator_base/jail)
 "XI" = (
 /obj/effect/light_emitter{
 	set_cap = 1;
@@ -14835,6 +14980,27 @@
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/infiltrator_base/outside)
+"XL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/structure/table,
+/obj/item/restraints/handcuffs{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/restraints/handcuffs{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/device/assembly/flash/handheld,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/red/side{
+	dir = 10
+	},
+/area/infiltrator_base/jail)
 "XN" = (
 /obj/structure/flora/grass/green,
 /turf/open/floor/plating/asteroid/snow/airless,
@@ -14843,6 +15009,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/floorgrime,
 /area/infiltrator_base)
+"XR" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/machinery/computer/camera_advanced/syndie{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/infiltrator_base/jail)
 "XY" = (
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/space)
@@ -14966,8 +15141,8 @@
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/infiltrator_base/outside)
 "Zd" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
 /area/infiltrator_base)
@@ -15038,17 +15213,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/infiltrator_base)
-"ZB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/airalarm{
-	pixel_y = 24;
-	req_access = list(150);
-	req_access_txt = "0"
-	},
-/turf/open/floor/plasteel/dark,
-/area/infiltrator_base/jail)
 "ZJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -15072,6 +15236,16 @@
 	dir = 2
 	},
 /area/infiltrator_base)
+"ZP" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Cell 1";
+	req_access_txt = "150"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/infiltrator_base/jail)
 "ZQ" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -38526,13 +38700,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-CU
-CU
-CU
+Uv
+Mw
+Mw
+Mw
+Mw
+Mw
+Mw
 CU
 CU
 CU
@@ -38777,21 +38951,21 @@ aa
 aa
 aa
 aa
-Uv
+aa
+aa
+aa
+aa
+aa
+aa
 Mw
+Vi
+Vv
 Mw
-Mw
-Mw
-aa
-aa
-aa
-aa
-aa
 zv
-Wq
-Nj
+Vi
+Mw
+XI
 RI
-Wq
 Nj
 Wq
 Wq
@@ -39034,20 +39208,20 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
 Mw
-Xv
-oU
-SZ
+td
+NY
 Mw
-aa
-aa
-aa
-aa
-aa
-zv
-Nj
-Wq
-Wq
+On
+Pz
+Mw
+XI
 Wq
 Wq
 Wq
@@ -39291,21 +39465,21 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
 Mw
-Wn
-Ml
-Qi
+OY
+NW
 Mw
-aa
-aa
-aa
-aa
-aa
-zv
-Wq
-Wq
+ZP
+OY
+Mw
+XI
 Nj
-Wq
 Wq
 Wq
 XI
@@ -39548,20 +39722,20 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+TA
+XC
+XG
+Xg
+MC
+XL
 Mw
-Vj
-QY
-QY
-Mw
-aa
-aa
-aa
-aa
-aa
-zv
-Wq
-Wq
-Wq
+XI
 Wq
 Wq
 XI
@@ -39805,20 +39979,20 @@ aa
 aa
 aa
 aa
-Mw
-Qw
-Wh
-XC
+aa
+aa
+aa
+aa
 Pu
 Oc
-Oc
-aa
-aa
-aa
-zv
-Nj
-Wq
-Wq
+Mw
+VK
+tW
+MI
+RQ
+Mm
+Mw
+XI
 Wq
 XI
 XI
@@ -40062,20 +40236,20 @@ aa
 aa
 aa
 aa
-Mw
-ZB
-XC
-XC
+aa
+aa
+aa
+aa
 Oc
 VD
-Oc
-aa
-aa
-aa
-zv
-Wq
-Wq
-Wq
+Mw
+XR
+zu
+qI
+Ny
+TJ
+Mw
+XI
 Wq
 XI
 Wq
@@ -40310,28 +40484,28 @@ aa
 aa
 aa
 aa
-CU
-zv
-zv
-zv
-zv
-zv
-zv
-zv
-zv
-Mw
-SH
-oV
 Oc
 Oc
-TE
 Oc
 Oc
+Oc
+Oc
+Oc
+Oc
+Oc
+aa
+aa
 aa
 Oc
 Oc
-Oc
-Oc
+TE
+Mw
+Mw
+PS
+Mw
+Mw
+TI
+Mw
 XI
 XI
 XI
@@ -40577,15 +40751,15 @@ XI
 Wq
 Oc
 Oc
-Qx
+Oc
 Oc
 Oc
 AI
 PN
 Pg
-Oc
-Oc
-Oc
+Mw
+Mw
+Mw
 PG
 Ne
 Yn
@@ -40844,7 +41018,7 @@ xE
 Oc
 QV
 RP
-UJ
+Ps
 QO
 Yn
 XI
@@ -41098,7 +41272,7 @@ Pt
 Uk
 Tf
 Zf
-Yn
+yN
 Zu
 PD
 OJ
@@ -41355,7 +41529,7 @@ ua
 AG
 OM
 Za
-Yn
+yN
 NP
 BX
 TG
@@ -41612,7 +41786,7 @@ Po
 Uk
 Tf
 Pm
-Yn
+yN
 Vk
 PD
 Oo
