@@ -165,7 +165,7 @@
 /obj/vehicle/ridden/scooter/wheelys/post_unbuckle_mob(mob/living/M)
 	if(!has_buckled_mobs())
 		to_chat(M, "<span class='notice'>You pop the Wheely-Heel's wheels back into place.</span>")
-		loc = null
+		moveToNullspace()
 	return ..()
 
 /obj/vehicle/ridden/scooter/wheelys/post_buckle_mob(mob/living/M)

@@ -279,7 +279,7 @@
 		W.unbuckle_mob(user)
 		wheelToggle = FALSE
 		return
-	W.loc = get_turf(user)
+	W.forceMove(get_turf(user))
 	W.buckle_mob(user)
 	wheelToggle = TRUE
 
@@ -288,6 +288,9 @@
 		W.unbuckle_mob(user)
 		wheelToggle = FALSE
 	..()
+
+/obj/item/clothing/shoes/wheelys/Destroy()
+	QDEL_NULL(W)
 
 /obj/item/clothing/shoes/kindleKicks
 	name = "Kindle Kicks"
