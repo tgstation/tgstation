@@ -13809,6 +13809,7 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = -32
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/infiltrator_base)
 "Ne" = (
