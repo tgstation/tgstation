@@ -49925,6 +49925,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/item/storage/secure/safe{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain/private)
 "ccT" = (
@@ -51613,6 +51616,9 @@
 /obj/item/storage/lockbox/loyalty,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
+	},
+/obj/item/storage/secure/safe{
+	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
