@@ -11,7 +11,6 @@ the new instance inside the host to be updated to the template's stats.
 	desc = ""
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
-	mouse_opacity = MOUSE_OPACITY_ICON
 	move_on_shuttle = FALSE
 	see_in_dark = 8
 	invisibility = INVISIBILITY_OBSERVER
