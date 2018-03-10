@@ -1,4 +1,0 @@
-author: "Singularbyte"
-delete-after: True
-changes: 
-  - bugfix: "Dead bodies no longer freak out about phobias"
