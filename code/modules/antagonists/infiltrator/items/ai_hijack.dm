@@ -9,6 +9,7 @@
 		var/mob/living/silicon/ai/A = O
 		user.visible_message("<span class='warning'>[user] begins attaching something to [A]...</span>")
 		if(do_after(user,55,target = A))
+			user.dropItemToGround(src)
 			forceMove(A)
 			A.hijacking = src
 			A.hijack_start = world.time
