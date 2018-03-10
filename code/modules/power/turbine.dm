@@ -180,6 +180,7 @@
 	locate_machinery()
 	if(!compressor)
 		stat |= BROKEN
+	connect_to_network()
 
 /obj/machinery/power/turbine/RefreshParts()
 	var/P = 0
@@ -370,3 +371,10 @@
 		if("reconnect")
 			locate_machinery()
 			. = TRUE
+<<<<<<< HEAD
+=======
+
+#undef COMPFRICTION
+#undef TURBGENQ
+#undef TURBGENG
+>>>>>>> 4b08977536... Constructed turbines now properly connect_to_network() (#36222)
