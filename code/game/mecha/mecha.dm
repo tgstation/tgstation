@@ -442,6 +442,7 @@
 			return
 
 	var/mob/living/L = user
+	var/obj/structure/closet/C = target
 	if(!Adjacent(target))
 		if(selected && selected.is_ranged())
 			if(L.has_trait(TRAIT_PACIFISM) && !selected.pacifist_safe)
@@ -452,6 +453,9 @@
 	else if(selected && selected.is_melee())
 		if(isliving(target) && !selected.pacifist_safe && L.has_trait(TRAIT_PACIFISM))
 			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+			return
+		if(istype(C) && !C.opened && !selected.pacifist_safe && L.has_trait(TRAIT_PACIFISM))
+			to_chat(user, "<span class='warning'> It's closed. Better make sure no one is in it first.</span>")
 			return
 		if(selected.action(target,params))
 			selected.start_cooldown()
