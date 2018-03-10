@@ -86,6 +86,25 @@
 #define SCREWYHUD_DEAD 2
 #define SCREWYHUD_HEALTHY 3
 
+//Moods levels for humans
+#define MOOD_LEVEL_HAPPY4 15
+#define MOOD_LEVEL_HAPPY3 10
+#define MOOD_LEVEL_HAPPY2 6
+#define MOOD_LEVEL_HAPPY1 2
+#define MOOD_LEVEL_NEUTRAL 0
+#define MOOD_LEVEL_SAD1 -3
+#define MOOD_LEVEL_SAD2 -12
+#define MOOD_LEVEL_SAD3 -18
+#define MOOD_LEVEL_SAD4 -26
+
+//Beauty levels of areas for carbons
+#define BEAUTY_LEVEL_HORRID -50
+#define BEAUTY_LEVEL_BAD -25
+#define BEAUTY_LEVEL_GOOD 25
+#define BEAUTY_LEVEL_GREAT 50
+
+
+
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550

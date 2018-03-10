@@ -4078,10 +4078,8 @@
 	pixel_x = 11
 	},
 /obj/structure/mirror{
-	desc = "Oh no, seven years of bad luck!";
 	icon_state = "mirror_broke";
-	pixel_x = 28;
-	broken = 1
+	pixel_x = 28
 	},
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
@@ -6091,7 +6089,7 @@
 "mJ" = (
 /obj/structure/sign/warning/vacuum{
 	desc = "A beacon used by a teleporter.";
-	icon = 'icons/obj/radio.dmi';
+	icon = 'icons/obj/device.dmi';
 	icon_state = "beacon";
 	name = "tracking beacon"
 	},

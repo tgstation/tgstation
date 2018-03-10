@@ -3,6 +3,7 @@
 	roundend_category = "traitors"
 	antagpanel_category = "Traitor"
 	job_rank = ROLE_TRAITOR
+	antag_moodlet = /datum/mood_event/focused
 	var/should_specialise = TRUE //do we split into AI and human, set to true on inital assignment only
 	var/ai_datum = /datum/antagonist/traitor/AI
 	var/human_datum = /datum/antagonist/traitor/human
