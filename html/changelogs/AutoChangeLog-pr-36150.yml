@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "You can now place people on tables on Help Intent. Doing so takes a few seconds and makes the target Rest, instead of stunning them."
