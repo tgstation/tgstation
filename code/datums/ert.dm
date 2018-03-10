@@ -46,3 +46,10 @@
 
 /datum/ert/centcom_official/New()
 	mission = "Conduct a routine preformance review of [station_name()] and its Captain."
+
+/datum/ert/inquisition
+	roles = list(/datum/antagonist/ert/chaplain/inquisitor, /datum/antagonist/ert/security/inquisitor, /datum/antagonist/ert/medic/inquisitor)
+	leader_role = /datum/antagonist/ert/commander/inquisitor
+	rename_team = "Inquisition"
+	mission = "Destroy any traces of paranormal activity aboard the station."
+	polldesc = "a Nanotrasen paranormal response team"
