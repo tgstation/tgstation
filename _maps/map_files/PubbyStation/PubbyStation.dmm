@@ -11050,12 +11050,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/door/window/westleft{
-	base_state = "right";
-	dir = 2;
-	icon_state = "right";
-	name = "Crate Disposal Chute";
-	req_access_txt = "0"
+/obj/machinery/door/window/southright{
+	name = "Crate Disposal Chute"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/disposalpipe/trunk,
