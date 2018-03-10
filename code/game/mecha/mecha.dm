@@ -455,7 +455,7 @@
 			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 			return
 		if(istype(C) && L.has_trait(TRAIT_PACIFISM) && !selected.pacifist_safe)
-			for(var/mob/living/M in C.contents)
+			for(var/mob/living/M in C)
 				to_chat(user, "<span class='warning'>There's someone in there! I don't want to hurt them.</span>")
 				return
 		if(selected.action(target,params))
