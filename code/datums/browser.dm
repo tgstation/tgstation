@@ -327,7 +327,10 @@
 	for (var/name in settings["mainsettings"])
 		var/setting = settings["mainsettings"][name]
 		if (setting["type"] == "datum")
-			dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
+			if (setting["subtypesonly"])
+				dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;subtypesonly=1;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
+			else
+				dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
 		else
 			dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;type=[setting["type"]]'>[setting["value"]]</a><BR>"
 
@@ -354,7 +357,10 @@
 		var/setting = href_list["setting"]
 		switch (href_list["type"])
 			if ("datum")
-				settings["mainsettings"][setting]["value"] = pick_closest_path(null, make_types_fancy(typesof(text2path(href_list["path"]))))
+				if (href_list["subtypesonly"])
+					settings["mainsettings"][setting]["value"] = pick_closest_path(null, make_types_fancy(subtypesof(text2path(href_list["path"]))))
+				else
+					settings["mainsettings"][setting]["value"] = pick_closest_path(null, make_types_fancy(typesof(text2path(href_list["path"]))))
 			if ("string")
 				settings["mainsettings"][setting]["value"] = stripped_input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]")
 			if ("number")
@@ -363,6 +369,10 @@
 				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("Yes","No")
 			if ("ckey")
 				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("none") + GLOB.directory
+		if (settings["mainsettings"][setting]["callback"])
+			var/datum/callback/callback = settings["mainsettings"][setting]["callback"]
+			settings = callback.Invoke(settings)
+			message_admins(json_encode(settings))
 	if (href_list["button"])
 		var/button = text2num(href_list["button"])
 		if (button <= 3 && button >= 1)
