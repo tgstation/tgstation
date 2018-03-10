@@ -253,3 +253,34 @@
 /obj/item/clothing/shoes/bronze/Initialize()
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50)
+
+/obj/item/clothing/shoes/wheelys
+	name = "Wheely-Heels"
+	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
+	icon_state = "wheelys"
+	item_state = "wheelys"
+	actions_types = list(/datum/action/item_action/wheelys)
+	var/wheelToggle = FALSE //False means wheels are not popped out
+	var/obj/vehicle/ridden/scooter/wheelys/W
+
+/obj/item/clothing/shoes/wheelys/Initialize()
+	. = ..()
+	W = new /obj/vehicle/ridden/scooter/wheelys(null)
+
+/obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
+	if(!isliving(user))
+		return
+	if(!(W.is_occupant(user)))
+		wheelToggle = FALSE
+	if(wheelToggle)
+		W.unbuckle_mob(user)
+		wheelToggle = FALSE
+		return
+	W.loc = get_turf(user)
+	W.buckle_mob(user)
+	wheelToggle = TRUE
+
+/obj/item/clothing/shoes/wheelys/dropped(mob/user)
+	if(wheelToggle)
+		W.unbuckle_mob(user)
+		wheelToggle = FALSE
