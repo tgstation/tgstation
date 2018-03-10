@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - rscadd: "Engi-Vend machines now have welding goggles available."
+  - tweak: "Grouped Nano-Med/Engi-Vend items by category."

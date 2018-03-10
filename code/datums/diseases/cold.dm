@@ -7,7 +7,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	permeability_mod = 0.5
 	desc = "If left untreated the subject will contract the flu."
-	severity = VIRUS_SEVERITY_NONTHREAT
+	severity = DISEASE_SEVERITY_NONTHREAT
 
 /datum/disease/cold/stage_act()
 	..()
@@ -47,7 +47,7 @@
 			if(prob(1))
 				to_chat(affected_mob, "<span class='danger'>Mucous runs down the back of your throat.</span>")
 			if(prob(1) && prob(50))
-				if(!affected_mob.resistances.Find(/datum/disease/flu))
-					var/datum/disease/Flu = new /datum/disease/flu(0)
-					affected_mob.ForceContractDisease(Flu)
+				if(!affected_mob.disease_resistances.Find(/datum/disease/flu))
+					var/datum/disease/Flu = new /datum/disease/flu()
+					affected_mob.ForceContractDisease(Flu, FALSE, TRUE)
 					cure()

@@ -38,11 +38,11 @@ Difficulty: Medium
 	spacewalk = TRUE
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
+	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
 	friendly = "stares down"
-	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -61,8 +61,10 @@ Difficulty: Medium
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
+	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/drake()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
+	smallsprite.Grant(src)
 	. = ..()
 	internal = new/obj/item/device/gps/internal/dragon(src)
 
@@ -380,6 +382,7 @@ Difficulty: Medium
 	obj_damage = 80
 	melee_damage_upper = 30
 	melee_damage_lower = 30
+	mouse_opacity = MOUSE_OPACITY_ICON
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	loot = list()
 	crusher_loot = list()
