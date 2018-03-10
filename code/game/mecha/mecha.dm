@@ -454,7 +454,7 @@
 		if(isliving(target) && !selected.pacifist_safe && L.has_trait(TRAIT_PACIFISM))
 			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 			return
-		if(istype(C) && L.has_trait(TRAIT_PACIFISM) && !selected.pacifist_safe)
+		if(istype(C) && L.has_trait(TRAIT_PACIFISM) && !selected.pacifist_safe && !istype(selected,/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/))
 			for(var/mob/living/M in C)
 				to_chat(user, "<span class='warning'>There's someone in there! I don't want to hurt them.</span>")
 				return
