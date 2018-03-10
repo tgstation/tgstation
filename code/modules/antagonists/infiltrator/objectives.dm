@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/stealt
 /datum/objective/infiltrator/exploit/check_completion()
 	if(!target)
 		return LAZYLEN(get_antag_minds(/datum/antagonist/hijacked_ai))
-	else if(isAI(target))
+	if(isAI(target))
 		var/mob/living/silicon/ai/A = target
 		return A && A.mind && A.mind.has_antag_datum(/datum/antagonist/hijacked_ai)
 	return FALSE
