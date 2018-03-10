@@ -78,8 +78,8 @@
 /obj/item/vending_refill/medical
 	machine_name = "NanoMed"
 	icon_state = "refill_medical"
-	charges = list(29, 5, 3)// of 86 standard, 13 contraband, 8 premium
-	init_charges = list(29, 5, 3)
+	charges = list(26, 5, 3)// of 76 standard, 13 contraband, 8 premium
+	init_charges = list(26, 5, 3)
 
 /obj/item/vending_refill/donksoft
 	machine_name = "Donksoft Toy Vendor"

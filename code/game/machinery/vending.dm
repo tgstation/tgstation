@@ -851,7 +851,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	req_access_txt = "5"
 	products = list(/obj/item/reagent_containers/syringe = 12, 
 					/obj/item/reagent_containers/dropper = 3, 
-					/obj/item/storage/pill_bottle = 10,
 					/obj/item/device/healthanalyzer = 4, 
 					/obj/item/device/sensor_device = 2, 
 					/obj/item/pinpointer/crew = 2,
