@@ -1,0 +1,5 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "Circuit slow-cloning no longer breaks with some circuits."
+  - code_imp: "Circuit slow-cloning is now cleaner."
