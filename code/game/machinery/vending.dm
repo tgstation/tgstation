@@ -1071,7 +1071,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/glasses/welding = 3,
 					/obj/item/device/multitool = 4, 
 					/obj/item/construction/rcd/loaded = 3, 
-					/obj/item/pipe_dispenser = 3,
 					/obj/item/grenade/chem_grenade/smart_metal_foam = 10,
 					/obj/item/device/geiger_counter = 5, 
 					/obj/item/stock_parts/cell/high = 10,
