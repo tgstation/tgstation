@@ -14,7 +14,7 @@ Reproductive extracts:
 	if(istype(O,/obj/item/reagent_containers/food/snacks/monkeycube))
 		qdel(O)
 		cubes_eaten++
-		to_chat(user, "<span class='notice'>You feed the [O] to the [src], and it pulses gently.</span>")
+		to_chat(user, "<span class='notice'>You feed [O] to [src], and it pulses gently.</span>")
 		playsound(get_turf(src), 'sound/items/eatfood.ogg', 20, 1)
 	if(cubes_eaten >= 3)
 		var/cores = rand(1,4)
