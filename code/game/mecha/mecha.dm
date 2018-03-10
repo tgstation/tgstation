@@ -454,9 +454,10 @@
 		if(isliving(target) && !selected.pacifist_safe && L.has_trait(TRAIT_PACIFISM))
 			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 			return
-		if(istype(C) && !C.opened && !selected.pacifist_safe && L.has_trait(TRAIT_PACIFISM))
-			to_chat(user, "<span class='warning'> It's closed. Better make sure no one is in it first.</span>")
-			return
+		if(istype(C) && L.has_trait(TRAIT_PACIFISM) && !selected.pacifist_safe)
+			for(var/mob/living/M in C.contents)
+				to_chat(user, "<span class='warning'>There's someone in there! I don't want to hurt them.</span>")
+				return
 		if(selected.action(target,params))
 			selected.start_cooldown()
 	else
