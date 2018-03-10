@@ -69,11 +69,6 @@
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
-<<<<<<< HEAD
-		if(28)
-			new /obj/item/disk/design_disk/modkit_disc/bounty(src)
-=======
->>>>>>> f4e0f567ef... Replaces alien brain necropolis chest loot with new artifact [MERGE READY] (#36143)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
