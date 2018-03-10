@@ -4,7 +4,7 @@
 #define MAX_MINOR_OBJECTIVES 4
 
 /datum/team/infiltrator
-	name = "syndicate infiltration unit"
+	name = "Syndicate Infiltration Unit"
 	member_name = "syndicate infiltrator"
 
 /datum/team/infiltrator/roundend_report()
