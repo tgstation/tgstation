@@ -21,7 +21,8 @@
 	E.implant(H)
 	var/obj/item/implant/uplink/infiltrator/U = new/obj/item/implant/uplink/infiltrator(H)
 	U.implant(H)
-	U.hidden_uplink.owner = "[H.key]"
+	var/datum/component/uplink/uplink = U.GetComponent(/datum/component/uplink)
+	uplink.owner = H.key
 	var/obj/item/implant/radio/syndicate/S = new/obj/item/implant/radio/syndicate(H)
 	S.implant(H)
 	H.faction |= ROLE_SYNDICATE
