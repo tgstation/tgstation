@@ -1,12 +1,10 @@
 /datum/ert
 	var/mobtype = /mob/living/carbon/human
 	var/team = /datum/team/ert
-	var/antagtype = /datum/antagonist/ert
 	var/opendoors = TRUE
-	var/leader_role = ERT_LEADER
+	var/leader_role = /datum/antagonist/ert/commander
 	var/enforce_human = TRUE
-	var/roles = list(ERT_SEC,ERT_MED,ERT_ENG) //List of possible sub-roles to be assigned to ERT members
-	var/high_alert = FALSE
+	var/roles = list(/datum/antagonist/ert/security, /datum/antagonist/ert/medic, /datum/antagonist/ert/engineer) //List of possible roles to be assigned to ERT members.
 	var/rename_team
 	var/code
 	var/mission = "Assist the station."
@@ -25,12 +23,13 @@
 	code = "Amber"
 
 /datum/ert/red
-	high_alert = TRUE
+	leader_role = /datum/antagonist/ert/commander/red
+	roles = list(/datum/antagonist/ert/security/red, /datum/antagonist/ert/medic/red, /datum/antagonist/ert/engineer/red)
 	code = "Red"
 
 /datum/ert/deathsquad
-	roles = list(DEATHSQUAD)
-	leader_role = DEATHSQUAD_LEADER
+	roles = list(/datum/antagonist/ert/deathsquad)
+	leader_role = /datum/antagonist/ert/deathsquad/leader
 	rename_team = "Deathsquad"
 	code = "Delta"
 	mission = "Leave no witnesses."
@@ -40,7 +39,8 @@
 	code = "Green"
 	teamsize = 1
 	opendoors = FALSE
-	antagtype = /datum/antagonist/official
+	leader_role = /datum/antagonist/official
+	roles = list(/datum/antagonist/official)
 	rename_team = "CentCom Officials"
 	polldesc = "a CentCom Official"
 

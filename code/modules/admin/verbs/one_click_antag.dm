@@ -358,13 +358,13 @@
 					ERTOperative.set_species(/datum/species/human)
 
 				//Give antag datum
-				var/datum/antagonist/ert/ert_antag = new ertemplate.antagtype
-				if (istype(ert_antag, /datum/antagonist/ert))
-					ert_antag.high_alert = ertemplate.high_alert
-					if(numagents == 1)
-						ert_antag.role = ertemplate.leader_role
-					else
-						ert_antag.role = ertemplate.roles[WRAP(numagents,1,length(ertemplate.roles) + 1)]
+				var/datum/antagonist/ert/ert_antag
+
+				if(numagents == 1)
+					ert_antag = new ertemplate.leader_role
+				else
+					ert_antag = ertemplate.roles[WRAP(numagents,1,length(ertemplate.roles) + 1)]
+					ert_antag = new ert_antag
 
 				ERTOperative.mind.add_antag_datum(ert_antag,ert_team)
 				ERTOperative.mind.assigned_role = ert_antag.name
