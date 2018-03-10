@@ -182,6 +182,7 @@
 	var/obj/item/card/id/C = H.wear_id
 	if(istype(C))
 		C.access = J.get_access()
+		shuffle_inplace(C.access) // Shuffle access list to make NTNet passkeys less predictable
 		C.registered_name = H.real_name
 		C.assignment = J.title
 		C.update_label()
