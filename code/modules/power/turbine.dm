@@ -173,6 +173,7 @@
 	locate_machinery()
 	if(!compressor)
 		stat |= BROKEN
+	connect_to_network()
 
 /obj/machinery/power/turbine/RefreshParts()
 	var/P = 0
