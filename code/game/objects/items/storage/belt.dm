@@ -46,7 +46,8 @@
 		/obj/item/device/geiger_counter,
 		/obj/item/extinguisher/mini,
 		/obj/item/device/radio,
-		/obj/item/clothing/gloves
+		/obj/item/clothing/gloves,
+		/obj/item/holosign_creator
 		)
 	content_overlays = TRUE
 
