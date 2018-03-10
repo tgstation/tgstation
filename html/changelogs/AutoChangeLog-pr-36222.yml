@@ -1,0 +1,4 @@
+author: "Astral"
+delete-after: True
+changes: 
+  - bugfix: "Constructed turbines will now properly connect to the powernet"
