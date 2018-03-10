@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/stealt
 				new item_type(T)
 
 /datum/objective/infiltrator/exploit
-	explanation_text = "Exploit the station's Nanotrasen AI and make it loyal to the Syndicate."
+	explanation_text = "Ensure there is at least 1 hijacked AI."
 	item_type = /obj/item/ai_hijack_device
 
 /datum/objective/infiltrator/exploit/find_target()
@@ -32,10 +32,12 @@ GLOBAL_LIST_INIT(infiltrator_kidnap_areas, typecacheof(list(/area/shuttle/stealt
 	if(target && target.current)
 		explanation_text = "Hijack [station_name()]'s AI unit, [target.name]."
 	else
-		explanation_text = "Free Objective"
+		explanation_text = "Ensure there is at least 1 hijacked AI on [station_name()]."
 
 /datum/objective/infiltrator/exploit/check_completion()
-	if(isAI(target))
+	if(!target)
+		return LAZYLEN(get_antag_minds(/datum/antagonist/hijacked_ai))
+	else if(isAI(target))
 		var/mob/living/silicon/ai/A = target
 		return A && A.mind && A.mind.has_antag_datum(/datum/antagonist/hijacked_ai)
 	return FALSE
