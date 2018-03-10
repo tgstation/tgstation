@@ -263,8 +263,9 @@
 	tint = 3			// to make them blind
 
 /obj/item/clothing/glasses/sunglasses/blindfold/equipped(mob/living/carbon/human/user, slot)
-	..()
-	user.become_blind("blindfold")
+	. = ..()
+	if(slot == slot_glasses)
+		user.become_blind("blindfold")
 
 /obj/item/clothing/glasses/sunglasses/blindfold/dropped(mob/living/carbon/human/user)
 	..()
