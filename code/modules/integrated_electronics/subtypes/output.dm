@@ -56,7 +56,7 @@
 
 /obj/item/integrated_circuit/output/screen/large/do_work()
 	..()
-	var/obj/O = assembly ? loc : assembly
+	var/obj/O = assembly ? get_turf(assembly) : loc
 	O.visible_message("<span class='notice'>[icon2html(O.icon, world, O.icon_state)]  [stuff_to_display]</span>")
 
 /obj/item/integrated_circuit/output/light

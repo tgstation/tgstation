@@ -70,7 +70,7 @@
 	power_draw_per_use = 4
 
 /obj/item/integrated_circuit/input/textpad/ask_for_input(mob/user)
-	var/new_input = stripped_input(user, "Enter some words, please.",displayed_name)
+	var/new_input = stripped_multiline_input(user, "Enter some words, please.",displayed_name)
 	if(istext(new_input) && user.IsAdvancedToolUser())
 		set_pin_data(IC_OUTPUT, 1, new_input)
 		push_data()
