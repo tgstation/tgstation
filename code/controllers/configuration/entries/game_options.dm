@@ -50,6 +50,9 @@
 
 /datum/config_entry/flag/allow_ai	// allow ai job
 
+/datum/config_entry/flag/disable_human_mood
+	config_entry_value = TRUE
+
 /datum/config_entry/flag/disable_secborg	// disallow secborg module to be chosen.
 
 /datum/config_entry/flag/disable_peaceborg
