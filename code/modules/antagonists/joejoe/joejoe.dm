@@ -21,4 +21,4 @@
 		"left pocket" = slot_l_store,
 		"right pocket" = slot_r_store
 	)
-	var/where = H.equip_in_one_of_slots(G, slots)
+	H.equip_in_one_of_slots(G, slots)
