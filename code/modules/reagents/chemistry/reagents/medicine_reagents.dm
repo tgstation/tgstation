@@ -1192,6 +1192,7 @@
 	id = "corazone"
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
+	self_consuming = TRUE
 
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"
