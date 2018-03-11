@@ -114,8 +114,6 @@
 /obj/machinery/power/tesla_coil/research/tesla_act(var/power)
 	if(anchored && !panel_open)
 		obj_flags |= BEING_SHOCKED
-		//don't lose arc power when it's not connected to anything
-		//please place tesla coils all around the station to maximize effectiveness
 		var/power_produced = powernet ? power / power_loss : power
 		add_avail(power_produced*input_power_multiplier)
 		flick("rpcoilhit", src)
@@ -134,11 +132,33 @@
 			icon_state = "rpcoil_open[anchored]"
 		else
 			icon_state = "rpcoil[anchored]"
+		if(anchored)
+			connect_to_network()
+		else
+			disconnect_from_network()
 
 /obj/machinery/power/tesla_coil/research/attackby(obj/item/W, mob/user, params)
-	. = ..()
 	if(default_deconstruction_screwdriver(user, "rpcoil_open[anchored]", "rpcoil[anchored]", W))
 		return
+
+	if(exchange_parts(user, W))
+		return
+
+	if(default_unfasten_wrench(user, W))
+		return
+
+	if(default_deconstruction_crowbar(W))
+		return
+
+	if(is_wire_tool(W) && panel_open)
+		wires.interact(user)
+		return
+
+	return ..()
+
+/obj/machinery/power/tesla_coil/research/on_construction()
+	if(anchored)
+		connect_to_network()
 
 /obj/machinery/power/grounding_rod
 	name = "grounding rod"
