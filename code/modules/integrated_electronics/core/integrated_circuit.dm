@@ -305,7 +305,7 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	return
 
 /obj/item/integrated_circuit/proc/special_input(mob/user, list/available_inputs, list/input_selection)
-	return
+	return FALSE
 
 // Returns true if there's enough power to work().
 /obj/item/integrated_circuit/proc/check_power()

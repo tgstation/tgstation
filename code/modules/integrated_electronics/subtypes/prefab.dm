@@ -80,7 +80,7 @@
 		var/list/circuit = i
 		var/obj/item/integrated_circuit/component_path = SScircuit.all_components[circuit["type"]]
 		var/obj/item/integrated_circuit/component = new component_path(src)
-		component.load(component_params)
+		component.load(circuit)
 		circuit_components += component
 		power_draw_per_use += component.power_draw_per_use
 		complexity += component.complexity
@@ -104,7 +104,7 @@
 			IO.connect_pin(IO2)
 	..()
 
-/obj/item/integrated_circuit/prefab/verify_save(list/component_params) // kind of a copypasta, with some checks removed since prefabs have no pins when created
+/obj/item/integrated_circuit/prefab/verify_save(list/component_params)
 	..()
 
 /obj/item/integrated_circuit/prefab/external_examine(mob/user)

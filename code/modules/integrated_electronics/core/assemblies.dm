@@ -407,7 +407,8 @@
 	var/list/input_selection = list()
 	var/list/available_inputs = list()
 	for(var/obj/item/integrated_circuit/inputC in assembly_components)
-		inputC.special_input(user, available_inputs, input_selection)
+		if(inputC.special_input(user, available_inputs, input_selection))
+			return
 		if(inputC.can_be_asked_input)
 			available_inputs.Add(inputC)
 			var/i = 0
