@@ -21,7 +21,11 @@
 				for(var/A in team.objectives)
 					var/datum/objective/O = A
 					if(istype(O) && O.target && !O.check_completion())
-						target = O.target
+						if(istype(O.target, /datum/mind))
+							var/datum/mind/M = O.target
+							target = M.current
+						else
+							target = O.target
 						break
 	..()
 
