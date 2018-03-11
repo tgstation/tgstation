@@ -139,8 +139,8 @@
 	Pulsing the 'step towards dir' activator pin will cause the machine to move a meter in that direction, assuming it is not \
 	being held, or anchored in some way. It should be noted that the ability to move is dependant on the type of assembly that this circuit inhabits."
 	w_class = WEIGHT_CLASS_SMALL
-	complexity = 20
-	cooldown_per_use = 8
+	complexity = 10
+	cooldown_per_use = 1
 	ext_cooldown = 1
 	inputs = list("direction" = IC_PINTYPE_DIR)
 	outputs = list("obstacle" = IC_PINTYPE_REF)

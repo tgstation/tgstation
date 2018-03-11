@@ -7,7 +7,7 @@
 	extended_desc = "This circuit uses a miniturized integrated camera to determine where the target is. If the machine \
 	cannot see the target, it will not be able to calculate the correct direction."
 	icon_state = "numberpad"
-	complexity = 25
+	complexity = 5
 	inputs = list("target" = IC_PINTYPE_REF)
 	outputs = list("dir" = IC_PINTYPE_DIR)
 	activators = list("calculate dir" = IC_PINTYPE_PULSE_IN, "on calculated" = IC_PINTYPE_PULSE_OUT)
