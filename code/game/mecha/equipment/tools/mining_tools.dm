@@ -9,6 +9,7 @@
 	equip_cooldown = 15
 	energy_drain = 10
 	force = 15
+	pacifist_safe = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/drill/Initialize()
 	. = ..()
