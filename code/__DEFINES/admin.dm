@@ -34,14 +34,9 @@
 #define R_SOUNDS		0x800
 #define R_SPAWN			0x1000
 #define R_AUTOLOGIN		0x2000
+#define R_DBRANKS		0x4000
 
 #define R_DEFAULT R_AUTOLOGIN
-
-#if DM_VERSION > 512
-#error Remove the flag below , its been long enough
-#endif
-//legacy , remove post 512, it was replaced by R_POLL
-#define R_REJUVINATE	2
 
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 

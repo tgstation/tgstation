@@ -111,6 +111,10 @@
 	name = "Cloning (Computer Board)"
 	build_path = /obj/machinery/computer/cloning
 
+/obj/item/circuitboard/computer/prototype_cloning
+	name = "Prototype Cloning (Computer Board)"
+	build_path = /obj/machinery/computer/prototype_cloning
+
 /obj/item/circuitboard/computer/arcade/battle
 	name = "Arcade Battle (Computer Board)"
 	build_path = /obj/machinery/computer/arcade/battle

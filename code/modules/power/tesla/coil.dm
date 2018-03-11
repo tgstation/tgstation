@@ -87,7 +87,7 @@
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 5, power_produced)
 		if(istype(linked_techweb))
-			linked_techweb.research_points += min(power_produced, 10)
+			linked_techweb.research_points += min(power_produced, 1) // x4 coils = ~240/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 	else
 		..()
@@ -120,7 +120,7 @@
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 5, power_produced)
 		if(istype(linked_techweb))
-			linked_techweb.research_points += min(power_produced, 200)
+			linked_techweb.research_points += min(power_produced, 3) // x4 coils with a pulse per second or so = ~720/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 	else
 		..()
@@ -132,29 +132,11 @@
 			icon_state = "rpcoil_open[anchored]"
 		else
 			icon_state = "rpcoil[anchored]"
-		if(anchored)
-			connect_to_network()
-		else
-			disconnect_from_network()
 
 /obj/machinery/power/tesla_coil/research/attackby(obj/item/W, mob/user, params)
+	. = ..()
 	if(default_deconstruction_screwdriver(user, "rpcoil_open[anchored]", "rpcoil[anchored]", W))
 		return
-
-	if(exchange_parts(user, W))
-		return
-
-	if(default_unfasten_wrench(user, W))
-		return
-
-	if(default_deconstruction_crowbar(W))
-		return
-
-	if(is_wire_tool(W) && panel_open)
-		wires.interact(user)
-		return
-
-	return ..()
 
 /obj/machinery/power/tesla_coil/research/on_construction()
 	if(anchored)

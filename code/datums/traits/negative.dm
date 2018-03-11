@@ -43,7 +43,7 @@
 	medical_record_text = "Patient is unusually pacifistic and cannot bring themselves to cause physical harm."
 
 /datum/trait/nonviolent/on_process()
-	if(trait_holder.mind && trait_holder.mind.antag_datums.len)
+	if(trait_holder.mind && LAZYLEN(trait_holder.mind.antag_datums))
 		to_chat(trait_holder, "<span class='boldannounce'>Your antagonistic nature has caused you to renounce your pacifism.</span>")
 		qdel(src)
 
@@ -114,7 +114,7 @@
 	if(trait_holder.reagents.has_reagent("mindbreaker"))
 		trait_holder.hallucination = 0
 		return
-	if(prob(1)) //we'll all be mad soon enough
+	if(prob(2)) //we'll all be mad soon enough
 		madness()
 
 /datum/trait/insanity/proc/madness(mad_fools)
@@ -154,3 +154,12 @@
 	else if(prob(0.5) && dumb_thing)
 		to_chat(H, "<span class='danger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
 		dumb_thing = FALSE //only once per life
+
+/datum/trait/depression
+	name = "Depression"
+	desc = "You sometimes just hate life."
+	mob_trait = TRAIT_DEPRESSION
+	value = -1
+	gain_text = "<span class='danger'>You start feeling depressed.</span>"
+	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
+	medical_record_text = "Patient has a severe mood disorder causing them to experience sudden moments of sadness."
