@@ -5017,7 +5017,7 @@
 	},
 /area/security/courtroom)
 "alJ" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/neutral/side,
 /area/security/courtroom)
 "alK" = (
@@ -15947,7 +15947,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "aOe" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/camera{
 	c_tag = "Arrivals Bay 1 South"
 	},
@@ -18461,7 +18461,7 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "aVp" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -27731,7 +27731,7 @@
 	pixel_y = 1
 	},
 /obj/structure/table,
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -36028,7 +36028,7 @@
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "bLp" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "bLq" = (
@@ -39948,7 +39948,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUN" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUO" = (
@@ -42433,7 +42433,7 @@
 /turf/open/floor/engine,
 /area/science/misc_lab)
 "caY" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/engine,
 /area/science/misc_lab)
 "caZ" = (

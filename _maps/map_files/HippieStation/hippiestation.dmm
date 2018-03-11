@@ -5638,7 +5638,7 @@
 /turf/open/floor/plasteel/neutral/side,
 /area/security/courtroom)
 "amx" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/neutral/side,
 /area/security/courtroom)
 "amy" = (
@@ -18330,7 +18330,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aSp" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/camera{
 	c_tag = "Arrivals Bay 1 South"
 	},
@@ -21242,7 +21242,7 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "baJ" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -31250,7 +31250,7 @@
 	pixel_y = 1
 	},
 /obj/structure/table,
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -39855,7 +39855,7 @@
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "bSY" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "bSZ" = (
@@ -43698,7 +43698,7 @@
 /turf/open/floor/plasteel/vault,
 /area/science/misc_lab)
 "cck" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
@@ -43984,7 +43984,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ccY" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ccZ" = (

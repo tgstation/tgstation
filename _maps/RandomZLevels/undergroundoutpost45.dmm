@@ -158,7 +158,7 @@
 "az" = (
 /obj/structure/sign/warning/vacuum{
 	desc = "A beacon used by a teleporter.";
-	icon = 'icons/obj/radio.dmi';
+	icon = 'icons/obj/device.dmi';
 	icon_state = "beacon";
 	name = "tracking beacon"
 	},

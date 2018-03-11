@@ -30312,7 +30312,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bkC" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
