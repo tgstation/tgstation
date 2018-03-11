@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - admin: "The debug message for generic shuttle errors is improved a little"
