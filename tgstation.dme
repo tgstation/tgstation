@@ -1441,6 +1441,7 @@
 #include "code\modules\events\meateor_wave.dm"
 #include "code\modules\events\meteor_wave.dm"
 #include "code\modules\events\mice_migration.dm"
+#include "code\modules\events\monkey_business.dm"
 #include "code\modules\events\nightmare.dm"
 #include "code\modules\events\operative.dm"
 #include "code\modules\events\pirates.dm"
