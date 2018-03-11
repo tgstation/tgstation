@@ -78,7 +78,7 @@
 			"name" = P.name,
 			"cost" = P.cost,
 			"id" = pack,
-			"desc" = P.desc ? P.desc : P.name // If there is a description, use it. Otherwise use the pack's name.
+			"desc" = P.desc || P.name // If there is a description, use it. Otherwise use the pack's name.
 		))
 
 	data["cart"] = list()
