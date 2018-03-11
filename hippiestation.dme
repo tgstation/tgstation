@@ -1469,7 +1469,6 @@
 #include "code\modules\fields\turf_objects.dm"
 #include "code\modules\flufftext\Dreaming.dm"
 #include "code\modules\flufftext\Hallucination.dm"
-#include "code\modules\flufftext\TextFilters.dm"
 #include "code\modules\food_and_drinks\food.dm"
 #include "code\modules\food_and_drinks\pizzabox.dm"
 #include "code\modules\food_and_drinks\drinks\drinks.dm"
