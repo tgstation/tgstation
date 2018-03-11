@@ -43,7 +43,7 @@
 	medical_record_text = "Patient is unusually pacifistic and cannot bring themselves to cause physical harm."
 
 /datum/trait/nonviolent/on_process()
-	if(trait_holder.mind && trait_holder.mind.antag_datums.len)
+	if(trait_holder.mind && LAZYLEN(trait_holder.mind.antag_datums))
 		to_chat(trait_holder, "<span class='boldannounce'>Your antagonistic nature has caused you to renounce your pacifism.</span>")
 		qdel(src)
 
