@@ -114,6 +114,7 @@
 	desc = "The air hangs heavy over this sinister flooring."
 	icon_state = "plating"
 	CanAtmosPass = ATMOS_PASS_NO
+	floor_tile = null
 	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearance
 
 
