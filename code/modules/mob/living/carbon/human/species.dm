@@ -718,7 +718,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.setOxyLoss(0)
 		H.losebreath = 0
 
-		var/takes_crit_damage = (!(NOCRITDAMAGE in species_traits))
+		var/takes_crit_damage = (!H.has_trait(TRAIT_NOCRITDAMAGE))
 		if((H.health < HEALTH_THRESHOLD_CRIT) && takes_crit_damage)
 			H.adjustBruteLoss(1)
 

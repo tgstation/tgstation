@@ -15391,7 +15391,7 @@
 	},
 /area/hallway/primary/fore)
 "aGo" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/red/corner{
 	dir = 2
 	},
@@ -18922,7 +18922,7 @@
 /turf/open/floor/plasteel/neutral/side,
 /area/security/courtroom)
 "aOj" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/neutral/side,
 /area/security/courtroom)
 "aOk" = (
@@ -29767,7 +29767,7 @@
 	},
 /area/bridge)
 "bkF" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -32210,7 +32210,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/holopad,
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "bpL" = (
@@ -33641,7 +33641,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bsm" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -36749,7 +36749,7 @@
 /area/ai_monitored/storage/satellite)
 "byP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/caution{
 	dir = 8
 	},
@@ -41037,7 +41037,7 @@
 "bIe" = (
 /obj/structure/table,
 /obj/item/hand_tele,
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23
@@ -41848,7 +41848,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 2
 	},
@@ -42161,7 +42161,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bKy" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
@@ -53837,7 +53837,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "ciT" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
@@ -54263,7 +54263,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cjV" = (
-/obj/machinery/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 4
 	},
@@ -63912,7 +63911,7 @@
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "cDx" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "cDy" = (
@@ -70141,7 +70140,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -72411,7 +72410,7 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "daH" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "daI" = (
