@@ -10,12 +10,12 @@
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	if (random_icon_states && length(src.random_icon_states) > 0)
-		src.icon_state = pick(src.random_icon_states)
+	if (random_icon_states && length(random_icon_states) > 0)
+		icon_state = pick(random_icon_states)
 	create_reagents(300)
-	if(src.loc && isturf(src.loc))
-		for(var/obj/effect/decal/cleanable/C in src.loc)
-			if(C != src && C.type == src.type && !QDELETED(C))
+	if(loc && isturf(loc))
+		for(var/obj/effect/decal/cleanable/C in loc)
+			if(C != src && C.type == type && !QDELETED(C))
 				if (replace_decal(C))
 					return INITIALIZE_HINT_QDEL
 

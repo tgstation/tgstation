@@ -485,6 +485,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!L.ckey)
 		return
 
+	L.SendSignal(COMSIG_AREA_ENTERED, A)
+
 	// Ambience goes down here -- make sure to list each area separately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
 		L.client.ambience_playing = 1
@@ -500,10 +502,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
 			L.client.played = TRUE
 			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
-
-	GET_COMPONENT_FROM(mood, /datum/component/mood, L)
-	if(mood)
-		mood.update_beauty(src)
 
 /client/proc/ResetAmbiencePlayed()
 	played = FALSE
