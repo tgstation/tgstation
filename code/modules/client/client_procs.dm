@@ -6,7 +6,7 @@
 GLOBAL_LIST_INIT(blacklisted_builds, list(
 	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
 	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
-	
+
 	))
 
 #define LIMITER_SIZE	5
@@ -93,8 +93,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			hsrc = holder
 		if("usr")
 			hsrc = mob
-		if("mentor") // hippie start
-			hsrc = mentor_datum // hippie end
 		if("prefs")
 			if (inprefs)
 				return
@@ -164,12 +162,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	GLOB.ahelp_tickets.ClientLogin(src)
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
-	var/localhost_addresses = list("127.0.0.1", "::1")
-	if(address && (address in localhost_addresses))
-		var/datum/admin_rank/localhost_rank = new("!localhost!", 65535)
-		if(localhost_rank)
-			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
-			localhost_holder.associate(src)
+	holder = GLOB.admin_datums[ckey]
+	if(holder)
+		GLOB.admins |= src
+		holder.owner = src
+		connecting_admin = TRUE
+	else if(GLOB.deadmins[ckey])
+		verbs += /client/proc/readmin
+		connecting_admin = TRUE
 	if(CONFIG_GET(flag/autoadmin))
 		if(!GLOB.admin_datums[ckey])
 			var/datum/admin_rank/autorank
@@ -235,7 +235,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		to_chat(src, "<span class='danger'>Please download a new version of byond. if [byond_build] is the latest, you can go to http://www.byond.com/download/build/ to download other versions.</span>")
 		if(connecting_admin)
 			to_chat(src, "As an admin, you are being allowed to continue using this version, but please consider changing byond versions")
-		else 
+		else
 			qdel(src)
 			return
 	#endif
@@ -298,6 +298,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		add_admin_verbs()
 		to_chat(src, get_message_output("memo"))
 		adminGreet()
+
 	add_verbs_from_config()
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
@@ -490,8 +491,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			return
 	if(!account_join_date)
 		account_join_date = "Error"
-	var/internet_address_to_use = CONFIG_GET(string/internet_address_to_use)
-	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[internet_address_to_use]' LIKE '', '0', '[internet_address_to_use]')),'[world.port]','[GLOB.round_id]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
+	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[GLOB.round_id]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
 	if(new_player)
 		player_age = -1
@@ -533,10 +533,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			tokens[ckey] = cid_check_reconnect()
 
 			sleep(15 SECONDS) //Longer sleep here since this would trigger if a client tries to reconnect manually because the inital reconnect failed
-			
+
 			 //we sleep after telling the client to reconnect, so if we still exist something is up
 			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
-			
+
 			qdel(src)
 			return TRUE
 
@@ -579,10 +579,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			tokens[ckey] = cid_check_reconnect()
 
 			sleep(5 SECONDS) //browse is queued, we don't want them to disconnect before getting the browse() command.
-			
+
 			//we sleep after telling the client to reconnect, so if we still exist something is up
 			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
-			
+
 			qdel(src)
 			return TRUE
 
