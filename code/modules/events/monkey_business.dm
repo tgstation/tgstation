@@ -1,7 +1,7 @@
 /datum/round_event_control/monkeys
 	name = "Monkey Business"
 	typepath = /datum/round_event/ghost_role/monkeys
-	weight = 15
+	weight = 10
 
 
 /datum/round_event/ghost_role/monkeys
