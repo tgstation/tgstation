@@ -22,31 +22,29 @@
 
 /datum/reagent/proc/handle_state_change(turf/T, volume, atom)
 	var/touch_msg
+	var/mob/living/touch_mob
 	if(!istype(T))
 		return
-	if(isspaceturf(T))
+	if(is_type_in_typecache(T, GLOB.statechange_turf_blacklist))
 		return
 	if(!volume)
 		return
 	if(volume * 0.25 < 1)
 		return
-
 	if(atom)
 		if(is_type_in_typecache(atom, GLOB.no_reagent_statechange_typecache))
 			return
 		if(istype(atom, /obj/item))
 			var/obj/item/I = atom
-			touch_msg = I.fingerprintslast
-			if(touch_msg)
-				touch_msg = get_mob_by_key(touch_msg)
+			touch_mob = I.fingerprintslast
+			if(istype(touch_mob))
+				touch_msg = get_mob_by_key(touch_mob)
 				touch_msg = "[ADMIN_LOOKUPFLW(touch_msg)]"
 
-//vapour
-	var/static/list/gas_reagent_blacklist = list("plasma", "oxygen", "nitrogen", "nitrous_oxide")//blacklisted paradoxical reagents such as plasma gas vapour
-	if(src.reagent_state == GAS)
-		if(src.id in gas_reagent_blacklist)
-			return
+	if(is_type_in_typecache(src, GLOB.statechange_reagent_blacklist)) //Reagent states are interchangeable, so one blacklist to rule them all.
+		return
 
+	if(src.reagent_state == GAS) //VAPOR
 		if(atom && istype(atom, /obj/effect/particle_effect))
 			volume = volume * GAS_PARTICLE_EFFECT_EFFICIENCY//big nerf to smoke and foam duping
 
@@ -67,17 +65,16 @@
 					else
 						qdel(RR)
 			log_game("Reagent vapour of type [src] was released at [COORD(T)] Last Fingerprint: [touch_msg] ")
-//liquid
-	var/static/list/liquid_reagent_blacklist = list("water", "bleach", "lube", "cleaner", "condensedcapsaicin", "thermite", "smoke_powder", "sugar", "cryostylane")//add stuff that doesn't make sense/is too op for liquids
-	if(src.reagent_state == LIQUID)
-		if(src.id in liquid_reagent_blacklist)
-			return
 
+
+	if(src.reagent_state == LIQUID) //LIQUID
 		if(atom && istype(atom, /obj/effect/particle_effect))
 			volume = volume * LIQUID_PARTICLE_EFFECT_EFFICIENCY//big nerf to smoke and foam duping
 
 		for(var/obj/effect/decal/cleanable/chempile/c in T.contents)//handles merging existing chempiles
 			if(c.reagents)
+				if(touch_msg)
+					c.add_fingerprint(touch_mob)
 				c.reagents.add_reagent("[src.id]", volume)
 				var/mixcolor = mix_color_from_reagents(c.reagents.reagent_list)
 				c.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY)
@@ -86,25 +83,27 @@
 				return TRUE
 
 		var/obj/effect/decal/cleanable/chempile/C = new /obj/effect/decal/cleanable/chempile(T)//otherwise makes a new one
+		if(touch_msg)
+			C.add_fingerprint(touch_mob)
 		C.reagents.add_reagent("[src.id]", volume)
 		var/mixcolor = mix_color_from_reagents(C.reagents.reagent_list)
 		C.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY)
-//solid
-	var/static/list/solid_reagent_blacklist = list("radium")
-	if(src.reagent_state == SOLID)
-		if(src.id in solid_reagent_blacklist)
-			return
 
+	if(src.reagent_state == SOLID) //SOLID
 		if(atom && istype(atom, /obj/effect/particle_effect))
 			volume = volume * SOLID_PARTICLE_EFFECT_EFFICIENCY//big nerf to smoke and foam duping
 
 		for(var/obj/item/reagent_containers/food/snacks/solid_reagent/SR in T.contents)
 			if(SR.reagents && SR.reagent_type == src.id && SR.reagents.total_volume < 200)
+				if(touch_msg)
+					SR.add_fingerprint(touch_mob)
 				SR.reagents.add_reagent("[src.id]", volume)
 				SR.bitecount = SR.reagents.total_volume*0.5
 				return TRUE
 
 		var/obj/item/reagent_containers/food/snacks/solid_reagent/Sr = new /obj/item/reagent_containers/food/snacks/solid_reagent(T)
+		if(touch_msg)
+			Sr.add_fingerprint(touch_mob)
 		Sr.reagents.add_reagent("[src.id]", volume)
 		Sr.reagent_type = src.id
 		Sr.bitecount = Sr.reagents.total_volume*0.5

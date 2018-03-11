@@ -4,13 +4,13 @@
 	max_stages = 5
 	stage_prob = 2
 	spread_text = "On contact"
-	spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_SKIN | VIRUS_SPREAD_CONTACT_FLUIDS
+	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
 	cure_text = "A mix of nothing, Driest Martini and bleach"
 	cures = list("bleach", "nothing", "driestmartini")
 	agent = "Fury from the circus of hell itself."
 	viable_mobtypes = list(/mob/living/carbon/human)
 	desc = "Subject will become dizzy, confused and steadily more retarded before being turned into a cluwne!"
-	severity = VIRUS_SEVERITY_BIOHAZARD
+	severity = DISEASE_SEVERITY_BIOHAZARD
 
 /datum/disease/cluwnification/stage_act()
 	..()
