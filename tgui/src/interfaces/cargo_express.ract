@@ -34,7 +34,11 @@
       <tab name='{{name}}'>
         {{#each packs}}
           <ui-section label='{{name}}' candystripe right>
+<<<<<<< HEAD
             <ui-button action='add' params='{"id": "{{id}}"}'>{{cost}} Credits (Premium Pricing)</ui-button>
+=======
+            <ui-button tooltip='{{desc}}' tooltip-side='left' action='add' params='{"id": "{{id}}"}'>{{cost}} Credits</ui-button>
+>>>>>>> f70d7f703c... Adds descriptions to all cargo orders! (#36077)
           </ui-section>
         {{/each}}
       </tab>
