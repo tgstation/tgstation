@@ -34,6 +34,8 @@
 
 	var/list/status_traits = list()
 
+	var/list/roundstart_traits = list()
+
 	var/list/surgeries = list()	//a list of surgery datums. generally empty, they're added when the player wants them.
 
 	var/now_pushing = null //used by living/Collide() and living/PushAM() to prevent potential infinite loop.
@@ -105,3 +107,7 @@
 	var/radiation = 0 //If the mob is irradiated.
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT
 	var/losebreath = 0
+
+	//List of active diseases
+	var/list/diseases = list() // list of all diseases in a mob
+	var/list/disease_resistances = list()

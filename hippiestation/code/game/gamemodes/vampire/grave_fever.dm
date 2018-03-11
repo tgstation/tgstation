@@ -3,13 +3,13 @@
 	max_stages = 3
 	stage_prob = 5
 	spread_text = "Non-Contagious"
-	spread_flags = VIRUS_SPREAD_SPECIAL
+	spread_flags = DISEASE_SPREAD_SPECIAL
 	cure_text = "Antibiotics"
 	cures = list("spaceacillin")
 	agent = "Grave Dust"
 	cure_chance = 20
 	viable_mobtypes = list(/mob/living/carbon/human)
-	severity = VIRUS_SEVERITY_DANGEROUS
+	severity = DISEASE_SEVERITY_DANGEROUS
 	disease_flags = CURABLE
 
 /datum/disease/vampire/stage_act()

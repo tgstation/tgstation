@@ -44,20 +44,6 @@
 //Mutations that cant be taken from genetics and are not in SE
 #define	NON_SCANNABLE		-1
 
-	// Extra powers:
-#define LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
-#define HEAL			10 	// healing people with hands
-#define SHADOW			11 	// shadow teleportation (create in/out portals anywhere) (25%)
-#define SCREAM			12 	// supersonic screaming (25%)
-#define EXPLOSIVE		13 	// exploding on-demand (15%)
-#define REGENERATION	14 	// superhuman regeneration (30%)
-#define REPROCESSOR		15 	// eat anything (50%)
-#define SHAPESHIFTING	16 	// take on the appearance of anything (40%)
-#define PHASING			17 	// ability to phase through walls (40%)
-#define SHIELD			18 	// shielding from all projectile attacks (30%)
-#define SHOCKWAVE		19 	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
-#define ELECTRICITY		20 	// ability to shoot electric attacks (15%)
-
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 
@@ -81,7 +67,6 @@
 #define TR_KEEPIMPLANTS	16
 #define TR_KEEPSE		32 // changelings shouldn't edit the DNA's SE when turning into a monkey
 #define TR_DEFAULTMSG	64
-#define TR_KEEPSRC		128
 #define TR_KEEPORGANS	256
 
 
