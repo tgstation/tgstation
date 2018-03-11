@@ -212,8 +212,8 @@ datum/reagent/medicine/virogone
 datum/reagent/medicine/virogone/on_mob_life(mob/living/M)//cures viruses very effectively but puts you to sleep while doing so
 	if(current_cycle <= 20)
 		M.adjustToxLoss(0.5)
-		for(var/datum/disease/D in M.viruses)
-			if(D.severity == VIRUS_SEVERITY_NONTHREAT || D.agent == "N-G-T"|| !(D.disease_flags & 1))//last one checks if it's curable
+		for(var/datum/disease/D in M.diseases)
+			if(D.severity == DISEASE_SEVERITY_NONTHREAT || D.agent == "N-G-T"|| !(D.disease_flags & 1))//last one checks if it's curable
 				continue
 			M.Sleeping(600, 0)//only puts to sleep if viruses are actually present so it isn't just instant chloral memes
 			D.spread_text = "Remissive"

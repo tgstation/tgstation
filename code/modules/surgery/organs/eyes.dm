@@ -26,6 +26,8 @@
 			HMN.regenerate_icons()
 		else
 			eye_color = HMN.eye_color
+		if(HMN.has_trait(TRAIT_NIGHT_VISION) && !lighting_alpha)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
 	M.update_tint()
 	owner.update_sight()
 

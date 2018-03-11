@@ -25,7 +25,7 @@
 /obj/machinery/chem_dispenser/scp_294/Initialize()
 	. = ..()
 	GLOB.poi_list += src
-	top_overlay = mutable_appearance(icon, "294_top", layer = ABOVE_MOB_LAYER)
+	top_overlay = mutable_appearance(icon, "294_top", layer = ABOVE_ALL_MOB_LAYER)
 	update_icon()
 
 
