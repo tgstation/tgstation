@@ -634,13 +634,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					S = GLOB.legs_list[H.dna.features["legs"]]
 				if("moth_wings")
 					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
-
-				if("moth_wings")
-					S = GLOB.moth_wings_list[H.dna.features["moth_wings"]]
-
+				if("caps")
+					S = GLOB.caps_list[H.dna.features["caps"]]
 				else
 					S = hippie_mutant_bodyparts(bodypart, H)
-
 			if(!S || S.icon_state == "none")
 				continue
 
