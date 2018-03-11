@@ -81,13 +81,7 @@
 
 
 #define COMPFRICTION 5e5
-#define COMPSTARTERLOAD 2800
 
-
-// Crucial to make things work!!!!
-// OLD FIX - explanation given down below.
-// /obj/machinery/power/compressor/CanPass(atom/movable/mover, turf/target)
-// 		return !density
 
 /obj/machinery/power/compressor/locate_machinery()
 	if(turbine)
@@ -169,7 +163,6 @@
 // These are crucial to working of a turbine - the stats modify the power output. TurbGenQ modifies how much raw energy can you get from
 // rpms, TurbGenG modifies the shape of the curve - the lower the value the less straight the curve is.
 
-#define TURBPRES 9000000
 #define TURBGENQ 100000
 #define TURBGENG 0.5
 
@@ -370,3 +363,7 @@
 		if("reconnect")
 			locate_machinery()
 			. = TRUE
+
+#undef COMPFRICTION
+#undef TURBGENQ
+#undef TURBGENG

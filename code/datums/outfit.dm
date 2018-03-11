@@ -85,6 +85,8 @@
 		if(backpack_contents)
 			for(var/path in backpack_contents)
 				var/number = backpack_contents[path]
+				if(!isnum(number))//Default to 1
+					number = 1
 				for(var/i=0,i<number,i++)
 					H.equip_to_slot_or_del(new path(H),slot_in_backpack)
 
