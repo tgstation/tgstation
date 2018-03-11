@@ -142,9 +142,6 @@
 		var/link = FOLLOW_LINK(M, owner)
 		to_chat(M, "[link] [dead_rendered]")
 
-/mob/camera/imaginary_friend/emote(act,m_type=1,message = null)
-	return
-
 /mob/camera/imaginary_friend/forceMove(atom/destination)
 	dir = get_dir(get_turf(src), destination)
 	loc = destination

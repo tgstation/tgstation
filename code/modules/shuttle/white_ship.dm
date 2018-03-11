@@ -17,4 +17,3 @@
 	x_offset = -6
 	y_offset = -10
 	designate_time = 100
-
