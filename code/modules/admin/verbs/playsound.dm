@@ -121,9 +121,15 @@
 		else //pressed ok with blank
 			log_admin("[key_name(src)] stopped web sound")
 			message_admins("[key_name(src)] stopped web sound")
-			web_sound_url = " "
+			web_sound_url = STOP_SOUNDS_URL
 
 		if(web_sound_url)
+<<<<<<< HEAD
+=======
+			if(!findtext(web_sound_url, GLOB.is_http_protocol))
+				to_chat(src, "<span class='boldwarning'>BLOCKED: Content URL not using http(s) protocol</span>")
+				to_chat(src, "<span class='warning'>The media provider returned a content URL that isn't using the HTTP or HTTPS protocol</span>")
+>>>>>>> 259838f38c... Merge pull request #36340 from vuonojenmustaturska/beelogreen
 			for(var/m in GLOB.player_list)
 				var/mob/M = m
 				var/client/C = M.client
@@ -157,5 +163,5 @@
 			SEND_SOUND(M, sound(null))
 			var/client/C = M.client
 			if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-				C.chatOutput.sendMusic(" ")
+				C.chatOutput.sendMusic(STOP_SOUNDS_URL)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop All Playing Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
