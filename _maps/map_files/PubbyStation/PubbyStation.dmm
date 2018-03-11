@@ -50291,7 +50291,7 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing)
 "htU" = (
-/obj/machinery/rnd/protolathe/department/science,
+/obj/machinery/rnd/production/protolathe/department/science,
 /turf/open/floor/plasteel/purple/side{
 	dir = 1
 	},
