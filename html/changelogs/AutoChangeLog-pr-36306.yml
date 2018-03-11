@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Custom shuttles being too close to the map edge was causing problems, you must now be at least 10 tiles away."
