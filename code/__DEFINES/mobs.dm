@@ -118,7 +118,7 @@
 //Sentience types, to prevent things like sentience potions from giving bosses sentience
 #define SENTIENCE_ORGANIC 1
 #define SENTIENCE_ARTIFICIAL 2
-#define SENTIENCE_OTHER 3
+// #define SENTIENCE_OTHER 3 unused
 #define SENTIENCE_MINEBOT 4
 #define SENTIENCE_BOSS 5
 
@@ -136,29 +136,6 @@
 #define ENVIRONMENT_SMASH_STRUCTURES 1 //crates, lockers, ect
 #define ENVIRONMENT_SMASH_WALLS 2   //walls
 #define ENVIRONMENT_SMASH_RWALLS 4  //rwalls
-
-
-//SNPCs
-//AI defines
-#define INTERACTING 2
-#define TRAVEL 4
-#define FIGHTING 8
-//Trait defines
-#define TRAIT_ROBUST 2
-#define TRAIT_UNROBUST 4
-#define TRAIT_SMART 8
-#define TRAIT_DUMB 16
-#define TRAIT_MEAN 32
-#define TRAIT_FRIENDLY 64
-#define TRAIT_THIEVING 128
-//Range/chance defines
-#define MAX_RANGE_FIND 32
-#define MIN_RANGE_FIND 16
-#define FUZZY_CHANCE_HIGH 85
-#define FUZZY_CHANCE_LOW 50
-#define CHANCE_TALK 1
-
-#define TK_MAXRANGE 15
 
 #define NO_SLIP_WHEN_WALKING 1
 #define SLIDE 2
@@ -215,6 +192,10 @@
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
+
+// Roundstart trait system
+
+#define MAX_TRAITS 6 //The maximum amount of traits one character can have at roundstart
 
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5

@@ -9,7 +9,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	cure_chance = 15
 	desc = "This disease constantly changes and shifts in the host and causes a build-up of oxygen depriving chemicals that damage the brain and cause the body to reflexively scream in a desperate attempt to gain more oxygen."
-	severity = VIRUS_SEVERITY_BIOHAZARD
+	severity = DISEASE_SEVERITY_BIOHAZARD
 	var/new_scream = list('hippiestation/sound/misc/oof.ogg')
 	var/alternate_cures = list("mannitol", "synaptizine", "cryoxadone", "salbutamol", "perfluorodecalin", "morphine", "oculine", "epinephrine", "mutadone", "antihol", "gold")
 	var/new_cure = list("mannitol")

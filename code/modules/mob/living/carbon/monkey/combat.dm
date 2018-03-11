@@ -1,3 +1,4 @@
+#define MAX_RANGE_FIND 32
 
 /mob/living/carbon/monkey
 	var/aggressive=0 // set to 1 using VV for an angry monkey
@@ -475,3 +476,5 @@
 	if(A)
 		dropItemToGround(A, TRUE)
 		update_icons()
+
+#undef MAX_RANGE_FIND
