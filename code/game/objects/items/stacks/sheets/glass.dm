@@ -305,5 +305,8 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 
 /obj/item/shard/Crossed(mob/living/L)
 	if(istype(L) && has_gravity(loc))
-		playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
+		if(L.has_trait(TRAIT_LIGHT_STEP))
+			playsound(loc, 'sound/effects/glass_step.ogg', 30, 1)
+		else
+			playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 	. = ..()
