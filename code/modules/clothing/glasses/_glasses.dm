@@ -265,11 +265,11 @@
 /obj/item/clothing/glasses/sunglasses/blindfold/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot == slot_glasses)
-		user.become_blind("blindfold")
+		user.become_blind("blindfold_[REF(src)]")
 
 /obj/item/clothing/glasses/sunglasses/blindfold/dropped(mob/living/carbon/human/user)
 	..()
-	user.cure_blind("blindfold")
+	user.cure_blind("blindfold_[REF(src)]")
 
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks flashes."
