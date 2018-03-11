@@ -11949,8 +11949,7 @@
 	},
 /obj/machinery/light_switch{
 	dir = 9;
-	pixel_x = -22;
-	
+	pixel_x = -22
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
