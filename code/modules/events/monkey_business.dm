@@ -1,14 +1,14 @@
 /datum/round_event_control/monkeys
 	name = "Monkey Business"
 	typepath = /datum/round_event/ghost_role/monkeys
-	weight = 10
+	weight = 8
 
 
 /datum/round_event/ghost_role/monkeys
 	minimum_required = 1
 	role_name = "random monkey"
 	fakeable = TRUE
-	var/max_monkeys = 5
+	var/max_monkeys = 4
 
 /datum/round_event/ghost_role/monkeys/announce(fake)
 	if(fake || prob(45)) //55% chance of "oh god monkeys"
@@ -45,6 +45,7 @@
 		MN.fully_heal(TRUE) //just incase some assistant used this monkey as a punching bag
 		MN.mind.assigned_role = "Sentient Monkey"
 		MN.mind.special_role = "Sentient Monkey"
+		MN.add_trait(TRAIT_ETERNALMONKEY, EVENT_TRAIT)
 
 		to_chat(MN, "<span class='userdanger'>It's time for... monkey business!</span>")
 		to_chat(MN, "<span class='warning'>Due to space anomalies, you are now fully sentient! Please note, <B>you are not an antag, and cannot harm or kill unless in self defense.</B></span>")

@@ -150,6 +150,8 @@
 /mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG))
 	if (notransform)
 		return
+
+	remove_trait(TRAIT_ETERNALMONKEY) //if we're being force humanized, might as well remove the ETERNALMONKEY trait.
 	//Handle items on mob
 
 	//first implants & organs
