@@ -24,8 +24,10 @@
 						if(istype(O.target, /datum/mind))
 							var/datum/mind/M = O.target
 							target = M.current
-						else
+						else if(istype(O.target, /atom))
 							target = O.target
+						else
+							continue
 						break
 	..()
 
