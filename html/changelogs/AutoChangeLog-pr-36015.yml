@@ -1,0 +1,5 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - imageadd: "Redded borg transformation animations"
+  - imageadd: "adjust mining borg animation to new colors."
