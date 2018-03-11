@@ -8412,8 +8412,7 @@
 "auX" = (
 /obj/structure/mirror{
 	icon_state = "mirror_broke";
-	pixel_y = 28;
-	broken = 1
+	pixel_y = 28
 	},
 /obj/machinery/iv_drip,
 /turf/open/floor/plating,
@@ -8421,8 +8420,7 @@
 "auY" = (
 /obj/structure/mirror{
 	icon_state = "mirror_broke";
-	pixel_y = 28;
-	broken = 1
+	pixel_y = 28
 	},
 /obj/item/shard{
 	icon_state = "medium"
@@ -33455,7 +33453,7 @@
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
-	pixel_w = 30
+	pixel_x = 30
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
