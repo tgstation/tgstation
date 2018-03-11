@@ -5,6 +5,7 @@
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
 	var/beauty = 0
+	var/savedbeauty //I need to save this in a variable to 1. prevent roomsize alerting during this cleanables existance altering the amount of beauty gained back when cleaning and 2. to prevent pre-init cleanables from being deleted and thus only giving free beauty
 	var/mergeable_decal = TRUE //when two of these are on a same tile or do we need to merge them into just one?
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
@@ -27,9 +28,11 @@
 			AddComponent(/datum/component/infective, diseases_to_add)
 
 /obj/effect/decal/cleanable/LateInitialize()
+	. = ..()
 	if(src.loc && isturf(src.loc))
 		var/area/A = get_area(src)
-		A.beauty += beauty / max(1, A.areasize) //Ensures that the effects scale with room size
+		savedbeauty = beauty / max(1, A.areasize) //Ensures that the effects scale with room size
+		A.beauty += savedbeauty
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
 	if(mergeable_decal)
@@ -102,4 +105,4 @@
 	. = ..()
 	if(src.loc && isturf(src.loc))
 		var/area/A = get_area(src)
-		A.beauty -= beauty / max(1, A.areasize)
+		A.beauty -= savedbeauty

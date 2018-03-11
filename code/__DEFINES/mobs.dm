@@ -97,6 +97,14 @@
 #define MOOD_LEVEL_SAD3 -18
 #define MOOD_LEVEL_SAD4 -26
 
+//Sanity levels for humans
+#define SANITY_GREAT 125
+#define SANITY_NEUTRAL 100
+#define SANITY_DISTURBED 75
+#define SANITY_UNSTABLE 50
+#define SANITY_CRAZY 25
+#define SANITY_INSANE 0
+
 //Beauty levels of areas for carbons
 #define BEAUTY_LEVEL_HORRID -50
 #define BEAUTY_LEVEL_BAD -25

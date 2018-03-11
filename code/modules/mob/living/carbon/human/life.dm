@@ -82,7 +82,7 @@
 		a_intent_change(INTENT_HELP)
 
 	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
-	if (getBrainLoss() >= 60 && stat == CONSCIOUS)
+	if (getBrainLoss() >= 60 && !incapacitated(TRUE))
 		if(mood)
 			mood.add_event("brain_damage", /datum/mood_event/brain_damage)
 		if(prob(3))

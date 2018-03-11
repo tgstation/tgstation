@@ -1,7 +1,8 @@
 /datum/component/mood
 	var/mood //Real happiness
+	var/sanity = 100 //Current sanity
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
-	var/mood_level //To track what stage of moodies they're on
+	var/mood_level = 5 //To track what stage of moodies they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/datum/mood_event/list/mood_events = list()
 	var/mob/living/owner
@@ -19,6 +20,22 @@
 
 /datum/component/mood/proc/print_mood()
 	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM>\n"
+	msg += "<span class='notice'>My current status is: </span>"
+	switch(sanity)
+		if(SANITY_GREAT to INFINITY)
+			msg += "<span class='nicegreen'>My mind feels like a temple!<span>\n"
+		if(SANITY_NEUTRAL to SANITY_GREAT)
+			msg += "<span class='nicegreen'>I have been feeling great lately!<span>\n"
+		if(SANITY_DISTURBED to SANITY_NEUTRAL)
+			msg += "<span class='nicegreen'>I have felt quite decent lately<span>\n"
+		if(SANITY_UNSTABLE to SANITY_DISTURBED)
+			msg += "<span class='warning'>I'm feeling a little bit unhinged...</span>\n"
+		if(SANITY_INSANE to SANITY_UNSTABLE)
+			msg += "<span class='boldwarning'>I'm freaking out!!</span>\n"
+		if(SANITY_INSANE to SANITY_CRAZY)
+			msg += "<span class='boldwarning'>AHAHAHAHAHAHAHAHAHAH!!</span>\n"
+
+
 	for(var/i in mood_events)
 		var/datum/mood_event/event = mood_events[i]
 		msg += event.description
@@ -59,15 +76,35 @@
 		owner.hud_used.mood.icon_state = "mood[mood_level]"
 
 /datum/component/mood/process() //Called on SSmood process
-	switch(mood)
-		if(-INFINITY to MOOD_LEVEL_SAD4)
+	switch(sanity)
+		if(SANITY_INSANE to SANITY_CRAZY)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 3)
-		if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
+		if(SANITY_INSANE to SANITY_UNSTABLE)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 2)
-		if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
+		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 1)
-		if(MOOD_LEVEL_SAD2 to INFINITY)
+		if(SANITY_DISTURBED to SANITY_GREAT)
 			owner.clear_fullscreen("depression")
+
+	switch(mood_level)
+		if(1)
+			DecreaseSanity(0.4)
+		if(2)
+			DecreaseSanity(0.25)
+		if(3)
+			DecreaseSanity(0.2)
+		if(4)
+			DecreaseSanity(0.1)
+		if(5)
+			IncreaseSanity(0.1)
+		if(6)
+			IncreaseSanity(0.15)
+		if(7)
+			IncreaseSanity(0.20)
+		if(8)
+			IncreaseSanity(0.25, 125)
+		if(9)
+			IncreaseSanity(0.4, 125)
 
 	if(owner.has_trait(TRAIT_DEPRESSION))
 		if(prob(0.1))
@@ -78,17 +115,23 @@
 			add_event("jolly", /datum/mood_event/jolly)
 			clear_event("depression")
 
+/datum/component/mood/proc/DecreaseSanity(amount)
+	sanity = max(0, sanity - amount)
+
+/datum/component/mood/proc/IncreaseSanity(amount, limit = 99)
+	if(sanity > limit)
+		DecreaseSanity(-0.5) //Removes some sanity to go back to our current limit.
+	sanity = min(limit, sanity + amount)
+
 /datum/component/mood/proc/add_event(category, type, param) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 	var/datum/mood_event/the_event
 	if(mood_events[category])
 		the_event = mood_events[category]
 		if(the_event.type != type)
 			clear_event(category)
-			return .()
 		else
 			return 0 //Don't have to update the event.
-	else
-		the_event = new type(src, param)
+	the_event = new type(src, param)
 
 	mood_events[category] = the_event
 	update_mood()

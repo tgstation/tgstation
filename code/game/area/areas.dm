@@ -536,7 +536,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(outdoors)
 		return FALSE
 	areasize = 0
-	for(var/turf/T in src.contents)
+	for(var/turf/open/T in src.contents)
 		areasize++
 
 /area/AllowDrop()

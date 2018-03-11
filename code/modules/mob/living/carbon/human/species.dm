@@ -969,14 +969,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
 		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
-		if(mood)
-			switch(mood.mood) //Alerts do_after delay based on how happy you are
-				if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
-					hunger_rate *= 0.9
-				if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
-					hunger_rate *= 0.8
-				if(MOOD_LEVEL_HAPPY4 to INFINITY)
-					hunger_rate *= 0.7
+		if(mood && mood.sanity > SANITY_DISTURBED)
+			hunger_rate *= min(0.5, 1 - 0.002 * mood.sanity) //0.85 to 0.75
 
 		if(H.satiety > 0)
 			H.satiety--
@@ -1144,12 +1138,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 		if(mood && !flight) //How can depression slow you down if you can just fly away from your problems?
-			switch(mood.mood)
-				if(-INFINITY to MOOD_LEVEL_SAD4)
+			switch(mood.sanity)
+				if(SANITY_INSANE to SANITY_CRAZY)
 					. += 1.5
-				if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
+				if(SANITY_CRAZY to SANITY_UNSTABLE)
 					. += 1
-				if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
+				if(SANITY_UNSTABLE to SANITY_DISTURBED)
 					. += 0.5
 
 		if(H.has_trait(TRAIT_FAT))
