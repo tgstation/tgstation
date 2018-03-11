@@ -20,6 +20,7 @@
 	var/blood_type = null
 	var/list/features = null
 	var/factions = null
+	var/list/traits = null
 	var/contains_sample = 0
 
 /obj/item/seeds/replicapod/attackby(obj/item/W, mob/user, params)
@@ -34,6 +35,7 @@
 					blood_type = bloodSample.data["blood_type"]
 					features = bloodSample.data["features"]
 					factions = bloodSample.data["factions"]
+					traits = bloodSample.data["traits"]
 					W.reagents.clear_reagents()
 					to_chat(user, "<span class='notice'>You inject the contents of the syringe into the seeds.</span>")
 					contains_sample = 1
@@ -99,6 +101,8 @@
 		podman.faction |= factions
 		if(!features["mcolor"])
 			features["mcolor"] = "#59CE00"
+		for(var/V in traits)
+			new V(podman)
 		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 
