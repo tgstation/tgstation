@@ -93,6 +93,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			hsrc = holder
 		if("usr")
 			hsrc = mob
+		if("mentor") // hippie start
+			hsrc = mentor_datum // hippie end
 		if("prefs")
 			if (inprefs)
 				return
