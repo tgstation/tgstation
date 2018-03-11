@@ -110,7 +110,8 @@
 			var/list/slots = list("backpack" = slot_in_backpack)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
-				H.equip_in_one_of_slots(O, slots)
+				if(!H.equip_in_one_of_slots(O, slots))
+					addtimer(CALLBACK(H, /mob/living/carbon.proc/equip_in_one_of_slots, O, slots), 55) //try to give it again in 5.5 seconds
 
 /datum/objective/assassinate
 	var/target_role_type=0
