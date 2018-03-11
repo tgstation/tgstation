@@ -12,13 +12,18 @@ the new instance inside the host to be updated to the template's stats.
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
-	move_on_shuttle = 1
+	move_on_shuttle = FALSE
 	see_in_dark = 8
 	invisibility = INVISIBILITY_OBSERVER
 	layer = BELOW_MOB_LAYER
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	sight = SEE_SELF
+	sight = SEE_SELF|SEE_THRU
 	initial_language_holder = /datum/language_holder/empty
+
+	var/freemove = TRUE
+	var/freemove_end = 0
+	var/const/freemove_time = 1200
+	var/freemove_end_timerid
 
 	var/datum/action/innate/disease_adapt/adaptation_menu_action
 	var/datum/disease_ability/examining_ability
@@ -45,19 +50,12 @@ the new instance inside the host to be updated to the template's stats.
 
 /mob/camera/disease/Initialize(mapload)
 	.= ..()
-	adaptation_menu_action = new /datum/action/innate/disease_adapt()
-	adaptation_menu_action.Grant(src)
 
 	disease_instances = list()
 	hosts = list()
 
 	purchased_abilities = list()
 	unpurchased_abilities = list()
-	for(var/V in GLOB.disease_ability_singletons)
-		unpurchased_abilities[V] = TRUE
-		var/datum/disease_ability/A = V
-		if(A.start_with && A.CanBuy(src))
-			A.Buy(src, TRUE, FALSE)
 
 	disease_template = new /datum/disease/advance/sentient_disease()
 	disease_template.overmind = src
@@ -69,29 +67,45 @@ the new instance inside the host to be updated to the template's stats.
 
 	browser = new /datum/browser(src, "disease_menu", "Adaptation Menu", 1000, 770, src)
 
+	freemove_end = world.time + freemove_time
+	freemove_end_timerid = addtimer(CALLBACK(src, .proc/infect_random_patient_zero), freemove_time, TIMER_STOPPABLE)
+
 /mob/camera/disease/Destroy()
 	. = ..()
+	QDEL_NULL(adaptation_menu_action)
 	for(var/V in GLOB.sentient_disease_instances)
 		var/datum/disease/advance/sentient_disease/S = V
 		if(S.overmind == src)
 			S.overmind = null
 
+/mob/camera/disease/Login()
+	..()
+	if(freemove)
+		to_chat(src, "<span class='warning'>You have [round((freemove_end - world.time)/10)] seconds to select your first host. Click on a human to select your host.</span>")
+
+
 /mob/camera/disease/Stat()
 	..()
 	if(statpanel("Status"))
-		stat("Adaptation Points: [points]/[total_points]")
-		stat("Hosts: [disease_instances.len]")
-		var/adapt_ready = next_adaptation_time - world.time
-		if(adapt_ready > 0)
-			stat("Adaptation Ready: [round(adapt_ready/10, 0.1)]s")
+		if(freemove)
+			stat("Host Selection Time: [round((freemove_end - world.time)/10)]s")
+		else
+			stat("Adaptation Points: [points]/[total_points]")
+			stat("Hosts: [disease_instances.len]")
+			var/adapt_ready = next_adaptation_time - world.time
+			if(adapt_ready > 0)
+				stat("Adaptation Ready: [round(adapt_ready/10, 0.1)]s")
 
 /mob/camera/disease/say(message)
 	return
 
 /mob/camera/disease/Move(NewLoc, Dir = 0)
-	if(world.time > (last_move_tick + move_delay))
-		follow_next(Dir & NORTHWEST)
-		last_move_tick = world.time
+	if(freemove)
+		forceMove(NewLoc)
+	else
+		if(world.time > (last_move_tick + move_delay))
+			follow_next(Dir & NORTHWEST)
+			last_move_tick = world.time
 
 /mob/camera/disease/mind_initialize()
 	. = ..()
@@ -122,22 +136,56 @@ the new instance inside the host to be updated to the template's stats.
 	if(A)
 		A.disease_name = set_name
 
-/mob/camera/disease/proc/infect_patient_zero()
-	var/list/possible_hosts = list()
-	var/datum/disease/advance/sentient_disease/V = disease_template.Copy()
-	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
-		if((H.stat != DEAD) && H.CanContractDisease(V))
-			possible_hosts += H
-	if(!possible_hosts.len)
+/mob/camera/disease/proc/infect_random_patient_zero(del_on_fail = TRUE)
+	if(!freemove)
 		return FALSE
-	var/mob/living/carbon/human/H = pick(possible_hosts)
-	if(H.ForceContractDisease(V, FALSE, TRUE))
-		return TRUE
+	var/list/possible_hosts = list()
+	var/list/afk_possible_hosts = list()
+	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+		var/turf/T = get_turf(H)
+		if((H.stat != DEAD) && T && is_station_level(T.z) && H.CanContractDisease(disease_template))
+			if(H.client && !H.client.is_afk())
+				possible_hosts += H
+			else
+				afk_possible_hosts += H
+
+	shuffle_inplace(possible_hosts)
+	shuffle_inplace(afk_possible_hosts)
+	possible_hosts += afk_possible_hosts //ideally we want a not-afk person, but we will settle for an afk one if there are no others (mostly for testing)
+
+	while(possible_hosts.len)
+		var/mob/living/carbon/human/target = possible_hosts[1]
+		if(force_infect(target))
+			return TRUE
+		possible_hosts.Cut(1, 2)
+
+	if(del_on_fail)
+		to_chat(src, "<span class=userdanger'>No hosts were available for your disease to infect.</span>")
+		qdel(src)
 	return FALSE
 
 /mob/camera/disease/proc/force_infect(mob/living/L)
 	var/datum/disease/advance/sentient_disease/V = disease_template.Copy()
-	return L.ForceContractDisease(V, FALSE, TRUE)
+	var/result = L.ForceContractDisease(V, FALSE, TRUE)
+	if(result && freemove)
+		end_freemove()
+	return result
+
+/mob/camera/disease/proc/end_freemove()
+	if(!freemove)
+		return
+	freemove = FALSE
+	move_on_shuttle = TRUE
+	adaptation_menu_action = new /datum/action/innate/disease_adapt()
+	adaptation_menu_action.Grant(src)
+	for(var/V in GLOB.disease_ability_singletons)
+		unpurchased_abilities[V] = TRUE
+		var/datum/disease_ability/A = V
+		if(A.start_with && A.CanBuy(src))
+			A.Buy(src, TRUE, FALSE)
+	if(freemove_end_timerid)
+		deltimer(freemove_end_timerid)
+	sight = SEE_SELF
 
 /mob/camera/disease/proc/add_infection(datum/disease/advance/sentient_disease/V)
 	disease_instances += V
@@ -211,6 +259,18 @@ the new instance inside the host to be updated to the template's stats.
 /mob/camera/disease/DblClickOn(var/atom/A, params)
 	if(hosts[A])
 		set_following(A)
+	else
+		..()
+
+/mob/camera/disease/ClickOn(var/atom/A, params)
+	if(freemove && ishuman(A))
+		var/mob/living/carbon/human/H = A
+		if(alert(src, "Select [H.name] as your initial host?", "Select Host", "Yes", "No") != "Yes")
+			return
+		if(!freemove)
+			return
+		if(QDELETED(H) || !force_infect(H))
+			to_chat(src, "<span class='warning'>[H ? H.name : "Host"] cannot be infected.</span>")
 	else
 		..()
 
