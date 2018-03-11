@@ -1,4 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - rscadd: "Orderable supplies in cargo now all have descriptions! The station's overall FLAVORFUL_TEXT stat has gone up by nearly 2% as a result."
