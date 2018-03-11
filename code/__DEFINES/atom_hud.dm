@@ -19,8 +19,9 @@
 #define DIAG_AIRLOCK_HUD "15"//Airlock shock overlay
 #define DIAG_PATH_HUD "16"//Bot path indicators
 #define GLAND_HUD "17"//Gland indicators for abductors
+#define SENTIENT_DISEASE_HUD	"18"
 //for antag huds. these are used at the /mob level
-#define ANTAG_HUD		"18"
+#define ANTAG_HUD		"19"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -35,23 +36,27 @@
 #define DATA_HUD_DIAGNOSTIC_BASIC		5
 #define DATA_HUD_DIAGNOSTIC_ADVANCED	6
 #define DATA_HUD_ABDUCTOR				7
+#define DATA_HUD_SENTIENT_DISEASE		8
+
 //antag HUD defines
-#define ANTAG_HUD_CULT			8
-#define ANTAG_HUD_REV			9
-#define ANTAG_HUD_OPS			10
-#define ANTAG_HUD_WIZ			11
-#define ANTAG_HUD_SHADOW    	12
-#define ANTAG_HUD_TRAITOR 		13
-#define ANTAG_HUD_NINJA 		14
-#define ANTAG_HUD_CHANGELING 	15
-#define ANTAG_HUD_ABDUCTOR 		16
-#define ANTAG_HUD_DEVIL			17
-#define ANTAG_HUD_SINTOUCHED	18
-#define ANTAG_HUD_SOULLESS		19
-#define ANTAG_HUD_CLOCKWORK		20
-#define ANTAG_HUD_BROTHER		21
+#define ANTAG_HUD_CULT			9
+#define ANTAG_HUD_REV			10
+#define ANTAG_HUD_OPS			11
+#define ANTAG_HUD_WIZ			12
+#define ANTAG_HUD_SHADOW    	13
+#define ANTAG_HUD_TRAITOR 		14
+#define ANTAG_HUD_NINJA 		15
+#define ANTAG_HUD_CHANGELING 	16
+#define ANTAG_HUD_ABDUCTOR 		17
+#define ANTAG_HUD_DEVIL			18
+#define ANTAG_HUD_SINTOUCHED	19
+#define ANTAG_HUD_SOULLESS		20
+#define ANTAG_HUD_CLOCKWORK		21
+#define ANTAG_HUD_BROTHER		22
 
 // Notification action types
 #define NOTIFY_JUMP "jump"
 #define NOTIFY_ATTACK "attack"
 #define NOTIFY_ORBIT "orbit"
+
+#define ADD_HUD_TO_COOLDOWN 20 //cooldown for being shown the images for any particular data hud

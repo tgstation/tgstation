@@ -85,7 +85,6 @@ the new instance inside the host to be updated to the template's stats.
 		if(adapt_ready > 0)
 			stat("Adaptation Ready: [round(adapt_ready/10, 0.1)]s")
 
-
 /mob/camera/disease/examine(mob/user)
 	..()
 	if(isobserver(user))
