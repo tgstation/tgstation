@@ -1335,7 +1335,7 @@
 
 /datum/supply_pack/organic/pizza
 	name = "Pizza Crate"
-	desc = "Best prices on this side of the galaxy. All deliveries are guarenteed to be 99% anomaly-free!"
+	desc = "Best prices on this side of the galaxy. All deliveries are guaranteed to be 99% anomaly-free!"
 	cost = 6000 // Best prices this side of the galaxy.
 	contains = list(/obj/item/pizzabox/margherita,
 					/obj/item/pizzabox/mushroom,
@@ -1904,7 +1904,7 @@
 
 /datum/supply_pack/misc/formalwear
 	name = "Formalwear Crate"
-	desc = "You're gonna like the way you look, I guarentee it. Contains an asston of fancy clothing."
+	desc = "You're gonna like the way you look, I guaranteed it. Contains an asston of fancy clothing."
 	cost = 3000 //Lots of very expensive items. You gotta pay up to look good!
 	contains = list(/obj/item/clothing/under/blacktango,
 					/obj/item/clothing/under/assistantformal,
