@@ -278,12 +278,65 @@
 /datum/admins/proc/makeERTTemplateModified(list/settings)
 	. = settings
 	var/datum/ert/newtemplate = settings["mainsettings"]["template"]["value"]
+	if (isnull(newtemplate))
+		return
 	if (!ispath(newtemplate))
 		newtemplate = text2path(newtemplate)
 	newtemplate = new newtemplate
 	.["mainsettings"]["teamsize"]["value"] = newtemplate.teamsize
 	.["mainsettings"]["mission"]["value"] = newtemplate.mission
 	.["mainsettings"]["polldesc"]["value"] = newtemplate.polldesc
+
+
+/datum/admins/proc/equipAntagOnDummy(mob/living/carbon/human/dummy/mannequin, datum/antagonist/antag)
+	for(var/I in mannequin.get_equipped_items())
+		qdel(I)
+	if (ispath(antag, /datum/antagonist/ert))
+		var/datum/antagonist/ert/ert = antag
+		mannequin.equipOutfit(initial(ert.outfit), TRUE)
+	else if (ispath(antag, /datum/antagonist/official))
+		mannequin.equipOutfit(/datum/outfit/centcom_official, TRUE)
+
+/datum/admins/proc/makeERTPreviewIcon(list/settings)
+	// Set up the dummy for its photoshoot
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_ADMIN)
+
+	var/prefs = settings["mainsettings"]
+	var/datum/ert/template = prefs["template"]["value"]
+	if (isnull(template))
+		return null
+	if (!ispath(template))
+		template = text2path(prefs["template"]["value"]) // new text2path ... doesn't compile in 511
+
+	template = new template
+	var/datum/antagonist/ert/ert = template.leader_role
+
+	equipAntagOnDummy(mannequin, ert)
+
+	COMPILE_OVERLAYS(mannequin)
+	CHECK_TICK
+	var/icon/preview_icon = icon('icons/effects/effects.dmi', "nothing")
+	preview_icon.Scale(48+32, 16+32)
+	CHECK_TICK
+	mannequin.setDir(NORTH)
+	var/icon/stamp = getFlatIcon(mannequin)
+	CHECK_TICK
+	preview_icon.Blend(stamp, ICON_OVERLAY, 25, 17)
+	CHECK_TICK
+	mannequin.setDir(WEST)
+	stamp = getFlatIcon(mannequin)
+	CHECK_TICK
+	preview_icon.Blend(stamp, ICON_OVERLAY, 1, 9)
+	CHECK_TICK
+	mannequin.setDir(SOUTH)
+	stamp = getFlatIcon(mannequin)
+	CHECK_TICK
+	preview_icon.Blend(stamp, ICON_OVERLAY, 49, 1)
+	CHECK_TICK
+	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2) // Scaling here to prevent blurring in the browser.
+	CHECK_TICK
+	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_ADMIN)
+	return preview_icon
 
 /datum/admins/proc/makeEmergencyresponseteam(var/datum/ert/ertemplate = null)
 	if (ertemplate)
@@ -292,6 +345,7 @@
 		ertemplate = new /datum/ert/centcom_official
 
 	var/list/settings = list(
+		"preview_callback" = CALLBACK(src, .proc/makeERTPreviewIcon),
 		"mainsettings" = list(
 		"template" = list("desc" = "Template", "callback" = CALLBACK(src, .proc/makeERTTemplateModified), "type" = "datum", "path" = "/datum/ert", "subtypesonly" = TRUE, "value" = ertemplate.type),
 		"teamsize" = list("desc" = "Team Size", "type" = "number", "value" = ertemplate.teamsize),
@@ -302,6 +356,9 @@
 	)
 
 	var/list/prefreturn = presentpreflikepicker(usr,"Customize ERT", "Customize ERT", Button1="Ok", width = 600, StealFocus = 1,Timeout = 0, settings=settings)
+
+	if (isnull(prefreturn))
+		return FALSE
 
 	if (prefreturn["button"] == 1)
 		var/list/prefs = settings["mainsettings"]
