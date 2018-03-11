@@ -53500,7 +53500,9 @@
 	c_tag = "Engineering Storage";
 	dir = 4
 	},
-/obj/machinery/rnd/production/protolathe/department/engineering,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cBo" = (
