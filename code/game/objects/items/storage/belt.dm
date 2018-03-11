@@ -47,7 +47,8 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves,
-		/obj/item/holosign_creator
+		/obj/item/holosign_creator,
+		/obj/item/device/assembly/signaler
 		)
 	content_overlays = TRUE
 
