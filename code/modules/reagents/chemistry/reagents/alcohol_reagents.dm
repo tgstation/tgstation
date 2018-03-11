@@ -1,5 +1,6 @@
 #define ALCOHOL_THRESHOLD_MODIFIER 0.05 //Greater numbers mean that less alcohol has greater intoxication potential
 #define ALCOHOL_RATE 0.005 //The rate at which alcohol affects you
+#define ALCOHOL_EXPONENT 1.6 //The exponent applied to boozepwr to make higher volume alcohol atleast a little bit damaging.
 
 ////////////// I don't know who made this header before I refactored alcohols but I'm going to fucking strangle them because it was so ugly, holy Christ
 // ALCOHOLS //
@@ -37,9 +38,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
-			H.drunkenness = max((H.drunkenness + (sqrt(volume) * boozepwr * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
+			var/booze_power = boozepwr
+			if(H.has_trait(TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
+				booze_power *= 0.7
+			H.drunkenness = max((H.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
 			var/obj/item/organ/liver/L = H.getorganslot(ORGAN_SLOT_LIVER)
-			H.applyLiverDamage((max(sqrt(volume) * boozepwr * L.alcohol_tolerance, 0))/4)
+			H.applyLiverDamage((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/150)
 	return ..() || .
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
@@ -117,7 +121,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.AdjustSleeping(-40, FALSE)
-	M.Jitter(5)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.Jitter(5)
 	..()
 	. = 1
 
@@ -140,18 +145,61 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#102000" // rgb: 16, 32, 0
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	boozepwr = 80
+	overdose_threshold = 60
+	addiction_threshold = 30
 	taste_description = "jitters and death"
 	glass_icon_state = "thirteen_loko_glass"
 	glass_name = "glass of Thirteen Loko"
 	glass_desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass."
 
-
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/M)
 	M.drowsyness = max(0,M.drowsyness-7)
 	M.AdjustSleeping(-40)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	M.Jitter(5)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.Jitter(5)
 	return ..()
+
+/datum/reagent/consumable/ethanol/thirteenloko/overdose_start(mob/living/M)
+	to_chat(M, "<span class='userdanger'>Your entire body violently jitters as you start to feel queasy. You really shouldn't have drank all of that [name]!</span>")
+	M.Jitter(20)
+	M.Stun(15)
+
+/datum/reagent/consumable/ethanol/thirteenloko/overdose_process(mob/living/M)
+	if(prob(7) && iscarbon(M))
+		var/obj/item/I = M.get_active_held_item()
+		if(I)
+			M.dropItemToGround(I)
+			to_chat(M, "<span class ='notice'>Your hands jitter and you drop what you were holding!</span>")
+			M.Jitter(10)
+
+	if(prob(7))
+		to_chat(M, "<span class='notice'>[pick("You have a really bad headache.", "Your eyes hurt.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]</span>")
+
+	if(prob(5) && iscarbon(M))
+		if(M.has_trait(TRAIT_BLIND))
+			var/obj/item/organ/eyes/eye = M.getorganslot(ORGAN_SLOT_EYES)
+			if(istype(eye))
+				eye.Remove(M)
+				eye.forceMove(get_turf(M))
+				to_chat(M, "<span class='userdanger'>You double over in pain as you feel your eyeballs liquify in your head!</span>")
+				M.emote("scream")
+				M.adjustBruteLoss(15)
+		else
+			to_chat(M, "<span class='userdanger'>You scream in terror as you go blind!</span>")
+			M.become_blind(EYE_DAMAGE)
+			M.emote("scream")
+
+	if(prob(3) && iscarbon(M))
+		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
+		M.Unconscious(100)
+		M.Jitter(350)
+
+	if(prob(1) && iscarbon(M))
+		var/datum/disease/D = new /datum/disease/heart_failure
+		M.ForceContractDisease(D)
+		to_chat(M, "<span class='userdanger'>You're pretty sure you just felt your heart stop for a second there..</span>")
+		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
 
 /datum/reagent/consumable/ethanol/vodka
 	name = "Vodka"
@@ -305,7 +353,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassgreen"
 
 /datum/reagent/consumable/ethanol/absinthe/on_mob_life(mob/living/M)
-	if(prob(10))
+	if(prob(10) && !M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
 		M.hallucination += 4 //Reference to the urban myth
 	..()
 
@@ -367,16 +415,27 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Gin and Tonic"
 	glass_desc = "A mild but still great cocktail. Drink up, like a true Englishman."
 
+/datum/reagent/consumable/ethanol/rum_coke
+	name = "Rum and Coke"
+	id = "rumcoke"
+	description = "Rum, mixed with cola."
+	taste_description = "cola"
+	boozepwr = 40
+	color = "#3E1B00"
+	glass_icon_state = "whiskeycolaglass"
+	glass_name = "Rum and Coke"
+	glass_desc = "The classic go-to of space-fratboys."
+
 /datum/reagent/consumable/ethanol/cuba_libre
 	name = "Cuba Libre"
 	id = "cubalibre"
-	description = "Rum, mixed with cola. Viva la revolucion."
+	description = "Viva la Revolucion! Viva Cuba Libre!"
 	color = "#3E1B00" // rgb: 62, 27, 0
 	boozepwr = 50
-	taste_description = "cola"
+	taste_description = "a refreshing marriage of citrus and rum"
 	glass_icon_state = "cubalibreglass"
 	glass_name = "Cuba Libre"
-	glass_desc = "A classic mix of rum and cola."
+	glass_desc = "A classic mix of rum, cola, and lime. A favorite of revolutionaries everywhere!"
 
 /datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/M)
 	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/rev)) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
@@ -556,7 +615,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Heavy, hot and strong. Just like the Iron fist of the LAW."
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/M)
-	M.Stun(40, 0)
+	if(M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.Stun(30, 0) //this realistically does nothing to prevent chainstunning but will cause them to recover faster once it's out of their system
+	else
+		M.Stun(40, 0)
 	return ..()
 
 /datum/reagent/consumable/ethanol/irish_cream
@@ -585,7 +647,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/manly_dorf/on_mob_add(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.dna.check_mutation(DWARFISM))
+		if(H.dna.check_mutation(DWARFISM) || H.has_trait(TRAIT_ALCOHOL_TOLERANCE))
 			to_chat(H, "<span class='notice'>Now THAT is MANLY!</span>")
 			boozepwr = 5 //We've had worse in the mines
 			dorf_mode = TRUE
@@ -1148,8 +1210,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/M)
 	M.set_drugginess(50)
-	M.confused = max(M.confused+2,0)
-	M.Dizzy(10)
+	if(!M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		M.confused = max(M.confused+2,0)
+		M.Dizzy(10)
 	if (!M.slurring)
 		M.slurring = 1
 	M.slurring += 3

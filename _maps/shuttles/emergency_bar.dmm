@@ -9,6 +9,13 @@
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"ad" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/turf/open/floor/plasteel/bar,
+/area/shuttle/escape)
 "ae" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
@@ -35,6 +42,13 @@
 	pixel_y = 6
 	},
 /turf/open/floor/carpet,
+/area/shuttle/escape)
+"aj" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
+/turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/extinguisher_cabinet{
@@ -250,11 +264,6 @@
 /mob/living/simple_animal/hostile/alien/maid/barmaid,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
-"aV" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
-/turf/open/floor/plasteel/bar,
-/area/shuttle/escape)
 "aW" = (
 /obj/structure/chair/wood/normal,
 /turf/open/floor/plasteel/grimy,
@@ -280,11 +289,6 @@
 /obj/structure/table/wood/bar,
 /obj/effect/spawner/lootdrop/gambling,
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape)
-"bb" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
-/turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "bc" = (
 /obj/item/twohanded/required/kirbyplants{
@@ -782,9 +786,9 @@ aG
 bW
 bI
 aS
-aV
+ad
 aY
-bb
+aj
 bN
 be
 bT

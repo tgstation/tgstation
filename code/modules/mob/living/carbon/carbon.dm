@@ -453,7 +453,7 @@
 	return ..()
 
 /mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE)
-	if(dna && dna.species && NOHUNGER in dna.species.species_traits)
+	if(has_trait(TRAIT_NOHUNGER))
 		return 1
 
 	if(nutrition < 100 && !blood)
@@ -583,10 +583,12 @@
 		return
 	tinttotal = get_total_tint()
 	if(tinttotal >= TINT_BLIND)
-		overlay_fullscreen("tint", /obj/screen/fullscreen/blind)
+		become_blind(EYES_COVERED)
 	else if(tinttotal >= TINT_DARKENED)
+		cure_blind(EYES_COVERED)
 		overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
 	else
+		cure_blind(EYES_COVERED)
 		clear_fullscreen("tint", 0)
 
 /mob/living/carbon/proc/get_total_tint()
@@ -767,9 +769,9 @@
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.damaged_brain = FALSE
-	for(var/thing in viruses)
+	for(var/thing in diseases)
 		var/datum/disease/D = thing
-		if(D.severity != VIRUS_SEVERITY_POSITIVE)
+		if(D.severity != DISEASE_SEVERITY_POSITIVE)
 			D.cure(FALSE)
 	if(admin_revive)
 		regenerate_limbs()

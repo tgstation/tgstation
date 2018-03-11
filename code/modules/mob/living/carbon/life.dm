@@ -98,7 +98,9 @@
 		air_update_turf()
 
 /mob/living/carbon/proc/has_smoke_protection()
-	return 0
+	if(has_trait(TRAIT_NOBREATH))
+		return TRUE
+	return FALSE
 
 
 //Third link in a breath chain, calls handle_breath_temperature()
@@ -245,7 +247,7 @@
 		O.on_life()
 
 /mob/living/carbon/handle_diseases()
-	for(var/thing in viruses)
+	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(prob(D.infectivity))
 			D.spread()

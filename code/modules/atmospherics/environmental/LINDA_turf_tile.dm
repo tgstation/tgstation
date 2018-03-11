@@ -248,8 +248,11 @@
 		pressure_difference = difference
 
 /turf/open/proc/high_pressure_movements()
-	for(var/atom/movable/M in src)
-		M.experience_pressure_difference(pressure_difference, pressure_direction)
+	var/atom/movable/M
+	for(var/thing in src)
+		M = thing
+		if (!M.anchored && !M.pulledby && M.last_high_pressure_movement_air_cycle < SSair.times_fired)
+			M.experience_pressure_difference(pressure_difference, pressure_direction)
 
 /atom/movable/var/pressure_resistance = 10
 /atom/movable/var/last_high_pressure_movement_air_cycle = 0
@@ -258,17 +261,13 @@
 	var/const/PROBABILITY_OFFSET = 25
 	var/const/PROBABILITY_BASE_PRECENT = 75
 	set waitfor = 0
-	. = FALSE
-	if (!anchored && !pulledby)
-		. = TRUE
-		if (last_high_pressure_movement_air_cycle < SSair.times_fired)
-			var/move_prob = 100
-			if (pressure_resistance > 0)
-				move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
-			move_prob += pressure_resistance_prob_delta
-			if (move_prob > PROBABILITY_OFFSET && prob(move_prob))
-				step(src, direction)
-				last_high_pressure_movement_air_cycle = SSair.times_fired
+	var/move_prob = 100
+	if (pressure_resistance > 0)
+		move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
+	move_prob += pressure_resistance_prob_delta
+	if (move_prob > PROBABILITY_OFFSET && prob(move_prob))
+		step(src, direction)
+		last_high_pressure_movement_air_cycle = SSair.times_fired
 
 ///////////////////////////EXCITED GROUPS/////////////////////////////
 

@@ -32,6 +32,12 @@
 		font_color = "red"
 		prayer_type = "CULTIST PRAYER"
 		deity = "Nar-Sie"
+	else if(isliving(usr))
+		var/mob/living/L = usr
+		if(L.has_trait(TRAIT_SPIRITUAL))
+			cross.icon_state = "holylight"
+			font_color = "blue"
+			prayer_type = "SPIRITUAL PRAYER"
 
 	msg = "<span class='adminnotice'>[icon2html(cross, GLOB.admins)]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [msg]</span>"
 

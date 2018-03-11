@@ -157,11 +157,6 @@
 #define FUZZY_CHANCE_HIGH 85
 #define FUZZY_CHANCE_LOW 50
 #define CHANCE_TALK 1
-//Traitor type defines
-#define SNPC_BRUTE 1
-#define SNPC_STEALTH 2
-#define SNPC_MARTYR 3
-#define SNPC_PSYCHO 4
 
 #define TK_MAXRANGE 15
 
@@ -220,6 +215,10 @@
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
+
+// Roundstart trait system
+
+#define MAX_TRAITS 6 //The maximum amount of traits one character can have at roundstart
 
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5

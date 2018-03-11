@@ -74,10 +74,10 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		messages += "Theoretical: Epicenter radius: [orig_dev_range]. Outer radius: [orig_heavy_range]. Shockwave radius: [orig_light_range]."
 
 	if(integrated)
-		var/obj/item/clothing/head/helmet/space/hardsuit/helm = loc
-		if(!helm || !istype(helm, /obj/item/clothing/head/helmet/space/hardsuit))
+		var/obj/item/clothing/head/helm = loc
+		if(!helm || !istype(helm, /obj/item/clothing/head))
 			return
-		helm.display_visor_message("Explosion detected! Epicenter: [devastation_range], Outer: [heavy_impact_range], Shock: [light_impact_range]")
+		helm.display_helmet_message("Explosion detected! Epicenter: [devastation_range], Outer: [heavy_impact_range], Shock: [light_impact_range]") //Allows bombsuit explosion messages too
 	else
 		for(var/message in messages)
 			say(message)

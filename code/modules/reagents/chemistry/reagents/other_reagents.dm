@@ -16,13 +16,15 @@
 		for(var/thing in data["viruses"])
 			var/datum/disease/D = thing
 
-			if((D.spread_flags & VIRUS_SPREAD_SPECIAL) || (D.spread_flags & VIRUS_SPREAD_NON_CONTAGIOUS))
+			if((D.spread_flags & DISEASE_SPREAD_SPECIAL) || (D.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
 
-			if((method == TOUCH || method == VAPOR) && (D.spread_flags & VIRUS_SPREAD_CONTACT_FLUIDS))
-				M.ContactContractDisease(D)
-			else //ingest, patch or inject
-				M.ForceContractDisease(D)
+			if(isliving(M))
+				var/mob/living/L = M
+				if((method == TOUCH || method == VAPOR) && (D.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
+					L.ContactContractDisease(D)
+				else //ingest, patch or inject
+					L.ForceContractDisease(D)
 
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
@@ -97,12 +99,15 @@
 	taste_description = "slime"
 
 /datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, reac_volume)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(islist(data) && (method == INGEST || method == INJECT))
-		for(var/thing in M.viruses)
+		for(var/thing in L.diseases)
 			var/datum/disease/D = thing
 			if(D.GetDiseaseID() in data)
 				D.cure()
-		M.resistances |= data
+		L.disease_resistances |= data
 
 /datum/reagent/vaccine/on_merge(list/data)
 	if(istype(data))
@@ -623,8 +628,11 @@
 	taste_description = "slime"
 
 /datum/reagent/aslimetoxin/reaction_mob(mob/M, method=TOUCH, reac_volume)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(method != TOUCH)
-		M.ForceContractDisease(new /datum/disease/transformation/slime(0))
+		L.ForceContractDisease(new /datum/disease/transformation/slime(), FALSE, TRUE)
 
 /datum/reagent/gluttonytoxin
 	name = "Gluttony's Blessing"
@@ -635,7 +643,10 @@
 	taste_description = "decay"
 
 /datum/reagent/gluttonytoxin/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	M.ForceContractDisease(new /datum/disease/transformation/morph(0))
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
+	L.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"
@@ -678,6 +689,13 @@
 	reagent_state = SOLID
 	color = "#6E3B08" // rgb: 110, 59, 8
 	taste_description = "metal"
+
+/datum/reagent/copper/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/stack/sheet/metal))
+		var/obj/item/stack/sheet/metal/M = O
+		reac_volume = min(reac_volume, M.amount)
+		new/obj/item/stack/tile/bronze(get_turf(M), reac_volume)
+		M.use(reac_volume)
 
 /datum/reagent/nitrogen
 	name = "Nitrogen"
@@ -1096,8 +1114,11 @@
 	taste_description = "sludge"
 
 /datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ForceContractDisease(new /datum/disease/transformation/robot(0))
+		L.ForceContractDisease(new /datum/disease/transformation/robot(), FALSE, TRUE)
 
 /datum/reagent/xenomicrobes
 	name = "Xenomicrobes"
@@ -1108,8 +1129,11 @@
 	taste_description = "sludge"
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ForceContractDisease(new /datum/disease/transformation/xeno(0))
+		L.ForceContractDisease(new /datum/disease/transformation/xeno(), FALSE, TRUE)
 
 /datum/reagent/fungalspores
 	name = "Tubercle bacillus Cosmosis microbes"
@@ -1120,8 +1144,11 @@
 	taste_description = "slime"
 
 /datum/reagent/fungalspores/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ForceContractDisease(new /datum/disease/tuberculosis(0))
+		L.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)
 
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
