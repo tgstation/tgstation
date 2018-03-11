@@ -85,7 +85,6 @@
 	for(var/V in roundstart_traits)
 		var/datum/trait/T = V
 		T.transfer_mob(to_mob)
-
 /*
 
 Commented version of Nearsighted to help you add your own traits

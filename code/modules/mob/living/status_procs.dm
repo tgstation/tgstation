@@ -146,9 +146,6 @@
 	else
 		status_traits[trait] |= list(source)
 
-<<<<<<< HEAD
-/mob/living/proc/remove_trait(trait, list/sources)
-=======
 /mob/living/proc/add_trait_datum(trait, spawn_effects) //separate proc due to the way these ones are handled
 	if(has_trait(trait))
 		return
@@ -159,9 +156,10 @@
 	return TRUE
 
 /mob/living/proc/remove_trait(trait, list/sources, force)
-
->>>>>>> 5c8d845f56... [s] Improves and secures trait assignment code, allows their pref to be changed midround, tweaks RDS and Night Vision (#36160)
 	if(!status_traits[trait])
+		return
+
+	if(locate(ROUNDSTART_TRAIT) in status_traits[trait] && !force) //mob traits applied through roundstart cannot normally be removed
 		return
 
 	if(!sources) // No defined source cures the trait entirely.
@@ -181,6 +179,12 @@
 	if(!LAZYLEN(status_traits[trait]))
 		status_traits -= trait
 
+/mob/living/proc/remove_trait_datum(trait)
+	var/datum/trait/T = roundstart_traits[trait]
+	if(T)
+		qdel(T)
+		return TRUE
+
 /mob/living/proc/has_trait(trait, list/sources)
 	if(!status_traits[trait])
 		return FALSE
@@ -195,6 +199,9 @@
 				return TRUE
 	else if(LAZYLEN(status_traits[trait]))
 		return TRUE
+
+/mob/living/proc/has_trait_datum(trait)
+	return roundstart_traits[trait]
 
 /mob/living/proc/remove_all_traits()
 	status_traits = list()
