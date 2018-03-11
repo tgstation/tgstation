@@ -1,4 +1,0 @@
-author: "DaedalusGame"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the auxbase camera console not placing airlocks on fans but doing so vice-versa"

@@ -9,7 +9,7 @@ PROCESSING_SUBSYSTEM_DEF(traits)
 	wait = 10
 	runlevels = RUNLEVEL_GAME
 
-	var/list/traits = list()		//Assoc. list of all roundstart trait datums; "name" = /path/
+	var/list/traits = list()		//Assoc. list of all roundstart trait datum types; "name" = /path/
 	var/list/trait_points = list()	//Assoc. list of trait names and their "point cost"; positive numbers are good traits, and negative ones are bad
 	var/list/trait_objects = list()	//A list of all trait objects in the game, since some may process
 
@@ -24,11 +24,10 @@ PROCESSING_SUBSYSTEM_DEF(traits)
 		traits[initial(T.name)] = T
 		trait_points[initial(T.name)] = initial(T.value)
 
-/datum/controller/subsystem/processing/traits/proc/AssignTraits(mob/living/user, client/cli)
-	if(!isnewplayer(user))
-		GenerateTraits(cli)
+/datum/controller/subsystem/processing/traits/proc/AssignTraits(mob/living/user, client/cli, spawn_effects)
+	GenerateTraits(cli)
 	for(var/V in cli.prefs.character_traits)
-		user.add_trait_datum(V)
+		user.add_trait_datum(V, spawn_effects)
 
 /datum/controller/subsystem/processing/traits/proc/GenerateTraits(client/user)
 	if(user.prefs.character_traits.len)
