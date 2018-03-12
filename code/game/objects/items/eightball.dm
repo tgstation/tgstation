@@ -12,7 +12,7 @@
 	var/on_cooldown = FALSE
 
 	var/shake_time = 50
-	var/cooldown_time = 200
+	var/cooldown_time = 100
 
 	var/static/list/possible_answers = list(
 		"It is certain",
