@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/gun/energy/kinetic_accelerator/crossbow
 	cost = 12
 	surplus = 50
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/infiltration)
 
 /datum/uplink_item/dangerous/flamethrower
 	name = "Flamethrower"
@@ -243,6 +243,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/melee/transforming/energy/sword/saber
 	cost = 8
+	exclude_modes = list(/datum/game_mode/infiltration)
 
 /datum/uplink_item/dangerous/doublesword
 	name = "Double-Bladed Energy Sword"
@@ -251,6 +252,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/twohanded/dualsaber
 	player_minimum = 25
 	cost = 16
+	exclude_modes = list(/datum/game_mode/infiltration)
 
 /datum/uplink_item/dangerous/doublesword/get_discount()
 	return pick(4;0.8,2;0.65,1;0.5)
@@ -277,6 +279,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			in addition to dealing high amounts of damage to nearby personnel."
 	item = /obj/item/grenade/syndieminibomb
 	cost = 6
+	exclude_modes = list(/datum/game_mode/infiltration)
 
 /datum/uplink_item/dangerous/foamsmg
 	name = "Toy Submachine Gun"
@@ -341,7 +344,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndie_kit/guardian
 	cost = 18
 	surplus = 0
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/infiltration)
 	player_minimum = 25
 
 // Ammunition
@@ -573,7 +576,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/sleeping_carp_scroll
 	cost = 17
 	surplus = 0
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/infiltration)
 
 /datum/uplink_item/stealthy_weapons/cqc
 	name = "CQC Manual"
@@ -635,7 +638,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndie_kit/romerol
 	cost = 25
 	cant_discount = TRUE
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/infiltration)
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
@@ -653,6 +656,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			them for longer. Beware, it has a chance to detonate your PDA."
 	item = /obj/item/cartridge/virus/syndicate
 	cost = 6
+	exclude_modes = list(/datum/game_mode/infiltration) //stealthhhh!
 
 /datum/uplink_item/stealthy_weapons/suppressor
 	name = "Universal Suppressor"
@@ -968,14 +972,16 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/c4
 	cost = 9 //10% discount!
 	cant_discount = TRUE
+	exclude_modes = list(/datum/game_mode/infiltration) //you don't need to be blowing that much shit up!
 
 /datum/uplink_item/device_tools/x4bag
 	name = "Bag of X-4 explosives"
 	desc = "Contains 3 X-4 plastic explosives. Similar, but more powerful than C-4. X-4 can be placed on a solid surface, such as a wall or window, and it will \
 			blast through the wall, injuring anything on the opposite side, while being safer to the user. For when you want a wider, deeper, hole."
 	item = /obj/item/storage/backpack/duffelbag/syndie/x4
-	cost = 4 //
+	cost = 4
 	cant_discount = TRUE
+	exclude_modes = list(/datum/game_mode/infiltration) //you don't need to be blowing that much shit up!
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"
@@ -984,6 +990,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			traditional bags and boxes."
 	item = /obj/item/device/powersink
 	cost = 6
+	exclude_modes = list(/datum/game_mode/infiltration) //if they have this objective, they get a special one
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Power Beacon"
@@ -993,6 +1000,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
 	item = /obj/item/device/sbeacondrop
 	cost = 14
+	exclude_modes = list(/datum/game_mode/infiltration) //no.
 
 /datum/uplink_item/device_tools/syndicate_bomb
 	name = "Syndicate Bomb"
@@ -1003,6 +1011,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			be defused, and some crew may attempt to do so."
 	item = /obj/item/device/sbeacondrop/bomb
 	cost = 11
+	exclude_modes = list(/datum/game_mode/infiltration) //no blowing shit up
 
 /datum/uplink_item/device_tools/syndicate_detonator
 	name = "Syndicate Detonator"
@@ -1160,6 +1169,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
 	item = /obj/item/device/autosurgeon/thermal_eyes
 	cost = 8
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/infiltration)
 
 /datum/uplink_item/cyber_implants/xray
 	name = "X-Ray Vision Implant"
@@ -1308,6 +1318,25 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 15
 	restricted_roles = list("Clown")
 
+//Infiltrator shit
+/datum/uplink_item/infiltration
+	category = "Infiltration Gear"
+	include_modes = list(/datum/game_mode/infiltration)
+	surplus = 0
+
+/datum/uplink_item/infiltration/pinpointer_upgrade
+	name = "Pinpointer Upgrade"
+	desc = "An infiltration pinpointer upgrade that allows pinpointers to track objective targets."
+	item = /obj/item/infiltrator_pinpointer_upgrade
+	cost = 8
+
+
+/datum/uplink_item/infiltration/extra_stealthsuit
+	name = "Chameleon Hardsuit"
+	desc = "An infiltration hardsuit, capable of changing it's appearance instantly."
+	item = /obj/item/clothing/suit/space/hardsuit/infiltration
+	cost = 10
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
@@ -1343,6 +1372,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
 	cant_discount = TRUE
+	exclude_modes = list(/datum/game_mode/infiltration) //no.
 
 /datum/uplink_item/badass/costumes
 	surplus = 0
@@ -1372,7 +1402,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			you will receive."
 	item = /obj/item/storage/box/syndicate
 	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/infiltration)
 	cant_discount = TRUE
 
 /datum/uplink_item/badass/surplus
@@ -1382,7 +1412,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/structure/closet/crate
 	cost = 20
 	player_minimum = 25
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/infiltration)
 	cant_discount = TRUE
 	var/starting_crate_value = 50
 

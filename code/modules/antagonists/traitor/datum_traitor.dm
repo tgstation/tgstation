@@ -170,7 +170,7 @@
 		if(prob(15) && !(locate(/datum/objective/download in owner.objectives)))
 			var/datum/objective/download/download_objective = new
 			download_objective.owner = owner
-			download_objective.gen_amount_goal()
+			download_objective.find_target()
 			add_objective(download_objective)
 		else
 			var/datum/objective/steal/steal_objective = new
@@ -227,7 +227,7 @@
 	var/mob/living/silicon/ai/A = mob_override || owner.current
 	if(istype(A))
 		A.hack_software = TRUE
-	
+
 /datum/antagonist/traitor/AI/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/silicon/ai/A = mob_override || owner.current

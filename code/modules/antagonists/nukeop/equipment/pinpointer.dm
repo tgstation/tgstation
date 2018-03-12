@@ -79,4 +79,3 @@
 	if(closest_operative)
 		target = closest_operative
 	..()
-
