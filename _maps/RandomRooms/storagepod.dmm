@@ -187,7 +187,6 @@
 /obj/structure/rack,
 /obj/item/stack/sheet/cloth/ten{
 	pixel_x = -2;
-	pixel_x = -2;
 	pixel_y = 6
 	},
 /obj/item/stack/sheet/glass/fifty,
