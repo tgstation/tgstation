@@ -274,6 +274,17 @@
 		qdel(S)
 	return ..()
 
+/obj/item/nullrod/scythe/talking/chainsword
+	icon_state = "chainswordon"
+	item_state = "chainswordon"
+	name = "possessed chainsaw sword"
+	desc = "Suffer not a heretic to live."
+	slot_flags = SLOT_BELT
+	force = 30
+	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+	hitsound = 'sound/weapons/chainsawhit.ogg'
+
+
 /obj/item/nullrod/hammmer
 	icon_state = "hammeron"
 	item_state = "hammeron"

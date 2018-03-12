@@ -1,0 +1,4 @@
+author: "Polyphynx"
+delete-after: True
+changes: 
+  - tweak: "Medical sprays can now be stored in medical belts and smartfridges."

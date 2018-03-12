@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - admin: "ERT creation has been refactored to allow for easier customization and deployment via templates and settings"

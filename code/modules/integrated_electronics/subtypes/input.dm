@@ -629,17 +629,16 @@
 
 	var/datum/netdata/data = new
 	data.recipient_ids = splittext(target_address, ";")
-	data.sender_id = address
 	data.plaintext_data = message
 	data.plaintext_data_secondary = text
-	data.plaintext_passkey = key
+	data.encrypted_passkey = key
 	ntnet_send(data)
 
 /obj/item/integrated_circuit/input/ntnet_recieve(datum/netdata/data)
 	set_pin_data(IC_OUTPUT, 1, data.sender_id)
 	set_pin_data(IC_OUTPUT, 2, data.plaintext_data)
 	set_pin_data(IC_OUTPUT, 3, data.plaintext_data_secondary)
-	set_pin_data(IC_OUTPUT, 4, data.plaintext_passkey)
+	set_pin_data(IC_OUTPUT, 4, data.encrypted_passkey)
 
 	push_data()
 	activate_pin(2)

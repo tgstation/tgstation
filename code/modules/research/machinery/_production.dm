@@ -73,6 +73,11 @@
 		materials.max_amount = 0
 		for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 			materials.max_amount += M.rating * 75000
+	var/total_rating = 0
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+		total_rating += M.rating
+	total_rating = max(1, total_rating)
+	efficiency_coeff = total_rating
 
 //we eject the materials upon deconstruction.
 /obj/machinery/rnd/production/on_deconstruction()
@@ -234,9 +239,9 @@
 		t = check_mat(D, M)
 		temp_material += " | "
 		if (t < 1)
-			temp_material += "<span class='bad'>[all_materials[M]*coeff] [CallMaterialName(M)]</span>"
+			temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
 		else
-			temp_material += " [all_materials[M]*coeff] [CallMaterialName(M)]"
+			temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
 		c = min(c,t)
 
 	if (c >= 1)
