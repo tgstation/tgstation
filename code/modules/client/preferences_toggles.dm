@@ -235,7 +235,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggleprayersounds)()
 	SEND_SOUND(usr, sound(null))
 	var/client/C = usr.client
 	if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-		C.chatOutput.sendMusic(" ")
+		C.chatOutput.sendMusic(STOP_SOUNDS_URL)
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
