@@ -188,6 +188,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/p_dir = NORTH
 	var/p_flipped = FALSE
 	var/paint_color="Grey"
+	var/atmos_build_speed = 5 //deciseconds (500ms)
+	var/disposal_build_speed = 5
+	var/transit_build_speed = 5
+	var/destroy_speed = 5
+	var/paint_speed = 5
 	var/screen = ATMOS_MODE //Starts on the atmos tab.
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/datum/pipe_info/recipe
@@ -334,7 +339,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(istype(A, /obj/item/pipe) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod) || istype(A, /obj/item/pipe_meter))
 		to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-		if(do_after(user, 5, target = A))
+		if(do_after(user, destroy_speed, target = A))
 			activate()
 			qdel(A)
 		return
@@ -344,7 +349,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/obj/machinery/atmospherics/pipe/P = A
 		to_chat(user, "<span class='notice'>You start painting \the [P] [paint_color]...</span>")
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-		if(do_after(user, 5, target = A))
+		if(do_after(user, paint_speed, target = A))
 			P.paint(GLOB.pipe_paint_colors[paint_color]) //paint the pipe
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
 		return
@@ -357,13 +362,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 				if (recipe.type == /datum/pipe_info/meter)
 					to_chat(user, "<span class='notice'>You start building a meter...</span>")
-					if(do_after(user, 5, target = A))
+					if(do_after(user, atmos_build_speed, target = A))
 						activate()
 						var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(A))
 						PM.setAttachLayer(temp_piping_layer)
 				else
 					to_chat(user, "<span class='notice'>You start building a pipe...</span>")
-					if(do_after(user, 5, target = A))
+					if(do_after(user, atmos_build_speed, target = A))
 						activate()
 						var/obj/machinery/atmospherics/path = queued_p_type
 						var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
@@ -387,7 +392,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					return
 				to_chat(user, "<span class='notice'>You start building a disposals pipe...</span>")
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-				if(do_after(user, 5, target = A))
+				if(do_after(user, disposal_build_speed, target = A))
 					var/obj/structure/disposalconstruct/C = new (A, queued_p_type, queued_p_dir, queued_p_flipped)
 
 					if(!C.can_place())
@@ -410,7 +415,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					return
 				to_chat(user, "<span class='notice'>You start building a transit tube...</span>")
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-				if(do_after(user, 5, target = A))
+				if(do_after(user, transit_build_speed, target = A))
 					activate()
 					if(queued_p_type == /obj/structure/c_transit_tube_pod)
 						var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(A)
