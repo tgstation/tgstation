@@ -45,7 +45,7 @@
 	polldesc = "a CentCom Official"
 
 /datum/ert/centcom_official/New()
-	mission = "Conduct a routine preformance review of [station_name()] and its Captain."
+	mission = "Conduct a routine performance review of [station_name()] and its Captain."
 
 /datum/ert/inquisition
 	roles = list(/datum/antagonist/ert/chaplain/inquisitor, /datum/antagonist/ert/security/inquisitor, /datum/antagonist/ert/medic/inquisitor)
