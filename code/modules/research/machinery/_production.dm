@@ -77,7 +77,7 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		total_rating += M.rating
 	total_rating = max(1, total_rating)
-	efficiency_coeff /= total_rating
+	efficiency_coeff = total_rating
 
 //we eject the materials upon deconstruction.
 /obj/machinery/rnd/production/on_deconstruction()
