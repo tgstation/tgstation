@@ -59,6 +59,7 @@
 		if(9)
 			msg += "<span class='nicegreen'>I love life!<span>\n"
 
+	msg += "<span class='notice'>Moodlets:\n</span>"//All moodlets
 	for(var/i in mood_events)
 		var/datum/mood_event/event = mood_events[i]
 		msg += event.description
@@ -141,7 +142,7 @@
 	var/area/A = get_area(owner)
 	if(A)
 		update_beauty(A)
-		
+
 /datum/component/mood/proc/DecreaseSanity(amount)
 	sanity = max(0, sanity - amount)
 
