@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "The disposal bin in Pubbystation's main tool storage now works."
+  - tweak: "Deleted a duplicate r-wall between Pubby's main tool storage and the captain's office. Added a Metastation-style crate disposals chute and a light switch."
