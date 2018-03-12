@@ -291,6 +291,7 @@
 
 /obj/item/clothing/shoes/wheelys/Destroy()
 	QDEL_NULL(W)
+	..()
 
 /obj/item/clothing/shoes/kindleKicks
 	name = "Kindle Kicks"
