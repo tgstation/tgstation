@@ -1010,5 +1010,5 @@ Pass a positive integer as an argument to override a bot's default speed.
 		return
 	var/image/I = path[path[1]]
 	if(I)
-		I.icon = null
+		I.alpha = 0
 	path.Cut(1, 2)
