@@ -4,25 +4,25 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
-/area/maintenance/port)
+/area/template_noop)
 "b" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
-/area/maintenance/port)
+/area/template_noop)
 "c" = (
 /turf/open/floor/wood,
-/area/maintenance/port)
+/area/template_noop)
 "d" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/maintenance/port)
+/area/template_noop)
 "e" = (
 /obj/item/clothing/mask/facehugger/toy,
 /turf/open/floor/wood,
-/area/maintenance/port)
+/area/template_noop)
 "f" = (
 /obj/structure/table/wood,
 /obj/item/briefcase_launchpad,
@@ -31,39 +31,39 @@
 	},
 /obj/item/toy/foamblade,
 /turf/open/floor/wood,
-/area/maintenance/port)
+/area/template_noop)
 "g" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/wood,
-/area/maintenance/port)
+/area/template_noop)
 "h" = (
 /obj/machinery/computer/slot_machine,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/maintenance/port)
+/area/template_noop)
 "i" = (
 /obj/machinery/computer/slot_machine,
 /obj/machinery/computer/arcade,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/maintenance/port)
+/area/template_noop)
 "j" = (
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/maintenance/port)
+/area/template_noop)
 "k" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
-/area/maintenance/port)
+/area/template_noop)
 "l" = (
 /obj/machinery/computer/slot_machine,
 /turf/open/floor/plating,
-/area/maintenance/port)
+/area/template_noop)
 "m" = (
 /obj/structure/table/wood,
 /obj/item/storage/pill_bottle,
@@ -78,21 +78,21 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/maintenance/port)
+/area/template_noop)
 "n" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
 	},
-/area/maintenance/port)
+/area/template_noop)
 "o" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/aiModule/toyAI,
 /turf/open/floor/wood,
-/area/maintenance/port)
+/area/template_noop)
 "p" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/wood,
-/area/maintenance/port)
+/area/template_noop)
 "q" = (
 /obj/structure/table/wood,
 /obj/item/coin/iron{
@@ -114,7 +114,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plating,
-/area/maintenance/port)
+/area/template_noop)
 
 (1,1,1) = {"
 a

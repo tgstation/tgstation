@@ -5,22 +5,22 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 "b" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 "c" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 "d" = (
 /obj/machinery/shieldwallgen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 "e" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -30,7 +30,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 "f" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/metal{
@@ -47,18 +47,18 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 "g" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 "h" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 "i" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/shieldgen,
@@ -67,14 +67,14 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 "j" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 "k" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
@@ -82,14 +82,14 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/item/watertank/atmos,
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 "l" = (
 /obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 "m" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -97,7 +97,7 @@
 	},
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 "n" = (
 /obj/structure/rack,
 /obj/item/crowbar/red,
@@ -111,7 +111,7 @@
 	pixel_y = -6
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 "o" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/cable_coil/white,
@@ -122,7 +122,7 @@
 /obj/effect/turf_decal/bot,
 /obj/item/melee/baton/cattleprod,
 /turf/open/floor/plasteel,
-/area/maintenance/port)
+/area/template_noop)
 
 (1,1,1) = {"
 a

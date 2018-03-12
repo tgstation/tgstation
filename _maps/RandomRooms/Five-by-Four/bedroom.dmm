@@ -32,10 +32,7 @@
 /turf/open/floor/mineral/gold,
 /area/template_noop)
 "e" = (
-/obj/structure/chair/brass{
-	desc = "Seems a little dull for gold...";
-	name = "gold chair"
-	},
+/obj/structure/chair/bronze,
 /turf/open/floor/mineral/gold,
 /area/template_noop)
 "f" = (

@@ -48,14 +48,7 @@
 /obj/item/device/instrument/accordion,
 /obj/item/device/instrument/recorder,
 /obj/item/device/instrument/violin/golden,
-/turf/open/floor/plating{
-	luminosity = 2
-	},
-/area/greytopia)
-"k" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/open/floor/plating,
 /area/greytopia)
 "l" = (
 /obj/structure/table/reinforced,
@@ -64,19 +57,11 @@
 	pixel_x = -11;
 	pixel_y = 7
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/greytopia)
-"m" = (
-/turf/open/floor/plating{
-	luminosity = 2
-	},
+/turf/open/floor/plating,
 /area/greytopia)
 "n" = (
 /obj/structure/rack,
 /obj/item/storage/firstaid/regular{
-	pixel_x = -2;
 	pixel_x = -2;
 	pixel_y = 6
 	},
@@ -84,26 +69,12 @@
 	pixel_x = -1;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/fire{
-	pixel_x = -1;
-	pixel_x = 5
-	},
 /obj/item/storage/firstaid/toxin{
-	pixel_x = -1;
 	pixel_x = 9;
 	pixel_y = -3
 	},
-/turf/open/floor/plating{
-	luminosity = 2
-	},
-/area/greytopia)
-"o" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
-/turf/open/floor/plating{
-	luminosity = 2
-	},
+/obj/item/storage/firstaid/fire,
+/turf/open/floor/plating,
 /area/greytopia)
 "p" = (
 /obj/structure/closet/firecloset/full,
@@ -129,7 +100,6 @@
 /obj/structure/rack,
 /obj/item/device/flashlight/flare/torch{
 	pixel_x = -4;
-	pixel_x = -2;
 	pixel_y = 7
 	},
 /obj/item/device/flashlight/flare/torch{
@@ -141,14 +111,11 @@
 	pixel_y = 5
 	},
 /obj/item/device/flashlight/flare/torch{
-	pixel_x = -3;
 	pixel_x = 9;
 	pixel_y = -3
 	},
 /obj/item/device/flashlight/lantern,
-/turf/open/floor/plating{
-	luminosity = 2
-	},
+/turf/open/floor/plating,
 /area/greytopia)
 "t" = (
 /obj/structure/closet/radiation,
@@ -184,9 +151,7 @@
 	pixel_x = 3;
 	pixel_y = -1
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/turf/open/floor/plating,
 /area/greytopia)
 "w" = (
 /obj/machinery/sleeper{
@@ -199,15 +164,6 @@
 /area/greytopia)
 "x" = (
 /obj/structure/rack,
-/obj/item/storage/belt/mining{
-	pixel_x = -1;
-	pixel_y = -4
-	},
-/obj/item/storage/belt/mining{
-	pixel_x = -3;
-	pixel_x = -3;
-	pixel_y = 4
-	},
 /obj/item/tank/jetpack/void{
 	pixel_x = 6;
 	pixel_y = 2
@@ -217,9 +173,15 @@
 	pixel_y = 2
 	},
 /obj/item/tank/jetpack/void,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
+/obj/item/storage/belt/mining{
+	pixel_x = -1;
+	pixel_y = -4
 	},
+/obj/item/storage/belt/mining{
+	pixel_x = -1;
+	pixel_y = -4
+	},
+/turf/open/floor/plating,
 /area/greytopia)
 "y" = (
 /obj/structure/rack,
@@ -229,11 +191,7 @@
 	pixel_y = 6
 	},
 /obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/metal/fifty{
-	pixel_x = -1;
-	pixel_x = 5;
-	pixel_y = -6
-	},
+/obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plating,
 /area/greytopia)
 "z" = (
@@ -349,7 +307,7 @@ a
 b
 d
 h
-k
+h
 h
 h
 h
@@ -377,7 +335,7 @@ E
 b
 f
 h
-m
+h
 h
 h
 h
@@ -405,7 +363,7 @@ a
 b
 b
 h
-m
+h
 h
 h
 h
@@ -419,7 +377,7 @@ a
 a
 b
 b
-o
+A
 K
 w
 K
