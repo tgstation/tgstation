@@ -138,6 +138,10 @@
 			add_event("jolly", /datum/mood_event/jolly)
 			clear_event("depression")
 
+	var/area/A = get_area(owner)
+	if(A)
+		update_beauty(A)
+		
 /datum/component/mood/proc/DecreaseSanity(amount)
 	sanity = max(0, sanity - amount)
 
