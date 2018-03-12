@@ -29,13 +29,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(findtext(message, "((") || findtext(message, "))"))
 		to_chat(src, "<span class='userdanger'>Do not use IC chat for OOC messages.</span>")
 		return
-	if(findtext(message, "owo") ||
-	findtext(message, "xD") ||
-	findtext(message, "x3") ||
-	findtext(message, ":)") ||
-	findtext(message, ":P") ||
-	findtext(message, ":D") ||
-	findtext(message, ":3"))
+	if(findtext(message, " owo") || findtext(message, "xD") || findtext(message, "x3") || findtext(message, ":)") || findtext(message, ":P") || findtext(message, ":D") || findtext(message, ":3"))
 		to_chat(src, "<span class='userdanger'>Do not use emoticons in IC chat.</span>")
 		return
 	message = replacetext(message, " tbh ", " to be honest ")
