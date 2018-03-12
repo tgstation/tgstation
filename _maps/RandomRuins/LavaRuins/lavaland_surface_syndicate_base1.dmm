@@ -2889,8 +2889,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/caution/red{
-	dir = 8;
-	
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/main)
