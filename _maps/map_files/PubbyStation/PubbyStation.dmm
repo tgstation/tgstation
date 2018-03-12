@@ -10970,6 +10970,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
 	},
@@ -11037,12 +11038,25 @@
 	},
 /area/storage/primary)
 "aCx" = (
-/obj/machinery/vending/tool,
 /obj/structure/sign/poster/official/obey{
 	pixel_y = 32
 	},
+/obj/machinery/disposal/deliveryChute{
+	name = "Crate Disposal Chute"
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/window/southright{
+	name = "Crate Disposal Chute"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel/neutral/side{
-	dir = 5
+	dir = 1
 	},
 /area/storage/primary)
 "aCy" = (
@@ -11933,6 +11947,10 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/light_switch{
+	dir = 9;
+	pixel_x = -22
+	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -12681,10 +12699,8 @@
 /turf/open/floor/plasteel/neutral/side,
 /area/storage/primary)
 "aGj" = (
-/obj/machinery/disposal/bin,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 6
-	},
+/obj/structure/disposalpipe/junction/flip,
+/turf/open/floor/plasteel/neutral/side,
 /area/storage/primary)
 "aGk" = (
 /obj/machinery/vending/boozeomat{
@@ -12945,22 +12961,10 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aGZ" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/public/glass{
-	name = "Primary Tool Storage"
-	},
+/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/storage/primary)
-"aHa" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	pixel_y = 3
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/hallway/primary/central)
 "aHb" = (
 /obj/machinery/computer/arcade,
 /turf/open/floor/plasteel/vault{
@@ -13261,6 +13265,9 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
+/obj/machinery/status_display{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -13278,11 +13285,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aHO" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
+	},
+/obj/structure/disposalpipe/junction/flip{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -47165,10 +47172,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/side,
 /area/storage/primary)
-"cov" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/neutral/side,
-/area/storage/primary)
 "cow" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/emergency,
@@ -50047,9 +50050,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
-"cBP" = (
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
 "cBQ" = (
 /obj/machinery/power/rad_collector,
 /turf/open/floor/plating,
@@ -50295,6 +50295,15 @@
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
+"gkR" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 5
+	},
+/area/storage/primary)
 "gtb" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/metal/fifty,
@@ -50459,6 +50468,15 @@
 	dir = 8
 	},
 /area/science/circuit)
+"jYe" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "khk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -50601,6 +50619,18 @@
 	dir = 4
 	},
 /area/science/circuit)
+"onX" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Primary Tool Storage"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel,
+/area/storage/primary)
+"oyF" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "oEG" = (
 /obj/machinery/bookbinder,
 /turf/open/floor/plasteel/purple/side{
@@ -50700,6 +50730,17 @@
 "qOE" = (
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
+"qXH" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4
+	},
+/area/hallway/primary/central)
 "rtE" = (
 /turf/open/floor/plasteel/purple/corner{
 	dir = 1
@@ -50787,6 +50828,15 @@
 /obj/item/device/integrated_electronics/analyzer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"ulu" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 6
+	},
+/area/storage/primary)
 "uoj" = (
 /obj/structure/table/reinforced,
 /obj/item/stock_parts/cell/super,
@@ -50865,6 +50915,12 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/library)
+"vTL" = (
+/obj/machinery/vending/tool,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 1
+	},
+/area/storage/primary)
 "wxJ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/preopen{
@@ -77003,7 +77059,7 @@ aDA
 aDy
 aDA
 aGi
-aGX
+aBi
 aHL
 aIP
 aJK
@@ -77255,11 +77311,11 @@ axO
 ayT
 aAq
 aBj
-aCs
+vTL
 aDA
 aEv
 aFu
-cov
+aFu
 aGZ
 aHM
 aIQ
@@ -77513,12 +77569,12 @@ ayU
 aAr
 aBj
 aCx
-aDB
-aEw
-aFv
+oyF
+oyF
+oyF
 aGj
-aGX
-aHH
+onX
+qXH
 aIO
 aJI
 aKP
@@ -77769,13 +77825,13 @@ axQ
 ayV
 aAs
 aBj
-aBj
-aBj
-aBj
-aBj
-aBj
-aBi
-aHN
+gkR
+aDB
+aEw
+aFv
+ulu
+aGX
+jYe
 aIO
 aJI
 aKQ
@@ -78031,8 +78087,8 @@ awR
 awR
 awR
 awR
-aHa
-aHN
+aAN
+jYe
 aIO
 aJM
 aKQ
@@ -78289,7 +78345,7 @@ aEx
 aFw
 awR
 aHb
-aHN
+jYe
 aIQ
 aJL
 aKR
@@ -82182,7 +82238,7 @@ brl
 bsL
 bul
 bwU
-cBP
+bsK
 bsK
 bAg
 bpY
