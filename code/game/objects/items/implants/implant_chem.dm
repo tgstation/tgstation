@@ -30,8 +30,10 @@
 	GLOB.tracked_chem_implants -= src
 	return ..()
 
-/obj/item/implant/chem/trigger(emote, mob/source)
+/obj/item/implant/chem/trigger(emote, mob/living/source)
 	if(emote == "deathgasp")
+		if(istype(source) && !(source.stat == DEAD))
+			return
 		activate(reagents.total_volume)
 
 /obj/item/implant/chem/activate(cause)
