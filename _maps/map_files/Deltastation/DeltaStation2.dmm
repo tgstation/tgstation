@@ -15647,7 +15647,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "aMu" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
@@ -16989,7 +16989,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "aPA" = (
@@ -101149,7 +101149,7 @@
 /turf/open/floor/circuit/green,
 /area/science/research/abandoned)
 "nSh" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "oZC" = (
