@@ -30,7 +30,7 @@
 		if(SANITY_NEUTRAL to SANITY_GREAT)
 			msg += "<span class='nicegreen'>I have been feeling great lately!<span>\n"
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
-			msg += "<span class='nicegreen'>I have felt quite decent lately<span>\n"
+			msg += "<span class='nicegreen'>I have felt quite decent lately.<span>\n"
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			msg += "<span class='warning'>I'm feeling a little bit unhinged...</span>\n"
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
@@ -60,9 +60,12 @@
 			msg += "<span class='nicegreen'>I love life!<span>\n"
 
 	msg += "<span class='notice'>Moodlets:\n</span>"//All moodlets
-	for(var/i in mood_events)
-		var/datum/mood_event/event = mood_events[i]
-		msg += event.description
+	if(mood_events.len)
+		for(var/i in mood_events)
+			var/datum/mood_event/event = mood_events[i]
+			msg += event.description
+	else
+		msg += "<span class='nicegreen'>Nothing special has happend to me lately!<span>\n"
 	to_chat(owner, msg)
 
 /datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed
