@@ -1,0 +1,7 @@
+author: "Toriate"
+delete-after: True
+changes: 
+  - rscadd: "Added ammo counters for RCDs"
+  - rscadd: "Added actual flashing yellow light for RCDs"
+  - imageadd: "added new RCD sprites including inhands"
+  - imagedel: "deleted old RCD iconstate, but not the inhands"
