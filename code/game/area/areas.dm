@@ -539,7 +539,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/update_beauty()
 	if(!areasize)
 		return FALSE
-	to_chat(world, "[src][areasize]")
 	beauty = totalbeauty / areasize
 
 /area/proc/update_areasize()
