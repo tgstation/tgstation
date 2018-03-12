@@ -57,8 +57,9 @@
 			continue // i'd be right happy to
 		meme_pack_data[P.group]["packs"] += list(list(
 			"name" = P.name,
-			"cost" = P.cost * 2, //displays twice the normal cost
-			"id" = pack
+			"cost" = P.cost,
+			"id" = pack,
+			"desc" = P.desc || P.name // If there is a description, use it. Otherwise use the pack's name.
 		))
 
 /obj/machinery/computer/cargo/express/ui_interact(mob/living/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
@@ -120,12 +121,12 @@
 						CHECK_TICK
 					if(empty_turfs && empty_turfs.len)
 						var/LZ = empty_turfs[rand(empty_turfs.len-1)]
-						SSshuttle.points -= SO.pack.cost * 2
+						SSshuttle.points -= SO.pack.cost
 						new /obj/effect/DPtarget(LZ, SO, podID)
 						. = TRUE
 						update_icon()
 			else
-				if(SO.pack.cost * (1.2*MAX_EMAG_ROCKETS) <= SSshuttle.points) // bulk discount :^)
+				if(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS) <= SSshuttle.points) // bulk discount :^)
 					landingzone = locate(pick(GLOB.the_station_areas)) in GLOB.sortedAreas
 					for(var/turf/open/floor/T in landingzone.contents)
 						if(is_blocked_turf(T))

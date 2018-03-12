@@ -46,18 +46,17 @@
 		if(WIRE_OPEN) // Pulse to open door (only works not emagged and ID wire is cut or no access is required).
 			if(A.obj_flags & EMAGGED)
 				return
-			if(A.density)
-				A.open()
-			else
-				A.close()
+			if(!A.requiresID() || A.check_access(null))
+				if(A.density)
+					INVOKE_ASYNC(A, /obj/machinery/door/airlock.proc/open)
+				else
+					INVOKE_ASYNC(A, /obj/machinery/door/airlock.proc/close)
 		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raise if power is on).
 			if(!A.locked)
 				A.bolt()
-				A.audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null,  1)
 			else
 				if(A.hasPower())
 					A.unbolt()
-					A.audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null, 1)
 			A.update_icon()
 		if(WIRE_IDSCAN) // Pulse to disable emergency access and flash red lights.
 			if(A.hasPower() && A.density)
