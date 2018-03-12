@@ -66,7 +66,6 @@
 // /area signals
 #define COMSIG_AREA_ENTERED "area_entered" 						//from base of area/Entered(): (atom/movable/M)
 #define COMSIG_AREA_EXITED "area_exited" 							//from base of area/Exited(): (atom/movable/M)
-#define COMSIG_AREA_UPDATE_BEAUTY "area_update_beauty" 			//from base of area/update_beauty(): (atom/movable/M)
 
 // /atom/movable signals
 #define COMSIG_MOVABLE_MOVED "movable_moved"					//from base of atom/movable/Moved(): (/atom, dir)
