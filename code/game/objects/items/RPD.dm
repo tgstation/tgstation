@@ -315,13 +315,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/queued_p_type = recipe.id
 	var/queued_p_dir = p_dir
 	var/queued_p_flipped = p_flipped
-/*
+
 	// clicking on an existing component puts the new one on the same layer
 	if (mode == ATMOS_MODE && istype(A, /obj/machinery/atmospherics))
 		var/obj/machinery/atmospherics/AM = A
 		temp_piping_layer = AM.piping_layer
 		A = get_turf(user)
-*/
+
 	//make sure what we're clicking is valid for the current mode
 	var/static/list/make_pipe_whitelist
 	if(!make_pipe_whitelist)
