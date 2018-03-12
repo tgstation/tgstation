@@ -4,9 +4,8 @@
 	var/list/random_icon_states = list()
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
-	var/beauty = 0
-	var/savedbeauty //I need to save this in a variable to 1. prevent roomsize alerting during this cleanables existance altering the amount of beauty gained back when cleaning and 2. to prevent pre-init cleanables from being deleted and thus only giving free beauty
 	var/mergeable_decal = TRUE //when two of these are on a same tile or do we need to merge them into just one?
+	var/beauty
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -27,12 +26,9 @@
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
 
-/obj/effect/decal/cleanable/LateInitialize()
+/obj/effect/decal/cleanable/ComponentInitialize()
 	. = ..()
-	if(src.loc && isturf(src.loc))
-		var/area/A = get_area(src)
-		savedbeauty = beauty / max(1, A.areasize) //Ensures that the effects scale with room size
-		A.beauty += savedbeauty
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, beauty), 0) //inb4 i get yelled at for using the beauty var on cleanable instead of calling this proc on every subtype which would be pedantic and actually run worse.
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
 	if(mergeable_decal)
@@ -100,9 +96,3 @@
 		return bloodiness
 	else
 		return 0
-
-/obj/effect/decal/cleanable/Destroy()
-	. = ..()
-	if(src.loc && isturf(src.loc))
-		var/area/A = get_area(src)
-		A.beauty -= savedbeauty

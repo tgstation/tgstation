@@ -15,7 +15,7 @@
 	owner = parent
 	RegisterSignal(COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
-	RegisterSignal(COMSIG_AREA_ENTERED, .proc/update_beauty)
+	RegisterSignal(COMSIG_ENTER_AREA, .proc/update_beauty)
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
@@ -115,9 +115,9 @@
 		if(2)
 			DecreaseSanity(0.25)
 		if(3)
-			DecreaseSanity(0.2)
+			DecreaseSanity(0.15)
 		if(4)
-			DecreaseSanity(0.1)
+			DecreaseSanity(0.05)
 		if(5)
 			IncreaseSanity(0.1)
 		if(6)
@@ -171,7 +171,7 @@
 	qdel(event)
 	update_mood()
 
-/datum/component/mood/proc/update_beauty(var/area/A)
+/datum/component/mood/proc/update_beauty(area/A)
 	if(A.outdoors) //if we're outside, we don't care.
 		clear_event("area_beauty")
 		return FALSE

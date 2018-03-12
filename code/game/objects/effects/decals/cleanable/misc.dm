@@ -3,7 +3,7 @@
 	desc = "Someone should clean that up."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shards"
-	beauty = -150
+	beauty = -100
 
 /obj/effect/decal/cleanable/ash
 	name = "ashes"
@@ -220,4 +220,4 @@
 	desc = "A puddle of stabilized plasma."
 	icon_state = "flour"
 	color = "#C8A5DC"
-	beauty = -200
+	beauty = -125
