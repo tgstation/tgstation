@@ -50047,9 +50047,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
-"cBP" = (
-/turf/open/floor/plasteel/white,
-/area/medical/chemistry)
 "cBQ" = (
 /obj/machinery/power/rad_collector,
 /turf/open/floor/plating,
@@ -50601,6 +50598,10 @@
 	dir = 4
 	},
 /area/science/circuit)
+"osE" = (
+/obj/machinery/smoke_machine,
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "oEG" = (
 /obj/machinery/bookbinder,
 /turf/open/floor/plasteel/purple/side{
@@ -82182,7 +82183,7 @@ brl
 bsL
 bul
 bwU
-cBP
+osE
 bsK
 bAg
 bpY

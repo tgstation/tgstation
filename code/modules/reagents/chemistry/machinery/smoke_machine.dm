@@ -28,6 +28,7 @@
 /obj/effect/particle_effect/smoke/chem/smoke_machine
 	opaque = FALSE
 	alpha = 100
+	residue = FALSE
 
 /obj/machinery/smoke_machine/Initialize()
 	. = ..()
