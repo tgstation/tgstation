@@ -340,7 +340,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			return
 
 		if(EATING_MODE) //Eating pipes
-			A = A.wrench_act(user, src)
+			if(istype(A, /obj/machinery/atmospherics))
+				A = A.wrench_act(user, src)
 			if(!(istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod)))
 				return ..()
 			to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
