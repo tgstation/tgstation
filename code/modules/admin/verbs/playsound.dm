@@ -74,8 +74,7 @@
 		if(length(web_sound_input))
 
 			web_sound_input = trim(web_sound_input)
-			var/static/regex/html_protocol_regex = regex("https?://")
-			if(findtext(web_sound_input, ":") && !findtext(web_sound_input, html_protocol_regex))
+			if(findtext(web_sound_input, ":") && !findtext(web_sound_input, GLOB.is_http_protocol))
 				to_chat(src, "<span class='boldwarning'>Non-http(s) URIs are not allowed.</span>")
 				to_chat(src, "<span class='warning'>For youtube-dl shortcuts like ytsearch: please use the appropriate full url from the website.</span>")
 				return
