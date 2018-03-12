@@ -1,0 +1,1585 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ab" = (
+/turf/closed/wall/mineral/wood,
+/area/space)
+"ac" = (
+/obj/machinery/autolathe,
+/turf/open/floor/wood,
+/area/space)
+"ad" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"ae" = (
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "sink";
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"af" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"ag" = (
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"ah" = (
+/obj/machinery/plantgenes/seedvault,
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"ai" = (
+/turf/open/floor/wood,
+/area/space)
+"aj" = (
+/obj/structure/table/wood/bar,
+/obj/structure/safe/floor,
+/obj/item/twohanded/dualsaber/toy,
+/obj/item/seeds/cherry/bomb,
+/turf/open/floor/wood,
+/area/space)
+"ak" = (
+/obj/structure/dresser,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/space)
+"al" = (
+/obj/structure/table/wood/bar,
+/obj/item/clothing/suit/hooded/carp_costume,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/under/shorts/black,
+/obj/structure/mirror{
+	pixel_y = 28
+	},
+/turf/open/floor/wood,
+/area/space)
+"am" = (
+/obj/machinery/vending/engivend,
+/turf/open/floor/wood,
+/area/space)
+"an" = (
+/obj/machinery/vending/tool,
+/turf/open/floor/wood,
+/area/space)
+"ao" = (
+/obj/machinery/modular_computer/console/preset/research,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/space)
+"ap" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/turf/open/floor/wood,
+/area/space)
+"aq" = (
+/obj/structure/table/wood,
+/obj/item/device/camera/detective{
+	desc = "A polaroid camera with extra capacity for social media marketing.";
+	name = "Professional camera"
+	},
+/obj/item/device/camera_film,
+/obj/item/wallframe/newscaster,
+/turf/open/floor/wood,
+/area/space)
+"ar" = (
+/obj/machinery/chem_master/condimaster{
+	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
+	name = "BrewMaster 2199";
+	pixel_x = -4
+	},
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"as" = (
+/obj/structure/table,
+/obj/item/seeds/pumpkin/blumpkin,
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"at" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/wood,
+/area/space)
+"au" = (
+/obj/structure/chair/wood/normal{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/space)
+"av" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"aw" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"ax" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/space)
+"ay" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/obj/machinery/door/window/eastright{
+	dir = 8;
+	name = "Animal Pen";
+	req_access_txt = "0"
+	},
+/turf/open/floor/grass,
+/area/space)
+"az" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/turf/open/floor/grass,
+/area/space)
+"aA" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/space)
+"aB" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"aC" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"aD" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/mob/living/simple_animal/chicken,
+/turf/open/floor/grass,
+/area/space)
+"aE" = (
+/turf/open/floor/grass,
+/area/space)
+"aF" = (
+/mob/living/simple_animal/cow,
+/turf/open/floor/grass,
+/area/space)
+"aG" = (
+/obj/machinery/vending/clothing,
+/turf/open/floor/wood,
+/area/space)
+"aH" = (
+/obj/machinery/vending/autodrobe{
+	req_access_txt = "0"
+	},
+/turf/open/floor/wood,
+/area/space)
+"aI" = (
+/obj/machinery/vending/assist,
+/turf/open/floor/wood,
+/area/space)
+"aJ" = (
+/obj/structure/rack,
+/obj/item/clothing/head/collectable/rabbitears,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/under/rank/nursesuit,
+/obj/item/clothing/shoes/sneakers/white,
+/obj/item/clothing/head/nursehat,
+/turf/open/floor/wood,
+/area/space)
+"aK" = (
+/obj/structure/rack,
+/obj/item/clothing/head/collectable/kitty,
+/obj/item/clothing/under/maid,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/head/collectable/rabbitears,
+/turf/open/floor/wood,
+/area/space)
+"aL" = (
+/obj/machinery/vending/hydroseeds,
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"aM" = (
+/obj/structure/closet/crate/hydroponics,
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"aN" = (
+/obj/machinery/biogenerator,
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"aO" = (
+/obj/structure/closet/secure_closet/hydroponics{
+	locked = 0
+	},
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"aP" = (
+/obj/machinery/gibber,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"aQ" = (
+/obj/machinery/processor,
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"aR" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"aS" = (
+/obj/effect/mob_spawn/human/maidcafe,
+/turf/open/floor/wood,
+/area/space)
+"aT" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+/area/space)
+"aU" = (
+/obj/structure/table,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"aV" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"aW" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"aX" = (
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"aY" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	pixel_y = 28;
+	req_access_txt = "0";
+	use_power = 0
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"aZ" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/whitegreen,
+/area/space)
+"ba" = (
+/obj/machinery/smartfridge,
+/turf/closed/wall/mineral/wood,
+/area/space)
+"bb" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"bc" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
+/turf/open/floor/wood,
+/area/space)
+"bd" = (
+/obj/structure/closet/secure_closet/freezer/meat{
+	locked = 0
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"be" = (
+/obj/structure/closet/secure_closet/freezer/fridge{
+	locked = 0
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"bf" = (
+/obj/structure/closet/secure_closet/freezer/kitchen{
+	locked = 0
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"bg" = (
+/obj/structure/table,
+/obj/item/reagent_containers/glass/beaker,
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"bh" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"bi" = (
+/obj/structure/table,
+/obj/item/stack/packageWrap,
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"bj" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 2
+	},
+/area/space)
+"bk" = (
+/obj/structure/closet/chefcloset,
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+"bl" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/space)
+"bm" = (
+/turf/open/floor/plasteel/airless/white,
+/area/space)
+"bn" = (
+/obj/machinery/washing_machine,
+/turf/open/floor/plasteel/airless/white,
+/area/space)
+"bo" = (
+/obj/structure/curtain,
+/obj/structure/window/reinforced/tinted{
+	dir = 8
+	},
+/obj/machinery/shower{
+	pixel_y = 12
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/space)
+"bp" = (
+/turf/open/space/basic,
+/area/space)
+"bq" = (
+/obj/machinery/vending/boozeomat{
+	req_access_txt = "0"
+	},
+/turf/closed/wall/mineral/wood,
+/area/space)
+"br" = (
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/closed/wall/mineral/wood,
+/area/space)
+"bs" = (
+/obj/machinery/chem_dispenser/drinks,
+/turf/closed/wall/mineral/wood,
+/area/space)
+"bt" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/space)
+"bu" = (
+/obj/structure/piano,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/carpet/black,
+/area/space)
+"bv" = (
+/obj/structure/sign/barsign{
+	pixel_y = 32
+	},
+/obj/structure/chair/stool,
+/turf/open/floor/carpet/black,
+/area/space)
+"bw" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/black,
+/area/space)
+"bx" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/wood,
+/area/space)
+"by" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/machinery/button/door{
+	id = "lmrestroom";
+	name = "Lock Control";
+	pixel_y = -28
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/space)
+"bz" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/plasteel/airless/white,
+/area/space)
+"bA" = (
+/obj/structure/curtain,
+/obj/structure/window/reinforced/tinted{
+	dir = 8
+	},
+/obj/machinery/shower{
+	dir = 1
+	},
+/turf/open/floor/plasteel/airless/white,
+/area/space)
+"bB" = (
+/obj/structure/table/wood,
+/obj/item/device/instrument/piano_synth,
+/turf/open/floor/carpet/black,
+/area/space)
+"bC" = (
+/turf/open/floor/carpet/black,
+/area/space)
+"bD" = (
+/obj/structure/table/wood/bar,
+/turf/open/floor/wood,
+/area/space)
+"bE" = (
+/obj/machinery/door/airlock/wood{
+	id_tag = "lmrestroom"
+	},
+/turf/open/floor/wood,
+/area/space)
+"bF" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/space)
+"bG" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 4
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/space)
+"bH" = (
+/turf/open/floor/plasteel/stairs,
+/area/space)
+"bI" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/wood,
+/area/space)
+"bJ" = (
+/obj/structure/window/paperframe{
+	CanAtmosPass = 0
+	},
+/turf/open/floor/wood,
+/area/space)
+"bK" = (
+/obj/structure/chair/wood/wings{
+	dir = 3
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/space)
+"bL" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/space)
+"bM" = (
+/turf/open/floor/grass,
+/area/lavaland/surface/outdoors)
+"bN" = (
+/obj/structure/table/wood/fancy,
+/obj/item/candle/infinite{
+	pixel_y = 6
+	},
+/turf/open/floor/wood,
+/area/space)
+"bO" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/space)
+"bP" = (
+/obj/structure/chair/wood/wings{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/space)
+"bQ" = (
+/obj/structure/chair/wood/wings{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/space)
+"bR" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/space)
+"bS" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/grass,
+/area/space)
+"bT" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/wood,
+/area/space)
+"bU" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/grass,
+/area/space)
+"bV" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/grass,
+/area/space)
+"bW" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/space)
+"bX" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/grass,
+/area/space)
+"bY" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/light,
+/turf/open/floor/grass,
+/area/space)
+"bZ" = (
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/space)
+"ca" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/light,
+/turf/open/floor/grass,
+/area/space)
+"cb" = (
+/obj/structure/fans/tiny,
+/obj/structure/mineral_door/paperframe,
+/turf/open/floor/carpet/black,
+/area/space)
+"cc" = (
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "sink";
+	pixel_y = 28
+	},
+/obj/effect/mob_spawn/human/maidcafe,
+/turf/open/floor/plasteel/cafeteria,
+/area/space)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bM
+aa
+aa
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+bJ
+bJ
+bJ
+ab
+bJ
+bJ
+bJ
+ab
+bM
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ad
+ad
+ad
+aB
+ad
+ad
+ad
+ab
+bl
+bt
+by
+ab
+bK
+bN
+bO
+bR
+ai
+ai
+bP
+bJ
+bM
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ae
+ag
+ag
+ag
+ag
+ag
+ag
+ab
+bm
+bm
+bm
+bE
+ai
+ai
+ai
+bS
+ai
+ai
+bN
+bJ
+bM
+bM
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+af
+ar
+av
+aC
+aL
+aN
+aZ
+ab
+bn
+bm
+bz
+ab
+ai
+ai
+ai
+ai
+ai
+ai
+bQ
+bJ
+bM
+bM
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ab
+bo
+bm
+bA
+ab
+ai
+ai
+ai
+bT
+ai
+bS
+bY
+ab
+bM
+bM
+bM
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ah
+as
+aw
+ag
+aM
+aO
+ag
+ab
+ab
+ab
+ab
+ab
+ai
+ai
+bP
+bU
+ai
+ai
+bP
+bJ
+bM
+bM
+bM
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+at
+ab
+ab
+ba
+ab
+ai
+ax
+ai
+at
+ai
+ai
+bN
+bS
+ai
+ai
+bN
+bJ
+bM
+bM
+bM
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+aI
+ai
+ax
+ai
+ai
+ai
+ai
+bc
+ai
+ab
+ab
+ab
+bL
+ai
+bQ
+bS
+ai
+ai
+bQ
+bJ
+bM
+bM
+bM
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+am
+ai
+ay
+aD
+ab
+aP
+aX
+bd
+ab
+ab
+bB
+bF
+ai
+ai
+ai
+ai
+ai
+ai
+bZ
+ab
+bM
+bM
+bM
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+an
+ai
+az
+aE
+ab
+aQ
+aX
+be
+ab
+bu
+bC
+bF
+ai
+ai
+bC
+bC
+bC
+bC
+bC
+cb
+bM
+bM
+bM
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+ai
+az
+aF
+ab
+aR
+aX
+bf
+bp
+bv
+bC
+bF
+ai
+ai
+bC
+bC
+bC
+bC
+bC
+ab
+bM
+bM
+bM
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+at
+ab
+ab
+ab
+cc
+aX
+bg
+ab
+bw
+bC
+bG
+ai
+ai
+bC
+bC
+bC
+bC
+bC
+cb
+bM
+bM
+bM
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+aj
+ai
+ax
+aS
+ab
+aT
+aX
+bh
+ab
+ab
+bC
+bH
+ai
+ai
+ai
+ai
+ai
+ai
+bZ
+ab
+bM
+bM
+bM
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ak
+ai
+ai
+aS
+ab
+aU
+aX
+bi
+ab
+ab
+ab
+ab
+bL
+ai
+bP
+bS
+ai
+ai
+bP
+bJ
+bM
+bM
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+al
+ai
+ai
+aS
+ab
+aV
+aX
+bj
+bq
+ax
+bD
+bI
+ai
+ai
+bN
+bV
+ai
+ai
+bN
+bJ
+bM
+bM
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+aG
+ai
+ai
+aJ
+ab
+aW
+aX
+aX
+ba
+ai
+bD
+bI
+ai
+ai
+bQ
+bS
+ai
+ai
+bQ
+bJ
+bM
+bM
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+aH
+ai
+ai
+aK
+ab
+aX
+aX
+aX
+br
+ai
+bD
+bI
+ai
+ai
+ai
+bT
+ai
+bX
+ca
+ab
+bM
+bM
+bM
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ao
+ai
+ai
+aK
+ab
+aY
+aX
+aX
+bs
+ai
+bD
+bI
+ai
+ai
+ai
+ai
+ai
+ai
+bP
+bJ
+bM
+bM
+bM
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ap
+au
+ai
+ai
+at
+aX
+aX
+aX
+at
+ai
+bD
+bI
+ai
+ai
+ai
+bS
+ai
+ai
+bN
+bJ
+bM
+bM
+bM
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+aq
+ai
+aA
+aK
+ab
+aX
+bb
+bk
+ab
+bx
+ab
+ab
+bK
+bN
+bO
+bW
+ai
+ai
+bQ
+bJ
+bM
+bM
+bM
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+bJ
+bJ
+bJ
+ab
+bJ
+bJ
+bJ
+ab
+bM
+bM
+bM
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bM
+bM
+bM
+aa
+bM
+bM
+bM
+bM
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bM
+bM
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
