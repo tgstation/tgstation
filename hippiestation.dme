@@ -142,6 +142,7 @@
 #include "code\_globalvars\genetics.dm"
 #include "code\_globalvars\logging.dm"
 #include "code\_globalvars\misc.dm"
+#include "code\_globalvars\regexes.dm"
 #include "code\_globalvars\lists\flavor_misc.dm"
 #include "code\_globalvars\lists\mapping.dm"
 #include "code\_globalvars\lists\medals.dm"
