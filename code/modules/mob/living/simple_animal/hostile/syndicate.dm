@@ -138,7 +138,7 @@
 	maxHealth = 200
 	health = 200
 	projectilesound = 'sound/weapons/gunshot.ogg'
-	casingtype = /obj/item/ammo_casing/shotgun/buckshot
+	casingtype = /obj/item/ammo_casing/shotgun/pulseslug
 	loot = list(/obj/effect/gibspawner/human)
 
 ///////////////Misc////////////
