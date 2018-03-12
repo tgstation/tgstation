@@ -849,10 +849,25 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_deny = "med-deny"
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	req_access_txt = "5"
-	products = list(/obj/item/reagent_containers/syringe = 12, /obj/item/reagent_containers/dropper = 3, /obj/item/stack/medical/gauze = 8, /obj/item/reagent_containers/pill/patch/styptic = 5, /obj/item/reagent_containers/pill/insulin = 10,
-				/obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/medspray/styptic = 2, /obj/item/reagent_containers/medspray/silver_sulf = 2, /obj/item/reagent_containers/glass/bottle/charcoal = 4, /obj/item/reagent_containers/medspray/sterilizine = 1,
-				/obj/item/reagent_containers/glass/bottle/epinephrine = 4, /obj/item/reagent_containers/glass/bottle/morphine = 4, /obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
-				/obj/item/reagent_containers/glass/bottle/toxin = 3, /obj/item/reagent_containers/syringe/antiviral = 6, /obj/item/reagent_containers/pill/salbutamol = 2, /obj/item/device/healthanalyzer = 4, /obj/item/device/sensor_device = 2, /obj/item/pinpointer/crew = 2)
+	products = list(/obj/item/reagent_containers/syringe = 12, 
+					/obj/item/reagent_containers/dropper = 3, 
+					/obj/item/device/healthanalyzer = 4, 
+					/obj/item/device/sensor_device = 2, 
+					/obj/item/pinpointer/crew = 2,
+					/obj/item/reagent_containers/medspray/sterilizine = 1,
+					/obj/item/stack/medical/gauze = 8, 
+					/obj/item/reagent_containers/pill/patch/styptic = 5, 
+					/obj/item/reagent_containers/medspray/styptic = 2, 
+					/obj/item/reagent_containers/pill/patch/silver_sulf = 5, 
+					/obj/item/reagent_containers/medspray/silver_sulf = 2,
+					/obj/item/reagent_containers/pill/insulin = 10,
+					/obj/item/reagent_containers/pill/salbutamol = 2, 
+					/obj/item/reagent_containers/glass/bottle/charcoal = 4, 
+					/obj/item/reagent_containers/glass/bottle/epinephrine = 4, 
+					/obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
+					/obj/item/reagent_containers/glass/bottle/morphine = 4, 
+					/obj/item/reagent_containers/glass/bottle/toxin = 3, 
+					/obj/item/reagent_containers/syringe/antiviral = 6)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 3, /obj/item/reagent_containers/pill/morphine = 4, /obj/item/reagent_containers/pill/charcoal = 6)
 	premium = list(/obj/item/storage/box/hug/medical = 1, /obj/item/reagent_containers/hypospray/medipen = 3, /obj/item/storage/belt/medical = 3, /obj/item/wrench/medical = 1)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
@@ -1051,7 +1066,16 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "engivend"
 	icon_deny = "engivend-deny"
 	req_access_txt = "11" //Engineering Equipment access
-	products = list(/obj/item/clothing/glasses/meson/engine = 2, /obj/item/device/multitool = 4, /obj/item/electronics/airlock = 10, /obj/item/electronics/apc = 10, /obj/item/electronics/airalarm = 10, /obj/item/stock_parts/cell/high = 10, /obj/item/construction/rcd/loaded = 3, /obj/item/device/geiger_counter = 5, /obj/item/grenade/chem_grenade/smart_metal_foam = 10)
+	products = list(/obj/item/clothing/glasses/meson/engine = 2, 
+					/obj/item/clothing/glasses/welding = 3,
+					/obj/item/device/multitool = 4, 
+					/obj/item/construction/rcd/loaded = 3, 
+					/obj/item/grenade/chem_grenade/smart_metal_foam = 10,
+					/obj/item/device/geiger_counter = 5, 
+					/obj/item/stock_parts/cell/high = 10,
+					/obj/item/electronics/airlock = 10, 
+					/obj/item/electronics/apc = 10, 
+					/obj/item/electronics/airalarm = 10)
 	contraband = list(/obj/item/stock_parts/cell/potato = 3)
 	premium = list(/obj/item/storage/belt/utility = 3, /obj/item/storage/box/smart_metal_foam = 1)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
