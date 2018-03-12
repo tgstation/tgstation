@@ -31,6 +31,5 @@
 	var/area/A = get_area(parent)
 	if(!A || A.outdoors)
 		return
-	to_chat(world, "what theffff123 fuck")
 	A.totalbeauty -= beauty
 	A.update_beauty()
