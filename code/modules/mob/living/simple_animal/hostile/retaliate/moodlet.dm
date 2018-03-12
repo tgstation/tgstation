@@ -30,6 +30,8 @@
 /mob/living/simple_animal/hostile/retaliate/moodlet/Retaliate()
 	..()
 	while(currentMood > 2)
+		if (stat != CONSCIOUS)
+			break
 		currentMood--
 		icon_state = "mood[currentMood]"
 		sleep(4)
