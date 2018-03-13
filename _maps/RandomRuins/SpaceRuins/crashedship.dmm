@@ -517,11 +517,10 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 1;
 	environ = 0;
 	equipment = 3;
-	locked = 0;
 	pixel_y = 32;
 	req_access = null
 	},
@@ -779,11 +778,10 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 1;
 	environ = 0;
 	equipment = 3;
-	locked = 0;
 	pixel_y = 32;
 	req_access = null
 	},
@@ -1049,9 +1047,8 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 1;
-	locked = 0;
 	pixel_y = 28;
 	req_access = null
 	},
