@@ -75,7 +75,7 @@
 
 /obj/item/integrated_circuit/transfer/demultiplexer/do_work()
 	var/output_index = get_pin_data(IC_INPUT, 1)
-	if(!isnull(output_index) && (output_index >= 1 && output_index < inputs.len))
+	if(!isnull(output_index) && (output_index >= 1 && output_index <= outputs.len))
 		var/datum/integrated_io/O = outputs[output_index]
 		O.data = get_pin_data(IC_INPUT, 2)
 		O.push_data()
