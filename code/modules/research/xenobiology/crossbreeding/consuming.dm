@@ -385,7 +385,7 @@ Consuming extracts:
 	taste = "ghosts and stuff"
 
 /obj/item/slime_cookie/black/do_effect(mob/living/M, mob/user)
-	M.apply_status_effect(/datum/status_effect/peacecookie)
+	M.apply_status_effect(/datum/status_effect/spookcookie)
 
 /obj/item/slimecross/consuming/lightpink
 	colour = "light pink"
