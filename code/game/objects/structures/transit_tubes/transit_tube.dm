@@ -12,7 +12,7 @@
 	var/list/tube_dirs //list of directions this tube section can connect to.
 	var/exit_delay = 1
 	var/enter_delay = 0
-	var/time_to_unwrench = 20 //deciseconds
+	var/const/time_to_unwrench = 2 SECONDS
 
 /obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
