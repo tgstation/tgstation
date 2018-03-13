@@ -253,3 +253,68 @@
 /obj/item/clothing/shoes/bronze/Initialize()
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50)
+
+/obj/item/clothing/shoes/wheelys
+	name = "Wheely-Heels"
+	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
+	icon_state = "wheelys"
+	item_state = "wheelys"
+	actions_types = list(/datum/action/item_action/wheelys)
+	var/wheelToggle = FALSE //False means wheels are not popped out
+	var/obj/vehicle/ridden/scooter/wheelys/W
+
+/obj/item/clothing/shoes/wheelys/Initialize()
+	. = ..()
+	W = new /obj/vehicle/ridden/scooter/wheelys(null)
+
+/obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
+	if(!isliving(user))
+		return
+	if(!istype(user.get_item_by_slot(slot_shoes), /obj/item/clothing/shoes/wheelys))
+		to_chat(user, "<span class='warning'>You must be wearing the wheely-heels to use them!</span>")
+		return
+	if(!(W.is_occupant(user)))
+		wheelToggle = FALSE
+	if(wheelToggle)
+		W.unbuckle_mob(user)
+		wheelToggle = FALSE
+		return
+	W.forceMove(get_turf(user))
+	W.buckle_mob(user)
+	wheelToggle = TRUE
+
+/obj/item/clothing/shoes/wheelys/dropped(mob/user)
+	if(wheelToggle)
+		W.unbuckle_mob(user)
+		wheelToggle = FALSE
+	..()
+
+/obj/item/clothing/shoes/wheelys/Destroy()
+	QDEL_NULL(W)
+	. = ..()
+
+/obj/item/clothing/shoes/kindleKicks
+	name = "Kindle Kicks"
+	desc = "They'll sure kindle something in you, and it's not childhood nostalgia..."
+	icon_state = "kindleKicks"
+	item_state = "kindleKicks"
+	actions_types = list(/datum/action/item_action/kindleKicks)
+	var/lightCycle = 0
+	var/active = FALSE
+
+/obj/item/clothing/shoes/kindleKicks/ui_action_click(mob/user, action)
+	if(active)
+		return
+	active = TRUE
+	set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
+	addtimer(CALLBACK(src, .proc/lightUp), 5)
+
+/obj/item/clothing/shoes/kindleKicks/proc/lightUp(mob/user)
+	if(lightCycle < 15)
+		set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
+		lightCycle += 1
+		addtimer(CALLBACK(src, .proc/lightUp), 5)
+	else
+		set_light(0)
+		lightCycle = 0
+		active = FALSE

@@ -172,7 +172,7 @@
 /obj/machinery/button/door
 	name = "door button"
 	desc = "A door remote control switch."
-	var/normaldoorcontrol = 0
+	var/normaldoorcontrol = FALSE
 	var/specialfunctions = OPEN // Bitflag, see assembly file
 
 /obj/machinery/button/door/setup_device()
