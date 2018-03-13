@@ -15,6 +15,9 @@
 		obj_break(null, mapload)
 
 /obj/structure/mirror/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(broken || !Adjacent(user))
 		return
 
@@ -118,6 +121,9 @@
 	..()
 
 /obj/structure/mirror/magic/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!ishuman(user))
 		return
 

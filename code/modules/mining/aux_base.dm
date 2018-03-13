@@ -31,11 +31,8 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	. = ..()
 	locator = new(src)
 
-/obj/machinery/computer/auxillary_base/attack_hand(mob/user)
-	if(..(user))
-		return
-	add_fingerprint(usr)
-
+/obj/machinery/computer/auxillary_base/ui_interact(mob/user)
+	. = ..()
 	var/list/options = params2list(possible_destinations)
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 	var/dat = "[is_station_level(z) ? "Docking clamps engaged. Standing by." : "Mining Shuttle Uplink: [M ? M.getStatusText() : "*OFFLINE*"]"]<br>"
@@ -280,6 +277,9 @@ obj/docking_port/stationary/public_mining_dock
 	var/console_range = 15 //Wifi range of the beacon to find the aux base console
 
 /obj/structure/mining_shuttle_beacon/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(anchored)
 		to_chat(user, "<span class='warning'>Landing zone already set.</span>")
 		return

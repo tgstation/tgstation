@@ -108,10 +108,6 @@
 	else
 		return ..()
 
-/obj/item/grenade/attack_hand()
-	walk(src, null, null)
-	..()
-
 /obj/item/grenade/attack_paw(mob/user)
 	return attack_hand(user)
 

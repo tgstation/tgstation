@@ -95,6 +95,7 @@
 	. = ..()
 	QDEL_IN(src, 300)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/hallucination/simple/bluespace_stream/attack_hand(mob/user)
 	if(user != seer || !linked_to)
 		return

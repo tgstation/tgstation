@@ -87,13 +87,13 @@
 		return
 	else if(istype(O, /obj/item/storage/bag))
 		var/obj/item/storage/P = O
-		var/loaded = 0
+		var/loaded = FALSE
 		for(var/obj/G in P.contents)
 			if(istype(G, /obj/item/reagent_containers/food/snacks/monkeycube))
-				loaded = 1
+				loaded = TRUE
 				monkeys++
 				qdel(G)
-		if (loaded)
+		if(loaded)
 			to_chat(user, "<span class='notice'>You fill [src] with the monkey cubes stored in [O]. [src] now has [monkeys] monkey cubes stored.</span>")
 		return
 	else if(istype(O, /obj/item/slimepotion/slime))

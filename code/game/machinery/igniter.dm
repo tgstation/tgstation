@@ -17,21 +17,15 @@
 	on = FALSE
 	icon_state = "igniter0"
 
-/obj/machinery/igniter/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/igniter/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/igniter/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	add_fingerprint(user)
 
 	use_power(50)
-	src.on = !( src.on )
-	src.icon_state = text("igniter[]", src.on)
-	return
+	on = !( on )
+	icon_state = "igniter[on]"
 
 /obj/machinery/igniter/process()	//ugh why is this even in process()?
 	if (src.on && !(stat & NOPOWER) )

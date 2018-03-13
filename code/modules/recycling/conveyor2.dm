@@ -146,8 +146,10 @@
 
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.Move_Pulled(src)
-
 
 // make the conveyor broken
 // also propagate inoperability to any connected conveyor with the same ID
@@ -244,6 +246,9 @@
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	add_fingerprint(user)
 	if(position == 0)
 		if(convdir)   //is it a oneway switch

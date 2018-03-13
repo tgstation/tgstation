@@ -51,7 +51,7 @@
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
-	var/flags
+	var/reagents_holder_flags
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -315,9 +315,9 @@
 
 /datum/reagents/proc/set_reacting(react = TRUE)
 	if(react)
-		flags &= ~(REAGENT_NOREACT)
+		reagents_holder_flags &= ~(REAGENT_NOREACT)
 	else
-		flags |= REAGENT_NOREACT
+		reagents_holder_flags |= REAGENT_NOREACT
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
@@ -337,7 +337,7 @@
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
-	if(flags & REAGENT_NOREACT)
+	if(reagents_holder_flags & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
 
 	var/reaction_occurred = 0

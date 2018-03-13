@@ -539,7 +539,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return assembled
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
-	if(!ignore_typecache)
+	if(!length(ignore_typecache))
 		return GetAllContents()
 	var/list/processing = list(src)
 	var/list/assembled = list()

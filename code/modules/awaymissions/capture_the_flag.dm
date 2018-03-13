@@ -49,6 +49,7 @@
 				to_chat(M, "<span class='userdanger'>\The [src] has been returned to base!</span>")
 		STOP_PROCESSING(SSobj, src)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/twohanded/ctf/attack_hand(mob/living/user)
 	if(!is_ctf_target(user) && !anyonecanpickup)
 		to_chat(user, "Non players shouldn't be moving the flag!")
@@ -70,6 +71,7 @@
 		if(istype(mob_area, /area/ctf))
 			to_chat(M, "<span class='userdanger'>\The [src] has been taken!</span>")
 	STOP_PROCESSING(SSobj, src)
+	..()
 
 /obj/item/twohanded/ctf/dropped(mob/user)
 	..()
@@ -204,6 +206,7 @@
 	ctf_gear = /datum/outfit/ctf/blue
 	instagib_gear = /datum/outfit/ctf/blue/instagib
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
 		if(user.client && user.client.holder)
@@ -663,6 +666,9 @@
 	capture(user)
 
 /obj/machinery/control_point/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	capture(user)
 
 /obj/machinery/control_point/proc/capture(mob/user)

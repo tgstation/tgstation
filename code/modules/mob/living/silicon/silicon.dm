@@ -40,6 +40,7 @@
 	var/updating = FALSE //portable camera camerachunk update
 
 	var/hack_software = FALSE //Will be able to use hacking actions
+	var/interaction_range = 7			//wireless control range
 
 /mob/living/silicon/Initialize()
 	. = ..()
@@ -152,17 +153,17 @@
 /mob/living/silicon/can_inject(mob/user, error_msg)
 	if(error_msg)
 		to_chat(user, "<span class='alert'>Their outer shell is too tough.</span>")
-	return 0
+	return FALSE
 
 /mob/living/silicon/IsAdvancedToolUser()
-	return 1
+	return TRUE
 
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
-		return 0
-	if (bot.connected_ai == ai)
-		return 1
-	return 0
+		return FALSE
+	if(bot.connected_ai == ai)
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/Topic(href, href_list)
 	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite

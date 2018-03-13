@@ -73,7 +73,8 @@
 		STOP_PROCESSING(SSobj, src)
 	return
 
-/obj/item/device/assembly/health/interact(mob/user as mob)//TODO: Change this to the wires thingy
+/obj/item/device/assembly/health/ui_interact(mob/user as mob)//TODO: Change this to the wires thingy
+	. = ..()
 	if(!secured)
 		user.show_message("<span class='warning'>The [name] is unsecured!</span>")
 		return 0
@@ -82,8 +83,6 @@
 		dat += "<BR>Health: [health_scan]"
 	user << browse(dat, "window=hscan")
 	onclose(user, "hscan")
-	return
-
 
 /obj/item/device/assembly/health/Topic(href, href_list)
 	..()
