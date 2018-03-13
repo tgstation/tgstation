@@ -2,6 +2,7 @@
 	name = "spurdo sparde mask"
 	desc = "Made from a rare Gondola hide. Is said to be cursed by the spirits of Space Finland, which speak through the mask when you scream."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_1 = MASKINTERNALS_1
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "spurdo"
 	item_state = "spurdo"
@@ -23,16 +24,17 @@
 			M = replacetextEx(M, " [uppertext(key)]", " [uppertext(value)]")
 			M = replacetextEx(M, " [capitalize(key)]", " [capitalize(value)]")
 			M = replacetextEx(M, " [key]", " [value]")
-			M = replacetext(M,"p","b") // This part and the lines below it are doubling down for accent's sake. It's modular.
-			M = replacetext(M,"oo","u")
-			M = replacetext(M,"ck","gg")
-			M = replacetext(M,"c","g")
-			M = replacetext(M,"t","j")
 
-		if(prob(3))
-			M += pick(" EBIN!!"," FUGG!!"," BENIS!!", " SPORO LORO SPLARLE SBOERDOLOLA!!")
+		M = replacetext(M,"p","b") // This part and the lines below it are doubling down for accent's sake. It's modular.
+		M = replacetext(M,"oo","u")
+		M = replacetext(M,"ck","gg")
+		M = replacetext(M,"c","g")
+		M = replacetext(M,"t","j")
+
 		if(prob(50))
-			M += pick (" :DDDDD", " :-DDDDDD")
+			M += pick(" :DDDDD", " :-DDDDDD")
+			if(prob(20))
+				M += pick (" EBIN!!"," FUGG!!"," BENIS!!", " SPORO LORO SPLARLE SBOERDOLOLA!!")
 	return trim(M)
 
 /obj/item/clothing/mask/spurdo/equipped(mob/user, slot) //when you put it on
@@ -43,4 +45,4 @@
 	return ..()
 
 obj/item/clothing/mask/spurdo/cursed
-	flags_1 = NODROP_1
+	flags_1 = NODROP_1 | MASKINTERNALS_1
