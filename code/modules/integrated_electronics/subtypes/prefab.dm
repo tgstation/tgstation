@@ -104,8 +104,17 @@
 			IO.connect_pin(IO2)
 	..()
 
-/obj/item/integrated_circuit/prefab/verify_save(list/component_params)
+/obj/item/integrated_circuit/prefab/verify_save(list/component_params, list/json_program)
 	..()
+	for(var/C in component_params["circuits"])
+		var/list/circuit = C
+		var/component_path = SScircuit.all_components[circuit["type"]]
+		var/obj/item/integrated_circuit/component = SScircuit.cached_components[component_path]
+		if(!component)
+			return "Invalid internal prefab component type."
+		json_program["complexity"] += component.complexity
+		json_program["used_space"] += component.size
+		json_program["metal_cost"] += component.materials[MAT_METAL]
 
 /obj/item/integrated_circuit/prefab/external_examine(mob/user)
 	..()

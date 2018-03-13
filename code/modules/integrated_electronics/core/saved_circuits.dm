@@ -43,7 +43,7 @@
 
 // Verifies a list of component parameters
 // Returns null on success, error name on failure
-/obj/item/integrated_circuit/proc/verify_save(list/component_params)
+/obj/item/integrated_circuit/proc/verify_save(list/component_params, list/json_program)
 	var/init_name = initial(name)
 	// Validate name
 	if(component_params["name"] && !reject_bad_name(component_params["name"], TRUE))
@@ -273,7 +273,7 @@
 		assembly_components.Add(component)
 
 		// Check component save data for errors
-		error = component.verify_save(component_params)
+		error = component.verify_save(component_params, blocks)
 		if(error)
 			return error
 
