@@ -9,7 +9,7 @@
 	density = FALSE
 	layer = LOW_ITEM_LAYER //same as the built tube
 	anchored = FALSE
-	var/time_to_unwrench = 20 //deciseconds
+	var/const/time_to_unwrench = 2 SECONDS
 	var/flipped = 0
 	var/build_type = /obj/structure/transit_tube
 	var/flipped_build_type
