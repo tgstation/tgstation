@@ -962,7 +962,7 @@
 /obj/structure/window{
 	dir = 8
 	},
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/empty{
 	dir = 1
 	},
 /turf/open/floor/holofloor{
@@ -976,7 +976,7 @@
 	},
 /area/holodeck/rec_center/medical)
 "dd" = (
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/empty{
 	dir = 1
 	},
 /turf/open/floor/holofloor{

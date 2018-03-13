@@ -50,8 +50,9 @@
 		for(var/i in 1 to min(chem_stores.len, mapload_containers.len))
 			var/container_path = mapload_containers[i]
 			var/obj/item/reagent_containers/container = new container_path()
-			add_store(container, i)
-			name_store(i, container.reagents.get_master_reagent_name())
+			if(container.forceMove(src))
+				add_store(container, i)
+				name_store(i, container.reagents.get_master_reagent_name())
 
 /obj/machinery/sleeper/Destroy()
 	drop_stores()
@@ -103,11 +104,17 @@
 	if(!state_open && !panel_open)
 		..()
 
-/obj/machinery/sleeper/dropContents()
+/obj/machinery/sleeper/Exited(atom/movable/AM, atom/newloc)
+	if(AM == occupant)
+		var/mob/living/L = AM
+		L.SetStasis(FALSE)
+	. = ..()
+
+/obj/machinery/sleeper/dropContents(to_drop = contents)
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		mob_occupant.SetStasis(FALSE)
-	..()
+	..(to_drop - chem_stores)
 
 /obj/machinery/sleeper/proc/drop_stores(from_index = 1)
 	var/stores_len = LAZYLEN(chem_stores)
@@ -126,8 +133,8 @@
 		else if(chem_stores[selected_store])
 			to_chat(user, "<span class='warning'>There's already a container in this slot, eject it first or select another one!</span>")
 		else
-			user.dropItemToGround(I)
-			add_store(I)
+			if(user.transferItemToLoc(I, src))
+				add_store(I)
 		return TRUE
 
 /obj/machinery/sleeper/proc/add_store(obj/item/reagent_containers/C, store_index)
@@ -135,7 +142,6 @@
 	if(store_index && LAZYLEN(chem_stores) >= store_index)
 		if(!chem_stores[store_index])
 			chem_stores[store_index] = C
-			C.moveToNullspace()
 
 /obj/machinery/sleeper/proc/eject_store(store_index)
 	var/obj/item/reagent_containers/C = LAZYACCESS(chem_stores, store_index)
