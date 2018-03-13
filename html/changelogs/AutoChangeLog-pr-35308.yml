@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "You need to actually clear an area for the aux base, remove all walls (except rock walls)."
