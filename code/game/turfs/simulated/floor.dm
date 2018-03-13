@@ -101,6 +101,8 @@
 
 /turf/open/floor/proc/break_tile_to_plating()
 	var/turf/open/floor/plating/T = make_plating()
+	if(!istype(T))
+		return
 	T.break_tile()
 
 /turf/open/floor/proc/break_tile()
@@ -119,7 +121,7 @@
 	burnt = 1
 
 /turf/open/floor/proc/make_plating()
-	return ChangeTurf(/turf/open/floor/plating)
+	return ScrapeAway()
 
 /turf/open/floor/ChangeTurf(path, new_baseturf, flags)
 	if(!isfloorturf(src))

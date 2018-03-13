@@ -536,7 +536,7 @@
 								playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)
 								var/turf/open/space/T
 								for(T in orange(1, src))
-									T.ChangeTurf(/turf/open/floor/plating/)
+									T.PlaceOnTop(/turf/open/floor/plating)
 						else
 							say("Something slams into the floor around [src] - luckily, it didn't get through!")
 							playsound(loc, 'sound/effects/bang.ogg', 50, 1)

@@ -5,6 +5,7 @@
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
+	baseturfs = /turf/open/floor/plating
 	floor_tile = /obj/item/stack/rods
 
 /turf/open/floor/engine/examine(mob/user)
@@ -37,7 +38,7 @@
 		if(!istype(src, /turf/open/floor/engine))
 			return TRUE
 		new /obj/item/stack/rods(src, 2)
-		ChangeTurf(/turf/open/floor/plating)
+		ScrapeAway()
 	return TRUE
 
 /turf/open/floor/engine/acid_act(acidpwr, acid_volume)

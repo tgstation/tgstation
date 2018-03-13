@@ -146,13 +146,9 @@
 	var/y0 = bounds[2]
 	var/x1 = bounds[3]
 	var/y1 = bounds[4]
-	if(x0 <= x1 && !ISINRANGE(T.x, x0, x1))
+	if(!ISINRANGE(T.x, min(x0, x1), max(x0, x1)))
 		return FALSE
-	else if(!ISINRANGE(T.x, x1, x0))
-		return FALSE
-	if(y0 <= y1 && !ISINRANGE(T.y, y0, y1))
-		return FALSE
-	else if(!ISINRANGE(T.y, y1, y0))
+	if(!ISINRANGE(T.y, min(y0, y1), max(y0, y1)))
 		return FALSE
 	return TRUE
 

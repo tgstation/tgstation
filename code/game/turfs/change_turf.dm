@@ -108,24 +108,26 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	return W
 
 // Take off the top layer turf and replace it with the next baseturf down
-/turf/proc/ScrapeAway()
+/turf/proc/ScrapeAway(amount=1, flags)
+	if(!amount)
+		return
 	if(length(baseturfs))
-		var/list/new_baseturfs = baseturfs
-		var/turf_type = new_baseturfs[new_baseturfs.len]
-		new_baseturfs.len--
-		switch(new_baseturfs.len)
-			if(1)
-				new_baseturfs = new_baseturfs[1]
-			if(0)
-				new_baseturfs = turf_type
-				// We must never end up with a situation where there is no baseturf
-				WARNING("turf of type [type] had a baseturfs length 1 still in list form.")
-		return ChangeTurf(turf_type, new_baseturfs)
+		var/list/new_baseturfs = baseturfs.Copy()
+		var/turf_type = new_baseturfs[max(1, new_baseturfs.len - amount + 1)]
+		while(ispath(turf_type, /turf/baseturf_skipover))
+			amount++
+			if(amount > new_baseturfs.len)
+				CRASH("The bottomost baseturf of a turf is a skipover [src]([type])")
+			turf_type = new_baseturfs[max(1, new_baseturfs.len - amount + 1)]
+		new_baseturfs.len -= min(amount, new_baseturfs.len - 1) // No removing the very bottom
+		if(new_baseturfs.len == 1)
+			new_baseturfs = new_baseturfs[1]
+		return ChangeTurf(turf_type, new_baseturfs, flags)
 	
 	if(baseturfs == type)
 		return src
 
-	return ChangeTurf(baseturfs, baseturfs) // The bottom baseturf will never go away
+	return ChangeTurf(baseturfs, baseturfs, flags) // The bottom baseturf will never go away
 
 // Take the input as baseturfs and put it underneath the current baseturfs
 // If fake_turf_type is provided and new_baseturfs is not the baseturfs list will be created identical to the turf type's
@@ -155,6 +157,11 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 // Things placed on top of closed turfs will ignore the topmost closed turf
 // Returns the new turf
 /turf/proc/PlaceOnTop(list/new_baseturfs, turf/fake_turf_type, flags)
+	var/area/turf_area = loc
+	if(new_baseturfs && !length(new_baseturfs))
+		new_baseturfs = list(new_baseturfs)
+	flags = turf_area.PlaceOnTopReact(new_baseturfs, fake_turf_type, flags) // A hook so areas can modify the incoming args
+
 	var/turf/newT
 	if(flags & CHANGETURF_SKIP) // We haven't been initialized
 		if(initialized)
@@ -202,17 +209,16 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	new_baseturfs += type
 
 	if(depth)
-		var/list/target_baseturfs = copytarget.baseturfs
-		target_baseturfs -= target_baseturfs & GLOB.blacklisted_automated_baseturfs
-		var/base_len = length(target_baseturfs)
-		if(!base_len)
-			if(!ignore_bottom)
-				new_baseturfs += target_baseturfs
-		else if(base_len > ignore_bottom)
-			if(base_len - ignore_bottom <= depth)
-				new_baseturfs += target_baseturfs.Copy(ignore_bottom + 1)
-			else
-				new_baseturfs += target_baseturfs.Copy(base_len - depth)
+		var/list/target_baseturfs
+		if(length(copytarget.baseturfs)) 
+			// with default inputs this would be Copy(CLAMP(2, -INFINITY, baseturfs.len))
+			// Don't forget a lower index is lower in the baseturfs stack, the bottom is baseturfs[1]
+			target_baseturfs = copytarget.baseturfs.Copy(CLAMP(1 + ignore_bottom, 1 + copytarget.baseturfs.len - depth, copytarget.baseturfs.len))
+		else if(!ignore_bottom)
+			target_baseturfs = list(copytarget.baseturfs)
+		if(target_baseturfs)
+			target_baseturfs -= new_baseturfs & GLOB.blacklisted_automated_baseturfs
+			new_baseturfs += target_baseturfs
 
 	var/turf/newT = copytarget.copyTurf(src)
 	newT.baseturfs = new_baseturfs

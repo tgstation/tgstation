@@ -21,6 +21,18 @@
 	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 
+/datum/map_template/shuttle/load(turf/T, centered)
+	. = ..()
+	if(!.)
+		return
+	var/list/turfs = block(	locate(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ]),
+							locate(.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ]))
+	for(var/i in 1 to turfs.len)
+		var/turf/place = turfs[i]
+		if(istype(place, /turf/open/space)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.
+			continue
+		place.baseturfs.Insert(3, /turf/baseturf_skipover/shuttle)
+
 //Whatever special stuff you want
 /datum/map_template/shuttle/proc/on_bought()
 	return
