@@ -223,9 +223,13 @@ Charged extracts:
 		return
 	var/list/allowed_species = list()
 	for(var/datum/species/S in subtypesof(/datum/species))
-		if(!S.blacklisted)
+		var/datum/species/temp = new S()
+		if(!temp.blacklisted)
 			allowed_species += S
-	H.set_species(pick(allowed_species), icon_update = 1)
+	var/datum/species/changed = pick(allowed_species)
+	if(changed)
+		H.set_species(changed, icon_update = 1)
+		to_chat(H, "<span class='danger'>You feel very different!</span>")
 	..()
 
 /obj/item/slimecross/charged/lightpink

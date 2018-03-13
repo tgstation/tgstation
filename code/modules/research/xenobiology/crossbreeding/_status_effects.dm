@@ -58,6 +58,207 @@
 		"<span class='notice'>Your gel second-skin dissolves!</span>")
 
 ///////////////////////////////////////////////////////
+//////////////////CONSUMING EXTRACTS///////////////////
+///////////////////////////////////////////////////////
+
+/datum/status_effect/firecookie
+	id = "firecookie"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 100
+
+/datum/status_effect/firecookie/on_apply()
+	owner.add_trait(TRAIT_RESISTCOLD,"firecookie")
+	owner.adjust_bodytemperature(110)
+	return ..()
+
+/datum/status_effect/firecookie/on_remove()
+	owner.remove_trait(TRAIT_RESISTCOLD,"firecookie")
+
+/datum/status_effect/watercookie
+	id = "watercookie"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 100
+
+/datum/status_effect/watercookie/on_apply()
+	owner.add_trait(TRAIT_NOSLIPWATER,"watercookie")
+	return ..()
+
+/datum/status_effect/watercookie/tick()
+	for(var/turf/open/T in range(get_turf(owner),1))
+		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
+
+/datum/status_effect/watercookie/on_remove()
+	owner.remove_trait(TRAIT_NOSLIPWATER,"watercookie")
+
+/datum/status_effect/metalcookie
+	id = "metalcookie"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 100
+
+/datum/status_effect/metalcookie/on_apply()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.physiology.brute_mod *= 0.9
+	return ..()
+
+/datum/status_effect/metalcookie/on_remove()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.physiology.brute_mod /= 0.9
+
+/datum/status_effect/sparkcookie
+	id = "sparkcookie"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 300
+	var/original_coeff
+
+/datum/status_effect/sparkcookie/on_apply()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		original_coeff = H.physiology.siemens_coeff
+		H.physiology.siemens_coeff = 0
+	return ..()
+
+/datum/status_effect/sparkcookie/on_remove()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.physiology.siemens_coeff = original_coeff
+
+/datum/status_effect/toxincookie
+	id = "toxincookie"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 600
+
+/datum/status_effect/toxincookie/on_apply()
+	owner.add_trait(TRAIT_TOXINLOVER,"toxincookie")
+	return ..()
+
+/datum/status_effect/toxincookie/on_remove()
+	owner.remove_trait(TRAIT_TOXINLOVER,"toxincookie")
+
+/datum/status_effect/timecookie
+	id = "timecookie"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 600
+
+/datum/status_effect/timecookie/on_apply()
+	owner.do_after_speed *= 0.95
+	return ..()
+
+/datum/status_effect/timecookie/on_remove()
+	owner.do_after_speed /= 0.95
+
+/datum/status_effect/lovecookie
+	id = "lovecookie"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 300
+
+/datum/status_effect/lovecookie/tick()
+	if(owner.stat != CONSCIOUS)
+		return
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		if(C.handcuffed)
+			return
+	var/list/huggables = list()
+	for(var/mob/living/carbon/L in range(get_turf(owner),1))
+		if(L != owner)
+			huggables += L
+	if(length(huggables))
+		var/mob/living/carbon/hugged = pick(huggables)
+		owner.visible_message("<span class='notice'>[owner] hugs [hugged]!</span>", "<span class='notice'>You hug [hugged]!</span>")
+
+/datum/status_effect/tarcookie
+	id = "tarcookie"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 100
+
+/datum/status_effect/tarcookie/tick()
+	for(var/mob/living/carbon/human/L in range(get_turf(owner),1))
+		if(L != owner)
+			L.apply_status_effect(/datum/status_effect/tarfoot)
+
+/datum/status_effect/tarfoot
+	id = "tarfoot"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 30
+
+/datum/status_effect/tarfoot/on_apply()
+	var/mob/living/carbon/human/H = owner
+	if(istype(H))
+		H.physiology.speed_mod += 0.5
+	return ..()
+
+/datum/status_effect/tarfoot/on_remove()
+	var/mob/living/carbon/human/H = owner
+	if(istype(H))
+		H.physiology.speed_mod -= 0.5
+
+/datum/status_effect/spookcookie
+	id = "spookcookie"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 300
+
+/datum/status_effect/spookcookie/on_apply()
+	var/image/I = image(icon = 'icons/mob/simple_human.dmi', icon_state = "skeleton", layer = ABOVE_MOB_LAYER, loc = owner)
+	I.override = 1
+	owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", I)
+	return ..()
+
+/datum/status_effect/spookcookie/on_remove()
+	owner.remove_alt_appearance("spookyscary")
+
+/datum/status_effect/peacecookie
+	id = "peacecookie"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 100
+
+/datum/status_effect/peacecookie/tick()
+	for(var/mob/living/L in range(get_turf(owner),1))
+		L.apply_status_effect(/datum/status_effect/plur)
+
+/datum/status_effect/plur
+	id = "plur"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 30
+
+/datum/status_effect/plur/on_apply()
+	owner.add_trait(TRAIT_PACIFISM, "peacecookie")
+	return ..()
+
+/datum/status_effect/plur/on_remove()
+	owner.remove_trait(TRAIT_PACIFISM, "peacecookie")
+
+/datum/status_effect/adamantinecookie
+	id = "adamantinecookie"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	duration = 100
+
+/datum/status_effect/adamantinecookie/on_apply()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.physiology.burn_mod *= 0.9
+	return ..()
+
+/datum/status_effect/adamantinecookie/on_remove()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		H.physiology.burn_mod /= 0.9
+
+///////////////////////////////////////////////////////
 //////////////////STABILIZED EXTRACTS//////////////////
 ///////////////////////////////////////////////////////
 

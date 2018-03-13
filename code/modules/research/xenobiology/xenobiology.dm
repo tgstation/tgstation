@@ -73,17 +73,7 @@
 	playsound(get_turf(M), 'sound/effects/attackblob.ogg', 50, 1)
 
 	if(M.applied >= SLIME_EXTRACT_CROSSING_REQUIRED)
-		M.visible_message("<span class='danger'>[M] shudders, its mutated core consuming the rest of it's body!</span>")
-		playsound(get_turf(src), 'sound/magic/smoke.ogg', 50, 1)
-		var/sanitizedcolour = replacetext(M.colour, " ", "")
-		var/sanitizedeffect = replacetext(effectmod, "-","")
-		var/corecross = sanitizedeffect + "/" + sanitizedcolour
-		var/crosspath = text2path("/obj/item/slimecross/"+corecross)
-		if(ispath(crosspath))
-			new crosspath(M.loc)
-		else
-			M.visible_message("<span class='warning'>The mutated core shudders, and collapses into a puddle, unable to maintain its form.</span>")
-		qdel(M)
+		M.spawn_corecross()
 
 /obj/item/slime_extract/grey
 	name = "grey slime extract"

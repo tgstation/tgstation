@@ -9,8 +9,25 @@ Reproductive extracts:
 	icon_state = "reproductive"
 	var/extract_type = /obj/item/slime_extract/
 	var/cubes_eaten = 0
+	var/last_produce = 0
+	var/cooldown = 30 // 3 seconds.
 
 /obj/item/slimecross/reproductive/attackby(obj/item/O, mob/user)
+	if((last_produce + cooldown) > world.time)
+		to_chat(user, "<span class='warning'>[src] is still digesting!</span>")
+		return
+	if(istype(O, /obj/item/storage/bag/bio))
+		var/obj/item/storage/P = O
+		var/obj/item/reagent_containers/food/snacks/monkeycube/M
+		for(var/obj/item/X in P.contents)
+			M = X
+			if(M && istype(M))
+				break
+		if(M && istype(M))
+			P.remove_from_storage(M, get_turf(src))
+			attackby(M,user)
+		else
+			to_chat(user, "<span class='warning'>There are no monkey cubes in the bio bag!</span>")
 	if(istype(O,/obj/item/reagent_containers/food/snacks/monkeycube))
 		qdel(O)
 		cubes_eaten++
@@ -20,8 +37,9 @@ Reproductive extracts:
 		var/cores = rand(1,4)
 		src.visible_message("<span class='notice'>[src] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!</span>")
 		playsound(get_turf(src), 'sound/effects/splat.ogg', 40, 1)
+		last_produce = world.time
 		for(var/i = 0, i < cores, i++)
-			new extract_type(src.loc)
+			new extract_type(get_turf(loc))
 		cubes_eaten = 0
 
 /obj/item/slimecross/reproductive/grey
