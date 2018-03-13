@@ -405,7 +405,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		if (SS_flags & SS_NO_FIRE)
 			subsystemstocheck -= SS
 			continue
-		if (!(SS_flags & SS_TICKER) && (SS_flags & SS_KEEP_TIMING) && SS.last_fire + (SS.wait * 0.75) > world.time)
+		if ((SS_flags & (SS_TICKER|SS_KEEP_TIMING)) == SS_KEEP_TIMING && SS.last_fire + (SS.wait * 0.75) > world.time)
 			continue
 		SS.enqueue()
 	. = 1
