@@ -2,6 +2,54 @@
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
 
+/datum/design/c38
+	name = "Speed Loader (.38)"
+	id = "c38"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 30000)
+	build_path = /obj/item/ammo_box/c38
+	category = list("initial", "Security")
+
+/datum/design/rubbershot
+	name = "Rubber Shot"
+	id = "rubber_shot"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_casing/shotgun/rubbershot
+	category = list("initial", "Security")
+
+/datum/design/shotgun_slug
+	name = "Shotgun Slug"
+	id = "shotgun_slug"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_casing/shotgun
+	category = list("hacked", "Security")
+
+/datum/design/buckshot_shell
+	name = "Buckshot Shell"
+	id = "buckshot_shell"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_casing/shotgun/buckshot
+	category = list("hacked", "Security")
+
+/datum/design/shotgun_dart
+	name = "Shotgun Dart"
+	id = "shotgun_dart"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_casing/shotgun/dart
+	category = list("hacked", "Security")
+
+/datum/design/incendiary_slug
+	name = "Incendiary Slug"
+	id = "incendiary_slug"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_casing/shotgun/incendiary
+	category = list("hacked", "Security")
+
 /datum/design/pin_testing
 	name = "Test-Range Firing Pin"
 	desc = "This safety firing pin allows firearms to be operated within proximity to a firing range."
