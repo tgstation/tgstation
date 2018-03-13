@@ -404,7 +404,7 @@
 	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_cult
 	hackProof = TRUE
-	aiControlDisabled = TRUE
+	aiControlDisabled = 1
 	req_access = list(ACCESS_BLOODCULT)
 	damage_deflection = 10
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
@@ -511,7 +511,7 @@
 	icon = 'icons/obj/doors/airlocks/clockwork/pinion_airlock.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/clockwork/overlays.dmi'
 	hackProof = TRUE
-	aiControlDisabled = TRUE
+	aiControlDisabled = 1
 	req_access = list(ACCESS_CLOCKCULT)
 	use_power = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
