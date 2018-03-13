@@ -98,22 +98,6 @@
 	else
 		user.put_in_active_hand(I)
 
-/*
-/datum/component/material_container/proc/get_mat_from_stack(obj/item/I, requested_amount)
-	var/inserted = insert_item(I, requested_amount)
-	if(inserted)
-		if(istype(I, /obj/item/stack))
-			.=inserted
-		else
-			qdel(I)
-			.=-inserted
-		if(after_insert)
-			after_insert.Invoke(I.type, last_inserted_id, inserted)
-	else
-		.=0
-	return
-*/
-
 //For inserting an amount of material
 /datum/component/material_container/proc/insert_amount(amt, id = null)
 	if(amt > 0 && has_space(amt))

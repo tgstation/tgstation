@@ -73,8 +73,9 @@
 
 /obj/item/integrated_circuit/smart/advanced_pathfinder
 	name = "advanced pathfinder"
-	desc = "This complex circuit using complex processor to pl."
-	extended_desc = "This circuit uses global coordinates for target. It will count as obstacle turf with given ref."
+	desc = "This complex circuit using complex processor for path planning."
+	extended_desc = "This circuit uses global coordinates for target. It will count as obstacle turf with given ref.Passkey\
+	is the same as used in door remotes."
 	icon_state = "numberpad"
 	complexity = 40
 	cooldown_per_use = 50
