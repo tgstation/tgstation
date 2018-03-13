@@ -9,10 +9,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/obj/structure/extraction_point/beacon
 	var/list/beacon_networks = list("station")
 
-/obj/item/extraction_pack/examine()
-	. = ..()
-	usr.show_message("It has [uses_left] use\s remaining.", 1)
-
 /obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
 	for(var/B in GLOB.total_extraction_beacons)
@@ -54,9 +50,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 				var/obj/item/storage/backpack/B = user.back
 				if(B.can_be_inserted(src,stop_messages = 1))
 					B.handle_item_insertion(src)
-			uses_left--
-			if(uses_left <= 0)
-				user.transferItemToLoc(src, A, TRUE)
 			var/mutable_appearance/balloon
 			var/mutable_appearance/balloon2
 			var/mutable_appearance/balloon3
@@ -125,8 +118,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			sleep(5)
 			A.forceMove(holder_obj.loc)
 			qdel(holder_obj)
-			if(uses_left <= 0)
-				qdel(src)
 
 
 /obj/item/fulton_core
