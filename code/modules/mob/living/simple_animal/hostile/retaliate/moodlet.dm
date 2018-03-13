@@ -26,12 +26,15 @@
 		if (currentMood < 9)
 			currentMood++
 			icon_state = "mood[currentMood]"
+			update_icons()
 
 /mob/living/simple_animal/hostile/retaliate/moodlet/Retaliate()
 	..()
-	while(currentMood > 2)
-		if (stat != CONSCIOUS)
-			break
+	makeUpset()
+
+/mob/living/simple_animal/hostile/retaliate/moodlet/proc/makeUpset()
+	if (currentMood > 2 && stat == CONSCIOUS)
 		currentMood--
 		icon_state = "mood[currentMood]"
-		sleep(4)
+		addtimer(CALLBACK(src, .proc/makeUpset), 4)
+		update_icons()
