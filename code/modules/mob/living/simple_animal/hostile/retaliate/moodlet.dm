@@ -36,5 +36,5 @@
 	if (currentMood > 2 && stat == CONSCIOUS)
 		currentMood--
 		icon_state = "mood[currentMood]"
-		addtimer(CALLBACK(src, .proc/makeUpset), 4)
 		update_icons()
+		addtimer(CALLBACK(src, .proc/makeUpset), 4)
