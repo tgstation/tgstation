@@ -68,7 +68,7 @@ D [1]/  ||
 			result += "<br>"
 			var/pos = 0
 			for(var/line in my_list)
-				result += "[display_data(line)]"
+				result += "[display_data(line)] = [display_data(my_list[line])]"
 				pos++
 				if(pos != my_list.len)
 					result += ",<br>"
@@ -133,7 +133,7 @@ D [1]/  ||
 
 	return FALSE
 
-/datum/integrated_io/proc/write_data_to_pin(new_data)
+/datum/integrated_io/proc/write_data_to_pin(new_data, secondary)
 	if(isnull(new_data) || isnum(new_data) || istext(new_data) || isweakref(new_data))
 		data = new_data
 		holder.on_data_written()

@@ -230,7 +230,7 @@
 
 /obj/item/integrated_circuit/converter/exploders
 	name = "string exploder"
-	desc = "This splits a single string into a list of strings."
+	desc = "This splits a single string into a list of strings. Outputs a non-associative list."
 	extended_desc = "This circuit splits a given string into a list of strings based on the string and given delimiter. \
 	For example, 'eat this burger' will be converted to list('eat','this','burger')."
 	icon_state = "split"
@@ -370,5 +370,33 @@
 		result = rgb(red,green,blue)
 
 	set_pin_data(IC_OUTPUT, 1, result)
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/converter/hex2str
+	name = "hex to str"
+	desc = "Converts hexadecimal data to a text string."
+	icon_state = "ref-string"
+	inputs = list("hex" = IC_PINTYPE_STRING)
+	outputs = list("string" = IC_PINTYPE_STRING)
+	spawn_flags = IC_SPAWN_DEFAULT | IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/converter/hex2str/do_work()
+	pull_data()
+	set_pin_data(IC_OUTPUT, 1, hextostr(get_pin_data(IC_INPUT, 1), TRUE))
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/converter/str2hex
+	name = "str to hex"
+	desc = "Converts a text string to hexadecimal data."
+	icon_state = "ref-string"
+	inputs = list("string" = IC_PINTYPE_STRING)
+	outputs = list("hex" = IC_PINTYPE_STRING)
+	spawn_flags = IC_SPAWN_DEFAULT | IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/converter/str2hex/do_work()
+	pull_data()
+	set_pin_data(IC_OUTPUT, 1, strtohex(get_pin_data(IC_INPUT, 1)))
 	push_data()
 	activate_pin(2)

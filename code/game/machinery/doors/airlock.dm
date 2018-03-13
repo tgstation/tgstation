@@ -202,8 +202,8 @@
 		return
 
 	// Handle recieved packet.
-	var/command = lowertext(data.plaintext_data)
-	var/command_value = lowertext(data.plaintext_data_secondary)
+	var/command = lowertext(data.data["data"])
+	var/command_value = lowertext(data.data["data_secondary"])
 	switch(command)
 		if("open")
 			if(command_value == "on" && !density)

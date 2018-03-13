@@ -117,3 +117,23 @@
 		set_pin_data(IC_OUTPUT, 2, Yn)
 		push_data()
 		activate_pin(2)
+
+/obj/item/integrated_circuit/smart/xorencrypt
+	name = "XOR encrypt"
+	desc = "Cryptographic processor for XOR encryption."
+	icon_state = "numberpad"
+	complexity = 10
+	inputs = list("input" = IC_PINTYPE_STRING, "key" = IC_PINTYPE_STRING)
+	outputs = list("output" = IC_PINTYPE_STRING)
+	activators = list("process" = IC_PINTYPE_PULSE_IN, "on process" = IC_PINTYPE_PULSE_OUT)
+	power_draw_per_use = 20
+	spawn_flags = IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/smart/xorencrypt/do_work()
+	pull_data()
+	var/string = get_pin_data(IC_INPUT, 1)
+	var/key = get_pin_data(IC_INPUT, 2)
+	var/result = XorEncrypt(string, key)
+	set_pin_data(IC_OUTPUT, 1, result)
+	push_data()
+	activate_pin(2)

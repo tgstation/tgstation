@@ -34,3 +34,6 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/processing/networks/proc/unregister_interface(datum/component/ntnet_interface/D)
 	interfaces_by_id -= D.hardware_id
 	return TRUE
+
+/datum/controller/subsystem/processing/networks/proc/get_next_HID()
+	return assignment_hardware_id++		//should never have a collision, up to 1 million.
