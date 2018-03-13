@@ -13,7 +13,7 @@
 /obj/item/clothing/mask/spurdo/speechModification(M)
 	if(copytext(M, 1, 2) != "*")
 		M = " [M]"
-		var/list/spurdo_words = strings("hippie_word_replacement.json", "spurdo") // Technically not modular, but unless we want to write an entire function for one damn mask then we'll just have this here
+		var/list/spurdo_words = strings("hippie_word_replacement.json", "spurdo") // Technically not modular, but unless we want to write an entire function for one damn mask then we'll just have this here.
 
 		for(var/key in spurdo_words)
 			var/value = spurdo_words[key]
@@ -31,6 +31,8 @@
 
 		if(prob(3))
 			M += pick(" EBIN!!"," FUGG!!"," BENIS!!", " SPORO LORO SPLARLE SBOERDOLOLA!!")
+		if(prob(50))
+			M += pick (" :DDDDD", " :-DDDDDD")
 	return trim(M)
 
 /obj/item/clothing/mask/spurdo/equipped(mob/user, slot) //when you put it on
