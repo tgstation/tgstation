@@ -9,7 +9,7 @@
 	description = "NT default research technologies."
 	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani",
 	"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
-	"space_heater", "rubber_shot", "buckshot_shell", "shotgun_slug", "incendiary_slug", "shotgun_dart")			//Default research tech, prevents bricking
+	"space_heater", "rubber_shot", "buckshot_shell", "shotgun_slug", "incendiary_slug", "shotgun_dart", "c38")			//Default research tech, prevents bricking
 
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech
