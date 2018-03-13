@@ -1,4 +1,0 @@
-author: "checkraisefold"
-delete-after: True
-changes: 
-  - bugfix: "Nukeops properly checks the required amount of enemies for the gamemode! This should fix downstream problems."
