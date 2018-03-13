@@ -376,14 +376,14 @@
 	stasis_enabled = FALSE //You can still go in stasis, but it starts off because of controls_inside, and stasis would prevent use of that
 	controls_inside = TRUE
 
-/obj/machinery/sleeper/clockwork
+/obj/machinery/sleeper/chems/clockwork
 	name = "soothing sleeper"
 	desc = "A large cryogenics unit built from brass. Its surface is pleasantly cool the touch."
 	icon_state = "sleeper_clockwork"
 	enter_message = "<span class='bold inathneq_small'>You hear the gentle hum and click of machinery, and are lulled into a sense of peace.</span>"
 	possible_chems = list(list("epinephrine", "salbutamol", "bicaridine", "kelotane", "oculine", "inacusiate", "mannitol"))
 
-/obj/machinery/sleeper/clockwork/process()
+/obj/machinery/sleeper/chems/clockwork/process()
 	if(occupant)
 		var/mob/living/L = occupant
 		if(GLOB.clockwork_vitality) //If there's Vitality, the sleeper has passive healing

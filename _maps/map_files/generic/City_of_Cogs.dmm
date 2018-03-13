@@ -44,7 +44,7 @@
 /turf/open/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "al" = (
-/obj/machinery/sleeper/clockwork,
+/obj/machinery/sleeper/chems/clockwork,
 /turf/open/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "am" = (
@@ -138,7 +138,7 @@
 /turf/open/floor/clockwork/reebe,
 /area/reebe/city_of_cogs)
 "aC" = (
-/obj/machinery/sleeper/clockwork{
+/obj/machinery/sleeper/chems/clockwork{
 	dir = 1
 	},
 /turf/open/floor/clockwork/reebe,
