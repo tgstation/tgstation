@@ -88,6 +88,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
+	// Hippie Start - Mentor PM
+	if (hippie_client_procs(href_list))
+		return
+	// Hippie End
+	
 	switch(href_list["_src_"])
 		if("holder")
 			hsrc = holder
