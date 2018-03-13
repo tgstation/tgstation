@@ -491,8 +491,7 @@
 	and will then provide a list of all found objects which are similar. \
 	The second pin is a radius."
 	inputs = list("desired type ref" = IC_PINTYPE_LIST, "radius" = IC_PINTYPE_NUMBER)
-	outputs = list("located ref" = IC_PINTYPE_LIST,
-					)
+	outputs = list("located ref" = IC_PINTYPE_LIST)
 	activators = list("locate" = IC_PINTYPE_PULSE_IN,"found" = IC_PINTYPE_PULSE_OUT,"not found" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 30
