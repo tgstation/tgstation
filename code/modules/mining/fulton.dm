@@ -95,7 +95,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			for(var/turf/open/floor in orange(1, beacon))
 				flooring_near_beacon += floor
 			if(beacon.z == z)
-				sleep(10 * (get_dist(get_turf(src), get_turf(beacon)) / 100)
+				sleep(10 * (get_dist(get_turf(src), get_turf(beacon)) / 100))
 			else
 				sleep(100)
 			holder_obj.forceMove(pick(flooring_near_beacon))
