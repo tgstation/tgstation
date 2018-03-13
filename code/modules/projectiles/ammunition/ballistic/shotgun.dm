@@ -9,7 +9,7 @@
 	materials = list(MAT_METAL=4000)
 	
 /obj/item/ammo_casing/shotgun/tengauge
-	name = "shotgun slug"
+	name = "10g shotgun slug"
 	desc = "A 10 gauge lead slug."
 	projectile_type = /obj/item/projectile/bullet/shotgun_slug/tengauge
 
