@@ -3,6 +3,7 @@
 	desc = "Injects things."
 	icon_state = "reagents"
 	container_type = OPENCONTAINER
+	activated = FALSE
 
 /obj/item/implant/chem/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -20,14 +21,14 @@
 				<b>Integrity:</b> Implant will last so long as the subject is alive."}
 	return dat
 
-/obj/item/implant/chem/New()
-	..()
+/obj/item/implant/chem/Initialize()
+	. = ..()
 	create_reagents(50)
 	GLOB.tracked_chem_implants += src
 
 /obj/item/implant/chem/Destroy()
-	. = ..()
 	GLOB.tracked_chem_implants -= src
+	return ..()
 
 /obj/item/implant/chem/trigger(emote, mob/source)
 	if(emote == "deathgasp")
@@ -38,6 +39,10 @@
 		return 0
 	var/mob/living/carbon/R = imp_in
 	var/injectamount = null
+	if (cause == "action_button")
+		injectamount = reagents.total_volume
+	else
+		injectamount = cause
 	reagents.trans_to(R, injectamount)
 	to_chat(R, "<span class='italics'>You hear a faint beep.</span>")
 	if(!reagents.total_volume)

@@ -12,7 +12,7 @@
 	var/debug = FALSE			// If it's upgraded and can clone, even without config settings.
 	var/current_category = null
 	var/cloning = FALSE			// If the printer is currently creating a circuit
-	var/clone_countdown = 0		// This counts down when cloning is in progress, and clones the circuit when it's ready
+	var/clone_countdown = 0		// Timestamp for when to print the circuit
 	var/recycling = FALSE		// If an assembly is being emptied into this printer
 	var/list/program			// Currently loaded save, in form of list
 
@@ -27,6 +27,8 @@
 /obj/item/device/integrated_circuit_printer/debug //translation: "integrated_circuit_printer/local_server"
 	name = "debug circuit printer"
 	debug = TRUE
+	upgraded = TRUE
+	can_clone = TRUE
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/device/integrated_circuit_printer/Initialize()
@@ -40,8 +42,7 @@
 /obj/item/device/integrated_circuit_printer/process()
 	if(!cloning)
 		STOP_PROCESSING(SSprocessing, src)
-	clone_countdown--
-	if(!clone_countdown || fast_clone)
+	if(world.time >= clone_countdown || fast_clone)
 		var/turf/T = get_turf(src)
 		T.visible_message("<span class='notice'>[src] has finished printing its assembly!</span>")
 		playsound(get_turf(T), 'sound/items/poster_being_created.ogg', 50, TRUE)
@@ -56,7 +57,6 @@
 			return TRUE
 		to_chat(user, "<span class='notice'>You install [O] into [src]. </span>")
 		upgraded = TRUE
-		qdel(O)
 		interact(user)
 		return TRUE
 
@@ -66,7 +66,6 @@
 			return TRUE
 		to_chat(user, "<span class='notice'>You install [O] into [src]. Circuit cloning will now be instant. </span>")
 		fast_clone = TRUE
-		qdel(O)
 		interact(user)
 		return TRUE
 
@@ -142,7 +141,7 @@
 		if(!program)
 			HTML += " {[fast_clone ? "Print" : "Begin Printing"] Assembly}"
 		else if(cloning)
-			HTML += " <A href='?src=[REF(src)];print=cancel'>{Cancel Print}</a> - [clone_countdown] second(s) remaining until completion"
+			HTML += " <A href='?src=[REF(src)];print=cancel'>{Cancel Print}</a> - [DisplayTimeText(max(0, clone_countdown - world.time))] remaining until completion"
 		else
 			HTML += " <A href='?src=[REF(src)];print=print'>{[fast_clone ? "Print" : "Begin Printing"] Assembly}</a>"
 
@@ -273,11 +272,11 @@
 					if(!materials.use_amount_type(program["metal_cost"], MAT_METAL))
 						to_chat(usr, "<span class='warning'>You need [program["metal_cost"]] metal to build that!</span>")
 						return
-					var/cloning_time = program["metal_cost"] / 150
+					var/cloning_time = round(program["metal_cost"] / 15)
 					cloning_time = min(cloning_time, MAX_CIRCUIT_CLONE_TIME)
 					cloning = TRUE
-					clone_countdown = cloning_time
-					to_chat(usr, "<span class='notice'>You begin printing a custom assembly. This will take approximately [round(cloning_time / 60, 0.1)] minute(s). You can still print \
+					clone_countdown = world.time + cloning_time
+					to_chat(usr, "<span class='notice'>You begin printing a custom assembly. This will take approximately [DisplayTimeText(cloning_time)]. You can still print \
 					off normal parts during this time.</span>")
 					playsound(src, 'sound/items/poster_being_created.ogg', 50, TRUE)
 					START_PROCESSING(SSprocessing, src)
