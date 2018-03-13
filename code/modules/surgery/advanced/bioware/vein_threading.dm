@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/vein_threading
+	name = "Vein Threading Surgery Disk"
 	desc = "The disk provides instructions on how to modify the circulatory system to greatly slow down bleeding."
 	surgeries = list(/datum/surgery/advanced/bioware/vein_threading)
 

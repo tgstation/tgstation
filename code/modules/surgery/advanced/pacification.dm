@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/pacification
+	name = "Pacification Surgery Disk"
 	desc = "The disk provides instructions on how to suppress violence by manipulating the patient's brain."
 	surgeries = list(/datum/surgery/advanced/pacify)
 
