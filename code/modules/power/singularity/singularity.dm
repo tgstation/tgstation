@@ -441,4 +441,7 @@
 	return(gain)
 
 /obj/singularity/boh //singulo created by putting on Bag of Holding in another
-	lifetime = 300
+	lifetime = 200
+
+/obj/singularity/boh/emagged //singulo created by emagged BoH
+	lifetime = 600
