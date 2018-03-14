@@ -202,7 +202,6 @@
 		if(mob_occupant)
 			if(stasis_enabled)
 				chill_out(mob_occupant)
-			mob_occupant.remote_control = src
 			if(mob_occupant.stat != DEAD)
 				to_chat(occupant, "[enter_message]")
 
