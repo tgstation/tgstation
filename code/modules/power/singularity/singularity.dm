@@ -47,11 +47,8 @@
 		addtimer(CALLBACK(src, .proc/timeOut), lifetime)
 	return
 
-/obj/singularity/proc/timeOut()
-	expand(STAGE_ONE) //called when lifetime expires
-	energy = 1 //this makes sure the sing stays at stage one
-	src.visible_message("<span class='danger'>[src] destabilizes and begins to collapse in on itself!</span>")
-	QDEL_IN(src, 20)
+/obj/singularity/proc/timeOut() //proc called when lifetime expires
+	qdel(src)
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -442,6 +439,12 @@
 
 /obj/singularity/boh //singulo created by putting on Bag of Holding in another
 	lifetime = 200
+	
+/obj/singularity/boh/timeOut()
+	expand(STAGE_ONE)
+	energy = 1 //this makes sure the sing stays at stage one
+	src.visible_message("<span class='danger'>[src] destabilizes and begins to collapse in on itself!</span>")
+	QDEL_IN(src, 20)
 
 /obj/singularity/boh/emagged //singulo created by emagged BoH
 	lifetime = 600
