@@ -100,8 +100,8 @@
 				O.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
 			if(O.resistance_flags & FIRE_PROOF)
 				O.resistance_flags &= ~FIRE_PROOF
-			if(O.armor["fire"] > 50) //obj with 100% fire armor still get slowly burned away.
-				O.armor["fire"] = 50
+			if(O.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
+				O.armor = O.armor.setRating(fire = 50)
 			O.fire_act(10000, 1000)
 
 		else if (isliving(thing))
@@ -111,15 +111,17 @@
 				continue	//YOU'RE FLYING OVER IT
 			if("lava" in L.weather_immunities)
 				continue
-			if(L.buckled)
-				if(isobj(L.buckled))
-					var/obj/O = L.buckled
-					if(O.resistance_flags & LAVA_PROOF)
-						continue
-				if(isliving(L.buckled)) //Goliath riding
-					var/mob/living/live = L.buckled
-					if("lava" in live.weather_immunities)
-						continue
+			var/buckle_check = L.buckling
+			if(!buckle_check)
+				buckle_check = L.buckled
+			if(isobj(buckle_check))
+				var/obj/O = buckle_check
+				if(O.resistance_flags & LAVA_PROOF)
+					continue
+			else if(isliving(buckle_check))
+				var/mob/living/live = buckle_check
+				if("lava" in live.weather_immunities)
+					continue
 
 			L.adjustFireLoss(20)
 			if(L) //mobs turning into object corpses could get deleted here.
@@ -137,7 +139,7 @@
 /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturfs = /turf/open/chasm/lavaland
+	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
 /turf/open/lava/smooth/airless
 	initial_gas_mix = "TEMP=2.7"

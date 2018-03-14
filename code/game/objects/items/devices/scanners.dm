@@ -18,6 +18,10 @@ GAS ANALYZER
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=150)
 
+/obj/item/device/t_scanner/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return TOXLOSS
+
 /obj/item/device/t_scanner/attack_self(mob/user)
 
 	on = !on
@@ -26,19 +30,6 @@ GAS ANALYZER
 	if(on)
 		START_PROCESSING(SSobj, src)
 
-/obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
-	if(ismob(loc))
-		var/mob/M = loc
-		var/image/I = new(loc = get_turf(pipe))
-		var/mutable_appearance/MA = new(pipe)
-		MA.alpha = 128
-		MA.dir = pipe.dir
-		I.appearance = MA
-		I.dir = pipe.dir
-		// Workaround for a weird bug with icon direction on T-Ray scan not matching the actual disposal pipe dir.
-		if(M.client)
-			flick_overlay(I, list(M.client), 8)
-
 /obj/item/device/t_scanner/process()
 	if(!on)
 		STOP_PROCESSING(SSobj, src)
@@ -46,15 +37,25 @@ GAS ANALYZER
 	scan()
 
 /obj/item/device/t_scanner/proc/scan()
+	t_ray_scan(loc)
 
-	for(var/turf/T in range(2, src.loc) )
-		for(var/obj/O in T.contents)
+/proc/t_ray_scan(mob/viewer, flick_time = 8, distance = 2)
+	if(!ismob(viewer) || !viewer.client)
+		return
+	var/list/t_ray_images = list()
+	for(var/obj/O in orange(distance, viewer) )
+		if(O.level != 1)
+			continue
 
-			if(O.level != 1)
-				continue
-
-			if(O.invisibility == INVISIBILITY_MAXIMUM)
-				flick_sonar(O)
+		if(O.invisibility == INVISIBILITY_MAXIMUM)
+			var/image/I = new(loc = get_turf(O))
+			var/mutable_appearance/MA = new(O)
+			MA.alpha = 128
+			MA.dir = O.dir
+			I.appearance = MA
+			t_ray_images += I
+	if(t_ray_images.len)
+		flick_overlay(t_ray_images, list(viewer.client), flick_time)
 
 /obj/item/device/healthanalyzer
 	name = "health analyzer"
@@ -74,6 +75,10 @@ GAS ANALYZER
 	var/scanmode = 0
 	var/advanced = FALSE
 
+/obj/item/device/healthanalyzer/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
+	return BRUTELOSS
+
 /obj/item/device/healthanalyzer/attack_self(mob/user)
 	if(!scanmode)
 		to_chat(user, "<span class='notice'>You switch the health analyzer to scan chemical contents.</span>")
@@ -85,7 +90,7 @@ GAS ANALYZER
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
 	// Clumsiness/brain damage check
-	if ((user.has_disability(DISABILITY_CLUMSY) || user.has_disability(DISABILITY_DUMB)) && prob(50))
+	if ((user.has_trait(TRAIT_CLUMSY) || user.has_trait(TRAIT_DUMB)) && prob(50))
 		to_chat(user, "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>")
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
 		to_chat(user, "<span class='info'>Analyzing results for The floor:\n\tOverall status: <b>Healthy</b>")
@@ -115,7 +120,7 @@ GAS ANALYZER
 	var/brute_loss = M.getBruteLoss()
 	var/mob_status = (M.stat == DEAD ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100] % healthy</b>")
 
-	if(M.status_flags & FAKEDEATH && !advanced)
+	if(M.has_trait(TRAIT_FAKEDEATH) && !advanced)
 		mob_status = "<span class='alert'><b>Deceased</b></span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
@@ -156,8 +161,19 @@ GAS ANALYZER
 		if(LAZYLEN(C.get_traumas()))
 			var/list/trauma_text = list()
 			for(var/datum/brain_trauma/B in C.get_traumas())
-				trauma_text += B.scan_desc
+				var/trauma_desc = ""
+				switch(B.resilience)
+					if(TRAUMA_RESILIENCE_SURGERY)
+						trauma_desc += "severe "
+					if(TRAUMA_RESILIENCE_LOBOTOMY)
+						trauma_desc += "deep-rooted "
+					if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
+						trauma_desc += "permanent "
+				trauma_desc += B.scan_desc
+				trauma_text += trauma_desc
 			to_chat(user, "\t<span class='alert'>Cerebral traumas detected: subjects appears to be suffering from [english_list(trauma_text)].</span>")
+		if(C.roundstart_traits.len)
+			to_chat(user, "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>")
 	if(advanced)
 		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>")
 	if (M.radiation)
@@ -176,10 +192,10 @@ GAS ANALYZER
 			to_chat(user, "\t<span class='info'><b>==EAR STATUS==</b></span>")
 			if(istype(ears))
 				var/healthy = TRUE
-				if(C.has_disability(DISABILITY_DEAF, GENETIC_MUTATION))
+				if(C.has_trait(TRAIT_DEAF, GENETIC_MUTATION))
 					healthy = FALSE
 					to_chat(user, "\t<span class='alert'>Subject is genetically deaf.</span>")
-				else if(C.has_disability(DISABILITY_DEAF))
+				else if(C.has_trait(TRAIT_DEAF))
 					healthy = FALSE
 					to_chat(user, "\t<span class='alert'>Subject is deaf.</span>")
 				else
@@ -197,10 +213,10 @@ GAS ANALYZER
 			to_chat(user, "\t<span class='info'><b>==EYE STATUS==</b></span>")
 			if(istype(eyes))
 				var/healthy = TRUE
-				if(C.has_disability(DISABILITY_BLIND))
+				if(C.has_trait(TRAIT_BLIND))
 					to_chat(user, "\t<span class='alert'>Subject is blind.</span>")
 					healthy = FALSE
-				if(C.has_disability(DISABILITY_NEARSIGHT))
+				if(C.has_trait(TRAIT_NEARSIGHT))
 					to_chat(user, "\t<span class='alert'>Subject is nearsighted.</span>")
 					healthy = FALSE
 				if(eyes.eye_damage > 30)
@@ -240,13 +256,13 @@ GAS ANALYZER
 	to_chat(user, "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>")
 
 	// Time of death
-	if(M.tod && (M.stat == DEAD || ((M.status_flags & FAKEDEATH) && !advanced)))
+	if(M.tod && (M.stat == DEAD || ((M.has_trait(TRAIT_FAKEDEATH)) && !advanced)))
 		to_chat(user, "<span class='info'>Time of Death:</span> [M.tod]")
 		var/tdelta = round(world.time - M.timeofdeath)
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
 			to_chat(user, "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</span>")
 
-	for(var/thing in M.viruses)
+	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			to_chat(user, "<span class='alert'><b>Warning: [D.form] detected</b>\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</span>")
@@ -320,7 +336,7 @@ GAS ANALYZER
 	advanced = TRUE
 
 /obj/item/device/analyzer
-	desc = "A hand-held environmental scanner which reports current gas levels."
+	desc = "A hand-held environmental scanner which reports current gas levels. Alt-Click to use the built in barometer function."
 	name = "analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
@@ -334,6 +350,13 @@ GAS ANALYZER
 	throw_range = 7
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
 	grind_results = list("mercury" = 5, "iron" = 5, "silicon" = 5)
+	var/cooldown = FALSE
+	var/cooldown_time = 250
+	var/accuracy // 0 is the best accuracy.
+
+/obj/item/device/analyzer/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
+	return BRUTELOSS
 
 /obj/item/device/analyzer/attack_self(mob/user)
 
@@ -394,6 +417,69 @@ GAS ANALYZER
 			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
 
+/obj/item/device/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
+	..()
+
+	if(user.canUseTopic(src))
+
+		if(cooldown)
+			to_chat(user, "<span class='warning'>[src]'s barometer function is prepraring itself.</span>")
+			return
+
+		var/turf/T = get_turf(user)
+		if(!T)
+			return
+
+		playsound(src, 'sound/effects/pop.ogg', 100)
+		var/area/user_area = T.loc
+		var/datum/weather/ongoing_weather = null
+
+		if(!user_area.outdoors)
+			to_chat(user, "<span class='warning'>[src]'s barometer function won't work indoors!</span>")
+			return
+
+		for(var/V in SSweather.processing)
+			var/datum/weather/W = V
+			if(W.barometer_predictable && (T.z in W.impacted_z_levels) && W.area_type == user_area.type && !(W.stage == END_STAGE))
+				ongoing_weather = W
+				break
+
+		if(ongoing_weather)
+			if((ongoing_weather.stage == MAIN_STAGE) || (ongoing_weather.stage == WIND_DOWN_STAGE))
+				to_chat(user, "<span class='warning'>[src]'s barometer function can't trace anything while the storm is [ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]</span>")
+				return
+
+			to_chat(user, "<span class='notice'>The next [ongoing_weather] will hit in [butchertime(ongoing_weather.next_hit_time - world.time)].</span>")
+			if(ongoing_weather.aesthetic)
+				to_chat(user, "<span class='warning'>[src]'s barometer function says that the next storm will breeze on by.</span>")
+		else
+			var/next_hit = SSweather.next_hit_by_zlevel["[T.z]"]
+			var/fixed = next_hit ? next_hit - world.time : -1
+			if(fixed < 0)
+				to_chat(user, "<span class='warning'>[src]'s barometer function was unable to trace any weather patterns.</span>")
+			else
+				to_chat(user, "<span class='warning'>[src]'s barometer function says a storm will land in approximately [butchertime(fixed)].</span>")
+		cooldown = TRUE
+		addtimer(CALLBACK(src,/obj/item/device/analyzer/proc/ping), cooldown_time)
+
+
+/obj/item/device/analyzer/proc/ping()
+	if(isliving(loc))
+		var/mob/living/L = loc
+		to_chat(L, "<span class='notice'>[src]'s barometer function is ready!</span>")
+	playsound(src, 'sound/machines/click.ogg', 100)
+	cooldown = FALSE
+
+/obj/item/device/analyzer/proc/butchertime(amount)
+	if(!amount)
+		return
+	if(accuracy)
+		var/inaccurate = round(accuracy*(1/3))
+		if(prob(50))
+			amount -= inaccurate
+		if(prob(50))
+			amount += inaccurate
+	return DisplayTimeText(max(1,amount))
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"
@@ -416,15 +502,19 @@ GAS ANALYZER
 		to_chat(user, "<span class='warning'>This device can only scan slimes!</span>")
 		return
 	var/mob/living/simple_animal/slime/T = M
-	to_chat(user, "Slime scan results:")
-	to_chat(user, "[T.colour] [T.is_adult ? "adult" : "baby"] slime")
+	slime_scan(T, user)
+
+/proc/slime_scan(mob/living/simple_animal/slime/T, mob/living/user)
+	to_chat(user, "========================")
+	to_chat(user, "<b>Slime scan results:</b>")
+	to_chat(user, "<span class='notice'>[T.colour] [T.is_adult ? "adult" : "baby"] slime</span>")
 	to_chat(user, "Nutrition: [T.nutrition]/[T.get_max_nutrition()]")
 	if (T.nutrition < T.get_starve_nutrition())
 		to_chat(user, "<span class='warning'>Warning: slime is starving!</span>")
 	else if (T.nutrition < T.get_hunger_nutrition())
 		to_chat(user, "<span class='warning'>Warning: slime is hungry</span>")
 	to_chat(user, "Electric change strength: [T.powerlevel]")
-	to_chat(user, "Health: [round(T.health/T.maxHealth,0.01)*100]")
+	to_chat(user, "Health: [round(T.health/T.maxHealth,0.01)*100]%")
 	if (T.slime_mutation[4] == T.colour)
 		to_chat(user, "This slime does not evolve any further.")
 	else
@@ -439,5 +529,6 @@ GAS ANALYZER
 			to_chat(user, "Possible mutations: [T.slime_mutation[1]], [T.slime_mutation[2]], [T.slime_mutation[3]], [T.slime_mutation[4]]")
 			to_chat(user, "Genetic destability: [T.mutation_chance] % chance of mutation on splitting")
 	if (T.cores > 1)
-		to_chat(user, "Anomalious slime core amount detected")
+		to_chat(user, "Multiple cores detected")
 	to_chat(user, "Growth progress: [T.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]")
+	to_chat(user, "========================")

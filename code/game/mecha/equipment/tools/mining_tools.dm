@@ -9,6 +9,11 @@
 	equip_cooldown = 15
 	energy_drain = 10
 	force = 15
+	pacifist_safe = FALSE
+
+/obj/item/mecha_parts/mecha_equipment/drill/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 50, 100)
 
 /obj/item/mecha_parts/mecha_equipment/drill/action(atom/target)
 	if(!action_checks(target))
@@ -76,14 +81,25 @@
 			return 1
 	return 0
 
+/obj/item/mecha_parts/mecha_equipment/drill/attach(obj/mecha/M)
+	..()
+	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	butchering.butchering_enabled = TRUE
+
+/obj/item/mecha_parts/mecha_equipment/drill/detach(atom/moveto)
+	..()
+	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	butchering.butchering_enabled = FALSE
+
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/user, var/drill_damage=80)
 	target.visible_message("<span class='danger'>[chassis] drills [target] with [src].</span>", \
 						"<span class='userdanger'>[chassis] drills [target] with [src].</span>")
 	add_logs(user, target, "attacked", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	if(target.stat == DEAD)
 		add_logs(user, target, "gibbed", name)
-		if(target.butcher_results)
-			target.harvest(chassis)//Butcher the mob with our drill.
+		if(target.butcher_results.len || target.guaranteed_butcher_results.len)
+			GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+			butchering.Butcher(chassis, target)
 		else
 			target.gib()
 	else
@@ -110,8 +126,8 @@
 	equip_cooldown = 15
 	var/scanning_time = 0
 
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/Initialize()
+	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/process()

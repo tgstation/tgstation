@@ -52,16 +52,19 @@
 /datum/atom_hud/data/diagnostic
 
 /datum/atom_hud/data/diagnostic/basic
-	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD)
+	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD)
 
 /datum/atom_hud/data/diagnostic/advanced
-	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD, DIAG_PATH_HUD)
+	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD, DIAG_PATH_HUD)
 
 /datum/atom_hud/data/bot_path
 	hud_icons = list(DIAG_PATH_HUD)
 
 /datum/atom_hud/abductor
 	hud_icons = list(GLAND_HUD)
+
+/datum/atom_hud/sentient_disease
+	hud_icons = list(SENTIENT_DISEASE_HUD)
 
 /* MED/SEC/DIAG HUD HOOKS */
 
@@ -78,7 +81,7 @@
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
 	var/threat
-	for(var/thing in viruses)
+	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			if(!threat || D.severity > threat) //a buffing virus gets an icon
@@ -87,7 +90,7 @@
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
-	if(M.stat == DEAD || (M.status_flags & FAKEDEATH))
+	if(M.stat == DEAD || (M.has_trait(TRAIT_FAKEDEATH)))
 		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
 	var/maxi_health = M.maxHealth
 	if(iscarbon(M) && M.health < 0)
@@ -143,10 +146,6 @@
 	var/datum/atom_hud/data/human/medical/basic/B = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
 	B.update_suit_sensors(src)
 
-	var/turf/T = get_turf(src)
-	if (T)
-		GLOB.crewmonitor.queueUpdate(T.z)
-
 //called when a living mob changes health
 /mob/living/proc/med_hud_set_health()
 	var/image/holder = hud_list[HEALTH_HUD]
@@ -158,16 +157,12 @@
 /mob/living/carbon/med_hud_set_health()
 	..()
 
-	var/turf/T = get_turf(src)
-	if(T)
-		GLOB.crewmonitor.queueUpdate(T.z)
-
 //called when a carbon changes stat, virus or XENO_HOST
 /mob/living/proc/med_hud_set_status()
 	var/image/holder = hud_list[STATUS_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if(stat == DEAD || (status_flags & FAKEDEATH))
+	if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
 		holder.icon_state = "huddead"
 	else
 		holder.icon_state = "hudhealthy"
@@ -177,25 +172,25 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	var/virus_threat = check_virus()
 	holder.pixel_y = I.Height() - world.icon_size
-	if(status_flags & XENO_HOST)
+	if(has_trait(TRAIT_XENO_HOST))
 		holder.icon_state = "hudxeno"
-	else if(stat == DEAD || (status_flags & FAKEDEATH))
+	else if(stat == DEAD || (has_trait(TRAIT_FAKEDEATH)))
 		holder.icon_state = "huddead"
 	else
 		switch(virus_threat)
-			if(VIRUS_SEVERITY_BIOHAZARD)
+			if(DISEASE_SEVERITY_BIOHAZARD)
 				holder.icon_state = "hudill5"
-			if(VIRUS_SEVERITY_DANGEROUS)
+			if(DISEASE_SEVERITY_DANGEROUS)
 				holder.icon_state = "hudill4"
-			if(VIRUS_SEVERITY_HARMFUL)
+			if(DISEASE_SEVERITY_HARMFUL)
 				holder.icon_state = "hudill3"
-			if(VIRUS_SEVERITY_MEDIUM)
+			if(DISEASE_SEVERITY_MEDIUM)
 				holder.icon_state = "hudill2"
-			if(VIRUS_SEVERITY_MINOR)
+			if(DISEASE_SEVERITY_MINOR)
 				holder.icon_state = "hudill1"
-			if(VIRUS_SEVERITY_NONTHREAT)
+			if(DISEASE_SEVERITY_NONTHREAT)
 				holder.icon_state = "hudill0"
-			if(VIRUS_SEVERITY_POSITIVE)
+			if(DISEASE_SEVERITY_POSITIVE)
 				holder.icon_state = "hudbuff"
 			if(null)
 				holder.icon_state = "hudhealthy"
@@ -215,10 +210,6 @@
 	if(wear_id)
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
 	sec_hud_set_security_status()
-
-	var/turf/T = get_turf(src)
-	if (T)
-		GLOB.crewmonitor.queueUpdate(T.z)
 
 /mob/living/carbon/human/proc/sec_hud_set_implants()
 	var/image/holder
@@ -426,6 +417,56 @@
 			holder.icon_state = "hudmove"
 		else
 			holder.icon_state = ""
+
+/*~~~~~~~~~~~~
+	Circutry!
+~~~~~~~~~~~~~*/
+/obj/item/device/electronic_assembly/proc/diag_hud_set_circuithealth(hide = FALSE)
+	var/image/holder = hud_list[DIAG_CIRCUIT_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if((!isturf(loc))||hide) //if not on the ground dont show overlay
+		holder.icon_state = null
+	else
+		holder.icon_state = "huddiag[RoundDiagBar(obj_integrity/max_integrity)]"
+
+/obj/item/device/electronic_assembly/proc/diag_hud_set_circuitcell(hide = FALSE)
+	var/image/holder = hud_list[DIAG_BATT_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if((!isturf(loc))||hide) //if not on the ground dont show overlay
+		holder.icon_state = null
+	else if(battery)
+		var/chargelvl = battery.charge/battery.maxcharge
+		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
+	else
+		holder.icon_state = "hudnobatt"
+
+/obj/item/device/electronic_assembly/proc/diag_hud_set_circuitstat(hide = FALSE) //On, On and dangerous, or Off
+	var/image/holder = hud_list[DIAG_STAT_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if((!isturf(loc))||hide) //if not on the ground dont show overlay
+		holder.icon_state = null
+	else if(!battery)
+		holder.icon_state = "hudoffline"
+	else if(battery.charge == 0)
+		holder.icon_state = "hudoffline"
+	else if(combat_circuits) //has a circuit that can harm people
+		holder.icon_state = "hudwarn"
+	else //Bot is on and not dangerous
+		holder.icon_state = prefered_hud_icon
+
+/obj/item/device/electronic_assembly/proc/diag_hud_set_circuittracking(hide = FALSE)
+	var/image/holder = hud_list[DIAG_TRACK_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if((!isturf(loc))||hide) //if not on the ground dont show overlay
+		holder.icon_state = null
+	else if(long_range_circuits)
+		holder.icon_state = "hudtracking"
+	else
+		holder.icon_state = null
 
 /*~~~~~~~~~~~~
 	Airlocks!

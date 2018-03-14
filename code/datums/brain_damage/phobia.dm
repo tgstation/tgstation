@@ -68,7 +68,7 @@
 							return
 
 /datum/brain_trauma/mild/phobia/on_hear(message, speaker, message_language, raw_message, radio_freq)
-	if(owner.has_disability(DISABILITY_DEAF) || world.time < next_scare) //words can't trigger you if you can't hear them *taps head*
+	if(owner.has_trait(TRAIT_DEAF) || world.time < next_scare) //words can't trigger you if you can't hear them *taps head*
 		return message
 	for(var/word in trigger_words)
 		if(findtext(message, word))
@@ -85,6 +85,8 @@
 
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
 	next_scare = world.time + 120
+	if(owner.stat == DEAD)
+		return
 	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
 	if(reason)
 		to_chat(owner, "<span class='userdanger'>Seeing [reason] [message]!</span>")

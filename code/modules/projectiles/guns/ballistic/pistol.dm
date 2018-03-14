@@ -12,7 +12,11 @@
 /obj/item/gun/ballistic/automatic/pistol/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
-	return
+
+/obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
+	. = ..()
+	var/obj/item/suppressor/S = new(src)
+	install_suppressor(S)
 
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"

@@ -33,7 +33,7 @@
 			else
 				new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
 		if(9)
-			new /obj/item/organ/brain/alien(src)
+			new /obj/item/rod_of_asclepius(src)
 		if(10)
 			new /obj/item/organ/heart/cursed/wizard(src)
 		if(11)
@@ -75,7 +75,6 @@
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
-
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -139,6 +138,54 @@
 	build_path = /obj/item/borg/upgrade/modkit/bounty
 
 //Spooky special loot
+
+//Rod of Asclepius
+/obj/item/rod_of_asclepius
+	name = "Rod of Asclepius"
+	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding it's way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "asclepius_dormant"
+	var/activated = FALSE
+
+/obj/item/rod_of_asclepius/attack_self(mob/user)
+	if(activated)
+		return
+	if(!iscarbon(user))
+		to_chat(user, "<span class='warning'>The snake carving seems to come alive, if only for a moment, before returning to it's dormant state, almost as if it finds you incapable of holding it's oath.</span>")
+		return
+	var/mob/living/carbon/itemUser = user
+	var/failText = "<span class='warning'>The snake seems unsatisfied with your incomplete oath and returns to it's previous place on the rod, returning to its dormant, wooden state. You must stand still while completing your oath!</span>"
+	to_chat(itemUser, "<span class='notice'>The wooden snake that was carved into the rod seems to suddenly come alive and begins to slither down your arm! The compulsion to help others grows abnormally strong...</span>")
+	if(do_after(itemUser, 40, target = itemUser))
+		itemUser.say("I swear to fulfill, to the best of my ability and judgment, this covenant:")
+	else
+		to_chat(itemUser, failText)
+		return
+	if(do_after(itemUser, 20, target = itemUser))
+		itemUser.say("I will apply, for the benefit of the sick, all measures that are required, avoiding those twin traps of overtreatment and therapeutic nihilism.")
+	else
+		to_chat(itemUser, failText)
+		return
+	if(do_after(itemUser, 30, target = itemUser))
+		itemUser.say("I will remember that I remain a member of society, with special obligations to all my fellow human beings, those sound of mind and body as well as the infirm.")
+	else
+		to_chat(itemUser, failText)
+		return
+	if(do_after(itemUser, 30, target = itemUser))
+		itemUser.say("If I do not violate this oath, may I enjoy life and art, respected while I live and remembered with affection thereafter. May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.")
+	else
+		to_chat(itemUser, failText)
+		return
+	to_chat(itemUser, "<span class='notice'>The snake, satisfied with your oath, attaches itself and the rod to your forearm with an inseparable grip. Your thoughts seem to only revolve around the core idea of helping others, and harm is nothing more than a distant, wicked memory...</span>")
+	var/datum/status_effect/hippocraticOath/effect = itemUser.apply_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH)
+	effect.hand = itemUser.get_held_index_of_item(src)
+	activated()
+
+/obj/item/rod_of_asclepius/proc/activated()
+	flags_1 = NODROP_1 | DROPDEL_1
+	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
+	icon_state = "asclepius_active"
+	activated = TRUE
 
 //Wisp Lantern
 /obj/item/device/wisp_lantern
@@ -323,6 +370,10 @@
 	actions_types = list(/datum/action/item_action/immortality)
 	var/cooldown = 0
 
+/obj/item/device/immortality_talisman/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
 /datum/action/item_action/immortality
 	name = "Immortality"
 
@@ -467,75 +518,6 @@
 	qdel(src)
 
 
-//Boat
-
-/obj/vehicle/ridden/lavaboat
-	name = "lava boat"
-	desc = "A boat used for traversing lava."
-	icon_state = "goliath_boat"
-	icon = 'icons/obj/lavaland/dragonboat.dmi'
-	resistance_flags = LAVA_PROOF | FIRE_PROOF
-	can_buckle = TRUE
-
-/obj/vehicle/ridden/lavaboat/Initialize()
-	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.keytype = /obj/item/oar
-	D.allowed_turf_typecache = typecacheof(/turf/open/lava)
-
-/obj/item/oar
-	name = "oar"
-	icon = 'icons/obj/vehicles.dmi'
-	icon_state = "oar"
-	item_state = "oar"
-	lefthand_file = 'icons/mob/inhands/misc/lavaland_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/lavaland_righthand.dmi'
-	desc = "Not to be confused with the kind Research hassles you for."
-	force = 12
-	w_class = WEIGHT_CLASS_NORMAL
-	resistance_flags = LAVA_PROOF | FIRE_PROOF
-
-/datum/crafting_recipe/oar
-	name = "goliath bone oar"
-	result = /obj/item/oar
-	reqs = list(/obj/item/stack/sheet/bone = 2)
-	time = 15
-	category = CAT_PRIMAL
-
-/datum/crafting_recipe/boat
-	name = "goliath hide boat"
-	result = /obj/vehicle/ridden/lavaboat
-	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
-	time = 50
-	category = CAT_PRIMAL
-
-//Dragon Boat
-
-
-/obj/item/ship_in_a_bottle
-	name = "ship in a bottle"
-	desc = "A tiny ship inside a bottle."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
-	icon_state = "ship_bottle"
-
-/obj/item/ship_in_a_bottle/attack_self(mob/user)
-	to_chat(user, "You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out.")
-	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
-	new /obj/vehicle/ridden/lavaboat/dragon(get_turf(src))
-	qdel(src)
-
-/obj/vehicle/ridden/lavaboat/dragon
-	name = "mysterious boat"
-	desc = "This boat moves where you will it, without the need for an oar."
-	icon_state = "dragon_boat"
-
-/obj/vehicle/ridden/lavaboat/dragon/Initialize()
-	. = ..()
-	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 1
-	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 2), TEXT_SOUTH = list(1, 2), TEXT_EAST = list(1, 2), TEXT_WEST = list( 1, 2)))
-	D.keytype = null
-
 //Potion of Flight
 /obj/item/reagent_containers/glass/bottle/potion
 	icon = 'icons/obj/lavaland/artefacts.dmi'
@@ -587,7 +569,7 @@
 	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
 	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
-		if(i == ZLEVEL_CENTCOM || i == ZLEVEL_TRANSIT || i == ZLEVEL_CITYOFCOGS)
+		if(is_centcom_level(i) || is_transit_level(i) || is_reebe(i))
 			continue
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
 		last_ladder = new /obj/structure/ladder/unbreakable/jacob(T2, null, last_ladder)
@@ -657,7 +639,7 @@
 	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 
 /obj/item/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
-	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
 
@@ -740,6 +722,7 @@
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
+	AddComponent(/datum/component/butchering, 150, 90)
 
 /obj/item/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
@@ -853,7 +836,7 @@
 	agent = "dragon's blood"
 	desc = "What do dragons have to do with Space Station 13?"
 	stage_prob = 20
-	severity = VIRUS_SEVERITY_BIOHAZARD
+	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
 	stage1	= list("Your bones ache.")
 	stage2	= list("Your skin feels scaly.")
@@ -979,8 +962,19 @@
 	if(used)
 		return
 	used = TRUE
-	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in GLOB.player_list
 
+	var/list/da_list = list()
+	for(var/I in GLOB.alive_mob_list & GLOB.player_list)
+		var/mob/living/L = I
+		da_list[L.real_name] = L
+
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in da_list
+
+	choice = da_list[choice]
+
+	if(!choice)
+		used = FALSE
+		return
 	if(!(isliving(choice)))
 		to_chat(user, "[choice] is already dead!")
 		used = FALSE
@@ -989,26 +983,25 @@
 		to_chat(user, "You feel like writing your own name into a cursed death warrant would be unwise.")
 		used = FALSE
 		return
-	else
 
-		var/mob/living/L = choice
+	var/mob/living/L = choice
 
-		message_admins("<span class='adminnotice'>[L] has been marked for death!</span>")
+	message_admins("<span class='adminnotice'>[L] has been marked for death!</span>")
 
-		var/datum/objective/survive/survive = new
-		survive.owner = L.mind
-		L.mind.objectives += survive
-		add_logs(user, L, "took out a blood contract on", src)
-		to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>")
-		L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
-		var/obj/effect/mine/pickup/bloodbath/B = new(L)
-		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, L)
+	var/datum/objective/survive/survive = new
+	survive.owner = L.mind
+	L.mind.objectives += survive
+	add_logs(user, L, "took out a blood contract on", src)
+	to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you! KILL THEM ALL!</span>")
+	L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
+	var/obj/effect/mine/pickup/bloodbath/B = new(L)
+	INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, L)
 
-		for(var/mob/living/carbon/human/H in GLOB.player_list)
-			if(H == L)
-				continue
-			to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>")
-			H.put_in_hands(new /obj/item/kitchen/knife/butcher(H), TRUE)
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
+		if(H == L)
+			continue
+		to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Whoever they were, friend or foe, go kill [L.p_them()]!</span>")
+		H.put_in_hands(new /obj/item/kitchen/knife/butcher(H), TRUE)
 
 	qdel(src)
 

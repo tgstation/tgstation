@@ -28,17 +28,20 @@
 		if(bp && istype(bp , /obj/item/clothing))
 			var/obj/item/clothing/C = bp
 			if(C.body_parts_covered & def_zone.body_part)
-				protection += C.armor[d_type]
+				protection += C.armor.getRating(d_type)
+	protection += physiology.armor.getRating(d_type)
 	return protection
 
 /mob/living/carbon/human/on_hit(obj/item/projectile/P)
-	dna.species.on_hit(P, src)
+	if(dna && dna.species)
+		dna.species.on_hit(P, src)
 
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
-	var/spec_return = dna.species.bullet_act(P, src)
-	if(spec_return)
-		return spec_return
+	if(dna && dna.species)
+		var/spec_return = dna.species.bullet_act(P, src)
+		if(spec_return)
+			return spec_return
 
 	if(mind)
 		if(mind.martial_art && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
@@ -68,7 +71,10 @@
 					P.firer = src
 					P.yo = new_y - curloc.y
 					P.xo = new_x - curloc.x
-					P.Angle = null
+					var/new_angle_s = P.Angle + rand(120,240)
+					while(new_angle_s > 180)	// Translate to regular projectile degrees
+						new_angle_s -= 360
+					P.setAngle(new_angle_s)
 
 				return -1 // complete projectile permutation
 
@@ -112,9 +118,10 @@
 	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
-	var/spec_return = dna.species.spec_hitby(AM, src)
-	if(spec_return)
-		return spec_return
+	if(dna && dna.species)
+		var/spec_return = dna.species.spec_hitby(AM, src)
+		if(spec_return)
+			return spec_return
 	var/obj/item/I
 	var/throwpower = 30
 	if(istype(AM, /obj/item))
@@ -129,21 +136,24 @@
 	else if(I)
 		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
 			if(can_embed(I))
-				if(prob(I.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.species_traits)))
+				if(prob(I.embedding.embed_chance) && !has_trait(TRAIT_PIERCEIMMUNE))
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 					var/obj/item/bodypart/L = pick(bodyparts)
 					L.embedded_objects |= I
 					I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
 					I.forceMove(src)
-					L.receive_damage(I.w_class*I.embedded_impact_pain_multiplier)
+					L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
 					visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>[I] embeds itself in your [L.name]!</span>")
+					GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+					if(mood)
+						mood.add_event("embedded", /datum/mood_event/embedded)
 					hitpush = FALSE
 					skipcatch = TRUE //can't catch the now embedded item
 
 	return ..()
 
 /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (has_disability(DISABILITY_FAT)) && ismonkey(pulling))
+	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (has_trait(TRAIT_FAT)) && ismonkey(pulling))
 		devour_mob(pulling)
 	else
 		..()
@@ -452,6 +462,7 @@
 			heart.beating = TRUE
 			if(stat == CONSCIOUS)
 				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
+	siemens_coeff *= physiology.siemens_coeff
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	if(.)
 		electrocution_animation(40)
@@ -596,7 +607,7 @@
 				facial_hair_style = "Shaved"
 				hair_style = "Bald"
 				update_hair()
-				status_flags |= DISFIGURED
+				add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 		update_damage_overlays()
 
@@ -647,24 +658,33 @@
 					if(prob(30))
 						burndamage += rand(30,40)
 
-				if(brutedamage > 0)
-					status = "bruised"
-				if(brutedamage > 20)
-					status = "battered"
-				if(brutedamage > 40)
-					status = "mangled"
-				if(brutedamage > 0 && burndamage > 0)
-					status += " and "
-				if(burndamage > 40)
-					status += "peeling away"
+				if(has_trait(TRAIT_SELF_AWARE))
+					status = "[brutedamage] brute damage and [burndamage] burn damage"
+					if(!brutedamage && !burndamage)
+						status = "no damage"
 
-				else if(burndamage > 10)
-					status += "blistered"
-				else if(burndamage > 0)
-					status += "numb"
-				if(status == "")
-					status = "OK"
-				to_chat(src, "\t <span class='[status == "OK" ? "notice" : "warning"]'>Your [LB.name] is [status].</span>")
+				else
+					if(brutedamage > 0)
+						status = "bruised"
+					if(brutedamage > 20)
+						status = "battered"
+					if(brutedamage > 40)
+						status = "mangled"
+					if(brutedamage > 0 && burndamage > 0)
+						status += " and "
+					if(burndamage > 40)
+						status += "peeling away"
+
+					else if(burndamage > 10)
+						status += "blistered"
+					else if(burndamage > 0)
+						status += "numb"
+					if(status == "")
+						status = "OK"
+				var/no_damage
+				if(status == "OK" || status == "no damage")
+					no_damage = TRUE
+				to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [has_trait(TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>")
 
 				for(var/obj/item/I in LB.embedded_objects)
 					to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
@@ -679,6 +699,23 @@
 					to_chat(src, "<span class='info'>You're completely exhausted.</span>")
 				else
 					to_chat(src, "<span class='info'>You feel fatigued.</span>")
+			if(has_trait(TRAIT_SELF_AWARE))
+				if(toxloss)
+					if(toxloss > 10)
+						to_chat(src, "<span class='danger'>You feel sick.</span>")
+					else if(toxloss > 20)
+						to_chat(src, "<span class='danger'>You feel nauseous.</span>")
+					else if(toxloss > 40)
+						to_chat(src, "<span class='danger'>You feel very unwell!</span>")
+				if(oxyloss)
+					if(oxyloss > 10)
+						to_chat(src, "<span class='danger'>You feel lightheaded.</span>")
+					else if(oxyloss > 20)
+						to_chat(src, "<span class='danger'>Your thinking is clouded and distant.</span>")
+					else if(oxyloss > 30)
+						to_chat(src, "<span class='danger'>You're choking!</span>")
+			if(roundstart_traits.len)
+				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
 		else
 			if(wear_suit)
 				wear_suit.add_fingerprint(M)

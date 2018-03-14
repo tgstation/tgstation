@@ -13,7 +13,7 @@
 	range = RANGED
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
+	if(!action_checks(target) || is_centcom_level(loc.z))
 		return
 	var/turf/T = get_turf(target)
 	if(T)
@@ -34,7 +34,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(atom/target)
-	if(!action_checks(target) || src.loc.z == ZLEVEL_CENTCOM)
+	if(!action_checks(target) || is_centcom_level(loc.z))
 		return
 	var/list/theareas = get_areas_in_range(100, chassis)
 	if(!theareas.len)
@@ -358,8 +358,8 @@
 	var/fuel_per_cycle_active = 200
 	var/power_per_cycle = 20
 
-/obj/item/mecha_parts/mecha_equipment/generator/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/generator/Initialize()
+	. = ..()
 	generator_init()
 
 /obj/item/mecha_parts/mecha_equipment/generator/Destroy()

@@ -101,14 +101,14 @@
 		if(SLUR)
 			slurring = max(slurring,(effect * hit_percent))
 		if(STUTTER)
-			if(status_flags & CANSTUN) // stun is usually associated with stutter
+			if((status_flags & CANSTUN) && !has_trait(TRAIT_STUNIMMUNE)) // stun is usually associated with stutter
 				stuttering = max(stuttering,(effect * hit_percent))
 		if(EYE_BLUR)
 			blur_eyes(effect * hit_percent)
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect * hit_percent))
 		if(JITTER)
-			if(status_flags & CANSTUN)
+			if((status_flags & CANSTUN) && !has_trait(TRAIT_STUNIMMUNE))
 				jitteriness = max(jitteriness,(effect * hit_percent))
 	return 1
 

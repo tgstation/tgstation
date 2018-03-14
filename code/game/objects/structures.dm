@@ -10,7 +10,7 @@
 
 /obj/structure/Initialize()
 	if (!armor)
-		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+		armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	. = ..()
 	if(smooth)
 		queue_smooth(src)
@@ -74,6 +74,8 @@
 		adjusted_climb_time *= 2
 	if(isalien(user))
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
+	if(user.has_trait(TRAIT_FREERUNNING)) //do you have any idea how fast I am???
+		adjusted_climb_time *= 0.8
 	structureclimber = user
 	if(do_mob(user, user, adjusted_climb_time))
 		if(src.loc) //Checking if structure has been destroyed

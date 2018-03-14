@@ -5,7 +5,7 @@
 	density = TRUE
 	anchored = TRUE
 	pixel_y = 8
-	unique_rename = 1
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
@@ -801,8 +801,7 @@
 		if(!anchored && !isinspace())
 			user.visible_message("[user] begins to wrench [src] into place.", \
 								"<span class='notice'>You begin to wrench [src] in place...</span>")
-			playsound(loc, O.usesound, 50, 1)
-			if (do_after(user, 20*O.toolspeed, target = src))
+			if (O.use_tool(src, user, 20, volume=50))
 				if(anchored)
 					return
 				anchored = TRUE
@@ -811,8 +810,7 @@
 		else if(anchored)
 			user.visible_message("[user] begins to unwrench [src].", \
 								"<span class='notice'>You begin to unwrench [src]...</span>")
-			playsound(loc, O.usesound, 50, 1)
-			if (do_after(user, 20*O.toolspeed, target = src))
+			if (O.use_tool(src, user, 20, volume=50))
 				if(!anchored)
 					return
 				anchored = FALSE
@@ -821,7 +819,7 @@
 
 	else if(istype(O, /obj/item/wirecutters) && unwrenchable)
 		using_irrigation = !using_irrigation
-		playsound(src, O.usesound, 50, 1)
+		O.play_tool_sound(src)
 		user.visible_message("<span class='notice'>[user] [using_irrigation ? "" : "dis"]connects [src]'s irrigation hoses.</span>", \
 		"<span class='notice'>You [using_irrigation ? "" : "dis"]connect [src]'s irrigation hoses.</span>")
 		for(var/obj/machinery/hydroponics/h in range(1,src))
@@ -831,21 +829,19 @@
 		if(!myseed && !weedlevel)
 			to_chat(user, "<span class='warning'>[src] doesn't have any plants or weeds!</span>")
 			return
-		user.visible_message("<span class='notice'>[user] starts digging out [src]'s plants...</span>", "<span class='notice'>You start digging out [src]'s plants...</span>")
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
-		if(!do_after(user, 50, target = src) || (!myseed && !weedlevel))
-			return
-		user.visible_message("<span class='notice'>[user] digs out the plants in [src]!</span>", "<span class='notice'>You dig out all of [src]'s plants!</span>")
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
-		if(myseed) //Could be that they're just using it as a de-weeder
-			age = 0
-			plant_health = 0
-			if(harvest)
-				harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
-			qdel(myseed)
-			myseed = null
-		weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
-		update_icon()
+		user.visible_message("<span class='notice'>[user] starts digging out [src]'s plants...</span>",
+			"<span class='notice'>You start digging out [src]'s plants...</span>")
+		if(O.use_tool(src, user, 50, volume=50) || (!myseed && !weedlevel))
+			user.visible_message("<span class='notice'>[user] digs out the plants in [src]!</span>", "<span class='notice'>You dig out all of [src]'s plants!</span>")
+			if(myseed) //Could be that they're just using it as a de-weeder
+				age = 0
+				plant_health = 0
+				if(harvest)
+					harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
+				qdel(myseed)
+				myseed = null
+			weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
+			update_icon()
 
 	else
 		return ..()

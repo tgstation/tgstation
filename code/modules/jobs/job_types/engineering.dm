@@ -17,6 +17,7 @@ Chief Engineer
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_ENGINEERING
+	antag_rep = 16
 
 	outfit = /datum/outfit/job/ce
 
@@ -41,7 +42,6 @@ Chief Engineer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/hardhat/white
 	gloves = /obj/item/clothing/gloves/color/black/ce
-	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/device/modular_computer/tablet/preset/advanced=1)
 
 	backpack = /obj/item/storage/backpack/industrial
@@ -77,6 +77,7 @@ Station Engineer
 	selection_color = "#fff5cc"
 	exp_requirements = 60
 	exp_type = EXP_TYPE_CREW
+	antag_rep = 8
 
 	outfit = /datum/outfit/job/engineer
 
@@ -96,7 +97,6 @@ Station Engineer
 	shoes = /obj/item/clothing/shoes/workboots
 	head = /obj/item/clothing/head/hardhat
 	r_pocket = /obj/item/device/t_scanner
-	accessory = /obj/item/clothing/accessory/pocketprotector/full
 
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng
@@ -134,6 +134,7 @@ Atmospheric Technician
 	selection_color = "#fff5cc"
 	exp_requirements = 60
 	exp_type = EXP_TYPE_CREW
+	antag_rep = 8
 
 	outfit = /datum/outfit/job/atmos
 
@@ -150,7 +151,6 @@ Atmospheric Technician
 	ears = /obj/item/device/radio/headset/headset_eng
 	uniform = /obj/item/clothing/under/rank/atmospheric_technician
 	r_pocket = /obj/item/device/analyzer
-	accessory = /obj/item/clothing/accessory/pocketprotector/full
 
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng

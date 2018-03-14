@@ -1,7 +1,6 @@
 
 SUBSYSTEM_DEF(research)
 	name = "Research"
-	flags = SS_KEEP_TIMING
 	priority = FIRE_PRIORITY_RESEARCH
 	wait = 10
 	init_order = INIT_ORDER_RESEARCH
@@ -20,7 +19,7 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_point_items = list()		//path = value
 	var/list/errored_datums = list()
 	//----------------------------------------------
-	var/single_server_income = 40.7
+	var/single_server_income = 54.3
 	var/multiserver_calculation = FALSE
 	var/last_income = 0
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
@@ -28,8 +27,6 @@ SUBSYSTEM_DEF(research)
 	//Aiming for 1.5 hours to max R&D
 	//[88nodes * 5000points/node] / [1.5hr * 90min/hr * 60s/min]
 	//Around 450000 points max???
-
-	var/bomb_research_point_scaling = 1800
 
 /datum/controller/subsystem/research/Initialize()
 	initialize_all_techweb_designs()

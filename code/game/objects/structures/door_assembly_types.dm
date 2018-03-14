@@ -206,9 +206,9 @@
 	desc = "Honk."
 	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
 	base_name = "bananium airlock"
-	airlock_type = /obj/machinery/door/airlock/clown
+	airlock_type = /obj/machinery/door/airlock/bananium
 	mineral = "bananium"
-	glass_type = /obj/machinery/door/airlock/clown/glass
+	glass_type = /obj/machinery/door/airlock/bananium/glass
 
 /obj/structure/door_assembly/door_assembly_sandstone
 	name = "sandstone airlock assembly"

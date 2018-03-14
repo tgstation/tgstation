@@ -442,7 +442,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "bp" = (
-/turf/closed/mineral/clown,
+/turf/closed/mineral/bananium,
 /area/ruin/powered/clownplanet)
 "bq" = (
 /obj/item/pickaxe,
@@ -628,10 +628,10 @@
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bS" = (
-/obj/item/coin/clown,
-/obj/item/coin/clown,
-/obj/item/coin/clown,
-/obj/item/coin/clown,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -671,7 +671,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "bZ" = (
-/obj/machinery/door/airlock/clown,
+/obj/machinery/door/airlock/bananium,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
 	name = "bananium floor";
@@ -803,10 +803,10 @@
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "dL" = (
-/obj/item/coin/clown,
-/obj/item/coin/clown,
-/obj/item/coin/clown,
-/obj/item/coin/clown,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
+/obj/item/coin/bananium,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -832,26 +832,19 @@
 	wet = 5
 	},
 /area/ruin/powered/clownplanet)
-"dR" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/indestructible/sound{
-	icon_state = "bananium";
-	name = "bananium floor";
-	sound = 'sound/effects/clownstep1.ogg';
-	wet = 5
-	},
-/area/ruin/powered/clownplanet)
 "eX" = (
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors/explored)
 "gX" = (
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/chasm/lavaland,
 /area/lavaland/surface/outdoors/explored)
 "hY" = (
 /obj/machinery/light,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/clownplanet)
 "pv" = (
@@ -866,6 +859,7 @@
 "CB" = (
 /obj/item/paper/crumpled/bloody/ruins/lavaland/clown_planet/hope,
 /obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -875,6 +869,7 @@
 	color = "#2F3000";
 	name = "stealth banana peel"
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "LH" = (
@@ -884,11 +879,13 @@
 	name = "THE TRIAL OF HONKITUDE"
 	},
 /obj/structure/disposalpipe/trunk,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered/clownplanet)
 "Mv" = (
+/obj/effect/mapping_helpers/no_lava,
 /mob/living/simple_animal/hostile/retaliate/clown,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
@@ -896,6 +893,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/clownplanet)
 "TD" = (
@@ -903,27 +901,32 @@
 /obj/structure/disposaloutlet{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/powered/clownplanet)
 "Xm" = (
 /obj/item/clothing/head/cone,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors/explored)
 "XO" = (
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "Yf" = (
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/clownplanet)
 "YI" = (
 /obj/machinery/light/small,
+/obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -1153,7 +1156,7 @@ bx
 bA
 bB
 bH
-dR
+bH
 bB
 bH
 bB
@@ -1970,40 +1973,6 @@ gX
 XO
 XO
 XO
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(32,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa

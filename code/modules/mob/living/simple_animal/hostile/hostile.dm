@@ -106,7 +106,7 @@
 	if(!search_objects)
 		. = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
 
-		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden))
+		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden,/obj/item/device/electronic_assembly))
 
 		for(var/HM in typecache_filter_list(range(vision_range, targets_from), hostile_machines))
 			if(can_see(targets_from, HM, vision_range))
@@ -170,6 +170,11 @@
 	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
 		return FALSE
 
+	if(ismob(the_target)) //Target is in godmode, ignore it.
+		var/mob/M = the_target
+		if(M.status_flags & GODMODE)
+			return FALSE
+
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return FALSE
 	if(search_objects < 2)
@@ -204,6 +209,11 @@
 				return FALSE
 			return TRUE
 
+		if(istype(the_target, /obj/item/device/electronic_assembly))
+			var/obj/item/device/electronic_assembly/O = the_target
+			if(O.combat_circuits)
+				return TRUE
+
 		if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
 			var/obj/structure/destructible/clockwork/ocular_warden/OW = the_target
 			if(OW.target != src)
@@ -229,7 +239,8 @@
 		LoseTarget()
 		return 0
 	if(target in possible_targets)
-		if(target.z != z)
+		var/turf/T = get_turf(src)
+		if(target.z != T.z)
 			LoseTarget()
 			return 0
 		var/target_distance = get_dist(targets_from,target)
@@ -318,14 +329,18 @@
 			else
 				M.Goto(src,M.move_to_delay,M.minimum_distance)
 
-/mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
+/mob/living/simple_animal/hostile/proc/CheckFriendlyFire(atom/A)
 	if(check_friendly_fire)
 		for(var/turf/T in getline(src,A)) // Not 100% reliable but this is faster than simulating actual trajectory
 			for(var/mob/living/L in T)
 				if(L == src || L == A)
 					continue
 				if(faction_check_mob(L) && !attack_same)
-					return
+					return TRUE
+
+/mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
+	if(CheckFriendlyFire(A))
+		return
 	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
 
 	if(rapid)
@@ -345,7 +360,7 @@
 	if(casingtype)
 		var/obj/item/ammo_casing/casing = new casingtype(startloc)
 		playsound(src, projectilesound, 100, 1)
-		casing.fire_casing(targeted_atom, src, null, null, null, zone_override = ran_zone())
+		casing.fire_casing(targeted_atom, src, null, null, null, ran_zone())
 	else if(projectiletype)
 		var/obj/item/projectile/P = new projectiletype(startloc)
 		playsound(src, projectilesound, 100, 1)
@@ -403,7 +418,7 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 	if(buckled)
 		buckled.attack_animal(src)
 	if(!isturf(targets_from.loc) && targets_from.loc != null)//Did someone put us in something?
-		var/atom/A = get_turf(targets_from)
+		var/atom/A = targets_from.loc
 		A.attack_animal(src)//Bang on it till we get out
 
 
@@ -475,12 +490,15 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 		toggle_ai(AI_Z_OFF)
 		return
 
-	if (isturf(T) && !(T.z in GLOB.station_z_levels))
+	var/cheap_search = isturf(T) && !is_station_level(T.z)
+	if (cheap_search)
 		tlist = ListTargetsLazy(T.z)
 	else
 		tlist = ListTargets()
 
 	if(AIStatus == AI_IDLE && FindTarget(tlist, 1))
+		if(cheap_search) //Try again with full effort
+			FindTarget()
 		toggle_ai(AI_ON)
 
 /mob/living/simple_animal/hostile/proc/ListTargetsLazy(var/_Z)//Step 1, find out what we can see

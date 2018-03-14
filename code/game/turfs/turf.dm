@@ -223,7 +223,7 @@
 		return current_target
 	var/list/new_baseturfs = list(current_target)
 	for(var/i=0;current_target != next_target;i++)
-		if(i > 100) 
+		if(i > 100)
 			// A baseturfs list over 100 members long is silly
 			// Because of how this is all structured it will only runtime/message once per type
 			stack_trace("A turf <[type]> created a baseturfs list over 100 members long. This is most likely an infinite loop.")
@@ -239,19 +239,19 @@
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1)
+		if(O.level == 1 && O.initialized)
 			O.hide(src.intact)
 
 // override for space turfs, since they should never hide anything
 /turf/open/space/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1)
+		if(O.level == 1 && O.initialized)
 			O.hide(0)
 
 // Removes all signs of lattice on the pos of the turf -Donkieyo
 /turf/proc/RemoveLattice()
 	var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-	if(L)
+	if(L && L.initialized)
 		qdel(L)
 
 /turf/proc/phase_damage_creatures(damage,mob/U = null)//>Ninja Code. Hurts and knocks out creatures on this turf //NINJACODE
@@ -264,7 +264,7 @@
 		M.take_damage(damage*2, BRUTE, "melee", 1)
 
 /turf/proc/Bless()
-	flags_1 |= NOJAUNT_1
+	new /obj/effect/blessing(src)
 
 /turf/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
 	if(src_object.contents.len)

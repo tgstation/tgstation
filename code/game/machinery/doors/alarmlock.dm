@@ -10,8 +10,8 @@
 	var/air_frequency = FREQ_ATMOS_ALARMS
 	autoclose = FALSE
 
-/obj/machinery/door/airlock/alarmlock/New()
-	..()
+/obj/machinery/door/airlock/alarmlock/Initialize()
+	. = ..()
 	air_connection = new
 
 /obj/machinery/door/airlock/alarmlock/Destroy()
@@ -33,8 +33,7 @@
 	var/alarm_area = signal.data["zone"]
 	var/alert = signal.data["alert"]
 
-	var/area/our_area = get_area(src)
-	if(alarm_area == our_area.name)
+	if(alarm_area == get_area_name(src))
 		switch(alert)
 			if("severe")
 				autoclose = TRUE

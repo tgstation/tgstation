@@ -323,8 +323,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/is_blind(A)
 	if(ismob(A))
 		var/mob/B = A
-		return	B.eye_blind
-	return 0
+		return B.eye_blind
+	return FALSE
 
 /mob/proc/hallucinating()
 	return FALSE
@@ -336,14 +336,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return FALSE
 	if(issilicon(M))
 		if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
-			var/mob/living/silicon/robot/R = M
-			if(R.mind && R.mind.special_role)
-				if(R.laws && R.laws.zeroth && R.syndicate)
-					if(R.connected_ai)
-						if(is_special_character(R.connected_ai) && R.connected_ai.laws && (R.connected_ai.laws.zeroth_borg == R.laws.zeroth || R.connected_ai.laws.zeroth == R.laws.zeroth))
-							return 0 //AI is the real traitor here, so the borg itself is not a traitor
-						return TRUE//Slaved but also a traitor
-					return TRUE //Unslaved, traitor
+			return FALSE
 		else if(isAI(M))
 			var/mob/living/silicon/ai/A = M
 			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
@@ -370,11 +363,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				if(M.mind in SSticker.mode.apprentices)
 					return 2
 			if("monkey")
-				if(M.viruses && (locate(/datum/disease/transformation/jungle_fever) in M.viruses))
-					return 2
-			if("abductor")
-				if(M.mind in SSticker.mode.abductors)
-					return 2
+				if(isliving(M))
+					var/mob/living/L = M
+					if(L.diseases && (locate(/datum/disease/transformation/jungle_fever) in L.diseases))
+						return 2
 		return TRUE
 	if(M.mind && LAZYLEN(M.mind.antag_datums)) //they have an antag datum!
 		return TRUE
@@ -448,15 +440,18 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
 	if(M.mind && M.mind.special_role)
 		poll_message = "[poll_message] Status:[M.mind.special_role]."
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, "pAI", null, FALSE, 100, M)
-	var/mob/dead/observer/theghost = null
+	else if(M.mind)
+		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
+		if(A)
+			poll_message = "[poll_message] Status:[A.name]."
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, null, FALSE, 100, M)
 
-	if(candidates.len)
-		theghost = pick(candidates)
+	if(LAZYLEN(candidates))
+		var/mob/dead/observer/C = pick(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost!")
-		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
+		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(M)])")
 		M.ghostize(0)
-		M.key = theghost.key
+		M.key = C.key
 		return TRUE
 	else
 		to_chat(M, "There were no ghosts willing to take control.")

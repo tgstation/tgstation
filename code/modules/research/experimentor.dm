@@ -317,7 +317,7 @@
 			R.add_reagent(chosenchem , 50)
 			investigate_log("Experimentor has released [chosenchem] smoke.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/smoke_spread/chem/smoke = new
-			smoke.set_up(R, 0, src, silent = 1)
+			smoke.set_up(R, 0, src, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
 			qdel(R)
@@ -329,7 +329,7 @@
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
 			var/datum/effect_system/smoke_spread/chem/smoke = new
-			smoke.set_up(R, 0, src, silent = 1)
+			smoke.set_up(R, 0, src, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
 			qdel(R)
@@ -413,7 +413,7 @@
 			R.add_reagent("frostoil" , 50)
 			investigate_log("Experimentor has released frostoil gas.", INVESTIGATE_EXPERIMENTOR)
 			var/datum/effect_system/smoke_spread/chem/smoke = new
-			smoke.set_up(R, 0, src, silent = 1)
+			smoke.set_up(R, 0, src, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, 1, -3)
 			smoke.start()
 			qdel(R)
@@ -664,11 +664,11 @@
 
 /obj/item/relic/proc/teleport(mob/user)
 	to_chat(user, "<span class='notice'>[src] begins to vibrate!</span>")
-	addtimer(CALLBACK(src, .proc/do_teleport, user), rand(10, 30))
+	addtimer(CALLBACK(src, .proc/do_the_teleport, user), rand(10, 30))
 
-/obj/item/relic/proc/do_teleport(mob/user)
+/obj/item/relic/proc/do_the_teleport(mob/user)
 	var/turf/userturf = get_turf(user)
-	if(loc == user && userturf.z != ZLEVEL_CENTCOM) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
+	if(loc == user && !is_centcom_level(userturf.z)) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
 		visible_message("<span class='notice'>[src] twists and bends, relocating itself!</span>")
 		throwSmoke(userturf)
 		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg')

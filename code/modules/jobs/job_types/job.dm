@@ -48,6 +48,9 @@
 	var/exp_type = ""
 	var/exp_type_department = ""
 
+	//The amount of good boy points playing this role will earn you towards a higher chance to roll antagonist next round
+	var/antag_rep = 0
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M)
@@ -70,13 +73,13 @@
 	if(outfit)
 		H.equipOutfit(outfit, visualsOnly)
 
-	H.dna.species.after_equip_job(src, H, visualsOnly)
-
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
 		if(H.dna.species.id != "human")
 			H.set_species(/datum/species/human)
 			H.rename_self("human", H.client)
 		purrbation_remove(H, silent=TRUE)
+
+	H.dna.species.after_equip_job(src, H, visualsOnly)
 
 	if(!visualsOnly && announce)
 		announce(H)
@@ -179,6 +182,7 @@
 	var/obj/item/card/id/C = H.wear_id
 	if(istype(C))
 		C.access = J.get_access()
+		shuffle_inplace(C.access) // Shuffle access list to make NTNet passkeys less predictable
 		C.registered_name = H.real_name
 		C.assignment = J.title
 		C.update_label()

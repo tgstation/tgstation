@@ -48,6 +48,11 @@
 	icon_state = "floorglow"
 	duration = 5
 
+/obj/effect/temp_visual/cult/portal
+	icon_state = "space"
+	duration = 600
+	layer = ABOVE_OBJ_LAYER
+
 //visuals for runes being magically created
 /obj/effect/temp_visual/cult/rune_spawn
 	icon_state = "runeouter"

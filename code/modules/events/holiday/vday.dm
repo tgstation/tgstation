@@ -10,7 +10,7 @@
 	typepath = /datum/round_event/valentines
 	weight = -1							//forces it to be called, regardless of weight
 	max_occurrences = 1
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/valentines/start()
 	..()
@@ -18,7 +18,7 @@
 		H.put_in_hands(new /obj/item/valentine)
 		var/obj/item/storage/backpack/b = locate() in H.contents
 		new /obj/item/reagent_containers/food/snacks/candyheart(b)
-
+		new /obj/item/storage/fancy/heart_box(b)
 
 	var/list/valentines = list()
 	for(var/mob/living/M in GLOB.player_list)
@@ -33,40 +33,19 @@
 
 
 			forge_valentines_objective(L, date)
-
 			forge_valentines_objective(date, L)
 
 			if(valentines.len && prob(4))
 				var/mob/living/notgoodenough = pick_n_take(valentines)
 				forge_valentines_objective(notgoodenough, date)
-
-
 		else
-			to_chat(L, "<span class='warning'><B>You didn't get a date! They're all having fun without you! you'll show them though...</B></span>")
-			var/datum/objective/martyr/normiesgetout = new
-			normiesgetout.owner = L.mind
-			L.mind.special_role = "heartbreaker"
-			SSticker.mode.traitors |= L.mind
-			L.mind.objectives += normiesgetout
-
-			L.mind.add_antag_datum(/datum/antagonist/auto_custom)
+			L.mind.add_antag_datum(/datum/antagonist/heartbreaker)
 
 /proc/forge_valentines_objective(mob/living/lover,mob/living/date)
-
-	SSticker.mode.traitors |= lover.mind
 	lover.mind.special_role = "valentine"
-	
-
-	var/datum/objective/protect/protect_objective = new /datum/objective/protect
-	protect_objective.owner = lover.mind
-	protect_objective.target = date.mind
-	protect_objective.explanation_text = "Protect [date.real_name], your date."
-	lover.mind.objectives += protect_objective
-
-	lover.mind.add_antag_datum(/datum/antagonist/auto_custom)
-
-	to_chat(lover, "<span class='warning'><B>You're on a date with [date]! Protect them at all costs. This takes priority over all other loyalties.</B></span>")
-
+	var/datum/antagonist/valentine/V = new
+	V.date = date.mind
+	lover.mind.add_antag_datum(V) //These really should be teams but i can't be assed to incorporate third wheels right now
 
 /datum/round_event/valentines/announce(fake)
 	priority_announce("It's Valentine's Day! Give a valentine to that special someone!")
@@ -143,8 +122,13 @@
 /obj/item/valentine/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/pen) || istype(W, /obj/item/toy/crayon))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
+			return
 		var/recipient = stripped_input(user, "Who is receiving this valentine?", "To:", null , 20)
 		var/sender = stripped_input(user, "Who is sending this valentine?", "From:", null , 20)
+		if(!user.canUseTopic(src, BE_CLOSE))
+			return
 		if(recipient && sender)
 			name = "valentine - To: [recipient] From: [sender]"
 

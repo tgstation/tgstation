@@ -21,13 +21,16 @@
 
 /datum/game_mode/nuclear/pre_setup()
 	var/n_agents = min(round(num_players() / 10), antag_candidates.len, agents_possible)
-	for(var/i = 0, i < n_agents, ++i)
-		var/datum/mind/new_op = pick_n_take(antag_candidates)
-		pre_nukeops += new_op
-		new_op.assigned_role = "Nuclear Operative"
-		new_op.special_role = "Nuclear Operative"
-		log_game("[new_op.key] (ckey) has been selected as a nuclear operative")
-	return TRUE
+	if(n_agents >= required_enemies)
+		for(var/i = 0, i < n_agents, ++i)
+			var/datum/mind/new_op = pick_n_take(antag_candidates)
+			pre_nukeops += new_op
+			new_op.assigned_role = "Nuclear Operative"
+			new_op.special_role = "Nuclear Operative"
+			log_game("[new_op.key] (ckey) has been selected as a nuclear operative")
+		return TRUE
+	else
+		return FALSE
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -52,7 +55,7 @@
 	return ..()
 
 /datum/game_mode/proc/are_operatives_dead()
-	for(var/datum/mind/operative_mind in get_antagonists(/datum/antagonist/nukeop))
+	for(var/datum/mind/operative_mind in get_antag_minds(/datum/antagonist/nukeop))
 		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
 			return FALSE
 	return TRUE
@@ -154,7 +157,7 @@
 	W.implant(H)
 	var/obj/item/implant/explosive/E = new/obj/item/implant/explosive(H)
 	E.implant(H)
-	H.faction |= "syndicate"
+	H.faction |= ROLE_SYNDICATE
 	H.update_icons()
 
 /datum/outfit/syndicate/full

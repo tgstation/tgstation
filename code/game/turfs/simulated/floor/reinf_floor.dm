@@ -25,18 +25,20 @@
 		..()
 	return //unplateable
 
-/turf/open/floor/engine/attackby(obj/item/C, mob/user, params)
-	if(!C || !user)
-		return
-	if(istype(C, /obj/item/wrench))
-		to_chat(user, "<span class='notice'>You begin removing rods...</span>")
-		playsound(src, C.usesound, 80, 1)
-		if(do_after(user, 30*C.toolspeed, target = src))
-			if(!istype(src, /turf/open/floor/engine))
-				return
-			new /obj/item/stack/rods(src, 2)
-			ChangeTurf(/turf/open/floor/plating)
-			return
+/turf/open/floor/engine/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
+
+/turf/open/floor/engine/crowbar_act(mob/living/user, obj/item/I)
+	return
+
+/turf/open/floor/engine/wrench_act(mob/living/user, obj/item/I)
+	to_chat(user, "<span class='notice'>You begin removing rods...</span>")
+	if(I.use_tool(src, user, 30, volume=80))
+		if(!istype(src, /turf/open/floor/engine))
+			return TRUE
+		new /obj/item/stack/rods(src, 2)
+		ChangeTurf(/turf/open/floor/plating)
+	return TRUE
 
 /turf/open/floor/engine/acid_act(acidpwr, acid_volume)
 	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
@@ -109,14 +111,18 @@
 
 /turf/open/floor/engine/cult
 	name = "engraved floor"
+	desc = "The air hangs heavy over this sinister flooring."
 	icon_state = "plating"
-	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearence
+	CanAtmosPass = ATMOS_PASS_NO
+	floor_tile = null
+	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearance
+
 
 /turf/open/floor/engine/cult/Initialize()
 	. = ..()
 	new /obj/effect/temp_visual/cult/turf/floor(src)
-	realappearence = new /obj/effect/clockwork/overlay/floor/bloodcult(src)
-	realappearence.linked = src
+	realappearance = new /obj/effect/clockwork/overlay/floor/bloodcult(src)
+	realappearance.linked = src
 
 /turf/open/floor/engine/cult/Destroy()
 	be_removed()
@@ -128,8 +134,8 @@
 	return ..()
 
 /turf/open/floor/engine/cult/proc/be_removed()
-	qdel(realappearence)
-	realappearence = null
+	qdel(realappearance)
+	realappearance = null
 
 /turf/open/floor/engine/cult/ratvar_act()
 	. = ..()

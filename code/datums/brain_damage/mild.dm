@@ -42,7 +42,10 @@
 	lose_text = "<span class='notice'>You feel smart again.</span>"
 
 /datum/brain_trauma/mild/dumbness/on_gain()
-	owner.add_disability(DISABILITY_DUMB, TRAUMA_DISABILITY)
+	owner.add_trait(TRAIT_DUMB, TRAUMA_TRAIT)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, owner)
+	if(mood)
+		mood.add_event("dumb", /datum/mood_event/oblivious)
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_life()
@@ -54,8 +57,11 @@
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_lose()
-	owner.remove_disability(DISABILITY_DUMB, TRAUMA_DISABILITY)
+	owner.remove_trait(TRAIT_DUMB, TRAUMA_TRAIT)
 	owner.derpspeech = 0
+	GET_COMPONENT_FROM(mood, /datum/component/mood, owner)
+	if(mood)
+		mood.clear_event("dumb")
 	..()
 
 /datum/brain_trauma/mild/speech_impediment

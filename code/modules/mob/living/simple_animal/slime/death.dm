@@ -19,7 +19,7 @@
 			return
 
 	if(buckled)
-		Feedstop(silent = 1) //releases ourselves from the mob we fed on.
+		Feedstop(silent = TRUE) //releases ourselves from the mob we fed on.
 
 	stat = DEAD
 	cut_overlays()

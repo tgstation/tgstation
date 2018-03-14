@@ -153,6 +153,13 @@
 	build_path = /obj/item/circuitboard/machine/smoke_machine
 	category = list ("Medical Machinery")
 
+/datum/design/board/reagentgrinder
+	name = "Machine Design (All-In-One Grinder)"
+	desc = "The circuit board for an All-In-One Grinder."
+	id = "reagentgrinder"
+	build_path = /obj/item/circuitboard/machine/reagentgrinder
+	category = list ("Medical Machinery")
+
 /datum/design/board/clonecontrol
 	name = "Computer Design (Cloning Machine Console)"
 	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
@@ -411,4 +418,18 @@
 	desc = "The circuit board for a Donksoft Toy Vendor."
 	id = "donksofttoyvendor"
 	build_path = /obj/item/circuitboard/machine/vending/donksofttoyvendor
+	category = list ("Misc. Machinery")
+
+/datum/design/board/cell_charger
+	name = "Machine Design (Cell Charger Board)"
+	desc = "The circuit board for a cell charger."
+	id = "cell_charger"
+	build_path = /obj/item/circuitboard/machine/cell_charger
+	category = list ("Misc. Machinery")
+
+/datum/design/board/dish_drive
+	name = "Machine Design (Dish Drive)"
+	desc = "The circuit board for a dish drive."
+	id = "dish_drive"
+	build_path = /obj/item/circuitboard/machine/dish_drive
 	category = list ("Misc. Machinery")

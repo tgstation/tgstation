@@ -22,7 +22,7 @@
 	name = "addition circuit"
 	desc = "This circuit can add numbers together."
 	extended_desc = "The order that the calculation goes is;<br>\
-	result = ((((A + B) + C) + D) ... ) and so on, until all pins have been added.  \
+	result = ((((A + B) + C) + D) ... ) and so on, until all pins have been added. \
 	Null pins are ignored."
 	icon_state = "addition"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -44,8 +44,8 @@
 	name = "subtraction circuit"
 	desc = "This circuit can subtract numbers."
 	extended_desc = "The order that the calculation goes is;<br>\
-	result = ((((A - B) - C) - D) ... ) and so on, until all pins have been subtracted.  \
-	Null pins are ignored.  Pin A <b>must</b> be a number or the circuit will not function."
+	result = ((((A - B) - C) - D) ... ) and so on, until all pins have been subtracted. \
+	Null pins are ignored.  Pin A <b>must</b> be a number, or the circuit will not function."
 	icon_state = "subtraction"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -70,8 +70,8 @@
 	name = "multiplication circuit"
 	desc = "This circuit can multiply numbers."
 	extended_desc = "The order that the calculation goes is;<br>\
-	result = ((((A * B) * C) * D) ... ) and so on, until all pins have been multiplied.  \
-	Null pins are ignored.  Pin A <b>must</b> be a number or the circuit will not function."
+	result = ((((A * B) * C) * D) ... ) and so on, until all pins have been multiplied. \
+	Null pins are ignored. Pin A <b>must</b> be a number, or the circuit will not function."
 	icon_state = "multiplication"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -96,8 +96,8 @@
 	name = "division circuit"
 	desc = "This circuit can divide numbers, just don't think about trying to divide by zero!"
 	extended_desc = "The order that the calculation goes is;<br>\
-	result = ((((A / B) / C) / D) ... ) and so on, until all pins have been divided.  \
-	Null pins, and pins containing 0, are ignored.  Pin A <b>must</b> be a number or the circuit will not function."
+	result = ((((A / B) / C) / D) ... ) and so on, until all pins have been divided. \
+	Null pins, and pins containing 0, are ignored. Pin A <b>must</b> be a number or the circuit will not function."
 	icon_state = "division"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -191,7 +191,7 @@
 
 /obj/item/integrated_circuit/arithmetic/absolute
 	name = "absolute circuit"
-	desc = "This outputs a non-negative version of the number you put in.  This may also be thought of as its distance from zero."
+	desc = "This outputs a non-negative version of the number you put in. This may also be thought of as its distance from zero."
 	icon_state = "absolute"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -236,7 +236,7 @@
 // Pi, because why the hell not? //
 /obj/item/integrated_circuit/arithmetic/pi
 	name = "pi constant circuit"
-	desc = "Not recommended for cooking.  Outputs '3.14159' when it receives a pulse."
+	desc = "Not recommended for cooking. Outputs '3.14159' when it receives a pulse."
 	icon_state = "pi"
 	inputs = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -251,7 +251,7 @@
 	name = "random number generator circuit"
 	desc = "This gives a random (integer) number between values A and B inclusive."
 	extended_desc = "'Inclusive' means that the upper bound is included in the range of numbers, e.g. L = 1 and H = 3 will allow \
-	for outputs of 1, 2, or 3.  H being the higher number is not <i>strictly</i> required."
+	for outputs of 1, 2, or 3. H being the higher number is not <i>strictly</i> required."
 	icon_state = "random"
 	inputs = list("L" = IC_PINTYPE_NUMBER,"H" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -272,7 +272,7 @@
 
 /obj/item/integrated_circuit/arithmetic/square_root
 	name = "square root circuit"
-	desc = "This outputs the square root of a number you put in."
+	desc = "This outputs the square root of a number you input."
 	icon_state = "square_root"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH

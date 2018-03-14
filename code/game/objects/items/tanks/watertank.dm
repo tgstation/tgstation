@@ -10,7 +10,7 @@
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
 	var/obj/item/noz
@@ -290,7 +290,7 @@
 		resin_cooldown = TRUE
 		R.remove_any(100)
 		var/obj/effect/resin_container/A = new (get_turf(src))
-		log_game("[key_name_admin(user)] used Resin Launcher at [get_area(user)] [COORD(user)].")
+		log_game("[key_name(user)] used Resin Launcher at [get_area(user)] [COORD(user)].")
 		playsound(src,'sound/items/syringeproj.ogg',40,1)
 		for(var/a=0, a<5, a++)
 			step_towards(A, target)

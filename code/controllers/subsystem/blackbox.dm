@@ -6,16 +6,20 @@ SUBSYSTEM_DEF(blackbox)
 	init_order = INIT_ORDER_BLACKBOX
 
 	var/list/feedback = list()	//list of datum/feedback_variable
+	var/list/first_death = list() //the first death of this round, assoc. vars keep track of different things
 	var/triggertime = 0
 	var/sealed = FALSE	//time to stop tracking stats?
 	var/list/versions = list("antagonists" = 3,
 							"admin_secrets_fun_used" = 2,
 							"time_dilation_current" = 3,
-							"science_techweb_unlock" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
+							"science_techweb_unlock" = 2,
+							"round_end_stats" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
 	record_feedback("amount", "random_seed", Master.random_seed)
+	record_feedback("amount", "dm_version", DM_VERSION)
+	record_feedback("amount", "byond_version", world.byond_version)
 	. = ..()
 
 //poll population
@@ -187,7 +191,7 @@ Versioning
 						"gun_fired" = 2)
 */
 /datum/controller/subsystem/blackbox/proc/record_feedback(key_type, key, increment, data, overwrite)
-	if(sealed || !key_type || !istext(key) || !isnum(increment) || !data)
+	if(sealed || !key_type || !istext(key) || !isnum(increment || !data))
 		return
 	var/datum/feedback_variable/FV = find_feedback_datum(key, key_type)
 	switch(key_type)
@@ -223,7 +227,7 @@ Versioning
 				if(islist(data[i]))
 					FV.json["data"]["[pos]"]["[i]"] = data[i] //and here with "[FV.json["data"].len]"
 				else
-					FV.json["data"]["[pos]"]["[i]"] = "[data[i]]" 
+					FV.json["data"]["[pos]"]["[i]"] = "[data[i]]"
 		else
 			CRASH("Invalid feedback key_type: [key_type]")
 
@@ -278,5 +282,13 @@ Versioning
 	var/last_words = sanitizeSQL(L.last_words)
 	var/suicide = sanitizeSQL(L.suiciding)
 	var/map = sanitizeSQL(SSmapping.config.map_name)
+	if(!L.suiciding && !first_death.len)
+		first_death["name"] = L.name
+		first_death["role"] = null
+		if(L.mind.assigned_role)
+			first_death["role"] = L.mind.assigned_role
+		first_death["area"] = "[get_area_name(L, TRUE)] [COORD(L)]"
+		first_death["damage"] = "<font color='#FF5555'>[sqlbrute]</font>/<font color='orange'>[sqlfire]</font>/<font color='lightgreen'>[sqltox]</font>/<font color='lightblue'>[sqloxy]</font>/<font color='pink'>[sqlclone]</font>"
+		first_death["last_words"] = L.last_words
 	var/datum/DBQuery/query_report_death = SSdbcore.NewQuery("INSERT INTO [format_table_name("death")] (pod, x_coord, y_coord, z_coord, mapname, server_ip, server_port, round_id, tod, job, special, name, byondkey, laname, lakey, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss, last_words, suicide) VALUES ('[sqlpod]', '[x_coord]', '[y_coord]', '[z_coord]', '[map]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', [GLOB.round_id], '[SQLtime()]', '[sqljob]', '[sqlspecial]', '[sqlname]', '[sqlkey]', '[laname]', '[lakey]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina], '[last_words]', [suicide])")
 	query_report_death.Execute()

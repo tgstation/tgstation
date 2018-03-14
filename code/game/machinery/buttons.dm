@@ -10,15 +10,15 @@
 	var/device_type = null
 	var/id = null
 	var/initialized_button = 0
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 90, acid = 70)
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 70)
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 
-/obj/machinery/button/New(loc, ndir = 0, built = 0)
-	..()
+/obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
+	. = ..()
 	if(built)
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
@@ -87,8 +87,8 @@
 
 		if(!device && !board && istype(W, /obj/item/wrench))
 			to_chat(user, "<span class='notice'>You start unsecuring the button frame...</span>")
-			playsound(loc, W.usesound, 50, 1)
-			if(do_after(user, 40*W.toolspeed, target = src))
+			W.play_tool_sound(src)
+			if(W.use_tool(src, user, 40))
 				to_chat(user, "<span class='notice'>You unsecure the button frame.</span>")
 				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
 				playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -103,12 +103,12 @@
 		return ..()
 
 /obj/machinery/button/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	req_access = list()
 	req_one_access = list()
 	playsound(src, "sparks", 100, 1)
-	emagged = TRUE
+	obj_flags |= EMAGGED
 
 /obj/machinery/button/attack_ai(mob/user)
 	if(!panel_open)
@@ -172,7 +172,7 @@
 /obj/machinery/button/door
 	name = "door button"
 	desc = "A door remote control switch."
-	var/normaldoorcontrol = 0
+	var/normaldoorcontrol = FALSE
 	var/specialfunctions = OPEN // Bitflag, see assembly file
 
 /obj/machinery/button/door/setup_device()

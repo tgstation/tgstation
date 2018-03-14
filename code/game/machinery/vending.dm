@@ -23,10 +23,10 @@
 	verb_exclaim = "beeps"
 	max_integrity = 300
 	integrity_failure = 100
-	armor = list(melee = 20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	circuit = /obj/item/circuitboard/machine/vendor
-	var/active = TRUE		//No sales pitches if off!
-	var/vend_ready = TRUE	//Are we ready to vend?? Is it time??
+	var/active = 1		//No sales pitches if off!
+	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 
 	// To be filled out at compile time
 	var/list/products	= list()	//For each, use the following pattern:
@@ -224,18 +224,18 @@
 
 /obj/machinery/vending/snack/proc/compartment_access_check(user)
 	req_access_txt = chef_compartment_access
-	if(!allowed(user) && !emagged && scan_id)
+	if(!allowed(user) && !(obj_flags & EMAGGED) && scan_id)
 		to_chat(user, "<span class='warning'>[src]'s chef compartment blinks red: Access denied.</span>")
 		req_access_txt = "0"
-		return FALSE
+		return 0
 	req_access_txt = "0"
-	return TRUE
+	return 1
 
 /obj/machinery/vending/snack/proc/iscompartmentfull(mob/user)
 	if(contents.len >= 30) // no more than 30 dishes can fit inside
 		to_chat(user, "<span class='warning'>[src]'s chef compartment is full.</span>")
-		return TRUE
-	return FALSE
+		return 1
+	return 0
 
 /obj/machinery/vending/snack/proc/food_load(obj/item/reagent_containers/food/snacks/S)
 	if(dish_quants[S.name])
@@ -244,32 +244,33 @@
 		dish_quants[S.name] = 1
 	sortList(dish_quants)
 
-/obj/machinery/vending/attackby(obj/item/W, mob/user, params)
+/obj/machinery/vending/crowbar_act(mob/living/user, obj/item/I)
+	if(!component_parts)
+		return FALSE
+	default_deconstruction_crowbar(I)
+	return TRUE
+
+/obj/machinery/vending/wrench_act(mob/living/user, obj/item/I)
 	if(panel_open)
-		if(default_unfasten_wrench(user, W, time = 60))
-			return
+		default_unfasten_wrench(user, I, time = 60)
+	return TRUE
 
-	if(component_parts)
-		if(default_deconstruction_crowbar(W))
-			return
-
-	if(istype(W, /obj/item/screwdriver))
-		if(anchored)
-			panel_open = !panel_open
-			to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>")
-			cut_overlays()
-			if(panel_open)
-				add_overlay("[initial(icon_state)]-panel")
-			playsound(src, W.usesound, 50, 1)
-			updateUsrDialog()
-		else
-			to_chat(user, "<span class='warning'>You must first secure [src].</span>")
-		return
-	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/wirecutters))
+/obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/I)
+	if(anchored)
+		default_deconstruction_screwdriver(user, icon_state, icon_state, I)
+		cut_overlays()
 		if(panel_open)
-			attack_hand(user)
+			add_overlay("[initial(icon_state)]-panel")
+		updateUsrDialog()
+	else
+		to_chat(user, "<span class='warning'>You must first secure [src].</span>")
+	return TRUE
+
+/obj/machinery/vending/attackby(obj/item/I, mob/user, params)
+	if(panel_open && is_wire_tool(I))
+		wires.interact(user)
 		return
-	else if(istype(W, /obj/item/coin))
+	else if(istype(I, /obj/item/coin))
 		if(coin)
 			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
 			return
@@ -279,32 +280,32 @@
 		if(!premium.len)
 			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
 			return
-		if(!user.transferItemToLoc(W, src))
+		if(!user.transferItemToLoc(I, src))
 			return
-		coin = W
-		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
+		coin = I
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		return
-	else if(istype(W, /obj/item/stack/spacecash))
+	else if(istype(I, /obj/item/stack/spacecash))
 		if(coin)
 			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
 			return
 		if(bill)
 			to_chat(user, "<span class='warning'>[src] already has [bill] inserted</span>")
 			return
-		var/obj/item/stack/S = W
+		var/obj/item/stack/S = I
 		if(!premium.len)
 			to_chat(user, "<span class='warning'>[src] doesn't have a bill slot.</span>")
 			return
 		S.use(1)
-		bill = new S.type(src,1)
-		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
+		bill = new S.type(src, 1)
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		return
-	else if(istype(W, refill_canister) && refill_canister != null)
+	else if(istype(I, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
 			to_chat(user, "<span class='notice'>It does nothing.</span>")
 		else if(panel_open)
 			//if the panel is open we attempt to refill the machine
-			var/obj/item/vending_refill/canister = W
+			var/obj/item/vending_refill/canister = I
 			if(canister.charges[STANDARD_CHARGE] == 0)
 				to_chat(user, "<span class='notice'>This [canister.name] is empty!</span>")
 			else
@@ -342,13 +343,187 @@
 	..()
 
 /obj/machinery/vending/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
 
 /obj/machinery/vending/attack_ai(mob/user)
 	return attack_hand(user)
+
+/obj/machinery/vending/attack_hand(mob/user)
+	var/dat = ""
+	if(panel_open && !isAI(user))
+		return wires.interact(user)
+	else
+		if(stat & (BROKEN|NOPOWER))
+			return
+
+		dat += "<h3>Select an item</h3>"
+		dat += "<div class='statusDisplay'>"
+		if(product_records.len == 0)
+			dat += "<font color = 'red'>No product loaded!</font>"
+		else
+			var/list/display_records = product_records
+			if(extended_inventory)
+				display_records = product_records + hidden_records
+			if(coin || bill)
+				display_records = product_records + coin_records
+			if((coin || bill) && extended_inventory)
+				display_records = product_records + hidden_records + coin_records
+			dat += "<ul>"
+			for (var/datum/data/vending_product/R in display_records)
+				dat += "<li>"
+				if(R.amount > 0)
+					dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
+				else
+					dat += "<span class='linkOff'>Sold out</span> "
+				dat += "<font color = '[R.display_color]'><b>[sanitize(R.product_name)]</b>:</font>"
+				dat += " <b>[R.amount]</b>"
+				dat += "</li>"
+			dat += "</ul>"
+		dat += "</div>"
+		if(premium.len > 0)
+			dat += "<b>Change Return:</b> "
+			if (coin || bill)
+				dat += "[(coin ? coin : "")][(bill ? bill : "")]&nbsp;&nbsp;<a href='byond://?src=[REF(src)];remove_coin=1'>Remove</a>"
+			else
+				dat += "<i>No money</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
+		if(istype(src, /obj/machinery/vending/snack))
+			dat += "<h3>Chef's Food Selection</h3>"
+			dat += "<div class='statusDisplay'>"
+			for (var/O in dish_quants)
+				if(dish_quants[O] > 0)
+					var/N = dish_quants[O]
+					dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
+					dat += "<B>[capitalize(O)]: [N]</B><br>"
+			dat += "</div>"
+	user.set_machine(src)
+	if(seconds_electrified && !(stat & NOPOWER))
+		if(shock(user, 100))
+			return
+
+	var/datum/browser/popup = new(user, "vending", (name))
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
+	popup.open()
+
+
+/obj/machinery/vending/Topic(href, href_list)
+	if(..())
+		return
+
+	if(href_list["remove_coin"])
+		if(!(coin || bill))
+			to_chat(usr, "<span class='notice'>There is no money in this machine.</span>")
+			return
+		if(coin)
+			if(!usr.get_active_held_item())
+				usr.put_in_hands(coin)
+			else
+				coin.forceMove(get_turf(src))
+			to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
+			coin = null
+		if(bill)
+			if(!usr.get_active_held_item())
+				usr.put_in_hands(bill)
+			else
+				bill.forceMove(get_turf(src))
+			to_chat(usr, "<span class='notice'>You remove [bill] from [src].</span>")
+			bill = null
+
+
+	usr.set_machine(src)
+
+	if((href_list["dispense"]) && (vend_ready))
+		var/N = href_list["dispense"]
+		if(dish_quants[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
+			return
+		vend_ready = 0
+		use_power(5)
+
+		dish_quants[N] = max(dish_quants[N] - 1, 0)
+		for(var/obj/O in contents)
+			if(O.name == N)
+				O.forceMove(drop_location())
+				break
+		vend_ready = 1
+		updateUsrDialog()
+		return
+
+	if((href_list["vend"]) && (vend_ready))
+		if(panel_open)
+			to_chat(usr, "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>")
+			return
+
+		if((!allowed(usr)) && !(obj_flags & EMAGGED) && scan_id)	//For SECURE VENDING MACHINES YEAH
+			to_chat(usr, "<span class='warning'>Access denied.</span>"	)
+			flick(icon_deny,src)
+			return
+
+		vend_ready = 0 //One thing at a time!!
+
+		var/datum/data/vending_product/R = locate(href_list["vend"])
+		if(!R || !istype(R) || !R.product_path)
+			vend_ready = 1
+			return
+
+		if(R in hidden_records)
+			if(!extended_inventory)
+				vend_ready = 1
+				return
+		else if(R in coin_records)
+			if(!(coin || bill))
+				to_chat(usr, "<span class='warning'>You need to insert money to get this item!</span>")
+				vend_ready = 1
+				return
+			if(coin && coin.string_attached)
+				if(prob(50))
+					if(usr.put_in_hands(coin))
+						to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
+						coin = null
+					else
+						to_chat(usr, "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>")
+						QDEL_NULL(coin)
+				else
+					to_chat(usr, "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
+					QDEL_NULL(coin)
+			else
+				QDEL_NULL(coin)
+				QDEL_NULL(bill)
+
+		else if (!(R in product_records))
+			vend_ready = 1
+			message_admins("Vending machine exploit attempted by [key_name(usr, usr.client)]!")
+			return
+
+		if (R.amount <= 0)
+			to_chat(usr, "<span class='warning'>Sold out.</span>")
+			vend_ready = 1
+			return
+		else
+			R.amount--
+
+		if(((last_reply + 200) <= world.time) && vend_reply)
+			speak(vend_reply)
+			last_reply = world.time
+
+		use_power(5)
+		if(icon_vend) //Show the vending animation if needed
+			flick(icon_vend,src)
+		new R.product_path(get_turf(src))
+		SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
+		vend_ready = 1
+		return
+
+		updateUsrDialog()
+		return
+
+	else if(href_list["togglevoice"] && panel_open)
+		shut_up = !shut_up
+
+	updateUsrDialog()
+
 
 /obj/machinery/vending/process()
 	if(stat & (BROKEN|NOPOWER))
@@ -431,96 +606,6 @@
 	else
 		return FALSE
 
-/obj/machinery/vending/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "vending", name, 350, 475, master_ui, state)
-		ui.open()
-
-/obj/machinery/vending/ui_data()
-	var/list/data = list()
-	var/list/listed_products = list()
-	var/list/display_records = product_records
-	if(extended_inventory)
-		display_records += hidden_records
-	if(coin)
-		display_records += coin_records
-	for(var/key = 1 to display_records.len)
-		var/datum/data/vending_product/I = display_records[key]
-		listed_products.Add(list(list(
-			"key" = key,
-			"name" = I.product_name,
-			"color" = I.display_color,
-			"amount" = I.amount)))
-	data["products"] = listed_products
-	if(!isnull(coin))
-		data["coin"] = coin.name
-	data["coinslot"] = premium.len
-	data["canvend"] = vend_ready
-
-	return data
-
-/obj/machinery/vending/ui_act(action, params)
-	if(..())
-		return
-	if(!vend_ready)
-		return
-	switch(action)
-		if("vend")
-			if(!allowed(usr) && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
-				to_chat(usr, "<span class='warning'>Access denied.</span>")
-				flick(icon_deny,src)
-				return
-			vend_ready = FALSE
-			addtimer(VARSET_CALLBACK(src, vend_ready, TRUE), 10)
-			var/key = text2num(params["key"])
-			var/datum/data/vending_product/R = product_records[key]
-			if(R in hidden_records)
-				if(!extended_inventory)
-					return
-			else if(R in coin_records)
-				if(!coin)
-					to_chat(usr, "<span class='warning'>You need to insert a coin to get this item!</span>")
-					return
-				if(coin.string_attached)
-					if(prob(50))
-						if(usr.put_in_hands(coin))
-							to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
-							coin = null
-						else
-							to_chat(usr, "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>")
-							QDEL_NULL(coin)
-					else
-						to_chat(usr, "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
-						QDEL_NULL(coin)
-				else
-					QDEL_NULL(coin)
-			else if (!(R in product_records))
-				return
-
-
-
-			if (R.amount <= 0)
-				to_chat(usr, "<span class='warning'>Sold out.</span>")
-				return
-			R.amount--
-			if(((last_reply + 200) <= world.time) && vend_reply)
-				speak(vend_reply)
-				last_reply = world.time
-			use_power(5)
-			if(icon_vend) //Show the vending animation if needed
-				flick(icon_vend,src)
-			new R.product_path(drop_location())
-			return TRUE
-		if("eject")
-			if(!coin)
-				to_chat(usr, "<span class='notice'>There is no coin in this machine.</span>")
-				return
-			usr.put_in_hands(coin)
-			to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
-			coin = null
-
 /*
  * Vending machine types
  */
@@ -568,7 +653,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 						/obj/item/wirecutters = 1, /obj/item/cartridge/signal = 4)
 	contraband = list(/obj/item/device/assembly/timer = 2, /obj/item/device/assembly/voice = 2, /obj/item/device/assembly/health = 2)
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/machinery/vending/coffee
@@ -600,10 +685,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	desc = "Uh oh!"
 
 /obj/machinery/vending/snack/random/Initialize()
-    ..()
-    var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
-    new T(get_turf(src))
-    return INITIALIZE_HINT_QDEL
+	..()
+	var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
+	new T(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/machinery/vending/snack/blue
 	icon_state = "snackblue"
@@ -630,7 +715,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/reagent_containers/food/drinks/coffee = 12,
 					/obj/item/tank/internals/emergency_oxygen = 6,
 					/obj/item/clothing/mask/breath = 6)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/machinery/vending/cola
@@ -653,10 +738,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	desc = "Uh oh!"
 
 /obj/machinery/vending/cola/random/Initialize()
-    . = ..()
-    var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
-    new T(get_turf(src))
-    return INITIALIZE_HINT_QDEL
+	..()
+	var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
+	new T(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/machinery/vending/cola/blue
 	icon_state = "Cola_Machine"
@@ -713,7 +798,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	products = list(/obj/item/cartridge/medical = 10, /obj/item/cartridge/engineering = 10, /obj/item/cartridge/security = 10,
 					/obj/item/cartridge/janitor = 10, /obj/item/cartridge/signal/toxins = 10, /obj/item/device/pda/heads = 10,
 					/obj/item/cartridge/captain = 3, /obj/item/cartridge/quartermaster = 10)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/machinery/vending/liberationstation
@@ -730,7 +815,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/gun/ballistic/shotgun = 2, /obj/item/gun/ballistic/automatic/ar = 2)
 	premium = list(/obj/item/ammo_box/magazine/smgm9mm = 2, /obj/item/ammo_box/magazine/m50 = 4, /obj/item/ammo_box/magazine/m45 = 2, /obj/item/ammo_box/magazine/m75 = 2)
 	contraband = list(/obj/item/clothing/under/patriotsuit = 1, /obj/item/bedsheet/patriot = 3)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/machinery/vending/cigarette
@@ -764,13 +849,28 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_deny = "med-deny"
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	req_access_txt = "5"
-	products = list(/obj/item/reagent_containers/syringe = 12, /obj/item/reagent_containers/dropper = 3, /obj/item/stack/medical/gauze = 8, /obj/item/reagent_containers/pill/patch/styptic = 5, /obj/item/reagent_containers/pill/insulin = 10,
-				/obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/glass/bottle/charcoal = 4, /obj/item/reagent_containers/spray/medical/sterilizer = 1,
-				/obj/item/reagent_containers/glass/bottle/epinephrine = 4, /obj/item/reagent_containers/glass/bottle/morphine = 4, /obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
-				/obj/item/reagent_containers/glass/bottle/toxin = 3, /obj/item/reagent_containers/syringe/antiviral = 6, /obj/item/reagent_containers/pill/salbutamol = 2, /obj/item/device/healthanalyzer = 4, /obj/item/device/sensor_device = 2, /obj/item/pinpointer/crew = 2)
+	products = list(/obj/item/reagent_containers/syringe = 12, 
+					/obj/item/reagent_containers/dropper = 3, 
+					/obj/item/device/healthanalyzer = 4, 
+					/obj/item/device/sensor_device = 2, 
+					/obj/item/pinpointer/crew = 2,
+					/obj/item/reagent_containers/medspray/sterilizine = 1,
+					/obj/item/stack/medical/gauze = 8, 
+					/obj/item/reagent_containers/pill/patch/styptic = 5, 
+					/obj/item/reagent_containers/medspray/styptic = 2, 
+					/obj/item/reagent_containers/pill/patch/silver_sulf = 5, 
+					/obj/item/reagent_containers/medspray/silver_sulf = 2,
+					/obj/item/reagent_containers/pill/insulin = 10,
+					/obj/item/reagent_containers/pill/salbutamol = 2, 
+					/obj/item/reagent_containers/glass/bottle/charcoal = 4, 
+					/obj/item/reagent_containers/glass/bottle/epinephrine = 4, 
+					/obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
+					/obj/item/reagent_containers/glass/bottle/morphine = 4, 
+					/obj/item/reagent_containers/glass/bottle/toxin = 3, 
+					/obj/item/reagent_containers/syringe/antiviral = 6)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 3, /obj/item/reagent_containers/pill/morphine = 4, /obj/item/reagent_containers/pill/charcoal = 6)
 	premium = list(/obj/item/storage/box/hug/medical = 1, /obj/item/reagent_containers/hypospray/medipen = 3, /obj/item/storage/belt/medical = 3, /obj/item/wrench/medical = 1)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/medical
 
@@ -790,10 +890,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_deny = "wallmed-deny"
 	density = FALSE
 	products = list(/obj/item/reagent_containers/syringe = 3, /obj/item/reagent_containers/pill/patch/styptic = 5,
-					/obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/pill/charcoal = 2,
-					/obj/item/reagent_containers/spray/medical/sterilizer = 1)
+					/obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/medspray/styptic = 2, /obj/item/reagent_containers/medspray/silver_sulf = 2,
+					/obj/item/reagent_containers/pill/charcoal = 2, /obj/item/reagent_containers/medspray/sterilizine = 1)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 2, /obj/item/reagent_containers/pill/morphine = 2)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/medical
 	refill_count = 1
@@ -809,7 +909,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/reagent_containers/food/snacks/donut = 12, /obj/item/storage/box/evidence = 6, /obj/item/device/flashlight/seclite = 4, /obj/item/restraints/legcuffs/bola/energy = 7)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2, /obj/item/storage/fancy/donut_box = 2)
 	premium = list(/obj/item/coin/antagtoken = 1)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/machinery/vending/security/pre_throw(obj/item/I)
@@ -831,7 +931,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	products = list(/obj/item/reagent_containers/glass/bottle/nutrient/ez = 30, /obj/item/reagent_containers/glass/bottle/nutrient/l4z = 20, /obj/item/reagent_containers/glass/bottle/nutrient/rh = 10, /obj/item/reagent_containers/spray/pestspray = 20,
 					/obj/item/reagent_containers/syringe = 5, /obj/item/storage/bag/plants = 5, /obj/item/cultivator = 3, /obj/item/shovel/spade = 3, /obj/item/device/plant_analyzer = 4)
 	contraband = list(/obj/item/reagent_containers/glass/bottle/ammonia = 10, /obj/item/reagent_containers/glass/bottle/diethylamine = 5)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/machinery/vending/hydroseeds
@@ -844,15 +944,15 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 						/obj/item/seeds/cabbage = 3, /obj/item/seeds/carrot = 3, /obj/item/seeds/cherry = 3, /obj/item/seeds/chanter = 3,
 						/obj/item/seeds/chili = 3, /obj/item/seeds/cocoapod = 3, /obj/item/seeds/coffee = 3, /obj/item/seeds/corn = 3,
 						/obj/item/seeds/eggplant = 3, /obj/item/seeds/grape = 3, /obj/item/seeds/grass = 3, /obj/item/seeds/lemon = 3,
-						/obj/item/seeds/lime = 3, /obj/item/seeds/onion = 3, /obj/item/seeds/orange = 3, /obj/item/seeds/potato = 3, /obj/item/seeds/poppy = 3,
-						/obj/item/seeds/pumpkin = 3, /obj/item/seeds/replicapod = 3, /obj/item/seeds/wheat/rice = 3, /obj/item/seeds/soya = 3, /obj/item/seeds/sunflower = 3,
-						/obj/item/seeds/tea = 3, /obj/item/seeds/tobacco = 3, /obj/item/seeds/tomato = 3,
+						/obj/item/seeds/lime = 3, /obj/item/seeds/onion = 3, /obj/item/seeds/orange = 3, /obj/item/seeds/pineapple = 3, /obj/item/seeds/potato = 3,
+						/obj/item/seeds/poppy = 3,/obj/item/seeds/pumpkin = 3, /obj/item/seeds/replicapod = 3, /obj/item/seeds/wheat/rice = 3, /obj/item/seeds/soya = 3,
+						/obj/item/seeds/sunflower = 3, /obj/item/seeds/tea = 3, /obj/item/seeds/tobacco = 3, /obj/item/seeds/tomato = 3,
 						/obj/item/seeds/tower = 3, /obj/item/seeds/watermelon = 3, /obj/item/seeds/wheat = 3, /obj/item/seeds/whitebeet = 3)
 	contraband = list(/obj/item/seeds/amanita = 2, /obj/item/seeds/glowshroom = 2, /obj/item/seeds/liberty = 2, /obj/item/seeds/nettle = 2,
 						/obj/item/seeds/plump = 2, /obj/item/seeds/reishi = 2, /obj/item/seeds/cannabis = 3, /obj/item/seeds/starthistle = 2,
 						/obj/item/seeds/random = 2)
 	premium = list(/obj/item/reagent_containers/spray/waterflower = 1)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/machinery/vending/magivend
@@ -864,7 +964,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_ads = "FJKLFJSD;AJKFLBJAKL;1234 LOONIES LOL!;>MFW;Kill them fuckers!;GET DAT FUKKEN DISK;HONK!;EI NATH;Destroy the station!;Admin conspiracies since forever!;Space-time bending hardware!"
 	products = list(/obj/item/clothing/head/wizard = 1, /obj/item/clothing/suit/wizrobe = 1, /obj/item/clothing/head/wizard/red = 1, /obj/item/clothing/suit/wizrobe/red = 1, /obj/item/clothing/head/wizard/yellow = 1, /obj/item/clothing/suit/wizrobe/yellow = 1, /obj/item/clothing/shoes/sandal/magic = 1, /obj/item/staff = 2)
 	contraband = list(/obj/item/reagent_containers/glass/bottle/wizarditis = 1)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/machinery/vending/autodrobe
@@ -921,7 +1021,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "dinnerware"
 	products = list(/obj/item/storage/bag/tray = 8, /obj/item/kitchen/fork = 6, /obj/item/kitchen/knife = 6, /obj/item/kitchen/rollingpin = 2, /obj/item/reagent_containers/food/drinks/drinkingglass = 8, /obj/item/clothing/suit/apron/chef = 2, /obj/item/reagent_containers/food/condiment/pack/ketchup = 5, /obj/item/reagent_containers/food/condiment/pack/hotsauce = 5, /obj/item/reagent_containers/food/condiment/saltshaker = 5, /obj/item/reagent_containers/food/condiment/peppermill = 5, /obj/item/reagent_containers/glass/bowl = 20)
 	contraband = list(/obj/item/kitchen/rollingpin = 2, /obj/item/kitchen/knife/butcher = 2)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/machinery/vending/sovietsoda
@@ -931,7 +1031,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
 	products = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda = 30)
 	contraband = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/cola = 20)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/machinery/vending/tool
@@ -957,7 +1057,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		/obj/item/clothing/gloves/color/fyellow = 2)
 	premium = list(
 		/obj/item/clothing/gloves/color/yellow = 1)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
 	resistance_flags = FIRE_PROOF
 
 /obj/machinery/vending/engivend
@@ -966,10 +1066,19 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "engivend"
 	icon_deny = "engivend-deny"
 	req_access_txt = "11" //Engineering Equipment access
-	products = list(/obj/item/clothing/glasses/meson/engine = 2, /obj/item/device/multitool = 4, /obj/item/electronics/airlock = 10, /obj/item/electronics/apc = 10, /obj/item/electronics/airalarm = 10, /obj/item/stock_parts/cell/high = 10, /obj/item/construction/rcd/loaded = 3, /obj/item/device/geiger_counter = 5, /obj/item/grenade/chem_grenade/smart_metal_foam = 10)
+	products = list(/obj/item/clothing/glasses/meson/engine = 2, 
+					/obj/item/clothing/glasses/welding = 3,
+					/obj/item/device/multitool = 4, 
+					/obj/item/construction/rcd/loaded = 3, 
+					/obj/item/grenade/chem_grenade/smart_metal_foam = 10,
+					/obj/item/device/geiger_counter = 5, 
+					/obj/item/stock_parts/cell/high = 10,
+					/obj/item/electronics/airlock = 10, 
+					/obj/item/electronics/apc = 10, 
+					/obj/item/electronics/airalarm = 10)
 	contraband = list(/obj/item/stock_parts/cell/potato = 3)
 	premium = list(/obj/item/storage/belt/utility = 3, /obj/item/storage/box/smart_metal_foam = 1)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 //This one's from bay12
@@ -985,7 +1094,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/stock_parts/cell = 8, /obj/item/weldingtool = 8, /obj/item/clothing/head/welding = 8,
 					/obj/item/light/tube = 10, /obj/item/clothing/suit/fire = 4, /obj/item/stock_parts/scanning_module = 5, /obj/item/stock_parts/micro_laser = 5,
 					/obj/item/stock_parts/matter_bin = 5, /obj/item/stock_parts/manipulator = 5)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 //This one's from bay12
@@ -999,7 +1108,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/stock_parts/cell/high = 12, /obj/item/device/assembly/prox_sensor = 3, /obj/item/device/assembly/signaler = 3, /obj/item/device/healthanalyzer = 3,
 					/obj/item/scalpel = 2, /obj/item/circular_saw = 2, /obj/item/tank/internals/anesthetic = 2, /obj/item/clothing/mask/breath/medical = 5,
 					/obj/item/screwdriver = 5, /obj/item/crowbar = 5)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 //DON'T FORGET TO CHANGE THE REFILL SIZE IF YOU CHANGE THE MACHINE'S CONTENTS!
@@ -1063,7 +1172,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 						/obj/item/toy/katana = 10,
 						/obj/item/twohanded/dualsaber/toy = 5,
 						/obj/item/toy/cards/deck/syndicate = 10) //Gambling and it hurts, making it a +18 item
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/donksoft
 
@@ -1088,7 +1197,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 						/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted = 10,
 						/obj/item/toy/katana = 10,
 						/obj/item/twohanded/dualsaber/toy = 5)
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/donksoft
 

@@ -8,7 +8,7 @@
 	item_state = "candle1"
 	w_class = WEIGHT_CLASS_TINY
 	light_color = LIGHT_COLOR_FIRE
-	var/wax = 200
+	var/wax = 1000
 	var/lit = FALSE
 	var/infinite = FALSE
 	var/start_lit = FALSE
@@ -22,9 +22,9 @@
 
 /obj/item/candle/update_icon()
 	var/i
-	if(wax>150)
+	if(wax>750)
 		i = 1
-	else if(wax>80)
+	else if(wax>400)
 		i = 2
 	else i = 3
 	icon_state = "candle[i][lit ? "_lit" : ""]"

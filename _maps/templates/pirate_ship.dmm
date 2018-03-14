@@ -26,9 +26,7 @@
 /obj/machinery/button/door{
 	id = "piratebridge";
 	name = "Bridge Shutters Control";
-	pixel_x = 0;
-	pixel_y = -5;
-	req_access_txt = "0"
+	pixel_y = -5
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/device/radio/intercom{
@@ -165,8 +163,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
-	name = "Crew Cabin";
-	req_access_txt = "0"
+	name = "Crew Cabin"
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
@@ -214,7 +211,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "aD" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "aE" = (
@@ -258,7 +255,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -24;
 	req_access = null
 	},
@@ -277,8 +273,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
-	name = "Captain's Quarters";
-	req_access_txt = "0"
+	name = "Captain's Quarters"
 	},
 /turf/open/floor/wood,
 /area/shuttle/pirate)
@@ -410,7 +405,6 @@
 	normaldoorcontrol = 1;
 	pixel_x = -8;
 	pixel_y = -24;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/machinery/turretid{
@@ -450,9 +444,9 @@
 /area/shuttle/pirate)
 "bg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/vault{
 	id_tag = "piratevault";
-	locked = 1;
 	name = "Vault"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -510,8 +504,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
-	name = "Crew Quarters";
-	req_access_txt = "0"
+	name = "Crew Quarters"
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
@@ -532,7 +525,6 @@
 /area/shuttle/pirate/vault)
 "br" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /turf/open/floor/pod/dark,
@@ -545,13 +537,8 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "bt" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_x = -32;
-	pixel_y = 0
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = -32
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -645,13 +632,8 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "bE" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_x = 32;
-	pixel_y = 0
+/obj/structure/sign/warning/vacuum/external{
+	pixel_x = 32
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -661,9 +643,9 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bF" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	id_tag = "pirateportexternal";
-	locked = 1
+	id_tag = "pirateportexternal"
 	},
 /obj/docking_port/mobile/pirate{
 	callTime = 100;
@@ -677,7 +659,7 @@
 	name = "Pirate Ship";
 	port_direction = 8;
 	preferred_direction = 1;
-	roundstart_move = "pirateship_home";
+	timid = 0;
 	width = 23
 	},
 /obj/docking_port/stationary{
@@ -688,6 +670,9 @@
 	name = "Deep Space";
 	width = 23
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bG" = (
@@ -696,6 +681,9 @@
 "bH" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bI" = (
@@ -719,9 +707,9 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24;
-	req_access = 152
+	req_access = null;
+	req_access_txt = "152"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack{
@@ -797,7 +785,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -24;
 	req_access = null
 	},
@@ -832,6 +819,9 @@
 /area/shuttle/pirate)
 "bU" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bV" = (
@@ -839,11 +829,14 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bW" = (
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
-	id_tag = "piratestarboardexternal";
-	locked = 1
+	id_tag = "piratestarboardexternal"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bX" = (
@@ -853,8 +846,6 @@
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = -24;
-	pixel_y = 0;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -914,18 +905,21 @@
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 24;
-	pixel_y = 0;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "cf" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 1;
-	faction = "pirate"
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 4
 	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/bar,
 /area/shuttle/pirate)
 "cg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -940,8 +934,7 @@
 	base_state = "left";
 	dir = 1;
 	icon_state = "left";
-	name = "Explosive Ordinance";
-	req_access_txt = "0"
+	name = "Explosive Ordinance"
 	},
 /obj/item/grenade/plastic/x4{
 	pixel_x = -5
@@ -1022,8 +1015,7 @@
 /area/shuttle/pirate)
 "cp" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Restrooms";
-	req_access_txt = "0"
+	name = "Unisex Restrooms"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/showroomfloor,
@@ -1192,12 +1184,9 @@
 "cH" = (
 /obj/structure/chair/stool,
 /obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable/yellow{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
@@ -1216,7 +1205,6 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1273,34 +1261,8 @@
 /area/shuttle/pirate)
 "cP" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
-/obj/item/storage/fancy/cigarettes{
-	pixel_x = -6;
-	pixel_y = -8
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_carp{
-	pixel_x = 1;
-	pixel_y = -8
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_midori{
-	pixel_x = 8;
-	pixel_y = -8
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_robust{
-	pixel_x = -6;
-	pixel_y = -14
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_shadyjims{
-	pixel_x = 1;
-	pixel_y = -14
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_uplift{
-	pixel_x = 8;
-	pixel_y = -14
-	},
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
+/obj/machinery/chem_dispenser/drinks{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/bar,
@@ -1308,8 +1270,7 @@
 "cQ" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/barman_recipes{
-	pixel_x = -4;
-	pixel_y = 0
+	pixel_x = -4
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -1324,7 +1285,7 @@
 /turf/open/floor/plasteel/bar,
 /area/shuttle/pirate)
 "cS" = (
-/obj/structure/sign/engineering{
+/obj/structure/sign/departments/engineering{
 	pixel_x = 32
 	},
 /obj/machinery/light/small{
@@ -1354,8 +1315,7 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -1394,7 +1354,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "cY" = (
-/obj/structure/sign/engineering{
+/obj/structure/sign/departments/engineering{
 	pixel_x = -32
 	},
 /obj/machinery/light/small{
@@ -1429,8 +1389,7 @@
 /area/shuttle/pirate)
 "dc" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 25;
-	pixel_y = 0
+	pixel_x = 25
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -1441,14 +1400,29 @@
 	},
 /area/shuttle/pirate)
 "dd" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/bar,
-/area/shuttle/pirate)
-"de" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/fancy/cigarettes/cigpack_uplift{
+	pixel_x = 8;
+	pixel_y = -14
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_shadyjims{
+	pixel_x = 1;
+	pixel_y = -14
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_robust{
+	pixel_x = -6;
+	pixel_y = -14
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_midori{
+	pixel_x = 8;
+	pixel_y = -8
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_carp{
+	pixel_x = 1;
+	pixel_y = -8
+	},
+/obj/item/storage/fancy/cigarettes,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/pirate)
 "df" = (
@@ -1478,7 +1452,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/nosmoking_2{
+/obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -1494,10 +1468,7 @@
 /area/shuttle/pirate)
 "dl" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -1575,8 +1546,7 @@
 	base_state = "right";
 	dir = 4;
 	icon_state = "right";
-	name = "Bar";
-	req_access_txt = "0"
+	name = "Bar"
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/pirate)
@@ -1601,25 +1571,20 @@
 	id = "pirateturbinevent";
 	name = "Turbine Vent Control";
 	pixel_x = -6;
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/button/door{
 	id = "pirateturbineauxvent";
 	name = "Turbine Auxiliary Vent Control";
 	pixel_x = 6;
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
 "dz" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/floorgrime,
@@ -1642,7 +1607,6 @@
 	normaldoorcontrol = 1;
 	pixel_x = 6;
 	pixel_y = -24;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1672,7 +1636,6 @@
 	},
 /obj/item/stack/sheet/glass{
 	amount = 50;
-	pixel_x = 0;
 	pixel_y = 5
 	},
 /obj/item/stack/sheet/mineral/plastitanium{
@@ -1730,20 +1693,17 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "dJ" = (
-/obj/structure/sign/fire,
+/obj/structure/sign/warning/fire,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "dK" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	heat_proof = 1;
 	id_tag = "pirateturbinebolt";
-	locked = 1;
 	name = "Turbine Access"
 	},
 /turf/open/floor/engine,
@@ -1769,10 +1729,7 @@
 /area/shuttle/pirate)
 "dO" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
@@ -1782,11 +1739,7 @@
 	frequency = 1441;
 	id = "inc_in"
 	},
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
+/obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32
 	},
 /turf/open/floor/engine/vacuum,
@@ -1801,8 +1754,7 @@
 "dR" = (
 /obj/structure/cable,
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/machinery/power/compressor{
 	comp_id = "pirateturbine";
@@ -1819,7 +1771,7 @@
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
 "dT" = (
-/obj/structure/sign/fire,
+/obj/structure/sign/warning/fire,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate)
 "dU" = (
@@ -1828,6 +1780,13 @@
 	name = "Turbine Vent"
 	},
 /turf/open/floor/engine/vacuum,
+/area/shuttle/pirate)
+"dV" = (
+/obj/machinery/porta_turret/syndicate{
+	dir = 1;
+	faction = list("pirate")
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 
 (1,1,1) = {"
@@ -1844,7 +1803,7 @@ aj
 aj
 bF
 aj
-cf
+dV
 aj
 aj
 aj
@@ -1873,8 +1832,8 @@ bX
 aj
 co
 aj
+cf
 cP
-dd
 du
 aj
 ai
@@ -1926,7 +1885,7 @@ aj
 cq
 cA
 cQ
-de
+dd
 dv
 dI
 dM
@@ -2364,7 +2323,7 @@ aj
 aj
 bW
 aj
-cf
+dV
 aj
 aj
 aj

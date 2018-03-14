@@ -9,6 +9,12 @@
 	earliest_start = 30 MINUTES
 	gamemode_blacklist = list("nuclear")
 
+/datum/round_event_control/pirates/preRunEvent()
+	if (!SSmapping.empty_space)
+		return EVENT_CANT_RUN
+
+	return ..()
+
 /datum/round_event/pirates
 	startWhen = 60 //2 minutes to answer
 	var/datum/comm_message/threat
@@ -60,7 +66,7 @@
 	var/datum/map_template/pirate_event_ship/ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
-	var/z = ZLEVEL_EMPTY_SPACE
+	var/z = SSmapping.empty_space.z_value
 	var/turf/T = locate(x,y,z)
 	if(!T)
 		CRASH("Pirate event found no turf to load in")
@@ -100,7 +106,7 @@
 
 /obj/machinery/shuttle_scrambler/process()
 	if(active)
-		if(z in GLOB.station_z_levels)
+		if(is_station_level(z))
 			var/siphoned = min(SSshuttle.points,siphon_per_tick)
 			SSshuttle.points -= siphoned
 			credits_stored += siphoned
@@ -188,7 +194,7 @@
 	name = "pirate shuttle navigation computer"
 	desc = "Used to designate a precise transit location for the pirate shuttle."
 	shuttleId = "pirateship"
-	station_lock_override = TRUE
+	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "pirateship_custom"
 	shuttlePortName = "custom location"
 	x_offset = 9
@@ -208,7 +214,7 @@
 
 /obj/docking_port/mobile/pirate/initiate_docking(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
 	. = ..()
-	if(. == DOCKING_SUCCESS && new_dock.z != ZLEVEL_TRANSIT)
+	if(. == DOCKING_SUCCESS && !is_transit_level(new_dock.z))
 		engines_cooling = TRUE
 		addtimer(CALLBACK(src,.proc/reset_cooldown),engine_cooldown,TIMER_UNIQUE)
 
@@ -252,7 +258,7 @@
 	var/list/results = list()
 	for(var/atom/movable/AM in world)
 		if(is_type_in_typecache(AM,GLOB.pirate_loot_cache))
-			if(AM.z in GLOB.station_z_levels)
+			if(is_station_level(AM.z))
 				if(get_area(AM) == get_area(src)) //Should this be variable ?
 					continue
 				results += AM
@@ -264,7 +270,6 @@
 			if(!results.len)
 				return
 			var/atom/movable/AM = pick_n_take(results)
-			var/area/loot_area = get_area(AM)
-			say("Located: [AM.name] at [loot_area.name]")
+			say("Located: [AM.name] at [get_area_name(AM)]")
 
 #undef LOOT_LOCATOR_COOLDOWN

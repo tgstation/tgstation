@@ -88,7 +88,7 @@
 /turf/open/indestructible/clock_spawn_room/proc/port_servants()
 	. = FALSE
 	for(var/mob/living/L in src)
-		if(is_servant_of_ratvar(L))
+		if(is_servant_of_ratvar(L) && L.stat != DEAD)
 			. = TRUE
 			L.forceMove(get_turf(pick(GLOB.servant_spawns)))
 			visible_message("<span class='warning'>[L] vanishes in a flash of red!</span>")
@@ -168,12 +168,12 @@
 	return 1
 
 /turf/open/proc/water_vapor_gas_act()
-	MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
+	MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 
 	for(var/mob/living/simple_animal/slime/M in src)
 		M.apply_water()
 
-	clean_blood()
+	SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	for(var/obj/effect/O in src)
 		if(is_cleanable(O))
 			qdel(O)
@@ -199,6 +199,9 @@
 		if(!(lube&SLIDE_ICE))
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
+		GET_COMPONENT_FROM(mood, /datum/component/mood, C)
+		if(mood)
+			mood.add_event("slipped", /datum/mood_event/slipped)
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)
 
@@ -269,9 +272,6 @@
 		if(TURF_WET_PERMAFROST)
 			intensity = 120
 			lube_flags = SLIDE_ICE | GALOSHES_DONT_HELP
-		if(TURF_WET_SLIDE)
-			intensity = 80
-			lube_flags = SLIDE | GALOSHES_DONT_HELP
 		else
 			qdel(GetComponent(/datum/component/slippery))
 			return
@@ -352,7 +352,9 @@
 
 
 /turf/open/rad_act(pulse_strength)
+	. = ..()
 	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
+		pulse_strength = min(pulse_strength,air.gases[/datum/gas/carbon_dioxide][MOLES]*1000,air.gases[/datum/gas/oxygen][MOLES]*2000) //Ensures matter is conserved properly
 		air.gases[/datum/gas/carbon_dioxide][MOLES]=max(air.gases[/datum/gas/carbon_dioxide][MOLES]-(pulse_strength/1000),0)
 		air.gases[/datum/gas/oxygen][MOLES]=max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength/2000),0)
 		air.assert_gas(/datum/gas/pluoxium)

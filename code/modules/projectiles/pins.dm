@@ -37,9 +37,9 @@
 				to_chat(user, "<span class ='notice'>This firearm already has a firing pin installed.</span>")
 
 /obj/item/device/firing_pin/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You override the authentication mechanism.</span>")
 
 /obj/item/device/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/G)
@@ -129,7 +129,7 @@
 // A gun with ultra-honk pin is useful for clown and useless for everyone else.
 /obj/item/device/firing_pin/clown/ultra/pin_auth(mob/living/user)
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-	if(!(user.has_disability(DISABILITY_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown"))
+	if(!(user.has_trait(TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown"))
 		return 0
 	return 1
 

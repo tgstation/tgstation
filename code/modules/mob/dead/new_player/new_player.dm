@@ -357,6 +357,11 @@
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
 
+		if(GLOB.summon_guns_triggered)
+			give_guns(humanc)
+		if(GLOB.summon_magic_triggered)
+			give_magic(humanc)
+
 	GLOB.joined_player_list += character.ckey
 
 	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
@@ -367,6 +372,9 @@
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
+
+	if(CONFIG_GET(flag/roundstart_traits))
+		SStraits.AssignTraits(humanc, humanc.client, TRUE)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 

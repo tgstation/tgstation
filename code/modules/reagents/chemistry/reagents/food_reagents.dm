@@ -101,6 +101,7 @@
 			O.loc.visible_message("<span class='warning'>[O] rapidly fries as it's splashed with hot oil! Somehow.</span>")
 			var/obj/item/reagent_containers/food/snacks/deepfryholder/F = new(O.drop_location(), O)
 			F.fry(volume)
+			F.reagents.add_reagent("cooking_oil", reac_volume)
 
 /datum/reagent/consumable/cooking_oil/reaction_mob(mob/living/M, method = TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(!istype(M))
@@ -123,7 +124,7 @@
 	if(!istype(T))
 		return
 	if(reac_volume >= 5)
-		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = reac_volume * 1.5)
+		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10, wet_time_to_add = reac_volume * 1.5)
 		T.name = "deep-fried [initial(T.name)]"
 		T.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 
@@ -183,25 +184,27 @@
 	taste_mult = 1.5
 
 /datum/reagent/consumable/capsaicin/on_mob_life(mob/living/M)
+	var/heating = 0
 	switch(current_cycle)
 		if(1 to 15)
-			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			heating = 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("cryostylane"))
 				holder.remove_reagent("cryostylane", 5)
 			if(isslime(M))
-				M.bodytemperature += rand(5,20)
+				heating = rand(5,20)
 		if(15 to 25)
-			M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			heating = 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
-				M.bodytemperature += rand(10,20)
+				heating = rand(10,20)
 		if(25 to 35)
-			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			heating = 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
-				M.bodytemperature += rand(15,20)
+				heating = rand(15,20)
 		if(35 to INFINITY)
-			M.bodytemperature += 20 * TEMPERATURE_DAMAGE_COEFFICIENT
+			heating = 20 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
-				M.bodytemperature += rand(20,25)
+				heating = rand(20,25)
+	M.adjust_bodytemperature(heating)
 	..()
 
 /datum/reagent/consumable/frostoil
@@ -212,29 +215,31 @@
 	taste_description = "mint"
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/M)
+	var/cooling = 0
 	switch(current_cycle)
 		if(1 to 15)
-			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			cooling = -10 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
 			if(isslime(M))
-				M.bodytemperature -= rand(5,20)
+				cooling = -rand(5,20)
 		if(15 to 25)
-			M.bodytemperature -= 20 * TEMPERATURE_DAMAGE_COEFFICIENT
+			cooling = -20 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
-				M.bodytemperature -= rand(10,20)
+				cooling = -rand(10,20)
 		if(25 to 35)
-			M.bodytemperature -= 30 * TEMPERATURE_DAMAGE_COEFFICIENT
+			cooling = -30 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(prob(1))
 				M.emote("shiver")
 			if(isslime(M))
-				M.bodytemperature -= rand(15,20)
+				cooling = -rand(15,20)
 		if(35 to INFINITY)
-			M.bodytemperature -= 40 * TEMPERATURE_DAMAGE_COEFFICIENT
+			cooling = -40 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(prob(5))
 				M.emote("shiver")
 			if(isslime(M))
-				M.bodytemperature -= rand(20,25)
+				cooling = -rand(20,25)
+	M.adjust_bodytemperature(cooling, 50)
 	..()
 
 /datum/reagent/consumable/frostoil/reaction_turf(turf/T, reac_volume)
@@ -370,11 +375,10 @@
 	glass_desc = "Tasty."
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/M)
-	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 
-/datum/reagent/mushroomhallucinogen
+/datum/reagent/drug/mushroomhallucinogen
 	name = "Mushroom Hallucinogen"
 	id = "mushroomhallucinogen"
 	description = "A strong hallucinogenic drug derived from certain species of mushroom."
@@ -429,7 +433,7 @@
 /datum/reagent/consumable/cornoil/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))
 		return
-	T.MakeSlippery(min_wet_time = 10, wet_time_to_add = reac_volume*2)
+	T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10, wet_time_to_add = reac_volume*2)
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air(T.air.total_moles())
@@ -462,8 +466,7 @@
 	taste_description = "wet and cheap noodles"
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/M)
-	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(310, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/hell_ramen
@@ -475,7 +478,7 @@
 	taste_description = "wet and cheap noodles on fire"
 
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/M)
-	M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT)
 	..()
 
 /datum/reagent/consumable/flour
@@ -527,6 +530,7 @@
 	name = "Egg Yolk"
 	id = "eggyolk"
 	description = "It's full of protein."
+	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#FFB500"
 	taste_description = "egg"
 
@@ -662,3 +666,11 @@
 		M.adjustFireLoss(-1*REM, 0)
 		. = TRUE
 	..()
+
+/datum/reagent/consumable/clownstears
+	name = "Clown's Tears"
+	id = "clownstears"
+	description = "The sorrow and melancholy of a thousand bereaved clowns, forever denied their Honkmechs."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#eef442" // rgb: 238, 244, 66
+	taste_description = "mournful honking"

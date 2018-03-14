@@ -12,6 +12,10 @@
 	var/flush = FALSE
 	var/mob/living/silicon/ai/AI
 
+/obj/item/device/aicard/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] is trying to upload themselves into [src]! That's not going to work out well!</span>")
+	return BRUTELOSS
+
 /obj/item/device/aicard/afterattack(atom/target, mob/user, proximity)
 	..()
 	if(!proximity || !target)

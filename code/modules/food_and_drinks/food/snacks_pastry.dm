@@ -391,7 +391,7 @@
 		name = "stack of pancakes"
 	else
 		name = initial(name)
-	if(contents.len < our_overlays.len)
+	if(contents.len < LAZYLEN(our_overlays))
 		cut_overlay(our_overlays[our_overlays.len])
 
 /obj/item/reagent_containers/food/snacks/pancakes/examine(mob/user)

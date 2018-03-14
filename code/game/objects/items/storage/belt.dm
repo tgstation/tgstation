@@ -4,10 +4,16 @@
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 	max_integrity = 300
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
+
+/obj/item/storage/belt/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins belting themselves with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 
 /obj/item/storage/belt/update_icon()
 	cut_overlays()
@@ -40,7 +46,9 @@
 		/obj/item/device/geiger_counter,
 		/obj/item/extinguisher/mini,
 		/obj/item/device/radio,
-		/obj/item/clothing/gloves
+		/obj/item/clothing/gloves,
+		/obj/item/holosign_creator,
+		/obj/item/device/assembly/signaler
 		)
 	content_overlays = TRUE
 
@@ -115,6 +123,7 @@
 		/obj/item/reagent_containers/glass/bottle,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/medspray,
 		/obj/item/lighter,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
@@ -146,7 +155,12 @@
 		/obj/item/storage/bag/chemistry,
 		/obj/item/storage/bag/bio,
 		/obj/item/reagent_containers/blood,
-		/obj/item/tank/internals/emergency_oxygen
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/pinpointer/crew, 
+		/obj/item/gun/syringe/syndicate,
+		/obj/item/implantcase,
+		/obj/item/implant,
+		/obj/item/implanter
 		)
 
 
@@ -168,13 +182,13 @@
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
 		/obj/item/reagent_containers/food/snacks/donut,
-		/obj/item/reagent_containers/food/snacks/donut/jelly,
 		/obj/item/kitchen/knife/combat,
 		/obj/item/device/flashlight/seclite,
 		/obj/item/melee/classic_baton/telescopic,
 		/obj/item/device/radio,
-		/obj/item/clothing/gloves/,
-		/obj/item/restraints/legcuffs/bola
+		/obj/item/clothing/gloves,
+		/obj/item/restraints/legcuffs/bola,
+		/obj/item/holosign_creator/security
 		)
 	content_overlays = TRUE
 
@@ -202,6 +216,7 @@
 		/obj/item/weldingtool,
 		/obj/item/wirecutters,
 		/obj/item/wrench,
+		/obj/item/device/multitool,
 		/obj/item/device/flashlight,
 		/obj/item/stack/cable_coil,
 		/obj/item/device/analyzer,
@@ -226,7 +241,7 @@
 		/obj/item/device/t_scanner/adv_mining_scanner,
 		/obj/item/reagent_containers/pill,
 		/obj/item/storage/pill_bottle,
-		/obj/item/ore,
+		/obj/item/stack/ore,
 		/obj/item/reagent_containers/food/drinks,
 		/obj/item/organ/regenerative_core,
 		/obj/item/device/wormhole_jaunter,
@@ -395,7 +410,9 @@
 		/obj/item/soap,
 		/obj/item/holosign_creator,
 		/obj/item/key/janitor,
-		/obj/item/clothing/gloves
+		/obj/item/clothing/gloves,
+		/obj/item/melee/flyswatter,
+		/obj/item/device/assembly/mousetrap
 		)
 
 /obj/item/storage/belt/bandolier
@@ -505,7 +522,7 @@
 		to_chat(user, "<span class='notice'>Alt-click it to quickly draw the blade.</span>")
 
 /obj/item/storage/belt/sabre/AltClick(mob/user)
-	if(!ishuman(user) || !user.canUseTopic(src, be_close=TRUE))
+	if(!iscarbon(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(contents.len)
 		var/obj/item/I = contents[1]

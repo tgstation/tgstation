@@ -13,11 +13,12 @@
 	var/action_icon = 'icons/mob/actions/actions_spells.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
+	var/base_action = /datum/action/spell_action
 
 /obj/effect/proc_holder/Initialize()
 	. = ..()
 	if(has_action)
-		action = new(src)
+		action = new base_action(src)
 
 /obj/effect/proc_holder/proc/on_gain(mob/living/user)
 	return
@@ -149,7 +150,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "spell_default"
 	action_background_icon_state = "bg_spell"
-	datum/action/spell_action/spell/action
+	base_action = /datum/action/spell_action/spell
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
@@ -162,7 +163,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			return 0
 
 	var/turf/T = get_turf(user)
-	if(T.z == ZLEVEL_CENTCOM && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
+	if(is_centcom_level(T.z) && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
 		to_chat(user, "<span class='notice'>You can't cast this spell here.</span>")
 		return 0
 
@@ -255,7 +256,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/Initialize()
 	. = ..()
-	action = new(src)
 	START_PROCESSING(SSfastprocess, src)
 
 	still_recharging_msg = "<span class='notice'>[name] is still recharging.</span>"
@@ -478,8 +478,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	perform(targets,user=user)
 
-/obj/effect/proc_holder/spell/proc/updateButtonIcon()
-	action.UpdateButtonIcon()
+/obj/effect/proc_holder/spell/proc/updateButtonIcon(status_only, force)
+	action.UpdateButtonIcon(status_only, force)
 
 /obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
 	if((human_req || clothes_req) && !ishuman(caster))

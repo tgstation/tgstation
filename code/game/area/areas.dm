@@ -31,6 +31,9 @@
 
 	var/outdoors = FALSE //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
 
+	var/beauty = 0 //To see how clean/dirty this area is, only works with indoors areas.
+	var/areasize = 0 //Size of the area in tiles, only calculated for indoors areas.
+
 	var/power_equip = TRUE
 	var/power_light = TRUE
 	var/power_environ = TRUE
@@ -62,6 +65,7 @@
 	var/list/firealarms
 	var/firedoors_last_closed_on = 0
 	var/xenobiology_compatible = FALSE //Can the Xenobio management console transverse this area by default?
+	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -75,7 +79,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(GLOB.teleportlocs[AR.name])
 			continue
 		var/turf/picked = safepick(get_area_turfs(AR.type))
-		if (picked && (picked.z in GLOB.station_z_levels))
+		if (picked && is_station_level(picked.z))
 			GLOB.teleportlocs[AR.name] = AR
 
 	sortTim(GLOB.teleportlocs, /proc/cmp_text_dsc)
@@ -105,6 +109,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	uid = ++global_uid
 	related = list(src)
 	map_name = name // Save the initial (the name set in the map) name of the area.
+	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
 	if(requires_power)
 		luminosity = 0
@@ -143,6 +148,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(!areas_in_z["[z]"])
 			areas_in_z["[z]"] = list()
 		areas_in_z["[z]"] += src
+	update_area_size()
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -382,9 +388,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			icon_state = "blue-red"
 	else
 		var/weather_icon
-		for(var/V in SSweather.existing_weather)
+		for(var/V in SSweather.processing)
 			var/datum/weather/W = V
-			if(src in W.impacted_areas)
+			if(W.stage != END_STAGE && (src in W.impacted_areas))
 				W.update_areas()
 				weather_icon = TRUE
 		if(!weather_icon)
@@ -495,6 +501,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			L.client.played = TRUE
 			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
 
+	GET_COMPONENT_FROM(mood, /datum/component/mood, L)
+	if(mood)
+		mood.update_beauty(src)
+
 /client/proc/ResetAmbiencePlayed()
 	played = FALSE
 
@@ -521,6 +531,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	valid_territory = FALSE
 	blob_allowed = FALSE
 	addSorted()
+
+/area/proc/update_area_size()
+	if(outdoors)
+		return FALSE
+	areasize = 0
+	for(var/turf/T in src.contents)
+		areasize++
 
 /area/AllowDrop()
 	CRASH("Bad op: area/AllowDrop() called")

@@ -21,8 +21,8 @@ SUBSYSTEM_DEF(parallax)
 				return
 			continue
 		var/atom/movable/A = C.eye
-		if(!A)
-			return
+		if(!istype(A))
+			continue
 		for (A; isloc(A.loc) && !isturf(A.loc); A = A.loc);
 
 		if(A != C.movingmob)

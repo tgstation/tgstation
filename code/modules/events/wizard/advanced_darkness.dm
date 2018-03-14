@@ -3,7 +3,7 @@
 	weight = 2
 	typepath = /datum/round_event/wizard/darkness
 	max_occurrences = 2
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/darkness
 	endWhen = 0
@@ -13,4 +13,4 @@
 /datum/round_event/wizard/darkness/start()
 	if(!started)
 		started = TRUE
-		SSweather.run_weather("advanced darkness", ZLEVEL_STATION_PRIMARY)
+		SSweather.run_weather(/datum/weather/advanced_darkness)

@@ -109,15 +109,11 @@
 		else
 			to_chat(user, "<span class='warning'>You can't reach, close it first!</span>")
 
-	else if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if(WT.remove_fuel(0,user))
+	else if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+		if(W.use_tool(src, user, 0, volume=50))
 			dismantle(user, TRUE)
-	else if(istype(W, /obj/item/gun/energy/plasmacutter))
-		dismantle(user, TRUE)
 	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
-		D.playDigSound()
+		W.play_tool_sound(src)
 		dismantle(user, TRUE)
 	else
 		return ..()
@@ -125,7 +121,7 @@
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
 	user.visible_message("[user] dismantles the false wall.", "<span class='notice'>You dismantle the false wall.</span>")
 	if(tool)
-		playsound(src, tool.usesound, 100, 1)
+		tool.play_tool_sound(src, 100)
 	else
 		playsound(src, 'sound/items/welder.ogg', 100, 1)
 	deconstruct(disassembled)
@@ -261,14 +257,14 @@
 	if(exposed_temperature > 300)
 		burnbabyburn()
 
-/obj/structure/falsewall/clown
+/obj/structure/falsewall/bananium
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
 	icon = 'icons/turf/walls/bananium_wall.dmi'
 	icon_state = "bananium"
 	mineral = /obj/item/stack/sheet/mineral/bananium
-	walltype = /turf/closed/wall/mineral/clown
-	canSmoothWith = list(/obj/structure/falsewall/clown, /turf/closed/wall/mineral/clown)
+	walltype = /turf/closed/wall/mineral/bananium
+	canSmoothWith = list(/obj/structure/falsewall/bananium, /turf/closed/wall/mineral/bananium)
 
 
 /obj/structure/falsewall/sandstone
@@ -295,6 +291,7 @@
 	icon = 'icons/turf/walls/iron_wall.dmi'
 	icon_state = "iron"
 	mineral = /obj/item/stack/rods
+	mineral_amount = 5
 	walltype = /turf/closed/wall/mineral/iron
 	canSmoothWith = list(/obj/structure/falsewall/iron, /turf/closed/wall/mineral/iron)
 

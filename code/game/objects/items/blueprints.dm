@@ -146,8 +146,7 @@
 		/area/centcom,
 		/area/asteroid,
 		/area/tdome,
-		/area/wizard_station,
-		/area/prison
+		/area/wizard_station
 	)
 	for (var/type in SPECIALS)
 		if ( istype(A,type) )
@@ -177,7 +176,7 @@
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area()
 	var/prevname = "[A.name]"
-	var/str = trim(stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN))
+	var/str = stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN)
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
@@ -191,6 +190,8 @@
 				var/obj/machinery/door/firedoor/FD = D
 				FD.CalculateAffectingAreas()
 	to_chat(usr, "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>")
+	log_game("[key_name(usr)] has renamed [prevname] to [str]")
+	A.update_area_size()
 	interact()
 	return 1
 

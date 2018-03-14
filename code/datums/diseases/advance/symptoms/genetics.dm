@@ -10,7 +10,7 @@ DNA Saboteur
 	Fatal Level.
 
 Bonus
-	Cleans the DNA of a person and then randomly gives them a disability.
+	Cleans the DNA of a person and then randomly gives them a trait.
 
 //////////////////////////////////////
 */

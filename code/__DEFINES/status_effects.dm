@@ -7,8 +7,6 @@
 
 #define STATUS_EFFECT_REPLACE 2 //if it allows only one, but new instances replace
 
-#define BASIC_STATUS_EFFECT /datum/status_effect //Has no effect.
-
 ///////////
 // BUFFS //
 ///////////
@@ -27,6 +25,12 @@
 #define STATUS_EFFECT_WISH_GRANTERS_GIFT /datum/status_effect/wish_granters_gift //If you're currently resurrecting with the Wish Granter
 
 #define STATUS_EFFECT_BLOODDRUNK /datum/status_effect/blooddrunk //Stun immunity and greatly reduced damage taken
+
+#define STATUS_EFFECT_FLESHMEND /datum/status_effect/fleshmend //Very fast healing; suppressed by fire, and heals less fire damage
+
+#define STATUS_EFFECT_EXERCISED /datum/status_effect/exercised //Prevents heart disease
+
+#define STATUS_EFFECT_HIPPOCRATIC_OATH /datum/status_effect/hippocraticOath //Gives you an aura of healing as well as regrowing the Rod of Asclepius if lost
 
 /////////////
 // DEBUFFS //
@@ -63,6 +67,8 @@
 #define CURSE_GRASPING	8 //hands reach out from the sides of the screen, doing damage and stunning if they hit the target
 
 #define STATUS_EFFECT_KINDLE /datum/status_effect/kindle //A knockdown reduced by 1 second for every 3 points of damage the target takes.
+
+#define STATUS_EFFECT_ICHORIAL_STAIN /datum/status_effect/ichorial_stain //Prevents a servant from being revived by vitality matrices for one minute.
 
 /////////////
 // NEUTRAL //

@@ -47,13 +47,13 @@ Bonus
 		to_chat(M, "<span class='warning'>[pick("You feel cold.", "You shiver.")]</span>")
 	else
 		to_chat(M, "<span class='userdanger'>[pick("You feel your blood run cold.", "You feel ice in your veins.", "You feel like you can't heat up.", "You shiver violently." )]</span>")
-	if(M.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT || unsafe)
+	if(M.bodytemperature > BODYTEMP_COLD_DAMAGE_LIMIT || unsafe)
 		Chill(M, A)
 
 /datum/symptom/shivering/proc/Chill(mob/living/M, datum/disease/advance/A)
 	var/get_cold = 6 * power
-	if(!unsafe)
-		M.bodytemperature = min(M.bodytemperature - (get_cold * A.stage), BODYTEMP_COLD_DAMAGE_LIMIT + 1)
-	else
-		M.bodytemperature -= (get_cold * A.stage)
+	var/limit = BODYTEMP_COLD_DAMAGE_LIMIT + 1
+	if(unsafe)
+		limit = 0
+	M.adjust_bodytemperature(-get_cold * A.stage, limit)
 	return 1
