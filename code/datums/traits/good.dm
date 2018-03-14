@@ -11,6 +11,23 @@
 
 
 
+/datum/trait/apathetic
+	name = "Apathetic"
+	desc = "You just don't care as much as other people. That's nice to have in a place like this, I guess."
+	value = 1
+
+/datum/trait/apathetic/add()
+	GET_COMPONENT_FROM(mood, /datum/component/mood, trait_holder)
+	if(mood)
+		mood.mood_modifier = 0.8
+
+/datum/trait/apathetic/remove()
+	GET_COMPONENT_FROM(mood, /datum/component/mood, trait_holder)
+	if(mood)
+		mood.mood_modifier = 1 //Change this once/if species get their own mood modifiers.
+
+
+
 /datum/trait/freerunning
 	name = "Freerunning"
 	desc = "You're great at quick moves! You can climb tables more quickly."
@@ -18,6 +35,14 @@
 	mob_trait = TRAIT_FREERUNNING
 	gain_text = "<span class='notice'>You feel lithe on your feet!</span>"
 	lose_text = "<span class='danger'>You feel clumsy again.</span>"
+
+
+
+/datum/trait/jolly
+	name = "Jolly"
+	desc = "You sometimes just feel happy, for no reason at all."
+	value = 1
+	mob_trait = TRAIT_JOLLY
 
 
 
@@ -81,26 +106,3 @@
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
-
-
-/datum/trait/jolly
-	name = "Jolly"
-	desc = "You sometimes just feel happy, for no reason at all."
-	value = 1
-	mob_trait = TRAIT_JOLLY
-
-
-/datum/trait/apathetic
-	name = "Apathetic"
-	desc = "You just don't care as much as other people, that's nice to have in a place like this, I guess."
-	value = 1
-
-/datum/trait/apathetic/add()
-	GET_COMPONENT_FROM(mood, /datum/component/mood, trait_holder)
-	if(mood)
-		mood.mood_modifier = 0.8
-
-/datum/trait/apathetic/remove()
-	GET_COMPONENT_FROM(mood, /datum/component/mood, trait_holder)
-	if(mood)
-		mood.mood_modifier = 1 //Change this once/if species get their own mood modifiers.

@@ -31,3 +31,19 @@
 	var/datum/species/species = H.dna.species
 	species.liked_food = initial(species.liked_food)
 	species.disliked_food = initial(species.disliked_food)
+
+
+
+/datum/trait/monochromatic
+	name = "Monochromacy"
+	desc = "You suffer from full colorblindness, and perceive nearly the entire world in blacks and whites."
+	value = 0
+	medical_record_text = "Patient is afflicted with almost complete color blindness."
+
+/datum/trait/monochromatic/add()
+	trait_holder.add_client_colour(/datum/client_colour/monochrome)
+	if(trait_holder.mind.assigned_role == "Detective")
+		trait_holder.playsound_local(trait_holder, 'sound/ambience/ambidet1.ogg', 50, FALSE)
+
+/datum/trait/monochromatic/remove()
+	trait_holder.remove_client_colour(/datum/client_colour/monochrome)

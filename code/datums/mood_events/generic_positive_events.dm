@@ -69,3 +69,7 @@
 /datum/mood_event/greatroom
 	description = "<span class='nicegreen'>This room is beautiful!</span>\n"
 	mood_change = 7
+
+/datum/mood_event/family_heirloom
+	description = "<span class='nicegreen'>My family heirloom is safe with me.</span>\n"
+	mood_change = 1
