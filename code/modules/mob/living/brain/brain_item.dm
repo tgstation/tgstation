@@ -226,6 +226,7 @@
 		trauma = new(arglist(arguments))
 	else
 		if(trauma.brain) //we don't accept used traumas here
+			WARNING("gain_trauma was given an already active trauma.")
 			return
 
 	traumas += trauma
