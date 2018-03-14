@@ -10,6 +10,7 @@
 	layer = MASSIVE_OBJ_LAYER
 	light_range = 6
 	appearance_flags = 0
+	var/lifetime = 0 //how many deciseconds until the singularity destroys itself. Set to 0 for infinite.
 	var/current_size = 1
 	var/allowed_size = 1
 	var/contained = 1 //Are we going to move around?
@@ -42,7 +43,14 @@
 		if(singubeacon.active)
 			target = singubeacon
 			break
+	if(lifetime > 0)
+		addtimer(CALLBACK(src, .proc/timeOut), lifetime)
 	return
+
+/obj/singularity/proc/timeOut()
+	expand(STAGE_ONE) //called when lifetime expires
+	src.visible_message("<span class='danger'>[src] destabilizes and begins to collapse in on itself!</span>")
+	QDEL_IN(src, 20)
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -430,3 +438,6 @@
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	qdel(src)
 	return(gain)
+
+/obj/singularity/boh //singulo created by putting on Bag of Holding in another
+	lifetime = 300
