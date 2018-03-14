@@ -3,10 +3,11 @@
 	var/filled = TRUE
 	name = "poolwater"
 	desc = "You're safer here than in the deep."
-	icon_state = "deep"
+	icon_state = "pool_tile"
 	heat_capacity = INFINITY
 	var/next_splash = 1
 	var/obj/effect/overlay/water/watereffect
+	var/obj/effect/overlay/water/top/watertop
 
 
 /turf/open/pool/Initialize()
@@ -18,31 +19,32 @@
 	if(!filled)
 		name = "drained pool"
 		desc = "No diving!"
-		qdel(watereffect)
-		watereffect = null
-		icon_state = "drained"
+		QDEL_NULL(watereffect)
+		QDEL_NULL(watertop)
 	else
 		name = "poolwater"
 		desc = "You're safer here than in the deep."
-		icon_state = "deep"
 		watereffect = new /obj/effect/overlay/water(src)
+		watertop = new /obj/effect/overlay/water/top(src)
 
 /obj/effect/overlay/water
 	name = "water"
 	icon = 'hippiestation/icons/turf/pool.dmi'
-	icon_state = "overlay"
+	icon_state = "bottom"
 	density = 0
 	mouse_opacity = 0
 	layer = ABOVE_MOB_LAYER
 	anchored = 1
 
-/mob
+/obj/effect/overlay/water/top
+	icon_state = "top"
+	layer = BELOW_MOB_LAYER
+
+/mob/living
 	var/swimming = FALSE
 
 //Put people out of the water
-/turf/open/floor/MouseDrop_T(mob/M as mob, mob/user as mob)
-	if(isobserver(usr))
-		return
+/turf/open/floor/MouseDrop_T(mob/living/M, mob/living/user)
 	if(user.stat || user.lying || !Adjacent(user) || !M.Adjacent(user)|| !iscarbon(M))
 		if(issilicon(M))
 			var/turf/T = get_turf(M)
@@ -86,6 +88,7 @@
 /turf/open/pool/Initialize()
 	. = ..()
 	watereffect = new /obj/effect/overlay/water(src)
+	watertop = new /obj/effect/overlay/water/top(src)
 
 /turf/open/pool/ex_act(severity, target)
 	return
@@ -164,7 +167,7 @@
 		L.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 //put people in water, including you
-/turf/open/pool/MouseDrop_T(mob/M as mob, mob/user as mob)
+/turf/open/pool/MouseDrop_T(mob/living/M, mob/living/user)
 	if(!has_gravity(src))
 		return
 	if(user.stat || user.lying || !Adjacent(user) || !M.Adjacent(user)|| !iscarbon(M))
@@ -269,7 +272,7 @@
 	layer = 5.1
 	dir=4
 
-/obj/structure/pool/ladder/attack_hand(mob/user as mob)
+/obj/structure/pool/ladder/attack_hand(mob/living/user as mob)
 	if(Adjacent(user) && user.y == y && user.swimming == 0)
 		user.swimming = 1
 		user.forceMove(get_step(user, get_dir(user, src))) //Either way, you're getting IN or OUT of the pool.
@@ -300,7 +303,7 @@
 	var/jumping = FALSE
 	var/timer
 
-/obj/structure/pool/Lboard/proc/backswim(obj/O as obj, mob/user as mob) //Puts the sprite back to it's maiden condition after a jump.
+/obj/structure/pool/Lboard/proc/backswim(obj/O, mob/living/user) //Puts the sprite back to it's maiden condition after a jump.
 	if(jumping)
 		for(var/mob/living/jumpee in loc) //hackzors.
 			playsound(jumpee, 'hippiestation/sound/effects/splash.ogg', 60, 1, 1)
@@ -310,7 +313,7 @@
 			jumpee.Stun(2)
 			jumpee.swimming = TRUE
 
-/obj/structure/pool/Lboard/attack_hand(mob/user as mob)
+/obj/structure/pool/Lboard/attack_hand(mob/living/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/jumper = user
 		if(jumping)
@@ -331,15 +334,14 @@
 				jumper.visible_message("<span class='notice'>[user] climbs up \the [src]!</span>", \
 									 "<span class='notice'>You climb up \the [src] and prepares to jump!</span>")
 				jumper.canmove = FALSE
-				jumper.Stun(8)
+				jumper.Stun(40)
 				jumping = TRUE
 				jumper.layer = 5.1
 				jumper.pixel_x = 3
 				jumper.pixel_y = 7
 				jumper.dir=8
 				sleep(1)
-				jumper.forceMove(T)
-				jumper.Stun(8)
+				jumper.loc = T
 				addtimer(CALLBACK(src, .proc/dive, jumper), 10)
 
 /obj/structure/pool/Lboard/proc/dive(mob/living/carbon/jumper)
@@ -406,14 +408,14 @@
 					 "<span class='userdanger'>No one can stop you now!</span>")
 				var/atom/throw_target = get_edge_target_turf(src, dir)
 				jumper.throw_at(throw_target, 6, 1)
-	jumper.canmove = TRUE
+	jumper.update_canmove()
 	addtimer(CALLBACK(src, .proc/togglejumping), 35)
 
 /obj/structure/pool/Lboard/proc/togglejumping()
 	jumping = FALSE
 
-/turf/open/pool/attack_hand(mob/user)
-	if(!user.stat && !user.lying && Adjacent(user) && user.swimming && filled && next_splash < world.time) //not drained, user alive and close, and user in water.
+/turf/open/pool/attack_hand(mob/living/user)
+	if(user.stat == CONSCIOUS && !(user.lying || user.resting) && Adjacent(user) && user.swimming && filled && next_splash < world.time) //not drained, user alive and close, and user in water.
 		if(user.x == x && user.y == y)
 			return
 		else
@@ -428,7 +430,7 @@
 					L.emote("cough")
 				L.adjustStaminaLoss(4) //You need to give em a break!
 
-/turf/open/pool/attackby(obj/item/W, mob/user)
+/turf/open/pool/attackby(obj/item/W, mob/living/user)
 	if(istype(W, /obj/item/mop) && filled)
 		W.reagents.add_reagent("water", 5)
 		to_chat(user, "<span class='notice'>You wet [W] in [src].</span>")
@@ -439,4 +441,4 @@
 	desc = "Wataaa!."
 	icon = 'hippiestation/icons/turf/pool.dmi'
 	icon_state = "splash"
-	layer = MOB_LAYER + 0.1
+	layer = ABOVE_ALL_MOB_LAYER

@@ -35,7 +35,7 @@
 	for(var/turf/open/pool/W in range(srange,src)) //Search for /turf/open/beach/water in the range of var/srange
 		LAZYADD(linkedturfs, W)
 	for(var/obj/machinery/drain/pooldrain in range(srange,src))
-		src.linkeddrain = pooldrain
+		linkeddrain = pooldrain
 
 /obj/machinery/poolcontroller/emag_act(user as mob) //Emag_act, this is called when it is hit with a cryptographic sequencer.
 	if(!(obj_flags & EMAGGED)) //If it is not already emagged, emag it.
@@ -192,7 +192,7 @@
 
 /obj/machinery/poolcontroller/proc/changecolor()
 	var/rcolor
-	if(beaker && LAZYLEN(beaker.reagents.reagent_list))
+	if(beaker && beaker.reagents.reagent_list.len)
 		rcolor = mix_color_from_reagents(beaker.reagents.reagent_list)
 	for(var/X in linkedturfs)
 		var/turf/open/pool/color1 = X
@@ -200,16 +200,20 @@
 			if(rcolor)
 				color1.color = BlendRGB(rgb(150, 20, 20), rcolor, 0.5)
 				color1.watereffect.color = BlendRGB(rgb(150, 20, 20), rcolor, 0.5)
+				color1.watertop.color = color1.watereffect.color
 			else
 				color1.color = rgb(150, 20, 20)
 				color1.watereffect.color = rgb(150, 20, 20)
+				color1.watertop.color = color1.watereffect.color
 		else if(!bloody && rcolor)
 			color1.color = rcolor
 			color1.watereffect.color = rcolor
+			color1.watertop.color = color1.watereffect.color
 
-		if(!bloody && (!beaker || !LAZYLEN(beaker.reagents.reagent_list)))
+		if(!bloody && (!beaker || !beaker.reagents.reagent_list.len))
 			color1.color = null
 			color1.watereffect.color = null
+			color1.watertop.color = null
 
 /obj/machinery/poolcontroller/proc/miston() //Spawn /obj/effect/mist (from the shower) on all linked pool tiles
 	for(var/X in linkedturfs)
