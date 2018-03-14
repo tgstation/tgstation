@@ -223,8 +223,7 @@
 			L.transform = matrix(1, 0, offset_x*L.speed, 0, 1, offset_y*L.speed)
 			animate(L, transform=matrix(), time = last_delay)
 
-		if(!L.absolute)
-			L.screen_loc = "CENTER-7:[round(L.offset_x,1)],CENTER-7:[round(L.offset_y,1)]"
+		L.screen_loc = "CENTER-7:[round(L.offset_x,1)],CENTER-7:[round(L.offset_y,1)]"
 
 /atom/movable/proc/update_parallax_contents()
 	if(length(client_mobs_in_contents))
