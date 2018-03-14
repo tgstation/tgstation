@@ -49,6 +49,7 @@
 
 /obj/singularity/proc/timeOut()
 	expand(STAGE_ONE) //called when lifetime expires
+	energy = 1 //this makes sure the sing stays at stage one
 	src.visible_message("<span class='danger'>[src] destabilizes and begins to collapse in on itself!</span>")
 	QDEL_IN(src, 20)
 
