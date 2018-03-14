@@ -42,7 +42,10 @@
 
 /datum/trait/monochromatic/add()
 	trait_holder.add_client_colour(/datum/client_colour/monochrome)
+
+/datum/trait/monochromatic/post_add()
 	if(trait_holder.mind.assigned_role == "Detective")
+		to_chat(trait_holder, "<span class='boldannounce'>Mmm. Nothing's ever clear on this station. It's all shades of gray...</span>")
 		trait_holder.playsound_local(trait_holder, 'sound/ambience/ambidet1.ogg', 50, FALSE)
 
 /datum/trait/monochromatic/remove()
