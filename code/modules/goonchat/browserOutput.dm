@@ -132,6 +132,9 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		music_data["musicRate"] = pitch
 	ehjax_send(data = music_data)
 
+/datum/chatOutput/proc/stopMusic()
+	ehjax_send(data = "stopMusic")
+
 /datum/chatOutput/proc/setMusicVolume(volume = "")
 	if(volume)
 		adminMusicVolume = CLAMP(text2num(volume), 0, 100)

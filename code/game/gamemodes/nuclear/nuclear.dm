@@ -21,13 +21,16 @@
 
 /datum/game_mode/nuclear/pre_setup()
 	var/n_agents = min(round(num_players() / 10), antag_candidates.len, agents_possible)
-	for(var/i = 0, i < n_agents, ++i)
-		var/datum/mind/new_op = pick_n_take(antag_candidates)
-		pre_nukeops += new_op
-		new_op.assigned_role = "Nuclear Operative"
-		new_op.special_role = "Nuclear Operative"
-		log_game("[new_op.key] (ckey) has been selected as a nuclear operative")
-	return TRUE
+	if(n_agents >= required_enemies)
+		for(var/i = 0, i < n_agents, ++i)
+			var/datum/mind/new_op = pick_n_take(antag_candidates)
+			pre_nukeops += new_op
+			new_op.assigned_role = "Nuclear Operative"
+			new_op.special_role = "Nuclear Operative"
+			log_game("[new_op.key] (ckey) has been selected as a nuclear operative")
+		return TRUE
+	else
+		return FALSE
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
