@@ -146,7 +146,7 @@
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "asclepius_dormant"
 	var/activated = FALSE
-	var/usedHand = null
+	var/usedHand
 
 /obj/item/rod_of_asclepius/attack_self(mob/user)
 	if(activated)
