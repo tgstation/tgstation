@@ -76,6 +76,8 @@
 	return 0
 
 /obj/item/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/living/user)
+	if(istype(W, /obj/item/card/emag))
+		emag_act(user)
 	if((istype(W, /obj/item/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/storage/backpack/holding)))
 		var/turf/loccheck = get_turf(src)
 		if(is_reebe(loccheck.z))
