@@ -42,7 +42,7 @@
           action='grant_language'
           params='{"language_name":"{{name}}"}'
         >Grant</ui-button>
-		<ui-button
+        <ui-button
           action='learn_language'
           params='{"language_name":"{{name}}"}'
         >Learn</ui-button>
