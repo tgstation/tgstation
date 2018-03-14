@@ -634,7 +634,7 @@
 	name = "S.H.H. \"Quietus\" Carbine"
 	id = "mech_silentgun"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine/silenced
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
 	materials = list(MAT_METAL=20000,MAT_TRANQUILLITE=10000)
 	construction_time = 500
 	category = list("Exosuit Equipment")

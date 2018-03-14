@@ -169,6 +169,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	materials = list(MAT_TRANQUILLITE=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/tranquillite
 
+/obj/item/stack/ore/tranquillite/fifty
+	amount = 50
+
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
 	icon_state = "Titanium ore"

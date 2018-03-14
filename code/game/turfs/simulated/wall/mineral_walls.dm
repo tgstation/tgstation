@@ -45,13 +45,21 @@
 /turf/closed/wall/mineral/tranquillite
 	name = "tranquillite wall"
 	desc = "A wall with tranquillite plating. Nearly invisible."
-	icon = 'icons/effects/water.dmi'
-	icon_state = "wet_floor_static"
+	icon = 'icons/turf/walls/tranquillite_wall.dmi'
+	icon_state = "tranquillite"
 	sheet_type = /obj/item/stack/sheet/mineral/tranquillite
-	canSmoothWith = list(/turf/closed/wall/mineral/tranquillite, /obj/structure/falsewall/tranquillite)
 	layer = TURF_LAYER
-	opacity = 0 //actually invisible
+	opacity = 0 //invisibleish/transparent
+	smooth = null
 
+/turf/closed/wall/mineral/tranquillite/Initialize()
+	. = ..()
+	var/turf/oldturf = null
+	if(islist(baseturfs))
+		oldturf = baseturfs[baseturfs.len]
+	else
+		oldturf = baseturfs
+	underlays += mutable_appearance(initial(oldturf.icon), initial(oldturf.icon_state), initial(oldturf.layer), initial(oldturf.plane))
 
 /turf/closed/wall/mineral/sandstone
 	name = "sandstone wall"
