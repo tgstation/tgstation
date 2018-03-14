@@ -1253,6 +1253,16 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.forcesay(GLOB.hit_appends)
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(user.zone_selected == "mouth" && istype(target.wear_mask, /obj/item/clothing/mask/cigarette))
+		var/obj/item/clothing/mask/cigarette/ciggie = target.wear_mask
+		var/list/adj_turfs = get_adjacent_open_turfs(target)
+		playsound(target, 'sound/weapons/throwtap.ogg', 50, 1, -1)
+		target.dropItemToGround(ciggie)
+		ciggie.throw_at(pick(adj_turfs), rand(2,5), 30)
+		target.visible_message("<span class='danger'>[user] slaps [ciggie] right out of [target]'s mouth!</span>",
+			"<span class='userdanger'>[user] slaps [ciggie] right out of your mouth!</span>", null, COMBAT_MESSAGE_RANGE)
+		return
+
 	if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
 		return 0
