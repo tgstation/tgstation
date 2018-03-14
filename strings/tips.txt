@@ -46,7 +46,7 @@ As a Scientist, you can generate research points by letting the tachyon-doppler 
 As a Scientist, getting drunk just enough will speed up research. Skol!
 As a Roboticist, keep an ear out for anomaly announcements. If you get your hands on an anomaly core, you can build a Phazon mech!
 As a Roboticist, you can repair your cyborgs with a welding tool. If they have taken burn damage from lasers, you can remove their battery, expose the wiring with a screwdriver and replace their wires with a cable coil.
-As a Roboticist, you can reset a cyborg's module by pulsing the reset wire with a multitool.
+As a Roboticist, you can reset a cyborg's module by cutting and mending the reset wire with a wire cutter.
 As the AI, you can click on people's names to look at them. This only works if there are cameras that can see them.
 As the AI, you can quickly open and close doors by holding shift while clicking them, bolt them when holding ctrl, and even shock them while holding alt.
 As the AI, you can take pictures with your camera and upload them to newscasters.
