@@ -1,7 +1,7 @@
 Where the space map levels connect is randomized every round, but are otherwise kept consistent within rounds. Remember that they are not necessarily bidirectional!
 You can catch thrown items by toggling on your throw mode with an empty hand active.
 To crack the safe in the vault, use a stethoscope on it.
-You can climb onto a table by dragging yourself onto one. This takes time and drops the items in your hands on the table.
+You can climb onto a table by dragging yourself onto one. This takes time and drops the items in your hands on the table. Clicking on a table that someone else is climbing onto will knock them down.
 You can drag other players onto yourself to open the strip menu, letting you remove their equipment or force them to wear something. Note that exosuits or helmets will block your access to the clothing beneath them, and that certain items take longer to strip or put on than others.
 Clicking on a windoor rather then bumping into it will keep it open, you can click it again to close it.
 You can spray a fire extinguisher or fire a gun while floating through space to change your direction. Simply fire opposite to where you want to go.
@@ -31,19 +31,21 @@ As a Medical Doctor, you can surgically implant or extract things from people's 
 As a Medical Doctor, you must target the correct limb and be on help intent when trying to perform surgery on someone.
 As a Chemist, there are dozens of chemicals that can heal, and even more that can cause harm. Experiment!
 As a Chemist, some chemicals can only be synthesized by heating up the contents in the chemical heater.
+As a Chemist, you can make bottles from plastic sheets. Great for when you run out of beakers!
 As a Geneticist, you can eject someone from cloning early by disabling power in genetics. Note that they will suffer more genetic damage and may lose vital organs from this.
 As a Geneticist, becoming a hulk makes you capable of dealing high melee damage, stunlocking people, and punching through walls. However, you can't fire guns, will lose your hulk status if you take too much damage, and are not considered a human by the AI while you are a hulk.
 As the Virologist, your viruses can range from healing powers so great that you can heal out of critical status, or diseases so dangerous they can kill the entire crew with airborne spontaneous combustion. Experiment!
 As the Virologist, you only require small amounts of vaccine to heal a sick patient. Work with the Chemist to distribute your cures more efficiently.
 As the Research Director, you can take AIs out of their cores by loading them into an intelliCard, and then from there into an AI system integrity restorer computer to revive and/or repair them.
 As the Research Director, you can lock down cyborgs instead of blowing them up. Then you can have their laws reset or if that doesn't work, safely dismantled.
-As a Scientist, you can inject yourself with the mutation toxin extracted from green slimes to become one of many races, including a slimeperson, who will never be attacked by slimes, can split and even regenerate limbs!
+As a Scientist, you can use the mutation toxin obtained from green slimes to turn yourself into a jelly mutant. Each subspecies has unique features - for example telepathic powers, duplicating bodies or integrating slime extracts!
 As a Scientist, you can maximize the number of uses you get out of a slime by feeding it slime steroid, created from purple slimes, while alive. You can then apply extract enhancer, created from cerulean slimes, on each extract.
-As a Scientist, you can disable anomalies by scanning them with an analyzer, then send a signal on the frequency it gives you with a remote signalling device. This will leave behind an anomaly core, which is good for research or the construction of a Phazon mech!
+As a Scientist, you can disable anomalies by scanning them with an analyzer, then send a signal on the frequency it gives you with a remote signalling device. This will leave behind an anomaly core, which is good for research!
 As a Scientist, researchable machine parts can seriously improve the efficiency and speed of machines around the station. In some cases, it can even unlock new functions.
-As a Scientist, with high enough bluespace research, you can build machines that can teleport objects and people all around the station! Look into setting up a telescience department if you can.
-As a Roboticist, keep an ear out for anomaly announcements. If you get your hands on an anomaly core, you can build a Phazon mech!
+As a Scientist, you can generate research points by letting the tachyon-doppler array record increasingly large explosions. 
+As a Scientist, getting drunk just enough will speed up research. Skol!
 As a Roboticist, you can repair your cyborgs with a welding tool. If they have taken burn damage from lasers, you can remove their battery, expose the wiring with a screwdriver and replace their wires with a cable coil.
+As a Roboticist, you can reset a cyborg's module by pulsing the reset wire with a multitool.
 As the AI, you can click on people's names to look at them. This only works if there are cameras that can see them.
 As the AI, you can quickly open and close doors by holding shift while clicking them, bolt them when holding ctrl, and even shock them while holding alt.
 As the AI, you can take pictures with your camera and upload them to newscasters.
@@ -54,15 +56,22 @@ As a Cyborg, you are extremely vulnerable to EMPs as EMPs both stun you and dama
 As the Chief Engineer, you can rename areas or create entirely new ones using your station blueprints.
 As the Chief Engineer, your hardsuit is significantly better than everybody else's. It boasts better protection, and is completely heat and fire proof.
 As the Chief Engineer, you can spy on and even forge PDA communications with the message monitor console! The key is in your office.
+As the Chief Engineer, your locker contains a jetpack upgrade that can be attached to hardsuits.
 As an Engineer, the supermatter shard is an extremely dangerous piece of equipment: touching it will disintegrate you.
 As an Engineer, you can electrify grilles by placing wire "nodes" beneath them: the big seemingly unconnected bulges from a half completed wiring job.
-As an Engineer, return to Engineering once in a while to check on the singularity or energy ball and the SMES cells. It's always a good idea to make sure containment isn't compromised.
-As an Engineer, you can power the station solely with the solar arrays. While uninteresting, it is a much safer alternative to the singularity engine.
+As an Engineer, return to Engineering once in a while to check on the engine and SMES cells. It's always a good idea to make sure containment isn't compromised.
+As an Engineer, you can power the station solely with the solar arrays. While uninteresting, it is a much safer alternative to regular engines.
+As an Engineer, you can cool the supermatter crystal by spraying it with a fire extinguisher. Only for the brave!
 As an Engineer, you can repair windows by using a welding tool on them while on any intent other than harm.
-As an Engineer, you can lock emitters using your ID card to prevent others from disabling them.
+As an Engineer, you can lock emitters and radiation collectors using your ID card to prevent others from disabling them.
+As an Engineer, you can convert tesla coils into corona analyzers by using a screwdriver on the circuit board. They will produce less power, but generate research points!
+As an Engineer, you can use radiation collectors to generate research points. Load them with a 50/50 oxygen/tritium tank and use a multitool to switch them to research mode.
 As an Atmospheric Technician, you can unwrench a pipe regardless of the pressures of the gases inside, but if they're too high they can burst out and injure you!
 As an Atmospheric Technician, look into replacing your gas pumps with volumetric gas pumps, as those move air in flat numerical amounts, rather than percentages which leave trace gases.
-As an Atmospheric Technician, you are better suited to fighting fires than anyone else. As such, you have access to better firesuits, nanofrost sprays, and a completely heat and fire proof rigsuit.
+As an Atmospheric Technician, you are better suited to fighting fires than anyone else. As such, you have access to better firesuits, backpack firefighter tanks, and a completely heat and fire proof rigsuit.
+As an Atmospheric Technician, your backpack firefighter tank can launch resin. This resin will extinguish fires and replace any gases with a safe, room-temperature airmix.
+As an Atmospheric Technician, your ATMOS holofan projector blocks gases while allowing objects to pass through. With it, you can quickly contain gas spills, fires and hull breaches. Or, use it to seal a plasmaman cloning room.
+As an Atmospheric Technician, burning a plasma/oxygen mix inside the incinerator will not only produce power, but also gases such as tritium and water vapor.
 As the Head of Security, you are expected to coordinate your security force to handle any threat that comes to the station. Sometimes it means making use of the armory to handle a blob, sometimes it means being ruthless during a revolution or cult.
 As the Head of Security, you can call for executions or forced cyborgization, but may require the Captain's approval.
 As the Head of Security, don't let the power go to your head. You may have high access, great equipment, and a miniature army at your side, but being a terrible person without a good reason is grounds for banning.
@@ -87,6 +96,7 @@ As the Mime, your oath of silence is your source of power. Breaking it robs you 
 As the Clown, if you lose your banana peel, you can still slip people with your PDA! Honk!
 As the Clown, eating bananas heals you slightly. Honk!
 As the Clown, your Holy Grail is the mineral bananium, which can be given to the Roboticist to build you a fun and robust mech beloved by everyone.
+As the Clown, you can use your stamp on a sheet of cardboard as the first step of making a honkbot. Fun for the whole crew!
 As the Chaplain, your null rod has a lot of functions: it can convert water into holy water, which if spread on the ground prevents wizards from jaunting away, can destroy cultist runes by hitting them, and is a very powerful weapon to boot!
 As the Chaplain, your bible is also a container that can store small items. Depending on your god, your starting bible may come with a surprise!
 As the Chaplain, you are much more likely to get a response by praying to the gods than most people. To boost your chances, make altars with colorful crayon runes, lit candles, and wire art.
@@ -96,11 +106,12 @@ As a Botanist, you should look into increasing the potency of your plants. This 
 As a Cook, you can load your food into snack vending machines.
 As a Cook, you can rename your custom made food with a pen.
 As a Cook, any food you make will be much healthier than the junk food found in vendors. Having the crew routinely eating from you will provide minor buffs.
+As a Cook, being in the kitchen will make you remember the basics of Close Quarters Cooking.
 As the Bartender, the drinks you start with only give you the basics. If you want more advanced mixtures, look into working with chemistry, hydroponics, or even mining for things to grind up and throw in!
 As the Bartender, you can use a circular saw on your shotgun to make it easier to store.
 As a Janitor, if someone steals your janicart, you can instead use your space cleaner spray, grenades, water sprayer or order another from Cargo.
 As a Janitor, mousetraps can be used to create bombs or booby-trap containers.
-As the Curator, you are not completely defenseless. Your laser pointer can blind humans and cyborgs, and you can hide items in wirecut books.
+As the Curator, you are not completely defenseless. Your whip easily disarms people, your laser pointer can blind humans and cyborgs, and you can hide items in wirecut books.
 As the Curator, be sure to keep the shelves stocked and the library clean for crew.
 As a Cargo Technician, you can hack MULEbots to make them faster, run over people in their way, and even let you ride them!
 As a Cargo Technician, you can order contraband items from the supply shuttle console by de-constructing it and using a multitool on the circuit board, the re-assembling it.
@@ -108,8 +119,9 @@ As a Cargo Technician, you can earn more cargo points by shipping back crates fr
 As the Quartermaster, be sure to check the manifests on crates you receive to make sure all the info is correct. If there's a mistake, stamp the manifest DENIED and send it back in a crate with the items untouched for a refund!
 As a Shaft Miner, the northern side of Lavaland has a lot more rare minerals than on the south.
 As a Shaft Miner, every monster on Lavaland has a pattern you can exploit to minimize damage from the encounters.
-As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your explorer's suit with them, greatly reducing incoming melee damage.
+As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your explorer's suit, mining hardsuits as well as Firefighter APLUs with them, greatly reducing incoming melee damage.
 As a Shaft Miner, always have a GPS on you, so a fellow miner or cyborg can come to save you if you die.
+As a Shaft Miner, you can craft a variety of equipment from the local fauna. Bone axes, lava boats and ash drake armour are just a few of them!
 As a Traitor, the cryptographic sequencer (emag) can not only open doors, but also lockers, crates, APCs and more. It can hack cyborgs, and even cause bots to go berserk. Use it on the right machines, and you can even order more traitor gear or contact the Syndicate. Experiment!
 As a Traitor, subverting the AI to serve you can make it an extremely powerful ally. However, be careful of the wording in the laws you give it, as it may use your poorly written laws against you!
 As a Traitor, the Captain and the Head of Security are two of the most difficult to kill targets on the station. If either one is your target, plan carefully.
@@ -190,3 +202,4 @@ As a Devil, as long as you control at least one other soul, you will automatical
 At which time a Devil's nameth is spake on the tongue of man, the Devil may appeareth. 
 As a Security Officer, remember that correlation does not equal causation. Someone may have just been at the wrong place at the wrong time!
 As a Security Officer, remember that you can attach a sec-lite to your taser or your helmet!
+You can swap floor tiles by holding a crowbar in one hand and a stack of tiles in the other.
