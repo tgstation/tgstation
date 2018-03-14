@@ -225,8 +225,6 @@
 
 		if(!L.absolute)
 			L.screen_loc = "CENTER-7:[round(L.offset_x,1)],CENTER-7:[round(L.offset_y,1)]"
-		else
-			L.screen_loc = "CENTER-7:[round(L.offset_x,1)],CENTER-7:[round(L.offset_y,1)]"
 
 /atom/movable/proc/update_parallax_contents()
 	if(length(client_mobs_in_contents))
