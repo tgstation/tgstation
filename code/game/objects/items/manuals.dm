@@ -965,6 +965,13 @@
 	var/list/remarks = list() //things to read about while learning.
 	var/pages_to_mastery = 3 //Essentially controls how long a mob must keep the book in his hand to actually successfully learn
 
+/obj/item/book/granter/proc/turn_page(mob/user)
+	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
+	if(do_after(user,50, user))
+		to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
+		return 1
+	return 0
+
 /obj/item/book/granter/action
 	var/datum/action/granted_action = null
 
@@ -986,13 +993,6 @@
 	if(do_after(user,50, user))
 		to_chat(user, "<span class='notice'>You feel like you've got a good handle on [G.name]!</span>")
 		G.Grant(user)
-
-/obj/item/book/granter/action/proc/turn_page(mob/user)
-	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
-	if(do_after(user,50, user))
-		to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
-		return 1
-	return 0
 
 /obj/item/book/granter/action/drink_fling
 	name = "Tapper: This One's For You"
@@ -1050,13 +1050,6 @@
 			user.log_message("<font color='orange'>learned the spell [spellname] ([S]).</font>", INDIVIDUAL_ATTACK_LOG)
 			onlearned(user)
 
-/obj/item/book/granter/spell/proc/turn_page(mob/user)
-	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
-	if(do_after(user,50, user))
-		to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
-		return 1
-	return 0
-
 /obj/item/book/granter/spell/proc/recoil(mob/user)
 	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")
 
@@ -1077,7 +1070,7 @@
 	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
 	qdel(src)
 
-/obj/item/spellbook/oneuse/sacredflame
+/obj/item/book/granter/spell/sacredflame
 	spell = /obj/effect/proc_holder/spell/targeted/sacred_flame
 	spellname = "sacred flame"
 	icon_state ="booksacredflame"
@@ -1216,3 +1209,13 @@
 	..()
 	to_chat(user,"<span class='warning'>[src] suddenly vanishes!</span>")
 	qdel(src)
+
+/obj/item/book/granter/spell/random
+	icon_state = "random_book"
+
+/obj/item/book/granter/spell/random/Initialize()
+	..()
+	var/static/banned_spells = list(/obj/item/book/granter/spell/mimery_blockade, /obj/item/book/granter/spell/mimery_guns)
+	var/real_type = pick(subtypesof(/obj/item/book/granter/spell) - banned_spells)
+	new real_type(loc)
+	return INITIALIZE_HINT_QDEL

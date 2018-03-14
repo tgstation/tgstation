@@ -34,19 +34,22 @@
 			break
 		for(var/obj/item in hand_items)
 			if(istype(item, /obj/item/spellbook))
-				if(istype(item, /obj/item/spellbook/oneuse))
-					var/obj/item/spellbook/oneuse/I = item
-					if(prob(80))
-						L.visible_message("<span class='warning'>[I] catches fire!</span>")
-						qdel(I)
-					else
-						I.used = 0
-						charged_item = I
-						break
-				else
-					to_chat(L, "<span class='danger'>Glowing red letters appear on the front cover...</span>")
-					to_chat(L, "<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE! VERY CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>")
+				to_chat(L, "<span class='danger'>Glowing red letters appear on the front cover...</span>")
+				to_chat(L, "<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE! VERY CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>")
+				burnt_out = 1
+			else if(istype(item, /obj/item/book/granter/spell))
+				var/obj/item/book/granter/spell/I = item
+				if(!I.oneuse)
+					to_chat(L, "<span class='notice'>This book is infinite use and can't be recharged, yet the magic has improved the book somehow...</span>")
 					burnt_out = 1
+					I.pages_to_mastery--
+				if(prob(80))
+					L.visible_message("<span class='warning'>[I] catches fire!</span>")
+					qdel(I)
+				else
+					I.used = 0
+					charged_item = I
+					break
 			else if(istype(item, /obj/item/gun/magic))
 				var/obj/item/gun/magic/I = item
 				if(prob(80) && !I.can_charge)
@@ -61,7 +64,7 @@
 				I.recharge_newshot()
 				charged_item = I
 				break
-			else if(istype(item, /obj/item/stock_parts/cell/))
+			else if(istype(item, /obj/item/stock_parts/cell))
 				var/obj/item/stock_parts/cell/C = item
 				if(!C.self_recharge)
 					if(prob(80))
