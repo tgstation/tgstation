@@ -201,8 +201,8 @@
 		var/change_y
 
 		if(L.absolute)
-			L.offset_x = -(posobj.x - 128) * L.speed
-			L.offset_y = -(posobj.y - 128) * L.speed
+			L.offset_x = -(posobj.x - SSparallax.planet_x_offset) * L.speed
+			L.offset_y = -(posobj.y - SSparallax.planet_y_offset) * L.speed
 		else
 			change_x = offset_x * L.speed
 			L.offset_x -= change_x
