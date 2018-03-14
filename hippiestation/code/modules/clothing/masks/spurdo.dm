@@ -30,6 +30,9 @@
 		M = replacetext(M,"ck","gg")
 		M = replacetext(M,"c","g")
 		M = replacetext(M,"t","j")
+		M = replacetext(M,"ca","ka")
+		M = replacetext(M,"to","do")
+		M = replacetext(M,"th","d")
 
 		if(prob(50))
 			M += pick(" :DDDDD", " :-DDDDDD")
@@ -41,7 +44,7 @@
 	var/mob/living/carbon/C = user
 	if(C.wear_mask == src)
 		C.emote("scream")
-		C.say("SUOMI PERKELE") // bawb made me do this
+		C.say("SUOMI PERKELE!") // bawb made me do this
 	return ..()
 
 obj/item/clothing/mask/spurdo/cursed
