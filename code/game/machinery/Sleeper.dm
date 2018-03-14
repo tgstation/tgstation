@@ -97,9 +97,12 @@
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
-/obj/machinery/sleeper/relaymove(mob/user)
+/obj/machinery/sleeper/relaymove(mob/user, direction)
 	if(!user.stat || user.stat == SOFT_CRIT)
 		container_resist(user)
+
+/obj/machinery/sleeper/relaynonmove(mob/user, direction)
+	relaymove(user, direction)
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)
@@ -109,16 +112,12 @@
 	if(AM == occupant)
 		var/mob/living/L = AM
 		L.SetStasis(FALSE)
-		if(L.remote_control == src)
-			L.remote_control = null
 	. = ..()
 
 /obj/machinery/sleeper/dropContents(to_drop = contents)
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		mob_occupant.SetStasis(FALSE)
-		if(mob_occupant.remote_control == src)
-			mob_occupant.remote_control = null
 	..(to_drop - chem_stores)
 
 /obj/machinery/sleeper/proc/drop_stores(from_index = 1)
@@ -182,7 +181,6 @@
 	var/freq = rand(24750, 26550)
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = freq)
 	target.SetStasis(TRUE)
-	target.remote_control = src
 	target.ExtinguishMob()
 
 /obj/machinery/sleeper/proc/set_stasis(enabled)
