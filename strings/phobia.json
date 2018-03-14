@@ -108,6 +108,16 @@
 		"viper",
 		"python"
 	],
+	"birds": [
+		"owl",
+		"griffon",
+		"poly",
+		"kiki",
+		"yaya",
+		"vox",
+		"parrot",
+		"bird",
+	],
 
 	"robots": [
 		"robot",

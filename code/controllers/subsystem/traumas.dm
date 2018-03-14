@@ -29,7 +29,8 @@ SUBSYSTEM_DEF(traumas)
 						"the supernatural"	= strings(PHOBIA_FILE, "the supernatural"),
 						"aliens"	= strings(PHOBIA_FILE, "aliens"),
 						"strangers"	= strings(PHOBIA_FILE, "strangers"),
-						"conspiracies" = strings(PHOBIA_FILE, "conspiracies")
+						"conspiracies" = strings(PHOBIA_FILE, "conspiracies"),
+						"birds" = strings(PHOBIA_FILE, "birds"),
 					   )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
@@ -45,6 +46,7 @@ SUBSYSTEM_DEF(traumas)
 					   /mob/living/simple_animal/revenant, /mob/living/simple_animal/shade)),
 					   "aliens"   = typecacheof(list(/mob/living/carbon/alien, /mob/living/simple_animal/slime)),
 					   "conspiracies" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/bot/ed209, /mob/living/simple_animal/drone))
+					   "birds" = typecacheof(list(/mob/living/simple_animal/parrot))
 					   )
 
 	phobia_objs = list("snakes" = typecacheof(list(/obj/item/rod_of_asclepius)),
@@ -122,8 +124,9 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/clothing/head/helmet/abductor, /obj/structure/bed/abductor, /obj/structure/table_frame/abductor,
 						/obj/structure/table/abductor, /obj/structure/table/optable/abductor, /obj/structure/closet/abductor, /obj/item/organ/heart/gland,
 						/obj/machinery/abductor, /obj/item/crowbar/abductor, /obj/item/screwdriver/abductor, /obj/item/weldingtool/abductor,
-						/obj/item/wirecutters/abductor, /obj/item/wrench/abductor, /obj/item/stack/sheet/mineral/abductor))
-					   )
+						/obj/item/wirecutters/abductor, /obj/item/wrench/abductor, /obj/item/stack/sheet/mineral/abductor)),
+						"birds" = typecacheof(list(/obj/item/clothing/suit/toggle/owlwings/griffinwings,/obj/item/clothing/shoes/griffin,
+						/obj/item/clothing/under/griffin,/obj/item/clothing/head/griffin,/obj/item/clothing/suit/toggle/owlwings,/obj/item/clothing/under/owl,/obj/item/clothing/mask/gas/owl_mask,))
 
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
 						"the supernatural" = typecacheof(list(/turf/open/floor/clockwork, /turf/closed/wall/clockwork,
@@ -138,7 +141,7 @@ SUBSYSTEM_DEF(traumas)
 						  "robots"   = typecacheof(list(/datum/species/android)),
 						  "the supernatural" = typecacheof(list(/datum/species/golem/clockwork, /datum/species/golem/runic)),
 						  "aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod,
-						  /datum/species/shadow))
+						  /datum/species/shadow)),
 						 )
 
 #undef PHOBIA_FILE
