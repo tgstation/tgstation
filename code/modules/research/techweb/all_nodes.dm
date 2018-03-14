@@ -232,7 +232,7 @@
 	display_name = "Cyborg Construction"
 	description = "Sapient robots with preloaded tool modules and programmable laws."
 	prereq_ids = list("mmi", "robotics")
-	research_cost = 2500
+	research_cost = 1000
 	export_price = 5000
 	design_ids = list("robocontrol", "sflash", "borg_suit", "borg_head", "borg_chest", "borg_r_arm", "borg_l_arm", "borg_r_leg", "borg_l_leg", "borgupload",
 	"cyborgrecharger", "borg_upgrade_restart", "borg_upgrade_rename")
@@ -243,7 +243,7 @@
 	description = "Utility upgrades for cybogs."
 	prereq_ids = list("engineering", "cyborg")
 	design_ids = list("borg_upgrade_holding", "borg_upgrade_lavaproof", "borg_upgrade_thrusters", "borg_upgrade_selfrepair", "borg_upgrade_expand", "borg_upgrade_rped")
-	research_cost = 2500
+	research_cost = 2000
 	export_price = 5000
 
 /datum/techweb_node/cyborg_upg_med
@@ -252,7 +252,7 @@
 	description = "Medical upgrades for cyborgs."
 	prereq_ids = list("adv_biotech", "cyborg")
 	design_ids = list("borg_upgrade_defibrillator", "borg_upgrade_piercinghypospray", "borg_upgrade_highstrengthsynthesiser", "borg_upgrade_expandedsynthesiser", "borg_upgrade_pinpointer")
-	research_cost = 2500
+	research_cost = 2000
 	export_price = 5000
 
 /datum/techweb_node/cyborg_upg_combat
@@ -261,7 +261,7 @@
 	description = "Military grade upgrades for cyborgs."
 	prereq_ids = list("adv_robotics", "adv_engi" , "weaponry")
 	design_ids = list("borg_upgrade_vtec", "borg_upgrade_disablercooler")
-	research_cost = 2500
+	research_cost = 5000
 	export_price = 5000
 
 /datum/techweb_node/ai
@@ -369,7 +369,7 @@
 	description = "The usefulness of computerized records, projected straight onto your eyepiece!"
 	prereq_ids = list("comp_recordkeeping", "emp_basic")
 	design_ids = list("health_hud", "security_hud", "diagnostic_hud", "scigoggles")
-	research_cost = 2500
+	research_cost = 1500
 	export_price = 5000
 
 /datum/techweb_node/NVGtech
@@ -378,7 +378,7 @@
 	description = "Allows seeing in the dark without actual light!"
 	prereq_ids = list("integrated_HUDs", "adv_engi", "emp_adv")
 	design_ids = list("health_hud_night", "security_hud_night", "diagnostic_hud_night", "night_visision_goggles", "nvgmesons")
-	research_cost = 2500
+	research_cost = 5000
 	export_price = 5000
 
 ////////////////////////Medical////////////////////////
