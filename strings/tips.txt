@@ -40,10 +40,11 @@ As the Research Director, you can take AIs out of their cores by loading them in
 As the Research Director, you can lock down cyborgs instead of blowing them up. Then you can have their laws reset or if that doesn't work, safely dismantled.
 As a Scientist, you can use the mutation toxin obtained from green slimes to turn yourself into a jelly mutant. Each subspecies has unique features - for example telepathic powers, duplicating bodies or integrating slime extracts!
 As a Scientist, you can maximize the number of uses you get out of a slime by feeding it slime steroid, created from purple slimes, while alive. You can then apply extract enhancer, created from cerulean slimes, on each extract.
-As a Scientist, you can disable anomalies by scanning them with an analyzer, then send a signal on the frequency it gives you with a remote signalling device. This will leave behind an anomaly core, which is good for research!
+As a Scientist, you can disable anomalies by scanning them with an analyzer, then send a signal on the frequency it gives you with a remote signalling device. This will leave behind an anomaly core, which can be used to construct a Phazon mech!
 As a Scientist, researchable machine parts can seriously improve the efficiency and speed of machines around the station. In some cases, it can even unlock new functions.
 As a Scientist, you can generate research points by letting the tachyon-doppler array record increasingly large explosions. 
 As a Scientist, getting drunk just enough will speed up research. Skol!
+As a Roboticist, keep an ear out for anomaly announcements. If you get your hands on an anomaly core, you can build a Phazon mech!
 As a Roboticist, you can repair your cyborgs with a welding tool. If they have taken burn damage from lasers, you can remove their battery, expose the wiring with a screwdriver and replace their wires with a cable coil.
 As a Roboticist, you can reset a cyborg's module by pulsing the reset wire with a multitool.
 As the AI, you can click on people's names to look at them. This only works if there are cameras that can see them.
