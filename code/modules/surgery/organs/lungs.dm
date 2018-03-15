@@ -349,7 +349,7 @@
 	var/missinghealth = maxhealth - health
 
 	if(!istype(C.wear_mask, /obj/item/clothing/mask/cigarette) && missinghealth > 0)//not smoking
-		applyDamage((10/missinghealth)*-1)//heal when not smoking
+		applyDamage((missinghealth)*-0.05)//heal when not smoking
 		return
 
 	if(istype(C))

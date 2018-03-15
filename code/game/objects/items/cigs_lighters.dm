@@ -230,7 +230,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(reagents && reagents.total_volume)
 		handle_reagents()
 
-	if(istype(M) && prob(10))
+	if(istype(M) && prob(33))
 		var/obj/item/organ/lungs/L = M.getorganslot(ORGAN_SLOT_LUNGS)
 		if(istype(L))
 			L.smokeDamage(src)
