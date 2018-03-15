@@ -231,32 +231,22 @@
 		"beak",
 		"poly",
 		"wing",
-		"wings",
 		"claw",
 		"peck",
-		"pecker",
 		"cracker",
 		"kiki yaya",
 		"ki ki ya ya",
 		"vox",
-		"flaps their wings",
-		"flaps his wings",
-		"flaps her wings",
-		"flaps their wings angrily",
-		"flaps his wings angrily",
-		"flaps her wings angrily",
-		"feather",
-		"feathered friend",
+		"flap",
+		"feather"
 		"avian",
 		"aviary",
 		"owl",
-		"owlman",
 		"griffin",
 		"kakaw",
 		"ka kaw",
 		"eagle",
 		"chick",
-		"chicken",
 		"fowl"
 	],
 
@@ -267,11 +257,9 @@
 		"pit",
 		"hole",
 		"fall",
-		"falling",
 		"fell",
 		"let go",
 		"i'll catch you",
-		"slip",
-		"slipped"
+		"slip"
 	]
 }

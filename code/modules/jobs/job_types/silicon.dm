@@ -27,8 +27,6 @@ AI
 		for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
 			if(!R.connected_ai)
 				R.TryConnectToAI()
-	
-	AI.gain_trauma(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_SURGERY, "birds") //Agh! Bird! Bird! Kill it! It's evil!
 
 
 /datum/job/ai/config_check()
