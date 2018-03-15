@@ -348,7 +348,7 @@
 	var/mob/living/carbon/C = owner
 	var/missinghealth = maxhealth - health
 
-	if(!istype(C.wear_mask, /obj/item/clothing/mask/cigarette))//not smoking
+	if(!istype(C.wear_mask, /obj/item/clothing/mask/cigarette) && missinghealth > 0)//not smoking
 		applyDamage((10/missinghealth)*-1)//heal when not smoking
 		return
 
