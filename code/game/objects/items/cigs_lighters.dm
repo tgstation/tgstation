@@ -230,9 +230,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(reagents && reagents.total_volume)
 		handle_reagents()
 
-	var/obj/item/organ/lungs/L = M.getorganslot(ORGAN_SLOT_LUNGS)
-	if(istype(L))
-		L.smokeDamage(src)
+	if(istype(M))
+		var/obj/item/organ/lungs/L = M.getorganslot(ORGAN_SLOT_LUNGS)
+		if(istype(L))
+			L.smokeDamage(src)
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
 	if(lit)
@@ -296,6 +297,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A Shady Jim's Super Slims cigarette."
 	carcinogenicity = 1.4
 	list_reagents = list("nicotine" = 15, "lipolicide" = 4, "ammonia" = 2, "plantbgone" = 1, "toxin" = 1.5)
+
+/obj/item/clothing/mask/cigarette/deadly
+	desc = "A cigarette containing the most carcinogenic chemicals known to man." //mostly for debug
+	carcinogenicity = 50
 
 // Rollies.
 
