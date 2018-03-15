@@ -51,7 +51,7 @@
 	var/mob/living/carbon/C = owner
 
 	if(istype(C))
-		C.reagents.metabolize(C, can_overdose=FALSE, C.liverless = TRUE)
+		C.reagents.metabolize(C, can_overdose=FALSE, liverless = TRUE)
 		if(C.has_trait(TRAIT_STABLEHEART))
 			return
 		C.adjustToxLoss(8, TRUE,  TRUE)
