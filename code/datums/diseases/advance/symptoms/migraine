@@ -11,7 +11,7 @@ Brain degradation
 /datum/symptom/migraine
 
 	name = "Brain degradation"
-	desc = "The virus slowly synthesizes Impedrezene, effectively removes the need of thought in one's actions."
+	desc = "The virus slowly synthesizes Impedrezene, which effectively removes the need of thought in one's actions."
 	stealth = -2
 	resistance = 1
 	stage_speed = 3
