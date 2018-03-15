@@ -346,14 +346,19 @@
 		return
 
 	var/mob/living/carbon/C = owner
+	var/missinghealth = maxhealth - health
+
+	if(!istype(C.wear_mask, /obj/item/clothing/mask/cigarette))//not smoking
+		applyDamage((10/missinghealth)*-1)//heal when not smoking
+		return
 
 	if(istype(C))
-		var/missinghealth = maxhealth - health
-		if((health<90 && health>=80) && prob(missinghealth*0.5))
+		if(health < 100 && prob(missinghealth)
 			C.emote("cough")
-			icon_state = "damlungs-1"
 
 		if(prob(missinghealth*0.5))
+			if(health<90 && health>=80)
+				icon_state = "damlungs-1"
 			if(health<80 && health >= 75)
 				to_chat(C, "<span class='notice'>Your lungs feel sore.</span>")
 				icon_state = "damlungs-2"
@@ -374,6 +379,7 @@
 /obj/item/organ/lungs/proc/applyDamage(var/dam)
 	health -= dam
 	health = max(health, 0) //clamp health
+	health = min(health, maxhealth)
 
 /obj/item/organ/lungs/prepare_eat()
 	var/obj/S = ..()
