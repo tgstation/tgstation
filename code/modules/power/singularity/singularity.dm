@@ -27,6 +27,7 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
+	var/timerid
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
@@ -44,7 +45,7 @@
 			target = singubeacon
 			break
 	if(lifetime > 0)
-		addtimer(CALLBACK(src, .proc/timeOut), lifetime)
+		timerid = addtimer(CALLBACK(src, .proc/timeOut), lifetime, TIMER_STOPPABLE)
 	return
 
 /obj/singularity/proc/timeOut() //proc called when lifetime expires
@@ -439,7 +440,18 @@
 
 /obj/singularity/boh //singulo created by putting on Bag of Holding in another
 	lifetime = 200
-	
+
+/obj/singularity/boh/consume(atom/A)
+	var/gain = A.singularity_act(current_size, src)
+	src.energy += gain
+	if(istype(A, /obj/machinery/power/supermatter_shard) && !consumedSupermatter)
+		desc = "[initial(desc)] It glows fiercely with inner fire."
+		name = "supermatter-charged [initial(name)]"
+		consumedSupermatter = 1
+		set_light(10)
+		deltimer(timerid)
+	return ..()
+
 /obj/singularity/boh/timeOut()
 	expand(STAGE_ONE)
 	energy = 1 //this makes sure the sing stays at stage one
