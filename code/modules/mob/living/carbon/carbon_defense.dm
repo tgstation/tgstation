@@ -339,13 +339,13 @@
 			var/deaf = max(ears.deaf, deafen_pwr * effect_amount)
 			adjustEarDamage(ear_damage,deaf)
 
-			if(ears.ear_damage >= 15)
+			if(ears.damage >= 15)
 				to_chat(src, "<span class='warning'>Your ears start to ring badly!</span>")
-				if(prob(ears.ear_damage - 5))
+				if(prob(ears.damage - 5))
 					to_chat(src, "<span class='userdanger'>You can't hear anything!</span>")
-					ears.ear_damage = min(ears.ear_damage, UNHEALING_EAR_DAMAGE)
+					ears.damage = min(ears.damage, UNHEALING_EAR_DAMAGE)
 					// you need earmuffs, inacusiate, or replacement
-			else if(ears.ear_damage >= 5)
+			else if(ears.damage >= 5)
 				to_chat(src, "<span class='warning'>Your ears start to ring!</span>")
 			SEND_SOUND(src, sound('sound/weapons/flash_ring.ogg',0,1,0,250))
 		return effect_amount //how soundbanged we are

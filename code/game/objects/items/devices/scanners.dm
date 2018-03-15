@@ -199,11 +199,11 @@ GAS ANALYZER
 					healthy = FALSE
 					to_chat(user, "\t<span class='alert'>Subject is deaf.</span>")
 				else
-					if(ears.ear_damage)
-						to_chat(user, "\t<span class='alert'>Subject has [ears.ear_damage > UNHEALING_EAR_DAMAGE? "permanent ": "temporary "]hearing damage.</span>")
+					if(ears.damage)
+						to_chat(user, "\t<span class='alert'>Subject has [ears.damage > UNHEALING_EAR_DAMAGE? "permanent ": "temporary "]hearing damage.</span>")
 						healthy = FALSE
 					if(ears.deaf)
-						to_chat(user, "\t<span class='alert'>Subject is [ears.ear_damage > UNHEALING_EAR_DAMAGE ? "permanently ": "temporarily "] deaf.</span>")
+						to_chat(user, "\t<span class='alert'>Subject is [ears.damage > UNHEALING_EAR_DAMAGE ? "permanently ": "temporarily "] deaf.</span>")
 						healthy = FALSE
 				if(healthy)
 					to_chat(user, "\t<span class='info'>Healthy.</span>")

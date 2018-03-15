@@ -47,6 +47,8 @@
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth
 
+/obj/item/organ/liver/onFailure()
+
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()
 	S.reagents.add_reagent("iron", 5)
