@@ -27,12 +27,11 @@
 
 		M = replacetext(M,"p","b") // This part and the lines below it are doubling down for accent's sake. It's modular.
 		M = replacetext(M,"oo","u")
-		M = replacetext(M,"ca","ka")
 		M = replacetext(M,"ck","gg")
-		M = replacetext(M,"c","g")
-		M = replacetext(M,"to","do")
+		M = replacetext(M,"c","n")
+		M = replacetext(M,"k","g")
 		M = replacetext(M,"th","d")
-		M = replacetext(M,"t","j")
+		M = replacetext(M,"t","d")
 
 		if(prob(50))
 			M += pick(" :DDDDD", " :-DDDDDD")
