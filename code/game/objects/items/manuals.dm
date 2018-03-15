@@ -1018,7 +1018,7 @@
 	UpdateButtonIcon()
 
 /obj/item/book/granter/spell
-	var/spell = null
+	var/spell = /obj/effect/proc_holder/spell/targeted/smoke
 	var/spellname = "magical bugs"
 	var/oneuse = 1 //default this is one, but admins can var this to 0 if we wanna all have a pass around of the rod form book
 	var/used = 0 //only really matters if oneuse but it might be nice to know if someone's taken
