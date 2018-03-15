@@ -5,7 +5,7 @@
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
-	var/obj/item/device/radio/beacon/projtarget
+	var/obj/item/device/beacon/projtarget
 
 /obj/item/projectile/energy/net/Initialize()
 	. = ..()
@@ -36,6 +36,7 @@
 	icon_state = "dragnetfield"
 	light_range = 3
 	anchored = TRUE
+	var/obj/item/device/beacon/teletarget
 
 /obj/effect/nettingportal/Initialize()
 	. = ..()
