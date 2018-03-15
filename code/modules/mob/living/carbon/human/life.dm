@@ -319,7 +319,7 @@
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
-					SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embeddedobject")
+					SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 /mob/living/carbon/human/proc/handle_active_genes()
 	for(var/datum/mutation/human/HM in dna.mutations)
