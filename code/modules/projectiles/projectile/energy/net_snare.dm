@@ -5,24 +5,23 @@
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
-	var/obj/item/device/beacon/projtarget
+	var/obj/item/device/beacon/targetbeacon
 
-/obj/item/projectile/energy/net/Initialize()
+/obj/item/projectile/energy/net/Initialize(mapload, tbeacon = null)
+	if(tbeacon)
+		targetbeacon = tbeacon
 	. = ..()
 	SpinAnimation()
-	set_projtarget()
-
-/obj/item/projectile/energy/net/proc/set_projtarget()
-	var/obj/item/ammo_casing/energy/net/N = loc
-	if(istype(N))
-		projtarget = N.drag.guntarget
 
 /obj/item/projectile/energy/net/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
 			var/obj/effect/nettingportal/NP = new (Tloc)
-			NP.teletarget = projtarget
+			if(targetbeacon)
+				NP.teletarget = targetbeacon
+			else
+				NP.teletarget = null
 	..()
 
 /obj/item/projectile/energy/net/on_range()
