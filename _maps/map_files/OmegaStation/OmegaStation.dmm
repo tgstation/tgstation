@@ -8053,6 +8053,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/mob/living/simple_animal/bot/secbot/beepsky,
 /turf/open/floor/plasteel/red/corner,
 /area/security/brig)
 "apC" = (
@@ -8132,6 +8133,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=1.2-BrigNorth";
+	location = "1.1-BrigCentral"
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
@@ -31752,6 +31757,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
+"iaa" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=1.1-BrigCentral";
+	location = "1.2-BrigNorth"
+	},
+/turf/open/floor/plasteel/red/corner{
+	dir = 1
+	},
+/area/hallway/primary/central)
 "kKd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -70626,7 +70641,7 @@ agI
 ahB
 aiu
 ajd
-akc
+iaa
 alb
 alR
 akc
