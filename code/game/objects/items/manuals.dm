@@ -1064,8 +1064,135 @@
 	spellname = "fireball"
 	icon_state ="bookfireball"
 	desc = "This book feels warm to the touch."
+	remarks = list("Aim...AIM, FOOL!", "Don't just catch them on fire...", "Accounting for crosswinds... really?", "I think I just burned my hand...", "Why the dumb stance? It's just a flick of the hand...", "OMEE... ONI... Ugh...", "What's the difference between a fireball and a pyroblast...")
 
 /obj/item/book/granter/spell/fireball/recoil(mob/user)
 	..()
 	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
+	qdel(src)
+
+/obj/item/book/granter/spell/smoke
+	spell = /obj/effect/proc_holder/spell/targeted/smoke
+	spellname = "smoke"
+	icon_state ="booksmoke"
+	desc = "This book is overflowing with the dank arts."
+
+/obj/item/book/granter/spell/smoke/lesser //Chaplain smoke book
+	spell = /obj/effect/proc_holder/spell/targeted/smoke/lesser
+
+/obj/item/book/granter/spell/smoke/recoil(mob/user)
+	..()
+	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
+	if(user.nutrition)
+		user.nutrition -= 200
+		if(user.nutrition <= 0)
+			user.nutrition = 0
+
+
+/obj/item/book/granter/spell/blind
+	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind
+	spellname = "blind"
+	icon_state ="bookblind"
+	desc = "This book looks blurry, no matter how you look at it."
+
+/obj/item/book/granter/spell/blind/recoil(mob/user)
+	..()
+	to_chat(user,"<span class='warning'>You go blind!</span>")
+	user.blind_eyes(10)
+
+/obj/item/book/granter/spell/mindswap
+	spell = /obj/effect/proc_holder/spell/targeted/mind_transfer
+	spellname = "mindswap"
+	icon_state ="bookmindswap"
+	desc = "This book's cover is pristine, though its pages look ragged and torn."
+	var/mob/stored_swap = null //Used in used book recoils to store an identity for mindswaps
+
+/obj/item/book/granter/spell/mindswap/onlearned()
+	spellname = pick("fireball","smoke","blind","forcewall","knock","barnyard","charge")
+	icon_state = "book[spellname]"
+	name = "spellbook of [spellname]" //Note, desc doesn't change by design
+	..()
+
+/obj/item/book/granter/spell/mindswap/recoil(mob/user)
+	..()
+	if(stored_swap in GLOB.dead_mob_list)
+		stored_swap = null
+	if(!stored_swap)
+		stored_swap = user
+		to_chat(user,"<span class='warning'>For a moment you feel like you don't even know who you are anymore.</span>")
+		return
+	if(stored_swap == user)
+		to_chat(user,"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>")
+		return
+
+	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new
+	swapper.cast(user, stored_swap, 1)
+
+	to_chat(stored_swap,"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>")
+	to_chat(user,"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>")
+	stored_swap = null
+
+/obj/item/book/granter/spell/forcewall
+	spell = /obj/effect/proc_holder/spell/targeted/forcewall
+	spellname = "forcewall"
+	icon_state ="bookforcewall"
+	desc = "This book has a dedication to mimes everywhere inside the front cover."
+
+/obj/item/book/granter/spell/forcewall/recoil(mob/living/user)
+	..()
+	to_chat(user,"<span class='warning'>You suddenly feel very solid!</span>")
+	user.Stun(40, ignore_canstun = TRUE)
+	user.petrify(30)
+
+/obj/item/book/granter/spell/knock
+	spell = /obj/effect/proc_holder/spell/aoe_turf/knock
+	spellname = "knock"
+	icon_state ="bookknock"
+	desc = "This book is hard to hold closed properly."
+
+/obj/item/book/granter/spell/knock/recoil(mob/living/user)
+	..()
+	to_chat(user,"<span class='warning'>You're knocked down!</span>")
+	user.Knockdown(40)
+
+/obj/item/book/granter/spell/barnyard
+	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
+	spellname = "barnyard"
+	icon_state ="bookhorses"
+	desc = "This book is more horse than your mind has room for."
+
+/obj/item/book/granter/spell/barnyard/recoil(mob/living/carbon/user)
+	if(ishuman(user))
+		to_chat(user,"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>")
+		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
+		magichead.flags_1 |= NODROP_1		//curses!
+		magichead.flags_inv &= ~HIDEFACE //so you can still see their face
+		magichead.voicechange = 1	//NEEEEIIGHH
+		if(!user.dropItemToGround(user.wear_mask))
+			qdel(user.wear_mask)
+		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
+		qdel(src)
+	else
+		to_chat(user,"<span class='notice'>I say thee neigh</span>") //It still lives here
+
+/obj/item/book/granter/spell/charge
+	spell = /obj/effect/proc_holder/spell/targeted/charge
+	spellname = "charging"
+	icon_state ="bookcharge"
+	desc = "This book is made of 100% post-consumer wizard."
+
+/obj/item/book/granter/spell/charge/recoil(mob/user)
+	..()
+	to_chat(user,"<span class='warning'>[src] suddenly feels very warm!</span>")
+	empulse(src, 1, 1)
+
+/obj/item/book/granter/spell/summonitem
+	spell = /obj/effect/proc_holder/spell/targeted/summonitem
+	spellname = "instant summons"
+	icon_state ="booksummons"
+	desc = "This book is bright and garish, very hard to miss."
+
+/obj/item/book/granter/spell/summonitem/recoil(mob/user)
+	..()
+	to_chat(user,"<span class='warning'>[src] suddenly vanishes!</span>")
 	qdel(src)
