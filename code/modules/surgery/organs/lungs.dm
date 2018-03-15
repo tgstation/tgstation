@@ -353,7 +353,7 @@
 		return
 
 	if(istype(C))
-		if(health < 100 && prob(missinghealth)
+		if(health < 100 && prob(missinghealth))
 			C.emote("cough")
 
 		if(prob(missinghealth*0.5))
