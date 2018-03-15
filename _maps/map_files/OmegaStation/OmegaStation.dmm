@@ -5275,6 +5275,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=2.2-BridgeWest";
+	location = "2.1-Teleporter"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "akp" = (
@@ -5448,6 +5452,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=4.2-HoP";
+	location = "4.1-BridgeEast"
+	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "akB" = (
@@ -5561,6 +5569,11 @@
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=5.1-EnteringCargo";
+	location = "4.2-HoP";
+	name = "Billy Herrington memorial navigation beacon"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
@@ -7234,6 +7247,10 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=5.2-Cargo";
+	location = "5.1-EnteringCargo"
+	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 4
 	},
@@ -7787,6 +7804,10 @@
 /obj/structure/cable/white{
 	icon_state = "2-4"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=5.3-Starboard";
+	location = "5.3-LeavingCargo"
+	},
 /turf/open/floor/plasteel/brown/corner,
 /area/hallway/primary/central)
 "apb" = (
@@ -7839,6 +7860,10 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/cable/white{
 	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=5.3-LeavingCargo";
+	location = "5.2-Cargo"
 	},
 /turf/open/floor/plasteel/brown/corner,
 /area/hallway/primary/central)
@@ -13392,6 +13417,10 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=1.1-BrigCentral";
+	location = "9.6-LeavingDorms"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -13923,6 +13952,10 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=9.5-Dorms";
+	location = "9.4-EnteringDorms"
+	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "aBM" = (
@@ -13990,6 +14023,10 @@
 	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=9.6-LeavingDorms";
+	location = "9.5-Dorms"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/crew_quarters/dorms)
@@ -15054,6 +15091,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=6.3-DeparturesS";
+	location = "6.2-DeparturesN"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/exit)
 "aEf" = (
@@ -15554,6 +15595,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=6.2-DeparturesN";
+	location = "6.1-EnteringDepartures"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aFk" = (
@@ -15758,6 +15803,10 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=9.4-EnteringDorms";
+	location = "9.3-Engi"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
 "aFF" = (
@@ -15829,6 +15878,10 @@
 	},
 /obj/structure/cable/white{
 	icon_state = "2-8"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=9.3-Engi";
+	location = "9.2-EnteringEngi"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
@@ -18558,6 +18611,10 @@
 	pixel_x = -32;
 	pixel_y = -32
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=3.3-AtriumSE";
+	location = "3.2-AtriumSW"
+	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aLg" = (
@@ -20712,6 +20769,10 @@
 /area/hallway/primary/central)
 "aPY" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=9.2-EnteringEngi";
+	location = "9.1-Library"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -21227,6 +21288,10 @@
 /obj/machinery/camera{
 	c_tag = "Aft Primary Hallway 2";
 	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=9.1-Library";
+	location = "8.4-AftNW"
 	},
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 8
@@ -28303,6 +28368,10 @@
 	name = "Station Intercom";
 	pixel_x = -26
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=8.4-AftNW";
+	location = "8.3-AftSW"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -30475,6 +30544,10 @@
 	dir = 8;
 	pixel_y = -22
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=8.2-AftSE";
+	location = "8.1-AftNE"
+	},
 /turf/open/floor/plasteel/purple/corner,
 /area/hallway/primary/central)
 "blq" = (
@@ -30804,6 +30877,10 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=7.1-StarboardQuarter";
+	location = "6.4-LeavingDepartures"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bsB" = (
@@ -30946,6 +31023,10 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=6.4-LeavingDepartures";
+	location = "6.3-DeparturesS"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/exit)
@@ -31242,6 +31323,13 @@
 /obj/item/pickaxe/emergency,
 /turf/open/floor/plating/asteroid/airless,
 /area/asteroid/nearstation)
+"bvV" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=4.1-BridgeEast";
+	location = "3.4-AtriumNE"
+	},
+/turf/open/floor/plasteel/redyellow,
+/area/crew_quarters/bar/atrium)
 "bwz" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -31757,14 +31845,55 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
+"heQ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=8.3-AftSW";
+	location = "8.2-AftSE"
+	},
+/turf/open/floor/plasteel/neutral/corner,
+/area/hallway/primary/central)
+"hpr" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=3.2-AtriumSW";
+	location = "3.1-AtriumNW"
+	},
+/turf/open/floor/plasteel/redyellow,
+/area/crew_quarters/bar/atrium)
+"hDi" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=3.4-AtriumNE";
+	location = "3.3-AtriumSE"
+	},
+/turf/open/floor/plasteel/redyellow,
+/area/crew_quarters/bar/atrium)
 "iaa" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=1.1-BrigCentral";
+	codes_txt = "patrol;next_patrol=2.1-Teleporter";
 	location = "1.2-BrigNorth"
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
+	},
+/area/hallway/primary/central)
+"jcn" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=3.1-AtriumNW";
+	location = "2.2-BridgeWest"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8;
+	heat_capacity = 1e+006
 	},
 /area/hallway/primary/central)
 "kKd" = (
@@ -34303,6 +34432,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
+"voi" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=8.1-AftNE";
+	location = "7.1-StarboardQuarter"
+	},
+/turf/open/floor/plasteel/purple/corner,
+/area/hallway/primary/central)
 "wUF" = (
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Supermatter Chamber";
@@ -75010,7 +75149,7 @@ swv
 aak
 aak
 ajq
-ake
+jcn
 all
 ame
 ame
@@ -75533,7 +75672,7 @@ aoN
 apT
 arb
 ase
-asg
+hpr
 asg
 asg
 asg
@@ -76561,7 +76700,7 @@ aoR
 apX
 arf
 asi
-asg
+bvV
 asg
 avi
 awn
@@ -76579,7 +76718,7 @@ asg
 asg
 asg
 ayL
-avi
+hDi
 aAR
 arf
 aOq
@@ -77118,7 +77257,7 @@ bef
 beK
 bfg
 bfO
-anc
+heQ
 bgW
 bhK
 biz
@@ -78126,7 +78265,7 @@ aCe
 asp
 ayP
 aPt
-aQv
+voi
 aRs
 aSw
 aTI
