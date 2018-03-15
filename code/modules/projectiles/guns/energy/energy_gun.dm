@@ -81,7 +81,7 @@
 
 /obj/item/gun/energy/e_gun/dragnet/examine(mob/user)
 	..()
-		to_chat(user, "<span class='notice'>Hit a teleport beacon with it to set the bluespace net teleport destination.</span>")
+	to_chat(user, "<span class='notice'>Hit a teleport beacon with it to set the bluespace net teleport destination.</span>")
 	if(guntarget)
 		to_chat(user, "<span class='notice'>[src] has locked onto [guntarget].</span>")
 
