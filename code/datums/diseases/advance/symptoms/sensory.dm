@@ -83,7 +83,7 @@
 		return
 	switch(A.stage)
 		if(4, 5)
-			M.restoreEars()
+			M.restoreOrgan()
 
 			if(M.has_trait(TRAIT_BLIND, EYE_DAMAGE))
 				if(prob(20))

@@ -17,8 +17,8 @@
 	if(stat != DEAD)
 		handle_brain_damage()
 
-	if(stat != DEAD)
-		handle_liver()
+	//if(stat != DEAD)
+		//handle_liver()
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -406,45 +406,6 @@
 			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
 			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
-/////////
-//LIVER//
-/////////
-
-/mob/living/carbon/proc/handle_liver()
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
-		return
-	if(liver)
-		if(liver.damage >= liver.maxHealth)
-			liver.failing = TRUE
-			liver_failure()
-	else
-		liver_failure()
-
-/mob/living/carbon/proc/undergoing_liver_failure()
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver && liver.failing)
-		return TRUE
-
-/mob/living/carbon/proc/return_liver_damage()
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver)
-		return liver.damage
-
-/mob/living/carbon/proc/applyLiverDamage(var/d)
-	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
-	if(L)
-		L.damage += d
-
-/mob/living/carbon/proc/liver_failure()
-	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
-	if(has_trait(TRAIT_STABLEHEART))
-		return
-	adjustToxLoss(8, TRUE,  TRUE)
-	if(prob(30))
-		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
-
-
 ////////////////
 //BRAIN DAMAGE//
 ////////////////
@@ -479,6 +440,8 @@
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(istype(heart) && heart.beating)
 		return FALSE
+	if(heart.failure)
+		return TRUE
 	return TRUE
 
 /mob/living/carbon/proc/set_heartattack(status)

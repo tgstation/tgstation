@@ -128,8 +128,10 @@ GAS ANALYZER
 		var/mob/living/carbon/human/H = M
 		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
 			to_chat(user, "<span class='danger'>Subject suffering from heart attack: apply defibrillator immediately!</span>")
-		if(H.undergoing_liver_failure() && H.stat != DEAD)
-			to_chat(user, "<span class='danger'>Subject suffering from liver failure: apply corazone and begin a liver transplant immediately!</span>")
+		var/obj/item/organ/liver/L = H.getorgan(/obj/item/organ/liver)
+		if(istype(L))
+			if(L.failure && H.stat != DEAD)
+				to_chat(user, "<span class='danger'>Subject suffering from liver failure: apply corazone and begin a liver transplant immediately!</span>")
 
 	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
 
@@ -199,11 +201,11 @@ GAS ANALYZER
 					healthy = FALSE
 					to_chat(user, "\t<span class='alert'>Subject is deaf.</span>")
 				else
-					if(ears.ear_damage)
-						to_chat(user, "\t<span class='alert'>Subject has [ears.ear_damage > UNHEALING_EAR_DAMAGE? "permanent ": "temporary "]hearing damage.</span>")
+					if(ears.damage)
+						to_chat(user, "\t<span class='alert'>Subject has [ears.damage > UNHEALING_EAR_DAMAGE? "permanent ": "temporary "]hearing damage.</span>")
 						healthy = FALSE
 					if(ears.deaf)
-						to_chat(user, "\t<span class='alert'>Subject is [ears.ear_damage > UNHEALING_EAR_DAMAGE ? "permanently ": "temporarily "] deaf.</span>")
+						to_chat(user, "\t<span class='alert'>Subject is [ears.damage > UNHEALING_EAR_DAMAGE ? "permanently ": "temporarily "] deaf.</span>")
 						healthy = FALSE
 				if(healthy)
 					to_chat(user, "\t<span class='info'>Healthy.</span>")
@@ -236,9 +238,11 @@ GAS ANALYZER
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/ldamage = H.return_liver_damage()
-		if(ldamage > 10)
-			to_chat(user, "\t<span class='alert'>[ldamage > 45 ? "severe" : "minor"] liver damage detected.</span>")
+		var/obj/item/organ/liver/L = H.getorgan(/obj/item/organ/liver)
+		if(istype(L))
+			var/ldamage = L.damage
+			if(ldamage > 10)
+				to_chat(user, "\t<span class='alert'>[ldamage > 45 ? "severe" : "minor"] liver damage detected.</span>")
 
 	// Body part damage report
 	if(iscarbon(M) && mode == 1)

@@ -13,6 +13,50 @@
 	var/external = FALSE
 	var/synthetic = FALSE // To distinguish between organic and synthetic organs
 
+	var/damage = 0
+	var/maxhealth = DEFAULT_ORGAN_HEALTH
+	var/failure = FALSE //is this organ failing?
+
+/obj/item/organ/proc/adjustDamage(adjust)
+	damage += adjust
+	damage = min(damage, maxhealth) //clamp damage
+
+/obj/item/organ/proc/getDamage() //if you want some sort of special behavior for getting the damage
+	return
+
+/obj/item/organ/proc/onFailure() //called when organ fails
+	failure = TRUE
+
+/obj/item/organ/proc/restoreOrgan() //call to restore an organ's health/anything else that is changed with damage
+	failure = FALSE
+	damage = 0
+
+/mob/proc/restoreOrgan()
+
+/mob/living/carbon/restoreOrgan(var/obj/item/organ/O)
+	if(istype(O))
+		O.restoreOrgan()
+
+/mob/proc/restoreOrganByType()
+
+/mob/living/carbon/restoreOrganByType(T)
+	var/obj/item/organ/O = getorgan(T)
+	if(istype(O))
+		O.restoreOrgan()
+
+/mob/proc/restoreOrgans()
+
+/mob/living/carbon/restoreOrgans()
+	for(var/obj/item/organ/O in internal_organs)
+		restoreOrgan(O)
+
+/mob/proc/adjustDamage()
+
+/mob/living/carbon/adjustDamage(var/obj/item/organ/O, adjust)
+	if(!istype(O))
+		return
+	O = getorgan(O)
+	O.adjustDamage(adjust)
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
@@ -51,7 +95,23 @@
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
-/obj/item/organ/proc/on_life()
+/obj/item/organ/proc/on_life() //called while the owner mob is alive
+	if(!failure)
+		on_life_unfailed()
+	else
+		on_life_failed()
+
+/obj/item/organ/process()
+	if(damage <= 0)
+		damage = 0
+	if(damage >= maxhealth)
+		if(!failure)
+			onFailure()
+
+/obj/item/organ/proc/on_life_unfailed() //called while owner mob is alive and organ has not failed.
+	return //this function should be used for organ functions that require the organ to be working
+
+/obj/item/organ/proc/on_life_failed()//called while owner is alive and organ has failed
 	return
 
 /obj/item/organ/examine(mob/user)

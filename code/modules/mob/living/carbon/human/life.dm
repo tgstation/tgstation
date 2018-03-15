@@ -44,9 +44,9 @@
 	if(..()) //not dead
 		handle_active_genes()
 
-	if(stat != DEAD)
+	//if(stat != DEAD)
 		//heart attack stuff
-		handle_heart()
+	//	handle_heart()
 
 	if(stat != DEAD)
 		//Stuff jammed in your limbs hurts
@@ -330,7 +330,7 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_life(src)
 
-/mob/living/carbon/human/proc/handle_heart()
+/*/mob/living/carbon/human/proc/handle_heart()
 	if(!can_heartattack())
 		return
 
@@ -348,7 +348,7 @@
 		adjustOxyLoss(8)
 		Unconscious(80)
 	// Tissues die without blood circulation
-	adjustBruteLoss(2)
+	adjustBruteLoss(2)*/
 
 /*
 Alcohol Poisoning Chart

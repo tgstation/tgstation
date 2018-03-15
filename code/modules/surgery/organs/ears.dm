@@ -13,14 +13,14 @@
 	// `ear_damage` measures long term damage to the ears, if too high,
 	// the person will not have either `deaf` or `ear_damage` decrease
 	// without external aid (earmuffs, drugs)
-	var/ear_damage = 0
+	//var/ear_damage = 0
 
 	//Resistance against loud noises
 	var/bang_protect = 0
 	// Multiplier for both long term and short term ear damage
 	var/damage_multiplier = 1
 
-/obj/item/organ/ears/on_life()
+/obj/item/organ/ears/on_life_unfailed()
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/C = owner
@@ -30,23 +30,27 @@
 	else
 		if(C.ears && (C.ears.flags_2 & HEALS_EARS_2))
 			deaf = max(deaf - 1, 1)
-			ear_damage = max(ear_damage - 0.1, 0)
+			damage = max(damage - 0.1, 0)
 		// if higher than UNHEALING_EAR_DAMAGE, no natural healing occurs.
-		if(ear_damage < UNHEALING_EAR_DAMAGE)
-			ear_damage = max(ear_damage - 0.05, 0)
+		if(damage < UNHEALING_EAR_DAMAGE)
+			damage = max(damage - 0.05, 0)
 			deaf = max(deaf - 1, 0)
 
-/obj/item/organ/ears/proc/restoreEars()
+/obj/item/organ/ears/restoreOrgan()
+	..()
 	deaf = 0
-	ear_damage = 0
+	//damage = 0
 
 	var/mob/living/carbon/C = owner
 
 	if(iscarbon(owner) && C.has_trait(TRAIT_DEAF))
 		deaf = 1
 
+/obj/item/organ/ears/adjustDamage(ddmg)
+	damage = max(damage + (ddmg*damage_multiplier), 0)
+
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
-	ear_damage = max(ear_damage + (ddmg*damage_multiplier), 0)
+	adjustDamage(ddmg)
 	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
 
 /obj/item/organ/ears/proc/minimumDeafTicks(value)
@@ -54,14 +58,6 @@
 
 /obj/item/organ/ears/invincible
 	damage_multiplier = 0
-
-
-/mob/proc/restoreEars()
-
-/mob/living/carbon/restoreEars()
-	var/obj/item/organ/ears/ears = getorgan(/obj/item/organ/ears)
-	if(ears)
-		ears.restoreEars()
 
 /mob/proc/adjustEarDamage()
 
