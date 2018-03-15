@@ -61,7 +61,7 @@
 
 /obj/item/gun/energy/e_gun/dragnet
 	name = "\improper DRAGnet"
-	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology. Hit a teleport beacon with it to set the bluespace net teleport destination."
+	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
 	icon_state = "dragnet"
 	item_state = "dragnet"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -81,6 +81,7 @@
 
 /obj/item/gun/energy/e_gun/dragnet/examine(mob/user)
 	..()
+		to_chat(user, "<span class='notice'>Hit a teleport beacon with it to set the bluespace net teleport destination.</span>")
 	if(guntarget)
 		to_chat(user, "<span class='notice'>[src] has locked onto [guntarget].</span>")
 
