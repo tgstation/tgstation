@@ -7805,7 +7805,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=5.3-Starboard";
+	codes_txt = "patrol;next_patrol=6.1-EnteringDepartures";
 	location = "5.3-LeavingCargo"
 	},
 /turf/open/floor/plasteel/brown/corner,
