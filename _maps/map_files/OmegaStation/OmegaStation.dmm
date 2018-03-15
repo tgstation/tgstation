@@ -3032,7 +3032,6 @@
 	},
 /obj/item/clothing/neck/stethoscope,
 /obj/item/stack/sheet/mineral/diamond,
-/obj/item/areaeditor/blueprints,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -9033,9 +9032,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aru" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
-	},
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
@@ -9043,6 +9039,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -9095,20 +9094,18 @@
 	},
 /area/engine/atmos)
 "arz" = (
-/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
-	dir = 1
-	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "arA" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
-	dir = 8
-	},
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/suit_storage_unit/atmos,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "arB" = (
@@ -9618,6 +9615,9 @@
 	},
 /area/engine/atmos)
 "asB" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/heater{
+	dir = 1
+	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "asC" = (
@@ -12166,14 +12166,12 @@
 	},
 /area/hallway/primary/central)
 "axD" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/arcade,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -14318,6 +14316,7 @@
 	pixel_y = -28
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/pipe_dispenser,
 /turf/open/floor/plasteel/vault/side{
 	dir = 1
 	},
@@ -14328,6 +14327,7 @@
 	},
 /obj/structure/closet/secure_closet/atmospherics,
 /obj/effect/turf_decal/bot,
+/obj/item/pipe_dispenser,
 /turf/open/floor/plasteel/vault/side{
 	dir = 1
 	},
@@ -14522,6 +14522,8 @@
 "aCN" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
+/obj/item/device/multitool,
+/obj/item/device/multitool,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/dorms)
 "aCO" = (
@@ -15068,10 +15070,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aEb" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-22"
-	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/computer/arcade{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "aEc" = (
@@ -15204,13 +15206,13 @@
 /area/engine/engineering)
 "aEx" = (
 /obj/structure/closet/radiation,
-/obj/item/clothing/glasses/meson,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/item/clothing/glasses/meson/engine,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aEy" = (
@@ -15670,6 +15672,7 @@
 	pixel_x = 26
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/areaeditor/blueprints,
 /turf/open/floor/plasteel/vault/side{
 	dir = 8
 	},
@@ -15736,11 +15739,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/obj/item/clothing/glasses/meson,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/item/clothing/glasses/meson/engine,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aFA" = (
@@ -17236,11 +17239,9 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aIv" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/vending/engivend,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aIw" = (
@@ -18346,6 +18347,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
+/obj/item/device/lightreplacer,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8
 	},
@@ -18369,6 +18371,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/plasteel/yellow,
 /area/engine/engineering)
 "aKL" = (
@@ -18393,7 +18397,6 @@
 /area/engine/engineering)
 "aKM" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/yellow,
 /obj/item/device/lightreplacer,
 /obj/structure/cable/white{
 	icon_state = "1-8"
@@ -18770,7 +18773,6 @@
 /area/engine/gravity_generator)
 "aLK" = (
 /obj/structure/closet/radiation,
-/obj/item/clothing/glasses/meson,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -18782,6 +18784,7 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
+/obj/item/clothing/glasses/meson/engine,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aLL" = (
@@ -22052,9 +22055,9 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/radiation,
 /obj/item/clothing/head/radiation,
-/obj/item/clothing/glasses/meson,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line,
+/obj/item/clothing/glasses/meson/engine,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aTa" = (
@@ -22723,6 +22726,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/device/multitool,
 /turf/open/floor/plasteel/vault/side,
 /area/science/lab)
 "aUF" = (
@@ -23108,14 +23112,13 @@
 /area/science/lab)
 "aVx" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/white,
-/obj/item/stock_parts/cell/high,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/device/integrated_circuit_printer,
+/obj/item/device/integrated_electronics/analyzer,
+/obj/item/device/integrated_electronics/debugger,
+/obj/item/device/integrated_electronics/wirer,
 /turf/open/floor/plasteel/vault/side,
 /area/science/lab)
 "aVy" = (
@@ -23522,6 +23525,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/vault/side,
 /area/science/lab)
 "aWp" = (
@@ -24271,6 +24276,10 @@
 	},
 /obj/item/storage/backpack/satchel/med,
 /obj/effect/turf_decal/bot,
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXQ" = (
@@ -31235,7 +31244,7 @@
 /area/tcommsat/server)
 "buO" = (
 /obj/machinery/telecomms/receiver/preset_left/birdstation,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/server{
 	dir = 4;
 	pixel_x = -23
 	},
@@ -31832,6 +31841,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"dEa" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/maintenance/port)
 "fWz" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port";
@@ -33605,7 +33620,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "sMP" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 1e+006
 	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
@@ -66972,7 +66987,7 @@ aZp
 bak
 bbc
 bbQ
-bcF
+dEa
 bdD
 beu
 sKE
