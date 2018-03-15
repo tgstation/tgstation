@@ -144,7 +144,7 @@
 	else
 		..()
 
-/obj/item/organ/brain/get_brain_damage()
+/obj/item/organ/brain/proc/get_brain_damage()
 	var/brain_damage_threshold = max_integrity * BRAIN_DAMAGE_INTEGRITY_MULTIPLIER
 	var/offset_integrity = obj_integrity - (maxhealth - brain_damage_threshold)
 	. = (1 - (offset_integrity / brain_damage_threshold)) * BRAIN_DAMAGE_DEATH

@@ -72,7 +72,7 @@
 			beat = BEAT_NONE
 
 /obj/item/organ/heart/on_life_failed()
-	var/mob/living/carbon/C = owner
+	var/mob/living/carbon/human/C = owner
 
 	if(istype(C))
 		var/we_breath = !C.has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)
@@ -81,7 +81,7 @@
 		if(C.has_trait(TRAIT_STABLEHEART))
 			return
 
-		if(C.we_breath)
+		if(we_breath)
 			C.adjustOxyLoss(8)
 			C.Unconscious(80)
 		// Tissues die without blood circulation
