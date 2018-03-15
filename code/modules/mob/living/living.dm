@@ -954,7 +954,6 @@
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/fire(src)
 		throw_alert("fire", /obj/screen/alert/fire)
-		SendSignal(COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 		update_fire()
 		return TRUE
 	return FALSE

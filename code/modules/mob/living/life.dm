@@ -101,6 +101,7 @@
 		return 1
 	if(fire_stacks > 0)
 		adjust_fire_stacks(-0.1) //the fire is slowly consumed
+		SendSignal(COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 	else
 		ExtinguishMob()
 		return
