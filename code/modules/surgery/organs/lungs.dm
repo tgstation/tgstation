@@ -349,11 +349,11 @@
 
 	if(istype(C))
 		var/missinghealth = maxhealth - health
-		if((health<90 && health>=80) && prob(missinghealth/2))
+		if((health<90 && health>=80) && prob(missinghealth*0.5))
 			C.emote("cough")
 			icon_state = "damlungs-1"
 
-		if(prob(missinghealth/2))
+		if(prob(missinghealth*0.5))
 			if(health<80 && health >= 75)
 				to_chat(C, "<span class='notice'>Your lungs feel sore.</span>")
 				icon_state = "damlungs-2"
@@ -364,8 +364,16 @@
 				to_chat(C, "<span class='danger'>Your lungs feel TERRIBLE!</span>")
 				icon_state = "damlungs-4"
 
+		C.adjustOxyLoss(min(missinghealth*0.1, HUMAN_MAX_OXYLOSS))
+
+
 /obj/item/organ/lungs/proc/smokeDamage(var/obj/item/clothing/mask/cigarette/ciggie)
-	health -= ciggie.carcinogenicity/10
+	var/missinghealth = maxhealth - health
+	applyDamage((ciggie.carcinogenicity*0.25)+missinghealth*0.05) //exponentially increase damage as your lungs
+															//get hurt
+/obj/item/organ/lungs/proc/applyDamage(var/dam)
+	health -= dam
+	health = max(health, 0) //clamp health
 
 /obj/item/organ/lungs/prepare_eat()
 	var/obj/S = ..()
