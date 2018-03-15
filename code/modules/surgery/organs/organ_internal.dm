@@ -36,12 +36,14 @@
 
 /mob/proc/restoreOrganByType()
 
-/mob/living/carbon/restoreOrganByType(/obj/item/organ/T)
+/mob/living/carbon/restoreOrganByType(T)
 	var/obj/item/organ/O = getorgan(T)
 	if(istype(O))
 		O.restoreOrgan()
 
 /mob/proc/restoreOrgans()
+
+/mob/living/carbon/restoreOrgans()
 	for(var/obj/item/organ/O in internal_organs)
 		restoreOrgan(O)
 

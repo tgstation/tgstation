@@ -49,7 +49,7 @@
 /obj/item/organ/ears/adjustDamage(ddmg)
 	damage = max(damage + (ddmg*damage_multiplier), 0)
 
-/obj/item/organ/ears/adjustEarDamage(ddmg, ddeaf)
+/obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
 	//damage = max(damage + (ddmg*damage_multiplier), 0)
 	adjustDamage(ddmg)
 	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
