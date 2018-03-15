@@ -17,8 +17,8 @@
 	if(stat != DEAD)
 		handle_brain_damage()
 
-	if(stat != DEAD)
-		handle_liver()
+	//if(stat != DEAD)
+		//handle_liver()
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -410,7 +410,7 @@
 //LIVER//
 /////////
 
-/mob/living/carbon/proc/handle_liver()
+/*/mob/living/carbon/proc/handle_liver()
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
 		return
@@ -444,7 +444,7 @@
 	if(prob(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
 
-
+*/
 ////////////////
 //BRAIN DAMAGE//
 ////////////////

@@ -8,7 +8,7 @@
 	desc = "Onaka ga suite imasu."
 	var/disgust_metabolism = 1
 
-/obj/item/organ/stomach/on_life()
+/obj/item/organ/stomach/on_life_unfailed()
 	var/mob/living/carbon/human/H = owner
 
 	if(istype(H))

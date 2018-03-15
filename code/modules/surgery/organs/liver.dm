@@ -1,4 +1,3 @@
-#define LIVER_DEFAULT_HEALTH 100 //amount of damage required for liver failure
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
 #define LIVER_DEFAULT_TOX_LETHALITY 0.5 //lower values lower how harmful toxins are to the liver
 
@@ -9,15 +8,15 @@
 	zone = "chest"
 	slot = ORGAN_SLOT_LIVER
 	desc = "Pairing suggestion: chianti and fava beans."
-	var/damage = 0 //liver damage, 0 is no damage, damage=maxHealth causes liver failure
+	//damage = 0 //liver damage, 0 is no damage, damage=maxHealth causes liver failure
 	var/alcohol_tolerance = ALCOHOL_RATE//affects how much damage the liver takes from alcohol
 	var/failing //is this liver failing?
-	var/maxHealth = LIVER_DEFAULT_HEALTH
+	var/maxhealth = DEFAULT_LIVER_HEALTH
 	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE//maximum amount of toxins the liver can just shrug off
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY//affects how much damage toxins do to the liver
 	var/filterToxins = TRUE //whether to filter toxins
 
-/obj/item/organ/liver/on_life()
+/obj/item/organ/liver/on_life_unfailed()
 	var/mob/living/carbon/C = owner
 
 	if(istype(C))
