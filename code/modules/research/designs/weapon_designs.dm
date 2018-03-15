@@ -2,58 +2,58 @@
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
 
-/datum/design/c38
+/datum/design/c38/sec
 	name = "Speed Loader (.38)"
 	id = "c38"
-	build_type = AUTOLATHE | PROTOLATHE
-	materials = list(MAT_METAL = 30000)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000)
 	build_path = /obj/item/ammo_box/c38
-	category = list("initial", "Security")
+	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/rubbershot
+/datum/design/rubbershot/sec
 	name = "Rubber Shot"
 	id = "rubber_shot"
-	build_type = AUTOLATHE | PROTOLATHE
-	materials = list(MAT_METAL = 4000)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000)
 	build_path = /obj/item/ammo_casing/shotgun/rubbershot
-	category = list("initial", "Security")
+	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/shotgun_slug
+/datum/design/shotgun_slug/sec
 	name = "Shotgun Slug"
 	id = "shotgun_slug"
-	build_type = AUTOLATHE | PROTOLATHE
-	materials = list(MAT_METAL = 4000)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000)
 	build_path = /obj/item/ammo_casing/shotgun
-	category = list("hacked", "Security")
+	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/buckshot_shell
+/datum/design/buckshot_shell/sec
 	name = "Buckshot Shell"
 	id = "buckshot_shell"
-	build_type = AUTOLATHE | PROTOLATHE
-	materials = list(MAT_METAL = 4000)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000)
 	build_path = /obj/item/ammo_casing/shotgun/buckshot
-	category = list("hacked", "Security")
+	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/shotgun_dart
+/datum/design/shotgun_dart/sec
 	name = "Shotgun Dart"
 	id = "shotgun_dart"
-	build_type = AUTOLATHE | PROTOLATHE
-	materials = list(MAT_METAL = 4000)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000)
 	build_path = /obj/item/ammo_casing/shotgun/dart
-	category = list("hacked", "Security")
+	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
-/datum/design/incendiary_slug
+/datum/design/incendiary_slug/sec
 	name = "Incendiary Slug"
 	id = "incendiary_slug"
-	build_type = AUTOLATHE | PROTOLATHE
-	materials = list(MAT_METAL = 4000)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000)
 	build_path = /obj/item/ammo_casing/shotgun/incendiary
-	category = list("hacked", "Security")
+	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/pin_testing
