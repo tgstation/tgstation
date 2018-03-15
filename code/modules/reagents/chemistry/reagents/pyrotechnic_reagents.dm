@@ -1,5 +1,5 @@
 
-/datum/reagent/thermite
+/datum/reagent/pyro/thermite
 	name = "Thermite"
 	id = "thermite"
 	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
@@ -7,23 +7,23 @@
 	color = "#550000"
 	taste_description = "sweet tasting metal"
 
-/datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
+/datum/reagent/pyro/thermite/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 1)
 		T.AddComponent(/datum/component/thermite, reac_volume)
 
-/datum/reagent/thermite/on_mob_life(mob/living/M)
+/datum/reagent/pyro/thermite/on_mob_life(mob/living/M)
 	M.adjustFireLoss(1, 0)
 	..()
 	. = 1
 
-/datum/reagent/nitroglycerin
+/datum/reagent/pyro/nitroglycerin
 	name = "Nitroglycerin"
 	id = "nitroglycerin"
 	description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "oil"
 
-/datum/reagent/stabilizing_agent
+/datum/reagent/pyro/stabilizing_agent
 	name = "Stabilizing Agent"
 	id = "stabilizing_agent"
 	description = "Keeps unstable chemicals stable. This does not work on everything."
@@ -31,7 +31,7 @@
 	color = "#FFFF00"
 	taste_description = "metal"
 
-/datum/reagent/clf3
+/datum/reagent/pyro/clf3
 	name = "Chlorine Trifluoride"
 	id = "clf3"
 	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
@@ -40,14 +40,14 @@
 	metabolization_rate = 4
 	taste_description = "burning"
 
-/datum/reagent/clf3/on_mob_life(mob/living/M)
+/datum/reagent/pyro/clf3/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(2)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
 	M.adjustFireLoss(burndmg, 0)
 	..()
 	. = 1
 
-/datum/reagent/clf3/reaction_turf(turf/T, reac_volume)
+/datum/reagent/pyro/clf3/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T))
 		var/turf/open/floor/plating/F = T
 		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
@@ -67,7 +67,7 @@
 		if(prob(reac_volume))
 			W.ScrapeAway()
 
-/datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/pyro/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
 		if(method != INGEST && method != INJECT)
 			M.adjust_fire_stacks(min(reac_volume/5, 10))
@@ -75,7 +75,7 @@
 			if(!locate(/obj/effect/hotspot) in M.loc)
 				new /obj/effect/hotspot(M.loc)
 
-/datum/reagent/sorium
+/datum/reagent/pyro/sorium
 	name = "Sorium"
 	id = "sorium"
 	description = "Sends everything flying from the detonation point."
@@ -83,7 +83,7 @@
 	color = "#5A64C8"
 	taste_description = "air and bitterness"
 
-/datum/reagent/liquid_dark_matter
+/datum/reagent/pyro/liquid_dark_matter
 	name = "Liquid Dark Matter"
 	id = "liquid_dark_matter"
 	description = "Sucks everything into the detonation point."
@@ -91,7 +91,7 @@
 	color = "#210021"
 	taste_description = "compressed bitterness"
 
-/datum/reagent/blackpowder
+/datum/reagent/pyro/blackpowder
 	name = "Black Powder"
 	id = "blackpowder"
 	description = "Explodes. Violently."
@@ -100,7 +100,7 @@
 	metabolization_rate = 0.05
 	taste_description = "salt"
 
-/datum/reagent/blackpowder/on_mob_life(mob/living/M)
+/datum/reagent/pyro/blackpowder/on_mob_life(mob/living/M)
 	..()
 	if(isplasmaman(M))
 		M.hallucination += 10
@@ -112,7 +112,7 @@
 	e.start()
 	holder.clear_reagents()
 
-/datum/reagent/flash_powder
+/datum/reagent/pyro/flash_powder
 	name = "Flash Powder"
 	id = "flash_powder"
 	description = "Makes a very bright flash."
@@ -120,7 +120,7 @@
 	color = "#C8C8C8"
 	taste_description = "salt"
 
-/datum/reagent/smoke_powder
+/datum/reagent/pyro/smoke_powder
 	name = "Smoke Powder"
 	id = "smoke_powder"
 	description = "Makes a large cloud of smoke that can carry reagents."
@@ -128,7 +128,7 @@
 	color = "#C8C8C8"
 	taste_description = "smoke"
 
-/datum/reagent/sonic_powder
+/datum/reagent/pyro/sonic_powder
 	name = "Sonic Powder"
 	id = "sonic_powder"
 	description = "Makes a deafening noise."
@@ -136,7 +136,7 @@
 	color = "#C8C8C8"
 	taste_description = "loud noises"
 
-/datum/reagent/phlogiston
+/datum/reagent/pyro/phlogiston
 	name = "Phlogiston"
 	id = "phlogiston"
 	description = "Catches you on fire and makes you ignite."
@@ -144,21 +144,21 @@
 	color = "#FA00AF"
 	taste_description = "burning"
 
-/datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/pyro/phlogiston/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	M.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
 	M.adjustFireLoss(burndmg, 0)
 	M.IgniteMob()
 	..()
 
-/datum/reagent/phlogiston/on_mob_life(mob/living/M)
+/datum/reagent/pyro/phlogiston/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
 	M.adjustFireLoss(burndmg, 0)
 	..()
 	. = 1
 
-/datum/reagent/napalm
+/datum/reagent/pyro/napalm
 	name = "Napalm"
 	id = "napalm"
 	description = "Very flammable."
@@ -166,16 +166,16 @@
 	color = "#FA00AF"
 	taste_description = "burning"
 
-/datum/reagent/napalm/on_mob_life(mob/living/M)
+/datum/reagent/pyro/napalm/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(1)
 	..()
 
-/datum/reagent/napalm/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/pyro/napalm/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
 		if(method != INGEST && method != INJECT)
 			M.adjust_fire_stacks(min(reac_volume/4, 20))
 
-/datum/reagent/cryostylane
+/datum/reagent/pyro/cryostylane
 	name = "Cryostylane"
 	id = "cryostylane"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Cryostylane slowly cools all other reagents in the container 0K."
@@ -184,18 +184,18 @@
 	taste_description = "bitterness"
 
 
-/datum/reagent/cryostylane/on_mob_life(mob/living/M) //TODO: code freezing into an ice cube
+/datum/reagent/pyro/cryostylane/on_mob_life(mob/living/M) //TODO: code freezing into an ice cube
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
 		M.adjust_bodytemperature(-15)
 	..()
 
-/datum/reagent/cryostylane/reaction_turf(turf/T, reac_volume)
+/datum/reagent/pyro/cryostylane/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
 			M.adjustToxLoss(rand(15,30))
 
-/datum/reagent/pyrosium
+/datum/reagent/pyro/pyrosium
 	name = "Pyrosium"
 	id = "pyrosium"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly heats all other reagents in the container."
@@ -203,13 +203,13 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
 
-/datum/reagent/pyrosium/on_mob_life(mob/living/M)
+/datum/reagent/pyro/pyrosium/on_mob_life(mob/living/M)
 	if(M.reagents.has_reagent("oxygen"))
 		M.reagents.remove_reagent("oxygen", 0.5)
 		M.adjust_bodytemperature(15)
 	..()
 
-/datum/reagent/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
+/datum/reagent/pyro/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
 	name = "Teslium"
 	id = "teslium"
 	description = "An unstable, electrically-charged metallic slurry. Periodically electrocutes its victim, and makes electrocutions against them more deadly. Excessively heating teslium results in dangerous destabilization. Do not allow to come into contact with water."
@@ -219,7 +219,7 @@
 	taste_description = "charged metal"
 	var/shock_timer = 0
 
-/datum/reagent/teslium/on_mob_life(mob/living/M)
+/datum/reagent/pyro/teslium/on_mob_life(mob/living/M)
 	shock_timer++
 	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
@@ -227,15 +227,16 @@
 		playsound(M, "sparks", 50, 1)
 	..()
 
-/datum/reagent/teslium/energized_jelly
+/datum/reagent/pyro/teslium/energized_jelly
 	name = "Energized Jelly"
 	id = "energized_jelly"
 	description = "Electrically-charged jelly. Boosts jellypeople's nervous system, but only shocks other lifeforms."
 	reagent_state = LIQUID
 	color = "#CAFF43"
 	taste_description = "jelly"
+	can_synth = FALSE
 
-/datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/M)
+/datum/reagent/pyro/teslium/energized_jelly/on_mob_life(mob/living/M)
 	if(isjellyperson(M))
 		shock_timer = 0 //immune to shocks
 		M.AdjustStun(-40, 0)
@@ -248,7 +249,7 @@
 			L.extract_cooldown = max(0, L.extract_cooldown - 20)
 	..()
 
-/datum/reagent/firefighting_foam
+/datum/reagent/pyro/firefighting_foam
 	name = "Firefighting Foam"
 	id = "firefighting_foam"
 	description = "A historical fire suppressant. Originally believed to simply displace oxygen to starve fires, it actually interferes with the combustion reaction itself. Vastly superior to the cheap water-based extinguishers found on NT vessels."
@@ -276,10 +277,10 @@
 			G.react()
 			qdel(hotspot)
 
-/datum/reagent/firefighting_foam/reaction_obj(obj/O, reac_volume)
+/datum/reagent/pyro/firefighting_foam/reaction_obj(obj/O, reac_volume)
 	O.extinguish()
 
-/datum/reagent/firefighting_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/pyro/firefighting_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M))
 		return
 	if(method in list(VAPOR, TOUCH))

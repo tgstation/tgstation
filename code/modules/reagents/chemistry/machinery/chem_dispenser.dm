@@ -19,6 +19,7 @@
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
 	var/obj/item/reagent_containers/beaker = null
+	var/type_to_dispense = null
 	var/list/dispensable_reagents = list(
 		"hydrogen",
 		"lithium",
@@ -61,6 +62,11 @@
 	. = ..()
 	cell = new cell_type
 	recharge()
+	if(type_to_dispense)
+		for(var/R in GLOB.chemical_reagents_list)
+			var/datum/reagent/RE = initial(R)
+			if(istype(RE, type_to_dispense) && RE.can_synth)
+				dispensable_reagents += RE.id
 	dispensable_reagents = sortList(dispensable_reagents)
 	update_icon()
 
@@ -508,3 +514,61 @@ obj/machinery/chem_dispenser/update_icon()
 		"ammonia",
 		"ash",
 		"diethylamine")
+
+
+/obj/machinery/chem_dispenser/base
+	name = "base reagent dispenser"
+	desc = "Creates and dispenses base reagents."
+	dispensable_reagents = list(
+		"hydrogen",
+		"lithium",
+		"carbon",
+		"nitrogen",
+		"oxygen",
+		"fluorine",
+		"sodium",
+		"aluminium",
+		"silicon",
+		"phosphorus",
+		"sulfur",
+		"chlorine",
+		"potassium",
+		"iron",
+		"copper",
+		"mercury",
+		"radium",
+		"water",
+		"ethanol",
+		"sugar",
+		"sacid",
+		"welding_fuel",
+		"silver",
+		"iodine",
+		"bromine",
+		"stable_plasma"
+	)
+	
+/obj/machinery/chem_dispenser/drug
+	name = "drug reagent dispenser"
+	desc = "Creates and dispenses drugs."
+	dispensable_reagents = list()
+	type_to_dispense = /datum/reagent/drug
+	
+/obj/machinery/chem_dispenser/medicine
+	name = "medicine reagent dispenser"
+	desc = "Creates and dispenses medicine."
+	dispensable_reagents = list()
+	type_to_dispense = /datum/reagent/medicine
+
+/obj/machinery/chem_dispenser/pyro
+	name = "pyro reagent dispenser"
+	desc = "Creates and dispenses pyro reagents."
+	dispensable_reagents = list()
+	type_to_dispense = /datum/reagent/pyro
+
+/obj/machinery/chem_dispenser/toxx
+	name = "toxin reagent dispenser"
+	desc = "Creates and dispenses toxin."
+	dispensable_reagents = list()
+	type_to_dispense = /datum/reagent/toxin
+
