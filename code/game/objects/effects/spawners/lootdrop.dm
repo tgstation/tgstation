@@ -128,10 +128,8 @@
 	lootcount = 3
 
 /obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner
-	name = "2% chance xeno egg spawner"
-	loot = list(
-		/obj/effect/decal/remains/xeno = 49,
-		/obj/effect/spawner/xeno_egg_delivery = 1)
+	name = "xeno gibs"
+	loot = list(/obj/effect/decal/remains/xeno = 1)
 
 /obj/effect/spawner/lootdrop/costume
 	name = "random costume spawner"
