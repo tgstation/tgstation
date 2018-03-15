@@ -95,7 +95,7 @@
 #define MOOD_LEVEL_SAD1 -3
 #define MOOD_LEVEL_SAD2 -12
 #define MOOD_LEVEL_SAD3 -18
-#define MOOD_LEVEL_SAD4 -26
+#define MOOD_LEVEL_SAD4 -25
 
 //Sanity levels for humans
 #define SANITY_GREAT 125
@@ -106,12 +106,12 @@
 #define SANITY_INSANE 0
 
 //Beauty levels of areas for carbons
-#define BEAUTY_LEVEL_HORRID -50
-#define BEAUTY_LEVEL_BAD -25
-#define BEAUTY_LEVEL_GOOD 25
-#define BEAUTY_LEVEL_GREAT 50
-
-
+#define BEAUTY_LEVEL_HORRID -100
+#define BEAUTY_LEVEL_BAD -66
+#define BEAUTY_LEVEL_MEH -33
+#define BEAUTY_LEVEL_DECENT 33
+#define BEAUTY_LEVEL_GOOD 66
+#define BEAUTY_LEVEL_GREAT 100
 
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600

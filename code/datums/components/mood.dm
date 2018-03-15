@@ -6,6 +6,7 @@
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/datum/mood_event/list/mood_events = list()
 	var/mob/living/owner
+	var/datum/looping_sound/reverse_bear_trap/slow/soundloop //Insanity ticking
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
@@ -13,12 +14,14 @@
 		CRASH("Some good for nothing loser put a mood component on something that isn't even a living mob.")
 	START_PROCESSING(SSmood, src)
 	owner = parent
+	soundloop = new(list(owner), FALSE, TRUE)
 	RegisterSignal(COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	RegisterSignal(COMSIG_ENTER_AREA, .proc/update_beauty)
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
+	QDEL_NULL(soundloop)
 	return ..()
 
 /datum/component/mood/proc/print_mood()
@@ -98,20 +101,35 @@
 			mood_level = 8
 		if(MOOD_LEVEL_HAPPY4 to INFINITY)
 			mood_level = 9
+	update_mood_icon()
 
+
+/datum/component/mood/proc/update_mood_icon()
 	if(owner.client && owner.hud_used)
-		owner.hud_used.mood.icon_state = "mood[mood_level]"
+		if(sanity < 25)
+			owner.hud_used.mood.icon_state = "mood_insane"
+		else
+			owner.hud_used.mood.icon_state = "mood[mood_level]"
 
 /datum/component/mood/process() //Called on SSmood process
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 3)
+			update_mood_icon()
+			if(prob(7))
+				owner.playsound_local(null, pick(CREEPY_SOUNDS), 100, 1)
+			soundloop.start()
 		if(SANITY_INSANE to SANITY_UNSTABLE)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 2)
+			if(prob(3))
+				owner.playsound_local(null, pick(CREEPY_SOUNDS), 60, 1)
+			soundloop.stop()
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 1)
+			soundloop.stop()
 		if(SANITY_DISTURBED to SANITY_GREAT)
 			owner.clear_fullscreen("depression")
+			soundloop.stop()
 
 	switch(mood_level)
 		if(1)
@@ -152,7 +170,8 @@
 /datum/component/mood/proc/IncreaseSanity(amount, limit = 99)
 	if(sanity > limit)
 		DecreaseSanity(-0.5) //Removes some sanity to go back to our current limit.
-	sanity = min(limit, sanity + amount)
+	else
+		sanity = min(limit, sanity + amount)
 
 /datum/component/mood/proc/add_event(category, type, param) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 	var/datum/mood_event/the_event
@@ -185,12 +204,16 @@
 		return FALSE
 	switch(A.beauty)
 		if(-INFINITY to BEAUTY_LEVEL_HORRID)
-			add_event("area_beauty", /datum/mood_event/disgustingroom)
+			add_event("area_beauty", /datum/mood_event/horridroom)
 		if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
-			add_event("area_beauty", /datum/mood_event/grossroom)
-		if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_GOOD)
+			add_event("area_beauty", /datum/mood_event/badroom)
+		if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_MEH)
+			add_event("area_beauty", /datum/mood_event/mehroom)
+		if(BEAUTY_LEVEL_MEH to BEAUTY_LEVEL_DECENT)
 			clear_event("area_beauty")
+		if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
+			add_event("area_beauty", /datum/mood_event/decentroom)
 		if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
-			add_event("area_beauty", /datum/mood_event/niceroom)
+			add_event("area_beauty", /datum/mood_event/goodroom)
 		if(BEAUTY_LEVEL_GREAT to INFINITY)
 			add_event("area_beauty", /datum/mood_event/greatroom)

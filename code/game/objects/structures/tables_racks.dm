@@ -113,12 +113,7 @@
 	if(!ishuman(pushed_mob))
 		return
 	var/mob/living/carbon/human/H = pushed_mob
-	if(iscatperson(H)) //Catpeople are a bit dumb and think its fun to be on a table
-		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/happytable)
-		H.startTailWag()
-		addtimer(CALLBACK(H, /mob/living/carbon/human.proc/endTailWag), 30)
-	else
-		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+	H.SendSignal(COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1))
