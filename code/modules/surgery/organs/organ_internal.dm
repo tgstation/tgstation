@@ -22,7 +22,7 @@
 	damage = min(damage, maxhealth) //clamp damage
 
 /obj/item/organ/proc/onFailure() //called when organ fails
-	return
+	failure = TRUE
 
 /obj/item/organ/proc/restoreOrgan() //call to restore an organ's health/anything else that is changed with damage
 	failure = FALSE
@@ -101,8 +101,8 @@
 /obj/item/organ/process()
 	if(damage <= 0)
 		damage = 0
-		failure = TRUE
-		onFailure()
+		if(!failure)
+			onFailure()
 
 /obj/item/organ/proc/on_life_unfailed() //called while owner mob is alive and organ has not failed.
 	return //this function should be used for organ functions that require the organ to be working
