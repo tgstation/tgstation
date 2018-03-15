@@ -8,6 +8,8 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5
 #define COLD_GAS_DAMAGE_LEVEL_3 3
 
+#define LUNGS_DEFAULT_HEALTH 100
+
 /obj/item/organ/lungs
 	name = "lungs"
 	icon_state = "lungs"
@@ -15,6 +17,10 @@
 	slot = ORGAN_SLOT_LUNGS
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_NORMAL
+
+	var/damage = TRUE
+	var/maxhealth = LUNGS_DEFAULT_HEALTH
+	var/health = LUNGS_DEFAULT_HEALTH
 
 	//Breath damage
 
@@ -335,6 +341,32 @@
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
 
+/obj/item/organ/lungs/on_life()
+	if(!damage || synthetic)
+		return
+
+	var/mob/living/carbon/C = owner
+
+	if(istype(C))
+		var/missinghealth = maxhealth - health
+		if((health<90 && health>=80) && prob(missinghealth/2))
+			C.emote("cough")
+			icon_state = "damlungs-1"
+
+		if(prob(missinghealth/2))
+			if(health<80 && health >= 75)
+				to_chat(C, "<span class='notice'>Your lungs feel sore.</span>")
+				icon_state = "damlungs-2"
+			if(health<75 && health >= 50)
+				to_chat(C, "<span class='notice'>Your lungs really hurt.</span>")
+				icon_state = "damlungs-3"
+			if(health<50 && health > 0)
+				to_chat(C, "<span class='danger'>Your lungs feel TERRIBLE!</span>")
+				icon_state = "damlungs-4"
+
+/obj/item/organ/lungs/proc/smokeDamage(var/obj/item/clothing/mask/cigarette/ciggie)
+	health -= ciggie.carcinogenicity/10
+
 /obj/item/organ/lungs/prepare_eat()
 	var/obj/S = ..()
 	S.reagents.add_reagent("salbutamol", 5)
@@ -348,6 +380,7 @@
 	safe_oxygen_min = 0 //We don't breath this
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
+	damage = FALSE
 
 /obj/item/organ/lungs/cybernetic
 	name = "cybernetic lungs"

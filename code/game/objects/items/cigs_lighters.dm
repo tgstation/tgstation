@@ -114,6 +114,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/lastHolder = null
 	var/smoketime = 300
 	var/chem_volume = 30
+	var/carcinogenicity = 1 //how toxic to your lungs this thing is to smoke
 	var/list/list_reagents = list("nicotine" = 15)
 	heat = 1000
 
@@ -229,6 +230,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(reagents && reagents.total_volume)
 		handle_reagents()
 
+	var/obj/item/organ/lungs/L = M.getorganslot(ORGAN_SLOT_LUNGS)
+	if(istype(L))
+		L.smokeDamage(src)
+
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
 	if(lit)
 		user.visible_message("<span class='notice'>[user] calmly drops and treads on \the [src], putting it out instantly.</span>")
@@ -277,6 +282,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/robustgold
 	desc = "A Robust Gold brand cigarette."
+	carcinogenicity = 0.5
 	list_reagents = list("nicotine" = 15, "gold" = 1)
 
 /obj/item/clothing/mask/cigarette/carp
@@ -288,6 +294,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/shadyjims
 	desc = "A Shady Jim's Super Slims cigarette."
+	carcinogenicity = 1.4
 	list_reagents = list("nicotine" = 15, "lipolicide" = 4, "ammonia" = 2, "plantbgone" = 1, "toxin" = 1.5)
 
 // Rollies.
@@ -304,6 +311,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 180
 	chem_volume = 50
 	list_reagents = null
+	carcinogenicity = 1.4
 
 /obj/item/clothing/mask/cigarette/rollie/New()
 	..()
@@ -339,6 +347,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "cigaroff"
 	smoketime = 1500
 	chem_volume = 40
+	carcinogenicity = 1.5
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "\improper Cohiba Robusto cigar"
@@ -348,6 +357,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "cigar2off"
 	smoketime = 2000
 	chem_volume = 80
+	carcinogenicity = 1.4
 
 
 /obj/item/clothing/mask/cigarette/cigar/havana
@@ -358,6 +368,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "cigar2off"
 	smoketime = 7200
 	chem_volume = 50
+	carcinogenicity = 1.2
 
 /obj/item/cigbutt
 	name = "cigarette butt"
@@ -387,6 +398,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 100
 	list_reagents = null
 	var/packeditem = 0
+	carcinogenicity = 0.8
 
 /obj/item/clothing/mask/cigarette/pipe/Initialize()
 	. = ..()
