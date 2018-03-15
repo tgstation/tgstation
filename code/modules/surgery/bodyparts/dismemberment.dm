@@ -106,7 +106,7 @@
 		C.clear_alert("embeddedobject")
 		GET_COMPONENT_FROM(mood, /datum/component/mood, C)
 		if(mood)
-			mood.add_event("embedded")
+			mood.clear_event("embedded")
 
 	if(!special)
 		if(C.dna)
