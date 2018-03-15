@@ -1077,11 +1077,19 @@
 	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
 	qdel(src)
 
+/obj/item/spellbook/oneuse/sacredflame
+	spell = /obj/effect/proc_holder/spell/targeted/sacred_flame
+	spellname = "sacred flame"
+	icon_state ="booksacredflame"
+	desc = "Become one with the flames that burn within... and invite others to do so as well."
+	remarks = list("Well, it's one way to stop an attacker...", "I'm gonna need some good gear to stop myself from burning to death...", "Keep a fire extingusher handy, got it...", "I think I just burned my hand...", "Apply flame directly to chest for proper ignition...", "No pain, no gain...", "One with the flame...")
+
 /obj/item/book/granter/spell/smoke
 	spell = /obj/effect/proc_holder/spell/targeted/smoke
 	spellname = "smoke"
 	icon_state ="booksmoke"
 	desc = "This book is overflowing with the dank arts."
+	remarks = list("Haha, weed...", "Smoke bomb would do just fine too...", "Wait, there's a machine that does the same thing in chemistry?", "This book smells awful...", "Why all these weed jokes? Just tell me how to cast it...", "Wind will ruin the whole spell, good thing we're in space... Right?", "So this is how the spider clan does it...")
 
 /obj/item/book/granter/spell/smoke/lesser //Chaplain smoke book
 	spell = /obj/effect/proc_holder/spell/targeted/smoke/lesser
@@ -1094,12 +1102,12 @@
 		if(user.nutrition <= 0)
 			user.nutrition = 0
 
-
 /obj/item/book/granter/spell/blind
 	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind
 	spellname = "blind"
 	icon_state ="bookblind"
 	desc = "This book looks blurry, no matter how you look at it."
+	remarks = list("Well I can't learn anything if I can't read the damn thing!", "Why would you use a dark font on a dark background...", "Ah, I can't see an- Oh, I'm fine...", "I can't see my hand...!", "I'm manually blinking, damn you book...", "I can't read this page, but somehow I feel like I learned something from it...", "Hey, who turned off the lights?")
 
 /obj/item/book/granter/spell/blind/recoil(mob/user)
 	..()
@@ -1112,6 +1120,7 @@
 	icon_state ="bookmindswap"
 	desc = "This book's cover is pristine, though its pages look ragged and torn."
 	var/mob/stored_swap = null //Used in used book recoils to store an identity for mindswaps
+	remarks = list("If you mindswap from a mouse, they will be helpless when you recover...", "Wait, where am I...?", "This book is giving me a horrible headache...", "This page is blank, but I feel words popping into my head...", "GYNU... GYRO... Ugh...", "The voices in my head need to stop, I'm trying to read here...", "I don't think anyone will be happy when I cast this spell...")
 
 /obj/item/book/granter/spell/mindswap/onlearned()
 	spellname = pick("fireball","smoke","blind","forcewall","knock","barnyard","charge")
@@ -1143,6 +1152,7 @@
 	spellname = "forcewall"
 	icon_state ="bookforcewall"
 	desc = "This book has a dedication to mimes everywhere inside the front cover."
+	remarks = list("I can go through the wall! Neat.", "Why are there so many mime references...?", "This would cause much grief in a hallway...", "This is some suprisingly strong magic to create a wall nobody can pass through...", "Why the dumb stance? It's just a flick of the hand...", "Why are the pages so hard to turn, is this even paper?", "I can't mo- Oh, i'm fine...")
 
 /obj/item/book/granter/spell/forcewall/recoil(mob/living/user)
 	..()
@@ -1155,6 +1165,7 @@
 	spellname = "knock"
 	icon_state ="bookknock"
 	desc = "This book is hard to hold closed properly."
+	remarks = list("Open Sesame!", "So THAT'S the magic password!", "Slow down, book. I still haven't finished this page...", "The book won't stop moving!", "I think this is hurting the spine of the book...", "I can't get to the next page, it's stuck t- I'm good, it just turned to the next page on it's own.", "Yeah, staff of doors does the same thing. Go figure...")
 
 /obj/item/book/granter/spell/knock/recoil(mob/living/user)
 	..()
@@ -1166,6 +1177,7 @@
 	spellname = "barnyard"
 	icon_state ="bookhorses"
 	desc = "This book is more horse than your mind has room for."
+	remarks = list("Moooooooo!","Moo!","Moooo!", "NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!", "Oink!", "Squeeeeeeee!", "Oink Oink!", "Ree!!", "Reee!!", "REEE!!", "REEEEE!!")
 
 /obj/item/book/granter/spell/barnyard/recoil(mob/living/carbon/user)
 	if(ishuman(user))
@@ -1186,6 +1198,7 @@
 	spellname = "charging"
 	icon_state ="bookcharge"
 	desc = "This book is made of 100% post-consumer wizard."
+	remarks = list("I feel alive!", "Zap! Zap!", "I'm FLYING through these pages!", "THIS GENIUS IS MAKING IT!", "This book is ACTION PAcKED!", "HE'S DONE IT", "LETS GOOOOOOOOOOOO")
 
 /obj/item/book/granter/spell/charge/recoil(mob/user)
 	..()
@@ -1197,6 +1210,7 @@
 	spellname = "instant summons"
 	icon_state ="booksummons"
 	desc = "This book is bright and garish, very hard to miss."
+	remarks = list("I can't look away from the book!", "The words seem to pop around the page...", "I just need to focus on one item...", "Make sure to have a good grip on it when casting...", "Slow down, book. I still haven't finished this page...", "Sounds pretty great with some staves...", "Magicians must love this one.")
 
 /obj/item/book/granter/spell/summonitem/recoil(mob/user)
 	..()
