@@ -5,16 +5,24 @@
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
+	var/obj/item/device/radio/beacon/projtarget
 
 /obj/item/projectile/energy/net/Initialize()
 	. = ..()
 	SpinAnimation()
+	set_projtarget()
+
+/obj/item/projectile/energy/net/proc/set_projtarget()
+	var/obj/item/ammo_casing/energy/net/N = loc
+	if(istype(N))
+		projtarget = N.drag.guntarget
 
 /obj/item/projectile/energy/net/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
-			new /obj/effect/nettingportal(Tloc)
+			var/obj/effect/nettingportal/NP = new (Tloc)
+			NP.teletarget = projtarget
 	..()
 
 /obj/item/projectile/energy/net/on_range()
@@ -31,23 +39,20 @@
 
 /obj/effect/nettingportal/Initialize()
 	. = ..()
-	var/obj/item/device/beacon/teletarget = null
-	for(var/obj/machinery/computer/teleporter/com in GLOB.machines)
-		if(com.target)
-			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
-				teletarget = com.target
 
-	addtimer(CALLBACK(src, .proc/pop, teletarget), 30)
+	addtimer(CALLBACK(src, .proc/pop), 30)
 
-/obj/effect/nettingportal/proc/pop(teletarget)
+/obj/effect/nettingportal/proc/pop()
 	if(teletarget)
+		var/TT = get_turf(teletarget)
 		for(var/mob/living/L in get_turf(src))
-			do_teleport(L, teletarget, 2)//teleport what's in the tile to the beacon
+			do_teleport(L, TT, 1)//teleport what's in the tile to the beacon
 	else
 		for(var/mob/living/L in get_turf(src))
 			do_teleport(L, L, 15) //Otherwise it just warps you off somewhere.
 
 	qdel(src)
+
 
 /obj/effect/nettingportal/singularity_act()
 	return

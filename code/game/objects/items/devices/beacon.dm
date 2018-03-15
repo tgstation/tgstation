@@ -13,7 +13,7 @@
 	. = ..()
 	if (enabled)
 		GLOB.teleportbeacons += src
-	else 
+	else
 		icon_state = "beacon-off"
 
 /obj/item/device/beacon/Destroy()
@@ -25,13 +25,17 @@
 	if (enabled)
 		icon_state = "beacon"
 		GLOB.teleportbeacons += src
-	else 
+	else
 		icon_state = "beacon-off"
 		GLOB.teleportbeacons.Remove(src)
 	to_chat(user, "<span class='notice'>You [enabled ? "enable" : "disable"] the beacon.</span>")
 	return
 
 /obj/item/device/beacon/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/gun/energy/e_gun/dragnet))
+		var/obj/item/gun/energy/e_gun/dragnet/D = W
+		D.set_target(src, user)
+
 	if(istype(W, /obj/item/pen)) // needed for things that use custom names like the locator
 		var/new_name = stripped_input(user, "What would you like the name to be?")
 		if(!user.canUseTopic(src, BE_CLOSE))
@@ -40,5 +44,5 @@
 			name = new_name
 			renamed = TRUE
 		return
-	else	
-		return ..()
+
+	return ..()

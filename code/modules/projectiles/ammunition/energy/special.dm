@@ -38,6 +38,14 @@
 	select_name = "netting"
 	pellets = 6
 	variance = 40
+	var/obj/item/gun/energy/e_gun/dragnet/drag
+
+/obj/item/ammo_casing/energy/net/Initialize()
+	.=..()
+	drag = loc
+	if(!istype(drag))
+		. = INITIALIZE_HINT_QDEL
+		CRASH("Energy net created outside of dragnet")
 
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/item/projectile/energy/trap
