@@ -50,7 +50,6 @@
 	damage = max(damage + (ddmg*damage_multiplier), 0)
 
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
-	//damage = max(damage + (ddmg*damage_multiplier), 0)
 	adjustDamage(ddmg)
 	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
 
@@ -59,14 +58,6 @@
 
 /obj/item/organ/ears/invincible
 	damage_multiplier = 0
-
-
-/*/mob/proc/restoreEars()
-
-/mob/living/carbon/restoreEars()
-	var/obj/item/organ/ears/ears = getorgan(/obj/item/organ/ears)
-	if(ears)
-		ears.restoreEars()*/
 
 /mob/proc/adjustEarDamage()
 
