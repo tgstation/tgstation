@@ -229,7 +229,7 @@
 				usr.visible_message("[usr] successfully rips [I] out of their [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
-					usr.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embeddedobject")
+					usr.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
 			return
 
 		if(href_list["item"])
