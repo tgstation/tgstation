@@ -49,7 +49,7 @@
 /obj/item/storage/backpack/holding/examine(mob/user)
 	..()
 	if(emagged)
-		to_chat(user, "A black scorch mark covers the bluespace transceiver")
+		to_chat(user, "A black scorch mark covers the bluespace transceiver.")
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
@@ -96,7 +96,7 @@
 		else
 			singulo = new /obj/singularity/boh (get_turf(src))
 
-		singulo.energy = 300 //should make it a bit bigger~
+		singulo.energy = 500 //should make it a bit bigger~
 		message_admins("[key_name_admin(user)] detonated a bag of holding")
 		log_game("[key_name(user)] detonated a bag of holding")
 		qdel(src)
