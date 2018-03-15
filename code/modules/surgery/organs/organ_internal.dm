@@ -21,6 +21,9 @@
 	damage += adjust
 	damage = min(damage, maxhealth) //clamp damage
 
+/obj/item/organ/proc/getDamage() //if you want some sort of special behavior for getting the damage
+	return
+
 /obj/item/organ/proc/onFailure() //called when organ fails
 	failure = TRUE
 
@@ -101,6 +104,7 @@
 /obj/item/organ/process()
 	if(damage <= 0)
 		damage = 0
+	if(damage >= maxhealth)
 		if(!failure)
 			onFailure()
 

@@ -6,6 +6,7 @@
 	slot = ORGAN_SLOT_HEART
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
+	maxhealth = DEFAULT_HEART_HEALTH
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
 	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
@@ -48,7 +49,7 @@
 	S.icon_state = "heart-off"
 	return S
 
-/obj/item/organ/heart/on_life()
+/obj/item/organ/heart/on_life_unfailed()
 	if(owner.client && beating)
 		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
 		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
@@ -69,6 +70,22 @@
 		else if(beat == BEAT_FAST)
 			H.stop_sound_channel(CHANNEL_HEARTBEAT)
 			beat = BEAT_NONE
+
+/obj/item/organ/heart/on_life_failed()
+	var/mob/living/carbon/C = owner
+
+	if(istype(C))
+		var/we_breath = !C.has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)
+
+		// Cardiac arrest, unless heart is stabilized
+		if(C.has_trait(TRAIT_STABLEHEART))
+			return
+
+		if(C.we_breath)
+			C.adjustOxyLoss(8)
+			C.Unconscious(80)
+		// Tissues die without blood circulation
+		C.adjustBruteLoss(2)
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
@@ -95,7 +112,7 @@
 	else
 		return ..()
 
-/obj/item/organ/heart/cursed/on_life()
+/obj/item/organ/heart/cursed/on_life_unfailed()
 	if(world.time > (last_pump + pump_delay))
 		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/H = owner
@@ -160,7 +177,7 @@
 	synthetic = TRUE //the power of freedom prevents heart attacks
 	var/min_next_adrenaline = 0
 
-/obj/item/organ/heart/freedom/on_life()
+/obj/item/organ/heart/freedom/on_life_unfailed()
 	. = ..()
 	if(owner.health < 5 && world.time > min_next_adrenaline)
 		min_next_adrenaline = world.time + rand(250, 600) //anywhere from 4.5 to 10 minutes

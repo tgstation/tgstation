@@ -440,6 +440,8 @@
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(istype(heart) && heart.beating)
 		return FALSE
+	if(heart.failure)
+		return TRUE
 	return TRUE
 
 /mob/living/carbon/proc/set_heartattack(status)

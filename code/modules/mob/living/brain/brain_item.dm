@@ -12,8 +12,11 @@
 	var/mob/living/brain/brainmob = null
 	var/damaged_brain = FALSE //whether the brain organ is damaged.
 	var/decoy_override = FALSE	//I apologize to the security players, and myself, who abused this, but this is going to go.
-
 	var/list/datum/brain_trauma/traumas = list()
+
+/obj/item/organ/brain/process()
+	damage = max_integrity - obj_integrity
+	..()
 
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0,no_id_transfer = FALSE)
 	..()
@@ -141,9 +144,9 @@
 	else
 		..()
 
-/obj/item/organ/brain/proc/get_brain_damage()
+/obj/item/organ/brain/get_brain_damage()
 	var/brain_damage_threshold = max_integrity * BRAIN_DAMAGE_INTEGRITY_MULTIPLIER
-	var/offset_integrity = obj_integrity - (max_integrity - brain_damage_threshold)
+	var/offset_integrity = obj_integrity - (maxhealth - brain_damage_threshold)
 	. = (1 - (offset_integrity / brain_damage_threshold)) * BRAIN_DAMAGE_DEATH
 
 /obj/item/organ/brain/proc/adjust_brain_damage(amount, maximum)

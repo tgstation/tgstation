@@ -43,10 +43,7 @@
 		if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
 			to_chat(C, "<span class='notice'>You feel [pick("nauseous", "dull pain in your lower body", "confused")].</span>")
 
-	if(damage > maxhealth)//cap liver damage
-		damage = maxhealth
-
-/obj/item/organ/liver/onFailure()
+/obj/item/organ/liver/on_life_failed()
 	..()
 	var/mob/living/carbon/C = owner
 
