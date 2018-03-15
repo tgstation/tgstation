@@ -8,13 +8,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	w_class = WEIGHT_CLASS_NORMAL
 	var/obj/structure/extraction_point/beacon
 	var/list/beacon_networks = list("station")
-	var/uses_left = 3
-	var/can_use_indoors
-	var/safe_for_living_creatures = 1
-
-/obj/item/extraction_pack/examine()
-	. = ..()
-	usr.show_message("It has [uses_left] use\s remaining.", 1)
 
 /obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
@@ -41,19 +34,11 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(!beacon)
 		to_chat(user, "[src] is not linked to a beacon, and cannot be used.")
 		return
-	if(!can_use_indoors)
-		var/area/area = get_area(A)
-		if(!area.outdoors)
-			to_chat(user, "[src] can only be used on things that are outdoors!")
-			return
 	if(!flag)
 		return
 	if(!istype(A))
 		return
 	else
-		if(!safe_for_living_creatures && check_for_living_mobs(A))
-			to_chat(user, "[src] is not safe for use with living creatures, they wouldn't survive the trip back!")
-			return
 		if(!isturf(A.loc)) // no extracting stuff inside other stuff
 			return
 		if(A.anchored)
@@ -65,9 +50,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 				var/obj/item/storage/backpack/B = user.back
 				if(B.can_be_inserted(src,stop_messages = 1))
 					B.handle_item_insertion(src)
-			uses_left--
-			if(uses_left <= 0)
-				user.transferItemToLoc(src, A, TRUE)
 			var/mutable_appearance/balloon
 			var/mutable_appearance/balloon2
 			var/mutable_appearance/balloon3
@@ -109,10 +91,13 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 				L.SetUnconscious(0)
 				L.drowsyness = 0
 				L.SetSleeping(0)
-			sleep(30)
 			var/list/flooring_near_beacon = list()
 			for(var/turf/open/floor in orange(1, beacon))
 				flooring_near_beacon += floor
+			if(beacon.z == z)
+				sleep(10 * (get_dist(get_turf(src), get_turf(beacon)) / 100))
+			else
+				sleep(100)
 			holder_obj.forceMove(pick(flooring_near_beacon))
 			animate(holder_obj, pixel_z = 10, time = 50)
 			sleep(50)
@@ -133,8 +118,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			sleep(5)
 			A.forceMove(holder_obj.loc)
 			qdel(holder_obj)
-			if(uses_left <= 0)
-				qdel(src)
 
 
 /obj/item/fulton_core
