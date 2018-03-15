@@ -9,15 +9,17 @@
 	idle_power_usage = 40
 	interact_offline = TRUE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	circuit = /obj/item/circuitboard/machine/chem_dispenser
 	var/cell_type = /obj/item/stock_parts/cell/high
 	var/obj/item/stock_parts/cell/cell
-	var/powerefficiency = 0.01
+	var/powerefficiency = 0.1
 	var/amount = 30
 	var/recharged = 0
 	var/recharge_delay = 5
 	var/mutable_appearance/beaker_overlay
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
+	var/macrotier = 1
 	var/obj/item/reagent_containers/beaker = null
 	var/list/dispensable_reagents = list(
 		"hydrogen",
@@ -145,6 +147,7 @@ obj/machinery/chem_dispenser/update_icon()
 	data["energy"] = cell.charge ? cell.charge * powerefficiency : "0" //To prevent NaN in the UI.
 	data["maxEnergy"] = cell.maxcharge * powerefficiency
 	data["isBeakerLoaded"] = beaker ? 1 : 0
+	data["macrosVisible"] = macrotier > 1 ? 1 : 0
 
 	var/beakerContents[0]
 	var/beakerCurrentVolume = 0
@@ -199,7 +202,7 @@ obj/machinery/chem_dispenser/update_icon()
 				var/actual = min(amount, (cell.charge * powerefficiency)*10, free)
 
 				R.add_reagent(reagent, actual)
-				cell.use((actual / 10) / powerefficiency)
+				cell.use(actual / powerefficiency)
 				work_animation()
 				. = TRUE
 		if("remove")
@@ -217,6 +220,8 @@ obj/machinery/chem_dispenser/update_icon()
 				update_icon()
 				. = TRUE
 		if("dispense_recipe")
+			if (macrotier < 2)
+				return
 			var/recipe_to_use = params["recipe"]
 			var/list/chemicals_to_dispense = process_recipe_list(recipe_to_use)
 			for(var/key in chemicals_to_dispense) // i suppose you could edit the list locally before passing it
@@ -256,6 +261,14 @@ obj/machinery/chem_dispenser/update_icon()
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
 	if(default_unfasten_wrench(user, I))
 		return
+	if(default_deconstruction_screwdriver(user, "dispenser-o", "dispenser", I))
+		return
+
+	if(exchange_parts(user, I))
+		return
+
+	if(default_deconstruction_crowbar(I))
+		return
 	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
 		. = 1 //no afterattack
@@ -294,87 +307,25 @@ obj/machinery/chem_dispenser/update_icon()
 	visible_message("<span class='danger'>[src] malfunctions, spraying chemicals everywhere!</span>")
 	..()
 
-/obj/machinery/chem_dispenser/constructable
-	name = "portable chem dispenser"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "minidispenser"
-	powerefficiency = 0.001
-	amount = 5
-	recharge_delay = 20
-	dispensable_reagents = list()
-	circuit = /obj/item/circuitboard/machine/chem_dispenser
-	working_state = "minidispenser_working"
-	nopower_state = "minidispenser_nopower"
-	var/static/list/dispensable_reagent_tiers = list(
-		list(
-			"hydrogen",
-			"oxygen",
-			"silicon",
-			"phosphorus",
-			"sulfur",
-			"carbon",
-			"nitrogen",
-			"water"
-		),
-		list(
-			"lithium",
-			"sugar",
-			"sacid",
-			"copper",
-			"mercury",
-			"sodium",
-			"iodine",
-			"bromine"
-		),
-		list(
-			"ethanol",
-			"chlorine",
-			"potassium",
-			"aluminium",
-			"radium",
-			"fluorine",
-			"iron",
-			"welding_fuel",
-			"silver",
-			"stable_plasma"
-		),
-		list(
-			"oil",
-			"ash",
-			"acetone",
-			"saltpetre",
-			"ammonia",
-			"diethylamine"
-		)
-	)
 
-/obj/machinery/chem_dispenser/constructable/RefreshParts()
+/obj/machinery/chem_dispenser/RefreshParts()
 	var/time = 0
-	var/i
+	var/newpowereff = 0.0666666
 	for(var/obj/item/stock_parts/cell/P in component_parts)
 		cell = P
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		time += M.rating
+		newpowereff += 0.0166666666*M.rating
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		time += C.rating
 	recharge_delay = 30/(time/2)         //delay between recharges, double the usual time on lowest 50% less than usual on highest
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		for(i=1, i<=M.rating, i++)
-			dispensable_reagents |= dispensable_reagent_tiers[i]
-	dispensable_reagents = sortList(dispensable_reagents)
+		if (M.rating > macrotier)
+			macrotier = M.rating
+	powerefficiency = round(newpowereff, 0.01)
 
-/obj/machinery/chem_dispenser/constructable/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", I))
-		return
 
-	if(exchange_parts(user, I))
-		return
 
-	if(default_deconstruction_crowbar(I))
-		return
-	return ..()
-
-/obj/machinery/chem_dispenser/constructable/on_deconstruction()
+/obj/machinery/chem_dispenser/on_deconstruction()
 	if(beaker)
 		beaker.forceMove(drop_location())
 		beaker = null
@@ -387,13 +338,9 @@ obj/machinery/chem_dispenser/update_icon()
 	for(var/reagents in first_process)
 		var/list/fuck = splittext(reagents, "=")
 		final_list += list(avoid_assoc_duplicate_keys(fuck[1],key_list) = text2num(fuck[2]))
+		if (final_list.len > macrotier*5)
+			break
 	return final_list
-
-/obj/machinery/chem_dispenser/constructable/display_beaker()
-	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
-	b_o.pixel_y = -4
-	b_o.pixel_x = -4
-	return b_o
 
 /obj/machinery/chem_dispenser/drinks/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")

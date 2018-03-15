@@ -3,6 +3,7 @@
     <ui-bar min='0' max='{{data.maxEnergy}}' value='{{data.energy}}'>{{Math.fixed(adata.energy)}} Units</ui-bar>
   </ui-section>
 </ui-display>
+{{#if data.macrosVisible}}
 <ui-display title='Saved Recipes' button>
   <ui-section>
     <ui-button icon='plus' action='add_recipe'>Add Recipe</ui-button>
@@ -12,6 +13,7 @@
     {{/each}}
   </ui-section>
 </ui-display>
+{{/if}}
 <ui-display title='Dispense' button>
   {{#partial button}}
     {{#each data.beakerTransferAmounts}}
