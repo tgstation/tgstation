@@ -1640,7 +1640,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.adjust_bodytemperature(11)
 		else
 			H.adjust_bodytemperature(BODYTEMP_HEATING_MAX + (H.fire_stacks * 12))
-
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 
 /datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
 	if(H.has_trait(TRAIT_NOFIRE))
