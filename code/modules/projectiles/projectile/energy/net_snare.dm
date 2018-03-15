@@ -46,7 +46,7 @@
 	var/TT = get_turf(teletarget)
 	if(teletarget && loc != TT)
 		for(var/mob/living/L in get_turf(src))
-			do_teleport(L, TT, 1)//teleport what's in the tile to the beacon
+			do_teleport(L, TT, 0)//teleport what's in the tile to the beacon
 	else
 		for(var/mob/living/L in get_turf(src))
 			do_teleport(L, L, 15) //Otherwise it just warps you off somewhere.
