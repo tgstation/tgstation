@@ -21,7 +21,7 @@
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
-			var/obj/effect/nettingportal/NP = new (Tloc)
+			var/NP = new /obj/effect/nettingportal(Tloc)
 			NP.teletarget = projtarget
 	..()
 
@@ -44,8 +44,8 @@
 	addtimer(CALLBACK(src, .proc/pop), 30)
 
 /obj/effect/nettingportal/proc/pop()
-	if(teletarget)
-		var/TT = get_turf(teletarget)
+	var/TT = get_turf(teletarget)
+	if(teletarget && loc != TT)
 		for(var/mob/living/L in get_turf(src))
 			do_teleport(L, TT, 1)//teleport what's in the tile to the beacon
 	else
