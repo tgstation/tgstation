@@ -958,15 +958,17 @@
 	title = "Hacking"
 	page_link = "Hacking"
 
-///Reusable books that grant actions (knowledge is power)
-/obj/item/book/action_granting
-	due_date = 0 // Game time in 1/10th seconds
+///Reusable books that teach things (intrinsic actions like bar flinging, or spells like fireball or smoke (knowledge is power))
+/obj/item/book/granter
+	due_date = 0 // Game time in deciseconds
 	unique = 1   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
-	var/datum/action/granted_action = null
 	var/list/remarks = list() //things to read about while learning.
 	var/pages_to_mastery = 3 //Essentially controls how long a mob must keep the book in his hand to actually successfully learn
 
-/obj/item/book/action_granting/attack_self(mob/user)
+/obj/item/book/granter/action
+	var/datum/action/granted_action = null
+
+/obj/item/book/granter/action/attack_self(mob/user)
 	if(!granted_action)
 		return
 	var/datum/action/G = new granted_action
@@ -985,14 +987,14 @@
 		to_chat(user, "<span class='notice'>You feel like you've got a good handle on [G.name]!</span>")
 		G.Grant(user)
 
-/obj/item/book/action_granting/proc/turn_page(mob/user)
+/obj/item/book/granter/action/proc/turn_page(mob/user)
 	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
 	if(do_after(user,50, user))
 		to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
 		return 1
 	return 0
 
-/obj/item/book/action_granting/drink_fling
+/obj/item/book/granter/action/drink_fling
 	name = "Tapper: This One's For You"
 	desc = "A seminal work on the dying art of booze sliding."
 	icon_state = "barbook"
@@ -1014,3 +1016,56 @@
 	button_icon_state = "drinkfling_off"
 	active = FALSE
 	UpdateButtonIcon()
+
+/obj/item/book/granter/spell
+	var/spell = null
+	var/oneuse = 1 //default this is one, but admins can var this to 0 if we wanna all have a pass around of the rod form book
+	var/used = 0 //only really matters if oneuse but it might be nice to know if someone's taken
+
+/obj/item/book/granter/spell/attack_self(mob/user)
+	if(!spell)
+		return
+	var/obj/effect/proc_holder/spell/S = new spell
+	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
+		if(knownspell.type == S.type)
+			if(user.mind)
+				if(iswizard(user))
+					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
+				else
+					to_chat(user,"<span class='notice'>You've already read this one.</span>")
+			return
+	if(used && oneuse)
+		recoil(user)
+	else
+		to_chat(user, "<span class='notice'>You start reading about [G.name]...</span>")
+		for(var/i=1, i<=pages_to_mastery, i++)
+			if(!turn_page(user))
+				to_chat(user, "<span class='notice'>You stop reading...</span>")
+				qdel(G)
+				return
+		if(do_after(user,50, user))
+			to_chat(user, "<span class='notice'>You feel like you've got a good handle on [G.name]!</span>")
+			user.mind.AddSpell(S)
+			user.log_message("<font color='orange'>learned the spell [spellname] ([S]).</font>", INDIVIDUAL_ATTACK_LOG)
+			onlearned(user)
+
+/obj/item/book/granter/spell/proc/turn_page(mob/user)
+	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
+	if(do_after(user,50, user))
+		to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
+		return 1
+	return 0
+
+/obj/item/book/granter/spell/proc/recoil(mob/user)
+	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")
+
+/obj/item/book/granter/spell/fireball
+	spell = /obj/effect/proc_holder/spell/aimed/fireball
+	spellname = "fireball"
+	icon_state ="bookfireball"
+	desc = "This book feels warm to the touch."
+
+/obj/item/book/granter/spell/fireball/recoil(mob/user)
+	..()
+	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
+	qdel(src)
