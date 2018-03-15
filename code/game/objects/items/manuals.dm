@@ -1019,6 +1019,7 @@
 
 /obj/item/book/granter/spell
 	var/spell = null
+	var/spellname = "magical bugs"
 	var/oneuse = 1 //default this is one, but admins can var this to 0 if we wanna all have a pass around of the rod form book
 	var/used = 0 //only really matters if oneuse but it might be nice to know if someone's taken
 
@@ -1037,14 +1038,14 @@
 	if(used && oneuse)
 		recoil(user)
 	else
-		to_chat(user, "<span class='notice'>You start reading about [G.name]...</span>")
+		to_chat(user, "<span class='notice'>You start reading about casting [S.spellname]...</span>")
 		for(var/i=1, i<=pages_to_mastery, i++)
 			if(!turn_page(user))
 				to_chat(user, "<span class='notice'>You stop reading...</span>")
-				qdel(G)
+				qdel(S)
 				return
 		if(do_after(user,50, user))
-			to_chat(user, "<span class='notice'>You feel like you've got a good handle on [G.name]!</span>")
+			to_chat(user, "<span class='notice'>You feel like you've got a good handle on [S.name]!</span>")
 			user.mind.AddSpell(S)
 			user.log_message("<font color='orange'>learned the spell [spellname] ([S]).</font>", INDIVIDUAL_ATTACK_LOG)
 			onlearned(user)
@@ -1059,12 +1060,17 @@
 /obj/item/book/granter/spell/proc/recoil(mob/user)
 	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")
 
+/obj/item/book/granter/spell/proc/onlearned(mob/user)
+	used = 1 //might seem odd to not put this under the oneuse check but if many people use it off oneuse and then an admin sets it to oneuse i could make an argument for having it then immediately jump to recoil
+	if(oneuse)
+		user.visible_message("<span class='caution'>[src] glows dark for a second!</span>")
+
 /obj/item/book/granter/spell/fireball
 	spell = /obj/effect/proc_holder/spell/aimed/fireball
 	spellname = "fireball"
 	icon_state ="bookfireball"
 	desc = "This book feels warm to the touch."
-	remarks = list("Aim...AIM, FOOL!", "Don't just catch them on fire...", "Accounting for crosswinds... really?", "I think I just burned my hand...", "Why the dumb stance? It's just a flick of the hand...", "OMEE... ONI... Ugh...", "What's the difference between a fireball and a pyroblast...")
+	remarks = list("Aim...AIM, FOOL!", "Just catching them on fire won't do...", "Accounting for crosswinds... really?", "I think I just burned my hand...", "Why the dumb stance? It's just a flick of the hand...", "OMEE... ONI... Ugh...", "What's the difference between a fireball and a pyroblast...")
 
 /obj/item/book/granter/spell/fireball/recoil(mob/user)
 	..()
