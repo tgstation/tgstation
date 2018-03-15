@@ -46,7 +46,7 @@
 	if(iscarbon(owner) && C.has_trait(TRAIT_DEAF))
 		deaf = 1
 
-/obj/item/organ/ear/adjustDamage(ddmg)
+/obj/item/organ/ears/adjustDamage(ddmg)
 	damage = max(damage + (ddmg*damage_multiplier), 0)
 
 /obj/item/organ/ears/adjustEarDamage(ddmg, ddeaf)

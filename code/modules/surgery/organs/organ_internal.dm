@@ -28,9 +28,26 @@
 	failure = FALSE
 	damage = 0
 
+/mob/proc/restoreOrgan()
+
+/mob/living/carbon/restoreOrgan(var/obj/item/organ/O)
+	if(istype(O))
+		O.restoreOrgan()
+
+/mob/proc/restoreOrganByType()
+
+/mob/living/carbon/restoreOrganByType(/obj/item/organ/T)
+	var/obj/item/organ/O = getorgan(T)
+	if(istype(O))
+		O.restoreOrgan()
+
+/mob/proc/restoreOrgans()
+	for(var/obj/item/organ/O in internal_organs)
+		restoreOrgan(O)
+
 /mob/proc/adjustDamage()
 
-/mob/living/carbon/adjustDamage(obj/item/organ/O, adjust)
+/mob/living/carbon/adjustDamage(var/obj/item/organ/O, adjust)
 	if(!istype(O))
 		return
 	O = getorgan(O)
