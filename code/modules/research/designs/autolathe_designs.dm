@@ -343,6 +343,14 @@
 	build_path = /obj/item/hatchet
 	category = list("initial","Misc")
 
+/datum/design/foilhat
+	name = "Tinfoil Hat"
+	id = "tinfoil_hat"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 5500)
+	build_path = /obj/item/clothing/head/foilhat
+	category = list("hacked", "Misc")
+
 /datum/design/scalpel
 	name = "Scalpel"
 	id = "scalpel"
@@ -415,12 +423,36 @@
 	build_path = /obj/item/device/healthanalyzer
 	category = list("initial", "Medical")
 
+/datum/design/pillbottle
+	name = "Pill Bottle"
+	id = "pillbottle"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 20, MAT_GLASS = 100)
+	build_path = /obj/item/storage/pill_bottle
+	category = list("initial", "Medical")
+
 /datum/design/beanbag_slug
 	name = "Beanbag Slug"
 	id = "beanbag_slug"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 250)
 	build_path = /obj/item/ammo_casing/shotgun/beanbag
+	category = list("initial", "Security")
+
+/datum/design/rubbershot
+	name = "Rubber Shot"
+	id = "rubber_shot"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_casing/shotgun/rubbershot
+	category = list("initial", "Security")
+
+/datum/design/c38
+	name = "Speed Loader (.38)"
+	id = "c38"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30000)
+	build_path = /obj/item/ammo_box/c38
 	category = list("initial", "Security")
 
 /datum/design/recorder
@@ -574,7 +606,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 500)
 	build_path = /obj/item/flamethrower/full
-	category = list("hacked", "Weapons and ammo")
+	category = list("hacked", "Security")
 
 /datum/design/rcd
 	name = "Rapid Construction Device (RCD)"
@@ -622,6 +654,38 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 15000)
 	build_path = /obj/item/weaponcrafting/receiver
+	category = list("hacked", "Security")
+
+/datum/design/shotgun_slug
+	name = "Shotgun Slug"
+	id = "shotgun_slug"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_casing/shotgun
+	category = list("hacked", "Security")
+
+/datum/design/buckshot_shell
+	name = "Buckshot Shell"
+	id = "buckshot_shell"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_casing/shotgun/buckshot
+	category = list("hacked", "Security")
+
+/datum/design/shotgun_dart
+	name = "Shotgun Dart"
+	id = "shotgun_dart"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_casing/shotgun/dart
+	category = list("hacked", "Security")
+
+/datum/design/incendiary_slug
+	name = "Incendiary Slug"
+	id = "incendiary_slug"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 4000)
+	build_path = /obj/item/ammo_casing/shotgun/incendiary
 	category = list("hacked", "Security")
 
 /datum/design/riot_dart
@@ -766,6 +830,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 100)
 	build_path = /obj/item/pet_carrier
+	category = list("initial", "Misc")
 
 /datum/design/miniature_power_cell
 	name = "Light Fixture Battery"
