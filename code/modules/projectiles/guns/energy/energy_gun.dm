@@ -69,7 +69,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
 	can_flashlight = 0
 	ammo_x_offset = 1
-	var/obj/item/device/radio/beacon/guntarget
+	var/obj/item/device/beacon/guntarget
 
 /obj/item/gun/energy/e_gun/dragnet/proc/set_target(target, user)//called on beacon's attackby()
 	guntarget = target
