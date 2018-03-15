@@ -230,7 +230,7 @@
 					clear_alert("embeddedobject")
 					GET_COMPONENT_FROM(mood, /datum/component/mood, usr)
 					if(mood)
-						mood.clear_event("embeddedobject")
+						mood.clear_event("embedded")
 			return
 
 		if(href_list["item"])
