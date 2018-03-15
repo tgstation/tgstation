@@ -356,7 +356,7 @@
 		if(health < 100 && prob(missinghealth))
 			C.emote("cough")
 
-		if(prob(missinghealth*0.5))
+		if(prob(missinghealth))
 			if(health<90 && health>=80)
 				icon_state = "damlungs-1"
 			if(health<80 && health >= 75)
