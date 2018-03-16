@@ -6,6 +6,7 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative
 	name = "regenerative extract"
 	desc = "It's filled with a milky substance, and pulses like a heartbeat."
+	effect = "regenerative"
 	icon_state = "regenerative"
 
 /obj/item/slimecross/regenerative/proc/core_effect(mob/living/carbon/human/target, mob/user)
@@ -27,10 +28,10 @@ Regenerative extracts:
 	else
 		user.visible_message("<span class='notice'>[user] crushes the [src] over [user.p_them()]self, the milky goo quickly regenerating all of [user.p_their()] injuries!</span>",
 			"<span class='notice'>You squeeze the [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!</span>")
-	src.core_effect_before(H, user)
+	core_effect_before(H, user)
 	H.revive(full_heal = 1)
-	src.core_effect(H, user)
-	playsound(get_turf(target), 'sound/effects/splat.ogg', 40, 1)
+	core_effect(H, user)
+	playsound(target, 'sound/effects/splat.ogg', 40, 1)
 	qdel(src)
 
 /obj/item/slimecross/regenerative/grey
@@ -106,11 +107,11 @@ Regenerative extracts:
 	if(H.get_item_by_slot(slot_wear_suit))
 		fireproofed = TRUE
 		var/obj/item/clothing/C = H.get_item_by_slot(slot_wear_suit)
-		src.fireproof(C)
+		fireproof(C)
 	if(H.get_item_by_slot(slot_head))
 		fireproofed = TRUE
 		var/obj/item/clothing/C = H.get_item_by_slot(slot_head)
-		src.fireproof(C)
+		fireproof(C)
 	if(fireproofed)
 		target.visible_message("<span class='notice'>Some of [target]'s clothing gets coated in the goo, and turns blue!</span>")
 
@@ -199,7 +200,7 @@ Regenerative extracts:
 /obj/item/slimecross/regenerative/gold/core_effect(mob/living/target, mob/user)
 	var/newcoin = pick(/obj/item/coin/silver, /obj/item/coin/iron, /obj/item/coin/gold, /obj/item/coin/diamond, /obj/item/coin/plasma, /obj/item/coin/uranium)
 	var/obj/item/coin/C = new newcoin(target.loc)
-	playsound(C.loc, 'sound/items/coinflip.ogg', 50, 1)
+	playsound(C, 'sound/items/coinflip.ogg', 50, 1)
 	target.put_in_hand(C)
 
 /obj/item/slimecross/regenerative/oil

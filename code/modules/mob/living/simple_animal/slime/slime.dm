@@ -364,7 +364,7 @@
 				hasFound = TRUE
 			if(applied >= SLIME_EXTRACT_CROSSING_REQUIRED)
 				to_chat(user, "<span class='notice'>You feed the slime as many of the extracts from the bag as you can, and it mutates!</span>")
-				playsound(get_turf(src), 'sound/effects/attackblob.ogg', 50, 1)
+				playsound(src, 'sound/effects/attackblob.ogg', 50, 1)
 				spawn_corecross()
 				hasOutput = TRUE
 				break
@@ -373,13 +373,13 @@
 				to_chat(user, "<span class='warning'>There are no extracts in the bag that this slime will accept!</span>")
 			else
 				to_chat(user, "<span class='notice'>You feed the slime some extracts from the bag.</span>")
-				playsound(get_turf(src), 'sound/effects/attackblob.ogg', 50, 1)
+				playsound(src, 'sound/effects/attackblob.ogg', 50, 1)
 		return
 	..()
 
 /mob/living/simple_animal/slime/proc/spawn_corecross()
-	src.visible_message("<span class='danger'>[src] shudders, its mutated core consuming the rest of its body!</span>")
-	playsound(get_turf(src), 'sound/magic/smoke.ogg', 50, 1)
+	visible_message("<span class='danger'>[src] shudders, its mutated core consuming the rest of its body!</span>")
+	playsound(src, 'sound/magic/smoke.ogg', 50, 1)
 	var/sanitizedcolour = replacetext(colour, " ", "")
 	var/sanitizedeffect = replacetext(effectmod, "-","")
 	var/corecross = sanitizedeffect + "/" + sanitizedcolour
@@ -387,7 +387,7 @@
 	if(ispath(crosspath))
 		new crosspath(loc)
 	else
-		src.visible_message("<span class='warning'>The mutated core shudders, and collapses into a puddle, unable to maintain its form.</span>")
+		visible_message("<span class='warning'>The mutated core shudders, and collapses into a puddle, unable to maintain its form.</span>")
 	qdel(src)
 
 /mob/living/simple_animal/slime/proc/apply_water()

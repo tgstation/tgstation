@@ -6,6 +6,7 @@ Recurring extracts:
 /obj/item/slimecross/recurring
 	name = "recurring extract"
 	desc = "A tiny, glowing core, wrapped in several layers of goo."
+	effect = "recurring"
 	icon_state = "recurring"
 	var/extract_type
 	var/obj/item/slime_extract/extract
@@ -15,7 +16,7 @@ Recurring extracts:
 /obj/item/slimecross/recurring/Initialize()
 	..()
 	extract = new extract_type(src.loc)
-	src.visible_message("<span class='notice'>[src] wraps a layer of goo around itself!</span>")
+	visible_message("<span class='notice'>[src] wraps a layer of goo around itself!</span>")
 	extract.name = name
 	extract.desc = desc
 	extract.icon = icon

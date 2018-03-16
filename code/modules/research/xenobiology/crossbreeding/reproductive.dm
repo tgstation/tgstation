@@ -7,6 +7,7 @@ Reproductive extracts:
 	name = "reproductive extract"
 	desc = "It pulses with a strange hunger."
 	icon_state = "reproductive"
+	effect = "reproductive"
 	var/extract_type = /obj/item/slime_extract/
 	var/cubes_eaten = 0
 	var/last_produce = 0
@@ -32,11 +33,11 @@ Reproductive extracts:
 		qdel(O)
 		cubes_eaten++
 		to_chat(user, "<span class='notice'>You feed [O] to [src], and it pulses gently.</span>")
-		playsound(get_turf(src), 'sound/items/eatfood.ogg', 20, 1)
+		playsound(src, 'sound/items/eatfood.ogg', 20, 1)
 	if(cubes_eaten >= 3)
 		var/cores = rand(1,4)
-		src.visible_message("<span class='notice'>[src] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!</span>")
-		playsound(get_turf(src), 'sound/effects/splat.ogg', 40, 1)
+		visible_message("<span class='notice'>[src] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!</span>")
+		playsound(src, 'sound/effects/splat.ogg', 40, 1)
 		last_produce = world.time
 		for(var/i = 0, i < cores, i++)
 			new extract_type(get_turf(loc))

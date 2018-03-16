@@ -7,6 +7,7 @@ Charged extracts:
 /obj/item/slimecross/charged
 	name = "charged extract"
 	desc = "It sparks with electric power."
+	effect = "charged"
 	container_type = INJECTABLE | DRAWABLE
 	icon_state = "charged"
 
@@ -20,8 +21,8 @@ Charged extracts:
 		return
 	reagents.remove_reagent("plasma",10)
 	to_chat(user, "<span class='notice'>You squeeze the extract, and it absorbs the plasma!</span>")
-	playsound(get_turf(src), 'sound/effects/bubbles.ogg', 50, 1)
-	playsound(get_turf(src), 'sound/effects/light_flicker.ogg', 50, 1)
+	playsound(src, 'sound/effects/bubbles.ogg', 50, 1)
+	playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
 	do_effect(user)
 
 /obj/item/slimecross/charged/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()
@@ -189,13 +190,13 @@ Charged extracts:
 	START_PROCESSING(SSobj, src)
 
 /obj/item/slimecross/charged/gold/process()
-	src.visible_message("<span class='warning'>[src] lets off a spark, and produces a living creature!</span>")
+	visible_message("<span class='warning'>[src] lets off a spark, and produces a living creature!</span>")
 	new /obj/effect/particle_effect/sparks(get_turf(src))
 	playsound(get_turf(src), "sparks", 50, 1)
 	create_random_mob(get_turf(src), HOSTILE_SPAWN)
 	spawned++
 	if(spawned >= max_spawn)
-		src.visible_message("<span class='warning'>[src] collapses into a puddle of goo.</span>")
+		visible_message("<span class='warning'>[src] collapses into a puddle of goo.</span>")
 		qdel(src)
 
 /obj/item/slimecross/charged/gold/Destroy()

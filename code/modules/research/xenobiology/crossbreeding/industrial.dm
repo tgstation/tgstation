@@ -6,6 +6,7 @@ Industrial extracts:
 	name = "industrial extract"
 	desc = "A gel-like, sturdy extract, fond of plasma and industry."
 	container_type = INJECTABLE | DRAWABLE
+	effect = "industrial"
 	icon_state = "industrial_still"
 	var/plasmarequired = 2 //Units of plasma required to be consumed to produce item.
 	var/itempath = /obj/item //The item produced by the extract.
@@ -40,12 +41,12 @@ Industrial extracts:
 		plasmaabsorbed += 1
 
 	if(plasmaabsorbed >= plasmarequired)
-		playsound(get_turf(src), 'sound/effects/attackblob.ogg', 50, 1)
+		playsound(src, 'sound/effects/attackblob.ogg', 50, 1)
 		plasmaabsorbed -= plasmarequired
 		for(var/i = 0, i < itemamount, i++)
 			do_after_spawn(new itempath(get_turf(src)))
 	else if(IsWorking)
-		playsound(get_turf(src), 'sound/effects/bubbles.ogg', 5, 1)
+		playsound(src, 'sound/effects/bubbles.ogg', 5, 1)
 	if(IsWorking)
 		icon_state = "industrial"
 	else

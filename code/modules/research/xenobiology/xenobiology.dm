@@ -21,7 +21,7 @@
 /obj/item/slime_extract/examine(mob/user)
 	..()
 	if(Uses > 1)
-		to_chat(user,"It has [Uses] use[Uses > 1 ? "s":""] remaining.")
+		to_chat(user,"It has [Uses] uses remaining.")
 
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/slimepotion/enhancer))
@@ -70,7 +70,7 @@
 	M.applied++
 	qdel(src)
 	to_chat(user, "<span class='notice'>You feed the slime [src], [M.applied == 1 ? "starting to mutate its core." : "further mutating its core."]</span>")
-	playsound(get_turf(M), 'sound/effects/attackblob.ogg', 50, 1)
+	playsound(M, 'sound/effects/attackblob.ogg', 50, 1)
 
 	if(M.applied >= SLIME_EXTRACT_CROSSING_REQUIRED)
 		M.spawn_corecross()

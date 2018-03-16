@@ -6,6 +6,7 @@ Burning extracts:
 /obj/item/slimecross/burning
 	name = "burning extract"
 	desc = "It's boiling over with barely-contained energy."
+	effect = "burning"
 	container_type = INJECTABLE | DRAWABLE
 	icon_state = "burning"
 
@@ -19,8 +20,8 @@ Burning extracts:
 		return
 	reagents.remove_reagent("plasma",10)
 	to_chat(user, "<span class='notice'>You squeeze the extract, and it absorbs the plasma!</span>")
-	playsound(get_turf(src), 'sound/effects/bubbles.ogg', 50, 1)
-	playsound(get_turf(src), 'sound/magic/fireball.ogg', 50, 1)
+	playsound(src, 'sound/effects/bubbles.ogg', 50, 1)
+	playsound(src, 'sound/magic/fireball.ogg', 50, 1)
 	do_effect(user)
 
 /obj/item/slimecross/burning/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()

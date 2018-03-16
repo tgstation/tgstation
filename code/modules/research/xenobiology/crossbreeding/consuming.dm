@@ -7,6 +7,7 @@ Consuming extracts:
 	name = "consuming extract"
 	desc = "It hungers... for <i>more</i>." //My slimecross has finally decided to eat... my buffet!
 	icon_state = "consuming"
+	effect = "consuming"
 	var/nutriment_eaten = 0
 	var/nutriment_required = 10
 	var/cooldown = 600 //1 minute.
@@ -24,13 +25,13 @@ Consuming extracts:
 			nutriment_eaten += N.volume
 			to_chat(user, "<span class='notice'>[src] opens up and swallows [O] whole!</span>")
 			qdel(O)
-			playsound(get_turf(src), 'sound/items/eatfood.ogg', 20, 1)
+			playsound(src, 'sound/items/eatfood.ogg', 20, 1)
 		else
 			to_chat(user, "<span class='warning'>[src] burbles unhappily at the offering.</span>")
 		if(nutriment_eaten >= nutriment_required)
 			nutriment_eaten = 0
 			user.visible_message("<span class='notice'>[src] swells up and produces a small pile of cookies!</span>")
-			playsound(get_turf(src), 'sound/effects/splat.ogg', 40, 1)
+			playsound(src, 'sound/effects/splat.ogg', 40, 1)
 			last_produced = world.time
 			for(var/i in 1 to cookies)
 				var/obj/item/S = spawncookie()

@@ -4,6 +4,7 @@ Self-sustaining extracts:
 */
 /obj/item/slimecross/selfsustaining
 	name = "self-sustaining extract"
+	effect = "selfsustaining"
 	icon_state = "selfsustaining"
 	var/extract_type = /obj/item/slime_extract
 
@@ -15,7 +16,7 @@ Self-sustaining extracts:
 //Just divides into the actual item.
 /obj/item/slimecross/selfsustaining/Initialize()
 	. = ..()
-	src.visible_message("<span class='warning'>The [src] shudders, and splits into four smaller extracts.</span>")
+	visible_message("<span class='warning'>The [src] shudders, and splits into four smaller extracts.</span>")
 	for(var/i = 0, i < 4, i++)
 		var/obj/item/autoslime/A = new /obj/item/autoslime(src.loc)
 		var/obj/item/slime_extract/X = new extract_type(A)
