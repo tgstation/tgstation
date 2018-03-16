@@ -322,5 +322,3 @@
 #undef LUM_FALLOFF
 #undef REMOVE_CORNER
 #undef APPLY_CORNER
-#undef X_CORNER
-#undef Y_CORNER
