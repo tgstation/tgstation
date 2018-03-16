@@ -147,7 +147,6 @@ obj/machinery/chem_dispenser/update_icon()
 	data["energy"] = cell.charge ? cell.charge * powerefficiency : "0" //To prevent NaN in the UI.
 	data["maxEnergy"] = cell.maxcharge * powerefficiency
 	data["isBeakerLoaded"] = beaker ? 1 : 0
-	data["macrosVisible"] = macrotier > 1 ? 1 : 0
 
 	var/beakerContents[0]
 	var/beakerCurrentVolume = 0
@@ -220,20 +219,19 @@ obj/machinery/chem_dispenser/update_icon()
 				update_icon()
 				. = TRUE
 		if("dispense_recipe")
-			if (macrotier < 2)
-				return
 			var/recipe_to_use = params["recipe"]
 			var/list/chemicals_to_dispense = process_recipe_list(recipe_to_use)
+			var/res = get_macro_resolution()
 			for(var/key in chemicals_to_dispense) // i suppose you could edit the list locally before passing it
 				var/list/keysplit = splittext(key," ")
 				var/r_id = keysplit[1]
 				if(beaker && dispensable_reagents.Find(r_id)) // but since we verify we have the reagent, it'll be fine
 					var/datum/reagents/R = beaker.reagents
 					var/free = R.maximum_volume - R.total_volume
-					var/actual = min(chemicals_to_dispense[key], (cell.charge * powerefficiency)*10, free)
+					var/actual = min(round(chemicals_to_dispense[key], res), (cell.charge * powerefficiency)*10, free)
 					if(actual)
 						R.add_reagent(r_id, actual)
-						cell.use((actual / 10) / powerefficiency)
+						cell.use(actual / powerefficiency)
 						work_animation()
 		if("clear_recipes")
 			var/yesno = alert("Clear all recipes?",, "Yes","No")
@@ -246,16 +244,22 @@ obj/machinery/chem_dispenser/update_icon()
 				var/list/first_process = splittext(recipe, ";")
 				if(!LAZYLEN(first_process))
 					return
+				var/res = get_macro_resolution()
+				var/resmismatch = FALSE
 				for(var/reagents in first_process)
-					var/list/fuck = splittext(reagents, "=")
-					if(dispensable_reagents.Find(fuck[1]))
+					var/list/reagent = splittext(reagents, "=")
+					if(dispensable_reagents.Find(reagent[1]))
+						if (!resmismatch && !check_macro_part(reagents, res))
+							resmismatch = TRUE
 						continue
 					else
-						var/temp = fuck[1]
+						var/chemid = reagent[1]
 						visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
-						to_chat(usr, "<span class ='danger'>[src] cannot find Chemical ID: <b>[temp]</b>!</span>")
+						to_chat(usr, "<span class ='danger'>[src] cannot find Chemical ID: <b>[chemid]</b>!</span>")
 						playsound(src, "sound/machines/buzz-two.ogg", 50, 1)
 						return
+				if (resmismatch && alert("[src] is not yet capable of replicating this recipe with the precision it needs, do you want to save it anyway?",, "Yes","No") == "No")
+					return
 				saved_recipes += list(list("recipe_name" = name, "contents" = recipe))
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
@@ -331,6 +335,24 @@ obj/machinery/chem_dispenser/update_icon()
 		beaker = null
 	return ..()
 
+/obj/machinery/chem_dispenser/proc/get_macro_resolution()
+	. = 5
+	if (macrotier > 1)
+		. -= macrotier // 5 for tier1, 3 for 2, 2 for 3, 1 for 4.
+
+/obj/machinery/chem_dispenser/proc/check_macro(var/macro)
+	var/res = get_macro_resolution()
+	for (var/reagent in splittext(macro, ";"))
+		if (!check_macro_part(reagent, res))
+			return FALSE
+	return TRUE
+
+/obj/machinery/chem_dispenser/proc/check_macro_part(var/part, var/res = get_macro_resolution())
+	var/detail = splittext(part, "=")
+	if (round(text2num(detail[2]), res) != text2num(detail[2]))
+		return FALSE
+	return TRUE
+
 /obj/machinery/chem_dispenser/proc/process_recipe_list(var/fucking_hell)
 	var/list/key_list = list()
 	var/list/final_list = list()
@@ -338,8 +360,6 @@ obj/machinery/chem_dispenser/update_icon()
 	for(var/reagents in first_process)
 		var/list/fuck = splittext(reagents, "=")
 		final_list += list(avoid_assoc_duplicate_keys(fuck[1],key_list) = text2num(fuck[2]))
-		if (final_list.len > macrotier*5)
-			break
 	return final_list
 
 /obj/machinery/chem_dispenser/drinks/display_beaker()
