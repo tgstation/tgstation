@@ -33,10 +33,10 @@
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
 
-/turf/open/floor/plating/asteroid/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+/turf/open/floor/plating/asteroid/MakeSlippery()
 	return
 
-/turf/open/floor/plating/asteroid/MakeDry(wet_setting = TURF_WET_WATER)
+/turf/open/floor/plating/asteroid/MakeDry()
 	return
 
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
