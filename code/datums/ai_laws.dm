@@ -13,7 +13,7 @@
 	var/list/supplied = list()
 	var/list/ion = list()
 	var/mob/living/silicon/owner
-	var/list/devillaws = null
+	var/list/devillaws = list()
 	var/id = DEFAULT_AI_LAWID
 
 /datum/ai_laws/proc/lawid_to_type(lawid)
@@ -403,15 +403,15 @@
 
 	if (include_zeroth && devillaws && devillaws.len)
 		for(var/i in devillaws)
-			data += "[show_numbers ? "666:" : ""] [i]"
+			data += "[show_numbers ? "666:" : ""] <font color='#cc5500'>[i]</font>"
 
 	if (include_zeroth && zeroth)
-		data += "[show_numbers ? "0:" : ""] [zeroth]"
+		data += "[show_numbers ? "0:" : ""] <font color='#ff0000'>[zeroth]</font>"
 
 	for(var/law in ion)
 		if (length(law) > 0)
 			var/num = ionnum()
-			data += "[show_numbers ? "[num]:" : ""] [law]"
+			data += "[show_numbers ? "[num]:" : ""] <font color='#00ffff'>[law]</font>"
 
 	var/number = 1
 	for(var/law in inherent)
@@ -421,6 +421,6 @@
 
 	for(var/law in supplied)
 		if (length(law) > 0)
-			data += "[show_numbers ? "[number]:" : ""] [law]"
+			data += "[show_numbers ? "[number]:" : ""] <font color='#800080'>[law]</font>"
 			number++
 	return data
