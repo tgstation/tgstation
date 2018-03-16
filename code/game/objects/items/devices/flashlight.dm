@@ -543,7 +543,7 @@
 		light.directional = dir
 		update_light()
 
-/obj/item/device/flashlight/directional/New()
+/obj/item/device/flashlight/directional/Initialize()
 	..()
 	START_PROCESSING(SSobj, src)
 
@@ -552,7 +552,6 @@
 	. = ..()
 
 /obj/item/device/flashlight/directional/process() //So that the light follows you when you turn without moving
-	..()
 	if(ismob(loc) && on)
 		if(dir != loc.dir)
 			dir = loc.dir
