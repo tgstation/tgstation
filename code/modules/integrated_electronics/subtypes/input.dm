@@ -933,8 +933,8 @@
 				set_pin_data(IC_OUTPUT, 1, C.charge)
 				set_pin_data(IC_OUTPUT, 2, C.maxcharge)
 				set_pin_data(IC_OUTPUT, 3, C.percent())
-	activate_pin(2)
 	push_data()
+	activate_pin(2)
 	return
 
 /obj/item/integrated_circuit/input/ntnetsc
