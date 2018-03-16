@@ -539,16 +539,17 @@
 /obj/item/device/flashlight/directional/update_brightness()
 	..()
 	if(light)
-		light.directional = loc.dir
+		dir = loc.dir
+		light.directional = dir
 		update_light()
 
-/obj/item/device/flashlight/directional/equipped()
+/obj/item/device/flashlight/directional/New()
 	..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/device/flashlight/directional/dropped()
-	..()
+/obj/item/device/flashlight/directional/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/item/device/flashlight/directional/process() //So that the light follows you when you turn without moving
 	..()

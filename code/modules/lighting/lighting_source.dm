@@ -251,6 +251,8 @@
 						C = thing
 						corners[C] = 0
 					turfs += T
+					if(T.has_opaque_atom)
+						break
 		else
 			var/oldlum = source_turf.luminosity
 			source_turf.luminosity = CEILING(light_range, 1)
