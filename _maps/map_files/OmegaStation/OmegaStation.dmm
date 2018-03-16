@@ -30409,11 +30409,6 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Shuttle Docking Foyer";
-	dir = 8;
-	network = list("mine")
-	},
-/obj/machinery/camera{
 	c_tag = "Escape Arm Airlocks";
 	dir = 8
 	},
