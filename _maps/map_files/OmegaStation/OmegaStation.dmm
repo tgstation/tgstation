@@ -9944,17 +9944,17 @@
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "atI" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Atmospherics Engine APC";
-	areastring = "/area/engine/atmos";
-	pixel_x = 26
-	},
 /obj/structure/cable/white{
 	icon_state = "0-2"
 	},
 /obj/structure/closet/wardrobe/atmospherics_yellow,
 /obj/effect/turf_decal/bot,
+/obj/machinery/power/apc/highcap/ten_k{
+	areastring = "/area/engine/atmos";
+	dir = 4;
+	name = "Atmospherics APC";
+	pixel_x = 26
+	},
 /turf/open/floor/plasteel/caution{
 	dir = 4
 	},
@@ -11341,6 +11341,9 @@
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/mask/gas,
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "awL" = (
@@ -12667,7 +12670,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "aAq" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/effect/landmark/start/atmospheric_technician,
 /obj/structure/cable/white{
 	icon_state = "1-4"
@@ -13931,14 +13933,16 @@
 /area/space)
 "aDr" = (
 /obj/structure/sign/warning/nosmoking,
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	icon_state = "intact";
+	dir = 8
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "aDs" = (
 /obj/structure/sign/warning/fire,
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	icon_state = "intact";
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
@@ -29363,7 +29367,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bko" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	icon_state = "intact";
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
@@ -30861,7 +30866,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "ckn" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/closed/wall/r_wall,
 /area/asteroid/nearstation)
 "cmp" = (
@@ -30881,7 +30886,7 @@
 /area/hallway/secondary/entry)
 "coQ" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	volume_rate = 200
+	volume_rate = 50
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -30965,7 +30970,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cWv" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "cWR" = (
@@ -31050,8 +31055,9 @@
 /area/engine/atmos)
 "dIu" = (
 /obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	icon_state = "intact";
+	dir = 8
 	},
 /turf/closed/wall/r_wall,
 /area/asteroid/nearstation)
@@ -31221,7 +31227,8 @@
 /turf/open/floor/engine,
 /area/asteroid/nearstation)
 "fEM" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	icon_state = "intact";
 	dir = 6
 	},
 /turf/closed/wall/r_wall,
@@ -31342,8 +31349,9 @@
 	},
 /area/asteroid/nearstation)
 "gUJ" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	icon_state = "intact";
+	dir = 8
 	},
 /turf/closed/wall/r_wall,
 /area/asteroid/nearstation)
@@ -31383,7 +31391,8 @@
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "hNO" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	icon_state = "intact";
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
@@ -31561,8 +31570,9 @@
 /turf/open/floor/plasteel/neutral,
 /area/asteroid/nearstation)
 "jDd" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	icon_state = "intact";
+	dir = 8
 	},
 /turf/closed/wall/r_wall/rust,
 /area/engine/atmos)
@@ -32014,8 +32024,9 @@
 /area/science/xenobiology)
 "pNE" = (
 /obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	icon_state = "intact";
+	dir = 8
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
@@ -34747,8 +34758,9 @@
 /turf/open/space/basic,
 /area/asteroid/nearstation)
 "uok" = (
-/obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	icon_state = "intact";
+	dir = 8
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
@@ -34791,7 +34803,7 @@
 	},
 /area/hallway/primary/aft)
 "uvg" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/asteroid/nearstation)
 "uxJ" = (
@@ -34854,10 +34866,10 @@
 	},
 /obj/machinery/computer/atmos_control/tank{
 	dir = 2;
-	input_tag = "no2_in";
+	input_tag = "n2o_in";
 	name = "Nitrogen Dioxide Supply Control";
-	output_tag = "no2_out";
-	sensors = list("no2_sensor" = "Tank")
+	output_tag = "n2o_out";
+	sensors = list("n2o_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
