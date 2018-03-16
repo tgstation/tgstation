@@ -48,7 +48,7 @@
 	
 			while (exclaim > 0)
 				M += "!"
-	return trim(M)
+	return uppertext(trim(M))
 
 /obj/item/clothing/mask/spurdo/equipped(mob/user, slot) //when you put it on
 	var/mob/living/carbon/C = user
