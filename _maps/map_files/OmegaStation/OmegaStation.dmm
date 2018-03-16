@@ -8802,6 +8802,8 @@
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/device/multitool,
+/obj/item/device/multitool,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aqV" = (
@@ -14316,7 +14318,6 @@
 	pixel_y = -28
 	},
 /obj/effect/turf_decal/bot,
-/obj/item/pipe_dispenser,
 /turf/open/floor/plasteel/vault/side{
 	dir = 1
 	},
@@ -14327,7 +14328,6 @@
 	},
 /obj/structure/closet/secure_closet/atmospherics,
 /obj/effect/turf_decal/bot,
-/obj/item/pipe_dispenser,
 /turf/open/floor/plasteel/vault/side{
 	dir = 1
 	},
@@ -14522,8 +14522,6 @@
 "aCN" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/dorms)
 "aCO" = (
@@ -18347,7 +18345,6 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/item/device/lightreplacer,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8
 	},
@@ -24276,10 +24273,6 @@
 	},
 /obj/item/storage/backpack/satchel/med,
 /obj/effect/turf_decal/bot,
-/obj/item/storage/belt/medical,
-/obj/item/storage/belt/medical,
-/obj/item/clothing/neck/stethoscope,
-/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXQ" = (
@@ -24300,6 +24293,10 @@
 /obj/item/storage/box/syringes,
 /obj/item/gun/syringe,
 /obj/item/reagent_containers/hypospray/CMO,
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXR" = (
@@ -33866,11 +33863,6 @@
 	},
 /area/ai_monitored/turret_protected/aisat_interior)
 "sNo" = (
-/obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
-	name = "AI Satellite turret control";
-	pixel_y = -24
-	},
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Antechamber";
 	req_one_access_txt = "32;19"
@@ -34014,6 +34006,12 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/machinery/turretid{
+	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
+	name = "AI Satellite turret control";
+	pixel_x = 30;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/vault/side{
 	dir = 6
 	},
@@ -34116,7 +34114,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "sNS" = (
 /obj/machinery/porta_turret/ai{
-	installation = /obj/item/gun/energy/e_gun
+	installation = /obj/item/gun/energy/e_gun/turret
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/airalarm{
@@ -34146,7 +34144,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "sNU" = (
 /obj/machinery/porta_turret/ai{
-	installation = /obj/item/gun/energy/e_gun
+	installation = /obj/item/gun/energy/e_gun/turret
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/firealarm{
