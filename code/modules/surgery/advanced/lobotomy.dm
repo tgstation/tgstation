@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/lobotomy
+	name = "Lobotomy Surgery Disk"
 	desc = "The disk provides instructions on how to perform a lobotomy, to cure the most resilient brain ailments."
 	surgeries = list(/datum/surgery/advanced/lobotomy)
 

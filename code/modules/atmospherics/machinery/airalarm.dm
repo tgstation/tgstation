@@ -137,6 +137,9 @@
 		/datum/gas/pluoxium			= new/datum/tlv(-1, -1, 135, 140) // Partial pressure, kpa
 	)
 
+/obj/machinery/airalarm/unlocked
+	locked = FALSE
+
 /obj/machinery/airalarm/engine
 	name = "engine air alarm"
 	locked = FALSE

@@ -350,7 +350,7 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, "<span class='userdanger'>You feel something <i>wrong</i> inside you...</span>")
-			user.ForceContractDisease(new /datum/disease/transformation/slime(0))
+			user.ForceContractDisease(new /datum/disease/transformation/slime(), FALSE, TRUE)
 			return 100
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -870,8 +870,9 @@
 	force = 6
 	materials = list(MAT_METAL=500)
 	throwforce = 10
-	throw_speed = 3
-	throw_range = 7
+	throw_speed = 0.1
+	throw_range = 28
+	glide_size = 2
 	flags_1 = CONDUCT_1
 	max_amount = 60
 	turf_type = /turf/open/floor/sepia

@@ -73,7 +73,7 @@
 	var/task = href_list["editrights"]
 	var/skip
 	if(task == "activate" || task == "deactivate")
-		skip = 1
+		skip = TRUE
 	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_admins) && task == "rank")
 		if(admin_ckey in GLOB.protected_admins)
 			to_chat(usr, "<span class='admin prefix'>Editing the rank of this admin is blocked by server configuration.</span>")
@@ -82,20 +82,20 @@
 		if(D.rank in GLOB.protected_ranks)
 			to_chat(usr, "<span class='admin prefix'>Editing the flags of this rank is blocked by server configuration.</span>")
 			return
-	if(check_rights(R_DBRANKS, 0))
+	if(check_rights(R_DBRANKS, FALSE))
 		if(!skip)
 			if(!SSdbcore.Connect())
 				to_chat(usr, "<span class='danger'>Unable to connect to database, changes are temporary only.</span>")
-				use_db = "Temporary"
-			if(!use_db)
+				use_db = FALSE
+			else
 				use_db = alert("Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", "Permanent", "Temporary", "Cancel")
 				if(use_db == "Cancel")
 					return
 				if(use_db == "Permanent")
-					use_db = 1
+					use_db = TRUE
 					admin_ckey = sanitizeSQL(admin_ckey)
 				else
-					use_db = 0
+					use_db = FALSE
 	if(task != "add")
 		D = GLOB.admin_datums[admin_ckey]
 		if(!D)
@@ -124,19 +124,20 @@
 	edit_admin_permissions()
 
 /datum/admins/proc/add_admin(use_db)
-	. = sanitizeSQL(ckey(input("New admin's ckey","Admin ckey") as text|null))
+	. = ckey(input("New admin's ckey","Admin ckey") as text|null)
 	if(!.)
-		return 0
+		return FALSE
 	if(. in GLOB.admin_datums+GLOB.deadmins)
 		to_chat(usr, "<span class='danger'>[.] is already an admin.</span>")
-		return 0
+		return FALSE
 	if(use_db)
+		. = sanitizeSQL(.)
 		var/datum/DBQuery/query_add_admin = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin")] (ckey, rank) VALUES ('[.]', 'NEW ADMIN')")
 		if(!query_add_admin.warn_execute())
-			return 0
+			return FALSE
 		var/datum/DBQuery/query_add_admin_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, adminckey, adminip, operation, log) VALUES ('[SQLtime()]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'add admin', 'New admin added: [.]')")
 		if(!query_add_admin_log.warn_execute())
-			return 0
+			return FALSE
 
 /datum/admins/proc/remove_admin(admin_ckey, use_db, datum/admins/D)
 	if(alert("Are you sure you want to remove [admin_ckey]?","Confirm Removal","Do it","Cancel") == "Do it")
@@ -175,7 +176,7 @@
 			rank_names[R.name] = R
 	var/new_rank = input("Please select a rank", "New rank") as null|anything in rank_names
 	if(new_rank == "*New Rank*")
-		new_rank = sanitizeSQL(ckeyEx(input("Please input a new rank", "New custom rank") as text|null))
+		new_rank = ckeyEx(input("Please input a new rank", "New custom rank") as text|null)
 	if(!new_rank)
 		return
 	R = rank_names[new_rank]
@@ -186,6 +187,7 @@
 			R = new(new_rank) //blank new admin_rank
 		GLOB.admin_ranks += R
 	if(use_db)
+		new_rank = sanitizeSQL(new_rank)
 		if(!R)
 			var/datum/DBQuery/query_add_rank = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_ranks")] (rank, flags, exclude_flags, can_edit_rights) VALUES ('[new_rank]', '0', '0', '0')")
 			if(!query_add_rank.warn_execute())
@@ -208,7 +210,8 @@
 	if(D) //they were previously an admin
 		D.disassociate() //existing admin needs to be disassociated
 		D.rank = R //set the admin_rank as our rank
-		D.associate()
+		var/client/C = GLOB.directory[admin_ckey]
+		D.associate(C)
 	else
 		D = new(R, admin_ckey, TRUE) //new admin
 	message_admins("[key_name_admin(usr)] edited the admin rank of [admin_ckey] to [new_rank] [use_db ? "permanently" : "temporarily"]")

@@ -16,13 +16,15 @@
 		for(var/thing in data["viruses"])
 			var/datum/disease/D = thing
 
-			if((D.spread_flags & VIRUS_SPREAD_SPECIAL) || (D.spread_flags & VIRUS_SPREAD_NON_CONTAGIOUS))
+			if((D.spread_flags & DISEASE_SPREAD_SPECIAL) || (D.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
 
-			if((method == TOUCH || method == VAPOR) && (D.spread_flags & VIRUS_SPREAD_CONTACT_FLUIDS))
-				M.ContactContractDisease(D)
-			else //ingest, patch or inject
-				M.ForceContractDisease(D)
+			if(isliving(M))
+				var/mob/living/L = M
+				if((method == TOUCH || method == VAPOR) && (D.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
+					L.ContactContractDisease(D)
+				else //ingest, patch or inject
+					L.ForceContractDisease(D)
 
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
@@ -97,12 +99,15 @@
 	taste_description = "slime"
 
 /datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, reac_volume)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(islist(data) && (method == INGEST || method == INJECT))
-		for(var/thing in M.viruses)
+		for(var/thing in L.diseases)
 			var/datum/disease/D = thing
 			if(D.GetDiseaseID() in data)
 				D.cure()
-		M.resistances |= data
+		L.disease_resistances |= data
 
 /datum/reagent/vaccine/on_merge(list/data)
 	if(istype(data))
@@ -217,13 +222,18 @@
 			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
-	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
+	if(data >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering = min(M.stuttering+4, 10)
 		M.Dizzy(5)
-		if(iscultist(M) && prob(5))
+		if(iscultist(M) && prob(8))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
+			if(prob(20))
+				M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
+				M.Unconscious(120)
+				to_chat(M, "<span class='cultlarge'>[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
+				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
 		else if(is_servant_of_ratvar(M) && prob(8))
 			switch(pick("speech", "message", "emote"))
 				if("speech")
@@ -623,8 +633,11 @@
 	taste_description = "slime"
 
 /datum/reagent/aslimetoxin/reaction_mob(mob/M, method=TOUCH, reac_volume)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(method != TOUCH)
-		M.ForceContractDisease(new /datum/disease/transformation/slime(0))
+		L.ForceContractDisease(new /datum/disease/transformation/slime(), FALSE, TRUE)
 
 /datum/reagent/gluttonytoxin
 	name = "Gluttony's Blessing"
@@ -635,7 +648,10 @@
 	taste_description = "decay"
 
 /datum/reagent/gluttonytoxin/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	M.ForceContractDisease(new /datum/disease/transformation/morph(0))
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
+	L.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"
@@ -1103,8 +1119,11 @@
 	taste_description = "sludge"
 
 /datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ForceContractDisease(new /datum/disease/transformation/robot(0))
+		L.ForceContractDisease(new /datum/disease/transformation/robot(), FALSE, TRUE)
 
 /datum/reagent/xenomicrobes
 	name = "Xenomicrobes"
@@ -1115,8 +1134,11 @@
 	taste_description = "sludge"
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ForceContractDisease(new /datum/disease/transformation/xeno(0))
+		L.ForceContractDisease(new /datum/disease/transformation/xeno(), FALSE, TRUE)
 
 /datum/reagent/fungalspores
 	name = "Tubercle bacillus Cosmosis microbes"
@@ -1127,8 +1149,11 @@
 	taste_description = "slime"
 
 /datum/reagent/fungalspores/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ForceContractDisease(new /datum/disease/tuberculosis(0))
+		L.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)
 
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"

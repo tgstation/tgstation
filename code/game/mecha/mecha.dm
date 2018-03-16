@@ -370,15 +370,21 @@
 				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 3)
 			else
 				occupant.clear_alert("mech damage")
-		var/actual_loc = occupant.loc
-		if(istype(actual_loc, /obj/item/device/mmi))
-			var/obj/item/device/mmi/M = actual_loc
-			actual_loc = M.mecha
-		if(actual_loc != src) //something went wrong
-			occupant.clear_alert("charge")
-			occupant.clear_alert("mech damage")
-			RemoveActions(occupant, human_occupant=1)
-			occupant = null
+		var/atom/checking = occupant.loc
+		// recursive check to handle all cases regarding very nested occupants,
+		// such as brainmob inside brainitem inside MMI inside mecha
+		while (!isnull(checking))
+			if (isturf(checking))
+				// hit a turf before hitting the mecha, seems like they have
+				// been moved out
+				occupant.clear_alert("charge")
+				occupant.clear_alert("mech damage")
+				RemoveActions(occupant, human_occupant=1)
+				occupant = null
+				break
+			else if (checking == src)
+				break  // all good
+			checking = checking.loc
 
 	if(lights)
 		var/lights_energy_drain = 2
@@ -434,11 +440,24 @@
 		target = safepick(view(3,target))
 		if(!target)
 			return
+
+	var/mob/living/L = user
+	var/obj/structure/closet/C = target
 	if(!Adjacent(target))
 		if(selected && selected.is_ranged())
+			if(L.has_trait(TRAIT_PACIFISM) && !selected.pacifist_safe)
+				to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+				return
 			if(selected.action(target,params))
 				selected.start_cooldown()
 	else if(selected && selected.is_melee())
+		if(isliving(target) && !selected.pacifist_safe && L.has_trait(TRAIT_PACIFISM))
+			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+			return
+		if(istype(C) && L.has_trait(TRAIT_PACIFISM) && !selected.pacifist_safe && !istype(selected,/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/))
+			for(var/mob/living/M in C)
+				to_chat(user, "<span class='warning'>There's someone in there! I don't want to hurt them.</span>")
+				return
 		if(selected.action(target,params))
 			selected.start_cooldown()
 	else
