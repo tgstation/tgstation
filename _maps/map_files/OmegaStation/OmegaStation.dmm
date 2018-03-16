@@ -8961,7 +8961,8 @@
 "arr" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
 	dir = 8;
-	filter_type = "n2o"
+	filter_type = "n2o";
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -8976,6 +8977,13 @@
 	},
 /area/engine/atmos)
 "arw" = (
+/obj/machinery/computer/atmos_control/tank{
+	dir = 2;
+	input_tag = "mix_in";
+	name = "Mix Tank Supply Control";
+	output_tag = "mix_out";
+	sensors = list("mix_sensor" = "Tank")
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -9490,10 +9498,6 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 10
 	},
-/turf/open/floor/plasteel/neutral,
-/area/engine/atmos)
-"asD" = (
-/obj/machinery/computer/atmos_control/tank,
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "asF" = (
@@ -10343,16 +10347,8 @@
 /obj/machinery/atmospherics/components/binary/pump,
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
-"auy" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 9
-	},
-/turf/open/floor/plasteel/neutral,
-/area/engine/atmos)
 "auA" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/visible{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/manifold4w/supply/visible,
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "auB" = (
@@ -10796,14 +10792,19 @@
 "avx" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/machinery/computer/atmos_control/tank{
-	dir = 1
+	dir = 1;
+	input_tag = "o2_in";
+	name = "Oxygen Supply Control";
+	output_tag = "o2_out";
+	sensors = list("o2_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "avy" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
 	dir = 4;
-	filter_type = "o2"
+	filter_type = "o2";
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -11887,6 +11888,9 @@
 /area/engine/atmos)
 "ayi" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "ayj" = (
@@ -11898,6 +11902,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -12275,19 +12282,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
-"azk" = (
-/obj/machinery/atmospherics/pipe/simple/green/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1
-	},
-/turf/open/floor/plasteel/neutral,
-/area/engine/atmos)
 "azl" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
 	dir = 4;
-	filter_type = "n2"
+	filter_type = "n2";
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -30833,13 +30832,6 @@
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
-"bTZ" = (
-/obj/machinery/computer/atmos_control/tank,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	dir = 4
-	},
-/turf/open/floor/plasteel/neutral,
-/area/engine/atmos)
 "bYE" = (
 /obj/structure/sign/warning/fire,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -30888,7 +30880,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "coQ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	volume_rate = 200
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -30924,6 +30918,16 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
+/area/engine/atmos)
+"cBS" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 8;
+	name = "scrubbers pipe"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "cCp" = (
 /obj/machinery/door/poddoor{
@@ -31035,9 +31039,12 @@
 	},
 /area/maintenance/port)
 "dFV" = (
-/obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -31066,12 +31073,30 @@
 	dir = 1
 	},
 /area/hallway/primary/fore)
-"eva" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 1
+"eaf" = (
+/obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
+/turf/open/floor/plasteel/neutral,
+/area/engine/atmos)
+"eew" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/asteroid/nearstation)
+"eva" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
+	},
+/obj/machinery/computer/atmos_control/tank{
+	dir = 1;
+	input_tag = "airmix_in";
+	name = "Airmix Supply Control";
+	output_tag = "airmix_out";
+	sensors = list("airmix_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/neutral,
 /area/asteroid/nearstation)
@@ -31122,7 +31147,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/machinery/computer/atmos_control/tank{
-	dir = 1
+	dir = 1;
+	input_tag = "n2_in";
+	name = "Nitrogen Supply Control";
+	output_tag = "n2_out";
+	sensors = list("n2_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -31133,10 +31162,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
-"eUr" = (
-/obj/machinery/computer/atmos_control/tank,
-/turf/open/floor/plasteel/neutral,
-/area/asteroid/nearstation)
 "eUz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -31285,6 +31310,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/asteroid/nearstation)
 "gyV" = (
@@ -31322,7 +31350,8 @@
 "gVX" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
 	dir = 8;
-	filter_type = "co2"
+	filter_type = "co2";
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -31389,9 +31418,25 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/asteroid/nearstation)
+"iHo" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/asteroid/nearstation)
 "iIj" = (
 /obj/machinery/atmospherics/components/trinary/mixer/flipped{
-	dir = 4
+	dir = 4;
+	node1_concentration = 0.8;
+	node2_concentration = 0.2;
+	on = 1
+	},
+/turf/open/floor/plasteel/neutral,
+/area/engine/atmos)
+"iJY" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -31530,12 +31575,30 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/asteroid/nearstation)
 "kqe" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
+"kHA" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/obj/machinery/computer/atmos_control/tank{
+	dir = 2;
+	input_tag = "co2_in";
+	name = "Carbox Dioxide Supply Control";
+	output_tag = "co2_out";
+	sensors = list("co2_sensor" = "Tank")
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/asteroid/nearstation)
 "kKd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -31717,6 +31780,9 @@
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 1
 	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/asteroid/nearstation)
 "mTM" = (
@@ -31800,6 +31866,13 @@
 "oiL" = (
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
+"orI" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/asteroid/nearstation)
 "otn" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 6
@@ -31827,6 +31900,13 @@
 "oyD" = (
 /turf/closed/wall,
 /area/crew_quarters/toilet/restrooms)
+"oCy" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/asteroid/nearstation)
 "oIG" = (
 /obj/structure/sign/warning/fire,
 /turf/closed/wall/r_wall,
@@ -32070,6 +32150,9 @@
 "rEx" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/asteroid/nearstation)
@@ -34739,6 +34822,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
+"uyJ" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/engine/atmos)
 "uBJ" = (
 /obj/effect/turf_decal/bot_white/right,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -34759,6 +34848,21 @@
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
+"viy" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/obj/machinery/computer/atmos_control/tank{
+	dir = 2;
+	input_tag = "no2_in";
+	name = "Nitrogen Dioxide Supply Control";
+	output_tag = "no2_out";
+	sensors = list("no2_sensor" = "Tank")
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/engine/atmos)
 "vkK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
@@ -34770,6 +34874,21 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"vmU" = (
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 4
+	},
+/obj/machinery/computer/atmos_control/tank{
+	dir = 2;
+	input_tag = "plasma_in";
+	name = "Plasma Supply Control";
+	output_tag = "plasma_out";
+	sensors = list("plasma_sensor" = "Tank")
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/engine/atmos)
 "voi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -34783,6 +34902,9 @@
 "vpz" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/asteroid/nearstation)
@@ -34945,6 +35067,15 @@
 	dir = 8
 	},
 /area/asteroid/nearstation)
+"xsS" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/engine/atmos)
 "xtL" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	name = "Incinerator Access Console";
@@ -35000,7 +35131,8 @@
 "xEQ" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
 	dir = 8;
-	filter_type = "plasma"
+	filter_type = "plasma";
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -35043,6 +35175,12 @@
 	},
 /turf/open/floor/engine,
 /area/asteroid/nearstation)
+"yba" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/engine/atmos)
 "yeE" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 4;
@@ -62434,7 +62572,7 @@ jpv
 bGL
 vuN
 jkl
-cGz
+eew
 cGz
 qUW
 ahu
@@ -62691,7 +62829,7 @@ uuJ
 kTz
 iKp
 tgp
-lAs
+iHo
 lAs
 skz
 pEH
@@ -62947,8 +63085,8 @@ lAs
 lAs
 mTv
 guM
-jpv
-jpv
+oCy
+orI
 jpv
 hNO
 aad
@@ -63195,8 +63333,8 @@ dIu
 hOh
 iqC
 xCL
-ymj
-eUr
+kHA
+lAs
 mTT
 mTT
 lBr
@@ -63716,7 +63854,7 @@ mIv
 lBr
 toY
 lAs
-lAs
+iHo
 eva
 xCL
 qsc
@@ -63973,7 +64111,7 @@ mae
 xeu
 bKQ
 aAn
-awF
+iJY
 uSs
 xIm
 mgs
@@ -64223,14 +64361,14 @@ dIu
 kit
 ddI
 xCL
-awC
-bTZ
+vmU
+bKQ
 oiL
 mae
 xeu
 bKQ
 aAp
-oiL
+yba
 vVA
 aqz
 aqz
@@ -64487,7 +64625,7 @@ auq
 xeu
 bKQ
 iIj
-qoT
+iJY
 dFV
 aAh
 aBp
@@ -64744,7 +64882,7 @@ auq
 xeu
 asx
 aty
-azm
+eaf
 avx
 aAi
 axi
@@ -65001,7 +65139,7 @@ auq
 xeu
 bKQ
 aAp
-oiL
+yba
 avy
 aAj
 blk
@@ -65251,14 +65389,14 @@ dIu
 gap
 fnp
 aqA
-awC
-bTZ
+viy
+bKQ
 oiL
 mae
 xeu
 bKQ
 aAp
-oiL
+yba
 vVA
 aqz
 aqz
@@ -65515,8 +65653,8 @@ mae
 xeu
 bKQ
 auv
-awF
-azk
+iJY
+dFV
 aAh
 aBr
 asv
@@ -65772,7 +65910,7 @@ mae
 xeu
 asC
 qoT
-azm
+eaf
 eCg
 aAi
 atx
@@ -66029,7 +66167,7 @@ auq
 xeu
 oiL
 oiL
-oiL
+yba
 azl
 aAj
 aBt
@@ -66280,13 +66418,13 @@ aor
 apv
 aqA
 arw
-asD
+oiL
 oiL
 mae
 xeu
 oiL
 oiL
-oiL
+yba
 xeu
 aqz
 aqz
@@ -66539,11 +66677,11 @@ aqE
 arx
 azm
 auw
-auy
+auq
 xeu
 oiL
 axm
-ayh
+cBS
 awJ
 ayh
 axo
@@ -66796,11 +66934,11 @@ aqF
 ary
 asF
 tWQ
-oiL
+uyJ
 avE
 awI
 oiL
-xeu
+xsS
 oiL
 avE
 axo
