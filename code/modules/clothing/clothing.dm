@@ -23,6 +23,7 @@
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
+	var/mouse_unequippable = TRUE //can this item be unequipped by dragging it into a hand slot?
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
 	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
@@ -53,8 +54,9 @@
 
 	if(!M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
-		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
-			add_fingerprint(usr)
+		if(mouse_unequippable)
+			if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
+				add_fingerprint(usr)
 
 /obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	if(pockets)
