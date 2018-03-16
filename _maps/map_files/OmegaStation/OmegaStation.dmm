@@ -9553,6 +9553,10 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Atmospherics North East";
+	dir = 8
+	},
 /turf/open/floor/plasteel/caution{
 	dir = 5
 	},
@@ -11434,12 +11438,6 @@
 /turf/open/floor/plasteel/caution{
 	dir = 4
 	},
-/area/engine/atmos)
-"awL" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
 /area/engine/atmos)
 "awM" = (
 /obj/structure/cable/white{
@@ -15094,8 +15092,9 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/pump,
-/obj/machinery/newscaster{
-	pixel_x = -32
+/obj/machinery/airalarm/unlocked{
+	dir = 4;
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 8
@@ -19393,6 +19392,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/airalarm{
+	pixel_y = 24
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port/aft)
 "aOV" = (
@@ -19513,9 +19515,6 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Aft Primary Hallway 3"
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
 	},
 /turf/open/floor/plasteel/green/corner{
 	dir = 1
@@ -19744,7 +19743,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "aPw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -19756,7 +19755,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "aPx" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -19768,7 +19767,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "aPy" = (
 /obj/structure/table,
 /obj/item/storage/briefcase,
@@ -19776,7 +19775,7 @@
 /turf/open/floor/plasteel/vault/side{
 	dir = 8
 	},
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "aPz" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
@@ -20207,7 +20206,7 @@
 "aQw" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/purple/corner,
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "aQx" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -20218,7 +20217,7 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "aQy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -20228,7 +20227,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "aQz" = (
 /obj/structure/sign/warning/securearea{
 	pixel_y = -32
@@ -20238,7 +20237,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "aQA" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21"
@@ -20254,7 +20253,7 @@
 /turf/open/floor/plasteel/vault/side{
 	dir = 8
 	},
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "aQB" = (
 /obj/structure/table/wood,
 /obj/item/crowbar/red,
@@ -27680,11 +27679,6 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bgt" = (
-/obj/machinery/camera{
-	c_tag = "Xenobiology Test Chamber";
-	dir = 2;
-	network = list("xeno","rd")
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -28727,6 +28721,11 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Xenobiology Central";
+	dir = 4;
+	pixel_y = -5
+	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "biD" = (
@@ -29346,6 +29345,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/camera{
+	c_tag = "Xenobiology South";
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bjR" = (
@@ -29722,7 +29725,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "blp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
@@ -29780,16 +29783,6 @@
 	},
 /turf/open/floor/plasteel/neutral,
 /area/medical/medbay/zone3)
-"blu" = (
-/obj/machinery/camera{
-	c_tag = "Xenobiology Test Chamber";
-	dir = 2;
-	network = list("xeno","rd")
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/science/xenobiology)
 "blv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -31006,6 +30999,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "chJ" = (
@@ -31092,6 +31088,10 @@
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -26
+	},
+/obj/machinery/camera{
+	c_tag = "Atmospherics South West";
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -31331,6 +31331,11 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/camera{
+	c_tag = "Xenobiology North";
+	dir = 4;
+	pixel_y = -5
+	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "eOs" = (
@@ -31400,6 +31405,10 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera{
+	c_tag = "Atmospherics Central";
+	dir = 1
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -31484,7 +31493,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "fSE" = (
 /turf/closed/wall/r_wall,
 /area/space)
@@ -31533,13 +31542,6 @@
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/aft)
-"gjW" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/starboard/aft)
 "glC" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/starboard/aft)
@@ -31566,7 +31568,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "gNH" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
@@ -32017,6 +32019,10 @@
 	name = "Station Intercom";
 	pixel_y = 24
 	},
+/obj/machinery/camera{
+	c_tag = "Atmospherics North West";
+	dir = 4
+	},
 /turf/open/floor/plasteel/caution{
 	dir = 9
 	},
@@ -32046,7 +32052,7 @@
 "lFi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "lFw" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible,
 /turf/open/floor/plating/asteroid/airless,
@@ -32066,7 +32072,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "lUu" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/engine/air,
@@ -32339,7 +32345,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "pbT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -32673,7 +32679,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/hallway/primary/starboard/aft)
+/area/hallway/primary/starboard)
 "sqz" = (
 /turf/closed/wall,
 /area/hallway/primary/starboard)
@@ -68324,7 +68330,7 @@ aqz
 hsV
 auC
 aqz
-awL
+aqz
 axq
 cBf
 diG
@@ -79414,15 +79420,15 @@ beh
 sKP
 sOV
 bfP
-blu
+bgm
 bgY
 bgm
 ibv
-blu
+bgm
 bgY
 bgm
 ibv
-blu
+bgm
 bgY
 bgm
 bfP
@@ -81450,7 +81456,7 @@ tLt
 tLt
 doD
 aPx
-gjW
+tLt
 aRx
 sOT
 aTP
