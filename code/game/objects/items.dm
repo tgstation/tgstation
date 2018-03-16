@@ -412,6 +412,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
+	if(NODROP_1 & flags_1)
+		qdel(src)
 	item_flags |= IN_INVENTORY
 	return
 
