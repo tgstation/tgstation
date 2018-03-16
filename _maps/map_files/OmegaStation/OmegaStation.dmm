@@ -35282,6 +35282,9 @@
 	name = "Plasma to Pure"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera{
+	c_tag = "Atmospherics North"
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
