@@ -54,9 +54,8 @@
 
 	if(!M.incapacitated() && loc == M && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
-		if(mouse_unequippable)
-			if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
-				add_fingerprint(usr)
+		if(mouse_unequippable && M.putItemFromInventoryInHandIfPossible(src, H.held_index))
+			add_fingerprint(usr)
 
 /obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	if(pockets)
