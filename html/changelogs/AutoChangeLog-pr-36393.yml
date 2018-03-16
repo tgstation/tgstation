@@ -1,0 +1,4 @@
+author: "Polyphynx"
+delete-after: True
+changes: 
+  - bugfix: "Bluespace slime radio potions now work, and are no longer invisible."

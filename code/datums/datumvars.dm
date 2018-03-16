@@ -1026,7 +1026,7 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
 				return
 
-			C.cure_all_traumas(TRUE, TRAUMA_RESILIENCE_ABSOLUTE)
+			C.cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
 
 			href_list["datumrefresh"] = href_list["curetraumas"]
 

@@ -6,8 +6,8 @@ the new instance inside the host to be updated to the template's stats.
 */
 
 /mob/camera/disease
-	name = ""
-	real_name = ""
+	name = "Sentient Disease"
+	real_name = "Sentient Disease"
 	desc = ""
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
