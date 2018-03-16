@@ -8078,6 +8078,7 @@
 	dir = 4
 	},
 /mob/living/simple_animal/bot/secbot/beepsky{
+	desc = "It's Officer Beepsky! Powered by a potato and a shot of whiskey.";
 	name = "Officer Beepsky"
 	},
 /turf/open/floor/plasteel/red/corner,
@@ -77919,7 +77920,7 @@ bfP
 bfP
 sKZ
 bfP
-bfP
+bjc
 bfP
 bfP
 dWc
@@ -81516,9 +81517,9 @@ aad
 bvg
 aac
 aad
-aad
-aad
-aad
+aac
+aac
+aac
 aad
 aad
 aac
@@ -81773,9 +81774,9 @@ bvg
 aac
 aaa
 aaa
-aad
-aad
-aad
+aaa
+aaa
+aac
 aad
 aad
 aad
@@ -82031,8 +82032,8 @@ aaa
 aaa
 aaa
 aaa
-aad
-aad
+aaa
+aaa
 aac
 aad
 aad
