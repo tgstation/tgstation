@@ -964,6 +964,7 @@
 	unique = 1   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/list/remarks = list() //things to read about while learning.
 	var/pages_to_mastery = 3 //Essentially controls how long a mob must keep the book in his hand to actually successfully learn
+	var/reading = FALSE //no, lets not learn like 50 copies of the power/spell
 
 /obj/item/book/granter/proc/turn_page(mob/user)
 	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
@@ -978,6 +979,9 @@
 /obj/item/book/granter/action/attack_self(mob/user)
 	if(!granted_action)
 		return
+	if(reading)
+		to_chat(user, "<span class='warning'>You're already reading this!</span>")
+		return
 	var/datum/action/G = new granted_action
 	for(var/datum/action/A in user.actions)
 		if(A.type == G.type)
@@ -985,13 +989,16 @@
 			qdel(G)
 			return
 	to_chat(user, "<span class='notice'>You start reading about [G.name]...</span>")
+	reading = TRUE
 	for(var/i=1, i<=pages_to_mastery, i++)
 		if(!turn_page(user))
 			to_chat(user, "<span class='notice'>You stop reading...</span>")
+			reading = FALSE
 			qdel(G)
 			return
 	if(do_after(user,50, user))
 		to_chat(user, "<span class='notice'>You feel like you've got a good handle on [G.name]!</span>")
+		reading = FALSE
 		G.Grant(user)
 
 /obj/item/book/granter/action/drink_fling
@@ -1020,11 +1027,14 @@
 /obj/item/book/granter/spell
 	var/spell = null
 	var/spellname = "magical bugs"
-	var/oneuse = 1 //default this is one, but admins can var this to 0 if we wanna all have a pass around of the rod form book
-	var/used = 0 //only really matters if oneuse but it might be nice to know if someone's taken
+	var/oneuse = TRUE //default this is one, but admins can var this to 0 if we wanna all have a pass around of the rod form book
+	var/used = FALSE //only really matters if oneuse but it might be nice to know if someone's taken
 
 /obj/item/book/granter/spell/attack_self(mob/user)
 	if(!spell)
+		return
+	if(reading)
+		to_chat(user, "<span class='warning'>You're already reading this!</span>")
 		return
 	var/obj/effect/proc_holder/spell/S = new spell
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
@@ -1039,13 +1049,16 @@
 		recoil(user)
 	else
 		to_chat(user, "<span class='notice'>You start reading about casting [spellname]...</span>")
+		reading = TRUE
 		for(var/i=1, i<=pages_to_mastery, i++)
 			if(!turn_page(user))
 				to_chat(user, "<span class='notice'>You stop reading...</span>")
+				reading = FALSE
 				qdel(S)
 				return
 		if(do_after(user,50, user))
-			to_chat(user, "<span class='notice'>You feel like you've got a good handle on [S.name]!</span>")
+			to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
+			reading = FALSE
 			user.mind.AddSpell(S)
 			user.log_message("<font color='orange'>learned the spell [spellname] ([S]).</font>", INDIVIDUAL_ATTACK_LOG)
 			onlearned(user)
@@ -1054,7 +1067,7 @@
 	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")
 
 /obj/item/book/granter/spell/proc/onlearned(mob/user)
-	used = 1 //might seem odd to not put this under the oneuse check but if many people use it off oneuse and then an admin sets it to oneuse i could make an argument for having it then immediately jump to recoil
+	used = TRUE //might seem odd to not put this under the oneuse check but if many people use it off oneuse and then an admin sets it to oneuse i could make an argument for having it then immediately jump to recoil
 	if(oneuse)
 		user.visible_message("<span class='caution'>[src] glows dark for a second!</span>")
 
@@ -1082,7 +1095,7 @@
 	spellname = "smoke"
 	icon_state ="booksmoke"
 	desc = "This book is overflowing with the dank arts."
-	remarks = list("Haha, weed...", "Smoke bomb would do just fine too...", "Wait, there's a machine that does the same thing in chemistry?", "This book smells awful...", "Why all these weed jokes? Just tell me how to cast it...", "Wind will ruin the whole spell, good thing we're in space... Right?", "So this is how the spider clan does it...")
+	remarks = list("A singer in a smokey room...", "Smoke bomb would do just fine too...", "Wait, there's a machine that does the same thing in chemistry?", "This book smells awful...", "Why all these weed jokes? Just tell me how to cast it...", "Wind will ruin the whole spell, good thing we're in space... Right?", "So this is how the spider clan does it...")
 
 /obj/item/book/granter/spell/smoke/lesser //Chaplain smoke book
 	spell = /obj/effect/proc_holder/spell/targeted/smoke/lesser
@@ -1188,10 +1201,10 @@
 
 /obj/item/book/granter/spell/charge
 	spell = /obj/effect/proc_holder/spell/targeted/charge
-	spellname = "charging"
+	spellname = "charge"
 	icon_state ="bookcharge"
 	desc = "This book is made of 100% post-consumer wizard."
-	remarks = list("I feel alive!", "Zap! Zap!", "I'm FLYING through these pages!", "THIS GENIUS IS MAKING IT!", "This book is ACTION PAcKED!", "HE'S DONE IT", "LETS GOOOOOOOOOOOO")
+	remarks = list("I feel ALIVE!", "I CAN TASTE THE MANA!", "What a RUSH!", "I'm FLYING through these pages!", "THIS GENIUS IS MAKING IT!", "This book is ACTION PAcKED!", "HE'S DONE IT", "LETS GOOOOOOOOOOOO")
 
 /obj/item/book/granter/spell/charge/recoil(mob/user)
 	..()
