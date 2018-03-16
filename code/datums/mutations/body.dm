@@ -148,4 +148,7 @@
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
 	if(owner && istype(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)))
+		if(owner.has_trait(TRAIT_ETERNALMONKEY)) //no.
+			force_give(owner)
+			return FALSE
 		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)

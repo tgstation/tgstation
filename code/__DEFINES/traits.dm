@@ -42,7 +42,7 @@
 #define TRAIT_DEPRESSION			"depression"
 #define TRAIT_JOLLY				"jolly"
 #define TRAIT_NOCRITDAMAGE		"no_crit"
-
+#define TRAIT_ETERNALMONKEY		"eternal_monkey"
 
 
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
@@ -78,3 +78,4 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
+#define EVENT_TRAIT "event"

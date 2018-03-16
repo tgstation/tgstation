@@ -106,7 +106,7 @@
 	if(istype(C))
 		C.real_name = NewDNA.real_name
 		NewDNA.transfer_identity(C)
-		if(ismonkey(C))
+		if(ismonkey(C) && !C.has_trait(TRAIT_ETERNALMONKEY))
 			C.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
 		C.updateappearance(mutcolor_update=1)
 
