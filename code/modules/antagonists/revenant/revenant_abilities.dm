@@ -85,6 +85,8 @@
 	draining = FALSE
 	essence_drained = 0
 
+/////GLOBAL REVENANT SPELLS/////
+
 //Toggle night vision: lets the revenant toggle its night vision
 /obj/effect/proc_holder/spell/targeted/night_vision/revenant
 	charge_max = 0
@@ -100,7 +102,7 @@
 	desc = "Telepathically transmits a message to the target."
 	panel = "Revenant Abilities"
 	charge_max = 0
-	clothes_req = 0
+	clothes_req = FALSE
 	range = 7
 	include_user = 0
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
@@ -124,10 +126,68 @@
 			var/follow_whispee = FOLLOW_LINK(ded, M)
 			to_chat(ded, "[follow_rev] <span class='revenboldnotice'>[user] Revenant Transmit:</span> <span class='revennotice'>\"[msg]\" to</span> [follow_whispee] <span class='name'>[M]</span>")
 
+/obj/effect/proc_holder/spell/targeted/revenant
+	clothes_req = FALSE
+	action_icon = 'icons/mob/actions/actions_revenant.dmi'
+	action_background_icon_state = "bg_revenant"
+	panel = "Revenant Abilities (Locked)"
+	name = "Report this to a coder"
+	var/reveal = 80 //How long it reveals the revenant in deciseconds
+	var/stun = 20 //How long it stuns the revenant in deciseconds
+	var/locked = TRUE //If it's locked and needs to be unlocked before use
+	var/unlock_amount = 100 //How much essence it costs to unlock
+	var/cast_amount = 50 //How much essence it costs to use
 
+/obj/effect/proc_holder/spell/targeted/revenant/New()
+	..()
+	if(locked)
+		name = "[initial(name)] ([unlock_amount]E)"
+	else
+		name = "[initial(name)] ([cast_amount]E)"
+
+/obj/effect/proc_holder/spell/targeted/revenant/can_cast(mob/living/simple_animal/revenant/user = usr)
+	if(charge_counter < charge_max)
+		return FALSE
+	if(!istype(user)) //Badmins, no. Badmins, don't do it.
+		return TRUE
+	if(user.inhibited)
+		return FALSE
+	if(locked)
+		if(user.essence <= unlock_amount)
+			return FALSE
+	if(user.essence <= cast_amount)
+		return FALSE
+	return TRUE
+
+/obj/effect/proc_holder/spell/targeted/revenant/proc/attempt_cast(mob/living/simple_animal/revenant/user = usr)
+	if(!istype(user)) //If you're not a revenant, it works. Please, please, please don't give this to a non-revenant.
+		name = "[initial(name)]"
+		if(locked)
+			panel = "Revenant Abilities"
+			locked = FALSE
+		return TRUE
+	if(locked)
+		if(!user.castcheck(-unlock_amount))
+			charge_counter = charge_max
+			return FALSE
+		name = "[initial(name)] ([cast_amount]E)"
+		to_chat(user, "<span class='revennotice'>You have unlocked [initial(name)]!</span>")
+		panel = "Revenant Abilities"
+		locked = FALSE
+		charge_counter = charge_max
+		return FALSE
+	if(!user.castcheck(-cast_amount))
+		charge_counter = charge_max
+		return FALSE
+	name = "[initial(name)] ([cast_amount]E)"
+	user.reveal(reveal)
+	user.stun(stun)
+	if(action)
+		action.UpdateButtonIcon()
+	return TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
-	clothes_req = 0
+	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_background_icon_state = "bg_revenant"
 	panel = "Revenant Abilities (Locked)"
@@ -185,47 +245,6 @@
 	if(action)
 		action.UpdateButtonIcon()
 	return TRUE
-
-//Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
-/obj/effect/proc_holder/spell/aoe_turf/revenant/overload
-	name = "Overload Lights"
-	desc = "Directs a large amount of essence into nearby electrical lights, causing lights to shock those nearby."
-	charge_max = 200
-	range = 5
-	stun = 30
-	cast_amount = 40
-	var/shock_range = 2
-	var/shock_damage = 15
-	action_icon_state = "overload_lights"
-
-/obj/effect/proc_holder/spell/aoe_turf/revenant/overload/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
-	if(attempt_cast(user))
-		for(var/turf/T in targets)
-			INVOKE_ASYNC(src, .proc/overload, T, user)
-
-/obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload(turf/T, mob/user)
-	for(var/obj/machinery/light/L in T)
-		if(!L.on)
-			return
-		L.visible_message("<span class='warning'><b>\The [L] suddenly flares brightly and begins to spark!</span>")
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(4, 0, L)
-		s.start()
-		new /obj/effect/temp_visual/revenant(get_turf(L))
-		addtimer(CALLBACK(src, .proc/overload_shock, L, user), 20)
-
-/obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload_shock(obj/machinery/light/L, mob/user)
-	if(!L.on) //wait, wait, don't shock me
-		return
-	flick("[L.base_state]2", L)
-	for(var/mob/living/carbon/human/M in view(shock_range, L))
-		if(M == user)
-			continue
-		L.Beam(M,icon_state="purple_lightning",time=5)
-		if(!M.anti_magic_check(FALSE, TRUE))
-			M.electrocute_act(shock_damage, L, safety=TRUE)
-		do_sparks(4, FALSE, M)
-		playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile
@@ -326,6 +345,154 @@
 		S.spark_system.start()
 		S.emp_act(EMP_HEAVY)
 
+/////POLTERGEIST (BRUTE GHOST)/////
+
+/obj/effect/proc_holder/spell/targeted/revenant/urges
+	name = "Violent Urges"
+	desc = "Causes someone to attack someone else. You will be only quickly flashed. Cheap, but high cooldown."
+	charge_max = 300
+	range = 7
+	cast_amount = 20
+	unlock_amount = 80
+	reveal = 10
+	stun = 0
+	locked = FALSE
+	action_icon_state = "blight"
+
+/obj/effect/proc_holder/spell/targeted/revenant/urges/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+	if(attempt_cast(user))
+		for(var/mob/living/target in targets)
+			target.a_intent = INTENT_HARM
+			target.click_random_mob()
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/push
+	name = "Whirlwind"
+	desc = "Causes nearby objects and people to fly away from you."
+	charge_max = 200
+	range = 2
+	cast_amount = 75
+	unlock_amount = 150
+	action_icon_state = "blight"
+	sound = 'sound/magic/repulse.ogg'
+	reveal = 70
+	stun = 40
+	action_icon_state = "repulse"
+	var/maxthrow = 5
+	var/sparkle_path = /obj/effect/temp_visual/gravpush
+	var/anti_magic_check = TRUE
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/push/cast(list/targets,mob/user = usr, var/stun_amt = 40) //repulse does the exact same thing so who am i to not use it's code
+	if(attempt_cast(user))
+		var/list/thrownatoms = list()
+		var/atom/throwtarget
+		var/distfromcaster
+		playMagSound()
+		for(var/turf/T in targets) //Done this way so things don't get thrown all around hilariously.
+			for(var/atom/movable/AM in T)
+				thrownatoms += AM
+
+		for(var/am in thrownatoms)
+			var/atom/movable/AM = am
+			if(AM == user || AM.anchored)
+				continue
+
+			if(ismob(AM))
+				var/mob/M = AM
+				if(M.anti_magic_check(anti_magic_check, FALSE))
+					continue
+
+			throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
+			distfromcaster = get_dist(user, AM)
+			if(distfromcaster == 0)
+				if(isliving(AM))
+					var/mob/living/M = AM
+					M.Knockdown(100)
+					M.adjustBruteLoss(5)
+					to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
+			else
+				new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
+				if(isliving(AM))
+					var/mob/living/M = AM
+					M.Knockdown(stun_amt)
+					to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
+				AM.throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/punch
+	name = "Ethereal Uppercut"
+	desc = "Uppercut in a line facing you, causing a delayed throw."
+	charge_max = 200
+	range = 1
+	cast_amount = 75
+	unlock_amount = 100
+	action_icon_state = "blight"
+	sound = 'sound/magic/repulse.ogg'
+	reveal = 0
+	stun = 0
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/punch/cast(list/targets,mob/user = usr)
+	if(attempt_cast(user))
+		if(!isrevenant(user))
+			return FALSE
+		var/mob/living/simple_animal/revenant/R = user
+		R.stun(40)
+		R.reveal(60)
+		if(!do_after(R, 20, 0, R))
+			to_chat(R, "<span class='userdanger'>Your attack was broken!</span>") //they're stunned, so this shouldn't happen but lets pretend it did
+			return FALSE
+		for(var/i in 1 to 4)
+			walk(R,0)
+			walk_towards(R, R.dir, 1)
+			var/turf/T = get_turf(R)
+			for(var/mob/living/L in T)
+				targets |= L
+			sleep(0.1) //wow, he's actually moving and stuff!
+		addtimer(CALLBACK(targets, .proc/polterthrow), 30)
+
+/////SPECTER (BURN GHOST)/////
+
+//Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
+/obj/effect/proc_holder/spell/aoe_turf/revenant/overload
+	name = "Overload Lights"
+	desc = "Directs a large amount of essence into nearby electrical lights, causing lights to shock those nearby."
+	charge_max = 200
+	range = 5
+	stun = 30
+	cast_amount = 40
+	action_icon_state = "overload_lights"
+	var/shock_range = 2
+	var/shock_damage = 15
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/overload/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+	if(attempt_cast(user))
+		for(var/turf/T in targets)
+			INVOKE_ASYNC(src, .proc/overload, T, user)
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload(turf/T, mob/user)
+	for(var/obj/machinery/light/L in T)
+		if(L.turned_off() || !(L.has_power() || L.has_emergency_power()))
+			return
+		L.visible_message("<span class='warning'><b>\The [L] suddenly flares brightly and begins to spark!</span>")
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(4, 0, L)
+		s.start()
+		new /obj/effect/temp_visual/revenant(get_turf(L))
+		addtimer(CALLBACK(src, .proc/overload_shock, L, user), 20)
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload_shock(obj/machinery/light/L, mob/user)
+	if(L.turned_off() || !(L.has_power() || L.has_emergency_power()))) //wait, wait, don't shock me
+		return
+	flick("[L.base_state]2", L)
+	for(var/mob/living/carbon/human/M in view(shock_range, L))
+		if(M == user)
+			continue
+		L.Beam(M,icon_state="purple_lightning",time=5)
+		if(!M.anti_magic_check(FALSE, TRUE))
+			M.electrocute_act(shock_damage, L, safety=TRUE)
+		do_sparks(4, FALSE, M)
+		playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+
+/////WIGHT (TOXIN GHOST)/////
+
 //Blight: Infects nearby humans and in general messes living stuff up.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight
 	name = "Blight"
@@ -379,3 +546,254 @@
 		tray.pestlevel = rand(8, 10)
 		tray.weedlevel = rand(8, 10)
 		tray.toxic = rand(45, 55)
+
+/////PHANTOM (OXYGEN GHOST)/////
+
+/////WENDIGO (BRAIN GHOST)/////
+
+/////PRETA (CLONELOSS GHOST)/////
+
+/obj/effect/proc_holder/spell/targeted/revenant/enthrall
+	name = "Enthrall"
+	desc = "After a channel, you will seed their mind with a festering madness that will cause them to join your side to build meat effigies. BE VERY CAREFUL NOT TO KILL YOURSELF WITH THIS."
+	charge_max = 6000 //10 minutes. don't mess this up!
+	range = 7 //right next to em
+	cast_amount = 60 //it'll put you at 15 health so beware
+	unlock_amount = 80
+	reveal = 0
+	stun = 0
+	action_icon_state = "blight"
+	locked = FALSE
+
+/obj/effect/proc_holder/spell/targeted/revenant/enthrall/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+	if(attempt_cast(user))
+		if(!istype(user))
+			return FALSE
+		if(length(r.thrall) > 0)
+			to_chat(r, "<span class='revenwarning'>You already have a thrall!</span>")
+			return FALSE
+		to_chat(r, "<span class='revenboldnotice'>Yes, a fine thrall! We need to brainwash them first...</span>")
+		for(var/mob/living/carbon/human/H in targets)
+			if(!do_after(user, 30, 0, H))
+				return FALSE
+			r.reveal(100)
+			r.stun(100)
+			var/datum/beam/B = r.Beam(H,icon_state="animate",time=INFINITY)
+			if(!do_after(r, 100, 0, H))
+				to_chat(r, "<span class='revenwarning'>The animation has been broken!</span>")
+				qdel(B)
+				return FALSE
+			qdel(B)
+			to_chat(H, "<span class='warning'>A horrible feeling decends upon you as your mind goes fuzzy...")
+
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/effigy
+	name = "Conjure Effigy"
+	desc = "Summons a small effigy for you to devour and possess. Must be improved by your thrall before you can use it."
+	charge_max = 200
+	range = 1
+	cast_amount = 75
+	unlock_amount = 200
+	action_icon_state = "blight"
+	locked = FALSE
+
+/obj/effect/proc_holder/spell/aoe_turf/revenant/effigy/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
+	if(attempt_cast(user))
+		if(!isrevenant(user))
+			return FALSE
+		var/mob/living/simple_animal/revenant/r = user
+		if(!r.thrall)
+			to_chat(r, "<span class='revenwarning'>Get a thrall first!</span>")
+			return FALSE
+		to_chat(r, "<span class='revenboldnotice'>Fine place as any to prepare a feast!</span>")
+		var/obj/structure/effigy/e = new(get_turf(user))
+		e.linkedpreta = r
+		e.linkedthrall = r.thrall
+		to_chat(r.thrall, "<span class='revenboldnotice'>Our master has placed the effigy in [get_area_name(e)]!</span>")
+
+
+/obj/structure/effigy
+	name = "meat effigy"
+	icon = 'icons/mob/revenant.dmi'
+	icon_state = "effigy0"
+	anchored = TRUE
+	density = TRUE
+	opacity = 0
+	max_integrity = 200
+	obj_integrity = 25
+	var/meatlevel = 0 //stats given to the monster are from this, no cap
+	var/rarelevel = 0 //spells given to the monster are from this, caps at 3
+	var/linkedpreta = list() //needed for the preta to hunt the thrall
+	var/linkedthrall = list()
+	var/commonitem = list() //what the effigy needs to upgrade.
+	var/rareitem = list() //what the effigy needs to gain spells.
+
+/obj/structure/effigy/Initialize()
+	. = ..()
+	pickcommon()
+	pickrare()
+
+/obj/structure/effigy/proc/pickcommon()
+	if(length(commonitem) > 0)
+		return FALSE
+	var/list/commonpicks = list(/obj/item/bodypart/head, /obj/item/bodypart/l_arm, /obj/item/bodypart/r_arm, /obj/item/bodypart/l_leg, /obj/item/bodypart/r_leg, /obj/item/organ/stomach, /obj/item/organ/liver, /obj/item/organ/ears, /obj/item/organ/eyes, /obj/item/organ/tongue, /obj/item/organ/brain, /obj/item/organ/heart, /obj/item/organ/lungs)
+	for(var/i in 1 to 3)
+		commonitem += pick(commonpicks)
+
+/obj/structure/effigy/proc/pickrare()
+	if(length(rareitem) > 0)
+		return FALSE
+	var/list/rarepicks = list(/obj/item/organ/heart/nightmare)
+	rareitem += pick(rarepicks)
+
+/obj/structure/effigy/examine(mob/user)
+	. = ..()
+	if(ishuman(user) && linkedthrall == user)
+		if(meatlevel > 0)
+			to_chat(user, "<span class='revenboldnotice'>Ah, it's wonderful... But it can be perfected. It just needs...</span>")
+		else
+			to_chat(user, "<span class='revenboldnotice'>Here's our effigy, granted by our master. We need to start building a wonderful feast for it, and that requires...</span>")
+		for(var/obj/item/item in commonitem)
+			to_chat(user, "<span class='revenwarning'>One [item]!</span>")
+		if(length(rareitem) > 0)
+			to_chat(user, "<span class='revenwarning'>And... a [rareitem] would be capable of granting unique powers if I could get my hands on it.</span>")
+	else
+		if(meatlevel > 0)
+			to_chat(user, "A hideous amalgamation of flesh and sinew that resembles a horrible creature... Who would build this?!")
+		else
+			to_chat(user, "It's a broken down borg shell, vibrantly shaking with evil energies. It would be wise to destroy this.")
+
+/obj/structure/effigy/attackby(obj/item/I, mob/user, params)
+	if(ishuman(user) && linkedthrall == user)
+		for(var/obj/item/requirement in commonitem)
+			if(requirement == I)
+				to_chat(user, "<span class='revenboldnotice'This will do nicely! Now to add it on...</span>")
+				if(do_after(user, 20, target = src))
+					contents.Add(I)
+					qdel(requirement)
+					if(length(commonitem) < 1) //level up!
+						pickcommon()
+						meatlevel ++
+						to_chat(user, "<span class='revenboldnotice'I have completed the checklist and the effigy has grown stronger. Check the new requirements by examining the effigy.</span>")
+						if(!rareitem && rarelevel < 3)
+							to_chat(user, "<span class='revenwarning'As I have also completed the rare requirement, I have also been given a new rare item to find.</span>")
+							pickrare()
+					return TRUE
+		for(var/obj/item/rarequirement in rareitem)
+			if(rarequirement == I)
+				to_chat(user, "<span class='revenbignotice'I can't believe I actually fetched this thing. Now to add it on...</span>")
+				if(do_after(user, 20, target = src))
+					contents.Add(I)
+					qdel(rarequirement)
+					rarelevel ++
+					return TRUE
+			else
+				to_chat(user, "<span class='revenwarning'>This isn't what it needs! I can examine the effigy to recall what it needs.</span>")
+				return FALSE //i think this prevents this from spamming the guy if it requires the thing
+	else
+		to_chat(user, "<span class='notice'>You don't know what to do with this... thing.</span>")
+
+/obj/structure/effigy/Destroy()
+	if(linkedthrall)
+		var/datum/antagonist/thrall/thrall = linkedthrall
+		thrall.pretahunt()
+
+/datum/antagonist/thrall
+	name = "Thrall"
+	roundend_category = "thralls"
+	antagpanel_category = "Other"
+	show_in_antagpanel = TRUE
+	show_name_in_check_antagonists = TRUE
+
+/datum/antagonist/thrall/on_gain()
+	give_objective()
+	. = ..()
+
+/datum/antagonist/thrall/proc/give_objective()
+	var/datum/objective/thrall/effigy/effigy = new
+	effigy.owner = owner
+	objectives += effigy
+	var/datum/objective/thrall/protecteffigy/protecteffigy = new
+	protecteffigy.owner = owner
+	objectives += protecteffigy
+	owner.objectives |= objectives
+
+/datum/antagonist/thrall/proc/pretahunt()
+	owner.objectives -= objectives
+	var/datum/objective/escape/thrall/escape = new
+	escape.owner = owner
+	objectives += escape
+	owner.objectives |= objectives
+
+/datum/antagonist/thrall/greet()
+	playsound(owner, 'sound/spookoween/ghost_whisper.ogg', 50, 1, -1)
+	to_chat(owner, "<span class='revenboldnotice'> A painful chatter rushes through your skull as a dark presence focuses its attention on you. It <italics>wants</italics> one small task from you...</span>")
+	owner.announce_objectives()
+
+/datum/antagonist/thrall/farewell()
+	to_chat(owner, "<span class='warning'>Your mind suddenly clears...</span>")
+	to_chat(owner, "<big><span class='warning'><b>You have finally broken free of the Preta's influence! You are no longer controlled by it and can do as you please!</b></span></big>")
+
+/datum/antagonist/thrall/on_removal()
+	owner.objectives -= objectives
+	. = ..()
+
+/datum/antagonist/thrall/roundend_report()
+	var/list/report = list()
+
+	if(!owner)
+		CRASH("antagonist datum without owner")
+
+	report += printplayer(owner)
+
+	var/objectives_complete = TRUE
+	if(owner.objectives.len)
+		report += printobjectives(owner)
+		for(var/datum/objective/objective in owner.objectives)
+			if(!objective.check_completion())
+				objectives_complete = FALSE
+				break
+
+	if(owner.objectives.len == 0 || objectives_complete)
+		if(/datum/objective/escape in owner.objectives)
+			report += "<span class='greentext big'>The [name] has escaped the Preta!</span>"
+		else
+			report += "<span class='greentext big'>The [name] constructed the perfect effigy!</span>"
+	else
+		if(/datum/objective/escape in owner.objectives)
+			report += "<span class='greentext big'>The [name] did not escape the Preta!</span>"
+		else
+			report += "<span class='redtext big'>The [name] has failed to finish the effigy!</span>"
+
+
+	return report.Join("<br>")
+
+/datum/objective/thrall
+	completed = TRUE
+
+/datum/objective/thrall/effigy
+	completed = FALSE
+	explanation_text = "Construct the perfect effigy to satisfy it's hunger."
+
+/datum/objective/thrall/protecteffigy
+	explanation_text = "Do not let the effigy be broken under any circumstances, or you will pay the ultimate price."
+
+/datum/objective/escape/thrall
+	explanation_text = "The effigy is broken, and the Preta is coming to eat you instead. Escape on the shuttle or an escape pod alive before it finds you."
+
+/datum/objective/escape/thrall/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!considered_pretaescape(M))
+			return FALSE
+	return TRUE
+
+/datum/objective/proc/considered_pretaescape(datum/mind/M)
+	if(!considered_alive(M))
+		return FALSE
+	if(SSticker.force_ending || SSticker.mode.station_was_nuked)
+		return TRUE
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
+		return FALSE
+	var/turf/location = get_turf(M.current)
+	return location.onCentCom() || location.onSyndieBase()

@@ -9,7 +9,7 @@
 /mob/living/simple_animal/revenant
 	name = "\a Revenant"
 	desc = "A malevolent spirit."
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/revenant.dmi'
 	icon_state = "revenant_idle"
 	var/icon_idle = "revenant_idle"
 	var/icon_reveal = "revenant_revealed"
@@ -60,18 +60,47 @@
 	var/essence_drained = 0 //How much essence the revenant will drain from the corpse it's feasting on.
 	var/draining = FALSE //If the revenant is draining someone.
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
+	var/list/thrall = list() //Preta only var, but it's used to keep in check who is the thrall
 	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
 	var/generated_objectives_and_spells = FALSE
+	var/pickedghost = "Buggy Enigma. Please report this on github"
 
 /mob/living/simple_animal/revenant/Initialize(mapload)
 	. = ..()
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
-	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
-	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
-	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
 	random_revenant_name()
+	if(type=="/mob/living/simple_animal/revenant") //so not an admin spawned specific revenant, lets randomly pick one
+		pickghost()
+
+/mob/living/simple_animal/revenant/proc/pickghost()
+	switch(rand(1,15))
+		if(1 to 3) //brute
+			pickedghost = "Poltergeist"
+			icon_state = "poltergeist_idle"
+			icon_idle = "poltergeist_idle"
+			icon_reveal = "poltergeist_revealed"
+			icon_stun = "poltergeist_stun"
+			icon_drain = "poltergeist_draining"
+			AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant/urges(null))
+			AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/push(null))
+		if(4 to 6) //burn
+			pickedghost = "Specter"
+			AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
+			AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
+		if(7 to 9) // toxin
+			pickedghost = "Wight"
+			AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
+		if(10 to 12) // oxygen
+			pickedghost = "Phantom"
+			AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
+		if(13 to 14) // brain
+			pickedghost = "Wendigo"
+		if(15) //clone
+			pickedghost = "Preta"
+			AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant/enthrall(null))
+			AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/effigy(null))
 
 /mob/living/simple_animal/revenant/proc/random_revenant_name()
 	var/built_name = ""
@@ -83,7 +112,7 @@
 
 /mob/living/simple_animal/revenant/Login()
 	..()
-	to_chat(src, "<span class='deadsay'><span class='big bold'>You are a revenant.</span></span>")
+	to_chat(src, "<span class='deadsay'><span class='big bold'>You are a [pickedghost].</span></span>")
 	to_chat(src, "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>")
 	to_chat(src, "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>")
 	to_chat(src, "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>")
@@ -461,3 +490,49 @@
 
 /datum/objective/revenantFluff/check_completion()
 	return TRUE
+
+/mob/living/simple_animal/revenant/poltergeist
+
+/mob/living/simple_animal/revenant/poltergeist/Initialize(mapload)
+	. = ..()
+	pickedghost = "Poltergeist"
+	icon_state = "poltergeist_idle"
+	icon_idle = "poltergeist_idle"
+	icon_reveal = "poltergeist_revealed"
+	icon_stun = "poltergeist_stun"
+	icon_drain = "poltergeist_draining"
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant/urges(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/push(null))
+
+/mob/living/simple_animal/revenant/specter
+
+/mob/living/simple_animal/revenant/specter/Initialize(mapload)
+	. = ..()
+	pickedghost = "Specter"
+
+/mob/living/simple_animal/revenant/wight
+
+/mob/living/simple_animal/revenant/wight/Initialize(mapload)
+	. = ..()
+	pickedghost = "Wight"
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
+
+/mob/living/simple_animal/revenant/phantom
+
+/mob/living/simple_animal/revenant/phantom/Initialize(mapload)
+	. = ..()
+	pickedghost = "Phantom"
+
+/mob/living/simple_animal/revenant/wendigo
+
+/mob/living/simple_animal/revenant/wendigo/Initialize(mapload)
+	. = ..()
+	pickedghost = "Wendigo"
+
+/mob/living/simple_animal/revenant/preta
+
+/mob/living/simple_animal/revenant/preta/Initialize(mapload)
+	. = ..()
+	pickedghost = "Preta"
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant/enthrall(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/effigy(null))
