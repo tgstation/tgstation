@@ -172,6 +172,13 @@ Turf and target are separate in case you want to teleport some distance from a t
 			line+=locate(px,py,M.z)
 	return line
 
+/proc/getline_distance(atom/M,atom/N,atom/P) //Finds the shortest distance between a line (first two points) and a point
+	var/A = M.y - N.y
+	var/B = N.x - M.x
+	var/C = M.x * N.y - N.x * M.y
+	var/D = abs(A * P.x + B * P.y + C) / sqrt(A ** 2 + B ** 2)
+	return D
+
 //Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
 	if (findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
