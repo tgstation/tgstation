@@ -64,6 +64,8 @@
 	var/zoom_out_amt = 0
 	var/datum/action/toggle_scope_zoom/azoom
 
+	var/obj/item/device/beacon/guntarget
+
 /obj/item/gun/Initialize()
 	. = ..()
 	if(pin)
