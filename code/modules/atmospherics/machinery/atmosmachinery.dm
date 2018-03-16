@@ -218,7 +218,7 @@ Pipelines + Other Objects -> Pipe network
 		//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 		if(unsafe_wrenching)
 			unsafe_pressure_release(user, internal_pressure)
-		return deconstruct(TRUE)
+		deconstruct(TRUE)
 	return TRUE
 
 /obj/machinery/atmospherics/proc/can_unwrench(mob/user)
@@ -251,7 +251,6 @@ Pipelines + Other Objects -> Pipe network
 			if(!disassembled)
 				stored.obj_integrity = stored.max_integrity * 0.5
 			transfer_fingerprints_to(stored)
-			. = stored
 	..()
 
 /obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255))
