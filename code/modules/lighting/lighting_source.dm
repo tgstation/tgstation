@@ -191,7 +191,7 @@
 		top_atom = source_atom
 		update = TRUE
 
-	if(directional && ismob(loc) && directional != source_atom.loc.dir)
+	if(directional && ismob(source_atom.loc) && directional != source_atom.loc.dir)
 		source_atom.dir = source_atom.loc.dir
 		directional = source_atom.dir
 		update = TRUE
@@ -323,3 +323,5 @@
 #undef LUM_FALLOFF
 #undef REMOVE_CORNER
 #undef APPLY_CORNER
+#undef X_FALLOFF
+#undef Y_FALLOFF
