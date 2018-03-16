@@ -7,10 +7,10 @@
 
 	var/turf/source_turf     // The turf under the above.
 	var/turf/pixel_turf      // The turf the top_atom appears to over.
-	var/light_power    // Intensity of the emitter light.
-	var/light_range      // The range of the emitted light.
-	var/light_color    // The colour of the light, string, decomposed by parse_light_color()
-	var/directional
+	var/light_power    		 // Intensity of the emitter light.
+	var/light_range     	 // The range of the emitted light.
+	var/light_color    		 // The colour of the light, string, decomposed by parse_light_color()
+	var/directional	  		 // The angle that the light is pointing, for directional lighting
 
 	// Variables for keeping track of the colour.
 	var/lum_r
@@ -112,17 +112,20 @@
 // As such this all gets counted as a single line.
 // The braces and semicolons are there to be able to do this on a single line.
 #define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
-#define X_FALLOFF(C, T) CLAMP01((abs(C.y - T.y) + 0.5) * 0.2) //When a light is facing North/South, we want the light to remain constant over the Y axis but falloff along the X axis
-#define Y_FALLOFF(C, T) CLAMP01((abs(C.x - T.x) + 0.5) * 0.2) // East/West
+#define X_FALLOFF(C, T) CLAMP01(abs(C.y - T.y) * 0.2) // For North-South directional lighting so that it forms a "cone" of light
+#define Y_FALLOFF(C, T) CLAMP01(abs(C.x - T.x) * 0.2) // East/West
+#define ANG_FALLOFF(C, T, E) CLAMP01((1 - getline_distance(T, E, C)) * sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2) * 0.2) // For angles
 
 #define APPLY_CORNER(C)                      \
-	if(!directional)						 \
+	if(isnull(directional))						 \
 		. = LUM_FALLOFF(C, pixel_turf);      \
 	else									 \
-		if(directional <= 2)					 \
+		if(directional == 0 || directional == 180)			\
 			. = X_FALLOFF(C, pixel_turf); 	 \
-		else								 \
+		else if(directional == 90 || directional == 270)	\
 			. = Y_FALLOFF(C, pixel_turf);	 \
+		else								 \
+			. = ANG_FALLOFF(C, pixel_turf, get_turf_in_angle(directional, pixel_turf, CEILING(light_range, 1)));	\
 	. *= light_power;                        \
 	var/OLD = effect_str[C];                 \
                                              \
@@ -191,9 +194,15 @@
 		top_atom = source_atom
 		update = TRUE
 
-	if(directional && ismob(source_atom.loc) && directional != source_atom.loc.dir)
-		source_atom.dir = source_atom.loc.dir
-		directional = source_atom.dir
+	if(!isnull(directional) && ismob(source_atom.loc) && directional != dir2angle(source_atom.loc.dir))
+		var/obj/item/device/flashlight/directional/D = source_atom //If directionality is expanded other flashlights should be made a child of this anyway
+		if(get_turf(source_atom) != source_turf)      // We moved, reset light direction to our current direction
+			D.pointing = null
+			source_atom.dir = source_atom.loc.dir
+			directional = dir2angle(source_atom.dir)
+		else if(isnull(D.pointing))					  // We turned without moving or pointing the light
+			source_atom.dir = source_atom.loc.dir
+			directional = dir2angle(source_atom.dir)
 		update = TRUE
 
 	if (!light_range || !light_power)
@@ -243,22 +252,32 @@
 	var/datum/lighting_corner/C
 	var/turf/T
 	if (source_turf)
-		if(directional)
-			var/angle = dir2angle(directional)
-			var/tempTurf = get_turf_in_angle(angle, source_turf, CEILING(light_range, 1))
+		if(!isnull(directional)) // If the light has a direction, which is provided as an angle
+			var/tempTurf = get_turf_in_angle(directional, source_turf, CEILING(light_range, 1))
 			for(T in getline(source_turf,tempTurf))
 				if(T != source_turf)
-					for (thing in T.get_corners(source_turf))
+					turfs += T
+					for (thing in T.get_corners())
 						C = thing
 						corners[C] = 0
-					turfs += T
 					if(T.has_opaque_atom)
 						break
+			if(!(directional in list(0,90,180,270))) // Angular lighting, more difficult but thankfully also quite rare, for now
+				for(T in turfs)
+					if(!T.has_opaque_atom)
+						for(var/direction in GLOB.cardinals)
+							var/turf/adj = get_step(src, direction)
+							if(!adj || !(adj in turfs) || T != source_turf)
+								continue
+							turfs += adj
+							for(thing in adj.get_corners())
+								C = thing
+								corners[C] = 0
 		else
-			var/oldlum = source_turf.luminosity
+			var/oldlum = source_turf.luminosity // Standard 360-degree lighting
 			source_turf.luminosity = CEILING(light_range, 1)
 			for(T in view(CEILING(light_range, 1), source_turf))
-				for (thing in T.get_corners(source_turf))
+				for (thing in T.get_corners())
 					C = thing
 					corners[C] = 0
 				turfs += T
