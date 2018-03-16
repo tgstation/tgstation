@@ -970,11 +970,11 @@
 	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
 	if(do_after(user,50, user))
 		to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/book/granter/action
-	var/datum/action/granted_action = null
+	var/datum/action/granted_action
 
 /obj/item/book/granter/action/attack_self(mob/user)
 	if(!granted_action)
@@ -1025,7 +1025,7 @@
 	UpdateButtonIcon()
 
 /obj/item/book/granter/spell
-	var/spell = null
+	var/spell
 	var/spellname = "magical bugs"
 	var/oneuse = TRUE //default this is one, but admins can var this to 0 if we wanna all have a pass around of the rod form book
 	var/used = FALSE //only really matters if oneuse but it might be nice to know if someone's taken
@@ -1080,7 +1080,7 @@
 
 /obj/item/book/granter/spell/fireball/recoil(mob/user)
 	..()
-	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
+	explosion(user.loc, -1, 0, 2, 3, FALSE, FALSE, 2)
 	qdel(src)
 
 /obj/item/book/granter/spell/sacredflame
@@ -1125,7 +1125,7 @@
 	spellname = "mindswap"
 	icon_state ="bookmindswap"
 	desc = "This book's cover is pristine, though its pages look ragged and torn."
-	var/mob/stored_swap = null //Used in used book recoils to store an identity for mindswaps
+	var/mob/stored_swap //Used in used book recoils to store an identity for mindswaps
 	remarks = list("If you mindswap from a mouse, they will be helpless when you recover...", "Wait, where am I...?", "This book is giving me a horrible headache...", "This page is blank, but I feel words popping into my head...", "GYNU... GYRO... Ugh...", "The voices in my head need to stop, I'm trying to read here...", "I don't think anyone will be happy when I cast this spell...")
 
 /obj/item/book/granter/spell/mindswap/onlearned()
@@ -1194,7 +1194,7 @@
 		magichead.voicechange = 1	//NEEEEIIGHH
 		if(!user.dropItemToGround(user.wear_mask))
 			qdel(user.wear_mask)
-		user.equip_to_slot_if_possible(magichead, slot_wear_mask, 1, 1)
+		user.equip_to_slot_if_possible(magichead, slot_wear_mask, TRUE, TRUE)
 		qdel(src)
 	else
 		to_chat(user,"<span class='notice'>I say thee neigh</span>") //It still lives here

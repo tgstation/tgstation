@@ -16,7 +16,7 @@
 	for(var/mob/living/L in targets)
 		var/list/hand_items = list(L.get_active_held_item(),L.get_inactive_held_item())
 		var/charged_item = null
-		var/burnt_out = 0
+		var/burnt_out = FALSE
 
 		if(L.pulling && isliving(L.pulling))
 			var/mob/living/M =	L.pulling
@@ -36,18 +36,19 @@
 			if(istype(item, /obj/item/spellbook))
 				to_chat(L, "<span class='danger'>Glowing red letters appear on the front cover...</span>")
 				to_chat(L, "<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE! VERY CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>")
-				burnt_out = 1
+				burnt_out = TRUE
 			else if(istype(item, /obj/item/book/granter/spell))
 				var/obj/item/book/granter/spell/I = item
 				if(!I.oneuse)
 					to_chat(L, "<span class='notice'>This book is infinite use and can't be recharged, yet the magic has improved the book somehow...</span>")
 					burnt_out = 1
 					I.pages_to_mastery--
+					break
 				if(prob(80))
 					L.visible_message("<span class='warning'>[I] catches fire!</span>")
 					qdel(I)
 				else
-					I.used = 0
+					I.used = FALSE
 					charged_item = I
 					break
 			else if(istype(item, /obj/item/gun/magic))
@@ -56,7 +57,7 @@
 					I.max_charges--
 				if(I.max_charges <= 0)
 					I.max_charges = 0
-					burnt_out = 1
+					burnt_out = TRUE
 				I.charges = I.max_charges
 				if(istype(item, /obj/item/gun/magic/wand) && I.max_charges != 0)
 					var/obj/item/gun/magic/W = item
@@ -71,7 +72,7 @@
 						C.maxcharge -= 200
 					if(C.maxcharge <= 1) //Div by 0 protection
 						C.maxcharge = 1
-						burnt_out = 1
+						burnt_out = TRUE
 				C.charge = C.maxcharge
 				charged_item = C
 				break
@@ -85,7 +86,7 @@
 								C.maxcharge -= 200
 							if(C.maxcharge <= 1) //Div by 0 protection
 								C.maxcharge = 1
-								burnt_out = 1
+								burnt_out = TRUE
 						C.charge = C.maxcharge
 						if(istype(C.loc, /obj/item/gun))
 							var/obj/item/gun/G = C.loc
