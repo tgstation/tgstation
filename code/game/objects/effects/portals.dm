@@ -138,7 +138,7 @@
 	return ..()
 
 /obj/effect/portal/attack_ghost(mob/dead/observer/O)
-	if(istype(O) && !teleport(O, TRUE))
+	if(!teleport(O, TRUE))
 		return ..()
 
 /obj/effect/portal/proc/teleport(atom/movable/M, force = FALSE)
