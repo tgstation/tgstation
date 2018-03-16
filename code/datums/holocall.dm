@@ -284,7 +284,7 @@
 	else
 		var/datum/preset_holoimage/H = new preset_image_type
 		record.caller_image = H.build_image()
-		
+
 //These build caller image from outfit and some additional data, for use by mappers for ruin holorecords
 /datum/preset_holoimage
 	var/nonhuman_mobtype //Fill this if you just want something nonhuman
@@ -348,3 +348,5 @@
 /datum/preset_holoimage/clown
 	outfit_type = /datum/outfit/job/clown
 
+/datum/preset_holoimage/fuzzy
+	nonhuman_mobtype = /mob/living/simple_animal/hostile/illusion

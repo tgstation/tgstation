@@ -12461,7 +12461,7 @@
 	id = "mining_home";
 	name = "mining shuttle bay";
 	width = 7;
-	roundstart_template = /datum/map_template/shuttle/mining/box
+	roundstart_template = !INVALID_VALUE!
 	},
 /turf/open/space/basic,
 /area/space)
@@ -12662,7 +12662,7 @@
 	id = "laborcamp_home";
 	name = "fore bay 1";
 	width = 9;
-	roundstart_template = /datum/map_template/shuttle/labour/box
+	roundstart_template = !INVALID_VALUE!
 	},
 /turf/open/space/basic,
 /area/space)
@@ -75611,7 +75611,7 @@
 	id = "arrivals_stationary";
 	name = "arrivals";
 	width = 7;
-	roundstart_template = /datum/map_template/shuttle/arrival/box
+	roundstart_template = !INVALID_VALUE!
 	},
 /turf/open/space/basic,
 /area/space)
