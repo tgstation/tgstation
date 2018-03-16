@@ -33,10 +33,21 @@
 		M = replacetext(M,"th","d")
 		M = replacetext(M,"t","d")
 
-		if(prob(50))
-			M += pick(" :DDDDD", " :-DDDDDD")
-			if(prob(20))
-				M += pick (" EBIN!!"," FUGG!!"," BENIS!!", " SPORO LORO SPLARLE SBOERDOLOLA!!")
+if (prob(50))
+	M += " :"
+	if (prob(50))
+		M += "-"
+
+	var/smiles = rand(3, 8)
+	
+	while (smiles > 0)
+		M += "D"
+
+	if (prob(50))
+		var/exclaim = rand(3, 8)
+
+		while (exclaim > 0)
+			M += "!"
 	return trim(M)
 
 /obj/item/clothing/mask/spurdo/equipped(mob/user, slot) //when you put it on
