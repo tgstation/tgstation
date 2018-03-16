@@ -10,6 +10,7 @@
 	var/light_power    // Intensity of the emitter light.
 	var/light_range      // The range of the emitted light.
 	var/light_color    // The colour of the light, string, decomposed by parse_light_color()
+	var/directional
 
 	// Variables for keeping track of the colour.
 	var/lum_r
@@ -56,10 +57,10 @@
 
 	if (top_atom)
 		LAZYREMOVE(top_atom.light_sources, src)
-	
+
 	if (needs_update)
 		GLOB.lighting_update_lights -= src
-	
+
 	. = ..()
 
 // Yes this doesn't align correctly on anything other than 4 width tabs.
@@ -111,9 +112,17 @@
 // As such this all gets counted as a single line.
 // The braces and semicolons are there to be able to do this on a single line.
 #define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
+#define X_FALLOFF(C, T) CLAMP01((abs(C.y - T.y) + 0.5) * 0.2) //When a light is facing North/South, we want the light to remain constant over the Y axis but falloff along the X axis
+#define Y_FALLOFF(C, T) CLAMP01((abs(C.x - T.x) + 0.5) * 0.2) // East/West
 
 #define APPLY_CORNER(C)                      \
-	. = LUM_FALLOFF(C, pixel_turf);          \
+	if(!directional)						 \
+		. = LUM_FALLOFF(C, pixel_turf);      \
+	else									 \
+		if(directional <= 2)					 \
+			. = X_FALLOFF(C, pixel_turf); 	 \
+		else								 \
+			. = Y_FALLOFF(C, pixel_turf);	 \
 	. *= light_power;                        \
 	var/OLD = effect_str[C];                 \
                                              \
@@ -125,7 +134,6 @@
 		(. * lum_g) - (OLD * applied_lum_g), \
 		(. * lum_b) - (OLD * applied_lum_b)  \
 	);
-
 
 #define REMOVE_CORNER(C)                     \
 	. = -effect_str[C];                      \
@@ -161,7 +169,6 @@
 	if (effect_str[C]) // Already have one.
 		REMOVE_CORNER(C)
 		effect_str[C] = 0
-
 	APPLY_CORNER(C)
 	UNSETEMPTY(effect_str)
 
@@ -182,6 +189,10 @@
 
 	if (!top_atom)
 		top_atom = source_atom
+		update = TRUE
+
+	if(directional && directional != source_atom.dir)
+		directional = source_atom.dir
 		update = TRUE
 
 	if (!light_range || !light_power)
@@ -231,14 +242,24 @@
 	var/datum/lighting_corner/C
 	var/turf/T
 	if (source_turf)
-		var/oldlum = source_turf.luminosity
-		source_turf.luminosity = CEILING(light_range, 1)
-		for(T in view(CEILING(light_range, 1), source_turf))
-			for (thing in T.get_corners(source_turf))
-				C = thing
-				corners[C] = 0
-			turfs += T
-		source_turf.luminosity = oldlum
+		if(directional)
+			var/angle = dir2angle(directional)
+			var/tempTurf = get_turf_in_angle(angle, source_turf, CEILING(light_range, 1))
+			for(T in getline(source_turf,tempTurf))
+				if(T != source_turf)
+					for (thing in T.get_corners(source_turf))
+						C = thing
+						corners[C] = 0
+					turfs += T
+		else
+			var/oldlum = source_turf.luminosity
+			source_turf.luminosity = CEILING(light_range, 1)
+			for(T in view(CEILING(light_range, 1), source_turf))
+				for (thing in T.get_corners(source_turf))
+					C = thing
+					corners[C] = 0
+				turfs += T
+			source_turf.luminosity = oldlum
 
 	LAZYINITLIST(affecting_turfs)
 	var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
@@ -272,12 +293,14 @@
 				continue
 			APPLY_CORNER(C)
 
+
 		for (thing in corners - L) // Existing corners
 			C = thing
 			if (!C.active)
 				effect_str[C] = 0
 				continue
 			APPLY_CORNER(C)
+
 
 	L = effect_str - corners
 	for (thing in L) // Old, now gone, corners.
@@ -297,3 +320,5 @@
 #undef LUM_FALLOFF
 #undef REMOVE_CORNER
 #undef APPLY_CORNER
+#undef X_CORNER
+#undef Y_CORNER

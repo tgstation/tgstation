@@ -529,3 +529,30 @@
 	flashlight_power = 1
 	flags_1 = CONDUCT_1 | DROPDEL_1
 	actions_types = list()
+
+/obj/item/device/flashlight/directional
+	name = "old flashlight"
+	desc = "This poor thing has seen better days, it only emits light in a single direction"
+	dir = 4
+	brightness_on = 3
+
+/obj/item/device/flashlight/directional/update_brightness()
+	..()
+	if(light)
+		light.directional = loc.dir
+		update_light()
+
+/obj/item/device/flashlight/directional/equipped()
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/device/flashlight/directional/dropped()
+	..()
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/device/flashlight/directional/process() //So that the light follows you when you turn without moving
+	..()
+	if(ismob(loc) && on)
+		if(dir != loc.dir)
+			dir = loc.dir
+			update_light()
