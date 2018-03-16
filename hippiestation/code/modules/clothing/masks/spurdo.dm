@@ -39,15 +39,17 @@
 			M += "-"
 
 		var/smiles = rand(3, 8)
-		
+
 		while (smiles > 0)
 			M += "D"
-	
+			smiles--
+
 		if (prob(50))
 			var/exclaim = rand(3, 8)
-	
+
 			while (exclaim > 0)
 				M += "!"
+				exclaim--
 	return uppertext(trim(M))
 
 /obj/item/clothing/mask/spurdo/equipped(mob/user, slot) //when you put it on
