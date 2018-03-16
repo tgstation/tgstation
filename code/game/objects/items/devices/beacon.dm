@@ -6,6 +6,7 @@
 	item_state = "beacon"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	anchored = FALSE
 	var/enabled = TRUE
 	var/renamed = FALSE
 
@@ -46,3 +47,25 @@
 		return
 
 	return ..()
+
+/obj/item/device/beacon/examine(mob/user)
+	..()
+	if(!anchored)
+		to_chat(user, "<span class='notice'>It is unsecured from the floor.</span>")
+	else
+		to_chat(user, "<span class='notice'>It is secured to the floor.</span>")
+
+/obj/item/device/beacon/wrench_act(mob/living/user, obj/item/I)
+	var/turf/T = get_turf(src)
+	if(!(T.intact && isfloorturf(T)))
+		to_chat(user, "<span class='notice'>You need a floor to fasten this to!</span>")
+		return
+
+	anchored = !anchored
+	if(anchored)
+		to_chat(user, "<span class='notice'>You fasten [src] to the floor.</span>")
+	else
+		to_chat(user, "<span class='notice'>You unfasten [src] from the floor.</span>")
+	I.play_tool_sound(src, 100)
+
+	return TRUE
