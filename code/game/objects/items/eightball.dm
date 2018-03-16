@@ -11,8 +11,8 @@
 	var/shaking = FALSE
 	var/on_cooldown = FALSE
 
-	var/shake_time = 150
-	var/cooldown_time = 1800
+	var/shake_time = 50
+	var/cooldown_time = 100
 
 	var/static/list/possible_answers = list(
 		"It is certain",
@@ -95,6 +95,8 @@
 // except it actually ASKS THE DEAD (wooooo)
 
 /obj/item/toy/eightball/haunted
+	shake_time = 150
+	cooldown_time = 1800
 	flags_1 = HEAR_1
 	var/last_message
 	var/selected_message

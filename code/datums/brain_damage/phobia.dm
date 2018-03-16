@@ -14,7 +14,7 @@
 	var/list/trigger_turfs
 	var/list/trigger_species
 
-/datum/brain_trauma/mild/phobia/New(mob/living/carbon/C, _permanent, specific_type)
+/datum/brain_trauma/mild/phobia/New(specific_type)
 	phobia_type = specific_type
 	if(!phobia_type)
 		phobia_type = pick(SStraumas.phobia_types)
@@ -85,6 +85,8 @@
 
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
 	next_scare = world.time + 120
+	if(owner.stat == DEAD)
+		return
 	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
 	if(reason)
 		to_chat(owner, "<span class='userdanger'>Seeing [reason] [message]!</span>")

@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/viral_bonding
+	name = "Viral Bonding Surgery Disk"
 	desc = "The disk provides instructions on how to force symbiosis between a virus and its host."
 	surgeries = list(/datum/surgery/advanced/viral_bonding)
 

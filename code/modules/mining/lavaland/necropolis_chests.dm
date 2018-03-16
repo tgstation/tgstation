@@ -33,7 +33,7 @@
 			else
 				new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
 		if(9)
-			new /obj/item/organ/brain/alien(src)
+			new /obj/item/rod_of_asclepius(src)
 		if(10)
 			new /obj/item/organ/heart/cursed/wizard(src)
 		if(11)
@@ -75,7 +75,6 @@
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
-
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -139,6 +138,54 @@
 	build_path = /obj/item/borg/upgrade/modkit/bounty
 
 //Spooky special loot
+
+//Rod of Asclepius
+/obj/item/rod_of_asclepius
+	name = "Rod of Asclepius"
+	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding it's way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "asclepius_dormant"
+	var/activated = FALSE
+
+/obj/item/rod_of_asclepius/attack_self(mob/user)
+	if(activated)
+		return
+	if(!iscarbon(user))
+		to_chat(user, "<span class='warning'>The snake carving seems to come alive, if only for a moment, before returning to it's dormant state, almost as if it finds you incapable of holding it's oath.</span>")
+		return
+	var/mob/living/carbon/itemUser = user
+	var/failText = "<span class='warning'>The snake seems unsatisfied with your incomplete oath and returns to it's previous place on the rod, returning to its dormant, wooden state. You must stand still while completing your oath!</span>"
+	to_chat(itemUser, "<span class='notice'>The wooden snake that was carved into the rod seems to suddenly come alive and begins to slither down your arm! The compulsion to help others grows abnormally strong...</span>")
+	if(do_after(itemUser, 40, target = itemUser))
+		itemUser.say("I swear to fulfill, to the best of my ability and judgment, this covenant:")
+	else
+		to_chat(itemUser, failText)
+		return
+	if(do_after(itemUser, 20, target = itemUser))
+		itemUser.say("I will apply, for the benefit of the sick, all measures that are required, avoiding those twin traps of overtreatment and therapeutic nihilism.")
+	else
+		to_chat(itemUser, failText)
+		return
+	if(do_after(itemUser, 30, target = itemUser))
+		itemUser.say("I will remember that I remain a member of society, with special obligations to all my fellow human beings, those sound of mind and body as well as the infirm.")
+	else
+		to_chat(itemUser, failText)
+		return
+	if(do_after(itemUser, 30, target = itemUser))
+		itemUser.say("If I do not violate this oath, may I enjoy life and art, respected while I live and remembered with affection thereafter. May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.")
+	else
+		to_chat(itemUser, failText)
+		return
+	to_chat(itemUser, "<span class='notice'>The snake, satisfied with your oath, attaches itself and the rod to your forearm with an inseparable grip. Your thoughts seem to only revolve around the core idea of helping others, and harm is nothing more than a distant, wicked memory...</span>")
+	var/datum/status_effect/hippocraticOath/effect = itemUser.apply_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH)
+	effect.hand = itemUser.get_held_index_of_item(src)
+	activated()
+
+/obj/item/rod_of_asclepius/proc/activated()
+	flags_1 = NODROP_1 | DROPDEL_1
+	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
+	icon_state = "asclepius_active"
+	activated = TRUE
 
 //Wisp Lantern
 /obj/item/device/wisp_lantern
