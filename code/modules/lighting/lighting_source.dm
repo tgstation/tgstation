@@ -191,7 +191,8 @@
 		top_atom = source_atom
 		update = TRUE
 
-	if(directional && directional != source_atom.dir)
+	if(directional && ismob(loc) && directional != source_atom.loc.dir)
+		source_atom.dir = source_atom.loc.dir
 		directional = source_atom.dir
 		update = TRUE
 
