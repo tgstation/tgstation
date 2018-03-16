@@ -4,7 +4,7 @@
 
 /datum/design/c38/sec
 	name = "Speed Loader (.38)"
-	id = "c38"
+	id = "sec_38"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 20000)
 	build_path = /obj/item/ammo_box/c38
@@ -13,7 +13,7 @@
 
 /datum/design/rubbershot/sec
 	name = "Rubber Shot"
-	id = "rubber_shot"
+	id = "sec_rshot"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000)
 	build_path = /obj/item/ammo_casing/shotgun/rubbershot
@@ -22,7 +22,7 @@
 
 /datum/design/shotgun_slug/sec
 	name = "Shotgun Slug"
-	id = "shotgun_slug"
+	id = "sec_slug"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000)
 	build_path = /obj/item/ammo_casing/shotgun
@@ -31,7 +31,7 @@
 
 /datum/design/buckshot_shell/sec
 	name = "Buckshot Shell"
-	id = "buckshot_shell"
+	id = "sec_bshot"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000)
 	build_path = /obj/item/ammo_casing/shotgun/buckshot
@@ -40,7 +40,7 @@
 
 /datum/design/shotgun_dart/sec
 	name = "Shotgun Dart"
-	id = "shotgun_dart"
+	id = "sec_dart"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000)
 	build_path = /obj/item/ammo_casing/shotgun/dart
@@ -49,7 +49,7 @@
 
 /datum/design/incendiary_slug/sec
 	name = "Incendiary Slug"
-	id = "incendiary_slug"
+	id = "sec_Islug"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000)
 	build_path = /obj/item/ammo_casing/shotgun/incendiary
