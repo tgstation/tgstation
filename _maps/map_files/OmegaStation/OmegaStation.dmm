@@ -8077,7 +8077,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/secbot/beepsky,
+/mob/living/simple_animal/bot/secbot/beepsky{
+	name = "Officer Beepsky"
+	},
 /turf/open/floor/plasteel/red/corner,
 /area/security/brig)
 "apC" = (
@@ -28426,7 +28428,7 @@
 "bgp" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
-	id = "xeno2";
+	id = "xeno1";
 	name = "Containment Control";
 	req_access_txt = "55"
 	},
@@ -28451,23 +28453,6 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
-/area/science/xenobiology)
-"bgs" = (
-/obj/structure/table/reinforced,
-/obj/machinery/button/door{
-	id = "xeno3";
-	name = "Containment Control";
-	req_access_txt = "55"
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 24;
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bgt" = (
@@ -28794,8 +28779,8 @@
 	req_access_txt = "47"
 	},
 /obj/machinery/door/poddoor/preopen{
-	id = "xeno2";
-	name = "Creature Cell #2"
+	id = "xeno1";
+	name = "Creature Cell #1"
 	},
 /obj/structure/cable/white{
 	icon_state = "2-4"
@@ -28836,26 +28821,6 @@
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 5
-	},
-/area/science/xenobiology)
-"bhe" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
-	name = "Creature Pen";
-	req_access_txt = "47"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "xeno3";
-	name = "Creature Cell #3"
-	},
-/obj/structure/cable/white{
-	icon_state = "1-8"
-	},
-/obj/structure/cable/white{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
 	},
 /area/science/xenobiology)
 "bhf" = (
@@ -29172,14 +29137,6 @@
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 4
 	},
-/area/science/xenobiology)
-"bhR" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bhS" = (
 /obj/structure/disposalpipe/trunk{
@@ -29537,10 +29494,6 @@
 	dir = 8
 	},
 /area/hallway/secondary/entry)
-"biB" = (
-/obj/structure/sign/warning/biohazard,
-/turf/closed/wall/r_wall,
-/area/science/xenobiology)
 "biC" = (
 /obj/machinery/shower{
 	dir = 4;
@@ -29565,10 +29518,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/science/xenobiology)
-"biE" = (
-/obj/structure/sign/departments/xenobio,
-/turf/closed/wall/r_wall,
 /area/science/xenobiology)
 "biF" = (
 /obj/structure/bed,
@@ -29779,7 +29728,7 @@
 "biX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
-	id = "xeno1";
+	id = "xeno2";
 	name = "Containment Control";
 	req_access_txt = "55"
 	},
@@ -29924,8 +29873,8 @@
 	req_access_txt = "47"
 	},
 /obj/machinery/door/poddoor/preopen{
-	id = "xeno1";
-	name = "Creature Cell #1"
+	id = "xeno2";
+	name = "Creature Cell #2"
 	},
 /obj/structure/cable/white{
 	icon_state = "1-4"
@@ -31844,6 +31793,36 @@
 	dir = 8
 	},
 /area/maintenance/port)
+"dWc" = (
+/turf/closed/mineral/random/labormineral,
+/area/space)
+"exb" = (
+/obj/machinery/door/window/brigdoor{
+	dir = 8;
+	name = "Creature Pen";
+	req_access_txt = "47"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "xeno3";
+	name = "Creature Cell #3"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-4"
+	},
+/obj/structure/cable/white{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/science/xenobiology)
+"eFp" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
 "fWz" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port";
@@ -31857,6 +31836,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
+"glC" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/starboard/aft)
 "heQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/navbeacon{
@@ -31892,6 +31874,18 @@
 	dir = 1
 	},
 /area/hallway/primary/central)
+"ibv" = (
+/turf/closed/wall,
+/area/science/xenobiology)
+"iVw" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 4
+	},
+/area/science/xenobiology)
 "jcn" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -31908,6 +31902,31 @@
 	heat_capacity = 1e+006
 	},
 /area/hallway/primary/central)
+"jdD" = (
+/obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	id = "xeno3";
+	name = "Containment Control";
+	req_access_txt = "55"
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
+"jBG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-4"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 4
+	},
+/area/science/xenobiology)
 "kKd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -31962,6 +31981,76 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"nTi" = (
+/obj/structure/sign/warning/biohazard,
+/turf/closed/wall,
+/area/science/xenobiology)
+"plz" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/machinery/button/door{
+	id = "xeno5";
+	name = "Containment Control";
+	pixel_x = 26;
+	pixel_y = -6;
+	req_access_txt = "55"
+	},
+/obj/machinery/button/door{
+	id = "xeno4";
+	name = "Containment Control";
+	pixel_x = 26;
+	pixel_y = 6;
+	req_access_txt = "55"
+	},
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
+"psq" = (
+/obj/structure/sign/poster/random{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/science/xenobiology)
+"pLb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/whitepurple/side{
+	dir = 8
+	},
+/area/science/xenobiology)
+"rCw" = (
+/obj/machinery/door/window/brigdoor{
+	dir = 4;
+	name = "Creature Pen";
+	req_access_txt = "47"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "xeno4";
+	name = "Creature Cell #4"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/white{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/science/xenobiology)
+"sdL" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plasteel/vault/side,
 /area/maintenance/starboard/aft)
 "sws" = (
 /obj/docking_port/stationary{
@@ -34455,6 +34544,19 @@
 	},
 /turf/open/floor/plasteel/purple/corner,
 /area/hallway/primary/central)
+"vsf" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/science/xenobiology)
+"wbV" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plasteel/vault/side{
+	dir = 1
+	},
+/area/maintenance/starboard/aft)
 "wUF" = (
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Supermatter Chamber";
@@ -34465,6 +34567,30 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
+"xFw" = (
+/obj/structure/sign/departments/xenobio,
+/turf/closed/wall,
+/area/science/xenobiology)
+"yeE" = (
+/obj/machinery/door/window/brigdoor{
+	dir = 4;
+	name = "Creature Pen";
+	req_access_txt = "47"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "xeno5";
+	name = "Creature Cell #5"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-8"
+	},
+/obj/structure/cable/white{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/science/xenobiology)
 
 (1,1,1) = {"
 aaa
@@ -77791,12 +77917,12 @@ sKZ
 bfP
 bfP
 bfP
+sKZ
 bfP
-aad
-aac
-aac
-aaa
-aaa
+bfP
+bfP
+bfP
+dWc
 aaa
 aaa
 aaa
@@ -78044,16 +78170,16 @@ bfP
 blu
 bgY
 bgm
-bfP
+ibv
+blu
+bgY
+bgm
+ibv
 blu
 bgY
 bgm
 bfP
 aad
-aad
-aad
-aac
-aac
 aac
 aac
 aad
@@ -78301,15 +78427,15 @@ sKZ
 bgn
 bgZ
 bhM
-bfP
+ibv
+bgn
+bgZ
+bhM
+ibv
 bgn
 bgZ
 bhM
 sKZ
-aad
-aad
-aad
-aad
 aad
 aac
 aad
@@ -78558,16 +78684,16 @@ bfP
 bgo
 bha
 bhN
-bfP
+ibv
 biW
 bjp
 bhN
+ibv
+biW
+exb
+bhN
 bfP
 bfP
-aad
-aad
-aad
-aad
 aad
 aad
 aad
@@ -78815,16 +78941,16 @@ bfP
 bgp
 bhb
 bhO
-biB
+ibv
 biX
+bhb
+bhO
+nTi
+jdD
 bhb
 bhO
 bjP
 bfP
-aad
-aad
-aad
-aad
 aad
 aad
 aad
@@ -79072,16 +79198,16 @@ bfQ
 bgq
 bhc
 bhP
+eFp
+bhP
+pLb
+bhP
 biC
 bhP
 bjq
 bjD
 bjQ
 bfP
-aad
-aad
-aad
-aad
 aad
 aad
 aad
@@ -79329,16 +79455,16 @@ bfR
 bgr
 bhd
 bhQ
+plz
+iVw
+jBG
+iVw
 biD
 biY
 bjr
 bjE
 bjR
 bfP
-aad
-aad
-aad
-aad
 aad
 aad
 aad
@@ -79583,19 +79709,19 @@ baa
 aZl
 dfP
 bfP
-bgs
-bhb
-bhR
-biB
+bgo
+rCw
+bhN
+ibv
+bgo
+yeE
+bhN
+nTi
 biZ
 bjs
 bjF
 bjS
 bfP
-aad
-aad
-aad
-aad
 aad
 aad
 aad
@@ -79840,19 +79966,19 @@ bem
 beO
 sOV
 bfP
-bgo
-bhe
-bhN
-bfP
+bgt
+bhf
+bhS
+ibv
+bgt
+bhf
+bhS
+ibv
 bja
 bjt
 bjG
 bjT
 bfP
-aad
-aad
-aad
-aad
 aad
 aad
 aad
@@ -80097,19 +80223,19 @@ ben
 beP
 bfn
 bfP
-bgt
-bhf
-bhS
-biE
+vsf
+bhg
+bgm
+ibv
+psq
+bgZ
+bgm
+xFw
 bjb
 bju
 bjH
 bfP
 sKZ
-aad
-aad
-aad
-aad
 aad
 aad
 aad
@@ -80357,15 +80483,15 @@ bfP
 bgm
 bhg
 bgm
+ibv
+bgm
+bhg
+bgm
 bfP
 bjc
 bjv
 bjc
 bfP
-aad
-aad
-aad
-aad
 aad
 aad
 aad
@@ -80612,17 +80738,17 @@ aZl
 sPI
 bfP
 bgm
-bhg
+bhi
+bgm
+ibv
+bgm
+bhi
 bgm
 sKZ
 bjd
 bjw
 bjI
 bfP
-aad
-aad
-aad
-aad
 aad
 aad
 aad
@@ -80868,18 +80994,18 @@ beq
 sKQ
 sOV
 sKZ
-bgm
-bhi
-bgm
+sKZ
+bfP
+bfP
+bfP
+sKZ
+bfP
+bfP
 bfP
 bje
 bjx
 bjI
 sKZ
-aad
-aad
-aad
-aad
 aad
 aad
 aad
@@ -81124,19 +81250,19 @@ bdy
 ber
 aZl
 bxX
-bfP
-sKZ
-bfP
-bfP
+glC
+sdL
+bhj
+wbV
+sOM
+aad
+aad
+aad
 bfP
 bfP
 bjc
 bfP
 bfP
-aad
-aad
-aad
-aad
 aad
 aad
 aad
@@ -81383,7 +81509,7 @@ beQ
 sOV
 sOM
 bgu
-bhj
+sPY
 bhT
 sOM
 aad
