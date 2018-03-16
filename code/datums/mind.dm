@@ -806,11 +806,6 @@
 	if(!mind.assigned_role)
 		mind.assigned_role = "Unassigned" //default
 
-//XENO
-/mob/living/carbon/alien/mind_initialize()
-	..()
-	mind.special_role = ROLE_ALIEN
-
 //AI
 /mob/living/silicon/ai/mind_initialize()
 	..()
