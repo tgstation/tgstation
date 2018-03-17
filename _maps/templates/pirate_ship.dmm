@@ -17,6 +17,8 @@
 "ad" = (
 /obj/structure/table,
 /obj/item/device/radio/off,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/super,
 /turf/open/floor/wood,
 /area/shuttle/pirate)
 "ae" = (
@@ -250,9 +252,6 @@
 	name = "Deep Space";
 	width = 23
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aE" = (
@@ -261,11 +260,11 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aF" = (
-/obj/machinery/door/airlock/external,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
+/obj/machinery/light/small{
+	dir = 1
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aG" = (
@@ -305,17 +304,21 @@
 /turf/open/floor/pod/light,
 /area/shuttle/pirate/vault)
 "aJ" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
+/obj/machinery/light/small,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aK" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door{
+	id = "piratestarboardexternal";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 0;
+	pixel_y = 24;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aL" = (
@@ -324,9 +327,6 @@
 	id_tag = "piratestarboardexternal"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aM" = (
@@ -335,30 +335,6 @@
 	faction = list("pirate")
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/pirate)
-"aN" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/button/door{
-	id = "pirateportexternal";
-	name = "External Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = -24;
-	req_access_txt = "0";
-	specialfunctions = 4
-	},
-/turf/open/floor/wood,
-/area/shuttle/pirate)
-"aO" = (
-/obj/machinery/button/door{
-	id = "piratestarboardexternal";
-	name = "External Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 24;
-	req_access_txt = "0";
-	specialfunctions = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood,
 /area/shuttle/pirate)
 "aP" = (
 /obj/structure/table,
@@ -519,6 +495,7 @@
 	id_tag = "piratecontainment1";
 	name = "Containment Room"
 	},
+/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bj" = (
@@ -543,9 +520,31 @@
 /area/shuttle/pirate)
 "bn" = (
 /obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/stock_parts/cell/super,
+/obj/item/stack/sheet/metal{
+	pixel_x = -1
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50;
+	pixel_y = 5
+	},
+/obj/item/stack/sheet/mineral/plastitanium{
+	amount = 30;
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/stack/rods/fifty,
+/obj/item/stack/cable_coil/red{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/item/stack/cable_coil/red{
+	pixel_x = 2
+	},
+/obj/item/device/multitool,
+/obj/item/clothing/head/welding{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bo" = (
@@ -587,37 +586,11 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"bs" = (
-/obj/structure/closet/crate,
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 35
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 35
-	},
-/obj/item/wrench,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/storage/toolbox/mechanical,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
-"bt" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/shuttle/pirate)
 "bu" = (
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/shuttle/pirate)
-"bv" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/turf/open/floor/wood,
 /area/shuttle/pirate)
 "bw" = (
 /obj/structure/table,
@@ -647,33 +620,74 @@
 /turf/open/floor/wood,
 /area/shuttle/pirate)
 "bz" = (
-/obj/structure/table,
-/obj/item/stack/sheet/metal{
-	pixel_x = -1
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 35
 	},
-/obj/item/stack/sheet/glass{
-	amount = 50;
-	pixel_y = 5
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 35
 	},
-/obj/item/stack/sheet/mineral/plastitanium{
-	amount = 30;
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/stack/rods/fifty,
-/obj/item/stack/cable_coil/red{
-	pixel_x = -1;
-	pixel_y = 3
-	},
-/obj/item/stack/cable_coil/red{
-	pixel_x = 2
-	},
-/obj/item/device/multitool,
-/obj/item/clothing/head/welding{
-	pixel_x = 4;
-	pixel_y = 4
-	},
+/obj/item/wrench,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/gloves/color/yellow,
 /obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"fg" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"jG" = (
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "pirateportexternal";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 0;
+	pixel_y = 0;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
+/turf/open/floor/wood,
+/area/shuttle/pirate)
+"At" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/pirate/vault)
+"EQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "piratestarboardexternal";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 0;
+	pixel_y = 0;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
+/turf/open/floor/wood,
+/area/shuttle/pirate)
+"To" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door{
+	id = "pirateportexternal";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 0;
+	pixel_y = 24;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"XP" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/pirate)
+"Yv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 
@@ -716,11 +730,11 @@ am
 am
 au
 am
-aE
+To
 am
 aP
 aV
-am
+ag
 am
 ag
 aa
@@ -748,7 +762,7 @@ ao
 ao
 aX
 bc
-am
+ag
 am
 am
 am
@@ -767,9 +781,9 @@ am
 ao
 ao
 ao
-aj
-ao
-aN
+Yv
+bl
+Yv
 ao
 ao
 ao
@@ -793,9 +807,9 @@ am
 ao
 aj
 ao
-aj
-bt
-ao
+Yv
+bl
+fg
 ao
 ao
 ao
@@ -818,12 +832,12 @@ ao
 am
 aU
 ao
+At
 aw
 aw
 aw
 aw
-aw
-aw
+At
 aY
 aj
 bg
@@ -840,7 +854,7 @@ ab
 ad
 ai
 aj
-ao
+jG
 am
 ao
 ao
@@ -856,7 +870,7 @@ aj
 bi
 bl
 bm
-bm
+XP
 am
 "}
 (8,1,1) = {"
@@ -892,7 +906,7 @@ ab
 af
 ak
 aj
-aj
+EQ
 am
 aj
 aj
@@ -908,7 +922,7 @@ ao
 bj
 bl
 bl
-bs
+XP
 am
 "}
 (10,1,1) = {"
@@ -922,12 +936,12 @@ aj
 am
 aW
 ao
+At
 aw
 aw
 aw
 aw
-aw
-aw
+At
 ba
 aj
 ao
@@ -949,9 +963,9 @@ am
 ao
 ao
 ao
-ao
-bv
-ao
+fg
+bl
+fg
 ao
 aj
 ao
@@ -975,9 +989,9 @@ am
 ao
 ao
 ao
-ao
-aj
-aO
+fg
+bm
+Yv
 ao
 ao
 aj
@@ -1008,7 +1022,7 @@ aT
 ao
 bb
 be
-am
+ag
 am
 am
 am
@@ -1032,7 +1046,7 @@ aK
 am
 bw
 bx
-am
+ag
 am
 ag
 aa
