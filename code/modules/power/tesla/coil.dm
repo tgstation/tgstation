@@ -89,6 +89,7 @@
 		if(istype(linked_techweb))
 			linked_techweb.research_points += min(power_produced, 1) // x4 coils = ~240/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
+		tesla_buckle_check(power)
 	else
 		..()
 
@@ -102,10 +103,7 @@
 	add_load(power)
 	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 	tesla_zap(src, 10, power/(coeff/2))
-	if(has_buckled_mobs())
-		for(var/m in buckled_mobs)
-			var/mob/living/buckled_mob = m
-			buckled_mob.electrocute_act((CLAMP(round((power/(coeff/2))/400), 10, 90) + rand(-5, 5)), src, 1, tesla_shock = 1)
+	tesla_buckle_check(power/(coeff/2))
 
 // Tesla R&D researcher
 /obj/machinery/power/tesla_coil/research
@@ -126,10 +124,7 @@
 		if(istype(linked_techweb))
 			linked_techweb.research_points += min(power_produced, 3) // x4 coils with a pulse per second or so = ~720/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
-		if(has_buckled_mobs())
-			for(var/m in buckled_mobs)
-				var/mob/living/buckled_mob = m
-				buckled_mob.electrocute_act((CLAMP(round(power/400), 10, 90) + rand(-5, 5)), src, 1, tesla_shock = 1)
+		tesla_buckle_check(power)
 	else
 		..()
 
@@ -193,9 +188,6 @@
 /obj/machinery/power/grounding_rod/tesla_act(var/power)
 	if(anchored && !panel_open)
 		flick("grounding_rodhit", src)
-		if(has_buckled_mobs())
-			for(var/m in buckled_mobs)
-				var/mob/living/buckled_mob = m
-				buckled_mob.electrocute_act((CLAMP(round(power/400), 10, 90) + rand(-5, 5)), src, 1, tesla_shock = 1)
+		tesla_buckle_check(power)
 	else
 		..()
