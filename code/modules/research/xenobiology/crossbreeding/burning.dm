@@ -45,7 +45,6 @@ Burning extracts:
 /obj/item/slimecross/burning/orange/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] boils over with a caustic gas!</span>")
 	var/datum/reagents/R = new/datum/reagents(100)
-	R.my_atom = get_turf(user)
 	R.add_reagent("condensedcapsaicin", 100)
 
 	var/datum/effect_system/smoke_spread/chem/smoke = new
@@ -67,7 +66,7 @@ Burning extracts:
 /obj/item/slimecross/burning/blue/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] flash-freezes the area!</span>")
 	for(var/turf/open/T in range(3, get_turf(user)))
-		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
+		T.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = 10, wet_time_to_add = 5)
 	for(var/mob/living/carbon/M in range(5, get_turf(user)))
 		if(M != user)
 			M.bodytemperature = BODYTEMP_COLD_DAMAGE_LIMIT + 10 //Not quite cold enough to hurt.
@@ -115,7 +114,6 @@ Burning extracts:
 /obj/item/slimecross/burning/darkblue/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] releases a burst of chilling smoke!</span>")
 	var/datum/reagents/R = new/datum/reagents(100)
-	R.my_atom = get_turf(user)
 	R.add_reagent("frostoil", 40)
 	user.reagents.add_reagent("cryoxadone",10)
 	var/datum/effect_system/smoke_spread/chem/smoke = new
@@ -209,7 +207,7 @@ Burning extracts:
 		return
 	var/obj/item/held = L.get_active_held_item() //This should be itself, but just in case...
 	L.dropItemToGround(held)
-	var/obj/item/nullrod/armblade/slime/blade = new(user)
+	var/obj/item/melee/arm_blade/slime/blade = new(user)
 	if(!L.put_in_hands(blade))
 		qdel(blade)
 		user.visible_message("<span class='warning'>[src] melts onto [user]'s arm, boiling the flesh horribly!</span>")
@@ -275,8 +273,8 @@ Burning extracts:
 
 /obj/item/slimecross/burning/lightpink/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] lets off a hypnotizing pink glow!</span>")
-	for(var/mob/living/L in view(7, get_turf(user)))
-		L.reagents.add_reagent("pax",5)
+	for(var/mob/living/carbon/C in view(7, get_turf(user)))
+		C.reagents.add_reagent("pax",5)
 	..()
 
 /obj/item/slimecross/burning/adamantine
@@ -344,9 +342,14 @@ Burning extracts:
 	qdel(src)
 	return
 
-/obj/item/nullrod/armblade/slime
+/obj/item/melee/arm_blade/slime
 	name = "slimy boneblade"
 	desc = "What remains of the bones in your arm. Incredibly sharp, and painful for both you and your opponents."
+
+/obj/item/melee/arm_blade/slime/attack(mob/living/L, mob/user)
+	. = ..()
+	if(prob(20))
+		user.emote("scream")
 
 /obj/item/kitchen/knife/rainbowknife
 	name = "rainbow knife"

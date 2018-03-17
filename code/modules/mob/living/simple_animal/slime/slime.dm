@@ -381,13 +381,13 @@
 	var/static/list/crossbreeds = subtypesof(/obj/item/slimecross)
 	visible_message("<span class='danger'>[src] shudders, its mutated core consuming the rest of its body!</span>")
 	playsound(src, 'sound/magic/smoke.ogg', 50, 1)
-	var/crosspath = /obj/item/slimecross
+	var/crosspath
 	for(var/X in crossbreeds)
 		var/obj/item/slimecross/S = X
 		if(initial(S.colour) == colour && initial(S.effect) == effectmod)
 			crosspath = S
 			break
-	if(crosspath && crosspath != /obj/item/slimecross)
+	if(crosspath)
 		new crosspath(loc)
 	else
 		visible_message("<span class='warning'>The mutated core shudders, and collapses into a puddle, unable to maintain its form.</span>")

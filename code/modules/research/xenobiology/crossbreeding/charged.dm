@@ -223,10 +223,10 @@ Charged extracts:
 		to_chat(user, "<span class='warning'>You have to be able to have a species to get your species changed.</span>")
 		return
 	var/list/allowed_species = list()
-	for(var/datum/species/S in subtypesof(/datum/species))
-		var/datum/species/temp = new S()
-		if(!temp.blacklisted)
-			allowed_species += S
+	for(var/X in subtypesof(/datum/species))
+		var/datum/species/temp = X
+		if(!initial(temp.blacklisted))
+			allowed_species += X
 	var/datum/species/changed = pick(allowed_species)
 	if(changed)
 		H.set_species(changed, icon_update = 1)
