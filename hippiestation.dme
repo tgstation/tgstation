@@ -2759,6 +2759,7 @@
 #include "hippiestation\code\modules\clothing\head\misc.dm"
 #include "hippiestation\code\modules\clothing\masks\gasmask.dm"
 #include "hippiestation\code\modules\clothing\masks\hailer.dm"
+#include "hippiestation\code\modules\clothing\masks\spurdo.dm"
 #include "hippiestation\code\modules\clothing\outfits\standard.dm"
 #include "hippiestation\code\modules\clothing\shoes\magboots.dm"
 #include "hippiestation\code\modules\clothing\spacesuits\hardsuit.dm"
