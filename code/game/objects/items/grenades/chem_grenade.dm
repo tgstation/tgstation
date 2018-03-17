@@ -26,6 +26,19 @@
 
 /obj/item/grenade/chem_grenade/examine(mob/user)
 	display_timer = (stage == READY && !nadeassembly)	//show/hide the timer based on assembly state
+	if(user.can_see_reagents())
+		var/count = 0
+		if(beakers.len)
+			to_chat(user, "<span class='notice'>You scan the grenade and detect the following reagents:</span>")
+			for(var/obj/item/reagent_containers/glass/G in beakers)
+				count++
+				for(var/datum/reagent/R in G.reagents.reagent_list)
+					if(count == 1)
+						to_chat(user, "<span class='notice'>[R.volume] units of [R.name] in the first beaker.</span>")
+					else
+						to_chat(user, "<span class='notice'>[R.volume] units of [R.name] in the second beaker.</span>")
+		else
+			to_chat(user, "<span class='notice'>You scan the grenade but detect nothing.</span>")
 	..()
 
 
