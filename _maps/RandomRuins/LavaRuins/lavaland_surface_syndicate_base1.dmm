@@ -109,6 +109,8 @@
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/chemistry,
 /obj/item/book/manual/wiki/chemistry,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "cG" = (
@@ -2281,6 +2283,7 @@
 /obj/item/pen/red,
 /obj/item/restraints/handcuffs,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel/white/side,
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "hu" = (
@@ -2739,6 +2742,17 @@
 "is" = (
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/machinery/turretid{
+	control_area = /area/ruin/unpowered/syndicate_lava_base;
+	dir = 1;
+	icon_state = "control_kill";
+	ailock = 1;
+	lethal = 1;
+	name = "Base turret controls";
+	pixel_y = 30;
+	req_access = null;
+	req_access_txt = "150"
 	},
 /turf/open/floor/circuit/red,
 /area/ruin/unpowered/syndicate_lava_base/main)
@@ -4090,6 +4104,7 @@
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/mop,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/soap/syndie,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "kQ" = (
@@ -4586,7 +4601,7 @@
 	dir = 9
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/unpowered/syndicate_lava_base/arrivals)
+/area/ruin/unpowered/syndicate_lava_base/main)
 "lT" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external{
