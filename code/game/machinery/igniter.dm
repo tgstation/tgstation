@@ -15,6 +15,7 @@
 	
 /obj/machinery/igniter/off
 	on = FALSE
+	icon_state = "igniter0"
 
 /obj/machinery/igniter/attack_ai(mob/user)
 	return src.attack_hand(user)
