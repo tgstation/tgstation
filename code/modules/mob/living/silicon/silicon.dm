@@ -227,6 +227,14 @@
 				src.say("[radiomod] [num]. [law]")
 				sleep(10)
 
+	for (var/index = 1, index <= src.laws.hacked.len, index++)
+		var/law = src.laws.hacked[index]
+		var/num = ionnum()
+		if (length(law) > 0)
+			if (force || src.ioncheck[index] == "Yes")
+				src.say("[radiomod] [num]. [law]")
+				sleep(10)
+
 	for (var/index = 1, index <= src.laws.inherent.len, index++)
 		var/law = src.laws.inherent[index]
 
@@ -260,7 +268,7 @@
 	if (src.laws.zeroth)
 		if (!src.lawcheck[1])
 			src.lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
-		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[src.lawcheck[1]] 0:</A> <font color='#ff0000'>[src.laws.zeroth]</font><BR>"}
+		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[src.lawcheck[1]] 0:</A> <font color='#ff0000'><b>[src.laws.zeroth]</b></font><BR>"}
 
 	for (var/index = 1, index <= src.laws.ion.len, index++)
 		var/law = src.laws.ion[index]
@@ -269,6 +277,15 @@
 			if (!src.ioncheck[index])
 				src.ioncheck[index] = "Yes"
 			list += {"<A href='byond://?src=[REF(src)];lawi=[index]'>[src.ioncheck[index]] [ionnum()]:</A> <font color='#00ffff'>[law]</font><BR>"}
+			src.ioncheck.len += 1
+
+	for (var/index = 1, index <= src.laws.hacked.len, index++)
+		var/law = src.laws.hacked[index]
+
+		if (length(law) > 0)
+			if (!src.ioncheck[index])
+				src.ioncheck[index] = "No"
+			list += {"<A href='byond://?src=[REF(src)];lawi=[index]'>[src.ioncheck[index]] [ionnum()]:</A> <font color='#660000'>[law]</font><BR>"}
 			src.ioncheck.len += 1
 
 	var/number = 1
@@ -289,7 +306,7 @@
 			src.lawcheck.len += 1
 			if (!src.lawcheck[number+1])
 				src.lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> <font color='#800080'>[law]</font><BR>"}
+			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> <font color='#990099'>[law]</font><BR>"}
 			number++
 	list += {"<br><br><A href='byond://?src=[REF(src)];laws=1'>State Laws</A>"}
 

@@ -41,6 +41,12 @@
 				var/num = ionnum()
 				laws += "<b>[num]:</b> [law]<BR>"
 
+		for (var/index = 1, index <= src.occupier.laws.hacked.len, index++)
+			var/law = src.occupier.laws.hacked[index]
+			if (length(law) > 0)
+				var/num = ionnum()
+				laws += "<b>[num]:</b> [law]<BR>"
+
 		var/number = 1
 		for (var/index = 1, index <= src.occupier.laws.inherent.len, index++)
 			var/law = src.occupier.laws.inherent[index]
