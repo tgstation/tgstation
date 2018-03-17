@@ -8597,7 +8597,6 @@
 /obj/machinery/meter,
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/green/hidden{
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
@@ -9011,9 +9010,8 @@
 	},
 /area/engine/atmos)
 "arz" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	name = "Air to Distro";
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Air to Distro"
 	},
 /obj/machinery/light{
 	dir = 1
@@ -10412,7 +10410,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
-	icon_state = "manifold";
 	dir = 8
 	},
 /obj/machinery/meter,
@@ -11978,8 +11975,7 @@
 /area/hallway/secondary/exit)
 "ayh" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	dir = 8;
-	name = "scrubbers pipe"
+	dir = 8
 	},
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt,
@@ -14057,7 +14053,6 @@
 "aDr" = (
 /obj/structure/sign/warning/nosmoking,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
@@ -14065,7 +14060,6 @@
 "aDs" = (
 /obj/structure/sign/warning/fire,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/closed/wall/r_wall,
@@ -29497,7 +29491,6 @@
 /area/hallway/secondary/entry)
 "bko" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
@@ -31029,9 +31022,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "coQ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	volume_rate = 50
-	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -31066,8 +31057,7 @@
 /area/engine/atmos)
 "cBS" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	dir = 8;
-	name = "scrubbers pipe"
+	dir = 8
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -31124,9 +31114,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "cWR" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
 	name = "Atmospherics Lockdown Blast door"
@@ -31140,8 +31128,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	dir = 8;
-	heat_capacity = 1e+006
+	dir = 8
 	},
 /area/hallway/primary/port)
 "ddI" = (
@@ -31209,10 +31196,9 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Oxygen to Airmix";
-	on = 1
+	name = "Oxygen to Airmix"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -31364,7 +31350,6 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	autoclose = 0;
-	frequency = 1449;
 	heat_proof = 1;
 	id_tag = "incinerator_airlock_exterior";
 	name = "Incinerator Exterior Airlock";
@@ -31450,7 +31435,6 @@
 /area/engine/atmos)
 "fEM" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/closed/wall/r_wall,
@@ -31687,7 +31671,6 @@
 /area/engine/atmos)
 "iqC" = (
 /obj/machinery/air_sensor{
-	frequency = 1441;
 	id_tag = "co2_sensor"
 	},
 /turf/open/floor/engine/co2,
@@ -31759,10 +31742,8 @@
 "iZQ" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 2;
-	frequency = 1441;
 	id = "co2_in";
-	name = "co2 injector";
-	pixel_y = 1
+	name = "co2 injector"
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
@@ -31893,7 +31874,6 @@
 /area/engine/atmos)
 "jDd" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/closed/wall/r_wall/rust,
@@ -31926,10 +31906,9 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Nitrogen to Airmix";
-	on = 1
+	name = "Nitrogen to Airmix"
 	},
 /obj/machinery/light,
 /obj/effect/decal/cleanable/dirt,
@@ -32099,7 +32078,6 @@
 "mgs" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1;
-	frequency = 1441;
 	id = "airmix_in";
 	name = "airmix injector"
 	},
@@ -32142,11 +32120,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "mJP" = (
-/obj/machinery/igniter{
-	icon_state = "igniter0";
+/obj/machinery/igniter/off{
 	id = "Incinerator";
-	luminosity = 2;
-	on = 0
+	luminosity = 2
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -32290,7 +32266,6 @@
 /area/engine/atmos)
 "oxn" = (
 /obj/machinery/power/compressor{
-	icon_state = "compressor";
 	dir = 4;
 	luminosity = 2;
 	comp_id = "incineratorturbine"
@@ -32364,7 +32339,6 @@
 "pjU" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/yellow/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/closed/wall/r_wall,
@@ -32395,7 +32369,6 @@
 /area/science/xenobiology)
 "pqs" = (
 /obj/machinery/power/turbine{
-	icon_state = "turbine";
 	dir = 8;
 	luminosity = 2
 	},
@@ -32443,7 +32416,6 @@
 "pNE" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
@@ -32484,7 +32456,6 @@
 /area/engine/gravity_generator)
 "qsc" = (
 /obj/machinery/air_sensor{
-	frequency = 1441;
 	id_tag = "airmix_sensor"
 	},
 /turf/open/floor/engine/air,
@@ -32650,10 +32621,8 @@
 "rVs" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 2;
-	frequency = 1441;
 	id = "mix_in";
-	name = "gas mix injector";
-	pixel_y = 1
+	name = "gas mix injector"
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
@@ -32698,10 +32667,8 @@
 "srR" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 2;
-	frequency = 1441;
 	id = "n2o_in";
-	name = "n2o injector";
-	pixel_y = 1
+	name = "n2o injector"
 	},
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
@@ -35267,7 +35234,6 @@
 /area/engine/atmos)
 "uok" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
@@ -35558,7 +35524,6 @@
 "vVS" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 2;
-	frequency = 1441;
 	id = "plasma_in";
 	name = "plasma injector";
 	pixel_y = 1
@@ -35771,7 +35736,6 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	autoclose = 0;
-	frequency = 1449;
 	heat_proof = 1;
 	id_tag = "incinerator_airlock_interior";
 	name = "Incinerator Interior Airlock";
