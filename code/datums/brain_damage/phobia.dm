@@ -14,7 +14,7 @@
 	var/list/trigger_turfs
 	var/list/trigger_species
 
-/datum/brain_trauma/mild/phobia/New(mob/living/carbon/C, _permanent, specific_type)
+/datum/brain_trauma/mild/phobia/New(specific_type)
 	phobia_type = specific_type
 	if(!phobia_type)
 		phobia_type = pick(SStraumas.phobia_types)

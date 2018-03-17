@@ -1,0 +1,7 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Chem dispensers now show the correct amount of units they will vend (instead of 1/10)"
+  - balance: "Chem dispensers can now be upgraded. Manipulators increase macro granularity, matter bins increase power efficiency, cells increase power capacity, capacitors increase recharge rate."
+  - balance: "Chem dispensers can now be constructed"
+  - rscdel: "mini-chemdispensers are removed."

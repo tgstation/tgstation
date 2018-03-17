@@ -772,7 +772,7 @@
 		update_handcuffed()
 		if(reagents)
 			reagents.addiction_list = list()
-	cure_all_traumas(TRUE, TRAUMA_RESILIENCE_MAGIC)
+	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	..()
 	// heal ears after healing traits, since ears check TRAIT_DEAF trait
 	// when healing.
