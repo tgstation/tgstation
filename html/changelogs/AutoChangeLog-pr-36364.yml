@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Syndicate stormtroopers now rapid fire 10g slugs instead of buckshot. This deals the same damage, but makes getting hit less laggy."
