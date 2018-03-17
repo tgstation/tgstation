@@ -34,18 +34,18 @@
 
 /datum/mood_event/slipped
 	description = "<span class='warning'>I slipped. I should be more careful next time...</span>\n"
-	mood_change = -3
+	mood_change = -2
 	timeout = 1800
 
 /datum/mood_event/eye_stab
 	description = "<span class='boldwarning'>I used to be an adventurer like you, until I took a screwdriver to the eye.</span>\n"
-	mood_change = -6
-	timeout = 2400
+	mood_change = -4
+	timeout = 1800
 
 /datum/mood_event/delam //SM delamination
 	description = "<span class='boldwarning'>Those God damn engineers can't do anything right...</span>\n"
-	mood_change = -6
-	timeout = 3000
+	mood_change = -2
+	timeout = 2400
 
 /datum/mood_event/depression
 	description = "<span class='warning'>I feel sad for no particular reason.</span>\n"
@@ -60,7 +60,7 @@
 /datum/mood_event/dismembered
   description = "<span class='boldwarning'>AHH! I WAS USING THAT LIMB!</span>\n"
   mood_change = -8
-  timeout = 3000
+  timeout = 2400
 
 /datum/mood_event/noshoes
 	 description = "<span class='warning'>I am a disgrace to comedy everywhere!</span>\n"
@@ -68,7 +68,7 @@
 
 /datum/mood_event/tased
 	description = "<span class='warning'>There's no \"z\" in \"taser\". It's in the zap.</span>\n"
-	mood_change = -4
+	mood_change = -3
 	timeout = 1200
 
 /datum/mood_event/embedded
@@ -84,7 +84,7 @@
   mood_change = -3
 
 /datum/mood_event/brain_damage/add_effects()
-  var/damage_message = pick_list_replacements("brain_damage_lines.json", "brain_damage")
+  var/damage_message = pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")
   description = "<span class='warning'>Hurr durr... [damage_message]</span>\n"
 
 /datum/mood_event/hulk //Entire duration of having the hulk mutation

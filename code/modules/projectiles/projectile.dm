@@ -419,6 +419,9 @@
 		transform = M
 	trajectory.increment(trajectory_multiplier)
 	var/turf/T = trajectory.return_turf()
+	if(!istype(T))
+		qdel(src)
+		return
 	if(T.z != loc.z)
 		var/old = loc
 		before_z_change(loc, T)

@@ -152,7 +152,6 @@
 "aL" = (
 /obj/machinery/door/airlock/external{
 	name = "Emergency Launch Catwalk";
-	req_access = null;
 	req_access_txt = "10;13"
 	},
 /turf/open/floor/plating,

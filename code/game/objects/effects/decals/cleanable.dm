@@ -99,6 +99,7 @@
 		return 0
 
 /obj/effect/decal/cleanable/Destroy()
+	. = ..()
 	if(src.loc && isturf(src.loc))
 		var/area/A = get_area(src)
 		A.beauty -= beauty / max(1, A.areasize)

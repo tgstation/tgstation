@@ -50,6 +50,12 @@
 	integrity_failure = 70
 	damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
 	interact_open = TRUE
+	autoclose = TRUE
+	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
+	assemblytype = /obj/structure/door_assembly
+	normalspeed = 1
+	explosion_block = 1
+	hud_possible = list(DIAG_AIRLOCK_HUD)
 
 	var/security_level = 0 //How much are wires secured
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
@@ -58,21 +64,16 @@
 	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.
 	var/spawnPowerRestoreRunning = FALSE
 	var/lights = TRUE // bolt lights show by default
-	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = FALSE
-	var/obj/machinery/door/airlock/closeOther = null
-	var/closeOtherId = null
-	var/lockdownbyai = FALSE
-	assemblytype = /obj/structure/door_assembly
+	var/closeOtherId //Cyclelinking for airlocks that aren't on the same x or y coord as the target.
+	var/obj/machinery/door/airlock/closeOther
 	var/justzap = FALSE
-	normalspeed = 1
-	var/obj/item/electronics/airlock/electronics = null
+	var/obj/item/electronics/airlock/electronics
 	var/shockCooldown = FALSE //Prevents multiple shocks from happening
-	autoclose = TRUE
-	var/obj/item/device/doorCharge/charge = null //If applied, causes an explosion upon opening the door
+	var/obj/item/device/doorCharge/charge //If applied, causes an explosion upon opening the door
 	var/obj/item/note //Any papers pinned to the airlock
-	var/detonated = 0
+	var/detonated = FALSE
 	var/abandoned = FALSE
 	var/doorOpen = 'sound/machines/airlock.ogg'
 	var/doorClose = 'sound/machines/airlockclose.ogg'
@@ -81,7 +82,7 @@
 	var/boltDown = 'sound/machines/boltsdown.ogg'
 	var/noPower = 'sound/machines/doorclick.ogg'
 	var/previous_airlock = /obj/structure/door_assembly //what airlock assembly mineral plating was applied to
-	var/airlock_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
+	var/airlock_material //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock
 
@@ -89,9 +90,6 @@
 	var/obj/machinery/door/airlock/cyclelinkedairlock
 	var/shuttledocked = 0
 	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
-
-	explosion_block = 1
-	hud_possible = list(DIAG_AIRLOCK_HUD)
 
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
@@ -153,6 +151,7 @@
 
 /obj/machinery/door/airlock/ComponentInitialize()
 	. = ..()
+	AddComponent(/datum/component/ntnet_interface)
 	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
 /obj/machinery/door/airlock/proc/update_other_id()
@@ -189,6 +188,55 @@
 		if ("cyclelinkeddir")
 			cyclelinkairlock()
 
+/obj/machinery/door/airlock/check_access_ntnet(datum/netdata/data)
+	return !requiresID() || ..()
+
+/obj/machinery/door/airlock/ntnet_recieve(datum/netdata/data)
+	// Check if the airlock is powered and can accept control packets.
+	if(!hasPower() || !canAIControl())
+		return
+
+	// Check packet access level.
+	if(!check_access_ntnet(data))
+		return
+
+	// Handle recieved packet.
+	var/command = lowertext(data.plaintext_data)
+	var/command_value = lowertext(data.plaintext_data_secondary)
+	switch(command)
+		if("open")
+			if(command_value == "on" && !density)
+				return
+
+			if(command_value == "off" && density)
+				return
+
+			if(density)
+				INVOKE_ASYNC(src, .proc/open)
+			else
+				INVOKE_ASYNC(src, .proc/close)
+
+		if("bolt")
+			if(command_value == "on" && locked)
+				return
+
+			if(command_value == "off" && !locked)
+				return
+
+			if(locked)
+				unbolt()
+			else
+				bolt()
+
+		if("emergency")
+			if(command_value == "on" && emergency)
+				return
+
+			if(command_value == "off" && !emergency)
+				return
+
+			emergency = !emergency
+			update_icon()
 
 /obj/machinery/door/airlock/lock()
 	bolt()
@@ -198,6 +246,7 @@
 		return
 	locked = TRUE
 	playsound(src,boltDown,30,0,3)
+	audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null,  1)
 	update_icon()
 
 /obj/machinery/door/airlock/unlock()
@@ -208,6 +257,7 @@
 		return
 	locked = FALSE
 	playsound(src,boltUp,30,0,3)
+	audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null,  1)
 	update_icon()
 
 /obj/machinery/door/airlock/narsie_act()
@@ -321,7 +371,7 @@
 	return FALSE
 
 /obj/machinery/door/airlock/proc/canAIControl(mob/user)
-	return ((aiControlDisabled != 1) && (!isAllPowerCut()));
+	return ((aiControlDisabled != 1) && !isAllPowerCut())
 
 /obj/machinery/door/airlock/proc/canAIHack()
 	return ((aiControlDisabled==1) && (!hackProof) && (!isAllPowerCut()));

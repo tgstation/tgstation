@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/revival
+	name = "Revival Surgery Disk"
 	desc = "The disk provides instructions on how to bring a corpse back to life."
 	surgeries = list(/datum/surgery/advanced/revival)
 

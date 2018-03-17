@@ -62,8 +62,7 @@
 /area/shuttle/mining)
 "i" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Mining Shuttle Airlock";
-	req_access_txt = "0"
+	name = "Mining Shuttle Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -103,8 +102,7 @@
 /area/shuttle/mining)
 "m" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Mining Shuttle Airlock";
-	req_access_txt = "0"
+	name = "Mining Shuttle Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8

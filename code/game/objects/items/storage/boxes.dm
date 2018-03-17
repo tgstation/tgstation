@@ -942,3 +942,12 @@ obj/item/storage/box/clown
 /obj/item/storage/box/fountainpens/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/pen/fountain(src)
+
+/obj/item/storage/box/holy_grenades
+	name = "box of holy hand grenades"
+	desc = "Contains several grenades used to rapidly purge heresy."
+	illustration = "flashbang"
+
+/obj/item/storage/box/holy_grenades/PopulateContents()
+	for(var/i in 1 to 7)
+		new/obj/item/grenade/chem_grenade/holy(src)

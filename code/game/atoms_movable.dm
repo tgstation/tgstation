@@ -690,10 +690,18 @@
 			message_admins("[src] has been moved out of bounds in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
 
 /atom/movable/proc/in_bounds()
-	. = FALSE
+	var/static/list/allowed_shuttles = typecacheof(list(/area/shuttle/syndicate, /area/shuttle/escape, /area/shuttle/pod_1, /area/shuttle/pod_2, /area/shuttle/pod_3, /area/shuttle/pod_4))
 	var/turf/T = get_turf(src)
-	if (T && (is_centcom_level(T.z) || is_station_level(T.z) || is_transit_level(T.z)))
-		. = TRUE
+	if (!T)
+		return FALSE
+	if (is_station_level(T.z) || is_centcom_level(T.z))
+		return TRUE
+	if (is_transit_level(T.z))
+		var/area/A = T.loc
+		if (is_type_in_typecache(A, allowed_shuttles))
+			return TRUE
+
+	return FALSE
 
 
 /* Language procs */
