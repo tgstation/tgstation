@@ -378,13 +378,16 @@
 	..()
 
 /mob/living/simple_animal/slime/proc/spawn_corecross()
+	var/static/list/crossbreeds = subtypesof(/obj/item/slimecross)
 	visible_message("<span class='danger'>[src] shudders, its mutated core consuming the rest of its body!</span>")
 	playsound(src, 'sound/magic/smoke.ogg', 50, 1)
-	var/sanitizedcolour = replacetext(colour, " ", "")
-	var/sanitizedeffect = replacetext(effectmod, "-","")
-	var/corecross = sanitizedeffect + "/" + sanitizedcolour
-	var/crosspath = text2path("/obj/item/slimecross/"+corecross)
-	if(ispath(crosspath))
+	var/crosspath = /obj/item/slimecross
+	for(var/X in crossbreeds)
+		var/obj/item/slimecross/S = X
+		if(initial(S.colour) == colour && initial(S.effect) == effectmod)
+			crosspath = S
+			break
+	if(crosspath && crosspath != /obj/item/slimecross)
 		new crosspath(loc)
 	else
 		visible_message("<span class='warning'>The mutated core shudders, and collapses into a puddle, unable to maintain its form.</span>")
