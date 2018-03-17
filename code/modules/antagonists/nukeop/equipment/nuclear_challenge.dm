@@ -55,14 +55,10 @@
 		var/obj/item/circuitboard/computer/syndicate_shuttle/board = V
 		board.challenge = TRUE
 
-<<<<<<< HEAD
-	new /obj/item/device/radio/uplink/nuclear(get_turf(user), user.key, GLOB.player_list.len * 6) // hippie-code: Changed this to scale better
-=======
 	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/D in GLOB.jam_on_wardec)
 		D.jammed = TRUE
 
-	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS)
->>>>>>> 7639492389... Added clown ops game mode, and several clown weapons. (#36459)
+	new uplink_type(get_turf(user), user.key, GLOB.player_list.len * 6) // hippie-code: Changed this to scale better
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
 
