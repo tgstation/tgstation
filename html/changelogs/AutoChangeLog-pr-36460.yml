@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Cameranet issues in OmegaStation's departures wing, crematorium, and freezer have been corrected."
