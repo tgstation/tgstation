@@ -20,7 +20,6 @@
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
-	add_overlay("waitlight")
 	. = ..()
 
 /obj/machinery/chem_master/Destroy()
