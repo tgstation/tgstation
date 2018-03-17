@@ -8,8 +8,7 @@
 	var/obj/item/device/beacon/targetbeacon
 
 /obj/item/projectile/energy/net/Initialize(mapload, tbeacon = null)
-	if(tbeacon)
-		targetbeacon = tbeacon
+	targetbeacon = tbeacon
 	. = ..()
 	SpinAnimation()
 
