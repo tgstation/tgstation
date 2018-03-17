@@ -94,9 +94,16 @@
 	chassis.use_power(energy_drain)
 	. = do_after(chassis.occupant, equip_cooldown, target=target)
 	set_ready_state(1)
-	if(!chassis || 	chassis.loc != C || src != chassis.selected)
+	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
 		return 0
 
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, delay)
+	if(!chassis)
+		return
+	var/C = chassis.loc
+	. = do_after(chassis.occupant, delay, target=target)
+	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
+		return 0
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M)
 	if(M.equipment.len<M.max_equip)
