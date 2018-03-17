@@ -186,7 +186,7 @@
 	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
 	volume = 180
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(10,15,20,25,30,60,120)
+	possible_transfer_amounts = list(10,15,20,25,30,60,120,180)
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
