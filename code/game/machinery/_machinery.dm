@@ -163,9 +163,9 @@ Class Procs:
 	update_icon()
 	updateUsrDialog()
 
-/obj/machinery/proc/dropContents()
-	var/turf/T = get_turf(src)
-	for(var/atom/movable/A in contents)
+/obj/machinery/proc/dropContents(list/to_drop = contents)
+	var/turf/T = drop_location()
+	for(var/atom/movable/A in to_drop)
 		A.forceMove(T)
 		if(isliving(A))
 			var/mob/living/L = A

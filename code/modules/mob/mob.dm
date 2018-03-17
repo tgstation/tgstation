@@ -181,7 +181,7 @@
 /mob/proc/restrained(ignore_grab)
 	return
 
-/mob/proc/incapacitated(ignore_restraints, ignore_grab)
+/mob/proc/incapacitated(ignore_restraints, ignore_grab, ignore_stasis)
 	return
 
 //This proc is called whenever someone clicks an inventory ui slot.

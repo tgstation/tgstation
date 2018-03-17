@@ -274,10 +274,13 @@
 
 	SendSignal(COMSIG_PARENT_EXAMINE, user)
 
-/atom/proc/relaymove(mob/user)
+/atom/proc/relaymove(mob/user, direction)
 	if(buckle_message_cooldown <= world.time)
 		buckle_message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
+	return
+
+/atom/proc/relaynonmove(mob/user, direction) //mob tries to move inside a container but has a false canmove
 	return
 
 /atom/proc/contents_explosion(severity, target)

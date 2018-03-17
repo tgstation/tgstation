@@ -72,12 +72,16 @@
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direct)
 
-	if(!mob.canmove)
-		return FALSE
-
 	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
 		var/atom/O = mob.loc
-		return O.relaymove(mob, direct)
+		if(mob.canmove)
+			. = O.relaymove(mob, direct)
+		else
+			. = O.relaynonmove(mob, direct)
+		return
+
+	if(!mob.canmove)
+		return FALSE
 
 	if(!mob.Process_Spacemove(direct))
 		return FALSE

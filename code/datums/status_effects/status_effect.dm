@@ -80,7 +80,8 @@
 	. = FALSE
 	var/datum/status_effect/S1 = effect
 	LAZYINITLIST(status_effects)
-	for(var/datum/status_effect/S in status_effects)
+	for(var/_S in status_effects)
+		var/datum/status_effect/S = _S
 		if(S.id == initial(S1.id) && S.status_type)
 			if(S.status_type == STATUS_EFFECT_REPLACE)
 				S.be_replaced()
@@ -95,7 +96,8 @@
 	. = FALSE
 	if(status_effects)
 		var/datum/status_effect/S1 = effect
-		for(var/datum/status_effect/S in status_effects)
+		for(var/_S in status_effects)
+			var/datum/status_effect/S = _S
 			if(initial(S1.id) == S.id)
 				qdel(S)
 				. = TRUE
@@ -104,7 +106,8 @@
 	. = FALSE
 	if(status_effects)
 		var/datum/status_effect/S1 = effect
-		for(var/datum/status_effect/S in status_effects)
+		for(var/_S in status_effects)
+			var/datum/status_effect/S = _S
 			if(initial(S1.id) == S.id)
 				return S
 
@@ -112,6 +115,7 @@
 	. = list()
 	if(status_effects)
 		var/datum/status_effect/S1 = effect
-		for(var/datum/status_effect/S in status_effects)
+		for(var/_S in status_effects)
+			var/datum/status_effect/S = _S
 			if(initial(S1.id) == S.id)
 				. += S

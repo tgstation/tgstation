@@ -58,7 +58,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/onehalf/hallway)
 "al" = (
-/obj/machinery/sleeper/syndie{
+/obj/machinery/sleeper/chems/syndie{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,

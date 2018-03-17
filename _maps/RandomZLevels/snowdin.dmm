@@ -11956,7 +11956,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/cave)
 "EN" = (
-/obj/machinery/sleeper/syndie{
+/obj/machinery/sleeper/chems/syndie{
 	icon_state = "sleeper_s";
 	dir = 1
 	},
@@ -11969,7 +11969,7 @@
 /area/awaymission/snowdin/cave)
 "EP" = (
 /obj/effect/turf_decal/bot_white,
-/obj/machinery/sleeper/syndie{
+/obj/machinery/sleeper/chems/syndie{
 	icon_state = "sleeper_s";
 	dir = 1
 	},

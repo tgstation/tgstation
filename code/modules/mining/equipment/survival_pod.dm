@@ -195,6 +195,10 @@
 	desc = "A heated storage unit. This one's seen better days."
 	empty = TRUE
 
+/obj/machinery/vending/wallmed/survival_pod
+	name = "survival pod medical supply"
+	req_access_txt = "0"
+
 //Fans
 /obj/structure/fans
 	icon = 'icons/obj/lavaland/survival_pod.dmi'

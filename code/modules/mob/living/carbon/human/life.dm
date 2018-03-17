@@ -41,24 +41,27 @@
 	if (notransform)
 		return
 
-	if(..()) //not dead
-		handle_active_genes()
+	var/genes_alive = ..()
 
-	if(stat != DEAD)
-		//heart attack stuff
-		handle_heart()
+	if(!IsInStasis())
+		if(genes_alive) //not dead
+			handle_active_genes()
 
-	if(stat != DEAD)
-		//Stuff jammed in your limbs hurts
-		handle_embedded_objects()
+		if(stat != DEAD)
+			//heart attack stuff
+			handle_heart()
+
+		if(stat != DEAD)
+			//Stuff jammed in your limbs hurts
+			handle_embedded_objects()
+
+		dna.species.spec_life(src) // for mutantraces
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
-	dna.species.spec_life(src) // for mutantraces
-
 	if(stat != DEAD)
-		return 1
+		return TRUE
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)

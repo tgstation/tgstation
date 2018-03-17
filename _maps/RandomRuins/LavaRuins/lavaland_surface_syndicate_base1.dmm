@@ -4721,7 +4721,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "md" = (
-/obj/machinery/sleeper/syndie{
+/obj/machinery/sleeper/chems/syndie{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -5083,7 +5083,7 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "mZ" = (
-/obj/machinery/sleeper/syndie{
+/obj/machinery/sleeper/chems/syndie{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,

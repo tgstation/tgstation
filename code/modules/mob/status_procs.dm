@@ -121,6 +121,17 @@
 	..()
 	update_canmove()
 
+/////////////////////////////////// STASIS ///////////////////////////////////
+
+/mob/proc/IsInStasis()
+	. = FALSE
+
+/mob/living/IsInStasis()
+	. = has_status_effect(STATUS_EFFECT_STASIS)
+
+/mob/living/proc/SetStasis(apply, updating = TRUE)
+	. = apply ? apply_status_effect(STATUS_EFFECT_STASIS, null, updating) : remove_status_effect(STATUS_EFFECT_STASIS)
+
 /////////////////////////////////// JITTERINESS ////////////////////////////////////
 
 /mob/proc/Jitter(amount)

@@ -36,6 +36,8 @@
 // DEBUFFS //
 /////////////
 
+#define STATUS_EFFECT_STASIS /datum/status_effect/incapacitating/stasis //Halts biological functions like bleeding, chemical processing, blood regeneration, walking, etc
+
 #define STATUS_EFFECT_STUN /datum/status_effect/incapacitating/stun //the affected is stunned
 
 #define STATUS_EFFECT_KNOCKDOWN /datum/status_effect/incapacitating/knockdown //the affected is knocked down
