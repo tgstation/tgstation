@@ -1,12 +1,11 @@
 /datum/component/archaeology
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	var/list/archdrops
+	var/list/archdrops = list(/obj/item/bikehorn = list("probability" = 100, "max_drop_amount" = 1)) // honk~
 	var/prob2drop
 	var/dug
 	var/datum/callback/callback
 
-/datum/component/archaeology/Initialize(_prob2drop, list/_archdrops = list(), datum/callback/_callback)
-	prob2drop = CLAMP(_prob2drop, 0, 100)
+/datum/component/archaeology/Initialize(list/_archdrops = list(), datum/callback/_callback)
 	archdrops = _archdrops
 	callback = _callback
 	RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/Dig)
@@ -43,9 +42,9 @@
 	else
 		var/turf/open/OT = get_turf(parent)
 		for(var/thing in archdrops)
-			var/maxtodrop = archdrops[thing]
+			var/maxtodrop = archdrops[thing]["max_drop_amount"]
 			for(var/i in 1 to maxtodrop)
-				if(prob(prob2drop)) // can't win them all!
+				if(prob(archdrops[thing]["probability"])) // can't win them all!
 					new thing(OT)
 
 		if(isopenturf(OT))
