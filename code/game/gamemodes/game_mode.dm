@@ -331,7 +331,7 @@
 		if(antag_select >= previous && antag_select <= (current-1))
 			SSpersistence.antag_rep_change[p_ckey] = -(spend - DEFAULT_ANTAG_TICKETS)
 
-//			WARNING("AR_DEBUG: Player [mind.key] won spending [subtract] tickets from starting value [SSpersistence.antag_rep[p_ckey]]")
+//			WARNING("AR_DEBUG: Player [mind.key] won spending [spend] tickets from starting value [SSpersistence.antag_rep[p_ckey]]")
 
 			return mind
 
