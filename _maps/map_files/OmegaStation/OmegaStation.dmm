@@ -13659,10 +13659,12 @@
 /area/hallway/secondary/exit)
 "aCs" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light/small,
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "aCw" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/light/small,
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "aCz" = (
@@ -31497,6 +31499,9 @@
 /area/engine/atmos)
 "gap" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "gdA" = (
@@ -31618,6 +31623,9 @@
 /area/engine/atmos)
 "hOh" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "hUG" = (
@@ -31883,6 +31891,9 @@
 /area/engine/atmos)
 "kit" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "kiw" = (
@@ -32047,6 +32058,7 @@
 /area/hallway/primary/starboard)
 "lUu" = (
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/light/small,
 /turf/open/floor/engine/air,
 /area/engine/atmos)
 "lXk" = (
