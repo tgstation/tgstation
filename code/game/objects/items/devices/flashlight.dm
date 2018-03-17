@@ -566,8 +566,9 @@
 	if(C)
 		pointing = mouse_angle_from_client(C)
 		dir = user.dir
-		light.directional = pointing
-		update_light()
+		if(light)
+			light.directional = round(pointing)
+			update_light()
 
-/obj/item/device/flashlight/directional/CanItemAutoclick() //BURN THE SERVER DOWN
+obj/item/device/flashlight/directional/CanItemAutoclick() //BURN THE SERVER DOWN
 	return TRUE
