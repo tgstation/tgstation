@@ -262,7 +262,7 @@ Burning extracts:
 	L.forceMove(S)
 	S.name = L.real_name
 	L.mind.transfer_to(S)
-	S.status_flags |= GODMODE
+	L.status_flags |= GODMODE
 	S.adjustBruteLoss((L.maxHealth - L.health)/2)
 	var/datum/action/innate/slime/transformback/R = new
 	R.Grant(S)
@@ -345,6 +345,8 @@ Burning extracts:
 /obj/item/melee/arm_blade/slime
 	name = "slimy boneblade"
 	desc = "What remains of the bones in your arm. Incredibly sharp, and painful for both you and your opponents."
+	force = 15
+	force_string = "painful"
 
 /obj/item/melee/arm_blade/slime/attack(mob/living/L, mob/user)
 	. = ..()
