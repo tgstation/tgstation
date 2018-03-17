@@ -257,15 +257,10 @@ Burning extracts:
 	if(!istype(L))
 		return
 	user.visible_message("<span class='danger'>[src] absorbs [user], transforming them into a slime!</span>")
-	var/mob/living/simple_animal/slime/transformedslime/S = new(get_turf(L))
-	S.originalbody = L
-	L.forceMove(S)
-	S.name = L.real_name
-	L.mind.transfer_to(S)
-	L.status_flags |= GODMODE
-	S.adjustBruteLoss((L.maxHealth - L.health)/2)
-	var/datum/action/innate/slime/transformback/R = new
-	R.Grant(S)
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform/S = new()
+	S.remove_on_restore = TRUE
+	user.mind.AddSpell(S)
+	S.cast(list(user),user)
 	..()
 
 /obj/item/slimecross/burning/lightpink
@@ -399,32 +394,26 @@ Burning extracts:
 	attack_verb = list("bashed","pounded","slammed")
 	flags_2 = SLOWS_WHILE_IN_HAND_2
 
-/mob/living/simple_animal/slime/transformedslime
-	var/mob/living/originalbody
 
-/mob/living/simple_animal/slime/transformedslime/death(gibbed)
-	Untransform()
+/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform
+	name = "Slime Transformation"
+	desc = "Transform from a human to a slime, or back again!"
+	action_icon_state = "transformslime"
+	cooldown_min = 0
+	charge_max = 0
+	invocation_type = "none"
+	shapeshift_type = /mob/living/simple_animal/slime/transformedslime
+	convert_damage = TRUE
+	convert_damage_type = CLONE
+	var/remove_on_restore = FALSE
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform/Restore(mob/living/M)
+	if(remove_on_restore)
+		if(M.mind)
+			M.mind.RemoveSpell(src)
 	..()
 
-/datum/action/innate/slime/transformback
-	name = "Transform Back"
-	button_icon_state = "transformback"
-
-/datum/action/innate/slime/transformback/Activate()
-	var/mob/living/simple_animal/slime/transformedslime/S = owner
-	S.Untransform()
-
-/mob/living/simple_animal/slime/transformedslime/proc/Untransform()
-	to_chat(src, "<span class='notice'>You shift back into human form!</span>")
-	originalbody.status_flags &= ~GODMODE
-	originalbody.forceMove(src.loc)
-	if(stat != DEAD)
-		originalbody.revive(full_heal = 1)
-		originalbody.adjustCloneLoss((maxHealth - health)*2)
-	else
-		originalbody.adjustCloneLoss(200)
-	mind.transfer_to(originalbody)
-	qdel(src)
+/mob/living/simple_animal/slime/transformedslime
 
 /mob/living/simple_animal/slime/transformedslime/Reproduce() //Just in case.
 	to_chat(src, "<span class='warning'>I can't reproduce...</span>")
