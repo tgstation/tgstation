@@ -17980,8 +17980,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Kitchen Coldroom";
-	dir = 4;
-	network = list("mine")
+	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/kitchen)
@@ -28488,8 +28487,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Crematorium";
-	dir = 4;
-	network = list("mine")
+	dir = 4
 	},
 /turf/open/floor/plasteel/vault/side{
 	dir = 4
@@ -30407,11 +30405,6 @@
 "bll" = (
 /obj/structure/chair{
 	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "Shuttle Docking Foyer";
-	dir = 8;
-	network = list("mine")
 	},
 /obj/machinery/camera{
 	c_tag = "Escape Arm Airlocks";
