@@ -41,7 +41,7 @@
 				var/obj/item/book/granter/spell/I = item
 				if(!I.oneuse)
 					to_chat(L, "<span class='notice'>This book is infinite use and can't be recharged, yet the magic has improved the book somehow...</span>")
-					burnt_out = 1
+					burnt_out = TRUE
 					I.pages_to_mastery--
 					break
 				if(prob(80))
