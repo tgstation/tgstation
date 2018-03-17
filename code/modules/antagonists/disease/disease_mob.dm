@@ -225,7 +225,6 @@ the new instance inside the host to be updated to the template's stats.
 		disease_instances -= V
 		hosts -= V.affected_mob
 	else
-		points -= 1
 		to_chat(src, "<span class='notice'>One of your hosts, <b>[V.affected_mob.real_name]</b>, has been purged of your infection.</span>")
 
 		var/datum/atom_hud/my_hud = GLOB.huds[DATA_HUD_SENTIENT_DISEASE]
