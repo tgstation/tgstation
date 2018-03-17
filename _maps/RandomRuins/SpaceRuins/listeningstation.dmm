@@ -781,8 +781,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock{
-	name = "Cabin";
-	req_access_txt = "0"
+	name = "Cabin"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{

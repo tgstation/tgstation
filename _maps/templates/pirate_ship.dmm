@@ -33,8 +33,7 @@
 /obj/machinery/button/door{
 	id = "piratebridge";
 	name = "Bridge Shutters Control";
-	pixel_y = -5;
-	req_access_txt = "0"
+	pixel_y = -5
 	},
 /turf/open/floor/wood,
 /area/shuttle/pirate)
@@ -150,8 +149,7 @@
 /area/shuttle/pirate)
 "av" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Restrooms";
-	req_access_txt = "0"
+	name = "Unisex Restrooms"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/showroomfloor,

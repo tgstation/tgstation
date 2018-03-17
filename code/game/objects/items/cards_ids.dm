@@ -293,6 +293,14 @@ update_label("John Doe", "Clowny")
 	access = get_all_accesses()+get_ert_access("med")-ACCESS_CHANGE_IDS
 	. = ..()
 
+/obj/item/card/id/ert/chaplain
+	registered_name = "Religious Response Officer"
+	assignment = "Religious Response Officer"
+
+/obj/item/card/id/ert/chaplain/Initialize()
+	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
+	. = ..()
+
 /obj/item/card/id/prisoner
 	name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."

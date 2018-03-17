@@ -1,6 +1,5 @@
 #define ION_RANDOM 0
 #define ION_ANNOUNCE 1
-#define ION_FILE "ion_laws.json"
 /datum/round_event_control/ion_storm
 	name = "Ion Storm"
 	typepath = /datum/round_event/ion_storm

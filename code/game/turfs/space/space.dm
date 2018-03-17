@@ -84,6 +84,9 @@
 /turf/open/space/proc/CanBuildHere()
 	return TRUE
 
+/turf/open/space/handle_slip()
+	return
+
 /turf/open/space/attackby(obj/item/C, mob/user, params)
 	..()
 	if(!CanBuildHere())
@@ -162,10 +165,7 @@
 		A.newtonian_move(A.inertia_dir)
 
 
-/turf/open/space/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
-	return
-
-/turf/open/space/handle_slip()
+/turf/open/space/MakeSlippery()
 	return
 
 /turf/open/space/singularity_act()

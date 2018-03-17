@@ -337,9 +337,7 @@
 /area/ruin/space/djstation)
 "bi" = (
 /obj/machinery/door/airlock/external{
-	name = "Ruskie DJ Station";
-	req_access = null;
-	req_access_txt = "0"
+	name = "Ruskie DJ Station"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
@@ -353,9 +351,7 @@
 /area/space/nearstation)
 "Co" = (
 /obj/machinery/door/airlock/external{
-	name = "Ruskie DJ Station";
-	req_access = null;
-	req_access_txt = "0"
+	name = "Ruskie DJ Station"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
