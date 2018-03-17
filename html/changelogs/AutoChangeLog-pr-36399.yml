@@ -1,0 +1,4 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - bugfix: "Edison's ghost no longer interferes with Tesla Corona Coil research device."
