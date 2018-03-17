@@ -91,3 +91,9 @@
 //Wet floors
 #define COMSIG_TURF_IS_WET "check_turf_wet"							//(): Returns bitflags of wet values.
 #define COMSIG_TURF_MAKE_DRY "make_turf_try"						//(max_strength, immediate, duration_decrease = INFINITY): Returns bool.
+
+//Non-Signal Component Related Defines
+
+//Arch
+#define ARCH_PROB "probability"					//Probability for each item
+#define ARCH_MAXDROP "max_drop_amount"				//each item's max drop amount
