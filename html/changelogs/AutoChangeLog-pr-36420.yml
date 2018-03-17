@@ -1,7 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - rscadd: "Pubbystation: Added protective grilles outside the circuitry lab. The one with the big glass windows, right next to the bomb test site. Oops."
-  - rscadd: "Pubby: Added electrified grilles to the windows of the CMO/RD/CE offices, as well as missing privacy shutters to the CE office."
-  - rscadd: "Pubby: There is now a very rare chance for a Xenomorph egg to appear in the Xeno containment chamber at roundstart."
-  - bugfix: "Pubby: Fixed the name of the HoS space shutter button."

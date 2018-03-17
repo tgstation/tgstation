@@ -1,7 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Changed behaviour of mech drills: now they take some time to start drilling, then they keep drilling until manually stopped or the target is destroyed. Mobs are still gibbed if they have more than 200 brute damage while being drilled."
-  - rscadd: "Drilling walls is now consistent; it takes longer, but it will always work instead of only randomly."
-  - tweak: "Drills no longer stun mobs, but they can dismember limbs."
-  - bugfix: "Mech drills no longer cause explosion-like effects on mobs inside objects."

@@ -1,5 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "Wet floors now get their duration decreased by 0.1 seconds per degree above 0C the air temperature on it is, and instantly dry above 100C. Below 0C they will freeze into ice and will not automatically dry."
-  - rscadd: "Floors can now have different types of wet at the same time! Wet strength/type is now a bitflag."

@@ -1,4 +1,0 @@
-author: "The Dreamweaver"
-delete-after: True
-changes: 
-  - bugfix: "Fixes duplication issue when the Rod of Asclepius is removed while lying down, as well as fixing a runtime when attempting to use multiple rods."
