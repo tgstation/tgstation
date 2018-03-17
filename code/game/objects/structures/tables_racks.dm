@@ -60,7 +60,7 @@
 	attack_hand(user)
 
 /obj/structure/table/attack_hand(mob/living/user)
-	if(user.pulling && isliving(user.pulling))
+	if(Adjacent(user) && user.pulling && isliving(user.pulling))
 		var/mob/living/pushed_mob = user.pulling
 		if(pushed_mob.buckled)
 			to_chat(user, "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>")
@@ -80,6 +80,9 @@
 		user.stop_pulling()
 	else
 		..()
+
+/obj/structure/table/attack_tk()
+	return FALSE
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))

@@ -825,9 +825,11 @@
 	L.regenerate_icons()
 	qdel(src)
 
-/obj/item/slimepotion/slimeradio
+/obj/item/slimepotion/slime/slimeradio
 	name = "bluespace radio potion"
 	desc = "A strange chemical that grants those who ingest it the ability to broadcast and recieve subscape radio waves."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "potgrey"
 
 /obj/item/slimepotion/slime/slimeradio/attack(mob/living/M, mob/user)
 	if(!ismob(M))
