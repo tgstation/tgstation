@@ -440,7 +440,7 @@
 		O.data = WEAKREF(assembly.loc)
 	set_pin_data(IC_OUTPUT, 2, isturf(assembly.loc))
 	set_pin_data(IC_OUTPUT, 3, ismob(assembly.loc))
-	O.push_data()
+	push_data()
 	activate_pin(2)
 
 /obj/item/integrated_circuit/input/adjacent_locator
@@ -880,7 +880,8 @@
 		"cell charge" = IC_PINTYPE_NUMBER,
 		"max charge" = IC_PINTYPE_NUMBER,
 		"percentage" = IC_PINTYPE_NUMBER,
-		"refference to assembly" = IC_PINTYPE_REF
+		"refference to assembly" = IC_PINTYPE_REF,
+		"refference to cell" = IC_PINTYPE_REF
 		)
 	activators = list("read" = IC_PINTYPE_PULSE_IN, "on read" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
