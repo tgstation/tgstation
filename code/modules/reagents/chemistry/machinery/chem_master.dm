@@ -80,7 +80,7 @@
 		stat |= NOPOWER
 
 /obj/machinery/chem_master/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", I))
+	if(default_deconstruction_screwdriver(user, "mixer0-o", "mixer0", I))
 		return
 
 	else if(exchange_parts(user, I))
