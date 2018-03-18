@@ -544,17 +544,19 @@
 	set waitfor = 0
 	if(flickering)
 		return
-	flickering = 1
-	if(on && status == LIGHT_OK)
+	var/initial_state = on
+	flickering = TRUE
+	if(status == LIGHT_OK)
 		for(var/i = 0; i < amount; i++)
 			if(status != LIGHT_OK)
 				break
 			on = !on
 			update(0)
-			sleep(rand(5, 15))
-		on = (status == LIGHT_OK)
+			sleep(rand(2, 10))
+			if(i == amount--)
+				on = (initial_state && status == LIGHT_OK)
+				flickering = FALSE
 		update(0)
-	flickering = 0
 
 // ai attack - make lights flicker, because why not
 
