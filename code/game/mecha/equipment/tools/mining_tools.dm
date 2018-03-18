@@ -12,7 +12,7 @@
 	equip_cooldown = 15
 	energy_drain = 10
 	force = 15
-	pacifist_safe = FALSE
+	harmful = TRUE
 	var/drill_delay = 7
 	var/drill_level = DRILL_BASIC
 
