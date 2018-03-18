@@ -1,0 +1,6 @@
+author: "Davidj361"
+delete-after: True
+changes: 
+  - tweak: "Made AI VOX sound files smaller sized"
+  - bugfix: "Fixed improperly pronounced AI VOX lines"
+  - soundadd: "Added a ton of new AI VOX sayings"
