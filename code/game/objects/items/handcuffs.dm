@@ -266,12 +266,12 @@
 		if(isliving(AM))
 			var/mob/living/L = AM
 			var/snap = 0
-			var/def_zone = "chest"
+			var/def_zone = BODY_ZONE_CHEST
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				snap = 1
 				if(!C.lying)
-					def_zone = pick("l_leg", "r_leg")
+					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 					if(!C.legcuffed && C.get_num_legs() >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src
 						forceMove(C)

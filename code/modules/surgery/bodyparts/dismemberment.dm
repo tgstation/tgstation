@@ -15,7 +15,7 @@
 	if(C.has_trait(TRAIT_NODISMEMBER))
 		return FALSE
 
-	var/obj/item/bodypart/affecting = C.get_bodypart("chest")
+	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
 	affecting.receive_damage(CLAMP(brute_dam/2, 15, 50), CLAMP(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
 	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
 	C.emote("scream")
@@ -61,7 +61,7 @@
 	for(var/X in C.internal_organs)
 		var/obj/item/organ/O = X
 		var/org_zone = check_zone(O.zone)
-		if(org_zone != "chest")
+		if(org_zone != BODY_ZONE_CHEST)
 			continue
 		O.Remove(C)
 		O.forceMove(T)
@@ -347,7 +347,7 @@
 	return 0
 
 /mob/living/carbon/regenerate_limbs(noheal, list/excluded_limbs)
-	var/list/limb_list = list("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg")
+	var/list/limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 	if(excluded_limbs)
 		limb_list -= excluded_limbs
 	for(var/Z in limb_list)

@@ -10,7 +10,7 @@
 	var/mob/living/carbon/owner = null
 	var/mob/living/carbon/original_owner = null
 	var/status = BODYPART_ORGANIC
-	var/body_zone //"chest", "l_arm", etc , used for def_zone
+	var/body_zone //BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
 	var/aux_zone // used for hands
 	var/aux_layer
 	var/body_part = null //bitflag used to check which clothes cover this bodypart
@@ -316,7 +316,7 @@
 
 	var/icon_gender = (body_gender == FEMALE) ? "f" : "m" //gender of the icon, if applicable
 
-	if((body_zone != "head" && body_zone != "chest"))
+	if((body_zone != BODY_ZONE_HEAD && body_zone != BODY_ZONE_CHEST))
 		should_draw_gender = FALSE
 
 	if(status == BODYPART_ORGANIC)
@@ -359,11 +359,11 @@
 	qdel(src)
 
 /obj/item/bodypart/chest
-	name = "chest"
+	name = BODY_ZONE_CHEST
 	desc = "It's impolite to stare at a person's chest."
 	icon_state = "default_human_chest"
 	max_damage = 200
-	body_zone = "chest"
+	body_zone = BODY_ZONE_CHEST
 	body_part = CHEST
 	px_x = 0
 	px_y = 0
@@ -413,9 +413,9 @@
 	icon_state = "default_human_l_arm"
 	attack_verb = list("slapped", "punched")
 	max_damage = 50
-	body_zone ="l_arm"
+	body_zone =BODY_ZONE_L_ARM
 	body_part = ARM_LEFT
-	aux_zone = "l_hand"
+	aux_zone = BODY_ZONE_PRECISE_L_HAND
 	aux_layer = HANDS_PART_LAYER
 	held_index = 1
 	px_x = -6
@@ -449,9 +449,9 @@
 	icon_state = "default_human_r_arm"
 	attack_verb = list("slapped", "punched")
 	max_damage = 50
-	body_zone = "r_arm"
+	body_zone = BODY_ZONE_R_ARM
 	body_part = ARM_RIGHT
-	aux_zone = "r_hand"
+	aux_zone = BODY_ZONE_PRECISE_R_HAND
 	aux_layer = HANDS_PART_LAYER
 	held_index = 2
 	px_x = 6
@@ -485,7 +485,7 @@
 	icon_state = "default_human_l_leg"
 	attack_verb = list("kicked", "stomped")
 	max_damage = 50
-	body_zone = "l_leg"
+	body_zone = BODY_ZONE_L_LEG
 	body_part = LEG_LEFT
 	px_x = -2
 	px_y = 12
@@ -523,7 +523,7 @@
 	icon_state = "default_human_r_leg"
 	attack_verb = list("kicked", "stomped")
 	max_damage = 50
-	body_zone = "r_leg"
+	body_zone = BODY_ZONE_R_LEG
 	body_part = LEG_RIGHT
 	px_x = 2
 	px_y = 12

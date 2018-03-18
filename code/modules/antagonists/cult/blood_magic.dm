@@ -385,9 +385,9 @@
 		user.whisper(invocation, language = /datum/language/common)
 	if(health_cost)
 		if(user.active_hand_index == 1)
-			user.apply_damage(health_cost, BRUTE, "l_arm")
+			user.apply_damage(health_cost, BRUTE, BODY_ZONE_L_ARM)
 		else
-			user.apply_damage(health_cost, BRUTE, "r_arm")
+			user.apply_damage(health_cost, BRUTE, BODY_ZONE_R_ARM)
 	if(uses <= 0)
 		qdel(src)
 	else if(source)
