@@ -18,6 +18,7 @@
 /obj/machinery/defibrillator_mount/loaded/Initialize() //loaded subtype for mapping use
 	. = ..()
 	defib = new/obj/item/defibrillator/loaded(src)
+	update_icon()
 
 /obj/machinery/defibrillator_mount/Destroy()
 	if(defib)
@@ -38,7 +39,7 @@
 		use_power(200)
 		defib.cell.give(180) //90% efficiency, slightly better than the cell charger's 87.5%
 		update_icon()
-	
+
 /obj/machinery/defibrillator_mount/update_icon()
 	cut_overlays()
 	if(defib)

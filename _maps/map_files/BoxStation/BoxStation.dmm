@@ -9085,12 +9085,14 @@
 	name = "Blast Door Control B";
 	pixel_x = -28;
 	pixel_y = 4;
+	
 	},
 /obj/machinery/button/door{
 	id = "maint1";
 	name = "Blast Door Control A";
 	pixel_x = -28;
 	pixel_y = -6;
+	
 	},
 /obj/structure/cable{
 	icon_state = "1-2"

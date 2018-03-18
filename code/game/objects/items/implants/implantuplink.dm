@@ -27,7 +27,7 @@
 
 	if(..())
 		if(hidden_uplink)
-			hidden_uplink.owner = "[user.key]"
+			hidden_uplink.owner = "[user ? user.key : target.key]"
 			return TRUE
 	return FALSE
 
@@ -47,3 +47,6 @@
 
 /obj/item/implant/uplink/precharged
 	starting_tc = 10
+
+/obj/item/implant/uplink/infiltrator
+	starting_tc = 30

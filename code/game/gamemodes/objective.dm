@@ -110,7 +110,8 @@
 			var/list/slots = list("backpack" = slot_in_backpack)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
-				H.equip_in_one_of_slots(O, slots)
+				if(!H.equip_in_one_of_slots(O, slots))
+					addtimer(CALLBACK(H, /mob/living/carbon/human.proc/equip_in_one_of_slots, O, slots), 55) //try to give it again in 5.5 seconds
 
 /datum/objective/assassinate
 	var/target_role_type=0
@@ -460,6 +461,23 @@ GLOBAL_LIST_EMPTY(possible_items)
 			if(targetinfo && I.type in targetinfo.altitems) //Ok, so you don't have the item. Do you have an alternative, at least?
 				if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
 					return TRUE
+	//Do you at least have it on your ship...?
+	var/list/ok_areas = list(/area/infiltrator_base, /area/syndicate_mothership, /area/shuttle/stealthcruiser)
+	var/list/compiled_areas = list()
+	for(var/A in ok_areas)
+		compiled_areas += typesof(A)
+	for(var/area/A in compiled_areas)
+		for(var/turf/T in get_area_turfs(A))
+			for(var/obj/I in T.GetAllContents())
+				if(istype(I, steal_target))
+					if(!targetinfo) //If there's no targetinfo, then that means it was a custom objective. At this point, we know you have the item, so return 1.
+						return TRUE
+					else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
+						return TRUE
+				if(targetinfo && I.type in targetinfo.altitems) //Ok, so you don't have the item. Do you have an alternative, at least?
+					if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
+						return TRUE
+
 	return FALSE
 
 
@@ -509,7 +527,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/download
 
-/datum/objective/download/proc/gen_amount_goal()
+/datum/objective/download/find_target()
 	target_amount = rand(20,40)
 	explanation_text = "Download [target_amount] research node\s."
 	return target_amount

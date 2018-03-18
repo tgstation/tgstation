@@ -1,3 +1,5 @@
+GLOBAL_VAR_INIT(powersink_transmitted, 0)
+
 // Powersink - used to drain station power
 
 /obj/item/device/powersink
@@ -121,18 +123,7 @@
 		var/drained = min ( drain_rate, PN.avail )
 		PN.load += drained
 		power_drained += drained
-
-		// if tried to drain more than available on powernet
-		// now look for APCs and drain their cells
-		if(drained < drain_rate)
-			for(var/obj/machinery/power/terminal/T in PN.nodes)
-				if(istype(T.master, /obj/machinery/power/apc))
-					var/obj/machinery/power/apc/A = T.master
-					if(A.operating && A.cell)
-						A.cell.charge = max(0, A.cell.charge - 50)
-						power_drained += 50
-						if(A.charging == 2) // If the cell was full
-							A.charging = 1 // It's no longer full
+		on_drain(drained)
 
 	if(power_drained > max_power * 0.98)
 		if (!admins_warned)
@@ -144,3 +135,29 @@
 		STOP_PROCESSING(SSobj, src)
 		explosion(src.loc, 4,8,16,32)
 		qdel(src)
+
+/obj/item/device/powersink/proc/on_drain(drained)
+	var/datum/powernet/PN = attached.powernet
+	if(drained < drain_rate)
+		for(var/obj/machinery/power/terminal/T in PN.nodes)
+			if(istype(T.master, /obj/machinery/power/apc))
+				var/obj/machinery/power/apc/A = T.master
+				if(A.operating && A.cell)
+					A.cell.charge = max(0, A.cell.charge - 50)
+					power_drained += 50
+					if(A.charging == 2) // If the cell was full
+						A.charging = 1 // It's no longer full
+
+/obj/item/device/powersink/infiltrator
+	desc = "A nulling power sink which drains energy from electrical systems. It appears to have some sort of bluespace antenna attached."
+	var/target
+	var/target_reached = FALSE
+
+/obj/item/device/powersink/infiltrator/on_drain(drained)
+	GLOB.powersink_transmitted += drained
+	if(GLOB.powersink_transmitted >= target && !target_reached)
+		visible_message("<span class='notice'>[src] beeps.</span>")
+		playsound('sound/machines/ping.ogg', 50, 1)
+		desc += " <b>An LED is blinking green on it.</b>"
+		target_reached = TRUE
+	return ..()
