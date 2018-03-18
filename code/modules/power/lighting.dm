@@ -539,7 +539,7 @@
 		return
 	var/initial_state = on
 	flickering = TRUE
-	if(on && status == LIGHT_OK)
+	if(status == LIGHT_OK)
 		for(var/i = 0; i < amount; i++)
 			if(status != LIGHT_OK)
 				break
