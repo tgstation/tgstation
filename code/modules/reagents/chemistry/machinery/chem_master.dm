@@ -408,3 +408,4 @@ obj/machinery/chem_master/proc/work_animation()
 	desc = "Used to create condiments and other cooking supplies."
 	condi = TRUE
 	icon_state = "mixer0"
+	
