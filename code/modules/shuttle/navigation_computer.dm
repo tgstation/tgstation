@@ -17,6 +17,7 @@
 	var/see_hidden = FALSE
 	var/designate_time = 0
 	var/turf/designating_target_loc
+	var/jammed = FALSE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
 	. = ..()
