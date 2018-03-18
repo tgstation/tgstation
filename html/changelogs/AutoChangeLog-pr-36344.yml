@@ -1,0 +1,9 @@
+author: "Floyd / Qustinnus"
+delete-after: True
+changes: 
+  - rscdel: "Removes short-term effects of mood
+add; Adds long-term effects of mood by implementing sanity which goes up with good mood, down with bad mood, but takes time to change. Your sanity can be seen as your average mood in the recent past. All effects of moods are now covered by this system"
+  - rscadd: "Beauty component, currently only attached to cleanables, but you could attach it to any atom/movable and make them pretty/ugly, affecting mood of anyone in the room."
+  - refactor: "Removes the original way of adding mood events, uses signals properly instead."
+  - bugfix: "Cleanables \"giving\" area's free beauty during initialization"
+  - bugfix: "Fixes some events not clearing properly"
