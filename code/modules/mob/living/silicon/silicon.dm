@@ -229,19 +229,19 @@
 			say("[radiomod] 0. [laws.zeroth]")
 			sleep(10)
 
-	for (var/index = 1, index <= laws.ion.len, index++)
-		var/law = laws.ion[index]
-		var/num = ionnum()
-		if (length(law) > 0)
-			if (force || ioncheck[index] == "Yes")
-				say("[radiomod] [num]. [law]")
-				sleep(10)
-
 	for (var/index = 1, index <= laws.hacked.len, index++)
 		var/law = laws.hacked[index]
 		var/num = ionnum()
 		if (length(law) > 0)
 			if (force || hackedcheck[index] == "Yes")
+				say("[radiomod] [num]. [law]")
+				sleep(10)
+
+	for (var/index = 1, index <= laws.ion.len, index++)
+		var/law = laws.ion[index]
+		var/num = ionnum()
+		if (length(law) > 0)
+			if (force || ioncheck[index] == "Yes")
 				say("[radiomod] [num]. [law]")
 				sleep(10)
 
