@@ -36713,7 +36713,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
 	frequency = 1441;
-	id_tag = "mix_in";
+	id_tag = "mix_out";
 	name = "distro out"
 	},
 /turf/open/floor/engine/vacuum,
@@ -37166,7 +37166,7 @@
 	frequency = 1441;
 	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
-	output_tag = "mix_in";
+	output_tag = "mix_out";
 	sensors = list("mix_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -50313,6 +50313,14 @@
 /obj/structure/grille,
 /turf/open/space/basic,
 /area/space/nearstation)
+"fuR" = (
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 4;
+	filter_type = "n2";
+	on = 1
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "fvG" = (
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 6
@@ -86220,7 +86228,7 @@ bTJ
 bMf
 bUs
 bMf
-bWK
+fuR
 bXt
 bYp
 bZd
