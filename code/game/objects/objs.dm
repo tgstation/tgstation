@@ -22,6 +22,11 @@
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
 
+	// Access levels, used in modules\jobs\access.dm
+	var/list/req_access
+	var/req_access_txt = "0"
+	var/list/req_one_access
+	var/req_one_access_txt = "0"
 
 
 /obj/vv_edit_var(vname, vval)

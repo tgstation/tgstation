@@ -65,8 +65,7 @@
 		qdel(src)
 
 /obj/item/organ/body_egg/changeling_egg/proc/Pop()
-	var/mob/living/carbon/monkey/M = new(owner)
-	owner.stomach_contents += M
+	var/mob/living/carbon/monkey/M = new(get_turf(owner)) // hippie edit - the monkey spawned dead in the last version
 
 	for(var/obj/item/organ/I in src)
 		I.Insert(M, 1)

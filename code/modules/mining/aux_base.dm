@@ -144,9 +144,11 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		return
 	if(!no_restrictions)
 		var/static/list/disallowed_turf_types = typecacheof(list(
+			/turf/closed,
 			/turf/open/lava,
-			/turf/closed/indestructible,
 			/turf/open/indestructible,
+			)) - typecacheof(list(
+			/turf/closed/mineral,
 			))
 
 		if(!is_mining_level(T.z))
@@ -231,7 +233,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		if(BAD_COORDS)
 			to_chat(user, "<span class='warning'>Location is too close to the edge of the station's scanning range. Move several paces away and try again.</span>")
 		if(BAD_TURF)
-			to_chat(user, "<span class='warning'>The landing zone contains turfs unsuitable for a base.</span>")
+			to_chat(user, "<span class='warning'>The landing zone contains turfs unsuitable for a base. Make sure you've removed all walls and dangerous terrain from the landing zone.</span>")
 
 /obj/item/device/assault_pod/mining/unrestricted
 	name = "omni-locational landing field designator"
@@ -247,6 +249,13 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	dwidth = 4
 	width = 9
 	height = 9
+
+/obj/docking_port/mobile/auxillary_base/takeoff(list/old_turfs, list/new_turfs, list/moved_atoms, rotation, movement_direction, old_dock, area/underlying_old_area)
+	for(var/i in new_turfs)
+		var/turf/place = i
+		if(istype(place, /turf/closed/mineral))
+			place.ScrapeAway()
+	return ..()
 
 obj/docking_port/stationary/public_mining_dock
 	name = "public mining base dock"
