@@ -44,3 +44,11 @@
 	item_state = "zootsuit"
 	item_color = "zootsuit"
 	can_adjust = 0
+
+/obj/item/clothing/under/hippie/telvis
+	name = "snazzy jumpsuit"
+	desc = "A swingin' white jumpsuit studded with rhinestones. The name 'Telvis' is stitched on the inside of the collar."
+	icon_state = "telvis"
+	item_state = "telvis"
+	item_color = "telvis"
+	can_adjust = 0
