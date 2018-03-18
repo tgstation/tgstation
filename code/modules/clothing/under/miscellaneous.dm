@@ -731,3 +731,21 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
+
+/obj/item/clothing/under/zootsuit
+	name = "zoot suit"
+	desc = "A snazzy purple zoot suit. The name 'Big Papa' is stitched on the inside of the collar."
+	icon_state = "zootsuit"
+	item_state = "zootsuit"
+	item_color = "zootsuit"
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+
+/obj/item/clothing/under/telvis
+	name = "snazzy jumpsuit"
+	desc = "A swingin' white jumpsuit studded with rhinestones. The name 'Telvis' is stitched on the inside of the collar."
+	icon_state = "telvis"
+	item_state = "telvis"
+	item_color = "telvis"
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE

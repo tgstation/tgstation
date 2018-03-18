@@ -641,3 +641,22 @@
 		to_chat(user, "<span class='warning'>[M] is too close to use [src] on.</span>")
 		return
 	M.attack_hand(user)
+
+/obj/item/pimpstick
+	name = "pimp stick"
+	desc = "A gold-rimmed cane, with a gleaming diamond set at the top. Great for bashing in kneecaps."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "pimpstick"
+	item_state = "pimpstick"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	slot_flags = SLOT_BELT
+	force = 10
+	throwforce = 7
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb = list("pimped", "smacked", "disciplined", "busted", "capped", "decked")
+	resistance_flags = FIRE_PROOF
+
+/obj/item/pimpstick/suicide_act(mob/user)
+		user.visible_message("<span class='suicide'>[user] is hitting [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to discipline [user.p_them()]self for being a mark-ass trick.</span>")
+		return (BRUTELOSS)

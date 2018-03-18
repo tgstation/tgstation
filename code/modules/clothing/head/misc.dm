@@ -322,3 +322,9 @@
 	desc = "Lavish space tomb not included."
 	icon_state = "nemes_headdress"
 	icon_state = "nemes_headdress"
+
+/obj/item/clothing/head/zoothat
+	name = "zoot suit hat"
+	desc = "What's swingin', toots?"
+	icon_state = "zoothat"
+	item_state = "zoothat"
