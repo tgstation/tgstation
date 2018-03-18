@@ -2612,6 +2612,7 @@
 #include "hippiestation\code\game\gamemodes\vampire\vampire_powers.dm"
 #include "hippiestation\code\game\gamemodes\wizard\spellbook.dm"
 #include "hippiestation\code\game\gamemodes\wizard\spellbook_darkness.dm"
+#include "code\modules\antagonists\xeno\xeno.dm"
 #include "hippiestation\code\game\machinery\announcement_system.dm"
 #include "hippiestation\code\game\machinery\autolathe.dm"
 #include "hippiestation\code\game\machinery\cell_charger.dm"
