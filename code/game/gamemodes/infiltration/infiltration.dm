@@ -56,3 +56,16 @@
 				if(!is_centcom_level(T.z) || !is_type_in_typecache(A, areas_that_can_finish))
 					all_at_base = FALSE
 	return all_at_base && objectives_complete
+
+/datum/game_mode/infiltration/set_round_result()
+	..()
+	var result = sit_team.get_result()
+	switch(result)
+		if(INFILTRATION_ALLCOMPLETE)
+			SSticker.mode_result = "major win - objectives complete"
+		if(INFILTRATION_MOSTCOMPLETE)
+			SSticker.mode_result = "semi-major win - most objectives complete"
+		if(INFILTRATION_SOMECOMPLETE)
+			SSticker.mode_result = "minor win - some objectives complete"
+		else
+			SSticker.mode_result = "loss - no objectives complete"

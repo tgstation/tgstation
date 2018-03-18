@@ -63,3 +63,22 @@
 		add_objective(pick(minor_objectives))
 	for(var/datum/mind/M in members)
 		M.objectives |= objectives
+
+/datum/team/infiltrator/proc/get_result()
+	var/objectives_complete = 0
+	var/objectives_failed = 0
+
+	for(var/datum/objective/O in objectives)
+		if(O.check_completion())
+			objectives_complete++
+		else
+			objectives_failed++
+
+	if(objectives_failed == 0 && objectives_complete > 0)
+		return INFILTRATION_ALLCOMPLETE
+	else if (objectives_complete > objectives_failed)
+		return INFILTRATION_MOSTCOMPLETE
+	else if((objectives_complete == objectives_failed) || (objectives_complete > 0 && objectives_failed > objectives_complete))
+		return INFILTRATION_SOMECOMPLETE
+	else
+		return INFILTRATION_NONECOMPLETE
