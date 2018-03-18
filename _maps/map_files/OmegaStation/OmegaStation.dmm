@@ -2553,8 +2553,7 @@
 	},
 /obj/structure/table/wood,
 /obj/machinery/recharger{
-	pixel_x = 5;
-	pixel_y = 0
+	pixel_x = 5
 	},
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-15";
