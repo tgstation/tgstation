@@ -60,7 +60,7 @@
 /obj/machinery/chem_master/proc/display_beaker()
 	..()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
-	b_o.pixel_y = 5
+	b_o.pixel_y = -2
 	b_o.pixel_x = 6
 	return b_o
 
