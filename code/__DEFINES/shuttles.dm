@@ -52,12 +52,12 @@
 #define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
 
 //Docking error flags
-#define DOCKING_SUCCESS 0
-#define DOCKING_BLOCKED 1
-#define DOCKING_IMMOBILIZED 2
-#define DOCKING_AREA_EMPTY 4
-#define DOCKING_NULL_DESTINATION 8
-#define DOCKING_NULL_SOURCE 16
+#define DOCKING_SUCCESS "Docking Succeeded"
+#define DOCKING_BLOCKED "Docking Blocked By Another Shuttle/Edge Of Map"
+#define DOCKING_IMMOBILIZED "Shuttle Unable To Move"
+#define DOCKING_AREA_EMPTY "Docking Area Empty"
+#define DOCKING_NULL_DESTINATION "No Destination To Dock At"
+#define DOCKING_NULL_SOURCE "No Source to Dock At"
 
 //Docking turf movements
 #define MOVE_TURF 1
