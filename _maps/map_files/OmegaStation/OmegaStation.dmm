@@ -2363,7 +2363,6 @@
 /area/crew_quarters/heads/hop)
 "aeO" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/med_data/laptop,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
@@ -2376,6 +2375,7 @@
 	pixel_x = 28;
 	pixel_y = 24
 	},
+/obj/machinery/recharger,
 /turf/open/floor/plasteel/vault/corner{
 	dir = 8
 	},
@@ -2518,11 +2518,7 @@
 	},
 /area/crew_quarters/heads/captain/private)
 "afl" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-15";
-	pixel_x = -6;
-	pixel_y = 12
-	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "afm" = (
@@ -2542,9 +2538,6 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
 "afo" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-21"
-	},
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
@@ -2557,6 +2550,16 @@
 /obj/machinery/camera{
 	c_tag = "Captain's Office";
 	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/machinery/recharger{
+	pixel_x = 5;
+	pixel_y = 0
+	},
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-15";
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken2"
@@ -13955,6 +13958,8 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/plasteel/vault/side,
 /area/crew_quarters/kitchen)
 "aDa" = (
@@ -21414,6 +21419,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/item/storage/box/pillbottles,
+/obj/item/storage/box/beakers,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "aTr" = (
@@ -23557,19 +23564,11 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXW" = (
-/obj/structure/table,
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/storage/pill_bottle/mannitol,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXX" = (
@@ -23999,16 +23998,26 @@
 "aYO" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/effect/turf_decal/stripes/line,
+/obj/item/wrench/medical,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aYP" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/obj/structure/table,
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/storage/pill_bottle/mannitol,
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aYQ" = (
@@ -31457,6 +31466,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"fMP" = (
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space/nearstation)
 "fMT" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -32425,6 +32438,11 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
+"pZU" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space/nearstation)
 "qdt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -32642,6 +32660,10 @@
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plasteel/vault/side,
 /area/maintenance/starboard/aft)
+"sdX" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "soC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -34334,7 +34356,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "sMP" = (
 /obj/machinery/power/smes{
-	charge = 1e+006
+	charge = 5e+006
 	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
@@ -34557,11 +34579,12 @@
 	},
 /area/ai_monitored/turret_protected/aisat_interior)
 "sNm" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/transit_tube/station/reverse/flipped{
 	dir = 4
 	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/transit_tube_pod,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "sNn" = (
@@ -34821,7 +34844,7 @@
 /area/space/nearstation)
 "sNP" = (
 /obj/structure/transit_tube,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "sNQ" = (
@@ -34884,7 +34907,7 @@
 /area/space/nearstation)
 "sOr" = (
 /obj/structure/transit_tube,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/bridge)
 "sOs" = (
@@ -34928,7 +34951,6 @@
 "sOw" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/transit_tube/station/reverse{
-	tag = "icon-closed_terminus0 (WEST)";
 	icon_state = "closed_terminus0";
 	dir = 8
 	},
@@ -78287,11 +78309,11 @@ aad
 aac
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+fMP
+pZU
+pZU
+sdX
+sdX
 aaf
 aaa
 aam
@@ -78545,7 +78567,7 @@ aad
 aac
 aac
 aaa
-aaa
+sdX
 aaa
 aaa
 aaa
