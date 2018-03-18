@@ -2,7 +2,7 @@
 	name = "prosthetic replacement"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/add_prosthetic)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list("r_arm", "l_arm", "l_leg", "r_leg", "head")
+	possible_locs = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD)
 	requires_bodypart = FALSE //need a missing limb
 	requires_bodypart_type = 0
 
@@ -52,7 +52,7 @@
 		else
 			to_chat(user, "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>")
 			return -1
-	else if(target_zone == "l_arm" || target_zone == "r_arm")
+	else if(target_zone == BODY_ZONE_L_ARM || target_zone == BODY_ZONE_R_ARM)
 		user.visible_message("[user] begins to attach [tool] onto [target].", "<span class='notice'>You begin to attach [tool] onto [target]...</span>")
 	else
 		to_chat(user, "<span class='warning'>[tool] must be installed onto an arm.</span>")
@@ -78,6 +78,7 @@
 		user.visible_message("[user] finishes attaching [tool]!", "<span class='notice'>You attach [tool].</span>")
 		qdel(tool)
 		if(istype(tool, /obj/item/twohanded/required/chainsaw))
+<<<<<<< HEAD
 			if(istype(tool, /obj/item/twohanded/required/chainsaw/energy)) //HIPPIE CODE -START- differenciates betwen esaws and normal saws
 				var/obj/item/mounted_energy_chainsaw/new_arm = new(target) //HIPPIECODE
 				target_zone == "r_arm" ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm) //HIPPIECODE
@@ -86,7 +87,12 @@
 				var/obj/item/mounted_chainsaw/new_arm = new(target)
 				target_zone == "r_arm" ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
 				return 1
+=======
+			var/obj/item/mounted_chainsaw/new_arm = new(target)
+			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
+			return 1
+>>>>>>> fbe5f4a062... Replaced body zone magic strings with defines
 		else if(istype(tool, /obj/item/melee/synthetic_arm_blade))
 			var/obj/item/melee/arm_blade/new_arm = new(target,TRUE,TRUE)
-			target_zone == "r_arm" ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
+			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
 			return 1
