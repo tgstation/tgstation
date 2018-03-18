@@ -84,9 +84,6 @@
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
 #define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"	//Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
 
-#define CALTROP_BYPASS_SHOES 1
-#define CALTROP_IGNORE_WALKERS 2
-
 //Component Specific Signals
 //Wet floors
 #define COMSIG_TURF_IS_WET "check_turf_wet"							//(): Returns bitflags of wet values.
@@ -97,3 +94,7 @@
 //Arch
 #define ARCH_PROB "probability"					//Probability for each item
 #define ARCH_MAXDROP "max_drop_amount"				//each item's max drop amount
+
+//Ouch my toes!
+#define CALTROP_BYPASS_SHOES 1
+#define CALTROP_IGNORE_WALKERS 2
