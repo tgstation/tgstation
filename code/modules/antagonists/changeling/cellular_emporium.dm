@@ -33,7 +33,7 @@
 	var/list/abilities = list()
 
 	for(var/path in changeling.all_powers)
-		var/obj/effect/proc_holder/changeling/ability = path
+		var/datum/action/changeling/ability = path
 
 		var/dna_cost = initial(ability.dna_cost)
 		if(dna_cost <= 0)
@@ -70,7 +70,7 @@
 	name = "Cellular Emporium"
 	icon_icon = 'icons/obj/drinks.dmi'
 	button_icon_state = "changelingsting"
-	background_icon_state = "bg_alien"
+	background_icon_state = "bg_changeling"
 	var/datum/cellular_emporium/cellular_emporium
 
 /datum/action/innate/cellular_emporium/New(our_target)
