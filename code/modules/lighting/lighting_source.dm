@@ -253,7 +253,7 @@
 	var/turf/T
 	if (source_turf)
 		if(!isnull(directional)) // If the light has a direction, which is provided as an angle
-			var/tempTurf = get_turf_in_angle(directional, source_turf, CEILING(light_range, 1))
+			var/tempTurf = get_turf_in_angle(directional, source_turf, CEILING(light_range+1, 1))
 			if (directional % 90 == 0)                                 // Cardinal Lighting
 				for(T in getline(source_turf,tempTurf))
 					if(T != source_turf)
@@ -269,7 +269,7 @@
 				for(var/i in 1 to 4)
 					if(i % 2 == 0)
 						set_angle = directional - spread
-						spread += 10
+						spread += 6
 					else
 						set_angle = directional + spread
 					tempTurf = get_turf_in_angle(set_angle, source_turf, CEILING(light_range, 1))
