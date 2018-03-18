@@ -429,15 +429,15 @@
 	if (include_zeroth && zeroth)
 		data += "[show_numbers ? "0:" : ""] <font color='#ff0000'><b>[zeroth]</b></font>"
 
-	for(var/law in ion)
-		if (length(law) > 0)
-			var/num = ionnum()
-			data += "[show_numbers ? "[num]:" : ""] <font color='#00ffff'>[law]</font>"
-
 	for(var/law in hacked)
 		if (length(law) > 0)
 			var/num = ionnum()
 			data += "[show_numbers ? "[num]:" : ""] <font color='#660000'>[law]</font>"
+
+	for(var/law in ion)
+		if (length(law) > 0)
+			var/num = ionnum()
+			data += "[show_numbers ? "[num]:" : ""] <font color='#00ffff'>[law]</font>"
 
 	var/number = 1
 	for(var/law in inherent)
