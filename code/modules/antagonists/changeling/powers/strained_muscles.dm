@@ -38,8 +38,13 @@
 			break
 
 		stacks++
-		//user.take_bodypart_damage(stacks * 0.03, 0)
-		user.staminaloss += stacks * 1.3 //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
+// Hippie Edit: Dunno how to modularize this, it's a proc inserted midway through a regular definition. Code by Xhuis.
+		if(!user.on_fire)
+			user.staminaloss += stacks * 1.3 //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
+		else //faster fatigue and higher damage from being on fire
+			stacks++
+			user.staminaloss += stacks * 2.6
+//Hippie edit end
 
 		if(stacks == 11) //Warning message that the stacks are getting too high
 			to_chat(user, "<span class='warning'>Our legs are really starting to hurt...</span>")

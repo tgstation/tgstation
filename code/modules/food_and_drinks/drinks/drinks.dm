@@ -21,7 +21,7 @@
 	else
 		gulp_size = max(round(reagents.total_volume / 5), 5)
 
-/obj/item/reagent_containers/food/drinks/attack(mob/M, mob/user, def_zone)
+/obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
 
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
@@ -36,6 +36,8 @@
 
 	if(M == user)
 		to_chat(M, "<span class='notice'>You swallow a gulp of [src].</span>")
+		if(M.has_trait(TRAIT_VORACIOUS))
+			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
 
 	else
 		M.visible_message("<span class='danger'>[user] attempts to feed the contents of [src] to [M].</span>", "<span class='userdanger'>[user] attempts to feed the contents of [src] to [M].</span>")

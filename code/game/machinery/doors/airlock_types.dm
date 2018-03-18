@@ -418,6 +418,19 @@
 /obj/machinery/door/airlock/cult/canAIControl(mob/user)
 	return (iscultist(user) && !isAllPowerCut())
 
+/obj/machinery/door/airlock/cult/obj_break(damage_flag)
+	if(!(flags_1 & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
+		stat |= BROKEN
+		if(!panel_open)
+			panel_open = TRUE
+		update_icon()
+
+/obj/machinery/door/airlock/cult/isElectrified()
+	return FALSE
+
+/obj/machinery/door/airlock/cult/hasPower()
+	return TRUE
+
 /obj/machinery/door/airlock/cult/allowed(mob/living/L)
 	if(!density)
 		return 1
@@ -487,7 +500,7 @@
 /obj/machinery/door/airlock/cult/weak
 	name = "brittle cult airlock"
 	desc = "An airlock hastily corrupted by blood magic, it is unusually brittle in this state."
-	normal_integrity = 180
+	normal_integrity = 150
 	damage_deflection = 5
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 

@@ -45,11 +45,6 @@
 	if(!poddoor)
 		to_chat(user, "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>")
 
-/obj/machinery/door/check_access(access)
-	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
-		return TRUE
-	return ..()
-
 /obj/machinery/door/check_access_list(list/access_list)
 	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
 		return TRUE

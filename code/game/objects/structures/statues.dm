@@ -1,6 +1,3 @@
-
-
-
 /obj/structure/statue
 	name = "statue"
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
@@ -16,47 +13,21 @@
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(W, /obj/item/wrench))
-		if(anchored)
-			user.visible_message("[user] is loosening the [name]'s bolts.", \
-								 "<span class='notice'>You are loosening the [name]'s bolts...</span>")
-			if(W.use_tool(src, user, 40, volume=100))
-				if(!anchored)
-					return
-				user.visible_message("[user] loosened the [name]'s bolts!", \
-									 "<span class='notice'>You loosen the [name]'s bolts!</span>")
-				anchored = FALSE
-		else
-			if(!isfloorturf(src.loc))
-				user.visible_message("<span class='warning'>A floor must be present to secure the [name]!</span>")
-				return
-			user.visible_message("[user] is securing the [name]'s bolts...", \
-								 "<span class='notice'>You are securing the [name]'s bolts...</span>")
-			if(W.use_tool(src, user, 40, volume=100))
-				if(anchored)
-					return
-				user.visible_message("[user] has secured the [name]'s bolts.", \
-									 "<span class='notice'>You have secured the [name]'s bolts.</span>")
-				anchored = TRUE
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(default_unfasten_wrench(user, W))
+			return
+		if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+			if(!W.tool_start_check(user, amount=0))
+				return FALSE
 
-	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		user.visible_message("[user] destroys the [name]!",
-							 "<span class='notice'>You destroy the [name].</span>")
-		W.play_tool_sound(src)
-		qdel(src)
-
-	else if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
-		if(!W.tool_start_check(user, amount=0))
-			return FALSE
-
-		user.visible_message("[user] is slicing apart the [name].", \
-							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(W.use_tool(src, user, 40, volume=50))
-			user.visible_message("[user] slices apart the [name].", \
-								 "<span class='notice'>You slice apart the [name]!</span>")
-			deconstruct(TRUE)
-	else
-		return ..()
+			user.visible_message("[user] is slicing apart the [name].", \
+								"<span class='notice'>You are slicing apart the [name]...</span>")
+			if(W.use_tool(src, user, 40, volume=50))
+				user.visible_message("[user] slices apart the [name].", \
+									"<span class='notice'>You slice apart the [name]!</span>")
+				deconstruct(TRUE)
+			return
+	return ..()
 
 /obj/structure/statue/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)

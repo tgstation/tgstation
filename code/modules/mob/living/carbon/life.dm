@@ -138,6 +138,7 @@
 
 
 	//OXYGEN
+	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 	if(O2_partialpressure < safe_oxy_min) //Not enough oxygen
 		if(prob(20))
 			emote("gasp")
@@ -150,6 +151,8 @@
 			adjustOxyLoss(3)
 			failed_last_breath = 1
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+		if(mood)
+			mood.add_event("suffocation", /datum/mood_event/suffocation)
 
 	else //Enough oxygen
 		failed_last_breath = 0
@@ -157,6 +160,8 @@
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
 		clear_alert("not_enough_oxy")
+		if(mood)
+			mood.clear_event("suffocation")
 
 	breath_gases[/datum/gas/oxygen][MOLES] -= oxygen_used
 	breath_gases[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
@@ -247,7 +252,7 @@
 		O.on_life()
 
 /mob/living/carbon/handle_diseases()
-	for(var/thing in viruses)
+	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(prob(D.infectivity))
 			D.spread()
@@ -432,10 +437,10 @@
 		L.damage += d
 
 /mob/living/carbon/proc/liver_failure()
-	if(reagents.get_reagent_amount("corazone"))//corazone is processed here an not in the liver because a failing liver can't metabolize reagents
-		reagents.remove_reagent("corazone", 0.4) //corazone slowly deletes itself.
+	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
+	if(has_trait(TRAIT_STABLEHEART))
 		return
-	adjustToxLoss(8, TRUE, TRUE)
+	adjustToxLoss(8, TRUE,  TRUE)
 	if(prob(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
 

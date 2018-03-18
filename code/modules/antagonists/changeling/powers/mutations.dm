@@ -136,7 +136,7 @@
 	desc = "We reform one of our arms into a deadly blade."
 	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form."
 	chemical_cost = 20
-	dna_cost = 2
+	dna_cost = 4 // Hippie edit - changeling proc_holders refuse to modularize properly
 	req_human = 1
 	weapon_type = /obj/item/melee/arm_blade
 	weapon_name_simple = "blade"
@@ -423,9 +423,9 @@
 		return ..()
 
 
-/***************************************\
-|*********SPACE SUIT + HELMET***********|
-\***************************************/
+
+/* HIPPIE EDIT - Commented out. Unfortunately, despite all of my attempts at modularity - these items continue to show up in the Changeling uplink even though I had disabled them on another file.
+No, setting their DNA Cost to -1 did not make them go away. I have no idea why.
 /obj/effect/proc_holder/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
 	desc = "We grow an organic suit to protect ourselves from space exposure."
@@ -484,6 +484,8 @@
 	helmet_type = /obj/item/clothing/head/helmet/changeling
 	suit_name_simple = "armor"
 	helmet_name_simple = "helmet"
+
+HIPPIE EDIT END */
 
 /obj/item/clothing/suit/armor/changeling
 	name = "chitinous mass"
