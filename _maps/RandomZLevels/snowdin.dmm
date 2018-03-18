@@ -13827,7 +13827,6 @@
 	height = 5;
 	id = "snowdin_mining";
 	name = "mining elevator";
-	timid = 0;
 	width = 5
 	},
 /obj/docking_port/stationary{
