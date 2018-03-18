@@ -16,7 +16,7 @@
 				/datum/surgery_step/close)
 
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list("chest")
+	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = 0
 
 /datum/surgery_step/reconstruct

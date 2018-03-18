@@ -444,7 +444,7 @@
 	// brain function, they also have no limbs or internal organs.
 
 	if(!H.has_trait(TRAIT_NODISMEMBER))
-		var/static/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
+		var/static/list/zones = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 		for(var/zone in zones)
 			var/obj/item/bodypart/BP = H.get_bodypart(zone)
 			if(BP)
