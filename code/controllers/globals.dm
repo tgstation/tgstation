@@ -13,7 +13,7 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 	GLOB = src
 
 	var/datum/controller/exclude_these = new
-	gvars_datum_in_built_vars = exclude_these.vars + list("gvars_datum_protected_varlist", "gvars_datum_in_built_vars", "gvars_datum_init_order")
+	gvars_datum_in_built_vars = exclude_these.vars + list(NAMEOF(src, gvars_datum_protected_varlist), NAMEOF(src, gvars_datum_in_built_vars), NAMEOF(src, gvars_datum_init_order))
 	qdel(exclude_these)
 
 	log_world("[vars.len - gvars_datum_in_built_vars.len] global variables")
@@ -42,7 +42,7 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 
 /datum/controller/global_vars/Initialize()
 	gvars_datum_init_order = list()
-	gvars_datum_protected_varlist = list("gvars_datum_protected_varlist" = TRUE)
+	gvars_datum_protected_varlist = list(NAMEOF(src, gvars_datum_protected_varlist) = TRUE)
 	var/list/global_procs = typesof(/datum/controller/global_vars/proc)
 	var/expected_len = vars.len - gvars_datum_in_built_vars.len
 	if(global_procs.len != expected_len)

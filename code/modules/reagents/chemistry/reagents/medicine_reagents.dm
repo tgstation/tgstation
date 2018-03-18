@@ -59,7 +59,7 @@
 	M.confused = 0
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
-	M.cure_all_traumas(TRUE, TRAUMA_RESILIENCE_MAGIC)
+	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
 		if(D.severity == DISEASE_SEVERITY_POSITIVE)
@@ -1192,6 +1192,7 @@
 	id = "corazone"
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
+	self_consuming = TRUE
 
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"

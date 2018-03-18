@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/nerve_grounding
+	name = "Nerve Grounding Surgery Disk"
 	desc = "The disk provides instructions on how to reroute the nervous system to ground electric shocks."
 	surgeries = list(/datum/surgery/advanced/bioware/nerve_grounding)
 

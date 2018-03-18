@@ -6,8 +6,8 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shade"
 	icon_living = "shade"
-	maxHealth = 50
-	health = 50
+	maxHealth = 40
+	health = 40
 	spacewalk = TRUE
 	healable = 0
 	speak_emote = list("hisses")
@@ -17,12 +17,11 @@
 	response_harm   = "punches"
 	speak_chance = 1
 	melee_damage_lower = 5
-	melee_damage_upper = 15
+	melee_damage_upper = 12
 	attacktext = "metaphysically strikes"
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	speed = -1
 	stop_automated_movement = 1
 	status_flags = 0
 	faction = list("cult")

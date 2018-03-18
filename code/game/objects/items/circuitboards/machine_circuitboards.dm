@@ -31,6 +31,10 @@
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/clonepod/experimental
+	name = "Experimental Clone Pod (Machine Board)"
+	build_path = /obj/machinery/clonepod/experimental
+
 /obj/item/circuitboard/machine/abductor
 	name = "alien board (Report This)"
 	icon_state = "abductor_mod"
@@ -595,8 +599,8 @@
 		/obj/item/stock_parts/capacitor = 6)
 
 /obj/item/circuitboard/machine/chem_dispenser
-	name = "Portable Chem Dispenser (Machine Board)"
-	build_path = /obj/machinery/chem_dispenser/constructable
+	name = "Chem Dispenser (Machine Board)"
+	build_path = /obj/machinery/chem_dispenser
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/capacitor = 1,
@@ -661,7 +665,7 @@
 
 /obj/item/circuitboard/machine/circuit_imprinter
 	name = "Circuit Imprinter (Machine Board)"
-	build_path = /obj/machinery/rnd/circuit_imprinter
+	build_path = /obj/machinery/rnd/production/circuit_imprinter
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1,
@@ -669,11 +673,11 @@
 
 /obj/item/circuitboard/machine/circuit_imprinter/department
 	name = "Departmental Circuit Imprinter (Machine Board)"
-	build_path = /obj/machinery/rnd/circuit_imprinter/department
+	build_path = /obj/machinery/rnd/production/circuit_imprinter/department
 
 /obj/item/circuitboard/machine/circuit_imprinter/department/science
 	name = "Departmental Circuit Imprinter - Science (Machine Board)"
-	build_path = /obj/machinery/rnd/circuit_imprinter/department/science
+	build_path = /obj/machinery/rnd/production/circuit_imprinter/department/science
 
 /obj/item/circuitboard/machine/destructive_analyzer
 	name = "Destructive Analyzer (Machine Board)"
@@ -693,7 +697,7 @@
 
 /obj/item/circuitboard/machine/protolathe
 	name = "Protolathe (Machine Board)"
-	build_path = /obj/machinery/rnd/protolathe
+	build_path = /obj/machinery/rnd/production/protolathe
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 2,
@@ -701,31 +705,67 @@
 
 /obj/item/circuitboard/machine/protolathe/department
 	name = "Departmental Protolathe (Machine Board)"
-	build_path = /obj/machinery/rnd/protolathe/department
+	build_path = /obj/machinery/rnd/production/protolathe/department
 
 /obj/item/circuitboard/machine/protolathe/department/cargo
 	name = "Departmental Protolathe (Machine Board) - Cargo"
-	build_path = /obj/machinery/rnd/protolathe/department/cargo
+	build_path = /obj/machinery/rnd/production/protolathe/department/cargo
 
 /obj/item/circuitboard/machine/protolathe/department/engineering
 	name = "Departmental Protolathe (Machine Board) - Engineering"
-	build_path = /obj/machinery/rnd/protolathe/department/engineering
+	build_path = /obj/machinery/rnd/production/protolathe/department/engineering
 
 /obj/item/circuitboard/machine/protolathe/department/medical
 	name = "Departmental Protolathe (Machine Board) - Medical"
-	build_path = /obj/machinery/rnd/protolathe/department/medical
+	build_path = /obj/machinery/rnd/production/protolathe/department/medical
 
 /obj/item/circuitboard/machine/protolathe/department/science
 	name = "Departmental Protolathe (Machine Board) - Science"
-	build_path = /obj/machinery/rnd/protolathe/department/science
+	build_path = /obj/machinery/rnd/production/protolathe/department/science
 
 /obj/item/circuitboard/machine/protolathe/department/security
 	name = "Departmental Protolathe (Machine Board) - Security"
-	build_path = /obj/machinery/rnd/protolathe/department/security
+	build_path = /obj/machinery/rnd/production/protolathe/department/security
 
 /obj/item/circuitboard/machine/protolathe/department/service
 	name = "Departmental Protolathe - Service (Machine Board)"
-	build_path = /obj/machinery/rnd/protolathe/department/service
+	build_path = /obj/machinery/rnd/production/protolathe/department/service
+
+/obj/item/circuitboard/machine/techfab
+	name = "\improper Techfab (Machine Board)"
+	build_path = /obj/machinery/rnd/production/techfab
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/reagent_containers/glass/beaker = 2)
+
+/obj/item/circuitboard/machine/techfab/department
+	name = "\improper Departmental Techfab (Machine Board)"
+	build_path = /obj/machinery/rnd/production/techfab/department
+
+/obj/item/circuitboard/machine/techfab/department/cargo
+	name = "\improper Departmental Techfab (Machine Board) - Cargo"
+	build_path = /obj/machinery/rnd/production/techfab/department/cargo
+
+/obj/item/circuitboard/machine/techfab/department/engineering
+	name = "\improper Departmental Techfab (Machine Board) - Engineering"
+	build_path = /obj/machinery/rnd/production/techfab/department/engineering
+
+/obj/item/circuitboard/machine/techfab/department/medical
+	name = "\improper Departmental Techfab (Machine Board) - Medical"
+	build_path = /obj/machinery/rnd/production/techfab/department/medical
+
+/obj/item/circuitboard/machine/techfab/department/science
+	name = "\improper Departmental Techfab (Machine Board) - Science"
+	build_path = /obj/machinery/rnd/production/techfab/department/science
+
+/obj/item/circuitboard/machine/techfab/department/security
+	name = "\improper Departmental Techfab (Machine Board) - Security"
+	build_path = /obj/machinery/rnd/production/techfab/department/security
+
+/obj/item/circuitboard/machine/techfab/department/service
+	name = "\improper Departmental Techfab - Service (Machine Board)"
+	build_path = /obj/machinery/rnd/production/techfab/department/service
 
 /obj/item/circuitboard/machine/rdserver
 	name = "R&D Server (Machine Board)"
