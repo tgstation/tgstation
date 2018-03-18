@@ -3856,7 +3856,7 @@
 /area/security/main)
 "aiw" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/machinery/rnd/protolathe/department/security,
+/obj/machinery/rnd/production/techfab/department/security,
 /turf/open/floor/plasteel/red/side,
 /area/security/main)
 "aix" = (
@@ -26280,7 +26280,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "bog" = (
@@ -28182,7 +28182,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/rnd/protolathe/department/science,
+/obj/machinery/rnd/production/protolathe/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bsM" = (
@@ -28977,7 +28977,7 @@
 /area/science/lab)
 "buv" = (
 /obj/item/reagent_containers/glass/beaker/sulphuric,
-/obj/machinery/rnd/circuit_imprinter/department/science,
+/obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "buw" = (
@@ -38295,7 +38295,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bPN" = (
-/obj/machinery/rnd/protolathe/department/medical,
+/obj/machinery/rnd/production/techfab/department/medical,
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
@@ -46535,7 +46535,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "ckb" = (
-/obj/machinery/rnd/protolathe/department/science,
+/obj/machinery/rnd/production/protolathe/department/science,
 /obj/structure/sign/poster/official/random{
 	pixel_x = 32
 	},
@@ -53782,7 +53782,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cBM" = (
-/obj/machinery/rnd/protolathe/department/engineering,
+/obj/machinery/rnd/production/protolathe/department/engineering,
 /obj/structure/sign/map/left{
 	pixel_y = 32
 	},
@@ -53798,7 +53798,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cBO" = (
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -58621,7 +58621,7 @@
 /turf/open/space/basic,
 /area/space)
 "ffe" = (
-/obj/machinery/rnd/protolathe/department/cargo,
+/obj/machinery/rnd/production/techfab/department/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "fiw" = (
@@ -58745,7 +58745,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
 "hhz" = (
-/obj/machinery/rnd/protolathe/department/service,
+/obj/machinery/rnd/production/techfab/department/service,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hallway/secondary/service)
 "hic" = (
