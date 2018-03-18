@@ -550,3 +550,20 @@
 
 	beakers += B1
 	beakers += B2
+
+/obj/item/grenade/chem_grenade/holy
+	name = "holy hand grenade"
+	desc = "A vessel of concentrated religious might."
+	icon_state = "holy_grenade"
+	stage = READY
+
+/obj/item/grenade/chem_grenade/holy/Initialize()
+	. = ..()
+	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+
+	B1.reagents.add_reagent("potassium", 100)
+	B2.reagents.add_reagent("holywater", 100)
+
+	beakers += B1
+	beakers += B2

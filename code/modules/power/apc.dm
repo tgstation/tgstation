@@ -96,6 +96,9 @@
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
 
+/obj/machinery/power/apc/unlocked
+	locked = FALSE
+
 /obj/machinery/power/apc/highcap/five_k
 	cell_type = /obj/item/stock_parts/cell/upgraded/plus
 

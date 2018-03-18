@@ -968,6 +968,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(newpath)
 		for(var/i in 1 to newpath.len)
 			var/turf/T = newpath[i]
+			if(T == loc) //don't bother putting an image if it's where we already exist.
+				continue
 			var/direction = NORTH
 			if(i > 1)
 				var/turf/prevT = path[i - 1]
@@ -1010,5 +1012,5 @@ Pass a positive integer as an argument to override a bot's default speed.
 		return
 	var/image/I = path[path[1]]
 	if(I)
-		I.icon = null
+		I.icon_state = null
 	path.Cut(1, 2)
