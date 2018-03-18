@@ -849,24 +849,24 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_deny = "med-deny"
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	req_access_txt = "5"
-	products = list(/obj/item/reagent_containers/syringe = 12,
-					/obj/item/reagent_containers/dropper = 3,
-					/obj/item/device/healthanalyzer = 4,
-					/obj/item/device/sensor_device = 2,
+	products = list(/obj/item/reagent_containers/syringe = 12, 
+					/obj/item/reagent_containers/dropper = 3, 
+					/obj/item/device/healthanalyzer = 4, 
+					/obj/item/device/sensor_device = 2, 
 					/obj/item/pinpointer/crew = 2,
 					/obj/item/reagent_containers/medspray/sterilizine = 1,
-					/obj/item/stack/medical/gauze = 8,
-					/obj/item/reagent_containers/pill/patch/styptic = 5,
-					/obj/item/reagent_containers/medspray/styptic = 2,
-					/obj/item/reagent_containers/pill/patch/silver_sulf = 5,
+					/obj/item/stack/medical/gauze = 8, 
+					/obj/item/reagent_containers/pill/patch/styptic = 5, 
+					/obj/item/reagent_containers/medspray/styptic = 2, 
+					/obj/item/reagent_containers/pill/patch/silver_sulf = 5, 
 					/obj/item/reagent_containers/medspray/silver_sulf = 2,
 					/obj/item/reagent_containers/pill/insulin = 10,
-					/obj/item/reagent_containers/pill/salbutamol = 2,
-					/obj/item/reagent_containers/glass/bottle/charcoal = 4,
-					/obj/item/reagent_containers/glass/bottle/epinephrine = 4,
+					/obj/item/reagent_containers/pill/salbutamol = 2, 
+					/obj/item/reagent_containers/glass/bottle/charcoal = 4, 
+					/obj/item/reagent_containers/glass/bottle/epinephrine = 4, 
 					/obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
-					/obj/item/reagent_containers/glass/bottle/morphine = 4,
-					/obj/item/reagent_containers/glass/bottle/toxin = 3,
+					/obj/item/reagent_containers/glass/bottle/morphine = 4, 
+					/obj/item/reagent_containers/glass/bottle/toxin = 3, 
 					/obj/item/reagent_containers/syringe/antiviral = 6)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 3, /obj/item/reagent_containers/pill/morphine = 4, /obj/item/reagent_containers/pill/charcoal = 6)
 	premium = list(/obj/item/storage/box/hug/medical = 1, /obj/item/reagent_containers/hypospray/medipen = 3, /obj/item/storage/belt/medical = 3, /obj/item/wrench/medical = 1)
@@ -1066,15 +1066,15 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "engivend"
 	icon_deny = "engivend-deny"
 	req_access_txt = "11" //Engineering Equipment access
-	products = list(/obj/item/clothing/glasses/meson/engine = 2,
+	products = list(/obj/item/clothing/glasses/meson/engine = 2, 
 					/obj/item/clothing/glasses/welding = 3,
-					/obj/item/device/multitool = 4,
-					/obj/item/construction/rcd/loaded = 3,
+					/obj/item/device/multitool = 4, 
+					/obj/item/construction/rcd/loaded = 3, 
 					/obj/item/grenade/chem_grenade/smart_metal_foam = 10,
-					/obj/item/device/geiger_counter = 5,
+					/obj/item/device/geiger_counter = 5, 
 					/obj/item/stock_parts/cell/high = 10,
-					/obj/item/electronics/airlock = 10,
-					/obj/item/electronics/apc = 10,
+					/obj/item/electronics/airlock = 10, 
+					/obj/item/electronics/apc = 10, 
 					/obj/item/electronics/airalarm = 10)
 	contraband = list(/obj/item/stock_parts/cell/potato = 3)
 	premium = list(/obj/item/storage/belt/utility = 3, /obj/item/storage/box/smart_metal_foam = 1)
@@ -1143,8 +1143,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/head/beanie/purple=1, /obj/item/clothing/head/beanie/yellow=1, /obj/item/clothing/head/beanie/orange=1, /obj/item/clothing/head/beanie/cyan=1, /obj/item/clothing/head/beanie/christmas=1,
 	/obj/item/clothing/head/beanie/striped=1, /obj/item/clothing/head/beanie/stripedred=1, /obj/item/clothing/head/beanie/stripedblue=1, /obj/item/clothing/head/beanie/stripedgreen=1,
 	/obj/item/clothing/suit/jacket/letterman_red=1,
-	/obj/item/clothing/under/zootsuit = 1, /obj/item/clothing/head/zoothat = 1,/obj/item/pimpstick = 1,
-	/obj/item/clothing/under/telvis=1,
 	/obj/item/clothing/ears/headphones = 10, /obj/item/clothing/suit/apron/purple_bartender=2, /obj/item/clothing/under/rank/bartender/purple=2)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1, /obj/item/clothing/mask/balaclava=1, /obj/item/clothing/head/ushanka=1, /obj/item/clothing/under/soviet=1, /obj/item/storage/belt/fannypack/black=2, /obj/item/clothing/suit/jacket/letterman_syndie=1, /obj/item/clothing/under/jabroni=1, /obj/item/clothing/suit/vapeshirt=1, /obj/item/clothing/under/geisha=1)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1, /obj/item/clothing/head/mailman=1, /obj/item/clothing/under/rank/mailman=1, /obj/item/clothing/suit/jacket/leather=1, /obj/item/clothing/suit/jacket/leather/overcoat=1, /obj/item/clothing/under/pants/mustangjeans=1, /obj/item/clothing/neck/necklace/dope=3, /obj/item/clothing/suit/jacket/letterman_nanotrasen=1)
