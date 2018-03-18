@@ -321,11 +321,7 @@
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
-<<<<<<< HEAD
-					GET_COMPONENT_FROM(mood, /datum/component/mood, src)
-					if(mood)
-						mood.clear_event("embedded")
-				
+					SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
 				// Hippie Start - Handle un-impaling player if pinned item falls out
 				if (I.pinned)
 					do_pindown(pinned_to, 0)
@@ -334,9 +330,6 @@
 					update_canmove()
 					I.pinned = null
 				// Hippie End
-=======
-					SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
->>>>>>> 4911991f70... [READY] Several fixes/changes to mood, longterm mood effects, beauty component (#36344)
 
 /mob/living/carbon/human/proc/handle_active_genes()
 	for(var/datum/mutation/human/HM in dna.mutations)
