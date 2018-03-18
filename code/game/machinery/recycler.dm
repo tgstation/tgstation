@@ -20,8 +20,8 @@
 
 /obj/machinery/recycler/Initialize()
 	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
-	. = ..()
 	AddComponent(/datum/component/butchering, 1, amount_produced,amount_produced/5)
+	. = ..()
 	update_icon()
 	req_one_access = get_all_accesses() + get_all_centcom_access()
 
