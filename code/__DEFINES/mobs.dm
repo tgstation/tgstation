@@ -98,8 +98,6 @@
 #define MOOD_LEVEL_SAD3 -18
 #define MOOD_LEVEL_SAD4 -25
 
-<<<<<<< HEAD
-=======
 //Sanity levels for humans
 #define SANITY_GREAT 125
 #define SANITY_NEUTRAL 100
@@ -116,7 +114,6 @@
 #define BEAUTY_LEVEL_GOOD 66
 #define BEAUTY_LEVEL_GREAT 100
 
->>>>>>> 4911991f70... [READY] Several fixes/changes to mood, longterm mood effects, beauty component (#36344)
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550
