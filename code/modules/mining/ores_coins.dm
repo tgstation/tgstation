@@ -53,7 +53,8 @@
 	if(!refined_type)
 		return ..()
 	var/obj/item/stack/sheet/S = new refined_type(drop_location())
-	var/amountrefined = round(amount/2)
+	var/percent = rand(0.3,0.7)
+	var/amountrefined = round(amount*percent)
 	S.amount = amountrefined
 	S.update_icon()
 	qdel(src)
