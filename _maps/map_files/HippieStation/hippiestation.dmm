@@ -5276,6 +5276,9 @@
 	dir = 4;
 	name = "Prosecution"
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -58818,6 +58821,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"iZN" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/courtroom)
 "jbX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -59268,6 +59277,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"pjL" = (
+/obj/structure/guillotine,
+/turf/open/floor/plasteel/dark,
+/area/security/courtroom)
 "plb" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -93605,10 +93618,10 @@ aht
 ahZ
 aiC
 abr
-ajx
+pjL
 ake
 akS
-akS
+iZN
 akS
 any
 ajx
