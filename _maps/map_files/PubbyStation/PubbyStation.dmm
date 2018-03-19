@@ -139,7 +139,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	aidisabled = 0;
 	dir = 1;
 	name = "AI Chamber APC";
 	areastring = "/area/ai_monitored/turret_protected/ai";

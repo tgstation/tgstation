@@ -2210,7 +2210,6 @@
 /area/ai_monitored/nuke_storage)
 "aeB" = (
 /obj/machinery/power/apc{
-	aidisabled = 0;
 	areastring = "/area/ai_monitored/nuke_storage";
 	dir = 1;
 	name = "AI Vault APC";
@@ -34357,7 +34356,6 @@
 /area/ai_monitored/turret_protected/ai)
 "sMe" = (
 /obj/machinery/power/apc{
-	aidisabled = 0;
 	dir = 1;
 	name = "AI Chamber APC";
 	areastring = "/area/ai_monitored/turret_protected/ai";
