@@ -10,6 +10,7 @@
 	layer = MASSIVE_OBJ_LAYER
 	light_range = 6
 	appearance_flags = 0
+	var/lifetime = 0 //how many deciseconds until the singularity destroys itself. Set to 0 for infinite.
 	var/current_size = 1
 	var/allowed_size = 1
 	var/contained = 1 //Are we going to move around?
@@ -26,6 +27,7 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
+	var/timerid
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
@@ -42,7 +44,12 @@
 		if(singubeacon.active)
 			target = singubeacon
 			break
+	if(lifetime > 0)
+		timerid = addtimer(CALLBACK(src, .proc/timeOut), lifetime, TIMER_STOPPABLE)
 	return
+
+/obj/singularity/proc/timeOut() //proc called when lifetime expires
+	qdel(src)
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -430,3 +437,26 @@
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	qdel(src)
 	return(gain)
+
+/obj/singularity/boh //singulo created by putting on Bag of Holding in another
+	lifetime = 200
+
+/obj/singularity/boh/consume(atom/A)
+	var/gain = A.singularity_act(current_size, src)
+	src.energy += gain
+	if(istype(A, /obj/machinery/power/supermatter_shard) && !consumedSupermatter)
+		desc = "[initial(desc)] It glows fiercely with inner fire."
+		name = "supermatter-charged [initial(name)]"
+		consumedSupermatter = 1
+		set_light(10)
+		deltimer(timerid)
+	return ..()
+
+/obj/singularity/boh/timeOut()
+	expand(STAGE_ONE)
+	energy = 1 //this makes sure the sing stays at stage one
+	src.visible_message("<span class='danger'>[src] destabilizes and begins to collapse in on itself!</span>")
+	QDEL_IN(src, 20)
+
+/obj/singularity/boh/emagged //singulo created by emagged BoH
+	lifetime = 600

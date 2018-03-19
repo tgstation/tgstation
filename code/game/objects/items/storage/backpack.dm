@@ -42,8 +42,14 @@
 	flags_2 = NO_MAT_REDEMPTION_2
 	var/pshoom = 'sound/items/pshoom.ogg'
 	var/alt_sound = 'sound/items/pshoom_2.ogg'
+	var/emagged = FALSE
+	var/obj/singularity/boh/singulo
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 50)
 
+/obj/item/storage/backpack/holding/examine(mob/user)
+	..()
+	if(emagged)
+		to_chat(user, "A black scorch mark covers the bluespace transceiver.")
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
@@ -70,6 +76,8 @@
 	return 0
 
 /obj/item/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/living/user)
+	if(istype(W, /obj/item/card/emag))
+		emag_act(user)
 	if((istype(W, /obj/item/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/storage/backpack/holding)))
 		var/turf/loccheck = get_turf(src)
 		if(is_reebe(loccheck.z))
@@ -82,14 +90,23 @@
 		investigate_log("has become a singularity. Caused by [user.key]", INVESTIGATE_SINGULO)
 		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		qdel(W)
-		var/obj/singularity/singulo = new /obj/singularity (get_turf(src))
-		singulo.energy = 300 //should make it a bit bigger~
+
+		if(emagged)
+			singulo = new /obj/singularity/boh/emagged (get_turf(src))
+		else
+			singulo = new /obj/singularity/boh (get_turf(src))
+
+		singulo.energy = 500 //should make it a bit bigger~
 		message_admins("[key_name_admin(user)] detonated a bag of holding")
 		log_game("[key_name(user)] detonated a bag of holding")
 		qdel(src)
 		singulo.process()
 		return
 	. = ..()
+
+/obj/item/storage/backpack/holding/emag_act(mob/user)
+	emagged = TRUE
+	to_chat(user, "<span class='notice'>You overload the bluespace transceiver.</span>")
 
 /obj/item/storage/backpack/holding/singularity_act(current_size)
 	var/dist = max((current_size - 2),1)
