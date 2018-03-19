@@ -77,7 +77,7 @@ Warden
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 16
+	antag_rep = 20
 
 	outfit = /datum/outfit/job/warden
 
@@ -130,7 +130,7 @@ Detective
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 12
+	antag_rep = 20
 
 	outfit = /datum/outfit/job/detective
 
@@ -181,7 +181,7 @@ Security Officer
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 12
+	antag_rep = 20
 
 	outfit = /datum/outfit/job/security
 

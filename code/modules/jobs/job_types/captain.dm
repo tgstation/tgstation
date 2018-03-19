@@ -70,7 +70,7 @@ Head of Personnel
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_SUPPLY
-	antag_rep = 16
+	antag_rep = 20
 
 	outfit = /datum/outfit/job/hop
 
