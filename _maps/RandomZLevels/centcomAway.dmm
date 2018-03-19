@@ -936,8 +936,7 @@
 /area/awaymission/centcomAway/general)
 "dL" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Rest Room";
-	req_access_txt = "0"
+	name = "Rest Room"
 	},
 /turf/open/floor/mineral/titanium,
 /area/awaymission/centcomAway/hangar)

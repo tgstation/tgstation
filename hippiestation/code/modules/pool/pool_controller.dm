@@ -2,7 +2,7 @@
 //Originally stolen from paradise. Credits to tigercat2000.
 //Modified a lot by Kokojo and Tortellini Tony.
 /obj/machinery/poolcontroller
-	name = "pool controller"
+	name = "\improper Pool Controller"
 	desc = "A controller for the nearby pool."
 	icon = 'hippiestation/icons/turf/pool.dmi'
 	icon_state = "poolc_3"
@@ -191,6 +191,8 @@
 	changecolor()
 
 /obj/machinery/poolcontroller/proc/changecolor()
+	if(drained)
+		return
 	var/rcolor
 	if(beaker && beaker.reagents.reagent_list.len)
 		rcolor = mix_color_from_reagents(beaker.reagents.reagent_list)
@@ -198,20 +200,15 @@
 		var/turf/open/pool/color1 = X
 		if(bloody)
 			if(rcolor)
-				color1.color = BlendRGB(rgb(150, 20, 20), rcolor, 0.5)
 				color1.watereffect.color = BlendRGB(rgb(150, 20, 20), rcolor, 0.5)
 				color1.watertop.color = color1.watereffect.color
 			else
-				color1.color = rgb(150, 20, 20)
 				color1.watereffect.color = rgb(150, 20, 20)
 				color1.watertop.color = color1.watereffect.color
 		else if(!bloody && rcolor)
-			color1.color = rcolor
 			color1.watereffect.color = rcolor
 			color1.watertop.color = color1.watereffect.color
-
-		if(!bloody && (!beaker || !beaker.reagents.reagent_list.len))
-			color1.color = null
+		else
 			color1.watereffect.color = null
 			color1.watertop.color = null
 
@@ -261,76 +258,102 @@
 	icon_state = "poolc_[temperature]"
 	update_icon()
 
-/obj/machinery/poolcontroller/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "poolcontrol", name, 420, 405, master_ui, state)
-		ui.open()
-
-/obj/machinery/poolcontroller/ui_data()
-	var/list/data = list()
-	data["candrain"] = drainable
-	data["draining"] = drained
-	data["temperature"] = temperature
-	data["tempunlocked"] = tempunlocked
-	data["linkeddrain"] = linkeddrain
-	data["canminus"] = canminus
-	data["canplus"] = canplus
-	data["chemical"] = cur_reagent
-	data["beaker"] = beaker
-	data["timer"] = timer
-
-	return data
-
-/obj/machinery/poolcontroller/ui_act(action, params)
-	if(..())
+/obj/machinery/poolcontroller/Topic(href, href_list)
+	if(!in_range(src, usr) || !isliving(usr))
 		return
 	if(timer > 0)
 		return
-	switch(action)
-		if("increase")
-			if(canplus)
-				temperature += 1
-				. = TRUE
+	if(href_list["IncreaseTemp"])
+		if(canplus)
+			temperature += 1
+			. = TRUE
+		handle_temp()
+	if(href_list["DecreaseTemp"])
+		if(canminus)
+			temperature -= 1
+		handle_temp()
+	if(href_list["beaker"])
+		var/obj/item/reagent_containers/glass/B = beaker
+		B.forceMove(loc)
+		beaker = null
+		changecolor()
+	if(href_list["Activate Drain"])
+		if(drainable)
+			mistoff()
+			timer = 60
+			linkeddrain.active = 1
+			linkeddrain.timer = 15
+			if(linkeddrain.status == 0)
+				new /obj/effect/whirlpool(linkeddrain.loc)
+				temperature = 3
+			if(linkeddrain.status == 1)
+				new /obj/effect/effect/waterspout(linkeddrain.loc)
+				temperature = 3
 			handle_temp()
-		if("decrease")
-			if(canminus)
-				temperature -= 1
-				. = TRUE
-			handle_temp()
-		if("eject")
-			if(beaker)
-				var/obj/item/reagent_containers/glass/B = beaker
-				B.forceMove(loc)
-				beaker = null
-				. = TRUE
-			changecolor()
-		if("drain")
-			if(drainable)
-				mistoff()
-				timer = 60
-				linkeddrain.active = 1
-				linkeddrain.timer = 15
-				if(linkeddrain.status == 0)
-					new /obj/effect/whirlpool(linkeddrain.loc)
-					temperature = 3
-				if(linkeddrain.status == 1)
-					new /obj/effect/effect/waterspout(linkeddrain.loc)
-					temperature = 3
-				handle_temp()
-				bloody = FALSE
-				. = TRUE
+			bloody = FALSE
+	updateUsrDialog()
 
+/obj/machinery/poolcontroller/proc/temp2text()
+	switch(temperature)
+		if(1)
+			return "<span class='bad'>Frigid</span>"
+		if(2)
+			return "<span class='good'>Cool</span>"
+		if(3)
+			return "<span class='good'>Normal</span>"
+		if(4)
+			return "<span class='good'>Warm</span>"
+		if(5)
+			return "<span class='bad'>Scalding</span>"
+		else
+			return "Outside of possible range."
+	
 /obj/machinery/poolcontroller/attack_hand(mob/user)
 	if(shocked && !(stat & NOPOWER))
 		shock(user,50)
+	if(panel_open && !isAI(user))
+		return wires.interact(user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	user.set_machine(src)
-	if(panel_open)
-		wires.interact(user)
-	..()
+	var/dat = ""
+	if(timer)
+		dat += "<span class='notice'>[timer] seconds left until pool can operate again.</span><BR>"
+	dat += text({"
+		<h3>Temperature</h3>
+		<div class='statusDisplay'>
+		<B>Current temperature:</B> [temp2text()]<BR>
+		[(canplus && timer == 0 && !drained) ? "<a href='?src=\ref[src];IncreaseTemp=1'>Increase Temperature</a><br>" : "<span class='linkOff'>Increase Temperature</span><br>"]
+		[(canminus && timer == 0 && !drained) ? "<a href='?src=\ref[src];DecreaseTemp=1'>Decrease Temperature</a><br>" : "<span class='linkOff'>Decrease Temperature</span><br>"]
+		</div>
+		<h3>Drain</h3>
+		<div class='statusDisplay'>
+		<B>Drain status:</B> [drainable ? "<span class='bad'>Enabled</span>" : "<span class='good'>Disabled</span>"]
+		<br><b>Pool status:</b> "})
+	if(timer < 45)
+		if(!drained)
+			dat += "<span class='good'>Full</span><BR>"
+		else
+			dat += "<span class='bad'>Drained</span><BR>"
+	else
+		dat += "<span class='bad'>[drained ? "Filling" : "Draining"]<BR></span>"
+	if(drainable && !timer)
+		if(drained)
+			dat += "<a href='?src=\ref[src];Activate Drain=1'>Fill Pool</a><br>"
+		else
+			dat += "<a href='?src=\ref[src];Activate Drain=1'>Drain Pool</a><br>"
+	else
+		dat += text({"<span class='linkOff'>[drained ? "Fill" : "Drain"] Pool</span>"})
+	dat += text({"</div>
+		<h3>Chemistry</h3>
+		<div class='statusDisplay'>
+		<b>Duplicator reagent:</b> [cur_reagent]
+		<br>[beaker ? "<a href='?src=\ref[src];beaker=1'>Remove Beaker</a>" : "<span class='linkOff'>Remove Beaker</span>"]
+		</div>
+		"})
+	var/datum/browser/popup = new(user, "Pool Controller", name, 300, 450)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/poolcontroller/attack_paw(mob/user)
 	return attack_hand(user)

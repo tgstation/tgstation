@@ -27,7 +27,6 @@
 		add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
 	return loc.handle_slip(src, knockdown_amount, O, lube)
 
-
 /mob/living/carbon/Process_Spacemove(movement_dir = 0)
 	if(..())
 		return 1
