@@ -1,222 +1,3020 @@
-"aa" = (/turf/open/space/basic,/area/template_noop)
-"ab" = (/turf/closed/indestructible/vault,/area/awaymission)
-"ac" = (/obj/structure/disposalpipe/segment{dir = 6},/turf/closed/indestructible/vault,/area/awaymission)
-"ad" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/closed/indestructible/vault,/area/awaymission)
-"ae" = (/obj/structure/disposalpipe/junction/yjunction,/turf/closed/indestructible/vault,/area/awaymission)
-"af" = (/obj/structure/disposalpipe/segment{dir = 10},/turf/closed/indestructible/vault,/area/awaymission)
-"ag" = (/turf/open/space/basic,/area/space)
-"ah" = (/obj/machinery/portable_atmospherics/canister/water_vapor,/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel/dark,/area/awaymission)
-"ai" = (/obj/machinery/atmospherics/components/unary/portables_connector/visible{dir = 4},/turf/open/floor/plasteel/dark,/area/awaymission)
-"aj" = (/obj/machinery/atmospherics/components/unary/thermomachine/freezer{dir = 8},/turf/open/floor/plasteel/dark,/area/awaymission)
-"ak" = (/obj/machinery/power/rad_collector/anchored,/obj/item/tank/internals/plasma/full,/obj/structure/cable{icon_state = "0-2"},/turf/open/floor/plasteel/dark,/area/awaymission)
-"al" = (/obj/item/nuke_core,/obj/structure/window/plasma/reinforced/spawner,/obj/structure/window/plasma/reinforced/spawner/east,/obj/structure/window/plasma/reinforced/spawner/west,/obj/structure/window/plasma/reinforced/spawner/north,/turf/open/floor/plasteel/dark,/area/awaymission)
-"am" = (/obj/structure/chair/e_chair,/obj/effect/decal/remains/human,/turf/open/floor/plasteel/dark,/area/awaymission)
-"an" = (/obj/structure/table/reinforced,/obj/item/device/assembly/signaler,/obj/item/cartridge/signal{pixel_x = 8; pixel_y = 9},/turf/open/floor/plasteel/dark,/area/awaymission)
-"ao" = (/obj/structure/disposalpipe/trunk{dir = 1},/obj/structure/disposaloutlet,/turf/open/floor/plasteel/dark,/area/awaymission)
-"ap" = (/mob/living/simple_animal/hostile/zombie,/turf/open/floor/plasteel/dark,/area/awaymission)
-"aq" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel/dark,/area/awaymission)
-"ar" = (/turf/open/floor/plasteel/dark,/area/awaymission)
-"as" = (/obj/machinery/disposal/deliveryChute,/obj/structure/disposalpipe/trunk{dir = 1},/obj/machinery/light/spooky{dir = 1},/turf/open/floor/plasteel/dark,/area/awaymission)
-"at" = (/obj/structure/table/glass,/obj/item/paper/pamphlet,/obj/item/cane,/turf/open/floor/plasteel/white,/area/awaymission)
-"au" = (/obj/item/paper/crumpled{info = "When rotating out of the clinic don't forget to stash payments in the floor safe, its under the plant next to the SAFETY poster - in case you forgot."},/obj/structure/closet/crate/bin,/turf/open/floor/plasteel/white,/area/awaymission)
-"av" = (/obj/machinery/vending/snack/blue,/obj/machinery/light/spooky/on{dir = 1},/turf/open/floor/plasteel/white,/area/awaymission)
-"aw" = (/obj/machinery/vending/coffee,/turf/open/floor/plasteel/white,/area/awaymission)
-"ax" = (/turf/open/floor/plasteel/white,/area/awaymission)
-"ay" = (/obj/machinery/door/window{base_state = "right"; dir = 4; icon_state = "right"; layer = 3},/turf/open/floor/plasteel/white,/area/awaymission)
-"az" = (/turf/open/floor/plasteel/whiteblue/side{dir = 1},/area/awaymission)
-"aA" = (/obj/item/twohanded/required/kirbyplants{icon_state = "plant-10"},/turf/open/floor/plasteel/whiteblue/side{dir = 5},/area/awaymission)
-"aB" = (/obj/machinery/shower{pixel_y = 15},/obj/structure/curtain,/turf/open/floor/plasteel/white,/area/awaymission)
-"aC" = (/obj/machinery/washing_machine,/obj/machinery/light/spooky/on{dir = 1},/turf/open/floor/plasteel/white,/area/awaymission)
-"aD" = (/obj/machinery/washing_machine,/turf/open/floor/plasteel/white,/area/awaymission)
-"aE" = (/obj/structure/table,/obj/structure/bedsheetbin,/turf/open/floor/plasteel/white,/area/awaymission)
-"aF" = (/obj/machinery/iv_drip,/turf/open/floor/plasteel/white,/area/awaymission)
-"aG" = (/obj/structure/closet/crate/freezer/blood,/obj/item/reagent_containers/blood/universal,/obj/item/reagent_containers/blood/universal,/turf/open/floor/plasteel/white,/area/awaymission)
-"aH" = (/obj/machinery/light/spooky/on{dir = 1},/turf/open/floor/plasteel/white,/area/awaymission)
-"aI" = (/obj/machinery/chem_master,/turf/open/floor/plasteel/white,/area/awaymission)
-"aJ" = (/obj/structure/table/glass,/obj/item/storage/box/beakers,/turf/open/floor/plasteel/white,/area/awaymission)
-"aK" = (/obj/structure/table/glass,/obj/item/storage/box/syringes,/obj/item/device/assembly/igniter,/turf/open/floor/plasteel/white,/area/awaymission)
-"aL" = (/obj/machinery/portable_atmospherics/canister/tritium,/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel/dark,/area/awaymission)
-"aM" = (/obj/structure/cable{icon_state = "1-4"},/turf/open/floor/plasteel/dark,/area/awaymission)
-"aN" = (/obj/machinery/power/tesla_coil,/obj/structure/cable{icon_state = "0-4"},/obj/structure/cable{icon_state = "0-8"},/turf/open/floor/plasteel/dark,/area/awaymission)
-"aO" = (/obj/structure/cable{icon_state = "1-8"},/turf/open/floor/plasteel/dark,/area/awaymission)
-"aP" = (/obj/structure/table/reinforced,/obj/machinery/cell_charger,/obj/item/stock_parts/cell/super,/turf/open/floor/plasteel/dark,/area/awaymission)
-"aQ" = (/obj/structure/chair/comfy/beige{dir = 4},/turf/open/floor/plasteel/white,/area/awaymission)
-"aR" = (/obj/structure/sign/poster/official/fruit_bowl{step_x = -1; pixel_x = 33},/turf/open/floor/plasteel/whiteblue/side{dir = 4},/area/awaymission)
-"aS" = (/obj/structure/sink{dir = 8; pixel_x = -12; pixel_y = 2},/obj/structure/mirror{pixel_x = -28},/turf/open/floor/plasteel/white,/area/awaymission)
-"aT" = (/obj/machinery/door/airlock/medical,/turf/open/floor/plasteel/white,/area/awaymission)
-"aU" = (/obj/structure/chair/office/light{dir = 4},/turf/open/floor/plasteel/white,/area/awaymission)
-"aV" = (/obj/structure/table/glass,/obj/item/storage/firstaid/o2,/turf/open/floor/plasteel/white,/area/awaymission)
-"aW" = (/obj/machinery/portable_atmospherics/canister/bz,/obj/effect/turf_decal/stripes/line{dir = 4},/obj/machinery/light/spooky{dir = 8},/turf/open/floor/plasteel/dark,/area/awaymission)
-"aX" = (/obj/structure/table/reinforced,/obj/item/device/assembly/signaler,/turf/open/floor/plasteel/dark,/area/awaymission)
-"aY" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/dark,/area/awaymission)
-"aZ" = (/obj/structure/table/reinforced,/obj/item/wrench,/turf/open/floor/plasteel/dark,/area/awaymission)
-"ba" = (/obj/structure/table/reinforced,/obj/item/storage/toolbox/electrical,/obj/machinery/light/spooky{dir = 4},/turf/open/floor/plasteel/dark,/area/awaymission)
-"bb" = (/obj/structure/table/wood/fancy/black,/obj/effect/spawner/structure/window/hollow/reinforced,/turf/open/floor/plasteel/dark,/area/awaymission)
-"bc" = (/obj/structure/sign/departments/medbay,/turf/closed/indestructible/vault,/area/awaymission)
-"bd" = (/obj/item/twohanded/required/kirbyplants{icon_state = "plant-21"},/turf/open/floor/plasteel/white,/area/awaymission)
-"be" = (/turf/open/floor/plasteel/whiteblue/side{dir = 8},/area/awaymission)
-"bf" = (/turf/open/floor/plasteel/whiteblue/side{dir = 4},/area/awaymission)
-"bg" = (/obj/structure/table,/obj/item/storage/box/masks{pixel_x = 5; pixel_y = 8},/obj/item/storage/box/gloves,/obj/item/clothing/gloves/color/latex/nitrile,/obj/structure/sign/poster/official/cleanliness{pixel_x = 30},/turf/open/floor/plasteel/white,/area/awaymission)
-"bh" = (/obj/machinery/sleeper{dir = 4},/turf/open/floor/plasteel/white,/area/awaymission)
-"bi" = (/obj/machinery/limbgrower,/turf/open/floor/plasteel/white,/area/awaymission)
-"bj" = (/obj/structure/table/glass,/obj/item/storage/backpack/duffelbag/med/surgery,/obj/machinery/button/door{id = 666; pixel_y = -24},/obj/item/clothing/neck/stethoscope,/turf/open/floor/plasteel/white,/area/awaymission)
-"bk" = (/obj/structure/table/glass,/obj/item/defibrillator/compact/loaded,/turf/open/floor/plasteel/white,/area/awaymission)
-"bl" = (/obj/machinery/portable_atmospherics/canister/nitryl,/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel/dark,/area/awaymission)
-"bm" = (/turf/closed/indestructible/vault,/area/space)
-"bn" = (/obj/item/twohanded/required/kirbyplants{icon_state = "plant-22"},/turf/open/floor/plasteel/white,/area/awaymission)
-"bo" = (/obj/machinery/vending/wallmed{pixel_x = 25},/turf/open/floor/plasteel/white,/area/awaymission)
-"bp" = (/obj/machinery/shieldwall{dir = 4},/turf/open/space/basic,/area/awaymission)
-"bq" = (/obj/structure/sign/warning/radiation/rad_area,/turf/closed/indestructible/vault,/area/awaymission)
-"br" = (/obj/machinery/door/airlock/research,/turf/open/floor/plasteel/dark,/area/awaymission)
-"bs" = (/obj/structure/lattice/catwalk,/turf/open/space/basic,/area/space)
-"bt" = (/obj/structure/table/glass,/obj/item/device/modular_computer/laptop,/turf/open/floor/plasteel/white,/area/awaymission)
-"bu" = (/obj/item/twohanded/required/kirbyplants{icon_state = "plant-18"},/turf/open/floor/plasteel/whiteblue/side{dir = 8},/area/awaymission)
-"bv" = (/turf/open/floor/plasteel/whiteblue/corner{dir = 4},/area/awaymission)
-"bw" = (/obj/structure/sign/warning/nosmoking{pixel_y = 29},/mob/living/simple_animal/bot/cleanbot,/turf/open/floor/plasteel/whiteblue/side{dir = 1},/area/awaymission)
-"bx" = (/obj/machinery/light/spooky/on{dir = 1},/turf/open/floor/plasteel/whiteblue/side{dir = 1},/area/awaymission)
-"by" = (/obj/item/twohanded/required/kirbyplants{icon_state = "plant-24"},/turf/open/floor/plasteel/whiteblue/side{dir = 1},/area/awaymission)
-"bz" = (/obj/structure/sign/warning/securearea{pixel_x = 32},/obj/machinery/door/poddoor{id = 666},/turf/open/floor/plasteel/whiteblue/side{dir = 5},/area/awaymission)
-"bA" = (/obj/effect/spawner/structure/window/shuttle,/turf/open/floor/plating,/area/awaymission)
-"bB" = (/obj/structure/sign/warning/biohazard,/turf/closed/indestructible/vault,/area/awaymission)
-"bC" = (/turf/open/floor/plasteel/darkpurple/side{icon_state = "darkpurple"; dir = 9},/area/awaymission)
-"bD" = (/turf/open/floor/plasteel/darkpurple/side{dir = 1},/area/awaymission)
-"bE" = (/turf/open/floor/plasteel/darkpurple/side{icon_state = "darkpurple"; dir = 5},/area/awaymission)
-"bF" = (/obj/structure/table/reinforced,/obj/item/clothing/glasses/sunglasses/blindfold,/obj/item/restraints/handcuffs,/obj/item/reagent_containers/syringe{pixel_y = 9},/turf/open/floor/plasteel/dark,/area/awaymission)
-"bG" = (/obj/item/clothing/suit/straight_jacket,/obj/structure/table/reinforced,/obj/item/clothing/mask/muzzle,/turf/open/floor/plasteel/dark,/area/awaymission)
-"bH" = (/obj/machinery/shieldwall,/turf/open/space/basic,/area/awaymission)
-"bI" = (/obj/machinery/door/airlock/vault,/turf/open/floor/plasteel/white,/area/awaymission)
-"bJ" = (/obj/machinery/holopad,/obj/item/disk/holodisk/immortus_one,/turf/open/floor/plasteel/white,/area/awaymission)
-"bK" = (/obj/structure/table/glass,/obj/item/paper/contract,/turf/open/floor/plasteel/white,/area/awaymission)
-"bL" = (/obj/structure/chair/office/light{dir = 8},/obj/machinery/light/spooky/on{dir = 4},/turf/open/floor/plasteel/white,/area/awaymission)
-"bM" = (/obj/machinery/light/spooky/on{dir = 8},/turf/open/floor/plasteel/whiteblue/side{dir = 8},/area/awaymission)
-"bN" = (/obj/machinery/door/poddoor{id = 666},/turf/open/floor/plasteel/whiteblue/side{dir = 4},/area/awaymission)
-"bO" = (/obj/machinery/door/airlock/highsecurity,/turf/open/floor/plasteel/white,/area/awaymission)
-"bP" = (/obj/machinery/light/floor,/turf/open/floor/plasteel/white,/area/awaymission)
-"bQ" = (/turf/open/floor/plasteel/darkpurple/side{dir = 8},/area/awaymission)
-"bR" = (/obj/machinery/holopad,/turf/open/floor/plasteel/dark,/area/awaymission)
-"bS" = (/turf/open/floor/plasteel/darkpurple/side{icon_state = "darkpurple"; dir = 4},/area/awaymission)
-"bT" = (/obj/structure/bed,/turf/open/floor/plasteel/dark,/area/awaymission)
-"bU" = (/obj/machinery/door/airlock/vault,/turf/open/floor/plasteel/dark,/area/awaymission)
-"bV" = (/obj/structure/table/glass,/obj/item/pen/fountain,/turf/open/floor/plasteel/white,/area/awaymission)
-"bW" = (/turf/open/floor/plasteel/whiteblue/corner,/area/awaymission)
-"bX" = (/turf/open/floor/plasteel/whiteblue/side,/area/awaymission)
-"bY" = (/obj/machinery/light/spooky/on,/turf/open/floor/plasteel/whiteblue/side,/area/awaymission)
-"bZ" = (/obj/item/twohanded/required/kirbyplants{icon_state = "plant-24"},/turf/open/floor/plasteel/whiteblue/side,/area/awaymission)
-"ca" = (/obj/structure/sign/warning/securearea{pixel_x = 32},/obj/machinery/door/poddoor{id = 666},/turf/open/floor/plasteel/whiteblue/side{dir = 6},/area/awaymission)
-"cb" = (/turf/open/floor/plasteel/darkpurple/side{icon_state = "darkpurple"; dir = 10},/area/awaymission)
-"cc" = (/turf/open/floor/plasteel/darkpurple/side,/area/awaymission)
-"cd" = (/obj/machinery/light/spooky,/turf/open/floor/plasteel/darkpurple/side,/area/awaymission)
-"ce" = (/turf/open/floor/plasteel/darkpurple/side{icon_state = "darkpurple"; dir = 6},/area/awaymission)
-"cf" = (/obj/machinery/defibrillator_mount/loaded{step_x = -1; pixel_x = 28},/turf/open/floor/plasteel/white,/area/awaymission)
-"cg" = (/obj/structure/closet/wardrobe/white/medical,/turf/open/floor/plasteel/white,/area/awaymission)
-"ch" = (/obj/structure/bed,/obj/item/bedsheet/blue,/turf/open/floor/plasteel/white,/area/awaymission)
-"ci" = (/obj/structure/bodycontainer/morgue{dir = 2},/turf/open/floor/plasteel/white,/area/awaymission)
-"cj" = (/obj/item/bodybag,/turf/open/floor/plasteel/white,/area/awaymission)
-"ck" = (/obj/structure/bodycontainer/morgue{dir = 2},/obj/item/stack/rods/ten,/turf/open/floor/plasteel/white,/area/awaymission)
-"cl" = (/obj/structure/bodycontainer/crematorium{id = 666},/obj/effect/decal/cleanable/ash,/turf/open/floor/plasteel/white,/area/awaymission)
-"cm" = (/obj/machinery/button/crematorium{id = 666; pixel_y = 23},/turf/open/floor/plasteel/white,/area/awaymission)
-"cn" = (/obj/machinery/computer/operating,/obj/item/disk/surgery/necrotic_revival,/turf/open/floor/plasteel/dark,/area/awaymission)
-"co" = (/obj/structure/table/optable,/obj/machinery/light/spooky{dir = 1},/turf/open/floor/plasteel/dark,/area/awaymission)
-"cp" = (/obj/structure/closet/secure_closet/medical2,/turf/open/floor/plasteel/dark,/area/awaymission)
-"cq" = (/obj/structure/closet/crate/freezer,/obj/effect/spawner/lootdrop/organ_spawner,/obj/effect/spawner/lootdrop/organ_spawner,/turf/open/floor/plasteel/dark,/area/awaymission)
-"cr" = (/obj/structure/table,/obj/item/clipboard,/turf/open/floor/plasteel/dark,/area/awaymission)
-"cs" = (/obj/structure/filingcabinet,/turf/open/floor/plasteel/dark,/area/awaymission)
-"ct" = (/obj/structure/sign/poster/official/walk{pixel_x = 30},/obj/item/twohanded/required/kirbyplants{icon_state = "plant-10"},/turf/open/floor/plasteel/whiteblue/side{dir = 4},/area/awaymission)
-"cu" = (/obj/structure/table,/obj/item/crowbar,/turf/open/floor/plasteel/white,/area/awaymission)
-"cv" = (/obj/machinery/light/spooky/on{dir = 4},/turf/open/floor/plasteel/white,/area/awaymission)
-"cw" = (/obj/machinery/computer/cloning,/turf/open/floor/plasteel/dark,/area/awaymission)
-"cx" = (/obj/machinery/light/spooky{dir = 8},/turf/open/floor/plasteel/dark,/area/awaymission)
-"cy" = (/obj/machinery/light/spooky{dir = 4},/turf/open/floor/plasteel/dark,/area/awaymission)
-"cz" = (/obj/structure/table/glass,/obj/item/book/manual/medical_cloning,/turf/open/floor/plasteel/white,/area/awaymission)
-"cA" = (/mob/living/simple_animal/bot/medbot,/turf/open/floor/plasteel/white,/area/awaymission)
-"cB" = (/obj/structure/bed/roller,/obj/machinery/light/spooky/on,/turf/open/floor/plasteel/white,/area/awaymission)
-"cC" = (/obj/structure/bed/roller,/turf/open/floor/plasteel/white,/area/awaymission)
-"cD" = (/obj/structure/safe/floor,/obj/item/stack/sheet/mineral/diamond{amount = 10},/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c1000,/obj/item/stack/sheet/animalhide/gondola{amount = 10},/turf/open/floor/plasteel/whiteblue/side{dir = 6},/area/awaymission)
-"cE" = (/obj/structure/closet/l3closet,/turf/open/floor/plasteel/white,/area/awaymission)
-"cF" = (/obj/machinery/light/spooky/on,/turf/open/floor/plasteel/white,/area/awaymission)
-"cG" = (/obj/item/roller,/turf/open/floor/plasteel/white,/area/awaymission)
-"cH" = (/obj/structure/table,/obj/item/reagent_containers/spray/cleaner{pixel_x = 6},/obj/item/device/gps/science{gpstag = "Unauthorized Signal"},/turf/open/floor/plasteel/white,/area/awaymission)
-"cI" = (/obj/structure/tank_dispenser/oxygen,/turf/open/floor/plasteel/white,/area/awaymission)
-"cJ" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/open/floor/plasteel/white,/area/awaymission)
-"cK" = (/obj/structure/table/glass,/obj/item/wallframe/camera,/obj/item/stack/cable_coil/cut,/obj/item/wirecutters{pixel_y = 16},/turf/open/floor/plasteel/dark,/area/awaymission)
-"cL" = (/obj/structure/showcase/horrific_experiment,/turf/open/floor/plasteel/dark,/area/awaymission)
-"cM" = (/obj/machinery/smoke_machine,/turf/open/floor/plasteel/dark,/area/awaymission)
-"cN" = (/obj/machinery/atmospherics/components/unary/cryo_cell{dir = 4},/turf/open/floor/plasteel/dark,/area/awaymission)
-"cO" = (/obj/machinery/atmospherics/components/unary/portables_connector/visible{dir = 8},/turf/open/floor/plasteel/dark,/area/awaymission)
-"cP" = (/obj/structure/closet/body_bag,/turf/open/floor/plasteel/dark,/area/awaymission)
-"cQ" = (/obj/structure/closet/firecloset/full,/turf/open/floor/plasteel/dark,/area/awaymission)
-"cR" = (/obj/structure/closet/radiation,/turf/open/floor/plasteel/dark,/area/awaymission)
-"cS" = (/obj/structure/closet/l3closet/security,/turf/open/floor/plasteel/dark,/area/awaymission)
-"cT" = (/obj/structure/statue/haunted/angel,/turf/open/floor/plasteel/dark,/area/awaymission)
-"cU" = (/obj/structure/table/reinforced,/obj/item/weldingtool/mini{light_intensity = 0},/turf/open/floor/plasteel/dark,/area/awaymission)
-"cV" = (/obj/machinery/light/sequence{dir = 1; group = 7},/turf/open/floor/plasteel/dark,/area/awaymission)
-"cW" = (/obj/machinery/light/sequence{dir = 1; group = 5},/turf/open/floor/plasteel/dark,/area/awaymission)
-"cX" = (/obj/effect/spawner/structure/window/shuttle,/turf/closed/indestructible/vault,/area/awaymission)
-"cY" = (/obj/machinery/light/sequence{dir = 1; group = 4},/turf/open/floor/plasteel/dark,/area/awaymission)
-"cZ" = (/obj/machinery/light/sequence{dir = 1; group = 3},/turf/open/floor/plasteel/dark,/area/awaymission)
-"da" = (/obj/machinery/light/sequence{dir = 1; group = 2},/turf/open/floor/plasteel/dark,/area/awaymission)
-"db" = (/obj/machinery/light/sequence{dir = 1},/turf/open/floor/plasteel/dark,/area/awaymission)
-"dc" = (/obj/machinery/light/sequence{dir = 1; group = 8},/turf/open/floor/plasteel/dark,/area/awaymission)
-"dd" = (/obj/structure/statue/haunted,/turf/open/floor/plasteel/dark,/area/awaymission)
-"de" = (/obj/machinery/light/sequence{dir = 8; group = 9},/turf/open/floor/plasteel/dark,/area/awaymission)
-"df" = (/obj/machinery/light/sequence{dir = 1; group = 6},/turf/open/floor/plasteel/dark,/area/awaymission)
-"dg" = (/obj/structure/statue/haunted/corgi,/turf/open/floor/plasteel/dark,/area/awaymission)
-"dh" = (/obj/machinery/door/airlock/public/glass,/turf/open/floor/plasteel/dark,/area/awaymission)
-"di" = (/obj/structure/barricade/wooden{max_integrity = 40},/turf/open/floor/plasteel/dark,/area/awaymission)
-"dj" = (/obj/structure/statue/haunted/female,/turf/open/floor/plasteel/dark,/area/awaymission)
-"dk" = (/obj/machinery/light{brightness = 2; dir = 8},/turf/open/floor/plasteel/dark,/area/awaymission)
-"dl" = (/obj/effect/spawner/structure/window/shuttle,/turf/open/floor/plasteel/dark,/area/awaymission)
-"dm" = (/obj/structure/table/wood/bar,/turf/open/floor/plasteel/dark,/area/awaymission)
-"dn" = (/obj/machinery/light/sequence{group = 4},/turf/open/floor/plasteel/dark,/area/awaymission)
-"do" = (/obj/structure/table/wood/bar,/obj/machinery/light{brightness = 2; dir = 8},/obj/item/spellbook/oneuse/weakpetrify,/turf/open/floor/plasteel/dark,/area/awaymission)
-"dp" = (/obj/machinery/light/sequence{dir = 2; group = 7},/turf/open/floor/plasteel/dark,/area/awaymission)
-"dq" = (/obj/machinery/light/sequence{dir = 8; group = 3},/turf/open/floor/plasteel/dark,/area/awaymission)
-"dr" = (/obj/machinery/light/sequence{dir = 4},/turf/open/floor/plasteel/dark,/area/awaymission)
-"ds" = (/obj/machinery/light/sequence{dir = 2; group = 5},/turf/open/floor/plasteel/dark,/area/awaymission)
-"dt" = (/obj/machinery/light/sequence{group = 2},/turf/open/floor/plasteel/dark,/area/awaymission)
-"du" = (/obj/machinery/light/sequence{dir = 2; group = 6},/turf/open/floor/plasteel/dark,/area/awaymission)
-"dv" = (/obj/machinery/light/sequence{dir = 2; group = 8},/turf/open/floor/plasteel/dark,/area/awaymission)
-"dw" = (/obj/machinery/light/sequence{group = 3},/turf/open/floor/plasteel/dark,/area/awaymission)
-"dx" = (/obj/machinery/light/sequence,/turf/open/floor/plasteel/dark,/area/awaymission)
-"dy" = (/obj/structure/fluff/divine/powerpylon,/turf/open/floor/plasteel/dark,/area/awaymission)
-"dz" = (/obj/structure/fluff/divine/defensepylon,/turf/open/floor/plasteel/dark,/area/awaymission)
-"dA" = (/obj/structure/fluff/divine/convertaltar,/turf/open/floor/plasteel/dark,/area/awaymission)
-"dB" = (/obj/structure/bonfire,/turf/open/floor/plasteel/dark,/area/awaymission)
-"dC" = (/obj/structure/healingfountain,/turf/open/floor/plasteel/dark,/area/awaymission)
-"dD" = (/obj/structure/kitchenspike,/turf/open/floor/plasteel/dark,/area/awaymission)
-"dE" = (/obj/structure/fluff/divine/nexus,/turf/open/floor/plasteel/dark,/area/awaymission)
-"dF" = (/obj/structure/fluff/divine/conduit,/turf/open/floor/plasteel/dark,/area/awaymission)
-"dG" = (/obj/structure/sacrificealtar,/turf/open/floor/plasteel/dark,/area/awaymission)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/open/space/basic,
+/area/template_noop)
+"ab" = (
+/turf/closed/indestructible/vault,
+/area/awaymission)
+"ac" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/closed/indestructible/vault,
+/area/awaymission)
+"ad" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/indestructible/vault,
+/area/awaymission)
+"ae" = (
+/obj/structure/disposalpipe/junction/yjunction,
+/turf/closed/indestructible/vault,
+/area/awaymission)
+"af" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/closed/indestructible/vault,
+/area/awaymission)
+"ag" = (
+/turf/open/space/basic,
+/area/space)
+"ah" = (
+/obj/machinery/portable_atmospherics/canister/water_vapor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"ai" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"aj" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"ak" = (
+/obj/machinery/power/rad_collector/anchored,
+/obj/item/tank/internals/plasma/full,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"al" = (
+/obj/item/nuke_core,
+/obj/structure/window/plasma/reinforced/spawner,
+/obj/structure/window/plasma/reinforced/spawner/east,
+/obj/structure/window/plasma/reinforced/spawner/west,
+/obj/structure/window/plasma/reinforced/spawner/north,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"am" = (
+/obj/structure/chair/e_chair,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"an" = (
+/obj/structure/table/reinforced,
+/obj/item/device/assembly/signaler,
+/obj/item/cartridge/signal{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"ao" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/disposaloutlet,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"ap" = (
+/mob/living/simple_animal/hostile/zombie,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"aq" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"ar" = (
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"as" = (
+/obj/machinery/disposal/deliveryChute,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/light/spooky{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"at" = (
+/obj/structure/table/glass,
+/obj/item/paper/pamphlet,
+/obj/item/cane,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"au" = (
+/obj/item/paper/crumpled{
+	info = "When rotating out of the clinic don't forget to stash payments in the floor safe, its under the plant next to the SAFETY poster - in case you forgot."
+	},
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"av" = (
+/obj/machinery/vending/snack/blue,
+/obj/machinery/light/spooky/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aw" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"ax" = (
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"ay" = (
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right";
+	layer = 3
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"az" = (
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 1
+	},
+/area/awaymission)
+"aA" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-10"
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 5
+	},
+/area/awaymission)
+"aB" = (
+/obj/machinery/shower{
+	pixel_y = 15
+	},
+/obj/structure/curtain,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aC" = (
+/obj/machinery/washing_machine,
+/obj/machinery/light/spooky/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aD" = (
+/obj/machinery/washing_machine,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aE" = (
+/obj/structure/table,
+/obj/structure/bedsheetbin,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aF" = (
+/obj/machinery/iv_drip,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aG" = (
+/obj/structure/closet/crate/freezer/blood,
+/obj/item/reagent_containers/blood/universal,
+/obj/item/reagent_containers/blood/universal,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aH" = (
+/obj/machinery/light/spooky/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aI" = (
+/obj/machinery/chem_master,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aJ" = (
+/obj/structure/table/glass,
+/obj/item/storage/box/beakers,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aK" = (
+/obj/structure/table/glass,
+/obj/item/storage/box/syringes,
+/obj/item/device/assembly/igniter,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aL" = (
+/obj/machinery/portable_atmospherics/canister/tritium,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"aM" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"aN" = (
+/obj/machinery/power/tesla_coil,
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"aO" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"aP" = (
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/super,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"aQ" = (
+/obj/structure/chair/comfy/beige{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aR" = (
+/obj/structure/sign/poster/official/fruit_bowl{
+	step_x = -1;
+	pixel_x = 33
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 4
+	},
+/area/awaymission)
+"aS" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aT" = (
+/obj/machinery/door/airlock/medical,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aU" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aV" = (
+/obj/structure/table/glass,
+/obj/item/storage/firstaid/o2,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"aW" = (
+/obj/machinery/portable_atmospherics/canister/bz,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light/spooky{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"aX" = (
+/obj/structure/table/reinforced,
+/obj/item/device/assembly/signaler,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"aY" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"aZ" = (
+/obj/structure/table/reinforced,
+/obj/item/wrench,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"ba" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/electrical,
+/obj/machinery/light/spooky{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"bb" = (
+/obj/structure/table/wood/fancy/black,
+/obj/effect/spawner/structure/window/hollow/reinforced,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"bc" = (
+/obj/structure/sign/departments/medbay,
+/turf/closed/indestructible/vault,
+/area/awaymission)
+"bd" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"be" = (
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 8
+	},
+/area/awaymission)
+"bf" = (
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 4
+	},
+/area/awaymission)
+"bg" = (
+/obj/structure/table,
+/obj/item/storage/box/masks{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/storage/box/gloves,
+/obj/item/clothing/gloves/color/latex/nitrile,
+/obj/structure/sign/poster/official/cleanliness{
+	pixel_x = 30
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bh" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bi" = (
+/obj/machinery/limbgrower,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bj" = (
+/obj/structure/table/glass,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/machinery/button/door{
+	id = 666;
+	pixel_y = -24
+	},
+/obj/item/clothing/neck/stethoscope,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bk" = (
+/obj/structure/table/glass,
+/obj/item/defibrillator/compact/loaded,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bl" = (
+/obj/machinery/portable_atmospherics/canister/nitryl,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"bm" = (
+/turf/closed/indestructible/vault,
+/area/space)
+"bn" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-22"
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bo" = (
+/obj/machinery/vending/wallmed{
+	pixel_x = 25
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bp" = (
+/obj/machinery/shieldwall{
+	dir = 4
+	},
+/turf/open/space/basic,
+/area/awaymission)
+"bq" = (
+/obj/structure/sign/warning/radiation/rad_area,
+/turf/closed/indestructible/vault,
+/area/awaymission)
+"br" = (
+/obj/machinery/door/airlock/research,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"bs" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"bt" = (
+/obj/structure/table/glass,
+/obj/item/device/modular_computer/laptop,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bu" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-18"
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 8
+	},
+/area/awaymission)
+"bv" = (
+/turf/open/floor/plasteel/whiteblue/corner{
+	dir = 4
+	},
+/area/awaymission)
+"bw" = (
+/obj/structure/sign/warning/nosmoking{
+	pixel_y = 29
+	},
+/mob/living/simple_animal/bot/cleanbot,
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 1
+	},
+/area/awaymission)
+"bx" = (
+/obj/machinery/light/spooky/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 1
+	},
+/area/awaymission)
+"by" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-24"
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 1
+	},
+/area/awaymission)
+"bz" = (
+/obj/structure/sign/warning/securearea{
+	pixel_x = 32
+	},
+/obj/machinery/door/poddoor{
+	id = 666
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 5
+	},
+/area/awaymission)
+"bA" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/awaymission)
+"bB" = (
+/obj/structure/sign/warning/biohazard,
+/turf/closed/indestructible/vault,
+/area/awaymission)
+"bC" = (
+/turf/open/floor/plasteel/darkpurple/side{
+	icon_state = "darkpurple";
+	dir = 9
+	},
+/area/awaymission)
+"bD" = (
+/turf/open/floor/plasteel/darkpurple/side{
+	dir = 1
+	},
+/area/awaymission)
+"bE" = (
+/turf/open/floor/plasteel/darkpurple/side{
+	icon_state = "darkpurple";
+	dir = 5
+	},
+/area/awaymission)
+"bF" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/glasses/sunglasses/blindfold,
+/obj/item/restraints/handcuffs,
+/obj/item/reagent_containers/syringe{
+	pixel_y = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"bG" = (
+/obj/item/clothing/suit/straight_jacket,
+/obj/structure/table/reinforced,
+/obj/item/clothing/mask/muzzle,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"bH" = (
+/obj/machinery/shieldwall,
+/turf/open/space/basic,
+/area/awaymission)
+"bI" = (
+/obj/machinery/door/airlock/vault,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bJ" = (
+/obj/machinery/holopad,
+/obj/item/disk/holodisk/immortus_one,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bK" = (
+/obj/structure/table/glass,
+/obj/item/paper/contract,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bL" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/obj/machinery/light/spooky/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bM" = (
+/obj/machinery/light/spooky/on{
+	dir = 8
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 8
+	},
+/area/awaymission)
+"bN" = (
+/obj/machinery/door/poddoor{
+	id = 666
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 4
+	},
+/area/awaymission)
+"bO" = (
+/obj/machinery/door/airlock/highsecurity,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bP" = (
+/obj/machinery/light/floor,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bQ" = (
+/turf/open/floor/plasteel/darkpurple/side{
+	dir = 8
+	},
+/area/awaymission)
+"bR" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"bS" = (
+/turf/open/floor/plasteel/darkpurple/side{
+	icon_state = "darkpurple";
+	dir = 4
+	},
+/area/awaymission)
+"bT" = (
+/obj/structure/bed,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"bU" = (
+/obj/machinery/door/airlock/vault,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"bV" = (
+/obj/structure/table/glass,
+/obj/item/pen/fountain,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"bW" = (
+/turf/open/floor/plasteel/whiteblue/corner,
+/area/awaymission)
+"bX" = (
+/turf/open/floor/plasteel/whiteblue/side,
+/area/awaymission)
+"bY" = (
+/obj/machinery/light/spooky/on,
+/turf/open/floor/plasteel/whiteblue/side,
+/area/awaymission)
+"bZ" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-24"
+	},
+/turf/open/floor/plasteel/whiteblue/side,
+/area/awaymission)
+"ca" = (
+/obj/structure/sign/warning/securearea{
+	pixel_x = 32
+	},
+/obj/machinery/door/poddoor{
+	id = 666
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 6
+	},
+/area/awaymission)
+"cb" = (
+/turf/open/floor/plasteel/darkpurple/side{
+	icon_state = "darkpurple";
+	dir = 10
+	},
+/area/awaymission)
+"cc" = (
+/turf/open/floor/plasteel/darkpurple/side,
+/area/awaymission)
+"cd" = (
+/obj/machinery/light/spooky,
+/turf/open/floor/plasteel/darkpurple/side,
+/area/awaymission)
+"ce" = (
+/turf/open/floor/plasteel/darkpurple/side{
+	icon_state = "darkpurple";
+	dir = 6
+	},
+/area/awaymission)
+"cf" = (
+/obj/machinery/defibrillator_mount/loaded{
+	step_x = -1;
+	pixel_x = 28
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cg" = (
+/obj/structure/closet/wardrobe/white/medical,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"ch" = (
+/obj/structure/bed,
+/obj/item/bedsheet/blue,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"ci" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cj" = (
+/obj/item/bodybag,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"ck" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 2
+	},
+/obj/item/stack/rods/ten,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cl" = (
+/obj/structure/bodycontainer/crematorium{
+	id = 666
+	},
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cm" = (
+/obj/machinery/button/crematorium{
+	id = 666;
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cn" = (
+/obj/machinery/computer/operating,
+/obj/item/disk/surgery/necrotic_revival,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"co" = (
+/obj/structure/table/optable,
+/obj/machinery/light/spooky{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cp" = (
+/obj/structure/closet/secure_closet/medical2,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cq" = (
+/obj/structure/closet/crate/freezer,
+/obj/effect/spawner/lootdrop/organ_spawner,
+/obj/effect/spawner/lootdrop/organ_spawner,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cr" = (
+/obj/structure/table,
+/obj/item/clipboard,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cs" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"ct" = (
+/obj/structure/sign/poster/official/walk{
+	pixel_x = 30
+	},
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-10"
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 4
+	},
+/area/awaymission)
+"cu" = (
+/obj/structure/table,
+/obj/item/crowbar,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cv" = (
+/obj/machinery/light/spooky/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cw" = (
+/obj/machinery/computer/cloning,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cx" = (
+/obj/machinery/light/spooky{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cy" = (
+/obj/machinery/light/spooky{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cz" = (
+/obj/structure/table/glass,
+/obj/item/book/manual/medical_cloning,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cA" = (
+/mob/living/simple_animal/bot/medbot,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cB" = (
+/obj/structure/bed/roller,
+/obj/machinery/light/spooky/on,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cC" = (
+/obj/structure/bed/roller,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cD" = (
+/obj/structure/safe/floor,
+/obj/item/stack/sheet/mineral/diamond{
+	amount = 10
+	},
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/sheet/animalhide/gondola{
+	amount = 10
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	dir = 6
+	},
+/area/awaymission)
+"cE" = (
+/obj/structure/closet/l3closet,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cF" = (
+/obj/machinery/light/spooky/on,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cG" = (
+/obj/item/roller,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cH" = (
+/obj/structure/table,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 6
+	},
+/obj/item/device/gps/science{
+	gpstag = "Unauthorized Signal"
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cI" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cJ" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel/white,
+/area/awaymission)
+"cK" = (
+/obj/structure/table/glass,
+/obj/item/wallframe/camera,
+/obj/item/stack/cable_coil/cut,
+/obj/item/wirecutters{
+	pixel_y = 16
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cL" = (
+/obj/structure/showcase/horrific_experiment,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cM" = (
+/obj/machinery/smoke_machine,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cN" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cO" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cP" = (
+/obj/structure/closet/body_bag,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cQ" = (
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cR" = (
+/obj/structure/closet/radiation,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cS" = (
+/obj/structure/closet/l3closet/security,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cT" = (
+/obj/structure/statue/haunted/angel,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cU" = (
+/obj/structure/table/reinforced,
+/obj/item/weldingtool/mini{
+	light_intensity = 0
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cV" = (
+/obj/machinery/light/sequence{
+	dir = 1;
+	group = 7
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cW" = (
+/obj/machinery/light/sequence{
+	dir = 1;
+	group = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cX" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/closed/indestructible/vault,
+/area/awaymission)
+"cY" = (
+/obj/machinery/light/sequence{
+	dir = 1;
+	group = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"cZ" = (
+/obj/machinery/light/sequence{
+	dir = 1;
+	group = 3
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"da" = (
+/obj/machinery/light/sequence{
+	dir = 1;
+	group = 2
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"db" = (
+/obj/machinery/light/sequence{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dc" = (
+/obj/machinery/light/sequence{
+	dir = 1;
+	group = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dd" = (
+/obj/structure/statue/haunted,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"de" = (
+/obj/machinery/light/sequence{
+	dir = 8;
+	group = 9
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"df" = (
+/obj/machinery/light/sequence{
+	dir = 1;
+	group = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dg" = (
+/obj/structure/statue/haunted/corgi,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dh" = (
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"di" = (
+/obj/structure/barricade/wooden{
+	max_integrity = 40
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dj" = (
+/obj/structure/statue/haunted/female,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dk" = (
+/obj/machinery/light{
+	brightness = 2;
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dl" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dm" = (
+/obj/structure/table/wood/bar,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dn" = (
+/obj/machinery/light/sequence{
+	group = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"do" = (
+/obj/structure/table/wood/bar,
+/obj/machinery/light{
+	brightness = 2;
+	dir = 8
+	},
+/obj/item/spellbook/oneuse/weakpetrify,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dp" = (
+/obj/machinery/light/sequence{
+	dir = 2;
+	group = 7
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dq" = (
+/obj/machinery/light/sequence{
+	dir = 8;
+	group = 3
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dr" = (
+/obj/machinery/light/sequence{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"ds" = (
+/obj/machinery/light/sequence{
+	dir = 2;
+	group = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dt" = (
+/obj/machinery/light/sequence{
+	group = 2
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"du" = (
+/obj/machinery/light/sequence{
+	dir = 2;
+	group = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dv" = (
+/obj/machinery/light/sequence{
+	dir = 2;
+	group = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dw" = (
+/obj/machinery/light/sequence{
+	group = 3
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dx" = (
+/obj/machinery/light/sequence,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dy" = (
+/obj/structure/fluff/divine/powerpylon,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dz" = (
+/obj/structure/fluff/divine/defensepylon,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dA" = (
+/obj/structure/fluff/divine/convertaltar,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dB" = (
+/obj/structure/bonfire,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dC" = (
+/obj/structure/healingfountain,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dD" = (
+/obj/structure/kitchenspike,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dE" = (
+/obj/structure/fluff/divine/nexus,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dF" = (
+/obj/structure/fluff/divine/conduit,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"dG" = (
+/obj/structure/sacrificealtar,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
+"fv" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/structure/trap/chill,
+/turf/closed/indestructible/vault,
+/area/awaymission)
+"Ec" = (
+/obj/structure/trap/chill,
+/turf/open/floor/plasteel/dark,
+/area/awaymission)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababacadadadaeadadadafabagagagagagagagagagag
-aaababababababababababababababababababababababaaaaaaaaaaaaaaabahaiajakalakamanabaoapaqarasaraqapaoabagagagagagagagagagag
-aaabatauavawaxayazaAabaBaCaDaEabaFaGaHaIaJaKabaaaaaaaaaaaaaaabaLararaMaNaOaraPabapapaqarararaqapapabagagagagagagagagagag
-aaabaQaxaxaxaxayaxaRabaSaxaxaxaTaxaxaxaxaUaVabaaaaaaaaaaaaaaabaWararaXaYaZarbaabapapaqarbbaraqapapabagagagagagagagagagag
-aabcaQaxaxaxbdabbebfabaSaxaxbgabbhaxaxbibjbkabaaaaaaaaaaaaaaabblararararararcUabapapaqarararaqapapabagagagagagagagagagag
-bmabbnaxaxaxboabbebfababaTababababababababababbpbpbpbpbpbpbpababababbqbrbqabababapapaqarararaqapapabbpbpabagagagagagagag
-bsabaxaxaxbtaxabbubvazazazbwazazazbxazazbybzabbAbAbAbAbAbAbAbBbCbDbDbDbDbDbDbEababababbFarbGababababbAbAbHagagagagagagag
-bsbIaxaxbJbKbLabbMaxaxaxaxaxaxaxaxaxaxaxaxbNbOaxaxaxbPaxaxaxbObQarbRararararbSbrararabcParbTabcQarbUarbAbHagagagagagagag
-bsabaxaxaxbVaxabbubWbXbXbXbXbYbXbXbXbXbXbZcaabbAbAbAbAbAbAbAbBcbcccccccdccccceabararabararbTabcRarabarbAbHagagagagagagag
-bmabbnaxaxaxcfabbebfababaTababababababababababbpbpbpbpbpbpbpababababababababababararabararbTabcSarabarbAbHagagagagagagag
-aabcaQaxaxaxbdabbebfabcgaxaxchabcicjckaxclcmabaaaaaaaaaaaaaaabcncocpcqabcrcsarbrararabarararabararabarbAbHagagagagagagag
-aaabaQaxaxaxaxayaxctabcuaxaxaxaTaxaxaxaxaxcvabaaaaaaaaaaaaaaabaraparcwabcxararabcxarababbrababarcyabarbAbHagagagagagagag
-aaabczcAcBcCaxaybXcDabcEcFaxchabcGcHaxcIaxcJabaaaaaaaaaaaaaaabcKararcLabarararabarararararararararabarbAbHagagagagagagag
-aaababababababababababababababababababababababaaaaaaaaaaaaaaabcMarararbrarcNcOabarararararararararabarbAbHagagagagagagag
-aaabababababababababababababababababababababababababababababababababababababababababababababababababarbAbHagagagagagagag
-aaababababcTardiararababababcTararcVarararabababcTararcWarararcXdyarcYardzcXarcZararardaararardbarabarbAbHagagagagagagag
-agababababarardiararababababarararararararabababarararararararcXdAardBardCcXarararararararararararabarbAbHagagagagagagag
-agababababararcXararardcdcdiararabababararabababararabababararcXdyararardzcXarararararddarararararabarbAbHagagagagagagag
-agababababdearcXararararardiararabababararardfdiararabababardgabcXcXdhcXcXabdjararabababababarararabarbAbHagagagagagagag
-agabdkardlararcXararababababararabababarararardiararabababarararararararardiarararcXardaarcXarararabarbAbHagagagagagagag
-agabdmardlararcXararababababararabababararabababarararcWarararararardnarardiarararcXarararcXarararbUarbAbHagagagagagagag
-agabdoardiararcXararababababcTarardparararabababcTarararararardldldldldldldldqarardhararardharardrabbAbAbHagagagagagagag
-agabdmardlararcXararababababararabababararabababararardsararararararararardiarararcXarararcXarararabbpbpabagagagagagagag
-agabdkardlararcXararababababararabababarararardiararabababarararararararardiarararcXardtarcXarararabagagagagagagagagagag
-agababababdearcXararararardiararabababararardudiararabababardgabcXcXdhcXcXabdjararabababababarararabagagagagagagagagagag
-agababababararcXararardvdvdiararabababararabababararabababararcXdDararardEcXarararararddarararararabagagagagagagagagagag
-agababababarardiararababababarararararararabababarararararararcXdFardBardGcXarararararararararararabagagagagagagagagagag
-agababababcTardiararababababcTarardparararabababcTarardsarararcXdDardnardEcXardwararardtararardxarabagagagagagagagagagag
-agabababababababababababababababababababababababababababababababababababababababababababababababababagagagagagagagagagag
-agagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagag
+aa
+aa
+aa
+aa
+aa
+bm
+bs
+bs
+bs
+bm
+aa
+aa
+aa
+aa
+aa
+aa
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+"}
+(2,1,1) = {"
+aa
+ab
+ab
+ab
+bc
+ab
+ab
+bI
+ab
+ab
+bc
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ag
+"}
+(3,1,1) = {"
+aa
+ab
+at
+aQ
+aQ
+bn
+ax
+ax
+ax
+bn
+aQ
+aQ
+cz
+ab
+ab
+ab
+ab
+ab
+ab
+dk
+dm
+do
+dm
+dk
+ab
+ab
+ab
+ab
+ab
+ag
+"}
+(4,1,1) = {"
+aa
+ab
+au
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+cA
+ab
+ab
+ab
+ab
+ab
+ab
+ar
+ar
+ar
+ar
+ar
+ab
+ab
+ab
+ab
+ab
+ag
+"}
+(5,1,1) = {"
+aa
+ab
+av
+ax
+ax
+ax
+ax
+bJ
+ax
+ax
+ax
+ax
+cB
+ab
+ab
+ab
+ab
+ab
+ab
+dl
+dl
+di
+dl
+dl
+ab
+ab
+ab
+ab
+ab
+ag
+"}
+(6,1,1) = {"
+aa
+ab
+aw
+ax
+ax
+ax
+bt
+bK
+bV
+ax
+ax
+ax
+cC
+ab
+ab
+cT
+ar
+ar
+de
+ar
+ar
+ar
+ar
+ar
+de
+ar
+ar
+cT
+ab
+ag
+"}
+(7,1,1) = {"
+aa
+ab
+ax
+ax
+bd
+bo
+ax
+bL
+ax
+cf
+bd
+ax
+ax
+ab
+ab
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ab
+ag
+"}
+(8,1,1) = {"
+aa
+ab
+ay
+ay
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ay
+ay
+ab
+ab
+di
+di
+fv
+cX
+cX
+cX
+cX
+cX
+cX
+cX
+cX
+di
+di
+ab
+ag
+"}
+(9,1,1) = {"
+aa
+ab
+az
+ax
+be
+be
+bu
+bM
+bu
+be
+be
+ax
+bX
+ab
+ab
+ar
+ar
+Ec
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+Ec
+ar
+ar
+ab
+ag
+"}
+(10,1,1) = {"
+aa
+ab
+aA
+aR
+bf
+bf
+bv
+ax
+bW
+bf
+bf
+ct
+cD
+ab
+ab
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ab
+ag
+"}
+(11,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+az
+ax
+bX
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ar
+ar
+ab
+ab
+ab
+ab
+ab
+ar
+ar
+ab
+ab
+ab
+ag
+"}
+(12,1,1) = {"
+aa
+ab
+aB
+aS
+aS
+ab
+az
+ax
+bX
+ab
+cg
+cu
+cE
+ab
+ab
+ab
+ab
+dc
+ar
+ab
+ab
+ab
+ab
+ab
+ar
+dv
+ab
+ab
+ab
+ag
+"}
+(13,1,1) = {"
+aa
+ab
+aC
+ax
+ax
+aT
+az
+ax
+bX
+aT
+ax
+ax
+cF
+ab
+ab
+ab
+ab
+dc
+ar
+ab
+ab
+ab
+ab
+ab
+ar
+dv
+ab
+ab
+ab
+ag
+"}
+(14,1,1) = {"
+aa
+ab
+aD
+ax
+ax
+ab
+bw
+ax
+bX
+ab
+ax
+ax
+ax
+ab
+ab
+ab
+ab
+di
+di
+ab
+ab
+ab
+ab
+ab
+di
+di
+ab
+ab
+ab
+ag
+"}
+(15,1,1) = {"
+aa
+ab
+aE
+ax
+bg
+ab
+az
+ax
+bY
+ab
+ch
+ax
+ch
+ab
+ab
+cT
+ar
+Ec
+ar
+ar
+ar
+cT
+ar
+ar
+Ec
+ar
+ar
+cT
+ab
+ag
+"}
+(16,1,1) = {"
+aa
+ab
+ab
+aT
+ab
+ab
+az
+ax
+bX
+ab
+ab
+aT
+ab
+ab
+ab
+Ec
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+Ec
+ab
+ag
+"}
+(17,1,1) = {"
+aa
+ab
+aF
+ax
+bh
+ab
+az
+ax
+bX
+ab
+ci
+ax
+cG
+ab
+ab
+ar
+ar
+ab
+ab
+ab
+ab
+ar
+ab
+ab
+ab
+ab
+ar
+ar
+ab
+ag
+"}
+(18,1,1) = {"
+aa
+ab
+aG
+ax
+ax
+ab
+bx
+ax
+bX
+ab
+cj
+ax
+cH
+ab
+ab
+cV
+ar
+ab
+ab
+ab
+ab
+dp
+ab
+ab
+ab
+ab
+ar
+dp
+ab
+ag
+"}
+(19,1,1) = {"
+aa
+ab
+aH
+ax
+ax
+ab
+az
+ax
+bX
+ab
+ck
+ax
+ax
+ab
+ab
+ar
+ar
+ab
+ab
+ab
+ab
+ar
+ab
+ab
+ab
+ab
+ar
+ar
+ab
+ag
+"}
+(20,1,1) = {"
+aa
+ab
+aI
+ax
+bi
+ab
+az
+ax
+bX
+ab
+ax
+ax
+cI
+ab
+ab
+ar
+ar
+ar
+Ec
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ab
+ag
+"}
+(21,1,1) = {"
+aa
+ab
+aJ
+aU
+bj
+ab
+by
+ax
+bZ
+ab
+cl
+ax
+ax
+ab
+ab
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+Ec
+ab
+ag
+"}
+(22,1,1) = {"
+aa
+ab
+aK
+aV
+bk
+ab
+bz
+bN
+ca
+ab
+cm
+cv
+cJ
+ab
+ab
+ab
+ab
+ab
+ar
+ar
+ab
+ab
+ab
+ar
+ar
+ab
+ab
+ab
+ab
+ag
+"}
+(23,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+bO
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+df
+ar
+ab
+ab
+ab
+ar
+du
+ab
+ab
+ab
+ab
+ag
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+bp
+bA
+ax
+bA
+bp
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+di
+di
+ab
+ab
+ab
+di
+di
+ab
+ab
+ab
+ab
+ag
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+bp
+bA
+ax
+bA
+bp
+aa
+aa
+aa
+aa
+ab
+cT
+Ec
+ar
+ar
+ar
+ar
+cT
+ar
+ar
+ar
+ar
+Ec
+cT
+ab
+ag
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+bp
+bA
+ax
+bA
+bp
+aa
+aa
+aa
+aa
+ab
+ar
+ar
+ar
+ar
+ar
+ar
+Ec
+ar
+ar
+ar
+ar
+ar
+ar
+ab
+ag
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+bp
+bA
+bP
+bA
+bp
+aa
+aa
+aa
+aa
+ab
+ar
+ar
+ab
+ab
+ab
+ar
+ar
+ar
+ab
+ab
+ab
+ar
+ar
+ab
+ag
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+bp
+bA
+ax
+bA
+bp
+aa
+aa
+aa
+aa
+ab
+cW
+ar
+ab
+ab
+ab
+cW
+ar
+ds
+ab
+ab
+ab
+ar
+ds
+ab
+ag
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+bp
+bA
+ax
+bA
+bp
+aa
+aa
+aa
+aa
+ab
+ar
+ar
+ab
+ab
+ab
+ar
+ar
+ar
+ab
+ab
+ab
+ar
+ar
+ab
+ag
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+bp
+bA
+ax
+bA
+bp
+aa
+aa
+aa
+aa
+ab
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ab
+ag
+"}
+(31,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+bB
+bO
+bB
+ab
+ab
+ab
+ab
+ab
+ab
+ar
+ar
+ar
+dg
+ar
+ar
+ar
+ar
+ar
+dg
+ar
+ar
+ar
+ab
+ag
+"}
+(32,1,1) = {"
+ab
+ah
+aL
+aW
+bl
+ab
+bC
+bQ
+cb
+ab
+cn
+ar
+cK
+cM
+ab
+cX
+cX
+cX
+ab
+ar
+ar
+dl
+ar
+ar
+ab
+cX
+cX
+cX
+ab
+ag
+"}
+(33,1,1) = {"
+ab
+ai
+ar
+ar
+ar
+ab
+bD
+ar
+cc
+ab
+co
+ap
+ar
+ar
+ab
+dy
+dA
+dy
+cX
+ar
+ar
+dl
+ar
+ar
+cX
+dD
+dF
+dD
+ab
+ag
+"}
+(34,1,1) = {"
+ab
+aj
+ar
+ar
+ar
+ab
+bD
+bR
+cc
+ab
+cp
+ar
+ar
+ar
+ab
+ar
+ar
+ar
+cX
+ar
+ar
+dl
+ar
+ar
+cX
+ar
+ar
+ar
+ab
+ag
+"}
+(35,1,1) = {"
+ab
+ak
+aM
+aX
+ar
+bq
+bD
+ar
+cc
+ab
+cq
+cw
+cL
+ar
+ab
+cY
+dB
+ar
+dh
+ar
+dn
+dl
+ar
+ar
+dh
+ar
+dB
+dn
+ab
+ag
+"}
+(36,1,1) = {"
+ab
+al
+aN
+aY
+ar
+br
+bD
+ar
+cd
+ab
+ab
+ab
+ab
+br
+ab
+ar
+ar
+ar
+cX
+ar
+ar
+dl
+ar
+ar
+cX
+ar
+ar
+ar
+ab
+ag
+"}
+(37,1,1) = {"
+ab
+ak
+aO
+aZ
+ar
+bq
+bD
+ar
+cc
+ab
+cr
+cx
+ar
+ar
+ab
+dz
+dC
+dz
+cX
+ar
+ar
+dl
+ar
+ar
+cX
+dE
+dG
+dE
+ab
+ag
+"}
+(38,1,1) = {"
+ab
+am
+ar
+ar
+ar
+ab
+bD
+ar
+cc
+ab
+cs
+ar
+ar
+cN
+ab
+cX
+cX
+cX
+ab
+di
+di
+dl
+di
+di
+ab
+cX
+cX
+cX
+ab
+ag
+"}
+(39,1,1) = {"
+ab
+an
+aP
+ba
+cU
+ab
+bE
+bS
+ce
+ab
+ar
+ar
+ar
+cO
+ab
+ar
+ar
+ar
+dj
+ar
+ar
+dq
+ar
+ar
+dj
+ar
+ar
+ar
+ab
+ag
+"}
+(40,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+br
+ab
+ab
+br
+ab
+ab
+ab
+ab
+cZ
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+dw
+ab
+ag
+"}
+(41,1,1) = {"
+ac
+ao
+ap
+ap
+ap
+ap
+ab
+ar
+ar
+ar
+ar
+cx
+ar
+ar
+ab
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ab
+ag
+"}
+(42,1,1) = {"
+ad
+ap
+ap
+ap
+ap
+ap
+ab
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ab
+ar
+ar
+ar
+ab
+cX
+cX
+dh
+cX
+cX
+ab
+ar
+ar
+ar
+ab
+ag
+"}
+(43,1,1) = {"
+ad
+aq
+aq
+aq
+aq
+aq
+ab
+ab
+ab
+ab
+ab
+ab
+ar
+ar
+ab
+ar
+ar
+ar
+ab
+ar
+ar
+ar
+ar
+ar
+ab
+ar
+ar
+ar
+ab
+ag
+"}
+(44,1,1) = {"
+ad
+ar
+ar
+ar
+ar
+ar
+bF
+cP
+ar
+ar
+ar
+ab
+ar
+ar
+ab
+da
+ar
+dd
+ab
+da
+ar
+ar
+ar
+dt
+ab
+dd
+ar
+dt
+ab
+ag
+"}
+(45,1,1) = {"
+ae
+as
+ar
+bb
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+br
+ar
+ar
+ab
+ar
+ar
+ar
+ab
+ar
+ar
+ar
+ar
+ar
+ab
+ar
+ar
+ar
+ab
+ag
+"}
+(46,1,1) = {"
+ad
+ar
+ar
+ar
+ar
+ar
+bG
+bT
+bT
+bT
+ar
+ab
+ar
+ar
+ab
+ar
+ar
+ar
+ab
+cX
+cX
+dh
+cX
+cX
+ab
+ar
+ar
+ar
+ab
+ag
+"}
+(47,1,1) = {"
+ad
+aq
+aq
+aq
+aq
+aq
+ab
+ab
+ab
+ab
+ab
+ab
+ar
+ar
+ab
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ab
+ag
+"}
+(48,1,1) = {"
+ad
+ap
+ap
+ap
+ap
+ap
+ab
+cQ
+cR
+cS
+ar
+ar
+ar
+ar
+ab
+db
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+dx
+ab
+ag
+"}
+(49,1,1) = {"
+af
+ao
+ap
+ap
+ap
+ap
+ab
+ar
+ar
+ar
+ar
+cy
+ar
+ar
+ab
+ar
+ar
+ar
+ar
+ar
+ar
+dr
+ar
+ar
+ar
+ar
+ar
+ar
+ab
+ag
+"}
+(50,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+bU
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+bU
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ag
+"}
+(51,1,1) = {"
+ag
+ag
+ag
+ag
+ag
+bp
+bA
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+bA
+bp
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+"}
+(52,1,1) = {"
+ag
+ag
+ag
+ag
+ag
+bp
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bp
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+"}
+(53,1,1) = {"
+ag
+ag
+ag
+ag
+ag
+ab
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+ab
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+"}
+(54,1,1) = {"
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+"}
+(55,1,1) = {"
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+"}
+(56,1,1) = {"
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+"}
+(57,1,1) = {"
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+"}
+(58,1,1) = {"
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+"}
+(59,1,1) = {"
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+"}
+(60,1,1) = {"
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
 "}

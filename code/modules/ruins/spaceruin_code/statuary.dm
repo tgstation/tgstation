@@ -60,15 +60,15 @@
 /obj/machinery/light/sequence
 	brightness = 4
 	on = FALSE
-	var/static/list/lights = list(list(),list(),list(),list(),list(),list(),list(),list(),list(),list())
+	var/static/list/lights = list(list(),list(),list(),list(),list(),list(),list(),list(),list(),list()) //Max of 9 groups
 	var/group = 1
 	var/static/sequencing
 
 /obj/machinery/light/sequence/Initialize()
 	GLOB.machines += src
 	if(!sequencing)
-		LAZYINITLIST(lights)
 		sequencing = TRUE
+		light_sequence(1)
 	lights[group] += src
 
 /obj/machinery/light/sequence/Destroy()
@@ -78,7 +78,6 @@
 /obj/machinery/light/sequence/proc/light_sequence(groupnum, backwards = FALSE)
 	var/obj/machinery/light/sequence/chosen
 	for(var/i in 1 to 4)
-		if
 		chosen = pick(lights[groupnum])
 		if(chosen.status == LIGHT_OK)
 			break
@@ -89,18 +88,18 @@
 	if(backwards)
 		next--
 		if(LAZYLEN(lights[next]))
-			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 80)
+			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 75)
 		else
 			next = 1
 			if(LAZYLEN(lights[next]))
-				addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 80)
+				addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 75)
 	else
 		next++
 		if(LAZYLEN(lights[next]))
-			addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 80)
+			addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 75)
 		else
 			next -= 2
-			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 80)
+			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 75)
 	sleep(100)
 	chosen.flicker(20, FALSE)
 
