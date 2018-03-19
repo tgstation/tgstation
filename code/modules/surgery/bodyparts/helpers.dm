@@ -121,9 +121,7 @@
 			I.forceMove(T)
 
 	clear_alert("embeddedobject")
-	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
-	if(mood)
-		mood.clear_event("embedded")
+	SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 /mob/living/carbon/proc/has_embedded_objects()
 	. = 0
