@@ -386,9 +386,6 @@ Charged extracts:
 	if(!isliving(M) || M.stat == DEAD)
 		to_chat(user, "<span class='warning'>The love potion only works on living things, sicko!</span>")
 		return ..()
-	if(!M.mind)
-		to_chat(user, "<span class='warning'>[M] doesn't seem to be able to feel love...</span>")
-		return ..()
 	if(user == M)
 		to_chat(user, "<span class='warning'>You can't drink the love potion. What are you, a narcissist?</span>")
 		return ..()
@@ -399,15 +396,10 @@ Charged extracts:
 	if(!do_after(user, 50, target = M))
 		return
 	to_chat(user, "<span class='notice'>You feed [M] the love potion!</span>")
-	if(M.mind.special_role)
-		to_chat(M, "<span class'warning'>You start to reflect on your feelings for [user], but you're too focussed on the task at hand!</span>")
-	else
-		var/mob/living/L = user
-		if(istype(L))
-			forge_valentines_objective(M,user)
-			to_chat(M, "<span class='userdanger'>You fall madly in love with [user]!</span>")
-		else
-			to_chat(M, "<span class='warning'>You feel the spark of love between [user] and yourself, but you can't get over the differences between eachother!</span>")
+	to_chat(M, "<span class='notice'>You develop feelings for [user], and anyone [p_they(user)] like.</span>")
+	if(!("[REF(user)]" in M.faction) && M.mind)
+		M.mind.store_memory("You have strong feelings for [user].")
+	M.faction |= "[REF(user)]"
 	qdel(src)
 
 /obj/item/slimepotion/peacepotion
