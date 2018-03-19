@@ -2605,8 +2605,7 @@
 /obj/structure/closet/secure_closet/lethalshots,
 /obj/machinery/camera/motion{
 	c_tag = "Armory Motion Sensor";
-	dir = 2;
-	name = "motion-sensitive security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
@@ -17522,7 +17521,6 @@
 /obj/machinery/camera{
 	c_tag = "Departures - Port";
 	dir = 4;
-	name = "security camera";
 	pixel_y = -7
 	},
 /turf/open/floor/plasteel/escape{

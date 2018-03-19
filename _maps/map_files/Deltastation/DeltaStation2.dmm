@@ -3884,8 +3884,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security Post - Arrivals";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 6
@@ -4993,8 +4992,7 @@
 /obj/item/clipboard,
 /obj/machinery/camera{
 	c_tag = "Vacant Office";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/vacantoffice)
@@ -15405,8 +15403,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security Post - Cargo";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 6
@@ -21993,8 +21990,7 @@
 "aZm" = (
 /obj/machinery/camera{
 	c_tag = "Security - Prison Port";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/red/corner,
 /area/security/prison)
@@ -22093,8 +22089,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Security - Prison";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/red/corner,
 /area/security/prison)
@@ -22318,8 +22313,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Security - Escape Pod";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 5
@@ -26226,8 +26220,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Medbay";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/whitered/side{
 	dir = 1
@@ -26315,8 +26308,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Office Fore";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 1
@@ -27161,8 +27153,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Head of Security's Office";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 4
@@ -28095,8 +28086,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Head of Security's Quarters";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
@@ -29363,8 +29353,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Transfer Centre";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 9
@@ -32869,8 +32858,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Office Aft";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/main)
@@ -33493,8 +33481,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Security - Brig Fore";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
@@ -35036,8 +35023,7 @@
 /obj/item/pen,
 /obj/machinery/camera{
 	c_tag = "Security - Interrogation Monitoring";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -35924,8 +35910,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Interrogation";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -37053,8 +37038,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Transfer Centre Aft";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /obj/structure/sign/poster/official/work_for_a_future{
 	pixel_y = -32
@@ -39999,8 +39983,7 @@
 /obj/structure/closet/secure_closet/evidence,
 /obj/machinery/camera{
 	c_tag = "Security - Evidence Storage";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -40784,8 +40767,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Detective's Interrogation";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -41686,8 +41668,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Detective's Office";
-	dir = 4;
-	name = "security camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -41820,8 +41801,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
 	c_tag = "Security - Brig Center";
-	dir = 4;
-	name = "security camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -44662,8 +44642,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Warden's Office";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 5
@@ -45321,8 +45300,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security Post - Engineering";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 5
@@ -49279,8 +49257,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Armory - Interior";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -49907,8 +49884,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Courtroom - Fore";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = 32
@@ -50075,8 +50051,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Security - Brig Aft";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 4
@@ -51133,8 +51108,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Gear Room";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 1
@@ -52701,8 +52675,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Lawyer's Office";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -52735,8 +52708,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Brig Desk";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
@@ -53424,8 +53396,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Courtroom - Center";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
@@ -55765,8 +55736,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Shooting Range";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/security/range)
@@ -56768,8 +56738,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Courtroom - Aft";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -72376,7 +72345,6 @@
 /obj/machinery/camera{
 	c_tag = "Security Post - Science";
 	dir = 8;
-	name = "security camera";
 	network = list("ss13","rd")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -73381,8 +73349,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security Post - Medbay";
-	dir = 4;
-	name = "security camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 10
@@ -99861,8 +99828,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Departures Port";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 9
@@ -100553,8 +100519,7 @@
 /obj/machinery/light,
 /obj/machinery/camera{
 	c_tag = "Security - Departures Starboard";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 6
