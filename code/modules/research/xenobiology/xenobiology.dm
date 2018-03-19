@@ -600,6 +600,10 @@
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
 		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
 		to_chat(user, "<span class='notice'>[SM] accepts [src] and suddenly becomes attentive and aware. It worked!</span>")
+		if(SM.flags_2 & HOLOGRAM_2) //Check to see if it's a holodeck creature
+			to_chat(SM, "<span class='userdanger'>For a moment, you are aware that you are not a real creature, but instead a holoform. YOu feel a moment of existential sadness, and then suddenly you feel your form solidify! You're real!</span>")
+			SM.flags_2 &= ~HOLOGRAM_2
+			to_chat(user, "<span class='notice'>The power of [src] rapidly transforms [SM]'s holographic form into real flesh! That's a relief, it'd be rather sad if a sentient being was nothing more than a projection of light, doomed to instant death if anything ever went wrong with the holodeck.</span>")
 		SM.copy_known_languages_from(user, FALSE)
 		after_success(user, SM)
 		qdel(src)
