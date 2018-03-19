@@ -1287,8 +1287,7 @@
 	base_state = "left";
 	dir = 2;
 	icon_state = "left";
-	name = "Chemistry";
-	req_access_txt = "0"
+	name = "Chemistry"
 	},
 /obj/machinery/door/window/southleft{
 	base_state = "left";
@@ -2195,8 +2194,7 @@
 "hk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Bay";
-	req_access_txt = "0"
+	name = "Cargo Bay"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
@@ -2365,8 +2363,7 @@
 "hC" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Bay";
-	req_access_txt = "0"
+	name = "Cargo Bay"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
@@ -2691,8 +2688,7 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "il" = (
 /obj/machinery/door/airlock{
-	name = "Cabin 2";
-	req_access_txt = "0"
+	name = "Cabin 2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -2704,8 +2700,7 @@
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "im" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Restrooms";
-	req_access_txt = "0"
+	name = "Unisex Restrooms"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -2714,8 +2709,7 @@
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "in" = (
 /obj/machinery/door/airlock{
-	name = "Cabin 4";
-	req_access_txt = "0"
+	name = "Cabin 4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -3160,8 +3154,7 @@
 /area/lavaland/surface/outdoors)
 "jf" = (
 /obj/machinery/door/airlock{
-	name = "Cabin 1";
-	req_access_txt = "0"
+	name = "Cabin 1"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -3188,8 +3181,7 @@
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "jh" = (
 /obj/machinery/door/airlock{
-	name = "Cabin 3";
-	req_access_txt = "0"
+	name = "Cabin 3"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -4255,8 +4247,7 @@
 	base_state = "right";
 	dir = 1;
 	icon_state = "right";
-	name = "Bar";
-	req_access_txt = "0"
+	name = "Bar"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{

@@ -290,12 +290,11 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/solar_control)
 "aT" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 8;
 	environ = 0;
 	equipment = 0;
 	lighting = 0;
-	locked = 0;
 	name = "Starboard Solar APC";
 	pixel_x = -24
 	},
@@ -887,7 +886,6 @@
 "cV" = (
 /obj/machinery/door/airlock/command{
 	name = "E.V.A.";
-	req_access = null;
 	req_access_txt = "18"
 	},
 /obj/structure/cable{
@@ -3270,7 +3268,6 @@
 "kR" = (
 /obj/machinery/door/airlock/security{
 	name = "Security";
-	req_access = null;
 	req_access_txt = "1"
 	},
 /obj/structure/cable{
@@ -4209,12 +4206,11 @@
 /area/ruin/space/derelict/se_solar)
 "nZ" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 8;
 	environ = 0;
 	equipment = 0;
 	lighting = 0;
-	locked = 0;
 	name = "Worn-out APC";
 	pixel_x = -24
 	},
