@@ -540,22 +540,20 @@
 	return TRUE
 
 
-/obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
+/obj/machinery/light/proc/flicker(var/amount = rand(10, 20), lit = TRUE)
 	set waitfor = 0
 	if(flickering)
 		return
-	var/initial_state = on
-	flickering = TRUE
-	if(on && status == LIGHT_OK)
+	if(status == LIGHT_OK)
+		flickering = TRUE
 		for(var/i = 0; i < amount; i++)
 			if(status != LIGHT_OK)
 				break
 			on = !on
 			update(0)
-			sleep(rand(2, 10))
-			if(i == amount--)
-				on = (initial_state && status == LIGHT_OK)
-				flickering = FALSE
+			sleep(rand(1, 5))
+		on = (lit && status == LIGHT_OK)
+		flickering = FALSE
 		update(0)
 
 

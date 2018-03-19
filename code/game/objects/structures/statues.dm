@@ -275,3 +275,33 @@
 	name = "snowman"
 	desc = "Several lumps of snow put together to form a snowman."
 	icon_state = "snowman"
+
+/////////////////////haunted//////////////////////////////////////
+
+/obj/structure/statue/haunted
+	desc = "An incredibly lifelike marble carving. Its eyes seem to follow you.."
+	icon_state = "human_male"
+	anchored = TRUE
+	var/statue_type = /mob/living/simple_animal/hostile/statue/haunted
+
+/obj/structure/statue/haunted/Initialize()
+	if(prob(20))
+		new statue_type(get_turf(src))
+		return INITIALIZE_HINT_QDEL
+	return ..()
+
+/obj/structure/statue/haunted/female
+	icon_state = "human_female"
+	statue_type = /mob/living/simple_animal/hostile/statue/haunted/female
+
+/obj/structure/statue/haunted/corgi
+	icon_state = "corgi"
+	statue_type = /mob/living/simple_animal/hostile/statue/haunted/corgi
+
+/obj/structure/statue/haunted/angel
+	icon_state = "angel"
+	statue_type = /mob/living/simple_animal/hostile/statue/haunted/angel
+
+/obj/structure/statue/angel
+	anchored = TRUE
+	icon_state = "angel"

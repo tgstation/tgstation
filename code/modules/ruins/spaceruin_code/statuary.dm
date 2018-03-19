@@ -37,24 +37,72 @@
 	DELAY 200;"}
 
 /obj/machinery/light/spooky
-	var/frequency = 3000 // Max time between flickering in deciseconds
+	brightness = 6
+	var/default_on = FALSE
+	var/frequency = 900 // Max time between flickering in deciseconds
 
-/obj/machinery/light/spooky/off
-	on = FALSE
-	frequency = 900
+/obj/machinery/light/spooky/on
+	default_on = TRUE
+	frequency = 3000
 
 /obj/machinery/light/spooky/Initialize()
-	..()
+	GLOB.machines += src
 	flicker_loop()
 
 /obj/machinery/light/spooky/proc/flicker_loop()
 	addtimer(CALLBACK(src, .proc/flicker_loop), rand(200, frequency))
-	if(on)
-		flicker()
+	if(default_on)
+		flicker(20)
 	else
-		seton(TRUE)
-		flicker()
-		seton(FALSE)
+		flicker(20, FALSE)
+
+
+/obj/machinery/light/sequence
+	brightness = 4
+	on = FALSE
+	var/static/list/lights = list(list(),list(),list(),list(),list(),list(),list(),list(),list(),list())
+	var/group = 1
+	var/static/sequencing
+
+/obj/machinery/light/sequence/Initialize()
+	GLOB.machines += src
+	if(!sequencing)
+		LAZYINITLIST(lights)
+		sequencing = TRUE
+	lights[group] += src
+
+/obj/machinery/light/sequence/Destroy()
+	lights[group] -= src
+	. = ..()
+
+/obj/machinery/light/sequence/proc/light_sequence(groupnum, backwards = FALSE)
+	var/obj/machinery/light/sequence/chosen
+	for(var/i in 1 to 4)
+		if
+		chosen = pick(lights[groupnum])
+		if(chosen.status == LIGHT_OK)
+			break
+	if(chosen)
+		to_chat(world, "Flickering [chosen] at loc: [chosen.x], [chosen.y] in group #[chosen.group]")
+		chosen.flicker(20)
+	var/next = groupnum
+	if(backwards)
+		next--
+		if(LAZYLEN(lights[next]))
+			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 80)
+		else
+			next = 1
+			if(LAZYLEN(lights[next]))
+				addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 80)
+	else
+		next++
+		if(LAZYLEN(lights[next]))
+			addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 80)
+		else
+			next -= 2
+			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 80)
+	sleep(100)
+	chosen.flicker(20, FALSE)
 
 /mob/living/simple_animal/hostile/zombie
 	name = "undead"
@@ -64,12 +112,13 @@
 	icon_living = "zombie"
 	icon_dead = "zombie_dead"
 	turns_per_move = 5
+	move_to_delay = 5
 	speak_emote = list("groans")
 	emote_see = list("groans")
 	a_intent = "harm"
 	maxHealth = 60
 	health = 60
-	speed = 2
+	speed = 2.5
 	obj_damage = 40
 	melee_damage_lower = 20
 	melee_damage_upper = 20
