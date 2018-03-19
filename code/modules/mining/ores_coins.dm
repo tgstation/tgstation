@@ -49,6 +49,15 @@
 
 	return TRUE
 
+/obj/item/stack/ore/burn()
+	if(!refined_type)
+		return ..()
+	var/obj/item/stack/sheet/S = new refined_type(drop_location())
+	var/amountrefined = round(amount/2)
+	S.amount = amountrefined
+	S.update_icon()
+	qdel(src)
+
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
