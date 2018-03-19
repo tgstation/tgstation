@@ -3,6 +3,8 @@
 #define CHALLENGE_MIN_PLAYERS 1  // hippie-code: Changed this som ops may ALWAYS declare war.
 #define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
+GLOBAL_LIST_EMPTY(jam_on_wardec)
+
 /obj/item/device/nuclear_challenge
 	name = "Declaration of War (Challenge Mode)"
 	icon_state = "gangtool-red"
