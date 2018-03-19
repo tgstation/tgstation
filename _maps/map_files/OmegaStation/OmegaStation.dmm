@@ -14986,6 +14986,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/item/areaeditor/blueprints,
+/obj/item/tank/jetpack/suit,
 /turf/open/floor/plasteel/vault/side{
 	dir = 8
 	},
@@ -17562,7 +17563,7 @@
 	dir = 1;
 	name = "Gas to Filter"
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/engine{
 	dir = 4;
 	pixel_x = -23
 	},
@@ -31336,6 +31337,7 @@
 /obj/item/storage/belt/utility,
 /obj/item/clothing/glasses/meson/engine/tray,
 /obj/item/clothing/glasses/meson/engine/tray,
+/obj/item/pipe_dispenser,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "eUz" = (
