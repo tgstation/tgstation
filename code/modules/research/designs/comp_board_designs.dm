@@ -68,7 +68,7 @@
 	id = "operating"
 	build_path = /obj/item/circuitboard/computer/operating
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/pandemic
 	name = "Computer Design (PanD.E.M.I.C. 2200)"
