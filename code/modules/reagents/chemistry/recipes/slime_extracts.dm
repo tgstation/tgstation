@@ -513,7 +513,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimeradio/on_reaction(datum/reagents/holder, created_volume)
-	new /obj/item/slimepotion/slimeradio(get_turf(holder.my_atom))
+	new /obj/item/slimepotion/slime/slimeradio(get_turf(holder.my_atom))
 	..()
 
 //Cerulean

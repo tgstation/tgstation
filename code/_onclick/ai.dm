@@ -10,9 +10,8 @@
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
 /mob/living/silicon/ai/DblClickOn(var/atom/A, params)
-	if(client.click_intercept)
-		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
-			return
+	if(check_click_intercept(params,A))
+		return
 
 	if(control_disabled || incapacitated())
 		return
@@ -27,9 +26,8 @@
 		return
 	next_click = world.time + 1
 
-	if(client.click_intercept)
-		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
-			return
+	if(check_click_intercept(params,A))
+		return
 
 	if(control_disabled || incapacitated())
 		return

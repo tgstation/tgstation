@@ -6,7 +6,7 @@
 	helptext = "Will alert nearby crew if any external limbs are \
 		regenerated. Can be used while unconscious."
 	chemical_cost = 10
-	dna_cost = 0
+	dna_cost = 1 // hippie edit - AGAIN it refused to modularize. This time it was so bad that it refused to appear in the uplink entirely.
 	req_stat = UNCONSCIOUS
 	always_keep = TRUE
 
