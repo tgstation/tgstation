@@ -25,6 +25,22 @@
 	name = "Sunburst"
 	icon_state = "sunburst"
 
+/datum/sprite_accessory/screen/sunburst
+	name = "Harm"
+	icon_state = "harm"
+
+/datum/sprite_accessory/screen/sunburst
+	name = "Help"
+	icon_state = "help"
+
+/datum/sprite_accessory/screen/sunburst
+	name = "Rainbow"
+	icon_state = "rainbow"
+
+/datum/sprite_accessory/screen/sunburst
+	name = "Blaze"
+	icon_state = "blaze"
+
 /datum/sprite_accessory/screen/static
 	name = "Static"
 	icon_state = "static"
