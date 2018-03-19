@@ -36,33 +36,25 @@
 				H.blur_eyes(3) //We need to add more shit down here
 
 		H.adjust_disgust(-0.5 * disgust_metabolism)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 	switch(H.disgust)
 		if(0 to DISGUST_LEVEL_GROSS)
 			H.clear_alert("disgust")
-			if(mood)
-				mood.clear_event("disgust")
+			H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "disgust")
 		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
 			H.throw_alert("disgust", /obj/screen/alert/gross)
-			if(mood)
-				mood.add_event("disgust", /datum/mood_event/disgust/gross)
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgust/gross)
 		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
 			H.throw_alert("disgust", /obj/screen/alert/verygross)
-			if(mood)
-				mood.add_event("disgust", /datum/mood_event/disgust/verygross)
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgust/verygross)
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			H.throw_alert("disgust", /obj/screen/alert/disgusted)
-			if(mood)
-				mood.add_event("disgust", /datum/mood_event/disgust/disgusted)
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgust/disgusted)
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
 	var/mob/living/carbon/human/H = owner
 	if(istype(H))
 		H.clear_alert("disgust")
-		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
-		if(mood)
-			mood.clear_event("disgust")
-
+		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "disgust")
 	..()
 
 /obj/item/organ/stomach/fly

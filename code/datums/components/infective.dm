@@ -36,7 +36,7 @@
 		try_infect(M)
 
 /datum/component/infective/proc/try_infect_collide(atom/A)
-	var/atom/P = parent
+	var/atom/movable/P = parent
 	if(P.throwing)
 		//this will be handled by try_infect_impact_zone()
 		return

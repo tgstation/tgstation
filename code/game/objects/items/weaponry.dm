@@ -443,6 +443,10 @@
 	throw_range = 2
 	attack_verb = list("busted")
 
+/obj/item/statuebust/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 1000), 0)
+
 /obj/item/tailclub
 	name = "tail club"
 	desc = "For the beating to death of lizards with their own tails."

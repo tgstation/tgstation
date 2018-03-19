@@ -21,17 +21,17 @@
 		for(var/i in WF.time_left_list)
 			add_wet(text2num(i), WF.time_left_list[i])
 
-/datum/component/wet_floor/Initialize(strength, duration_minimum, duration_add, duration_maximum, permanent = FALSE)
+/datum/component/wet_floor/Initialize(strength, duration_minimum, duration_add, duration_maximum, _permanent = FALSE)
 	if(!isopenturf(parent))
 		. = COMPONENT_INCOMPATIBLE
 		CRASH("Wet floor component attempted to be applied to a non open turf!")
 	add_wet(strength, duration_minimum, duration_add, duration_maximum)
 	RegisterSignal(COMSIG_TURF_IS_WET, .proc/is_wet)
 	RegisterSignal(COMSIG_TURF_MAKE_DRY, .proc/dry)
+	permanent = _permanent
 	if(!permanent)
 		START_PROCESSING(SSwet_floors, src)
-	if(gc())
-		stack_trace("Warning: Wet floor component added and immediately deleted! What a waste of time!")
+	addtimer(CALLBACK(src, .proc/gc, TRUE), 1)		//GC after initialization.
 
 /datum/component/wet_floor/Destroy()
 	STOP_PROCESSING(SSwet_floors, src)
@@ -140,10 +140,23 @@
 	var/turf/T = to_datum
 	T.add_overlay(current_overlay)
 
-/datum/component/wet_floor/proc/add_wet(type, duration_minimum = 0, duration_add = 0, duration_maximum = MAXIMUM_WET_TIME)
+/datum/component/wet_floor/proc/add_wet(type, duration_minimum = 0, duration_add = 0, duration_maximum = MAXIMUM_WET_TIME, _permanent = FALSE)
 	var/static/list/allowed_types = list(TURF_WET_WATER, TURF_WET_LUBE, TURF_WET_ICE, TURF_WET_PERMAFROST)
-	if(!duration_minimum || duration_minimum < 0 || !type || !(type in allowed_types))
+	if(duration_minimum <= 0 || !type)
 		return FALSE
+	if(type in allowed_types)
+		return _do_add_wet(type, duration_minimum, duration_add, duration_maximum)
+	else
+		. = NONE
+		for(var/i in allowed_types)
+			if(!(type & i))
+				continue
+			. |= _do_add_wet(i, duration_minimum, duration_add, duration_maximum)
+	if(_permanent)
+		permanent = TRUE
+		STOP_PROCESSING(SSwet_floors, src)
+
+/datum/component/wet_floor/proc/_do_add_wet(type, duration_minimum, duration_add, duration_maximum)
 	var/time = 0
 	if(LAZYACCESS(time_left_list, "[type]"))
 		time = CLAMP(LAZYACCESS(time_left_list, "[type]") + duration_add, duration_minimum, duration_maximum)
@@ -153,10 +166,14 @@
 	check(TRUE)
 	return TRUE
 
-/datum/component/wet_floor/proc/gc()
+/datum/component/wet_floor/proc/gc(on_init = FALSE)
 	if(!LAZYLEN(time_left_list))
+		if(on_init)
+			var/turf/T = parent
+			stack_trace("Warning: Wet floor component gc'd right initializatoin! What a waste of time and CPU! Type = [T? T.type : "ERROR - NO PARENT"], Coords = [istype(T)? COORD(T) : "ERROR - INVALID PARENT"].")
 		qdel(src)
 		return TRUE
+	return FALSE
 
 /datum/component/wet_floor/proc/check(force_update = FALSE)
 	var/changed = FALSE

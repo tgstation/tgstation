@@ -30,9 +30,7 @@
 				L.embedded_objects -= I
 			if(!H.has_embedded_objects())
 				H.clear_alert("embeddedobject")
-				GET_COMPONENT_FROM(mood, /datum/component/mood, H)
-				if(mood)
-					mood.clear_event("embedded")
+				H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 			if(objects > 0)
 				user.visible_message("[user] successfully removes [objects] objects from [H]'s [L]!", "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>")

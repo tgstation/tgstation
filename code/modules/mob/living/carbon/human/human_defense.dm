@@ -144,9 +144,7 @@
 					I.forceMove(src)
 					L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
 					visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>[I] embeds itself in your [L.name]!</span>")
-					GET_COMPONENT_FROM(mood, /datum/component/mood, src)
-					if(mood)
-						mood.add_event("embedded", /datum/mood_event/embedded)
+					SendSignal(COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 					hitpush = FALSE
 					skipcatch = TRUE //can't catch the now embedded item
 

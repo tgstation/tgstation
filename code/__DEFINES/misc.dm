@@ -183,9 +183,9 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 //Wet floor type flags. Stronger ones should be higher in number.
 #define TURF_DRY		0
 #define TURF_WET_WATER	1
-#define TURF_WET_LUBE	2
+#define TURF_WET_PERMAFROST	2
 #define TURF_WET_ICE 4
-#define TURF_WET_PERMAFROST	8
+#define TURF_WET_LUBE	8
 
 #define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
 

@@ -19,9 +19,7 @@
 	affecting.receive_damage(CLAMP(brute_dam/2, 15, 50), CLAMP(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
 	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
 	C.emote("scream")
-	GET_COMPONENT_FROM(mood, /datum/component/mood, C)
-	if(mood)
-		mood.add_event("dismembered", /datum/mood_event/dismembered)
+	C.SendSignal(COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
 	drop_limb()
 
 	if(dam_type == BURN)
@@ -104,9 +102,7 @@
 		I.forceMove(src)
 	if(!C.has_embedded_objects())
 		C.clear_alert("embeddedobject")
-		GET_COMPONENT_FROM(mood, /datum/component/mood, C)
-		if(mood)
-			mood.add_event("embedded")
+		C.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 	if(!special)
 		if(C.dna)

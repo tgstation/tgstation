@@ -954,9 +954,6 @@
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/fire(src)
 		throw_alert("fire", /obj/screen/alert/fire)
-		GET_COMPONENT_FROM(mood, /datum/component/mood, src)
-		if(mood)
-			mood.add_event("on_fire", /datum/mood_event/on_fire)
 		update_fire()
 		return TRUE
 	return FALSE
@@ -968,9 +965,7 @@
 		for(var/obj/effect/dummy/fire/F in src)
 			qdel(F)
 		clear_alert("fire")
-		GET_COMPONENT_FROM(mood, /datum/component/mood, src)
-		if(mood)
-			mood.clear_event("on_fire")
+		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
