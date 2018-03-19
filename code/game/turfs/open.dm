@@ -7,7 +7,7 @@
 	var/list/archdrops
 	var/wet
 
-/turf/open/Initialize()
+/turf/open/ComponentInitialize()
 	. = ..()
 	if(wet)
 		AddComponent(/datum/component/wet_floor, wet, INFINITY, 0, INFINITY, TRUE)
