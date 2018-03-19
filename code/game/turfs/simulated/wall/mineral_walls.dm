@@ -130,7 +130,21 @@
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	hardness = 70
 	explosion_block = 0
-	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood)
+	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood/nonmetal)
+
+/turf/closed/wall/mineral/wood/nonmetal
+	desc = "A solidly wooden wall. It's a bit weaker than a wall made with metal."
+	girder_type = /obj/structure/barricade/wooden
+	hardness = 50
+	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood/nonmetal)
+
+/turf/closed/wall/mineral/wood/nonmetal/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/twohanded/fireaxe))
+		to_chat(user, "<span class='notice'>You start to break down the wooden wall.</span>")
+		if(do_after(user, 10, target=src))
+			dismantle_wall(FALSE,FALSE)
+			return
+	return ..()
 
 /turf/closed/wall/mineral/iron
 	name = "rough metal wall"
@@ -250,7 +264,7 @@
 /turf/closed/wall/mineral/plastitanium/overspace
 	icon_state = "map-overspace"
 	fixed_underlay = list("space"=1)
-	
+
 /turf/closed/wall/mineral/plastitanium/explosive/ex_act(severity)
 	var/datum/explosion/acted_explosion = null
 	for(var/datum/explosion/E in GLOB.explosions)

@@ -1565,6 +1565,7 @@
 #include "code\modules\hydroponics\beekeeping\beekeeper_suit.dm"
 #include "code\modules\hydroponics\beekeeping\honey_frame.dm"
 #include "code\modules\hydroponics\beekeeping\honeycomb.dm"
+#include "code\modules\hydroponics\crafted\gaiasblessing.dm"
 #include "code\modules\hydroponics\grown\ambrosia.dm"
 #include "code\modules\hydroponics\grown\apple.dm"
 #include "code\modules\hydroponics\grown\banana.dm"
