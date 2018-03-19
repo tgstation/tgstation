@@ -192,6 +192,14 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/glass/beaker( src )
 
+/obj/item/storage/box/medsprays
+	name = "box of medical sprayers"
+	desc = "A box full of medical sprayers, with unscrewable caps and precision spray heads."
+
+/obj/item/storage/box/medsprays/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/medspray( src )
+
 /obj/item/storage/box/injectors
 	name = "box of DNA injectors"
 	desc = "This box contains injectors, it seems."
@@ -934,3 +942,12 @@ obj/item/storage/box/clown
 /obj/item/storage/box/fountainpens/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/pen/fountain(src)
+
+/obj/item/storage/box/holy_grenades
+	name = "box of holy hand grenades"
+	desc = "Contains several grenades used to rapidly purge heresy."
+	illustration = "flashbang"
+
+/obj/item/storage/box/holy_grenades/PopulateContents()
+	for(var/i in 1 to 7)
+		new/obj/item/grenade/chem_grenade/holy(src)

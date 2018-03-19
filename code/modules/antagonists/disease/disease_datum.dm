@@ -27,14 +27,13 @@
 /datum/antagonist/disease/apply_innate_effects(mob/living/mob_override)
 	if(!istype(owner.current, /mob/camera/disease))
 		var/turf/T = get_turf(owner.current)
-		T = T ? T : locate(1, 1, 1)
+		T = T ? T : SSmapping.get_station_center()
 		var/mob/camera/disease/D = new /mob/camera/disease(T)
 		owner.transfer_to(D)
 
 /datum/antagonist/disease/admin_add(datum/mind/new_owner,mob/admin)
 	..()
 	var/mob/camera/disease/D = new_owner.current
-	D.infect_patient_zero()
 	D.pick_name()
 
 /datum/antagonist/disease/roundend_report()

@@ -28,7 +28,6 @@
 	var/safe = TRUE //whether the door detects things and mobs in its way and reopen or crushes them.
 	var/locked = FALSE //whether the door is bolted or not.
 	var/assemblytype //the type of door frame to drop during deconstruction
-	var/auto_close //TO BE REMOVED, no longer used, it's just preventing a runtime with a map var edit.
 	var/datum/effect_system/spark_spread/spark_system
 	var/damage_deflection = 10
 	var/real_explosion_block	//ignore this, just use explosion_block
@@ -44,11 +43,6 @@
 			to_chat(user, "<span class='notice'>In the event of a red alert, its access requirements will automatically lift.</span>")
 	if(!poddoor)
 		to_chat(user, "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>")
-
-/obj/machinery/door/check_access(access)
-	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
-		return TRUE
-	return ..()
 
 /obj/machinery/door/check_access_list(list/access_list)
 	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)

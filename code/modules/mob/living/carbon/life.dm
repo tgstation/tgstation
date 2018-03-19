@@ -150,6 +150,7 @@
 			adjustOxyLoss(3)
 			failed_last_breath = 1
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+		SendSignal(COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
 
 	else //Enough oxygen
 		failed_last_breath = 0
@@ -157,6 +158,7 @@
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
 		clear_alert("not_enough_oxy")
+		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
 	breath_gases[/datum/gas/oxygen][MOLES] -= oxygen_used
 	breath_gases[/datum/gas/carbon_dioxide][MOLES] += oxygen_used

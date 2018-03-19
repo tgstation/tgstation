@@ -45,9 +45,11 @@
 	if(druggy)
 		overlay_fullscreen("high", /obj/screen/fullscreen/high)
 		throw_alert("high", /obj/screen/alert/high)
+		SendSignal(COMSIG_ADD_MOOD_EVENT, "high", /datum/mood_event/drugs/high)
 	else
 		clear_fullscreen("high")
 		clear_alert("high")
+		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "high")
 
 /mob/living/carbon/set_drugginess(amount)
 	druggy = max(amount, 0)
@@ -97,4 +99,3 @@
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
 		. = B.cure_all_traumas(resilience)
-

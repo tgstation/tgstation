@@ -109,6 +109,7 @@
 		A.symptoms += S.Copy()
 	A.properties = properties.Copy()
 	A.id = id
+	A.mutable = mutable
 	//this is a new disease starting over at stage 1, so processing is not copied
 	return A
 
@@ -166,13 +167,10 @@
 
 	var/the_id = GetDiseaseID()
 	if(!SSdisease.archive_diseases[the_id])
-		if(new_name)
-			AssignName()
 		SSdisease.archive_diseases[the_id] = src // So we don't infinite loop
 		SSdisease.archive_diseases[the_id] = Copy()
-
-	var/datum/disease/advance/A = SSdisease.archive_diseases[the_id]
-	name = A.name
+		if(new_name)
+			AssignName()
 
 //Generate disease properties based on the effects. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()

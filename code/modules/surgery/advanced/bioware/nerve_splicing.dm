@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/nerve_splicing
+	name = "Nerve Splicing Surgery Disk"
 	desc = "The disk provides instructions on how to splice the circulatory system to counter stuns and paralysis."
 	surgeries = list(/datum/surgery/advanced/bioware/nerve_splicing)
 

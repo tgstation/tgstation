@@ -144,9 +144,7 @@
 /area/mine/laborcamp)
 "aB" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Infirmary";
-	req_access_txt = "0"
+	name = "Infirmary"
 	},
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
@@ -457,8 +455,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Prisoner Airlock";
-	req_access_txt = "0"
+	name = "Labor Camp Shuttle Prisoner Airlock"
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
@@ -500,7 +497,6 @@
 /area/mine/laborcamp)
 "bC" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/machinery/computer/shuttle/mining{
@@ -587,7 +583,7 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "bO" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/purple/corner{
 	dir = 8
 	},
@@ -757,8 +753,7 @@
 /obj/machinery/door/airlock/external{
 	glass = 1;
 	name = "Mining Shuttle Airlock";
-	opacity = 0;
-	req_access_txt = "0"
+	opacity = 0
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
@@ -915,8 +910,7 @@
 /area/mine/production)
 "cJ" = (
 /obj/machinery/door/airlock{
-	name = "Closet";
-	req_access_txt = "0"
+	name = "Closet"
 	},
 /turf/open/floor/plating,
 /area/mine/production)
@@ -1049,7 +1043,6 @@
 "dc" = (
 /obj/structure/closet/crate,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/bot,
@@ -1112,7 +1105,6 @@
 	dir = 8
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/machinery/iv_drip,
@@ -1380,9 +1372,7 @@
 /area/mine/living_quarters)
 "dR" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Infirmary";
-	req_access_txt = "0"
+	name = "Infirmary"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -1467,7 +1457,6 @@
 /area/mine/living_quarters)
 "ee" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
@@ -1864,7 +1853,6 @@
 /area/mine/living_quarters)
 "fc" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/purple/corner{
@@ -1886,7 +1874,6 @@
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/carpet,
@@ -1981,7 +1968,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet,
@@ -2127,7 +2113,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet,
@@ -2158,7 +2143,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet,
@@ -3331,8 +3315,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Prisoner Airlock";
-	req_access_txt = "0"
+	name = "Labor Camp Shuttle Prisoner Airlock"
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
@@ -3355,8 +3338,7 @@
 /obj/machinery/door/airlock/external{
 	glass = 1;
 	name = "Mining Shuttle Airlock";
-	opacity = 0;
-	req_access_txt = "0"
+	opacity = 0
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)

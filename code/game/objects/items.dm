@@ -530,6 +530,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		M.take_bodypart_damage(7)
 
+	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "eye_stab", /datum/mood_event/eye_stab)
+
 	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
 	M.adjust_blurriness(3)
@@ -673,6 +675,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return 0
 
 /obj/item/attack_animal(mob/living/simple_animal/M)
+	if (obj_flags & CAN_BE_HIT)
+		return ..()
 	return 0
 
 /obj/item/mech_melee_attack(obj/mecha/M)

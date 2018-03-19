@@ -320,7 +320,6 @@
 /datum/config_entry/number/client_warn_version
 	config_entry_value = null
 	min_val = 500
-	max_val = DM_VERSION - 1
 
 /datum/config_entry/string/client_warn_message
 	config_entry_value = "Your version of byond may have issues or be blocked from accessing this server in the future."
@@ -330,7 +329,6 @@
 /datum/config_entry/number/client_error_version
 	config_entry_value = null
 	min_val = 500
-	max_val = DM_VERSION - 1
 
 /datum/config_entry/string/client_error_message
 	config_entry_value = "Your version of byond is too old, may have issues, and is blocked from accessing this server."

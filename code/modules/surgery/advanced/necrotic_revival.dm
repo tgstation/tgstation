@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/necrotic_revival
+	name = "Necrotic Revival Surgery Disk"
 	desc = "The disk provides instructions on how to make bodies keep working past death."
 	surgeries = list(/datum/surgery/advanced/necrotic_revival)
 
