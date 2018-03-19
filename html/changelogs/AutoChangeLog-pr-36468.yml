@@ -1,0 +1,12 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - rscadd: "It's suicide HoPline prevention week at Omegastation!"
+  - rscadd: "Navigation beacons and a brand-new Officer Beepsky unit have been installed. This means that crewmembers can now use medibots, janibots and other bots as well."
+  - rscadd: "The atmospherics department has been outfitted with all missing gases as well as an incinerator and a hardsuit."
+  - rscadd: "The size of the botany and xenobiology departments have been increased in order to increase productivity. The medbay O2 port has been moved so that doctors can access the table next to it."
+  - rscadd: "RnD now has circuitry tools; medbay has stethoscopes+wrench+beaker/pill bottle boxes and primary tool storage has multitools. Enginers no longer have to share a single pair of insulated gloves either."
+  - rscadd: "Engineers now have access to an Engi-Vend vending machine as well as missing tools like inducers. Circuitry storage has a smoke machine board and a solars crate in case the engine blows up."
+  - tweak: "Blueprints have been moved from the vault safe to secure storage in order to speed up construction projects."
+  - bugfix: "The AI sat transit tube now works! Turret controls can now be accessed from the outside. The first two turrets now use the proper type of gun. The telecomms air alarm will no longer report false alarms."
+  - bugfix: "The main hallway's firelocks now no longer all close at once."
