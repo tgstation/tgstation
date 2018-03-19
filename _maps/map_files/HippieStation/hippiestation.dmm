@@ -48854,7 +48854,7 @@
 	},
 /area/crew_quarters/heads/chief)
 "cqk" = (
-/obj/structure/closet/secure_closet/engineering_chief
+/obj/structure/closet/secure_closet/engineering_chief,
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "CE Office APC";
