@@ -54,7 +54,7 @@
 	force = 0
 	throwforce = 0
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy
-	clumsy_check = 0
+	clumsy_check = FALSE
 	item_flags = NONE
 	casing_ejector = FALSE
 	can_suppress = FALSE
@@ -87,6 +87,7 @@
 	item_flags = NONE
 	mag_type = /obj/item/ammo_box/magazine/toy/smgm45/riot
 	casing_ejector = FALSE
+	clumsy_check = FALSE
 
 /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted //Use this for actual toys
 	pin = /obj/item/device/firing_pin
@@ -103,6 +104,7 @@
 	item_flags = NONE
 	mag_type = /obj/item/ammo_box/magazine/toy/m762/riot
 	casing_ejector = FALSE
+	clumsy_check = FALSE
 
 /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted //Use this for actual toys
 	pin = /obj/item/device/firing_pin
