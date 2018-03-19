@@ -146,6 +146,7 @@
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "asclepius_dormant"
 	var/activated = FALSE
+	var/usedHand
 
 /obj/item/rod_of_asclepius/attack_self(mob/user)
 	if(activated)
@@ -154,6 +155,10 @@
 		to_chat(user, "<span class='warning'>The snake carving seems to come alive, if only for a moment, before returning to it's dormant state, almost as if it finds you incapable of holding it's oath.</span>")
 		return
 	var/mob/living/carbon/itemUser = user
+	usedHand = itemUser.get_held_index_of_item(src)
+	if(itemUser.has_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH))
+		to_chat(user, "<span class='warning'>You can't possibly handle the responsibility of more than one rod!</span>")
+		return
 	var/failText = "<span class='warning'>The snake seems unsatisfied with your incomplete oath and returns to it's previous place on the rod, returning to its dormant, wooden state. You must stand still while completing your oath!</span>"
 	to_chat(itemUser, "<span class='notice'>The wooden snake that was carved into the rod seems to suddenly come alive and begins to slither down your arm! The compulsion to help others grows abnormally strong...</span>")
 	if(do_after(itemUser, 40, target = itemUser))
@@ -178,7 +183,7 @@
 		return
 	to_chat(itemUser, "<span class='notice'>The snake, satisfied with your oath, attaches itself and the rod to your forearm with an inseparable grip. Your thoughts seem to only revolve around the core idea of helping others, and harm is nothing more than a distant, wicked memory...</span>")
 	var/datum/status_effect/hippocraticOath/effect = itemUser.apply_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH)
-	effect.hand = itemUser.get_held_index_of_item(src)
+	effect.hand = usedHand
 	activated()
 
 /obj/item/rod_of_asclepius/proc/activated()

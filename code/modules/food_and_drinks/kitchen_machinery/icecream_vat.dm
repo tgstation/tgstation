@@ -25,6 +25,7 @@
 		"sugar" = 5,
 		"ice" = 5,
 		"cocoa" = 5,
+		"vanilla" = 5,
 		"berryjuice" = 5,
 		"singulo" = 5)
 
@@ -40,8 +41,8 @@
 			return list("flour", "sugar")
 		if(CONE_CHOC)
 			return list("flour", "sugar", "cocoa")
-		else
-			return list("milk", "ice")
+		else //ICECREAM_VANILLA
+			return list("milk", "ice", "vanilla")
 
 
 /obj/machinery/icecream_vat/proc/get_flavour_name(flavour_type)
@@ -56,7 +57,7 @@
 			return "waffle"
 		if(CONE_CHOC)
 			return "chocolate"
-		else
+		else //ICECREAM_VANILLA
 			return "vanilla"
 
 
