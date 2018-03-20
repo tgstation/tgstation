@@ -11,6 +11,17 @@
 	lose_text = "<span class='notice'>You feel awake again.</span>"
 	medical_record_text = "Patient has abnormal sleep study results and is difficult to wake up."
 
+/datum/trait/brainproblems
+	name = "Brain Tumor"
+	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
+	value = -2
+	gain_text = "<span class='danger'>You feel smooth.</span>"
+	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
+	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
+
+/datum/trait/brainproblems/on_process()
+	trait_holder.adjustBrainLoss(0.2)
+
 
 
 /datum/trait/nearsighted //t. errorage
@@ -74,21 +85,21 @@
 	var/slot_string = "limb"
 
 /datum/trait/prosthetic_limb/on_spawn()
-	var/limb_slot = pick("l_arm", "r_arm", "l_leg", "r_leg")
+	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/mob/living/carbon/human/H = trait_holder
 	var/obj/item/bodypart/old_part = H.get_bodypart(limb_slot)
 	var/obj/item/bodypart/prosthetic
 	switch(limb_slot)
-		if("l_arm")
+		if(BODY_ZONE_L_ARM)
 			prosthetic = new/obj/item/bodypart/l_arm/robot/surplus(trait_holder)
 			slot_string = "left arm"
-		if("r_arm")
+		if(BODY_ZONE_R_ARM)
 			prosthetic = new/obj/item/bodypart/r_arm/robot/surplus(trait_holder)
 			slot_string = "right arm"
-		if("l_leg")
+		if(BODY_ZONE_L_LEG)
 			prosthetic = new/obj/item/bodypart/l_leg/robot/surplus(trait_holder)
 			slot_string = "left leg"
-		if("r_leg")
+		if(BODY_ZONE_R_LEG)
 			prosthetic = new/obj/item/bodypart/r_leg/robot/surplus(trait_holder)
 			slot_string = "right leg"
 	prosthetic.replace_limb(H)

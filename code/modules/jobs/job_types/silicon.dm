@@ -15,7 +15,7 @@ AI
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_SILICON
-	antag_rep = 12
+	antag_rep = 20
 
 /datum/job/ai/equip(mob/living/carbon/human/H)
 	return H.AIize(FALSE)

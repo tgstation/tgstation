@@ -425,5 +425,8 @@
 	if(..())
 		return 3
 
+/mob/living/simple_animal/slime/can_be_implanted()
+	return TRUE
+
 /mob/living/simple_animal/slime/random/Initialize(mapload, new_colour, new_is_adult)
 	. = ..(mapload, pick(slime_colours), prob(50))

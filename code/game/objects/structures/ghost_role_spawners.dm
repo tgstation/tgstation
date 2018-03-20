@@ -534,9 +534,6 @@
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
 
-
-#define PIRATE_NAMES_FILE "pirates.json"
-
 /obj/effect/mob_spawn/human/pirate
 	name = "space pirate sleeper"
 	desc = "A cryo sleeper smelling faintly of rum."

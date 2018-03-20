@@ -14,7 +14,7 @@
 	/datum/surgery_step/close)
 
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list("head")
+	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
 
 /datum/surgery/advanced/lobotomy/can_start(mob/user, mob/living/carbon/target)

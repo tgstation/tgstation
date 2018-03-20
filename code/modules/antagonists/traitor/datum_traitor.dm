@@ -321,6 +321,7 @@
 	var/TC_uses = 0
 	var/uplink_true = FALSE
 	var/purchases = ""
+	LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
 	var/datum/uplink_purchase_log/H = GLOB.uplink_purchase_logs_by_key[owner.key]
 	if(H)
 		TC_uses = H.total_spent

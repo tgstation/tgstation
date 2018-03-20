@@ -9,7 +9,7 @@
 	description = "NT default research technologies."
 	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani",
 	"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
-	"space_heater")			//Default research tech, prevents bricking
+	"space_heater","xlarge_beaker")			//Default research tech, prevents bricking
 
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech
@@ -26,7 +26,7 @@
 	display_name = "Advanced Biotechnology"
 	description = "Advanced Biotechnology"
 	prereq_ids = list("biotech")
-	design_ids = list("piercesyringe", "smoke_machine", "plasmarefiller", "limbgrower", "defibrillator")
+	design_ids = list("piercesyringe", "smoke_machine", "plasmarefiller", "limbgrower", "defibrillator", "meta_beaker")
 	research_cost = 2500
 	export_price = 5000
 

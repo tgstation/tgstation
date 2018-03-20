@@ -1,0 +1,4 @@
+author: "Shadowlight213"
+delete-after: True
+changes: 
+  - bugfix: "Malf hacked APCs can be broken with extinguishers and toolboxes again."

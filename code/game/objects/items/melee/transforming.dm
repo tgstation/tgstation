@@ -1,4 +1,5 @@
 /obj/item/melee/transforming
+	sharpness = IS_SHARP
 	var/active = FALSE
 	var/force_on = 30 //force when active
 	var/faction_bonus_force = 0 //Bonus force dealt against certain factions
@@ -8,10 +9,10 @@
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/list/attack_verb_off = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = WEIGHT_CLASS_SMALL
-	sharpness = IS_SHARP
 	var/bonus_active = FALSE //If the faction damage bonus is active
 	var/list/nemesis_factions //Any mob with a faction that exists in this list will take bonus damage/effects
 	var/w_class_on = WEIGHT_CLASS_BULKY
+	var/clumsy_check = TRUE
 
 /obj/item/melee/transforming/Initialize()
 	. = ..()
@@ -81,6 +82,6 @@
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
 /obj/item/melee/transforming/proc/clumsy_transform_effect(mob/living/user)
-	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(clumsy_check && user.has_trait(TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(5,5)
