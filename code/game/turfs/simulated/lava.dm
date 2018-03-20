@@ -15,6 +15,7 @@
 	contents_explosion(severity, target)
 
 /turf/open/lava/MakeSlippery()
+	return
 
 /turf/open/lava/acid_act(acidpwr, acid_volume)
 	return
