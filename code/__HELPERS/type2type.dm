@@ -12,7 +12,8 @@
 //Returns an integer given a hex input, supports negative values "-ff"
 //skips preceding invalid characters
 //breaks when hittin invalid characters thereafter
-/proc/hex2num(hex)
+// If safe=TRUE, returns null on incorrect input strings instead of CRASHing
+/proc/hex2num(hex, safe=FALSE)
 	. = 0
 	var/place = 1
 	for(var/i in length(hex) to 1 step -1)
@@ -27,7 +28,10 @@
 			if(45)
 				return . * -1 // -
 			else
-				CRASH("Malformed hex number")
+				if(safe)
+					return null
+				else
+					CRASH("Malformed hex number")
 
 		. += num * place
 		place *= 16
@@ -178,38 +182,40 @@
 			return ICON_OVERLAY
 
 //Converts a rights bitfield into a string
-/proc/rights2text(rights, seperator="", list/adds, list/subs)
+/proc/rights2text(rights, seperator="", prefix = "+")
+	seperator += prefix
 	if(rights & R_BUILDMODE)
-		. += "[seperator]+BUILDMODE"
+		. += "[seperator]BUILDMODE"
 	if(rights & R_ADMIN)
-		. += "[seperator]+ADMIN"
+		. += "[seperator]ADMIN"
 	if(rights & R_BAN)
-		. += "[seperator]+BAN"
+		. += "[seperator]BAN"
 	if(rights & R_FUN)
-		. += "[seperator]+FUN"
+		. += "[seperator]FUN"
 	if(rights & R_SERVER)
-		. += "[seperator]+SERVER"
+		. += "[seperator]SERVER"
 	if(rights & R_DEBUG)
-		. += "[seperator]+DEBUG"
+		. += "[seperator]DEBUG"
 	if(rights & R_POSSESS)
-		. += "[seperator]+POSSESS"
+		. += "[seperator]POSSESS"
 	if(rights & R_PERMISSIONS)
-		. += "[seperator]+PERMISSIONS"
+		. += "[seperator]PERMISSIONS"
 	if(rights & R_STEALTH)
-		. += "[seperator]+STEALTH"
+		. += "[seperator]STEALTH"
 	if(rights & R_POLL)
-		. += "[seperator]+POLL"
+		. += "[seperator]POLL"
 	if(rights & R_VAREDIT)
-		. += "[seperator]+VAREDIT"
+		. += "[seperator]VAREDIT"
 	if(rights & R_SOUNDS)
-		. += "[seperator]+SOUND"
+		. += "[seperator]SOUND"
 	if(rights & R_SPAWN)
-		. += "[seperator]+SPAWN"
-
-	for(var/verbpath in adds)
-		. += "[seperator]+[verbpath]"
-	for(var/verbpath in subs)
-		. += "[seperator]-[verbpath]"
+		. += "[seperator]SPAWN"
+	if(rights & R_AUTOLOGIN)
+		. += "[seperator]AUTOLOGIN"
+	if(rights & R_DBRANKS)
+		. += "[seperator]DBRANKS"
+	if(!.)
+		. = "NONE"
 	return .
 
 /proc/ui_style2icon(ui_style)
@@ -348,47 +354,47 @@
 		return 0
 
 	if(bpc & FULL_BODY)
-		covered_parts |= list("l_arm","r_arm","head","chest","l_leg","r_leg")
+		covered_parts |= list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM,BODY_ZONE_HEAD,BODY_ZONE_CHEST,BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)
 
 	else
 		if(bpc & HEAD)
-			covered_parts |= list("head")
+			covered_parts |= list(BODY_ZONE_HEAD)
 		if(bpc & CHEST)
-			covered_parts |= list("chest")
+			covered_parts |= list(BODY_ZONE_CHEST)
 		if(bpc & GROIN)
-			covered_parts |= list("chest")
+			covered_parts |= list(BODY_ZONE_CHEST)
 
 		if(bpc & ARMS)
-			covered_parts |= list("l_arm","r_arm")
+			covered_parts |= list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM)
 		else
 			if(bpc & ARM_LEFT)
-				covered_parts |= list("l_arm")
+				covered_parts |= list(BODY_ZONE_L_ARM)
 			if(bpc & ARM_RIGHT)
-				covered_parts |= list("r_arm")
+				covered_parts |= list(BODY_ZONE_R_ARM)
 
 		if(bpc & HANDS)
-			covered_parts |= list("l_arm","r_arm")
+			covered_parts |= list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM)
 		else
 			if(bpc & HAND_LEFT)
-				covered_parts |= list("l_arm")
+				covered_parts |= list(BODY_ZONE_L_ARM)
 			if(bpc & HAND_RIGHT)
-				covered_parts |= list("r_arm")
+				covered_parts |= list(BODY_ZONE_R_ARM)
 
 		if(bpc & LEGS)
-			covered_parts |= list("l_leg","r_leg")
+			covered_parts |= list(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)
 		else
 			if(bpc & LEG_LEFT)
-				covered_parts |= list("l_leg")
+				covered_parts |= list(BODY_ZONE_L_LEG)
 			if(bpc & LEG_RIGHT)
-				covered_parts |= list("r_leg")
+				covered_parts |= list(BODY_ZONE_R_LEG)
 
 		if(bpc & FEET)
-			covered_parts |= list("l_leg","r_leg")
+			covered_parts |= list(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)
 		else
 			if(bpc & FOOT_LEFT)
-				covered_parts |= list("l_leg")
+				covered_parts |= list(BODY_ZONE_L_LEG)
 			if(bpc & FOOT_RIGHT)
-				covered_parts |= list("r_leg")
+				covered_parts |= list(BODY_ZONE_R_LEG)
 
 	return covered_parts
 
@@ -582,12 +588,16 @@
 		r+= num2hex(c)
 	return r
 
-/proc/hextostr(str)
+// Decodes hex to raw byte string.
+// If safe=TRUE, returns null on incorrect input strings instead of CRASHing
+/proc/hextostr(str, safe=FALSE)
 	if(!istext(str)||!str)
 		return
 	var/r
 	var/c
 	for(var/i = 1 to length(str)/2)
-		c= hex2num(copytext(str,i*2-1,i*2+1))
-		r+= ascii2text(c)
+		c = hex2num(copytext(str,i*2-1,i*2+1), safe)
+		if(isnull(c))
+			return null
+		r += ascii2text(c)
 	return r

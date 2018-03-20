@@ -62,8 +62,8 @@
 					to_chat(H, "You already used this contract!")
 					return
 				used = TRUE
-				var/client/C = pick(candidates)
-				spawn_antag(C, get_turf(src), href_list["school"],H.mind)
+				var/mob/dead/observer/C = pick(candidates)
+				spawn_antag(C.client, get_turf(src), href_list["school"],H.mind)
 			else
 				to_chat(H, "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.")
 
@@ -73,7 +73,7 @@
 	C.prefs.copy_to(M)
 	M.key = C.key
 	var/datum/mind/app_mind = M.mind
-	
+
 	var/datum/antagonist/wizard/apprentice/app = new()
 	app.master = user
 	app.school = kind
@@ -124,8 +124,8 @@
 		if(!(check_usability(user)))
 			return
 		used = TRUE
-		var/client/C = pick(nuke_candidates)
-		spawn_antag(C, get_turf(src), "syndieborg", user.mind)
+		var/mob/dead/observer/G = pick(nuke_candidates)
+		spawn_antag(G.client, get_turf(src), "syndieborg", user.mind)
 		do_sparks(4, TRUE, src)
 		qdel(src)
 	else
@@ -144,6 +144,26 @@
 	if(creator_op)
 		M.mind.add_antag_datum(new_op,creator_op.nuke_team)
 		M.mind.special_role = "Nuclear Operative"
+
+//////CLOWN OP
+/obj/item/antag_spawner/nuke_ops/clown
+	name = "clown operative teleporter"
+	desc = "A single-use teleporter designed to quickly reinforce clown operatives in the field."
+
+/obj/item/antag_spawner/nuke_ops/clown/spawn_antag(client/C, turf/T, kind, datum/mind/user)
+	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
+	C.prefs.copy_to(M)
+	M.key = C.key
+
+	var/datum/antagonist/nukeop/clownop/new_op = new /datum/antagonist/nukeop/clownop()
+	new_op.send_to_spawnpoint = FALSE
+	new_op.nukeop_outfit = /datum/outfit/syndicate/clownop/no_crystals
+
+	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop/clownop,TRUE)
+	if(creator_op)
+		M.mind.add_antag_datum(new_op, creator_op.nuke_team)
+		M.mind.special_role = "Clown Operative"
+
 
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele
@@ -187,7 +207,7 @@
 	R.real_name = R.name
 
 	R.key = C.key
-	
+
 	var/datum/antagonist/nukeop/new_borg = new()
 	new_borg.send_to_spawnpoint = FALSE
 	R.mind.add_antag_datum(new_borg,creator_op.nuke_team)
@@ -203,8 +223,8 @@
 
 	var/shatter_msg = "<span class='notice'>You shatter the bottle, no turning back now!</span>"
 	var/veil_msg = "<span class='warning'>You sense a dark presence lurking just beyond the veil...</span>"
-	var/objective_verb = "Kill"
 	var/mob/living/demon_type = /mob/living/simple_animal/slaughter
+	var/antag_type = /datum/antagonist/slaughter
 
 
 /obj/item/antag_spawner/slaughter_demon/attack_self(mob/user)
@@ -218,8 +238,8 @@
 		if(used)
 			return
 		used = TRUE
-		var/client/C = pick(candidates)
-		spawn_antag(C, get_turf(src), initial(demon_type.name),user.mind)
+		var/mob/dead/observer/C = pick(candidates)
+		spawn_antag(C.client, get_turf(src), initial(demon_type.name),user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
@@ -235,24 +255,10 @@
 	S.key = C.key
 	S.mind.assigned_role = S.name
 	S.mind.special_role = S.name
-	var/datum/objective/assassinate/new_objective
-	if(user)
-		new_objective = new /datum/objective/assassinate
-		new_objective.owner = S.mind
-		new_objective.target = user
-		new_objective.explanation_text = "[objective_verb] [user.name], the one who summoned you."
-		S.mind.objectives += new_objective
-	var/datum/objective/new_objective2 = new /datum/objective
-	new_objective2.owner = S.mind
-	new_objective2.explanation_text = "[objective_verb] everyone[user ? " else while you're at it":""]."
-	S.mind.objectives += new_objective2
-	S.mind.add_antag_datum(/datum/antagonist/auto_custom)
+	S.mind.add_antag_datum(antag_type)
 	to_chat(S, S.playstyle_string)
 	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. \
 	Ctrl+Click a blood pool to manifest.</B>")
-	if(new_objective)
-		to_chat(S, "<B>Objective #[1]</B>: [new_objective.explanation_text]")
-	to_chat(S, "<B>Objective #[new_objective ? "[2]":"[1]"]</B>: [new_objective2.explanation_text]")
 
 /obj/item/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"
@@ -262,5 +268,5 @@
 	color = "#FF69B4" // HOT PINK
 
 	veil_msg = "<span class='warning'>You sense an adorable presence lurking just beyond the veil...</span>"
-	objective_verb = "Hug and Tickle"
 	demon_type = /mob/living/simple_animal/slaughter/laughter
+	antag_type = /datum/antagonist/slaughter/laughter

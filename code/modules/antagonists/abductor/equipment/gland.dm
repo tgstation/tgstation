@@ -194,15 +194,12 @@
 	to_chat(owner, "<span class='warning'>You feel sick.</span>")
 	var/datum/disease/advance/A = random_virus(pick(2,6),6)
 	A.carrier = TRUE
-	owner.viruses += A
-	A.affected_mob = owner
-	owner.med_hud_set_status()
+	owner.ForceContractDisease(A, FALSE, TRUE)
 
 /obj/item/organ/heart/gland/viral/proc/random_virus(max_symptoms, max_level)
-	if(max_symptoms > SYMPTOM_LIMIT)
-		max_symptoms = SYMPTOM_LIMIT
-	var/datum/disease/advance/A = new(FALSE, null)
-	A.symptoms = list()
+	if(max_symptoms > VIRUS_SYMPTOM_LIMIT)
+		max_symptoms = VIRUS_SYMPTOM_LIMIT
+	var/datum/disease/advance/A = new /datum/disease/advance()
 	var/list/datum/symptom/possible_symptoms = list()
 	for(var/symptom in subtypesof(/datum/symptom))
 		var/datum/symptom/S = symptom
@@ -219,7 +216,7 @@
 	A.Refresh() //just in case someone already made and named the same disease
 	return A
 
-/obj/item/organ/heart/gland/trauma //TODO : Replace with something more interesting
+/obj/item/organ/heart/gland/trauma
 	cooldown_low = 800
 	cooldown_high = 1200
 	uses = 5
@@ -230,12 +227,12 @@
 /obj/item/organ/heart/gland/trauma/activate()
 	to_chat(owner, "<span class='warning'>You feel a spike of pain in your head.</span>")
 	if(prob(33))
-		owner.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRUE)
+		owner.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
 	else
 		if(prob(20))
-			owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRUE)
+			owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
 		else
-			owner.gain_trauma_type(BRAIN_TRAUMA_MILD, TRUE)
+			owner.gain_trauma_type(BRAIN_TRAUMA_MILD, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
 
 /obj/item/organ/heart/gland/spiderman
 	cooldown_low = 450
@@ -262,10 +259,9 @@
 	mind_control_duration = 1800
 
 /obj/item/organ/heart/gland/egg/activate()
-	to_chat(owner, "<span class='boldannounce'>You lay an egg!</span>")
-	var/obj/item/reagent_containers/food/snacks/egg/egg = new(owner.drop_location())
-	egg.reagents.add_reagent(get_random_reagent_id(), 15)
-	egg.desc += " It looks weird..."
+	owner.visible_message("<span class='alertalien'>[owner] [pick(EGG_LAYING_MESSAGES)]</span>")
+	var/turf/T = owner.drop_location()
+	new /obj/item/reagent_containers/food/snacks/egg/gland(T)
 
 /obj/item/organ/heart/gland/electric
 	cooldown_low = 800

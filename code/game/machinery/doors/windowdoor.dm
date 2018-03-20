@@ -9,7 +9,7 @@
 	var/base_state = "left"
 	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ max_integrity at the bottom of this .dm file
 	integrity_failure = 0
-	armor = list(melee = 20, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 70, acid = 100)
+	armor = list("melee" = 20, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 70, "acid" = 100)
 	visible = FALSE
 	flags_1 = ON_BORDER_1
 	opacity = 0
@@ -18,7 +18,7 @@
 	var/reinf = 0
 	var/shards = 2
 	var/rods = 2
-	var/cable = 2
+	var/cable = 1
 	var/list/debris = list()
 
 /obj/machinery/door/window/Initialize(mapload, set_dir)
@@ -227,17 +227,16 @@
 			if(density || operating)
 				to_chat(user, "<span class='warning'>You need to open the door to access the maintenance panel!</span>")
 				return
-			playsound(src.loc, I.usesound, 50, 1)
+			I.play_tool_sound(src)
 			panel_open = !panel_open
 			to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
 			return
 
 		if(istype(I, /obj/item/crowbar))
 			if(panel_open && !density && !operating)
-				playsound(src.loc, I.usesound, 100, 1)
 				user.visible_message("[user] removes the electronics from the [src.name].", \
 									 "<span class='notice'>You start to remove electronics from the [src.name]...</span>")
-				if(do_after(user,40*I.toolspeed, target = src))
+				if(I.use_tool(src, user, 40, volume=50))
 					if(panel_open && !density && !operating && src.loc)
 						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
 						switch(base_state)

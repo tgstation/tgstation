@@ -12,7 +12,7 @@
 	var/blobbernaut_message = "slams" //blobbernaut attack verb
 	var/message = "The blob strikes you" //message sent to any mob hit by the blob
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
-	can_synth = 0
+	can_synth = FALSE
 
 /datum/reagent/blob/proc/send_message(mob/living/M)
 	var/totalmessage = message
@@ -459,7 +459,7 @@
 	reac_volume = ..()
 	var/turf/open/T = get_turf(M)
 	if(istype(T) && prob(reac_volume))
-		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
+		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
 	M.apply_damage(0.4*reac_volume, BRUTE)
@@ -481,7 +481,7 @@
 /datum/reagent/blob/pressurized_slime/proc/extinguisharea(obj/structure/blob/B, probchance)
 	for(var/turf/open/T in range(1, B))
 		if(prob(probchance))
-			T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
+			T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 			for(var/obj/O in T)
 				O.extinguish()
 			for(var/mob/living/L in T)

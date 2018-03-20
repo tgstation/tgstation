@@ -84,6 +84,9 @@
 /turf/open/space/proc/CanBuildHere()
 	return TRUE
 
+/turf/open/space/handle_slip()
+	return
+
 /turf/open/space/attackby(obj/item/C, mob/user, params)
 	..()
 	if(!CanBuildHere())
@@ -129,13 +132,25 @@
 	if ((!(A) || src != A.loc))
 		return
 
-	if(destination_z)
-		var/old_z = A.z
-		A.x = destination_x
-		A.y = destination_y
-		A.z = destination_z
-		if (old_z != destination_z)
-			A.onTransitZ(old_z, destination_z)
+	if(destination_z && destination_x && destination_y)
+		var/tx = destination_x
+		var/ty = destination_y
+		var/turf/DT = locate(tx, ty, destination_z)
+		var/itercount = 0
+		while(DT.density || istype(DT.loc,/area/shuttle)) // Extend towards the center of the map, trying to look for a better place to arrive
+			if (itercount++ >= 100)
+				log_game("SPACE Z-TRANSIT ERROR: Could not not find a safe place to land [A] within 100 iterations.")
+				break
+			if (tx < 128)
+				tx++
+			else
+				tx--
+			if (ty < 128)
+				ty++
+			else
+				ty--
+			DT = locate(tx, ty, destination_z)
+		A.forceMove(DT)
 
 		if(isliving(A))
 			var/mob/living/L = A
@@ -149,7 +164,8 @@
 		stoplag()//Let a diagonal move finish, if necessary
 		A.newtonian_move(A.inertia_dir)
 
-/turf/open/space/handle_slip()
+
+/turf/open/space/MakeSlippery()
 	return
 
 /turf/open/space/singularity_act()

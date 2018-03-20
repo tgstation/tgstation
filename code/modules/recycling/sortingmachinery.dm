@@ -33,7 +33,12 @@
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/pen))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
+			return
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		if(!user.canUseTopic(src, BE_CLOSE))
+			return
 		if(!str || !length(str))
 			to_chat(user, "<span class='warning'>Invalid text!</span>")
 			return
@@ -114,7 +119,12 @@
 			playsound(loc, 'sound/machines/twobeep.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/pen))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
+			return
 		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		if(!user.canUseTopic(src, BE_CLOSE))
+			return
 		if(!str || !length(str))
 			to_chat(user, "<span class='warning'>Invalid text!</span>")
 			return

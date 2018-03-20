@@ -5,24 +5,30 @@
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
 	var/mergeable_decal = TRUE //when two of these are on a same tile or do we need to merge them into just one?
+	var/beauty
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	if (random_icon_states && length(src.random_icon_states) > 0)
-		src.icon_state = pick(src.random_icon_states)
+	if (random_icon_states && length(random_icon_states) > 0)
+		icon_state = pick(random_icon_states)
 	create_reagents(300)
-	if(src.loc && isturf(src.loc))
-		for(var/obj/effect/decal/cleanable/C in src.loc)
-			if(C != src && C.type == src.type && !QDELETED(C))
+	if(loc && isturf(loc))
+		for(var/obj/effect/decal/cleanable/C in loc)
+			if(C != src && C.type == type && !QDELETED(C))
 				if (replace_decal(C))
 					return INITIALIZE_HINT_QDEL
+
 	if(LAZYLEN(diseases))
 		var/list/datum/disease/diseases_to_add = list()
 		for(var/datum/disease/D in diseases)
-			if(D.spread_flags & VIRUS_SPREAD_CONTACT_FLUIDS)
+			if(D.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
 				diseases_to_add += D
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
+
+/obj/effect/decal/cleanable/ComponentInitialize()
+	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, beauty), 0) //inb4 i get yelled at for using the beauty var on cleanable instead of calling this proc on every subtype which would be pedantic and actually run worse.
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
 	if(mergeable_decal)

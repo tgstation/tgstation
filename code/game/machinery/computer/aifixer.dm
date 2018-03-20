@@ -35,6 +35,12 @@
 		if (src.occupier.laws.zeroth)
 			laws += "<b>0:</b> [src.occupier.laws.zeroth]<BR>"
 
+		for (var/index = 1, index <= src.occupier.laws.hacked.len, index++)
+			var/law = src.occupier.laws.hacked[index]
+			if (length(law) > 0)
+				var/num = ionnum()
+				laws += "<b>[num]:</b> [law]<BR>"
+
 		for (var/index = 1, index <= src.occupier.laws.ion.len, index++)
 			var/law = src.occupier.laws.ion[index]
 			if (length(law) > 0)

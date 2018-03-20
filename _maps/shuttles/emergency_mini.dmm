@@ -63,8 +63,7 @@
 "l" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	pixel_x = 28;
-	req_access_txt = "0"
+	pixel_x = 28
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -90,9 +89,7 @@
 /area/shuttle/escape)
 "p" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Escape Shuttle Infirmary";
-	req_access_txt = "0"
+	name = "Escape Shuttle Infirmary"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -147,8 +144,7 @@
 /area/shuttle/escape)
 "z" = (
 /obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	req_access_txt = "0"
+	name = "Emergency NanoMed"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -170,7 +166,6 @@
 	dwidth = 8;
 	height = 9;
 	name = "Mini emergency shuttle";
-	timid = 1;
 	width = 21
 	},
 /turf/open/floor/mineral/titanium/blue,

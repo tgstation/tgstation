@@ -373,6 +373,9 @@
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
 
+	if(CONFIG_GET(flag/roundstart_traits))
+		SStraits.AssignTraits(humanc, humanc.client, TRUE)
+
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
@@ -427,9 +430,9 @@
 			if (job.title in GLOB.command_positions)
 				position_class = "commandPosition"
 			dat += "<a class='[position_class]' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
-	if(!job_count) //if there's nowhere to go, assistant opens up.
+	if(!job_count) //if there's nowhere to go, overflow opens up.
 		for(var/datum/job/job in SSjob.occupations)
-			if(job.title != "Assistant")
+			if(job.title != SSjob.overflow_role)
 				continue
 			dat += "<a class='otherPosition' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
 			break

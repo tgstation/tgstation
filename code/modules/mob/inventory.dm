@@ -121,6 +121,19 @@
 			return I
 	return FALSE
 
+//Checks if we're holding a tool that has given quality
+//Returns the tool that has the best version of this quality
+/mob/proc/is_holding_tool_quality(quality)
+	var/obj/item/best_item
+	var/best_quality = INFINITY
+
+	for(var/obj/item/I in held_items)
+		if(I.tool_behaviour == quality && I.toolspeed < best_quality)
+			best_item = I
+			best_quality = I.toolspeed
+
+	return best_item
+
 
 //To appropriately fluff things like "they are holding [I] in their [get_held_index_name(get_held_index_of_item(I))]"
 //Can be overriden to pass off the fluff to something else (eg: science allowing people to add extra robotic limbs, and having this proc react to that
@@ -149,14 +162,20 @@
 	return FALSE
 
 /mob/proc/can_put_in_hand(I, hand_index)
+	if(hand_index > held_items.len)
+		return FALSE
 	if(!put_in_hand_check(I))
 		return FALSE
 	if(!has_hand_for_held_index(hand_index))
 		return FALSE
 	return !held_items[hand_index]
 
-/mob/proc/put_in_hand(obj/item/I, hand_index)
-	if(can_put_in_hand(I, hand_index))
+/mob/proc/put_in_hand(obj/item/I, hand_index, forced = FALSE)
+	if(forced || can_put_in_hand(I, hand_index))
+		if(hand_index == null)
+			return FALSE
+		if(get_item_for_held_index(hand_index) != null)
+			dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
 		I.forceMove(src)
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
@@ -169,7 +188,6 @@
 		I.pixel_y = initial(I.pixel_y)
 		return hand_index || TRUE
 	return FALSE
-
 
 //Puts the item into the first available left hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(obj/item/I)
@@ -286,7 +304,7 @@
 	return doUnEquip(I, force, null, TRUE, idrop)
 
 //DO NOT CALL THIS PROC
-//use one of the above 2 helper procs
+//use one of the above 3 helper procs
 //you may override it, but do not modify the args
 /mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE) //Force overrides NODROP_1 for things like wizarditis and admin undress.
 													//Use no_move if the item is just gonna be immediately moved afterward
@@ -314,10 +332,10 @@
 
 //Outdated but still in use apparently. This should at least be a human proc.
 //Daily reminder to murder this - Remie.
-/mob/living/proc/get_equipped_items()
+/mob/living/proc/get_equipped_items(include_pockets = FALSE)
 	return
 
-/mob/living/carbon/get_equipped_items()
+/mob/living/carbon/get_equipped_items(include_pockets = FALSE)
 	var/list/items = list()
 	if(back)
 		items += back
@@ -329,7 +347,7 @@
 		items += wear_neck
 	return items
 
-/mob/living/carbon/human/get_equipped_items()
+/mob/living/carbon/human/get_equipped_items(include_pockets = FALSE)
 	var/list/items = ..()
 	if(belt)
 		items += belt
@@ -347,6 +365,13 @@
 		items += wear_suit
 	if(w_uniform)
 		items += w_uniform
+	if(include_pockets)
+		if(l_store)
+			items += l_store
+		if(r_store)
+			items += r_store
+		if(s_store)
+			items += s_store
 	return items
 
 /mob/living/proc/unequip_everything()

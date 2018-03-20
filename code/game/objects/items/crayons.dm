@@ -145,7 +145,7 @@
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(user.canUseTopic(src, be_close=TRUE))
+	if(user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(has_cap)
 			is_capped = !is_capped
 			to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
@@ -244,8 +244,13 @@
 	if(!proximity || !check_allowed_items(target))
 		return
 
-	if(check_empty(user))
+	var/cost = 1
+	if(paint_mode == PAINT_LARGE_HORIZONTAL)
+		cost = 5
+	var/charges_used = use_charges(user, cost)
+	if(!charges_used)
 		return
+	. = charges_used
 
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
@@ -353,10 +358,6 @@
 		audible_message("<span class='notice'>You hear spraying.</span>")
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
-	var/cost = 1
-	if(paint_mode == PAINT_LARGE_HORIZONTAL)
-		cost = 5
-	. = use_charges(user, cost)
 	var/fraction = min(1, . / reagents.maximum_volume)
 	if(affected_turfs.len)
 		fraction /= affected_turfs.len

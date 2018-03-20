@@ -5,7 +5,7 @@
 	density = FALSE
 	layer = SIGN_LAYER
 	max_integrity = 100
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	var/buildable_sign = 1 //unwrenchable and modifiable
 
 /obj/structure/sign/ComponentInitialize()
@@ -27,21 +27,21 @@
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', 80, 1)
 
-/obj/structure/sign/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/wrench) && buildable_sign)
+/obj/structure/sign/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/wrench) && buildable_sign)
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
 							 "<span class='notice'>You start unfastening [src].</span>")
-		playsound(src, O.usesound, 50, 1)
-		if(!do_after(user, 30*O.toolspeed, target = src))
-			return
-		playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
-							 "<span class='notice'>You unfasten [src].</span>")
-		var/obj/item/sign_backing/SB = new (get_turf(user))
-		SB.icon_state = icon_state
-		SB.sign_path = type
-		qdel(src)
-	else if(istype(O, /obj/item/pen) && buildable_sign)
+		I.play_tool_sound(src)
+		if(I.use_tool(src, user, 40))
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
+								 "<span class='notice'>You unfasten [src].</span>")
+			var/obj/item/sign_backing/SB = new (get_turf(user))
+			SB.icon_state = icon_state
+			SB.sign_path = type
+			qdel(src)
+		return
+	else if(istype(I, /obj/item/pen) && buildable_sign)
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
 		"Hydroponics", "Xenobiology")
 		var/obj/structure/sign/sign_type

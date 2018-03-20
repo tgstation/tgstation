@@ -201,7 +201,6 @@
 	height = 18;
 	port_direction = 4;
 	width = 14;
-	timid = 1;
 	name = "Birdboat emergency escape shuttle"
 	},
 /turf/open/floor/mineral/titanium,

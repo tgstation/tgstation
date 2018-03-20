@@ -27,13 +27,13 @@
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM && material == METAL)
-		var/obj/item/weldingtool/WT = I
 		if(obj_integrity < max_integrity)
-			if(WT.remove_fuel(0,user))
-				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-				playsound(loc, WT.usesound, 40, 1)
-				if(do_after(user, 40*I.toolspeed, target = src))
-					obj_integrity = CLAMP(obj_integrity + 20, 0, max_integrity)
+			if(!I.tool_start_check(user, amount=0))
+				return
+
+			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+			if(I.use_tool(src, user, 40, volume=40))
+				obj_integrity = CLAMP(obj_integrity + 20, 0, max_integrity)
 	else
 		return ..()
 
@@ -63,12 +63,6 @@
 	icon_state = "woodenbarricade"
 	material = WOOD
 	var/drop_amount = 3
-
-/obj/structure/barricade/wooden/snowed
-	name = "crude plank barricade"
-	desc = "This space is blocked off by a wooden barricade. It seems to be covered in a layer of snow."
-	icon_state = "woodenbarricade-snow"
-	max_integrity = 125
 
 /obj/structure/barricade/wooden/crude
 	name = "crude plank barricade"
@@ -110,7 +104,7 @@
 	anchored = FALSE
 	max_integrity = 180
 	proj_pass_rate = 20
-	armor = list(melee = 10, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 10, acid = 0)
+	armor = list("melee" = 10, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 10, "acid" = 0)
 
 	var/deploy_time = 40
 	var/deploy_message = TRUE
@@ -141,8 +135,8 @@
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to toggle modes.</span>")
 
-/obj/item/grenade/barrier/AltClick(mob/living/user)
-	if(!istype(user) || user.incapacitated())
+/obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	toggle_mode(user)
 

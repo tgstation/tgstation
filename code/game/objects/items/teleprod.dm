@@ -26,12 +26,13 @@
 				do_teleport(M, get_turf(M), 15)
 
 /obj/item/melee/baton/cattleprod/attackby(obj/item/I, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
-	if(istype(I, /obj/item/ore/bluespace_crystal))
+	if(istype(I, /obj/item/stack/ore/bluespace_crystal))
 		if(!cell)
+			var/obj/item/stack/ore/bluespace_crystal/BSC = I
 			var/obj/item/melee/baton/cattleprod/teleprod/S = new /obj/item/melee/baton/cattleprod/teleprod
 			remove_item_from_storage(user)
 			qdel(src)
-			qdel(I)
+			BSC.use(1)
 			user.put_in_hands(S)
 			to_chat(user, "<span class='notice'>You place the bluespace crystal firmly into the igniter.</span>")
 		else

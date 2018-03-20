@@ -19,7 +19,9 @@
 
 /obj/item/reagent_containers/food/snacks/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	tastes = list("[name]" = 1) // apples taste of apple, silly.
+	if(!tastes)
+		tastes = list("[name]" = 1)
+
 	if(new_seed)
 		seed = new_seed.Copy()
 	else if(ispath(seed))

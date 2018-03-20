@@ -319,9 +319,10 @@
 			break
 
 /proc/get_mob_by_key(key)
+	var/ckey = ckey(key)
 	for(var/i in GLOB.player_list)
 		var/mob/M = i
-		if(M.ckey == lowertext(key))
+		if(M.ckey == ckey)
 			return M
 	return null
 
@@ -539,7 +540,7 @@
 	winset(C, "mainwindow", "flash=5")
 
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
-	if(!SSticker.IsRoundInProgress() || !character)
+	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
 	var/area/A = get_area(character)
 	var/message = "<span class='game deadsay'><span class='name'>\

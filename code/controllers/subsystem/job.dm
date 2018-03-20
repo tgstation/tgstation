@@ -13,6 +13,8 @@ SUBSYSTEM_DEF(job)
 	var/list/prioritized_jobs = list()
 	var/list/latejoin_trackers = list()	//Don't read this list, use GetLateJoinTurfs() instead
 
+	var/overflow_role = "Assistant"
+
 /datum/controller/subsystem/job/Initialize(timeofday)
 	if(!occupations.len)
 		SetupOccupations()
@@ -119,7 +121,7 @@ SUBSYSTEM_DEF(job)
 		if(!job)
 			continue
 
-		if(istype(job, GetJob("Assistant"))) // We don't want to give him assistant, that's boring!
+		if(istype(job, GetJob(SSjob.overflow_role))) // We don't want to give him assistant, that's boring!
 			continue
 
 		if(job.title in GLOB.command_positions) //If you want a command position, select it!
@@ -250,15 +252,15 @@ SUBSYSTEM_DEF(job)
 
 	HandleFeedbackGathering()
 
-	//People who wants to be assistants, sure, go on.
-	Debug("DO, Running Assistant Check 1")
-	var/datum/job/assist = new /datum/job/assistant()
-	var/list/assistant_candidates = FindOccupationCandidates(assist, 3)
-	Debug("AC1, Candidates: [assistant_candidates.len]")
-	for(var/mob/dead/new_player/player in assistant_candidates)
+	//People who wants to be the overflow role, sure, go on.
+	Debug("DO, Running Overflow Check 1")
+	var/datum/job/overflow = GetJob(SSjob.overflow_role)
+	var/list/overflow_candidates = FindOccupationCandidates(overflow, 3)
+	Debug("AC1, Candidates: [overflow_candidates.len]")
+	for(var/mob/dead/new_player/player in overflow_candidates)
 		Debug("AC1 pass, Player: [player]")
-		AssignRole(player, "Assistant")
-		assistant_candidates -= player
+		AssignRole(player, SSjob.overflow_role)
+		overflow_candidates -= player
 	Debug("DO, AC1 end")
 
 	//Select one head
@@ -327,8 +329,8 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
-		else if(jobban_isbanned(player, "Assistant"))
-			GiveRandomJob(player) //you get to roll for random before everyone else just to be sure you don't get assistant. you're so speshul
+		else if(jobban_isbanned(player, SSjob.overflow_role))
+			GiveRandomJob(player) //you get to roll for random before everyone else just to be sure you don't get overflow. you're so speshul
 
 	for(var/mob/dead/new_player/player in unassigned)
 		if(PopcapReached())
@@ -344,15 +346,15 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
-		if(player.client.prefs.joblessrole == BEASSISTANT)
+		if(player.client.prefs.joblessrole == BEOVERFLOW)
 			Debug("AC2 Assistant located, Player: [player]")
-			AssignRole(player, "Assistant")
+			AssignRole(player, SSjob.overflow_role)
 		else // For those who don't want to play if their preference were filled, back you go.
 			RejectPlayer(player)
 
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
 		if(!GiveRandomJob(player))
-			AssignRole(player, "Assistant") //If everything is already filled, make them an assistant
+			AssignRole(player, SSjob.overflow_role) //If everything is already filled, make them an assistant
 
 	return 1
 
@@ -401,6 +403,8 @@ SUBSYSTEM_DEF(job)
 				N.new_character = H
 			else
 				M = H
+
+	SSpersistence.antag_rep_change[M.client.ckey] += job.antag_rep
 
 	to_chat(M, "<b>You are the [rank].</b>")
 	to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")

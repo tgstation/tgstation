@@ -22,6 +22,11 @@
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
 
+	// Access levels, used in modules\jobs\access.dm
+	var/list/req_access
+	var/req_access_txt = "0"
+	var/list/req_one_access
+	var/req_one_access_txt = "0"
 
 
 /obj/vv_edit_var(vname, vval)
@@ -202,12 +207,6 @@
 /obj/proc/check_uplink_validity()
 	return 1
 
-/obj/proc/on_mob_move(dir, mob, oldLoc, forced)
-	return
-
-/obj/proc/on_mob_turn(dir, mob)
-	return
-
 /obj/proc/intercept_user_move(dir, mob, newLoc, oldLoc)
 	return
 
@@ -226,15 +225,17 @@
 
 /obj/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && !current_skin && in_range(user,src))
-		if(user.incapacitated())
-			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-			return
+	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		reskin_obj(user)
 
 /obj/proc/reskin_obj(mob/M)
 	if(!LAZYLEN(unique_reskin))
 		return
+	to_chat(M, "<b>Reskin options for [name]:</b>")
+	for(var/V in unique_reskin)
+		var/output = icon2html(src, M, unique_reskin[V])
+		to_chat(M, "[V]: <span class='reallybig'>[output]</span>")
+
 	var/choice = input(M,"Warning, you can only reskin [src] once!","Reskin Object") as null|anything in unique_reskin
 	if(!QDELETED(src) && choice && !current_skin && !M.incapacitated() && in_range(M,src))
 		if(!unique_reskin[choice])

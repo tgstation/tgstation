@@ -72,7 +72,7 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "moth_wings" = pick(GLOB.moth_wings_list)))
+	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list)))
 
 /proc/random_hair_style(gender)
 	switch(gender)
@@ -277,7 +277,7 @@ Proc for attack log creation, because really why not
 		checked_health["health"] = health
 	return ..()
 
-/proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
+/proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
 	if(!user)
 		return 0
 	var/atom/Tloc = null
@@ -299,6 +299,14 @@ Proc for attack log creation, because really why not
 	var/datum/progressbar/progbar
 	if (progress)
 		progbar = new(user, delay, target)
+
+	GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+	if(mood)
+		switch(mood.sanity) //Alters do_after delay based on how sane you are
+			if(SANITY_INSANE to SANITY_DISTURBED)
+				delay *= 1.25
+			if(SANITY_NEUTRAL to SANITY_GREAT)
+				delay *= 0.90
 
 	var/endtime = world.time + delay
 	var/starttime = world.time

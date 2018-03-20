@@ -27,7 +27,7 @@
 	new /obj/item/door_remote/chief_engineer(src)
 	new /obj/item/pipe_dispenser(src)
 	new /obj/item/inducer(src)
-	new /obj/item/circuitboard/machine/protolathe/department/engineering(src)
+	new /obj/item/circuitboard/machine/techfab/department/engineering(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"

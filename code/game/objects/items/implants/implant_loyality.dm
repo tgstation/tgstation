@@ -16,17 +16,21 @@
 	return dat
 
 
-/obj/item/implant/mindshield/implant(mob/living/target, mob/user, silent = 0)
+/obj/item/implant/mindshield/implant(mob/living/target, mob/user, silent = FALSE)
 	if(..())
 		if(!target.mind)
 			return TRUE
+
+		if(target.mind.has_antag_datum(/datum/antagonist/brainwashed))
+			target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
+
 		if(target.mind.has_antag_datum(/datum/antagonist/rev/head) || target.mind.unconvertable)
 			if(!silent)
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			removed(target, 1)
 			qdel(src)
 			return FALSE
-		
+
 		var/datum/antagonist/rev/rev = target.mind.has_antag_datum(/datum/antagonist/rev)
 		if(rev)
 			rev.remove_revolutionary(FALSE, user)
@@ -38,7 +42,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/implant/mindshield/removed(mob/target, silent = 0, special = 0)
+/obj/item/implant/mindshield/removed(mob/target, silent = FALSE, special = 0)
 	if(..())
 		if(target.stat != DEAD && !silent)
 			to_chat(target, "<span class='boldnotice'>Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing.</span>")

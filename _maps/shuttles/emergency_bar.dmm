@@ -9,6 +9,13 @@
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"ad" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/turf/open/floor/plasteel/bar,
+/area/shuttle/escape)
 "ae" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
@@ -35,6 +42,13 @@
 	pixel_y = 6
 	},
 /turf/open/floor/carpet,
+/area/shuttle/escape)
+"aj" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
+/turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/extinguisher_cabinet{
@@ -242,18 +256,12 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "The Emergency Escape Bar";
-	timid = 1
+	name = "The Emergency Escape Bar"
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aU" = (
 /mob/living/simple_animal/hostile/alien/maid/barmaid,
-/turf/open/floor/plasteel/bar,
-/area/shuttle/escape)
-"aV" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aW" = (
@@ -281,11 +289,6 @@
 /obj/structure/table/wood/bar,
 /obj/effect/spawner/lootdrop/gambling,
 /turf/open/floor/plasteel/grimy,
-/area/shuttle/escape)
-"bb" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
-/turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "bc" = (
 /obj/item/twohanded/required/kirbyplants{
@@ -322,8 +325,7 @@
 /area/shuttle/escape)
 "bm" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Restrooms";
-	req_access_txt = "0"
+	name = "Unisex Restrooms"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
@@ -783,9 +785,9 @@ aG
 bW
 bI
 aS
-aV
+ad
 aY
-bb
+aj
 bN
 be
 bT

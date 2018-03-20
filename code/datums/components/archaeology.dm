@@ -19,28 +19,22 @@
 	for(var/I in other_archdrops)
 		_archdrops[I] += other_archdrops[I]
 
-/datum/component/archaeology/proc/Dig(obj/item/W, mob/living/user)
+/datum/component/archaeology/proc/Dig(obj/item/I, mob/living/user)
 	if(dug)
 		to_chat(user, "<span class='notice'>Looks like someone has dug here already.</span>")
 		return
-		
-	var/digging_speed
-	if (istype(W, /obj/item/shovel))
-		var/obj/item/shovel/S = W
-		digging_speed = S.digspeed
-	else if (istype(W, /obj/item/pickaxe))
-		var/obj/item/pickaxe/P = W
-		digging_speed = P.digspeed
-	
-	if (digging_speed && isturf(user.loc))
-		to_chat(user, "<span class='notice'>You start digging...</span>")
-		playsound(parent, 'sound/effects/shovel_dig.ogg', 50, 1)
 
-		if(do_after(user, digging_speed, target = parent))
+	if(!isturf(user.loc))
+		return
+
+	if(I.tool_behaviour == TOOL_SHOVEL || I.tool_behaviour == TOOL_MINING)
+		to_chat(user, "<span class='notice'>You start digging...</span>")
+
+		if(I.use_tool(parent, user, 40, volume=50))
 			to_chat(user, "<span class='notice'>You dig a hole.</span>")
 			gets_dug()
 			dug = TRUE
-			SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
+			SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
 			return COMPONENT_NO_AFTERATTACK
 
 /datum/component/archaeology/proc/gets_dug()

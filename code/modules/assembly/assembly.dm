@@ -25,6 +25,9 @@
 
 	var/next_activate = 0 //When we're next allowed to activate - for spam control
 
+/obj/item/device/assembly/get_part_rating()
+	return 1
+
 /obj/item/device/assembly/proc/on_attach()
 
 /obj/item/device/assembly/proc/on_detach()

@@ -94,7 +94,6 @@
 	name = "White Ship";
 	port_direction = 4;
 	preferred_direction = 1;
-	timid = 1;
 	width = 9
 	},
 /turf/open/floor/plasteel/dark,

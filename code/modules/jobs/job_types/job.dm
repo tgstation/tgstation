@@ -48,6 +48,9 @@
 	var/exp_type = ""
 	var/exp_type_department = ""
 
+	//The amount of good boy points playing this role will earn you towards a higher chance to roll antagonist next round
+	var/antag_rep = 0
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M)
@@ -179,6 +182,7 @@
 	var/obj/item/card/id/C = H.wear_id
 	if(istype(C))
 		C.access = J.get_access()
+		shuffle_inplace(C.access) // Shuffle access list to make NTNet passkeys less predictable
 		C.registered_name = H.real_name
 		C.assignment = J.title
 		C.update_label()

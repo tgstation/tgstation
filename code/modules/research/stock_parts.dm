@@ -9,7 +9,6 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
-	can_hold = list(/obj/item/stock_parts)
 	storage_slots = 50
 	use_to_pickup = 1
 	allow_quick_gather = 1
@@ -21,6 +20,9 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	var/works_from_distance = 0
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
+
+/obj/item/storage/part_replacer/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
+	return ..() && W.get_part_rating()
 
 /obj/item/storage/part_replacer/afterattack(obj/machinery/T, mob/living/carbon/human/user, flag, params)
 	if(flag)
@@ -63,10 +65,17 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	else
 		playsound(src, pshoom_or_beepboopblorpzingshadashwoosh, 40, 1)
 
+/obj/item/storage/part_replacer/cyborg
+	name = "rapid part exchange device"
+	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
+	icon_state = "borgrped"
+	item_state = "RPED"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+
 //Sorts stock parts inside an RPED by their rating.
-//Only use /obj/item/stock_parts/ with this sort proc!
-/proc/cmp_rped_sort(obj/item/stock_parts/A, obj/item/stock_parts/B)
-	return B.rating - A.rating
+/proc/cmp_rped_sort(obj/item/A, obj/item/B)
+	return A.get_part_rating() - B.get_part_rating()
 
 /obj/item/stock_parts
 	name = "stock part"
@@ -80,6 +89,8 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
+/obj/item/stock_parts/get_part_rating()
+	return rating
 //Rating 1
 
 /obj/item/stock_parts/capacitor

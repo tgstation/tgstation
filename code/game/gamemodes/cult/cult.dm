@@ -26,8 +26,8 @@
 			return FALSE
 	else
 		return FALSE
-	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
-		return FALSE //can't convert machines, shielded, or ratvar's dogs
+	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M) || !M.client)
+		return FALSE //can't convert machines, shielded, braindead, or ratvar's dogs
 	return TRUE
 
 /datum/game_mode/cult
@@ -74,13 +74,13 @@
 	for(var/cultists_number = 1 to recommended_enemies)
 		if(!antag_candidates.len)
 			break
-		var/datum/mind/cultist = pick(antag_candidates)
+		var/datum/mind/cultist = antag_pick(antag_candidates)
 		antag_candidates -= cultist
 		cultists_to_cult += cultist
 		cultist.special_role = ROLE_CULTIST
 		cultist.restricted_roles = restricted_jobs
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
-	
+
 
 	return (cultists_to_cult.len>=required_enemies)
 
