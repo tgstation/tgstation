@@ -24,8 +24,8 @@
 	attacktext = "chomps"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "is avoided by the"
+	vision_range = 5
 	aggro_vision_range = 9
-	idle_vision_range = 5
 	mob_size = MOB_SIZE_SMALL
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	gold_core_spawnable = HOSTILE_SPAWN
