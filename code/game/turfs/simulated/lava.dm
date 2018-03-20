@@ -15,6 +15,8 @@
 	contents_explosion(severity, target)
 
 /turf/open/lava/MakeSlippery()
+
+/turf/open/lava/acid_act(acidpwr, acid_volume)
 	return
 
 /turf/open/lava/MakeDry(wet_setting = TURF_WET_WATER)
