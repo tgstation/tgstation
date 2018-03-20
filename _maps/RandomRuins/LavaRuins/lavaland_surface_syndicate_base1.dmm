@@ -612,6 +612,28 @@
 /obj/item/grenade/chem_grenade,
 /obj/item/grenade/chem_grenade,
 /obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade/adv_release{
+	pixel_x = 8
+	},
+/obj/item/grenade/chem_grenade/adv_release{
+	pixel_x = 8
+	},
+/obj/item/grenade/chem_grenade/pyro{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/grenade/chem_grenade/pyro{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/grenade/chem_grenade/cryo{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/grenade/chem_grenade/cryo{
+	pixel_x = -6;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -998,6 +1020,14 @@
 /obj/item/restraints/handcuffs,
 /obj/item/device/taperecorder,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/box/monkeycubes{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -1334,23 +1364,39 @@
 	dir = 8
 	},
 /obj/structure/closet/crate,
-/obj/item/reagent_containers/glass/beaker/waterbottle/large{
-	pixel_x = -3;
-	pixel_y = 3
+/obj/item/stock_parts/capacitor/quadratic,
+/obj/item/stock_parts/capacitor/quadratic,
+/obj/item/stock_parts/cell/bluespace{
+	pixel_x = -2;
+	pixel_y = 2
 	},
-/obj/item/reagent_containers/glass/beaker/waterbottle/large{
-	pixel_x = -3;
-	pixel_y = 3
+/obj/item/stock_parts/cell/bluespace{
+	pixel_x = -2;
+	pixel_y = 2
 	},
-/obj/item/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/reagent_containers/glass/beaker/waterbottle/large{
-	pixel_x = 3;
-	pixel_y = -3
+/obj/item/stock_parts/manipulator/femto{
+	pixel_x = -4;
+	pixel_y = 4
 	},
-/obj/item/reagent_containers/glass/beaker/waterbottle/large{
-	pixel_x = 3;
-	pixel_y = -3
+/obj/item/stock_parts/manipulator/femto{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/stock_parts/matter_bin/bluespace{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/stock_parts/matter_bin/bluespace{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/stock_parts/scanning_module/triphasic{
+	step_x = -4
+	},
+/obj/item/stock_parts/scanning_module/triphasic{
+	step_x = -4
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
@@ -2744,7 +2790,7 @@
 	dir = 1
 	},
 /obj/machinery/turretid{
-	control_area = /area/ruin/unpowered/syndicate_lava_base;
+	control_area = "/area/ruin/unpowered/syndicate_lava_base/main";
 	dir = 1;
 	icon_state = "control_kill";
 	ailock = 1;
@@ -4101,10 +4147,10 @@
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "kP" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/mop,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/soap/syndie,
+/obj/item/mop,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "kQ" = (
