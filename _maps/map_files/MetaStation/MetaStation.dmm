@@ -26657,7 +26657,6 @@
 /area/ai_monitored/turret_protected/ai)
 "bew" = (
 /obj/machinery/power/apc{
-	aidisabled = 0;
 	dir = 1;
 	name = "AI Chamber APC";
 	areastring = "/area/ai_monitored/turret_protected/ai";
@@ -31044,7 +31043,6 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "bnE" = (
 /obj/machinery/power/apc{
-	aidisabled = 0;
 	dir = 4;
 	name = "MiniSat Antechamber APC";
 	areastring = "/area/ai_monitored/turret_protected/aisat_interior";
@@ -33234,7 +33232,6 @@
 	network = list("minisat")
 	},
 /obj/machinery/power/apc{
-	aidisabled = 0;
 	dir = 2;
 	name = "MiniSat Exterior APC";
 	areastring = "/area/aisat";
@@ -33336,7 +33333,6 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/highcap/five_k{
-	aidisabled = 0;
 	dir = 2;
 	name = "MiniSat Foyer APC";
 	areastring = "/area/ai_monitored/turret_protected/aisat/foyer";
