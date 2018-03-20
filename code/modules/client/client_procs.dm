@@ -675,6 +675,12 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, SSassets.preload, register_asset = FALSE)
+		#if (PRELOAD_RSC == 0)
+		for (var/name in GLOB.vox_sounds)
+			var/file = GLOB.vox_sounds[name]
+			Export("##action=load_rsc", file)
+			stoplag()
+		#endif
 
 
 //Hook, override it to run code when dir changes
