@@ -5,7 +5,7 @@
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "mixer0"
+	icon_state = "chemmaster"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -17,10 +17,14 @@
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
+	var/mutable_appearance/beaker_overlay
+	var/working_state = "chemmaster_working"
+	var/nopower_state = "chemmaster_nopower"
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
-	add_overlay("waitlight")
+	if(condi)
+		add_overlay("waitlight")
 	. = ..()
 
 /obj/machinery/chem_master/Destroy()
@@ -52,12 +56,29 @@
 		update_icon()
 	else if(A == bottle)
 		bottle = null
+		
+/obj/machinery/chem_master/proc/display_beaker()
+	..()
+	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
+	b_o.pixel_y = -2
+	b_o.pixel_x = 6
+	return b_o
+
+obj/machinery/chem_master/proc/work_animation()
+	if(working_state)
+		flick(working_state,src)
 
 /obj/machinery/chem_master/update_icon()
-	if(beaker)
-		icon_state = "mixer1"
+	if(!condi)
+		cut_overlays()
+		if(beaker)
+			beaker_overlay = display_beaker()
+			add_overlay(beaker_overlay)
 	else
-		icon_state = "mixer0"
+		if(beaker)
+			icon_state = "mixer1"
+		else
+			icon_state = "mixer0"
 
 /obj/machinery/chem_master/proc/eject_beaker(mob/user)
 	if(beaker)
@@ -74,13 +95,21 @@
 		qdel(src)
 
 /obj/machinery/chem_master/power_change()
-	if(powered())
-		stat &= ~NOPOWER
-	else
+	..()
+	if(!powered())
 		stat |= NOPOWER
+		if(!condi && nopower_state)
+			icon_state = nopower_state
+	else
+		stat &= ~NOPOWER
+		if(!condi)
+			icon_state = initial(icon_state)
 
 /obj/machinery/chem_master/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", I))
+	if(!condi)
+		if(default_deconstruction_screwdriver(user, "chemmaster-o", "chemmaster", I))
+			return
+	else if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", I))
 		return
 
 	else if(exchange_parts(user, I))
@@ -235,6 +264,7 @@
 					P.name = trim("[name] pill")
 					adjust_item_drop_location(P)
 					reagents.trans_to(P,vol_each)
+				work_animation()
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
@@ -268,6 +298,7 @@
 				P.name = trim("[name] patch")
 				adjust_item_drop_location(P)
 				reagents.trans_to(P,vol_each)
+			work_animation()
 			. = TRUE
 
 		if("createBottle")
@@ -303,8 +334,9 @@
 				if(vol_part)
 					P = new/obj/item/reagent_containers/glass/bottle(drop_location())
 					P.name = trim("[name] bottle")
-					adjust_item_drop_location(P)
+					adjust_item_drop_location(P) 
 					reagents.trans_to(P, vol_part)
+				work_animation()
 			. = TRUE
 
 		if("analyze")
@@ -375,3 +407,5 @@
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
 	condi = TRUE
+	icon_state = "mixer0"
+	
