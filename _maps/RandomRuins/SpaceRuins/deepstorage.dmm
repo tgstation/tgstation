@@ -2749,7 +2749,7 @@
 "gO" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "n2o";
+	filter_type = "n2";
 	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
