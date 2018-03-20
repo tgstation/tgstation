@@ -129,16 +129,21 @@
 	if(opened)
 		assembly_params["opened"] = TRUE
 
+	// Save modified color
+	if(initial(detail_color) != detail_color)
+		assembly_params["detail_color"] = detail_color
+
 	return assembly_params
 
 
 // Verifies a list of assembly parameters
 // Returns null on success, error name on failure
 /obj/item/device/electronic_assembly/proc/verify_save(list/assembly_params)
-	// Validate name
+	// Validate name and color
 	if(assembly_params["name"] && !reject_bad_name(assembly_params["name"], TRUE))
 		return "Bad assembly name."
-
+	if(assembly_params["detail_color"] && !(assembly_params["detail_color"] in color_whitelist))
+		return "Bad assembly color."
 
 // Loads assembly parameters from a list
 // Doesn't verify any of the parameters it loads, this is the job of verify_save()
@@ -150,7 +155,11 @@
 	// Load panel status
 	if(assembly_params["opened"])
 		opened = TRUE
-		update_icon()
+
+	if(assembly_params["detail_color"])
+		detail_color = assembly_params["detail_color"]
+
+	update_icon()
 
 
 
