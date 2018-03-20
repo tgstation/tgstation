@@ -728,7 +728,7 @@
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(iscultist(user))
-		var/list/options = list("Blood Spear (200)", "Blood Bolt Barrage (400)", "Blood Beam (600)")
+		var/list/options = list("Blood Spear (150)", "Blood Bolt Barrage (300)", "Blood Beam (500)")
 		var/choice = input(user, "Choose a greater blood rite...", "Greater Blood Rites") as null|anything in options
 		if(!choice)
 			to_chat(user, "<span class='cultitalic'>You decide against conducting a greater blood rite.</span>")
