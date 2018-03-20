@@ -85,7 +85,7 @@
 	var/armorval = 0
 
 	if(def_zone)
-		if(def_zone == "head")
+		if(def_zone == BODY_ZONE_HEAD)
 			if(inventory_head)
 				armorval = inventory_head.armor.getRating(type)
 		else
@@ -139,7 +139,7 @@
 			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
-			if("head")
+			if(BODY_ZONE_HEAD)
 				if(inventory_head)
 					inventory_head.forceMove(drop_location())
 					inventory_head = null
@@ -168,7 +168,7 @@
 		var/add_to = href_list["add_inv"]
 
 		switch(add_to)
-			if("head")
+			if(BODY_ZONE_HEAD)
 				place_on_head(usr.get_active_held_item(),usr)
 
 			if("back")

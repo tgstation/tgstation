@@ -1,5 +1,5 @@
 /obj/item/clothing/head
-	name = "head"
+	name = BODY_ZONE_HEAD
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "top_hat"
 	item_state = "that"
