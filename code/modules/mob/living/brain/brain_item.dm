@@ -167,10 +167,8 @@
 
 /obj/item/organ/brain/Destroy() //copypasted from MMIs.
 	if(brainmob)
-		qdel(brainmob)
-		brainmob = null
-	for(var/T in traumas)
-		qdel(T)
+		QDEL_NULL(brainmob)
+	QDEL_LIST(traumas)
 	return ..()
 
 /obj/item/organ/brain/alien
