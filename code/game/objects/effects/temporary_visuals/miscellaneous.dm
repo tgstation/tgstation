@@ -412,3 +412,8 @@
 			animate(src, alpha = 0, transform = skew, time = duration)
 	else
 		return INITIALIZE_HINT_QDEL
+
+/obj/effect/temp_visual/necro
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "necro"
+	duration = 30

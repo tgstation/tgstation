@@ -348,5 +348,14 @@
 /datum/preset_holoimage/clown
 	outfit_type = /datum/outfit/job/clown
 
+/datum/preset_holoimage/cmo
+	outfit_type = /datum/outfit/job/cmo
+
+/datum/preset_holoimage/rd
+	outfit_type = /datum/outfit/job/rd
+
+/datum/preset_holoimage/janitor
+	outfit_type = /datum/outfit/job/janitor
+
 /datum/preset_holoimage/fuzzy
 	nonhuman_mobtype = /mob/living/simple_animal/hostile/illusion

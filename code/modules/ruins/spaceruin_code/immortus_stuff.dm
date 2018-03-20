@@ -5,13 +5,13 @@
 	set waitfor = FALSE
 	for(var/obj/machinery/door/poddoor/P in src)
 		if(P.density)
-			P.open()
+			INVOKE_ASYNC(P, /obj/machinery/door/poddoor.proc/open)
 			addtimer(CALLBACK(P, /obj/machinery/door.proc/close), 600)
 		else
-			P.close()
+			INVOKE_ASYNC(P, /obj/machinery/door/poddoor.proc/close)
 			addtimer(CALLBACK(P, /obj/machinery/door.proc/open), 600)
 	for(var/obj/machinery/alarm_light/L in src)
-		L.alarm()
+		INVOKE_ASYNC(L, /obj/machinery/alarm_light.proc/alarm)
 
 /obj/machinery/alarm_light
 	name = "alarm light"
@@ -33,23 +33,27 @@
 	while(world.time < timesup) // Simulates the spinning light within the alarm
 		switch(phase)
 			if(1)
-				light_range--
+				light_range-= 0.5
 			if(2)
-				light_range--
+				light_range-= 0.5
 			if(3)
+				light_range--
+			if(4)
 				prevangle = light.directional
 				light.directional = null
 				light_range++
-			if(4)
+			if(5)
 				if(prevangle == initangle)
 					light.directional = oppangle
 				else
 					light.directional = initangle
 				light_range--
-			if(5)
-				light_range++
 			if(6)
 				light_range++
+			if(7)
+				light_range += 0.5
+			if(8)
+				light_range += 0.5
 				phase = 0
 		update_light()
 		phase++
@@ -57,46 +61,140 @@
 	light_range = 0
 	update_light()
 	icon_state = "firelight0"
+	update_icon()
 
 
 
 /obj/item/disk/holodisk/immortus_one
 	name = "Welcome"
-	preset_image_type = /datum/preset_holoimage/fuzzy
+	preset_image_type = /datum/preset_holoimage/cmo
 	preset_record_text = {"
-	NAME Sentry
-	DELAY 10
-	SAY Welcome to Immortus Clinics
+	NAME Greeter
 	DELAY 20
+	SOUND sound/misc/compiler_stage2.ogg
+	SAY Welcome to Immortus Clinics!
+	DELAY 25
 	SAY We understand that for our distinguished clients in their final days...
 	DELAY 20
 	SAY small-minded regulations and medical ethics can only offer to hasten your end.
-	DELAY 20
+	DELAY 35
 	SAY Here at Immortus, we offer hope instead.
-	DELAY 20
+	DELAY 30
 	SAY That is why we established this clinic in an unregistered sector...
-	DELAY 20
-	SAY to offer you the latest and most cutting-edge of treatments.
-	DELAY 200;"}
+	DELAY 25
+	SAY to offer you the latest cutting-edge treatments.
+	DELAY 30
+	SAY Please make yourself comfortable while we prepare for your appointment.
+	DELAY 40
+	SAY Based on our current capacity, your estimated wait time is 'INTEGER_OVERFLOW' minutes.
+	DELAY 25;"}
 
 /obj/item/disk/holodisk/immortus_two
-	name = "Welcome"
+	name = "Password"
 	preset_image_type = /datum/preset_holoimage/fuzzy
 	preset_record_text = {"
-	NAME Sentry
-	DELAY 10
-	SAY Welcome to Immortus Clinics
+	NAME System AI
+	SAY Playing last recorded message...
+	DELAY 40
+	NAME Dr. Herbert West
+	PRESET /datum/preset_holoimage/rd
+	SAY Judging by all the racket out there it looks like Immortus finally sent its cleaners.
+	DELAY 40
+	SOUND sound/effects/explosion_distant.ogg
+	DELAY 25
+	SAY Can't you fools just leave me to my work? Besides you're just wasting your time on that door.
+	DELAY 30
+	SOUND sound/machines/beep.ogg
+	DELAY 30
+	SOUND sound/machines/beep.ogg
+	SAY Wait...
+	DELAY 30
+	SOUND sound/machines/beep.ogg
+	SAY What is the yield on that thing?
+	DELAY 30
+	SOUND sound/machines/beep.ogg
+	DELAY 30
+	SAY What?! And the board has the audacity to say I've gone mad!
+	DELAY 30
+	SOUND sound/machines/beep.ogg
+	DELAY 30
+	SOUND sound/machines/beep.ogg
+	DELAY 15
+	SAY You'll destroy everything!
+	DELAY 15
+	SOUND sound/machines/beep.ogg
 	DELAY 20
-	SAY We understand that for our distinguished clients in their final days...
+	SAY Fine, fine. The password is 'Miskatonic', not that any of you fools would be familiar with it.
+	DELAY 40
+	SOUND sound/machines/terminal_off.ogg
+	DELAY 30
+	SOUND sound/machines/airlockopen.ogg
+	DELAY 30
+	SAY I needed more data points for my latest experiment anyway...
+	DELAY 20;"}
+
+/obj/item/disk/holodisk/immortus_three
+	name = "Written-over Vault Footage"
+	preset_image_type = /datum/preset_holoimage/engineer
+	preset_record_text = {"
+	NAME Isaac
 	DELAY 20
-	SAY small-minded regulations and medical ethics can only offer to hasten your end.
+	SAY Hey...
 	DELAY 20
-	SAY Here at Immortus, we offer hope instead.
+	SAY HEY!
+	DELAY 30
+	NAME Scruffy
+	PRESET /datum/preset_holoimage/janitor
+	SAY Mhm?
+	DELAY 30
+	NAME Isaac
+	PRESET /datum/preset_holoimage/engineer
+	SAY Did you remember to turn off the holorecorder?
+	DELAY 30
+	SAY You know how West is about his data...
+	DELAY 30
+	SAY If we left that thing running in between rotations, it'd write over all the entries, he'd lose his god damn mind.
+	DELAY 40
+	SAY If he hasn't already...
 	DELAY 20
-	SAY That is why we established this clinic in an unregistered sector...
-	DELAY 20
-	SAY to offer you the latest and most cutting-edge of treatments.
-	DELAY 200;"}
+	NAME Scruffy
+	PRESET /datum/preset_holoimage/janitor
+	SAY Mhm
+	DELAY 40
+	NAME Isaac
+	PRESET /datum/preset_holoimage/engineer
+	SAY Was that 'Mhm' that he'd lose his mind or 'Mhm' that you turned off the holorecorder?
+	DELAY 30
+	NAME Scruffy
+	PRESET /datum/preset_holoimage/janitor
+	SAY Mhm
+	DELAY 35
+	NAME Isaac
+	PRESET /datum/preset_holoimage/engineer
+	SAY Whatever, this was my last rotation, too much drama with Immortus, and I've heard good things about the mining industry.
+	DELAY 40
+	SAY Ok, almost done.
+	DELAY 5
+	SOUND sound/items/drill_use.ogg
+	DELAY 25
+	SAY I've got an idea for the leftover experiments AND the lack of security for West's prototype.
+	DELAY 40
+	NAME Scruffy
+	PRESET /datum/preset_holoimage/janitor
+	SAY Mhm?
+	DELAY 30
+	NAME Isaac
+	PRESET /datum/preset_holoimage/engineer
+	SAY Yea, toss me that RPD...
+	DELAY 20;"}
+
+/obj/item/disk/holodisk/immortus_four
+	name = "Final Entry"
+	preset_image_type = /datum/preset_holoimage/engineer
+	preset_record_text = {"
+	NAME Isaac
+	SAY Hey...
+	DELAY 20;"}
 
 /obj/machinery/light/spooky
 	var/default_on = FALSE
@@ -160,23 +258,22 @@
 		if(chosen.status == LIGHT_OK && !chosen.flickering)
 			break
 	if(chosen)
-		to_chat(world, "Flickering [chosen] at loc: [chosen.x], [chosen.y] in group #[chosen.group]")
 		chosen.flicker(10)
 	var/next = groupnum
 	if(backwards)
 		next--
 		if(next == 0 || !LAZYLEN(lights[next]))
 			next = 1
-			addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 90)
+			addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 100)
 		else
-			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 90)
+			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 100)
 	else
 		next++
 		if(next == 11 || !LAZYLEN(lights[next]))
 			next -= 2
-			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 90)
+			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 100)
 		else
-			addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 90)
+			addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 100)
 	addtimer(CALLBACK(src, .proc/flicker, 20, FALSE), 100)
 
 
@@ -191,7 +288,6 @@
 	move_to_delay = 5
 	speak_emote = list("groans")
 	emote_see = list("groans")
-	a_intent = "harm"
 	maxHealth = 60
 	health = 60
 	speed = 2.5
@@ -203,7 +299,6 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 350
-	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	robust_searching = 1
 	stat_attack = UNCONSCIOUS
 	gold_core_spawnable = 0
@@ -214,12 +309,12 @@
 
 /mob/living/simple_animal/hostile/zombie/death()
 	..()
-	addtimer(CALLBACK(src, .proc/arise), rand(400,600))
+	addtimer(CALLBACK(src, .proc/arise), rand(500,700))
 
 /mob/living/simple_animal/hostile/zombie/proc/arise()
 	if(stat == DEAD)
 		visible_message("<span class='danger'>[src] staggers to their feet!</span>")
-		playsound(src, 'sound/hallucinations/growl1.ogg', 100, 1)
+		playsound(src, 'sound/hallucinations/wail.ogg', 100, 1)
 		revive(full_heal = 1)
 
 /obj/structure/displaycase/necrostaff
@@ -249,9 +344,10 @@
 		var/datum/beam/current_beam = M.Beam(loc,icon_state="chain",time=50)
 		playsound(M,'sound/weapons/chainhit.ogg',50,1)
 		user.visible_message("<span class='danger'>[user] attempts to bind [M]'s soul to the [src].</span>", "<span class='danger'>You attempt to bind [M]'s soul to the [src].</span>")
+		new /obj/effect/temp_visual/necro(get_turf(M))
 		if(!channeling)
 			channeling = TRUE
-			if(do_after(user, 30, target = user))
+			if(do_after(user, 33, target = user))
 				if(M.stat == DEAD)
 					if(souls.len < max_souls)
 						playsound(M,'sound/magic/wandodeath.ogg',50,1)
@@ -290,9 +386,8 @@
 				H.Beam(loc,icon_state="lichbeam",time=20)
 				H.forceMove(src)
 
-/obj/item/gun/magic/staff/necro/afterattack(atom/A, mob/user, proximity_flag)
-	if(A in souls && user && proximity_flag)
-		var/mob/M = A
+/obj/item/gun/magic/staff/necro/attack(mob/living/M, mob/living/carbon/user)
+	if(M in souls && user)
 		user.visible_message("<span class='warning'>[user] releases [M] from the [src]'s service.</span>", "<span class='warning'>You release [M] from its eternal service.</span>")
 		M.Beam(loc,icon_state="drainlife",time=20)
 		M.death()
@@ -383,8 +478,17 @@
 	desc = "Used to reclaim your items after you finish your visit to an Immortus Clinic."
 	req_access = list()
 
-/obj/effect/decal/immmortus
-	name = "immortus logo"
+/obj/effect/decal/immortus
+	name = "Immortus logo"
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "immortus"
 	layer = TURF_PLATING_DECAL_LAYER
+
+/obj/effect/decal/immortus_name
+	name = "Immortus Clinic"
+	icon = 'icons/effects/96x32.dmi'
+	icon_state = "immortus"
+	layer = SIGN_LAYER
+
+/obj/effect/decal/immortus_name/sideways
+	icon = 'icons/effects/32x96.dmi'

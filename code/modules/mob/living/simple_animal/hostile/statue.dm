@@ -52,7 +52,7 @@
 	maxHealth = 1000
 	health = 1000
 	vision_range = 10
-	aggro_vision_range = 10
+	aggro_vision_range = 18
 	move_to_delay = 1
 	melee_damage_lower = 25
 	melee_damage_upper = 25

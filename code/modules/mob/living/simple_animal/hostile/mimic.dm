@@ -283,6 +283,15 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	lose_patience_timeout = 6000
 	speak_emote = list("groans","wails","moans")
+	environment_target_typecache = list(
+	/obj/machinery/door,	//These are slaves, magically bound to hunt down their target, they aren't going to wait for someone to open a door
+	/obj/structure/window,
+	/obj/structure/closet,
+	/obj/structure/table,
+	/obj/structure/grille,
+	/obj/structure/girder,
+	/obj/structure/rack,
+	/obj/structure/barricade)
 	var/obj/item/gun/magic/staff/necro/home
 	var/atom/marked
 
@@ -290,7 +299,6 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/mob/CopyObject(atom/movable/O, mob/living/creator, destroy_original = 0)
 	. = ..()
 	if(.)
-
 		add_overlay(mutable_appearance('icons/mob/mob.dmi', "necro"))
 		if(isliving(O))
 			var/mob/living/L = O
