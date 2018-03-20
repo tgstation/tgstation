@@ -2,6 +2,7 @@
 	name = "\improper Immortus Clinic"
 
 /area/ruin/powered/Immortus/burglaralert(obj/trigger)
+	set waitfor = FALSE
 	for(var/obj/machinery/door/poddoor/P in src)
 		if(P.density)
 			P.open()
@@ -18,7 +19,6 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "firelight0"
 	light_color = "#ff0000"
-	var/alarming = FALSE
 
 /obj/machinery/alarm_light/proc/alarm(duration = 600) //deciseconds
 	icon_state = "firelight1"
@@ -39,11 +39,13 @@
 			if(3)
 				prevangle = light.directional
 				light.directional = null
+				light_range++
 			if(4)
 				if(prevangle == initangle)
 					light.directional = oppangle
 				else
 					light.directional = initangle
+				light_range--
 			if(5)
 				light_range++
 			if(6)
@@ -53,6 +55,7 @@
 		phase++
 		sleep(1)
 	light_range = 0
+	update_light()
 	icon_state = "firelight0"
 
 
@@ -154,7 +157,7 @@
 	var/obj/machinery/light/sequence/chosen
 	for(var/i in 1 to 4)
 		chosen = pick(lights[groupnum])
-		if(chosen.status == LIGHT_OK)
+		if(chosen.status == LIGHT_OK && !chosen.flickering)
 			break
 	if(chosen)
 		to_chat(world, "Flickering [chosen] at loc: [chosen.x], [chosen.y] in group #[chosen.group]")
@@ -164,16 +167,16 @@
 		next--
 		if(next == 0 || !LAZYLEN(lights[next]))
 			next = 1
-			addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 75)
+			addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 90)
 		else
-			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 75)
+			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 90)
 	else
 		next++
 		if(next == 11 || !LAZYLEN(lights[next]))
 			next -= 2
-			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 75)
+			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 90)
 		else
-			addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 75)
+			addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 90)
 	addtimer(CALLBACK(src, .proc/flicker, 20, FALSE), 100)
 
 
@@ -288,7 +291,7 @@
 				H.forceMove(src)
 
 /obj/item/gun/magic/staff/necro/afterattack(atom/A, mob/user, proximity_flag)
-	if(A in souls && user)
+	if(A in souls && user && proximity_flag)
 		var/mob/M = A
 		user.visible_message("<span class='warning'>[user] releases [M] from the [src]'s service.</span>", "<span class='warning'>You release [M] from its eternal service.</span>")
 		M.Beam(loc,icon_state="drainlife",time=20)
@@ -338,3 +341,50 @@
 
 /obj/item/paper/contract/immortus/update_text()
 	info = "<center><B>Contract for resurrection</B></center><BR><BR><BR>I, Herbert West, of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent, in exchange for arcane abilities beyond normal human ability. I understand that upon my demise, my soul shall fall into the infernal hells for all eternity.<BR><BR><BR>Signed, <font face=\"Nyala\" color=#600A0A size=6><i>Dr. Herbert West</i></font>"
+
+/obj/machinery/gulag_teleporter/immortus
+	name = "Immortus Clinic in-patient processor"
+	desc = "Used to process patients at a legendary Immortus Clinic."
+	jumpsuit_type = /obj/item/clothing/under/pj/blue
+	shoes_type = /obj/item/clothing/shoes/sneakers/white
+	dir = 4
+	var/strip = TRUE
+
+/obj/machinery/gulag_teleporter/immortus/exit
+	name = "Immortus Clinic out-patient processor"
+	dir = 8
+	strip = FALSE
+
+/obj/machinery/gulag_teleporter/immortus/locate_reclaimer()
+	linked_reclaimer = locate(/obj/machinery/gulag_item_reclaimer/immortus)
+	if(linked_reclaimer)
+		linked_reclaimer.linked_teleporter = src
+
+/obj/machinery/gulag_teleporter/immortus/toggle_open()
+	if(state_open)
+		close_machine()
+		if(occupant)
+			teleport(occupant)
+		return
+	else
+		open_machine()
+
+/obj/machinery/gulag_teleporter/immortus/proc/teleport(mob/user)
+	if(strip)
+		handle_prisoner()
+	playsound(loc, 'sound/weapons/emitter.ogg', 50, 1)
+	user.forceMove(get_step(get_step(loc, dir), dir))
+	new /obj/effect/particle_effect/sparks(user.loc)
+	playsound(user, "sparks", 50, 1)
+	toggle_open()
+
+/obj/machinery/gulag_item_reclaimer/immortus
+	name = "Immortus equipment reclaimer station"
+	desc = "Used to reclaim your items after you finish your visit to an Immortus Clinic."
+	req_access = list()
+
+/obj/effect/decal/immmortus
+	name = "immortus logo"
+	icon = 'icons/effects/160x160.dmi'
+	icon_state = "immortus"
+	layer = TURF_PLATING_DECAL_LAYER

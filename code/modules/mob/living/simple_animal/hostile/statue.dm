@@ -51,8 +51,8 @@
 /mob/living/simple_animal/hostile/statue/haunted
 	maxHealth = 1000
 	health = 1000
-	vision_range = 8
-	aggro_vision_range = 8
+	vision_range = 10
+	aggro_vision_range = 10
 	move_to_delay = 1
 	melee_damage_lower = 25
 	melee_damage_upper = 25
