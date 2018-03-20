@@ -37,11 +37,6 @@
 	description = "<span class='nicegreen'>What a lovely day.</span>\n"
 	mood_change = 3
 
-/datum/mood_event/happytable
-	description = "<span class='nicegreen'>They want to play on the table!</span>\n"
-	mood_change = 2
-	timeout = 1200
-
 /datum/mood_event/jolly
 	description = "<span class='nicegreen'>I feel happy for no particular reason.</span>\n"
 	mood_change = 6
@@ -73,3 +68,4 @@
 /datum/mood_event/family_heirloom
 	description = "<span class='nicegreen'>My family heirloom is safe with me.</span>\n"
 	mood_change = 1
+  

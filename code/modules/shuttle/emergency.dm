@@ -407,6 +407,7 @@
 /obj/docking_port/mobile/pod
 	name = "escape pod"
 	id = "pod"
+	timid = FALSE
 	dwidth = 1
 	width = 3
 	height = 4

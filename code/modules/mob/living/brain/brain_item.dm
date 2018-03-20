@@ -5,7 +5,7 @@
 	throw_speed = 3
 	throw_range = 5
 	layer = ABOVE_MOB_LAYER
-	zone = "head"
+	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
 	vital = TRUE
 	attack_verb = list("attacked", "slapped", "whacked")
@@ -112,7 +112,7 @@
 
 	add_fingerprint(user)
 
-	if(user.zone_selected != "head")
+	if(user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
 
 	if((C.head && (C.head.flags_cover & HEADCOVERSEYES)) || (C.wear_mask && (C.wear_mask.flags_cover & MASKCOVERSEYES)) || (C.glasses && (C.glasses.flags_1 & GLASSESCOVERSEYES)))
@@ -122,7 +122,7 @@
 //since these people will be dead M != usr
 
 	if(!C.getorgan(/obj/item/organ/brain))
-		if(!C.get_bodypart("head") || !user.temporarilyRemoveItemFromInventory(src))
+		if(!C.get_bodypart(BODY_ZONE_HEAD) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/msg = "[C] has [src] inserted into [C.p_their()] head by [user]."
 		if(C == user)
@@ -222,16 +222,21 @@
 /obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
 	if(!can_gain_trauma(trauma, resilience))
 		return
-	var/trauma_type
 	if(ispath(trauma))
-		trauma_type = trauma
-		SSblackbox.record_feedback("tally", "traumas", 1, trauma_type)
-		traumas += new trauma_type(arglist(list(src, resilience) + arguments))
+		trauma = new(arglist(arguments))
 	else
-		SSblackbox.record_feedback("tally", "traumas", 1, trauma.type)
-		traumas += trauma
-		if(resilience)
-			trauma.resilience = resilience
+		if(trauma.brain) //we don't accept used traumas here
+			WARNING("gain_trauma was given an already active trauma.")
+			return
+
+	traumas += trauma
+	trauma.brain = src
+	if(owner)
+		trauma.owner = owner
+		trauma.on_gain()
+	if(resilience)
+		trauma.resilience = resilience
+	SSblackbox.record_feedback("tally", "traumas", 1, trauma.type)
 
 //Add a random trauma of a certain subtype
 /obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)
