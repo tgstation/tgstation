@@ -78,20 +78,14 @@
 		user.visible_message("[user] finishes attaching [tool]!", "<span class='notice'>You attach [tool].</span>")
 		qdel(tool)
 		if(istype(tool, /obj/item/twohanded/required/chainsaw))
-<<<<<<< HEAD
 			if(istype(tool, /obj/item/twohanded/required/chainsaw/energy)) //HIPPIE CODE -START- differenciates betwen esaws and normal saws
 				var/obj/item/mounted_energy_chainsaw/new_arm = new(target) //HIPPIECODE
 				target_zone == "r_arm" ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm) //HIPPIECODE
 				return 1 //HIPPIECODE
 			else //HIPPIECODE -END-
 				var/obj/item/mounted_chainsaw/new_arm = new(target)
-				target_zone == "r_arm" ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
+				target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm
 				return 1
-=======
-			var/obj/item/mounted_chainsaw/new_arm = new(target)
-			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
-			return 1
->>>>>>> fbe5f4a062... Replaced body zone magic strings with defines
 		else if(istype(tool, /obj/item/melee/synthetic_arm_blade))
 			var/obj/item/melee/arm_blade/new_arm = new(target,TRUE,TRUE)
 			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
