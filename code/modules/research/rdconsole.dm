@@ -280,7 +280,7 @@ doesn't have toxins access.
 		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
 			continue
-		if(!(D.departmental_flags & linked_lathe.allowed_department_flags))
+		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
 			continue
 		var/temp_material
 		var/c = 50
@@ -291,9 +291,9 @@ doesn't have toxins access.
 			t = linked_lathe.check_mat(D, M)
 			temp_material += " | "
 			if (t < 1)
-				temp_material += "<span class='bad'>[all_materials[M]*coeff] [CallMaterialName(M)]</span>"
+				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_material += " [all_materials[M]*coeff] [CallMaterialName(M)]"
+				temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
 			c = min(c,t)
 
 		if (c >= 1)
@@ -332,7 +332,7 @@ doesn't have toxins access.
 	l += ui_protolathe_header()
 	var/coeff = linked_lathe.efficiency_coeff
 	for(var/datum/design/D in matching_designs)
-		if(!(D.departmental_flags & linked_lathe.allowed_department_flags))
+		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
 			continue
 		var/temp_material
 		var/c = 50
@@ -342,9 +342,9 @@ doesn't have toxins access.
 			t = linked_lathe.check_mat(D, M)
 			temp_material += " | "
 			if (t < 1)
-				temp_material += "<span class='bad'>[all_materials[M]*coeff] [CallMaterialName(M)]</span>"
+				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_material += " [all_materials[M]*coeff] [CallMaterialName(M)]"
+				temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
 			c = min(c,t)
 
 		if (c >= 1)
@@ -422,7 +422,7 @@ doesn't have toxins access.
 		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
 			continue
-		if(!(D.departmental_flags & linked_imprinter.allowed_department_flags))
+		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
 			continue
 		var/temp_materials
 		var/check_materials = TRUE
@@ -451,7 +451,7 @@ doesn't have toxins access.
 
 	var/coeff = linked_imprinter.efficiency_coeff
 	for(var/datum/design/D in matching_designs)
-		if(!(D.departmental_flags & linked_imprinter.allowed_department_flags))
+		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
 			continue
 		var/temp_materials
 		var/check_materials = TRUE
