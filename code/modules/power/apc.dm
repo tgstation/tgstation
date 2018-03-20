@@ -684,7 +684,7 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 15 && (!(stat & BROKEN) || malfai))
+	if(damage_flag == "melee" && damage_amount < 10 && (!(stat & BROKEN) || malfai))
 		return 0
 	. = ..()
 
