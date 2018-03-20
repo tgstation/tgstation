@@ -625,15 +625,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 
-<<<<<<< HEAD
-			if(rank == "Assistant")//Assistant is special
+			if(rank == SSjob.overflow_role)//Overflow is special
 				if(jobban_isbanned(user, CLUWNEBAN) || jobban_isbanned(user, CATBAN))
 					HTML += "<font color=orange>Mandatory</font>"
-				else if(job_civilian_low & ASSISTANT)
-=======
-			if(rank == SSjob.overflow_role)//Overflow is special
-				if(job_civilian_low & overflow.flag)
->>>>>>> c72743e4cf... April Fools Day replaces the overflow role with Clowns (#36533)
+				else if(job_civilian_low & overflow.flag)
 					HTML += "<font color=green>Yes</font>"
 				else
 					HTML += "<font color=red>No</font>"
