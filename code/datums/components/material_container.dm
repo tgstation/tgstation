@@ -350,3 +350,8 @@
 /datum/material/biomass
 	name = "Biomass"
 	id = MAT_BIOMASS
+
+/datum/material/plastic
+	name = "Plastic"
+	id = MAT_PLASTIC
+	sheet_type = /obj/item/stack/sheet/plastic
