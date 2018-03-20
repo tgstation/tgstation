@@ -105,14 +105,6 @@
   mood_change = -3
   timeout = 3000
 
-/datum/mood_event/grossroom
-	description = "<span class='warning'>This room is kind of dirty...</span>\n"
-	mood_change = -3
-
-/datum/mood_event/disgustingroom
-	description = "<span class='warning'>This room is disgusting!</span>\n"
-	mood_change = -5
-
 /datum/mood_event/nyctophobia
 	description = "<span class='warning'>It sure is dark around here...</span>\n"
 	mood_change = -3

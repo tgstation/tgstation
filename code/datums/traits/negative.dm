@@ -17,10 +17,6 @@
 	value = -1
 	var/obj/item/heirloom
 	var/where_text
-	var/datum/component/mood/mood
-
-/datum/trait/family_heirloom/add()
-	mood = trait_holder.GetComponent(/datum/component/mood)
 
 /datum/trait/family_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = trait_holder
@@ -74,13 +70,12 @@
 	heirloom.name = "\improper [family_name[family_name.len]] family [heirloom.name]"
 
 /datum/trait/family_heirloom/process()
-	if(mood)
-		if(heirloom in trait_holder.GetAllContents())
-			mood.clear_event("family_heirloom_missing")
-			mood.add_event("family_heirloom", /datum/mood_event/family_heirloom)
-		else
-			mood.clear_event("family_heirloom")
-			mood.add_event("family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
+	if(heirloom in trait_holder.GetAllContents())
+		trait_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
+		trait_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "family_heirloom", /datum/mood_event/family_heirloom)
+	else
+		trait_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
+		trait_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
 
 
 
@@ -130,10 +125,6 @@
 	name = "Nyctophobia"
 	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
 	value = -1
-	var/datum/component/mood/mood
-
-/datum/trait/nyctophobia/add()
-	mood = trait_holder.GetComponent(/datum/component/mood) //assign this on creation for speed
 
 /datum/trait/nyctophobia/on_process()
 	var/mob/living/carbon/human/H = trait_holder
@@ -145,11 +136,9 @@
 		if(trait_holder.m_intent == MOVE_INTENT_RUN)
 			to_chat(trait_holder, "<span class='warning'>Easy, easy, take it slow... you're in the dark...</span>")
 			trait_holder.toggle_move_intent()
-		if(mood)
-			mood.add_event("nyctophobia", /datum/mood_event/nyctophobia)
+		trait_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
 	else
-		if(mood)
-			mood.clear_event("nyctophobia")
+		trait_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
 
 
 
