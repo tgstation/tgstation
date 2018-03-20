@@ -21,19 +21,19 @@
 /datum/antagonist/sintouched/proc/forge_objectives()
 	var/datum/objective/sintouched/O
 	switch(sin)//traditional seven deadly sins... except lust.
-		if(1) // acedia
+		if(SIN_ACEDIA)
 			O = new /datum/objective/sintouched/acedia
-		if(2) // Gluttony
+		if(SIN_GLUTTONY)
 			O = new /datum/objective/sintouched/gluttony
-		if(3) // Greed
+		if(SIN_GREED)
 			O = new /datum/objective/sintouched/greed
-		if(4) // sloth
+		if(SIN_SLOTH)
 			O = new /datum/objective/sintouched/sloth
-		if(5) // Wrath
+		if(SIN_WRATH)
 			O = new /datum/objective/sintouched/wrath
-		if(6) // Envy
+		if(SIN_ENVY)
 			O = new /datum/objective/sintouched/envy
-		if(7) // Pride
+		if(SIN_PRIDE)
 			O = new /datum/objective/sintouched/pride
 	objectives += O
 
@@ -73,3 +73,11 @@
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_SINTOUCHED]
 	hud.leave_hud(owner.current)
 	set_antag_hud(owner.current, null)
+
+#undef SIN_ACEDIA
+#undef SIN_ENVY
+#undef SIN_GLUTTONY
+#undef SIN_GREED
+#undef SIN_PRIDE
+#undef SIN_SLOTH
+#undef SIN_WRATH
