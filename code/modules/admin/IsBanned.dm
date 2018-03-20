@@ -2,12 +2,12 @@
 
 //How many new ckey matches before we revert the stickyban to it's roundstart state
 //These are exclusive, so once it goes over one of these numbers, it reverts the ban
-#define STICKYBAN_MAX_MATCHES 20
-#define STICKYBAN_MAX_EXISTING_USER_MATCHES 5 //ie, users who were connected before the ban triggered
-#define STICKYBAN_MAX_ADMIN_MATCHES 2
+#define STICKYBAN_MAX_MATCHES 15
+#define STICKYBAN_MAX_EXISTING_USER_MATCHES 3 //ie, users who were connected before the ban triggered
+#define STICKYBAN_MAX_ADMIN_MATCHES 1
 
-/world/IsBanned(key,address,computer_id,type,real_bans_only=FALSE)
-	if (!key || !address || !computer_id)
+/world/IsBanned(key, address, computer_id, type, real_bans_only=FALSE)
+	if (!key || (!real_bans_only && (!address || !computer_id)))
 		if(real_bans_only)
 			return FALSE
 		log_access("Failed Login (invalid data): [key] [address]-[computer_id]")
@@ -82,10 +82,32 @@
 
 		var/newmatch = FALSE
 		var/client/C = GLOB.directory[ckey]
-		var/cachedban = SSstickyban.cache[bannedckey]
+		var/list/cachedban = SSstickyban.cache[bannedckey]
+		if (!CONFIG_GET(flag/ban_legacy_system) && (SSdbcore.Connect() || length(SSstickyban.dbcache)))
+			ban = get_stickyban_from_ckey(bannedckey)
+			var/list/bancache = list()
+			while (ban["ckey"] && ban["keys"] && ban["keys"][ckey] && ban["keys"][ckey]["exempt"])
+				if (C || SSstickyban.confirmed_exempt[ckey]) //modifing/re-adding a stickyban makes it re-match everybody
+					return
+				bancache[ban["ckey"]] = world.GetConfig("ban", ban["ckey"])
+				//Hacky way to ensure somebody exempt from one stickyban doesn't get exempt from all stickybans
+				world.SetConfig("ban", bannedckey, null)
+				var/list/newban = ..()
+				if (!newban || newban["ckey"] == ban["ckey"])
+					SSstickyban.confirmed_exempt[ckey] = TRUE
+					return
+				if (!newban["ckey"])
+					ban = newban
+					break
+				ban = get_stickyban_from_ckey(ban["ckey"])
+
+			spawn()
+				for(var/bancacheckey in bancache)
+					world.SetConfig("ban", bancacheckey, bancache[bancacheckey])
 
 		//rogue ban in the process of being reverted.
-		if (cachedban && cachedban["reverting"])
+		if (cachedban && cachedban["reverting"] || cachedban["timeout"])
+			world.SetConfig("ban", bannedckey, null)
 			return null
 
 		if (cachedban && ckey != bannedckey)
@@ -98,39 +120,65 @@
 
 		if (newmatch && cachedban)
 			var/list/newmatches = cachedban["matches_this_round"]
+			var/list/pendingmatches = cachedban["matches_this_round"]
 			var/list/newmatches_connected = cachedban["existing_user_matches_this_round"]
 			var/list/newmatches_admin = cachedban["admin_matches_this_round"]
 
-			newmatches[ckey] = ckey
+			pendingmatches[ckey] = ckey
+
 			if (C)
 				newmatches_connected[ckey] = ckey
+				newmatches_connected = cachedban["existing_user_matches_this_round"]
 			if (admin)
 				newmatches_admin[ckey] = ckey
 
+			sleep(STICKYBAN_ROGUE_CHECK_TIME)
+
+			pendingmatches -= ckey
+
+			if (cachedban["reverting"] || cachedban["timeout"])
+				return null
+
+			newmatches[ckey] = ckey
+
+
 			if (\
-				newmatches.len > STICKYBAN_MAX_MATCHES || \
+				newmatches.len+pendingmatches.len > STICKYBAN_MAX_MATCHES || \
 				newmatches_connected.len > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
 				newmatches_admin.len > STICKYBAN_MAX_ADMIN_MATCHES \
 				)
-				if (cachedban["reverting"])
-					return null
-				cachedban["reverting"] = TRUE
+
+				var/action
+				if (ban["fromdb"])
+					cachedban["timeout"] = TRUE
+					action = "putting it on timeout for the remainder of the round"
+				else
+					cachedban["reverting"] = TRUE
+					action = "reverting to its roundstart state"
 
 				world.SetConfig("ban", bannedckey, null)
 
-				log_game("Stickyban on [bannedckey] detected as rogue, reverting to its roundstart state")
-				message_admins("Stickyban on [bannedckey] detected as rogue, reverting to its roundstart state")
+				log_game("Stickyban on [bannedckey] detected as rogue, [action]")
+				message_admins("Stickyban on [bannedckey] detected as rogue, [action]")
 				//do not convert to timer.
 				spawn (5)
 					world.SetConfig("ban", bannedckey, null)
 					sleep(1)
 					world.SetConfig("ban", bannedckey, null)
-					cachedban["matches_this_round"] = list()
-					cachedban["existing_user_matches_this_round"] = list()
-					cachedban["admin_matches_this_round"] = list()
-					cachedban -= "reverting"
-					world.SetConfig("ban", bannedckey, list2stickyban(cachedban))
+					if (!ban["fromdb"])
+						cachedban = cachedban.Copy() //so old references to the list still see the ban as reverting
+						cachedban["matches_this_round"] = list()
+						cachedban["existing_user_matches_this_round"] = list()
+						cachedban["admin_matches_this_round"] = list()
+						cachedban -= "reverting"
+						SSstickyban.cache[bannedckey] = cachedban
+						world.SetConfig("ban", bannedckey, list2stickyban(cachedban))
 				return null
+
+			if (ban["fromdb"])
+				if(!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
+					var/datum/DBQuery/query_add_match = SSdbcore.NewQuery("INSERT IGNORE INTO [format_table_name("stickyban_matched_ckey")] (matchedckey, stickyban) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(bannedckey)]')")
+					query_add_match.warn_execute()
 
 		//byond will not trigger isbanned() for "global" host bans,
 		//ie, ones where the "apply to this game only" checkbox is not checked (defaults to not checked)
@@ -142,7 +190,7 @@
 			return null
 
 		if (C) //user is already connected!.
-			to_chat(C, "You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect using file -> reconnect to see if the match was reversed.")
+			to_chat(C, "You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect using file -> reconnect to see if the match was automatically reversed.")
 
 		var/desc = "\nReason:(StickyBan) You, or another user of this computer or connection ([bannedckey]) is banned from playing here. The ban reason is:\n[ban["message"]]\nThis ban was applied by [ban["admin"]]\nThis is a BanEvasion Detection System ban, if you think this ban is a mistake, please wait EXACTLY 6 seconds, then try again before filing an appeal.\n"
 		. = list("reason" = "Stickyban", "desc" = desc)
