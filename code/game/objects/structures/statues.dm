@@ -305,3 +305,7 @@
 /obj/structure/statue/angel
 	anchored = TRUE
 	icon_state = "angel"
+
+/obj/structure/statue/male
+	anchored = TRUE
+	icon_state = "human_male"

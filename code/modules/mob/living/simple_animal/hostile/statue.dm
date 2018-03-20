@@ -49,6 +49,8 @@
 	var/mob/living/creator = null
 
 /mob/living/simple_animal/hostile/statue/haunted
+	maxHealth = 1000
+	health = 1000
 	vision_range = 8
 	aggro_vision_range = 8
 	move_to_delay = 1

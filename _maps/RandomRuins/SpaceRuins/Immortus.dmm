@@ -4,51 +4,48 @@
 /area/template_noop)
 "ab" = (
 /turf/closed/indestructible/vault,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ac" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /turf/closed/indestructible/vault,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ad" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/closed/indestructible/vault,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ae" = (
 /obj/structure/disposalpipe/junction/yjunction,
 /turf/closed/indestructible/vault,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "af" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /turf/closed/indestructible/vault,
-/area/awaymission)
-"ag" = (
-/turf/open/space/basic,
-/area/space)
+/area/ruin/powered/Immortus)
 "ah" = (
 /obj/machinery/portable_atmospherics/canister/water_vapor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ai" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aj" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ak" = (
 /obj/machinery/power/rad_collector/anchored,
 /obj/item/tank/internals/plasma/full,
@@ -56,7 +53,7 @@
 	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "al" = (
 /obj/item/nuke_core,
 /obj/structure/window/plasma/reinforced/spawner,
@@ -64,12 +61,12 @@
 /obj/structure/window/plasma/reinforced/spawner/west,
 /obj/structure/window/plasma/reinforced/spawner/north,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "am" = (
 /obj/structure/chair/e_chair,
 /obj/effect/decal/remains/human,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "an" = (
 /obj/structure/table/reinforced,
 /obj/item/device/assembly/signaler,
@@ -78,25 +75,25 @@
 	pixel_y = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ao" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ap" = (
 /mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aq" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ar" = (
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "as" = (
 /obj/machinery/disposal/deliveryChute,
 /obj/structure/disposalpipe/trunk{
@@ -106,34 +103,34 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "at" = (
 /obj/structure/table/glass,
 /obj/item/paper/pamphlet,
 /obj/item/cane,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "au" = (
 /obj/item/paper/crumpled{
 	info = "When rotating out of the clinic don't forget to stash payments in the floor safe, its under the plant next to the SAFETY poster - in case you forgot."
 	},
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "av" = (
 /obj/machinery/vending/snack/blue,
 /obj/machinery/light/spooky/on{
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aw" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ax" = (
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ay" = (
 /obj/machinery/door/window{
 	base_state = "right";
@@ -142,12 +139,12 @@
 	layer = 3
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "az" = (
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aA" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-10"
@@ -155,74 +152,74 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 5
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aB" = (
 /obj/machinery/shower{
 	pixel_y = 15
 	},
 /obj/structure/curtain,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aC" = (
 /obj/machinery/washing_machine,
 /obj/machinery/light/spooky/on{
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aD" = (
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aE" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aF" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aG" = (
 /obj/structure/closet/crate/freezer/blood,
 /obj/item/reagent_containers/blood/universal,
 /obj/item/reagent_containers/blood/universal,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aH" = (
 /obj/machinery/light/spooky/on{
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aI" = (
 /obj/machinery/chem_master,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aJ" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/beakers,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aK" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/syringes,
 /obj/item/device/assembly/igniter,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aL" = (
 /obj/machinery/portable_atmospherics/canister/tritium,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aM" = (
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aN" = (
 /obj/machinery/power/tesla_coil,
 /obj/structure/cable{
@@ -232,25 +229,25 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aO" = (
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aP" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/super,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aQ" = (
 /obj/structure/chair/comfy/beige{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aR" = (
 /obj/structure/sign/poster/official/fruit_bowl{
 	step_x = -1;
@@ -259,7 +256,7 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aS" = (
 /obj/structure/sink{
 	dir = 8;
@@ -270,22 +267,22 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aT" = (
 /obj/machinery/door/airlock/medical,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aU" = (
 /obj/structure/chair/office/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aV" = (
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/o2,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aW" = (
 /obj/machinery/portable_atmospherics/canister/bz,
 /obj/effect/turf_decal/stripes/line{
@@ -295,21 +292,21 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aX" = (
 /obj/structure/table/reinforced,
 /obj/item/device/assembly/signaler,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aY" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "aZ" = (
 /obj/structure/table/reinforced,
 /obj/item/wrench,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ba" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/electrical,
@@ -317,32 +314,36 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bb" = (
-/obj/structure/table/wood/fancy/black,
-/obj/effect/spawner/structure/window/hollow/reinforced,
+/obj/structure/displaycase/necrostaff{
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/stripes/asteroid/full{
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bc" = (
 /obj/structure/sign/departments/medbay,
 /turf/closed/indestructible/vault,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bd" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "be" = (
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 8
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bf" = (
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bg" = (
 /obj/structure/table,
 /obj/item/storage/box/masks{
@@ -355,17 +356,17 @@
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bh" = (
 /obj/machinery/sleeper{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bi" = (
 /obj/machinery/limbgrower,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bj" = (
 /obj/structure/table/glass,
 /obj/item/storage/backpack/duffelbag/med/surgery,
@@ -375,57 +376,54 @@
 	},
 /obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bk" = (
 /obj/structure/table/glass,
 /obj/item/defibrillator/compact/loaded,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bl" = (
 /obj/machinery/portable_atmospherics/canister/nitryl,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
-"bm" = (
-/turf/closed/indestructible/vault,
-/area/space)
+/area/ruin/powered/Immortus)
 "bn" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bo" = (
 /obj/machinery/vending/wallmed{
 	pixel_x = 25
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bp" = (
 /obj/machinery/shieldwall{
 	dir = 4
 	},
 /turf/open/space/basic,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bq" = (
 /obj/structure/sign/warning/radiation/rad_area,
 /turf/closed/indestructible/vault,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "br" = (
 /obj/machinery/door/airlock/research,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bs" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/space)
+/area/ruin/powered/Immortus)
 "bt" = (
 /obj/structure/table/glass,
 /obj/item/device/modular_computer/laptop,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bu" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-18"
@@ -433,21 +431,20 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 8
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bv" = (
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 4
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bw" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 29
 	},
-/mob/living/simple_animal/bot/cleanbot,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bx" = (
 /obj/machinery/light/spooky/on{
 	dir = 1
@@ -455,7 +452,7 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "by" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-24"
@@ -463,7 +460,7 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bz" = (
 /obj/structure/sign/warning/securearea{
 	pixel_x = 32
@@ -474,65 +471,68 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 5
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bA" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bB" = (
 /obj/structure/sign/warning/biohazard,
 /turf/closed/indestructible/vault,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bC" = (
 /turf/open/floor/plasteel/darkpurple/side{
 	icon_state = "darkpurple";
 	dir = 9
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bD" = (
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 1
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bE" = (
 /turf/open/floor/plasteel/darkpurple/side{
 	icon_state = "darkpurple";
 	dir = 5
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bF" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/glasses/sunglasses/blindfold,
 /obj/item/restraints/handcuffs,
-/obj/item/reagent_containers/syringe{
-	pixel_y = 9
+/obj/machinery/alarm_light{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bG" = (
 /obj/item/clothing/suit/straight_jacket,
 /obj/structure/table/reinforced,
 /obj/item/clothing/mask/muzzle,
+/obj/machinery/alarm_light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bH" = (
 /obj/machinery/shieldwall,
 /turf/open/space/basic,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bI" = (
 /obj/machinery/door/airlock/vault,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bJ" = (
 /obj/machinery/holopad,
 /obj/item/disk/holodisk/immortus_one,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bK" = (
 /obj/structure/table/glass,
 /obj/item/paper/contract,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bL" = (
 /obj/structure/chair/office/light{
 	dir = 8
@@ -541,7 +541,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bM" = (
 /obj/machinery/light/spooky/on{
 	dir = 8
@@ -549,7 +549,7 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 8
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bN" = (
 /obj/machinery/door/poddoor{
 	id = 666
@@ -557,59 +557,55 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bO" = (
 /obj/machinery/door/airlock/highsecurity,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bP" = (
 /obj/machinery/light/floor,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bQ" = (
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 8
 	},
-/area/awaymission)
-"bR" = (
-/obj/machinery/holopad,
-/turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bS" = (
 /turf/open/floor/plasteel/darkpurple/side{
 	icon_state = "darkpurple";
 	dir = 4
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bT" = (
 /obj/structure/bed,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bU" = (
 /obj/machinery/door/airlock/vault,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bV" = (
 /obj/structure/table/glass,
 /obj/item/pen/fountain,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bW" = (
 /turf/open/floor/plasteel/whiteblue/corner,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bX" = (
 /turf/open/floor/plasteel/whiteblue/side,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bY" = (
 /obj/machinery/light/spooky/on,
 /turf/open/floor/plasteel/whiteblue/side,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "bZ" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-24"
 	},
 /turf/open/floor/plasteel/whiteblue/side,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ca" = (
 /obj/structure/sign/warning/securearea{
 	pixel_x = 32
@@ -620,104 +616,104 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 6
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cb" = (
 /turf/open/floor/plasteel/darkpurple/side{
 	icon_state = "darkpurple";
 	dir = 10
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cc" = (
 /turf/open/floor/plasteel/darkpurple/side,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cd" = (
 /obj/machinery/light/spooky,
 /turf/open/floor/plasteel/darkpurple/side,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ce" = (
 /turf/open/floor/plasteel/darkpurple/side{
 	icon_state = "darkpurple";
 	dir = 6
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cf" = (
 /obj/machinery/defibrillator_mount/loaded{
 	step_x = -1;
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cg" = (
 /obj/structure/closet/wardrobe/white/medical,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ch" = (
 /obj/structure/bed,
 /obj/item/bedsheet/blue,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ci" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 2
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cj" = (
 /obj/item/bodybag,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ck" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 2
 	},
 /obj/item/stack/rods/ten,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cl" = (
 /obj/structure/bodycontainer/crematorium{
 	id = 666
 	},
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cm" = (
 /obj/machinery/button/crematorium{
 	id = 666;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cn" = (
 /obj/machinery/computer/operating,
 /obj/item/disk/surgery/necrotic_revival,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "co" = (
 /obj/structure/table/optable,
 /obj/machinery/light/spooky{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cp" = (
 /obj/structure/closet/secure_closet/medical2,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cq" = (
 /obj/structure/closet/crate/freezer,
 /obj/effect/spawner/lootdrop/organ_spawner,
 /obj/effect/spawner/lootdrop/organ_spawner,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cr" = (
 /obj/structure/table,
 /obj/item/clipboard,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cs" = (
 /obj/structure/filingcabinet,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ct" = (
 /obj/structure/sign/poster/official/walk{
 	pixel_x = 30
@@ -728,52 +724,50 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cu" = (
 /obj/structure/table,
 /obj/item/crowbar,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cv" = (
 /obj/machinery/light/spooky/on{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cw" = (
-/obj/machinery/computer/cloning,
+/obj/machinery/computer/cloning{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cx" = (
 /obj/machinery/light/spooky{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cy" = (
 /obj/machinery/light/spooky{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cz" = (
 /obj/structure/table/glass,
 /obj/item/book/manual/medical_cloning,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
-"cA" = (
-/mob/living/simple_animal/bot/medbot,
-/turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cB" = (
 /obj/structure/bed/roller,
 /obj/machinery/light/spooky/on,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cC" = (
 /obj/structure/bed/roller,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cD" = (
 /obj/structure/safe/floor,
 /obj/item/stack/sheet/mineral/diamond{
@@ -790,37 +784,37 @@
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 6
 	},
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cE" = (
 /obj/structure/closet/l3closet,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cF" = (
 /obj/machinery/light/spooky/on,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cG" = (
-/obj/item/roller,
+/obj/structure/closet/coffin,
+/obj/item/device/gps/science{
+	gpstag = "Unauthorized Signal"
+	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cH" = (
 /obj/structure/table,
 /obj/item/reagent_containers/spray/cleaner{
 	pixel_x = 6
 	},
-/obj/item/device/gps/science{
-	gpstag = "Unauthorized Signal"
-	},
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cI" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cJ" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/white,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cK" = (
 /obj/structure/table/glass,
 /obj/item/wallframe/camera,
@@ -829,274 +823,495 @@
 	pixel_y = 16
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cL" = (
 /obj/structure/showcase/horrific_experiment,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cM" = (
 /obj/machinery/smoke_machine,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cN" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cO" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cP" = (
 /obj/structure/closet/body_bag,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cQ" = (
-/obj/structure/closet/firecloset/full,
+/obj/structure/closet/firecloset,
+/obj/item/clothing/head/hardhat/orange{
+	brightness_on = 0;
+	desc = "A dusty piece of old headgear used in dangerous working conditions to protect the head. The flashlight looks burnt out on this one."
+	},
+/obj/item/clothing/suit/fire,
+/obj/item/clothing/mask/gas,
+/obj/item/extinguisher,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cR" = (
 /obj/structure/closet/radiation,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cS" = (
 /obj/structure/closet/l3closet/security,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cT" = (
 /obj/structure/statue/haunted/angel,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cU" = (
 /obj/structure/table/reinforced,
 /obj/item/weldingtool/mini{
 	light_intensity = 0
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cV" = (
 /obj/machinery/light/sequence{
 	dir = 1;
 	group = 7
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cW" = (
 /obj/machinery/light/sequence{
 	dir = 1;
 	group = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cX" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/closed/indestructible/vault,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cY" = (
 /obj/machinery/light/sequence{
 	dir = 1;
 	group = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "cZ" = (
 /obj/machinery/light/sequence{
 	dir = 1;
 	group = 3
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "da" = (
 /obj/machinery/light/sequence{
 	dir = 1;
 	group = 2
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "db" = (
 /obj/machinery/light/sequence{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dc" = (
 /obj/machinery/light/sequence{
 	dir = 1;
 	group = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dd" = (
 /obj/structure/statue/haunted,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "de" = (
 /obj/machinery/light/sequence{
 	dir = 8;
 	group = 9
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "df" = (
 /obj/machinery/light/sequence{
 	dir = 1;
 	group = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dg" = (
 /obj/structure/statue/haunted/corgi,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dh" = (
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "di" = (
 /obj/structure/barricade/wooden{
 	max_integrity = 40
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dj" = (
 /obj/structure/statue/haunted/female,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
-"dk" = (
-/obj/machinery/light{
-	brightness = 2;
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dl" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dm" = (
 /obj/structure/table/wood/bar,
+/obj/item/paper/contract/immortus{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/device/camera/spooky,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dn" = (
 /obj/machinery/light/sequence{
 	group = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "do" = (
 /obj/structure/table/wood/bar,
-/obj/machinery/light{
-	brightness = 2;
+/obj/item/spellbook/oneuse/weakpetrify,
+/obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/spellbook/oneuse/weakpetrify,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dp" = (
 /obj/machinery/light/sequence{
 	dir = 2;
 	group = 7
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dq" = (
 /obj/machinery/light/sequence{
 	dir = 8;
 	group = 3
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dr" = (
 /obj/machinery/light/sequence{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "ds" = (
 /obj/machinery/light/sequence{
 	dir = 2;
 	group = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dt" = (
 /obj/machinery/light/sequence{
 	group = 2
 	},
+/obj/structure/table/reinforced,
+/obj/item/spellbook{
+	owner = "Dr. Herbert West";
+	uses = 0
+	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "du" = (
 /obj/machinery/light/sequence{
 	dir = 2;
 	group = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dv" = (
 /obj/machinery/light/sequence{
 	dir = 2;
 	group = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dw" = (
 /obj/machinery/light/sequence{
 	group = 3
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dx" = (
 /obj/machinery/light/sequence,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dy" = (
 /obj/structure/fluff/divine/powerpylon,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dz" = (
 /obj/structure/fluff/divine/defensepylon,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dA" = (
 /obj/structure/fluff/divine/convertaltar,
+/obj/item/book/codex_gigas,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dB" = (
 /obj/structure/bonfire,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dC" = (
 /obj/structure/healingfountain,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dD" = (
 /obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dE" = (
 /obj/structure/fluff/divine/nexus,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dF" = (
 /obj/structure/fluff/divine/conduit,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
 "dG" = (
 /obj/structure/sacrificealtar,
+/obj/item/tome,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
+"ek" = (
+/obj/effect/turf_decal/stripes/asteroid/line,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"er" = (
+/obj/item/wrench/power,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"fu" = (
+/obj/structure/frame,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
 "fv" = (
 /obj/effect/spawner/structure/window/shuttle,
 /obj/structure/trap/chill,
 /turf/closed/indestructible/vault,
-/area/awaymission)
+/area/ruin/powered/Immortus)
+"fw" = (
+/obj/machinery/door/password,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/Immortus)
+"gH" = (
+/obj/structure/table/reinforced,
+/obj/item/clockwork/slab,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"iJ" = (
+/obj/structure/table/wood/bar,
+/obj/item/gun/syringe/rapidsyringe,
+/obj/item/reagent_containers/glass/bottle{
+	name = "bottle of romerol";
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"kw" = (
+/obj/item/ammo_casing/a357{
+	pixel_x = 5;
+	pixel_y = -9
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"nd" = (
+/obj/structure/filingcabinet,
+/obj/structure/sign/warning/biohazard{
+	pixel_y = 31
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"oU" = (
+/obj/machinery/manned_turret/ultimate{
+	name = "Immortus containment turret"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"rB" = (
+/obj/item/card/id/syndicate/nuke_leader{
+	assignment = "Lead Researcher";
+	name = "Herbert West"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"rJ" = (
+/obj/structure/closet/crate/secure/loot,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"tQ" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/runed_metal/ten,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"tV" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/syringe{
+	pixel_x = -3;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_y = -1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"ul" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"wV" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"yk" = (
+/obj/machinery/light/sequence{
+	dir = 1;
+	group = 2
+	},
+/obj/structure/table/reinforced,
+/obj/item/kitchen/knife/ritual,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"yL" = (
+/obj/item/ectoplasm,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"AL" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"CT" = (
+/obj/item/clockwork/alloy_shards,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
 "Ec" = (
 /obj/structure/trap/chill,
 /turf/open/floor/plasteel/dark,
-/area/awaymission)
+/area/ruin/powered/Immortus)
+"EG" = (
+/obj/item/chair/wood,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"GH" = (
+/obj/structure/closet/coffin,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"Jf" = (
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"Jh" = (
+/obj/machinery/door/airlock/research,
+/obj/machinery/door/poddoor/preopen,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"Jv" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/glass/bottle/chloralhydrate{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/glass/bottle/chloralhydrate{
+	pixel_y = 8
+	},
+/obj/structure/sign/warning/biohazard{
+	pixel_y = 31
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"KY" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/magic/wand/teleport{
+	charges = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"Lm" = (
+/obj/structure/table/reinforced,
+/obj/item/device/soulstone{
+	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard lies still, dull and lifeless.";
+	name = "dull soulstone shard";
+	spent = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"LD" = (
+/obj/structure/chair/office/dark{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"MK" = (
+/obj/structure/chair/office/dark,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"MM" = (
+/obj/structure/sign/poster/ripped{
+	pixel_x = 30
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"MQ" = (
+/obj/item/device/flashlight/directional,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/Immortus)
+"Nq" = (
+/obj/machinery/light/sequence{
+	group = 2
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"NK" = (
+/obj/structure/dresser,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/Immortus)
+"PK" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"TF" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/Immortus)
+"Ug" = (
+/obj/machinery/holopad,
+/obj/item/disk/holodisk/immortus_two,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/Immortus)
 
 (1,1,1) = {"
 aa
@@ -1104,31 +1319,31 @@ aa
 aa
 aa
 aa
-bm
+ab
 bs
 bs
 bs
-bm
+ab
 aa
 aa
 aa
 aa
 aa
 aa
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (2,1,1) = {"
 aa
@@ -1160,7 +1375,7 @@ ab
 ab
 ab
 ab
-ag
+aa
 "}
 (3,1,1) = {"
 aa
@@ -1182,17 +1397,17 @@ ab
 ab
 ab
 ab
-dk
+ar
 dm
 do
-dm
-dk
+iJ
+ar
 ab
 ab
 ab
 ab
 ab
-ag
+aa
 "}
 (4,1,1) = {"
 aa
@@ -1207,7 +1422,7 @@ ax
 ax
 ax
 ax
-cA
+ax
 ab
 ab
 ab
@@ -1215,16 +1430,16 @@ ab
 ab
 ab
 ar
+kw
+EG
 ar
 ar
-ar
-ar
 ab
 ab
 ab
 ab
 ab
-ag
+aa
 "}
 (5,1,1) = {"
 aa
@@ -1256,7 +1471,7 @@ ab
 ab
 ab
 ab
-ag
+aa
 "}
 (6,1,1) = {"
 aa
@@ -1288,7 +1503,7 @@ ar
 ar
 cT
 ab
-ag
+aa
 "}
 (7,1,1) = {"
 aa
@@ -1320,7 +1535,7 @@ ar
 ar
 ar
 ab
-ag
+aa
 "}
 (8,1,1) = {"
 aa
@@ -1352,7 +1567,7 @@ cX
 di
 di
 ab
-ag
+aa
 "}
 (9,1,1) = {"
 aa
@@ -1384,7 +1599,7 @@ Ec
 ar
 ar
 ab
-ag
+aa
 "}
 (10,1,1) = {"
 aa
@@ -1416,7 +1631,7 @@ ar
 ar
 ar
 ab
-ag
+aa
 "}
 (11,1,1) = {"
 aa
@@ -1439,16 +1654,16 @@ ab
 ar
 ar
 ab
+di
 ab
-ab
-ab
+di
 ab
 ar
 ar
 ab
 ab
 ab
-ag
+aa
 "}
 (12,1,1) = {"
 aa
@@ -1471,16 +1686,16 @@ ab
 dc
 ar
 ab
-ab
-ab
-ab
+di
+er
+di
 ab
 ar
 dv
 ab
 ab
 ab
-ag
+aa
 "}
 (13,1,1) = {"
 aa
@@ -1503,16 +1718,16 @@ ab
 dc
 ar
 ab
-ab
-ab
-ab
+PK
+oU
+ar
 ab
 ar
 dv
 ab
 ab
 ab
-ag
+aa
 "}
 (14,1,1) = {"
 aa
@@ -1525,9 +1740,9 @@ bw
 ax
 bX
 ab
+NK
 ax
 ax
-ax
 ab
 ab
 ab
@@ -1544,7 +1759,7 @@ di
 ab
 ab
 ab
-ag
+aa
 "}
 (15,1,1) = {"
 aa
@@ -1576,7 +1791,7 @@ ar
 ar
 cT
 ab
-ag
+aa
 "}
 (16,1,1) = {"
 aa
@@ -1608,7 +1823,7 @@ ar
 ar
 Ec
 ab
-ag
+aa
 "}
 (17,1,1) = {"
 aa
@@ -1640,7 +1855,7 @@ ab
 ar
 ar
 ab
-ag
+aa
 "}
 (18,1,1) = {"
 aa
@@ -1672,7 +1887,7 @@ ab
 ar
 dp
 ab
-ag
+aa
 "}
 (19,1,1) = {"
 aa
@@ -1704,7 +1919,7 @@ ab
 ar
 ar
 ab
-ag
+aa
 "}
 (20,1,1) = {"
 aa
@@ -1736,7 +1951,7 @@ ar
 ar
 ar
 ab
-ag
+aa
 "}
 (21,1,1) = {"
 aa
@@ -1768,7 +1983,7 @@ ar
 ar
 Ec
 ab
-ag
+aa
 "}
 (22,1,1) = {"
 aa
@@ -1800,7 +2015,7 @@ ab
 ab
 ab
 ab
-ag
+aa
 "}
 (23,1,1) = {"
 aa
@@ -1824,7 +2039,7 @@ ab
 df
 ar
 ab
-ab
+rB
 ab
 ar
 du
@@ -1832,7 +2047,7 @@ ab
 ab
 ab
 ab
-ag
+aa
 "}
 (24,1,1) = {"
 aa
@@ -1856,7 +2071,7 @@ ab
 di
 di
 ab
-ab
+di
 ab
 di
 di
@@ -1864,7 +2079,7 @@ ab
 ab
 ab
 ab
-ag
+aa
 "}
 (25,1,1) = {"
 aa
@@ -1896,7 +2111,7 @@ ar
 Ec
 cT
 ab
-ag
+aa
 "}
 (26,1,1) = {"
 aa
@@ -1928,7 +2143,7 @@ ar
 ar
 ar
 ab
-ag
+aa
 "}
 (27,1,1) = {"
 aa
@@ -1960,7 +2175,7 @@ ab
 ar
 ar
 ab
-ag
+aa
 "}
 (28,1,1) = {"
 aa
@@ -1970,7 +2185,7 @@ aa
 aa
 bp
 bA
-ax
+MQ
 bA
 bp
 aa
@@ -1992,7 +2207,7 @@ ab
 ar
 ds
 ab
-ag
+aa
 "}
 (29,1,1) = {"
 aa
@@ -2002,7 +2217,7 @@ aa
 aa
 bp
 bA
-ax
+Ug
 bA
 bp
 aa
@@ -2024,7 +2239,7 @@ ab
 ar
 ar
 ab
-ag
+aa
 "}
 (30,1,1) = {"
 aa
@@ -2034,7 +2249,7 @@ aa
 aa
 bp
 bA
-ax
+fw
 bA
 bp
 aa
@@ -2056,7 +2271,7 @@ ar
 ar
 ar
 ab
-ag
+aa
 "}
 (31,1,1) = {"
 ab
@@ -2088,7 +2303,7 @@ ar
 ar
 ar
 ab
-ag
+aa
 "}
 (32,1,1) = {"
 ab
@@ -2120,7 +2335,7 @@ cX
 cX
 cX
 ab
-ag
+aa
 "}
 (33,1,1) = {"
 ab
@@ -2150,9 +2365,9 @@ ar
 cX
 dD
 dF
-dD
+Jf
 ab
-ag
+aa
 "}
 (34,1,1) = {"
 ab
@@ -2162,7 +2377,7 @@ ar
 ar
 ab
 bD
-bR
+ar
 cc
 ab
 cp
@@ -2182,9 +2397,9 @@ ar
 cX
 ar
 ar
-ar
+wV
 ab
-ag
+aa
 "}
 (35,1,1) = {"
 ab
@@ -2216,7 +2431,7 @@ ar
 dB
 dn
 ab
-ag
+aa
 "}
 (36,1,1) = {"
 ab
@@ -2248,7 +2463,7 @@ ar
 ar
 ar
 ab
-ag
+aa
 "}
 (37,1,1) = {"
 ab
@@ -2280,7 +2495,7 @@ dE
 dG
 dE
 ab
-ag
+aa
 "}
 (38,1,1) = {"
 ab
@@ -2312,7 +2527,7 @@ cX
 cX
 cX
 ab
-ag
+aa
 "}
 (39,1,1) = {"
 ab
@@ -2344,7 +2559,7 @@ ar
 ar
 ar
 ab
-ag
+aa
 "}
 (40,1,1) = {"
 ab
@@ -2376,7 +2591,7 @@ ar
 ar
 dw
 ab
-ag
+aa
 "}
 (41,1,1) = {"
 ac
@@ -2392,7 +2607,7 @@ ar
 ar
 cx
 ar
-ar
+rJ
 ab
 ar
 ar
@@ -2408,7 +2623,7 @@ ar
 ar
 ar
 ab
-ag
+aa
 "}
 (42,1,1) = {"
 ad
@@ -2419,7 +2634,7 @@ ap
 ap
 ab
 ar
-ar
+MM
 ar
 ar
 ar
@@ -2440,7 +2655,7 @@ ar
 ar
 ar
 ab
-ag
+aa
 "}
 (43,1,1) = {"
 ad
@@ -2455,80 +2670,70 @@ ab
 ab
 ab
 ab
-ar
-ar
-ab
-ar
-ar
-ar
-ab
-ar
-ar
-ar
-ar
+tV
 ar
 ab
 ar
 ar
 ar
 ab
-ag
+Lm
+yL
+ar
+CT
+gH
+ab
+ar
+ar
+ar
+ab
+aa
 "}
 (44,1,1) = {"
 ad
 ar
 ar
-ar
+TF
 ar
 ar
 bF
 cP
-ar
+GH
 ar
 ar
 ab
-ar
+Jv
 ar
 ab
 da
 ar
 dd
 ab
-da
+yk
+LD
 ar
-ar
-ar
+MK
 dt
 ab
 dd
 ar
-dt
+Nq
 ab
-ag
+aa
 "}
 (45,1,1) = {"
 ae
 as
-ar
+ek
 bb
+AL
 ar
 ar
 ar
 ar
 ar
 ar
-ar
-br
-ar
-ar
-ab
-ar
-ar
-ar
-ab
-ar
-ar
-ar
+Jh
 ar
 ar
 ab
@@ -2536,13 +2741,23 @@ ar
 ar
 ar
 ab
-ag
+tQ
+ar
+ar
+ar
+KY
+ab
+ar
+ar
+ar
+ab
+aa
 "}
 (46,1,1) = {"
 ad
 ar
 ar
-ar
+ul
 ar
 ar
 bG
@@ -2551,7 +2766,7 @@ bT
 bT
 ar
 ab
-ar
+nd
 ar
 ab
 ar
@@ -2568,7 +2783,7 @@ ar
 ar
 ar
 ab
-ag
+aa
 "}
 (47,1,1) = {"
 ad
@@ -2583,24 +2798,24 @@ ab
 ab
 ab
 ab
+cs
+ar
+ab
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
+ar
 ar
 ar
 ab
-ar
-ar
-ar
-ar
-ar
-ar
-ar
-ar
-ar
-ar
-ar
-ar
-ar
-ab
-ag
+aa
 "}
 (48,1,1) = {"
 ad
@@ -2632,7 +2847,7 @@ ar
 ar
 dx
 ab
-ag
+aa
 "}
 (49,1,1) = {"
 af
@@ -2648,7 +2863,7 @@ ar
 ar
 cy
 ar
-ar
+fu
 ab
 ar
 ar
@@ -2664,7 +2879,7 @@ ar
 ar
 ar
 ab
-ag
+aa
 "}
 (50,1,1) = {"
 ab
@@ -2696,14 +2911,14 @@ ab
 ab
 ab
 ab
-ag
+aa
 "}
 (51,1,1) = {"
-ag
-ag
-ag
-ag
-ag
+aa
+aa
+aa
+aa
+aa
 bp
 bA
 ar
@@ -2722,20 +2937,20 @@ ar
 ar
 bA
 bp
-ag
-ag
-ag
-ag
-ag
-ag
-ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (52,1,1) = {"
-ag
-ag
-ag
-ag
-ag
+aa
+aa
+aa
+aa
+aa
 bp
 bA
 bA
@@ -2754,20 +2969,20 @@ bA
 bA
 bA
 bp
-ag
-ag
-ag
-ag
-ag
-ag
-ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (53,1,1) = {"
-ag
-ag
-ag
-ag
-ag
+aa
+aa
+aa
+aa
+aa
 ab
 bH
 bH
@@ -2786,235 +3001,235 @@ bH
 bH
 bH
 ab
-ag
-ag
-ag
-ag
-ag
-ag
-ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (54,1,1) = {"
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (55,1,1) = {"
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (56,1,1) = {"
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (57,1,1) = {"
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (58,1,1) = {"
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (59,1,1) = {"
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (60,1,1) = {"
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
-ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
