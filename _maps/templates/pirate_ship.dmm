@@ -270,8 +270,7 @@
 	},
 /obj/item/melee/transforming/energy/sword/pirate{
 	pixel_x = 12;
-	pixel_y = 7;
-	pixel_z = 0
+	pixel_y = 7
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -309,10 +308,11 @@
 	id = "piratestarboardexternal";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = 24;
-	req_access_txt = "0";
 	specialfunctions = 4
+	},
+/obj/structure/sign/warning/vacuum/external{
+	pixel_y = -32
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -567,9 +567,6 @@
 	id = "pirateportexternal";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
-	pixel_y = 0;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
@@ -604,9 +601,6 @@
 	id = "piratestarboardexternal";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
-	pixel_y = 0;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
@@ -668,10 +662,11 @@
 	id = "pirateportexternal";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = 24;
-	req_access_txt = "0";
 	specialfunctions = 4
+	},
+/obj/structure/sign/warning/vacuum/external{
+	pixel_y = -32
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -680,9 +675,7 @@
 	id = "piratecontainment1";
 	name = "Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = -24;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
