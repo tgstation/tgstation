@@ -127,7 +127,7 @@
 							delay_offset++
 				else
 					H.apply_damage(15 * blade_sharpness, BRUTE, head)
-					add_logs(user, H, "dropped the blade on", src, " non-fatal")
+					add_logs(user, H, "dropped the blade on", src, " non-fatally")
 					H.emote("scream")
 
 				if (blade_sharpness > 1)
