@@ -10,6 +10,7 @@
 	icon_living = "basic"
 	icon_dead = "basic"
 	gender = NEUTER
+	mob_biotypes = list(MOB_ROBOTIC)
 	health = 15
 	maxHealth = 15
 	healable = 0

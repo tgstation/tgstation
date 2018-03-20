@@ -3,6 +3,7 @@
 	icon = 'icons/mob/aibots.dmi'
 	layer = MOB_LAYER
 	gender = NEUTER
+	mob_biotypes = list(MOB_ROBOTIC)
 	light_range = 3
 	stop_automated_movement = 1
 	wander = 0

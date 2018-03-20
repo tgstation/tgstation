@@ -4,6 +4,7 @@
 	icon_state = "otherthing"
 	icon_living = "otherthing"
 	icon_dead = "otherthing-dead"
+	mob_biotypes = list(MOB_INORGANIC)
 	health = 80
 	maxHealth = 80
 	obj_damage = 100
@@ -73,6 +74,7 @@
 	maxHealth = 50
 	spawn_time = 600 //1 minute
 	max_mobs = 15
+	mob_biotypes = list(MOB_INORGANIC)
 	icon = 'icons/mob/nest.dmi'
 	spawn_text = "crawls through"
 	mob_types = list(/mob/living/simple_animal/hostile/netherworld/migo, /mob/living/simple_animal/hostile/netherworld, /mob/living/simple_animal/hostile/netherworld/blankbody)

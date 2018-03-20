@@ -57,6 +57,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/list/species_traits = list()
 	// generic traits tied to having the species
 	var/list/inherent_traits = list()
+	var/list/inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 
 	var/attack_verb = "punch"	// punch-specific attack verb
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
@@ -262,6 +263,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		species_traits += DIGITIGRADE
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
+
+	C.mob_biotypes = inherent_biotypes
 
 	regenerate_organs(C,old_species)
 

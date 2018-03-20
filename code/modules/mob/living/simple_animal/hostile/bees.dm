@@ -36,6 +36,7 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
+	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
 	movement_type = FLYING
 	gold_core_spawnable = HOSTILE_SPAWN
 	search_objects = 1 //have to find those plant trays!
@@ -291,5 +292,5 @@
 		if(idle >= BEE_IDLE_ROAMING && prob(BEE_PROB_GOROAM))
 			toggle_ai(AI_ON)
 			forceMove(beehome.drop_location())
-	else  
+	else
 		..()
