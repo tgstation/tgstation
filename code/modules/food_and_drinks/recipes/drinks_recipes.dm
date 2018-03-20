@@ -615,7 +615,7 @@
 	name = "Sugar Rush"
 	id = "sugar_rush"
 	results = list("sugar_rush" = 4)
-	required_reagents = list("sodawater" = 2, "lemonjuice" = 1, "wine" = 1) //2 adelhyde (sweet), 1 powdered delta (sour), 1 karmotrine (alcohol)
+	required_reagents = list("sugar" = 2, "lemonjuice" = 1, "wine" = 1) //2 adelhyde (sweet), 1 powdered delta (sour), 1 karmotrine (alcohol)
 	mix_message = "The mixture bubbles and brightens into a girly pink."
 
 /datum/chemical_reaction/crevice_spike
