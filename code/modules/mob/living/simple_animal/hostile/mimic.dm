@@ -312,7 +312,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 			return 1
 	return 0
 
-/mob/living/simple_animal/hostile/mimic/copy/mob/death()
+/mob/living/simple_animal/hostile/mimic/copy/mob/Destroy()
 	if(home)
 		home.souls -= src
 	..()

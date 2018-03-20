@@ -162,20 +162,20 @@
 	var/next = groupnum
 	if(backwards)
 		next--
-		if(next == 0 || !LAZYLEN(lights[next])
+		if(next == 0 || !LAZYLEN(lights[next]))
 			next = 1
 			addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 75)
 		else
 			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 75)
 	else
 		next++
-		if(next == 10 || !LAZYLEN(lights[next]))
+		if(next == 11 || !LAZYLEN(lights[next]))
 			next -= 2
 			addtimer(CALLBACK(chosen, .proc/light_sequence, next, TRUE), 75)
 		else
 			addtimer(CALLBACK(chosen, .proc/light_sequence, next, FALSE), 75)
-	sleep(100)
-	chosen.flicker(20, FALSE)
+	addtimer(CALLBACK(src, .proc/flicker, 20, FALSE), 100)
+
 
 /mob/living/simple_animal/hostile/zombie
 	name = "undead"
@@ -274,12 +274,12 @@
 
 /obj/item/gun/magic/staff/necro/attack_self(mob/user)
 	if(capturing)
-		playsound(M,'sound/magic/summon_karp.ogg',50,1)
+		playsound(src,'sound/magic/summon_karp.ogg',50,1)
 		capturing = FALSE
 		to_chat(user, "<span class='notice'>You twist the [src]'s grip, shifting the staff into <b>attack mode</b>.</span>")
 	else
 		capturing = TRUE
-		playsound(M,'sound/magic/wandodeath.ogg',50,1)
+		playsound(src,'sound/magic/wandodeath.ogg',50,1)
 		to_chat(user, "<span class='notice'>You twist the [src]'s grip, shifting the staff into <b>capture mode</b> [souls.len ? "and calling your thralls back to the staff.":"."]</span>")
 		for(var/mob/living/simple_animal/hostile/H in souls)
 			if(H.loc != src)
