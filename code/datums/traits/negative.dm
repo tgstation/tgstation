@@ -1,6 +1,15 @@
 //predominantly negative traits
 
 
+/datum/trait/frail_genes
+	name = "Frail Genes"
+	desc = "Your genetic makeup is unstable - so much so that all known means of revival are incapable of working on you. If you die, you're dead for good."
+	value = -2
+	mob_trait = TRAIT_NOREVIVE
+	gain_text = "<span class='danger'>You feel like this is your only chance at life!</span>"
+	lose_text = "<span class='notice'>You feel like you can be brought back again.</span>"
+	medical_record_text = "Patient's body is unstable, and unable to be revived should they die."
+
 
 /datum/trait/heavy_sleeper
 	name = "Heavy Sleeper"
