@@ -14,9 +14,6 @@
 	desc = "A large structure used to remove the heads of traitors and treasonists."
 	icon = 'icons/obj/guillotine.dmi'
 	icon_state = "guillotine_raised"
-	var/blade_status = GUILLOTINE_BLADE_RAISED
-	var/blade_sharpness = GUILLOTINE_BLADE_MAX_SHARP // How sharp the blade is
-	var/kill_count = 0
 	can_buckle = TRUE
 	anchored = TRUE
 	density = TRUE
@@ -24,6 +21,9 @@
 	buckle_lying = FALSE
 	buckle_prevents_pull = TRUE
 	layer = ABOVE_MOB_LAYER
+	var/blade_status = GUILLOTINE_BLADE_RAISED
+	var/blade_sharpness = GUILLOTINE_BLADE_MAX_SHARP // How sharp the blade is
+	var/kill_count = 0
 
 /obj/structure/guillotine/Initialize()
 	LAZYINITLIST(buckled_mobs)
@@ -55,41 +55,42 @@
 	return msg
 
 /obj/structure/guillotine/attack_hand(mob/user)
-	if (blade_status == GUILLOTINE_BLADE_MOVING)
-		return
+	add_fingerprint(user)
 
-	if (blade_status == GUILLOTINE_BLADE_DROPPED)
-		blade_status = GUILLOTINE_BLADE_MOVING
-		icon_state = "guillotine_raise"
-		addtimer(CALLBACK(src, .proc/raise_blade), GUILLOTINE_ANIMATION_LENGTH)
-		return
-
-	if (blade_status == GUILLOTINE_BLADE_RAISED)
-		if (LAZYLEN(buckled_mobs))
-			if (user.a_intent == INTENT_HARM)
-				user.visible_message("<span class='warning'>[user] begins to pull the lever!</span>",
-					                 "<span class='warning'>You begin to the pull the lever.</span>")
-				if (do_after(user, GUILLOTINE_ACTIVATE_DELAY, target = src) && blade_status == GUILLOTINE_BLADE_RAISED)
-					blade_status = GUILLOTINE_BLADE_MOVING
-					icon_state = "guillotine_drop"
-					addtimer(CALLBACK(src, .proc/drop_blade), GUILLOTINE_ANIMATION_LENGTH - 2) // Minus two so we play the sound and decap faster
-			else
-				var/mob/living/carbon/human/H = buckled_mobs[1]
-
-				if (H)
-					H.regenerate_icons()
-
-				unbuckle_all_mobs()
-		else
+	switch (blade_status)
+		if (GUILLOTINE_BLADE_MOVING)
+			return
+		if (GUILLOTINE_BLADE_DROPPED)
 			blade_status = GUILLOTINE_BLADE_MOVING
-			icon_state = "guillotine_drop"
-			addtimer(CALLBACK(src, .proc/drop_blade), GUILLOTINE_ANIMATION_LENGTH)
+			icon_state = "guillotine_raise"
+			addtimer(CALLBACK(src, .proc/raise_blade), GUILLOTINE_ANIMATION_LENGTH)
+			return
+		if (GUILLOTINE_BLADE_RAISED)
+			if (LAZYLEN(buckled_mobs))
+				if (user.a_intent == INTENT_HARM)
+					user.visible_message("<span class='warning'>[user] begins to pull the lever!</span>",
+						                 "<span class='warning'>You begin to the pull the lever.</span>")
+					if (do_after(user, GUILLOTINE_ACTIVATE_DELAY, target = src) && blade_status == GUILLOTINE_BLADE_RAISED)
+						blade_status = GUILLOTINE_BLADE_MOVING
+						icon_state = "guillotine_drop"
+						addtimer(CALLBACK(src, .proc/drop_blade), GUILLOTINE_ANIMATION_LENGTH - 2) // Minus two so we play the sound and decap faster
+				else
+					var/mob/living/carbon/human/H = buckled_mobs[1]
+
+					if (H)
+						H.regenerate_icons()
+
+					unbuckle_all_mobs()
+			else
+				blade_status = GUILLOTINE_BLADE_MOVING
+				icon_state = "guillotine_drop"
+				addtimer(CALLBACK(src, .proc/drop_blade, user), GUILLOTINE_ANIMATION_LENGTH)
 
 /obj/structure/guillotine/proc/raise_blade()
 	blade_status = GUILLOTINE_BLADE_RAISED
 	icon_state = "guillotine_raised"
 
-/obj/structure/guillotine/proc/drop_blade()
+/obj/structure/guillotine/proc/drop_blade(mob/user)
 	if (buckled_mobs.len && blade_sharpness)
 		var/mob/living/carbon/human/H = buckled_mobs[1]
 
@@ -100,6 +101,7 @@
 				playsound(src, 'sound/weapons/bladeslice.ogg', 100, 1)
 				if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 					head.dismember()
+					add_logs(user, H, "beheaded", src)
 					H.regenerate_icons()
 					unbuckle_all_mobs()
 					kill_count += 1
@@ -125,6 +127,7 @@
 							delay_offset++
 				else
 					H.apply_damage(15 * blade_sharpness, BRUTE, head)
+					add_logs(user, H, "dropped the blade on", src, " non-fatal")
 					H.emote("scream")
 
 				if (blade_sharpness > 1)
@@ -135,6 +138,7 @@
 
 /obj/structure/guillotine/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/sharpener))
+		add_fingerprint(user)
 		if (blade_status == GUILLOTINE_BLADE_SHARPENING)
 			return
 		
