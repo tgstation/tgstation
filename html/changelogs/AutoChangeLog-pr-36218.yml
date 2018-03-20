@@ -1,5 +1,0 @@
-author: "Garen"
-delete-after: True
-changes: 
-  - rscadd: "Added 4 new Icons to the diagnostic hud circuit status display that can be set using the AR interface circuit."
-  - rscadd: "now instead of seeing the yellow warning icon when a weapon is in the circuit, the current status icon will just turn red."

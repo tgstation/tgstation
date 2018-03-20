@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "At last, the Pubbystation auxillary base can be launched again."
-  - code_imp: "Aux base/escape pod/assault pod/elevator docking ports now default to timid = FALSE."

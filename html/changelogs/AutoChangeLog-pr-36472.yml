@@ -1,4 +1,0 @@
-author: "TheDreamweaver"
-delete-after: True
-changes: 
-  - bugfix: "Holodeck mobs that are given sentience via sentience potions are now warned about the state of their existence."

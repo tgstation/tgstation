@@ -1,5 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - admin: "Whether to open the armory doors when spawning an ERT is now controllable from the ERT creation window."
-  - tweak: "Chaplain inquisitor role now spawns with one holy hand grenade instead of a box full of them, and the belt now has actually useful stones instead of unusable cult stones"

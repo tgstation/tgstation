@@ -1,5 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - tweak: "Plastic is now a valid material for lathes"
-  - rscadd: "Added two new beaker types, 120u and 180u. The 120u beaker can be printed off the medical protolathe with just glass and plastic, the 180u requires some mining materials and tech."
