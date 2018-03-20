@@ -67,7 +67,7 @@
 		armor_block = H.run_armor_check(affecting, "melee","","",armour_penetration) // For normal attack damage
 
 		//If they have a hat/helmet and the user is targeting their head.
-		if(istype(H.head, /obj/item/clothing/head) && affecting == "head")
+		if(istype(H.head, /obj/item/clothing/head) && affecting == BODY_ZONE_HEAD)
 			headarmor = H.head.armor.melee
 		else
 			headarmor = 0
@@ -78,7 +78,7 @@
 	else
 		//Only humans can have armor, right?
 		armor_block = target.run_armor_check(affecting, "melee")
-		if(affecting == "head")
+		if(affecting == BODY_ZONE_HEAD)
 			armor_duration = duration + force
 
 	//Apply the damage!
@@ -87,7 +87,7 @@
 
 	// You are going to knock someone out for longer if they are not wearing a helmet.
 	var/head_attack_message = ""
-	if(affecting == "head" && istype(target, /mob/living/carbon/))
+	if(affecting == BODY_ZONE_HEAD && istype(target, /mob/living/carbon/))
 		head_attack_message = " on the head"
 		//Knockdown the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
@@ -128,6 +128,10 @@
 	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 	sharpness = IS_SHARP
+
+/obj/item/broken_bottle/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 200, 55)
 
 /obj/item/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater gin"

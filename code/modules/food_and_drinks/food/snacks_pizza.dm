@@ -16,7 +16,7 @@
 	foodtype = GRAIN | DAIRY | VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/pizza/margherita
-	name = "margherita"
+	name = "pizza margherita"
 	desc = "The most cheezy pizza in galaxy."
 	icon_state = "pizzamargherita"
 	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/margherita

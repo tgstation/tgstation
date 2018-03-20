@@ -18,6 +18,11 @@ field_generator power level display
 #define FG_CHARGING 1
 #define FG_ONLINE 2
 
+//field generator construction defines
+#define FG_UNSECURED 0
+#define FG_SECURED 1
+#define FG_WELDED 2
+
 /obj/machinery/field/generator
 	name = "field generator"
 	desc = "A large thermal battery that projects a high amount of energy when powered."
@@ -28,7 +33,7 @@ field_generator power level display
 	use_power = NO_POWER_USE
 	max_integrity = 500
 	//100% immune to lasers and energy projectiles since it absorbs their energy.
-	armor = list(melee = 25, bullet = 10, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	var/const/num_power_levels = 6	// Total number of power level icon has
 	var/power_level = 0
 	var/active = FG_OFFLINE
@@ -89,7 +94,7 @@ field_generator power level display
 
 	return ..()
 
-/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
+/obj/machinery/field/generator/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)

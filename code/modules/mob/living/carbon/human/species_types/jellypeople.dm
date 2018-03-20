@@ -4,7 +4,8 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,NOBLOOD)
+	inherent_traits = list(TRAIT_TOXINLOVER)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	damage_overlay_type = ""
@@ -17,14 +18,14 @@
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
-	C.remove_language(/datum/language/slime, TRUE)
+	C.remove_language(/datum/language/slime)
 	C.faction -= "slime"
 	..()
 	C.faction -= "slime"
 
 /datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C.grant_language(/datum/language/slime, TRUE)
+	C.grant_language(/datum/language/slime)
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
@@ -51,13 +52,13 @@
 		regenerate_limbs.UpdateButtonIcon()
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
-	var/list/limbs_to_consume = list("r_arm", "l_arm", "r_leg", "l_leg") - H.get_missing_limbs()
+	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
 	var/obj/item/bodypart/consumed_limb
 	if(!limbs_to_consume.len)
 		H.losebreath++
 		return
 	if(H.get_num_legs()) //Legs go before arms
-		limbs_to_consume -= list("r_arm", "l_arm")
+		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
 	to_chat(H, "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>")
@@ -111,7 +112,7 @@
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,TOXINLOVER)
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150

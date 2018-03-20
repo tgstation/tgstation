@@ -141,8 +141,7 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Hyperfractal Gigashuttle";
-	timid = 1
+	name = "Hyperfractal Gigashuttle"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -153,7 +152,6 @@
 "aL" = (
 /obj/machinery/door/airlock/external{
 	name = "Emergency Launch Catwalk";
-	req_access = null;
 	req_access_txt = "10;13"
 	},
 /turf/open/floor/plating,

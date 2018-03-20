@@ -11,6 +11,7 @@ Quartermaster
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/quartermaster
 
@@ -41,6 +42,7 @@ Cargo Technician
 	spawn_positions = 2
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
+	antag_rep = 14
 
 	outfit = /datum/outfit/job/cargo_tech
 
@@ -69,6 +71,7 @@ Shaft Miner
 	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/miner
 
@@ -147,11 +150,12 @@ Bartender
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	antag_rep = 14
 
 	outfit = /datum/outfit/job/bartender
 
-	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS)
-	minimal_access = list(ACCESS_BAR)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM)
 
 
 /datum/outfit/job/bartender
@@ -180,11 +184,12 @@ Cook
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/cooks = 0 //Counts cooks amount
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/cook
 
-	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE)
-	minimal_access = list(ACCESS_KITCHEN, ACCESS_MORGUE)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/cook
 	name = "Cook"
@@ -195,6 +200,7 @@ Cook
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
 	head = /obj/item/clothing/head/chefhat
+	mask = /obj/item/clothing/mask/fakemoustache/italian
 	backpack_contents = list(/obj/item/sharpener = 1)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -215,14 +221,8 @@ Cook
 	var/chosen_box = pick(possible_boxes)
 	var/obj/item/storage/box/I = new chosen_box(src)
 	H.equip_to_slot_or_del(I,slot_in_backpack)
-
-/datum/outfit/job/cook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(visualsOnly)
-		return
-
-	H.dna.add_mutation(ITALIAN)
-
+	var/datum/martial_art/cqc/under_siege/justacook = new
+	justacook.teach(H)
 
 /*
 Botanist
@@ -237,11 +237,12 @@ Botanist
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/botanist
 
-	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE)
-	minimal_access = list(ACCESS_HYDROPONICS, ACCESS_MORGUE)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_HYDROPONICS, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
 	// Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS
 	// Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT
 	// Given Morgue access because they have a viable means of cloning.
@@ -276,11 +277,12 @@ Janitor
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/global/janitors = 0
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/janitor
 
-	access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS)
-	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS)
+	access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/janitor
 	name = "Janitor"

@@ -36,8 +36,7 @@
 	var/mob/living/L = user
 
 	if(istype(L))
-		if(!user.Adjacent(src) || user.incapacitated())
-			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 			return FALSE
 		else
 			return TRUE
@@ -73,7 +72,7 @@
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		deconstruct()
 	else if(istype(W, /obj/item/assembly/shock_kit))
 		if(!user.temporarilyRemoveItemFromInventory(W))
@@ -225,8 +224,7 @@
 	if(over_object == usr && Adjacent(usr))
 		if(!item_chair || !usr.can_hold_items() || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
 			return
-		if(usr.incapacitated())
-			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
+		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)
@@ -365,6 +363,7 @@
 	buildstacktype = /obj/item/stack/tile/brass
 	buildstackamount = 1
 	item_chair = null
+	var/turns = 0
 
 /obj/structure/chair/brass/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -373,12 +372,16 @@
 /obj/structure/chair/brass/process()
 	setDir(turn(dir,-90))
 	playsound(src, 'sound/effects/servostep.ogg', 50, FALSE)
+	turns++
+	if(turns >= 8)
+		STOP_PROCESSING(SSfastprocess, src)
 
 /obj/structure/chair/brass/ratvar_act()
 	return
 
 /obj/structure/chair/brass/AltClick(mob/living/user)
-	if(!user.canUseTopic(src, be_close = TRUE))
+	turns = 0
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(!isprocessing)
 		user.visible_message("<span class='notice'>[user] spins [src] around, and Ratvarian technology keeps it spinning FOREVER.</span>", \
@@ -388,3 +391,17 @@
 		user.visible_message("<span class='notice'>[user] stops [src]'s uncontrollable spinning.</span>", \
 		"<span class='notice'>You grab [src] and stop its wild spinning.</span>")
 		STOP_PROCESSING(SSfastprocess, src)
+
+/obj/structure/chair/bronze
+	name = "brass chair"
+	desc = "A spinny chair made of bronze. It has little cogs for wheels!"
+	anchored = FALSE
+	icon_state = "brass_chair"
+	buildstacktype = /obj/item/stack/tile/bronze
+	buildstackamount = 1
+	item_chair = null
+
+/obj/structure/chair/bronze/Moved()
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)

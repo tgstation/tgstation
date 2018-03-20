@@ -3,6 +3,7 @@
 
 /obj/item/device/electronic_assembly
 	name = "electronic assembly"
+	obj_flags = CAN_BE_HIT
 	desc = "It's a case, for building small electronics with."
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/assemblies/electronic_setups.dmi'
@@ -20,25 +21,78 @@
 	var/charge_tick = FALSE
 	var/charge_delay = 4
 	var/use_cyborg_cell = TRUE
+	var/ext_next_use = 0
+	var/atom/movable/collw
+	var/allowed_circuit_action_flags = IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE //which circuit flags are allowed
+	var/combat_circuits = 0 //number of combat cicuits in the assembly, used for diagnostic hud
+	var/long_range_circuits = 0 //number of long range cicuits in the assembly, used for diagnostic hud
+	var/prefered_hud_icon = "hudstat"		// Used by the AR circuit to change the hud icon.
+	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD, DIAG_CIRCUIT_HUD) //diagnostic hud overlays
 	max_integrity = 50
-	armor = list(melee = 50, bullet = 70, laser = 70, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 0, acid = 0)
+	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	anchored = FALSE
+	var/can_anchor = TRUE
+	var/detail_color = COLOR_ASSEMBLY_BLACK
+	var/list/color_whitelist = list( //This is just for checking that hacked colors aren't in the save data.
+		COLOR_ASSEMBLY_BLACK,
+		COLOR_FLOORTILE_GRAY,
+		COLOR_ASSEMBLY_BGRAY,
+		COLOR_ASSEMBLY_WHITE,
+		COLOR_ASSEMBLY_RED,
+		COLOR_ASSEMBLY_ORANGE,
+		COLOR_ASSEMBLY_BEIGE,
+		COLOR_ASSEMBLY_BROWN,
+		COLOR_ASSEMBLY_GOLD,
+		COLOR_ASSEMBLY_YELLOW,
+		COLOR_ASSEMBLY_GURKHA,
+		COLOR_ASSEMBLY_LGREEN,
+		COLOR_ASSEMBLY_GREEN,
+		COLOR_ASSEMBLY_LBLUE,
+		COLOR_ASSEMBLY_BLUE,
+		COLOR_ASSEMBLY_PURPLE
+		)
+
+/obj/item/device/electronic_assembly/examine(mob/user)
+	. = ..()
+	if(can_anchor)
+		to_chat(user, "<span class='notice'>The anchoring bolts [anchored ? "are" : "can be"] <b>wrenched</b> in place and the maintainence panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
+	else
+		to_chat(user, "<span class='notice'>The maintainence panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
 
 /obj/item/device/electronic_assembly/proc/check_interactivity(mob/user)
-	return user.canUseTopic(src,be_close = TRUE)
+	return user.canUseTopic(src, BE_CLOSE)
 
+/obj/item/device/electronic_assembly/CollidedWith(atom/movable/AM)
+	collw = AM
+	..()
 
 /obj/item/device/electronic_assembly/Initialize()
 	.=..()
 	START_PROCESSING(SScircuit, src)
 	materials[MAT_METAL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
 
+	//sets up diagnostic hud view
+	prepare_huds()
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
+	diag_hud_set_circuithealth()
+	diag_hud_set_circuitcell()
+	diag_hud_set_circuitstat()
+	diag_hud_set_circuittracking()
+
 /obj/item/device/electronic_assembly/Destroy()
 	STOP_PROCESSING(SScircuit, src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.remove_from_hud(src)
 	return ..()
 
 /obj/item/device/electronic_assembly/process()
 	handle_idle_power()
 	check_pulling()
+
+	//updates diagnostic hud
+	diag_hud_set_circuithealth()
+	diag_hud_set_circuitcell()
 
 /obj/item/device/electronic_assembly/proc/handle_idle_power()
 	// First we generate power.
@@ -83,7 +137,7 @@
 		if(!circuit.removable)
 			builtin_components += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
 			builtin_components += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
-			builtin_components += "<a href='?src=[REF(circuit)];scan=1'>\[Scan with Debugger\]</a>"
+			builtin_components += "<a href='?src=[REF(circuit)];scan=1;return=1'>\[Copy Ref\]</a>"
 			builtin_components += "<br>"
 
 	// Put removable circuits (if any) in separate categories from non-removable
@@ -101,7 +155,7 @@
 		if(circuit.removable)
 			HTML += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
 			HTML += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
-			HTML += "<a href='?src=[REF(circuit)];scan=1'>\[Scan with Debugger\]</a> | "
+			HTML += "<a href='?src=[REF(circuit)];scan=1;return=1'>\[Copy Ref\]</a> | "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];remove=1'>\[Remove\]</a> | "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];up=1' style='text-decoration:none;'>&#8593;</a> "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];down=1' style='text-decoration:none;'>&#8595;</a>  "
@@ -110,7 +164,7 @@
 			HTML += "<br>"
 
 	HTML += "</body></html>"
-	user << browse(HTML, "window=assembly-[REF(src)];size=600x350;border=1;can_resize=1;can_close=1;can_minimize=1")
+	user << browse(HTML, "window=assembly-[REF(src)];size=655x350;border=1;can_resize=1;can_close=1;can_minimize=1")
 
 /obj/item/device/electronic_assembly/Topic(href, href_list)
 	if(..())
@@ -127,6 +181,7 @@
 			playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
 			to_chat(usr, "<span class='notice'>You pull \the [battery] out of \the [src]'s power supplier.</span>")
 			battery = null
+			diag_hud_set_circuitstat() //update diagnostic hud
 
 	if(href_list["component"])
 		var/obj/item/integrated_circuit/component = locate(href_list["component"]) in assembly_components
@@ -170,6 +225,22 @@
 
 	interact(usr) // To refresh the UI.
 
+/obj/item/device/electronic_assembly/pickup(mob/living/user)
+	. = ..()
+	//update diagnostic hud when picked up, true is used to force the hud to be hidden
+	diag_hud_set_circuithealth(TRUE)
+	diag_hud_set_circuitcell(TRUE)
+	diag_hud_set_circuitstat(TRUE)
+	diag_hud_set_circuittracking(TRUE)
+
+/obj/item/device/electronic_assembly/dropped(mob/user)
+	. = ..()
+	//update diagnostic hud when dropped
+	diag_hud_set_circuithealth()
+	diag_hud_set_circuitcell()
+	diag_hud_set_circuitstat()
+	diag_hud_set_circuittracking()
+
 /obj/item/device/electronic_assembly/proc/rename()
 	var/mob/M = usr
 	if(!check_interactivity(M))
@@ -190,6 +261,12 @@
 		icon_state = initial(icon_state) + "-open"
 	else
 		icon_state = initial(icon_state)
+	cut_overlays()
+	if(detail_color == COLOR_ASSEMBLY_BLACK) //Black colored overlay looks almost but not exactly like the base sprite, so just cut the overlay and avoid it looking kinda off.
+		return
+	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/assemblies/electronic_setups.dmi', "[icon_state]-color")
+	detail_overlay.color = detail_color
+	add_overlay(detail_overlay)
 
 /obj/item/device/electronic_assembly/examine(mob/user)
 	..()
@@ -232,6 +309,9 @@
 	if((total_complexity + IC.complexity) > max_complexity)
 		to_chat(user, "<span class='warning'>You can't seem to add the '[IC]', since this setup's too complicated for the case.</span>")
 		return FALSE
+	if((allowed_circuit_action_flags & IC.action_flags) != IC.action_flags)
+		to_chat(user, "<span class='warning'>You can't seem to add the '[IC]', since the case doesn't support the circuit type.</span>")
+		return FALSE
 
 	if(!user.transferItemToLoc(IC, src))
 		return FALSE
@@ -249,20 +329,34 @@
 	component.assembly = src
 	assembly_components |= component
 
+	//increment numbers for diagnostic hud
+	if(component.action_flags & IC_ACTION_COMBAT)
+		combat_circuits += 1;
+	if(component.action_flags & IC_ACTION_LONG_RANGE)
+		long_range_circuits += 1;
 
-/obj/item/device/electronic_assembly/proc/try_remove_component(obj/item/integrated_circuit/IC, mob/user)
+	//diagnostic hud update
+	diag_hud_set_circuitstat()
+	diag_hud_set_circuittracking()
+
+
+/obj/item/device/electronic_assembly/proc/try_remove_component(obj/item/integrated_circuit/IC, mob/user, silent)
 	if(!opened)
-		to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't fiddle with the internal components.</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't fiddle with the internal components.</span>")
 		return FALSE
 
 	if(!IC.removable)
-		to_chat(user, "<span class='warning'>[src] is permanently attached to the case.</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>[src] is permanently attached to the case.</span>")
 		return FALSE
 
-	to_chat(user, "<span class='notice'>You pop \the [src] out of the case, and slide it out.</span>")
-	playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
-
 	remove_component(IC)
+	if(!silent)
+		to_chat(user, "<span class='notice'>You pop \the [IC] out of the case, and slide it out.</span>")
+		playsound(src, 'sound/items/crowbar.ogg', 50, 1)
+		user.put_in_hands(IC)
+
 	return TRUE
 
 // Actually removes the component, doesn't perform any checks.
@@ -272,6 +366,16 @@
 	component.assembly = null
 	assembly_components.Remove(component)
 
+	//decriment numbers for diagnostic hud
+	if(component.action_flags & IC_ACTION_COMBAT)
+		combat_circuits -= 1;
+	if(component.action_flags & IC_ACTION_LONG_RANGE)
+		long_range_circuits -= 1;
+
+	//diagnostic hud update
+	diag_hud_set_circuitstat()
+	diag_hud_set_circuittracking()
+
 
 /obj/item/device/electronic_assembly/afterattack(atom/target, mob/user, proximity)
 	for(var/obj/item/integrated_circuit/input/S in assembly_components)
@@ -279,40 +383,59 @@
 			visible_message("<span class='notice'> [user] waves [src] around [target].</span>")
 
 
-/obj/item/device/electronic_assembly/screwdriver_act(mob/living/user, obj/item/S)
-	playsound(src, S.usesound, 50, 1)
+/obj/item/device/electronic_assembly/screwdriver_act(mob/living/user, obj/item/I)
+	I.play_tool_sound(src)
 	opened = !opened
 	to_chat(user, "<span class='notice'>You [opened ? "open" : "close"] the maintenance hatch of [src].</span>")
 	update_icon()
 	return TRUE
 
 /obj/item/device/electronic_assembly/attackby(obj/item/I, mob/living/user)
+	if(can_anchor && default_unfasten_wrench(user, I, 20))
+		return
 	if(istype(I, /obj/item/integrated_circuit))
 		if(!user.canUnEquip(I))
 			return FALSE
 		if(try_add_component(I, user))
 			interact(user)
 			return TRUE
+		else
+			for(var/obj/item/integrated_circuit/input/S in assembly_components)
+				S.attackby_react(I,user,user.a_intent)
+			return ..()
 	else if(istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/integrated_electronics/wirer) || istype(I, /obj/item/device/integrated_electronics/debugger))
 		if(opened)
 			interact(user)
+			return TRUE
 		else
 			to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't fiddle with the internal components.</span>")
+			for(var/obj/item/integrated_circuit/input/S in assembly_components)
+				S.attackby_react(I,user,user.a_intent)
+			return ..()
 	else if(istype(I, /obj/item/stock_parts/cell))
 		if(!opened)
-			to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't put anything inside.</span>")
-			return FALSE
+			to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't access \the [src]'s power supplier.</span>")
+			for(var/obj/item/integrated_circuit/input/S in assembly_components)
+				S.attackby_react(I,user,user.a_intent)
+			return ..()
 		if(battery)
 			to_chat(user, "<span class='warning'>[src] already has \a [battery] installed. Remove it first if you want to replace it.</span>")
-			return FALSE
+			for(var/obj/item/integrated_circuit/input/S in assembly_components)
+				S.attackby_react(I,user,user.a_intent)
+			return ..()
 		var/obj/item/stock_parts/cell = I
 		user.transferItemToLoc(I, loc)
 		cell.forceMove(src)
 		battery = cell
+		diag_hud_set_circuitstat() //update diagnostic hud
 		playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You slot \the [cell] inside \the [src]'s power supplier.</span>")
 		interact(user)
 		return TRUE
+	else if(istype(I, /obj/item/device/integrated_electronics/detailer))
+		var/obj/item/device/integrated_electronics/detailer/D = I
+		detail_color = D.detail_color
+		update_icon()
 	else
 		for(var/obj/item/integrated_circuit/input/S in assembly_components)
 			S.attackby_react(I,user,user.a_intent)
@@ -400,6 +523,17 @@
 
 	return acting_object.drop_location()
 
+/obj/item/device/electronic_assembly/attack_tk(mob/user)
+	if(anchored)
+		return
+	..()
+
+/obj/item/device/electronic_assembly/attack_hand(mob/user)
+	if(anchored)
+		attack_self(user)
+		return
+	..()
+
 /obj/item/device/electronic_assembly/default //The /default electronic_assemblys are to allow the introduction of the new naming scheme without breaking old saves.
   name = "type-a electronic assembly"
 
@@ -417,6 +551,16 @@
 	name = "type-d electronic assembly"
 	icon_state = "setup_small_simple"
 	desc = "It's a case, for building small electronics with. This one has a simple design."
+
+/obj/item/device/electronic_assembly/hook
+	name = "type-e electronic assembly"
+	icon_state = "setup_small_hook"
+	desc = "It's a case, for building small electronics with. This one looks like it has a belt clip, but it's purely decorative."
+
+/obj/item/device/electronic_assembly/pda
+	name = "type-f electronic assembly"
+	icon_state = "setup_small_pda"
+	desc = "It's a case, for building small electronics with. This one resembles a PDA."
 
 /obj/item/device/electronic_assembly/medium
 	name = "electronic mechanism"
@@ -444,6 +588,16 @@
 	icon_state = "setup_medium_med"
 	desc = "It's a case, for building medium-sized electronics with. This one resembles some type of medical apparatus."
 
+/obj/item/device/electronic_assembly/medium/gun
+	name = "type-e electronic mechanism"
+	icon_state = "setup_medium_gun"
+	desc = "It's a case, for building medium-sized electronics with. This one resembles a gun, or some type of tool, if you're feeling optimistic."
+
+/obj/item/device/electronic_assembly/medium/radio
+	name = "type-f electronic mechanism"
+	icon_state = "setup_medium_radio"
+	desc = "It's a case, for building medium-sized electronics with. This one resembles an old radio."
+
 /obj/item/device/electronic_assembly/large
 	name = "electronic machine"
 	icon_state = "setup_large"
@@ -451,23 +605,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	max_components = IC_MAX_SIZE_BASE * 4
 	max_complexity = IC_COMPLEXITY_BASE * 4
-	anchored = FALSE
-
-/obj/item/device/electronic_assembly/large/attackby(obj/item/O, mob/user)
-	if(default_unfasten_wrench(user, O, 20))
-		return
-	..()
-
-/obj/item/device/electronic_assembly/large/attack_tk(mob/user)
-	if(anchored)
-		return
-	..()
-
-/obj/item/device/electronic_assembly/large/attack_hand(mob/user)
-	if(anchored)
-		attack_self(user)
-		return
-	..()
 
 /obj/item/device/electronic_assembly/large/default
 	name = "type-a electronic machine"
@@ -487,13 +624,25 @@
 	icon_state = "setup_large_arm"
 	desc = "It's a case, for building large electronics with. This one resembles a robotic arm."
 
+/obj/item/device/electronic_assembly/large/tall
+	name = "type-e electronic machine"
+	icon_state = "setup_large_tall"
+	desc = "It's a case, for building large electronics with. This one has a tall design."
+
+/obj/item/device/electronic_assembly/large/industrial
+	name = "type-f electronic machine"
+	icon_state = "setup_large_industrial"
+	desc = "It's a case, for building large electronics with. This one resembles some kind of industrial machinery."
+
 /obj/item/device/electronic_assembly/drone
 	name = "electronic drone"
 	icon_state = "setup_drone"
 	desc = "It's a case, for building mobile electronics with."
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_BULKY
 	max_components = IC_MAX_SIZE_BASE * 3
 	max_complexity = IC_COMPLEXITY_BASE * 3
+	allowed_circuit_action_flags = IC_ACTION_MOVEMENT | IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE
+	can_anchor = FALSE
 
 /obj/item/device/electronic_assembly/drone/can_move()
 	return TRUE
@@ -505,3 +654,75 @@
 	name = "type-b electronic drone"
 	icon_state = "setup_drone_arms"
 	desc = "It's a case, for building mobile electronics with. This one is armed and dangerous."
+
+/obj/item/device/electronic_assembly/drone/secbot
+	name = "type-c electronic drone"
+	icon_state = "setup_drone_secbot"
+	desc = "It's a case, for building mobile electronics with. This one resembles a Securitron."
+
+/obj/item/device/electronic_assembly/drone/medbot
+	name = "type-d electronic drone"
+	icon_state = "setup_drone_medbot"
+	desc = "It's a case, for building mobile electronics with. This one resembles a Medibot."
+
+/obj/item/device/electronic_assembly/drone/genbot
+	name = "type-e electronic drone"
+	icon_state = "setup_drone_genbot"
+	desc = "It's a case, for building mobile electronics with. This one has a generic bot design."
+
+/obj/item/device/electronic_assembly/drone/android
+	name = "type-f electronic drone"
+	icon_state = "setup_drone_android"
+	desc = "It's a case, for building mobile electronics with. This one has a hominoid design."
+
+/obj/item/device/electronic_assembly/wallmount
+	name = "wall-mounted electronic assembly"
+	icon_state = "setup_wallmount_medium"
+	desc = "It's a case, for building medium-sized electronics with. It has a magnetized backing to allow it to stick to walls, but you'll still need to wrench the anchoring bolts in place to keep it on."
+	w_class = WEIGHT_CLASS_NORMAL
+	max_components = IC_MAX_SIZE_BASE * 2
+	max_complexity = IC_COMPLEXITY_BASE * 2
+
+/obj/item/device/electronic_assembly/wallmount/heavy
+	name = "heavy wall-mounted electronic assembly"
+	icon_state = "setup_wallmount_large"
+	desc = "It's a case, for building large electronics with. It has a magnetized backing to allow it to stick to walls, but you'll still need to wrench the anchoring bolts in place to keep it on."
+	w_class = WEIGHT_CLASS_BULKY
+	max_components = IC_MAX_SIZE_BASE * 4
+	max_complexity = IC_COMPLEXITY_BASE * 4
+
+/obj/item/device/electronic_assembly/wallmount/light
+	name = "light wall-mounted electronic assembly"
+	icon_state = "setup_wallmount_small"
+	desc = "It's a case, for building small electronics with. It has a magnetized backing to allow it to stick to walls, but you'll still need to wrench the anchoring bolts in place to keep it on."
+	w_class = WEIGHT_CLASS_SMALL
+	max_components = IC_MAX_SIZE_BASE
+	max_complexity = IC_COMPLEXITY_BASE
+
+/obj/item/device/electronic_assembly/wallmount/proc/mount_assembly(turf/on_wall, mob/user) //Yeah, this is admittedly just an abridged and kitbashed version of the wallframe attach procs.
+	if(get_dist(on_wall,user)>1)
+		return
+	var/ndir = get_dir(on_wall, user)
+	if(!(ndir in GLOB.cardinals))
+		return
+	var/turf/T = get_turf(user)
+	if(!isfloorturf(T))
+		to_chat(user, "<span class='warning'>You cannot place [src] on this spot!</span>")
+		return
+	if(gotwallitem(T, ndir))
+		to_chat(user, "<span class='warning'>There's already an item on this wall!</span>")
+		return
+	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
+	user.visible_message("[user.name] attaches [src] to the wall.",
+		"<span class='notice'>You attach [src] to the wall.</span>",
+		"<span class='italics'>You hear clicking.</span>")
+	user.dropItemToGround(src)
+	switch(ndir)
+		if(NORTH)
+			pixel_y = -31
+		if(SOUTH)
+			pixel_y = 31
+		if(EAST)
+			pixel_x = -31
+		if(WEST)
+			pixel_x = 31

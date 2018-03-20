@@ -7,11 +7,7 @@
 	anchored = TRUE
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
-	var/mineral = /obj/item/stack/sheet/metal
-	var/mineral_amount = 2
-	var/walltype = /turf/closed/wall
-	var/girder_type = /obj/structure/girder/displaced
-	var/opening = FALSE
+	layer = CLOSED_TURF_LAYER
 	density = TRUE
 	opacity = 1
 	max_integrity = 100
@@ -28,6 +24,11 @@
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	var/mineral = /obj/item/stack/sheet/metal
+	var/mineral_amount = 2
+	var/walltype = /turf/closed/wall
+	var/girder_type = /obj/structure/girder/displaced
+	var/opening = FALSE
 
 /obj/structure/falsewall/Initialize()
 	. = ..()
@@ -113,8 +114,7 @@
 		if(W.use_tool(src, user, 0, volume=50))
 			dismantle(user, TRUE)
 	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		var/obj/item/pickaxe/drill/jackhammer/D = W
-		D.playDigSound()
+		W.play_tool_sound(src)
 		dismantle(user, TRUE)
 	else
 		return ..()
@@ -122,7 +122,7 @@
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
 	user.visible_message("[user] dismantles the false wall.", "<span class='notice'>You dismantle the false wall.</span>")
 	if(tool)
-		playsound(src, tool.usesound, 100, 1)
+		tool.play_tool_sound(src, 100)
 	else
 		playsound(src, 'sound/items/welder.ogg', 100, 1)
 	deconstruct(disassembled)

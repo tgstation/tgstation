@@ -35,8 +35,7 @@
 	dwidth = 10;
 	height = 13;
 	name = "Asteroid emergency shuttle";
-	width = 28;
-	timid = 1
+	width = 28
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -111,8 +110,7 @@
 /area/shuttle/escape)
 "aG" = (
 /obj/machinery/door/airlock/mining{
-	name = "Emergency Shuttle Storage";
-	req_access_txt = "0"
+	name = "Emergency Shuttle Storage"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
@@ -310,7 +308,6 @@
 /area/shuttle/escape)
 "bq" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
 	name = "Escape Shuttle Infirmary";
 	req_access_txt = "5"
 	},
@@ -318,9 +315,7 @@
 /area/shuttle/escape)
 "br" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Escape Shuttle Infirmary";
-	req_access_txt = "0"
+	name = "Escape Shuttle Infirmary"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)

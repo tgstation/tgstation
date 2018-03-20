@@ -12,16 +12,16 @@
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
-	var/digspeed = 40
-	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
+	tool_behaviour = TOOL_MINING
+	toolspeed = 1
+	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 
 /obj/item/pickaxe/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins digging into their chest!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	if(do_after(user,30, target = user))
-		playDigSound()
+	if(use_tool(user, user, 30, volume=50))
 		return BRUTELOSS
-	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")	
+	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")
 	return SHAME
 
 /obj/item/pickaxe/mini
@@ -34,14 +34,11 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=1000)
 
-/obj/item/pickaxe/proc/playDigSound()
-	playsound(src, pick(digsound),50,1)
-
 /obj/item/pickaxe/silver
 	name = "silver-plated pickaxe"
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
-	digspeed = 20 //mines faster than a normal pickaxe, bought from mining vendor
+	toolspeed = 0.5 //mines faster than a normal pickaxe, bought from mining vendor
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	force = 17
 
@@ -49,7 +46,7 @@
 	name = "diamond-tipped pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	digspeed = 14
+	toolspeed = 0.3
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
 
@@ -58,8 +55,8 @@
 	icon_state = "handdrill"
 	item_state = "jackhammer"
 	slot_flags = SLOT_BELT
-	digspeed = 25 //available from roundstart, faster than a pickaxe.
-	digsound = list('sound/weapons/drill.ogg')
+	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
+	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
 
@@ -71,20 +68,20 @@
 /obj/item/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
-	digspeed = 7
+	toolspeed = 0.2
 	desc = "Yours is the drill that will pierce the heavens!"
 
 /obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
 	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP_1 flag, and easier to change borg specific drill mechanics.
 	icon_state = "diamonddrill"
-	digspeed = 7
+	toolspeed = 0.2
 
 /obj/item/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
-	digspeed = 5 //the epitome of powertools. extremely fast mining, laughs at puny walls
-	digsound = list('sound/weapons/sonic_jackhammer.ogg')
+	toolspeed = 0.1 //the epitome of powertools. extremely fast mining, laughs at puny walls
+	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
 
@@ -98,20 +95,25 @@
 	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	force = 8
-	var/digspeed = 20
+	tool_behaviour = TOOL_SHOVEL
+	toolspeed = 1
+	usesound = 'sound/effects/shovel_dig.ogg'
 	throwforce = 4
 	item_state = "shovel"
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=50)
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 	sharpness = IS_SHARP
-	
+
+/obj/item/shovel/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 150, 40) //it's sharp, so it works, but barely.
+
 /obj/item/shovel/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins digging their own grave!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	if(do_after(user,30, target = user))
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
+	if(use_tool(user, user, 30, volume=50))
 		return BRUTELOSS
-	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")	
+	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")
 	return SHAME
 
 /obj/item/shovel/spade

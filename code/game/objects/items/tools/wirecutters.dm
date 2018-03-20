@@ -19,7 +19,7 @@
 
 	tool_behaviour = TOOL_WIRECUTTER
 	toolspeed = 1
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 	var/random_color = TRUE
 	var/static/list/wirecutter_colors = list(
 		"blue" = "#1861d5",
@@ -99,7 +99,7 @@
 	playsound(loc, 'sound/items/jaws_cut.ogg', 50, 1, -1)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		var/obj/item/bodypart/BP = C.get_bodypart("head")
+		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
 			playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)

@@ -118,6 +118,9 @@
 	. = ..()
 	update_icon()
 
+/obj/item/reagent_containers/glass/beaker/get_part_rating()
+	return reagents.maximum_volume
+
 /obj/item/reagent_containers/glass/beaker/on_reagent_change(changetype)
 	update_icon()
 
@@ -161,6 +164,29 @@
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
+
+/obj/item/reagent_containers/glass/beaker/plastic
+	name = "x-large beaker"
+	desc = "An extra-large beaker. Can hold up to 120 units."
+	icon_state = "beakerwhite"
+	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
+	volume = 120
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(10,15,20,25,30,60,120)
+
+/obj/item/reagent_containers/glass/beaker/plastic/update_icon()
+	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
+	..()
+	icon_state = "beakerwhite"
+
+/obj/item/reagent_containers/glass/beaker/meta
+	name = "metamaterial beaker"
+	desc = "A large beaker. Can hold up to 180 units."
+	icon_state = "beakergold"
+	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
+	volume = 180
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(10,15,20,25,30,60,120,180)
 
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
@@ -230,7 +256,7 @@
 	flags_inv = HIDEHAIR
 	slot_flags = SLOT_HEAD
 	resistance_flags = NONE
-	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 75, acid = 50) //Weak melee protection, because you can wear it on your head
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 50) //Weak melee protection, because you can wear it on your head
 	slot_equipment_priority = list( \
 		slot_back, slot_wear_id,\
 		slot_w_uniform, slot_wear_suit,\

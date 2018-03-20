@@ -12,8 +12,8 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned)
 "ad" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 2;
 	name = "External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -102,8 +102,10 @@
 	},
 /area/shuttle/abandoned)
 "an" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 1;
 	glass = 1;
 	name = "Internal Airlock"
 	},
@@ -953,8 +955,10 @@
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bP" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 4;
 	glass = 1;
 	name = "Internal Airlock"
 	},
@@ -967,8 +971,10 @@
 	},
 /area/shuttle/abandoned)
 "bQ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 8;
 	name = "External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -982,7 +988,6 @@
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_x = -28;
-	req_access_txt = "0";
 	use_power = 0
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1014,9 +1019,7 @@
 	name = "dust"
 	},
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Infirmary";
-	req_access_txt = "0"
+	name = "Infirmary"
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
@@ -1500,8 +1503,10 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "cS" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 8;
 	name = "External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1518,7 +1523,6 @@
 	name = "White-Ship";
 	port_direction = 8;
 	preferred_direction = 8;
-	timid = 0;
 	width = 32
 	},
 /turf/open/floor/plasteel/neutral,

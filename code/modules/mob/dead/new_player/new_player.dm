@@ -373,6 +373,9 @@
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
 
+	if(CONFIG_GET(flag/roundstart_traits))
+		SStraits.AssignTraits(humanc, humanc.client, TRUE)
+
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)

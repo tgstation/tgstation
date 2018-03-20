@@ -23,7 +23,7 @@
 		user.visible_message("<span class='suicide'>[user] is beheading [user.p_them()]self with [src.name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
-			var/obj/item/bodypart/BP = C.get_bodypart("head")
+			var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 			if(BP)
 				BP.drop_limb()
 				playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
@@ -60,7 +60,7 @@
 		update_icon()
 		return
 	if(istype(P, /obj/item/screwdriver) && storedcutter)
-		playsound(src, P.usesound, 50, 1)
+		P.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>[storedcutter] has been [cuttersecured ? "unsecured" : "secured"].</span>")
 		cuttersecured = !cuttersecured
 		return

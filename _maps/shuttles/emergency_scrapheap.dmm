@@ -217,8 +217,7 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Scrapheap Challenge";
-	timid = 1
+	name = "Scrapheap Challenge"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -324,8 +323,7 @@
 /area/shuttle/escape)
 "bd" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Restrooms";
-	req_access_txt = "0"
+	name = "Unisex Restrooms"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)

@@ -1,6 +1,3 @@
-#define MEDAL_PREFIX "Boss"
-
-
 /mob/living/simple_animal/hostile/megafauna
 	name = "boss of this gym"
 	desc = "Attack the weak point for massive damage."
@@ -21,8 +18,12 @@
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
+	vision_range = 5
 	aggro_vision_range = 18
-	idle_vision_range = 5
+	anchored = TRUE
+	mob_size = MOB_SIZE_LARGE
+	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
+	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
 	environment_target_typecache = list(
 	/obj/machinery/door/window,
 	/obj/structure/window,
@@ -35,16 +36,12 @@
 	/obj/machinery/field,
 	/obj/machinery/power/emitter)
 	var/list/crusher_loot
-	var/medal_type = MEDAL_PREFIX
+	var/medal_type
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
 	var/anger_modifier = 0
 	var/obj/item/device/gps/internal
 	var/recovery_time = 0
-	anchored = TRUE
-	mob_size = MOB_SIZE_LARGE
-	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
-	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
@@ -59,13 +56,17 @@
 		return
 	else
 		var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
-		if(C && crusher_loot)
-			if(C.total_damage >= maxHealth * 0.6) //if you do at least 60% of its health with the crusher, you'll get the item
-				spawn_crusher_loot()
+		var/crusher_kill = FALSE
+		if(C && crusher_loot && C.total_damage >= maxHealth * 0.6)
+			spawn_crusher_loot()
+			crusher_kill = TRUE
 		if(!admin_spawned)
-			SSblackbox.record_feedback("tally", "megafauna_kills", 1, "[initial(name)]")
+			var/tab = "megafauna_kills"
+			if(crusher_kill)
+				tab = "megafauna_kills_crusher"
+			SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
-				grant_achievement(medal_type,score_type)
+				grant_achievement(medal_type, score_type, crusher_kill)
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
@@ -119,122 +120,18 @@
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
 	recovery_time = world.time + buffer_time
 
-/mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype,scoretype)
-	if(medal_type == "Boss")	//Don't award medals if the medal type isn't set
+/mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill)
+	if(!medal_type || admin_spawned || !SSmedals.hub_enabled) //Don't award medals if the medal type isn't set
 		return FALSE
 
-	if(admin_spawned)
-		return FALSE
-
-	if(MedalsAvailable())
-		for(var/mob/living/L in view(7,src))
-			if(L.stat)
-				continue
-			if(L.client)
-				var/client/C = L.client
-				var/suffixm = BOSS_KILL_MEDAL
-				UnlockMedal("Boss [suffixm]",C)
-				UnlockMedal("[medaltype] [suffixm]",C)
-				SetScore(BOSS_SCORE,C,1)
-				SetScore(score_type,C,1)
+	for(var/mob/living/L in view(7,src))
+		if(L.stat || !L.client)
+			continue
+		var/client/C = L.client
+		SSmedals.UnlockMedal("Boss [BOSS_KILL_MEDAL]", C)
+		SSmedals.UnlockMedal("[medaltype] [BOSS_KILL_MEDAL]", C)
+		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/required/kinetic_crusher))
+			SSmedals.UnlockMedal("[medaltype] [BOSS_KILL_MEDAL_CRUSHER]", C)
+		SSmedals.SetScore(BOSS_SCORE, C, 1)
+		SSmedals.SetScore(score_type, C, 1)
 	return TRUE
-
-/proc/UnlockMedal(medal,client/player)
-	set waitfor = FALSE
-	if(!player || !medal)
-		return
-	if(MedalsAvailable())
-		var/result = world.SetMedal(medal, player, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
-		if(isnull(result))
-			GLOB.medals_enabled = FALSE
-			log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.ckey]")
-			message_admins("Error! Failed to contact hub to award [medal] medal to [player.ckey]!")
-		else if (result)
-			to_chat(player, "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>")
-
-
-/proc/SetScore(score,client/player,increment,force)
-	set waitfor = FALSE
-	if(!score || !player)
-		return
-	if(MedalsAvailable())
-		var/list/oldscore = GetScore(score,player,1)
-		if(increment)
-			if(!oldscore[score])
-				oldscore[score] = 1
-			else
-				oldscore[score] = (text2num(oldscore[score]) + 1)
-		else
-			oldscore[score] = force
-
-		var/newscoreparam = list2params(oldscore)
-
-		var/result = world.SetScores(player.ckey, newscoreparam, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
-
-		if(isnull(result))
-			GLOB.medals_enabled = FALSE
-			log_game("SCORE ERROR: Could not contact hub to set score. Score:[score] player:[player.ckey]")
-			message_admins("Error! Failed to contact hub to set [score] score for [player.ckey]!")
-
-
-/proc/GetScore(score,client/player,returnlist)
-
-	if(!score || !player)
-		return
-	if(MedalsAvailable())
-
-		var/scoreget = world.GetScores(player.ckey, score, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
-		if(isnull(scoreget))
-			GLOB.medals_enabled = FALSE
-			log_game("SCORE ERROR: Could not contact hub to get score. Score:[score] player:[player.ckey]")
-			message_admins("Error! Failed to contact hub to get score: [score] for [player.ckey]!")
-			return
-
-		var/list/scoregetlist = params2list(scoreget)
-
-		if(returnlist)
-			return scoregetlist
-		else
-			return scoregetlist[score]
-
-
-/proc/CheckMedal(medal,client/player)
-
-	if(!player || !medal)
-		return
-	if(MedalsAvailable())
-
-		var/result = world.GetMedal(medal, player, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
-
-		if(isnull(result))
-			GLOB.medals_enabled = FALSE
-			log_game("MEDAL ERROR: Could not contact hub to get medal:[medal] player:[player.ckey]")
-			message_admins("Error! Failed to contact hub to get [medal] medal for [player.ckey]!")
-		else if (result)
-			to_chat(player, "[medal] is unlocked")
-
-/proc/LockMedal(medal,client/player)
-
-	if(!player || !medal)
-		return
-	if(MedalsAvailable())
-
-		var/result = world.ClearMedal(medal, player, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
-
-		if(isnull(result))
-			GLOB.medals_enabled = FALSE
-			log_game("MEDAL ERROR: Could not contact hub to clear medal:[medal] player:[player.ckey]")
-			message_admins("Error! Failed to contact hub to clear [medal] medal for [player.ckey]!")
-		else if (result)
-			message_admins("Medal: [medal] removed for [player.ckey]")
-		else
-			message_admins("Medal: [medal] was not found for [player.ckey]. Unable to clear.")
-
-
-/proc/ClearScore(client/player)
-	world.SetScores(player.ckey, "", CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
-
-/proc/MedalsAvailable()
-	return CONFIG_GET(string/medal_hub_address) && CONFIG_GET(string/medal_hub_password) && GLOB.medals_enabled
-
-#undef MEDAL_PREFIX

@@ -551,7 +551,6 @@
 	name = "Cere emergency shuttle";
 	port_direction = 4;
 	preferred_direction = 2;
-	timid = 1;
 	width = 42
 	},
 /turf/open/floor/plating,
@@ -790,7 +789,6 @@
 /area/shuttle/escape)
 "cq" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/white,
@@ -801,7 +799,6 @@
 /area/shuttle/escape)
 "cs" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/white,

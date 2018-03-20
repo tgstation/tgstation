@@ -11,6 +11,10 @@
 	anchored = TRUE
 	var/deconstruction_state = SHOWCASE_CONSTRUCTED
 
+/obj/structure/showcase/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 750), 0)
+
 /obj/structure/showcase/fakeid
 	name = "\improper CentCom identification console"
 	desc = "You can use this to change ID's."
@@ -18,7 +22,7 @@
 	icon_state = "computer"
 
 /obj/structure/showcase/fakeid/Initialize()
-	..()
+	. = ..()
 	add_overlay("id")
 	add_overlay("id_key")
 
@@ -29,7 +33,7 @@
 	icon_state = "computer"
 
 /obj/structure/showcase/fakesec/Initialize()
-	..()
+	. = ..()
 	add_overlay("security")
 	add_overlay("security_key")
 
@@ -112,11 +116,11 @@
 	if(istype(W, /obj/item/screwdriver) && !anchored)
 		if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
 			to_chat(user, "<span class='notice'>You screw the screws back into the showcase.</span>")
-			playsound(loc, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			deconstruction_state = SHOWCASE_CONSTRUCTED
 		else if (deconstruction_state == SHOWCASE_CONSTRUCTED)
 			to_chat(user, "<span class='notice'>You unscrew the screws.</span>")
-			playsound(loc, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			deconstruction_state = SHOWCASE_SCREWDRIVERED
 
 	if(istype(W, /obj/item/crowbar) && deconstruction_state == SHOWCASE_SCREWDRIVERED)

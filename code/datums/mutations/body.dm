@@ -11,6 +11,7 @@
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Unconscious(200)
 		owner.Jitter(1000)
+		owner.SendSignal(COMSIG_ADD_MOOD_EVENT, "epilepsy", /datum/mood_event/epilepsy)
 		addtimer(CALLBACK(src, .proc/jitter_less, owner), 90)
 
 /datum/mutation/human/epilepsy/proc/jitter_less(mob/living/carbon/human/owner)
@@ -146,19 +147,3 @@
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
 	if(owner && istype(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)))
 		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
-
-//Italian makes you speak-a like Mario!
-
-/datum/mutation/human/italian
-	name = "Italian"
-	quality = NEGATIVE
-
-/datum/mutation/human/italian/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	owner.add_trait(TRAIT_ITALIAN, GENETIC_MUTATION)
-
-/datum/mutation/human/italian/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	owner.remove_trait(TRAIT_ITALIAN, GENETIC_MUTATION)

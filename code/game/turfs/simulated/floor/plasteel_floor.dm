@@ -318,6 +318,8 @@
 
 /turf/open/floor/plasteel/freezer
 	icon_state = "freezerfloor"
+/turf/open/floor/plasteel/freezer/airless
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plasteel/bar
 	icon_state = "bar"

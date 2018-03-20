@@ -12,7 +12,6 @@
 	ranged = 1
 	vision_range = 5
 	aggro_vision_range = 9
-	idle_vision_range = 5
 	speed = 3
 	maxHealth = 75
 	health = 75
@@ -226,7 +225,7 @@
 	max_mobs = 3
 	spawn_time = 200
 	spawn_text = "peels itself off from"
-	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	anchored = FALSE
@@ -241,7 +240,6 @@
 	move_to_delay = 14
 	vision_range = 5
 	aggro_vision_range = 9
-	idle_vision_range = 5
 	speed = 3
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
@@ -346,7 +344,6 @@
 			mask = /obj/item/clothing/mask/breath
 		if("Operative")
 			id_job = "Operative"
-			id_access_list = list(ACCESS_SYNDICATE)
 			outfit = /datum/outfit/syndicatecommandocorpse
 		if("Shadow")
 			mob_species = /datum/species/shadow

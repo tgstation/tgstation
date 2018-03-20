@@ -11,12 +11,12 @@
 	if(alert("Are we sure we wish to kill ourself and create a headslug?",,"Yes", "No") == "No")
 		return
 	var/datum/mind/M = user.mind
-	var/list/organs = user.getorganszone("head", 1)
+	var/list/organs = user.getorganszone(BODY_ZONE_HEAD, 1)
 
 	for(var/obj/item/organ/I in organs)
 		I.Remove(user, 1)
 
-	explosion(get_turf(user),0,0,2,0,silent=1)
+	explosion(get_turf(user), 0, 0, 2, 0, TRUE)
 	for(var/mob/living/carbon/human/H in range(2,user))
 		to_chat(H, "<span class='userdanger'>You are blinded by a shower of blood!</span>")
 		H.Stun(20)

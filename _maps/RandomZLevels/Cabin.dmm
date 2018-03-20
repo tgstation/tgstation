@@ -411,7 +411,9 @@
 /area/awaymission/cabin)
 "bv" = (
 /obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bw" = (

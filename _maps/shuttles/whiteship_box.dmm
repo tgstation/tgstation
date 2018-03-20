@@ -19,7 +19,6 @@
 	name = "NT Medical Ship";
 	port_direction = 8;
 	preferred_direction = 4;
-	timid = 1;
 	width = 35
 	},
 /turf/open/floor/mineral/titanium,

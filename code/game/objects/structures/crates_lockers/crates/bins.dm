@@ -33,7 +33,7 @@
 		do_animate()
 	else if(istype(W, /obj/item/wrench))
 		anchored = !anchored
-		playsound(src.loc, W.usesound, 75, 1)
+		W.play_tool_sound(src, 75)
 	else
 		return ..()
 

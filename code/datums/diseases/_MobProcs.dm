@@ -1,17 +1,17 @@
 
-/mob/proc/HasDisease(datum/disease/D)
-	for(var/thing in viruses)
+/mob/living/proc/HasDisease(datum/disease/D)
+	for(var/thing in diseases)
 		var/datum/disease/DD = thing
 		if(D.IsSame(DD))
 			return TRUE
 	return FALSE
 
 
-/mob/proc/CanContractDisease(datum/disease/D)
+/mob/living/proc/CanContractDisease(datum/disease/D)
 	if(stat == DEAD)
 		return FALSE
 
-	if(D.GetDiseaseID() in resistances)
+	if(D.GetDiseaseID() in disease_resistances)
 		return FALSE
 
 	if(HasDisease(D))
@@ -23,38 +23,10 @@
 	return TRUE
 
 
-/mob/proc/ContactContractDisease(datum/disease/D)
+/mob/living/proc/ContactContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
 		return FALSE
-	AddDisease(D)
-
-
-/mob/proc/AddDisease(datum/disease/D)
-	for(var/datum/disease/advance/P in viruses)
-		if(istype(D, /datum/disease/advance))
-			var/datum/disease/advance/DD = D
-			if (P.totalResistance() < DD.totalTransmittable()) //Overwrite virus if the attacker's Transmission is lower than the defender's Resistance. This does not grant immunity to the lost virus.
-				P.remove_virus()
-
-	if (!viruses.len) //Only add the new virus if it defeated the existing one
-		var/datum/disease/DD = new D.type(1, D, 0)
-		viruses += DD
-		DD.affected_mob = src
-		SSdisease.active_diseases += DD //Add it to the active diseases list, now that it's actually in a mob and being processed.
-
-		//Copy properties over. This is so edited diseases persist.
-		var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars","transformed","symptoms","processing")
-		for(var/V in DD.vars)
-			if(V in skipped)
-				continue
-			if(islist(DD.vars[V]))
-				var/list/L = D.vars[V]
-				DD.vars[V] = L.Copy()
-			else
-				DD.vars[V] = D.vars[V]
-
-		DD.after_add()
-		DD.affected_mob.med_hud_set_status()
+	D.try_infect(src)
 
 
 /mob/living/carbon/ContactContractDisease(datum/disease/D, target_zone)
@@ -75,13 +47,13 @@
 	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
 		return
 	if(!target_zone)
-		target_zone = pick(head_ch;"head",body_ch;"body",hands_ch;"hands",feet_ch;"feet")
+		target_zone = pick(head_ch;BODY_ZONE_HEAD,body_ch;"body",hands_ch;"hands",feet_ch;"feet")
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 
 		switch(target_zone)
-			if("head")
+			if(BODY_ZONE_HEAD)
 				if(isobj(H.head) && !istype(H.head, /obj/item/paper))
 					Cl = H.head
 					passed = prob((Cl.permeability_coefficient*100) - 1)
@@ -118,40 +90,42 @@
 	else if(ismonkey(src))
 		var/mob/living/carbon/monkey/M = src
 		switch(target_zone)
-			if("head")
+			if(BODY_ZONE_HEAD)
 				if(M.wear_mask && isobj(M.wear_mask))
 					Cl = M.wear_mask
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 
 	if(passed)
-		AddDisease(D)
+		D.try_infect(src)
 
-/mob/proc/AirborneContractDisease(datum/disease/D)
-	if((D.spread_flags & VIRUS_SPREAD_AIRBORNE) && prob((50*D.permeability_mod) - 1))
+/mob/living/proc/AirborneContractDisease(datum/disease/D, force_spread)
+	if( ((D.spread_flags & DISEASE_SPREAD_AIRBORNE) || force_spread) && prob((50*D.permeability_mod) - 1))
 		ForceContractDisease(D)
 
-/mob/living/carbon/AirborneContractDisease(datum/disease/D)
+/mob/living/carbon/AirborneContractDisease(datum/disease/D, force_spread)
 	if(internal)
 		return
-	..()
-
-/mob/living/carbon/human/AirborneContractDisease(datum/disease/D)
-	if(dna && (NOBREATH in dna.species.species_traits))
+	if(has_trait(TRAIT_NOBREATH))
 		return
 	..()
 
 
-//Proc to use when you 100% want to infect someone, as long as they aren't immune
-/mob/proc/ForceContractDisease(datum/disease/D)
+//Proc to use when you 100% want to try to infect someone (ignoreing protective clothing and such), as long as they aren't immune
+/mob/living/proc/ForceContractDisease(datum/disease/D, make_copy = TRUE, del_on_fail = FALSE)
 	if(!CanContractDisease(D))
+		if(del_on_fail)
+			qdel(D)
 		return FALSE
-	AddDisease(D)
+	if(!D.try_infect(src, make_copy))
+		if(del_on_fail)
+			qdel(D)
+		return FALSE
+	return TRUE
 
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
-
 	if(dna)
-		if((VIRUSIMMUNE in dna.species.species_traits) && !D.bypasses_immunity)
+		if(has_trait(TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
 			return FALSE
 
 		var/can_infect = FALSE

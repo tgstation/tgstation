@@ -193,6 +193,11 @@
 	w_class = WEIGHT_CLASS_TINY
 	list_reagents = list("chlorine" = 3, "ammonia" = 1)
 
+/obj/item/reagent_containers/food/urinalcake/attack_self(mob/living/user)
+	user.visible_message("<span class='notice'>[user] squishes [src]!</span>", "<span class='notice'>You squish [src].</span>", "<i>You hear a squish.</i>")
+	icon_state = "urinalcake_squish"
+	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 8)
+
 /obj/machinery/shower
 	name = "shower"
 	desc = "The HS-451. Installed in the 2550s by the Nanotrasen Hygiene Division."
@@ -242,7 +247,7 @@
 		soundloop.stop()
 		if(isopenturf(loc))
 			var/turf/open/tile = loc
-			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5, wet_time_to_add = 1)
+			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5 SECONDS, wet_time_to_add = 1 SECONDS)
 
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
@@ -330,6 +335,7 @@
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
 	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	L.SendSignal(COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	if(iscarbon(L))
 		var/mob/living/carbon/M = L
 		. = TRUE
@@ -416,10 +422,10 @@
 
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C)
 	if(watertemp == "freezing")
-		C.bodytemperature = max(80, C.bodytemperature - 80)
+		C.adjust_bodytemperature(-80, 80)
 		to_chat(C, "<span class='warning'>The water is freezing!</span>")
 	else if(watertemp == "boiling")
-		C.bodytemperature = min(500, C.bodytemperature + 35)
+		C.adjust_bodytemperature(35, 0, 500)
 		C.adjustFireLoss(5)
 		to_chat(C, "<span class='danger'>The water is searing!</span>")
 
@@ -458,7 +464,7 @@
 		return
 	var/selected_area = parse_zone(user.zone_selected)
 	var/washing_face = 0
-	if(selected_area in list("head", "mouth", "eyes"))
+	if(selected_area in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES))
 		washing_face = 1
 	user.visible_message("<span class='notice'>[user] starts washing their [washing_face ? "face" : "hands"]...</span>", \
 						"<span class='notice'>You start washing your [washing_face ? "face" : "hands"]...</span>")

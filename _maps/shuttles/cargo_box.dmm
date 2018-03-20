@@ -49,8 +49,7 @@
 	},
 /obj/docking_port/mobile/supply{
 	dwidth = 5;
-	width = 12;
-	timid = 1
+	width = 12
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)

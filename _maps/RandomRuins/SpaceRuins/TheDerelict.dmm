@@ -290,12 +290,11 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/solar_control)
 "aT" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 8;
 	environ = 0;
 	equipment = 0;
 	lighting = 0;
-	locked = 0;
 	name = "Starboard Solar APC";
 	pixel_x = -24
 	},
@@ -887,7 +886,6 @@
 "cV" = (
 /obj/machinery/door/airlock/command{
 	name = "E.V.A.";
-	req_access = null;
 	req_access_txt = "18"
 	},
 /obj/structure/cable{
@@ -1095,6 +1093,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/gravity_generator)
@@ -2983,6 +2984,9 @@
 /obj/machinery/door/airlock/external{
 	name = "Arrivals Docking Bay 1"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
 "jV" = (
@@ -3264,7 +3268,6 @@
 "kR" = (
 /obj/machinery/door/airlock/security{
 	name = "Security";
-	req_access = null;
 	req_access_txt = "1"
 	},
 /obj/structure/cable{
@@ -3590,6 +3593,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
 "ma" = (
@@ -4202,12 +4206,11 @@
 /area/ruin/space/derelict/se_solar)
 "nZ" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 8;
 	environ = 0;
 	equipment = 0;
 	lighting = 0;
-	locked = 0;
 	name = "Worn-out APC";
 	pixel_x = -24
 	},
@@ -4478,6 +4481,15 @@
 	icon_state = "damaged3"
 	},
 /area/space/nearstation)
+"DE" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict/arrival)
 "Ev" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
@@ -4510,6 +4522,15 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
+"Le" = (
+/obj/machinery/door/airlock/external{
+	name = "Arrivals Docking Bay 1"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/derelict/arrival)
 "Lv" = (
 /turf/closed/wall,
 /area/space/nearstation)
@@ -4525,6 +4546,14 @@
 	icon_state = "damaged4"
 	},
 /area/ruin/space/derelict/singularity_engine)
+"RF" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering Access";
+	req_access_txt = "10"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/gravity_generator)
 "Sv" = (
 /turf/closed/wall/r_wall,
 /area/space/nearstation)
@@ -8650,7 +8679,7 @@ cw
 cH
 cO
 cO
-da
+RF
 dh
 dt
 dC
@@ -12988,7 +13017,7 @@ kM
 hf
 lZ
 hP
-lZ
+DE
 aa
 aa
 aa
@@ -13880,7 +13909,7 @@ aa
 aa
 aa
 jK
-jU
+Le
 jK
 aa
 aa

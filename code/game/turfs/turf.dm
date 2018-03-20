@@ -223,7 +223,7 @@
 		return current_target
 	var/list/new_baseturfs = list(current_target)
 	for(var/i=0;current_target != next_target;i++)
-		if(i > 100) 
+		if(i > 100)
 			// A baseturfs list over 100 members long is silly
 			// Because of how this is all structured it will only runtime/message once per type
 			stack_trace("A turf <[type]> created a baseturfs list over 100 members long. This is most likely an infinite loop.")

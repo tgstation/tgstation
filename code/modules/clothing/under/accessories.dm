@@ -69,7 +69,7 @@
 	return
 
 /obj/item/clothing/accessory/AltClick(mob/user)
-	if(user.canUseTopic(src, be_close=TRUE))
+	if(istype(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(initial(above_suit))
 			above_suit = !above_suit
 			to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
@@ -141,6 +141,7 @@
 							SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input))
 							GLOB.commendations += "[user.real_name] awarded <b>[M.real_name]</b> the <span class='medaltext'>[name]</span>! \n- [input]"
 							commended = TRUE
+							desc += "<br>The inscription reads: [input] - [user.real_name]" 
 							log_game("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 							message_admins("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 
@@ -207,7 +208,7 @@
 	icon_state = "plasma"
 	item_color = "plasma"
 	medaltype = "medal-plasma"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = -10, acid = 0) //It's made of plasma. Of course it's flammable.
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = -10, "acid" = 0) //It's made of plasma. Of course it's flammable.
 	materials = list(MAT_PLASMA=1000)
 
 /obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -318,7 +319,7 @@
 	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
 	icon_state = "talisman"
 	item_color = "talisman"
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5, fire = 0, acid = 25)
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
 
 
 /obj/item/clothing/accessory/skullcodpiece
@@ -327,4 +328,4 @@
 	icon_state = "skull"
 	item_color = "skull"
 	above_suit = TRUE
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5, fire = 0, acid = 25)
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)

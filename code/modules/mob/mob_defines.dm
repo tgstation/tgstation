@@ -57,7 +57,7 @@
 
 	//Hands
 	var/active_hand_index = 1
-	var/list/held_items = list(null, null) //len = number of hands, eg: 2 nulls is 2 empty hands, 1 item and 1 null is 1 full hand and 1 empty hand.
+	var/list/held_items = list() //len = number of hands, eg: 2 nulls is 2 empty hands, 1 item and 1 null is 1 full hand and 1 empty hand.
 	//held_items[active_hand_index] is the actively held item, but please use get_active_held_item() instead, because OOP
 
 	var/obj/item/storage/s_active = null//Carbon
@@ -82,10 +82,6 @@
 
 	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
 
-//List of active diseases
-
-	var/list/viruses = list() // list of all diseases in a mob
-	var/list/resistances = list()
 
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 
@@ -106,3 +102,5 @@
 	var/list/progressbars = null	//for stacking do_after bars
 
 	var/list/mousemove_intercept_objects
+
+	var/datum/click_intercept

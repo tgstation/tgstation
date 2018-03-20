@@ -81,10 +81,13 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 /obj/structure/bodycontainer/attackby(obj/P, mob/user, params)
 	add_fingerprint(user)
 	if(istype(P, /obj/item/pen))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
+			return
 		var/t = stripped_input(user, "What would you like the label to be?", text("[]", name), null)
 		if (user.get_active_held_item() != P)
 			return
-		if ((!in_range(src, usr) && src.loc != user))
+		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if (t)
 			name = text("[]- '[]'", initial(name), t)
@@ -138,20 +141,25 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
  */
 /obj/structure/bodycontainer/morgue
 	name = "morgue"
-	desc = "Used to keep bodies in until someone fetches them."
+	desc = "Used to keep bodies in until someone fetches them. Now includes a high-tech alert system."
 	icon_state = "morgue1"
 	dir = EAST
 	var/beeper = TRUE
+	var/beep_cooldown = 50
+	var/next_beep = 0
 
 /obj/structure/bodycontainer/morgue/New()
 	connected = new/obj/structure/tray/m_tray(src)
 	connected.connected = src
 	..()
 
+/obj/structure/bodycontainer/morgue/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The speaker is [beeper ? "enabled" : "disabled"]. Alt-click to toggle it.</span>")
+
 /obj/structure/bodycontainer/morgue/AltClick(mob/user)
 	..()
-	if(user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	beeper = !beeper
 	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "off" : "on"].</span>")
@@ -174,7 +182,9 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 				if(mob_occupant.client && !mob_occupant.suiciding && !(mob_occupant.has_trait(TRAIT_NOCLONE)) && !mob_occupant.hellbound)
 					icon_state = "morgue4" // Cloneable
 					if(mob_occupant.stat == DEAD && beeper)
-						playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, 0) //Clone them you blind fucks
+						if(world.time > next_beep)
+							playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, 0) //Clone them you blind fucks
+							next_beep = world.time + beep_cooldown
 					break
 
 

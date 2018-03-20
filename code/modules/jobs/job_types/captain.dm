@@ -15,6 +15,7 @@ Captain
 	minimal_player_age = 14
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
+	antag_rep = 20
 
 	outfit = /datum/outfit/job/captain
 
@@ -69,6 +70,7 @@ Head of Personnel
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_SUPPLY
+	antag_rep = 20
 
 	outfit = /datum/outfit/job/hop
 

@@ -29,7 +29,7 @@
 			var/obj/item/I = user.get_active_held_item()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
-				var/obj/item/bodypart/BP = get_bodypart("chest")
+				var/obj/item/bodypart/BP = get_bodypart(BODY_ZONE_CHEST)
 				if(BP.receive_damage(d, 0))
 					update_damage_overlays()
 				visible_message("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>", \
@@ -440,7 +440,7 @@
 	return ..()
 
 /mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE)
-	if(dna && dna.species && NOHUNGER in dna.species.species_traits)
+	if(has_trait(TRAIT_NOHUNGER))
 		return 1
 
 	if(nutrition < 100 && !blood)
@@ -568,10 +568,12 @@
 		return
 	tinttotal = get_total_tint()
 	if(tinttotal >= TINT_BLIND)
-		overlay_fullscreen("tint", /obj/screen/fullscreen/blind)
+		become_blind(EYES_COVERED)
 	else if(tinttotal >= TINT_DARKENED)
+		cure_blind(EYES_COVERED)
 		overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
 	else
+		cure_blind(EYES_COVERED)
 		clear_fullscreen("tint", 0)
 
 /mob/living/carbon/proc/get_total_tint()
@@ -740,22 +742,24 @@
 		drop_all_held_items()
 		stop_pulling()
 		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
+		SendSignal(COMSIG_ADD_MOOD_EVENT, "handcuffed", /datum/mood_event/handcuffed)
 	else
 		clear_alert("handcuffed")
+		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "handcuffed")
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 
-/mob/living/carbon/fully_heal(admin_revive = 0)
+/mob/living/carbon/fully_heal(admin_revive = FALSE)
 	if(reagents)
 		reagents.clear_reagents()
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
-		B.damaged_brain = 0
-	for(var/thing in viruses)
+		B.damaged_brain = FALSE
+	for(var/thing in diseases)
 		var/datum/disease/D = thing
-		if(D.severity != VIRUS_SEVERITY_POSITIVE)
-			D.cure(0)
+		if(D.severity != DISEASE_SEVERITY_POSITIVE)
+			D.cure(FALSE)
 	if(admin_revive)
 		regenerate_limbs()
 		regenerate_organs()
@@ -765,7 +769,7 @@
 		update_handcuffed()
 		if(reagents)
 			reagents.addiction_list = list()
-	cure_all_traumas(TRUE, TRUE)
+	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	..()
 	// heal ears after healing traits, since ears check TRAIT_DEAF trait
 	// when healing.
@@ -788,8 +792,6 @@
 			O.forceMove(drop_location())
 	if(organs_amt)
 		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
-
-	..()
 
 /mob/living/carbon/ExtinguishMob()
 	for(var/X in get_equipped_items())

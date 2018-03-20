@@ -12,6 +12,7 @@ Chaplain
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	antag_rep = 14
 
 	outfit = /datum/outfit/job/chaplain
 
@@ -52,7 +53,7 @@ Chaplain
 			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
 		if("satanism")
 			B.name = "The Unholy Bible"
-		if("cthulu")
+		if("cthulhu")
 			B.name = "The Necronomicon"
 		if("islam")
 			B.name = "Quran"

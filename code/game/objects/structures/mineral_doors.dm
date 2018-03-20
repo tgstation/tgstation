@@ -15,7 +15,7 @@
 	var/isSwitchingStates = 0
 	var/close_delay = -1 //-1 if does not auto close.
 	max_integrity = 200
-	armor = list(melee = 10, bullet = 0, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 50, acid = 50)
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 50, "acid" = 50)
 	var/sheetType = /obj/item/stack/sheet/metal
 	var/sheetAmount = 7
 	var/openSound = 'sound/effects/stonedoor_openclose.ogg'
@@ -124,11 +124,10 @@
 	else
 		icon_state = initial_state
 
-/obj/structure/mineral_door/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/pickaxe))
-		var/obj/item/pickaxe/digTool = W
+/obj/structure/mineral_door/attackby(obj/item/I, mob/user, params)
+	if(I.tool_behaviour == TOOL_MINING)
 		to_chat(user, "<span class='notice'>You start digging the [name]...</span>")
-		if(do_after(user,digTool.digspeed*(1+round(max_integrity*0.01)), target = src) && src)
+		if(I.use_tool(src, user, 40, volume=50))
 			to_chat(user, "<span class='notice'>You finish digging.</span>")
 			deconstruct(TRUE)
 	else if(user.a_intent != INTENT_HARM)

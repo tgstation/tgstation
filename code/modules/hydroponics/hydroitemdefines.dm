@@ -81,7 +81,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags_1 = CONDUCT_1
 	force = 12
-	w_class = WEIGHT_CLASS_TINY
+	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 15
 	throw_speed = 3
 	throw_range = 4
@@ -89,6 +89,10 @@
 	attack_verb = list("chopped", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+
+/obj/item/hatchet/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 70, 100)
 
 /obj/item/hatchet/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -113,11 +117,15 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/swiping = FALSE
 
+/obj/item/scythe/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 90, 105)
+
 /obj/item/scythe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		var/obj/item/bodypart/BP = C.get_bodypart("head")
+		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
 			playsound(src,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)

@@ -964,7 +964,7 @@
 					var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
 					if(!isnull(angle))
 						A.transform = M.Turn(angle)
-			
+
 			href_list["datumrefresh"] = href_list["modtransform"]
 
 		else if(href_list["rotatedatum"])
@@ -1006,7 +1006,6 @@
 
 			var/list/traumas = subtypesof(/datum/brain_trauma)
 			var/result = input(usr, "Choose the brain trauma to apply","Traumatize") as null|anything in traumas
-			var/permanent = alert("Do you want to make the trauma unhealable?", "Permanently Traumatize", "Yes", "No")
 			if(!usr)
 				return
 			if(QDELETED(C))
@@ -1014,7 +1013,7 @@
 				return
 
 			if(result)
-				C.gain_trauma(result, permanent)
+				C.gain_trauma(result)
 
 			href_list["datumrefresh"] = href_list["givetrauma"]
 
@@ -1027,7 +1026,7 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
 				return
 
-			C.cure_all_traumas(TRUE, TRUE)
+			C.cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
 
 			href_list["datumrefresh"] = href_list["curetraumas"]
 
@@ -1179,9 +1178,9 @@
 			var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("add","remove", "augment")
 			if(!edit_action)
 				return
-			var/list/limb_list = list("head", "l_arm", "r_arm", "l_leg", "r_leg")
+			var/list/limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 			if(edit_action == "augment")
-				limb_list += "chest"
+				limb_list += BODY_ZONE_CHEST
 			var/result = input(usr, "Please choose which body part to [edit_action]","[capitalize(edit_action)] Body Part") as null|anything in limb_list
 
 			if(!C)
