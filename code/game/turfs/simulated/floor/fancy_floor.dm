@@ -10,6 +10,7 @@
 /turf/open/floor/wood
 	desc = "Stylish dark wood."
 	icon_state = "wood"
+	baseturfs = /turf/open/floor/plating
 	floor_tile = /obj/item/stack/tile/wood
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 
@@ -64,6 +65,7 @@
 	name = "grass patch"
 	desc = "You can't tell if this is real grass or just cheap plastic imitation."
 	icon_state = "grass"
+	baseturfs = /turf/open/floor/plating
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
 	flags_1 = NONE
@@ -137,6 +139,7 @@
 	desc = "Soft velvet carpeting. Feels good between your toes."
 	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
+	baseturfs = /turf/open/floor/plating
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
 	smooth = SMOOTH_TRUE
