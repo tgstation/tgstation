@@ -1,5 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - code_imp: "Jobs other than Assistant may now be assigned by admins or events as the overflow role"
-  - rscadd: "April Fools now sets the overflow role as Clown."
