@@ -45,7 +45,7 @@
 	owner.announce_objectives()
 
 /datum/antagonist/sintouched/roundend_report()
-	return
+	return printplayer(owner)
 
 /datum/antagonist/sintouched/admin_add(datum/mind/new_owner,mob/admin)
 	var/choices = sins + "Random"
