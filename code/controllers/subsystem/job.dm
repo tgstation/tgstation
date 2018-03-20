@@ -252,27 +252,19 @@ SUBSYSTEM_DEF(job)
 
 	HandleFeedbackGathering()
 
-<<<<<<< HEAD
-	// Hippie Station - Catbans
+	// Hippie Start - Catbans
 	for(var/i in unassigned)
 		var/mob/dead/new_player/player = i
 		if(jobban_isbanned(player, CATBAN) || jobban_isbanned(player, CLUWNEBAN))
 			AssignRole(player, "Assistant")
-
-	//People who wants to be assistants, sure, go on.
-	Debug("DO, Running Assistant Check 1")
-	var/datum/job/assist = new /datum/job/assistant()
-	var/list/assistant_candidates = FindOccupationCandidates(assist, 3)
-	Debug("AC1, Candidates: [assistant_candidates.len]")
-	for(var/mob/dead/new_player/player in assistant_candidates)
-=======
+	// Hippie End
+	
 	//People who wants to be the overflow role, sure, go on.
 	Debug("DO, Running Overflow Check 1")
 	var/datum/job/overflow = GetJob(SSjob.overflow_role)
 	var/list/overflow_candidates = FindOccupationCandidates(overflow, 3)
 	Debug("AC1, Candidates: [overflow_candidates.len]")
 	for(var/mob/dead/new_player/player in overflow_candidates)
->>>>>>> c72743e4cf... April Fools Day replaces the overflow role with Clowns (#36533)
 		Debug("AC1 pass, Player: [player]")
 		AssignRole(player, SSjob.overflow_role)
 		overflow_candidates -= player
