@@ -7,15 +7,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.9
 	equip_delay_other = 20
-	mouse_unequippable = FALSE
-
-/obj/item/clothing/mask/muzzle/attack_hand(mob/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(src == C.wear_mask)
-			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
-			return
-	..()
 
 /obj/item/clothing/mask/surgical
 	name = "sterile mask"
