@@ -30,3 +30,5 @@ SUBSYSTEM_DEF(stickyban)
 	
 	for (var/bannedckey in cache)
 		world.SetConfig("ban", bannedckey, list2stickyban(cache[bannedckey]))
+
+	return ..()
