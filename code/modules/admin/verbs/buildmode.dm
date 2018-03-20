@@ -259,9 +259,9 @@
 				if(isspaceturf(object))
 					T.ChangeTurf(/turf/open/floor/plasteel)
 				else if(isfloorturf(object))
-					T.ChangeTurf(/turf/closed/wall)
+					T.ChangeTurf(/turf/closed/wall, /turf/open/floor/plasteel)
 				else if(iswallturf(object))
-					T.ChangeTurf(/turf/closed/wall/r_wall)
+					T.ChangeTurf(/turf/closed/wall/r_wall, /turf/open/floor/plasteel)
 				log_admin("Build Mode: [key_name(user)] built [T] at ([T.x],[T.y],[T.z])")
 				return
 			else if(right_click)
