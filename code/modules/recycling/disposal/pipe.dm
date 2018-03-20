@@ -141,26 +141,19 @@
 	return ..()
 
 
-//attack by item
-//weldingtool: unfasten and convert to obj/disposalconstruct
-/obj/structure/disposalpipe/attackby(obj/item/I, mob/user, params)
-	add_fingerprint(user)
-	if(istype(I, /obj/item/weldingtool))
-		if(!can_be_deconstructed(user))
-			return
+//welding tool: unfasten and convert to obj/disposalconstruct
+/obj/structure/disposalpipe/welder_act(mob/living/user, obj/item/I)
+	if(!can_be_deconstructed(user))
+		return TRUE
 
-		var/obj/item/weldingtool/W = I
-		if(W.remove_fuel(0, user))
-			playsound(src, I.usesound, 50, 1)
-			to_chat(user, "<span class='notice'>You start slicing [src]...</span>")
-			// check if anything changed over 2 seconds
-			if(do_after(user, 30*I.toolspeed, target = src))
-				if(!W.isOn())
-					return
-				deconstruct()
-				to_chat(user, "<span class='notice'>You slice [src].</span>")
-	else
-		return ..()
+	if(!I.tool_start_check(user, amount=0))
+		return TRUE
+
+	to_chat(user, "<span class='notice'>You start slicing [src]...</span>")
+	if(I.use_tool(src, user, 30, volume=50))
+		deconstruct()
+		to_chat(user, "<span class='notice'>You slice [src].</span>")
+	return TRUE
 
 //checks if something is blocking the deconstruction (e.g. trunk with a bin still linked to it)
 /obj/structure/disposalpipe/proc/can_be_deconstructed()

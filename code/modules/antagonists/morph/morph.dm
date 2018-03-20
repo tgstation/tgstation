@@ -26,7 +26,7 @@
 	melee_damage_upper = 20
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	idle_vision_range = 1 // Only attack when target is close
+	vision_range = 1 // Only attack when target is close
 	wander = 0
 	attacktext = "glomps"
 	attack_sound = 'sound/effects/blobattack.ogg'
@@ -167,7 +167,7 @@
 	restore()
 
 /mob/living/simple_animal/hostile/morph/LoseAggro()
-	vision_range = idle_vision_range
+	vision_range = initial(vision_range)
 
 /mob/living/simple_animal/hostile/morph/AIShouldSleep(var/list/possible_targets)
 	. = ..()
@@ -227,7 +227,7 @@
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Morph"
 	player_mind.special_role = "Morph"
-	player_mind.add_antag_datum(/datum/antagonist/auto_custom)
+	player_mind.add_antag_datum(/datum/antagonist/morph)
 	to_chat(S, S.playstyle_string)
 	SEND_SOUND(S, sound('sound/magic/mutate.ogg'))
 	message_admins("[key_name_admin(S)] has been made into a morph by an event.")

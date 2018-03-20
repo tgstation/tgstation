@@ -16,7 +16,6 @@
 	var/shocked = FALSE
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
-	var/allowed_department_flags = ALL
 
 /obj/machinery/rnd/proc/reset_busy()
 	busy = FALSE
@@ -46,8 +45,6 @@
 			return
 	if(panel_open)
 		wires.interact(user)
-
-
 
 /obj/machinery/rnd/attackby(obj/item/O, mob/user, params)
 	if (shocked)
@@ -108,12 +105,12 @@
 
 /obj/machinery/rnd/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
 	var/stack_name
-	if(ispath(type_inserted, /obj/item/ore/bluespace_crystal))
+	if(ispath(type_inserted, /obj/item/stack/ore/bluespace_crystal))
 		stack_name = "bluespace"
 		use_power(MINERAL_MATERIAL_AMOUNT / 10)
 	else
 		var/obj/item/stack/S = type_inserted
 		stack_name = initial(S.name)
-		use_power(max(1000, (MINERAL_MATERIAL_AMOUNT * amount_inserted / 100)))
+		use_power(min(1000, (amount_inserted / 100)))
 	add_overlay("protolathe_[stack_name]")
 	addtimer(CALLBACK(src, /atom/proc/cut_overlay, "protolathe_[stack_name]"), 10)

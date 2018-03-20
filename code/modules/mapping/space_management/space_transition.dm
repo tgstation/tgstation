@@ -1,9 +1,8 @@
 /datum/space_level/proc/set_linkage(new_linkage)
 	linkage = new_linkage
 	if(linkage == SELFLOOPING)
-		neigbours = list()
-		var/list/L = list(TEXT_NORTH,TEXT_SOUTH,TEXT_EAST,TEXT_WEST)
-		for(var/A in L)
+		neigbours = list(TEXT_NORTH,TEXT_SOUTH,TEXT_EAST,TEXT_WEST)
+		for(var/A in neigbours)
 			neigbours[A] = src
 
 /datum/space_level/proc/set_neigbours(list/L)

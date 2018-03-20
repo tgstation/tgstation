@@ -36,22 +36,23 @@
 
 /obj/structure/mecha_wreckage/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weldingtool))
-		if(salvage_num <= 0)
+		if(salvage_num <= 0 || !length(welder_salvage))
 			to_chat(user, "<span class='warning'>You don't see anything that can be cut with [I]!</span>")
 			return
-		var/obj/item/weldingtool/WT = I
-		if(welder_salvage && welder_salvage.len && WT.remove_fuel(0, user))
-			var/type = prob(70) ? pick(welder_salvage) : null
-			if(type)
-				var/N = new type(get_turf(user))
-				user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
-				if(istype(N, /obj/item/mecha_parts/part))
-					welder_salvage -= type
-				salvage_num--
-			else
-				to_chat(user, "<span class='warning'>You fail to salvage anything valuable from [src]!</span>")
-		else
+
+		if(!I.use_tool(src, user, 0, volume=50))
 			return
+
+		var/type = prob(70) ? pick(welder_salvage) : null
+		if(type)
+			var/N = new type(get_turf(user))
+			user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
+			if(istype(N, /obj/item/mecha_parts/part))
+				welder_salvage -= type
+			salvage_num--
+		else
+			to_chat(user, "<span class='warning'>You fail to salvage anything valuable from [src]!</span>")
+		return
 
 	else if(istype(I, /obj/item/wirecutters))
 		if(salvage_num <= 0)

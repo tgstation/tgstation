@@ -7,7 +7,7 @@
 	var/lock_override = NONE
 	var/mob/camera/aiEye/remote/eyeobj
 	var/mob/living/current_user = null
-	var/list/networks = list("SS13")
+	var/list/networks = list("ss13")
 	var/datum/action/innate/camera_off/off_action = new
 	var/datum/action/innate/camera_jump/jump_action = new
 	var/list/actions = list()
@@ -16,6 +16,9 @@
 
 /obj/machinery/computer/camera_advanced/Initialize()
 	. = ..()
+	for(var/i in networks)
+		networks -= i
+		networks += lowertext(i)
 	if(lock_override)
 		if(lock_override & CAMERA_LOCK_STATION)
 			z_lock |= SSmapping.levels_by_trait(ZTRAIT_STATION)
@@ -261,7 +264,7 @@
 	name = "ratvarian camera observer"
 	desc = "A console used to snoop on the station's goings-on. A jet of steam occasionally whooshes out from slats on its sides."
 	use_power = FALSE
-	networks = list("SS13", "MiniSat") //:eye:
+	networks = list("ss13", "minisat") //:eye:
 	var/datum/action/innate/servant_warp/warp_action = new
 
 /obj/machinery/computer/camera_advanced/ratvar/Initialize()

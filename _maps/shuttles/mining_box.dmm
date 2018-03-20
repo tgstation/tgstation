@@ -31,8 +31,7 @@
 /area/shuttle/mining)
 "h" = (
 /obj/machinery/door/airlock/titanium{
-	name = "Mining Shuttle Airlock";
-	req_access_txt = "0"
+	name = "Mining Shuttle Airlock"
 	},
 /obj/docking_port/mobile{
 	dir = 8;
@@ -41,7 +40,6 @@
 	id = "mining";
 	name = "mining shuttle";
 	port_direction = 4;
-	timid = 1;
 	width = 7
 	},
 /turf/open/floor/plating,

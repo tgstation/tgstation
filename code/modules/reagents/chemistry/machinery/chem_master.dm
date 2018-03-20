@@ -223,7 +223,7 @@
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
 				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
 					return
 				var/obj/item/reagent_containers/pill/P
 
@@ -237,7 +237,7 @@
 					reagents.trans_to(P,vol_each)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
 					return
 				var/obj/item/reagent_containers/food/condiment/pack/P = new/obj/item/reagent_containers/food/condiment/pack(drop_location())
 
@@ -259,7 +259,7 @@
 					return
 				vol_each = min(reagents.total_volume / amount, 40)
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
 				return
 			var/obj/item/reagent_containers/pill/P
 
@@ -277,7 +277,7 @@
 
 			if(condi)
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
 					return
 				var/obj/item/reagent_containers/food/condiment/P = new(drop_location())
 				P.originalname = name
@@ -290,7 +290,7 @@
 					amount_full = round(reagents.total_volume / 30)
 					vol_part = reagents.total_volume % 30
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
 					return
 
 				var/obj/item/reagent_containers/glass/bottle/P

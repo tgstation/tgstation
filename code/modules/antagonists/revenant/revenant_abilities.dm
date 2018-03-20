@@ -54,6 +54,11 @@
 				reveal(46)
 				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray.</span>")
+				if(target.anti_magic_check(FALSE, TRUE))
+					to_chat(src, "<span class='revenminor'>Something's wrong! [target] seems to be resisting the siphoning, leaving you vulnerable!</span>")
+					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
+											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
+					return
 				var/datum/beam/B = Beam(target,icon_state="drain_life",time=INFINITY)
 				if(do_after(src, 46, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained, FALSE, target)
@@ -110,7 +115,8 @@
 			return
 		log_talk(user,"RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]",LOGSAY)
 		to_chat(user, "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>")
-		to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[msg]</span>")
+		if(!M.anti_magic_check(FALSE, TRUE)) //hear no evil
+			to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[msg]</span>")
 		for(var/ded in GLOB.dead_mob_list)
 			if(!isobserver(ded))
 				continue
@@ -216,7 +222,8 @@
 		if(M == user)
 			continue
 		L.Beam(M,icon_state="purple_lightning",time=5)
-		M.electrocute_act(shock_damage, L, safety=1)
+		if(!M.anti_magic_check(FALSE, TRUE))
+			M.electrocute_act(shock_damage, L, safety=TRUE)
 		do_sparks(4, FALSE, M)
 		playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 
@@ -298,6 +305,8 @@
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)
 			continue
+		if(human.anti_magic_check(FALSE, TRUE))
+			continue
 		to_chat(human, "<span class='revenwarning'>You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")].</span>")
 		new /obj/effect/temp_visual/revenant(human.loc)
 		human.emp_act(EMP_HEAVY)
@@ -336,6 +345,8 @@
 	for(var/mob/living/mob in T)
 		if(mob == user)
 			continue
+		if(mob.anti_magic_check(FALSE, TRUE))
+			continue
 		new /obj/effect/temp_visual/revenant(mob.loc)
 		if(iscarbon(mob))
 			if(ishuman(mob))
@@ -343,12 +354,12 @@
 				if(H.dna && H.dna.species)
 					H.dna.species.handle_hair(H,"#1d2953") //will be reset when blight is cured
 				var/blightfound = FALSE
-				for(var/datum/disease/revblight/blight in H.viruses)
+				for(var/datum/disease/revblight/blight in H.diseases)
 					blightfound = TRUE
 					if(blight.stage < 5)
 						blight.stage++
 				if(!blightfound)
-					H.AddDisease(new /datum/disease/revblight)
+					H.ForceContractDisease(new /datum/disease/revblight(), FALSE, TRUE)
 					to_chat(H, "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")].</span>")
 			else
 				if(mob.reagents)

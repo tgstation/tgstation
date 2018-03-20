@@ -31,7 +31,7 @@
 	if(bodytemperature >= TCRYO && !(has_trait(TRAIT_NOCLONE))) //cryosleep or husked people do not pump the blood.
 
 		//Blood regeneration if there is some space
-		if(blood_volume < BLOOD_VOLUME_NORMAL && !(NOHUNGER in dna.species.species_traits))
+		if(blood_volume < BLOOD_VOLUME_NORMAL && !has_trait(TRAIT_NOHUNGER))
 			var/nutrition_ratio = 0
 			switch(nutrition)
 				if(0 to NUTRITION_LEVEL_STARVING)
@@ -98,6 +98,7 @@
 				add_splatter_floor(src.loc, 1)
 
 /mob/living/carbon/human/bleed(amt)
+	amt *= physiology.bleed_mod
 	if(!(NOBLOOD in dna.species.species_traits))
 		..()
 
@@ -139,7 +140,7 @@
 				if(blood_data["viruses"])
 					for(var/thing in blood_data["viruses"])
 						var/datum/disease/D = thing
-						if((D.spread_flags & VIRUS_SPREAD_SPECIAL) || (D.spread_flags & VIRUS_SPREAD_NON_CONTAGIOUS))
+						if((D.spread_flags & DISEASE_SPREAD_SPECIAL) || (D.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 							continue
 						C.ForceContractDisease(D)
 				if(!(blood_data["blood_type"] in get_safe_blood(C.dna.blood_type)))
@@ -163,13 +164,13 @@
 		blood_data["donor"] = src
 		blood_data["viruses"] = list()
 
-		for(var/thing in viruses)
+		for(var/thing in diseases)
 			var/datum/disease/D = thing
 			blood_data["viruses"] += D.Copy()
 
 		blood_data["blood_DNA"] = copytext(dna.unique_enzymes,1,0)
-		if(resistances && resistances.len)
-			blood_data["resistances"] = resistances.Copy()
+		if(disease_resistances && disease_resistances.len)
+			blood_data["resistances"] = disease_resistances.Copy()
 		var/list/temp_chem = list()
 		for(var/datum/reagent/R in reagents.reagent_list)
 			temp_chem[R.id] = R.volume
@@ -190,6 +191,10 @@
 		blood_data["real_name"] = real_name
 		blood_data["features"] = dna.features
 		blood_data["factions"] = faction
+		blood_data["traits"] = list()
+		for(var/V in roundstart_traits)
+			var/datum/trait/T = V
+			blood_data["traits"] += T.type
 		return blood_data
 
 //get the id of the substance this mob use as blood.

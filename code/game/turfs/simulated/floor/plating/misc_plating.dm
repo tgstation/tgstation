@@ -22,6 +22,8 @@
 /turf/open/floor/plating/abductor2/burn_tile()
 	return //unburnable
 
+/turf/open/floor/plating/abductor2/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
 
 /turf/open/floor/plating/astplate
 	icon_state = "asteroidplating"
@@ -48,6 +50,9 @@
 		pixel_x = -4
 		icon = smooth_icon
 	. = ..()
+
+/turf/open/floor/plating/ashplanet/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
 
 /turf/open/floor/plating/ashplanet/break_tile()
 	return
@@ -83,6 +88,9 @@
 	icon = 'icons/misc/beach.dmi'
 	flags_1 = NONE
 	attachment_holes = FALSE
+
+/turf/open/floor/plating/beach/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
 
 /turf/open/floor/plating/beach/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -122,6 +130,9 @@
 /turf/open/floor/plating/ironsand/burn_tile()
 	return
 
+/turf/open/floor/plating/ironsand/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
+
 /turf/open/floor/plating/ice
 	name = "ice sheet"
 	desc = "A sheet of solid ice. Looks slippery."
@@ -132,14 +143,14 @@
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/floor/plating/ice
 	slowdown = 1
-	wet = TURF_WET_PERMAFROST
 	attachment_holes = FALSE
 
-/turf/open/floor/plating/ice/HandleWet()
-	if(wet == TURF_WET_ICE)
-		return
-	..()
-	MakeSlippery(TURF_WET_ICE) //rewet after ..() clears out lube/ice etc.
+/turf/open/floor/plating/ice/Initialize()
+	. = ..()
+	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE)
+
+/turf/open/floor/plating/ice/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
 
 /turf/open/floor/plating/ice/smooth
 	icon_state = "smooth"

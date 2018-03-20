@@ -362,7 +362,7 @@
 			pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [DisplayEnergy(pocell.maxcharge)], and you should not swallow it."
 
 			if(G.reagents.has_reagent("plasma", 2))
-				pocell.rigged = 1
+				pocell.rigged = TRUE
 
 			qdel(G)
 		else

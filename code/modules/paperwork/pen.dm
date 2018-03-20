@@ -90,6 +90,10 @@
 						"Command Blue" = "pen-fountain-cb"
 						)
 
+/obj/item/pen/fountain/captain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 200, 115) //the pen is mightier than the sword
+
 /obj/item/pen/fountain/captain/reskin_obj(mob/M)
 	..()
 	if(current_skin)
@@ -124,39 +128,28 @@
 		. = ..()
 
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
-	//Changing Name/Description of items. Only works if they have the 'unique_rename' var set
-	if(isobj(O) && proximity)
-		if(O.obj_flags & UNIQUE_RENAME)
-			var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
-			if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
-
-				if(penchoice == "Rename")
-					var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
-					var/oldname = O.name
-					if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
-						if(oldname == input)
-							to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
-							return
-						else
-							O.name = input
-							to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
-							return
-					else
-						to_chat(user, "You are too far away!")
-
-				if(penchoice == "Change description")
-					var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
-					if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
-						O.desc = input
-						to_chat(user, "You have successfully changed \the [O.name]'s description.")
-						return
-					else
-						to_chat(user, "You are too far away!")
-			else
-				to_chat(user, "You are too far away!")
+	//Changing Name/Description of items. Only works if they have the 'unique_rename' flag set
+	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
+		var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
+		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			return
+		if(penchoice == "Rename")
+			var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
+			var/oldname = O.name
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-	else
-		return
+			if(oldname == input)
+				to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
+			else
+				O.name = input
+				to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
+
+		if(penchoice == "Change description")
+			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+				return
+			O.desc = input
+			to_chat(user, "You have successfully changed \the [O.name]'s description.")
 
 /*
  * Sleepypens
@@ -178,7 +171,7 @@
 /obj/item/pen/sleepy/Initialize()
 	. = ..()
 	create_reagents(45)
-	reagents.add_reagent("chloralhydrate2", 20)
+	reagents.add_reagent("chloralhydratedelayed", 20)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
 
@@ -188,6 +181,10 @@
 /obj/item/pen/edagger
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	var/on = FALSE
+
+/obj/item/pen/edagger/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg', TRUE)
 
 /obj/item/pen/edagger/attack_self(mob/living/user)
 	if(on)
@@ -210,6 +207,8 @@
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
+	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	butchering.butchering_enabled = on
 	update_icon()
 
 /obj/item/pen/edagger/update_icon()

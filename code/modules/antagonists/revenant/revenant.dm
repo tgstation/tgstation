@@ -4,6 +4,7 @@
 //Admin-spawn or random event
 
 #define INVISIBILITY_REVENANT 50
+#define REVENANT_NAME_FILE "revenant_names.json"
 
 /mob/living/simple_animal/revenant
 	name = "\a Revenant"
@@ -62,6 +63,24 @@
 	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
 	var/generated_objectives_and_spells = FALSE
 
+/mob/living/simple_animal/revenant/Initialize(mapload)
+	. = ..()
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
+	random_revenant_name()
+
+/mob/living/simple_animal/revenant/proc/random_revenant_name()
+	var/built_name = ""
+	built_name += pick(strings(REVENANT_NAME_FILE, "spirit_type"))
+	built_name += " of "
+	built_name += pick(strings(REVENANT_NAME_FILE, "adverb"))
+	built_name += pick(strings(REVENANT_NAME_FILE, "theme"))
+	name = built_name
+
 /mob/living/simple_animal/revenant/Login()
 	..()
 	to_chat(src, "<span class='deadsay'><span class='big bold'>You are a revenant.</span></span>")
@@ -73,26 +92,10 @@
 	to_chat(src, "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant to learn more.</b>")
 	if(!generated_objectives_and_spells)
 		generated_objectives_and_spells = TRUE
-		mind.remove_all_antag()
-		mind.wipe_memory()
-		SEND_SOUND(src, sound('sound/effects/ghost.ogg'))
-		var/datum/objective/revenant/objective = new
-		objective.owner = mind
-		mind.objectives += objective
-		to_chat(src, "<b>Objective #1</b>: [objective.explanation_text]")
-		var/datum/objective/revenantFluff/objective2 = new
-		objective2.owner = mind
-		mind.objectives += objective2
-		to_chat(src, "<b>Objective #2</b>: [objective2.explanation_text]")
 		mind.assigned_role = ROLE_REVENANT
 		mind.special_role = ROLE_REVENANT
-		mind.add_antag_datum(/datum/antagonist/auto_custom)
-		AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
-		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
-		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
-		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
-		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
-		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
+		SEND_SOUND(src, sound('sound/effects/ghost.ogg'))
+		mind.add_antag_datum(/datum/antagonist/revenant)
 
 //Life, Stat, Hud Updates, and Say
 /mob/living/simple_animal/revenant/Life()
@@ -219,7 +222,7 @@
 	var/reforming_essence = essence_regen_cap //retain the gained essence capacity
 	var/obj/item/ectoplasm/revenant/R = new(get_turf(src))
 	R.essence = max(reforming_essence - 15 * perfectsouls, 75) //minus any perfect souls
-	R.client_to_revive = client //If the essence reforms, the old revenant is put back in the body
+	R.old_key = client.key //If the essence reforms, the old revenant is put back in the body
 	R.revenant = src
 	invisibility = INVISIBILITY_ABSTRACT
 	revealed = FALSE
@@ -328,7 +331,7 @@
 	var/essence = 75 //the maximum essence of the reforming revenant
 	var/reforming = TRUE
 	var/inert = FALSE
-	var/client/client_to_revive
+	var/old_key //key of the previous revenant, will have first pick on reform.
 	var/mob/living/simple_animal/revenant/revenant
 
 /obj/item/ectoplasm/revenant/New()
@@ -375,11 +378,11 @@
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
 	forceMove(drop_location()) //In case it's in a backpack or someone's hand
 	revenant.forceMove(loc)
-	if(client_to_revive)
+	if(old_key)
 		for(var/mob/M in GLOB.dead_mob_list)
-			if(M.client == client_to_revive) //Only recreates the mob if the mob the client is in is dead
-				revenant.client = client_to_revive
-				key_of_revenant = client_to_revive.key
+			if(M.client && M.client.key == old_key) //Only recreates the mob if the mob the client is in is dead
+				key_of_revenant = old_key
+				break
 	if(!key_of_revenant)
 		message_admins("The new revenant's old client either could not be found or is in a new, living mob - grabbing a random candidate instead...")
 		var/list/candidates = pollCandidatesForMob("Do you want to be [revenant.name] (reforming)?", ROLE_REVENANT, null, ROLE_REVENANT, 50, revenant)
@@ -389,8 +392,7 @@
 			inert = TRUE
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
-		var/client/C = pick(candidates)
-		revenant.client = C
+		var/mob/dead/observer/C = pick(candidates)
 		key_of_revenant = C.key
 		if(!key_of_revenant)
 			qdel(revenant)
@@ -399,8 +401,8 @@
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
 
-	message_admins("[key_of_revenant] has been [client_to_revive ? "re":""]made into a revenant by reforming ectoplasm.")
-	log_game("[key_of_revenant] was [client_to_revive ? "re":""]made as a revenant by reforming ectoplasm.")
+	message_admins("[key_of_revenant] has been [old_key == key_of_revenant ? "re":""]made into a revenant by reforming ectoplasm.")
+	log_game("[key_of_revenant] was [old_key == key_of_revenant ? "re":""]made as a revenant by reforming ectoplasm.")
 	visible_message("<span class='revenboldnotice'>[src] suddenly rises into the air before fading away.</span>")
 
 	revenant.essence = essence

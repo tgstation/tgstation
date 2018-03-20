@@ -3,14 +3,16 @@
 
 // Saves type, modified name and modified inputs (if any) to a list
 // The list is converted to JSON down the line.
+//"Special" is not verified at any point except for by the circuit itself.
 /obj/item/integrated_circuit/proc/save()
 	var/list/component_params = list()
+	var/init_name = initial(name)
 
 	// Save initial name used for differentiating assemblies
-	component_params["type"] = name
+	component_params["type"] = init_name
 
 	// Save the modified name.
-	if(name != displayed_name)
+	if(init_name != displayed_name)
 		component_params["name"] = displayed_name
 
 	// Saving input values
@@ -37,31 +39,38 @@
 		if(saved_inputs.len)
 			component_params["inputs"] = saved_inputs
 
+	var/special = save_special()
+	if(special)
+		component_params["special"] = special
+
 	return component_params
 
+/obj/item/integrated_circuit/proc/save_special()
+	return
 
 // Verifies a list of component parameters
 // Returns null on success, error name on failure
 /obj/item/integrated_circuit/proc/verify_save(list/component_params)
+	var/init_name = initial(name)
 	// Validate name
 	if(component_params["name"] && !reject_bad_name(component_params["name"], TRUE))
-		return "Bad component name at [name]."
+		return "Bad component name at [init_name]."
 
 	// Validate input values
 	if(component_params["inputs"])
 		var/list/loaded_inputs = component_params["inputs"]
 		if(!islist(loaded_inputs))
-			return "Malformed input values list at [name]."
+			return "Malformed input values list at [init_name]."
 
 		var/inputs_amt = length(inputs)
 
 		// Too many inputs? Inputs for input-less component? This is not good.
 		if(!inputs_amt || inputs_amt < length(loaded_inputs))
-			return "Input values list out of bounds at [name]."
+			return "Input values list out of bounds at [init_name]."
 
 		for(var/list/input in loaded_inputs)
 			if(input.len != 3)
-				return "Malformed input data at [name]."
+				return "Malformed input data at [init_name]."
 
 			var/input_id = input[1]
 			var/input_type = input[2]
@@ -69,12 +78,12 @@
 
 			// No special type support yet.
 			if(input_type)
-				return "Unidentified input type at [name]!"
+				return "Unidentified input type at [init_name]!"
 			// TODO: support for special input types, such as typepaths and internal refs
 
 			// Input ID is a list index, make sure it's sane.
 			if(!isnum(input_id) || input_id % 1 || input_id > inputs_amt || input_id < 1)
-				return "Invalid input index at [name]."
+				return "Invalid input index at [init_name]."
 
 
 // Loads component parameters from a list
@@ -98,7 +107,11 @@
 			pin.write_data_to_pin(input_value)
 			// TODO: support for special input types, such as internal refs and maybe typepaths
 
+	if(component_params["special"])
+		load_special(component_params["special"])
 
+/obj/item/integrated_circuit/proc/load_special(special_data)
+	return
 
 // Saves type and modified name (if any) to a list
 // The list is converted to JSON down the line.
@@ -116,16 +129,21 @@
 	if(opened)
 		assembly_params["opened"] = TRUE
 
+	// Save modified color
+	if(initial(detail_color) != detail_color)
+		assembly_params["detail_color"] = detail_color
+
 	return assembly_params
 
 
 // Verifies a list of assembly parameters
 // Returns null on success, error name on failure
 /obj/item/device/electronic_assembly/proc/verify_save(list/assembly_params)
-	// Validate name
+	// Validate name and color
 	if(assembly_params["name"] && !reject_bad_name(assembly_params["name"], TRUE))
 		return "Bad assembly name."
-
+	if(assembly_params["detail_color"] && !(assembly_params["detail_color"] in color_whitelist))
+		return "Bad assembly color."
 
 // Loads assembly parameters from a list
 // Doesn't verify any of the parameters it loads, this is the job of verify_save()
@@ -137,7 +155,11 @@
 	// Load panel status
 	if(assembly_params["opened"])
 		opened = TRUE
-		update_icon()
+
+	if(assembly_params["detail_color"])
+		detail_color = assembly_params["detail_color"]
+
+	update_icon()
 
 
 
@@ -202,7 +224,7 @@
 // Returns assembly (type: list) if the save is valid.
 // Returns error code (type: text) if loading has failed.
 // The following parameters area calculated during validation and added to the returned save list:
-// "requires_upgrades", "metal_cost", "complexity", "max_complexity", "used_space", "max_space"
+// "requires_upgrades", "unsupported_circuit", "metal_cost", "complexity", "max_complexity", "used_space", "max_space"
 /datum/controller/subsystem/processing/circuit/proc/validate_electronic_assembly(program)
 	var/list/blocks = json_decode(program)
 	if(!blocks)
@@ -272,6 +294,10 @@
 		// Check if the assembly requires printer upgrades
 		if(!(component.spawn_flags & IC_SPAWN_DEFAULT))
 			blocks["requires_upgrades"] = TRUE
+
+		// Check if the assembly supports the circucit
+		if((component.action_flags & assembly.allowed_circuit_action_flags) != component.action_flags)
+			blocks["unsupported_circuit"] = TRUE
 
 
 	// Check complexity and space limitations

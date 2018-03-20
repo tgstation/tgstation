@@ -86,7 +86,7 @@
 				if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
 
-				if(affecting.body_zone == "head")
+				if(affecting.body_zone == BODY_ZONE_HEAD)
 					if(wear_mask)
 						wear_mask.add_mob_blood(src)
 						update_inv_wear_mask()
@@ -110,20 +110,20 @@
 
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
 
-	for(var/thing in viruses)
+	for(var/thing in diseases)
 		var/datum/disease/D = thing
-		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			user.ContactContractDisease(D)
 
-	for(var/thing in user.viruses)
+	for(var/thing in user.diseases)
 		var/datum/disease/D = thing
-		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
 	if(lying && surgeries.len)
-		if(user.a_intent == INTENT_HELP)
+		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user))
+				if(S.next_step(user, user.a_intent))
 					return 1
 	return 0
 
@@ -131,14 +131,14 @@
 /mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
 
 	if(can_inject(M, TRUE))
-		for(var/thing in viruses)
+		for(var/thing in diseases)
 			var/datum/disease/D = thing
-			if((D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN) && prob(85))
+			if((D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN) && prob(85))
 				M.ContactContractDisease(D)
 
-	for(var/thing in M.viruses)
+	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
-		if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
 	if(M.a_intent == INTENT_HELP)
@@ -146,7 +146,7 @@
 		return 0
 
 	if(..()) //successful monkey bite.
-		for(var/thing in M.viruses)
+		for(var/thing in M.diseases)
 			var/datum/disease/D = thing
 			ForceContractDisease(D)
 		return 1
@@ -184,7 +184,7 @@
 		var/list/things_to_ruin = shuffle(bodyparts.Copy())
 		for(var/B in things_to_ruin)
 			var/obj/item/bodypart/bodypart = B
-			if(bodypart.body_zone == "head" || bodypart.body_zone == "chest")
+			if(bodypart.body_zone == BODY_ZONE_HEAD || bodypart.body_zone == BODY_ZONE_CHEST)
 				continue
 			if(!affecting || ((affecting.get_damage() / affecting.max_damage) < (bodypart.get_damage() / bodypart.max_damage)))
 				affecting = bodypart
@@ -261,6 +261,7 @@
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+			SendSignal(COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
 		AdjustStun(-60)
 		AdjustKnockdown(-60)
 		AdjustUnconscious(-60)
@@ -352,7 +353,7 @@
 	if(damage_type != BRUTE && damage_type != BURN)
 		return
 	damage_amount *= 0.5 //0.5 multiplier for balance reason, we don't want clothes to be too easily destroyed
-	if(!def_zone || def_zone == "head")
+	if(!def_zone || def_zone == BODY_ZONE_HEAD)
 		var/obj/item/clothing/hit_clothes
 		if(wear_mask)
 			hit_clothes = wear_mask

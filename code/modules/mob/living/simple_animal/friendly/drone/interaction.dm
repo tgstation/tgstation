@@ -80,7 +80,7 @@
 	if(istype(I, /obj/item/screwdriver) && stat != DEAD)
 		if(health < maxHealth)
 			to_chat(user, "<span class='notice'>You start to tighten loose screws on [src]...</span>")
-			if(do_after(user,80*I.toolspeed,target=user))
+			if(I.use_tool(src, user, 80))
 				adjustBruteLoss(-getBruteLoss())
 				visible_message("<span class='notice'>[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!</span>", "<span class='notice'>You tighten [src == user ? "your" : "[src]'s"] loose screws.</span>")
 			else
@@ -91,12 +91,10 @@
 	else if(istype(I, /obj/item/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
 							 "<span class='notice'>You press down on [src]'s factory reset control...</span>")
-		playsound(src, I.usesound, 50, 1)
-		if(!do_after(user, 50*I.toolspeed, target = src))
-			return
-		user.visible_message("<span class='notice'>[user] resets [src]!</span>", \
-							 "<span class='notice'>You reset [src]'s directives to factory defaults!</span>")
-		update_drone_hack(FALSE)
+		if(I.use_tool(src, user, 50, volume=50))
+			user.visible_message("<span class='notice'>[user] resets [src]!</span>", \
+								 "<span class='notice'>You reset [src]'s directives to factory defaults!</span>")
+			update_drone_hack(FALSE)
 		return
 	else
 		..()

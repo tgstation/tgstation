@@ -3,7 +3,7 @@
 	weight = 3
 	typepath = /datum/round_event/wizard/rpgloot
 	max_occurrences = 1
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/rpgloot/start()
 	var/upgrade_scroll_chance = 0

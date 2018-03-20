@@ -101,8 +101,7 @@
 
 		if(ASSEMBLY_FOURTH_STEP)
 			if(istype(W, /obj/item/weldingtool))
-				var/obj/item/weldingtool/WT = W
-				if(WT.remove_fuel(0,user))
+				if(W.use_tool(src, user, 0, volume=40))
 					name = "shielded frame assembly"
 					to_chat(user, "<span class='notice'>You weld the vest to [src].</span>")
 					build_step++
@@ -183,9 +182,8 @@
 
 		if(8)
 			if(istype(W, /obj/item/screwdriver))
-				playsound(loc, W.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
-				if(do_after(user, 40*W.toolspeed, 0, src, 1))
+				if(W.use_tool(src, user, 40, volume=100))
 					name = "armed [name]"
 					to_chat(user, "<span class='notice'>Taser gun attached.</span>")
 					build_step++
@@ -391,8 +389,7 @@
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
 			if(istype(I, /obj/item/weldingtool))
-				var/obj/item/weldingtool/WT = I
-				if(WT.remove_fuel(0, user))
+				if(I.use_tool(src, user, 0, volume=40))
 					add_overlay("hs_hole")
 					to_chat(user, "<span class='notice'>You weld a hole in [src]!</span>")
 					build_step++
@@ -414,8 +411,7 @@
 				build_step++
 
 			else if(istype(I, /obj/item/weldingtool)) //deconstruct
-				var/obj/item/weldingtool/WT = I
-				if(WT.remove_fuel(0, user))
+				if(I.use_tool(src, user, 0, volume=40))
 					cut_overlay("hs_hole")
 					to_chat(user, "<span class='notice'>You weld the hole in [src] shut!</span>")
 					build_step--

@@ -170,8 +170,7 @@
 /area/shuttle/escape)
 "aE" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Cargo Hold";
-	req_access_txt = "0"
+	name = "Emergency Shuttle Cargo Hold"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -288,7 +287,6 @@
 	height = 15;
 	name = "Pubby emergency shuttle";
 	port_direction = 4;
-	timid = 1;
 	width = 18
 	},
 /turf/open/floor/plating,

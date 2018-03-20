@@ -55,7 +55,7 @@
 		return if_no_face
 	if( head && (head.flags_inv&HIDEFACE) )
 		return if_no_face		//Likewise for hats
-	var/obj/item/bodypart/O = get_bodypart("head")
+	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)
 	if( !O || (has_trait(TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name )	//disfigured. use id-name if possible
 		return if_no_face
 	return real_name
@@ -138,7 +138,7 @@
 		if(src.dna.check_mutation(HULK))
 			to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 			return FALSE
-		if(NOGUNS in src.dna.species.species_traits)
+		if(has_trait(TRAIT_NOGUNS))
 			to_chat(src, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
 			return FALSE
 	if(mind)

@@ -14,7 +14,7 @@
 /turf/open/lava/ex_act(severity, target)
 	contents_explosion(severity, target)
 
-/turf/open/lava/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+/turf/open/lava/MakeSlippery()
 	return
 
 /turf/open/lava/MakeDry(wet_setting = TURF_WET_WATER)
@@ -139,7 +139,7 @@
 /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturfs = /turf/open/chasm/lavaland
+	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
 /turf/open/lava/smooth/airless
 	initial_gas_mix = "TEMP=2.7"

@@ -13,7 +13,7 @@
 	item_state = "jackboots"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	armor = list(melee = 25, bullet = 25, laser = 25, energy = 25, bomb = 50, bio = 10, rad = 0, fire = 70, acid = 50)
+	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 10, "rad" = 0, "fire" = 70, "acid" = 50)
 	strip_delay = 70
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
@@ -24,7 +24,7 @@
 	desc = "High speed, no drag combat boots."
 	permeability_coefficient = 0.01
 	flags_1 = NOSLIP_1
-	armor = list(melee = 40, bullet = 30, laser = 25, energy = 25, bomb = 50, bio = 30, rad = 30, fire = 90, acid = 50)
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 90, "acid" = 50)
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -55,7 +55,7 @@
 	strip_delay = 50
 	equip_delay_other = 50
 	resistance_flags = NONE
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 40, acid = 75)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 75)
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
@@ -64,9 +64,7 @@
 
 /obj/item/clothing/shoes/galoshes/dry/step_action()
 	var/turf/open/t_loc = get_turf(src)
-	if(istype(t_loc) && t_loc.wet)
-		t_loc.MakeDry(TURF_WET_WATER)
-		t_loc.wet_time = 0
+	t_loc.SendSignal(COMSIG_TURF_MAKE_DRY, TURF_WET_WATER, TRUE, INFINITY)
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"
@@ -80,6 +78,16 @@
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50)
+
+/obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
+	. = ..()
+	if(user.mind && user.mind.assigned_role == "Clown")
+		user.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "noshoes")
+
+/obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
+	. = ..()
+	if(user.mind && user.mind.assigned_role == "Clown")
+		user.SendSignal(COMSIG_ADD_MOOD_EVENT, "noshoes", /datum/mood_event/noshoes)
 
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"
@@ -229,3 +237,78 @@
 	desc = "These boots were made for dancing."
 	icon_state = "bsing"
 	equip_delay_other = 50
+
+/obj/item/clothing/shoes/bronze
+	name = "bronze boots"
+	desc = "A giant, clunky pair of shoes crudely made out of bronze. Why would anyone wear these?"
+	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon_state = "clockwork_treads"
+
+/obj/item/clothing/shoes/bronze/Initialize()
+	. = ..()
+	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50)
+
+/obj/item/clothing/shoes/wheelys
+	name = "Wheely-Heels"
+	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
+	icon_state = "wheelys"
+	item_state = "wheelys"
+	actions_types = list(/datum/action/item_action/wheelys)
+	var/wheelToggle = FALSE //False means wheels are not popped out
+	var/obj/vehicle/ridden/scooter/wheelys/W
+
+/obj/item/clothing/shoes/wheelys/Initialize()
+	. = ..()
+	W = new /obj/vehicle/ridden/scooter/wheelys(null)
+
+/obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
+	if(!isliving(user))
+		return
+	if(!istype(user.get_item_by_slot(slot_shoes), /obj/item/clothing/shoes/wheelys))
+		to_chat(user, "<span class='warning'>You must be wearing the wheely-heels to use them!</span>")
+		return
+	if(!(W.is_occupant(user)))
+		wheelToggle = FALSE
+	if(wheelToggle)
+		W.unbuckle_mob(user)
+		wheelToggle = FALSE
+		return
+	W.forceMove(get_turf(user))
+	W.buckle_mob(user)
+	wheelToggle = TRUE
+
+/obj/item/clothing/shoes/wheelys/dropped(mob/user)
+	if(wheelToggle)
+		W.unbuckle_mob(user)
+		wheelToggle = FALSE
+	..()
+
+/obj/item/clothing/shoes/wheelys/Destroy()
+	QDEL_NULL(W)
+	. = ..()
+
+/obj/item/clothing/shoes/kindleKicks
+	name = "Kindle Kicks"
+	desc = "They'll sure kindle something in you, and it's not childhood nostalgia..."
+	icon_state = "kindleKicks"
+	item_state = "kindleKicks"
+	actions_types = list(/datum/action/item_action/kindleKicks)
+	var/lightCycle = 0
+	var/active = FALSE
+
+/obj/item/clothing/shoes/kindleKicks/ui_action_click(mob/user, action)
+	if(active)
+		return
+	active = TRUE
+	set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
+	addtimer(CALLBACK(src, .proc/lightUp), 5)
+
+/obj/item/clothing/shoes/kindleKicks/proc/lightUp(mob/user)
+	if(lightCycle < 15)
+		set_light(2, 3, rgb(rand(0,255),rand(0,255),rand(0,255)))
+		lightCycle += 1
+		addtimer(CALLBACK(src, .proc/lightUp), 5)
+	else
+		set_light(0)
+		lightCycle = 0
+		active = FALSE

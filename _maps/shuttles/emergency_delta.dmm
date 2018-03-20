@@ -307,9 +307,7 @@
 /area/shuttle/escape)
 "aF" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Escape Shuttle Infirmary";
-	req_access_txt = "0"
+	name = "Escape Shuttle Infirmary"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -383,8 +381,7 @@
 /area/shuttle/escape)
 "aO" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Emergency Shuttle Airlock";
-	req_access_txt = "0"
+	name = "Emergency Shuttle Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -423,9 +420,7 @@
 /area/shuttle/escape)
 "aV" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Escape Shuttle Infirmary";
-	req_access_txt = "0"
+	name = "Escape Shuttle Infirmary"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -443,8 +438,7 @@
 	name = "Delta emergency shuttle";
 	width = 30;
 	preferred_direction = 2;
-	port_direction = 4;
-	timid = 1
+	port_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -578,7 +572,6 @@
 "bj" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	req_access_txt = "0";
 	use_power = 0
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -858,7 +851,6 @@
 "bY" = (
 /obj/machinery/door/airlock/command{
 	name = "Emergency Recovery Airlock";
-	req_access = null;
 	req_access_txt = "19"
 	},
 /obj/effect/turf_decal/stripes/line{

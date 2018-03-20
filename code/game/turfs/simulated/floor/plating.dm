@@ -78,15 +78,15 @@
 			playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 		else
 			to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>")
-	else if(istype(C, /obj/item/weldingtool))
-		var/obj/item/weldingtool/welder = C
-		if( welder.isOn() && (broken || burnt) )
-			if(welder.remove_fuel(0,user))
-				to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
-				playsound(src, welder.usesound, 80, 1)
-				icon_state = icon_plating
-				burnt = 0
-				broken = 0
+
+/turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
+	if((broken || burnt) && I.use_tool(src, user, 0, volume=80))
+		to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
+		icon_state = icon_plating
+		burnt = FALSE
+		broken = FALSE
+
+	return TRUE
 
 /turf/open/floor/plating/foam
 	name = "metal foam plating"
@@ -123,3 +123,6 @@
 /turf/open/floor/plating/foam/ex_act()
 	..()
 	ScrapeAway()
+
+/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/tool/I, tool_type)
+	return

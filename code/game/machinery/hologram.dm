@@ -26,7 +26,6 @@ Possible to do for anyone motivated enough:
 
 #define HOLOPAD_PASSIVE_POWER_USAGE 1
 #define HOLOGRAM_POWER_USAGE 2
-#define HOLOPAD_MODE RANGE_BASED
 
 /obj/machinery/holopad
 	name = "holopad"
@@ -39,7 +38,7 @@ Possible to do for anyone motivated enough:
 	idle_power_usage = 5
 	active_power_usage = 100
 	max_integrity = 300
-	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
+	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	circuit = /obj/item/circuitboard/machine/holopad
 	var/list/masters //List of living mobs that use the holopad
 	var/list/holorays //Holoray-mob link.
@@ -58,10 +57,46 @@ Possible to do for anyone motivated enough:
 	var/static/force_answer_call = FALSE	//Calls will be automatically answered after a couple rings, here for debugging
 	var/static/list/holopads = list()
 	var/obj/effect/overlay/holoray/ray
+	var/ringing = FALSE
+	var/offset = FALSE
+	var/on_network = TRUE
+
+/obj/machinery/holopad/tutorial
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	flags_1 = NODECONSTRUCT_1
+	on_network = FALSE
+	var/proximity_range = 1
+	
+/obj/machinery/holopad/tutorial/Initialize(mapload)
+	. = ..()
+	if(proximity_range)
+		proximity_monitor = new(src, proximity_range)
+	if(mapload)
+		var/obj/item/disk/holodisk/new_disk = locate(/obj/item/disk/holodisk) in src.loc
+		if(new_disk && !disk)
+			new_disk.forceMove(src)
+			disk = new_disk
+
+/obj/machinery/holopad/tutorial/attack_hand(mob/user)
+	if(!istype(user))
+		return
+	if(user.incapacitated() || !is_operational())
+		return
+	if(replay_mode)
+		replay_stop()
+	else if(disk && disk.record)
+		replay_start()
+	
+/obj/machinery/holopad/tutorial/HasProximity(atom/movable/AM)
+	if (!isliving(AM))
+		return
+	if(!replay_mode && (disk && disk.record))
+		replay_start()
 
 /obj/machinery/holopad/Initialize()
 	. = ..()
-	holopads += src
+	if(on_network)
+		holopads += src
 
 /obj/machinery/holopad/Destroy()
 	if(outgoing_call)
@@ -136,10 +171,6 @@ Possible to do for anyone motivated enough:
 
 	return ..()
 
-/obj/machinery/holopad/AltClick(mob/living/carbon/human/user)
-	if(isAI(user))
-		hangup_all_calls()
-		return
 
 /obj/machinery/holopad/interact(mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))
@@ -153,8 +184,9 @@ Possible to do for anyone motivated enough:
 	if(temp)
 		dat = temp
 	else
-		dat = "<a href='?src=[REF(src)];AIrequest=1'>Request an AI's presence</a><br>"
-		dat += "<a href='?src=[REF(src)];Holocall=1'>Call another holopad</a><br>"
+		if(on_network)
+			dat += "<a href='?src=[REF(src)];AIrequest=1'>Request an AI's presence</a><br>"
+			dat += "<a href='?src=[REF(src)];Holocall=1'>Call another holopad</a><br>"
 		if(disk)
 			if(disk.record)
 				//Replay
@@ -171,23 +203,24 @@ Possible to do for anyone motivated enough:
 		if(LAZYLEN(holo_calls))
 			dat += "=====================================================<br>"
 
-		var/one_answered_call = FALSE
-		var/one_unanswered_call = FALSE
-		for(var/I in holo_calls)
-			var/datum/holocall/HC = I
-			if(HC.connected_holopad != src)
-				dat += "<a href='?src=[REF(src)];connectcall=[REF(HC)]'>Answer call from [get_area(HC.calling_holopad)]</a><br>"
-				one_unanswered_call = TRUE
-			else
-				one_answered_call = TRUE
+		if(on_network)
+			var/one_answered_call = FALSE
+			var/one_unanswered_call = FALSE
+			for(var/I in holo_calls)
+				var/datum/holocall/HC = I
+				if(HC.connected_holopad != src)
+					dat += "<a href='?src=[REF(src)];connectcall=[REF(HC)]'>Answer call from [get_area(HC.calling_holopad)]</a><br>"
+					one_unanswered_call = TRUE
+				else
+					one_answered_call = TRUE
 
-		if(one_answered_call && one_unanswered_call)
-			dat += "=====================================================<br>"
-		//we loop twice for formatting
-		for(var/I in holo_calls)
-			var/datum/holocall/HC = I
-			if(HC.connected_holopad == src)
-				dat += "<a href='?src=[REF(src)];disconnectcall=[REF(HC)]'>Disconnect call from [HC.user]</a><br>"
+			if(one_answered_call && one_unanswered_call)
+				dat += "=====================================================<br>"
+			//we loop twice for formatting
+			for(var/I in holo_calls)
+				var/datum/holocall/HC = I
+				if(HC.connected_holopad == src)
+					dat += "<a href='?src=[REF(src)];disconnectcall=[REF(HC)]'>Disconnect call from [HC.user]</a><br>"
 
 
 	var/datum/browser/popup = new(user, "holopad", name, 300, 175)
@@ -279,12 +312,23 @@ Possible to do for anyone motivated enough:
 		record_stop()
 	else if(href_list["record_clear"])
 		record_clear()
-
+	else if(href_list["offset"])
+		offset++
+		if (offset > 4)
+			offset = FALSE
+		var/turf/new_turf
+		if (!offset)
+			new_turf = get_turf(src)
+		else
+			new_turf = get_step(src, GLOB.cardinals[offset])
+		replay_holo.forceMove(new_turf)
 	updateDialog()
 
 //do not allow AIs to answer calls or people will use it to meta the AI sattelite
 /obj/machinery/holopad/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
+		return
+	if (!on_network)
 		return
 	/*There are pretty much only three ways to interact here.
 	I don't need to check for client since they're clicking on an object.
@@ -323,6 +367,8 @@ Possible to do for anyone motivated enough:
 	if(outgoing_call)
 		outgoing_call.Check()
 
+	ringing = FALSE
+
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		if(HC.connected_holopad != src)
@@ -333,7 +379,9 @@ Possible to do for anyone motivated enough:
 				HC.Disconnect(src)//can't answer calls while calling
 			else
 				playsound(src, 'sound/machines/twobeep.ogg', 100)	//bring, bring!
+				ringing = TRUE
 
+	update_icon()
 
 /obj/machinery/holopad/proc/activate_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
@@ -403,7 +451,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/holopad/update_icon()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
-	if(total_users || replay_mode)
+	if(ringing)
+		icon_state = "holopad_ringing"
+	else if(total_users || replay_mode)
 		icon_state = "holopad1"
 	else
 		icon_state = "holopad0"
@@ -420,7 +470,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/holopad/proc/clear_holo(mob/living/user)
 	qdel(masters[user]) // Get rid of user's hologram
-	qdel(holorays[user])
 	unset_holo(user)
 	return TRUE
 
@@ -429,6 +478,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(istype(AI) && AI.current == src)
 		AI.current = null
 	LAZYREMOVE(masters, user) // Discard AI from the list of those who use holopad
+	qdel(holorays[user])
 	LAZYREMOVE(holorays, user)
 	SetLightsAndPower()
 	return TRUE
@@ -493,7 +543,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		replay_mode = TRUE
 		replay_holo = setup_replay_holo(disk.record)
 		temp = "Replaying...<br>"
-		temp += "<A href='?src=[REF(src)];replay_stop=1'>End replay.</A>"
+		temp += "<A href='?src=[REF(src)];offset=1'>Change offset</A><br>"
+		temp += "<A href='?src=[REF(src)];replay_stop=1'>End replay</A>"
 		SetLightsAndPower()
 		replay_entry(1)
 	return
@@ -502,6 +553,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(replay_mode)
 		replay_mode = FALSE
 		loop_mode = FALSE
+		offset = FALSE
 		temp = null
 		QDEL_NULL(replay_holo)
 		SetLightsAndPower()
@@ -514,15 +566,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	record_mode = TRUE
 	record_start = world.time
 	record_user = user
-	disk.record.caller_image = get_record_icon(user)
+	disk.record.set_caller_image(user)
 	temp = "Recording...<br>"
 	temp += "<A href='?src=[REF(src)];record_stop=1'>End recording.</A>"
-
-/obj/machinery/holopad/proc/get_record_icon(mob/living/user)
-	var/olddir = user.dir
-	user.setDir(SOUTH)
-	. = getFlatIcon(user)
-	user.setDir(olddir)
 
 /obj/machinery/holopad/proc/record_message(mob/living/speaker,message,language)
 	if(!record_mode)
@@ -553,8 +599,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/proc/replay_entry(entry_number)
 	if(!replay_mode)
 		return
+	if (!disk.record.entries.len) // check for zero entries such as photographs and no text recordings
+		return // and pretty much just display them statically untill manually stopped
 	if(disk.record.entries.len < entry_number)
-		if (loop_mode)
+		if(loop_mode)
 			entry_number = 1
 		else
 			replay_stop()

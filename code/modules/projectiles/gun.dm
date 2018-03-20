@@ -27,7 +27,7 @@
 	var/obj/item/ammo_casing/chambered = null
 	trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
-	var/sawn_state = SAWN_INTACT
+	var/sawn_off = FALSE
 	var/burst_size = 1					//how large a burst is
 	var/fire_delay = 0					//rate of fire for burst firing and semi auto
 	var/firing_burst = 0				//Prevent the weapon from firing again while already firing
@@ -35,6 +35,7 @@
 	var/weapon_weight = WEAPON_LIGHT
 	var/spread = 0						//Spread induced by the gun itself.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
+	var/harmful = TRUE					//some arent harmful and should have this set to false. used for pacifists with tasers, medibeams, etc
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -134,7 +135,7 @@
 			return
 		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
 			return
-		if(target == user && user.zone_selected != "mouth") //so we can't shoot ourselves (unless mouth selected)
+		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
 			return
 
 	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
@@ -147,7 +148,7 @@
 		return
 
 	if(flag)
-		if(user.zone_selected == "mouth")
+		if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 			handle_suicide(user, target, params)
 			return
 
@@ -157,7 +158,7 @@
 		if(istype(user))
 			if (user.has_trait(TRAIT_CLUMSY) && prob(40))
 				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
-				var/shot_leg = pick("l_leg", "r_leg")
+				var/shot_leg = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 				process_fire(user, user, FALSE, params, shot_leg)
 				user.dropItemToGround(src, TRUE)
 				return
@@ -246,6 +247,8 @@
 	var/rand_spr = rand()
 	if(spread)
 		randomized_gun_spread =	rand(0,spread)
+	if(user.has_trait(TRAIT_POOR_AIM)) //nice shootin' tex
+		bonus_spread += 25
 	var/randomized_bonus_spread = rand(0, bonus_spread)
 
 	if(burst_size > 1)
@@ -420,7 +423,7 @@
 
 	semicd = TRUE
 
-	if(!do_mob(user, target, 120) || user.zone_selected != "mouth")
+	if(!do_mob(user, target, 120) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
 		if(user)
 			if(user == target)
 				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")

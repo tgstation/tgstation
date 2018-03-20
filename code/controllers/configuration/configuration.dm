@@ -67,6 +67,9 @@
 	entries_by_type -= CE.type
 
 /datum/controller/configuration/proc/LoadEntries(filename, list/stack = list())
+	if(IsAdminAdvancedProcCall())
+		return
+
 	var/filename_to_test = world.system_type == MS_WINDOWS ? lowertext(filename) : filename
 	if(filename_to_test in stack)
 		log_config("Warning: Config recursion detected ([english_list(stack)]), breaking!")
@@ -236,9 +239,10 @@
 
 		switch (command)
 			if ("map")
-				currentmap = new ("_maps/[data].json")
+				currentmap = load_map_config("_maps/[data].json")
 				if(currentmap.defaulted)
 					log_config("Failed to load map config for [data]!")
+					currentmap = null
 			if ("minplayers","minplayer")
 				currentmap.config_min_users = text2num(data)
 			if ("maxplayers","maxplayer")

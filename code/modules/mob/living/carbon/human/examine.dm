@@ -6,8 +6,14 @@
 	var/t_him = p_them()
 	var/t_has = p_have()
 	var/t_is = p_are()
+	var/obscure_name
 
-	var/msg = "<span class='info'>*---------*\nThis is <EM>[name]</EM>!\n"
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.has_trait(TRAIT_PROSOPAGNOSIA))
+			obscure_name = TRUE
+
+	var/msg = "<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!\n"
 
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
@@ -119,14 +125,14 @@
 					msg += " and [t_his] soul has departed"
 		msg += "...</span>\n"
 
-	if(get_bodypart("head") && !getorgan(/obj/item/organ/brain))
+	if(get_bodypart(BODY_ZONE_HEAD) && !getorgan(/obj/item/organ/brain))
 		msg += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>\n"
 
 	var/temp = getBruteLoss() //no need to calculate each of these twice
 
 	msg += "<span class='warning'>"
 
-	var/list/missing = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
+	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		missing -= BP.body_zone
@@ -137,12 +143,12 @@
 	var/l_limbs_missing = 0
 	var/r_limbs_missing = 0
 	for(var/t in missing)
-		if(t=="head")
+		if(t==BODY_ZONE_HEAD)
 			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B><span class='warning'>\n"
 			continue
-		if(t == "l_arm" || t == "l_leg")
+		if(t == BODY_ZONE_L_ARM || t == BODY_ZONE_L_LEG)
 			l_limbs_missing++
-		else if(t == "r_arm" || t == "r_leg")
+		else if(t == BODY_ZONE_R_ARM || t == BODY_ZONE_R_LEG)
 			r_limbs_missing++
 
 		msg += "<B>[capitalize(t_his)] [parse_zone(t)] is missing!</B>\n"
@@ -251,15 +257,7 @@
 			if(InCritical())
 				msg += "[t_He] [t_is] barely conscious.\n"
 		if(getorgan(/obj/item/organ/brain))
-			if(istype(src, /mob/living/carbon/human/interactive))
-				var/mob/living/carbon/human/interactive/auto = src
-				if(auto.showexaminetext)
-					msg += "<span class='deadsay'>[t_He] appear[p_s()] to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
-				if(auto.debugexamine)
-					var/dodebug = auto.doing2string(auto.doing)
-					var/interestdebug = auto.interest2string(auto.interest)
-					msg += "<span class='deadsay'>[t_He] [t_is] appears to be [interestdebug] and [dodebug].</span>\n"
-			else if(!key)
+			if(!key)
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)
 				msg += "[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon.\n"
@@ -267,6 +265,7 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
 
+	var/traitstring = get_trait_string()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/cyberimp/eyes/hud/CIH = H.getorgan(/obj/item/organ/cyberimp/eyes/hud)
@@ -294,6 +293,10 @@
 					R = find_record("name", perpname, GLOB.data_core.medical)
 					if(R)
 						msg += "<a href='?src=[REF(src)];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
+					if(traitstring)
+						msg += "<span class='info'>Detected physiological traits:<br></span>"
+						msg += "<span class='info'>[traitstring]</span><br>"
+
 
 
 				if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH, /obj/item/organ/cyberimp/eyes/hud/security))
@@ -310,6 +313,8 @@
 						msg += "<a href='?src=[REF(src)];hud=s;add_crime=1'>\[Add crime\]</a> "
 						msg += "<a href='?src=[REF(src)];hud=s;view_comment=1'>\[View comment log\]</a> "
 						msg += "<a href='?src=[REF(src)];hud=s;add_comment=1'>\[Add comment\]</a>\n"
+	else if(isobserver(user) && traitstring)
+		msg += "<span class='info'><b>Traits:</b> [traitstring]</span><br>"
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)

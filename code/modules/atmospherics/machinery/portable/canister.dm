@@ -17,7 +17,7 @@
 	var/can_max_release_pressure = (ONE_ATMOSPHERE * 10)
 	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
 
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 50)
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 50)
 	max_integrity = 250
 	integrity_failure = 100
 	pressure_resistance = 7 * ONE_ATMOSPHERE
@@ -278,21 +278,20 @@
 			new /obj/item/stack/sheet/metal (loc, 5)
 	qdel(src)
 
-/obj/machinery/portable_atmospherics/canister/attackby(obj/item/W, mob/user, params)
-	if(user.a_intent != INTENT_HARM && istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if(stat & BROKEN)
-			if(!WT.remove_fuel(0, user))
-				return
-			playsound(loc, WT.usesound, 40, 1)
-			to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
-			if(do_after(user, 30, target = src))
-				deconstruct(TRUE)
-		else
-			to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
-		return 1
+/obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
+	if(user.a_intent == INTENT_HARM)
+		return FALSE
+
+	if(stat & BROKEN)
+		if(!I.tool_start_check(user, amount=0))
+			return TRUE
+		to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
+		if(I.use_tool(src, user, 30, volume=50))
+			deconstruct(TRUE)
 	else
-		return ..()
+		to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
+
+	return TRUE
 
 /obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
 	if((stat & BROKEN) || (flags_1 & NODECONSTRUCT_1))
@@ -315,6 +314,16 @@
 	if(holding)
 		holding.forceMove(T)
 		holding = null
+
+/obj/machinery/portable_atmospherics/canister/replace_tank(mob/living/user, close_valve)
+	. = ..()
+	if(.)
+		if(close_valve)
+			valve_open = FALSE
+			update_icon()
+			investigate_log("Valve was <b>closed</b> by [key_name(user)].<br>", INVESTIGATE_ATMOS)
+		else if(valve_open && holding)
+			investigate_log("[key_name(user)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	..()
@@ -436,7 +445,7 @@
 							message_admins(msg)
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
-			investigate_log(logmsg, "atmos")
+			investigate_log(logmsg, INVESTIGATE_ATMOS)
 			release_log += logmsg
 			. = TRUE
 		if("timer")

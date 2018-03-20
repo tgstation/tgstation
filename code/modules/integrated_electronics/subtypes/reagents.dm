@@ -3,6 +3,7 @@
 /obj/item/integrated_circuit/reagent
 	category_text = "Reagent"
 	resistance_flags = UNACIDABLE | FIRE_PROOF
+	cooldown_per_use = 10
 	var/volume = 0
 
 /obj/item/integrated_circuit/reagent/Initialize()
@@ -21,7 +22,7 @@
 	icon_state = "smoke"
 	extended_desc = "This smoke generator creates clouds of smoke on command. It can also hold liquids inside, which will go \
 	into the smoke clouds when activated. The reagents are consumed when smoke is made."
-
+	ext_cooldown = 1
 	container_type = OPENCONTAINER
 	volume = 100
 
@@ -193,7 +194,7 @@
 			activate_pin(3)
 			return
 
-		var/tramount = CLAMP(transfer_amount, 0, AM.reagents.total_volume)
+		var/tramount = abs(transfer_amount)
 
 		if(isliving(AM))
 			var/mob/living/L = AM
@@ -202,13 +203,15 @@
 			busy = TRUE
 			if(do_atom(src, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,null,0)))
 				if(L.transfer_blood_to(src, tramount))
-					L.visible_message("[acting_object] takes a blood sample from [L].")
+					L.visible_message("<span class='danger'>[acting_object] takes a blood sample from [L]!</span>", \
+					"<span class='userdanger'>[acting_object] takes a blood sample from you!</span>")
 				else
 					busy = FALSE
 					activate_pin(3)
 					return
 			busy = FALSE
 		else
+			tramount = min(tramount, AM.reagents.total_volume)
 			if(!AM.reagents.total_volume)
 				activate_pin(3)
 				return
@@ -279,6 +282,7 @@
 	activate_pin(2)
 
 /obj/item/integrated_circuit/reagent/storage
+	cooldown_per_use = 1
 	name = "reagent storage"
 	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u."
 	icon_state = "reagent_storage"

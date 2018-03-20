@@ -2,7 +2,7 @@
 	hitsound_on = 'sound/weapons/blade1.ogg'
 	heat = 3500
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 3
 
@@ -17,6 +17,8 @@
 	return ..()
 
 /obj/item/melee/transforming/energy/suicide_act(mob/user)
+	if(!active)
+		transform_weapon(user, TRUE)
 	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
 	return (BRUTELOSS|FIRELOSS)
 

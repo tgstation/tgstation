@@ -11,7 +11,7 @@
 	throw_range = 7
 	attack_verb = list("banned")
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/banhammer/suicide_act(mob/user)
@@ -19,7 +19,7 @@
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/banhammer/attack(mob/M, mob/user)
-	if(user.zone_selected == "head")
+	if(user.zone_selected == BODY_ZONE_HEAD)
 		M.visible_message("<span class='danger'>[user] are stroking the head of [M] with a bangammer</span>", "<span class='userdanger'>[user] are stroking the head with a bangammer</span>", "you hear a bangammer stroking a head");
 	else
 		M.visible_message("<span class='danger'>[M] has been banned FOR NO REISIN by [user]</span>", "<span class='userdanger'>You have been banned FOR NO REISIN by [user]</span>", "you hear a banhammer banning someone")
@@ -63,8 +63,12 @@
 	block_chance = 50
 	sharpness = IS_SHARP
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
+
+/obj/item/claymore/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 40, 105)
 
 /obj/item/claymore/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -109,7 +113,8 @@
 
 /obj/item/claymore/highlander/dropped(mob/living/user)
 	user.remove_trait(TRAIT_IGNORESLOWDOWN, HIGHLANDER)
-	qdel(src) //If this ever happens, it's because you lost an arm
+	if(!QDELETED(src))
+		qdel(src) //If this ever happens, it's because you lost an arm
 
 /obj/item/claymore/highlander/examine(mob/user)
 	..()
@@ -209,7 +214,7 @@
 	block_chance = 50
 	sharpness = IS_SHARP
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/katana/cursed
@@ -438,6 +443,10 @@
 	throw_range = 2
 	attack_verb = list("busted")
 
+/obj/item/statuebust/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 1000), 0)
+
 /obj/item/tailclub
 	name = "tail club"
 	desc = "For the beating to death of lizards with their own tails."
@@ -599,7 +608,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
 		L.endTailWag()
-	if(user.a_intent != INTENT_HARM && ((user.zone_selected == "mouth") || (user.zone_selected == "eyes") || (user.zone_selected == "head")))
+	if(user.a_intent != INTENT_HARM && ((user.zone_selected == BODY_ZONE_PRECISE_MOUTH) || (user.zone_selected == BODY_ZONE_PRECISE_EYES) || (user.zone_selected == BODY_ZONE_HEAD)))
 		user.do_attack_animation(M)
 		playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message("<span class='danger'>[user] slaps [M]!</span>",

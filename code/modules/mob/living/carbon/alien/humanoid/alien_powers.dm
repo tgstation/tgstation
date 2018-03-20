@@ -44,20 +44,20 @@ Doesn't work on other aliens/AI.*/
 	if(plasma_cost > 0)
 		return "[plasma_cost]"
 
-/obj/effect/proc_holder/alien/proc/cost_check(check_turf=0,mob/living/carbon/user,silent = 0)
+/obj/effect/proc_holder/alien/proc/cost_check(check_turf = FALSE, mob/living/carbon/user, silent = FALSE)
 	if(user.stat)
 		if(!silent)
 			to_chat(user, "<span class='noticealien'>You must be conscious to do this.</span>")
-		return 0
+		return FALSE
 	if(user.getPlasma() < plasma_cost)
 		if(!silent)
 			to_chat(user, "<span class='noticealien'>Not enough plasma stored.</span>")
-		return 0
+		return FALSE
 	if(check_turf && (!isturf(user.loc) || isspaceturf(user.loc)))
 		if(!silent)
 			to_chat(user, "<span class='noticealien'>Bad place for a garden!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/effect/proc_holder/alien/proc/check_vent_block(mob/living/user)
 	var/obj/machinery/atmospherics/components/unary/atmos_thing = locate() in user.loc
@@ -71,7 +71,7 @@ Doesn't work on other aliens/AI.*/
 	name = "Plant Weeds"
 	desc = "Plants some alien weeds."
 	plasma_cost = 50
-	check_turf = 1
+	check_turf = TRUE
 	action_icon_state = "alien_plant"
 
 /obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)

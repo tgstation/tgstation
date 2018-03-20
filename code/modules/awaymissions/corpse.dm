@@ -54,6 +54,8 @@
 	GLOB.poi_list -= src
 	var/list/spawners = GLOB.mob_spawners[name]
 	LAZYREMOVE(spawners, src)
+	if(!LAZYLEN(spawners))
+		LAZYREMOVE(GLOB.mob_spawners,name)
 	return ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
@@ -106,6 +108,7 @@
 	var/mob_species = null		//Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
 	var/datum/outfit/outfit = /datum/outfit	//If this is a path, it will be instanced in Initialize()
 	var/disable_pda = TRUE
+	var/disable_sensors = TRUE
 	//All of these only affect the ID that the outfit has placed in the ID slot
 	var/id_job = null			//Such as "Clown" or "Chef." This just determines what the ID reads as, not their access
 	var/id_access = null		//This is for access. See access.dm for which jobs give what access. Use "Captain" if you want it to be all access.
@@ -181,6 +184,12 @@
 			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H
 			if(PDA)
 				PDA.toff = TRUE
+		if(disable_sensors)
+			// Using crew monitors to find corpses while creative makes finding certain ruins too easy.
+			var/obj/item/clothing/under/C = H.w_uniform
+			if(istype(C))
+				C.sensor_mode = NO_SENSORS
+
 	var/obj/item/card/id/W = H.wear_id
 	if(W)
 		if(id_access)
@@ -222,7 +231,7 @@
 	var/mob/living/silicon/ai/spawned/M = new(loc) //spawn new AI at landmark as var M
 	M.name = src.name
 	M.real_name = src.name
-	M.aiPDA.toff = 1 //turns the AI's PDA messenger off, stopping it showing up on player PDAs
+	M.aiPDA.toff = TRUE //turns the AI's PDA messenger off, stopping it showing up on player PDAs
 	M.death() //call the AI's death proc
 	qdel(src)
 

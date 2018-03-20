@@ -49,6 +49,7 @@
 	modifystate = 1
 	ammo_x_offset = 1
 	selfcharge = 1
+	harmful = FALSE
 
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"
@@ -127,27 +128,41 @@
 	can_charge = 0
 
 	heat = 3800
-	usesound = 'sound/items/welder.ogg'
+	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
+
+/obj/item/gun/energy/plasmacutter/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 25, 105, 0, 'sound/weapons/plasma_cutter.ogg')
 
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
 	..()
 	if(cell)
 		to_chat(user, "<span class='notice'>[src] is [round(cell.percent())]% charged.</span>")
 
-/obj/item/gun/energy/plasmacutter/attackby(obj/item/A, mob/user)
-	if(istype(A, /obj/item/stack/sheet/mineral/plasma))
-		var/obj/item/stack/sheet/S = A
-		S.use(1)
+/obj/item/gun/energy/plasmacutter/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/stack/sheet/mineral/plasma))
+		I.use(1)
 		cell.give(1000)
-		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
-	else if(istype(A, /obj/item/ore/plasma))
-		qdel(A)
+		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
+	else if(istype(I, /obj/item/stack/ore/plasma))
+		I.use(1)
 		cell.give(500)
-		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
+		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
 	else
 		..()
+
+// Tool procs, in case plasma cutter is used as welder
+/obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
+	if(cell.charge >= amount * 100)
+		return TRUE
+
+	to_chat(user, "<span class='warning'>You need more charge to complete this task!</span>")
+	return FALSE
+
+/obj/item/gun/energy/plasmacutter/use(amount)
+	return cell.use(amount * 100)
 
 /obj/item/gun/energy/plasmacutter/update_icon()
 	return

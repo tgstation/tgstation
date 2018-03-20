@@ -13,10 +13,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/replace_banned = TRUE //Should replace jobbaned player with ghosts if granted.
 	var/list/objectives = list()
 	var/antag_memory = ""//These will be removed with antag datum
-	
+	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
+
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
+	var/show_name_in_check_antagonists = FALSE //Will append antagonist name in admin listings - use for categories that share more than one antag type
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -66,6 +68,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(!silent)
 			greet()
 		apply_innate_effects()
+		give_antag_moodies()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
 
@@ -79,7 +82,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
 	if(LAZYLEN(candidates))
-		var/client/C = pick(candidates)
+		var/mob/dead/observer/C = pick(candidates)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner.current)]) to replace a jobbaned player.")
 		owner.current.ghostize(0)
@@ -87,6 +90,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/proc/on_removal()
 	remove_innate_effects()
+	clear_antag_moodies()
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
 		if(!silent && owner.current)
@@ -101,6 +105,16 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/proc/farewell()
 	return
+
+/datum/antagonist/proc/give_antag_moodies()
+	if(!antag_moodlet)
+		return
+	owner.current.SendSignal(COMSIG_ADD_MOOD_EVENT, "antag_moodlet", antag_moodlet)
+
+/datum/antagonist/proc/clear_antag_moodies()
+	if(!antag_moodlet)
+		return
+	owner.current.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "antag_moodlet")
 
 //Returns the team antagonist belongs to if any.
 /datum/antagonist/proc/get_team()
@@ -182,7 +196,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		edit_memory(usr)
 		owner.traitor_panel()
 		return
-	
+
 	//Some commands might delete/modify this datum clearing or changing owner
 	var/datum/mind/persistent_owner = owner
 
@@ -205,6 +219,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/auto_custom
 	show_in_antagpanel = FALSE
 	antagpanel_category = "Other"
+	show_name_in_check_antagonists = TRUE
 
 /datum/antagonist/auto_custom/on_gain()
 	..()
@@ -218,12 +233,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 			already_registered_objectives |= A.objectives
 	objectives = owner.objectives - already_registered_objectives
 
-/datum/antagonist/auto_custom/antag_listing_name()
-	return ..() + "([name])"
-
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom
 	antagpanel_category = "Custom"
+	show_name_in_check_antagonists = TRUE //They're all different
 
 /datum/antagonist/custom/admin_add(datum/mind/new_owner,mob/admin)
 	var/custom_name = stripped_input(admin, "Custom antagonist name:", "Custom antag", "Antagonist")
@@ -232,6 +245,3 @@ GLOBAL_LIST_EMPTY(antagonists)
 	else
 		return
 	..()
-
-/datum/antagonist/custom/antag_listing_name()
-	return ..() + "([name])"

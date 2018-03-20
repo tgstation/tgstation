@@ -118,9 +118,7 @@
 	if(istype(I, /obj/item/crowbar))
 		user.visible_message("<span class='notice'>[user] struggles to pry up \the [src] with \the [I].</span>", \
 		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
-		if(do_after(user, 40*I.toolspeed, target = src))
-			if(QDELETED(src))
-				return //prevent multiple decontructs
+		if(I.use_tool(src, user, 40, volume=40))
 			if(!(stat & BROKEN))
 				var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
 				C.id = id
@@ -130,7 +128,7 @@
 
 	else if(istype(I, /obj/item/wrench))
 		if(!(stat & BROKEN))
-			playsound(loc, I.usesound, 50, 1)
+			I.play_tool_sound(src)
 			setDir(turn(dir,-45))
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You rotate [src].</span>")
