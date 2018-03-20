@@ -557,6 +557,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 		var/datum/job/lastJob
 
+		var/datum/job/overflow = SSjob.GetJob(SSjob.overflow_role)
+
 		for(var/datum/job/job in SSjob.occupations)
 
 			index += 1
@@ -584,7 +586,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/available_in_days = job.available_in_days(user.client)
 				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
 				continue
-			if((job_civilian_low & ASSISTANT) && (rank != "Assistant") && !jobban_isbanned(user, "Assistant"))
+			if((job_civilian_low & overflow.flag) && (rank != SSjob.overflow_role) && !jobban_isbanned(user, SSjob.overflow_role))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue
 			if((rank in GLOB.command_positions) || (rank == "AI"))//Bold head jobs
@@ -623,10 +625,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 
-			if(rank == "Assistant")//Assistant is special
+			if(rank == SSjob.overflow_role)//Overflow is special
 				if(jobban_isbanned(user, CLUWNEBAN) || jobban_isbanned(user, CATBAN))
 					HTML += "<font color=orange>Mandatory</font>"
-				else if(job_civilian_low & ASSISTANT)
+				else if(job_civilian_low & overflow.flag)
 					HTML += "<font color=green>Yes</font>"
 				else
 					HTML += "<font color=red>No</font>"
@@ -642,7 +644,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		HTML += "</td'></tr></table>"
 		HTML += "</center></table>"
 
-		var/message = "Be an Assistant if preferences unavailable"
+		var/message = "Be an [SSjob.overflow_role] if preferences unavailable"
 		if(joblessrole == BERANDOMJOB)
 			message = "Get random job if preferences unavailable"
 		else if(joblessrole == RETURNTOLOBBY)
@@ -730,7 +732,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		ShowChoices(user)
 		return
 
-	if(role == "Assistant")
+	if(role == SSjob.overflow_role)
 		if(job_civilian_low & job.flag)
 			job_civilian_low &= ~job.flag
 		else
@@ -880,11 +882,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if("random")
 				switch(joblessrole)
 					if(RETURNTOLOBBY)
-						if(jobban_isbanned(user, "Assistant"))
+						if(jobban_isbanned(user, SSjob.overflow_role))
 							joblessrole = BERANDOMJOB
 						else
-							joblessrole = BEASSISTANT
-					if(BEASSISTANT)
+							joblessrole = BEOVERFLOW
+					if(BEOVERFLOW)
 						joblessrole = BERANDOMJOB
 					if(BERANDOMJOB)
 						joblessrole = RETURNTOLOBBY
