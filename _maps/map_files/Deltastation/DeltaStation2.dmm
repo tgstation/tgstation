@@ -27770,6 +27770,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-4"
 	},
+/obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "blS" = (
@@ -100684,15 +100685,6 @@
 /obj/machinery/rnd/production/techfab/department/cargo,
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/office)
-"ehK" = (
-/obj/machinery/mineral/ore_redemption{
-	input_dir = 4;
-	output_dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/stripes/box,
-/turf/open/floor/plasteel/neutral,
-/area/quartermaster/miningoffice)
 "ehL" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -101022,6 +101014,12 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"obP" = (
+/obj/machinery/mineral/ore_redemption,
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/plating,
+/area/quartermaster/miningoffice)
 "oZC" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -144526,7 +144524,7 @@ bgK
 bii
 bjU
 blR
-baU
+obP
 boO
 bqZ
 bsT
@@ -145038,7 +145036,7 @@ baU
 bfw
 bgG
 bik
-ehK
+baU
 baQ
 baQ
 boW
