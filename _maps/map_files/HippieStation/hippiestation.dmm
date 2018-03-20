@@ -1623,7 +1623,6 @@
 	desc = "A remote control-switch for privacy shutters.";
 	id = "HOSOffice";
 	name = "Privacy Shutters";
-	pixel_x = 0;
 	pixel_y = -24;
 	req_access_txt = "58"
 	},
@@ -35602,7 +35601,6 @@
 /obj/machinery/button/door{
 	id = "RDOffice";
 	name = "Privacy Shutters";
-	pixel_x = 0;
 	pixel_y = -27;
 	req_access_txt = "47"
 	},
