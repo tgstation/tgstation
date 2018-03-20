@@ -270,6 +270,9 @@ ALLOW_AI
 
 ## AWAY MISSIONS ###
 
+# Will random away mission be loaded at initialization.
+#ROUNDSTART_AWAY
+
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
 GATEWAY_DELAY 18000
