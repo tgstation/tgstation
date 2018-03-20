@@ -1545,6 +1545,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Crevice Spike"
 	glass_desc = "It'll either knock the drunkenness out of you or knock you out cold. Both, probably."
 
-/datum/reagent/consumable/ethanol/crevice_spike/on_mob_add(mob/living/L)
-	L.adjustBruteLoss(15) //That first gulp hurts going down! But you can finish the drink much easier on your gut-zone.
-
+/datum/reagent/consumable/ethanol/crevice_spike/on_mob_add(mob/living/L) //damage only applies when drink first enters system and won't again until drink metabolizes out
+	var/initialburn = 5
+	for(var/i in 1 to min(volume, initialburn)) //minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you for the full 15
+		L.adjustBruteLoss(3)
