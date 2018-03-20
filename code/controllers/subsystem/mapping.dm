@@ -345,7 +345,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		if(alert("There's no home gateway on the station. You sure you want to continue ?", "Uh oh", "Yes", "No") != "Yes")
 			return
 
-	var/list/possible_options = GLOB.potentialRandomZlevels + "Generated" + "Custom"
+	var/list/possible_options = GLOB.potentialRandomZlevels + "Custom"
 	var/away_name
 	var/datum/space_level/away_level
 
@@ -359,9 +359,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			to_chat(usr,"<span class='notice'>Loading [mapfile]...</span>")
 			var/datum/map_template/template = new(mapfile, "Away Mission")
 			away_level = template.load_new_z()
-		if("Generated") //SOON
-			away_name = "Generated"
-			return
 		else
 			if(answer in GLOB.potentialRandomZlevels)
 				away_name = answer
