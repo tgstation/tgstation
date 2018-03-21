@@ -736,7 +736,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		. += .(rest)
 
 //Replacement for the \th macro when you want the whole word output as text (first instead of 1st)
-/proc/thottext(number)
+/proc/thtotext(number)
 	if(!isnum(number))
 		return
 	switch(number)
@@ -755,7 +755,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		if(7)
 			return "seventh"
 		if(8)
-			return "eight"
+			return "eighth"
 		if(9)
 			return "ninth"
 		if(10)

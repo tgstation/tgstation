@@ -32,7 +32,7 @@
 		if(beakers.len)
 			to_chat(user, "<span class='notice'>You scan the grenade and detect the following reagents:</span>")
 			for(var/obj/item/reagent_containers/glass/G in beakers)
-				var/textcount = thottext(++count)
+				var/textcount = thtotext(++count)
 				for(var/datum/reagent/R in G.reagents.reagent_list)
 					to_chat(user, "<span class='notice'>[R.volume] units of [R.name] in the [textcount] beaker.</span>")
 			if(beakers.len == 1)
