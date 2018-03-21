@@ -616,6 +616,19 @@
 			M.blind_eyes(2)
 
 
+/datum/reagent/consumable/nutriment/stabilized
+	name = "Stabilized Nutriment"
+	id = "stabilizednutriment"
+	description = "A bioengineered protien-nutrient structure designed to decompose in high saturation. In layman's terms, it won't get you fat."
+	reagent_state = SOLID
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+	color = "#664330" // rgb: 102, 67, 48
+
+/datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
+	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
+		M.nutrition -= 3*nutriment_factor
+	..()
+
 ////Lavaland Flora Reagents////
 
 

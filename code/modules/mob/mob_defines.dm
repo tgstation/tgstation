@@ -103,4 +103,6 @@
 
 	var/list/mousemove_intercept_objects
 
+	var/do_after_speed = 1 //Speed mod for do_after. Lower is better. If temporarily adjusting, please only modify using *= and /=, so you don't interrupt other calculations.
+
 	var/datum/click_intercept

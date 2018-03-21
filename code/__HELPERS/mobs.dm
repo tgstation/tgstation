@@ -300,6 +300,8 @@ Proc for attack log creation, because really why not
 	if (progress)
 		progbar = new(user, delay, target)
 
+	delay *= user.do_after_speed
+
 	GET_COMPONENT_FROM(mood, /datum/component/mood, user)
 	if(mood)
 		switch(mood.sanity) //Alters do_after delay based on how sane you are
