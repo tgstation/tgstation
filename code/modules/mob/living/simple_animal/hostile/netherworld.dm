@@ -98,15 +98,15 @@
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/proc/imlagre_revive()
 	var/itlives = FALSE
-	for(var/mob/living/simple_animal/hostile/netherworld/imlagre/i in linked_imlagre)
+	for(var/mob/living/i in linked_imlagre)
 		if(!i.stat) //if any of them are alive then REVIVE!!
 			itlives = TRUE
 			revive(TRUE)
 			var/flufftext = list("wicked", "sinister", "baleful", "hideous", "wild", "malevolent")
-			visible_message("<span class='danger'>[i] winds back together with a [pick(flufftext)] cackle!</span>")
+			visible_message("<span class='danger'>[src] winds back together with a [pick(flufftext)] cackle!</span>")
 			adjustBruteLoss(maxHealth * 0.5) //revived at half HP, or, about a carpsful of health
-	if(!itlives == TRUE)
-		for(var/mob/living/simple_animal/hostile/netherworld/imlagre/i in linked_imlagre)
+	if(itlives == FALSE)
+		for(var/mob/living/i in linked_imlagre)
 			i.visible_message("<span class='danger'>[i]'s corpse explodes in a shower of gore!</span>")
 			i.gib()
 		visible_message("<span class='danger'>[src]'s corpse explodes in a shower of gore!</span>")
