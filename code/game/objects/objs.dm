@@ -1,5 +1,6 @@
 
 /obj
+	parent_type = /objmob
 	var/crit_fail = FALSE
 	animate_movement = 2
 	var/throwforce = 0

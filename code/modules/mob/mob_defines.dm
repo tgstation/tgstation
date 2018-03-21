@@ -1,4 +1,5 @@
 /mob
+	parent_type = /objmob
 	datum_flags = DF_USE_TAG
 	density = TRUE
 	layer = MOB_LAYER
