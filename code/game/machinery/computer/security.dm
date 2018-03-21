@@ -447,7 +447,7 @@ What a mess.*/
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/photo/photo = active1.fields["photo_front"]
-								new /obj/item/poster/wanted(src.loc, photo.img, wanted_name, info)
+								new /obj/item/poster/wanted(src.loc, I, wanted_name, info)
 							printing = 0
 
 //RECORD DELETE
@@ -611,6 +611,13 @@ What a mess.*/
 						var/icon/photo = get_photo(usr)
 						if(photo)
 							qdel(active1.fields["photo_front"])
+							//Lets center it to a 32x32.
+							var/icon/I = photo.img
+							var/w = I.Width()
+							var/h = I.Height()
+							var/dw = w - 32
+							var/dh = w - 32
+							I.Crop(dw/2, dh/2, w - dw/2, h - dh/2)
 							active1.fields["photo_front"] = photo
 					if("print_photo_front")
 						if(active1.fields["photo_front"])
@@ -626,6 +633,13 @@ What a mess.*/
 						var/icon/photo = get_photo(usr)
 						if(photo)
 							qdel(active1.fields["photo_side"])
+							//Lets center it to a 32x32.
+							var/icon/I = photo.img
+							var/w = I.Width()
+							var/h = I.Height()
+							var/dw = w - 32
+							var/dh = w - 32
+							I.Crop(dw/2, dh/2, w - dw/2, h - dh/2)
 							active1.fields["photo_side"] = photo
 					if("print_photo_side")
 						if(active1.fields["photo_side"])
