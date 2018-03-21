@@ -31,7 +31,7 @@
 
 /datum/brain_trauma/mild/phobia/on_life()
 	..()
-	if(owner.eye_blind)
+	if(is_blind(owner))
 		return
 	if(world.time > next_check && world.time > next_scare)
 		next_check = world.time + 50
@@ -68,10 +68,10 @@
 							return
 
 /datum/brain_trauma/mild/phobia/on_hear(message, speaker, message_language, raw_message, radio_freq)
-	if(owner.has_trait(TRAIT_DEAF) || world.time < next_scare) //words can't trigger you if you can't hear them *taps head*
+	if(!owner.can_hear() || world.time < next_scare) //words can't trigger you if you can't hear them *taps head*
 		return message
 	for(var/word in trigger_words)
-		if(findtext(message, word))
+		if(findtext(raw_message, word))
 			addtimer(CALLBACK(src, .proc/freak_out, null, word), 10) //to react AFTER the chat message
 			break
 	return message
