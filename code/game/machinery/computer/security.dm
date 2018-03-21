@@ -608,7 +608,7 @@ What a mess.*/
 								var/obj/item/photo/P = active1.fields["photo_front"]
 								P.show(usr)
 					if("upd_photo_front")
-						var/icon/photo = get_photo(usr)
+						var/obj/item/photo/photo = get_photo(usr)
 						if(photo)
 							qdel(active1.fields["photo_front"])
 							//Lets center it to a 32x32.
@@ -630,7 +630,7 @@ What a mess.*/
 								var/obj/item/photo/P = active1.fields["photo_side"]
 								P.show(usr)
 					if("upd_photo_side")
-						var/icon/photo = get_photo(usr)
+						var/obj/item/photo/photo = get_photo(usr)
 						if(photo)
 							qdel(active1.fields["photo_side"])
 							//Lets center it to a 32x32.
