@@ -151,16 +151,12 @@
 				ty--
 			DT = locate(tx, ty, destination_z)
 
-		if(isliving(A))
-			var/mob/living/L = A
-			var/atom/movable/AM = L.pulling
-			L.forceMove(DT)
-			if(AM)
-				var/turf/T = get_step(L.loc,turn(A.dir, 180))
-				AM.forceMove(T)
-				L.start_pulling(AM)
-		else
-			A.forceMove(DT)
+		var/atom/movable/AM = A.pulling
+		A.forceMove(DT)
+		if(AM)
+			var/turf/T = get_step(A.loc,turn(A.dir, 180))
+			AM.forceMove(T)
+			A.start_pulling(AM)
 
 		//now we're on the new z_level, proceed the space drifting
 		stoplag()//Let a diagonal move finish, if necessary
