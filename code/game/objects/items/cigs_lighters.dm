@@ -290,6 +290,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A Shady Jim's Super Slims cigarette."
 	list_reagents = list("nicotine" = 15, "lipolicide" = 4, "ammonia" = 2, "plantbgone" = 1, "toxin" = 1.5)
 
+/obj/item/clothing/mask/cigarette/xeno
+	desc = "A Xeno Filtered brand cigarette."
+	list_reagents = list ("nicotine" = 20, "regen_jelly" = 15, "krokodil" = 4)
+
 // Rollies.
 
 /obj/item/clothing/mask/cigarette/rollie
@@ -607,6 +611,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/lighter/greyscale/ignition_effect(atom/A, mob/user)
 	if(is_hot())
 		. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
+
+
+/obj/item/lighter/slime
+	name = "slime zippo"
+	desc = "A specialty zippo made from slimes and industry. Has a much hotter flame than normal."
+	icon_state = "slimezippo"
+	heat = 3000 //Blue flame!
+	light_color = LIGHT_COLOR_CYAN
+	grind_results = list("iron" = 1, "welding_fuel" = 5, "pyroxadone" = 5)
 
 
 ///////////
