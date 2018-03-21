@@ -536,6 +536,6 @@
 			else if(issilicon(L))
 				L.adjustBruteLoss(-3.5)
 				L.adjustFireLoss(-3.5)
-			else if(issimpleanimal(L))
+			else if(isanimal(L))
 				var/mob/living/simple_animal/SM = L
 				SM.adjustHealth(-3.5, forced = TRUE)
