@@ -267,6 +267,7 @@
 	duration = -1
 	alert_type = null
 	var/obj/item/slimecross/stabilized/linked_extract
+	var/colour = "null"
 
 /datum/status_effect/stabilized/tick()
 	if(!linked_extract || !linked_extract.loc) //Sanity checking
@@ -287,6 +288,7 @@
 //Stabilized effects start below.
 /datum/status_effect/stabilized/grey
 	id = "stabilizedgrey"
+	colour = "grey"
 
 /datum/status_effect/stabilized/grey/tick()
 	for(var/mob/living/simple_animal/slime/S in range(1, get_turf(owner)))
@@ -297,6 +299,7 @@
 
 /datum/status_effect/stabilized/orange
 	id = "stabilizedorange"
+	colour = "orange"
 
 /datum/status_effect/stabilized/orange/tick()
 	var/body_temperature_difference = BODYTEMP_NORMAL - owner.bodytemperature
@@ -305,6 +308,7 @@
 
 /datum/status_effect/stabilized/purple
 	id = "stabilizedpurple"
+	colour = "purple"
 
 /datum/status_effect/stabilized/purple/tick()
 	var/is_healing = FALSE
@@ -326,6 +330,7 @@
 
 /datum/status_effect/stabilized/blue
 	id = "stabilizedblue"
+	colour = "blue"
 
 /datum/status_effect/stabilized/blue/on_apply()
 	owner.add_trait(TRAIT_NOSLIPWATER, "slimestatus")
@@ -336,6 +341,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/metal
 	id = "stabilizedmetal"
+	colour = "metal"
 	var/cooldown = 30
 	var/max_cooldown = 30
 
@@ -358,6 +364,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/yellow
 	id = "stabilizedyellow"
+	colour = "yellow"
 	var/cooldown = 10
 	var/max_cooldown = 10
 	examine_text = "<span class='warning'>Nearby electronics seem just a little more charged wherever SUBJECTPRONOUN goes.</span>"
@@ -386,6 +393,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/darkpurple
 	id = "stabilizeddarkpurple"
+	colour = "dark purple"
 	var/obj/item/hothands/fire
 	examine_text = "<span class='notice'>Their fingertips burn brightly!</span>"
 
@@ -411,6 +419,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/darkblue
 	id = "stabilizeddarkblue"
+	colour = "dark blue"
 
 /datum/status_effect/stabilized/darkblue/tick()
 	if(owner.fire_stacks > 0 && prob(80))
@@ -442,12 +451,13 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/silver
 	id = "stabilizedsilver"
+	colour = "silver"
 
 /datum/status_effect/stabilized/silver/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.hunger_mod *= 0.8 //20% buff
-	..()
+	return ..()
 
 /datum/status_effect/stabilized/silver/on_remove()
 	if(ishuman(owner))
@@ -467,6 +477,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/bluespace
 	id = "stabilizedbluespace"
+	colour = "bluespace"
 	alert_type = /obj/screen/alert/status_effect/bluespaceslime
 	var/healthcheck
 
@@ -496,6 +507,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/sepia
 	id = "stabilizedsepia"
+	colour = "sepia"
 	var/mod = 0
 
 /datum/status_effect/stabilized/sepia/tick()
@@ -518,6 +530,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"
+	colour = "cerulean"
 	var/mob/living/clone
 
 /datum/status_effect/stabilized/cerulean/on_apply()
@@ -552,6 +565,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/pyrite
 	id = "stabilizedpyrite"
+	colour = "pyrite"
 	var/originalcolor
 
 /datum/status_effect/stabilized/pyrite/on_apply()
@@ -567,6 +581,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/red
 	id = "stabilizedred"
+	colour = "red"
 
 /datum/status_effect/stabilized/red/on_apply()
 	owner.add_trait(TRAIT_IGNORESLOWDOWN,"slimestatus")
@@ -577,6 +592,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/green
 	id = "stabilizedgreen"
+	colour = "green"
 	var/datum/dna/originalDNA
 	var/originalname
 
@@ -624,6 +640,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/pink
 	id = "stabilizedpink"
+	colour = "pink"
 	var/list/mobs = list()
 	var/faction_name
 
@@ -669,6 +686,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/oil
 	id = "stabilizedoil"
+	colour = "oil"
 	examine_text = "<span class='warning'>SUBJECTPRONOUN smells of sulfer and oil!</span>"
 
 /datum/status_effect/stabilized/oil/tick()
@@ -678,6 +696,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/black
 	id = "stabilizedblack"
+	colour = "black"
 	var/messagedelivered = FALSE
 	var/heal_amount = 1
 
@@ -711,6 +730,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/lightpink
 	id = "stabilizedlightpink"
+	colour = "light pink"
 
 /datum/status_effect/stabilized/lightpink/on_apply()
 	owner.add_trait(TRAIT_GOTTAGOFAST,"slimestatus")
@@ -728,10 +748,12 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/adamantine
 	id = "stabilizedadamantine"
+	colour = "adamantine"
 	examine_text = "<span class='warning'>SUBJECTPRONOUN has a strange metallic coating on their skin.</span>"
 
 /datum/status_effect/stabilized/gold
 	id = "stabilizedgold"
+	colour = "gold"
 	var/mob/living/simple_animal/familiar
 
 /datum/status_effect/stabilized/gold/tick()
@@ -757,6 +779,7 @@ datum/status_effect/stabilized/blue/on_remove()
 
 /datum/status_effect/stabilized/rainbow
 	id = "stabilizedrainbow"
+	colour = "rainbow"
 
 /datum/status_effect/stabilized/rainbow/tick()
 	if(owner.health <= 0)

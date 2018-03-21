@@ -32,8 +32,13 @@ Stabilized extracts:
 	if(!humanfound)
 		return
 	var/mob/living/carbon/human/H = humanfound
-	var/sanitizedcolour = replacetext(colour, " ", "")
-	var/effectpath = text2path("/datum/status_effect/stabilized/[sanitizedcolour]")
+	var/effectpath = /datum/status_effect/stabilized
+	var/static/list/effects = subtypesof(/datum/status_effect/stabilized)
+	for(var/X in effects)
+		var/datum/status_effect/stabilized/S = X
+		if(initial(S.colour) == colour)
+			effectpath = S
+			break
 	if(!H.has_status_effect(effectpath))
 		var/datum/status_effect/stabilized/S = H.apply_status_effect(effectpath)
 		owner = H
