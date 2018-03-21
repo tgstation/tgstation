@@ -746,7 +746,7 @@
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
 									"<span class='userdanger'>You headbutt the airlock!</span>")
 				H.Knockdown(100)
-				H.apply_damage(10, BRUTE, "head")
+				H.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
 			else
 				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet.</span>")
 			return
@@ -1085,7 +1085,7 @@
 			H.Unconscious(160)
 			H.adjust_fire_stacks(20)
 			H.IgniteMob() //Guaranteed knockout and ignition for nearby people
-			H.apply_damage(40, BRUTE, "chest")
+			H.apply_damage(40, BRUTE, BODY_ZONE_CHEST)
 		return
 	if(forced < 2)
 		if(obj_flags & EMAGGED)

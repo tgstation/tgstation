@@ -139,7 +139,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
 	mode = MINEDRONE_COLLECT
-	idle_vision_range = 9
+	vision_range = 9
 	search_objects = 2
 	wander = TRUE
 	ranged = FALSE
@@ -150,7 +150,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
 	mode = MINEDRONE_ATTACK
-	idle_vision_range = 7
+	vision_range = 7
 	search_objects = 0
 	wander = FALSE
 	ranged = TRUE

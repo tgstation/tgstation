@@ -64,7 +64,7 @@
 /mob/living/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
-		var/zone = ran_zone("chest", 65)//Hits a random part of the body, geared towards the chest
+		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
 		dtype = I.damtype

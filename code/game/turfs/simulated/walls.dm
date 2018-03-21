@@ -218,6 +218,11 @@
 	else if(istype(W, /obj/item/poster))
 		place_poster(W,user)
 		return TRUE
+	//wall mounted IC assembly stuff
+	else if(istype(W, /obj/item/device/electronic_assembly/wallmount))
+		var/obj/item/device/electronic_assembly/wallmount/A = W
+		A.mount_assembly(src, user)
+		return TRUE
 
 	return FALSE
 
@@ -303,5 +308,5 @@
 	cut_overlay(dent_decals)
 	LAZYADD(dent_decals, decal)
 	add_overlay(dent_decals)
-	
+
 #undef MAX_DENT_DECALS

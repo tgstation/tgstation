@@ -30,7 +30,7 @@
 		if((flags & CALTROP_IGNORE_WALKERS) && H.m_intent == MOVE_INTENT_WALK)
 			return
 
-		var/picked_def_zone = pick("l_leg", "r_leg")
+		var/picked_def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
 		if(!istype(O))
 			return

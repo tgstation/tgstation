@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - bugfix: "VOX sounds are now forcefully preloaded on clients to deal with an issue keeping byond from loading them"

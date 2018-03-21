@@ -105,7 +105,7 @@
 	if(get_bodypart(hit_zone))
 		return hit_zone
 	else //when a limb is missing the damage is actually passed to the chest
-		return "chest"
+		return BODY_ZONE_CHEST
 
 /obj/item/projectile/proc/prehit(atom/target)
 	return TRUE
