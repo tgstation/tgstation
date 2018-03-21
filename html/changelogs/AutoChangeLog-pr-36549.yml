@@ -1,0 +1,6 @@
+author: "BunnyBot5000"
+delete-after: True
+changes: 
+  - rscadd: "Fringe Weaver drink - made with ethanol and sugar, it's classy (and slightly weaker) hooch"
+  - rscadd: "Sugar Rush drink - made with sugar, lemon juice, and wine. It's got a slight nutritional value but decreases your satiety, causing you to be unable to consume junk food."
+  - rscadd: "Crevice Spike drink - made with lime juice and hot sauce. A 'sobering' drink, the Crevice Spike will reduce your drunkenness slightly but it kicks hard going down, dealing 15 points of brute when first ingested."
