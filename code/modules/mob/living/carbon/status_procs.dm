@@ -80,10 +80,13 @@
 	if(B)
 		. = B.has_trauma_type(brain_trauma_type, resilience)
 
-/mob/living/carbon/proc/gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
+/mob/living/carbon/proc/gain_trauma(datum/brain_trauma/trauma, resilience, ...)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
-		. = B.gain_trauma(trauma, resilience, arguments)
+		var/list/arguments = list()
+		if(args.len > 2)
+			arguments = args.Copy(3)
+		. = B.brain_gain_trauma(trauma, resilience, arguments)
 
 /mob/living/carbon/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
