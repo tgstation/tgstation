@@ -44,12 +44,9 @@
 #define TRAIT_DEPRESSION			"depression"
 #define TRAIT_JOLLY				"jolly"
 #define TRAIT_NOCRITDAMAGE		"no_crit"
-<<<<<<< HEAD
-=======
 #define TRAIT_NOSLIPWATER		"noslip_water"
 #define TRAIT_NOSLIPALL			"noslip_all"
 
->>>>>>> 97534f2ac3... [Ready] Slime Crossbreeding! (Part 1 of 2!) (#35986)
 
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
