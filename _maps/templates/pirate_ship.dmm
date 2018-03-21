@@ -112,7 +112,6 @@
 	normaldoorcontrol = 1;
 	pixel_x = -8;
 	pixel_y = -24;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/machinery/turretid{
