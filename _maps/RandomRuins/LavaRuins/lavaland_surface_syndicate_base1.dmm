@@ -1393,10 +1393,10 @@
 /obj/item/stock_parts/micro_laser/quadultra,
 /obj/item/stock_parts/micro_laser/quadultra,
 /obj/item/stock_parts/scanning_module/triphasic{
-	step_x = -4
+	pixel_x = -4
 	},
 /obj/item/stock_parts/scanning_module/triphasic{
-	step_x = -4
+	pixel_x = -4
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
