@@ -54816,10 +54816,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
-"wIM" = (
-/obj/structure/guillotine,
-/turf/open/floor/plasteel/dark,
-/area/security/courtroom)
 "wUY" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/bucket,
@@ -88615,7 +88611,7 @@ ahi
 ahN
 aix
 abp
-wIM
+ajp
 ajU
 ajn
 trb
