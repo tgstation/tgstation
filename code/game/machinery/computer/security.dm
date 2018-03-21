@@ -447,7 +447,7 @@ What a mess.*/
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/photo/photo = active1.fields["photo_front"]
-								new /obj/item/poster/wanted(src.loc, I, wanted_name, info)
+								new /obj/item/poster/wanted(src.loc, photo.img, wanted_name, info)
 							printing = 0
 
 //RECORD DELETE
