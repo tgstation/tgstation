@@ -127,7 +127,7 @@
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 1)
 			soundloop.stop()
-		if(SANITY_DISTURBED to SANITY_GREAT)
+		if(SANITY_DISTURBED to INFINITY)
 			owner.clear_fullscreen("depression")
 			soundloop.stop()
 
@@ -169,7 +169,7 @@
 
 /datum/component/mood/proc/IncreaseSanity(amount, limit = 99)
 	if(sanity > limit)
-		DecreaseSanity(-0.5) //Removes some sanity to go back to our current limit.
+		DecreaseSanity(0.5) //Removes some sanity to go back to our current limit.
 	else
 		sanity = min(limit, sanity + amount)
 
