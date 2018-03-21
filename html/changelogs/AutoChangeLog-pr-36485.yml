@@ -1,0 +1,4 @@
+author: "cyclowns"
+delete-after: True
+changes: 
+  - tweak: "Unary devices can now be analyzed using gas scanners. This means stuff like vents, scrubbers, cryo tubes, or heaters/freezers."

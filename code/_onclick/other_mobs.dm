@@ -91,7 +91,7 @@
 		return
 	var/mob/living/carbon/ML = A
 	if(istype(ML))
-		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		var/obj/item/bodypart/affecting = null
 		if(ishuman(ML))
 			var/mob/living/carbon/human/H = ML

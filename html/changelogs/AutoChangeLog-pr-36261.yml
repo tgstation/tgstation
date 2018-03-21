@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Blowing up the wrong part of the shuttle should no longer result in the shuttle being permanently broken."

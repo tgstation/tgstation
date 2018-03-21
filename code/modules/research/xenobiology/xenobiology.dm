@@ -599,6 +599,8 @@
 		SM.sentience_act()
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
 		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>")
+		if(SM.flags_2 & HOLOGRAM_2) //Check to see if it's a holodeck creature
+			to_chat(SM, "<span class='userdanger'>You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck.</span>")
 		to_chat(user, "<span class='notice'>[SM] accepts [src] and suddenly becomes attentive and aware. It worked!</span>")
 		SM.copy_known_languages_from(user, FALSE)
 		after_success(user, SM)
@@ -825,9 +827,11 @@
 	L.regenerate_icons()
 	qdel(src)
 
-/obj/item/slimepotion/slimeradio
+/obj/item/slimepotion/slime/slimeradio
 	name = "bluespace radio potion"
 	desc = "A strange chemical that grants those who ingest it the ability to broadcast and recieve subscape radio waves."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "potgrey"
 
 /obj/item/slimepotion/slime/slimeradio/attack(mob/living/M, mob/user)
 	if(!ismob(M))
@@ -870,8 +874,9 @@
 	force = 6
 	materials = list(MAT_METAL=500)
 	throwforce = 10
-	throw_speed = 3
-	throw_range = 7
+	throw_speed = 0.1
+	throw_range = 28
+	glide_size = 2
 	flags_1 = CONDUCT_1
 	max_amount = 60
 	turf_type = /turf/open/floor/sepia
