@@ -1505,3 +1505,45 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.satiety += 5 //for context, vitamins give 30 satiety per tick
 	..()
 	. = TRUE
+
+/datum/reagent/consumable/ethanol/fringe_weaver
+	name = "Fringe Weaver"
+	id = "fringe_weaver"
+	description = "Bubbly, classy, and undoubtedly strong - a Glitch City classic."
+	color = "#FFEAC4"
+	boozepwr = 90 //classy hooch, essentially, but lower pwr to make up for slightly easier access
+	taste_description = "ethylic alcohol with a hint of sugar"
+	glass_icon_state = "fringe_weaver"
+	glass_name = "Fringe Weaver"
+	glass_desc = "It's a wonder it doesn't spill out of the glass."
+
+/datum/reagent/consumable/ethanol/sugar_rush
+	name = "Sugar Rush"
+	id = "sugar_rush"
+	description = "Sweet, light, and fruity - as girly as it gets."
+	color = "#FF226C"
+	boozepwr = 10
+	taste_description = "your arteries clogging with sugar"
+	nutriment_factor = 2 * REAGENTS_METABOLISM
+	glass_icon_state = "sugar_rush"
+	glass_name = "Sugar Rush"
+	glass_desc = "If you can't mix a Sugar Rush, you can't tend bar."
+
+/datum/reagent/consumable/ethanol/sugar_rush/on_mob_life(mob/living/M)
+	M.satiety -= 10 //junky as hell! a whole glass will keep you from being able to eat junk food
+	..()
+	. = TRUE
+
+/datum/reagent/consumable/ethanol/crevice_spike
+	name = "Crevice Spike"
+	id = "crevice_spike"
+	description = "Sour, bitter, and smashingly sobering."
+	color = "#5BD231"
+	boozepwr = -10 //sobers you up - ideally, one would drink to get hit with brute damage now to avoid alcohol problems later
+	taste_description = "a bitter SPIKE with a sour aftertaste"
+	glass_icon_state = "crevice_spike"
+	glass_name = "Crevice Spike"
+	glass_desc = "It'll either knock the drunkenness out of you or knock you out cold. Both, probably."
+
+/datum/reagent/consumable/ethanol/crevice_spike/on_mob_add(mob/living/L) //damage only applies when drink first enters system and won't again until drink metabolizes out
+	L.adjustBruteLoss(3 * min(5,volume)) //minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you for the full 15
