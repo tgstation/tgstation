@@ -23,6 +23,7 @@
 #define TRAIT_SHOCKIMMUNE		"shock_immunity"
 #define TRAIT_STABLEHEART		"stable_heart"
 #define TRAIT_RESISTHEAT		"resist_heat"
+#define TRAIT_RESISTHEATHANDS	"resist_heat_handsonly" //For when you want to be able to touch hot things, but still want fire to be an issue.
 #define TRAIT_RESISTCOLD		"resist_cold"
 #define TRAIT_RESISTHIGHPRESSURE	"resist_high_pressure"
 #define TRAIT_RESISTLOWPRESSURE	"resist_low_pressure"
@@ -43,6 +44,12 @@
 #define TRAIT_DEPRESSION			"depression"
 #define TRAIT_JOLLY				"jolly"
 #define TRAIT_NOCRITDAMAGE		"no_crit"
+<<<<<<< HEAD
+=======
+#define TRAIT_NOSLIPWATER		"noslip_water"
+#define TRAIT_NOSLIPALL			"noslip_all"
+
+>>>>>>> 97534f2ac3... [Ready] Slime Crossbreeding! (Part 1 of 2!) (#35986)
 
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
