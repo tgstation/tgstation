@@ -167,8 +167,8 @@
 
 /obj/item/organ/brain/Destroy() //copypasted from MMIs.
 	if(brainmob)
-		qdel(brainmob)
-		brainmob = null
+		QDEL_NULL(brainmob)
+	QDEL_LIST(traumas)
 	return ..()
 
 /obj/item/organ/brain/alien
@@ -218,25 +218,39 @@
 		return FALSE
 	return TRUE
 
-//Add a specific trauma
-/obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
+//Proc to use when directly adding a trauma to the brain, so extra args can be given
+/obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, resilience, ...)
+	var/list/arguments = list()
+	if(args.len > 2)
+		arguments = args.Copy(3)
+	. = brain_gain_trauma(trauma, resilience, arguments)
+
+//Direct trauma gaining proc. Necessary to assign a trauma to its brain. Avoid using directly.
+/obj/item/organ/brain/proc/brain_gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
 	if(!can_gain_trauma(trauma, resilience))
 		return
-	if(ispath(trauma))
-		trauma = new(arglist(arguments))
-	else
-		if(trauma.brain) //we don't accept used traumas here
-			WARNING("gain_trauma was given an already active trauma.")
-			return
 
-	traumas += trauma
-	trauma.brain = src
+	var/datum/brain_trauma/actual_trauma
+	if(ispath(trauma))
+		if(!LAZYLEN(arguments))
+			actual_trauma = new trauma() //arglist with an empty list runtimes for some reason
+		else
+			actual_trauma = new trauma(arglist(arguments))
+	else
+		actual_trauma = trauma
+
+	if(actual_trauma.brain) //we don't accept used traumas here
+		WARNING("gain_trauma was given an already active trauma.")
+		return
+
+	traumas += actual_trauma
+	actual_trauma.brain = src
 	if(owner)
-		trauma.owner = owner
-		trauma.on_gain()
+		actual_trauma.owner = owner
+		actual_trauma.on_gain()
 	if(resilience)
-		trauma.resilience = resilience
-	SSblackbox.record_feedback("tally", "traumas", 1, trauma.type)
+		actual_trauma.resilience = resilience
+	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
 
 //Add a random trauma of a certain subtype
 /obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)
@@ -250,8 +264,7 @@
 		return
 
 	var/trauma_type = pick(possible_traumas)
-	SSblackbox.record_feedback("tally", "traumas", 1, trauma_type)
-	traumas += new trauma_type(src, resilience)
+	gain_trauma(trauma_type, resilience)
 
 //Cure a random trauma of a certain resilience level
 /obj/item/organ/brain/proc/cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
