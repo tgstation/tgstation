@@ -143,6 +143,9 @@
 				var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
 				tune = input("Tune frequency ([min]-[max]):", name, format_frequency(frequency)) as null|num
 				if(!isnull(tune) && !..())
+					if (tune < MIN_FREE_FREQ && tune <= MAX_FREE_FREQ / 10)
+						// allow typing 144.7 to get 1447
+						tune *= 10
 					. = TRUE
 			else if(adjust)
 				tune = frequency + adjust * 10
