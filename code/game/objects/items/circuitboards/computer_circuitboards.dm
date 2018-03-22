@@ -236,6 +236,10 @@
 	name = "Outpost Status Display (Computer Board)"
 	build_path = /obj/machinery/computer/security/mining
 
+/obj/item/circuitboard/computer/research
+	name = "Research Monitor (Computer Board)"
+	build_path = /obj/machinery/computer/security/research
+
 /obj/item/circuitboard/computer/comm_monitor
 	name = "Telecommunications Monitor (Computer Board)"
 	build_path = /obj/machinery/computer/telecomms/monitor
