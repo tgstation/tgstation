@@ -39,7 +39,7 @@
 	invocation = "Ra'sha yoka!"
 
 /obj/item/paper/talisman/malformed/invoke(mob/living/user, successfuluse = 1)
-	to_chat(user, "<span class='cultitalic'>You feel a pain in your head. The Geometer is displeased.</span>")
+	to_chat(user, "<span class='cult italic'>You feel a pain in your head. The Geometer is displeased.</span>")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.apply_damage(10, BRUTE, "head")
@@ -66,7 +66,7 @@
 		return ..(user, 0)
 
 	if(user.z > ZLEVEL_SPACEMAX)
-		to_chat(user, "<span class='cultitalic'>You are not in the right dimension!</span>")
+		to_chat(user, "<span class='cult italic'>You are not in the right dimension!</span>")
 		log_game("Teleport talisman failed - user in away mission")
 		return ..(user, 0)
 
@@ -79,7 +79,7 @@
 		to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
 		return ..(user, 0)
 	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear[user.p_s()] with a sharp crack!</span>", \
-	"<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>", "<i>You hear a sharp crack.</i>")
+	"<span class='cult italic'>You speak the words of the talisman and find yourself somewhere else!</span>", "<i>You hear a sharp crack.</i>")
 	user.forceMove(target)
 	target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	return ..()
@@ -96,10 +96,10 @@
 /obj/item/paper/talisman/summon_tome/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
 	user.visible_message("<span class='warning'>[user]'s hand glows red for a moment.</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman!</span>")
+						 "<span class='cult italic'>You speak the words of the talisman!</span>")
 	new /obj/item/tome(get_turf(user))
 	user.visible_message("<span class='warning'>A tome appears at [user]'s feet!</span>", \
-			 "<span class='cultitalic'>An arcane tome materializes at your feet.</span>")
+			 "<span class='cult italic'>An arcane tome materializes at your feet.</span>")
 
 /obj/item/paper/talisman/true_sight
 	cultist_name = "Talisman of Veiling"
@@ -115,14 +115,14 @@
 	. = ..()
 	if(!revealing)
 		user.visible_message("<span class='warning'>Thin grey dust falls from [user]'s hand!</span>", \
-			"<span class='cultitalic'>You speak the words of the talisman, hiding nearby runes.</span>")
+			"<span class='cult italic'>You speak the words of the talisman, hiding nearby runes.</span>")
 		invocation = "Nikt'o barada kla'atu!"
 		revealing = TRUE
 		for(var/obj/effect/rune/R in range(4,user))
 			R.talismanhide()
 	else
 		user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
-			 "<span class='cultitalic'>You speak the words of the talisman, revealing nearby runes.</span>")
+			 "<span class='cult italic'>You speak the words of the talisman, revealing nearby runes.</span>")
 		for(var/obj/effect/rune/R in range(3,user))
 			R.talismanreveal()
 
@@ -137,7 +137,7 @@
 /obj/item/paper/talisman/emp/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
 	user.visible_message("<span class='warning'>[user]'s hand flashes a bright blue!</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman, emitting an EMP blast.</span>")
+						 "<span class='cult italic'>You speak the words of the talisman, emitting an EMP blast.</span>")
 	empulse(src, 4, 8)
 
 
@@ -162,7 +162,7 @@
 	if(iscultist(user))
 		invoke(user, 1)
 		user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of red light!</span>", \
-							 "<span class='cultitalic'>You stun [target] with the talisman!</span>")
+							 "<span class='cult italic'>You stun [target] with the talisman!</span>")
 		var/obj/item/nullrod/N = locate() in target
 		if(N)
 			target.visible_message("<span class='warning'>[target]'s holy weapon absorbs the talisman's light!</span>", \
@@ -197,7 +197,7 @@
 /obj/item/paper/talisman/armor/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
 	user.visible_message("<span class='warning'>Otherworldly armor suddenly appears on [user]!</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman, arming yourself!</span>")
+						 "<span class='cult italic'>You speak the words of the talisman, arming yourself!</span>")
 	user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
 	user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
 	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), slot_shoes)
@@ -226,7 +226,7 @@
 /obj/item/paper/talisman/horror/afterattack(mob/living/target, mob/living/user)
 	if(iscultist(user) && (get_dist(user, target) < 7))
 		if(iscarbon(target))
-			to_chat(user, "<span class='cultitalic'>You disturb [target] with visions of madness!</span>")
+			to_chat(user, "<span class='cult italic'>You disturb [target] with visions of madness!</span>")
 			var/mob/living/carbon/H = target
 			H.reagents.add_reagent("mindbreaker", 12)
 			if(is_servant_of_ratvar(target))
@@ -254,7 +254,7 @@
 
 /obj/item/paper/talisman/construction/attack(obj/M,mob/living/user)
 	if(iscultist(user))
-		to_chat(user, "<span class='cultitalic'>This talisman will only work on a stack of metal or plasteel sheets!</span>")
+		to_chat(user, "<span class='cult italic'>This talisman will only work on a stack of metal or plasteel sheets!</span>")
 		log_game("Construct talisman failed - not a valid target")
 	else
 		..()
@@ -306,7 +306,7 @@
 /obj/item/paper/talisman/shackle/attack(mob/living/carbon/target, mob/living/user)
 	if(iscultist(user) && istype(target))
 		if(target.stat == DEAD)
-			user.visible_message("<span class='cultitalic'>This talisman's magic does not affect the dead!</span>")
+			user.visible_message("<span class='cult italic'>This talisman's magic does not affect the dead!</span>")
 			return
 		CuffAttack(target, user)
 		return

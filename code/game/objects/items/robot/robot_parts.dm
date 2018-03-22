@@ -69,7 +69,7 @@
 		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 			if (M.use(1))
 				var/obj/item/ed209_assembly/B = new /obj/item/ed209_assembly
-				B.loc = get_turf(src)
+				B.forceMove(drop_location())
 				to_chat(user, "<span class='notice'>You arm the robot frame.</span>")
 				var/holding_this = user.get_inactive_held_item()==src
 				qdel(src)
@@ -227,7 +227,7 @@
 			O.job = "Cyborg"
 
 			O.cell = chest.cell
-			chest.cell.loc = O
+			chest.cell.forceMove(O)
 			chest.cell = null
 			W.forceMove(O)//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			if(O.mmi) //we delete the mmi created by robot/New()
@@ -271,7 +271,7 @@
 
 
 			O.cell = chest.cell
-			chest.cell.loc = O
+			chest.cell.forceMove(O)
 			chest.cell = null
 			O.locked = panel_locked
 			O.job = "Cyborg"

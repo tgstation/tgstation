@@ -224,7 +224,7 @@
 			G.use(10)
 			var/obj/structure/displaycase/display = new(src.loc)
 			if(electronics)
-				electronics.loc = display
+				electronics.forceMove(display)
 				display.electronics = electronics
 				if(electronics.one_access)
 					display.req_one_access = electronics.accesses

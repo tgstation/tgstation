@@ -169,23 +169,20 @@
 		if("signaller")
 
 			if(href_list["send"])
-
-				sradio.send_signal("ACTIVATE")
+				signaler.send_activation()
 				audible_message("[icon2html(src, world)] *beep* *beep*")
 
 			if(href_list["freq"])
-
-				var/new_frequency = (sradio.frequency + text2num(href_list["freq"]))
+				var/new_frequency = (signaler.frequency + text2num(href_list["freq"]))
 				if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
 					new_frequency = sanitize_frequency(new_frequency)
-				sradio.set_frequency(new_frequency)
+				signaler.set_frequency(new_frequency)
 
 			if(href_list["code"])
-
-				sradio.code += text2num(href_list["code"])
-				sradio.code = round(sradio.code)
-				sradio.code = min(100, sradio.code)
-				sradio.code = max(1, sradio.code)
+				signaler.code += text2num(href_list["code"])
+				signaler.code = round(signaler.code)
+				signaler.code = min(100, signaler.code)
+				signaler.code = max(1, signaler.code)
 
 
 
@@ -397,14 +394,14 @@
 	Frequency:
 	<A href='byond://?src=[REF(src)];software=signaller;freq=-10;'>-</A>
 	<A href='byond://?src=[REF(src)];software=signaller;freq=-2'>-</A>
-	[format_frequency(sradio.frequency)]
+	[format_frequency(signaler.frequency)]
 	<A href='byond://?src=[REF(src)];software=signaller;freq=2'>+</A>
 	<A href='byond://?src=[REF(src)];software=signaller;freq=10'>+</A><BR>
 
 	Code:
 	<A href='byond://?src=[REF(src)];software=signaller;code=-5'>-</A>
 	<A href='byond://?src=[REF(src)];software=signaller;code=-1'>-</A>
-	[sradio.code]
+	[signaler.code]
 	<A href='byond://?src=[REF(src)];software=signaller;code=1'>+</A>
 	<A href='byond://?src=[REF(src)];software=signaller;code=5'>+</A><BR>
 

@@ -81,7 +81,9 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 "u" = (
-/obj/machinery/door/airlock/survival_pod/vertical,
+/obj/machinery/door/airlock/survival_pod/glass{
+	dir = 4
+	},
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 

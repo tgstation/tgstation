@@ -154,7 +154,10 @@
 		if(!isturf(eye_user.loc))
 			return
 		T = get_turf(T)
-		loc = T
+		if (T)
+			forceMove(T)
+		else
+			moveToNullspace()
 		if(use_static)
 			GLOB.cameranet.visibility(src)
 		if(visible_icon)

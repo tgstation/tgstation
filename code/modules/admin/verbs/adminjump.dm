@@ -34,7 +34,7 @@
 
 	log_admin("[key_name(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
 	message_admins("[key_name_admin(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
-	usr.loc = T
+	usr.forceMove(T)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Jump To Turf") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -137,7 +137,7 @@
 	admin_ticket_log(M, msg)
 	if(M)
 		M.forceMove(get_turf(usr))
-		usr.loc = M.loc
+		usr.forceMove(M.loc)
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Get Key") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/sendmob(mob/M in sortmobs())

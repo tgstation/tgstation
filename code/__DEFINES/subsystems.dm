@@ -23,8 +23,8 @@
 #define FLIGHTSUIT_PROCESSING_FULL 1
 
 #define INITIALIZATION_INSSATOMS 0	//New should not call Initialize
-#define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
-#define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
+#define INITIALIZATION_INNEW_MAPLOAD 2	//New should call Initialize(TRUE)
+#define INITIALIZATION_INNEW_REGULAR 1	//New should call Initialize(FALSE)
 
 #define INITIALIZE_HINT_NORMAL 0    //Nothing happens
 #define INITIALIZE_HINT_LATELOAD 1  //Call LateInitialize
@@ -46,16 +46,17 @@
 #define INIT_ORDER_DBCORE 18
 #define INIT_ORDER_BLACKBOX 17
 #define INIT_ORDER_SERVER_MAINT 16
-#define INIT_ORDER_RESEARCH 15
-#define INIT_ORDER_EVENTS 14
-#define INIT_ORDER_JOBS 13
-#define INIT_ORDER_TICKER 12
-#define INIT_ORDER_MAPPING 11
-#define INIT_ORDER_ATOMS 10
-#define INIT_ORDER_NETWORKS 9
-#define INIT_ORDER_LANGUAGE 8
-#define INIT_ORDER_MACHINES 7
-#define INIT_ORDER_CIRCUIT 6
+#define INIT_ORDER_INPUT 15
+#define INIT_ORDER_RESEARCH 14
+#define INIT_ORDER_EVENTS 13
+#define INIT_ORDER_JOBS 12
+#define INIT_ORDER_TICKER 11
+#define INIT_ORDER_MAPPING 10
+#define INIT_ORDER_ATOMS 9
+#define INIT_ORDER_NETWORKS 8
+#define INIT_ORDER_LANGUAGE 7
+#define INIT_ORDER_MACHINES 6
+#define INIT_ORDER_CIRCUIT 5
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
 #define INIT_ORDER_AIR -1
@@ -69,6 +70,40 @@
 #define INIT_ORDER_SHUTTLE -21
 #define INIT_ORDER_SQUEAK -40
 #define INIT_ORDER_PERSISTENCE -100
+
+// Subsystem fire priority, from lowest to highest priority
+// If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
+
+#define FIRE_PRIORITY_IDLE_NPC		1
+#define FIRE_PRIORITY_SERVER_MAINT	1
+
+#define FIRE_PRIORITY_GARBAGE		4
+#define FIRE_PRIORITY_RESEARCH		4
+#define FIRE_PRIORITY_AIR			5
+#define FIRE_PRIORITY_NPC			5
+#define FIRE_PRIORITY_PROCESS		6
+#define FIRE_PRIORITY_THROWING		6
+#define FIRE_PRIORITY_FLIGHTPACKS	7
+#define FIRE_PRIORITY_SPACEDRIFT	7
+#define FIRE_PRIOTITY_SMOOTHING		8
+#define FIRE_PRIORITY_ORBIT			8
+#define FIRE_PRIORITY_OBJ			9
+#define FIRE_PRIORUTY_FIELDS		9
+#define FIRE_PRIORITY_ACID			9
+#define FIRE_PRIOTITY_BURNING		9
+#define FIRE_PRIORITY_INBOUNDS		9
+
+#define FIRE_PRIORITY_DEFAULT		10
+
+#define FIRE_PRIORITY_PARALLAX		11
+#define FIRE_PRIORITY_NETWORKS		12
+#define FIRE_PRIORITY_MOBS			13
+#define FIRE_PRIORITY_TGUI			14
+
+#define FIRE_PRIORITY_TICKER		19
+#define FIRE_PRIORITY_OVERLAYS		20
+
+#define FIRE_PRIORITY_INPUT			100 // This must always always be the max highest priority. Player input must never be lost.
 
 // SS runlevels
 

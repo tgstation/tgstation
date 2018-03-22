@@ -1,32 +1,11 @@
 /obj/item/device/radio
 	icon = 'icons/obj/radio.dmi'
 	name = "station bounced radio"
-	suffix = "\[3\]"
 	icon_state = "walkietalkie"
 	item_state = "walkietalkie"
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
-	var/on = TRUE // 0 for off
-	var/last_transmission
-	var/frequency = FREQ_COMMON
-	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
-	var/canhear_range = 3 // the range which mobs can hear this radio from
-	var/list/secure_radio_connections
-	var/prison_radio = 0
-	var/b_stat = 0
-	var/broadcasting = 0
-	var/listening = 1
-	var/translate_binary = 0
-	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
-	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
-	var/obj/item/device/encryptionkey/keyslot //To allow the radio to accept encryption keys.
-	var/subspace_switchable = 0
-	var/subspace_transmission = 0
-	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
-	var/independent = FALSE // If true, bypasses any tcomms machinery.
-	var/freqlock = 0 //Frequency lock to stop the user from untuning specialist radios.
-	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
-//			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
+
 	flags_1 = CONDUCT_1 | HEAR_1
 	flags_2 = NO_EMP_WIRES_2
 	slot_flags = SLOT_BELT
@@ -35,12 +14,33 @@
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=75, MAT_GLASS=25)
 
-	var/const/TRANSMISSION_DELAY = 5 // only 2/second/radio
-	var/const/FREQ_LISTENING = 1
-		//FREQ_BROADCASTING = 2
+	var/on = TRUE
+	var/frequency = FREQ_COMMON
+	var/traitor_frequency = 0  // If tuned to this frequency, uplink will be unlocked.
+	var/canhear_range = 3  // The range around the radio in which mobs can hear what it receives.
+	var/emped = 0  // Tracks the number of EMPs currently stacked.
 
-	var/command = FALSE //If we are speaking into a command headset, our text can be BOLD
-	var/use_command = FALSE
+	var/broadcasting = FALSE  // Whether the radio will transmit dialogue it hears nearby.
+	var/listening = TRUE  // Whether the radio is currently receiving.
+	var/prison_radio = FALSE  // If true, the transmit wire starts cut.
+	var/unscrewed = FALSE  // Whether wires are accessible. Toggleable by screwdrivering.
+	var/freerange = FALSE  // If true, the radio has access to the full spectrum.
+	var/subspace_transmission = FALSE  // If true, the radio transmits and receives on subspace exclusively.
+	var/subspace_switchable = FALSE  // If true, subspace_transmission can be toggled at will.
+	var/freqlock = FALSE  // Frequency lock to stop the user from untuning specialist radios.
+	var/use_command = FALSE  // If true, broadcasts will be large and BOLD.
+	var/command = FALSE  // If true, use_command can be toggled at will.
+
+	// Encryption key handling
+	var/obj/item/device/encryptionkey/keyslot
+	var/translate_binary = FALSE  // If true, can hear the special binary channel.
+	var/independent = FALSE  // If true, can say/hear on the special CentCom channel.
+	var/syndie = FALSE  // If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel.
+	var/list/channels = list()  // Map from name (see communications.dm) to on/off. First entry is current department (:h).
+	var/list/secure_radio_connections
+
+	var/const/FREQ_LISTENING = 1
+	//FREQ_BROADCASTING = 2
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)
 	remove_radio(src, frequency)
@@ -48,23 +48,19 @@
 
 /obj/item/device/radio/proc/recalculateChannels()
 	channels = list()
-	translate_binary = 0
-	syndie = 0
+	translate_binary = FALSE
+	syndie = FALSE
 	independent = FALSE
 
 	if(keyslot)
 		for(var/ch_name in keyslot.channels)
-			if(ch_name in src.channels)
-				continue
-			channels += ch_name
-			channels[ch_name] = keyslot.channels[ch_name]
+			if(!(ch_name in channels))
+				channels[ch_name] = keyslot.channels[ch_name]
 
 		if(keyslot.translate_binary)
-			translate_binary = 1
-
+			translate_binary = TRUE
 		if(keyslot.syndie)
-			syndie = 1
-
+			syndie = TRUE
 		if(keyslot.independent)
 			independent = TRUE
 
@@ -78,10 +74,9 @@
 	recalculateChannels()
 
 /obj/item/device/radio/Destroy()
-	qdel(wires)
-	wires = null
 	remove_radio_all(src) //Just to be sure
-	keyslot = null
+	QDEL_NULL(wires)
+	QDEL_NULL(keyslot)
 	return ..()
 
 /obj/item/device/radio/Initialize()
@@ -99,7 +94,7 @@
 /obj/item/device/radio/interact(mob/user)
 	if (..())
 		return
-	if(b_stat && !isAI(user))
+	if(unscrewed && !isAI(user))
 		wires.interact(user)
 	else
 		ui_interact(user)
@@ -456,30 +451,30 @@
 				raw_message = stars(raw_message)
 			talk_into(speaker, raw_message, , spans, language=message_language)
 
-/obj/item/device/radio/proc/receive_range(freq, level)
+/obj/item/device/radio/proc/can_receive(freq, level)
 	// check if this radio can receive on the given frequency, and if so,
 	// what the range is in which mobs will hear the radio
 	// returns: -1 if can't receive, range otherwise
 
 	if (wires.is_cut(WIRE_RX))
-		return -1
+		return FALSE
 	if(!listening)
-		return -1
+		return FALSE
 	if(!(0 in level))
 		var/turf/position = get_turf(src)
 		if(!position || !(position.z in level))
-			return -1
+			return FALSE
 	if(freq == FREQ_SYNDICATE)
 		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
-			return -1
+			return FALSE
 	if(freq == FREQ_CENTCOM)
 		if(!independent)
-			return -1
+			return FALSE
 	if (!on)
-		return -1
+		return FALSE
 	if (!freq) //received on main frequency
 		if (!listening)
-			return -1
+			return FALSE
 	else
 		var/accept = (freq==frequency && listening)
 		if (!accept)
@@ -489,19 +484,13 @@
 						accept = 1
 						break
 		if (!accept)
-			return -1
-	return canhear_range
-
-/obj/item/device/radio/proc/send_hear(freq, level)
-
-	var/range = receive_range(freq, level)
-	if(range > -1)
-		return get_hearers_in_view(canhear_range, src)
+			return FALSE
+	return TRUE
 
 
 /obj/item/device/radio/examine(mob/user)
 	..()
-	if (b_stat)
+	if (unscrewed)
 		to_chat(user, "<span class='notice'>It can be attached and modified.</span>")
 	else
 		to_chat(user, "<span class='notice'>It cannot be modified or attached.</span>")
@@ -509,8 +498,8 @@
 /obj/item/device/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/screwdriver))
-		b_stat = !b_stat
-		if(b_stat)
+		unscrewed = !unscrewed
+		if(unscrewed)
 			to_chat(user, "<span class='notice'>The radio can now be attached and modified!</span>")
 		else
 			to_chat(user, "<span class='notice'>The radio can no longer be modified or attached!</span>")
@@ -522,8 +511,8 @@
 	var/curremp = emped //Remember which EMP this was
 	if (listening && ismob(loc))	// if the radio is turned on and on someone's person they notice
 		to_chat(loc, "<span class='warning'>\The [src] overloads.</span>")
-	broadcasting = 0
-	listening = 0
+	broadcasting = FALSE
+	listening = FALSE
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
 	on = FALSE
@@ -541,7 +530,7 @@
 
 /obj/item/device/radio/borg
 	name = "cyborg radio"
-	subspace_switchable = 1
+	subspace_switchable = TRUE
 	dog_fashion = null
 	flags_2 = NO_EMP_WIRES_2
 
@@ -568,7 +557,7 @@
 			if(keyslot)
 				var/turf/T = get_turf(user)
 				if(T)
-					keyslot.loc = T
+					keyslot.forceMove(T)
 					keyslot = null
 
 			recalculateChannels()

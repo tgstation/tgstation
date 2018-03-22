@@ -20,6 +20,7 @@
 	filling_color = "#F0E68C"
 	tastes = list("egg" = 1)
 	foodtype = MEAT
+	grind_results = list("eggyolk" = 5)
 
 /obj/item/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?

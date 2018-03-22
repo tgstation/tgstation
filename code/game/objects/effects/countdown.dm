@@ -24,7 +24,7 @@
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
-	loc = get_turf(A)
+	forceMove(get_turf(A))
 
 /obj/effect/countdown/proc/start()
 	if(!started)

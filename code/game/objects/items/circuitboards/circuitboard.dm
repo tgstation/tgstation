@@ -12,6 +12,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_GLASS=1000)
 	w_class = WEIGHT_CLASS_SMALL
+	grind_results = list("silicon" = 20, "sacid" = 0.5) //Retrieving acid this way is extremely inefficient
 	var/build_path = null
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/M)
@@ -35,7 +36,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 		return
 
 	M.component_parts = list(src) // List of components always contains a board
-	loc = null
+	moveToNullspace()
 
 	for(var/comp_path in req_components)
 		var/comp_amt = req_components[comp_path]

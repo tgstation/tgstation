@@ -48,6 +48,7 @@
 	var/datum/object = GLOBAL_PROC
 	var/delegate
 	var/list/arguments
+	var/datum/weakref/user
 
 /datum/callback/New(thingtocall, proctocall, ...)
 	if (thingtocall)
@@ -55,6 +56,8 @@
 	delegate = proctocall
 	if (length(args) > 2)
 		arguments = args.Copy(3)
+	if(usr)
+		user = WEAKREF(usr)
 
 /world/proc/ImmediateInvokeAsync(thingtocall, proctocall, ...)
 	set waitfor = FALSE
@@ -70,8 +73,16 @@
 		call(thingtocall, proctocall)(arglist(calling_arguments))
 
 /datum/callback/proc/Invoke(...)
+	if(!usr)
+		var/datum/weakref/W = user
+		if(W)
+			var/mob/M = W.resolve()
+			if(M)
+				return world.PushUsr(M, src)
+		
 	if (!object)
 		return
+		
 	var/list/calling_arguments = arguments
 	if (length(args))
 		if (length(arguments))
@@ -87,8 +98,17 @@
 //copy and pasted because fuck proc overhead
 /datum/callback/proc/InvokeAsync(...)
 	set waitfor = FALSE
+
+	if(!usr)
+		var/datum/weakref/W = user
+		if(W)
+			var/mob/M = W.resolve()
+			if(M)
+				return world.PushUsr(M, src)
+	
 	if (!object)
 		return
+		
 	var/list/calling_arguments = arguments
 	if (length(args))
 		if (length(arguments))

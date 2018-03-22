@@ -265,7 +265,7 @@
 	pull_data()
 	var/incoming = get_pin_data(IC_INPUT, 1)
 	if(!isnull(incoming))
-		result = ToDegrees(incoming)
+		result = TODEGREES(incoming)
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -283,7 +283,7 @@
 	pull_data()
 	var/incoming = get_pin_data(IC_INPUT, 1)
 	if(!isnull(incoming))
-		result = ToRadians(incoming)
+		result = TORADIANS(incoming)
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -318,5 +318,57 @@
 		set_pin_data(IC_OUTPUT, 1, x1 - x2)
 		set_pin_data(IC_OUTPUT, 2, y1 - y2)
 
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/converter/hsv2hex
+	name = "hsv to hexadecimal"
+	desc = "This circuit can convert a HSV (Hue, Saturation, and Value) color to a Hexadecimal RGB color."
+	extended_desc = "The first pin controls tint (0-359), the second pin controls how intense the tint is (0-255), and the third controls how bright the tint is (0 for black, 127 for normal, 255 for white)."
+	icon_state = "hsv-hex"
+	inputs = list(
+		"hue" = IC_PINTYPE_NUMBER,
+		"saturation" = IC_PINTYPE_NUMBER,
+		"value" = IC_PINTYPE_NUMBER
+	)
+	outputs = list("hexadecimal rgb" = IC_PINTYPE_COLOR)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/converter/hsv2hex/do_work()
+	var/result = null
+	pull_data()
+	var/hue = get_pin_data(IC_INPUT, 1)
+	var/saturation = get_pin_data(IC_INPUT, 2)
+	var/value = get_pin_data(IC_INPUT, 3)
+	if(isnum(hue)&&isnum(saturation)&&isnum(value))
+		result = HSVtoRGB(hsv(AngleToHue(hue),saturation,value))
+
+	set_pin_data(IC_OUTPUT, 1, result)
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/converter/rgb2hex
+	name = "rgb to hexadecimal"
+	desc = "This circuit can convert a RGB (Red, Green, Blue) color to a Hexadecimal RGB color."
+	extended_desc = "The first pin controls red amount, the second pin controls green amount, and the third controls blue amount. All go from 0-255."
+	icon_state = "rgb-hex"
+	inputs = list(
+		"red" = IC_PINTYPE_NUMBER,
+		"green" = IC_PINTYPE_NUMBER,
+		"blue" = IC_PINTYPE_NUMBER
+	)
+	outputs = list("hexadecimal rgb" = IC_PINTYPE_COLOR)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/converter/rgb2hex/do_work()
+	var/result = null
+	pull_data()
+	var/red = get_pin_data(IC_INPUT, 1)
+	var/green = get_pin_data(IC_INPUT, 2)
+	var/blue = get_pin_data(IC_INPUT, 3)
+	if(isnum(red)&&isnum(green)&&isnum(blue))
+		result = rgb(red,green,blue)
+
+	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
 	activate_pin(2)

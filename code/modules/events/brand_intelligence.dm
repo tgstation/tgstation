@@ -67,12 +67,12 @@
 
 		kill()
 		return
-	if(IsMultiple(activeFor, 4))
+	if(ISMULTIPLE(activeFor, 4))
 		var/obj/machinery/vending/rebel = pick(vendingMachines)
 		vendingMachines.Remove(rebel)
 		infectedMachines.Add(rebel)
 		rebel.shut_up = 0
 		rebel.shoot_inventory = 1
 
-		if(IsMultiple(activeFor, 8))
+		if(ISMULTIPLE(activeFor, 8))
 			originMachine.speak(pick(rampant_speeches))

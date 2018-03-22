@@ -4347,7 +4347,7 @@
 /turf/open/floor/mineral/plasma,
 /area/space/nearstation)
 "nc" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/mineral/plasma,
 /area/space/nearstation)
 "nd" = (

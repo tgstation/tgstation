@@ -212,7 +212,7 @@
 	add_overlay(img)
 	add_overlay("evidence")
 	desc = "An organ storage container holding [I]."
-	I.loc = src
+	I.forceMove(src)
 	w_class = I.w_class
 
 /obj/item/organ_storage/attack_self(mob/user)

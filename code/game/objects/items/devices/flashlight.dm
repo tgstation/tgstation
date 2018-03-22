@@ -48,7 +48,7 @@
 	add_fingerprint(user)
 	if(istype(M) && on && user.zone_selected in list("eyes", "mouth"))
 
-		if((user.disabilities & (CLUMSY | DUMB)) && prob(50))	//too dumb to use flashlight properly
+		if((user.has_disability(CLUMSY) || user.has_disability(DUMB)) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
 		if(!user.IsAdvancedToolUser())
@@ -82,7 +82,7 @@
 				else
 					user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
 										 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
-					if(M.stat == DEAD || (M.disabilities & BLIND) || !M.flash_act(visual = 1)) //mob is dead or fully blind
+					if(M.stat == DEAD || (M.has_disability(BLIND)) || !M.flash_act(visual = 1)) //mob is dead or fully blind
 						to_chat(user, "<span class='warning'>[M]'s pupils don't react to the light!</span>")
 					else if(M.dna && M.dna.check_mutation(XRAY))	//mob has X-RAY vision
 						to_chat(user, "<span class='danger'>[M]'s pupils give an eerie glow!</span>")
@@ -256,6 +256,7 @@
 	var/produce_heat = 1500
 	heat = 1000
 	light_color = LIGHT_COLOR_FLARE
+	grind_results = list("sulfur" = 15)
 
 /obj/item/device/flashlight/flare/New()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
@@ -404,6 +405,7 @@
 	color = LIGHT_COLOR_GREEN
 	icon_state = "glowstick"
 	item_state = "glowstick"
+	grind_results = list("phenol" = 15, "hydrogen" = 10, "oxygen" = 5) //Meth-in-a-stick
 	var/fuel = 0
 
 /obj/item/device/flashlight/glowstick/Initialize()

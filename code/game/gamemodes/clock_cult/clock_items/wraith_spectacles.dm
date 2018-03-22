@@ -32,7 +32,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		if(src == H.glasses && !up)
-			if(H.disabilities & BLIND)
+			if(H.has_disability(BLIND))
 				to_chat(H, "<span class='heavy_brass'>\"You're blind, idiot. Stop embarrassing yourself.\"</span>")
 				return
 			if(blind_cultist(H))
@@ -51,7 +51,7 @@
 		to_chat(victim, "<span class='heavy_brass'>\"It looks like Nar-Sie's dogs really don't value their eyes.\"</span>")
 		to_chat(victim, "<span class='userdanger'>Your eyes explode with horrific pain!</span>")
 		victim.emote("scream")
-		victim.become_blind()
+		victim.become_blind(EYE_DAMAGE)
 		victim.adjust_blurriness(30)
 		victim.adjust_blindness(30)
 		return TRUE
@@ -76,7 +76,7 @@
 	..()
 	if(slot != slot_glasses || up)
 		return
-	if(user.disabilities & BLIND)
+	if(user.has_disability(BLIND))
 		to_chat(user, "<span class='heavy_brass'>\"You're blind, idiot. Stop embarrassing yourself.\"</span>" )
 		return
 	if(blind_cultist(user)) //Cultists instantly go blind
@@ -115,11 +115,11 @@
 		var/obj/item/clothing/glasses/wraith_spectacles/WS = L.glasses
 		desc = "[glasses_right && !WS.up ? "<font color=#DAAA18><b>":""]You are [glasses_right ? "":"not "]wearing wraith spectacles[glasses_right && !WS.up ? "!</b></font>":"."]<br>\
 		You have taken <font color=#DAAA18><b>[W.eye_damage_done]</b></font> eye damage from them.<br>"
-		if(L.disabilities & NEARSIGHT)
+		if(L.has_disability(NEARSIGHT))
 			desc += "<font color=#DAAA18><b>You are nearsighted!</b></font><br>"
 		else if(glasses_right && !WS.up)
 			desc += "You will become nearsighted at <font color=#DAAA18><b>[W.nearsight_breakpoint]</b></font> eye damage.<br>"
-		if(L.disabilities & BLIND)
+		if(L.has_disability(BLIND))
 			desc += "<font color=#DAAA18><b>You are blind!</b></font>"
 		else if(glasses_right && !WS.up)
 			desc += "You will become blind at <font color=#DAAA18><b>[W.blind_breakpoint]</b></font> eye damage."
@@ -142,8 +142,8 @@
 		apply_eye_damage(H)
 	else
 		if(GLOB.ratvar_awakens)
-			H.cure_nearsighted()
-			H.cure_blind()
+			H.cure_nearsighted(list(EYE_DAMAGE))
+			H.cure_blind(list(EYE_DAMAGE))
 			H.adjust_eye_damage(-eye_damage_done)
 			eye_damage_done = 0
 		else if(prob(50) && eye_damage_done)
@@ -153,17 +153,20 @@
 			qdel(src)
 
 /datum/status_effect/wraith_spectacles/proc/apply_eye_damage(mob/living/carbon/human/H)
-	if(H.disabilities & BLIND)
+	if(H.has_disability(BLIND))
 		return
 	H.adjust_eye_damage(0.5)
 	eye_damage_done += 0.5
 	if(eye_damage_done >= 20)
 		H.adjust_blurriness(2)
 	if(eye_damage_done >= nearsight_breakpoint)
-		if(H.become_nearsighted())
-			to_chat(H, "<span class='nzcrentr'>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</span>")
+		if(!H.has_disability(NEARSIGHT))
+			to_chat(H, "<span class='nzcrentr'>Your vision doubles, then trembles. Darkness begins to close in. You can't keep this up!</span>")
+		H.become_nearsighted(EYE_DAMAGE)
 	if(eye_damage_done >= blind_breakpoint)
-		if(H.become_blind())
+		if(!H.has_disability(BLIND))
 			to_chat(H, "<span class='nzcrentr_large'>A piercing white light floods your vision. Suddenly, all goes dark!</span>")
+		H.become_blind(EYE_DAMAGE)
+
 	if(prob(min(20, 5 + eye_damage_done)))
 		to_chat(H, "<span class='nzcrentr_small'><i>Your eyes continue to burn.</i></span>")

@@ -29,7 +29,7 @@
 		icon_state = "fitnesslifter2"
 		user.setDir(SOUTH)
 		user.Stun(80)
-		user.loc = src.loc
+		user.forceMove(src.loc)
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 		user.visible_message("<B>[user] is [bragmessage]!</B>")
 		var/lifts = 0
@@ -67,7 +67,7 @@
 		icon_state = "fitnessweight-c"
 		user.setDir(SOUTH)
 		user.Stun(80)
-		user.loc = src.loc
+		user.forceMove(src.loc)
 		var/mutable_appearance/swole_overlay = mutable_appearance(icon, "fitnessweight-w", WALL_OBJ_LAYER)
 		add_overlay(swole_overlay)
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")

@@ -42,7 +42,7 @@
 	lose_text = "<span class='notice'>You feel smart again.</span>"
 
 /datum/brain_trauma/mild/dumbness/on_gain()
-	owner.disabilities |= DUMB
+	owner.add_disability(DUMB, TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_life()
@@ -54,7 +54,7 @@
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_lose()
-	owner.disabilities &= ~DUMB
+	owner.remove_disability(DUMB, TRAUMA_DISABILITY)
 	owner.derpspeech = 0
 	..()
 
@@ -107,6 +107,26 @@
 
 	..()
 
+/datum/brain_trauma/mild/healthy
+	name = "Anosognosia"
+	desc = "Patient always feels healthy, regardless of their condition."
+	scan_desc = "self-awareness deficit"
+	gain_text = "<span class='notice'>You feel great!</span>"
+	lose_text = "<span class='warning'>You no longer feel perfectly healthy.</span>"
+
+/datum/brain_trauma/mild/healthy/on_gain()
+	owner.set_screwyhud(SCREWYHUD_HEALTHY)
+	..()
+
+/datum/brain_trauma/mild/healthy/on_life()
+	owner.set_screwyhud(SCREWYHUD_HEALTHY) //just in case of hallucinations
+	owner.adjustStaminaLoss(-5) //no pain, no fatigue
+	..()
+
+/datum/brain_trauma/mild/healthy/on_lose()
+	owner.set_screwyhud(SCREWYHUD_NONE)
+	..()
+
 /datum/brain_trauma/mild/muscle_weakness
 	name = "Muscle Weakness"
 	desc = "Patient experiences occasional bouts of muscle weakness."
@@ -132,4 +152,63 @@
 	else if(prob(3))
 		to_chat(owner, "<span class='warning'>You feel a sudden weakness in your muscles!</span>")
 		owner.adjustStaminaLoss(50)
+	..()
+
+/datum/brain_trauma/mild/muscle_spasms
+	name = "Muscle Spasms"
+	desc = "Patient has occasional muscle spasms, causing them to move unintentionally."
+	scan_desc = "nervous fits"
+	gain_text = "<span class='warning'>Your muscles feel oddly faint.</span>"
+	lose_text = "<span class='notice'>You feel in control of your muscles again.</span>"
+
+/datum/brain_trauma/mild/muscle_spasms/on_life()
+	if(prob(7))
+		switch(rand(1,5))
+			if(1)
+				if(owner.canmove && !isspaceturf(owner.loc))
+					to_chat(owner, "<span class='warning'>Your leg spasms!</span>")
+					step(owner, pick(GLOB.cardinals))
+			if(2)
+				if(owner.incapacitated())
+					return
+				var/obj/item/I = owner.get_active_held_item()
+				if(I)
+					to_chat(owner, "<span class='warning'>Your fingers spasm!</span>")
+					log_attack("[key_name(owner)] used [I] due to a Muscle Spasm.")
+					I.attack_self(owner)
+			if(3)
+				var/prev_intent = owner.a_intent
+				owner.a_intent = INTENT_HARM
+
+				var/range = 1
+				if(istype(owner.get_active_held_item(), /obj/item/gun)) //get targets to shoot at
+					range = 7
+
+				var/list/mob/living/targets = list()
+				for(var/mob/M in oview(owner, range))
+					if(isliving(M))
+						targets += M
+				if(LAZYLEN(targets))
+					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
+					log_attack("[key_name(owner)] attacked someone due to a Muscle Spasm.") //the following attack will log itself
+					owner.ClickOn(pick(targets))
+				owner.a_intent = prev_intent
+			if(4)
+				var/prev_intent = owner.a_intent
+				owner.a_intent = INTENT_HARM
+				to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
+				log_attack("[key_name(owner)] attacked himself to a Muscle Spasm.")
+				owner.ClickOn(owner)
+				owner.a_intent = prev_intent
+			if(5)
+				if(owner.incapacitated())
+					return
+				var/obj/item/I = owner.get_active_held_item()
+				var/list/turf/targets = list()
+				for(var/turf/T in oview(owner, 3))
+					targets += T
+				if(LAZYLEN(targets) && I)
+					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
+					log_attack("[key_name(owner)] threw [I] due to a Muscle Spasm.")
+					owner.throw_item(pick(targets))
 	..()

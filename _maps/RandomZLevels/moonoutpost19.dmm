@@ -786,7 +786,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bO" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Break Room"
 	},
 /turf/open/floor/plasteel{
@@ -1127,7 +1127,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cr" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	density = 0;
 	emagged = 1;
 	icon_state = "open";
@@ -5322,7 +5322,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "km" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Diner"
 	},
 /turf/open/floor/plasteel{

@@ -1,6 +1,6 @@
 PROCESSING_SUBSYSTEM_DEF(networks)
 	name = "Networks"
-	priority = 80
+	priority = FIRE_PRIORITY_NETWORKS
 	wait = 1
 	stat_tag = "NET"
 	flags = SS_KEEP_TIMING

@@ -8108,6 +8108,7 @@
 	name = "syndicate infiltrator";
 	port_direction = 1;
 	roundstart_move = "syndicate_away";
+	hidden = 1;
 	width = 18
 	},
 /obj/structure/fans/tiny,
@@ -9834,7 +9835,7 @@
 /area/wizard_station)
 "zQ" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/mob/living/simple_animal/hostile/creature{
+/mob/living/simple_animal/hostile/netherworld{
 	name = "Experiment 35b"
 	},
 /turf/open/floor/grass,

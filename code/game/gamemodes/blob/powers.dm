@@ -7,22 +7,23 @@
 
 // Power verbs
 
-/mob/camera/blob/proc/place_blob_core(point_rate, placement_override)
+/mob/camera/blob/proc/place_blob_core(point_rate, placement_override , pop_override = FALSE)
 	if(placed && placement_override != -1)
 		return 1
 	if(!placement_override)
-		for(var/mob/living/M in range(7, src))
-			if("blob" in M.faction)
-				continue
-			if(M.client)
-				to_chat(src, "<span class='warning'>There is someone too close to place your blob core!</span>")
-				return 0
-		for(var/mob/living/M in view(13, src))
-			if("blob" in M.faction)
-				continue
-			if(M.client)
-				to_chat(src, "<span class='warning'>Someone could see your blob core from here!</span>")
-				return 0
+		if(!pop_override)
+			for(var/mob/living/M in range(7, src))
+				if("blob" in M.faction)
+					continue
+				if(M.client)
+					to_chat(src, "<span class='warning'>There is someone too close to place your blob core!</span>")
+					return 0
+			for(var/mob/living/M in view(13, src))
+				if("blob" in M.faction)
+					continue
+				if(M.client)
+					to_chat(src, "<span class='warning'>Someone could see your blob core from here!</span>")
+					return 0
 		var/turf/T = get_turf(src)
 		if(T.density)
 			to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
@@ -37,12 +38,12 @@
 			else if(O.density)
 				to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
 				return 0
-		if(world.time <= manualplace_min_time && world.time <= autoplace_max_time)
+		if(!pop_override && world.time <= manualplace_min_time && world.time <= autoplace_max_time)
 			to_chat(src, "<span class='warning'>It is too early to place your blob core!</span>")
 			return 0
 	else if(placement_override == 1)
 		var/turf/T = pick(GLOB.blobstart)
-		loc = T //got overrided? you're somewhere random, motherfucker
+		forceMove(T) //got overrided? you're somewhere random, motherfucker
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
 	else
@@ -74,7 +75,7 @@
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
 		var/obj/structure/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
-			loc = chosen_node.loc
+			forceMove(chosen_node.loc)
 
 /mob/camera/blob/proc/createSpecial(price, blobType, nearEquals, needsNode, turf/T)
 	if(!T)

@@ -110,7 +110,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aw" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "ax" = (
@@ -220,7 +220,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aR" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aS" = (
@@ -288,7 +288,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "be" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bf" = (

@@ -59,48 +59,13 @@
 		clear_alert("high")
 
 /mob/living/carbon/adjust_disgust(amount)
-	disgust = Clamp(disgust+amount, 0, DISGUST_LEVEL_MAXEDOUT)
+	disgust = CLAMP(disgust+amount, 0, DISGUST_LEVEL_MAXEDOUT)
 
 /mob/living/carbon/set_disgust(amount)
-	disgust = Clamp(amount, 0, DISGUST_LEVEL_MAXEDOUT)
+	disgust = CLAMP(amount, 0, DISGUST_LEVEL_MAXEDOUT)
 
-/mob/living/carbon/cure_blind()
-	if(disabilities & BLIND)
-		disabilities &= ~BLIND
-		adjust_blindness(-1)
-		return 1
-/mob/living/carbon/become_blind()
-	if(!(disabilities & BLIND))
-		disabilities |= BLIND
-		blind_eyes(1)
-		return 1
 
-/mob/living/carbon/cure_nearsighted()
-	if(disabilities & NEARSIGHT)
-		disabilities &= ~NEARSIGHT
-		clear_fullscreen("nearsighted")
-		return 1
-
-/mob/living/carbon/become_nearsighted()
-	if(!(disabilities & NEARSIGHT))
-		disabilities |= NEARSIGHT
-		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-		return 1
-
-/mob/living/carbon/cure_husk()
-	if(disabilities & HUSK)
-		disabilities &= ~HUSK
-		status_flags &= ~DISFIGURED
-		update_body()
-		return 1
-
-/mob/living/carbon/become_husk()
-	if(disabilities & HUSK)
-		return
-	disabilities |= HUSK
-	status_flags |= DISFIGURED	//makes them unknown
-	update_body()
-	return 1
+////////////////////////////////////////TRAUMAS/////////////////////////////////////////
 
 /mob/living/carbon/proc/get_traumas()
 	. = list()

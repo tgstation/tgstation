@@ -10,7 +10,7 @@
 	if(!check_rights(R_PERMISSIONS))
 		return
 
-	var/output = {"<!DOCTYPE html>
+	var/list/output = list({"<!DOCTYPE html>
 <html>
 <head>
 <title>Permissions Panel</title>
@@ -25,18 +25,26 @@
 <th style='width:375px;'>PERMISSIONS</th>
 <th style='width:100%;'>VERB-OVERRIDES</th>
 </tr>
-"}
+"})
 
-	for(var/adm_ckey in GLOB.admin_datums)
+	for(var/adm_ckey in GLOB.admin_datums+GLOB.deadmins)
 		var/datum/admins/D = GLOB.admin_datums[adm_ckey]
 		if(!D)
-			continue
+			D = GLOB.deadmins[adm_ckey]
+			if (!D)
+				continue
 
 		var/rights = rights2text(D.rank.rights," ")
-		if(!rights)	rights = "*none*"
+		if(!rights)
+			rights = "*none*"
+		var/deadminlink = ""
+		if (D.deadmined)
+			deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=activate;ckey=[adm_ckey]'>\[RA\]</a>"
+		else
+			deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=deactivate;ckey=[adm_ckey]'>\[DA\]</a>"
 
 		output += "<tr>"
-		output += "<td style='text-align:right;'>[adm_ckey] <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=remove;ckey=[adm_ckey]'>\[-\]</a></td>"
+		output += "<td style='text-align:right;'>[adm_ckey] [deadminlink]<a class='small' href='?src=[REF(src)];[HrefToken()];editrights=remove;ckey=[adm_ckey]'>\[-\]</a></td>"
 		output += "<td><a href='?src=[REF(src)];[HrefToken()];editrights=rank;ckey=[adm_ckey]'>[D.rank.name]</a></td>"
 		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights]</a></td>"
 		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(0," ",D.rank.adds,D.rank.subs)]</a></td>"
@@ -48,7 +56,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=editrights;size=900x650")
+	usr << browse(jointext(output, ""),"window=editrights;size=900x650")
 
 /datum/admins/proc/log_admin_rank_modification(adm_ckey, new_rank)
 	if(CONFIG_GET(flag/admin_legacy_system))

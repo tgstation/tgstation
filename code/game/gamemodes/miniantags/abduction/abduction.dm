@@ -1,19 +1,5 @@
-/datum/objective_team/abductor_team
-	member_name = "abductor" 
-	var/list/objectives = list()
-	var/team_number
-
-/datum/objective_team/abductor_team/is_solo()
-	return FALSE
-
-/datum/objective_team/abductor_team/proc/add_objective(datum/objective/O)
-	O.team = src
-	O.update_explanation_text()
-	objectives += O
-
 /datum/game_mode
 	var/list/datum/mind/abductors = list()
-	var/list/datum/mind/abductees = list()
 
 /datum/game_mode/abduction
 	name = "abduction"
@@ -24,7 +10,7 @@
 	required_players = 15
 	maximum_players = 50
 	var/max_teams = 4
-	var/list/datum/objective_team/abductor_team/abductor_teams = list()
+	var/list/datum/team/abductor_team/abductor_teams = list()
 	var/finished = FALSE
 	var/static/team_count = 0
 
@@ -51,7 +37,7 @@
 	if(team_number > max_teams)
 		return //or should it try to stuff them in anway ?
 
-	var/datum/objective_team/abductor_team/team = new
+	var/datum/team/abductor_team/team = new
 	team.team_number = team_number
 	team.name = "Mothership [pick(GLOB.possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
 	team.add_objective(new/datum/objective/experiment)
@@ -79,12 +65,12 @@
 	return team
 
 /datum/game_mode/abduction/post_setup()
-	for(var/datum/objective_team/abductor_team/team in abductor_teams)
+	for(var/datum/team/abductor_team/team in abductor_teams)
 		post_setup_team(team)
 	return ..()
 
 //Used for create antag buttons
-/datum/game_mode/abduction/proc/post_setup_team(datum/objective_team/abductor_team/team)
+/datum/game_mode/abduction/proc/post_setup_team(datum/team/abductor_team/team)
 	for(var/datum/mind/M in team.members)
 		if(M.assigned_role == "Abductor Scientist")
 			M.add_antag_datum(ANTAG_DATUM_ABDUCTOR_SCIENTIST, team)
@@ -93,42 +79,13 @@
 
 /datum/game_mode/abduction/check_finished()
 	if(!finished)
-		for(var/datum/objective_team/abductor_team/team in abductor_teams)
+		for(var/datum/team/abductor_team/team in abductor_teams)
 			for(var/datum/objective/O in team.objectives)
 				if(O.check_completion())
 					SSshuttle.emergency.request(null, set_coefficient = 0.5)
 					finished = TRUE
 					return ..()
 	return ..()
-
-/datum/game_mode/abduction/declare_completion()
-	for(var/datum/objective_team/abductor_team/team in abductor_teams)
-		var/won = TRUE
-		for(var/datum/objective/O in team.objectives)
-			if(!O.check_completion())
-				won = FALSE
-		if(won)
-			to_chat(world, "<span class='greenannounce'>[team.name] team fulfilled its mission!</span>")
-		else
-			to_chat(world, "<span class='boldannounce'>[team.name] team failed its mission.</span>")
-	..()
-	return TRUE
-
-/datum/game_mode/proc/auto_declare_completion_abduction()
-	var/text = ""
-	if(abductors.len)
-		text += "<br><span class='big'><b>The abductors were:</b></span>"
-		for(var/datum/mind/abductor_mind in abductors)
-			text += printplayer(abductor_mind)
-			text += printobjectives(abductor_mind)
-		text += "<br>"
-		if(abductees.len)
-			text += "<br><span class='big'><b>The abductees were:</b></span>"
-			for(var/datum/mind/abductee_mind in abductees)
-				text += printplayer(abductee_mind)
-				text += printobjectives(abductee_mind)
-	text += "<br>"
-	to_chat(world, text)
 
 // LANDMARKS
 /obj/effect/landmark/abductor
@@ -146,9 +103,9 @@
 
 /datum/objective/experiment/check_completion()
 	for(var/obj/machinery/abductor/experiment/E in GLOB.machines)
-		if(!istype(team, /datum/objective_team/abductor_team))
+		if(!istype(team, /datum/team/abductor_team))
 			return FALSE
-		var/datum/objective_team/abductor_team/T = team
+		var/datum/team/abductor_team/T = team
 		if(E.team_number == T.team_number)
 			return E.points >= target_amount
 	return FALSE

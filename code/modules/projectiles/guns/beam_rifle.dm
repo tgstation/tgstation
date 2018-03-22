@@ -355,15 +355,15 @@
 	if(lastfire > world.time + delay)
 		return
 	lastfire = world.time
+	. = ..()
 	stop_aiming()
-	return ..()
 
 /obj/item/gun/energy/beam_rifle/proc/sync_ammo()
 	for(var/obj/item/ammo_casing/energy/beam_rifle/AC in contents)
 		AC.sync_stats()
 
 /obj/item/gun/energy/beam_rifle/proc/delay_penalty(amount)
-	aiming_time_left = Clamp(aiming_time_left + amount, 0, aiming_time)
+	aiming_time_left = CLAMP(aiming_time_left + amount, 0, aiming_time)
 
 /obj/item/ammo_casing/energy/beam_rifle
 	name = "particle acceleration lens"
@@ -414,11 +414,11 @@
 	HS_BB.stun = projectile_stun
 	HS_BB.impact_structure_damage = impact_structure_damage
 	HS_BB.aoe_mob_damage = aoe_mob_damage
-	HS_BB.aoe_mob_range = Clamp(aoe_mob_range, 0, 15)				//Badmin safety lock
+	HS_BB.aoe_mob_range = CLAMP(aoe_mob_range, 0, 15)				//Badmin safety lock
 	HS_BB.aoe_fire_chance = aoe_fire_chance
 	HS_BB.aoe_fire_range = aoe_fire_range
 	HS_BB.aoe_structure_damage = aoe_structure_damage
-	HS_BB.aoe_structure_range = Clamp(aoe_structure_range, 0, 15)	//Badmin safety lock
+	HS_BB.aoe_structure_range = CLAMP(aoe_structure_range, 0, 15)	//Badmin safety lock
 	HS_BB.wall_devastate = wall_devastate
 	HS_BB.wall_pierce_amount = wall_pierce_amount
 	HS_BB.structure_pierce_amount = structure_piercing
@@ -500,11 +500,11 @@
 	if(!do_pierce)
 		return FALSE
 	if(pierced[target])		//we already pierced them go away
-		loc = get_turf(target)
+		forceMove(get_turf(target))
 		return TRUE
 	if(isclosedturf(target))
 		if(wall_pierce++ < wall_pierce_amount)
-			loc = target
+			forceMove(target)
 			if(prob(wall_devastate))
 				if(iswallturf(target))
 					var/turf/closed/wall/W = target
@@ -520,7 +520,7 @@
 					var/obj/O = AM
 					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(AM), BURN, "energy", FALSE)
 				pierced[AM] = TRUE
-				loc = get_turf(AM)
+				forceMove(AM.drop_location())
 				structure_pierce++
 				return TRUE
 	return FALSE

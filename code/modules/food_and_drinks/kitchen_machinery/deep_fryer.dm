@@ -29,7 +29,7 @@ God bless America.
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	var/obj/item/reagent_containers/food/snacks/deepfryholder/frying	//What's being fried RIGHT NOW?
 	var/cook_time = 0
 	var/oil_use = 0.05 //How much cooking oil is used per tick

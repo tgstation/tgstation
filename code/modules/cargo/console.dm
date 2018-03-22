@@ -206,9 +206,5 @@
 	if(!frequency)
 		return
 
-	var/datum/signal/status_signal = new
-	status_signal.source = src
-	status_signal.transmission_method = TRANSMISSION_RADIO
-	status_signal.data["command"] = command
-
+	var/datum/signal/status_signal = new(list("command" = command))
 	frequency.post_signal(src, status_signal)

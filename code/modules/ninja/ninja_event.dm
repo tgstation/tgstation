@@ -95,7 +95,7 @@ Contents:
 	var/datum/mind/Mind = new /datum/mind(key)
 	Mind.assigned_role = "Space Ninja"
 	Mind.special_role = "Space Ninja"
-	SSticker.mode.traitors |= Mind			//Adds them to current traitor list. Which is really the extra antagonist list.
+	SSticker.mode.traitors |= Mind			//Adds them to current traitor list. TODO : Remove this in admin tools refeactor.
 	return Mind
 
 

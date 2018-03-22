@@ -99,7 +99,7 @@
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
-			S.loc = remote_eye.loc
+			S.forceMove(remote_eye.loc)
 			S.visible_message("[S] warps in!")
 			X.stored_slimes -= S
 	else
@@ -125,7 +125,7 @@
 				if(S.buckled)
 					S.Feedstop(silent=1)
 				S.visible_message("[S] vanishes in a flash of light!")
-				S.loc = X
+				S.forceMove(X)
 				X.stored_slimes += S
 	else
 		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")

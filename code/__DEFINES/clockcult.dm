@@ -6,7 +6,6 @@
 #define HIEROPHANT_ANSIBLE "hierophant_ansible" //Use this for construction-related scripture!
 
 GLOBAL_VAR_INIT(clockwork_construction_value, 0) //The total value of all structures built by the clockwork cult
-GLOBAL_VAR_INIT(clockwork_caches, 0) //How many clockwork caches exist in the world (not each individual)
 GLOBAL_VAR_INIT(clockwork_vitality, 0) //How much Vitality is stored, total
 GLOBAL_VAR_INIT(clockwork_power, 0) //How many watts of power are globally available to the clockwork cult
 

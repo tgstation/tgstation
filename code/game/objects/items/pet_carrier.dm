@@ -70,7 +70,7 @@
 	update_icon()
 
 /obj/item/pet_carrier/AltClick(mob/living/user)
-	if(open)
+	if(open || !user.canUseTopic(src, be_close=TRUE))
 		return
 	locked = !locked
 	to_chat(user, "<span class='notice'>You flip the lock switch [locked ? "down" : "up"].</span>")

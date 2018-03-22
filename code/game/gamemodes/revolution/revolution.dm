@@ -26,7 +26,7 @@
 	var/finished = 0
 	var/check_counter = 0
 	var/max_headrevs = 3
-	var/datum/objective_team/revolution/revolution
+	var/datum/team/revolution/revolution
 	var/list/datum/mind/headrev_candidates = list()
 
 ///////////////////////////
@@ -169,62 +169,22 @@
 				return FALSE
 	return TRUE
 
-//////////////////////////////////////////////////////////////////////
-//Announces the end of the game with all relavent information stated//
-//////////////////////////////////////////////////////////////////////
-/datum/game_mode/revolution/declare_completion()
+
+/datum/game_mode/revolution/set_round_result()
+	..()
 	if(finished == 1)
 		SSticker.mode_result = "win - heads killed"
-		to_chat(world, "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>")
-
 		SSticker.news_report = REVS_WIN
-
 	else if(finished == 2)
 		SSticker.mode_result = "loss - rev heads killed"
-		to_chat(world, "<span class='redtext'>The heads of staff managed to stop the revolution!</span>")
-
 		SSticker.news_report = REVS_LOSE
-	..()
-	return TRUE
 
-/datum/game_mode/proc/auto_declare_completion_revolution()
-	var/list/targets = list()
-	var/list/datum/mind/headrevs = get_antagonists(/datum/antagonist/rev/head)
-	var/list/datum/mind/revs = get_antagonists(/datum/antagonist/rev,TRUE)
-	if(headrevs.len)
-		var/num_revs = 0
-		var/num_survivors = 0
-		for(var/mob/living/carbon/survivor in GLOB.alive_mob_list)
-			if(survivor.ckey)
-				num_survivors++
-				if(survivor.mind)
-					if(is_revolutionary(survivor))
-						num_revs++
-		if(num_survivors)
-			to_chat(world, "[GLOB.TAB]Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>" )
-		var/text = "<br><font size=3><b>The head revolutionaries were:</b></font>"
-		for(var/datum/mind/headrev in headrevs)
-			text += printplayer(headrev, 1)
-		text += "<br>"
-		to_chat(world, text)
-
-	if(revs.len)
-		var/text = "<br><font size=3><b>The revolutionaries were:</b></font>"
-		for(var/datum/mind/rev in revs)
-			text += printplayer(rev, 1)
-		text += "<br>"
-		to_chat(world, text)
-
-	if(revs.len || headrevs.len)
-		var/text = "<br><font size=3><b>The heads of staff were:</b></font>"
-		var/list/heads = SSjob.get_all_heads()
-		for(var/datum/mind/head in heads)
-			var/target = (head in targets)
-			if(target)
-				text += "<span class='boldannounce'>Target</span>"
-			text += printplayer(head, 1)
-		text += "<br>"
-		to_chat(world, text)
+//TODO What should be displayed for revs in non-rev rounds
+/datum/game_mode/revolution/special_report()
+	if(finished == 1)
+		return "<span class='redtext big'>The heads of staff were killed or exiled! The revolutionaries win!</span>"
+	else if(finished == 2)
+		return "<span class='redtext big'>The heads of staff managed to stop the revolution!</span>"
 
 /datum/game_mode/revolution/generate_report()
 	return "Employee unrest has spiked in recent weeks, with several attempted mutinies on heads of staff. Some crew have been observed using flashbulb devices to blind their colleagues, \

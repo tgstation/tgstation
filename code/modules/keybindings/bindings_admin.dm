@@ -7,9 +7,12 @@
 			player_panel_new()
 			return
 		if("F7")
-			user.cmd_admin_pm_panel()
+			user.togglebuildmodeself()
 			return
 		if("F8")
-			user.invisimin()
+			if(user.keys_held["Ctrl"])
+				user.stealth()
+			else
+				user.invisimin()
 			return
 	..()

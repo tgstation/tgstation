@@ -23,7 +23,7 @@
 	if(cell && cell.charge)
 		if(cell.charge <= 100)
 			uneq_all()
-		var/amt = Clamp((lamp_intensity - 2) * 2,1,cell.charge) //Always try to use at least one charge per tick, but allow it to completely drain the cell.
+		var/amt = CLAMP((lamp_intensity - 2) * 2,1,cell.charge) //Always try to use at least one charge per tick, but allow it to completely drain the cell.
 		cell.use(amt) //Usage table: 1/tick if off/lowest setting, 4 = 4/tick, 6 = 8/tick, 8 = 12/tick, 10 = 16/tick
 	else
 		uneq_all()
@@ -50,6 +50,7 @@
 			if(!mind.special_role)
 				mind.special_role = "traitor"
 				SSticker.mode.traitors += mind
+				mind.add_antag_datum(/datum/antagonist/auto_custom) // ????
 
 
 /mob/living/silicon/robot/update_health_hud()

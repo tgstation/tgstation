@@ -75,7 +75,7 @@ Possible to do for anyone motivated enough:
 		replay_stop()
 	if(record_mode)
 		record_stop()
-	
+
 	QDEL_NULL(disk)
 
 	holopads -= src
@@ -256,12 +256,12 @@ Possible to do for anyone motivated enough:
 		temp = ""
 		if(outgoing_call)
 			outgoing_call.Disconnect()
-	
+
 	else if(href_list["disk_eject"])
 		if(disk && !replay_mode)
 			disk.forceMove(drop_location())
 			disk = null
-	
+
 	else if(href_list["replay_stop"])
 		replay_stop()
 	else if(href_list["replay_start"])
@@ -424,7 +424,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(masters[user])
 		var/obj/effect/overlay/holo_pad_hologram/H = masters[user]
 		step_to(H, new_turf)
-		H.loc = new_turf
+		H.forceMove(new_turf)
 		var/area/holo_area = get_area(src)
 		var/area/eye_area = new_turf.loc
 
@@ -505,7 +505,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		current_delay += entry[2]
 
 	var/time_delta = world.time - record_start - current_delay
-	
+
 	if(time_delta >= 1)
 		disk.record.entries += list(list(HOLORECORD_DELAY,time_delta))
 	disk.record.entries += list(list(HOLORECORD_SAY,message))

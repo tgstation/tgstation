@@ -30,12 +30,12 @@
 /datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities |= MUTE
+	owner.add_disability(MUTE, GENETIC_MUTATION)
 
 /datum/mutation/human/mute/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.disabilities &= ~MUTE
+	owner.remove_disability(MUTE, GENETIC_MUTATION)
 
 
 /datum/mutation/human/smile
@@ -98,6 +98,7 @@
 /datum/mutation/human/unintelligible
 	name = "Unintelligible"
 	quality = NEGATIVE
+	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='danger'>You can't seem to form any coherent thoughts!</span>"
 	text_lose_indication = "<span class='danger'>Your mind feels more clear.</span>"
 

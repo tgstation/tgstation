@@ -58,6 +58,8 @@
 		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
 
 	if(target.mind)//if the victim has got a mind
+		// Absorb a lizard, speak Draconic.
+		user.copy_known_languages_from(target)
 
 		target.mind.show_memory(user, 0) //I can read your mind, kekeke. Output all their notes.
 

@@ -11,7 +11,8 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
-	container_type = INJECTABLE_1
+	container_type = INJECTABLE | DRAWABLE
+	grind_results = list()
 	var/Uses = 1 // uses before it goes inert
 	var/qdel_timer = null // deletion timer, for delayed reactions
 
@@ -28,6 +29,10 @@
 /obj/item/slime_extract/Initialize()
 	. = ..()
 	create_reagents(100)
+
+/obj/item/slime_extract/on_grind()
+	if(Uses)
+		grind_results["slimejelly"] = 20
 
 /obj/item/slime_extract/grey
 	name = "grey slime extract"
@@ -290,7 +295,7 @@
 		return ..()
 
 	to_chat(user, "<span class='notice'>You feed the slime the stabilizer. It is now less likely to mutate.</span>")
-	M.mutation_chance = Clamp(M.mutation_chance-15,0,100)
+	M.mutation_chance = CLAMP(M.mutation_chance-15,0,100)
 	qdel(src)
 
 /obj/item/slimepotion/mutator
@@ -314,7 +319,7 @@
 		return ..()
 
 	to_chat(user, "<span class='notice'>You feed the slime the mutator. It is now more likely to mutate.</span>")
-	M.mutation_chance = Clamp(M.mutation_chance+12,0,100)
+	M.mutation_chance = CLAMP(M.mutation_chance+12,0,100)
 	M.mutator_used = TRUE
 	qdel(src)
 

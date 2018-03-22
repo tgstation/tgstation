@@ -42,7 +42,7 @@
 
 	radio = new(src)
 	radio.keyslot = new radio_key
-	radio.subspace_transmission = 1
+	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
@@ -174,7 +174,7 @@
 			open_machine()
 		return
 
-	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air1 = airs[1]
 
 	if(air1.gases.len)
 		if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
@@ -196,9 +196,9 @@
 	if(!on)
 		return
 
-	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air1 = airs[1]
 
-	if(!NODE1 || !AIR1 || !air1.gases.len || air1.gases[/datum/gas/oxygen][MOLES] < 5) // Turn off if the machine won't work.
+	if(!nodes[1] || !airs[1] || !air1.gases.len || air1.gases[/datum/gas/oxygen][MOLES] < 5) // Turn off if the machine won't work.
 		on = FALSE
 		update_icon()
 		return
@@ -348,7 +348,7 @@
 		else
 			data["occupant"]["temperaturestatus"] = "bad"
 
-	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air1 = airs[1]
 	data["cellTemperature"] = round(air1.temperature, 1)
 
 	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
@@ -400,7 +400,7 @@
 	return 0 // you can't see the pipe network when inside a cryo cell.
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/return_temperature()
-	var/datum/gas_mixture/G = AIR1
+	var/datum/gas_mixture/G = airs[1]
 
 	if(G.total_moles() > 10)
 		return G.temperature
@@ -410,13 +410,13 @@
 	. = ..()
 	if(.)
 		SetInitDirections()
-		var/obj/machinery/atmospherics/node = NODE1
+		var/obj/machinery/atmospherics/node = nodes[1]
 		if(node)
 			node.disconnect(src)
-			NODE1 = null
-		nullifyPipenet(PARENT1)
+			nodes[1] = null
+		nullifyPipenet(parents[1])
 		atmosinit()
-		node = NODE1
+		node = nodes[1]
 		if(node)
 			node.atmosinit()
 			node.addMember(src)

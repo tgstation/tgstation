@@ -67,7 +67,7 @@
 		resistance_flags |= INDESTRUCTIBLE
 
 /obj/structure/lattice/clockwork/ratvar_act()
-	if(IsOdd(x+y))
+	if(ISODD(x+y))
 		icon = 'icons/obj/smooth_structures/lattice_clockwork_large.dmi'
 		pixel_x = -9
 		pixel_y = -9
@@ -124,7 +124,7 @@
 		resistance_flags |= INDESTRUCTIBLE
 
 /obj/structure/lattice/catwalk/clockwork/ratvar_act()
-	if(IsOdd(x+y))
+	if(ISODD(x+y))
 		icon = 'icons/obj/smooth_structures/catwalk_clockwork_large.dmi'
 		pixel_x = -9
 		pixel_y = -9

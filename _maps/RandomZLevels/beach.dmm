@@ -162,7 +162,7 @@
 	uniform = /obj/item/clothing/under/rank/bartender;
 	death = 0;
 	desc = "Looks secure.";
-	flavour_text = "You are a bartender for the beach!";
+	flavour_text = "<span class='big bold'>You are a bartender for the beach!</span>";
 	icon = 'icons/obj/machines/sleeper.dmi';
 	icon_state = "sleeper";
 	mob_name = "Jerry Thomas";

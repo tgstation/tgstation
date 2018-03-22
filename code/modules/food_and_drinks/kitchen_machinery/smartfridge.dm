@@ -301,10 +301,10 @@
 		if(S.dried_type == S.type)//if the dried type is the same as the object's type, don't bother creating a whole new item...
 			S.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)
 			S.dry = TRUE
-			S.loc = get_turf(src)
+			S.forceMove(drop_location())
 		else
 			var/dried = S.dried_type
-			new dried(src.loc)
+			new dried(drop_location())
 			qdel(S)
 		return TRUE
 	for(var/obj/item/stack/sheet/wetleather/WL in contents)

@@ -178,9 +178,9 @@
 
 /obj/machinery/processor/proc/empty()
 	for (var/obj/O in src)
-		O.loc = src.loc
+		O.forceMove(drop_location())
 	for (var/mob/M in src)
-		M.loc = src.loc
+		M.forceMove(drop_location())
 	return
 
 /obj/machinery/processor/slime

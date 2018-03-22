@@ -842,7 +842,8 @@
 	return TRUE
 
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
-	override = dna.species.override_float
+	if(dna && dna.species) //prevents a runtime while a human is being monkeyfied
+		override = dna.species.override_float
 	..()
 
 /mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)

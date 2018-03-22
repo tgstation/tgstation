@@ -55,5 +55,5 @@
 			else if(I) // Put the implant in case.
 				var/obj/item/implantcase/case = new(get_turf(C))
 				case.imp = I
-				I.loc = case
+				I.forceMove(case)
 				case.update_icon()

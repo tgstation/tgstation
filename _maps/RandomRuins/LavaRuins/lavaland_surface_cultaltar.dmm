@@ -88,7 +88,7 @@
 	triggerer_only = 1
 	},
 /obj/effect/step_trigger/message{
-	message = "<span class='cultitalic'><b><span class='big'>You've made a grave mistake, haven't you?</span></b></span>";
+	message = "<span class='cult italic'><b><span class='big'>You've made a grave mistake, haven't you?</span></b></span>";
 	name = "ohfuck"
 	},
 /turf/open/floor/engine/cult{

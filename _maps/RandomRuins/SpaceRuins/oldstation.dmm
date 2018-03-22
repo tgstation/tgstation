@@ -1468,7 +1468,7 @@
 "eo" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Hydroponics"
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1502,7 +1502,7 @@
 /area/ruin/space/has_grav/ancientstation/hydroponics)
 "es" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Hydroponics"
 	},
 /obj/machinery/door/firedoor/closed,
@@ -3143,14 +3143,14 @@
 "ii" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Dining Area"
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "ij" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Dining Area"
 	},
 /obj/machinery/door/firedoor/closed,
@@ -3881,7 +3881,7 @@
 /area/ruin/space/has_grav/ancientstation)
 "jU" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Cryogenics Room"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,

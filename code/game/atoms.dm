@@ -194,27 +194,22 @@
 	set waitfor = FALSE
 	return
 
-// Convenience proc to see if a container is open for chemistry handling
-// returns true if open
-// false if closed
+// Convenience procs to see if a container is open for chemistry handling
 /atom/proc/is_open_container()
-	return container_type & OPENCONTAINER_1
-
-/atom/proc/is_transparent()
-	return container_type & TRANSPARENT_1
+	return is_refillable() && is_drainable()
 
 /atom/proc/is_injectable(allowmobs = TRUE)
-	if(isliving(src) && allowmobs)
-		var/mob/living/L = src
-		return L.can_inject()
-	if(container_type & OPENCONTAINER_1)
-		return TRUE
-	return container_type & INJECTABLE_1
+	return reagents && (container_type & (INJECTABLE | REFILLABLE))
 
 /atom/proc/is_drawable(allowmobs = TRUE)
-	if(is_injectable(allowmobs)) //Everything that can be injected can also be drawn from, but not vice versa
-		return TRUE
-	return container_type & DRAWABLE_1
+	return reagents && (container_type & (DRAWABLE | DRAINABLE))
+
+/atom/proc/is_refillable()
+	return reagents && (container_type & REFILLABLE)
+
+/atom/proc/is_drainable()
+	return reagents && (container_type & DRAINABLE)
+
 
 /atom/proc/AllowDrop()
 	return FALSE
@@ -256,19 +251,26 @@
 	if(desc)
 		to_chat(user, desc)
 
-	if(reagents && (is_open_container() || is_transparent())) //is_open_container() isn't really the right proc for this, but w/e
-		to_chat(user, "It contains:")
-		if(reagents.reagent_list.len)
-			if(user.can_see_reagents()) //Show each individual reagent
-				for(var/datum/reagent/R in reagents.reagent_list)
-					to_chat(user, "[R.volume] units of [R.name]")
-			else //Otherwise, just show the total volume
-				var/total_volume = 0
-				for(var/datum/reagent/R in reagents.reagent_list)
-					total_volume += R.volume
-				to_chat(user, "[total_volume] units of various reagents")
-		else
-			to_chat(user, "Nothing.")
+	if(reagents)
+		if(container_type & TRANSPARENT)
+			to_chat(user, "It contains:")
+			if(reagents.reagent_list.len)
+				if(user.can_see_reagents()) //Show each individual reagent
+					for(var/datum/reagent/R in reagents.reagent_list)
+						to_chat(user, "[R.volume] units of [R.name]")
+				else //Otherwise, just show the total volume
+					var/total_volume = 0
+					for(var/datum/reagent/R in reagents.reagent_list)
+						total_volume += R.volume
+					to_chat(user, "[total_volume] units of various reagents")
+			else
+				to_chat(user, "Nothing.")
+		else if(container_type & AMOUNT_VISIBLE)
+			if(reagents.total_volume)
+				to_chat(user, "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>")
+			else
+				to_chat(user, "<span class='danger'>It's empty.</span>")
+
 	SendSignal(COMSIG_PARENT_EXAMINE, user)
 
 /atom/proc/relaymove(mob/user)

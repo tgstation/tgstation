@@ -7,12 +7,12 @@
 /datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.become_nearsighted()
+	owner.become_nearsighted(GENETIC_MUTATION)
 
 /datum/mutation/human/nearsight/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.cure_nearsighted()
+	owner.cure_nearsighted(GENETIC_MUTATION)
 
 
 //Blind makes you blind. Who knew?
@@ -24,12 +24,12 @@
 /datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.become_blind()
+	owner.become_blind(GENETIC_MUTATION)
 
 /datum/mutation/human/blind/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.cure_blind()
+	owner.cure_blind(GENETIC_MUTATION)
 
 
 //X-Ray Vision lets you see through walls.

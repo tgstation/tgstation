@@ -544,7 +544,7 @@
 "bN" = (
 /obj/effect/mob_spawn/cow{
 	dir = 4;
-	flavour_text = "<font size=3><b>Y</b></font><b>ou're a cow. You've lived a pampered life as a prized show heifer, a real blue-ribbon winner. After showing signs of a minor respiratory infection, your master took you to the hospital right away. He'd better come back soon. You're getting quite impatient.</b>";
+	flavour_text = "<span class='big bold'>You're a cow.</span><b> You've lived a pampered life as a prized show heifer, a real blue-ribbon winner. After showing signs of a minor respiratory infection, your master took you to the hospital right away. He'd better come back soon. You're getting quite impatient.</b>";
 	mob_name = "Flossie"
 	},
 /turf/open/floor/plasteel/white,

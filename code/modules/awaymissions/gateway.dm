@@ -199,9 +199,9 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	active = 1
 	update_icon()
 
-/obj/machinery/gateway/centeraway/proc/check_exile_implant(mob/living/carbon/C)
-	for(var/obj/item/implant/exile/E in C.implants)//Checking that there is an exile implant
-		to_chat(C, "\black The station gate has detected your exile implant and is blocking your entry.")
+/obj/machinery/gateway/centeraway/proc/check_exile_implant(mob/living/L)
+	for(var/obj/item/implant/exile/E in L.implants)//Checking that there is an exile implant
+		to_chat(L, "\black The station gate has detected your exile implant and is blocking your entry.")
 		return TRUE
 	return FALSE
 
@@ -212,17 +212,17 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		return
 	if(!stationgate || QDELETED(stationgate))
 		return
-	if(istype(AM, /mob/living/carbon))
+	if(isliving(AM))
 		if(check_exile_implant(AM))
 			return
 	else
-		for(var/mob/living/carbon/C in AM.contents)
-			if(check_exile_implant(C))
+		for(var/mob/living/L in AM.contents)
+			if(check_exile_implant(L))
 				say("Rejecting [AM]: Exile implant detected in contained lifeform.")
 				return
 	if(AM.has_buckled_mobs())
-		for(var/mob/living/carbon/C in AM.buckled_mobs)
-			if(check_exile_implant(C))
+		for(var/mob/living/L in AM.buckled_mobs)
+			if(check_exile_implant(L))
 				say("Rejecting [AM]: Exile implant detected in close proximity lifeform.")
 				return
 	AM.forceMove(get_step(stationgate.loc, SOUTH))

@@ -216,13 +216,13 @@
 
 				if(do_after(user, 40, target = src))
 					if(!src || electronics)
-						W.loc = src.loc
+						W.forceMove(drop_location())
 						return
 					to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")
 					name = "near finished windoor assembly"
 					electronics = W
 				else
-					W.loc = loc
+					W.forceMove(drop_location())
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(istype(W, /obj/item/screwdriver))
@@ -240,7 +240,7 @@
 					var/obj/item/electronics/airlock/ae
 					ae = electronics
 					electronics = null
-					ae.loc = loc
+					ae.forceMove(drop_location())
 
 			else if(istype(W, /obj/item/pen))
 				var/t = stripped_input(user, "Enter the name for the door.", name, created_name,MAX_NAME_LEN)
@@ -285,7 +285,7 @@
 							else
 								windoor.req_access = electronics.accesses
 							windoor.electronics = electronics
-							electronics.loc = windoor
+							electronics.forceMove(windoor)
 							if(created_name)
 								windoor.name = created_name
 							qdel(src)

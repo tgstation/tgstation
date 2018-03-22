@@ -417,17 +417,17 @@
 				dat += "<br>You ran out of food and starved."
 				if(emagged)
 					user.nutrition = 0 //yeah you pretty hongry
-					to_chat(user, "<span class='userdanger'><font size=3>Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor.</span>")
+					to_chat(user, "<span class='userdanger'>Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor.</span>")
 			if(fuel <= 0)
 				dat += "<br>You ran out of fuel, and drift, slowly, into a star."
 				if(emagged)
 					var/mob/living/M = user
 					M.adjust_fire_stacks(5)
 					M.IgniteMob() //flew into a star, so you're on fire
-					to_chat(user, "<span class='userdanger'><font size=3>You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames.</span>")
+					to_chat(user, "<span class='userdanger'>You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames.</span>")
 
 		if(emagged)
-			to_chat(user, "<span class='userdanger'><font size=3>You're never going to make it to Orion...</span></font>")
+			to_chat(user, "<span class='userdanger'>You're never going to make it to Orion...</span>")
 			user.death()
 			emagged = FALSE //removes the emagged status after you lose
 			gameStatus = ORION_STATUS_START

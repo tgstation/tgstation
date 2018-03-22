@@ -51,10 +51,10 @@
 		var/obj/item/ammo_casing/bullet = stored_ammo[i]
 		if(!bullet || !bullet.BB) // found a spent ammo
 			stored_ammo[i] = R
-			R.loc = src
+			R.forceMove(src)
 
 			if(bullet)
-				bullet.loc = get_turf(src.loc)
+				bullet.forceMove(drop_location())
 			return 1
 
 	return 0

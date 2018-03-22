@@ -57,9 +57,9 @@ SUBSYSTEM_DEF(timer)
 			var/datum/timedevent/bucket_head = bucket_list[i]
 			if (!bucket_head)
 				continue
-				
+
 			log_world("Active timers at index [i]:")
-			
+
 			var/datum/timedevent/bucket_node = bucket_head
 			var/anti_loop_check = 1000
 			do

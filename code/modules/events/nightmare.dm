@@ -35,6 +35,7 @@
 	player_mind.assigned_role = "Nightmare"
 	player_mind.special_role = "Nightmare"
 	SSticker.mode.traitors += player_mind
+	player_mind.add_antag_datum(/datum/antagonist/auto_custom)
 	S.set_species(/datum/species/shadow/nightmare)
 	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
 	message_admins("[key_name_admin(S)] has been made into a Nightmare by an event.")

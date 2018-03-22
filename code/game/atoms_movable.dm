@@ -200,7 +200,7 @@
 		loc.handle_atom_del(src)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
-	loc = null
+	moveToNullspace()
 	invisibility = INVISIBILITY_ABSTRACT
 	if(pulledby)
 		pulledby.stop_pulling()
@@ -254,6 +254,12 @@
 		loc = destination
 
 		if(!same_loc)
+			var/turf/oldturf = get_turf(oldloc)
+			var/turf/destturf = get_turf(destination)
+			var/old_z = (oldturf ? oldturf.z : null)
+			var/dest_z = (destturf ? destturf.z : null)
+			if (old_z != dest_z)
+				onTransitZ(old_z, dest_z)
 			destination.Entered(src, oldloc)
 			if(destarea && old_area != destarea)
 				destarea.Entered(src, oldloc)
@@ -268,30 +274,18 @@
 	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
 	else
 		. = TRUE
-		var/atom/oldloc = loc
-		var/area/old_area = get_area(oldloc)
-		oldloc.Exited(src, null)
-		if(old_area)
-			old_area.Exited(src, null)
+		if (loc)
+			var/atom/oldloc = loc
+			var/area/old_area = get_area(oldloc)
+			oldloc.Exited(src, null)
+			if(old_area)
+				old_area.Exited(src, null)
 		loc = null
 
-/mob/living/forceMove(atom/destination)
-	stop_pulling()
-	if(buckled)
-		buckled.unbuckle_mob(src, force = TRUE)
-	if(has_buckled_mobs())
-		unbuckle_all_mobs(force = TRUE)
-	. = ..()
-	if(.)
-		if(client)
-			reset_perspective(destination)
-		update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
-
-/mob/living/brain/forceMove(atom/destination)
-	if(container)
-		return container.forceMove(destination)
-	else //something went very wrong.
-		CRASH("Brainmob without container.")
+/atom/movable/proc/onTransitZ(old_z,new_z)
+	for (var/item in src) // Notify contents of Z-transition. This can be overridden IF we know the items contents do not care.
+		var/atom/movable/AM = item
+		AM.onTransitZ(old_z,new_z)
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
@@ -420,7 +414,7 @@
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
 		if(!buckled_mob.Move(newloc, direct))
-			loc = buckled_mob.loc
+			forceMove(buckled_mob.loc)
 			last_move = buckled_mob.last_move
 			inertia_dir = last_move
 			buckled_mob.inertia_dir = last_move
@@ -522,6 +516,7 @@
 	. = ..()
 	. -= "Jump to"
 	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]"
+	.["Get"] = "?_src=holder;[HrefToken()];admingetmovable=[REF(src)]"
 
 /atom/movable/proc/ex_check(ex_id)
 	if(!ex_id)

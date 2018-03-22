@@ -20,43 +20,36 @@ GLOBAL_LIST_INIT(movement_keys, list(
 	"North" = NORTH, "West" = WEST, "South" = SOUTH, "East" = EAST,											// Arrow keys & Numpad
 	))
 
-/*
-A horrific battle against shitcode was fought here to find out some use details of winset
-Aparently you need to wrap the entire proc + args in quotes if you intend on using args
-But you don't need the quote wrappings to just call on a proc with no args
-ex. winset(src, "default-Any", "command=keyDown \[\[*\]\]") 		fail: command = keyDown
-ex. winset(src, "default-Any", "command=keyDown \"\[\[*\]\]\"") 	fail: same
-ex. winset(src, "default-T", "command=say") 						works fine
-ex. winset(src, "default-Any", "command=\"keyDown \[\[*\]\]\"")		works fine
-Thanks for the useful errors lummox ~ninjanomnom
-*/
-GLOBAL_LIST_INIT(default_macros, list(
-	"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=#F0F0F0:input.focus=true input.background-color=#D3B5B5\\\"\"",
-	"O" = "ooc",
-	"T" = "say",
-	"M" = "me",
-	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
-	"Any" = "\"KeyDown \[\[*\]\]\"",
-	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
-	))
+// removes all the existing macros
+/client/proc/erase_all_macros()
+	var/list/macro_sets = params2list(winget(src, null, "macros"))
+	var/erase_output = ""
+	for(var/i in 1 to macro_sets.len)
+		var/setname = macro_sets[i]
+		var/list/macro_set = params2list(winget(src, "[setname].*", "command")) // The third arg doesnt matter here as we're just removing them all
+		for(var/k in 1 to macro_set.len)
+			var/list/split_name = splittext(macro_set[k], ".")
+			var/macro_name = "[split_name[1]].[split_name[2]]" // [3] is "command"
+			erase_output = "[erase_output];[macro_name].parent=null"
+	winset(src, null, erase_output)
 
 /client/proc/set_macros()
 	set waitfor = FALSE
 
-	winset(src, null, "reset=true")
-	winset(src, null, "mainwindow.macro=default")
-	var/list/default = params2list(winget(src, "default.*", "command"))
-	for(var/i in 1 to length(default))
-		var/id = default[i]
-		winset(src, id, "parent=none")
+	erase_all_macros()
 
-	var/list/default_macros = GLOB.default_macros
-	for(var/i in 1 to length(default_macros))
-		var/input = default_macros[i]
-		var/output = default_macros[input]
-		winset(src, "default-[input]", "parent=default;name=[input];command=[output]")
+	var/list/macro_sets = SSinput.macro_sets
+	for(var/i in 1 to macro_sets.len)
+		var/setname = macro_sets[i]
+		if(setname != "default")
+			winclone(src, "default", setname)
+		var/list/macro_set = macro_sets[setname]
+		for(var/k in 1 to macro_set.len)
+			var/key = macro_set[k]
+			var/command = macro_set[key]
+			winset(src, "[setname]-[REF(key)]", "parent=[setname];name=[key];command=[command]")
 
 	if(prefs.hotkeys)
-		winset(src, null, "mapwindow.map.focus=true input.background-color=#e0e0e0")
+		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED] mainwindow.macro=default")
 	else
-		winset(src, null, "input.focus=true input.background-color=#d3b5b5")
+		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED] mainwindow.macro=old_default")

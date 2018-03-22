@@ -42,7 +42,7 @@
 
 	for(var/obj/item/stock_parts/micro_laser/ML in component_parts)
 		var/wratemod = ML.rating * 2.5
-		min_wrate = Floor(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
+		min_wrate = FLOOR(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
 		min_wchance = 67-(ML.rating*16) // 48,35,19,3 	Clamps at 0 and 67	You want this low
 	for(var/obj/item/circuitboard/machine/plantgenes/vaultcheck in component_parts)
 		if(istype(vaultcheck, /obj/item/circuitboard/machine/plantgenes/vault)) // DUMB BOTANY TUTS
@@ -260,7 +260,7 @@
 
 	if(href_list["eject_seed"] && !operation)
 		if (seed)
-			seed.loc = src.loc
+			seed.forceMove(drop_location())
 			seed.verb_pickup()
 			seed = null
 			update_genes()
@@ -275,7 +275,7 @@
 		update_icon()
 	else if(href_list["eject_disk"] && !operation)
 		if (disk)
-			disk.loc = src.loc
+			disk.forceMove(drop_location())
 			disk.verb_pickup()
 			disk = null
 			update_genes()
@@ -368,7 +368,7 @@
 /obj/machinery/plantgenes/proc/insert_seed(obj/item/seeds/S)
 	if(!istype(S) || seed)
 		return
-	S.loc = src
+	S.forceMove(src)
 	seed = S
 	update_genes()
 	update_icon()

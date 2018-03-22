@@ -7,7 +7,7 @@
 
 /obj/item/ammo_casing/caseless/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread)
 	if (..()) //successfully firing
-		loc = null
+		moveToNullspace()
 		return 1
 	else
 		return 0

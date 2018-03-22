@@ -70,7 +70,7 @@
 			//nothing
 		if(21 to INFINITY)
 			if(prob(current_cycle-10))
-				M.cure_nearsighted()
+				M.cure_nearsighted(list(EYE_DAMAGE))
 	..()
 	return
 

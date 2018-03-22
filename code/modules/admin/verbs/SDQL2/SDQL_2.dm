@@ -24,10 +24,14 @@
 		message_admins("<span class='danger'>ERROR: Non-admin [key_name(usr, usr.client)] attempted to execute a SDQL query!</span>")
 		log_admin("Non-admin [usr.ckey]([usr]) attempted to execute a SDQL query!")
 		return FALSE
+	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[usr.ckey]([usr])")
+	for(var/I in 1 to 3)
+		to_chat(usr, results[I])
 
+/world/proc/SDQL2_query(query_text, log_entry1, log_entry2)
 	var/query_log = "executed SDQL query: \"[query_text]\"."
-	message_admins("[key_name_admin(usr)] [query_log]")
-	query_log = "[usr.ckey]([usr]) [query_log]"
+	message_admins("[log_entry1] [query_log]")
+	query_log = "[log_entry2] [query_log]"
 	log_game(query_log)
 	NOTICE(query_log)
 	var/objs_all = 0
@@ -49,6 +53,7 @@
 	if(!querys || querys.len < 1)
 		return
 
+	var/list/refs = list()
 	for(var/list/query_tree in querys)
 		var/list/from_objs = list()
 		var/list/select_types = list()
@@ -100,6 +105,7 @@
 				var/text = ""
 				for(var/datum/t in objs)
 					text += SDQL_gen_vv_href(t)
+					refs[REF(t)] = TRUE
 					CHECK_TICK
 				usr << browse(text, "window=SDQL-result")
 
@@ -112,9 +118,9 @@
 
 	var/end_time = REALTIMEOFDAY
 	end_time -= start_time
-	to_chat(usr, "<span class='admin'>SDQL query results: [query_text]</span>")
-	to_chat(usr, "<span class='admin'>SDQL query completed: [objs_all] objects selected by path, and [objs_eligible] objects executed on after WHERE filtering if applicable.</span>")
-	to_chat(usr, "<span class='admin'>SDQL query took [DisplayTimeText(end_time)] to complete.</span>")
+	return list("<span class='admin'>SDQL query results: [query_text]</span>",\
+		"<span class='admin'>SDQL query completed: [objs_all] objects selected by path, and [objs_eligible] objects executed on after WHERE filtering if applicable.</span>",\
+		"<span class='admin'>SDQL query took [DisplayTimeText(end_time)] to complete.</span>") + refs
 
 /proc/SDQL_qdel_datum(datum/d)
 	qdel(d)
@@ -429,7 +435,7 @@
 		else if(expression[start + 1] == "\[" && islist(v))
 			var/list/L = v
 			var/index = SDQL_expression(source, expression[start + 2])
-			if(isnum(index) && (!IsInteger(index) || L.len < index))
+			if(isnum(index) && (!ISINTEGER(index) || L.len < index))
 				to_chat(usr, "<span class='danger'>Invalid list index: [index]</span>")
 				return null
 			return L[index]

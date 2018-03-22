@@ -13,7 +13,7 @@
 
 /obj/machinery/atmospherics/components/unary/tank/New()
 	..()
-	var/datum/gas_mixture/air_contents = AIR1
+	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 	if(gas_type)
@@ -43,7 +43,7 @@
 
 /obj/machinery/atmospherics/components/unary/tank/air/New()
 	..()
-	var/datum/gas_mixture/air_contents = AIR1
+	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = AIR_CONTENTS * 0.2
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = AIR_CONTENTS * 0.8

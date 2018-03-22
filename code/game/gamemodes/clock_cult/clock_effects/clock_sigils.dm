@@ -207,7 +207,7 @@
 	to_chat(cyborg, "<span class='brass'>You start to charge from the [sigil_name]...</span>")
 	if(!do_after(cyborg, 50, target = src, extra_checks = CALLBACK(src, .proc/cyborg_checks, cyborg, TRUE)))
 		return
-	var/giving_power = min(Floor(cyborg.cell.maxcharge - cyborg.cell.charge, MIN_CLOCKCULT_POWER), get_clockwork_power()) //give the borg either all our power or their missing power floored to MIN_CLOCKCULT_POWER
+	var/giving_power = min(FLOOR(cyborg.cell.maxcharge - cyborg.cell.charge, MIN_CLOCKCULT_POWER), get_clockwork_power()) //give the borg either all our power or their missing power floored to MIN_CLOCKCULT_POWER
 	if(adjust_clockwork_power(-giving_power))
 		cyborg.visible_message("<span class='warning'>[cyborg] glows a brilliant orange!</span>")
 		var/previous_color = cyborg.color
@@ -275,7 +275,6 @@
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
 	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
 		return
-	visible_message("<span class='warning'>[src] begins to glow bright blue!</span>")
 	animate(src, alpha = 255, time = 10, flags = ANIMATION_END_NOW) //we may have a previous animation going. finish it first, then do this one without delay.
 	sleep(10)
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
@@ -310,7 +309,7 @@
 		else
 			if(L.stat == DEAD)
 				var/revival_cost = revive_cost
-				if(GLOB.ratvar_awakens)
+				if(GLOB.ratvar_awakens || L.suiciding) // No cost if Ratvar is summoned or if you're reviving a convert who suicided
 					revival_cost = 0
 				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
 				if(GLOB.clockwork_vitality >= revival_cost && (ghost || (L.mind && L.mind.active)))
@@ -323,6 +322,20 @@
 					L.visible_message("<span class='warning'>[L] suddenly gets back up, [L.p_their()] body dripping blue ichor!</span>", "<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
 					GLOB.clockwork_vitality -= revival_cost
 				break
+			if(!L.client || L.client.is_afk())
+				set waitfor = FALSE
+				var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [L.name], an inactive clock cultist?", "[name]", null, "Clock Cultist", 50, L)
+				var/mob/dead/observer/theghost = null
+				if(candidates.len)
+					to_chat(L, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form!")
+					message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(L)]) to replace an inactive clock cultist.")
+					L.ghostize(0)
+					L.key = theghost.key
+					var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
+					animate(V, alpha = 0, transform = matrix()*2, time = 8)
+					playsound(L, 'sound/magic/staff_healing.ogg', 50, 1)
+					L.visible_message("<span class='warning'>[L]'s eyes suddenly open wide, gleaming with renewed vigor for the cause!</span>", "<span class='inathneq'>\"[text2ratvar("Awaken!")]\"</span>")
+					break
 			var/vitality_for_cycle = 3
 			if(!GLOB.ratvar_awakens)
 				if(L.stat == CONSCIOUS)
@@ -341,5 +354,4 @@
 	if(sigil_active)
 		animation_number = initial(animation_number)
 		sigil_active = FALSE
-		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 	animate(src, alpha = initial(alpha), time = 10, flags = ANIMATION_END_NOW)

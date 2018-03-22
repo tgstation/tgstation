@@ -726,7 +726,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cG" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/plasteel/stage_bleft,
 /area/awaymission/wildwest/gov)
 "cH" = (
@@ -761,7 +761,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cN" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cO" = (
@@ -771,7 +771,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cP" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/gov)
 "cQ" = (
@@ -1024,7 +1024,7 @@
 /area/awaymission/wildwest/gov)
 "dB" = (
 /obj/structure/toilet,
-/mob/living/simple_animal/hostile/creature,
+/mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/plasteel/white,
 /area/awaymission/wildwest/gov)
 "dC" = (
@@ -1941,7 +1941,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "gn" = (
-/mob/living/simple_animal/hostile/creature,
+/mob/living/simple_animal/hostile/netherworld,
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "go" = (

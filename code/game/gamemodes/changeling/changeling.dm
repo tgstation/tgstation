@@ -94,46 +94,6 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 			of the Thing being sent to a station in this sector is highly likely. It may be in the guise of any crew member. Trust nobody - suspect everybody. Do not announce this to the crew, \
 			as paranoia may spread and inhibit workplace efficiency."
 
-/datum/game_mode/proc/auto_declare_completion_changeling()
-	var/list/changelings = get_antagonists(/datum/antagonist/changeling,TRUE) //Only real lings get a mention
-	if(changelings.len)
-		var/text = "<br><font size=3><b>The changelings were:</b></font>"
-		for(var/datum/mind/changeling in changelings)
-			var/datum/antagonist/changeling/ling = changeling.has_antag_datum(/datum/antagonist/changeling)
-			var/changelingwin = 1
-			if(!changeling.current)
-				changelingwin = 0
-
-			text += printplayer(changeling)
-
-			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
-			text += "<br><b>Changeling ID:</b> [ling.changelingID]."
-			text += "<br><b>Genomes Extracted:</b> [ling.absorbedcount]"
-
-			if(changeling.objectives.len)
-				var/count = 1
-				for(var/datum/objective/objective in changeling.objectives)
-					if(objective.check_completion())
-						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
-						SSblackbox.record_feedback("nested tally", "changeling_objective", 1, list("[objective.type]", "SUCCESS"))
-					else
-						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span>"
-						SSblackbox.record_feedback("nested tally", "changeling_objective", 1, list("[objective.type]", "FAIL"))
-						changelingwin = 0
-					count++
-
-			if(changelingwin)
-				text += "<br><font color='green'><b>The changeling was successful!</b></font>"
-				SSblackbox.record_feedback("tally", "changeling_success", 1, "SUCCESS")
-			else
-				text += "<br><span class='boldannounce'>The changeling has failed.</span>"
-				SSblackbox.record_feedback("tally", "changeling_success", 1, "FAIL")
-			text += "<br>"
-
-		to_chat(world, text)
-
-	return 1
-
 /proc/changeling_transform(mob/living/carbon/human/user, datum/changelingprofile/chosen_prof)
 	var/datum/dna/chosen_dna = chosen_prof.dna
 	user.real_name = chosen_prof.name

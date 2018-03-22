@@ -78,7 +78,7 @@
 	if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
 		if(beaker)
 			var/obj/item/reagent_containers/glass/B = beaker
-			B.loc = loc
+			B.forceMove(drop_location())
 			beaker = null
 		update_icon()
 		return

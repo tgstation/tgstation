@@ -160,8 +160,12 @@
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 	else if(eye_blind)
 		var/blind_minimum = 0
-		if((stat != CONSCIOUS && stat != SOFT_CRIT) || (disabilities & BLIND))
+		if((stat != CONSCIOUS && stat != SOFT_CRIT))
 			blind_minimum = 1
+		if(isliving(src))
+			var/mob/living/L = src
+			if(L.has_disability(BLIND))
+				blind_minimum = 1
 		eye_blind = max(eye_blind+amount, blind_minimum)
 		if(!eye_blind)
 			clear_alert("blind")
@@ -177,8 +181,12 @@
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 	else if(eye_blind)
 		var/blind_minimum = 0
-		if((stat != CONSCIOUS && stat != SOFT_CRIT) || (disabilities & BLIND))
+		if(stat != CONSCIOUS && stat != SOFT_CRIT)
 			blind_minimum = 1
+		if(isliving(src))
+			var/mob/living/L = src
+			if(L.has_disability(BLIND))
+				blind_minimum = 1
 		eye_blind = blind_minimum
 		if(!eye_blind)
 			clear_alert("blind")
@@ -225,31 +233,6 @@
 	return
 
 /mob/proc/set_disgust(amount)
-	return
-
-/////////////////////////////////// BLIND DISABILITY ////////////////////////////////////
-
-/mob/proc/cure_blind() //when we want to cure the BLIND disability only.
-	return
-
-/mob/proc/become_blind()
-	return
-
-/////////////////////////////////// NEARSIGHT DISABILITY ////////////////////////////////////
-
-/mob/proc/cure_nearsighted()
-	return
-
-/mob/proc/become_nearsighted()
-	return
-
-
-//////////////////////////////// HUSK DISABILITY ///////////////////////////:
-
-/mob/proc/cure_husk()
-	return
-
-/mob/proc/become_husk()
 	return
 
 

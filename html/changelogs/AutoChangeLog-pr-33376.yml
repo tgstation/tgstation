@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - tweak: "Flickering lights will now actually flicker and not go between emergency lights and normal lighting."

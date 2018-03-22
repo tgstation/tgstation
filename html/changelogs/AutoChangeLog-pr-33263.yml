@@ -1,5 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "Nanotrasen would like to remind crewmembers and especially medical personnel to stand clear of cadeavers before applying a defibrillator shock. (You get shocked if you're pulling/grabbing someone being defibbed.)"
-  - tweak: "defib shock/charge sounds upped from 50% to 75%."

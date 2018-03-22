@@ -275,7 +275,7 @@
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
 			target = null
 			LoseSearchObjects()
-		if(AIStatus == AI_IDLE)
+		if(AIStatus != AI_ON && AIStatus != AI_OFF)
 			toggle_ai(AI_ON)
 			FindTarget()
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
@@ -465,6 +465,31 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 
 /mob/living/simple_animal/hostile/consider_wakeup()
 	..()
-	if(AIStatus == AI_IDLE && FindTarget(ListTargets(), 1))
+	var/list/tlist
+	var/turf/T = get_turf(src)
+
+	if (!T)
+		return
+
+	if (!length(SSmobs.clients_by_zlevel[T.z])) // It's fine to use .len here but doesn't compile on 511
+		toggle_ai(AI_Z_OFF)
+		return
+
+	if (isturf(T) && !(T.z in GLOB.station_z_levels))
+		tlist = ListTargetsLazy(T.z)
+	else
+		tlist = ListTargets()
+
+	if(AIStatus == AI_IDLE && FindTarget(tlist, 1))
 		toggle_ai(AI_ON)
 
+/mob/living/simple_animal/hostile/proc/ListTargetsLazy(var/_Z)//Step 1, find out what we can see
+	var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/structure/destructible/clockwork/ocular_warden))
+	. = list()
+	for (var/I in SSmobs.clients_by_zlevel[_Z])
+		var/mob/M = I
+		if (get_dist(M, src) < vision_range)
+			if (isturf(M.loc))
+				. += M
+			else if (M.loc.type in hostile_machines)
+				. += M.loc

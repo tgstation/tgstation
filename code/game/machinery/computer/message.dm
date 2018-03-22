@@ -47,8 +47,7 @@
 		screen = 2
 		spark_system.set_up(5, 0, src)
 		src.spark_system.start()
-		var/obj/item/paper/monitorkey/MK = new/obj/item/paper/monitorkey
-		MK.loc = src.loc
+		var/obj/item/paper/monitorkey/MK = new(loc)
 		// Will help make emagging the console not so easy to get away with.
 		MK.info += "<br><br><font color='red'>�%@%(*$%&(�&?*(%&�/{}</font>"
 		var/time = 100 * length(src.linkedServer.decryptkey)

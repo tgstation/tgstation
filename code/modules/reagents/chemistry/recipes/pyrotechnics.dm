@@ -168,7 +168,7 @@
 		return
 	holder.remove_reagent("sorium", created_volume*4)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = Clamp(sqrt(created_volume*4), 1, 6)
+	var/range = CLAMP(sqrt(created_volume*4), 1, 6)
 	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/sorium_vortex
@@ -179,7 +179,7 @@
 
 /datum/chemical_reaction/sorium_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = Clamp(sqrt(created_volume), 1, 6)
+	var/range = CLAMP(sqrt(created_volume), 1, 6)
 	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/liquid_dark_matter
@@ -193,7 +193,7 @@
 		return
 	holder.remove_reagent("liquid_dark_matter", created_volume*3)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = Clamp(sqrt(created_volume*3), 1, 6)
+	var/range = CLAMP(sqrt(created_volume*3), 1, 6)
 	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/ldm_vortex
@@ -204,7 +204,7 @@
 
 /datum/chemical_reaction/ldm_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = Clamp(sqrt(created_volume/2), 1, 6)
+	var/range = CLAMP(sqrt(created_volume/2), 1, 6)
 	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/flash_powder
@@ -381,7 +381,6 @@
 	name = "Teslium Destabilization"
 	id = "teslium_lightning"
 	required_reagents = list("teslium" = 1, "water" = 1)
-	results = list("destabilized_teslium" = 1)
 	strengthdiv = 100
 	modifier = -100
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"

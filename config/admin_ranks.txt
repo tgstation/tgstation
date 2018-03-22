@@ -27,17 +27,19 @@
 # +RIGHTS (or +PERMISSIONS) = allows you to promote and/or demote people.
 # +SOUND (or +SOUNDS) = allows you to upload and play sounds
 # +SPAWN (or +CREATE) = mob transformations, spawning of most atoms including mobs (high-risk atoms, e.g. blackholes, will require the +FUN flag too)
+# +AUTOLOGIN = admin gains powers upon connect. This defaults to on, you can use -AUTOLOGIN to make a role require using the readmin verb to gain powers. (this does not effect the admin's ability to walk past bans or other on-connect limitations like panic bunker or pop limit.)
 # +EVERYTHING (or +HOST or +ALL) = Simply gives you everything without having to type every flag
 # END_KEYWORDS
 
-Admin Observer
+Admin Observer	= -AUTOLOGIN
 Moderator		= +ADMIN
 Admin Candidate	= +@
 Trial Admin		= +@ +SPAWN +VAREDIT +BAN
 Badmin			= +@ +POSSESS +POLL +BUILDMODE +SERVER +FUN
 Game Admin		= +@ +STEALTH +SOUNDS +DEBUG
 Game Master		= +EVERYTHING
+Lazy Master 	= +EVERYTHING -AUTOLOGIN
 
 Host			= +EVERYTHING
 
-Coder			= +DEBUG +VAREDIT +SERVER +SPAWN +POLL
+Coder			= +DEBUG +VAREDIT +SERVER +SPAWN +POLL -AUTOLOGIN

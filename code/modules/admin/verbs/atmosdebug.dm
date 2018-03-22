@@ -13,12 +13,12 @@
 
 	//Manifolds
 	for (var/obj/machinery/atmospherics/pipe/manifold/pipe in GLOB.machines)
-		if (!pipe.NODE1 || !pipe.NODE2 || !pipe.NODE3)
+		if (!pipe.nodes[1] || !pipe.nodes[2] || !pipe.nodes[3])
 			to_chat(usr, "Unconnected [pipe.name] located at [pipe.x],[pipe.y],[pipe.z] ([get_area(pipe.loc)])")
 
 	//Pipes
 	for (var/obj/machinery/atmospherics/pipe/simple/pipe in GLOB.machines)
-		if (!pipe.NODE1 || !pipe.NODE2)
+		if (!pipe.nodes[1] || !pipe.nodes[2])
 			to_chat(usr, "Unconnected [pipe.name] located at [pipe.x],[pipe.y],[pipe.z] ([get_area(pipe.loc)])")
 
 /client/proc/powerdebug()

@@ -25,7 +25,7 @@
 	limbs_id = "zombie"
 	mutanthands = /obj/item/zombie_hand
 	armor = 20 // 120 damage to KO a zombie, which kills it
-	speedmod = 2
+	speedmod = 1.6
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
 	var/regen_cooldown = 0
 
@@ -34,7 +34,7 @@
 
 
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
-	. = min(2, amount)
+	. = min(20, amount)
 
 /datum/species/zombie/infectious/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	. = ..()

@@ -60,6 +60,19 @@
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
 
+
+// Used in attack logs for reagents in pills and such
+/datum/reagents/proc/log_list()
+	if(!length(reagent_list))
+		return "no reagents"
+
+	var/list/data = list()
+	for(var/r in reagent_list) //no reagents will be left behind
+		var/datum/reagent/R = r
+		data += "[R.id] ([round(R.volume, 0.1)]u)"
+		//Using IDs because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
+	return english_list(data)
+
 /datum/reagents/proc/remove_any(amount = 1)
 	var/list/cached_reagents = reagent_list
 	var/total_transfered = 0
@@ -581,7 +594,7 @@
 		if (R.id == reagent)
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
-			amount = Clamp(amount, 0, R.volume)
+			amount = CLAMP(amount, 0, R.volume)
 			R.volume -= amount
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to

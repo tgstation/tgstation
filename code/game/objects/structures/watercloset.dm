@@ -59,7 +59,7 @@
 			if(ishuman(user))
 				user.put_in_hands(I)
 			else
-				I.loc = get_turf(src)
+				I.forceMove(drop_location())
 			to_chat(user, "<span class='notice'>You find [I] in the cistern.</span>")
 			w_items -= I.w_class
 	else
@@ -483,9 +483,9 @@
 
 	if(istype(O, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RG = O
-		if(RG.container_type & OPENCONTAINER_1)
+		if(RG.is_refillable())
 			if(!RG.reagents.holder_full())
-				RG.reagents.add_reagent("[dispensedreagent]", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+				RG.reagents.add_reagent(dispensedreagent, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 				to_chat(user, "<span class='notice'>You fill [RG] from [src].</span>")
 				return TRUE
 			to_chat(user, "<span class='notice'>\The [RG] is full.</span>")
@@ -533,7 +533,7 @@
 		O.clean_blood()
 		O.acid_level = 0
 		create_reagents(5)
-		reagents.add_reagent("[dispensedreagent]", 5)
+		reagents.add_reagent(dispensedreagent, 5)
 		reagents.reaction(O, TOUCH)
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")

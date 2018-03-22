@@ -433,14 +433,9 @@
 	if(!radio_connection)
 		return 0
 
-	var/datum/signal/signal = new
-	signal.transmission_method = TRANSMISSION_RADIO
-	signal.source = src
-
-	signal.data = command
+	var/datum/signal/signal = new(command)
 	signal.data["tag"] = target
 	signal.data["sigtype"] = "command"
-
 	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
 
 	return 1
@@ -632,12 +627,10 @@
 
 	var/area/A = get_area(src)
 
-	var/datum/signal/alert_signal = new
-	alert_signal.source = src
-	alert_signal.transmission_method = TRANSMISSION_RADIO
-	alert_signal.data["zone"] = A.name
-	alert_signal.data["type"] = "Atmospheric"
-
+	var/datum/signal/alert_signal = new(list(
+		"zone" = A.name,
+		"type" = "Atmospheric"
+	))
 	if(alert_level==2)
 		alert_signal.data["alert"] = "severe"
 	else if (alert_level==1)
@@ -645,7 +638,7 @@
 	else if (alert_level==0)
 		alert_signal.data["alert"] = "clear"
 
-	frequency.post_signal(src, alert_signal,null,-1)
+	frequency.post_signal(src, alert_signal, range = -1)
 
 /obj/machinery/airalarm/proc/apply_danger_level()
 	var/area/A = get_area(src)

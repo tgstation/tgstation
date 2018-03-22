@@ -24,7 +24,7 @@
 		if(istype(target, /obj/item/gun))
 			var/obj/item/gun/G = target
 			if(G.pin && (force_replace || G.pin.pin_removeable))
-				G.pin.loc = get_turf(G)
+				G.pin.forceMove(get_turf(G))
 				G.pin.gun_remove(user)
 				to_chat(user, "<span class ='notice'>You remove [G]'s old pin.</span>")
 
@@ -129,7 +129,7 @@
 // A gun with ultra-honk pin is useful for clown and useless for everyone else.
 /obj/item/device/firing_pin/clown/ultra/pin_auth(mob/living/user)
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-	if(!(user.disabilities & CLUMSY) && !(user.mind && user.mind.assigned_role == "Clown"))
+	if(!(user.has_disability(CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown"))
 		return 0
 	return 1
 

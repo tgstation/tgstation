@@ -43,6 +43,7 @@
 	throw_speed = 1
 	throw_range = 3
 	attack_verb = list("stung")
+	grind_results = list("sacid" = 0)
 
 /obj/item/grown/nettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is eating some of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -91,6 +92,7 @@
 	icon_state = "deathnettle"
 	force = 30
 	throwforce = 15
+	grind_results = list("facid" = 1, "sacid" = 1)
 
 /obj/item/grown/nettle/death/add_juice()
 	..()

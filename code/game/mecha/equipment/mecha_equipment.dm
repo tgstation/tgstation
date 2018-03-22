@@ -104,7 +104,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M)
 	M.equipment += src
 	chassis = M
-	src.loc = M
+	forceMove(M)
 	M.log_message("[src] initialized.")
 	if(!M.selected && selectable)
 		M.selected = src

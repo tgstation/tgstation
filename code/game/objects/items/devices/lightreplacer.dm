@@ -169,7 +169,7 @@
 
 // Negative numbers will subtract
 /obj/item/device/lightreplacer/proc/AddUses(amount = 1)
-	uses = Clamp(uses + amount, 0, max_uses)
+	uses = CLAMP(uses + amount, 0, max_uses)
 
 /obj/item/device/lightreplacer/proc/AddShards(amount = 1, user)
 	bulb_shards += amount

@@ -90,7 +90,7 @@
 	icon_state = "chemical_cell"
 	extended_desc = "This is effectively an internal beaker. It will consume and produce power from plasma, slime jelly, welding fuel, carbon,\
 	 ethanol, nutriments and blood , in order of decreasing efficiency. It will consume fuel only if the battery can take more energy."
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	complexity = 4
 	inputs = list()
 	outputs = list("volume used" = IC_PINTYPE_NUMBER, "self reference" = IC_PINTYPE_REF)

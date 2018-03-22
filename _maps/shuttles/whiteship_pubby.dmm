@@ -12,7 +12,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "d" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Shuttle Airlock"
 	},
 /turf/open/floor/plasteel/dark,
@@ -81,7 +81,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/abandoned)
 "o" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Shuttle Airlock"
 	},
 /obj/docking_port/mobile{

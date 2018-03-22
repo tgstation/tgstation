@@ -9,7 +9,7 @@
 
 /obj/item/implant/uplink/Initialize(mapload, _owner)
 	. = ..()
-	LoadComponent(/datum/component/uplink, _owner, TRUE, FALSE, null, starting_tc)
+	AddComponent(/datum/component/uplink, _owner, TRUE, FALSE, null, starting_tc)
 
 /obj/item/implant/uplink/implant(mob/living/target, mob/user, silent = 0)
 	GET_COMPONENT(hidden_uplink, /datum/component/uplink)

@@ -113,7 +113,7 @@
 
 	if(!forced)
 		Radio.set_frequency(FREQ_SECURITY)
-		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", FREQ_SECURITY, get_default_language())
+		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", FREQ_SECURITY)
 
 	timing = FALSE
 	activation_time = null
@@ -142,7 +142,7 @@
 		. /= 10
 
 /obj/machinery/door_timer/proc/set_timer(value)
-	var/new_time = Clamp(value,0,MAX_TIMER)
+	var/new_time = CLAMP(value,0,MAX_TIMER)
 	. = new_time == timer_duration //return 1 on no change
 	timer_duration = new_time
 

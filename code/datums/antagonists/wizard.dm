@@ -5,13 +5,13 @@
 
 /datum/antagonist/wizard
 	name = "Space Wizard"
+	roundend_category = "wizards/witches"
 	job_rank = ROLE_WIZARD
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
 	var/hud_version = "wizard"
-	var/datum/objective_team/wizard/wiz_team //Only created if wizard summons apprentices
-	var/list/objectives = list() //this should be base datum antag proc and list, todo make lazy
+	var/datum/team/wizard/wiz_team //Only created if wizard summons apprentices
 	var/move_to_lair = TRUE
 	var/outfit_type = /datum/outfit/wizard
 	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
@@ -33,7 +33,7 @@
 /datum/antagonist/wizard/proc/unregister()
 	SSticker.mode.wizards -= src
 
-/datum/antagonist/wizard/create_team(datum/objective_team/wizard/new_team)
+/datum/antagonist/wizard/create_team(datum/team/wizard/new_team)
 	if(!new_team)
 		return
 	if(!istype(new_team))
@@ -43,12 +43,14 @@
 /datum/antagonist/wizard/get_team()
 	return wiz_team
 
-/datum/objective_team/wizard
+/datum/team/wizard
 	name = "wizard team"
+	var/datum/antagonist/wizard/master_wizard
 
 /datum/antagonist/wizard/proc/create_wiz_team()
 	wiz_team = new(owner)
 	wiz_team.name = "[owner.current.real_name] team"
+	wiz_team.master_wizard = src
 	update_wiz_icons_added(owner.current)
 
 /datum/antagonist/wizard/proc/send_to_lair()
@@ -284,3 +286,45 @@
 	new_objective.owner = owner
 	owner.objectives += new_objective
 	objectives += new_objective
+
+//Solo wizard report
+/datum/antagonist/wizard/roundend_report()
+	var/list/parts = list()
+
+	parts += printplayer(owner)
+
+	var/count = 1
+	var/wizardwin = 1
+	for(var/datum/objective/objective in objectives)
+		if(objective.check_completion())
+			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+		else
+			parts += "<B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+			wizardwin = 0
+		count++
+
+	if(wizardwin)
+		parts += "<span class='greentext'>The wizard was successful!</span>"
+	else
+		parts += "<span class='redtext'>The wizard has failed!</span>"
+
+	if(owner.spell_list.len>0)
+		parts += "<B>[owner.name] used the following spells: </B>"
+		var/list/spell_names = list()
+		for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
+			spell_names += S.name
+		parts += spell_names.Join(", ")
+
+	return parts.Join("<br>")
+
+//Wizard with apprentices report
+/datum/team/wizard/roundend_report()
+	var/list/parts = list()
+
+	parts += "<span class='header'>Wizards/witches of [master_wizard.owner.name] team were:</span>"
+	parts += master_wizard.roundend_report()
+	parts += " "
+	parts += "<span class='header'>[master_wizard.owner.name] apprentices were:</span>"
+	parts += printplayerlist(members - master_wizard.owner)
+
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

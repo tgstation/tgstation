@@ -27,6 +27,7 @@
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 	var/antag_datum = ANTAG_DATUM_TRAITOR //what type of antag to create
+	var/traitors_required = TRUE //Will allow no traitors
 
 
 /datum/game_mode/traitor/pre_setup()
@@ -55,7 +56,7 @@
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
 		antag_candidates.Remove(traitor)
 
-	return pre_traitors.len > 0
+	return !traitors_required || pre_traitors.len > 0
 
 
 /datum/game_mode/traitor/post_setup()
@@ -85,78 +86,9 @@
 	new_antag.should_specialise = TRUE
 	character.add_antag_datum(new_antag)
 
-
-
-/datum/game_mode/traitor/declare_completion()
-	..()
-	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
-
-
-/datum/game_mode/proc/auto_declare_completion_traitor()
-	if(traitors.len)
-		var/text = "<br><font size=3><b>The [traitor_name]s were:</b></font>"
-		for(var/datum/mind/traitor in traitors)
-			var/traitorwin = TRUE
-
-			text += printplayer(traitor)
-
-			var/TC_uses = 0
-			var/uplink_true = FALSE
-			var/purchases = ""
-			for(var/datum/component/uplink/H in GLOB.uplinks)
-				if(H && H.owner && H.owner == traitor.key)
-					TC_uses += H.spent_telecrystals
-					uplink_true = TRUE
-					purchases += H.purchase_log.generate_render(FALSE)
-
-			var/objectives = ""
-			if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
-				var/count = 1
-				for(var/datum/objective/objective in traitor.objectives)
-					if(objective.check_completion())
-						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-						SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "SUCCESS"))
-					else
-						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-						SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "FAIL"))
-						traitorwin = FALSE
-					count++
-
-			if(uplink_true)
-				text += " (used [TC_uses] TC) [purchases]"
-				if(TC_uses==0 && traitorwin)
-					var/static/icon/badass = icon('icons/badass.dmi', "badass")
-					text += "<BIG>[icon2html(badass, world)]</BIG>"
-
-			text += objectives
-
-			var/special_role_text
-			if(traitor.special_role)
-				special_role_text = lowertext(traitor.special_role)
-			else
-				special_role_text = "antagonist"
-
-
-			if(traitorwin)
-				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
-				SSblackbox.record_feedback("tally", "traitor_success", 1, "SUCCESS")
-			else
-				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
-				SSblackbox.record_feedback("tally", "traitor_success", 1, "FAIL")
-				SEND_SOUND(traitor.current, 'sound/ambience/ambifailure.ogg')
-
-			text += "<br>"
-
-		text += "<br><b>The code phrases were:</b> <font color='red'>[GLOB.syndicate_code_phrase]</font><br>\
-		<b>The code responses were:</b> <font color='red'>[GLOB.syndicate_code_response]</font><br>"
-		to_chat(world, text)
-
-	return TRUE
-
 /datum/game_mode/traitor/generate_report()
 	return "Although more specific threats are commonplace, you should always remain vigilant for Syndicate agents aboard your station. Syndicate communications have implied that many \
 		Nanotrasen employees are Syndicate agents with hidden memories that may be activated at a moment's notice, so it's possible that these agents might not even know their positions."
-
 
 /datum/game_mode/proc/update_traitor_icons_added(datum/mind/traitor_mind)
 	var/datum/atom_hud/antag/traitorhud = GLOB.huds[ANTAG_HUD_TRAITOR]

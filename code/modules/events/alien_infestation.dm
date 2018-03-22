@@ -41,7 +41,7 @@
 		if(QDELETED(temp_vent))
 			continue
 		if((temp_vent.loc.z in GLOB.station_z_levels) && !temp_vent.welded)
-			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
+			var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
 			//Stops Aliens getting stuck in small networks.
 			//See: Security, Virology
 			if(temp_vent_parent.other_atmosmch.len > 20)

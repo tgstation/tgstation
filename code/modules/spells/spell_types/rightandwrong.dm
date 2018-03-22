@@ -22,12 +22,14 @@
 				guns.owner = H.mind
 				H.mind.objectives += guns
 				H.mind.special_role = "survivalist"
+				H.mind.add_antag_datum(/datum/antagonist/auto_custom)
 				to_chat(H, "<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>")
 			else
 				var/datum/objective/steal_five_of_type/summon_magic/magic = new
 				magic.owner = H.mind
 				H.mind.objectives += magic
 				H.mind.special_role = "amateur magician"
+				H.mind.add_antag_datum(/datum/antagonist/auto_custom)
 				to_chat(H, "<B>You are the amateur magician! Grow your newfound talent! Grab as many magical artefacts as possible, by any means necessary. Kill anyone who gets in your way.</B>")
 			var/datum/objective/survive/survive = new
 			survive.owner = H.mind

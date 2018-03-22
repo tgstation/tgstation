@@ -167,9 +167,13 @@
 /turf/closed/indestructible/swarmer_act()
 	return FALSE
 
-/obj/swarmer_act()
+/obj/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return FALSE
+	for(var/mob/living/L in contents)
+		if(!issilicon(L) && !isbrain(L))
+			to_chat(S, "<span class='warning'>An organism has been detected inside this object. Aborting.</span>")
+			return FALSE
 	return ..()
 
 /obj/item/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)

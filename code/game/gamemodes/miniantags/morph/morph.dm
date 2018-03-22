@@ -41,7 +41,7 @@
 	/mob/living/simple_animal/hostile/morph,
 	/obj/effect))
 
-	var/playstyle_string = "<b><font size=3 color='red'>You are a morph,</font> an abomination of science created primarily with changeling cells. \
+	var/playstyle_string = "<span class='big bold'>You are a morph,</span></b> an abomination of science created primarily with changeling cells. \
 							You may take the form of anything nearby by shift-clicking it. This process will alert any nearby \
 							observers, and can only be performed once every five seconds. While morphed, you move faster, but do \
 							less damage. In addition, anyone within three tiles will note an uncanny wrongness if examining you. \
@@ -227,6 +227,7 @@
 	player_mind.assigned_role = "Morph"
 	player_mind.special_role = "Morph"
 	SSticker.mode.traitors |= player_mind
+	player_mind.add_antag_datum(/datum/antagonist/auto_custom)
 	to_chat(S, S.playstyle_string)
 	SEND_SOUND(S, sound('sound/magic/mutate.ogg'))
 	message_admins("[key_name_admin(S)] has been made into a morph by an event.")

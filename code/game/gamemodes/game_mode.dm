@@ -74,7 +74,6 @@
 /datum/game_mode/proc/pre_setup()
 	return 1
 
-
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup(report) //Gamemodes can override the intercept report. Passing TRUE as the argument will force a report.
 	if(!report)
@@ -242,54 +241,8 @@
 	return 0
 
 
-/datum/game_mode/proc/declare_completion()
-	var/clients = 0
-	var/surviving_humans = 0
-	var/surviving_total = 0
-	var/ghosts = 0
-	var/escaped_humans = 0
-	var/escaped_total = 0
-
-	for(var/mob/M in GLOB.player_list)
-		if(M.client)
-			clients++
-			if(ishuman(M))
-				if(!M.stat)
-					surviving_humans++
-					if(M.z == ZLEVEL_CENTCOM)
-						escaped_humans++
-			if(!M.stat)
-				surviving_total++
-				if(M.z == ZLEVEL_CENTCOM)
-					escaped_total++
-
-
-			if(isobserver(M))
-				ghosts++
-
-	if(clients)
-		SSblackbox.record_feedback("nested tally", "round_end_stats", clients, list("clients"))
-	if(ghosts)
-		SSblackbox.record_feedback("nested tally", "round_end_stats", ghosts, list("ghosts"))
-	if(surviving_humans)
-		SSblackbox.record_feedback("nested tally", "round_end_stats", surviving_humans, list("survivors", "human"))
-	if(surviving_total)
-		SSblackbox.record_feedback("nested tally", "round_end_stats", surviving_total, list("survivors", "total"))
-	if(escaped_humans)
-		SSblackbox.record_feedback("nested tally", "round_end_stats", escaped_humans, list("escapees", "human"))
-	if(escaped_total)
-		SSblackbox.record_feedback("nested tally", "round_end_stats", escaped_total, list("escapees", "total"))
-
-	send2irc("Server", "Round just ended.")
-	if(cult.len && !istype(SSticker.mode, /datum/game_mode/cult))
-		datum_cult_completion()
-
-	return 0
-
-
 /datum/game_mode/proc/check_win() //universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
 	return 0
-
 
 /datum/game_mode/proc/send_intercept()
 	var/intercepttext = "<b><i>Central Command Status Summary</i></b><hr>"
@@ -452,34 +405,6 @@
 	for (var/C in GLOB.admins)
 		to_chat(C, msg)
 
-/datum/game_mode/proc/printplayer(datum/mind/ply, fleecheck)
-	var/text = "<br><b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
-	if(ply.current)
-		if(ply.current.stat == DEAD)
-			text += " <span class='boldannounce'>died</span>"
-		else
-			text += " <span class='greenannounce'>survived</span>"
-		if(fleecheck)
-			var/turf/T = get_turf(ply.current)
-			if(!T || !(T.z in GLOB.station_z_levels))
-				text += " while <span class='boldannounce'>fleeing the station</span>"
-		if(ply.current.real_name != ply.name)
-			text += " as <b>[ply.current.real_name]</b>"
-	else
-		text += " <span class='boldannounce'>had their body destroyed</span>"
-	return text
-
-/datum/game_mode/proc/printobjectives(datum/mind/ply)
-	var/text = ""
-	var/count = 1
-	for(var/datum/objective/objective in ply.objectives)
-		if(objective.check_completion())
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='greenannounce'>Success!</span>"
-		else
-			text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='boldannounce'>Fail.</span>"
-		count++
-	return text
-
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/game_mode/proc/age_check(client/C)
 	if(get_remaining_days(C) == 0)
@@ -519,11 +444,6 @@
 		station_goals += new picked
 
 
-/datum/game_mode/proc/declare_station_goal_completion()
-	for(var/V in station_goals)
-		var/datum/station_goal/G = V
-		G.print_result()
-
 /datum/game_mode/proc/generate_report() //Generates a small text blurb for the gamemode in centcom report
 	return "Gamemode report for [name] not set.  Contact a coder."
 
@@ -532,3 +452,17 @@
 	nuke_off_station = off_station
 	if(off_station < 2)
 		station_was_nuked = TRUE //Will end the round on next check.
+
+//Additional report section in roundend report
+/datum/game_mode/proc/special_report()
+	return
+
+//Set result and news report here
+/datum/game_mode/proc/set_round_result()
+	SSticker.mode_result = "undefined"
+	if(station_was_nuked)
+		SSticker.news_report = STATION_DESTROYED_NUKE
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
+		SSticker.news_report = STATION_EVACUATED
+		if(SSshuttle.emergency.is_hijacked())
+			SSticker.news_report = SHUTTLE_HIJACK

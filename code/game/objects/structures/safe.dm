@@ -43,7 +43,7 @@ FLOOR SAFES
 			return
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
-			I.loc = src
+			I.forceMove(src)
 
 
 /obj/structure/safe/proc/check_unlocked(mob/user, canhear)
@@ -97,10 +97,10 @@ FLOOR SAFES
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/user = usr
-	
+
 	if(!user.canUseTopic(src))
 		return
-	
+
 	var/canhear = 0
 	if(user.is_holding_item_of_type(/obj/item/clothing/neck/stethoscope))
 		canhear = 1
