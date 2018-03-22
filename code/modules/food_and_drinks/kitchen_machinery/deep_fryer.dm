@@ -93,8 +93,8 @@ God bless America.
 	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
 		return
 	else
-		if(is_type_in_typecache(I, deepfry_blacklisted_items))
-			. = ..()
+		if(is_type_in_typecache(I, deepfry_blacklisted_items) || (I.flags_1 & (ABSTRACT_1 | NODROP_1 | DROPDEL_1)))
+			return ..()
 		else if(!frying && user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 			frying = new/obj/item/reagent_containers/food/snacks/deepfryholder(src, I)
@@ -142,7 +142,7 @@ God bless America.
 		var/mob/living/carbon/C = user.pulling
 		user.visible_message("<span class = 'danger'>[user] dunks [C]'s face in [src]!</span>")
 		reagents.reaction(C, TOUCH)
-		C.apply_damage(min(30, reagents.total_volume), BURN, "head")
+		C.apply_damage(min(30, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		reagents.remove_any((reagents.total_volume/2))
 		C.Knockdown(60)
 		user.changeNext_move(CLICK_CD_MELEE)

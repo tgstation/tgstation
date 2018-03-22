@@ -3,6 +3,11 @@
 	id = "drug"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
+	var/trippy = TRUE //Does this drug make you trip?
+
+/datum/reagent/drug/on_mob_delete(mob/living/M)
+	if(trippy)
+		M.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "[id]_high")
 
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
@@ -23,7 +28,7 @@
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You start tripping hard!</span>")
-
+	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/overdose, name)
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
 	if(M.hallucination < volume && prob(20))
@@ -38,11 +43,13 @@
 	color = "#60A584" // rgb: 96, 165, 132
 	addiction_threshold = 30
 	taste_description = "smoke"
+	trippy = FALSE
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/M)
 	if(prob(1))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
+	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/drugs/smoked, name)
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
 	M.AdjustUnconscious(-20, 0)
@@ -57,6 +64,7 @@
 	taste_description = "mint"
 	reagent_state = LIQUID
 	color = "#80AF9C"
+	trippy = FALSE
 
 /datum/reagent/drug/crank
 	name = "Crank"
@@ -166,6 +174,18 @@
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 
+/datum/reagent/drug/methamphetamine/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
+
+/datum/reagent/drug/methamphetamine/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	..()
+
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/M)
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
 	if(prob(5))
@@ -174,9 +194,8 @@
 	M.AdjustKnockdown(-40, 0)
 	M.AdjustUnconscious(-40, 0)
 	M.adjustStaminaLoss(-2, 0)
-	M.status_flags |= GOTTAGOREALLYFAST
 	M.Jitter(2)
-	M.adjustBrainLoss(0.25)
+	M.adjustBrainLoss(rand(1,4))
 	if(prob(5))
 		M.emote(pick("twitch", "shiver"))
 	..()
@@ -234,24 +253,40 @@
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
 	id = "bath_salts"
-	description = "Makes you nearly impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
+	description = "Makes you impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 20
 	addiction_threshold = 10
 	taste_description = "salt" // because they're bathsalts?
+	var/datum/brain_trauma/special/psychotic_brawling/bath_salts/rage
 
+/datum/reagent/drug/bath_salts/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_STUNIMMUNE, id)
+		L.add_trait(TRAIT_SLEEPIMMUNE, id)
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			rage = new()
+			C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/reagent/drug/bath_salts/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_STUNIMMUNE, id)
+		L.remove_trait(TRAIT_SLEEPIMMUNE, id)
+		if(rage)
+			QDEL_NULL(rage)
+	..()
 
 /datum/reagent/drug/bath_salts/on_mob_life(mob/living/M)
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
-	M.AdjustStun(-60, 0)
-	M.AdjustKnockdown(-60, 0)
-	M.AdjustUnconscious(-60, 0)
 	M.adjustStaminaLoss(-5, 0)
-	M.adjustBrainLoss(0.5)
-	M.adjustToxLoss(0.1, 0)
+	M.adjustBrainLoss(4)
 	M.hallucination += 10
 	if(M.canmove && !ismovableatom(M.loc))
 		step(M, pick(GLOB.cardinals))
@@ -322,7 +357,7 @@
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
 	id = "aranesp"
-	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage.."
+	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#78FFF0"
 

@@ -29,7 +29,7 @@
 			var/obj/item/I = user.get_active_held_item()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
-				var/obj/item/bodypart/BP = get_bodypart("chest")
+				var/obj/item/bodypart/BP = get_bodypart(BODY_ZONE_CHEST)
 				if(BP.receive_damage(d, 0))
 					update_damage_overlays()
 				visible_message("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>", \
@@ -157,7 +157,7 @@
 			if(!throwable_mob.buckled)
 				thrown_thing = throwable_mob
 				stop_pulling()
-				if(has_disability(PACIFISM))
+				if(has_trait(TRAIT_PACIFISM))
 					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
@@ -170,7 +170,7 @@
 		thrown_thing = I
 		dropItemToGround(I)
 
-		if(has_disability(PACIFISM) && I.throwforce)
+		if(has_trait(TRAIT_PACIFISM) && I.throwforce)
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
 			return
 
@@ -302,10 +302,10 @@
 
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
-	if(I.being_removed)
+	if(I.item_flags & BEING_REMOVED)
 		to_chat(src, "<span class='warning'>You're already attempting to remove [I]!</span>")
 		return
-	I.being_removed = TRUE
+	I.item_flags |= BEING_REMOVED
 	breakouttime = I.breakouttime
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
@@ -326,7 +326,7 @@
 
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		clear_cuffs(I, cuff_break)
-	I.being_removed = FALSE
+	I.item_flags &= ~BEING_REMOVED
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -365,16 +365,9 @@
 	to_chat(src, "<span class='notice'>You successfully [cuff_break ? "break" : "remove"] [I].</span>")
 
 	if(cuff_break)
+		. = !((I == handcuffed) || (I == legcuffed))
 		qdel(I)
-		if(I == handcuffed)
-			handcuffed = null
-			update_handcuffed()
-			return
-		else if(I == legcuffed)
-			legcuffed = null
-			update_inv_legcuffed()
-			return
-		return TRUE
+		return
 
 	else
 		if(I == handcuffed)
@@ -409,7 +402,7 @@
 	dropItemToGround(I)
 
 	var/modifier = 0
-	if(has_disability(CLUMSY))
+	if(has_trait(TRAIT_CLUMSY))
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
 
 	switch(rand(1,100)+modifier) //91-100=Nothing special happens
@@ -447,7 +440,7 @@
 	return ..()
 
 /mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE)
-	if(dna && dna.species && NOHUNGER in dna.species.species_traits)
+	if(has_trait(TRAIT_NOHUNGER))
 		return 1
 
 	if(nutrition < 100 && !blood)
@@ -575,10 +568,12 @@
 		return
 	tinttotal = get_total_tint()
 	if(tinttotal >= TINT_BLIND)
-		overlay_fullscreen("tint", /obj/screen/fullscreen/blind)
+		become_blind(EYES_COVERED)
 	else if(tinttotal >= TINT_DARKENED)
+		cure_blind(EYES_COVERED)
 		overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
 	else
+		cure_blind(EYES_COVERED)
 		clear_fullscreen("tint", 0)
 
 /mob/living/carbon/proc/get_total_tint()
@@ -727,7 +722,7 @@
 		if(health <= HEALTH_THRESHOLD_DEAD)
 			death()
 			return
-		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_FULLCRIT)
+		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (has_trait(TRAIT_FAKEDEATH)) || health <= HEALTH_THRESHOLD_FULLCRIT)
 			stat = UNCONSCIOUS
 			blind_eyes(1)
 		else
@@ -747,22 +742,24 @@
 		drop_all_held_items()
 		stop_pulling()
 		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
+		SendSignal(COMSIG_ADD_MOOD_EVENT, "handcuffed", /datum/mood_event/handcuffed)
 	else
 		clear_alert("handcuffed")
+		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "handcuffed")
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 
-/mob/living/carbon/fully_heal(admin_revive = 0)
+/mob/living/carbon/fully_heal(admin_revive = FALSE)
 	if(reagents)
 		reagents.clear_reagents()
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
-		B.damaged_brain = 0
-	for(var/thing in viruses)
+		B.damaged_brain = FALSE
+	for(var/thing in diseases)
 		var/datum/disease/D = thing
-		if(D.severity != VIRUS_SEVERITY_POSITIVE)
-			D.cure(0)
+		if(D.severity != DISEASE_SEVERITY_POSITIVE)
+			D.cure(FALSE)
 	if(admin_revive)
 		regenerate_limbs()
 		regenerate_organs()
@@ -772,9 +769,9 @@
 		update_handcuffed()
 		if(reagents)
 			reagents.addiction_list = list()
-	cure_all_traumas(TRUE, TRUE)
+	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	..()
-	// heal ears after healing disabilities, since ears check DEAF disability
+	// heal ears after healing traits, since ears check TRAIT_DEAF trait
 	// when healing.
 	restoreEars()
 
@@ -795,8 +792,6 @@
 			O.forceMove(drop_location())
 	if(organs_amt)
 		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
-
-	..()
 
 /mob/living/carbon/ExtinguishMob()
 	for(var/X in get_equipped_items())
@@ -859,3 +854,6 @@
 	.["Hallucinate"] = "?_src_=vars;[HrefToken()];hallucinate=[REF(src)]"
 	.["Give brain trauma"] = "?_src_=vars;[HrefToken()];givetrauma=[REF(src)]"
 	.["Cure brain traumas"] = "?_src_=vars;[HrefToken()];curetraumas=[REF(src)]"
+
+/mob/living/carbon/can_resist()
+	return bodyparts.len > 2 && ..()

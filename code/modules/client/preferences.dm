@@ -47,6 +47,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/allow_midround_antag = 1
 	var/preferred_map = null
 	var/pda_style = MONO
+	var/pda_color = "#808000"
 
 	var/uses_glasses_colour = 0
 
@@ -67,13 +68,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
+	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain")
 
 	var/list/custom_names = list("human", "clown", "mime", "ai", "cyborg", "religion", "deity")
 	var/prefered_security_department = SEC_DEPT_RANDOM
 
 		//Mob preview
 	var/icon/preview_icon = null
+
+		//Trait list
+	var/list/positive_traits = list()
+	var/list/negative_traits = list()
+	var/list/neutral_traits = list()
+	var/list/all_traits = list()
+	var/list/character_traits = list()
 
 		//Jobs, uses bitflags
 	var/job_civilian_high = 0
@@ -107,7 +115,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/uplink_spawn_loc = UPLINK_PDA
 
-	var/list/exp
+	var/list/exp = list()
 	var/list/menuoptions
 
 	var/action_buttons_screen_locs = list()
@@ -172,6 +180,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<center><h2>Occupation Choices</h2>"
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
+			if(CONFIG_GET(flag/roundstart_traits))
+				dat += "<center><h2>Trait Setup</h2>"
+				dat += "<a href='?_src_=prefs;preference=trait;task=menu'>Configure Traits</a><br></center>"
+				dat += "<center><b>Current traits:</b> [all_traits.len ? all_traits.Join(", ") : "None"]</center>"
 			dat += "<h2>Identity</h2>"
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
 			if(jobban_isbanned(user, "appearance"))
@@ -248,7 +260,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "</td>"
 
-			if(EYECOLOR in pref_species.species_traits)
+			if((EYECOLOR in pref_species.species_traits) && !(NOEYES in pref_species.species_traits))
 
 				dat += "<td valign='top' width='21%'>"
 
@@ -330,6 +342,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
 
 				dat += "</td>"
+			if("moth_wings" in pref_species.mutant_bodyparts)
+
+				dat += "<td valign='top' width='7%'>"
+
+				dat += "<h3>Moth wings</h3>"
+
+				dat += "<a href='?_src_=prefs;preference=moth_wings;task=input'>[features["moth_wings"]]</a><BR>"
+
+				dat += "</td>"
 
 			if(CONFIG_GET(flag/join_with_mutant_humans))
 
@@ -370,7 +391,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
 			dat += "<b>Action Buttons:</b> <a href='?_src_=prefs;preference=action_buttons'>[(buttons_locked) ? "Locked In Place" : "Unlocked"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
-			dat += "<b>PDA Style:</b> <a href='?_src_=prefs;task=input;preference=PDA'>[pda_style]</a><br>"
+			dat += "<b>PDA Style:</b> <a href='?_src_=prefs;task=input;preference=pda_style'>[pda_style]</a><br>"
+			dat += "<b>PDA Color:</b> <span style='border:1px solid #161616; background-color: [pda_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=pda_color;task=input'>Change</a><BR>"
 			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>Window Flashing:</b> <a href='?_src_=prefs;preference=winflash'>[(windowflashing) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
@@ -457,7 +479,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<h2>Special Role Settings</h2>"
 
-			if(jobban_isbanned(user, "Syndicate"))
+			if(jobban_isbanned(user, ROLE_SYNDICATE))
 				dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
 				src.be_special = list()
 
@@ -520,6 +542,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
 		var/datum/job/lastJob
 
+		var/datum/job/overflow = SSjob.GetJob(SSjob.overflow_role)
+
 		for(var/datum/job/job in SSjob.occupations)
 
 			index += 1
@@ -547,7 +571,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/available_in_days = job.available_in_days(user.client)
 				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
 				continue
-			if((job_civilian_low & ASSISTANT) && (rank != "Assistant") && !jobban_isbanned(user, "Assistant"))
+			if((job_civilian_low & overflow.flag) && (rank != SSjob.overflow_role) && !jobban_isbanned(user, SSjob.overflow_role))
 				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue
 			if((rank in GLOB.command_positions) || (rank == "AI"))//Bold head jobs
@@ -586,8 +610,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 
-			if(rank == "Assistant")//Assistant is special
-				if(job_civilian_low & ASSISTANT)
+			if(rank == SSjob.overflow_role)//Overflow is special
+				if(job_civilian_low & overflow.flag)
 					HTML += "<font color=green>Yes</font>"
 				else
 					HTML += "<font color=red>No</font>"
@@ -603,7 +627,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		HTML += "</td'></tr></table>"
 		HTML += "</center></table>"
 
-		var/message = "Be an Assistant if preferences unavailable"
+		var/message = "Be an [SSjob.overflow_role] if preferences unavailable"
 		if(joblessrole == BERANDOMJOB)
 			message = "Get random job if preferences unavailable"
 		else if(joblessrole == RETURNTOLOBBY)
@@ -691,7 +715,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		ShowChoices(user)
 		return
 
-	if(role == "Assistant")
+	if(role == SSjob.overflow_role)
 		if(job_civilian_low & job.flag)
 			job_civilian_low &= ~job.flag
 		else
@@ -750,6 +774,65 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					return job_engsec_low
 	return 0
 
+/datum/preferences/proc/SetTraits(mob/user)
+	if(!SStraits)
+		to_chat(user, "<span class='danger'>The trait subsystem is still initializing! Try again in a minute.</span>")
+		return
+
+	var/list/dat = list()
+	if(!SStraits.traits.len)
+		dat += "The trait subsystem hasn't finished initializing, please hold..."
+		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center><br>"
+
+	else
+		dat += "<center><b>Choose trait setup</b></center><br>"
+		dat += "<div align='center'>Left-click to add or remove traits. You need one negative trait for every positive trait.<br>\
+		Traits are applied at roundstart and cannot normally be removed.</div>"
+		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center>"
+		dat += "<hr>"
+		dat += "<center><b>Current traits:</b> [all_traits.len ? all_traits.Join(", ") : "None"]</center>"
+		/*dat += "<center><font color='#AAFFAA'>[positive_traits.len] / [MAX_POSITIVE_TRAITS]</font> \
+		| <font color='#AAAAFF'>[neutral_traits.len] / [MAX_NEUTRAL_TRAITS]</font> \
+		| <font color='#FFAAAA'>[negative_traits.len] / [MAX_NEGATIVE_TRAITS]</font></center><br>"*/
+		dat += "<center>[all_traits.len] / [MAX_TRAITS] max traits<br>\
+		<b>Trait balance remaining:</b> [GetTraitBalance()]</center><br>"
+		for(var/V in SStraits.traits)
+			var/datum/trait/T = SStraits.traits[V]
+			var/trait_name = initial(T.name)
+			var/has_trait
+			var/trait_cost = initial(T.value) * -1
+			for(var/_V in all_traits)
+				if(_V == trait_name)
+					has_trait = TRUE
+			if(has_trait)
+				trait_cost *= -1 //invert it back, since we'd be regaining this amount
+			if(trait_cost > 0)
+				trait_cost = "+[trait_cost]"
+			var/font_color = "#AAAAFF"
+			if(initial(T.value) != 0)
+				font_color = initial(T.value) > 0 ? "#AAFFAA" : "#FFAAAA"
+			if(has_trait)
+				dat += "<b><font color='[font_color]'>[trait_name]</font></b> - [initial(T.desc)] \
+				<a href='?_src_=prefs;preference=trait;task=update;trait=[trait_name]'>[has_trait ? "Lose" : "Take"] ([trait_cost] pts.)</a><br>"
+			else
+				dat += "<font color='[font_color]'>[trait_name]</font> - [initial(T.desc)] \
+				<a href='?_src_=prefs;preference=trait;task=update;trait=[trait_name]'>[has_trait ? "Lose" : "Take"] ([trait_cost] pts.)</a><br>"
+		dat += "<br><center><a href='?_src_=prefs;preference=trait;task=reset'>Reset Traits</a></center>"
+
+	user << browse(null, "window=preferences")
+	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Trait Preferences</div>", 900, 600) //no reason not to reuse the occupation window, as it's cleaner that way
+	popup.set_window_options("can_close=0")
+	popup.set_content(dat.Join())
+	popup.open(0)
+	return
+
+/datum/preferences/proc/GetTraitBalance()
+	var/bal = 0
+	for(var/V in all_traits)
+		var/datum/trait/T = SStraits.traits[V]
+		bal -= initial(T.value)
+	return bal
+
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(href_list["jobbancheck"])
 		var/job = sanitizeSQL(href_list["jobbancheck"])
@@ -782,11 +865,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if("random")
 				switch(joblessrole)
 					if(RETURNTOLOBBY)
-						if(jobban_isbanned(user, "Assistant"))
+						if(jobban_isbanned(user, SSjob.overflow_role))
 							joblessrole = BERANDOMJOB
 						else
-							joblessrole = BEASSISTANT
-					if(BEASSISTANT)
+							joblessrole = BEOVERFLOW
+					if(BEOVERFLOW)
 						joblessrole = BERANDOMJOB
 					if(BERANDOMJOB)
 						joblessrole = RETURNTOLOBBY
@@ -796,6 +879,63 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			else
 				SetChoices(user)
 		return 1
+
+	else if(href_list["preference"] == "trait")
+		switch(href_list["task"])
+			if("close")
+				user << browse(null, "window=mob_occupation")
+				ShowChoices(user)
+			if("update")
+				var/trait = href_list["trait"]
+				if(!SStraits.traits[trait])
+					return
+				var/value = SStraits.trait_points[trait]
+				if(value == 0)
+					if(trait in neutral_traits)
+						neutral_traits -= trait
+						all_traits -= trait
+					else
+						if(all_traits.len >= MAX_TRAITS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+							return
+						neutral_traits += trait
+						all_traits += trait
+				else
+					var/balance = GetTraitBalance()
+					if(trait in positive_traits)
+						positive_traits -= trait
+						all_traits -= trait
+					else if(trait in negative_traits)
+						if(balance + value < 0)
+							to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
+							return
+						negative_traits -= trait
+						all_traits -= trait
+					else if(value > 0)
+						if(all_traits.len >= MAX_TRAITS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+							return
+						if(balance - value < 0)
+							to_chat(user, "<span class='warning'>You don't have enough balance to gain this trait!</span>")
+							return
+						positive_traits += trait
+						all_traits += trait
+					else
+						if(all_traits.len >= MAX_TRAITS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+							return
+						negative_traits += trait
+						all_traits += trait
+				SetTraits(user)
+			if("reset")
+				all_traits = list()
+				positive_traits = list()
+				negative_traits = list()
+				neutral_traits = list()
+				SetTraits(user)
+			else
+				SetTraits(user)
+		return TRUE
 
 	switch(href_list["task"])
 		if("random")
@@ -818,7 +958,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					undershirt = random_undershirt(gender)
 				if("socks")
 					socks = random_socks()
-				if("eyes")
+				if(BODY_ZONE_PRECISE_EYES)
 					eye_color = random_eye_color()
 				if("s_tone")
 					skin_tone = random_skin_tone()
@@ -878,7 +1018,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
 				if("hair")
-					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as null|color
+					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference","#"+hair_color) as color|null
 					if(new_hair)
 						hair_color = sanitize_hexcolor(new_hair)
 
@@ -905,7 +1045,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						hair_style = previous_list_item(hair_style, GLOB.hair_styles_female_list)
 
 				if("facial")
-					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as null|color
+					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference","#"+facial_hair_color) as color|null
 					if(new_facial)
 						facial_hair_color = sanitize_hexcolor(new_facial)
 
@@ -954,8 +1094,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_socks)
 						socks = new_socks
 
-				if("eyes")
-					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
+				if(BODY_ZONE_PRECISE_EYES)
+					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference","#"+eye_color) as color|null
 					if(new_eyes)
 						eye_color = sanitize_hexcolor(new_eyes)
 
@@ -972,7 +1112,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor"] = pref_species.default_color
 
 				if("mutant_color")
-					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference") as color|null
+					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference","#"+features["mcolor"]) as color|null
 					if(new_mutantcolor)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
@@ -1042,13 +1182,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_legs)
 						features["legs"] = new_legs
 
+				if("moth_wings")
+					var/new_moth_wings
+					new_moth_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.moth_wings_list
+					if(new_moth_wings)
+						features["moth_wings"] = new_moth_wings
+
 				if("s_tone")
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in GLOB.skin_tones
 					if(new_s_tone)
 						skin_tone = new_s_tone
 
 				if("ooccolor")
-					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
+					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference",ooccolor) as color|null
 					if(new_ooccolor)
 						ooccolor = new_ooccolor
 
@@ -1141,10 +1287,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/pickedui = input(user, "Choose your UI style.", "Character Preference")  as null|anything in list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative", "Clockwork")
 					if(pickedui)
 						UI_style = pickedui
-				if("PDA")
-					var/pickedPDA = input(user, "Choose your PDA style.", "Character Preference")  as null|anything in list(MONO, SHARE, ORBITRON, VT)
-					if(pickedPDA)
-						pda_style = pickedPDA
+				if("pda_style")
+					var/pickedPDAStyle = input(user, "Choose your PDA style.", "Character Preference")  as null|anything in list(MONO, SHARE, ORBITRON, VT)
+					if(pickedPDAStyle)
+						pda_style = pickedPDAStyle
+				if("pda_color")
+					var/pickedPDAColor = input(user, "Choose your PDA Interface color.", "Character Preference",pda_color) as color|null
+					if(pickedPDAColor)
+						pda_color = pickedPDAColor
 
 		else
 			switch(href_list["preference"])

@@ -4,6 +4,8 @@ GLOBAL_VAR(security_mode)
 GLOBAL_VAR(restart_counter)
 GLOBAL_PROTECT(security_mode)
 
+//This happens after the Master subsystem news (it's a global datum)
+//So subsystems globals exist, but are not initialised
 /world/New()
 	log_world("World loaded at [time_stamp()]")
 
@@ -15,16 +17,16 @@ GLOBAL_PROTECT(security_mode)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-	new /datum/controller/configuration
+	config.Load()
 
-	CheckSchemaVersion()
-	SetRoundID()
-
+	//SetupLogs depends on the RoundID, so lets check
+	//DB schema and set RoundID if we can
+	SSdbcore.CheckSchemaVersion()
+	SSdbcore.SetRoundID()
 	SetupLogs()
 
 	SERVER_TOOLS_ON_NEW
 
-	load_motd()
 	load_admins()
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
@@ -37,55 +39,46 @@ GLOBAL_PROTECT(security_mode)
 		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
 		fdel(RESTART_COUNTER_PATH)
 
+	if(NO_INIT_PARAMETER in params)
+		return
+
 	Master.Initialize(10, FALSE)
+
+	if(TEST_RUN_PARAMETER in params)
+		HandleTestRun()
+
+/world/proc/HandleTestRun()
+	//trigger things to run the whole process
+	Master.sleep_offline_after_initializations = FALSE
+	SSticker.start_immediately = TRUE
+	CONFIG_SET(number/round_end_countdown, 0)
+#ifdef UNIT_TESTS
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/RunUnitTests))
+#else
+	SSticker.force_ending = TRUE
+#endif
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
-	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
+	GLOB.external_rsc_urls = world.file2list("[global.config.directory]/external_rsc_urls.txt","\n")
 	var/i=1
-	while(i<=external_rsc_urls.len)
-		if(external_rsc_urls[i])
+	while(i<=GLOB.external_rsc_urls.len)
+		if(GLOB.external_rsc_urls[i])
 			i++
 		else
-			external_rsc_urls.Cut(i,i+1)
+			GLOB.external_rsc_urls.Cut(i,i+1)
 #endif
 
-/world/proc/CheckSchemaVersion()
-	if(CONFIG_GET(flag/sql_enabled))
-		if(SSdbcore.Connect())
-			log_world("Database connection established.")
-			var/datum/DBQuery/query_db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
-			query_db_version.Execute()
-			if(query_db_version.NextRow())
-				var/db_major = text2num(query_db_version.item[1])
-				var/db_minor = text2num(query_db_version.item[2])
-				if(db_major != DB_MAJOR_VERSION || db_minor != DB_MINOR_VERSION)
-					message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-					log_sql("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-			else
-				message_admins("Could not get schema version from database")
-				log_sql("Could not get schema version from database")
-		else
-			log_sql("Your server failed to establish a connection with the database.")
-	else
-		log_sql("Database is not enabled in configuration.")
-
-/world/proc/SetRoundID()
-	if(CONFIG_GET(flag/sql_enabled))
-		if(SSdbcore.Connect())
-			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
-			query_round_start.Execute()
-			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
-			query_round_last_id.Execute()
-			if(query_round_last_id.NextRow())
-				GLOB.round_id = query_round_last_id.item[1]
-
 /world/proc/SetupLogs()
-	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
-	if(GLOB.round_id)
-		GLOB.log_directory += "[GLOB.round_id]"
+	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
+	if(!override_dir)
+		GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
+		if(GLOB.round_id)
+			GLOB.log_directory += "[GLOB.round_id]"
+		else
+			GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
 	else
-		GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
+		GLOB.log_directory = "data/logs/[override_dir]"
 	GLOB.world_game_log = file("[GLOB.log_directory]/game.log")
 	GLOB.world_attack_log = file("[GLOB.log_directory]/attack.log")
 	GLOB.world_runtime_log = file("[GLOB.log_directory]/runtime.log")
@@ -94,6 +87,10 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.world_pda_log = file("[GLOB.log_directory]/pda.log")
 	GLOB.sql_error_log = file("[GLOB.log_directory]/sql.log")
 	GLOB.manifest_log = file("[GLOB.log_directory]/manifest.log")
+#ifdef UNIT_TESTS
+	GLOB.test_log = file("[GLOB.log_directory]/tests.log")
+	WRITE_FILE(GLOB.test_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
+#endif
 	WRITE_FILE(GLOB.world_game_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_attack_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
 	WRITE_FILE(GLOB.world_runtime_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
@@ -157,6 +154,27 @@ GLOBAL_PROTECT(security_mode)
 	for(var/client/C in GLOB.clients)
 		C.AnnouncePR(final_composed)
 
+/world/proc/FinishTestRun()
+	set waitfor = FALSE
+	var/list/fail_reasons
+	if(GLOB)
+		if(GLOB.total_runtimes != 0)
+			fail_reasons = list("Total runtimes: [GLOB.total_runtimes]")
+#ifdef UNIT_TESTS
+		if(GLOB.failed_any_test)
+			LAZYADD(fail_reasons, "Unit Tests failed!")
+#endif
+		if(!GLOB.log_directory)
+			LAZYADD(fail_reasons, "Missing GLOB.log_directory!")
+	else
+		fail_reasons = list("Missing GLOB!")
+	if(!fail_reasons)
+		text2file("Success!", "[GLOB.log_directory]/clean_run.lk")
+	else
+		log_world("Test run failed!\n[fail_reasons.Join("\n")]")
+	sleep(0)	//yes, 0, this'll let Reboot finish and prevent byond memes
+	qdel(src)	//shut it down
+
 /world/Reboot(reason = 0, fast_track = FALSE)
 	SERVER_TOOLS_ON_REBOOT
 	if (reason || fast_track) //special reboot, do none of the normal stuff
@@ -167,6 +185,10 @@ GLOBAL_PROTECT(security_mode)
 	else
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns
+
+	if(TEST_RUN_PARAMETER in params)
+		FinishTestRun()
+		return
 
 	if(SERVER_TOOLS_PRESENT)
 		var/do_hard_reboot
@@ -190,9 +212,6 @@ GLOBAL_PROTECT(security_mode)
 
 	log_world("World rebooted at [time_stamp()]")
 	..()
-
-/world/proc/load_motd()
-	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
 
 /world/proc/update_status()
 
@@ -250,3 +269,8 @@ GLOBAL_PROTECT(security_mode)
 		hub_password = "kMZy3U5jJHSiBQjr"
 	else
 		hub_password = "SORRYNOPASSWORD"
+
+/world/proc/incrementMaxZ()
+	maxz++
+	SSmobs.MaxZChanged()
+	SSidlenpcpool.MaxZChanged()

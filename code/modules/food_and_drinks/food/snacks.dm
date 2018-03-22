@@ -5,7 +5,7 @@
 	icon_state = null
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	unique_rename = 1
+	obj_flags = UNIQUE_RENAME
 	grind_results = list() //To let them be ground up to transfer their reagents
 	var/bitesize = 2
 	var/bitecount = 0
@@ -50,7 +50,7 @@
 	return
 
 
-/obj/item/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
+/obj/item/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(!eatverb)
@@ -82,6 +82,8 @@
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				to_chat(M, "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")
 				return 0
+			if(M.has_trait(TRAIT_VORACIOUS))
+				M.changeNext_move(CLICK_CD_MELEE * 0.5) //nom nom nom
 		else
 			if(!isbrain(M))		//If you're feeding it to someone else.
 				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
@@ -223,6 +225,8 @@
 		slice.name = "slice of [name]"
 	if(desc != initial(desc))
 		slice.desc = "[desc]"
+	if(foodtype != initial(foodtype))
+		slice.foodtype = foodtype //if something happens that overrode our food type, make sure the slice carries that over
 
 /obj/item/reagent_containers/food/snacks/proc/generate_trash(atom/location)
 	if(trash)

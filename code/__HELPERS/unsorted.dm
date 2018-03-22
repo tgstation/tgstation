@@ -238,7 +238,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 			continue
 		if(R.stat == DEAD)
 			continue
-		if(R.emagged || R.scrambledcodes || R.syndicate)
+		if(R.emagged || R.scrambledcodes)
 			continue
 		. += R
 
@@ -518,16 +518,24 @@ Turf and target are separate in case you want to teleport some distance from a t
 	Gets all contents of contents and returns them all in a list.
 */
 
-/atom/proc/GetAllContents()
+/atom/proc/GetAllContents(var/T)
 	var/list/processing_list = list(src)
 	var/list/assembled = list()
-	while(processing_list.len)
-		var/atom/A = processing_list[1]
-		processing_list.Cut(1, 2)
-		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
-		//This is also why we don't need to check against assembled as we go along
-		processing_list += A.contents
-		assembled += A
+	if(T)
+		while(processing_list.len)
+			var/atom/A = processing_list[1]
+			processing_list.Cut(1, 2)
+			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
+			//This is also why we don't need to check against assembled as we go along
+			processing_list += A.contents
+			if(istype(A,T))
+				assembled += A
+	else
+		while(processing_list.len)
+			var/atom/A = processing_list[1]
+			processing_list.Cut(1, 2)
+			processing_list += A.contents
+			assembled += A
 	return assembled
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
@@ -728,21 +736,21 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return
 
 /proc/parse_zone(zone)
-	if(zone == "r_hand")
+	if(zone == BODY_ZONE_PRECISE_R_HAND)
 		return "right hand"
-	else if (zone == "l_hand")
+	else if (zone == BODY_ZONE_PRECISE_L_HAND)
 		return "left hand"
-	else if (zone == "l_arm")
+	else if (zone == BODY_ZONE_L_ARM)
 		return "left arm"
-	else if (zone == "r_arm")
+	else if (zone == BODY_ZONE_R_ARM)
 		return "right arm"
-	else if (zone == "l_leg")
+	else if (zone == BODY_ZONE_L_LEG)
 		return "left leg"
-	else if (zone == "r_leg")
+	else if (zone == BODY_ZONE_R_LEG)
 		return "right leg"
-	else if (zone == "l_foot")
+	else if (zone == BODY_ZONE_PRECISE_L_FOOT)
 		return "left foot"
-	else if (zone == "r_foot")
+	else if (zone == BODY_ZONE_PRECISE_R_FOOT)
 		return "right foot"
 	else
 		return zone
@@ -912,7 +920,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	That said, this proc should not be used if the change facing proc of the click code is overriden at the same time*/
 	if(!ismob(target) || target.lying)
 	//Make sure we are not doing this for things that can't have a logical direction to the players given that the target would be on their side
-		return FACING_FAILED
+		return FALSE
 	if(initator.dir == target.dir) //mobs are facing the same direction
 		return FACING_SAME_DIR
 	if(is_A_facing_B(initator,target) && is_A_facing_B(target,initator)) //mobs are facing each other
@@ -987,9 +995,9 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 		var/mob/living/LA = A
 		if(LA.lying)
 			return 0
-	var/goal_dir = angle2dir(dir2angle(get_dir(B,A)+180))
+	var/goal_dir = get_dir(A,B)
 	var/clockwise_A_dir = turn(A.dir, -45)
-	var/anticlockwise_A_dir = turn(B.dir, 45)
+	var/anticlockwise_A_dir = turn(A.dir, 45)
 
 	if(A.dir == goal_dir || clockwise_A_dir == goal_dir || anticlockwise_A_dir == goal_dir)
 		return 1
@@ -1199,18 +1207,8 @@ B --><-- A
 	sleep(duration)
 	A.cut_overlay(O)
 
-/proc/get_areas_in_z(zlevel)
-	. = list()
-	var/validarea = FALSE
-	for(var/V in GLOB.sortedAreas)
-		var/area/A = V
-		validarea = TRUE
-		for(var/turf/T in A)
-			if(T.z != zlevel)
-				validarea = FALSE
-				break
-		if(validarea)
-			. += A
+/proc/get_random_station_turf()
+	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
 
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
@@ -1257,6 +1255,14 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 /datum/proc/stack_trace(msg)
 	CRASH(msg)
+
+GLOBAL_REAL_VAR(list/stack_trace_storage)
+/proc/gib_stack_trace()
+	stack_trace_storage = list()
+	stack_trace()
+	stack_trace_storage.Cut(1, min(3,stack_trace_storage.len))
+	. = stack_trace_storage
+	stack_trace_storage = null
 
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 
@@ -1436,11 +1442,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	temp = ((temp + (temp>>3))&29127) % 63	//070707
 	return temp
 
-//checks if a turf is in the planet z list.
-/proc/turf_z_is_planet(turf/T)
-	return GLOB.z_is_planet["[T.z]"]
-
-
 //same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
 /proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
 	if(!user || !target)
@@ -1499,29 +1500,126 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 // \ref behaviour got changed in 512 so this is necesary to replicate old behaviour.
 // If it ever becomes necesary to get a more performant REF(), this lies here in wait
-// #define REF(thing) (thing && istype(thing, /datum) && thing:use_tag && thing:tag ? "[thing:tag]" : "\ref[thing]")
+// #define REF(thing) (thing && istype(thing, /datum) && (thing:datum_flags & DF_USE_TAG) && thing:tag ? "[thing:tag]" : "\ref[thing]")
 /proc/REF(input)
 	if(istype(input, /datum))
 		var/datum/thing = input
-		if(thing.use_tag)
+		if(thing.datum_flags & DF_USE_TAG)
 			if(!thing.tag)
-				WARNING("A ref was requested of an object with use_tag set but no tag: [thing]")
-				thing.use_tag = FALSE
+				stack_trace("A ref was requested of an object with DF_USE_TAG set but no tag: [thing]")
+				thing.datum_flags &= ~DF_USE_TAG
 			else
 				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"
 
 // Makes a call in the context of a different usr
 // Use sparingly
-/world/proc/PushUsr(mob/M, datum/callback/CB)
+/world/proc/PushUsr(mob/M, datum/callback/CB, ...)
 	var/temp = usr
 	usr = M
-	. = CB.Invoke()
+	if (length(args) > 2)
+		. = CB.Invoke(arglist(args.Copy(3)))
+	else
+		. = CB.Invoke()
 	usr = temp
-  
+
 //Returns a list of all servants of Ratvar and observers.
 /proc/servants_and_ghosts()
 	. = list()
 	for(var/V in GLOB.player_list)
 		if(is_servant_of_ratvar(V) || isobserver(V))
 			. += V
+
+//datum may be null, but it does need to be a typed var
+#define NAMEOF(datum, X) (#X || ##datum.##X)
+
+#define VARSET_LIST_CALLBACK(target, var_name, var_value) CALLBACK(GLOBAL_PROC, /proc/___callbackvarset, ##target, ##var_name, ##var_value)
+//dupe code because dm can't handle 3 level deep macros
+#define VARSET_CALLBACK(datum, var, var_value) CALLBACK(GLOBAL_PROC, /proc/___callbackvarset, ##datum, NAMEOF(##datum, ##var), ##var_value)
+
+/proc/___callbackvarset(list_or_datum, var_name, var_value)
+	if(length(list_or_datum))
+		list_or_datum[var_name] = var_value
+		return
+	var/datum/D = list_or_datum
+	if(IsAdminAdvancedProcCall())
+		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
+	else
+		D.vars[var_name] = var_value
+
+/proc/get_random_food()
+	var/list/blocked = list(/obj/item/reagent_containers/food/snacks,
+		/obj/item/reagent_containers/food/snacks/store/bread,
+		/obj/item/reagent_containers/food/snacks/breadslice,
+		/obj/item/reagent_containers/food/snacks/store/cake,
+		/obj/item/reagent_containers/food/snacks/cakeslice,
+		/obj/item/reagent_containers/food/snacks/store,
+		/obj/item/reagent_containers/food/snacks/pie,
+		/obj/item/reagent_containers/food/snacks/kebab,
+		/obj/item/reagent_containers/food/snacks/pizza,
+		/obj/item/reagent_containers/food/snacks/pizzaslice,
+		/obj/item/reagent_containers/food/snacks/salad,
+		/obj/item/reagent_containers/food/snacks/meat,
+		/obj/item/reagent_containers/food/snacks/meat/slab,
+		/obj/item/reagent_containers/food/snacks/soup,
+		/obj/item/reagent_containers/food/snacks/grown,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom,
+		/obj/item/reagent_containers/food/snacks/deepfryholder
+		)
+	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
+
+	return pick(typesof(/obj/item/reagent_containers/food/snacks) - blocked)
+
+/proc/get_random_drink()
+	return pick(subtypesof(/obj/item/reagent_containers/food/drinks))
+
+//For these two procs refs MUST be ref = TRUE format like typecaches!
+/proc/weakref_filter_list(list/things, list/refs)
+	if(!islist(things) || !islist(refs))
+		return
+	if(!refs.len)
+		return things
+	if(things.len > refs.len)
+		var/list/f = list()
+		for(var/i in refs)
+			var/datum/weakref/r = i
+			var/datum/d = r.resolve()
+			if(d)
+				f |= d
+		return things & f
+
+	else
+		. = list()
+		for(var/i in things)
+			if(!refs[WEAKREF(i)])
+				continue
+			. |= i
+
+/proc/weakref_filter_list_reverse(list/things, list/refs)
+	if(!islist(things) || !islist(refs))
+		return
+	if(!refs.len)
+		return things
+	if(things.len > refs.len)
+		var/list/f = list()
+		for(var/i in refs)
+			var/datum/weakref/r = i
+			var/datum/d = r.resolve()
+			if(d)
+				f |= d
+
+		return things - f
+	else
+		. = list()
+		for(var/i in things)
+			if(refs[WEAKREF(i)])
+				continue
+			. |= i
+
+/proc/special_list_filter(list/L, datum/callback/condition)
+	if(!islist(L) || !length(L) || !istype(condition))
+		return list()
+	. = list()
+	for(var/i in L)
+		if(condition.Invoke(i))
+			. |= i

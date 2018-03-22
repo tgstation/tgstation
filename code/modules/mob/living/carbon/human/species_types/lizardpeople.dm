@@ -39,6 +39,11 @@
 	if(H)
 		H.endTailWag()
 
+/datum/species/lizard/spec_stun(mob/living/carbon/human/H,amount)
+	if(H)
+		H.endTailWag()
+	. = ..()
+
 /*
  Lizard subspecies: ASHWALKERS
 */
@@ -46,4 +51,5 @@
 	name = "Ash Walker"
 	id = "ashlizard"
 	limbs_id = "lizard"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
+	inherent_traits = list(TRAIT_NOGUNS,TRAIT_NOBREATH)

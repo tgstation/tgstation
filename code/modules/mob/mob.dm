@@ -1,6 +1,3 @@
-/mob
-	use_tag = TRUE
-
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
@@ -14,7 +11,6 @@
 			var/mob/dead/observe = M
 			observe.reset_perspective(null)
 	qdel(hud_used)
-	QDEL_LIST(viruses)
 	for(var/cc in client_colours)
 		qdel(cc)
 	client_colours = null
@@ -23,7 +19,6 @@
 	return QDEL_HINT_HARDDEL
 
 /mob/Initialize()
-	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
 	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
@@ -37,7 +32,11 @@
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
+	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
 	. = ..()
+
+/mob/GenerateTag()
+	tag = "mob_[next_mob_id++]"
 
 /atom/proc/prepare_huds()
 	hud_list = list()
@@ -174,8 +173,7 @@
 	return 0
 
 /mob/proc/Life()
-	set waitfor = 0
-	return
+	set waitfor = FALSE
 
 /mob/proc/get_item_by_slot(slot_id)
 	return null
@@ -254,12 +252,31 @@
 
 	return 0
 
+// reset_perspective(thing) set the eye to the thing (if it's equal to current default reset to mob perspective)
+// reset_perspective() set eye to common default : mob on turf, loc otherwise
 /mob/proc/reset_perspective(atom/A)
 	if(client)
-		if(ismovableatom(A))
-			client.perspective = EYE_PERSPECTIVE
-			client.eye = A
+		if(A)
+			if(ismovableatom(A))
+				//Set the the thing unless it's us
+				if(A != src)
+					client.perspective = EYE_PERSPECTIVE
+					client.eye = A
+				else
+					client.eye = client.mob
+					client.perspective = MOB_PERSPECTIVE
+			else if(isturf(A))
+				//Set to the turf unless it's our current turf
+				if(A != loc)
+					client.perspective = EYE_PERSPECTIVE
+					client.eye = A
+				else
+					client.eye = client.mob
+					client.perspective = MOB_PERSPECTIVE
+			else
+				//Do nothing
 		else
+			//Reset to common defaults: mob if on turf, otherwise current loc
 			if(isturf(loc))
 				client.eye = client.mob
 				client.perspective = MOB_PERSPECTIVE
@@ -267,16 +284,6 @@
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
 		return 1
-
-/mob/living/reset_perspective(atom/A)
-	if(..())
-		update_sight()
-		if(client.eye != src)
-			var/atom/AT = client.eye
-			AT.get_remote_view_fullscreens(src)
-		else
-			clear_fullscreen("remote_view", 0)
-		update_pipe_vision()
 
 /mob/proc/show_inv(mob/user)
 	return
@@ -314,60 +321,6 @@
 
 	return 1
 
-//this and stop_pulling really ought to be /mob/living procs
-/mob/proc/start_pulling(atom/movable/AM, supress_message = 0)
-	if(!AM || !src)
-		return FALSE
-	if(!(AM.can_be_pulled(src)))
-		return FALSE
-	if(throwing || incapacitated())
-		return FALSE
-
-	AM.add_fingerprint(src)
-
-	// If we're pulling something then drop what we're currently pulling and pull this instead.
-	if(pulling)
-		// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
-		if(AM == pulling)
-			return
-		stop_pulling()
-
-	changeNext_move(CLICK_CD_GRABBING)
-
-	if(AM.pulledby)
-		if(!supress_message)
-			visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
-		add_logs(AM, AM.pulledby, "pulled from", src)
-		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
-
-	pulling = AM
-	AM.pulledby = src
-	if(!supress_message)
-		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-	update_pull_hud_icon()
-
-	if(ismob(AM))
-		var/mob/M = AM
-
-		//Share diseases that are spread by touch
-		for(var/thing in viruses)
-			var/datum/disease/D = thing
-			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
-				M.ContactContractDisease(D)
-
-		for(var/thing in M.viruses)
-			var/datum/disease/D = thing
-			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
-				ContactContractDisease(D)
-
-		add_logs(src, M, "grabbed", addition="passive grab")
-		if(!supress_message)
-			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
-		if(!iscarbon(src))
-			M.LAssailant = null
-		else
-			M.LAssailant = usr
-
 /mob/proc/can_resist()
 	return FALSE		//overridden in living.dm
 
@@ -389,21 +342,6 @@
 				D = NORTH
 		setDir(D)
 		spintime -= speed
-
-/mob/verb/stop_pulling()
-	set name = "Stop Pulling"
-	set category = "IC"
-
-	if(pulling)
-		pulling.pulledby = null
-		var/mob/living/ex_pulled = pulling
-		pulling = null
-		grab_state = 0
-		update_pull_hud_icon()
-    
-		if(isliving(ex_pulled))
-			var/mob/living/L = ex_pulled
-			L.update_canmove()// mob gets up if it was lyng down in a chokehold
 
 /mob/proc/update_pull_hud_icon()
 	if(hud_used)
@@ -583,7 +521,8 @@
 			stat(null, "Next Map: [cached.map_name]")
 		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
 		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
-		stat(null, "Station Time: [worldtime2text()]")
+		stat(null, "Round Time: [worldtime2text()]")
+		stat(null, "Station Time: [station_time_timestamp()]")
 		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
 		if(SSshuttle.emergency)
 			var/ETA = SSshuttle.emergency.getModeStr()
@@ -596,6 +535,7 @@
 			stat("Location:", COORD(T))
 			stat("CPU:", "[world.cpu]")
 			stat("Instances:", "[num2text(world.contents.len, 10)]")
+			stat("World Time:", "[world.time]")
 			GLOB.stat_entry()
 			config.stat_entry()
 			stat(null)
@@ -686,7 +626,6 @@
 	client.move_delay += movement_delay()
 	return 1
 
-
 /mob/verb/westface()
 	set hidden = 1
 	if(!canface())
@@ -695,7 +634,6 @@
 	client.move_delay += movement_delay()
 	return 1
 
-
 /mob/verb/northface()
 	set hidden = 1
 	if(!canface())
@@ -703,7 +641,6 @@
 	setDir(NORTH)
 	client.move_delay += movement_delay()
 	return 1
-
 
 /mob/verb/southface()
 	set hidden = 1
@@ -814,7 +751,7 @@
 	return 0
 
 //Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic()
+/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	return
 
 /mob/proc/faction_check_mob(mob/target, exact_match)
@@ -908,39 +845,6 @@
 		if (L)
 			L.alpha = lighting_alpha
 
-/mob/living/vv_edit_var(var_name, var_value)
-	switch(var_name)
-		if("stat")
-			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
-				GLOB.dead_mob_list -= src
-				GLOB.alive_mob_list += src
-			if((stat < DEAD) && (var_value == DEAD))//Kill he
-				GLOB.alive_mob_list -= src
-				GLOB.dead_mob_list += src
-	. = ..()
-	switch(var_name)
-		if("knockdown")
-			SetKnockdown(var_value)
-		if("stun")
-			SetStun(var_value)
-		if("unconscious")
-			SetUnconscious(var_value)
-		if("sleeping")
-			SetSleeping(var_value)
-		if("eye_blind")
-			set_blindness(var_value)
-		if("eye_damage")
-			set_eye_damage(var_value)
-		if("eye_blurry")
-			set_blurriness(var_value)
-		if("maxHealth")
-			updatehealth()
-		if("resize")
-			update_transform()
-		if("lighting_alpha")
-			sync_lighting_plane_alpha()
-
-
 /mob/proc/is_literate()
 	return 0
 
@@ -949,15 +853,6 @@
 
 /mob/proc/get_idcard()
 	return
-
-/mob/proc/get_static_viruses() //used when creating blood and other infective objects
-	if(!LAZYLEN(viruses))
-		return
-	var/list/datum/disease/diseases = list()
-	for(var/datum/disease/D in viruses)
-		var/static_virus = D.Copy()
-		diseases += static_virus
-	return diseases
 
 
 /mob/vv_get_dropdown()
@@ -970,7 +865,6 @@
 	.["Toggle Godmode"] = "?_src_=vars;[HrefToken()];godmode=[REF(src)]"
 	.["Drop Everything"] = "?_src_=vars;[HrefToken()];drop_everything=[REF(src)]"
 	.["Regenerate Icons"] = "?_src_=vars;[HrefToken()];regenerateicons=[REF(src)]"
-	.["Make Space Ninja"] = "?_src_=vars;[HrefToken()];ninja=[REF(src)]"
 	.["Show player panel"] = "?_src_=vars;[HrefToken()];mob_player_panel=[REF(src)]"
 	.["Toggle Build Mode"] = "?_src_=vars;[HrefToken()];build_mode=[REF(src)]"
 	.["Assume Direct Control"] = "?_src_=vars;[HrefToken()];direct_control=[REF(src)]"

@@ -11,6 +11,11 @@
 	valid_territory = FALSE
 	icon_state = "shuttle"
 
+/area/shuttle/Initialize()
+	if(!canSmoothWithAreas)
+		canSmoothWithAreas = type
+	. = ..()
+
 ////////////////////////////Multi-area shuttles////////////////////////////
 
 ////////////////////////////Syndicate infiltrator////////////////////////////
@@ -19,6 +24,7 @@
 	name = "Syndicate Infiltrator"
 	blob_allowed = FALSE
 	ambientsounds = HIGHSEC
+	canSmoothWithAreas = /area/shuttle/syndicate
 
 /area/shuttle/syndicate/bridge
 	name = "Syndicate Infiltrator Control"
@@ -36,6 +42,18 @@
 
 /area/shuttle/syndicate/airlock
 	name = "Syndicate Infiltrator Airlock"
+
+////////////////////////////Pirate Shuttle////////////////////////////
+
+/area/shuttle/pirate
+	name = "Pirate Shuttle"
+	blob_allowed = FALSE
+	requires_power = TRUE
+	canSmoothWithAreas = /area/shuttle/pirate
+
+/area/shuttle/pirate/vault
+	name = "Pirate Shuttle Vault"
+	requires_power = FALSE
 
 ////////////////////////////Single-area shuttles////////////////////////////
 
@@ -76,9 +94,20 @@
 /area/shuttle/escape
 	name = "Emergency Shuttle"
 
+/area/shuttle/escape/backup
+	name = "Backup Emergency Shuttle"
+
 /area/shuttle/escape/luxury
 	name = "Luxurious Emergency Shuttle"
 	noteleport = TRUE
+
+/area/shuttle/escape/arena
+	name = "The Arena"
+	noteleport = TRUE
+
+/area/shuttle/escape/meteor
+	name = "\proper a meteor with engines strapped to it"
+	luminosity = NONE
 
 /area/shuttle/transport
 	name = "Transport Shuttle"
@@ -112,11 +141,27 @@
 	name = "Syndicate Scout"
 	blob_allowed = FALSE
 
-/area/shuttle/pirate
-	name = "Pirate Shuttle"
+/area/shuttle/caravan
 	blob_allowed = FALSE
 	requires_power = TRUE
 
-/area/shuttle/pirate/vault
-	name = "Pirate Shuttle Vault"
-	requires_power = FALSE
+/area/shuttle/caravan/syndicate1
+	name = "Syndicate Fighter"
+
+/area/shuttle/caravan/syndicate2
+	name = "Syndicate Fighter"
+
+/area/shuttle/caravan/syndicate3
+	name = "Syndicate Drop Ship"
+
+/area/shuttle/caravan/pirate
+	name = "Pirate Cutter"
+
+/area/shuttle/caravan/freighter1
+	name = "Small Freighter"
+
+/area/shuttle/caravan/freighter2
+	name = "Tiny Freighter"
+
+/area/shuttle/caravan/freighter3
+	name = "Tiny Freighter"

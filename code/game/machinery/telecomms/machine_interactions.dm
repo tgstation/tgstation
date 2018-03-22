@@ -102,23 +102,8 @@
 	dat += "</font>"
 	temp = ""
 	user << browse(dat, "window=tcommachine;size=520x500;can_resize=0")
-	onclose(user, "dormitory")
-
-
-// Off-Site Relays
-//
-// You are able to send/receive signals from the station's z level (changeable in the ZLEVEL_STATION_PRIMARY #define) if
-
-
-/obj/machinery/telecomms/relay/proc/toggle_level()
-
-	var/turf/position = get_turf(src)
-
-	// Toggle on/off getting signals from the station or the current Z level
-	if(listening_level in GLOB.station_z_levels) // equals the station
-		listening_level = position.z
-		return TRUE
-	return FALSE
+	onclose(user, "tcommachine")
+	return TRUE
 
 // Returns a multitool from a user depending on their mobtype.
 

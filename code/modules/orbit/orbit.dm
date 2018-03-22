@@ -33,7 +33,9 @@
 		orbiting = null
 	return ..()
 
-/datum/orbit/proc/Check(turf/targetloc)
+/datum/orbit/proc/Check(turf/targetloc, list/checked_already = list())
+	//Avoid infinite loops for people who end up orbiting themself through another orbiter
+	checked_already[src] = TRUE
 	if (!orbiter)
 		qdel(src)
 		return
@@ -55,12 +57,14 @@
 		return
 	orbiter.loc = targetloc
 	orbiter.update_parallax_contents()
+	orbiter.update_light()
 	lastloc = orbiter.loc
 	for(var/other_orbit in orbiter.orbiters)
 		var/datum/orbit/OO = other_orbit
-		if(OO == src || OO.orbiter == orbiting)
+		//Skip if checked already
+		if(checked_already[OO])
 			continue
-		OO.Check(targetloc)
+		OO.Check(targetloc, checked_already)
 
 /atom/movable/var/datum/orbit/orbiting = null
 /atom/var/list/orbiters = null

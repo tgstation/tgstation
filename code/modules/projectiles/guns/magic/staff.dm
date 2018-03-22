@@ -27,6 +27,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/heal
 	icon_state = "staffofhealing"
 	item_state = "staffofhealing"
+	harmful = FALSE
 
 /obj/item/gun/magic/staff/healing/handle_suicide() //Stops people trying to commit suicide to heal themselves
 	return
@@ -45,9 +46,9 @@
 	/obj/item/projectile/magic/death, /obj/item/projectile/magic/teleport, /obj/item/projectile/magic/door, /obj/item/projectile/magic/aoe/fireball,
 	/obj/item/projectile/magic/spellblade, /obj/item/projectile/magic/arcane_barrage)
 
-/obj/item/gun/magic/staff/chaos/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
+/obj/item/gun/magic/staff/chaos/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	chambered.projectile_type = pick(allowed_projectile_types)
-	. = ..(target, user, message, params, zone_override, bonus_spread)
+	. = ..()
 
 /obj/item/gun/magic/staff/door
 	name = "staff of door creation"
@@ -59,6 +60,7 @@
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = 1
+	harmful = FALSE
 
 /obj/item/gun/magic/staff/honk
 	name = "staff of the honkmother"
@@ -69,6 +71,7 @@
 	item_state = "honker"
 	max_charges = 4
 	recharge_rate = 8
+	harmful = FALSE
 
 /obj/item/gun/magic/staff/spellblade
 	name = "spellblade"
@@ -85,6 +88,10 @@
 	block_chance = 50
 	sharpness = IS_SHARP
 	max_charges = 4
+
+/obj/item/gun/magic/staff/spellblade/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 15, 125, 0, hitsound)
 
 /obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)

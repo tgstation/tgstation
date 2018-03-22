@@ -2,7 +2,7 @@
 	name = "ears"
 	icon_state = "ears"
 	desc = "There are three parts to the ear. Inner, middle and outer. Only one of these parts should be normally visible."
-	zone = "head"
+	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EARS
 	gender = PLURAL
 
@@ -25,7 +25,7 @@
 		return
 	var/mob/living/carbon/C = owner
 	// genetic deafness prevents the body from using the ears, even if healthy
-	if(C.has_disability(DEAF))
+	if(C.has_trait(TRAIT_DEAF))
 		deaf = max(deaf, 1)
 	else
 		if(C.ears && (C.ears.flags_2 & HEALS_EARS_2))
@@ -42,7 +42,7 @@
 
 	var/mob/living/carbon/C = owner
 
-	if(iscarbon(owner) && C.has_disability(DEAF))
+	if(iscarbon(owner) && C.has_trait(TRAIT_DEAF))
 		deaf = 1
 
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)

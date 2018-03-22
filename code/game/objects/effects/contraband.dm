@@ -60,6 +60,7 @@
 
 /obj/structure/sign/poster/Initialize()
 	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 75), 0)
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)
@@ -88,7 +89,7 @@
 
 /obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wirecutters))
-		playsound(loc, I.usesound, 100, 1)
+		I.play_tool_sound(src, 100)
 		if(ruined)
 			to_chat(user, "<span class='notice'>You remove the remnants of the poster.</span>")
 			qdel(src)

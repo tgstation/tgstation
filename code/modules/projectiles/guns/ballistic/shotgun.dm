@@ -44,7 +44,7 @@
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
 	if(chambered && chambered.BB)
-		process_fire(user, user,0)
+		process_fire(user, user, FALSE)
 		. = 1
 
 /obj/item/gun/ballistic/shotgun/proc/pump(mob/M)
@@ -57,8 +57,7 @@
 /obj/item/gun/ballistic/shotgun/proc/pump_unload(mob/M)
 	if(chambered)//We have a shell in the chamber
 		chambered.forceMove(drop_location())//Eject casing
-		chambered.SpinAnimation(10, 1)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, chambered, 'sound/weapons/bulletremove.ogg', 60, 1), 3)
+		chambered.bounce_away()
 		chambered = null
 
 /obj/item/gun/ballistic/shotgun/proc/pump_reload(mob/M)
@@ -241,7 +240,7 @@
 		to_chat(user, "You switch to tube A.")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	if(user.incapacitated() || !Adjacent(user) || !istype(user))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	pump()
 

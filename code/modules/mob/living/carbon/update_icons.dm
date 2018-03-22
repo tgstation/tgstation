@@ -115,7 +115,7 @@
 /mob/living/carbon/update_inv_wear_mask()
 	remove_overlay(FACEMASK_LAYER)
 
-	if(!get_bodypart("head")) //Decapitated
+	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
 
 	if(client && hud_used && hud_used.inv_slots[slot_wear_mask])
@@ -159,7 +159,7 @@
 /mob/living/carbon/update_inv_head()
 	remove_overlay(HEAD_LAYER)
 
-	if(!get_bodypart("head")) //Decapitated
+	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
 
 	if(client && hud_used && hud_used.inv_slots[slot_back])
@@ -279,7 +279,7 @@
 		else
 			. += "-robotic"
 
-	if(has_disability(HUSK))
+	if(has_trait(TRAIT_HUSK))
 		. += "-husk"
 
 

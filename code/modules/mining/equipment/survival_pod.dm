@@ -60,7 +60,7 @@
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
 
 		var/turf/T = deploy_location
-		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
+		if(!is_mining_level(T.z)) //only report capsules away from the mining/lavaland level
 			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [get_area(T)][COORD(T)]")
 		template.load(deploy_location, centered = TRUE)
@@ -138,16 +138,16 @@
 	density = TRUE
 	pixel_y = -32
 
-/obj/item/device/gps/computer/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, W.usesound, 50, 1)
-		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
-						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20*W.toolspeed, target = src))
-			new /obj/item/device/gps(loc)
-			qdel(src)
-		return
-	return ..()
+/obj/item/device/gps/computer/wrench_act(mob/living/user, obj/item/I)
+	if(flags_1 & NODECONSTRUCT_1)
+		return TRUE
+
+	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
+		"<span class='notice'>You start to disassemble [src]...</span>", "You hear clanking and banging noises.")
+	if(I.use_tool(src, user, 20, volume=50))
+		new /obj/item/device/gps(loc)
+		qdel(src)
+	return TRUE
 
 /obj/item/device/gps/computer/attack_hand(mob/user)
 	attack_self(user)
@@ -203,7 +203,6 @@
 	desc = "A large machine releasing a constant gust of air."
 	anchored = TRUE
 	density = TRUE
-	var/arbitraryatmosblockingvar = TRUE
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 5
 	CanAtmosPass = ATMOS_PASS_NO
@@ -214,14 +213,15 @@
 			new buildstacktype(loc,buildstackamount)
 	qdel(src)
 
-/obj/structure/fans/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
-		playsound(src.loc, W.usesound, 50, 1)
-		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
-						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
-		if(do_after(user, 20*W.toolspeed, target = src))
-			deconstruct()
-			return ..()
+/obj/structure/fans/wrench_act(mob/living/user, obj/item/I)
+	if(flags_1 & NODECONSTRUCT_1)
+		return TRUE
+
+	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
+		"<span class='notice'>You start to disassemble [src]...</span>", "You hear clanking and banging noises.")
+	if(I.use_tool(src, user, 20, volume=50))
+		deconstruct()
+	return TRUE
 
 /obj/structure/fans/tiny
 	name = "tiny fan"

@@ -39,23 +39,24 @@
 	return 1
 
 /obj/item/device/flashlight/suicide_act(mob/living/carbon/human/user)
+	if (user.eye_blind)
+		user.visible_message("<span class='suicide'>[user]  is putting [src] close to [user.p_their()] eyes and turning it on ... but [user.p_theyre()] blind!</span>")
+		return SHAME
 	user.visible_message("<span class='suicide'>[user] is putting [src] close to [user.p_their()] eyes and turning it on! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
-
-
 /obj/item/device/flashlight/attack(mob/living/carbon/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(istype(M) && on && user.zone_selected in list("eyes", "mouth"))
+	if(istype(M) && on && user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH))
 
-		if((user.has_disability(CLUMSY) || user.has_disability(DUMB)) && prob(50))	//too dumb to use flashlight properly
+		if((user.has_trait(TRAIT_CLUMSY) || user.has_trait(TRAIT_DUMB)) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
 		if(!user.IsAdvancedToolUser())
 			to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 			return
 
-		if(!M.get_bodypart("head"))
+		if(!M.get_bodypart(BODY_ZONE_HEAD))
 			to_chat(user, "<span class='warning'>[M] doesn't have a head!</span>")
 			return
 
@@ -64,7 +65,7 @@
 			return
 
 		switch(user.zone_selected)
-			if("eyes")
+			if(BODY_ZONE_PRECISE_EYES)
 				if((M.head && M.head.flags_cover & HEADCOVERSEYES) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) || (M.glasses && M.glasses.flags_cover & GLASSESCOVERSEYES))
 					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
 					return
@@ -82,14 +83,14 @@
 				else
 					user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
 										 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
-					if(M.stat == DEAD || (M.has_disability(BLIND)) || !M.flash_act(visual = 1)) //mob is dead or fully blind
+					if(M.stat == DEAD || (M.has_trait(TRAIT_BLIND)) || !M.flash_act(visual = 1)) //mob is dead or fully blind
 						to_chat(user, "<span class='warning'>[M]'s pupils don't react to the light!</span>")
 					else if(M.dna && M.dna.check_mutation(XRAY))	//mob has X-RAY vision
 						to_chat(user, "<span class='danger'>[M]'s pupils give an eerie glow!</span>")
 					else //they're okay!
 						to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
 
-			if("mouth")
+			if(BODY_ZONE_PRECISE_MOUTH)
 
 				if((M.head && M.head.flags_cover & HEADCOVERSMOUTH) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSMOUTH) ? "helmet" : "mask"] first.</span>")
@@ -99,7 +100,7 @@
 
 				var/list/mouth_organs = new
 				for(var/obj/item/organ/O in M.internal_organs)
-					if(O.zone == "mouth")
+					if(O.zone == BODY_ZONE_PRECISE_MOUTH)
 						mouth_organs.Add(O)
 				var/organ_list = ""
 				var/organ_count = LAZYLEN(mouth_organs)
@@ -371,7 +372,7 @@
 	return TRUE
 
 /obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && user.zone_selected in list("eyes", "mouth")) // call original attack when examining organs
+	if(on && user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH)) // call original attack when examining organs
 		..()
 	return
 
@@ -493,7 +494,7 @@
 	color = null
 
 /obj/item/device/flashlight/glowstick/random/Initialize()
-	. = ..()
+	..()
 	var/T = pick(typesof(/obj/item/device/flashlight/glowstick) - /obj/item/device/flashlight/glowstick/random)
 	new T(loc)
 	return INITIALIZE_HINT_QDEL

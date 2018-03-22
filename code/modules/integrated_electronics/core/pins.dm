@@ -25,14 +25,16 @@ D [1]/  ||
 	var/list/linked = list()
 	var/io_type = DATA_CHANNEL
 	var/pin_type			// IC_INPUT, IC_OUTPUT, IC_ACTIVATOR - used in saving assembly wiring
+	var/ord
 
-
-/datum/integrated_io/New(loc, _name, _data, _pin_type)
+/datum/integrated_io/New(loc, _name, _data, _pin_type,_ord)
 	name = _name
 	if(_data)
 		data = _data
 	if(_pin_type)
 		pin_type = _pin_type
+	if(_ord)
+		ord = _ord
 
 	holder = loc
 
@@ -148,7 +150,7 @@ D [1]/  ||
 /datum/integrated_io/activate/push_data()
 	for(var/k in 1 to linked.len)
 		var/datum/integrated_io/io = linked[k]
-		io.holder.check_then_do_work()
+		io.holder.check_then_do_work(io.ord)
 
 /datum/integrated_io/proc/pull_data()
 	for(var/k in 1 to linked.len)
@@ -207,7 +209,7 @@ D [1]/  ||
 	write_data_to_pin(new_data)
 
 /datum/integrated_io/activate/ask_for_pin_data(mob/user) // This just pulses the pin.
-	holder.check_then_do_work(ignore_power = TRUE)
+	holder.check_then_do_work(ord,ignore_power = TRUE)
 	to_chat(user, "<span class='notice'>You pulse \the [holder]'s [src] pin.</span>")
 
 /datum/integrated_io/activate

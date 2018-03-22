@@ -130,6 +130,18 @@ Borg Hypospray
 	reagent_ids = list ("facid", "mutetoxin", "cyanide", "sodium_thiopental", "heparin", "lexorin")
 	accepts_reagent_upgrades = FALSE
 
+/obj/item/reagent_containers/borghypo/clown
+	name = "laughter injector"
+	desc = "Keeps the crew happy and productive!"
+	reagent_ids = list("laughter")
+	accepts_reagent_upgrades = FALSE
+
+/obj/item/reagent_containers/borghypo/clown/hacked
+	name = "laughter injector"
+	desc = "Keeps the crew so happy they don't work!"
+	reagent_ids = list("superlaughter")
+	accepts_reagent_upgrades = FALSE
+
 /obj/item/reagent_containers/borghypo/syndicate
 	name = "syndicate cyborg hypospray"
 	desc = "An experimental piece of Syndicate technology used to produce powerful restorative nanites used to very quickly restore injuries of all types. Also metabolizes potassium iodide, for radiation poisoning, and morphine, for offense."
@@ -208,18 +220,18 @@ Borg Shaker
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
 
-	reagent_ids = list("beer2")
+	reagent_ids = list("fakebeer")
 
 /obj/item/reagent_containers/borghypo/peace
 	name = "Peace Hypospray"
 
-	reagent_ids = list("dizzysolution","tiresolution")
+	reagent_ids = list("dizzysolution","tiresolution","synthpax")
 	accepts_reagent_upgrades = FALSE
 
 /obj/item/reagent_containers/borghypo/peace/hacked
 	desc = "Everything's peaceful in death!"
 	icon_state = "borghypo_s"
-	reagent_ids = list("dizzysolution","tiresolution","tirizene","sulfonal","sodium_thiopental","cyanide","neurotoxin2")
+	reagent_ids = list("dizzysolution","tiresolution","synthpax","tirizene","sulfonal","sodium_thiopental","cyanide","fentanyl")
 	accepts_reagent_upgrades = FALSE
 
 /obj/item/reagent_containers/borghypo/epi

@@ -101,7 +101,7 @@
 
 				var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this) // transfer from, transfer to - who cares?
 
-				to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the solution.</span>")
+				to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units.</span>")
 			if (reagents.total_volume >= reagents.maximum_volume)
 				mode=!mode
 				update_icon()
@@ -154,9 +154,19 @@
 
 
 /obj/item/reagent_containers/syringe/update_icon()
-	var/rounded_vol = CLAMP(round((reagents.total_volume / volume * 15),5), 0, 15)
 	cut_overlays()
+	var/rounded_vol
+	if(reagents && reagents.total_volume)
+		rounded_vol = CLAMP(round((reagents.total_volume / volume * 15),5), 1, 15)
+		var/image/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
+		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+		add_overlay(filling_overlay)
+	else
+		rounded_vol = 0
+	icon_state = "[rounded_vol]"
+	item_state = "syringe_[rounded_vol]"
 	if(ismob(loc))
+		var/mob/M = loc
 		var/injoverlay
 		switch(mode)
 			if (SYRINGE_DRAW)
@@ -164,13 +174,7 @@
 			if (SYRINGE_INJECT)
 				injoverlay = "inject"
 		add_overlay(injoverlay)
-	icon_state = "[rounded_vol]"
-	item_state = "syringe_[rounded_vol]"
-
-	if(reagents.total_volume)
-		var/image/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
-		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling_overlay)
+		M.update_inv_hands()
 
 /obj/item/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"

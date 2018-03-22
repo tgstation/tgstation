@@ -23,9 +23,6 @@
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("morphine" = 0.35, "charcoal" = 0.35, "nutriment" = 0)
 
-
-
-
 /obj/item/reagent_containers/food/snacks/grown/mushroom/reishi
 	seed = /obj/item/seeds/reishi
 	name = "reishi"
@@ -277,6 +274,7 @@
 	icon_state = "glowcap"
 	filling_color = "#00FA9A"
 	effect_path = /obj/structure/glowshroom/glowcap
+	tastes = list("glowcap" = 1)
 
 
 //Shadowshroom
@@ -300,6 +298,7 @@
 	desc = "<I>Mycena Umbra</I>: This species of mushroom emits shadow instead of light."
 	icon_state = "shadowshroom"
 	effect_path = /obj/structure/glowshroom/shadowshroom
+	tastes = list("shadow" = 1, "mushroom" = 1)
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom/attack_self(mob/user)
 	. = ..()

@@ -70,7 +70,7 @@
 	switch(mode)
 		if(0)
 			if(M.health >= 0)
-				if(user.zone_selected == "head")
+				if(user.zone_selected == BODY_ZONE_HEAD)
 					user.visible_message("<span class='notice'>[user] playfully boops [M] on the head!</span>", \
 									"<span class='notice'>You playfully boop [M] on the head!</span>")
 					user.do_attack_animation(M, ATTACK_EFFECT_BOOP)
@@ -95,7 +95,7 @@
 					if(M.lying)
 						user.visible_message("<span class='notice'>[user] shakes [M] trying to get [M.p_them()] up!</span>", \
 										"<span class='notice'>You shake [M] trying to get [M.p_them()] up!</span>")
-					else if(user.zone_selected == "head")
+					else if(user.zone_selected == BODY_ZONE_HEAD)
 						user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
 										"<span class='warning'>You bop [M] on the head!</span>")
 						user.do_attack_animation(M, ATTACK_EFFECT_PUNCH)
@@ -280,21 +280,21 @@
 	var/cooldown = 0
 
 /obj/item/device/harmalarm/emag_act(mob/user)
-	emagged = !emagged
-	if(emagged)
+	obj_flags ^= EMAGGED
+	if(obj_flags & EMAGGED)
 		to_chat(user, "<font color='red'>You short out the safeties on [src]!</font>")
 	else
 		to_chat(user, "<font color='red'>You reset the safeties on [src]!</font>")
 
 /obj/item/device/harmalarm/attack_self(mob/user)
-	var/safety = !emagged
+	var/safety = !(obj_flags & EMAGGED)
 	if(cooldown > world.time)
 		to_chat(user, "<font color='red'>The device is still recharging!</font>")
 		return
 
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
-		if(R.cell.charge < 1200)
+		if(!R.cell || R.cell.charge < 1200)
 			to_chat(user, "<font color='red'>You don't have enough charge to do this!</font>")
 			return
 		R.cell.charge -= 1000
@@ -354,6 +354,9 @@
 	var/hitspeed = 2
 	var/hitdamage = 0
 	var/emaggedhitdamage = 3
+
+/obj/item/borg/lollipop/clown
+	emaggedhitdamage = 0
 
 /obj/item/borg/lollipop/equipped()
 	check_amount()
@@ -649,7 +652,7 @@
 		else
 			energy = CLAMP(energy + energy_recharge, 0, maxenergy)
 			return
-	if((host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
+	if(host.cell && (host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
 		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
 		energy += energy_recharge
 

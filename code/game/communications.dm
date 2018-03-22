@@ -192,7 +192,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	var/obj/source
 	var/frequency = 0
 	var/transmission_method
-	var/data
+	var/list/data
 
 /datum/signal/New(data, transmission_method = TRANSMISSION_RADIO)
 	src.data = data || list()

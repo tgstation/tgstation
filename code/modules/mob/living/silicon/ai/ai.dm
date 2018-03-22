@@ -27,7 +27,7 @@
 	sec_hud = DATA_HUD_SECURITY_BASIC
 	d_hud = DATA_HUD_DIAGNOSTIC_ADVANCED
 	mob_size = MOB_SIZE_LARGE
-	var/list/network = list("SS13")
+	var/list/network = list("ss13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
@@ -149,7 +149,7 @@
 	GLOB.shuttle_caller_list += src
 
 	builtInCamera = new (src)
-	builtInCamera.network = list("SS13")
+	builtInCamera.network = list("ss13")
 
 
 /mob/living/silicon/ai/Destroy()
@@ -243,9 +243,7 @@
 		if(!stat)
 			stat(null, text("System integrity: [(health+100)/2]%"))
 			stat(null, text("Connected cyborgs: [connected_robots.len]"))
-			var/area/borg_area
 			for(var/mob/living/silicon/robot/R in connected_robots)
-				borg_area = get_area(R)
 				var/robot_status = "Nominal"
 				if(R.shell)
 					robot_status = "AI SHELL"
@@ -255,7 +253,7 @@
 					robot_status = "DEPOWERED"
 				//Name, Health, Battery, Module, Area, and Status! Everything an AI wants to know about its borgies!
 				stat(null, text("[R.name] | S.Integrity: [R.health]% | Cell: [R.cell ? "[R.cell.charge]/[R.cell.maxcharge]" : "Empty"] | \
-				Module: [R.designation] | Loc: [borg_area.name] | Status: [robot_status]"))
+				Module: [R.designation] | Loc: [get_area_name(R, TRUE)] | Status: [robot_status]"))
 			stat(null, text("AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]")) //Count of total AI shells
 		else
 			stat(null, text("Systems nonfunctional"))
@@ -430,20 +428,17 @@
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
+	if(QDELETED(C))
+		return FALSE
 
 	if(!tracking)
 		cameraFollow = null
 
-	if (!C)
-		return FALSE
-
-	if(!src.eyeobj)
+	if(QDELETED(eyeobj))
 		view_core()
 		return
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
-	//machine = src
-
 	return TRUE
 
 /mob/living/silicon/ai/proc/botcall()
@@ -459,18 +454,16 @@
 	var/turf/ai_current_turf = get_turf(src)
 	var/ai_Zlevel = ai_current_turf.z
 	var/d
-	var/area/bot_area
 	d += "<A HREF=?src=[REF(src)];botrefresh=1>Query network status</A><br>"
 	d += "<table width='100%'><tr><td width='40%'><h3>Name</h3></td><td width='30%'><h3>Status</h3></td><td width='30%'><h3>Location</h3></td><td width='10%'><h3>Control</h3></td></tr>"
 
 	for (Bot in GLOB.alive_mob_list)
 		if(Bot.z == ai_Zlevel && !Bot.remote_disabled) //Only non-emagged bots on the same Z-level are detected!
-			bot_area = get_area(Bot)
 			var/bot_mode = Bot.get_mode()
 			d += "<tr><td width='30%'>[Bot.hacked ? "<span class='bad'>(!)</span>" : ""] [Bot.name]</A> ([Bot.model])</td>"
 			//If the bot is on, it will display the bot's current mode status. If the bot is not mode, it will just report "Idle". "Inactive if it is not on at all.
 			d += "<td width='30%'>[bot_mode]</td>"
-			d += "<td width='30%'>[bot_area.name]</td>"
+			d += "<td width='30%'>[get_area_name(Bot, TRUE)]</td>"
 			d += "<td width='10%'><A HREF=?src=[REF(src)];interface=[REF(Bot)]>Interface</A></td>"
 			d += "<td width='10%'><A HREF=?src=[REF(src)];callbot=[REF(Bot)]>Call</A></td>"
 			d += "</tr>"
@@ -574,11 +567,13 @@
 	var/mob/living/silicon/ai/U = usr
 
 	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+		var/list/tempnetwork = C.network
+		if(!(is_station_level(C.z) || is_mining_level(C.z) || ("ss13" in tempnetwork)))
+			continue
 		if(!C.can_use())
 			continue
 
-		var/list/tempnetwork = C.network
-		tempnetwork.Remove("CREED", "thunder", "RD", "toxins", "Prison")
+		tempnetwork.Remove("rd", "toxins", "prison")
 		if(tempnetwork.len)
 			for(var/i in C.network)
 				cameralist[i] = i
@@ -598,7 +593,7 @@
 			if(network in C.network)
 				U.eyeobj.setLoc(get_turf(C))
 				break
-	to_chat(src, "<span class='notice'>Switched to [network] camera network.</span>")
+	to_chat(src, "<span class='notice'>Switched to the \"[uppertext(network)]\" camera network.</span>")
 //End of code by Mord_Sith
 
 
@@ -803,10 +798,12 @@
 		return TRUE
 	return ..()
 
-/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = FALSE)
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(control_disabled || incapacitated())
+		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(be_close && !in_range(M, src))
+		to_chat(src, "<span class='warning'>You are too far away!</span>")
 		return FALSE
 	return can_see(M) //stop AIs from leaving windows open and using then after they lose vision
 

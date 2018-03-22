@@ -116,7 +116,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost, togglemidroundantag)()
 	return C.prefs.toggles & MIDROUND_ANTAG
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggletitlemusic)()
-	set name = "Hear/Silence LobbyMusic"
+	set name = "Hear/Silence Lobby Music"
 	set category = "Preferences"
 	set desc = "Hear Music In Lobby"
 	usr.client.prefs.toggles ^= SOUND_LOBBY
@@ -146,7 +146,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, togglemidis)()
 		usr.stop_sound_channel(CHANNEL_ADMIN)
 		var/client/C = usr.client
 		if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-			C.chatOutput.sendMusic(" ")
+			C.chatOutput.stopMusic()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Hearing Midis", "[usr.client.prefs.toggles & SOUND_MIDI ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /datum/verbs/menu/Settings/Sound/togglemidis/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_MIDI
@@ -235,7 +235,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggleprayersounds)()
 	SEND_SOUND(usr, sound(null))
 	var/client/C = usr.client
 	if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-		C.chatOutput.sendMusic(" ")
+		C.chatOutput.stopMusic()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

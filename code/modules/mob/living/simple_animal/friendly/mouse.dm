@@ -43,12 +43,13 @@
 /mob/living/simple_animal/mouse/death(gibbed, toast)
 	if(!ckey)
 		..(1)
-		var/obj/item/reagent_containers/food/snacks/deadmouse/M = new(loc)
-		M.icon_state = icon_dead
-		M.name = name
-		if(toast)
-			M.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
-			M.desc = "It's toast."
+		if(!gibbed)
+			var/obj/item/reagent_containers/food/snacks/deadmouse/M = new(loc)
+			M.icon_state = icon_dead
+			M.name = name
+			if(toast)
+				M.add_atom_colour("#3A3A3A", FIXED_COLOUR_PRIORITY)
+				M.desc = "It's toast."
 		qdel(src)
 	else
 		..(gibbed)
@@ -106,7 +107,7 @@
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "mouse_gray_dead"
 	bitesize = 3
-	eatverb = "devours"
+	eatverb = "devour"
 	list_reagents = list("nutriment" = 3, "vitamin" = 2)
 	foodtype = GROSS | MEAT | RAW
 	grind_results = list("blood" = 20, "liquidgibs" = 5)

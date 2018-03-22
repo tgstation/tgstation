@@ -176,7 +176,8 @@ There are several things that need to be remembered:
 		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_gloves]
 		inv.update_icon()
 
-	if(!gloves && blood_DNA)
+	GET_COMPONENT(FR, /datum/component/forensics)
+	if(!gloves && FR && length(FR.blood_DNA))
 		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
 		if(get_num_arms() < 2)
 			if(has_left_hand())
@@ -208,7 +209,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_glasses()
 	remove_overlay(GLASSES_LAYER)
 
-	if(!get_bodypart("head")) //decapitated
+	if(!get_bodypart(BODY_ZONE_HEAD)) //decapitated
 		return
 
 	if(client && hud_used)
@@ -236,7 +237,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_ears()
 	remove_overlay(EARS_LAYER)
 
-	if(!get_bodypart("head")) //decapitated
+	if(!get_bodypart(BODY_ZONE_HEAD)) //decapitated
 		return
 
 	if(client && hud_used)
@@ -600,7 +601,7 @@ generate/load female uniform sprites matching all previously decided variables
 		if(BP.dmg_overlay_type)
 			. += "-[BP.dmg_overlay_type]"
 
-	if(has_disability(HUSK))
+	if(has_trait(TRAIT_HUSK))
 		. += "-husk"
 
 /mob/living/carbon/human/load_limb_from_cache()

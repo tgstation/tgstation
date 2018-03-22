@@ -60,13 +60,58 @@
 #define BRAIN_TRAUMA_SEVERE /datum/brain_trauma/severe
 #define BRAIN_TRAUMA_SPECIAL /datum/brain_trauma/special
 
+#define TRAUMA_RESILIENCE_BASIC 1      //Curable with chems
+#define TRAUMA_RESILIENCE_SURGERY 2    //Curable with brain surgery
+#define TRAUMA_RESILIENCE_LOBOTOMY 3   //Curable with lobotomy
+#define TRAUMA_RESILIENCE_MAGIC 4      //Curable only with magic
+#define TRAUMA_RESILIENCE_ABSOLUTE 5   //This is here to stay
+
+//Limit of traumas for each resilience tier
+#define TRAUMA_LIMIT_BASIC 3
+#define TRAUMA_LIMIT_SURGERY 2
+#define TRAUMA_LIMIT_LOBOTOMY 3
+#define TRAUMA_LIMIT_MAGIC 3
+#define TRAUMA_LIMIT_ABSOLUTE INFINITY
+
 #define BRAIN_DAMAGE_INTEGRITY_MULTIPLIER 0.5
+
+//Surgery Defines
+#define BIOWARE_GENERIC "generic"
+#define BIOWARE_NERVES "nerves"
+#define BIOWARE_CIRCULATION "circulation"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
 #define SCREWYHUD_CRIT 1
 #define SCREWYHUD_DEAD 2
 #define SCREWYHUD_HEALTHY 3
+
+//Moods levels for humans
+#define MOOD_LEVEL_HAPPY4 15
+#define MOOD_LEVEL_HAPPY3 10
+#define MOOD_LEVEL_HAPPY2 6
+#define MOOD_LEVEL_HAPPY1 2
+#define MOOD_LEVEL_NEUTRAL 0
+#define MOOD_LEVEL_SAD1 -3
+#define MOOD_LEVEL_SAD2 -12
+#define MOOD_LEVEL_SAD3 -18
+#define MOOD_LEVEL_SAD4 -25
+
+//Sanity levels for humans
+#define SANITY_GREAT 125
+#define SANITY_NEUTRAL 100
+#define SANITY_DISTURBED 75
+#define SANITY_UNSTABLE 50
+#define SANITY_CRAZY 25
+#define SANITY_INSANE 0
+
+//Beauty levels of areas for carbons
+#define BEAUTY_LEVEL_HORRID -100
+#define BEAUTY_LEVEL_BAD -66
+#define BEAUTY_LEVEL_MEH -33
+#define BEAUTY_LEVEL_DECENT 33
+#define BEAUTY_LEVEL_GOOD 66
+#define BEAUTY_LEVEL_GREAT 100
 
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600
@@ -76,6 +121,9 @@
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150
 
+#define NUTRITION_LEVEL_START_MIN 250
+#define NUTRITION_LEVEL_START_MAX 400
+
 //Disgust levels for humans
 #define DISGUST_LEVEL_MAXEDOUT 150
 #define DISGUST_LEVEL_DISGUSTED 75
@@ -84,6 +132,9 @@
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
+
+//Slime extract crossing. Controls how many extracts is required to feed to a slime to core-cross.
+#define SLIME_EXTRACT_CROSSING_REQUIRED 10
 
 //Slime commands defines
 #define SLIME_FRIENDSHIP_FOLLOW 			3 //Min friendship to order it to follow
@@ -97,7 +148,7 @@
 //Sentience types, to prevent things like sentience potions from giving bosses sentience
 #define SENTIENCE_ORGANIC 1
 #define SENTIENCE_ARTIFICIAL 2
-#define SENTIENCE_OTHER 3
+// #define SENTIENCE_OTHER 3 unused
 #define SENTIENCE_MINEBOT 4
 #define SENTIENCE_BOSS 5
 
@@ -115,34 +166,6 @@
 #define ENVIRONMENT_SMASH_STRUCTURES 1 //crates, lockers, ect
 #define ENVIRONMENT_SMASH_WALLS 2   //walls
 #define ENVIRONMENT_SMASH_RWALLS 4  //rwalls
-
-
-//SNPCs
-//AI defines
-#define INTERACTING 2
-#define TRAVEL 4
-#define FIGHTING 8
-//Trait defines
-#define TRAIT_ROBUST 2
-#define TRAIT_UNROBUST 4
-#define TRAIT_SMART 8
-#define TRAIT_DUMB 16
-#define TRAIT_MEAN 32
-#define TRAIT_FRIENDLY 64
-#define TRAIT_THIEVING 128
-//Range/chance defines
-#define MAX_RANGE_FIND 32
-#define MIN_RANGE_FIND 16
-#define FUZZY_CHANCE_HIGH 85
-#define FUZZY_CHANCE_LOW 50
-#define CHANCE_TALK 1
-//Traitor type defines
-#define SNPC_BRUTE 1
-#define SNPC_STEALTH 2
-#define SNPC_MARTYR 3
-#define SNPC_PSYCHO 4
-
-#define TK_MAXRANGE 15
 
 #define NO_SLIP_WHEN_WALKING 1
 #define SLIDE 2
@@ -186,3 +209,24 @@
 #define OFFSET_BACK "back"
 #define OFFSET_SUIT "suit"
 #define OFFSET_NECK "neck"
+
+//MINOR TWEAKS/MISC
+#define AGE_MIN				17	//youngest a character can be
+#define AGE_MAX				85	//oldest a character can be
+#define WIZARD_AGE_MIN		30	//youngest a wizard can be
+#define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
+#define SHOES_SLOWDOWN		0	//How much shoes slow you down by default. Negative values speed you up
+#define POCKET_STRIP_DELAY			40	//time taken (in deciseconds) to search somebody's pockets
+#define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
+
+#define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
+#define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
+#define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
+
+// Roundstart trait system
+
+#define MAX_TRAITS 6 //The maximum amount of traits one character can have at roundstart
+
+// AI Toggles
+#define AI_CAMERA_LUMINOSITY	5
+#define AI_VOX // Comment out if you don't want VOX to be enabled and have players download the voice sounds.

@@ -1,10 +1,10 @@
 /datum/surgery/lipoplasty
 	name = "lipoplasty"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/cut_fat, /datum/surgery_step/remove_fat, /datum/surgery_step/close)
-	possible_locs = list("chest")
+	possible_locs = list(BODY_ZONE_CHEST)
 
 /datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
-	if(target.has_disability(FAT))
+	if(target.has_trait(TRAIT_FAT))
 		return 1
 	return 0
 
@@ -25,7 +25,7 @@
 //remove fat
 /datum/surgery_step/remove_fat
 	name = "remove loose fat"
-	implements = list(/obj/item/retractor = 100, /obj/item/screwdriver = 45, /obj/item/wirecutters = 35)
+	implements = list(/obj/item/retractor = 100, TOOL_SCREWDRIVER = 45, TOOL_WIRECUTTER = 35)
 	time = 32
 
 /datum/surgery_step/remove_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

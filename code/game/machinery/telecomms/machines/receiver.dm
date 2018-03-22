@@ -1,4 +1,3 @@
-
 /*
 	The receiver idles and receives messages from subspace-compatible radio equipment;
 	primarily headsets. They then just relay this information to all linked devices,
@@ -15,40 +14,30 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
-	machinetype = 1
 	circuit = /obj/item/circuitboard/machine/telecomms/receiver
 
-/obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
-
-	if(!on) // has to be on to receive messages
+/obj/machinery/telecomms/receiver/receive_signal(datum/signal/subspace/signal)
+	if(!on || !istype(signal) || !check_receive_level(signal) || signal.transmission_method != TRANSMISSION_SUBSPACE)
 		return
-	if(!signal)
+	if(!is_freq_listening(signal))
 		return
-	if(!check_receive_level(signal))
-		return
-	if(signal.transmission_method == TRANSMISSION_SUBSPACE)
 
-		if(is_freq_listening(signal)) // detect subspace signals
+	signal.levels = list()
 
-			//Remove the level and then start adding levels that it is being broadcasted in.
-			signal.data["level"] = list()
+	// send the signal to the hub if possible, or a bus otherwise
+	if(!relay_information(signal, /obj/machinery/telecomms/hub))
+		relay_information(signal, /obj/machinery/telecomms/bus)
 
-			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub") // ideally relay the copied information to relays
-			if(!can_send)
-				relay_information(signal, "/obj/machinery/telecomms/bus") // Send it to a bus instead, if it's linked to one
+/obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/subspace/signal)
+	if (z in signal.levels)
+		return TRUE
 
-/obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/signal)
+	for(var/obj/machinery/telecomms/hub/H in links)
+		for(var/obj/machinery/telecomms/relay/R in H.links)
+			if(R.can_receive(signal) && R.z in signal.levels)
+				return TRUE
 
-	if(signal.data["level"] != listening_level)
-		for(var/obj/machinery/telecomms/hub/H in links)
-			var/list/connected_levels = list()
-			for(var/obj/machinery/telecomms/relay/R in H.links)
-				if(R.can_receive(signal))
-					connected_levels |= R.listening_level
-			if(signal.data["level"] in connected_levels)
-				return 1
-		return 0
-	return 1
+	return FALSE
 
 //Preset Receivers
 

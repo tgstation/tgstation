@@ -11,8 +11,9 @@
 	health = 500
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
+	can_be_held = TRUE
 
-	var/network = "SS13"
+	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
 	var/ram = 100	// Used as currency to purchase different abilities
@@ -57,7 +58,10 @@
 	var/canholo = TRUE
 	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
-	var/list/possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot", "rabbit")
+	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE)		//assoc value is whether it can be picked up.
+	var/static/item_head_icon = 'icons/mob/pai_item_head.dmi'
+	var/static/item_lh_icon = 'icons/mob/pai_item_lh.dmi'
+	var/static/item_rh_icon = 'icons/mob/pai_item_rh.dmi'
 
 	var/emitterhealth = 20
 	var/emittermaxhealth = 20
@@ -70,7 +74,7 @@
 	var/overload_bulletblock = 0	//Why is this a good idea?
 	var/overload_maxhealth = 0
 	canmove = FALSE
-	var/silent = 0
+	var/silent = FALSE
 	var/hit_slowdown = 0
 	var/brightness_power = 5
 	var/slowdown = 0
@@ -180,7 +184,10 @@
 
 // See software.dm for Topic()
 
-/mob/living/silicon/pai/canUseTopic(atom/movable/M)
+/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+	if(be_close && !in_range(M, src))
+		to_chat(src, "<span class='warning'>You are too far away!</span>")
+		return FALSE
 	return TRUE
 
 /mob/proc/makePAI(delold)

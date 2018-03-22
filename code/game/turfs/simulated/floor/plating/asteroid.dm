@@ -5,7 +5,7 @@
 
 /turf/open/floor/plating/asteroid //floor piece
 	name = "asteroid sand"
-	baseturf = /turf/open/floor/plating/asteroid
+	baseturfs = /turf/open/floor/plating/asteroid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
@@ -13,7 +13,7 @@
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/floor_variance = 20 //probability floor has a different icon state
-	archdrops = list(/obj/item/ore/glass = 5)
+	archdrops = list(/obj/item/stack/ore/glass = 5)
 	attachment_holes = FALSE
 
 /turf/open/floor/plating/asteroid/Initialize()
@@ -26,13 +26,17 @@
 	if(LAZYLEN(archdrops))
 		AddComponent(/datum/component/archaeology, 100, archdrops)
 
+
+/turf/open/floor/plating/asteroid/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
+
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
 
-/turf/open/floor/plating/asteroid/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+/turf/open/floor/plating/asteroid/MakeSlippery()
 	return
 
-/turf/open/floor/plating/asteroid/MakeDry(wet_setting = TURF_WET_WATER)
+/turf/open/floor/plating/asteroid/MakeDry()
 	return
 
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
@@ -41,7 +45,7 @@
 	if(istype(W, /obj/item/storage/bag/ore))
 		var/obj/item/storage/bag/ore/S = W
 		if(S.collection_mode == 1)
-			for(var/obj/item/ore/O in src.contents)
+			for(var/obj/item/stack/ore/O in contents)
 				O.attackby(W,user)
 				return
 
@@ -59,27 +63,29 @@
 
 
 /turf/open/floor/plating/asteroid/singularity_act()
-	if(turf_z_is_planet(src))
+	if(is_planet_level(z))
 		return ..()
-	ChangeTurf(/turf/open/space)
+	ScrapeAway()
 
 /turf/open/floor/plating/asteroid/ex_act(severity, target)
 	. = SendSignal(COMSIG_ATOM_EX_ACT, severity, target)
 	contents_explosion(severity, target)
 
+/turf/open/floor/plating/lavaland_baseturf
+	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 
 /turf/open/floor/plating/asteroid/basalt
 	name = "volcanic floor"
-	baseturf = /turf/open/floor/plating/asteroid/basalt
+	baseturfs = /turf/open/floor/plating/asteroid/basalt
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
 	icon_plating = "basalt"
 	environment_type = "basalt"
-	archdrops = list(/obj/item/ore/glass/basalt = 5)
+	archdrops = list(/obj/item/stack/ore/glass/basalt = 5)
 	floor_variance = 15
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
-	baseturf = /turf/open/lava/smooth
+	baseturfs = /turf/open/lava/smooth
 
 /turf/open/floor/plating/asteroid/basalt/airless
 	initial_gas_mix = "TEMP=2.7"
@@ -103,7 +109,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	baseturf = /turf/open/lava/smooth/lava_land_surface
+	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
 
 
@@ -206,12 +212,12 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type,FALSE,FALSE,TRUE)
+				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type, null, CHANGETURF_IGNORE_AIR)
 				C.going_backwards = FALSE
 				C.produce_tunnel_from_data(rand(10, 15), dir)
 			else
 				SpawnFloor(tunnel)
-		else //if(!istype(tunnel, src.parent)) // We hit space/normal/wall, stop our tunnel.
+		else //if(!istype(tunnel, parent)) // We hit space/normal/wall, stop our tunnel.
 			break
 
 		// Chance to change our direction left or right.
@@ -232,7 +238,7 @@
 	SpawnFlora(T)
 
 	SpawnMonster(T)
-	T.ChangeTurf(turf_type,FALSE,FALSE,TRUE)
+	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
@@ -279,20 +285,45 @@
 	name = "snow"
 	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'
-	baseturf = /turf/open/floor/plating/asteroid/snow
+	baseturfs = /turf/open/floor/plating/asteroid/snow
 	icon_state = "snow"
 	icon_plating = "snow"
-	initial_gas_mix = "TEMP=180"
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	slowdown = 2
 	environment_type = "snow"
 	flags_1 = NONE
+	planetary_atmos = TRUE
 	archdrops = list(/obj/item/stack/sheet/mineral/snow = 5)
+	burnt_states = list("snow_dug")
+
+/turf/open/floor/plating/asteroid/snow/burn_tile()
+	if(!burnt)
+		visible_message("<span class='danger'>[src] melts away!.</span>")
+		slowdown = 0
+		burnt = TRUE
+		icon_state = "snow_dug"
+		return TRUE
+	return FALSE
+
+/turf/open/floor/plating/asteroid/snow/ice
+	name = "icey snow"
+	desc = "Looks colder."
+	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
+	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"
+	floor_variance = 0
+	icon_state = "snow-ice"
+	icon_plating = "snow-ice"
+	environment_type = "snow_cavern"
+
+/turf/open/floor/plating/asteroid/snow/ice/burn_tile()
+	return FALSE
 
 /turf/open/floor/plating/asteroid/snow/airless
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/asteroid/snow/temperatre
-	initial_gas_mix = "TEMP=255.37"
+	initial_gas_mix = "o2=22;n2=82;TEMP=255.37"
 
 /turf/open/floor/plating/asteroid/snow/atmosphere
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	planetary_atmos = FALSE

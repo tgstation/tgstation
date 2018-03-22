@@ -1,6 +1,5 @@
 /mob/living/carbon/monkey
 	name = "monkey"
-	voice_name = "monkey"
 	verb_say = "chimpers"
 	initial_language_holder = /datum/language_holder/monkey
 	icon = 'icons/mob/monkey.dmi'
@@ -17,7 +16,7 @@
 
 
 
-/mob/living/carbon/monkey/Initialize()
+/mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
@@ -32,8 +31,19 @@
 
 	. = ..()
 
+	if (cubespawned)
+		if (LAZYLEN(SSmobs.cubemonkeys) > SSmobs.cubemonkeycap)
+			if (spawner)
+				to_chat(spawner, "<span class='warning'>Bluespace harmonics prevent the spawning of more than [SSmobs.cubemonkeycap] monkeys on the station at one time!</span>")
+			return INITIALIZE_HINT_QDEL
+		SSmobs.cubemonkeys += src
+
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
+
+/mob/living/carbon/monkey/Destroy()
+	SSmobs.cubemonkeys -= src
+	return ..()
 
 /mob/living/carbon/monkey/create_internal_organs()
 	internal_organs += new /obj/item/organ/appendix

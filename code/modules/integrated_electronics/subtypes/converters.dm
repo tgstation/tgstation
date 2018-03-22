@@ -10,7 +10,7 @@
 /obj/item/integrated_circuit/converter/num2text
 	name = "number to string"
 	desc = "This circuit can convert a number variable into a string."
-	extended_desc = "Because of game limitations null/false variables will output a '0' string."
+	extended_desc = "Because of circuit limitations, null/false variables will output a '0' string."
 	icon_state = "num-string"
 	inputs = list("input" = IC_PINTYPE_NUMBER)
 	outputs = list("output" = IC_PINTYPE_STRING)
@@ -80,7 +80,7 @@
 	pull_data()
 	var/atom/A = get_pin_data(IC_INPUT, 1)
 	if(A && istype(A))
-		result = strtohex(XorEncrypt(REF(A),SScircuit.cipherkey))
+		result = strtohex(XorEncrypt(REF(A), SScircuit.cipherkey))
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -88,7 +88,7 @@
 
 /obj/item/integrated_circuit/converter/refdecode
 	name = "reference decoder"
-	desc = "This circuit can convert a encoded reference to actual reference."
+	desc = "This circuit can convert an encoded reference to actual reference."
 	icon_state = "ref-string"
 	inputs = list("input" = IC_PINTYPE_STRING)
 	outputs = list("output" = IC_PINTYPE_REF)
@@ -97,14 +97,14 @@
 
 /obj/item/integrated_circuit/converter/refdecode/do_work()
 	pull_data()
-	dec=XorEncrypt(hextostr(get_pin_data(IC_INPUT, 1)),SScircuit.cipherkey)
-	set_pin_data(IC_OUTPUT, 1, WEAKREF(locate( dec )))
+	dec = XorEncrypt(hextostr(get_pin_data(IC_INPUT, 1), TRUE), SScircuit.cipherkey)
+	set_pin_data(IC_OUTPUT, 1, WEAKREF(locate(dec)))
 	push_data()
 	activate_pin(2)
 
 /obj/item/integrated_circuit/converter/lowercase
 	name = "lowercase string converter"
-	desc = "this will cause a string to come out in all lowercase."
+	desc = "this circuit will cause a string to come out in all lowercase."
 	icon_state = "lowercase"
 	inputs = list("input" = IC_PINTYPE_STRING)
 	outputs = list("output" = IC_PINTYPE_STRING)
@@ -160,10 +160,10 @@
 
 /obj/item/integrated_circuit/converter/concatenator/do_work()
 	var/result = null
-	for(var/datum/integrated_io/I in inputs)
-		I.pull_data()
-		if(!isnull(I.data))
-			result = result + I.data
+	for(var/k in 1 to inputs.len)
+		var/I = get_pin_data(IC_INPUT, k)
+		if(!isnull(I))
+			result = result + I
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -207,7 +207,7 @@
 	name = "find text"
 	desc = "This gives position of sample in the string. Or returns 0."
 	extended_desc = "The first pin is the string to be examined. The second pin is the sample to be found. \
-	For example, 'eat this burger',' ' will give you position 4. This circuit isn't case sensitive."
+	For example, 'eat this burger' will give you position 4. This circuit isn't case sensitive."
 	complexity = 4
 	inputs = list(
 		"string" = IC_PINTYPE_STRING,
@@ -232,7 +232,7 @@
 	name = "string exploder"
 	desc = "This splits a single string into a list of strings."
 	extended_desc = "This circuit splits a given string into a list of strings based on the string and given delimiter. \
-	For example, 'eat this burger',' ' will be converted to list('eat','this','burger')."
+	For example, 'eat this burger' will be converted to list('eat','this','burger')."
 	icon_state = "split"
 	complexity = 4
 	inputs = list(

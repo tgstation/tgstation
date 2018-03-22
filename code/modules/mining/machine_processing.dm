@@ -2,6 +2,16 @@
 
 /**********************Mineral processing unit console**************************/
 
+/obj/machinery/mineral
+	var/input_dir = NORTH
+	var/output_dir = SOUTH
+
+/obj/machinery/mineral/proc/unload_mineral(atom/movable/S)
+	S.forceMove(drop_location())
+	var/turf/T = get_step(src,output_dir)
+	if(T)
+		S.forceMove(T)
+
 /obj/machinery/mineral/processing_unit_console
 	name = "production machine console"
 	icon = 'icons/obj/machines/mining_machines.dmi'
@@ -83,10 +93,10 @@
 	return ..()
 
 /obj/machinery/mineral/processing_unit/HasProximity(atom/movable/AM)
-	if(istype(AM, /obj/item/ore) && AM.loc == get_step(src, input_dir))
+	if(istype(AM, /obj/item/stack/ore) && AM.loc == get_step(src, input_dir))
 		process_ore(AM)
 
-/obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/ore/O)
+/obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
 	GET_COMPONENT(materials, /datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!materials.has_space(material_amount))

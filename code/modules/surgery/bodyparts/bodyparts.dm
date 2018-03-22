@@ -10,7 +10,9 @@
 	var/mob/living/carbon/owner = null
 	var/mob/living/carbon/original_owner = null
 	var/status = BODYPART_ORGANIC
-	var/body_zone //"chest", "l_arm", etc , used for def_zone
+	var/body_zone //BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
+	var/aux_zone // used for hands
+	var/aux_layer
 	var/body_part = null //bitflag used to check which clothes cover this bodypart
 	var/use_digitigrade = NOT_DIGITIGRADE //Used for alternate legs, useless elsewhere
 	var/brutestate = 0
@@ -60,7 +62,7 @@
 /obj/item/bodypart/attack(mob/living/carbon/C, mob/user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(EASYLIMBATTACHMENT in H.dna.species.species_traits)
+		if(C.has_trait(TRAIT_LIMBATTACHMENT))
 			if(!H.get_bodypart(body_zone) && !animal_origin)
 				if(H == user)
 					H.visible_message("<span class='warning'>[H] jams [src] into [H.p_their()] empty socket!</span>",\
@@ -217,7 +219,7 @@
 		C = owner
 		no_update = 0
 
-	if(C.has_disability(HUSK))
+	if(C.has_trait(TRAIT_HUSK))
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
@@ -297,6 +299,7 @@
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
+	var/image/aux
 	. += limb
 
 	if(animal_origin)
@@ -313,7 +316,7 @@
 
 	var/icon_gender = (body_gender == FEMALE) ? "f" : "m" //gender of the icon, if applicable
 
-	if((body_zone != "head" && body_zone != "chest"))
+	if((body_zone != BODY_ZONE_HEAD && body_zone != BODY_ZONE_CHEST))
 		should_draw_gender = FALSE
 
 	if(status == BODYPART_ORGANIC)
@@ -331,6 +334,9 @@
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
+		if(aux_zone)
+			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
+			. += aux
 
 	else
 		limb.icon = icon
@@ -345,17 +351,19 @@
 		var/draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
 		if(draw_color)
 			limb.color = "#[draw_color]"
+			if(aux_zone)
+				aux.color = "#[draw_color]"
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()
 	qdel(src)
 
 /obj/item/bodypart/chest
-	name = "chest"
+	name = BODY_ZONE_CHEST
 	desc = "It's impolite to stare at a person's chest."
 	icon_state = "default_human_chest"
 	max_damage = 200
-	body_zone = "chest"
+	body_zone = BODY_ZONE_CHEST
 	body_part = CHEST
 	px_x = 0
 	px_y = 0
@@ -405,8 +413,10 @@
 	icon_state = "default_human_l_arm"
 	attack_verb = list("slapped", "punched")
 	max_damage = 50
-	body_zone ="l_arm"
+	body_zone =BODY_ZONE_L_ARM
 	body_part = ARM_LEFT
+	aux_zone = BODY_ZONE_PRECISE_L_HAND
+	aux_layer = HANDS_PART_LAYER
 	held_index = 1
 	px_x = -6
 	px_y = 0
@@ -439,8 +449,10 @@
 	icon_state = "default_human_r_arm"
 	attack_verb = list("slapped", "punched")
 	max_damage = 50
-	body_zone = "r_arm"
+	body_zone = BODY_ZONE_R_ARM
 	body_part = ARM_RIGHT
+	aux_zone = BODY_ZONE_PRECISE_R_HAND
+	aux_layer = HANDS_PART_LAYER
 	held_index = 2
 	px_x = 6
 	px_y = 0
@@ -473,7 +485,7 @@
 	icon_state = "default_human_l_leg"
 	attack_verb = list("kicked", "stomped")
 	max_damage = 50
-	body_zone = "l_leg"
+	body_zone = BODY_ZONE_L_LEG
 	body_part = LEG_LEFT
 	px_x = -2
 	px_y = 12
@@ -511,7 +523,7 @@
 	icon_state = "default_human_r_leg"
 	attack_verb = list("kicked", "stomped")
 	max_damage = 50
-	body_zone = "r_leg"
+	body_zone = BODY_ZONE_R_LEG
 	body_part = LEG_RIGHT
 	px_x = 2
 	px_y = 12

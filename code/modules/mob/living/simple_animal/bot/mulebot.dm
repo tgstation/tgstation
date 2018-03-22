@@ -415,11 +415,9 @@
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
-	var/area/dest_area
 	if(path && path.len)
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
-		dest_area = get_area(target)
-		destination = format_text(dest_area.name)
+		destination = get_area_name(target, TRUE)
 		pathset = 1 //Indicates the AI's custom path is initialized.
 		start()
 
@@ -472,8 +470,7 @@
 				if(isturf(next))
 					if(bloodiness)
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
-						if(blood_DNA && blood_DNA.len)
-							B.blood_DNA |= blood_DNA.Copy()
+						B.add_blood_DNA(return_blood_DNA())
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
 							B.setDir(newdir)
@@ -609,7 +606,7 @@
 				if(AM && AM.Adjacent(src))
 					load(AM)
 					if(report_delivery)
-						speak("Now loading [load] at <b>[get_area(src)]</b>.", radio_channel)
+						speak("Now loading [load] at <b>[get_area_name(src)]</b>.", radio_channel)
 		// whatever happened, check to see if we return home
 
 		if(auto_return && home_destination && destination != home_destination)
@@ -644,19 +641,18 @@
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/damage = rand(5,15)
-	H.apply_damage(2*damage, BRUTE, "head", run_armor_check("head", "melee"))
-	H.apply_damage(2*damage, BRUTE, "chest", run_armor_check("chest", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "l_leg", run_armor_check("l_leg", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "r_leg", run_armor_check("r_leg", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "l_arm", run_armor_check("l_arm", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "r_arm", run_armor_check("r_arm", "melee"))
+	H.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD, run_armor_check(BODY_ZONE_HEAD, "melee"))
+	H.apply_damage(2*damage, BRUTE, BODY_ZONE_CHEST, run_armor_check(BODY_ZONE_CHEST, "melee"))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_LEG, run_armor_check(BODY_ZONE_L_LEG, "melee"))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_LEG, run_armor_check(BODY_ZONE_R_LEG, "melee"))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_ARM, run_armor_check(BODY_ZONE_L_ARM, "melee"))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_ARM, run_armor_check(BODY_ZONE_R_ARM, "melee"))
 
 	var/turf/T = get_turf(src)
 	T.add_mob_blood(H)
 
 	var/list/blood_dna = H.get_blood_dna_list()
-	if(blood_dna)
-		transfer_blood_dna(blood_dna)
+	add_blood_DNA(blood_dna)
 	bloodiness += 4
 
 // player on mulebot attempted to move
