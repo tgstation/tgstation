@@ -17,6 +17,9 @@
 /turf/open/lava/MakeSlippery()
 	return
 
+/turf/open/lava/acid_act(acidpwr, acid_volume)
+	return
+
 /turf/open/lava/MakeDry(wet_setting = TURF_WET_WATER)
 	return
 
