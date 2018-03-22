@@ -52,7 +52,7 @@
 
 /mob/living/simple_animal/hostile/netherworld/imlagre
 	name = "imlagre"
-	desc = "An odd looking blue fellow that always comes in <span class='danger'>3</span>."
+	desc = "An odd looking green fellow that always comes in <span class='danger'>3</span>."
 	icon_state = "imlagre4"
 	icon_living = "imlagre4"
 	icon_dead = "imlagredead"
