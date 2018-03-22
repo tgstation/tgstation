@@ -13,6 +13,7 @@
 	var/roundstart = TRUE //fires on initialize
 	var/instant = FALSE	//fires on New
 	var/flavour_text = "The mapper forgot to set this!"
+	var/additional_ghost_info
 	var/faction = null
 	var/permanent = FALSE	//If true, the spawner will not disappear upon running out of uses.
 	var/random = FALSE		//Don't set a name or gender, just go random
@@ -36,7 +37,7 @@
 	if(jobban_isbanned(user, banType))
 		to_chat(user, "<span class='warning'>You are jobanned!</span>")
 		return
-	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
+	var/ghost_role = alert("Become [mob_name]?[additional_ghost_info? "[additional_ghost_info]":""] (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
 		return
 	log_game("[user.ckey] became [mob_name]")
