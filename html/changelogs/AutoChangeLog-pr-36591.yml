@@ -1,0 +1,5 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Ventcrawlers in pipes now breathe from that pipe."
+  - bugfix: "Deconstructing atmos components no longer breaks ventcrawl visuals."
