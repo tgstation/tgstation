@@ -235,7 +235,7 @@
 
 /obj/structure/destructible/cult/tome/attack_hand(mob/living/user)
 	if(!iscultist(user))
-		to_chat(user, "<span class='warning'>All of these books seem to be gibberish.</span>")
+		to_chat(user, "<span class='warning'>These books won't open and it hurts to even try and read the covers.</span>")
 		return
 	if(!anchored)
 		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with your dagger first.</span>")
