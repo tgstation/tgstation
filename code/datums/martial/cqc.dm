@@ -212,3 +212,38 @@
 	visible_message("<span class='warning'>[src] beeps ominously, and a moment later it bursts up in flames.</span>")
 	qdel(src)
 	new /obj/effect/decal/cleanable/ash(user.drop_location())
+
+/datum/martial_art/power_kick
+	name = "Power Kick"
+
+/datum/martial_art/power_kick/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	return disarm_pkick(A,D)
+
+/datum/martial_art/power_kick/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	return harm_pkick(A,D)
+
+/datum/martial_art/power_kick/proc/harm_pkick(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
+	if(D.lying)
+		if(D.stat && user.get_bodypart("head"))
+			var/obj/item/bodypart/head/Dhead = D.get_bodypart("head")
+			if(do_after(A, 50, D)) //if if if but i promise this is needed
+				Dhead.qdel() //this can't be right but wip wip wip wip
+			//gibs here
+		else
+			var/atk_verb = pick("stomps", "crushes", "stamps")
+			D.apply_damage(rand(25,30), BRUTE)
+			D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
+						"<span class='userdanger'>[A] [atk_verb] you!</span>")
+	else
+		var/atk_verb = pick("punts", "kicks", "cracks", "boots", "slams")
+		D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
+					"<span class='userdanger'>[A] [atk_verb] you!</span>")
+		D.apply_damage(rand(8,10), BRUTE)
+		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, 1, -1)
+		if(prob(15) && !D.lying) //dunno about chances but it's less than sleeping carp and has less knockdown so i have high hopes
+			D.visible_message("<span class='warning'>[D] is knocked down by a powerful kick from [A]!</span>", "<span class='userdanger'>The kick sends you sprawling to the floor!</span>")
+			D.Knockdown(60)
+	if(atk_verb)
+		add_logs(A, D, "[atk_verb] (Power Kick)")
+		return 1
