@@ -30,6 +30,14 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/board/rdcamera
+	name = "Computer Design (Research Camera)"
+	desc = "Allows for the construction of circuit boards used to build research camera computers."
+	id = "rdcamera"
+	build_path = /obj/item/circuitboard/computer/rdcamera
+	category = list("Computer Boards")
+departmental_flags = DEPARTMENTAL_FLAG_RESEARCH
+
 /datum/design/board/xenobiocamera
 	name = "Computer Design (Xenobiology Console)"
 	desc = "Allows for the construction of circuit boards used to build xenobiology camera computers."
