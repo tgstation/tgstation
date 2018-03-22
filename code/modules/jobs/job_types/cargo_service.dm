@@ -221,8 +221,6 @@ Cook
 	var/chosen_box = pick(possible_boxes)
 	var/obj/item/storage/box/I = new chosen_box(src)
 	H.equip_to_slot_or_del(I,slot_in_backpack)
-	var/datum/martial_art/cqc/under_siege/justacook = new
-	justacook.teach(H)
 
 /*
 Botanist
