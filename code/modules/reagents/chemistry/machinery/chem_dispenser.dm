@@ -330,6 +330,7 @@ obj/machinery/chem_dispenser/update_icon()
 
 
 /obj/machinery/chem_dispenser/on_deconstruction()
+	cell = null
 	if(beaker)
 		beaker.forceMove(drop_location())
 		beaker = null
