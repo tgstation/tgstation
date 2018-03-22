@@ -4,7 +4,7 @@ hippiestation/sound/lobby/01 68 State.ogg
 hippiestation/sound/lobby/01-james_hannigan_-_red_alert_3_theme_soviet_march-umt.ogg
 hippiestation/sound/lobby/02 - &.ogg
 hippiestation/sound/lobby/02 Rhythm Bandits.ogg
-hippiestation/sound/lobby/03 - Kitsune² - Banana Man.ogg
+hippiestation/sound/lobby/03 - KitsuneÂ² - Banana Man.ogg
 hippiestation/sound/lobby/03 - Revolution 909.ogg
 hippiestation/sound/lobby/03 Move Your Feet.ogg
 hippiestation/sound/lobby/03 Stuck In A Movie!.ogg
@@ -47,12 +47,11 @@ hippiestation/sound/lobby/435021_Elation.ogg
 hippiestation/sound/lobby/Battle Against a Familiar Foe.ogg
 hippiestation/sound/lobby/Bound Together-02-Shael Riley-ROM Schtick.ogg
 hippiestation/sound/lobby/Bound Together-03-Joshua Morse-The Ness Shot.ogg
-hippiestation/sound/lobby/CHICAGO¤lollie - RETAIL - 03 The Opposition.ogg
-hippiestation/sound/lobby/CHICAGO¤lollie - RETAIL - 08 Out With The New.ogg
+hippiestation/sound/lobby/CHICAGOÂ¤lollie - RETAIL - 03 The Opposition.ogg
+hippiestation/sound/lobby/CHICAGOÂ¤lollie - RETAIL - 08 Out With The New.ogg
 hippiestation/sound/lobby/FatlipWhatsUpFatlipLyricsEeuNg86JcE.ogg
 hippiestation/sound/lobby/glue70 - All Art is Quite Useless - 15 Life is Hectic (glue70 Remix).ogg
 hippiestation/sound/lobby/Honkman+Battle+Honkwork+HonkCust.ogg
-hippiestation/sound/lobby/ifuckinghatethisshit.py
 hippiestation/sound/lobby/JacksonandHisComputerbandSMASHMinidouxTjZMyLemXo.ogg
 hippiestation/sound/lobby/Jake Kaufman - Mighty Switch Force OST - 06 BGM - Love You Love You Love.ogg
 hippiestation/sound/lobby/Jake Kaufman - Shovel Knight Original Soundtrack - 33 Flowers of Antimony (The Explodatorium) -Manami Matsumae-.ogg
@@ -81,7 +80,6 @@ hippiestation/sound/lobby/pilotredsun - Achievement - 10 snow day.ogg
 hippiestation/sound/lobby/pilotredsun - Achievement - 12 thanks.ogg
 hippiestation/sound/lobby/Proux - Just For Me.ogg
 hippiestation/sound/lobby/quaker.ogg
-hippiestation/sound/lobby/roundstartsounds.txt
 hippiestation/sound/lobby/S.T.A.L.K.E.R. Clear Sky SNES - Bandit Radio.ogg
 hippiestation/sound/lobby/Samiyam - Lifesized Stuffed Animal.ogg
 hippiestation/sound/lobby/Schizoid Enthusiast - All Art is Quite Useless - 01 Our Feature Presentation.ogg
