@@ -24,4 +24,4 @@
 	
 /obj/item/device/modular_computer/tablet/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] starts downloading Hunt Down The Freeman on their [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return (BRAINLOSS)
+	return (BRUTELOSS)
