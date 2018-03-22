@@ -3,13 +3,13 @@
 // PARTS //
 
 /obj/item/weaponcrafting/receiver
-	name = "modular receiver"
+	name = "Modular Receiver"
 	desc = "A prototype modular receiver and trigger assembly for a firearm."
 	icon = 'icons/obj/improvised.dmi'
 	icon_state = "receiver"
 
 /obj/item/weaponcrafting/stock
-	name = "rifle stock"
+	name = "Rifle Stock"
 	desc = "A classic rifle stock that doubles as a grip, roughly carved out of wood."
 	icon = 'icons/obj/improvised.dmi'
 	icon_state = "riflestock"
