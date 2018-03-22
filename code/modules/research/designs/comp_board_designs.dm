@@ -31,7 +31,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/board/rdcamera
-	name = "Computer Design (Research Camera)"
+	name = "Computer Design (Research Monitor)"
 	desc = "Allows for the construction of circuit boards used to build research camera computers."
 	id = "rdcamera"
 	build_path = /obj/item/circuitboard/computer/research
