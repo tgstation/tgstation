@@ -249,6 +249,32 @@
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/storage/bag/ore, /obj/item/pickaxe)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	var/datum/component/mobhook
+
+/obj/item/clothing/suit/space/hardsuit/mining/proc/on_mob_move()
+	var/turf/T = get_turf(loc)
+	if(lavaland_equipment_pressure_check(T))
+		slowdown = 0
+	else
+		slowdown = 1
+		
+/obj/item/clothing/suit/space/hardsuit/mining/equipped(mob/user, slot)
+	. = ..()
+	if (slot == slot_wear_suit)
+		if (mobhook && mobhook.parent != user)
+			QDEL_NULL(mobhook)
+		if (!mobhook)
+			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/on_mob_move))
+	else
+		QDEL_NULL(mobhook)
+
+/obj/item/clothing/suit/space/hardsuit/mining/dropped()
+	. = ..()
+	QDEL_NULL(mobhook)
+
+/obj/item/clothing/suit/space/hardsuit/mining/Destroy()
+	QDEL_NULL(mobhook) // mobhook is not our component
+	return ..()
 
 	//Syndicate hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi
