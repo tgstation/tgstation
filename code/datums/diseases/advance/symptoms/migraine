@@ -33,4 +33,4 @@ Brain degradation
 		else
 			if(prob(base_message_chance))
 				to_chat(M, "<span class='warning'>[pick("Your head aches.", "You hear a rattling sound in your head.", "You forgot what you were just thinking about.")]</span>")
-	return
+
