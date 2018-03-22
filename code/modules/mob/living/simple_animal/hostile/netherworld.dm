@@ -106,10 +106,11 @@
 			visible_message("<span class='danger'>[i] winds back together with a [pick(flufftext)] cackle!</span>")
 			adjustBruteLoss(maxHealth * 0.5) //revived at half HP, or, about a carpsful of health
 	if(!itlives == TRUE)
+		for(var/mob/living/simple_animal/hostile/netherworld/imlagre/i in linked_imlagre)
+			i.visible_message("<span class='danger'>[i]'s corpse explodes in a shower of gore!</span>")
+			i.gib()
 		visible_message("<span class='danger'>[src]'s corpse explodes in a shower of gore!</span>")
-		i.visible_message("<span class='danger'>[i]'s corpse explodes in a shower of gore!</span>")
-		gib()
-		i.gib()
+		gib() //i don't think it matters that i do this last, but it saves me at least one compile finding out that gibbing before finishing messes the code up
 
 /mob/living/simple_animal/hostile/netherworld/blankbody
 	name = "blank body"
