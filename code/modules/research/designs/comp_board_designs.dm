@@ -34,7 +34,7 @@
 	name = "Computer Design (Research Camera)"
 	desc = "Allows for the construction of circuit boards used to build research camera computers."
 	id = "rdcamera"
-	build_path = /obj/item/circuitboard/computer/rdcamera
+	build_path = /obj/item/circuitboard/computer/research
 	category = list("Computer Boards")
 departmental_flags = DEPARTMENTAL_FLAG_RESEARCH
 
