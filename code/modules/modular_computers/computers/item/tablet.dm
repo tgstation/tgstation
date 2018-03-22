@@ -21,3 +21,7 @@
 	icon_state = "tablet-[finish_color]"
 	icon_state_unpowered = "tablet-[finish_color]"
 	icon_state_powered = "tablet-[finish_color]"
+	
+/obj/item/device/modular_computer/tablet/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] starts downloading Hunt Down The Freeman on their [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (BRUTELOSS)
