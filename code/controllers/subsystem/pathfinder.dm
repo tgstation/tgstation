@@ -14,6 +14,8 @@ SUBSYSTEM_DEF(pathfinder)
 	free = 1
 	flow = new()
 	flow.len=lcount
+	
+	return ..()
 
 /datum/controller/subsystem/pathfinder/proc/getfree(atom/M)
 	if(run < lcount)

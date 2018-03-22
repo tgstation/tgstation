@@ -249,7 +249,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			can_handle_hot = TRUE
 		else if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
 			can_handle_hot = TRUE
-		else if(C.has_trait(TRAIT_RESISTHEAT))
+		else if(C.has_trait(TRAIT_RESISTHEAT) || C.has_trait(TRAIT_RESISTHEATHANDS))
 			can_handle_hot = TRUE
 
 		if(can_handle_hot)
@@ -481,7 +481,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
 
 	var/is_human_victim = 0
-	var/obj/item/bodypart/affecting = M.get_bodypart("head")
+	var/obj/item/bodypart/affecting = M.get_bodypart(BODY_ZONE_HEAD)
 	if(ishuman(M))
 		if(!affecting) //no head!
 			return
@@ -530,9 +530,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		M.take_bodypart_damage(7)
 
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
-	if(mood)
-		mood.add_event("eye_stab", /datum/mood_event/eye_stab)
+	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "eye_stab", /datum/mood_event/eye_stab)
 
 	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 

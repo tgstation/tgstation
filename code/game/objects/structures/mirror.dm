@@ -9,6 +9,10 @@
 	max_integrity = 200
 	integrity_failure = 100
 
+/obj/structure/mirror/Initialize(mapload)
+	. = ..()
+	if(icon_state == "mirror_broke" && !broken)
+		obj_break(null, mapload)
 
 /obj/structure/mirror/attack_hand(mob/user)
 	if(broken || !Adjacent(user))
@@ -46,12 +50,14 @@
 		return // no message spam
 	..()
 
-/obj/structure/mirror/obj_break(damage_flag)
+/obj/structure/mirror/obj_break(damage_flag, mapload)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		icon_state = "mirror_broke"
-		playsound(src, "shatter", 70, 1)
-		desc = "Oh no, seven years of bad luck!"
-		broken = 1
+		if(!mapload)
+			playsound(src, "shatter", 70, 1)
+		if(desc == initial(desc))
+			desc = "Oh no, seven years of bad luck!"
+		broken = TRUE
 
 /obj/structure/mirror/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -211,7 +217,7 @@
 						H.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
 				H.update_hair()
 
-		if("eyes")
+		if(BODY_ZONE_PRECISE_EYES)
 			var/new_eye_color = input(H, "Choose your eye color", "Eye Color","#"+H.eye_color) as color|null
 			if(!Adjacent(user))
 				return

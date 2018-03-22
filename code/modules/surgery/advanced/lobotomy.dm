@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/lobotomy
+	name = "Lobotomy Surgery Disk"
 	desc = "The disk provides instructions on how to perform a lobotomy, to cure the most resilient brain ailments."
 	surgeries = list(/datum/surgery/advanced/lobotomy)
 
@@ -13,7 +14,7 @@
 	/datum/surgery_step/close)
 
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list("head")
+	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
 
 /datum/surgery/advanced/lobotomy/can_start(mob/user, mob/living/carbon/target)

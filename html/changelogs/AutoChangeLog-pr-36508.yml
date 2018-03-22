@@ -1,0 +1,4 @@
+author: "JohnGinnane"
+delete-after: True
+changes: 
+  - refactor: "Vending machines now have their own files which includes their refill cannister. The machines themselves are unchanged"

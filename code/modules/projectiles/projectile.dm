@@ -105,7 +105,7 @@
 	if(get_bodypart(hit_zone))
 		return hit_zone
 	else //when a limb is missing the damage is actually passed to the chest
-		return "chest"
+		return BODY_ZONE_CHEST
 
 /obj/item/projectile/proc/prehit(atom/target)
 	return TRUE
@@ -419,6 +419,9 @@
 		transform = M
 	trajectory.increment(trajectory_multiplier)
 	var/turf/T = trajectory.return_turf()
+	if(!istype(T))
+		qdel(src)
+		return
 	if(T.z != loc.z)
 		var/old = loc
 		before_z_change(loc, T)

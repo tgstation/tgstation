@@ -6,7 +6,7 @@
 /obj/item/organ/vocal_cords //organs that are activated through speech with the :x channel
 	name = "vocal cords"
 	icon_state = "appendix"
-	zone = "mouth"
+	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_VOICE
 	gender = PLURAL
 	var/list/spans = null
@@ -23,7 +23,7 @@
 /obj/item/organ/adamantine_resonator
 	name = "adamantine resonator"
 	desc = "Fragments of adamantine exist in all golems, stemming from their origins as purely magical constructs. These are used to \"hear\" messages from their leaders."
-	zone = "head"
+	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_ADAMANTINE_RESONATOR
 	icon_state = "adamantine_resonator"
 
@@ -312,7 +312,7 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.apply_damage(15 * power_multiplier, def_zone = "chest")
+			L.apply_damage(15 * power_multiplier, def_zone = BODY_ZONE_CHEST)
 
 	//BLEED
 	else if((findtext(message, bleed_words)))

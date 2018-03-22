@@ -1,8 +1,8 @@
 /obj/item/organ/eyes
-	name = "eyes"
+	name = BODY_ZONE_PRECISE_EYES
 	icon_state = "eyeballs"
 	desc = "I see you!"
-	zone = "eyes"
+	zone = BODY_ZONE_PRECISE_EYES
 	slot = ORGAN_SLOT_EYES
 	gender = PLURAL
 

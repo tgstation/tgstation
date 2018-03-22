@@ -216,7 +216,7 @@ function tag_pr($payload, $opened) {
 			$tags[] = 'Removal';
 	}
 
-	$remove = array();
+	$remove = array('Test Merge Candidate');
 
 	$mergeable = $payload['pull_request']['mergeable'];
 	if($mergeable === TRUE)	//only look for the false value

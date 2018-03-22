@@ -147,6 +147,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 GLOBAL_LIST_EMPTY(external_rsc_urls)
 #endif
 
+/client/can_vv_get(var_name)
+	return var_name != NAMEOF(src, holder) && ..()
+
+/client/vv_edit_var(var_name, var_value)
+	return var_name != NAMEOF(src, holder) && ..()
 
 /client/New(TopicData)
 	var/tdata = TopicData //save this for later use
@@ -651,17 +656,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		return inactivity
 	return FALSE
 
-// Byond seemingly calls stat, each tick.
-// Calling things each tick can get expensive real quick.
-// So we slow this down a little.
-// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
-/client/Stat()
-	. = ..()
-	if (holder)
-		stoplag(1)
-	else
-		stoplag(5)
-
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
 #if (PRELOAD_RSC == 0)
@@ -681,6 +675,12 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, SSassets.preload, register_asset = FALSE)
+		#if (PRELOAD_RSC == 0)
+		for (var/name in GLOB.vox_sounds)
+			var/file = GLOB.vox_sounds[name]
+			Export("##action=load_rsc", file)
+			stoplag()
+		#endif
 
 
 //Hook, override it to run code when dir changes
