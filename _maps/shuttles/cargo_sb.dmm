@@ -119,7 +119,7 @@
 "q" = (
 /obj/machinery/conveyor{
 	dir = 8;
-	id = "cargoload"
+	id = "QMLoad"
 	},
 /obj/machinery/door/poddoor{
 	id = "QMLoaddoor";
