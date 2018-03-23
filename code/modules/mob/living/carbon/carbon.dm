@@ -504,11 +504,14 @@
 		return
 	var/total_burn	= 0
 	var/total_brute	= 0
+	var/total_stamina = 0
 	for(var/X in bodyparts)	//hardcoded to streamline things a bit
 		var/obj/item/bodypart/BP = X
 		total_brute	+= BP.brute_dam
 		total_burn	+= BP.burn_dam
+		total_stamina += BP.stamina_dam
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
+	staminaloss = total_stamina
 	update_stat()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD) && stat == DEAD )
 		become_husk("burn")
