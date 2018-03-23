@@ -27,7 +27,6 @@
 	ammo_type = /obj/item/ammo_casing/magic/heal
 	icon_state = "staffofhealing"
 	item_state = "staffofhealing"
-	harmful = FALSE
 
 /obj/item/gun/magic/staff/healing/handle_suicide() //Stops people trying to commit suicide to heal themselves
 	return
@@ -60,7 +59,6 @@
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = 1
-	harmful = FALSE
 
 /obj/item/gun/magic/staff/honk
 	name = "staff of the honkmother"
@@ -71,7 +69,6 @@
 	item_state = "honker"
 	max_charges = 4
 	recharge_rate = 8
-	harmful = FALSE
 
 /obj/item/gun/magic/staff/spellblade
 	name = "spellblade"

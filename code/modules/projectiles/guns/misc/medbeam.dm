@@ -5,7 +5,6 @@
 	icon_state = "chronogun"
 	item_state = "chronogun"
 	w_class = WEIGHT_CLASS_NORMAL
-	harmful = FALSE
 
 	var/mob/living/current_target
 	var/last_check = 0

@@ -49,7 +49,6 @@
 	modifystate = 1
 	ammo_x_offset = 1
 	selfcharge = 1
-	harmful = FALSE
 
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"

@@ -13,7 +13,6 @@
 	clumsy_check = 0
 	item_flags = NONE
 	casing_ejector = FALSE
-	harmful = FALSE
 
 /obj/item/gun/ballistic/automatic/toy/unrestricted
 	pin = /obj/item/device/firing_pin
@@ -28,7 +27,6 @@
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
-	harmful = FALSE
 
 /obj/item/gun/ballistic/automatic/toy/pistol/update_icon()
 	..()
@@ -58,7 +56,6 @@
 	item_flags = NONE
 	casing_ejector = FALSE
 	can_suppress = FALSE
-	harmful = FALSE
 
 /obj/item/gun/ballistic/shotgun/toy/process_chamber(empty_chamber = 0)
 	..()
