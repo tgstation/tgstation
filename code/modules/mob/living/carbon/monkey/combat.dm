@@ -132,10 +132,6 @@
 	return FALSE
 
 /mob/living/carbon/monkey/proc/handle_combat()
-	// Don't do any AI if inside another mob (devoured)
-	if (ismob(loc))
-		return TRUE
-
 	if(pickupTarget)
 		if(restrained() || blacklistItems[pickupTarget] || (pickupTarget.flags_1 & NODROP_1))
 			pickupTarget = null
@@ -199,6 +195,8 @@
 			// pickup any nearby weapon
 			if(!pickupTarget && prob(MONKEY_WEAPON_PROB))
 				var/obj/item/W = locate(/obj/item/) in oview(2,src)
+				if(!locate(/obj/item) in held_items)
+					best_force = 0
 				if(W && !blacklistItems[W] && W.force > best_force)
 					pickupTarget = W
 
