@@ -27,7 +27,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 		/obj/item/stack/ore/bluespace_crystal))
 
 /obj/item/storage/part_replacer/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
-	var/yes = is_type_in_typecache(W, can_go_in)
+	var/yes = can_go_in[W.type]
 	if(yes)
 		return ..() && TRUE
 	return ..() && FALSE
