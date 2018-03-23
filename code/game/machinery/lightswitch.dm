@@ -37,12 +37,8 @@
 	..()
 	to_chat(user, "It is [on? "on" : "off"].")
 
-
-/obj/machinery/light_switch/attack_paw(mob/user)
-	src.attack_hand(user)
-
-/obj/machinery/light_switch/attack_hand(mob/user)
-
+/obj/machinery/light_switch/interact(mob/user)
+	. = ..()
 	on = !on
 
 	for(var/area/A in area.related)

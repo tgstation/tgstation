@@ -512,6 +512,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	return
 
 /obj/machinery/power/supermatter_shard/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	dust_mob(user, cause = "hand")
 
 /obj/machinery/power/supermatter_shard/proc/dust_mob(mob/living/nom, vis_msg, mob_msg, cause)

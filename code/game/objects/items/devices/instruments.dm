@@ -36,6 +36,9 @@
 	interact(user)
 
 /obj/item/device/instrument/interact(mob/user)
+	ui_interact(user)
+
+/obj/item/device/instrument/ui_interact(mob/user)
 	if(!user)
 		return
 

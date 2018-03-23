@@ -122,6 +122,9 @@
 			return ..()
 
 /obj/machinery/processor/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(src.processing)

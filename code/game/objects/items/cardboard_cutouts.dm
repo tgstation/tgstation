@@ -18,6 +18,7 @@
 
 	var/lastattacker = null
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
 	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()

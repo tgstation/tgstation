@@ -100,7 +100,6 @@
 	..()
 	to_chat(user, status())
 
-
 /obj/machinery/meter/wrench_act(mob/user, obj/item/I)
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	if (I.use_tool(src, user, 40, volume=50))
@@ -116,19 +115,11 @@
 		new /obj/item/pipe_meter(loc)
 	qdel(src)
 
-/obj/machinery/meter/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/meter/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/meter/attack_hand(mob/user)
-
+/obj/machinery/meter/interact(mob/user)
 	if(stat & (NOPOWER|BROKEN))
-		return 1
+		return
 	else
-		to_chat(usr, status())
-		return 1
+		to_chat(user, status())
 
 /obj/machinery/meter/singularity_pull(S, current_size)
 	..()

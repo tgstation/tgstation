@@ -75,11 +75,12 @@
 	return
 
 /obj/item/device/assembly_holder/attack_hand()//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
+	. = ..()
+	if(.)
+		return
 	if(a_left && a_right)
 		a_left.holder_movement()
 		a_right.holder_movement()
-	..()
-	return
 
 /obj/item/device/assembly_holder/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/screwdriver))

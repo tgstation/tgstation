@@ -91,7 +91,7 @@
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_paw(mob/user)
-	attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/grille/hulk_damage()
 	return 60
@@ -103,6 +103,9 @@
 		return TRUE
 
 /obj/structure/grille/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='warning'>[user] hits [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
@@ -268,7 +271,7 @@
 				C.powernet.load += C.powernet.avail * 0.0375 // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
 
-/obj/structure/grille/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/structure/grille/get_dumping_location(datum/component/storage/source,mob/user)
 	return null
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement

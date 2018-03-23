@@ -528,9 +528,6 @@
 	else
 		to_chat(usr, "The storage unit will only unlock during a Red or Delta security alert.")
 
-/obj/item/storage/pod/attack_hand(mob/user)
-	return MouseDrop(user)
-
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
 	id = "backup"

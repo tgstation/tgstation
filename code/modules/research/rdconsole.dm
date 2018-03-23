@@ -1012,13 +1012,8 @@ doesn't have toxins access.
 
 	updateUsrDialog()
 
-/obj/machinery/computer/rdconsole/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/rdconsole/interact(mob/user)
-	user.set_machine(src)
+/obj/machinery/computer/rdconsole/ui_interact(mob/user)
+	. = ..()
 	var/datum/browser/popup = new(user, "rndconsole", name, 900, 600)
 	popup.add_stylesheet("techwebs", 'html/browser/techwebs.css')
 	popup.set_content(generate_ui())

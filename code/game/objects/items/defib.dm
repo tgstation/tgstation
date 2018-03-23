@@ -80,6 +80,7 @@
 /obj/item/defibrillator/ui_action_click()
 	toggle_paddles()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user)
 	if(loc == user)
 		if(slot_flags == SLOT_BACK)
@@ -96,9 +97,10 @@
 		return
 	else if(istype(loc, /obj/machinery/defibrillator_mount))
 		ui_action_click() //checks for this are handled in defibrillator.mount.dm
-	..()
+	return ..()
 
 /obj/item/defibrillator/MouseDrop(obj/over_object)
+	. = ..()
 	if(ismob(loc))
 		var/mob/M = loc
 		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))

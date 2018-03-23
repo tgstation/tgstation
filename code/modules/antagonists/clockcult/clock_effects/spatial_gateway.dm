@@ -57,11 +57,13 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		to_chat(user, "<span class='brass'>It has [uses] use\s remaining.</span>")
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/clockwork/spatial_gateway/attack_ghost(mob/user)
 	if(linked_gateway)
 		user.forceMove(get_turf(linked_gateway))
 	..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user)
 	if(!uses)
 		return FALSE

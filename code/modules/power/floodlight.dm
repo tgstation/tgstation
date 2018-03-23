@@ -95,16 +95,15 @@
 		. = ..()
 
 /obj/machinery/power/floodlight/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	var/current = setting
 	if(current == 1)
 		current = light_setting_list.len
 	else
 		current--
 	change_setting(current, user)
-	..()
-
-/obj/machinery/power/floodlight/attack_ai(mob/user)
-	attack_hand(user)
 	..()
 
 /obj/machinery/power/floodlight/obj_break(damage_flag)
