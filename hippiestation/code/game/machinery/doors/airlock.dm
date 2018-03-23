@@ -1,9 +1,32 @@
 #define COOLDOWN_TIME 10
+#define EASTEREGG_CHANCE 2
 
 /obj/machinery/door/airlock
 	doorClose = 'sound/machines/airlock.ogg'
-	doorDeni = 'hippiestation/sound/machine/denied.ogg'
+	doorDeni = 'hippiestation/sound/machines/denied.ogg'
 	var/request_cooldown = 0 //To prevent spamming requests for the AI to open
+	var/easteregg_triggered = FALSE
+	var/easteregg_doorOpen = 'hippiestation/sound/machines/airlockopen_doom.ogg'
+	var/easteregg_doorClose = 'hippiestation/sound/machines/airlockclose_doom.ogg'
+
+/obj/machinery/door/airlock/open(forced = 0)
+	if (prob(EASTEREGG_CHANCE))
+		easteregg_triggered = TRUE
+		doorOpen = easteregg_doorOpen
+		doorClose = easteregg_doorClose
+
+	return ..()
+
+/obj/machinery/door/airlock/close(forced = 0)
+	. = ..()
+
+	// Reset the sounds
+	if (easteregg_triggered)
+		easteregg_triggered = FALSE
+		doorOpen = initial(doorOpen)
+		doorClose = initial(doorClose)
+
+	return .
 
 /obj/machinery/door/airlock/bananium
 	doorClose = 'sound/items/bikehorn.ogg'
@@ -31,3 +54,5 @@
 		to_chat(AI, "<span class='info'><a href='?src=[REF(AI)];track=[html_encode(user.name)]'><span class='name'>[user.name] ([user.GetJob()])</span></a> is requesting you to open [src]<a href='?src=[REF(AI)];remotedoor=[REF(src)]'>(Open)</a></span>")
 	request_cooldown = world.time + (COOLDOWN_TIME * 10)
 	to_chat(user, "<span class='info'>Request sent.</span>")
+
+#undef EASTEREGG_CHANCE
