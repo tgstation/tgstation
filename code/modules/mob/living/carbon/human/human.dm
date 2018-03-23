@@ -946,6 +946,10 @@
 	else
 		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
 
+/mob/living/carbon/human/do_after_coefficent()
+	. = ..()
+	. *= physiology.do_after_speed
+
 /mob/living/carbon/human/species
 	var/race = null
 
