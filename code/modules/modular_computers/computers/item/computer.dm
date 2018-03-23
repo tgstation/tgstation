@@ -161,12 +161,15 @@
 	var/mob/M = usr
 	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src))
 		return attack_self(M)
-	return
+	return ..()
 
 /obj/item/device/modular_computer/attack_ai(mob/user)
 	return attack_self(user)
 
 /obj/item/device/modular_computer/attack_ghost(mob/dead/observer/user)
+	. = ..()
+	if(.)
+		return
 	if(enabled)
 		ui_interact(user)
 	else if(IsAdminGhost(user))
@@ -207,7 +210,7 @@
 
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
-/obj/item/device/modular_computer/attack_self(mob/user)
+/obj/item/device/modular_computer/interact(mob/user)
 	if(enabled)
 		ui_interact(user)
 	else

@@ -9,7 +9,7 @@
 	density = TRUE
 	var/win_prob = 5
 
-/obj/structure/cursed_slot_machine/attack_hand(mob/living/carbon/human/user)
+/obj/structure/cursed_slot_machine/interact(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
 	if(obj_flags & IN_USE)
@@ -58,6 +58,9 @@
 	qdel(src)
 
 /obj/structure/cursed_money/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	user.visible_message("<span class='warning'>[user] opens the bag and \
 		and removes a die. The bag then vanishes.</span>",
 		"<span class='boldwarning'>You open the bag...!</span>\n\

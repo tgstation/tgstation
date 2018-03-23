@@ -58,11 +58,6 @@
 	var/datum/species/abductor/S = H.dna.species
 	return S.scientist
 
-/obj/machinery/computer/camera_advanced/abductor/attack_hand(mob/user)
-	if(!isabductor(user))
-		return
-	return ..()
-
 /datum/action/innate/teleport_in
 	name = "Send To"
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'

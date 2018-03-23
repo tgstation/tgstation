@@ -109,6 +109,9 @@
 	beauty = -200
 
 /obj/effect/decal/cleanable/vomit/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(isflyperson(H))

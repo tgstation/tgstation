@@ -161,6 +161,9 @@
 
 
 /obj/structure/bonfire/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(burning)
 		to_chat(user, "<span class='warning'>You need to extinguish [src] before removing the logs!</span>")
 		return
@@ -173,8 +176,6 @@
 			new /obj/item/stack/rods(loc, 1)
 		qdel(src)
 		return
-	..()
-
 
 /obj/structure/bonfire/proc/CheckOxygen()
 	if(isopenturf(loc))
