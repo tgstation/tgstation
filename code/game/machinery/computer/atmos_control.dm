@@ -14,6 +14,34 @@
 	var/frequency = FREQ_ATMOS_STORAGE
 	var/datum/radio_frequency/radio_connection
 
+/obj/machinery/air_sensor/atmos/toxin_tank
+	name = "plasma tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_TOX
+/obj/machinery/air_sensor/atmos/toxins_mixing_tank
+	name = "toxins mixing gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB
+/obj/machinery/air_sensor/atmos/oxygen_tank
+	name = "oxygen tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_O2
+/obj/machinery/air_sensor/atmos/nitrogen_tank
+	name = "nitrogen tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_N2
+/obj/machinery/air_sensor/atmos/mix_tank
+	name = "mix tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_MIX
+/obj/machinery/air_sensor/atmos/nitrous_tank
+	name = "nitrous oxide tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_N2O
+/obj/machinery/air_sensor/atmos/air_tank
+	name = "air mix tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_AIR
+/obj/machinery/air_sensor/atmos/carbon_tank
+	name = "carbon dioxide tank gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_CO2
+/obj/machinery/air_sensor/atmos/incinerator_tank
+	name = "incinerator chamber gas sensor"
+	id_tag = ATMOS_GAS_MONITOR_SENSOR_INCINERATOR
+
 /obj/machinery/air_sensor/update_icon()
 		icon_state = "gsensor[on]"
 
@@ -67,17 +95,17 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 
 	var/frequency = FREQ_ATMOS_STORAGE
 	var/list/sensors = list(
-		"n2_sensor" = "Nitrogen Tank",
-		"o2_sensor" = "Oxygen Tank",
-		"co2_sensor" = "Carbon Dioxide Tank",
-		"tox_sensor" = "Plasma Tank",
-		"n2o_sensor" = "Nitrous Oxide Tank",
-		"air_sensor" = "Mixed Air Tank",
-		"mix_sensor" = "Mix Tank",
-		"distro_meter" = "Distribution Loop",
-		"waste_meter" = "Waste Loop",
-		"incinerator_internal_sensor" = "Incinerator Chamber"
-		"toxins_mixing_internal_sensor" = "Toxins Mixing Chamber"
+		ATMOS_GAS_MONITOR_SENSOR_N2 = "Nitrogen Tank",
+		ATMOS_GAS_MONITOR_SENSOR_O2 = "Oxygen Tank",
+		ATMOS_GAS_MONITOR_SENSOR_CO2 = "Carbon Dioxide Tank",
+		ATMOS_GAS_MONITOR_SENSOR_TOX = "Plasma Tank",
+		ATMOS_GAS_MONITOR_SENSOR_N2O = "Nitrous Oxide Tank",
+		ATMOS_GAS_MONITOR_SENSOR_AIR = "Mixed Air Tank",
+		ATMOS_GAS_MONITOR_SENSOR_MIX = "Mix Tank",
+		ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION = "Distribution Loop",
+		ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE = "Atmos Waste Loop",
+		ATMOS_GAS_MONITOR_SENSOR_INCINERATOR = "Incinerator Chamber",
+		ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB = "Toxins Mixing Chamber"
 	)
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
@@ -149,51 +177,51 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 
 /obj/machinery/computer/atmos_control/tank/oxygen_tank
 	name = "Oxygen Supply Control"
-	input_tag = "o2_in"
-	output_tag = "o2_out"
-	sensors = list("o2_sensor" = "Oxygen Tank")
+	input_tag = ATMOS_GAS_MONITOR_INPUT_O2
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_O2
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_O2 = "Oxygen Tank")
 
 /obj/machinery/computer/atmos_control/tank/toxin_tank
 	name = "Plasma Supply Control"
-	input_tag = "tox_in"
-	output_tag = "tox_out"
-	sensors = list("tox_sensor" = "Plasma Tank")
+	input_tag = ATMOS_GAS_MONITOR_INPUT_TOX
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_TOX
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_TOX = "Plasma Tank")
 
 /obj/machinery/computer/atmos_control/tank/air_tank
 	name = "Mixed Air Supply Control"
-	input_tag = "air_in"
-	output_tag = "air_out"
-	sensors = list("air_sensor" = "Air Mix Tank")
+	input_tag = ATMOS_GAS_MONITOR_INPUT_AIR
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_AIR
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_AIR = "Air Mix Tank")
 
 /obj/machinery/computer/atmos_control/tank/mix_tank
 	name = "Gas Mix Tank Control"
-	input_tag = "mix_in"
-	output_tag = "mix_out"
-	sensors = list("mix_sensor" = "Gas Mix Tank")
+	input_tag = ATMOS_GAS_MONITOR_INPUT_MIX
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_MIX
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_MIX = "Gas Mix Tank")
 
 /obj/machinery/computer/atmos_control/tank/nitrous_tank
 	name = "Nitrous Oxide Supply Control"
-	input_tag = "n2o_in"
-	output_tag = "n2o_out"
-	sensors = list("n2o_sensor" = "Nitrous Oxide Tank")
+	input_tag = ATMOS_GAS_MONITOR_INPUT_N2O
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_N2O
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_N2O = "Nitrous Oxide Tank")
 
 /obj/machinery/computer/atmos_control/tank/nitrogen_tank
 	name = "Nitrogen Supply Control"
-	input_tag = "n2_in"
-	output_tag = "n2_out"
-	sensors = list("n2_sensor" = "Nitrogen Tank")
+	input_tag = ATMOS_GAS_MONITOR_INPUT_N2
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_N2
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_N2 = "Nitrogen Tank")
 
 /obj/machinery/computer/atmos_control/tank/carbon_tank
 	name = "Carbon Dioxide Supply Control"
-	input_tag = "co2_in"
-	output_tag = "co2_out"
-	sensors = list("co2_sensor" = "Carbon Dioxide Tank")
+	input_tag = ATMOS_GAS_MONITOR_INPUT_CO2
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_CO2
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_CO2 = "Carbon Dioxide Tank")
 
 /obj/machinery/computer/atmos_control/tank/incinerator
 	name = "Incinerator Air Control"
-	input_tag = "incinerator_in"
-	output_tag = "incinerator_out"
-	sensors = list("incinerator_internal_sensor" = "Incinerator Chamber")
+	input_tag = ATMOS_GAS_MONITOR_INPUT_INCINERATOR
+	output_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR
+	sensors = list(ATMOS_GAS_MONITOR_SENSOR_INCINERATOR = "Incinerator Chamber")
 
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)

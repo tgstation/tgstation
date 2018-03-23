@@ -7655,9 +7655,8 @@
 /area/engine/atmospherics_engine)
 "avl" = (
 /obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 8;
-	id = "waste_out"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+	dir = 8
 	},
 /turf/open/space,
 /area/engine/atmospherics_engine)
@@ -15621,10 +15620,8 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "aMu" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 4;
-	id_tag = "incinerator_out";
-	name = "incinerator output intake"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output{
+	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
@@ -16248,8 +16245,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/air_sensor{
-	id_tag = "incinerator_internal_sensor";
+/obj/machinery/air_sensor/atmos/incinerator_tank{
 	pixel_x = -32;
 	pixel_y = 32
 	},
@@ -16948,10 +16944,8 @@
 /turf/open/floor/plasteel/vault,
 /area/security/execution/education)
 "aPx" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 4;
-	id = "incinerator_in";
-	name = "incinerator input injector"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine/vacuum,
@@ -18947,10 +18941,8 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "aTj" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on/atmos{
-	dir = 8;
-	id_tag = "air_out";
-	name = "air out"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output{
+	dir = 8
 	},
 /turf/open/floor/engine/air,
 /area/engine/atmos)
@@ -19871,9 +19863,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "aUZ" = (
-/obj/machinery/air_sensor{
-	id_tag = "air_sensor"
-	},
+/obj/machinery/air_sensor/atmos/air_tank,
 /turf/open/floor/engine/air,
 /area/engine/atmos)
 "aVa" = (
@@ -20627,10 +20617,8 @@
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "aWv" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
-	dir = 4;
-	id_tag = "co2_out";
-	name = "co2 vent"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/carbon_output{
+	dir = 4
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
@@ -20814,9 +20802,8 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "aWS" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 8;
-	id = "air_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/air_input{
+	dir = 8
 	},
 /turf/open/floor/engine/air,
 /area/engine/atmos)
@@ -21337,9 +21324,7 @@
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "aXX" = (
-/obj/machinery/air_sensor{
-	id_tag = "co2_sensor"
-	},
+/obj/machinery/air_sensor/atmos/carbon_tank,
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "aXY" = (
@@ -22331,9 +22316,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_3)
 "aZP" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 4;
-	id = "co2_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/carbon_input{
+	dir = 4
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
@@ -22505,10 +22489,8 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "bak" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
-	dir = 8;
-	id_tag = "o2_out";
-	name = "oxygen vent"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output{
+	dir = 8
 	},
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
@@ -23233,9 +23215,7 @@
 	},
 /area/engine/atmos)
 "bbN" = (
-/obj/machinery/air_sensor{
-	id_tag = "o2_sensor"
-	},
+/obj/machinery/air_sensor/atmos/oxygen_tank,
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "bbO" = (
@@ -23788,10 +23768,8 @@
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bcZ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
-	dir = 4;
-	id_tag = "tox_out";
-	name = "plasma vent"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output{
+	dir = 4
 	},
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
@@ -23906,9 +23884,8 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "bdn" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 8;
-	id = "o2_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/oxygen_input{
+	dir = 8
 	},
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
@@ -24431,9 +24408,7 @@
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bew" = (
-/obj/machinery/air_sensor{
-	id_tag = "tox_sensor"
-	},
+/obj/machinery/air_sensor/atmos/toxin_tank,
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bex" = (
@@ -25010,9 +24985,8 @@
 	},
 /area/security/prison)
 "bfT" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 4;
-	id = "tox_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxin_input{
+	dir = 4
 	},
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
@@ -25128,10 +25102,8 @@
 	},
 /area/engine/atmos)
 "bgf" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
-	dir = 8;
-	id_tag = "n2_out";
-	name = "n2 vent"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output{
+	dir = 8
 	},
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
@@ -25702,9 +25674,7 @@
 	},
 /area/engine/atmos)
 "bhv" = (
-/obj/machinery/air_sensor{
-	id_tag = "n2_sensor"
-	},
+/obj/machinery/air_sensor/atmos/nitrogen_tank,
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "bhw" = (
@@ -26386,10 +26356,8 @@
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "biV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
-	dir = 4;
-	id_tag = "n2o_out";
-	name = "n2o vent"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output{
+	dir = 4
 	},
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
@@ -26570,9 +26538,8 @@
 	},
 /area/engine/atmos)
 "bjn" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 8;
-	id = "n2_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrogen_input{
+	dir = 8
 	},
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
@@ -27186,9 +27153,7 @@
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bkI" = (
-/obj/machinery/air_sensor{
-	id_tag = "n2o_sensor"
-	},
+/obj/machinery/air_sensor/atmos/nitrous_tank,
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bkJ" = (
@@ -28100,9 +28065,8 @@
 /turf/open/space,
 /area/space/nearstation)
 "bmI" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 4;
-	id = "n2o_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrous_input{
+	dir = 4
 	},
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
@@ -29642,9 +29606,8 @@
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "bpP" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 4;
-	id = "mix_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/mix_input{
+	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
@@ -30729,9 +30692,7 @@
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "brU" = (
-/obj/machinery/air_sensor{
-	id_tag = "mix_sensor"
-	},
+/obj/machinery/air_sensor/atmos/mix_tank,
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "brV" = (
@@ -31695,10 +31656,8 @@
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "btL" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
-	dir = 4;
-	id_tag = "mix_out";
-	name = "distro vent"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/mix_output{
+	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
@@ -32933,10 +32892,7 @@
 /area/engine/atmos)
 "bwv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/meter/atmos{
-	id_tag = "distro_meter";
-	name = "Distribution Loop"
-	},
+/obj/machinery/meter/atmos/distro_loop,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/visible,
 /turf/open/floor/plasteel/caution,
 /area/engine/atmos)
@@ -32957,10 +32913,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 4
 	},
-/obj/machinery/meter/atmos{
-	id_tag = "waste_meter";
-	name = "Waste Loop"
-	},
+/obj/machinery/meter/atmos/atmos_waste_loop,
 /turf/open/floor/plasteel/caution{
 	dir = 6
 	},

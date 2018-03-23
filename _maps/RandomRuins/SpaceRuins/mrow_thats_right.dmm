@@ -733,7 +733,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "cl" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 8;
 	id_tag = "n2o_out_cat";
 	name = "n2o out"
@@ -767,7 +767,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/cat_man)
 "cs" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 1;
 	id_tag = "o2_out_cat";
 	name = "freezer vent"

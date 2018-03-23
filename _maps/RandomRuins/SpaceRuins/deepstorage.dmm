@@ -2276,7 +2276,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "fC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 8;
 	id_tag = "o2_out_bunker";
 	name = "oxygen out"
@@ -2603,7 +2603,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/deepstorage/power)
 "gv" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 8;
 	id_tag = "n2_out_bunker";
 	name = "nitrogen out"

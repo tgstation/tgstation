@@ -7764,7 +7764,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on/atmos{
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos{
 	dir = 2;
 	icon_state = "in";
 	id_tag = "UO45_air_out";
@@ -10826,7 +10826,7 @@
 /turf/open/floor/engine/n2,
 /area/awaymission/undergroundoutpost45/engineering)
 "ve" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 1;
 	id_tag = "UO45_n2_out";
 	name = "nitrogen out"
@@ -10841,7 +10841,7 @@
 /turf/open/floor/engine/o2,
 /area/awaymission/undergroundoutpost45/engineering)
 "vg" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 1;
 	id_tag = "UO45_o2_out";
 	name = "oxygen out"
