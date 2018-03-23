@@ -250,7 +250,6 @@
 /area/ruin/powered/Immortus)
 "aR" = (
 /obj/structure/sign/poster/official/fruit_bowl{
-	step_x = -1;
 	pixel_x = 33
 	},
 /turf/open/floor/plasteel/whiteblue/side{
@@ -662,7 +661,6 @@
 /area/ruin/powered/Immortus)
 "cf" = (
 /obj/machinery/defibrillator_mount/loaded{
-	step_x = -1;
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/white,
@@ -1229,7 +1227,7 @@
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/effect/decal/immmortus{
+/obj/effect/decal/immortus{
 	alpha = 180;
 	color = "#90BCD7";
 	pixel_x = -28;
@@ -1302,13 +1300,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/powered/Immortus)
-"rU" = (
-/obj/effect/decal/immmortus_name{
-	dir = 8;
-	layer = 5.031
-	},
-/turf/closed/indestructible/vault,
-/area/ruin/powered/Immortus)
 "tQ" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/runed_metal/ten,
@@ -1376,6 +1367,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/powered/Immortus)
+"Lo" = (
+/obj/effect/decal/immortus_name/sideways,
+/turf/closed/indestructible/vault,
+/area/ruin/powered/Immortus)
 "LD" = (
 /obj/structure/chair/office/dark{
 	dir = 1
@@ -1404,10 +1399,6 @@
 /obj/effect/decal/remains/human,
 /turf/open/floor/plasteel/dark,
 /area/ruin/powered/Immortus)
-"Sv" = (
-/obj/effect/decal/immmortus_name,
-/turf/closed/indestructible/vault,
-/area/ruin/powered/Immortus)
 "TF" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
@@ -1415,7 +1406,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/powered/Immortus)
 "TN" = (
-/obj/effect/decal/immmortus_name{
+/obj/effect/decal/immortus_name{
 	layer = 3.4;
 	pixel_x = 4
 	},
@@ -1614,9 +1605,9 @@ bc
 ab
 ab
 ab
-rU
 ab
 ab
+Lo
 ab
 ab
 ab
@@ -1647,7 +1638,7 @@ aQ
 aQ
 cz
 ab
-Sv
+ab
 ab
 ab
 ab
