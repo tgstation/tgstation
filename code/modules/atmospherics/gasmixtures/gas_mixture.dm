@@ -458,7 +458,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 			*/
 
-			. |= reaction.react(src, null)
+			. |= reaction.react(src, dump_location)
 			if (. & STOP_REACTIONS)
 				break
 	if(.)
