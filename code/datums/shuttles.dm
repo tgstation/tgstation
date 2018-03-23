@@ -72,7 +72,13 @@
 	port_id = "infiltrator"
 	can_be_bought = FALSE
 
+/datum/map_template/shuttle/aux_base
+	port_id = "aux_base"
+	can_be_bought = FALSE
 
+/datum/map_template/shuttle/escape_pod
+	port_id = "escape_pod"
+	can_be_bought = FALSE
 
 // Shuttles start here:
 
@@ -367,3 +373,15 @@
 /datum/map_template/shuttle/arrival/pubby
 	suffix = "pubby"
 	name = "arrival shuttle (Pubby)"
+
+/datum/map_template/shuttle/aux_base/default
+	suffix = "default"
+	name = "auxilliary base (Default)"
+
+/datum/map_template/shuttle/escape_pod/default
+	suffix = "default"
+	name = "escape pod (Default)"
+
+/datum/map_template/shuttle/escape_pod/large
+	suffix = "large"
+	name = "escape pod (Large)"

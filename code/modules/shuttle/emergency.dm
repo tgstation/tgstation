@@ -426,8 +426,9 @@
 
 /obj/docking_port/mobile/pod/Initialize()
 	. = ..()
+	var/static/i = 1
 	if(id == "pod")
-		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
+		id = "pod[i++]"
 
 /obj/docking_port/mobile/pod/cancel()
 	return

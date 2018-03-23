@@ -4769,9 +4769,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"ann" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_1)
 "anp" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -5099,13 +5096,6 @@
 /obj/item/device/camera,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"aoc" = (
-/obj/machinery/computer/shuttle/monastery_shuttle,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
 "aod" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -5328,27 +5318,6 @@
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"aoE" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
-"aoF" = (
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
-"aoG" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
 "aoH" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -5705,18 +5674,6 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/department/crew_quarters/dorms)
-"apx" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
-"apy" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
 "apz" = (
 /obj/structure/chair{
 	dir = 8
@@ -5888,24 +5845,6 @@
 "apX" = (
 /turf/closed/wall,
 /area/crew_quarters/dorms)
-"apY" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/item/storage/pod{
-	pixel_x = -24
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
-"apZ" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/item/device/radio/intercom{
-	pixel_x = 30
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
 "aqa" = (
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -6260,33 +6199,17 @@
 	},
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/dorms)
-"aqX" = (
-/obj/structure/shuttle/engine/propulsion/burst,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_1)
 "aqY" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Shuttle Airlock"
-	},
 /obj/docking_port/stationary{
+	dir = 1;
 	dwidth = 2;
 	height = 6;
-	id = "monastery_shuttle_station";
-	name = "station";
+	name = "large escape pod loader";
+	roundstart_template = /datum/map_template/shuttle/escape_pod/large;
 	width = 5
 	},
-/obj/docking_port/mobile{
-	dwidth = 2;
-	height = 6;
-	id = "pod1";
-	launch_status = 0;
-	name = "monastery shuttle";
-	port_direction = 2;
-	width = 5;
-	timid = 0
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
+/turf/open/space/basic,
+/area/space)
 "aqZ" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
@@ -40826,7 +40749,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/engine)
+/area/construction/mining/aux_base)
 "bVr" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
@@ -42088,7 +42011,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/engine)
+/area/construction/mining/aux_base)
 "bYG" = (
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 8;
@@ -42535,32 +42458,14 @@
 	},
 /area/maintenance/department/engine)
 "bZs" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
 "bZt" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"bZu" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/docking_port/stationary/public_mining_dock{
 	dir = 2
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"bZv" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
 "bZw" = (
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/plating,
@@ -42779,19 +42684,30 @@
 /area/maintenance/department/engine)
 "cab" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"cac" = (
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"cad" = (
-/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
+"cac" = (
+/obj/docking_port/stationary{
+	area_type = /area/construction/mining/aux_base;
+	dir = 2;
+	dwidth = 4;
+	height = 9;
+	id = "aux_base_zone";
+	name = "aux base zone";
+	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	turf_type = /turf/open/floor/plating;
+	width = 9
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
+"cad" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "cae" = (
 /obj/structure/plasticflaps{
 	opacity = 1
@@ -43714,15 +43630,6 @@
 /obj/structure/table/optable,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
-"ccP" = (
-/obj/machinery/light,
-/obj/machinery/camera{
-	c_tag = "Auxillary Mining Base";
-	dir = 1;
-	network = list("ss13","auxbase")
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "ccQ" = (
 /obj/machinery/field/generator,
 /turf/open/floor/plating,
@@ -43942,28 +43849,6 @@
 /obj/item/cigbutt,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
-"cdF" = (
-/obj/structure/closet/secure_closet/miner/unlocked,
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"cdG" = (
-/obj/docking_port/mobile/auxillary_base{
-	dheight = 5;
-	dir = 1;
-	dwidth = 5;
-	height = 11;
-	width = 11
-	},
-/obj/machinery/bluespace_beacon,
-/obj/machinery/computer/auxillary_base,
-/turf/closed/wall,
-/area/shuttle/auxillary_base)
-"cdH" = (
-/obj/structure/mining_shuttle_beacon{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "cdI" = (
 /obj/machinery/field/generator,
 /obj/machinery/camera{
@@ -44196,12 +44081,6 @@
 	},
 /turf/open/floor/plating/asteroid,
 /area/chapel/asteroid/monastery)
-"cep" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "ceq" = (
 /obj/machinery/power/emitter,
 /turf/open/floor/plating,
@@ -44814,22 +44693,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
-"cgo" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "cgp" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"cgq" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 6
+	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
 "cgr" = (
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/transit_tube,
@@ -46953,11 +46822,6 @@
 /obj/structure/punching_bag,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
-"cnW" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/pod_1)
 "cnX" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -50589,6 +50453,9 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"oEA" = (
+/turf/closed/wall,
+/area/construction/mining/aux_base)
 "oEG" = (
 /obj/machinery/bookbinder,
 /turf/open/floor/plasteel/purple/side{
@@ -50813,6 +50680,10 @@
 /obj/item/device/integrated_electronics/analyzer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"ukn" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/construction/mining/aux_base)
 "ulu" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -74047,19 +73918,19 @@ bva
 bva
 bDi
 bva
-bva
-bva
-bva
-bva
-bva
-bva
-bva
-bva
-bva
-cqy
-cqy
-bva
-bva
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+ukn
+ukn
+oEA
+oEA
 aaa
 aaa
 aaa
@@ -74304,7 +74175,7 @@ bva
 bWj
 bWZ
 bXS
-bva
+oEA
 bZs
 cab
 cab
@@ -74315,8 +74186,8 @@ cab
 cab
 cab
 cab
-cgo
-bva
+bZs
+oEA
 aaa
 aaa
 aaa
@@ -74561,19 +74432,19 @@ bVt
 bWk
 bXa
 bXT
-cqy
+ukn
 bZt
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-cqy
+ukn
 aaa
 aaa
 aaa
@@ -74820,17 +74691,17 @@ bDi
 bSw
 bYF
 bZt
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-cqy
+ukn
 aaa
 aaa
 aaa
@@ -75075,19 +74946,19 @@ bVu
 bNX
 bDi
 bDi
-cqy
+ukn
 bZt
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-cqy
+ukn
 aaa
 aaa
 aaa
@@ -75332,19 +75203,19 @@ bVv
 bSw
 bPC
 bXU
-bva
+oEA
 bZt
-cac
-cac
-cac
-cac
-cdF
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-bva
+oEA
 aaa
 aaa
 aaa
@@ -75589,19 +75460,19 @@ bVw
 bDi
 bDi
 bXV
-cqy
-bZu
+ukn
+bZt
 cac
-cac
-cac
-ccP
-cdG
-cep
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-bva
+oEA
 aaa
 aaa
 aaa
@@ -75846,19 +75717,19 @@ bVx
 bPC
 bXb
 bDi
-bva
+oEA
 bZt
-cac
-cac
-cac
-cac
-cdH
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-bva
+oEA
 aaa
 aaa
 aaa
@@ -76103,19 +75974,19 @@ bVy
 bDi
 bXc
 bDi
-cqy
+ukn
 bZt
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-cqy
+ukn
 aaa
 aaa
 aaa
@@ -76362,17 +76233,17 @@ bSw
 bDi
 bVq
 bZt
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-cqy
+ukn
 aaa
 aaa
 aaa
@@ -76617,19 +76488,19 @@ bVz
 bWm
 bSw
 bNX
-cqy
+ukn
 bZt
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-cqy
+ukn
 aaa
 aaa
 aaa
@@ -76874,8 +76745,8 @@ bva
 bva
 bDi
 cBj
-bva
-bZv
+oEA
+bZs
 cad
 cad
 cad
@@ -76885,8 +76756,8 @@ cad
 cad
 cad
 cad
-cgq
-bva
+bZs
+oEA
 aaa
 aaa
 aaa
@@ -77131,19 +77002,19 @@ bDi
 bDi
 bNK
 bva
-bva
-bva
-bva
-bva
-bva
-bva
-bva
-bva
-bva
-cqy
-cqy
-bva
-bva
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+ukn
+ukn
+oEA
+oEA
 aaa
 aaa
 aaa
@@ -90151,11 +90022,11 @@ alf
 aaa
 aaa
 aaa
-ann
-ann
-cnW
-ann
-aqX
+aaa
+aaa
+aaa
+aaa
+aaa
 apX
 apX
 aul
@@ -90407,12 +90278,12 @@ akn
 alg
 aaa
 aaa
-ann
-ann
-aoE
-apx
-apY
-aqX
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 ash
 ash
 ash
@@ -90664,11 +90535,11 @@ ako
 alg
 aaa
 aaa
-cnW
-aoc
-aoF
-aoF
-aoF
+aaa
+aaa
+aaa
+aaa
+aaa
 aqY
 asi
 atk
@@ -90921,12 +90792,12 @@ akn
 alg
 aaa
 aaa
-ann
-ann
-aoG
-apy
-apZ
-aqX
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 asj
 atl
 aum
@@ -91179,11 +91050,11 @@ alh
 aaa
 aaa
 aaa
-ann
-ann
-cnW
-ann
-aqX
+aaa
+aaa
+aaa
+aaa
+aaa
 apX
 apX
 apX
