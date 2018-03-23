@@ -132,17 +132,8 @@
 			S.remove_from_storage(O,src)
 		O.forceMove(src)
 
-/obj/machinery/smartfridge/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/smartfridge/attack_ai(mob/user)
 	return FALSE
-
-/obj/machinery/smartfridge/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-
 
 /obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

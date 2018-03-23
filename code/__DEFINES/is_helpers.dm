@@ -90,6 +90,8 @@
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
 
+#define issiliconoradminghost(A) (istype(A, /mob/living/silicon) || IsAdminGhost(A))
+
 #define iscyborg(A) (istype(A, /mob/living/silicon/robot))
 
 #define isAI(A) (istype(A, /mob/living/silicon/ai))

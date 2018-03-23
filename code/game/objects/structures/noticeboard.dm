@@ -39,7 +39,11 @@
 	else
 		return ..()
 
-/obj/structure/noticeboard/attack_hand(mob/user)
+/obj/structure/noticeboard/interact(mob/user)
+	ui_interact(user)
+
+/obj/structure/noticeboard/ui_interact(mob/user)
+	. = ..()
 	var/auth = allowed(user)
 	var/dat = "<B>[name]</B><BR>"
 	for(var/obj/item/P in src)

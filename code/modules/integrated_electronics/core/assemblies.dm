@@ -106,8 +106,11 @@
 			if(!draw_power(IC.power_draw_idle))
 				IC.power_fail()
 
-
 /obj/item/device/electronic_assembly/interact(mob/user)
+	ui_interact(user)
+
+/obj/item/device/electronic_assembly/ui_interact(mob/user)
+	. = ..()
 	if(!check_interactivity(user))
 		return
 
