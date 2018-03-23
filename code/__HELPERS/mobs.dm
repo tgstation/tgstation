@@ -300,15 +300,15 @@ Proc for attack log creation, because really why not
 	if (progress)
 		progbar = new(user, delay, target)
 
+	delay *= user.do_after_speed
+
 	GET_COMPONENT_FROM(mood, /datum/component/mood, user)
 	if(mood)
-		switch(mood.mood) //Alerts do_after delay based on how happy you are
-			if(-INFINITY to MOOD_LEVEL_SAD2)
+		switch(mood.sanity) //Alters do_after delay based on how sane you are
+			if(SANITY_INSANE to SANITY_DISTURBED)
 				delay *= 1.25
-			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
-				delay *= 0.95
-			if(MOOD_LEVEL_HAPPY4 to INFINITY)
-				delay *= 0.9
+			if(SANITY_NEUTRAL to SANITY_GREAT)
+				delay *= 0.90
 
 	var/endtime = world.time + delay
 	var/starttime = world.time

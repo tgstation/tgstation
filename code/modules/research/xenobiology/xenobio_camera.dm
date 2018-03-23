@@ -168,10 +168,11 @@
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		if(X.monkeys >= 1)
-			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc)
-			food.LAssailant = C
-			X.monkeys --
-			to_chat(owner, "[X] now has [X.monkeys] monkeys left.")
+			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc, TRUE, owner)
+			if (!QDELETED(food))
+				food.LAssailant = C
+				X.monkeys --
+				to_chat(owner, "[X] now has [X.monkeys] monkeys left.")
 	else
 		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 

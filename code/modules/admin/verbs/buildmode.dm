@@ -262,6 +262,7 @@
 					T.ChangeTurf(/turf/closed/wall)
 				else if(iswallturf(object))
 					T.ChangeTurf(/turf/closed/wall/r_wall)
+				T.assemble_baseturfs(initial(T.baseturfs))
 				log_admin("Build Mode: [key_name(user)] built [T] at ([T.x],[T.y],[T.z])")
 				return
 			else if(right_click)

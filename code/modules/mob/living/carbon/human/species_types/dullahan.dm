@@ -26,7 +26,7 @@
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
 	H.flags_1 &= ~HEAR_1
-	var/obj/item/bodypart/head/head = H.get_bodypart("head")
+	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		head.drop_limb()
 		head.flags_1 = HEAR_1
@@ -42,14 +42,14 @@
 		myhead = null
 		DR.owner = null
 		qdel(DR)
-	H.regenerate_limb("head",FALSE)
+	H.regenerate_limb(BODY_ZONE_HEAD,FALSE)
 	..()
 
 /datum/species/dullahan/spec_life(mob/living/carbon/human/H)
 	if(QDELETED(myhead))
 		myhead = null
 		H.gib()
-	var/obj/item/bodypart/head/head2 = H.get_bodypart("head")
+	var/obj/item/bodypart/head/head2 = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head2)
 		myhead = null
 		H.gib()

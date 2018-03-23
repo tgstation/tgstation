@@ -47,13 +47,13 @@
 	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
 		return
 	if(!target_zone)
-		target_zone = pick(head_ch;"head",body_ch;"body",hands_ch;"hands",feet_ch;"feet")
+		target_zone = pick(head_ch;BODY_ZONE_HEAD,body_ch;"body",hands_ch;"hands",feet_ch;"feet")
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 
 		switch(target_zone)
-			if("head")
+			if(BODY_ZONE_HEAD)
 				if(isobj(H.head) && !istype(H.head, /obj/item/paper))
 					Cl = H.head
 					passed = prob((Cl.permeability_coefficient*100) - 1)
@@ -90,7 +90,7 @@
 	else if(ismonkey(src))
 		var/mob/living/carbon/monkey/M = src
 		switch(target_zone)
-			if("head")
+			if(BODY_ZONE_HEAD)
 				if(M.wear_mask && isobj(M.wear_mask))
 					Cl = M.wear_mask
 					passed = prob((Cl.permeability_coefficient*100) - 1)

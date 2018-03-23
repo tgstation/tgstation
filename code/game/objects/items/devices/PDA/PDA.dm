@@ -858,6 +858,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 			else if (istype(A, /obj/machinery/atmospherics/pipe))
 				var/obj/machinery/atmospherics/pipe/P = A
 				atmosanalyzer_scan(P.parent.air, user, P)
+			else if (istype(A, /obj/machinery/atmospherics/components/unary))
+				var/obj/machinery/atmospherics/components/unary/U = A
+				atmosanalyzer_scan(U.airs[1], user, U)
 			else if (istype(A, /obj/machinery/power/rad_collector))
 				var/obj/machinery/power/rad_collector/RC = A
 				if(RC.loaded_tank)
