@@ -37,8 +37,8 @@
 #define MINIMUM_AIR_TO_SUSPEND						(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND)	//Minimum amount of air that has to move before a group processing can be suspended
 #define MINIMUM_MOLES_DELTA_TO_MOVE					(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_MOVE) //Either this must be active
 #define MINIMUM_TEMPERATURE_TO_MOVE					(T20C+100)			//or this (or both, obviously)
-#define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND		10		//Minimum temperature difference before group processing is suspended
-#define MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER		5		//Minimum temperature difference before the gas temperatures are just set to be equal
+#define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND		4		//Minimum temperature difference before group processing is suspended
+#define MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER		0.5		//Minimum temperature difference before the gas temperatures are just set to be equal
 #define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		T20C+10
 #define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	T20C+200
 
