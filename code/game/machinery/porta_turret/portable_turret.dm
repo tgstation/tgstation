@@ -353,10 +353,8 @@
 			if(has_cover)
 				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
 				cover.parent_turret = src	//assign the cover its parent_turret, which would be this (src)
-	if(!on)
-		if(!always_up)
-	
-	if(stat & (NOPOWER|BROKEN) || || manual_control)
+
+	if(!on || (stat & (NOPOWER|BROKEN)) || manual_control)
 		return
 
 	var/list/targets = list()
