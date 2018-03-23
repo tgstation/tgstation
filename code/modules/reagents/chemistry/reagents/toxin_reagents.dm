@@ -128,7 +128,7 @@
 		M.adjustToxLoss(rand(20,60)*REM, 0)
 		. = 1
 	else if(prob(40))
-		M.heal_bodypart_damage(5*REM,0, 0)
+		M.heal_bodypart_damage(5*REM)
 		. = 1
 	..()
 
@@ -874,7 +874,7 @@
 
 /datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
 	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
-	if(M.staminaloss < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
+	if(M.getStaminaLoss() < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		M.adjustStaminaLoss(10)
 	if(prob(30))
 		to_chat(M, "You should sit down and take a rest...")
