@@ -843,9 +843,9 @@
 	acidpwr = 42.0
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/M)
-	M.adjustFireLoss(current_cycle/10, 0) // I rode a tank, held a general's rank
-	. = 1 // When the blitzkrieg raged and the bodies stank
-	..() // Pleased to meet you, hope you guess my name
+	M.adjustFireLoss(current_cycle/10, 0)
+	. = 1
+	..()
 
 /datum/reagent/toxin/peaceborg/confuse
 	name = "Dizzying Solution"
