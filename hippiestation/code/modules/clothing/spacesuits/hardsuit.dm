@@ -239,7 +239,7 @@
 			cell.charge = 0
 			armor_cancel()
 			cloak_cancel()
-		if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(35))
+		if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(50))
 			var/datum/effect_system/spark_spread/s = new
 			s.set_up(1, 1, src)
 			s.start()
@@ -328,7 +328,7 @@
 			helmet.display_visor_message("Cloak Engaged!")
 			slowdown = 0.4
 			mode = "cloak"
-			animate(U, alpha = 25, time = 2)
+			animate(U, alpha = 40, time = 2)
 			U.filters += filter(type="blur", x=0, y=0,size=1)
 
 /obj/item/clothing/suit/space/hardsuit/nano/proc/cloak_cancel()
@@ -368,7 +368,7 @@
 			helmet.display_visor_message("Maximum Speed!")
 			U.add_trait(TRAIT_GOTTAGOFAST, "Speed Mode")
 			U.adjustOxyLoss(-5, 0)
-			U.adjustStaminaLoss(-10)
+			U.adjustStaminaLoss(-20)
 			//jetpack.full_speed = TRUE
 			mode = "speed"
 
