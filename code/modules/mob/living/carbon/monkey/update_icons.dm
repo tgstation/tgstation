@@ -15,7 +15,7 @@
 /mob/living/carbon/monkey/update_hair()
 	remove_overlay(HAIR_LAYER)
 
-	var/obj/item/bodypart/head/HD = get_bodypart("head")
+	var/obj/item/bodypart/head/HD = get_bodypart(BODY_ZONE_HEAD)
 	if(!HD) //Decapitated
 		return
 

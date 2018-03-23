@@ -12,6 +12,7 @@
 	var/list/tube_dirs //list of directions this tube section can connect to.
 	var/exit_delay = 1
 	var/enter_delay = 0
+	var/const/time_to_unwrench = 2 SECONDS
 
 /obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
@@ -42,7 +43,7 @@
 				to_chat(user, "<span class='warning'>Remove the pod first!</span>")
 				return
 			user.visible_message("[user] starts to deattach \the [src].", "<span class='notice'>You start to deattach the [name]...</span>")
-			if(W.use_tool(src, user, 40, volume=50))
+			if(W.use_tool(src, user, time_to_unwrench, volume=50))
 				to_chat(user, "<span class='notice'>You deattach the [name].</span>")
 				var/obj/structure/c_transit_tube/R = new tube_construction(loc)
 				R.setDir(dir)

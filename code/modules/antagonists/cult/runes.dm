@@ -637,7 +637,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 						 "<span class='cult italic'>You channel [carbon_user ? "your life ":""]energy into [src], [density ? "temporarily preventing" : "allowing"] passage above it.</span>")
 	if(carbon_user)
 		var/mob/living/carbon/C = user
-		C.apply_damage(2, BRUTE, pick("l_arm", "r_arm"))
+		C.apply_damage(2, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 
 /obj/effect/rune/wall/proc/spread_density()
 	for(var/R in GLOB.wall_runes)

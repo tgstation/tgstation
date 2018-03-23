@@ -736,21 +736,21 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return
 
 /proc/parse_zone(zone)
-	if(zone == "r_hand")
+	if(zone == BODY_ZONE_PRECISE_R_HAND)
 		return "right hand"
-	else if (zone == "l_hand")
+	else if (zone == BODY_ZONE_PRECISE_L_HAND)
 		return "left hand"
-	else if (zone == "l_arm")
+	else if (zone == BODY_ZONE_L_ARM)
 		return "left arm"
-	else if (zone == "r_arm")
+	else if (zone == BODY_ZONE_R_ARM)
 		return "right arm"
-	else if (zone == "l_leg")
+	else if (zone == BODY_ZONE_L_LEG)
 		return "left leg"
-	else if (zone == "r_leg")
+	else if (zone == BODY_ZONE_R_LEG)
 		return "right leg"
-	else if (zone == "l_foot")
+	else if (zone == BODY_ZONE_PRECISE_L_FOOT)
 		return "left foot"
-	else if (zone == "r_foot")
+	else if (zone == BODY_ZONE_PRECISE_R_FOOT)
 		return "right foot"
 	else
 		return zone
@@ -1572,3 +1572,54 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 /proc/get_random_drink()
 	return pick(subtypesof(/obj/item/reagent_containers/food/drinks))
+
+//For these two procs refs MUST be ref = TRUE format like typecaches!
+/proc/weakref_filter_list(list/things, list/refs)
+	if(!islist(things) || !islist(refs))
+		return
+	if(!refs.len)
+		return things
+	if(things.len > refs.len)
+		var/list/f = list()
+		for(var/i in refs)
+			var/datum/weakref/r = i
+			var/datum/d = r.resolve()
+			if(d)
+				f |= d
+		return things & f
+
+	else
+		. = list()
+		for(var/i in things)
+			if(!refs[WEAKREF(i)])
+				continue
+			. |= i
+
+/proc/weakref_filter_list_reverse(list/things, list/refs)
+	if(!islist(things) || !islist(refs))
+		return
+	if(!refs.len)
+		return things
+	if(things.len > refs.len)
+		var/list/f = list()
+		for(var/i in refs)
+			var/datum/weakref/r = i
+			var/datum/d = r.resolve()
+			if(d)
+				f |= d
+
+		return things - f
+	else
+		. = list()
+		for(var/i in things)
+			if(refs[WEAKREF(i)])
+				continue
+			. |= i
+
+/proc/special_list_filter(list/L, datum/callback/condition)
+	if(!islist(L) || !length(L) || !istype(condition))
+		return list()
+	. = list()
+	for(var/i in L)
+		if(condition.Invoke(i))
+			. |= i

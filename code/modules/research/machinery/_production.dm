@@ -23,7 +23,7 @@
 	. = ..()
 	create_reagents(0)
 	materials = AddComponent(/datum/component/material_container,
-		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
+		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC), 0,
 		FALSE, list(/obj/item/stack), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
 	materials.precise_insertion = TRUE
 	RefreshParts()
@@ -41,7 +41,7 @@
 	cached_designs.Cut()
 	for(var/i in stored_research.researched_designs)
 		var/datum/design/d = stored_research.researched_designs[i]
-		if((d.departmental_flags & allowed_department_flags) && (d.build_type & allowed_buildtypes))
+		if((isnull(allowed_department_flags) || (d.departmental_flags & allowed_department_flags)) && (d.build_type & allowed_buildtypes))
 			cached_designs |= d
 
 /obj/machinery/rnd/production/RefreshParts()
@@ -115,7 +115,7 @@
 	var/datum/design/D = (linked_console || requires_console)? linked_console.stored_research.researched_designs[id] : get_techweb_design_by_id(id)
 	if(!istype(D))
 		return FALSE
-	if(!(D.departmental_flags & allowed_department_flags))
+	if(!(isnull(allowed_department_flags) || (D.departmental_flags & allowed_department_flags)))
 		say("Warning: Printing failed: This fabricator does not have the necessary keys to decrypt design schematics. Please update the research data with the on-screen button and contact Nanotrasen Support!")
 		return FALSE
 	if(D.build_type && !(D.build_type & allowed_buildtypes))
@@ -152,7 +152,7 @@
 	matching_designs.Cut()
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = stored_research.researched_designs[v]
-		if(!(D.build_type & allowed_buildtypes) || !(D.departmental_flags & allowed_department_flags))
+		if(!(D.build_type & allowed_buildtypes) || !(isnull(allowed_department_flags) || (D.departmental_flags & allowed_department_flags)))
 			continue
 		if(findtext(D.name,string))
 			matching_designs.Add(D)
@@ -308,7 +308,7 @@
 		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category)|| !(D.build_type & allowed_buildtypes))
 			continue
-		if(!(D.departmental_flags & allowed_department_flags))
+		if(!(isnull(allowed_department_flags) || (D.departmental_flags & allowed_department_flags)))
 			continue
 		l += design_menu_entry(D, coeff)
 	l += "</div>"

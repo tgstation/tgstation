@@ -141,4 +141,6 @@ SUBSYSTEM_DEF(traumas)
 						  /datum/species/shadow))
 						 )
 
+	return ..()
+
 #undef PHOBIA_FILE

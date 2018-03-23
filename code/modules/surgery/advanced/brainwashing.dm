@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/brainwashing
+	name = "Brainwashing Surgery Disk"
 	desc = "The disk provides instructions on how to impress an order on a brain, making it the primary objective of the patient."
 	surgeries = list(/datum/surgery/advanced/brainwashing)
 
@@ -13,7 +14,7 @@
 	/datum/surgery_step/close)
 
 	species = list(/mob/living/carbon/human)
-	possible_locs = list("head")
+	possible_locs = list(BODY_ZONE_HEAD)
 
 /datum/surgery/advanced/brainwashing/can_start(mob/user, mob/living/carbon/target)
 	if(!..())

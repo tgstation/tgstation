@@ -263,7 +263,7 @@
 		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
 		return
 
-	if(user.zone_selected == "chest")
+	if(user.zone_selected == BODY_ZONE_CHEST)
 		if(voodoo_link)
 			target = null
 			voodoo_link.forceMove(drop_location())
@@ -274,24 +274,24 @@
 
 	if(target && cooldown < world.time)
 		switch(user.zone_selected)
-			if("mouth")
+			if(BODY_ZONE_PRECISE_MOUTH)
 				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
 				target.say(wgw)
 				log_game("[user][user.key] made [target][target.key] say [wgw] with a voodoo doll.")
-			if("eyes")
+			if(BODY_ZONE_PRECISE_EYES)
 				user.set_machine(src)
 				user.reset_perspective(target)
 				spawn(100)
 					user.reset_perspective(null)
 					user.unset_machine()
-			if("r_leg","l_leg")
+			if(BODY_ZONE_R_LEG,BODY_ZONE_L_LEG)
 				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
 				var/turf/T = get_step(target,pick(GLOB.cardinals))
 				target.Move(T)
-			if("r_arm","l_arm")
+			if(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM)
 				target.click_random_mob()
 				GiveHint(target)
-			if("head")
+			if(BODY_ZONE_HEAD)
 				to_chat(user, "<span class='notice'>You smack the doll's head with your hand.</span>")
 				target.Dizzy(10)
 				to_chat(target, "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>")
