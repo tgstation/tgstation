@@ -5703,7 +5703,7 @@
 	height = 5;
 	id = "laborcamp_home";
 	name = "fore bay 1";
-	roundstart_template = /datum/map_template/shuttle/labour/box;
+	roundstart_template = !INVALID_VALUE!;
 	width = 9
 	},
 /turf/open/space/basic,
@@ -34829,7 +34829,7 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/box;
+	roundstart_template = !INVALID_VALUE!;
 	width = 7
 	},
 /turf/open/space/basic,
@@ -37788,9 +37788,7 @@
 	},
 /area/maintenance/starboard/aft)
 "bPP" = (
-/obj/machinery/chem_dispenser/constructable{
-	cell_type = /obj/item/stock_parts/cell/upgraded
-	},
+/obj/machinery/chem_master,
 /turf/open/floor/plating/ice/smooth{
 	planetary_atmos = 0
 	},
@@ -53257,7 +53255,7 @@
 	height = 15;
 	id = "arrivals_stationary";
 	name = "arrivals";
-	roundstart_template = /datum/map_template/shuttle/arrival/box;
+	roundstart_template = !INVALID_VALUE!;
 	width = 7
 	},
 /turf/open/space/basic,
