@@ -3,56 +3,38 @@
 /////////////////////////////////////////
 
 /datum/design/c38/sec
-	name = "Speed Loader (.38)"
 	id = "sec_38"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 20000)
-	build_path = /obj/item/ammo_box/c38
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/rubbershot/sec
-	name = "Rubber Shot"
 	id = "sec_rshot"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000)
-	build_path = /obj/item/ammo_casing/shotgun/rubbershot
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/shotgun_slug/sec
-	name = "Shotgun Slug"
 	id = "sec_slug"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000)
-	build_path = /obj/item/ammo_casing/shotgun
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/buckshot_shell/sec
-	name = "Buckshot Shell"
 	id = "sec_bshot"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000)
-	build_path = /obj/item/ammo_casing/shotgun/buckshot
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/shotgun_dart/sec
-	name = "Shotgun Dart"
 	id = "sec_dart"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000)
-	build_path = /obj/item/ammo_casing/shotgun/dart
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/incendiary_slug/sec
-	name = "Incendiary Slug"
 	id = "sec_Islug"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000)
-	build_path = /obj/item/ammo_casing/shotgun/incendiary
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
