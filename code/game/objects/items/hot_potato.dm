@@ -143,7 +143,7 @@
 	log_game("[user? "[user] has primed [src]" : "A [src] has been primed"] ([detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_fire_range]) for detonation at [COORD(T)]([T.loc])")
 	active = TRUE
 
-/obj/item/hot_potato/proc/deactivate(mob/user)
+/obj/item/hot_potato/proc/deactivate()
 	update_icon()
 	name = initial(name)
 	flags_1 &= ~NODROP_1
