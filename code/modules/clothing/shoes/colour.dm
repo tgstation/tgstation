@@ -87,11 +87,13 @@
 	item_color = "orange"
 
 /obj/item/clothing/shoes/sneakers/orange/attack_self(mob/user)
-	if (src.chained)
-		src.chained = null
-		src.slowdown = SHOES_SLOWDOWN
-		new /obj/item/restraints/handcuffs( user.loc )
-		src.icon_state = "orange"
+	if (chained)
+		chained = FALSE
+		slowdown = SHOES_SLOWDOWN
+		mouse_unequippable = TRUE
+		var/H = new /obj/item/restraints/handcuffs()
+		user.put_in_hands(H)
+		icon_state = "orange"
 	return
 
 /obj/item/clothing/shoes/sneakers/orange/attackby(obj/H, loc, params)
@@ -99,15 +101,16 @@
 	// Note: not using istype here because we want to ignore all subtypes
 	if (H.type == /obj/item/restraints/handcuffs && !chained)
 		qdel(H)
-		src.chained = 1
-		src.slowdown = 15
-		src.icon_state = "orange1"
+		chained = TRUE
+		slowdown = 15
+		mouse_unequippable = FALSE
+		icon_state = "orange1"
 	return
 
 /obj/item/clothing/shoes/sneakers/orange/attack_hand(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/C = user
-		if(C.shoes == src && src.chained == 1)
+		if(C.shoes == src && chained)
 			to_chat(user, "<span class='warning'>You need help taking these off!</span>")
 			return
 	..()
