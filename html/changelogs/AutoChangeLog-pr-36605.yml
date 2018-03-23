@@ -1,6 +1,0 @@
-author: "Floyd / Qustinnus"
-delete-after: True
-changes: 
-  - bugfix: "progression bar now takes the delay after co_efficent in account"
-  - code_imp: "removes do_after_speed from mob base, moves it into physiology"
-  - code_imp: "makes a do_after coefficiency proc"

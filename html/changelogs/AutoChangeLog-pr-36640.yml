@@ -1,4 +1,0 @@
-author: "Floyd / Qustinnus"
-delete-after: True
-changes: 
-  - balance: "Changes rate of sanity drain and caps it depending on mood"

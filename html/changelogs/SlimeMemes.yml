@@ -1,9 +1,0 @@
-author: "Fel"
-delete-after: True
-changes:
-  - add: "Slimes can now be crossbred by feeding them a number of slime extracts of one type. Beware, it only produces one crossbred extract!"
-  - experiment: "The number of required extracts has been lowered to 10 since the testmerge, but this number is up for potential change depending on balance consideration in the future."
-  - wip: "Currently available crossbreeds are accomplished by feeding any slime the required amount of the following extract colors: Grey, orange, purple, blue, metal, yellow, dark purple, silver, cerulean, and pyrite. Their relevant effects will be added to the wiki page for xenobiology soon(TM), and more to come in a later addition!"
-  - add: "Slimes can be fed extracts one at a time, but if you start mutating it, you can feed it extracts straight from a biobag! You can also use biobags to feed a reproductive extract monkey cubes."
-  - add: "Slimes in the process of being crossbred will reveal what modifier they will gain from their current modification, as well as how many more extracts are required, to slime scanners."
-  - tweak: "The rainbow slime clusterblorble effect will now only use reagents that the extract will be activated from, and will try any of these reagents! As a bonus side effect, this means it has a 1.1% chance of spawning and activating another clusterblorble effect."
