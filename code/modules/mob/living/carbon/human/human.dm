@@ -791,11 +791,7 @@
 		return
 	else
 		if(hud_used.healths)
-<<<<<<< HEAD
-			var/health_amount = health
-=======
 			var/health_amount = health - getStaminaLoss()
->>>>>>> 4a23703622... Combat Overhaul Staging: Limb Specific Stamina and status effect clickdelay modifiers! (#36274)
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
 					if(SCREWYHUD_CRIT)
