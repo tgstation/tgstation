@@ -47,6 +47,9 @@
 	on = TRUE
 	icon_state = "vent_map_siphon_on"
 
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos
+	frequency = FREQ_ATMOS_STORAGE
+
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
 	if(!id_tag)
@@ -78,6 +81,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on
 	on = TRUE
 	icon_state = "vent_map_siphon_on"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on/atmos
+	frequency = FREQ_ATMOS_STORAGE
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
 	..()

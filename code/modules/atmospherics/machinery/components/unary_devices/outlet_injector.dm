@@ -24,6 +24,11 @@
 	SSradio.remove_object(src,frequency)
 	return ..()
 
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos
+	frequency = FREQ_ATMOS_STORAGE
+	on = TRUE
+	volume_rate = 200
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = TRUE
 

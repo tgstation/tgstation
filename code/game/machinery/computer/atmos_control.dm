@@ -56,6 +56,7 @@
 /////////////////////////////////////////////////////////////
 // GENERAL AIR CONTROL (a.k.a atmos computer)
 /////////////////////////////////////////////////////////////
+GLOBAL_LIST_EMPTY(atmos_air_controllers)
 
 /obj/machinery/computer/atmos_control
 	name = "atmospherics monitoring"
@@ -75,6 +76,8 @@
 		"mix_sensor" = "Mix Tank",
 		"distro_meter" = "Distribution Loop",
 		"waste_meter" = "Waste Loop",
+		"incinerator_internal_sensor" = "Incinerator Chamber"
+		"toxins_mixing_internal_sensor" = "Toxins Mixing Chamber"
 	)
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
@@ -83,9 +86,11 @@
 
 /obj/machinery/computer/atmos_control/Initialize()
 	. = ..()
+	GLOB.atmos_air_controllers += src
 	set_frequency(frequency)
 
 /obj/machinery/computer/atmos_control/Destroy()
+	GLOB.atmos_air_controllers -= src
 	SSradio.remove_object(src, frequency)
 	return ..()
 
@@ -141,6 +146,54 @@
 
 	var/list/input_info
 	var/list/output_info
+
+/obj/machinery/computer/atmos_control/tank/oxygen_tank
+	name = "Oxygen Supply Control"
+	input_tag = "o2_in"
+	output_tag = "o2_out"
+	sensors = list("o2_sensor" = "Oxygen Tank")
+
+/obj/machinery/computer/atmos_control/tank/toxin_tank
+	name = "Plasma Supply Control"
+	input_tag = "tox_in"
+	output_tag = "tox_out"
+	sensors = list("tox_sensor" = "Plasma Tank")
+
+/obj/machinery/computer/atmos_control/tank/air_tank
+	name = "Mixed Air Supply Control"
+	input_tag = "air_in"
+	output_tag = "air_out"
+	sensors = list("air_sensor" = "Air Mix Tank")
+
+/obj/machinery/computer/atmos_control/tank/mix_tank
+	name = "Gas Mix Tank Control"
+	input_tag = "mix_in"
+	output_tag = "mix_out"
+	sensors = list("mix_sensor" = "Gas Mix Tank")
+
+/obj/machinery/computer/atmos_control/tank/nitrous_tank
+	name = "Nitrous Oxide Supply Control"
+	input_tag = "n2o_in"
+	output_tag = "n2o_out"
+	sensors = list("n2o_sensor" = "Nitrous Oxide Tank")
+
+/obj/machinery/computer/atmos_control/tank/nitrogen_tank
+	name = "Nitrogen Supply Control"
+	input_tag = "n2_in"
+	output_tag = "n2_out"
+	sensors = list("n2_sensor" = "Nitrogen Tank")
+
+/obj/machinery/computer/atmos_control/tank/carbon_tank
+	name = "Carbon Dioxide Supply Control"
+	input_tag = "co2_in"
+	output_tag = "co2_out"
+	sensors = list("co2_sensor" = "Carbon Dioxide Tank")
+
+/obj/machinery/computer/atmos_control/tank/incinerator
+	name = "Incinerator Air Control"
+	input_tag = "incinerator_in"
+	output_tag = "incinerator_out"
+	sensors = list("incinerator_internal_sensor" = "Incinerator Chamber")
 
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)

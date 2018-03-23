@@ -16,6 +16,9 @@
 	var/id_tag
 	var/target_layer = PIPING_LAYER_DEFAULT
 
+/obj/machinery/meter/atmos
+	frequency = FREQ_ATMOS_STORAGE
+
 /obj/machinery/meter/Destroy()
 	SSair.atmos_machinery -= src
 	target = null
