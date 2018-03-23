@@ -254,9 +254,7 @@
 				current_user.setDir(SOUTH)
 			if(226 to 315)
 				current_user.setDir(WEST)
-		var/difference = abs(lastangle - angle)
-		if(difference > 350)			//Too lazy to properly math, detects 360 --> 0 changes.
-			difference = (lastangle > 350? ((360 - lastangle) + angle) : ((360 - angle) + lastangle))
+		var/difference = abs(closer_angle_difference(lastangle, angle))
 		delay_penalty(difference * aiming_time_increase_angle_multiplier)
 		lastangle = angle
 
@@ -292,7 +290,7 @@
 		current_user = null
 	if(istype(user))
 		current_user = user
-		LAZYADD(current_user.mousemove_intercept_objects, src)
+		LAZYOR(current_user.mousemove_intercept_objects, src)
 		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/on_mob_move))
 
 /obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
