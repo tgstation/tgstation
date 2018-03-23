@@ -7,8 +7,8 @@
 	density = FALSE
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
-	var/state = PLASTIC_FLAPS_NORMAL
 	CanAtmosPass = ATMOS_PASS_NO
+	var/state = PLASTIC_FLAPS_NORMAL
 
 /obj/structure/plasticflaps/examine(mob/user)
 	. = ..()
@@ -77,7 +77,6 @@
 	if(ismecha(A))
 		return 0
 
-
 	else if(isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if(isbot(A)) //Bots understand the secrets
@@ -93,9 +92,9 @@
 		new /obj/item/stack/sheet/plastic/five(loc)
 	qdel(src)
 
-/obj/structure/plasticflaps/New()
-	air_update_turf(1)
-	. = ..()
+/obj/structure/plasticflaps/Initialize()
+ 	. = ..()
+ 	air_update_turf(TRUE)
 
 /obj/structure/plasticflaps/Destroy()
 	var/atom/oldloc = loc
