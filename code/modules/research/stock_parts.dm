@@ -30,7 +30,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	var/yes = can_go_in[W.type]
 	if(yes)
 		return ..() && TRUE
-	return ..() && FALSE
+	return FALSE
 
 /obj/item/storage/part_replacer/afterattack(obj/machinery/T, mob/living/carbon/human/user, flag, params)
 	if(flag)
