@@ -268,7 +268,7 @@
 
 //Cure a random trauma of a certain resilience level
 /obj/item/organ/brain/proc/cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
-	var/datum/brain_trauma/trauma = has_trauma_type(resilience)
+	var/datum/brain_trauma/trauma = has_trauma_type(/datum/brain_trauma, resilience)
 	if(trauma)
 		qdel(trauma)
 
