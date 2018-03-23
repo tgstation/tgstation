@@ -98,14 +98,8 @@
 	else
 		..()
 
-
-/obj/machinery/plantgenes/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/plantgenes/interact(mob/user)
-	user.set_machine(src)
+/obj/machinery/plantgenes/ui_interact(mob/user)
+	. = ..()
 	if(!user)
 		return
 

@@ -49,7 +49,7 @@
 	max_integrity = 200
 	integrity_failure = 50
 	resistance_flags = FIRE_PROOF
-	interact_open = TRUE
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 
 	var/lon_range = 1.5
 	var/area/area
@@ -95,6 +95,9 @@
 	var/update_state = -1
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
+
+/obj/machinery/power/apc/unlocked
+	locked = FALSE
 
 /obj/machinery/power/apc/highcap/five_k
 	cell_type = /obj/item/stock_parts/cell/upgraded/plus
@@ -378,7 +381,7 @@
 /obj/machinery/power/apc/attackby(obj/item/W, mob/living/user, params)
 
 	if(issilicon(user) && get_dist(src,user)>1)
-		return src.attack_hand(user)
+		return attack_hand(user)
 	if (istype(W, /obj/item/crowbar)) //Using crowbar
 		if (opened) // a) on open apc
 			if (has_electronics==1)
@@ -681,7 +684,7 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 15 && (!(stat & BROKEN) || malfai))
+	if(damage_flag == "melee" && damage_amount < 10 && (!(stat & BROKEN) || malfai))
 		return 0
 	. = ..()
 
@@ -718,6 +721,9 @@
 // attack with hand - remove cell (if cover open) or interact with the APC
 
 /obj/machinery/power/apc/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!user)
 		return
 	if(usr == user && opened && (!issilicon(user)))
@@ -731,7 +737,6 @@
 		return
 	if((stat & MAINT) && !opened) //no board; no interface
 		return
-	..()
 
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)

@@ -57,7 +57,8 @@
 	QDEL_NULL(wires)
 	return ..()
 
-/obj/machinery/autolathe/interact(mob/user)
+/obj/machinery/autolathe/ui_interact(mob/user)
+	. = ..()
 	if(!is_operational())
 		return
 

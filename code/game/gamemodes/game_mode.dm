@@ -323,17 +323,17 @@
 	for(var/datum/mind/mind in candidates)
 		p_ckey = ckey(mind.key)
 		p_rep = SSpersistence.antag_rep[p_ckey]
-		p_rep = p_rep == null ? 0 : p_rep
 
-		if(current <= antag_select)
-			var/subtract = min(p_rep + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL) - DEFAULT_ANTAG_TICKETS
-			SSpersistence.antag_rep_change[p_ckey] = -subtract
+		var/previous = current
+		var/spend = min(p_rep + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
+		current += spend
 
-//			WARNING("AR_DEBUG: Player [mind.key] won spending [subtract] tickets from starting value [SSpersistence.antag_rep[p_ckey]]")
+		if(antag_select >= previous && antag_select <= (current-1))
+			SSpersistence.antag_rep_change[p_ckey] = -(spend - DEFAULT_ANTAG_TICKETS)
+
+//			WARNING("AR_DEBUG: Player [mind.key] won spending [spend] tickets from starting value [SSpersistence.antag_rep[p_ckey]]")
 
 			return mind
-
-		current += min(p_rep + DEFAULT_ANTAG_TICKETS, MAX_TICKETS_PER_ROLL)
 
 	WARNING("Something has gone terribly wrong. /datum/game_mode/proc/antag_pick failed to select a candidate. Falling back to pick()")
 	return pick(candidates)

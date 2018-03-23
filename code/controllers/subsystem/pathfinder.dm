@@ -24,7 +24,6 @@ SUBSYSTEM_DEF(pathfinder)
 	free = 1
 	flow = new/list(lcount)
 
-
 /datum/flowcache/proc/getfree(atom/M)
 	if(run < lcount)
 		run += 1

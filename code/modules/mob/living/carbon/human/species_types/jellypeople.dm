@@ -52,13 +52,13 @@
 		regenerate_limbs.UpdateButtonIcon()
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
-	var/list/limbs_to_consume = list("r_arm", "l_arm", "r_leg", "l_leg") - H.get_missing_limbs()
+	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
 	var/obj/item/bodypart/consumed_limb
 	if(!limbs_to_consume.len)
 		H.losebreath++
 		return
 	if(H.get_num_legs()) //Legs go before arms
-		limbs_to_consume -= list("r_arm", "l_arm")
+		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
 	to_chat(H, "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>")

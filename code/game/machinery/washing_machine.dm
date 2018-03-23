@@ -220,6 +220,9 @@
 		return ..()
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] is busy.</span>")
 		return

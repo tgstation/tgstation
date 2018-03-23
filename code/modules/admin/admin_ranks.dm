@@ -226,8 +226,8 @@ GLOBAL_PROTECT(protected_ranks)
 			dbfail = 1
 		else
 			while(query_load_admins.NextRow())
-				var/admin_ckey = query_load_admins.item[1]
-				var/admin_rank = query_load_admins.item[2]
+				var/admin_ckey = ckey(query_load_admins.item[1])
+				var/admin_rank = ckeyEx(query_load_admins.item[2])
 				var/skip
 				if(rank_names[admin_rank] == null)
 					message_admins("[admin_ckey] loaded with invalid admin rank [admin_rank].")
@@ -248,7 +248,7 @@ GLOBAL_PROTECT(protected_ranks)
 			for(var/A in GLOB.admin_datums + GLOB.deadmins)
 				if(A == "[J]") //this admin was already loaded from txt override
 					continue
-			new /datum/admins(rank_names[json["admins"]["[J]"]], "[J]")
+			new /datum/admins(ckeyEx(rank_names[json["admins"]["[J]"]]), ckey("[J]"))
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
 	for(var/ckey in GLOB.admin_datums)

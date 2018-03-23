@@ -50,7 +50,7 @@
 	return 0
 
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
-	..()
+	. = ..()
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
 		if(!ishuman(usr))
 			return 0
@@ -74,7 +74,7 @@
 	max_mob_size = MOB_SIZE_LARGE
 
 /obj/structure/closet/body_bag/bluespace/MouseDrop(over_object, src_location, over_location)
-	..()
+	. = ..()
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
 		if(!ishuman(usr))
 			return 0

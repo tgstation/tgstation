@@ -1,5 +1,3 @@
-#define ION_FILE "ion_laws.json"
-
 /proc/lizard_name(gender)
 	if(gender == MALE)
 		return "[pick(GLOB.lizard_names_male)]-[pick(GLOB.lizard_names_male)]"
