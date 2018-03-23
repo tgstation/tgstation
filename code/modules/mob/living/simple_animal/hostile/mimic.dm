@@ -273,7 +273,6 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/mob // Exclusive to the necro staff
 	idledamage = FALSE
 	overlay_googly_eyes = FALSE
-	search_objects = 1
 	see_in_dark = 13
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	vision_range = 30
@@ -317,8 +316,8 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	if(ismob(O))
 		var/mob/M = O
 		if(M.stat == DEAD)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/simple_animal/hostile/mimic/copy/mob/Destroy()
 	if(home)
