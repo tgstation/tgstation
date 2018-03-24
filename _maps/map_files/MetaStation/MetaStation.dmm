@@ -55395,10 +55395,7 @@
 /area/maintenance/disposal/incinerator)
 "cne" = (
 /obj/machinery/igniter{
-	icon_state = "igniter0";
-	id = "Incinerator";
-	luminosity = 2;
-	on = 0
+	id = "Incinerator"
 	},
 /obj/structure/cable{
 	icon_state = "1-2"

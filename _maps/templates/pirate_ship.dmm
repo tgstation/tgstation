@@ -1716,10 +1716,7 @@
 /area/shuttle/pirate)
 "dN" = (
 /obj/machinery/igniter{
-	icon_state = "igniter0";
-	id = "pirateincinerator";
-	luminosity = 2;
-	on = 0
+	id = "pirateincinerator"
 	},
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)

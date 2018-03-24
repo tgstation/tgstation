@@ -16234,10 +16234,7 @@
 /area/maintenance/disposal/incinerator)
 "aNR" = (
 /obj/machinery/igniter{
-	icon_state = "igniter0";
-	id = "Incinerator";
-	luminosity = 2;
-	on = 0
+	id = "Incinerator"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"

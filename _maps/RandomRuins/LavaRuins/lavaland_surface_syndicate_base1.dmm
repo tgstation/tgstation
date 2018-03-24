@@ -6026,9 +6026,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/igniter{
-	id = "syndie_lavaland_Incinerator";
-	luminosity = 2;
-	on = 0
+	id = "syndie_lavaland_Incinerator"
 	},
 /turf/open/floor/engine{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"

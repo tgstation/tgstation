@@ -37177,10 +37177,7 @@
 /area/science/mixing)
 "bMm" = (
 /obj/machinery/igniter{
-	icon_state = "igniter0";
-	id = "toxigniter";
-	luminosity = 2;
-	on = 0
+	id = "toxigniter"
 	},
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
@@ -43100,10 +43097,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/igniter{
-	icon_state = "igniter0";
-	id = "Incinerator";
-	luminosity = 2;
-	on = 0
+	id = "Incinerator"
 	},
 /obj/machinery/air_sensor/atmos/incinerator_tank{
 	pixel_x = 32;

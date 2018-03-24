@@ -7709,9 +7709,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/igniter{
-	id = "snowdin_turbine_ignitor";
-	luminosity = 2;
-	on = 0
+	id = "snowdin_turbine_ignitor"
 	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/snowdin/post/engineering)
