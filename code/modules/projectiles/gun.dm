@@ -211,6 +211,10 @@
 			firing_burst = FALSE
 			return FALSE
 	if(chambered && chambered.BB)
+		if(user.has_trait(TRAIT_PACIFISM))
+			if(chambered.harmful)
+				to_chat(user, "<span class='notice'> [src] is lethal! You don't want to risk harming anyone...</span>")
+				return
 		if(randomspread)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 		else //Smart spread
@@ -258,7 +262,7 @@
 		if(chambered)
 			if(user.has_trait(TRAIT_PACIFISM))
 				if(chambered.harmful)
-					to_chat(user, "<span class='notice'>The round chambered is lethal! You don't want to risk harming anyone...</span>")
+					to_chat(user, "<span class='notice'> [src] is lethal! You don't want to risk harming anyone...</span>")
 					return
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd))
