@@ -32,12 +32,12 @@
 	var/obj/item/organ/butt/B = trait_holder.getorgan(/obj/item/organ/butt)
 	if(!B)
 		to_chat(trait_holder, "<span class='warning'>You somehow gained this trait without a butt, contact an admin.</span>")
-		src.remove()
+		qdel(src)
 	else if(B.storage_slots > 0)
 		B.inv.storage_slots = initial(B.inv.storage_slots) - 1
 	else
 		to_chat(trait_holder, "<span class='warning'>Dat booty can't get any smaller!</span>")
-		src.remove()
+		qdel(src)
 
 /datum/trait/smallbutt/remove()
 	var/obj/item/organ/butt/B = trait_holder.getorgan(/obj/item/organ/butt)
