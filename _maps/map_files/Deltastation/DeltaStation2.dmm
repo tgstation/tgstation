@@ -3881,8 +3881,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security Post - Arrivals";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 6
@@ -4990,8 +4989,7 @@
 /obj/item/clipboard,
 /obj/machinery/camera{
 	c_tag = "Vacant Office";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/vacantoffice)
@@ -7657,11 +7655,8 @@
 /area/engine/atmospherics_engine)
 "avl" = (
 /obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 1441;
-	id = "n2_in";
-	volume_rate = 200
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+	dir = 8
 	},
 /turf/open/space,
 /area/engine/atmospherics_engine)
@@ -15402,8 +15397,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security Post - Cargo";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 6
@@ -15626,7 +15620,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "aMu" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output{
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
@@ -16250,6 +16244,10 @@
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/air_sensor/atmos/incinerator_tank{
+	pixel_x = -32;
+	pixel_y = 32
 	},
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
@@ -16946,10 +16944,8 @@
 /turf/open/floor/plasteel/vault,
 /area/security/execution/education)
 "aPx" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	frequency = 1441;
-	id = "mix_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine/vacuum,
@@ -18945,11 +18941,8 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "aTj" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on{
-	dir = 8;
-	frequency = 1441;
-	id_tag = "air_out";
-	name = "air out"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output{
+	dir = 8
 	},
 /turf/open/floor/engine/air,
 /area/engine/atmos)
@@ -19852,13 +19845,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aUX" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	frequency = 1441;
-	input_tag = "air_in";
-	name = "Mixed Air Supply Control";
-	output_tag = "air_out";
-	sensors = list("air_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/air_tank{
+	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -19875,10 +19863,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "aUZ" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "air_sensor"
-	},
+/obj/machinery/air_sensor/atmos/air_tank,
 /turf/open/floor/engine/air,
 /area/engine/atmos)
 "aVa" = (
@@ -20632,11 +20617,8 @@
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "aWv" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 4;
-	frequency = 1441;
-	id_tag = "co2_out";
-	name = "co2 vent"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/carbon_output{
+	dir = 4
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
@@ -20820,10 +20802,8 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "aWS" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 1441;
-	id = "air_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/air_input{
+	dir = 8
 	},
 /turf/open/floor/engine/air,
 /area/engine/atmos)
@@ -21344,10 +21324,7 @@
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "aXX" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "co2_sensor"
-	},
+/obj/machinery/air_sensor/atmos/carbon_tank,
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "aXY" = (
@@ -21358,13 +21335,8 @@
 	},
 /area/engine/atmos)
 "aXZ" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 4;
-	frequency = 1441;
-	input_tag = "co2_in";
-	name = "Carbon Dioxide Supply Control";
-	output_tag = "co2_out";
-	sensors = list("co2_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/carbon_tank{
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -21990,8 +21962,7 @@
 "aZm" = (
 /obj/machinery/camera{
 	c_tag = "Security - Prison Port";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/red/corner,
 /area/security/prison)
@@ -22090,8 +22061,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Security - Prison";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/red/corner,
 /area/security/prison)
@@ -22315,8 +22285,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Security - Escape Pod";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 5
@@ -22347,10 +22316,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_3)
 "aZP" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	frequency = 1441;
-	id = "co2_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/carbon_input{
+	dir = 4
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
@@ -22522,11 +22489,8 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "bak" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 8;
-	frequency = 1441;
-	id_tag = "o2_out";
-	name = "oxygen vent"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output{
+	dir = 8
 	},
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
@@ -23232,13 +23196,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bbL" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	frequency = 1441;
-	input_tag = "o2_in";
-	name = "Oxygen Supply Control";
-	output_tag = "o2_out";
-	sensors = list("o2_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/oxygen_tank{
+	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -23256,10 +23215,7 @@
 	},
 /area/engine/atmos)
 "bbN" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "o2_sensor"
-	},
+/obj/machinery/air_sensor/atmos/oxygen_tank,
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "bbO" = (
@@ -23812,11 +23768,8 @@
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bcZ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 4;
-	frequency = 1441;
-	id_tag = "tox_out";
-	name = "plasma vent"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output{
+	dir = 4
 	},
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
@@ -23931,10 +23884,8 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "bdn" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 1441;
-	id = "o2_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/oxygen_input{
+	dir = 8
 	},
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
@@ -24457,20 +24408,12 @@
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bew" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "tox_sensor"
-	},
+/obj/machinery/air_sensor/atmos/toxin_tank,
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bex" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 4;
-	frequency = 1441;
-	input_tag = "tox_in";
-	name = "Plasma Supply Control";
-	output_tag = "tox_out";
-	sensors = list("tox_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/toxin_tank{
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -25042,10 +24985,8 @@
 	},
 /area/security/prison)
 "bfT" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	frequency = 1441;
-	id = "tox_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxin_input{
+	dir = 4
 	},
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
@@ -25161,11 +25102,8 @@
 	},
 /area/engine/atmos)
 "bgf" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 8;
-	frequency = 1441;
-	id_tag = "n2_out";
-	name = "n2 vent"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output{
+	dir = 8
 	},
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
@@ -25718,13 +25656,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bht" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	frequency = 1441;
-	input_tag = "n2_in";
-	name = "Nitrogen Supply Control";
-	output_tag = "n2_out";
-	sensors = list("n2_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/nitrogen_tank{
+	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -25741,10 +25674,7 @@
 	},
 /area/engine/atmos)
 "bhv" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "n2_sensor"
-	},
+/obj/machinery/air_sensor/atmos/nitrogen_tank,
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "bhw" = (
@@ -26222,8 +26152,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Medbay";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/whitered/side{
 	dir = 1
@@ -26311,8 +26240,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Office Fore";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 1
@@ -26428,11 +26356,8 @@
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "biV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 4;
-	frequency = 1441;
-	id_tag = "n2o_out";
-	name = "n2o vent"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output{
+	dir = 4
 	},
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
@@ -26613,10 +26538,8 @@
 	},
 /area/engine/atmos)
 "bjn" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 1441;
-	id = "n2_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrogen_input{
+	dir = 8
 	},
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
@@ -27157,8 +27080,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Head of Security's Office";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 4
@@ -27231,20 +27153,12 @@
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bkI" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "n2o_sensor"
-	},
+/obj/machinery/air_sensor/atmos/nitrous_tank,
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bkJ" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 4;
-	frequency = 1441;
-	input_tag = "n2o_in";
-	name = "Nitrous Oxide Supply Control";
-	output_tag = "n2o_out";
-	sensors = list("n2o_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/nitrous_tank{
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -28091,8 +28005,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Head of Security's Quarters";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
@@ -28152,10 +28065,8 @@
 /turf/open/space,
 /area/space/nearstation)
 "bmI" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	frequency = 1441;
-	id = "n2o_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrous_input{
+	dir = 4
 	},
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
@@ -29359,8 +29270,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Transfer Centre";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 9
@@ -29696,10 +29606,8 @@
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "bpP" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	frequency = 1441;
-	id = "mix_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/mix_input{
+	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
@@ -30784,20 +30692,12 @@
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "brU" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "mix_sensor"
-	},
+/obj/machinery/air_sensor/atmos/mix_tank,
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "brV" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 4;
-	frequency = 1441;
-	input_tag = "mix_in";
-	name = "Gas Mix Tank Control";
-	output_tag = "mix_in";
-	sensors = list("mix_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/mix_tank{
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plasteel/green/side{
@@ -31756,11 +31656,8 @@
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "btL" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 4;
-	frequency = 1441;
-	id_tag = "mix_in";
-	name = "distro vent"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/mix_output{
+	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
@@ -32865,8 +32762,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Office Aft";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/main)
@@ -32996,11 +32892,7 @@
 /area/engine/atmos)
 "bwv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/meter{
-	frequency = 1441;
-	id_tag = "distro_meter";
-	name = "Distribution Loop"
-	},
+/obj/machinery/meter/atmos/distro_loop,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/visible,
 /turf/open/floor/plasteel/caution,
 /area/engine/atmos)
@@ -33021,11 +32913,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 4
 	},
-/obj/machinery/meter{
-	frequency = 1441;
-	id_tag = "waste_meter";
-	name = "Waste Loop"
-	},
+/obj/machinery/meter/atmos/atmos_waste_loop,
 /turf/open/floor/plasteel/caution{
 	dir = 6
 	},
@@ -33489,8 +33377,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Security - Brig Fore";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
@@ -35032,8 +34919,7 @@
 /obj/item/pen,
 /obj/machinery/camera{
 	c_tag = "Security - Interrogation Monitoring";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -35920,8 +35806,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Interrogation";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -37049,8 +36934,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Transfer Centre Aft";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /obj/structure/sign/poster/official/work_for_a_future{
 	pixel_y = -32
@@ -39995,8 +39879,7 @@
 /obj/structure/closet/secure_closet/evidence,
 /obj/machinery/camera{
 	c_tag = "Security - Evidence Storage";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -40780,8 +40663,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Detective's Interrogation";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -41682,8 +41564,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Detective's Office";
-	dir = 4;
-	name = "security camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -41816,8 +41697,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
 	c_tag = "Security - Brig Center";
-	dir = 4;
-	name = "security camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -44658,8 +44538,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Warden's Office";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 5
@@ -45317,8 +45196,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security Post - Engineering";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 5
@@ -49275,8 +49153,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Armory - Interior";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -49903,8 +49780,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Courtroom - Fore";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = 32
@@ -50071,8 +49947,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Security - Brig Aft";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 4
@@ -51129,8 +51004,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Gear Room";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 1
@@ -52697,8 +52571,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Lawyer's Office";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -52731,8 +52604,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Brig Desk";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
@@ -53420,8 +53292,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Courtroom - Center";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
@@ -55761,8 +55632,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Shooting Range";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/security/range)
@@ -56764,8 +56634,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Courtroom - Aft";
-	dir = 8;
-	name = "security camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -72372,7 +72241,6 @@
 /obj/machinery/camera{
 	c_tag = "Security Post - Science";
 	dir = 8;
-	name = "security camera";
 	network = list("ss13","rd")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -73377,8 +73245,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security Post - Medbay";
-	dir = 4;
-	name = "security camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 10
@@ -99857,8 +99724,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Departures Port";
-	dir = 2;
-	name = "security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 9
@@ -100549,8 +100415,7 @@
 /obj/machinery/light,
 /obj/machinery/camera{
 	c_tag = "Security - Departures Starboard";
-	dir = 1;
-	name = "security camera"
+	dir = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 6

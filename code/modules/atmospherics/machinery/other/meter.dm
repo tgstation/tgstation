@@ -16,6 +16,17 @@
 	var/id_tag
 	var/target_layer = PIPING_LAYER_DEFAULT
 
+/obj/machinery/meter/atmos
+	frequency = FREQ_ATMOS_STORAGE
+
+/obj/machinery/meter/atmos/atmos_waste_loop
+	name = "waste loop gas flow meter"
+	id_tag = ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE
+
+/obj/machinery/meter/atmos/distro_loop
+	name = "distribution loop gas flow meter"
+	id_tag = ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION
+
 /obj/machinery/meter/Destroy()
 	SSair.atmos_machinery -= src
 	target = null

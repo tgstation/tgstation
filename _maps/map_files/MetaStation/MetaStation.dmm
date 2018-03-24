@@ -26657,7 +26657,6 @@
 /area/ai_monitored/turret_protected/ai)
 "bew" = (
 /obj/machinery/power/apc{
-	aidisabled = 0;
 	dir = 1;
 	name = "AI Chamber APC";
 	areastring = "/area/ai_monitored/turret_protected/ai";
@@ -31044,7 +31043,6 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "bnE" = (
 /obj/machinery/power/apc{
-	aidisabled = 0;
 	dir = 4;
 	name = "MiniSat Antechamber APC";
 	areastring = "/area/ai_monitored/turret_protected/aisat_interior";
@@ -33234,7 +33232,6 @@
 	network = list("minisat")
 	},
 /obj/machinery/power/apc{
-	aidisabled = 0;
 	dir = 2;
 	name = "MiniSat Exterior APC";
 	areastring = "/area/aisat";
@@ -33336,7 +33333,6 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/highcap/five_k{
-	aidisabled = 0;
 	dir = 2;
 	name = "MiniSat Foyer APC";
 	areastring = "/area/ai_monitored/turret_protected/aisat/foyer";
@@ -36731,11 +36727,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 8
 	},
-/obj/machinery/meter{
-	frequency = 1441;
-	id_tag = "waste_meter";
-	name = "Waste Loop"
-	},
+/obj/machinery/meter/atmos/atmos_waste_loop,
 /turf/open/floor/plasteel/caution{
 	dir = 1
 	},
@@ -36757,11 +36749,7 @@
 	},
 /area/engine/atmos)
 "bzd" = (
-/obj/machinery/meter{
-	frequency = 1441;
-	id_tag = "distro_meter";
-	name = "Distribution Loop"
-	},
+/obj/machinery/meter/atmos/distro_loop,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/visible,
 /turf/open/floor/plasteel/caution{
 	dir = 1
@@ -38314,11 +38302,8 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "bCB" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 8;
-	frequency = 1441;
-	id_tag = "mix_in";
-	name = "mix in"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/mix_output{
+	dir = 8
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
@@ -38950,13 +38935,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bEc" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	frequency = 1441;
-	input_tag = "mix_in";
-	name = "Gas Mix Tank Control";
-	output_tag = "mix_in";
-	sensors = list("mix_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/mix_tank{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/plasteel/green/side{
@@ -38964,10 +38944,7 @@
 	},
 /area/engine/atmos)
 "bEd" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "mix_sensor"
-	},
+/obj/machinery/air_sensor/atmos/mix_tank,
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "bEe" = (
@@ -40030,11 +40007,8 @@
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "bGa" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 1441;
-	id = "mix_in";
-	pixel_y = 1
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/mix_input{
+	dir = 8
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
@@ -41322,11 +41296,8 @@
 /turf/open/space,
 /area/space/nearstation)
 "bJc" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 8;
-	frequency = 1441;
-	id_tag = "n2o_out";
-	name = "n2o out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output{
+	dir = 8
 	},
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
@@ -42027,13 +41998,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bKF" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	frequency = 1441;
-	input_tag = "n2o_in";
-	name = "Nitrous Oxide Supply Control";
-	output_tag = "n2o_out";
-	sensors = list("n2o_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/nitrous_tank{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/structure/window/reinforced{
@@ -42048,10 +42014,7 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "bKH" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "n2o_sensor"
-	},
+/obj/machinery/air_sensor/atmos/nitrous_tank,
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bKI" = (
@@ -42774,11 +42737,8 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "bMm" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 1441;
-	id = "n2o_in";
-	pixel_y = 1
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrous_input{
+	dir = 8
 	},
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
@@ -44290,11 +44250,8 @@
 /turf/open/floor/plasteel/purple,
 /area/engine/atmos)
 "bPx" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 8;
-	frequency = 1441;
-	id_tag = "tox_out";
-	name = "toxin out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output{
+	dir = 8
 	},
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
@@ -44898,13 +44855,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bQW" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	frequency = 1441;
-	input_tag = "tox_in";
-	name = "Plasma Supply Control";
-	output_tag = "tox_out";
-	sensors = list("tox_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/toxin_tank{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/structure/window/reinforced{
@@ -44913,10 +44865,7 @@
 /turf/open/floor/plasteel/purple,
 /area/engine/atmos)
 "bQX" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "tox_sensor"
-	},
+/obj/machinery/air_sensor/atmos/toxin_tank,
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bQY" = (
@@ -45589,11 +45538,8 @@
 /turf/open/floor/plasteel/purple,
 /area/engine/atmos)
 "bSk" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 1441;
-	id = "tox_in";
-	pixel_y = 1
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxin_input{
+	dir = 8
 	},
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
@@ -46770,11 +46716,8 @@
 /turf/open/floor/plasteel/vault,
 /area/engine/atmos)
 "bUI" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 8;
-	frequency = 1441;
-	id_tag = "co2_out";
-	name = "co2 out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/carbon_output{
+	dir = 8
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
@@ -47270,13 +47213,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bVM" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	frequency = 1441;
-	input_tag = "co2_in";
-	name = "Carbon Dioxide Supply Control";
-	output_tag = "co2_out";
-	sensors = list("co2_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/carbon_tank{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/structure/window/reinforced{
@@ -47285,10 +47223,7 @@
 /turf/open/floor/plasteel/vault,
 /area/engine/atmos)
 "bVN" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "co2_sensor"
-	},
+/obj/machinery/air_sensor/atmos/carbon_tank,
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "bVO" = (
@@ -48078,11 +48013,8 @@
 /turf/open/floor/plasteel/vault,
 /area/engine/atmos)
 "bXr" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 1441;
-	id = "co2_in";
-	pixel_y = 1
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/carbon_input{
+	dir = 8
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
@@ -49841,13 +49773,8 @@
 /area/engine/atmos)
 "cbe" = (
 /obj/structure/window/reinforced,
-/obj/machinery/computer/atmos_control/tank{
-	dir = 1;
-	frequency = 1441;
-	input_tag = "n2_in";
-	name = "Nitrogen Supply Control";
-	output_tag = "n2_out";
-	sensors = list("n2_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/nitrogen_tank{
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -49896,13 +49823,8 @@
 /area/engine/atmos)
 "cbi" = (
 /obj/structure/window/reinforced,
-/obj/machinery/computer/atmos_control/tank{
-	dir = 1;
-	frequency = 1441;
-	input_tag = "o2_in";
-	name = "Oxygen Supply Control";
-	output_tag = "o2_out";
-	sensors = list("o2_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/oxygen_tank{
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -53085,74 +53007,50 @@
 /turf/open/floor/plasteel/dark,
 /area/aisat)
 "chN" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	frequency = 1441;
-	id = "n2_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrogen_input{
+	dir = 1
 	},
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "chO" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "n2_sensor"
-	},
+/obj/machinery/air_sensor/atmos/nitrogen_tank,
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "chP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 1;
-	frequency = 1441;
-	id_tag = "n2_out";
-	name = "n2 out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output{
+	dir = 1
 	},
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "chQ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	frequency = 1441;
-	id = "o2_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/oxygen_input{
+	dir = 1
 	},
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "chR" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "o2_sensor"
-	},
+/obj/machinery/air_sensor/atmos/oxygen_tank,
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "chS" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 1;
-	frequency = 1441;
-	id_tag = "o2_out";
-	name = "o2 out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output{
+	dir = 1
 	},
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "chT" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	frequency = 1441;
-	id = "air_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/air_input{
+	dir = 1
 	},
 /turf/open/floor/engine/air,
 /area/engine/atmos)
 "chU" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "air_sensor"
-	},
+/obj/machinery/air_sensor/atmos/air_tank,
 /turf/open/floor/engine/air,
 /area/engine/atmos)
 "chV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on{
-	dir = 1;
-	frequency = 1441;
-	id_tag = "air_out";
-	name = "air out"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output{
+	dir = 1
 	},
 /turf/open/floor/engine/air,
 /area/engine/atmos)
@@ -55523,9 +55421,8 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cnd" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 1;
-	name = "incinerator output intake"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output{
+	dir = 1
 	},
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
@@ -55539,16 +55436,18 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/air_sensor/atmos/incinerator_tank{
+	pixel_x = -32;
+	pixel_y = -32
+	},
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "cnf" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32
 	},
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	frequency = 1441;
-	id = "air_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input{
+	dir = 1
 	},
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
@@ -64201,7 +64100,7 @@
 	id = "mixingsparker";
 	pixel_x = 25
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output{
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
@@ -65086,10 +64985,8 @@
 	id = "mixingsparker";
 	pixel_x = 25
 	},
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	frequency = 1441;
-	id = "air_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input{
+	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
@@ -71762,11 +71659,8 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "cVz" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	frequency = 1441;
-	id = "n2_in";
-	volume_rate = 200
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+	dir = 1
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -71794,13 +71688,8 @@
 /area/shuttle/auxillary_base)
 "cVJ" = (
 /obj/structure/window/reinforced,
-/obj/machinery/computer/atmos_control/tank{
-	dir = 1;
-	frequency = 1441;
-	input_tag = "air_in";
-	name = "Mixed Air Supply Control";
-	output_tag = "air_out";
-	sensors = list("air_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/air_tank{
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -73600,9 +73489,7 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "dea" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	volume_rate = 200
-	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "deb" = (
@@ -77665,6 +77552,10 @@
 /obj/item/gun/energy/laser/practice,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"tXK" = (
+/obj/machinery/air_sensor/atmos/toxins_mixing_tank,
+/turf/open/floor/engine/vacuum,
+/area/science/mixing)
 "upN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -110152,7 +110043,7 @@ cBu
 cCv
 cyK
 cEt
-cFn
+tXK
 cGj
 cHe
 cId
