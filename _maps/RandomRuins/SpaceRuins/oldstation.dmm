@@ -4190,10 +4190,9 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/atmo)
 "kW" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Air Outlet Pump";
-	on = 1
+	name = "Air Outlet Pump"
 	},
 /turf/open/floor/plasteel/airless/floorgrime,
 /area/ruin/space/has_grav/ancientstation/atmo)

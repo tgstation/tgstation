@@ -7511,10 +7511,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "Cooling to Unfiltered";
-	on = 1
+	name = "Cooling to Unfiltered"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
@@ -11588,10 +11587,9 @@
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aEl" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Gas to Cooling Loop";
-	on = 1
+	name = "Gas to Cooling Loop"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -11660,10 +11658,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "aEr" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Gas to Filter";
-	on = 1
+	name = "Gas to Filter"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -20579,8 +20576,7 @@
 "aWq" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Justice gas pump";
-	on = 0
+	name = "Justice gas pump"
 	},
 /obj/machinery/door/window/westleft,
 /turf/open/floor/plasteel/vault{
@@ -20665,8 +20661,7 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
-	name = "CO2 to Pure";
-	on = 0
+	name = "CO2 to Pure"
 	},
 /turf/open/floor/plasteel/vault,
 /area/engine/atmos)
@@ -22465,10 +22460,9 @@
 	pixel_y = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "O2 to Airmix";
-	on = 1
+	name = "O2 to Airmix"
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 5
@@ -23793,8 +23787,7 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
-	name = "Plasma to Pure";
-	on = 0
+	name = "Plasma to Pure"
 	},
 /turf/open/floor/plasteel/purple/side{
 	dir = 9
@@ -25018,8 +25011,7 @@
 "bfW" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	name = "Port Mix to Port Ports";
-	on = 0
+	name = "Port Mix to Port Ports"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -25034,8 +25026,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	name = "Port Mix to Starboard Ports";
-	on = 0
+	name = "Port Mix to Starboard Ports"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -25085,10 +25076,9 @@
 	pixel_y = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "N2 to Airmix";
-	on = 1
+	name = "N2 to Airmix"
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 5
@@ -26372,8 +26362,7 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
-	name = "N2O to Pure";
-	on = 0
+	name = "N2O to Pure"
 	},
 /turf/open/floor/plasteel/escape{
 	dir = 9
@@ -26397,8 +26386,7 @@
 "biZ" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	name = "Pure to Ports";
-	on = 0
+	name = "Pure to Ports"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -26408,8 +26396,7 @@
 "bja" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	name = "Mix to Ports";
-	on = 0
+	name = "Mix to Ports"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -26419,8 +26406,7 @@
 "bjb" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	name = "Air to Ports";
-	on = 0
+	name = "Air to Ports"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -29622,10 +29608,9 @@
 /area/engine/atmos)
 "bpR" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Unfiltered & Air to Mix";
-	on = 1
+	name = "Unfiltered & Air to Mix"
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 1
@@ -29643,8 +29628,7 @@
 "bpT" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
-	name = "Pure to Mix";
-	on = 0
+	name = "Pure to Mix"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/caution{
@@ -29746,10 +29730,9 @@
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "bqe" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "Air to External Air Ports";
-	on = 1
+	name = "Air to External Air Ports"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -30741,10 +30724,9 @@
 /area/engine/atmos)
 "bsa" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "Mix to Filter";
-	on = 1
+	name = "Mix to Filter"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -30811,10 +30793,9 @@
 /area/engine/atmos)
 "bsh" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "External Waste Ports to Filter";
-	on = 1
+	name = "External Waste Ports to Filter"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -31711,10 +31692,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Waste to Filter";
-	on = 1
+	name = "Waste to Filter"
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 4
@@ -32262,8 +32242,7 @@
 "bva" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
-	name = "Mix to Distro";
-	on = 0
+	name = "Mix to Distro"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -32868,10 +32847,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bwt" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
 	name = "Air to Distro";
-	on = 1;
 	target_pressure = 101
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -32899,8 +32877,7 @@
 "bww" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
-	name = "Distro to Waste";
-	on = 0
+	name = "Distro to Waste"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/caution,

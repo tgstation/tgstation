@@ -1055,10 +1055,9 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "cv" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
 	name = "N2 Out";
-	on = 1;
 	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1221,11 +1220,9 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "cK" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "O2 Out";
-	on = 1;
-	target_pressure = 4500
+	name = "O2 Out"target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
@@ -1596,9 +1593,8 @@
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 2;
-	on = 1;
 	target_pressure = 4500
 	},
 /obj/machinery/button/door{

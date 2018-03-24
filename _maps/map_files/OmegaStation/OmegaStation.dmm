@@ -13263,10 +13263,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aBB" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "External Waste Ports to Filter";
-	on = 1
+	name = "External Waste Ports to Filter"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -13740,10 +13739,9 @@
 	},
 /area/engine/atmos)
 "aCF" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "Air to External Air Ports";
-	on = 1
+	name = "Air to External Air Ports"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
@@ -16448,10 +16446,9 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aIl" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Gas to Filter";
-	on = 1
+	name = "Gas to Filter"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -20703,10 +20700,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 2;
-	name = "Gas to Cooling Loop";
-	on = 1
+	name = "Gas to Cooling Loop"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -20788,10 +20784,9 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aRQ" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Gas to Cooling Loop";
-	on = 1
+	name = "Gas to Cooling Loop"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -34646,10 +34641,9 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "sNf" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "Waste Out";
-	on = 1
+	name = "Waste Out"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
