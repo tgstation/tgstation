@@ -1,0 +1,4 @@
+author: "Davidj361"
+delete-after: True
+changes: 
+  - bugfix: "Ranged guardians in scout mode no longer are able to move out of their master when recalled."
