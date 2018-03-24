@@ -9000,10 +9000,8 @@
 	},
 /area/quartermaster/miningdock)
 "arr" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	dir = 8;
-	filter_type = "n2o";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2o{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -10900,10 +10898,8 @@
 	},
 /area/engine/atmos)
 "avy" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	dir = 4;
-	filter_type = "o2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/o2{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -12406,10 +12402,8 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
 "azl" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	dir = 4;
-	filter_type = "n2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -31631,10 +31625,8 @@
 	},
 /area/engine/atmos)
 "gVX" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	dir = 8;
-	filter_type = "co2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -31784,11 +31776,8 @@
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "iIj" = (
-/obj/machinery/atmospherics/components/trinary/mixer/flipped{
-	dir = 4;
-	node1_concentration = 0.8;
-	node2_concentration = 0.2;
-	on = 1
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -35888,10 +35877,8 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/port)
 "xEQ" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	dir = 8;
-	filter_type = "plasma";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/plasma{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{

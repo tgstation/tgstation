@@ -6861,12 +6861,8 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/awaymission/snowdin/post/engineering)
 "qx" = (
-/obj/machinery/atmospherics/components/trinary/mixer/flipped{
-	dir = 4;
-	node1_concentration = 0.8;
-	node2_concentration = 0.1;
-	on = 1;
-	target_pressure = 4500
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/engineering)

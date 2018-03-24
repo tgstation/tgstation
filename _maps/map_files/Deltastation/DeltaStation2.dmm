@@ -22349,12 +22349,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 2;
-	filter_type = "co2";
-	name = "co2 filter";
-	on = 1
-	},
+/obj/machinery/atmospherics/components/trinary/filter/atmos/co2,
 /turf/open/floor/plasteel/vault,
 /area/engine/atmos)
 "aZV" = (
@@ -22438,13 +22433,8 @@
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "bag" = (
-/obj/machinery/atmospherics/components/trinary/mixer{
-	dir = 1;
-	name = "air mixer";
-	node1_concentration = 0.8;
-	node2_concentration = 0.2;
-	on = 1;
-	target_pressure = 4500
+/obj/machinery/atmospherics/components/trinary/mixer/airmix{
+	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -23847,11 +23837,8 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "o2";
-	name = "oxygen filter";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
+	dir = 1
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 6
@@ -24995,12 +24982,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 2;
-	filter_type = "plasma";
-	name = "waste filter";
-	on = 1
-	},
+/obj/machinery/atmospherics/components/trinary/filter/atmos/plasma,
 /turf/open/floor/plasteel/purple/side{
 	dir = 10
 	},
@@ -26510,11 +26492,8 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "n2";
-	name = "nitrogen filter";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2{
+	dir = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 6
@@ -28058,12 +28037,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 2;
-	filter_type = "n2o";
-	name = "n2o filter";
-	on = 1
-	},
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2o,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/escape{
 	dir = 10

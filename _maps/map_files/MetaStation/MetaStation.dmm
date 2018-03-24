@@ -36762,7 +36762,7 @@
 "bzf" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Air to Distro"target_pressure = 101
+	name = "Air to Distro"
 	},
 /obj/machinery/airalarm{
 	pixel_y = 25
@@ -42698,10 +42698,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bMk" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "n2o";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2o{
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -44820,10 +44818,7 @@
 /turf/closed/wall,
 /area/engine/atmos)
 "bQU" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	filter_type = -1;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/trinary/filter/atmos,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bQV" = (
@@ -45505,10 +45500,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bSj" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "plasma";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/plasma{
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -47974,10 +47967,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bXq" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "co2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/co2{
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -48450,12 +48441,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bYz" = (
-/obj/machinery/atmospherics/components/trinary/mixer{
-	dir = 4;
-	node1_concentration = 0.8;
-	node2_concentration = 0.2;
-	on = 1;
-	target_pressure = 4500
+/obj/machinery/atmospherics/components/trinary/mixer/airmix{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -49735,10 +49722,8 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "cbd" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "n2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2{
+	dir = 4
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/red,
@@ -49785,10 +49770,8 @@
 /area/engine/atmos)
 "cbh" = (
 /obj/structure/window/reinforced,
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "o2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
+	dir = 4
 	},
 /turf/open/floor/plasteel/blue,
 /area/engine/atmos)

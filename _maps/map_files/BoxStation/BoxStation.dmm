@@ -40267,10 +40267,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bWb" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "n2o";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2o{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -41701,10 +41699,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bZJ" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "plasma";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/plasma{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -43311,20 +43307,14 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cdA" = (
-/obj/machinery/atmospherics/components/trinary/mixer{
-	dir = 4;
-	node1_concentration = 0.8;
-	node2_concentration = 0.2;
-	on = 1;
-	target_pressure = 4500
+/obj/machinery/atmospherics/components/trinary/mixer/airmix{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cdB" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "co2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/co2{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -43895,11 +43885,7 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/break_room)
 "cfi" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 2;
-	filter_type = "n2";
-	on = 1
-	},
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cfj" = (
@@ -44133,10 +44119,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cfR" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "o2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)

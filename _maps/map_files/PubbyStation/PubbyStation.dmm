@@ -3556,11 +3556,8 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "aku" = (
-/obj/machinery/atmospherics/components/trinary/mixer/flipped{
-	dir = 1;
-	node1_concentration = 0.2;
-	node2_concentration = 0.8;
-	on = 1
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
@@ -38877,10 +38874,8 @@
 	},
 /area/engine/atmos)
 "bQN" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "n2o";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2o{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -40225,10 +40220,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bTU" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "plasma";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/plasma{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -41500,10 +41493,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bWK" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "o2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -41538,10 +41529,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bWQ" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "co2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/co2{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -41766,11 +41755,7 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/atmos)
 "bXA" = (
-/obj/machinery/atmospherics/components/trinary/mixer{
-	node1_concentration = 0.8;
-	node2_concentration = 0.2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/trinary/mixer/airmix,
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/atmos)
 "bXB" = (
@@ -50176,10 +50161,8 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "fuR" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "n2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)

@@ -8348,13 +8348,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qL" = (
-/obj/machinery/atmospherics/components/trinary/mixer{
-	dir = 1;
-	node1_concentration = 0.8;
-	node2_concentration = 0.2;
-	on = 1;
-	req_access = null;
-	target_pressure = 4500
+/obj/machinery/atmospherics/components/trinary/mixer/airmix{
+	dir = 1
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 5;
@@ -10379,10 +10374,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "um" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "n2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2{
+	dir = 4
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 10;
@@ -10419,10 +10412,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "up" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "o2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
+	dir = 4
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 10;
