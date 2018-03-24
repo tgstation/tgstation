@@ -40173,7 +40173,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-+/obj/machinery/meter/atmos/atmos_waste_loop,
+/obj/machinery/meter/atmos/atmos_waste_loop,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUx" = (
@@ -40191,7 +40191,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
 	dir = 2
 	},
-+/obj/machinery/meter/atmos/distro_loop,
+/obj/machinery/meter/atmos/distro_loop,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUz" = (
