@@ -169,6 +169,7 @@
 	
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
 	on = TRUE
+	target_temperature = 73.15
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()
