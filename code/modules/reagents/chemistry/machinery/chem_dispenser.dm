@@ -14,8 +14,7 @@
 	var/obj/item/stock_parts/cell/cell
 	var/powerefficiency = 0.1
 	var/amount = 30
-	var/recharged = 0
-	var/recharge_delay = 5
+	var/recharge_amount = 0.1
 	var/mutable_appearance/beaker_overlay
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
@@ -62,7 +61,6 @@
 /obj/machinery/chem_dispenser/Initialize()
 	. = ..()
 	cell = new cell_type
-	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
 	update_icon()
 
@@ -72,11 +70,11 @@
 	return ..()
 
 /obj/machinery/chem_dispenser/process()
-	if(recharged < 0)
-		recharge()
-		recharged = recharge_delay
-	else
-		recharged -= 1
+	if(stat & (BROKEN|NOPOWER))
+		return
+	var/usedpower = cell.give(recharge_amount) //Should always be a gain of one on the UI.
+	if(usedpower)
+		use_power(2500)
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
 	..()
@@ -102,12 +100,7 @@ obj/machinery/chem_dispenser/update_icon()
 		beaker_overlay = display_beaker()
 		add_overlay(beaker_overlay)
 
-/obj/machinery/chem_dispenser/proc/recharge()
-	if(stat & (BROKEN|NOPOWER))
-		return
-	var/usedpower = cell.give( 1 / powerefficiency) //Should always be a gain of one on the UI.
-	if(usedpower)
-		use_power(2500)
+
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -314,14 +307,14 @@ obj/machinery/chem_dispenser/update_icon()
 
 /obj/machinery/chem_dispenser/RefreshParts()
 	var/time = 0
+	recharge_amount = 0
 	var/newpowereff = 0.0666666
 	for(var/obj/item/stock_parts/cell/P in component_parts)
 		cell = P
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		newpowereff += 0.0166666666*M.rating
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		time += C.rating
-	recharge_delay = 30/(time/2)         //delay between recharges, double the usual time on lowest 50% less than usual on highest
+		recharge_amount += (C.rating*0.1)
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > macrotier)
 			macrotier = M.rating
