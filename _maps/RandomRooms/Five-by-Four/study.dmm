@@ -1,0 +1,140 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/device/radio/off{
+	pixel_x = 7
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"b" = (
+/turf/open/floor/wood,
+/area/template_noop)
+"c" = (
+/obj/structure/table/wood,
+/obj/item/storage/box/papersack{
+	icon_state = "paperbag_NanotrasenStandard_closed"
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"d" = (
+/obj/structure/table/wood,
+/obj/item/pen{
+	desc = "Writes upside down!";
+	name = "astronaut pen"
+	},
+/obj/item/paper/crumpled/bloody{
+	info = "<i>Dear Diary:<br><br>I consider myself to be a reserved individual, but I simply couldn't study with all that racket next door! I lost my temper and pounded on the wall and yelled for them to keep it down, and it worked!<br> It was deathly silent after that. I can't help but feel a little bad, it's probably not their fault, the wall felt practically hollow when I beat on it...</i>"
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"e" = (
+/obj/item/chair/wood,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/wood,
+/area/template_noop)
+"f" = (
+/obj/structure/closet/crate/bin,
+/obj/item/device/gps,
+/turf/open/floor/wood,
+/area/template_noop)
+"g" = (
+/obj/structure/chair/wood/normal{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/template_noop)
+"h" = (
+/obj/structure/table/wood,
+/obj/item/kitchen/fork{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/trash/plate,
+/turf/open/floor/wood,
+/area/template_noop)
+"i" = (
+/turf/closed/wall/mineral/wood,
+/area/template_noop)
+"j" = (
+/obj/structure/falsewall/wood,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/wood,
+/area/template_noop)
+"k" = (
+/obj/item/stack/sheet/bone{
+	pixel_y = -2;
+	amount = 4
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/closet/secure_closet/freezer,
+/obj/item/reagent_containers/food/snacks/breadslice/meat,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/fly,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard,
+/obj/item/reagent_containers/food/snacks/meat/slab/human,
+/obj/item/reagent_containers/food/snacks/meatballspaghetti,
+/obj/item/reagent_containers/food/snacks/meatbun,
+/obj/item/reagent_containers/food/snacks/pie/meatpie,
+/obj/item/reagent_containers/food/snacks/soup/meatball,
+/obj/item/reagent_containers/food/snacks/pie/meatpie,
+/turf/open/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/template_noop)
+"l" = (
+/obj/item/bodybag,
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/template_noop)
+"m" = (
+/obj/item/candle/infinite,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/template_noop)
+"n" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/sharpener,
+/turf/open/floor/wood{
+	icon_state = "wood-broken2"
+	},
+/area/template_noop)
+"o" = (
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/template_noop)
+
+(1,1,1) = {"
+a
+d
+i
+k
+"}
+(2,1,1) = {"
+b
+e
+j
+l
+"}
+(3,1,1) = {"
+b
+f
+i
+m
+"}
+(4,1,1) = {"
+b
+g
+i
+n
+"}
+(5,1,1) = {"
+c
+h
+i
+o
+"}

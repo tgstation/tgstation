@@ -15,17 +15,16 @@
 		name = rename
 
 /datum/map_template/proc/preload_size(path)
-	var/bounds = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+	var/bounds = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE, dir = 1)
 	if(bounds)
 		width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
 		height = bounds[MAP_MAXY]
 	return bounds
 
-/datum/map_template/proc/initTemplateBounds(var/list/bounds)
+/datum/map_template/proc/initTemplateBounds(var/list/bounds, orientation = 1)
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
-
 	var/list/turfs = block(	locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
 	var/list/border = block(locate(max(bounds[MAP_MINX]-1, 1),			max(bounds[MAP_MINY]-1, 1),			 bounds[MAP_MINZ]),
@@ -47,13 +46,19 @@
 	SSatoms.InitializeAtoms(atoms)
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
+	var/rotation = dir2angle(orientation)-dir2angle(1)
+	if(rotation)
+		if ((rotation % 90) != 0)
+			rotation += (rotation % 90) //diagonal rotations not allowed, round up
+		rotation = SIMPLIFY_DEGREES(rotation)
+		for(var/atom/O in atoms)
+			O.shuttleRotate(rotation)
 
 /datum/map_template/proc/load_new_z()
 	var/x = round((world.maxx - width)/2)
 	var/y = round((world.maxy - height)/2)
-
 	var/datum/space_level/level = SSmapping.add_new_zlevel(name, list(ZTRAIT_AWAY = TRUE))
-	var/list/bounds = maploader.load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
+	var/list/bounds = maploader.load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE, dir = 1)
 	if(!bounds)
 		return FALSE
 
@@ -65,17 +70,23 @@
 	initTemplateBounds(bounds)
 	log_game("Z-level [name] loaded at at [x],[y],[world.maxz]")
 
-/datum/map_template/proc/load(turf/T, centered = FALSE)
+/datum/map_template/proc/load(turf/T, centered = FALSE, orientation = 1)
+	var/loadwidth = width
+	var/loadheight = height
+	if(orientation > 2) // Its sideways so flip the dimensions
+		loadwidth = height
+		loadheight = width
 	if(centered)
-		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
+		T = locate(T.x - round(loadwidth/2) , T.y - round(loadheight/2) , T.z)
 	if(!T)
 		return
-	if(T.x+width > world.maxx)
+	if(T.x+loadwidth > world.maxx)
 		return
-	if(T.y+height > world.maxy)
+	if(T.y+loadheight > world.maxy)
 		return
 
-	var/list/bounds = maploader.load_map(file(mappath), T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
+
+	var/list/bounds = maploader.load_map(file(mappath), T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE, dir = orientation)
 	if(!bounds)
 		return
 
@@ -83,7 +94,7 @@
 		repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	initTemplateBounds(bounds)
+	initTemplateBounds(bounds, orientation)
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
 	return TRUE
@@ -102,3 +113,4 @@
 /proc/load_new_z_level(var/file, var/name)
 	var/datum/map_template/template = new(file, name)
 	template.load_new_z()
+

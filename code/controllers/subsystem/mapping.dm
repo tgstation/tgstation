@@ -17,6 +17,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
+	var/list/random_room_templates = list()
 
 	var/list/areas_in_z = list()
 
@@ -113,6 +114,7 @@ SUBSYSTEM_DEF(mapping)
 	lava_ruins_templates = SSmapping.lava_ruins_templates
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
+	random_room_templates = SSmapping.random_room_templates
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
@@ -281,6 +283,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	preloadRuinTemplates()
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
+	preloadRandomRoomTemplates()
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
@@ -329,3 +332,12 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
+
+/datum/controller/subsystem/mapping/proc/preloadRandomRoomTemplates()
+	for(var/item in subtypesof(/datum/map_template/random_room))
+		var/datum/map_template/random_room/room_type = item
+		if(!(initial(room_type.mappath)))
+			continue
+		var/datum/map_template/random_room/R = new room_type()
+		random_room_templates[R.room_id] = R
+		map_templates[R.room_id] = R

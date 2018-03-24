@@ -272,3 +272,274 @@ datum/action/innate/aux_base/install_turret/Activate()
 	B.turret_stock--
 	to_chat(owner, "<span class='notice'>Turret installation complete!</span>")
 	playsound(turret_turf, 'sound/items/drill_use.ogg', 65, 1)
+
+
+
+/obj/item/circuitboard/computer/base_construction/arena
+	name = "Arena Construction Board"
+	desc = "Allows the construction of hazards in a specially designated arena."
+
+
+
+/obj/machinery/computer/camera_advanced/arena_construction
+	name = "arena construction console"
+	desc = "Designed to maximize viewership. Ensure all participants have signed the omni-waiver."
+	networks = list("arena")
+	circuit = /obj/item/circuitboard/computer/base_construction/arena
+	off_action = new/datum/action/innate/camera_off/base_construction
+	jump_action = null
+	var/list/hazards = list()
+	var/datum/action/innate/arena_base/turfchange/lava/V = new
+	var/datum/action/innate/arena_base/turfchange/ice/I = new
+	var/datum/action/innate/arena_base/turfchange/slow/W = new
+	var/datum/action/innate/arena_base/turfchange/fast/A = new
+	var/datum/action/innate/arena_base/object/launcher/L = new
+	var/datum/action/innate/arena_base/object/slip/S = new
+	var/datum/action/innate/arena_base/object/freeze/Z = new
+	var/datum/action/innate/arena_base/object/damage/D = new
+	var/datum/action/innate/arena_base/object/fire/F = new
+	var/datum/action/innate/arena_base/object/snare/N = new
+	var/datum/action/innate/arena_base/object/emitter/E = new
+	var/datum/action/innate/clear_hazards/H = new
+
+
+//Rage Cage Construction Console
+/mob/camera/aiEye/remote/arena_construction
+	name = "arena holo-drone"
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "construction_drone"
+	use_static = FALSE
+	var/area/starting_area
+
+/mob/camera/aiEye/remote/arena_construction/Initialize()
+	. = ..()
+	starting_area = get_area(loc)
+
+/mob/camera/aiEye/remote/arena_construction/setLoc(var/t)
+	var/area/curr_area = get_area(t)
+	if(curr_area == starting_area || istype(curr_area, /area/maintenance/arena))
+		return ..()
+
+/mob/camera/aiEye/remote/arena_construction/relaymove(mob/user, direct)
+	dir = direct //This camera eye is visible as a drone, and needs to keep the dir updated
+	..()
+
+/obj/machinery/computer/camera_advanced/arena_construction/CreateEye()
+	eyeobj = new /mob/camera/aiEye/remote/arena_construction(get_turf(src))
+	eyeobj.origin = src
+
+/obj/machinery/computer/camera_advanced/arena_construction/GrantActions(mob/living/user)
+	..()
+	if(V)
+		V.target = src
+		V.Grant(user)
+		actions += V
+	if(I)
+		I.target = src
+		I.Grant(user)
+		actions += I
+	if(W)
+		W.target = src
+		W.Grant(user)
+		actions += W
+	if(A)
+		A.target = src
+		A.Grant(user)
+		actions += A
+	if(L)
+		L.target = src
+		L.Grant(user)
+		actions += L
+	if(S)
+		S.target = src
+		S.Grant(user)
+		actions += S
+	if(Z)
+		Z.target = src
+		Z.Grant(user)
+		actions += Z
+	if(D)
+		D.target = src
+		D.Grant(user)
+		actions += D
+	if(F)
+		F.target = src
+		F.Grant(user)
+		actions += F
+	if(N)
+		N.target = src
+		N.Grant(user)
+		actions += N
+	if(E)
+		E.target = src
+		E.Grant(user)
+		actions += E
+	if(H)
+		H.target = src
+		H.Grant(user)
+		actions += H
+	eyeobj.invisibility = 0
+
+/obj/machinery/computer/camera_advanced/arena_construction/remove_eye_control(mob/living/user)
+	..()
+	eyeobj.invisibility = INVISIBILITY_MAXIMUM //Hide the eye when not in use.
+
+/datum/action/innate/arena_base//Parent for arena construction actions
+	icon_icon = 'icons/mob/actions/actions_construction.dmi'
+	var/mob/living/C //Mob using the action
+	var/mob/camera/aiEye/remote/base_construction/remote_eye //Console's eye mob
+	var/obj/machinery/computer/camera_advanced/arena_construction/comp //Console itself
+
+/datum/action/innate/arena_base/Activate()
+	if(!target)
+		return FALSE
+	C = owner
+	remote_eye = C.remote_control
+	comp = target
+	if(!check_spot())
+		return FALSE
+	if(hazard_limited())
+		return FALSE
+	return TRUE
+
+/datum/action/innate/arena_base/proc/check_spot()
+	var/turf/build_target = get_turf(remote_eye)
+	var/area/build_area = get_area(build_target)
+	if(!istype(build_area, /area/maintenance/arena))
+		to_chat(owner, "<span class='warning'>You can only build within the arena!</span>")
+		return FALSE
+	return TRUE
+
+/datum/action/innate/arena_base/proc/hazard_limited()
+	for(var/obj/O in comp.hazards)
+		if(QDELETED(O))
+			comp.hazards -= O
+	if(LAZYLEN(comp.hazards) >= 12)
+		to_chat(owner, "<span class='warning'>You have reached the arena's hazard limit - clear the previous hazards to create more!</span>")
+		return TRUE
+	return FALSE
+
+
+datum/action/innate/arena_base/turfchange
+	name = "Place Default Turf"
+	button_icon_state = "build"
+	var/turf_type = /turf/open/floor/plasteel/showroomfloor
+
+datum/action/innate/arena_base/turfchange/Activate()
+	. = ..()
+	if(.)
+		var/turf/T = get_turf(remote_eye)
+		var/turf/open/Newt = T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
+		Newt.planetary_atmos = 0
+		playsound(Newt, 'sound/machines/click.ogg', 50, 1)
+		new /obj/effect/temp_visual/small_smoke(Newt)
+		comp.hazards += Newt
+
+datum/action/innate/arena_base/turfchange/lava
+	name = "Place Lava"
+	icon_icon = 'icons/turf/floors.dmi'
+	button_icon_state = "lava"
+	turf_type = /turf/open/lava/smooth
+
+datum/action/innate/arena_base/turfchange/ice
+	name = "Place Ice"
+	icon_icon = 'icons/turf/snow.dmi'
+	button_icon_state = "ice"
+	turf_type = /turf/open/floor/plating/ice/smooth
+
+datum/action/innate/arena_base/turfchange/slow
+	name = "Place Slow Tile"
+	icon_icon = 'icons/turf/floors.dmi'
+	button_icon_state = "sepia"
+	turf_type = /turf/open/floor/sepia/notile
+
+datum/action/innate/arena_base/turfchange/fast
+	name = "Place Speed Tile"
+	icon_icon = 'icons/turf/floors.dmi'
+	button_icon_state = "bluespace"
+	turf_type = /turf/open/floor/bluespace/notile
+
+datum/action/innate/arena_base/object
+	name = "Place Object"
+	button_icon_state = "build"
+	var/obj_type = /obj/item
+
+datum/action/innate/arena_base/object/Activate()
+	. = ..()
+	if(.)
+		var/turf/T = get_turf(remote_eye)
+		var/obj/O = new obj_type(T)
+		O.dir = remote_eye.dir
+		playsound(T, 'sound/machines/click.ogg', 50, 1)
+		new /obj/effect/temp_visual/small_smoke(T)
+		comp.hazards += O
+
+datum/action/innate/arena_base/object/launcher
+	name = "Place Atmos Launcher"
+	icon_icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
+	button_icon_state = "intake"
+	obj_type = /obj/machinery/disposal/deliveryChute
+
+datum/action/innate/arena_base/object/slip
+	name = "Place Oil Slick"
+	icon_icon = 'icons/mob/robots.dmi'
+	button_icon_state = "floor2"
+	obj_type = /obj/effect/decal/cleanable/oil/slippery
+
+
+datum/action/innate/arena_base/object/freeze
+	name = "Place Freeze Trap"
+	icon_icon = 'icons/obj/hand_of_god_structures.dmi'
+	button_icon_state = "trap-frost"
+	obj_type = /obj/structure/trap/chill
+
+datum/action/innate/arena_base/object/damage
+	name = "Place Damage Trap"
+	icon_icon  = 'icons/obj/hand_of_god_structures.dmi'
+	button_icon_state = "trap-earth"
+	obj_type = /obj/structure/trap/damage
+
+datum/action/innate/arena_base/object/fire
+	name = "Place Fire Trap"
+	icon_icon  = 'icons/obj/hand_of_god_structures.dmi'
+	button_icon_state = "trap-fire"
+	obj_type = /obj/structure/trap/fire
+
+datum/action/innate/arena_base/object/snare
+	name = "Place Energy Snare"
+	icon_icon = 'icons/obj/items_and_weapons.dmi'
+	button_icon_state  = "e_snare"
+	obj_type = /obj/item/restraints/legcuffs/beartrap/energy/arena
+
+/obj/item/restraints/legcuffs/beartrap/energy/arena/dissipate()
+	return
+
+datum/action/innate/arena_base/object/emitter
+	name = "Place Emitter"
+	icon_icon = 'icons/obj/singularity.dmi'
+	button_icon_state = "emitter"
+	obj_type = /obj/machinery/power/emitter/energycannon/arena
+
+/obj/machinery/power/emitter/energycannon/arena
+	projectile_type = /obj/item/projectile/beam/emitter/arena
+
+/obj/item/projectile/beam/emitter/arena
+	range = 5
+
+datum/action/innate/clear_hazards
+	name = "Clear Hazards"
+	icon_icon = 'icons/mob/actions/actions_flightsuit.dmi'
+	button_icon_state = "flightpack_airbrake"
+	var/obj/machinery/computer/camera_advanced/arena_construction/comp //Console itself
+
+/datum/action/innate/clear_hazards/Activate()
+	if(!target)
+		return FALSE
+	comp = target
+	for(var/A in comp.hazards)
+		if(isturf(A))
+			var/turf/T = A
+			T.ChangeTurf(/turf/open/floor/plating)
+		else
+			qdel(A)
+	comp.hazards = list()

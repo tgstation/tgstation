@@ -1,0 +1,148 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/template_noop)
+"b" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/template_noop)
+"c" = (
+/turf/open/floor/wood,
+/area/template_noop)
+"d" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/template_noop)
+"e" = (
+/obj/item/clothing/mask/facehugger/toy,
+/turf/open/floor/wood,
+/area/template_noop)
+"f" = (
+/obj/structure/table/wood,
+/obj/item/briefcase_launchpad,
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -32
+	},
+/obj/item/toy/foamblade,
+/turf/open/floor/wood,
+/area/template_noop)
+"g" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/wood,
+/area/template_noop)
+"h" = (
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/template_noop)
+"i" = (
+/obj/machinery/computer/slot_machine,
+/obj/machinery/computer/arcade,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/template_noop)
+"j" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/template_noop)
+"k" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/template_noop)
+"l" = (
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/plating,
+/area/template_noop)
+"m" = (
+/obj/structure/table/wood,
+/obj/item/storage/pill_bottle,
+/obj/item/coin/antagtoken{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/coin/diamond{
+	pixel_x = 7;
+	pixel_y = -4
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/template_noop)
+"n" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/template_noop)
+"o" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/item/aiModule/toyAI,
+/turf/open/floor/wood,
+/area/template_noop)
+"p" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/wood,
+/area/template_noop)
+"q" = (
+/obj/structure/table/wood,
+/obj/item/coin/iron{
+	icon_state = "coin_bananium_heads";
+	name = "arcade coin";
+	pixel_x = 6
+	},
+/obj/item/coin/iron{
+	icon_state = "coin_bananium_heads";
+	name = "arcade coin";
+	pixel_x = -6
+	},
+/obj/item/coin/iron{
+	icon_state = "coin_bananium_heads";
+	name = "arcade coin";
+	pixel_y = 6
+	},
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+f
+i
+m
+"}
+(2,1,1) = {"
+b
+c
+g
+p
+"}
+(3,1,1) = {"
+c
+o
+j
+n
+"}
+(4,1,1) = {"
+d
+g
+k
+c
+"}
+(5,1,1) = {"
+e
+h
+l
+q
+"}

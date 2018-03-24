@@ -66,7 +66,6 @@
 
 /obj/item/photo/examine(mob/user)
 	..()
-
 	if(in_range(src, user))
 		show(user)
 	else
@@ -539,18 +538,21 @@
 	flags_1 = 0
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/picture_frame
-	var/obj/item/photo/displayed
+	var/obj/item/displayed
 
 /obj/item/wallframe/picture/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/photo))
+	if(istype(I, /obj/item/photo) || istype(I, /obj/item/canvas))
 		if(!displayed)
-			if(!user.transferItemToLoc(I, src))
-				return
-			displayed = I
-			update_icon()
+			display(I, user)
 		else
 			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
 	..()
+
+/obj/item/wallframe/picture/proc/display(obj/item/I, mob/user)
+	if(!user.transferItemToLoc(I, src))
+		return
+	displayed = I
+	update_icon()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/wallframe/picture/attack_hand(mob/user)
@@ -569,10 +571,9 @@
 	user.examinate(src)
 
 /obj/item/wallframe/picture/examine(mob/user)
-	if(user.is_holding(src) && displayed)
-		displayed.show(user)
-	else
-		..()
+	var/obj/item/photo/I = displayed
+	I.show(user)
+	..()
 
 /obj/item/wallframe/picture/update_icon()
 	cut_overlays()
@@ -588,7 +589,6 @@
 	if(contents.len)
 		var/obj/item/I = pick(contents)
 		I.forceMove(PF)
-
 
 /obj/structure/sign/picture_frame
 	name = "picture frame"
@@ -608,8 +608,7 @@
 /obj/structure/sign/picture_frame/examine(mob/user)
 	if(in_range(src, user) && framed)
 		framed.show(user)
-	else
-		..()
+	..()
 
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver) || istype(I, /obj/item/wrench))
@@ -619,18 +618,20 @@
 			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
 			deconstruct()
 		return
-
-	else if(istype(I, /obj/item/photo))
+	else if(istype(I, /obj/item/photo) || istype(I, /obj/item/canvas))
 		if(!framed)
-			var/obj/item/photo/P = I
-			if(!user.transferItemToLoc(P, src))
-				return
-			framed = P
-			update_icon()
+			display(I, user)
 		else
-			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
-
+			to_chat(user, "<span class=notice>\The [src] already has an attached artwork, you need a <b>crowbar</b> to remove it.</span>")
 	..()
+
+/obj/structure/sign/picture_frame/crowbar_act(mob/living/user, obj/item/crowbar)
+	if(crowbar.use_tool(src, user, 50, volume=50))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+		to_chat(user, "<span class='notice'>You unsecure the [framed].</span>")
+		framed.forceMove(loc)
+		framed = null
+		update_icon()
 
 /obj/structure/sign/picture_frame/attack_hand(mob/user)
 	. = ..()
@@ -655,3 +656,36 @@
 			I.forceMove(F)
 		F.update_icon()
 	qdel(src)
+
+/obj/structure/sign/picture_frame/proc/display(obj/item/I, mob/user)
+	if(!user.transferItemToLoc(I, src))
+		return
+	framed = I
+	update_icon()
+
+
+/obj/structure/sign/picture_frame/persist
+	name = "durable picture frame"
+
+/obj/structure/sign/picture_frame/persist/Initialize()
+	. = ..()
+	GLOB.persist_frames += src
+
+/obj/structure/sign/picture_frame/persist/Destroy()
+	GLOB.persist_frames -= src
+	return ..()
+
+/obj/structure/sign/picture_frame/persist/display(obj/item/I, mob/user)
+	. = ..()
+	var/note = stripped_input(user, "What would you like the plaque to say? Default value is item's description.", "Frame Plaque")
+	if(note)
+		if(user.canUseTopic(src, BE_CLOSE))
+			if(user.is_literate())
+				desc = note + "<br>This masterpiece was created by [user.real_name]."
+
+			else
+				desc = "[user.real_name] has left an incoherent string of half-words, scribbles, and emojis to describe this piece."
+			to_chat(user, "You update the frame's plaque.")
+
+
+

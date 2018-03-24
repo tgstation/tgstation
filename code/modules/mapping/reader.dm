@@ -29,21 +29,21 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, lower_crop_x as num,  lower_crop_y as num, upper_crop_x as num, upper_crop_y as num, placeOnTop as num)
+/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, lower_crop_x as num,  lower_crop_y as num, upper_crop_x as num, upper_crop_y as num, placeOnTop as num, dir as num)
 	//How I wish for RAII
 	Master.StartLoadingMap()
 	space_key = null
 	#ifdef TESTING
 	turfsSkipped = 0
 	#endif
-	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, lower_crop_x, upper_crop_x, lower_crop_y, upper_crop_y, placeOnTop)
+	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, lower_crop_x, upper_crop_x, lower_crop_y, upper_crop_y, placeOnTop, dir)
 	#ifdef TESTING
 	if(turfsSkipped)
 		testing("Skipped loading [turfsSkipped] default turfs")
 	#endif
 	Master.StopLoadingMap()
 
-/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
+/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE, dir = 1)
 	var/tfile = dmm_file//the map file we're creating
 	if(isfile(tfile))
 		tfile = file2text(tfile)
@@ -59,11 +59,19 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 	var/list/grid_models = list()
 	var/key_len = 0
 
+	var/firstx = -1
+	var/finalx = 1
+	if(dir > 1)
+		var/max_index = 1
+		while(dmmRegex.Find(tfile, max_index))
+			if(firstx<0 && dmmRegex.group[3])
+				firstx = text2num(dmmRegex.group[3]) + x_offset - 1
+			max_index = dmmRegex.next
+		if(dmmRegex.group[3])
+			finalx = text2num(dmmRegex.group[3]) + x_offset - 1
 	var/stored_index = 1
-
 	while(dmmRegex.Find(tfile, stored_index))
 		stored_index = dmmRegex.next
-
 		// "aa" = (/type{vars=blah})
 		if(dmmRegex.group[1]) // Model
 			var/key = dmmRegex.group[1]
@@ -83,10 +91,8 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 				throw EXCEPTION("Coords before model definition in DMM")
 
 			var/curr_x = text2num(dmmRegex.group[3])
-
 			if(curr_x < x_lower || curr_x > x_upper)
 				continue
-
 			var/xcrdStart = curr_x + x_offset - 1
 			//position of the currently processed square
 			var/xcrd
@@ -121,28 +127,145 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 				gridLines.Cut(gridLines.len) // Remove only one blank line at the end.
 
 			bounds[MAP_MINY] = min(bounds[MAP_MINY], CLAMP(ycrd, y_lower, y_upper))
-			ycrd += gridLines.len - 1 // Start at the top and work down
-
-			if(!cropMap && ycrd > world.maxy)
-				if(!measureOnly)
-					world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
-				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
-			else
-				bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
-
-			var/maxx = xcrdStart
+			var/maxx = 1
 			if(measureOnly)
+				maxx = xcrdStart
+				ycrd += gridLines.len - 1
+				if(!cropMap && ycrd > world.maxy)
+					bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
+				else
+					bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
 				for(var/line in gridLines)
 					maxx = max(maxx, xcrdStart + length(line) / key_len - 1)
 			else
-				for(var/line in gridLines)
-					if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
-						--ycrd
-						continue
-					if(ycrd <= world.maxy && ycrd >= 1)
-						xcrd = xcrdStart
-						for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
-							if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)			//Same as above.
+				switch(dir) //WARNING: Dir = 1 represents the DEFAULT mapload, any other direction will ONLY work for .tgm files
+					if(1)
+						ycrd += gridLines.len - 1 // Start at the top and work down
+						if(!cropMap && ycrd > world.maxy)
+							world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
+						else
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
+						for(var/line in gridLines)
+							if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
+								--ycrd
+								continue
+							if(ycrd <= world.maxy && ycrd >= 1)
+								xcrd = xcrdStart
+								for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
+									if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)			//Same as above.
+										++xcrd
+										continue								//X cropping.
+									if(xcrd > world.maxx)
+										if(cropMap)
+											break
+										else
+											world.maxx = xcrd
+
+									if(xcrd >= 1)
+										var/model_key = copytext(line, tpos, tpos + key_len)
+										var/no_afterchange = no_changeturf || zexpansion
+										if(!no_afterchange || (model_key != space_key))
+											if(!grid_models[model_key])
+												throw EXCEPTION("Undefined model key in DMM.")
+											parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, no_changeturf || zexpansion)
+										#ifdef TESTING
+										else
+											++turfsSkipped
+										#endif
+										CHECK_TICK
+									maxx = max(maxx, xcrd)
+									++xcrd
+							--ycrd
+					if(2)
+						ycrd += gridLines.len - 1
+						if(!cropMap && ycrd > world.maxy)
+							world.maxy = ycrd
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
+						else
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
+						ycrd -= gridLines.len - 1 //Had to find the top for bounds, but we work from the bottom for this "upside down" load
+						for(var/line in gridLines)
+							if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)
+								++ycrd
+								continue
+							if(ycrd <= world.maxy && ycrd >= 1)
+								xcrd = firstx + (finalx - xcrdStart)
+								for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
+									if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)			//Same as above.
+										++xcrd
+										continue								//X cropping.
+									if(xcrd > world.maxx)
+										if(cropMap)
+											break
+										else
+											world.maxx = xcrd
+
+									if(xcrd >= 1)
+										var/model_key = copytext(line, tpos, tpos + key_len)
+										var/no_afterchange = no_changeturf || zexpansion
+										if(!no_afterchange || (model_key != space_key))
+											if(!grid_models[model_key])
+												throw EXCEPTION("Undefined model key in DMM.")
+											parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, no_changeturf || zexpansion)
+										#ifdef TESTING
+										else
+											++turfsSkipped
+										#endif
+										CHECK_TICK
+									maxx = max(maxx, xcrd)
+									++xcrd
+							++ycrd
+					if(4)
+						xcrd = firstx + gridLines.len - 1 // Facing east means the "end" of the X-row is now as "deep" as the height of the Y-column
+						ycrd += finalx - xcrdStart  // Oh shit we're facing east now, the top of the Y-column is now as "tall" as the width of the X-row
+						if(!cropMap && ycrd > world.maxy)
+							world.maxy = ycrd
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
+						else
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
+						var/ycrdStart = ycrd
+						for(var/line in gridLines)
+							if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)
+								--xcrd
+								continue								//X cropping.
+							if(xcrd > world.maxx)
+								if(cropMap)
+									break
+								else
+									world.maxx = xcrd
+							maxx = max(maxx, xcrd)
+							if(ycrd <= world.maxy && ycrd >= 1)
+								ycrd = ycrdStart
+								for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
+									if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
+										--ycrd
+										continue
+									if(ycrd >= 1)
+										var/model_key = copytext(line, tpos, tpos + key_len)
+										var/no_afterchange = no_changeturf || zexpansion
+										if(!no_afterchange || (model_key != space_key))
+											if(!grid_models[model_key])
+												throw EXCEPTION("Undefined model key in DMM.")
+											parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, no_changeturf || zexpansion)
+										#ifdef TESTING
+										else
+											++turfsSkipped
+										#endif
+										CHECK_TICK
+									--ycrd
+							--xcrd
+					if(8)
+						xcrd = firstx // Facing west
+						ycrd += xcrdStart - firstx
+						if(!cropMap && ycrd > world.maxy)
+							world.maxy = ycrd
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(ycrd, y_lower, y_upper))
+						else
+							bounds[MAP_MAXY] = max(bounds[MAP_MAXY], CLAMP(min(ycrd, world.maxy), y_lower, y_upper))
+						var/ycrdStart = ycrd
+						for(var/line in gridLines)
+							if((xcrd - x_offset + 1) < x_lower || (xcrd - x_offset + 1) > x_upper)
 								++xcrd
 								continue								//X cropping.
 							if(xcrd > world.maxx)
@@ -150,23 +273,27 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 									break
 								else
 									world.maxx = xcrd
-
-							if(xcrd >= 1)
-								var/model_key = copytext(line, tpos, tpos + key_len)
-								var/no_afterchange = no_changeturf || zexpansion
-								if(!no_afterchange || (model_key != space_key))
-									if(!grid_models[model_key])
-										throw EXCEPTION("Undefined model key in DMM.")
-									parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, no_changeturf || zexpansion, placeOnTop)
-								#ifdef TESTING
-								else
-									++turfsSkipped
-								#endif
-								CHECK_TICK
 							maxx = max(maxx, xcrd)
+							if(ycrd <= world.maxy && ycrd >= 1)
+								ycrd = ycrdStart
+								for(var/tpos = 1 to length(line) - key_len + 1 step key_len)
+									if((ycrd - y_offset + 1) < y_lower || (ycrd - y_offset + 1) > y_upper)				//Reverse operation and check if it is out of bounds of cropping.
+										++ycrd
+										continue
+									if(ycrd >= 1)
+										var/model_key = copytext(line, tpos, tpos + key_len)
+										var/no_afterchange = no_changeturf || zexpansion
+										if(!no_afterchange || (model_key != space_key))
+											if(!grid_models[model_key])
+												throw EXCEPTION("Undefined model key in DMM.")
+											parse_grid(grid_models[model_key], model_key, xcrd, ycrd, zcrd, no_changeturf || zexpansion)
+										#ifdef TESTING
+										else
+											++turfsSkipped
+										#endif
+										CHECK_TICK
+									++ycrd
 							++xcrd
-					--ycrd
-
 			bounds[MAP_MAXX] = CLAMP(max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx), x_lower, x_upper)
 
 		CHECK_TICK
@@ -199,7 +326,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
  * 4) Instanciates the atom with its variables
  *
  */
-/dmm_suite/proc/parse_grid(model as text, model_key as text, xcrd as num,ycrd as num,zcrd as num, no_changeturf as num, placeOnTop as num)
+/dmm_suite/proc/parse_grid(model as text, model_key as text, xcrd as num,ycrd as num,zcrd as num, no_changeturf as num, placeOnTop as num, orientation as num)
 	/*Method parse_grid()
 	- Accepts a text string containing a comma separated list of type paths of the
 		same construction as those contained in a .dmm file, and instantiates them.
@@ -283,7 +410,6 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 	var/turf/crds = locate(xcrd,ycrd,zcrd)
-
 	//first instance the /area and remove it from the members list
 	index = members.len
 	if(members[index] != /area/template_noop)
@@ -314,7 +440,6 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
 		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],crds,no_changeturf,placeOnTop)
-
 	if(T)
 		//if others /turf are presents, simulates the underlays piling effect
 		index = first_turf_index + 1
@@ -327,8 +452,10 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 	//finally instance all remainings objects/mobs
 	for(index in 1 to first_turf_index-1)
 		instance_atom(members[index],members_attributes[index],crds,no_changeturf,placeOnTop)
+
 	//Restore initialization to the previous value
 	SSatoms.map_loader_stop()
+
 
 ////////////////
 //Helpers procs

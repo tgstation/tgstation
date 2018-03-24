@@ -1,0 +1,112 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/chair,
+/turf/open/floor/plating,
+/area/template_noop)
+"b" = (
+/obj/machinery/iv_drip,
+/turf/open/floor/plating,
+/area/template_noop)
+"c" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"d" = (
+/obj/item/shard,
+/obj/item/circuitboard/computer/operating,
+/turf/open/floor/plating,
+/area/template_noop)
+"e" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/chair,
+/obj/item/reagent_containers/blood/random,
+/turf/open/floor/plating,
+/area/template_noop)
+"f" = (
+/obj/item/wrench,
+/turf/open/floor/plating,
+/area/template_noop)
+"g" = (
+/obj/structure/table/optable{
+	name = "Robotics Operating Table"
+	},
+/obj/item/surgical_drapes{
+	pixel_x = -3;
+	pixel_y = 9
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"h" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"i" = (
+/obj/structure/frame/computer,
+/turf/open/floor/plating,
+/area/template_noop)
+"j" = (
+/obj/item/storage/bag/trash,
+/turf/open/floor/plating,
+/area/template_noop)
+"k" = (
+/obj/structure/table/glass,
+/obj/item/storage/bag/trash,
+/obj/item/hemostat,
+/turf/open/floor/plating,
+/area/template_noop)
+"l" = (
+/obj/structure/closet/wardrobe/white,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
+/turf/open/floor/plating,
+/area/template_noop)
+"m" = (
+/obj/item/shard,
+/turf/open/floor/plating,
+/area/template_noop)
+"n" = (
+/obj/structure/table/glass,
+/obj/item/restraints/handcuffs/cable/zipties,
+/obj/item/reagent_containers/blood/random,
+/turf/open/floor/plating,
+/area/template_noop)
+"F" = (
+/obj/structure/mirror{
+	icon_state = "mirror_broke";
+	pixel_x = 24
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+c
+h
+l
+"}
+(2,1,1) = {"
+b
+f
+c
+c
+"}
+(3,1,1) = {"
+c
+g
+i
+c
+"}
+(4,1,1) = {"
+d
+c
+j
+m
+"}
+(5,1,1) = {"
+e
+F
+k
+n
+"}

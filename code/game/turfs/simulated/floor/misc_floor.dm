@@ -234,6 +234,8 @@
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds."
 	floor_tile = /obj/item/stack/tile/bluespace
 
+/turf/open/floor/bluespace/notile
+	floor_tile = null
 
 /turf/open/floor/sepia
 	slowdown = 2
@@ -241,7 +243,8 @@
 	desc = "Time seems to flow very slowly around these tiles."
 	floor_tile = /obj/item/stack/tile/sepia
 
-
+/turf/open/floor/sepia/notile
+	floor_tile = null
 /turf/open/floor/bronze
 	name = "clockwork floor"
 	desc = "Some heavy bronze tiles."

@@ -1,0 +1,130 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/table/reinforced,
+/obj/item/circuitboard/machine/sleeper{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/storage/secure/briefcase,
+/obj/structure/sign/poster/official/random{
+	pixel_x = -32
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"b" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"c" = (
+/obj/item/electronics/apc,
+/obj/structure/table/reinforced,
+/obj/item/circuitboard/machine/smoke_machine{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"d" = (
+/obj/item/stack/cable_coil/white,
+/obj/item/stack/cable_coil/white,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/circuitboard/machine/microwave,
+/obj/structure/table/reinforced,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"e" = (
+/obj/structure/chair/office/dark{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"f" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plating,
+/area/template_noop)
+"g" = (
+/obj/structure/frame/computer,
+/obj/item/stack/cable_coil/white,
+/turf/open/floor/plating,
+/area/template_noop)
+"h" = (
+/obj/item/electronics/airalarm,
+/obj/item/electronics/airlock,
+/obj/structure/table/reinforced,
+/obj/item/storage/belt/utility/full/engi{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"i" = (
+/obj/item/electronics/firelock,
+/obj/item/electronics/airlock,
+/obj/structure/table/reinforced,
+/obj/item/circuitboard/machine/pacman{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"j" = (
+/obj/machinery/autolathe{
+	name = "public autolathe"
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"k" = (
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"l" = (
+/obj/structure/frame/computer,
+/obj/item/circuitboard/computer/secure_data,
+/turf/open/floor/plating,
+/area/template_noop)
+"m" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/metal/twenty,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/plating,
+/area/template_noop)
+"n" = (
+/obj/structure/frame/machine,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+d
+h
+m
+"}
+(2,1,1) = {"
+b
+e
+i
+f
+"}
+(3,1,1) = {"
+b
+f
+j
+b
+"}
+(4,1,1) = {"
+b
+b
+k
+b
+"}
+(5,1,1) = {"
+c
+g
+l
+n
+"}

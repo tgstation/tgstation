@@ -1,0 +1,176 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/mech_bay_recharge_port{
+	dir = 2
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/open/floor/circuit,
+/area/template_noop)
+"b" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/circuit,
+/area/template_noop)
+"c" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/template_noop)
+"d" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"e" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/cardboard,
+/obj/item/device/radio/off,
+/obj/structure/light_construct{
+	dir = 1
+	},
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+"f" = (
+/turf/open/floor/mech_bay_recharge_floor,
+/area/template_noop)
+"g" = (
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/circuit,
+/area/template_noop)
+"h" = (
+/obj/machinery/recharge_station,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/template_noop)
+"i" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/item/wrench,
+/turf/open/floor/plating,
+/area/template_noop)
+"j" = (
+/obj/machinery/mecha_part_fabricator{
+	dir = 2;
+	name = "counterfeit exosuit fabricator";
+	req_access = null
+	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"k" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -32
+	},
+/turf/open/floor/circuit,
+/area/template_noop)
+"l" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/item/clothing/glasses/welding,
+/turf/open/floor/circuit,
+/area/template_noop)
+"m" = (
+/obj/structure/rack,
+/obj/item/stack/rods{
+	amount = 23
+	},
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/device/flashlight/seclite,
+/turf/open/floor/plating,
+/area/template_noop)
+"o" = (
+/obj/structure/closet,
+/obj/item/stack/sheet/metal{
+	amount = 34
+	},
+/obj/item/extinguisher/mini,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/template_noop)
+"p" = (
+/obj/structure/rack,
+/obj/item/screwdriver{
+	pixel_y = 16
+	},
+/obj/item/hand_labeler,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/stack/cable_coil,
+/turf/open/floor/plating,
+/area/template_noop)
+"q" = (
+/turf/open/floor/plating,
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/template_noop)
+"r" = (
+/obj/structure/closet,
+/obj/item/stack/sheet/glass{
+	amount = 12
+	},
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/item/weldingtool,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+f
+k
+p
+"}
+(2,1,1) = {"
+b
+g
+l
+q
+"}
+(3,1,1) = {"
+c
+h
+m
+d
+"}
+(4,1,1) = {"
+d
+i
+d
+d
+"}
+(5,1,1) = {"
+e
+j
+o
+r
+"}

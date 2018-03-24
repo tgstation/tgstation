@@ -1,0 +1,130 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/window/spawner/east,
+/obj/structure/urinal{
+	pixel_y = 27
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"b" = (
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"c" = (
+/turf/open/floor/plating,
+/area/template_noop)
+"d" = (
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
+	},
+/obj/machinery/vending/cigarette,
+/turf/open/floor/plating,
+/area/template_noop)
+"e" = (
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -32
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"f" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/template_noop)
+"g" = (
+/obj/machinery/door/airlock{
+	id_tag = "AuxToilet1";
+	name = "Unit 1"
+	},
+/turf/open/floor/plasteel,
+/area/template_noop)
+"h" = (
+/turf/closed/wall,
+/area/template_noop)
+"i" = (
+/obj/structure/curtain,
+/turf/open/floor/plating,
+/area/template_noop)
+"j" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -11
+	},
+/obj/structure/mirror{
+	pixel_x = -26
+	},
+/turf/open/floor/plating,
+/area/template_noop)
+"k" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/button/door{
+	id = "AuxToilet1";
+	name = "Lock Control";
+	normaldoorcontrol = 1;
+	pixel_x = 25;
+	specialfunctions = 4
+	},
+/obj/machinery/newscaster{
+	pixel_y = -32
+	},
+/obj/structure/toilet{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/template_noop)
+"l" = (
+/obj/machinery/shower{
+	dir = 8;
+	name = "emergency shower"
+	},
+/obj/item/reagent_containers/pill/bathsalt,
+/obj/item/soap/homemade,
+/turf/open/floor/plating,
+/area/template_noop)
+"m" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -11
+	},
+/obj/structure/mirror{
+	icon_state = "mirror_broke";
+	pixel_x = -26
+	},
+/obj/item/reagent_containers/spray/spraytan,
+/turf/open/floor/plating,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+e
+g
+k
+"}
+(2,1,1) = {"
+b
+c
+h
+h
+"}
+(3,1,1) = {"
+c
+c
+i
+l
+"}
+(4,1,1) = {"
+c
+f
+h
+h
+"}
+(5,1,1) = {"
+d
+c
+j
+m
+"}

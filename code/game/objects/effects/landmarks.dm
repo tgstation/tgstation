@@ -421,3 +421,20 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.ruin_landmarks -= src
 	ruin_template = null
 	. = ..()
+
+/obj/effect/landmark/maintblock // Should be mapped in sets by child-number, where placement of a blockage won't completely impede use of that maint segment
+	name = "potential maint blockage"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "x"
+	var/static/list/spawned = list()
+	var/id = "1"
+
+/obj/effect/landmark/maintblock/Initialize()
+	. = ..()
+	if(prob(10))
+		new /obj/structure/destructible/steam_vent/active(get_turf(src))
+	else if(!spawned[id] && prob(30))
+		spawned[id] = TRUE
+		var/turf/T = get_turf(src)
+		T.ChangeTurf(/turf/closed/wall, null, CHANGETURF_IGNORE_AIR)
+	return INITIALIZE_HINT_QDEL
