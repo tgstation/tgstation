@@ -69,7 +69,8 @@
 			last_power-=bitcoins_mined
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(anchored)
 		if(!src.locked)

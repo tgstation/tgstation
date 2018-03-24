@@ -98,13 +98,13 @@
 	w_class += S.w_class //so pistols do not fit in pockets when suppressed
 	update_icon()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/gun/ballistic/attack_hand(mob/user)
 	if(loc == user)
 		if(suppressed && can_unsuppress)
 			var/obj/item/suppressor/S = suppressed
 			if(!user.is_holding(src))
-				..()
-				return
+				return ..()
 			to_chat(user, "<span class='notice'>You unscrew [suppressed] from [src].</span>")
 			user.put_in_hands(suppressed)
 			fire_sound = S.oldsound
@@ -112,7 +112,7 @@
 			suppressed = null
 			update_icon()
 			return
-	..()
+	return ..()
 
 /obj/item/gun/ballistic/attack_self(mob/living/user)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round

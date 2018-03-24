@@ -131,7 +131,7 @@
 			playsound(src,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 	return (BRUTELOSS)
 
-/obj/item/scythe/pre_attackby(atom/A, mob/living/user, params)
+/obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
 	if(swiping || !istype(A, /obj/structure/spacevine) || get_turf(A) == get_turf(user))
 		return ..()
 	else

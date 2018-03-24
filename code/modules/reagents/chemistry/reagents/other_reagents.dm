@@ -784,7 +784,7 @@
 	taste_description = "chlorine"
 
 /datum/reagent/chlorine/on_mob_life(mob/living/M)
-	M.take_bodypart_damage(1*REM, 0, 0)
+	M.take_bodypart_damage(1*REM, 0, 0, 0)
 	. = 1
 	..()
 

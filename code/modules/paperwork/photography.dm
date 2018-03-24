@@ -554,6 +554,7 @@
 	displayed = I
 	update_icon()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/wallframe/picture/attack_hand(mob/user)
 	if(user.get_inactive_held_item() != src)
 		..()
@@ -564,6 +565,7 @@
 		to_chat(user, "<span class='notice'>You carefully remove the photo from \the [src].</span>")
 		displayed = null
 		update_icon()
+	return ..()
 
 /obj/item/wallframe/picture/attack_self(mob/user)
 	user.examinate(src)
@@ -632,6 +634,9 @@
 		update_icon()
 
 /obj/structure/sign/picture_frame/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(framed)
 		framed.show(user)
 

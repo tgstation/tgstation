@@ -206,26 +206,26 @@
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE)
 	if(!istype(W))
-		return 0
+		return FALSE
 	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
 		if(qdel_on_fail)
 			qdel(W)
 		else
 			if(!disable_warning)
-				to_chat(src, "<span class='warning'>You are unable to equip that!</span>" )
-		return 0
+				to_chat(src, "<span class='warning'>You are unable to equip that!</span>")
+		return FALSE
 	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
-	return 1
+	return TRUE
 
-//This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
+//This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't equip need to be done before! Use mob_can_equip() for that task.
 //In most cases you will want to use equip_to_slot_if_possible()
 /mob/proc/equip_to_slot(obj/item/W, slot)
 	return
 
-//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
+//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the round starts and when events happen and such.
 //Also bypasses equip delay checks, since the mob isn't actually putting it on.
 /mob/proc/equip_to_slot_or_del(obj/item/W, slot)
-	return equip_to_slot_if_possible(W, slot, 1, 1, 0, 1)
+	return equip_to_slot_if_possible(W, slot, TRUE, TRUE, FALSE, TRUE)
 
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
@@ -482,7 +482,7 @@
 	return
 
 /mob/MouseDrop(mob/M)
-	..()
+	. = ..()
 	if(M != usr)
 		return
 	if(usr == src)
@@ -729,6 +729,10 @@
 //can the mob be unbuckled from something by default?
 /mob/proc/can_unbuckle()
 	return 1
+
+//Can the mob interact() with an atom?
+/mob/proc/can_interact_with(atom/A)
+	return IsAdminGhost(src) || Adjacent(A)
 
 //Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
