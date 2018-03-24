@@ -38,6 +38,25 @@
 	SSradio.remove_object(src,frequency)
 	return ..()
 
+/obj/machinery/atmospherics/components/trinary/filter/atmos //Used for atmos waste loops
+	on = TRUE
+	
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2
+	name = "nitrogen filter"
+	filter_type = "n2"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/o2
+	name = "oxygen filter"
+	filter_type = "o2"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/co2
+	name = "carbon dioxide filter"
+	filter_type = "co2"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2o
+	name = "nitrous oxide filter"
+	filter_type = "n2o"
+/obj/machinery/atmospherics/components/trinary/filter/atmos/plasma
+	name = "plasma filter"
+	filter_type = "plasma"
+
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	cut_overlays()
 	for(var/direction in GLOB.cardinals)

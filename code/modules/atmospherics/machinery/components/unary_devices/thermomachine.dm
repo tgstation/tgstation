@@ -166,6 +166,9 @@
 	max_temperature = T20C
 	min_temperature = 170
 	circuit = /obj/item/circuitboard/machine/thermomachine/freezer
+	
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
+	on = TRUE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()
@@ -183,6 +186,9 @@
 	min_temperature = T20C
 	circuit = /obj/item/circuitboard/machine/thermomachine/heater
 
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on
+	on = TRUE
+	
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/RefreshParts()
 	..()
 	var/L
