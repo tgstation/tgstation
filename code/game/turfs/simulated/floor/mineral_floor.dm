@@ -12,6 +12,7 @@
 /turf/open/floor/mineral
 	name = "mineral floor"
 	icon_state = ""
+	baseturfs = /turf/open/floor/plating
 	var/list/icons
 
 
