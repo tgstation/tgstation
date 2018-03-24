@@ -56,7 +56,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 
 /obj/machinery/conveyor/Destroy()
-	LAZYREMOVE(GLOB.conveyors_by_id[id], src)
+	var/list/L = GLOB.conveyors_by_id[id]
+	LAZYREMOVE(L, src)
 	. = ..()
 
 /obj/machinery/conveyor/vv_edit_var(var_name, var_value)
