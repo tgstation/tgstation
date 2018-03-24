@@ -514,7 +514,7 @@
 		SM.on_spread(src, stepturf)
 		stepturf = get_step(src,direction) //in case turf changes, to make sure no runtimes happen
 	if(!locate(/obj/structure/spacevine, stepturf))
-		if(stepturf.Enter(src))
+		if(stepturf.Enter(src) && !istype(stepturf, /turf/open/space))
 			if(master)
 				master.spawn_spacevine_piece(stepturf, src)
 
