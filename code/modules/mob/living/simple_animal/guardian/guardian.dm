@@ -656,11 +656,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/storage/box/syndie_kit/guardian
 	name = "holoparasite injector kit"
 
-/obj/item/storage/box/syndie_kit/guardian/Initialize()
-	. = ..()
+/obj/item/storage/box/syndie_kit/guardian/PopulateContents()
 	new /obj/item/guardiancreator/tech/choose/traitor(src)
 	new /obj/item/paper/guides/antag/guardian(src)
-	return
 
 /obj/item/guardiancreator/carp
 	name = "holocarp fishsticks"

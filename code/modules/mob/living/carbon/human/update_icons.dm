@@ -209,7 +209,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_glasses()
 	remove_overlay(GLASSES_LAYER)
 
-	if(!get_bodypart("head")) //decapitated
+	if(!get_bodypart(BODY_ZONE_HEAD)) //decapitated
 		return
 
 	if(client && hud_used)
@@ -237,7 +237,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_ears()
 	remove_overlay(EARS_LAYER)
 
-	if(!get_bodypart("head")) //decapitated
+	if(!get_bodypart(BODY_ZONE_HEAD)) //decapitated
 		return
 
 	if(client && hud_used)

@@ -407,6 +407,7 @@
 /obj/docking_port/mobile/pod
 	name = "escape pod"
 	id = "pod"
+	timid = FALSE
 	dwidth = 1
 	width = 3
 	height = 4
@@ -526,9 +527,6 @@
 		. = ..()
 	else
 		to_chat(usr, "The storage unit will only unlock during a Red or Delta security alert.")
-
-/obj/item/storage/pod/attack_hand(mob/user)
-	return MouseDrop(user)
 
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"

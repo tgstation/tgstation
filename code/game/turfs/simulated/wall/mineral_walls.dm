@@ -74,7 +74,7 @@
 
 /turf/closed/wall/mineral/uranium/attack_hand(mob/user)
 	radiate()
-	..()
+	. = ..()
 
 /turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
 	radiate()

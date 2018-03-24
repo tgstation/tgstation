@@ -499,21 +499,17 @@
 				if(!itemUser.has_hand_for_held_index(hand))
 					//If user does not have the corresponding hand anymore, give them one and return the rod to their hand
 					if(((hand % 2) == 0))
-						var/obj/item/bodypart/L = itemUser.newBodyPart("r_arm", FALSE, FALSE)
+						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_R_ARM, FALSE, FALSE)
 						L.attach_limb(itemUser)
-						itemUser.put_in_r_hand(newRod)
+						itemUser.put_in_hand(newRod, hand, forced = TRUE)
 					else
-						var/obj/item/bodypart/L = itemUser.newBodyPart("l_arm", FALSE, FALSE)
+						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_L_ARM, FALSE, FALSE)
 						L.attach_limb(itemUser)
-						itemUser.put_in_l_hand(newRod)
+						itemUser.put_in_hand(newRod, hand, forced = TRUE)
 					to_chat(itemUser, "<span class='notice'>Your arm suddenly grows back with the Rod of Asclepius still attached!</span>")
 				else
 					//Otherwise get rid of whatever else is in their hand and return the rod to said hand
-					itemUser.dropItemToGround(itemUser.get_item_for_held_index(hand))
-					if(((hand % 2) == 0))
-						itemUser.put_in_r_hand(newRod)
-					else
-						itemUser.put_in_l_hand(newRod)
+					itemUser.put_in_hand(newRod, hand, forced = TRUE)
 					to_chat(itemUser, "<span class='notice'>The Rod of Asclepius suddenly grows back out of your arm!</span>")
 			//Because a servant of medicines stops at nothing to help others, lets keep them on their toes and give them an additional boost.
 			if(itemUser.health < itemUser.maxHealth)
@@ -537,6 +533,9 @@
 				L.adjustStaminaLoss(-3.5)
 				L.adjustBrainLoss(-3.5)
 				L.adjustCloneLoss(-1) //Becasue apparently clone damage is the bastion of all health
-			else
+			else if(issilicon(L))
+				L.adjustBruteLoss(-3.5)
+				L.adjustFireLoss(-3.5)
+			else if(isanimal(L))
 				var/mob/living/simple_animal/SM = L
 				SM.adjustHealth(-3.5, forced = TRUE)

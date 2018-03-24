@@ -30,12 +30,7 @@
 		else
 			icon_state = "ai-slipper1"
 
-/obj/machinery/ai_slipper/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/ai_slipper/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
-		return
+/obj/machinery/ai_slipper/interact(mob/user)
 	if(!allowed(user))
 		to_chat(user, "<span class='danger'>Access denied.</span>")
 		return

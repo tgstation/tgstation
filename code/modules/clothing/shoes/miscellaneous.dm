@@ -64,9 +64,7 @@
 
 /obj/item/clothing/shoes/galoshes/dry/step_action()
 	var/turf/open/t_loc = get_turf(src)
-	if(istype(t_loc) && t_loc.wet)
-		t_loc.MakeDry(TURF_WET_WATER)
-		t_loc.wet_time = 0
+	t_loc.SendSignal(COMSIG_TURF_MAKE_DRY, TURF_WET_WATER, TRUE, INFINITY)
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"
@@ -84,16 +82,12 @@
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
 	if(user.mind && user.mind.assigned_role == "Clown")
-		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
-		if(mood)
-			mood.clear_event("noshoes")
+		user.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "noshoes")
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
 	. = ..()
 	if(user.mind && user.mind.assigned_role == "Clown")
-		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
-		if(mood)
-			mood.add_event("noshoes", /datum/mood_event/noshoes)
+		user.SendSignal(COMSIG_ADD_MOOD_EVENT, "noshoes", /datum/mood_event/noshoes)
 
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"
