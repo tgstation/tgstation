@@ -8666,7 +8666,9 @@
 	},
 /area/bridge)
 "auO" = (
-/obj/machinery/disposal/bin,
+/obj/machinery/disposal/bin{
+	pass_flags = 64
+	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel/blue/side{
