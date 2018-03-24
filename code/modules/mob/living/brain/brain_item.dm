@@ -180,7 +180,7 @@
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
 /obj/item/organ/brain/proc/has_trauma_type(brain_trauma_type, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
-	for(var/X in traumas)
+	for(var/X in shuffle(traumas))
 		var/datum/brain_trauma/BT = X
 		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience))
 			return BT
@@ -267,8 +267,8 @@
 	gain_trauma(trauma_type, resilience)
 
 //Cure a random trauma of a certain resilience level
-/obj/item/organ/brain/proc/cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
-	var/datum/brain_trauma/trauma = has_trauma_type(/datum/brain_trauma, resilience)
+/obj/item/organ/brain/proc/cure_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_BASIC)
+	var/datum/brain_trauma/trauma = has_trauma_type(brain_trauma_type, resilience)
 	if(trauma)
 		qdel(trauma)
 
