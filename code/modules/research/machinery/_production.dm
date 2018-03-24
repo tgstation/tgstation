@@ -50,7 +50,7 @@
 /obj/machinery/rnd/production/attack_hand(mob/user)
 	interact(user)									//remove this snowflake shit when the refactor of storage components or some other pr that unsnowflakes attack_hand on machinery is in
 
-/obj/machinery/rnd/production/interact(mob/user)
+/obj/machinery/rnd/production/ui_interact(mob/user)
 	if(!consoleless_interface)
 		return ..()
 	user.set_machine(src)
