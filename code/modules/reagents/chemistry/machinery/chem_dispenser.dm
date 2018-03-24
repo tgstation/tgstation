@@ -228,7 +228,7 @@ obj/machinery/chem_dispenser/update_icon()
 				if(beaker && dispensable_reagents.Find(r_id)) // but since we verify we have the reagent, it'll be fine
 					var/datum/reagents/R = beaker.reagents
 					var/free = R.maximum_volume - R.total_volume
-					var/actual = min(round(chemicals_to_dispense[key], res), (cell.charge * powerefficiency)*10, free)
+					var/actual = min(max(chemicals_to_dispense[key], res), (cell.charge * powerefficiency)*10, free)
 					if(actual)
 						R.add_reagent(r_id, actual)
 						cell.use(actual / powerefficiency)
@@ -350,7 +350,7 @@ obj/machinery/chem_dispenser/update_icon()
 
 /obj/machinery/chem_dispenser/proc/check_macro_part(var/part, var/res = get_macro_resolution())
 	var/detail = splittext(part, "=")
-	if (round(text2num(detail[2]), res) != text2num(detail[2]))
+	if (max(text2num(detail[2]), res) != text2num(detail[2]))
 		return FALSE
 	return TRUE
 
