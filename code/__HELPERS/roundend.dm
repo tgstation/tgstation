@@ -60,8 +60,14 @@
 				file_data["[escaped]"]["npcs"]["[initial(m.name)]"] = 1
 		else
 			if(isobserver(m))
-				file_data["[escaped]"] = mob_data
+				var/pos = length(file_data["[escaped]"]) + 1
+				file_data["[escaped]"]["[pos]"] = mob_data
 			else
+				if(!category)
+					category = "others"
+					mob_data += list("name" = m.name, "typepath" = m.type)
+					if(m.ckey)
+						mob_data += list("ckey" = m.ckey)
 				var/pos = length(file_data["[escaped]"]["[category]"]) + 1
 				file_data["[escaped]"]["[category]"]["[pos]"] = mob_data
 	var/datum/station_state/end_state = new /datum/station_state()
