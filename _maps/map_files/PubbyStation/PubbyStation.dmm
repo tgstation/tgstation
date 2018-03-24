@@ -50903,7 +50903,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/sign/directions/evac{
-	step_x = 32
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
