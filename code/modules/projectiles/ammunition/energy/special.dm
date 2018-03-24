@@ -10,6 +10,7 @@
 
 /obj/item/ammo_casing/energy/flora
 	fire_sound = 'sound/effects/stealthoff.ogg'
+	harmful = FALSE
 
 /obj/item/ammo_casing/energy/flora/yield
 	projectile_type = /obj/item/projectile/energy/florayield
@@ -38,10 +39,12 @@
 	select_name = "netting"
 	pellets = 6
 	variance = 40
+	harmful = FALSE
 
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/item/projectile/energy/trap
 	select_name = "snare"
+	harmful = FALSE
 
 /obj/item/ammo_casing/energy/instakill
 	projectile_type = /obj/item/projectile/beam/instakill
