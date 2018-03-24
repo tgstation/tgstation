@@ -31388,6 +31388,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	autoclose = 0;
+	frequency = 1449;
 	heat_proof = 1;
 	id_tag = "incinerator_airlock_exterior";
 	name = "Incinerator Exterior Airlock";
@@ -35925,6 +35926,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	autoclose = 0;
+	frequency = 1449;
 	heat_proof = 1;
 	id_tag = "incinerator_airlock_interior";
 	name = "Incinerator Interior Airlock";
