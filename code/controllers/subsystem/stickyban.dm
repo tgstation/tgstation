@@ -42,11 +42,11 @@ SUBSYSTEM_DEF(stickyban)
 /datum/controller/subsystem/stickyban/proc/Populatedbcache()
 	var/newdbcache = list() //so if we runtime or the db connection dies we don't kill the existing cache
 
-	var/datum/DBQuery/query_stickybans = SSdbcore.NewQuery("SELECT ckey, reason, banning_admin, datetime FROM [format_table_name("stickyban")] ORDERED BY ckey")
+	var/datum/DBQuery/query_stickybans = SSdbcore.NewQuery("SELECT ckey, reason, banning_admin, datetime FROM [format_table_name("stickyban")] ORDER BY ckey")
 	if (!query_stickybans.warn_execute())
 		return
 
-	var/datum/DBQuery/query_stickyban_matches = SSdbcore.NewQuery("SELECT stickyban, matched_ckey, first_matched, exempt FROM [format_table_name("stickyban_matrched_ckey")]")
+	var/datum/DBQuery/query_stickyban_matches = SSdbcore.NewQuery("SELECT stickyban, matched_ckey, first_matched, exempt FROM [format_table_name("stickyban_matched_ckey")] ORDER BY first_matched")
 	if (!query_stickyban_matches.warn_execute())
 		return
 	query_stickyban_matches.SetConversion(4, SSdbcore.NUMBER_CONV) //read exempt as a number, not a string
@@ -55,9 +55,11 @@ SUBSYSTEM_DEF(stickyban)
 		var/list/ban = list()
 
 		ban["ckey"] = query_stickybans.item[1]
-		ban["reason"] = query_stickybans.item[2]
-		ban["banning_admin"] = query_stickybans.item[3]
+		ban["message"] = query_stickybans.item[2]
+		ban["reason"] = "(InGameBan)([query_stickybans.item[3]])"
+		ban["admin"] = query_stickybans.item[3]
 		ban["datetime"] = query_stickybans.item[4]
+		ban["type"] = list("sticky")
 
 		newdbcache["[query_stickybans.item[1]]"] = ban
 
@@ -70,13 +72,13 @@ SUBSYSTEM_DEF(stickyban)
 		match["first_matched"] = query_stickyban_matches.item[3]
 		match["exempt"] = query_stickyban_matches.item[4]
 
-		var/ban = newdbcache[match["stickyban"]]
+		var/ban = newdbcache[query_stickyban_matches.item[1]]
 		if (!ban)
 			continue
 		var/keys = ban["keys"]
 		if (!keys)
 			keys = ban["keys"] = list()
-		keys[match["matched_ckey"]] = match
+		keys[query_stickyban_matches.item[2]] = match
 
 	dbcache = newdbcache
 	dbcacheexpire = world.time+STICKYBAN_DB_CACHE_TIME
