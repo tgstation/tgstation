@@ -567,7 +567,7 @@
 			my_atom.on_reagent_change(ADD_REAGENT)
 		if(!no_react)
 			handle_reactions()
-		if(isliving(my_atom))
+		if(isliving(my_atom)&&!QDELETED(R))
 			R.on_mob_add(my_atom)
 		return TRUE
 
