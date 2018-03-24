@@ -2923,6 +2923,7 @@
 #include "hippiestation\code\modules\mob\living\silicon\robot\login.dm"
 #include "hippiestation\code\modules\mob\living\simple_animal\floor_cluwne.dm"
 #include "hippiestation\code\modules\mob\living\simple_animal\bot\buttbot.dm"
+#include "hippiestation\code\modules\mob\living\simple_animal\bot\medbot.dm"
 #include "hippiestation\code\modules\mob\living\simple_animal\friendly\cat.dm"
 #include "hippiestation\code\modules\mob\living\simple_animal\gremlin\event.dm"
 #include "hippiestation\code\modules\mob\living\simple_animal\gremlin\gremlin.dm"
