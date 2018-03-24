@@ -14,7 +14,8 @@
 	var/obj/item/stock_parts/cell/cell
 	var/powerefficiency = 0.1
 	var/amount = 30
-	var/recharge_amount = 0.1
+	var/recharge_amount = 10
+	var/recharge_counter = 0
 	var/mutable_appearance/beaker_overlay
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
@@ -70,11 +71,15 @@
 	return ..()
 
 /obj/machinery/chem_dispenser/process()
-	if(stat & (BROKEN|NOPOWER))
+	if (recharge_counter >= 4)
+		if(stat & (BROKEN|NOPOWER))
+			return
+		var/usedpower = cell.give(recharge_amount)
+		if(usedpower)
+			use_power(250*recharge_amount)
+		recharge_counter = 0
 		return
-	var/usedpower = cell.give(recharge_amount) //Should always be a gain of one on the UI.
-	if(usedpower)
-		use_power(2500)
+	recharge_counter++
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
 	..()
@@ -306,15 +311,14 @@ obj/machinery/chem_dispenser/update_icon()
 
 
 /obj/machinery/chem_dispenser/RefreshParts()
-	var/time = 0
-	recharge_amount = 0
+	recharge_amount = initial(recharge_amount)
 	var/newpowereff = 0.0666666
 	for(var/obj/item/stock_parts/cell/P in component_parts)
 		cell = P
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		newpowereff += 0.0166666666*M.rating
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		recharge_amount += (C.rating*0.1)
+		recharge_amount *= C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > macrotier)
 			macrotier = M.rating
