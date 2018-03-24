@@ -6035,9 +6035,8 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oB" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	frequency = 1441;
 	id = "syndie_lavaland_inc_in"
 	},
 /obj/structure/sign/warning/vacuum/external{
