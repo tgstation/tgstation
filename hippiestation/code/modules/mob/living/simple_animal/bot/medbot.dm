@@ -9,5 +9,3 @@
 			visible_message("<span class='notice'>[src] dispenses a lollipop.</span>")
 
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-	
-	return .
