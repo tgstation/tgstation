@@ -385,30 +385,18 @@
 	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 	update_canmove()
 
-//Recursive function to find everything a mob is holding.
-/mob/living/get_contents(obj/item/storage/Storage = null)
-	var/list/L = list()
-
-	if(Storage) //If it called itself
-		L += Storage.return_inv()
-		return L
-	else
-		L += src.contents
-		for(var/obj/item/storage/S in src.contents)	//Check for storage items
-			L += get_contents(S)
-		for(var/obj/item/clothing/under/U in src.contents)	//Check for jumpsuit accessories
-			L += U.contents
-		for(var/obj/item/folder/F in src.contents)	//Check for folders
-			L += F.contents
-		return L
-
-/mob/living/proc/check_contents_for(A)
-	var/list/L = src.get_contents()
-
-	for(var/obj/B in L)
-		if(B.type == A)
-			return 1
-	return 0
+//Recursive function to find everything a mob is holding. Really shitty proc tbh.
+/mob/living/get_contents()
+	. = list()
+	. |= list(src)
+	for(var/obj/o in .)
+		var/list/newlist = list()
+		o.SendSignal(COMSIG_TRY_STORAGE_RETURN_INVENTORY, newlist)
+		. |= newlist
+	for(var/obj/item/clothing/under/U in .)
+		. |= U.contents
+	for(var/obj/item/folder/F in .)
+		. |= F.contents
 
 // Living mobs use can_inject() to make sure that the mob is not syringe-proof in general.
 /mob/living/proc/can_inject()
@@ -526,8 +514,8 @@
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
-	if (s_active && !(CanReach(s_active,view_only = TRUE)))
-		s_active.close(src)
+	if(active_storage && !(CanReach(active_storage.parent,view_only = TRUE)))
+		active_storage.close(src)
 
 	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)

@@ -43,12 +43,8 @@
 	if(..())
 		return TRUE
 	if(istype(W, /obj/item/storage/bag/ore))
-		var/obj/item/storage/bag/ore/S = W
-		if(S.collection_mode == 1)
-			for(var/obj/item/stack/ore/O in contents)
-				O.attackby(W,user)
-				return
-
+		for(var/obj/item/stack/ore/O in src)
+			W.SendSignal(COMSIG_PARENT_ATTACKBY, O)
 	if(istype(W, /obj/item/stack/tile))
 		var/obj/item/stack/tile/Z = W
 		if(!Z.use(1))
@@ -60,7 +56,6 @@
 			F.state = L.state
 		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 		return
-
 
 /turf/open/floor/plating/asteroid/singularity_act()
 	if(is_planet_level(z))

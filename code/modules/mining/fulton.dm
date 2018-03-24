@@ -63,8 +63,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
 			if(loc == user && istype(user.back, /obj/item/storage/backpack))
 				var/obj/item/storage/backpack/B = user.back
-				if(B.can_be_inserted(src,stop_messages = 1))
-					B.handle_item_insertion(src)
+				B.SendSignal(COMSIG_TRY_STORAGE_INSERT, src, user, FALSE, FALSE)
 			uses_left--
 			if(uses_left <= 0)
 				user.transferItemToLoc(src, A, TRUE)

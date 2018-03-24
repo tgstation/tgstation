@@ -101,16 +101,14 @@
 
 	//Fill machine with a bag!
 	if(istype(I, /obj/item/storage/bag))
-		var/obj/item/storage/bag/B = I
-		for (var/obj/item/reagent_containers/food/snacks/grown/G in B.contents)
-			B.remove_from_storage(G, src)
-			holdingitems[G] = TRUE
-			if(length(holdingitems) >= limit) //Sanity checking so the blender doesn't overfill
+		var/list/inserted = list()
+		if(I.SendSignal(COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/reagent_containers/food/snacks/grown, src, limit - length(holdingitems), null, null, user, inserted))
+			for(var/i in inserted)
+				holdingitems[i] = TRUE
+			if(!I.contents.len)
+				to_chat(user, "<span class='notice'>You empty [I] into [src].</span>")
+			else
 				to_chat(user, "<span class='notice'>You fill [src] to the brim.</span>")
-				break
-
-		if(!I.contents.len)
-			to_chat(user, "<span class='notice'>You empty [I] into [src].</span>")
 
 		updateUsrDialog()
 		return TRUE

@@ -212,8 +212,12 @@
 /obj/item/storage/backpack/bannerpack
 	name = "nanotrasen banner backpack"
 	desc = "It's a backpack with lots of extra room.  A banner with Nanotrasen's logo is attached, that can't be removed."
-	max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
 	icon_state = "bannerpack"
+
+/obj/item/storage/backpack/bannerpack/Initialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
 
 /obj/item/storage/backpack/bannerpack/red
 	name = "red banner backpack"

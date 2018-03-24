@@ -192,8 +192,12 @@
 
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
-	can_hold = list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate)
-	max_w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/box/syndie_kit/space/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
 
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
 	new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
@@ -212,7 +216,11 @@
 
 /obj/item/storage/box/syndie_kit/chemical
 	name = "boxed chemical kit"
-	storage_slots = 14
+
+/obj/item/storage/box/syndie_kit/chemical/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 14
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()
 	new /obj/item/reagent_containers/glass/bottle/polonium(src)

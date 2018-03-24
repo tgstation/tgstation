@@ -822,13 +822,13 @@
 	if(shoes)
 		shoes.relink_suit(src)
 
-/obj/item/clothing/suit/space/hardsuit/flightsuit/attack_hand(mob/user)
+/obj/item/clothing/suit/space/hardsuit/flightsuit/allow_attack_hand_drop(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(src == H.wear_suit && locked)
 			usermessage("You can not take a locked hardsuit off! Unlock it first!", "boldwarning")
-			return
-	..()
+			return FALSE
+	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/dropped()
 	if(deployedpack)

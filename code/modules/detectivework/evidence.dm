@@ -40,9 +40,8 @@
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
-		if(istype(I.loc, /obj/item/storage))	//in a container.
-			var/obj/item/storage/U = I.loc
-			U.remove_from_storage(I, src)
+		if(I.loc.SendSignal(COMSIG_CONTAINS_STORAGE))	//in a container.
+			I.loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, I, src)
 		if(!user.dropItemToGround(I))
 			return
 

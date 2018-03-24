@@ -214,12 +214,8 @@
 		return
 	if(loc == AM)
 		return
-	if((istype(AM, /obj/item/storage/)) && !((istype(AM, /obj/item/storage/secure)) || (istype(AM, /obj/item/storage/lockbox)))) //If its storage but not secure storage OR a lockbox, then place it inside.
+	if(AM.SendSignal(COMSIG_CONTAINS_STORAGE) && !AM.SendSignal(COMSIG_IS_STORAGE_LOCKED))
 		return
-	if((istype(AM, /obj/item/storage/secure)) || (istype(AM, /obj/item/storage/lockbox)))
-		var/obj/item/storage/secure/S = AM
-		if(!S.locked) //Literal hacks, this works for lockboxes despite incorrect type casting, because they both share the locked var. But if its unlocked, place it inside, otherwise PLANTING C4!
-			return
 
 	to_chat(user, "<span class='notice'>You start planting the bomb...</span>")
 

@@ -72,11 +72,8 @@
 			put_in_hands(I)
 			update_inv_hands()
 		if(slot_in_backpack)
-			var/obj/item/storage/B = back
-			var/prev_jimmies = B.rustle_jimmies
-			B.rustle_jimmies = FALSE //don't conspicously rustle
-			B.handle_item_insertion(I, 1, src)
-			B.rustle_jimmies = prev_jimmies
+			if(!back.SendSignal(COMSIG_TRY_STORAGE_INSERT, I, src, TRUE))
+				not_handled = TRUE
 		else
 			not_handled = TRUE
 
