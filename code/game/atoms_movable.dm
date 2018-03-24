@@ -145,7 +145,7 @@
 	var/atom/movable/pullee = pulling
 	var/turf/T = loc
 	if(pulling)
-		if(pullee && get_dist(src, pullee) > 1)
+		if(pullee && get_dist(src, pullee) > (moving_diagonally ? 2 : 1))
 			stop_pulling()
 
 		if(pullee && pullee.loc != loc && !isturf(pullee.loc) ) //to be removed once all code that changes an object's loc uses forceMove().
@@ -202,6 +202,14 @@
 			if(!. && moving_diagonally == SECOND_DIAG_STEP)
 				setDir(first_step_dir)
 			moving_diagonally = 0
+			if (first_step_dir && pulling && pulling == pullee)
+				// anchored check handled below
+				if(get_dist(src, pulling) > 1) //puller and pullee more than one tile away
+					pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
+					if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
+						stop_pulling()
+				if(pulledby && get_dist(src, pulledby) > 1)//separated from our puller
+					pulledby.stop_pulling()
 			return
 
 	if(!loc || (loc == oldloc && oldloc != newloc))
@@ -214,13 +222,15 @@
 		if(pulling.anchored)
 			stop_pulling()
 			return
-		var/pull_dir = get_dir(src, pulling)
-		if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
-			pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
-			if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
-				stop_pulling()
-		if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
-			pulledby.stop_pulling()
+		if (!moving_diagonally) // not in the middle of a diagonal move
+			// diagonal move situation handled above
+			var/pull_dir = get_dir(src, pulling)
+			if((get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir))) //puller and pullee more than one tile away or in diagonal position
+				pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
+				if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
+					stop_pulling()
+			if(pulledby && get_dist(src, pulledby) > 1)//separated from our puller
+				pulledby.stop_pulling()
 
 
 	last_move = direct
