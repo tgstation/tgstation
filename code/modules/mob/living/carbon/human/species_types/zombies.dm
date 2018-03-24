@@ -66,7 +66,8 @@
 	if(!infection)
 		infection = new()
 		infection.Insert(C)
-
+	C.remove_trait_datum(/datum/trait/nonviolent) //we are zombies and thus have no high function to contemplate the morality of cannibalizing living, screaming people
+	C.remove_trait(TRAIT_PACIFISM)
 
 // Your skin falls off
 /datum/species/krokodil_addict
