@@ -418,6 +418,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		if(gas in GLOB.nonreactive_gases)
 			continue
 		possible = TRUE
+		break
 	if(!possible)
 		return
 
