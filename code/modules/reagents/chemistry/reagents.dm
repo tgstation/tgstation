@@ -32,6 +32,7 @@
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 	var/self_consuming = FALSE
+	var/mobeffectactive = FALSE
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -61,6 +62,7 @@
 
 // Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/M)
+	mobeffectactive = TRUE
 	return
 
 // Called when this reagent is removed while inside a mob
