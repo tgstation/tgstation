@@ -103,7 +103,7 @@
 			SSstickyban.cache[ckey] = ban
 
 			if (!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
-				var/datum/DBQuery/query_remove_stickyban_alt = SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE ckey = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
+				var/datum/DBQuery/query_remove_stickyban_alt = SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
 				query_remove_stickyban_alt.warn_execute()
 
 			log_admin_private("[key_name(usr)] has disassociated [alt] from [ckey]'s sticky ban")
@@ -145,7 +145,7 @@
 			var/ckey = data["ckey"]
 			if (!data["alt"])
 				return
-			if (!CONFIG_GET(flag/ban_legacy_system) || !SSdbcore.Connect())
+			if (CONFIG_GET(flag/ban_legacy_system) || !SSdbcore.Connect())
 				to_chat(usr, "<span class='adminnotice'>No database connection!</span>")
 				return
 			var/alt = ckey(data["alt"])
@@ -180,7 +180,7 @@
 			SSstickyban.cache[ckey] = ban
 
 
-			var/datum/DBQuery/query_exempt_stickyban_alt = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 1 WHERE stickyban = ckey = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
+			var/datum/DBQuery/query_exempt_stickyban_alt = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 1 WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
 			query_exempt_stickyban_alt.warn_execute()
 
 			log_admin_private("[key_name(usr)] has exempted [alt] from [ckey]'s sticky ban")
@@ -192,7 +192,7 @@
 			var/ckey = data["ckey"]
 			if (!data["alt"])
 				return
-			if (!CONFIG_GET(flag/ban_legacy_system) || !SSdbcore.Connect())
+			if (CONFIG_GET(flag/ban_legacy_system) || !SSdbcore.Connect())
 				to_chat(usr, "<span class='adminnotice'>No database connection!</span>")
 				return
 			var/alt = ckey(data["alt"])
@@ -227,7 +227,7 @@
 			SSstickyban.cache[ckey] = ban
 
 
-			var/datum/DBQuery/query_unexempt_stickyban_alt = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 0 WHERE stickyban = ckey = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
+			var/datum/DBQuery/query_unexempt_stickyban_alt = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 0 WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
 			query_unexempt_stickyban_alt.warn_execute()
 
 			log_admin_private("[key_name(usr)] has unexempted [alt] from [ckey]'s sticky ban")
@@ -381,16 +381,20 @@
 			SSstickyban.Populatedbcache()
 		if (SSstickyban.dbcacheexpire)
 			. = SSstickyban.dbcache[ckey]
-			var/list/cachedban = SSstickyban.cache["ckey"]["timeout"]
-			if (cachedban)
-				.["timeout"] = cachedban["timeout"]
-			.["fromdb"] = TRUE
+			//reset the cache incase its a newer ban (but only if we didn't update the cache
+			if (!. && SSstickyban.dbcacheexpire != world.time+STICKYBAN_DB_CACHE_TIME)
+				SSstickyban.dbcacheexpire = 1
+				SSstickyban.Populatedbcache()
+				. = SSstickyban.dbcache[ckey]
+			if (.)
+				var/list/cachedban = SSstickyban.cache["[ckey]"]
+				if (cachedban)
+					.["timeout"] = cachedban["timeout"]
+
+				.["fromdb"] = TRUE
 			return
 
 	. = stickyban2list(world.GetConfig("ban", ckey)) || stickyban2list(world.GetConfig("ban", ckey(ckey))) || list()
-
-	if (!length(.) && ckey != ckey(ckey)) //say that 10 times fast
-		. = stickyban2list(world.GetConfig("ban", ckey(ckey)))
 
 	if (!length(.))
 		return null
@@ -422,6 +426,10 @@
 
 	. -= "reverting"
 	. -= "fromdb"
+	. -= "matches_this_round"
+	. -= "existing_user_matches_this_round"
+	. -= "admin_matches_this_round"
+	. -= "pending_matches_this_round"
 
 	//storing these can sometimes cause sticky bans to start matching everybody
 	//	and isn't even needed for sticky ban matching, as the hub tracks these separately

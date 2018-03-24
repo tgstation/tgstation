@@ -7,6 +7,7 @@
 #define STICKYBAN_MAX_ADMIN_MATCHES 1
 
 /world/IsBanned(key, address, computer_id, type, real_bans_only=FALSE)
+	debug_world_log("isbanned(): '[args.Join("', '")]'")
 	if (!key || (!real_bans_only && (!address || !computer_id)))
 		if(real_bans_only)
 			return FALSE
@@ -16,18 +17,27 @@
 	if (text2num(computer_id) == 2147483647) //this cid causes stickybans to go haywire
 		log_access("Failed Login (invalid cid): [key] [address]-[computer_id]")
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided an invalid Computer ID.)")
-	var/admin = 0
+
+
+	var/admin = FALSE
 	var/ckey = ckey(key)
+
+	//isBanned can get re-called on a user in certain situations, this prevents that leading to repeated messages to admins.
+	var/static/list/checkedckeys = list()
+	//magic voodo to check for a key in a list while also adding that key to the list without having to do two associated lookups
+	var/message = !checkedckeys[ckey]++
+
 	if(GLOB.admin_datums[ckey] || GLOB.deadmins[ckey])
-		admin = 1
+		admin = TRUE
 
 	//Whitelist
 	if(CONFIG_GET(flag/usewhitelist))
 		if(!check_whitelist(ckey))
 			if (admin)
 				log_admin("The admin [key] has been allowed to bypass the whitelist")
-				message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass the whitelist</span>")
-				addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass the whitelist</span>")
+				if (message)
+					message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass the whitelist</span>")
+					addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass the whitelist</span>")
 			else
 				log_access("Failed Login: [key] - Not on whitelist")
 				return list("reason"="whitelist", "desc" = "\nReason: You are not on the white list for this server")
@@ -46,6 +56,7 @@
 	if(!real_bans_only && extreme_popcap && living_player_count() >= extreme_popcap && !admin)
 		log_access("Failed Login: [key] - Population cap reached")
 		return list("reason"="popcap", "desc"= "\nReason: [CONFIG_GET(string/extreme_popcap_message)]")
+
 	if(CONFIG_GET(flag/sql_enabled))
 		if(!SSdbcore.Connect())
 			var/msg = "Ban database connection failure. Key [ckey] not checked"
@@ -74,6 +85,7 @@
 				[expires]"}
 				log_access("Failed Login: [key] [computer_id] [address] - Banned (#[i["id"]])")
 				return list("reason"="Banned","desc"="[desc]")
+
 	var/list/ban = ..()	//default pager ban stuff
 	if (ban)
 		var/bannedckey = "ERROR"
@@ -86,12 +98,19 @@
 		if (!CONFIG_GET(flag/ban_legacy_system) && (SSdbcore.Connect() || length(SSstickyban.dbcache)))
 			ban = get_stickyban_from_ckey(bannedckey)
 			var/list/bancache = list()
+
+			//we need to re-add exempted bans but the exempt code needs to return when a user is exempt
+			//	so we spawn now since bancache is a reference and will have the entries we add later.
+			spawn(1)
+				for(var/bancacheckey in bancache)
+					world.SetConfig("ban", bancacheckey, bancache[bancacheckey])
+
 			while (ban["ckey"] && ban["keys"] && ban["keys"][ckey] && ban["keys"][ckey]["exempt"])
-				if (C || SSstickyban.confirmed_exempt[ckey]) //modifing/re-adding a stickyban makes it re-match everybody
+				if (C || SSstickyban.confirmed_exempt[ckey]) //When we re-add the stickyban isbanned() will run on that user again. This avoids the unintentional recursion.
 					return
 				bancache[ban["ckey"]] = world.GetConfig("ban", ban["ckey"])
 				//Hacky way to ensure somebody exempt from one stickyban doesn't get exempt from all stickybans
-				world.SetConfig("ban", bannedckey, null)
+				world.SetConfig("ban", ban["ckey"], null)
 				var/list/newban = ..()
 				if (!newban || newban["ckey"] == ban["ckey"])
 					SSstickyban.confirmed_exempt[ckey] = TRUE
@@ -101,12 +120,8 @@
 					break
 				ban = get_stickyban_from_ckey(ban["ckey"])
 
-			spawn()
-				for(var/bancacheckey in bancache)
-					world.SetConfig("ban", bancacheckey, bancache[bancacheckey])
-
 		//rogue ban in the process of being reverted.
-		if (cachedban && cachedban["reverting"] || cachedban["timeout"])
+		if (cachedban && (cachedban["reverting"] || cachedban["timeout"]))
 			world.SetConfig("ban", bannedckey, null)
 			return null
 
@@ -158,6 +173,7 @@
 
 				world.SetConfig("ban", bannedckey, null)
 
+				//we always report this
 				log_game("Stickyban on [bannedckey] detected as rogue, [action]")
 				message_admins("Stickyban on [bannedckey] detected as rogue, [action]")
 				//do not convert to timer.
@@ -177,7 +193,7 @@
 
 			if (ban["fromdb"])
 				if(!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
-					var/datum/DBQuery/query_add_match = SSdbcore.NewQuery("INSERT IGNORE INTO [format_table_name("stickyban_matched_ckey")] (matchedckey, stickyban) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(bannedckey)]')")
+					var/datum/DBQuery/query_add_match = SSdbcore.NewQuery("INSERT IGNORE INTO [format_table_name("stickyban_matched_ckey")] (matched_ckey, stickyban) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(bannedckey)]')")
 					query_add_match.warn_execute()
 
 		//byond will not trigger isbanned() for "global" host bans,
@@ -185,8 +201,9 @@
 		//So it's safe to let admins walk thru host/sticky bans here
 		if (admin)
 			log_admin("The admin [key] has been allowed to bypass a matching host/sticky ban on [bannedckey]")
-			message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching host/sticky ban on [bannedckey]</span>")
-			addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching host/sticky ban on [bannedckey]</span>")
+			if (message)
+				message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching host/sticky ban on [bannedckey]</span>")
+				addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching host/sticky ban on [bannedckey]</span>")
 			return null
 
 		if (C) //user is already connected!.
