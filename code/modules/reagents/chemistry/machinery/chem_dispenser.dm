@@ -105,7 +105,7 @@ obj/machinery/chem_dispenser/update_icon()
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER))
 		return
-	var/usedpower = cell.give( 1 / powerefficiency) //Should always be a gain of one on the UI.
+	var/usedpower = cell.give( 10 / powerefficiency) //Should always be a gain of one on the UI.
 	if(usedpower)
 		use_power(2500)
 
@@ -321,7 +321,7 @@ obj/machinery/chem_dispenser/update_icon()
 		newpowereff += 0.0166666666*M.rating
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		time += C.rating
-	recharge_delay = 30/(time/2)         //delay between recharges, double the usual time on lowest 50% less than usual on highest
+	recharge_delay = 3/(time/2)         //delay between recharges, double the usual time on lowest 50% less than usual on highest
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > macrotier)
 			macrotier = M.rating
