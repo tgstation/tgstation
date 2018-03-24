@@ -131,6 +131,10 @@ Class Procs:
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
 
+/obj/machinery/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/redirect, list(COMSIG_ENTER_AREA), CALLBACK(src, .proc/power_change))
+
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
 	if(!speed_process)
