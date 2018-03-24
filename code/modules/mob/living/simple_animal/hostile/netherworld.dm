@@ -63,25 +63,24 @@
 	melee_damage_upper = 10
 	attacktext = "slashes"
 	deathmessage = "unwinds in a a paroxysm of laughter."
-	var/list/linked_imlagre = list()
+	var/list/linked_imlagres = list()
 	var/laughmod = 1 //need this on the mob so it carries over to life, and i like letting admins var as much as they please
 	var/list/laughs = list('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/Initialize(mapload, initial = TRUE)
 	. = ..()
 	laughmod = rand(0.5,1.5) //they laugh the same every time but it's a random pitch and there are three of them with random pitches so it works out
-	if(initial) //use this var to check if it's the first to spawn
-		var/turf/T = get_turf(src) //cache for speed
+	if(initial) //stops infinite spawning be careful
 		summon_the_imlagres(2)
 
-/mob/living/simple_animal/hostile/netherworld/imlagre/proc/summon_the_imlargres(amt_to_add = 1)
-	var/list/total_imlagres = linked_imlarges + src //this is incase you want to continue adding imlarges after you've already generated some
+/mob/living/simple_animal/hostile/netherworld/imlagre/proc/summon_the_imlagres(amt_to_add = 1)
+	var/list/total_imlagres = linked_imlagres + src //this is incase you want to continue adding imlagres after you've already generated some
 	for(var/i in 1 to amt_to_add) //loop that generates the buggers
 		var/newguy = new /mob/living/simple_animal/hostile/netherworld/imlagre(loc, FALSE)
 		total_imlagres += newguy
 	for(var/i in total_imlagres) //loop that relates them
 		var/mob/living/simple_animal/hostile/netherworld/imlagre/needs_to_sync
-		needs_to_sync.linked_imlarges = total_imlagres - needs_to_sync //refers to all related imlagres then removes itself
+		needs_to_sync.linked_imlagres = total_imlagres - needs_to_sync //refers to all related imlagres then removes itself
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/Life()
 	. = ..()
@@ -100,7 +99,7 @@
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/proc/imlagre_revive()
 	var/itlives = FALSE
-	for(var/mob/living/i in linked_imlagre)
+	for(var/mob/living/i in linked_imlagres)
 		if(!i.stat) //if any of them are alive then REVIVE!!
 			itlives = TRUE
 			revive(TRUE)
@@ -108,7 +107,7 @@
 			visible_message("<span class='danger'>[src] winds back together with a [pick(flufftext)] cackle!</span>")
 			adjustBruteLoss(maxHealth * 0.5) //revived at half HP, or, about a carpsful of health
 	if(itlives == FALSE)
-		for(var/mob/living/i in linked_imlagre)
+		for(var/mob/living/i in linked_imlagres)
 			i.visible_message("<span class='danger'>[i]'s corpse explodes in a shower of gore!</span>")
 			i.gib()
 		visible_message("<span class='danger'>[src]'s corpse explodes in a shower of gore!</span>")
