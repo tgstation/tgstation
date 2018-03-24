@@ -14,7 +14,9 @@
 /datum/netdata/proc/pre_send(datum/component/ntnet_interface/interface)
 	// Decrypt the passkey.
 	if(encrypted_passkey && !passkey)
-		passkey = json_decode(XorEncrypt(hextostr(encrypted_passkey, TRUE), SScircuit.cipherkey))
+		var/result = XorEncrypt(hextostr(encrypted_passkey, TRUE), SScircuit.cipherkey)
+		if(length(result) > 1)
+			passkey = json_decode(XorEncrypt(hextostr(encrypted_passkey, TRUE), SScircuit.cipherkey))
 
 	// Encrypt the passkey.
 	if(!encrypted_passkey && passkey)
