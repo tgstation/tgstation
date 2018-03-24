@@ -1,7 +1,7 @@
 /* Hippie good traits */
 /datum/trait/iron_butt
 	name = "Iron Butt"
-	desc = "Your butt is stronger than other butts, it will be half as likley to come off when farting."
+	desc = "Your butt is stronger than other butts, it will be half as likely to come off when farting."
 	value = 1
 	gain_text = "<span class='notice'>Your butt feels STRONGER.</span>"
 	lose_text = "<span class='notice'>Your butt feels weaker.</span>"

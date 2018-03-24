@@ -6,7 +6,7 @@
 	value = -1
 	gain_text = "<span class='danger'>Your butt starts to twitch!</span>"
 	lose_text = "<span class='notice'>Your butt settles down.</span>"
-	medical_record_text = "Patient has a muscular spasam in their rectal sphincter, gaseous discharge may occour."
+	medical_record_text = "Patient has a muscular spasm in their rectal sphincter, gaseous discharge may occour."
 
 /datum/trait/flatulence/on_process()
 	if(prob(3))
