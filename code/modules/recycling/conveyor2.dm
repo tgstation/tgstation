@@ -56,15 +56,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 
 /obj/machinery/conveyor/Destroy()
-	var/list/L = GLOB.conveyors_by_id[id]
-	LAZYREMOVE(L, src)
+	LAZYREMOVE(GLOB.conveyors_by_id[id], src)
 	. = ..()
 
 /obj/machinery/conveyor/vv_edit_var(var_name, var_value)
 	if (var_name == "id")
 		// if "id" is varedited, update our list membership
-		var/list/L = GLOB.conveyors_by_id[id]
-		LAZYREMOVE(L, src)
+		LAZYREMOVE(GLOB.conveyors_by_id[id], src)
 		. = ..()
 		LAZYADD(GLOB.conveyors_by_id[id], src)
 	else
@@ -233,15 +231,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 
 /obj/machinery/conveyor_switch/Destroy()
-	var/list/L = GLOB.conveyors_by_id[id]
-	LAZYREMOVE(L, src)
+	LAZYREMOVE(GLOB.conveyors_by_id[id], src)
 	. = ..()
 
 /obj/machinery/conveyor_switch/vv_edit_var(var_name, var_value)
 	if (var_name == "id")
 		// if "id" is varedited, update our list membership
-		var/list/L = GLOB.conveyors_by_id[id]
-		LAZYREMOVE(L, src)
+		LAZYREMOVE(GLOB.conveyors_by_id[id], src)
 		. = ..()
 		LAZYADD(GLOB.conveyors_by_id[id], src)
 	else
