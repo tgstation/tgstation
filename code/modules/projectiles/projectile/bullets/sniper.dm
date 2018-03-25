@@ -10,8 +10,9 @@
 	var/breakthings = TRUE
 
 /obj/item/projectile/bullet/p50/on_hit(atom/target, blocked = 0)
-	if((blocked != 100) && (!ismob(target) && breakthings))
-		target.ex_act(rand(1,2))
+	if((blocked != 100) && breakthings)
+		if(isobj(target))
+			target.take_damage(80, BRUTE, "bullet", FALSE)
 	return ..()
 
 /obj/item/projectile/bullet/p50/soporific
