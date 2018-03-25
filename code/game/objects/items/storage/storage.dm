@@ -425,6 +425,15 @@
 	if(!can_be_inserted(W, 0 , user))
 		if(contents.len >= storage_slots) //don't use items on the backpack if they don't fit
 			return 1
+
+		var/sum_w_class = W.w_class
+
+		for(var/obj/item/I in contents)
+			sum_w_class += I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
+
+		if(sum_w_class > max_combined_w_class)
+			return 1
+		
 		return 0
 
 	handle_item_insertion(W, 0 , user)
