@@ -67,3 +67,8 @@
 
 /obj/structure/sign/departments/medbay/alt
 	icon_state = "bluecross2"
+
+/obj/structure/sign/departments/surgery
+	name = "\improper SURGERY"
+	desc = "A sign labelling an area containing a surgical center."
+	icon_state = "surgery1"

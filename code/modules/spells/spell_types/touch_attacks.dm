@@ -62,3 +62,9 @@
 
 	action_icon_state = "statue"
 	sound = 'sound/magic/fleshtostone.ogg'
+
+/obj/effect/proc_holder/spell/targeted/touch/flesh_to_stone/weak
+	name = "Minor Flesh to Stone"
+	desc = "This spell charges your hand with the power to turn victims into inert statues for a short period of time."
+	hand_path = "/obj/item/melee/touch_attack/fleshtostone/weak"
+	clothes_req = FALSE

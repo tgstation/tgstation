@@ -529,3 +529,45 @@
 	flashlight_power = 1
 	flags_1 = CONDUCT_1 | DROPDEL_1
 	actions_types = list()
+
+/obj/item/device/flashlight/directional
+	name = "old flashlight"
+	desc = "This poor thing has seen better days, it only emits light in a single direction"
+	icon_state = "oldlight"
+	dir = 4
+	brightness_on = 3
+	var/pointing
+
+/obj/item/device/flashlight/directional/update_brightness(mob/user = null)
+	..()
+	if(light)
+		if(user)
+			dir = user.dir //Someone is holding the light, so aim it where they are facing
+		light.directional = dir2angle(dir)
+		update_light()
+
+/obj/item/device/flashlight/directional/Initialize()
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/device/flashlight/directional/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/device/flashlight/directional/process() //So that the light follows you when you turn without moving
+	if(ismob(loc) && on)
+		if(dir != loc.dir)
+			update_light()
+
+/obj/item/device/flashlight/directional/afterattack(atom/A, mob/living/user, flag, params)
+	..()
+	var/C = user.client
+	if(C)
+		pointing = mouse_angle_from_client(C)
+		dir = user.dir
+		light.directional = pointing
+		update_light()
+
+
+/obj/item/device/flashlight/directional/CanItemAutoclick() //BURN THE SERVER DOWN
+	return TRUE

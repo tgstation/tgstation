@@ -9,7 +9,7 @@
 	icon_dead = "human_male"
 	gender = NEUTER
 	a_intent = INTENT_HARM
-
+	wander = FALSE
 	response_help = "touches"
 	response_disarm = "pushes"
 
@@ -47,7 +47,39 @@
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
 
+/mob/living/simple_animal/hostile/statue/haunted
+	maxHealth = 1000
+	health = 1000
+	vision_range = 10
+	aggro_vision_range = 18
+	move_to_delay = 1
+	melee_damage_lower = 25
+	melee_damage_upper = 25
+	stat_attack = UNCONSCIOUS
 
+/mob/living/simple_animal/hostile/statue/haunted/female
+	icon_state = "human_female"
+
+/mob/living/simple_animal/hostile/statue/haunted/corgi
+	icon_state = "corgi"
+
+/mob/living/simple_animal/hostile/statue/haunted/angel
+	icon_state = "angel"
+
+/mob/living/simple_animal/hostile/statue/haunted/angel/Life()
+	..()
+	update_icons()
+
+/mob/living/simple_animal/hostile/statue/haunted/angel/update_icons()
+	if(!client)
+		if(!target)
+			icon_state = "angel"
+		else
+			if(can_be_seen())
+				icon_state = "angelseen"
+			else
+				icon_state = "angelattack"
+	..()
 
 // No movement while seen code.
 
@@ -226,3 +258,4 @@
 	. = ..()
 	if(can_be_seen(loc))
 		return 1
+

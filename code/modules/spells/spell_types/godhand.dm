@@ -81,6 +81,7 @@
 	on_use_sound = 'sound/magic/fleshtostone.ogg'
 	icon_state = "fleshtostone"
 	item_state = "fleshtostone"
+	var/duration = 240 // in seconds
 
 /obj/item/melee/touch_attack/fleshtostone/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity || target == user || !isliving(target) || !iscarbon(user) || user.lying || user.handcuffed) //getting hard after touching yourself would also be bad
@@ -98,5 +99,8 @@
 		..()
 		return
 	M.Stun(40)
-	M.petrify()
+	M.petrify(duration)
 	..()
+
+/obj/item/melee/touch_attack/fleshtostone/weak
+	duration = 20

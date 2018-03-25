@@ -910,3 +910,13 @@
 	spellname = "sacred flame"
 	icon_state ="booksacredflame"
 	desc = "Become one with the flames that burn within... and invite others to do so as well."
+
+/obj/item/spellbook/oneuse/weakpetrify
+	spell = /obj/effect/proc_holder/spell/targeted/touch/flesh_to_stone/weak
+	spellname = "minor flesh to stone"
+	icon_state ="book7"
+	desc = "The unfortunate result of an experiment to obtain eternal life."
+
+/obj/item/spellbook/oneuse/weakpetrify/recoil(mob/living/carbon/user)
+	if(ishuman(user))
+		user.petrify(20)

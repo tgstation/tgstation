@@ -540,21 +540,22 @@
 	return TRUE
 
 
-/obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
+/obj/machinery/light/proc/flicker(var/amount = rand(10, 20), lit = TRUE)
 	set waitfor = 0
 	if(flickering)
 		return
-	flickering = 1
-	if(on && status == LIGHT_OK)
+	if(status == LIGHT_OK)
+		flickering = TRUE
 		for(var/i = 0; i < amount; i++)
 			if(status != LIGHT_OK)
 				break
 			on = !on
 			update(0)
-			sleep(rand(5, 15))
-		on = (status == LIGHT_OK)
+			sleep(rand(1, 5))
+		on = (lit && status == LIGHT_OK)
+		flickering = FALSE
 		update(0)
-	flickering = 0
+
 
 // ai attack - make lights flicker, because why not
 
@@ -807,3 +808,4 @@
 	layer = 2.5
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
+

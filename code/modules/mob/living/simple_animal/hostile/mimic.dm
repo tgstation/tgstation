@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	var/idledamage = TRUE
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/simple_animal/hostile/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = 0, no_googlies = FALSE)
+/mob/living/simple_animal/hostile/mimic/copy/Initialize(mapload, atom/movable/copy, mob/living/creator, destroy_original = 0, no_googlies = FALSE)
 	. = ..()
 	if (no_googlies)
 		overlay_googly_eyes = FALSE
@@ -115,8 +115,6 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	..()
 	if(idledamage && !target && !ckey) //Objects eventually revert to normal if no one is around to terrorize
 		adjustBruteLoss(1)
-	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
-		death()
 
 /mob/living/simple_animal/hostile/mimic/copy/death()
 	for(var/atom/movable/M in src)
@@ -133,12 +131,12 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		creator = owner
 		faction |= "[REF(owner)]"
 
-/mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject(obj/O)
+/mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject(atom/movable/O)
 	if((isitem(O) || isstructure(O)) && !is_type_in_list(O, GLOB.protected_objects))
 		return 1
 	return 0
 
-/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/user, destroy_original = 0)
+/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(atom/movable/O, mob/living/user, destroy_original = 0)
 	if(destroy_original || CheckObject(O))
 		O.forceMove(src)
 		name = O.name
@@ -271,3 +269,65 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		return
 	icon_state = TrueGun.icon_state
 	icon_living = TrueGun.icon_state
+
+/mob/living/simple_animal/hostile/mimic/copy/mob // Exclusive to the necro staff
+	idledamage = FALSE
+	overlay_googly_eyes = FALSE
+	see_in_dark = 13
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	vision_range = 30
+	aggro_vision_range = 30
+	search_objects = 1
+	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	lose_patience_timeout = 6000
+	speak_emote = list("groans","wails","moans")
+	environment_target_typecache = list(
+	/obj/machinery/door,	//These are slaves, magically bound to hunt down their target, they aren't going to wait for someone to open a door
+	/obj/structure/window,
+	/obj/structure/closet,
+	/obj/structure/table,
+	/obj/structure/grille,
+	/obj/structure/girder,
+	/obj/structure/rack,
+	/obj/structure/barricade)
+	var/obj/item/gun/magic/staff/necro/home
+	var/atom/marked
+
+
+/mob/living/simple_animal/hostile/mimic/copy/mob/CopyObject(atom/movable/O, mob/living/creator, destroy_original = 0)
+	. = ..()
+	if(.)
+		add_overlay(mutable_appearance('icons/mob/mob.dmi', "necro"))
+		if(isliving(O))
+			var/mob/living/L = O
+			health = L.maxHealth
+			if(isanimal(O))
+				var/mob/living/simple_animal/A = O
+				attack_sound = A.attack_sound
+				icon_state = A.icon_living
+			else if(ishuman(O))
+				var/mob/living/carbon/human/H = O
+				if(H.dna)
+					var/datum/species/S = H.dna.species
+					attack_sound = S.attack_sound
+
+/mob/living/simple_animal/hostile/mimic/copy/mob/CheckObject(atom/movable/O)
+	if(ismob(O))
+		var/mob/M = O
+		if(M.stat == DEAD)
+			return TRUE
+	return FALSE
+
+/mob/living/simple_animal/hostile/mimic/copy/mob/Destroy()
+	if(home)
+		home.souls -= src
+	..()
+
+/mob/living/simple_animal/hostile/mimic/copy/mob/CanAttack(atom/the_target)
+	if(the_target == marked)
+		if(ishuman(marked) && prob(2))
+			say("Join us [marked]...")
+		return TRUE
+	else
+		return ..()
