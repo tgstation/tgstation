@@ -1,4 +1,5 @@
 #define MAX_TICKS_TO_MAKE_UP 3 //how many missed ticks will we attempt to make up for this run.
+#define MAX_THROWING_DIST 1280 // 5 z-levels on default width
 
 SUBSYSTEM_DEF(throwing)
 	name = "Throwing"
@@ -106,6 +107,10 @@ SUBSYSTEM_DEF(throwing)
 			return
 
 		dist_travelled++
+		
+		if (dist_travelled > MAX_THROWING_DIST)
+			finalize()
+			return
 
 /datum/thrownthing/proc/finalize(hit = FALSE, target=null)
 	set waitfor = 0
