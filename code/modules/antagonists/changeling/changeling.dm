@@ -85,7 +85,6 @@
 			B.vital = TRUE
 			B.decoy_override = FALSE
 	remove_changeling_powers()
-	owner.objectives -= objectives
 	. = ..()
 
 /datum/antagonist/changeling/proc/remove_clownmut()

@@ -43,7 +43,7 @@
 	name = "Halo"
 	icon_state = "halo"
 	desc = "The holiest of all headwear."
-	alternate_worn_layer = BELOW_MOB_LAYER
+	alternate_worn_layer = BODY_BEHIND_LAYER
 
 /obj/item/clothing/head/hippie/halo/spacejesus
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF

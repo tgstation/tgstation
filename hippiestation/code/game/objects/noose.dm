@@ -89,6 +89,10 @@
 	if(!in_range(user, src) || user.stat || user.restrained() || !iscarbon(M))
 		return FALSE
 
+	if (!M.get_bodypart("head"))
+		to_chat(user, "<span class='warning'>[M] has no head!</span>")
+		return FALSE
+
 	if(M.loc != src.loc) return FALSE //Can only noose someone if they're on the same tile as noose
 
 	add_fingerprint(user)

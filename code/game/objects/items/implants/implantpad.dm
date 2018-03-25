@@ -22,6 +22,9 @@
 
 
 /obj/item/implantpad/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(case && user.is_holding(src))
 		user.put_in_active_hand(case)
 
@@ -30,9 +33,6 @@
 
 		add_fingerprint(user)
 		update_icon()
-	else
-		return ..()
-
 
 /obj/item/implantpad/attackby(obj/item/implantcase/C, mob/user, params)
 	if(istype(C, /obj/item/implantcase))

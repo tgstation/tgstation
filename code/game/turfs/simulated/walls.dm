@@ -138,7 +138,7 @@
 
 /turf/closed/wall/attack_paw(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 
 /turf/closed/wall/attack_animal(mob/living/simple_animal/M)
@@ -162,12 +162,13 @@
 	return TRUE
 
 /turf/closed/wall/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
 	playsound(src, 'sound/weapons/genhit.ogg', 25, 1)
-	src.add_fingerprint(user)
-	..()
-
+	add_fingerprint(user)
 
 /turf/closed/wall/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -217,6 +218,11 @@
 	//Poster stuff
 	else if(istype(W, /obj/item/poster))
 		place_poster(W,user)
+		return TRUE
+	//wall mounted IC assembly stuff
+	else if(istype(W, /obj/item/device/electronic_assembly/wallmount))
+		var/obj/item/device/electronic_assembly/wallmount/A = W
+		A.mount_assembly(src, user)
 		return TRUE
 
 	return FALSE
@@ -303,5 +309,5 @@
 	cut_overlay(dent_decals)
 	LAZYADD(dent_decals, decal)
 	add_overlay(dent_decals)
-	
+
 #undef MAX_DENT_DECALS

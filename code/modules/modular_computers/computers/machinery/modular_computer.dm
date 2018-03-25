@@ -37,6 +37,9 @@
 	return ..()
 
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
+	. = ..()
+	if(.)
+		return
 	if(cpu)
 		cpu.attack_ghost(user)
 
@@ -92,16 +95,19 @@
 	if(cpu)
 		cpu.AltClick(user)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 // On-click handling. Turns on the computer if it's off and opens the GUI.
-/obj/machinery/modular_computer/attack_hand(mob/user)
+/obj/machinery/modular_computer/interact(mob/user)
 	if(cpu)
-		cpu.attack_self(user) // CPU is an item, that's why we route attack_hand to attack_self
+		return cpu.interact(user) // CPU is an item, that's why we route attack_hand to attack_self
+	else
+		return ..()
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
 /obj/machinery/modular_computer/process()
 	if(cpu)
 		// Keep names in sync.
-		cpu.name = src.name
+		cpu.name = name
 		cpu.process()
 
 // Used in following function to reduce copypaste
@@ -113,7 +119,6 @@
 			cpu.shutdown_computer(0)
 	stat |= NOPOWER
 	update_icon()
-
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()

@@ -216,6 +216,7 @@
 							RGNT.volume += RG.volume
 							RGNT.data += RG.data
 							qdel(RG)
+						RC.on_reagent_change()
 					else
 						surroundings -= RC
 			else if(ispath(A, /obj/item/stack))

@@ -157,6 +157,9 @@
 	. = ..()
 
 /obj/structure/window/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!can_be_reached(user))
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -166,7 +169,6 @@
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
-
 
 /obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)	//used by attack_alien, attack_animal, and attack_slime
 	if(!can_be_reached(user))
@@ -699,6 +701,9 @@
 	update_icon()
 
 /obj/structure/window/paperframe/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	add_fingerprint(user)
 	if(user.a_intent != INTENT_HARM)
 		user.changeNext_move(CLICK_CD_MELEE)

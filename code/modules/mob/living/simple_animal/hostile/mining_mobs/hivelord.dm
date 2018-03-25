@@ -12,7 +12,6 @@
 	ranged = 1
 	vision_range = 5
 	aggro_vision_range = 9
-	idle_vision_range = 5
 	speed = 3
 	maxHealth = 75
 	health = 75
@@ -241,7 +240,6 @@
 	move_to_delay = 14
 	vision_range = 5
 	aggro_vision_range = 9
-	idle_vision_range = 5
 	speed = 3
 	faction = list("mining")
 	weather_immunities = list("lava","ash")

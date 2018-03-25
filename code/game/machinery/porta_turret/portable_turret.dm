@@ -162,18 +162,8 @@
 	remove_control()
 	return ..()
 
-
-/obj/machinery/porta_turret/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/porta_turret/attack_hand(mob/user)
+/obj/machinery/porta_turret/ui_interact(mob/user)
 	. = ..()
-	if(.)
-		return
-
-	interact(user)
-
-/obj/machinery/porta_turret/interact(mob/user)
 	var/dat
 	dat += "Status: <a href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</a><br>"
 	dat += "Behaviour controls are [locked ? "locked" : "unlocked"]<br>"
@@ -192,7 +182,7 @@
 				dat += "Assume direct control : <a href='?src=[REF(src)];operation=manual'>Manual Control</a><br>"
 		else
 			dat += "Warning! Remote control protocol enabled.<br>"
-			
+
 
 	var/datum/browser/popup = new(user, "autosec", "Automatic Portable Turret Installation", 300, 300)
 	popup.set_content(dat)
@@ -364,27 +354,12 @@
 				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
 				cover.parent_turret = src	//assign the cover its parent_turret, which would be this (src)
 
-	if(stat & (NOPOWER|BROKEN))
-		if(!always_up)
-			//if the turret has no power or is broken, make the turret pop down if it hasn't already
-			popDown()
+	if(!on || (stat & (NOPOWER|BROKEN)) || manual_control)
 		return
 
-	if(!on)
-		if(!always_up)
-			//if the turret is off, make it pop down
-			popDown()
-		return
-
-	if(manual_control)
-		return
 	var/list/targets = list()
-	var/static/things_to_scan = typecacheof(list(/mob/living, /obj/mecha))
-
-	for(var/A in typecache_filter_list(view(scan_range, base), things_to_scan))
-		var/atom/AA = A
-
-		if(AA.invisibility > SEE_INVISIBLE_LIVING)
+	for(var/mob/A in view(scan_range, base))
+		if(A.invisibility > SEE_INVISIBLE_LIVING)
 			continue
 
 		if(check_anomalies)//if it's set to check for simple animals
@@ -423,17 +398,17 @@
 			else if(check_anomalies) //non humans who are not simple animals (xenos etc)
 				if(!in_faction(C))
 					targets += C
+	for(var/A in GLOB.mechas_list)
+		if((get_dist(A, base) < scan_range) && can_see(base, A, scan_range))
+			var/obj/mecha/Mech = A
+			if(Mech.occupant && !in_faction(Mech.occupant)) //If there is a user and they're not in our faction
+				if(assess_perp(Mech.occupant) >= 4)
+					targets += Mech
 
-		if(ismecha(A))
-			var/obj/mecha/M = A
-			//If there is a user and they're not in our faction
-			if(M.occupant && !in_faction(M.occupant))
-				if(assess_perp(M.occupant) >= 4)
-					targets += M
-
-	if(!tryToShootAt(targets))
-		if(!always_up)
-			popDown() // no valid targets, close the cover
+	if(targets.len)
+		tryToShootAt(targets)
+	else if(!always_up)
+		popDown() // no valid targets, close the cover
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)
@@ -582,6 +557,8 @@
 	if(controllock)
 		return
 	src.on = on
+	if(!on)
+		popDown()
 	src.mode = mode
 	power_change()
 
@@ -832,7 +809,7 @@
 					user << browse(null, "window=turretid")
 			else
 				if (user.machine==src)
-					src.attack_hand(user)
+					attack_hand(user)
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
@@ -851,7 +828,8 @@
 	else
 		to_chat(user, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
 
-/obj/machinery/turretid/attack_hand(mob/user as mob)
+/obj/machinery/turretid/ui_interact(mob/user)
+	. = ..()
 	if ( get_dist(src, user) > 0 )
 		if ( !(issilicon(user) || IsAdminGhost(user)) )
 			to_chat(user, "<span class='notice'>You are too far away.</span>")
@@ -859,7 +837,6 @@
 			user << browse(null, "window=turretid")
 			return
 
-	user.set_machine(src)
 	var/t = ""
 
 	if(locked && !(issilicon(user) || IsAdminGhost(user)))
@@ -886,7 +863,7 @@
 		toggle_on()
 	else if (href_list["toggleLethal"])
 		toggle_lethal()
-	src.attack_hand(usr)
+	attack_hand(usr)
 
 /obj/machinery/turretid/proc/toggle_lethal()
 	lethal = !lethal
@@ -1013,7 +990,8 @@
 	if(properties["team_color"])
 		team_color = properties["team_color"]
 
-/obj/machinery/porta_turret/lasertag/interact(mob/user)
+/obj/machinery/porta_turret/lasertag/ui_interact(mob/user)
+	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(team_color == "blue" && istype(H.wear_suit, /obj/item/clothing/suit/redtag))

@@ -13,7 +13,3 @@
 /datum/antagonist/greentext/on_gain()
 	forge_objectives()
 	. = ..()
-
-/datum/antagonist/greentext/on_removal()
-	owner.objectives -= objectives
-	. = ..()

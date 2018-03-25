@@ -54,10 +54,10 @@ Pipenet stuff; housekeeping
 */
 
 /obj/machinery/atmospherics/components/nullifyNode(i)
-	..()
 	if(nodes[i])
 		nullifyPipenet(parents[i])
 		QDEL_NULL(airs[i])
+	..()
 
 /obj/machinery/atmospherics/components/on_construction()
 	..()

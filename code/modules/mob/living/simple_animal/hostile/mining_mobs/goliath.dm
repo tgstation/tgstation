@@ -25,8 +25,8 @@
 	attacktext = "pulverizes"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
+	vision_range = 5
 	aggro_vision_range = 9
-	idle_vision_range = 5
 	anchored = TRUE //Stays anchored until death as to be unpullable
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"

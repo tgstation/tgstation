@@ -78,6 +78,11 @@
 	. = ..()
 	AddComponent(/datum/component/spell_catalyst)
 
+/obj/item/melee/flyswatter
+	force = 2
+	throwforce = 2
+	attack_verb = list("swatted", "smacked", "slapped", "whacked") // if it seems too suggestive may remove, this isnt an ERP item
+
 /obj/item/pimpstick
 	name = "pimp stick"
 	desc = "A gold-rimmed cane, with a gleaming diamond set at the top. Great for bashing in kneecaps."

@@ -36,6 +36,7 @@
 		return
 	. = ..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/clockwork/city_of_cogs_rift/attack_hand(atom/movable/AM)
 	beckon(AM)
 

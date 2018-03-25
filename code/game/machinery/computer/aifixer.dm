@@ -18,12 +18,8 @@
 	else
 		return ..()
 
-/obj/machinery/computer/aifixer/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/aifixer/interact(mob/user)
+/obj/machinery/computer/aifixer/ui_interact(mob/user)
+	. = ..()
 
 	var/dat = ""
 
@@ -34,6 +30,12 @@
 
 		if (src.occupier.laws.zeroth)
 			laws += "<b>0:</b> [src.occupier.laws.zeroth]<BR>"
+
+		for (var/index = 1, index <= src.occupier.laws.hacked.len, index++)
+			var/law = src.occupier.laws.hacked[index]
+			if (length(law) > 0)
+				var/num = ionnum()
+				laws += "<b>[num]:</b> [law]<BR>"
 
 		for (var/index = 1, index <= src.occupier.laws.ion.len, index++)
 			var/law = src.occupier.laws.ion[index]
@@ -98,6 +100,7 @@
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
 		active = TRUE
 		add_fingerprint(usr)
+	updateUsrDialog()
 
 /obj/machinery/computer/aifixer/update_icon()
 	..()
