@@ -116,6 +116,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if("openLink")
 			src << link(href_list["link"])
 
+	var/datum/real_src = hsrc
+	if(QDELETED(real_src))
+		return
+
 	..()	//redirect to hsrc.Topic()
 
 /client/proc/is_content_unlocked()
