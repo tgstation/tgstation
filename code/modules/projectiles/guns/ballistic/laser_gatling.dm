@@ -29,6 +29,7 @@
 /obj/item/minigunpack/process()
 	overheat = max(0, overheat - heat_diffusion)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/minigunpack/attack_hand(var/mob/living/carbon/user)
 	if(src.loc == user)
 		if(!armed)
@@ -57,6 +58,7 @@
 		user.dropItemToGround(gun, TRUE)
 
 /obj/item/minigunpack/MouseDrop(atom/over_object)
+	. = ..()
 	if(armed)
 		return
 	if(iscarbon(usr))

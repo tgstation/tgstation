@@ -1,6 +1,0 @@
-author: "TheMythicGhost"
-delete-after: True
-changes:
-    -rscadd: "New Integrated Circuit Converter Components: hsv2hex and rgb2hex for smooth color transitions, woo!"
-    -imageadd: "Added icons for the new component chips."
-    -rscadd: "New Integrated Circuit Component: AI Vox Sound Circuit"

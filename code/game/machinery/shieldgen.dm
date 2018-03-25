@@ -120,6 +120,9 @@
 			update_icon()
 
 /obj/machinery/shieldgen/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(locked)
 		to_chat(user, "<span class='warning'>The machine is locked, you are unable to use it!</span>")
 		return
@@ -358,6 +361,9 @@
 		return ..()
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!anchored)
 		to_chat(user, "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>")
 		return
@@ -420,9 +426,6 @@
 	gen_primary = null
 	gen_secondary = null
 	return ..()
-
-/obj/machinery/shieldwall/attack_hand(mob/user)
-	return
 
 /obj/machinery/shieldwall/process()
 	if(needs_power)

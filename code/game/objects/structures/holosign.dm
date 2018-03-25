@@ -22,6 +22,9 @@
 	return ..()
 
 /obj/structure/holosign/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
 	take_damage(5 , BRUTE, "melee", 1)
@@ -112,6 +115,9 @@
 	shockcd = FALSE
 
 /obj/structure/holosign/barrier/cyborg/hacked/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!shockcd)
 		if(ismob(user))
 			var/mob/living/M = user

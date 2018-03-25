@@ -1,12 +1,13 @@
 /obj/structure/plasticflaps
-	name = "plastic flaps"
-	desc = "Definitely can't get past those. No way."
+	name = "airtight plastic flaps"
+	desc = "Heavy duty, airtight, plastic flaps. Definitely can't get past those. No way."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "plasticflaps"
 	armor = list("melee" = 100, "bullet" = 80, "laser" = 80, "energy" = 100, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 50, "acid" = 50)
 	density = FALSE
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
+	CanAtmosPass = ATMOS_PASS_NO
 	var/state = PLASTIC_FLAPS_NORMAL
 
 /obj/structure/plasticflaps/examine(mob/user)
@@ -76,7 +77,6 @@
 	if(ismecha(A))
 		return 0
 
-
 	else if(isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if(isbot(A)) //Bots understand the secrets
@@ -92,17 +92,13 @@
 		new /obj/item/stack/sheet/plastic/five(loc)
 	qdel(src)
 
-/obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
-	name = "airtight plastic flaps"
-	desc = "Heavy duty, airtight, plastic flaps."
-	CanAtmosPass = ATMOS_PASS_NO
+/obj/structure/plasticflaps/Initialize()
+ 	. = ..()
+ 	air_update_turf(TRUE)
 
-/obj/structure/plasticflaps/mining/New()
-	air_update_turf(1)
-	. = ..()
-
-/obj/structure/plasticflaps/mining/Destroy()
+/obj/structure/plasticflaps/Destroy()
 	var/atom/oldloc = loc
 	. = ..()
 	if (oldloc)
 		oldloc.air_update_turf(1)
+		
