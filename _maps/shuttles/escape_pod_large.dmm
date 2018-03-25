@@ -8,9 +8,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
-"m" = (
-/turf/open/space/basic,
-/area/space)
 "r" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
@@ -83,13 +80,16 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
+"W" = (
+/turf/template_noop,
+/area/template_noop)
 "Z" = (
 /obj/structure/shuttle/engine/propulsion/burst,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
 
 (1,1,1) = {"
-m
+W
 B
 B
 u
@@ -121,7 +121,7 @@ A
 Z
 "}
 (5,1,1) = {"
-m
+W
 B
 B
 u
