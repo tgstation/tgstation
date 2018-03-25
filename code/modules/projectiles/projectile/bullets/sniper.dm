@@ -12,7 +12,8 @@
 /obj/item/projectile/bullet/p50/on_hit(atom/target, blocked = 0)
 	if((blocked != 100) && breakthings)
 		if(isobj(target))
-			target.take_damage(80, BRUTE, "bullet", FALSE)
+			var/obj/O = target
+			O.take_damage(80, BRUTE, "bullet", FALSE)
 	return ..()
 
 /obj/item/projectile/bullet/p50/soporific
