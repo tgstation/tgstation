@@ -399,7 +399,7 @@
 	if (!length(.))
 		return null
 
-/proc/stickyban2list(var/ban)
+/proc/stickyban2list(ban)
 	if (!ban)
 		return null
 	. = params2list(ban)
@@ -413,9 +413,10 @@
 	.["type"] = splittext(.["type"], ",")
 	.["IP"] = splittext(.["IP"], ",")
 	.["computer_id"] = splittext(.["computer_id"], ",")
+	. -= "fromdb"
 
 
-/proc/list2stickyban(var/list/ban)
+/proc/list2stickyban(list/ban)
 	if (!ban || !islist(ban))
 		return null
 	. = ban.Copy()
@@ -425,7 +426,6 @@
 		.["type"] = jointext(.["type"], ",")
 
 	. -= "reverting"
-	. -= "fromdb"
 	. -= "matches_this_round"
 	. -= "existing_user_matches_this_round"
 	. -= "admin_matches_this_round"

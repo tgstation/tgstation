@@ -12,6 +12,24 @@ SUBSYSTEM_DEF(stickyban)
 /datum/controller/subsystem/stickyban/Initialize(timeofday)
 	var/list/bannedkeys = sticky_banned_ckeys()
 	//sanitize the sticky ban list
+
+	//delete db bans that no longer exist in the database and add new legacy bans to the database
+	if (!CONFIG_GET(flag/ban_legacy_system) && (SSdbcore.Connect() || length(SSstickyban.dbcache)))
+		for (var/oldban in (world.GetConfig("ban") - bannedkeys))
+			var/ckey = ckey(oldban)
+			if (ckey != oldban && (ckey in bannedkeys))
+				continue
+
+			var/list/ban = params2list(world.GetConfig("ban", oldban))
+			if (ban && !ban["fromdb"])
+				if (!import_to_db(ckey, ban))
+					log_world("Could not import stickyban on [oldban] into the database. Ignoring")
+					continue
+				dbcacheexpire = 0
+				bannedkeys += ckey
+			world.SetConfig("ban", oldban, null)
+
+
 	for (var/bannedkey in bannedkeys)
 		var/ckey = ckey(bannedkey)
 		var/list/ban = get_stickyban_from_ckey(bannedkey)
@@ -29,14 +47,8 @@ SUBSYSTEM_DEF(stickyban)
 		ban["pending_matches_this_round"] = list()
 
 		cache[ckey] = ban
+		world.SetConfig("ban", ckey, list2stickyban(ban))
 
-	for (var/bannedckey in cache)
-		world.SetConfig("ban", bannedckey, list2stickyban(cache[bannedckey]))
-
-
-	if (!CONFIG_GET(flag/ban_legacy_system) && (SSdbcore.Connect() || length(SSstickyban.dbcache)))
-		for (var/oldban in (world.GetConfig("ban") - bannedkeys))
-			world.SetConfig("ban", oldban, null) //remove bans that no longer exist.
 	return ..()
 
 /datum/controller/subsystem/stickyban/proc/Populatedbcache()
@@ -82,3 +94,31 @@ SUBSYSTEM_DEF(stickyban)
 
 	dbcache = newdbcache
 	dbcacheexpire = world.time+STICKYBAN_DB_CACHE_TIME
+
+
+/datum/controller/subsystem/stickyban/proc/import_to_db(ckey, list/ban)
+	. = FALSE
+	if (!ban["admin"])
+		ban["admin"] = "LEGACY"
+	if (!ban["message"])
+		ban["message"] = "Evasion"
+
+	var/datum/DBQuery/query_create_stickyban = SSdbcore.NewQuery("INSERT INTO [format_table_name("stickyban")] (ckey, reason, banning_admin) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(ban["message"])]', '[sanitizeSQL(ban["admin"])]')")
+	if (!query_create_stickyban.warn_execute())
+		return
+
+	if (ban["keys"])
+		var/list/keys = splittext(ban["keys"], ",")
+		var/l = length(keys)
+		var/list/sqlkeys = new (l)
+		for (var/i in 1 to l)
+			var/key = keys[i]
+			var/list/sqlkey = list()
+			sqlkey["stickyban"] = "'[sanitizeSQL(ckey)]'"
+			sqlkey["matched_ckey"] = "'[sanitizeSQL(ckey(key))]'"
+			sqlkeys[i] = sqlkey
+		if (length(sqlkeys))
+			SSdbcore.MassInsert(format_table_name("stickyban_matched_ckey"), sqlkeys, FALSE, TRUE)
+
+
+	return TRUE
