@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(cinematics)
 	for(var/A in GLOB.cinematics)
 		var/datum/cinematic/C = A
 		if(C == src)
-			continue 
+			continue
 		if(C.is_global || !is_global)
 			return //Can't play two global or local cinematics at the same time
 
@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(cinematics)
 			if(is_global)
 				M.notransform = TRUE
 				locked += M
-	
+
 	//Actually play it
 	content()
 	//Cleanup
@@ -207,6 +207,17 @@ GLOBAL_LIST_EMPTY(cinematics)
 
 /datum/cinematic/nuke_far/content()
 	cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
+	special()
+
+/datum/cinematic/clownop
+	id = CINEMATIC_NUKE_CLOWNOP
+	cleanup_time = 100
+
+/datum/cinematic/clownop/content()
+	flick("intro_nuke",screen)
+	sleep(35)
+	cinematic_sound(sound('sound/items/airhorn.ogg'))
+	flick("summary_selfdes",screen) //???
 	special()
 
 /* Intended usage.

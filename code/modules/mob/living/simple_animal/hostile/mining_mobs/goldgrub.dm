@@ -10,7 +10,6 @@
 	icon_gib = "syndicate_gib"
 	vision_range = 2
 	aggro_vision_range = 9
-	idle_vision_range = 2
 	move_to_delay = 5
 	friendly = "harmlessly rolls into"
 	maxHealth = 45
@@ -77,5 +76,5 @@
 	return
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	idle_vision_range = 9
+	vision_range = 9
 	. = ..()

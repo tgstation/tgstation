@@ -446,14 +446,14 @@
 	var/image/holder = hud_list[DIAG_STAT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if((!isturf(loc))||hide) //if not on the ground dont show overlay
+	if((!isturf(loc))||hide) //if not on the ground don't show overlay
 		holder.icon_state = null
 	else if(!battery)
 		holder.icon_state = "hudoffline"
 	else if(battery.charge == 0)
 		holder.icon_state = "hudoffline"
 	else if(combat_circuits) //has a circuit that can harm people
-		holder.icon_state = "hudwarn"
+		holder.icon_state = prefered_hud_icon + "-red"
 	else //Bot is on and not dangerous
 		holder.icon_state = prefered_hud_icon
 

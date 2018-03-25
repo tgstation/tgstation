@@ -77,10 +77,10 @@
 	mouseObject = object
 	mouseControlObject = control
 	if(mob && LAZYLEN(mob.mousemove_intercept_objects))
-		for(var/obj/item/I in mob.mousemove_intercept_objects)
-			I.onMouseMove(object, location, control, params)
+		for(var/datum/D in mob.mousemove_intercept_objects)
+			D.onMouseMove(object, location, control, params)
 
-/obj/item/proc/onMouseMove(object, location, control, params)
+/datum/proc/onMouseMove(object, location, control, params)
 	return
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)

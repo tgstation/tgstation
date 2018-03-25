@@ -196,10 +196,9 @@
 	return ..()
 	
 /datum/reagent/consumable/ethanol/driestmartini/reaction_turf(turf/open/T, reac_volume)
-	if(istype(T) && T.wet)
-		T.wet_time = max(0, T.wet_time-reac_volume*5)
-		T.HandleWet()
-		
+	if (istype(T))
+		T.MakeDry(ALL, TRUE, reac_volume * 5 SECONDS)
+
 /datum/reagent/consumable/ethanol/martini/on_mob_life(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M

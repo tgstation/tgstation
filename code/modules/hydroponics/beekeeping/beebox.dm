@@ -192,8 +192,8 @@
 
 	..()
 
-
-/obj/structure/beebox/attack_hand(mob/user)
+/obj/structure/beebox/interact(mob/user)
+	. = ..()
 	if(!user.bee_friendly())
 		//Time to get stung!
 		var/bees = FALSE

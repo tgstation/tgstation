@@ -78,7 +78,7 @@
 
 //you can wipe off lipstick with paper!
 /obj/item/paper/attack(mob/M, mob/user)
-	if(user.zone_selected == "mouth")
+	if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		if(!ismob(M))
 			return
 
@@ -109,12 +109,12 @@
 
 /obj/item/razor/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	shave(user, "mouth")
-	shave(user, "head")//doesnt need to be "head" specifically, but whatever 
+	shave(user, BODY_ZONE_PRECISE_MOUTH)
+	shave(user, BODY_ZONE_HEAD)//doesnt need to be BODY_ZONE_HEAD specifically, but whatever
 	return BRUTELOSS
 
-/obj/item/razor/proc/shave(mob/living/carbon/human/H, location = "mouth")
-	if(location == "mouth")
+/obj/item/razor/proc/shave(mob/living/carbon/human/H, location = BODY_ZONE_PRECISE_MOUTH)
+	if(location == BODY_ZONE_PRECISE_MOUTH)
 		H.facial_hair_style = "Shaved"
 	else
 		H.hair_style = "Skinhead"
@@ -127,10 +127,10 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/location = user.zone_selected
-		if((location in list("eyes", "mouth", "head")) && !H.get_bodypart("head"))
+		if((location in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_HEAD)) && !H.get_bodypart(BODY_ZONE_HEAD))
 			to_chat(user, "<span class='warning'>[H] doesn't have a head!</span>")
 			return
-		if(location == "mouth")
+		if(location == BODY_ZONE_PRECISE_MOUTH)
 			if(!(FACEHAIR in H.dna.species.species_traits))
 				to_chat(user, "<span class='warning'>There is no facial hair to shave!</span>")
 				return
@@ -158,7 +158,7 @@
 											 "<span class='notice'>You shave [H]'s facial hair clean off.</span>")
 						shave(H, location)
 
-		else if(location == "head")
+		else if(location == BODY_ZONE_HEAD)
 			if(!(HAIR in H.dna.species.species_traits))
 				to_chat(user, "<span class='warning'>There is no hair to shave!</span>")
 				return

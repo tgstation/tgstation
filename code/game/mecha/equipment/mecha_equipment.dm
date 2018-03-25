@@ -11,10 +11,10 @@
 	var/equip_ready = 1 //whether the equipment is ready for use. (or deactivated/activated for static stuff)
 	var/energy_drain = 0
 	var/obj/mecha/chassis = null
-	var/range = MELEE //bitflags
+	var/range = MELEE //bitFflags
 	var/salvageable = 1
 	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
-	var/pacifist_safe = TRUE //Controls if equipment can be used to attack by a pacifist.
+	var/harmful = FALSE //Controls if equipment can be used to attack by a pacifist.
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
 	if(chassis)

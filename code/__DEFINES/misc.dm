@@ -180,15 +180,17 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define HAS_SENSORS 1
 #define LOCKED_SENSORS 2
 
-//Turf wet states
+//Wet floor type flags. Stronger ones should be higher in number.
 #define TURF_DRY		0
 #define TURF_WET_WATER	1
-#define TURF_WET_LUBE	2
-#define TURF_WET_ICE	3
-#define TURF_WET_PERMAFROST 4
+#define TURF_WET_PERMAFROST	2
+#define TURF_WET_ICE 4
+#define TURF_WET_LUBE	8
 
-//Maximum amount of time, (in approx. seconds.) a tile can be wet for.
-#define MAXIMUM_WET_TIME 300
+#define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
+
+//Maximum amount of time, (in deciseconds) a tile can be wet for.
+#define MAXIMUM_WET_TIME 3000
 
 //unmagic-strings for types of polls
 #define POLLTYPE_OPTION		"OPTION"

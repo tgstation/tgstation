@@ -89,7 +89,9 @@
 			var/obj/item/stack/S = I
 			to_chat(user, "<span class='notice'>You insert [inserted] [S.singular_name][inserted>1 ? "s" : ""] into [parent].</span>")
 			if(!QDELETED(I))
-				user.put_in_active_hand(I)
+				if(!user.put_in_hands(I))
+					stack_trace("Warning: User could not put object back in hand during material container insertion, line [__LINE__]! This can lead to issues.")
+					I.forceMove(user.drop_location())
 		else
 			to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
 			qdel(I)
@@ -350,3 +352,8 @@
 /datum/material/biomass
 	name = "Biomass"
 	id = MAT_BIOMASS
+
+/datum/material/plastic
+	name = "Plastic"
+	id = MAT_PLASTIC
+	sheet_type = /obj/item/stack/sheet/plastic

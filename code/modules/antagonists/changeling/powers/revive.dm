@@ -11,7 +11,7 @@
 	user.cure_fakedeath("changeling")
 	user.revive(full_heal = 1)
 	var/list/missing = user.get_missing_limbs()
-	missing -= "head" // headless changelings are funny
+	missing -= BODY_ZONE_HEAD // headless changelings are funny
 	if(missing.len)
 		playsound(user, 'sound/magic/demon_consume.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user]'s missing limbs \
@@ -21,7 +21,7 @@
 			"<span class='italics'>You hear organic matter ripping \
 			and tearing!</span>")
 		user.emote("scream")
-		user.regenerate_limbs(0, list("head"))
+		user.regenerate_limbs(0, list(BODY_ZONE_HEAD))
 	user.regenerate_organs()
 	to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)

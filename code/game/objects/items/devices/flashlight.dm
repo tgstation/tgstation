@@ -47,7 +47,7 @@
 
 /obj/item/device/flashlight/attack(mob/living/carbon/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(istype(M) && on && user.zone_selected in list("eyes", "mouth"))
+	if(istype(M) && on && user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH))
 
 		if((user.has_trait(TRAIT_CLUMSY) || user.has_trait(TRAIT_DUMB)) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
@@ -56,7 +56,7 @@
 			to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 			return
 
-		if(!M.get_bodypart("head"))
+		if(!M.get_bodypart(BODY_ZONE_HEAD))
 			to_chat(user, "<span class='warning'>[M] doesn't have a head!</span>")
 			return
 
@@ -65,7 +65,7 @@
 			return
 
 		switch(user.zone_selected)
-			if("eyes")
+			if(BODY_ZONE_PRECISE_EYES)
 				if((M.head && M.head.flags_cover & HEADCOVERSEYES) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) || (M.glasses && M.glasses.flags_cover & GLASSESCOVERSEYES))
 					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
 					return
@@ -90,7 +90,7 @@
 					else //they're okay!
 						to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
 
-			if("mouth")
+			if(BODY_ZONE_PRECISE_MOUTH)
 
 				if((M.head && M.head.flags_cover & HEADCOVERSMOUTH) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSMOUTH) ? "helmet" : "mask"] first.</span>")
@@ -100,7 +100,7 @@
 
 				var/list/mouth_organs = new
 				for(var/obj/item/organ/O in M.internal_organs)
-					if(O.zone == "mouth")
+					if(O.zone == BODY_ZONE_PRECISE_MOUTH)
 						mouth_organs.Add(O)
 				var/organ_list = ""
 				var/organ_count = LAZYLEN(mouth_organs)
@@ -324,6 +324,9 @@
 	brightness_on = 4
 	icon_state = "torch"
 	item_state = "torch"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	light_color = LIGHT_COLOR_ORANGE
 	on_damage = 10
 	slot_flags = null
 
@@ -372,7 +375,7 @@
 	return TRUE
 
 /obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && user.zone_selected in list("eyes", "mouth")) // call original attack when examining organs
+	if(on && user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH)) // call original attack when examining organs
 		..()
 	return
 
