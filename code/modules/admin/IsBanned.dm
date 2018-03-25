@@ -1,110 +1,200 @@
 //Blocks an attempt to connect before even creating our client datum thing.
 
-world/IsBanned(key,address,computer_id)
-	if(ckey(key) in admin_datums)
-		//It has proven to be a bad idea to make admins completely immune to bans, making them have to wait for someone with daemon access
-		//to add a daemon ban to finally stop them. Admin tempbans and admin permabans are special, high-level ban types, which are there to help
-		//deal with rogue admins quicker. If admin tempbans or admin permabans are ever needed, it should be consider a big deal. The same applies if
-		//admin bans are ever abused. This ban type does NOT check for IP or Computer ID. The reason for this is so a player cannot find/steal an admin's
-		//computer id, set it on his computer, get himself banned, resulting in the admin getting banned aswell. - this happens to also be the reason why
-		//admins were immune to bans in the first place.
-		if(!config.ban_legacy_system)
-			var/ckeytext = ckey(key)
+//How many new ckey matches before we revert the stickyban to it's roundstart state
+//These are exclusive, so once it goes over one of these numbers, it reverts the ban
+#define STICKYBAN_MAX_MATCHES 20
+#define STICKYBAN_MAX_EXISTING_USER_MATCHES 5 //ie, users who were connected before the ban triggered
+#define STICKYBAN_MAX_ADMIN_MATCHES 2
 
-			if(!establish_db_connection())
-				world.log << "Ban database connection failure. Admin [ckeytext] not checked"
-				diary << "Ban database connection failure. Admin [ckeytext] not checked"
-				return
+/world/IsBanned(key,address,computer_id,type,real_bans_only=FALSE)
+	if (!key || !address || !computer_id)
+		if(real_bans_only)
+			return FALSE
+		log_access("Failed Login (invalid data): [key] [address]-[computer_id]")
+		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided invalid or blank information to the server on connection (byond username, IP, and Computer ID.) Provided information for reference: Username:'[key]' IP:'[address]' Computer ID:'[computer_id]'. (If you continue to get this error, please restart byond or contact byond support.)")
 
-			var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM erro_ban WHERE (ckey = '[ckeytext]') AND (bantype = 'ADMIN_PERMABAN'  OR (bantype = 'ADMIN_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+	if (text2num(computer_id) == 2147483647) //this cid causes stickybans to go haywire
+		log_access("Failed Login (invalid cid): [key] [address]-[computer_id]")
+		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided an invalid Computer ID.)")
+	var/admin = 0
+	var/ckey = ckey(key)
+	if(GLOB.admin_datums[ckey] || GLOB.deadmins[ckey])
+		admin = 1
 
-			query.Execute()
-
-			while(query.NextRow())
-				var/pckey = query.item[1]
-				//var/pip = query.item[2]
-				//var/pcid = query.item[3]
-				var/ackey = query.item[4]
-				var/reason = query.item[5]
-				var/expiration = query.item[6]
-				var/duration = query.item[7]
-				var/bantime = query.item[8]
-				var/bantype = query.item[9]
-
-				var/expires = ""
-				if(text2num(duration) > 0)
-					expires = " The ban is for [duration] minutes and expires on [expiration] (server time)."
-
-				var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban was applied by [ackey] on [bantime], [expires]"
-
-				return list("reason"="[bantype]", "desc"="[desc]")
-
-		return ..()
+	//Whitelist
+	if(CONFIG_GET(flag/usewhitelist))
+		if(!check_whitelist(ckey(key)))
+			if (admin)
+				log_admin("The admin [key] has been allowed to bypass the whitelist")
+				message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass the whitelist</span>")
+				addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass the whitelist</span>")
+			else
+				log_access("Failed Login: [key] - Not on whitelist")
+				return list("reason"="whitelist", "desc" = "\nReason: You are not on the white list for this server")
 
 	//Guest Checking
-	if(!guests_allowed && IsGuestKey(key))
-		log_access("Failed Login: [key] - Guests not allowed")
-		message_admins("\blue Failed Login: [key] - Guests not allowed")
-		return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
+	if(!real_bans_only && IsGuestKey(key))
+		if (CONFIG_GET(flag/guest_ban))
+			log_access("Failed Login: [key] - Guests not allowed")
+			return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
+		if (CONFIG_GET(flag/panic_bunker) && SSdbcore.Connect())
+			log_access("Failed Login: [key] - Guests not allowed during panic bunker")
+			return list("reason"="guest", "desc"="\nReason: Sorry but the server is currently not accepting connections from never before seen players or guests. If you have played on this server with a byond account before, please log in to the byond account you have played from.")
 
-	if(config.ban_legacy_system)
+	//Population Cap Checking
+	var/extreme_popcap = CONFIG_GET(number/extreme_popcap)
+	if(!real_bans_only && extreme_popcap && living_player_count() >= extreme_popcap && !admin)
+		log_access("Failed Login: [key] - Population cap reached")
+		return list("reason"="popcap", "desc"= "\nReason: [CONFIG_GET(string/extreme_popcap_message)]")
+
+	if(CONFIG_GET(flag/ban_legacy_system))
 
 		//Ban Checking
 		. = CheckBan( ckey(key), computer_id, address )
 		if(.)
-			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
-			message_admins("\blue Failed Login: [key] id:[computer_id] ip:[address] - Banned [.["reason"]]")
-			return .
-
-		return ..()	//default pager ban stuff
+			if (admin)
+				log_admin("The admin [key] has been allowed to bypass a matching ban on [.["key"]]")
+				message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching ban on [.["key"]]</span>")
+				addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [.["key"]]</span>")
+			else
+				log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
+				return .
 
 	else
 
 		var/ckeytext = ckey(key)
 
-		if(!establish_db_connection())
-			world.log << "Ban database connection failure. Key [ckeytext] not checked"
-			diary << "Ban database connection failure. Key [ckeytext] not checked"
+		if(!SSdbcore.Connect())
+			var/msg = "Ban database connection failure. Key [ckeytext] not checked"
+			log_world(msg)
+			message_admins(msg)
 			return
-
-		var/failedcid = 1
-		var/failedip = 1
 
 		var/ipquery = ""
 		var/cidquery = ""
 		if(address)
-			failedip = 0
-			ipquery = " OR ip = '[address]' "
+			ipquery = " OR ip = INET_ATON('[address]') "
 
 		if(computer_id)
-			failedcid = 0
 			cidquery = " OR computerid = '[computer_id]' "
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, ip, computerid, a_ckey, reason, expiration_time, duration, bantime, bantype FROM erro_ban WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN'  OR (bantype = 'TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
-
-		query.Execute()
-
-		while(query.NextRow())
-			var/pckey = query.item[1]
-			//var/pip = query.item[2]
-			//var/pcid = query.item[3]
-			var/ackey = query.item[4]
-			var/reason = query.item[5]
-			var/expiration = query.item[6]
-			var/duration = query.item[7]
-			var/bantime = query.item[8]
-			var/bantype = query.item[9]
-
+		var/datum/DBQuery/query_ban_check = SSdbcore.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, duration, bantime, bantype, id FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
+		if(!query_ban_check.Execute())
+			return
+		while(query_ban_check.NextRow())
+			var/pckey = query_ban_check.item[1]
+			var/ackey = query_ban_check.item[2]
+			var/reason = query_ban_check.item[3]
+			var/expiration = query_ban_check.item[4]
+			var/duration = query_ban_check.item[5]
+			var/bantime = query_ban_check.item[6]
+			var/bantype = query_ban_check.item[7]
+			var/banid = query_ban_check.item[8]
+			if (bantype == "ADMIN_PERMABAN" || bantype == "ADMIN_TEMPBAN")
+				//admin bans MUST match on ckey to prevent cid-spoofing attacks
+				//	as well as dynamic ip abuse
+				if (pckey != ckey)
+					continue
+			if (admin)
+				if (bantype == "ADMIN_PERMABAN" || bantype == "ADMIN_TEMPBAN")
+					log_admin("The admin [key] is admin banned (#[banid]), and has been disallowed access")
+					message_admins("<span class='adminnotice'>The admin [key] is admin banned (#[banid]), and has been disallowed access</span>")
+				else
+					log_admin("The admin [key] has been allowed to bypass a matching ban on [pckey] (#[banid])")
+					message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching ban on [pckey] (#[banid])</span>")
+					addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [pckey] (#[banid])</span>")
+					continue
 			var/expires = ""
 			if(text2num(duration) > 0)
 				expires = " The ban is for [duration] minutes and expires on [expiration] (server time)."
+			else
+				expires = " The is a permanent ban."
 
-			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban was applied by [ackey] on [bantime], [expires]"
+			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban (BanID #[banid]) was applied by [ackey] on [bantime], [expires]"
 
-			return list("reason"="[bantype]", "desc"="[desc]")
+			. = list("reason"="[bantype]", "desc"="[desc]")
 
-		if (failedcid)
-			message_admins("[key] has logged in with a blank computer id in the ban check.")
-		if (failedip)
-			message_admins("[key] has logged in with a blank ip in the ban check.")
-		return ..()	//default pager ban stuff
+
+			log_access("Failed Login: [key] [computer_id] [address] - Banned (#[banid]) [.["reason"]]")
+			return .
+
+	var/list/ban = ..()	//default pager ban stuff
+	if (ban)
+		var/bannedckey = "ERROR"
+		if (ban["ckey"])
+			bannedckey = ban["ckey"]
+
+		var/newmatch = FALSE
+		var/client/C = GLOB.directory[ckey]
+		var/cachedban = SSstickyban.cache[bannedckey]
+
+		//rogue ban in the process of being reverted.
+		if (cachedban && cachedban["reverting"])
+			return null
+
+		if (cachedban && ckey != bannedckey)
+			newmatch = TRUE
+			if (cachedban["keys"])
+				if (cachedban["keys"][ckey])
+					newmatch = FALSE
+			if (cachedban["matches_this_round"][ckey])
+				newmatch = FALSE
+
+		if (newmatch && cachedban)
+			var/list/newmatches = cachedban["matches_this_round"]
+			var/list/newmatches_connected = cachedban["existing_user_matches_this_round"]
+			var/list/newmatches_admin = cachedban["admin_matches_this_round"]
+
+			newmatches[ckey] = ckey
+			if (C)
+				newmatches_connected[ckey] = ckey
+			if (admin)
+				newmatches_admin[ckey] = ckey
+
+			if (\
+				newmatches.len > STICKYBAN_MAX_MATCHES || \
+				newmatches_connected.len > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
+				newmatches_admin.len > STICKYBAN_MAX_ADMIN_MATCHES \
+				)
+				if (cachedban["reverting"])
+					return null
+				cachedban["reverting"] = TRUE
+
+				world.SetConfig("ban", bannedckey, null)
+
+				log_game("Stickyban on [bannedckey] detected as rogue, reverting to its roundstart state")
+				message_admins("Stickyban on [bannedckey] detected as rogue, reverting to its roundstart state")
+				//do not convert to timer.
+				spawn (5)
+					world.SetConfig("ban", bannedckey, null)
+					sleep(1)
+					world.SetConfig("ban", bannedckey, null)
+					cachedban["matches_this_round"] = list()
+					cachedban["existing_user_matches_this_round"] = list()
+					cachedban["admin_matches_this_round"] = list()
+					cachedban -= "reverting"
+					world.SetConfig("ban", bannedckey, list2stickyban(cachedban))
+				return null
+
+		//byond will not trigger isbanned() for "global" host bans,
+		//ie, ones where the "apply to this game only" checkbox is not checked (defaults to not checked)
+		//So it's safe to let admins walk thru host/sticky bans here
+		if (admin)
+			log_admin("The admin [key] has been allowed to bypass a matching host/sticky ban on [bannedckey]")
+			message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching host/sticky ban on [bannedckey]</span>")
+			addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching host/sticky ban on [bannedckey]</span>")
+			return null
+
+		if (C) //user is already connected!.
+			to_chat(C, "You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect using file -> reconnect to see if the match was reversed.")
+
+		var/desc = "\nReason:(StickyBan) You, or another user of this computer or connection ([bannedckey]) is banned from playing here. The ban reason is:\n[ban["message"]]\nThis ban was applied by [ban["admin"]]\nThis is a BanEvasion Detection System ban, if you think this ban is a mistake, please wait EXACTLY 6 seconds, then try again before filing an appeal.\n"
+		. = list("reason" = "Stickyban", "desc" = desc)
+		log_access("Failed Login: [key] [computer_id] [address] - StickyBanned [ban["message"]] Target Username: [bannedckey] Placed by [ban["admin"]]")
+
+	return .
+
+
+#undef STICKYBAN_MAX_MATCHES
+#undef STICKYBAN_MAX_EXISTING_USER_MATCHES
+#undef STICKYBAN_MAX_ADMIN_MATCHES

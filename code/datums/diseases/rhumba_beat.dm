@@ -1,51 +1,46 @@
 /datum/disease/rhumba_beat
 	name = "The Rhumba Beat"
 	max_stages = 5
-	spread = "On contact"
-	spread_type = CONTACT_GENERAL
-	cure = "Chick Chicky Boom!"
-	cure_id = list("plasma")
+	spread_text = "On contact"
+	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
+	cure_text = "Chick Chicky Boom!"
+	cures = list("plasma")
 	agent = "Unknown"
-	affected_species = list("Human")
+	viable_mobtypes = list(/mob/living/carbon/human)
 	permeability_mod = 1
+	severity = DISEASE_SEVERITY_BIOHAZARD
+	process_dead = TRUE
 
 /datum/disease/rhumba_beat/stage_act()
 	..()
+	if(affected_mob.ckey == "rosham")
+		cure()
+		return
 	switch(stage)
-		if(1)
-			if(affected_mob.ckey == "rosham")
-				src.cure()
 		if(2)
-			if(affected_mob.ckey == "rosham")
-				src.cure()
 			if(prob(45))
-				affected_mob.adjustToxLoss(5)
+				affected_mob.adjustFireLoss(5)
 				affected_mob.updatehealth()
 			if(prob(1))
-				affected_mob << "\red You feel strange..."
+				to_chat(affected_mob, "<span class='danger'>You feel strange...</span>")
 		if(3)
-			if(affected_mob.ckey == "rosham")
-				src.cure()
 			if(prob(5))
-				affected_mob << "\red You feel the urge to dance..."
+				to_chat(affected_mob, "<span class='danger'>You feel the urge to dance...</span>")
 			else if(prob(5))
 				affected_mob.emote("gasp")
 			else if(prob(10))
-				affected_mob << "\red You feel the need to chick chicky boom..."
+				to_chat(affected_mob, "<span class='danger'>You feel the need to chick chicky boom...</span>")
 		if(4)
-			if(affected_mob.ckey == "rosham")
-				src.cure()
-			if(prob(10))
-				affected_mob.emote("gasp")
-				affected_mob << "\red You feel a burning beat inside..."
 			if(prob(20))
-				affected_mob.adjustToxLoss(5)
-				affected_mob.updatehealth()
+				if (prob(50))
+					affected_mob.adjust_fire_stacks(2)
+					affected_mob.IgniteMob()
+				else
+					affected_mob.emote("gasp")
+					to_chat(affected_mob, "<span class='danger'>You feel a burning beat inside...</span>")
 		if(5)
-			if(affected_mob.ckey == "rosham")
-				src.cure()
-			affected_mob << "\red Your body is unable to contain the Rhumba Beat..."
+			to_chat(affected_mob, "<span class='danger'>Your body is unable to contain the Rhumba Beat...</span>")
 			if(prob(50))
-				affected_mob.gib()
+				explosion(get_turf(affected_mob), -1, 0, 2, 3, 0, 2) // This is equivalent to a lvl 1 fireball
 		else
 			return

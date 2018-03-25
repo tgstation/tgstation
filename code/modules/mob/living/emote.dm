@@ -1,282 +1,501 @@
-//This only assumes that the mob has a body and face with at least one mouth.
-//Things like airguitar can be done without arms, and the flap thing makes so little sense it's a keeper.
-//Intended to be called by a higher up emote proc if the requested emote isn't in the custom emotes.
 
-/mob/living/emote(var/act,var/m_type=1,var/message = null)
-	var/param = null
+/* EMOTE DATUMS */
+/datum/emote/living
+	mob_type_allowed_typecache = list(/mob/living)
+	mob_type_blacklist_typecache = list(/mob/living/simple_animal/slime, /mob/living/brain)
 
-	if (findtext(act, "-", 1, null))
-		var/t1 = findtext(act, "-", 1, null)
-		param = copytext(act, t1 + 1, length(act) + 1)
-		act = copytext(act, 1, t1)
+/datum/emote/living/blush
+	key = "blush"
+	key_third_person = "blushes"
+	message = "blushes."
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,length(act))
+/datum/emote/living/bow
+	key = "bow"
+	key_third_person = "bows"
+	message = "bows."
+	message_param = "bows to %t."
+	restraint_check = TRUE
 
-	switch(act)//Hello, how would you like to order? Alphabetically!
-		if ("aflap")
-			if (!src.restrained())
-				message = "<B>[src]</B> flaps its wings ANGRILY!"
-				m_type = 2
+/datum/emote/living/burp
+	key = "burp"
+	key_third_person = "burps"
+	message = "burps."
+	emote_type = EMOTE_AUDIBLE
 
-		if ("blush")
-			message = "<B>[src]</B> blushes."
-			m_type = 1
+/datum/emote/living/choke
+	key = "choke"
+	key_third_person = "chokes"
+	message = "chokes!"
+	emote_type = EMOTE_AUDIBLE
 
-		if ("bow")
-			if (!src.buckled)
-				var/M = null
-				if (param)
-					for (var/mob/A in view(1, src))
-						if (param == A.name)
-							M = A
-							break
-				if (!M)
-					param = null
-				if (param)
-					message = "<B>[src]</B> bows to [param]."
+/datum/emote/living/cross
+	key = "cross"
+	key_third_person = "crosses"
+	message = "crosses their arms."
+	restraint_check = TRUE
+
+/datum/emote/living/chuckle
+	key = "chuckle"
+	key_third_person = "chuckles"
+	message = "chuckles."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/collapse
+	key = "collapse"
+	key_third_person = "collapses"
+	message = "collapses!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/collapse/run_emote(mob/user, params)
+	. = ..()
+	if(. && isliving(user))
+		var/mob/living/L = user
+		L.Unconscious(40)
+
+/datum/emote/living/cough
+	key = "cough"
+	key_third_person = "coughs"
+	message = "coughs!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/dance
+	key = "dance"
+	key_third_person = "dances"
+	message = "dances around happily."
+	restraint_check = TRUE
+
+/datum/emote/living/deathgasp
+	key = "deathgasp"
+	key_third_person = "deathgasps"
+	message = "seizes up and falls limp, their eyes dead and lifeless..."
+	message_robot = "shudders violently for a moment before falling still, its eyes slowly darkening."
+	message_AI = "lets out a flurry of sparks, its screen flickering as its systems slowly halt."
+	message_alien = "lets out a waning guttural screech, green blood bubbling from its maw..."
+	message_larva = "lets out a sickly hiss of air and falls limply to the floor..."
+	message_monkey = "lets out a faint chimper as it collapses and stops moving..."
+	message_simple =  "stops moving..."
+	stat_allowed = UNCONSCIOUS
+
+/datum/emote/living/deathgasp/run_emote(mob/user, params)
+	var/mob/living/simple_animal/S = user
+	if(istype(S) && S.deathmessage)
+		message_simple = S.deathmessage
+	. = ..()
+	message_simple = initial(message_simple)
+	if(. && isalienadult(user))
+		playsound(user.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
+
+/datum/emote/living/drool
+	key = "drool"
+	key_third_person = "drools"
+	message = "drools."
+
+/datum/emote/living/faint
+	key = "faint"
+	key_third_person = "faints"
+	message = "faints."
+
+/datum/emote/living/faint/run_emote(mob/user, params)
+	. = ..()
+	if(. && isliving(user))
+		var/mob/living/L = user
+		L.SetSleeping(200)
+
+/datum/emote/living/flap
+	key = "flap"
+	key_third_person = "flaps"
+	message = "flaps their wings."
+	restraint_check = TRUE
+	var/wing_time = 20
+
+/datum/emote/living/flap/run_emote(mob/user, params)
+	. = ..()
+	if(. && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/open = FALSE
+		if(H.dna.features["wings"] != "None")
+			if("wingsopen" in H.dna.species.mutant_bodyparts)
+				open = TRUE
+				H.CloseWings()
+			else
+				H.OpenWings()
+			addtimer(CALLBACK(H, open ? /mob/living/carbon/human.proc/OpenWings : /mob/living/carbon/human.proc/CloseWings), wing_time)
+
+/datum/emote/living/flap/aflap
+	key = "aflap"
+	key_third_person = "aflaps"
+	message = "flaps their wings ANGRILY!"
+	restraint_check = TRUE
+	wing_time = 10
+
+/datum/emote/living/frown
+	key = "frown"
+	key_third_person = "frowns"
+	message = "frowns."
+
+/datum/emote/living/gag
+	key = "gag"
+	key_third_person = "gags"
+	message = "gags."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/gasp
+	key = "gasp"
+	key_third_person = "gasps"
+	message = "gasps!"
+	emote_type = EMOTE_AUDIBLE
+	stat_allowed = UNCONSCIOUS
+
+/datum/emote/living/giggle
+	key = "giggle"
+	key_third_person = "giggles"
+	message = "giggles."
+	message_mime = "giggles silently!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/glare
+	key = "glare"
+	key_third_person = "glares"
+	message = "glares."
+	message_param = "glares at %t."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/grin
+	key = "grin"
+	key_third_person = "grins"
+	message = "grins."
+
+/datum/emote/living/groan
+	key = "groan"
+	key_third_person = "groans"
+	message = "groans!"
+	message_mime = "appears to groan!"
+
+/datum/emote/living/grimace
+	key = "grimace"
+	key_third_person = "grimaces"
+	message = "grimaces."
+
+/datum/emote/living/jump
+	key = "jump"
+	key_third_person = "jumps"
+	message = "jumps!"
+	restraint_check = TRUE
+
+/datum/emote/living/kiss
+	key = "kiss"
+	key_third_person = "kisses"
+	message = "blows a kiss."
+	message_param = "blows a kiss to %t."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/laugh
+	key = "laugh"
+	key_third_person = "laughs"
+	message = "laughs."
+	message_mime = "laughs silently!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent
+
+/datum/emote/living/laugh/run_emote(mob/user, params)
+	. = ..()
+	if(. && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+			if(user.gender == FEMALE)
+				playsound(H, 'sound/voice/human/womanlaugh.ogg', 50, 1)
+			else
+				playsound(H, pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg'), 50, 1)
+
+/datum/emote/living/look
+	key = "look"
+	key_third_person = "looks"
+	message = "looks."
+	message_param = "looks at %t."
+
+/datum/emote/living/nod
+	key = "nod"
+	key_third_person = "nods"
+	message = "nods."
+	message_param = "nods at %t."
+
+/datum/emote/living/point
+	key = "point"
+	key_third_person = "points"
+	message = "points."
+	message_param = "points at %t."
+	restraint_check = TRUE
+
+/datum/emote/living/point/run_emote(mob/user, params)
+	message_param = initial(message_param) // reset
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.get_num_arms() == 0)
+			if(H.get_num_legs() != 0)
+				message_param = "tries to point at %t with a leg, <span class='userdanger'>falling down</span> in the process!"
+				H.Knockdown(20)
+			else
+				message_param = "<span class='userdanger'>bumps their head on the ground</span> trying to motion towards %t."
+				H.adjustBrainLoss(5)
+	..()
+
+/datum/emote/living/pout
+	key = "pout"
+	key_third_person = "pouts"
+	message = "pouts."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/scream
+	key = "scream"
+	key_third_person = "screams"
+	message = "screams."
+	message_mime = "acts out a scream!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/scowl
+	key = "scowl"
+	key_third_person = "scowls"
+	message = "scowls."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/shake
+	key = "shake"
+	key_third_person = "shakes"
+	message = "shakes their head."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/shiver
+	key = "shiver"
+	key_third_person = "shiver"
+	message = "shivers."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/sigh
+	key = "sigh"
+	key_third_person = "sighs"
+	message = "sighs."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/sit
+	key = "sit"
+	key_third_person = "sits"
+	message = "sits down."
+
+/datum/emote/living/smile
+	key = "smile"
+	key_third_person = "smiles"
+	message = "smiles."
+
+/datum/emote/living/sneeze
+	key = "sneeze"
+	key_third_person = "sneezes"
+	message = "sneezes."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/smug
+	key = "smug"
+	key_third_person = "smugs"
+	message = "grins smugly."
+
+/datum/emote/living/sniff
+	key = "sniff"
+	key_third_person = "sniffs"
+	message = "sniffs."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/snore
+	key = "snore"
+	key_third_person = "snores"
+	message = "snores."
+	message_mime = "sleeps soundly."
+	emote_type = EMOTE_AUDIBLE
+	stat_allowed = UNCONSCIOUS
+
+/datum/emote/living/stare
+	key = "stare"
+	key_third_person = "stares"
+	message = "stares."
+	message_param = "stares at %t."
+
+/datum/emote/living/strech
+	key = "stretch"
+	key_third_person = "stretches"
+	message = "stretches their arms."
+
+/datum/emote/living/sulk
+	key = "sulk"
+	key_third_person = "sulks"
+	message = "sulks down sadly."
+
+/datum/emote/living/surrender
+	key = "surrender"
+	key_third_person = "surrenders"
+	message = "puts their hands on their head and falls to the ground, they surrender!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/surrender/run_emote(mob/user, params)
+	. = ..()
+	if(. && isliving(user))
+		var/mob/living/L = user
+		L.Knockdown(200)
+
+/datum/emote/living/sway
+	key = "sway"
+	key_third_person = "sways"
+	message = "sways around dizzily."
+
+/datum/emote/living/tremble
+	key = "tremble"
+	key_third_person = "trembles"
+	message = "trembles in fear!"
+
+/datum/emote/living/twitch
+	key = "twitch"
+	key_third_person = "twitches"
+	message = "twitches violently."
+
+/datum/emote/living/twitch_s
+	key = "twitch_s"
+	message = "twitches."
+
+/datum/emote/living/wave
+	key = "wave"
+	key_third_person = "waves"
+	message = "waves."
+
+/datum/emote/living/whimper
+	key = "whimper"
+	key_third_person = "whimpers"
+	message = "whimpers."
+	message_mime = "appears hurt."
+
+/datum/emote/living/wsmile
+	key = "wsmile"
+	key_third_person = "wsmiles"
+	message = "smiles weakly."
+
+/datum/emote/living/yawn
+	key = "yawn"
+	key_third_person = "yawns"
+	message = "yawns."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/custom
+	key = "me"
+	key_third_person = "custom"
+	message = null
+
+/datum/emote/living/custom/proc/check_invalid(mob/user, input)
+	. = TRUE
+	if(copytext(input,1,5) == "says")
+		to_chat(user, "<span class='danger'>Invalid emote.</span>")
+	else if(copytext(input,1,9) == "exclaims")
+		to_chat(user, "<span class='danger'>Invalid emote.</span>")
+	else if(copytext(input,1,6) == "yells")
+		to_chat(user, "<span class='danger'>Invalid emote.</span>")
+	else if(copytext(input,1,5) == "asks")
+		to_chat(user, "<span class='danger'>Invalid emote.</span>")
+	else
+		. = FALSE
+
+/datum/emote/living/custom/run_emote(mob/user, params, type_override = null)
+	if(jobban_isbanned(user, "emote"))
+		to_chat(user, "You cannot send custom emotes (banned).")
+		return FALSE
+	else if(user.client && user.client.prefs.muted & MUTE_IC)
+		to_chat(user, "You cannot send IC messages (muted).")
+		return FALSE
+	else if(!params)
+		var/custom_emote = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
+		if(custom_emote && !check_invalid(user, custom_emote))
+			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
+			switch(type)
+				if("Visible")
+					emote_type = EMOTE_VISIBLE
+				if("Hearable")
+					emote_type = EMOTE_AUDIBLE
 				else
-					message = "<B>[src]</B> bows."
-			m_type = 1
-
-		if ("burp")
-			message = "<B>[src]</B> burps."
-			m_type = 2
-
-		if ("choke")
-			message = "<B>[src]</B> chokes!"
-			m_type = 2
-
-		if ("chuckle")
-			message = "<B>[src]</B> chuckles."
-			m_type = 2
-
-		if ("collapse")
-			Paralyse(2)
-			message = "<B>[src]</B> collapses!"
-			m_type = 2
-
-		if ("cough")
-			message = "<B>[src]</B> coughs!"
-			m_type = 2
-
-		if ("dance")
-			if (!src.restrained())
-				message = "<B>[src]</B> dances around happily."
-				m_type = 1
-
-		if ("deathgasp")
-			message = "<B>[src]</B> seizes up and falls limp, its eyes dead and lifeless..."
-			m_type = 1
-
-		if ("drool")
-			message = "<B>[src]</B> drools."
-			m_type = 1
-
-		if ("faint")
-			message = "<B>[src]</B> faints."
-			if(src.sleeping)
-				return //Can't faint while asleep
-			src.sleeping += 10 //Short-short nap
-			m_type = 1
-
-		if ("flap")
-			if (!src.restrained())
-				message = "<B>[src]</B> flaps its wings."
-				m_type = 2
-
-		if ("frown")
-			message = "<B>[src]</B> frowns."
-			m_type = 1
-
-		if ("gasp")
-			message = "<B>[src]</B> gasps!"
-			m_type = 2
-
-		if ("giggle")
-			message = "<B>[src]</B> giggles."
-			m_type = 2
-
-		if ("glare")
-			var/M = null
-			if (param)
-				for (var/mob/A in view(1, src))
-					if (param == A.name)
-						M = A
-						break
-			if (!M)
-				param = null
-			if (param)
-				message = "<B>[src]</B> glares at [param]."
-			else
-				message = "<B>[src]</B> glares."
-
-		if ("grin")
-			message = "<B>[src]</B> grins."
-			m_type = 1
-
-		if ("jump")
-			message = "<B>[src]</B> jumps!"
-			m_type = 1
-
-		if ("laugh")
-			message = "<B>[src]</B> laughs."
-			m_type = 2
-
-		if ("look")
-			var/M = null
-			if (param)
-				for (var/mob/A in view(1, src))
-					if (param == A.name)
-						M = A
-						break
-			if (!M)
-				param = null
-			if (param)
-				message = "<B>[src]</B> looks at [param]."
-			else
-				message = "<B>[src]</B> looks."
-			m_type = 1
-
-		if ("me")
-			if (src.client)
-				if(client.prefs.muted & MUTE_IC)
-					src << "You cannot send IC messages (muted)."
+					alert("Unable to use this emote, must be either hearable or visible.")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
-					return
-			if (stat)
-				return
-			if(!(message))
-				return
-			else
-				message = "<B>[src]</B> [message]"
+			message = custom_emote
+	else
+		message = params
+		if(type_override)
+			emote_type = type_override
+	. = ..()
+	message = null
+	emote_type = EMOTE_VISIBLE
 
-		if ("nod")
-			message = "<B>[src]</B> nods."
-			m_type = 1
+/datum/emote/living/custom/replace_pronoun(mob/user, message)
+	return message
 
-		if ("point")
-			if (!src.restrained())
-				var/mob/M = null
-				if (param)
-					for (var/atom/A as mob|obj|turf|area in view(1, src))
-						if (param == A.name)
-							M = A
-							break
-				if (!M)
-					message = "<B>[src]</B> points."
-				else
-					M.point()
-				if (M)
-					message = "<B>[src]</B> points to [M]."
-				else
-			m_type = 1
+/datum/emote/living/help
+	key = "help"
 
-		if ("scream")
-			message = "<B>[src]</B> screams!"
-			m_type = 2
+/datum/emote/living/help/run_emote(mob/user, params)
+	var/list/keys = list()
+	var/list/message = list("Available emotes, you can use them with say \"*emote\": ")
 
-		if ("shake")
-			message = "<B>[src]</B> shakes its head."
-			m_type = 1
+	var/datum/emote/E
+	var/list/emote_list = E.emote_list
+	for(var/e in emote_list)
+		if(e in keys)
+			continue
+		E = emote_list[e]
+		if(E.can_run_emote(user, status_check = FALSE))
+			keys += E.key
 
-		if ("sigh")
-			message = "<B>[src]</B> sighs."
-			m_type = 2
+	keys = sortList(keys)
 
-		if ("sit")
-			message = "<B>[src]</B> sits down."
-			m_type = 1
-
-		if ("smile")
-			message = "<B>[src]</B> smiles."
-			m_type = 1
-
-		if ("sneeze")
-			message = "<B>[src]</B> sneezes."
-			m_type = 2
-
-		if ("sniff")
-			message = "<B>[src]</B> sniffs."
-			m_type = 2
-
-		if ("snore")
-			message = "<B>[src]</B> snores."
-			m_type = 2
-
-		if ("stare")
-			var/M = null
-			if (param)
-				for (var/mob/A in view(1, src))
-					if (param == A.name)
-						M = A
-						break
-			if (!M)
-				param = null
-			if (param)
-				message = "<B>[src]</B> stares at [param]."
-			else
-				message = "<B>[src]</B> stares."
-
-		if ("sulk")
-			message = "<B>[src]</B> sulks down sadly."
-			m_type = 1
-
-		if ("sway")
-			message = "<B>[src]</B> sways around dizzily."
-			m_type = 1
-
-		if ("tremble")
-			message = "<B>[src]</B> trembles in fear!"
-			m_type = 1
-
-		if ("twitch")
-			message = "<B>[src]</B> twitches violently."
-			m_type = 1
-
-		if ("twitch_s")
-			message = "<B>[src]</B> twitches."
-			m_type = 1
-
-		if ("wave")
-			message = "<B>[src]</B> waves."
-			m_type = 1
-
-		if ("whimper")
-			message = "<B>[src]</B> whimpers."
-			m_type = 2
-
-		if ("yawn")
-			message = "<B>[src]</B> yawns."
-			m_type = 2
-
-		if ("help")
-			src << "Help for emotes. You can use these emotes with say \"*emote\":\n\naflap, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, grin, jump, laugh, look, me, nod, point-atom, scream, shake, sit, sigh, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, yawn"
-
+	for(var/emote in keys)
+		if(LAZYLEN(message) > 1)
+			message += ", [emote]"
 		else
-			src << "\blue Unusable emote '[act]'. Say *help for a list."
+			message += "[emote]"
 
+	message += "."
 
+	message = jointext(message, "")
 
+	to_chat(user, message)
 
+/datum/emote/sound/beep
+	key = "beep"
+	key_third_person = "beeps"
+	message = "beeps."
+	message_param = "beeps at %t."
+	sound = 'sound/machines/twobeep.ogg'
 
-	if (message)
-		log_emote("[name]/[key] : [message]")
+/datum/emote/living/circle
+	key = "circle"
+	key_third_person = "circles"
+	restraint_check = TRUE
 
- //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
- // Maybe some people are okay with that.
+/datum/emote/living/circle/run_emote(mob/user, params)
+	. = ..()
+	var/obj/item/circlegame/N = new(user)
+	if(user.put_in_hands(N))
+		to_chat(user, "<span class='notice'>You make a circle with your hand.</span>")
+	else
+		qdel(N)
+		to_chat(user, "<span class='warning'>You don't have any free hands to make a circle with.</span>")
 
-		for(var/mob/M in dead_mob_list)
-			if(!M.client || istype(M, /mob/new_player))
-				continue //skip monkeys, leavers and new players
-			if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
-				M.show_message(message)
+/datum/emote/living/slap
+	key = "slap"
+	key_third_person = "slaps"
+	restraint_check = TRUE
 
-
-		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
-				O.show_message(message, m_type)
-		else if (m_type & 2)
-			for (var/mob/O in hearers(src.loc, null))
-				O.show_message(message, m_type)
+/datum/emote/living/slap/run_emote(mob/user, params)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/slapper/N = new(user)
+	if(user.put_in_hands(N))
+		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
+	else
+		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")

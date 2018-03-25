@@ -1,124 +1,170 @@
 /proc/attempt_initiate_surgery(obj/item/I, mob/living/M, mob/user)
-	if(istype(M))
-		if(M.lying || isslime(M))	//if they're prone or a slime
-			var/list/all_surgeries = surgeries_list.Copy()
-			var/list/available_surgeries = list()
-			for(var/i in all_surgeries)
-				var/datum/surgery/S = all_surgeries[i]
+	if(!istype(M))
+		return
 
-				if(locate(S.type) in M.surgeries)
+	var/mob/living/carbon/C
+	var/obj/item/bodypart/affecting
+	var/selected_zone = user.zone_selected
+
+	if(iscarbon(M))
+		C = M
+		affecting = C.get_bodypart(check_zone(selected_zone))
+
+	if(!M.lying && !isslime(M))	//if they're prone or a slime
+		return
+
+	var/datum/surgery/current_surgery
+
+	for(var/datum/surgery/S in M.surgeries)
+		if(S.location == selected_zone)
+			current_surgery = S
+
+	if(!current_surgery)
+		var/list/all_surgeries = GLOB.surgeries_list.Copy()
+		var/list/available_surgeries = list()
+
+		for(var/datum/surgery/S in all_surgeries)
+			if(!S.possible_locs.Find(selected_zone))
+				continue
+			if(affecting)
+				if(!S.requires_bodypart)
 					continue
-				if(S.target_must_be_dead && M.stat != DEAD)
+				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
 					continue
-				if(S.target_must_be_fat && !(FAT in M.mutations))
+				if(S.requires_real_bodypart && affecting.is_pseudopart)
 					continue
+			else if(C && S.requires_bodypart) //mob with no limb in surgery zone when we need a limb
+				continue
+			if(!S.can_start(user, M))
+				continue
+			for(var/path in S.species)
+				if(istype(M, path))
+					available_surgeries[S.name] = S
+					break
 
-				if(istype(M, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = M //So we can use get_organ and not some terriblly long Switch or something worse - RR
+		var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
+		if(P && user && user.Adjacent(M) && (I in user))
+			var/datum/surgery/S = available_surgeries[P]
 
-					if(S.requires_organic_chest && H.getlimb(/obj/item/organ/limb/robot/chest)) //This a seperate case to below, see "***" in surgery.dm - RR
-						continue
+			for(var/datum/surgery/other in M.surgeries)
+				if(other.location == S.location)
+					return //during the input() another surgery was started at the same location.
 
+			//we check that the surgery is still doable after the input() wait.
+			if(C)
+				affecting = C.get_bodypart(check_zone(selected_zone))
+			if(affecting)
+				if(!S.requires_bodypart)
+					return
+				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
+					return
+			else if(C && S.requires_bodypart)
+				return
+			if(!S.can_start(user, M))
+				return
 
-					var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
+			if(S.ignore_clothes || get_location_accessible(M, selected_zone))
+				var/datum/surgery/procedure = new S.type(M, selected_zone, affecting)
+				user.visible_message("[user] drapes [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].", \
+					"<span class='notice'>You drape [I] over [M]'s [parse_zone(selected_zone)] to prepare for \an [procedure.name].</span>")
 
-					if(affecting.status == ORGAN_ROBOTIC && affecting.body_part != HEAD) //Cannot operate on Robotic organs except for the head. - RR
-						continue
-
-				for(var/path in S.species)
-					if(istype(M, path))
-						available_surgeries[S.name] = S
-						break
-
-			var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
-			if(P)
-				var/datum/surgery/S = available_surgeries[P]
-				var/datum/surgery/procedure = new S.type
-				if(procedure)
-					if(get_location_accessible(M, procedure.location))
-						if(procedure.location == "anywhere") // if location == "anywhere" change location to the surgeon's target, otherwise leave location as is.
-							procedure.location = user.zone_sel.selecting
-						M.surgeries += procedure
-						user.visible_message("<span class='notice'>[user] drapes [I] over [M]'s [parse_zone(procedure.location)] to prepare for \an [procedure.name].</span>")
-
-						add_logs(user, M, "operated", addition="Operation type: [procedure.name]")
-						return 1
-					else
-						user << "<span class='notice'>You need to expose [M]'s [procedure.location] first.</span>"
-						return 1	//return 1 so we don't slap the guy in the dick with the drapes.
+				add_logs(user, M, "operated", addition="Operation type: [procedure.name], location: [selected_zone]")
 			else
-				return 1	//once the input menu comes up, cancelling it shouldn't hit the guy with the drapes either.
-	return 0
+				to_chat(user, "<span class='warning'>You need to expose [M]'s [parse_zone(selected_zone)] first!</span>")
 
+	else if(!current_surgery.step_in_progress)
+		attempt_cancel_surgery(current_surgery, I, M, user)
 
+	return 1
 
-proc/get_location_modifier(mob/M)
+/proc/attempt_cancel_surgery(datum/surgery/S, obj/item/I, mob/living/M, mob/user)
+	var/selected_zone = user.zone_selected
+	if(S.status == 1)
+		M.surgeries -= S
+		user.visible_message("[user] removes [I] from [M]'s [parse_zone(selected_zone)].", \
+			"<span class='notice'>You remove [I] from [M]'s [parse_zone(selected_zone)].</span>")
+		qdel(S)
+	else if(S.can_cancel)
+		var/close_tool_type = /obj/item/cautery
+		var/obj/item/close_tool = user.get_inactive_held_item()
+		var/is_robotic = S.requires_bodypart_type == BODYPART_ROBOTIC
+		if(is_robotic)
+			close_tool_type = /obj/item/screwdriver
+		if(istype(close_tool, close_tool_type) || iscyborg(user))
+			M.surgeries -= S
+			user.visible_message("[user] closes [M]'s [parse_zone(selected_zone)] with [close_tool] and removes [I].", \
+				"<span class='notice'>You close [M]'s [parse_zone(selected_zone)] with [close_tool] and remove [I].</span>")
+			qdel(S)
+		else
+			to_chat(user, "<span class='warning'>You need to hold a [is_robotic ? "screwdriver" : "cautery"] in your inactive hand to stop [M]'s surgery!</span>")
+
+/proc/get_location_modifier(mob/M)
 	var/turf/T = get_turf(M)
-	if(locate(/obj/structure/optable, T))
+	if(locate(/obj/structure/table/optable, T))
 		return 1
 	else if(locate(/obj/structure/table, T))
 		return 0.8
-	else if(locate(/obj/structure/stool/bed, T))
+	else if(locate(/obj/structure/bed, T))
 		return 0.7
 	else
 		return 0.5
 
 
 /proc/get_location_accessible(mob/M, location)
-	var/covered_locations	= 0	//based on body_parts_covered
-	var/face_covered		= 0	//based on flags_inv
-	var/eyesmouth_covered	= 0	//based on flags
+	var/covered_locations = 0	//based on body_parts_covered
+	var/face_covered = 0	//based on flags_inv
+	var/eyesmouth_covered = 0	//based on flags_cover
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		for(var/obj/item/clothing/I in list(C.back, C.wear_mask))
+		for(var/obj/item/clothing/I in list(C.back, C.wear_mask, C.head))
 			covered_locations |= I.body_parts_covered
 			face_covered |= I.flags_inv
-			eyesmouth_covered |= I.flags
+			eyesmouth_covered |= I.flags_cover
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
-			for(var/obj/item/I in list(H.wear_suit, H.w_uniform, H.shoes, H.belt, H.gloves, H.glasses, H.head, H.ears))
+			for(var/obj/item/I in list(H.wear_suit, H.w_uniform, H.shoes, H.belt, H.gloves, H.glasses, H.ears))
 				covered_locations |= I.body_parts_covered
 				face_covered |= I.flags_inv
-				eyesmouth_covered |= I.flags
+				eyesmouth_covered |= I.flags_cover
 
 	switch(location)
-		if("head")
+		if(BODY_ZONE_HEAD)
 			if(covered_locations & HEAD)
 				return 0
-		if("eyes")
+		if(BODY_ZONE_PRECISE_EYES)
 			if(covered_locations & HEAD || face_covered & HIDEEYES || eyesmouth_covered & GLASSESCOVERSEYES)
 				return 0
-		if("mouth")
-			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH)
+		if(BODY_ZONE_PRECISE_MOUTH)
+			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH || eyesmouth_covered & HEADCOVERSMOUTH)
 				return 0
-		if("chest")
+		if(BODY_ZONE_CHEST)
 			if(covered_locations & CHEST)
 				return 0
-		if("groin")
+		if(BODY_ZONE_PRECISE_GROIN)
 			if(covered_locations & GROIN)
 				return 0
-		if("l_arm")
+		if(BODY_ZONE_L_ARM)
 			if(covered_locations & ARM_LEFT)
 				return 0
-		if("r_arm")
+		if(BODY_ZONE_R_ARM)
 			if(covered_locations & ARM_RIGHT)
 				return 0
-		if("l_leg")
+		if(BODY_ZONE_L_LEG)
 			if(covered_locations & LEG_LEFT)
 				return 0
-		if("r_leg")
+		if(BODY_ZONE_R_LEG)
 			if(covered_locations & LEG_RIGHT)
 				return 0
-		if("l_hand")
+		if(BODY_ZONE_PRECISE_L_HAND)
 			if(covered_locations & HAND_LEFT)
 				return 0
-		if("r_hand")
+		if(BODY_ZONE_PRECISE_R_HAND)
 			if(covered_locations & HAND_RIGHT)
 				return 0
-		if("l_foot")
+		if(BODY_ZONE_PRECISE_L_FOOT)
 			if(covered_locations & FOOT_LEFT)
 				return 0
-		if("r_foot")
+		if(BODY_ZONE_PRECISE_R_FOOT)
 			if(covered_locations & FOOT_RIGHT)
 				return 0
 

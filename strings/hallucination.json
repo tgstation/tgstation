@@ -1,0 +1,235 @@
+{
+	"suspicion": [
+		"@pick(add_name)i'm watching you...",
+		"@pick(add_name)i know what you're doing",
+		"@pick(add_name)what are you hiding?",
+		"I saw that"
+	],
+
+	"greetings": [
+		"",
+		"Hey, ",
+		"Hi ",
+		"Hello ",
+		"Wait, ",
+		"It's "
+	],
+
+	"getout": [
+		"@pick(add_name)get out",
+		"@pick(add_name)get out!",
+		"@pick(add_name)go away",
+		"@pick(add_name)fuck off",
+		"OUT!",
+		"@pick(add_name)out!"
+	],
+
+	"weird": [
+		"Kchck-Chkck? Kchchck!",
+		"Kchckchk...",
+		"EEEeeeeEEEE",
+		"khhhhh",
+		"#@§*&£",
+		"H**p m*",
+		"H-hhhhh..."
+	],
+
+	"didyouhearthat": [
+		"Did you hear that?",
+		"Did you see that?",
+		"What was that?"
+	],
+
+	"imatraitor": [
+		"Hail Ratvar",
+		"Hail Nar'Sie",
+		"Hey, @pick(add_name)i've got some TC left, want something?",
+		"Viva!",
+		"I'll spare you if you don't tell anybody about me",
+		"Hey, @pick(add_name)are you a traitor too?",
+		"You're my target, but @pick(excuses)",
+		"Are you mr. @pick(ling_names)?"
+	],
+
+	"excuses": [
+		"i like you, so i'll spare you",
+		"i don't really feel like following objectives today",
+		"i'm not robust enough to fight you",
+		"who cares",
+		"i'll kill you later"
+	],
+
+	"ling_names": [
+		"Alpha",
+		"Beta",
+		"Gamma",
+		"Delta",
+		"Epsilon",
+		"Eta",
+		"Theta",
+		"Lambda",
+		"Mu",
+		"Xi",
+		"Rho",
+		"Sigma",
+		"Tau",
+		"Upsilon",
+		"Phi",
+		"Psi",
+		"Omega"
+	],
+
+	"add_name": [
+		"%TARGETNAME%, ",
+		""
+	],
+
+	"doubt": [
+		"Why?",
+		"What?",
+		"Wait, what?",
+		"@pick(add_name)wait",
+		"@pick(add_name)hold on",
+		"Uh..."
+	],
+
+	"aggressive": [
+		"@pick(add_name)give me that!",
+		"@pick(add_name)i'm going to kill you!",
+		"@pick(add_name)fuck you!"
+	],
+
+	"help": [
+		"HELP",
+		"HELP ME",
+		"HELP HIM",
+		"HELP HER",
+		"HELP THEM",
+		"HELP US",
+		"HELP YOURSELF"
+	],
+
+	"escape": [
+		"@pick(add_name)RUN!!",
+		"They're behind me!",
+		"It's here!",
+		"@pick(add_name)follow me!",
+		"@pick(add_name)follow me"
+	],
+
+	"infection_advice": [
+		"@pick(add_name)stay away",
+		"@pick(add_name)don't get close",
+		"@pick(add_name)be careful",
+		"@pick(add_name)help me",
+		"@pick(add_name)kill me"
+	],
+
+	"people": [
+		"Captain",
+		"Hos",
+		"Cmo",
+		"Rd",
+		"Ce",
+		"Hop",
+		"Janitor",
+		"AI",
+		"Viro",
+		"Qm",
+		"%TARGETNAME%"
+	],
+
+	"accusations": [
+		"rogue",
+		"cult",
+		"a cultist",
+		"clockcult",
+		"a clock cultist",
+		"a revhead",
+		"a rev",
+		"a gang leader",
+		"a gangster",
+		"a traitor",
+		"a tator",
+		"a ling",
+		"a changeling"
+	],
+
+	"threat": [
+		"Cult",
+		"Wizard",
+		"Blob",
+		"Ling",
+		"Ops",
+		"Swarmers",
+		"Revenant",
+		"Traitor",
+		"Harm",
+		"I hear flashing",
+		"Help",
+		"%TARGETNAME%"
+	],
+
+	"location": [
+		"bridge",
+		"armory",
+		"sec",
+		"security",
+		"science",
+		"engineering",
+		"cargo",
+		"medbay",
+		"atmos",
+		"maint",
+		"hops office",
+		"captains office",
+		"chapel",
+		"library",
+		"tool storage",
+		"botany",
+		"kitchen",
+		"the ai sat"
+	],
+
+	"advice": [
+		"Hmm...not sure about that.",
+		"Yes. You're doing the right thing.",
+		"No. Stop what you're doing.",
+		"You should be wary of that person.",
+		"Trust that person.",
+		"That person wants to kill you.",
+		"Kill that person. You know who.",
+		"You should go somewhere else. Quickly.",
+		"Good luck. You'll need it.",
+		"You have my permission. Do it."
+	],
+
+	"chemicals": [
+		"Ooze",
+		"Fire",
+		"Earth",
+		"Lightning",
+		"Air",
+		"Magic",
+		"Spiders",
+		"Button",
+		"Surprise",
+		"Happiness",
+		"Despair",
+		"Blood",
+		"Awesome",
+		"Infinity",
+		"Electronics",
+		"Time",
+		"Space",
+		"Pain",
+		"Guts",
+		"Life",
+		"Death",
+		"Phlebotinium",
+		"Mana",
+		"Energy",
+		"?????"
+	]
+
+}

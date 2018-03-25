@@ -1,43 +1,52 @@
 // Cold
 
-/datum/disease/advance/cold/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
-	if(!D)
-		name = "Cold"
-		symptoms = list(new/datum/symptom/sneeze)
-	..(process, D, copy)
+/datum/disease/advance/cold/New()
+	name = "Cold"
+	symptoms = list(new/datum/symptom/sneeze)
+	..()
 
 
 // Flu
 
-/datum/disease/advance/flu/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
-	if(!D)
-		name = "Flu"
-		symptoms = list(new/datum/symptom/cough)
-	..(process, D, copy)
+/datum/disease/advance/flu/New()
+	name = "Flu"
+	symptoms = list(new/datum/symptom/cough)
+	..()
 
 
 // Voice Changing
 
-/datum/disease/advance/voice_change/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
-	if(!D)
-		name = "Epiglottis Mutation"
-		symptoms = list(new/datum/symptom/voice_change)
-	..(process, D, copy)
+/datum/disease/advance/voice_change/New()
+	name = "Epiglottis Mutation"
+	symptoms = list(new/datum/symptom/voice_change)
+	..()
 
 
 // Toxin Filter
 
-/datum/disease/advance/heal/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
-	if(!D)
-		name = "Liver Enhancer"
-		symptoms = list(new/datum/symptom/heal)
-	..(process, D, copy)
+/datum/disease/advance/heal/New()
+	name = "Liver Enhancer"
+	symptoms = list(new/datum/symptom/heal)
+	..()
 
 
-// Hullucigen
+// Hallucigen
 
-/datum/disease/advance/hullucigen/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
-	if(!D)
-		name = "Reality Impairment"
-		symptoms = list(new/datum/symptom/hallucigen)
-	..(process, D, copy)
+/datum/disease/advance/hallucigen/New()
+	name = "Second Sight"
+	symptoms = list(new/datum/symptom/hallucigen)
+	..()
+
+// Sensory Restoration
+
+/datum/disease/advance/mind_restoration/New()
+	name = "Intelligence Booster"
+	symptoms = list(new/datum/symptom/mind_restoration)
+	..()
+
+// Sensory Destruction
+
+/datum/disease/advance/narcolepsy/New()
+	name = "Experimental Insomnia Cure"
+	symptoms = list(new/datum/symptom/narcolepsy)
+	..()

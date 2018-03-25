@@ -1,14 +1,14 @@
 /datum/disease/fake_gbs
 	name = "GBS"
 	max_stages = 5
-	spread = "On contact"
-	spread_type = CONTACT_GENERAL
-	cure = "Synaptizine & Sulfur"
-	cure_id = list("synaptizine","sulfur")
+	spread_text = "On contact"
+	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
+	cure_text = "Synaptizine & Sulfur"
+	cures = list("synaptizine","sulfur")
 	agent = "Gravitokinetic Bipotential SADS-"
-	affected_species = list("Human", "Monkey")
+	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	desc = "If left untreated death will occur."
-	severity = "Major"
+	severity = DISEASE_SEVERITY_BIOHAZARD
 
 /datum/disease/fake_gbs/stage_act()
 	..()
@@ -22,7 +22,7 @@
 			else if(prob(5))
 				affected_mob.emote("gasp")
 			if(prob(10))
-				affected_mob << "\red You're starting to feel very weak..."
+				to_chat(affected_mob, "<span class='danger'>You're starting to feel very weak...</span>")
 		if(4)
 			if(prob(10))
 				affected_mob.emote("cough")

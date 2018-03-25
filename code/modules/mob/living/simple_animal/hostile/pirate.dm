@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile/pirate
 	name = "Pirate"
 	desc = "Does what he wants cause a pirate is free."
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "piratemelee"
 	icon_living = "piratemelee"
 	icon_dead = "piratemelee_dead"
@@ -10,29 +11,33 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	stop_automated_movement_when_pulled = 0
 	maxHealth = 100
 	health = 100
+	spacewalk = TRUE
 
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 
-	min_oxy = 5
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 1
-	min_co2 = 0
-	max_co2 = 5
-	min_n2 = 0
-	max_n2 = 0
-	unsuitable_atoms_damage = 15
-	var/corpse = /obj/effect/landmark/mobcorpse/pirate
-	var/weapon1 = /obj/item/weapon/melee/energy/sword/pirate
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 15
+	speak_emote = list("yarrs")
+	loot = list(/obj/effect/mob_spawn/human/corpse/pirate,
+			/obj/item/melee/transforming/energy/sword/pirate)
+	del_on_death = 1
+	faction = list("pirate")
+	var/obj/effect/light_emitter/red_energy_sword/sord
 
-	faction = "pirate"
+/mob/living/simple_animal/hostile/pirate/Initialize()
+	. = ..()
+	sord = new(src)
+
+/mob/living/simple_animal/hostile/pirate/Destroy()
+	QDEL_NULL(sord)
+	return ..()
 
 /mob/living/simple_animal/hostile/pirate/ranged
 	name = "Pirate Gunner"
@@ -44,16 +49,31 @@
 	rapid = 1
 	retreat_distance = 5
 	minimum_distance = 5
-	projectiletype = /obj/item/projectile/beam
-	corpse = /obj/effect/landmark/mobcorpse/pirate/ranged
-	weapon1 = /obj/item/weapon/gun/energy/laser
+	projectiletype = /obj/item/projectile/beam/laser
+	loot = list(/obj/effect/mob_spawn/human/corpse/pirate/ranged,
+			/obj/item/gun/energy/laser)
 
+/mob/living/simple_animal/hostile/pirate/space
+	name = "Space Pirate"
+	icon_state = "piratespace"
+	icon_living = "piratespace"
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	speed = 1
 
-/mob/living/simple_animal/hostile/pirate/Die()
-	..()
-	if(corpse)
-		new corpse (src.loc)
-	if(weapon1)
-		new weapon1 (src.loc)
-	qdel(src)
-	return
+/mob/living/simple_animal/hostile/pirate/space/Initialize()
+	. = ..()
+	set_light(3)
+
+/mob/living/simple_animal/hostile/pirate/space/ranged
+	name = "Space Pirate Gunner"
+	icon_state = "piratespaceranged"
+	icon_living = "piratespaceranged"
+	projectilesound = 'sound/weapons/laser.ogg'
+	ranged = 1
+	rapid = 1
+	retreat_distance = 5
+	minimum_distance = 5
+	projectiletype = /obj/item/projectile/beam/laser
+	loot = list(/obj/effect/mob_spawn/human/corpse/pirate/ranged,
+			/obj/item/gun/energy/laser)

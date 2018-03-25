@@ -3,1192 +3,390 @@
 // ********************************************************
 
 /obj/item/seeds
-	name = "pack of seeds"
-	icon = 'icons/obj/seeds.dmi'
-	icon_state = "seed"				//Unknown plant seed - these shouldn't exist in-game.
-	w_class = 1						//Pocketable.
-	var/plantname = "Plants"		//Name of plant when planted.
-	var/product						//A type path. The thing that is created when the plant is harvested.
-	var/species = ""				//Used to update icons. Should match the name in the sprites.
-	var/lifespan = 0 				//How long before the plant begins to take damage from age.
-	var/endurance = 0 				//Amount of health the plant has.
-	var/maturation = 0 				//Used to determine which sprite to switch to when growing.
-	var/production = 0 				//Changes the amount of time needed for a plant to become harvestable.
-	var/yield = 0					//Amount of growns created per harvest. If is -1, the plant/shroom/weed is never meant to be harvested.
-	var/oneharvest = 0				//If a plant is cleared from the tray after harvesting, e.g. a carrot.
-	var/potency = -1				//The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
-	var/growthstages = 0			//Amount of growth sprites the plant has.
-	var/plant_type = 0				//0 = 'normal plant'; 1 = weed; 2 = shroom
-	var/rarity = 0					//How rare the plant is. Used for giving points to cargo when shipping off to Centcom.
-	var/list/mutatelist = list()	//The type of plants that this plant can mutate into.
+	icon = 'icons/obj/hydroponics/seeds.dmi'
+	icon_state = "seed"				// Unknown plant seed - these shouldn't exist in-game.
+	w_class = WEIGHT_CLASS_TINY
+	resistance_flags = FLAMMABLE
+	var/plantname = "Plants"		// Name of plant when planted.
+	var/product						// A type path. The thing that is created when the plant is harvested.
+	var/species = ""				// Used to update icons. Should match the name in the sprites unless all icon_* are overriden.
 
-/obj/item/seeds/New(loc, parent)
-	..()
+	var/growing_icon = 'icons/obj/hydroponics/growing.dmi' //the file that stores the sprites of the growing plant from this seed.
+	var/icon_grow					// Used to override grow icon (default is "[species]-grow"). You can use one grow icon for multiple closely related plants with it.
+	var/icon_dead					// Used to override dead icon (default is "[species]-dead"). You can use one dead icon for multiple closely related plants with it.
+	var/icon_harvest				// Used to override harvest icon (default is "[species]-harvest"). If null, plant will use [icon_grow][growthstages].
+
+	var/lifespan = 25				// How long before the plant begins to take damage from age.
+	var/endurance = 15				// Amount of health the plant has.
+	var/maturation = 6				// Used to determine which sprite to switch to when growing.
+	var/production = 6				// Changes the amount of time needed for a plant to become harvestable.
+	var/yield = 3					// Amount of growns created per harvest. If is -1, the plant/shroom/weed is never meant to be harvested.
+	var/potency = 10				// The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
+	var/growthstages = 6			// Amount of growth sprites the plant has.
+	var/rarity = 0					// How rare the plant is. Used for giving points to cargo when shipping off to CentCom.
+	var/list/mutatelist = list()	// The type of plants that this plant can mutate into.
+	var/list/genes = list()			// Plant genes are stored here, see plant_genes.dm for more info.
+	var/list/reagents_add = list()
+	// A list of reagents to add to product.
+	// Format: "reagent_id" = potency multiplier
+	// Stronger reagents must always come first to avoid being displaced by weaker ones.
+	// Total amount of any reagent in plant is calculated by formula: 1 + round(potency * multiplier)
+
+	var/weed_rate = 1 //If the chance below passes, then this many weeds sprout during growth
+	var/weed_chance = 5 //Percentage chance per tray update to grow weeds
+
+/obj/item/seeds/Initialize(loc, nogenes = 0)
+	. = ..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 8)
 
-/obj/item/seeds/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
-		user << "*** <B>[plantname]</B> ***"
-		user << "-Plant Endurance: <span class='notice'> [endurance]</span>"
-		user << "-Plant Lifespan: <span class='notice'> [lifespan]</span>"
-		user << "-Species Discovery Value: <span class='notice'> [rarity]</span>"
+	if(!icon_grow)
+		icon_grow = "[species]-grow"
+
+	if(!icon_dead)
+		icon_dead = "[species]-dead"
+
+	if(!icon_harvest && !get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism) && yield != -1)
+		icon_harvest = "[species]-harvest"
+
+	if(!nogenes) // not used on Copy()
+		genes += new /datum/plant_gene/core/lifespan(lifespan)
+		genes += new /datum/plant_gene/core/endurance(endurance)
+		genes += new /datum/plant_gene/core/weed_rate(weed_rate)
+		genes += new /datum/plant_gene/core/weed_chance(weed_chance)
 		if(yield != -1)
-			user << "-Plant Yield: <span class='notice'> [yield]</span>"
-		user << "-Plant Production: <span class='notice'> [production]</span>"
+			genes += new /datum/plant_gene/core/yield(yield)
+			genes += new /datum/plant_gene/core/production(production)
 		if(potency != -1)
-			user << "-Plant Potency: <span class='notice'> [potency]</span>"
+			genes += new /datum/plant_gene/core/potency(potency)
+
+		for(var/p in genes)
+			if(ispath(p))
+				genes -= p
+				genes += new p
+
+		for(var/reag_id in reagents_add)
+			genes += new /datum/plant_gene/reagent(reag_id, reagents_add[reag_id])
+
+/obj/item/seeds/proc/Copy()
+	var/obj/item/seeds/S = new type(null, 1)
+	// Copy all the stats
+	S.lifespan = lifespan
+	S.endurance = endurance
+	S.maturation = maturation
+	S.production = production
+	S.yield = yield
+	S.potency = potency
+	S.weed_rate = weed_rate
+	S.weed_chance = weed_chance
+	S.genes = list()
+	for(var/g in genes)
+		var/datum/plant_gene/G = g
+		S.genes += G.Copy()
+	S.reagents_add = reagents_add.Copy() // Faster than grabbing the list from genes.
+	return S
+
+/obj/item/seeds/proc/get_gene(typepath)
+	return (locate(typepath) in genes)
+
+/obj/item/seeds/proc/reagents_from_genes()
+	reagents_add = list()
+	for(var/datum/plant_gene/reagent/R in genes)
+		reagents_add[R.reagent_id] = R.rate
+
+/obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0)
+	adjust_lifespan(rand(-lifemut,lifemut))
+	adjust_endurance(rand(-endmut,endmut))
+	adjust_production(rand(-productmut,productmut))
+	adjust_yield(rand(-yieldmut,yieldmut))
+	adjust_potency(rand(-potmut,potmut))
+	adjust_weed_rate(rand(-wrmut, wrmut))
+	adjust_weed_chance(rand(-wcmut, wcmut))
+	if(prob(traitmut))
+		add_random_traits(1, 1)
+
+
+
+/obj/item/seeds/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
+	if(istype(Proj, /obj/item/projectile/energy/florayield))
+		var/rating = 1
+		if(istype(loc, /obj/machinery/hydroponics))
+			var/obj/machinery/hydroponics/H = loc
+			rating = H.rating
+
+		if(yield == 0)//Oh god don't divide by zero you'll doom us all.
+			adjust_yield(1 * rating)
+		else if(prob(1/(yield * yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
+			adjust_yield(1 * rating)
+	else
+		return ..()
+
+
+// Harvest procs
+/obj/item/seeds/proc/getYield()
+	var/return_yield = yield
+
+	var/obj/machinery/hydroponics/parent = loc
+	if(istype(loc, /obj/machinery/hydroponics))
+		if(parent.yieldmod == 0)
+			return_yield = min(return_yield, 1)//1 if above zero, 0 otherwise
+		else
+			return_yield *= (parent.yieldmod)
+
+	return return_yield
+
+
+/obj/item/seeds/proc/harvest(mob/user = usr)
+	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/t_amount = 0
+	var/list/result = list()
+	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+	var/product_name
+	while(t_amount < getYield())
+		var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
+		result.Add(t_prod) // User gets a consumable
+		if(!t_prod)
+			return
+		t_amount++
+		product_name = t_prod.name
+	if(getYield() >= 1)
+		SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
+	parent.update_tray()
+
+	return result
+
+
+/obj/item/seeds/proc/prepare_result(var/obj/item/reagent_containers/food/snacks/grown/T)
+	if(!T.reagents)
+		CRASH("[T] has no reagents.")
+
+	for(var/rid in reagents_add)
+		var/amount = 1 + round(potency * reagents_add[rid], 1)
+
+		var/list/data = null
+		if(rid == "blood") // Hack to make blood in plants always O-
+			data = list("blood_type" = "O-")
+		if(rid == "nutriment" || rid == "vitamin")
+			// apple tastes of apple.
+			data = T.tastes
+
+		T.reagents.add_reagent(rid, amount, data)
+
+
+/// Setters procs ///
+/obj/item/seeds/proc/adjust_yield(adjustamt)
+	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
+		yield = CLAMP(yield + adjustamt, 0, 10)
+
+		if(yield <= 0 && get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
+			yield = 1 // Mushrooms always have a minimum yield of 1.
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/yield)
+		if(C)
+			C.value = yield
+
+/obj/item/seeds/proc/adjust_lifespan(adjustamt)
+	lifespan = CLAMP(lifespan + adjustamt, 10, 100)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/lifespan)
+	if(C)
+		C.value = lifespan
+
+/obj/item/seeds/proc/adjust_endurance(adjustamt)
+	endurance = CLAMP(endurance + adjustamt, 10, 100)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
+	if(C)
+		C.value = endurance
+
+/obj/item/seeds/proc/adjust_production(adjustamt)
+	if(yield != -1)
+		production = CLAMP(production + adjustamt, 1, 10)
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
+		if(C)
+			C.value = production
+
+/obj/item/seeds/proc/adjust_potency(adjustamt)
+	if(potency != -1)
+		potency = CLAMP(potency + adjustamt, 0, 100)
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
+		if(C)
+			C.value = potency
+
+/obj/item/seeds/proc/adjust_weed_rate(adjustamt)
+	weed_rate = CLAMP(weed_rate + adjustamt, 0, 10)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
+	if(C)
+		C.value = weed_rate
+
+/obj/item/seeds/proc/adjust_weed_chance(adjustamt)
+	weed_chance = CLAMP(weed_chance + adjustamt, 0, 67)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
+	if(C)
+		C.value = weed_chance
+
+//Directly setting stats
+
+/obj/item/seeds/proc/set_yield(adjustamt)
+	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
+		yield = CLAMP(adjustamt, 0, 10)
+
+		if(yield <= 0 && get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
+			yield = 1 // Mushrooms always have a minimum yield of 1.
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/yield)
+		if(C)
+			C.value = yield
+
+/obj/item/seeds/proc/set_lifespan(adjustamt)
+	lifespan = CLAMP(adjustamt, 10, 100)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/lifespan)
+	if(C)
+		C.value = lifespan
+
+/obj/item/seeds/proc/set_endurance(adjustamt)
+	endurance = CLAMP(adjustamt, 10, 100)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
+	if(C)
+		C.value = endurance
+
+/obj/item/seeds/proc/set_production(adjustamt)
+	if(yield != -1)
+		production = CLAMP(adjustamt, 1, 10)
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
+		if(C)
+			C.value = production
+
+/obj/item/seeds/proc/set_potency(adjustamt)
+	if(potency != -1)
+		potency = CLAMP(adjustamt, 0, 100)
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
+		if(C)
+			C.value = potency
+
+/obj/item/seeds/proc/set_weed_rate(adjustamt)
+	weed_rate = CLAMP(adjustamt, 0, 10)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
+	if(C)
+		C.value = weed_rate
+
+/obj/item/seeds/proc/set_weed_chance(adjustamt)
+	weed_chance = CLAMP(adjustamt, 0, 67)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
+	if(C)
+		C.value = weed_chance
+
+
+/obj/item/seeds/proc/get_analyzer_text()  //in case seeds have something special to tell to the analyzer
+	var/text = ""
+	if(!get_gene(/datum/plant_gene/trait/plant_type/weed_hardy) && !get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism) && !get_gene(/datum/plant_gene/trait/plant_type/alien_properties))
+		text += "- Plant type: Normal plant\n"
+	if(get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
+		text += "- Plant type: Weed. Can grow in nutrient-poor soil.\n"
+	if(get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
+		text += "- Plant type: Mushroom. Can grow in dry soil.\n"
+	if(get_gene(/datum/plant_gene/trait/plant_type/alien_properties))
+		text += "- Plant type: <span class='warning'>UNKNOWN</span> \n"
+	if(potency != -1)
+		text += "- Potency: [potency]\n"
+	if(yield != -1)
+		text += "- Yield: [yield]\n"
+	text += "- Maturation speed: [maturation]\n"
+	if(yield != -1)
+		text += "- Production speed: [production]\n"
+	text += "- Endurance: [endurance]\n"
+	text += "- Lifespan: [lifespan]\n"
+	text += "- Weed Growth Rate: [weed_rate]\n"
+	text += "- Weed Vulnerability: [weed_chance]\n"
+	if(rarity)
+		text += "- Species Discovery Value: [rarity]\n"
+	var/all_traits = ""
+	for(var/datum/plant_gene/trait/traits in genes)
+		if(istype(traits, /datum/plant_gene/trait/plant_type))
+			continue
+		all_traits += " [traits.get_name()]"
+	text += "- Plant Traits:[all_traits]\n"
+
+	text += "*---------*"
+
+	return text
+
+/obj/item/seeds/proc/on_chem_reaction(datum/reagents/S)  //in case seeds have some special interaction with special chems
+	return
+
+/obj/item/seeds/attackby(obj/item/O, mob/user, params)
+	if (istype(O, /obj/item/device/plant_analyzer))
+		to_chat(user, "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>")
+		var/text = get_analyzer_text()
+		if(text)
+			to_chat(user, "<span class='notice'>[text]</span>")
+
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
-/obj/item/seeds/chiliseed
-	name = "pack of chili seeds"
-	desc = "These seeds grow into chili plants. HOT! HOT! HOT!"
-	icon_state = "seed-chili"
-	species = "chili"
-	plantname = "Chili Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/chili
-	lifespan = 20
-	endurance = 15
-	maturation = 5
-	production = 5
-	yield = 4
-	potency = 20
-	plant_type = 0
-	growthstages = 6
-	rarity = 0 // CentComm knows about this species already, it's in exotic seeds crates.
-	mutatelist = list(/obj/item/seeds/icepepperseed, /obj/item/seeds/chillighost)
 
-/obj/item/seeds/replicapod
-	name = "pack of replica pod seeds"
-	desc = "These seeds grow into replica pods. They say these are used to harvest humans."
-	icon_state = "seed-replicapod"
-	species = "replicapod"
-	plantname = "Replica Pod"
-	product = /mob/living/carbon/human //verrry special -- Urist
-	lifespan = 50
-	endurance = 8
-	maturation = 10
-	production = 10
-	yield = 1 //seeds if there isn't a dna inside
-	oneharvest = 1
-	potency = 30
-	plant_type = 0
-	growthstages = 6
-	var/ui = null //for storing the guy
-	var/se = null
-	var/ckey = null
-	var/realName = null
-	var/datum/mind/mind = null
-	gender = MALE
 
-/obj/item/seeds/grapeseed
-	name = "pack of grape seeds"
-	desc = "These seeds grow into grape vines."
-	icon_state = "seed-grapes"
-	species = "grape"
-	plantname = "Grape Vine"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/grapes
-	lifespan = 50
-	endurance = 25
-	maturation = 3
-	production = 5
-	yield = 4
-	potency = 10
-	plant_type = 0
-	growthstages = 2
-	mutatelist = list(/obj/item/seeds/greengrapeseed)
 
-/obj/item/seeds/greengrapeseed
-	name = "pack of green grape seeds"
-	desc = "These seeds grow into green-grape vines."
-	icon_state = "seed-greengrapes"
-	species = "greengrape"
-	plantname = "Green-Grape Vine"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/greengrapes
-	lifespan = 50
-	endurance = 25
-	maturation = 3
-	production = 5
-	yield = 4
-	potency = 10
-	plant_type = 0
-	growthstages = 2
-	rarity = 0 // Technically it's a beneficial mutant, but it's not exactly "new"...
 
-/obj/item/seeds/cabbageseed
-	name = "pack of cabbage seeds"
-	desc = "These seeds grow into cabbages."
-	icon_state = "seed-cabbage"
-	species = "cabbage"
-	plantname = "Cabbages"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage
-	lifespan = 50
-	endurance = 25
-	maturation = 3
-	production = 5
-	yield = 4
-	potency = 10
-	plant_type = 0
-	growthstages = 1
 
-/obj/item/seeds/berryseed
-	name = "pack of berry seeds"
-	desc = "These seeds grow into berry bushes."
-	icon_state = "seed-berry"
-	species = "berry"
-	plantname = "Berry Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/berries
-	lifespan = 20
-	endurance = 15
-	maturation = 5
-	production = 5
-	yield = 2
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-	mutatelist = list(/obj/item/seeds/glowberryseed,/obj/item/seeds/poisonberryseed)
 
-/obj/item/seeds/glowberryseed
-	name = "pack of glow-berry seeds"
-	desc = "These seeds grow into glow-berry bushes."
-	icon_state = "seed-glowberry"
-	species = "glowberry"
-	plantname = "Glow-Berry Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries
-	lifespan = 30
-	endurance = 25
-	maturation = 5
-	production = 5
-	yield = 2
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-	rarity = 20
-
-/obj/item/seeds/bananaseed
-	name = "pack of banana seeds"
-	desc = "They're seeds that grow into banana trees. When grown, keep away from clown."
-	icon_state = "seed-banana"
-	species = "banana"
-	plantname = "Banana Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
-	lifespan = 50
-	endurance = 30
-	maturation = 6
-	production = 6
-	yield = 3
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-
-/obj/item/seeds/eggplantseed
-	name = "pack of eggplant seeds"
-	desc = "These seeds grow to produce berries that look nothing like eggs."
-	icon_state = "seed-eggplant"
-	species = "eggplant"
-	plantname = "Eggplants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
-	lifespan = 25
-	endurance = 15
-	maturation = 6
-	production = 6
-	yield = 2
-	potency = 20
-	plant_type = 0
-	growthstages = 6
-	mutatelist = list(/obj/item/seeds/eggyseed)
-
-/obj/item/seeds/eggyseed
-	name = "pack of eggplant seeds"
-	desc = "These seeds grow to produce berries that look a lot like eggs."
-	icon_state = "seed-eggy"
-	species = "eggy"
-	plantname = "Eggplants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/egg
-	lifespan = 75
-	endurance = 15
-	maturation = 6
-	production = 12
-	yield = 2
-	plant_type = 0
-	growthstages = 6
-	rarity = 0 // CentComm ships these to us in the exotic seeds crate.
-
-/obj/item/seeds/bloodtomatoseed
-	name = "pack of blood-tomato seeds"
-	desc = "These seeds grow into blood-tomato plants."
-	icon_state = "seed-bloodtomato"
-	species = "bloodtomato"
-	plantname = "Blood-Tomato Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato
-	lifespan = 25
-	endurance = 20
-	maturation = 8
-	production = 6
-	yield = 3
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-	rarity = 20
-
-/obj/item/seeds/tomatoseed
-	name = "pack of tomato seeds"
-	desc = "These seeds grow into tomato plants."
-	icon_state = "seed-tomato"
-	species = "tomato"
-	plantname = "Tomato Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
-	lifespan = 25
-	endurance = 15
-	maturation = 8
-	production = 6
-	yield = 3
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-	mutatelist = list(/obj/item/seeds/bluetomatoseed, /obj/item/seeds/bloodtomatoseed, /obj/item/seeds/killertomatoseed)
-
-/obj/item/seeds/killertomatoseed
-	name = "pack of killer-tomato seeds"
-	desc = "These seeds grow into killer-tomato plants."
-	icon_state = "seed-killertomato"
-	species = "killertomato"
-	plantname = "Killer-Tomato Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato
-	lifespan = 25
-	endurance = 15
-	maturation = 8
-	production = 6
-	yield = 2
-	potency = 10
-	plant_type = 0
-	oneharvest = 1
-	growthstages = 2
-	rarity = 30
-
-/obj/item/seeds/bluetomatoseed
-	name = "pack of blue-tomato seeds"
-	desc = "These seeds grow into blue-tomato plants."
-	icon_state = "seed-bluetomato"
-	species = "bluetomato"
-	plantname = "Blue-Tomato Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
-	lifespan = 25
-	endurance = 15
-	maturation = 8
-	production = 6
-	yield = 2
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-	mutatelist = list(/obj/item/seeds/bluespacetomatoseed)
-	rarity = 20
-
-/obj/item/seeds/bluespacetomatoseed
-	name = "pack of blue-space tomato seeds"
-	desc = "These seeds grow into blue-space tomato plants."
-	icon_state = "seed-bluespacetomato"
-	species = "bluespacetomato"
-	plantname = "Blue-Space Tomato Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
-	lifespan = 25
-	endurance = 15
-	maturation = 8
-	production = 6
-	yield = 2
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-	rarity = 50
-
-/obj/item/seeds/cornseed
-	name = "pack of corn seeds"
-	desc = "I don't mean to sound corny..."
-	icon_state = "seed-corn"
-	species = "corn"
-	plantname = "Corn Stalks"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/corn
-	lifespan = 25
-	endurance = 15
-	maturation = 8
-	production = 6
-	yield = 3
-	plant_type = 0
-	oneharvest = 1
-	potency = 20
-	growthstages = 3
-
-/obj/item/seeds/poppyseed
-	name = "pack of poppy seeds"
-	desc = "These seeds grow into poppies."
-	icon_state = "seed-poppy"
-	species = "poppy"
-	plantname = "Poppy Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
-	lifespan = 25
-	endurance = 10
-	maturation = 8
-	production = 6
-	yield = 6
-	potency = 20
-	plant_type = 0
-	oneharvest = 1
-	growthstages = 3
-
-/obj/item/seeds/potatoseed
-	name = "pack of potato seeds"
-	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
-	icon_state = "seed-potato"
-	species = "potato"
-	plantname = "Potato-Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
-	lifespan = 30
-	endurance = 15
-	maturation = 10
-	production = 1
-	yield = 4
-	plant_type = 0
-	oneharvest = 1
-	potency = 10
-	growthstages = 4
-
-/obj/item/seeds/icepepperseed
-	name = "pack of ice-pepper seeds"
-	desc = "These seeds grow into ice-pepper plants."
-	icon_state = "seed-icepepper"
-	species = "chiliice"
-	plantname = "Ice-Pepper Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
-	lifespan = 25
-	endurance = 15
-	maturation = 4
-	production = 4
-	yield = 4
-	potency = 20
-	plant_type = 0
-	growthstages = 6
-	rarity = 20
-
-/obj/item/seeds/soyaseed
-	name = "pack of soybean seeds"
-	desc = "These seeds grow into soybean plants."
-	icon_state = "seed-soybean"
-	species = "soybean"
-	plantname = "Soybean Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
-	lifespan = 25
-	endurance = 15
-	maturation = 4
-	production = 4
-	yield = 3
-	potency = 15
-	plant_type = 0
-	growthstages = 4
-	mutatelist = list(/obj/item/seeds/koiseed)
-
-/obj/item/seeds/koiseed
-	name = "pack of koibean seeds"
-	desc = "These seeds grow into koibean plants."
-	icon_state = "seed-koibean"
-	species = "soybean"
-	plantname = "Koibean Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/koibeans
-	lifespan = 25
-	endurance = 15
-	maturation = 4
-	production = 4
-	yield = 3
-	potency = 10
-	plant_type = 0
-	growthstages = 4
-	rarity = 20
-
-/obj/item/seeds/wheatseed
-	name = "pack of wheat seeds"
-	desc = "These may, or may not, grow into wheat."
-	icon_state = "seed-wheat"
-	species = "wheat"
-	plantname = "Wheat Stalks"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
-	lifespan = 25
-	endurance = 15
-	maturation = 6
-	production = 1
-	yield = 4
-	potency = 15
-	oneharvest = 1
-	plant_type = 0
-	growthstages = 6
-
-/obj/item/seeds/carrotseed
-	name = "pack of carrot seeds"
-	desc = "These seeds grow into carrots."
-	icon_state = "seed-carrot"
-	species = "carrot"
-	plantname = "Carrots"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
-	lifespan = 25
-	endurance = 15
-	maturation = 10
-	production = 1
-	yield = 5
-	potency = 10
-	oneharvest = 1
-	plant_type = 0
-	growthstages = 3
-
-/obj/item/seeds/reishimycelium
-	name = "pack of reishi mycelium"
-	desc = "This mycelium grows into something medicinal and relaxing."
-	icon_state = "mycelium-reishi"
-	species = "reishi"
-	plantname = "Reishi"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
-	lifespan = 35
-	endurance = 35
-	maturation = 10
-	production = 5
-	yield = 4
-	potency = 15
-	oneharvest = 1
-	growthstages = 4
-	plant_type = 2
-
-/obj/item/seeds/amanitamycelium
-	name = "pack of fly amanita mycelium"
-	desc = "This mycelium grows into something horrible."
-	icon_state = "mycelium-amanita"
-	species = "amanita"
-	plantname = "Fly Amanitas"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
-	lifespan = 50
-	endurance = 35
-	maturation = 10
-	production = 5
-	yield = 4
-	potency = 10
-	oneharvest = 1
-	growthstages = 3
-	plant_type = 2
-	mutatelist = list(/obj/item/seeds/angelmycelium)
-
-/obj/item/seeds/angelmycelium
-	name = "pack of destroying angel mycelium"
-	desc = "This mycelium grows into something devestating."
-	icon_state = "mycelium-angel"
-	species = "angel"
-	plantname = "Destroying Angels"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
-	lifespan = 50
-	endurance = 35
-	maturation = 12
-	production = 5
-	yield = 2
-	potency = 35
-	oneharvest = 1
-	growthstages = 3
-	plant_type = 2
-	rarity = 30
-
-/obj/item/seeds/libertymycelium
-	name = "pack of liberty-cap mycelium"
-	desc = "This mycelium grows into liberty-cap mushrooms."
-	icon_state = "mycelium-liberty"
-	species = "liberty"
-	plantname = "Liberty-Caps"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
-	lifespan = 25
-	endurance = 15
-	maturation = 7
-	production = 1
-	yield = 5
-	potency = 15
-	oneharvest = 1
-	growthstages = 3
-	plant_type = 2
-
-/obj/item/seeds/chantermycelium
-	name = "pack of chanterelle mycelium"
-	desc = "This mycelium grows into chanterelle mushrooms."
-	icon_state = "mycelium-chanter"
-	species = "chanter"
-	plantname = "Chanterelle Mushrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
-	lifespan = 35
-	endurance = 20
-	maturation = 7
-	production = 1
-	yield = 5
-	potency = 15
-	oneharvest = 1
-	growthstages = 3
-	plant_type = 2
-
-/obj/item/seeds/towermycelium
-	name = "pack of tower-cap mycelium"
-	desc = "This mycelium grows into tower-cap mushrooms."
-	icon_state = "mycelium-tower"
-	species = "towercap"
-	plantname = "Tower Caps"
-	product = /obj/item/weapon/grown/log
-	lifespan = 80
-	endurance = 50
-	maturation = 15
-	production = 1
-	yield = 5
-	potency = 50
-	oneharvest = 1
-	growthstages = 3
-	plant_type = 2
-
-/obj/item/seeds/glowshroom
-	name = "pack of glowshroom mycelium"
-	desc = "This mycelium -glows- into mushrooms!"
-	icon_state = "mycelium-glowshroom"
-	species = "glowshroom"
-	plantname = "Glowshrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
-	lifespan = 120 //ten times that is the delay
-	endurance = 30
-	maturation = 15
-	production = 1
-	yield = 3 //-> spread
-	potency = 30 //-> brightness
-	oneharvest = 1
-	growthstages = 4
-	plant_type = 2
-	rarity = 20
-
-/obj/item/seeds/plumpmycelium
-	name = "pack of plump-helmet mycelium"
-	desc = "This mycelium grows into helmets... maybe."
-	icon_state = "mycelium-plump"
-	species = "plump"
-	plantname = "Plump-Helmet Mushrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
-	lifespan = 25
-	endurance = 15
-	maturation = 8
-	production = 1
-	yield = 4
-	potency = 15
-	oneharvest = 1
-	growthstages = 3
-	plant_type = 2
-	mutatelist = list(/obj/item/seeds/walkingmushroommycelium)
-
-/obj/item/seeds/walkingmushroommycelium
-	name = "pack of walking mushroom mycelium"
-	desc = "This mycelium will grow into huge stuff!"
-	icon_state = "mycelium-walkingmushroom"
-	species = "walkingmushroom"
-	plantname = "Walking Mushrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
-	lifespan = 30
-	endurance = 30
-	maturation = 5
-	production = 1
-	yield = 1
-	potency = 10
-	oneharvest = 1
-	growthstages = 3
-	plant_type = 2
-	rarity = 30
-
-/obj/item/seeds/nettleseed
-	name = "pack of nettle seeds"
-	desc = "These seeds grow into nettles."
-	icon_state = "seed-nettle"
-	species = "nettle"
-	plantname = "Nettles"
-	product = /obj/item/weapon/grown/nettle
-	lifespan = 30
-	endurance = 40 // tuff like a toiger
-	maturation = 6
-	production = 6
-	yield = 4
-	potency = 10
-	oneharvest = 0
-	growthstages = 5
-	plant_type = 1
-	mutatelist = list(/obj/item/seeds/deathnettleseed)
-
-/obj/item/seeds/deathnettleseed
-	name = "pack of death-nettle seeds"
-	desc = "These seeds grow into death-nettles."
-	icon_state = "seed-deathnettle"
-	species = "deathnettle"
-	plantname = "Death Nettles"
-	product = /obj/item/weapon/grown/deathnettle
-	lifespan = 30
-	endurance = 25
-	maturation = 8
-	production = 6
-	yield = 2
-	potency = 10
-	oneharvest = 0
-	growthstages = 5
-	plant_type = 1
-	rarity = 10
-
-/obj/item/seeds/weeds
-	name = "pack of weed seeds"
-	desc = "Yo mang, want some weeds?"
-	icon_state = "seed"
-	species = "weeds"
-	plantname = "Starthistle"
-	lifespan = 100
-	endurance = 50 // damm pesky weeds
-	maturation = 5
-	production = 1
-	yield = -1
-	potency = -1
-	oneharvest = 1
-	growthstages = 4
-	plant_type = 1
-
-/obj/item/seeds/harebell
-	name = "pack of harebell seeds"
-	desc = "These seeds grow into pretty little flowers."
-	icon_state = "seed-harebell"
-	species = "harebell"
-	plantname = "Harebells"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
-	lifespan = 100
-	endurance = 20
-	maturation = 7
-	production = 1
-	yield = 2
-	potency = 30
-	oneharvest = 1
-	growthstages = 4
-	plant_type = 1
-
-/obj/item/seeds/sunflowerseed
-	name = "pack of sunflower seeds"
-	desc = "These seeds grow into sunflowers."
-	icon_state = "seed-sunflower"
-	species = "sunflower"
-	plantname = "Sunflowers"
-	product = /obj/item/weapon/grown/sunflower
-	lifespan = 25
-	endurance = 20
-	maturation = 6
-	production = 2
-	yield = 2
-	potency = 10
-	oneharvest = 1
-	growthstages = 3
-	plant_type = 0
-	mutatelist = list(/obj/item/seeds/moonflowerseed,/obj/item/seeds/novaflowerseed)
-
-/obj/item/seeds/moonflowerseed
-	name = "pack of moonflower seeds"
-	desc = "These seeds grow into moonflowers."
-	icon_state = "seed-moonflower"
-	species = "moonflower"
-	plantname = "Moonflowers"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/moonflower
-	lifespan = 25
-	endurance = 20
-	maturation = 6
-	production = 2
-	yield = 2
-	potency = 15
-	oneharvest = 1
-	growthstages = 3
-	plant_type = 0
-	rarity = 10
-
-/obj/item/seeds/novaflowerseed
-	name = "pack of novaflower seeds"
-	desc = "These seeds grow into novaflowers."
-	icon_state = "seed-novaflower"
-	species = "novaflower"
-	plantname = "Novaflowers"
-	product = /obj/item/weapon/grown/novaflower
-	lifespan = 25
-	endurance = 20
-	maturation = 6
-	production = 2
-	yield = 2
-	potency = 20
-	oneharvest = 1
-	growthstages = 3
-	plant_type = 0
-
-/obj/item/seeds/appleseed
-	name = "pack of apple seeds"
-	desc = "These seeds grow into apple trees."
-	icon_state = "seed-apple"
-	species = "apple"
-	plantname = "Apple Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/apple
-	lifespan = 55
-	endurance = 35
-	maturation = 6
-	production = 6
-	yield = 5
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-	mutatelist = list(/obj/item/seeds/goldappleseed)
-
-/obj/item/seeds/poisonedappleseed
-	name = "pack of apple seeds"
-	desc = "These seeds grow into apple trees."
-	icon_state = "seed-apple"
-	species = "apple"
-	plantname = "Apple Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned
-	lifespan = 55
-	endurance = 35
-	maturation = 6
-	production = 6
-	yield = 5
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-	rarity = 50 // Source of cyanide, and impossible obtain normally.
-
-/obj/item/seeds/goldappleseed
-	name = "pack of golden apple seeds"
-	desc = "These seeds grow into golden apple trees. Good thing there are no firebirds in space."
-	icon_state = "seed-goldapple"
-	species = "goldapple"
-	plantname = "Golden Apple Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/goldapple
-	lifespan = 55
-	endurance = 35
-	maturation = 10
-	production = 10
-	yield = 3
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-	rarity = 40 // Alchemy!
-
-/obj/item/seeds/ambrosiavulgarisseed
-	name = "pack of ambrosia vulgaris seeds"
-	desc = "These seeds grow into common ambrosia, a plant grown by and from medicine."
-	icon_state = "seed-ambrosiavulgaris"
-	species = "ambrosiavulgaris"
-	plantname = "Ambrosia Vulgaris"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris
-	lifespan = 60
-	endurance = 25
-	maturation = 6
-	production = 6
-	yield = 6
-	potency = 5
-	plant_type = 0
-	growthstages = 6
-	mutatelist = list(/obj/item/seeds/ambrosiadeusseed)
-
-/obj/item/seeds/ambrosiadeusseed
-	name = "pack of ambrosia deus seeds"
-	desc = "These seeds grow into ambrosia deus. Could it be the food of the gods..?"
-	icon_state = "seed-ambrosiadeus"
-	species = "ambrosiadeus"
-	plantname = "Ambrosia Deus"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
-	lifespan = 60
-	endurance = 25
-	maturation = 6
-	production = 6
-	yield = 6
-	potency = 5
-	plant_type = 0
-	growthstages = 6
-	rarity = 40
-
-/obj/item/seeds/whitebeetseed
-	name = "pack of white-beet seeds"
-	desc = "These seeds grow into sugary beet producing plants."
-	icon_state = "seed-whitebeet"
-	species = "whitebeet"
-	plantname = "White-Beet Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
-	lifespan = 60
-	endurance = 50
-	maturation = 6
-	production = 6
-	yield = 6
-	oneharvest = 1
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-
-/obj/item/seeds/sugarcaneseed
-	name = "pack of sugarcane seeds"
-	desc = "These seeds grow into sugarcane."
-	icon_state = "seed-sugarcane"
-	species = "sugarcane"
-	plantname = "Sugarcane"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
-	lifespan = 60
-	endurance = 50
-	maturation = 3
-	production = 6
-	yield = 4
-	potency = 10
-	plant_type = 0
-	growthstages = 3
-
-/obj/item/seeds/watermelonseed
-	name = "pack of watermelon seeds"
-	desc = "These seeds grow into watermelon plants."
-	icon_state = "seed-watermelon"
-	species = "watermelon"
-	plantname = "Watermelon Vines"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
-	lifespan = 50
-	endurance = 40
-	maturation = 6
-	production = 6
-	yield = 3
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-
-/obj/item/seeds/pumpkinseed
-	name = "pack of pumpkin seeds"
-	desc = "These seeds grow into pumpkin vines."
-	icon_state = "seed-pumpkin"
-	species = "pumpkin"
-	plantname = "Pumpkin Vines"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
-	lifespan = 50
-	endurance = 40
-	maturation = 6
-	production = 6
-	yield = 3
-	potency = 10
-	plant_type = 0
-	growthstages = 3
-
-/obj/item/seeds/limeseed
-	name = "pack of lime seeds"
-	desc = "These are very sour seeds."
-	icon_state = "seed-lime"
-	species = "lime"
-	plantname = "Lime Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/lime
-	lifespan = 55
-	endurance = 50
-	maturation = 6
-	production = 6
-	yield = 4
-	potency = 15
-	plant_type = 0
-	growthstages = 6
-
-/obj/item/seeds/lemonseed
-	name = "pack of lemon seeds"
-	desc = "These are sour seeds."
-	icon_state = "seed-lemon"
-	species = "lemon"
-	plantname = "Lemon Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/lemon
-	lifespan = 55
-	endurance = 45
-	maturation = 6
-	production = 6
-	yield = 4
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-	mutatelist = list(/obj/item/seeds/cashseed)
-
-/obj/item/seeds/cashseed
-	name = "pack of money seeds"
-	desc = "When life gives you lemons, mutate them into cash."
-	icon_state = "seed-cash"
-	species = "cashtree"
-	plantname = "Money Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/money
-	lifespan = 55
-	endurance = 45
-	maturation = 6
-	production = 6
-	yield = 4
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-	rarity = 50  // Nanotrasen approves... but are these seeds even attainable?  Drag the tray to the shuttle?
-
-/obj/item/seeds/orangeseed
-	name = "pack of orange seed"
-	desc = "Sour seeds."
-	icon_state = "seed-orange"
-	species = "orange"
-	plantname = "Orange Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/orange
-	lifespan = 60
-	endurance = 50
-	maturation = 6
-	production = 6
-	yield = 5
-	potency = 20
-	plant_type = 0
-	growthstages = 6
-
-/obj/item/seeds/poisonberryseed
-	name = "pack of poison-berry seeds"
-	desc = "These seeds grow into poison-berry bushes."
-	icon_state = "seed-poisonberry"
-	species = "poisonberry"
-	plantname = "Poison-Berry Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries
-	lifespan = 20
-	endurance = 15
-	maturation = 5
-	production = 5
-	yield = 2
-	potency = 10
-	plant_type = 0
-	growthstages = 6
-	mutatelist = list(/obj/item/seeds/deathberryseed)
-	rarity = 10 // Mildly poisonous berries are common in reality
-
-/obj/item/seeds/deathberryseed
-	name = "pack of death-berry seeds"
-	desc = "These seeds grow into death berries."
-	icon_state = "seed-deathberry"
-	species = "deathberry"
-	plantname = "Death Berry Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/deathberries
-	lifespan = 30
-	endurance = 20
-	maturation = 5
-	production = 5
-	yield = 3
-	potency = 50
-	plant_type = 0
-	growthstages = 6
-	rarity = 30
-
-/obj/item/seeds/grassseed
-	name = "pack of grass seeds"
-	desc = "These seeds grow into grass. Yummy!"
-	icon_state = "seed-grass"
-	species = "grass"
-	plantname = "Grass"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/grass
-	lifespan = 40
-	endurance = 40
-	maturation = 2
-	production = 5
-	yield = 5
-	potency = 10
-	plant_type = 0
-	growthstages = 2
-
-/obj/item/seeds/cocoapodseed
-	name = "pack of cocoa pod seeds"
-	desc = "These seeds grow into cacao trees. They look fattening." //SIC: cocoa is the seeds. The trees are spelled cacao.
-	icon_state = "seed-cocoapod"
-	species = "cocoapod"
-	plantname = "Cocao Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
-	lifespan = 20
-	endurance = 15
-	maturation = 5
-	production = 5
-	yield = 2
-	potency = 10
-	plant_type = 0
-	growthstages = 5
-
-/obj/item/seeds/cherryseed
-	name = "pack of cherry pits"
-	desc = "Careful not to crack a tooth on one... That'd be the pits."
-	icon_state = "seed-cherry"
-	species = "cherry"
-	plantname = "Cherry Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cherries
-	lifespan = 35
-	endurance = 35
-	maturation = 5
-	production = 5
-	yield = 3
-	potency = 10
-	plant_type = 0
-	growthstages = 5
-
-/obj/item/seeds/kudzuseed
-	name = "pack of kudzu seeds"
-	desc = "These seeds grow into a weed that grows incredibly fast."
-	icon_state = "seed-kudzu"
-	species = "kudzu"
-	plantname = "Kudzu"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod
-	lifespan = 20
-	endurance = 10
-	maturation = 6
-	production = 6
-	yield = 4
-	potency = 10
-	growthstages = 4
-	plant_type = 1
-	rarity = 30
-	var/list/mutations = list()
-	var/mutating
-
-/obj/item/seeds/kudzuseed/New(loc, obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/parent)
-	..()
-	if(parent)
-		mutations = parent.mutations
-		mutating = parent.mutating
-
-/obj/item/seeds/kudzuseed/harvest()
-	var/list/prod = ..()
-	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/K in prod)
-		K.mutations = mutations
-		K.mutating = prob(15)
-
-/obj/item/seeds/kudzuseed/attack_self(mob/user as mob)
-	if(istype(user.loc,/turf/space))
-		return
-	user << "<span class='notice'>You plant the kudzu. You monster.</span>"
-	new /obj/effect/spacevine_controller(user.loc, mutations)
-	qdel(src)
-
-/obj/item/seeds/chillighost
-	name = "pack of ghost chilli seeds"
-	desc = "These seeds grow into a chili said to be the hottest in the galaxy."
-	icon_state = "seed-chilighost"
-	species = "chilighost"
-	plantname = "chilighost"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chilli
-	lifespan = 20
-	endurance = 10
-	maturation = 10
-	production = 10
-	yield = 3
-	potency = 20
-	plant_type = 0
-	growthstages = 6
-	rarity = 20
-
-/obj/item/seeds/gatfruit
-	name = "pack of gatfruit seeds"
-	desc = "These seeds grow into .357 revolvers."
-	icon_state = "seed-gatfruit"
-	species = "gatfruit"
-	plantname = "gatfruit"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
-	lifespan = 20
-	endurance = 20
-	maturation = 40
-	production = 10
-	yield = 2
-	potency = 60
-	plant_type = 0
-	growthstages = 2
-	rarity = 50 // Seems admin-only.
-
-/obj/item/seeds/coffee_arabica_seed
-	name = "pack of coffee arabica seeds"
-	desc = "These seeds grow into coffee arabica bushes."
-	icon_state = "seed-coffeea"
-	species = "coffeea"
-	plantname = "Coffee Arabica Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_arabica
-	lifespan = 30
-	endurance = 20
-	maturation = 5
-	production = 5
-	yield = 5
-	potency = 10
-	plant_type = 0
-	growthstages = 5
-	mutatelist = list(/obj/item/seeds/coffee_robusta_seed)
-
-/obj/item/seeds/coffee_robusta_seed
-	name = "pack of coffee robusta seeds"
-	desc = "These seeds grow into coffee robusta bushes."
-	icon_state = "seed-coffeer"
-	species = "coffeer"
-	plantname = "Coffee Robusta Bush"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee_robusta
-	lifespan = 20
-	endurance = 15
-	maturation = 5
-	production = 5
-	yield = 5
-	potency = 10
-	plant_type = 0
-	growthstages = 5
-	rarity = 20
-
-/obj/item/seeds/tobacco_seed
-	name = "pack of tobacco seeds"
-	desc = "These seeds grow into tobacco plants."
-	icon_state = "seed-tobacco"
-	species = "tobacco"
-	plantname = "Tobacco Plant"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco
-	lifespan = 20
-	endurance = 15
-	maturation = 5
-	production = 5
-	oneharvest = 1
-	yield = 10
-	potency = 10
-	plant_type = 0
-	growthstages = 3
-	mutatelist = list(/obj/item/seeds/tobacco_space_seed)
-
-/obj/item/seeds/tobacco_space_seed
-	name = "pack of space tobacco seeds"
-	desc = "These seeds grow into space tobacco plants."
-	icon_state = "seed-stobacco"
-	species = "stobacco"
-	plantname = "Space Tobacco Plant"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
-	lifespan = 20
-	endurance = 15
-	maturation = 5
-	production = 5
-	oneharvest = 1
-	yield = 10
-	potency = 10
-	plant_type = 0
-	growthstages = 3
-	rarity = 20
-
-/obj/item/seeds/tea_aspera_seed
-	name = "pack of tea aspera seeds"
-	desc = "These seeds grow into tea plants."
-	icon_state = "seed-teaaspera"
-	species = "teaaspera"
-	plantname = "Tea Aspera Plant"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_aspera
-	lifespan = 20
-	endurance = 15
-	maturation = 5
-	production = 5
-	yield = 5
-	potency = 10
-	plant_type = 0
-	growthstages = 5
-	mutatelist = list(/obj/item/seeds/tea_astra_seed)
-
-/obj/item/seeds/tea_astra_seed
-	name = "pack of tea astra seeds"
-	desc = "These seeds grow into tea plants."
-	icon_state = "seed-teaastra"
-	species = "teaastra"
-	plantname = "Tea Astra Plant"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea_astra
-	lifespan = 20
-	endurance = 15
-	maturation = 5
-	production = 5
-	yield = 5
-	potency = 10
-	plant_type = 0
-	growthstages = 5
-	rarity = 20
+// Checks plants for broken tray icons. Use Advanced Proc Call to activate.
+// Maybe some day it would be used as unit test.
+/proc/check_plants_growth_stages_icons()
+	var/list/states = icon_states('icons/obj/hydroponics/growing.dmi')
+	states |= icon_states('icons/obj/hydroponics/growing_fruits.dmi')
+	states |= icon_states('icons/obj/hydroponics/growing_flowers.dmi')
+	states |= icon_states('icons/obj/hydroponics/growing_mushrooms.dmi')
+	states |= icon_states('icons/obj/hydroponics/growing_vegetables.dmi')
+	var/list/paths = typesof(/obj/item/seeds) - /obj/item/seeds - typesof(/obj/item/seeds/sample)
+
+	for(var/seedpath in paths)
+		var/obj/item/seeds/seed = new seedpath
+
+		for(var/i in 1 to seed.growthstages)
+			if("[seed.icon_grow][i]" in states)
+				continue
+			to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!")
+
+		if(!(seed.icon_dead in states))
+			to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon!")
+
+		if(seed.icon_harvest) // mushrooms have no grown sprites, same for items with no product
+			if(!(seed.icon_harvest in states))
+				to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon!")
+
+/obj/item/seeds/proc/randomize_stats()
+	set_lifespan(rand(25, 60))
+	set_endurance(rand(15, 35))
+	set_production(rand(2, 10))
+	set_yield(rand(1, 10))
+	set_potency(rand(10, 35))
+	set_weed_rate(rand(1, 10))
+	set_weed_chance(rand(5, 100))
+	maturation = rand(6, 12)
+
+/obj/item/seeds/proc/add_random_reagents(lower = 0, upper = 2)
+	var/amount_random_reagents = rand(lower, upper)
+	for(var/i in 1 to amount_random_reagents)
+		var/random_amount = rand(4, 15) * 0.01 // this must be multiplied by 0.01, otherwise, it will not properly associate
+		var/datum/plant_gene/reagent/R = new(get_random_reagent_id(), random_amount)
+		if(R.can_add(src))
+			genes += R
+		else
+			qdel(R)
+	reagents_from_genes()
+
+/obj/item/seeds/proc/add_random_traits(lower = 0, upper = 2)
+	var/amount_random_traits = rand(lower, upper)
+	for(var/i in 1 to amount_random_traits)
+		var/random_trait = pick((subtypesof(/datum/plant_gene/trait)-typesof(/datum/plant_gene/trait/plant_type)))
+		var/datum/plant_gene/trait/T = new random_trait
+		if(T.can_add(src))
+			genes += T
+		else
+			qdel(T)
+
+/obj/item/seeds/proc/add_random_plant_type(normal_plant_chance = 75)
+	if(prob(normal_plant_chance))
+		var/random_plant_type = pick(subtypesof(/datum/plant_gene/trait/plant_type))
+		var/datum/plant_gene/trait/plant_type/P = new random_plant_type
+		if(P.can_add(src))
+			genes += P
+		else
+			qdel(P)

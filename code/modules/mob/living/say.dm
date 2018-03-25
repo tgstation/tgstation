@@ -1,380 +1,407 @@
+GLOBAL_LIST_INIT(department_radio_prefixes, list(":", "."))
 
-var/list/department_radio_keys = list(
-	  ":r" = "right hand",	"#r" = "right hand",	".r" = "right hand",
-	  ":l" = "left hand",	"#l" = "left hand",		".l" = "left hand",
-	  ":i" = "intercom",	"#i" = "intercom",		".i" = "intercom",
-	  ":h" = "department",	"#h" = "department",	".h" = "department",
-	  ":c" = "Command",		"#c" = "Command",		".c" = "Command",
-	  ":n" = "Science",		"#n" = "Science",		".n" = "Science",
-	  ":m" = "Medical",		"#m" = "Medical",		".m" = "Medical",
-	  ":e" = "Engineering", "#e" = "Engineering",	".e" = "Engineering",
-	  ":s" = "Security",	"#s" = "Security",		".s" = "Security",
-	  ":w" = "whisper",		"#w" = "whisper",		".w" = "whisper",
-	  ":b" = "binary",		"#b" = "binary",		".b" = "binary",
-	  ":a" = "alientalk",	"#a" = "alientalk",		".a" = "alientalk",
-	  ":t" = "Syndicate",	"#t" = "Syndicate",		".t" = "Syndicate",
-	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
-	  ":v" = "Service",		"#v" = "Service",		".v" = "Service",
-	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
+GLOBAL_LIST_INIT(department_radio_keys, list(
+	// Location
+	"r" = "right hand",
+	"l" = "left hand",
+	"i" = "intercom",
 
-	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
-	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
-	  ":I" = "intercom",	"#I" = "intercom",		".I" = "intercom",
-	  ":H" = "department",	"#H" = "department",	".H" = "department",
-	  ":C" = "Command",		"#C" = "Command",		".C" = "Command",
-	  ":N" = "Science",		"#N" = "Science",		".N" = "Science",
-	  ":M" = "Medical",		"#M" = "Medical",		".M" = "Medical",
-	  ":E" = "Engineering",	"#E" = "Engineering",	".E" = "Engineering",
-	  ":S" = "Security",	"#S" = "Security",		".S" = "Security",
-	  ":W" = "whisper",		"#W" = "whisper",		".W" = "whisper",
-	  ":B" = "binary",		"#B" = "binary",		".B" = "binary",
-	  ":A" = "alientalk",	"#A" = "alientalk",		".A" = "alientalk",
-	  ":T" = "Syndicate",	"#T" = "Syndicate",		".T" = "Syndicate",
-	  ":U" = "Supply",		"#U" = "Supply",		".U" = "Supply",
-	  ":V" = "Service",		"#V" = "Service",		".V" = "Service",
-	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
+	// Department
+	"h" = "department",
+	"c" = "Command",
+	"n" = "Science",
+	"m" = "Medical",
+	"e" = "Engineering",
+	"s" = "Security",
+	"u" = "Supply",
+	"v" = "Service",
 
-	  //kinda localization -- rastaf0
-	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
-	  ":ê" = "right hand",	"#ê" = "right hand",	".ê" = "right hand",
-	  ":ä" = "left hand",	"#ä" = "left hand",		".ä" = "left hand",
-	  ":ø" = "intercom",	"#ø" = "intercom",		".ø" = "intercom",
-	  ":ð" = "department",	"#ð" = "department",	".ð" = "department",
-	  ":ñ" = "Command",		"#ñ" = "Command",		".ñ" = "Command",
-	  ":ò" = "Science",		"#ò" = "Science",		".ò" = "Science",
-	  ":ü" = "Medical",		"#ü" = "Medical",		".ü" = "Medical",
-	  ":ó" = "Engineering",	"#ó" = "Engineering",	".ó" = "Engineering",
-	  ":û" = "Security",	"#û" = "Security",		".û" = "Security",
-	  ":ö" = "whisper",		"#ö" = "whisper",		".ö" = "whisper",
-	  ":è" = "binary",		"#è" = "binary",		".è" = "binary",
-	  ":ô" = "alientalk",	"#ô" = "alientalk",		".ô" = "alientalk",
-	  ":å" = "Syndicate",	"#å" = "Syndicate",		".å" = "Syndicate",
-	  ":é" = "Supply",		"#é" = "Supply",		".é" = "Supply",
-	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
-)
+	// Faction
+	"t" = "Syndicate",
+	"y" = "CentCom",
 
-/mob/living/proc/binarycheck()
-	if (istype(src, /mob/living/silicon/pai))
-		return
-	if (issilicon(src))
-		return 1
-	if (!ishuman(src))
-		return
-	var/mob/living/carbon/human/H = src
-	if (H.ears)
-		var/obj/item/device/radio/headset/dongle = H.ears
-		if(!istype(dongle)) return
-		if(dongle.translate_binary) return 1
+	// Admin
+	"p" = "admin",
+	"d" = "deadmin",
 
-/mob/living/proc/IsVocal()
-	return 1
+	// Misc
+	"o" = "AI Private", // AI Upload channel
+	"x" = "cords",		// vocal cords, used by Voice of God
 
-/mob/living/proc/hivecheck()
-	if (isalien(src)) return 1
-	if (!ishuman(src)) return
-	var/mob/living/carbon/human/H = src
-	if (H.ears)
-		var/obj/item/device/radio/headset/dongle = H.ears
-		if(!istype(dongle)) return
-		if(dongle.translate_hive) return 1
 
-/mob/living/say(var/message, var/bubble_type)
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	//kinda localization -- rastaf0
+	//same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
+	// Location
+	"Ãª" = "right hand",
+	"Ã¤" = "left hand",
+	"Ã¸" = "intercom",
 
-	if (!message)
-		return
+	// Department
+	"Ã°" = "department",
+	"Ã±" = "Command",
+	"Ã²" = "Science",
+	"Ã¼" = "Medical",
+	"Ã³" = "Engineering",
+	"Ã»" = "Security",
+	"Ã£" = "Supply",
+	"Ã¬" = "Service",
 
-	if (stat == 2)
-		return say_dead(message)
+	// Faction
+	"Ã¥" = "Syndicate",
+	"Ã­" = "CentCom",
 
-	if (src.client)
-		if(client.prefs.muted & MUTE_IC)
-			src << "\red You cannot speak in IC (muted)."
-			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
-			return
+	// Admin
+	"Ã§" = "admin",
+	"Ã¢" = "deadmin",
 
-	// stat == 2 is handled above, so this stops transmission of uncontious messages
-	if (stat)
+	// Misc
+	"Ã¹" = "AI Private",
+	"Ã·" = "cords"
+))
+
+/mob/living/proc/Ellipsis(original_msg, chance = 50, keep_words)
+    if(chance <= 0)
+        return "..."
+    if(chance >= 100)
+        return original_msg
+
+    var/list
+        words = splittext(original_msg," ")
+        new_words = list()
+
+    var/new_msg = ""
+
+    for(var/w in words)
+        if(prob(chance))
+            new_words += "..."
+            if(!keep_words)
+                continue
+        new_words += w
+
+    new_msg = jointext(new_words," ")
+
+    return new_msg
+
+/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE)
+	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
+	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
+	var/talk_key = get_key(message)
+
+	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
+
+	if(sanitize)
+		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	if(!message || message == "")
 		return
 
-	// Mute disability
-	if (sdisabilities & MUTE)
-		return
+	var/datum/saymode/saymode = SSradio.saymodes[talk_key]
+	var/message_mode = get_message_mode(message)
+	var/original_message = message
+	var/in_critical = InCritical()
 
-	// emotes
-	if (copytext(message, 1, 2) == "*" && !stat)
-		return emote(copytext(message, 2))
-
-	var/alt_name = ""
-	if (istype(src, /mob/living/carbon/human) && name != GetVoice())
-		var/mob/living/carbon/human/H = src
-		alt_name = " (as [H.get_id_name("Unknown")])"
-	var/italics = 0
-	var/message_range = null
-	var/message_mode = null
-
-	if (getBrainLoss() >= 60 && prob(50))
-		if (ishuman(src))
-			message_mode = "headset"
-	// Special message handling
-	else if (copytext(message, 1, 2) == ";")
-		if (ishuman(src))
-			message_mode = "headset"
-		else if(ispAI(src) || isrobot(src))
-			message_mode = "pAI"
+	if(one_character_prefix[message_mode])
+		message = copytext(message, 2)
+	else if(message_mode || saymode)
+		message = copytext(message, 3)
+	if(findtext(message, " ", 1, 2))
 		message = copytext(message, 2)
 
-	else if (length(message) >= 2)
-		var/channel_prefix = copytext(message, 1, 3)
-
-		message_mode = department_radio_keys[channel_prefix]
-		//world << "channel_prefix=[channel_prefix]; message_mode=[message_mode]"
-		if (message_mode)
-			message = trim(copytext(message, 3))
-			if (!(ishuman(src) || istype(src, /mob/living/simple_animal/parrot) || isrobot(src) && (message_mode=="department" || (message_mode in radiochannels))))
-				message_mode = null //only humans can use headsets
-			// Check changed so that parrots can use headsets. Other simple animals do not have ears and will cause runtimes.
-			// And borgs -Sieve
-
-	if (!message)
+	if(message_mode == "admin")
+		if(client)
+			client.cmd_admin_say(message)
 		return
 
-	// :downs:
-	if (getBrainLoss() >= 60)
-		message = derpspeech(message, stuttering)
-
-	if (stuttering)
-		message = stutter(message)
-
-/* //qw do not have beesease atm.
-	if(virus)
-		if(virus.name=="beesease" && virus.stage>=2)
-			if(prob(virus.stage*10))
-				var/bzz = length(message)
-				message = "B"
-				for(var/i=0,i<bzz,i++)
-					message += "Z"
-*/
-	var/list/obj/item/used_radios = new
-
-	switch (message_mode)
-		if ("headset")
-			if (src:ears)
-				src:ears.talk_into(src, message)
-				used_radios += src:ears
-
-			message_range = 1
-			italics = 1
-
-
-		if ("secure headset")
-			if (src:ears)
-				src:ears.talk_into(src, message, 1)
-				used_radios += src:ears
-
-			message_range = 1
-			italics = 1
-
-		if ("right hand")
-			if (r_hand)
-				r_hand.talk_into(src, message)
-				used_radios += src:r_hand
-
-			message_range = 1
-			italics = 1
-
-		if ("left hand")
-			if (l_hand)
-				l_hand.talk_into(src, message)
-				used_radios += src:l_hand
-
-			message_range = 1
-			italics = 1
-
-		if ("intercom")
-			for (var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, message)
-				used_radios += I
-
-			message_range = 1
-			italics = 1
-
-		//I see no reason to restrict such way of whispering
-		if ("whisper")
-			whisper(message)
-			return
-
-		if ("binary")
-			if(robot_talk_understand || binarycheck())
-			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
-				robot_talk(message)
-			return
-
-		if ("alientalk")
-			if(alien_talk_understand || hivecheck())
-			//message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)) //seems redundant
-				alien_talk(message)
-			return
-
-		if ("department")
-			if (src:ears)
-				src:ears.talk_into(src, message, message_mode)
-				used_radios += src:ears
-			message_range = 1
-			italics = 1
-
-		if ("pAI")
-			if (src:radio)
-				src:radio.talk_into(src, message)
-				used_radios += src:radio
-			message_range = 1
-			italics = 1
-
-		if("changeling")
-			if(mind && mind.changeling)
-				for(var/mob/Changeling in mob_list)
-					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
-						Changeling << "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-				return
-////SPECIAL HEADSETS START
-		else
-			//world << "SPECIAL HEADSETS"
-			if (message_mode in radiochannels)
-				if(isrobot(src))//Seperates robots to prevent runtimes from the ear stuff
-					var/mob/living/silicon/robot/R = src
-					if(R.radio)//Sanityyyy
-						R.radio.talk_into(src, message, message_mode)
-						used_radios += R.radio
-				else
-					if (src:ears)
-						src:ears.talk_into(src, message, message_mode)
-						used_radios += src:ears
-				message_range = 1
-				italics = 1
-/////SPECIAL HEADSETS END
-
-	if(!IsVocal())
+	if(message_mode == "deadmin")
+		if(client)
+			client.dsay(message)
 		return
 
-	var/list/listening
+	if(stat == DEAD)
+		say_dead(original_message)
+		return
 
-	listening = get_mobs_in_view(message_range, src)
-	for(var/mob/M in player_list)
-		if (!M.client)
-			continue //skip monkeys and leavers
-		if (istype(M, /mob/new_player))
-			continue
-		if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTEARS) && src.client) // src.client is so that ghosts don't have to listen to mice
-			listening|=M
+	if(check_emote(original_message) || !can_speak_basic(original_message, ignore_spam))
+		return
 
+	if(in_critical)
+		if(!(crit_allowed_modes[message_mode]))
+			return
+	else if(stat == UNCONSCIOUS)
+		if(!(unconscious_allowed_modes[message_mode]))
+			return
+
+	// language comma detection.
+	var/datum/language/message_language = get_message_language(message)
+	if(message_language)
+		// No, you cannot speak in xenocommon just because you know the key
+		if(can_speak_in_language(message_language))
+			language = message_language
+		message = copytext(message, 3)
+
+		// Trim the space if they said ",0 I LOVE LANGUAGES"
+		if(findtext(message, " ", 1, 2))
+			message = copytext(message, 2)
+
+	if(!language)
+		language = get_default_language()
+
+	// Detection of language needs to be before inherent channels, because
+	// AIs use inherent channels for the holopad. Most inherent channels
+	// ignore the language argument however.
+
+	if(saymode && !saymode.handle_message(src, message, language))
+		return
+
+	if(!can_speak_vocal(message))
+		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
+		return
+
+	var/message_range = 7
+
+	var/succumbed = FALSE
+
+	var/fullcrit = InFullCritical()
+	if((InCritical() && !fullcrit) || message_mode == MODE_WHISPER)
+		message_range = 1
+		message_mode = MODE_WHISPER
+		log_talk(src,"[key_name(src)] : [message]",LOGWHISPER)
+		if(fullcrit)
+			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
+			// If we cut our message short, abruptly end it with a-..
+			var/message_len = length(message)
+			message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
+			message = Ellipsis(message, 10, 1)
+			last_words = message
+			message_mode = MODE_WHISPER_CRIT
+			succumbed = TRUE
+	else
+		log_talk(src,"[name]/[key] : [message]",LOGSAY)
+
+	message = treat_message(message)
+	if(!message)
+		return
+
+	spans |= get_spans()
+
+	if(language)
+		var/datum/language/L = GLOB.language_datum_instances[language]
+		spans |= L.spans
+
+	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
+	log_message(message, INDIVIDUAL_SAY_LOG)
+
+	var/radio_return = radio(message, message_mode, spans, language)
+	if(radio_return & ITALICS)
+		spans |= SPAN_ITALICS
+	if(radio_return & REDUCE_RANGE)
+		message_range = 1
+	if(radio_return & NOPASS)
+		return 1
+
+	//No screams in space, unless you're next to someone.
 	var/turf/T = get_turf(src)
-	var/list/W = hear(message_range, T)
+	var/datum/gas_mixture/environment = T.return_air()
+	var/pressure = (environment)? environment.return_pressure() : 0
+	if(pressure < SOUND_MINIMUM_PRESSURE)
+		message_range = 1
 
-	for (var/obj/O in ((W | contents)-used_radios))
-		W |= O
+	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
+		spans |= SPAN_ITALICS
 
-	for (var/mob/M in W)
-		W |= M.contents
+	send_speech(message, message_range, src, bubble_type, spans, language, message_mode)
 
-	for (var/atom/A in W)
-		if(istype(A, /mob/living/simple_animal/parrot)) //Parrot speech mimickry
-			if(A == src)
-				continue //Dont imitate ourselves
+	if(succumbed)
+		succumb(1)
+		to_chat(src, compose_message(src, language, message, , spans, message_mode))
 
-			var/mob/living/simple_animal/parrot/P = A
-			if(P.speech_buffer.len >= 10)
-				P.speech_buffer.Remove(pick(P.speech_buffer))
-			P.speech_buffer.Add(html_decode(message))
+	return 1
 
-		if(istype(A, /obj/)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
-			var/obj/O = A
-			spawn (0)
-				if(O && !istype(O.loc, /obj/item/weapon/storage))
-					O.hear_talk(src, message)
+/mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	if(!client)
+		return
+	var/deaf_message
+	var/deaf_type
+	if(speaker != src)
+		if(!radio_freq) //These checks have to be seperate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
+			deaf_message = "<span class='name'>[speaker]</span> [speaker.verb_say] something but you cannot hear them."
+			deaf_type = 1
+	else
+		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
+		deaf_type = 2 // Since you should be able to hear yourself without looking
 
+	// Recompose message for AI hrefs, language incomprehension.
+	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
+	show_message(message, 2, deaf_message, deaf_type)
+	return message
 
-/*			Commented out as replaced by code above from BS12
-	for (var/obj/O in ((V | contents)-used_radios)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
-		spawn (0)
-			if (O)
-				O.hear_talk(src, message)
-*/
+/mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode)
+	var/static/list/eavesdropping_modes = list(MODE_WHISPER = TRUE, MODE_WHISPER_CRIT = TRUE)
+	var/eavesdrop_range = 0
+	if(eavesdropping_modes[message_mode])
+		eavesdrop_range = EAVESDROP_EXTRA_RANGE
+	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
+	var/list/the_dead = list()
+	for(var/_M in GLOB.player_list)
+		var/mob/M = _M
+		if(M.stat != DEAD) //not dead, not important
+			continue
+		if(!M.client || !client) //client is so that ghosts don't have to listen to mice
+			continue
+		if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing
+			if(eavesdropping_modes[message_mode] && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+				continue
+			if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
+				continue
+		listening |= M
+		the_dead[M] = TRUE
 
-/*	if(isbrain(src))//For brains to properly talk if they are in an MMI..or in a brain. Could be extended to other mobs I guess.
-		for(var/obj/O in loc)//Kinda ugly but whatever.
-			if(O)
-				spawn(0)
-					O.hear_talk(src, message)
-*/
+	var/eavesdropping
+	var/eavesrendered
+	if(eavesdrop_range)
+		eavesdropping = stars(message)
+		eavesrendered = compose_message(src, message_language, eavesdropping, , spans, message_mode)
 
-
-	var/list/heard_a = list() // understood us
-	var/list/heard_b = list() // didn't understand us
-
-	for (var/M in listening)
-		if(hascall(M,"say_understands"))
-			if (M:say_understands(src))
-				heard_a += M
-			else
-				heard_b += M
-
-	var/rendered = null
-	if (length(heard_a))
-		var/message_a = say_quote(message)
-
-		if (italics)
-			message_a = "<i>[message_a]</i>"
-
-		rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] <span class='message'>[message_a]</span></span>"
-
-		for (var/M in heard_a)
-			if(hascall(M,"show_message"))
-				var/deaf_message = ""
-				var/deaf_type = 1
-				if(M != src)
-					deaf_message = "<span class='name'>[name][alt_name]</span> talks but you cannot hear them."
-				else
-					deaf_message = "<span class='notice'>You cannot hear yourself!</span>"
-					deaf_type = 2 // Since you should be able to hear yourself without looking
-				M:show_message(rendered, 2, deaf_message, deaf_type)
-
-	if (length(heard_b))
-		var/message_b
-
-		if (voice_message)
-			message_b = voice_message
+	var/rendered = compose_message(src, message_language, message, , spans, message_mode)
+	for(var/_AM in listening)
+		var/atom/movable/AM = _AM
+		if(eavesdrop_range && get_dist(source, AM) > message_range && !(the_dead[AM]))
+			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode)
 		else
-			message_b = stars(message)
-			message_b = say_quote(message_b)
-
-		if (italics)
-			message_b = "<i>[message_b]</i>"
-
-		rendered = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
-
-
-		for (var/M in heard_b)
-			if(hascall(M,"show_message"))
-				M:show_message(rendered, 2)
+			AM.Hear(rendered, src, message_language, message, , spans, message_mode)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
-	for(var/mob/M in heard_a + heard_b)
+	for(var/mob/M in listening)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
-	spawn(0)
-		flick_overlay(image('icons/mob/talk.dmi', src, "h[bubble_type][say_test(message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
 
-	log_say("[name]/[key] : [message]")
+/mob/proc/binarycheck()
+	return FALSE
 
-/mob/living/proc/GetVoice()
-	return name
+/mob/living/can_speak(message) //For use outside of Say()
+	if(can_speak_basic(message) && can_speak_vocal(message))
+		return 1
 
-/mob/living/proc/say_test(var/text)
-	var/ending = copytext(text, length(text))
-	if (ending == "?")
-		return "1"
-	else if (ending == "!")
-		return "2"
-	return "0"
+/mob/living/proc/can_speak_basic(message, ignore_spam = FALSE) //Check BEFORE handling of xeno and ling channels
+	if(client)
+		if(client.prefs.muted & MUTE_IC)
+			to_chat(src, "<span class='danger'>You cannot speak in IC (muted).</span>")
+			return 0
+		if(!ignore_spam && client.handle_spam_prevention(message,MUTE_IC))
+			return 0
+
+	return 1
+
+/mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
+	if(has_trait(TRAIT_MUTE))
+		return 0
+
+	if(is_muzzled())
+		return 0
+
+	if(!IsVocal())
+		return 0
+
+	return 1
+
+/mob/living/proc/get_message_mode(message)
+	var/key = copytext(message, 1, 2)
+	if(key == "#")
+		return MODE_WHISPER
+	else if(key == ";")
+		return MODE_HEADSET
+	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
+		var/key_symbol = lowertext(copytext(message, 2, 3))
+		return GLOB.department_radio_keys[key_symbol]
+
+/mob/living/proc/get_key(message)
+	var/key = copytext(message, 1, 2)
+	if(key in GLOB.department_radio_prefixes)
+		return lowertext(copytext(message, 2, 3))
+
+/mob/living/proc/get_message_language(message)
+	if(copytext(message, 1, 2) == ",")
+		var/key = copytext(message, 2, 3)
+		for(var/ld in GLOB.all_languages)
+			var/datum/language/LD = ld
+			if(initial(LD.key) == key)
+				return LD
+	return null
+
+/mob/living/proc/treat_message(message)
+	if(derpspeech)
+		message = derpspeech(message, stuttering)
+
+	if(stuttering)
+		message = stutter(message)
+
+	if(slurring)
+		message = slur(message)
+
+	if(cultslurring)
+		message = cultslur(message)
+
+	message = capitalize(message)
+
+	return message
+
+/mob/living/proc/radio(message, message_mode, list/spans, language)
+	var/obj/item/implant/radio/imp = locate() in src
+	if(imp && imp.radio.on)
+		if(message_mode == MODE_HEADSET)
+			imp.radio.talk_into(src, message, , spans, language)
+			return ITALICS | REDUCE_RANGE
+		if(message_mode == MODE_DEPARTMENT || message_mode in GLOB.radiochannels)
+			imp.radio.talk_into(src, message, message_mode, spans, language)
+			return ITALICS | REDUCE_RANGE
+
+	switch(message_mode)
+		if(MODE_WHISPER)
+			return ITALICS
+		if(MODE_R_HAND)
+			for(var/obj/item/r_hand in get_held_items_for_side("r", all = TRUE))
+				if (r_hand)
+					return r_hand.talk_into(src, message, , spans, language)
+				return ITALICS | REDUCE_RANGE
+		if(MODE_L_HAND)
+			for(var/obj/item/l_hand in get_held_items_for_side("l", all = TRUE))
+				if (l_hand)
+					return l_hand.talk_into(src, message, , spans, language)
+				return ITALICS | REDUCE_RANGE
+
+		if(MODE_INTERCOM)
+			for (var/obj/item/device/radio/intercom/I in view(1, null))
+				I.talk_into(src, message, , spans, language)
+			return ITALICS | REDUCE_RANGE
+
+		if(MODE_BINARY)
+			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
+
+	return 0
+
+/mob/living/say_mod(input, message_mode)
+	if(message_mode == MODE_WHISPER)
+		. = verb_whisper
+	else if(message_mode == MODE_WHISPER_CRIT)
+		. = "[verb_whisper] in [p_their()] last breath"
+	else if(stuttering)
+		. = "stammers"
+	else if(derpspeech)
+		. = "gibbers"
+	else
+		. = ..()
+
+/mob/living/whisper(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
+	say("#[message]", bubble_type, spans, sanitize, language)
+
+/mob/living/get_language_holder(shadow=TRUE)
+	if(mind && shadow)
+		// Mind language holders shadow mob holders.
+		. = mind.get_language_holder()
+		if(.)
+			return .
+
+	. = ..()

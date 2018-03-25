@@ -1,67 +1,53 @@
-//handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
-/mob/proc/update_Login_details()
-	//Multikey checks and logging
+/mob/Login()
+	GLOB.player_list |= src
 	lastKnownIP	= client.address
 	computer_id	= client.computer_id
-	log_access("Login: [key_name(src)] from [lastKnownIP ? lastKnownIP : "localhost"]-[computer_id] || BYOND v[client.byond_version]")
-	if(config.log_access)
-		for(var/mob/M in player_list)
-			if(M == src)	continue
-			if( M.key && (M.key != key) )
-				var/matches
-				if( (M.lastKnownIP == client.address) )
-					matches += "IP ([client.address])"
-				if( (M.computer_id == client.computer_id) )
-					if(matches)	matches += " and "
-					matches += "ID ([client.computer_id])"
-					spawn() alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
-				if(matches)
-					if(M.client)
-						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(M)].</font>", 1)
-						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)].")
-					else
-						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(M)] (no longer logged in). </font>", 1)
-						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)] (no longer logged in).")
-
-/mob/Login()
-	player_list |= src
-	update_Login_details()
+	log_access("Mob Login: [key_name(src)] was assigned to a [type]")
 	world.update_status()
+	client.screen = list()				//remove hud items just in case
+	client.images = list()
 
-	client.images = null				//remove the images such as AIs being unable to see runes
-	client.screen = null				//remove hud items just in case
-	if(hud_used)	del(hud_used)		//remove the hud objects
-	hud_used = new /datum/hud(src)
+	if(!hud_used)
+		create_mob_hud()
+	if(hud_used)
+		hud_used.show_hud(hud_used.hud_version)
 
 	next_move = 1
-	sight |= SEE_SELF
 
 	..()
 
-	if(loc && !isturf(loc))
-		client.eye = loc
-		client.perspective = EYE_PERSPECTIVE
-	else
-		client.eye = src
-		client.perspective = MOB_PERSPECTIVE
+	reset_perspective(loc)
 
-	if(isobj(loc))
-		var/obj/Loc=loc
-		Loc.on_log()
+	if(loc)
+		loc.on_log(TRUE)
 
-// Calling update_interface() in /mob/Login() causes the Cyborg to immediately be ghosted; because of winget().
-// Calling it in the overriden Login, such as /mob/living/Login() doesn't cause this.
-/mob/proc/update_interface()
+	//readd this mob's HUDs (antag, med, etc)
+	reload_huds()
+
+	reload_fullscreen() // Reload any fullscreen overlays this mob has.
+
+	add_click_catcher()
+
+	sync_mind()
+
+	//Reload alternate appearances
+	for(var/v in GLOB.active_alternate_appearances)
+		if(!v)
+			continue
+		var/datum/atom_hud/alternate_appearance/AA = v
+		AA.onNewMob(src)
+
+	update_client_colour()
 	if(client)
-		if(winget(src, "hotkey_toggle", "is-checked"))
-			update_hotkey_mode()
-		else
-			update_normal_mode()
+		client.click_intercept = null
 
-/mob/proc/update_hotkey_mode()
-	winset(src, null, "mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true input.background-color=#F0F0F0")
+		client.change_view(CONFIG_GET(string/default_view)) // Resets the client.view in case it was changed.
 
-/mob/proc/update_normal_mode()
-	winset(src, null, "mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true input.background-color=#D3B5B5")
+		if(client.player_details.player_actions.len)
+			for(var/datum/action/A in client.player_details.player_actions)
+				A.Grant(src)
 
-
+	if(!GLOB.individual_log_list[ckey])
+		GLOB.individual_log_list[ckey] = logging
+	else
+		logging = GLOB.individual_log_list[ckey]

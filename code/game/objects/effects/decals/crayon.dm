@@ -1,31 +1,30 @@
 /obj/effect/decal/cleanable/crayon
 	name = "rune"
-	desc = "A rune drawn in crayon."
+	desc = "Graffiti. Damn kids."
 	icon = 'icons/effects/crayondecal.dmi'
 	icon_state = "rune1"
-	layer = 2.1
-	anchored = 1
+	gender = NEUTER
+	mergeable_decal = FALSE
+	var/do_icon_rotate = TRUE
+	var/rotation = 0
+	var/paint_colour = "#FFFFFF"
 
+/obj/effect/decal/cleanable/crayon/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null)
+	. = ..()
 
-	examine()
-		set src in view(2)
-		..()
-		return
-
-
-	New(location,main = "#FFFFFF", var/type = "rune")
-		..()
-		loc = location
-
-		name = type
-		desc = "A [type] drawn in crayon."
-
-		switch(type)
-			if("rune")
-				type = "rune[rand(1,6)]"
-			if("graffiti")
-				type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa")
-
-
+	if(e_name)
+		name = e_name
+	desc = "A [name] vandalizing the station."
+	if(alt_icon)
+		icon = alt_icon
+	if(type)
 		icon_state = type
-		color = main
+	if(graf_rot)
+		rotation = graf_rot
+	if(rotation && do_icon_rotate)
+		var/matrix/M = matrix()
+		M.Turn(rotation)
+		src.transform = M
+	if(main)
+		paint_colour = main
+	add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)

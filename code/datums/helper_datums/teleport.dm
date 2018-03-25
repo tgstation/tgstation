@@ -2,26 +2,25 @@
 /proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
 	var/datum/teleport/instant/science/D = new
 	if(D.start(arglist(args)))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/teleport
 	var/atom/movable/teleatom //atom to teleport
 	var/atom/destination //destination to teleport to
 	var/precision = 0 //teleport precision
-	var/datum/effect/effect/system/effectin //effect to show right before teleportation
-	var/datum/effect/effect/system/effectout //effect to show right after teleportation
+	var/datum/effect_system/effectin //effect to show right before teleportation
+	var/datum/effect_system/effectout //effect to show right after teleportation
 	var/soundin //soundfile to play before teleportation
 	var/soundout //soundfile to play after teleportation
 	var/force_teleport = 1 //if false, teleport will use Move() proc (dense objects will prevent teleportation)
 
-
 /datum/teleport/proc/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
-	if(!Init(arglist(args)))
+	if(!initTeleport(arglist(args)))
 		return 0
 	return 1
 
-/datum/teleport/proc/Init(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout)
+/datum/teleport/proc/initTeleport(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout)
 	if(!setTeleatom(ateleatom))
 		return 0
 	if(!setDestination(adestination))
@@ -59,7 +58,7 @@
 
 //custom effects must be properly set up first for instant-type teleports
 //optional
-/datum/teleport/proc/setEffects(datum/effect/effect/system/aeffectin=null,datum/effect/effect/system/aeffectout=null)
+/datum/teleport/proc/setEffects(datum/effect_system/aeffectin=null,datum/effect_system/aeffectout=null)
 	effectin = istype(aeffectin) ? aeffectin : null
 	effectout = istype(aeffectout) ? aeffectout : null
 	return 1
@@ -79,45 +78,50 @@
 /datum/teleport/proc/teleportChecks()
 	return 1
 
-/datum/teleport/proc/playSpecials(atom/location,datum/effect/effect/system/effect,sound)
+/datum/teleport/proc/playSpecials(atom/location,datum/effect_system/effect,sound)
 	if(location)
 		if(effect)
-			spawn(-1)
-				src = null
-				effect.attach(location)
-				effect.start()
+			INVOKE_ASYNC(src, .proc/do_effect, location, effect)
 		if(sound)
-			spawn(-1)
-				src = null
-				playsound(location,sound,60,1)
-	return
+			INVOKE_ASYNC(src, .proc/do_sound, location, sound)
+
+/datum/teleport/proc/do_effect(atom/location, datum/effect_system/effect)
+	src = null
+	effect.attach(location)
+	effect.start()
+
+/datum/teleport/proc/do_sound(atom/location, sound)
+	src = null
+	playsound(location, sound, 60, 1)
 
 //do the monkey dance
 /datum/teleport/proc/doTeleport()
 
 	var/turf/destturf
 	var/turf/curturf = get_turf(teleatom)
-	var/area/destarea = get_area(destination)
-	if(precision)
-		var/list/posturfs = circlerangeturfs(destination,precision)
-		destturf = safepick(posturfs)
-	else
-		destturf = get_turf(destination)
+	destturf = get_teleport_turf(get_turf(destination), precision)
 
-	if(!destturf || !curturf)
+	if(!destturf || !curturf || destturf.is_transition_turf())
+		return 0
+
+	var/area/A = get_area(curturf)
+	if(A.noteleport)
 		return 0
 
 	playSpecials(curturf,effectin,soundin)
-
 	if(force_teleport)
 		teleatom.forceMove(destturf)
+		if(ismegafauna(teleatom))
+			message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_COORDJMP(curturf)] to [ADMIN_COORDJMP(destturf)].")
 		playSpecials(destturf,effectout,soundout)
 	else
 		if(teleatom.Move(destturf))
 			playSpecials(destturf,effectout,soundout)
-
-	destarea.Entered(teleatom)
-
+			if(ismegafauna(teleatom))
+				message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_COORDJMP(curturf)] to [ADMIN_COORDJMP(destturf)].")
+	if(ismob(teleatom))
+		var/mob/M = teleatom
+		M.cancel_camera()
 	return 1
 
 /datum/teleport/proc/teleport()
@@ -136,9 +140,9 @@
 
 /datum/teleport/instant/science
 
-/datum/teleport/instant/science/setEffects(datum/effect/effect/system/aeffectin,datum/effect/effect/system/aeffectout)
+/datum/teleport/instant/science/setEffects(datum/effect_system/aeffectin,datum/effect_system/aeffectout)
 	if(aeffectin==null || aeffectout==null)
-		var/datum/effect/effect/system/spark_spread/aeffect = new
+		var/datum/effect_system/spark_spread/aeffect = new
 		aeffect.set_up(5, 1, teleatom)
 		effectin = effectin || aeffect
 		effectout = effectout || aeffect
@@ -148,28 +152,86 @@
 
 /datum/teleport/instant/science/setPrecision(aprecision)
 	..()
-	if(istype(teleatom, /obj/item/weapon/storage/backpack/holding))
+	if(istype(teleatom, /obj/item/storage/backpack/holding))
 		precision = rand(1,100)
 
-	var/list/bagholding = teleatom.search_contents_for(/obj/item/weapon/storage/backpack/holding)
+	var/static/list/bag_cache = typecacheof(/obj/item/storage/backpack/holding)
+	var/list/bagholding = typecache_filter_list(teleatom.GetAllContents(), bag_cache)
 	if(bagholding.len)
 		precision = max(rand(1,100)*bagholding.len,100)
-		if(istype(teleatom, /mob/living))
+		if(isliving(teleatom))
 			var/mob/living/MM = teleatom
-			MM << "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>"
-	return 1
+			to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
+	return TRUE
 
-/datum/teleport/instant/science/teleportChecks()
-	if(istype(teleatom, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks get teleported --NeoFite
-		teleatom.visible_message("<span class='warning'>The portal rejects [teleatom]!</span>")
-		return 0
+// Safe location finder
 
-	if(!isemptylist(teleatom.search_contents_for(/obj/item/weapon/disk/nuclear)))
-		if(istype(teleatom, /mob/living))
-			var/mob/living/MM = teleatom
-			MM.visible_message("<span class='warning'>The portal rejects [MM]!","<span class='warning'>The nuclear disk that you're carrying seems to be unable to pass through the portal. Better drop it if you want to go through.</span>")
+/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE)
+	if(!zlevels)
+		if (zlevel)
+			zlevels = list(zlevel)
 		else
-			teleatom.visible_message("<span class='warning'>The portal rejects [teleatom]!</span>")
-		return 0
+			zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+	var/cycles = 1000
+	for(var/cycle in 1 to cycles)
+		// DRUNK DIALLING WOOOOOOOOO
+		var/x = rand(1, world.maxx)
+		var/y = rand(1, world.maxy)
+		var/z = pick(zlevels)
+		var/random_location = locate(x,y,z)
 
-	return 1
+		if(!isfloorturf(random_location))
+			continue
+		var/turf/open/floor/F = random_location
+		if(!F.air)
+			continue
+
+		var/datum/gas_mixture/A = F.air
+		var/list/A_gases = A.gases
+		var/trace_gases
+		for(var/id in A_gases)
+			if(id in GLOB.hardcoded_gases)
+				continue
+			trace_gases = TRUE
+			break
+
+		// Can most things breathe?
+		if(trace_gases)
+			continue
+		if(!(A_gases[/datum/gas/oxygen] && A_gases[/datum/gas/oxygen][MOLES] >= 16))
+			continue
+		if(A_gases[/datum/gas/plasma])
+			continue
+		if(A_gases[/datum/gas/carbon_dioxide] && A_gases[/datum/gas/carbon_dioxide][MOLES] >= 10)
+			continue
+
+		// Aim for goldilocks temperatures and pressure
+		if((A.temperature <= 270) || (A.temperature >= 360))
+			continue
+		var/pressure = A.return_pressure()
+		if((pressure <= 20) || (pressure >= 550))
+			continue
+
+		if(extended_safety_checks)
+			if(islava(F)) //chasms aren't /floor, and so are pre-filtered
+				var/turf/open/lava/L = F
+				if(!L.is_safe())
+					continue
+
+		// DING! You have passed the gauntlet, and are "probably" safe.
+		return F
+
+/proc/get_teleport_turfs(turf/center, precision = 0)
+	if(!precision)
+		return list(center)
+	var/list/posturfs = list()
+	for(var/turf/T in range(precision,center))
+		if(T.is_transition_turf())
+			continue // Avoid picking these.
+		var/area/A = T.loc
+		if(!A.noteleport)
+			posturfs.Add(T)
+	return posturfs
+
+/proc/get_teleport_turf(turf/center, precision = 0)
+	return safepick(get_teleport_turfs(center, precision))

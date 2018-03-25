@@ -1,48 +1,22 @@
-//By Carnwennan
+/atom/proc/investigate_log(message, subject)
+	if(!message || !subject)
+		return
+	var/F = file("[GLOB.log_directory]/[subject].html")
+	WRITE_FILE(F, "<small>[time_stamp()] [REF(src)] ([x],[y],[z])</small> || [src] [message]<br>")
 
-//This system was made as an alternative to all the in-game lists and variables used to log stuff in-game.
-//lists and variables are great. However, they have several major flaws:
-//Firstly, they use memory. TGstation has one of the highest memory usage of all the ss13 branches.
-//Secondly, they are usually stored in an object. This means that they aren't centralised. It also means that
-//the data is lost when the object is deleted! This is especially annoying for things like the singulo engine!
-#define INVESTIGATE_DIR "data/investigate/"
-
-//SYSTEM
-/proc/investigate_subject2file(var/subject)
-	return file("[INVESTIGATE_DIR][subject].html")
-
-/proc/investigate_reset()
-	if(fdel(INVESTIGATE_DIR))	return 1
-	return 0
-
-/atom/proc/investigate_log(var/message, var/subject)
-	if(!message)	return
-	var/F = investigate_subject2file(subject)
-	if(!F)	return
-	F << "<small>[time2text(world.timeofday,"hh:mm")] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>"
-
-//ADMINVERBS
-/client/proc/investigate_show( subject in list("hrefs","notes","ntsl","singulo","wires","telesci", "gravity") )
+/client/proc/investigate_show(subject in list("hrefs","notes, memos, watchlist", INVESTIGATE_RESEARCH, INVESTIGATE_EXONET, INVESTIGATE_PORTAL, INVESTIGATE_SINGULO, INVESTIGATE_WIRES, INVESTIGATE_TELESCI, INVESTIGATE_GRAVITY, INVESTIGATE_RECORDS, INVESTIGATE_CARGO, INVESTIGATE_SUPERMATTER, INVESTIGATE_ATMOS, INVESTIGATE_EXPERIMENTOR, INVESTIGATE_BOTANY, INVESTIGATE_HALLUCINATIONS, INVESTIGATE_RADIATION) )
 	set name = "Investigate"
 	set category = "Admin"
-	if(!holder)	return
+	if(!holder)
+		return
 	switch(subject)
-		if("singulo", "ntsl", "wires", "telesci", "gravity")			//general one-round-only stuff
-			var/F = investigate_subject2file(subject)
-			if(!F)
-				src << "<font color='red'>Error: admin_investigate: [INVESTIGATE_DIR][subject] is an invalid path or cannot be accessed.</font>"
+		if("notes, memos, watchlist")
+			if(!check_rights(R_ADMIN))
+				return
+			browse_messages()
+		else
+			var/F = file("[GLOB.log_directory]/[subject].html")
+			if(!fexists(F))
+				to_chat(src, "<span class='danger'>No [subject] logfile was found.</span>")
 				return
 			src << browse(F,"window=investigate[subject];size=800x300")
-
-		if("hrefs")				//persistant logs and stuff
-			if(config && config.log_hrefs)
-				if(href_logfile)
-					src << browse(href_logfile,"window=investigate[subject];size=800x300")
-				else
-					src << "<font color='red'>Error: admin_investigate: No href logfile found.</font>"
-					return
-			else
-				src << "<font color='red'>Error: admin_investigate: Href Logging is not on.</font>"
-				return
-		if("notes")
-			holder.notes_show()

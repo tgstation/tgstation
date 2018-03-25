@@ -1,26 +1,17 @@
 /datum/round_event_control/anomaly/anomaly_pyro
-	name = "Pyroclastic Anomaly"
+	name = "Anomaly: Pyroclastic"
 	typepath = /datum/round_event/anomaly/anomaly_pyro
-	max_occurrences = 2
-	weight = 15
+	max_occurrences = 5
+	weight = 20
 
 /datum/round_event/anomaly/anomaly_pyro
-	startWhen = 10
-	announceWhen = 3
-	endWhen = 70
+	startWhen = 3
+	announceWhen = 10
 
-
-/datum/round_event/anomaly/anomaly_pyro/announce()
-	command_alert("Atmospheric anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
+/datum/round_event/anomaly/anomaly_pyro/announce(fake)
+	priority_announce("Pyroclastic anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/anomaly_pyro/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
+	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
-		newAnomaly = new /obj/effect/anomaly/pyro(T.loc)
-
-/datum/round_event/anomaly/anomaly_pyro/tick()
-	if(!newAnomaly)
-		kill()
-		return
-	if(IsMultiple(activeFor, 5))
-		newAnomaly.anomalyEffect()
+		newAnomaly = new /obj/effect/anomaly/pyro(T)

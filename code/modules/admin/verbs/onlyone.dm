@@ -1,50 +1,29 @@
-/client/proc/only_one()
-	if(!ticker)
+GLOBAL_VAR_INIT(highlander, FALSE)
+/client/proc/only_one() //Gives everyone kilts, berets, claymores, and pinpointers, with the objective to hijack the emergency shuttle.
+	if(!SSticker.HasRoundStarted())
 		alert("The game hasn't started yet!")
 		return
+	GLOB.highlander = TRUE
 
-	for(var/mob/living/carbon/human/H in player_list)
-		if(H.stat == 2 || !(H.client)) continue
-		if(is_special_character(H)) continue
+	send_to_playing_players("<span class='boldannounce'><font size=6>THERE CAN BE ONLY ONE</font></span>")
 
-		ticker.mode.traitors += H.mind
-		H.mind.special_role = "traitor"
+	for(var/obj/item/disk/nuclear/N in GLOB.poi_list)
+		N.relocate() //Gets it out of bags and such
 
-		var/datum/objective/steal/steal_objective = new
-		steal_objective.owner = H.mind
-		steal_objective.set_target("nuclear authentication disk")
-		H.mind.objectives += steal_objective
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
+		if(H.stat == DEAD || !(H.client))
+			continue
+		H.make_scottish()
 
-		var/datum/objective/hijack/hijack_objective = new
-		hijack_objective.owner = H.mind
-		H.mind.objectives += hijack_objective
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
+	log_admin("[key_name(usr)] used THERE CAN BE ONLY ONE.")
+	addtimer(CALLBACK(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 1), 50)
 
-		H << "<B>You are the traitor.</B>"
-		var/obj_count = 1
-		for(var/datum/objective/OBJ in H.mind.objectives)
-			H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-			obj_count++
+/client/proc/only_one_delayed()
+	send_to_playing_players("<span class='userdanger'>Bagpipes begin to blare. You feel Scottish pride coming over you.</span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used (delayed) THERE CAN BE ONLY ONE!</span>")
+	log_admin("[key_name(usr)] used delayed THERE CAN BE ONLY ONE.")
+	addtimer(CALLBACK(src, .proc/only_one), 420)
 
-		for (var/obj/item/I in H)
-			if (istype(I, /obj/item/weapon/implant))
-				continue
-			qdel(I)
-
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), slot_ears)
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/beret(H), slot_head)
-		H.equip_to_slot_or_del(new /obj/item/weapon/claymore(H), slot_l_hand)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat/combat(H), slot_shoes)
-		H.equip_to_slot_or_del(new /obj/item/weapon/pinpointer(H.loc), slot_l_store)
-
-		var/obj/item/weapon/card/id/W = new(H)
-		W.icon_state = "centcom"
-		W.access = get_all_accesses()
-		W.access += get_all_centcom_access()
-		W.assignment = "Highlander"
-		W.registered_name = H.real_name
-		W.update_label(H.real_name)
-		H.equip_to_slot_or_del(W, slot_wear_id)
-
-	message_admins("\blue [key_name_admin(usr)] used THERE CAN BE ONLY ONE!", 1)
-	log_admin("[key_name(usr)] used there can be only one.")
+/mob/living/carbon/human/proc/make_scottish()
+	mind.add_antag_datum(/datum/antagonist/highlander)

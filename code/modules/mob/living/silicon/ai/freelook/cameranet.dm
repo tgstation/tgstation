@@ -2,16 +2,21 @@
 //
 // The datum containing all the chunks.
 
-var/const/CHUNK_SIZE = 16 // Only chunk sizes that are to the power of 2. E.g: 2, 4, 8, 16, etc..
+#define CHUNK_SIZE 16 // Only chunk sizes that are to the power of 2. E.g: 2, 4, 8, 16, etc..
 
-var/datum/cameranet/cameranet = new()
+GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 /datum/cameranet
+	var/name = "Camera Net" // Name to show for VV and stat()
+
 	// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Del().
 	var/list/cameras = list()
 	// The chunks of the map, mapping the areas that the cameras can see.
 	var/list/chunks = list()
 	var/ready = 0
+
+	// The object used for the clickable stat() button.
+	var/obj/effect/statclick/statclick
 
 // Checks if a chunk has been Generated in x, y, z.
 /datum/cameranet/proc/chunkGenerated(x, y, z)
@@ -59,9 +64,9 @@ var/datum/cameranet/cameranet = new()
 
 // Updates the chunks that the turf is located in. Use this when obstacles are destroyed or	when doors open.
 
-/datum/cameranet/proc/updateVisibility(atom/A, var/opacity_check = 1)
+/datum/cameranet/proc/updateVisibility(atom/A, opacity_check = 1)
 
-	if(!ticker || (opacity_check && !A.opacity))
+	if(!SSticker || (opacity_check && !A.opacity))
 		return
 	majorChunkChange(A, 2)
 
@@ -75,8 +80,7 @@ var/datum/cameranet/cameranet = new()
 // Removes a camera from a chunk.
 
 /datum/cameranet/proc/removeCamera(obj/machinery/camera/c)
-	if(c.can_use())
-		majorChunkChange(c, 0)
+	majorChunkChange(c, 0)
 
 // Add a camera to a chunk.
 
@@ -89,8 +93,6 @@ var/datum/cameranet/cameranet = new()
 /datum/cameranet/proc/updatePortableCamera(obj/machinery/camera/c)
 	if(c.can_use())
 		majorChunkChange(c, 1)
-	//else
-	//	majorChunkChange(c, 0)
 
 // Never access this proc directly!!!!
 // This will update the chunk and all the surrounding chunks.
@@ -98,7 +100,7 @@ var/datum/cameranet/cameranet = new()
 // Setting the choice to 0 will remove the camera from the chunks.
 // If you want to update the chunks around an object, without adding/removing a camera, use choice 2.
 
-/datum/cameranet/proc/majorChunkChange(atom/c, var/choice)
+/datum/cameranet/proc/majorChunkChange(atom/c, choice)
 	// 0xf = 15
 	if(!c)
 		return
@@ -109,9 +111,6 @@ var/datum/cameranet/cameranet = new()
 		var/y1 = max(0, T.y - (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
 		var/x2 = min(world.maxx, T.x + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
 		var/y2 = min(world.maxy, T.y + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
-
-		//world << "X1: [x1] - Y1: [y1] - X2: [x2] - Y2: [y2]"
-
 		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
 				if(chunkGenerated(x, y, T.z))
@@ -126,14 +125,14 @@ var/datum/cameranet/cameranet = new()
 
 // Will check if a mob is on a viewable turf. Returns 1 if it is, otherwise returns 0.
 
-/datum/cameranet/proc/checkCameraVis(mob/living/target as mob)
+/datum/cameranet/proc/checkCameraVis(mob/living/target)
 
 	// 0xf = 15
 	var/turf/position = get_turf(target)
 	return checkTurfVis(position)
 
 
-/datum/cameranet/proc/checkTurfVis(var/turf/position)
+/datum/cameranet/proc/checkTurfVis(turf/position)
 	var/datum/camerachunk/chunk = getCameraChunk(position.x, position.y, position.z)
 	if(chunk)
 		if(chunk.changed)
@@ -142,13 +141,8 @@ var/datum/cameranet/cameranet = new()
 			return 1
 	return 0
 
+/datum/cameranet/proc/stat_entry()
+	if(!statclick)
+		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
-// Debug verb for VVing the chunk that the turf is in.
-/*
-/turf/verb/view_chunk()
-	set src in world
-
-	if(cameranet.chunkGenerated(x, y, z))
-		var/datum/camerachunk/chunk = cameranet.getCameraChunk(x, y, z)
-		usr.client.debug_variables(chunk)
-*/
+	stat(name, statclick.update("Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]"))

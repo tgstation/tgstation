@@ -3,40 +3,40 @@
 /area/awaymission/centcomAway
 	name = "XCC-P5831"
 	icon_state = "away"
-	requires_power = 0
+	requires_power = FALSE
 
 /area/awaymission/centcomAway/general
 	name = "XCC-P5831"
-	music = "music/ambigen3.ogg"
+	music = 'sound/ambience/ambigen3.ogg'
 
 /area/awaymission/centcomAway/maint
 	name = "XCC-P5831 Maintenance"
 	icon_state = "away1"
-	music = "music/ambisin1.ogg"
+	music = 'sound/ambience/ambisin1.ogg'
 
 /area/awaymission/centcomAway/thunderdome
 	name = "XCC-P5831 Thunderdome"
 	icon_state = "away2"
-	music = "music/ambisin2.ogg"
+	music = 'sound/ambience/ambisin2.ogg'
 
 /area/awaymission/centcomAway/cafe
 	name = "XCC-P5831 Kitchen Arena"
 	icon_state = "away3"
-	music = "music/ambisin3.ogg"
+	music = 'sound/ambience/ambisin3.ogg'
 
 /area/awaymission/centcomAway/courtroom
 	name = "XCC-P5831 Courtroom"
 	icon_state = "away4"
-	music = "music/ambisin4.ogg"
+	music = 'sound/ambience/ambisin4.ogg'
 
 /area/awaymission/centcomAway/hangar
 	name = "XCC-P5831 Hangars"
 	icon_state = "away4"
-	music = "music/ambigen5.ogg"
+	music = 'sound/ambience/ambigen5.ogg'
 
 //centcomAway items
 
-/obj/item/weapon/paper/pamphlet/ccaInfo
+/obj/item/paper/pamphlet/centcom/visitor_info
 	name = "Visitor Info Pamphlet"
 	info = "<b> XCC-P5831 Visitor Information </b><br>\
 	Greetings, visitor, to  XCC-P5831! As you may know, this outpost was once \
@@ -48,7 +48,7 @@
 	and the thrilling pay-per-view broadcasts of <i>PLASTEEL CHEF</i> and <i>THUNDERDOME LIVE</i>.<br> \
 	We hope you enjoy your stay!"
 
-/obj/item/weapon/paper/ccaMemo
+/obj/item/paper/fluff/awaymissions/centcom/gateway_memo
 	name = "Memo to XCC-P5831 QM"
 	info = "<b>From: XCC-P5831 Management Office</b><br>\
 	<b>To: Rolf Ingram, XCC-P5831 Quartermaster</b><br>\

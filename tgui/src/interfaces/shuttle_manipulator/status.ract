@@ -1,0 +1,14 @@
+{{#each data.shuttles}}
+  <ui-section label='{{name}} ({{id}})'>
+    {{status}}
+    {{#if timer}}
+      ({{timeleft}})
+    {{/if}}
+    <ui-button action='jump_to' params='{"type": "mobile", "id": "{{id}}"}'>
+      Jump To
+    </ui-button>
+    <ui-button action='fast_travel' params='{"id": "{{id}}"}' state='{{can_fast_travel ? null : 'disabled'}}'>
+      Fast Travel
+    </ui-button>
+  </ui-section>
+{{/each}}

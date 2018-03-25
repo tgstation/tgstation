@@ -1,9 +1,3 @@
-#define VANILLA_BUG		0
-#define UNIVERSAL_BUG	1
-#define NETWORK_BUG		2
-#define SABOTAGE_BUG	3
-#define ADVANCED_BUG	4
-#define ADMIN_BUG		5
 
 #define BUGMODE_LIST	0
 #define BUGMODE_MONITOR	1
@@ -16,19 +10,16 @@
 	desc = "For illicit snooping through the camera network."
 	icon = 'icons/obj/device.dmi'
 	icon_state	= "camera_bug"
-	w_class		= 1.0
+	w_class		= WEIGHT_CLASS_TINY
 	item_state	= "camera_bug"
 	throw_speed	= 4
 	throw_range	= 20
+	flags_1 = NOBLUDGEON_1
 
 	var/obj/machinery/camera/current = null
-	var/obj/item/expansion = null
-	var/bugtype = VANILLA_BUG
 
 	var/last_net_update = 0
-	var/last_bugtype = VANILLA_BUG
 	var/list/bugged_cameras = list()
-	var/skip_bugcheck = 0
 
 	var/track_mode = BUGMODE_LIST
 	var/last_tracked = 0
@@ -42,14 +33,9 @@
 
 /obj/item/device/camera_bug/New()
 	..()
-	processing_objects += src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/camera_bug/Destroy()
-	if(expansion)
-		qdel(expansion)
-		expansion = null
-	del(src)
-/* Easier to just call del() than this nonsense
 	get_cameras()
 	for(var/cam_tag in bugged_cameras)
 		var/obj/machinery/camera/camera = bugged_cameras[cam_tag]
@@ -58,94 +44,80 @@
 	bugged_cameras = list()
 	if(tracking)
 		tracking = null
-	..()
-*/
+	return ..()
 
-/obj/item/device/camera_bug/interact(var/mob/user = usr)
+/obj/item/device/camera_bug/interact(mob/user)
+	ui_interact(user)
+
+/obj/item/device/camera_bug/ui_interact(mob/user = usr)
+	. = ..()
 	var/datum/browser/popup = new(user, "camerabug","Camera Bug",nref=src)
 	popup.set_content(menu(get_cameras()))
 	popup.open()
 
-/obj/item/device/camera_bug/attack_self(mob/user as mob)
+/obj/item/device/camera_bug/attack_self(mob/user)
 	user.set_machine(src)
 	interact(user)
 
-/obj/item/device/camera_bug/check_eye(var/mob/user as mob)
-	if (user.stat || loc != user || !user.canmove || user.blinded || !current)
-		user.reset_view(null)
+/obj/item/device/camera_bug/check_eye(mob/user)
+	if ( loc != user || user.incapacitated() || user.eye_blind || !current )
 		user.unset_machine()
-		return null
-
+		return 0
 	var/turf/T = get_turf(user.loc)
-	if(T.z != current.z || (!skip_bugcheck && current.bug != src) || !current.can_use())
-		user << "\red [src] has lost the signal."
+	if(T.z != current.z || !current.can_use())
+		to_chat(user, "<span class='danger'>[src] has lost the signal.</span>")
 		current = null
-		user.reset_view(null)
 		user.unset_machine()
-		return null
-
+		return 0
 	return 1
+/obj/item/device/camera_bug/on_unset_machine(mob/user)
+	user.reset_perspective(null)
 
 /obj/item/device/camera_bug/proc/get_cameras()
-	if(bugtype != last_bugtype || ( (bugtype in list(UNIVERSAL_BUG,NETWORK_BUG,ADMIN_BUG)) && world.time > (last_net_update + 100)))
+	if( world.time > (last_net_update + 100))
 		bugged_cameras = list()
-		last_bugtype = bugtype
-		for(var/obj/machinery/camera/camera in cameranet.cameras)
+		for(var/obj/machinery/camera/camera in GLOB.cameranet.cameras)
 			if(camera.stat || !camera.can_use())
 				continue
-			switch(bugtype)
-				if(VANILLA_BUG,SABOTAGE_BUG,ADVANCED_BUG)
-					if(camera.bug == src)
-						bugged_cameras[camera.c_tag] = camera
-				if(UNIVERSAL_BUG)
-					if(camera.bug)
-						bugged_cameras[camera.c_tag] = camera
-				if(NETWORK_BUG,ADMIN_BUG)
-					if(length(list("SS13","MINE")&camera.network))
-						bugged_cameras[camera.c_tag] = camera
-	bugged_cameras = sortAssoc(bugged_cameras)
+			if(length(list("ss13","mine")&camera.network))
+				bugged_cameras[camera.c_tag] = camera
+	sortList(bugged_cameras)
 	return bugged_cameras
 
 
-/obj/item/device/camera_bug/proc/menu(var/list/cameras)
+/obj/item/device/camera_bug/proc/menu(list/cameras)
 	if(!cameras || !cameras.len)
 		return "No bugged cameras found."
 
 	var/html
 	switch(track_mode)
 		if(BUGMODE_LIST)
-			html = "<h3>Select a camera:</h3> <a href='?src=\ref[src];view'>\[Cancel camera view\]</a><hr><table>"
+			html = "<h3>Select a camera:</h3> <a href='?src=[REF(src)];view'>\[Cancel camera view\]</a><hr><table>"
 			for(var/entry in cameras)
 				var/obj/machinery/camera/C = cameras[entry]
 				var/functions = ""
-				switch(bugtype)
-					if(SABOTAGE_BUG)
-						functions = " - <a href='?src=\ref[src];emp=\ref[C]'>\[Disable\]</a>"
-					if(ADVANCED_BUG)
-						functions = " - <a href='?src=\ref[src];monitor=\ref[C]'>\[Monitor\]</a>"
-					if(ADMIN_BUG)
-						if(C.bug == src)
-							functions = " - <a href='?src=\ref[src];monitor=\ref[C]'>\[Monitor\]</a> <a href='?src=\ref[src];emp=\ref[C]'>\[Disable\]</a>"
-						else
-							functions = " - <a href='?src=\ref[src];monitor=\ref[C]'>\[Monitor\]</a>"
-				html += "<tr><td><a href='?src=\ref[src];view=\ref[C]'>[entry]</a></td><td>[functions]</td></tr>"
+				if(C.bug == src)
+					functions = " - <a href='?src=[REF(src)];monitor=[REF(C)]'>\[Monitor\]</a> <a href='?src=[REF(src)];emp=[REF(C)]'>\[Disable\]</a>"
+				else
+					functions = " - <a href='?src=[REF(src)];monitor=[REF(C)]'>\[Monitor\]</a>"
+				html += "<tr><td><a href='?src=[REF(src)];view=[REF(C)]'>[entry]</a></td><td>[functions]</td></tr>"
 
 		if(BUGMODE_MONITOR)
 			if(current)
-				html = "Analyzing Camera '[current.c_tag]' <a href='?\ref[src];mode=0'>\[Select Camera\]</a><br>"
+				html = "Analyzing Camera '[current.c_tag]' <a href='?[REF(src)];mode=0'>\[Select Camera\]</a><br>"
 				html += camera_report()
 			else
 				track_mode = BUGMODE_LIST
 				return .(cameras)
 		if(BUGMODE_TRACK)
 			if(tracking)
-				html = "Tracking '[tracked_name]'  <a href='?\ref[src];mode=0'>\[Cancel Tracking\]</a>  <a href='?src=\ref[src];view'>\[Cancel camera view\]</a><br>"
+				html = "Tracking '[tracked_name]'  <a href='?[REF(src)];mode=0'>\[Cancel Tracking\]</a>  <a href='?src=[REF(src)];view'>\[Cancel camera view\]</a><br>"
 				if(last_found)
 					var/time_diff = round((world.time - last_seen) / 150)
 					var/obj/machinery/camera/C = bugged_cameras[last_found]
 					var/outstring
 					if(C)
-						outstring = "<a href='?\ref[src];view=\ref[C]'>[last_found]</a>"
+						outstring = "<a href='?[REF(src)];view=[REF(C)]'>[last_found]</a>"
 					else
 						outstring = last_found
 					if(!time_diff)
@@ -154,8 +126,12 @@
 						// 15 second intervals ~ 1/4 minute
 						var/m = round(time_diff/4)
 						var/s = (time_diff - 4*m) * 15
-						if(!s) s = "00"
+						if(!s)
+							s = "00"
 						html += "Last seen near [outstring] ([m]:[s] minute\s ago)<br>"
+					if( C && (C.bug == src)) //Checks to see if the camera has a bug
+						html += "<a href='?src=[REF(src)];emp=[REF(C)]'>\[Disable\]</a>"
+
 				else
 					html += "Not yet seen."
 			else
@@ -163,13 +139,18 @@
 				return .(cameras)
 	return html
 
+/obj/item/device/camera_bug/proc/get_seens()
+	if(current && current.can_use())
+		var/list/seen = current.can_see()
+		return seen
+
 /obj/item/device/camera_bug/proc/camera_report()
 	// this should only be called if current exists
 	var/dat = ""
-	if(current && current.can_use())
-		var/list/seen = current.can_see()
+	var/list/seen = get_seens()
+	if(seen && seen.len >= 1)
 		var/list/names = list()
-		for(var/obj/machinery/singularity/S in seen) // god help you if you see more than one
+		for(var/obj/singularity/S in seen) // god help you if you see more than one
 			if(S.name in names)
 				names[S.name]++
 				dat += "[S.name] ([names[S.name]])"
@@ -178,7 +159,7 @@
 				dat += "[S.name]"
 			var/stage = round(S.current_size / 2)+1
 			dat += " (Stage [stage])"
-			dat += " <a href='?\ref[src];track=\ref[S]'>\[Track\]</a><br>"
+			dat += " <a href='?[REF(src)];track=[REF(S)]'>\[Track\]</a><br>"
 
 		for(var/obj/mecha/M in seen)
 			if(M.name in names)
@@ -187,7 +168,7 @@
 			else
 				names[M.name] = 1
 				dat += "[M.name]"
-			dat += " <a href='?\ref[src];track=\ref[M]'>\[Track\]</a><br>"
+			dat += " <a href='?[REF(src)];track=[REF(M)]'>\[Track\]</a><br>"
 
 
 		for(var/mob/living/M in seen)
@@ -201,73 +182,77 @@
 				dat += " (Sitting)"
 			if(M.lying)
 				dat += " (Laying down)"
-			dat += " <a href='?\ref[src];track=\ref[M]'>\[Track\]</a><br>"
+			dat += " <a href='?[REF(src)];track=[REF(M)]'>\[Track\]</a><br>"
 		if(length(dat) == 0)
 			dat += "No motion detected."
 		return dat
 	else
 		return "Camera Offline<br>"
 
-/obj/item/device/camera_bug/Topic(var/href,var/list/href_list)
+/obj/item/device/camera_bug/Topic(href,list/href_list)
 	if(usr != loc)
 		usr.unset_machine()
-		usr.reset_view(null)
 		usr << browse(null, "window=camerabug")
 		return
 	usr.set_machine(src)
 	if("mode" in href_list)
 		track_mode = text2num(href_list["mode"])
 	if("monitor" in href_list)
-		var/obj/machinery/camera/C = locate(href_list["monitor"])
-		if(C)
+		//You can't locate on a list with keys
+		var/list/cameras = flatten_list(bugged_cameras)
+		var/obj/machinery/camera/C = locate(href_list["monitor"]) in cameras
+		if(C && istype(C))
 			track_mode = BUGMODE_MONITOR
 			current = C
-			usr.reset_view(null)
+			usr.reset_perspective(null)
 			interact()
 	if("track" in href_list)
-		var/atom/A = locate(href_list["track"])
-		if(A)
-			tracking = A
-			tracked_name = A.name
-			last_found = current.c_tag
-			last_seen = world.time
-			track_mode = BUGMODE_TRACK
+		var/list/seen = get_seens()
+		if(seen && seen.len >= 1)
+			var/atom/A = locate(href_list["track"]) in seen
+			if(A && istype(A))
+				tracking = A
+				tracked_name = A.name
+				last_found = current.c_tag
+				last_seen = world.time
+				track_mode = BUGMODE_TRACK
 	if("emp" in href_list)
-		var/obj/machinery/camera/C = locate(href_list["emp"])
-		if(istype(C) && C.bug == src)
-			C.emp_act(1)
+		//You can't locate on a list with keys
+		var/list/cameras = flatten_list(bugged_cameras)
+		var/obj/machinery/camera/C = locate(href_list["emp"]) in cameras
+		if(C && istype(C) && C.bug == src)
+			C.emp_act(EMP_HEAVY)
 			C.bug = null
 			bugged_cameras -= C.c_tag
 		interact()
 		return
 	if("close" in href_list)
-		usr.reset_view(null)
 		usr.unset_machine()
 		current = null
-		return // I do not <- I do not remember what I was going to write in this comment -Sayu, sometime later
+		return
 	if("view" in href_list)
-		var/obj/machinery/camera/C = locate(href_list["view"])
-		if(istype(C))
+		//You can't locate on a list with keys
+		var/list/cameras = flatten_list(bugged_cameras)
+		var/obj/machinery/camera/C = locate(href_list["view"]) in cameras
+		if(C && istype(C))
 			if(!C.can_use())
-				usr << "\red Something's wrong with that camera.  You can't get a feed."
+				to_chat(usr, "<span class='warning'>Something's wrong with that camera!  You can't get a feed.</span>")
 				return
 			var/turf/T = get_turf(loc)
 			if(!T || C.z != T.z)
-				usr << "\red You can't get a signal."
+				to_chat(usr, "<span class='warning'>You can't get a signal!</span>")
 				return
 			current = C
 			spawn(6)
 				if(src.check_eye(usr))
-					usr.reset_view(C)
+					usr.reset_perspective(C)
 					interact()
 				else
 					usr.unset_machine()
-					usr.reset_view(null)
 					usr << browse(null, "window=camerabug")
 			return
 		else
 			usr.unset_machine()
-			usr.reset_view(null)
 
 	interact()
 
@@ -308,62 +293,6 @@
 				break
 	src.updateSelfDialog()
 
-/obj/item/device/camera_bug/attackby(var/obj/item/W as obj,var/mob/living/user as mob)
-	if(istype(W,/obj/item/weapon/screwdriver) && expansion)
-		expansion.loc = get_turf(loc)
-		user << "You unscrew [expansion]."
-		user.put_in_inactive_hand(expansion)
-		expansion = null
-		bugtype = VANILLA_BUG
-		skip_bugcheck = 0
-		track_mode = BUGMODE_LIST
-		tracking = null
-		return
-
-	if(expansion || !W)
-		return ..(W,user)
-
-	// I am not sure that this list is or should be final
-	// really I do not know what to do here.
-	var/static/list/expandables = list(
-		/obj/item/weapon/research = ADMIN_BUG, // could have been anything spawn-only
-
-		// these are all so hackish I am sorry
-
-		/obj/item/device/analyzer = UNIVERSAL_BUG,
-		/obj/item/weapon/stock_parts/subspace/analyzer = UNIVERSAL_BUG,
-
-		/obj/item/device/assembly/igniter = SABOTAGE_BUG,
-		/obj/item/device/assembly/infra = SABOTAGE_BUG, // ir blaster to disable camera
-		/obj/item/weapon/stock_parts/subspace/amplifier = SABOTAGE_BUG,
-
-		/obj/item/device/radio = NETWORK_BUG,
-		/obj/item/device/assembly/signaler = NETWORK_BUG,
-		/obj/item/weapon/stock_parts/subspace/transmitter = NETWORK_BUG,
-
-		/obj/item/device/detective_scanner = ADVANCED_BUG,
-		/obj/item/device/paicard = ADVANCED_BUG,
-		/obj/item/weapon/stock_parts/scanning_module = ADVANCED_BUG
-		)
-
-	for(var/entry in expandables)
-		if(istype(W,entry))
-			bugtype = expandables[entry]
-			user.drop_item()
-			W.loc = src
-			expansion = W
-			user << "You add [W] to [src]."
-			get_cameras() // the tracking code will want to know the new camera list
-			if(bugtype in list(UNIVERSAL_BUG,NETWORK_BUG,ADMIN_BUG))
-				skip_bugcheck = 1
-			return
-
-#undef VANILLA_BUG
-#undef UNIVERSAL_BUG
-#undef NETWORK_BUG
-#undef SABOTAGE_BUG
-#undef ADVANCED_BUG
-#undef ADMIN_BUG
 
 #undef BUGMODE_LIST
 #undef BUGMODE_MONITOR

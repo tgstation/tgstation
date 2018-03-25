@@ -1,6 +1,23 @@
+/*
+	CONTENTS
+	LINE 10  - BASE MOB
+	LINE 43  - SWORD AND SHIELD
+	LINE 95  - GUNS
+	LINE 136 - MISC
+*/
+
+
+///////////////Base mob////////////
+/obj/effect/light_emitter/red_energy_sword //used so there's a combination of both their head light and light coming off the energy sword
+	set_luminosity = 2
+	set_cap = 2.5
+	light_color = LIGHT_COLOR_RED
+
+
 /mob/living/simple_animal/hostile/syndicate
 	name = "Syndicate Operative"
 	desc = "Death to Nanotrasen."
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "syndicate"
 	icon_living = "syndicate"
 	icon_dead = "syndicate_dead"
@@ -11,95 +28,83 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	speed = 0
-	stop_automated_movement_when_pulled = 0
+	stat_attack = UNCONSCIOUS
+	robust_searching = 1
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "punches"
-	a_intent = "harm"
-	var/corpse = /obj/effect/landmark/mobcorpse/syndicatesoldier
-	var/weapon1
-	var/weapon2
-	min_oxy = 5
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 1
-	min_co2 = 0
-	max_co2 = 5
-	min_n2 = 0
-	max_n2 = 0
-	unsuitable_atoms_damage = 15
-	faction = "syndicate"
+	attack_sound = 'sound/weapons/punch1.ogg'
+	a_intent = INTENT_HARM
+	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 15
+	faction = list(ROLE_SYNDICATE)
+	check_friendly_fire = 1
 	status_flags = CANPUSH
-
-/mob/living/simple_animal/hostile/syndicate/Die()
-	..()
-	if(corpse)
-		new corpse (src.loc)
-	if(weapon1)
-		new weapon1 (src.loc)
-	if(weapon2)
-		new weapon2 (src.loc)
-	qdel(src)
-	return
+	del_on_death = 1
 
 ///////////////Sword and shield////////////
 
 /mob/living/simple_animal/hostile/syndicate/melee
-	melee_damage_lower = 20
-	melee_damage_upper = 25
+	melee_damage_lower = 25
+	melee_damage_upper = 30
 	icon_state = "syndicatemelee"
 	icon_living = "syndicatemelee"
-	weapon1 = /obj/item/weapon/melee/energy/sword/red
-	weapon2 = /obj/item/weapon/shield/energy
+	loot = list(/obj/effect/gibspawner/human)
 	attacktext = "slashes"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	armour_penetration = 28
+	light_color = LIGHT_COLOR_RED
 	status_flags = 0
+	maxHealth = 170
+	health = 170
+	spacewalk = TRUE
 
-/mob/living/simple_animal/hostile/syndicate/melee/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(O.force)
-		if(prob(80))
-			var/damage = O.force
-			if (O.damtype == STAMINA)
-				damage = 0
-			health -= damage
-			visible_message("<span class='danger'>[src] has been attacked with [O] by [user]!</span>")
-		else
-			visible_message("<span class='danger'>[src] blocks [O] with its shield!</span>")
+/mob/living/simple_animal/hostile/syndicate/melee/Initialize()
+	. = ..()
+	set_light(2)
+
+/mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
+	if(!Proj)
+		return
+	if(prob(50))
+		return ..()
 	else
-		usr << "\red This weapon is ineffective, it does no damage."
-		visible_message("\red [user] gently taps [src] with [O]. ")
-
-
-/mob/living/simple_animal/hostile/syndicate/melee/bullet_act(var/obj/item/projectile/Proj)
-	if(!Proj)	return
-	if(prob(65))
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			src.health -= Proj.damage
-	else
-		visible_message("\red <B>[src] blocks [Proj] with its shield!</B>")
-	return 0
+		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
+		return 0
 
 
 /mob/living/simple_animal/hostile/syndicate/melee/space
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	icon_state = "syndicatemeleespace"
 	icon_living = "syndicatemeleespace"
 	name = "Syndicate Commando"
-	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
+	loot = list(/obj/effect/gibspawner/human)
 	speed = 1
+	var/obj/effect/light_emitter/red_energy_sword/sord
 
-/mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(var/check_drift = 0)
-	return
+/mob/living/simple_animal/hostile/syndicate/melee/space/Initialize()
+	. = ..()
+	sord = new(src)
+	set_light(4)
+
+/mob/living/simple_animal/hostile/syndicate/melee/space/Destroy()
+	QDEL_NULL(sord)
+	return ..()
+
+/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper
+	icon_state = "syndicatemeleestormtrooper"
+	icon_living = "syndicatemeleestormtrooper"
+	name = "Syndicate Stormtrooper"
+	maxHealth = 340
+	health = 340
+	loot = list(/obj/effect/gibspawner/human)
+
+///////////////Guns////////////
 
 /mob/living/simple_animal/hostile/syndicate/ranged
 	ranged = 1
@@ -108,31 +113,46 @@
 	minimum_distance = 5
 	icon_state = "syndicateranged"
 	icon_living = "syndicateranged"
-	casingtype = /obj/item/ammo_casing/a12mm
-	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
-	projectiletype = /obj/item/projectile/bullet/midbullet2
-
-	weapon1 = /obj/item/weapon/gun/projectile/automatic/c20r
+	casingtype = /obj/item/ammo_casing/c45/nostamina
+	projectilesound = 'sound/weapons/gunshot_smg.ogg'
+	loot = list(/obj/effect/gibspawner/human)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space
-	icon_state = "syndicaterangedpsace"
-	icon_living = "syndicaterangedpsace"
+	icon_state = "syndicaterangedspace"
+	icon_living = "syndicaterangedspace"
 	name = "Syndicate Commando"
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	corpse = /obj/effect/landmark/mobcorpse/syndicatecommando
 	speed = 1
+	spacewalk = TRUE
+	loot = list(/obj/effect/gibspawner/human)
 
-/mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(var/check_drift = 0)
-	return
+/mob/living/simple_animal/hostile/syndicate/ranged/space/Initialize()
+	. = ..()
+	set_light(4)
 
+/mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper
+	icon_state = "syndicaterangedstormtrooper"
+	icon_living = "syndicaterangedstormtrooper"
+	name = "Syndicate Stormtrooper"
+	maxHealth = 200
+	health = 200
+	casingtype = /obj/item/ammo_casing/shotgun/tengauge
+	projectilesound = 'sound/weapons/gunshot.ogg'
+	loot = list(/obj/effect/gibspawner/human)
+
+///////////////Misc////////////
+
+/mob/living/simple_animal/hostile/syndicate/civilian
+	minimum_distance = 10
+	retreat_distance = 10
+	obj_damage = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
+
+/mob/living/simple_animal/hostile/syndicate/civilian/Aggro()
+	..()
+	summon_backup(15)
+	say("GUARDS!!")
 
 
 /mob/living/simple_animal/hostile/viscerator
@@ -141,25 +161,22 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE
-	health = 15
-	maxHealth = 15
+	health = 25
+	maxHealth = 25
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	obj_damage = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	attacktext = "cuts"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	faction = "syndicate"
-	min_oxy = 0
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 0
-	min_co2 = 0
-	max_co2 = 0
-	min_n2 = 0
-	max_n2 = 0
+	faction = list(ROLE_SYNDICATE)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-
-/mob/living/simple_animal/hostile/viscerator/Die()
-	..()
-	visible_message("\red <b>[src]</b> is smashed into pieces!")
-	qdel(src)
-	return
+	mob_size = MOB_SIZE_TINY
+	movement_type = FLYING
+	limb_destroyer = 1
+	speak_emote = list("states")
+	bubble_icon = "syndibot"
+	gold_core_spawnable = HOSTILE_SPAWN
+	del_on_death = 1
+	deathmessage = "is smashed into pieces!"

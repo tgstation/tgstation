@@ -1,348 +1,176 @@
-/mob/living/carbon/human/emote(var/act,var/m_type=1,var/message = null)
-	var/param = null
+/datum/emote/living/carbon/human
+	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 
-	if (findtext(act, "-", 1, null))
-		var/t1 = findtext(act, "-", 1, null)
-		param = copytext(act, t1 + 1, length(act) + 1)
-		act = copytext(act, 1, t1)
+/datum/emote/living/carbon/human/cry
+	key = "cry"
+	key_third_person = "cries"
+	message = "cries."
+	emote_type = EMOTE_AUDIBLE
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,length(act))
+/datum/emote/living/carbon/human/dap
+	key = "dap"
+	key_third_person = "daps"
+	message = "sadly can't find anybody to give daps to, and daps themself. Shameful."
+	message_param = "give daps to %t."
+	restraint_check = TRUE
 
-	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
-	//var/m_type = 1
+/datum/emote/living/carbon/human/eyebrow
+	key = "eyebrow"
+	message = "raises an eyebrow."
 
-	for (var/obj/item/weapon/implant/I in src)
-		if (I.implanted)
-			I.trigger(act, src)
+/datum/emote/living/carbon/human/grumble
+	key = "grumble"
+	key_third_person = "grumbles"
+	message = "grumbles!"
+	emote_type = EMOTE_AUDIBLE
 
-	var/miming=0
-	if(mind)
-		miming=mind.miming
+/datum/emote/living/carbon/human/handshake
+	key = "handshake"
+	message = "shakes their own hands."
+	message_param = "shakes hands with %t."
+	restraint_check = TRUE
+	emote_type = EMOTE_AUDIBLE
 
-	if(src.stat == 2.0 && (act != "deathgasp"))
+/datum/emote/living/carbon/human/hug
+	key = "hug"
+	key_third_person = "hugs"
+	message = "hugs themself."
+	message_param = "hugs %t."
+	restraint_check = TRUE
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/mumble
+	key = "mumble"
+	key_third_person = "mumbles"
+	message = "mumbles!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/pale
+	key = "pale"
+	message = "goes pale for a second."
+
+/datum/emote/living/carbon/human/raise
+	key = "raise"
+	key_third_person = "raises"
+	message = "raises a hand."
+	restraint_check = TRUE
+
+/datum/emote/living/carbon/human/salute
+	key = "salute"
+	key_third_person = "salutes"
+	message = "salutes."
+	message_param = "salutes to %t."
+	restraint_check = TRUE
+
+/datum/emote/living/carbon/human/shrug
+	key = "shrug"
+	key_third_person = "shrugs"
+	message = "shrugs."
+
+/datum/emote/living/carbon/human/wag
+	key = "wag"
+	key_third_person = "wags"
+	message = "wags their tail."
+
+/datum/emote/living/carbon/human/wag/run_emote(mob/user, params)
+	. = ..()
+	if(!.)
 		return
-	switch(act) //Please keep this alphabetically ordered when adding or changing emotes.
-		if ("aflap") //Any emote on human that uses miming must be left in, oh well.
-			if (!src.restrained())
-				message = "<B>[src]</B> flaps \his wings ANGRILY!"
-				m_type = 2
+	var/mob/living/carbon/human/H = user
+	if(!H.is_wagging_tail())
+		H.startTailWag()
+	else
+		H.endTailWag()
 
-		if ("choke")
-			if (miming)
-				message = "<B>[src]</B> clutches \his throat desperately!"
-			else
-				..(act)
+/mob/living/carbon/human/proc/is_wagging_tail()
+	return (dna && dna.species && (("waggingtail_lizard" in dna.species.mutant_bodyparts) || ("waggingtail_human" in dna.species.mutant_bodyparts)))
 
-		if ("chuckle")
-			if(miming)
-				message = "<B>[src]</B> appears to chuckle."
-			else
-				..(act)
+/datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check = TRUE)
+	if(!..())
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	if(H.dna && H.dna.species && (("tail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("tail_human" in H.dna.species.mutant_bodyparts) || ("waggingtail_human" in H.dna.species.mutant_bodyparts)))
+		return TRUE
 
-		if ("clap")
-			if (!src.restrained())
-				message = "<B>[src]</B> claps."
-				m_type = 2
+/datum/emote/living/carbon/human/wag/select_message_type(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	if(H.is_wagging_tail())
+		. = null
 
-		if ("collapse")
-			Paralyse(2)
-			message = "<B>[src]</B> collapses!"
-			m_type = 2
+//Don't know where else to put this, it's basically an emote
+/mob/living/carbon/human/proc/startTailWag()
+	if(!dna || !dna.species)
+		return
+	if("tail_lizard" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "tail_lizard"
+		dna.species.mutant_bodyparts -= "spines"
+		dna.species.mutant_bodyparts |= "waggingtail_lizard"
+		dna.species.mutant_bodyparts |= "waggingspines"
+	if("tail_human" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "tail_human"
+		dna.species.mutant_bodyparts |= "waggingtail_human"
+	update_body()
 
-		if ("cough")
-			if (miming)
-				message = "<B>[src]</B> appears to cough!"
-			else
-				if (!muzzled)
-					message = "<B>[src]</B> coughs!"
-					m_type = 2
-				else
-					message = "<B>[src]</B> makes a strong noise."
-					m_type = 2
+/mob/living/carbon/human/proc/endTailWag()
+	if(!dna || !dna.species)
+		return
+	if("waggingtail_lizard" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "waggingtail_lizard"
+		dna.species.mutant_bodyparts -= "waggingspines"
+		dna.species.mutant_bodyparts |= "tail_lizard"
+		dna.species.mutant_bodyparts |= "spines"
+	if("waggingtail_human" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "waggingtail_human"
+		dna.species.mutant_bodyparts |= "tail_human"
+	update_body()
 
-		if ("cry")
-			if (miming)
-				message = "<B>[src]</B> cries."
-			else
-				if (!muzzled)
-					message = "<B>[src]</B> cries."
-					m_type = 2
-				else
-					message = "<B>[src]</B> makes a weak noise. \He frowns."
-					m_type = 2
+/datum/emote/living/carbon/human/wing
+	key = "wing"
+	key_third_person = "wings"
+	message = "their wings."
 
-		if ("custom")
-			var/input = copytext(sanitize(input("Choose an emote to display.") as text|null),1,MAX_MESSAGE_LEN)
-			if (!input)
-				return
-			if(copytext(input,1,5) == "says")
-				src << "\red Invalid emote."
-				return
-			else if(copytext(input,1,9) == "exclaims")
-				src << "\red Invalid emote."
-				return
-			else if(copytext(input,1,5) == "asks")
-				src << "\red Invalid emote."
-				return
-			else
-				var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
-				if (input2 == "Visible")
-					m_type = 1
-				else if (input2 == "Hearable")
-					if(miming)
-						return
-					m_type = 2
-				else
-					alert("Unable to use this emote, must be either hearable or visible.")
-					return
-				message = "<B>[src]</B> [input]"
-
-		if ("dap")
-			m_type = 1
-			if (!src.restrained())
-				var/M = null
-				if (param)
-					for (var/mob/A in view(1, src))
-						if (param == A.name)
-							M = A
-							break
-				if (M)
-					message = "<B>[src]</B> gives daps to [M]."
-				else
-					message = "<B>[src]</B> sadly can't find anybody to give daps to, and daps \himself. Shameful."
-
-		if ("eyebrow")
-			message = "<B>[src]</B> raises an eyebrow."
-			m_type = 1
-
-		if ("flap")
-			if (!src.restrained())
-				message = "<B>[src]</B> flaps \his wings."
-				m_type = 2
-
-		if ("gasp")
-			if (miming)
-				message = "<B>[src]</B> appears to be gasping!"
-			else
-				..(act)
-
-		if ("giggle")
-			if (miming)
-				message = "<B>[src]</B> giggles silently!"
-			else
-				..(act)
-
-		if ("groan")
-			if (miming)
-				message = "<B>[src]</B> appears to groan!"
-			else
-				if (!muzzled)
-					message = "<B>[src]</B> groans!"
-					m_type = 2
-				else
-					message = "<B>[src]</B> makes a loud noise."
-					m_type = 2
-
-		if ("grumble")
-			if (!muzzled)
-				message = "<B>[src]</B> grumbles!"
-			else
-				message = "<B>[src]</B> makes a noise."
-				m_type = 2
-
-		if ("handshake")
-			m_type = 1
-			if (!src.restrained() && !src.r_hand)
-				var/mob/M = null
-				if (param)
-					for (var/mob/A in view(1, src))
-						if (param == A.name)
-							M = A
-							break
-				if (M == src)
-					M = null
-				if (M)
-					if (M.canmove && !M.r_hand && !M.restrained())
-						message = "<B>[src]</B> shakes hands with [M]."
-					else
-						message = "<B>[src]</B> holds out \his hand to [M]."
-
-		if ("hug")
-			m_type = 1
-			if (!src.restrained())
-				var/M = null
-				if (param)
-					for (var/mob/A in view(1, src))
-						if (param == A.name)
-							M = A
-							break
-				if (M == src)
-					M = null
-				if (M)
-					message = "<B>[src]</B> hugs [M]."
-				else
-					message = "<B>[src]</B> hugs \himself."
-
-		if ("johnny")
-			var/M
-			if (param)
-				M = param
-			if (!M)
-				param = null
-			else
-				if(miming)
-					message = "<B>[src]</B> takes a drag from a cigarette and blows \"[M]\" out in smoke."
-				else
-					message = "<B>[src]</B> says, \"[M], please. He had a family.\" [src.name] takes a drag from a cigarette and blows \his name out in smoke."
-					m_type = 2
-
-		if ("me")
-			if(silent)
-				return
-			if (src.client)
-				if (client.prefs.muted & MUTE_IC)
-					src << "\red You cannot send IC messages (muted)."
-					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
-					return
-			if (stat)
-				return
-			if(!(message))
-				return
-			if(copytext(message,1,5) == "says")
-				src << "\red Invalid emote."
-				return
-			else if(copytext(message,1,9) == "exclaims")
-				src << "\red Invalid emote."
-				return
-			else if(copytext(message,1,5) == "asks")
-				src << "\red Invalid emote."
-				return
-			else
-				message = "<B>[src]</B> [message]"
-
-		if ("moan")
-			if(miming)
-				message = "<B>[src]</B> appears to moan!"
-			else
-				message = "<B>[src]</B> moans!"
-				m_type = 2
-
-		if ("mumble")
-			message = "<B>[src]</B> mumbles!"
-			m_type = 2
-
-		if ("pale")
-			message = "<B>[src]</B> goes pale for a second."
-			m_type = 1
-
-		if ("raise")
-			if (!src.restrained())
-				message = "<B>[src]</B> raises a hand."
-			m_type = 1
-
-		if ("salute")
-			if (!src.buckled)
-				var/M = null
-				if (param)
-					for (var/mob/A in view(1, src))
-						if (param == A.name)
-							M = A
-							break
-				if (!M)
-					param = null
-				if (param)
-					message = "<B>[src]</B> salutes to [param]."
-				else
-					message = "<B>[src]</b> salutes."
-			m_type = 1
-
-		if ("scream")
-			if (miming)
-				message = "<B>[src]</B> acts out a scream!"
-			else
-				..(act)
-
-		if ("shiver")
-			message = "<B>[src]</B> shivers."
-			m_type = 1
-
-		if ("shrug")
-			message = "<B>[src]</B> shrugs."
-			m_type = 1
-
-		if ("sigh")
-			if(miming)
-				message = "<B>[src]</B> sighs."
-			else
-				..(act)
-
-		if ("signal")
-			if (!src.restrained())
-				var/t1 = round(text2num(param))
-				if (isnum(t1))
-					if (t1 <= 5 && (!src.r_hand || !src.l_hand))
-						message = "<B>[src]</B> raises [t1] finger\s."
-					else if (t1 <= 10 && (!src.r_hand && !src.l_hand))
-						message = "<B>[src]</B> raises [t1] finger\s."
-			m_type = 1
-
-		if ("sneeze")
-			if (miming)
-				message = "<B>[src]</B> sneezes."
-			else
-				..(act)
-
-		if ("sniff")
-			message = "<B>[src]</B> sniffs."
-			m_type = 2
-
-		if ("snore")
-			if (miming)
-				message = "<B>[src]</B> sleeps soundly."
-			else
-				..(act)
-
-		if ("whimper")
-			if (miming)
-				message = "<B>[src]</B> appears hurt."
-			else
-				..(act)
-
-		if ("yawn")
-			if (!muzzled)
-				message = "<B>[src]</B> yawns."
-				m_type = 2
-
-		if ("help") //This can stay at the bottom.
-			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, frown, flap, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, johnny, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
-
+/datum/emote/living/carbon/human/wing/run_emote(mob/user, params)
+	. = ..()
+	if(.)
+		var/mob/living/carbon/human/H = user
+		if(findtext(select_message_type(user), "open"))
+			H.OpenWings()
 		else
-			..(act)
+			H.CloseWings()
 
-	if(miming)
-		m_type = 1
+/datum/emote/living/carbon/human/wing/select_message_type(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	if("wings" in H.dna.species.mutant_bodyparts)
+		. = "opens " + message
+	else
+		. = "closes " + message
 
+/datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE)
+	if(!..())
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	if(H.dna && H.dna.species && (H.dna.features["wings"] != "None"))
+		return TRUE
 
+/mob/living/carbon/human/proc/OpenWings()
+	if(!dna || !dna.species)
+		return
+	if("wings" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "wings"
+		dna.species.mutant_bodyparts |= "wingsopen"
+	update_body()
 
-	if (message)
-		log_emote("[name]/[key] : [message]")
+/mob/living/carbon/human/proc/CloseWings()
+	if(!dna || !dna.species)
+		return
+	if("wingsopen" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "wingsopen"
+		dna.species.mutant_bodyparts |= "wings"
+	update_body()
+	if(isturf(loc))
+		var/turf/T = loc
+		T.Entered(src)
 
- //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
- // Maybe some people are okay with that.
-
-		for(var/mob/M in dead_mob_list)
-			if(!M.client || istype(M, /mob/new_player))
-				continue //skip monkeys, leavers and new players
-			if(M.stat == DEAD && (M.client.prefs.toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
-				M.show_message(message)
-
-
-		if (m_type & 1)
-			for (var/mob/O in viewers(src, null))
-				O.show_message(message, m_type)
-		else if (m_type & 2)
-			for (var/mob/O in hearers(src.loc, null))
-				O.show_message(message, m_type)
-
+//Ayy lmao

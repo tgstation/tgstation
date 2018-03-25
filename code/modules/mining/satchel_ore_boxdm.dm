@@ -4,81 +4,88 @@
 /obj/structure/ore_box
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "orebox"
-	name = "Ore Box"
-	desc = "It's heavy"
-	density = 1
+	name = "ore box"
+	desc = "A heavy wooden box, which can be filled with a lot of ores."
+	density = TRUE
+	pressure_resistance = 5*ONE_ATMOSPHERE
 
-/obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/ore))
-		user.drop_item()
-		W.loc = src
-	if (istype(W, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = W
-		S.hide_from(usr)
-		for(var/obj/item/weapon/ore/O in S.contents)
+/obj/structure/ore_box/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/ore))
+		user.transferItemToLoc(I, src)
+	else if(istype(I, /obj/item/storage))
+		var/obj/item/storage/S = I
+		for(var/obj/item/stack/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
-		user << "\blue You empty the satchel into the box."
-	return
+		to_chat(user, "<span class='notice'>You empty the ore in [S] into \the [src].</span>")
+	else
+		return ..()
 
-/obj/structure/ore_box/attack_hand(mob/user as mob)
-	var/amt_gold = 0
-	var/amt_silver = 0
-	var/amt_diamond = 0
-	var/amt_glass = 0
-	var/amt_iron = 0
-	var/amt_plasma = 0
-	var/amt_uranium = 0
-	var/amt_clown = 0
+/obj/structure/ore_box/crowbar_act(mob/living/user, obj/item/I)
+	if(I.use_tool(src, user, 50, volume=50))
+		user.visible_message("[user] pries \the [src] apart.",
+			"<span class='notice'>You pry apart \the [src].</span>",
+			"<span class='italics'>You hear splitting wood.</span>")
+		deconstruct(TRUE, user)
+	return TRUE
 
-	for (var/obj/item/weapon/ore/C in contents)
-		if (istype(C,/obj/item/weapon/ore/diamond))
-			amt_diamond++;
-		if (istype(C,/obj/item/weapon/ore/glass))
-			amt_glass++;
-		if (istype(C,/obj/item/weapon/ore/plasma))
-			amt_plasma++;
-		if (istype(C,/obj/item/weapon/ore/iron))
-			amt_iron++;
-		if (istype(C,/obj/item/weapon/ore/silver))
-			amt_silver++;
-		if (istype(C,/obj/item/weapon/ore/gold))
-			amt_gold++;
-		if (istype(C,/obj/item/weapon/ore/uranium))
-			amt_uranium++;
-		if (istype(C,/obj/item/weapon/ore/clown))
-			amt_clown++;
+/obj/structure/ore_box/examine(mob/living/user)
+	if(Adjacent(user) && istype(user))
+		show_contents(user)
+	. = ..()
 
+/obj/structure/ore_box/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(Adjacent(user))
+		show_contents(user)
+
+/obj/structure/ore_box/attack_robot(mob/user)
+	if(Adjacent(user))
+		show_contents(user)
+
+/obj/structure/ore_box/proc/show_contents(mob/user)
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
-	if (amt_gold)
-		dat += text("Gold ore: [amt_gold]<br>")
-	if (amt_silver)
-		dat += text("Silver ore: [amt_silver]<br>")
-	if (amt_iron)
-		dat += text("Metal ore: [amt_iron]<br>")
-	if (amt_glass)
-		dat += text("Sand: [amt_glass]<br>")
-	if (amt_diamond)
-		dat += text("Diamond ore: [amt_diamond]<br>")
-	if (amt_plasma)
-		dat += text("Plasma ore: [amt_plasma]<br>")
-	if (amt_uranium)
-		dat += text("Uranium ore: [amt_uranium]<br>")
-	if (amt_clown)
-		dat += text("Bananium ore: [amt_clown]<br>")
+	var/list/assembled = list()
+	for(var/obj/item/stack/ore/O in src)
+		assembled[O.type] += O.amount
+	for(var/type in assembled)
+		var/obj/item/stack/ore/O = type
+		dat += "[initial(O.name)] - [assembled[type]]<br>"
+	dat += text("<br><br><A href='?src=[REF(src)];removeall=1'>Empty box</A>")
+	user << browse(dat, "window=orebox")
 
-	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
-	user << browse("[dat]", "window=orebox")
-	return
+/obj/structure/ore_box/proc/dump_box_contents()
+	var/drop = drop_location()
+	for(var/obj/item/stack/ore/O in src)
+		if(QDELETED(O))
+			continue
+		if(QDELETED(src))
+			break
+		O.forceMove(drop)
+		if(TICK_CHECK)
+			stoplag()
+			drop = drop_location()
 
 /obj/structure/ore_box/Topic(href, href_list)
 	if(..())
 		return
+	if(!Adjacent(usr))
+		return
+
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["removeall"])
-		for (var/obj/item/weapon/ore/O in contents)
-			contents -= O
-			O.loc = src.loc
-		usr << "\blue You empty the box"
-	src.updateUsrDialog()
+		dump_box_contents()
+		to_chat(usr, "<span class='notice'>You open the release hatch on the box..</span>")
+	updateUsrDialog()
+
+/obj/structure/ore_box/deconstruct(disassembled = TRUE, mob/user)
+	var/obj/item/stack/sheet/mineral/wood/WD = new (loc, 4)
+	if(user)
+		WD.add_fingerprint(user)
+	dump_box_contents()
+	qdel(src)
+
+/obj/structure/ore_box/onTransitZ()
 	return

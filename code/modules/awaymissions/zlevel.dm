@@ -1,11 +1,41 @@
-proc/createRandomZlevel()
-	if(awaydestinations.len)	//crude, but it saves another var!
+// How much "space" we give the edge of the map
+GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "[global.config.directory]/awaymissionconfig.txt"))
+
+/proc/createRandomZlevel()
+	if(GLOB.awaydestinations.len)	//crude, but it saves another var!
 		return
 
-	var/list/potentialRandomZlevels = list()
-	world << "\red \b Searching for away missions..."
-	var/list/Lines = file2list("_maps/RandomZLevels/fileList.txt")
-	if(!Lines.len)	return
+	if(GLOB.potentialRandomZlevels && GLOB.potentialRandomZlevels.len)
+		to_chat(world, "<span class='boldannounce'>Loading away mission...</span>")
+		var/map = pick(GLOB.potentialRandomZlevels)
+		load_new_z_level(map, "Away Mission")
+		to_chat(world, "<span class='boldannounce'>Away mission loaded.</span>")
+
+/proc/reset_gateway_spawns(reset = FALSE)
+	for(var/obj/machinery/gateway/G in world)
+		if(reset)
+			G.randomspawns = GLOB.awaydestinations
+		else
+			G.randomspawns.Add(GLOB.awaydestinations)
+
+/obj/effect/landmark/awaystart
+	name = "away mission spawn"
+	desc = "Randomly picked away mission spawn points."
+
+/obj/effect/landmark/awaystart/New()
+	GLOB.awaydestinations += src
+	..()
+
+/obj/effect/landmark/awaystart/Destroy()
+	GLOB.awaydestinations -= src
+	return ..()
+
+/proc/generateMapList(filename)
+	. = list()
+	var/list/Lines = world.file2list(filename)
+
+	if(!Lines.len)
+		return
 	for (var/t in Lines)
 		if (!t)
 			continue
@@ -18,36 +48,14 @@ proc/createRandomZlevel()
 
 		var/pos = findtext(t, " ")
 		var/name = null
-	//	var/value = null
 
 		if (pos)
 			name = lowertext(copytext(t, 1, pos))
-		//	value = copytext(t, pos + 1)
+
 		else
 			name = lowertext(t)
 
 		if (!name)
 			continue
 
-		potentialRandomZlevels.Add(t)
-
-
-	if(potentialRandomZlevels.len)
-		world << "\red \b Loading away mission..."
-
-		var/map = pick(potentialRandomZlevels)
-		var/file = file(map)
-		if(isfile(file))
-			maploader.load_map(file)
-			world.log << "away mission loaded: [map]"
-
-		for(var/obj/effect/landmark/L in landmarks_list)
-			if (L.name != "awaystart")
-				continue
-			awaydestinations.Add(L)
-
-		world << "\red \b Away mission loaded."
-
-	else
-		world << "\red \b No away missions found."
-		return
+		. += t

@@ -1,0 +1,12 @@
+#define MEAT 1
+#define VEGETABLES 2
+#define RAW 4
+#define JUNKFOOD 8
+#define GRAIN 16
+#define FRUIT 32
+#define DAIRY 64
+#define FRIED 128
+#define ALCOHOL 256
+#define SUGAR 512
+#define GROSS 1024
+#define TOXIC 2048

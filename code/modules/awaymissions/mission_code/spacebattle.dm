@@ -1,33 +1,42 @@
 //Spacebattle Areas
 
 /area/awaymission/spacebattle
-	name = "\improper Space Battle"
-	icon_state = "away"
-	requires_power = 0
+	name = "Space Battle"
+	icon_state = "awaycontent1"
+	requires_power = FALSE
 
 /area/awaymission/spacebattle/cruiser
-	name = "\improper Nanotrasen Cruiser"
+	name = "Nanotrasen Cruiser"
+	icon_state = "awaycontent2"
 
 /area/awaymission/spacebattle/syndicate1
-	name = "\improper Syndicate Assault Ship 1"
+	name = "Syndicate Assault Ship 1"
+	icon_state = "awaycontent3"
 
 /area/awaymission/spacebattle/syndicate2
-	name = "\improper Syndicate Assault Ship 2"
+	name = "Syndicate Assault Ship 2"
+	icon_state = "awaycontent4"
 
 /area/awaymission/spacebattle/syndicate3
-	name = "\improper Syndicate Assault Ship 3"
+	name = "Syndicate Assault Ship 3"
+	icon_state = "awaycontent5"
 
 /area/awaymission/spacebattle/syndicate4
-	name = "\improper Syndicate War Sphere 1"
+	name = "Syndicate War Sphere 1"
+	icon_state = "awaycontent6"
 
 /area/awaymission/spacebattle/syndicate5
-	name = "\improper Syndicate War Sphere 2"
+	name = "Syndicate War Sphere 2"
+	icon_state = "awaycontent7"
 
 /area/awaymission/spacebattle/syndicate6
-	name = "\improper Syndicate War Sphere 3"
+	name = "Syndicate War Sphere 3"
+	icon_state = "awaycontent8"
 
 /area/awaymission/spacebattle/syndicate7
-	name = "\improper Syndicate Fighter"
+	name = "Syndicate Fighter"
+	icon_state = "awaycontent9"
 
 /area/awaymission/spacebattle/secret
-	name = "\improper Hidden Chamber"
+	name = "Hidden Chamber"
+	icon_state = "awaycontent10"

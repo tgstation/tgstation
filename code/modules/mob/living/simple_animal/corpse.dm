@@ -2,156 +2,205 @@
 
 //If someone can do this in a neater way, be my guest-Kor
 
-//This has to be seperate from the Away Mission corpses, because New() doesn't work for those, and initialize() doesn't work for these.
+//This has to be separate from the Away Mission corpses, because New() doesn't work for those, and initialize() doesn't work for these.
 
 //To do: Allow corpses to appear mangled, bloody, etc. Allow customizing the bodies appearance (they're all bald and white right now).
 
-
-/obj/effect/landmark/mobcorpse
-	name = "Unknown"
-	var/mobname = "Unknown"  //Unused now but it'd fuck up maps to remove it now
-	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
-	var/corpsesuit = null
-	var/corpseshoes = null
-	var/corpsegloves = null
-	var/corpseradio = null
-	var/corpseglasses = null
-	var/corpsemask = null
-	var/corpsehelmet = null
-	var/corpsebelt = null
-	var/corpsepocket1 = null
-	var/corpsepocket2 = null
-	var/corpseback = null
-	var/corpseid = 0     //Just set to 1 if you want them to have an ID
-	var/corpseidjob = null // Needs to be in quotes, such as "Clown" or "Chef." This just determines what the ID reads as, not their access
-	var/corpseidaccess = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
-	var/corpseidicon = null //For setting it to be a gold, silver, centcom etc ID
-
-/obj/effect/landmark/mobcorpse/New()
-	createCorpse()
-
-/obj/effect/landmark/mobcorpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
-	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
-	M.real_name = src.name
-	M.stat = 2 //Kills the new mob
-	if(src.corpseuniform)
-		M.equip_to_slot_or_del(new src.corpseuniform(M), slot_w_uniform)
-	if(src.corpsesuit)
-		M.equip_to_slot_or_del(new src.corpsesuit(M), slot_wear_suit)
-	if(src.corpseshoes)
-		M.equip_to_slot_or_del(new src.corpseshoes(M), slot_shoes)
-	if(src.corpsegloves)
-		M.equip_to_slot_or_del(new src.corpsegloves(M), slot_gloves)
-	if(src.corpseradio)
-		M.equip_to_slot_or_del(new src.corpseradio(M), slot_ears)
-	if(src.corpseglasses)
-		M.equip_to_slot_or_del(new src.corpseglasses(M), slot_glasses)
-	if(src.corpsemask)
-		M.equip_to_slot_or_del(new src.corpsemask(M), slot_wear_mask)
-	if(src.corpsehelmet)
-		M.equip_to_slot_or_del(new src.corpsehelmet(M), slot_head)
-	if(src.corpsebelt)
-		M.equip_to_slot_or_del(new src.corpsebelt(M), slot_belt)
-	if(src.corpsepocket1)
-		M.equip_to_slot_or_del(new src.corpsepocket1(M), slot_r_store)
-	if(src.corpsepocket2)
-		M.equip_to_slot_or_del(new src.corpsepocket2(M), slot_l_store)
-	if(src.corpseback)
-		M.equip_to_slot_or_del(new src.corpseback(M), slot_back)
-	if(src.corpseid == 1)
-		var/obj/item/weapon/card/id/W = new(M)
-		var/datum/job/jobdatum
-		for(var/jobtype in typesof(/datum/job))
-			var/datum/job/J = new jobtype
-			if(J.title == corpseidaccess)
-				jobdatum = J
-				break
-		if(src.corpseidicon)
-			W.icon_state = corpseidicon
-		if(src.corpseidaccess)
-			if(jobdatum)
-				W.access = jobdatum.get_access()
-			else
-				W.access = list()
-		if(corpseidjob)
-			W.assignment = corpseidjob
-		W.registered_name = M.real_name
-		W.update_label()
-		M.equip_to_slot_or_del(W, slot_wear_id)
-	qdel(src)
-
-
-
 //List of different corpse types
 
-/obj/effect/landmark/mobcorpse/syndicatesoldier
+/obj/effect/mob_spawn/human/corpse/syndicatesoldier
 	name = "Syndicate Operative"
-	corpseuniform = /obj/item/clothing/under/syndicate
-	corpsesuit = /obj/item/clothing/suit/armor/vest
-	corpseshoes = /obj/item/clothing/shoes/swat
-	corpsegloves = /obj/item/clothing/gloves/combat
-	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas
-	corpsehelmet = /obj/item/clothing/head/helmet/swat
-	corpseback = /obj/item/weapon/storage/backpack
-	corpseid = 1
-	corpseidjob = "Operative"
-	corpseidaccess = "Syndicate"
+	id_job = "Operative"
+	hair_style = "Bald"
+	facial_hair_style = "Shaved"
+	outfit = /datum/outfit/syndicatesoldiercorpse
+
+/datum/outfit/syndicatesoldiercorpse
+	name = "Syndicate Operative Corpse"
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/armor/vest
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	ears = /obj/item/device/radio/headset
+	mask = /obj/item/clothing/mask/gas
+	head = /obj/item/clothing/head/helmet/swat
+	back = /obj/item/storage/backpack
+	id = /obj/item/card/id/syndicate
 
 
-
-/obj/effect/landmark/mobcorpse/syndicatecommando
+/obj/effect/mob_spawn/human/corpse/syndicatecommando
 	name = "Syndicate Commando"
-	corpseuniform = /obj/item/clothing/under/syndicate
-	corpsesuit = /obj/item/clothing/suit/space/rig/syndi
-	corpseshoes = /obj/item/clothing/shoes/swat
-	corpsegloves = /obj/item/clothing/gloves/combat
-	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas/syndicate
-	corpsehelmet = /obj/item/clothing/head/helmet/space/rig/syndi
-	corpseback = /obj/item/weapon/tank/jetpack/oxygen
-	corpsepocket1 = /obj/item/weapon/tank/emergency_oxygen
-	corpseid = 1
-	corpseidjob = "Operative"
-	corpseidaccess = "Syndicate"
+	id_job = "Operative"
+	hair_style = "Bald"
+	facial_hair_style = "Shaved"
+	outfit = /datum/outfit/syndicatecommandocorpse
+
+/datum/outfit/syndicatecommandocorpse
+	name = "Syndicate Commando Corpse"
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/space/hardsuit/syndi
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	ears = /obj/item/device/radio/headset
+	mask = /obj/item/clothing/mask/gas/syndicate
+	back = /obj/item/tank/jetpack/oxygen
+	r_pocket = /obj/item/tank/internals/emergency_oxygen
+	id = /obj/item/card/id/syndicate
 
 
+/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper
+	name = "Syndicate Stormtrooper"
+	id_job = "Operative"
+	hair_style = "Bald"
+	facial_hair_style = "Shaved"
+	outfit = /datum/outfit/syndicatestormtroopercorpse
 
-/obj/effect/landmark/mobcorpse/clown
-	name = "Clown"
-	corpseuniform = /obj/item/clothing/under/rank/clown
-	corpseshoes = /obj/item/clothing/shoes/clown_shoes
-	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas/clown_hat
-	corpsepocket1 = /obj/item/weapon/bikehorn
-	corpseback = /obj/item/weapon/storage/backpack/clown
-	corpseid = 1
-	corpseidjob = "Clown"
-	corpseidaccess = "Clown"
+/datum/outfit/syndicatestormtroopercorpse
+	name = "Syndicate Stormtrooper Corpse"
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	ears = /obj/item/device/radio/headset
+	mask = /obj/item/clothing/mask/gas/syndicate
+	back = /obj/item/tank/jetpack/oxygen/harness
+	id = /obj/item/card/id/syndicate
 
 
+/obj/effect/mob_spawn/human/clown/corpse
+	roundstart = FALSE
+	instant = TRUE
+	skin_tone = "caucasian1"
+	hair_style = "Bald"
+	facial_hair_style = "Shaved"
 
-/obj/effect/landmark/mobcorpse/pirate
+/obj/effect/mob_spawn/human/corpse/pirate
 	name = "Pirate"
-	corpseuniform = /obj/item/clothing/under/pirate
-	corpseshoes = /obj/item/clothing/shoes/jackboots
-	corpseglasses = /obj/item/clothing/glasses/eyepatch
-	corpsehelmet = /obj/item/clothing/head/bandana
+	skin_tone = "Caucasian1" //all pirates are white because it's easier that way
+	outfit = /datum/outfit/piratecorpse
+	hair_style = "Bald"
+	facial_hair_style = "Shaved"
+
+/datum/outfit/piratecorpse
+	name = "Pirate Corpse"
+	uniform = /obj/item/clothing/under/pirate
+	shoes = /obj/item/clothing/shoes/jackboots
+	glasses = /obj/item/clothing/glasses/eyepatch
+	head = /obj/item/clothing/head/bandana
 
 
-
-/obj/effect/landmark/mobcorpse/pirate/ranged
+/obj/effect/mob_spawn/human/corpse/pirate/ranged
 	name = "Pirate Gunner"
-	corpsesuit = /obj/item/clothing/suit/pirate
-	corpsehelmet = /obj/item/clothing/head/pirate
+	outfit = /datum/outfit/piratecorpse/ranged
+
+/datum/outfit/piratecorpse/ranged
+	name = "Pirate Gunner Corpse"
+	suit = /obj/item/clothing/suit/pirate
+	head = /obj/item/clothing/head/pirate
 
 
-
-/obj/effect/landmark/mobcorpse/russian
+/obj/effect/mob_spawn/human/corpse/russian
 	name = "Russian"
-	corpseuniform = /obj/item/clothing/under/soviet
-	corpseshoes = /obj/item/clothing/shoes/jackboots
-	corpsehelmet = /obj/item/clothing/head/bearpelt
+	outfit = /datum/outfit/russiancorpse
+	hair_style = "Bald"
+	facial_hair_style = "Shaved"
 
-/obj/effect/landmark/mobcorpse/russian/ranged
-	corpsehelmet = /obj/item/clothing/head/ushanka
+/datum/outfit/russiancorpse
+	name = "Russian Corpse"
+	uniform = /obj/item/clothing/under/soviet
+	shoes = /obj/item/clothing/shoes/jackboots
+	head = /obj/item/clothing/head/bearpelt
+	gloves = /obj/item/clothing/gloves/color/black
+	mask = /obj/item/clothing/mask/gas
+
+
+
+/obj/effect/mob_spawn/human/corpse/russian/ranged
+	outfit = /datum/outfit/russiancorpse/ranged
+
+/datum/outfit/russiancorpse/ranged
+	name = "Ranged Russian Corpse"
+	head = /obj/item/clothing/head/ushanka
+
+
+/obj/effect/mob_spawn/human/corpse/russian/ranged/trooper
+	outfit = /datum/outfit/russiancorpse/ranged/trooper
+
+/datum/outfit/russiancorpse/ranged/trooper
+	name = "Ranged Russian Trooper Corpse"
+	uniform = /obj/item/clothing/under/syndicate/camo
+	suit = /obj/item/clothing/suit/armor/bulletproof
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	ears = /obj/item/device/radio/headset
+	head = /obj/item/clothing/head/helmet/alt
+	mask = /obj/item/clothing/mask/balaclava
+
+
+/obj/effect/mob_spawn/human/corpse/russian/ranged/officer
+	name = "Russian Officer"
+	outfit = /datum/outfit/russiancorpse/officer
+
+/datum/outfit/russiancorpse/officer
+	name = "Russian Officer Corpse"
+	uniform = /obj/item/clothing/under/rank/security/navyblue/russian
+	suit = /obj/item/clothing/suit/security/officer/russian
+	shoes = /obj/item/clothing/shoes/combat
+	ears = /obj/item/device/radio/headset
+	head = /obj/item/clothing/head/ushanka
+
+
+/obj/effect/mob_spawn/human/corpse/wizard
+	name = "Space Wizard Corpse"
+	outfit = /datum/outfit/wizardcorpse
+	hair_style = "Bald"
+	facial_hair_style = "Long Beard"
+	skin_tone = "Caucasian1"
+
+/datum/outfit/wizardcorpse
+	name = "Space Wizard Corpse"
+	uniform = /obj/item/clothing/under/color/lightpurple
+	suit = /obj/item/clothing/suit/wizrobe
+	shoes = /obj/item/clothing/shoes/sandal/magic
+	head = /obj/item/clothing/head/wizard
+
+
+/obj/effect/mob_spawn/human/corpse/nanotrasensoldier
+	name = "Nanotrasen Private Security Officer"
+	id_job = "Private Security Force"
+	id_access = "Security Officer"
+	outfit = /datum/outfit/nanotrasensoldiercorpse2
+	hair_style = "Bald"
+	facial_hair_style = "Shaved"
+
+/datum/outfit/nanotrasensoldiercorpse2
+	name = "NT Private Security Officer Corpse"
+	uniform = /obj/item/clothing/under/rank/security
+	suit = /obj/item/clothing/suit/armor/vest
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	ears = /obj/item/device/radio/headset
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	head = /obj/item/clothing/head/helmet/swat/nanotrasen
+	back = /obj/item/storage/backpack/security
+	id = /obj/item/card/id
+
+/obj/effect/mob_spawn/human/corpse/cat_butcher
+	name = "The Cat Surgeon"
+	id_job = "Cat Surgeon"
+	id_access_list = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
+	hair_style = "Cut Hair"
+	facial_hair_style = "Watson Mustache"
+	skin_tone = "caucasian1"
+	outfit = /datum/outfit/cat_butcher
+
+/datum/outfit/cat_butcher
+	name = "Cat Butcher Uniform"
+	uniform = /obj/item/clothing/under/rank/medical/green
+	suit = /obj/item/clothing/suit/apron/surgical
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	gloves = /obj/item/clothing/gloves/color/latex/nitrile
+	ears = /obj/item/device/radio/headset
+	back = /obj/item/storage/backpack/satchel/med
+	id = /obj/item/card/id
+	glasses = /obj/item/clothing/glasses/hud/health
