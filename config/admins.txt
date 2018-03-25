@@ -13,11 +13,14 @@ fulpstation	=	Fulp Crew
 tomamoto	=	Host
 Grupert87	=	Moderator
 Krinkels	=	Game Master
-Rumpelgeist	=	SeniorAdmin
 ImpendingRiot	=	Moderator
 Oney	=	Fulp Crew
 FaKanza		=	Game Master
 Trickytyfly		=	Game Master
+
+#SENIORADMINS
+Rumpelgeist	=	Game Master
+Ss4gogeta0	=	Game Master
 
 #ADMINS
 saladata	=	Administrator
@@ -31,7 +34,6 @@ ChocolateJ		=	Administrator
 Axolotl123		=	Administrator
 Qustinnus		=	Administrator
 Idontcareacount		=	Administrator
-Ss4gogeta0	=	Administrator
 Windarkata	=	Administrator
 Bricksqwad	=	Administrator
 Ishiro	=	Administrator
