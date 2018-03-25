@@ -18,9 +18,6 @@
 	forge_objectives()
 	. = ..()
 
-/datum/antagonist/valentine/on_removal()
-	owner.objectives -= objectives
-
 /datum/antagonist/valentine/greet()
 	to_chat(owner, "<span class='warning'><B>You're on a date with [date.name]! Protect them at all costs. This takes priority over all other loyalties.</B></span>")
 
