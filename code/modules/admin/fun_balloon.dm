@@ -37,6 +37,9 @@
 		return
 	switch(alert("Pop [src]?","Fun Balloon","Yes","No"))
 		if("Yes")
+			if (popped)
+				return
+			popped = TRUE
 			effect()
 			pop()
 
