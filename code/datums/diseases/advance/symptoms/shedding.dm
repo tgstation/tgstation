@@ -4,7 +4,7 @@ Alopecia
 
 	Not Noticeable.
 	Increases resistance slightly.
-	Reduces stage speed slightly.
+	Increases stage speed.
 	Transmittable.
 	Intense Level.
 
@@ -19,7 +19,7 @@ BONUS
 	desc = "The virus causes rapid shedding of head and body hair."
 	stealth = 0
 	resistance = 1
-	stage_speed = -1
+	stage_speed = 2
 	transmittable = 3
 	level = 4
 	severity = 1
