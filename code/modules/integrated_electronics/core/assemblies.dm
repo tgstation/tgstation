@@ -90,9 +90,6 @@
 	handle_idle_power()
 	check_pulling()
 
-	if(light) //Update lighting objects (From light circuits) so movement is handled.
-		update_light()
-
 	//updates diagnostic hud
 	diag_hud_set_circuithealth()
 	diag_hud_set_circuitcell()
@@ -505,6 +502,8 @@
 	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
 		IC.ext_moved(oldLoc, dir)
+	if(light) //Update lighting objects (From light circuits).
+		update_light()
 
 /obj/item/device/electronic_assembly/stop_pulling()
 	..()
