@@ -90,6 +90,9 @@
 	handle_idle_power()
 	check_pulling()
 
+	if(light) //Update lighting objects (From light circuits) so movement is handled.
+		update_light()
+
 	//updates diagnostic hud
 	diag_hud_set_circuithealth()
 	diag_hud_set_circuitcell()
