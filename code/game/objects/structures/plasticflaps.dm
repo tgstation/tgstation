@@ -58,7 +58,9 @@
 		var/mob/living/M = caller
 		if(!M.ventcrawler && M.mob_size != MOB_SIZE_TINY)
 			return 0
-
+	var/atom/movable/M = caller
+	if(M && M.pulling)
+		return CanAStarPass(ID, to_dir, M.pulling)
 	return 1 //diseases, stings, etc can pass
 
 /obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
