@@ -385,9 +385,9 @@
 		user.whisper(invocation, language = /datum/language/common)
 	if(health_cost)
 		if(user.active_hand_index == 1)
-			user.apply_damage(health_cost, BRUTE, "l_arm")
+			user.apply_damage(health_cost, BRUTE, BODY_ZONE_L_ARM)
 		else
-			user.apply_damage(health_cost, BRUTE, "r_arm")
+			user.apply_damage(health_cost, BRUTE, BODY_ZONE_R_ARM)
 	if(uses <= 0)
 		qdel(src)
 	else if(source)
@@ -728,7 +728,7 @@
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(iscultist(user))
-		var/list/options = list("Blood Spear (200)", "Blood Bolt Barrage (400)", "Blood Beam (600)")
+		var/list/options = list("Blood Spear (150)", "Blood Bolt Barrage (300)", "Blood Beam (500)")
 		var/choice = input(user, "Choose a greater blood rite...", "Greater Blood Rites") as null|anything in options
 		if(!choice)
 			to_chat(user, "<span class='cultitalic'>You decide against conducting a greater blood rite.</span>")

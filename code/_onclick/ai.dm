@@ -168,9 +168,14 @@
 
 /* AI Turrets */
 /obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
+	if(ailock)
+		return
 	toggle_lethal()
 	add_fingerprint(usr)
+
 /obj/machinery/turretid/AICtrlClick() //turns off/on Turrets
+	if(ailock)
+		return
 	toggle_on()
 	add_fingerprint(usr)
 

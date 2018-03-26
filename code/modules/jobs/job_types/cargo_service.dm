@@ -11,7 +11,7 @@ Quartermaster
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
-	antag_rep = 12
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/quartermaster
 
@@ -42,7 +42,7 @@ Cargo Technician
 	spawn_positions = 2
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
-	antag_rep = 4
+	antag_rep = 14
 
 	outfit = /datum/outfit/job/cargo_tech
 
@@ -71,7 +71,7 @@ Shaft Miner
 	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
-	antag_rep = 8
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/miner
 
@@ -150,12 +150,12 @@ Bartender
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
-	antag_rep = 4
+	antag_rep = 14
 
 	outfit = /datum/outfit/job/bartender
 
-	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS)
-	minimal_access = list(ACCESS_BAR)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM)
 
 
 /datum/outfit/job/bartender
@@ -184,12 +184,12 @@ Cook
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/cooks = 0 //Counts cooks amount
-	antag_rep = 8
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/cook
 
-	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE)
-	minimal_access = list(ACCESS_KITCHEN, ACCESS_MORGUE)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/cook
 	name = "Cook"
@@ -237,12 +237,12 @@ Botanist
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
-	antag_rep = 8
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/botanist
 
-	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE)
-	minimal_access = list(ACCESS_HYDROPONICS, ACCESS_MORGUE)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_HYDROPONICS, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
 	// Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS
 	// Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT
 	// Given Morgue access because they have a viable means of cloning.
@@ -277,12 +277,12 @@ Janitor
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/global/janitors = 0
-	antag_rep = 8
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/janitor
 
-	access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS)
-	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS)
+	access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/janitor
 	name = "Janitor"

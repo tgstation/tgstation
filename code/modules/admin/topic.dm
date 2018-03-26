@@ -1362,7 +1362,7 @@
 		to_chat(M, "<span class='adminnotice'>You have been sent to Prison!</span>")
 
 		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
-		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] Prison!")
+		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to Prison!")
 
 	else if(href_list["sendbacktolobby"])
 		if(!check_rights(R_ADMIN))

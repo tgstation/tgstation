@@ -3,6 +3,7 @@
 
 // Saves type, modified name and modified inputs (if any) to a list
 // The list is converted to JSON down the line.
+//"Special" is not verified at any point except for by the circuit itself.
 /obj/item/integrated_circuit/proc/save()
 	var/list/component_params = list()
 	var/init_name = initial(name)
@@ -38,8 +39,14 @@
 		if(saved_inputs.len)
 			component_params["inputs"] = saved_inputs
 
+	var/special = save_special()
+	if(special)
+		component_params["special"] = special
+
 	return component_params
 
+/obj/item/integrated_circuit/proc/save_special()
+	return
 
 // Verifies a list of component parameters
 // Returns null on success, error name on failure
@@ -100,7 +107,11 @@
 			pin.write_data_to_pin(input_value)
 			// TODO: support for special input types, such as internal refs and maybe typepaths
 
+	if(component_params["special"])
+		load_special(component_params["special"])
 
+/obj/item/integrated_circuit/proc/load_special(special_data)
+	return
 
 // Saves type and modified name (if any) to a list
 // The list is converted to JSON down the line.
@@ -118,16 +129,21 @@
 	if(opened)
 		assembly_params["opened"] = TRUE
 
+	// Save modified color
+	if(initial(detail_color) != detail_color)
+		assembly_params["detail_color"] = detail_color
+
 	return assembly_params
 
 
 // Verifies a list of assembly parameters
 // Returns null on success, error name on failure
 /obj/item/device/electronic_assembly/proc/verify_save(list/assembly_params)
-	// Validate name
+	// Validate name and color
 	if(assembly_params["name"] && !reject_bad_name(assembly_params["name"], TRUE))
 		return "Bad assembly name."
-
+	if(assembly_params["detail_color"] && !(assembly_params["detail_color"] in color_whitelist))
+		return "Bad assembly color."
 
 // Loads assembly parameters from a list
 // Doesn't verify any of the parameters it loads, this is the job of verify_save()
@@ -139,7 +155,11 @@
 	// Load panel status
 	if(assembly_params["opened"])
 		opened = TRUE
-		update_icon()
+
+	if(assembly_params["detail_color"])
+		detail_color = assembly_params["detail_color"]
+
+	update_icon()
 
 
 

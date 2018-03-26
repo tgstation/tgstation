@@ -6,9 +6,8 @@
 	var/trippy = TRUE //Does this drug make you trip?
 
 /datum/reagent/drug/on_mob_delete(mob/living/M)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
-	if(mood && trippy)
-		mood.clear_event("[id]_high")
+	if(trippy)
+		M.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "[id]_high")
 
 /datum/reagent/drug/space_drugs
 	name = "Space drugs"
@@ -29,9 +28,7 @@
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You start tripping hard!</span>")
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
-	if(mood)
-		mood.add_event("[id]_overdose", /datum/mood_event/drugs/overdose, name)
+	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/overdose, name)
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)
 	if(M.hallucination < volume && prob(20))
@@ -52,9 +49,7 @@
 	if(prob(1))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
-	if(mood)
-		mood.add_event("smoked", /datum/mood_event/drugs/smoked, name)
+	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/drugs/smoked, name)
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
 	M.AdjustUnconscious(-20, 0)

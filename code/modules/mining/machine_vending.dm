@@ -80,14 +80,9 @@
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
-	return
 
-/obj/machinery/mineral/equipment_vendor/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/mineral/equipment_vendor/interact(mob/user)
+/obj/machinery/mineral/equipment_vendor/ui_interact(mob/user)
+	. = ..()
 	var/dat
 	dat +="<div class='statusDisplay'>"
 	if(istype(inserted_id))
@@ -283,8 +278,7 @@
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 
-/obj/item/storage/backpack/duffelbag/mining_conscript/Initialize()
-	. = ..()
+/obj/item/storage/backpack/duffelbag/mining_conscript/PopulateContents()
 	new /obj/item/pickaxe/mini(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)

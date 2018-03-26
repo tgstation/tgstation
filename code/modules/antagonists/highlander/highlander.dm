@@ -12,10 +12,6 @@
 	var/mob/living/L = owner.current || mob_override
 	L.remove_trait(TRAIT_NOGUNS, "highlander")
 
-/datum/antagonist/highlander/on_removal()
-	owner.objectives -= objectives
-	. = ..()
-
 /datum/antagonist/highlander/proc/forge_objectives()
 	var/datum/objective/steal/steal_objective = new
 	steal_objective.owner = owner

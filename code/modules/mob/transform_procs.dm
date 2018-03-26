@@ -17,7 +17,7 @@
 
 	var/obj/item/cavity_object
 
-	var/obj/item/bodypart/chest/CH = get_bodypart("chest")
+	var/obj/item/bodypart/chest/CH = get_bodypart(BODY_ZONE_CHEST)
 	if(CH.cavity_item)
 		cavity_object = CH.cavity_item
 		CH.cavity_item = null
@@ -106,7 +106,7 @@
 			var/obj/item/organ/I = X
 			I.Insert(O, 1)
 
-	var/obj/item/bodypart/chest/torso = O.get_bodypart("chest")
+	var/obj/item/bodypart/chest/torso = O.get_bodypart(BODY_ZONE_CHEST)
 	if(cavity_object)
 		torso.cavity_item = cavity_object //cavity item is given to the new chest
 		cavity_object.forceMove(O)
@@ -166,7 +166,7 @@
 
 	var/obj/item/cavity_object
 
-	var/obj/item/bodypart/chest/CH = get_bodypart("chest")
+	var/obj/item/bodypart/chest/CH = get_bodypart(BODY_ZONE_CHEST)
 	if(CH.cavity_item)
 		cavity_object = CH.cavity_item
 		CH.cavity_item = null
@@ -264,7 +264,7 @@
 			I.Insert(O, 1)
 
 
-	var/obj/item/bodypart/chest/torso = get_bodypart("chest")
+	var/obj/item/bodypart/chest/torso = get_bodypart(BODY_ZONE_CHEST)
 	if(cavity_object)
 		torso.cavity_item = cavity_object //cavity item is given to the new chest
 		cavity_object.forceMove(O)
@@ -490,6 +490,8 @@
 /mob/living/carbon/proc/gorillize()
 	if(notransform)
 		return
+
+	SSblackbox.record_feedback("amount", "gorillas_created", 1)
 
 	var/Itemlist = get_equipped_items()
 	Itemlist += held_items

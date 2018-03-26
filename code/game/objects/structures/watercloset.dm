@@ -18,6 +18,9 @@
 
 
 /obj/structure/toilet/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(swirlie)
 		user.changeNext_move(CLICK_CD_MELEE)
 		playsound(src.loc, "swing_hit", 25, 1)
@@ -133,6 +136,9 @@
 	hiddenitem = new /obj/item/reagent_containers/food/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -228,8 +234,10 @@
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-
 /obj/machinery/shower/attack_hand(mob/M)
+	. = ..()
+	if(.)
+		return
 	on = !on
 	update_icon()
 	add_fingerprint(M)
@@ -248,7 +256,6 @@
 		if(isopenturf(loc))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5 SECONDS, wet_time_to_add = 1 SECONDS)
-
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
 	if(I.type == /obj/item/device/analyzer)
@@ -335,9 +342,7 @@
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
 	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, L)
-	if(mood)
-		mood.add_event("shower", /datum/mood_event/nice_shower)
+	L.SendSignal(COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	if(iscarbon(L))
 		var/mob/living/carbon/M = L
 		. = TRUE
@@ -454,6 +459,9 @@
 
 
 /obj/structure/sink/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!user || !istype(user))
 		return
 	if(!iscarbon(user))
@@ -466,7 +474,7 @@
 		return
 	var/selected_area = parse_zone(user.zone_selected)
 	var/washing_face = 0
-	if(selected_area in list("head", "mouth", "eyes"))
+	if(selected_area in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES))
 		washing_face = 1
 	user.visible_message("<span class='notice'>[user] starts washing their [washing_face ? "face" : "hands"]...</span>", \
 						"<span class='notice'>You start washing your [washing_face ? "face" : "hands"]...</span>")
@@ -573,9 +581,10 @@
 	icon_state = "puddle"
 	resistance_flags = UNACIDABLE
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/sink/puddle/attack_hand(mob/M)
 	icon_state = "puddle-splash"
-	..()
+	. = ..()
 	icon_state = "puddle"
 
 /obj/structure/sink/puddle/attackby(obj/item/O, mob/user, params)
@@ -645,9 +654,11 @@
 
 
 /obj/structure/curtain/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	playsound(loc, 'sound/effects/curtain.ogg', 50, 1)
 	toggle()
-	..()
 
 /obj/structure/curtain/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/cloth (loc, 2)

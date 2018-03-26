@@ -75,7 +75,7 @@
 	energy_drain = 30
 	projectile = /obj/item/projectile/beam/laser
 	fire_sound = 'sound/weapons/laser.ogg'
-	pacifist_safe = FALSE
+	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	equip_cooldown = 15
@@ -103,7 +103,7 @@
 	energy_drain = 500
 	projectile = /obj/item/projectile/energy/tesla/cannon
 	fire_sound = 'sound/magic/lightningbolt.ogg'
-	pacifist_safe = FALSE
+	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
 	equip_cooldown = 30
@@ -113,7 +113,7 @@
 	energy_drain = 120
 	projectile = /obj/item/projectile/beam/pulse/heavy
 	fire_sound = 'sound/weapons/marauder.ogg'
-	pacifist_safe = FALSE
+	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
 	equip_cooldown = 10
@@ -126,7 +126,7 @@
 	energy_drain = 30
 	projectile = /obj/item/projectile/plasma/adv/mech
 	fire_sound = 'sound/weapons/plasma_cutter.ogg'
-	pacifist_safe = FALSE
+	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/mecha/working/M)
 	if(..()) //combat mech
@@ -246,7 +246,7 @@
 	projectile = /obj/item/projectile/bullet/incendiary/fnx99
 	projectiles = 24
 	projectile_energy_cost = 15
-	pacifist_safe = FALSE
+	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
 	name = "\improper S.H.H. \"Quietus\" Carbine"
@@ -257,7 +257,7 @@
 	projectile = /obj/item/projectile/bullet/mime
 	projectiles = 6
 	projectile_energy_cost = 50
-	pacifist_safe = FALSE
+	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	name = "\improper LBX AC 10 \"Scattershot\""
@@ -269,7 +269,7 @@
 	projectile_energy_cost = 25
 	projectiles_per_shot = 4
 	variance = 25
-	pacifist_safe = FALSE
+	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	name = "\improper Ultra AC 2"
@@ -283,7 +283,7 @@
 	variance = 6
 	randomspread = 1
 	projectile_delay = 2
-	pacifist_safe = FALSE
+	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	name = "\improper SRM-8 missile rack"
@@ -294,7 +294,7 @@
 	projectiles = 8
 	projectile_energy_cost = 1000
 	equip_cooldown = 60
-	pacifist_safe = FALSE
+	harmful = TRUE
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher

@@ -82,16 +82,12 @@
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
 	if(user.mind && user.mind.assigned_role == "Clown")
-		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
-		if(mood)
-			mood.clear_event("noshoes")
+		user.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "noshoes")
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
 	. = ..()
 	if(user.mind && user.mind.assigned_role == "Clown")
-		GET_COMPONENT_FROM(mood, /datum/component/mood, user)
-		if(mood)
-			mood.add_event("noshoes", /datum/mood_event/noshoes)
+		user.SendSignal(COMSIG_ADD_MOOD_EVENT, "noshoes", /datum/mood_event/noshoes)
 
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"

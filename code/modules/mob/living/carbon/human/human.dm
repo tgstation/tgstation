@@ -32,6 +32,7 @@
 
 
 /mob/living/carbon/human/ComponentInitialize()
+	. = ..()
 	if(!CONFIG_GET(flag/disable_human_mood))
 		AddComponent(/datum/component/mood)
 
@@ -228,9 +229,7 @@
 				usr.visible_message("[usr] successfully rips [I] out of their [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
-					GET_COMPONENT_FROM(mood, /datum/component/mood, usr)
-					if(mood)
-						mood.clear_event("embeddedobject")
+					usr.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
 			return
 
 		if(href_list["item"])
@@ -654,9 +653,7 @@
 			return
 
 		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
-		GET_COMPONENT_FROM(mood, /datum/component/mood, src)
-		if(mood)
-			mood.add_event("perform_cpr", /datum/mood_event/perform_cpr)
+		SendSignal(COMSIG_ADD_MOOD_EVENT, "perform_cpr", /datum/mood_event/perform_cpr)
 		C.cpr_time = world.time
 		add_logs(src, C, "CPRed")
 
@@ -772,7 +769,7 @@
 		return
 	else
 		if(hud_used.healths)
-			var/health_amount = health - staminaloss
+			var/health_amount = health - getStaminaLoss()
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
 					if(SCREWYHUD_CRIT)
@@ -820,34 +817,6 @@
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
 	..()
-
-/mob/living/carbon/human/proc/influenceSin()
-	var/datum/objective/sintouched/O
-	switch(rand(1,7))//traditional seven deadly sins... except lust.
-		if(1) // acedia
-			log_game("[src] was influenced by the sin of Acedia.")
-			O = new /datum/objective/sintouched/acedia
-		if(2) // Gluttony
-			log_game("[src] was influenced by the sin of gluttony.")
-			O = new /datum/objective/sintouched/gluttony
-		if(3) // Greed
-			log_game("[src] was influenced by the sin of greed.")
-			O = new /datum/objective/sintouched/greed
-		if(4) // sloth
-			log_game("[src] was influenced by the sin of sloth.")
-			O = new /datum/objective/sintouched/sloth
-		if(5) // Wrath
-			log_game("[src] was influenced by the sin of wrath.")
-			O = new /datum/objective/sintouched/wrath
-		if(6) // Envy
-			log_game("[src] was influenced by the sin of envy.")
-			O = new /datum/objective/sintouched/envy
-		if(7) // Pride
-			log_game("[src] was influenced by the sin of pride.")
-			O = new /datum/objective/sintouched/pride
-	SSticker.mode.sintouched += src.mind
-	src.mind.objectives += O
-	src.mind.announce_objectives()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()
@@ -925,6 +894,10 @@
 		stop_pulling()
 	else
 		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
+
+/mob/living/carbon/human/do_after_coefficent()
+	. = ..()
+	. *= physiology.do_after_speed
 
 /mob/living/carbon/human/species
 	var/race = null

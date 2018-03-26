@@ -70,7 +70,7 @@
 	switch(mode)
 		if(0)
 			if(M.health >= 0)
-				if(user.zone_selected == "head")
+				if(user.zone_selected == BODY_ZONE_HEAD)
 					user.visible_message("<span class='notice'>[user] playfully boops [M] on the head!</span>", \
 									"<span class='notice'>You playfully boop [M] on the head!</span>")
 					user.do_attack_animation(M, ATTACK_EFFECT_BOOP)
@@ -95,7 +95,7 @@
 					if(M.lying)
 						user.visible_message("<span class='notice'>[user] shakes [M] trying to get [M.p_them()] up!</span>", \
 										"<span class='notice'>You shake [M] trying to get [M.p_them()] up!</span>")
-					else if(user.zone_selected == "head")
+					else if(user.zone_selected == BODY_ZONE_HEAD)
 						user.visible_message("<span class='warning'>[user] bops [M] on the head!</span>", \
 										"<span class='warning'>You bop [M] on the head!</span>")
 						user.do_attack_animation(M, ATTACK_EFFECT_PUNCH)

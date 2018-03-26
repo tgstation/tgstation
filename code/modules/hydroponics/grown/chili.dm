@@ -78,7 +78,9 @@
 	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
-	..()
+	. = ..()
+	if(.)
+		return
 	if( ismob(loc) )
 		held_mob = loc
 		START_PROCESSING(SSobj, src)

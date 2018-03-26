@@ -75,8 +75,10 @@
 
 /obj/item/integrated_circuit/transfer/demultiplexer/do_work()
 	var/output_index = get_pin_data(IC_INPUT, 1)
-	for(var/i = 1 to outputs.len)
-		set_pin_data(IC_OUTPUT, i, i == output_index ? get_pin_data(IC_INPUT, 2) : null)
+	if(!isnull(output_index) && (output_index >= 1 && output_index <= outputs.len))
+		var/datum/integrated_io/O = outputs[output_index]
+		O.data = get_pin_data(IC_INPUT, 2)
+		O.push_data()
 
 	activate_pin(2)
 
@@ -142,3 +144,16 @@
 	icon_state = "dmux16"
 	w_class = WEIGHT_CLASS_SMALL
 	number_of_pins = 16
+
+/obj/item/integrated_circuit/transfer/wire_node
+	name = "wire node"
+	desc = "Just wire node to make wiring more easy.Transfer pulse from in to out."
+	icon_state = "wire_node"
+	activators = list("pulse in" = IC_PINTYPE_PULSE_IN, "pulse out" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	power_draw_per_use = 0
+	complexity = 0
+	size = 0.1
+
+/obj/item/integrated_circuit/transfer/wire_node/do_work()
+	activate_pin(2)

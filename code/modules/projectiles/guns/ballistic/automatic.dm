@@ -320,7 +320,7 @@
 		..()
 		update_icon()
 
-
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/gun/ballistic/automatic/l6_saw/attack_hand(mob/user)
 	if(loc != user)
 		..()
@@ -336,7 +336,6 @@
 		update_icon()
 		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
 		playsound(user, 'sound/weapons/magout.ogg', 60, 1)
-
 
 /obj/item/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
 	if(!cover_open && istype(A, mag_type))
