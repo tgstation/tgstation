@@ -202,6 +202,18 @@
 	QDEL_NULL(letmetalkpls)
 	return ..()
 
+/mob/living/simple_animal/hostile/poison/giant_spider/ambusher
+	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
+	icon_state = "hunter"
+	icon_living = "hunter"
+	icon_dead = "hunter_dead"
+	maxHealth = 120
+	health = 120
+	melee_damage_lower = 10
+	melee_damage_upper = 20
+	poison_per_bite = 5
+	move_to_delay = 5
+
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
 	name = "giant ice spider"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
