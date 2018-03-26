@@ -57,6 +57,11 @@
 	icon_state = "fuel"
 	reagent_id = "welding_fuel"
 
+/obj/structure/reagent_dispensers/fueltank/hitby(atom/movable/AM)
+	. = ..()
+	if(ismob(AM) && !iscarbon(AM))
+		return
+
 /obj/structure/reagent_dispensers/fueltank/boom()
 	explosion(get_turf(src), 0, 1, 5, flame_range = 5)
 	qdel(src)
