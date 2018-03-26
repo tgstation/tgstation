@@ -36,7 +36,7 @@
 	occupant = H
 
 	if(!clonename)	//to prevent null names
-		clonename = "clone ([rand(0,999)])"
+		clonename = "clone ([rand(1,999)])"
 	H.real_name = clonename
 
 	icon_state = "pod_1"
