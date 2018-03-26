@@ -22,7 +22,7 @@
 
 /datum/trait/smallbutt
 	name = "Small anal cavity"
-	desc = "Muscular contractions cause the patients anal cavity to be undersized."
+	desc = "Muscular contractions cause the patient's anal cavity to be undersized."
 	value = -1
 	gain_text = "<span class='danger'>Your butt tenses up!</span>"
 	lose_text = "<span class='notice'>Your butt muscles relax.</span>"
