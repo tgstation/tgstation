@@ -1204,6 +1204,7 @@
 #include "code\modules\antagonists\devil\devil_helpers.dm"
 #include "code\modules\antagonists\devil\imp\imp.dm"
 #include "code\modules\antagonists\devil\sintouched\objectives.dm"
+#include "code\modules\antagonists\devil\sintouched\sintouched.dm"
 #include "code\modules\antagonists\devil\true_devil\_true_devil.dm"
 #include "code\modules\antagonists\devil\true_devil\inventory.dm"
 #include "code\modules\antagonists\disease\disease_abilities.dm"
