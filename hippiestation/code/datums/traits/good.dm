@@ -18,7 +18,7 @@
 	name = "Volatile Butt"
 	desc = "Your butt is volatile and far more likely to blow catastrophically when farting as hard as you can."
 	value = 2
-	gain_text = "<span class='notice'>Your butt feels volatile and upredictable!</span>"
+	gain_text = "<span class='notice'>Your butt feels volatile and unpredictable!</span>"
 	lose_text = "<span class='notice'>Your butt feels stable.</span>"
 
 /datum/trait/volatile_butt/add()
