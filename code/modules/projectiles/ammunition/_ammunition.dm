@@ -37,7 +37,7 @@
 //proc to magically refill a casing with a new projectile
 /obj/item/ammo_casing/proc/newshot() //For energy weapons, syringe gun, shotgun shells and wands (!).
 	if(!BB)
-		BB = new projectile_type(src)
+		BB = new projectile_type(src, src)
 
 /obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_box))
