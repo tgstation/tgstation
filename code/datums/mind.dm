@@ -774,6 +774,17 @@
 	if(G)
 		G.reenter_corpse()
 
+//user: The mob that is suiciding
+/datum/mind/proc/suicide_log(mob/user)
+	var/turf/T = get_turf(user)
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		log_game("[key_name(user)] (job: [H.job ? "[H.job]" : "None"]) committed suicide at [get_area(user)][COORD(T)].")
+
+		return
+
+	log_game("[key_name(user)] committed suicide at [get_area(user)][COORD(T)] as [user.type].")
 
 /datum/mind/proc/has_objective(objective_type)
 	for(var/datum/antagonist/A in antag_datums)
