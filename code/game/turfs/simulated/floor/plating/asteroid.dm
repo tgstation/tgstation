@@ -209,7 +209,7 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				if(!tunnel || isspaceturf(tunnel) || istype(tunnel.loc, /area/mine/explored) || !istype(tunnel.loc, /area/lavaland/surface/outdoors/unexplored))
+				if(!tunnel || isspaceturf(tunnel) || !istype(tunnel.loc, /area/lavaland/surface/outdoors/unexplored))
 					sanity = 0
 					break
 				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type, null, CHANGETURF_IGNORE_AIR)
@@ -230,7 +230,7 @@
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
 	for(var/S in RANGE_TURFS(1, src))
 		var/turf/NT = S
-		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || !istype(NT.loc, /area/lavaland/surface/outdoors/unexplored))
+		if(!NT || isspaceturf(NT) || !istype(NT.loc, /area/lavaland/surface/outdoors/unexplored))
 			sanity = 0
 			break
 	if(!sanity)
