@@ -12,7 +12,7 @@
 	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
 	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
 	var/item_state_on = "butterfly"
-	throwforce = 1
+	throwforce = 0
 	throwforce_on = 10
 	var/backstabforce = 30
 	armour_penetration = 20
