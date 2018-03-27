@@ -15,6 +15,10 @@
 	for(var/datum/atom_hud/data/hud in GLOB.huds)
 		hud.remove_from_hud(src)
 
+/mob/proc/reload_huds_of_me()
+	src.remove_from_all_data_huds()
+	src.add_to_all_human_data_huds()
+
 /datum/atom_hud/data
 
 /datum/atom_hud/data/human/medical

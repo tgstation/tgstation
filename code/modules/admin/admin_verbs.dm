@@ -361,9 +361,13 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
+			mob.add_to_all_human_data_huds()
+			mob.mind.invisi_join_antag_huds()
 			to_chat(mob, "<span class='boldannounce'>Invisimin off. Invisibility reset.</span>")
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
+			mob.remove_from_all_data_huds()
+			mob.mind.invisi_leave_antag_huds()
 			to_chat(mob, "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>")
 
 /client/proc/check_antagonists()
