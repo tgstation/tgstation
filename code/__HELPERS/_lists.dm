@@ -13,6 +13,8 @@
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+#define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
+#define LAZYFIND(L, V) L ? L.Find(V) : 0
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 #define LAZYLEN(L) length(L)

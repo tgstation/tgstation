@@ -30,8 +30,8 @@
 	else
 		return INITIALIZE_HINT_QDEL
 
-/obj/machinery/mineral/processing_unit_console/attack_hand(mob/user)
-
+/obj/machinery/mineral/processing_unit_console/ui_interact(mob/user)
+	. = ..()
 	if(!machine)
 		return
 

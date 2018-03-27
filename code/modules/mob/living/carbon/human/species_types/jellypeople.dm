@@ -52,13 +52,13 @@
 		regenerate_limbs.UpdateButtonIcon()
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
-	var/list/limbs_to_consume = list("r_arm", "l_arm", "r_leg", "l_leg") - H.get_missing_limbs()
+	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
 	var/obj/item/bodypart/consumed_limb
 	if(!limbs_to_consume.len)
 		H.losebreath++
 		return
 	if(H.get_num_legs()) //Legs go before arms
-		limbs_to_consume -= list("r_arm", "l_arm")
+		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
 	to_chat(H, "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>")
@@ -234,6 +234,7 @@
 	var/datum/species/jelly/slime/spare_datum = spare.dna.species
 	spare_datum.bodies = origin_datum.bodies
 
+	H.transfer_trait_datums(spare)
 	H.mind.transfer_to(spare)
 	spare.visible_message("<span class='warning'>[H] distorts as a new body \
 		\"steps out\" of them.</span>",
@@ -372,6 +373,7 @@
 			"<span class='notice'>You stop moving this body...</span>")
 	else
 		to_chat(M.current, "<span class='notice'>You abandon this body...</span>")
+	M.current.transfer_trait_datums(dupe)
 	M.transfer_to(dupe)
 	dupe.visible_message("<span class='notice'>[dupe] blinks and looks \
 		around.</span>",

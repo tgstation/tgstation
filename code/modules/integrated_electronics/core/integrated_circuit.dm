@@ -118,6 +118,10 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		displayed_name = input
 
 /obj/item/integrated_circuit/interact(mob/user)
+	ui_interact(user)
+
+/obj/item/integrated_circuit/ui_interact(mob/user)
+	. = ..()
 	if(!check_interactivity(user))
 		return
 

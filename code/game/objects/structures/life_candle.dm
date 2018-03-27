@@ -25,6 +25,9 @@
 	var/respawn_sound = 'sound/magic/staff_animation.ogg'
 
 /obj/structure/life_candle/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!user.mind)
 		return
 	if(user.mind in linked_minds)

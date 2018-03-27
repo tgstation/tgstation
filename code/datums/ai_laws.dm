@@ -3,6 +3,7 @@
 #define LAW_INHERENT "inherent"
 #define LAW_SUPPLIED "supplied"
 #define LAW_ION "ion"
+#define LAW_HACKED "hacked"
 
 
 /datum/ai_laws
@@ -12,8 +13,9 @@
 	var/list/inherent = list()
 	var/list/supplied = list()
 	var/list/ion = list()
+	var/list/hacked = list()
 	var/mob/living/silicon/owner
-	var/list/devillaws = null
+	var/list/devillaws = list()
 	var/id = DEFAULT_AI_LAWID
 
 /datum/ai_laws/proc/lawid_to_type(lawid)
@@ -260,6 +262,8 @@
 		law_amount++
 	if(ion.len && (LAW_ION in groups))
 		law_amount += ion.len
+	if(hacked.len && (LAW_HACKED in groups))
+		law_amount += hacked.len
 	if(inherent.len && (LAW_INHERENT in groups))
 		law_amount += inherent.len
 	if(supplied.len && (LAW_SUPPLIED in groups))
@@ -284,6 +288,9 @@
 /datum/ai_laws/proc/add_ion_law(law)
 	ion += law
 
+/datum/ai_laws/proc/add_hacked_law(law)
+	hacked += law
+
 /datum/ai_laws/proc/clear_inherent_laws()
 	qdel(inherent)
 	inherent = list()
@@ -300,6 +307,8 @@
 		replaceable_groups[LAW_ZEROTH] = 1
 	if(ion.len && (LAW_ION in groups))
 		replaceable_groups[LAW_ION] = ion.len
+	if(hacked.len && (LAW_HACKED in groups))
+		replaceable_groups[LAW_ION] = hacked.len
 	if(inherent.len && (LAW_INHERENT in groups))
 		replaceable_groups[LAW_INHERENT] = inherent.len
 	if(supplied.len && (LAW_SUPPLIED in groups))
@@ -313,6 +322,10 @@
 			var/i = rand(1, ion.len)
 			. = ion[i]
 			ion[i] = law
+		if(LAW_HACKED)
+			var/i = rand(1, hacked.len)
+			. = hacked[i]
+			hacked[i] = law
 		if(LAW_INHERENT)
 			var/i = rand(1, inherent.len)
 			. = inherent[i]
@@ -326,6 +339,8 @@
 	var/list/laws = list()
 	if(ion.len && (LAW_ION in groups))
 		laws += ion
+	if(hacked.len && (LAW_HACKED in groups))
+		laws += hacked
 	if(inherent.len && (LAW_INHERENT in groups))
 		laws += inherent
 	if(supplied.len && (LAW_SUPPLIED in groups))
@@ -336,6 +351,9 @@
 	if(ion.len && (LAW_ION in groups))
 		for(var/i = 1, i <= ion.len, i++)
 			ion[i] = pick_n_take(laws)
+	if(hacked.len && (LAW_HACKED in groups))
+		for(var/i = 1, i <= hacked.len, i++)
+			hacked[i] = pick_n_take(laws)
 	if(inherent.len && (LAW_INHERENT in groups))
 		for(var/i = 1, i <= inherent.len, i++)
 			inherent[i] = pick_n_take(laws)
@@ -372,6 +390,9 @@
 /datum/ai_laws/proc/clear_ion_laws()
 	ion = list()
 
+/datum/ai_laws/proc/clear_hacked_laws()
+	hacked = list()
+
 /datum/ai_laws/proc/show_laws(who)
 	var/list/printable_laws = get_law_list(include_zeroth = TRUE)
 	for(var/law in printable_laws)
@@ -403,15 +424,20 @@
 
 	if (include_zeroth && devillaws && devillaws.len)
 		for(var/i in devillaws)
-			data += "[show_numbers ? "666:" : ""] [i]"
+			data += "[show_numbers ? "666:" : ""] <font color='#cc5500'>[i]</font>"
 
 	if (include_zeroth && zeroth)
-		data += "[show_numbers ? "0:" : ""] [zeroth]"
+		data += "[show_numbers ? "0:" : ""] <font color='#ff0000'><b>[zeroth]</b></font>"
+
+	for(var/law in hacked)
+		if (length(law) > 0)
+			var/num = ionnum()
+			data += "[show_numbers ? "[num]:" : ""] <font color='#660000'>[law]</font>"
 
 	for(var/law in ion)
 		if (length(law) > 0)
 			var/num = ionnum()
-			data += "[show_numbers ? "[num]:" : ""] [law]"
+			data += "[show_numbers ? "[num]:" : ""] <font color='#547DFE'>[law]</font>"
 
 	var/number = 1
 	for(var/law in inherent)
@@ -421,6 +447,6 @@
 
 	for(var/law in supplied)
 		if (length(law) > 0)
-			data += "[show_numbers ? "[number]:" : ""] [law]"
+			data += "[show_numbers ? "[number]:" : ""] <font color='#990099'>[law]</font>"
 			number++
 	return data

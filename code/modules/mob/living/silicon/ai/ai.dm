@@ -319,6 +319,10 @@
 		if(C)
 			C.post_status("shuttle")
 
+/mob/living/silicon/ai/can_interact_with(atom/A)
+	. = ..()
+	return . || (istype(loc, /obj/item/device/aicard))? (ISINRANGE(A.x, x - interaction_range, x + interaction_range) && ISINRANGE(A.y, y - interaction_range, y + interaction_range)): GLOB.cameranet.checkTurfVis(get_turf(A))
+
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
 

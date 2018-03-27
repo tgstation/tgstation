@@ -35,7 +35,7 @@
 					qdel(O) //so the brain isn't transfered to the head when the head drops.
 					continue
 				var/org_zone = check_zone(O.zone) //both groin and chest organs.
-				if(org_zone == "chest")
+				if(org_zone == BODY_ZONE_CHEST)
 					O.Remove(src)
 					if(get_turf(src))
 						O.forceMove(get_turf(src))

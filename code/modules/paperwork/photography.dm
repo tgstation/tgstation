@@ -466,7 +466,7 @@
 			var/mob/M = target
 			disk.record.caller_name = M.name
 			disk.record.set_caller_image(M)
-		else 
+		else
 			return
 	else
 		captureimage(target, user, flag)
@@ -552,6 +552,7 @@
 			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
 	..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/wallframe/picture/attack_hand(mob/user)
 	if(user.get_inactive_held_item() != src)
 		..()
@@ -562,6 +563,7 @@
 		to_chat(user, "<span class='notice'>You carefully remove the photo from \the [src].</span>")
 		displayed = null
 		update_icon()
+	return ..()
 
 /obj/item/wallframe/picture/attack_self(mob/user)
 	user.examinate(src)
@@ -631,6 +633,9 @@
 	..()
 
 /obj/structure/sign/picture_frame/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(framed)
 		framed.show(user)
 

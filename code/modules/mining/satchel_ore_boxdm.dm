@@ -34,6 +34,9 @@
 	. = ..()
 
 /obj/structure/ore_box/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(Adjacent(user))
 		show_contents(user)
 
