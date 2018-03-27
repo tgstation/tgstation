@@ -54,7 +54,7 @@
 		playsound(src, chosen_sound, 100, TRUE)
 
 /mob/living/simple_animal/hostile/netherworld/imlagre
-	name = "imlagre"
+	name = "livligtre"
 	desc = "An odd, large nether inhabitant that lifelinks with a few members of itself to reanimate."
 	icon_state = "imlagre1"
 	icon_living = "imlagre1"
@@ -83,7 +83,7 @@
 	chat.Grant(src)
 	check = new
 	check.Grant(src)
-	name = "imlagre ([rand(1, 999)])"
+	name = "livligtre ([rand(1, 999)])"
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/Destroy()
 	QDEL_NULL(chat)
@@ -97,12 +97,12 @@
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/proc/imlagre_check()
 	if(linked_imlagres.len == 0)
-		to_chat(usr, "<span class='swarmer'><b>I have no linked imlagre, I must be mindful to survive.</b></span>")
+		to_chat(usr, "<span class='swarmer'><b>I have no linked imlagre.</b></span>")
 	else
 		to_chat(usr, "<span class='swarmer'><b>I have some linked imlagre! They are...</b></span>")
 		for(var/i in linked_imlagres)
 			var/mob/living/simple_animal/hostile/netherworld/imlagre/theboyz = i
-			to_chat(usr, "<span class='swarmer'>[theboyz], in the [lowertext(get_area_name(theboyz))]!</span>")
+			to_chat(usr, "<span class='swarmer'>/improper[theboyz], in the [lowertext(get_area_name(theboyz))]!</span>")
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/proc/summon_imlagre(amt_to_add = 1)
 	var/list/total_imlagres = linked_imlagres + src //this is incase you want to continue adding imlagres after you've already generated some
@@ -123,12 +123,16 @@
 
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/death()
+	for(var/mob/living/i in linked_imlagre)
+		i.Beam(src,icon_state="lichbeam",time=10,maxdistance=INFINITY)
 	addtimer(CALLBACK(src, .proc/imlagre_revive), 100)
 	. = ..()
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/proc/imlagre_revive()
 	var/itlives = FALSE
-	for(var/mob/living/i in linked_imlagres)
+	for(var/mob/living/simple_animal/hostile/netherworld/imlagre/i in viewers(7, src))
+		if(!(i in linked_imlagre))
+			return
 		if(!i.stat) //if any of them are alive then REVIVE!!
 			itlives = TRUE
 			revive(TRUE)
