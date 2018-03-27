@@ -7,8 +7,6 @@
 
 	var/update = TRUE
 	var/reconcile = FALSE //If the pipeline contains components that must be reconciled if our gas mix is updated
-	var/static/d1 = 0
-	var/static/d2 = 0
 
 /datum/pipeline/New()
 	other_airs = list()
