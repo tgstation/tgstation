@@ -7,6 +7,8 @@
 
 	var/update = TRUE
 	var/reconcile = FALSE //If the pipeline contains components that must be reconciled if our gas mix is updated
+	var/static/d1 = 0
+	var/static/d2 = 0
 
 /datum/pipeline/New()
 	other_airs = list()
@@ -29,7 +31,7 @@
 		if(reconcile)
 			reconcile_air()
 		else
-			update_air()
+			air.update_pipeair(other_airs)
 		update = air.react()
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
@@ -218,7 +220,8 @@
 		var/datum/pipeline/P = PL[i]
 		if(!P)
 			continue
-		GL += P.return_air()
+		if(P != src)
+			GL += P.return_air()
 		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
 			if(V.open)
 				PL |= V.parents[1]
@@ -226,53 +229,21 @@
 		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)
 			if(C.connected_device)
 				GL += C.portableConnectorReturnAir()
-
-	var/total_thermal_energy = 0
-	var/total_heat_capacity = 0
-	var/datum/gas_mixture/total_gas_mixture = new(0)
-
-	for(var/i in GL)
-		var/datum/gas_mixture/G = i
-		total_gas_mixture.volume += G.volume
-
-		total_gas_mixture.merge(G)
-
-		total_thermal_energy += THERMAL_ENERGY(G)
-		total_heat_capacity += G.heat_capacity()
-
-	total_gas_mixture.temperature = total_heat_capacity ? total_thermal_energy/total_heat_capacity : 0
-
-	if(total_gas_mixture.volume > 0)
-		//Update individual gas_mixtures by volume ratio
-		for(var/i in GL)
-			var/datum/gas_mixture/G = i
-			G.copy_from(total_gas_mixture)
-			var/list/G_gases = G.gases
-			for(var/id in G_gases)
-				G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume
 	reconcile = FALSE
+	air.update_pipeair(GL)
 
-/datum/pipeline/proc/update_air()
-	var/list/datum/gas_mixture/GL = list()
-	GL += return_air()
-	var/total_thermal_energy
-	var/total_heat_capacity
-	var/datum/gas_mixture/total_gas_mixture = new(0)
 
-	for(var/i in GL)
+/datum/gas_mixture/proc/update_pipeair(list/other_airs)
+	var/total_volume = volume
+	for(var/i in other_airs)
 		var/datum/gas_mixture/G = i
-		total_gas_mixture.volume += G.volume
-		if(G.gases.len)
-			total_gas_mixture.merge(G)
-			total_thermal_energy += THERMAL_ENERGY(G)
-			total_heat_capacity += G.heat_capacity()
-	total_gas_mixture.temperature = total_heat_capacity ? total_thermal_energy/total_heat_capacity : 0
-
-	if(total_gas_mixture.volume)
-		//Update individual gas_mixtures by volume ratio
-		for(var/i in GL)
+		total_volume += G.volume
+		if(G.gases.len) //Average 0.6-0.8 false results for every proc call
+			merge(G)
+	if(gases.len) //Average 0.15 false results for every proc call
+		for(var/i in other_airs)	//Update individual gas_mixtures by volume ratio
 			var/datum/gas_mixture/G = i
-			G.copy_from(total_gas_mixture)
-			var/list/G_gases = G.gases
-			for(var/id in G_gases)
-				G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume
+			G.ratio_copy_from(src, G.volume/total_volume)
+		var/ratio = volume/total_volume
+		for(var/id in gases)
+			gases[id][MOLES] *= ratio

@@ -98,7 +98,7 @@
 		var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-		if(removed.volume)
+		if(transfer_moles)
 			loc.assume_air(removed)
 			air_update_turf()
 			update_parents()

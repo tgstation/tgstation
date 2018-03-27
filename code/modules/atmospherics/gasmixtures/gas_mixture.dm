@@ -27,7 +27,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
 	var/list/reaction_results
-	var/static/list/nonreactive_gases = list(typecacheof(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide)) // These gasses cannot react amongst themselves
 
 /datum/gas_mixture/New(volume)
 	gases = new
@@ -136,6 +135,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample)
 	//Copies variables from sample
 	//Returns: 1 if we are mutable, 0 otherwise
+
+/datum/gas_mixture/proc/ratio_copy_from(datum/gas_mixture/sample, ratio = 1)
+	//Works just like copy_from but will multiply the moles in the copy by a ratio
 
 /datum/gas_mixture/proc/copy_from_turf(turf/model)
 	//Copies all gas info from the turf into the gas list along with temperature
@@ -258,6 +260,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	cached_gases &= sample_gases
 
 	return 1
+
+/datum/gas_mixture/ratio_copy_from(datum/gas_mixture/sample, ratio = 1)
+	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
+	var/list/sample_gases = sample.gases
+	temperature = sample.temperature
+	for(var/id in sample_gases)
+		ASSERT_GAS(id,src)
+		cached_gases[id][MOLES] = ratio * sample_gases[id][MOLES]
 
 /datum/gas_mixture/copy_from_turf(turf/model)
 	parse_gas_string(model.initial_gas_mix)
@@ -412,18 +422,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/react(turf/open/dump_location)
 	. = NO_REACTION
-	if(volume == 0)
-		return
-	var/possible
-	for(var/gas in gases)
-		if(is_type_in_typecache(gas,nonreactive_gases))
-			continue
-		possible = TRUE
-		break
-	if(!possible)
-		return
 
 	reaction_results = new
+
 	var/list/cached_gases = gases
 	var/temp = temperature
 	var/ener = THERMAL_ENERGY(src)
@@ -467,7 +468,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		garbage_collect()
 		if(temperature < TCMB) //just for safety
 			temperature = TCMB
-
 
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings
