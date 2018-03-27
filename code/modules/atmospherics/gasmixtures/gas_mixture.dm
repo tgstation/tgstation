@@ -412,12 +412,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/react(turf/open/dump_location)
 	var/static/list/nonreactive_gases = list(typecacheof(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide)) // These gases cannot react amongst themselves
 	. = NO_REACTION
-	if(!volume)
+	if(gases.len)
 		return
 	var/possible
 	for(var/I in gases)
-    	if(nonreactive_gases[I])
-        	continue
+		if(nonreactive_gases[I])
+			continue
 		possible = TRUE
 		break
 	if(!possible)
