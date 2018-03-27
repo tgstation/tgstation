@@ -30,15 +30,8 @@
 	var/mob/living/ass //i can't believe i didn't write a stupid-ass comment about this var when i first coded asscopy.
 	var/busy = FALSE
 
-/obj/machinery/photocopier/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/photocopier/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/photocopier/attack_hand(mob/user)
-	user.set_machine(src)
-
+/obj/machinery/photocopier/ui_interact(mob/user)
+	. = ..()
 	var/dat = "Photocopier<BR><BR>"
 	if(copy || photocopy || doccopy || (ass && (ass.loc == src.loc)))
 		dat += "<a href='byond://?src=[REF(src)];remove=1'>Remove Paper</a><BR>"

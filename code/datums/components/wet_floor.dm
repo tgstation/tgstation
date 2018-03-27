@@ -9,6 +9,7 @@
 	var/static/mutable_appearance/generic_turf_overlay = mutable_appearance('icons/effects/water.dmi', "wet_static")
 	var/current_overlay
 	var/permanent = FALSE
+	var/last_process = 0
 
 /datum/component/wet_floor/InheritComponent(datum/newcomp, orig, argslist)
 	if(!newcomp)	//We are getting passed the arguments of a would-be new component, but not a new component
@@ -32,6 +33,7 @@
 	if(!permanent)
 		START_PROCESSING(SSwet_floors, src)
 	addtimer(CALLBACK(src, .proc/gc, TRUE), 1)		//GC after initialization.
+	last_process = world.time
 
 /datum/component/wet_floor/Destroy()
 	STOP_PROCESSING(SSwet_floors, src)
@@ -103,15 +105,17 @@
 
 /datum/component/wet_floor/process()
 	var/turf/open/T = parent
+	var/diff = world.time - last_process
 	var/decrease = 0
 	var/t = T.GetTemperature()
 	switch(t)
 		if(-INFINITY to T0C)
 			add_wet(TURF_WET_ICE, max_time_left())			//Water freezes into ice!
 		if(T0C to T0C + 100)
-			decrease = (T.air.temperature - T0C)			//one ds per degree.
+			decrease = ((T.air.temperature - T0C) / SSwet_floors.temperature_coeff) * (diff / SSwet_floors.time_ratio)
 		if(T0C + 100 to INFINITY)
 			decrease = INFINITY
+	decrease = max(0, decrease)
 	if((is_wet() & TURF_WET_ICE) && t > T0C)		//Ice melts into water!
 		for(var/obj/O in T.contents)
 			if(O.flags_2 & FROZEN_2)
@@ -120,6 +124,7 @@
 		dry(TURF_WET_ICE)
 	dry(ALL, FALSE, decrease)
 	check()
+	last_process = world.time
 
 /datum/component/wet_floor/proc/update_strength()
 	highest_strength = 0			//Not bitflag.

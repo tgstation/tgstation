@@ -433,6 +433,7 @@
 	if(status_flags & GODMODE)
 		return
 	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+	staminaloss = getStaminaLoss()
 	update_stat()
 	med_hud_set_health()
 	med_hud_set_status()
@@ -481,7 +482,7 @@
 	cure_blind()
 	cure_husk()
 	hallucination = 0
-	heal_overall_damage(100000, 100000, 0, 0, 1) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
+	heal_overall_damage(INFINITY, INFINITY, INFINITY, FALSE, FALSE, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
 	fire_stacks = 0
 	update_canmove()
@@ -862,14 +863,18 @@
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/proc/update_stamina()
-	if(staminaloss)
-		var/total_health = (health - staminaloss)
+/mob/living/proc/update_stamina()
+	return
+
+/mob/living/carbon/update_stamina()
+	var/stam = getStaminaLoss()
+	if(stam)
+		var/total_health = (health - stam)
 		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			Knockdown(100)
-			setStaminaLoss(health - 2)
-	update_health_hud()
+			setStaminaLoss(health - 2, FALSE, FALSE)
+			update_health_hud()
 
 /mob/living/carbon/alien/update_stamina()
 	return
@@ -897,10 +902,9 @@
 	return 1
 
 /mob/living/proc/check_acedia()
-	if(src.mind && src.mind.objectives)
-		for(var/datum/objective/sintouched/acedia/A in src.mind.objectives)
-			return 1
-	return 0
+	if(mind && mind.has_objective(/datum/objective/sintouched/acedia))
+		return TRUE
+	return FALSE
 
 /mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	stop_pulling()

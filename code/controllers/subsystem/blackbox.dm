@@ -283,7 +283,7 @@ Versioning
 	var/suicide = sanitizeSQL(L.suiciding)
 	var/map = sanitizeSQL(SSmapping.config.map_name)
 	if(!L.suiciding && !first_death.len)
-		first_death["name"] = L.name
+		first_death["name"] = "[(L.real_name == L.name) ? L.real_name : "[L.real_name] as [L.name]"]"
 		first_death["role"] = null
 		if(L.mind.assigned_role)
 			first_death["role"] = L.mind.assigned_role

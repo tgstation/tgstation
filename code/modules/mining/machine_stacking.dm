@@ -19,8 +19,8 @@
 	else
 		qdel(src)
 
-/obj/machinery/mineral/stacking_unit_console/attack_hand(mob/user)
-
+/obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user)
+	. = ..()
 	var/obj/item/stack/sheet/s
 	var/dat
 
@@ -34,8 +34,6 @@
 	dat += text("<br>Stacking: [machine.stack_amt]<br><br>")
 
 	user << browse(dat, "window=console_stacking_machine")
-
-	return
 
 /obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
 	if(..())

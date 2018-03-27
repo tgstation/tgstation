@@ -70,11 +70,8 @@
 	for(var/reagent in icecream_vat_reagents)
 		reagents.add_reagent(reagent, icecream_vat_reagents[reagent])
 
-/obj/machinery/icecream_vat/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/icecream_vat/interact(mob/user)
+/obj/machinery/icecream_vat/ui_interact(mob/user)
+	. = ..()
 	var/dat
 	dat += "<b>ICE CREAM</b><br><div class='statusDisplay'>"
 	dat += "<b>Dispensing: [flavour_name] icecream </b> <br><br>"

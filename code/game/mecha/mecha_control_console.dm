@@ -9,10 +9,8 @@
 	var/screen = 0
 	var/stored_data
 
-/obj/machinery/computer/mecha/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/mecha/ui_interact(mob/user)
+	. = ..()
 	var/dat = "<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
@@ -36,7 +34,6 @@
 
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 /obj/machinery/computer/mecha/Topic(href, href_list)
 	if(..())

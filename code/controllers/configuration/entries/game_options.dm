@@ -199,7 +199,9 @@
 /datum/config_entry/number/slime_delay
 /datum/config_entry/number/animal_delay
 
-/datum/config_entry/number/gateway_delay	//How long the gateway takes before it activates. Default is half an hour.
+/datum/config_entry/flag/roundstart_away	//Will random away mission be loaded.
+
+/datum/config_entry/number/gateway_delay	//How long the gateway takes before it activates. Default is half an hour. Only matters if roundstart_away is enabled.
 	config_entry_value = 18000
 	min_val = 0
 

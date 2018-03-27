@@ -119,13 +119,9 @@
 	src.potency = poten
 	src.amount = am
 
-/obj/machinery/seed_extractor/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/seed_extractor/interact(mob/user)
+/obj/machinery/seed_extractor/ui_interact(mob/user)
 	if (stat)
-		return 0
+		return FALSE
 
 	var/dat = "<b>Stored seeds:</b><br>"
 

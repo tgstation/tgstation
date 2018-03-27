@@ -776,7 +776,6 @@
 	impact_effect_type = /obj/effect/temp_visual/dir_setting/bloodsplatter
 
 /obj/item/projectile/magic/arcane_barrage/blood/Collide(atom/target)
-	colliding = TRUE
 	var/turf/T = get_turf(target)
 	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
 	if(iscultist(target))
@@ -790,7 +789,6 @@
 				M.adjustHealth(-5)
 		new /obj/effect/temp_visual/cult/sparks(T)
 		qdel(src)
-		colliding = FALSE
 	else
 		..()
 
