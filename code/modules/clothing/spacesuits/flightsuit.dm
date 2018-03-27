@@ -496,8 +496,7 @@
 		else if(!requires_suit)
 			usermessage("Warning: Flightpack not linked to compatible flight-suit mount!", "boldwarning")
 			return FALSE
-	wearer.movement_type |= FLYING
-	wearer.pass_flags |= flight_passflags
+	wearer.set_flight("flightpack", TRUE)
 	usermessage("ENGAGING FLIGHT ENGINES.")
 	wearer.visible_message("<font color='blue' size='2'>[wearer]'s flight engines activate as they lift into the air!</font>")
 	flight = TRUE
@@ -516,8 +515,7 @@
 		calculate_momentum_speed()
 		usermessage("DISENGAGING FLIGHT ENGINES.")
 		wearer.visible_message("<font color='blue' size='2'>[wearer] drops to the ground as their flight engines cut out!</font>")
-		wearer.movement_type &= ~FLYING
-		wearer.pass_flags &= ~flight_passflags
+		wearer.set_flight("flightpack", FALSE)
 		flight = FALSE
 		update_slowdown()
 		update_icon()

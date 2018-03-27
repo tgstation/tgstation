@@ -197,7 +197,7 @@
 		else if (isliving(thing))
 			. = 1
 			var/mob/living/L = thing
-			if(L.movement_type & FLYING)
+			if(L.is_flying())
 				continue	//YOU'RE FLYING OVER IT
 			if("snow" in L.weather_immunities)
 				continue

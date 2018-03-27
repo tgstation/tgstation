@@ -21,8 +21,8 @@
 		. += SOFTCRIT_ADD_SLOWDOWN
 
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube)
-	if(movement_type & FLYING)
-		return 0
+	if(is_flying())
+		return FALSE
 	if(!(lube&SLIDE_ICE))
 		add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
 	return loc.handle_slip(src, knockdown_amount, O, lube)

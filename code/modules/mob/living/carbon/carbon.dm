@@ -105,7 +105,7 @@
 			take_bodypart_damage(10)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
-		if(victim.movement_type & FLYING)
+		if(victim.is_flying())
 			return
 		if(hurt)
 			victim.take_bodypart_damage(10)

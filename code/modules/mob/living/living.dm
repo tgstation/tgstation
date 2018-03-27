@@ -17,6 +17,8 @@
 	medhud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
+	if(movement_type & FLYING)
+		set_flight(TRAIT_INNATE, TRUE)
 
 
 /mob/living/prepare_huds()
@@ -553,6 +555,26 @@
 			if(MOVE_INTENT_WALK)
 				. += config_walk_delay.value_cache
 
+/mob/living/is_flying(source)
+	if(has_trait(TRAIT_FLIGHT, source))
+		return TRUE
+	else
+		return FALSE
+
+/mob/living/set_flight(source, flight = TRUE)
+	if(flight)
+		add_trait(TRAIT_FLIGHT, source)
+	else
+		remove_trait(TRAIT_FLIGHT, source)
+
+	if(has_trait(TRAIT_FLIGHT))
+		movement_type |= FLYING
+		pass_flags |= PASSTABLE
+	else
+		movement_type &= ~FLYING
+		if(!(initial(pass_flags) & PASSTABLE))
+			pass_flags &= ~PASSTABLE
+
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
 		return
@@ -1010,7 +1032,7 @@
 	C.Knockdown(40)
 
 /mob/living/ConveyorMove()
-	if((movement_type & FLYING) && !stat)
+	if(is_flying() && !stat)
 		return
 	..()
 

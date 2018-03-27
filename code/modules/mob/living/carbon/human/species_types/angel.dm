@@ -26,8 +26,7 @@
 /datum/species/angel/on_species_loss(mob/living/carbon/human/H)
 	if(fly)
 		fly.Remove(H)
-	if(H.movement_type & FLYING)
-		H.movement_type &= ~FLYING
+	H.set_flight(SPECIES_TRAIT, FALSE)
 	ToggleFlight(H,0)
 	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "None") && ("wings" in H.dna.species.mutant_bodyparts)))
 		H.dna.features["wings"] = "None"
@@ -39,7 +38,7 @@
 	HandleFlight(H)
 
 /datum/species/angel/proc/HandleFlight(mob/living/carbon/human/H)
-	if(H.movement_type & FLYING)
+	if(H.is_flying(SPECIES_TRAIT))
 		if(!CanFly(H))
 			ToggleFlight(H,0)
 			return 0
@@ -74,7 +73,7 @@
 	var/mob/living/carbon/human/H = owner
 	var/datum/species/angel/A = H.dna.species
 	if(A.CanFly(H))
-		if(H.movement_type & FLYING)
+		if(H.is_flying(SPECIES_TRAIT))
 			to_chat(H, "<span class='notice'>You settle gently back onto the ground...</span>")
 			A.ToggleFlight(H,0)
 			H.update_canmove()
@@ -111,31 +110,29 @@
 
 
 /datum/species/angel/spec_stun(mob/living/carbon/human/H,amount)
-	if(H.movement_type & FLYING)
+	if(H.is_flying(SPECIES_TRAIT))
 		ToggleFlight(H,0)
 		flyslip(H)
 	. = ..()
 
 /datum/species/angel/negates_gravity(mob/living/carbon/human/H)
-	if(H.movement_type & FLYING)
-		return 1
+	if(H.is_flying(SPECIES_TRAIT))
+		return TRUE
 
 /datum/species/angel/space_move(mob/living/carbon/human/H)
-	if(H.movement_type & FLYING)
-		return 1
+	if(H.is_flying(SPECIES_TRAIT))
+		return TRUE
 
 /datum/species/angel/proc/ToggleFlight(mob/living/carbon/human/H,flight)
 	if(flight && CanFly(H))
 		stunmod = 2
 		speedmod = -0.35
-		H.movement_type |= FLYING
+		H.set_flight(SPECIES_TRAIT, TRUE)
 		override_float = TRUE
-		H.pass_flags |= PASSTABLE
 		H.OpenWings()
 	else
 		stunmod = 1
 		speedmod = 0
-		H.movement_type &= ~FLYING
+		H.set_flight(SPECIES_TRAIT, FALSE)
 		override_float = FALSE
-		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()

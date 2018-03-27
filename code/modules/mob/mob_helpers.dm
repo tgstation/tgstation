@@ -458,11 +458,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
 		return FALSE
 
-/mob/proc/is_flying(mob/M = src)
-	if(M.movement_type & FLYING)
-		return 1
+/mob/proc/is_flying(source)
+	if(movement_type & FLYING)
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /mob/proc/click_random_mob()
 	var/list/nearby_mobs = list()
@@ -486,3 +486,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /mob/proc/can_hear()
 	. = TRUE
+
+/mob/proc/set_flight(source, flight = TRUE)
+	if(flight)
+		movement_type |= FLYING
+		pass_flags |= PASSTABLE
+	else
+		movement_type &= ~FLYING
+		if(!(initial(pass_flags) & PASSTABLE))
+			pass_flags &= ~PASSTABLE
