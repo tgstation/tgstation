@@ -66,9 +66,9 @@ Thus, the two variables affect pump operation are set in New():
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
-		air2.merge(removed)
-
-		update_parents()
+		if(transfer_moles)
+			air2.merge(removed)
+			update_parents()
 
 //Radio remote control
 /obj/machinery/atmospherics/components/binary/pump/proc/set_frequency(new_frequency)

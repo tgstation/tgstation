@@ -144,9 +144,9 @@
 				var/transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-
 				loc.assume_air(removed)
 				air_update_turf()
+				update_parents()
 
 	else // external -> internal
 		var/pressure_delta = 10000
@@ -161,10 +161,9 @@
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 			if (isnull(removed)) // in space
 				return
-
 			air_contents.merge(removed)
 			air_update_turf()
-	update_parents()
+			update_parents()
 
 //Radio remote control
 

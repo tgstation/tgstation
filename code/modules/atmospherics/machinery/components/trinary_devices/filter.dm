@@ -114,7 +114,7 @@
 
 		air3.merge(removed)
 
-	update_parents()
+		update_parents()
 
 /obj/machinery/atmospherics/components/trinary/filter/atmosinit()
 	set_frequency(frequency)
