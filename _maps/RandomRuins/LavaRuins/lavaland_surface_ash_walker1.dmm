@@ -1033,7 +1033,7 @@
 /obj/structure/table/wood,
 /obj/item/twohanded/spear,
 /obj/item/storage/belt,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "cI" = (
 /obj/structure/stone_tile/cracked{
@@ -1075,7 +1075,7 @@
 /obj/structure/table/wood,
 /obj/item/twohanded/spear,
 /obj/item/scythe,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "cM" = (
 /obj/structure/stone_tile/block{
