@@ -41,7 +41,7 @@
 	icon_state = "Spike_ball"
 	icon_living = "Spike_ball"
 	user.adjustBruteLoss(5)
-	user.visible_message("<span class = 'warning'> [user] pricks their finger on [src]'s spikes!</span>")
+	user.visible_message("<span class = 'warning'> [user] pricks their finger on [src]'s quills!</span>")
 	update_canmove()
 	sleep(5 SECONDS)
 	icon_state = "Spike"
