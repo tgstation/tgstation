@@ -1,0 +1,4 @@
+author: "JohnGinnane"
+delete-after: True
+changes: 
+  - rscadd: "A guillotine has been added to the game. Can be crafted. If the blade isn't dull, will cut through human necks like a hot knife through butter. Use a whetstone to sharpen it if it becomes dull."
