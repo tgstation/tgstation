@@ -23,8 +23,8 @@
 	desc = "A spiky hog belonging to the captain. Looking at it fills you with a strange feeling of reverence."
 
 /mob/living/simple_animal/pet/hedgehog/attacked_by(obj/item/I, mob/living/user)
-	..()
-	if(icon_state != "Spike_ball")
+	var/hurt= ..()
+	if(hurt && icon_state != "Spike_ball")
 		visible_message("<span class = 'notice'> [src] curls up into a ball. </span>")
 		icon_state = "Spike_ball"
 		icon_living = "Spike_ball"
