@@ -218,8 +218,9 @@
 		var/datum/pipeline/P = PL[i]
 		if(!P)
 			continue
-		if(P != src)
-			GL += P.return_air()
+		GL += P.return_air()
+		if(P == src)
+			GL -= src
 		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
 			if(V.open)
 				PL |= V.parents[1]
