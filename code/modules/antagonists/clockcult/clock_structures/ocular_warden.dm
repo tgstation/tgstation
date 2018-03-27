@@ -116,7 +116,7 @@
 			continue
 		if (iscarbon(L))
 			var/mob/living/carbon/c = L
-			if (c.handcuffed && istype(c.handcuffed,/obj/item/restraints/handcuffs/clockwork))
+			if (istype(c.handcuffed,/obj/item/restraints/handcuffs/clockwork))
 				continue
 		if(ishostile(L))
 			var/mob/living/simple_animal/hostile/H = L
