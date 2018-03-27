@@ -25,6 +25,20 @@
 	remove_hud_from(M)
 	if(M.mind)
 		M.mind.antag_hud = null
+		
+/datum/atom_hud/antag/proc/invisi_leave_hud(mob/M)
+	if(!M)
+		return
+	if(!istype(M))
+		CRASH("leave_hud(): [M] ([M.type]) is not a mob!")
+	remove_from_hud(M)
+
+/datum/atom_hud/antag/proc/invisi_join_hud(mob/M)
+	if(!M)
+		return
+	if(!istype(M))
+		CRASH("leave_hud(): [M] ([M.type]) is not a mob!")
+	add_to_hud(M)
 
 
 //GAME_MODE PROCS
@@ -51,3 +65,13 @@
 	for(var/datum/atom_hud/antag/hud in GLOB.huds)
 		if(hud.hudusers[current])
 			hud.leave_hud(current)
+
+/datum/mind/proc/invisi_leave_antag_huds()
+	for(var/datum/atom_hud/antag/hud in GLOB.huds)
+		if(hud.hudusers[current])
+			hud.invisi_leave_hud(current)
+			
+/datum/mind/proc/invisi_join_antag_huds()
+	for(var/datum/atom_hud/antag/hud in GLOB.huds)
+		if(hud.hudusers[current])
+			hud.invisi_join_hud(current)
