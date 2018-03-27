@@ -6,7 +6,7 @@
 	name = "liver"
 	icon_state = "liver"
 	w_class = WEIGHT_CLASS_NORMAL
-	zone = "chest"
+	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LIVER
 	desc = "Pairing suggestion: chianti and fava beans."
 	var/damage = 0 //liver damage, 0 is no damage, damage=maxHealth causes liver failure

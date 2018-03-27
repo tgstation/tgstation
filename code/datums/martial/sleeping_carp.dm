@@ -42,7 +42,7 @@
 		playsound(get_turf(A), 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 		D.emote("scream")
 		D.dropItemToGround(D.get_active_held_item())
-		D.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
+		D.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		D.Stun(60)
 		return 1
 	add_logs(A, D, "wrist wrenched (Sleeping Carp)")
@@ -78,7 +78,7 @@
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the jaw!</span>")
-		D.apply_damage(20, BRUTE, "head")
+		D.apply_damage(20, BRUTE, BODY_ZONE_HEAD)
 		D.drop_all_held_items()
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		D.Stun(80)
@@ -93,7 +93,7 @@
 						  "<span class='userdanger'>[A] piledrives you with their elbow!</span>")
 		if(D.stat)
 			D.death() //FINISH HIM!
-		D.apply_damage(50, BRUTE, "chest")
+		D.apply_damage(50, BRUTE, BODY_ZONE_CHEST)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 75, 1, -1)
 		return 1
 	add_logs(A, D, "elbow dropped (Sleeping Carp)")
@@ -202,7 +202,7 @@
 		user.Knockdown(60)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.apply_damage(2*force, BRUTE, "head")
+			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
 		else
 			user.take_bodypart_damage(2*force)
 		return

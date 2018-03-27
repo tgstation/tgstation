@@ -49,6 +49,7 @@
 	modifystate = 1
 	ammo_x_offset = 1
 	selfcharge = 1
+	harmful = FALSE
 
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"
@@ -184,7 +185,16 @@
 /obj/item/gun/energy/wormhole_projector/update_icon()
 	icon_state = "[initial(icon_state)][select]"
 	item_state = icon_state
-	return
+
+/obj/item/gun/energy/wormhole_projector/update_ammo_types()
+	. = ..()
+	for(var/i in 1 to ammo_type.len)
+		var/obj/item/ammo_casing/energy/wormhole/W = ammo_type[i]
+		if(istype(W))
+			W.gun = src
+			var/obj/item/projectile/beam/wormhole/WH = W.BB
+			if(istype(WH))
+				WH.gun = src
 
 /obj/item/gun/energy/wormhole_projector/process_chamber()
 	..()

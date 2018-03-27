@@ -75,11 +75,13 @@
 			ReplaceWithLattice()
 
 /turf/open/floor/engine/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/open/floor/engine/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.Move_Pulled(src)
-
 
 //air filled floors; used in atmos pressure chambers
 
@@ -114,6 +116,7 @@
 	desc = "The air hangs heavy over this sinister flooring."
 	icon_state = "plating"
 	CanAtmosPass = ATMOS_PASS_NO
+	floor_tile = null
 	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearance
 
 

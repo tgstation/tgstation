@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/pacification
+	name = "Pacification Surgery Disk"
 	desc = "The disk provides instructions on how to suppress violence by manipulating the patient's brain."
 	surgeries = list(/datum/surgery/advanced/pacify)
 
@@ -12,7 +13,7 @@
 				/datum/surgery_step/close)
 
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list("head")
+	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
 
 /datum/surgery/advanced/pacify/can_start(mob/user, mob/living/carbon/target)

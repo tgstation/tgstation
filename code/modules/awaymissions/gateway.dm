@@ -61,6 +61,9 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	icon_state = "off"
 
 /obj/machinery/gateway/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!detect())
 		return
 	if(!active)

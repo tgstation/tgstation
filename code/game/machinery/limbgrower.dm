@@ -37,7 +37,8 @@
 	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
 	. = ..()
 
-/obj/machinery/limbgrower/interact(mob/user)
+/obj/machinery/limbgrower/ui_interact(mob/user)
+	. = ..()
 	if(!is_operational())
 		return
 

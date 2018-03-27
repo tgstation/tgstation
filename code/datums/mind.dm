@@ -774,6 +774,13 @@
 	if(G)
 		G.reenter_corpse()
 
+
+/datum/mind/proc/has_objective(objective_type)
+	for(var/datum/antagonist/A in antag_datums)
+		for(var/O in A.objectives)
+			if(istype(O,objective_type))
+				return TRUE
+
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
@@ -805,11 +812,6 @@
 	..()
 	if(!mind.assigned_role)
 		mind.assigned_role = "Unassigned" //default
-
-//XENO
-/mob/living/carbon/alien/mind_initialize()
-	..()
-	mind.special_role = ROLE_ALIEN
 
 //AI
 /mob/living/silicon/ai/mind_initialize()

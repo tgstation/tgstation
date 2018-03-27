@@ -23,6 +23,21 @@
 		bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
 		filling_color = "#FF69B4"
 
+
+/obj/item/reagent_containers/food/snacks/donut/checkLiked(fraction, mob/M)	//Sec officers always love donuts
+	if(last_check_time + 50 < world.time)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.mind && H.mind.assigned_role == "Security Officer" && !H.has_trait(TRAIT_AGEUSIA))
+				to_chat(H,"<span class='notice'>I love this taste!</span>")
+				H.adjust_disgust(-5 + -2.5 * fraction)
+				GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+				if(mood)
+					mood.add_event("fav_food", /datum/mood_event/favorite_food)
+				last_check_time = world.time
+				return
+	..()
+
 /obj/item/reagent_containers/food/snacks/donut/chaos
 	name = "chaos donut"
 	desc = "Like life, it never quite tastes the same."

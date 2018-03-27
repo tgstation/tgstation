@@ -32,8 +32,6 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 
 	var/scribe_delay = 40 //how long the rune takes to create
 	var/scribe_damage = 0.1 //how much damage you take doing it
-
-	var/allow_excess_invokers = FALSE //if we allow excess invokers when being invoked
 	var/invoke_damage = 0 //how much damage invokers take when invoking it
 	var/construct_invoke = TRUE //if constructs can invoke it
 
@@ -69,6 +67,9 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		qdel(src)
 
 /obj/effect/rune/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>You aren't able to understand the words of [src].</span>")
 		return
@@ -109,12 +110,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/proc/can_invoke(var/mob/living/user=null)
 	//This proc determines if the rune can be invoked at the time. If there are multiple required cultists, it will find all nearby cultists.
 	var/list/invokers = list() //people eligible to invoke the rune
-	var/list/chanters = list() //people who will actually chant the rune when passed to invoke()
 	if(user)
-		chanters += user
 		invokers += user
-	
-	if(req_cultists > 1 || allow_excess_invokers)
+	if(req_cultists > 1 || istype(src, /obj/effect/rune/convert))
 		var/list/things_in_range = range(1, src)
 		var/obj/item/toy/plush/narplush/plushsie = locate() in things_in_range
 		if(istype(plushsie) && plushsie.is_invoker)
@@ -130,17 +128,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				if(L.stat)
 					continue
 				invokers += L
-			if(allow_excess_invokers)
-				chanters += invokers
-			else
-				shuffle_inplace(invokers)
-				for(var/i in 1 to req_cultists)
-					var/C = pick_n_take(invokers)
-					if(!C)
-						break
-					if(C != user)
-						chanters += C
-	return chanters
+	return invokers
 
 /obj/effect/rune/proc/invoke(var/list/invokers)
 	//This proc contains the effects of the rune as well as things that happen afterwards. If you want it to spawn an object and then delete itself, have both here.
@@ -160,9 +148,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/proc/do_invoke_glow()
 	set waitfor = FALSE
 	var/oldtransform = transform
-	animate(src, transform = matrix()*2, alpha = 0, time = 5) //fade out
+	animate(src, transform = matrix()*2, alpha = 0, time = 5, flags = ANIMATION_END_NOW) //fade out
 	sleep(5)
-	animate(src, transform = oldtransform, alpha = 255, time = 0)
+	animate(src, transform = oldtransform, alpha = 255, time = 0, flags = ANIMATION_END_NOW)
 
 /obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
@@ -197,7 +185,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon_state = "3"
 	color = RUNE_COLOR_OFFER
 	req_cultists = 1
-	allow_excess_invokers = TRUE
 	rune_in_use = FALSE
 
 /obj/effect/rune/convert/do_invoke_glow()
@@ -247,7 +234,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
 	if(invokers.len < 2)
 		for(var/M in invokers)
-			to_chat(M, "<span class='warning'>You need more invokers to convert [convertee]!</span>")
+			to_chat(M, "<span class='danger'>You need at least two invokers to convert [convertee]!</span>")
 		log_game("Offer rune failed - tried conversion with one invoker")
 		return 0
 	if(convertee.anti_magic_check(TRUE, TRUE))
@@ -653,7 +640,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 						 "<span class='cult italic'>You channel [carbon_user ? "your life ":""]energy into [src], [density ? "temporarily preventing" : "allowing"] passage above it.</span>")
 	if(carbon_user)
 		var/mob/living/carbon/C = user
-		C.apply_damage(2, BRUTE, pick("l_arm", "r_arm"))
+		C.apply_damage(2, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 
 /obj/effect/rune/wall/proc/spread_density()
 	for(var/R in GLOB.wall_runes)
@@ -938,7 +925,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	icon_state = "apoc"
 	pixel_x = -32
 	pixel_y = -32
-	allow_excess_invokers = TRUE
 	color = RUNE_COLOR_DARKRED
 	req_cultists = 3
 	scribe_delay = 100

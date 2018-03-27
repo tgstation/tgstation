@@ -2981,8 +2981,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3072,10 +3071,8 @@
 "jk" = (
 /obj/machinery/door/poddoor{
 	density = 1;
-	icon_state = "closed";
 	id = "XCCQMLoaddoor2";
-	name = "Supply Dock Loading Door";
-	opacity = 1
+	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
 	dir = 4;
@@ -3102,10 +3099,8 @@
 "jm" = (
 /obj/machinery/door/poddoor{
 	density = 1;
-	icon_state = "closed";
 	id = "XCCQMLoaddoor2";
-	name = "Supply Dock Loading Door";
-	opacity = 1
+	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
 	dir = 4;
@@ -3280,10 +3275,8 @@
 "jI" = (
 /obj/machinery/door/poddoor{
 	density = 1;
-	icon_state = "closed";
 	id = "XCCQMLoaddoor";
-	name = "Supply Dock Loading Door";
-	opacity = 1
+	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
 	dir = 8;
@@ -3308,10 +3301,8 @@
 "jK" = (
 /obj/machinery/door/poddoor{
 	density = 1;
-	icon_state = "closed";
 	id = "XCCQMLoaddoor";
-	name = "Supply Dock Loading Door";
-	opacity = 1
+	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
 	dir = 8;
@@ -5083,7 +5074,6 @@
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_y = 32;
-	req_access_txt = "0";
 	use_power = 0
 	},
 /turf/open/floor/plasteel/vault,
@@ -6069,8 +6059,7 @@
 "qT" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -7356,8 +7345,7 @@
 /obj/machinery/button/door{
 	id = "XCCFerry";
 	name = "Hanger Bay Shutters";
-	pixel_y = -38;
-	req_access_txt = "0"
+	pixel_y = -38
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -8245,8 +8233,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -8354,8 +8341,7 @@
 /area/space)
 "xc" = (
 /obj/machinery/door/airlock/external{
-	name = "Ferry Airlock";
-	req_access_txt = "0"
+	name = "Ferry Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -8556,8 +8542,7 @@
 	dwidth = 3;
 	name = "steel rain";
 	port_direction = 4;
-	preferred_direction = 4;
-	timid = 0
+	preferred_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)
@@ -8865,8 +8850,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -9989,7 +9973,6 @@
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_y = -32;
-	req_access_txt = "0";
 	use_power = 0
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -10577,8 +10560,7 @@
 "Eg" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Booth";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -11109,8 +11091,7 @@
 "FK" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Backstage";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -13533,8 +13514,7 @@
 "NU" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -13548,8 +13528,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -13642,8 +13621,7 @@
 /area/centcom/control)
 "Xy" = (
 /obj/machinery/door/airlock/external{
-	name = "Ferry Airlock";
-	req_access_txt = "0"
+	name = "Ferry Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8

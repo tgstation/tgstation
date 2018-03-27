@@ -313,8 +313,8 @@
 	desc = "A long, thin construct built to herald Nar-Sie's rise. It'll be all over soon."
 	icon_state = "chosen"
 	icon_living = "chosen"
-	maxHealth = 60
-	health = 60
+	maxHealth = 40
+	health = 40
 	sight = SEE_MOBS
 	melee_damage_lower = 15
 	melee_damage_upper = 20
@@ -436,7 +436,8 @@
 	else
 		if(LAZYLEN(GLOB.cult_narsie.souls_needed))
 			the_construct.master = pick(GLOB.cult_narsie.souls_needed)
-			to_chat(the_construct, "<span class='cult italic'>You are now tracking your prey, [the_construct.master] - harvest them!</span>")
+			var/mob/living/real_target = the_construct.master //We can typecast this way because Narsie only allows /mob/living into the souls list
+			to_chat(the_construct, "<span class='cult italic'>You are now tracking your prey, [real_target.real_name] - harvest them!</span>")
 		else
 			to_chat(the_construct, "<span class='cult italic'>Nar'Sie has completed her harvest!</span>")
 			return

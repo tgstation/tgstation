@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/nerve_splicing
+	name = "Nerve Splicing Surgery Disk"
 	desc = "The disk provides instructions on how to splice the circulatory system to counter stuns and paralysis."
 	surgeries = list(/datum/surgery/advanced/bioware/nerve_splicing)
 
@@ -11,7 +12,7 @@
 				/datum/surgery_step/incise,
 				/datum/surgery_step/splice_nerves,
 				/datum/surgery_step/close)
-	possible_locs = list("chest")
+	possible_locs = list(BODY_ZONE_CHEST)
 	bioware_target = BIOWARE_NERVES
 
 /datum/surgery_step/splice_nerves

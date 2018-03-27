@@ -191,3 +191,73 @@
 	W.assignment = "CentCom Official"
 	W.registered_name = H.real_name
 	W.update_label()
+
+/datum/outfit/ert/commander/inquisitor
+	name = "Inquisition Commander"
+	r_hand = /obj/item/nullrod/scythe/talking/chainsword
+	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal
+	backpack_contents = list(/obj/item/storage/box/engineer=1,
+		/obj/item/clothing/mask/gas/sechailer=1,
+		/obj/item/gun/energy/e_gun=1)
+
+/datum/outfit/ert/security/inquisitor
+	name = "Inquisition Security"
+
+	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
+
+	backpack_contents = list(/obj/item/storage/box/engineer=1,
+		/obj/item/storage/box/handcuffs=1,
+		/obj/item/clothing/mask/gas/sechailer=1,
+		/obj/item/gun/energy/e_gun/stun=1,
+		/obj/item/melee/baton/loaded=1,
+		/obj/item/construction/rcd/loaded=1)
+
+/datum/outfit/ert/medic/inquisitor
+	name = "Inquisition Medic"
+
+	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
+
+	backpack_contents = list(/obj/item/storage/box/engineer=1,
+		/obj/item/melee/baton/loaded=1,
+		/obj/item/clothing/mask/gas/sechailer=1,
+		/obj/item/gun/energy/e_gun=1,
+		/obj/item/reagent_containers/hypospray/combat=1,
+		/obj/item/reagent_containers/hypospray/combat/heresypurge=1,
+		/obj/item/gun/medbeam=1)
+
+/datum/outfit/ert/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	var/obj/item/device/radio/R = H.ears
+	R.keyslot = new /obj/item/device/encryptionkey/heads/hop
+	R.recalculateChannels()
+
+/datum/outfit/ert/chaplain
+	name = "ERT Chaplain"
+
+	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor // Chap role always gets this suit
+	id = /obj/item/card/id/ert/chaplain
+	glasses = /obj/item/clothing/glasses/hud/health
+	back = /obj/item/storage/backpack/cultpack
+	belt = /obj/item/storage/belt/soulstone
+	backpack_contents = list(/obj/item/storage/box/engineer=1,
+		/obj/item/nullrod=1,
+		/obj/item/clothing/mask/gas/sechailer=1,
+		/obj/item/gun/energy/e_gun=1,
+		)
+
+/datum/outfit/ert/chaplain/inquisitor
+	name = "Inquisition Chaplain"
+
+	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
+
+	belt = /obj/item/storage/belt/soulstone/full/chappy
+	backpack_contents = list(/obj/item/storage/box/engineer=1,
+		/obj/item/grenade/chem_grenade/holy=1,
+		/obj/item/nullrod=1,
+		/obj/item/clothing/mask/gas/sechailer=1,
+		/obj/item/gun/energy/e_gun=1,
+		)

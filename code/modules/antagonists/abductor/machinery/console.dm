@@ -26,7 +26,8 @@
 	var/list/datum/icon_snapshot/disguises = list()
 
 /obj/machinery/abductor/console/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!isabductor(user))
 		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")

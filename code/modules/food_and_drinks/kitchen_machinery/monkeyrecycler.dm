@@ -75,7 +75,10 @@
 
 
 /obj/machinery/monkey_recycler/attack_hand(mob/user)
-	if (src.stat != 0) //NOPOWER etc
+	. = ..()
+	if(.)
+		return
+	if(stat != 0) //NOPOWER etc
 		return
 	if(grinded >= required_grind)
 		to_chat(user, "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>")

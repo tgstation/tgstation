@@ -85,10 +85,18 @@
 	volatile = TRUE
 
 /obj/item/slime_extract/proc/activate_slime()
-	var/list/slime_chems = list("plasma","water","blood")
+	var/list/slime_chems = src.activate_reagents
 	for(var/i in 1 to slime_chems.len)
 		if(!QDELETED(src))
-			reagents.add_reagent(pick_n_take(slime_chems),5) //Add them in random order so we get all effects
+			var/chem = pick_n_take(slime_chems)
+			var/amount = 5
+			if(chem == "lesser plasma") //In the rare case we get another rainbow.
+				chem = "plasma"
+				amount = 4
+			if(chem == "holy water and uranium")
+				chem = "uranium"
+				reagents.add_reagent("holywater")
+			reagents.add_reagent(chem,amount) //Add them in random order so we get all effects
 
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)
 	for(var/loop = numspawned ,loop > 0, loop--)

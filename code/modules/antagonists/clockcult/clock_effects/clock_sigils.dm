@@ -26,14 +26,15 @@
 /obj/effect/clockwork/sigil/attack_tk(mob/user)
 	return //you can't tk stomp sigils, but you can hit them with something
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
 	if(iscarbon(user) && !user.stat)
 		if(is_servant_of_ratvar(user) && user.a_intent != INTENT_HARM)
 			return ..()
 		user.visible_message("<span class='warning'>[user] stamps out [src]!</span>", "<span class='danger'>You stomp on [src], scattering it into thousands of particles.</span>")
 		qdel(src)
-		return 1
-	..()
+		return TRUE
+	. = ..()
 
 /obj/effect/clockwork/sigil/ex_act(severity)
 	visible_message("<span class='warning'>[src] scatters into thousands of particles.</span>")
@@ -242,14 +243,17 @@
 	return TRUE
 
 /obj/effect/clockwork/sigil/transmission/update_icon()
+	var/power_charge = get_clockwork_power()
 	if(GLOB.ratvar_awakens)
 		alpha = 255
-	var/power_charge = get_clockwork_power()
-	alpha = min(initial(alpha) + power_charge * 0.02, 255)
-	if(!power_charge)
-		set_light(0)
 	else
-		set_light(max(alpha * 0.02, 1.4), max(alpha * 0.01, 0.1))
+		alpha = min(CEILING(initial(alpha) + power_charge * 0.02, 35), 255)
+	var/r = alpha * 0.02
+	var/p = max(alpha * 0.01, 0.1)
+	if(!power_charge && light_range != 0)
+		set_light(0)
+	else if(r != light_range || p != light_power)
+		set_light(r, p)
 
 //Vitality Matrix: Drains health from non-servants to heal or even revive servants.
 /obj/effect/clockwork/sigil/vitality
