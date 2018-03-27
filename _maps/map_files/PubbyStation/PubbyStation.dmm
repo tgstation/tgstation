@@ -14047,11 +14047,16 @@
 	dir = 1;
 	icon_state = "direction_sec";
 	pixel_x = 32;
-	pixel_y = -26
+	pixel_y = -24
 	},
 /obj/structure/sign/directions/medical{
 	pixel_x = 32;
-	pixel_y = -38
+	pixel_y = -40
+	},
+/obj/structure/sign/directions/evac{
+	dir = 1;
+	pixel_x = 32;
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -50139,6 +50144,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
+"dyf" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/sign/departments/evac,
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "dAF" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 4
@@ -50539,6 +50549,15 @@
 /obj/item/stack/cable_coil,
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/lab)
+"mnE" = (
+/obj/structure/sign/directions/evac{
+	dir = 1;
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/green/corner{
+	dir = 1
+	},
+/area/hallway/primary/central)
 "mCe" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -50643,6 +50662,27 @@
 /obj/item/device/integrated_electronics/analyzer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"pRN" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "bridge blast door"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge";
+	req_access_txt = "19"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/structure/sign/directions/evac{
+	dir = 1;
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/vault,
+/area/bridge)
 "pWF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light{
@@ -50803,6 +50843,11 @@
 	},
 /turf/closed/wall/r_wall,
 /area/science/mixing)
+"tYm" = (
+/obj/effect/spawner/structure/window,
+/obj/structure/sign/departments/evac,
+/turf/open/floor/plating,
+/area/hallway/secondary/exit/departure_lounge)
 "tYI" = (
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel/white,
@@ -50854,6 +50899,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"vel" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/sign/directions/evac{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "vpz" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/security/telescreen{
@@ -69624,7 +69677,7 @@ aHA
 aHA
 aHA
 aKB
-aHA
+dyf
 aKB
 aHA
 aHA
@@ -74507,7 +74560,7 @@ aOs
 aPv
 aQz
 aRH
-aRH
+tYm
 aRH
 aUJ
 aVQ
@@ -75267,7 +75320,7 @@ aDv
 aBh
 aBh
 aGd
-aEY
+vel
 aHG
 aIM
 aJG
@@ -78632,7 +78685,7 @@ bcb
 bdn
 bel
 bdn
-bdn
+mnE
 aJI
 aDZ
 bik
@@ -80407,7 +80460,7 @@ aDJ
 aEC
 aDJ
 aAA
-aHe
+pRN
 aHU
 aIV
 aJS
