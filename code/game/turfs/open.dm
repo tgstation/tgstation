@@ -199,9 +199,6 @@
 				return 0
 		if(!(lube&SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
-<<<<<<< HEAD
-			C.log_message("<font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>", INDIVIDUAL_ATTACK_LOG)
-		if(!(lube&SLIDE_ICE))
 			// Hippie Start - custom sounds for slipping
 			var/slip_sound = 'sound/misc/slip.ogg'
 			if(prob(95))
@@ -216,8 +213,6 @@
 				slip_sound = 'hippiestation/sound/misc/oof.ogg'
 			playsound(C.loc, (slip_sound), 50, 1, -3)
 			// Hippie End
-=======
->>>>>>> a6c9a2280f... Merge pull request #36617 from ShizCalev/logging-cleanup
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
 		C.SendSignal(COMSIG_ADD_MOOD_EVENT, "slipped", /datum/mood_event/slipped)
