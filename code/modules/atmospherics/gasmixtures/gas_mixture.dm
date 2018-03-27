@@ -27,6 +27,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
 	var/list/reaction_results
+	var/static/list/nonreactive_gases = list(typecacheof(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide)) // These gasses cannot react amongst themselves
 
 /datum/gas_mixture/New(volume)
 	gases = new
@@ -411,9 +412,18 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /datum/gas_mixture/react(turf/open/dump_location)
 	. = NO_REACTION
+	if(volume == 0)
+		return
+	var/possible
+	for(var/gas in gases)
+		if(is_type_in_typecache(gas,nonreactive_gases))
+			continue
+		possible = TRUE
+		break
+	if(!possible)
+		return
 
 	reaction_results = new
-
 	var/list/cached_gases = gases
 	var/temp = temperature
 	var/ener = THERMAL_ENERGY(src)
@@ -457,6 +467,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		garbage_collect()
 		if(temperature < TCMB) //just for safety
 			temperature = TCMB
+
 
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings

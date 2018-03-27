@@ -190,17 +190,16 @@
 
 			tile.assume_air(removed)
 			tile.air_update_turf()
+			update_parents()
 
 	else //Just siphoning all air
 
 		var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
 
 		var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
-
 		air_contents.merge(removed)
 		tile.air_update_turf()
-
-	update_parents()
+		update_parents()
 
 	return TRUE
 
@@ -278,12 +277,6 @@
 		pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 		pipe_vision_img.plane = ABOVE_HUD_PLANE
 	return TRUE
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
-	. = ..()
-	if(. && on && is_operational())
-		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
-		return FALSE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded

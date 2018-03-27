@@ -62,9 +62,7 @@ Thus, the two variables affect pump operation are set in New():
 	var/transfer_ratio = min(1, transfer_rate/air1.volume)
 
 	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
-
 	air2.merge(removed)
-
 	update_parents()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/set_frequency(new_frequency)

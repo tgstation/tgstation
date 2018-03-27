@@ -61,9 +61,9 @@ Passive gate is similar to the regular pump except:
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
-		air2.merge(removed)
-
-		update_parents()
+		if(removed.gases.len)
+			air2.merge(removed)
+			update_parents()
 
 
 //Radio remote control
