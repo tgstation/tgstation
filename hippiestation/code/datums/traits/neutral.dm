@@ -1,2 +1,2 @@
 /* Hippie Neutral Traits */
--/* Currently, there are none */
+/* Currently, there are none */
