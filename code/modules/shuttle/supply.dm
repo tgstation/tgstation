@@ -9,7 +9,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/singularity,
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,
-		/obj/machinery/telepad,
 		/obj/machinery/quantumpad,
 		/obj/machinery/clonepod,
 		/obj/effect/mob_spawn,

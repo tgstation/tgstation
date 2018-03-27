@@ -2623,8 +2623,6 @@
 #include "code\white\other\looc.dm"
 #include "code\white\other\multiaccounts.dm"
 #include "code\white\other\report.dm"
-#include "code\white\telescience\telepad.dm"
-#include "code\white\telescience\telesci_computer.dm"
 #include "interface\interface.dm"
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
