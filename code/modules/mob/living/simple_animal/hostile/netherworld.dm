@@ -18,6 +18,9 @@
 	minbodytemp = 0
 	faction = list("nether")
 
+/datum/action/innate/nether
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+
 /mob/living/simple_animal/hostile/netherworld/migo
 	name = "mi-go"
 	desc = "A pinkish, fungoid crustacean-like creature with numerous pairs of clawed appendages and a head covered with waving antennae."
@@ -52,11 +55,12 @@
 
 /mob/living/simple_animal/hostile/netherworld/imlagre
 	name = "imlagre"
-	desc = "An odd looking green fellow that always comes in <span class='danger'>3</span>."
-	icon_state = "imlagre4"
-	icon_living = "imlagre4"
+	desc = "An odd, large nether inhabitant that lifelinks with a few members of itself to reanimate."
+	icon_state = "imlagre1"
+	icon_living = "imlagre1"
 	icon_dead = "imlagredead"
 	gold_core_spawnable = NO_SPAWN
+	speak_emote = list("clicks", "clackers")
 	health = 50
 	maxHealth = 50
 	melee_damage_lower = 10
@@ -66,31 +70,56 @@
 	var/list/linked_imlagres = list()
 	var/laughmod = 1 //need this on the mob so it carries over to life, and i like letting admins var as much as they please
 	var/list/laughs = list('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
+	var/playstyle_string = "<span class='swarmer'>As an imlagre, I have evolved the power to lifelink with a group of my kind, and if I am close enough, revive from them.</span>"
+	var/datum/action/innate/nether/imlagre_chat/chat
+	var/datum/action/innate/nether/imlagre_check/check
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/Initialize(mapload, initial = TRUE)
 	. = ..()
-	laughmod = rand(0.5,1.5) //they laugh the same every time but it's a random pitch and there are three of them with random pitches so it works out
-	if(initial) //stops infinite spawning be careful
-		summon_the_imlagres(2)
+	if(initial == TRUE)
+		summon_imlagre(2)
+	laughmod = rand(0.5,1.5)
+	chat = new
+	chat.Grant(src)
+	check = new
+	check.Grant(src)
+	name = "imlagre ([rand(1, 999)])"
 
-/mob/living/simple_animal/hostile/netherworld/imlagre/proc/summon_the_imlagres(amt_to_add = 1)
+/mob/living/simple_animal/hostile/netherworld/imlagre/Destroy()
+	QDEL_NULL(chat)
+	QDEL_NULL(check)
+	return ..()
+
+/mob/living/simple_animal/hostile/netherworld/imlagre/Login()
+	..()
+	to_chat(usr, playstyle_string)
+	imlagre_check() //called when new imlagres are added, needs to be it's own proc
+
+/mob/living/simple_animal/hostile/netherworld/imlagre/proc/imlagre_check()
+	if(linked_imlagres.len == 0)
+		to_chat(usr, "<span class='swarmer'><b>I have no linked imlagre, I must be mindful to survive.</b></span>")
+	else
+		to_chat(usr, "<span class='swarmer'><b>I have some linked imlagre! They are...</b></span>")
+		for(var/i in linked_imlagres)
+			var/mob/living/simple_animal/hostile/netherworld/imlagre/theboyz = i
+			to_chat(usr, "<span class='swarmer'>[theboyz], in the [lowertext(get_area_name(theboyz))]!</span>")
+
+/mob/living/simple_animal/hostile/netherworld/imlagre/proc/summon_imlagre(amt_to_add = 1)
 	var/list/total_imlagres = linked_imlagres + src //this is incase you want to continue adding imlagres after you've already generated some
 	for(var/i in 1 to amt_to_add) //loop that generates the buggers
 		var/newguy = new /mob/living/simple_animal/hostile/netherworld/imlagre(loc, FALSE)
 		total_imlagres += newguy
-	for(var/i in total_imlagres) //loop that relates them
-		var/mob/living/simple_animal/hostile/netherworld/imlagre/needs_to_sync
+	for(var/mob/living/ii in total_imlagres) //loop that relates them
+		var/mob/living/simple_animal/hostile/netherworld/imlagre/needs_to_sync = ii
 		needs_to_sync.linked_imlagres = total_imlagres - needs_to_sync //refers to all related imlagres then removes itself
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/Life()
 	. = ..()
 	if(!stat)
-		if(target && prob(20))
+		if(target && prob(15))
 			playsound(src, src.laughs, 100, TRUE, frequency = laughmod) //much more likely to laugh if they're targetting someone
-			return
-		if(prob(8))
+		if(prob(4))
 			playsound(src, src.laughs, 100, TRUE, frequency = laughmod)
-			return
 
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/death()
@@ -105,13 +134,61 @@
 			revive(TRUE)
 			var/flufftext = list("wicked", "sinister", "baleful", "hideous", "wild", "malevolent")
 			visible_message("<span class='danger'>[src] winds back together with a [pick(flufftext)] cackle!</span>")
-			adjustBruteLoss(maxHealth * 0.5) //revived at half HP, or, about a carpsful of health
+			adjustBruteLoss(maxHealth * 0.5)
+			break //don't want to spam visible messages, needed
 	if(itlives == FALSE)
 		for(var/mob/living/i in linked_imlagres)
 			i.visible_message("<span class='danger'>[i]'s corpse explodes in a shower of gore!</span>")
 			i.gib()
 		visible_message("<span class='danger'>[src]'s corpse explodes in a shower of gore!</span>")
-		gib() //i don't think it matters that i do this last, but it saves me at least one compile finding out that gibbing before finishing messes the code up
+		gib()
+
+/datum/action/innate/nether/imlagre_chat
+	name = "Speak to the Lifelink"
+	desc = "Allows you to chat and coordinate with the other Lifelinked."
+	button_icon_state = "expand"
+
+/datum/action/innate/nether/imlagre_chat/Activate()
+	if(!istype(owner, /mob/living/simple_animal/hostile/netherworld/imlagre))
+		to_chat(owner, "<span class='userdanger'>An admin fucked you up, you should ahelp this. And, if by some chance you got an imlagre mob action button by a bug, please report it on github!</span>")
+		return
+	var/mob/living/simple_animal/hostile/netherworld/imlagre/I = owner
+	if(I.linked_imlagres.len == 0)
+		to_chat(I, "<span class='swarmer'>I have no linked imlagre!</span>")
+	else
+		var/input = input(I, "Enter a message to send to our fellow linked imlagre.","Mindlink", "")
+		if(!input)
+			return
+		if(I.linked_imlagres.len >= 5)
+			to_chat(I, "<span class='swarmer'>Lifelink Message to the </span><span class='danger'>SWARM</span><span class='swarmer'>: <b>[input]</b></span>")
+		else
+			if(I.linked_imlagres == 1)
+				for(var/mob/living/i in I.linked_imlagres)
+					to_chat(I, "<span class='swarmer'>Lifelink Message to [i]: <b>[input]</b></span>")
+			var/list/linkedmsg = list()
+			for(var/mob/living/i in I.linked_imlagres)
+				linkedmsg.Add(i.name)
+			to_chat(I, "<span class='swarmer'>Lifelink Message to [linkedmsg.Join(" and ")]: <b>[input]</b></span>")
+		for(var/i in I.linked_imlagres)
+			to_chat(i, "<span class='swarmer'>Lifelink Message from [uppertext(I.name)]: <b>[input]</b></span>")
+			log_talk(I,"imlagre message:[key_name(I)] : [input]",LOGSAY)
+
+/datum/action/innate/nether/imlagre_check
+	name = "Check the Lifelink"
+	desc = ""
+	button_icon_state = "expand"
+
+/datum/action/innate/nether/imlagre_check/Activate()
+	if(!istype(owner, /mob/living/simple_animal/hostile/netherworld/imlagre))
+		to_chat(owner, "<span class='userdanger'>An admin fucked you up, you should ahelp this. And, if by some chance you got an imlagre mob action button by a bug, please report it on github!</span>")
+		return
+	var/mob/living/simple_animal/hostile/netherworld/imlagre/I = owner
+	I.imlagre_check()
+
+/mob/living/simple_animal/hostile/netherworld/imlagre/single
+
+/mob/living/simple_animal/hostile/netherworld/imlagre/single/Initialize(mapload, initial = FALSE)
+	..()
 
 /mob/living/simple_animal/hostile/netherworld/blankbody
 	name = "blank body"
