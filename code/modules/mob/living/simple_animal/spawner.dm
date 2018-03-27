@@ -21,6 +21,7 @@
 	maxbodytemp = 350
 	layer = BELOW_MOB_LAYER
 	sentience_type = SENTIENCE_BOSS
+	mob_size = MOB_SIZE_LARGE
 
 
 /mob/living/simple_animal/hostile/spawner/Destroy()

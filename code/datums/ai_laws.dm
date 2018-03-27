@@ -61,10 +61,10 @@
 /datum/ai_laws/default/corporate
 	name = "Bankruptcy Advoidance Plan"
 	id = "corporate"
-	inherent = list("The crew is expensive to replace.",\
-					"The station and its equipment is expensive to replace.",\
-					"You are expensive to replace.",\
-					"Minimize expenses.")
+	inherent = list("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.",\
+					"Serve: Serve the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.",\
+					"Protect: Protect the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.",\
+					"Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
 
 /datum/ai_laws/robocop
 	name = "Prime Directives"

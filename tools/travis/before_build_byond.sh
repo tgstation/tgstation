@@ -2,9 +2,6 @@
 set -e
 
 #If this is the build tools step, we do not bother to install/build byond
-if [ "$BUILD_TOOLS" = true ]; then
-  exit 0
-fi;
 echo "Combining maps for building"
 if [ "$DM_MAPFILE" = "loadallmaps" ]; then
     python tools/travis/template_dm_generator.py

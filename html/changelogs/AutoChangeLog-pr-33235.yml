@@ -1,0 +1,4 @@
+author: "Fox McCloud"
+delete-after: True
+changes: 
+  - tweak: "Slime blueprints can now make an area compatible with Xenobio consoles, regardless of the name of the new area"

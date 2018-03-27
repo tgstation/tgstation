@@ -1,4 +1,4 @@
-/proc/emoji_parse(text)
+/proc/emoji_parse(text, mob/user)
 	. = text
 	if(!CONFIG_GET(flag/emojis))
 		return
@@ -27,4 +27,3 @@
 				parsed += copytext(text, pos, search)
 		break
 	return parsed
-

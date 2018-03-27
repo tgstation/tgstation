@@ -65,5 +65,4 @@
 		if("E")
 			quick_equip()
 			return
-
 	return ..()

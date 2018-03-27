@@ -72,7 +72,7 @@
 			if(!try_use_power(hierophant_cost))
 				to_chat(user, "<span class='warning'>[src] lacks the power to broadcast!</span>")
 				return
-			clockwork_say(user, text2ratvar("Hierophant Broadcast, activate! [html_decode(input)]"))
+			clockwork_say(user, text2ratvar("Hierophant Broadcast, activate! [rhtml_decode(input)]"))
 			titled_hierophant_message(user, input, "big_brass", "large_brass")
 		if("Spatial Gateway")
 			if(active)

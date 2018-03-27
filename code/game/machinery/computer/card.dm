@@ -151,7 +151,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		dat += " || Confirm Identity: "
 		var/S
 		if(scan)
-			S = html_encode(scan.name)
+			S = rhtml_encode(scan.name)
 		else
 			S = "--------"
 		dat += "<a href='?src=[REF(src)];choice=scan'>[S]</a>"
@@ -225,21 +225,21 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		var/target_owner
 		var/target_rank
 		if(modify)
-			target_name = html_encode(modify.name)
+			target_name = rhtml_encode(modify.name)
 		else
 			target_name = "--------"
 		if(modify && modify.registered_name)
-			target_owner = html_encode(modify.registered_name)
+			target_owner = rhtml_encode(modify.registered_name)
 		else
 			target_owner = "--------"
 		if(modify && modify.assignment)
-			target_rank = html_encode(modify.assignment)
+			target_rank = rhtml_encode(modify.assignment)
 		else
 			target_rank = "Unassigned"
 
 		var/scan_name
 		if(scan)
-			scan_name = html_encode(scan.name)
+			scan_name = rhtml_encode(scan.name)
 		else
 			scan_name = "--------"
 

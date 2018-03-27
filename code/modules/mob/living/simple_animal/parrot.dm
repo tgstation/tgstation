@@ -148,7 +148,7 @@
 		if(!radio_freq || prob(10))
 			if(speech_buffer.len >= 500)
 				speech_buffer -= pick(speech_buffer)
-			speech_buffer |= html_decode(raw_message)
+			speech_buffer |= rhtml_decode(raw_message)
 	if(speaker == src && !client) //If a parrot squawks in the woods and no one is around to hear it, does it make a sound? This code says yes!
 		return message
 	..()

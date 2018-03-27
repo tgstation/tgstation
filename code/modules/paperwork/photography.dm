@@ -60,7 +60,7 @@
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
 		txt = copytext(txt, 1, 128)
 		if(user.canUseTopic(src, BE_CLOSE))
-			scribble = txt
+			scribble = sanitize_russian(txt)
 	..()
 
 

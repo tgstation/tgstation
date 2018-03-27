@@ -14,6 +14,7 @@
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
 
 
+
 /obj/item/device/onetankbomb/examine(mob/user)
 	bombtank.examine(user)
 

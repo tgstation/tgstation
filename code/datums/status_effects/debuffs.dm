@@ -366,22 +366,31 @@
 		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse)
 	else
 		C.apply_curse(set_curse)
-		C.duration += 3000 //additional curses add 5 minutes
+		if(C.duration>0)
+			C.duration += 3000 //additional curses add 5 minutes
+		else
+			C.pre_duration += 3000 //same
 
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
-	duration = 6000 //you're cursed for 10 minutes have fun
+	duration = -1 //you're cursed indefinitely, go either drown yourself in holy water or kill Legion
 	tick_interval = 50
 	alert_type = null
 	var/curse_flags = NONE
 	var/effect_last_activation = 0
-	var/effect_cooldown = 100
+	var/effect_cooldown = 150 //modified it from 100 to make curses less harmful
 	var/obj/effect/temp_visual/curse/wasting_effect = new
+	var/pre_duration = 3000 //5 minutes after Legion's fall, have fun
+	var/upkeeping = 0 //if we have it before Legion died
 
 /datum/status_effect/necropolis_curse/on_creation(mob/living/new_owner, set_curse)
 	. = ..()
 	if(.)
 		apply_curse(set_curse)
+		if(locate(/mob/living/simple_animal/hostile/megafauna/legion) in GLOB.mob_list)
+			upkeeping = 1
+		else
+			duration = world.time + pre_duration //no Legion, so it's simply timed
 
 /datum/status_effect/necropolis_curse/Destroy()
 	if(!QDELETED(wasting_effect))
@@ -405,6 +414,12 @@
 /datum/status_effect/necropolis_curse/tick()
 	if(owner.stat == DEAD)
 		return
+	if(upkeeping && !(locate(/mob/living/simple_animal/hostile/megafauna/legion) in GLOB.mob_list))
+		upkeeping = 0
+		duration = world.time + pre_duration / 2 //no Legion, so it becomes timed; smaller duration as bonus for killing Legion
+		to_chat(owner,"<span class='notice'>You no longer feel presence of great evil that fed your illness</span>")
+	if(upkeeping && prob(5))
+		to_chat(owner,"<span class='warning'>You feel [pick("something evil staring at you","evil presence","something horrible near you","otherworldly attention to you")]</span>")
 	if(curse_flags & CURSE_WASTING)
 		wasting_effect.forceMove(owner.loc)
 		wasting_effect.setDir(owner.dir)
@@ -430,14 +445,20 @@
 			var/turf/spawn_turf = get_ranged_target_turf(owner, grab_dir, 5)
 			if(spawn_turf)
 				grasp(spawn_turf)
+	if(owner.reagents && owner.reagents.has_reagent("holywater"))
+		var/hamount = owner.reagents.get_reagent_amount("holywater")
+		if(prob(hamount/20)) //caps at 35% probability per tick, HAVE FUN; generally 5% prob per tick if drank one chaplain bottle, not much, but still...
+			to_chat(owner,"<span class='notice'>Suddenly you feel much better</span>")
+			qdel(src) //status removal is done in Destroy
+			return
+
 
 /datum/status_effect/necropolis_curse/proc/grasp(turf/spawn_turf)
 	set waitfor = FALSE
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
 	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, 1, -1)
-	var/turf/ownerloc = get_turf(owner)
 	var/obj/item/projectile/curse_hand/C = new (spawn_turf)
-	C.preparePixelProjectile(ownerloc, spawn_turf)
+	C.preparePixelProjectile(owner, spawn_turf)
 	C.fire()
 
 /obj/effect/temp_visual/curse
