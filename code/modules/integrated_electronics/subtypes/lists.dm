@@ -111,8 +111,8 @@
 		"sample" = IC_PINTYPE_ANY
 		)
 	outputs = list(
-		"list matched" = IC_PINTYPE_LIST,
-		"list filtered" = IC_PINTYPE_LIST
+		"list filtered" = IC_PINTYPE_LIST,
+		"list matched" = IC_PINTYPE_LIST
 		)
 	activators = list(
 		"compute" = IC_PINTYPE_PULSE_IN,
