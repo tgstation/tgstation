@@ -164,7 +164,7 @@
 	icon_state_on = "freezer_1"
 	icon_state_open = "freezer-o"
 	max_temperature = T20C
-	min_temperature = 170
+	min_temperature = 170 //actual minimum temperature is defined by RefreshParts()
 	circuit = /obj/item/circuitboard/machine/thermomachine/freezer
 	
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
@@ -184,7 +184,7 @@
 	icon_state = "heater"
 	icon_state_on = "heater_1"
 	icon_state_open = "heater-o"
-	max_temperature = 140
+	max_temperature = 140 //actual maximum temperature is defined by RefreshParts()
 	min_temperature = T20C
 	circuit = /obj/item/circuitboard/machine/thermomachine/heater
 
