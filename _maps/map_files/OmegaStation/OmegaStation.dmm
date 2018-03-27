@@ -27789,7 +27789,7 @@
 /area/chapel/main)
 "bgC" = (
 /obj/structure/table/wood/fancy,
-/obj/item/spellbook/oneuse/smoke,
+/obj/item/book/granter/spell/smoke,
 /obj/item/nullrod,
 /obj/item/organ/heart,
 /obj/item/reagent_containers/food/drinks/bottle/holywater,
