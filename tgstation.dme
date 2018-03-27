@@ -332,6 +332,7 @@
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\spooky.dm"
 #include "code\datums\components\squeek.dm"
+#include "code\datums\components\swarming.dm"
 #include "code\datums\components\thermite.dm"
 #include "code\datums\components\wet_floor.dm"
 #include "code\datums\components\decals\blood.dm"
