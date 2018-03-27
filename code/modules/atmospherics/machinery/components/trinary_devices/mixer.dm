@@ -21,7 +21,7 @@
 	icon_state = "mixer_off_f"
 	flipped = TRUE
 
-/obj/machinery/atmospherics/components/trinary/mixer/airmix
+/obj/machinery/atmospherics/components/trinary/mixer/airmix //For standard airmix to distro
 	name = "air mixer"
 	icon_state = "mixer_on"
 	node1_concentration = N2STANDARD
