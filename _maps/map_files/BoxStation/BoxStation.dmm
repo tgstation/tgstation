@@ -4762,6 +4762,9 @@
 	dir = 4;
 	name = "Prosecution"
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -54546,6 +54549,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/hallway/secondary/service)
+"trb" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/courtroom)
 "tMl" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/showroomfloor,
@@ -88492,7 +88501,7 @@ abp
 ajp
 ajU
 ajn
-ajn
+trb
 ajn
 amr
 ajp
