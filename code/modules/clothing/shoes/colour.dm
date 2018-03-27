@@ -116,7 +116,7 @@
 	var/mob/m = usr
 	if(ishuman(m))
 		var/mob/living/carbon/human/c = m
-		if(c.shoes == src && src.chained == 1)
+		if(c.shoes == src && chained == 1)
 			to_chat(c, "<span class='warning'>You need help taking these off!</span>")
 			return
 	return ..()
