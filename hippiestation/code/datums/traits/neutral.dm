@@ -11,3 +11,8 @@
 	var/mob/living/carbon/human/H = trait_holder
 	H.scream_vol = 100
 	H.scream_oxyloss = 10
+
+/datum/trait/super_lungs/remove()
+	var/mob/living/carbon/human/H = trait_holder
+	H.scream_vol = initial(H.scream_vol)
+	H.scream_oxyloss = initial(H.scream_oxyloss)
