@@ -27,7 +27,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
 	var/list/reaction_results
-	var/static/list/nonreactive_gases = list(typecacheof(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide)) // These gasses cannot react amongst themselves
 
 /datum/gas_mixture/New(volume)
 	gases = new
@@ -411,13 +410,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return ""
 
 /datum/gas_mixture/react(turf/open/dump_location)
+	var/static/list/nonreactive_gases = list(typecacheof(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide)) // These gases cannot react amongst themselves
 	. = NO_REACTION
-	if(volume == 0)
+	if(!volume)
 		return
 	var/possible
-	for(var/gas in gases)
-		if(is_type_in_typecache(gas,nonreactive_gases))
-			continue
+	for(var/I in gases)
+    	if(nonreactive_gases[I])
+        	continue
 		possible = TRUE
 		break
 	if(!possible)
