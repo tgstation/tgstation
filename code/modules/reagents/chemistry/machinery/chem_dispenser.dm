@@ -72,7 +72,7 @@
 
 /obj/machinery/chem_dispenser/process()
 	if (recharge_counter >= 4)
-		if(stat & (BROKEN|NOPOWER))
+		if(!is_operational())
 			return
 		var/usedpower = cell.give(recharge_amount)
 		if(usedpower)
