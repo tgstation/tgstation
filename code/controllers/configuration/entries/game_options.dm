@@ -51,10 +51,6 @@
 /datum/config_entry/flag/allow_ai	// allow ai job
 
 /datum/config_entry/flag/disable_human_mood
-<<<<<<< HEAD
-	config_entry_value = TRUE
-=======
->>>>>>> 90a7bfdf15... Adds load away mission verb (#36568)
 
 /datum/config_entry/flag/disable_secborg	// disallow secborg module to be chosen.
 
