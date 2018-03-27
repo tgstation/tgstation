@@ -34,11 +34,11 @@
 	else
 		return ..()
 
-/obj/machinery/computer/med_data/interact(mob/user)
+/obj/machinery/computer/med_data/ui_interact(mob/user)
 	. = ..()
 	var/dat
-	if(src.temp)
-		dat = text("<TT>[src.temp]</TT><BR><BR><A href='?src=[REF(src)];temp=1'>Clear Screen</A>")
+	if(temp)
+		dat = text("<TT>[temp]</TT><BR><BR><A href='?src=[REF(src)];temp=1'>Clear Screen</A>")
 	else
 		dat = text("Confirm Identity: <A href='?src=[REF(src)];scan=1'>[]</A><HR>", (src.scan ? text("[]", src.scan.name) : "----------"))
 		if(src.authenticated)
