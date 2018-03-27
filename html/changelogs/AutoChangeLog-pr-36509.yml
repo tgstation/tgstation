@@ -1,0 +1,4 @@
+author: "selea"
+delete-after: True
+changes: 
+  - tweak: "Now recycler can butcher mobs and saw tree logs."

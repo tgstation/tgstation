@@ -17,5 +17,5 @@
 	owner.objectives |= objectives
 
 /datum/antagonist/revenant/on_gain()
-		forge_objectives()
-		. = ..()
+	forge_objectives()
+	. = ..()

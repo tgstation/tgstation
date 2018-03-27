@@ -61,7 +61,8 @@ SUBSYSTEM_DEF(mapping)
 	transit = add_new_zlevel("Transit", list(ZTRAIT_TRANSIT = TRUE))
 
 	// Pick a random away mission.
-	createRandomZlevel()
+	if(CONFIG_GET(flag/roundstart_away))
+		createRandomZlevel()
 
 	// Generate mining ruins
 	loading_ruins = TRUE
@@ -329,3 +330,57 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
+
+
+//Manual loading of away missions.
+/client/proc/admin_away()
+	set name = "Load Away Mission"
+	set category = "Fun"
+
+	if(!holder ||!check_rights(R_FUN))
+		return
+
+
+	if(!GLOB.the_gateway)
+		if(alert("There's no home gateway on the station. You sure you want to continue ?", "Uh oh", "Yes", "No") != "Yes")
+			return
+
+	var/list/possible_options = GLOB.potentialRandomZlevels + "Custom"
+	var/away_name
+	var/datum/space_level/away_level
+
+	var/answer = input("What kind ? ","Away") as null|anything in possible_options
+	switch(answer)
+		if("Custom")
+			var/mapfile = input("Pick file:", "File") as null|file
+			if(!mapfile)
+				return
+			away_name = mapfile
+			to_chat(usr,"<span class='notice'>Loading [mapfile]...</span>")
+			var/datum/map_template/template = new(mapfile, "Away Mission")
+			away_level = template.load_new_z()
+		else
+			if(answer in GLOB.potentialRandomZlevels)
+				away_name = answer
+				to_chat(usr,"<span class='notice'>Loading [away_name]...</span>")
+				var/datum/map_template/template = new(away_name, "Away Mission")
+				away_level = template.load_new_z()
+			else
+				return
+	
+	message_admins("Admin [key_name_admin(usr)] has loaded [away_name] away mission.")
+	if(!away_level)
+		message_admins("Loading [away_name] failed!")
+		return
+	
+	
+	if(GLOB.the_gateway)
+		//Link any found away gate with station gate
+		var/obj/machinery/gateway/centeraway/new_gate
+		for(var/obj/machinery/gateway/centeraway/G in GLOB.machines)
+			if(G.z == away_level.z_value) //I'll have to refactor gateway shitcode before multi-away support.
+				new_gate = G
+				break
+		//Link station gate with away gate and remove wait time.
+		GLOB.the_gateway.awaygate = new_gate
+		GLOB.the_gateway.wait = world.time
