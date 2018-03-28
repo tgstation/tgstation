@@ -72,10 +72,10 @@
 	else
 		to_chat(owner, "<span class='cultitalic'>You are already invoking blood magic!")
 		return
-	if(do_after(owner, 100 - rune*65, target = owner))
+	if(do_after(owner, 100 - rune*60, target = owner))
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.bleed(30 - rune*25)
+			H.bleed(40 - rune*32)
 		var/datum/action/innate/cult/blood_spell/new_spell = new BS(owner)
 		new_spell.Grant(owner, src)
 		spells += new_spell
@@ -177,6 +177,7 @@
 	desc = "<u>A sinister spell used to convert:</u><br>Plasteel into runed metal<br>25 metal into a construct shell<br>Cyborgs directly into constructs<br>Cyborg shells into construct shells<br>Airlocks into runed airlocks (harm intent)"
 	button_icon_state = "transmute"
 	magic_path = "/obj/item/melee/blood_magic/construction"
+	health_cost = 10
 
 /datum/action/innate/cult/blood_spell/equipment
 	name = "Summon Equipment"
@@ -384,9 +385,9 @@
 		user.whisper(invocation, language = /datum/language/common)
 	if(health_cost)
 		if(user.active_hand_index == 1)
-			user.apply_damage(health_cost, BRUTE, "l_arm")
+			user.apply_damage(health_cost, BRUTE, BODY_ZONE_L_ARM)
 		else
-			user.apply_damage(health_cost, BRUTE, "r_arm")
+			user.apply_damage(health_cost, BRUTE, BODY_ZONE_R_ARM)
 	if(uses <= 0)
 		qdel(src)
 	else if(source)
@@ -414,7 +415,7 @@
 			target.visible_message("<span class='warning'>[L]'s holy weapon absorbs the light!</span>", \
 								   "<span class='userdanger'>Your holy weapon absorbs the blinding light!</span>")
 		else
-			L.Knockdown(180)
+			L.Knockdown(160)
 			L.flash_act(1,1)
 			if(issilicon(target))
 				var/mob/living/silicon/S = L
@@ -727,17 +728,17 @@
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(iscultist(user))
-		var/list/options = list("Blood Spear (200)", "Blood Bolt Barrage (400)", "Blood Beam (600)")
+		var/list/options = list("Blood Spear (150)", "Blood Bolt Barrage (300)", "Blood Beam (500)")
 		var/choice = input(user, "Choose a greater blood rite...", "Greater Blood Rites") as null|anything in options
 		if(!choice)
 			to_chat(user, "<span class='cultitalic'>You decide against conducting a greater blood rite.</span>")
 			return
 		switch(choice)
-			if("Blood Spear (200)")
-				if(uses < 200)
+			if("Blood Spear (150)")
+				if(uses < 150)
 					to_chat(user, "<span class='cultitalic'>You need 200 charges to perform this rite.</span>")
 				else
-					uses -= 200
+					uses -= 150
 					var/turf/T = get_turf(user)
 					qdel(src)
 					var/datum/action/innate/cult/spear/S = new(user)
@@ -749,24 +750,24 @@
 					else
 						user.visible_message("<span class='warning'>A [rite.name] appears at [user]'s feet!</span>", \
 							 "<span class='cultitalic'>A [rite.name] materializes at your feet.</span>")
-			if("Blood Bolt Barrage (400)")
-				if(uses < 400)
+			if("Blood Bolt Barrage (300)")
+				if(uses < 300)
 					to_chat(user, "<span class='cultitalic'>You need 400 charges to perform this rite.</span>")
 				else
 					var/obj/rite = new /obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood()
-					uses -= 400
+					uses -= 300
 					qdel(src)
 					if(user.put_in_hands(rite))
 						to_chat(user, "<span class='cult'><b>Your hands glow with power!</b></span>")
 					else
 						to_chat(user, "<span class='cultitalic'>You need a free hand for this rite!</span>")
 						qdel(rite)
-			if("Blood Beam (600)")
-				if(uses < 600)
+			if("Blood Beam (500)")
+				if(uses < 500)
 					to_chat(user, "<span class='cultitalic'>You need 600 charges to perform this rite.</span>")
 				else
 					var/obj/rite = new /obj/item/blood_beam()
-					uses -= 600
+					uses -= 500
 					qdel(src)
 					if(user.put_in_hands(rite))
 						to_chat(user, "<span class='cultlarge'><b>Your hands glow with POWER OVERWHELMING!!!</b></span>")

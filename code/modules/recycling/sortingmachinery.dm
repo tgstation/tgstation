@@ -8,7 +8,7 @@
 	var/giftwrapped = FALSE
 	var/sortTag = 0
 
-/obj/structure/bigDelivery/attack_hand(mob/user)
+/obj/structure/bigDelivery/interact(mob/user)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	qdel(src)
 

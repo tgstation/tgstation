@@ -91,6 +91,7 @@ PROBABILITY EXTENDED 0
 PROBABILITY SECRET_EXTENDED 0
 PROBABILITY DEVIL 0
 PROBABILITY DEVIL_AGENTS 0
+PROBABILITY CLOWNOPS 0
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -268,6 +269,9 @@ ALLOW_AI
 #DISABLE_PEACEBORG
 
 ## AWAY MISSIONS ###
+
+## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
+#ROUNDSTART_AWAY
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.

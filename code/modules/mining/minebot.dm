@@ -115,6 +115,9 @@
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
+	. = ..()
+	if(.)
+		return
 	if(M.a_intent == INTENT_HELP)
 		toggle_mode()
 		switch(mode)
@@ -123,7 +126,6 @@
 			if(MINEDRONE_ATTACK)
 				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 		return
-	..()
 
 /mob/living/simple_animal/hostile/mining_drone/CanPass(atom/movable/O)
 	if(istype(O, /obj/item/projectile/kinetic))
@@ -139,7 +141,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
 	mode = MINEDRONE_COLLECT
-	idle_vision_range = 9
+	vision_range = 9
 	search_objects = 2
 	wander = TRUE
 	ranged = FALSE
@@ -150,7 +152,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
 	mode = MINEDRONE_ATTACK
-	idle_vision_range = 7
+	vision_range = 7
 	search_objects = 0
 	wander = FALSE
 	ranged = TRUE

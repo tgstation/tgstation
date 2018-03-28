@@ -215,7 +215,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		tail = new mutanttail()
 		tail.Insert(C)
 
-	if(C.get_bodypart("head"))
+	if(C.get_bodypart(BODY_ZONE_HEAD))
 		if(eyes && (replace_current || !should_have_eyes))
 			eyes.Remove(C,1)
 			QDEL_NULL(eyes)
@@ -302,7 +302,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
 
-	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
+	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 	if(!HD) //Decapitated
 		return
 
@@ -445,7 +445,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/list/standing = list()
 
-	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
+	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 
 	if(HD && !(H.has_trait(TRAIT_HUSK)))
 		// lipstick
@@ -510,7 +510,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!mutant_bodyparts)
 		return
 
-	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
+	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 
 	if("tail_lizard" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -742,7 +742,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return 0
 			if( !(I.slot_flags & SLOT_MASK) )
 				return 0
-			if(!H.get_bodypart("head"))
+			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return 0
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_neck)
@@ -787,7 +787,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(H.belt)
 				return 0
 
-			var/obj/item/bodypart/O = H.get_bodypart("chest")
+			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
@@ -801,7 +801,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return 0
 			if( !(I.slot_flags & SLOT_EYES) )
 				return 0
-			if(!H.get_bodypart("head"))
+			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return 0
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_head)
@@ -809,7 +809,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return 0
 			if( !(I.slot_flags & SLOT_HEAD) )
 				return 0
-			if(!H.get_bodypart("head"))
+			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return 0
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_ears)
@@ -817,7 +817,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return 0
 			if( !(I.slot_flags & SLOT_EARS) )
 				return 0
-			if(!H.get_bodypart("head"))
+			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return 0
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_w_uniform)
@@ -830,7 +830,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(H.wear_id)
 				return 0
 
-			var/obj/item/bodypart/O = H.get_bodypart("chest")
+			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
@@ -844,7 +844,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(H.l_store)
 				return 0
 
-			var/obj/item/bodypart/O = H.get_bodypart("l_leg")
+			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_LEG)
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
@@ -860,7 +860,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(H.r_store)
 				return 0
 
-			var/obj/item/bodypart/O = H.get_bodypart("r_leg")
+			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_LEG)
 
 			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
@@ -969,14 +969,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
 		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
-		if(mood)
-			switch(mood.mood) //Alerts do_after delay based on how happy you are
-				if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
-					hunger_rate *= 0.9
-				if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
-					hunger_rate *= 0.8
-				if(MOOD_LEVEL_HAPPY4 to INFINITY)
-					hunger_rate *= 0.7
+		if(mood && mood.sanity > SANITY_DISTURBED)
+			hunger_rate *= max(0.5, 1 - 0.002 * mood.sanity) //0.85 to 0.75
 
 		if(H.satiety > 0)
 			H.satiety--
@@ -985,6 +979,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(prob(round(-H.satiety/40)))
 				H.Jitter(5)
 			hunger_rate = 3 * HUNGER_FACTOR
+		hunger_rate *= H.physiology.hunger_mod
 		H.nutrition = max(0, H.nutrition - hunger_rate)
 
 
@@ -1011,31 +1006,24 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			to_chat(H, "<span class='notice'>You no longer feel vigorous.</span>")
 		H.metabolism_efficiency = 1
 
-	GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			if(mood)
-				mood.add_event("nutrition", /datum/mood_event/nutrition/fat)
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fat)
 			H.throw_alert("nutrition", /obj/screen/alert/fat)
 		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-			if(mood)
-				mood.add_event("nutrition", /datum/mood_event/nutrition/wellfed)
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/wellfed)
 			H.clear_alert("nutrition")
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-			if(mood)
-				mood.add_event("nutrition", /datum/mood_event/nutrition/fed)
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/fed)
 			H.clear_alert("nutrition")
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-			if(mood)
-				mood.clear_event("nutrition")
+			H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "nutrition")
 			H.clear_alert("nutrition")
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			if(mood)
-				mood.add_event("nutrition", /datum/mood_event/nutrition/hungry)
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/hungry)
 			H.throw_alert("nutrition", /obj/screen/alert/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
-			if(mood)
-				mood.add_event("nutrition", /datum/mood_event/nutrition/starving)
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "nutrition", /datum/mood_event/nutrition/starving)
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
@@ -1144,12 +1132,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 		if(mood && !flight) //How can depression slow you down if you can just fly away from your problems?
-			switch(mood.mood)
-				if(-INFINITY to MOOD_LEVEL_SAD4)
+			switch(mood.sanity)
+				if(SANITY_INSANE to SANITY_CRAZY)
 					. += 1.5
-				if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
+				if(SANITY_CRAZY to SANITY_UNSTABLE)
 					. += 1
-				if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
+				if(SANITY_UNSTABLE to SANITY_DISTURBED)
 					. += 0.5
 
 		if(H.has_trait(TRAIT_FAT))
@@ -1377,7 +1365,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					user.add_mob_blood(H)
 
 		switch(hit_area)
-			if("head")
+			if(BODY_ZONE_HEAD)
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
@@ -1407,7 +1395,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						H.glasses.add_mob_blood(H)
 						H.update_inv_glasses()
 
-			if("chest")
+			if(BODY_ZONE_CHEST)
 				if(H.stat == CONSCIOUS && armor_block < 50)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
@@ -1464,7 +1452,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(CLONE)
 			H.adjustCloneLoss(damage * hit_percent * H.physiology.clone_mod)
 		if(STAMINA)
-			H.adjustStaminaLoss(damage * hit_percent * H.physiology.stamina_mod)
+			if(BP)
+				if(BP.receive_damage(0, 0, damage * hit_percent * H.physiology.stamina_mod))
+					H.update_stamina()
+			else
+				H.adjustStaminaLoss(damage * hit_percent * H.physiology.stamina_mod)
 		if(BRAIN)
 			H.adjustBrainLoss(damage * hit_percent * H.physiology.brain_mod)
 	return 1
@@ -1519,13 +1511,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.adjust_bodytemperature(natural*(1/(thermal_protection+1)) + min(thermal_protection * (loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX))
 
 	// +/- 50 degrees from 310K is the 'safe' zone, where no damage is dealt.
-	GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !H.has_trait(TRAIT_RESISTHEAT))
 		//Body temperature is too hot.
 		var/burn_damage
-		if(mood)
-			mood.clear_event("cold")
-			mood.add_event("hot", /datum/mood_event/hot)
+		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "cold")
+		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 		switch(H.bodytemperature)
 			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
 				H.throw_alert("temp", /obj/screen/alert/hot, 1)
@@ -1545,9 +1535,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.apply_damage(burn_damage, BURN)
 
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(GLOB.mutations_list[COLDRES] in H.dna.mutations))
-		if(mood)
-			mood.clear_event("hot")
-			mood.add_event("cold", /datum/mood_event/cold)
+		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "hot")
+		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.throw_alert("temp", /obj/screen/alert/cold, 1)
@@ -1561,9 +1550,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	else
 		H.clear_alert("temp")
-		if(mood)
-			mood.clear_event("cold")
-			mood.clear_event("hot")
+		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "cold")
+		H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "hot")
 
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
@@ -1657,7 +1645,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.adjust_bodytemperature(11)
 		else
 			H.adjust_bodytemperature(BODYTEMP_HEATING_MAX + (H.fire_stacks * 12))
-
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 
 /datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
 	if(H.has_trait(TRAIT_NOFIRE))

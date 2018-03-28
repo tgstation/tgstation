@@ -92,6 +92,8 @@ Class Procs:
 	pressure_resistance = 15
 	max_integrity = 200
 
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
+
 	var/stat = 0
 	var/use_power = IDLE_POWER_USE
 		//0 = dont run the auto
@@ -107,10 +109,10 @@ Class Procs:
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
 	var/atom/movable/occupant = null
-	var/interact_open = FALSE // Can the machine be interacted with when in maint/when the panel is open.
-	var/interact_offline = FALSE // Can the machine be interacted with while de-powered.
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
+
+	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 
 /obj/machinery/Initialize()
 	if(!armor)
@@ -127,6 +129,7 @@ Class Procs:
 	else
 		START_PROCESSING(SSfastprocess, src)
 	power_change()
+	AddComponent(/datum/component/redirect, list(COMSIG_ENTER_AREA), CALLBACK(src, .proc/power_change))
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
@@ -155,7 +158,7 @@ Class Procs:
 		new /obj/effect/temp_visual/emp(loc)
 	..()
 
-/obj/machinery/proc/open_machine(drop = 1)
+/obj/machinery/proc/open_machine(drop = TRUE)
 	state_open = TRUE
 	density = FALSE
 	if(drop)
@@ -207,25 +210,29 @@ Class Procs:
 /obj/machinery/proc/is_operational()
 	return !(stat & (NOPOWER|BROKEN|MAINT))
 
-/obj/machinery/proc/is_interactable()
-	if((stat & (NOPOWER|BROKEN)) && !interact_offline)
+/obj/machinery/can_interact(mob/user)
+	var/silicon = issiliconoradminghost(user)
+	if((stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE))
 		return FALSE
-	if(panel_open && !interact_open)
+	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
+		if(!silicon || !(interaction_flags_machine & INTERACT_MACHINE_OPEN_SILICON))
+			return FALSE
+	if(!silicon && (interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON))
+		return FALSE
+	else if(silicon && !(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
 		return FALSE
 	return TRUE
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+//Return a non FALSE value to interrupt attack_hand propagation to subtypes.
 /obj/machinery/interact(mob/user, special_state)
-	add_fingerprint(user)
-	if(special_state)
-		ui_interact(user, state = special_state)
-	else
-		ui_interact(user)
+	if(interaction_flags_machine & INTERACT_MACHINE_SET_MACHINE)
+		user.set_machine(src)
+	. = ..()
 
 /obj/machinery/ui_status(mob/user)
-	if(is_interactable())
+	if(can_interact(user))
 		return ..()
 	return UI_CLOSE
 
@@ -235,17 +242,14 @@ Class Procs:
 
 /obj/machinery/Topic(href, href_list)
 	..()
-	if(!is_interactable())
+	if(!can_interact(usr))
 		return 1
 	if(!usr.canUseTopic(src))
 		return 1
 	add_fingerprint(usr)
 	return 0
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 /obj/machinery/attack_paw(mob/living/user)
 	if(user.a_intent != INTENT_HARM)
@@ -256,32 +260,23 @@ Class Procs:
 		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		take_damage(4, BRUTE, "melee", 1)
 
+/obj/machinery/attack_robot(mob/user)
+	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !IsAdminGhost(user))
+		return FALSE
+	return _try_interact(user)
 
 /obj/machinery/attack_ai(mob/user)
+	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !IsAdminGhost(user))
+		return FALSE
 	if(iscyborg(user))// For some reason attack_robot doesn't work
-		var/mob/living/silicon/robot/R = user
-		if(R.client && R.client.eye == R && !R.low_power_mode)// This is to stop robots from using cameras to remotely control machines; and from using machines when the borg has no power.
-			return attack_hand(user)
+		return attack_robot(user)
 	else
-		return attack_hand(user)
+		return _try_interact(user)
 
-
-//set_machine must be 0 if clicking the machinery doesn't bring up a dialog
-/obj/machinery/attack_hand(mob/user, check_power = 1, set_machine = 1)
-	if(..())// unbuckling etc
-		return 1
-	if((user.lying || user.stat) && !IsAdminGhost(user))
-		return 1
-	if(!user.IsAdvancedToolUser() && !IsAdminGhost(user))
-		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return 1
-	if(!is_interactable())
-		return 1
-	if(set_machine)
-		user.set_machine(src)
-	interact(user)
-	add_fingerprint(user)
-	return 0
+/obj/machinery/_try_interact(mob/user)
+	if((interaction_flags_machine & INTERACT_MACHINE_WIRES_IF_OPEN) && panel_open && (attempt_wire_interaction(user) == WIRE_INTERACTION_BLOCK))
+		return TRUE
+	return ..()
 
 /obj/machinery/CheckParts(list/parts_list)
 	..()
@@ -359,7 +354,7 @@ Class Procs:
 	return 0
 
 /obj/proc/can_be_unfasten_wrench(mob/user, silent) //if we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
-	if(!isfloorturf(loc) && !anchored)
+	if(!(isfloorturf(loc) || istype(loc, /turf/open/indestructible)) && !anchored)
 		to_chat(user, "<span class='warning'>[src] needs to be on the floor to be secured!</span>")
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
@@ -431,8 +426,8 @@ Class Procs:
 			display_parts(user)
 		if(shouldplaysound)
 			W.play_rped_sound()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/proc/display_parts(mob/user)
 	to_chat(user, "<span class='notice'>It contains the following parts:</span>")
