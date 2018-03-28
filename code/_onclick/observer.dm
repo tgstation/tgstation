@@ -42,8 +42,6 @@
 
 	if(world.time <= next_move)
 		return
-	// You are responsible for checking config.ghost_interaction when you override this function
-	// Not all of them require checking, see below
 	A.attack_ghost(src)
 
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you

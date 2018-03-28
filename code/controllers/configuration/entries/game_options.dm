@@ -203,8 +203,6 @@
 	config_entry_value = 18000
 	min_val = 0
 
-/datum/config_entry/flag/ghost_interaction
-
 /datum/config_entry/flag/silent_ai
 /datum/config_entry/flag/silent_borg
 

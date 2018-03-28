@@ -40,8 +40,6 @@
 			return FALSE
 		else
 			return TRUE
-	else if(isobserver(user) && CONFIG_GET(flag/ghost_interaction))
-		return TRUE
 	return FALSE
 
 /obj/structure/chair/Destroy()
