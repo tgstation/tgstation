@@ -1,8 +1,0 @@
-author: "selea"
-delete-after: True
-changes: 
-  - rscadd: "a* pathfinder, coordinate pathfinder(accepts not ref to some obj, but it's abs coordinates) ,turf pointer(can give you ref to turf with given coordinates), turf scanner(can read letters on floor and contents of turf),material scaner(can read amounts of materials in machinery),material manipulator(to load/unload resources)"
-  - tweak: "now you can decide, if basic pathfinder should avoid obstacles, or not.Now demux push only desired output without unnecessary nulls,upgraded claw and local locator."
-  - balance: "reduced complexity cost of locomotors,abs/rel converters and basic pathfinders.Increased complexity of throwers,"
-  - bugfix: "Fixed bugs with cryptography, obstacle ref in locomotors, release pin in pullng claw."
-  - refactor: "add material tranfer proc to mat containers.refactored pathfinder SS to have separated queue for mobs and circuits to avoid spam."

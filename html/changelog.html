@@ -55,6 +55,100 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">28 March 2018</h2>
+			<h3 class="author">Dax Dupont updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">You no longer hit borgs with hats you want them to wear.</li>
+				<li class="rscadd">Viva la borg, engieborgs can now wear hats</li>
+				<li class="rscadd">Borgs can now wear more hats.</li>
+				<li class="bugfix">After a space OSHA inspection you can now reach the safe and fire extinguisher in the omega detective office.</li>
+				<li class="bugfix">Makes it so you don't accidently trigger the fun balloon twice.</li>
+			</ul>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Pubbystation's signs to evac have been made more obvious.</li>
+				<li class="tweak">Plastic flaps are now airtight.</li>
+				<li class="spellcheck">Bluespace crystals now show their proper name during machine construction.</li>
+			</ul>
+			<h3 class="author">EvilJackCarver updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Edited a certain part of the disco machine's dance to only target carbon-based (mob/living/carbon) lifeforms. pAI units will no longer spam chat with rest notifications when in range of the disco machine.</li>
+			</ul>
+			<h3 class="author">Frozenguy5 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">The monkeycap has been increased to 64.</li>
+			</ul>
+			<h3 class="author">JohnGinnane updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">A guillotine has been added to the game. Can be crafted. If the blade isn't dull, will cut through human necks like a hot knife through butter. Use a whetstone to sharpen it if it becomes dull.</li>
+			</ul>
+			<h3 class="author">MrDoomBringer updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">All stations have been outfitted with brand new Chem Masters! They have nicer sprites now!</li>
+			</ul>
+			<h3 class="author">Naksu updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Chem dispensers no longer take hours to recharge</li>
+				<li class="tweak">chem dispensers also now use energy from the grid in proportion with the amount charged</li>
+				<li class="admin">Admins now get a follow link when a revenant spawns.</li>
+			</ul>
+			<h3 class="author">Pipe fixes updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Runtime in components_base.dm,91 what cause atmos machinery connection problems.</li>
+				<li class="bugfix">Pipes release air in turf on Destroy(), again.</li>
+				<li class="bugfix">Pipeline now cant be annihilated by merge(src). Pipes don't lose air on connecting more than to one pipe.</li>
+			</ul>
+			<h3 class="author">Robustin updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">Monkey AI is now much more efficient and no longer full of terrible, wasteful processes</li>
+				<li class="tweak">Monkeys will now move more and will only focus on nearby objects for stealing. This should result in more natural monkey behavior instead of the monkey staring furiously at random shit in the room for 5 minutes until it has a 50 item blacklist of shit it will refuse to touch from then on out.</li>
+				<li class="tweak">The chance for a monkey to attack you for pulling it will now only happen when execute the initial grab, instead of a check that happens every tick.</li>
+			</ul>
+			<h3 class="author">ShizCalev updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Cleaned up the preferences panel a bit to be a bit more user friendly.</li>
+			</ul>
+			<h3 class="author">SpaceManiac updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Unwrenching and re-placing directional signs now keeps their direction, and backings may be rotated in-hand rather than by pulling.</li>
+			</ul>
+			<h3 class="author">XDTM updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Bees (and similar swarming mobs)  are now able to occupy the same tile as other bees! When doing so, their icons are offset to make them seem like a proper swarm.</li>
+				<li class="tweak">Bees will now dodge bullets not directly aimed at them. Why are you firing guns at bees</li>
+				<li class="bugfix">Sniper rifles will no longer oneshot mechs (although they still deal high damage).</li>
+				<li class="bugfix">Sniper rifles no longer knock down walls they hit.</li>
+			</ul>
+			<h3 class="author">Xhuis updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added the Family Heirloom trait. This makes you spawn with a special object on your person; if you don't have it with you, you will gain a mood debuff.</li>
+				<li class="rscadd">Added the Nyctophobia trait. This makes you walk slowly in complete darkness, and gain a mood debuff from the fear!</li>
+				<li class="rscadd">Added the Monochromacy trait, which makes you perceive (almost) the entire world in black-and-white.</li>
+				<li class="balance">Social Anxiety's trigger frequency is now correlated to the number of people near you.</li>
+				<li class="bugfix">Slimepeople now transfer their roundstart traits when swapping bodies.</li>
+			</ul>
+			<h3 class="author">YPOQ updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Machine power will now update when moving from powered to unpowered areas and vice versa.</li>
+			</ul>
+			<h3 class="author">iskyp updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">night vision goggles no longer overwrite thermal eyes. nvg eyes no longer overwrite thermal goggles.</li>
+			</ul>
+			<h3 class="author">selea updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">a* pathfinder, coordinate pathfinder(accepts not ref to some obj, but it's abs coordinates) ,turf pointer(can give you ref to turf with given coordinates), turf scanner(can read letters on floor and contents of turf),material scaner(can read amounts of materials in machinery),material manipulator(to load/unload resources)</li>
+				<li class="tweak">now you can decide, if basic pathfinder should avoid obstacles, or not.Now demux push only desired output without unnecessary nulls,upgraded claw and local locator.</li>
+				<li class="balance">reduced complexity cost of locomotors,abs/rel converters and basic pathfinders.Increased complexity of throwers,</li>
+				<li class="bugfix">Fixed bugs with cryptography, obstacle ref in locomotors, release pin in pullng claw.</li>
+				<li class="refactor">add material tranfer proc to mat containers.refactored pathfinder SS to have separated queue for mobs and circuits to avoid spam.</li>
+				<li class="tweak">Now recycler can butcher mobs and saw tree logs.</li>
+			</ul>
+			<h3 class="author">yorii updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Science goggles can now detect reagents in grenades.</li>
+			</ul>
+
 			<h2 class="date">24 March 2018</h2>
 			<h3 class="author">Davidj361 updated:</h3>
 			<ul class="changes bgimages16">
@@ -2034,163 +2128,6 @@
 			<h3 class="author">ninjanomnom updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">Loaded templates now get placed on top of existing terrain so as to preserve baseturfs. This fixes survival pods walls breaking to lava as well as allows some future fixes.</li>
-			</ul>
-
-			<h2 class="date">24 January 2018</h2>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed missing wheat fridge on omega and removes a duplicate pipe.</li>
-				<li class="rscadd">Beakers and beaker-like objects now get put in your hand on ejection from chemistry devices.</li>
-			</ul>
-			<h3 class="author">Shadowlight213 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed eye damage not being applied if it was exactly 3.</li>
-			</ul>
-			<h3 class="author">YPOQ updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Emergency lights will give off light again</li>
-			</ul>
-			<h3 class="author">ninjanomnom updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Pointing at squeaky things doesn't make them squeak anymore.</li>
-			</ul>
-
-			<h2 class="date">23 January 2018</h2>
-			<h3 class="author">Cruix updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">engine goggles set to t-ray mode will no longer show pipes with the wrong rotation.</li>
-				<li class="bugfix">cables now show up on t-ray scans.</li>
-			</ul>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed missing tile under autolathes</li>
-			</ul>
-			<h3 class="author">MrDoomBringer updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">NanoTrasen's Creative Psychology Initiative has brought new training to all crewmembers to foster rapid, innovative problem-solving! You can now kill yourself in so many more ways!</li>
-				<li class="rscadd">The RnD department can now develop firmware upgrades to the Express Supply Console, unlocking advanced cargo drop pods!</li>
-			</ul>
-			<h3 class="author">Naksu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">removed a bunch of unnecessary vars, combining them into a bitfield</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed occasional runtimes when ion storms or overflow would replace an existing law.</li>
-			</ul>
-			<h3 class="author">WJohnston updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Space syndie listening post now has a real microwave, and a book management console. Lava listening post comms room intercom now no longer starts with broadcast on.</li>
-				<li class="rscadd">the syndicate drop ship and fighter pods from the caravan ambush can now be flown to the syndicate listening post. The fighter pods also now have xray cameras because regular ones were super useless.</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added Regenerative Jelly, made with tricordrazine and slime jelly. It regenerates a bit faster, and won't harm jellypeople.</li>
-				<li class="rscadd">Added Energized Jelly, made with teslium and jelly. It works as an anti-stun chemical for slimepeople and speeds up luminescents' power cooldown, but non-jellypeople will just get shocked.</li>
-				<li class="rscadd">Added Pyroxadone, made with cryoxadone and slime jelly. It's basically inverse cryoxadone: it heals faster the hotter your body temperature is.</li>
-				<li class="tweak">Cryoxadone no longer deals toxin damage to jellypeople.</li>
-				<li class="tweak">Purple Slime Extracts no longer have their sugar->slime jelly reaction (obsolete with extract grinding), and instead have a blood->regen jelly reaction.</li>
-				<li class="tweak">Purple Extract's major activation by Luminescents now give regenerative jelly instead of tricordrazine.</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Fake nuclear disks can only be identified by the captain, observers, nuclear operatives, seeing where the pinpointer points, or attempting to put it into a nuclear device.</li>
-				<li class="rscadd">Fake nuclear disks "respawn" on the station just like the real one.</li>
-			</ul>
-			<h3 class="author">kevinz000 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">pulling claw can now only passively grab</li>
-				<li class="bugfix">Infrared beams now update instantly.</li>
-			</ul>
-			<h3 class="author">ninjanomnom updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Changeling clothing can get bloodied again.</li>
-			</ul>
-			<h3 class="author">the hatchet man (i eat garbage code) updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">you shitlords picked the wrong virtual anime tits to fuck so im takin away your space bases experimental: lets be fair all you guys did in those was jack off to hentai, and not real man's gachimuchi</li>
-			</ul>
-
-			<h2 class="date">22 January 2018</h2>
-			<h3 class="author">DaedalusGame updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">foam and smoke now get 4x the reagents as they should according to the comments</li>
-				<li class="bugfix">fixes pyrosium and cryostylane not heating or cooling humans at all</li>
-				<li class="bugfix">fixes cryostylane cooling beakers to negative kelvin, it's now limited to what the description says</li>
-				<li class="bugfix">fixes cryostylane cooling people to negative body temperature</li>
-				<li class="code_imp">removed redundant check in trans_to</li>
-				<li class="code_imp">fixes a runtime when total_volume is 0 in copy_to</li>
-				<li class="tweak">Gas reagents (o2, plasma, ...) now dump out gas based on container temperature instead of room temperature</li>
-			</ul>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Fans of clown photography have successfully lobbied Nanotrasen to include camera and camera accessories designs in the autolathe.</li>
-				<li class="tweak">Brings material values for the camera in line with other devices.</li>
-				<li class="tweak">The tapes printed by autolathes now come in random colors.</li>
-			</ul>
-			<h3 class="author">Dax Dupont & Coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Praise the lord for he has granted thy chaplains, wizards, revenants and eminences with holy vision. They can now see blessed tiles.</li>
-			</ul>
-			<h3 class="author">MMMiracles updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Syndicate and pirate mobs now give off light when appropriate</li>
-			</ul>
-			<h3 class="author">More Robust Than You updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed monkey teams</li>
-				<li class="tweak">The Lepidopterian language now has less spaces in it</li>
-			</ul>
-			<h3 class="author">Robustin updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed monkeys slowly freezing to death</li>
-			</ul>
-			<h3 class="author">ShizCalev updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Clockcultists and revolutionaries can no longer be mindswapped.</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="refactor">Weather and certain events have been updated to use Z traits.</li>
-				<li class="bugfix">The Staff of Storms now correctly starts and ends storms if used from inside lockers.</li>
-				<li class="bugfix">Weather telegraph messages are now shown to those inside lockers and mechs.</li>
-				<li class="bugfix">Radio jammers no longer affect other z-levels.</li>
-			</ul>
-			<h3 class="author">Tlaltecuhtli updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">min player req for rev is 30 now</li>
-			</ul>
-			<h3 class="author">Xhuis updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Emergency lights now function correctly.</li>
-			</ul>
-			<h3 class="author">deathride58 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">Light fixtures no longer use hardcoded values for their power and colour.</li>
-			</ul>
-			<h3 class="author">ninjanomnom updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Functions that aren't intending on actually moving the shuttle yet don't send error messages to admins anymore when seeing if a shuttle *can* move.</li>
-			</ul>
-			<h3 class="author">scrubs2009 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Candles last longer</li>
-			</ul>
-			<h3 class="author">uraniummeltdown updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Bananium shows up on mining scanners again</li>
-			</ul>
-
-			<h2 class="date">21 January 2018</h2>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Moth wings will now respect your preferences.</li>
-			</ul>
-			<h3 class="author">WJohnston updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">We've lost contact with one of our trade caravans in your sector, be on the lookout for possible enemy activity.</li>
-				<li class="rscadd">Redesigned the syndicate ambush space ruin. It now boasts multiple flyable shuttles and looks a lot prettier.</li>
-				<li class="imageadd">Wirecutter greyscaling is now less ugly</li>
 			</ul>
 		</div>
 

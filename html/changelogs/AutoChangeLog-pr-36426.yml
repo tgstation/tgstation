@@ -1,7 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - rscadd: "Added the Family Heirloom trait. This makes you spawn with a special object on your person; if you don't have it with you, you will gain a mood debuff."
-  - rscadd: "Added the Nyctophobia trait. This makes you walk slowly in complete darkness, and gain a mood debuff from the fear!"
-  - rscadd: "Added the Monochromacy trait, which makes you perceive (almost) the entire world in black-and-white."
-  - balance: "Social Anxiety's trigger frequency is now correlated to the number of people near you."
