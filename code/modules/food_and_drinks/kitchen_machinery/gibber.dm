@@ -45,7 +45,7 @@
 		add_overlay("gridle")
 
 /obj/machinery/gibber/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/gibber/container_resist(mob/living/user)
 	go_out()
@@ -54,6 +54,9 @@
 	go_out()
 
 /obj/machinery/gibber/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(operating)

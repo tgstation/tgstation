@@ -42,8 +42,8 @@
 			D.visible_message("<span class='danger'>[A] [atk_verb] [D]!</span>", \
 					  "<span class='userdanger'>[A] [atk_verb] you!</span>")
 			playsound(get_turf(D), 'sound/weapons/punch1.ogg', 40, 1, -1)
-			D.apply_damage(rand(5,10), BRUTE, "head")
-			A.apply_damage(rand(5,10), BRUTE, "head")
+			D.apply_damage(rand(5,10), BRUTE, BODY_ZONE_HEAD)
+			A.apply_damage(rand(5,10), BRUTE, BODY_ZONE_HEAD)
 			if(!istype(D.head,/obj/item/clothing/head/helmet/) && !istype(D.head,/obj/item/clothing/head/hardhat))
 				D.adjustBrainLoss(5)
 			A.Stun(rand(10,45))

@@ -13,6 +13,7 @@
 	req_access = list(ACCESS_MINERAL_STOREROOM)
 	speed_process = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_redemption
+	layer = BELOW_OBJ_LAYER
 	var/req_access_reclaim = ACCESS_MINING_STATION
 	var/obj/item/card/id/inserted_id
 	var/points = 0
@@ -188,11 +189,6 @@
 	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
 	..()
-
-/obj/machinery/mineral/ore_redemption/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
 
 /obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

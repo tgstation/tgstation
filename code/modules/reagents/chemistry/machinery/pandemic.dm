@@ -122,9 +122,9 @@
 
 	icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
 	if(wait)
-		cut_overlays()
-	else
 		add_overlay("waitlight")
+	else
+		cut_overlays()
 
 /obj/machinery/computer/pandemic/proc/eject_beaker()
 	if(beaker)

@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the description of the Cargo Express Console. Cargo Drop Pod orders aren't double-priced any more!"

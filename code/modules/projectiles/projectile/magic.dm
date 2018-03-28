@@ -165,7 +165,7 @@
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 				Robot.clear_inherent_laws(0)
 				Robot.clear_zeroth_law(0)
-
+        
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
 
@@ -327,6 +327,7 @@
 	nodamage = 0
 	armour_penetration = 0
 	flag = "magic"
+	hitsound = 'sound/weapons/barragespellhit.ogg'
 
 /obj/item/projectile/magic/arcane_barrage/on_hit(target)
 	if(ismob(target))

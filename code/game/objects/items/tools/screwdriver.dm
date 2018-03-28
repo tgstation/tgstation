@@ -73,7 +73,7 @@
 /obj/item/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
-	if(user.zone_selected != "eyes" && user.zone_selected != "head")
+	if(user.zone_selected != BODY_ZONE_PRECISE_EYES && user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
 	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 		M = user

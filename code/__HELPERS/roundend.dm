@@ -504,7 +504,7 @@
 /datum/controller/subsystem/ticker/proc/save_admin_data()
 	if(CONFIG_GET(flag/admin_legacy_system)) //we're already using legacy system so there's nothing to save
 		return
-	else if(load_admins()) //returns true if there was a database failure and the backup was loaded from
+	else if(load_admins(TRUE)) //returns true if there was a database failure and the backup was loaded from
 		return
 	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
 	query_admin_rank_update.Execute()

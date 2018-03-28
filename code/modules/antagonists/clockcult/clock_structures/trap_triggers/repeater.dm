@@ -7,6 +7,9 @@
 	icon_state = "repeater"
 
 /obj/structure/destructible/clockwork/trap/trigger/repeater/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!is_servant_of_ratvar(user))
 		return
 	if(!isprocessing)

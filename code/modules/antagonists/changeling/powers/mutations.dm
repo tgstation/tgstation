@@ -43,9 +43,9 @@
 		return
 	var/limb_regen = 0
 	if(user.active_hand_index % 2 == 0) //we regen the arm before changing it into the weapon
-		limb_regen = user.regenerate_limb("r_arm", 1)
+		limb_regen = user.regenerate_limb(BODY_ZONE_R_ARM, 1)
 	else
-		limb_regen = user.regenerate_limb("l_arm", 1)
+		limb_regen = user.regenerate_limb(BODY_ZONE_L_ARM, 1)
 	if(limb_regen)
 		user.visible_message("<span class='warning'>[user]'s missing arm reforms, making a loud, grotesque sound!</span>", "<span class='userdanger'>Your arm regrows, making a loud, crunchy sound and giving you great pain!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		user.emote("scream")
@@ -307,7 +307,7 @@
 		for(var/obj/item/I in H.held_items)
 			if(I.is_sharp())
 				C.visible_message("<span class='danger'>[H] impales [C] with [H.p_their()] [I.name]!</span>", "<span class='userdanger'>[H] impales you with [H.p_their()] [I.name]!</span>")
-				C.apply_damage(I.force, BRUTE, "chest")
+				C.apply_damage(I.force, BRUTE, BODY_ZONE_CHEST)
 				H.do_item_attack_animation(C, used_item = I)
 				H.add_mob_blood(C)
 				playsound(get_turf(H),I.hitsound,75,1)

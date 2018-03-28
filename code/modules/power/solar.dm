@@ -189,10 +189,6 @@
 	var/tracker = 0
 	var/glass_type = null
 
-/obj/item/solar_assembly/attack_hand(mob/user)
-	if(!anchored && isturf(loc)) // You can't pick it up
-		..()
-
 // Give back the glass type we were supplied with
 /obj/item/solar_assembly/proc/give_glass(device_broken)
 	if(device_broken)
@@ -430,7 +426,7 @@
 				A.anchored = TRUE
 				qdel(src)
 	else if(user.a_intent != INTENT_HARM && !(I.flags_1 & NOBLUDGEON_1))
-		src.attack_hand(user)
+		attack_hand(user)
 	else
 		return ..()
 

@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Pubbystation: The atmos mix tank and N2 filter should now work properly."
