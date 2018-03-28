@@ -1,2 +1,2 @@
 /obj/machinery/smartfridge/drying_rack
-	icon = 'hippiestation/icons/obj/hydroponics/equipment.dmi'
+	icon_hippie = 'hippiestation/icons/obj/hydroponics/equipment.dmi'

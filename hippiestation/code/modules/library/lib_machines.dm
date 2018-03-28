@@ -1,5 +1,5 @@
 /obj/machinery/libraryscanner
-	icon = 'hippiestation/icons/obj/library.dmi'
+	icon_hippie = 'hippiestation/icons/obj/library.dmi'
 
 /obj/machinery/bookbinder
-	icon = 'hippiestation/icons/obj/library.dmi'
+	icon_hippie = 'hippiestation/icons/obj/library.dmi'

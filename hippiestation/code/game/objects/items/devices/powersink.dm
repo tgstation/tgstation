@@ -1,2 +1,2 @@
 /obj/item/device/powersink
-	icon = 'hippiestation/icons/obj/device.dmi'
+	icon_hippie = 'hippiestation/icons/obj/device.dmi'

@@ -1,5 +1,5 @@
 /obj/machinery/power/port_gen
-	icon = 'hippiestation/icons/obj/power.dmi'
+	icon_hippie = 'hippiestation/icons/obj/power.dmi'
 	icon_state = "portgen0"
 
 /obj/machinery/power/port_gen/pacman/super
