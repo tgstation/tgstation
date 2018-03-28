@@ -11,6 +11,7 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = FALSE
+	baseturfs = /turf/open/space
 	var/attachment_holes = TRUE
 
 /turf/open/floor/plating/examine(mob/user)

@@ -5,7 +5,6 @@
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
-	baseturfs = /turf/open/floor/plating
 	floor_tile = /obj/item/stack/rods
 
 /turf/open/floor/engine/examine(mob/user)
