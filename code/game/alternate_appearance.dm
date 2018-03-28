@@ -113,6 +113,19 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	return FALSE
 
+/datum/atom_hud/alternate_appearance/basic/AI
+
+/datum/atom_hud/alternate_appearance/basic/AI/New()
+	..()
+	for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
+		if(mobShouldSee(AI))
+			add_hud_to(AI)
+
+/datum/atom_hud/alternate_appearance/basic/AI/mobShouldSee(mob/M)
+	if(isAI(M))
+		return TRUE
+	return FALSE
+
 /datum/atom_hud/alternate_appearance/basic/observers
 	add_ghost_version = FALSE //just in case, to prevent infinite loops
 
