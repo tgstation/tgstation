@@ -89,12 +89,15 @@
 
 /datum/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
+	.["tool_behaviour"] = list()
 	for(var/obj/item/I in get_environment(user))
 		if(I.flags_2 & HOLOGRAM_2)
 			continue
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			.[I.type] += S.amount
+		else if(I.tool_behaviour)
+			.["tool_behaviour"] += I.tool_behaviour
 		else
 			if(istype(I, /obj/item/reagent_containers))
 				var/obj/item/reagent_containers/RC = I
@@ -108,6 +111,7 @@
 		return TRUE
 	var/list/possible_tools = list()
 	var/list/present_qualities = list()
+	present_qualities |= contents["tool_behaviour"]
 	for(var/obj/item/I in user.contents)
 		if(istype(I, /obj/item/storage))
 			for(var/obj/item/SI in I.contents)
@@ -120,7 +124,7 @@
 		if(I.tool_behaviour)
 			present_qualities.Add(I.tool_behaviour)
 
-	possible_tools += contents
+	possible_tools |= contents
 
 	main_loop:
 		for(var/A in R.tools)
