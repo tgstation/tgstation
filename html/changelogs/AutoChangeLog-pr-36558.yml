@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - tweak: "Cleaned up the preferences panel a bit to be a bit more user friendly."
