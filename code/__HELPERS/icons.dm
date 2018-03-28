@@ -713,10 +713,18 @@ as a single icon. Useful for when you want to manipulate an icon via the above a
 The _flatIcons list is a cache for generated icon files.
 */
 
+#define GETFLAT_DEPTH_LIMIT 50
+#define GETFLAT_OVERLAY_LIMIT 50
+
 // Creates a single icon from a given /atom or /image.  Only the first argument is required.
-/proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
+/proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE, sanity = 0)
 	// We start with a blank canvas, otherwise some icon procs crash silently
 	var/icon/flat = icon('icons/effects/effects.dmi', "nothing") // Final flattened icon
+
+	if(GETFLAT_DEPTH_LIMIT > 50)
+		stack_trace("Above depth limit in getFlatIcon")
+		return flat
+
 	if(!A)
 		return flat
 	if(A.alpha <= 0)
@@ -798,6 +806,7 @@ The _flatIcons list is a cache for generated icon files.
 		copy.blend_mode = curblend
 		layers[copy] = A.layer
 
+
 	// Loop through the underlays, then overlays, sorting them into the layers list
 	var/list/process = A.underlays // Current list being processed
 	var/pSet=0 // Which list is being processed: 0 = underlays, 1 = overlays
@@ -806,6 +815,11 @@ The _flatIcons list is a cache for generated icon files.
 	var/currentLayer // Calculated layer that overlay appears on (special case for FLOAT_LAYER)
 	var/compare // The overlay 'add' is being compared against
 	var/cmpIndex // The index in the layers list of 'compare'
+
+	if(A.overlays.len > GETFLAT_OVERLAY_LIMIT)
+		stack_trace("Above overlay limit in getFlatIcon")
+		curIndex = process.len + 1 //Skip it
+
 	while(TRUE)
 		if(curIndex<=process.len)
 			current = process[curIndex]
@@ -867,7 +881,7 @@ The _flatIcons list is a cache for generated icon files.
 			curblend = BLEND_OVERLAY
 			add = icon(I.icon, I.icon_state, base_icon_dir)
 		else // 'I' is an appearance object.
-			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend, FALSE, no_anim)
+			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend, FALSE, no_anim, sanity = sanity + 1)
 
 		// Find the new dimensions of the flat icon to fit the added overlay
 		addX1 = min(flatX1, I.pixel_x+1)
@@ -896,6 +910,9 @@ The _flatIcons list is a cache for generated icon files.
 		return cleaned
 	else
 		return icon(flat, "", SOUTH)
+
+#undef GETFLAT_DEPTH_LIMIT
+#undef GETFLAT_OVERLAY_LIMIT
 
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
