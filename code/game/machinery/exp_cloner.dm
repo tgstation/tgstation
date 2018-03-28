@@ -49,9 +49,8 @@
 	H.add_trait(TRAIT_NOCRITDAMAGE, "cloning")
 	H.Unconscious(80)
 
-	var/list/candidates = pollCandidatesForMob("Do you want to play as [clonename]'s defective clone?", null, null, null, 100, H)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
+	if(LAZYLEN(GLOB.dead_mob_list))
+		var/mob/dead/observer/C = pick(GLOB.dead_mob_list)
 		H.key = C.key
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
