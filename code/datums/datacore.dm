@@ -217,7 +217,10 @@
 		var/obj/item/photo/photo_front = new()
 		var/obj/item/photo/photo_side = new()
 		for(var/D in show_directions) 
-			photo_front.photocreate(null, icon(image, dir = D))
+			if(D == SOUTH)
+				photo_front.photocreate(null, icon(image, dir = D))
+			if(D == WEST || D == EAST)
+				photo_side.photocreate(null, icon(image, dir = D))
 
 		//These records should ~really~ be merged or something
 		//General Record
