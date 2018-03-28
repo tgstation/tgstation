@@ -334,7 +334,7 @@
 		set_pin_data(IC_OUTPUT, 1, H.name)
 		set_pin_data(IC_OUTPUT, 2, H.desc)
 
-		if(istype(H, /mob/living/))
+		if(istype(H, /mob/living))
 			var/mob/living/M = H
 			var/msg = M.examine()
 			if(msg)
@@ -411,23 +411,23 @@
 	cooldown_per_use = 10
 
 /obj/item/integrated_circuit/input/turfscan/do_work()
-	var/atom/H = get_pin_data_as_type(IC_INPUT, 1, /atom)
-	var/turf/T = get_turf(src)
-	var/turf/E = get_turf(H)
-	var/AN = get_area_name(E)
-	if(!istype(H)) //Invalid input
+	var/atom/scanned_object = get_pin_data_as_type(IC_INPUT, 1, /atom)
+	var/turf/circuit_turf = get_turf(src)
+	var/turf/scanned_turf = get_turf(scanned_object)
+	var/area_name = get_area_name(scanned_turf)
+	if(!istype(scanned_object)) //Invalid input
 		return
 
-	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
-		var/list/cont = new()
-		if(E.contents.len)
-			for(var/i = 1 to E.contents.len)
-				var/atom/U = E.contents[i]
-				cont += WEAKREF(U)
-		set_pin_data(IC_OUTPUT, 1, cont)
-		set_pin_data(IC_OUTPUT, 3, AN)
+	if(scanned_object in view(circuit_turf)) // This is a camera. It can't examine things that it can't see.
+		var/list/turf_contents = new()
+		if(scanned_turf.contents.len)
+			for(var/i = 1 to scanned_turf.contents.len)
+				var/atom/U = scanned_turf.contents[i]
+				turf_contents += WEAKREF(U)
+		set_pin_data(IC_OUTPUT, 1, turf_contents)
+		set_pin_data(IC_OUTPUT, 3, area_name)
 		var/list/St = new()
-		for(var/obj/effect/decal/cleanable/crayon/I in E.contents)
+		for(var/obj/effect/decal/cleanable/crayon/I in scanned_turf.contents)
 			St.Add(I.icon_state)
 		if(St.len)
 			set_pin_data(IC_OUTPUT, 2, jointext(St, ",", 1, 0))

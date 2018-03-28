@@ -131,31 +131,31 @@
 	var/list/output_list2 = list()
 	var/list/output = list()
 
-	for(var/i1 in input_list)
+	for(var/input_item in input_list)
 		if(sample_list)
-			for(var/i2 in sample_list)
-				if(!isnull(i2))
-					if(istext(i1) && istext(i2) && findtext(i1, i2))
-						output += i1
-					if(istype(i1, /atom) && istext(i2))
-						var/atom/i1a = i1
-						if(istext(i2) && findtext(i1a.name, i2))
-							output += i1
-				if(!istext(i1))
-					if(i1 == i2)
-						output += i1
+			for(var/sample_item in sample_list)
+				if(!isnull(sample_item))
+					if(istext(input_item) && istext(sample_item) && findtext(input_item, sample_item))
+						output += input_item
+					if(istype(input_item, /atom) && istext(sample_item))
+						var/atom/input_item_atom = input_item
+						if(istext(sample_item) && findtext(input_item_atom.name, sample_item))
+							output += input_item
+				if(!istext(input_item))
+					if(input_item == sample_item)
+						output += input_item
 		else
 			if(!isnull(sample))
-				if(istext(i1) && istext(sample) && findtext(i1, sample))
-					output += i1
+				if(istext(input_item) && istext(sample) && findtext(input_item, sample))
+					output += input_item
 					continue
-				if(istype(i1, /atom) && istext(sample))
-					var/atom/i1a = i1
-					if(findtext(i1a.name, sample))
-						output += i1
-			if(!istext(i1))
-				if(i1 == sample)
-					output += i1
+				if(istype(input_item, /atom) && istext(sample))
+					var/atom/input_itema = input_item
+					if(findtext(input_itema.name, sample))
+						output += input_item
+			if(!istext(input_item))
+				if(input_item == sample)
+					output += input_item
 
 	output_list1.Remove(output)
 	output_list2.Add(output)

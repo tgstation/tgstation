@@ -23,7 +23,7 @@
 	var/use_cyborg_cell = TRUE
 	var/ext_next_use = 0
 	var/atom/collw
-	var/obj/item/card/id/access_card = null
+	var/obj/item/card/id/access_card
 	var/allowed_circuit_action_flags = IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE //which circuit flags are allowed
 	var/combat_circuits = 0 //number of combat cicuits in the assembly, used for diagnostic hud
 	var/long_range_circuits = 0 //number of long range cicuits in the assembly, used for diagnostic hud
@@ -92,7 +92,7 @@
 	STOP_PROCESSING(SScircuit, src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.remove_from_hud(src)
-	qdel(access_card)
+	QDEL_NULL(access_card)
 	return ..()
 
 /obj/item/device/electronic_assembly/process()
