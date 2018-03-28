@@ -1,0 +1,5 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Chem dispensers no longer take hours to recharge"
+  - tweak: "chem dispensers also now use energy from the grid in proportion with the amount charged"
