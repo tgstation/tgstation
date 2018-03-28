@@ -3282,10 +3282,11 @@
 /area/security/detectives_office)
 "agK" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
-/obj/item/hand_labeler,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
+	},
+/obj/machinery/computer/security/wooden_tv{
+	pixel_x = 2
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
@@ -3818,7 +3819,6 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "ahE" = (
-/obj/machinery/computer/security/wooden_tv,
 /obj/structure/table/wood,
 /obj/machinery/button/door{
 	id = "detectivewindows";
@@ -3834,6 +3834,8 @@
 /obj/structure/cable/white{
 	icon_state = "2-8"
 	},
+/obj/item/folder/red,
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "ahF" = (
@@ -27787,7 +27789,7 @@
 /area/chapel/main)
 "bgC" = (
 /obj/structure/table/wood/fancy,
-/obj/item/spellbook/oneuse/smoke,
+/obj/item/book/granter/spell/smoke,
 /obj/item/nullrod,
 /obj/item/organ/heart,
 /obj/item/reagent_containers/food/drinks/bottle/holywater,

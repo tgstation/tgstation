@@ -68006,7 +68006,7 @@
 /area/chapel/office)
 "cMa" = (
 /obj/structure/table/wood,
-/obj/item/spellbook/oneuse/smoke/lesser{
+/obj/item/book/granter/spell/smoke/lesser{
 	name = "mysterious old book of "
 	},
 /obj/item/reagent_containers/food/drinks/bottle/holywater{
