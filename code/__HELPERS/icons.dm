@@ -721,7 +721,7 @@ The _flatIcons list is a cache for generated icon files.
 	// We start with a blank canvas, otherwise some icon procs crash silently
 	var/icon/flat = icon('icons/effects/effects.dmi', "nothing") // Final flattened icon
 
-	if(GETFLAT_DEPTH_LIMIT > 50)
+	if(sanity > GETFLAT_DEPTH_LIMIT)
 		stack_trace("Above depth limit in getFlatIcon")
 		return flat
 
