@@ -457,6 +457,7 @@
 #include "code\game\atoms_movable.dm"
 #include "code\game\communications.dm"
 #include "code\game\data_huds.dm"
+#include "code\game\objmob.dm"
 #include "code\game\say.dm"
 #include "code\game\shuttle_engines.dm"
 #include "code\game\sound.dm"
