@@ -91,7 +91,7 @@
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 	add_fingerprint(user)
-	return ..()
+	// return ..() // Breaks the paperbin where the bin drops to the ground from your hand, bag, etc, when taking a paper or pen
 
 /obj/item/paper_bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/paper))
