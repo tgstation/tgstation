@@ -144,10 +144,10 @@
 	overheat = FALSE
 
 /obj/item/gun/energy/kinetic_accelerator/update_icon()
-	..()
-
 	if(empty_state && !can_shoot())
 		add_overlay(empty_state)
+	else
+		cut_overlays()
 
 //Casing
 /obj/item/ammo_casing/energy/kinetic
