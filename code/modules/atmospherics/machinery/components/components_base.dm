@@ -88,8 +88,6 @@ Pipenet stuff; housekeeping
 	parents[nodes.Find(A)] = reference
 
 /obj/machinery/atmospherics/components/returnPipenet(obj/machinery/atmospherics/A = nodes[1]) //returns parents[1] if called without argument
-	if(QDELETED(src))
-		warning(" returnPipenet called on QDELETED [src]  Nearby: ([x], [y], [z])")
 	return parents[nodes.Find(A)]
 
 /obj/machinery/atmospherics/components/replacePipenet(datum/pipeline/Old, datum/pipeline/New)
