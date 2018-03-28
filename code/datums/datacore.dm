@@ -199,7 +199,7 @@
 
 /datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
 	set waitfor = FALSE
-	var/list/show_directions = list(SOUTH, WEST)
+	var/static/list/show_directions = list(SOUTH, WEST)
 	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
 		var/assignment
 		if(H.mind.assigned_role)
@@ -283,7 +283,7 @@
 		locked += L
 	return
 
-/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C, show_directions = list())
+/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C, show_directions = list(SOUTH))
 	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 	var/datum/preferences/P
 	if(!C)
