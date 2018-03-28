@@ -21438,7 +21438,7 @@
 /area/medical/medbay/zone3)
 "aTo" = (
 /obj/structure/window/reinforced,
-/obj/machinery/clonepod,
+/obj/machinery/clonepod/experimental,
 /turf/open/floor/plasteel/vault/side,
 /area/medical/medbay/zone3)
 "aTp" = (
@@ -21868,7 +21868,8 @@
 	},
 /area/medical/medbay/zone3)
 "aUq" = (
-/obj/machinery/computer/cloning{
+/obj/machinery/computer/prototype_cloning{
+	icon_state = "computer";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/corner{

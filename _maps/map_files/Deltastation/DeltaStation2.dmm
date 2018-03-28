@@ -79566,25 +79566,25 @@
 	},
 /area/maintenance/department/medical)
 "dnl" = (
-/obj/machinery/clonepod,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
+/obj/machinery/clonepod/experimental,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/medical/genetics/cloning)
 "dnm" = (
-/obj/machinery/computer/cloning,
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
+/obj/machinery/computer/prototype_cloning,
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 1
 	},
