@@ -98,6 +98,13 @@
 	max_mod_capacity = 0
 	empty_state = null
 
+/obj/item/gun/energy/kinetic_accelerator/crossbow/update_icon()
+	if(!can_shoot())
+		add_overlay("[icon_state]_empty")
+	else
+		cut_overlays()
+
+
 /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
 	name = "candy corn crossbow"
 	desc = "A weapon favored by Syndicate trick-or-treaters."
