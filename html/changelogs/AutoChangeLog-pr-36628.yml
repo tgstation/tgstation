@@ -1,0 +1,5 @@
+author: "Davidj361"
+delete-after: True
+changes: 
+  - bugfix: "Ocular Wardens now target buckled and cuffed players/mobs, unless they are cuffed by a slab."
+  - tweak: "Cuck cultists can cuff already sec-cuffed targets with their slab cuff spell."
