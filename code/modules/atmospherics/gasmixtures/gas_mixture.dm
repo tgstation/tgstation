@@ -413,7 +413,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen,
 /datum/gas_mixture/react(turf/open/dump_location)
 	. = NO_REACTION
 	var/list/cached_gases = gases
-	if(!length(cached_gases-GLOB.nonreactive_gases))) //Uses nitrogen, oxygen, and co2 to quickly check if a reaction is possible
+	if(!length(cached_gases-GLOB.nonreactive_gases)) //Uses nitrogen, oxygen, and co2 to quickly check if a reaction is possible
 		return
 	reaction_results = new
 	var/temp = temperature
