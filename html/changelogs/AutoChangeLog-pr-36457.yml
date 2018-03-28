@@ -1,4 +1,0 @@
-author: "Tacolizard Forever"
-delete-after: True
-changes: 
-  - bugfix: "phobias will no longer recognize trigger words inside of other words"
