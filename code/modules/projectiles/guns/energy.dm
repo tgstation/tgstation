@@ -60,7 +60,7 @@
 	return ..()
 
 /obj/item/gun/energy/process()
-	if(selfcharge && cell && cell.percent < 100)
+	if(selfcharge && cell && cell.percent() < 100)
 		charge_tick++
 		if(charge_tick < charge_delay)
 			return
