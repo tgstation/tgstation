@@ -424,6 +424,7 @@
 
 /obj/item/projectile/beam/ctf
 	damage = 0
+	speed = 1.5
 	icon_state = "omnilaser"
 
 /obj/item/projectile/beam/ctf/prehit(atom/target)

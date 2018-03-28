@@ -9,6 +9,7 @@
 /obj/item/projectile/bullet/a50AE
 	name = ".50AE bullet"
 	damage = 60
+	speed = 1.5
 
 // .38 (Detective's Gun)
 
@@ -17,9 +18,11 @@
 	damage = 15
 	knockdown = 60
 	stamina = 50
+	speed = 2.0
 
 // .357 (Syndie Revolver)
 
 /obj/item/projectile/bullet/a357
 	name = ".357 bullet"
 	damage = 60
+	speed = 1.7

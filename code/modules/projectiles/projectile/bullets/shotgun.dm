@@ -1,7 +1,7 @@
 /obj/item/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
 	damage = 60
-	
+
 /obj/item/projectile/bullet/shotgun_slug/tengauge
 	name = "10g shotgun slug"
 	damage = 72.5
@@ -10,10 +10,12 @@
 	name = "beanbag slug"
 	damage = 5
 	stamina = 80
+	speed = 2.1
 
 /obj/item/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
 	damage = 20
+	speed = 1.6
 
 /obj/item/projectile/bullet/incendiary/shotgun/dragonsbreath
 	name = "dragonsbreath pellet"
