@@ -107,8 +107,8 @@ GLOBAL_LIST_INIT(huds, list(
 	if(!M || !M.client || !A)
 		return
 	if (ismob(A))
-		var/mob/m = A
-		if (m.digitalinvis && isAI(M))
+		var/mob/changeling = A
+		if (changeling.digitalinvis && isAI(M))
 			return
 	for(var/i in hud_icons)
 		if(A.hud_list[i])
