@@ -59699,9 +59699,6 @@
 /turf/open/floor/plasteel/vault,
 /area/medical/genetics/cloning)
 "cvw" = (
-/obj/machinery/clonepod{
-	pixel_y = 2
-	},
 /obj/item/device/radio/intercom{
 	freerange = 0;
 	frequency = 1459;
@@ -59709,6 +59706,7 @@
 	pixel_x = 29
 	},
 /obj/structure/window/reinforced,
+/obj/machinery/clonepod/experimental,
 /turf/open/floor/plasteel/vault,
 /area/medical/genetics/cloning)
 "cvx" = (
@@ -60205,11 +60203,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/obj/machinery/computer/cloning{
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/machinery/computer/prototype_cloning{
+	icon_state = "computer";
+	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 5

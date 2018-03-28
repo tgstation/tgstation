@@ -30699,18 +30699,19 @@
 	},
 /area/medical/genetics)
 "bzm" = (
-/obj/machinery/clonepod,
+/obj/machinery/clonepod/experimental,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 6
 	},
 /area/medical/genetics)
 "bzn" = (
-/obj/machinery/computer/cloning{
-	dir = 1
-	},
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/machinery/computer/prototype_cloning{
+	icon_state = "computer";
+	dir = 1
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 2

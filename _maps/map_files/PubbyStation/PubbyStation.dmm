@@ -26653,7 +26653,6 @@
 /turf/open/floor/grass,
 /area/medical/genetics)
 "bpy" = (
-/obj/machinery/clonepod,
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	freerange = 0;
@@ -26662,6 +26661,7 @@
 	name = "Station Intercom (Medbay)";
 	pixel_x = -30
 	},
+/obj/machinery/clonepod/experimental,
 /turf/open/floor/plasteel/blue,
 /area/medical/genetics)
 "bpz" = (
@@ -27349,7 +27349,8 @@
 /turf/open/floor/grass,
 /area/medical/genetics)
 "bqW" = (
-/obj/machinery/computer/cloning{
+/obj/machinery/computer/prototype_cloning{
+	icon_state = "computer";
 	dir = 4
 	},
 /turf/open/floor/plasteel/blue,
