@@ -40,7 +40,7 @@
 		else if(L.stat)
 			to_chat(ranged_ability_user, "<span class='neovgre'>\"There is use in shackling the dead, but for examples.\"</span>")
 			return TRUE
-		else if(L.handcuffed)
+		else if (istype(L.handcuffed,/obj/item/restraints/handcuffs/clockwork))
 			to_chat(ranged_ability_user, "<span class='neovgre'>\"They are already helpless, no?\"</span>")
 			return TRUE
 
@@ -49,7 +49,7 @@
 		"<span class='neovgre_small'>You begin shaping replicant alloy into manacles around [L]'s wrists...</span>")
 		to_chat(L, "<span class='userdanger'>[ranged_ability_user] begins forming manacles around your wrists!</span>")
 		if(do_mob(ranged_ability_user, L, 30))
-			if(!L.handcuffed)
+			if(!(istype(L.handcuffed,/obj/item/restraints/handcuffs/clockwork)))
 				L.handcuffed = new/obj/item/restraints/handcuffs/clockwork(L)
 				L.update_handcuffed()
 				to_chat(ranged_ability_user, "<span class='neovgre_small'>You shackle [L].</span>")
