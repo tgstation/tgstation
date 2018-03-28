@@ -120,7 +120,10 @@
 		if(I.tool_behaviour)
 			present_qualities.Add(I.tool_behaviour)
 
-	possible_tools += contents
+	possible_tools |= contents
+	for(var/obj/item/I in contents)
+		if(I.tool_behaviour)
+			present_qualities.Add(I.tool_behaviour)
 
 	main_loop:
 		for(var/A in R.tools)
@@ -128,7 +131,7 @@
 				continue
 			else
 				for(var/I in possible_tools)
-					if(ispath(I, A))
+					if(findtext("[I]", "[A]"))
 						continue main_loop
 			return FALSE
 	return TRUE
