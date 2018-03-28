@@ -266,7 +266,7 @@
 					return
 				crit_fail = FALSE
 				times_used = 0
-				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 				update_icon()
 				flash.crit_fail = TRUE
 				flash.update_icon()
