@@ -129,6 +129,9 @@
 /datum/config_entry/flag/enable_localhost_rank	//Gives the !localhost! rank to any client connecting from 127.0.0.1 or ::1
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/load_legacy_ranks_only	//Loads admin ranks only from legacy admin_ranks.txt, while enabled ranks are mirrored to the database
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/string/hostedby
 
 /datum/config_entry/flag/norespawn

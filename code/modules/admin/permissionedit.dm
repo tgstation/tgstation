@@ -82,6 +82,10 @@
 		if(D.rank in GLOB.protected_ranks)
 			to_chat(usr, "<span class='admin prefix'>Editing the flags of this rank is blocked by server configuration.</span>")
 			return
+	if(CONFIG_GET(flag/load_legacy_ranks_only) && (task == "rank" || task == "permissions"))
+		to_chat(usr, "<span class='admin prefix'>Database rank loading is disabled, only temporary changes can be made to an admin's rank or permissions.</span>")
+		use_db = FALSE
+		skip = TRUE
 	if(check_rights(R_DBRANKS, FALSE))
 		if(!skip)
 			if(!SSdbcore.Connect())
