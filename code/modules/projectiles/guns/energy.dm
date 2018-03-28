@@ -128,13 +128,13 @@
 	return
 
 /obj/item/gun/energy/update_icon()
-	..()
 	if(!automatic_charge_overlays)
 		return
 	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
 	if(ratio == old_ratio)
 		return
 	old_ratio = ratio
+	cut_overlays()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/iconState = "[icon_state]_charge"
 	var/itemState = null
