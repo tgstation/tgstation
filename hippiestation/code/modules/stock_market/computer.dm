@@ -1,2 +1,2 @@
 /obj/machinery/computer/stockexchange
-	icon = 'hippiestation/icons/obj/computer.dmi'
+	icon_hippie = 'hippiestation/icons/obj/computer.dmi'
