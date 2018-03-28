@@ -123,7 +123,7 @@
 
 
 /mob/living/simple_animal/hostile/netherworld/imlagre/death()
-	for(var/mob/living/i in linked_imlagre)
+	for(var/mob/living/i in src.linked_imlagre)
 		i.Beam(src,icon_state="lichbeam",time=10,maxdistance=INFINITY)
 	addtimer(CALLBACK(src, .proc/imlagre_revive), 100)
 	. = ..()
@@ -131,7 +131,7 @@
 /mob/living/simple_animal/hostile/netherworld/imlagre/proc/imlagre_revive()
 	var/itlives = FALSE
 	for(var/mob/living/simple_animal/hostile/netherworld/imlagre/i in viewers(7, src))
-		if(!(i in linked_imlagre))
+		if(!(i in src.linked_imlagre))
 			return
 		if(!i.stat) //if any of them are alive then REVIVE!!
 			itlives = TRUE
