@@ -27,10 +27,9 @@
 /datum/pipeline/process()
 	if(update)
 		if(reconcile)
-			reconcile_air()
+			update = reconcile_air()
 		else
-			air.update_pipeair(other_airs)
-		update = air.react()
+			update = air.update_pipeair(other_airs)
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
 	var/volume = 0
@@ -213,14 +212,14 @@
 	var/list/datum/gas_mixture/GL = list()
 	var/list/datum/pipeline/PL = list()
 	PL += src
-
 	for(var/i = 1; i <= PL.len; i++) //can't do a for-each here because we may add to the list within the loop
 		var/datum/pipeline/P = PL[i]
 		if(!P)
 			continue
-		GL += P.return_air()
-		if(P == src)
-			GL -= src
+		if(i == 1)
+			GL += P.other_airs
+		else
+			GL += P.return_air()
 		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
 			if(V.open)
 				PL |= V.parents[1]
@@ -229,8 +228,7 @@
 			if(C.connected_device)
 				GL += C.portableConnectorReturnAir()
 	reconcile = FALSE
-	air.update_pipeair(GL)
-
+	return air.update_pipeair(GL)
 
 /datum/gas_mixture/proc/update_pipeair(list/other_airs)
 	var/total_volume = volume
@@ -239,10 +237,42 @@
 		total_volume += G.volume
 		if(G.gases.len) //Average 0.6-0.8 false results for every proc call
 			merge(G)
-	if(gases.len) //Average 0.15 false results for every proc call
+	var/list/cached_gases = gases
+	. = NO_REACTION
+	if(cached_gases.len) //Average 0.15 false results for every proc call
 		for(var/i in other_airs)	//Update individual gas_mixtures by volume ratio
 			var/datum/gas_mixture/G = i
-			G.ratio_copy_from(src, G.volume/total_volume)
+			var/ratio = G.volume/total_volume
+			G.temperature = temperature
+			for(var/id in cached_gases)
+				ASSERT_GAS(id,G)
+				G.gases[id][MOLES] = ratio * cached_gases[id][MOLES]
 		var/ratio = volume/total_volume
-		for(var/id in gases)
-			gases[id][MOLES] *= ratio
+		for(var/id in cached_gases)
+			cached_gases[id][MOLES] *= ratio
+		if(!length(cached_gases-GLOB.nonreactive_gases))
+			return
+		reaction_results = new
+		var/temp = temperature
+		var/ener = THERMAL_ENERGY(src)
+		reaction_loop:
+			for(var/r in SSair.gas_reactions)
+				var/datum/gas_reaction/reaction = r
+	
+				var/list/min_reqs = reaction.min_requirements.Copy()
+				if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
+				|| (min_reqs["ENER"] && ener < min_reqs["ENER"]))
+					continue
+				min_reqs -= "TEMP"
+				min_reqs -= "ENER"
+	
+				for(var/id in min_reqs)
+					if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
+						continue reaction_loop
+				. |= reaction.react(src, null)
+				if (. & STOP_REACTIONS)
+					break
+		if(.)
+			garbage_collect()
+			if(temperature < TCMB) //just for safety
+				temperature = TCMB
