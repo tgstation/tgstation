@@ -606,3 +606,13 @@
 	name = "Mummification Bandages (Body)"
 	result = /obj/item/clothing/under/mummy
 	reqs = list(/obj/item/stack/sheet/cloth = 5)
+
+/datum/crafting_recipe/guillotine
+	name = "Guillotine"
+	result = /obj/structure/guillotine
+	time = 150 // Building a functioning guillotine takes time
+	reqs = list(/obj/item/stack/sheet/plasteel = 3,
+		        /obj/item/stack/sheet/mineral/wood = 20,
+		        /obj/item/stack/cable_coil = 10)
+	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
+	category = CAT_MISC
