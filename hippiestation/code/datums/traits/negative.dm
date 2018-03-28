@@ -45,3 +45,17 @@
 		return
 	else
 		B.inv.storage_slots = initial(B.inv.storage_slots)
+
+/datum/trait/nonviolent
+	name = "Hippie Anti-Griff system."
+	desc = "A foolproof system that will eiliminate any and all grief, while it's listed here, this is non-optional."
+	value = 0
+	mob_trait = TRAIT_PACIFISM
+	gain_text = "<span class='danger'>You feel repulsed by the thought of griefing!</span>"
+	lose_text = "<span class='notice'>Error, Anti-Griff offline, contact an admin.</span>"
+	medical_record_text = "Patient is unusually pacifistic and cannot bring themselves to cause physical harm."
+
+/datum/trait/nonviolent/on_process()
+	if(trait_holder.mind && LAZYLEN(trait_holder.mind.antag_datums))
+		to_chat(trait_holder, "<span class='boldannounce'>Your antagonistic nature allows you to buypass the otherwise foolproof hippie anti-griff system.</span>")
+		qdel(src)
