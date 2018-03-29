@@ -47,6 +47,16 @@
 	playsound(loc, 'sound/items/eatfood.ogg', 50, 1, -1)
 	return (TOXLOSS)
 
+/obj/item/storage/bag/trash/remove_from_storage()
+	. = ..()
+	if(.)
+		update_icon()
+
+/obj/item/storage/bag/trash/handle_item_insertion()
+	. = ..()
+	if(.)
+		update_icon()
+
 /obj/item/storage/bag/trash/update_icon()
 	if(contents.len == 0)
 		icon_state = "[initial(icon_state)]"

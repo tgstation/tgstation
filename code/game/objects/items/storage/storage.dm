@@ -360,7 +360,6 @@
 		for(var/mob/M in can_see_contents())
 			show_to(M)
 	W.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
-	update_icon()
 	return 1
 
 
@@ -378,7 +377,7 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		W.dropped(M)
-	
+
 
 	if(new_location)
 		W.forceMove(new_location)
@@ -399,8 +398,6 @@
 	for(var/mob/M in seeing_mobs)
 		orient2hud(M)
 		show_to(M)
-
-	update_icon()
 	return 1
 
 /obj/item/storage/deconstruct(disassembled = TRUE)
@@ -588,3 +585,5 @@
 //Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"
 
 /obj/item/storage/proc/PopulateContents()
+
+/obj/item/storage/update_icon(obj/item/I, added = TRUE)

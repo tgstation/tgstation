@@ -9,23 +9,39 @@
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 	max_integrity = 300
-	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
+	var/list/content_overlays = list() //If this is true, the belt will gain overlays based on what it's holding
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins belting themselves with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
-/obj/item/storage/belt/update_icon()
-	cut_overlays()
-	if(content_overlays)
-		for(var/obj/item/I in contents)
-			var/mutable_appearance/M = I.get_belt_overlay()
+
+/obj/item/storage/belt/remove_from_storage(obj/item/I, atom/new_location)
+	. = ..()
+	if(. && is_type_in_typecache(I, content_overlays))
+		update_icon(I, FALSE)
+
+/obj/item/storage/belt/handle_item_insertion(obj/item/I, atom/new_location)
+	. = ..()
+	if(. && is_type_in_typecache(I, content_overlays))
+		update_icon(I, TRUE)
+
+
+/obj/item/storage/belt/update_icon(obj/item/I, added = TRUE)
+	if(I) //An object was moved in or out of the belt
+		var/mutable_appearance/M = I.get_belt_overlay()
+		if(added)
 			add_overlay(M)
-	..()
+		else
+			cut_overlay(M)
 
 /obj/item/storage/belt/Initialize()
 	. = ..()
-	update_icon()
+	if(content_overlays.len)
+		content_overlays = typecacheof(content_overlays)
+		for(var/obj/O in contents)
+			if(is_type_in_typecache(O, content_overlays))
+				update_icon(O, TRUE)
 
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
@@ -50,7 +66,13 @@
 		/obj/item/holosign_creator,
 		/obj/item/device/assembly/signaler
 		)
-	content_overlays = TRUE
+	content_overlays = list(
+		/obj/item/crowbar,
+		/obj/item/screwdriver,
+		/obj/item/wirecutters,
+		/obj/item/wrench,
+		/obj/item/device/multitool
+		)
 
 /obj/item/storage/belt/utility/chief
 	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
@@ -190,7 +212,11 @@
 		/obj/item/restraints/legcuffs/bola,
 		/obj/item/holosign_creator/security
 		)
-	content_overlays = TRUE
+	content_overlays = list(
+		/obj/item/melee/baton,
+		/obj/item/grenade/flashbang
+		)
+
 
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
@@ -198,7 +224,6 @@
 	new /obj/item/grenade/flashbang(src)
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/melee/baton/loaded(src)
-	update_icon()
 
 
 /obj/item/storage/belt/mining
@@ -548,7 +573,5 @@
 		L.regenerate_icons()
 	..()
 
-
 /obj/item/storage/belt/sabre/PopulateContents()
 	new /obj/item/melee/sabre(src)
-	update_icon()
