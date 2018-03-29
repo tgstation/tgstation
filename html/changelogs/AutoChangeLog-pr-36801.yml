@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Omegastation: Added advanced magboots to secure storage so that traitors can complete the theft objective."
