@@ -48,6 +48,6 @@ Bonus
 				to_chat(M, "<span class='warning'>[pick("You feel dizzy.", "Your head spins.")]</span>")
 		else
 			to_chat(M, "<span class='userdanger'>A wave of dizziness washes over you!</span>")
-			M.Dizzy(5)
+			shake_camera(M, 15, 1)
 			if(power >= 2)
 				M.set_drugginess(5)
