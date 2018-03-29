@@ -9,5 +9,5 @@
 /mob/proc/dust()
 	return
 
-/mob/proc/death(gibbed)
+/mob/proc/death(gibbed, args)
 	return
