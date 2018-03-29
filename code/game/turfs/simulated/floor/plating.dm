@@ -89,6 +89,9 @@
 
 	return TRUE
 
+/turf/open/floor/plating/make_plating()
+	return
+
 /turf/open/floor/plating/foam
 	name = "metal foam plating"
 	desc = "Thin, fragile flooring created with metal foam."
