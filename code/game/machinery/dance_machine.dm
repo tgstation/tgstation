@@ -1,7 +1,7 @@
 /obj/machinery/jukebox
 	name = "jukebox"
 	desc = "A classic music player.."
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "jukebox"
 	anchored = TRUE
 	verb_say = "states"
@@ -79,8 +79,6 @@
 		icon_state = "[initial(icon_state)]-active"
 	else
 		icon_state = "[initial(icon_state)]"
-	..()
-
 
 /obj/machinery/jukebox/ui_interact(mob/user)
 	. = ..()
