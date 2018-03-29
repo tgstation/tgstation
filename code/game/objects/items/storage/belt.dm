@@ -39,9 +39,9 @@
 	. = ..()
 	if(content_overlays.len)
 		content_overlays = typecacheof(content_overlays)
-		for(var/obj/O in contents)
-			if(is_type_in_typecache(O, content_overlays))
-				update_icon(O, TRUE)
+		for(var/I in contents)
+			if(is_type_in_typecache(I, content_overlays))
+				update_icon(I, TRUE)
 
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
