@@ -585,5 +585,3 @@
 //Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"
 
 /obj/item/storage/proc/PopulateContents()
-
-/obj/item/storage/update_icon(obj/item/I, added = TRUE)
