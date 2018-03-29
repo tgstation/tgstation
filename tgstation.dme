@@ -2607,6 +2607,7 @@
 #include "code\white\hule\bearcat\coord_nav.dm"
 #include "code\white\hule\clothing\desertcape.dm"
 #include "code\white\hule\clothing\gloves.dm"
+#include "code\white\hule\clothing\masks.dm"
 #include "code\white\hule\columbine\columbine.dm"
 #include "code\white\hule\desertmapgen\desertmapgen.dm"
 #include "code\white\hule\desertmapgen\desertspawners.dm"
