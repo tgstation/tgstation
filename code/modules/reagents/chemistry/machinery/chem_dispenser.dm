@@ -19,6 +19,7 @@
 	var/mutable_appearance/beaker_overlay
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
+	var/has_panel_overlay = TRUE
 	var/macrotier = 1
 	var/obj/item/reagent_containers/beaker = null
 	var/list/dispensable_reagents = list(
@@ -70,6 +71,11 @@
 	QDEL_NULL(cell)
 	return ..()
 
+/obj/machinery/chem_dispenser/examine(mob/user)
+	..()
+	if(panel_open)
+		to_chat(user, "<span class='notice'>[src]'s maintenance hatch is open!</span>")
+
 /obj/machinery/chem_dispenser/process()
 	if (recharge_counter >= 4)
 		if(!is_operational())
@@ -94,13 +100,13 @@ obj/machinery/chem_dispenser/proc/work_animation()
 
 /obj/machinery/chem_dispenser/power_change()
 	..()
-	if(!powered() && nopower_state)
-		icon_state = nopower_state
-	else
-		icon_state = initial(icon_state)
+	icon_state = "[(nopower_state && !powered()) ? nopower_state : initial(icon_state)]"
 
-obj/machinery/chem_dispenser/update_icon()
+/obj/machinery/chem_dispenser/update_icon()
 	cut_overlays()
+	if(has_panel_overlay && panel_open)
+		add_overlay(mutable_appearance(icon, "[initial(icon_state)]_panel-o"))
+
 	if(beaker)
 		beaker_overlay = display_beaker()
 		add_overlay(beaker_overlay)
@@ -263,7 +269,8 @@ obj/machinery/chem_dispenser/update_icon()
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
 	if(default_unfasten_wrench(user, I))
 		return
-	if(default_deconstruction_screwdriver(user, "dispenser-o", "dispenser", I))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+		update_icon()
 		return
 
 	if(exchange_parts(user, I))
@@ -383,6 +390,7 @@ obj/machinery/chem_dispenser/update_icon()
 	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "soda_dispenser"
+	has_panel_overlay = FALSE
 	amount = 10
 	pixel_y = 6
 	layer = WALL_OBJ_LAYER
