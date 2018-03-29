@@ -2,7 +2,7 @@
 	name = "outdated chem dispenser"
 	desc = "It's covered in dust and is missing a bunch of chemicals."
 	powerefficiency = 0.007
-	recharge_delay = 15
+	recharge_amount = 3.33
 	dispensable_reagents = list(
 		"carbon",
 		"hydrogen",
