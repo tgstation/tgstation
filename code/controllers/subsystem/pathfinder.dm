@@ -1,5 +1,5 @@
 SUBSYSTEM_DEF(pathfinder)
-	name = "pathfinder"
+	name = "Pathfinder"
 	init_order = INIT_ORDER_PATH
 	flags = SS_NO_FIRE
 	var/datum/flowcache/mobs
@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(pathfinder)
 	var/list/flow
 
 /datum/flowcache/New(var/n)
-	.=..()
+	. = ..()
 	lcount = n
 	run = 0
 	free = 1
