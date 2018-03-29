@@ -290,7 +290,7 @@
 	for(var/V in GLOB.player_list)
 		var/mob/M = V
 		var/turf/T = get_turf(M)
-		if(is_servant_of_ratvar(M) && (!T || T.z != z))
+		if(is_servant_of_ratvar(M) && (!T || T.z != z) && !isobserver(M))
 			M.forceMove(get_step(src, SOUTH))
 			M.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 			M.clear_fullscreen("flash", 5)
