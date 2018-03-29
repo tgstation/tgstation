@@ -15004,6 +15004,7 @@
 /obj/effect/turf_decal/bot,
 /obj/item/areaeditor/blueprints,
 /obj/item/tank/jetpack/suit,
+/obj/item/clothing/shoes/magboots/advance,
 /turf/open/floor/plasteel/vault/side{
 	dir = 8
 	},
