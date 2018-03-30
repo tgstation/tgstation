@@ -73,3 +73,24 @@
 					M.adjust_fire_stacks(3)
 					M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
 					M.adjustFireLoss(3)		//Hence the other damages... ain't I a bastard?
+
+/datum/reagent/unstablemutationtoxin	//For some reason the TG Menace seems to have deleted this one :(
+	name = "Unstable Mutation Toxin"	//Also putting this in the hippie tree so that we don't get fucked by TG messing with the reagents again
+	id = "unstablemutationtoxin"
+	description = "A corruptive toxin... it seems to bubble and froth unpredictably. Are you sure you want to be around this for long?"
+	color = "#a872e6" // rgb: 168, 114, 230
+	metabolization_rate = 0.5 //Time to have some fun with this, this will make 1 unit transform a person twice. It's unstable, after all.
+	taste_description = "fizzy slime"
+
+/datum/reagent/unstablemutationtoxin/on_mob_life(mob/living/carbon/human/H)
+	..()
+	if(!istype(H))
+		return
+	to_chat(H, "<span class='warning'><b>You start feeling your skin boil and bubble from the inside...</b></span>")
+	H.visible_message("<b>[H]</b> looks like their skin is becoming extremely bubbly...")
+	addtimer(10)
+	to_chat(H, "<span class='warning'><b>You feel like your skin is starting to melt off, the pain is excruciating!</b></span>")
+	addtimer(10)
+	H.reagents.add_reagent(pick("mutationtoxin","lizardmutationtoxin","flymutationtoxin", "mothmutationtoxin", "podmutationtoxin", "jellymutationtoxin", "golemmutationtoxin", "abductormutationtoxin", "androidmutationtoxin", "skeletonmutationtoxin", "zombiemutationtoxin", "ashmutationtoxin", "shadowmutationtoxin"), 1) //No plasmaman 4u xDDD
+	H.reagents.add_reagent("methamphetamine", 1) //To help stop that darned stunlocking
+	return
