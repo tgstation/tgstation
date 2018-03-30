@@ -1,5 +1,5 @@
 /obj/item/stock_parts
-	icon = 'hippiestation/icons/obj/stock_parts.dmi'
+	icon_hippie = 'hippiestation/icons/obj/stock_parts.dmi'
 
 /obj/structure/frame
-	icon = 'hippiestation/icons/obj/stock_parts.dmi'
+	icon_hippie = 'hippiestation/icons/obj/stock_parts.dmi'

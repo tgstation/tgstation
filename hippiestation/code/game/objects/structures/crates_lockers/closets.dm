@@ -6,7 +6,7 @@ Sorry for doing this, but apparently the Hippie community hates art and new thin
 */
 
 /obj/structure/closet
-	icon = 'hippiestation/icons/obj/closet.dmi'
+	icon_hippie = 'hippiestation/icons/obj/closet.dmi'
 
 /obj/structure/closet/update_icon()
 	cut_overlays()

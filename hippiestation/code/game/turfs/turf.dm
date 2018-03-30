@@ -17,3 +17,7 @@
 			for (var/obj/item/stack/rods/R in H.contents)
 				if (R.pinned)
 					R.pinned = null
+
+/turf/Initialize()
+    check_hippie_icon()
+    return ..()

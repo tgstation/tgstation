@@ -2,7 +2,7 @@
 
 /obj/machinery/computer/cargo/express
 	name = "express supply console"
-	desc = "This console allows the user to purchase a package for double the price,\
+	desc = "This console allows the user to purchase a package \
 		with 1/40th of the delivery time: made possible by NanoTrasen's new \"Drop Pod Railgun\".\
 		All sales are near instantaneous - please choose carefully"
 	icon_screen = "supply_express"
@@ -75,8 +75,7 @@
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
 	data["points"] = SSshuttle.points
 	data["supplies"] = list()
-	message = "For normally priced items, please use the standard Supply or Request Console. \
-		Sales are near-instantaneous - please choose carefully."
+	message = "Sales are near-instantaneous - please choose carefully."
 	if(SSshuttle.supplyBlocked)
 		message = blockade_warning
 	if(obj_flags & EMAGGED)

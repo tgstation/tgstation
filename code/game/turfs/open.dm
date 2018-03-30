@@ -199,8 +199,6 @@
 				return 0
 		if(!(lube&SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
-			C.log_message("<font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>", INDIVIDUAL_ATTACK_LOG)
-		if(!(lube&SLIDE_ICE))
 			// Hippie Start - custom sounds for slipping
 			var/slip_sound = 'sound/misc/slip.ogg'
 			if(prob(95))

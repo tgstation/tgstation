@@ -23,6 +23,19 @@
 	restraint_check = TRUE
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/carbon/clap/run_emote(mob/living/user, params)
+	. = ..()
+	if (.)
+		if (ishuman(user))
+			// Need hands to clap
+			if (!user.get_bodypart("l_arm") || !user.get_bodypart("r_arm"))
+				return
+			var/clap = pick('sound/misc/clap1.ogg',
+				            'sound/misc/clap2.ogg',
+				            'sound/misc/clap3.ogg',
+				            'sound/misc/clap4.ogg')
+			playsound(user, clap, 50, 1, -1)
+
 /datum/emote/living/carbon/gnarl
 	key = "gnarl"
 	key_third_person = "gnarls"

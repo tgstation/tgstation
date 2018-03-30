@@ -1,10 +1,10 @@
 /obj/structure/reagent_dispensers
-	icon = 'hippiestation/icons/obj/objects.dmi'
+	icon_hippie = 'hippiestation/icons/obj/objects.dmi'
 	var/mutable_appearance/reagent_icon
 	var/use_reagent_icon = FALSE
 
 /obj/structure/reagent_dispensers/water_cooler
-	icon = 'hippiestation/icons/obj/vending.dmi'
+	icon_hippie = 'hippiestation/icons/obj/vending.dmi'
 
 /obj/structure/reagent_dispensers/on_reagent_change()
 	update_icon()

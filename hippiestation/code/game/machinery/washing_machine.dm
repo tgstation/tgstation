@@ -1,2 +1,2 @@
 /obj/machinery/washing_machine
-	icon = 'hippiestation/icons/obj/machines/washing_machine.dmi'
+	icon_hippie = 'hippiestation/icons/obj/machines/washing_machine.dmi'
