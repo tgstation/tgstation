@@ -17,6 +17,11 @@
 	..()
 	src.bd = bd
 
+/obj/screen/buildmode/Destroy()
+	bd.buttons -= src
+	bd = null
+	return ..()
+
 /obj/screen/buildmode/mode
 	icon_state = "buildmode1"
 	name = "Toggle Mode"
@@ -102,8 +107,12 @@
 
 /datum/buildmode/Destroy()
 	stored = null
-	for(var/button in buttons)
-		qdel(button)
+	QDEL_LIST(buttons)
+	throw_atom = null
+	holder = null
+	preview.Cut()
+	cornerA = null
+	cornerB = null
 	return ..()
 
 /datum/buildmode/proc/create_buttons()
