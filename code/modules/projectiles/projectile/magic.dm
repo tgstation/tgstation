@@ -159,8 +159,7 @@
 				new_mob.invisibility = 0
 				new_mob.job = "Cyborg"
 				var/mob/living/silicon/robot/Robot = new_mob
-				Robot.aisync = FALSE
-				Robot.lawsync = FALSE
+				Robot.lawupdate = FALSE
 				Robot.connected_ai = null
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 				Robot.clear_inherent_laws(0)
