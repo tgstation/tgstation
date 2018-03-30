@@ -1,0 +1,6 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Booze & soda dispensers will no longer turn into chem dispensers when screwdrivered"
+  - bugfix: "Fixed chem dispensers showing as powered on when screwdrivered opened."
+  - rscadd: "Added an examine indication when the maintenance panel to chem/soda/booze dispensers is open."
