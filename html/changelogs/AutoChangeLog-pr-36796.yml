@@ -1,4 +1,0 @@
-author: "neersighted"
-delete-after: True
-changes: 
-  - admin: "Re-juggled delete verb permissions"

@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an exploit involving chem dispensers not actually checking if there was enough energy to dispense the target chemicals."
-  - bugfix: "Fixed exploit where chem dispensers always worked even if they didn't have power..."
