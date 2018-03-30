@@ -96,5 +96,6 @@
 	..()
 	if(istype(H))
 		color = H.hair_color
+		H.dna.features["ears"] = "None"
 		H.dna.species.mutant_bodyparts -= "ears"
 		H.update_body()
