@@ -407,7 +407,8 @@
 		sleep(speed)
 		for(var/i in 1 to speed)
 			M.setDir(pick(GLOB.cardinals))
-			M.lay_down(TRUE)
+			for(var/mob/living/carbon/NS in rangers)
+				NS.lay_down(TRUE)		//specifically excludes silicons to prevent pAI chat spam
 		 time--
 
 /obj/machinery/disco/proc/dance5(var/mob/living/M)

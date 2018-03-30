@@ -355,27 +355,12 @@
 				cover = new /obj/machinery/porta_turret_cover(loc)	//if the turret has no cover and is anchored, give it a cover
 				cover.parent_turret = src	//assign the cover its parent_turret, which would be this (src)
 
-	if(stat & (NOPOWER|BROKEN))
-		if(!always_up)
-			//if the turret has no power or is broken, make the turret pop down if it hasn't already
-			popDown()
+	if(!on || (stat & (NOPOWER|BROKEN)) || manual_control)
 		return
 
-	if(!on)
-		if(!always_up)
-			//if the turret is off, make it pop down
-			popDown()
-		return
-
-	if(manual_control)
-		return
 	var/list/targets = list()
-	var/static/things_to_scan = typecacheof(list(/mob/living, /obj/mecha))
-
-	for(var/A in typecache_filter_list(view(scan_range, base), things_to_scan))
-		var/atom/AA = A
-
-		if(AA.invisibility > SEE_INVISIBLE_LIVING)
+	for(var/mob/A in view(scan_range, base))
+		if(A.invisibility > SEE_INVISIBLE_LIVING)
 			continue
 
 		if(check_anomalies)//if it's set to check for simple animals
@@ -414,17 +399,17 @@
 			else if(check_anomalies) //non humans who are not simple animals (xenos etc)
 				if(!in_faction(C))
 					targets += C
+	for(var/A in GLOB.mechas_list)
+		if((get_dist(A, base) < scan_range) && can_see(base, A, scan_range))
+			var/obj/mecha/Mech = A
+			if(Mech.occupant && !in_faction(Mech.occupant)) //If there is a user and they're not in our faction
+				if(assess_perp(Mech.occupant) >= 4)
+					targets += Mech
 
-		if(ismecha(A))
-			var/obj/mecha/M = A
-			//If there is a user and they're not in our faction
-			if(M.occupant && !in_faction(M.occupant))
-				if(assess_perp(M.occupant) >= 4)
-					targets += M
-
-	if(!tryToShootAt(targets))
-		if(!always_up)
-			popDown() // no valid targets, close the cover
+	if(targets.len)
+		tryToShootAt(targets)
+	else if(!always_up)
+		popDown() // no valid targets, close the cover
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)
@@ -573,6 +558,8 @@
 	if(controllock)
 		return
 	src.on = on
+	if(!on)
+		popDown()
 	src.mode = mode
 	power_change()
 

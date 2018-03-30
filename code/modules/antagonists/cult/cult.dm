@@ -37,9 +37,6 @@
 	objectives |= cult_team.objectives
 	owner.objectives |= objectives
 
-/datum/antagonist/cult/proc/remove_objectives()
-	owner.objectives -= objectives
-
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)
 	QDEL_NULL(vote)
@@ -130,7 +127,6 @@
 	current.clear_alert("bloodsense")
 
 /datum/antagonist/cult/on_removal()
-	remove_objectives()
 	SSticker.mode.cult -= owner
 	SSticker.mode.update_cult_icons_removed(owner)
 	if(!silent)

@@ -67,6 +67,7 @@
 		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
+		I.SendSignal(COMSIG_MOVABLE_IMPACT_ZONE, src, zone)
 		dtype = I.damtype
 
 		if (I.throwforce > 0) //If the weapon's throwforce is greater than zero...
@@ -387,9 +388,7 @@
 	return
 
 
-/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
-	if(A != src)
-		end_pixel_y = get_standard_pixel_y_offset(lying)
+/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!used_item)
 		used_item = get_active_held_item()
 	..()

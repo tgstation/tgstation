@@ -22,13 +22,14 @@
 	var/charge_delay = 4
 	var/use_cyborg_cell = TRUE
 	var/ext_next_use = 0
-	var/atom/movable/collw
+	var/atom/collw
 	var/allowed_circuit_action_flags = IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE //which circuit flags are allowed
 	var/combat_circuits = 0 //number of combat cicuits in the assembly, used for diagnostic hud
 	var/long_range_circuits = 0 //number of long range cicuits in the assembly, used for diagnostic hud
 	var/prefered_hud_icon = "hudstat"		// Used by the AR circuit to change the hud icon.
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD, DIAG_CIRCUIT_HUD) //diagnostic hud overlays
 	max_integrity = 50
+	pass_flags = 0
 	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 	anchored = FALSE
 	var/can_anchor = TRUE
@@ -62,9 +63,9 @@
 /obj/item/device/electronic_assembly/proc/check_interactivity(mob/user)
 	return user.canUseTopic(src, BE_CLOSE)
 
-/obj/item/device/electronic_assembly/CollidedWith(atom/movable/AM)
+/obj/item/device/electronic_assembly/Collide(atom/AM)
 	collw = AM
-	..()
+	.=..()
 
 /obj/item/device/electronic_assembly/Initialize()
 	.=..()
@@ -502,12 +503,14 @@
 	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
 		IC.ext_moved(oldLoc, dir)
+	if(light) //Update lighting objects (From light circuits).
+		update_light()
 
 /obj/item/device/electronic_assembly/stop_pulling()
-	..()
 	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
 		IC.stop_pulling()
+	..()
 
 
 // Returns the object that is supposed to be used in attack messages, location checks, etc.
