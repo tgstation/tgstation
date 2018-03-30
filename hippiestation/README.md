@@ -56,3 +56,17 @@ New actions and spells should use the "hippiestation/icons/mob/actions.dmi" file
 ### Reagents
 
 New reagents should go inside "hippiestation/code/modules/reagents/drug_reagents.dm." In this case, "drug_reagents" is an example, so please use or create a "toxins.dm" if you are adding a new toxin. Recipes should go inside "hippiestation/code/modules/reagents/recipes/drug_reagents.dm." Once again, "drug_reagents" has been used as an example.
+
+### Vending machine
+
+You can manipulate the products, contraband, and premium items of vending machines by adding items to the following:
+
+`hippie_products` 
+`hippie_contraband`
+`hippie_premium`
+
+Like their counterparts, these are associative lists. The index is a reference to the object and the value is how many of that object. If you want to add 3 items to the products list, you do `hippie_products = list(/path/to/that/object/ = 3)`. This also works with lowering the count of items. 
+
+If you take away more items then there is then the entry is removed. 
+
+For example if the `products` list has a entry of `/obj/item/screwdriver` and this a value of `5`, and we put an entry of `/obj/item/screwdriver` with a value of `-6` into `hippie_products` then there will be no screwdrivers in the vending machine. A large negative value is recommended for this purpose (e.g. `-100` just to be safe)
