@@ -553,7 +553,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Delete"
 
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_SPAWN|R_DEBUG))
 		return
 
 	admin_delete(A)
