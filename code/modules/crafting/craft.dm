@@ -396,7 +396,6 @@
 	data["ref"] = "[REF(R)]"
 	var/req_text = ""
 	var/tool_text = ""
-	var/tool_addafter = "" // this exists because tools use both paths and defines
 	var/catalyst_text = ""
 
 	for(var/a in R.reqs)
@@ -416,10 +415,9 @@
 	for(var/a in R.tools)
 		if(ispath(a, /obj/item))
 			var/obj/item/b = a
-			tool_addafter += " [initial(b.name)],"
+			tool_text += " [initial(b.name)],"
 		else
 			tool_text += " [a],"
-	tool_text += tool_addafter
 	tool_text = replacetext(tool_text,",","",-1)
 	data["tool_text"] = tool_text
 
