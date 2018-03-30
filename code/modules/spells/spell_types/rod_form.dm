@@ -7,7 +7,7 @@
 	cooldown_min = 100
 	range = -1
 	include_user = 1
-	invocation = "CLANG!"
+	invocation = "Z' A ROD' EENNU!"
 	invocation_type = "shout"
 	action_icon_state = "immrod"
 
