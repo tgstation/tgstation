@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - rscadd: "Sentient diseases now have the \"Secrete Infection\" ability, which causes anything touching the skin of  the host they are currently following to become infective, spreading their infection to anyone who touches it for the next 30 seconds."
