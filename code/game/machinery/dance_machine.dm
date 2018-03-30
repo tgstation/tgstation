@@ -428,13 +428,8 @@
 
 /obj/machinery/jukebox/disco/dance_over()
 	..()
-	for(var/obj/item/device/flashlight/spotlight/SL in spotlights)
-		qdel(SL)
 	QDEL_LIST(spotlights)
-	for(var/obj/effect/overlay/sparkles/SP in sparkles)
-		qdel(SP)
 	QDEL_LIST(sparkles)
-
 
 /obj/machinery/jukebox/process()
 	if(world.time < stop && active)
