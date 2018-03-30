@@ -50,7 +50,7 @@
 	if(..())
 		if(scared)
 			user.visible_message("<span class = 'warning'> [user] pricks their finger on [src]'s quills!</span>")
-			user.adjustBruteLoss(15)
+			user.adjustBruteLoss(8)
 		scared = TRUE
 		scared_time = world.time + FEAR_DURATION
 
