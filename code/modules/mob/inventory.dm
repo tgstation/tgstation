@@ -244,7 +244,7 @@
 						to_chat(usr, "<span class='notice'>Your [inactive_stack.name] stack now contains [inactive_stack.get_amount()] [inactive_stack.singular_name]\s.</span>")
 						return TRUE
 
-	if(put_in_active_hand(I, TRUE))
+	if(put_in_active_hand(I, forced))
 		return TRUE
 
 	var/hand = get_empty_held_index_for_side("l")
