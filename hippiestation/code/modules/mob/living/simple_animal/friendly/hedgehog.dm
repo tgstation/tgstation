@@ -31,9 +31,9 @@
 	if(scared && stat != DEAD)
 		if(icon_state != "Hedgehog_ball")
 			visible_message("<span class = 'notice'> [src] curls up into a ball. </span>")
-		icon_state = "Hedgehog_ball"
-		icon_living = "Hedgehog_ball"
-		canmove = 0
+			icon_state = "Hedgehog_ball"
+			icon_living = "Hedgehog_ball"
+			canmove = 0
 		if(world.time > scared_time)
 			scared = FALSE
 			icon_state = "Hedgehog"
