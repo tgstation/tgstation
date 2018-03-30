@@ -186,23 +186,32 @@ obj/machinery/chem_dispenser/update_icon()
 		return
 	switch(action)
 		if("amount")
+			if(!is_operational())
+				return
 			var/target = text2num(params["target"])
 			if(target in beaker.possible_transfer_amounts)
 				amount = target
 				work_animation()
 				. = TRUE
 		if("dispense")
+			if(!is_operational() || QDELETED(cell))
+				return
 			var/reagent = params["reagent"]
 			if(beaker && dispensable_reagents.Find(reagent))
 				var/datum/reagents/R = beaker.reagents
 				var/free = R.maximum_volume - R.total_volume
 				var/actual = min(amount, (cell.charge * powerefficiency)*10, free)
 
+				if(!cell.use(actual / powerefficiency))
+					say("Not enough energy to complete operation!")
+					return
 				R.add_reagent(reagent, actual)
-				cell.use(actual / powerefficiency)
+
 				work_animation()
 				. = TRUE
 		if("remove")
+			if(!is_operational())
+				return
 			var/amount = text2num(params["amount"])
 			if(beaker && amount in beaker.possible_transfer_amounts)
 				beaker.reagents.remove_all(amount)
@@ -217,6 +226,8 @@ obj/machinery/chem_dispenser/update_icon()
 				update_icon()
 				. = TRUE
 		if("dispense_recipe")
+			if(!is_operational() || QDELETED(cell))
+				return
 			var/recipe_to_use = params["recipe"]
 			var/list/chemicals_to_dispense = process_recipe_list(recipe_to_use)
 			var/res = get_macro_resolution()
@@ -228,16 +239,24 @@ obj/machinery/chem_dispenser/update_icon()
 					var/free = R.maximum_volume - R.total_volume
 					var/actual = min(round(chemicals_to_dispense[key], res), (cell.charge * powerefficiency)*10, free)
 					if(actual)
+						if(!cell.use(actual / powerefficiency))
+							say("Not enough energy to complete operation!")
+							return
 						R.add_reagent(r_id, actual)
-						cell.use(actual / powerefficiency)
 						work_animation()
 		if("clear_recipes")
+			if(!is_operational())
+				return
 			var/yesno = alert("Clear all recipes?",, "Yes","No")
 			if(yesno == "Yes")
 				saved_recipes = list()
 		if("add_recipe")
+			if(!is_operational())
+				return
 			var/name = stripped_input(usr,"Name","What do you want to name this recipe?", "Recipe", MAX_NAME_LEN)
 			var/recipe = stripped_input(usr,"Recipe","Insert recipe with chem IDs")
+			if(!usr.canUseTopic(src, !issilicon(usr)))
+				return
 			if(name && recipe)
 				var/list/first_process = splittext(recipe, ";")
 				if(!LAZYLEN(first_process))
