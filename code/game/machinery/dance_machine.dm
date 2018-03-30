@@ -93,7 +93,7 @@
 		return
 	if(!songs.len)
 		to_chat(user,"<span class='warning'>Error: No music tracks have been authorized for your station. Petition Central Command to resolve this issue.</span>")
-		user.playsound_local(src,'sound/misc/compiler-failure.ogg', 25, 1)
+		playsound(src,'sound/misc/compiler-failure.ogg', 25, 1)
 		return
 	var/list/dat = list()
 	dat +="<div class='statusDisplay' style='text-align:center'>"
@@ -429,10 +429,10 @@
 	..()
 	for(var/obj/item/device/flashlight/spotlight/SL in spotlights)
 		qdel(SL)
-	spotlights.Cut()
+	QDEL_LIST(spotlights)
 	for(var/obj/effect/overlay/sparkles/SP in sparkles)
 		qdel(SP)
-	sparkles.Cut()
+	QDEL_LIST(sparkles)
 
 
 /obj/machinery/jukebox/process()
