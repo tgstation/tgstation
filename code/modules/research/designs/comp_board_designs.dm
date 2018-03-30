@@ -36,7 +36,7 @@
 	id = "rdcamera"
 	build_path = /obj/item/circuitboard/computer/research
 	category = list("Computer Boards")
-departmental_flags = DEPARTMENTAL_FLAG_RESEARCH
+	departmental_flags = DEPARTMENTAL_FLAG_RESEARCH
 
 /datum/design/board/xenobiocamera
 	name = "Computer Design (Xenobiology Console)"
