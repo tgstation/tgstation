@@ -144,6 +144,7 @@
 	active = TRUE
 	update_icon()
 	START_PROCESSING(SSobj, src)
+	stop = world.time + selection.song_length
 
 /obj/machinery/jukebox/disco/activate_music()
 	..()
@@ -151,7 +152,6 @@
 	lights_spin()
 
 /obj/machinery/jukebox/disco/proc/dance_setup()
-	stop = world.time + selection.song_length
 	var/turf/cen = get_turf(src)
 	FOR_DVIEW(var/turf/t, 3, get_turf(src),INVISIBILITY_LIGHTING)
 		if(t.x == cen.x && t.y > cen.y)
@@ -456,7 +456,7 @@
 		STOP_PROCESSING(SSobj, src)
 		dance_over()
 		playsound(src,'sound/machines/terminal_off.ogg',50,1)
-		icon_state = "disco0"
+		update_icon()
 		stop = world.time + 100
 
 
