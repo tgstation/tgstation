@@ -55,9 +55,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output
 	name = "plasma tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOX
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output
-	name = "toxins mixing output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output
 	name = "oxygen tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_O2
@@ -76,6 +73,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output
 	name = "incinerator chamber output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR
+	frequency = FREQ_ATMOS_CONTROL
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output
+	name = "toxins mixing output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB
+	frequency = FREQ_ATMOS_CONTROL
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()

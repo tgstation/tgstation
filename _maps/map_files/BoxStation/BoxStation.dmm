@@ -46693,6 +46693,18 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	airpump_tag = "incinerator_airlock_pump";
+	exterior_door_tag = "incinerator_airlock_exterior";
+	id_tag = "incinerator_airlock_control";
+	interior_door_tag = "incinerator_airlock_interior";
+	name = "Incinerator Access Console";
+	pixel_x = 38;
+	pixel_y = 6;
+	req_access_txt = "12";
+	sanitize_external = 1;
+	sensor_tag = "incinerator_airlock_sensor"
+	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "cmg" = (
@@ -48804,18 +48816,6 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "csr" = (
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	name = "Incinerator Access Console";
-	airpump_tag = "incinerator_airlock_pump";
-	exterior_door_tag = "incinerator_airlock_exterior";
-	id_tag = "incinerator_access_control";
-	interior_door_tag = "incinerator_airlock_interior";
-	pixel_x = 6;
-	pixel_y = -26;
-	sanitize_external = 1;
-	sensor_tag = "incinerator_airlock_sensor";
-	req_access_txt = "12"
-	},
 /obj/machinery/button/ignition{
 	id = "Incinerator";
 	pixel_x = -6;

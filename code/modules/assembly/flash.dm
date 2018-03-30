@@ -266,22 +266,22 @@
 					return
 				crit_fail = FALSE
 				times_used = 0
-				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 				update_icon()
 				flash.crit_fail = TRUE
 				flash.update_icon()
 				return
 	..()
 
-/obj/item/device/assembly/flash/shield/update_icon(flash = 0)
-	item_state = "flashshield"
+/obj/item/device/assembly/flash/shield/update_icon(flash = FALSE)
+	icon_state = "flashshield"
 	item_state = "flashshield"
 
 	if(crit_fail)
 		icon_state = "riot"
 		item_state = "riot"
 	else if(flash)
-		item_state = "flashshield_flash"
+		icon_state = "flashshield_flash"
 		item_state = "flashshield_flash"
 		addtimer(CALLBACK(src, .proc/update_icon), 5)
 
