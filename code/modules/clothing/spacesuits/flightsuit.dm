@@ -468,8 +468,8 @@
 
 /obj/item/device/flightpack/proc/losecontrol(knockdown = FALSE, move = TRUE)
 	usermessage("Warning: Control system not responding. Deactivating!", "boldwarning")
-	wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
 	if(wearer)
+		wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
 		if(move)
 			while(momentum_x != 0 || momentum_y != 0)
 				sleep(2)
