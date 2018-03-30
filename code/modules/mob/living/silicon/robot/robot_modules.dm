@@ -318,7 +318,7 @@
 	cyborg_base_icon = "engineer"
 	moduleselect_icon = "engineer"
 	magpulsing = TRUE
-	hat_offset = INFINITY // No hats
+	hat_offset = -4
 
 /obj/item/robot_module/security
 	name = "Security"

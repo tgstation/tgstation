@@ -113,6 +113,7 @@
 /obj/effect/dummy/chameleon/attackby()
 	master.disrupt()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/dummy/chameleon/attack_hand()
 	master.disrupt()
 

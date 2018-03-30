@@ -4206,8 +4206,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on{
 	dir = 8;
-	frequency = 1441;
-	id_tag = "air_out";
+	id_tag = "oldstation_air_out";
 	name = "air output"
 	},
 /turf/open/floor/engine/air,

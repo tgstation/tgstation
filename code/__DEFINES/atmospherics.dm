@@ -149,6 +149,49 @@
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50 //what pressure you have to be under to increase the effect of equipment meant for lavaland
 #define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"
 
+//ATMOSIA GAS MONITOR TAGS
+#define ATMOS_GAS_MONITOR_INPUT_O2 "o2_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_O2 "o2_out"
+#define ATMOS_GAS_MONITOR_SENSOR_O2 "o2_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_TOX "tox_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_TOX "tox_out"
+#define ATMOS_GAS_MONITOR_SENSOR_TOX "tox_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_AIR "air_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_AIR "air_out"
+#define ATMOS_GAS_MONITOR_SENSOR_AIR "air_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_MIX "mix_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_MIX "mix_out"
+#define ATMOS_GAS_MONITOR_SENSOR_MIX "mix_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_N2O "n2o_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_N2O "n2o_out"
+#define ATMOS_GAS_MONITOR_SENSOR_N2O "n2o_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_N2 "n2_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_N2 "n2_out"
+#define ATMOS_GAS_MONITOR_SENSOR_N2 "n2_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_CO2 "co2_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_CO2 "co2_out"
+#define ATMOS_GAS_MONITOR_SENSOR_CO2 "co2_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_INCINERATOR "incinerator_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR "incinerator_out"
+#define ATMOS_GAS_MONITOR_SENSOR_INCINERATOR "incinerator_sensor"
+
+#define ATMOS_GAS_MONITOR_INPUT_TOXINS_LAB "toxinslab_in"
+#define ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB "toxinslab_out"
+#define ATMOS_GAS_MONITOR_SENSOR_TOXINS_LAB "toxinslab_sensor"
+
+#define ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION "distro-loop_meter"
+#define ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE "atmos-waste_loop_meter"
+
+#define ATMOS_GAS_MONITOR_WASTE_ENGINE "engine-waste_out"
+#define ATMOS_GAS_MONITOR_WASTE_ATMOS "atmos-waste_out"
+
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
 #define PIPING_LAYER_MIN 1

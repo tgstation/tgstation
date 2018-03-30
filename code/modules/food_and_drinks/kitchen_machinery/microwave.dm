@@ -156,18 +156,6 @@
 		..()
 	updateUsrDialog()
 
-/obj/machinery/microwave/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/microwave/attack_ai(mob/user)
-	return 0
-
-/obj/machinery/microwave/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
-	interact(user)
-
 /obj/machinery/microwave/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE) && !(operating || broken > 0 || panel_open || !anchored || dirty == 100))
 		cook()
@@ -176,7 +164,7 @@
 *   Microwave Menu
 ********************/
 
-/obj/machinery/microwave/interact(mob/user) // The microwave Menu
+/obj/machinery/microwave/ui_interact(mob/user) // The microwave Menu
 	if(panel_open || !anchored)
 		return
 	var/dat = "<div class='statusDisplay'>"

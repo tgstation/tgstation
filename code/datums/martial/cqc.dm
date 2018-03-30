@@ -194,21 +194,5 @@
 	to_chat(usr, "<span class='notice'>Restrain</span>: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a choke hold.")
 	to_chat(usr, "<span class='notice'>Pressure</span>: Disarm Grab. Decent stamina damage.")
 	to_chat(usr, "<span class='notice'>Consecutive CQC</span>: Disarm Disarm Harm. Mainly offensive move, huge damage and decent stamina damage.")
-		
+
 	to_chat(usr, "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>")
-
-/obj/item/cqc_manual
-	name = "old manual"
-	desc = "A small, black manual. There are drawn instructions of tactical hand-to-hand combat."
-	icon = 'icons/obj/library.dmi'
-	icon_state ="cqcmanual"
-
-/obj/item/cqc_manual/attack_self(mob/living/carbon/human/user)
-	if(!istype(user) || !user)
-		return
-	to_chat(user, "<span class='boldannounce'>You remember the basics of CQC.</span>")
-	var/datum/martial_art/cqc/D = new(null)
-	D.teach(user)
-	visible_message("<span class='warning'>[src] beeps ominously, and a moment later it bursts up in flames.</span>")
-	qdel(src)
-	new /obj/effect/decal/cleanable/ash(user.drop_location())

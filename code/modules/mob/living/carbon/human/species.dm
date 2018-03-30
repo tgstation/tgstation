@@ -970,7 +970,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/hunger_rate = HUNGER_FACTOR
 		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
 		if(mood && mood.sanity > SANITY_DISTURBED)
-			hunger_rate *= min(0.5, 1 - 0.002 * mood.sanity) //0.85 to 0.75
+			hunger_rate *= max(0.5, 1 - 0.002 * mood.sanity) //0.85 to 0.75
 
 		if(H.satiety > 0)
 			H.satiety--
@@ -979,6 +979,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(prob(round(-H.satiety/40)))
 				H.Jitter(5)
 			hunger_rate = 3 * HUNGER_FACTOR
+		hunger_rate *= H.physiology.hunger_mod
 		H.nutrition = max(0, H.nutrition - hunger_rate)
 
 
@@ -1451,7 +1452,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(CLONE)
 			H.adjustCloneLoss(damage * hit_percent * H.physiology.clone_mod)
 		if(STAMINA)
-			H.adjustStaminaLoss(damage * hit_percent * H.physiology.stamina_mod)
+			if(BP)
+				if(BP.receive_damage(0, 0, damage * hit_percent * H.physiology.stamina_mod))
+					H.update_stamina()
+			else
+				H.adjustStaminaLoss(damage * hit_percent * H.physiology.stamina_mod)
 		if(BRAIN)
 			H.adjustBrainLoss(damage * hit_percent * H.physiology.brain_mod)
 	return 1

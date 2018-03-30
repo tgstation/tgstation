@@ -18,12 +18,8 @@
 	else
 		return ..()
 
-/obj/machinery/computer/aifixer/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/aifixer/interact(mob/user)
+/obj/machinery/computer/aifixer/ui_interact(mob/user)
+	. = ..()
 
 	var/dat = ""
 
@@ -104,6 +100,7 @@
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
 		active = TRUE
 		add_fingerprint(usr)
+	updateUsrDialog()
 
 /obj/machinery/computer/aifixer/update_icon()
 	..()
