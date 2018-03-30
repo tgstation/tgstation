@@ -53,9 +53,10 @@
 		T.song_name = L[1]
 		T.song_length = text2num(L[2])
 		T.song_beat = text2num(L[3])
-
 		songs |= T
-	selection = pick(songs)
+
+	if(songs.len)
+		selection = pick(songs)
 
 /obj/machinery/jukebox/Destroy()
 	dance_over()
