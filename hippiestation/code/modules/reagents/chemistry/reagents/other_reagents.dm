@@ -79,18 +79,17 @@
 	id = "unstablemutationtoxin"
 	description = "A corruptive toxin... it seems to bubble and froth unpredictably. Are you sure you want to be around this for long?"
 	color = "#a872e6" // rgb: 168, 114, 230
-	metabolization_rate = 0.5 //Time to have some fun with this, this will make 1 unit transform a person twice. It's unstable, after all.
+	metabolization_rate = INFINITY
 	taste_description = "fizzy slime"
 
-/datum/reagent/unstablemutationtoxin/on_mob_life(mob/living/carbon/human/H)
+/datum/reagent/unstablemutationtoxin/on_mob_add(mob/living/carbon/human/H)
 	..()
 	if(!istype(H))
 		return
 	to_chat(H, "<span class='warning'><b>You start feeling your skin boil and bubble from the inside...</b></span>")
 	H.visible_message("<b>[H]</b> looks like their skin is becoming extremely bubbly...")
-	addtimer(5)
+	addtimer(30)
 	to_chat(H, "<span class='warning'><b>You feel like your skin is starting to melt off, the pain is excruciating!</b></span>")
-	addtimer(3)
+	addtimer(20)
 	H.reagents.add_reagent(pick("mutationtoxin","lizardmutationtoxin","flymutationtoxin", "mothmutationtoxin", "podmutationtoxin", "jellymutationtoxin", "golemmutationtoxin", "abductormutationtoxin", "androidmutationtoxin", "skeletonmutationtoxin", "zombiemutationtoxin", "ashmutationtoxin", "shadowmutationtoxin"), 1) //No plasmaman 4u xDDD
-	H.reagents.add_reagent("methamphetamine", 1) //To help stop that darned stunlocking
 	return
