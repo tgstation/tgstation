@@ -81,6 +81,7 @@
 	color = "#a872e6" // rgb: 168, 114, 230
 	metabolization_rate = INFINITY
 	taste_description = "fizzy slime"
+	can_synth = TRUE
 
 /datum/reagent/unstablemutationtoxin/on_mob_add(mob/living/carbon/human/H)
 	..()
