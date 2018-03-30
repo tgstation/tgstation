@@ -49,6 +49,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
 
+	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
+
 	var/item_color = null //this needs deprecating, soonish
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
@@ -237,6 +239,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ..()
 
 /obj/item/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!user)
 		return
 	if(anchored)
@@ -271,6 +276,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
 					C.update_damage_overlays()
 
+	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP))		//See if we're supposed to auto pickup.
+		return
 
 	if(istype(loc, /obj/item/storage))
 		//If the item is in a storage item, take it out
@@ -280,7 +287,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(throwing)
 		throwing.finalize(FALSE)
 	if(loc == user)
-		if(!user.dropItemToGround(src))
+		if(!allow_attack_hand_drop(user) || !user.dropItemToGround(src))
 			return
 
 	pickup(user)
@@ -412,9 +419,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
+	SendSignal(COMSIG_ITEM_PICKUP, user)
 	item_flags |= IN_INVENTORY
-	return
 
+/obj/item/proc/allow_attack_hand_drop(mob/user)
+	return TRUE
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/storage/S)

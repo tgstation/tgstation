@@ -69,7 +69,6 @@
 			if(initial(tempCheck.icon_state) != null)
 				critical_items += I
 
-
 /obj/machinery/rnd/experimentor/Initialize()
 	. = ..()
 
@@ -109,8 +108,7 @@
 	ejectItem()
 	. = ..(O)
 
-/obj/machinery/rnd/experimentor/attack_hand(mob/user)
-	user.set_machine(src)
+/obj/machinery/rnd/experimentor/ui_interact(mob/user)
 	var/list/dat = list("<center>")
 	if(!linked_console)
 		dat += "<b><a href='byond://?src=[REF(src)];function=search'>Scan for R&D Console</A></b>"

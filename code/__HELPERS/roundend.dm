@@ -20,7 +20,7 @@
 		if(isnewplayer(m))
 			continue
 		if(m.mind)
-			if(m.stat != DEAD && !isbrain(m))
+			if(m.stat != DEAD && !isbrain(m) && !iscameramob(m))
 				num_survivors++
 			mob_data += list("name" = m.name, "ckey" = ckey(m.mind.key))
 			if(isobserver(m))
@@ -41,9 +41,9 @@
 					if(iscyborg(L))
 						var/mob/living/silicon/robot/R = L
 						mob_data += list("module" = R.module)
-				else
-					category = "others"
-					mob_data += list("typepath" = L.type)
+			else
+				category = "others"
+				mob_data += list("typepath" = m.type)
 		if(!escaped)
 			if(EMERGENCY_ESCAPED_OR_ENDGAMED && (m.onCentCom() || m.onSyndieBase()))
 				escaped = "escapees"
@@ -60,8 +60,12 @@
 				file_data["[escaped]"]["npcs"]["[initial(m.name)]"] = 1
 		else
 			if(isobserver(m))
-				file_data["[escaped]"] = mob_data
+				var/pos = length(file_data["[escaped]"]) + 1
+				file_data["[escaped]"]["[pos]"] = mob_data
 			else
+				if(!category)
+					category = "others"
+					mob_data += list("name" = m.name, "typepath" = m.type)
 				var/pos = length(file_data["[escaped]"]["[category]"]) + 1
 				file_data["[escaped]"]["[category]"]["[pos]"] = mob_data
 	var/datum/station_state/end_state = new /datum/station_state()
@@ -504,7 +508,7 @@
 /datum/controller/subsystem/ticker/proc/save_admin_data()
 	if(CONFIG_GET(flag/admin_legacy_system)) //we're already using legacy system so there's nothing to save
 		return
-	else if(load_admins()) //returns true if there was a database failure and the backup was loaded from
+	else if(load_admins(TRUE)) //returns true if there was a database failure and the backup was loaded from
 		return
 	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
 	query_admin_rank_update.Execute()

@@ -68,7 +68,7 @@
 			var/datum/mood_event/event = mood_events[i]
 			msg += event.description
 	else
-		msg += "<span class='nicegreen'>Nothing special has happend to me lately!<span>\n"
+		msg += "<span class='nicegreen'>Nothing special has happened to me lately!<span>\n"
 	to_chat(owner, msg)
 
 /datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed
@@ -117,12 +117,12 @@
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 3)
 			update_mood_icon()
 			if(prob(7))
-				owner.playsound_local(null, pick(CREEPY_SOUNDS), 100, 1)
+				owner.playsound_local(null, pick(CREEPY_SOUNDS), 40, 1)
 			soundloop.start()
 		if(SANITY_INSANE to SANITY_UNSTABLE)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 2)
 			if(prob(3))
-				owner.playsound_local(null, pick(CREEPY_SOUNDS), 60, 1)
+				owner.playsound_local(null, pick(CREEPY_SOUNDS), 20, 1)
 			soundloop.stop()
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			owner.overlay_fullscreen("depression", /obj/screen/fullscreen/depression, 1)
@@ -133,13 +133,13 @@
 
 	switch(mood_level)
 		if(1)
-			DecreaseSanity(0.4)
+			DecreaseSanity(0.2, 0)
 		if(2)
-			DecreaseSanity(0.25)
+			DecreaseSanity(0.125, 25)
 		if(3)
-			DecreaseSanity(0.15)
+			DecreaseSanity(0.075, 50)
 		if(4)
-			DecreaseSanity(0.05)
+			DecreaseSanity(0.025, 75)
 		if(5)
 			IncreaseSanity(0.1)
 		if(6)
@@ -164,8 +164,11 @@
 	if(A)
 		update_beauty(A)
 
-/datum/component/mood/proc/DecreaseSanity(amount)
-	sanity = max(0, sanity - amount)
+/datum/component/mood/proc/DecreaseSanity(amount, limit = 0)
+	if(sanity < limit) //This might make KevinZ stop fucking pinging me.
+		IncreaseSanity(0.5)
+	else
+		sanity = max(0, sanity - amount)
 
 /datum/component/mood/proc/IncreaseSanity(amount, limit = 99)
 	if(sanity > limit)

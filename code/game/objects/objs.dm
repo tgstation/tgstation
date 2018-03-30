@@ -28,7 +28,6 @@
 	var/list/req_one_access
 	var/req_one_access_txt = "0"
 
-
 /obj/vv_edit_var(vname, vval)
 	switch(vname)
 		if("obj_flags")
@@ -110,18 +109,18 @@
 		return null
 
 /obj/proc/updateUsrDialog()
-	if(obj_flags & IN_USE)
+	if((obj_flags & IN_USE) && !(obj_flags & USES_TGUI))
 		var/is_in_use = 0
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
 				is_in_use = 1
-				src.attack_hand(M)
+				ui_interact(usr)
 		if(isAI(usr) || iscyborg(usr) || IsAdminGhost(usr))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = 1
-					src.attack_ai(usr)
+					ui_interact(usr)
 
 		// check for TK users
 
@@ -131,7 +130,7 @@
 				if(usr.client && usr.machine==src)
 					if(H.dna.check_mutation(TK))
 						is_in_use = 1
-						src.attack_hand(usr)
+						ui_interact(usr)
 		if (is_in_use)
 			obj_flags |= IN_USE
 		else
@@ -153,9 +152,10 @@
 
 
 /obj/attack_ghost(mob/user)
-	if(ui_interact(user) != -1)
+	. = ..()
+	if(.)
 		return
-	..()
+	ui_interact(user)
 
 /obj/proc/container_resist(mob/living/user)
 	return
@@ -195,10 +195,7 @@
 /obj/get_spans()
 	return ..() | SPAN_ROBOT
 
-/obj/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-	return
-
-/obj/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/get_dumping_location(datum/component/storage/source,mob/user)
 	return get_turf(src)
 
 /obj/proc/CanAStarPass()

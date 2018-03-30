@@ -1734,9 +1734,8 @@
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
 "dP" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	frequency = 1441;
 	id = "inc_in"
 	},
 /obj/structure/sign/warning/vacuum/external{

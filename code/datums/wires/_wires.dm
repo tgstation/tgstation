@@ -14,6 +14,14 @@
 /atom
 	var/datum/wires/wires = null
 
+/atom/proc/attempt_wire_interaction(mob/user)
+	if(!wires)
+		return WIRE_INTERACTION_FAIL
+	if(!user.CanReach(src))
+		return WIRE_INTERACTION_FAIL
+	wires.interact(user)
+	return WIRE_INTERACTION_BLOCK
+
 /datum/wires
 	var/atom/holder = null // The holder (atom that contains these wires).
 	var/holder_type = null // The holder's typepath (used to make wire colors common to all holders).

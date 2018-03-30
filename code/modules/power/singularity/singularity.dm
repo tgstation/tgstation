@@ -58,10 +58,9 @@
 		last_failed_movement = direct
 		return 0
 
-
 /obj/singularity/attack_hand(mob/user)
 	consume(user)
-	return 1
+	return TRUE
 
 /obj/singularity/attack_paw(mob/user)
 	consume(user)

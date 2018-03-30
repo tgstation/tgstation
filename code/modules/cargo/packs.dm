@@ -1532,7 +1532,7 @@
 					/obj/item/vending_refill/coffee,
 					/obj/item/vending_refill/coffee,
 					/obj/item/vending_refill/coffee,
-					/obj/item/book/action_granting/drink_fling)
+					/obj/item/book/granter/action/drink_fling)
 	crate_name = "bartending supply crate"
 
 /datum/supply_pack/organic/vending/cigarette

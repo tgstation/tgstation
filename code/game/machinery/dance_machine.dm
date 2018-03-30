@@ -87,7 +87,8 @@
 	..()
 
 
-/obj/machinery/disco/interact(mob/user)
+/obj/machinery/disco/ui_interact(mob/user)
+	. = ..()
 	if (!anchored)
 		to_chat(user,"<span class='warning'>This device must be anchored by a wrench!</span>")
 		return
@@ -97,7 +98,6 @@
 		return
 	if(!Adjacent(user) && !isAI(user))
 		return
-	user.set_machine(src)
 	var/list/dat = list()
 	dat +="<div class='statusDisplay' style='text-align:center'>"
 	dat += "<b><A href='?src=[REF(src)];action=toggle'>[!active ? "BREAK IT DOWN" : "SHUT IT DOWN"]<b></A><br>"
@@ -407,7 +407,8 @@
 		sleep(speed)
 		for(var/i in 1 to speed)
 			M.setDir(pick(GLOB.cardinals))
-			M.lay_down(TRUE)
+			for(var/mob/living/carbon/NS in rangers)
+				NS.lay_down(TRUE)		//specifically excludes silicons to prevent pAI chat spam
 		 time--
 
 /obj/machinery/disco/proc/dance5(var/mob/living/M)

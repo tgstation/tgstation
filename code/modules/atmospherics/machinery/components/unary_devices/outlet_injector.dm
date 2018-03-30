@@ -24,6 +24,45 @@
 	SSradio.remove_object(src,frequency)
 	return ..()
 
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos
+	frequency = FREQ_ATMOS_STORAGE
+	on = TRUE
+	volume_rate = 200
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste
+	name = "atmos waste outlet injector"
+	id =  ATMOS_GAS_MONITOR_WASTE_ATMOS
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste
+	name = "engine outlet injector"
+	id = ATMOS_GAS_MONITOR_WASTE_ENGINE
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxin_input
+	name = "plasma tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_TOX
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/oxygen_input
+	name = "oxygen tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_O2
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrogen_input
+	name = "nitrogen tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_N2
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/mix_input
+	name = "mix tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_MIX
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrous_input
+	name = "nitrous oxide tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_N2O
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/air_input
+	name = "air mix tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_AIR
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/carbon_input
+	name = "carbon dioxide tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_CO2
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input
+	name = "incinerator chamber input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_INCINERATOR
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input
+	name = "toxins mixing input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_TOXINS_LAB
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = TRUE
 

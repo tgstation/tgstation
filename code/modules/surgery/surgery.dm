@@ -67,7 +67,6 @@
 	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
 	qdel(src)
 
-
 /datum/surgery/proc/get_propability_multiplier()
 	var/propability = 0.5
 	var/turf/T = get_turf(target)
