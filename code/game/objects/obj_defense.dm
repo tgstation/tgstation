@@ -47,7 +47,8 @@
 	..()
 	var/tforce = 0
 	if(ismob(AM))
-		tforce = 10
+		var/mob/M = AM
+		tforce = M.throwforce
 	else if(isobj(AM))
 		var/obj/O = AM
 		tforce = O.throwforce

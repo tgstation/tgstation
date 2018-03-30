@@ -5,6 +5,7 @@
 	var/collar_type
 	var/unique_pet = FALSE
 	blood_volume = BLOOD_VOLUME_NORMAL
+	throwforce = 0
 
 /mob/living/simple_animal/pet/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/clothing/neck/petcollar) && !pcollar && collar_type)
