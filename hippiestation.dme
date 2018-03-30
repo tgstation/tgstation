@@ -3008,6 +3008,7 @@
 #include "hippiestation\code\modules\research\designs\biogenerator_designs.dm"
 #include "hippiestation\code\modules\research\designs\bluespace.dm"
 #include "hippiestation\code\modules\research\designs\medical_designs.dm"
+#include "hippiestation\code\modules\research\designs\reagent_forge_designs.dm"
 #include "hippiestation\code\modules\research\techweb\_techweb.dm"
 #include "hippiestation\code\modules\research\techweb\all_nodes.dm"
 #include "hippiestation\code\modules\research\xenobiology\xenobiology.dm"
