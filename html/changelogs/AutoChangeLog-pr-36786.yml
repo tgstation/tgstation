@@ -1,5 +1,0 @@
-author: "Davidj361"
-delete-after: True
-changes: 
-  - bugfix: "Fixed table crafting not properly checking the surrounding area for tools."
-  - code_imp: "Changed /datum/personal_crafting/proc/get_surroundings(mob/user) to return 2 lists."
