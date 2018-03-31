@@ -97,25 +97,20 @@
 /turf/open/proc/update_visuals()
 	var/list/new_overlay_types = tile_graphic()
 	var/list/atmos_overlay_types = src.atmos_overlay_types // Cache for free performance
-
+	var/list/diff = new_overlay_types^atmos_overlay_types
 	#if DM_VERSION >= 513
 	#warning 512 is stable now for sure, remove the old code
 	#endif
 
 	#if DM_VERSION >= 512
-	if (new_overlay_types.len)
-		if (atmos_overlay_types)
-			vars["vis_contents"] -= atmos_overlay_types - new_overlay_types
-			vars["vis_contents"] += new_overlay_types - atmos_overlay_types //don't add overlays that already exist
-		else
-			vars["vis_contents"] += new_overlay_types
+	if (diff)
+		vars["vis_contents"] -= atmos_overlay_types - new_overlay_types
+		vars["vis_contents"] += new_overlay_types - atmos_overlay_types //don't add overlays that already exist
+
 	#else
-	if (new_overlay_types.len)
-		if (atmos_overlay_types)
-			cut_overlay(atmos_overlay_types - new_overlay_types)
-			add_overlay(new_overlay_types - atmos_overlay_types) //don't add overlays that already exist
-		else
-			add_overlay(new_overlay_types)
+	if (diff)
+		cut_overlay(atmos_overlay_types - new_overlay_types)
+		add_overlay(new_overlay_types - atmos_overlay_types) //don't add overlays that already exist
 	#endif
 
 	UNSETEMPTY(new_overlay_types)
@@ -123,9 +118,11 @@
 
 /turf/open/proc/tile_graphic()
 	. = new /list
-	if(air)
+	if(air && air.gases)
 		var/list/gases = air.gases
 		for(var/id in gases)
+			if(GLOB.nonreactive_gases[id])
+				continue
 			var/gas = gases[id]
 			var/gas_meta = gas[GAS_META]
 			var/gas_overlay = gas_meta[META_GAS_OVERLAY]
