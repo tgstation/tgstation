@@ -316,17 +316,12 @@
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
-<<<<<<< HEAD
 	if(jobban_isbanned(src, CATBAN) || jobban_isbanned(src, CLUWNEBAN))
 		rank = "Assistant"
-
-	if(!IsJobAvailable(rank))
-		alert(src, "[rank] is not available. Please try another.")
-=======
+	
 	var/error = IsJobUnavailable(rank)
 	if(error != JOB_AVAILABLE)
 		alert(src, get_job_unavailable_error_message(error, rank))
->>>>>>> 08c4d9a0a6... Failing to latejoin as a job when the latejoin panel is already open now makes a more descriptive error message (#36794)
 		return FALSE
 
 	if(SSticker.late_join_disabled)
