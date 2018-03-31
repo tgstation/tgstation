@@ -553,7 +553,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Delete"
 
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_SPAWN|R_DEBUG))
 		return
 
 	admin_delete(A)
@@ -1232,9 +1232,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			NT.Insert(H, drop_if_replaced = FALSE)
 		else
 			tail.Remove(H)
-
-	H.dna.features["ears"] = "None"
-	H.dna.features["tail_human"] = "None"
 
 	if(!silent)
 		to_chat(H, "You are no longer a cat.")
