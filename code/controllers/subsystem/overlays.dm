@@ -121,6 +121,7 @@ SUBSYSTEM_DEF(overlays)
 
 	if(LAZYLEN(overlays)) //don't queue empty lists, don't cut priority overlays
 		remove_overlays = overlays
+		add_overlays.Cut()
 		need_compile = TRUE
 
 	if(priority && LAZYLEN(cached_priority))
@@ -134,8 +135,11 @@ SUBSYSTEM_DEF(overlays)
 	if(!overlays)
 		return
 	overlays = build_appearance_list(overlays)
-	LAZYINITLIST(remove_overlays) //always initialized after this point
+	LAZYINITLIST(add_overlays) //always initialized after this point
+	LAZYINITLIST(priority_overlays)
+	LAZYINITLIST(remove_overlays)
 	remove_overlays += overlays
+	add_overlays -= remove_overlays
 	var/list/cached_priority = priority_overlays
 
 	if(priority)
@@ -152,7 +156,7 @@ SUBSYSTEM_DEF(overlays)
 
 	LAZYINITLIST(add_overlays) //always initialized after this point
 	LAZYINITLIST(priority_overlays)
-
+	LAZYINITLIST(remove_overlays)
 	var/list/cached_priority = priority_overlays
 	var/init_p_len = cached_priority.len  //starter pokemon
 
@@ -162,6 +166,7 @@ SUBSYSTEM_DEF(overlays)
 			QUEUE_FOR_COMPILE
 	else
 		add_overlays |= overlays
+		remove_overlays -= overlays
 		if(NOT_QUEUED_ALREADY)
 			QUEUE_FOR_COMPILE
 

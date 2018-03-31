@@ -538,39 +538,10 @@ generate/load female uniform sprites matching all previously decided variables
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
 
-	//Handle held offsets
-	var/mob/M = loc
-	if(istype(M))
-		var/list/L = get_held_offsets()
-		if(L)
-			standing.pixel_x += L["x"] //+= because of center()ing
-			standing.pixel_y += L["y"]
-
 	standing.alpha = alpha
 	standing.color = color
 
 	return standing
-
-
-/obj/item/proc/get_held_offsets()
-	var/list/L
-	if(ismob(loc))
-		var/mob/M = loc
-		L = M.get_item_offsets_for_index(M.get_held_index_of_item(src))
-	return L
-
-
-//Can't think of a better way to do this, sadly
-/mob/proc/get_item_offsets_for_index(i)
-	switch(i)
-		if(3) //odd = left hands
-			return list("x" = 0, "y" = 16)
-		if(4) //even = right hands
-			return list("x" = 0, "y" = 16)
-		else //No offsets or Unwritten number of hands
-			return list("x" = 0, "y" = 0)
-
-
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/generate_icon_render_key()
