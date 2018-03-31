@@ -64,9 +64,11 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/toggle_antag_hud, 	/*toggle display of the admin antag hud*/
 	/client/proc/toggle_combo_hud, // toggle display of the combination pizza antag and taco sci/med/eng hud
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
+	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
-	/client/proc/toggleadminhelpsound
+	/client/proc/toggleadminhelpsound,
+	/client/proc/respawn_character
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/DB_ban_panel, /client/proc/stickybanpanel))
@@ -130,6 +132,9 @@ GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 	/client/proc/cmd_debug_del_all,
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs,
+	/client/proc/callproc,
+	/client/proc/callproc_datum,
+	/client/proc/SDQL2_query,
 	/client/proc/test_movable_UI,
 	/client/proc/test_snap_UI,
 	/client/proc/debugNatureMapGenerator,
@@ -143,6 +148,8 @@ GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 	/client/proc/create_outfits,
 	/client/proc/modify_goals,
 	/client/proc/debug_huds,
+	/client/proc/map_template_load,
+	/client/proc/map_template_upload,
 	/client/proc/jump_to_ruin,
 	/client/proc/clear_dynamic_transit,
 	/client/proc/toggle_medal_disable,
@@ -150,7 +157,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 	/client/proc/pump_random_event,
 	/client/proc/cmd_display_init_log,
 	/client/proc/cmd_display_overlay_log,
-	/datum/admins/proc/create_or_modify_area
+	/datum/admins/proc/create_or_modify_area,
 	)
 GLOBAL_PROTECT(admin_verbs_possess)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
