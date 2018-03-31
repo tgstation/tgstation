@@ -1301,8 +1301,12 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	if(!istype(C))
 		return
 
+	var/animate_color = initial(C.color)
+	var/datum/client_colour/CC = C.mob.client_colours[1]
+	if(CC)
+		animate_color = CC.colour
 	C.color = flash_color
-	animate(C, color = initial(C.color), time = flash_time)
+	animate(C, color = animate_color, time = flash_time)
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 

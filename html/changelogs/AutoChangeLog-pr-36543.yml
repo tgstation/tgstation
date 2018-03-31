@@ -1,6 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "You no longer hit borgs with hats you want them to wear."
-  - rscadd: "Viva la borg, engieborgs can now wear hats"
-  - rscadd: "Borgs can now wear more hats."

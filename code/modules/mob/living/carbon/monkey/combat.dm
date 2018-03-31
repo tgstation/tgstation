@@ -425,7 +425,7 @@
 
 /mob/living/carbon/monkey/grabbedby(mob/living/carbon/user)
 	. = ..()
-	if(pulledby && (mode != MONKEY_IDLE || prob(MONKEY_PULL_AGGRO_PROB))) // nuh uh you don't pull me!
+	if(!IsDeadOrIncap() && pulledby && (mode != MONKEY_IDLE || prob(MONKEY_PULL_AGGRO_PROB))) // nuh uh you don't pull me!
 		if(Adjacent(pulledby))
 			a_intent = INTENT_DISARM
 			monkey_attack(pulledby)
