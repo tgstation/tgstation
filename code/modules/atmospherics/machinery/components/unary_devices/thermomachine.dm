@@ -169,8 +169,12 @@
 	
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
 	on = TRUE
-	target_temperature = 73.15
 	icon_state = "freezer_1"
+	
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize()
+	. = ..()
+	if(target_temperature == initial(target_temperature))
+		target_temperature = min_temperature
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()
