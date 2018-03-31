@@ -1101,7 +1101,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/academy/classrooms)
 "ea" = (
-/obj/machinery/igniter,
+/obj/machinery/igniter/on,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "eb" = (
@@ -2943,7 +2943,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "jC" = (
-/obj/machinery/igniter,
+/obj/machinery/igniter/on,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "jD" = (
