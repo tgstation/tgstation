@@ -40,7 +40,7 @@
 			component_params["inputs"] = saved_inputs
 
 	var/special = save_special()
-	if(special)
+	if(special != null)
 		component_params["special"] = special
 
 	return component_params
