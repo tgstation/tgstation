@@ -339,7 +339,8 @@
 			var/state = "bayonet"							//Generic state.
 			if(bayonet.icon_state in icon_states('icons/obj/guns/bayonets.dmi'))		//Snowflake state?
 				state = bayonet.icon_state
-			knife_overlay = mutable_appearance('icons/obj/guns/bayonets.dmi', state)
+			var/icon/bayonet_icons = 'icons/obj/guns/bayonets.dmi' 
+			knife_overlay = mutable_appearance(bayonet_icons, state)
 			knife_overlay.pixel_x = knife_x_offset
 			knife_overlay.pixel_y = knife_y_offset
 			add_overlay(knife_overlay, TRUE)
