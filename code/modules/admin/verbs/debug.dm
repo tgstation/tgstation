@@ -894,6 +894,24 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 
 	usr << browse(dellog.Join(), "window=dellog")
 
+/client/proc/cmd_display_comsig_log()
+	set category = "Debug"
+	set name = "Display comsig Log"
+	set desc = "Display component signal log."
+
+	var/list/L = list("<B>Comsigs fired:</B><BR><BR><ol>")
+	sortTim(GLOB.component_signal_log_items, cmp=/proc/cmp_comsig_log, associative = TRUE)
+	for(var/sig in GLOB.component_signal_log_items)
+		var/datum/comsig_log/log = GLOB.component_signal_log_items[sig]
+		L += "<li>Signal string: [sig]"
+		L += "<BR>Fires: [log.calls]"
+		L += "<BR>Time usage: [log.time]"
+		L += "</li>"
+
+	L += "</ol>"
+
+	usr << browse(L.Join(), "window=L")
+
 /client/proc/cmd_display_overlay_log()
 	set category = "Debug"
 	set name = "Display overlay Log"

@@ -81,3 +81,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_advdisease_resistance_asc(datum/disease/advance/A, datum/disease/advance/B)
 	return A.totalResistance() - B.totalResistance()
+
+/proc/cmp_comsig_log(datum/comsig_log/a, datum/comsig_log/b)
+	return b.time - a.time
