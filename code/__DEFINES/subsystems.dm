@@ -127,16 +127,16 @@
 		var/list/a = A.add_overlays;\
 		var/list/r = A.remove_overlays;\
 		var/list/po = A.priority_overlays;\
-		if(LAZYLEN(po)){\
-			A.overlays = po;\
-		}\
 		if(LAZYLEN(r)){\
 			A.overlays -= r;\
 			r.Cut();\
 		}\
 		if(LAZYLEN(a)){\
-			A.overlays += a;\
+			A.overlays |= a;\
 			a.Cut();\
+		}\
+		if(LAZYLEN(po)){\
+			A.overlays |= po;\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}

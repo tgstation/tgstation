@@ -161,7 +161,7 @@ SUBSYSTEM_DEF(overlays)
 		if(NOT_QUEUED_ALREADY && (init_p_len != cached_priority.len))
 			QUEUE_FOR_COMPILE
 	else
-		add_overlays += overlays
+		add_overlays |= overlays
 		if(NOT_QUEUED_ALREADY)
 			QUEUE_FOR_COMPILE
 
@@ -171,12 +171,11 @@ SUBSYSTEM_DEF(overlays)
 			cut_overlays()
 		return
 
-	var/list/cached_other = other.overlays
+	var/list/cached_other = other.overlays.Copy()
 	if(cached_other)
 		if(cut_old || !LAZYLEN(overlays))
-			add_overlays = cached_other.Copy()
-		else
-			add_overlays = (cached_other - overlays)
+			remove_overlays = overlays
+			add_overlays = cached_other
 		if(NOT_QUEUED_ALREADY)
 			QUEUE_FOR_COMPILE
 	else if(cut_old)
@@ -187,7 +186,7 @@ SUBSYSTEM_DEF(overlays)
 
 //TODO: Better solution for these?
 /image/proc/add_overlay(x)
-	overlays += x
+	overlays |= x
 
 /image/proc/cut_overlay(x)
 	overlays -= x
@@ -205,7 +204,5 @@ SUBSYSTEM_DEF(overlays)
 	if(cached_other)
 		if(cut_old || !overlays.len)
 			overlays = cached_other.Copy()
-		else
-			overlays |= cached_other
 	else if(cut_old)
 		cut_overlays()
