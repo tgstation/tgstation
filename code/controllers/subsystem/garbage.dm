@@ -25,6 +25,10 @@ SUBSYSTEM_DEF(garbage)
 	//Queue
 	var/list/queues
 
+	#ifdef TESTING
+	var/list/reference_find_on_fail = list()
+	#endif
+
 
 /datum/controller/subsystem/garbage/PreInit()
 	queues = new(GC_QUEUE_COUNT)
@@ -152,6 +156,9 @@ SUBSYSTEM_DEF(garbage)
 			++gcedlasttick
 			++totalgcs
 			pass_counts[level]++
+			#ifdef TESTING
+			reference_find_on_fail -= refID		//It's deleted we don't care anymore.
+			#endif
 			if (MC_TICK_CHECK)
 				break
 			continue
@@ -162,6 +169,11 @@ SUBSYSTEM_DEF(garbage)
 			if (GC_QUEUE_CHECK)
 				#ifdef GC_FAILURE_HARD_LOOKUP
 				D.find_references()
+				#endif
+				#ifdef TESTING
+				if(reference_find_on_fail[refID])
+					D.find_references()
+				reference_find_on_fail -= refID
 				#endif
 				var/type = D.type
 				var/datum/qdel_item/I = items[type]
@@ -261,6 +273,11 @@ SUBSYSTEM_DEF(garbage)
 /datum/qdel_item/New(mytype)
 	name = "[mytype]"
 
+#ifdef TESTING
+/proc/qdel_and_find_ref_if_fail(datum/D, force = FALSE)
+	SSgarbage.reference_find_on_fail[REF(D)] = TRUE
+	qdel(D, force)
+#endif
 
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
@@ -317,6 +334,11 @@ SUBSYSTEM_DEF(garbage)
 				SSgarbage.PreQueue(D)
 				#ifdef TESTING
 				D.find_references()
+				#endif
+			if (QDEL_HINT_IFFAIL_FINDREFERENCE)
+				SSgarbage.PreQueue(D)
+				#ifdef TESTING
+				SSgarbage.reference_find_on_fail[REF(D)] = TRUE
 				#endif
 			else
 				#ifdef TESTING
@@ -387,9 +409,16 @@ SUBSYSTEM_DEF(garbage)
 	set name = "qdel() then Find References"
 	set src in world
 
-	qdel(src)
+	qdel(src, TRUE)		//Force.
 	if(!running_find_references)
 		find_references(TRUE)
+
+/datum/verb/qdel_then_if_fail_find_references()
+	set category = "Debug"
+	set name = "qdel() then Find References if GC failure"
+	set src in world
+
+	qdel_and_find_ref_if_fail(src, TRUE)
 
 /datum/proc/DoSearchVar(X, Xname, recursive_limit = 64)
 	if(usr && usr.client && !usr.client.running_find_references)
