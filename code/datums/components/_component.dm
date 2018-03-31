@@ -124,7 +124,7 @@
 /datum/proc/SendSignal(sigtype, ...)
 	var/datum/comsig_log/log
 	var/start
-	if(GLOB)
+	if(GLOB && islist(GLOB.component_signal_log_items))
 		log = GLOB.component_signal_log_items[sigtype]
 		if(!log)
 			log = GLOB.component_signal_log_items[sigtype] = new /datum/comsig_log(sigtype)
