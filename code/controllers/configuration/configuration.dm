@@ -258,7 +258,7 @@
 			if ("disabled")
 				currentmap = null
 			else
-				WRITE_FILE(GLOB.config_error_log, "Unknown command in map vote config: '[command]'")
+				log_config("Unknown command in map vote config: '[command]'")
 
 
 /datum/controller/configuration/proc/pick_mode(mode_name)
