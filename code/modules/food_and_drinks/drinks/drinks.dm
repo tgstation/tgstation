@@ -110,7 +110,7 @@
 /obj/item/reagent_containers/food/drinks/proc/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(!isGlass)
 		return
-	if(QDELETED(src) || !target)		//Invalid loc
+	if(QDELING(src) || !target)		//Invalid loc
 		return
 	if(bartender_check(target) && ranged)
 		return
