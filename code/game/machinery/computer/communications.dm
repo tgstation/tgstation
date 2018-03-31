@@ -45,9 +45,8 @@
 
 /obj/machinery/computer/communications/process()
 	if(..())
-		if(state != STATE_STATUSDISPLAY && state != STATE_CALLSHUTTLE)
+		if(state != STATE_STATUSDISPLAY && state != STATE_CALLSHUTTLE && state != STATE_PURCHASE)
 			updateDialog()
-
 
 /obj/machinery/computer/communications/Topic(href, href_list)
 	if(..())
