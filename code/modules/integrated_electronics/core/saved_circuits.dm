@@ -107,7 +107,7 @@
 			pin.write_data_to_pin(input_value)
 			// TODO: support for special input types, such as internal refs and maybe typepaths
 
-	if(component_params["special"])
+	if(component_params["special"] != null)
 		load_special(component_params["special"])
 
 /obj/item/integrated_circuit/proc/load_special(special_data)
