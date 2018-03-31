@@ -173,7 +173,7 @@ SUBSYSTEM_DEF(overlays)
 	if(cached_other)
 		if(cut_old || !LAZYLEN(overlays))
 			remove_overlays = overlays
-			add_overlays = cached_other
+		add_overlays = cached_other
 		if(NOT_QUEUED_ALREADY)
 			QUEUE_FOR_COMPILE
 	else if(cut_old)
@@ -198,9 +198,11 @@ SUBSYSTEM_DEF(overlays)
 			cut_overlays()
 		return
 
-	var/list/cached_other = other.overlays
+	var/list/cached_other = other.overlays.Copy()
 	if(cached_other)
 		if(cut_old || !overlays.len)
-			overlays = cached_other.Copy()
+			overlays = cached_other
+		else
+			overlays |= cached_other
 	else if(cut_old)
 		cut_overlays()
