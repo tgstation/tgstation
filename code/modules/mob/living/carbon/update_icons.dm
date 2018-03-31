@@ -96,7 +96,6 @@
 
 
 /mob/living/carbon/update_damage_overlays()
-	stack_trace("DAMAGE CALLED WITHOUT DAMAGE REEEE")
 	remove_overlay(DAMAGE_LAYER)
 
 	var/mutable_appearance/damage_overlay = mutable_appearance('icons/mob/dam_mob.dmi', "blank", -DAMAGE_LAYER)

@@ -115,20 +115,16 @@ SUBSYSTEM_DEF(overlays)
 #define NOT_QUEUED_ALREADY (!(flags_1 & OVERLAY_QUEUED_1))
 #define QUEUE_FOR_COMPILE flags_1 |= OVERLAY_QUEUED_1; SSoverlays.queue += src;
 /atom/proc/cut_overlays(priority = FALSE)
-	var/list/cached_priority = priority_overlays
+	LAZYINITLIST(priority_overlays)
+	LAZYINITLIST(remove_overlays)
+	LAZYINITLIST(add_overlays)
+	remove_overlays = overlays
+	add_overlays.Cut()
 
-	var/need_compile = FALSE
+	if(priority)
+		priority_overlays.Cut()
 
-	if(LAZYLEN(overlays)) //don't queue empty lists, don't cut priority overlays
-		remove_overlays = overlays
-		add_overlays.Cut()
-		need_compile = TRUE
-
-	if(priority && LAZYLEN(cached_priority))
-		cached_priority.Cut()
-		need_compile = TRUE
-
-	if(NOT_QUEUED_ALREADY && need_compile)
+	if(NOT_QUEUED_ALREADY)
 		QUEUE_FOR_COMPILE
 
 /atom/proc/cut_overlay(list/overlays, priority)
@@ -139,7 +135,7 @@ SUBSYSTEM_DEF(overlays)
 	LAZYINITLIST(priority_overlays)
 	LAZYINITLIST(remove_overlays)
 	remove_overlays += overlays
-	add_overlays -= remove_overlays
+	add_overlays -= overlays
 	var/list/cached_priority = priority_overlays
 
 	if(priority)
@@ -157,16 +153,13 @@ SUBSYSTEM_DEF(overlays)
 	LAZYINITLIST(add_overlays) //always initialized after this point
 	LAZYINITLIST(priority_overlays)
 	LAZYINITLIST(remove_overlays)
-	var/list/cached_priority = priority_overlays
-	var/init_p_len = cached_priority.len  //starter pokemon
 
 	if(priority)
-		cached_priority += overlays  //or in the image. Can we use [image] = image?
-		if(NOT_QUEUED_ALREADY && (init_p_len != cached_priority.len))
+		priority_overlays += overlays  //or in the image. Can we use [image] = image?
+		if(NOT_QUEUED_ALREADY)
 			QUEUE_FOR_COMPILE
 	else
-		add_overlays |= overlays
-		remove_overlays -= overlays
+		add_overlays += overlays
 		if(NOT_QUEUED_ALREADY)
 			QUEUE_FOR_COMPILE
 
