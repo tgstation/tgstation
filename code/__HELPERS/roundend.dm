@@ -447,7 +447,7 @@
 
 /datum/action/report
 	name = "Show roundend report"
-	button_icon_state = "vote"
+	button_icon_state = "round_end"
 
 /datum/action/report/Trigger()
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
