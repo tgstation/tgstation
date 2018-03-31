@@ -124,21 +124,19 @@
 
 #define COMPILE_OVERLAYS(A)\
 	if (TRUE) {\
-		var/list/oo = A.our_overlays;\
+		var/list/a = A.add_overlays;\
+		var/list/r = A.remove_overlays;\
 		var/list/po = A.priority_overlays;\
 		if(LAZYLEN(po)){\
-			if(LAZYLEN(oo)){\
-				A.overlays = oo + po;\
-			}\
-			else{\
-				A.overlays = po;\
-			}\
+			A.overlays = po;\
 		}\
-		else if(LAZYLEN(oo)){\
-			A.overlays = oo;\
+		if(LAZYLEN(r)){\
+			A.overlays -= r;\
+			r.Cut();\
 		}\
-		else{\
-			A.overlays.Cut();\
+		if(LAZYLEN(a)){\
+			A.overlays += a;\
+			a.Cut();\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}

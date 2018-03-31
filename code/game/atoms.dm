@@ -22,8 +22,9 @@
 							//its inherent color, the colored paint applied on it, special color effect etc...
 	var/initialized = FALSE
 
-	var/list/our_overlays	//our local copy of (non-priority) overlays without byond magic. Use procs in SSoverlays to manipulate
 	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
+	var/list/remove_overlays // a very temporary list of overlays to remove
+	var/list/add_overlays // a very temporary list of overlays to add
 
 	var/datum/proximity_monitor/proximity_monitor
 	var/buckle_message_cooldown = 0
