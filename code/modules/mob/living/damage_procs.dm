@@ -85,7 +85,7 @@
 
 
 
-/mob/living/proc/apply_effect(effect = 0,effecttype = STUN, blocked = FALSE)
+/mob/living/proc/apply_effect(effect = 0,effecttype = EFFECT_STUN, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if(!effect || (hit_percent <= 0))
 		return 0
