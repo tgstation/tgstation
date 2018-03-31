@@ -251,7 +251,7 @@
 	if(!hand)
 		hand =  get_empty_held_index_for_side("r")
 	if(hand)
-		if(put_in_hand(I, hand, TRUE))
+		if(put_in_hand(I, hand, forced))
 			return TRUE
 	if(del_on_fail)
 		qdel(I)
