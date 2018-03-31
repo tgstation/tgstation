@@ -12,6 +12,9 @@
 	var/kingmaking
 
 /obj/structure/destructible/clockwork/eminence_spire/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='notice'>You can tell how powerful [src] is; you know better than to touch it.</span>")
 		return
@@ -42,6 +45,7 @@
 		to_chat(user, "<span class='warning'>You feel the omniscient gaze turn into a puzzled frown. Perhaps you should just stick to building.</span>")
 		return
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/structure/destructible/clockwork/eminence_spire/attack_ghost(mob/user)
 	if(!IsAdminGhost(user))
 		return

@@ -27,6 +27,7 @@
 	var/show_flavour = TRUE
 	var/banType = "lavaland"
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted() || !loc)
 		return
@@ -186,8 +187,8 @@
 				PDA.toff = TRUE
 		if(disable_sensors)
 			// Using crew monitors to find corpses while creative makes finding certain ruins too easy.
-			var/obj/item/clothing/under/C = H.wear_suit
-			if(C)
+			var/obj/item/clothing/under/C = H.w_uniform
+			if(istype(C))
 				C.sensor_mode = NO_SENSORS
 
 	var/obj/item/card/id/W = H.wear_id
@@ -527,6 +528,7 @@
 	outfit = /datum/outfit/spacebartender
 	assignedrole = "Space Bar Patron"
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
 	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")
 	if(despawn == "No" || !loc || !Adjacent(user))

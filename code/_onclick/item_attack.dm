@@ -1,6 +1,6 @@
 
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
-	if(!tool_attack_chain(user, target) && pre_attackby(target, user, params))
+	if(!tool_attack_chain(user, target) && pre_attack(target, user, params))
 		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 		var/resolved = target.attackby(src, user, params)
 		if(!resolved && target && !QDELETED(src))
@@ -20,7 +20,9 @@
 	SendSignal(COMSIG_ITEM_ATTACK_SELF, user)
 	interact(user)
 
-/obj/item/proc/pre_attackby(atom/A, mob/living/user, params) //do stuff before attackby!
+/obj/item/proc/pre_attack(atom/A, mob/living/user, params) //do stuff before attackby!
+	if(SendSignal(COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_NO_ATTACK)
+		return FALSE
 	return TRUE //return FALSE to avoid calling attackby after this proc does stuff
 
 // No comment
@@ -34,14 +36,18 @@
 
 /mob/living/attackby(obj/item/I, mob/living/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(user.a_intent == INTENT_HARM && stat == DEAD && butcher_results) //can we butcher it?
-		var/sharpness = I.is_sharp()
-		if(sharpness)
+	if(user.a_intent == INTENT_HARM && stat == DEAD && (butcher_results || guaranteed_butcher_results)) //can we butcher it?
+		GET_COMPONENT_FROM(butchering, /datum/component/butchering, I)
+		if(butchering && butchering.butchering_enabled)
 			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80/sharpness) && Adjacent(I))
-				harvest(user)
+			playsound(loc, butchering.butcher_sound, 50, TRUE, -1)
+			if(do_mob(user, src, butchering.speed) && Adjacent(I))
+				butchering.Butcher(user, src)
 			return 1
+		else if(I.is_sharp() && !butchering) //give sharp objects butchering functionality, for consistency
+			I.AddComponent(/datum/component/butchering, 80 * I.toolspeed)
+			attackby(I, user, params) //call the attackby again to refresh and do the butchering check again
+			return
 	return I.attack(src, user)
 
 
@@ -71,7 +77,8 @@
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
-	SendSignal(COMSIG_ITEM_ATTACK_OBJ, O, user)
+	if(SendSignal(COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
+		return
 	if(flags_1 & NOBLUDGEON_1)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)

@@ -100,8 +100,7 @@
 /area/shuttle/escape)
 "as" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Premium Lounge";
-	req_access_txt = "0"
+	name = "Emergency Shuttle Premium Lounge"
 	},
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
@@ -144,8 +143,7 @@
 /area/shuttle/escape)
 "aA" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Emergency Shuttle Greentext";
-	req_access_txt = "0"
+	name = "Emergency Shuttle Greentext"
 	},
 /turf/open/floor/bluespace,
 /area/shuttle/escape)

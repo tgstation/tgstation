@@ -253,22 +253,26 @@
 		afterForceMove = FALSE
 	if(flight)
 		ion_trail.generate_effect()
-		var/momentum_increment = momentum_gain
-		if(boost)
-			momentum_increment = boost_power
-		if(brake)
-			momentum_increment = 0
-		if(!gravity && !pressure)
-			momentum_increment -= 10
-		switch(dir)
-			if(NORTH)
-				adjust_momentum(0, momentum_increment)
-			if(SOUTH)
-				adjust_momentum(0, -momentum_increment)
-			if(EAST)
-				adjust_momentum(momentum_increment, 0)
-			if(WEST)
-				adjust_momentum(-momentum_increment, 0)
+
+/obj/item/device/flightpack/intercept_user_move(dir, mob, newLoc, oldLoc)
+	if(!flight)
+		return
+	var/momentum_increment = momentum_gain
+	if(boost)
+		momentum_increment = boost_power
+	if(brake)
+		momentum_increment = 0
+	if(!gravity && !pressure)
+		momentum_increment -= 10
+	switch(dir)
+		if(NORTH)
+			adjust_momentum(0, momentum_increment)
+		if(SOUTH)
+			adjust_momentum(0, -momentum_increment)
+		if(EAST)
+			adjust_momentum(momentum_increment, 0)
+		if(WEST)
+			adjust_momentum(-momentum_increment, 0)
 
 //Make the wearer lose some momentum.
 /obj/item/device/flightpack/proc/momentum_decay()
@@ -464,8 +468,8 @@
 
 /obj/item/device/flightpack/proc/losecontrol(knockdown = FALSE, move = TRUE)
 	usermessage("Warning: Control system not responding. Deactivating!", "boldwarning")
-	wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
 	if(wearer)
+		wearer.visible_message("<span class='warning'>[wearer]'s flight suit abruptly shuts off and they lose control!</span>")
 		if(move)
 			while(momentum_x != 0 || momentum_y != 0)
 				sleep(2)

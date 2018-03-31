@@ -51,7 +51,7 @@
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
-	var/flags
+	var/reagents_holder_flags
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
@@ -251,7 +251,7 @@
 	R.handle_reactions()
 	return amount
 
-/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = 0)
+/datum/reagents/proc/metabolize(mob/living/carbon/C, can_overdose = FALSE, liverless = FALSE)
 	var/list/cached_reagents = reagent_list
 	var/list/cached_addictions = addiction_list
 	if(C)
@@ -260,6 +260,8 @@
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		if(QDELETED(R.holder))
+			continue
+		if(liverless && !R.self_consuming) //need to be metabolized
 			continue
 		if(!C)
 			C = R.holder.my_atom
@@ -301,6 +303,7 @@
 							need_mob_update += R.addiction_act_stage4(C)
 						if(40 to INFINITY)
 							to_chat(C, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
+							C.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "[R.id]_addiction")
 							cached_addictions.Remove(R)
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
@@ -312,9 +315,9 @@
 
 /datum/reagents/proc/set_reacting(react = TRUE)
 	if(react)
-		flags &= ~(REAGENT_NOREACT)
+		reagents_holder_flags &= ~(REAGENT_NOREACT)
 	else
-		flags |= REAGENT_NOREACT
+		reagents_holder_flags |= REAGENT_NOREACT
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
@@ -334,7 +337,7 @@
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
-	if(flags & REAGENT_NOREACT)
+	if(reagents_holder_flags & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
 
 	var/reaction_occurred = 0

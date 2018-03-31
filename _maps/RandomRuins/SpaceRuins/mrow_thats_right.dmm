@@ -104,6 +104,9 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "au" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "av" = (
@@ -730,9 +733,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "cl" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 8;
-	frequency = 1441;
 	id_tag = "n2o_out_cat";
 	name = "n2o out"
 	},
@@ -765,9 +767,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/cat_man)
 "cs" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 1;
-	frequency = 1441;
 	id_tag = "o2_out_cat";
 	name = "freezer vent"
 	},
@@ -855,6 +856,25 @@
 /obj/item/organ/tail/cat,
 /obj/item/organ/tail/cat,
 /turf/open/floor/plasteel/freezer,
+/area/ruin/space/has_grav/powered/cat_man)
+"Bl" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"RT" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/cat_man)
+"Sl" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 
 (1,1,1) = {"
@@ -1090,7 +1110,7 @@ ad
 ad
 ad
 ad
-au
+Sl
 ad
 ad
 ad
@@ -1133,9 +1153,9 @@ ad
 bK
 aI
 aG
-au
+RT
 ah
-au
+Bl
 ac
 ac
 ac

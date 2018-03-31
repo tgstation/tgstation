@@ -110,11 +110,7 @@
 #define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 8	//Coefficient of multiplication for the damage the item does when removed without a surgery (this*item.w_class)
 #define EMBEDDED_UNSAFE_REMOVAL_TIME			30	//A Time in ticks, total removal time = (this*item.w_class)
 
-//Gun Stuff
-#define SAWN_INTACT  0
-#define SAWN_OFF     1
 //Gun weapon weight
-#define WEAPON_DUAL_WIELD 0
 #define WEAPON_LIGHT 1
 #define WEAPON_MEDIUM 2
 #define WEAPON_HEAVY 3
@@ -146,3 +142,22 @@
 
 #define EMP_HEAVY 1
 #define EMP_LIGHT 2
+
+#define GRENADE_CLUMSY_FUMBLE 1
+#define GRENADE_NONCLUMSY_FUMBLE 2
+#define GRENADE_NO_FUMBLE 3
+
+#define BODY_ZONE_HEAD		"head"
+#define BODY_ZONE_CHEST		"chest"
+#define BODY_ZONE_L_ARM		"l_arm"
+#define BODY_ZONE_R_ARM		"r_arm"
+#define BODY_ZONE_L_LEG		"l_leg"
+#define BODY_ZONE_R_LEG		"r_leg"
+
+#define BODY_ZONE_PRECISE_EYES		"eyes"
+#define BODY_ZONE_PRECISE_MOUTH		"mouth"
+#define BODY_ZONE_PRECISE_GROIN		"groin"
+#define BODY_ZONE_PRECISE_L_HAND	"l_hand"
+#define BODY_ZONE_PRECISE_R_HAND	"r_hand"
+#define BODY_ZONE_PRECISE_L_FOOT	"l_foot"
+#define BODY_ZONE_PRECISE_R_FOOT	"r_foot"

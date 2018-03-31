@@ -27,7 +27,7 @@
 	sec_hud = DATA_HUD_SECURITY_BASIC
 	d_hud = DATA_HUD_DIAGNOSTIC_ADVANCED
 	mob_size = MOB_SIZE_LARGE
-	var/list/network = list("SS13")
+	var/list/network = list("ss13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
@@ -149,7 +149,7 @@
 	GLOB.shuttle_caller_list += src
 
 	builtInCamera = new (src)
-	builtInCamera.network = list("SS13")
+	builtInCamera.network = list("ss13")
 
 
 /mob/living/silicon/ai/Destroy()
@@ -318,6 +318,10 @@
 		var/obj/machinery/computer/communications/C = locate() in GLOB.machines
 		if(C)
 			C.post_status("shuttle")
+
+/mob/living/silicon/ai/can_interact_with(atom/A)
+	. = ..()
+	return . || (istype(loc, /obj/item/device/aicard))? (ISINRANGE(A.x, x - interaction_range, x + interaction_range) && ISINRANGE(A.y, y - interaction_range, y + interaction_range)): GLOB.cameranet.checkTurfVis(get_turf(A))
 
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
@@ -567,11 +571,13 @@
 	var/mob/living/silicon/ai/U = usr
 
 	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+		var/list/tempnetwork = C.network
+		if(!(is_station_level(C.z) || is_mining_level(C.z) || ("ss13" in tempnetwork)))
+			continue
 		if(!C.can_use())
 			continue
 
-		var/list/tempnetwork = C.network
-		tempnetwork.Remove("CREED", "thunder", "RD", "toxins", "Prison")
+		tempnetwork.Remove("rd", "toxins", "prison")
 		if(tempnetwork.len)
 			for(var/i in C.network)
 				cameralist[i] = i
@@ -591,7 +597,7 @@
 			if(network in C.network)
 				U.eyeobj.setLoc(get_turf(C))
 				break
-	to_chat(src, "<span class='notice'>Switched to [network] camera network.</span>")
+	to_chat(src, "<span class='notice'>Switched to the \"[uppertext(network)]\" camera network.</span>")
 //End of code by Mord_Sith
 
 

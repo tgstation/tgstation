@@ -31,6 +31,7 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=set_name'>Rename Station Name</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=reset_name'>Reset Station Name</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=night_shift_set'>Set Night Shift Mode</A><BR>
 			<BR>
 			<B>Shuttles</B><BR>
 			<BR>
@@ -164,6 +165,23 @@
 			log_admin("[key_name(usr)] renamed the station to \"[new_name]\".")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] renamed the station to: [new_name].</span>")
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
+		if("night_shift_set")
+			if(!check_rights(R_ADMIN))
+				return
+			var/val = alert(usr, "What do you want to set night shift to? This will override the automatic system until set to automatic again.", "Night Shift", "On", "Off", "Automatic")
+			switch(val)
+				if("Automatic")
+					if(CONFIG_GET(flag/enable_night_shifts))
+						SSnightshift.can_fire = TRUE
+						SSnightshift.fire()
+					else
+						SSnightshift.update_nightshift(FALSE, TRUE)
+				if("On")
+					SSnightshift.can_fire = FALSE
+					SSnightshift.update_nightshift(TRUE, TRUE)
+				if("Off")
+					SSnightshift.can_fire = FALSE
+					SSnightshift.update_nightshift(FALSE, TRUE)
 
 		if("reset_name")
 			if(!check_rights(R_ADMIN))
@@ -392,8 +410,10 @@
 
 				if(H.dna.species.id == "human")
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
-						H.dna.features["tail_human"] = "Cat"
-						H.dna.features["ears"] = "Cat"
+						var/obj/item/organ/ears/cat/ears = new
+						var/obj/item/organ/tail/cat/tail = new
+						ears.Insert(H, drop_if_replaced=FALSE)
+						tail.Insert(H, drop_if_replaced=FALSE)
 					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san")) //John Robust -> Robust-kun
 					var/list/names = splittext(H.real_name," ")
 					var/forename = names.len > 1 ? names[2] : names[1]
@@ -603,13 +623,13 @@
 			var/list/new_movement = list()
 			for(var/i in 1 to movement_keys.len)
 				var/key = movement_keys[i]
-				
+
 				var/msg = "Please input the new movement direction when the user presses [key]. Ex. northeast"
 				var/title = "New direction for [key]"
 				var/new_direction = text2dir(input(usr, msg, title) as text|null)
 				if(!new_direction)
 					new_direction = movement_keys[key]
-				
+
 				new_movement[key] = new_direction
 			SSinput.movement_keys = new_movement
 			message_admins("[key_name_admin(usr)] has configured all movement directions.")

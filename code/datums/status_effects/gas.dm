@@ -28,7 +28,7 @@
 	if(!owner.stat)
 		to_chat(owner, "The cube melts!")
 	owner.cut_overlay(cube)
-	owner.bodytemperature += 100
+	owner.adjust_bodytemperature(100)
 	owner.update_canmove()
 
 /datum/status_effect/freon/watcher

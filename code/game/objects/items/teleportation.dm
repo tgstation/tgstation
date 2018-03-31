@@ -17,9 +17,6 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/temp = null
-	var/frequency = FREQ_LOCATOR_IMPLANT
-	var/broadcasting = null
-	var/listening = 1
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
@@ -32,17 +29,11 @@
 /obj/item/locator/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat
-	if (src.temp)
-		dat = "[src.temp]<BR><BR><A href='byond://?src=[REF(src)];temp=1'>Clear</A>"
+	if (temp)
+		dat = "[temp]<BR><BR><A href='byond://?src=[REF(src)];temp=1'>Clear</A>"
 	else
 		dat = {"
 <B>Persistent Signal Locator</B><HR>
-Frequency:
-<A href='byond://?src=[REF(src)];freq=-10'>-</A>
-<A href='byond://?src=[REF(src)];freq=-2'>-</A> [format_frequency(src.frequency)]
-<A href='byond://?src=[REF(src)];freq=2'>+</A>
-<A href='byond://?src=[REF(src)];freq=10'>+</A><BR>
-
 <A href='?src=[REF(src)];refresh=1'>Refresh</A>"}
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
@@ -59,30 +50,30 @@ Frequency:
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)))
 		usr.set_machine(src)
 		if (href_list["refresh"])
-			src.temp = "<B>Persistent Signal Locator</B><HR>"
+			temp = "<B>Persistent Signal Locator</B><HR>"
 			var/turf/sr = get_turf(src)
 
 			if (sr)
-				src.temp += "<B>Located Beacons:</B><BR>"
-
-				for(var/obj/item/device/radio/beacon/W in GLOB.teleportbeacons)
-					if (W.frequency == src.frequency)
-						var/turf/tr = get_turf(W)
-						if (tr.z == sr.z && tr)
-							var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-							if (direct < 5)
-								direct = "very strong"
+				temp += "<B>Beacon Signals:</B><BR>"
+				for(var/obj/item/device/beacon/W in GLOB.teleportbeacons)
+					if (!W.renamed)
+						continue
+					var/turf/tr = get_turf(W)
+					if (tr.z == sr.z && tr)
+						var/direct = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
+						if (direct < 5)
+							direct = "very strong"
+						else
+							if (direct < 10)
+								direct = "strong"
 							else
-								if (direct < 10)
-									direct = "strong"
+								if (direct < 20)
+									direct = "weak"
 								else
-									if (direct < 20)
-										direct = "weak"
-									else
-										direct = "very weak"
-							src.temp += "[W.code]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
+									direct = "very weak"
+						temp += "[W.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
-				src.temp += "<B>Extranneous Signals:</B><BR>"
+				temp += "<B>Implant Signals:</B><BR>"
 				for (var/obj/item/implant/tracking/W in GLOB.tracked_implants)
 					if (!W.imp_in || !isliving(W.loc))
 						continue
@@ -103,18 +94,14 @@ Frequency:
 									direct = "strong"
 								else
 									direct = "weak"
-							src.temp += "[W.imp_in.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
+							temp += "[W.imp_in.name]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
-				src.temp += "<B>You are at \[[sr.x],[sr.y],[sr.z]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=[REF(src)];refresh=1'>Refresh</A><BR>"
+				temp += "<B>You are at \[[sr.x],[sr.y],[sr.z]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=[REF(src)];refresh=1'>Refresh</A><BR>"
 			else
-				src.temp += "<B><FONT color='red'>Processing Error:</FONT></B> Unable to locate orbital position.<BR>"
+				temp += "<B><FONT color='red'>Processing Error:</FONT></B> Unable to locate orbital position.<BR>"
 		else
-			if (href_list["freq"])
-				src.frequency += text2num(href_list["freq"])
-				src.frequency = sanitize_frequency(src.frequency)
-			else
-				if (href_list["temp"])
-					src.temp = null
+			if (href_list["temp"])
+				temp = null
 		if (ismob(src.loc))
 			attack_self(src.loc)
 		else
@@ -149,7 +136,7 @@ Frequency:
 	. = ..()
 	active_portal_pairs = list()
 
-/obj/item/hand_tele/pre_attackby(atom/target, mob/user, params)
+/obj/item/hand_tele/pre_attack(atom/target, mob/user, params)
 	if(try_dispel_portal(target, user))
 		return FALSE
 	return ..()

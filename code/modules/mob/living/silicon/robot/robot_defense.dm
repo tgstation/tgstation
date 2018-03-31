@@ -1,13 +1,11 @@
-
-
-/mob/living/silicon/robot/attacked_by(obj/item/I, mob/living/user, def_zone)
+/mob/living/silicon/robot/attackby(obj/item/I, mob/living/user)
 	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, equippable_hats))
 		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")
 		to_chat(src, "<span class='notice'>[user] is placing [I] on your head...</span>")
 		if(do_after(user, 30, target = src))
-			user.temporarilyRemoveItemFromInventory(I, TRUE)
-			place_on_head(I)
-			return
+			if (user.temporarilyRemoveItemFromInventory(I, TRUE))
+				place_on_head(I)
+		return
 	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
 	return ..()
@@ -52,6 +50,7 @@
 
 	return
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/user)
 	add_fingerprint(user)
 	if(opened && !wiresexposed && !issilicon(user))

@@ -82,10 +82,6 @@
 
 	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
 
-//List of active diseases
-
-	var/list/viruses = list() // list of all diseases in a mob
-	var/list/resistances = list()
 
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 
@@ -106,3 +102,5 @@
 	var/list/progressbars = null	//for stacking do_after bars
 
 	var/list/mousemove_intercept_objects
+
+	var/datum/click_intercept

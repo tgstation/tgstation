@@ -30,9 +30,16 @@
 
 	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
 
+
+/mob/living/carbon/human/ComponentInitialize()
+	. = ..()
+	if(!CONFIG_GET(flag/disable_human_mood))
+		AddComponent(/datum/component/mood)
+
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	return ..()
+
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
@@ -73,7 +80,7 @@
 		var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
 		if(statpanel("SpiderOS"))
 			stat("SpiderOS Status:","[SN.s_initialized ? "Initialized" : "Disabled"]")
-			stat("Current Time:", "[worldtime2text()]")
+			stat("Current Time:", "[station_time_timestamp()]")
 			if(SN.s_initialized)
 				//Suit gear
 				stat("Energy Charge:", "[round(SN.cell.charge/100)]%")
@@ -90,10 +97,10 @@
 				stat("Radiation Levels:","[radiation] rad")
 				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
 
-				//Virsuses
-				if(viruses.len)
+				//Diseases
+				if(diseases.len)
 					stat("Viruses:", null)
-					for(var/thing in viruses)
+					for(var/thing in diseases)
 						var/datum/disease/D = thing
 						stat("*", "[D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]")
 
@@ -222,6 +229,7 @@
 				usr.visible_message("[usr] successfully rips [I] out of their [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
+					usr.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
 			return
 
 		if(href_list["item"])
@@ -423,7 +431,7 @@
 														return
 													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot(ORGAN_SLOT_HUD), /obj/item/organ/cyberimp/eyes/hud/security))
 														return
-													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
+													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, station_time_timestamp())
 													GLOB.data_core.addMinorCrime(R.fields["id"], crime)
 													to_chat(usr, "<span class='notice'>Successfully added a minor crime.</span>")
 													return
@@ -438,7 +446,7 @@
 														return
 													else if (!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot(ORGAN_SLOT_HUD), /obj/item/organ/cyberimp/eyes/hud/security))
 														return
-													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
+													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, station_time_timestamp())
 													GLOB.data_core.addMajorCrime(R.fields["id"], crime)
 													to_chat(usr, "<span class='notice'>Successfully added a major crime.</span>")
 									return
@@ -470,7 +478,7 @@
 											var/counter = 1
 											while(R.fields[text("com_[]", counter)])
 												counter++
-											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, worldtime2text(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 											to_chat(usr, "<span class='notice'>Successfully added comment.</span>")
 											return
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
@@ -482,7 +490,7 @@
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_selected
-	if(dna && (PIERCEIMMUNE in dna.species.species_traits))
+	if(has_trait(TRAIT_PIERCEIMMUNE))
 		. = 0
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
@@ -638,13 +646,14 @@
 			to_chat(src, "<span class='warning'>You fail to perform CPR on [C]!</span>")
 			return 0
 
-		var/they_breathe = (!(NOBREATH in C.dna.species.species_traits))
+		var/they_breathe = !C.has_trait(TRAIT_NOBREATH)
 		var/they_lung = C.getorganslot(ORGAN_SLOT_LUNGS)
 
 		if(C.health > HEALTH_THRESHOLD_CRIT)
 			return
 
 		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
+		SendSignal(COMSIG_ADD_MOOD_EVENT, "perform_cpr", /datum/mood_event/perform_cpr)
 		C.cpr_time = world.time
 		add_logs(src, C, "CPRed")
 
@@ -760,7 +769,7 @@
 		return
 	else
 		if(hud_used.healths)
-			var/health_amount = health - staminaloss
+			var/health_amount = health - getStaminaLoss()
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
 					if(SCREWYHUD_CRIT)
@@ -808,34 +817,6 @@
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
 	..()
-
-/mob/living/carbon/human/proc/influenceSin()
-	var/datum/objective/sintouched/O
-	switch(rand(1,7))//traditional seven deadly sins... except lust.
-		if(1) // acedia
-			log_game("[src] was influenced by the sin of Acedia.")
-			O = new /datum/objective/sintouched/acedia
-		if(2) // Gluttony
-			log_game("[src] was influenced by the sin of gluttony.")
-			O = new /datum/objective/sintouched/gluttony
-		if(3) // Greed
-			log_game("[src] was influenced by the sin of greed.")
-			O = new /datum/objective/sintouched/greed
-		if(4) // sloth
-			log_game("[src] was influenced by the sin of sloth.")
-			O = new /datum/objective/sintouched/sloth
-		if(5) // Wrath
-			log_game("[src] was influenced by the sin of wrath.")
-			O = new /datum/objective/sintouched/wrath
-		if(6) // Envy
-			log_game("[src] was influenced by the sin of envy.")
-			O = new /datum/objective/sintouched/envy
-		if(7) // Pride
-			log_game("[src] was influenced by the sin of pride.")
-			O = new /datum/objective/sintouched/pride
-	SSticker.mode.sintouched += src.mind
-	src.mind.objectives += O
-	src.mind.announce_objectives()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()
@@ -913,6 +894,10 @@
 		stop_pulling()
 	else
 		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
+
+/mob/living/carbon/human/do_after_coefficent()
+	. = ..()
+	. *= physiology.do_after_speed
 
 /mob/living/carbon/human/species
 	var/race = null

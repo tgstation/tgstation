@@ -3,6 +3,7 @@
 
 /obj/item/device/electronic_assembly
 	name = "electronic assembly"
+	obj_flags = CAN_BE_HIT
 	desc = "It's a case, for building small electronics with."
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/assemblies/electronic_setups.dmi'
@@ -20,17 +21,51 @@
 	var/charge_tick = FALSE
 	var/charge_delay = 4
 	var/use_cyborg_cell = TRUE
+	var/ext_next_use = 0
+	var/atom/collw
 	var/allowed_circuit_action_flags = IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE //which circuit flags are allowed
 	var/combat_circuits = 0 //number of combat cicuits in the assembly, used for diagnostic hud
 	var/long_range_circuits = 0 //number of long range cicuits in the assembly, used for diagnostic hud
 	var/prefered_hud_icon = "hudstat"		// Used by the AR circuit to change the hud icon.
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD, DIAG_CIRCUIT_HUD) //diagnostic hud overlays
 	max_integrity = 50
+	pass_flags = 0
 	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	anchored = FALSE
+	var/can_anchor = TRUE
+	var/detail_color = COLOR_ASSEMBLY_BLACK
+	var/list/color_whitelist = list( //This is just for checking that hacked colors aren't in the save data.
+		COLOR_ASSEMBLY_BLACK,
+		COLOR_FLOORTILE_GRAY,
+		COLOR_ASSEMBLY_BGRAY,
+		COLOR_ASSEMBLY_WHITE,
+		COLOR_ASSEMBLY_RED,
+		COLOR_ASSEMBLY_ORANGE,
+		COLOR_ASSEMBLY_BEIGE,
+		COLOR_ASSEMBLY_BROWN,
+		COLOR_ASSEMBLY_GOLD,
+		COLOR_ASSEMBLY_YELLOW,
+		COLOR_ASSEMBLY_GURKHA,
+		COLOR_ASSEMBLY_LGREEN,
+		COLOR_ASSEMBLY_GREEN,
+		COLOR_ASSEMBLY_LBLUE,
+		COLOR_ASSEMBLY_BLUE,
+		COLOR_ASSEMBLY_PURPLE
+		)
+
+/obj/item/device/electronic_assembly/examine(mob/user)
+	. = ..()
+	if(can_anchor)
+		to_chat(user, "<span class='notice'>The anchoring bolts [anchored ? "are" : "can be"] <b>wrenched</b> in place and the maintainence panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
+	else
+		to_chat(user, "<span class='notice'>The maintainence panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
 
 /obj/item/device/electronic_assembly/proc/check_interactivity(mob/user)
 	return user.canUseTopic(src, BE_CLOSE)
 
+/obj/item/device/electronic_assembly/Collide(atom/AM)
+	collw = AM
+	.=..()
 
 /obj/item/device/electronic_assembly/Initialize()
 	.=..()
@@ -72,8 +107,11 @@
 			if(!draw_power(IC.power_draw_idle))
 				IC.power_fail()
 
-
 /obj/item/device/electronic_assembly/interact(mob/user)
+	ui_interact(user)
+
+/obj/item/device/electronic_assembly/ui_interact(mob/user)
+	. = ..()
 	if(!check_interactivity(user))
 		return
 
@@ -227,6 +265,12 @@
 		icon_state = initial(icon_state) + "-open"
 	else
 		icon_state = initial(icon_state)
+	cut_overlays()
+	if(detail_color == COLOR_ASSEMBLY_BLACK) //Black colored overlay looks almost but not exactly like the base sprite, so just cut the overlay and avoid it looking kinda off.
+		return
+	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/assemblies/electronic_setups.dmi', "[icon_state]-color")
+	detail_overlay.color = detail_color
+	add_overlay(detail_overlay)
 
 /obj/item/device/electronic_assembly/examine(mob/user)
 	..()
@@ -351,24 +395,38 @@
 	return TRUE
 
 /obj/item/device/electronic_assembly/attackby(obj/item/I, mob/living/user)
+	if(can_anchor && default_unfasten_wrench(user, I, 20))
+		return
 	if(istype(I, /obj/item/integrated_circuit))
 		if(!user.canUnEquip(I))
 			return FALSE
 		if(try_add_component(I, user))
 			interact(user)
 			return TRUE
+		else
+			for(var/obj/item/integrated_circuit/input/S in assembly_components)
+				S.attackby_react(I,user,user.a_intent)
+			return ..()
 	else if(istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/integrated_electronics/wirer) || istype(I, /obj/item/device/integrated_electronics/debugger))
 		if(opened)
 			interact(user)
+			return TRUE
 		else
 			to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't fiddle with the internal components.</span>")
+			for(var/obj/item/integrated_circuit/input/S in assembly_components)
+				S.attackby_react(I,user,user.a_intent)
+			return ..()
 	else if(istype(I, /obj/item/stock_parts/cell))
 		if(!opened)
-			to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't put anything inside.</span>")
-			return FALSE
+			to_chat(user, "<span class='warning'>[src]'s hatch is closed, so you can't access \the [src]'s power supplier.</span>")
+			for(var/obj/item/integrated_circuit/input/S in assembly_components)
+				S.attackby_react(I,user,user.a_intent)
+			return ..()
 		if(battery)
 			to_chat(user, "<span class='warning'>[src] already has \a [battery] installed. Remove it first if you want to replace it.</span>")
-			return FALSE
+			for(var/obj/item/integrated_circuit/input/S in assembly_components)
+				S.attackby_react(I,user,user.a_intent)
+			return ..()
 		var/obj/item/stock_parts/cell = I
 		user.transferItemToLoc(I, loc)
 		cell.forceMove(src)
@@ -378,6 +436,10 @@
 		to_chat(user, "<span class='notice'>You slot \the [cell] inside \the [src]'s power supplier.</span>")
 		interact(user)
 		return TRUE
+	else if(istype(I, /obj/item/device/integrated_electronics/detailer))
+		var/obj/item/device/integrated_electronics/detailer/D = I
+		detail_color = D.detail_color
+		update_icon()
 	else
 		for(var/obj/item/integrated_circuit/input/S in assembly_components)
 			S.attackby_react(I,user,user.a_intent)
@@ -441,12 +503,14 @@
 	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
 		IC.ext_moved(oldLoc, dir)
+	if(light) //Update lighting objects (From light circuits).
+		update_light()
 
 /obj/item/device/electronic_assembly/stop_pulling()
-	..()
 	for(var/I in assembly_components)
 		var/obj/item/integrated_circuit/IC = I
 		IC.stop_pulling()
+	..()
 
 
 // Returns the object that is supposed to be used in attack messages, location checks, etc.
@@ -465,6 +529,17 @@
 
 	return acting_object.drop_location()
 
+/obj/item/device/electronic_assembly/attack_tk(mob/user)
+	if(anchored)
+		return
+	..()
+
+/obj/item/device/electronic_assembly/attack_hand(mob/user)
+	if(anchored)
+		attack_self(user)
+		return
+	..()
+
 /obj/item/device/electronic_assembly/default //The /default electronic_assemblys are to allow the introduction of the new naming scheme without breaking old saves.
   name = "type-a electronic assembly"
 
@@ -482,6 +557,16 @@
 	name = "type-d electronic assembly"
 	icon_state = "setup_small_simple"
 	desc = "It's a case, for building small electronics with. This one has a simple design."
+
+/obj/item/device/electronic_assembly/hook
+	name = "type-e electronic assembly"
+	icon_state = "setup_small_hook"
+	desc = "It's a case, for building small electronics with. This one looks like it has a belt clip, but it's purely decorative."
+
+/obj/item/device/electronic_assembly/pda
+	name = "type-f electronic assembly"
+	icon_state = "setup_small_pda"
+	desc = "It's a case, for building small electronics with. This one resembles a PDA."
 
 /obj/item/device/electronic_assembly/medium
 	name = "electronic mechanism"
@@ -509,6 +594,16 @@
 	icon_state = "setup_medium_med"
 	desc = "It's a case, for building medium-sized electronics with. This one resembles some type of medical apparatus."
 
+/obj/item/device/electronic_assembly/medium/gun
+	name = "type-e electronic mechanism"
+	icon_state = "setup_medium_gun"
+	desc = "It's a case, for building medium-sized electronics with. This one resembles a gun, or some type of tool, if you're feeling optimistic."
+
+/obj/item/device/electronic_assembly/medium/radio
+	name = "type-f electronic mechanism"
+	icon_state = "setup_medium_radio"
+	desc = "It's a case, for building medium-sized electronics with. This one resembles an old radio."
+
 /obj/item/device/electronic_assembly/large
 	name = "electronic machine"
 	icon_state = "setup_large"
@@ -516,23 +611,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	max_components = IC_MAX_SIZE_BASE * 4
 	max_complexity = IC_COMPLEXITY_BASE * 4
-	anchored = FALSE
-
-/obj/item/device/electronic_assembly/large/attackby(obj/item/O, mob/user)
-	if(default_unfasten_wrench(user, O, 20))
-		return
-	..()
-
-/obj/item/device/electronic_assembly/large/attack_tk(mob/user)
-	if(anchored)
-		return
-	..()
-
-/obj/item/device/electronic_assembly/large/attack_hand(mob/user)
-	if(anchored)
-		attack_self(user)
-		return
-	..()
 
 /obj/item/device/electronic_assembly/large/default
 	name = "type-a electronic machine"
@@ -552,6 +630,16 @@
 	icon_state = "setup_large_arm"
 	desc = "It's a case, for building large electronics with. This one resembles a robotic arm."
 
+/obj/item/device/electronic_assembly/large/tall
+	name = "type-e electronic machine"
+	icon_state = "setup_large_tall"
+	desc = "It's a case, for building large electronics with. This one has a tall design."
+
+/obj/item/device/electronic_assembly/large/industrial
+	name = "type-f electronic machine"
+	icon_state = "setup_large_industrial"
+	desc = "It's a case, for building large electronics with. This one resembles some kind of industrial machinery."
+
 /obj/item/device/electronic_assembly/drone
 	name = "electronic drone"
 	icon_state = "setup_drone"
@@ -560,6 +648,7 @@
 	max_components = IC_MAX_SIZE_BASE * 3
 	max_complexity = IC_COMPLEXITY_BASE * 3
 	allowed_circuit_action_flags = IC_ACTION_MOVEMENT | IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE
+	can_anchor = FALSE
 
 /obj/item/device/electronic_assembly/drone/can_move()
 	return TRUE
@@ -571,3 +660,75 @@
 	name = "type-b electronic drone"
 	icon_state = "setup_drone_arms"
 	desc = "It's a case, for building mobile electronics with. This one is armed and dangerous."
+
+/obj/item/device/electronic_assembly/drone/secbot
+	name = "type-c electronic drone"
+	icon_state = "setup_drone_secbot"
+	desc = "It's a case, for building mobile electronics with. This one resembles a Securitron."
+
+/obj/item/device/electronic_assembly/drone/medbot
+	name = "type-d electronic drone"
+	icon_state = "setup_drone_medbot"
+	desc = "It's a case, for building mobile electronics with. This one resembles a Medibot."
+
+/obj/item/device/electronic_assembly/drone/genbot
+	name = "type-e electronic drone"
+	icon_state = "setup_drone_genbot"
+	desc = "It's a case, for building mobile electronics with. This one has a generic bot design."
+
+/obj/item/device/electronic_assembly/drone/android
+	name = "type-f electronic drone"
+	icon_state = "setup_drone_android"
+	desc = "It's a case, for building mobile electronics with. This one has a hominoid design."
+
+/obj/item/device/electronic_assembly/wallmount
+	name = "wall-mounted electronic assembly"
+	icon_state = "setup_wallmount_medium"
+	desc = "It's a case, for building medium-sized electronics with. It has a magnetized backing to allow it to stick to walls, but you'll still need to wrench the anchoring bolts in place to keep it on."
+	w_class = WEIGHT_CLASS_NORMAL
+	max_components = IC_MAX_SIZE_BASE * 2
+	max_complexity = IC_COMPLEXITY_BASE * 2
+
+/obj/item/device/electronic_assembly/wallmount/heavy
+	name = "heavy wall-mounted electronic assembly"
+	icon_state = "setup_wallmount_large"
+	desc = "It's a case, for building large electronics with. It has a magnetized backing to allow it to stick to walls, but you'll still need to wrench the anchoring bolts in place to keep it on."
+	w_class = WEIGHT_CLASS_BULKY
+	max_components = IC_MAX_SIZE_BASE * 4
+	max_complexity = IC_COMPLEXITY_BASE * 4
+
+/obj/item/device/electronic_assembly/wallmount/light
+	name = "light wall-mounted electronic assembly"
+	icon_state = "setup_wallmount_small"
+	desc = "It's a case, for building small electronics with. It has a magnetized backing to allow it to stick to walls, but you'll still need to wrench the anchoring bolts in place to keep it on."
+	w_class = WEIGHT_CLASS_SMALL
+	max_components = IC_MAX_SIZE_BASE
+	max_complexity = IC_COMPLEXITY_BASE
+
+/obj/item/device/electronic_assembly/wallmount/proc/mount_assembly(turf/on_wall, mob/user) //Yeah, this is admittedly just an abridged and kitbashed version of the wallframe attach procs.
+	if(get_dist(on_wall,user)>1)
+		return
+	var/ndir = get_dir(on_wall, user)
+	if(!(ndir in GLOB.cardinals))
+		return
+	var/turf/T = get_turf(user)
+	if(!isfloorturf(T))
+		to_chat(user, "<span class='warning'>You cannot place [src] on this spot!</span>")
+		return
+	if(gotwallitem(T, ndir))
+		to_chat(user, "<span class='warning'>There's already an item on this wall!</span>")
+		return
+	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
+	user.visible_message("[user.name] attaches [src] to the wall.",
+		"<span class='notice'>You attach [src] to the wall.</span>",
+		"<span class='italics'>You hear clicking.</span>")
+	user.dropItemToGround(src)
+	switch(ndir)
+		if(NORTH)
+			pixel_y = -31
+		if(SOUTH)
+			pixel_y = 31
+		if(EAST)
+			pixel_x = -31
+		if(WEST)
+			pixel_x = 31

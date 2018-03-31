@@ -129,7 +129,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.add_reagent_list(list_reagents)
 	if(starts_lit)
 		light()
-	AddComponent(/datum/component/knockoff,90,list("mouth"),list(slot_wear_mask))//90% to knock off when wearing a mask
+	AddComponent(/datum/component/knockoff,90,list(BODY_ZONE_PRECISE_MOUTH),list(slot_wear_mask))//90% to knock off when wearing a mask
 
 /obj/item/clothing/mask/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -289,6 +289,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/shadyjims
 	desc = "A Shady Jim's Super Slims cigarette."
 	list_reagents = list("nicotine" = 15, "lipolicide" = 4, "ammonia" = 2, "plantbgone" = 1, "toxin" = 1.5)
+
+/obj/item/clothing/mask/cigarette/xeno
+	desc = "A Xeno Filtered brand cigarette."
+	list_reagents = list ("nicotine" = 20, "regen_jelly" = 15, "krokodil" = 4)
 
 // Rollies.
 
@@ -546,9 +550,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				if(prot || prob(75))
 					user.visible_message("After a few attempts, [user] manages to light [src].", "<span class='notice'>After a few attempts, you manage to light [src].</span>")
 				else
-					var/hitzone = user.held_index_to_dir(user.active_hand_index) == "r" ? "r_hand" : "l_hand"
+					var/hitzone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
 					user.apply_damage(5, BURN, hitzone)
 					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
+					user.SendSignal(COMSIG_ADD_MOOD_EVENT, "burnt_thumb", /datum/mood_event/burnt_thumb)
 
 		else
 			set_lit(FALSE)
@@ -606,6 +611,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/lighter/greyscale/ignition_effect(atom/A, mob/user)
 	if(is_hot())
 		. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
+
+
+/obj/item/lighter/slime
+	name = "slime zippo"
+	desc = "A specialty zippo made from slimes and industry. Has a much hotter flame than normal."
+	icon_state = "slimezippo"
+	heat = 3000 //Blue flame!
+	light_color = LIGHT_COLOR_CYAN
+	grind_results = list("iron" = 1, "welding_fuel" = 5, "pyroxadone" = 5)
 
 
 ///////////
@@ -797,7 +811,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		vapetime = 0
 		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, 0)
-			M.apply_damage(20, BURN, "head")
+			M.apply_damage(20, BURN, BODY_ZONE_HEAD)
 			M.Knockdown(300, 1, 0)
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread
 			sp.set_up(5, 1, src)

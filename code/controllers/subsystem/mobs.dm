@@ -6,6 +6,8 @@ SUBSYSTEM_DEF(mobs)
 
 	var/list/currentrun = list()
 	var/static/list/clients_by_zlevel[][]
+	var/static/list/cubemonkeys = list()
+	var/cubemonkeycap = 64
 
 /datum/controller/subsystem/mobs/stat_entry()
 	..("P:[GLOB.mob_living_list.len]")
@@ -21,8 +23,8 @@ SUBSYSTEM_DEF(mobs)
 	var/seconds = wait * 0.1
 	if (!resumed)
 		src.currentrun = GLOB.mob_living_list.Copy()
-		if (GLOB.overminds.len) // blob cameras need to Life()
-			src.currentrun += GLOB.overminds
+		if (GLOB.living_cameras.len)
+			src.currentrun += GLOB.living_cameras
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun

@@ -5,7 +5,7 @@
 	throw_speed = 3
 	throw_range = 5
 	layer = ABOVE_MOB_LAYER
-	zone = "head"
+	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
 	vital = TRUE
 	attack_verb = list("attacked", "slapped", "whacked")
@@ -112,7 +112,7 @@
 
 	add_fingerprint(user)
 
-	if(user.zone_selected != "head")
+	if(user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
 
 	if((C.head && (C.head.flags_cover & HEADCOVERSEYES)) || (C.wear_mask && (C.wear_mask.flags_cover & MASKCOVERSEYES)) || (C.glasses && (C.glasses.flags_1 & GLASSESCOVERSEYES)))
@@ -122,7 +122,7 @@
 //since these people will be dead M != usr
 
 	if(!C.getorgan(/obj/item/organ/brain))
-		if(!C.get_bodypart("head") || !user.temporarilyRemoveItemFromInventory(src))
+		if(!C.get_bodypart(BODY_ZONE_HEAD) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/msg = "[C] has [src] inserted into [C.p_their()] head by [user]."
 		if(C == user)
@@ -167,8 +167,8 @@
 
 /obj/item/organ/brain/Destroy() //copypasted from MMIs.
 	if(brainmob)
-		qdel(brainmob)
-		brainmob = null
+		QDEL_NULL(brainmob)
+	QDEL_LIST(traumas)
 	return ..()
 
 /obj/item/organ/brain/alien
@@ -185,31 +185,86 @@
 		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience))
 			return BT
 
+/obj/item/organ/brain/proc/can_gain_trauma(datum/brain_trauma/trauma, resilience)
+	if(!ispath(trauma))
+		trauma = trauma.type
+	if(!initial(trauma.can_gain))
+		return FALSE
+	if(!resilience)
+		resilience = initial(trauma.resilience)
 
-//Add a specific trauma
-/obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
-	var/trauma_type
+	var/resilience_tier_count = 0
+	for(var/X in traumas)
+		if(istype(X, trauma))
+			return FALSE
+		var/datum/brain_trauma/T = X
+		if(resilience == T.resilience)
+			resilience_tier_count++
+
+	var/max_traumas
+	switch(resilience)
+		if(TRAUMA_RESILIENCE_BASIC)
+			max_traumas = TRAUMA_LIMIT_BASIC
+		if(TRAUMA_RESILIENCE_SURGERY)
+			max_traumas = TRAUMA_LIMIT_SURGERY
+		if(TRAUMA_RESILIENCE_LOBOTOMY)
+			max_traumas = TRAUMA_LIMIT_LOBOTOMY
+		if(TRAUMA_RESILIENCE_MAGIC)
+			max_traumas = TRAUMA_LIMIT_MAGIC
+		if(TRAUMA_RESILIENCE_ABSOLUTE)
+			max_traumas = TRAUMA_LIMIT_ABSOLUTE
+
+	if(resilience_tier_count >= max_traumas)
+		return FALSE
+	return TRUE
+
+//Proc to use when directly adding a trauma to the brain, so extra args can be given
+/obj/item/organ/brain/proc/gain_trauma(datum/brain_trauma/trauma, resilience, ...)
+	var/list/arguments = list()
+	if(args.len > 2)
+		arguments = args.Copy(3)
+	. = brain_gain_trauma(trauma, resilience, arguments)
+
+//Direct trauma gaining proc. Necessary to assign a trauma to its brain. Avoid using directly.
+/obj/item/organ/brain/proc/brain_gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
+	if(!can_gain_trauma(trauma, resilience))
+		return
+
+	var/datum/brain_trauma/actual_trauma
 	if(ispath(trauma))
-		trauma_type = trauma
-		SSblackbox.record_feedback("tally", "traumas", 1, trauma_type)
-		traumas += new trauma_type(arglist(list(src, resilience) + arguments))
+		if(!LAZYLEN(arguments))
+			actual_trauma = new trauma() //arglist with an empty list runtimes for some reason
+		else
+			actual_trauma = new trauma(arglist(arguments))
 	else
-		SSblackbox.record_feedback("tally", "traumas", 1, trauma.type)
-		traumas += trauma
-		if(resilience)
-			trauma.resilience = resilience
+		actual_trauma = trauma
+
+	if(actual_trauma.brain) //we don't accept used traumas here
+		WARNING("gain_trauma was given an already active trauma.")
+		return
+
+	traumas += actual_trauma
+	actual_trauma.brain = src
+	if(owner)
+		actual_trauma.owner = owner
+		actual_trauma.on_gain()
+	if(resilience)
+		actual_trauma.resilience = resilience
+	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
 
 //Add a random trauma of a certain subtype
 /obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)
 	var/list/datum/brain_trauma/possible_traumas = list()
 	for(var/T in subtypesof(brain_trauma_type))
 		var/datum/brain_trauma/BT = T
-		if(initial(BT.can_gain))
+		if(can_gain_trauma(BT, resilience))
 			possible_traumas += BT
 
+	if(!LAZYLEN(possible_traumas))
+		return
+
 	var/trauma_type = pick(possible_traumas)
-	SSblackbox.record_feedback("tally", "traumas", 1, trauma_type)
-	traumas += new trauma_type(src, resilience)
+	gain_trauma(trauma_type, resilience)
 
 //Cure a random trauma of a certain resilience level
 /obj/item/organ/brain/proc/cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)

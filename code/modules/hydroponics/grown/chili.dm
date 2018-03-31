@@ -78,7 +78,9 @@
 	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
-	..()
+	. = ..()
+	if(.)
+		return
 	if( ismob(loc) )
 		held_mob = loc
 		START_PROCESSING(SSobj, src)
@@ -88,7 +90,7 @@
 		if(held_mob.is_holding(src))
 			if(istype(held_mob) && held_mob.gloves)
 				return
-			held_mob.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			held_mob.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(prob(10))
 				to_chat(held_mob, "<span class='warning'>Your hand holding [src] burns!</span>")
 	else

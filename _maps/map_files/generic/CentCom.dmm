@@ -2981,8 +2981,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3072,10 +3071,8 @@
 "jk" = (
 /obj/machinery/door/poddoor{
 	density = 1;
-	icon_state = "closed";
 	id = "XCCQMLoaddoor2";
-	name = "Supply Dock Loading Door";
-	opacity = 1
+	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
 	dir = 4;
@@ -3102,10 +3099,8 @@
 "jm" = (
 /obj/machinery/door/poddoor{
 	density = 1;
-	icon_state = "closed";
 	id = "XCCQMLoaddoor2";
-	name = "Supply Dock Loading Door";
-	opacity = 1
+	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
 	dir = 4;
@@ -3280,10 +3275,8 @@
 "jI" = (
 /obj/machinery/door/poddoor{
 	density = 1;
-	icon_state = "closed";
 	id = "XCCQMLoaddoor";
-	name = "Supply Dock Loading Door";
-	opacity = 1
+	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
 	dir = 8;
@@ -3308,10 +3301,8 @@
 "jK" = (
 /obj/machinery/door/poddoor{
 	density = 1;
-	icon_state = "closed";
 	id = "XCCQMLoaddoor";
-	name = "Supply Dock Loading Door";
-	opacity = 1
+	name = "Supply Dock Loading Door"
 	},
 /obj/machinery/conveyor{
 	dir = 8;
@@ -5083,7 +5074,6 @@
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_y = 32;
-	req_access_txt = "0";
 	use_power = 0
 	},
 /turf/open/floor/plasteel/vault,
@@ -5334,6 +5324,24 @@
 	dir = 8
 	},
 /area/centcom/control)
+"oS" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/tdome/tdomeobserve)
+"oT" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/tdome/tdomeobserve)
 "oW" = (
 /obj/structure/flora/bush,
 /obj/effect/light_emitter{
@@ -6051,8 +6059,7 @@
 "qT" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -6277,7 +6284,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the RD's goons and the AI's satellite from the safety of his office.";
 	name = "Research Monitor";
-	network = list("RD","Sat");
+	network = list("rd","minisat");
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/grimy,
@@ -7338,8 +7345,7 @@
 /obj/machinery/button/door{
 	id = "XCCFerry";
 	name = "Hanger Bay Shutters";
-	pixel_y = -38;
-	req_access_txt = "0"
+	pixel_y = -38
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -8227,8 +8233,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -8336,8 +8341,7 @@
 /area/space)
 "xc" = (
 /obj/machinery/door/airlock/external{
-	name = "Ferry Airlock";
-	req_access_txt = "0"
+	name = "Ferry Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -8846,8 +8850,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -9970,7 +9973,6 @@
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_y = -32;
-	req_access_txt = "0";
 	use_power = 0
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -10558,8 +10560,7 @@
 "Eg" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Booth";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -11090,8 +11091,7 @@
 "FK" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Backstage";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -11837,13 +11837,6 @@
 	},
 /turf/open/floor/plasteel/bar,
 /area/tdome/tdomeobserve)
-"HE" = (
-/obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks/beer,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/tdome/tdomeobserve)
 "HF" = (
 /obj/structure/sink{
 	dir = 4;
@@ -11937,13 +11930,6 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/tdome/tdomeobserve)
-"HQ" = (
-/obj/structure/table/wood,
-/obj/machinery/chem_dispenser/drinks,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
 /area/tdome/tdomeobserve)
 "HR" = (
 /obj/structure/sink{
@@ -13528,8 +13514,7 @@
 "NU" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -13543,8 +13528,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
-	opacity = 1;
-	req_access_txt = "0"
+	opacity = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -13637,8 +13621,7 @@
 /area/centcom/control)
 "Xy" = (
 /obj/machinery/door/airlock/external{
-	name = "Ferry Airlock";
-	req_access_txt = "0"
+	name = "Ferry Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -59892,8 +59875,8 @@ Ep
 GU
 GM
 Hw
-HE
-HQ
+oS
+oT
 HX
 Ie
 Iq

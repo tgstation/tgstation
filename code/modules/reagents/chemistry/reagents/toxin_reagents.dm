@@ -100,16 +100,14 @@
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/M)
 	. = TRUE
-	var/mob/living/carbon/C
-	if(iscarbon(M))
-		C = M
-		CHECK_DNA_AND_SPECIES(C)
-		if(NOBREATH in C.dna.species.species_traits)
-			. = FALSE
+
+	if(M.has_trait(TRAIT_NOBREATH))
+		. = FALSE
 
 	if(.)
 		M.adjustOxyLoss(5, 0)
-		if(C)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
 			C.losebreath += 2
 		if(prob(20))
 			M.emote("gasp")
@@ -130,7 +128,7 @@
 		M.adjustToxLoss(rand(20,60)*REM, 0)
 		. = 1
 	else if(prob(40))
-		M.heal_bodypart_damage(5*REM,0, 0)
+		M.heal_bodypart_damage(5*REM)
 		. = 1
 	..()
 
@@ -184,7 +182,7 @@
 /datum/reagent/toxin/mindbreaker
 	name = "Mindbreaker Toxin"
 	id = "mindbreaker"
-	description = "A powerful hallucinogen. Not a thing to be messed with."
+	description = "A powerful hallucinogen. Not a thing to be messed with. For some mental patients. it counteracts their symptoms and anchors them to reality."
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
 	taste_description = "sourness"
@@ -291,9 +289,9 @@
 			. = 1
 	..()
 
-/datum/reagent/toxin/chloralhydratedelayed
+/datum/reagent/toxin/chloralhydratedelayed //sedates half as quickly and does not cause toxloss. same name/desc so it doesn't give away sleepypens
 	name = "Chloral Hydrate"
-	id = "chloralhydrate2"
+	id = "chloralhydratedelayed"
 	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
@@ -309,9 +307,9 @@
 			M.Sleeping(40, 0)
 	..()
 
-/datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
+/datum/reagent/toxin/fakebeer	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
-	id = "beer2"
+	id = "fakebeer"
 	description = "A specially-engineered sedative disguised as beer. It induces instant sleep in its target."
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
@@ -320,7 +318,7 @@
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
 
-/datum/reagent/toxin/beer2/on_mob_life(mob/living/M)
+/datum/reagent/toxin/fakebeer/on_mob_life(mob/living/M)
 	switch(current_cycle)
 		if(1 to 50)
 			M.Sleeping(40, 0)
@@ -453,16 +451,16 @@
 	else
 		..()
 
-/datum/reagent/toxin/neurotoxin2
-	name = "Neurotoxin"
-	id = "neurotoxin2"
-	description = "Neurotoxin will inhibit brain function and cause toxin damage before eventually knocking out its victim."
+/datum/reagent/toxin/fentanyl
+	name = "Fentanyl"
+	id = "fentanyl"
+	description = "Fentanyl will inhibit brain function and cause toxin damage before eventually knocking out its victim."
 	reagent_state = LIQUID
 	color = "#64916E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/neurotoxin2/on_mob_life(mob/living/M)
+/datum/reagent/toxin/fentanyl/on_mob_life(mob/living/M)
 	M.adjustBrainLoss(3*REM, 150)
 	. = 1
 	if(M.toxloss <= 60)
@@ -810,6 +808,7 @@
 	toxpwr = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
+	self_consuming = TRUE
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))
@@ -844,9 +843,9 @@
 	acidpwr = 42.0
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/M)
-	M.adjustFireLoss(current_cycle/10, 0) // I rode a tank, held a general's rank
-	. = 1 // When the blitzkrieg raged and the bodies stank
-	..() // Pleased to meet you, hope you guess my name
+	M.adjustFireLoss(current_cycle/10, 0)
+	. = 1
+	..()
 
 /datum/reagent/toxin/peaceborg/confuse
 	name = "Dizzying Solution"
@@ -875,7 +874,7 @@
 
 /datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
 	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
-	if(M.staminaloss < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
+	if(M.getStaminaLoss() < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		M.adjustStaminaLoss(10)
 	if(prob(30))
 		to_chat(M, "You should sit down and take a rest...")

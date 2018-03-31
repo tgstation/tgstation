@@ -27,26 +27,26 @@
 /obj/item/grenade/chem_grenade/examine(mob/user)
 	display_timer = (stage == READY && !nadeassembly)	//show/hide the timer based on assembly state
 	..()
+	if(user.can_see_reagents())
+		var/count = 0
+		if(beakers.len)
+			to_chat(user, "<span class='notice'>You scan the grenade and detect the following reagents:</span>")
+			for(var/obj/item/reagent_containers/glass/G in beakers)
+				var/textcount = thtotext(++count)
+				for(var/datum/reagent/R in G.reagents.reagent_list)
+					to_chat(user, "<span class='notice'>[R.volume] units of [R.name] in the [textcount] beaker.</span>")
+			if(beakers.len == 1)
+				to_chat(user, "<span class='notice'>You detect no second beaker in the grenade.</span>")
+		else
+			to_chat(user, "<span class='notice'>You scan the grenade, but detect nothing.</span>")
 
 
 /obj/item/grenade/chem_grenade/attack_self(mob/user)
-	if(stage == READY &&  !active)
+	if(stage == READY && !active)
 		if(nadeassembly)
 			nadeassembly.attack_self(user)
-		else if(clown_check(user))
-			var/turf/bombturf = get_turf(src)
-			var/area/A = get_area(bombturf)
-			message_admins("[ADMIN_LOOKUPFLW(usr)] has primed a [name] for detonation at [A.name][ADMIN_JMP(bombturf)].")
-			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] [COORD(bombturf)].")
-			to_chat(user, "<span class='warning'>You prime the [name]! [det_time / 10] second\s!</span>")
-			playsound(user.loc, 'sound/weapons/armbomb.ogg', 60, 1)
-			active = 1
-			icon_state = initial(icon_state) + "_active"
-			if(iscarbon(user))
-				var/mob/living/carbon/C = user
-				C.throw_mode_on()
-
-			addtimer(CALLBACK(src, .proc/prime), det_time)
+		else
+			..()
 
 
 /obj/item/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
@@ -60,7 +60,7 @@
 				to_chat(user, "<span class='warning'>You need to add at least one beaker before locking the [initial(name)] assembly!</span>")
 		else if(stage == READY && !nadeassembly)
 			det_time = det_time == 50 ? 30 : 50	//toggle between 30 and 50
-			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [det_time / 10] second\s.</span>")
+			to_chat(user, "<span class='notice'>You modify the time delay. It's set for [DisplayTimeText(det_time)].</span>")
 		else if(stage == EMPTY)
 			to_chat(user, "<span class='warning'>You need to add an activation mechanism!</span>")
 
@@ -559,6 +559,23 @@
 	B1.reagents.add_reagent("fungalspores", 200)
 	B2.reagents.add_reagent("blood", 250)
 	B2.reagents.add_reagent("sugar", 50)
+
+	beakers += B1
+	beakers += B2
+
+/obj/item/grenade/chem_grenade/holy
+	name = "holy hand grenade"
+	desc = "A vessel of concentrated religious might."
+	icon_state = "holy_grenade"
+	stage = READY
+
+/obj/item/grenade/chem_grenade/holy/Initialize()
+	. = ..()
+	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+
+	B1.reagents.add_reagent("potassium", 100)
+	B2.reagents.add_reagent("holywater", 100)
 
 	beakers += B1
 	beakers += B2

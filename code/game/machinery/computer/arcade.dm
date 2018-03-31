@@ -49,7 +49,9 @@
 		/obj/item/toy/toy_dagger								= 2,
 		/obj/item/extendohand/acme								= 1,
 		/obj/item/hot_potato/harmless/toy						= 1,
-		/obj/item/card/emagfake									= 1)
+		/obj/item/card/emagfake									= 1,
+		/obj/item/clothing/shoes/wheelys				= 2,
+		/obj/item/clothing/shoes/kindleKicks				= 2)
 
 	light_color = LIGHT_COLOR_GREEN
 
@@ -67,7 +69,8 @@
 		return INITIALIZE_HINT_QDEL
 	Reset()
 
-/obj/machinery/computer/arcade/proc/prizevend()
+/obj/machinery/computer/arcade/proc/prizevend(mob/user)
+	user.SendSignal(COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
 		SSmedals.UnlockMedal(MEDAL_PULSE, usr.client)
@@ -131,10 +134,8 @@
 	enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	name = (name_action + name_part1 + name_part2)
 
-/obj/machinery/computer/arcade/battle/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/arcade/battle/ui_interact(mob/user)
+	. = ..()
 	var/dat = "<a href='byond://?src=[REF(src)];close=1'>Close</a>"
 	dat += "<center><h4>[enemy_name]</h4></center>"
 
@@ -170,7 +171,7 @@
 
 			sleep(10)
 			enemy_hp -= attackamt
-			arcade_action()
+			arcade_action(usr)
 
 		else if (href_list["heal"])
 			blocked = TRUE
@@ -186,7 +187,7 @@
 			player_hp += healamt
 			blocked = TRUE
 			updateUsrDialog()
-			arcade_action()
+			arcade_action(usr)
 
 		else if (href_list["charge"])
 			blocked = TRUE
@@ -199,7 +200,7 @@
 
 			updateUsrDialog()
 			sleep(10)
-			arcade_action()
+			arcade_action(usr)
 
 	if (href_list["close"])
 		usr.unset_machine()
@@ -222,7 +223,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/arcade/battle/proc/arcade_action()
+/obj/machinery/computer/arcade/battle/proc/arcade_action(mob/user)
 	if ((enemy_mp <= 0) || (enemy_hp <= 0))
 		if(!gameover)
 			gameover = TRUE
@@ -237,7 +238,7 @@
 				Reset()
 				obj_flags &= ~EMAGGED
 			else
-				prizevend()
+				prizevend(user)
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
 
 
@@ -401,13 +402,11 @@
 	spaceport_freebie = 0
 	last_spaceport_action = ""
 
-/obj/machinery/computer/arcade/orion_trail/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/arcade/orion_trail/ui_interact(mob/user)
+	. = ..()
 	if(fuel <= 0 || food <=0 || settlers.len == 0)
 		gameStatus = ORION_STATUS_GAMEOVER
 		event = null
-	user.set_machine(src)
 	var/dat = ""
 	if(gameStatus == ORION_STATUS_GAMEOVER)
 		dat = "<center><h1>Game Over</h1></center>"
@@ -479,7 +478,7 @@
 	if (href_list["continue"]) //Continue your travels
 		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)
 			if(turns >= ORION_TRAIL_WINTURN)
-				win()
+				win(usr)
 			else
 				food -= (alive+lings_aboard)*2
 				fuel -= 5
@@ -1023,7 +1022,7 @@
 	return removed
 
 
-/obj/machinery/computer/arcade/orion_trail/proc/win()
+/obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(obj_flags & EMAGGED)
@@ -1031,7 +1030,7 @@
 		message_admins("[key_name_admin(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 	else
-		prizevend()
+		prizevend(user)
 	obj_flags &= ~EMAGGED
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"

@@ -107,7 +107,10 @@ effective or pretty fucking useless.
 	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
 
 /obj/item/device/healthanalyzer/rad_laser/interact(mob/user)
-	user.set_machine(src)
+	ui_interact(user)
+
+/obj/item/device/healthanalyzer/rad_laser/ui_interact(mob/user)
+	. = ..()
 
 	var/dat = "Irradiation: <A href='?src=[REF(src)];rad=1'>[irradiate ? "On" : "Off"]</A><br>"
 	dat += "Stealth Mode (NOTE: Deactivates automatically while Irradiation is off): <A href='?src=[REF(src)];stealthy=[TRUE]'>[stealth ? "On" : "Off"]</A><br>"

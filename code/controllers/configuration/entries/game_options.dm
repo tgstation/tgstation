@@ -50,6 +50,8 @@
 
 /datum/config_entry/flag/allow_ai	// allow ai job
 
+/datum/config_entry/flag/disable_human_mood
+
 /datum/config_entry/flag/disable_secborg	// disallow secborg module to be chosen.
 
 /datum/config_entry/flag/disable_peaceborg
@@ -91,6 +93,20 @@
 /datum/config_entry/flag/enforce_human_authority	//If non-human species are barred from joining as a head of staff
 
 /datum/config_entry/flag/allow_latejoin_antagonists	// If late-joining players can be traitor/changeling
+
+/datum/config_entry/flag/use_antag_rep // see game_options.txt for details
+
+/datum/config_entry/number/antag_rep_maximum
+	config_entry_value = 200
+	min_val = 0
+
+/datum/config_entry/number/default_antag_tickets
+	config_entry_value = 100
+	min_val = 0
+
+/datum/config_entry/number/max_tickets_per_roll
+	config_entry_value = 100
+	min_val = 0
 
 /datum/config_entry/number/midround_antag_time_check	// How late (in minutes you want the midround antag system to stay on, setting this to 0 will disable the system)
 	config_entry_value = 60
@@ -183,7 +199,9 @@
 /datum/config_entry/number/slime_delay
 /datum/config_entry/number/animal_delay
 
-/datum/config_entry/number/gateway_delay	//How long the gateway takes before it activates. Default is half an hour.
+/datum/config_entry/flag/roundstart_away	//Will random away mission be loaded.
+
+/datum/config_entry/number/gateway_delay	//How long the gateway takes before it activates. Default is half an hour. Only matters if roundstart_away is enabled.
 	config_entry_value = 18000
 	min_val = 0
 
@@ -258,3 +276,11 @@
 	integer = FALSE
 
 /datum/config_entry/flag/ic_printing
+
+/datum/config_entry/flag/roundstart_traits
+
+/datum/config_entry/flag/enable_night_shifts
+
+/datum/config_entry/flag/randomize_shift_time
+
+/datum/config_entry/flag/shift_time_realtime

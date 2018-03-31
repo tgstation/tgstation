@@ -63,9 +63,8 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/cmd_change_command_name,
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/toggle_antag_hud, 	/*toggle display of the admin antag hud*/
+	/client/proc/toggle_combo_hud, // toggle display of the combination pizza antag and taco sci/med/eng hud
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
-	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
-	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
 	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
@@ -97,10 +96,11 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/mass_zombie_cure,
 	/client/proc/polymorph_all,
 	/client/proc/show_tip,
-	/client/proc/smite
+	/client/proc/smite,
+	/client/proc/admin_away
 	))
 GLOBAL_PROTECT(admin_verbs_spawn)
-GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /client/proc/respawn_character))
+GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character))
 GLOBAL_PROTECT(admin_verbs_server)
 GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 /world/proc/AVerbsServer()
@@ -231,9 +231,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/toggle_nuke,
 	/client/proc/cmd_display_del_log,
 	/client/proc/toggle_antag_hud,
-	/client/proc/debug_huds,
-	/client/proc/customiseSNPC,
-	/client/proc/resetSNPC,
+	/client/proc/toggle_combo_hud,
+	/client/proc/debug_huds
 	))
 
 /client/proc/add_admin_verbs()
@@ -269,11 +268,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		if(rights & R_SPAWN)
 			verbs += GLOB.admin_verbs_spawn
 
-		for(var/path in holder.rank.adds)
-			verbs += path
-		for(var/path in holder.rank.subs)
-			verbs -= path
-
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
 		GLOB.admin_verbs_default,
@@ -291,25 +285,10 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		/client/proc/play_web_sound,
 		GLOB.admin_verbs_spawn,
 		/*Debug verbs added by "show debug verbs"*/
-		/client/proc/Cell,
-		/client/proc/camera_view,
-		/client/proc/sec_camera_report,
-		/client/proc/intercom_view,
-		/client/proc/air_status,
-		/client/proc/atmosscan,
-		/client/proc/powerdebug,
-		/client/proc/count_objects_on_z_level,
-		/client/proc/count_objects_all,
-		/client/proc/cmd_assume_direct_control,
-		/client/proc/startSinglo,
-		/client/proc/set_server_fps,
-		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/cmd_admin_areatest_all,
-		/client/proc/cmd_admin_areatest_station,
+		GLOB.admin_verbs_debug_mapping,
+		/client/proc/disable_debug_verbs,
 		/client/proc/readmin
 		)
-	if(holder)
-		verbs.Remove(holder.rank.adds)
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 	set name = "Adminverbs - Hide Most"
@@ -595,14 +574,17 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed the spell [S] from [key_name(T)].</span>")
 			SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/give_disease(mob/T in GLOB.mob_list)
+/client/proc/give_disease(mob/living/T in GLOB.mob_living_list)
 	set category = "Fun"
 	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."
+	if(!istype(T))
+		to_chat(src, "<span class='notice'>You can only give a disease to a mob of type /mob/living.</span>")
+		return
 	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in SSdisease.diseases
 	if(!D)
 		return
-	T.ForceContractDisease(new D)
+	T.ForceContractDisease(new D, FALSE, TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Disease") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>")
@@ -703,7 +685,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 						while ((!tile || !istype(tile)) && --k > 0)
 
 						if (tile)
-							new/mob/living/carbon/human/interactive(tile)
+							var/mob/living/carbon/human/hooman = new(tile)
+							hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
 							testing("Spawned test mob at [tile.x],[tile.y],[tile.z]")
 			while (!area && --j > 0)
 

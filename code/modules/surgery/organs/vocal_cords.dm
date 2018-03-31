@@ -6,7 +6,7 @@
 /obj/item/organ/vocal_cords //organs that are activated through speech with the :x channel
 	name = "vocal cords"
 	icon_state = "appendix"
-	zone = "mouth"
+	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_VOICE
 	gender = PLURAL
 	var/list/spans = null
@@ -23,7 +23,7 @@
 /obj/item/organ/adamantine_resonator
 	name = "adamantine resonator"
 	desc = "Fragments of adamantine exist in all golems, stemming from their origins as purely magical constructs. These are used to \"hear\" messages from their leaders."
-	zone = "head"
+	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_ADAMANTINE_RESONATOR
 	icon_state = "adamantine_resonator"
 
@@ -139,7 +139,7 @@
 	message = lowertext(message)
 	var/mob/living/list/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
-		if(L.can_hear() && !L.null_rod_check() && L.stat != DEAD)
+		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)
 			if(L == user && !include_speaker)
 				continue
 			if(ishuman(L))
@@ -305,14 +305,14 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, 0)
+			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, FALSE, FALSE)
 
 	//BRUTE DAMAGE
 	else if((findtext(message, hurt_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.apply_damage(15 * power_multiplier, def_zone = "chest")
+			L.apply_damage(15 * power_multiplier, def_zone = BODY_ZONE_CHEST)
 
 	//BLEED
 	else if((findtext(message, bleed_words)))
@@ -333,14 +333,14 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.bodytemperature += (50 * power_multiplier)
+			L.adjust_bodytemperature(50 * power_multiplier)
 
 	//COLD
 	else if((findtext(message, cold_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.bodytemperature -= (50 * power_multiplier)
+			L.adjust_bodytemperature(-50 * power_multiplier)
 
 	//REPULSE
 	else if((findtext(message, repulse_words)))

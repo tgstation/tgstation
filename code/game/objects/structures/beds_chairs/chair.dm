@@ -228,6 +228,7 @@
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)
+		TransferComponents(C)
 		usr.put_in_hands(C)
 		qdel(src)
 
@@ -279,6 +280,7 @@
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
+	TransferComponents(C)
 	C.setDir(dir)
 	qdel(src)
 
@@ -391,3 +393,17 @@
 		user.visible_message("<span class='notice'>[user] stops [src]'s uncontrollable spinning.</span>", \
 		"<span class='notice'>You grab [src] and stop its wild spinning.</span>")
 		STOP_PROCESSING(SSfastprocess, src)
+
+/obj/structure/chair/bronze
+	name = "brass chair"
+	desc = "A spinny chair made of bronze. It has little cogs for wheels!"
+	anchored = FALSE
+	icon_state = "brass_chair"
+	buildstacktype = /obj/item/stack/tile/bronze
+	buildstackamount = 1
+	item_chair = null
+
+/obj/structure/chair/bronze/Moved()
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)

@@ -232,8 +232,8 @@
 			explosion(loc,-1,0,2, flame_range = 2)
 		if(9)
 			//Cold
-			var/datum/disease/D = new /datum/disease/cold
-			user.ForceContractDisease(D)
+			var/datum/disease/D = new /datum/disease/cold()
+			user.ForceContractDisease(D, FALSE, TRUE)
 		if(10)
 			//Nothing
 			visible_message("<span class='notice'>[src] roll perfectly.</span>")
@@ -260,7 +260,7 @@
 			new /obj/item/gun/ballistic/revolver/mateba(drop_location())
 		if(15)
 			//Random One-use spellbook
-			new /obj/item/spellbook/oneuse/random(drop_location())
+			new /obj/item/book/granter/spell/random(drop_location())
 		if(16)
 			//Servant & Servant Summon
 			var/mob/living/carbon/human/H = new(drop_location())

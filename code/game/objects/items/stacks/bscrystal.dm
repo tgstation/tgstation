@@ -4,6 +4,7 @@
 	desc = "A glowing bluespace crystal, not much is known about how they work. It looks very delicate."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "bluespace_crystal"
+	singular_name = "bluespace crystal"
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_BLUESPACE=MINERAL_MATERIAL_AMOUNT)
 	points = 50
@@ -20,6 +21,9 @@
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
+
+/obj/item/stack/ore/bluespace_crystal/get_part_rating()
+	return 1
 
 /obj/item/stack/ore/bluespace_crystal/attack_self(mob/user)
 	user.visible_message("<span class='warning'>[user] crushes [src]!</span>", "<span class='danger'>You crush [src]!</span>")
@@ -67,6 +71,7 @@
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening
 	to_chat(user, "<span class='warning'>You cannot crush the polycrystal in-hand, try breaking one off.</span>")
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/stack/sheet/bluespace_crystal/attack_hand(mob/user)
 	if(user.get_inactive_held_item() == src)
 		if(zero_amount())

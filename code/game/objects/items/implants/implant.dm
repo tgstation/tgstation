@@ -3,7 +3,7 @@
 	icon = 'icons/obj/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
 	actions_types = list(/datum/action/item_action/hands_free/activate)
-	var/activated = 1 //1 for implant types that can be activated, 0 for ones that are "always on" like mindshield implants
+	var/activated = TRUE //1 for implant types that can be activated, 0 for ones that are "always on" like mindshield implants
 	var/mob/living/imp_in = null
 	item_color = "b"
 	var/allow_multiple = FALSE
@@ -70,7 +70,7 @@
 		H.sec_hud_set_implants()
 
 	if(user)
-		add_logs(user, target, "implanted", object="[name]")
+		add_logs(user, target, "implanted", "\a [name]")
 
 	return 1
 

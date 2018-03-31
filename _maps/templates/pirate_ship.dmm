@@ -26,8 +26,7 @@
 /obj/machinery/button/door{
 	id = "piratebridge";
 	name = "Bridge Shutters Control";
-	pixel_y = -5;
-	req_access_txt = "0"
+	pixel_y = -5
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/device/radio/intercom{
@@ -164,8 +163,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
-	name = "Crew Cabin";
-	req_access_txt = "0"
+	name = "Crew Cabin"
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
@@ -275,8 +273,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
-	name = "Captain's Quarters";
-	req_access_txt = "0"
+	name = "Captain's Quarters"
 	},
 /turf/open/floor/wood,
 /area/shuttle/pirate)
@@ -408,7 +405,6 @@
 	normaldoorcontrol = 1;
 	pixel_x = -8;
 	pixel_y = -24;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/machinery/turretid{
@@ -508,8 +504,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
-	name = "Crew Quarters";
-	req_access_txt = "0"
+	name = "Crew Quarters"
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
@@ -851,7 +846,6 @@
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = -24;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -911,10 +905,21 @@
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 24;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/plating,
+/area/shuttle/pirate)
+"cf" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/bar,
 /area/shuttle/pirate)
 "cg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -929,8 +934,7 @@
 	base_state = "left";
 	dir = 1;
 	icon_state = "left";
-	name = "Explosive Ordinance";
-	req_access_txt = "0"
+	name = "Explosive Ordinance"
 	},
 /obj/item/grenade/plastic/x4{
 	pixel_x = -5
@@ -1011,8 +1015,7 @@
 /area/shuttle/pirate)
 "cp" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Restrooms";
-	req_access_txt = "0"
+	name = "Unisex Restrooms"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/showroomfloor,
@@ -1258,34 +1261,8 @@
 /area/shuttle/pirate)
 "cP" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
-/obj/item/storage/fancy/cigarettes{
-	pixel_x = -6;
-	pixel_y = -8
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_carp{
-	pixel_x = 1;
-	pixel_y = -8
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_midori{
-	pixel_x = 8;
-	pixel_y = -8
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_robust{
-	pixel_x = -6;
-	pixel_y = -14
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_shadyjims{
-	pixel_x = 1;
-	pixel_y = -14
-	},
-/obj/item/storage/fancy/cigarettes/cigpack_uplift{
-	pixel_x = 8;
-	pixel_y = -14
-	},
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
+/obj/machinery/chem_dispenser/drinks{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/bar,
@@ -1423,14 +1400,29 @@
 	},
 /area/shuttle/pirate)
 "dd" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/bar,
-/area/shuttle/pirate)
-"de" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/fancy/cigarettes/cigpack_uplift{
+	pixel_x = 8;
+	pixel_y = -14
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_shadyjims{
+	pixel_x = 1;
+	pixel_y = -14
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_robust{
+	pixel_x = -6;
+	pixel_y = -14
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_midori{
+	pixel_x = 8;
+	pixel_y = -8
+	},
+/obj/item/storage/fancy/cigarettes/cigpack_carp{
+	pixel_x = 1;
+	pixel_y = -8
+	},
+/obj/item/storage/fancy/cigarettes,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/pirate)
 "df" = (
@@ -1554,8 +1546,7 @@
 	base_state = "right";
 	dir = 4;
 	icon_state = "right";
-	name = "Bar";
-	req_access_txt = "0"
+	name = "Bar"
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/pirate)
@@ -1580,16 +1571,14 @@
 	id = "pirateturbinevent";
 	name = "Turbine Vent Control";
 	pixel_x = -6;
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/button/door{
 	id = "pirateturbineauxvent";
 	name = "Turbine Auxiliary Vent Control";
 	pixel_x = 6;
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
@@ -1618,7 +1607,6 @@
 	normaldoorcontrol = 1;
 	pixel_x = 6;
 	pixel_y = -24;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1746,9 +1734,8 @@
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
 "dP" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	frequency = 1441;
 	id = "inc_in"
 	},
 /obj/structure/sign/warning/vacuum/external{
@@ -1844,8 +1831,8 @@ bX
 aj
 co
 aj
+cf
 cP
-dd
 du
 aj
 ai
@@ -1897,7 +1884,7 @@ aj
 cq
 cA
 cQ
-de
+dd
 dv
 dI
 dM
