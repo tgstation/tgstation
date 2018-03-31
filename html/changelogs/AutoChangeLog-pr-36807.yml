@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - rscdel: "Chameleon projectors will no longer work from inside transformations, effects, mechas or machines. Effects that cause movement will no longer leave sleepers in a bugged state where they can apply chems to you across distances."
