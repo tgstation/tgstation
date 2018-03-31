@@ -223,7 +223,7 @@
 					return
 				L.embedded_objects -= I
 				L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
-				
+
 				// Hippie Start - Remove pinned item
 				if (I.pinned)
 					do_pindown(src.pinned_to, 0)
@@ -700,6 +700,9 @@
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		if(..(I, cuff_break = FAST_CUFFBREAK))
+			dropItemToGround(I)
+	else if(istype(src.mind.martial_art, /datum/martial_art/nano))
 		if(..(I, cuff_break = FAST_CUFFBREAK))
 			dropItemToGround(I)
 	else
