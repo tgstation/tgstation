@@ -1,7 +1,7 @@
 /client/verb/suggest()
 	set category = "OOC"
 	set name = "Report a Bug, Suggestions"
-	var/suggbug = input("Write a code to be a Host, or write something about your bug or your suggestion", "Report about something to Joctopus!", " ")
+	var/suggbug = input("Write a code to be a Host, or write something about your bug or your suggestion", "Report", " ")
 	suggbug = sanitizeSQL(suggbug)
 	suggestDBInsert(usr.ckey, suggbug)
 
@@ -34,7 +34,7 @@
 
 
 proc/suggestDBDelete(var/id)
-	if(!usr.ckey == "joctopus")
+	if(!usr.ckey == "Moonmandoom")
 		to_chat(usr,"Fuck you, leatherman.")
 		return
 	var/datum/DBQuery/query_suggestions_delete = SSdbcore.NewQuery("DELETE FROM suggestion WHERE id = [text2num(id)]")
