@@ -11,7 +11,6 @@ GLOBAL_LIST_INIT(admin_verbs_default, world.AVerbsDefault())
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
 	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
-	/client/proc/secrets,
 	/client/proc/toggle_hear_radio,		/*allows admins to hide all radio output*/
 	/client/proc/reload_admins,
 	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
@@ -241,32 +240,20 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 
 		var/rights = holder.rank.rights
 		verbs += GLOB.admin_verbs_default
-		if(rights & R_BUILDMODE)
-			verbs += /client/proc/togglebuildmodeself
 		if(rights & R_ADMIN)
 			verbs += GLOB.admin_verbs_admin
 		if(rights & R_BAN)
 			verbs += GLOB.admin_verbs_ban
-		if(rights & R_FUN)
-			verbs += GLOB.admin_verbs_fun
 		if(rights & R_SERVER)
 			verbs += GLOB.admin_verbs_server
 		if(rights & R_DEBUG)
 			verbs += GLOB.admin_verbs_debug
-		if(rights & R_POSSESS)
-			verbs += GLOB.admin_verbs_possess
 		if(rights & R_PERMISSIONS)
 			verbs += GLOB.admin_verbs_permissions
 		if(rights & R_STEALTH)
 			verbs += /client/proc/stealth
 		if(rights & R_ADMIN)
 			verbs += GLOB.admin_verbs_poll
-		if(rights & R_SOUNDS)
-			verbs += GLOB.admin_verbs_sounds
-			if(CONFIG_GET(string/invoke_youtubedl))
-				verbs += /client/proc/play_web_sound
-		if(rights & R_SPAWN)
-			verbs += GLOB.admin_verbs_spawn
 
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
