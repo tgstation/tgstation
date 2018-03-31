@@ -30,8 +30,6 @@
 	else
 		trait_holder.add_client_colour(/datum/client_colour/vibrant)
 		to_chat(trait_holder, "<span class='notice'>You feel like everything has gotten brighter and more colourful.</span>")
-		fixinggg
-
 
 /datum/trait/vibrancy/remove()
 	trait_holder.remove_client_colour(/datum/client_colour/vibrant)
