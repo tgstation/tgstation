@@ -21,7 +21,7 @@
 		if(istype(user, /mob/living/simple_animal/hostile/gorilla))
 			sound = 'sound/creatures/gorilla.ogg'
 		if(ishuman(user))
-			user.adjustOxyLoss(5)
+			user.adjustOxyLoss(user.scream_oxyloss)
 			sound = pick('hippiestation/sound/voice/scream_m1.ogg', 'hippiestation/sound/voice/scream_m2.ogg')
 			if(user.gender == FEMALE)
 				sound = pick('hippiestation/sound/voice/scream_f1.ogg', 'hippiestation/sound/voice/scream_f2.ogg')
@@ -42,7 +42,7 @@
 		LAZYINITLIST(user.alternate_screams)
 		if(LAZYLEN(user.alternate_screams))
 			sound = pick(user.alternate_screams)
-		playsound(user.loc, sound, 50, 1, 4, 1.2)
+		playsound(user.loc, sound, user.scream_vol, 1, 4, 1.2)
 		message = "screams!"
 	else if(miming)
 		message = "acts out a scream."
