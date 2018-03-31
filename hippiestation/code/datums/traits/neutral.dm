@@ -22,7 +22,7 @@
 	value = 0
 	lose_text = "<span class='notice'>It seems like everything is not so vibrant anymore...</span>"
 
-/datum/trait/vibrancy/add()
+/datum/trait/vibrancy/add() = /datum/client_colour
 	if(trait_holder.client_colour == client_colour.monochrome)
 		to_chat(trait_holder, "<span class='warning'>You feel your vibrant vision having no effect because of your monochromacy!</span>")
 		sleep(20) //Don't want the two messages to pop up instantly, muh immershun
@@ -30,7 +30,6 @@
 	else
 		trait_holder.add_client_colour(/datum/client_colour/vibrant)
 		to_chat(trait_holder, "<span class='notice'>You feel like everything has gotten brighter and more colourful.</span>")
-
 
 /datum/trait/vibrancy/remove()
 	trait_holder.remove_client_colour(/datum/client_colour/vibrant)
