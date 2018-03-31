@@ -167,12 +167,13 @@ SUBSYSTEM_DEF(garbage)
 		fail_counts[level]++
 		switch (level)
 			if (GC_QUEUE_CHECK)
-				#ifdef GC_FAILURE_HARD_LOOKUP
-				D.find_references()
-				#endif
 				#ifdef TESTING
 				if(reference_find_on_fail[refID])
 					D.find_references()
+				#ifdef GC_FAILURE_HARD_LOOKUP
+				else
+					D.find_references()
+				#endif
 				reference_find_on_fail -= refID
 				#endif
 				var/type = D.type
