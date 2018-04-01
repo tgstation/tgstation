@@ -139,7 +139,7 @@
 
 		if(!excited && air.compare(enemy_air))
 			//testing("Active turf found. Return value of compare(): [is_active]")
-			excited = 1
+			excited = TRUE
 			SSair.active_turfs |= src
 	UNSETEMPTY(atmos_adjacent_turfs)
 	if (atmos_adjacent_turfs)
