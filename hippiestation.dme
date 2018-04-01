@@ -3052,5 +3052,3 @@
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 // END_INCLUDE
-
-#define fuck
