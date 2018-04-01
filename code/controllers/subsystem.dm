@@ -161,7 +161,7 @@
 	initialized = TRUE
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 	var/meme = capitalize(lowertext(pick_list(ION_FILE, "ionadjectives")))
-	var/msg = "Initialized [memo] subsystem within [time] second[time == 1 ? "" : "s"]!"
+	var/msg = "Initialized [meme] subsystem within [time] second[time == 1 ? "" : "s"]!"
 	to_chat(world, "<span class='boldannounce'>[msg]</span>")
 	log_world(msg)
 	return time
