@@ -32,6 +32,7 @@
 /datum/trait/inverted_vision
 	name = "Inverted Colour Vision"
 	desc = "You see red and blue colours as reversed."
+	value = 0
 	gain_text = "<span class='notice'>You feel like you're seeing colours differently.</span>"
 	lose_text = "<span class='notice'>You feel like you're seeing colours normally again.</span>"
 
