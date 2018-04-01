@@ -36,6 +36,7 @@
 	P.info += jointext(log, "<BR>")
 	P.info += "<HR><B>Notes:</B><BR>"
 	P.info_links = P.info
+	P.updateinfolinks()
 
 	if(ismob(loc))
 		var/mob/M = loc
