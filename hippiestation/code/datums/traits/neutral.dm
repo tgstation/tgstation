@@ -16,6 +16,18 @@
 /datum/trait/monochromatic/remove()
 	trait_holder.remove_client_colour(/datum/client_colour/monochrome)
 
+/datum/trait/inverted_vision
+	name = "Inverted Colour Vision"
+	desc = "You see colours as the reverse of what they would normally be. Though... everything also seems duller..."
+	gain_text = "<span class='notice'>You feel like you're seeing colours differently.</span>"
+	lose_text = "<span class='notice'>You feel like you're seeing colours normally again.</span>"
+
+/datum/trait/inverted_vision/add()
+	trait_holder.add_client_colour(/datum/client_colour/inverted)
+
+/datum/trait/inverted_vision/remove()
+	trait_holder.remove_client_colour(/datum/client_colour/inverted)
+
 /datum/trait/vibrancy
 	name = "Vibrancy"
 	desc = "You must have taken some of the good stuff, because everything looks way brighter and far more vibrant!"
