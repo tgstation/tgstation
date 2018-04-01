@@ -18,6 +18,7 @@
 
 /obj/item/paper_bin/Initialize(mapload)
 	. = ..()
+	interaction_flags_item = interaction_flags_item & ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	if(!mapload)
 		return
 	var/obj/item/pen/P = locate(/obj/item/pen) in src.loc
@@ -91,7 +92,7 @@
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 	add_fingerprint(user)
-	// return ..() // Breaks the paperbin where the bin drops to the ground from your hand, bag, etc, when taking a paper or pen
+	return ..()
 
 /obj/item/paper_bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/paper))
