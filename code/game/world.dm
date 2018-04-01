@@ -52,11 +52,13 @@ GLOBAL_PROTECT(security_mode)
 	Master.sleep_offline_after_initializations = FALSE
 	SSticker.start_immediately = TRUE
 	CONFIG_SET(number/round_end_countdown, 0)
+	var/datum/callback/cb
 #ifdef UNIT_TESTS
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/RunUnitTests))
+	cb = CALLBACK(GLOBAL_PROC, /proc/RunUnitTests)
 #else
-	SSticker.force_ending = TRUE
+	cb = VARSET_CALLBACK(SSticker, force_ending, TRUE)
 #endif
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/addtimer, cb, 10 SECONDS))
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
