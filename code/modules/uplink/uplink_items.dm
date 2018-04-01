@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/cant_discount = FALSE
 	var/limited_stock = -1 //Setting this above zero limits how many times this item can be bought by the same traitor in a round, -1 is unlimited
 	var/list/include_modes = list() // Game modes to allow this item in.
-	var/list/exclude_modes = list() // Game modes to disallow this item from.
+	var/list/exclude_modes = list(/datum/game_mode/nuclear) // Game modes to disallow this item from.
 	var/list/restricted_roles = list() //If this uplink item is only available to certain roles. Roles are dependent on the frequency chip or stored ID.
 	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
@@ -146,6 +146,35 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "For systematic suppression of carbon lifeforms in close range: Contains a specialist Pyrotechnic equipment, foreign pistol, two magazines, a pipebomb, and a stimulant syringe."
 	item = /obj/item/storage/backpack/duffelbag/syndie/firestarter
 	cost = 30
+
+/datum/uplink_item/henchmen
+	category = "Henchmen Gear"
+
+/datum/uplink_item/henchmen/reinforcement
+	name = "Extra Henchmen"
+	desc = "Call in an additional henchmen. Competency not guaranteed."
+	item = /obj/item/antag_spawner/nuke_ops
+	cost = 25
+	refundable = TRUE
+	exclude_modes = list()
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/henchmen/dart_gun
+	name = "Extra Dart Gun"
+	desc = "An extra dart gun, for when you want to feel like a real badass henchmen."
+	item = /obj/item/gun/chem/henchmen
+	cost = 10
+	exclude_modes = list()
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/henchmen/toolbox
+	name = "Toolbox"
+	desc = "For when the front gate doesn't work.."
+	item = /obj/item/storage/toolbox/syndicate/henchmen
+	cost = 5
+	exclude_modes = list()
+	include_modes = list(/datum/game_mode/nuclear)
+
 
 // Dangerous Items
 /datum/uplink_item/dangerous

@@ -28,6 +28,12 @@
  * Backpack Types
  */
 
+/obj/item/storage/backpack/henchmen
+	name = "wings"
+	desc = "Granted to the henchmen who deserve it. This probably doesn't include you."
+	icon_state = "henchmen"
+	item_state = "henchmen"
+
 /obj/item/storage/backpack/old
 	max_combined_w_class = 12
 

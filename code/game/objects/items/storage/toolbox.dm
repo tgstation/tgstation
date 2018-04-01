@@ -112,15 +112,22 @@
 	silent = 1
 	force = 15
 	throwforce = 18
+	var/wirecutter_color = "red"
 
 /obj/item/storage/toolbox/syndicate/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
 	new /obj/item/wrench(src)
 	new /obj/item/weldingtool/largetank(src)
 	new /obj/item/crowbar/red(src)
-	new /obj/item/wirecutters(src, "red")
+	new /obj/item/wirecutters(src, wirecutter_color)
 	new /obj/item/device/multitool(src)
 	new /obj/item/clothing/gloves/combat(src)
+
+/obj/item/storage/toolbox/syndicate/henchmen
+	name = "henchmen toolbox"
+	icon_state = "yellow"
+	item_state = "toolbox_yellow"
+	wirecutter_color = "yellow"
 
 /obj/item/storage/toolbox/drone
 	name = "mechanical toolbox"
