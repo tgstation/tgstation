@@ -230,7 +230,7 @@ GLOBAL_PROTECT(protected_ranks)
 			continue
 		new /datum/admins(rank_names[rank], ckey, 0, 1)
 	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
-		var/datum/DBQuery/query_load_admins = SSdbcore.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
+		var/datum/DBQuery/query_load_admins = SSdbcore.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")] ORDER BY rank")
 		if(!query_load_admins.Execute())
 			message_admins("Error loading admins from database. Loading from backup.")
 			log_sql("Error loading admins from database. Loading from backup.")
