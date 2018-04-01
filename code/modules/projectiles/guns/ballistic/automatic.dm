@@ -40,6 +40,7 @@
 					oldmag.dropped()
 					oldmag.forceMove(get_turf(src.loc))
 					oldmag.update_icon()
+					user.say(pick("I'M RELOADING!!!", "NEW MAG IN!!!", "CHANGING MAG!!!", "COVER ME! I'M RELOADING!!!", "RELOADING!!!", "REEEELOADING!!!"))
 				else
 					to_chat(user, "<span class='notice'>You insert the magazine into \the [src].</span>")
 
