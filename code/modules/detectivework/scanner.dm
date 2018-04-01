@@ -181,3 +181,14 @@
 		return
 	to_chat(user, "<span class='notice'>The scanner logs are cleared.</span>")
 	log = list()
+
+/obj/item/device/detective_scanner/verb/displayResults()
+	set name = "Display Scanner Results"
+	set category = "Object"
+	if(!can_use(usr))
+		return
+	if(!LAZYLEN(log) || scanning)
+		to_chat(usr, "<span class='notice'>The scanner has no logs or is in use.</span>")
+	to_chat(usr, "<span class='notice'><B>Scanner Report</B></span>")
+	for(var/iterLog in log)
+		to_chat(usr, iterLog)
