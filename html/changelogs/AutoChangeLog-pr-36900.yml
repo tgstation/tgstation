@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Removed stray defines from maps, making roundstart atmos functional and runtime-spam free again"
