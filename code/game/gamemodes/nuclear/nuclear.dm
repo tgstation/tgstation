@@ -1,19 +1,19 @@
 /datum/game_mode/nuclear
-	name = "nuclear emergency"
+	name = "arching operation"
 	config_tag = "nuclear"
 	false_report_weight = 10
 	required_players = 30 // 30 players - 3 players to be the nuke ops = 27 players remaining
 	required_enemies = 2
-	recommended_enemies = 5
+	recommended_enemies = 10
 	antag_flag = ROLE_OPERATIVE
 	enemy_minimum_age = 14
 
 	announce_span = "danger"
-	announce_text = "Syndicate forces are approaching the station in an attempt to destroy it!\n\
-	<span class='danger'>Operatives</span>: Secure the nuclear authentication disk and use your nuke to destroy the station.\n\
+	announce_text = "The henchmen are here!\n\
+	<span class='danger'>Henchmen</span>: Secure the nuclear authentication disk and use your nuke to destroy the station.\n\
 	<span class='notice'>Crew</span>: Defend the nuclear authentication disk and ensure that it leaves with you on the emergency shuttle."
 
-	var/const/agents_possible = 5 //If we ever need more syndicate agents.
+	var/const/agents_possible = 10 //If we ever need more syndicate agents.
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/list/pre_nukeops = list()
 
@@ -28,9 +28,9 @@
 		for(var/i = 0, i < n_agents, ++i)
 			var/datum/mind/new_op = pick_n_take(antag_candidates)
 			pre_nukeops += new_op
-			new_op.assigned_role = "Nuclear Operative"
-			new_op.special_role = "Nuclear Operative"
-			log_game("[new_op.key] (ckey) has been selected as a nuclear operative")
+			new_op.assigned_role = "Henchmen"
+			new_op.special_role = "Henchmen"
+			log_game("[new_op.key] (ckey) has been selected as a henchmen")
 		return TRUE
 	else
 		return FALSE
@@ -80,13 +80,13 @@
 	var result = nuke_team.get_result()
 	switch(result)
 		if(NUKE_RESULT_FLUKE)
-			SSticker.mode_result = "loss - syndicate nuked - disk secured"
+			SSticker.mode_result = "loss - monarch nuked - disk secured"
 			SSticker.news_report = NUKE_SYNDICATE_BASE
 		if(NUKE_RESULT_NUKE_WIN)
-			SSticker.mode_result = "win - syndicate nuke"
+			SSticker.mode_result = "win - monarch nuke"
 			SSticker.news_report = STATION_NUKED
 		if(NUKE_RESULT_NOSURVIVORS)
-			SSticker.mode_result = "halfwin - syndicate nuke - did not evacuate in time"
+			SSticker.mode_result = "halfwin - monarch nuke - did not evacuate in time"
 			SSticker.news_report = STATION_NUKED
 		if(NUKE_RESULT_WRONG_STATION)
 			SSticker.mode_result = "halfwin - blew wrong station"
@@ -111,7 +111,7 @@
 			SSticker.news_report = OPERATIVE_SKIRMISH
 
 /datum/game_mode/nuclear/generate_report()
-	return "One of Central Command's trading routes was recently disrupted by a raid carried out by the Gorlex Marauders. They seemed to only be after one ship - a highly-sensitive \
+	return "One of Central Command's trading routes was recently disrupted by a raid carried out by the Monarch's henchmen. They seemed to only be after one ship - a highly-sensitive \
 			transport containing a nuclear fission explosive, although it is useless without the proper code and authorization disk. While the code was likely found in minutes, the only disk that \
 			can activate this explosive is on your station. Ensure that it is protected at all times, and remain alert for possible intruders."
 
@@ -119,18 +119,17 @@
 	return M && istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/nukeop)
 
 /datum/outfit/syndicate
-	name = "Syndicate Operative - Basic"
+	name = "Henchmen"
 
 	uniform = /obj/item/clothing/under/syndicate
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	back = /obj/item/storage/backpack
+	shoes = /obj/item/clothing/shoes/galoshes
+	gloves = /obj/item/clothing/gloves/color/yellow
+	back = /obj/item/storage/backpack/henchmen
 	ears = /obj/item/device/radio/headset/syndicate/alt
 	l_pocket = /obj/item/pinpointer/nuke/syndicate
 	id = /obj/item/card/id/syndicate
-	belt = /obj/item/gun/ballistic/automatic/pistol
-	backpack_contents = list(/obj/item/storage/box/syndie=1,\
-		/obj/item/kitchen/knife/combat/survival)
+	belt = /obj/item/gun/chem/henchmen
+	backpack_contents = list(/obj/item/storage/box/syndie=1)
 
 	var/tc = 25
 	var/command_radio = FALSE
@@ -138,7 +137,8 @@
 
 
 /datum/outfit/syndicate/leader
-	name = "Syndicate Leader - Basic"
+	name = "Henchmen Leader"
+	uniform = /obj/item/clothing/under/syndicate/henchmen_leader
 	id = /obj/item/card/id/syndicate/nuke_leader
 	r_hand = /obj/item/device/nuclear_challenge
 	command_radio = TRUE

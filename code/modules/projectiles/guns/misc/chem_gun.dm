@@ -17,12 +17,13 @@
 	var/syringes_left = 4
 	var/max_syringes = 4
 	var/last_synth = 0
+	var/volume_to_create = 100
 
 /obj/item/gun/chem/Initialize()
 	. = ..()
 	chambered = new /obj/item/ammo_casing/chemgun(src)
 	START_PROCESSING(SSobj, src)
-	create_reagents(100)
+	create_reagents(volume_to_create)
 
 /obj/item/gun/chem/Destroy()
 	. = ..()
@@ -45,3 +46,17 @@
 	if(chambered && !chambered.BB)
 		chambered.newshot()
 	last_synth = world.time
+
+/obj/item/gun/chem/henchmen
+	name = "dart gun"
+	desc = "Standard issue henchmen dart gun. Comes pre-loaded with way too much morphine.\nOften immediately resold on the black market after assignment."
+	icon_state = "dartgun"
+	w_class = WEIGHT_CLASS_SMALL
+	volume_to_create = 42069
+	syringes_left = 20
+	max_syringes = 20
+	time_per_syringe = 100
+
+/obj/item/gun/chem/henchmen/Initialize()
+	..()
+	reagents.add_reagent("morphine", 42069)
