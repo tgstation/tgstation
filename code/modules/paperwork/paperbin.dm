@@ -18,7 +18,7 @@
 
 /obj/item/paper_bin/Initialize(mapload)
 	. = ..()
-	interaction_flags_item = interaction_flags_item & ~INTERACT_ITEM_ATTACK_HAND_PICKUP
+	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	if(!mapload)
 		return
 	var/obj/item/pen/P = locate(/obj/item/pen) in src.loc
