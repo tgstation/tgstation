@@ -48,6 +48,7 @@
 	dextrous = TRUE
 	dextrous_hud_type = /datum/hud/dextrous/drone
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	see_in_dark = 7
 	can_be_held = TRUE
 	held_items = list(null, null)
 	var/staticChoice = "static"
