@@ -166,3 +166,18 @@
 
 /proc/get_timestamp()
 	return time2text(world.time + 432000, ":ss")
+
+/obj/item/device/detective_scanner/proc/can_use(mob/user)
+	if(user && ismob(user))
+		if(!user.incapacitated())
+			return TRUE
+	return FALSE
+	
+/obj/item/device/detective_scanner/AltClick(mob/living/user)
+	if(!can_use(user))
+		return
+	if(!LAZYLEN(log) || scanning)
+		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner has no logs or is in use.</span>")
+		return
+	to_chat(user, "<span class='notice'>The scanner logs are cleared.</span>")
+	log = list()
