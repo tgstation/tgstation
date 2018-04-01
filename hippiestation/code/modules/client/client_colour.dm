@@ -1,4 +1,6 @@
 //The compiler got angry when I tried capitalising the defines so I've left them uncapitalised - sorry
+//Stopped all this from being run because travis freaked out
+/*
 #define red_colour rgb(0, 0, 255)
 #define green_colour rgb(0, 255, 0)
 #define blue_colour rgb(255, 0, 0)
@@ -8,10 +10,9 @@
 #define colour_vibrant list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,0, 1,1,1,0) //This was the attempt at vibrancy, by setting the colours to their normal values and adding the constant I thought I'd be able to stack the constant on top but... that didn't work :(
 
 var/thenewcolour = rgb2hsl(red_colour)
-
 var/vibrant_colour_sum_multiplier = 2
-
 #define vibrant_summed colour_sum
+*/
 
 //None of the above is needed for this code to work but I'll leave it here in case someone finds a use for it
 
