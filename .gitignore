@@ -196,3 +196,4 @@ tools/MapAtmosFixer/MapAtmosFixer/obj/x86/Debug/MapAtmosFixer.csproj.CoreCompile
 
 #GitHub Atom
 .atom-build.json
+/hippiestation/code/modules/atmospherics/machinery/components/binary_devices/relief_valve.dm
