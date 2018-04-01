@@ -20,6 +20,8 @@
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL)
 			blood_volume += 0.1 // regenerate blood VERY slowly
+			if(blood_volume < BLOOD_VOLUME_OKAY)
+				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
