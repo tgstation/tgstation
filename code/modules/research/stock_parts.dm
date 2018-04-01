@@ -17,12 +17,16 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	display_contents_with_number = 1
 	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 100
+
+	can_hold = list(
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/device/assembly/igniter,
+		/obj/item/stock_parts,
+		/obj/item/stack/ore/bluespace_crystal)
+
 	var/works_from_distance = 0
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
-
-/obj/item/storage/part_replacer/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
-	return ..() && W.get_part_rating()
 
 /obj/item/storage/part_replacer/afterattack(obj/machinery/T, mob/living/carbon/human/user, flag, params)
 	if(flag)

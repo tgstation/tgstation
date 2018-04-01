@@ -40,7 +40,7 @@
 	M.setCloneLoss(0, 0)
 	M.setOxyLoss(0, 0)
 	M.radiation = 0
-	M.heal_bodypart_damage(5,5, 0)
+	M.heal_bodypart_damage(5,5)
 	M.adjustToxLoss(-5, 0, TRUE)
 	M.hallucination = 0
 	M.setBrainLoss(0)
@@ -59,10 +59,10 @@
 	M.confused = 0
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
-	M.cure_all_traumas(TRUE, TRAUMA_RESILIENCE_MAGIC)
-	for(var/thing in M.viruses)
+	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
-		if(D.severity == VIRUS_SEVERITY_POSITIVE)
+		if(D.severity == DISEASE_SEVERITY_POSITIVE)
 			continue
 		D.cure()
 	..()
@@ -197,7 +197,7 @@
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
-	M.heal_bodypart_damage(1,1, 0)
+	M.heal_bodypart_damage(1,1)
 	M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
 	..()
 	. = 1
@@ -214,7 +214,7 @@
 	id = "spaceacillin"
 	description = "Spaceacillin will prevent a patient from conventionally spreading any diseases they are currently infected with."
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
 /datum/reagent/medicine/silver_sulfadiazine
@@ -1129,7 +1129,7 @@
 	can_synth = FALSE
 
 /datum/reagent/medicine/miningnanites/on_mob_life(mob/living/M)
-	M.heal_bodypart_damage(5,5, 0)
+	M.heal_bodypart_damage(5,5)
 	..()
 	. = 1
 
@@ -1192,6 +1192,7 @@
 	id = "corazone"
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
+	self_consuming = TRUE
 
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"

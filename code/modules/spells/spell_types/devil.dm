@@ -193,9 +193,11 @@
 	for(var/mob/living/carbon/human/H in targets)
 		if(!H.mind)
 			continue
-		if(locate(/datum/objective/sintouched) in H.mind.objectives)
+		if(H.mind.has_antag_datum(/datum/antagonist/sintouched))
 			continue
-		H.influenceSin()
+		if(H.anti_magic_check(FALSE, TRUE))
+			continue
+		H.mind.add_antag_datum(/datum/antagonist/sintouched)
 		H.Knockdown(400)
 
 

@@ -85,6 +85,10 @@
 	dir = pick(GLOB.cardinals)
 
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
+	if(ismob(AM))
+		var/mob/M = AM
+		if(M.anti_magic_check())
+			return
 	if(linked_dist && walks_left > 0)
 		flick("purplesparkles", src)
 		linked_dist.get_walker(AM)
@@ -107,6 +111,7 @@
 	else
 		walk_link(user)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/cross_action/spacetime_dist/attack_hand(mob/user)
 	walk_link(user)
 

@@ -53,22 +53,21 @@
 	mytape.ruin() //Fires destroy the tape
 	..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/device/taperecorder/attack_hand(mob/user)
 	if(loc == user)
 		if(mytape)
 			if(!user.is_holding(src))
-				..()
-				return
+				return ..()
 			eject(user)
-			return
-	..()
-
+	else
+		return ..()
 
 /obj/item/device/taperecorder/proc/can_use(mob/user)
 	if(user && ismob(user))
 		if(!user.incapacitated())
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /obj/item/device/taperecorder/verb/ejectverb()

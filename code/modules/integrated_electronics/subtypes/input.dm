@@ -344,13 +344,92 @@
 	else
 		activate_pin(3)
 
+/obj/item/integrated_circuit/input/turfpoint
+	name = "Tile pointer"
+	desc = "This circuit will get tile ref with given relative coorinates."
+	extended_desc = "If the machine	cannot see the target, it will not be able to calculate the correct direction.\
+	This circuit is working only in assembly."
+	icon_state = "numberpad"
+	complexity = 5
+	inputs = list("X" = IC_PINTYPE_NUMBER,"Y" = IC_PINTYPE_NUMBER)
+	outputs = list("tile" = IC_PINTYPE_REF)
+	activators = list("calculate dir" = IC_PINTYPE_PULSE_IN, "on calculated" = IC_PINTYPE_PULSE_OUT,"not calculated" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 40
+
+/obj/item/integrated_circuit/input/turfpoint/do_work()
+	if(!assembly)
+		activate_pin(3)
+		return
+	var/turf/T = get_turf(assembly)
+	var/target_x = CLAMP(get_pin_data(IC_INPUT, 1) - assembly.x, 0, world.maxx)
+	var/target_y = CLAMP(get_pin_data(IC_INPUT, 2) - assembly.y, 0, world.maxy)
+	var/turf/A = locate(target_x, target_y, T.z)
+	set_pin_data(IC_OUTPUT, 1, null)
+	if(!A||!(A in view(T)))
+		activate_pin(3)
+		return
+	else
+		set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/input/turfscan
+	name = "tile analyzer"
+	desc = "This machine vision system can analyze contents of desired tile.And can read letters on floor."
+	icon_state = "video_camera"
+	complexity = 5
+	inputs = list(
+		"target" = IC_PINTYPE_REF
+		)
+	outputs = list(
+		"located ref" 		= IC_PINTYPE_LIST,
+		"Written letters" 	= IC_PINTYPE_STRING
+		)
+	activators = list(
+		"scan" = IC_PINTYPE_PULSE_IN,
+		"on scanned" = IC_PINTYPE_PULSE_OUT,
+		"not scanned" = IC_PINTYPE_PULSE_OUT
+		)
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 40
+	cooldown_per_use = 10
+
+/obj/item/integrated_circuit/input/turfscan/do_work()
+	var/atom/movable/H = get_pin_data_as_type(IC_INPUT, 1, /atom)
+	var/turf/T = get_turf(src)
+	var/turf/E = get_turf(H)
+	if(!istype(H)) //Invalid input
+		return
+
+	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
+		var/list/cont = new()
+		if(E.contents.len)
+			for(var/i = 1 to E.contents.len)
+				var/atom/U = E.contents[i]
+				cont += WEAKREF(U)
+		set_pin_data(IC_OUTPUT, 1, cont)
+		var/list/St = new()
+		for(var/obj/effect/decal/cleanable/crayon/I in E.contents)
+			St.Add(I.icon_state)
+		if(St.len)
+			set_pin_data(IC_OUTPUT, 2, jointext(St, ",", 1, 0))
+		push_data()
+		activate_pin(2)
+	else
+		activate_pin(3)
+
 /obj/item/integrated_circuit/input/local_locator
 	name = "local locator"
 	desc = "This is needed for certain devices that demand a reference for a target to act upon. This type only locates something \
 	that is holding the machine containing it."
 	inputs = list()
-	outputs = list("located ref")
-	activators = list("locate" = IC_PINTYPE_PULSE_IN)
+	outputs = list("located ref"		= IC_PINTYPE_REF,
+					"is ground"			= IC_PINTYPE_BOOLEAN,
+					"is creature"		= IC_PINTYPE_BOOLEAN)
+	activators = list("locate" = IC_PINTYPE_PULSE_IN,
+		"on scanned" = IC_PINTYPE_PULSE_OUT
+		)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 20
 
@@ -358,10 +437,11 @@
 	var/datum/integrated_io/O = outputs[1]
 	O.data = null
 	if(assembly)
-		if(istype(assembly.loc, /mob/living)) // Now check if someone's holding us.
-			O.data = WEAKREF(assembly.loc)
-
-	O.push_data()
+		O.data = WEAKREF(assembly.loc)
+	set_pin_data(IC_OUTPUT, 2, isturf(assembly.loc))
+	set_pin_data(IC_OUTPUT, 3, ismob(assembly.loc))
+	push_data()
+	activate_pin(2)
 
 /obj/item/integrated_circuit/input/adjacent_locator
 	name = "adjacent locator"
@@ -416,6 +496,7 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 30
 	var/radius = 1
+	cooldown_per_use = 10
 
 /obj/item/integrated_circuit/input/advanced_locator_list/on_data_written()
 	var/rad = get_pin_data(IC_INPUT, 2)
@@ -526,7 +607,7 @@
 	action_flags = IC_ACTION_LONG_RANGE
 	power_draw_idle = 5
 	power_draw_per_use = 40
-
+	cooldown_per_use = 5
 	var/frequency = FREQ_SIGNALER
 	var/code = DEFAULT_SIGNALER_CODE
 	var/datum/radio_frequency/radio_connection
@@ -583,9 +664,7 @@
 		return 0
 
 	activate_pin(3)
-
-	for(var/mob/O in hearers(1, get_turf(src)))
-		audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
 
 /obj/item/integrated_circuit/input/ntnet_packet
 	name = "NTNet networking circuit"
@@ -596,6 +675,7 @@
 	can be send to multiple recepients. Addresses must be separated with ; symbol."
 	icon_state = "signal"
 	complexity = 4
+	cooldown_per_use = 5
 	inputs = list(
 		"target NTNet addresses"= IC_PINTYPE_STRING,
 		"data to send"			= IC_PINTYPE_STRING,
@@ -629,17 +709,16 @@
 
 	var/datum/netdata/data = new
 	data.recipient_ids = splittext(target_address, ";")
-	data.sender_id = address
 	data.plaintext_data = message
 	data.plaintext_data_secondary = text
-	data.plaintext_passkey = key
+	data.encrypted_passkey = key
 	ntnet_send(data)
 
 /obj/item/integrated_circuit/input/ntnet_recieve(datum/netdata/data)
 	set_pin_data(IC_OUTPUT, 1, data.sender_id)
 	set_pin_data(IC_OUTPUT, 2, data.plaintext_data)
 	set_pin_data(IC_OUTPUT, 3, data.plaintext_data_secondary)
-	set_pin_data(IC_OUTPUT, 4, data.plaintext_passkey)
+	set_pin_data(IC_OUTPUT, 4, data.encrypted_passkey)
 
 	push_data()
 	activate_pin(2)
@@ -801,7 +880,8 @@
 		"cell charge" = IC_PINTYPE_NUMBER,
 		"max charge" = IC_PINTYPE_NUMBER,
 		"percentage" = IC_PINTYPE_NUMBER,
-		"refference to assembly" = IC_PINTYPE_REF
+		"refference to assembly" = IC_PINTYPE_REF,
+		"refference to cell" = IC_PINTYPE_REF
 		)
 	activators = list("read" = IC_PINTYPE_PULSE_IN, "on read" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -811,13 +891,15 @@
 	set_pin_data(IC_OUTPUT, 1, null)
 	set_pin_data(IC_OUTPUT, 2, null)
 	set_pin_data(IC_OUTPUT, 3, null)
-	set_pin_data(IC_OUTPUT, 4, WEAKREF(assembly))
+	set_pin_data(IC_OUTPUT, 4, null)
+	set_pin_data(IC_OUTPUT, 5, null)
 	if(assembly)
+		set_pin_data(IC_OUTPUT, 4, WEAKREF(assembly))
 		if(assembly.battery)
-
 			set_pin_data(IC_OUTPUT, 1, assembly.battery.charge)
 			set_pin_data(IC_OUTPUT, 2, assembly.battery.maxcharge)
 			set_pin_data(IC_OUTPUT, 3, 100*assembly.battery.charge/assembly.battery.maxcharge)
+			set_pin_data(IC_OUTPUT, 5, WEAKREF(assembly.battery))
 	push_data()
 	activate_pin(2)
 
@@ -852,8 +934,8 @@
 				set_pin_data(IC_OUTPUT, 1, C.charge)
 				set_pin_data(IC_OUTPUT, 2, C.maxcharge)
 				set_pin_data(IC_OUTPUT, 3, C.percent())
-	activate_pin(2)
 	push_data()
+	activate_pin(2)
 	return
 
 /obj/item/integrated_circuit/input/ntnetsc
@@ -886,9 +968,60 @@
 
 	if(net)
 		set_pin_data(IC_OUTPUT, 1, net.hardware_id)
+		push_data()
 		activate_pin(2)
 	else
 		set_pin_data(IC_OUTPUT, 1, null)
+		push_data()
 		activate_pin(3)
-	push_data()
-	return
+
+/obj/item/integrated_circuit/input/matscan
+	name = "material scaner"
+	desc = "It's special module, designed to get information about material containers of different machinery.\
+			Like ORM, lathes, etc."
+	icon_state = "video_camera"
+	complexity = 6
+	inputs = list(
+		"target" = IC_PINTYPE_REF
+		)
+	outputs = list(
+		"Metal"				 	= IC_PINTYPE_NUMBER,
+		"Glass"					= IC_PINTYPE_NUMBER,
+		"Silver"				= IC_PINTYPE_NUMBER,
+		"Gold"					= IC_PINTYPE_NUMBER,
+		"Diamond"				= IC_PINTYPE_NUMBER,
+		"Solid Plasma"			= IC_PINTYPE_NUMBER,
+		"Uranium"				= IC_PINTYPE_NUMBER,
+		"Bananium"				= IC_PINTYPE_NUMBER,
+		"Titanium"		= IC_PINTYPE_NUMBER,
+		"Bluespace Mesh"		= IC_PINTYPE_NUMBER,
+		"Biomass"				= IC_PINTYPE_NUMBER,
+		)
+	activators = list(
+		"scan" = IC_PINTYPE_PULSE_IN,
+		"on scanned" = IC_PINTYPE_PULSE_OUT,
+		"not scanned" = IC_PINTYPE_PULSE_OUT
+		)
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 40
+	var/list/mtypes = list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_BIOMASS)
+
+
+/obj/item/integrated_circuit/input/matscan/do_work()
+	var/atom/movable/H = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
+	var/turf/T = get_turf(src)
+	GET_COMPONENT_FROM(mt, /datum/component/material_container, H)
+	if(!mt) //Invalid input
+		return
+	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
+		for(var/I in 1 to mtypes.len)
+			var/datum/material/M = mt.materials[mtypes[I]]
+			if(M)
+				set_pin_data(IC_OUTPUT, I, M.amount)
+			else
+				set_pin_data(IC_OUTPUT, I, null)
+		push_data()
+		activate_pin(2)
+	else
+		activate_pin(3)
+

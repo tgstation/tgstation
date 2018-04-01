@@ -1,7 +1,5 @@
 // simple is_type and similar inline helpers
 
-#define isdatum(D) (istype(D, /datum))
-
 #define islist(L) (istype(L, /list))
 
 #if DM_VERSION >= 512
@@ -64,7 +62,6 @@
 #define isjellyperson(A) (is_species(A, /datum/species/jelly))
 #define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
 #define isluminescent(A) (is_species(A, /datum/species/jelly/luminescent))
-#define isshadowperson(A) (is_species(A, /datum/species/shadow))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
 
@@ -93,6 +90,8 @@
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
 
+#define issiliconoradminghost(A) (istype(A, /mob/living/silicon) || IsAdminGhost(A))
+
 #define iscyborg(A) (istype(A, /mob/living/silicon/robot))
 
 #define isAI(A) (istype(A, /mob/living/silicon/ai))
@@ -106,8 +105,6 @@
 
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot))
 
-#define iscrab(A) (istype(A, /mob/living/simple_animal/crab))
-
 #define isshade(A) (istype(A, /mob/living/simple_animal/shade))
 
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
@@ -118,15 +115,9 @@
 
 #define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
 
-#define isdog(A) (istype(A, /mob/living/simple_animal/pet/dog))
-
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/pet/dog/corgi))
 
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
-
-#define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
-
-#define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))
 
 #define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
 
@@ -183,13 +174,9 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 
 #define isigniter(O) (istype(O, /obj/item/device/assembly/igniter))
 
-#define isinfared(O) (istype(O, /obj/item/device/assembly/infra))
-
 #define isprox(O) (istype(O, /obj/item/device/assembly/prox_sensor))
 
 #define issignaler(O) (istype(O, /obj/item/device/assembly/signaler))
-
-#define istimer(O) (istype(O, /obj/item/device/assembly/timer))
 
 GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 	/obj/item/stack/sheet/glass,

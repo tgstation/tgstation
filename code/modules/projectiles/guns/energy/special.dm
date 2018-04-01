@@ -49,6 +49,7 @@
 	modifystate = 1
 	ammo_x_offset = 1
 	selfcharge = 1
+	harmful = FALSE
 
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"
@@ -131,6 +132,10 @@
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
 
+/obj/item/gun/energy/plasmacutter/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 25, 105, 0, 'sound/weapons/plasma_cutter.ogg')
+
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
 	..()
 	if(cell)
@@ -180,7 +185,16 @@
 /obj/item/gun/energy/wormhole_projector/update_icon()
 	icon_state = "[initial(icon_state)][select]"
 	item_state = icon_state
-	return
+
+/obj/item/gun/energy/wormhole_projector/update_ammo_types()
+	. = ..()
+	for(var/i in 1 to ammo_type.len)
+		var/obj/item/ammo_casing/energy/wormhole/W = ammo_type[i]
+		if(istype(W))
+			W.gun = src
+			var/obj/item/projectile/beam/wormhole/WH = W.BB
+			if(istype(WH))
+				WH.gun = src
 
 /obj/item/gun/energy/wormhole_projector/process_chamber()
 	..()

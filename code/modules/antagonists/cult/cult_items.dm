@@ -45,6 +45,9 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
 
+/obj/item/melee/cultblade/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 40, 100)
 
 /obj/item/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!iscultist(user))
@@ -54,7 +57,7 @@
 							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.apply_damage(rand(force/2, force), BRUTE, pick("l_arm", "r_arm"))
+			H.apply_damage(rand(force/2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		else
 			user.adjustBruteLoss(rand(force/2,force))
 		return
@@ -76,7 +79,7 @@
 			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
 			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
 			user.emote("scream")
-			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
+			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 			user.dropItemToGround(src)
 
 /obj/item/twohanded/required/cult_bastard
@@ -112,6 +115,7 @@
 	set_light(4)
 	jaunt = new(src)
 	linked_action = new(src)
+	AddComponent(/datum/component/butchering, 50, 80)
 
 /obj/item/twohanded/required/cult_bastard/examine(mob/user)
 	if(contents.len)
@@ -143,7 +147,7 @@
 			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
 			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
 			user.emote("scream")
-			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
+			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 			user.dropItemToGround(src, TRUE)
 			user.Knockdown(50)
 			return
@@ -662,6 +666,10 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/spear/spear_act
 
+/obj/item/twohanded/cult_spear/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 100, 90)
+
 /obj/item/twohanded/cult_spear/Destroy()
 	if(spear_act)
 		qdel(spear_act)
@@ -681,7 +689,7 @@
 			else
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
-			if(!L.null_rod_check())
+			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
 					L.Knockdown(100)
 				else
@@ -768,7 +776,6 @@
 	impact_effect_type = /obj/effect/temp_visual/dir_setting/bloodsplatter
 
 /obj/item/projectile/magic/arcane_barrage/blood/Collide(atom/target)
-	colliding = TRUE
 	var/turf/T = get_turf(target)
 	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
 	if(iscultist(target))
@@ -782,7 +789,6 @@
 				M.adjustHealth(-5)
 		new /obj/effect/temp_visual/cult/sparks(T)
 		qdel(src)
-		colliding = FALSE
 	else
 		..()
 
@@ -974,7 +980,7 @@
 			else
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
-			if(!L.null_rod_check())
+			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
 					L.Knockdown(60)
 				else

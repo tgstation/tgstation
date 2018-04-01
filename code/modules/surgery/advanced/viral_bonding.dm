@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/viral_bonding
+	name = "Viral Bonding Surgery Disk"
 	desc = "The disk provides instructions on how to force symbiosis between a virus and its host."
 	surgeries = list(/datum/surgery/advanced/viral_bonding)
 
@@ -12,12 +13,12 @@
 				/datum/surgery_step/close)
 
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list("chest")
+	possible_locs = list(BODY_ZONE_CHEST)
 
 /datum/surgery/advanced/viral_bonding/can_start(mob/user, mob/living/carbon/target)
 	if(!..())
 		return FALSE
-	if(!LAZYLEN(target.viruses))
+	if(!LAZYLEN(target.diseases))
 		return FALSE
 	return TRUE
 
@@ -38,7 +39,7 @@
 
 /datum/surgery_step/viral_bond/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[target]'s bone marrow begins pulsing slowly.", "<span class='notice'>[target]'s bone marrow begins pulsing slowly. The viral bonding is complete.</span>")
-	for(var/X in target.viruses)
+	for(var/X in target.diseases)
 		var/datum/disease/D = X
 		D.carrier = TRUE
 	return TRUE

@@ -164,6 +164,9 @@
 	return TRUE
 
 /obj/item/device/gps/computer/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	attack_self(user)
 
 //Bed
@@ -217,7 +220,6 @@
 	desc = "A large machine releasing a constant gust of air."
 	anchored = TRUE
 	density = TRUE
-	var/arbitraryatmosblockingvar = TRUE
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 5
 	CanAtmosPass = ATMOS_PASS_NO
@@ -289,7 +291,7 @@
 	icon_state = "x2"
 	var/possible = list(/obj/item/ship_in_a_bottle,
 						/obj/item/gun/energy/pulse,
-						/obj/item/sleeping_carp_scroll,
+						/obj/item/book/granter/martial/carp,
 						/obj/item/melee/supermatter_sword,
 						/obj/item/shield/changeling,
 						/obj/item/lava_staff,

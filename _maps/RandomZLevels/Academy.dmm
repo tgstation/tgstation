@@ -44,11 +44,10 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 1;
 	environ = 3;
 	equipment = 3;
-	locked = 0;
 	pixel_y = 32;
 	req_access = null
 	},
@@ -1157,11 +1156,10 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 1;
 	environ = 3;
 	equipment = 3;
-	locked = 0;
 	pixel_y = 32;
 	req_access = null
 	},
@@ -2146,11 +2144,10 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 1;
 	environ = 3;
 	equipment = 3;
-	locked = 0;
 	pixel_y = 32;
 	req_access = null
 	},
@@ -3106,11 +3103,10 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kh" = (
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/unlocked{
 	dir = 1;
 	environ = 3;
 	equipment = 3;
-	locked = 0;
 	pixel_y = 32;
 	req_access = null
 	},
@@ -3677,7 +3673,7 @@
 /area/awaymission/academy/academyengine)
 "mj" = (
 /obj/structure/rack,
-/obj/item/spellbook/oneuse/summonitem,
+/obj/item/book/granter/spell/summonitem,
 /obj/item/pen/fourcolor,
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)

@@ -43,9 +43,9 @@
 		return
 	var/limb_regen = 0
 	if(user.active_hand_index % 2 == 0) //we regen the arm before changing it into the weapon
-		limb_regen = user.regenerate_limb("r_arm", 1)
+		limb_regen = user.regenerate_limb(BODY_ZONE_R_ARM, 1)
 	else
-		limb_regen = user.regenerate_limb("l_arm", 1)
+		limb_regen = user.regenerate_limb(BODY_ZONE_L_ARM, 1)
 	if(limb_regen)
 		user.visible_message("<span class='warning'>[user]'s missing arm reforms, making a loud, grotesque sound!</span>", "<span class='userdanger'>Your arm regrows, making a loud, crunchy sound and giving you great pain!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		user.emote("scream")
@@ -136,7 +136,7 @@
 	desc = "We reform one of our arms into a deadly blade."
 	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form."
 	chemical_cost = 20
-	dna_cost = 2
+	dna_cost = 4 // Hippie edit - changeling proc_holders refuse to modularize properly
 	req_human = 1
 	weapon_type = /obj/item/melee/arm_blade
 	weapon_name_simple = "blade"
@@ -166,6 +166,7 @@
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	if(synthetic)
 		can_drop = TRUE
+	AddComponent(/datum/component/butchering, 60, 80)
 
 /obj/item/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
@@ -306,7 +307,7 @@
 		for(var/obj/item/I in H.held_items)
 			if(I.is_sharp())
 				C.visible_message("<span class='danger'>[H] impales [C] with [H.p_their()] [I.name]!</span>", "<span class='userdanger'>[H] impales you with [H.p_their()] [I.name]!</span>")
-				C.apply_damage(I.force, BRUTE, "chest")
+				C.apply_damage(I.force, BRUTE, BODY_ZONE_CHEST)
 				H.do_item_attack_animation(C, used_item = I)
 				H.add_mob_blood(C)
 				playsound(get_turf(H),I.hitsound,75,1)
@@ -422,9 +423,9 @@
 		return ..()
 
 
-/***************************************\
-|*********SPACE SUIT + HELMET***********|
-\***************************************/
+
+/* HIPPIE EDIT - Commented out. Unfortunately, despite all of my attempts at modularity - these items continue to show up in the Changeling uplink even though I had disabled them on another file.
+No, setting their DNA Cost to -1 did not make them go away. I have no idea why.
 /obj/effect/proc_holder/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
 	desc = "We grow an organic suit to protect ourselves from space exposure."
@@ -483,6 +484,8 @@
 	helmet_type = /obj/item/clothing/head/helmet/changeling
 	suit_name_simple = "armor"
 	helmet_name_simple = "helmet"
+
+HIPPIE EDIT END */
 
 /obj/item/clothing/suit/armor/changeling
 	name = "chitinous mass"

@@ -1,2 +1,2 @@
 /obj/machinery/recharger
-	icon = 'hippiestation/icons/obj/stationobjs.dmi'
+	icon_hippie = 'hippiestation/icons/obj/stationobjs.dmi'

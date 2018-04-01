@@ -6,9 +6,8 @@ RPD
 #define PAINT_MODE -2
 #define EATING_MODE -1
 #define ATMOS_MODE 0
-#define METER_MODE 1
-#define DISPOSALS_MODE 2
-#define TRANSIT_MODE 3
+#define DISPOSALS_MODE 1
+#define TRANSIT_MODE 2
 
 
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
@@ -307,7 +306,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 
-/obj/item/pipe_dispenser/pre_attackby(atom/A, mob/user)
+/obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)
 	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
 		return ..()
 
@@ -318,7 +317,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/queued_p_flipped = p_flipped
 
 	// clicking on an existing component puts the new one on the same layer
-	if ((mode == ATMOS_MODE || mode == METER_MODE) && istype(A, /obj/machinery/atmospherics))
+	if (mode == ATMOS_MODE && istype(A, /obj/machinery/atmospherics))
 		var/obj/machinery/atmospherics/AM = A
 		temp_piping_layer = AM.piping_layer
 		A = get_turf(user)
@@ -352,35 +351,30 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		if(ATMOS_MODE) //Making pipes
 			if(!can_make_pipe)
 				return ..()
-			to_chat(user, "<span class='notice'>You start building a pipe...</span>")
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 2, target = A))
-				activate()
+			if (recipe.type == /datum/pipe_info/meter)
+				to_chat(user, "<span class='notice'>You start building a meter...</span>")
+				if(do_after(user, 2, target = A))
+					activate()
+					var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(A))
+					PM.setAttachLayer(temp_piping_layer)
+			else
+				to_chat(user, "<span class='notice'>You start building a pipe...</span>")
+				if(do_after(user, 2, target = A))
+					activate()
+					var/obj/machinery/atmospherics/path = queued_p_type
+					var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
+					var/obj/item/pipe/P = new pipe_item_type(get_turf(A), queued_p_type, queued_p_dir)
 
-				var/obj/machinery/atmospherics/path = queued_p_type
-				var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
+					if(queued_p_flipped && istype(P, /obj/item/pipe/trinary/flippable))
+						var/obj/item/pipe/trinary/flippable/F = P
+						F.flipped = queued_p_flipped
 
-				var/obj/item/pipe/P = new pipe_item_type(get_turf(A), queued_p_type, queued_p_dir)
-
-				if(queued_p_flipped && istype(P, /obj/item/pipe/trinary/flippable))
-					var/obj/item/pipe/trinary/flippable/F = P
-					F.flipped = queued_p_flipped
-
-				P.update()
-				P.add_fingerprint(usr)
-				P.setPipingLayer(temp_piping_layer)
-				P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
-
-		if(METER_MODE) //Making pipe meters
-			if(!can_make_pipe)
-				return ..()
-			to_chat(user, "<span class='notice'>You start building a meter...</span>")
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 2, target = A))
-				activate()
-				var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(A))
-				PM.setAttachLayer(temp_piping_layer)
-
+					P.update()
+					P.add_fingerprint(usr)
+					P.setPipingLayer(temp_piping_layer)
+					P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+			
 		if(DISPOSALS_MODE) //Making disposals pipes
 			if(!can_make_pipe)
 				return ..()
@@ -439,5 +433,4 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 #undef PAINT_MODE
 #undef EATING_MODE
 #undef ATMOS_MODE
-#undef METER_MODE
 #undef DISPOSALS_MODE

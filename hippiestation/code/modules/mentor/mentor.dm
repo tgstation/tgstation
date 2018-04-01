@@ -57,29 +57,6 @@ GLOBAL_PROTECT(mentor_href_token)
 /proc/MentorHrefToken(forceGlobal = FALSE)
 	return "mentor_token=[RawMentorHrefToken(forceGlobal)]"
 
-/datum/mentors/Topic(href, href_list)
-	..()
-	if(!usr || !usr.client || usr.client != owner || !usr.client.is_mentor())
-		return
-	if(!CheckMentorHREF(href, href_list))
-		return
-	if(href_list["mentor_msg"])
-		if(CONFIG_GET(flag/mentors_mobname_only))
-			var/mob/M = locate(href_list["mentor_msg"])
-			usr.client.cmd_mentor_pm(M,null)
-		else
-			usr.client.cmd_mentor_pm(href_list["mentor_msg"],null)
-		return
-
-	//Mentor Follow
-	if(href_list["mentor_follow"])
-		var/mob/living/M = locate(href_list["mentor_follow"])
-
-		if(istype(M))
-			usr.client.mentor_follow(M)
-
-		return
-
 /proc/load_mentors()
 	GLOB.mentor_datums.Cut()
 	for(var/client/C in GLOB.mentors)

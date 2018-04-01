@@ -1,2 +1,2 @@
 /obj/machinery/photocopier
-	icon = 'hippiestation/icons/obj/library.dmi'
+	icon_hippie = 'hippiestation/icons/obj/library.dmi'

@@ -27,26 +27,27 @@
 	var/OldLoc = loc
 	if(NewLoc && !istype(NewLoc, /turf/open/indestructible/reebe_void))
 		var/turf/T = get_turf(NewLoc)
-		if (locate(/obj/effect/blessing, T))
-			if(last_failed_turf != T)
-				T.visible_message("<span class='warning'>[T] suddenly emits a ringing sound!</span>", null, null, null, src)
-				playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
-				last_failed_turf = T
-			if ((world.time - lastWarning) >= 30) 
-				lastWarning = world.time
-				to_chat(src, "<span class='warning'>This turf is consecrated and can't be crossed!</span>")
-			return
-		if(!GLOB.ratvar_awakens && istype(get_area(T), /area/chapel))
-			if ((world.time - lastWarning) >= 30) 
-				lastWarning = world.time
-				to_chat(src, "<span class='warning'>The Chapel is hallowed ground under a heretical deity, and can't be accessed!</span>")
-			return
+		if(!GLOB.ratvar_awakens)
+			if(locate(/obj/effect/blessing, T))
+				if(last_failed_turf != T)
+					T.visible_message("<span class='warning'>[T] suddenly emits a ringing sound!</span>", null, null, null, src)
+					playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
+					last_failed_turf = T
+				if((world.time - lastWarning) >= 30) 
+					lastWarning = world.time
+					to_chat(src, "<span class='warning'>This turf is consecrated and can't be crossed!</span>")
+				return
+			if(istype(get_area(T), /area/chapel))
+				if((world.time - lastWarning) >= 30) 
+					lastWarning = world.time
+					to_chat(src, "<span class='warning'>The Chapel is hallowed ground under a heretical deity, and can't be accessed!</span>")
+				return
+		else
+			for(var/turf/TT in range(5, src))
+				if(prob(166 - (get_dist(src, TT) * 33)))
+					TT.ratvar_act() //Causes moving to leave a swath of proselytized area behind the Eminence
 		forceMove(T)
-	Moved(OldLoc, direct)
-	if(GLOB.ratvar_awakens)
-		for(var/turf/T in range(5, src))
-			if(prob(166 - (get_dist(src, T) * 33)))
-				T.ratvar_act() //Causes moving to leave a swath of proselytized area behind the Eminence
+		Moved(OldLoc, direct)
 
 /mob/camera/eminence/Process_Spacemove(movement_dir = 0)
 	return TRUE

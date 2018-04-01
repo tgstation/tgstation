@@ -292,12 +292,9 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	locked = 0;
-	pixel_x = 24;
-	req_access = null;
-	req_one_access = null
+	pixel_x = 24
 	},
 /obj/machinery/light{
 	dir = 4
@@ -1063,12 +1060,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null;
-	req_one_access = null
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
@@ -1130,12 +1124,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	locked = 0;
-	pixel_x = 24;
-	req_access = null;
-	req_one_access = null
+	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
@@ -1253,12 +1244,9 @@
 "dO" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	locked = 0;
-	pixel_x = 24;
-	req_access = null;
-	req_one_access = null
+	pixel_x = 24
 	},
 /obj/item/clothing/suit/space/nasavoid/old,
 /turf/open/floor/plasteel/yellow/side{
@@ -1319,12 +1307,9 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null;
-	req_one_access = null
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
@@ -1363,12 +1348,9 @@
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "ee" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	locked = 0;
-	pixel_x = 24;
-	req_access = null;
-	req_one_access = null
+	pixel_x = 24
 	},
 /mob/living/simple_animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
@@ -1840,12 +1822,12 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "fu" = (
-/obj/machinery/rnd/protolathe,
+/obj/machinery/rnd/production/protolathe,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "fv" = (
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/dropper,
 /turf/open/floor/plasteel/white,
@@ -2134,7 +2116,6 @@
 "gg" = (
 /obj/machinery/door/airlock/external{
 	name = "Engineering External Access";
-	req_access = null;
 	req_access_txt = "200"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2768,12 +2749,8 @@
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "hw" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null;
-	req_one_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/egg_smudge,
 /turf/open/floor/plasteel/cafeteria,
@@ -3199,12 +3176,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	locked = 0;
-	pixel_x = 24;
-	req_access = null;
-	req_one_access = null
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/orange/side{
 	tag = "icon-orange (EAST)";
@@ -3259,9 +3233,8 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/unlocked{
 	dir = 4;
-	locked = 0;
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel/red/side{
@@ -3287,12 +3260,9 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null;
-	req_one_access = null
+	pixel_x = -23
 	},
 /mob/living/simple_animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
@@ -3393,12 +3363,9 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "iO" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	locked = 0;
-	pixel_x = 24;
-	req_access = null;
-	req_one_access = null
+	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
@@ -3923,12 +3890,8 @@
 /area/ruin/space/has_grav/ancientstation/proto)
 "kj" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23;
-	req_access = null;
-	req_one_access = null
+/obj/machinery/airalarm/all_access{
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/proto)
@@ -4243,8 +4206,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on{
 	dir = 8;
-	frequency = 1441;
-	id_tag = "air_out";
+	id_tag = "oldstation_air_out";
 	name = "air output"
 	},
 /turf/open/floor/engine/air,
@@ -4327,12 +4289,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/proto)
 "lk" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	locked = 0;
-	pixel_x = 24;
-	req_access = null;
-	req_one_access = null
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/airless/floorgrime,
 /area/ruin/space/has_grav/ancientstation/atmo)

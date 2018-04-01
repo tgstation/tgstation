@@ -13,7 +13,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/replace_banned = TRUE //Should replace jobbaned player with ghosts if granted.
 	var/list/objectives = list()
 	var/antag_memory = ""//These will be removed with antag datum
-	
+	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
+
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
@@ -67,6 +68,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(!silent)
 			greet()
 		apply_innate_effects()
+		give_antag_moodies()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
 
@@ -88,10 +90,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/proc/on_removal()
 	remove_innate_effects()
+	clear_antag_moodies()
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
 		if(!silent && owner.current)
 			farewell()
+		owner.objectives -= objectives
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
@@ -102,6 +106,16 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/proc/farewell()
 	return
+
+/datum/antagonist/proc/give_antag_moodies()
+	if(!antag_moodlet)
+		return
+	owner.current.SendSignal(COMSIG_ADD_MOOD_EVENT, "antag_moodlet", antag_moodlet)
+
+/datum/antagonist/proc/clear_antag_moodies()
+	if(!antag_moodlet)
+		return
+	owner.current.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "antag_moodlet")
 
 //Returns the team antagonist belongs to if any.
 /datum/antagonist/proc/get_team()
@@ -183,7 +197,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		edit_memory(usr)
 		owner.traitor_panel()
 		return
-	
+
 	//Some commands might delete/modify this datum clearing or changing owner
 	var/datum/mind/persistent_owner = owner
 

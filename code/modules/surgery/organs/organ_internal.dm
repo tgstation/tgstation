@@ -5,7 +5,7 @@
 	var/status = ORGAN_ORGANIC
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
-	var/zone = "chest"
+	var/zone = BODY_ZONE_CHEST
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
 	var/vital = 0
@@ -110,7 +110,7 @@
 	var/breathes = TRUE
 	var/blooded = TRUE
 	if(dna && dna.species)
-		if(NOBREATH in dna.species.species_traits)
+		if(has_trait(TRAIT_NOBREATH, SPECIES_TRAIT))
 			breathes = FALSE
 		if(NOBLOOD in dna.species.species_traits)
 			blooded = FALSE

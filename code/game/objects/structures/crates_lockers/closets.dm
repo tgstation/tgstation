@@ -311,13 +311,14 @@
 	container_resist()
 
 /obj/structure/closet/attack_hand(mob/user)
-	..()
+	. = ..()
+	if(.)
+		return
 	if(user.lying && get_dist(src, user) > 0)
 		return
 
 	if(!toggle(user))
 		togglelock(user)
-		return
 
 /obj/structure/closet/attack_paw(mob/user)
 	return attack_hand(user)
@@ -339,7 +340,7 @@
 		return
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
-		attack_hand(usr)
+		return attack_hand(usr)
 	else
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 
@@ -397,7 +398,14 @@
 	else
 		togglelock(user)
 
-/obj/structure/closet/proc/togglelock(mob/living/user)
+/obj/structure/closet/CtrlShiftClick(mob/living/user)
+	if(!user.has_trait(TRAIT_SKITTISH))
+		return ..()
+	if(!user.canUseTopic(src) || !isturf(user.loc))
+		return
+	dive_into(user)
+
+/obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)
 		if(allowed(user))
 			if(iscarbon(user))
@@ -406,7 +414,7 @@
 			user.visible_message("<span class='notice'>[user] [locked ? null : "un"]locks [src].</span>",
 							"<span class='notice'>You [locked ? null : "un"]lock [src].</span>")
 			update_icon()
-		else
+		else if(!silent)
 			to_chat(user, "<span class='notice'>Access Denied</span>")
 	else if(secure && broken)
 		to_chat(user, "<span class='warning'>\The [src] is broken!</span>")
@@ -456,3 +464,23 @@
 
 /obj/structure/closet/return_temperature()
 	return
+
+/obj/structure/closet/proc/dive_into(mob/living/user)
+	var/turf/T1 = get_turf(user)
+	var/turf/T2 = get_turf(src)
+	if(!open() && !opened)
+		togglelock(user, TRUE)
+		if(!open())
+			to_chat(user, "<span class='warning'>It won't budge!</span>")
+			return
+	step_towards(user, T2)
+	T1 = get_turf(user)
+	if(T1 == T2)
+		user.resting = TRUE //so people can jump into crates without slamming the lid on their head
+		if(!close())
+			to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
+			user.resting = FALSE
+			return
+		user.resting = FALSE
+		togglelock(user)
+		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")

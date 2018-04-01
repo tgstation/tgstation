@@ -85,12 +85,8 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 ///////
 
-/obj/machinery/computer/telecrystals/uplinker/attack_hand(mob/user)
-	if(..())
-		return
-	src.add_fingerprint(user)
-	user.set_machine(src)
-
+/obj/machinery/computer/telecrystals/uplinker/ui_interact(mob/user)
+	. = ..()
 	var/dat = ""
 	if(linkedboss)
 		dat += "[linkedboss] has [linkedboss.storedcrystals] telecrystals available for distribution. <BR><BR>"
@@ -109,7 +105,6 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/telecrystals/uplinker/Topic(href, href_list)
 	if(..())
@@ -141,7 +136,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	var/list/transferlog = list()
 
 /obj/machinery/computer/telecrystals/boss/proc/logTransfer(logmessage)
-	transferlog += ("<b>[worldtime2text()]</b> [logmessage]")
+	transferlog += ("<b>[station_time_timestamp()]</b> [logmessage]")
 
 /obj/machinery/computer/telecrystals/boss/proc/scanUplinkers()
 	for(var/obj/machinery/computer/telecrystals/uplinker/A in urange(scanrange, src.loc))
@@ -164,13 +159,8 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /////////
 
-/obj/machinery/computer/telecrystals/boss/attack_hand(mob/user)
-	if(..())
-		return
-	src.add_fingerprint(user)
-	user.set_machine(src)
-
-
+/obj/machinery/computer/telecrystals/boss/ui_interact(mob/user)
+	. = ..()
 	var/dat = ""
 	dat += "<a href='byond://?src=[REF(src)];scan=1'>Scan for TC stations.</a><BR>"
 	dat += "[storedcrystals] telecrystals are available for distribution. <BR>"
@@ -198,7 +188,6 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/telecrystals/boss/Topic(href, href_list)
 	if(..())

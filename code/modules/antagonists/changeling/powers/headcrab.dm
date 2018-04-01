@@ -3,7 +3,7 @@
 	desc = "We sacrifice our current body in a moment of need, placing us in control of a vessel."
 	helptext = "We will be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
 	chemical_cost = 20
-	dna_cost = 1
+	dna_cost = 2 // hippie edit - again, file refuses to modularize and displays the wrong cost
 	req_human = 1
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
@@ -11,7 +11,7 @@
 	if(alert("Are we sure we wish to kill ourself and create a headslug?",,"Yes", "No") == "No")
 		return
 	var/datum/mind/M = user.mind
-	var/list/organs = user.getorganszone("head", 1)
+	var/list/organs = user.getorganszone(BODY_ZONE_HEAD, 1)
 
 	for(var/obj/item/organ/I in organs)
 		I.Remove(user, 1)

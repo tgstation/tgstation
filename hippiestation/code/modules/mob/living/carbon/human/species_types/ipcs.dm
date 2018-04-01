@@ -5,10 +5,9 @@
 	default_color = "00FF00"
 	blacklisted = 0
 	sexes = 0
-	species_traits = list(MUTCOLORS,NOEYES)
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,NOEYES)
 	mutant_bodyparts = list("ipc_screen")
 	default_features = list("ipc_screen" = "Sunburst")
-	species_traits = list(MUTCOLORS)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
 
 /datum/species/ipc/on_species_gain(mob/living/carbon/human/C)

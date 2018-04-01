@@ -22,12 +22,8 @@
 		return 0
 	return 1
 
-/obj/machinery/computer/robotics/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/robotics/interact(mob/user)
+/obj/machinery/computer/robotics/ui_interact(mob/user)
+	. = ..()
 	if (src.z > 6)
 		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return

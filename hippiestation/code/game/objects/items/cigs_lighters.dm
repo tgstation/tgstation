@@ -1,2 +1,2 @@
 /obj/item/clothing/mask/vape
-	icon = 'hippiestation/icons/obj/clothing/masks.dmi'
+	icon_hippie = 'hippiestation/icons/obj/clothing/masks.dmi'

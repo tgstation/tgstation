@@ -1,5 +1,7 @@
 GLOBAL_LIST_EMPTY(admin_datums)
 GLOBAL_PROTECT(admin_datums)
+GLOBAL_LIST_EMPTY(protected_admins)
+GLOBAL_PROTECT(protected_admins)
 
 GLOBAL_VAR_INIT(href_token, GenerateToken())
 GLOBAL_PROTECT(href_token)
@@ -26,7 +28,7 @@ GLOBAL_PROTECT(href_token)
 
 	var/deadmined
 
-/datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE)
+/datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"
 		message_admins("[key_name_admin(usr)][msg]")
@@ -51,6 +53,8 @@ GLOBAL_PROTECT(href_token)
 	if(R.rights & R_DEBUG) //grant profile access
 		world.SetConfig("APP/admin", ckey, "role=admin")
 	//only admins with +ADMIN start admined
+	if(protected)
+		GLOB.protected_admins[target] = src
 	if (force_active || (R.rights & R_AUTOLOGIN))
 		activate()
 	else
@@ -141,6 +145,9 @@ GLOBAL_PROTECT(href_token)
 		if( (rank.rights & other.rank.rights) == other.rank.rights )
 			return 1 //we have all the rights they have and more
 	return 0
+
+/datum/admins/can_vv_get(var_name, var_value)
+	return FALSE //nice try trialmin
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin

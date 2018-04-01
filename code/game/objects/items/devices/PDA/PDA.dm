@@ -167,7 +167,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/mob/M = usr
 	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src))
 		return attack_self(M)
-	return
+	return ..()
 
 /obj/item/device/pda/attack_self(mob/user)
 	if(!user.IsAdvancedToolUser())
@@ -212,7 +212,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += text("ID: <a href='?src=[REF(src)];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
 				dat += text("<br><a href='?src=[REF(src)];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
-				dat += "[worldtime2text()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
+				dat += "[station_time_timestamp()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
 				dat += "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer+540]"
 
 				dat += "<br><br>"
@@ -858,6 +858,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 			else if (istype(A, /obj/machinery/atmospherics/pipe))
 				var/obj/machinery/atmospherics/pipe/P = A
 				atmosanalyzer_scan(P.parent.air, user, P)
+			else if (istype(A, /obj/machinery/atmospherics/components/unary))
+				var/obj/machinery/atmospherics/components/unary/U = A
+				atmosanalyzer_scan(U.airs[1], user, U)
 			else if (istype(A, /obj/machinery/power/rad_collector))
 				var/obj/machinery/power/rad_collector/RC = A
 				if(RC.loaded_tank)

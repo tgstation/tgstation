@@ -1,2 +1,2 @@
 /obj/machinery/seed_extractor
-	icon = 'hippiestation/icons/obj/hydroponics/equipment.dmi'
+	icon_hippie = 'hippiestation/icons/obj/hydroponics/equipment.dmi'

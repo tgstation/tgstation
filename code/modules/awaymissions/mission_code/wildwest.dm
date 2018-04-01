@@ -70,9 +70,7 @@
 	var/chargesa = 1
 	var/insistinga = 0
 
-/obj/machinery/wish_granter_dark/attack_hand(mob/living/carbon/human/user)
-	usr.set_machine(src)
-
+/obj/machinery/wish_granter_dark/interact(mob/living/carbon/human/user)
 	if(chargesa <= 0)
 		to_chat(user, "The Wish Granter lies silent.")
 		return

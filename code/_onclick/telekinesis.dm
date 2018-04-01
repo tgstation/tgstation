@@ -10,6 +10,8 @@
 	By default, emulate the user's unarmed attack
 */
 
+#define TK_MAXRANGE 15
+
 /atom/proc/attack_tk(mob/user)
 	if(user.stat || !tkMaxRangeCheck(user, src))
 		return
@@ -102,9 +104,6 @@
 	qdel(src)
 	return
 
-/obj/item/tk_grab/attack_hand(mob/user)
-	return
-
 /obj/item/tk_grab/attack_self(mob/user)
 	if(!focus)
 		return
@@ -188,3 +187,6 @@
 /obj/item/tk_grab/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is using [user.p_their()] telekinesis to choke [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (OXYLOSS)
+
+
+#undef TK_MAXRANGE

@@ -63,6 +63,13 @@
 	owner = null
 	qdel(src)
 
+//clickdelay/nextmove modifiers!
+/datum/status_effect/proc/nextmove_modifier()
+	return 1
+
+/datum/status_effect/proc/nextmove_adjust()
+	return 0
+
 ////////////////
 // ALERT HOOK //
 ////////////////

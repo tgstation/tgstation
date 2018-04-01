@@ -26,7 +26,6 @@ Possible to do for anyone motivated enough:
 
 #define HOLOPAD_PASSIVE_POWER_USAGE 1
 #define HOLOGRAM_POWER_USAGE 2
-#define HOLOPAD_MODE RANGE_BASED
 
 /obj/machinery/holopad
 	name = "holopad"
@@ -173,7 +172,8 @@ Possible to do for anyone motivated enough:
 	return ..()
 
 
-/obj/machinery/holopad/interact(mob/living/carbon/human/user) //Carn: Hologram requests.
+/obj/machinery/holopad/ui_interact(mob/living/carbon/human/user) //Carn: Hologram requests.
+	. = ..()
 	if(!istype(user))
 		return
 

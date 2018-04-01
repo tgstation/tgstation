@@ -1,2 +1,2 @@
 /obj/machinery/power/apc
-	icon = 'hippiestation/icons/obj/power.dmi'
+	icon_hippie = 'hippiestation/icons/obj/power.dmi'

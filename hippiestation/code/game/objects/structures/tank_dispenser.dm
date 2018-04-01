@@ -1,2 +1,2 @@
 /obj/structure/tank_dispenser
-	icon = 'hippiestation/icons/obj/objects.dmi'
+	icon_hippie = 'hippiestation/icons/obj/objects.dmi'

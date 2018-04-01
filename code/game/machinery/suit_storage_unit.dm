@@ -383,6 +383,8 @@
 					dump_contents() // Dump out contents if someone is in there.
 			. = TRUE
 		if("lock")
+			if(state_open)
+				return
 			locked = !locked
 			. = TRUE
 		if("uv")

@@ -21,7 +21,7 @@
 	else
 		gulp_size = max(round(reagents.total_volume / 5), 5)
 
-/obj/item/reagent_containers/food/drinks/attack(mob/M, mob/user, def_zone)
+/obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
 
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
@@ -36,6 +36,8 @@
 
 	if(M == user)
 		to_chat(M, "<span class='notice'>You swallow a gulp of [src].</span>")
+		if(M.has_trait(TRAIT_VORACIOUS))
+			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
 
 	else
 		M.visible_message("<span class='danger'>[user] attempts to feed the contents of [src] to [M].</span>", "<span class='userdanger'>[user] attempts to feed the contents of [src] to [M].</span>")
@@ -107,6 +109,8 @@
 
 /obj/item/reagent_containers/food/drinks/proc/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(!isGlass)
+		return
+	if(QDELING(src) || !target)		//Invalid loc
 		return
 	if(bartender_check(target) && ranged)
 		return
@@ -391,7 +395,7 @@
 	return BRUTELOSS
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
-	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == "head")
+	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == BODY_ZONE_HEAD)
 		user.visible_message("<span class='warning'>[user] crushes the can of [src] on [user.p_their()] forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
 		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)

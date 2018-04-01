@@ -69,7 +69,8 @@
 			last_power-=bitcoins_mined
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(anchored)
 		if(!src.locked)
@@ -93,7 +94,7 @@
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/machinery/power/rad_collector/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
+/obj/machinery/power/rad_collector/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
@@ -128,11 +129,11 @@
 	else
 		return ..()
 
-/obj/machinery/power/rad_collector/wrench_act(mob/living/user, obj/item/wrench)
-	default_unfasten_wrench(user, wrench, 0)
+/obj/machinery/power/rad_collector/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I, 0)
 	return TRUE
 
-/obj/machinery/power/rad_collector/crowbar_act(mob/living/user, obj/item/crowbar)
+/obj/machinery/power/rad_collector/crowbar_act(mob/living/user, obj/item/I)
 	if(loaded_tank)
 		if(locked)
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
@@ -142,7 +143,7 @@
 	to_chat(user, "<span class='warning'>There isn't a tank loaded!</span>")
 	return TRUE
 
-/obj/machinery/power/rad_collector/multitool_act(mob/living/user, obj/item/multitool)
+/obj/machinery/power/rad_collector/multitool_act(mob/living/user, obj/item/I)
 	if(!is_station_level(z) && !SSresearch.science_tech)
 		to_chat(user, "<span class='warning'>[src] isn't linked to a research system!</span>")
 		return TRUE

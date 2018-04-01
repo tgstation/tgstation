@@ -6,6 +6,8 @@
  *		Pumpkin head
  *		Kitty ears
  *		Cardborg disguise
+ *		Wig
+ *		Bronze hat
  */
 
 /*
@@ -219,15 +221,41 @@
 	hair_color = "#[random_short_color()]"
 	. = ..()
 
+/obj/item/clothing/head/bronze
+	name = "bronze hat"
+	desc = "A crude helmet made out of bronze plates. It offers very little in the way of protection."
+	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon_state = "clockwork_helmet_old"
+	flags_inv = HIDEEARS|HIDEHAIR
+	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
+
 /obj/item/clothing/head/foilhat
 	name = "tinfoil hat"
 	desc = "Thought control rays, psychotronic scanning. Don't mind that, I'm protected cause I made this hat."
 	icon_state = "foilhat"
 	item_state = "foilhat"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = -5,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = -5, "fire" = 0, "acid" = 0)
+	equip_delay_other = 140
+	var/datum/brain_trauma/mild/phobia/paranoia
 
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
+	..()
 	if(slot == slot_head)
-		user.gain_trauma(/datum/brain_trauma/mild/phobia, FALSE, "conspiracies")
+		if(paranoia)
+			QDEL_NULL(paranoia)
+		paranoia = new()
+		user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC, "conspiracies")
 		to_chat(user, "<span class='warning'>As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. </span>")
-		flags_1 |= NODROP_1
+
+/obj/item/clothing/head/foilhat/dropped(mob/user)
+	..()
+	if(paranoia)
+		QDEL_NULL(paranoia)
+
+/obj/item/clothing/head/foilhat/attack_hand(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(src == C.head)
+			to_chat(user, "<span class='userdanger'>Why would you want to take this off? Do you want them to get into your mind?!</span>")
+			return
+	..()

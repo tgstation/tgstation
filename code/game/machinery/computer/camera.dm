@@ -51,6 +51,9 @@
 	return ..()
 
 /obj/machinery/computer/security/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(stat)
 		return
 	if (!network)
