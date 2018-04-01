@@ -132,19 +132,21 @@
 	explosion_block = 0
 	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood/nonmetal)
 
+/turf/closed/wall/mineral/wood/attackby(obj/item/W, mob/user)
+	var/duration = (48/W.force) * 2 //In seconds, for now.
+	if(W.sharpness)
+		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/twohanded/fireaxe))
+			duration /= 4 //Much better with hatchets and axes.
+		if(do_after(user, duration*10, target=src)) //Into deciseconds.
+			dismantle_wall(FALSE,FALSE)
+			return
+	return ..()
+
 /turf/closed/wall/mineral/wood/nonmetal
 	desc = "A solidly wooden wall. It's a bit weaker than a wall made with metal."
 	girder_type = /obj/structure/barricade/wooden
 	hardness = 50
 	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood/nonmetal)
-
-/turf/closed/wall/mineral/wood/nonmetal/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/twohanded/fireaxe))
-		to_chat(user, "<span class='notice'>You start to break down the wooden wall.</span>")
-		if(do_after(user, 10, target=src))
-			dismantle_wall(FALSE,FALSE)
-			return
-	return ..()
 
 /turf/closed/wall/mineral/iron
 	name = "rough metal wall"
