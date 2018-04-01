@@ -53,7 +53,7 @@
 		var/obj/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
-	add_fingerprint(M)
+	src.add_fingerprint(M)
 
 /obj/item/paper_bin/attack_paw(mob/user)
 	return attack_hand(user)
@@ -65,6 +65,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(bin_pen)
 		var/obj/item/pen/P = bin_pen
+		P.add_fingerprint(user)
 		P.forceMove(user.loc)
 		user.put_in_hands(P)
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
@@ -86,6 +87,7 @@
 					P.rigged = 1
 					P.updateinfolinks()
 
+		P.add_fingerprint(user)
 		P.forceMove(user.loc)
 		user.put_in_hands(P)
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
