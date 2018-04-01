@@ -10,9 +10,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/computer/shuttle/pod{
-	pixel_x = -32;
-	possible_destinations = "pod_lavaland1";
-	shuttleId = "pod1"
+	pixel_x = -32
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
@@ -21,7 +19,6 @@
 	name = "Escape Pod Airlock"
 	},
 /obj/docking_port/mobile/pod{
-	name = "escape pod 1";
 	port_direction = 2;
 	timid = 1;
 	dwidth = 1;

@@ -427,8 +427,22 @@
 /obj/docking_port/mobile/pod/Initialize()
 	. = ..()
 	var/static/i = 1
-	if(id == "pod")
-		id = "pod[i++]"
+	if(id == initial(id))
+		id = "[initial(id)] [i]"
+	if(name == initial(name))
+		name = "[initial(name)] [i]"
+
+	for(var/k in shuttle_areas)
+		var/area/place = k
+		for(var/obj/machinery/computer/shuttle/pod/pod_comp in place)
+			if(pod_comp.shuttleId == initial(pod_comp.shuttleId))
+				pod_comp.shuttleId = id
+			if(pod_comp.possible_destinations == initial(pod_comp.possible_destinations))
+				pod_comp.possible_destinations = "pod_lavaland[i]"
+
+	i++
+
+
 
 /obj/docking_port/mobile/pod/cancel()
 	return
