@@ -692,7 +692,6 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "alien_frame"
 	framestack = /obj/item/stack/sheet/mineral/abductor
 	framestackamount = 1
-	density = TRUE
 
 /obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/wrench))
