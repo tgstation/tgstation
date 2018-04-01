@@ -142,13 +142,6 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create a Centcom response team. Unfortunately, there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create a Centcom response team.")
-			if("messiah")
-				if(src.makeJesus())
-					message_admins("[key_name(usr)] created a messiah.")
-					log_admin("[key_name(usr)] created a messiah.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a messiah. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create a messiah.")
 			if("abductors")
 				message_admins("[key_name(usr)] is creating an abductor team...")
 				if(src.makeAbductorTeam())
