@@ -17,16 +17,16 @@ var/vibrant_colour_sum_multiplier = 2
 
 /datum/client_colour/vibrant
 	colour = rgb(255,255,255) //This just changes everything to white - leaving it here in case someone wants to experiment or figures out how to do this one properly
-	priority = 1 //Higher priority number = will override all other colour sets more
+	priority = INFINITY - 1 //Higher priority number = will override all other colour sets more
 
 /datum/client_colour/inverted
 	colour = list(rgb(0,0,255), rgb(0,255,0), rgb(255,0,0)) //For some reason changing the green causes weird things to happen so I can't change the green... yet
-	priority = 2
+	priority = INFINITY - 2
 
 /datum/client_colour/greyscale
 	colour = list(rgb(80,80,80), rgb(80,80,80), rgb(80,80,80), rgb(0,0,0))
-	priority = 4
+	priority = INFINITY - 4
 
 /datum/client_colour/faded //This one isn't used yet in a trait but I left it here cause it looks pretty cool
 	colour = list(rgb(255,85,85), rgb(85,255,85), rgb(85,85,255), rgb(0,0,0))
-	priority = 3
+	priority = INFINITY - 3
