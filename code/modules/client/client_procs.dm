@@ -588,16 +588,16 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				cidcheck_spoofckeys -= ckey
 			cidcheck -= ckey
 	else if (computer_id != lastcid)
-			cidcheck[ckey] = computer_id
-			tokens[ckey] = cid_check_reconnect()
+		cidcheck[ckey] = computer_id
+		tokens[ckey] = cid_check_reconnect()
 
-			sleep(5 SECONDS) //browse is queued, we don't want them to disconnect before getting the browse() command.
+		sleep(5 SECONDS) //browse is queued, we don't want them to disconnect before getting the browse() command.
 
-			//we sleep after telling the client to reconnect, so if we still exist something is up
-			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
+		//we sleep after telling the client to reconnect, so if we still exist something is up
+		log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
 
-			qdel(src)
-			return TRUE
+		qdel(src)
+		return TRUE
 
 /client/proc/cid_check_reconnect()
 	var/token = md5("[rand(0,9999)][world.time][rand(0,9999)][ckey][rand(0,9999)][address][rand(0,9999)][computer_id][rand(0,9999)]")
