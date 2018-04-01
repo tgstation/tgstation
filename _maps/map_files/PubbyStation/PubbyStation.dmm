@@ -36207,10 +36207,10 @@
 /area/science/mixing)
 "bJT" = (
 /obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the test chamber.";
+	desc = "Used for watching the bomb testing site.";
 	dir = 2;
 	layer = 4;
-	name = "Test Chamber Telescreen";
+	name = "Testing Site Telescreen";
 	network = list("toxins");
 	pixel_y = -32
 	},
@@ -45775,7 +45775,7 @@
 	invuln = 1;
 	luminosity = 3;
 	name = "Hardened Bomb-Test Camera";
-	network = list("toxins");
+	network = list("ss13", "rd", "toxins");
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid/airless,
@@ -46803,7 +46803,7 @@
 	invuln = 1;
 	luminosity = 3;
 	name = "Hardened Bomb-Test Camera";
-	network = list("toxins");
+	network = list("ss13", "rd", "toxins");
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid/airless,
