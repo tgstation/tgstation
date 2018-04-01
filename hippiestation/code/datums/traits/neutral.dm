@@ -16,9 +16,22 @@
 /datum/trait/monochromatic/remove()
 	trait_holder.remove_client_colour(/datum/client_colour/monochrome)
 
+/datum/trait/greyscale_vision
+	name = "Old School Vision"
+	desc = "Did you get stuck in an old video recorder? You can only see in black and white!"
+	value = 0
+	gain_text = "<span class='notice'>...Huh? You can't see colour anymore!"
+	lose_text = "<span class='notice'>You can see colour again!"
+
+/datum/trait/greyscale_vision/add()
+	trait_holder.add_client_colour(/datum/client_colour/greyscale)
+
+/datum/trait/greyscale_vision/remove()
+	trait_holder.remove_client_colour(/datum/client_colour/greyscale)
+
 /datum/trait/inverted_vision
 	name = "Inverted Colour Vision"
-	desc = "You see colours as the reverse of what they would normally be. Though... everything also seems duller..."
+	desc = "You see red and blue colours as reversed."
 	gain_text = "<span class='notice'>You feel like you're seeing colours differently.</span>"
 	lose_text = "<span class='notice'>You feel like you're seeing colours normally again.</span>"
 
@@ -28,6 +41,8 @@
 /datum/trait/inverted_vision/remove()
 	trait_holder.remove_client_colour(/datum/client_colour/inverted)
 
+//I'm going to leave this code in here just in case we figure out how to do it properly, but for now leave this disabled - it doesn't work
+/*
 /datum/trait/vibrancy
 	name = "Vibrancy"
 	desc = "You must have taken some of the good stuff, because everything looks way brighter and far more vibrant!"
@@ -43,8 +58,11 @@
 		trait_holder.add_client_colour(/datum/client_colour/vibrant)
 		to_chat(trait_holder, "<span class='notice'>You feel like everything has gotten brighter and more colourful.</span>")
 
+		//The vibrancy trait won't get removed if you have monochromacy because when traits get added at roundstart, it doesn't currently call the add proc, so there's probably no use for all of this
+
 /datum/trait/vibrancy/remove()
 	trait_holder.remove_client_colour(/datum/client_colour/vibrant)
+*/
 
 /datum/trait/super_lungs
 	name = "Super Lungs"
