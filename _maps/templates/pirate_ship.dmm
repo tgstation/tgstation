@@ -48,8 +48,6 @@
 /area/shuttle/pirate)
 "ai" = (
 /obj/structure/chair{
-	tag = "icon-chair (WEST)";
-	icon_state = "chair";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -467,8 +465,6 @@
 /area/shuttle/pirate)
 "bo" = (
 /obj/structure/chair{
-	tag = "icon-chair (WEST)";
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/plating,
