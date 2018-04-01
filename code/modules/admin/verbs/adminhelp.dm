@@ -495,6 +495,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
+	to_chat(usr, "<span class='danger'>As our anti-griefing system is foolproof ahelps only exist for legacy and logging reasons.</span>")
 	msg = trim(msg)
 
 	if(!msg)
