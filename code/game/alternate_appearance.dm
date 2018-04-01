@@ -117,7 +117,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/AI/New()
 	..()
-	for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
+	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
 		if(mobShouldSee(AI))
 			add_hud_to(AI)
 
