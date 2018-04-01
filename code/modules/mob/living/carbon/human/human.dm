@@ -29,9 +29,6 @@
 	. = ..()
 
 	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
-	
-	var/datum/trait/nonviolent/N
-	roundstart_traits += N
 
 
 /mob/living/carbon/human/ComponentInitialize()
