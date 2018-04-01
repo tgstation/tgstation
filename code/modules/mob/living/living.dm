@@ -596,23 +596,25 @@
 		return pick("trails_1", "trails_2")
 
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
-	if (client && client.move_delay >= world.time + world.tick_lag*2)
+	if(buckled)
+		return
+	if(client && client.move_delay >= world.time + world.tick_lag*2)
 		pressure_resistance_prob_delta -= 30
 
 	var/list/turfs_to_check = list()
 
-	if (has_limbs)
+	if(has_limbs)
 		var/turf/T = get_step(src, angle2dir(dir2angle(direction)+90))
 		if (T)
 			turfs_to_check += T
 
 		T = get_step(src, angle2dir(dir2angle(direction)-90))
-		if (T)
+		if(T)
 			turfs_to_check += T
 
-		for (var/t in turfs_to_check)
+		for(var/t in turfs_to_check)
 			T = t
-			if (T.density)
+			if(T.density)
 				pressure_resistance_prob_delta -= 20
 				continue
 			for (var/atom/movable/AM in T)
@@ -700,7 +702,7 @@
 		clear_alert("weightless")
 	else
 		throw_alert("weightless", /obj/screen/alert/weightless)
-	if(!override)
+	if(!override && !is_flying())
 		float(!has_gravity)
 
 /mob/living/float(on)
@@ -713,10 +715,10 @@
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		sleep(10)
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
-		floating = 1
+		floating = TRUE
 	else if(((!on || fixed) && floating))
 		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
-		floating = 0
+		floating = FALSE
 
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
@@ -733,10 +735,10 @@
 				var/list/L = where
 				if(what == who.get_item_for_held_index(L[2]))
 					if(who.dropItemToGround(what))
-						add_logs(src, who, "stripped", addition="of [what]")
+						add_logs(src, who, "stripped [what] off")
 			if(what == who.get_item_by_slot(where))
 				if(who.dropItemToGround(what))
-					add_logs(src, who, "stripped", addition="of [what]")
+					add_logs(src, who, "stripped [what] off")
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
@@ -940,7 +942,7 @@
 	if(amount > RAD_BURN_THRESHOLD)
 		apply_damage((amount-RAD_BURN_THRESHOLD)/RAD_BURN_THRESHOLD, BURN, null, blocked)
 
-	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), IRRADIATE, blocked)
+	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
 /mob/living/proc/fakefireextinguish()
 	return

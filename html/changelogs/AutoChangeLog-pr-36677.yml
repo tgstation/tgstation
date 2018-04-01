@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Unwrenching and re-placing directional signs now keeps their direction, and backings may be rotated in-hand rather than by pulling."

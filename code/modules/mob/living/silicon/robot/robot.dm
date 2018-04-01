@@ -81,9 +81,11 @@
 	var/obj/item/hat
 	var/hat_offset = -3
 	var/list/equippable_hats = list(/obj/item/clothing/head/caphat,
-	/obj/item/clothing/head/hardhat/cakehat,
+	/obj/item/clothing/head/hardhat,
 	/obj/item/clothing/head/centhat,
 	/obj/item/clothing/head/HoS,
+	/obj/item/clothing/head/beret,
+	/obj/item/clothing/head/kitty,
 	/obj/item/clothing/head/hopcap,
 	/obj/item/clothing/head/wizard,
 	/obj/item/clothing/head/nursehat,

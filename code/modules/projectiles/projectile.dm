@@ -325,7 +325,7 @@
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
 	//If no angle needs to resolve it from xo/yo!
 	if(!log_override && firer && original)
-		add_logs(firer, original, "fired at", src, " [get_area(src)]")
+		add_logs(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 	if(direct_target)
 		if(prehit(direct_target))
 			direct_target.bullet_act(src, def_zone)

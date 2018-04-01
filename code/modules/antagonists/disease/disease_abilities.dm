@@ -7,6 +7,7 @@ is currently following.
 GLOBAL_LIST_INIT(disease_ability_singletons, list(
 	new /datum/disease_ability/action/cough(),
 	new /datum/disease_ability/action/sneeze(),
+	new /datum/disease_ability/action/infect(),
 	new /datum/disease_ability/symptom/cough(),
 	new /datum/disease_ability/symptom/sneeze(),\
 	new /datum/disease_ability/symptom/hallucigen(),
@@ -165,7 +166,6 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 	short_desc = "Force the host you are following to sneeze, spreading your infection to those in front of them."
 	long_desc = "Force the host you are following to sneeze with extra force, spreading your infection to any victims in a 4 meter cone in front of your host.<br>Cooldown: 20 seconds"
 
-
 /datum/action/cooldown/disease_sneeze
 	name = "Sneeze"
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
@@ -191,6 +191,47 @@ GLOBAL_LIST_INIT(disease_ability_singletons, list(
 		if(is_A_facing_B(SD.affected_mob, M) && disease_air_spread_walk(get_turf(SD.affected_mob), get_turf(M)))
 			M.AirborneContractDisease(SD, TRUE)
 
+	StartCooldown()
+	return TRUE
+
+
+/datum/disease_ability/action/infect
+	name = "Secrete Infection"
+	actions = list(/datum/action/cooldown/disease_infect)
+	cost = 2
+	required_total_points = 3
+	short_desc = "Cause all objects your host is touching to become infectious for a limited time, spreading your infection to anyone who touches them."
+	long_desc = "Cause the host you are following to excrete an infective substance from their pores, causing all objects touching their skin to transmit your infection to anyone who touches them for the next 30 seconds. This includes the floor, if they are not wearing shoes, and any items they are holding, if they are not wearing gloves.<br>Cooldown: 40 seconds"
+
+/datum/action/cooldown/disease_infect
+	name = "Secrete Infection"
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon_state = "infect"
+	desc = "Cause the host you are following to excrete an infective substance from their pores, causing all objects touching their skin to transmit your infection to anyone who touches them for the next 30 seconds.<br>Cooldown: 40 seconds"
+	cooldown_time = 400
+
+/datum/action/cooldown/disease_infect/Trigger()
+	if(!..())
+		return FALSE
+	var/mob/camera/disease/D = owner
+	var/mob/living/carbon/human/H = D.following_host
+	if(!H)
+		return FALSE
+	for(var/V in H.get_equipped_items(FALSE))
+		var/obj/O = V
+		O.AddComponent(/datum/component/infective, D.disease_template, 300)
+	//no shoes? infect the floor.
+	if(!H.shoes)
+		var/turf/T = get_turf(H)
+		if(T && !isspaceturf(T))
+			T.AddComponent(/datum/component/infective, D.disease_template, 300)
+	//no gloves? infect whatever we are holding.
+	if(!H.gloves)
+		for(var/V in H.held_items)
+			if(!V)
+				continue
+			var/obj/O = V
+			O.AddComponent(/datum/component/infective, D.disease_template, 300)
 	StartCooldown()
 	return TRUE
 
