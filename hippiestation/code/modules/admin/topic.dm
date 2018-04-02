@@ -14,11 +14,21 @@
 		message_admins("[key_name_admin(usr)] tried to create a vampire. Unfortunately, there were no candidates available.")
 		log_admin("[key_name(usr)] failed to create a vampire.")
 
+/datum/admins/proc/hippie_makeJesus(datum/admins/sr)
+	if(sr.makeJesus())
+		message_admins("[key_name(usr)] created a messiah.")
+		log_admin("[key_name(usr)] created a messiah.")
+	else
+		message_admins("[key_name_admin(usr)] tried to create a messiah. Unfortunately, there were no candidates available.")
+		log_admin("[key_name(usr)] failed to create a messiah.")
+
 /datum/admins/proc/hippieTopic(href, href_list)
 	if(href_list["makeAntag"] == "shadowling")
 		hippie_makeShadowling(src)
 	else if(href_list["makeAntag"] == "vampire")
 		hippie_makeVampire(src)
+	else if(href_list["makeAntag"] == "messiah")
+		hippie_makeJesus(src)
 	else if(href_list["makementor"])
 		makeMentor(href_list["makementor"])
 	else if(href_list["removementor"])
