@@ -36207,10 +36207,10 @@
 /area/science/mixing)
 "bJT" = (
 /obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the test chamber.";
+	desc = "Used for watching the bomb testing site.";
 	dir = 2;
 	layer = 4;
-	name = "Test Chamber Telescreen";
+	name = "Testing Site Telescreen";
 	network = list("toxins");
 	pixel_y = -32
 	},
@@ -43047,6 +43047,17 @@
 	name = "Turbine Interior Airlock";
 	req_access_txt = "24"
 	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	airpump_tag = "incinerator_airlock_pump";
+	exterior_door_tag = "incinerator_airlock_exterior";
+	id_tag = "incinerator_airlock_control";
+	interior_door_tag = "incinerator_airlock_interior";
+	name = "Incinerator Access Console";
+	pixel_x = -6;
+	pixel_y = -26;
+	sanitize_external = 1;
+	sensor_tag = "incinerator_airlock_sensor"
+	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "caM" = (
@@ -43360,17 +43371,6 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
 "cbC" = (
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	name = "Incinerator Access Console";
-	airpump_tag = "incinerator_airlock_pump";
-	exterior_door_tag = "incinerator_airlock_exterior";
-	id_tag = "incinerator_access_control";
-	interior_door_tag = "incinerator_airlock_interior";
-	pixel_x = 26;
-	pixel_y = 6;
-	sanitize_external = 1;
-	sensor_tag = "incinerator_airlock_sensor"
-	},
 /obj/machinery/button/ignition{
 	id = "Incinerator";
 	pixel_x = 26;
@@ -45775,7 +45775,7 @@
 	invuln = 1;
 	luminosity = 3;
 	name = "Hardened Bomb-Test Camera";
-	network = list("toxins");
+	network = list("ss13", "rd", "toxins");
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid/airless,
@@ -46803,7 +46803,7 @@
 	invuln = 1;
 	luminosity = 3;
 	name = "Hardened Bomb-Test Camera";
-	network = list("toxins");
+	network = list("ss13", "rd", "toxins");
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid/airless,

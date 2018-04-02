@@ -44,6 +44,7 @@
 	icon_state = "halo"
 	desc = "The holiest of all headwear."
 	alternate_worn_layer = BODY_BEHIND_LAYER
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/hippie/halo/spacejesus
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
