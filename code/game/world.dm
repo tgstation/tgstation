@@ -215,6 +215,7 @@ GLOBAL_PROTECT(security_mode)
 
 		if(do_hard_reboot)
 			log_world("World hard rebooted at [time_stamp()]")
+			shutdown_logging() // See comment below.
 			SERVER_TOOLS_REBOOT_BYOND
 
 	log_world("World rebooted at [time_stamp()]")
