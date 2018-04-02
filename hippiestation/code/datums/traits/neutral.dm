@@ -14,7 +14,7 @@
 		trait_holder.playsound_local(trait_holder, 'sound/ambience/ambidet1.ogg', 50, FALSE)
 
 /datum/trait/monochromatic/remove()
-	trait_holder.remove_client_colour(/datum/client_colour/monochrome)000
+	trait_holder.remove_client_colour(/datum/client_colour/monochrome)
 
 /datum/trait/greyscale_vision
 	name = "Old School Vision"
