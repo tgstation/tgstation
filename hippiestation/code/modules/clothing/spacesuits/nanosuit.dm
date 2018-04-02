@@ -33,7 +33,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
-	var/jumpdistance = 3 //-1 from to see the actual distance, e.g 3 goes over 2 tiles
+	var/jumpdistance = 2 //-1 from to see the actual distance, e.g 3 goes over 2 tiles
 	var/jumpspeed = 2
 	actions_types = list(/datum/action/item_action/nanojump)
 
@@ -42,8 +42,7 @@
 		return
 
 	var/turf/open/floor/T = get_turf(src)
-	var/obj/structure/S = src.loc.contents
-
+	var/obj/structure/S = locate() in get_turf(user.loc)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/nano))
@@ -108,10 +107,10 @@
 /obj/item/clothing/glasses/nano_goggles
 	name = "nanosuit goggles"
 	desc = "Goggles built into your nanosuit helmet. Property of CryNet."
-	alternate_worn_icon = 'hippiestation/icons/obj/nanosuit.dmi'
+	alternate_worn_icon = 'hippiestation/icons/mob/nanosuit.dmi'
 	icon = 'hippiestation/icons/obj/nanosuit.dmi'
 	icon_state = "nvgmesonnano"
-	item_state = "nvgmesonnano_worn"
+	item_state = "nvgmesonnano"
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 	glass_colour_type = /datum/client_colour/glass_colour/nightvision
 	actions_types = list(/datum/action/item_action/nanogoggles/toggle)
@@ -119,7 +118,7 @@
 	var/on = 0
 
 /datum/client_colour/glass_colour/nightvision
-	colour = "#214b1b"
+	colour = "#45723f"
 
 /obj/item/clothing/glasses/nano_goggles/equipped(mob/user, slot)
 	.=..()
@@ -165,10 +164,10 @@
 		nvgmode(loc,TRUE)
 
 /obj/item/clothing/suit/space/hardsuit/nano
-	alternate_worn_icon = 'hippiestation/icons/obj/nanosuit.dmi'
+	alternate_worn_icon = 'hippiestation/icons/mob/nanosuit.dmi'
 	icon = 'hippiestation/icons/obj/nanosuit.dmi'
 	icon_state = "nanosuit"
-	item_state = "nanosuit_worn"
+	item_state = "nanosuit"
 	name = "nanosuit"
 	desc = "Some sort of alien future suit. It looks very robust."
 	armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 45, "bomb" = 70, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 100)
@@ -384,13 +383,10 @@ obj/item/clothing/suit/space/hardsuit/nano/proc/DisableModes()
 
 	if(mode == "armor")
 		update_icon()
-		slowdown = 0.5
+		slowdown = initial(slowdown)
 		helmet.display_visor_message("Armor Disabled!")
 		mode = "none"
-		armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 45,
-						"bomb" = 70, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 100)
-		helmet.armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 45,
-						"bomb" = 70, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 100)
+		armor = initial(armor)
 		return 1
 	return 0
 
@@ -425,7 +421,7 @@ obj/item/clothing/suit/space/hardsuit/nano/proc/DisableModes()
 
 	if(mode == "cloak")
 		update_icon()
-		slowdown = 0.5
+		slowdown = initial(slowdown)
 		helmet.display_visor_message("Cloak Disabled!")
 		mode = "none"
 		U.filters -= filter(type="blur",size=1)
@@ -556,10 +552,10 @@ obj/item/clothing/suit/space/hardsuit/nano/proc/DisableModes()
 /obj/item/clothing/head/helmet/space/hardsuit/nano
 	name = "nanosuit helmet"
 	desc = "Some sort of alien future suit helmet. It looks very robust."
-	alternate_worn_icon = 'hippiestation/icons/obj/nanosuit.dmi'
+	alternate_worn_icon = 'hippiestation/icons/mob/nanosuit.dmi'
 	icon = 'hippiestation/icons/obj/nanosuit.dmi'
-	icon_state = "nanohelmet_worn"
-	item_state = "nanohelmet_worn"
+	icon_state = "nanohelmet"
+	item_state = "nanohelmet"
 	item_color = "nano"
 	siemens_coefficient = 0
 	gas_transfer_coefficient = 0.01
@@ -588,7 +584,6 @@ obj/item/clothing/suit/space/hardsuit/nano/proc/DisableModes()
 /datum/outfit/nanosuit
 	name = "Nanosuit"
 	uniform = /obj/item/clothing/under/syndicate/combat/nano
-	//head = /obj/item/clothing/head/helmet/space/hardsuit/nano
 	glasses = /obj/item/clothing/glasses/nano_goggles
 	mask = /obj/item/clothing/mask/gas/nano_mask
 	ears = /obj/item/device/radio/headset/syndicate/alt/nano
@@ -766,7 +761,7 @@ obj/item/clothing/suit/space/hardsuit/nano/dropped()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	if(istype(attacker.mind.martial_art, /datum/martial_art/nano))
-		return 1.5 //deal 50% more damage in strength
+		return 1.25 //deal 25% more damage in strength
 	. = ..()
 
 
