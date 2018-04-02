@@ -16,7 +16,7 @@
 /datum/trait/monochromatic/remove()
 	trait_holder.remove_client_colour(/datum/client_colour/monochrome)
 
-/datum/trait/greyscale_vision
+/datum/trait/greyscale_visionff
 	name = "Old School Vision"
 	desc = "Did you get stuck in an old video recorder? You can only see in black and white!</span>"
 	value = 0
