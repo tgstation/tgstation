@@ -364,9 +364,9 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	if (macrotier > 1)
 		. -= macrotier // 5 for tier1, 3 for 2, 2 for 3, 1 for 4.
 
-/obj/machinery/chem_dispenser/proc/check_macro(var/macro)
+/obj/machinery/chem_dispenser/proc/check_macro(macro)
 	var/res = get_macro_resolution()
-	for (var/reagent in splittext(macro, ";"))
+	for (var/reagent in splittext(trim(macro), ";"))
 		if (!check_macro_part(reagent, res))
 			return FALSE
 	return TRUE
