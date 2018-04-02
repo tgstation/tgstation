@@ -50,7 +50,7 @@
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/M)
 	if(istype(M))
-		M.apply_effect(5,IRRADIATE,0)
+		M.apply_effect(5,EFFECT_IRRADIATE,0)
 	return ..()
 
 /datum/reagent/toxin/plasma

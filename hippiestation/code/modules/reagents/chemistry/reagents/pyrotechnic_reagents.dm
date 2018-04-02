@@ -122,7 +122,7 @@
 	..()
 
 /datum/reagent/emit_on/on_mob_life(mob/living/M)
-	M.apply_effect(5,IRRADIATE,0)
+	M.apply_effect(5, EFFECT_IRRADIATE, 0)
 	..()
 
 /datum/reagent/sboom
