@@ -47,6 +47,11 @@
 	laws.add_ion_law(law)
 	post_lawchange(announce)
 
+/mob/living/silicon/proc/add_hacked_law(law, announce = TRUE)
+	laws_sanity_check()
+	laws.add_hacked_law(law)
+	post_lawchange(announce)
+
 /mob/living/silicon/proc/replace_random_law(law, groups, announce = TRUE)
 	laws_sanity_check()
 	. = laws.replace_random_law(law,groups)
@@ -65,6 +70,11 @@
 /mob/living/silicon/proc/clear_ion_laws(announce = TRUE)
 	laws_sanity_check()
 	laws.clear_ion_laws()
+	post_lawchange(announce)
+
+/mob/living/silicon/proc/clear_hacked_laws(announce = TRUE)
+	laws_sanity_check()
+	laws.clear_hacked_laws()
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/make_laws()

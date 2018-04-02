@@ -47,6 +47,38 @@
 	on = TRUE
 	icon_state = "vent_map_siphon_on"
 
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos
+	frequency = FREQ_ATMOS_STORAGE
+	on = TRUE
+	icon_state = "vent_map_siphon_on"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output
+	name = "plasma tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOX
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output
+	name = "oxygen tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_O2
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output
+	name = "nitrogen tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_N2
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/mix_output
+	name = "mix tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_MIX
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output
+	name = "nitrous oxide tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_N2O
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/carbon_output
+	name = "carbon dioxide tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_CO2
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output
+	name = "incinerator chamber output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR
+	frequency = FREQ_ATMOS_CONTROL
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output
+	name = "toxins mixing output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB
+	frequency = FREQ_ATMOS_CONTROL
+
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
 	if(!id_tag)
@@ -78,6 +110,15 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on
 	on = TRUE
 	icon_state = "vent_map_siphon_on"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos
+	frequency = FREQ_ATMOS_STORAGE
+	on = TRUE
+	icon_state = "vent_map_siphon_on"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output
+	name = "air mix tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_AIR
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
 	..()

@@ -9,7 +9,7 @@
 	density = TRUE
 	var/win_prob = 5
 
-/obj/structure/cursed_slot_machine/attack_hand(mob/living/carbon/human/user)
+/obj/structure/cursed_slot_machine/interact(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
 	if(obj_flags & IN_USE)
@@ -58,6 +58,9 @@
 	qdel(src)
 
 /obj/structure/cursed_money/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	user.visible_message("<span class='warning'>[user] opens the bag and \
 		and removes a die. The bag then vanishes.</span>",
 		"<span class='boldwarning'>You open the bag...!</span>\n\
@@ -82,15 +85,13 @@
 		var/mob/living/carbon/human/H = mover
 		if(H.nutrition >= NUTRITION_LEVEL_FAT)
 			H.visible_message("<span class='warning'>[H] pushes through [src]!</span>", "<span class='notice'>You've seen and eaten worse than this.</span>")
-			return 1
+			return TRUE
 		else
 			to_chat(H, "<span class='warning'>You're repulsed by even looking at [src]. Only a pig could force themselves to go through it.</span>")
 	if(istype(mover, /mob/living/simple_animal/hostile/morph))
-		return 1
+		return TRUE
 	else
-		return 0
-
-
+		return FALSE
 
 /obj/structure/mirror/magic/pride //Pride's mirror: Used in the Pride ruin.
 	name = "pride's mirror"

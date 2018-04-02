@@ -49,6 +49,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
 
+	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
+
 	var/item_color = null //this needs deprecating, soonish
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
@@ -237,6 +239,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ..()
 
 /obj/item/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!user)
 		return
 	if(anchored)
@@ -249,7 +254,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			can_handle_hot = TRUE
 		else if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
 			can_handle_hot = TRUE
-		else if(C.has_trait(TRAIT_RESISTHEAT))
+		else if(C.has_trait(TRAIT_RESISTHEAT) || C.has_trait(TRAIT_RESISTHEATHANDS))
 			can_handle_hot = TRUE
 
 		if(can_handle_hot)
@@ -271,6 +276,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
 					C.update_damage_overlays()
 
+	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP))		//See if we're supposed to auto pickup.
+		return
 
 	if(istype(loc, /obj/item/storage))
 		//If the item is in a storage item, take it out
@@ -280,7 +287,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(throwing)
 		throwing.finalize(FALSE)
 	if(loc == user)
-		if(!user.dropItemToGround(src))
+		if(!allow_attack_hand_drop(user) || !user.dropItemToGround(src))
 			return
 
 	pickup(user)
@@ -412,9 +419,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
+	SendSignal(COMSIG_ITEM_PICKUP, user)
 	item_flags |= IN_INVENTORY
-	return
 
+/obj/item/proc/allow_attack_hand_drop(mob/user)
+	return TRUE
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/storage/S)
@@ -439,7 +448,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
-	SendSignal(COMSIG_ITEM_EQUIPPED,user,slot)
 	item_flags |= IN_INVENTORY
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
@@ -481,7 +489,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
 
 	var/is_human_victim = 0
-	var/obj/item/bodypart/affecting = M.get_bodypart("head")
+	var/obj/item/bodypart/affecting = M.get_bodypart(BODY_ZONE_HEAD)
 	if(ishuman(M))
 		if(!affecting) //no head!
 			return
@@ -530,9 +538,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		M.take_bodypart_damage(7)
 
-	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
-	if(mood)
-		mood.add_event("eye_stab", /datum/mood_event/eye_stab)
+	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "eye_stab", /datum/mood_event/eye_stab)
 
 	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
 
@@ -566,8 +572,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		return
 
-/obj/item/throw_impact(atom/A)
+/obj/item/throw_impact(atom/A, datum/thrownthing/throwingdatum)
 	if(A && !QDELETED(A))
+		SendSignal(COMSIG_MOVABLE_IMPACT, A, throwingdatum)
 		if(is_hot() && isliving(A))
 			var/mob/living/L = A
 			L.IgniteMob()

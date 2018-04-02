@@ -93,10 +93,9 @@
 /proc/cult_ending_helper(var/no_explosion = 0)
 	Cinematic(CINEMATIC_CULT,world,CALLBACK(GLOBAL_PROC,.ending_helper))
 
-
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
 	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, cultoverride = TRUE, loc_override = src.loc)
-
 
 /obj/singularity/narsie/process()
 	if(clashing)
@@ -128,7 +127,7 @@
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
 				to_chat(M, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>")
-				M.apply_effect(60, STUN)
+				M.apply_effect(60, EFFECT_STUN)
 
 
 /obj/singularity/narsie/consume(atom/A)

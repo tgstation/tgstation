@@ -43,9 +43,7 @@
 
 /datum/brain_trauma/mild/dumbness/on_gain()
 	owner.add_trait(TRAIT_DUMB, TRAUMA_TRAIT)
-	GET_COMPONENT_FROM(mood, /datum/component/mood, owner)
-	if(mood)
-		mood.add_event("dumb", /datum/mood_event/oblivious)
+	owner.SendSignal(COMSIG_ADD_MOOD_EVENT, "dumb", /datum/mood_event/oblivious)
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_life()
@@ -59,9 +57,7 @@
 /datum/brain_trauma/mild/dumbness/on_lose()
 	owner.remove_trait(TRAIT_DUMB, TRAUMA_TRAIT)
 	owner.derpspeech = 0
-	GET_COMPONENT_FROM(mood, /datum/component/mood, owner)
-	if(mood)
-		mood.clear_event("dumb")
+	owner.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "dumb")
 	..()
 
 /datum/brain_trauma/mild/speech_impediment

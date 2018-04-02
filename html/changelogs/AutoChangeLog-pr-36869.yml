@@ -1,0 +1,4 @@
+author: "RandomMarine"
+delete-after: True
+changes: 
+  - bugfix: "The quick equip hotkey (e) now works for drones again."

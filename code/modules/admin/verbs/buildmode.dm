@@ -17,6 +17,11 @@
 	..()
 	src.bd = bd
 
+/obj/screen/buildmode/Destroy()
+	bd.buttons -= src
+	bd = null
+	return ..()
+
 /obj/screen/buildmode/mode
 	icon_state = "buildmode1"
 	name = "Toggle Mode"
@@ -102,8 +107,12 @@
 
 /datum/buildmode/Destroy()
 	stored = null
-	for(var/button in buttons)
-		qdel(button)
+	QDEL_LIST(buttons)
+	throw_atom = null
+	holder = null
+	preview.Cut()
+	cornerA = null
+	cornerB = null
 	return ..()
 
 /datum/buildmode/proc/create_buttons()
@@ -262,6 +271,7 @@
 					T.ChangeTurf(/turf/closed/wall)
 				else if(iswallturf(object))
 					T.ChangeTurf(/turf/closed/wall/r_wall)
+				T.assemble_baseturfs(initial(T.baseturfs))
 				log_admin("Build Mode: [key_name(user)] built [T] at ([T.x],[T.y],[T.z])")
 				return
 			else if(right_click)

@@ -7,7 +7,7 @@
 	var/list/archdrops
 	var/wet
 
-/turf/open/Initialize()
+/turf/open/ComponentInitialize()
 	. = ..()
 	if(wet)
 		AddComponent(/datum/component/wet_floor, wet, INFINITY, 0, INFINITY, TRUE)
@@ -199,13 +199,9 @@
 				return 0
 		if(!(lube&SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
-			C.log_message("<font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>", INDIVIDUAL_ATTACK_LOG)
-		if(!(lube&SLIDE_ICE))
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
-		GET_COMPONENT_FROM(mood, /datum/component/mood, C)
-		if(mood)
-			mood.add_event("slipped", /datum/mood_event/slipped)
+		C.SendSignal(COMSIG_ADD_MOOD_EVENT, "slipped", /datum/mood_event/slipped)
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)
 

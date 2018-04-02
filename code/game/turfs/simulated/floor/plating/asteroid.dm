@@ -159,10 +159,9 @@
 	if (!flora_spawn_list)
 		flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash/tall_shroom = 2)
 
+	. = ..()
 	if(!has_data)
 		produce_tunnel_from_data()
-	else
-		..()	//do not continue after changeturfing or we will do a double initialize
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/get_cave_data(set_length, exclude_dir = -1)
 	// If set_length (arg1) isn't defined, get a random length; otherwise assign our length to the length arg.

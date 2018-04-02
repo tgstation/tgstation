@@ -354,51 +354,72 @@
 		return 0
 
 	if(bpc & FULL_BODY)
-		covered_parts |= list("l_arm","r_arm","head","chest","l_leg","r_leg")
+		covered_parts |= list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM,BODY_ZONE_HEAD,BODY_ZONE_CHEST,BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)
 
 	else
 		if(bpc & HEAD)
-			covered_parts |= list("head")
+			covered_parts |= list(BODY_ZONE_HEAD)
 		if(bpc & CHEST)
-			covered_parts |= list("chest")
+			covered_parts |= list(BODY_ZONE_CHEST)
 		if(bpc & GROIN)
-			covered_parts |= list("chest")
+			covered_parts |= list(BODY_ZONE_CHEST)
 
 		if(bpc & ARMS)
-			covered_parts |= list("l_arm","r_arm")
+			covered_parts |= list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM)
 		else
 			if(bpc & ARM_LEFT)
-				covered_parts |= list("l_arm")
+				covered_parts |= list(BODY_ZONE_L_ARM)
 			if(bpc & ARM_RIGHT)
-				covered_parts |= list("r_arm")
+				covered_parts |= list(BODY_ZONE_R_ARM)
 
 		if(bpc & HANDS)
-			covered_parts |= list("l_arm","r_arm")
+			covered_parts |= list(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM)
 		else
 			if(bpc & HAND_LEFT)
-				covered_parts |= list("l_arm")
+				covered_parts |= list(BODY_ZONE_L_ARM)
 			if(bpc & HAND_RIGHT)
-				covered_parts |= list("r_arm")
+				covered_parts |= list(BODY_ZONE_R_ARM)
 
 		if(bpc & LEGS)
-			covered_parts |= list("l_leg","r_leg")
+			covered_parts |= list(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)
 		else
 			if(bpc & LEG_LEFT)
-				covered_parts |= list("l_leg")
+				covered_parts |= list(BODY_ZONE_L_LEG)
 			if(bpc & LEG_RIGHT)
-				covered_parts |= list("r_leg")
+				covered_parts |= list(BODY_ZONE_R_LEG)
 
 		if(bpc & FEET)
-			covered_parts |= list("l_leg","r_leg")
+			covered_parts |= list(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG)
 		else
 			if(bpc & FOOT_LEFT)
-				covered_parts |= list("l_leg")
+				covered_parts |= list(BODY_ZONE_L_LEG)
 			if(bpc & FOOT_RIGHT)
-				covered_parts |= list("r_leg")
+				covered_parts |= list(BODY_ZONE_R_LEG)
 
 	return covered_parts
 
+/proc/slot2body_zone(slot)
+	switch(slot)
+		if(slot_back, slot_wear_suit, slot_w_uniform, slot_belt, slot_wear_id)
+			return BODY_ZONE_CHEST
 
+		if(slot_gloves, slot_hands, slot_handcuffed)
+			return pick(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
+
+		if(slot_head, slot_neck, slot_neck, slot_ears)
+			return BODY_ZONE_HEAD
+
+		if(slot_wear_mask)
+			return BODY_ZONE_PRECISE_MOUTH
+
+		if(slot_glasses)
+			return BODY_ZONE_PRECISE_EYES
+
+		if(slot_shoes)
+			return pick(BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_L_FOOT)
+
+		if(slot_legcuffed)
+			return pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
 //adapted from http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
 /proc/heat2colour(temp)
