@@ -131,15 +131,14 @@
 	. = new /list
 	if(air)
 		var/list/gases = air.gases
-		if(gases)
-			for(var/id in gases)
-				if(GLOB.nonreactive_gases[id])
-					continue
-				var/gas = gases[id]
-				var/gas_meta = gas[GAS_META]
-				var/gas_overlay = gas_meta[META_GAS_OVERLAY]
-				if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
-					. += gas_overlay
+		for(var/id in gases)
+			if(GLOB.nonoverlay_gases[id])
+				continue
+			var/gas = gases[id]
+			var/gas_meta = gas[GAS_META]
+			var/gas_overlay = gas_meta[META_GAS_OVERLAY]
+			if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
+				. += gas_overlay
 
 /////////////////////////////SIMULATION///////////////////////////////////
 
