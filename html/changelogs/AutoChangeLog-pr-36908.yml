@@ -1,5 +1,0 @@
-author: "Davidj361"
-delete-after: True
-changes: 
-  - bugfix: "Fixed 'vox_login' for AI VOX"
-  - tweak: "Made the AI VOX airhorn quieter to 25% of its original volume"

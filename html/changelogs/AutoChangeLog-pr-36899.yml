@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Removed some edge cases where atmospherics gas lists could continue holding active gas items that can only transfer 0 gases to neighbors by making the garbage collection clean them up."
