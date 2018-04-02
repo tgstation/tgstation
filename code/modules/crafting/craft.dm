@@ -419,7 +419,11 @@
 	data["catalyst_text"] = catalyst_text
 
 	for(var/a in R.tools)
-		tool_text += " [a],"
+		if(ispath(a, /obj/item))
+			var/obj/item/b = a
+			tool_text += " [initial(b.name)],"
+		else
+			tool_text += " [a],"
 	tool_text = replacetext(tool_text,",","",-1)
 	data["tool_text"] = tool_text
 
