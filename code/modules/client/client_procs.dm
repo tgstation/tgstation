@@ -562,7 +562,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			qdel(src)
 			return TRUE
 
-		if (oldcid != computer_id && computerid != lastcid) //IT CHANGED!!!
+		if (oldcid != computer_id && computer_id != lastcid) //IT CHANGED!!!
 			cidcheck -= ckey //so they can try again after removing the cid randomizer.
 
 			to_chat(src, "<span class='userdanger'>Connection Error:</span>")
