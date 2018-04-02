@@ -217,3 +217,14 @@
 	materials = list(MAT_BIOMASS = 100)
 	build_path = /obj/item/melee/baseball_bat
 	category = list("initial","Leather and Cloth")
+
+/* Special Stuff*/
+
+/datum/design/strange_seed
+	name = "Pack of strange seeds"
+	id = "strange_seed"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 500)
+	build_path = /obj/item/seeds/random
+	make_reagents = list()
+	category = list("initial","Special")
