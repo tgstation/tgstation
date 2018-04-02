@@ -3,8 +3,6 @@ CONTAINS:
 RPD
 */
 
-#define PAINT_MODE -2
-#define EATING_MODE -1
 #define ATMOS_MODE 0
 #define DISPOSALS_MODE 1
 #define TRANSIT_MODE 2
@@ -69,6 +67,21 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	)
 ))
 
+
+GLOBAL_LIST_INIT(pipe_paint_colors, list(
+		"amethyst" = rgb(130,43,255), //supplymain
+		"blue" = rgb(0,0,255),
+		"brown" = rgb(178,100,56),
+		"cyan" = rgb(0,255,249),
+		"dark" = rgb(69,69,69),
+		"green" = rgb(30,255,0),
+		"grey" = rgb(255,255,255),
+		"orange" = rgb(255,129,25),
+		"purple" = rgb(128,0,182),
+		"red" = rgb(255,0,0),
+		"violet" = rgb(64,0,128),
+		"yellow" = rgb(255,198,0)
+))
 
 /datum/pipe_info
 	var/name
@@ -184,11 +197,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/working = 0
-	var/mode = ATMOS_MODE
 	var/p_dir = NORTH
 	var/p_flipped = FALSE
-	var/paint_color="Grey"
-	var/screen = ATMOS_MODE //Starts on the atmos tab.
+	var/paint_color = "grey"
+	var/atmos_build_speed = 5 //deciseconds (500ms)
+	var/disposal_build_speed = 5
+	var/transit_build_speed = 5
+	var/destroy_speed = 5
+	var/paint_speed = 5
+	var/mode = ATMOS_MODE
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/datum/pipe_info/recipe
 	var/static/datum/pipe_info/first_atmos
@@ -236,15 +253,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/ui_data(mob/user)
 	var/list/data = list(
 		"mode" = mode,
-		"screen" = screen,
 		"piping_layer" = piping_layer,
 		"preview_rows" = recipe.get_preview(p_dir),
 		"categories" = list(),
-		"paint_colors" = list()
+		"selected_color" = paint_color,
+		"paint_colors" = GLOB.pipe_paint_colors
 	)
 
 	var/list/recipes
-	switch(screen)
+	switch(mode)
 		if(ATMOS_MODE)
 			recipes = GLOB.atmos_pipe_recipes
 		if(DISPOSALS_MODE)
@@ -259,10 +276,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe)))
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
-	data["paint_colors"] = list()
-	for(var/c in GLOB.pipe_paint_colors)
-		data["paint_colors"] += list(list("color_name" = c, "color_hex" = GLOB.pipe_paint_colors[c], "selected" = (c == paint_color)))
-
 	return data
 
 /obj/item/pipe_dispenser/ui_act(action, params)
@@ -276,11 +289,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			paint_color = params["paint_color"]
 		if("mode")
 			mode = text2num(params["mode"])
-		if("screen")
-			if(mode == screen)
-				mode = text2num(params["screen"])
-			screen = text2num(params["screen"])
-			switch(screen)
+			switch(mode)
 				if(DISPOSALS_MODE)
 					recipe = first_disposal
 				if(ATMOS_MODE)
@@ -329,108 +338,110 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/can_make_pipe = (isturf(A) || is_type_in_typecache(A, make_pipe_whitelist))
 
 	. = FALSE
-	switch(mode) //if we've gotten this var, the target is valid
-		if(PAINT_MODE) //Paint pipes
-			if(!istype(A, /obj/machinery/atmospherics/pipe))
-				return ..()
-			var/obj/machinery/atmospherics/pipe/P = A
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			P.paint(GLOB.pipe_paint_colors[paint_color])
+
+	//if we're clicking on an unwrenched pipe, destroy it
+	if(istype(A, /obj/item/pipe) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod) || istype(A, /obj/item/pipe_meter))
+		to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
+		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+		if(do_after(user, destroy_speed, target = A))
+			activate()
+			qdel(A)
+		return
+
+	//if we're clicking on a pipe that can be painted, paint it
+	else if(istype(A, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/P = A
+		to_chat(user, "<span class='notice'>You start painting \the [P] [paint_color]...</span>")
+		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+		if(do_after(user, paint_speed, target = A))
+			P.paint(GLOB.pipe_paint_colors[paint_color]) //paint the pipe
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
-			return
+		return
 
-		if(EATING_MODE) //Eating pipes
-			if(!(istype(A, /obj/item/pipe) || istype(A, /obj/item/pipe_meter) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod)))
-				return ..()
-			to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 2, target = A))
-				activate()
-				qdel(A)
+	else
+		switch(mode) //if we've gotten this var, the target is valid
+			if(ATMOS_MODE) //Making pipes
+				if(!can_make_pipe)
+					return ..()
+				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+				if (recipe.type == /datum/pipe_info/meter)
+					to_chat(user, "<span class='notice'>You start building a meter...</span>")
+					if(do_after(user, atmos_build_speed, target = A))
+						activate()
+						var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(A))
+						PM.setAttachLayer(temp_piping_layer)
+				else
+					to_chat(user, "<span class='notice'>You start building a pipe...</span>")
+					if(do_after(user, atmos_build_speed, target = A))
+						activate()
+						var/obj/machinery/atmospherics/path = queued_p_type
+						var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
+						var/obj/item/pipe/P = new pipe_item_type(get_turf(A), queued_p_type, queued_p_dir)
 
-		if(ATMOS_MODE) //Making pipes
-			if(!can_make_pipe)
-				return ..()
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if (recipe.type == /datum/pipe_info/meter)
-				to_chat(user, "<span class='notice'>You start building a meter...</span>")
-				if(do_after(user, 2, target = A))
+						if(queued_p_flipped && istype(P, /obj/item/pipe/trinary/flippable))
+							var/obj/item/pipe/trinary/flippable/F = P
+							F.flipped = queued_p_flipped
+
+						P.update()
+						P.add_fingerprint(usr)
+						P.setPipingLayer(temp_piping_layer)
+						P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+
+			if(DISPOSALS_MODE) //Making disposals pipes
+				if(!can_make_pipe)
+					return ..()
+				A = get_turf(A)
+				if(isclosedturf(A))
+					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
+					return
+				to_chat(user, "<span class='notice'>You start building a disposals pipe...</span>")
+				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+				if(do_after(user, disposal_build_speed, target = A))
+					var/obj/structure/disposalconstruct/C = new (A, queued_p_type, queued_p_dir, queued_p_flipped)
+
+					if(!C.can_place())
+						to_chat(user, "<span class='warning'>There's not enough room to build that here!</span>")
+						qdel(C)
+						return
+
 					activate()
-					var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(A))
-					PM.setAttachLayer(temp_piping_layer)
-			else
-				to_chat(user, "<span class='notice'>You start building a pipe...</span>")
-				if(do_after(user, 2, target = A))
-					activate()
-					var/obj/machinery/atmospherics/path = queued_p_type
-					var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
-					var/obj/item/pipe/P = new pipe_item_type(get_turf(A), queued_p_type, queued_p_dir)
 
-					if(queued_p_flipped && istype(P, /obj/item/pipe/trinary/flippable))
-						var/obj/item/pipe/trinary/flippable/F = P
-						F.flipped = queued_p_flipped
-
-					P.update()
-					P.add_fingerprint(usr)
-					P.setPipingLayer(temp_piping_layer)
-					P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
-			
-		if(DISPOSALS_MODE) //Making disposals pipes
-			if(!can_make_pipe)
-				return ..()
-			A = get_turf(A)
-			if(isclosedturf(A))
-				to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
-				return
-			to_chat(user, "<span class='notice'>You start building a disposals pipe...</span>")
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 4, target = A))
-				var/obj/structure/disposalconstruct/C = new (A, queued_p_type, queued_p_dir, queued_p_flipped)
-
-				if(!C.can_place())
-					to_chat(user, "<span class='warning'>There's not enough room to build that here!</span>")
-					qdel(C)
+					C.add_fingerprint(usr)
+					C.update_icon()
 					return
 
-				activate()
+			if(TRANSIT_MODE) //Making transit tubes
+				if(!can_make_pipe)
+					return ..()
+				A = get_turf(A)
+				if(isclosedturf(A))
+					to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
+					return
+				to_chat(user, "<span class='notice'>You start building a transit tube...</span>")
+				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+				if(do_after(user, transit_build_speed, target = A))
+					activate()
+					if(queued_p_type == /obj/structure/c_transit_tube_pod)
+						var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(A)
+						pod.add_fingerprint(usr)
+					else
+						var/obj/structure/c_transit_tube/tube = new queued_p_type(A)
+						tube.dir = queued_p_dir
 
-				C.add_fingerprint(usr)
-				C.update_icon()
-				return
+						if(queued_p_flipped)
+							tube.dir = turn(queued_p_dir, 45)
+							tube.simple_rotate_flip()
 
-		if(TRANSIT_MODE) //Making transit tubes
-			if(!can_make_pipe)
+						tube.add_fingerprint(usr)
+					return
+
+			else
 				return ..()
-			A = get_turf(A)
-			if(isclosedturf(A))
-				to_chat(user, "<span class='warning'>[src]'s error light flickers; there's something in the way!</span>")
-				return
-			to_chat(user, "<span class='notice'>You start building a transit tube...</span>")
-			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			if(do_after(user, 4, target = A))
-				activate()
-				if(queued_p_type == /obj/structure/c_transit_tube_pod)
-					var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(A)
-					pod.add_fingerprint(usr)
-				else
-					var/obj/structure/c_transit_tube/tube = new queued_p_type(A)
-					tube.dir = queued_p_dir
-
-					if(queued_p_flipped)
-						tube.dir = turn(queued_p_dir, 45)
-						tube.simple_rotate_flip()
-
-					tube.add_fingerprint(usr)
-				return
-
-		else
-			return ..()
 
 
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 
-#undef PAINT_MODE
-#undef EATING_MODE
 #undef ATMOS_MODE
 #undef DISPOSALS_MODE
+#undef TRANSIT_MODE
