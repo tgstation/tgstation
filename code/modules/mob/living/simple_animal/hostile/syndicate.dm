@@ -162,7 +162,7 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE | PASSMOB
-  a_intent = INTENT_HARM
+	a_intent = INTENT_HARM
 	mob_biotypes = list(MOB_ROBOTIC)
 	health = 25
 	maxHealth = 25
