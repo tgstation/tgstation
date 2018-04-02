@@ -4835,7 +4835,7 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
 	name = "O2 to Incinerator";
-	target_pressure = MAX_OUTPUT_PRESSURE
+	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -5851,7 +5851,7 @@
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/components/binary/pump/on{
-	target_pressure = MAX_OUTPUT_PRESSURE
+	target_pressure = 4500
 	},
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
