@@ -81,6 +81,8 @@
 /obj/item/device/assembly/flash/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
 	if(!target_loc)
 		target_loc = loc
+		if(!isturf(target_loc))
+			target_loc = loc.loc
 	if(override_vision_checks)
 		return get_hearers_in_view(range, get_turf(target_loc))
 	if(isturf(target_loc) || (ismob(target_loc) && isturf(target_loc.loc)))
@@ -150,7 +152,7 @@
 		return FALSE
 	if(!AOE_flash(FALSE, 3, 5, FALSE, user))
 		return FALSE
-	to_chat(user, "<span class='danger'>Your [src] emits a blinding light!</span>")
+	to_chat(user, "<span class='danger'>[src] emits a blinding light!</span>")
 
 /obj/item/device/assembly/flash/emp_act(severity)
 	if(!try_use_flash())
@@ -158,6 +160,9 @@
 	AOE_flash()
 	burn_out()
 	. = ..()
+
+/obj/item/device/assembly/flash/activate()
+	AOE_flash(FALSE, 3, 5, FALSE)
 
 /obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/human/H, mob/user)
 	if(istype(H) && ishuman(user) && H.stat != DEAD)
