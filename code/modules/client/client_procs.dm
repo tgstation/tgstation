@@ -537,7 +537,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/static/tokens = list()
 	var/static/cidcheck_failedckeys = list() //to avoid spamming the admins if the same guy keeps trying.
 	var/static/cidcheck_spoofckeys = list()
+	var/sql_ckey = sanitizeSQL(ckey)
+	var/datum/DBQuery/query_cidcheck = SSdbcore.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	query_cidcheck.Execute()
 
+	var/lastcid
+	if (query_cidcheck.NextRow())
+		lastcid = query_cidcheck.item[1]
 	var/oldcid = cidcheck[ckey]
 
 	if (oldcid)
@@ -556,7 +562,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			qdel(src)
 			return TRUE
 
-		if (oldcid != computer_id) //IT CHANGED!!!
+		if (oldcid != computer_id && computer_id != lastcid) //IT CHANGED!!!
 			cidcheck -= ckey //so they can try again after removing the cid randomizer.
 
 			to_chat(src, "<span class='userdanger'>Connection Error:</span>")
@@ -581,26 +587,17 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")
 				cidcheck_spoofckeys -= ckey
 			cidcheck -= ckey
-	else
-		var/sql_ckey = sanitizeSQL(ckey)
-		var/datum/DBQuery/query_cidcheck = SSdbcore.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
-		query_cidcheck.Execute()
+	else if (computer_id != lastcid)
+		cidcheck[ckey] = computer_id
+		tokens[ckey] = cid_check_reconnect()
 
-		var/lastcid
-		if (query_cidcheck.NextRow())
-			lastcid = query_cidcheck.item[1]
+		sleep(5 SECONDS) //browse is queued, we don't want them to disconnect before getting the browse() command.
 
-		if (computer_id != lastcid)
-			cidcheck[ckey] = computer_id
-			tokens[ckey] = cid_check_reconnect()
+		//we sleep after telling the client to reconnect, so if we still exist something is up
+		log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
 
-			sleep(5 SECONDS) //browse is queued, we don't want them to disconnect before getting the browse() command.
-
-			//we sleep after telling the client to reconnect, so if we still exist something is up
-			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
-
-			qdel(src)
-			return TRUE
+		qdel(src)
+		return TRUE
 
 /client/proc/cid_check_reconnect()
 	var/token = md5("[rand(0,9999)][world.time][rand(0,9999)][ckey][rand(0,9999)][address][rand(0,9999)][computer_id][rand(0,9999)]")
