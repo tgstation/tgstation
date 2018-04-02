@@ -18,10 +18,10 @@
 
 /datum/trait/greyscale_vision
 	name = "Old School Vision"
-	desc = "Did you get stuck in an old video recorder? You can only see in black and white!"
+	desc = "Did you get stuck in an old video recorder? You can only see in black and white!</span>"
 	value = 0
-	gain_text = "<span class='notice'>...Huh? You can't see colour anymore!"
-	lose_text = "<span class='notice'>You can see colour again!"
+	gain_text = "<span class='notice'>...Huh? You can't see colour anymore!</span>"
+	lose_text = "<span class='notice'>You can see colour again!</span>"
 
 /datum/trait/greyscale_vision/add()
 	trait_holder.add_client_colour(/datum/client_colour/greyscale)
