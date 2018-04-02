@@ -15,7 +15,7 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 	var/cost_multiplier = MINERAL_MATERIAL_AMOUNT / 10 // Each circuit cost unit is 200cm3
 
 /datum/controller/subsystem/processing/circuit/Initialize(start_timeofday)
-	SScircuit.cipherkey = random_string(2000+rand(0,10), GLOB.alphabet)
+	SScircuit.cipherkey = uppertext(random_string(2000+rand(0,10), GLOB.alphabet))
 	circuits_init()
 	return ..()
 

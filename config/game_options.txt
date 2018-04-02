@@ -270,6 +270,9 @@ ALLOW_AI
 
 ## AWAY MISSIONS ###
 
+## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
+#ROUNDSTART_AWAY
+
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
 GATEWAY_DELAY 18000
@@ -506,6 +509,9 @@ MICE_ROUNDSTART 10
 
 ## Uncomment to allow roundstart trait selection in the character setup menu.
 ROUNDSTART_TRAITS
+
+## Uncomment to disable human moods.
+#DISABLE_HUMAN_MOOD
 
 ## Enable night shifts ##
 #ENABLE_NIGHT_SHIFTS

@@ -21,7 +21,7 @@
 	return TRUE
 
 /obj/item/mushpunch
-	name = "mysterious mushroom"
+	name = "odd mushroom"
 	desc = "<I>Sapienza Ophioglossoides</I>:An odd mushroom from the flesh of a mushroom person. it has apparently retained some innate power of it's owner, as it quivers with barely-contained POWER!"
 	icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	icon_state = "mycelium-angel"

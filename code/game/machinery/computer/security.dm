@@ -607,9 +607,16 @@ What a mess.*/
 								var/obj/item/photo/P = active1.fields["photo_front"]
 								P.show(usr)
 					if("upd_photo_front")
-						var/icon/photo = get_photo(usr)
+						var/obj/item/photo/photo = get_photo(usr)
 						if(photo)
 							qdel(active1.fields["photo_front"])
+							//Lets center it to a 32x32.
+							var/icon/I = photo.img
+							var/w = I.Width()
+							var/h = I.Height()
+							var/dw = w - 32
+							var/dh = w - 32
+							I.Crop(dw/2, dh/2, w - dw/2, h - dh/2)
 							active1.fields["photo_front"] = photo
 					if("print_photo_front")
 						if(active1.fields["photo_front"])
@@ -622,9 +629,16 @@ What a mess.*/
 								var/obj/item/photo/P = active1.fields["photo_side"]
 								P.show(usr)
 					if("upd_photo_side")
-						var/icon/photo = get_photo(usr)
+						var/obj/item/photo/photo = get_photo(usr)
 						if(photo)
 							qdel(active1.fields["photo_side"])
+							//Lets center it to a 32x32.
+							var/icon/I = photo.img
+							var/w = I.Width()
+							var/h = I.Height()
+							var/dw = w - 32
+							var/dh = w - 32
+							I.Crop(dw/2, dh/2, w - dw/2, h - dh/2)
 							active1.fields["photo_side"] = photo
 					if("print_photo_side")
 						if(active1.fields["photo_side"])

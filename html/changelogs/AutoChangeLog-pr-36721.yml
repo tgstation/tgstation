@@ -1,0 +1,4 @@
+author: "GrayRachnid"
+delete-after: True
+changes: 
+  - bugfix: "Fixes some crafting tooltips not displaying tool names properly."

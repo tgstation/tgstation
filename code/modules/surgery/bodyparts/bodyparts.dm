@@ -44,6 +44,15 @@
 	var/species_flags_list = list()
 	var/dmg_overlay_type //the type of damage overlay (if any) to use when this bodypart is bruised/burned.
 
+	//Damage messages used by help_shake_act()
+	var/light_brute_msg = "bruised"
+	var/medium_brute_msg = "battered"
+	var/heavy_brute_msg = "mangled"
+
+	var/light_burn_msg = "numb"
+	var/medium_burn_msg = "blistered"
+	var/heavy_burn_msg = "peeling away"
+
 /obj/item/bodypart/examine(mob/user)
 	..()
 	if(brute_dam > 0)

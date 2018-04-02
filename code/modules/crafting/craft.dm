@@ -52,6 +52,7 @@
 
 
 /datum/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents)
+	contents = contents["other"]
 	main_loop:
 		for(var/A in R.reqs)
 			var/needed_amount = R.reqs[A]
@@ -89,25 +90,30 @@
 
 /datum/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
+	.["tool_behaviour"] = list()
+	.["other"] = list()
 	for(var/obj/item/I in get_environment(user))
 		if(I.flags_2 & HOLOGRAM_2)
 			continue
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
-			.[I.type] += S.amount
+			.["other"][I.type] += S.amount
+		else if(I.tool_behaviour)
+			.["tool_behaviour"] += I.tool_behaviour
 		else
 			if(istype(I, /obj/item/reagent_containers))
 				var/obj/item/reagent_containers/RC = I
 				if(RC.is_drainable())
 					for(var/datum/reagent/A in RC.reagents.reagent_list)
-						.[A.type] += A.volume
-			.[I.type] += 1
+						.["other"][A.type] += A.volume
+			.["other"][I.type] += 1
 
 /datum/personal_crafting/proc/check_tools(mob/user, datum/crafting_recipe/R, list/contents)
 	if(!R.tools.len)
 		return TRUE
 	var/list/possible_tools = list()
 	var/list/present_qualities = list()
+	present_qualities |= contents["tool_behaviour"]
 	for(var/obj/item/I in user.contents)
 		if(istype(I, /obj/item/storage))
 			for(var/obj/item/SI in I.contents)
@@ -120,7 +126,7 @@
 		if(I.tool_behaviour)
 			present_qualities.Add(I.tool_behaviour)
 
-	possible_tools += contents
+	possible_tools |= contents["other"]
 
 	main_loop:
 		for(var/A in R.tools)
@@ -413,7 +419,11 @@
 	data["catalyst_text"] = catalyst_text
 
 	for(var/a in R.tools)
-		tool_text += " [a],"
+		if(ispath(a, /obj/item))
+			var/obj/item/b = a
+			tool_text += " [initial(b.name)],"
+		else
+			tool_text += " [a],"
 	tool_text = replacetext(tool_text,",","",-1)
 	data["tool_text"] = tool_text
 

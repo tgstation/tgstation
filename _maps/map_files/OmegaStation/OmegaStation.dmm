@@ -3282,10 +3282,11 @@
 /area/security/detectives_office)
 "agK" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
-/obj/item/hand_labeler,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
+	},
+/obj/machinery/computer/security/wooden_tv{
+	pixel_x = 2
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
@@ -3818,7 +3819,6 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "ahE" = (
-/obj/machinery/computer/security/wooden_tv,
 /obj/structure/table/wood,
 /obj/machinery/button/door{
 	id = "detectivewindows";
@@ -3834,6 +3834,8 @@
 /obj/structure/cable/white{
 	icon_state = "2-8"
 	},
+/obj/item/folder/red,
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "ahF" = (
@@ -9000,10 +9002,8 @@
 	},
 /area/quartermaster/miningdock)
 "arr" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	dir = 8;
-	filter_type = "n2o";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2o{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -10900,10 +10900,8 @@
 	},
 /area/engine/atmos)
 "avy" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	dir = 4;
-	filter_type = "o2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/o2{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -12406,10 +12404,8 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
 "azl" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	dir = 4;
-	filter_type = "n2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -13263,10 +13259,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aBB" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "External Waste Ports to Filter";
-	on = 1
+	name = "External Waste Ports to Filter"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -13740,10 +13735,9 @@
 	},
 /area/engine/atmos)
 "aCF" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "Air to External Air Ports";
-	on = 1
+	name = "Air to External Air Ports"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
@@ -15002,6 +14996,7 @@
 /obj/effect/turf_decal/bot,
 /obj/item/areaeditor/blueprints,
 /obj/item/tank/jetpack/suit,
+/obj/item/clothing/shoes/magboots/advance,
 /turf/open/floor/plasteel/vault/side{
 	dir = 8
 	},
@@ -16448,10 +16443,9 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aIl" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Gas to Filter";
-	on = 1
+	name = "Gas to Filter"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -20671,12 +20665,7 @@
 /turf/open/floor/plasteel/vault/side,
 /area/tcommsat/server)
 "aRE" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 2;
-	min_temperature = 80;
-	on = 1;
-	target_temperature = 80
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault/side,
 /area/tcommsat/server)
@@ -20703,10 +20692,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 2;
-	name = "Gas to Cooling Loop";
-	on = 1
+	name = "Gas to Cooling Loop"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -20788,10 +20776,9 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aRQ" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Gas to Cooling Loop";
-	on = 1
+	name = "Gas to Cooling Loop"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -21247,9 +21234,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on{
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -21270,11 +21256,8 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "aSW" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1;
-	min_temperature = 80;
-	on = 1;
-	target_temperature = 80
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -23582,12 +23565,7 @@
 /turf/open/floor/plasteel,
 /area/medical/medbay/zone3)
 "aXV" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 2;
-	min_temperature = 80;
-	on = 1;
-	target_temperature = 80
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -23783,11 +23761,8 @@
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/science/research)
 "aYq" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1;
-	min_temperature = 80;
-	on = 1;
-	target_temperature = 80
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 1
 	},
 /obj/machinery/firealarm{
 	dir = 8;
@@ -27787,7 +27762,7 @@
 /area/chapel/main)
 "bgC" = (
 /obj/structure/table/wood/fancy,
-/obj/item/spellbook/oneuse/smoke,
+/obj/item/book/granter/spell/smoke,
 /obj/item/nullrod,
 /obj/item/organ/heart,
 /obj/item/reagent_containers/food/drinks/bottle/holywater,
@@ -29290,11 +29265,8 @@
 	},
 /area/science/xenobiology)
 "bjH" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1;
-	min_temperature = 80;
-	on = 1;
-	target_temperature = 80
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -31388,6 +31360,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	autoclose = 0;
+	frequency = 1449;
 	heat_proof = 1;
 	id_tag = "incinerator_airlock_exterior";
 	name = "Incinerator Exterior Airlock";
@@ -31636,10 +31609,8 @@
 	},
 /area/engine/atmos)
 "gVX" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	dir = 8;
-	filter_type = "co2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -31789,11 +31760,8 @@
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "iIj" = (
-/obj/machinery/atmospherics/components/trinary/mixer/flipped{
-	dir = 4;
-	node1_concentration = 0.8;
-	node2_concentration = 0.2;
-	on = 1
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -32244,9 +32212,8 @@
 	},
 /area/hallway/primary/port/fore)
 "mJP" = (
-/obj/machinery/igniter/off{
-	id = "Incinerator";
-	luminosity = 2
+/obj/machinery/igniter{
+	id = "Incinerator"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -34646,10 +34613,9 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "sNf" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "Waste Out";
-	on = 1
+	name = "Waste Out"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
@@ -35815,18 +35781,6 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "xtL" = (
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	name = "Incinerator Access Console";
-	airpump_tag = "incinerator_airlock_pump";
-	exterior_door_tag = "incinerator_airlock_exterior";
-	id_tag = "incinerator_access_control";
-	interior_door_tag = "incinerator_airlock_interior";
-	pixel_x = 8;
-	pixel_y = -24;
-	sanitize_external = 1;
-	sensor_tag = "incinerator_airlock_sensor";
-	req_access_txt = "12"
-	},
 /obj/machinery/button/ignition{
 	id = "Incinerator";
 	pixel_x = 8;
@@ -35895,10 +35849,8 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/port)
 "xEQ" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	dir = 8;
-	filter_type = "plasma";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/plasma{
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -35925,6 +35877,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass{
 	autoclose = 0;
+	frequency = 1449;
 	heat_proof = 1;
 	id_tag = "incinerator_airlock_interior";
 	name = "Incinerator Interior Airlock";
@@ -35935,6 +35888,18 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
+	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	airpump_tag = "incinerator_airlock_pump";
+	exterior_door_tag = "incinerator_airlock_exterior";
+	id_tag = "incinerator_airlock_control";
+	interior_door_tag = "incinerator_airlock_interior";
+	name = "Incinerator Access Console";
+	pixel_x = -8;
+	pixel_y = 35;
+	req_access_txt = "12";
+	sanitize_external = 1;
+	sensor_tag = "incinerator_airlock_sensor"
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)

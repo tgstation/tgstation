@@ -1,5 +1,82 @@
 //predominantly negative traits
 
+/datum/trait/depression
+	name = "Depression"
+	desc = "You sometimes just hate life."
+	mob_trait = TRAIT_DEPRESSION
+	value = -1
+	gain_text = "<span class='danger'>You start feeling depressed.</span>"
+	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
+	medical_record_text = "Patient has a severe mood disorder causing them to experience sudden moments of sadness."
+
+
+
+/datum/trait/family_heirloom
+	name = "Family Heirloom"
+	desc = "You are the current owner of an heirloom. passed down for generations. You have to keep it safe!"
+	value = -1
+	var/obj/item/heirloom
+	var/where_text
+
+/datum/trait/family_heirloom/on_spawn()
+	var/mob/living/carbon/human/H = trait_holder
+	var/obj/item/heirloom_type
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS]) //on april fools, pick from any item in the game
+		var/list/heirlooms = subtypesof(/obj/item)
+		for(var/V in heirlooms)
+			var/obj/item/I = V
+			if((!initial(I.icon_state)) || (!initial(I.item_state)) || (initial(I.flags_1) & ABSTRACT_1))
+				heirlooms -= V
+		heirloom_type = pick(heirlooms)
+	else
+		switch(trait_holder.mind.assigned_role)
+			if("Clown")
+				heirloom_type = /obj/item/bikehorn/golden
+			if("Mime")
+				heirloom_type = /obj/item/reagent_containers/food/snacks/baguette
+			if("Lawyer")
+				heirloom_type = /obj/item/gavelhammer
+			if("Janitor")
+				heirloom_type = /obj/item/mop
+			if("Security Officer")
+				heirloom_type = /obj/item/book/manual/wiki/security_space_law
+			if("Scientist")
+				heirloom_type = /obj/item/toy/plush/slimeplushie
+			if("Assistant")
+				heirloom_type = /obj/item/storage/toolbox/mechanical/old/heirloom
+	if(!heirloom_type)
+		heirloom_type = pick(
+		/obj/item/toy/cards/deck,
+		/obj/item/lighter,
+		/obj/item/dice/d20)
+	heirloom = new heirloom_type(get_turf(trait_holder))
+	var/list/slots = list(
+		"in your backpack" = slot_in_backpack,
+		"in your left pocket" = slot_l_store,
+		"in your right pocket" = slot_r_store
+	)
+	var/where = H.equip_in_one_of_slots(heirloom, slots)
+	if(!where)
+		where = "at your feet"
+		if(where == "in your backpack")
+			var/obj/item/storage/B = H.back
+			B.orient2hud(trait_holder)
+			B.show_to(trait_holder)
+	where_text = "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>"
+
+/datum/trait/family_heirloom/post_add()
+	to_chat(trait_holder, where_text)
+	var/list/family_name = splittext(trait_holder.real_name, " ")
+	heirloom.name = "\improper [family_name[family_name.len]] family [heirloom.name]"
+
+/datum/trait/family_heirloom/process()
+	if(heirloom in trait_holder.GetAllContents())
+		trait_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
+		trait_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "family_heirloom", /datum/mood_event/family_heirloom)
+	else
+		trait_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
+		trait_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
+
 
 
 /datum/trait/heavy_sleeper
@@ -41,6 +118,27 @@
 	H.put_in_hands(glasses)
 	H.equip_to_slot(glasses, slot_glasses)
 	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
+
+
+
+/datum/trait/nyctophobia
+	name = "Nyctophobia"
+	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
+	value = -1
+
+/datum/trait/nyctophobia/on_process()
+	var/mob/living/carbon/human/H = trait_holder
+	if(H.dna.species.id in list("shadow", "nightmare"))
+		return //we're tied with the dark, so we don't get scared of it; don't cleanse outright to avoid cheese
+	var/turf/T = get_turf(trait_holder)
+	var/lums = T.get_lumcount()
+	if(lums <= 0.2)
+		if(trait_holder.m_intent == MOVE_INTENT_RUN)
+			to_chat(trait_holder, "<span class='warning'>Easy, easy, take it slow... you're in the dark...</span>")
+			trait_holder.toggle_move_intent()
+		trait_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "nyctophobia", /datum/mood_event/nyctophobia)
+	else
+		trait_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
 
 
 
@@ -156,21 +254,18 @@
 	var/dumb_thing = TRUE
 
 /datum/trait/social_anxiety/on_process()
+	var/nearby_people = 0
+	for(var/mob/living/carbon/human/H in view(5, trait_holder))
+		if(H.client)
+			nearby_people++
 	var/mob/living/carbon/human/H = trait_holder
-	if(prob(5))
+	if(prob(2 + nearby_people))
 		H.stuttering = max(3, H.stuttering)
-	else if(prob(1) && !H.silent)
+	else if(prob(min(3, nearby_people)) && !H.silent)
 		to_chat(H, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
 		H.silent = max(10, H.silent)
 	else if(prob(0.5) && dumb_thing)
-		to_chat(H, "<span class='danger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
+		to_chat(H, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
 		dumb_thing = FALSE //only once per life
-
-/datum/trait/depression
-	name = "Depression"
-	desc = "You sometimes just hate life."
-	mob_trait = TRAIT_DEPRESSION
-	value = -1
-	gain_text = "<span class='danger'>You start feeling depressed.</span>"
-	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
-	medical_record_text = "Patient has a severe mood disorder causing them to experience sudden moments of sadness."
+		if(prob(1))
+			new/obj/item/reagent_containers/food/snacks/pastatomato(get_turf(H)) //now that's what I call spaghetti code
