@@ -17,6 +17,8 @@
 	medhud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
+	if(adapt_original_size_to_health)
+		update_original_size_to_health()
 
 
 /mob/living/prepare_huds()

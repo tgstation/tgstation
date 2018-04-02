@@ -211,11 +211,19 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				var/matches
 				if( (C.address == address) )
 					matches += "IP ([address])"
+					if(!(C in shared_ips))
+						shared_ips += C
+					if(!(src in C.shared_ips))
+						C.shared_ips += src
 				if( (C.computer_id == computer_id) )
 					if(matches)
 						matches += " and "
 					matches += "ID ([computer_id])"
 					alert_mob_dupe_login = TRUE
+					if(!(C in shared_ids))
+						shared_ids += C
+					if(!(src in C.shared_ids))
+						C.shared_ids += src
 				if(matches)
 					if(C)
 						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)].</font>")
@@ -609,7 +617,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/proc/note_randomizer_user()
 	add_system_note("CID-Error", "Detected as using a cid randomizer.")
-	
+
 /client/proc/add_system_note(system_ckey, message)
 	var/sql_system_ckey = sanitizeSQL(system_ckey)
 	var/sql_ckey = sanitizeSQL(ckey)

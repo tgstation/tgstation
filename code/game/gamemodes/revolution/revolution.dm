@@ -13,8 +13,8 @@
 	antag_flag = ROLE_REV
 	false_report_weight = 10
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
-	required_players = 30
-	required_enemies = 2
+	required_players = 10 //formerly 30
+	required_enemies = 1
 	recommended_enemies = 3
 	enemy_minimum_age = 14
 
@@ -22,6 +22,9 @@
 	announce_text = "Some crewmembers are attempting a coup!\n\
 	<span class='danger'>Revolutionaries</span>: Expand your cause and overthrow the heads of staff by execution or otherwise.\n\
 	<span class='notice'>Crew</span>: Prevent the revolutionaries from taking over the station."
+
+	precentage_for_antagonists = 0.05
+	minimum_enemies = 2
 
 	var/finished = 0
 	var/check_counter = 0
@@ -41,6 +44,29 @@
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
+
+/datum/game_mode/revolution/can_start()
+	. = ..()
+	if(!.)
+		return .
+	var/list/heads = list()
+	for(var/command_position in GLOB.command_positions)
+		var/datum/job/job = SSjob.GetJob(command_position)
+		for(var/level = 1 to 3)
+			for(var/mob/dead/new_player/player in GLOB.player_list)
+				if(jobban_isbanned(player, job.title))
+					continue
+				if(!job.player_old_enough(player.client))
+					continue
+				if(player.mind && job.title in player.mind.restricted_roles)
+					continue
+				if(CONFIG_GET(flag/enforce_human_authority) && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
+					continue
+				if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
+					heads += player.mind
+	if(!heads.len)
+		return 0
+
 /datum/game_mode/revolution/pre_setup()
 
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))

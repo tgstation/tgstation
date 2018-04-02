@@ -31,6 +31,10 @@ SUBSYSTEM_DEF(job)
 		to_chat(world, "<span class='boldannounce'>Error setting up jobs, no job datums found</span>")
 		return 0
 
+	var/list/jobdatums = list()
+	var/list/repositioned_jobdatums = list()
+
+
 	for(var/J in all_jobs)
 		var/datum/job/job = new J()
 		if(!job)
@@ -42,9 +46,18 @@ SUBSYSTEM_DEF(job)
 		if(!job.map_check())	//Even though we initialize before mapping, this is fine because the config is loaded at new
 			testing("Removed [job.type] due to map config");
 			continue
+
+		if(!ispath(job.position_after_type))
+			jobdatums += job
+			if(repositioned_jobdatums[job.type])
+				jobdatums += repositioned_jobdatums[job.type]
+				repositioned_jobdatums.Remove(job.type)
+		else
+			repositioned_jobdatums[job.position_after_type] = job
+	for(var/datum/job/job in jobdatums)
 		occupations += job
 		name_occupations[job.title] = job
-		type_occupations[J] = job
+		type_occupations[job.type] = job
 
 	return 1
 

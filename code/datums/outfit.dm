@@ -105,7 +105,7 @@
 			for(var/implant_type in implants)
 				var/obj/item/implant/I = new implant_type(H)
 				I.implant(H, null, TRUE)
-
+	update_toolbox_inventory(H) //TOOLBOX add any additions to how a mob might get equipped at round start to this proc
 	H.update_body()
 	return TRUE
 

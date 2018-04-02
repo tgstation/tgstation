@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
-
+	/*
 	var/list/byond_sound_formats = list(
 		"mid"  = TRUE,
 		"midi" = TRUE,
@@ -120,8 +120,10 @@ SUBSYSTEM_DEF(ticker)
 		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 		login_music = pick(music)
 	else
-		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
+		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"*/
+	//The fuck is all this shit for. its fucking music. - falaskian
 
+	login_music = 'sound/toolbox/titlefalaskian.ogg' //fixed - falaskian
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
@@ -620,10 +622,11 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/newroundsexy.ogg',
 		'sound/roundend/apcdestroyed.ogg',
 		'sound/roundend/bangindonk.ogg',
-		'sound/roundend/leavingtg.ogg',
-		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg'\
+		'sound/toolbox/roundend/autism.ogg',
+		'sound/toolbox/roundend/heeman.ogg',
+		'sound/toolbox/roundend/rigged_from_the_start.ogg',
+		'sound/toolbox/roundend/seagulls.ogg',
+		'sound/toolbox/roundend/mrmemerswag.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))

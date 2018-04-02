@@ -48,6 +48,10 @@
 
 	var/gamemode_ready = FALSE //Is the gamemode all set up and ready to start checking for ending conditions.
 
+	var/precentage_for_antagonists = -1
+
+	var/minimum_enemies = 0
+
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
 	to_chat(world, "<b>[announce_text]</b>")
@@ -55,10 +59,7 @@
 
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
-	var/playerC = 0
-	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if((player.client)&&(player.ready == PLAYER_READY_TO_PLAY))
-			playerC++
+	var/playerC = num_players()
 	if(!GLOB.Debug2)
 		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
 			return 0
@@ -353,6 +354,13 @@
 	// Goodbye antag dante
 	players = shuffle(players)
 
+	if(precentage_for_antagonists > 0)
+		var/new_recommended_enemies = round(players.len*precentage_for_antagonists,1)
+		if(minimum_enemies)
+			new_recommended_enemies = max(new_recommended_enemies,minimum_enemies)
+		if(new_recommended_enemies < recommended_enemies)
+			recommended_enemies = new_recommended_enemies
+
 	for(var/mob/dead/new_player/player in players)
 		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 			if(role in player.client.prefs.be_special)
@@ -417,9 +425,18 @@
 
 /datum/game_mode/proc/num_players()
 	. = 0
-	for(var/mob/dead/new_player/P in GLOB.player_list)
-		if(P.client && P.ready == PLAYER_READY_TO_PLAY)
-			. ++
+	var/atleastoneready = 0
+	for(var/mob/M in GLOB.player_list)
+		if(M.client)
+			if(!atleastoneready && istype(M, /mob/dead/new_player))
+				var/mob/dead/new_player/new_player = M
+				if(new_player.ready == PLAYER_READY_TO_PLAY)
+					atleastoneready = 1
+			.++
+	if(!atleastoneready)
+		. = 0
+	else if(GLOB.override_lobby_player_count > 0)
+		. = GLOB.override_lobby_player_count
 
 //////////////////////////
 //Reports player logouts//

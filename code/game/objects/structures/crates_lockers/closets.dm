@@ -1,7 +1,7 @@
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
-	icon = 'icons/obj/closet.dmi'
+	icon = 'icons/oldschool/oldericons/closet_old.dmi'
 	icon_state = "generic"
 	density = TRUE
 	layer = BELOW_OBJ_LAYER

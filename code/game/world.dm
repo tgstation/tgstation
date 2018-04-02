@@ -213,7 +213,7 @@ GLOBAL_PROTECT(security_mode)
 	log_world("World rebooted at [time_stamp()]")
 	..()
 
-/world/proc/update_status()
+/*/world/proc/update_status()
 
 	var/list/features = list()
 
@@ -259,7 +259,7 @@ GLOBAL_PROTECT(security_mode)
 	if (features)
 		s += ": [jointext(features, ", ")]"
 
-	status = s
+	status = s*/
 
 /world/proc/update_hub_visibility(new_visibility)
 	if(new_visibility == GLOB.hub_visibility)

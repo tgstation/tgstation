@@ -9,6 +9,7 @@
 	name = "air vent"
 	desc = "Has a valve and pump attached to it."
 	icon_state = "vent_map"
+	icon = 'icons/oldschool/oldericons/unary_devices_old.dmi'
 	use_power = IDLE_POWER_USE
 	can_unwrench = TRUE
 	welded = FALSE
@@ -84,8 +85,9 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	var/area/A = get_area(src)
-	A.air_vent_names -= id_tag
-	A.air_vent_info -= id_tag
+	if(A)
+		A.air_vent_names -= id_tag
+		A.air_vent_info -= id_tag
 
 	SSradio.remove_object(src,frequency)
 	radio_connection = null
@@ -124,6 +126,10 @@
 	air_contents.volume = 1000
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
+	var/oldschool = 0
+	if(icon == 'icons/oldschool/oldericons/unary_devices_old.dmi')
+		oldschool = 1
+
 	cut_overlays()
 	if(showpipe)
 		add_overlay(getpipeimage(icon, "vent_cap", initialize_directions))
@@ -132,25 +138,30 @@
 		icon_state = "vent_welded"
 		return
 
-	if(!nodes[1] || !on || !is_operational())
-		if(icon_state == "vent_welded")
+	if(!oldschool)
+		if(!nodes[1] || !on || !is_operational())
+			if(icon_state == "vent_welded")
+				icon_state = "vent_off"
+				return
+			if(pump_direction & RELEASING)
+				icon_state = "vent_out-off"
+			else // pump_direction == SIPHONING
+				icon_state = "vent_in-off"
+			return
+	else
+		if(!nodes[1] || !on || !is_operational())
 			icon_state = "vent_off"
 			return
 
-		if(pump_direction & RELEASING)
-			icon_state = "vent_out-off"
-		else // pump_direction == SIPHONING
-			icon_state = "vent_in-off"
-		return
-
-	if(icon_state == ("vent_out-off" || "vent_in-off" || "vent_off"))
-		if(pump_direction & RELEASING)
-			icon_state = "vent_out"
-			flick("vent_out-starting", src)
-		else // pump_direction == SIPHONING
-			icon_state = "vent_in"
-			flick("vent_in-starting", src)
-		return
+	if(!oldschool)
+		if(icon_state == ("vent_out-off" || "vent_in-off" || "vent_off"))
+			if(pump_direction & RELEASING)
+				icon_state = "vent_out"
+				flick("vent_out-starting", src)
+			else // pump_direction == SIPHONING
+				icon_state = "vent_in"
+				flick("vent_in-starting", src)
+			return
 
 	if(pump_direction & RELEASING)
 		icon_state = "vent_out"

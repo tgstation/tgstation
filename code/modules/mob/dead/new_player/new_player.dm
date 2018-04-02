@@ -336,7 +336,7 @@
 	if(!arrivals_docked)
 		var/obj/screen/splash/Spl = new(character.client, TRUE)
 		Spl.Fade(TRUE)
-		character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
+		character.playsound_local(get_turf(character), 'sound/toolbox/NATS.ogg', 25)
 
 	character.update_parallax_teleport()
 
@@ -472,10 +472,13 @@
 	if(transfer_after)
 		transfer_character()
 
+GLOBAL_LIST_EMPTY(Original_Minds)
 /mob/dead/new_player/proc/transfer_character()
 	. = new_character
 	if(.)
 		new_character.key = key		//Manually transfer the key to log them in
+		if(new_character.mind && !(new_character.mind in GLOB.Original_Minds))
+			GLOB.Original_Minds[new_character.mind] = world.time
 		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 		new_character = null
 		qdel(src)

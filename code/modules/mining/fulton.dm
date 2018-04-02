@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 /obj/item/fulton_core
 	name = "extraction beacon signaller"
 	desc = "Emits a signal which fulton recovery devices can lock onto. Activate in hand to create a beacon."
-	icon = 'icons/obj/stock_parts.dmi'
+	icon = 'icons/oldschool/oldericons/stock_parts_old.dmi'
 	icon_state = "subspace_amplifier"
 
 /obj/item/fulton_core/attack_self(mob/user)

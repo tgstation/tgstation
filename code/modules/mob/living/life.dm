@@ -67,6 +67,9 @@
 	if(stat != DEAD)
 		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
+	if(adapt_size_to_health)
+		resize_on_health()
+
 	if(stat != DEAD)
 		return 1
 

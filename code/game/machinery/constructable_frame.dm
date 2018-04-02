@@ -1,6 +1,6 @@
 /obj/structure/frame
 	name = "frame"
-	icon = 'icons/obj/stock_parts.dmi'
+	icon = 'icons/oldschool/oldericons/stock_parts_old.dmi'
 	icon_state = "box_0"
 	density = TRUE
 	max_integrity = 250

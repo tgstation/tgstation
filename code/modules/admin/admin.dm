@@ -167,6 +167,7 @@
 			body += "<A href='?_src_=holder;[HrefToken()];simplemake=constructbuilder;mob=[REF(M)]'>Artificer</A> , "
 			body += "<A href='?_src_=holder;[HrefToken()];simplemake=constructwraith;mob=[REF(M)]'>Wraith</A> \] "
 			body += "<A href='?_src_=holder;[HrefToken()];simplemake=shade;mob=[REF(M)]'>Shade</A>"
+			body += "<br>Special: \[<A href='?_src_=holder;simplemake=jesus;mob=\ref[M]'>Space Jesus</A>\]"
 			body += "<br>"
 
 	if (M.client)

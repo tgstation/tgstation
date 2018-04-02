@@ -186,6 +186,7 @@ obj/machinery/chem_dispenser/update_icon()
 /obj/machinery/chem_dispenser/ui_act(action, params)
 	if(..())
 		return
+	add_fingerprint(usr)
 	switch(action)
 		if("amount")
 			var/target = text2num(params["target"])

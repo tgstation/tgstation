@@ -51,6 +51,8 @@
 	//The amount of good boy points playing this role will earn you towards a higher chance to roll antagonist next round
 	var/antag_rep = 0
 
+	var/position_after_type = null //add the type path of a job to be positioned after in the jobs list. If left blank it will appear in the job list in the same order as it appears in the source code its self.
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M)

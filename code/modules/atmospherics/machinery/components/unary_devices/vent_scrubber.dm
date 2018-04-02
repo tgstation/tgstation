@@ -5,6 +5,7 @@
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it."
 	icon_state = "scrub_map"
+	icon = 'icons/oldschool/oldericons/unary_devices_old.dmi'
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 60
@@ -73,6 +74,10 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
+	var/oldschool = 0
+	if(icon == 'icons/oldschool/oldericons/unary_devices_old.dmi')
+		oldschool = 1
+
 	cut_overlays()
 	if(showpipe)
 		add_overlay(getpipeimage(icon, "scrub_cap", initialize_directions))
@@ -86,7 +91,7 @@
 		return
 
 	if(scrubbing & SCRUBBING)
-		if(widenet)
+		if(widenet && !oldschool)
 			icon_state = "scrub_wide"
 		else
 			icon_state = "scrub_on"

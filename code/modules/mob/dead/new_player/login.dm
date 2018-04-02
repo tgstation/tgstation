@@ -24,6 +24,21 @@
 
 	new_player_panel()
 	client.playtitlemusic()
+
+	//toolbox watermark and scrolling lobby camera.
+	var/obj/screen/toolboxlogo = new()
+	toolboxlogo.name = "Toolbox Station"
+	toolboxlogo.icon = 'icons/oldschool/toolboxlogo.dmi'
+	toolboxlogo.icon_state = ""
+	toolboxlogo.screen_loc = "south:16,east-5:10"
+	toolboxlogo.alpha = round(255*0.7,1)
+	toolboxlogo.mouse_opacity = 0
+	toolboxlogo.layer = 20
+	toolboxlogo.plane = 100
+	if (client)
+		client.screen += toolboxlogo
+	//do_new_player_cam_shit()
+
 	if(SSticker.current_state < GAME_STATE_SETTING_UP)
 		var/tl = SSticker.GetTimeLeft()
 		var/postfix

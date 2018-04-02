@@ -12,10 +12,11 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 	false_report_weight = 10
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	required_players = 15
+	required_players = 8 //formerly 15
 	required_enemies = 1
 	recommended_enemies = 4
 	reroll_friendly = 1
+	precentage_for_antagonists = 0.15
 
 	announce_span = "green"
 	announce_text = "Alien changelings have infiltrated the crew!\n\
@@ -24,6 +25,8 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 
 	var/const/changeling_amount = 4 //hard limit on changelings if scaling is turned off
 	var/list/changelings = list()
+
+	precentage_for_antagonists = 0.15
 
 /datum/game_mode/changeling/pre_setup()
 

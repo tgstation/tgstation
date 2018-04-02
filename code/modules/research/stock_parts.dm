@@ -80,7 +80,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 /obj/item/stock_parts
 	name = "stock part"
 	desc = "What?"
-	icon = 'icons/obj/stock_parts.dmi'
+	icon = 'icons/oldschool/oldericons/stock_parts_old.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/rating = 1
 
@@ -280,6 +280,6 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 
 /obj/item/research//Makes testing much less of a pain -Sieve
 	name = "research"
-	icon = 'icons/obj/stock_parts.dmi'
+	icon = 'icons/oldschool/oldericons/stock_parts_old.dmi'
 	icon_state = "capacitor"
 	desc = "A debug item for research."

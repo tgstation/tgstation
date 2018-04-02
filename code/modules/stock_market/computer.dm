@@ -1,6 +1,6 @@
 /obj/machinery/computer/stockexchange
 	name = "stock exchange computer"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/oldschool/oldericons/computer_old.dmi'
 	icon_state = "oldcomp"
 	icon_screen = "stock_computer"
 	icon_keyboard = "no_keyboard"

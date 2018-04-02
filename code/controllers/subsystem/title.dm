@@ -6,6 +6,7 @@ SUBSYSTEM_DEF(title)
 	var/icon/icon
 	var/icon/previous_icon
 	var/turf/closed/indestructible/splashscreen/splash_turf
+	var/default_title = "icons/oldschool/splashscreen.dmi"
 
 /datum/controller/subsystem/title/PreInit()
 	if(file_path && icon)
@@ -28,9 +29,9 @@ SUBSYSTEM_DEF(title)
 
 	if(length(title_screens))
 		file_path = "[global.config.directory]/title_screens/images/[pick(title_screens)]"
-	
+
 	if(!file_path)
-		file_path = "icons/default_title.dmi"
+		file_path = default_title
 
 	ASSERT(fexists(file_path))
 

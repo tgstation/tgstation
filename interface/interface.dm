@@ -27,7 +27,7 @@
 		to_chat(src, "<span class='danger'>The forum URL is not set in the server configuration.</span>")
 	return
 
-/client/verb/rules()
+/*/client/verb/rules()
 	set name = "rules"
 	set desc = "Show Server Rules."
 	set hidden = 1
@@ -38,6 +38,17 @@
 		src << link(rulesurl)
 	else
 		to_chat(src, "<span class='danger'>The rules URL is not set in the server configuration.</span>")
+	return*/
+
+/client/verb/rules()
+	set name = "rules"
+	set desc = "Show Server Rules."
+	set hidden = 1
+	if (fexists("config/rules.html"))
+		src << browse(file("config/rules.html"), "window=rules;size=800x540")
+	else
+		to_chat(src, "<span class='danger'>The rules URL is not set in the server configuration.</span>")
+		src << sound('sound/items/bikehorn.ogg')
 	return
 
 /client/verb/github()

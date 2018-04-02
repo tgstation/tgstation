@@ -11,6 +11,45 @@
 	var/has_corgi = 0
 	var/obj/item/color_source
 	var/max_wash_capacity = 5
+	var/hasdetergent = 0
+
+/obj/machinery/washing_machine/Initialize()
+	. = ..()
+	var/foundabox = 0
+	for(var/obj/item/storage/box/tidepods/tidepod in world)
+		var/turf/T = get_turf(tidepod)
+		if(T && get_dist(src,T) <= 2)
+			foundabox = 1
+			break
+	if(!foundabox)
+		var/list/adjacentturfs = list()
+		for(var/turf/T in orange(2,src))
+			var/turf/current = loc
+			var/tries = 2
+			while(current != T)
+				if(tries <= 0)
+					break
+				tries--
+				var/turf/next = get_step(current,get_dir(current,T))
+				if(next.Adjacent(current))
+					current = next
+			if(current == T)
+				adjacentturfs += T
+		if(adjacentturfs.len)
+			var/list/objectstoinsert = list()
+			for(var/turf/T in adjacentturfs)
+				for(var/obj/structure/table/table in T)
+					objectstoinsert += table
+				for(var/obj/structure/closet/closet in T)
+					if(istype(closet,/obj/structure/closet/secure_closet))
+						continue
+					objectstoinsert += closet
+			if(objectstoinsert.len)
+				var/atom/movable/AM = pick(objectstoinsert)
+				if(istype(AM,/obj/structure/closet))
+					new /obj/item/storage/box/tidepods(AM)
+				else if(istype(AM,/obj/structure/table))
+					new /obj/item/storage/box/tidepods(AM.loc)
 
 /obj/machinery/washing_machine/ComponentInitialize()
 	. = ..()
@@ -48,12 +87,18 @@
 		update_icon()
 
 /obj/machinery/washing_machine/proc/wash_cycle()
+	for(var/obj/item/reagent_containers/food/snacks/S in contents)
+		var/datum/reagent/R = S.reagents.has_reagent("tide")
+		if(R)
+			hasdetergent += R.volume
 	for(var/X in contents)
 		var/atom/movable/AM = X
-		AM.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		if(hasdetergent >= 5)
+			AM.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 		AM.machine_wash(src)
 
 	busy = FALSE
+	hasdetergent = 0
 	if(color_source)
 		qdel(color_source)
 		color_source = null
