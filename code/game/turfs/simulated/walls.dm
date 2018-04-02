@@ -191,7 +191,7 @@
 			if(iswallturf(src) && LAZYLEN(dent_decals))
 				to_chat(user, "<span class='notice'>You fix some dents on the wall.</span>")
 				cut_overlay(dent_decals)
-				LAZYCLEARLIST(dent_decals)
+				dent_decals.Cut()
 			return TRUE
 
 	return FALSE
