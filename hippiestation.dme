@@ -3042,6 +3042,7 @@
 #include "hippiestation\code\modules\vending\boozeomat.dm"
 #include "hippiestation\code\modules\vending\clothesmate.dm"
 #include "hippiestation\code\modules\vending\medical_wall.dm"
+#include "hippiestation\code\modules\vending\megaseed.dm"
 #include "hippiestation\code\modules\vending\security.dm"
 #include "hippiestation\code\modules\vending\snack.dm"
 #include "hippiestation\interface\interface.dm"
