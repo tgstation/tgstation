@@ -132,7 +132,7 @@
 	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	chainsaw.flags_1 |= NODROP_1
 	victim.drop_all_held_items()
-	victim.put_in_hands(chainsaw, FALSE, null, TRUE)
+	victim.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(victim)
 	chainsaw.wield(victim)
 	victim.reagents.add_reagent("adminordrazine",25)
