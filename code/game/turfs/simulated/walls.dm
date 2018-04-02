@@ -289,7 +289,7 @@
 	switch(denttype)
 		if(WALL_DENT_SHOT)
 			decal.icon_state = "bullet_hole"
-		else
+		if(WALL_DENT_HIT)
 			decal.icon_state = "impact[rand(1, 3)]"
 
 	decal.pixel_x = x
@@ -297,7 +297,7 @@
 
 	if(LAZYLEN(dent_decals))
 		cut_overlay(dent_decals)
-		dent_decals.Add(decal)
+		dent_decals += decal
 	else
 		dent_decals = list(decal)
 
