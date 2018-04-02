@@ -80,9 +80,7 @@
 
 /obj/item/device/assembly/flash/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
 	if(!target_loc)
-		target_loc = loc
-		if(!isturf(target_loc))
-			target_loc = loc.loc
+		target_loc = get_turf(src)
 	if(override_vision_checks)
 		return get_hearers_in_view(range, get_turf(target_loc))
 	if(isturf(target_loc) || (ismob(target_loc) && isturf(target_loc.loc)))
