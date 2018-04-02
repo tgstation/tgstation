@@ -127,7 +127,7 @@
 
 	L.Stun(stunforce)
 	L.staminaloss += stamforce //Not reduced by armour to give it an edge over a taser.
-	L.apply_effect(STUTTER, 7) //Duration of sec baton
+	L.apply_effect(EFFECT_STUTTER, 7) //Duration of sec baton
 	user.changeNext_move(CLICK_CD_MELEE * MAKESHIFT_BATON_CD)
 	if(user)
 		L.lastattacker = user.real_name
