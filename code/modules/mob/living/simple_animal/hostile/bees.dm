@@ -35,6 +35,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	density = FALSE
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
 	movement_type = FLYING
@@ -57,7 +58,7 @@
 /mob/living/simple_animal/hostile/poison/bees/Initialize()
 	. = ..()
 	generate_bee_visuals()
-
+	AddComponent(/datum/component/swarming)
 
 /mob/living/simple_animal/hostile/poison/bees/Destroy()
 	if(beehome)

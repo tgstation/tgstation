@@ -311,13 +311,14 @@
 	container_resist()
 
 /obj/structure/closet/attack_hand(mob/user)
-	..()
+	. = ..()
+	if(.)
+		return
 	if(user.lying && get_dist(src, user) > 0)
 		return
 
 	if(!toggle(user))
 		togglelock(user)
-		return
 
 /obj/structure/closet/attack_paw(mob/user)
 	return attack_hand(user)
@@ -339,7 +340,7 @@
 		return
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
-		attack_hand(usr)
+		return attack_hand(usr)
 	else
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 

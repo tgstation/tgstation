@@ -37,7 +37,7 @@
 		if(MODE_MESON)
 			vision_flags = SEE_TURFS
 			darkness_view = 1
-			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 		if(MODE_TRAY) //undoes the last mode, meson
 			vision_flags = NONE

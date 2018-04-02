@@ -16,10 +16,9 @@
 	var/const/max_signs = 4
 
 
-/obj/structure/janitorialcart/New()
+/obj/structure/janitorialcart/Initialize()
+	. = ..()
 	create_reagents(100)
-	..()
-
 
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/mop, mob/user)
 	if(reagents.total_volume < 1)
@@ -90,6 +89,9 @@
 		return ..()
 
 /obj/structure/janitorialcart/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.set_machine(src)
 	var/dat
 	if(mybag)

@@ -15,7 +15,7 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 	var/cost_multiplier = MINERAL_MATERIAL_AMOUNT / 10 // Each circuit cost unit is 200cm3
 
 /datum/controller/subsystem/processing/circuit/Initialize(start_timeofday)
-	SScircuit.cipherkey = random_string(2000+rand(0,10), GLOB.alphabet)
+	SScircuit.cipherkey = uppertext(random_string(2000+rand(0,10), GLOB.alphabet))
 	circuits_init()
 	return ..()
 
@@ -48,21 +48,35 @@ PROCESSING_SUBSYSTEM_DEF(circuit)
 		/obj/item/device/electronic_assembly/calc,
 		/obj/item/device/electronic_assembly/clam,
 		/obj/item/device/electronic_assembly/simple,
+		/obj/item/device/electronic_assembly/hook,
+		/obj/item/device/electronic_assembly/pda,
 		/obj/item/device/electronic_assembly/medium/default,
 		/obj/item/device/electronic_assembly/medium/box,
 		/obj/item/device/electronic_assembly/medium/clam,
 		/obj/item/device/electronic_assembly/medium/medical,
+		/obj/item/device/electronic_assembly/medium/gun,
+		/obj/item/device/electronic_assembly/medium/radio,
 		/obj/item/device/electronic_assembly/large/default,
 		/obj/item/device/electronic_assembly/large/scope,
 		/obj/item/device/electronic_assembly/large/terminal,
 		/obj/item/device/electronic_assembly/large/arm,
+		/obj/item/device/electronic_assembly/large/tall,
+		/obj/item/device/electronic_assembly/large/industrial,
 		/obj/item/device/electronic_assembly/drone/default,
-		/obj/item/device/electronic_assembly/drone/arms
+		/obj/item/device/electronic_assembly/drone/arms,
+		/obj/item/device/electronic_assembly/drone/secbot,
+		/obj/item/device/electronic_assembly/drone/medbot,
+		/obj/item/device/electronic_assembly/drone/genbot,
+		/obj/item/device/electronic_assembly/drone/android,
+		/obj/item/device/electronic_assembly/wallmount/light,
+		/obj/item/device/electronic_assembly/wallmount,
+		/obj/item/device/electronic_assembly/wallmount/heavy
 		///obj/item/weapon/implant/integrated_circuit
 		)
 
 	circuit_fabricator_recipe_list["Tools"] = list(
 		/obj/item/device/integrated_electronics/wirer,
 		/obj/item/device/integrated_electronics/debugger,
-		/obj/item/device/integrated_electronics/analyzer
+		/obj/item/device/integrated_electronics/analyzer,
+		/obj/item/device/integrated_electronics/detailer
 		)

@@ -54,7 +54,9 @@
 		max_spawned = base.max_spawned
 	icon_state = "[base_state]_active"
 	active = TRUE
-	walk_away(src,loc,rand(1,4))
+	var/steps = rand(1,4)
+	for(var/i in 1 to steps)
+		step_away(src,loc)
 	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 
 /obj/item/grenade/clusterbuster/segment/prime()
@@ -76,7 +78,9 @@
 		if(istype(P))
 			P.active = TRUE
 			addtimer(CALLBACK(P, /obj/item/grenade/proc/prime), rand(15,60))
-		walk_away(P,loc,rand(1,4))
+		var/steps = rand(1,4)
+		for(var/i in 1 to steps)
+			step_away(src,loc)
 
 /obj/effect/payload_spawner/random_slime
 	var/volatile = FALSE
@@ -85,10 +89,17 @@
 	volatile = TRUE
 
 /obj/item/slime_extract/proc/activate_slime()
-	var/list/slime_chems = list("plasma","water","blood")
-	for(var/i in 1 to slime_chems.len)
-		if(!QDELETED(src))
-			reagents.add_reagent(pick_n_take(slime_chems),5) //Add them in random order so we get all effects
+	var/list/slime_chems = src.activate_reagents
+	if(!QDELETED(src))
+		var/chem = pick(slime_chems)
+		var/amount = 5
+		if(chem == "lesser plasma") //In the rare case we get another rainbow.
+			chem = "plasma"
+			amount = 4
+		if(chem == "holy water and uranium")
+			chem = "uranium"
+			reagents.add_reagent("holywater")
+		reagents.add_reagent(chem,amount)
 
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)
 	for(var/loop = numspawned ,loop > 0, loop--)
@@ -96,7 +107,9 @@
 		var/obj/item/slime_extract/P = new chosen(loc)
 		if(volatile)
 			addtimer(CALLBACK(P, /obj/item/slime_extract/proc/activate_slime), rand(15,60))
-		walk_away(P,loc,rand(1,4))
+		var/steps = rand(1,4)
+		for(var/i in 1 to steps)
+			step_away(src,loc)
 
 //////////////////////////////////
 //Custom payload clusterbusters

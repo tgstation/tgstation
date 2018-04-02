@@ -150,6 +150,9 @@
 	return TRUE
 
 /obj/item/device/gps/computer/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	attack_self(user)
 
 //Bed
@@ -274,7 +277,7 @@
 	icon_state = "x2"
 	var/possible = list(/obj/item/ship_in_a_bottle,
 						/obj/item/gun/energy/pulse,
-						/obj/item/sleeping_carp_scroll,
+						/obj/item/book/granter/martial/carp,
 						/obj/item/melee/supermatter_sword,
 						/obj/item/shield/changeling,
 						/obj/item/lava_staff,

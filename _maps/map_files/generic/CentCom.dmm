@@ -1918,7 +1918,7 @@
 /turf/closed/indestructible/riveted,
 /area/space)
 "fy" = (
-/obj/machinery/igniter,
+/obj/machinery/igniter/on,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
@@ -8542,8 +8542,7 @@
 	dwidth = 3;
 	name = "steel rain";
 	port_direction = 4;
-	preferred_direction = 4;
-	timid = 0
+	preferred_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)
@@ -12151,7 +12150,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Is" = (
-/obj/machinery/igniter,
+/obj/machinery/igniter/on,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/tdome/arena)

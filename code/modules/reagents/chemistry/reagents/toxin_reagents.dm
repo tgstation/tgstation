@@ -50,7 +50,7 @@
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/M)
 	if(istype(M))
-		M.apply_effect(5,IRRADIATE,0)
+		M.apply_effect(5,EFFECT_IRRADIATE,0)
 	return ..()
 
 /datum/reagent/toxin/plasma
@@ -128,7 +128,7 @@
 		M.adjustToxLoss(rand(20,60)*REM, 0)
 		. = 1
 	else if(prob(40))
-		M.heal_bodypart_damage(5*REM,0, 0)
+		M.heal_bodypart_damage(5*REM)
 		. = 1
 	..()
 
@@ -841,9 +841,9 @@
 	acidpwr = 42.0
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/M)
-	M.adjustFireLoss(current_cycle/10, 0) // I rode a tank, held a general's rank
-	. = 1 // When the blitzkrieg raged and the bodies stank
-	..() // Pleased to meet you, hope you guess my name
+	M.adjustFireLoss(current_cycle/10, 0)
+	. = 1
+	..()
 
 /datum/reagent/toxin/peaceborg/confuse
 	name = "Dizzying Solution"
@@ -872,7 +872,7 @@
 
 /datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
 	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
-	if(M.staminaloss < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
+	if(M.getStaminaLoss() < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
 		M.adjustStaminaLoss(10)
 	if(prob(30))
 		to_chat(M, "You should sit down and take a rest...")

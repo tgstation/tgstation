@@ -59,6 +59,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
 #define NO_MAT_REDEMPTION_2		1024
 
+// LAVA_PROTECT used on the flags_2 variable for both SUIT and HEAD items, and stops lava damage. Must be present in both to stop lava damage.
+#define LAVA_PROTECT_2			2048
+
 //turf-only flags
 #define NOJAUNT_1				1
 #define UNUSED_TRANSIT_TURF_1	2

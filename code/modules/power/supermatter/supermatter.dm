@@ -484,7 +484,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		to_chat(C, "<span class='userdanger'>That was a really dumb idea.</span>")
-		var/obj/item/bodypart/head/rip_u = C.get_bodypart("head")
+		var/obj/item/bodypart/head/rip_u = C.get_bodypart(BODY_ZONE_HEAD)
 		rip_u.dismember(BURN) //nice try jedi
 
 /obj/machinery/power/supermatter_shard/attack_paw(mob/user)
@@ -512,6 +512,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	return
 
 /obj/machinery/power/supermatter_shard/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	dust_mob(user, cause = "hand")
 
 /obj/machinery/power/supermatter_shard/proc/dust_mob(mob/living/nom, vis_msg, mob_msg, cause)
@@ -621,7 +624,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 			var/atom/movable/pulled_object = P
 			if(ishuman(P))
 				var/mob/living/carbon/human/H = P
-				H.apply_effect(40, KNOCKDOWN, 0)
+				H.apply_effect(40, EFFECT_KNOCKDOWN, 0)
 			if(pulled_object && !pulled_object.anchored && !ishuman(P))
 				step_towards(pulled_object,center)
 				step_towards(pulled_object,center)
