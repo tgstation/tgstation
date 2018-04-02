@@ -16,8 +16,8 @@
 	var/productivity = 0
 	var/max_items = 40
 	var/datum/techweb/stored_research
-	var/list/show_categories = list("Food", "Botany Chemicals", "Leather and Cloth", "Special")
-	var/list/timesFiveCategories = list("Food", "Botany Chemicals", "Special")
+	var/list/show_categories = list("Food", "Botany Chemicals", "Leather and Cloth", "Special") //hippie edit - added "Special" to list
+	var/list/timesFiveCategories = list("Food", "Botany Chemicals", "Special") //hippie edit - added "Special" to list
 
 /obj/machinery/biogenerator/Initialize()
 	. = ..()
