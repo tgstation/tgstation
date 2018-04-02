@@ -137,14 +137,10 @@
 			if (!atmos_adjacent_turfs || !atmos_adjacent_turfs[enemy_tile])
 				continue
 
-
-		var/is_active = air.compare(enemy_air)
-
-		if(is_active)
+		if(!excited && air.compare(enemy_air))
 			//testing("Active turf found. Return value of compare(): [is_active]")
-			if(!excited) //make sure we aren't already excited
-				excited = 1
-				SSair.active_turfs |= src
+			excited = TRUE
+			SSair.active_turfs |= src
 	UNSETEMPTY(atmos_adjacent_turfs)
 	if (atmos_adjacent_turfs)
 		src.atmos_adjacent_turfs = atmos_adjacent_turfs
