@@ -1,0 +1,4 @@
+author: "robbylm"
+delete-after: True
+changes: 
+  - bugfix: "Fixes 0 value not being saved in constant memory circuits (#36860)"
