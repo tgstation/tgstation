@@ -93,25 +93,15 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/everyone/New()
 	..()
-	for(var/mob in GLOB.mob_list)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
-
-/datum/atom_hud/alternate_appearance/basic/everyone/mobShouldSee(mob/M)
-	return !isobserver(M)
+	for(var/mob in (GLOB.mob_list - GLOB.dead_mob_list))
+		add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/silicons
 
 /datum/atom_hud/alternate_appearance/basic/silicons/New()
 	..()
 	for(var/mob in GLOB.silicon_mobs)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
-
-/datum/atom_hud/alternate_appearance/basic/silicons/mobShouldSee(mob/M)
-	if(issilicon(M))
-		return TRUE
-	return FALSE
+		add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/AI
 
@@ -120,48 +110,27 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	for(var/mob/ai in GLOB.ai_list)
 		add_hud_to(ai)
 
-/datum/atom_hud/alternate_appearance/basic/AI/mobShouldSee(mob/M)
-	if(isAI(M))
-		return TRUE
-	return FALSE
-
 /datum/atom_hud/alternate_appearance/basic/observers
 	add_ghost_version = FALSE //just in case, to prevent infinite loops
 
 /datum/atom_hud/alternate_appearance/basic/observers/New()
 	..()
 	for(var/mob in GLOB.dead_mob_list)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
-
-/datum/atom_hud/alternate_appearance/basic/observers/mobShouldSee(mob/M)
-	return isobserver(M)
+		add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/noncult
 
 /datum/atom_hud/alternate_appearance/basic/noncult/New()
 	..()
-	for(var/mob in GLOB.player_list)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
-
-/datum/atom_hud/alternate_appearance/basic/noncult/mobShouldSee(mob/M)
-	if(!iscultist(M))
-		return TRUE
-	return FALSE
+	for(var/mob in (GLOB.player_list - GLOB.cult_narsie))
+		add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/cult
 
 /datum/atom_hud/alternate_appearance/basic/cult/New()
 	..()
-	for(var/mob in GLOB.player_list)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
-
-/datum/atom_hud/alternate_appearance/basic/cult/mobShouldSee(mob/M)
-	if(iscultist(M))
-		return TRUE
-	return FALSE
+	for(var/mob in GLOB.cult_narsie)
+		add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/blessedAware
 
