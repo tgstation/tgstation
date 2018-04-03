@@ -159,7 +159,7 @@
 	var/list/products = list("generator", "laptop", "keyboard", "memory card", "display", "operating system", "processor", "graphics card", "nanobots", "power supply", "pAI", "mech", "capacitor", "cell")
 	var/list/prefix = list("the [company_name] ", "the high performance ", "the mobile ", "the portable ", "the professional ", "the extreme ", "the incredible ", "the blazing fast ", "the bleeding edge ", "the bluespace-powered ", null)
 	var/L = pick(consonant(), "Seed ", "Radiant ", "Robust ", "Pentathon ", "Athlete ", "Phantom ", "Semper Fi ")
-	var/N = rand(0,99)
+	var/N = rand(1, 99)
 	var/prefix2 = "[L][N][prob(5) ? " " + latin_number(N) : null]"
 	return "[pick(prefix)][prefix2] [pick(products)]"
 
