@@ -102,3 +102,44 @@
 		else
 			to_chat(user, "<span class='warning'>[src] cannot hold more syringes!</span>")
 	return FALSE
+
+/obj/item/gun/syringe/chem
+	name = "reagent gun"
+	desc = "A Nanotrasen syringe gun, modified to automatically synthesise chemical darts, and instead hold reagents."
+	icon_state = "chemgun"
+	item_state = "chemgun"
+	max_syringes = 4
+	container_type = OPENCONTAINER
+	var/time_per_syringe = 250
+	var/last_synth = 0
+
+/obj/item/gun/syringe/chem/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
+	return
+
+/obj/item/gun/syringe/chem/Initialize()
+	. = ..()
+	chambered = new /obj/item/ammo_casing/chemgun(src)
+	START_PROCESSING(SSobj, src)
+	create_reagents(100)
+
+/obj/item/gun/syringe/chem/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/gun/syringe/chem/can_shoot()
+	return syringes.len
+
+/obj/item/gun/syringe/chem/process_chamber()
+	if(chambered && !chambered.BB && syringes.len)
+		chambered.newshot()
+
+/obj/item/gun/syringe/chem/process()
+	if(syringes.len >= max_syringes)
+		return
+	if(world.time < last_synth+time_per_syringe)
+		return
+	to_chat(loc, "<span class='warning'>You hear a click as [src] synthesizes a new dart.</span>")
+	syringes.len++
+	if(chambered && !chambered.BB)
+		chambered.newshot()
+	last_synth = world.time
