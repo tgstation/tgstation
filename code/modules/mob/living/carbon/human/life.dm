@@ -86,8 +86,6 @@
 		if(prob(3))
 			if(prob(25))
 				emote("drool")
-			else
-				say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
 	else
 		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
 
