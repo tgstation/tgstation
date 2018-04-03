@@ -93,7 +93,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/everyone/New()
 	..()
-	for(var/mob in (GLOB.mob_list - GLOB.dead_mob_list))
+	for(var/mob in GLOB.alive_mob_list)
 		add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/silicons
@@ -107,7 +107,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/AI/New()
 	..()
-	for(var/mob/ai in GLOB.ai_list)
+	for(var/mob in GLOB.ai_list)
 		add_hud_to(ai)
 
 /datum/atom_hud/alternate_appearance/basic/observers
