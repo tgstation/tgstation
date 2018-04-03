@@ -11,6 +11,7 @@
 
 /datum/mood_event/Destroy()
 	remove_effects()
+	. = ..()
 
 /datum/mood_event/proc/add_effects(param)
 	return
