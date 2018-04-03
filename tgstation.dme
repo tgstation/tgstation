@@ -1667,6 +1667,7 @@
 #include "code\modules\language\draconic.dm"
 #include "code\modules\language\drone.dm"
 #include "code\modules\language\language.dm"
+#include "code\modules\language\language_guidebook.dm"
 #include "code\modules\language\language_holder.dm"
 #include "code\modules\language\language_menu.dm"
 #include "code\modules\language\machine.dm"
