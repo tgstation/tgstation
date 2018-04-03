@@ -35,6 +35,10 @@
 	if(cable)
 		debris += new /obj/item/stack/cable_coil(src, cable)
 
+/obj/machinery/door/window/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/ntnet_interface)
+
 /obj/machinery/door/window/Destroy()
 	density = FALSE
 	for(var/I in debris)
@@ -295,6 +299,33 @@
 		if("deny")
 			flick("[src.base_state]deny", src)
 
+/obj/machinery/door/window/check_access_ntnet(datum/netdata/data)
+	return !requiresID() || ..()
+
+/obj/machinery/door/window/ntnet_recieve(datum/netdata/data)
+	// Check if the window is powered and can accept control packets.
+	if(!hasPower())
+		return
+
+	// Check packet access level.
+	if(!check_access_ntnet(data))
+		return
+
+	// Handle recieved packet.
+	var/command = lowertext(data.plaintext_data)
+	var/command_value = lowertext(data.plaintext_data_secondary)
+	switch(command)
+		if("open")
+			if(command_value == "on" && !density)
+				return
+
+			if(command_value == "off" && density)
+				return
+
+			if(density)
+				INVOKE_ASYNC(src, .proc/open)
+			else
+				INVOKE_ASYNC(src, .proc/close)
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"
