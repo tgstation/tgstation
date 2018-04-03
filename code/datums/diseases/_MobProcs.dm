@@ -17,6 +17,14 @@
 	if(HasDisease(D))
 		return FALSE
 
+	var/can_infect = FALSE
+	for(var/host_type in D.infectable_biotypes)
+		if(host_type in mob_biotypes)
+			can_infect = TRUE
+			break
+	if(!can_infect)
+		return FALSE
+
 	if(!(type in D.viable_mobtypes))
 		return FALSE
 
@@ -130,14 +138,6 @@
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
 	if(dna)
 		if(has_trait(TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
-			return FALSE
-
-		var/can_infect = FALSE
-		for(var/host_type in D.infectable_hosts)
-			if(host_type in dna.species.species_traits)
-				can_infect = TRUE
-				break
-		if(!can_infect)
 			return FALSE
 
 	for(var/thing in D.required_organs)
