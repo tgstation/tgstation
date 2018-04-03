@@ -7,7 +7,7 @@
 #define REVENANT_NAME_FILE "revenant_names.json"
 
 /mob/living/simple_animal/revenant
-	name = "\a Revenant"
+	name = "revenant"
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "revenant_idle"
