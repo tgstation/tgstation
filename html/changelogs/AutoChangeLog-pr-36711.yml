@@ -1,0 +1,5 @@
+author: "JohnGinnane"
+delete-after: True
+changes: 
+  - bugfix: "Fixed items sometimes being used on fullpacks when trying to insert"
+  - bugfix: "Fixed spray containers being used on open lockers and other containers"

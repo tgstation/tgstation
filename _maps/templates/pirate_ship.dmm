@@ -1058,7 +1058,7 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
 	name = "N2 Out";
-	target_pressure = MAX_OUTPUT_PRESSURE
+	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
@@ -1217,7 +1217,7 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
 	name = "O2 Out";
-	target_pressure = MAX_OUTPUT_PRESSURE
+	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
@@ -1239,7 +1239,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
 	name = "Port Out";
-	target_pressure = MAX_OUTPUT_PRESSURE
+	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
@@ -1362,7 +1362,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
 	name = "O2 to Incinerator";
-	target_pressure = MAX_OUTPUT_PRESSURE
+	target_pressure = 4500
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -1513,7 +1513,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
 	name = "Plasma to Incinerator";
-	target_pressure = MAX_OUTPUT_PRESSURE
+	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
@@ -1590,7 +1590,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 2;
-	target_pressure = MAX_OUTPUT_PRESSURE
+	target_pressure = 4500
 	},
 /obj/machinery/button/door{
 	id = "pirateturbinebolt";
@@ -1661,7 +1661,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
 	name = "Port to Incinerator";
-	target_pressure = MAX_OUTPUT_PRESSURE
+	target_pressure = 4500
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/caution,

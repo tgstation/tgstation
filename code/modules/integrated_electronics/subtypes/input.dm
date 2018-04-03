@@ -345,15 +345,15 @@
 		activate_pin(3)
 
 /obj/item/integrated_circuit/input/turfpoint
-	name = "Tile pointer"
-	desc = "This circuit will get tile ref with given relative coorinates."
-	extended_desc = "If the machine	cannot see the target, it will not be able to calculate the correct direction.\
-	This circuit is working only in assembly."
+	name = "tile pointer"
+	desc = "This circuit will get tile ref with given absolute coorinates."
+	extended_desc = "If the machine	cannot see the target, it will not be able to scan it.\
+	This circuit will only work in an assembly."
 	icon_state = "numberpad"
 	complexity = 5
 	inputs = list("X" = IC_PINTYPE_NUMBER,"Y" = IC_PINTYPE_NUMBER)
 	outputs = list("tile" = IC_PINTYPE_REF)
-	activators = list("calculate dir" = IC_PINTYPE_PULSE_IN, "on calculated" = IC_PINTYPE_PULSE_OUT,"not calculated" = IC_PINTYPE_PULSE_OUT)
+	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT,"not scanned" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 40
 
@@ -362,11 +362,11 @@
 		activate_pin(3)
 		return
 	var/turf/T = get_turf(assembly)
-	var/target_x = CLAMP(get_pin_data(IC_INPUT, 1) - assembly.x, 0, world.maxx)
-	var/target_y = CLAMP(get_pin_data(IC_INPUT, 2) - assembly.y, 0, world.maxy)
+	var/target_x = CLAMP(get_pin_data(IC_INPUT, 1), 0, world.maxx)
+	var/target_y = CLAMP(get_pin_data(IC_INPUT, 2), 0, world.maxy)
 	var/turf/A = locate(target_x, target_y, T.z)
 	set_pin_data(IC_OUTPUT, 1, null)
-	if(!A||!(A in view(T)))
+	if(!A || !(A in view(T)))
 		activate_pin(3)
 		return
 	else
