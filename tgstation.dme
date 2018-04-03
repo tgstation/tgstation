@@ -832,7 +832,7 @@
 #include "code\game\objects\items\implants\implant_explosive.dm"
 #include "code\game\objects\items\implants\implant_freedom.dm"
 #include "code\game\objects\items\implants\implant_krav_maga.dm"
-#include "code\game\objects\items\implants\implant_loyality.dm"
+#include "code\game\objects\items\implants\implant_mindshield.dm"
 #include "code\game\objects\items\implants\implant_misc.dm"
 #include "code\game\objects\items\implants\implant_spell.dm"
 #include "code\game\objects\items\implants\implant_storage.dm"
