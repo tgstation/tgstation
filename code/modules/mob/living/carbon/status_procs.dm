@@ -93,10 +93,10 @@
 	if(B)
 		. = B.gain_trauma_type(brain_trauma_type, resilience)
 
-/mob/living/carbon/proc/cure_trauma_type(resilience)
+/mob/living/carbon/proc/cure_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 	if(B)
-		. = B.cure_trauma_type(resilience)
+		. = B.cure_trauma_type(brain_trauma_type, resilience)
 
 /mob/living/carbon/proc/cure_all_traumas(resilience)
 	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
