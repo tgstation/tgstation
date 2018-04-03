@@ -8,7 +8,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
 	.=..()
-	if (prob(33) && rad_count > 250 && severity > 15)
+	if (prob(33) && rad_count > 500 && severity > 25)
 		if (next_warn_rad > world.time)
 			return
 		next_warn_rad = world.time + warn_rad_cooldown

@@ -4,6 +4,10 @@
 	desc = "A robust suit to line the inside of your nanosuit. Provides internal protection."
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 
+/obj/item/clothing/under/syndicate/combat/nano/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
+
 /obj/item/clothing/under/syndicate/combat/nano/equipped(mob/user, slot)
 	.=..()
 	if(slot == slot_w_uniform)
@@ -14,6 +18,10 @@
 	desc = "A robust gas mask. Property of CryNet Systems." //More accurate
 	icon_state = "syndicate"
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
+
+/obj/item/clothing/mask/gas/nano_gas/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
 
 /obj/item/clothing/mask/gas/nano_mask/equipped(mob/user, slot)
 	.=..()
@@ -36,6 +44,11 @@
 	var/jumpdistance = 2 //-1 from to see the actual distance, e.g 3 goes over 2 tiles
 	var/jumpspeed = 2
 	actions_types = list(/datum/action/item_action/nanojump)
+
+/obj/item/clothing/shoes/combat/nano/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
+
 
 /obj/item/clothing/shoes/combat/coldres/nanojump/ui_action_click(mob/user, action)
 	if(!isliving(user))
@@ -64,7 +77,7 @@
 	var/atom/target = get_edge_target_turf(user, user.dir) //gets the user's direction
 
 	if(user.throw_at(target, jumpdistance, jumpspeed, spin = FALSE, diagonals_first = TRUE))
-		playsound(src, 'sound/effects/stealthoff.ogg', 50, 1, 1)
+		playsound(src, 'sound/effects/stealthoff.ogg', 50, 0.75, 1)
 		user.visible_message("<span class='warning'>[usr] jumps forward into the air!</span>")
 	else
 		to_chat(user, "<span class='warning'>Something prevents you from dashing forward!</span>")
@@ -82,6 +95,12 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 
+/obj/item/clothing/gloves/combat/nano/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
+
+/obj/item/device/radio/headset/syndicate/alt/nano
+
 /obj/item/clothing/gloves/combat/nano/equipped(mob/user, slot)
 	.=..()
 	if(slot == slot_gloves)
@@ -95,6 +114,10 @@
 	subspace_transmission = FALSE
 	keyslot = new /obj/item/device/encryptionkey/binary
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
+
+/obj/item/device/radio/headset/syndicate/alt/nano/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
 
 /obj/item/device/radio/headset/syndicate/alt/nano/equipped(mob/user, slot)
 	.=..()
@@ -116,6 +139,10 @@
 	actions_types = list(/datum/action/item_action/nanogoggles/toggle)
 	vision_correction = 1 //We must let our wearer have good eyesight
 	var/on = 0
+
+/obj/item/clothing/glasses/nano_goggles/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
 
 /datum/client_colour/glass_colour/nightvision
 	colour = "#45723f"
@@ -188,11 +215,14 @@
 	var/hit_use = 5
 	var/criticalpower = FALSE
 	var/mode = "none"
-	var/recharge_delay = 30
+	var/recharge_delay = 40
 	var/datum/martial_art/nano/style = new
 	var/shutdown = FALSE
 	var/empdmg = 0
 
+/obj/item/clothing/suit/space/hardsuit/nano/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
 
 /obj/item/clothing/suit/space/hardsuit/nano/emp_act(severity)
 	..()
@@ -207,7 +237,6 @@
 	if(!U.mind)
 		return //Not sure how this could happen.
 	shutdown = TRUE
-	DisableModes()
 	U.Knockdown(empdmg*30)
 	U.AdjustStun(empdmg*30)
 	U.Jitter(empdmg*30)
@@ -264,27 +293,16 @@
 	update_icon()
 
 /obj/item/clothing/suit/space/hardsuit/nano/Destroy()
-	DisableModes()
 	QDEL_NULL(cell)
 	STOP_PROCESSING(SSobj, src)
 	if(U)
 		U = null
 	return ..()
 
-obj/item/clothing/suit/space/hardsuit/nano/proc/DisableModes()
-	if(U)
-		armor_cancel()
-		cloak_cancel()
-		speed_cancel()
-		strength_cancel()
 
 /obj/item/clothing/suit/space/hardsuit/nano/examine(mob/user)
 	..()
-	if(user == U)
-		if(mode != "none")
-			to_chat(user, "The suit appears to be in: [mode] mode.")
-		else
-			to_chat(user, "The suit appears to not be in any mode.")
+	to_chat(user, "The suit appears to be in: [mode] mode.")
 
 
 /obj/item/clothing/suit/space/hardsuit/nano/process()
@@ -295,18 +313,23 @@ obj/item/clothing/suit/space/hardsuit/nano/proc/DisableModes()
 			helmet.display_visor_message("Energy Critical!")
 			criticalpower = !criticalpower
 	if(cell.charge < 1)
-		DisableModes()
 		cell.charge = 0
+		if(mode != "armor")
+			toggle_mode("armor")
 	if(mode == "cloak")
 		cell.use(1)
+
 
 /obj/item/clothing/suit/space/hardsuit/nano/proc/ntick()
 	spawn while(!shutdown)
 		if(cell && cell.charge < cell.maxcharge && mode != "cloak" && !U.Move())
-			sleep(10)//bit of a delay
-			cell.give(charge_rate)
+			if(cell.charge >= 1)
+				cell.give(charge_rate) //this will get called after the bottom
+			else
+				sleep(50) //if we lose energy wait 5 seconds then recharge us
+				cell.give(charge_rate)
 
-		sleep(recharge_delay)//recharges us every 3 seconds
+		sleep(recharge_delay)//recharges us at variable rate
 
 
 /obj/item/clothing/suit/space/hardsuit/nano/hit_reaction(mob/living/carbon/human/user, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -316,197 +339,103 @@ obj/item/clothing/suit/space/hardsuit/nano/proc/DisableModes()
 			cell.use(CLAMP(hit_use + damage,1,cell.charge))
 		else if(cell <= 20) //we instantly go out of armor/cloak if we get hit at charge of 20 or less
 			cell.charge = 0
-			DisableModes()
+			//DisableModes()
 		if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(50))
 			var/datum/effect_system/spark_spread/s = new
 			s.set_up(1, 1, src)
 			s.start()
 	if(mode == "armor")
-		user.visible_message("<span class='danger'>[user]'s shields deflect [attack_text]!</span>")
-		return 1
+		if(cell.charge > 0)
+			user.visible_message("<span class='danger'>[user]'s shields deflect [attack_text]!</span>")
+			return 1
+		else
+			return 0
+
 	return 0
 
 /obj/item/clothing/suit/space/hardsuit/nano/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/nanosuit/armor))
-		armormode()
+		toggle_mode("armor")
 		return TRUE
 	if(istype(action, /datum/action/item_action/nanosuit/cloak))
-		cloakmode()
+		toggle_mode("cloak")
 		return TRUE
 	if(istype(action, /datum/action/item_action/nanosuit/speed))
-		speedmode()
+		toggle_mode("speed")
 		return TRUE
 	if(istype(action, /datum/action/item_action/nanosuit/strength))
-		strengthmode()
+		toggle_mode("strength")
 		return TRUE
 	return FALSE
 
 /obj/item/clothing/suit/space/hardsuit/nano/proc/can_toggle()
-	if(cell.charge <= 0 && !shutdown)
-		helmet.display_visor_message("Insufficient Charge!")
-		return FALSE
-	if(shutdown)
-		helmet.display_visor_message("ERROR")
+	if(!U)
 		return FALSE
 	return TRUE
 
-/obj/item/clothing/suit/space/hardsuit/nano/proc/armormode()
-	armor_toggle()
-
-/obj/item/clothing/suit/space/hardsuit/nano/proc/armor_toggle()
-	if(!U)
-		return
-	if(mode == "armor")
-		armor_cancel()
-	else
-		if(can_toggle())
-			update_icon()
-			cloak_cancel()
-			speed_cancel()
-			strength_cancel()
-			helmet.display_visor_message("Maximum Armor!")
-			slowdown = 1.0
-			mode = "armor"
-			armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 65,
+/obj/item/clothing/suit/space/hardsuit/nano/proc/toggle_mode(var/suitmode)
+	if(can_toggle())
+		switch(suitmode)
+			if("armor")
+				mode = "armor"
+				helmet.display_visor_message("Maximum Armor!")
+				slowdown = 1.0
+				armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 65,
 							"bomb" = 100, "bio" = 100, "rad" = 90, "fire" = 100, "acid" = 100)
-			helmet.armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 65,
+				helmet.armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 65,
 							"bomb" = 100, "bio" = 100, "rad" = 90, "fire" = 100, "acid" = 100)
+				U.filters -= filter(type="blur",size=1)
+				animate(U, alpha = 255, time = 5)
+				U.remove_trait(TRAIT_GOTTAGOFAST, "Speed Mode")
+				U.remove_trait(TRAIT_IGNORESLOWDOWN, "Speed Mode")
+				if(!U.has_trait(TRAIT_HULK))//don't want to cuck our hulk push immunity
+					U.remove_trait(TRAIT_PUSHIMMUNE, "Strength Mode")
+				style.remove(U)
 
+			if("cloak")
+				mode = "cloak"
+				helmet.display_visor_message("Cloak Engaged!")
+				slowdown = 0.4
+				armor = initial(armor)
+				U.filters += filter(type="blur",size=1)
+				animate(U, alpha = 40, time = 2)
+				U.remove_trait(TRAIT_GOTTAGOFAST, "Speed Mode")
+				U.remove_trait(TRAIT_IGNORESLOWDOWN, "Speed Mode")
+				if(!U.has_trait(TRAIT_HULK))//don't want to cuck our hulk push immunity
+					U.remove_trait(TRAIT_PUSHIMMUNE, "Strength Mode")
+				style.remove(U)
+
+			if("speed")
+				mode = "speed"
+				helmet.display_visor_message("Maximum Speed!")
+				slowdown = initial(slowdown)
+				armor = initial(armor)
+				U.add_trait(TRAIT_GOTTAGOFAST, "Speed Mode")
+				U.add_trait(TRAIT_IGNORESLOWDOWN, "Speed Mode")
+				U.adjustOxyLoss(-2, 0)
+				U.adjustStaminaLoss(-20)
+				U.filters -= filter(type="blur",size=1)
+				animate(U, alpha = 255, time = 5)
+				if(!U.has_trait(TRAIT_HULK))//don't want to cuck our hulk push immunity
+					U.remove_trait(TRAIT_PUSHIMMUNE, "Strength Mode")
+				style.remove(U)
+
+			if("strength")
+				mode = "strength"
+				helmet.display_visor_message("Maximum Strength!")
+				U.add_trait(TRAIT_PUSHIMMUNE, "Strength Mode")
+				style.teach(U,1)
+				slowdown = initial(slowdown)
+				armor = initial(armor)
+				U.filters -= filter(type="blur",size=1)
+				animate(U, alpha = 255, time = 5)
+				U.remove_trait(TRAIT_GOTTAGOFAST, "Speed Mode")
+				U.remove_trait(TRAIT_IGNORESLOWDOWN, "Speed Mode")
+
+	update_icon()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
-
-
-/obj/item/clothing/suit/space/hardsuit/nano/proc/armor_cancel()
-	if(!U)
-		return 0
-
-	if(mode == "armor")
-		update_icon()
-		slowdown = initial(slowdown)
-		helmet.display_visor_message("Armor Disabled!")
-		mode = "none"
-		armor = initial(armor)
-		return 1
-	return 0
-
-
-/obj/item/clothing/suit/space/hardsuit/nano/proc/cloakmode()
-	cloak_toggle()
-
-/obj/item/clothing/suit/space/hardsuit/nano/proc/cloak_toggle()
-	if(!U)
-		return
-	if(mode == "cloak")
-		cloak_cancel()
-	else
-		if(can_toggle())
-			update_icon()
-			armor_cancel()
-			speed_cancel()
-			strength_cancel()
-			helmet.display_visor_message("Cloak Engaged!")
-			slowdown = 0.4
-			mode = "cloak"
-			U.filters += filter(type="blur",size=1)
-			animate(U, alpha = 40, time = 2)
-
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
-
-/obj/item/clothing/suit/space/hardsuit/nano/proc/cloak_cancel()
-	if(!U)
-		return 0
-
-	if(mode == "cloak")
-		update_icon()
-		slowdown = initial(slowdown)
-		helmet.display_visor_message("Cloak Disabled!")
-		mode = "none"
-		U.filters -= filter(type="blur",size=1)
-		animate(U, alpha = 255, time = 5)
-		return 1
-	return 0
-
-
-/obj/item/clothing/suit/space/hardsuit/nano/proc/speedmode()
-	speed_toggle()
-
-/obj/item/clothing/suit/space/hardsuit/nano/proc/speed_toggle()
-	if(!U)
-		return
-	if(mode == "speed")
-		speed_cancel()
-	else
-		if(can_toggle())
-			update_icon()
-			armor_cancel()
-			cloak_cancel()
-			strength_cancel()
-			helmet.display_visor_message("Maximum Speed!")
-			U.add_trait(TRAIT_GOTTAGOFAST, "Speed Mode")
-			U.add_trait(TRAIT_IGNORESLOWDOWN, "Speed Mode")
-			U.adjustOxyLoss(-2, 0)
-			U.adjustStaminaLoss(-20)
-			mode = "speed"
-
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
-
-/obj/item/clothing/suit/space/hardsuit/nano/proc/speed_cancel()
-	if(!U)
-		return 0
-
-	if(mode == "speed")
-		update_icon()
-		U.remove_trait(TRAIT_GOTTAGOFAST, "Speed Mode")
-		U.remove_trait(TRAIT_IGNORESLOWDOWN, "Speed Mode")
-		helmet.display_visor_message("Speed Disabled!")
-		mode = "none"
-		return 1
-	return 0
-
-
-/obj/item/clothing/suit/space/hardsuit/nano/proc/strengthmode()
-	strength_toggle()
-
-
-/obj/item/clothing/suit/space/hardsuit/nano/proc/strength_toggle()
-	if(!U)
-		return
-	if(mode == "strength")
-		strength_cancel()
-	else
-		if(can_toggle())
-			update_icon()
-			armor_cancel()
-			cloak_cancel()
-			speed_cancel()
-			helmet.display_visor_message("Maximum Strength!")
-			mode = "strength"
-			U.add_trait(TRAIT_PUSHIMMUNE, "Strength Mode")
-			style.teach(U,1)
-
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
-
-/obj/item/clothing/suit/space/hardsuit/nano/proc/strength_cancel()
-	if(!U)
-		return 0
-
-	if(mode == "strength")
-		update_icon()
-		helmet.display_visor_message("Strength Disabled!")
-		mode = "none"
-		if(!U.has_trait(TRAIT_HULK))//don't want to cuck our hulk push immunity
-			U.remove_trait(TRAIT_PUSHIMMUNE, "Strength Mode")
-		style.remove(U)
-		return 1
-	return 0
-
 
 /datum/action/item_action/nanogoggles/toggle
 	check_flags = AB_CHECK_STUN|AB_CHECK_CONSCIOUS
@@ -568,6 +497,10 @@ obj/item/clothing/suit/space/hardsuit/nano/proc/DisableModes()
 	var/obj/item/clothing/glasses/nano_goggles/nanogoggles
 	actions_types = list()
 
+/obj/item/clothing/head/helmet/space/hardsuit/nano/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
+
 /obj/item/clothing/suit/space/hardsuit/nano/equipped(mob/user, slot)
 	if(ishuman(user))
 		U = user
@@ -595,7 +528,6 @@ obj/item/clothing/suit/space/hardsuit/nano/proc/DisableModes()
 
 
 obj/item/clothing/suit/space/hardsuit/nano/dropped()
-	DisableModes()
 	if(U)
 		U = null
 	..()
@@ -633,7 +565,7 @@ obj/item/clothing/suit/space/hardsuit/nano/dropped()
 					if(NS.mode == "speed" || NS.mode == "cloak")
 						NS.cell.use(NS.move_use)
 				else
-					NS.DisableModes()
+					//NS.DisableModes()
 					NS.cell.charge = 0
 
 /datum/martial_art/nano
