@@ -22,14 +22,16 @@
 	desc = "A computer used for remotely handling slimes."
 	networks = list("ss13")
 	circuit = /obj/item/circuitboard/computer/xenobiology
-	var/datum/action/innate/slime_place/slime_place_action = new
-	var/datum/action/innate/slime_pick_up/slime_up_action = new
-	var/datum/action/innate/feed_slime/feed_slime_action = new
-	var/datum/action/innate/monkey_recycle/monkey_recycle_action = new
-	var/datum/action/innate/slime_scan/scan_action = new
-	var/datum/action/innate/feed_potion/potion_action = new
+	var/datum/action/innate/slime_place/slime_place_action
+	var/datum/action/innate/slime_pick_up/slime_up_action
+	var/datum/action/innate/feed_slime/feed_slime_action
+	var/datum/action/innate/monkey_recycle/monkey_recycle_action
+	var/datum/action/innate/slime_scan/scan_action
+	var/datum/action/innate/feed_potion/potion_action
 
-	var/list/stored_slimes = list()
+	var/datum/component/redirect/listener
+
+	var/list/stored_slimes
 	var/obj/item/slimepotion/slime/current_potion
 	var/max_slimes = 5
 	var/monkeys = 0
@@ -38,6 +40,26 @@
 	icon_keyboard = "rd_key"
 
 	light_color = LIGHT_COLOR_PINK
+
+/obj/machinery/computer/camera_advanced/xenobio/Initialize()
+	. = ..()
+	slime_place_action = new
+	slime_up_action = new
+	feed_slime_action = new
+	monkey_recycle_action = new
+	scan_action = new
+	potion_action = new
+	stored_slimes = list()
+	listener = AddComponent(/datum/component/redirect, COMSIG_ATOM_CONTENTS_DEL, CALLBACK(src, .proc/on_contents_del))
+
+/obj/machinery/computer/camera_advanced/xenobio/Destroy()
+	stored_slimes = null
+	QDEL_NULL(current_potion)
+	for(var/i in contents)
+		var/mob/living/simple_animal/slime/S = i
+		if(istype(S))
+			S.forceMove(drop_location())
+	return ..()
 
 /obj/machinery/computer/camera_advanced/xenobio/CreateEye()
 	eyeobj = new /mob/camera/aiEye/remote/xenobio(get_turf(src))
@@ -78,6 +100,12 @@
 		potion_action.target = src
 		potion_action.Grant(user)
 		actions += potion_action
+
+/obj/machinery/computer/camera_advanced/xenobio/proc/on_contents_del(atom/deleted)
+	if(current_potion == deleted)
+		current_potion = null
+	if(deleted in stored_slimes)
+		stored_slimes -= deleted
 
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))

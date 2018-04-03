@@ -10,7 +10,7 @@
 
 	density = FALSE
 	stat = DEAD
-	canmove = 0
+	canmove = FALSE
 
 	anchored = TRUE	//  don't get pushed around
 	var/mob/living/new_character	//for instant transfer once the round is set up
