@@ -31,7 +31,8 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/pump/on
 	on = TRUE
-
+	icon_state = "pump_on"
+	
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
 	SSradio.remove_object(src,frequency)
 	if(radio_connection)
