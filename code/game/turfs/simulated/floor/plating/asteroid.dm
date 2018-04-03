@@ -13,7 +13,7 @@
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/floor_variance = 20 //probability floor has a different icon state
-	archdrops = list(/obj/item/stack/ore/glass = 5)
+	archdrops = list(/obj/item/stack/ore/glass = list(ARCH_PROB = 100,ARCH_MAXDROP = 5))
 	attachment_holes = FALSE
 
 /turf/open/floor/plating/asteroid/Initialize()
@@ -24,7 +24,7 @@
 		icon_state = "[environment_type][rand(0,12)]"
 
 	if(LAZYLEN(archdrops))
-		AddComponent(/datum/component/archaeology, 100, archdrops)
+		AddComponent(/datum/component/archaeology, archdrops)
 
 
 /turf/open/floor/plating/asteroid/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
@@ -81,7 +81,7 @@
 	icon_state = "basalt"
 	icon_plating = "basalt"
 	environment_type = "basalt"
-	archdrops = list(/obj/item/stack/ore/glass/basalt = 5)
+	archdrops = list(/obj/item/stack/ore/glass/basalt = list(ARCH_PROB = 100,ARCH_MAXDROP = 5))
 	floor_variance = 15
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
@@ -292,7 +292,7 @@
 	environment_type = "snow"
 	flags_1 = NONE
 	planetary_atmos = TRUE
-	archdrops = list(/obj/item/stack/sheet/mineral/snow = 5)
+	archdrops = list(/obj/item/stack/sheet/mineral/snow = list(ARCH_PROB = 100, ARCH_MAXDROP = 5))
 	burnt_states = list("snow_dug")
 
 /turf/open/floor/plating/asteroid/snow/burn_tile()
