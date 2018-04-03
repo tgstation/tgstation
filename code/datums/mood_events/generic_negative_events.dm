@@ -90,6 +90,7 @@
 			mood_change = 2
 
 /datum/mood_event/brain_damage
+  description = "my hed feel sof and i think bad"
   mood_change = -3
 
 /datum/mood_event/hulk //Entire duration of having the hulk mutation
