@@ -241,7 +241,7 @@
 	if(..() || !iscarbon(hit_atom))
 		return
 	var/mob/living/carbon/C = hit_atom
-	C.apply_effect(PUCK_STUN_AMT, STUN)
+	C.apply_effect(PUCK_STUN_AMT, EFFECT_STUN)
 	C.apply_damage((throwforce * 2), STAMINA) //This way the stamina damage is ALSO buffed by special throw items, the hockey stick for example.
 	playsound(src, 'sound/effects/snap.ogg', 50, 1)
 	visible_message("<span class='danger'>[C] has been dazed by a holopuck!</span>", \
