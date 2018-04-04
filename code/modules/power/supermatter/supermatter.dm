@@ -617,6 +617,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 /obj/machinery/power/supermatter_shard/crystal/engine
 	is_main_engine = TRUE
 
+/obj/machinery/power/supermatter_shard/crystal/engine/nerfed
+	explosion_power = 12 //5.4, 12.8, 14.8 in terms of the typical blast damage, better for small maps that still want to use it without killing the entire map if it delamms.
+
 /obj/machinery/power/supermatter_shard/proc/supermatter_pull(turf/center, pull_range = 10)
 	playsound(src.loc, 'sound/weapons/marauder.ogg', 100, 1, extrarange = 7)
 	for(var/atom/P in orange(pull_range,center))
