@@ -125,9 +125,7 @@
 /obj/item/gun/syringe/chem/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-
-/obj/item/gun/syringe/chem/can_shoot()
-	return syringes.len
+	return ..()
 
 /obj/item/gun/syringe/chem/process_chamber()
 	if(chambered && !chambered.BB && syringes.len)
