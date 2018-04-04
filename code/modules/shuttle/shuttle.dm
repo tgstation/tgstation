@@ -235,7 +235,7 @@
 		if(get_docked())
 			log_world("A transit dock was destroyed while something was docked to it.")
 		SSshuttle.transit -= src
-		if(istype(owner))			//istype instead of just nullcheck because we can not afford to runtime before we dezone.
+		if(owner)
 			if(owner.assigned_transit == src)
 				owner.assigned_transit = null
 			owner = null
