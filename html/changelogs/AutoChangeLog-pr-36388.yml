@@ -1,7 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Shuttles have proper baseturfs now."
-  - bugfix: "Mineral walls properly use their baseturfs when destroyed/drilled."
-  - rscadd: "A new engineering goggle mode allows you to see the shuttle area you're standing in."
-  - admin: "Buildmode works a bit better with baseturfs now and can properly only remove the top layer of turfs when editing. Note that as a result the order you place turfs is important and a wall placed on space means when the wall is removed there will be space underneath."
