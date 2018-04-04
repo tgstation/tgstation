@@ -263,14 +263,10 @@
 
 /datum/reagent/drug/bath_salts/on_mob_add(mob/M)
 	..()
-	if(isliving(M))
-		var/mob/living/L = M
-		L.add_trait(TRAIT_STUNIMMUNE, id)
-		L.add_trait(TRAIT_SLEEPIMMUNE, id)
-		if(iscarbon(L))
-			var/mob/living/carbon/C = L
-			rage = new()
-			C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		rage = new()
+		C.gain_trauma(rage, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/reagent/drug/bath_salts/on_mob_delete(mob/M)
 	if(isliving(M))
@@ -288,6 +284,12 @@
 	M.adjustStaminaLoss(-5, 0)
 	M.adjustBrainLoss(4)
 	M.hallucination += 10
+	if(volume >= 2)
+		M.add_trait(TRAIT_STUNIMMUNE, id)
+		M.add_trait(TRAIT_SLEEPIMMUNE, id)
+	else
+		M.remove_trait(TRAIT_STUNIMMUNE, id)
+		M.remove_trait(TRAIT_SLEEPIMMUNE, id)
 	if(M.canmove && !ismovableatom(M.loc))
 		step(M, pick(GLOB.cardinals))
 		step(M, pick(GLOB.cardinals))
