@@ -20,12 +20,6 @@
 		return null
 	return format_text ? format_text(A.name) : A.name
 
-/proc/get_area_by_name(N) //get area by its name
-	for(var/area/A in world)
-		if(A.name == N)
-			return A
-	return 0
-
 /proc/get_areas_in_range(dist=0, atom/center=usr)
 	if(!dist)
 		var/turf/T = get_turf(center)

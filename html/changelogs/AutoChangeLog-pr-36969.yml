@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Plasmamen that get converted into humans as a part of spawning as a protected head role no longer retain their plasmaman equipment."

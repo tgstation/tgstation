@@ -1233,9 +1233,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		else
 			tail.Remove(H)
 
-	H.dna.features["ears"] = "None"
-	H.dna.features["tail_human"] = "None"
-
 	if(!silent)
 		to_chat(H, "You are no longer a cat.")
 

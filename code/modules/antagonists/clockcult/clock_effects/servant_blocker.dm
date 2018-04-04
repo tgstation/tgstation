@@ -14,7 +14,7 @@
 
 /obj/effect/clockwork/servant_blocker/Destroy(force)
 	if(!force)
-		return
+		return QDEL_HINT_LETMELIVE
 	var/turf/T = get_turf(src)
 	. = ..()
 	T.air_update_turf(TRUE)

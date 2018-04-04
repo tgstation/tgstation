@@ -344,6 +344,14 @@
 	config_entry_value = null
 	min_val = 0
 
+/datum/config_entry/number/minute_click_limit
+	config_entry_value = 400
+	min_val = 0
+
+/datum/config_entry/number/second_click_limit
+	config_entry_value = 15
+	min_val = 0
+
 /datum/config_entry/number/error_cooldown	// The "cooldown" time for each occurrence of a unique error
 	config_entry_value = 600
 	min_val = 0

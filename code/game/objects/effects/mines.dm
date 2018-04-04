@@ -123,8 +123,8 @@
 	to_chat(victim, "<span class='reallybig redtext'>RIP AND TEAR</span>")
 	SEND_SOUND(victim, sound('sound/misc/e1m1.ogg'))
 	var/old_color = victim.client.color
-	var/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
-	var/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
+	var/static/list/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
+	var/static/list/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
 
 	spawn(0)
 		new /datum/hallucination/delusion(victim, TRUE, "demon",duration,0)
@@ -132,7 +132,7 @@
 	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	chainsaw.flags_1 |= NODROP_1
 	victim.drop_all_held_items()
-	victim.put_in_hands(chainsaw)
+	victim.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(victim)
 	chainsaw.wield(victim)
 	victim.reagents.add_reagent("adminordrazine",25)
