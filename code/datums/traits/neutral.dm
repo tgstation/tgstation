@@ -12,6 +12,14 @@
 
 
 
+/datum/trait/cat_person
+	name = "Cat Person"
+	desc = "You are a firm believer in the theory that cats are the fluffiest animal in the universe."
+	value = 0
+	mob_trait = TRAIT_CAT_PERSON
+
+
+
 /datum/trait/deviant_tastes
 	name = "Deviant Tastes"
 	desc = "You dislike food that most people enjoy, and find delicious what they don't."
@@ -31,6 +39,14 @@
 	var/datum/species/species = H.dna.species
 	species.liked_food = initial(species.liked_food)
 	species.disliked_food = initial(species.disliked_food)
+
+
+
+/datum/trait/dog_person
+	name = "Dog Person"
+	desc = "You get along very well with dogs. You love them SO MUCH."
+	value = 0
+	mob_trait = TRAIT_DOG_PERSON
 
 
 
