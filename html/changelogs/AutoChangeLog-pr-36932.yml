@@ -1,4 +1,0 @@
-author: "SailorDave"
-delete-after: True
-changes: 
-  - bugfix: "Fixes virology Asphyxiation symptom activating too early and ignoring transmission level."
