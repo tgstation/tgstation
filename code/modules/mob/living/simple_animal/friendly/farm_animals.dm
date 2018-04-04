@@ -158,7 +158,7 @@
 		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
 		Knockdown(60)
 		update_canmove()
-		addtimer(CALLBACK(src, .proc/reset_canmove), 61)
+		addtimer(CALLBACK(src, .proc/update_canmove), 61)
 		icon_state = icon_dead
 		spawn(rand(20,50))
 			if(!stat && M)
@@ -178,9 +178,6 @@
 					"<span class='revennotice'>[internal]</span>")
 	else
 		..()
-
-/mob/living/simple_animal/cow/proc/reset_canmove()
-	update_canmove()
 
 /mob/living/simple_animal/chick
 	name = "\improper chick"
