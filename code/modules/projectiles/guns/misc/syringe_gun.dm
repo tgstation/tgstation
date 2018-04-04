@@ -123,7 +123,6 @@
 	create_reagents(100)
 
 /obj/item/gun/syringe/chem/Destroy()
-	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
