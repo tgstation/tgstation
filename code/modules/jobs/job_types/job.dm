@@ -67,17 +67,17 @@
 	if(!H)
 		return 0
 
-	//Equip the rest of the gear
-	H.dna.species.before_equip_job(src, H, visualsOnly)
-
-	if(outfit)
-		H.equipOutfit(outfit, visualsOnly)
-
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
 		if(H.dna.species.id != "human")
 			H.set_species(/datum/species/human)
 			H.rename_self("human", H.client)
 		purrbation_remove(H, silent=TRUE)
+
+	//Equip the rest of the gear
+	H.dna.species.before_equip_job(src, H, visualsOnly)
+
+	if(outfit)
+		H.equipOutfit(outfit, visualsOnly)
 
 	H.dna.species.after_equip_job(src, H, visualsOnly)
 
