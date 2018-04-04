@@ -686,7 +686,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 8
 	},
 /area/bridge)
@@ -793,7 +792,6 @@
 /area/bridge)
 "abB" = (
 /obj/machinery/computer/robotics{
-	icon_state = "computer";
 	dir = 4
 	},
 /obj/machinery/light{
@@ -804,7 +802,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 8
 	},
 /area/bridge)
@@ -848,7 +845,6 @@
 /area/bridge)
 "abG" = (
 /obj/machinery/computer/mecha{
-	icon_state = "computer";
 	dir = 8
 	},
 /obj/machinery/light{
@@ -859,7 +855,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 4
 	},
 /area/bridge)
@@ -18993,7 +18988,9 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aOa" = (
-/obj/machinery/power/supermatter_shard/crystal/engine/nerfed,
+/obj/machinery/power/supermatter_shard/crystal/engine{
+	anchored = TRUE
+	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "aOb" = (
@@ -35796,7 +35793,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 4
 	},
 /area/bridge)
