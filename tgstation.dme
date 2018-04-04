@@ -2615,6 +2615,7 @@
 #include "code\white\hule\jungle\jungleshit.dm"
 #include "code\white\hule\reagents\reagents.dm"
 #include "code\white\hule\weapons\bombshot.dm"
+#include "code\white\hule\weapons\ptr.dm"
 #include "code\white\hule\weapons\winchester.dm"
 #include "code\white\jukebox\diskwriter.dm"
 #include "code\white\jukebox\jukebox_huli.dm"
