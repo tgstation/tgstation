@@ -5,6 +5,7 @@
 	icon_state = "wizard"
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_chance = 0
 	turns_per_move = 3
 	response_help = "pokes"

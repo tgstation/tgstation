@@ -586,7 +586,7 @@
 	..()
 	if(!istype(H))
 		return
-	if(!H.dna || !H.dna.species || !(H.dna.species.species_traits & SPECIES_ORGANIC))
+	if(!H.dna || !H.dna.species || !(MOB_ORGANIC in H.mob_biotypes))
 		return
 
 	if(isjellyperson(H))
