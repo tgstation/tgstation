@@ -3,7 +3,7 @@
 	weight = 2
 	typepath = /datum/round_event/wizard/race
 	max_occurrences = 5
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/race/start()
 

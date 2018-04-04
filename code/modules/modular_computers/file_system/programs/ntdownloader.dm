@@ -29,7 +29,7 @@
 		return 0
 
 	// Attempting to download antag only program, but without having emagged computer. No.
-	if(PRG.available_on_syndinet && !computer.emagged)
+	if(PRG.available_on_syndinet && !(computer.obj_flags & EMAGGED))
 		return 0
 
 	var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
@@ -140,7 +140,7 @@
 			"size" = P.size
 			)))
 		data["hackedavailable"] = 0
-		if(computer.emagged) // If we are running on emagged computer we have access to some "bonus" software
+		if(computer.obj_flags & EMAGGED) // If we are running on emagged computer we have access to some "bonus" software
 			var/list/hacked_programs[0]
 			for(var/S in SSnetworks.station_network.available_antag_software)
 				var/datum/computer_file/program/P = S

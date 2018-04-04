@@ -20,6 +20,9 @@
 		else if(istype(A, /obj/item))
 			var/obj/item/I = A
 			I.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			if(ismob(I.loc))
+				var/mob/M = I.loc
+				M.regenerate_icons()
 		else if(ishuman(A))
 			var/mob/living/carbon/human/cleaned_human = A
 			if(cleaned_human.lying)
@@ -33,4 +36,5 @@
 					cleaned_human.shoes.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 				cleaned_human.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 				cleaned_human.wash_cream()
+				cleaned_human.regenerate_icons()
 				to_chat(cleaned_human, "<span class='danger'>[AM] cleans your face!</span>")

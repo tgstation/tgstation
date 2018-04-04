@@ -101,13 +101,16 @@
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
 	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
-		if(user.stat > stat_allowed  || (user.status_flags & FAKEDEATH))
+		if(user.stat > stat_allowed)
 			to_chat(user, "<span class='notice'>You cannot [key] while unconscious.</span>")
 			return FALSE
 		if(restraint_check && (user.restrained() || user.buckled))
 			to_chat(user, "<span class='notice'>You cannot [key] while restrained.</span>")
 			return FALSE
-		if(user.reagents && user.reagents.has_reagent("mimesbane"))
+
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.has_trait(TRAIT_EMOTEMUTE))
 			return FALSE
 
 /datum/emote/sound

@@ -10,7 +10,7 @@
 
 	density = FALSE
 	stat = DEAD
-	canmove = 0
+	canmove = FALSE
 
 	anchored = TRUE	//  don't get pushed around
 	var/mob/living/new_character	//for instant transfer once the round is set up
@@ -278,31 +278,47 @@
 	qdel(src)
 	return TRUE
 
-/mob/dead/new_player/proc/IsJobAvailable(rank)
+/proc/get_job_unavailable_error_message(retval, jobtitle)
+	switch(retval)
+		if(JOB_AVAILABLE)
+			return "[jobtitle] is available."
+		if(JOB_UNAVAILABLE_GENERIC)
+			return "[jobtitle] is unavailable."
+		if(JOB_UNAVAILABLE_BANNED)
+			return "You are currently banned from [jobtitle]."
+		if(JOB_UNAVAILABLE_PLAYTIME)
+			return "You do not have enough relevant playtime for [jobtitle]."
+		if(JOB_UNAVAILABLE_ACCOUNTAGE)
+			return "Your account is not old enough for [jobtitle]."
+		if(JOB_UNAVAILABLE_SLOTFULL)
+			return "[jobtitle] is already filled to capacity."
+	return "Error: Unknown job availability."
+	
+/mob/dead/new_player/proc/IsJobUnavailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
-		return 0
+		return JOB_UNAVAILABLE_GENERIC
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
 		if(job.title == "Assistant")
 			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
-				return 1
+				return JOB_AVAILABLE
 			for(var/datum/job/J in SSjob.occupations)
 				if(J && J.current_positions < J.total_positions && J.title != job.title)
-					return 0
+					return JOB_UNAVAILABLE_SLOTFULL
 		else
-			return 0
+			return JOB_UNAVAILABLE_SLOTFULL
 	if(jobban_isbanned(src,rank))
-		return 0
-	if(!job.player_old_enough(src.client))
-		return 0
+		return JOB_UNAVAILABLE_BANNED
+	if(!job.player_old_enough(client))
+		return JOB_UNAVAILABLE_ACCOUNTAGE
 	if(job.required_playtime_remaining(client))
-		return 0
-	return 1
-
+		return JOB_UNAVAILABLE_PLAYTIME
+	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
-	if(!IsJobAvailable(rank))
-		alert(src, "[rank] is not available. Please try another.")
+	var/error = IsJobUnavailable(rank)
+	if(error != JOB_AVAILABLE)
+		alert(src, get_job_unavailable_error_message(error, rank))
 		return FALSE
 
 	if(SSticker.late_join_disabled)
@@ -357,6 +373,11 @@
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
 
+		if(GLOB.summon_guns_triggered)
+			give_guns(humanc)
+		if(GLOB.summon_magic_triggered)
+			give_magic(humanc)
+
 	GLOB.joined_player_list += character.ckey
 
 	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
@@ -367,6 +388,9 @@
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
+
+	if(CONFIG_GET(flag/roundstart_traits))
+		SStraits.AssignTraits(humanc, humanc.client, TRUE)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
@@ -391,7 +415,7 @@
 
 	var/available_job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobAvailable(job.title))
+		if(job && IsJobUnavailable(job.title) == JOB_AVAILABLE)
 			available_job_count++;
 
 
@@ -414,7 +438,7 @@
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobAvailable(job.title))
+		if(job && IsJobUnavailable(job.title) == JOB_AVAILABLE)
 			job_count++;
 			if (job_count > round(available_job_count / 2))
 				dat += "</div><div class='jobsColumn'>"
@@ -422,9 +446,9 @@
 			if (job.title in GLOB.command_positions)
 				position_class = "commandPosition"
 			dat += "<a class='[position_class]' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
-	if(!job_count) //if there's nowhere to go, assistant opens up.
+	if(!job_count) //if there's nowhere to go, overflow opens up.
 		for(var/datum/job/job in SSjob.occupations)
-			if(job.title != "Assistant")
+			if(job.title != SSjob.overflow_role)
 				continue
 			dat += "<a class='otherPosition' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
 			break

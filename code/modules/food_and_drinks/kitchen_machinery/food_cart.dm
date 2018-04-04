@@ -29,11 +29,7 @@
 	QDEL_NULL(mixer)
 	return ..()
 
-/obj/machinery/food_cart/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/food_cart/interact(mob/user)
+/obj/machinery/food_cart/ui_interact(mob/user)
 	var/dat
 	dat += "<br><b>STORED INGREDIENTS AND DRINKS</b><br><div class='statusDisplay'>"
 	dat += "Remaining glasses: [glasses]<br>"

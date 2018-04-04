@@ -57,17 +57,17 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/integrated_printer
-	name = "Integrated circuits printer"
+	name = "Integrated circuit printer"
 	desc = "This machine provides all neccesary things for circuitry."
 	id = "icprinter"
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 5000, MAT_METAL = 5000)
+	materials = list(MAT_GLASS = 5000, MAT_METAL = 10000)
 	build_path = /obj/item/device/integrated_circuit_printer
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/IC_printer_upgrade_advanced
-	name = "Integrated Circuits printer upgrade: Advanced Designs"
+	name = "Integrated circuit printer upgrade: Advanced Designs"
 	desc = "This disk allows for integrated circuit printers to print advanced circuitry designs."
 	id = "icupgadv"
 	build_type = PROTOLATHE
@@ -77,8 +77,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/IC_printer_upgrade_clone
-	name = "Integrated Circuits printer upgrade: Clone Ability"
-	desc = "This disk allows for integrated circuit printers to clone designs."
+	name = "Integrated circuit printer upgrade: Instant Cloning"
+	desc = "This disk allows for integrated circuit printers to clone designs instantaneously."
 	id = "icupgclo"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 10000, MAT_METAL = 10000)

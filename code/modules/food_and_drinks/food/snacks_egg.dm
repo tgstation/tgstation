@@ -15,12 +15,21 @@
 	name = "egg"
 	desc = "An egg!"
 	icon_state = "egg"
-	list_reagents = list("nutriment" = 1)
+	list_reagents = list("eggyolk" = 5)
 	cooked_type = /obj/item/reagent_containers/food/snacks/boiledegg
 	filling_color = "#F0E68C"
-	tastes = list("egg" = 1)
 	foodtype = MEAT
-	grind_results = list("eggyolk" = 5)
+	grind_results = list()
+
+/obj/item/reagent_containers/food/snacks/egg/gland
+	desc = "An egg! It looks weird..."
+
+/obj/item/reagent_containers/food/snacks/egg/gland/Initialize()
+	. = ..()
+	reagents.add_reagent(get_random_reagent_id(), 15)
+
+	var/color = mix_color_from_reagents(reagents.reagent_list)
+	add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
 /obj/item/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?
@@ -30,7 +39,7 @@
 		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/egg/attackby(obj/item/W, mob/user, params)
-	if(istype( W, /obj/item/toy/crayon ))
+	if(istype(W, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = W
 		var/clr = C.item_color
 
@@ -38,7 +47,7 @@
 			to_chat(usr, "<span class='notice'>[src] refuses to take on this colour!</span>")
 			return
 
-		to_chat(usr, "<span class='notice'>You colour [src] [clr].</span>")
+		to_chat(usr, "<span class='notice'>You colour [src] with [W].</span>")
 		icon_state = "egg-[clr]"
 		item_color = clr
 	else
@@ -47,42 +56,34 @@
 /obj/item/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"
 	item_color = "blue"
-	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/reagent_containers/food/snacks/egg/green
 	icon_state = "egg-green"
 	item_color = "green"
-	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/reagent_containers/food/snacks/egg/mime
 	icon_state = "egg-mime"
 	item_color = "mime"
-	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/reagent_containers/food/snacks/egg/orange
 	icon_state = "egg-orange"
 	item_color = "orange"
-	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/reagent_containers/food/snacks/egg/purple
 	icon_state = "egg-purple"
 	item_color = "purple"
-	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/reagent_containers/food/snacks/egg/rainbow
 	icon_state = "egg-rainbow"
 	item_color = "rainbow"
-	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/reagent_containers/food/snacks/egg/red
 	icon_state = "egg-red"
 	item_color = "red"
-	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/reagent_containers/food/snacks/egg/yellow
 	icon_state = "egg-yellow"
 	item_color = "yellow"
-	tastes = list("egg" = 4, "the back of class" = 1)
 
 /obj/item/reagent_containers/food/snacks/friedegg
 	name = "fried egg"

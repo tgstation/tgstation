@@ -3,7 +3,7 @@
 	icon = 'icons/obj/atmos.dmi'
 	use_power = NO_POWER_USE
 	max_integrity = 250
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 60, acid = 30)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 60, "acid" = 30)
 
 
 	var/datum/gas_mixture/air_contents
@@ -73,24 +73,51 @@
 	anchored = FALSE
 	connected_port.connected_device = null
 	connected_port = null
+	pixel_x = 0
+	pixel_y = 0
 	return TRUE
 
 /obj/machinery/portable_atmospherics/portableConnectorReturnAir()
 	return air_contents
 
+/obj/machinery/portable_atmospherics/AltClick(mob/living/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, !ismonkey(user)))
+		return
+	if(holding)
+		to_chat(user, "<span class='notice'>You remove [holding] from [src].</span>")
+		replace_tank(user, TRUE)
+
+/obj/machinery/portable_atmospherics/examine(mob/user)
+	..()
+	if(holding)
+		to_chat(user, "<span class='notice'>\The [src] contains [holding]. Alt-click [src] to remove it.</span>")
+
+/obj/machinery/portable_atmospherics/proc/replace_tank(mob/living/user, close_valve, obj/item/tank/new_tank)
+	if(holding)
+		holding.forceMove(drop_location())
+		if(Adjacent(user) && !issilicon(user))
+			user.put_in_hands(holding)
+	if(new_tank)
+		holding = new_tank
+	else
+		holding = null
+	update_icon()
+	return TRUE
+
 /obj/machinery/portable_atmospherics/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/tank))
 		if(!(stat & BROKEN))
 			var/obj/item/tank/T = W
-			if(holding || !user.transferItemToLoc(T, src))
+			if(!user.transferItemToLoc(T, src))
 				return
-			holding = T
+			to_chat(user, "<span class='notice'>[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [T]" : "You insert [T] into [src]"].</span>")
+			replace_tank(user, FALSE, T)
 			update_icon()
 	else if(istype(W, /obj/item/wrench))
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
-				playsound(src.loc, W.usesound, 50, 1)
+				W.play_tool_sound(src)
 				user.visible_message( \
 					"[user] disconnects [src].", \
 					"<span class='notice'>You unfasten [src] from the port.</span>", \
@@ -105,7 +132,7 @@
 				if(!connect(possible_port))
 					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
 					return
-				playsound(src.loc, W.usesound, 50, 1)
+				W.play_tool_sound(src)
 				user.visible_message( \
 					"[user] connects [src].", \
 					"<span class='notice'>You fasten [src] to the port.</span>", \

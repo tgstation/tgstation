@@ -49,6 +49,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	icon_state = "swarmer_console"
 	health = 750
 	maxHealth = 750 //""""low-ish"""" HP because it's a passive boss, and the swarm itself is the real foe
+	mob_biotypes = list(MOB_ROBOTIC)
 	medal_type = MEDAL_PREFIX
 	score_type = SWARMER_BEACON_SCORE
 	faction = list("mining", "boss", "swarmer")
@@ -145,7 +146,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 					return FALSE
 
 			if(ischasm(newloc) && !throwing)
-				throw_at(get_edge_target_turf(src, get_dir(src, newloc)), 7 , 3, spin = FALSE) //my planet needs me
+				throw_at(get_edge_target_turf(src, get_dir(src, newloc)), 7 , 3, src, FALSE) //my planet needs me
 				return FALSE
 
 		return ..()

@@ -54,9 +54,8 @@
 		return ..()
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
-/obj/machinery/computer/secure_data/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/secure_data/ui_interact(mob/user)
+	. = ..()
 	if(src.z > 6)
 		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
@@ -199,8 +198,10 @@
 						<tr><td>Mental Status:</td><td>&nbsp;[active1.fields["m_stat"]]&nbsp;</td></tr>
 						</table></td>
 						<td><table><td align = center><a href='?src=[REF(src)];choice=Edit Field;field=show_photo_front'><img src=photo_front height=80 width=80 border=4></a><br>
+						<a href='?src=[REF(src)];choice=Edit Field;field=print_photo_front'>Print photo</a><br>
 						<a href='?src=[REF(src)];choice=Edit Field;field=upd_photo_front'>Update front photo</a></td>
 						<td align = center><a href='?src=[REF(src)];choice=Edit Field;field=show_photo_side'><img src=photo_side height=80 width=80 border=4></a><br>
+						<a href='?src=[REF(src)];choice=Edit Field;field=print_photo_side'>Print photo</a><br>
 						<a href='?src=[REF(src)];choice=Edit Field;field=upd_photo_side'>Update side photo</a></td></table>
 						</td></tr></table></td></tr></table>"}
 					else
@@ -261,7 +262,8 @@
 					else
 						dat += "Security Record Lost!<br>"
 						dat += "<A href='?src=[REF(src)];choice=New Record (Security)'>New Security Record</A><br><br>"
-					dat += "<A href='?src=[REF(src)];choice=Delete Record (ALL)'>Delete Record (ALL)</A><br><A href='?src=[REF(src)];choice=Print Record'>Print Record</A><BR><A href='?src=[REF(src)];choice=Print Poster'>Print Wanted Poster</A><BR><A href='?src=[REF(src)];choice=Return'>Back</A><BR>"
+					dat += "<A href='?src=[REF(src)];choice=Delete Record (ALL)'>Delete Record (ALL)</A><br><A href='?src=[REF(src)];choice=Print Record'>Print Record</A><BR><A href='?src=[REF(src)];choice=Print Poster'>Print Wanted Poster</A><BR><A href='?src=[REF(src)];choice=Return'>Back</A><BR><BR>"
+					dat += "<A href='?src=[REF(src)];choice=Log Out'>{Log Out}</A>"
 				else
 		else
 			dat += "<A href='?src=[REF(src)];choice=Log In'>{Log In}</A>"
@@ -471,7 +473,7 @@ What a mess.*/
 				var/counter = 1
 				while(active2.fields[text("com_[]", counter)])
 					counter++
-				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 
 			if("Delete Record (ALL)")
 				if(active1)
@@ -605,27 +607,51 @@ What a mess.*/
 								var/obj/item/photo/P = active1.fields["photo_front"]
 								P.show(usr)
 					if("upd_photo_front")
-						var/icon/photo = get_photo(usr)
+						var/obj/item/photo/photo = get_photo(usr)
 						if(photo)
 							qdel(active1.fields["photo_front"])
+							//Lets center it to a 32x32.
+							var/icon/I = photo.img
+							var/w = I.Width()
+							var/h = I.Height()
+							var/dw = w - 32
+							var/dh = w - 32
+							I.Crop(dw/2, dh/2, w - dw/2, h - dh/2)
 							active1.fields["photo_front"] = photo
+					if("print_photo_front")
+						if(active1.fields["photo_front"])
+							if(istype(active1.fields["photo_front"], /obj/item/photo))
+								var/obj/item/photo/P = active1.fields["photo_front"]
+								print_photo(P.img, active1.fields["name"])
 					if("show_photo_side")
 						if(active1.fields["photo_side"])
 							if(istype(active1.fields["photo_side"], /obj/item/photo))
 								var/obj/item/photo/P = active1.fields["photo_side"]
 								P.show(usr)
 					if("upd_photo_side")
-						var/icon/photo = get_photo(usr)
+						var/obj/item/photo/photo = get_photo(usr)
 						if(photo)
 							qdel(active1.fields["photo_side"])
+							//Lets center it to a 32x32.
+							var/icon/I = photo.img
+							var/w = I.Width()
+							var/h = I.Height()
+							var/dw = w - 32
+							var/dh = w - 32
+							I.Crop(dw/2, dh/2, w - dw/2, h - dh/2)
 							active1.fields["photo_side"] = photo
+					if("print_photo_side")
+						if(active1.fields["photo_side"])
+							if(istype(active1.fields["photo_side"], /obj/item/photo))
+								var/obj/item/photo/P = active1.fields["photo_side"]
+								print_photo(P.img, active1.fields["name"])
 					if("mi_crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input minor crime names:", "Secure. records", "", null)
 							var/t2 = stripped_input(usr, "Please input minor crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
+							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
 							GLOB.data_core.addMinorCrime(active1.fields["id"], crime)
 					if("mi_crim_delete")
 						if(istype(active1, /datum/data/record))
@@ -639,7 +665,7 @@ What a mess.*/
 							var/t2 = stripped_input(usr, "Please input major crime details:", "Secure. records", "", null)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, worldtime2text())
+							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
 							GLOB.data_core.addMajorCrime(active1.fields["id"], crime)
 					if("ma_crim_delete")
 						if(istype(active1, /datum/data/record))
@@ -738,6 +764,23 @@ What a mess.*/
 	else if(istype(user.get_active_held_item(), /obj/item/photo))
 		P = user.get_active_held_item()
 	return P
+
+/obj/machinery/computer/secure_data/proc/print_photo(icon/temp, name)
+	if (printing)
+		return
+	printing = TRUE
+	sleep(20)
+	var/obj/item/photo/P = new/obj/item/photo(drop_location())
+	var/icon/small_img = icon(temp)
+	var/icon/ic = icon('icons/obj/items_and_weapons.dmi',"photo")
+	small_img.Scale(8, 8)
+	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
+	P.icon = ic
+	P.img = temp
+	P.desc = "The photo on file for [name]."
+	P.pixel_x = rand(-10, 10)
+	P.pixel_y = rand(-10, 10)
+	printing = FALSE
 
 /obj/machinery/computer/secure_data/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

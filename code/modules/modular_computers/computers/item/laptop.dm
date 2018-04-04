@@ -53,6 +53,7 @@
 	try_toggle_open(usr)
 
 /obj/item/device/modular_computer/laptop/MouseDrop(obj/over_object, src_location, over_location)
+	. = ..()
 	if(over_object == usr || over_object == src)
 		try_toggle_open(usr)
 	else if(istype(over_object, /obj/screen/inventory/hand))
@@ -65,11 +66,11 @@
 			M.put_in_hand(src, H.held_index)
 
 /obj/item/device/modular_computer/laptop/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(screen_on && isturf(loc))
 		return attack_self(user)
-
-	return ..()
-
 
 /obj/item/device/modular_computer/laptop/proc/try_toggle_open(mob/living/user)
 	if(issilicon(user))

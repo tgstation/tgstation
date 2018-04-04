@@ -84,11 +84,13 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/necropolis_gate/attack_hand(mob/user)
 	if(locked)
 		to_chat(user, "<span class='boldannounce'>It's [open ? "stuck open":"locked"].</span>")
 		return
 	toggle_the_gate(user)
+	return ..()
 
 /obj/structure/necropolis_gate/proc/toggle_the_gate(mob/user, legion_damaged)
 	if(changing_openness)
@@ -151,6 +153,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	else
 		return QDEL_HINT_LETMELIVE
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/necropolis_gate/legion_gate/attack_hand(mob/user)
 	if(!open && !changing_openness)
 		var/safety = alert(user, "You think this might be a bad idea...", "Knock on the door?", "Proceed", "Abort")
@@ -159,7 +162,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		user.visible_message("<span class='warning'>[user] knocks on [src]...</span>", "<span class='boldannounce'>You tentatively knock on [src]...</span>")
 		playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, 1)
 		sleep(50)
-	..()
+	return ..()
 
 /obj/structure/necropolis_gate/legion_gate/toggle_the_gate(mob/user, legion_damaged)
 	if(open)

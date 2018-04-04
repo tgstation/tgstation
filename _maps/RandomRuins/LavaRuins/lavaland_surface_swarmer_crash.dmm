@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -21,13 +21,8 @@
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/unpowered)
-"g" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall/mineral/plastitanium,
-/area/ruin/unpowered)
 
 (1,1,1) = {"
-a
 a
 a
 a
@@ -47,7 +42,6 @@ a
 a
 a
 a
-a
 b
 b
 b
@@ -61,7 +55,6 @@ a
 a
 "}
 (3,1,1) = {"
-a
 a
 a
 b
@@ -78,7 +71,6 @@ a
 a
 "}
 (4,1,1) = {"
-a
 b
 b
 b
@@ -95,7 +87,6 @@ a
 a
 "}
 (5,1,1) = {"
-a
 b
 b
 b
@@ -113,7 +104,6 @@ a
 "}
 (6,1,1) = {"
 a
-a
 b
 b
 b
@@ -130,7 +120,6 @@ a
 "}
 (7,1,1) = {"
 a
-a
 b
 b
 b
@@ -146,7 +135,6 @@ b
 a
 "}
 (8,1,1) = {"
-a
 a
 b
 b
@@ -165,7 +153,6 @@ a
 (9,1,1) = {"
 a
 a
-a
 b
 a
 c
@@ -180,7 +167,6 @@ b
 b
 "}
 (10,1,1) = {"
-a
 a
 a
 b
@@ -199,7 +185,6 @@ b
 (11,1,1) = {"
 a
 a
-a
 b
 b
 a
@@ -208,13 +193,12 @@ d
 d
 d
 d
-g
+c
 b
 b
 a
 "}
 (12,1,1) = {"
-a
 a
 a
 a
@@ -235,7 +219,6 @@ a
 a
 a
 a
-a
 c
 c
 e
@@ -252,7 +235,6 @@ a
 a
 a
 a
-a
 c
 e
 a
@@ -260,23 +242,6 @@ a
 a
 e
 c
-a
-a
-a
-"}
-(15,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
 a
 a
 a

@@ -1,6 +1,7 @@
 //Dogs.
 
 /mob/living/simple_animal/pet/dog
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
@@ -31,6 +32,7 @@
 	var/nofur = 0 		//Corgis that have risen past the material plane of existence.
 	gold_core_spawnable = FRIENDLY_SPAWN
 	can_be_held = TRUE
+	collar_type = "corgi"
 
 /mob/living/simple_animal/pet/dog/pug
 	name = "\improper pug"
@@ -42,6 +44,7 @@
 	icon_dead = "pug_dead"
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/pug = 3)
 	gold_core_spawnable = FRIENDLY_SPAWN
+	collar_type = "pug"
 
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
@@ -83,18 +86,18 @@
 	var/armorval = 0
 
 	if(def_zone)
-		if(def_zone == "head")
+		if(def_zone == BODY_ZONE_HEAD)
 			if(inventory_head)
-				armorval = inventory_head.armor[type]
+				armorval = inventory_head.armor.getRating(type)
 		else
 			if(inventory_back)
-				armorval = inventory_back.armor[type]
+				armorval = inventory_back.armor.getRating(type)
 		return armorval
 	else
 		if(inventory_head)
-			armorval += inventory_head.armor[type]
+			armorval += inventory_head.armor.getRating(type)
 		if(inventory_back)
-			armorval += inventory_back.armor[type]
+			armorval += inventory_back.armor.getRating(type)
 	return armorval*0.5
 
 /mob/living/simple_animal/pet/dog/corgi/attackby(obj/item/O, mob/user, params)
@@ -137,7 +140,7 @@
 			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
-			if("head")
+			if(BODY_ZONE_HEAD)
 				if(inventory_head)
 					inventory_head.forceMove(drop_location())
 					inventory_head = null
@@ -166,7 +169,7 @@
 		var/add_to = href_list["add_inv"]
 
 		switch(add_to)
-			if("head")
+			if(BODY_ZONE_HEAD)
 				place_on_head(usr.get_active_held_item(),usr)
 
 			if("back")
@@ -229,6 +232,7 @@
 		return
 	if(!item_to_add)
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
+		user.SendSignal(COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
 		return
 
 	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))
@@ -295,6 +299,7 @@
 	response_disarm = "bops"
 	response_harm   = "kicks"
 	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
 	var/age = 0
 	var/record_age = 1
 	var/memory_saved = FALSE
@@ -444,6 +449,7 @@
 	faction = list("dog", "cult")
 	gold_core_spawnable = NO_SPAWN
 	nofur = TRUE
+	unique_pet = TRUE
 
 /mob/living/simple_animal/pet/dog/corgi/narsie/Life()
 	..()
@@ -467,7 +473,7 @@
 
 
 /mob/living/simple_animal/pet/dog/corgi/regenerate_icons()
-	cut_overlays()
+	..()
 	if(inventory_head)
 		var/image/head_icon
 		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
@@ -507,10 +513,6 @@
 			back_icon = DF.get_overlay()
 		add_overlay(back_icon)
 
-	if(pcollar)
-		add_overlay(collar)
-		add_overlay(pettag)
-
 	return
 
 
@@ -525,6 +527,7 @@
 	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
+	collar_type = "puppy"
 
 //puppies cannot wear anything.
 /mob/living/simple_animal/pet/dog/corgi/puppy/Topic(href, href_list)
@@ -556,6 +559,8 @@
 	real_name = "Lisa"
 	gender = FEMALE
 	desc = "It's a corgi with a cute pink bow."
+	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
 	icon_state = "lisa"
 	icon_living = "lisa"
 	icon_dead = "lisa_dead"
@@ -564,7 +569,6 @@
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/puppies = 0
-	gold_core_spawnable = NO_SPAWN
 
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)
@@ -611,6 +615,7 @@
 			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
 				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "yaps happily!")
+				M.SendSignal(COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
 		else
 			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
 				emote("me", 1, "growls!")

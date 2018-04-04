@@ -53,22 +53,21 @@
 	mytape.ruin() //Fires destroy the tape
 	..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/device/taperecorder/attack_hand(mob/user)
 	if(loc == user)
 		if(mytape)
 			if(!user.is_holding(src))
-				..()
-				return
+				return ..()
 			eject(user)
-			return
-	..()
-
+	else
+		return ..()
 
 /obj/item/device/taperecorder/proc/can_use(mob/user)
 	if(user && ismob(user))
 		if(!user.incapacitated())
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 
 /obj/item/device/taperecorder/verb/ejectverb()
@@ -276,17 +275,11 @@
 
 
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
-	if(ruined)
-		var/delay = -1
-		if (istype(I, /obj/item/screwdriver))
-			delay = 120*I.toolspeed
-		else if(istype(I, /obj/item/pen))
-			delay = 120*1.5
-		if (delay != -1)
-			to_chat(user, "<span class='notice'>You start winding the tape back in...</span>")
-			if(do_after(user, delay, target = src))
-				to_chat(user, "<span class='notice'>You wound the tape back in.</span>")
-				fix()
+	if(ruined && istype(I, /obj/item/screwdriver) || istype(I, /obj/item/pen))
+		to_chat(user, "<span class='notice'>You start winding the tape back in...</span>")
+		if(I.use_tool(src, user, 120))
+			to_chat(user, "<span class='notice'>You wound the tape back in.</span>")
+			fix()
 
 //Random colour tapes
 /obj/item/device/tape/random

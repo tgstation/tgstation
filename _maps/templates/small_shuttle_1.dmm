@@ -12,9 +12,6 @@
 "d" = (
 /turf/closed/wall/mineral/titanium,
 /area/space)
-"e" = (
-/turf/closed/wall/mineral/titanium,
-/area/space)
 "f" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/space)
@@ -24,18 +21,9 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/space)
-"h" = (
-/turf/closed/wall/mineral/titanium,
-/area/space)
-"i" = (
-/turf/closed/wall/mineral/titanium,
-/area/space)
 "j" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/open/floor/mineral/titanium/blue,
-/area/space)
-"k" = (
-/turf/closed/wall/mineral/titanium,
 /area/space)
 "l" = (
 /obj/structure/chair{
@@ -53,9 +41,6 @@
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
 /area/space)
-"o" = (
-/turf/closed/wall/mineral/titanium,
-/area/space)
 "p" = (
 /obj/structure/shuttle/engine/propulsion/left,
 /turf/open/floor/plating/airless,
@@ -68,28 +53,25 @@
 /obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/space)
-"s" = (
-/turf/closed/wall/mineral/titanium,
-/area/space)
 
 (1,1,1) = {"
 a
 a
 a
 b
-e
-e
+d
+d
 j
 j
-e
-e
+d
+d
 b
 "}
 (2,1,1) = {"
 b
-e
-e
-e
+d
+d
+d
 l
 l
 f
@@ -102,7 +84,7 @@ p
 c
 f
 f
-e
+d
 f
 f
 f
@@ -128,7 +110,7 @@ q
 c
 f
 f
-e
+d
 f
 f
 f
@@ -139,9 +121,9 @@ q
 "}
 (6,1,1) = {"
 b
-e
-e
-e
+d
+d
+d
 m
 m
 f
@@ -155,11 +137,11 @@ a
 a
 a
 b
-e
-e
+d
+d
 j
 j
-e
-e
+d
+d
 b
 "}

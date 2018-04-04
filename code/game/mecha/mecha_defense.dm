@@ -55,6 +55,9 @@
 
 
 /obj/mecha/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
@@ -240,9 +243,8 @@
 
 	else if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
 		user.changeNext_move(CLICK_CD_MELEE)
-		var/obj/item/weldingtool/WT = W
-		if(obj_integrity<max_integrity)
-			if(WT.remove_fuel(1, user))
+		if(obj_integrity < max_integrity)
+			if(W.use_tool(src, user, 0, volume=50, amount=1))
 				if (internal_damage & MECHA_INT_TANK_BREACH)
 					clearInternalDamage(MECHA_INT_TANK_BREACH)
 					to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
@@ -251,9 +253,7 @@
 					obj_integrity += min(10, max_integrity-obj_integrity)
 					if(obj_integrity == max_integrity)
 						to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
-			else
-				to_chat(user, "<span class='warning'>[WT] needs to be on for this task!</span>")
-				return 1
+			return 1
 		else
 			to_chat(user, "<span class='warning'>The [name] is at full integrity!</span>")
 		return 1
@@ -322,7 +322,7 @@
 			if(L)
 				L.ratvar_act()
 
-/obj/mecha/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+/obj/mecha/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect)
 		if(selected)
 			used_item = selected

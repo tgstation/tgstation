@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/template_noop,
 /area/template_noop)
@@ -168,21 +168,16 @@
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"B" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall/mineral/titanium/survival/pod,
-/area/ruin/powered)
 
 (1,1,1) = {"
 a
 a
 a
-a
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
 a
 a
 a
@@ -190,47 +185,30 @@ a
 (2,1,1) = {"
 a
 a
-a
-a
 b
 b
+e
+b
+e
 b
 b
-b
-a
 a
 a
 "}
 (3,1,1) = {"
 a
 a
-a
 b
-b
-e
-b
-e
-b
+d
+d
+d
+d
+d
 b
 a
 a
 "}
 (4,1,1) = {"
-a
-a
-a
-b
-d
-d
-d
-d
-d
-b
-a
-a
-"}
-(5,1,1) = {"
-a
 a
 b
 c
@@ -243,8 +221,7 @@ w
 b
 b
 "}
-(6,1,1) = {"
-a
+(5,1,1) = {"
 a
 b
 b
@@ -257,8 +234,7 @@ x
 b
 b
 "}
-(7,1,1) = {"
-a
+(6,1,1) = {"
 b
 b
 c
@@ -271,22 +247,20 @@ y
 b
 b
 "}
-(8,1,1) = {"
-a
+(7,1,1) = {"
 a
 b
 b
 d
 d
-B
+d
 d
 d
 z
 j
 j
 "}
-(9,1,1) = {"
-a
+(8,1,1) = {"
 a
 a
 b
@@ -299,8 +273,7 @@ A
 b
 b
 "}
-(10,1,1) = {"
-a
+(9,1,1) = {"
 a
 a
 b
@@ -313,8 +286,7 @@ a
 a
 a
 "}
-(11,1,1) = {"
-a
+(10,1,1) = {"
 a
 a
 a
@@ -323,20 +295,6 @@ a
 o
 j
 b
-a
-a
-a
-"}
-(12,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
 a
 a
 a

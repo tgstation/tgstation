@@ -64,9 +64,11 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		return
 	if(brainmob.client)
 		visible_message(success_message)
+		playsound(src, 'sound/machines/ping.ogg', 15, TRUE)
 	else
 		visible_message(fail_message)
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/item/device/mmi/posibrain/attack_ghost(mob/user)
 	activate(user)
 

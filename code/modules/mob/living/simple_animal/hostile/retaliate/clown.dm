@@ -6,6 +6,7 @@
 	icon_living = "clown"
 	icon_dead = "clown_dead"
 	icon_gib = "clown_gib"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	turns_per_move = 5
 	response_help = "pokes"
 	response_disarm = "gently pushes aside"
@@ -16,7 +17,7 @@
 	a_intent = INTENT_HARM
 	maxHealth = 75
 	health = 75
-	speed = 0
+	speed = 1
 	harm_intent_damage = 8
 	melee_damage_lower = 10
 	melee_damage_upper = 10

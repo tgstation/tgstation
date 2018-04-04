@@ -3,7 +3,7 @@
 	weight = 3
 	typepath = /datum/round_event/wizard/cursed_items
 	max_occurrences = 3
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 //Note about adding items to this: Because of how NODROP_1 works if an item spawned to the hands can also be equiped to a slot
 //it will be able to be put into that slot from the hand, but then get stuck there. To avoid this make a new subtype of any

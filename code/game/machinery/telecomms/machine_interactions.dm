@@ -31,24 +31,14 @@
 	else
 		return ..()
 
-
-/obj/machinery/telecomms/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/telecomms/attack_hand(mob/user)
-
+/obj/machinery/telecomms/ui_interact(mob/user)
+	. = ..()
 	// You need a multitool to use this, or be silicon
 	if(!issilicon(user))
 		// istype returns false if the value is null
 		if(!istype(user.get_active_held_item(), /obj/item/device/multitool))
 			return
-
-	if(stat & (BROKEN|NOPOWER))
-		return
-
 	var/obj/item/device/multitool/P = get_multitool(user)
-
-	user.set_machine(src)
 	var/dat
 	dat = "<font face = \"Courier\"><HEAD><TITLE>[name]</TITLE></HEAD><center><H3>[name] Access</H3></center>"
 	dat += "<br>[temp]<br>"

@@ -66,6 +66,9 @@
 	var/list/ckeys_that_took = list()
 
 /obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!user.ckey)
 		return
 
@@ -291,6 +294,10 @@
 	throw_speed = 2
 	throw_range = 4
 
+/obj/item/twohanded/required/kirbyplants/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 750), 0)
+
 /obj/item/twohanded/required/kirbyplants/equipped(mob/living/user)
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
 	I.copy_overlays(src)
@@ -345,7 +352,7 @@
 
 /obj/structure/flora/rock
 	icon_state = "basalt"
-	desc = "A volcanic rock."
+	desc = "A volcanic rock. Pioneers used to ride these babies for miles."
 	icon = 'icons/obj/flora/rocks.dmi'
 	resistance_flags = FIRE_PROOF
 	density = TRUE

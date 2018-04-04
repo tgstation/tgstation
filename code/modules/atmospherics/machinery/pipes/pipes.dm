@@ -59,6 +59,9 @@
 /obj/machinery/atmospherics/pipe/return_air()
 	return parent.air
 
+/obj/machinery/atmospherics/pipe/remove_air(amount)
+	return parent.air.remove(amount)
+
 /obj/machinery/atmospherics/pipe/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/analyzer))
 		atmosanalyzer_scan(parent.air, user)
@@ -76,9 +79,10 @@
 	parent = P
 
 /obj/machinery/atmospherics/pipe/Destroy()
+	QDEL_NULL(parent)
+
 	releaseAirToTurf()
-	qdel(air_temporary)
-	air_temporary = null
+	QDEL_NULL(air_temporary)
 
 	var/turf/T = loc
 	for(var/obj/machinery/meter/meter in T)
@@ -87,8 +91,6 @@
 			meter.transfer_fingerprints_to(PM)
 			qdel(meter)
 	. = ..()
-
-	QDEL_NULL(parent)
 
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()
 	for(var/i in 1 to device_type)

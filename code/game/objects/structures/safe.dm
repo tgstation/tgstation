@@ -21,6 +21,7 @@ FLOOR SAFES
 	var/dial = 0		//where is the dial pointing?
 	var/space = 0		//the combined w_class of everything in the safe
 	var/maxspace = 24	//the maximum combined w_class of stuff in the safe
+	var/explosion_count = 0	//Tough, but breakable
 
 
 /obj/structure/safe/New()
@@ -47,6 +48,8 @@ FLOOR SAFES
 
 
 /obj/structure/safe/proc/check_unlocked(mob/user, canhear)
+	if(explosion_count > 2)
+		return 1
 	if(user && canhear)
 		if(tumbler_1_pos == tumbler_1_open)
 			to_chat(user, "<span class='italics'>You hear a [pick("tonk", "krunk", "plunk")] from [src].</span>")
@@ -55,8 +58,8 @@ FLOOR SAFES
 	if(tumbler_1_pos == tumbler_1_open && tumbler_2_pos == tumbler_2_open)
 		if(user)
 			visible_message("<i><b>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</b></i>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /obj/structure/safe/proc/decrement(num)
@@ -81,9 +84,12 @@ FLOOR SAFES
 
 
 /obj/structure/safe/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.set_machine(src)
 	var/dat = "<center>"
-	dat += "<a href='?src=[REF(src)];open=1'>[open ? "Close" : "Open"] [src]</a> | <a href='?src=[REF(src)];decrement=1'>-</a> [dial * 5] <a href='?src=[REF(src)];increment=1'>+</a>"
+	dat += "<a href='?src=[REF(src)];open=1'>[open ? "Close" : "Open"] [src]</a> | <a href='?src=[REF(src)];decrement=1'>-</a> [dial] <a href='?src=[REF(src)];increment=1'>+</a>"
 	if(open)
 		dat += "<table>"
 		for(var/i = contents.len, i>=1, i--)
@@ -101,9 +107,9 @@ FLOOR SAFES
 	if(!user.canUseTopic(src))
 		return
 
-	var/canhear = 0
+	var/canhear = FALSE
 	if(user.is_holding_item_of_type(/obj/item/clothing/neck/stethoscope))
-		canhear = 1
+		canhear = TRUE
 
 	if(href_list["open"])
 		if(check_unlocked())
@@ -182,7 +188,15 @@ FLOOR SAFES
 	return
 
 /obj/structure/safe/ex_act(severity, target)
-	return
+	if(((severity == 2 && target == src) || severity == 1) && explosion_count < 3)
+		explosion_count++
+		switch(explosion_count)
+			if(1)
+				desc = initial(desc) + "\nIt looks a little banged up."
+			if(2)
+				desc = initial(desc) + "\nIt's pretty heavily damaged."
+			if(3)
+				desc = initial(desc) + "\nThe lock seems to be broken."
 
 
 //FLOOR SAFES

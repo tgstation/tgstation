@@ -40,6 +40,28 @@
 /datum/map_template/shuttle/whiteship
 	port_id = "whiteship"
 
+/datum/map_template/shuttle/labour
+	port_id = "labour"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/mining
+	port_id = "mining"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/cargo
+	port_id = "cargo"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/arrival
+	port_id = "arrival"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/infiltrator
+	port_id = "infiltrator"
+	can_be_bought = FALSE
+
+
+
 // Shuttles start here:
 
 /datum/map_template/shuttle/emergency/airless
@@ -100,7 +122,7 @@
 	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
 	admin_notes = "Flaming hot."
 	credit_cost = 10000
-	
+
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
 	name = "The Arena"
@@ -218,6 +240,12 @@
 	admin_notes = "If the crew can solve the puzzle, they will wake the wabbajack statue. It will likely not end well. There's a reason it's boarded up. Maybe they should have just left it alone."
 	credit_cost = 15000
 
+/datum/map_template/shuttle/emergency/omega
+	suffix = "omega"
+	name = "Omegastation Emergency Shuttle"
+	description = "On the smaller size with a modern design, this shuttle is for the crew who like the cosier things, while still being able to stretch their legs."
+	credit_cost = 1000
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
@@ -240,13 +268,18 @@
 	Fulfilling needs you didn't even know you had. We've got EVERYTHING, and something else!"
 	admin_notes = "Currently larger than ferry docking port on Box, will not hit anything, but must be force docked. Trader and ERT bodyguards are not included."
 
+/datum/map_template/shuttle/ferry/fancy
+	suffix = "fancy"
+	name = "fancy transport ferry"
+	description = "At some point, someone upgraded the ferry to have fancier flooring... and less seats."
+
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
 	name = "NT Medical Ship"
 
 /datum/map_template/shuttle/whiteship/meta
 	suffix = "meta"
-	name = "NT Recovery White-ship"
+	name = "NT Recovery Whiteship"
 
 /datum/map_template/shuttle/whiteship/pubby
 	suffix = "pubby"
@@ -255,6 +288,11 @@
 /datum/map_template/shuttle/whiteship/cere
 	suffix = "cere"
 	name = "NT Construction Vessel"
+
+/datum/map_template/shuttle/whiteship/delta
+	suffix = "delta"
+	name = "Unnamed NT Vessel"
+	admin_notes = "The Delta whiteship doesn't have a name, apparently."
 
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
@@ -277,3 +315,43 @@
 	description = "The CentCom Raven Battlecruiser is currently docked at the CentCom ship bay awaiting a mission, this Battlecruiser has been reassigned as an emergency escape shuttle for currently unknown reasons. The CentCom Raven Battlecruiser should comfortably fit a medium to large crew size crew and is complete with all required facitlities including a top of the range CentCom Medical Bay."
 	admin_notes = "The long way home"
 	credit_cost = 12500
+
+/datum/map_template/shuttle/arrival/box
+	suffix = "box"
+	name = "arrival shuttle (Box)"
+
+/datum/map_template/shuttle/cargo/box
+	suffix = "box"
+	name = "cargo ferry (Box)"
+
+/datum/map_template/shuttle/mining/box
+	suffix = "box"
+	name = "mining shuttle (Box)"
+
+/datum/map_template/shuttle/labour/box
+	suffix = "box"
+	name = "labour shuttle (Box)"
+
+/datum/map_template/shuttle/infiltrator/basic
+	suffix = "basic"
+	name = "basic syndicate infiltrator"
+
+/datum/map_template/shuttle/cargo/delta
+	suffix = "delta"
+	name = "cargo ferry (Delta)"
+
+/datum/map_template/shuttle/mining/delta
+	suffix = "delta"
+	name = "mining shuttle (Delta)"
+
+/datum/map_template/shuttle/labour/delta
+	suffix = "delta"
+	name = "labour shuttle (Delta)"
+
+/datum/map_template/shuttle/arrival/delta
+	suffix = "delta"
+	name = "arrival shuttle (Delta)"
+
+/datum/map_template/shuttle/arrival/pubby
+	suffix = "pubby"
+	name = "arrival shuttle (Pubby)"

@@ -29,15 +29,16 @@
 							"human",
 							"lizard",
 							"plasmaman",
-							"special"
+							"other"
 							)
 
 /obj/machinery/limbgrower/Initialize()
-	. = ..()
-	create_reagents(0)
+	create_reagents(100)
 	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
+	. = ..()
 
-/obj/machinery/limbgrower/interact(mob/user)
+/obj/machinery/limbgrower/ui_interact(mob/user)
+	. = ..()
 	if(!is_operational())
 		return
 
@@ -165,9 +166,6 @@
 	dat += "<table style='width:100%' align='center'><tr>"
 
 	for(var/C in categories)
-		if(C=="special" && !emagged)	//Only want to show special when console is emagged
-			continue
-
 		dat += "<td><A href='?src=[REF(src)];category=[C];menu=[LIMBGROWER_CATEGORY_MENU]'>[C]</A></td>"
 		dat += "</tr><tr>"
 		//one category per line
@@ -220,10 +218,11 @@
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	for(var/datum/design/D in SSresearch.techweb_designs)
-		if((D.build_type & LIMBGROWER) && ("special" in D.category))
+	for(var/id in SSresearch.techweb_designs)
+		var/datum/design/D = SSresearch.techweb_designs[id]
+		if((D.build_type & LIMBGROWER) && ("emagged" in D.category))
 			stored_research.add_design(D)
 	to_chat(user, "<span class='warning'>A warning flashes onto the screen, stating that safety overrides have been deactivated!</span>")
-	emagged = TRUE
+	obj_flags |= EMAGGED

@@ -135,7 +135,7 @@
 	toggle_igniter(user)
 
 /obj/item/flamethrower/AltClick(mob/user)
-	if(ptank && isliving(user) && !user.incapacitated() && Adjacent(user))
+	if(ptank && isliving(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, "<span class='notice'>You remove the plasma tank from [src]!</span>")
@@ -224,7 +224,7 @@
 			ptank = new /obj/item/tank/internals/plasma/full(src)
 		update_icon()
 
-/obj/item/flamethrower/full/tank
+/obj/item/flamethrower/full
 	create_full = TRUE
 
 /obj/item/flamethrower/full/tank

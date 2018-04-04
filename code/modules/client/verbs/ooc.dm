@@ -19,9 +19,9 @@
 		if(prefs.muted & MUTE_OOC)
 			to_chat(src, "<span class='danger'>You cannot use OOC (muted).</span>")
 			return
-		if(jobban_isbanned(src.mob, "OOC"))
-			to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
-			return
+	if(jobban_isbanned(src.mob, "OOC"))
+		to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
+		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	var/raw_msg = msg
@@ -56,7 +56,6 @@
 	if(prefs.unlock_content)
 		if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
-
 	for(var/client/C in GLOB.clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
 			if(holder)
@@ -229,8 +228,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set category = "OOC"
 	set desc ="Check the Message of the Day"
 
-	if(GLOB.join_motd)
-		to_chat(src, "<div class=\"motd\">[GLOB.join_motd]</div>")
+	var/motd = global.config.motd
+	if(motd)
+		to_chat(src, "<div class=\"motd\">[motd]</div>")
 	else
 		to_chat(src, "<span class='notice'>The Message of the Day has not been set.</span>")
 
@@ -244,6 +244,21 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 		return
 
 	browse_messages(null, usr.ckey, null, TRUE)
+
+/client/proc/self_playtime()
+	set name = "View tracked playtime"
+	set category = "OOC"
+	set desc = "View the amount of playtime for roles the server has tracked."
+
+	if(!CONFIG_GET(flag/use_exp_tracking))
+		to_chat(usr, "<span class='notice'>Sorry, tracking is currently disabled.</span>")
+		return
+
+	var/list/body = list()
+	body += "<html><head><title>Playtime for [key]</title></head><BODY><BR>Playtime:"
+	body += get_exp_report()
+	body += "</BODY></HTML>"
+	usr << browse(body.Join(), "window=playerplaytime[ckey];size=550x615")
 
 /client/proc/ignore_key(client)
 	var/client/C = client
@@ -259,7 +274,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
 
-	
+
 	var/see_ghost_names = isobserver(mob)
 	var/list/choices = list()
 	for(var/client/C in GLOB.clients)

@@ -13,7 +13,8 @@
 
 /obj/vehicle/ridden/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>Put a key inside it by clicking it with the key. If there's a key inside, you can remove it via Alt-Click!</span>")
+	if(key_type)
+		to_chat(user, "<span class='notice'>Put a key inside it by clicking it with the key. If there's a key inside, you can remove it via Alt-Click!</span>")
 
 /obj/vehicle/ridden/generate_action_type(actiontype)
 	var/datum/action/vehicle/ridden/A = ..()
@@ -42,7 +43,7 @@
 	return ..()
 
 /obj/vehicle/ridden/AltClick(mob/user)
-	if(user.Adjacent(src) && inserted_key)
+	if(inserted_key && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		if(!is_occupant(user))
 			to_chat(user, "<span class='notice'>You must be riding the [src] to remove [src]'s key!</span>")
 			return
@@ -61,14 +62,9 @@
 	return ..()
 
 /obj/vehicle/ridden/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
-	if(user.incapacitated())
-		return
-	for(var/atom/movable/A in get_turf(src))
-		if(A.density)
-			if(A != src && A != M)
-				return
-	M.forceMove(get_turf(src))
-	. = ..()
+	if(!in_range(user, src) || !in_range(M, src))
+		return FALSE
+	. = ..(M, user, FALSE)
 
 /obj/vehicle/ridden/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!force && occupant_amount() >= max_occupants)

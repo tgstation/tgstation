@@ -144,7 +144,7 @@
 /area/awaymission/beach)
 "aA" = (
 /obj/machinery/vending/boozeomat{
-	emagged = 1
+	set_obj_flags = "EMAGGED"
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
@@ -233,9 +233,6 @@
 /obj/effect/overlay/palmtree_r,
 /turf/open/floor/plating/beach/sand,
 /area/space)
-"aR" = (
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
 "aS" = (
 /obj/machinery/door/airlock/sandstone,
 /turf/open/floor/wood,

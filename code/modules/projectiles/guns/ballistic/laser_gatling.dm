@@ -29,6 +29,7 @@
 /obj/item/minigunpack/process()
 	overheat = max(0, overheat - heat_diffusion)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/minigunpack/attack_hand(var/mob/living/carbon/user)
 	if(src.loc == user)
 		if(!armed)
@@ -57,6 +58,7 @@
 		user.dropItemToGround(gun, TRUE)
 
 /obj/item/minigunpack/MouseDrop(atom/over_object)
+	. = ..()
 	if(armed)
 		return
 	if(iscarbon(usr))
@@ -129,7 +131,7 @@
 	else
 		qdel(src)
 
-/obj/item/gun/ballistic/minigun/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
+/obj/item/gun/ballistic/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(ammo_pack)
 		if(ammo_pack.overheat < ammo_pack.overheat_max)
 			ammo_pack.overheat += burst_size

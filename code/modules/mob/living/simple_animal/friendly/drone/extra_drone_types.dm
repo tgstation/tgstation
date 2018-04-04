@@ -18,7 +18,7 @@
 	health = 30
 	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
 	initial_language_holder = /datum/language_holder/drone/syndicate
-	faction = list("syndicate")
+	faction = list(ROLE_SYNDICATE)
 	speak_emote = list("hisses")
 	bubble_icon = "syndibot"
 	heavy_emp_damage = 10

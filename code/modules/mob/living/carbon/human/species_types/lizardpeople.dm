@@ -4,7 +4,8 @@
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,LIPS)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS)
+	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_REPTILE)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs")
 	mutanttongue = /obj/item/organ/tongue/lizard
 	mutanttail = /obj/item/organ/tail/lizard
@@ -51,4 +52,5 @@
 	name = "Ash Walker"
 	id = "ashlizard"
 	limbs_id = "lizard"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
+	inherent_traits = list(TRAIT_NOGUNS,TRAIT_NOBREATH)

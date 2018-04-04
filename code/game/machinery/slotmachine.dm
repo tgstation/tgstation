@@ -100,22 +100,16 @@
 		return ..()
 
 /obj/machinery/computer/slot_machine/emag_act()
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(4, 0, src.loc)
 	spark_system.start()
 	playsound(src, "sparks", 50, 1)
 
-/obj/machinery/computer/slot_machine/attack_hand(mob/living/user)
-	. = ..() //Sanity checks.
-	if(.)
-		return .
-
-	interact(user)
-
-/obj/machinery/computer/slot_machine/interact(mob/living/user)
+/obj/machinery/computer/slot_machine/ui_interact(mob/living/user)
+	. = ..()
 	var/reeltext = {"<center><font face=\"courier new\">
 	/*****^*****^*****^*****^*****\\<BR>
 	| \[[reels[1][1]]\] | \[[reels[2][1]]\] | \[[reels[3][1]]\] | \[[reels[4][1]]\] | \[[reels[5][1]]\] |<BR>
@@ -163,7 +157,7 @@
 	if(prob(15 * severity))
 		return
 	if(prob(1)) // :^)
-		emagged = TRUE
+		obj_flags |= EMAGGED
 	var/severity_ascending = 4 - severity
 	money = max(rand(money - (200 * severity_ascending), money + (200 * severity_ascending)), 0)
 	balance = max(rand(balance - (50 * severity_ascending), balance + (50 * severity_ascending)), 0)
@@ -286,9 +280,9 @@
 	balance += surplus
 
 /obj/machinery/computer/slot_machine/proc/give_coins(amount)
-	var/cointype = emagged ? /obj/item/coin/iron : /obj/item/coin/silver
+	var/cointype = obj_flags & EMAGGED ? /obj/item/coin/iron : /obj/item/coin/silver
 
-	if(!emagged)
+	if(!(obj_flags & EMAGGED))
 		amount = dispense(amount, cointype, null, 0)
 
 	else

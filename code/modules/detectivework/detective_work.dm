@@ -91,7 +91,7 @@
 		var/obj/item/clothing/gloves/G = gloves
 		G.add_blood_DNA(blood_dna)
 	else if(length(blood_dna))
-		AddComponent(/datum/component/forensics, null, null, dna)
+		AddComponent(/datum/component/forensics, null, null, blood_dna)
 		bloody_hands = rand(2, 4)
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return TRUE

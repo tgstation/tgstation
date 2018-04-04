@@ -1,6 +1,8 @@
 # This list auto requests reviews from the specified org members
 # when a PR that modifies the file in question is opened
 # This list is alphabetized by User -> Filename KEEP IT THAT WAY
+# In the event that multiple org members are to be informed of changes
+# to the same file or dir, add them to the end under Multiple Owners
 
 # ChangelingRain
 
@@ -34,7 +36,6 @@
 # duncathan
 
 /code/__DEFINES/atmospherics.dm @duncathan
-/code/controllers/subsystem/air.dm @duncathan
 /code/modules/atmospherics/ @duncathan
 
 # Jordie0608
@@ -51,7 +52,6 @@
 /code/controllers/master.dm @MrStonedOne
 /code/controllers/failsafe.dm @MrStonedOne
 /code/controllers/subsystem.dm @MrStonedOne
-/code/controllers/subsystem/air.dm @MrStonedOne
 /code/controllers/subsystem/timer.dm @MrStonedOne
 
 # ninjanomnom
@@ -62,5 +62,9 @@
 # ShizCalev
 
 /_maps/ @ShizCalev
-/icons/ @ShizCalev
 /sound/ @ShizCalev
+
+# Multiple Owners
+
+/code/controllers/subsystem/air.dm @duncathan @MrStonedOne
+/icons/ @ShizCalev @WJohn

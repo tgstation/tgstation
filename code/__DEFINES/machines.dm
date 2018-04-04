@@ -85,5 +85,15 @@
 #define SUPERMATTER_EMERGENCY 5		// Integrity < 25%
 #define SUPERMATTER_DELAMINATING 6	// Pretty obvious.
 
-//R&D Snowflakes
-#define RD_CONSOLE_LOCKED_SCREEN 0.2
+//Nuclear bomb stuff
+#define NUKESTATE_INTACT		5
+#define NUKESTATE_UNSCREWED		4
+#define NUKESTATE_PANEL_REMOVED		3
+#define NUKESTATE_WELDED		2
+#define NUKESTATE_CORE_EXPOSED	1
+#define NUKESTATE_CORE_REMOVED	0
+
+#define NUKE_OFF_LOCKED		0
+#define NUKE_OFF_UNLOCKED	1
+#define NUKE_ON_TIMING		2
+#define NUKE_ON_EXPLODING	3

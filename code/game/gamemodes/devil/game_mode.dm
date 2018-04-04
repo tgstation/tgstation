@@ -1,5 +1,4 @@
 /datum/game_mode
-	var/list/datum/mind/sintouched = list()
 	var/list/datum/mind/devils = list()
 	var/devil_ascended = 0 // Number of arch devils on station
 
@@ -24,16 +23,6 @@
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_DEVIL]
 	hud.leave_hud(devil_mind.current)
 	set_antag_hud(devil_mind.current, null)
-
-/datum/game_mode/proc/update_sintouched_icons_added(datum/mind/sintouched_mind)
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_SINTOUCHED]
-	hud.join_hud(sintouched_mind.current)
-	set_antag_hud(sintouched_mind.current, "sintouched")
-
-/datum/game_mode/proc/update_sintouched_icons_removed(datum/mind/sintouched_mind)
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_SINTOUCHED]
-	hud.leave_hud(sintouched_mind.current)
-	set_antag_hud(sintouched_mind.current, null)
 
 /datum/game_mode/proc/update_soulless_icons_added(datum/mind/soulless_mind)
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_SOULLESS]

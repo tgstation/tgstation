@@ -9,6 +9,12 @@
 	earliest_start = 30 MINUTES
 	gamemode_blacklist = list("nuclear")
 
+/datum/round_event_control/pirates/preRunEvent()
+	if (!SSmapping.empty_space)
+		return EVENT_CANT_RUN
+
+	return ..()
+
 /datum/round_event/pirates
 	startWhen = 60 //2 minutes to answer
 	var/datum/comm_message/threat
@@ -60,7 +66,7 @@
 	var/datum/map_template/pirate_event_ship/ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
-	var/z = ZLEVEL_EMPTY_SPACE
+	var/z = SSmapping.empty_space.z_value
 	var/turf/T = locate(x,y,z)
 	if(!T)
 		CRASH("Pirate event found no turf to load in")
@@ -188,7 +194,7 @@
 	name = "pirate shuttle navigation computer"
 	desc = "Used to designate a precise transit location for the pirate shuttle."
 	shuttleId = "pirateship"
-	station_lock_override = TRUE
+	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "pirateship_custom"
 	shuttlePortName = "custom location"
 	x_offset = 9
@@ -264,7 +270,6 @@
 			if(!results.len)
 				return
 			var/atom/movable/AM = pick_n_take(results)
-			var/area/loot_area = get_area(AM)
-			say("Located: [AM.name] at [loot_area.name]")
+			say("Located: [AM.name] at [get_area_name(AM)]")
 
 #undef LOOT_LOCATOR_COOLDOWN

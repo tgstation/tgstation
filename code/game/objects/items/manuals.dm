@@ -933,6 +933,10 @@
 	title = "Space Law"
 	page_link = "Space_Law"
 
+/obj/item/book/manual/wiki/security_space_law/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] pretends to read \the [src] intently... then promptly dies of laughter!</span>")
+	return OXYLOSS
+
 /obj/item/book/manual/wiki/infections
 	name = "Infections - Making your own pandemic!"
 	icon_state = "bookInfections"

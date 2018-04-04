@@ -12,8 +12,8 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned)
 "ad" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 2;
 	name = "External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -47,7 +47,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/shuttle/abandoned)
 "ah" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned)
 "ai" = (
@@ -102,8 +102,10 @@
 	},
 /area/shuttle/abandoned)
 "an" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 1;
 	glass = 1;
 	name = "Internal Airlock"
 	},
@@ -701,8 +703,7 @@
 /area/shuttle/abandoned)
 "bp" = (
 /obj/structure/urinal{
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -892,7 +893,7 @@
 	},
 /area/shuttle/abandoned)
 "bI" = (
-/obj/structure/sign/vacuum,
+/obj/structure/sign/warning/vacuum,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "bJ" = (
@@ -954,8 +955,10 @@
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned)
 "bP" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 4;
 	glass = 1;
 	name = "Internal Airlock"
 	},
@@ -968,8 +971,10 @@
 	},
 /area/shuttle/abandoned)
 "bQ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 8;
 	name = "External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -983,7 +988,6 @@
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_x = -28;
-	req_access_txt = "0";
 	use_power = 0
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1015,9 +1019,7 @@
 	name = "dust"
 	},
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Infirmary";
-	req_access_txt = "0"
+	name = "Infirmary"
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/abandoned)
@@ -1085,7 +1087,7 @@
 /turf/open/floor/plasteel/whiteblue/side,
 /area/shuttle/abandoned)
 "cc" = (
-/obj/structure/sign/bluecross_2,
+/obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cd" = (
@@ -1098,7 +1100,7 @@
 	},
 /area/shuttle/abandoned)
 "ce" = (
-/obj/structure/sign/engineering,
+/obj/structure/sign/departments/engineering,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cf" = (
@@ -1431,7 +1433,7 @@
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/shuttle/abandoned)
 "cL" = (
-/obj/structure/sign/science,
+/obj/structure/sign/departments/science,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
 "cM" = (
@@ -1501,8 +1503,10 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "cS" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /obj/machinery/door/airlock/titanium{
-	cyclelinkeddir = 8;
 	name = "External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1519,8 +1523,6 @@
 	name = "White-Ship";
 	port_direction = 8;
 	preferred_direction = 8;
-	roundstart_move = "whiteship_away";
-	timid = 1;
 	width = 32
 	},
 /turf/open/floor/plasteel/neutral,

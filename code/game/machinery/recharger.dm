@@ -29,7 +29,7 @@
 		anchored = !anchored
 		power_change()
 		to_chat(user, "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>")
-		playsound(loc, G.usesound, 75, 1)
+		G.play_tool_sound(src)
 		return
 
 	var/allowed = is_type_in_typecache(G, allowed_devices)
@@ -73,7 +73,8 @@
 	return ..()
 
 /obj/machinery/recharger/attack_hand(mob/user)
-	if(issilicon(user))
+	. = ..()
+	if(.)
 		return
 
 	add_fingerprint(user)
@@ -84,9 +85,6 @@
 		charging = null
 		use_power = IDLE_POWER_USE
 		update_icon()
-
-/obj/machinery/recharger/attack_paw(mob/user)
-	return attack_hand(user)
 
 /obj/machinery/recharger/attack_tk(mob/user)
 	if(charging)

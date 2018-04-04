@@ -101,6 +101,14 @@
 	name = "Luxurious Emergency Shuttle"
 	noteleport = TRUE
 
+/area/shuttle/escape/arena
+	name = "The Arena"
+	noteleport = TRUE
+
+/area/shuttle/escape/meteor
+	name = "\proper a meteor with engines strapped to it"
+	luminosity = NONE
+
 /area/shuttle/transport
 	name = "Transport Shuttle"
 	blob_allowed = FALSE
@@ -132,3 +140,28 @@
 /area/shuttle/syndicate_scout
 	name = "Syndicate Scout"
 	blob_allowed = FALSE
+
+/area/shuttle/caravan
+	blob_allowed = FALSE
+	requires_power = TRUE
+
+/area/shuttle/caravan/syndicate1
+	name = "Syndicate Fighter"
+
+/area/shuttle/caravan/syndicate2
+	name = "Syndicate Fighter"
+
+/area/shuttle/caravan/syndicate3
+	name = "Syndicate Drop Ship"
+
+/area/shuttle/caravan/pirate
+	name = "Pirate Cutter"
+
+/area/shuttle/caravan/freighter1
+	name = "Small Freighter"
+
+/area/shuttle/caravan/freighter2
+	name = "Tiny Freighter"
+
+/area/shuttle/caravan/freighter3
+	name = "Tiny Freighter"

@@ -387,3 +387,80 @@
 
 	R.make_shell(src)
 	return TRUE
+
+/obj/item/borg/upgrade/expand
+	name = "borg expander"
+	desc = "A cyborg resizer, it makes a cyborg huge."
+	icon_state = "cyborg_upgrade3"
+
+/obj/item/borg/upgrade/expand/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	if(R.hasExpanded)
+		to_chat(usr, "<span class='notice'>This unit already has an expand module installed!</span>")
+		return
+
+	R.notransform = TRUE
+	var/prev_lockcharge = R.lockcharge
+	R.SetLockdown(1)
+	R.anchored = TRUE
+	var/datum/effect_system/smoke_spread/smoke = new
+	smoke.set_up(1, R.loc)
+	smoke.start()
+	sleep(2)
+	for(var/i in 1 to 4)
+		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
+		sleep(12)
+	if(!prev_lockcharge)
+		R.SetLockdown(0)
+	R.anchored = FALSE
+	R.notransform = FALSE
+	R.resize = 2
+	R.hasExpanded = TRUE
+	R.update_transform()
+	return TRUE
+
+/obj/item/borg/upgrade/rped
+	name = "engineering cyborg RPED"
+	desc = "A rapid part exchange device for the engineering cyborg."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "borgrped"
+	require_module = TRUE
+	module_type = /obj/item/robot_module/engineering
+
+/obj/item/borg/upgrade/rped/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R
+	if(RPED)
+		to_chat(usr, "<span class='warning'>This unit is already equipped with a RPED module.</span>")
+		return FALSE
+
+	RPED = new(R.module)
+	R.module.basic_modules += RPED
+	R.module.add_module(RPED, FALSE, TRUE)
+	return TRUE
+
+/obj/item/borg/upgrade/pinpointer
+	name = "medical cyborg crew pinpointer"
+	desc = "A crew pinpointer module for the medical cyborg."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "pinpointer_crew"
+	require_module = TRUE
+	module_type = /obj/item/robot_module/medical
+
+/obj/item/borg/upgrade/pinpointer/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	var/obj/item/pinpointer/crew/PP = locate() in R
+	if(PP)
+		to_chat(usr, "<span class='warning'>This unit is already equipped with a pinpointer module.</span>")
+		return FALSE
+
+	PP = new(R.module)
+	R.module.basic_modules += PP
+	R.module.add_module(PP, FALSE, TRUE)
+	return TRUE

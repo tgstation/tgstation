@@ -283,15 +283,17 @@
 	var/field_type = /datum/proximity_monitor/advanced/debug
 	var/operating = FALSE
 	var/datum/proximity_monitor/advanced/current = null
+	var/datum/component/mobhook
 
-/obj/item/device/multitool/field_debug/New()
+/obj/item/device/multitool/field_debug/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
-	..()
 
 /obj/item/device/multitool/field_debug/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(current)
-	..()
+	QDEL_NULL(mobhook)
+	return ..()
 
 /obj/item/device/multitool/field_debug/proc/setup_debug_field()
 	var/list/new_params = field_params.Copy()
@@ -301,12 +303,18 @@
 /obj/item/device/multitool/field_debug/attack_self(mob/user)
 	operating = !operating
 	to_chat(user, "You turn [src] [operating? "on":"off"].")
+	QDEL_NULL(mobhook)
 	if(!istype(current) && operating)
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/on_mob_move))
 		setup_debug_field()
 	else if(!operating)
 		QDEL_NULL(current)
 
-/obj/item/device/multitool/field_debug/on_mob_move()
+/obj/item/device/multitool/field_debug/dropped()
+	. = ..()
+	QDEL_NULL(mobhook)
+
+/obj/item/device/multitool/field_debug/proc/on_mob_move()
 	check_turf(get_turf(src))
 
 /obj/item/device/multitool/field_debug/process()

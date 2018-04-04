@@ -67,7 +67,7 @@
 /obj/item/gun/energy/chrono_gun/update_icon()
 	return
 
-/obj/item/gun/energy/chrono_gun/process_fire()
+/obj/item/gun/energy/chrono_gun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(field)
 		field_disconnect(field)
 	..()

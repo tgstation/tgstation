@@ -30,14 +30,6 @@
 	else
 		return ..()
 
-/obj/machinery/computer/launchpad/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/computer/launchpad/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
 /obj/machinery/computer/launchpad/proc/pad_exists(number)
 	var/obj/machinery/launchpad/pad = launchpads[number]
 	if(QDELETED(pad))
@@ -48,10 +40,11 @@
 	var/obj/machinery/launchpad/pad = launchpads[number]
 	return pad
 
-/obj/machinery/computer/launchpad/interact(mob/user)
+/obj/machinery/computer/launchpad/ui_interact(mob/user)
+	. = ..()
 	var/list/t = list()
 	if(!LAZYLEN(launchpads))
-		in_use = FALSE     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
+		obj_flags &= ~IN_USE     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
 		t += "<div class='statusDisplay'>No launchpad located.</div><BR>"
 	else
 		for(var/i in 1 to LAZYLEN(launchpads))

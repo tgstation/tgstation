@@ -20,7 +20,6 @@
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
-	add_overlay("waitlight")
 	. = ..()
 
 /obj/machinery/chem_master/Destroy()
@@ -54,27 +53,27 @@
 		bottle = null
 
 /obj/machinery/chem_master/update_icon()
+	cut_overlays()
+	if (stat & BROKEN)
+		add_overlay("waitlight")
 	if(beaker)
 		icon_state = "mixer1"
 	else
 		icon_state = "mixer0"
 
-/obj/machinery/chem_master/proc/eject_beaker()
+/obj/machinery/chem_master/proc/eject_beaker(mob/user)
 	if(beaker)
 		beaker.forceMove(drop_location())
-		adjust_item_drop_location(beaker)
+		if(Adjacent(user) && !issilicon(user))
+			user.put_in_hands(beaker)
+		else
+			adjust_item_drop_location(beaker)
 		beaker = null
 		update_icon()
 
 /obj/machinery/chem_master/blob_act(obj/structure/blob/B)
 	if (prob(50))
 		qdel(src)
-
-/obj/machinery/chem_master/power_change()
-	if(powered())
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
 
 /obj/machinery/chem_master/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", I))
@@ -88,7 +87,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
 		. = 1 // no afterattack
 		if(panel_open)
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
@@ -169,7 +168,7 @@
 		return
 	switch(action)
 		if("eject")
-			eject_beaker()
+			eject_beaker(usr)
 			. = TRUE
 
 		if("ejectp")
@@ -220,7 +219,7 @@
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
 				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/pill/P
 
@@ -234,7 +233,7 @@
 					reagents.trans_to(P,vol_each)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/food/condiment/pack/P = new/obj/item/reagent_containers/food/condiment/pack(drop_location())
 
@@ -256,7 +255,7 @@
 					return
 				vol_each = min(reagents.total_volume / amount, 40)
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 				return
 			var/obj/item/reagent_containers/pill/P
 
@@ -274,7 +273,7 @@
 
 			if(condi)
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/food/condiment/P = new(drop_location())
 				P.originalname = name
@@ -287,7 +286,7 @@
 					amount_full = round(reagents.total_volume / 30)
 					vol_part = reagents.total_volume % 30
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, be_close=TRUE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 
 				var/obj/item/reagent_containers/glass/bottle/P

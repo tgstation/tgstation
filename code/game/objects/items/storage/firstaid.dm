@@ -22,6 +22,10 @@
 	icon_state = "firstaid"
 	desc = "A first aid kit with the ability to heal common types of injuries."
 
+/obj/item/storage/firstaid/regular/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins giving [user.p_them()]self aids with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
+
 /obj/item/storage/firstaid/regular/PopulateContents()
 	if(empty)
 		return
@@ -55,6 +59,10 @@
 	icon_state = "ointment"
 	item_state = "firstaid-ointment"
 
+/obj/item/storage/firstaid/fire/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins rubbing \the [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to start a fire!</span>")
+	return FIRELOSS
+
 /obj/item/storage/firstaid/fire/Initialize(mapload)
 	. = ..()
 	icon_state = pick("ointment","firefirstaid")
@@ -75,6 +83,10 @@
 	icon_state = "antitoxin"
 	item_state = "firstaid-toxin"
 
+/obj/item/storage/firstaid/toxin/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins licking the lead paint off \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return TOXLOSS
+
 /obj/item/storage/firstaid/toxin/Initialize(mapload)
 	. = ..()
 	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
@@ -94,6 +106,10 @@
 	icon_state = "o2"
 	item_state = "firstaid-o2"
 
+/obj/item/storage/firstaid/o2/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return OXYLOSS
+
 /obj/item/storage/firstaid/o2/PopulateContents()
 	if(empty)
 		return
@@ -108,6 +124,10 @@
 	desc = "A first aid kit for when you get toolboxed."
 	icon_state = "brute"
 	item_state = "firstaid-brute"
+
+/obj/item/storage/firstaid/brute/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins beating [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 
 /obj/item/storage/firstaid/brute/PopulateContents()
 	if(empty)

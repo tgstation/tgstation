@@ -23,6 +23,7 @@
 	desc = "Death to Nanotrasen. This variant comes in MECHA DEATH flavour."
 	wanted_objects = list()
 	search_objects = 0
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 
 	var/spawn_mecha_type = /obj/mecha/combat/marauder/mauler/loaded
 	var/obj/mecha/mecha //Ref to pilot's mecha instance
@@ -289,6 +290,6 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/Goto(target, delay, minimum_distance)
 	if(mecha)
-		walk_to(mecha, target, minimum_distance, delay)
+		walk_to(mecha, target, minimum_distance, mecha.step_in)
 	else
 		..()

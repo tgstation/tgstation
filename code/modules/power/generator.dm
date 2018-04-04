@@ -123,12 +123,6 @@
 	lastgen -= power_output
 	..()
 
-/obj/machinery/power/generator/attack_hand(mob/user)
-	if(..())
-		user << browse(null, "window=teg")
-		return
-	interact(user)
-
 /obj/machinery/power/generator/proc/get_menu(include_link = 1)
 	var/t = ""
 	if(!powernet)
@@ -161,15 +155,12 @@
 
 	return t
 
-/obj/machinery/power/generator/interact(mob/user)
-
-	user.set_machine(src)
+/obj/machinery/power/generator/ui_interact(mob/user)
+	. = ..()
 	var/datum/browser/popup = new(user, "teg", "Thermo-Electric Generator", 460, 300)
 	popup.set_content(get_menu())
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return 1
-
 
 /obj/machinery/power/generator/Topic(href, href_list)
 	if(..())

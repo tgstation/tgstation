@@ -26,11 +26,6 @@
 		bin_pen = P
 		update_icon()
 
-/obj/item/paper_bin/fire_act(exposed_temperature, exposed_volume)
-	if(!total_paper)
-		return
-	..()
-
 /obj/item/paper_bin/Destroy()
 	if(papers)
 		for(var/i in papers)
@@ -45,6 +40,7 @@
 	..()
 
 /obj/item/paper_bin/MouseDrop(atom/over_object)
+	. = ..()
 	var/mob/living/M = usr
 	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return
@@ -58,11 +54,10 @@
 
 	add_fingerprint(M)
 
-
 /obj/item/paper_bin/attack_paw(mob/user)
 	return attack_hand(user)
 
-
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/paper_bin/attack_hand(mob/user)
 	if(user.lying)
 		return
@@ -95,9 +90,8 @@
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
-
 	add_fingerprint(user)
-
+	return ..()
 
 /obj/item/paper_bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/paper))
@@ -147,12 +141,15 @@
 	icon_state = "paper_bundle"
 	papertype = /obj/item/paper/natural
 	resistance_flags = FLAMMABLE
+
 /obj/item/paper_bin/bundlenatural/attack_hand(mob/user)
 	..()
 	if(total_paper < 1)
 		qdel(src)
+
 /obj/item/paper_bin/bundlenatural/fire_act(exposed_temperature, exposed_volume)
 	qdel(src)
+
 /obj/item/paper_bin/bundlenatural/attackby(obj/item/W, mob/user)
 	if(W.is_sharp())
 		to_chat(user, "<span class='notice'>You snip \the [src], spilling paper everywhere.</span>")

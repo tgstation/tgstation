@@ -551,7 +551,6 @@
 	name = "Cere emergency shuttle";
 	port_direction = 4;
 	preferred_direction = 2;
-	timid = 1;
 	width = 42
 	},
 /turf/open/floor/plating,
@@ -695,7 +694,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "cb" = (
-/obj/structure/sign/bluecross_2{
+/obj/structure/sign/departments/medbay/alt{
 	pixel_x = 32;
 	pixel_y = -32
 	},
@@ -790,7 +789,6 @@
 /area/shuttle/escape)
 "cq" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/white,
@@ -801,7 +799,6 @@
 /area/shuttle/escape)
 "cs" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/white,
@@ -879,8 +876,8 @@
 /area/shuttle/escape)
 "cE" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/empty,
-/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood,
+/obj/item/reagent_containers/blood,
 /obj/item/reagent_containers/blood/AMinus,
 /obj/item/reagent_containers/blood/BMinus{
 	pixel_x = -4;
@@ -1109,7 +1106,7 @@
 	},
 /area/shuttle/escape)
 "di" = (
-/obj/structure/sign/electricshock{
+/obj/structure/sign/warning/electricshock{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -1131,7 +1128,7 @@
 /area/shuttle/escape)
 "dl" = (
 /obj/structure/table,
-/obj/structure/sign/enginesafety{
+/obj/structure/sign/warning/enginesafety{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/yellow/side,

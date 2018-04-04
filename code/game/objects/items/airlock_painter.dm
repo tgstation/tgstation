@@ -11,6 +11,7 @@
 
 	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	slot_flags = SLOT_BELT
+	usesound = 'sound/effects/spray2.ogg'
 
 	var/obj/item/device/toner/ink = null
 
@@ -20,7 +21,7 @@
 
 //This proc doesn't just check if the painter can be used, but also uses it.
 //Only call this if you are certain that the painter will be used right after this check!
-/obj/item/airlock_painter/proc/use(mob/user)
+/obj/item/airlock_painter/proc/use_paint(mob/user)
 	if(can_use(user))
 		ink.charges--
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)

@@ -11,7 +11,7 @@
 	layer = LOW_OBJ_LAYER
 	anchored = TRUE
 	max_integrity = 500
-	armor = list(melee = 70, bullet = 70, laser = 70, energy = 70, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
+	armor = list("melee" = 70, "bullet" = 70, "laser" = 70, "energy" = 70, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
 	var/open = FALSE		// true if cover is open
 	var/locked = TRUE		// true if controls are locked
@@ -108,10 +108,9 @@
 /obj/machinery/navbeacon/attack_paw()
 	return
 
-/obj/machinery/navbeacon/attack_hand(mob/user)
-	interact(user, 0)
-
-/obj/machinery/navbeacon/interact(mob/user, ai = 0)
+/obj/machinery/navbeacon/ui_interact(mob/user)
+	. = ..()
+	var/ai = isAI(user)
 	var/turf/T = loc
 	if(T.intact)
 		return		// prevent intraction when T-scanner revealed

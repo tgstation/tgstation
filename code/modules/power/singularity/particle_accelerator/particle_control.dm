@@ -35,6 +35,9 @@
 	return ..()
 
 /obj/machinery/particle_accelerator/control_box/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(construction_state == PA_CONSTRUCTION_COMPLETE)
 		interact(user)
 	else if(construction_state == PA_CONSTRUCTION_PANEL_OPEN)
@@ -223,13 +226,13 @@
 	return 1
 
 
-/obj/machinery/particle_accelerator/control_box/interact(mob/user)
+/obj/machinery/particle_accelerator/control_box/ui_interact(mob/user)
+	. = ..()
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
 		if(!issilicon(user))
 			user.unset_machine()
 			user << browse(null, "window=pacontrol")
 			return
-	user.set_machine(src)
 
 	var/dat = ""
 	dat += "<A href='?src=[REF(src)];close=1'>Close</A><BR><BR>"
@@ -270,7 +273,7 @@
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
 			if(istype(W, /obj/item/wrench) && !isinspace())
-				playsound(loc, W.usesound, 75, 1)
+				W.play_tool_sound(src, 75)
 				anchored = TRUE
 				user.visible_message("[user.name] secures the [name] to the floor.", \
 					"You secure the external bolts.")
@@ -278,7 +281,7 @@
 				did_something = TRUE
 		if(PA_CONSTRUCTION_UNWIRED)
 			if(istype(W, /obj/item/wrench))
-				playsound(loc, W.usesound, 75, 1)
+				W.play_tool_sound(src, 75)
 				anchored = FALSE
 				user.visible_message("[user.name] detaches the [name] from the floor.", \
 					"You remove the external bolts.")

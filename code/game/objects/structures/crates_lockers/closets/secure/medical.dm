@@ -74,7 +74,8 @@
 	new /obj/item/door_remote/chief_medical_officer(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
-	new /obj/item/circuitboard/machine/protolathe/department/medical(src)
+	new /obj/item/wallframe/defib_mount(src)
+	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"
@@ -95,3 +96,5 @@
 	..()
 	new /obj/item/storage/box/pillbottles(src)
 	new /obj/item/storage/box/pillbottles(src)
+	new /obj/item/storage/box/medsprays(src)
+	new /obj/item/storage/box/medsprays(src)

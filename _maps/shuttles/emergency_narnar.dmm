@@ -159,8 +159,7 @@
 "E" = (
 /obj/machinery/door/airlock/cult/friendly,
 /obj/docking_port/mobile/emergency{
-	name = "shuttle 667";
-	timid = 1
+	name = "shuttle 667"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)

@@ -11,7 +11,6 @@
 /obj/effect/mob_spawn/human/corpse/syndicatesoldier
 	name = "Syndicate Operative"
 	id_job = "Operative"
-	id_access_list = list(ACCESS_SYNDICATE)
 	hair_style = "Bald"
 	facial_hair_style = "Shaved"
 	outfit = /datum/outfit/syndicatesoldiercorpse
@@ -26,13 +25,12 @@
 	mask = /obj/item/clothing/mask/gas
 	head = /obj/item/clothing/head/helmet/swat
 	back = /obj/item/storage/backpack
-	id = /obj/item/card/id
+	id = /obj/item/card/id/syndicate
 
 
 /obj/effect/mob_spawn/human/corpse/syndicatecommando
 	name = "Syndicate Commando"
 	id_job = "Operative"
-	id_access_list = list(ACCESS_SYNDICATE)
 	hair_style = "Bald"
 	facial_hair_style = "Shaved"
 	outfit = /datum/outfit/syndicatecommandocorpse
@@ -47,13 +45,12 @@
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/tank/jetpack/oxygen
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
-	id = /obj/item/card/id
+	id = /obj/item/card/id/syndicate
 
 
 /obj/effect/mob_spawn/human/corpse/syndicatestormtrooper
 	name = "Syndicate Stormtrooper"
 	id_job = "Operative"
-	id_access_list = list(ACCESS_SYNDICATE)
 	hair_style = "Bald"
 	facial_hair_style = "Shaved"
 	outfit = /datum/outfit/syndicatestormtroopercorpse
@@ -67,7 +64,7 @@
 	ears = /obj/item/device/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/tank/jetpack/oxygen/harness
-	id = /obj/item/card/id
+	id = /obj/item/card/id/syndicate
 
 
 /obj/effect/mob_spawn/human/clown/corpse
@@ -187,3 +184,23 @@
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
 	id = /obj/item/card/id
+
+/obj/effect/mob_spawn/human/corpse/cat_butcher
+	name = "The Cat Surgeon"
+	id_job = "Cat Surgeon"
+	id_access_list = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
+	hair_style = "Cut Hair"
+	facial_hair_style = "Watson Mustache"
+	skin_tone = "caucasian1"
+	outfit = /datum/outfit/cat_butcher
+
+/datum/outfit/cat_butcher
+	name = "Cat Butcher Uniform"
+	uniform = /obj/item/clothing/under/rank/medical/green
+	suit = /obj/item/clothing/suit/apron/surgical
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	gloves = /obj/item/clothing/gloves/color/latex/nitrile
+	ears = /obj/item/device/radio/headset
+	back = /obj/item/storage/backpack/satchel/med
+	id = /obj/item/card/id
+	glasses = /obj/item/clothing/glasses/hud/health

@@ -91,7 +91,7 @@
 	return ..()
 
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
-	new_spawn.real_name = "Wish Granter's Victim ([rand(0,999)])"
+	new_spawn.real_name = "Wish Granter's Victim ([rand(1,999)])"
 	var/wish = rand(1,4)
 	switch(wish)
 		if(1)
@@ -161,6 +161,9 @@
 		new_spawn.mind.assigned_role = "Free Golem"
 
 /obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(isgolem(user) && can_transfer)
 		var/transfer_choice = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
 		if(transfer_choice != "Yes")
@@ -173,7 +176,6 @@
 		create(ckey = user.ckey,name = user.real_name)
 		user.death()
 		return
-	..()
 
 /obj/effect/mob_spawn/human/golem/servant
 	has_owner = TRUE
@@ -396,7 +398,6 @@
 	death = FALSE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
-	id_access_list = list(ACCESS_SYNDICATE)
 	outfit = /datum/outfit/syndicate_empty
 	assignedrole = "Space Syndicate"	//I know this is really dumb, but Syndicate operative is nuke ops
 
@@ -408,10 +409,10 @@
 	ears = /obj/item/device/radio/headset/syndicate/alt
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/weapons_auth)
-	id = /obj/item/card/id
+	id = /obj/item/card/id/syndicate
 
 /datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
-	H.faction |= "syndicate"
+	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
@@ -535,9 +536,6 @@
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
 
-
-#define PIRATE_NAMES_FILE "pirates.json"
-
 /obj/effect/mob_spawn/human/pirate
 	name = "space pirate sleeper"
 	desc = "A cryo sleeper smelling faintly of rum."
@@ -545,7 +543,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	mob_name = "a space pirate"
-	mob_species = /datum/species/human
+	mob_species = /datum/species/skeleton
 	outfit = /datum/outfit/pirate/space
 	roundstart = FALSE
 	death = FALSE

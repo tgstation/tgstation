@@ -78,9 +78,6 @@
 		emote(copytext(message, 2))
 		return 1
 
-/mob/proc/emote(var/act)
-	return
-
 /mob/proc/hivecheck()
 	return 0
 

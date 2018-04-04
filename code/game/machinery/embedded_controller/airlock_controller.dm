@@ -281,6 +281,7 @@
 <div class='line'><div class='statusLabel'>\> Control Pump:</div><div class='statusValue'>[pump_status]</div></div>
 <div class='line'><div class='statusLabel'>\> Interior Door:</div><div class='statusValue'>[interior_status]</div></div>
 <div class='line'><div class='statusLabel'>\> Exterior Door:</div><div class='statusValue'>[exterior_status]</div></div>
+<div class='clearBoth'></div>
 </div>
 [state_options]"}
 

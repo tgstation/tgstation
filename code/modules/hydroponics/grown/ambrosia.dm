@@ -8,6 +8,7 @@
 	filling_color = "#008000"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	tastes = list("ambrosia" = 1)
 
 // Ambrosia Vulgaris
 /obj/item/seeds/ambrosia

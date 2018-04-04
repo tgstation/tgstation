@@ -99,6 +99,8 @@
 	var/length = round(sqrt((DX)**2+(DY)**2)) //hypotenuse of the triangle formed by target and origin's displacement
 
 	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
+		if(QDELETED(src) || finished)
+			break
 		var/obj/effect/ebeam/X = new beam_type(origin_oldloc)
 		X.owner = src
 		elements += X

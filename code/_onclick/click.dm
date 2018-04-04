@@ -20,6 +20,14 @@
 /mob/proc/changeNext_move(num)
 	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
 
+/mob/living/changeNext_move(num)
+	var/mod = next_move_modifier
+	var/adj = next_move_adjust
+	for(var/i in status_effects)
+		var/datum/status_effect/S = i
+		mod *= S.nextmove_modifier()
+		adj += S.nextmove_adjust()
+	next_move = world.time + ((num + adj)*mod)
 
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
@@ -61,9 +69,8 @@
 		return
 	next_click = world.time + 1
 
-	if(client && client.click_intercept)
-		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
-			return
+	if(check_click_intercept(params,A))
+		return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
@@ -190,23 +197,13 @@
 	return FALSE
 
 /atom/movable/proc/DirectAccess(atom/target)
-	if(target == src)
-		return TRUE
-	if(target == loc)
-		return TRUE
+	return (target == src || target == loc)
 
 /mob/DirectAccess(atom/target)
-	if(..())
-		return TRUE
-	if(target in contents) //This could probably use moving down and restricting to inventory only
-		return TRUE
-	return FALSE
+	return (..() || (target in contents))
 
 /mob/living/DirectAccess(atom/target)
-	if(..()) //Lightweight checks first
-		return TRUE
-	if(target in GetAllContents())
-		return TRUE
+	return (..() || (target in GetAllContents()))
 
 /atom/proc/AllowClick()
 	return FALSE
@@ -472,7 +469,7 @@
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
+		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr.client ? usr.client.eye : usr))
 		params += "&catcher=1"
 		if(T)
 			T.Click(location, control, params)
@@ -492,3 +489,16 @@
 		else
 			view = 1
 		add_view_range(view)
+
+/mob/proc/check_click_intercept(params,A)
+	//Client level intercept
+	if(client && client.click_intercept)
+		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
+			return TRUE
+
+	//Mob level intercept
+	if(click_intercept)
+		if(call(click_intercept, "InterceptClickOn")(src, params, A))
+			return TRUE
+
+	return FALSE

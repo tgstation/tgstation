@@ -100,7 +100,7 @@
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 	if(istype(mob_occupant))
 		if(locate_computer(/obj/machinery/computer/cloning))
-			if(!mob_occupant.suiciding && !(mob_occupant.has_disability(DISABILITY_NOCLONE)) && !mob_occupant.hellbound)
+			if(!mob_occupant.suiciding && !(mob_occupant.has_trait(TRAIT_NOCLONE)) && !mob_occupant.hellbound)
 				mob_occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
 
 	// DNA manipulators cannot operate on severed heads or brains
@@ -144,10 +144,7 @@
 
 	return ..()
 
-/obj/machinery/dna_scannernew/attack_hand(mob/user)
-	if(..(user,1,0)) //don't set the machine, since there's no dialog
-		return
-
+/obj/machinery/dna_scannernew/interact(mob/user)
 	toggle_open(user)
 
 /obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)

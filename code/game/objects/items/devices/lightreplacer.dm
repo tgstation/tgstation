@@ -149,7 +149,7 @@
 		to_chat(user, "<span class='notice'>You fill \the [src] with lights from \the [S]. " + status_string() + "</span>")
 
 /obj/item/device/lightreplacer/emag_act()
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	Emag()
 
@@ -157,7 +157,7 @@
 	to_chat(user, status_string())
 
 /obj/item/device/lightreplacer/update_icon()
-	icon_state = "lightreplacer[emagged]"
+	icon_state = "lightreplacer[(obj_flags & EMAGGED ? 1 : 0)]"
 
 /obj/item/device/lightreplacer/proc/status_string()
 	return "It has [uses] light\s remaining (plus [bulb_shards] fragment\s)."
@@ -205,7 +205,7 @@
 
 			target.status = L2.status
 			target.switchcount = L2.switchcount
-			target.rigged = emagged
+			target.rigged = (obj_flags & EMAGGED ? 1 : 0)
 			target.brightness = L2.brightness
 			target.on = target.has_power()
 			target.update()
@@ -223,9 +223,9 @@
 		return
 
 /obj/item/device/lightreplacer/proc/Emag()
-	emagged = !emagged
+	obj_flags ^= EMAGGED
 	playsound(src.loc, "sparks", 100, 1)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		name = "shortcircuited [initial(name)]"
 	else
 		name = initial(name)

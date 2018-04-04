@@ -1,5 +1,5 @@
 #define MINER_DASH_RANGE 4
-#define MEDAL_PREFIX "Blood-drunk Miner"
+
 /*
 
 BLOOD-DRUNK MINER
@@ -28,6 +28,7 @@ Difficulty: Medium
 	icon_state = "miner"
 	icon_living = "miner"
 	icon = 'icons/mob/broadMobs.dmi'
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	light_color = "#E4C7C5"
 	movement_type = GROUND
 	speak_emote = list("roars")
@@ -43,7 +44,7 @@ Difficulty: Medium
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
-	medal_type = MEDAL_PREFIX
+	medal_type = BOSS_MEDAL_MINER
 	var/obj/item/melee/transforming/cleaving_saw/miner/miner_saw
 	var/time_until_next_transform = 0
 	var/dashing = FALSE
@@ -129,7 +130,7 @@ Difficulty: Medium
 	INVOKE_ASYNC(src, .proc/quick_attack_loop)
 	return TRUE
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!used_item && !isturf(A))
 		used_item = miner_saw
 	..()

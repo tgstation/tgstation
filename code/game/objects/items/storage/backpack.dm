@@ -42,7 +42,7 @@
 	flags_2 = NO_MAT_REDEMPTION_2
 	var/pshoom = 'sound/items/pshoom.ogg'
 	var/alt_sound = 'sound/items/pshoom_2.ogg'
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 60, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 50)
 
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
@@ -326,6 +326,12 @@
 			new R(src)
 		revealed = 1
 
+/obj/item/storage/backpack/satchel/flat/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
+	if(SSpersistence.spawned_objects[W])
+		to_chat(user, "<span class='warning'>[W] is unstable after its journey through space and time, it wouldn't survive another trip.</span>")
+		return FALSE
+	return ..()
+
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"
 	desc = "A large duffel bag for holding extra things."
@@ -553,3 +559,16 @@
 	new /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka(src)
 	new /obj/item/reagent_containers/syringe/stimulants(src)
 	new /obj/item/grenade/syndieminibomb(src)
+
+// For ClownOps.
+/obj/item/storage/backpack/duffelbag/clown/syndie
+	slowdown = 0
+	silent = TRUE
+
+/obj/item/storage/backpack/duffelbag/clown/syndie/PopulateContents()
+	new /obj/item/device/pda/clown(src)
+	new /obj/item/clothing/under/rank/clown(src)
+	new /obj/item/clothing/shoes/clown_shoes(src)
+	new /obj/item/clothing/mask/gas/clown_hat(src)
+	new /obj/item/bikehorn(src)
+	new /obj/item/implanter/sad_trombone(src)

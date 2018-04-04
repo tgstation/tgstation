@@ -5,15 +5,15 @@
 	desc = "Dispenses countless types of pipes. Very useful if you need pipes."
 	density = TRUE
 	anchored = TRUE
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_OFFLINE
 	var/wait = 0
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/pipedispenser/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/pipedispenser/attack_hand(mob/user)
-	if(..())
-		return 1
+/obj/machinery/pipedispenser/ui_interact(mob/user)
+	. = ..()
 	var/dat = "PIPING LAYER: <A href='?src=[REF(src)];layer_down=1'>--</A><b>[piping_layer]</b><A href='?src=[REF(src)];layer_up=1'>++</A><BR>"
 
 	var/recipes = GLOB.atmos_pipe_recipes
@@ -64,34 +64,14 @@
 		to_chat(usr, "<span class='notice'>You put [W] back into [src].</span>")
 		qdel(W)
 		return
-	else if (istype(W, /obj/item/wrench))
-		if (!anchored && !isinspace())
-			playsound(src, W.usesound, 50, 1)
-			to_chat(user, "<span class='notice'>You begin to fasten \the [src] to the floor...</span>")
-			if (do_after(user, 40*W.toolspeed, target = src))
-				add_fingerprint(user)
-				user.visible_message( \
-					"[user] fastens \the [src].", \
-					"<span class='notice'>You fasten \the [src]. Now it can dispense pipes.</span>", \
-					"<span class='italics'>You hear ratchet.</span>")
-				anchored = TRUE
-				stat &= MAINT
-				if (usr.machine==src)
-					usr << browse(null, "window=pipedispenser")
-		else if(anchored)
-			playsound(src, W.usesound, 50, 1)
-			to_chat(user, "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>")
-			if (do_after(user, 20*W.toolspeed, target = src))
-				add_fingerprint(user)
-				user.visible_message( \
-					"[user] unfastens \the [src].", \
-					"<span class='notice'>You unfasten \the [src]. Now it can be pulled somewhere else.</span>", \
-					"<span class='italics'>You hear ratchet.</span>")
-				anchored = FALSE
-				stat |= ~MAINT
-				power_change()
 	else
 		return ..()
+
+/obj/machinery/pipedispenser/wrench_act(mob/living/user, obj/item/I)
+	if(default_unfasten_wrench(user, I, 40))
+		user << browse(null, "window=pipedispenser")
+
+	return TRUE
 
 
 /obj/machinery/pipedispenser/disposal
@@ -119,9 +99,7 @@
 
 	qdel(pipe)
 
-/obj/machinery/pipedispenser/disposal/attack_hand(mob/user)
-	if(..())
-		return 1
+/obj/machinery/pipedispenser/disposal/interact(mob/user)
 
 	var/dat = ""
 	var/recipes = GLOB.disposal_pipe_recipes
@@ -171,9 +149,7 @@
 	desc = "Dispenses pipes that will move beings around."
 	anchored = TRUE
 
-/obj/machinery/pipedispenser/disposal/transit_tube/attack_hand(mob/user)
-	if(..())
-		return 1
+/obj/machinery/pipedispenser/disposal/transit_tube/interact(mob/user)
 
 	var/dat = {"<B>Transit Tubes:</B><BR>
 <A href='?src=[REF(src)];tube=[TRANSIT_TUBE_STRAIGHT]'>Straight Tube</A><BR>

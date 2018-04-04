@@ -13,6 +13,7 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=75, MAT_GLASS=25)
+	obj_flags = USES_TGUI
 
 	var/on = TRUE
 	var/frequency = FREQ_COMMON
@@ -41,6 +42,10 @@
 
 	var/const/FREQ_LISTENING = 1
 	//FREQ_BROADCASTING = 2
+
+/obj/item/device/radio/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] starts bouncing [src] off their head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return BRUTELOSS
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)
 	remove_radio(src, frequency)
@@ -101,6 +106,7 @@
 
 /obj/item/device/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "radio", name, 370, 220 + channels.len * 22, master_ui, state)
@@ -140,6 +146,9 @@
 				var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
 				tune = input("Tune frequency ([min]-[max]):", name, format_frequency(frequency)) as null|num
 				if(!isnull(tune) && !..())
+					if (tune < MIN_FREE_FREQ && tune <= MAX_FREE_FREQ / 10)
+						// allow typing 144.7 to get 1447
+						tune *= 10
 					. = TRUE
 			else if(adjust)
 				tune = frequency + adjust * 10
@@ -204,7 +213,7 @@
 		spans |= SPAN_COMMAND
 
 	/*
-	Roughly speaking, radios attempt to make a subspace transmittion (which
+	Roughly speaking, radios attempt to make a subspace transmission (which
 	is received, processed, and rebroadcast by the telecomms satellite) and
 	if that fails, they send a mundane radio transmission.
 
@@ -228,7 +237,8 @@
 	// Nearby active jammers severely gibberish the message
 	var/turf/position = get_turf(src)
 	for(var/obj/item/device/jammer/jammer in GLOB.active_jammers)
-		if(get_dist(position,get_turf(jammer)) < jammer.range)
+		var/turf/jammer_turf = get_turf(jammer)
+		if(position.z == jammer_turf.z && (get_dist(position, jammer_turf) < jammer.range))
 			message = Gibberish(message,100)
 			break
 

@@ -11,16 +11,14 @@
 	. = ..()
 	if(.)
 		var/list/newv = list()
-		for(var/I in value)
-			newv[replacetext(I, "+", " ")] = value[I]
-		value = newv
+		for(var/I in config_entry_value)
+			newv[replacetext(I, "+", " ")] = config_entry_value[I]
+		config_entry_value = newv
 
 /datum/config_entry/keyed_string_list/cross_server/ValidateListEntry(key_name, key_value)
 	return key_value != "byond:\\address:port" && ..()
 
 /datum/config_entry/string/cross_comms_name
-
-GLOBAL_VAR_INIT(medals_enabled, TRUE)	//will be auto set to false if the game fails contacting the medal hub to prevent unneeded calls.
 
 /datum/config_entry/string/medal_hub_address
 

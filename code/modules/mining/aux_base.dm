@@ -31,11 +31,8 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	. = ..()
 	locator = new(src)
 
-/obj/machinery/computer/auxillary_base/attack_hand(mob/user)
-	if(..(user))
-		return
-	add_fingerprint(usr)
-
+/obj/machinery/computer/auxillary_base/ui_interact(mob/user)
+	. = ..()
 	var/list/options = params2list(possible_destinations)
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 	var/dat = "[is_station_level(z) ? "Docking clamps engaged. Standing by." : "Mining Shuttle Uplink: [M ? M.getStatusText() : "*OFFLINE*"]"]<br>"
@@ -44,7 +41,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
 			if(!options.Find(S.id))
 				continue
-			if(!M.check_dock(S))
+			if(!M.check_dock(S, silent=TRUE))
 				continue
 			destination_found = 1
 			dat += "<A href='?src=[REF(src)];move=[S.id]'>Send to [S.name]</A><br>"
@@ -102,7 +99,10 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 	if(href_list["random"] && !possible_destinations)
 		usr.changeNext_move(CLICK_CD_RAPID) //Anti-spam
-		var/turf/LZ = safepick(Z_TURFS(ZLEVEL_MINING)) //Pick a random mining Z-level turf
+		var/list/all_mining_turfs = list()
+		for (var/z_level in SSmapping.levels_by_trait(ZTRAIT_MINING))
+			all_mining_turfs += Z_TURFS(z_level)
+		var/turf/LZ = safepick(all_mining_turfs) //Pick a random mining Z-level turf
 		if(!ismineralturf(LZ) && !istype(LZ, /turf/open/floor/plating/asteroid))
 		//Find a suitable mining turf. Reduces chance of landing in a bad area
 			to_chat(usr, "<span class='warning'>Landing zone scan failed. Please try again.</span>")
@@ -141,9 +141,11 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		return
 	if(!no_restrictions)
 		var/static/list/disallowed_turf_types = typecacheof(list(
+			/turf/closed,
 			/turf/open/lava,
-			/turf/closed/indestructible,
 			/turf/open/indestructible,
+			)) - typecacheof(list(
+			/turf/closed/mineral,
 			))
 
 		if(!is_mining_level(T.z))
@@ -228,7 +230,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		if(BAD_COORDS)
 			to_chat(user, "<span class='warning'>Location is too close to the edge of the station's scanning range. Move several paces away and try again.</span>")
 		if(BAD_TURF)
-			to_chat(user, "<span class='warning'>The landing zone contains turfs unsuitable for a base.</span>")
+			to_chat(user, "<span class='warning'>The landing zone contains turfs unsuitable for a base. Make sure you've removed all walls and dangerous terrain from the landing zone.</span>")
 
 /obj/item/device/assault_pod/mining/unrestricted
 	name = "omni-locational landing field designator"
@@ -239,11 +241,19 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 /obj/docking_port/mobile/auxillary_base
 	name = "auxillary base"
 	id = "colony_drop"
+	timid = FALSE
 	//Reminder to map-makers to set these values equal to the size of your base.
 	dheight = 4
 	dwidth = 4
 	width = 9
 	height = 9
+
+/obj/docking_port/mobile/auxillary_base/takeoff(list/old_turfs, list/new_turfs, list/moved_atoms, rotation, movement_direction, old_dock, area/underlying_old_area)
+	for(var/i in new_turfs)
+		var/turf/place = i
+		if(istype(place, /turf/closed/mineral))
+			place.ScrapeAway()
+	return ..()
 
 obj/docking_port/stationary/public_mining_dock
 	name = "public mining base dock"
@@ -267,6 +277,9 @@ obj/docking_port/stationary/public_mining_dock
 	var/console_range = 15 //Wifi range of the beacon to find the aux base console
 
 /obj/structure/mining_shuttle_beacon/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(anchored)
 		to_chat(user, "<span class='warning'>Landing zone already set.</span>")
 		return

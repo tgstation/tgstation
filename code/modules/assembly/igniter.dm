@@ -6,6 +6,11 @@
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 	heat = 1000
 
+/obj/item/device/assembly/igniter/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is trying to ignite [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.IgniteMob()
+	return FIRELOSS
+
 /obj/item/device/assembly/igniter/New()
 	..()
 	sparks.set_up(2, 0, src)

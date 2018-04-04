@@ -34,14 +34,9 @@
 #define R_SOUNDS		0x800
 #define R_SPAWN			0x1000
 #define R_AUTOLOGIN		0x2000
+#define R_DBRANKS		0x4000
 
 #define R_DEFAULT R_AUTOLOGIN
-
-#if DM_VERSION > 512
-#error Remove the flag below , its been long enough
-#endif
-//legacy , remove post 512, it was replaced by R_POLL
-#define R_REJUVINATE	2
 
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
@@ -76,3 +71,8 @@
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
 #define AHELP_RESOLVED 3
+
+#define ROUNDSTART_LOGOUT_REPORT_TIME	6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
+
+#define SPAM_TRIGGER_WARNING	5	//Number of identical messages required before the spam-prevention will warn you to stfu
+#define SPAM_TRIGGER_AUTOMUTE	10	//Number of identical messages required before the spam-prevention will automute you

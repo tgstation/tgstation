@@ -5,7 +5,7 @@
 	get_chance = 20
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>You feel smarter!</span>"
-	limb_req = "head"
+	limb_req = BODY_ZONE_HEAD
 
 /datum/mutation/human/telekinesis/New()
 	..()

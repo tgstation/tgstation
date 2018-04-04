@@ -11,6 +11,7 @@
 	var/processing = FALSE
 	var/obj/screen/movable/action_button/button = null
 	var/buttontooltipstyle = ""
+	var/transparent_when_unavailable = TRUE
 
 	var/button_icon = 'icons/mob/actions/backgrounds.dmi' //This is the file for the BACKGROUND icon
 	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND //And this is the state for the background icon
@@ -104,7 +105,7 @@
 			return 0
 	return 1
 
-/datum/action/proc/UpdateButtonIcon(status_only = FALSE)
+/datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	if(button)
 		if(!status_only)
 			button.name = name
@@ -121,16 +122,16 @@
 				if(button.icon_state != background_icon_state)
 					button.icon_state = background_icon_state
 
-			ApplyIcon(button)
+			ApplyIcon(button, force)
 
 		if(!IsAvailable())
-			button.color = rgb(128,0,0,128)
+			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
 		else
 			button.color = rgb(255,255,255,255)
 			return 1
 
-/datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
-	if(icon_icon && button_icon_state && current_button.button_icon_state != button_icon_state)
+/datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button, force = FALSE)
+	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
 		current_button.cut_overlays(TRUE)
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
@@ -163,11 +164,11 @@
 		I.ui_action_click(owner, src)
 	return 1
 
-/datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button)
+/datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button, force)
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
 		// of the item appearence
-		..(current_button)
+		..()
 	else if(target && current_button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
 		var/obj/item/I = target
 		var/old_layer = I.layer
@@ -215,7 +216,7 @@
 /datum/action/item_action/set_internals
 	name = "Set Internals"
 
-/datum/action/item_action/set_internals/UpdateButtonIcon(status_only = FALSE)
+/datum/action/item_action/set_internals/UpdateButtonIcon(status_only = FALSE, force)
 	if(..()) //button available
 		if(iscarbon(owner))
 			var/mob/living/carbon/C = owner
@@ -253,7 +254,7 @@
 	if(..())
 		UpdateButtonIcon()
 
-/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon(status_only = FALSE)
+/datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon(status_only = FALSE, force)
 	if(istype(target, /obj/item/hierophant_club))
 		var/obj/item/hierophant_club/H = target
 		if(H.friendly_fire_check)
@@ -454,7 +455,34 @@
 	name = "Use [target.name]"
 	button.name = name
 
+/datum/action/item_action/cult_dagger
+	name = "Draw Blood Rune"
+	desc = "Use the ritual dagger to create a powerful blood rune"
+	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	button_icon_state = "draw"
+	buttontooltipstyle = "cult"
+	background_icon_state = "bg_demon"
 
+/datum/action/item_action/cult_dagger/Grant(mob/M)
+	if(iscultist(M))
+		..()
+		button.screen_loc = "6:157,4:-2"
+		button.moved = "6:157,4:-2"
+	else
+		Remove(owner)
+
+/datum/action/item_action/cult_dagger/Trigger()
+	for(var/obj/item/H in owner.held_items) //In case we were already holding another dagger
+		if(istype(H, /obj/item/melee/cultblade/dagger))
+			H.attack_self(owner)
+			return
+	var/obj/item/I = target
+	if(owner.can_equip(I, slot_hands))
+		owner.temporarilyRemoveItemFromInventory(I)
+		owner.put_in_hands(I)
+		I.attack_self(owner)
+	else
+		to_chat(owner, "<span class='cultitalic'>Your hands are full!</span>")
 
 
 //Preset for spells
@@ -545,6 +573,52 @@
 		call(target, procname)(usr)
 	return 1
 
+
+//Preset for an action with a cooldown
+
+/datum/action/cooldown
+	check_flags = 0
+	transparent_when_unavailable = FALSE
+	var/cooldown_time = 0
+	var/next_use_time = 0
+
+/datum/action/cooldown/New()
+	..()
+	button.maptext = ""
+	button.maptext_x = 8
+	button.maptext_y = 0
+	button.maptext_width = 24
+	button.maptext_height = 12
+
+/datum/action/cooldown/IsAvailable()
+	return next_use_time <= world.time
+
+/datum/action/cooldown/proc/StartCooldown()
+	next_use_time = world.time + cooldown_time
+	button.maptext = "<b>[round(cooldown_time/10, 0.1)]</b>"
+	UpdateButtonIcon()
+	START_PROCESSING(SSfastprocess, src)
+
+/datum/action/cooldown/process()
+	if(!owner)
+		button.maptext = ""
+		STOP_PROCESSING(SSfastprocess, src)
+	var/timeleft = max(next_use_time - world.time, 0)
+	if(timeleft == 0)
+		button.maptext = ""
+		UpdateButtonIcon()
+		STOP_PROCESSING(SSfastprocess, src)
+	else
+		button.maptext = "<b>[round(timeleft/10, 0.1)]</b>"
+
+/datum/action/cooldown/Grant(mob/M)
+	..()
+	if(owner)
+		UpdateButtonIcon()
+		if(next_use_time > world.time)
+			START_PROCESSING(SSfastprocess, src)
+
+
 //Stickmemes
 /datum/action/item_action/stickmen
 	name = "Summon Stick Minions"
@@ -573,3 +647,45 @@
 		var/datum/language_holder/H = M.get_language_holder()
 		H.open_language_menu(usr)
 
+/datum/action/item_action/wheelys
+	name = "Toggle Wheely-Heel's Wheels"
+	desc = "Pops out or in your wheely-heel's wheels."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "wheelys"
+
+/datum/action/item_action/kindleKicks
+	name = "Activate Kindle Kicks"
+	desc = "Kick you feet together, activating the lights in your Kindle Kicks."
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "kindleKicks"
+
+//Small sprites
+/datum/action/small_sprite
+	name = "Toggle Giant Sprite"
+	desc = "Others will always see you as giant"
+	button_icon_state = "smallqueen"
+	background_icon_state = "bg_alien"
+	var/small = FALSE
+	var/small_icon
+	var/small_icon_state
+
+/datum/action/small_sprite/queen
+	small_icon = 'icons/mob/alien.dmi'
+	small_icon_state = "alienq"
+
+/datum/action/small_sprite/drake
+	small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	small_icon_state = "ash_whelp"
+
+/datum/action/small_sprite/Trigger()
+	..()
+	if(!small)
+		var/image/I = image(icon = small_icon, icon_state = small_icon_state, loc = owner)
+		I.override = TRUE
+		I.pixel_x -= owner.pixel_x
+		I.pixel_y -= owner.pixel_y
+		owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic, "smallsprite", I)
+		small = TRUE
+	else
+		owner.remove_alt_appearance("smallsprite")
+		small = FALSE

@@ -22,6 +22,7 @@
 	icon_state = "guard"
 	icon_living = "guard"
 	icon_dead = "guard_dead"
+	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
 	speak_emote = list("chitters")
 	emote_hear = list("chitters")
 	speak_chance = 5
@@ -73,8 +74,10 @@
 		to_chat(src, "<span class='spider'><b>[directive]</b></span>")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/attack_ghost(mob/user)
-	if(!humanize_spider(user))
-		return ..()
+	. = ..()
+	if(.)
+		return
+	humanize_spider(user)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
 	if(key || !playable_spider)//Someone is in it or the fun police are shutting it down
@@ -480,7 +483,7 @@
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
 		return
 	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
-	S.directive = stripped_input(S, "Enter the new directive", "Create directive", "[S.directive]", MAX_MESSAGE_LEN)
+	S.directive = stripped_input(S, "Enter the new directive", "Create directive", "[S.directive]")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	. = ..()

@@ -9,9 +9,11 @@
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
 	max_integrity = 350
-	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	flags_1 = PREVENT_CLICK_UNDER_1
+
+	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 
 	var/secondsElectrified = 0
 	var/shockedby = list()
@@ -28,11 +30,11 @@
 	var/safe = TRUE //whether the door detects things and mobs in its way and reopen or crushes them.
 	var/locked = FALSE //whether the door is bolted or not.
 	var/assemblytype //the type of door frame to drop during deconstruction
-	var/auto_close //TO BE REMOVED, no longer used, it's just preventing a runtime with a map var edit.
 	var/datum/effect_system/spark_spread/spark_system
 	var/damage_deflection = 10
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
+	var/poddoor = FALSE
 
 /obj/machinery/door/examine(mob/user)
 	..()
@@ -41,24 +43,17 @@
 			to_chat(user, "<span class='notice'>Due to a security threat, its access requirements have been lifted!</span>")
 		else
 			to_chat(user, "<span class='notice'>In the event of a red alert, its access requirements will automatically lift.</span>")
-	to_chat(user, "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>")
-
-/obj/machinery/door/check_access(access)
-	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
-		return TRUE
-	return ..()
+	if(!poddoor)
+		to_chat(user, "<span class='notice'>Its maintenance panel is <b>screwed</b> in place.</span>")
 
 /obj/machinery/door/check_access_list(list/access_list)
 	if(red_alert_access && GLOB.security_level >= SEC_LEVEL_RED)
 		return TRUE
 	return ..()
 
-/obj/machinery/door/New()
-	..()
-	if(density)
-		layer = CLOSED_DOOR_LAYER //Above most items if closed
-	else
-		layer = OPEN_DOOR_LAYER //Under all objects if opened. 2.7 due to tables being at 2.6
+/obj/machinery/door/Initialize()
+	. = ..()
+	set_init_door_layer()
 	update_freelook_sight()
 	air_update_turf(1)
 	GLOB.airlocks += src
@@ -68,6 +63,12 @@
 	//doors only block while dense though so we have to use the proc
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
+
+/obj/machinery/door/proc/set_init_door_layer()
+	if(density)
+		layer = closingLayer
+	else
+		layer = initial(layer)
 
 /obj/machinery/door/Destroy()
 	density = FALSE
@@ -80,7 +81,7 @@
 	return ..()
 
 /obj/machinery/door/CollidedWith(atom/movable/AM)
-	if(operating || emagged)
+	if(operating || (obj_flags & EMAGGED))
 		return
 	if(ismob(AM))
 		var/mob/B = AM
@@ -127,20 +128,18 @@
 	if(!src.requiresID())
 		user = null
 
-	if(density && !emagged)
+	if(density && !(obj_flags & EMAGGED))
 		if(allowed(user))
 			open()
 		else
 			do_animate("deny")
 	return
 
-
-/obj/machinery/door/attack_ai(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/door/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	return try_to_activate_door(user)
-
 
 /obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
@@ -149,7 +148,7 @@
 
 /obj/machinery/door/proc/try_to_activate_door(mob/user)
 	add_fingerprint(user)
-	if(operating || emagged)
+	if(operating || (obj_flags & EMAGGED))
 		return
 	if(!requiresID())
 		user = null //so allowed(user) always succeeds
@@ -255,7 +254,7 @@
 	sleep(5)
 	density = FALSE
 	sleep(5)
-	layer = OPEN_DOOR_LAYER
+	layer = initial(layer)
 	update_icon()
 	set_opacity(0)
 	operating = FALSE
@@ -268,10 +267,8 @@
 
 /obj/machinery/door/proc/close()
 	if(density)
-		return 1
-	if(operating)
-		return
-	if(welded)
+		return TRUE
+	if(operating || welded)
 		return
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))

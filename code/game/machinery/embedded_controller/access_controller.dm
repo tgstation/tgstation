@@ -14,7 +14,7 @@
 	var/idSelf
 
 /obj/machinery/doorButtons/attackby(obj/O, mob/user)
-	attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/doorButtons/proc/findObjsByTag()
 	return
@@ -27,9 +27,9 @@
 	findObjsByTag()
 
 /obj/machinery/doorButtons/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	req_access = list()
 	req_one_access = list()
 	playsound(src, "sparks", 100, 1)
@@ -59,7 +59,8 @@
 			break
 
 /obj/machinery/doorButtons/access_button/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(busy)
 		return
@@ -260,7 +261,8 @@
 		icon_state = "access_control_standby"
 
 /obj/machinery/doorButtons/airlock_controller/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/datum/browser/popup = new(user, "computer", name)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

@@ -47,6 +47,38 @@
 	on = TRUE
 	icon_state = "vent_map_siphon_on"
 
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos
+	frequency = FREQ_ATMOS_STORAGE
+	on = TRUE
+	icon_state = "vent_map_siphon_on"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output
+	name = "plasma tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOX
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output
+	name = "oxygen tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_O2
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output
+	name = "nitrogen tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_N2
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/mix_output
+	name = "mix tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_MIX
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output
+	name = "nitrous oxide tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_N2O
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/carbon_output
+	name = "carbon dioxide tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_CO2
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output
+	name = "incinerator chamber output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_INCINERATOR
+	frequency = FREQ_ATMOS_CONTROL
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output
+	name = "toxins mixing output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TOXINS_LAB
+	frequency = FREQ_ATMOS_CONTROL
+
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
 	if(!id_tag)
@@ -78,6 +110,15 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on
 	on = TRUE
 	icon_state = "vent_map_siphon_on"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos
+	frequency = FREQ_ATMOS_STORAGE
+	on = TRUE
+	icon_state = "vent_map_siphon_on"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output
+	name = "air mix tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_AIR
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
 	..()
@@ -269,28 +310,21 @@
 	broadcast_status()
 	update_icon()
 
-/obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = W
-		if (WT.remove_fuel(0, user))
-			playsound(loc, WT.usesound, 40, 1)
-			to_chat(user, "<span class='notice'>You begin welding the vent...</span>")
-			if(do_after(user, W.toolspeed * 20, target = src))
-				if(!src || !WT.isOn())
-					return
-				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
-				if(!welded)
-					user.visible_message("[user] welds the vent shut.", "<span class='notice'>You weld the vent shut.</span>", "<span class='italics'>You hear welding.</span>")
-					welded = TRUE
-				else
-					user.visible_message("[user] unwelds the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
-					welded = FALSE
-				update_icon()
-				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
-				pipe_vision_img.plane = ABOVE_HUD_PLANE
-			return 0
-	else
-		return ..()
+/obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/I)
+	if(!I.tool_start_check(user, amount=0))
+		return TRUE
+	to_chat(user, "<span class='notice'>You begin welding the vent...</span>")
+	if(I.use_tool(src, user, 20, volume=50))
+		if(!welded)
+			user.visible_message("[user] welds the vent shut.", "<span class='notice'>You weld the vent shut.</span>", "<span class='italics'>You hear welding.</span>")
+			welded = TRUE
+		else
+			user.visible_message("[user] unwelds the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
+			welded = FALSE
+		update_icon()
+		pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
+		pipe_vision_img.plane = ABOVE_HUD_PLANE
+	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
 	. = ..()

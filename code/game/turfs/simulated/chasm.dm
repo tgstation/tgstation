@@ -11,7 +11,7 @@
 
 /turf/open/chasm/Initialize()
 	. = ..()
-	AddComponent(/datum/component/chasm, null)
+	AddComponent(/datum/component/chasm, SSmapping.get_turf_below(src))
 
 /turf/open/chasm/proc/set_target(turf/target)
 	GET_COMPONENT(chasm_component, /datum/component/chasm)
@@ -21,10 +21,10 @@
 	GET_COMPONENT(chasm_component, /datum/component/chasm)
 	chasm_component.drop(AM)
 
-/turf/open/chasm/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+/turf/open/chasm/MakeSlippery()
 	return
 
-/turf/open/chasm/MakeDry(wet_setting = TURF_WET_WATER)
+/turf/open/chasm/MakeDry()
 	return
 
 /turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
@@ -64,16 +64,6 @@
 /turf/open/chasm/CanPass(atom/movable/mover, turf/target)
 	return 1
 
-
-// Naive "down" which just subtracts a z-level
-/turf/open/chasm/straight_down
-	baseturfs = /turf/open/chasm/straight_down
-
-/turf/open/chasm/straight_down/Initialize()
-	. = ..()
-	set_target(locate(x, y, z - 1))
-
-
 // Chasms for Lavaland, with planetary atmos and lava glow
 /turf/open/chasm/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -95,10 +85,3 @@
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
 	underlay_appearance.icon_state = "dirt"
 	return TRUE
-
-/turf/open/chasm/jungle/straight_down
-	baseturfs = /turf/open/chasm/jungle/straight_down
-
-/turf/open/chasm/jungle/straight_down/Initialize(mapload)
-	. = ..()
-	set_target(locate(x, y, z - 1))

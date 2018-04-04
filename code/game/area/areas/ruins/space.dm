@@ -55,6 +55,9 @@
 /area/ruin/space/has_grav/powered/dinner_for_two
 	name = "Dinner for Two"
 
+/area/ruin/space/has_grav/powered/cat_man
+	name = "Kitty Den"
+
 /area/ruin/space/has_grav/powered/authorship
 	name = "Authorship"
 
@@ -71,6 +74,24 @@
 /area/ruin/space/has_grav/hotel/guestroom
 	name = "Hotel Guest Room"
 	icon_state = "Sleep"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_1
+	name = "Hotel Guest Room 1"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_2
+	name = "Hotel Guest Room 2"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_3
+	name = "Hotel Guest Room 3"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_4
+	name = "Hotel Guest Room 4"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_5
+	name = "Hotel Guest Room 5"
+
+/area/ruin/space/has_grav/hotel/guestroom/room_6
+	name = "Hotel Guest Room 6"
 
 /area/ruin/space/has_grav/hotel/security
 	name = "Hotel Security Post"
@@ -435,3 +456,18 @@
 
 	name = "Abandoned Ship"
 	icon_state = "red"
+
+
+//SYNDICATE LISTENING POST STATION
+
+/area/ruin/space/has_grav/listeningstation
+	name = "Listening Post"
+	icon_state = "yellow"
+
+/area/ruin/space/has_grav/powered/scp_294
+	name = "Abandoned SCP-294 Containment"
+	icon_state = "yellow"
+
+/area/ruin/space/has_grav/powered/ancient_shuttle
+	name = "Ancient Shuttle"
+	icon_state = "yellow"
