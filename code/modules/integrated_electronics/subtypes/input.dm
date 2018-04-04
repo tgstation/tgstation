@@ -403,11 +403,11 @@
 
 	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
 		var/list/cont = new()
-		for(var/atom/U in H.contents)
+		for(var/U in H)
 			cont += WEAKREF(U)
 		set_pin_data(IC_OUTPUT, 1, cont)
 		var/list/St = new()
-		for(var/obj/effect/decal/cleanable/crayon/I in H.contents)
+		for(var/obj/effect/decal/cleanable/crayon/I in H)
 			St.Add(I.icon_state)
 		if(St.len)
 			set_pin_data(IC_OUTPUT, 2, jointext(St, ",", 1, 0))
