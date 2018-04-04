@@ -8,6 +8,7 @@
 	gain_text = "<span class='danger'>You start feeling depressed.</span>"
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
 	medical_record_text = "Patient has a severe mood disorder causing them to experience sudden moments of sadness."
+	mood_trait = TRUE
 
 
 
@@ -15,6 +16,7 @@
 	name = "Family Heirloom"
 	desc = "You are the current owner of an heirloom. passed down for generations. You have to keep it safe!"
 	value = -1
+	mood_trait = TRUE
 	var/obj/item/heirloom
 	var/where_text
 
@@ -253,7 +255,7 @@
 	var/mob/living/carbon/human/H = trait_holder
 	if(prob(2 + nearby_people))
 		H.stuttering = max(3, H.stuttering)
-	else if(prob(min(3, nearby_people)) && !H.silent)
+	else if(prob(max(nearby_people, 3)) && !H.silent)
 		to_chat(H, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
 		H.silent = max(10, H.silent)
 	else if(prob(0.5) && dumb_thing)

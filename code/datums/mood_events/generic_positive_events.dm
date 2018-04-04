@@ -22,6 +22,7 @@
 	description = "<span class='nicegreen'>Corgis are adorable! I can't stop petting them!</span>\n"
 	mood_change = 3
 	timeout = 3000
+	timeout = 3000
 
 /datum/mood_event/honk
 	description = "<span class='nicegreen'>Maybe clowns aren't so bad after all. Honk!</span>\n"
