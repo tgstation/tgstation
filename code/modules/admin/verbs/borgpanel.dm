@@ -43,7 +43,8 @@
 		"name" = "[borg]",
 		"emagged" = borg.emagged,
 		"active_module" = "[borg.module.type]",
-		"lawupdate" = borg.lawupdate
+		"lawupdate" = borg.lawupdate,
+		"lockdown" = borg.lockcharge
 	)
 	.["upgrades"] = getBorgUpgradesForType(borg)
 	.["laws"] = borg.laws ? borg.laws.get_law_list(include_zeroth = TRUE) : list()
@@ -72,6 +73,8 @@
 			borg.SetEmagged(!borg.emagged)
 		if ("toggle_lawupdate")
 			borg.lawupdate = !borg.lawupdate
+		if ("toggle_lockdown")
+			borg.SetLockdown(!borg.lockcharge)
 		if ("setmodule")
 			warning("params is [json_encode(params)]")
 			var/newmodulepath = text2path(params["module"])
