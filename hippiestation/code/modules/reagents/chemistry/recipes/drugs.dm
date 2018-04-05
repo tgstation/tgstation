@@ -21,5 +21,5 @@
 	name = "Sweet Brown"
 	id = "sweetbrown"
 	results = list("sweetbrown" = 4)
-	required_reagents = list("welding_fuel" = 3, "sugar" = 1)
+	required_reagents = list("welding_fuel" = 3, "nutriment" = 1)
 

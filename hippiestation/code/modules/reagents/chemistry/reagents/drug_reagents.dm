@@ -294,15 +294,13 @@
 	if(prob(15)) //once every six-ish ticks. is that ok?
 		H.emote("burp")
 	..()
-	return
 
-/datum/reagent/drug/pupupipi/overdose_process(mob/living/carbon/human/M)
+/datum/reagent/drug/pupupipi/overdose_process(mob/living/carbon/human/H)
 	CHECK_DNA_AND_SPECIES(M)
-	if(!istype(M.dna.species, /datum/species/krokodil_addict))
+	if(ishuman(M))
 		to_chat(M, "<span class= 'userdanger'>Oh shit!</span>")
 		M.set_species(/datum/species/krokodil_addict)
 		M.setBrainLoss(30)
 	else
 		M.setBrainLoss(30)
 	..()
-	return
