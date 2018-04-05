@@ -910,6 +910,8 @@
 
 /datum/reagent/toxin/mimesbane/on_mob_add(mob/living/L)
 	L.add_trait(TRAIT_EMOTEMUTE, id)
+	()..
 
 /datum/reagent/toxin/mimesbane/on_mob_delete(mob/living/L)
 	L.remove_trait(TRAIT_EMOTEMUTE, id)
+	()..
