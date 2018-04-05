@@ -58,7 +58,7 @@
 	.["laws"] = borg.laws ? borg.laws.get_law_list(include_zeroth = TRUE) : list()
 	.["channels"] = list()
 	for (var/i in GLOB.radiochannels)
-		.["channels"] += list(list("name" = i, "installed" = (name == "Common" || i in borg.radio.channels)))
+		.["channels"] += list(list("name" = i, "installed" = (i == "Common" || i in borg.radio.channels)))
 	.["cell"] = borg.cell ? list("missing" = FALSE, "maxcharge" = borg.cell.maxcharge, "charge" = borg.cell.charge) : list("missing" = TRUE, "maxcharge" = 1, "charge" = 0)
 	.["modules"] = list()
 	for(var/moduletype in typesof(/obj/item/robot_module))
