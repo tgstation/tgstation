@@ -289,7 +289,8 @@
 	var/high_message = pick("You need mo' o' dat sweet brown juice...", "Your guts tingle...", "You feel lightheaded...")
 	M.Jitter(30)
 	M.AdjustSleeping(-15, FALSE)
-	H.emote("burp")
+	if(prob(15)) //once every six-ish ticks. is that ok?
+		H.emote("burp")
 	..()
 	return
 
