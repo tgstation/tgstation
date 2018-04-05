@@ -45,6 +45,7 @@
 		"active_module" = "[borg.module.type]",
 		"lawupdate" = borg.lawupdate
 	)
+	.["upgrades"] = getBorgUpgradesForType(borg)
 	.["laws"] = borg.laws ? borg.laws.get_law_list(include_zeroth = TRUE) : list()
 	.["cell"] = borg.cell ? list("missing" = FALSE, "maxcharge" = borg.cell.maxcharge, "charge" = borg.cell.charge) : list("missing" = TRUE, "maxcharge" = 1, "charge" = 0)
 	.["modules"] = list()
@@ -94,3 +95,24 @@
 				borg.lawsync()
 
 	. = TRUE
+
+/datum/borgpanel/proc/getBorgUpgradesForType(borg)
+	. = list()
+	//VTEC
+	. += list(list("name" = "VTEC", "installed" = (borg.speed < 0), "type" = /obj/item/borg/upgrade/vtec))
+	//Expansion module
+	. += list(list("name" = "Borg expander", "installed" = borg.hasExpanded, "type" = /obj/item/borg/upgrade/expand))
+	//Ion Thrusters
+	. += list(list("name" = "Ion thrusters", "installed" = borg.ionpulse, "type" = /obj/item/borg/upgrade/thrusters))
+	//AI shell
+	. += list(list("name" = "AI Shell", "installed" = borg.shell, "type" = /obj/item/borg/upgrade/ai))
+	//Self-repair module
+	. += list(list("name" = "Self-repair", "installed" = (locate(/obj/item/borg/upgrade/selfrepair) in borg ? TRUE : FALSE), "type" = /obj/item/borg/upgrade/selfrepair))
+	switch (borg.module.type)
+		if (/obj/item/robot_module/miner)
+		if (/obj/item/robot_module/medical)
+		if (/obj/item/robot_module/engineering)
+			//RPED
+			. += list(list("name" = "RPED", "installed" = (locate(/obj/item/storage/part_replacer/cyborg) in borg ? TRUE : FALSE), "type" = /obj/item/borg/upgrade/rped)
+		if (/obj/item/robot_module/security)
+
