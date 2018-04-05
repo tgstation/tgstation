@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			This deadly weapon has a massive 50-round magazine of devastating 1.95x129mm ammunition."
 	item = /obj/item/gun/ballistic/automatic/l6_saw
 	cost = 18
-	surplus = list(CARGO = 40, TRAITOR = 40)
+	surplus = list(CARGO = 0, TRAITOR = 0)
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/grenadier
