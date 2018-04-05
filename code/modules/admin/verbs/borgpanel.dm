@@ -49,13 +49,16 @@
 	.["upgrades"] = list()
 	for (var/upgradetype in subtypesof(/obj/item/borg/upgrade)-/obj/item/borg/upgrade/hypospray) //hypospray is a dummy parent for hypospray upgrades
 		var/obj/item/borg/upgrade/upgrade = upgradetype
-		if (initial(upgrade.module_type) && !istype(borg.module, initial(upgrade.module_type)) // Upgrade requires a different module
+		if (initial(upgrade.module_type) && !istype(borg.module, initial(upgrade.module_type))) // Upgrade requires a different module
 			continue
 		var/installed = FALSE
 		if (locate(upgradetype) in borg)
 			installed = TRUE
 		.["upgrades"] += list(list("name" = initial(upgrade.name), "installed" = installed, "type" = upgradetype))
 	.["laws"] = borg.laws ? borg.laws.get_law_list(include_zeroth = TRUE) : list()
+	.["channels"] = list()
+	for (var/i in GLOB.radiochannels)
+		.["channels"] += list(list("name" = i, "installed" = (name == "Common" || i in borg.radio.channels)))
 	.["cell"] = borg.cell ? list("missing" = FALSE, "maxcharge" = borg.cell.maxcharge, "charge" = borg.cell.charge) : list("missing" = TRUE, "maxcharge" = 1, "charge" = 0)
 	.["modules"] = list()
 	for(var/moduletype in typesof(/obj/item/robot_module))
@@ -87,11 +90,39 @@
 			var/upgradepath = text2path(params["upgrade"])
 			var/installedupgrade = locate(upgradepath) in borg
 			if (installedupgrade)
-				// TODO
+				installedupgrade.deactivate(borg, user)
+				borg.upgrades -= installedupgrade
+				qdel(installedupgrade)
 			else
-				var/upgrade = new upgradepath(borg)
-				upgrade.action(borg)
+				var/obj/item/borg/upgrade/upgrade = new upgradepath(borg)
+				upgrade.action(borg, user)
 				borg.upgrades += upgrade
+		if ("toggle_radio")
+			var/channel = params["channel"]
+			if (channel == "Common")
+				return
+			if (channel in borg.radio.channels) // We're removing a channel
+				if (!borg.radio.keyslot) // There's no encryption key. This shouldn't happen but we can cope
+					borg.radio.channels -= channel
+					if (channel == "Syndicate")
+						borg.radio.syndie = FALSE
+					else if (channel == "CentCom")
+						borg.radio.independent = FALSE
+				else
+					borg.radio.keyslot.channels -= channel
+					if (channel == "Syndicate")
+						borg.radio.keyslot.syndie = FALSE
+					else if (channel == "CentCom")
+						borg.radio.keyslot.independent = FALSE
+			else	// We're adding a channel
+				if (!borg.radio.keyslot) // Assert that an encryption key exists
+					borg.radio.keyslot = new (borg.radio)
+				borg.radio.keyslot.channels += channel
+				if (channel == "Syndicate")
+					borg.radio.keyslot.syndie = TRUE
+				else if (channel == "CentCom")
+					borg.radio.keyslot.independent = TRUE
+			borg.radio.recalculateChannels()
 		if ("setmodule")
 			warning("params is [json_encode(params)]")
 			var/newmodulepath = text2path(params["module"])
@@ -115,4 +146,3 @@
 				borg.lawsync()
 
 	. = TRUE
-

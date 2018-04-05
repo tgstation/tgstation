@@ -11,6 +11,11 @@
 			<span class='warning'>Cell missing</span><br/>
 		{{/if}}
 	</ui-section>
+	<ui-section label='Radio channels'>
+		{{#each data.channels}}
+			<ui-button icon='{{installed ? "check-square-o" : "square-o"}}' style='{{installed ? "selected" : null}}'  action='toggle_radio' params='{"channel": "{{name}}"}'>{{name}}</ui-button>
+		{{/each}}
+	</ui-section>
 	<ui-section label='Module'>
 		{{#each data.modules}}
 			<ui-button icon='{{data.borg.active_module == type ? "check-square-o" : "square-o"}}' style='{{data.borg.active_module == type ? "selected" : null}}' action='setmodule' params='{"module": "{{type}}"}'>{{name}}</ui-button>
@@ -18,7 +23,7 @@
 	</ui-section>
 	<ui-section label='Upgrades'>
 		{{#each data.upgrades}}
-			<ui-button icon='{{installed ? "check-square-o" : "square-o"}}' style='{{installed == type ? "selected" : null}}' action='toggle_upgrade' params='{"upgrade": "{{type}}"}'>{{name}}</ui-button>
+			<ui-button icon='{{installed ? "check-square-o" : "square-o"}}' style='{{installed ? "selected" : null}}' action='toggle_upgrade' params='{"upgrade": "{{type}}"}'>{{name}}</ui-button>
 		{{/each}}
 	</ui-section>
 	<ui-section label='Master AI'>

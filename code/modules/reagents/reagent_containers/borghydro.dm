@@ -67,6 +67,18 @@ Borg Hypospray
 
 	modes[reagent] = modes.len + 1
 
+/obj/item/reagent_containers/borghypo/proc/del_reagent(reagent)
+	reagent_ids -= reagent
+	var/datum/reagents/RG
+	for(var/i in 1 to reagent_ids.len)
+		RG = reagent_list[i]
+		if (RG.has_reagent(reagent))
+			break
+	reagent_list -= RG
+	RG.del_reagent(reagent)
+
+	modes[reagent] = modes.len - 1
+
 /obj/item/reagent_containers/borghypo/proc/regenerate_reagents()
 	if(iscyborg(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
