@@ -134,7 +134,16 @@ Helpers
 		if(!parent)
 			throw EXCEPTION("Component is missing a pipenet! Rebuilding...")
 			build_network()
-		parent.update = 1
+		parent.update = TRUE
+
+/obj/machinery/atmospherics/components/proc/reconcile_parents()
+	for(var/i in 1 to device_type)
+		var/datum/pipeline/parent = parents[i]
+		if(!parent)
+			throw EXCEPTION("Component is missing a pipenet! Rebuilding...")
+			build_network()
+		parent.reconcile = TRUE
+		parent.update = TRUE
 
 /obj/machinery/atmospherics/components/returnPipenets()
 	. = list()

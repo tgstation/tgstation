@@ -23,7 +23,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/process_atmos()
 	if(!connected_device)
 		return
-	update_parents()
+	reconcile_parents()
 
 /obj/machinery/atmospherics/components/unary/portables_connector/Destroy()
 	if(connected_device)

@@ -137,6 +137,9 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	//Copies variables from sample
 	//Returns: 1 if we are mutable, 0 otherwise
 
+/datum/gas_mixture/proc/ratio_copy_from(datum/gas_mixture/sample, ratio = 1)
+	//Works just like copy_from but will multiply the moles in the copy by a ratio
+
 /datum/gas_mixture/proc/copy_from_turf(turf/model)
 	//Copies all gas info from the turf into the gas list along with temperature
 	//Returns: 1 if we are mutable, 0 otherwise
@@ -258,6 +261,14 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	cached_gases &= sample_gases
 
 	return 1
+
+/datum/gas_mixture/ratio_copy_from(datum/gas_mixture/sample, ratio = 1)
+	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
+	var/list/sample_gases = sample.gases
+	temperature = sample.temperature
+	for(var/id in sample_gases)
+		ASSERT_GAS(id,src)
+		cached_gases[id][MOLES] = ratio * sample_gases[id][MOLES]
 
 /datum/gas_mixture/copy_from_turf(turf/model)
 	parse_gas_string(model.initial_gas_mix)

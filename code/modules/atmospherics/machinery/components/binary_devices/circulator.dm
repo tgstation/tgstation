@@ -43,8 +43,8 @@
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = air2.remove(transfer_moles)
-
-		update_parents()
+		if(removed.gases.len)
+			update_parents()
 
 		return removed
 
