@@ -767,11 +767,7 @@
 		var/J_totPos = html_encode(job.total_positions)
 		dat += "<tr><td>[J_title]:</td> <td>[J_opPos]/[job.total_positions < 0 ? " (unlimited)" : J_totPos]"
 
-		if(job.title == "AI" || job.title == "Cyborg")
-			dat += " </td><td>(Cannot Late Join)</td>"
-			continue
-		else
-			dat += "</td>"
+		dat += "</td>"
 		dat += "<td>"
 		if(job.total_positions >= 0)
 			dat += "<A href='?src=[REF(src)];[HrefToken()];customjobslot=[job.title]'>Custom</A> | "
