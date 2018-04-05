@@ -287,6 +287,8 @@
 
 /datum/reagent/drug/pupupipi/on_mob_life(mob/living/M)
 	var/high_message = pick("You need mo' o' dat sweet brown juice...", "Your guts tingle...", "You feel lightheaded...")
+	if(prob(5))
+		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.Jitter(30)
 	M.AdjustSleeping(-15, FALSE)
 	if(prob(15)) //once every six-ish ticks. is that ok?
