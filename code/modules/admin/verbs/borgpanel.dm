@@ -57,8 +57,8 @@
 		.["upgrades"] += list(list("name" = initial(upgrade.name), "installed" = installed, "type" = upgradetype))
 	.["laws"] = borg.laws ? borg.laws.get_law_list(include_zeroth = TRUE) : list()
 	.["channels"] = list()
-	for (var/i in GLOB.radiochannels)
-		.["channels"] += list(list("name" = i, "installed" = (i == "Common" || i in borg.radio.channels)))
+	for (var/k in GLOB.radiochannels)
+		.["channels"] += list(list("name" = k, "installed" = (k == "Common" || k in borg.radio.channels)))
 	.["cell"] = borg.cell ? list("missing" = FALSE, "maxcharge" = borg.cell.maxcharge, "charge" = borg.cell.charge) : list("missing" = TRUE, "maxcharge" = 1, "charge" = 0)
 	.["modules"] = list()
 	for(var/moduletype in typesof(/obj/item/robot_module))
@@ -88,7 +88,7 @@
 			borg.SetLockdown(!borg.lockcharge)
 		if ("toggle_upgrade")
 			var/upgradepath = text2path(params["upgrade"])
-			var/installedupgrade = locate(upgradepath) in borg
+			var/obj/item/borg/upgrade/installedupgrade = locate(upgradepath) in borg
 			if (installedupgrade)
 				installedupgrade.deactivate(borg, user)
 				borg.upgrades -= installedupgrade
