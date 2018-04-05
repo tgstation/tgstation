@@ -52,12 +52,18 @@
 /obj/item/stack/ore/burn()
 	if(!refined_type)
 		return ..()
-	var/obj/item/stack/sheet/S = new refined_type(drop_location())
-	var/percent = rand(0.3,0.7)
-	var/amountrefined = round(amount*percent)
-	S.amount = amountrefined
-	S.update_icon()
-	qdel(src)
+	var/amountrefined = 0
+	for(var/i in 1 to amount)
+		var/probability = rand(30,70)
+		if(prob(probability))
+			amountrefined ++	
+	if(amountrefined < 1)
+		..()
+	else
+		var/obj/item/stack/sheet/S = new refined_type(drop_location())
+		S.amount = amountrefined
+		S.update_icon()
+		qdel(src)
 
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
