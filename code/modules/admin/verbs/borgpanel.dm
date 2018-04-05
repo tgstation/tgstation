@@ -20,7 +20,6 @@
 /datum/borgpanel
 	var/mob/living/silicon/robot/borg
 	var/user
-	var/datum/tgui/ui
 
 /datum/borgpanel/New(user, mob/living/silicon/robot/borg)
 	if(!istype(borg))
@@ -32,8 +31,7 @@
 /datum/borgpanel/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.admin_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "borgopanel", "Borg Panel", 700, 600, master_ui, state)
-		src.ui = ui
+		ui = new(user, src, ui_key, "borgopanel", "Borg Panel", 700, 700, master_ui, state)
 		ui.open()
 
 /datum/borgpanel/ui_data(mob/user)
@@ -58,7 +56,9 @@
 	.["laws"] = borg.laws ? borg.laws.get_law_list(include_zeroth = TRUE) : list()
 	.["channels"] = list()
 	for (var/k in GLOB.radiochannels)
-		.["channels"] += list(list("name" = k, "installed" = (k == "Common" || k in borg.radio.channels)))
+		if (k == "Common")
+			continue
+		.["channels"] += list(list("name" = k, "installed" = (k in borg.radio.channels)))
 	.["cell"] = borg.cell ? list("missing" = FALSE, "maxcharge" = borg.cell.maxcharge, "charge" = borg.cell.charge) : list("missing" = TRUE, "maxcharge" = 1, "charge" = 0)
 	.["modules"] = list()
 	for(var/moduletype in typesof(/obj/item/robot_module))
@@ -99,8 +99,6 @@
 				borg.upgrades += upgrade
 		if ("toggle_radio")
 			var/channel = params["channel"]
-			if (channel == "Common")
-				return
 			if (channel in borg.radio.channels) // We're removing a channel
 				if (!borg.radio.keyslot) // There's no encryption key. This shouldn't happen but we can cope
 					borg.radio.channels -= channel
@@ -124,12 +122,10 @@
 					borg.radio.keyslot.independent = TRUE
 			borg.radio.recalculateChannels()
 		if ("setmodule")
-			warning("params is [json_encode(params)]")
 			var/newmodulepath = text2path(params["module"])
 			if (ispath(newmodulepath))
 				borg.module.transform_to(newmodulepath)
 		if ("slavetoai")
-			warning("params is [json_encode(params)]")
 			var/mob/living/silicon/ai/newai = locate(params["slavetoai"]) in GLOB.ai_list
 			if (newai && newai != borg.connected_ai)
 				borg.notify_ai(DISCONNECT)

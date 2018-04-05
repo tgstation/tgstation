@@ -484,7 +484,7 @@
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		R.resize = 1
+		R.resize = 0.5
 		R.hasExpanded = FALSE
 		R.update_transform()
 
