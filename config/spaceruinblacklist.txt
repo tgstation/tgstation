@@ -27,7 +27,6 @@
 #_maps/RandomRuins/SpaceRuins/caravanambush.dmm
 #_maps/RandomRuins/SpaceRuins/originalcontent.dmm
 #_maps/RandomRuins/SpaceRuins/onehalf.dmm
-#_maps/RandomRuins/SpaceRuins/spacehotel.dmm
 #_maps/RandomRuins/SpaceRuins/turretedoutpost.dmm
 #_maps/RandomRuins/SpaceRuins/shuttlerelic.dmm
 #_maps/RandomRuins/SpaceRuins/djstation.dmm
