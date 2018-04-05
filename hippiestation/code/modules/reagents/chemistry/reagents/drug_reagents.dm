@@ -295,7 +295,7 @@
 	..()
 
 /datum/reagent/drug/pupupipi/overdose_process(mob/living/carbon/human/H)
-	CHECK_DNA_AND_SPECIES(M)
+	CHECK_DNA_AND_SPECIES(H)
 	if(ishuman(H))
 		to_chat(H, "<span class= 'userdanger'>Oh shit!</span>")
 		H.set_species(/datum/species/krokodil_addict)
