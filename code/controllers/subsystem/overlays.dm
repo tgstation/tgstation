@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(overlays)
 	LAZYINITLIST(priority_overlays)
 	LAZYINITLIST(remove_overlays)
 	LAZYINITLIST(add_overlays)
-	remove_overlays = overlays
+	remove_overlays = overlays.Copy()
 	add_overlays.Cut()
 
 	if(priority)
