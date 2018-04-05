@@ -20,6 +20,6 @@
 /datum/chemical_reaction/pupupipi
 	name = "Sweet Brown"
 	id = "sweetbrown"
-	results = list("sweetbrown" =
+	results = list("sweetbrown" = 4)
 	required_reagents = list("welding_fuel" = 3, "sugar" = 1)
 
