@@ -542,6 +542,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 			to_chat(user, "<span class='notice'>You extract a sliver from \the [src]. \The [src] begins to react violently!</span>")
 			new /obj/item/nuke_core/supermatter_sliver(drop_location())
 			matter_power += 200
+	else if (istype(W, /obj/item/wrench))
+		if (anchored == FALSE)
+			user.visible_message("<span class='notice'>You secure the shard to the ground</span>")
+			anchored = TRUE
+		else
+			user.visible_message("<span class='notice'>You unsecure the shard from the ground</span>")
+			anchored = FALSE
 	else if(user.dropItemToGround(W))
 		user.visible_message("<span class='danger'>As [user] touches \the [src] with \a [W], silence fills the room...</span>",\
 			"<span class='userdanger'>You touch \the [src] with \the [W], and everything suddenly goes silent.</span>\n<span class='notice'>\The [W] flashes into dust as you flinch away from \the [src].</span>",\
