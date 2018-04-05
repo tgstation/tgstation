@@ -1915,6 +1915,16 @@
 		else
 			show_traitor_panel(M)
 
+	else if(href_list["borgpanel"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["borgpanel"])
+		if(!iscyborg(M))
+			to_chat(usr, "This can only be used on cyborgs")
+		else
+			open_borgopanel(M)
+
 	else if(href_list["initmind"])
 		if(!check_rights(R_ADMIN))
 			return
