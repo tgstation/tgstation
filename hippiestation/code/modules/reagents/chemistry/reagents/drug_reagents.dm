@@ -275,3 +275,31 @@
 	if(prob(20))
 		M.say("Yes.")
 	..()
+
+/datum/reagent/drug/pupupipi
+	name = "Sweet Brown"
+	id = "sweetbrown"
+	description = "A fetid concoction often huffed or drank by vagrants and bums. High dosages have... interesting effects."
+	color = "#602101" // rgb: 96, 33, 1
+	reagent_state = LIQUID
+	overdose_threshold = 500
+	addiction_threshold = 50 // doesn't do shit though
+
+/datum/reagent/drug/pupupipi/on_mob_life(mob/living/M)
+	var/high_message = pick("You need mo' o' dat sweet brown juice...", "Your guts tingle...", "You feel lightheaded...")
+	M.Jitter(30)
+	M.AdjustSleeping(-15, FALSE)
+	H.emote("burp")
+	..()
+	return
+
+/datum/reagent/drug/pupupipi/overdose_process(mob/living/carbon/human/M)
+	CHECK_DNA_AND_SPECIES(M)
+	if(!istype(M.dna.species, /datum/species/krokodil_addict))
+		to_chat(M, "<span class= 'userdanger'>Oh shit!</span>")
+		M.set_species(/datum/species/krokodil_addict)
+		M.setBrainLoss(30)
+	else
+		M.setBrainLoss(30)
+	..()
+	return
