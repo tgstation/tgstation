@@ -157,6 +157,8 @@
 			"<span class='notice'>You tip over [src].</span>")
 		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
 		Knockdown(60)
+		update_canmove()
+		addtimer(CALLBACK(src, .proc/update_canmove), 61)
 		icon_state = icon_dead
 		spawn(rand(20,50))
 			if(!stat && M)
