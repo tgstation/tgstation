@@ -137,6 +137,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	var/datum/looping_sound/supermatter/soundloop
 
+	var/moveable = TRUE
+
 /obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
 	uid = gl_uid++
@@ -542,13 +544,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 			to_chat(user, "<span class='notice'>You extract a sliver from \the [src]. \The [src] begins to react violently!</span>")
 			new /obj/item/nuke_core/supermatter_sliver(drop_location())
 			matter_power += 200
-	else if (istype(W, /obj/item/wrench))
-		if (anchored == FALSE)
-			user.visible_message("<span class='notice'>You secure the shard to the ground</span>")
-			anchored = TRUE
-		else
-			user.visible_message("<span class='notice'>You unsecure the shard from the ground</span>")
-			anchored = FALSE
 	else if(user.dropItemToGround(W))
 		user.visible_message("<span class='danger'>As [user] touches \the [src] with \a [W], silence fills the room...</span>",\
 			"<span class='userdanger'>You touch \the [src] with \the [W], and everything suddenly goes silent.</span>\n<span class='notice'>\The [W] flashes into dust as you flinch away from \the [src].</span>",\
@@ -559,6 +554,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 		radiation_pulse(src, 150, 4)
 
+/obj/machinery/power/supermatter_shard/wrench_act(mob/user, obj/item/tool)
+	if (moveable)
+		default_unfasten_wrench(user, tool, time = 20)
+	return TRUE
 
 /obj/machinery/power/supermatter_shard/CollidedWith(atom/movable/AM)
 	if(isliving(AM))
@@ -620,6 +619,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	anchored = TRUE
 	gasefficency = 0.15
 	explosion_power = 35
+	moveable = FALSE
 
 /obj/machinery/power/supermatter_shard/crystal/engine
 	is_main_engine = TRUE
