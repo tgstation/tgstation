@@ -42,7 +42,7 @@
 	permeability_coefficient = 0.01
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 	var/jumpdistance = 2 //-1 from to see the actual distance, e.g 3 goes over 2 tiles
-	var/jumpspeed = 2
+	var/jumpspeed = 1
 	actions_types = list(/datum/action/item_action/nanojump)
 
 /obj/item/clothing/shoes/combat/nano/ComponentInitialize()
@@ -197,7 +197,9 @@
 	item_state = "nanosuit"
 	name = "nanosuit"
 	desc = "Some sort of alien future suit. It looks very robust."
-	armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 45, "bomb" = 70, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 65, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	var/armor_mode = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 45, "bomb" = 70, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 100)
+	var/normal_mode = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 65, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	allowed = list(/obj/item/tank/internals)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
@@ -302,7 +304,10 @@
 
 /obj/item/clothing/suit/space/hardsuit/nano/examine(mob/user)
 	..()
-	to_chat(user, "The suit appears to be in: [mode] mode.")
+	if(mode != "none")
+		to_chat(user, "The suit appears to be in: [mode] mode.")
+	else
+		to_chat(user, "The suit appears to be offline.")
 
 
 /obj/item/clothing/suit/space/hardsuit/nano/process()
@@ -350,6 +355,8 @@
 			return 1
 		else
 			return 0
+	if(mode == "cloak")
+		cell.charge = 0
 
 	return 0
 
@@ -380,10 +387,8 @@
 				mode = "armor"
 				helmet.display_visor_message("Maximum Armor!")
 				slowdown = 1.0
-				armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 65,
-							"bomb" = 100, "bio" = 100, "rad" = 90, "fire" = 100, "acid" = 100)
-				helmet.armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 65,
-							"bomb" = 100, "bio" = 100, "rad" = 90, "fire" = 100, "acid" = 100)
+				armor = armor_mode
+				helmet.armor = armor_mode
 				U.filters -= filter(type="blur",size=1)
 				animate(U, alpha = 255, time = 5)
 				U.remove_trait(TRAIT_GOTTAGOFAST, "Speed Mode")
@@ -395,9 +400,10 @@
 			if("cloak")
 				mode = "cloak"
 				helmet.display_visor_message("Cloak Engaged!")
-				slowdown = 0.4
-				armor = initial(armor)
-				U.filters += filter(type="blur",size=1)
+				slowdown = 0.4 //cloaking makes us go sliightly faster
+				armor = normal_mode
+				helmet.armor = normal_mode
+				U.filters = filter(type="blur",size=1)
 				animate(U, alpha = 40, time = 2)
 				U.remove_trait(TRAIT_GOTTAGOFAST, "Speed Mode")
 				U.remove_trait(TRAIT_IGNORESLOWDOWN, "Speed Mode")
@@ -409,12 +415,13 @@
 				mode = "speed"
 				helmet.display_visor_message("Maximum Speed!")
 				slowdown = initial(slowdown)
-				armor = initial(armor)
+				armor = normal_mode
+				helmet.armor = normal_mode
 				U.add_trait(TRAIT_GOTTAGOFAST, "Speed Mode")
 				U.add_trait(TRAIT_IGNORESLOWDOWN, "Speed Mode")
 				U.adjustOxyLoss(-2, 0)
 				U.adjustStaminaLoss(-20)
-				U.filters -= filter(type="blur",size=1)
+				U.filters = filter(type="blur",size=0)
 				animate(U, alpha = 255, time = 5)
 				if(!U.has_trait(TRAIT_HULK))//don't want to cuck our hulk push immunity
 					U.remove_trait(TRAIT_PUSHIMMUNE, "Strength Mode")
@@ -426,12 +433,14 @@
 				U.add_trait(TRAIT_PUSHIMMUNE, "Strength Mode")
 				style.teach(U,1)
 				slowdown = initial(slowdown)
-				armor = initial(armor)
+				armor = normal_mode
+				helmet.armor = normal_mode
 				U.filters -= filter(type="blur",size=1)
 				animate(U, alpha = 255, time = 5)
 				U.remove_trait(TRAIT_GOTTAGOFAST, "Speed Mode")
 				U.remove_trait(TRAIT_IGNORESLOWDOWN, "Speed Mode")
 
+	U.update_inv_wear_suit()
 	update_icon()
 	for(var/X in actions)
 		var/datum/action/A = X
@@ -495,7 +504,57 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	var/obj/item/clothing/mask/gas/nano_mask/nanomask
 	var/obj/item/clothing/glasses/nano_goggles/nanogoggles
-	actions_types = list()
+	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_BASIC)
+	var/zoom_range = 12
+	var/zoom = FALSE
+	actions_types = list(/datum/action/item_action/nanosuit/zoom)
+
+/obj/item/clothing/head/helmet/space/hardsuit/nano/ui_action_click()
+	return FALSE
+
+/obj/item/clothing/head/helmet/space/hardsuit/nano/equipped(mob/living/carbon/human/wearer, slot)
+	..()
+	if(slot == slot_head)
+		flags_1 |= NODROP_1
+	for(var/hudtype in datahuds)
+		var/datum/atom_hud/H = GLOB.huds[hudtype]
+		H.add_hud_to(wearer)
+
+/obj/item/clothing/head/helmet/space/hardsuit/nano/dropped(mob/living/carbon/human/wearer)
+	..()
+	if(wearer)
+		for(var/hudtype in datahuds)
+			var/datum/atom_hud/H = GLOB.huds[hudtype]
+			H.remove_hud_from(wearer)
+		if(zoom)
+			toggle_zoom(wearer, TRUE)
+
+/obj/item/clothing/head/helmet/space/hardsuit/nano/proc/toggle_zoom(mob/living/user, force_off = FALSE)
+	if(zoom || force_off)
+		user.client.change_view(CONFIG_GET(string/default_view))
+		to_chat(user, "<span class='boldnotice'>Disabled helmet zoom...</span>")
+		zoom = FALSE
+		return FALSE
+	else
+		user.client.change_view(zoom_range)
+		to_chat(user, "<span class='boldnotice'>Toggled helmet zoom!</span>")
+		zoom = TRUE
+		return TRUE
+
+
+/datum/action/item_action/nanosuit/zoom
+	name = "Helmet Zoom"
+	icon_icon = 'icons/mob/actions.dmi'
+	background_icon_state = "bg_tech_blue"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "sniper_zoom"
+
+/datum/action/item_action/nanosuit/zoom/Trigger()
+	var/obj/item/clothing/head/helmet/space/hardsuit/nano/NS = target
+	if(istype(NS))
+		NS.toggle_zoom(owner)
+	return ..()
+
 
 /obj/item/clothing/head/helmet/space/hardsuit/nano/ComponentInitialize()
 	. = ..()
@@ -522,7 +581,7 @@
 	ears = /obj/item/device/radio/headset/syndicate/alt/nano
 	shoes = /obj/item/clothing/shoes/combat/coldres/nanojump
 	gloves = /obj/item/clothing/gloves/combat/nano
-	r_pocket = /obj/item/tank/internals/emergency_oxygen
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
 	internals_slot = slot_r_store
 	implants = list(/obj/item/implant/explosive)
 
@@ -530,11 +589,6 @@
 obj/item/clothing/suit/space/hardsuit/nano/dropped()
 	if(U)
 		U = null
-	..()
-
-/obj/item/clothing/head/helmet/space/hardsuit/nano/equipped(mob/user, slot)
-	if(slot == slot_head)
-		flags_1 |= NODROP_1
 	..()
 
 /mob/living/carbon/human/Stat()
@@ -692,7 +746,7 @@ obj/item/clothing/suit/space/hardsuit/nano/dropped()
 
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
-	if(istype(attacker.mind.martial_art, /datum/martial_art/nano))
+	if(istype(attacker.mind.martial_art, /datum/martial_art/nano) && weapon && weapon.damtype == BRUTE)
 		return 1.25 //deal 25% more damage in strength
 	. = ..()
 
