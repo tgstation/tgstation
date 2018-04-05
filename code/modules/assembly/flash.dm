@@ -71,7 +71,7 @@
 /obj/item/device/assembly/flash/proc/AOE_flash(bypass_checks = FALSE, range = 3, power = 5, targeted = FALSE, mob/user)
 	if(!bypass_checks && !try_use_flash())
 		return FALSE
-	var/list/mob/targets = get_flash_targets(loc, range, FALSE)
+	var/list/mob/targets = get_flash_targets(get_turf(src), range, FALSE)
 	if(user)
 		targets -= user
 	for(var/mob/living/carbon/C in targets)
@@ -80,7 +80,7 @@
 
 /obj/item/device/assembly/flash/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
 	if(!target_loc)
-		target_loc = get_turf(src)
+		target_loc = loc
 	if(override_vision_checks)
 		return get_hearers_in_view(range, get_turf(target_loc))
 	if(isturf(target_loc) || (ismob(target_loc) && isturf(target_loc.loc)))
@@ -160,7 +160,7 @@
 	. = ..()
 
 /obj/item/device/assembly/flash/activate()
-	AOE_flash(FALSE, 3, 5, FALSE)
+	AOE_flash()
 
 /obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/human/H, mob/user)
 	if(istype(H) && ishuman(user) && H.stat != DEAD)
