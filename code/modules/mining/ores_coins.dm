@@ -58,7 +58,7 @@
 		if(prob(probability))
 			amountrefined ++	
 	if(amountrefined < 1)
-		..()
+		return ..()
 	else
 		var/obj/item/stack/sheet/S = new refined_type(drop_location())
 		S.amount = amountrefined
