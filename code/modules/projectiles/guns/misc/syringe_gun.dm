@@ -113,12 +113,13 @@
 	var/time_per_syringe = 250
 	var/last_synth = 0
 
-/obj/item/gun/syringe/chem/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
+/obj/item/gun/syringe/chem/attackby()
 	return
 
 /obj/item/gun/syringe/chem/Initialize()
 	. = ..()
 	chambered = new /obj/item/ammo_casing/chemgun(src)
+	syringes.len = 4
 	START_PROCESSING(SSobj, src)
 	create_reagents(100)
 
