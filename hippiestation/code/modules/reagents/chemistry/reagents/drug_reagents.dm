@@ -282,7 +282,7 @@
 	description = "A fetid concoction often huffed or drank by vagrants and bums. High dosages have... interesting effects."
 	color = "#602101" // rgb: 96, 33, 1
 	reagent_state = LIQUID
-	overdose_threshold = 500
+	overdose_threshold = 100
 	addiction_threshold = 50 // doesn't do shit though
 
 /datum/reagent/drug/pupupipi/on_mob_life(mob/living/M)
@@ -290,17 +290,16 @@
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.Jitter(30)
-	M.AdjustSleeping(-15, FALSE)
 	if(prob(15)) //once every six-ish ticks. is that ok?
-		H.emote("burp")
+		M.emote("burp")
 	..()
 
 /datum/reagent/drug/pupupipi/overdose_process(mob/living/carbon/human/H)
 	CHECK_DNA_AND_SPECIES(M)
-	if(ishuman(M))
-		to_chat(M, "<span class= 'userdanger'>Oh shit!</span>")
-		M.set_species(/datum/species/krokodil_addict)
-		M.setBrainLoss(30)
+	if(ishuman(H))
+		to_chat(H, "<span class= 'userdanger'>Oh shit!</span>")
+		H.set_species(/datum/species/krokodil_addict)
+		H.setBrainLoss(30)
 	else
-		M.setBrainLoss(30)
+		H.setBrainLoss(30)
 	..()
