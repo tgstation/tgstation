@@ -111,6 +111,10 @@
 	switch (borg.module.type)
 		if (/obj/item/robot_module/miner)
 		if (/obj/item/robot_module/medical)
+			//Pinpointer
+			. += list(list("name" = "Crew pinpointer", "installed" = (locate(/obj/item/pinpointer/crew) in borg ? TRUE : FALSE), "type" = /obj/item/borg/upgrade/pinpointer)
+			//Defibrillator
+			. += list(list("name" = "Crew pinpointer", "installed" = (locate(/obj/item/twohanded/shockpaddles/cyborg) in borg ? TRUE : FALSE), "type" = /obj/item/borg/upgrade/defib)
 		if (/obj/item/robot_module/engineering)
 			//RPED
 			. += list(list("name" = "RPED", "installed" = (locate(/obj/item/storage/part_replacer/cyborg) in borg ? TRUE : FALSE), "type" = /obj/item/borg/upgrade/rped)
