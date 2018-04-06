@@ -2869,6 +2869,7 @@
 #include "hippiestation\code\modules\jobs\job_types\engineering.dm"
 #include "hippiestation\code\modules\jobs\job_types\medical.dm"
 #include "hippiestation\code\modules\jobs\job_types\science.dm"
+#include "hippiestation\code\modules\jobs\job_types\security.dm"
 #include "hippiestation\code\modules\keybindings\bindings_admin.dm"
 #include "hippiestation\code\modules\keybindings\bindings_hippie.dm"
 #include "hippiestation\code\modules\library\lib_machines.dm"
