@@ -71,11 +71,12 @@
 /obj/item/device/assembly/flash/proc/AOE_flash(bypass_checks = FALSE, range = 3, power = 5, targeted = FALSE, mob/user)
 	if(!bypass_checks && !try_use_flash())
 		return FALSE
-	var/list/mob/targets = get_flash_targets(loc, range, FALSE)
+	var/list/targets = get_flash_targets(loc, range, FALSE)
 	if(user)
 		targets -= user
-	for(var/mob/living/carbon/C in targets)
-		flash_carbon(C, user, power, targeted, TRUE)
+	for(var/i in targets)
+		var/mob/living/L= i
+		flash_carbon(L, user, power, targeted, TRUE)
 	return TRUE
 
 /obj/item/device/assembly/flash/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
