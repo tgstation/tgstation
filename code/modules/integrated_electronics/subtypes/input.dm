@@ -405,6 +405,8 @@
 		var/list/cont = new()
 		for(var/obj/U in H)
 			cont += WEAKREF(U)
+		for(var/mob/U in H)
+			cont += WEAKREF(U)
 		set_pin_data(IC_OUTPUT, 1, cont)
 		var/list/St = new()
 		for(var/obj/effect/decal/cleanable/crayon/I in H)
