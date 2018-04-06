@@ -18360,10 +18360,12 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aVA" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/turf/open/floor/plasteel/cafeteria,
+/obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/preopen{
+	id = "barShutters";
+	name = "privacy shutters"
+	},
+/turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "aVB" = (
 /obj/structure/table,
@@ -36253,8 +36255,7 @@
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 4;
-	
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
@@ -53747,6 +53748,10 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"gYO" = (
+/obj/machinery/jukebox,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
 "gZG" = (
 /obj/structure/closet/crate/freezer/surplus_limbs,
 /obj/item/reagent_containers/glass/beaker/synthflesh,
@@ -91529,9 +91534,9 @@ aND
 aJC
 aab
 aRg
-aQc
 aac
 aQc
+gYO
 aXk
 aQc
 aQc
@@ -91786,8 +91791,8 @@ aJC
 aJC
 aJI
 aJI
-aSI
 aJI
+aSI
 aVA
 aJI
 aYK
