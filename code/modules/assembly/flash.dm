@@ -159,7 +159,9 @@
 	burn_out()
 	. = ..()
 
-/obj/item/device/assembly/flash/activate()
+/obj/item/device/assembly/flash/activate()//AOE flash on signal recieved
+	if(!..())
+		return
 	AOE_flash()
 
 /obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/human/H, mob/user)
