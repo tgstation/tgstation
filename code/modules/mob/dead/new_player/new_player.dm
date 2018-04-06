@@ -313,6 +313,8 @@
 		return JOB_UNAVAILABLE_ACCOUNTAGE
 	if(job.required_playtime_remaining(client))
 		return JOB_UNAVAILABLE_PLAYTIME
+	if(latejoin && !job.special_check_latejoin(client))
+		return JOB_UNAVAILABLE_GENERIC
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
@@ -417,7 +419,7 @@
 
 	var/available_job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobUnavailable(job.title) == JOB_AVAILABLE)
+		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
 			available_job_count++;
 
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)

@@ -41,7 +41,8 @@
 
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
-		data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning, or else we won't know who's even getting cloned, etc
+		if(data["blood_DNA"] != mix_data["blood_DNA"])
+			data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning if the DNA sample doesn't match.
 		if(data["viruses"] || mix_data["viruses"])
 
 			var/list/mix1 = data["viruses"]
