@@ -192,6 +192,15 @@
 	priority = 2
 	name = "Plasmic Fusion"
 	id = "fusion"
+	var power_gases = list(
+		/datum/gas/carbon_dioxide = 2,
+		/datum/gas/stimulum = 7,
+		/datum/gas/pluoxium = 10,
+		/datum/gas/nitryl = 1.5,
+		/datum/gas/bz = 2,
+		/datum/gas/nitrous_oxide = 2
+	)
+
 
 /datum/gas_reaction/fusion/init_reqs()
 	min_requirements = list(
@@ -210,28 +219,30 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_energy = THERMAL_ENERGY(air)
 	var/mediation = (air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES]) //This is the average heat capacity of the mixture,not including plasma.
-	assert_gases(/datum/gas/pluox,/datum/gas/stimulum/,/datum/gas/nitryl)
-	var/gas_power = (2*cached_gases[/datum/gas/carbon_dioxide][MOLES])+(7*cached_gases[/datum/gas/stimulum][MOLES])+(10*cached_gases[/datum/gas/pluox][MOLES])+(1.5*cached_gases[/datum/gas/nitryl][MOLES])
+	var/gas_power
+	for (var/G in power_gases)
+		var/datum/gas/gas = G
+		air.assert_gas(gas)
+		gas_power += power_gases[gas]*cached_gases[gas][MOLES]
 	var/plasma_fused = 0
-	if (reaction_energy/gas_power < PLASMA_BINDING_ENERGY) //Lack of catalyst, fusion reaction starts to break down.
-		plasma_fused = max(gas_power,cached_gases[/datum/gas/plasma][MOLES])
+	if (gas_power > mediation*10) //Lack of catalyst, fusion reaction starts to break down.
+		plasma_fused = min(gas_power,cached_gases[/datum/gas/plasma][MOLES])
 		reaction_energy += plasma_fused*PLASMA_BINDING_ENERGY
 		cached_gases[/datum/gas/plasma][MOLES] -= plasma_fused
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= gas_power/20
 		air.assert_gases(/datum/gas/bz,/datum/gas/nitrous_oxide)
-		cached_gases[/datum/gas/bz][MOLES] += cached_gases[/datum/gas/carbon_dioxide][MOLES]/20
-		cached_gases[/datum/gas/nitrous_oxide][MOLES] += cached_gases[/datum/gas/carbon_dioxide][MOLES]/20
+		cached_gases[/datum/gas/bz][MOLES] += gas_power/20
+		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gas_power/20
 		if (location)
 			radiation_pulse(location, reaction_energy/(PLASMA_BINDING_ENERGY))
 	else
-		plasma_fused = max(gas_power*cached_gases[/datum/gas/plasma][MOLES]/mediation,cached_gases[/datum/gas/plasma][MOLES])
+		plasma_fused = min(gas_power*cached_gases[/datum/gas/plasma][MOLES]/mediation,cached_gases[/datum/gas/plasma][MOLES])
 		reaction_energy += plasma_fused*PLASMA_BINDING_ENERGY
 		air.assert_gases(/datum/gas/oxygen)
 		cached_gases[/datum/gas/plasma][MOLES] -= plasma_fused
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] = 0
-		cached_gases[/datum/gas/stimulum][MOLES] = 0
-		cached_gases[/datum/gas/pluox[MOLES] = 0
-		cached_gases[/datum/gas/nitryl][MOLES] = 0
+		for (var/G in power_gases)
+			var/datum/gas/gas = G
+			cached_gases[gas][MOLES] = 0
 		cached_gases[/datum/gas/oxygen][MOLES] += gas_power
 		if (location)
 			radiation_pulse(location, reaction_energy/(PLASMA_BINDING_ENERGY*MAX_CATALYST_EFFICENCY))
