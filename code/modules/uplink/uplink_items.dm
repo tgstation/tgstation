@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/cost = 0
 	var/refund_amount = 0 // specified refund amount in case there needs to be a TC penalty for refunds.
 	var/refundable = FALSE
-	var/list/surplus = list(CARGO = 100, TRAITOR = 100) // Chance of being included in the null crate or surplus crate
+	var/surplus = 100 // Chance of being included in the surplus crate.
 	var/cant_discount = FALSE
 	var/limited_stock = -1 //Setting this above zero limits how many times this item can be bought by the same traitor in a round, -1 is unlimited
 	var/list/include_modes = list() // Game modes to allow this item in.
@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 // Nuclear Operative (Special Offers)
 /datum/uplink_item/nukeoffer
 	category = "Special Offers"
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
 
@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A brutally simple syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
 	item = /obj/item/gun/ballistic/revolver
 	cost = 13
-	surplus = list(CARGO = 50, TRAITOR = 50)
+	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/pie_cannon
@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A special pie cannon for a special clown, this gadget can hold up to 20 pies and automatically fabricates one every two seconds!"
 	cost = 10
 	item = /obj/item/pneumatic_cannon/pie/selfcharge
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/shotgun
@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			quarter anti-personnel engagements."
 	item = /obj/item/gun/ballistic/automatic/shotgun/bulldog
 	cost = 8
-	surplus = list(CARGO = 40, TRAITOR = 40)
+	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/smg
@@ -190,7 +190,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			20-round magazine and is compatible with suppressors."
 	item = /obj/item/gun/ballistic/automatic/c20r
 	cost = 10
-	surplus = list(CARGO = 40, TRAITOR = 40)
+	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/machinegun
@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			This deadly weapon has a massive 50-round magazine of devastating 1.95x129mm ammunition."
 	item = /obj/item/gun/ballistic/automatic/l6_saw
 	cost = 18
-	surplus = list(CARGO = 40, TRAITOR = 40)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/grenadier
@@ -208,14 +208,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/belt/grenade/full
 	include_modes = list(/datum/game_mode/nuclear)
 	cost = 22
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
 	desc = "Ranged fury, Syndicate style. Guaranteed to cause shock and awe or your TC back!"
 	item = /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	cost = 16
-	surplus = list(CARGO = 25, TRAITOR = 25)
+	surplus = 25
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/bolt_action
@@ -235,7 +235,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		after each shot."
 	item = /obj/item/gun/energy/kinetic_accelerator/crossbow
 	cost = 12
-	surplus = list(CARGO = 50, TRAITOR = 50)
+	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/flamethrower
@@ -244,7 +244,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			stations. Make a statement by roasting the filth in their own greed. Use with caution."
 	item = /obj/item/flamethrower/full/tank
 	cost = 4
-	surplus = list(CARGO = 40, TRAITOR = 40)
+	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/sword
@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	impact, or just stepping on it. Beware friendly fire, as even anti-slip shoes will not protect against it."
 	item = /obj/item/melee/transforming/energy/sword/bananium
 	cost = 3
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/doublesword
@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		a few seconds after the banana is eaten."
 	item = /obj/item/reagent_containers/food/snacks/grown/banana/bombanana
 	cost = 4 //it is a bit cheaper than a minibomb because you have to take off your helmet to eat it, which is how you arm it
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/tearstache
@@ -315,7 +315,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		remain attached to the face of all targets for one minute, preventing the use of breath masks and other such devices."
 	item = /obj/item/grenade/chem_grenade/teargas/moustache
 	cost = 3
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/foamsmg
@@ -323,7 +323,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A fully-loaded Donksoft bullpup submachine gun that fires riot grade rounds with a 20-round magazine."
 	item = /obj/item/gun/ballistic/automatic/c20r/toy
 	cost = 5
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/foammachinegun
@@ -332,7 +332,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			riot grade darts, that can briefly incapacitate someone in just one volley."
 	item = /obj/item/gun/ballistic/automatic/l6_saw/toy
 	cost = 10
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/viscerators
@@ -341,7 +341,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			any non-operatives in the area."
 	item = /obj/item/grenade/spawnergrenade/manhacks
 	cost = 5
-	surplus = list(CARGO = 35, TRAITOR = 35)
+	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/bioterrorfoam
@@ -351,7 +351,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			using additional spore toxin. Ensure suit is sealed before use."
 	item = /obj/item/grenade/chem_grenade/bioterrorfoam
 	cost = 5
-	surplus = list(CARGO = 35, TRAITOR = 35)
+	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/bioterror
@@ -361,7 +361,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Use with extreme caution, to prevent exposure to yourself and your fellow operatives."
 	item = /obj/item/reagent_containers/spray/chemsprayer/bioterror
 	cost = 20
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/stealthy_weapons/virus_grenade
@@ -371,7 +371,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			the BVAK solution."
 	item = /obj/item/storage/box/syndie_kit/tuberculosisgrenade
 	cost = 12
-	surplus = list(CARGO = 35, TRAITOR = 35)
+	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/guardian
@@ -380,14 +380,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			organic host as a home base and source of fuel."
 	item = /obj/item/storage/box/syndie_kit/guardian
 	cost = 18
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	player_minimum = 25
 
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
-	surplus = list(CARGO = 40, TRAITOR = 40)
+	surplus = 40
 
 /datum/uplink_item/ammo/pistol
 	name = "10mm Handgun Magazine"
@@ -500,7 +500,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/ammo/machinegun
 	cost = 6
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun/basic
@@ -554,7 +554,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A box of 40 Donksoft foam riot darts, for reloading any compatible foam dart gun. Don't forget to share!"
 	item = /obj/item/ammo_box/foambox/riot
 	cost = 2
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 
 /datum/uplink_item/ammo/bioterror
 	name = "Box of Bioterror Syringes"
@@ -567,7 +567,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 //Support and Mechs
 /datum/uplink_item/support
 	category = "Support and Mechanized Exosuits"
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/support/reinforcement
@@ -632,7 +632,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
 	cost = 17
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/stealthy_weapons/cqc
@@ -641,7 +641,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/book/granter/martial/cqc
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	cost = 13
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 
 /datum/uplink_item/stealthy_weapons/throwingweapons
 	name = "Box of Throwing Weapons"
@@ -662,7 +662,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			darts effective at incapacitating a target."
 	item = /obj/item/gun/ballistic/automatic/toy/pistol/riot
 	cost = 3
-	surplus = list(CARGO = 10, TRAITOR = 10)
+	surplus = 10
 
 /datum/uplink_item/stealthy_weapons/sleepy_pen
 	name = "Sleepy Pen"
@@ -680,14 +680,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			You can also drop it underfoot to slip people."
 	item = /obj/item/soap/syndie
 	cost = 1
-	surplus = list(CARGO = 50, TRAITOR = 50)
+	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
 	item = /obj/item/storage/box/syndie_kit/chemical
 	cost = 6
-	surplus = list(CARGO = 50, TRAITOR = 50)
+	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/romerol_kit
 	name = "Romerol"
@@ -703,7 +703,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			space a small item can."
 	item = /obj/item/gun/syringe/syndicate
 	cost = 4
-	surplus = list(CARGO = 50, TRAITOR = 50)
+	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/detomatix
 	name = "Detomatix PDA Cartridge"
@@ -720,7 +720,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			shots of the weapon for increased stealth and superior ambushing capability."
 	item = /obj/item/suppressor
 	cost = 3
-	surplus = list(CARGO = 10, TRAITOR = 10)
+	surplus = 10
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/stealthy_weapons/pizza_bomb
@@ -729,7 +729,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			opening the box again will trigger the detonation after the timer has elapsed. Comes with free pizza, for you or your target!"
 	item = /obj/item/pizzabox/bomb
 	cost = 6
-	surplus = list(CARGO = 8, TRAITOR = 8)
+	surplus = 8
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
@@ -777,7 +777,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		squeek significantly louder."
 	item = /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat
 	cost = 6
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/stealthy_tools/frame
@@ -812,7 +812,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			to disable them remotely."
 	item = /obj/item/device/camera_bug
 	cost = 1
-	surplus = list(CARGO = 90, TRAITOR = 90)
+	surplus = 90
 
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
@@ -821,7 +821,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			known to survive intact even beyond the current shift. "
 	item = /obj/item/storage/backpack/satchel/flat
 	cost = 2
-	surplus = list(CARGO = 30, TRAITOR = 30)
+	surplus = 30
 
 /datum/uplink_item/stealthy_tools/stimpack
 	name = "Stimpack"
@@ -829,7 +829,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			5 minutes after injection."
 	item = /obj/item/reagent_containers/syringe/stimulants
 	cost = 5
-	surplus = list(CARGO = 90, TRAITOR = 90)
+	surplus = 90
 
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"
@@ -837,7 +837,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			and appearance."
 	item = /obj/item/reagent_containers/syringe/mulligan
 	cost = 4
-	surplus = list(CARGO = 30, TRAITOR = 30)
+	surplus = 30
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/stealthy_tools/emplight
@@ -846,7 +846,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		Useful for disrupting headsets, cameras, and borgs during stealth operations."
 	item = /obj/item/device/flashlight/emp
 	cost = 2
-	surplus = list(CARGO = 30, TRAITOR = 30)
+	surplus = 30
 
 /datum/uplink_item/stealthy_tools/cutouts
 	name = "Adaptive Cardboard Cutouts"
@@ -854,19 +854,19 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	crayon for changing their appearances."
 	item = /obj/item/storage/box/syndie_kit/cutouts
 	cost = 1
-	surplus = list(CARGO = 20, TRAITOR = 20)
+	surplus = 20
 
 /datum/uplink_item/stealthy_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
 	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny by the Captain. Don't try to give this to us to complete your objective, we know better!"
 	item = /obj/item/disk/nuclear/fake
 	cost = 1
-	surplus = list(CARGO = 1, TRAITOR = 1)
+	surplus = 1
 
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
 	category = "Space Suits and Hardsuits"
-	surplus = list(CARGO = 40, TRAITOR = 40)
+	surplus = 40
 
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
@@ -980,7 +980,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			be taken while doing this, as unless they are allied with you, they are programmed to report such intrusions."
 	item = /obj/item/device/encryptionkey/binary
 	cost = 5
-	surplus = list(CARGO = 75, TRAITOR = 75)
+	surplus = 75
 
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
@@ -988,7 +988,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
 	item = /obj/item/device/encryptionkey/syndicate
 	cost = 2
-	surplus = list(CARGO = 75, TRAITOR = 75)
+	surplus = 75
 
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector"
@@ -1008,7 +1008,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Briefcase Launchpad"
 	desc = "A briefcase containing a launchpad, a device able to teleport items and people to and from targets up to three tiles away from the briefcase. \
 			Also includes a remote control. Touch the briefcase with the remote to link it."
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	item = /obj/item/briefcase_launchpad
 	cost = 6
 
@@ -1084,7 +1084,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			be defused, and some crew may attempt to do so."
 	item = /obj/item/device/sbeacondrop/clownbomb
 	cost = 15
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/device_tools/syndicate_detonator
@@ -1111,7 +1111,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "Use to select the landing zone of your assault pod."
 	item = /obj/item/device/assault_pod
 	cost = 30
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/device_tools/shield
@@ -1120,7 +1120,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			against other attacks. Pair with an Energy Sword for a killer combination."
 	item = /obj/item/shield/energy
 	cost = 16
-	surplus = list(CARGO = 20, TRAITOR = 20)
+	surplus = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/shield
@@ -1130,7 +1130,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		and returning to you even if you miss. WARNING: DO NOT ATTEMPT TO STAND ON SHIELD WHILE DEPLOYED, EVEN IF WEARING ANTI-SLIP SHOES."
 	item = /obj/item/shield/energy/bananium
 	cost = 16
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/device_tools/medgun
@@ -1153,7 +1153,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A telecrystal in its rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
 	item = /obj/item/stack/telecrystal
 	cost = 1
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	cant_discount = TRUE
 	// Don't add telecrystals to the purchase_log since
 	// it's just used to buy more items (including itself!)
@@ -1186,7 +1186,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
-	surplus = list(CARGO = 50, TRAITOR = 50)
+	surplus = 50
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
@@ -1201,7 +1201,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndie_kit/imp_uplink
 	cost = 4
 	// An empty uplink is kinda useless.
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 
 /datum/uplink_item/implants/adrenal
 	name = "Adrenal Implant"
@@ -1245,7 +1245,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 // Cybernetics
 /datum/uplink_item/cyber_implants
 	category = "Cybernetic Implants"
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/cyber_implants/thermals
@@ -1283,7 +1283,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/role_restricted
 	category = "Role-Restricted"
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 
 /datum/uplink_item/role_restricted/reverse_revolver
 	name = "Reverse Revolver"
@@ -1308,14 +1308,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 12
 	item = /obj/item/storage/box/syndie_kit/mimery
 	restricted_roles = list("Mime")
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
 	desc = "A box with three cleaner grenades using the trademark Waffle Co. formula. Serves as a cleaner and causes acid damage to anyone standing nearby. The acid only affects carbon-based creatures."
 	item = /obj/item/storage/box/syndie_kit/ez_clean
 	cost = 6
-	surplus = list(CARGO = 20, TRAITOR = 20)
+	surplus = 20
 	restricted_roles = list("Janitor")
 
 /datum/uplink_item/role_restricted/explosive_hot_potato
@@ -1323,7 +1323,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A potato rigged with explosives. On activation, a special mechanism is activated that prevents it from being dropped. The only way to get rid of it if you are holding it is to attack someone else with it, causing it to latch to that person instead."
 	item = /obj/item/hot_potato/syndicate
 	cost = 4
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	restricted_roles = list("Cook", "Botanist", "Clown", "Mime")
 
 /datum/uplink_item/role_restricted/his_grace
@@ -1335,7 +1335,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/his_grace
 	cost = 20
 	restricted_roles = list("Chaplain")
-	surplus = list(CARGO = 5, TRAITOR = 5) //Very low chance to get it in a surplus crate even without being the chaplain
+	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
 /datum/uplink_item/role_restricted/pie_cannon
 	name = "Banana Cream Pie Cannon"
@@ -1343,7 +1343,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 10
 	item = /obj/item/pneumatic_cannon/pie/selfcharge
 	restricted_roles = list("Clown")
-	surplus = list(CARGO = 0, TRAITOR = 0) //No fun unless you're the clown!
+	surplus = 0 //No fun unless you're the clown!
 
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
@@ -1351,7 +1351,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/clothing/under/color/grey/glorf
 	cost = 20
 	restricted_roles = list("Assistant")
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"
@@ -1404,7 +1404,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
@@ -1413,7 +1413,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			You can also play card games with them or leave them on your victims."
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
-	surplus = list(CARGO = 40, TRAITOR = 40)
+	surplus = 40
 
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"
@@ -1438,7 +1438,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cant_discount = TRUE
 
 /datum/uplink_item/badass/costumes
-	surplus = list(CARGO = 0, TRAITOR = 0)
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	cost = 4
 	cant_discount = TRUE
@@ -1499,7 +1499,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		var/item = pick(uplink_items[category])
 		var/datum/uplink_item/I = uplink_items[category][item]
 
-		if(!I.surplus[TRAITOR] || prob(100 - I.surplus[TRAITOR]))
+		if(!I.surplus || prob(100 - I.surplus))
 			continue
 		if(crate_value < I.cost)
 			continue
