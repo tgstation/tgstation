@@ -48,6 +48,7 @@
 
 	return INITIALIZE_HINT_NORMAL
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /turf/open/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)
 		var/turf/T = locate(destination_x, destination_y, destination_z)
@@ -79,7 +80,7 @@
 		set_light(0)
 
 /turf/open/space/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/open/space/proc/CanBuildHere()
 	return TRUE

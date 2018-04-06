@@ -18,6 +18,9 @@
 
 
 /obj/structure/toilet/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(swirlie)
 		user.changeNext_move(CLICK_CD_MELEE)
 		playsound(src.loc, "swing_hit", 25, 1)
@@ -133,6 +136,9 @@
 	hiddenitem = new /obj/item/reagent_containers/food/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -228,8 +234,10 @@
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-
 /obj/machinery/shower/attack_hand(mob/M)
+	. = ..()
+	if(.)
+		return
 	on = !on
 	update_icon()
 	add_fingerprint(M)
@@ -248,7 +256,6 @@
 		if(isopenturf(loc))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5 SECONDS, wet_time_to_add = 1 SECONDS)
-
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
 	if(I.type == /obj/item/device/analyzer)
@@ -452,6 +459,9 @@
 
 
 /obj/structure/sink/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!user || !istype(user))
 		return
 	if(!iscarbon(user))
@@ -571,9 +581,10 @@
 	icon_state = "puddle"
 	resistance_flags = UNACIDABLE
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/sink/puddle/attack_hand(mob/M)
 	icon_state = "puddle-splash"
-	..()
+	. = ..()
 	icon_state = "puddle"
 
 /obj/structure/sink/puddle/attackby(obj/item/O, mob/user, params)
@@ -643,9 +654,11 @@
 
 
 /obj/structure/curtain/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	playsound(loc, 'sound/effects/curtain.ogg', 50, 1)
 	toggle()
-	..()
 
 /obj/structure/curtain/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/cloth (loc, 2)

@@ -41,6 +41,9 @@
 /datum/trait/proc/transfer_mob(mob/living/to_mob)
 	trait_holder.roundstart_traits -= src
 	to_mob.roundstart_traits += src
+	if(mob_trait)
+		trait_holder.remove_trait(mob_trait, ROUNDSTART_TRAIT)
+		to_mob.add_trait(mob_trait, ROUNDSTART_TRAIT)
 	trait_holder = to_mob
 	on_transfer()
 

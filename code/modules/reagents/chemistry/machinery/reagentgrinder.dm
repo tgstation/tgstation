@@ -131,17 +131,8 @@
 		updateUsrDialog()
 		return FALSE
 
-/obj/machinery/reagentgrinder/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/reagentgrinder/attack_ai(mob/user)
-	return FALSE
-
-/obj/machinery/reagentgrinder/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/reagentgrinder/interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
+/obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
+	. = ..()
 	var/is_chamber_empty = FALSE
 	var/is_beaker_ready = FALSE
 	var/processing_chamber = ""

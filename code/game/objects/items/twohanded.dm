@@ -178,9 +178,9 @@
 	if(H != null)
 		to_chat(user, "<span class='notice'>[src] is too cumbersome to carry in one hand!</span>")
 		return
-	if(src.loc != user)
+	if(loc != user)
 		wield(user)
-	..()
+	. = ..()
 
 /obj/item/twohanded/required/equipped(mob/user, slot)
 	..()

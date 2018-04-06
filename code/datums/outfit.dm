@@ -87,7 +87,7 @@
 				var/number = backpack_contents[path]
 				if(!isnum(number))//Default to 1
 					number = 1
-				for(var/i=0,i<number,i++)
+				for(var/i in 1 to number)
 					H.equip_to_slot_or_del(new path(H),slot_in_backpack)
 
 	if(!H.head && toggle_helmet && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))

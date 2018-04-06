@@ -151,7 +151,7 @@ again.
 //shuttle window
 
 /obj/effect/spawner/structure/window/shuttle
-	name = "reinforced tinted window spawner"
+	name = "reinforced shuttle window spawner"
 	icon_state = "swindow_spawner"
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/shuttle)
 
@@ -225,7 +225,7 @@ again.
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced/fulltile)
 
 /obj/effect/spawner/structure/window/hollow/plasma/reinforced
-	name = "hollow plasma window spawner"
+	name = "hollow reinforced plasma window spawner"
 	icon_state = "phrwindow_spawner_full"
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/plasma/reinforced, /obj/structure/window/plasma/reinforced/spawner/north, /obj/structure/window/plasma/reinforced/spawner/east, /obj/structure/window/plasma/reinforced/spawner/west)
 

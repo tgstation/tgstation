@@ -16,7 +16,6 @@
 	activators = list("compare" = IC_PINTYPE_PULSE_IN, "on true result" = IC_PINTYPE_PULSE_OUT, "on false result" = IC_PINTYPE_PULSE_OUT)
 
 /obj/item/integrated_circuit/logic/binary/do_work()
-	pull_data()
 	var/datum/integrated_io/A = inputs[1]
 	var/datum/integrated_io/B = inputs[2]
 	var/datum/integrated_io/O = outputs[1]
@@ -36,7 +35,6 @@
 	activators = list("compare" = IC_PINTYPE_PULSE_IN, "on compare" = IC_PINTYPE_PULSE_OUT)
 
 /obj/item/integrated_circuit/logic/unary/do_work()
-	pull_data()
 	var/datum/integrated_io/A = inputs[1]
 	var/datum/integrated_io/O = outputs[1]
 	O.data = do_check(A) ? TRUE : FALSE
@@ -66,7 +64,6 @@
 	var/lstate=FALSE
 
 /obj/item/integrated_circuit/logic/binary/jklatch/do_work()
-	pull_data()
 	var/datum/integrated_io/A = inputs[1]
 	var/datum/integrated_io/B = inputs[2]
 	var/datum/integrated_io/O = outputs[1]
@@ -98,7 +95,6 @@
 	var/lstate=FALSE
 
 /obj/item/integrated_circuit/logic/binary/rslatch/do_work()
-	pull_data()
 	var/datum/integrated_io/A = inputs[1]
 	var/datum/integrated_io/B = inputs[2]
 	var/datum/integrated_io/O = outputs[1]
@@ -128,7 +124,6 @@
 	var/lstate=FALSE
 
 /obj/item/integrated_circuit/logic/binary/gdlatch/do_work()
-	pull_data()
 	var/datum/integrated_io/A = inputs[1]
 	var/datum/integrated_io/B = inputs[2]
 	var/datum/integrated_io/O = outputs[1]

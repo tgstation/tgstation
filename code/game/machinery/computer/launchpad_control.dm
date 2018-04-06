@@ -30,14 +30,6 @@
 	else
 		return ..()
 
-/obj/machinery/computer/launchpad/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/computer/launchpad/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
 /obj/machinery/computer/launchpad/proc/pad_exists(number)
 	var/obj/machinery/launchpad/pad = launchpads[number]
 	if(QDELETED(pad))
@@ -48,7 +40,8 @@
 	var/obj/machinery/launchpad/pad = launchpads[number]
 	return pad
 
-/obj/machinery/computer/launchpad/interact(mob/user)
+/obj/machinery/computer/launchpad/ui_interact(mob/user)
+	. = ..()
 	var/list/t = list()
 	if(!LAZYLEN(launchpads))
 		obj_flags &= ~IN_USE     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console

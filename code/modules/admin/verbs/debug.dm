@@ -500,6 +500,42 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		qdel(adminmob)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_admin_test_atmos_controllers()
+	set category = "Mapping"
+	set name = "Test Atmos Monitoring Consoles"
+
+	var/list/dat = list()
+
+	if(SSticker.current_state == GAME_STATE_STARTUP)
+		to_chat(usr, "Game still loading, please hold!")
+		return
+
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used the Test Atmos Monitor debug command.</span>")
+	log_admin("[key_name(usr)] used the Test Atmos Monitor debug command.")
+
+	var/bad_shit = 0
+	for(var/obj/machinery/computer/atmos_control/tank/console in GLOB.atmos_air_controllers)
+		dat += "<h1>[console] at [get_area_name(console, TRUE)] [COORD(console)]:</h1><br>"
+		if(console.input_tag == console.output_tag)
+			dat += "Error: input_tag is the same as the output_tag, \"[console.input_tag]\"!<br>"
+			bad_shit++
+		if(!LAZYLEN(console.input_info))
+			dat += "Failed to find a valid outlet injector as an input with the tag [console.input_tag].<br>"
+			bad_shit++
+		if(!LAZYLEN(console.output_info))
+			dat += "Failed to find a valid siphon pump as an outlet with the tag [console.output_tag].<br>"
+			bad_shit++
+		if(!bad_shit)
+			dat += "<B>STATUS:</B> NORMAL"
+		else
+			bad_shit = 0
+		dat += "<br>"
+		CHECK_TICK
+
+	var/datum/browser/popup = new(usr, "testatmoscontroller", "Test Atmos Monitoring Consoles", 500, 750)
+	popup.set_content(dat.Join())
+	popup.open()
+
 /client/proc/cmd_admin_areatest(on_station)
 	set category = "Mapping"
 	set name = "Test Areas"

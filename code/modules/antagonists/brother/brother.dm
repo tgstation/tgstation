@@ -26,7 +26,6 @@
 
 /datum/antagonist/brother/on_removal()
 	SSticker.mode.brothers -= owner
-	owner.objectives -= objectives
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")
 	owner.special_role = null

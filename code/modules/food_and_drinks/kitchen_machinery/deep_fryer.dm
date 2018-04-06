@@ -146,4 +146,4 @@ God bless America.
 		reagents.remove_any((reagents.total_volume/2))
 		C.Knockdown(60)
 		user.changeNext_move(CLICK_CD_MELEE)
-	..()
+	return ..()

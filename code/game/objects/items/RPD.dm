@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 
-/obj/item/pipe_dispenser/pre_attackby(atom/A, mob/user)
+/obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)
 	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))
 		return ..()
 

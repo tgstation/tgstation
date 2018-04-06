@@ -49,6 +49,9 @@
 		to_chat(user, "<span class='notice'>You slide the target into the stake.</span>")
 
 /obj/structure/target_stake/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(pinned_target)
 		removeTarget(user)
 

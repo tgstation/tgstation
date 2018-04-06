@@ -167,7 +167,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/mob/M = usr
 	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src))
 		return attack_self(M)
-	return
+	return ..()
 
 /obj/item/device/pda/attack_self(mob/user)
 	if(!user.IsAdvancedToolUser())

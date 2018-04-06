@@ -36,7 +36,10 @@
 
 /proc/create_area(mob/creator)
 	var/static/blacklisted_turfs = typecacheof(/turf/open/space)
-	var/static/blacklisted_areas = typecacheof(/area/space)
+	var/static/blacklisted_areas = typecacheof(list(
+		/area/space,
+		/area/shuttle,
+		))
 	var/list/turfs = detect_room(get_turf(creator), blacklisted_turfs)
 	if(!turfs)
 		to_chat(creator, "<span class='warning'>The new area must be completely airtight and not a part of a shuttle.</span>")

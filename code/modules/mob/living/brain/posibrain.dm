@@ -68,6 +68,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	else
 		visible_message(fail_message)
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/item/device/mmi/posibrain/attack_ghost(mob/user)
 	activate(user)
 

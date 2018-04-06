@@ -144,10 +144,7 @@
 
 	return ..()
 
-/obj/machinery/dna_scannernew/attack_hand(mob/user)
-	if(..(user,1,0)) //don't set the machine, since there's no dialog
-		return
-
+/obj/machinery/dna_scannernew/interact(mob/user)
 	toggle_open(user)
 
 /obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)

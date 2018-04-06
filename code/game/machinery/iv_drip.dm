@@ -66,6 +66,7 @@
 			add_overlay(filling_overlay)
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
+	. = ..()
 	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE) || !isliving(target))
 		return
 
@@ -150,6 +151,9 @@
 			update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!ishuman(user))
 		return
 	if(attached)

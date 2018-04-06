@@ -232,7 +232,7 @@
 		var/mob/living/Food = A
 		if(CanFeedon(Food))
 			Feedon(Food)
-	..()
+	return ..()
 
 /mob/living/simple_animal/slime/doUnEquip(obj/item/W)
 	return
@@ -277,8 +277,6 @@
 	if(user.a_intent == INTENT_HARM)
 		discipline_slime(user)
 		return ..()
-
-
 
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
 	if(buckled)

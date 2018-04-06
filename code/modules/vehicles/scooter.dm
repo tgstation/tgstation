@@ -80,6 +80,7 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
 /obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
+	. = ..()
 	var/mob/living/carbon/M = usr
 	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return

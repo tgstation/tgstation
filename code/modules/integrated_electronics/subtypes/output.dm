@@ -11,7 +11,6 @@
 	activators = list("load data" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 10
-	cooldown_per_use = 10
 	var/eol = "&lt;br&gt;"
 	var/stuff_to_display = null
 
@@ -53,6 +52,7 @@
 	desc = "Takes any data type as an input and displays it to the user upon examining, and to all nearby beings when pulsed."
 	icon_state = "screen_large"
 	power_draw_per_use = 40
+	cooldown_per_use = 10
 
 /obj/item/integrated_circuit/output/screen/large/do_work()
 	..()
@@ -222,7 +222,7 @@
 	desc = "Takes any string as an input and will make the device say the string when pulsed."
 	extended_desc = "This unit is more advanced than the plain speaker circuit, able to transpose any valid text to speech."
 	icon_state = "speaker"
-	ext_cooldown = 2
+	cooldown_per_use = 10
 	complexity = 12
 	inputs = list("text" = IC_PINTYPE_STRING)
 	outputs = list()

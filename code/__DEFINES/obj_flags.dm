@@ -8,6 +8,7 @@
 #define DANGEROUS_POSSESSION 16 //Admin possession yes/no
 #define ON_BLUEPRINTS 32  //Are we visible on the station blueprints at roundstart?
 #define UNIQUE_RENAME 64 // can you customize the description/name of the thing?
+#define USES_TGUI 128	//put on things that use tgui on ui_interact instead of custom/old UI.
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 

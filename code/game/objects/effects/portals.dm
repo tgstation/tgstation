@@ -57,6 +57,9 @@
 	return
 
 /obj/effect/portal/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(get_turf(user) == get_turf(src))
 		teleport(user)
 	if(Adjacent(user))

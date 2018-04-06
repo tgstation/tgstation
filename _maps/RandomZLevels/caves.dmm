@@ -188,7 +188,7 @@
 	amount = 25
 	},
 /obj/item/coin/antagtoken,
-/obj/item/spellbook/oneuse/summonitem{
+/obj/item/book/granter/spell/summonitem{
 	name = "an extremely flamboyant book"
 	},
 /turf/open/floor/engine/cult{
@@ -356,7 +356,7 @@
 /area/awaymission/caves/BMP_asteroid/level_four)
 "ba" = (
 /obj/structure/destructible/cult/talisman,
-/obj/item/plasma_fist_scroll,
+/obj/item/book/granter/martial/plasma_fist,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
 	},

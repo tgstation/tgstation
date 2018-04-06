@@ -90,6 +90,7 @@
 	playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/device/assembly/mousetrap/attack_hand(mob/living/carbon/human/user)
 	if(armed)
 		if((user.has_trait(TRAIT_DUMB) || user.has_trait(TRAIT_CLUMSY)) && prob(50))
@@ -100,7 +101,7 @@
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
 			return
-	..()
+	return ..()
 
 
 /obj/item/device/assembly/mousetrap/Crossed(atom/movable/AM as mob|obj)

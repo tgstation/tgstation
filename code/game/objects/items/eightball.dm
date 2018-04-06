@@ -114,11 +114,13 @@
 /obj/item/toy/eightball/haunted/MakeHaunted()
 	return FALSE
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/item/toy/eightball/haunted/attack_ghost(mob/user)
 	if(!shaking)
 		to_chat(user, "<span class='warning'>[src] is not currently being shaken.</span>")
 		return
 	interact(user)
+	return ..()
 
 /obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
 	last_message = raw_message

@@ -9,6 +9,7 @@
 	icon_state = "blueprints"
 	attack_verb = list("attacked", "bapped", "hit")
 	var/fluffnotice = "Nobody's gonna read this stuff!"
+	var/in_use = FALSE
 
 /obj/item/areaeditor/attack_self(mob/user)
 	add_fingerprint(user)
@@ -25,12 +26,16 @@
 
 /obj/item/areaeditor/Topic(href, href_list)
 	if(..())
-		return
+		return TRUE
 	if(!usr.canUseTopic(src))
 		usr << browse(null, "window=blueprints")
-		return
+		return TRUE
 	if(href_list["create_area"])
+		if(in_use)
+			return
+		in_use = TRUE
 		create_area(usr)
+		in_use = FALSE
 	updateUsrDialog()
 
 //Station blueprints!!!
@@ -79,11 +84,16 @@
 
 
 /obj/item/areaeditor/blueprints/Topic(href, href_list)
-	..()
+	if(..())
+		return
 	if(href_list["edit_area"])
 		if(get_area_type()!=AREA_STATION)
 			return
+		if(in_use)
+			return
+		in_use = TRUE
 		edit_area()
+		in_use = FALSE
 	if(href_list["exit_legend"])
 		legend = FALSE;
 	if(href_list["view_legend"])

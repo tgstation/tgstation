@@ -36,10 +36,11 @@
 	speed_multiplier = 0
 	no_cost = TRUE
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clockwork/slab/debug/attack_hand(mob/living/user)
-	..()
 	if(!is_servant_of_ratvar(user))
 		add_servant_of_ratvar(user)
+	return ..()
 
 /obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
 	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture."

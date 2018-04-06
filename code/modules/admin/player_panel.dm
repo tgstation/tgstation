@@ -1,6 +1,7 @@
 /datum/admins/proc/player_panel_new()//The new one
 	if(!check_rights())
 		return
+	log_admin("[key_name(usr)] checked the player panel.")
 	var/dat = "<html><head><title>Player Panel</title></head>"
 
 	//javascript, the part that does most of the work~

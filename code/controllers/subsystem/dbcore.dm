@@ -277,7 +277,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	if(istext(column))
 		column = columns.Find(column)
 	if(!conversions)
-		conversions = list(column)
+		conversions = new /list(column)
 	else if(conversions.len < column)
 		conversions.len = column
 	conversions[column] = conversion

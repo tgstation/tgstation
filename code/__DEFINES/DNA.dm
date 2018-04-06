@@ -89,11 +89,7 @@
 #define NOSTOMACH		13
 #define NO_DNA_COPY     14
 #define DRINKSBLOOD		15
-#define SPECIES_ORGANIC 16
-#define SPECIES_INORGANIC 17
-#define SPECIES_UNDEAD  18
-#define SPECIES_ROBOTIC 19
-#define NOEYES			20
+#define NOEYES			16
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"

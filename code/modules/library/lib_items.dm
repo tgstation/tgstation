@@ -117,6 +117,9 @@
 
 
 /obj/structure/bookcase/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(contents.len)
 		var/obj/item/book/choice = input("Which book would you like to remove from the shelf?") as null|obj in contents
 		if(choice)

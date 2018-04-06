@@ -23,6 +23,7 @@
 	var/shot_number = 0
 	var/state = 0
 	var/locked = FALSE
+	var/allow_switch_interact = TRUE
 
 	var/projectile_type = /obj/item/projectile/beam/emitter
 
@@ -101,13 +102,13 @@
 		icon_state = initial(icon_state)
 
 
-/obj/machinery/power/emitter/attack_hand(mob/user)
-	src.add_fingerprint(user)
+/obj/machinery/power/emitter/interact(mob/user)
+	add_fingerprint(user)
 	if(state == 2)
 		if(!powernet)
 			to_chat(user, "<span class='warning'>The emitter isn't connected to a wire!</span>")
 			return 1
-		if(!src.locked)
+		if(!locked && allow_switch_interact)
 			if(src.active==1)
 				src.active = 0
 				to_chat(user, "<span class='notice'>You turn off \the [src].</span>")
