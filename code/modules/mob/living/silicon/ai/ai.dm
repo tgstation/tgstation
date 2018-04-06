@@ -18,7 +18,7 @@
 	icon_state = "ai"
 	anchored = TRUE
 	density = TRUE
-	canmove = 0
+	canmove = FALSE
 	status_flags = CANSTUN|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
@@ -28,7 +28,7 @@
 	d_hud = DATA_HUD_DIAGNOSTIC_ADVANCED
 	mob_size = MOB_SIZE_LARGE
 	var/list/network = list("ss13")
-	var/obj/machinery/camera/current = null
+	var/obj/machinery/camera/current
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
 	var/requires_power = POWER_REQ_ALL
@@ -37,44 +37,44 @@
 	var/viewalerts = 0
 	var/icon/holo_icon//Default is assigned when AI is created.
 	var/obj/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
-	var/radio_enabled = 1 //Determins if a carded AI can speak with its built in radio or not.
+	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
-	var/obj/item/device/pda/ai/aiPDA = null
-	var/obj/item/device/multitool/aiMulti = null
+	var/obj/item/device/pda/ai/aiPDA
+	var/obj/item/device/multitool/aiMulti
 	var/mob/living/simple_animal/bot/Bot
-	var/tracking = 0 //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
+	var/tracking = FALSE //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
 	var/datum/effect_system/spark_spread/spark_system//So they can initialize sparks whenever/N
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
 	var/list/datum/AI_Module/current_modules = list()
-	var/can_dominate_mechs = 0
-	var/shunted = 0 //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
+	var/can_dominate_mechs = FALSE
+	var/shunted = FALSE	//1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
 
-	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click()
-	var/malfhacking = 0 // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
-	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
+	var/control_disabled = FALSE	// Set to 1 to stop AI from interacting via Click()
+	var/malfhacking = FALSE		// More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
+	var/malf_cooldown = 0		//Cooldown var for malf modules, stores a worldtime + cooldown
 
-	var/obj/machinery/power/apc/malfhack = null
-	var/explosive = 0 //does the AI explode when it dies?
+	var/obj/machinery/power/apc/malfhack
+	var/explosive = FALSE		//does the AI explode when it dies?
 
-	var/mob/living/silicon/ai/parent = null
-	var/camera_light_on = 0
+	var/mob/living/silicon/ai/parent
+	var/camera_light_on = FALSE
 	var/list/obj/machinery/camera/lit_cameras = list()
 
-	var/datum/trackable/track = new()
+	var/datum/trackable/track = new
 
 	var/last_paper_seen = null
-	var/can_shunt = 1
-	var/last_announcement = "" // For AI VOX, if enabled
+	var/can_shunt = TRUE
+	var/last_announcement = "" 		// For AI VOX, if enabled
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
-	var/waypoint_mode = 0 //Waypoint mode is for selecting a turf via clicking.
-	var/call_bot_cooldown = 0 //time of next call bot command
-	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
+	var/waypoint_mode = FALSE		//Waypoint mode is for selecting a turf via clicking.
+	var/call_bot_cooldown = 0		//time of next call bot command
+	var/apc_override = FALSE		//hack for letting the AI use its APC even when visionless
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
 
-	var/mob/camera/aiEye/eyeobj = new()
+	var/mob/camera/aiEye/eyeobj = new
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1

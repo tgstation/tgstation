@@ -1945,15 +1945,6 @@
 	},
 /turf/open/floor/plating,
 /area/security/main)
-"aeD" = (
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 8
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_3)
-"aeE" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_3)
 "aeG" = (
 /obj/structure/cable,
 /obj/machinery/power/solar{
@@ -2296,50 +2287,16 @@
 /turf/open/floor/plating,
 /area/security/main)
 "afp" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Escape Pod Airlock"
-	},
-/obj/docking_port/mobile/pod{
+/obj/docking_port/stationary{
 	dir = 4;
-	id = "pod3";
-	name = "escape pod 3";
-	port_direction = 2;
-	preferred_direction = 4
+	dwidth = 1;
+	height = 4;
+	name = "escape pod loader";
+	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
+	width = 3
 	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_3)
-"afq" = (
-/obj/machinery/computer/shuttle/pod{
-	pixel_y = -32;
-	possible_destinations = "pod_lavaland3";
-	shuttleId = "pod3"
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_3)
-"afr" = (
-/obj/item/device/radio/intercom{
-	pixel_y = 25
-	},
-/obj/item/storage/pod{
-	pixel_x = 6;
-	pixel_y = -32
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_3)
-"afs" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/pod_3)
+/turf/open/space/basic,
+/area/space)
 "aft" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
@@ -6504,10 +6461,6 @@
 /obj/machinery/portable_atmospherics/canister/water_vapor,
 /turf/open/floor/plasteel,
 /area/janitor)
-"apH" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/pod_1)
 "apI" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
 	dir = 1
@@ -6518,10 +6471,6 @@
 "apJ" = (
 /turf/closed/wall,
 /area/construction/mining/aux_base)
-"apK" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/pod_2)
 "apL" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -6538,11 +6487,8 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/port/fore)
 "apN" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
 "apO" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -6847,9 +6793,6 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"aqF" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_1)
 "aqG" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
@@ -6858,15 +6801,6 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
-"aqH" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_2)
-"aqI" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "aqJ" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
@@ -6892,13 +6826,6 @@
 /obj/machinery/meter,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"aqN" = (
-/obj/structure/closet/secure_closet/miner/unlocked,
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "aqO" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -7164,15 +7091,6 @@
 "arB" = (
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/entry)
-"arC" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"arD" = (
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "arE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/yellow/side{
@@ -7549,12 +7467,6 @@
 "asC" = (
 /turf/open/floor/plasteel/airless,
 /area/space/nearstation)
-"asD" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "asE" = (
 /turf/closed/wall,
 /area/hallway/secondary/entry)
@@ -7562,10 +7474,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
-"asG" = (
-/obj/machinery/light,
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "asH" = (
 /obj/structure/closet/toolcloset,
 /turf/open/floor/plasteel/yellow/side{
@@ -7768,26 +7676,6 @@
 	dir = 8
 	},
 /area/crew_quarters/dorms)
-"atk" = (
-/obj/machinery/camera{
-	c_tag = "Auxillary Mining Base";
-	dir = 8;
-	network = list("ss13","auxbase")
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"atl" = (
-/obj/docking_port/mobile/auxillary_base{
-	dheight = 4;
-	dir = 4;
-	dwidth = 4;
-	height = 9;
-	width = 9
-	},
-/obj/machinery/bluespace_beacon,
-/obj/machinery/computer/auxillary_base,
-/turf/closed/wall,
-/area/shuttle/auxillary_base)
 "atm" = (
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
@@ -8317,10 +8205,6 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/department/electrical)
-"auN" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "auO" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
@@ -9232,12 +9116,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
-"awX" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "awY" = (
 /obj/machinery/light{
 	dir = 1
@@ -12151,13 +12029,6 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
-"aEp" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/structure/ore_box,
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "aEz" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -12608,13 +12479,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
-"aFD" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "aFG" = (
 /turf/open/floor/plasteel/arrival{
 	dir = 4
@@ -46012,12 +45876,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"ckq" = (
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_2)
 "ckr" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -47616,15 +47474,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"cpc" = (
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 8
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_4)
-"cpd" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_4)
 "cpe" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
@@ -47830,51 +47679,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"cpJ" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Escape Pod Airlock"
-	},
-/obj/docking_port/mobile/pod{
-	dir = 4;
-	id = "pod4";
-	name = "escape pod 4";
-	port_direction = 2;
-	preferred_direction = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_4)
-"cpK" = (
-/obj/machinery/computer/shuttle/pod{
-	pixel_y = -32;
-	possible_destinations = "pod_lavaland2";
-	shuttleId = "pod2"
-	},
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_2)
-"cpL" = (
-/obj/item/storage/pod{
-	pixel_x = 6;
-	pixel_y = -28
-	},
-/obj/item/device/radio/intercom{
-	pixel_y = 25
-	},
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_2)
-"cpM" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/pod_4)
 "cpN" = (
 /obj/machinery/power/turbine{
 	luminosity = 2
@@ -48115,17 +47919,16 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqq" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Escape Pod Airlock"
-	},
-/obj/docking_port/mobile/pod{
+/obj/docking_port/stationary{
 	dir = 8;
-	id = "pod2";
-	name = "escape pod 2";
-	port_direction = 2
+	dwidth = 1;
+	height = 4;
+	name = "escape pod loader";
+	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
+	width = 3
 	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_2)
+/turf/open/space/basic,
+/area/space)
 "cqr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -50518,12 +50321,6 @@
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
-"cwU" = (
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_1)
 "cwV" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
@@ -50542,39 +50339,11 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
-"cxl" = (
-/obj/machinery/computer/shuttle/pod{
-	pixel_y = -32;
-	possible_destinations = "pod_lavaland1";
-	shuttleId = "pod1"
-	},
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
 "cxn" = (
 /obj/structure/lattice,
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
 /area/space/nearstation)
-"cxx" = (
-/obj/item/storage/pod{
-	pixel_x = 6;
-	pixel_y = -28
-	},
-/obj/item/device/radio/intercom{
-	pixel_y = 25
-	},
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
 "cxA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -50593,18 +50362,6 @@
 	},
 /turf/open/space/basic,
 /area/space)
-"cxF" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Escape Pod Airlock"
-	},
-/obj/docking_port/mobile/pod{
-	dir = 8;
-	id = "pod1";
-	name = "escape pod 1";
-	port_direction = 2
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
 "cxG" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -50916,34 +50673,6 @@
 "czK" = (
 /turf/closed/wall,
 /area/security/vacantoffice)
-"czL" = (
-/obj/machinery/computer/shuttle/pod{
-	pixel_y = -32;
-	possible_destinations = "pod_lavaland4";
-	shuttleId = "pod4"
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_4)
-"czM" = (
-/obj/item/device/radio/intercom{
-	pixel_y = 25
-	},
-/obj/item/storage/pod{
-	pixel_x = 6;
-	pixel_y = -32
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_4)
 "czN" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
@@ -51900,21 +51629,20 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
-"cCs" = (
-/obj/structure/mining_shuttle_beacon{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "cCt" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/docking_port/stationary/public_mining_dock{
-	dir = 8
+/obj/docking_port/stationary{
+	area_type = /area/construction/mining/aux_base;
+	dir = 8;
+	dwidth = 4;
+	height = 9;
+	id = "aux_base_zone";
+	name = "aux base zone";
+	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	turf_type = /turf/open/floor/plating;
+	width = 9
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
 "cCB" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
@@ -62567,9 +62295,9 @@ aaa
 aae
 aaf
 aaa
-aqH
-apK
-aqH
+aaa
+aaa
+aaa
 aaa
 aaa
 aae
@@ -62581,9 +62309,9 @@ aaa
 aaa
 aaa
 aaa
-aqF
-apH
-aqF
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -62824,9 +62552,6 @@ aaa
 aaa
 aaf
 aaa
-aqH
-cpK
-aqH
 aaa
 aaa
 aaa
@@ -62838,9 +62563,12 @@ aaa
 aaa
 aaa
 aaa
-aqF
-cxl
-aqF
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -63081,9 +62809,6 @@ aaa
 aaa
 aaf
 aaa
-aqH
-cpL
-aqH
 aaa
 aaa
 aaa
@@ -63095,9 +62820,12 @@ aaa
 aaa
 aaa
 aaa
-aqF
-cxx
-aqF
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -63338,9 +63066,8 @@ aaa
 aaa
 aaf
 aaa
-ckq
+aaa
 cqq
-ckq
 aaa
 aaa
 aaa
@@ -63352,9 +63079,10 @@ aaa
 aaa
 aaa
 aaa
-cwU
-cxF
-cwU
+aaa
+aaa
+cqq
+aaa
 aaa
 aaa
 aaa
@@ -64100,14 +63828,14 @@ aaa
 aaa
 apJ
 apN
-arC
-arC
-arC
-arC
-arC
-arC
-arC
-aEp
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 avP
 iEJ
@@ -64356,15 +64084,15 @@ aaa
 aaa
 aaf
 apJ
-aqI
-arD
-arD
-arD
-arD
-arD
-arD
-arD
-auN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 awY
 ayk
@@ -64613,15 +64341,15 @@ aaa
 aaa
 aaf
 apJ
-aqI
-arD
-arD
-arD
-arD
-arD
-arD
-arD
-auN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 awZ
 ayl
@@ -64870,15 +64598,15 @@ aaa
 aaa
 aaf
 apJ
-aqI
-arD
-arD
-arD
-atk
-arD
-arD
-arD
-auN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 awZ
 ayk
@@ -65127,15 +64855,15 @@ aaa
 aaa
 aaa
 apJ
-aqI
-arD
-arD
-asG
-atl
-awX
-arD
-arD
-auN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 awZ
 cqr
@@ -65384,15 +65112,15 @@ aaa
 aaa
 aaa
 apJ
-aqI
-arD
-arD
-arD
-cCs
-arD
-arD
-arD
-auN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 awZ
 aIK
@@ -65641,15 +65369,15 @@ aaa
 aaa
 aaa
 apJ
-aqI
-arD
-arD
-arD
-arD
-arD
-arD
-arD
-auN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 awZ
 aIK
@@ -65898,15 +65626,15 @@ aaa
 aaa
 aaf
 apJ
-aqI
-arD
-arD
-arD
-arD
-arD
-arD
-arD
-auN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 awZ
 cry
@@ -66155,15 +65883,15 @@ aaa
 aaa
 aaa
 apJ
-aqN
-asD
-asD
-asD
+apN
+apN
+apN
+apN
 cCt
-asD
-asD
-asD
-aFD
+apN
+apN
+apN
+apN
 apJ
 awZ
 crz
@@ -88604,9 +88332,9 @@ clV
 cmV
 bOh
 cig
-cpc
-cpJ
-cpc
+aaa
+afp
+aaa
 cDN
 cqY
 cqY
@@ -88861,9 +88589,9 @@ clW
 clW
 bOh
 cig
-cpd
-czM
-cpd
+aaa
+aaa
+aaa
 cDN
 aaa
 aaa
@@ -89118,9 +88846,9 @@ bOh
 bOh
 bOh
 ccw
-cpd
-czL
-cpd
+aaa
+aaa
+aaa
 cDL
 aaf
 aaa
@@ -89375,9 +89103,9 @@ clY
 clZ
 bOh
 aaa
-cpd
-cpM
-cpd
+aaa
+aaa
+aaa
 cCQ
 aaf
 aaa
@@ -90040,9 +89768,9 @@ aaf
 aaf
 aaf
 abp
-aeD
+aaa
 afp
-aeD
+aaa
 abp
 aaa
 aaa
@@ -90297,9 +90025,9 @@ aaf
 aaa
 aaa
 adR
-aeE
-afr
-aeE
+aaa
+aaa
+aaa
 adR
 aaa
 aaa
@@ -90554,9 +90282,9 @@ aaa
 aaa
 aaa
 aaa
-aeE
-afq
-aeE
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -90811,9 +90539,9 @@ aaa
 aaa
 aaa
 aaa
-aeE
-afs
-aeE
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa

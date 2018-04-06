@@ -293,7 +293,7 @@
 		if(JOB_UNAVAILABLE_SLOTFULL)
 			return "[jobtitle] is already filled to capacity."
 	return "Error: Unknown job availability."
-	
+
 /mob/dead/new_player/proc/IsJobUnavailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
@@ -343,18 +343,20 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
-	var/equip = SSjob.EquipRank(character, rank, 1)
+	var/equip = SSjob.EquipRank(character, rank, TRUE)
 	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
-	SSjob.SendToLateJoin(character)
+	var/datum/job/job = SSjob.GetJob(rank)
 
-	if(!arrivals_docked)
-		var/obj/screen/splash/Spl = new(character.client, TRUE)
-		Spl.Fade(TRUE)
-		character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
+	if(job && !job.override_latejoin_spawn(character))
+		SSjob.SendToLateJoin(character)
+		if(!arrivals_docked)
+			var/obj/screen/splash/Spl = new(character.client, TRUE)
+			Spl.Fade(TRUE)
+			character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
 
-	character.update_parallax_teleport()
+		character.update_parallax_teleport()
 
 	SSticker.minds += character.mind
 
@@ -389,7 +391,7 @@
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
 
-	if(CONFIG_GET(flag/roundstart_traits))
+	if(humanc && CONFIG_GET(flag/roundstart_traits))
 		SStraits.AssignTraits(humanc, humanc.client, TRUE)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
@@ -417,7 +419,6 @@
 	for(var/datum/job/job in SSjob.occupations)
 		if(job && IsJobUnavailable(job.title) == JOB_AVAILABLE)
 			available_job_count++;
-
 
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
 		if(prioritized_job.current_positions >= prioritized_job.total_positions)
