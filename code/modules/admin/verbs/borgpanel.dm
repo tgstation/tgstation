@@ -42,7 +42,8 @@
 		"emagged" = borg.emagged,
 		"active_module" = "[borg.module.type]",
 		"lawupdate" = borg.lawupdate,
-		"lockdown" = borg.lockcharge
+		"lockdown" = borg.lockcharge,
+		"scrambledcodes" = borg.scrambledcodes
 	)
 	.["upgrades"] = list()
 	for (var/upgradetype in subtypesof(/obj/item/borg/upgrade)-/obj/item/borg/upgrade/hypospray) //hypospray is a dummy parent for hypospray upgrades
@@ -86,6 +87,8 @@
 			borg.lawupdate = !borg.lawupdate
 		if ("toggle_lockdown")
 			borg.SetLockdown(!borg.lockcharge)
+		if ("toggle_scrambledcodes")
+			borg.scrambledcodes = !borg.scrambledcodes
 		if ("toggle_upgrade")
 			var/upgradepath = text2path(params["upgrade"])
 			var/obj/item/borg/upgrade/installedupgrade = locate(upgradepath) in borg
