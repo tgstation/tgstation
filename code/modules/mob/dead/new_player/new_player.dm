@@ -294,7 +294,7 @@
 			return "[jobtitle] is already filled to capacity."
 	return "Error: Unknown job availability."
 
-/mob/dead/new_player/proc/IsJobUnavailable(rank)
+/mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
 		return JOB_UNAVAILABLE_GENERIC
@@ -441,7 +441,7 @@
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobUnavailable(job.title) == JOB_AVAILABLE)
+		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
 			job_count++;
 			if (job_count > round(available_job_count / 2))
 				dat += "</div><div class='jobsColumn'>"
