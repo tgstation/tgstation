@@ -196,3 +196,9 @@
 	icon_keyboard = "mining_key"
 	network = list("mine")
 	circuit = /obj/item/circuitboard/computer/mining
+	
+/obj/machinery/computer/security/research
+	name = "research camera console"
+	desc = "Used to access the various cameras in science."
+	network = list("rd")
+	circuit = /obj/item/circuitboard/computer/research
