@@ -2,6 +2,7 @@
 	<ui-section label='Status'>
 			<ui-button icon='{{data.borg.emagged ? "check-square-o" : "square-o"}}' style='{{data.borg.emagged ? "selected" : null}}' action='toggle_emagged'>Emagged</ui-button>
 			<ui-button icon='{{data.borg.lockdown ? "check-square-o" : "square-o"}}' style='{{data.borg.lockdown ? "selected" : null}}' action='toggle_lockdown'>Locked down</ui-button>
+			<ui-button icon='{{data.borg.scrambledcodes ? "check-square-o" : "square-o"}}' style='{{data.borg.scrambledcodes ? "selected" : null}}' action='toggle_scrambledcodes'>Scrambled codes</ui-button>
 	</ui-section>
 	<ui-section label='Charge'>
 		{{#if !data.cell.missing}}
