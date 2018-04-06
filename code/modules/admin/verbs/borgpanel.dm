@@ -1,4 +1,4 @@
-/datum/admins/proc/open_borgopanel(mob/living/silicon/robot/borgo in GLOB.silicon_mobs)
+/datum/admins/proc/open_borgopanel(borgo in GLOB.silicon_mobs)
 	set category = "Admin"
 	set name = "Show Borg Panel"
 	set desc = "Show borg panel"
@@ -6,9 +6,9 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	if (!borgo)
+	if (!borgo || !istype(borgo, /mob/living/silicon/robot))
 		borgo = input("Select a borg", "Select a borg", null, null) as null|anything in GLOB.silicon_mobs
-	if (!borgo)
+	if (!borgo || !istype(borgo, /mob/living/silicon/robot))
 		to_chat(usr, "<span class='warning'>Borg is required for borgpanel</span>")
 
 	var/datum/borgpanel/borgpanel = new(usr, borgo)
@@ -81,6 +81,19 @@
 			var/newcharge = input("New charge (0-[borg.cell.maxcharge]):", borg.name, borg.cell.charge) as num|null
 			if (newcharge)
 				borg.cell.charge = CLAMP(newcharge, 0, borg.cell.maxcharge)
+		if ("remove_cell")
+			QDEL_NULL(borg.cell)
+		if ("change_cell")
+			var/chosen = pick_closest_path(null, make_types_fancy(typesof(/obj/item/stock_parts/cell)))
+			if (!ispath(chosen))
+				chosen = text2path(chosen)
+			if (chosen)
+				if (borg.cell)
+					QDEL_NULL(borg.cell)
+				var/new_cell = new chosen(borg)
+				borg.cell = new_cell
+				borg.cell.charge = borg.cell.maxcharge
+				borg.diag_hud_set_borgcell()
 		if ("toggle_emagged")
 			borg.SetEmagged(!borg.emagged)
 		if ("toggle_lawupdate")
@@ -89,6 +102,12 @@
 			borg.SetLockdown(!borg.lockcharge)
 		if ("toggle_scrambledcodes")
 			borg.scrambledcodes = !borg.scrambledcodes
+		if ("rename")
+			var/new_name = stripped_input(usr,"What would you like to name this cyborg?","Input a name",borg.real_name,MAX_NAME_LEN)
+			if(!new_name)
+				return
+			message_admins("Admin [key_name_admin(user)] renamed [key_name_admin(borg)] to [new_name].")
+			borg.fully_replace_character_name(borg.real_name,new_name)
 		if ("toggle_upgrade")
 			var/upgradepath = text2path(params["upgrade"])
 			var/obj/item/borg/upgrade/installedupgrade = locate(upgradepath) in borg
@@ -118,7 +137,7 @@
 			else	// We're adding a channel
 				if (!borg.radio.keyslot) // Assert that an encryption key exists
 					borg.radio.keyslot = new (borg.radio)
-				borg.radio.keyslot.channels += channel
+				borg.radio.keyslot.channels[channel] = 1
 				if (channel == "Syndicate")
 					borg.radio.keyslot.syndie = TRUE
 				else if (channel == "CentCom")
