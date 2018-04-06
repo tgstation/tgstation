@@ -1,0 +1,4 @@
+author: "robbym"
+delete-after: True
+changes: 
+  - bugfix: "Fixes examiner circuit failing to pulse 'not scanned' when reference is null  (#36881)"
