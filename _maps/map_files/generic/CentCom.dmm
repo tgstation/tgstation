@@ -2526,10 +2526,6 @@
 /obj/machinery/capture_the_flag/red,
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
-"hH" = (
-/obj/effect/landmark/shuttle_import,
-/turf/open/space,
-/area/space)
 "hI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -13506,6 +13502,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"VX" = (
+/obj/effect/landmark/shuttle_import,
+/turf/open/space/basic,
+/area/space)
 "Wc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -36021,7 +36021,7 @@ aa
 aa
 aa
 aa
-aa
+VX
 aa
 aa
 aa
@@ -44564,7 +44564,7 @@ aa
 aa
 aa
 aa
-hH
+ad
 aa
 aa
 aa
