@@ -1,0 +1,4 @@
+author: "PKPenguin321"
+delete-after: True
+changes: 
+  - bugfix: "Restored accidentally cut functionality to flashes. You can once again attach them to a signaller and signal them to trigger an AoE flash remotely."
