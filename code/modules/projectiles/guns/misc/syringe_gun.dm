@@ -113,7 +113,7 @@
 	var/time_per_syringe = 250
 	var/last_synth = 0
 
-/obj/item/gun/syringe/chem/attackby()
+/obj/item/gun/syringe/chem/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
 	return
 
 /obj/item/gun/syringe/chem/Initialize()
