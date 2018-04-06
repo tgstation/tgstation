@@ -174,18 +174,9 @@
 
 /obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/device/multitool))
-		if(!hacked)
-			hacked = TRUE
-			item_color = "rainbow"
-			to_chat(user, "<span class='warning'>RNBW_ENGAGE</span>")
-
-			if(active)
-				icon_state = "swordrainbow"
-				user.update_inv_hands()
-		else
-			to_chat(user, "<span class='warning'>It's already fabulous!</span>")
-	else
-		return ..()
+		var/color = input("Select a color!", "Esword color") in list("red", "green", "blue", "purple")
+		icon_state = "sword[color]"
+		item_color = "[color]"
 
 /obj/item/melee/transforming/energy/sword/pirate
 	name = "energy cutlass"
