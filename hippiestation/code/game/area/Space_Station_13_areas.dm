@@ -28,3 +28,7 @@
 /area/maintenance/forge
 	name = "Forge room"
 	icon_state = "red"
+
+/area/engine/port_engineering
+	name = "Port Engineering"
+	icon_state = "green"
