@@ -226,6 +226,7 @@
 		var/mob/living/carbon/itemUser = user
 		var/obj/item/bodypart/head/head = itemUser.get_bodypart(BODY_ZONE_HEAD)
 		head.drop_limb()
-		head.forceMove(locate(rand(0, 250), rand(0, 250), pick(2, 3, 4, 5, 7, 8, 9, 10, 11, 12)))
+		var/list/safeLevels = SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS & ZTRAITS_SPACE & ZTRAITS_STATION & ZTRAITS_LAVALAND)
+		head.forceMove(locate(rand(1, world.maxx), rand(1, world.maxy), pick(safeLevels)))
 		itemUser.visible_message("<span class='suicide'>The portal snaps closed taking [user]'s head with it!</span>")
 		return BRUTELOSS
