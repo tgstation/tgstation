@@ -6,18 +6,22 @@
 	var/has_overlay = FALSE
 	var/icon_selection
 	var/icon_overlay  //only need to use these two if the chair is movable AND has an overlay
+	var/buckledmob = FALSE //to stop the post_buckle glitching the icon
 
-/obj/structure/chair/post_buckle_mob(mob/living/M)
+/obj/structure/chair/movable/post_buckle_mob(mob/living/M)
 	. = ..()
-	handle_layer()
-	if(has_buckled_mob && is_movable)
+	if(!has_buckled_mobs())
+		handle_layer()
+	else
 		handle_rotation_overlayed()
+		buckledmob = TRUE
 
-/obj/structure/chair/post_unbuckle_mob()
+/obj/structure/chair/movable/post_unbuckle_mob()
 	. = ..()
 	handle_layer()
-	if(!has_buckled_mob && is_movable)
+	if(!has_buckled_mobs() && is_movable)
 		overlays = null
+		buckledmob = FALSE
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
 	if(is_movable) //first snowflake check? :) so it begins!
@@ -40,14 +44,14 @@
 		return ..()
 
 /obj/structure/chair/movable/proc/handle_rotation_overlayed()
-	if(has_buckled_mobs())
-		var/mob/living/buckled_mob
-		overlays = null
-		var/image/O = image(icon = icon_selection, icon_state = icon_overlay, layer = FLY_LAYER, dir = src.dir)
-		overlays += O
-		if(buckled_mob)
-			buckled_mob.dir = dir
-
+	has_buckled_mobs()
+	var/mob/living/buckled_mob
+	var/obj/structure/chair/movable
+	overlays = null
+	var/image/O = image(icon = icon_selection, icon_state = icon_overlay, layer = FLY_LAYER, dir = src.dir)
+	overlays += O
+	if(movable)
+		buckled_mob.dir = dir
 
 /obj/structure/chair/movable
 	var/delay = 10
@@ -63,7 +67,9 @@
 	if(!has_overlay)
 		handle_rotation()
 	else
-		handle_rotation_overlayed()
+		if(!buckledmob)
+			overlays = null
+			handle_rotation_overlayed()
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			if((!Process_Spacemove(direction)) || (!has_gravity(src.loc)) || user.stat != CONSCIOUS || user.IsStun() || user.IsKnockdown() || (user.restrained()))
@@ -85,6 +91,7 @@
 				sleep(3)
 				timing = FALSE
 				moving = FALSE
+				buckledmob = FALSE
 
 /obj/structure/chair/movable/Collide(atom/movable/M)
 	. = ..()
@@ -115,7 +122,7 @@
 		overlays = null
 	else
 		handle_rotation_overlayed()
-
+		buckledmob = FALSE
 
 /obj/structure/chair/movable/wheelchair/wrench_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='notice'>You begin to detach the wheels...</span>")
