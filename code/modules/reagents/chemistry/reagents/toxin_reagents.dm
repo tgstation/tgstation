@@ -50,7 +50,7 @@
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/M)
 	if(istype(M))
-		M.apply_effect(5,IRRADIATE,0)
+		M.apply_effect(5,EFFECT_IRRADIATE,0)
 	return ..()
 
 /datum/reagent/toxin/plasma
@@ -231,12 +231,10 @@
 	toxpwr = 1
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
-	if(method == VAPOR)
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			if(!C.wear_mask) // If not wearing a mask
-				var/damage = min(round(0.4*reac_volume, 0.1),10)
-				C.adjustToxLoss(damage)
+	..()
+	if(MOB_BUG in M.mob_biotypes)
+		var/damage = min(round(0.4*reac_volume, 0.1),10)
+		M.adjustToxLoss(damage)
 
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"

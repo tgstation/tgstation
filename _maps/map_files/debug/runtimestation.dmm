@@ -257,9 +257,8 @@
 	},
 /area/engine/atmos)
 "aO" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -374,9 +373,8 @@
 	},
 /area/engine/atmos)
 "bc" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)

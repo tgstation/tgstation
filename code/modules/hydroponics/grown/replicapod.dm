@@ -91,7 +91,7 @@
 		if(realName)
 			podman.real_name = realName
 		else
-			podman.real_name = "Pod Person [rand(0,999)]"
+			podman.real_name = "Pod Person ([rand(1,999)])"
 		mind.transfer_to(podman)
 		if(ckey)
 			podman.ckey = ckey

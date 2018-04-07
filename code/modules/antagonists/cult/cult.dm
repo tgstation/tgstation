@@ -241,7 +241,7 @@
 
 		var/datum/job/sacjob = SSjob.GetJob(sac_objective.target.assigned_role)
 		var/datum/preferences/sacface = sac_objective.target.current.client.prefs
-		var/icon/reshape = get_flat_human_icon(null, sacjob, sacface)
+		var/icon/reshape = get_flat_human_icon(null, sacjob, sacface, list(SOUTH))
 		reshape.Shift(SOUTH, 4)
 		reshape.Shift(EAST, 1)
 		reshape.Crop(7,4,26,31)

@@ -6,6 +6,7 @@
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
+	mob_biotypes = list(MOB_ORGANIC, MOB_EPIC)
 	obj_damage = 400
 	light_range = 3
 	faction = list("mining", "boss")

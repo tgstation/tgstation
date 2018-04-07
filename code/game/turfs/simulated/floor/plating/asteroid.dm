@@ -1,6 +1,4 @@
 
-
-
 /**********************Asteroid**************************/
 
 /turf/open/floor/plating/asteroid //floor piece
@@ -14,7 +12,7 @@
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/floor_variance = 20 //probability floor has a different icon state
-	archdrops = list(/obj/item/stack/ore/glass = 5)
+	archdrops = list(/obj/item/stack/ore/glass = list(ARCH_PROB = 100,ARCH_MAXDROP = 5))
 	attachment_holes = FALSE
 
 /turf/open/floor/plating/asteroid/Initialize()
@@ -25,7 +23,7 @@
 		icon_state = "[environment_type][rand(0,12)]"
 
 	if(LAZYLEN(archdrops))
-		AddComponent(/datum/component/archaeology, 100, archdrops)
+		AddComponent(/datum/component/archaeology, archdrops)
 
 
 /turf/open/floor/plating/asteroid/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
@@ -54,7 +52,7 @@
 		var/obj/item/stack/tile/Z = W
 		if(!Z.use(1))
 			return
-		var/turf/open/floor/T = ChangeTurf(Z.turf_type)
+		var/turf/open/floor/T = PlaceOnTop(Z.turf_type)
 		if(istype(Z, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 			var/obj/item/stack/tile/light/L = Z
 			var/turf/open/floor/light/F = T
@@ -82,7 +80,7 @@
 	icon_state = "basalt"
 	icon_plating = "basalt"
 	environment_type = "basalt"
-	archdrops = list(/obj/item/stack/ore/glass/basalt = 5)
+	archdrops = list(/obj/item/stack/ore/glass/basalt = list(ARCH_PROB = 100,ARCH_MAXDROP = 5))
 	floor_variance = 15
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
@@ -212,6 +210,9 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
+				if(istype(tunnel.loc, /area/mine/explored) || (istype(tunnel.loc, /area/lavaland/surface/outdoors) && !istype(tunnel.loc, /area/lavaland/surface/outdoors/unexplored)))
+					sanity = 0
+					break
 				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type, null, CHANGETURF_IGNORE_AIR)
 				C.going_backwards = FALSE
 				C.produce_tunnel_from_data(rand(10, 15), dir)
@@ -230,7 +231,7 @@
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
 	for(var/S in RANGE_TURFS(1, src))
 		var/turf/NT = S
-		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || istype(NT.loc, /area/lavaland/surface/outdoors/explored))
+		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || (istype(NT.loc, /area/lavaland/surface/outdoors) && !istype(NT.loc, /area/lavaland/surface/outdoors/unexplored)))
 			sanity = 0
 			break
 	if(!sanity)
@@ -294,7 +295,7 @@
 	environment_type = "snow"
 	flags_1 = NONE
 	planetary_atmos = TRUE
-	archdrops = list(/obj/item/stack/sheet/mineral/snow = 5)
+	archdrops = list(/obj/item/stack/sheet/mineral/snow = list(ARCH_PROB = 100, ARCH_MAXDROP = 5))
 	burnt_states = list("snow_dug")
 
 /turf/open/floor/plating/asteroid/snow/burn_tile()

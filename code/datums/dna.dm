@@ -5,17 +5,29 @@
 	var/struc_enzymes
 	var/uni_identity
 	var/blood_type
-	var/datum/species/species = new /datum/species/human() //The type of mutant race the player is if applicable (i.e. potato-man)
+	var/datum/species/species = new /datum/species/human //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/list/features = list("FFF") //first value is mutant color
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/list/mutations = list()   //All mutations are from now on here
 	var/list/temporary_mutations = list() //Timers for temporary mutations
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
-	var/mob/living/holder
+	var/mob/living/carbon/holder
 
-/datum/dna/New(mob/living/new_holder)
-	if(new_holder)
+/datum/dna/New(mob/living/carbon/new_holder)
+	if(istype(new_holder))
 		holder = new_holder
+
+/datum/dna/Destroy()
+	if(holder.dna == src)
+		holder.dna = null
+	holder = null
+	QDEL_NULL(species)
+
+	mutations.Cut()					//This only references mutations, just dereference.
+	temporary_mutations.Cut()		//^
+	previous.Cut()					//^
+
+	return ..()
 
 /datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
 	if(!istype(destination))

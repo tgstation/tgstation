@@ -1055,22 +1055,15 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "cv" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
 	name = "N2 Out";
-	on = 1;
 	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
 "cw" = (
-/obj/machinery/atmospherics/components/trinary/mixer/flipped{
-	name = "Air Mixer";
-	node1_concentration = 0.8;
-	node2_concentration = 0.2;
-	on = 1;
-	target_pressure = 4500
-	},
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
 "cx" = (
@@ -1221,10 +1214,9 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "cK" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
 	name = "O2 Out";
-	on = 1;
 	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1596,9 +1588,8 @@
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 2;
-	on = 1;
 	target_pressure = 4500
 	},
 /obj/machinery/button/door{
@@ -1720,10 +1711,7 @@
 /area/shuttle/pirate)
 "dN" = (
 /obj/machinery/igniter{
-	icon_state = "igniter0";
-	id = "pirateincinerator";
-	luminosity = 2;
-	on = 0
+	id = "pirateincinerator"
 	},
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
