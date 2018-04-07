@@ -348,7 +348,20 @@
 	return result.Join()
 
 /datum/team/revolution/antag_listing_entry()
-	var/common_part = ..()
+	var/common_part = ""
+	var/list/parts = list()
+	parts += "<b>[antag_listing_name()]</b><br>"
+	parts += "<table cellspacing=5>"
+
+	var/list/heads = get_team_antags(/datum/antagonist/rev/head,TRUE)
+
+	for(var/datum/antagonist/A in heads | get_team_antags())
+		parts += A.antag_listing_entry()
+	
+	parts += "</table>"
+	parts += antag_listing_footer()
+	common_part = parts.Join()
+
 	var/heads_report = "<b>Heads of Staff</b><br>"
 	heads_report += "<table cellspacing=5>"
 	for(var/datum/mind/N in SSjob.get_living_heads())
