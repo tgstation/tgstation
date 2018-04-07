@@ -31,8 +31,13 @@
 	icon_state = "stickyweb1"
 
 /obj/structure/spider/stickyweb/Initialize()
-	if(prob(50))
-		icon_state = "stickyweb2"
+	switch(rand(1,3))
+		if(1)
+			icon_state = "stickyweb1"
+		if(2)
+			icon_state = "stickyweb2"
+		if(3)
+			icon_state = "stickyweb3"
 	. = ..()
 
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
