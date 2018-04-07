@@ -145,8 +145,6 @@
 /mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	if(amount < 0 && has_status_effect(STATUS_EFFECT_NOHEAL))
-		return FALSE
 	bruteloss = CLAMP((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
