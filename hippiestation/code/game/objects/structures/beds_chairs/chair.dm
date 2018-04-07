@@ -113,7 +113,7 @@
 	icon_selection = 'hippiestation/icons/obj/chairs.dmi'
 	icon_overlay = "wheelchair_overlay"
 
-/obj/structure/chair/movable/wheelchair/Moved()
+/obj/structure/chair/movable/wheelchair/Moved(direction)
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, 1)
