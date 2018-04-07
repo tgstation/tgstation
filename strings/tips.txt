@@ -64,7 +64,7 @@ As an Engineering Cyborg, you can attach air alarm/fire alarm/APC frames to wall
 As a Medical Cyborg, you can fully perform surgery and even augment people.
 As a Janitor Cyborg, you are the bane of all slaughter demons and even Bubblegum himself. Cleaning up blood stains will severely gimp them.
 As the Chief Engineer, you can rename areas or create entirely new ones using your station blueprints.
-As the Chief Engineer, your hardsuit is significantly better than everybody else's. It's the best of both worlds from engineering and atmospherics hardsuits - boasting nigh-invulnerability to radiation and all atmospheric conditions.
+As the Chief Engineer, your hardsuit is significantly better than everybody else's. It has the best features of both engineering and atmospherics hardsuits - boasting nigh-invulnerability to radiation and all atmospheric conditions.
 As the Chief Engineer, you can spy on and even forge PDA communications with the message monitor console! The key is in your office.
 As the Chief Engineer, your locker contains a jetpack upgrade that can be attached to hardsuits.
 As an Engineer, the supermatter shard is an extremely dangerous piece of equipment: touching it will disintegrate you.
