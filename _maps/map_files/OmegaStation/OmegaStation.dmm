@@ -18988,7 +18988,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aOa" = (
-/obj/machinery/power/supermatter_shard/crystal/engine{
+/obj/machinery/power/supermatter_crystal/engine{
 	anchored = 1
 	},
 /turf/open/floor/engine,
