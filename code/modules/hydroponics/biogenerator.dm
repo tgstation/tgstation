@@ -18,6 +18,7 @@
 	var/datum/techweb/stored_research
 	var/list/show_categories = list("Food", "Botany Chemicals", "Leather and Cloth")
 	var/list/timesFiveCategories = list("Food", "Botany Chemicals")
+
 /obj/machinery/biogenerator/Initialize()
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/biogenerator
