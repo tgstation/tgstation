@@ -25274,8 +25274,10 @@
 /area/bridge)
 "hIF" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 1;
 	req_access_txt = "13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable{
@@ -26022,9 +26024,9 @@
 /area/maintenance/port/fore)
 "nyo" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 2;
 	req_access_txt = "13"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -26131,9 +26133,9 @@
 /area/crew_quarters/dorms)
 "oiq" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 2;
 	req_access_txt = "13"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/turf_decal/stripes/line{
 	icon_state = "warningline";
 	dir = 1
@@ -26877,8 +26879,10 @@
 /area/quartermaster/storage)
 "sRW" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 1;
 	req_access_txt = "13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	icon_state = "warningline";
@@ -64214,7 +64218,7 @@ uDh
 agu
 agN
 ghd
-mgd
+agJ
 aga
 aga
 aga
