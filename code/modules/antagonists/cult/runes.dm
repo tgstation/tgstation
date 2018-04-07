@@ -231,15 +231,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
 	if(!Cult_team.risen && !Cult_team.ascendent)
 		var/alive = 0
-		var/cult = 0
+		var/cultplayers = 0
 		for(var/I in GLOB.player_list)
 			var/mob/M = I
 			if(M.stat != DEAD)
-				if(iscultist(M)
-					++cult
+				if(iscultist(M))
+					++cultplayers
 				else
 					++alive
-		var/ratio = cult/alive
+		var/ratio = cultplayers/alive
 		if(ratio > CULT_RISEN && !Cult_team.risen)
 			for(var/datum/mind/B in Cult_team.members)
 				if(B.current)
