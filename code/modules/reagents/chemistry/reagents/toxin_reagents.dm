@@ -19,7 +19,7 @@
 /datum/reagent/toxin/antiheal
 	name = "Venomous Blight"
 	id = "spiderblight"
-	description = "A toxic venom that does not allow the user to be healed by normal means while in the system. Can still be removed by charcoal and other chems that remove other reagents."
+	description = "A toxic venom that disrupts the body's ability to heal brute and burn injuries."
 	color = "#94ba57" // rgb: 148, 186, 87
 	taste_description = "bitterness"
 	taste_mult = 1.0

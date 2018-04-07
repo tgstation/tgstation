@@ -81,10 +81,25 @@
 	icon_state = "asleep"
 
 //OTHER DEBUFFS
-/datum/status_effect/noheal //you can't heal
+/datum/status_effect/noheal //you can't heal brute or burn.
 	id = "noheal"
 	duration = -1
+	tick_interval = 0
 	alert_type = null
+	var/lastbrute
+	var/lastfire
+
+/datum/status_effect/noheal/tick()
+	var/newbrute = owner.getBruteLoss()
+	if(newbrute <= lastbrute)
+		var/brutediff = newbrute - lastbrute
+		owner.adjustBruteLoss(brutediff)
+	lastbrute = newbrute
+	var/newfire = owner.getFireLoss()
+	if(newfire <= lastfire)
+		var/firediff = newfire - lastfire
+		owner.adjustFireLoss(firediff)
+	lastfire = newfire
 
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"

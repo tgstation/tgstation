@@ -203,14 +203,20 @@
 	var/mob/living/jaunter
 	var/warned = FALSE //warning for reinforced tiles
 	var/turf/alerttile
+	var/movedelay = 0
+	var/movespeed = 2
 	density = FALSE
 	anchored = TRUE
 	invisibility = 60
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/dummy/burrow/relaymove(mob/user, direction)
+	if(movedelay > world.time)
+		return
+	movedelay = world.time + movespeed
 	var/turf/newLoc = get_step(src,direction)
 	if(validtunnel(newLoc))
+		return
 		forceMove(newLoc)
 	else
 		to_chat(user, "<span class='warning'>We cannot move here, as it is either impossible or would reveal us.</span>")
