@@ -56,7 +56,7 @@
 
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
-/obj/machinery/power/supermatter_crystal //"We really need to reverse the type between daddy crystal and baby shard, which is going to be a pain." FUCK YOU COBBY I DID IT IN 20 MINUTES
+/obj/machinery/power/supermatter_crystal
 	name = "supermatter crystal"
 	desc = "A strangely translucent and iridescent crystal."
 	icon = 'icons/obj/supermatter.dmi'
