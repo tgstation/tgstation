@@ -12,3 +12,5 @@
 //blood magic
 #define MAX_BLOODCHARGE 4
 #define RUNELESS_MAX_BLOODCHARGE 1
+#define CULT_RISEN 0.2
+#define CULT_ASCENDENT 0.4
