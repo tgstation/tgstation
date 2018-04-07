@@ -170,12 +170,6 @@
 	results = list("flymutationtoxin" = 1)
 	required_reagents = list("unstablemutationtoxin" = 1, "mutagen" = 1)
 
-/datum/chemical_reaction/lizardmutationtoxin
-	name = "Lizard Mutation Toxin"
-	id = "lizardmutationtoxin"
-	results = list("lizardmutationtoxin" = 1)
-	required_reagents = list("unstablemutationtoxin" = 1, "radium" = 1)
-
 /datum/chemical_reaction/jellymutationtoxin
 	name = "Imperfect Mutation Toxin"
 	id = "jellymutationtoxin"
