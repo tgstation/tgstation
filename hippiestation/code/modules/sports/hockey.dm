@@ -57,11 +57,6 @@
 /obj/item/hockeypack/proc/make_stick()
 	return new /obj/item/twohanded/hockeystick(src)
 
-/obj/item/hockeypack/equipped(mob/user, slot)
-	..()
-	if (slot != slot_back) //The Pack is cursed so this should not happen, but i'm going to play it safe.
-		remove_stick()
-
 /obj/item/hockeypack/proc/remove_stick()
 	if(ismob(packstick.loc))
 		var/mob/M = packstick.loc
@@ -98,7 +93,7 @@
 
 /obj/item/hockeypack/item_action_slot_check(slot, mob/user)
 	if(slot == user.getBackSlot())
-		return 1
+		return TRUE
 
 /mob/proc/getHockeypackSlot()
 	return slot_back
@@ -205,7 +200,7 @@
 
 /obj/item/storage/belt/hippie/hockey/item_action_slot_check(slot, mob/user)
 	if(slot == user.getBeltSlot())
-		return 1
+		return TRUE
 
 /obj/item/storage/belt/hippie/hockey/ui_action_click()
 	make_puck()
