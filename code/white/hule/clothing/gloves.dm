@@ -6,15 +6,8 @@
 	var/active = 0
 	var/list/stored_items = list()
 	actions_types = list(/datum/action/item_action/toggle)
-	var/item_overlay
 
-/obj/item/clothing/gloves/combat/maggloves/New()
-	if(item_overlay)
-		var/mutable_appearance/overlay = mutable_appearance(icon, item_overlay)
-		overlay.color = "#DE7E00"
-		add_overlay(overlay)
-
-/obj/item/clothing/gloves/combat/maggloves/ui_action_click()
+/obj/item/clothing/gloves/combat/maggloves/ui_action_click(mob/usr, action)
 	active = !active
 	if(active)
 		for(var/obj/item/I in usr.held_items)

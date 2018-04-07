@@ -27,7 +27,7 @@
 /obj/item/projectile/bullet/a15mm
 	name = "15mm bullet"
 	damage = 99
-	speed = 0.1
+	speed = 0.5
 	pass_flags = PASSTABLE | PASSGRILLE
 
 /obj/item/projectile/bullet/a15mm/on_hit(atom/target)
@@ -39,8 +39,7 @@
 		if(def_zone == BODY_ZONE_HEAD)
 			var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 			head.drop_limb()
-			playsound(src,'code/white/hule/weapons/headshot.ogg',40,1)
-
+			playsound(src,'code/white/hule/weapons/headshot.ogg', 100, 5, pressure_affected = FALSE)
 
 /obj/item/ammo_box/a15mm
 	name = "ammo box (15mm)"
