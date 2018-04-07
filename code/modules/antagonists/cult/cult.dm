@@ -217,6 +217,8 @@
 	var/cult_vote_called = FALSE
 	var/mob/living/cult_master
 	var/reckoning_complete = FALSE
+	var/cult_risen = FALSE
+	var/cult_ascendent = FALSE
 
 
 /datum/team/cult/proc/setup_objectives()
