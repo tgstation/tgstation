@@ -64,8 +64,6 @@
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	if(amount < 0 && has_status_effect(STATUS_EFFECT_NOHEAL))
-		return FALSE
 	if(amount > 0)
 		take_overall_damage(amount, 0, 0, updating_health)
 	else
@@ -74,8 +72,6 @@
 
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
-		return FALSE
-	if(amount < 0 && has_status_effect(STATUS_EFFECT_NOHEAL))
 		return FALSE
 	if(amount > 0)
 		take_overall_damage(0, amount, 0, updating_health)
@@ -100,8 +96,6 @@
 
 /mob/living/carbon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
-		return FALSE
-	if(amount < 0 && has_status_effect(STATUS_EFFECT_NOHEAL))
 		return FALSE
 	if(amount > 0)
 		take_overall_damage(0, 0, amount, updating_health)
