@@ -1,2 +1,2 @@
 /obj/machinery/biogenerator
-	icon_hippie = 'hippiestation/icons/obj/biogenerator.dmi'
+	icon_hippie = 'hippiestation/icons/obj/biogenerator.dmi'f
