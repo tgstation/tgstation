@@ -229,7 +229,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		do_sacrifice(L, invokers)
 	animate(src, color = oldcolor, time = 5)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
-	if(!Cult_team.ascendent)
+	if(!Cult_team.cult_ascendent)
 		var/alive = 0
 		var/cultplayers = 0
 		for(var/I in GLOB.player_list)
