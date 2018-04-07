@@ -18,7 +18,7 @@
 
 /datum/trait/greyscale_vision
 	name = "Old School Vision"
-	desc = "Did you get stuck in an old video recorder? You can only see in black and white!</span>"
+	desc = "Did you get stuck in an old video recorder? You can only see in black and white!"
 	value = 0
 	gain_text = "<span class='notice'>...Huh? You can't see colour anymore!</span>"
 	lose_text = "<span class='notice'>You can see colour again!</span>"
