@@ -55,6 +55,39 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">07 April 2018</h2>
+			<h3 class="author">Davidj361 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Stacked sheets now have a cancel button when taking an amount from them.</li>
+			</ul>
+			<h3 class="author">Dax Dupont updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes dead chat announcements not using real name.</li>
+			</ul>
+			<h3 class="author">Naksu updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Trash bin anchoring/unanchoring now gives you a small text blip about what happened.</li>
+			</ul>
+			<h3 class="author">PKPenguin321 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Restored accidentally cut functionality to flashes. You can once again attach them to a signaller and signal them to trigger an AoE flash remotely.</li>
+			</ul>
+			<h3 class="author">SailorDave updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Mixed blood samples preserve their cloneability for podpeople if the samples are the same.</li>
+			</ul>
+			<h3 class="author">kevinz000 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">AIs can now latejoin!</li>
+				<li class="rscadd">Latejoining AIs will be sent to a special deactivated AI core. This AI core will spawn in the AI satellite chamber in place of an active AI if none is there at roundstart. These cores can be deactivated with a multitool, and moved around per usual, but not deconstructed. They can, however, be destroyed per usual.</li>
+				<li class="rscadd">AIs can only latejoin if atleast one of these cores exists and is in a valid area (Powered, on station, etc etc), and if the AI job slot isn't filled already by a roundstart or latejoin AI.</li>
+				<li class="code_imp">A few code internal debugging features have been added to help debug GC errors. QDEL_HINT_IFFAIL_FINDREFERENCE hint will make the garbage subsystem find references if the build is in TESTING mode, and qdel_and_then_find_ref_if_fail(datum) or calling qdel_then_if_fail_find_references will do the same.</li>
+			</ul>
+			<h3 class="author">robbym updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes examiner circuit failing to pulse 'not scanned' when reference is null  (#36881)</li>
+			</ul>
+
 			<h2 class="date">04 April 2018</h2>
 			<h3 class="author">Fludd12 updated:</h3>
 			<ul class="changes bgimages16">
@@ -1821,93 +1854,6 @@
 			<h3 class="author">nicbn updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="rscadd">Destroying windows will now spawn tiny shards</li>
-			</ul>
-
-			<h2 class="date">03 February 2018</h2>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Moved the lathe from box's cargo room to box's cargo office which miners now can access.</li>
-				<li class="tweak">Harmonized medbay storage access requirements so all maps allow all medbay personnel into medbay storage like on Meta and Delta.</li>
-				<li class="tweak">Moved service lathes into a dedicated service hall/storage area if they weren't accessible by janitor or bartender.</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">Removed the now-unused revenant spawn landmark.</li>
-			</ul>
-			<h3 class="author">Xhuis updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Servant cyborgs with the Standard module now correctly have Abscond.</li>
-				<li class="bugfix">Securing pipe fittings now transfers fingerprints to the new pipe.</li>
-				<li class="bugfix">The firelock below the Circuitry Lab airlock on Boxstation will no longer cover it up when the airlock is open.</li>
-			</ul>
-			<h3 class="author">uraniummeltdown updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Some airlock animations should no longer be glitchy and restart in the middle</li>
-			</ul>
-
-			<h2 class="date">02 February 2018</h2>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Hijack objectives will only be given out if there are 30 or more players.</li>
-			</ul>
-			<h3 class="author">DeityLink updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">You can now see the rays from a holopad displaying a hologram!</li>
-			</ul>
-			<h3 class="author">Epoc updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Soap now has inhand sprites</li>
-			</ul>
-			<h3 class="author">Xhuis updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Brass skewers now must be at least one tile apart.</li>
-				<li class="balance">Steam vents can no longer be placed within cardinal directions of other steam vents, and will not hide objects they're placed on top of.</li>
-				<li class="bugfix">Races that have eyes that look different from regular humans' no longer have white eyespots where human eyes appear.</li>
-			</ul>
-			<h3 class="author">Xhuis, Cosmic, Fwoosh, and epochayur updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added pineapples to botany, and a recipe for Hawaiian pizza.</li>
-			</ul>
-			<h3 class="author">improvedname updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">adds yeehaw to the dj's disco soundboard</li>
-			</ul>
-			<h3 class="author">oranges updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">removes ketrazine</li>
-			</ul>
-
-			<h2 class="date">01 February 2018</h2>
-			<h3 class="author">CosmicScientist updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">tomatoes and similar ovary laden edibles are fruit, not veg, beware plasmamen and mothmen</li>
-			</ul>
-			<h3 class="author">Denton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Added a missing distress signal to the space ambush ruin.</li>
-			</ul>
-			<h3 class="author">Jalleo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">Space ghost syndicate comms guy removed.</li>
-			</ul>
-			<h3 class="author">Jittai updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Cloning doesn't runtime (and indefinitely get stuck) on cloning non-humans.</li>
-				<li class="tweak">Some of the Morgue Trays and Crematoriums on Box, Delta, and Meta have been re-positioned to make use of their new directional states.</li>
-				<li class="imageadd">New Horizontal Coffin Sprites</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">The Whiteship spawn point is now a space ruin rather than being fixed every round.</li>
-			</ul>
-			<h3 class="author">Xhuis updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Servant golems no longer appear in the magic mirror race list.</li>
-				<li class="bugfix">Cogs now fucking work</li>
-			</ul>
-			<h3 class="author">cebutris updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="spellcheck">The text you get when you examine a stunbaton to see the battery level now uses the item's name instead of "baton"</li>
 			</ul>
 		</div>
 

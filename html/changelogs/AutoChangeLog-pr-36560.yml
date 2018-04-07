@@ -1,6 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "AIs can now latejoin!"
-  - rscadd: "Latejoining AIs will be sent to a special deactivated AI core. This AI core will spawn in the AI satellite chamber in place of an active AI if none is there at roundstart. These cores can be deactivated with a multitool, and moved around per usual, but not deconstructed. They can, however, be destroyed per usual."
-  - rscadd: "AIs can only latejoin if atleast one of these cores exists and is in a valid area (Powered, on station, etc etc), and if the AI job slot isn't filled already by a roundstart or latejoin AI."
