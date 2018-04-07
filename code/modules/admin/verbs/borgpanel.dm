@@ -87,8 +87,12 @@
 			var/newcharge = input("New charge (0-[borg.cell.maxcharge]):", borg.name, borg.cell.charge) as num|null
 			if (newcharge)
 				borg.cell.charge = CLAMP(newcharge, 0, borg.cell.maxcharge)
+				message_admins("[key_name_admin(user)] set the charge of [key_name_admin(borg)][ADMIN_FLW(borg)] to [borg.cell.charge].")
+				log_admin("[key_name_admin(user)] set the charge of [key_name_admin(borg)] to [borg.cell.charge].")
 		if ("remove_cell")
 			QDEL_NULL(borg.cell)
+			message_admins("[key_name_admin(user)] deleted the cell of [key_name_admin(borg)][ADMIN_FLW(borg)].")
+			log_admin("[key_name_admin(user)] deleted the cell of [key_name_admin(borg)].")
 		if ("change_cell")
 			var/chosen = pick_closest_path(null, make_types_fancy(typesof(/obj/item/stock_parts/cell)))
 			if (!ispath(chosen))
@@ -100,19 +104,46 @@
 				borg.cell = new_cell
 				borg.cell.charge = borg.cell.maxcharge
 				borg.diag_hud_set_borgcell()
+				message_admins("[key_name_admin(user)] changed the cell of [key_name_admin(borg)][ADMIN_FLW(borg)] to [new_cell].")
+				log_admin("[key_name_admin(user)] changed the cell of [key_name_admin(borg)] to [new_cell].")
 		if ("toggle_emagged")
 			borg.SetEmagged(!borg.emagged)
+			if (borg.emagged)
+				message_admins("[key_name_admin(user)] emagged [key_name_admin(borg)][ADMIN_FLW(borg)].")
+				log_admin("[key_name_admin(user)] emagged [key_name_admin(borg)].")
+			else
+				message_admins("[key_name_admin(user)] un-emagged [key_name_admin(borg)][ADMIN_FLW(borg)].")
+				log_admin("[key_name_admin(user)] un-emagged [key_name_admin(borg)].")
 		if ("toggle_lawupdate")
 			borg.lawupdate = !borg.lawupdate
+			if (borg.lawupdate)
+				message_admins("[key_name_admin(user)] enabled lawsync on [key_name_admin(borg)][ADMIN_FLW(borg)].")
+				log_admin("[key_name_admin(user)] enabled lawsync on [key_name_admin(borg)].")
+			else
+				message_admins("[key_name_admin(user)] disabled lawsync on [key_name_admin(borg)][ADMIN_FLW(borg)].")
+				log_admin("[key_name_admin(user)] disabled lawsync on [key_name_admin(borg)].")
 		if ("toggle_lockdown")
 			borg.SetLockdown(!borg.lockcharge)
+			if (borg.lockcharge)
+				message_admins("[key_name_admin(user)] locked down [key_name_admin(borg)][ADMIN_FLW(borg)].")
+				log_admin("[key_name_admin(user)] locked down [key_name_admin(borg)].")
+			else
+				message_admins("[key_name_admin(user)] released [key_name_admin(borg)][ADMIN_FLW(borg)] from lockdown.")
+				log_admin("[key_name_admin(user)] released [key_name_admin(borg)] from lockdown.")
 		if ("toggle_scrambledcodes")
 			borg.scrambledcodes = !borg.scrambledcodes
+			if (borg.scrambledcodes)
+				message_admins("[key_name_admin(user)] enabled scrambled codes on [key_name_admin(borg)][ADMIN_FLW(borg)].")
+				log_admin("[key_name_admin(user)] enabled scrambled codes on [key_name_admin(borg)].")
+			else
+				message_admins("[key_name_admin(user)] disabled scrambled codes on [key_name_admin(borg)][ADMIN_FLW(borg)].")
+				log_admin("[key_name_admin(user)] disabled scrambled codes on [key_name_admin(borg)].")
 		if ("rename")
 			var/new_name = stripped_input(user,"What would you like to name this cyborg?","Input a name",borg.real_name,MAX_NAME_LEN)
 			if(!new_name)
 				return
-			message_admins("Admin [key_name_admin(user)] renamed [key_name_admin(borg)] to [new_name].")
+			message_admins("[key_name_admin(user)] renamed [key_name_admin(borg)][ADMIN_FLW(borg)] to [new_name].")
+			log_admin("[key_name_admin(user)] renamed [key_name_admin(borg)] to [new_name].")
 			borg.fully_replace_character_name(borg.real_name,new_name)
 		if ("toggle_upgrade")
 			var/upgradepath = text2path(params["upgrade"])
@@ -120,11 +151,15 @@
 			if (installedupgrade)
 				installedupgrade.deactivate(borg, user)
 				borg.upgrades -= installedupgrade
+				message_admins("[key_name_admin(user)] removed the [installedupgrade] upgrade from [key_name_admin(borg)][ADMIN_FLW(borg)].")
+				log_admin("[key_name_admin(user)] removed the [installedupgrade] upgrade from [key_name_admin(borg)].")
 				qdel(installedupgrade)
 			else
 				var/obj/item/borg/upgrade/upgrade = new upgradepath(borg)
 				upgrade.action(borg, user)
 				borg.upgrades += upgrade
+				message_admins("[key_name_admin(user)] added the [upgrade] borg upgrade to [key_name_admin(borg)][ADMIN_FLW(borg)].")
+				log_admin("[key_name_admin(user)] added the [upgrade] borg upgrade to [key_name_admin(borg)].")
 		if ("toggle_radio")
 			var/channel = params["channel"]
 			if (channel in borg.radio.channels) // We're removing a channel
@@ -140,6 +175,8 @@
 						borg.radio.keyslot.syndie = FALSE
 					else if (channel == "CentCom")
 						borg.radio.keyslot.independent = FALSE
+				message_admins("[key_name_admin(user)] removed the [channel] radio channel from [key_name_admin(borg)][ADMIN_FLW(borg)].")
+				log_admin("[key_name_admin(user)] removed the [channel] radio channel from [key_name_admin(borg)].")
 			else	// We're adding a channel
 				if (!borg.radio.keyslot) // Assert that an encryption key exists
 					borg.radio.keyslot = new (borg.radio)
@@ -148,11 +185,15 @@
 					borg.radio.keyslot.syndie = TRUE
 				else if (channel == "CentCom")
 					borg.radio.keyslot.independent = TRUE
+				message_admins("[key_name_admin(user)] added the [channel] radio channel to [key_name_admin(borg)][ADMIN_FLW(borg)].")
+				log_admin("[key_name_admin(user)] added the [channel] radio channel to [key_name_admin(borg)].")
 			borg.radio.recalculateChannels()
 		if ("setmodule")
 			var/newmodulepath = text2path(params["module"])
 			if (ispath(newmodulepath))
 				borg.module.transform_to(newmodulepath)
+				message_admins("[key_name_admin(user)] changed the module of [key_name_admin(borg)][ADMIN_FLW(borg)] to [newmodulepath].")
+				log_admin("[key_name_admin(user)] changed the module of [key_name_admin(borg)] to [newmodulepath].")
 		if ("slavetoai")
 			var/mob/living/silicon/ai/newai = locate(params["slavetoai"]) in GLOB.ai_list
 			if (newai && newai != borg.connected_ai)
@@ -161,11 +202,15 @@
 					borg.undeploy()
 				borg.connected_ai = newai
 				borg.notify_ai(TRUE)
+				message_admins("[key_name_admin(user)] slaved [key_name_admin(borg)][ADMIN_FLW(borg)] to the AI [key_name_admin(newai)][ADMIN_FLW(newai)].")
+				log_admin("[key_name_admin(user)] slaved [key_name_admin(borg)] to the AI [key_name_admin(newai)].")
 			else if (params["slavetoai"] == "null")
 				borg.notify_ai(DISCONNECT)
 				if(borg.shell)
 					borg.undeploy()
 				borg.connected_ai = null
+				message_admins("[key_name_admin(user)] freed [key_name_admin(borg)][ADMIN_FLW(borg)] from being slaved to an AI.")
+				log_admin("[key_name_admin(user)] freed [key_name_admin(borg)] from being slaved to an AI.")
 			if (borg.lawupdate)
 				borg.lawsync()
 
