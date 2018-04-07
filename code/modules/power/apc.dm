@@ -450,12 +450,12 @@
 		else
 			switch (has_electronics)
 				if (APC_ELECTRONICS_INSTALLED)
-					has_electronics = 2
+					has_electronics = APC_ELECTRONICS_SECURED
 					stat &= ~MAINT
 					W.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You screw the circuit electronics into place.</span>")
 				if (APC_ELECTRONICS_SECURED)
-					has_electronics = 1
+					has_electronics = APC_ELECTRONICS_INSTALLED
 					stat |= MAINT
 					W.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You unfasten the electronics.</span>")
