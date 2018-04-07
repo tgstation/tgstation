@@ -125,8 +125,7 @@
 	QDEL_NULL(set_directive)
 	return ..()
 
-//hunters have the most poison and move the fastest, so they can find prey
-/mob/living/simple_animal/hostile/poison/giant_spider/hunter
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter //basic attack spider, normal poison.
 	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
 	icon_state = "hunter"
 	icon_living = "hunter"
@@ -135,7 +134,157 @@
 	health = 120
 	melee_damage_lower = 10
 	melee_damage_upper = 20
-	poison_per_bite = 5
+	poison_per_bite = 10
+	move_to_delay = 5
+
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter/sapper //sappers are the first variant, using anti-med toxins to incapacitate prey
+	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
+	icon_state = "hunter"
+	icon_living = "hunter"
+	icon_dead = "hunter_dead"
+	maxHealth = 120
+	health = 120
+	melee_damage_lower = 10
+	melee_damage_upper = 20
+	poison_per_bite = 10
+	poison_type = "toxin" //TODO: replace with sapping venom
+	move_to_delay = 5
+
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter/ambusher //ambushers are the second variant, using tunnelling ambushes to incapacitate prey
+	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
+	icon_state = "hunter"
+	icon_living = "hunter"
+	icon_dead = "hunter_dead"
+	poison_per_bite = 0
+	move_to_delay = 5
+	var/datum/action/innate/spider/ambush/ambush
+
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter/ambusher/Initialize()
+	. = ..()
+	ambush = new
+	ambush.Grant(src)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter/ambusher/Destroy()
+	QDEL_NULL(ambush)
+	return ..()
+
+/datum/action/innate/spider/ambush
+	name = "Tunnel"
+	desc = "Hide under the tiles, to ambush victims."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "lay_web"
+
+/datum/action/innate/spider/ambush/Activate()
+	var/L = owner.loc
+	var/turf/T = get_turf(owner)
+	if(istype(owner.loc, /obj/effect/dummy/burrow))
+		if(!istype(T, /turf/open/floor/engine))
+			var/obj/effect/dummy/burrow/B = L
+			B.end_jaunt()
+			return
+		else
+			to_chat(owner, "<span class='warning'>This tile is too reinforced to burrow through!</span>")
+	else
+		if(isspaceturf(T)) //hahahaha yeah ok togopal
+			to_chat(owner, "<span class='warning'>There is no tile to burrow under!</span>")
+			return
+		if(T.type == /turf/open/floor/plating || T.type == /turf/open/floor/plating/airless || T.type == /turf/open/floor/plating/foam)
+			to_chat(owner, "<span class='warning'>There is no tile to burrow under!</span>")
+			return
+		if(istype(T, /turf/open/floor/engine))
+			to_chat(owner, "<span class='warning'>This tile is too reinforced to burrow through!</span>")
+			return
+		var/mob/living/tunnelboy = owner
+		tunnelboy.SetStun(0, FALSE)
+		tunnelboy.SetKnockdown(0, FALSE)
+		tunnelboy.setStaminaLoss(0, 0)
+		var/obj/effect/dummy/burrow/B2 = new(get_turf(tunnelboy.loc))
+		tunnelboy.forceMove(B2)
+		B2.jaunter = tunnelboy
+
+/obj/effect/dummy/burrow
+	name = "tremors"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "nothing"
+	var/canmove = 1
+	var/mob/living/jaunter
+	var/warned = FALSE //warning for reinforced tiles
+	var/turf/alerttile
+	density = FALSE
+	anchored = TRUE
+	invisibility = 60
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/effect/dummy/burrow/relaymove(mob/user, direction)
+	var/turf/newLoc = get_step(src,direction)
+	if(validtunnel(newLoc))
+		forceMove(newLoc)
+	else
+		to_chat(user, "<span class='warning'>We cannot move here, as it is either impossible or would reveal us.</span>")
+
+/obj/effect/dummy/burrow/proc/validtunnel(var/turf/open/T)
+	if(!istype(T, /turf/open))
+		return FALSE
+	if(isspaceturf(T))
+		return FALSE
+	if(T.type == /turf/open/floor/plating || T.type == /turf/open/floor/plating/airless || T.type == /turf/open/floor/plating/foam)
+		return FALSE
+	if(istype(T, /turf/open/floor/engine))
+		if(warned == FALSE)
+			to_chat(jaunter, "<span class='notice'>Moving here is fine, but you will need to move away from these reinforced tiles to unburrow.</span>")
+			warned = TRUE
+		return TRUE
+	warned = FALSE
+	return TRUE
+
+/obj/effect/dummy/burrow/proc/end_jaunt(forced = FALSE)
+	if(jaunter)
+		if(forced)
+			visible_message("<span class='danger'>[jaunter] is revealed!</span>")
+		else
+			visible_message("<span class='danger'>[jaunter] emerges from the floor!</span>")
+		jaunter.forceMove(get_turf(src))
+		playsound(get_turf(jaunter), 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
+		jaunter = null
+	qdel(src)
+
+/obj/effect/dummy/burrow/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/dummy/burrow/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/effect/dummy/burrow/process()
+	var/turf/T = get_turf(src)
+	if(!jaunter)
+		qdel(src)
+	if(jaunter.loc != src)
+		qdel(src)
+	if(!validtunnel(T))
+		end_jaunt(TRUE)
+		return
+
+/obj/effect/dummy/burrow/ex_act()
+	return
+
+/obj/effect/dummy/burrow/bullet_act()
+	return
+
+/obj/effect/dummy/burrow/singularity_act()
+	return
+
+/mob/living/simple_animal/hostile/poison/giant_spider/hunter/leaper //leapers are the third variant, using leaping to outmaneuver and incapacitate prey
+	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
+	icon_state = "hunter"
+	icon_living = "hunter"
+	icon_dead = "hunter_dead"
+	maxHealth = 120
+	health = 120
+	melee_damage_lower = 10
+	melee_damage_upper = 20
+	poison_per_bite = 0
 	move_to_delay = 5
 
 //vipers are the rare variant of the hunter, no IMMEDIATE damage but so much poison medical care will be needed fast.
@@ -155,7 +304,7 @@
 	speed = 1
 	gold_core_spawnable = NO_SPAWN
 
-//tarantulas are really tanky, regenerating (maybe), hulky monster but are also extremely slow, so.
+//tarantulas are really tanky, hulky monster but are also extremely off webs.
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
 	name = "tarantula"
 	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes."
@@ -201,18 +350,6 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Destroy()
 	QDEL_NULL(letmetalkpls)
 	return ..()
-
-/mob/living/simple_animal/hostile/poison/giant_spider/ambusher
-	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
-	icon_state = "hunter"
-	icon_living = "hunter"
-	icon_dead = "hunter_dead"
-	maxHealth = 120
-	health = 120
-	melee_damage_lower = 10
-	melee_damage_upper = 20
-	poison_per_bite = 5
-	move_to_delay = 5
 
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
 	name = "giant ice spider"
@@ -532,6 +669,8 @@
 		var/link = FOLLOW_LINK(M, user)
 		to_chat(M, "[link] [my_message]")
 	log_talk(user, "SPIDERCOMMAND: [key_name(user)] : [message]",LOGSAY)
+
+/datum/action/innate/spider/lay_web
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
