@@ -229,7 +229,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		do_sacrifice(L, invokers)
 	animate(src, color = oldcolor, time = 5)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
-	if(!Cult_team.risen && !Cult_team.ascendent)
+	if(!Cult_team.ascendent)
 		var/alive = 0
 		var/cultplayers = 0
 		for(var/I in GLOB.player_list)
@@ -240,12 +240,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 				else
 					++alive
 		var/ratio = cultplayers/alive
-		if(ratio > CULT_RISEN && !Cult_team.risen)
+		if(ratio > CULT_RISEN && !Cult_team.cult_risen)
 			for(var/datum/mind/B in Cult_team.members)
 				if(B.current)
 					SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
 					to_chat(B.current, "<span class='cultlarge'>The veil weakens as your cult grows, your eyes begin to glow...")
-		if(ratio > CULT_ASCENDENT && !Cult_team.ascendent)
+		if(ratio > CULT_ASCENDENT && !Cult_team.cult_ascendent)
 			for(var/datum/mind/B in Cult_team.members)
 				if(B.current)
 					SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
