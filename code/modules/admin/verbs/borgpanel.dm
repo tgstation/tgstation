@@ -6,9 +6,9 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	if (!borgo || !istype(borgo, /mob/living/silicon/robot))
+	if (!istype(borgo, /mob/living/silicon/robot))
 		borgo = input("Select a borg", "Select a borg", null, null) as null|anything in GLOB.silicon_mobs
-	if (!borgo || !istype(borgo, /mob/living/silicon/robot))
+	if (!istype(borgo, /mob/living/silicon/robot))
 		to_chat(usr, "<span class='warning'>Borg is required for borgpanel</span>")
 
 	var/datum/borgpanel/borgpanel = new(usr, borgo)
@@ -23,7 +23,7 @@
 
 /datum/borgpanel/New(user, mob/living/silicon/robot/borg)
 	if(!istype(borg))
-		to_chat(usr, "<span class='warning'>Borg panel is only available for borgs</span>")
+		CRASH("Borg panel is only available for borgs")
 		qdel(src)
 	src.user = user
 	src.borg = borg
@@ -103,7 +103,7 @@
 		if ("toggle_scrambledcodes")
 			borg.scrambledcodes = !borg.scrambledcodes
 		if ("rename")
-			var/new_name = stripped_input(usr,"What would you like to name this cyborg?","Input a name",borg.real_name,MAX_NAME_LEN)
+			var/new_name = stripped_input(user,"What would you like to name this cyborg?","Input a name",borg.real_name,MAX_NAME_LEN)
 			if(!new_name)
 				return
 			message_admins("Admin [key_name_admin(user)] renamed [key_name_admin(borg)] to [new_name].")
