@@ -130,8 +130,8 @@
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
-	maxHealth = 120
-	health = 120
+	maxHealth = 80
+	health = 80
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	poison_per_bite = 10
@@ -145,9 +145,9 @@
 	move_to_delay = 5
 
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/ambusher //ambushers are the second variant, using tunnelling ambushes to incapacitate prey
-	icon_state = "hunter"
-	icon_living = "hunter"
-	icon_dead = "hunter_dead"
+	icon_state = "burrowing"
+	icon_living = "burrowing"
+	icon_dead = "burrowing_dead"
 	poison_per_bite = 0
 	move_to_delay = 5
 	var/datum/action/innate/spider/ambush/ambush
@@ -303,7 +303,7 @@
 	speed = 1
 	gold_core_spawnable = NO_SPAWN
 
-//tarantulas are really tanky, hulky monster but are also extremely off webs.
+//tarantulas are really tanky, hulky monster that speeds up on webs and is slow off of webs.
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
 	name = "tarantula"
 	desc = "Furry and black, it makes you shudder to look at it. This one has abyssal red eyes."
@@ -316,17 +316,17 @@
 	melee_damage_upper = 40
 	poison_per_bite = 0
 	move_to_delay = 8
-	speed = 7
-	status_flags = NONE
+	speed = 5
+	status_flags = CANPUSH
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula/movement_delay()
 	var/turf/T = get_turf(src)
 	if(locate(/obj/structure/spider/stickyweb) in T)
-		speed = 2
+		speed = 1.5
 	else
-		speed = 7
+		speed = 5
 	. = ..()
 
 //midwives are the queen of the spiders, can send messages to all them and web faster. That rare round where you get a queen spider and turn your 'for honor' players into 'r6siege' players will be a fun one.
