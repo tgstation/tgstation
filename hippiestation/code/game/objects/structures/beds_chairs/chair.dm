@@ -7,6 +7,18 @@
 	var/icon_selection
 	var/icon_overlay  //only need to use these two if the chair is movable AND has an overlay
 
+/obj/structure/chair/post_buckle_mob(mob/living/M)
+	. = ..()
+	handle_layer()
+	if(has_buckled_mob && is_movable)
+		handle_rotation_overlayed()
+
+/obj/structure/chair/post_unbuckle_mob()
+	. = ..()
+	handle_layer()
+	if(!has_buckled_mob && is_movable)
+		overlays = null
+
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
 	if(is_movable) //first snowflake check? :) so it begins!
 		return
@@ -36,6 +48,7 @@
 		if(buckled_mob)
 			buckled_mob.dir = dir
 
+
 /obj/structure/chair/movable
 	var/delay = 10
 	var/cooldown = 1
@@ -46,6 +59,11 @@
 	is_movable = TRUE
 
 /obj/structure/chair/movable/relaymove(mob/user, direction) //hopefully this fixes the issues with cooldown
+	handle_layer()
+	if(!has_overlay)
+		handle_rotation()
+	else
+		handle_rotation_overlayed()
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			if((!Process_Spacemove(direction)) || (!has_gravity(src.loc)) || user.stat != CONSCIOUS || user.IsStun() || user.IsKnockdown() || (user.restrained()))
@@ -60,9 +78,6 @@
 			else
 				handle_rotation_overlayed()
 			if(!timing)
-				cooldown = 1
-				spawn(delay)
-					cooldown = 1
 				timing = TRUE
 				moving = TRUE
 				sleep(cooldown_amount) //Sorry but I can't find a better way to do this, and it works well kk
@@ -95,6 +110,12 @@
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/effects/roll.ogg', 100, 1)
+	if(!has_buckled_mobs())
+		handle_rotation()
+		overlays = null
+	else
+		handle_rotation_overlayed()
+
 
 /obj/structure/chair/movable/wheelchair/wrench_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='notice'>You begin to detach the wheels...</span>")
