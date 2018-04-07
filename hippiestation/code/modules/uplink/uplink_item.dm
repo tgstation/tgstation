@@ -330,3 +330,6 @@
 	item = /obj/item/storage/box/syndie_kit/armstrong
 	cost = 14
 	surplus = 20 // someone who respects the eldritch god Nar-Sie a little (((too much))) complained
+
+/datum/uplink_item/device_tools/brainwash_disk
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
