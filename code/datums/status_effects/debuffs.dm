@@ -81,6 +81,11 @@
 	icon_state = "asleep"
 
 //OTHER DEBUFFS
+/datum/status_effect/noheal //you can't heal
+	id = "noheal"
+	duration = -1
+	alert_type = null
+
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
 	duration = -1

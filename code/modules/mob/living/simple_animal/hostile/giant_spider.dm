@@ -138,20 +138,13 @@
 	move_to_delay = 5
 
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/sapper //sappers are the first variant, using anti-med toxins to incapacitate prey
-	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
-	maxHealth = 120
-	health = 120
-	melee_damage_lower = 10
-	melee_damage_upper = 20
-	poison_per_bite = 10
-	poison_type = "toxin" //TODO: replace with sapping venom
+	poison_type = "spiderblight"
 	move_to_delay = 5
 
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/ambusher //ambushers are the second variant, using tunnelling ambushes to incapacitate prey
-	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
