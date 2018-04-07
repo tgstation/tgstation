@@ -2162,7 +2162,6 @@
 	height = 18;
 	id = "emergency_home";
 	name = "BoxStation emergency evac bay";
-	turf_type = /turf/open/space;
 	width = 32
 	},
 /turf/open/space/basic,
@@ -8632,7 +8631,6 @@
 	height = 17;
 	id = "syndicate_ne";
 	name = "northeast of station";
-	turf_type = /turf/open/space;
 	width = 23
 	},
 /turf/open/space,
@@ -50200,7 +50198,6 @@
 	height = 13;
 	id = "ferry_home";
 	name = "port bay 2";
-	turf_type = /turf/open/space;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -51481,7 +51478,6 @@
 	id = "aux_base_zone";
 	name = "aux base zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/default;
-	turf_type = /turf/open/floor/plating;
 	width = 9
 	},
 /turf/open/floor/plating,
