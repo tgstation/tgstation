@@ -219,3 +219,13 @@
 		if(active_portal_pairs[i] == P)
 			return DESTINATION_PORTAL
 	return FALSE
+
+/obj/item/hand_tele/suicide_act(mob/user)
+	if(iscarbon(user))
+		user.visible_message("<span class='suicide'>[user] is creating a weak portal and sticking their head through! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		var/mob/living/carbon/itemUser = user
+		var/obj/item/bodypart/head/head = itemUser.get_bodypart(BODY_ZONE_HEAD)
+		head.drop_limb()
+		head.forceMove(locate(rand(0, 250), rand(0, 250), pick(2, 3, 4, 5, 7, 8, 9, 10, 11, 12)))
+		itemUser.visible_message("<span class='suicide'>The portal snaps closed taking [user]'s head with it!</span>")
+		return BRUTELOSS
