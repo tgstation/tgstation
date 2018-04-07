@@ -745,10 +745,8 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/science/lab)
 "bS" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 4;
-	on = 1;
-	target_temperature = 80
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/science/lab)
@@ -6443,10 +6441,8 @@
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server)
 "pv" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	target_temperature = 80;
-	dir = 2;
-	on = 1
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server)
@@ -6708,10 +6704,9 @@
 	},
 /area/engine/atmos)
 "pY" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Air to Distro";
-	on = 1
+	name = "Air to Distro"
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
@@ -6726,10 +6721,9 @@
 	},
 /area/engine/atmos)
 "qa" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 0;
-	name = "Waste In";
-	on = 1
+	name = "Waste In"
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
@@ -6870,10 +6864,9 @@
 /area/engine/supermatter)
 "qq" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Gas to Filter";
-	on = 1
+	name = "Gas to Filter"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -7268,10 +7261,9 @@
 /turf/open/space/basic,
 /area/space/nearstation/frenzy)
 "rh" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Gas to Cold Loop";
-	on = 1
+	name = "Gas to Cold Loop"
 	},
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -7728,10 +7720,9 @@
 /turf/open/space/basic,
 /area/space/nearstation/frenzy)
 "sk" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "Cold Loop to Gas";
-	on = 1
+	name = "Cold Loop to Gas"
 	},
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -7962,10 +7953,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "sH" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 2;
-	filter_type = "o2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
+	dir = 2
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
@@ -8423,10 +8412,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "tD" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 2;
-	filter_type = "n2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2{
+	dir = 2
 	},
 /obj/machinery/light{
 	dir = 4
@@ -8533,18 +8520,13 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "tR" = (
-/obj/machinery/atmospherics/components/trinary/mixer{
-	node1_concentration = 0.8;
-	node2_concentration = 0.2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/trinary/mixer/airmix,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "tS" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 0;
-	name = "Waste to Space";
-	on = 1
+	name = "Waste to Space"
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
