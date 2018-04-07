@@ -122,7 +122,8 @@ GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 	/client/proc/panicbunker,
 	/client/proc/toggle_hub,
 	/datum/admins/proc/override_player_count,
-	/datum/admins/proc/manage_antag_tokens
+	/datum/admins/proc/manage_antag_tokens,
+	/datum/admins/proc/check_hub
 	)
 GLOBAL_PROTECT(admin_verbs_debug)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())

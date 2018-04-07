@@ -222,6 +222,13 @@ GLOBAL_VAR_INIT(override_lobby_player_count,0)
 			finalmap += mapentriestextfirst[entrytext]
 			fuckthis*/
 
-/*/client/verb/view_title()
-	var/text = "[world.status]"
-	src << browse(text,"window=worldnametest;size=300x300")*/
+/datum/admins/proc/check_hub()
+	set name = "Check Hub"
+	set category = "Server"
+	var/statustext = "Active"
+	if(!world.visibility)
+		statustext = "Inactive"
+	var/dat = "<B>Hub Status: [statustext]</B><BR><BR>"
+	dat += "<B>Hub Text:</B><BR><BR>"
+	dat += "[world.status]"
+	usr << browse(dat,"window=check_hub;size=300x300")

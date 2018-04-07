@@ -35,7 +35,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/font_mode = "font-family:monospace;" //The currently selected font.
 	var/background_color = "#808000" //The currently selected background color.
 
-	#define FONT_MONO "font-family:monospace;"
+	//#define FONT_MONO "font-family:monospace;" // terrible font is terrible
+	#define FONT_MONO ""
 	#define FONT_SHARE "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
 	#define FONT_ORBITRON "font-family:\"Orbitron\", monospace;letter-spacing:0px; font-size:15px"
 	#define FONT_VT "font-family:\"VT323\", monospace;letter-spacing:1px;"
@@ -372,7 +373,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	..()
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
-
+	if(loc)
+		var/atom/A = src
+		while(A)
+			A = A.loc
+			if(istype(A,/turf) || istype(A,/mob))
+				break
+		if(A != usr)
+			return
 	if(usr.canUseTopic(src) && !href_list["close"])
 		add_fingerprint(U)
 		U.set_machine(src)
