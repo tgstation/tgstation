@@ -27194,6 +27194,31 @@
 	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/research)
+"uWx" = (
+/obj/item/target,
+/obj/item/target,
+/obj/item/target/alien,
+/obj/item/target/alien,
+/obj/item/target/clown,
+/obj/item/target/clown,
+/obj/item/target/syndicate,
+/obj/item/target/syndicate,
+/obj/structure/closet/crate/secure{
+	desc = "A secure crate containing various materials for building a customised test-site.";
+	name = "Firing Range Gear Crate";
+	req_access_txt = "1"
+	},
+/obj/item/gun/energy/laser/practice{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/gun/energy/laser/practice{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/structure/target_stake,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "uXH" = (
 /obj/structure/cable{
 	icon_state = "0-8"
@@ -68582,7 +68607,7 @@ eYZ
 cRt
 qTl
 ojy
-afd
+uWx
 gTU
 agB
 ahc
