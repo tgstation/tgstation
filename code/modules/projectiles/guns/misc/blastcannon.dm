@@ -65,7 +65,7 @@
 	temp.merge(bomb.tank_one.air_contents.remove_ratio(1))
 	temp.merge(bomb.tank_two.air_contents.remove_ratio(2))
 	for(var/i in 1 to 6)
-		temp.react()
+		temp.react(src)
 	var/pressure = temp.return_pressure()
 	qdel(temp)
 	if(pressure < TANK_FRAGMENT_PRESSURE)
