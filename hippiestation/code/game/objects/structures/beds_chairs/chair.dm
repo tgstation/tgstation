@@ -2,6 +2,39 @@
 /obj/structure/chair
 	icon_hippie = 'hippiestation/icons/obj/chairs.dmi'
 	icon_state = "chair"
+	var/is_movable = FALSE
+	var/has_overlay = FALSE
+	var/icon_selection
+	var/icon_overlay  //only need to use these two if the chair is movable AND has an overlay
+
+/obj/structure/chair/attackby(obj/item/W, mob/user, params)
+	if(is_movable) //first snowflake check? :) so it begins!
+		return
+	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
+		W.play_tool_sound(src)
+		deconstruct()
+	else if(istype(W, /obj/item/assembly/shock_kit))
+		if(!user.temporarilyRemoveItemFromInventory(W))
+			return
+		var/obj/item/assembly/shock_kit/SK = W
+		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+		E.setDir(dir)
+		E.part = SK
+		SK.forceMove(E)
+		SK.master = E
+		qdel(src)
+	else
+		return ..()
+
+/obj/structure/chair/movable/proc/handle_rotation_overlayed()
+	if(has_buckled_mobs())
+		var/mob/living/buckled_mob
+		overlays = null
+		var/image/O = image(icon = icon_selection, icon_state = icon_overlay, layer = FLY_LAYER, dir = src.dir)
+		overlays += O
+		if(buckled_mob)
+			buckled_mob.dir = dir
 
 /obj/structure/chair/movable
 	var/delay = 10
@@ -9,6 +42,8 @@
 	var/cooldown_amount = 1 //the actual cooldown for stuff
 	var/emulate_door_bumps = TRUE //shamelessly stolen from vehicles
 	var/timing = FALSE
+	var/moving = FALSE //to stop the chair and player being able to rotate while moving
+	is_movable = TRUE
 
 /obj/structure/chair/movable/relaymove(mob/user, direction) //hopefully this fixes the issues with cooldown
 	if(has_buckled_mobs())
@@ -16,17 +51,25 @@
 			if((!Process_Spacemove(direction)) || (!has_gravity(src.loc)) || user.stat != CONSCIOUS || user.IsStun() || user.IsKnockdown() || (user.restrained()))
 				return
 			var/mob/living/buckled_mob = m
-			buckled_mob.dir = direction
-			dir = buckled_mob.dir
+			if(!moving)
+				buckled_mob.dir = direction
+				dir = buckled_mob.dir
+				handle_layer()
+			if(!has_overlay)
+				handle_rotation()
+			else
+				handle_rotation_overlayed()
 			if(!timing)
 				cooldown = 1
 				spawn(delay)
 					cooldown = 1
 				timing = TRUE
-				sleep(cooldown_amount)
+				moving = TRUE
+				sleep(cooldown_amount) //Sorry but I can't find a better way to do this, and it works well kk
 				step(src, direction)
-				sleep(2)
+				sleep(3)
 				timing = FALSE
+				moving = FALSE
 
 /obj/structure/chair/movable/Collide(atom/movable/M)
 	. = ..()
@@ -38,11 +81,15 @@
 /obj/structure/chair/movable/wheelchair
 	name = "wheelchair"
 	desc = "A chair with big wheels. It looks like you can move in this on your own."
+	icon_state = "wheelchair"
 	anchored = FALSE
 	buildstacktype = null
 	buildstackamount = null //no crafting 4 u, use teh crafting menu!!!1!
 	item_chair = null
-	cooldown_amount = 5
+	cooldown_amount = 3
+	has_overlay = TRUE
+	icon_selection = 'hippiestation/icons/obj/chairs.dmi'
+	icon_overlay = "wheelchair_overlay"
 
 /obj/structure/chair/movable/wheelchair/Moved()
 	. = ..()
@@ -57,3 +104,7 @@
 		new /obj/item/stack/rods(drop_location(), 6)
 		new /obj/item/stack/sheet/metal(drop_location(), 4)
 		qdel(src)
+		if(QDELETED(src))
+			qdel(wheelchair)
+	else
+		return
