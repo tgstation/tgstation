@@ -211,7 +211,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	var/mob/living/F = invokers[1]
 	var/datum/antagonist/cult/C = F.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-
+	var/datum/team/cult/Cult_team = C.cult_team
 	var/is_convertable = is_convertable_to_cult(L,C.cult_team)
 	if(L.stat != DEAD && (is_clock || is_convertable))
 		invocation = "Mah'weyh pleggh at e'ntrath!"
@@ -229,7 +229,28 @@ structure_check() searches for nearby cultist structures required for the invoca
 		do_sacrifice(L, invokers)
 	animate(src, color = oldcolor, time = 5)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
-	rune_in_use = FALSE
+	if(!Cult_team.risen && !Cult_team.ascendent)
+		var/alive = 0
+		var/cult = 0
+		for(var/I in GLOB.player_list)
+			var/mob/M = I
+			if(M.stat != DEAD)
+				if(iscultist(M)
+					++cult
+				else
+					++alive
+		var/ratio = cult/alive
+		if(ratio > CULT_RISEN && !Cult_team.risen)
+			for(var/datum/mind/B in Cult_team.members)
+				if(B.current)
+					SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
+					to_chat(B.current, "<span class='cultlarge'>The veil weakens as your cult grows, your eyes begin to glow...")
+		if(ratio > CULT_ASCENDENT && !Cult_team.ascendent)
+			for(var/datum/mind/B in Cult_team.members)
+				if(B.current)
+					SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
+					to_chat(B.current, "<span class='cultlarge'>Your cult is ascendent and your very blood pulses with power!")
+		rune_in_use = FALSE
 
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
 	if(invokers.len < 2)
@@ -313,6 +334,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, 1)
 			sacrificial.gib()
 	return TRUE
+	
 
 
 /obj/effect/rune/empower
@@ -512,7 +534,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!" //Depends on the name of the user - see below
 	icon_state = "1"
 	color = RUNE_COLOR_MEDIUMRED
-	var/static/revives_used = 0
+	var/static/revives_used = -3
 
 /obj/effect/rune/raise_dead/examine(mob/user)
 	..()
@@ -549,11 +571,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		invocation = initial(invocation)
 	..()
 	if(mob_to_revive.stat == DEAD)
-		if(LAZYLEN(GLOB.sacrificed) <= revives_used)
-			to_chat(user, "<span class='warning'>Your cult must carry out another sacrifice before it can revive a cultist!</span>")
+		var/diff = LAZYLEN(GLOB.sacrificed) - revives_used - 3
+		if(diff < 0)
+			to_chat(user, "<span class='warning'>Your cult must carry out [abs(diff)] more sacrifice\s before it can revive another cultist!</span>")
 			fail_invoke()
 			return
-		revives_used++
+		revives_used += 3
 		mob_to_revive.revive(1, 1) //This does remove traits and such, but the rune might actually see some use because of it!
 		mob_to_revive.grab_ghost()
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
