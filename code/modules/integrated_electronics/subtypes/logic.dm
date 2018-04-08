@@ -30,6 +30,16 @@
 /obj/item/integrated_circuit/logic/binary/proc/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
 	return FALSE
 
+/obj/item/integrated_circuit/logic/binary/proc/comparable(var/datum/integrated_io/A, var/datum/integrated_io/B)
+	if(isnum(A.data))
+		if(isnum(B.data))
+			return TRUE
+	else
+		if(istext(A.data))
+			if(istext(B.data))
+				return TRUE
+	return FALSE
+
 /obj/item/integrated_circuit/logic/unary
 	inputs = list("A")
 	activators = list("compare" = IC_PINTYPE_PULSE_IN, "on compare" = IC_PINTYPE_PULSE_OUT)
@@ -176,7 +186,8 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/logic/binary/less_than/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
-	return A.data < B.data
+	if(comparable(A, B))
+		return A.data < B.data
 
 /obj/item/integrated_circuit/logic/binary/less_than_or_equal
 	name = "less than or equal gate"
@@ -185,7 +196,8 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/logic/binary/less_than_or_equal/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
-	return A.data <= B.data
+	if(comparable(A, B))
+		return A.data <= B.data
 
 /obj/item/integrated_circuit/logic/binary/greater_than
 	name = "greater than gate"
@@ -194,7 +206,8 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/logic/binary/greater_than/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
-	return A.data > B.data
+	if(comparable(A, B))
+		return A.data > B.data
 
 /obj/item/integrated_circuit/logic/binary/greater_than_or_equal
 	name = "greater_than or equal gate"
@@ -203,7 +216,8 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/logic/binary/greater_than_or_equal/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
-	return A.data >= B.data
+	if(comparable(A, B))
+		return A.data >= B.data
 
 /obj/item/integrated_circuit/logic/unary/not
 	name = "not gate"
