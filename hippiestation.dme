@@ -2714,6 +2714,7 @@
 #include "hippiestation\code\game\objects\items\garrote.dm"
 #include "hippiestation\code\game\objects\items\holotool.dm"
 #include "hippiestation\code\game\objects\items\meat.dm"
+#include "hippiestation\code\game\objects\items\melee\energy.dm"
 #include "hippiestation\code\game\objects\items\special_attacks.dm"
 #include "hippiestation\code\game\objects\items\staples.dm"
 #include "hippiestation\code\game\objects\items\stunbaton.dm"
