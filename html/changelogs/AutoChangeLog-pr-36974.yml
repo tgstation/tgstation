@@ -1,0 +1,5 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - rscadd: "Hugbox version of the VR sleeper you can't emag."
+  - admin: "There's now two categorized vr landmarks for two teams for easy spawning. You can also now rebuild/refresh all the VR spawnpoints by calling build_spawnpoints(1) on any sleeper."
