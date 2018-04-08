@@ -23,17 +23,8 @@
 	sparks = new /datum/effect_system/spark_spread()
 	sparks.set_up(2,0)
 	sparks.attach(src)
-
+	build_spawnpoints()
 	update_icon()
-
-	if(!available_vr_spawnpoints || !available_vr_spawnpoints.len) //(re)build spawnpoint lists
-		available_vr_spawnpoints = list()
-		for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
-			available_vr_spawnpoints[V.vr_category] = list()
-			var/turf/T = get_turf(V)
-			if(T)
-				available_vr_spawnpoints[V.vr_category] |= T
-
 
 /obj/machinery/vr_sleeper/attack_hand(mob/user)
 	. = ..()
@@ -59,6 +50,8 @@
 	QDEL_NULL(sparks)
 	return ..()
 
+/obj/machinery/vr_sleeper/hugbox/emag_act(mob/user)
+	return
 
 /obj/machinery/vr_sleeper/emag_act(mob/user)
 	you_die_in_the_game_you_die_for_real = TRUE
@@ -146,6 +139,17 @@
 /obj/machinery/vr_sleeper/proc/get_vr_spawnpoint() //proc so it can be overriden for team games or something
 	return safepick(available_vr_spawnpoints[vr_category])
 
+/obj/machinery/vr_sleeper/proc/build_spawnpoints(rebuild = FALSE) 
+	if (rebuild)
+		available_vr_spawnpoints = null
+	if(!available_vr_spawnpoints || !available_vr_spawnpoints.len) //(re)build spawnpoint lists
+		available_vr_spawnpoints = list()
+		for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
+			available_vr_spawnpoints[V.vr_category] = list()
+			var/turf/T = get_turf(V)
+			if(T)
+				available_vr_spawnpoints[V.vr_category] |= T
+
 /obj/machinery/vr_sleeper/proc/build_virtual_human(mob/living/carbon/human/H, location, transfer = TRUE)
 	if(H)
 		cleanup_vr_human()
@@ -172,6 +176,12 @@
 
 /obj/effect/landmark/vr_spawn //places you can spawn in VR, auto selected by the vr_sleeper during get_vr_spawnpoint()
 	var/vr_category = "default" //So we can have specific sleepers, eg: "Basketball VR Sleeper", etc.
+
+/obj/effect/landmark/vr_spawn/team_1
+	vr_category = "team_1"
+
+/obj/effect/landmark/vr_spawn/team_2
+	vr_category = "team_2"	
 
 /datum/outfit/vr_basic
 	name = "basic vr"
