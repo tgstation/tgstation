@@ -53,7 +53,7 @@
 		var/obj/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
-	src.add_fingerprint(M)
+	add_fingerprint(M)
 
 /obj/item/paper_bin/attack_paw(mob/user)
 	return attack_hand(user)
