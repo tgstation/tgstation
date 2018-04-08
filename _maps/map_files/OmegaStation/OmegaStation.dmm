@@ -31519,9 +31519,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
-"fSE" = (
-/turf/closed/wall/r_wall,
-/area/space)
 "fWz" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port";
@@ -69053,7 +69050,7 @@ swZ
 agF
 agF
 agF
-fSE
+agF
 swZ
 agF
 auE
