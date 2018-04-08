@@ -60,6 +60,7 @@
 	var/emulate_door_bumps = TRUE //shamelessly stolen from vehicles
 	var/timing = FALSE
 	var/moving = FALSE //to stop the chair and player being able to rotate while moving
+	var/cannot_move = FALSE //to stop delayed spam on addtimer if player cannot move
 	is_movable = TRUE
 
 /obj/structure/chair/movable/relaymove(mob/user, direction) //hopefully this fixes the issues with cooldown
@@ -71,9 +72,11 @@
 			overlays = null
 			handle_rotation_overlayed()
 	var/mob/living/carbon/human/H = user
-	if(!H.get_num_arms() && !timing)
-		to_chat(user, "<span class='warning'>You can't move the wheels without arms!</span>")
-		sleep(20)
+	if(!H.get_num_arms())
+		if(!cannot_move)
+			to_chat(user, "<span class='warning'>You can't move the wheels without arms!</span>")
+		cannot_move = TRUE
+		addtimer(CALLBACK(src, .proc/stopmove), 20)
 		return
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
@@ -91,12 +94,21 @@
 			if(!timing)
 				timing = TRUE
 				moving = TRUE
-				sleep(cooldown_amount) //Sorry but I can't find a better way to do this, and it works well kk
+				addtimer(CALLBACK(src, .proc/movedelay), cooldown_amount) //Sorry but I can't find a better way to do this, and it works well kk
 				step(src, direction)
-				sleep(3)
-				timing = FALSE
-				moving = FALSE
-				buckledmob = FALSE
+				addtimer(CALLBACK(src, .proc/changeflags), 3)
+
+/obj/structure/chair/movable/proc/movedelay(direction)
+	step(src, direction)
+
+/obj/structure/chair/movable/proc/changeflags()
+	timing = FALSE
+	moving = FALSE
+	buckledmob = FALSE
+
+/obj/structure/chair/movable/proc/stopmove()
+	if(cannot_move) //to prevent any possible delayed addtimer spam
+		cannot_move = FALSE
 
 /obj/structure/chair/movable/Collide(atom/movable/M)
 	. = ..()
