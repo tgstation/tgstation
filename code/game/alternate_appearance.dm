@@ -108,7 +108,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 /datum/atom_hud/alternate_appearance/basic/AI/New()
 	..()
 	for(var/mob in GLOB.ai_list)
-		add_hud_to(ai)
+		add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/observers
 	add_ghost_version = FALSE //just in case, to prevent infinite loops
