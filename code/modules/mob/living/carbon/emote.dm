@@ -36,6 +36,22 @@
 				            'sound/misc/clap4.ogg')
 			playsound(user, clap, 50, 1, -1)
 
+/datum/emote/living/carbon/snap
+	key = "snap"
+	message = "snaps their fingers."
+	muzzle_ignore = TRUE
+	restraint_check = TRUE
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/snap/run_emote(mob/living/user, params)
+	. = ..()
+	if (.)
+		if (ishuman(user))
+			// Need hands
+			if (user.get_bodypart("l_arm") || user.get_bodypart("r_arm"))
+				var/snapFingers = 'sound/effects/snapfingers.ogg'
+				playsound(user, snapFingers, 50, 1, -1)
+
 /datum/emote/living/carbon/gnarl
 	key = "gnarl"
 	key_third_person = "gnarls"

@@ -58,6 +58,22 @@
 	message = "coughs!"
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/cough/can_run_emote(mob/living/user, status_check = TRUE)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent
+
+/datum/emote/living/cough/run_emote(mob/user, params)
+	. = ..()
+	if(. && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+			if(user.gender == FEMALE)
+				playsound(H, 'sound/voice/human/womancough.ogg', 50, 1)
+			else
+				playsound(H, 'sound/voice/human/mancough.ogg', 50, 1)
+
 /datum/emote/living/dance
 	key = "dance"
 	key_third_person = "dances"
@@ -146,6 +162,22 @@
 	emote_type = EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
 
+/datum/emote/living/gasp/can_run_emote(mob/living/user, status_check = TRUE)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent
+
+/datum/emote/living/gasp/run_emote(mob/user, params)
+	. = ..()
+	if(. && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+			if(user.gender == FEMALE)
+				playsound(H, 'sound/voice/human/womangasp.ogg', 50, 1)
+			else
+				playsound(H, 'sound/voice/human/mangasp.ogg', 50, 1)
+
 /datum/emote/living/giggle
 	key = "giggle"
 	key_third_person = "giggles"
@@ -189,6 +221,19 @@
 	message_param = "blows a kiss to %t."
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/kiss/can_run_emote(mob/living/user, status_check = TRUE)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent
+
+/datum/emote/living/kiss/run_emote(mob/user, params)
+	. = ..()
+	if(. && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+			playsound(H, 'sound/effects/kiss.ogg', 50, 0)
+
 /datum/emote/living/laugh
 	key = "laugh"
 	key_third_person = "laughs"
@@ -211,6 +256,29 @@
 				playsound(H, 'sound/voice/human/womanlaugh.ogg', 50, 1)
 			else
 				playsound(H, pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg'), 50, 1)
+
+/datum/emote/living/oof
+	key = "oof"
+	key_third_person = "oofs"
+	message = "oofs."
+	message_mime = "oofs silently!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/oof/can_run_emote(mob/living/user, status_check = TRUE)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent
+
+/datum/emote/living/oof/run_emote(mob/user, params)
+	. = ..()
+	if(. && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+			if(user.gender == FEMALE)
+				playsound(H, 'sound/voice/human/womanoof.ogg', 50, 1)
+			else
+				playsound(H, 'sound/voice/human/manoof.ogg', 50, 1)
 
 /datum/emote/living/look
 	key = "look"
@@ -279,7 +347,24 @@
 	key = "sigh"
 	key_third_person = "sighs"
 	message = "sighs."
+	message_mime = "sighs silently!"
 	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/sigh/can_run_emote(mob/living/user, status_check = TRUE)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent
+
+/datum/emote/living/sigh/run_emote(mob/user, params)
+	. = ..()
+	if(. && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+			if(user.gender == FEMALE)
+				playsound(H, 'sound/voice/human/womansigh.ogg', 50, 1)
+			else
+				playsound(H, 'sound/voice/human/mansigh.ogg', 50, 1)
 
 /datum/emote/living/sit
 	key = "sit"
@@ -296,6 +381,22 @@
 	key_third_person = "sneezes"
 	message = "sneezes."
 	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/sneeze/can_run_emote(mob/living/user, status_check = TRUE)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent
+
+/datum/emote/living/sneeze/run_emote(mob/user, params)
+	. = ..()
+	if(. && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+			if(user.gender == FEMALE)
+				playsound(H, 'sound/voice/human/womansneeze.ogg', 50, 1)
+			else
+				playsound(H, 'sound/voice/human/mansneeze.ogg', 50, 1)
 
 /datum/emote/living/smug
 	key = "smug"
@@ -315,6 +416,19 @@
 	message_mime = "sleeps soundly."
 	emote_type = EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
+	
+/datum/emote/living/snore/can_run_emote(mob/living/user, status_check = TRUE)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent
+
+/datum/emote/living/snore/run_emote(mob/user, params)
+	. = ..()
+	if(. && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+			playsound(H, pick('sound/voice/human/snore.ogg', 'sound/voice/human/snore2.ogg'), 20, 1)
 
 /datum/emote/living/stare
 	key = "stare"
@@ -384,6 +498,22 @@
 	key_third_person = "yawns"
 	message = "yawns."
 	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/yawn/can_run_emote(mob/living/user, status_check = TRUE)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent
+
+/datum/emote/living/yawn/run_emote(mob/user, params)
+	. = ..()
+	if(. && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+			if(user.gender == FEMALE)
+				playsound(H, 'sound/voice/human/womanyawn.ogg', 50, 1)
+			else
+				playsound(H, 'sound/voice/human/manyawn.ogg', 50, 1)
 
 /datum/emote/living/custom
 	key = "me"
