@@ -7,7 +7,6 @@ RPD
 #define DISPOSALS_MODE 1
 #define TRANSIT_MODE 2
 
-
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 	"Pipes" = list(
 		new /datum/pipe_info/pipe("Pipe",				/obj/machinery/atmospherics/pipe/simple),
@@ -65,22 +64,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		new /datum/pipe_info/transit("Terminus Tube Station",		/obj/structure/c_transit_tube/station/reverse, PIPE_UNARY),
 		new /datum/pipe_info/transit("Transit Tube Pod",			/obj/structure/c_transit_tube_pod, PIPE_ONEDIR),
 	)
-))
-
-
-GLOBAL_LIST_INIT(pipe_paint_colors, list(
-		"amethyst" = rgb(130,43,255), //supplymain
-		"blue" = rgb(0,0,255),
-		"brown" = rgb(178,100,56),
-		"cyan" = rgb(0,255,249),
-		"dark" = rgb(69,69,69),
-		"green" = rgb(30,255,0),
-		"grey" = rgb(255,255,255),
-		"orange" = rgb(255,129,25),
-		"purple" = rgb(128,0,182),
-		"red" = rgb(255,0,0),
-		"violet" = rgb(64,0,128),
-		"yellow" = rgb(255,198,0)
 ))
 
 /datum/pipe_info
@@ -349,7 +332,7 @@ GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		return
 
 	//if we're clicking on a pipe that can be painted, paint it
-	else if(istype(A, /obj/machinery/atmospherics/pipe))
+	else if(istype(A, /obj/machinery/atmospherics/pipe) && !istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
 		var/obj/machinery/atmospherics/pipe/P = A
 		to_chat(user, "<span class='notice'>You start painting \the [P] [paint_color]...</span>")
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -385,7 +368,8 @@ GLOBAL_LIST_INIT(pipe_paint_colors, list(
 						P.update()
 						P.add_fingerprint(usr)
 						P.setPipingLayer(temp_piping_layer)
-						P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+						if(istype(P, /obj/machinery/atmospherics/pipe) && !istype(P, /obj/machinery/atmospherics/pipe/layer_manifold))
+							P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 
 			if(DISPOSALS_MODE) //Making disposals pipes
 				if(!can_make_pipe)

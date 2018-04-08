@@ -170,3 +170,18 @@
 	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id]; out_list[gas_id] = tmp_gaslist.Copy();
 
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
+
+GLOBAL_LIST_INIT(pipe_paint_colors, list(
+		"amethyst" = rgb(130,43,255), //supplymain
+		"blue" = rgb(0,0,255),
+		"brown" = rgb(178,100,56),
+		"cyan" = rgb(0,255,249),
+		"dark" = rgb(69,69,69),
+		"green" = rgb(30,255,0),
+		"grey" = rgb(255,255,255),
+		"orange" = rgb(255,129,25),
+		"purple" = rgb(128,0,182),
+		"red" = rgb(255,0,0),
+		"violet" = rgb(64,0,128),
+		"yellow" = rgb(255,198,0)
+))
