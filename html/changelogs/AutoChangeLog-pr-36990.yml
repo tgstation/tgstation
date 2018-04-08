@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - admin: "Admins can now access a new control panel for borgs via a new admin verb"
