@@ -377,9 +377,18 @@
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 
-/obj/machinery/power/apc/wrench_act(mob/living/user, obj/item/W)
+/obj/machinery/power/apc/crowbar_act(mob/user, obj/item/W)
 	. = TRUE
 	if (opened)
+		if(cell)
+			user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
+			var/turf/T = get_turf(user)
+			cell.forceMove(T)
+			cell.update_icon()
+			cell = null
+			charging = 0
+			update_icon()
+			return
 		if (has_electronics == APC_ELECTRONICS_INSTALLED)
 			if (terminal)
 				to_chat(user, "<span class='warning'>Disconnect the wires first!</span>")
@@ -717,17 +726,6 @@
 			locked = FALSE
 			to_chat(user, "<span class='notice'>You emag the APC interface.</span>")
 			update_icon()
-
-/obj/machinery/power/apc/crowbar_act(mob/user, obj/item/W)
-	if(opened && cell)
-		user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
-		var/turf/T = get_turf(user)
-		cell.forceMove(T)
-		cell.update_icon()
-		cell = null
-		charging = 0
-		update_icon()
-		return TRUE
 
 
 // attack with hand - remove cell (if cover open) or interact with the APC
