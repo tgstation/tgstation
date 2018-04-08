@@ -31,9 +31,7 @@
 				O.forceMove(T)
 		T.update_icon()
 		do_animate()
-	else if(istype(W, /obj/item/wrench))
-		anchored = !anchored
-		W.play_tool_sound(src, 75)
+		return TRUE
 	else
 		return ..()
 

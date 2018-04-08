@@ -402,7 +402,7 @@
 	SSspacedrift.processing[src] = src
 	return 1
 
-/atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
+/atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = 0
 	SendSignal(COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
 	return hit_atom.hitby(src)

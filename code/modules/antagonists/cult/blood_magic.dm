@@ -589,6 +589,7 @@
 			SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else
 			to_chat(user, "<span class='warning'>The spell will not work on [target]!</span>")
+			return
 		..()
 
 //Armor: Gives the target a basic cultist combat loadout

@@ -32,7 +32,7 @@
 	// may result.
 	if(force)
 		..()
-		. = QDEL_HINT_HARDDEL_NOW
+		. = QDEL_HINT_QUEUE
 	else
 		return QDEL_HINT_LETMELIVE
 
@@ -146,13 +146,9 @@
 	var/y0 = bounds[2]
 	var/x1 = bounds[3]
 	var/y1 = bounds[4]
-	if(x0 <= x1 && !ISINRANGE(T.x, x0, x1))
+	if(!ISINRANGE(T.x, min(x0, x1), max(x0, x1)))
 		return FALSE
-	else if(!ISINRANGE(T.x, x1, x0))
-		return FALSE
-	if(y0 <= y1 && !ISINRANGE(T.y, y0, y1))
-		return FALSE
-	else if(!ISINRANGE(T.y, y1, y0))
+	if(!ISINRANGE(T.y, min(y0, y1), max(y0, y1)))
 		return FALSE
 	return TRUE
 
@@ -186,6 +182,11 @@
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#f00")
 	#endif
+
+/obj/docking_port/stationary/Destroy(force)
+	if(force)
+		SSshuttle.stationary -= src
+	. = ..()
 
 /obj/docking_port/stationary/proc/load_roundstart()
 	if(json_key)
@@ -231,13 +232,14 @@
 			log_world("A transit dock was destroyed while something was docked to it.")
 		SSshuttle.transit -= src
 		if(owner)
+			if(owner.assigned_transit == src)
+				owner.assigned_transit = null
 			owner = null
 		if(assigned_turfs)
 			dezone()
 			assigned_turfs.Cut()
 		assigned_turfs = null
 	. = ..()
-
 
 /obj/docking_port/mobile
 	name = "shuttle"

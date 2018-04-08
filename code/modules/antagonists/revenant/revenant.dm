@@ -7,7 +7,7 @@
 #define REVENANT_NAME_FILE "revenant_names.json"
 
 /mob/living/simple_animal/revenant
-	name = "\a Revenant"
+	name = "revenant"
 	desc = "A malevolent spirit."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "revenant_idle"
@@ -16,6 +16,7 @@
 	var/icon_stun = "revenant_stun"
 	var/icon_drain = "revenant_draining"
 	var/stasis = FALSE
+	mob_biotypes = list(MOB_SPIRIT)
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
