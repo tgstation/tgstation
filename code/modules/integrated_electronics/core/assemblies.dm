@@ -157,14 +157,14 @@
 	for(var/c in assembly_components)
 		var/obj/item/integrated_circuit/circuit = c
 		if(circuit.removable)
-			HTML += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
-			HTML += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
-			HTML += "<a href='?src=[REF(circuit)];scan=1;return=1'>\[Copy Ref\]</a> | "
-			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];remove=1'>\[Remove\]</a> | "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];up=1' style='text-decoration:none;'>&#8593;</a> "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];down=1' style='text-decoration:none;'>&#8595;</a>  "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];top=1' style='text-decoration:none;'>&#10514;</a> "
-			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];bottom=1' style='text-decoration:none;'>&#10515;</a>"
+			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];bottom=1' style='text-decoration:none;'>&#10515;</a> | "
+			HTML += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
+			HTML += "<a href='?src=[REF(circuit)];scan=1;return=1'>\[Copy Ref\]</a> | "
+			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];remove=1'>\[Remove\]</a> | "
+			HTML += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a>"
 			HTML += "<br>"
 
 	HTML += "</body></html>"
