@@ -70,6 +70,11 @@
 		if(!buckledmob)
 			overlays = null
 			handle_rotation_overlayed()
+	var/mob/living/carbon/human/H = user
+	if(!H.get_num_arms() && !timing)
+		to_chat(user, "<span class='warning'>You can't move the wheels without arms!</span>")
+		sleep(20)
+		return
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			if((!Process_Spacemove(direction)) || (!has_gravity(src.loc)) || user.stat != CONSCIOUS || user.IsStun() || user.IsKnockdown() || (user.restrained()))
