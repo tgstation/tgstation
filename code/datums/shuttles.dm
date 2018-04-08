@@ -378,6 +378,10 @@
 	suffix = "pubby"
 	name = "arrival shuttle (Pubby)"
 
+/datum/map_template/shuttle/arrival/omega
+	suffix = "omega"
+	name = "arrival shuttle (Omega)"
+	
 /datum/map_template/shuttle/aux_base/default
 	suffix = "default"
 	name = "auxilliary base (Default)"
