@@ -38,12 +38,16 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "g" = (
-/obj/structure/closet/wardrobe/grey,
+/obj/structure/closet/wardrobe/grey{
+	anchored = 1
+	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/neutral/corner,
 /area/shuttle/arrival)
 "h" = (
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emcloset{
+	anchored = 1
+	},
 /obj/machinery/vending/wallmed{
 	pixel_y = 32
 	},
@@ -61,7 +65,9 @@
 /turf/open/floor/plasteel/neutral/side,
 /area/shuttle/arrival)
 "i" = (
-/obj/structure/closet/wardrobe/mixed,
+/obj/structure/closet/wardrobe/mixed{
+	anchored = 1
+	},
 /obj/structure/sign/poster/official/enlist{
 	pixel_x = 32
 	},
@@ -82,7 +88,6 @@
 /area/shuttle/arrival)
 "k" = (
 /obj/effect/turf_decal/caution{
-	icon_state = "caution";
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/side{
