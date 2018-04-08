@@ -366,6 +366,7 @@
 #include "code\datums\diseases\advance\symptoms\heal.dm"
 #include "code\datums\diseases\advance\symptoms\itching.dm"
 #include "code\datums\diseases\advance\symptoms\narcolepsy.dm"
+#include "code\datums\diseases\advance\symptoms\migraine.dm"
 #include "code\datums\diseases\advance\symptoms\oxygen.dm"
 #include "code\datums\diseases\advance\symptoms\sensory.dm"
 #include "code\datums\diseases\advance\symptoms\shedding.dm"
