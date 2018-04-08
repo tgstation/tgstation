@@ -65,6 +65,7 @@
 	if (QDELETED(trait_holder))
 		trait_holder = null
 		qdel(src)
+		return
 	if(heirloom in trait_holder.GetAllContents())
 		trait_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
 		trait_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "family_heirloom", /datum/mood_event/family_heirloom)
