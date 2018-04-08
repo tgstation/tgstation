@@ -68,9 +68,6 @@
 /obj/structure/closet/wardrobe/mixed{
 	anchored = 1
 	},
-/obj/structure/sign/poster/official/enlist{
-	pixel_x = 32
-	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
@@ -100,6 +97,9 @@
 "m" = (
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/structure/sign/poster/official/enlist{
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
