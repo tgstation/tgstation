@@ -11,7 +11,7 @@
 /obj/item/organ/lungs
 	name = "lungs"
 	icon_state = "lungs"
-	zone = "chest"
+	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LUNGS
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_NORMAL

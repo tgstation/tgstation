@@ -150,6 +150,9 @@
 	anchored = TRUE
 
 /obj/machinery/mineral/labor_points_checker/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.examinate(src)
 
 /obj/machinery/mineral/labor_points_checker/attackby(obj/item/I, mob/user, params)

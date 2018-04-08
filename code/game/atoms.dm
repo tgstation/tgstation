@@ -3,8 +3,9 @@
 	plane = GAME_PLANE
 	var/level = 2
 
-	var/flags_1 = 0
-	var/flags_2 = 0
+	var/flags_1 = NONE
+	var/flags_2 = NONE
+	var/interaction_flags_atom = NONE
 	var/container_type = NONE
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
 	var/datum/reagents/reagents = null
@@ -304,6 +305,9 @@
 	if(AM && isturf(AM.loc))
 		step(AM, turn(AM.dir, 180))
 
+/atom/proc/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
+	return
+
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
 	if(get_blood_id() != "blood")
@@ -352,9 +356,6 @@
 		return FALSE
 
 /atom/proc/handle_fall()
-	return
-
-/atom/proc/handle_slip()
 	return
 
 /atom/proc/singularity_act()

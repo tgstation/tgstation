@@ -129,6 +129,9 @@
 /datum/config_entry/flag/enable_localhost_rank	//Gives the !localhost! rank to any client connecting from 127.0.0.1 or ::1
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/load_legacy_ranks_only	//Loads admin ranks only from legacy admin_ranks.txt, while enabled ranks are mirrored to the database
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/string/hostedby
 
 /datum/config_entry/flag/norespawn
@@ -320,7 +323,6 @@
 /datum/config_entry/number/client_warn_version
 	config_entry_value = null
 	min_val = 500
-	max_val = DM_VERSION - 1
 
 /datum/config_entry/string/client_warn_message
 	config_entry_value = "Your version of byond may have issues or be blocked from accessing this server in the future."
@@ -330,7 +332,6 @@
 /datum/config_entry/number/client_error_version
 	config_entry_value = null
 	min_val = 500
-	max_val = DM_VERSION - 1
 
 /datum/config_entry/string/client_error_message
 	config_entry_value = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
@@ -341,6 +342,14 @@
 
 /datum/config_entry/number/second_topic_limit
 	config_entry_value = null
+	min_val = 0
+
+/datum/config_entry/number/minute_click_limit
+	config_entry_value = 400
+	min_val = 0
+
+/datum/config_entry/number/second_click_limit
+	config_entry_value = 15
 	min_val = 0
 
 /datum/config_entry/number/error_cooldown	// The "cooldown" time for each occurrence of a unique error

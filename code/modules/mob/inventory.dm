@@ -170,8 +170,12 @@
 		return FALSE
 	return !held_items[hand_index]
 
-/mob/proc/put_in_hand(obj/item/I, hand_index)
-	if(can_put_in_hand(I, hand_index))
+/mob/proc/put_in_hand(obj/item/I, hand_index, forced = FALSE)
+	if(forced || can_put_in_hand(I, hand_index))
+		if(hand_index == null)
+			return FALSE
+		if(get_item_for_held_index(hand_index) != null)
+			dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
 		I.forceMove(src)
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
@@ -184,7 +188,6 @@
 		I.pixel_y = initial(I.pixel_y)
 		return hand_index || TRUE
 	return FALSE
-
 
 //Puts the item into the first available left hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(obj/item/I)
@@ -205,8 +208,8 @@
 
 
 //Puts the item into our active hand if possible. returns TRUE on success.
-/mob/proc/put_in_active_hand(obj/item/I)
-	return put_in_hand(I, active_hand_index)
+/mob/proc/put_in_active_hand(obj/item/I, forced = FALSE)
+	return put_in_hand(I, active_hand_index, forced)
 
 
 //Puts the item into our inactive hand if possible, returns TRUE on success
@@ -217,7 +220,7 @@
 //Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
 //If both fail it drops it on the floor and returns FALSE.
 //This is probably the main one you need to know :)
-/mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE)
+/mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, forced = FALSE)
 	if(!I)
 		return FALSE
 
@@ -241,14 +244,14 @@
 						to_chat(usr, "<span class='notice'>Your [inactive_stack.name] stack now contains [inactive_stack.get_amount()] [inactive_stack.singular_name]\s.</span>")
 						return TRUE
 
-	if(put_in_active_hand(I))
+	if(put_in_active_hand(I, forced))
 		return TRUE
 
 	var/hand = get_empty_held_index_for_side("l")
 	if(!hand)
 		hand =  get_empty_held_index_for_side("r")
 	if(hand)
-		if(put_in_hand(I, hand))
+		if(put_in_hand(I, hand, forced))
 			return TRUE
 	if(del_on_fail)
 		qdel(I)

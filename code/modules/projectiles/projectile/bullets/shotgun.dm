@@ -1,6 +1,10 @@
 /obj/item/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
 	damage = 60
+	
+/obj/item/projectile/bullet/shotgun_slug/tengauge
+	name = "10g shotgun slug"
+	damage = 72.5
 
 /obj/item/projectile/bullet/shotgun_beanbag
 	name = "beanbag slug"

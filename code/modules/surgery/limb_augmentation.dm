@@ -44,7 +44,7 @@
 	name = "augmentation"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/replace, /datum/surgery_step/saw, /datum/surgery_step/add_limb)
 	species = list(/mob/living/carbon/human)
-	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
+	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
 
 //SURGERY STEP SUCCESSES

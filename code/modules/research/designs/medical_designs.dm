@@ -44,6 +44,24 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/xlarge_beaker
+	name = "X-large Beaker"
+	id = "xlarge_beaker"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_GLASS = 2500, MAT_PLASTIC = 3000)
+	build_path = /obj/item/reagent_containers/glass/beaker/plastic
+	category = list("Medical Designs")
+
+/datum/design/meta_beaker
+	name = "Metamaterial Beaker"
+	id = "meta_beaker"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_GLASS = 2500, MAT_PLASTIC = 3000, MAT_GOLD = 1000, MAT_TITANIUM = 1000)
+	build_path = /obj/item/reagent_containers/glass/beaker/meta
+	category = list("Medical Designs")
+
 /datum/design/bluespacesyringe
 	name = "Bluespace Syringe"
 	desc = "An advanced syringe that can hold 60 units of chemicals"

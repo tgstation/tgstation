@@ -26,8 +26,7 @@
 /obj/machinery/button/door{
 	id = "piratebridge";
 	name = "Bridge Shutters Control";
-	pixel_y = -5;
-	req_access_txt = "0"
+	pixel_y = -5
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/device/radio/intercom{
@@ -164,8 +163,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
-	name = "Crew Cabin";
-	req_access_txt = "0"
+	name = "Crew Cabin"
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
@@ -275,8 +273,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
-	name = "Captain's Quarters";
-	req_access_txt = "0"
+	name = "Captain's Quarters"
 	},
 /turf/open/floor/wood,
 /area/shuttle/pirate)
@@ -408,7 +405,6 @@
 	normaldoorcontrol = 1;
 	pixel_x = -8;
 	pixel_y = -24;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/machinery/turretid{
@@ -508,8 +504,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
-	name = "Crew Quarters";
-	req_access_txt = "0"
+	name = "Crew Quarters"
 	},
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
@@ -851,7 +846,6 @@
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = -24;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -911,7 +905,6 @@
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 24;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/plating,
@@ -941,8 +934,7 @@
 	base_state = "left";
 	dir = 1;
 	icon_state = "left";
-	name = "Explosive Ordinance";
-	req_access_txt = "0"
+	name = "Explosive Ordinance"
 	},
 /obj/item/grenade/plastic/x4{
 	pixel_x = -5
@@ -1023,8 +1015,7 @@
 /area/shuttle/pirate)
 "cp" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Restrooms";
-	req_access_txt = "0"
+	name = "Unisex Restrooms"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/showroomfloor,
@@ -1064,22 +1055,15 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "cv" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
 	name = "N2 Out";
-	on = 1;
 	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
 "cw" = (
-/obj/machinery/atmospherics/components/trinary/mixer/flipped{
-	name = "Air Mixer";
-	node1_concentration = 0.8;
-	node2_concentration = 0.2;
-	on = 1;
-	target_pressure = 4500
-	},
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
 "cx" = (
@@ -1230,10 +1214,9 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "cK" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
 	name = "O2 Out";
-	on = 1;
 	target_pressure = 4500
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1555,8 +1538,7 @@
 	base_state = "right";
 	dir = 4;
 	icon_state = "right";
-	name = "Bar";
-	req_access_txt = "0"
+	name = "Bar"
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/pirate)
@@ -1581,16 +1563,14 @@
 	id = "pirateturbinevent";
 	name = "Turbine Vent Control";
 	pixel_x = -6;
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/button/door{
 	id = "pirateturbineauxvent";
 	name = "Turbine Auxiliary Vent Control";
 	pixel_x = 6;
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
@@ -1608,9 +1588,8 @@
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 2;
-	on = 1;
 	target_pressure = 4500
 	},
 /obj/machinery/button/door{
@@ -1619,7 +1598,6 @@
 	normaldoorcontrol = 1;
 	pixel_x = 6;
 	pixel_y = -24;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1733,10 +1711,7 @@
 /area/shuttle/pirate)
 "dN" = (
 /obj/machinery/igniter{
-	icon_state = "igniter0";
-	id = "pirateincinerator";
-	luminosity = 2;
-	on = 0
+	id = "pirateincinerator"
 	},
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
@@ -1747,9 +1722,8 @@
 /turf/open/floor/engine/vacuum,
 /area/shuttle/pirate)
 "dP" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	frequency = 1441;
 	id = "inc_in"
 	},
 /obj/structure/sign/warning/vacuum/external{

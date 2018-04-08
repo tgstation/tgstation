@@ -80,6 +80,7 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
 /obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
+	. = ..()
 	var/mob/living/carbon/M = usr
 	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return
@@ -146,3 +147,44 @@
 		qdel(src)
 	return TRUE
 
+//Wheelys
+/obj/vehicle/ridden/scooter/wheelys
+	name = "Wheely-Heels"
+	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either."
+	icon = null
+	density = FALSE
+
+/obj/vehicle/ridden/scooter/wheelys/Initialize()
+	. = ..()
+	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+	D.vehicle_move_delay = 0
+	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
+
+/obj/vehicle/ridden/scooter/wheelys/post_unbuckle_mob(mob/living/M)
+	if(!has_buckled_mobs())
+		to_chat(M, "<span class='notice'>You pop the Wheely-Heel's wheels back into place.</span>")
+		moveToNullspace()
+	return ..()
+
+/obj/vehicle/ridden/scooter/wheelys/post_buckle_mob(mob/living/M)
+	to_chat(M, "<span class='notice'>You pop out the Wheely-Heel's wheels.</span>")
+	return ..()
+
+/obj/vehicle/ridden/scooter/wheelys/Collide(atom/A)
+	. = ..()
+	if(A.density && has_buckled_mobs())
+		var/mob/living/H = buckled_mobs[1]
+		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
+		unbuckle_mob(H)
+		H.throw_at(throw_target, 4, 3)
+		H.Knockdown(30)
+		H.adjustStaminaLoss(10)
+		var/head_slot = H.get_item_by_slot(slot_head)
+		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
+			H.adjustBrainLoss(1)
+			H.updatehealth()
+		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
+		playsound(src, 'sound/effects/bang.ogg', 50, 1)

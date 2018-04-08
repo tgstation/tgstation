@@ -15,7 +15,7 @@
 	],
 
 	"security": [
-		" sec ",
+		"sec",
 		"security",
 		"shitcurity",
 		"baton",
@@ -32,22 +32,22 @@
 		"chain of command",
 		"heads of staff",
 		"head of security",
-		" hos ",
+		"hos",
 		"head of personnel",
-		" hop ",
+		"hop",
 		"head of research",
-		" rd ",
+		"rd",
 		"chief medical officer",
-		" cmo ",
+		"cmo",
 		"chief engineer",
-		" ce ",
+		"ce",
 		"captain",
 		"deathsquad",
 		"death squad",
 		"alien",
 		"xeno",
 		"abductor",
-		" ayy",
+		"ayy",
 		"gray",
 		"grey",
 		"ufo",
@@ -66,7 +66,9 @@
 		"clown",
 		"honk",
 		"banana",
-		"slip"
+		"slip",
+		"slipped",
+		"slipping"
 	],
 
 	"greytide": [
@@ -84,7 +86,11 @@
 		"lizard",
 		"ligger",
 		"hiss",
-		"wag"
+		"hissed",
+		"hissing",
+		"wag",
+		"wagged",
+		"wagging"
 	],
 
 	"skeletons": [

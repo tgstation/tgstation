@@ -157,8 +157,7 @@
 /area/shuttle/arrival)
 "n" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Arrival Shuttle Airlock";
-	req_access_txt = "0"
+	name = "Arrival Shuttle Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -271,7 +270,6 @@
 "C" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	req_access_txt = "0";
 	use_power = 0
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -344,8 +342,7 @@
 	dir = 2
 	},
 /obj/machinery/door/airlock/shuttle{
-	name = "Arrival Shuttle Airlock";
-	req_access_txt = "0"
+	name = "Arrival Shuttle Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1

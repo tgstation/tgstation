@@ -847,6 +847,9 @@
 		return ..()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(issilicon(user)) //How does AI know what plant is?
 		return
 	if(harvest)

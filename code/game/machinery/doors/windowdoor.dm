@@ -201,10 +201,6 @@
 		take_damage(round(exposed_volume / 200), BURN, 0, 0)
 	..()
 
-
-/obj/machinery/door/window/attack_ai(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/door/window/emag_act(mob/user)
 	if(!operating && density && !(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED

@@ -825,8 +825,7 @@
 /obj/machinery/nuclearbomb/syndicate,
 /obj/machinery/door/window{
 	dir = 1;
-	name = "Theatre Stage";
-	req_access_txt = "0"
+	name = "Theatre Stage"
 	},
 /turf/open/floor/circuit/red,
 /area/shuttle/syndicate/hallway)

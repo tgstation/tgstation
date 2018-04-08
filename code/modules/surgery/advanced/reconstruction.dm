@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/reconstruction
+	name = "Reconstruction Surgery Disk"
 	desc = "The disk provides instructions on how to repair a body without the use of chemicals."
 	surgeries = list(/datum/surgery/advanced/reconstruction)
 
@@ -15,7 +16,7 @@
 				/datum/surgery_step/close)
 
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list("chest")
+	possible_locs = list(BODY_ZONE_CHEST)
 	requires_bodypart_type = 0
 
 /datum/surgery_step/reconstruct

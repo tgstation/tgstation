@@ -53,9 +53,12 @@
 			return TryToSwitchState(user)
 
 /obj/structure/mineral_door/attack_paw(mob/user)
-	return TryToSwitchState(user)
+	return attack_hand(user)
 
 /obj/structure/mineral_door/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	return TryToSwitchState(user)
 
 /obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target)
@@ -131,7 +134,7 @@
 			to_chat(user, "<span class='notice'>You finish digging.</span>")
 			deconstruct(TRUE)
 	else if(user.a_intent != INTENT_HARM)
-		attack_hand(user)
+		return attack_hand(user)
 	else
 		return ..()
 

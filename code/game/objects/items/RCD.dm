@@ -6,6 +6,7 @@
 CONTAINS:
 RCD
 ARCD
+RLD
 */
 
 /obj/item/construction
@@ -30,6 +31,8 @@ ARCD
 	var/sheetmultiplier	= 4 //Controls the amount of matter added for each glass/metal sheet, triple for plasteel
 	var/plasteelmultiplier = 3 //Plasteel is worth 3 times more than glass or metal
 	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on the device blinks yellow.</span>"
+	var/has_ammobar = FALSE	//controls whether or not does update_icon apply ammo indicator overlays
+	var/ammo_sections = 10	//amount of divisions in the ammo indicator overlay/number of ammo indicator states
 
 /obj/item/construction/Initialize()
 	. = ..()
@@ -66,6 +69,7 @@ ARCD
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
 	else
 		return ..()
+	update_icon()	//ensures that ammo counters (if present) get updated
 
 /obj/item/construction/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
 	var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
@@ -100,6 +104,8 @@ ARCD
 	. = matter >= amount
 	if(!. && user)
 		to_chat(user, no_ammo_message)
+		if(has_ammobar)
+			flick("[icon_state]_empty", src)	//somewhat hacky thing to make RCDs with ammo counters actually have a blinking yellow light
 	return .
 
 /obj/item/construction/proc/range_check(atom/A, mob/user)
@@ -124,6 +130,7 @@ ARCD
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_matter = 160
 	flags_2 = NO_MAT_REDEMPTION_2
+	has_ammobar = TRUE
 	var/mode = 1
 	var/ranged = FALSE
 	var/airlock_type = /obj/machinery/door/airlock
@@ -134,7 +141,6 @@ ARCD
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
 	var/delay_mod = 1
 	var/canRturf = FALSE //Variable for R walls to deconstruct them
-
 
 /obj/item/construction/rcd/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
@@ -381,6 +387,16 @@ ARCD
 	explosion(src, 0, 0, 3, 1, flame_range = 1)
 	qdel(src)
 
+/obj/item/construction/rcd/update_icon()
+	..()
+	if(has_ammobar)
+		var/ratio = CEILING((matter / max_matter) * ammo_sections, 1)
+		cut_overlays()	//To prevent infinite stacking of overlays
+		add_overlay("[icon_state]_charge[ratio]")
+
+/obj/item/construction/rcd/Initialize()
+	..()
+	update_icon()
 
 /obj/item/construction/rcd/borg
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
@@ -419,6 +435,8 @@ ARCD
 
 /obj/item/construction/rcd/combat
 	name = "industrial RCD"
+	icon_state = "ircd"
+	item_state = "ircd"
 	max_matter = 500
 	matter = 500
 	canRturf = TRUE
@@ -456,7 +474,8 @@ ARCD
 	delay_mod = 0.6
 	ranged = TRUE
 	icon_state = "arcd"
-	item_state = "rcd"
+	item_state = "oldrcd"
+	has_ammobar = FALSE
 
 /obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)
 	if(!range_check(A,user))

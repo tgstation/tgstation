@@ -27,6 +27,18 @@
 /obj/item/grenade/chem_grenade/examine(mob/user)
 	display_timer = (stage == READY && !nadeassembly)	//show/hide the timer based on assembly state
 	..()
+	if(user.can_see_reagents())
+		var/count = 0
+		if(beakers.len)
+			to_chat(user, "<span class='notice'>You scan the grenade and detect the following reagents:</span>")
+			for(var/obj/item/reagent_containers/glass/G in beakers)
+				var/textcount = thtotext(++count)
+				for(var/datum/reagent/R in G.reagents.reagent_list)
+					to_chat(user, "<span class='notice'>[R.volume] units of [R.name] in the [textcount] beaker.</span>")
+			if(beakers.len == 1)
+				to_chat(user, "<span class='notice'>You detect no second beaker in the grenade.</span>")
+		else
+			to_chat(user, "<span class='notice'>You scan the grenade, but detect nothing.</span>")
 
 
 /obj/item/grenade/chem_grenade/attack_self(mob/user)
@@ -547,6 +559,23 @@
 	B1.reagents.add_reagent("fungalspores", 200)
 	B2.reagents.add_reagent("blood", 250)
 	B2.reagents.add_reagent("sugar", 50)
+
+	beakers += B1
+	beakers += B2
+
+/obj/item/grenade/chem_grenade/holy
+	name = "holy hand grenade"
+	desc = "A vessel of concentrated religious might."
+	icon_state = "holy_grenade"
+	stage = READY
+
+/obj/item/grenade/chem_grenade/holy/Initialize()
+	. = ..()
+	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+
+	B1.reagents.add_reagent("potassium", 100)
+	B2.reagents.add_reagent("holywater", 100)
 
 	beakers += B1
 	beakers += B2

@@ -231,6 +231,12 @@
 	icon_state = "shadyjim"
 	spawn_type = /obj/item/clothing/mask/cigarette/shadyjims
 
+/obj/item/storage/fancy/cigarettes/cigpack_xeno
+	name = "\improper Xeno Filtered packet"
+	desc = "Loaded with 100% pure slime. And also nicotine."
+	icon_state = "slime"
+	spawn_type = /obj/item/clothing/mask/cigarette/xeno
+
 /obj/item/storage/fancy/rollingpapers
 	name = "rolling paper pack"
 	desc = "A pack of Nanotrasen brand rolling papers."

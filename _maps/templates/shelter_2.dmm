@@ -151,7 +151,6 @@
 	alert = 0;
 	desc = "A display case containing an expensive forgery, probably.";
 	pixel_y = -4;
-	req_access = null;
 	req_access_txt = "48";
 	start_showpiece_type = /obj/item/fakeartefact
 	},

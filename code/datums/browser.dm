@@ -312,8 +312,9 @@
 /datum/browser/modal/preflikepicker
 	var/settings = list()
 	var/icon/preview_icon = null
+	var/datum/callback/preview_update
 
-/datum/browser/modal/preflikepicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/settings,inputtype="checkbox", width = 400, height, slidecolor)
+/datum/browser/modal/preflikepicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/settings,inputtype="checkbox", width = 600, height, slidecolor)
 	if (!User)
 		return
 	src.settings = settings
@@ -322,12 +323,20 @@
 	set_content(ShowChoices(User))
 
 /datum/browser/modal/preflikepicker/proc/ShowChoices(mob/user)
+	if (settings["preview_callback"])
+		var/datum/callback/callback = settings["preview_callback"]
+		preview_icon = callback.Invoke(settings)
+		if (preview_icon)
+			user << browse_rsc(preview_icon, "previewicon.png")
 	var/dat = ""
 
 	for (var/name in settings["mainsettings"])
 		var/setting = settings["mainsettings"][name]
 		if (setting["type"] == "datum")
-			dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
+			if (setting["subtypesonly"])
+				dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;subtypesonly=1;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
+			else
+				dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
 		else
 			dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;type=[setting["type"]]'>[setting["value"]]</a><BR>"
 
@@ -354,7 +363,13 @@
 		var/setting = href_list["setting"]
 		switch (href_list["type"])
 			if ("datum")
-				settings["mainsettings"][setting]["value"] = pick_closest_path(null, make_types_fancy(typesof(text2path(href_list["path"]))))
+				var/oldval = settings["mainsettings"][setting]["value"]
+				if (href_list["subtypesonly"])
+					settings["mainsettings"][setting]["value"] = pick_closest_path(null, make_types_fancy(subtypesof(text2path(href_list["path"]))))
+				else
+					settings["mainsettings"][setting]["value"] = pick_closest_path(null, make_types_fancy(typesof(text2path(href_list["path"]))))
+				if (isnull(settings["mainsettings"][setting]["value"]))
+					settings["mainsettings"][setting]["value"] = oldval
 			if ("string")
 				settings["mainsettings"][setting]["value"] = stripped_input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]")
 			if ("number")
@@ -363,6 +378,9 @@
 				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("Yes","No")
 			if ("ckey")
 				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("none") + GLOB.directory
+		if (settings["mainsettings"][setting]["callback"])
+			var/datum/callback/callback = settings["mainsettings"][setting]["callback"]
+			settings = callback.Invoke(settings)
 	if (href_list["button"])
 		var/button = text2num(href_list["button"])
 		if (button <= 3 && button >= 1)

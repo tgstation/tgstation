@@ -109,7 +109,6 @@
 	icon_state = "night"
 	item_state = "glasses"
 	darkness_view = 8
-	vision_flags = SEE_BLACKNESS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
@@ -263,12 +262,13 @@
 	tint = 3			// to make them blind
 
 /obj/item/clothing/glasses/sunglasses/blindfold/equipped(mob/living/carbon/human/user, slot)
-	..()
-	user.become_blind("blindfold")
+	. = ..()
+	if(slot == slot_glasses)
+		user.become_blind("blindfold_[REF(src)]")
 
 /obj/item/clothing/glasses/sunglasses/blindfold/dropped(mob/living/carbon/human/user)
 	..()
-	user.cure_blind("blindfold")
+	user.cure_blind("blindfold_[REF(src)]")
 
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks flashes."

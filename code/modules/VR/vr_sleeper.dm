@@ -23,19 +23,13 @@
 	sparks = new /datum/effect_system/spark_spread()
 	sparks.set_up(2,0)
 	sparks.attach(src)
-
+	build_spawnpoints()
 	update_icon()
 
-	if(!available_vr_spawnpoints || !available_vr_spawnpoints.len) //(re)build spawnpoint lists
-		available_vr_spawnpoints = list()
-		for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
-			available_vr_spawnpoints[V.vr_category] = list()
-			var/turf/T = get_turf(V)
-			if(T)
-				available_vr_spawnpoints[V.vr_category] |= T
-
-
 /obj/machinery/vr_sleeper/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(occupant)
 		ui_interact(user)
 	else
@@ -44,14 +38,11 @@
 		else
 			open_machine()
 
-
 /obj/machinery/vr_sleeper/relaymove(mob/user)
 	open_machine()
 
-
 /obj/machinery/vr_sleeper/container_resist(mob/living/user)
 	open_machine()
-
 
 /obj/machinery/vr_sleeper/Destroy()
 	open_machine()
@@ -59,15 +50,15 @@
 	QDEL_NULL(sparks)
 	return ..()
 
+/obj/machinery/vr_sleeper/hugbox/emag_act(mob/user)
+	return
 
 /obj/machinery/vr_sleeper/emag_act(mob/user)
 	you_die_in_the_game_you_die_for_real = TRUE
 	sparks.start()
 
-
 /obj/machinery/vr_sleeper/update_icon()
 	icon_state = "[initial(icon_state)][state_open ? "-open" : ""]"
-
 
 /obj/machinery/vr_sleeper/open_machine()
 	if(!state_open)
@@ -77,19 +68,16 @@
 			SStgui.close_user_uis(occupant, src)
 		..()
 
-
 /obj/machinery/vr_sleeper/close_machine()
 	..()
 	if(occupant)
 		ui_interact(occupant)
-
 
 /obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "vr_sleeper", "VR Sleeper", 475, 340, master_ui, state)
 		ui.open()
-
 
 /obj/machinery/vr_sleeper/ui_act(action, params)
 	if(..())
@@ -131,7 +119,6 @@
 				open_machine()
 			. = TRUE
 
-
 /obj/machinery/vr_sleeper/ui_data(mob/user)
 	var/list/data = list()
 	if(vr_human && !QDELETED(vr_human))
@@ -149,10 +136,19 @@
 	data["isoccupant"] = (user == occupant)
 	return data
 
-
 /obj/machinery/vr_sleeper/proc/get_vr_spawnpoint() //proc so it can be overriden for team games or something
 	return safepick(available_vr_spawnpoints[vr_category])
 
+/obj/machinery/vr_sleeper/proc/build_spawnpoints(rebuild = FALSE) 
+	if (rebuild)
+		available_vr_spawnpoints = null
+	if(!available_vr_spawnpoints || !available_vr_spawnpoints.len) //(re)build spawnpoint lists
+		available_vr_spawnpoints = list()
+		for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
+			available_vr_spawnpoints[V.vr_category] = list()
+			var/turf/T = get_turf(V)
+			if(T)
+				available_vr_spawnpoints[V.vr_category] |= T
 
 /obj/machinery/vr_sleeper/proc/build_virtual_human(mob/living/carbon/human/H, location, transfer = TRUE)
 	if(H)
@@ -176,12 +172,16 @@
 
 /obj/machinery/vr_sleeper/proc/cleanup_vr_human()
 	if(vr_human)
-		vr_human.death(0)
-
+		vr_human.death(FALSE)
 
 /obj/effect/landmark/vr_spawn //places you can spawn in VR, auto selected by the vr_sleeper during get_vr_spawnpoint()
 	var/vr_category = "default" //So we can have specific sleepers, eg: "Basketball VR Sleeper", etc.
 
+/obj/effect/landmark/vr_spawn/team_1
+	vr_category = "team_1"
+
+/obj/effect/landmark/vr_spawn/team_2
+	vr_category = "team_2"	
 
 /datum/outfit/vr_basic
 	name = "basic vr"

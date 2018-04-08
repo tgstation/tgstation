@@ -149,10 +149,11 @@
 /datum/holiday/april_fools
 	name = APRIL_FOOLS
 	begin_day = 1
-	end_day = 2
+	end_day = 5
 	begin_month = APRIL
 
 /datum/holiday/april_fools/celebrate()
+	SSjob.overflow_role = "Clown"
 	SSticker.login_music = 'sound/ambience/clown.ogg'
 	for(var/mob/dead/new_player/P in GLOB.mob_list)
 		if(P.client)

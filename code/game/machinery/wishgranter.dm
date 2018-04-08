@@ -12,6 +12,9 @@
 	var/insisting = 0
 
 /obj/machinery/wish_granter/attack_hand(mob/living/carbon/user)
+	. = ..()
+	if(.)
+		return
 	if(charges <= 0)
 		to_chat(user, "The Wish Granter lies silent.")
 		return

@@ -529,8 +529,7 @@
 	base_state = "right";
 	dir = 8;
 	icon_state = "right";
-	name = "Unisex Showers";
-	req_access_txt = "0"
+	name = "Unisex Showers"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
@@ -609,8 +608,7 @@
 	},
 /obj/machinery/camera/motion{
 	c_tag = "Armory Motion Sensor";
-	dir = 2;
-	name = "motion-sensitive security camera"
+	dir = 2
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -626,7 +624,6 @@
 	name = "Cell Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -642,7 +639,6 @@
 	name = "Cell Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -819,8 +815,7 @@
 /area/security/prison)
 "ach" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Restroom";
-	req_access_txt = "0"
+	name = "Unisex Restroom"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
@@ -977,7 +972,6 @@
 	name = "Cell Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -1932,15 +1926,6 @@
 	},
 /turf/open/floor/plating,
 /area/security/main)
-"aeD" = (
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 8
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_3)
-"aeE" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_3)
 "aeG" = (
 /obj/structure/cable,
 /obj/machinery/power/solar{
@@ -2025,11 +2010,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	aiControlDisabled = 0;
-	id_tag = null;
-	locked = 0;
+	aiControlDisabled = 1;
 	name = "Prisoner Transfer Centre";
-	req_access = null;
 	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/dark,
@@ -2278,8 +2260,7 @@
 /area/security/main)
 "afo" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Pod Three";
-	req_access_txt = "0"
+	name = "Escape Pod Three"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -2287,51 +2268,16 @@
 /turf/open/floor/plating,
 /area/security/main)
 "afp" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Escape Pod Airlock"
-	},
-/obj/docking_port/mobile/pod{
+/obj/docking_port/stationary{
 	dir = 4;
-	id = "pod3";
-	name = "escape pod 3";
-	port_direction = 2;
-	preferred_direction = 4;
-	timid = 0
+	dwidth = 1;
+	height = 4;
+	name = "escape pod loader";
+	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
+	width = 3
 	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_3)
-"afq" = (
-/obj/machinery/computer/shuttle/pod{
-	pixel_y = -32;
-	possible_destinations = "pod_lavaland3";
-	shuttleId = "pod3"
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_3)
-"afr" = (
-/obj/item/device/radio/intercom{
-	pixel_y = 25
-	},
-/obj/item/storage/pod{
-	pixel_x = 6;
-	pixel_y = -32
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_3)
-"afs" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/pod_3)
+/turf/open/space/basic,
+/area/space)
 "aft" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
@@ -2465,7 +2411,6 @@
 /area/security/prison)
 "afK" = (
 /obj/machinery/door/airlock/security/glass{
-	id_tag = null;
 	name = "Evidence Storage";
 	req_access_txt = "63"
 	},
@@ -2489,7 +2434,6 @@
 "afO" = (
 /obj/machinery/door/airlock/command{
 	name = "Command Tool Storage";
-	req_access = null;
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel,
@@ -2498,7 +2442,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/command{
 	name = "Command Tool Storage";
-	req_access = null;
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel/dark,
@@ -2659,7 +2602,6 @@
 "agl" = (
 /obj/machinery/door/airlock/security{
 	name = "Interrogation";
-	req_access = null;
 	req_access_txt = "63"
 	},
 /turf/open/floor/plasteel/dark,
@@ -3232,8 +3174,7 @@
 	base_state = "left";
 	dir = 4;
 	icon_state = "left";
-	name = "Brig Infirmary";
-	req_access_txt = "0"
+	name = "Brig Infirmary"
 	},
 /turf/open/floor/plasteel/whitered/side{
 	dir = 4
@@ -3406,8 +3347,7 @@
 	id = "Secure Gate";
 	name = "Cell Shutters";
 	pixel_x = -27;
-	pixel_y = -2;
-	req_access_txt = "0"
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -3689,8 +3629,7 @@
 	base_state = "right";
 	dir = 4;
 	icon_state = "right";
-	name = "Brig Infirmary";
-	req_access_txt = "0"
+	name = "Brig Infirmary"
 	},
 /turf/open/floor/plasteel/whitered/side{
 	dir = 4
@@ -3889,7 +3828,6 @@
 "aiW" = (
 /obj/machinery/door/airlock/security{
 	name = "Interrogation";
-	req_access = null;
 	req_access_txt = "63"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -4231,7 +4169,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
 	name = "Brig";
-	req_access = null;
 	req_access_txt = "63; 42"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -4308,7 +4245,6 @@
 "ajW" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access = null;
 	req_access_txt = "10; 13"
 	},
 /obj/structure/cable{
@@ -4373,7 +4309,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
 	name = "Labor Shuttle";
-	req_access = null;
 	req_access_txt = "2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -4784,6 +4719,9 @@
 	dir = 4;
 	name = "Prosecution"
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -4826,7 +4764,6 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access = null;
 	req_access_txt = "10; 13"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -4934,8 +4871,7 @@
 	id = "briggate";
 	name = "Desk Shutters";
 	pixel_x = -26;
-	pixel_y = 6;
-	req_access_txt = "0"
+	pixel_y = 6
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -5288,7 +5224,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access = null;
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
@@ -5669,8 +5604,7 @@
 	name = "exit button";
 	normaldoorcontrol = 1;
 	pixel_x = 26;
-	pixel_y = -6;
-	req_access_txt = "0"
+	pixel_y = -6
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -5772,7 +5706,6 @@
 /area/maintenance/solars/port/fore)
 "anI" = (
 /obj/machinery/door/airlock/engineering{
-	locked = 0;
 	name = "Port Bow Solar Access";
 	req_access_txt = "10"
 	},
@@ -5821,7 +5754,6 @@
 /obj/machinery/door/airlock/security{
 	id_tag = "laborexit";
 	name = "Labor Shuttle";
-	req_access = null;
 	req_access_txt = "63"
 	},
 /turf/open/floor/plasteel,
@@ -6179,10 +6111,9 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "aoL" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Air Out";
-	on = 1
+	name = "Air Out"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -6427,10 +6358,9 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "apw" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "Air In";
-	on = 1
+	name = "Air In"
 	},
 /obj/effect/landmark/blobstart,
 /obj/effect/turf_decal/stripes/line{
@@ -6512,16 +6442,9 @@
 /obj/machinery/portable_atmospherics/canister/water_vapor,
 /turf/open/floor/plasteel,
 /area/janitor)
-"apH" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/pod_1)
 "apI" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	frequency = 1441;
-	id = "waste_out";
-	volume_rate = 200
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+	dir = 1
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -6529,10 +6452,6 @@
 "apJ" = (
 /turf/closed/wall,
 /area/construction/mining/aux_base)
-"apK" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/pod_2)
 "apL" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -6549,11 +6468,8 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/port/fore)
 "apN" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
 "apO" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -6740,7 +6656,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -6801,7 +6716,6 @@
 "aqv" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access";
-	req_access = null;
 	req_access_txt = "13"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -6814,7 +6728,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/engineering{
-	locked = 0;
 	name = "Starboard Bow Solar Access";
 	req_access_txt = "10"
 	},
@@ -6861,9 +6774,6 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
-"aqF" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_1)
 "aqG" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
@@ -6872,20 +6782,10 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
-"aqH" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_2)
-"aqI" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "aqJ" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
 	name = "External Access";
-	req_access = null;
 	req_access_txt = "13"
 	},
 /turf/open/floor/plating,
@@ -6907,13 +6807,6 @@
 /obj/machinery/meter,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"aqN" = (
-/obj/structure/closet/secure_closet/miner/unlocked,
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "aqO" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -7179,15 +7072,6 @@
 "arB" = (
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/entry)
-"arC" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"arD" = (
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "arE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/yellow/side{
@@ -7518,7 +7402,6 @@
 	name = "Cabin Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -7565,12 +7448,6 @@
 "asC" = (
 /turf/open/floor/plasteel/airless,
 /area/space/nearstation)
-"asD" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "asE" = (
 /turf/closed/wall,
 /area/hallway/secondary/entry)
@@ -7578,10 +7455,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
-"asG" = (
-/obj/machinery/light,
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "asH" = (
 /obj/structure/closet/toolcloset,
 /turf/open/floor/plasteel/yellow/side{
@@ -7617,7 +7490,6 @@
 	name = "Cabin Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -7785,27 +7657,6 @@
 	dir = 8
 	},
 /area/crew_quarters/dorms)
-"atk" = (
-/obj/machinery/camera{
-	c_tag = "Auxillary Mining Base";
-	dir = 8;
-	network = list("ss13","auxbase")
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"atl" = (
-/obj/docking_port/mobile/auxillary_base{
-	dheight = 4;
-	dir = 4;
-	dwidth = 4;
-	height = 9;
-	width = 9;
-	timid = 0
-	},
-/obj/machinery/bluespace_beacon,
-/obj/machinery/computer/auxillary_base,
-/turf/closed/wall,
-/area/shuttle/auxillary_base)
 "atm" = (
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
@@ -7824,10 +7675,7 @@
 /area/crew_quarters/heads/hos)
 "atp" = (
 /obj/machinery/door/airlock/external{
-	name = "Construction Zone";
-	req_access = null;
-	req_access_txt = "0";
-	req_one_access_txt = "0"
+	name = "Construction Zone"
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
@@ -7888,8 +7736,7 @@
 /obj/machinery/button/door{
 	id = "maint3";
 	name = "Blast Door Control C";
-	pixel_y = 24;
-	req_access_txt = "0"
+	pixel_y = 24
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -8223,7 +8070,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -8340,10 +8186,6 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/department/electrical)
-"auN" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "auO" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
@@ -9121,15 +8963,13 @@
 	id = "maint2";
 	name = "Blast Door Control B";
 	pixel_x = -28;
-	pixel_y = 4;
-	req_access_txt = "0"
+	pixel_y = 4
 	},
 /obj/machinery/button/door{
 	id = "maint1";
 	name = "Blast Door Control A";
 	pixel_x = -28;
-	pixel_y = -6;
-	req_access_txt = "0"
+	pixel_y = -6
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -9257,12 +9097,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
-"awX" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "awY" = (
 /obj/machinery/light{
 	dir = 1
@@ -9932,8 +9766,7 @@
 "ayK" = (
 /obj/structure/closet/crate/rcd,
 /obj/machinery/camera/motion{
-	c_tag = "EVA Motion Sensor";
-	name = "motion-sensitive security camera"
+	c_tag = "EVA Motion Sensor"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/eva)
@@ -10039,7 +9872,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -10427,8 +10259,7 @@
 /area/ai_monitored/storage/eva)
 "azX" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Showers";
-	req_access_txt = "0"
+	name = "Unisex Showers"
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -11280,7 +11111,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -11978,8 +11808,7 @@
 /area/crew_quarters/theatre)
 "aDS" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Showers";
-	req_access_txt = "0"
+	name = "Unisex Showers"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -12181,13 +12010,6 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
-"aEp" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/structure/ore_box,
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "aEz" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -12298,8 +12120,7 @@
 /area/security/checkpoint/auxiliary)
 "aEL" = (
 /obj/machinery/door/airlock{
-	name = "Garden";
-	req_access_txt = "0"
+	name = "Garden"
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics/garden)
@@ -12490,8 +12311,7 @@
 /area/crew_quarters/toilet)
 "aFh" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Restrooms";
-	req_access_txt = "0"
+	name = "Unisex Restrooms"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -12640,13 +12460,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
-"aFD" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "aFG" = (
 /turf/open/floor/plasteel/arrival{
 	dir = 4
@@ -13280,7 +13093,6 @@
 "aGZ" = (
 /obj/machinery/door/airlock/security{
 	name = "Security Checkpoint";
-	req_access = null;
 	req_access_txt = "1"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -13939,7 +13751,6 @@
 	id = "aux_base_shutters";
 	name = "Public Shutters Control";
 	pixel_x = 24;
-	req_access_txt = "0";
 	req_one_access_txt = "32;47;48"
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -14514,8 +14325,6 @@
 "aKc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
-	lockdownbyai = 0;
-	locked = 0;
 	name = "Gateway Access";
 	req_access_txt = "62"
 	},
@@ -15013,7 +14822,6 @@
 "aLu" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Auxillary Base Construction";
-	req_access_txt = "0";
 	req_one_access_txt = "32;47;48"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -15771,8 +15579,7 @@
 "aNH" = (
 /obj/machinery/door/window{
 	dir = 4;
-	name = "Theatre Stage";
-	req_access_txt = "0"
+	name = "Theatre Stage"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -16983,8 +16790,7 @@
 /area/maintenance/port)
 "aRc" = (
 /obj/machinery/door/airlock{
-	name = "Port Emergency Storage";
-	req_access_txt = "0"
+	name = "Port Emergency Storage"
 	},
 /turf/open/floor/plating,
 /area/storage/emergency/port)
@@ -19336,7 +19142,6 @@
 "aXl" = (
 /obj/machinery/door/window/southright{
 	name = "Bar Door";
-	req_access_txt = "0";
 	req_one_access_txt = "25;28"
 	},
 /turf/open/floor/plasteel/bar,
@@ -19362,8 +19167,7 @@
 /area/hydroponics)
 "aXp" = (
 /obj/machinery/door/airlock{
-	name = "Unisex Restrooms";
-	req_access_txt = "0"
+	name = "Unisex Restrooms"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/freezer,
@@ -19487,9 +19291,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	id_tag = null;
-	name = "Port Docking Bay 2";
-	req_access_txt = "0"
+	name = "Port Docking Bay 2"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -19817,7 +19619,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
-	locked = 0;
 	name = "AI Upload Access";
 	req_access_txt = "16"
 	},
@@ -20300,7 +20101,6 @@
 "aZQ" = (
 /obj/machinery/door/airlock/command{
 	name = "Conference Room";
-	req_access = null;
 	req_access_txt = "19"
 	},
 /obj/structure/cable{
@@ -20340,7 +20140,6 @@
 "aZX" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Office";
-	req_access = null;
 	req_access_txt = "20"
 	},
 /obj/structure/cable{
@@ -22141,16 +21940,14 @@
 "beK" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
-	name = "Port Docking Bay 4";
-	req_access_txt = "0"
+	name = "Port Docking Bay 4"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "beL" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
-	name = "Port Docking Bay 3";
-	req_access_txt = "0"
+	name = "Port Docking Bay 3"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -23122,8 +22919,7 @@
 /area/medical/morgue)
 "bhr" = (
 /obj/machinery/door/airlock{
-	name = "Starboard Emergency Storage";
-	req_access_txt = "0"
+	name = "Starboard Emergency Storage"
 	},
 /turf/open/floor/plating,
 /area/storage/emergency/starboard)
@@ -23135,8 +22931,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
 	name = "Mech Bay";
-	req_access_txt = "29";
-	req_one_access_txt = "0"
+	req_access_txt = "29"
 	},
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
@@ -24651,7 +24446,6 @@
 "blb" = (
 /obj/machinery/door/airlock/command{
 	name = "Captain's Quarters";
-	req_access = null;
 	req_access_txt = "20"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -25226,7 +25020,6 @@
 "bms" = (
 /obj/machinery/door/airlock/command{
 	name = "Head of Personnel";
-	req_access = null;
 	req_access_txt = "57"
 	},
 /obj/structure/cable{
@@ -25284,8 +25077,7 @@
 /area/crew_quarters/heads/captain)
 "bmA" = (
 /obj/machinery/door/airlock{
-	name = "Private Restroom";
-	req_access_txt = "0"
+	name = "Private Restroom"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/heads/captain)
@@ -25891,8 +25683,7 @@
 	},
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Gravity Generator";
-	req_access_txt = "11";
-	req_one_access_txt = "0"
+	req_access_txt = "11"
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
@@ -26345,8 +26136,7 @@
 /obj/machinery/door/window/northleft{
 	dir = 8;
 	icon_state = "left";
-	name = "Reception Window";
-	req_access_txt = "0"
+	name = "Reception Window"
 	},
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
@@ -26612,7 +26402,6 @@
 "bpD" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
 	name = "Chemistry Lab";
 	req_access_txt = "5; 33"
 	},
@@ -27479,7 +27268,6 @@
 /area/science/explab)
 "brE" = (
 /obj/machinery/door/airlock/maintenance/abandoned{
-	req_access_txt = "0";
 	req_one_access_txt = "8;12"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -27866,8 +27654,7 @@
 "bsw" = (
 /obj/machinery/door/airlock/research{
 	name = "Robotics Lab";
-	req_access_txt = "29";
-	req_one_access_txt = "0"
+	req_access_txt = "29"
 	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
@@ -29078,8 +28865,7 @@
 /area/medical/medbay/central)
 "bvl" = (
 /obj/machinery/door/airlock/medical/glass{
-	name = "Surgery Observation";
-	req_access_txt = "0"
+	name = "Surgery Observation"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -30115,7 +29901,6 @@
 "bxG" = (
 /obj/machinery/door/airlock/command{
 	name = "Head of Personnel";
-	req_access = null;
 	req_access_txt = "57"
 	},
 /obj/structure/cable{
@@ -30318,7 +30103,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
 	name = "Server Room";
-	req_access = null;
 	req_access_txt = "30"
 	},
 /obj/structure/cable{
@@ -30705,9 +30489,7 @@
 /area/medical/sleeper)
 "bzc" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Recovery Room";
-	req_access_txt = "0"
+	name = "Recovery Room"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
@@ -30861,11 +30643,7 @@
 /turf/open/floor/plating,
 /area/science/server)
 "bzx" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	target_temperature = 80;
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/dark,
 /area/science/server)
@@ -32783,7 +32561,6 @@
 /area/maintenance/aft)
 "bDW" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
 	name = "Medbay Storage";
 	req_access_txt = "5"
 	},
@@ -32831,7 +32608,6 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
 	name = "Medbay Storage";
 	req_access_txt = "5"
 	},
@@ -33623,7 +33399,6 @@
 /area/science/mixing)
 "bFY" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0";
 	req_one_access_txt = "8;12"
 	},
 /obj/structure/cable{
@@ -34975,7 +34750,6 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "Mining Dock Airlock";
-	req_access = null;
 	req_access_txt = "48";
 	shuttledocked = 1
 	},
@@ -36467,7 +36241,7 @@
 	id = "mixingsparker";
 	pixel_x = 25
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxins_mixing_output{
 	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
@@ -36478,9 +36252,9 @@
 	master_tag = "tox_airlock_control";
 	pixel_y = 24
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	on = 1
+	
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
@@ -36631,8 +36405,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Distro to Waste";
-	on = 0
+	name = "Distro to Waste"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -36643,11 +36416,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/meter{
-	frequency = 1441;
-	id_tag = "waste_meter";
-	name = "Waste Loop"
-	},
+/obj/machinery/meter/atmos/atmos_waste_loop,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bMU" = (
@@ -36660,11 +36429,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
 	dir = 2
 	},
-/obj/machinery/meter{
-	frequency = 1441;
-	id_tag = "distro_meter";
-	name = "Distribution Loop"
-	},
+/obj/machinery/meter/atmos/distro_loop,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bMW" = (
@@ -36674,10 +36439,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bMX" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Air to Distro";
-	on = 1
+	name = "Air to Distro"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -37107,8 +36871,7 @@
 "bOc" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	name = "Mix to Distro";
-	on = 0
+	name = "Mix to Distro"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -37135,8 +36898,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	name = "Mix to Incinerator";
-	on = 0
+	name = "Mix to Incinerator"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -37312,10 +37074,8 @@
 	id = "mixingsparker";
 	pixel_x = 25
 	},
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	frequency = 1441;
-	id = "air_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input{
+	dir = 4
 	},
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
@@ -37323,9 +37083,8 @@
 /obj/structure/sign/warning/fire{
 	pixel_y = -32
 	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/engine,
@@ -37563,10 +37322,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bPd" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 0;
-	name = "Waste In";
-	on = 1
+	name = "Waste In"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -37580,8 +37338,7 @@
 "bPf" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 0;
-	name = "Air to Mix";
-	on = 0
+	name = "Air to Mix"
 	},
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
@@ -37591,8 +37348,7 @@
 "bPg" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Mix Outlet Pump";
-	on = 0
+	name = "Mix Outlet Pump"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -37628,11 +37384,8 @@
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "bPl" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 8;
-	frequency = 1441;
-	id_tag = "mix_out";
-	name = "distro out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/mix_output{
+	dir = 8
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
@@ -38134,10 +37887,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bQs" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Mix to Filter";
-	on = 1
+	name = "Mix to Filter"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -38177,13 +37929,8 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bQz" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	frequency = 1441;
-	input_tag = "mix_in";
-	name = "Gas Mix Tank Control";
-	output_tag = "mix_out";
-	sensors = list("mix_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/mix_tank{
+	dir = 8
 	},
 /turf/open/floor/plasteel/green/side{
 	dir = 4
@@ -38194,10 +37941,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/atmos)
 "bQB" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "mix_sensor"
-	},
+/obj/machinery/air_sensor/atmos/mix_tank,
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "bQC" = (
@@ -38617,8 +38361,7 @@
 "bRE" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	name = "Pure to Mix";
-	on = 0
+	name = "Pure to Mix"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -38629,10 +38372,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bRG" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Unfiltered to Mix";
-	on = 1
+	name = "Unfiltered to Mix"
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
@@ -38669,11 +38411,8 @@
 /turf/open/space,
 /area/space/nearstation)
 "bRL" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 1441;
-	id = "mix_in";
-	pixel_y = 1
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/mix_input{
+	dir = 8
 	},
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
@@ -39588,8 +39327,7 @@
 "bTV" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "N2O Outlet Pump";
-	on = 0
+	name = "N2O Outlet Pump"
 	},
 /turf/open/floor/plasteel/escape{
 	dir = 5
@@ -39599,11 +39337,8 @@
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bTX" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 8;
-	frequency = 1441;
-	id_tag = "n2o_out";
-	name = "n2o out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrous_output{
+	dir = 8
 	},
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
@@ -39930,10 +39665,9 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUK" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Air to External";
-	on = 1
+	name = "Air to External"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -39960,24 +39694,21 @@
 "bUO" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 0;
-	name = "Mix to Port";
-	on = 0
+	name = "Mix to Port"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUP" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 0;
-	name = "Air to Port";
-	on = 0
+	name = "Air to Port"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUQ" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 0;
-	name = "Pure to Port";
-	on = 0
+	name = "Pure to Port"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -39990,13 +39721,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUT" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	frequency = 1441;
-	input_tag = "n2o_in";
-	name = "Nitrous Oxide Supply Control";
-	output_tag = "n2o_out";
-	sensors = list("n2o_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/nitrous_tank{
+	dir = 8
 	},
 /turf/open/floor/plasteel/escape{
 	dir = 4
@@ -40007,10 +39733,7 @@
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bUV" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "n2o_sensor"
-	},
+/obj/machinery/air_sensor/atmos/nitrous_tank,
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bUW" = (
@@ -40353,10 +40076,9 @@
 /turf/closed/wall,
 /area/engine/atmos)
 "bVT" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "External to Filter";
-	on = 1
+	name = "External to Filter"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -40408,10 +40130,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bWb" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "n2o";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2o{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -40424,11 +40144,8 @@
 	},
 /area/engine/atmos)
 "bWd" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 1441;
-	id = "n2o_in";
-	pixel_y = 1
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrous_input{
+	dir = 8
 	},
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
@@ -40749,8 +40466,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 0;
-	name = "Air to Port";
-	on = 0
+	name = "Air to Port"
 	},
 /obj/machinery/light{
 	dir = 8
@@ -41010,7 +40726,6 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Access";
-	req_access = null;
 	req_access_txt = "13"
 	},
 /turf/open/floor/plating,
@@ -41191,8 +40906,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Plasma Outlet Pump";
-	on = 0
+	name = "Plasma Outlet Pump"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -41203,11 +40917,8 @@
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bXX" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 8;
-	frequency = 1441;
-	id_tag = "tox_out";
-	name = "toxin out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/toxin_output{
+	dir = 8
 	},
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
@@ -41401,8 +41112,7 @@
 "bYv" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Mix to Space";
-	on = 0
+	name = "Mix to Space"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/port/aft)
@@ -41539,13 +41249,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bYT" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	frequency = 1441;
-	input_tag = "tox_in";
-	name = "Plasma Supply Control";
-	output_tag = "tox_out";
-	sensors = list("tox_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/toxin_tank{
+	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -41557,10 +41262,7 @@
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bYV" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "tox_sensor"
-	},
+/obj/machinery/air_sensor/atmos/toxin_tank,
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bYW" = (
@@ -41661,8 +41363,7 @@
 "bZl" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Mix to Port";
-	on = 0
+	name = "Mix to Port"
 	},
 /obj/machinery/light/small,
 /turf/open/floor/plating,
@@ -41861,10 +41562,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bZJ" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "plasma";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/plasma{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -41878,11 +41577,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bZL" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 1441;
-	id = "tox_in";
-	pixel_y = 1
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxin_input{
+	dir = 8
 	},
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
@@ -42243,8 +41939,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 0;
-	name = "Port to Filter";
-	on = 0
+	name = "Port to Filter"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -42531,10 +42226,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Mix to Space";
-	on = 1
+	name = "Mix to Space"
 	},
 /turf/open/floor/plating/airless,
 /area/maintenance/port/aft)
@@ -42704,8 +42398,7 @@
 "cbD" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Port to Filter";
-	on = 0
+	name = "Port to Filter"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -42723,8 +42416,7 @@
 "cbG" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "CO2 Outlet Pump";
-	on = 0
+	name = "CO2 Outlet Pump"
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
@@ -42734,11 +42426,8 @@
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "cbI" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 8;
-	frequency = 1441;
-	id_tag = "co2_out";
-	name = "co2 out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/carbon_output{
+	dir = 8
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
@@ -43098,19 +42787,13 @@
 "ccz" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
-	name = "N2 to Pure";
-	on = 0
+	name = "N2 to Pure"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "ccA" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	frequency = 1441;
-	input_tag = "co2_in";
-	name = "Carbon Dioxide Supply Control";
-	output_tag = "co2_out";
-	sensors = list("co2_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/carbon_tank{
+	dir = 8
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
@@ -43121,10 +42804,7 @@
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "ccC" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "co2_sensor"
-	},
+/obj/machinery/air_sensor/atmos/carbon_tank,
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "ccD" = (
@@ -43485,26 +43165,19 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	name = "O2 to Pure";
-	on = 0
+	name = "O2 to Pure"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cdA" = (
-/obj/machinery/atmospherics/components/trinary/mixer{
-	dir = 4;
-	node1_concentration = 0.8;
-	node2_concentration = 0.2;
-	on = 1;
-	target_pressure = 4500
+/obj/machinery/atmospherics/components/trinary/mixer/airmix{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cdB" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "co2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/co2{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -43517,11 +43190,8 @@
 	},
 /area/engine/atmos)
 "cdD" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 1441;
-	id = "co2_in";
-	pixel_y = 1
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/carbon_input{
+	dir = 8
 	},
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
@@ -44009,8 +43679,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Power Storage";
-	req_access_txt = "11";
-	req_one_access_txt = "0"
+	req_access_txt = "11"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -44079,11 +43748,7 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/break_room)
 "cfi" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 2;
-	filter_type = "n2";
-	on = 1
-	},
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cfj" = (
@@ -44317,10 +43982,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cfR" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "o2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -44475,11 +44138,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cgn" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	target_temperature = 80;
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -44723,13 +44382,8 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cgV" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 1;
-	frequency = 1441;
-	input_tag = "n2_in";
-	name = "Nitrogen Supply Control";
-	output_tag = "n2_out";
-	sensors = list("n2_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/nitrogen_tank{
+	dir = 1
 	},
 /turf/open/floor/plasteel/red/side,
 /area/engine/atmos)
@@ -44746,23 +44400,17 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cgY" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "N2 Outlet Pump";
-	on = 1
+	name = "N2 Outlet Pump"
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
 /area/engine/atmos)
 "cgZ" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 1;
-	frequency = 1441;
-	input_tag = "o2_in";
-	name = "Oxygen Supply Control";
-	output_tag = "o2_out";
-	sensors = list("o2_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/oxygen_tank{
+	dir = 1
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 0
@@ -44775,23 +44423,17 @@
 	},
 /area/engine/atmos)
 "chb" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "O2 Outlet Pump";
-	on = 1
+	name = "O2 Outlet Pump"
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 6
 	},
 /area/engine/atmos)
 "chc" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 1;
-	frequency = 1441;
-	input_tag = "air_in";
-	name = "Mixed Air Supply Control";
-	output_tag = "air_out";
-	sensors = list("air_sensor" = "Tank")
+/obj/machinery/computer/atmos_control/tank/air_tank{
+	dir = 1
 	},
 /turf/open/floor/plasteel/arrival,
 /area/engine/atmos)
@@ -44816,10 +44458,9 @@
 	c_tag = "Atmospherics South East";
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Air Outlet Pump";
-	on = 1
+	name = "Air Outlet Pump"
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 6
@@ -45118,7 +44759,6 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access = null;
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
@@ -45747,8 +45387,7 @@
 "cju" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	name = "Incinerator to Output";
-	on = 0
+	name = "Incinerator to Output"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -45918,7 +45557,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
 	name = "Engineering External Access";
-	req_access = null;
 	req_access_txt = "10;13"
 	},
 /turf/open/floor/plasteel,
@@ -46109,12 +45747,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"ckq" = (
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_2)
 "ckr" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -46321,74 +45953,50 @@
 	},
 /area/engine/engineering)
 "ckU" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "n2_sensor"
-	},
+/obj/machinery/air_sensor/atmos/nitrogen_tank,
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "ckV" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	frequency = 1441;
-	id = "n2_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrogen_input{
+	dir = 1
 	},
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "ckW" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 1;
-	frequency = 1441;
-	id_tag = "n2_out";
-	name = "n2 out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrogen_output{
+	dir = 1
 	},
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
 "ckX" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "o2_sensor"
-	},
+/obj/machinery/air_sensor/atmos/oxygen_tank,
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "ckY" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	frequency = 1441;
-	id = "o2_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/oxygen_input{
+	dir = 1
 	},
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "ckZ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 1;
-	frequency = 1441;
-	id_tag = "o2_out";
-	name = "o2 out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/oxygen_output{
+	dir = 1
 	},
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
 "cla" = (
-/obj/machinery/air_sensor{
-	frequency = 1441;
-	id_tag = "air_sensor"
-	},
+/obj/machinery/air_sensor/atmos/air_tank,
 /turf/open/floor/engine/air,
 /area/engine/atmos)
 "clb" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	frequency = 1441;
-	id = "air_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/air_input{
+	dir = 1
 	},
 /turf/open/floor/engine/air,
 /area/engine/atmos)
 "clc" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on{
-	dir = 1;
-	frequency = 1441;
-	id_tag = "air_out";
-	name = "air out"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output{
+	dir = 1
 	},
 /turf/open/floor/engine/air,
 /area/engine/atmos)
@@ -46397,8 +46005,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
-	name = "Mix to Incinerator";
-	on = 0
+	name = "Mix to Incinerator"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
@@ -46505,7 +46112,6 @@
 "clp" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access = null;
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
@@ -46753,6 +46359,18 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	airpump_tag = "incinerator_airlock_pump";
+	exterior_door_tag = "incinerator_airlock_exterior";
+	id_tag = "incinerator_airlock_control";
+	interior_door_tag = "incinerator_airlock_interior";
+	name = "Incinerator Access Console";
+	pixel_x = 38;
+	pixel_y = 6;
+	req_access_txt = "12";
+	sanitize_external = 1;
+	sensor_tag = "incinerator_airlock_sensor"
+	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "cmg" = (
@@ -46978,9 +46596,8 @@
 /turf/open/floor/plasteel,
 /area/construction)
 "cmY" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 2;
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 2
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -47000,9 +46617,8 @@
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "cmZ" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 1
 	},
 /obj/structure/sign/warning/fire{
 	pixel_x = 32
@@ -47080,7 +46696,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access = null;
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
@@ -47246,10 +46861,9 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cnF" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 2;
-	name = "Waste Out";
-	on = 1
+	name = "Waste Out"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -47461,15 +47075,13 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cop" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	frequency = 1441;
-	id = "inc_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input{
+	dir = 1
 	},
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "coq" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/incinerator_output{
 	dir = 1
 	},
 /obj/structure/sign/warning/vacuum/external{
@@ -47479,13 +47091,14 @@
 /area/maintenance/disposal/incinerator)
 "cor" = (
 /obj/machinery/igniter{
-	icon_state = "igniter0";
-	id = "Incinerator";
-	luminosity = 2;
-	on = 0
+	id = "Incinerator"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/machinery/air_sensor{
+	pixel_x = -32;
+	pixel_y = -32
 	},
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
@@ -47711,15 +47324,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"cpc" = (
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 8
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_4)
-"cpd" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_4)
 "cpe" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
@@ -47916,58 +47520,10 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	name = "Escape Pod Four";
-	req_access = null;
-	req_access_txt = "0"
+	name = "Escape Pod Four"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"cpJ" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Escape Pod Airlock"
-	},
-/obj/docking_port/mobile/pod{
-	dir = 4;
-	id = "pod4";
-	name = "escape pod 4";
-	port_direction = 2;
-	preferred_direction = 4;
-	timid = 0
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_4)
-"cpK" = (
-/obj/machinery/computer/shuttle/pod{
-	pixel_y = -32;
-	possible_destinations = "pod_lavaland2";
-	shuttleId = "pod2"
-	},
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_2)
-"cpL" = (
-/obj/item/storage/pod{
-	pixel_x = 6;
-	pixel_y = -28
-	},
-/obj/item/device/radio/intercom{
-	pixel_y = 25
-	},
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_2)
-"cpM" = (
-/obj/effect/spawner/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/pod_4)
 "cpN" = (
 /obj/machinery/power/turbine{
 	luminosity = 2
@@ -48123,10 +47679,9 @@
 /area/engine/engineering)
 "cqg" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Gas to Filter";
-	on = 1
+	name = "Gas to Filter"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -48209,18 +47764,16 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqq" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Escape Pod Airlock"
-	},
-/obj/docking_port/mobile/pod{
+/obj/docking_port/stationary{
 	dir = 8;
-	id = "pod2";
-	name = "escape pod 2";
-	port_direction = 2;
-	timid = 0
+	dwidth = 1;
+	height = 4;
+	name = "escape pod loader";
+	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
+	width = 3
 	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_2)
+/turf/open/space/basic,
+/area/space)
 "cqr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -48244,7 +47797,6 @@
 "cqu" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access";
-	req_access = null;
 	req_access_txt = "13"
 	},
 /turf/open/floor/plating,
@@ -48286,7 +47838,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
 	name = "Engineering External Access";
-	req_access = null;
 	req_access_txt = "10;13"
 	},
 /turf/open/floor/plating,
@@ -48791,7 +48342,6 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "Engineering External Access";
-	req_access = null;
 	req_access_txt = "10;13"
 	},
 /turf/open/floor/plating,
@@ -48848,18 +48398,6 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
 "csr" = (
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	name = "Incinerator Access Console";
-	airpump_tag = "incinerator_airlock_pump";
-	exterior_door_tag = "incinerator_airlock_exterior";
-	id_tag = "incinerator_access_control";
-	interior_door_tag = "incinerator_airlock_interior";
-	pixel_x = 6;
-	pixel_y = -26;
-	sanitize_external = 1;
-	sensor_tag = "incinerator_airlock_sensor";
-	req_access_txt = "12"
-	},
 /obj/machinery/button/ignition{
 	id = "Incinerator";
 	pixel_x = -6;
@@ -49036,7 +48574,6 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "MiniSat External Access";
-	req_access = null;
 	req_access_txt = "65;13"
 	},
 /turf/open/floor/plating,
@@ -49506,8 +49043,7 @@
 "cuq" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 0;
-	name = "Air Out";
-	on = 0
+	name = "Air Out"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
@@ -50629,12 +50165,6 @@
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
-"cwU" = (
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_1)
 "cwV" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
@@ -50653,39 +50183,11 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
-"cxl" = (
-/obj/machinery/computer/shuttle/pod{
-	pixel_y = -32;
-	possible_destinations = "pod_lavaland1";
-	shuttleId = "pod1"
-	},
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
 "cxn" = (
 /obj/structure/lattice,
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
 /area/space/nearstation)
-"cxx" = (
-/obj/item/storage/pod{
-	pixel_x = 6;
-	pixel_y = -28
-	},
-/obj/item/device/radio/intercom{
-	pixel_y = 25
-	},
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
 "cxA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -50704,26 +50206,12 @@
 	},
 /turf/open/space/basic,
 /area/space)
-"cxF" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Escape Pod Airlock"
-	},
-/obj/docking_port/mobile/pod{
-	dir = 8;
-	id = "pod1";
-	name = "escape pod 1";
-	port_direction = 2;
-	timid = 0
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
 "cxG" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	name = "Escape Pod Three";
-	req_access_txt = "0"
+	name = "Escape Pod Three"
 	},
 /turf/open/floor/plating,
 /area/security/main)
@@ -50746,7 +50234,6 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access = null;
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
@@ -50764,7 +50251,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
 	name = "External Access";
-	req_access = null;
 	req_access_txt = "13"
 	},
 /turf/open/floor/plating,
@@ -50812,7 +50298,6 @@
 	},
 /obj/machinery/door/airlock/command{
 	name = "Command Tool Storage";
-	req_access = null;
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel/dark,
@@ -50832,9 +50317,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external{
-	id_tag = null;
-	name = "Port Docking Bay 2";
-	req_access_txt = "0"
+	name = "Port Docking Bay 2"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -50861,8 +50344,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/external{
-	name = "Port Docking Bay 4";
-	req_access_txt = "0"
+	name = "Port Docking Bay 4"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -50871,8 +50353,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/external{
-	name = "Port Docking Bay 3";
-	req_access_txt = "0"
+	name = "Port Docking Bay 3"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -50901,7 +50382,6 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Access";
-	req_access = null;
 	req_access_txt = "13"
 	},
 /turf/open/floor/plating,
@@ -50925,7 +50405,6 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access = null;
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
@@ -50970,7 +50449,6 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access = null;
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
@@ -50981,8 +50459,6 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Four";
-	req_access = null;
-	req_access_txt = "0";
 	shuttledocked = 1
 	},
 /turf/open/floor/plating,
@@ -50993,7 +50469,6 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "MiniSat External Access";
-	req_access = null;
 	req_access_txt = "65;13"
 	},
 /turf/open/floor/plating,
@@ -51042,34 +50517,6 @@
 "czK" = (
 /turf/closed/wall,
 /area/security/vacantoffice)
-"czL" = (
-/obj/machinery/computer/shuttle/pod{
-	pixel_y = -32;
-	possible_destinations = "pod_lavaland4";
-	shuttleId = "pod4"
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_4)
-"czM" = (
-/obj/item/device/radio/intercom{
-	pixel_y = 25
-	},
-/obj/item/storage/pod{
-	pixel_x = 6;
-	pixel_y = -32
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/light/small,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_4)
 "czN" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
@@ -51273,10 +50720,9 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "Cooling Loop to Gas";
-	on = 1
+	name = "Cooling Loop to Gas"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -51298,8 +50744,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
-	name = "Gas to Mix";
-	on = 0
+	name = "Gas to Mix"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -51778,6 +51223,7 @@
 /area/maintenance/aft)
 "cBE" = (
 /obj/effect/landmark/event_spawn,
+/obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
 "cBF" = (
@@ -51893,7 +51339,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
 	name = "Security Office";
-	req_access = null;
 	req_access_txt = "1"
 	},
 /obj/structure/cable{
@@ -52028,21 +51473,20 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
-"cCs" = (
-/obj/structure/mining_shuttle_beacon{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "cCt" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/docking_port/stationary/public_mining_dock{
-	dir = 8
+/obj/docking_port/stationary{
+	area_type = /area/construction/mining/aux_base;
+	dir = 8;
+	dwidth = 4;
+	height = 9;
+	id = "aux_base_zone";
+	name = "aux base zone";
+	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	turf_type = /turf/open/floor/plating;
+	width = 9
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
 "cCB" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
@@ -52059,8 +51503,7 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
-	name = "Mix to Engine";
-	on = 0
+	name = "Mix to Engine"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -52297,8 +51740,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Atmos to Loop";
-	on = 0
+	name = "Atmos to Loop"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -52523,10 +51965,9 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Gas to Cooling Loop";
-	on = 1
+	name = "Gas to Cooling Loop"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -52636,8 +52077,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Mix to Gas";
-	on = 0
+	name = "Mix to Gas"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -53159,9 +52599,8 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "cGZ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1;
-	volume_rate = 200
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
@@ -53686,7 +53125,6 @@
 /area/maintenance/starboard)
 "cNV" = (
 /obj/machinery/door/airlock/maintenance/abandoned{
-	req_access_txt = "0";
 	req_one_access_txt = "8;12"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -53700,7 +53138,6 @@
 /area/maintenance/starboard/aft)
 "cNX" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0";
 	req_one_access_txt = "8;12"
 	},
 /obj/structure/cable{
@@ -54293,7 +53730,6 @@
 "gLH" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access";
-	req_access = null;
 	req_access_txt = "13"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -54769,6 +54205,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/hallway/secondary/service)
+"trb" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/courtroom)
 "tMl" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/showroomfloor,
@@ -54934,7 +54376,6 @@
 "xiw" = (
 /obj/machinery/door/airlock{
 	name = "Service Hall";
-	req_access_txt = "0";
 	req_one_access_txt = "25;26;35;28"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -62517,9 +61958,9 @@ aaa
 aae
 aaf
 aaa
-aqH
-apK
-aqH
+aaa
+aaa
+aaa
 aaa
 aaa
 aae
@@ -62531,9 +61972,9 @@ aaa
 aaa
 aaa
 aaa
-aqF
-apH
-aqF
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -62774,9 +62215,6 @@ aaa
 aaa
 aaf
 aaa
-aqH
-cpK
-aqH
 aaa
 aaa
 aaa
@@ -62788,9 +62226,12 @@ aaa
 aaa
 aaa
 aaa
-aqF
-cxl
-aqF
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -63031,9 +62472,6 @@ aaa
 aaa
 aaf
 aaa
-aqH
-cpL
-aqH
 aaa
 aaa
 aaa
@@ -63045,9 +62483,12 @@ aaa
 aaa
 aaa
 aaa
-aqF
-cxx
-aqF
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -63288,9 +62729,8 @@ aaa
 aaa
 aaf
 aaa
-ckq
+aaa
 cqq
-ckq
 aaa
 aaa
 aaa
@@ -63302,9 +62742,10 @@ aaa
 aaa
 aaa
 aaa
-cwU
-cxF
-cwU
+aaa
+aaa
+cqq
+aaa
 aaa
 aaa
 aaa
@@ -64050,14 +63491,14 @@ aaa
 aaa
 apJ
 apN
-arC
-arC
-arC
-arC
-arC
-arC
-arC
-aEp
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 avP
 iEJ
@@ -64306,15 +63747,15 @@ aaa
 aaa
 aaf
 apJ
-aqI
-arD
-arD
-arD
-arD
-arD
-arD
-arD
-auN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 awY
 ayk
@@ -64563,15 +64004,15 @@ aaa
 aaa
 aaf
 apJ
-aqI
-arD
-arD
-arD
-arD
-arD
-arD
-arD
-auN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 awZ
 ayl
@@ -64820,15 +64261,15 @@ aaa
 aaa
 aaf
 apJ
-aqI
-arD
-arD
-arD
-atk
-arD
-arD
-arD
-auN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 awZ
 ayk
@@ -65077,15 +64518,15 @@ aaa
 aaa
 aaa
 apJ
-aqI
-arD
-arD
-asG
-atl
-awX
-arD
-arD
-auN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 awZ
 cqr
@@ -65334,15 +64775,15 @@ aaa
 aaa
 aaa
 apJ
-aqI
-arD
-arD
-arD
-cCs
-arD
-arD
-arD
-auN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 awZ
 aIK
@@ -65591,15 +65032,15 @@ aaa
 aaa
 aaa
 apJ
-aqI
-arD
-arD
-arD
-arD
-arD
-arD
-arD
-auN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 awZ
 aIK
@@ -65848,15 +65289,15 @@ aaa
 aaa
 aaf
 apJ
-aqI
-arD
-arD
-arD
-arD
-arD
-arD
-arD
-auN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
+apN
 apJ
 awZ
 cry
@@ -66105,15 +65546,15 @@ aaa
 aaa
 aaa
 apJ
-aqN
-asD
-asD
-asD
+apN
+apN
+apN
+apN
 cCt
-asD
-asD
-asD
-aFD
+apN
+apN
+apN
+apN
 apJ
 awZ
 crz
@@ -88554,9 +87995,9 @@ clV
 cmV
 bOh
 cig
-cpc
-cpJ
-cpc
+aaa
+afp
+aaa
 cDN
 cqY
 cqY
@@ -88716,7 +88157,7 @@ abp
 ajp
 ajU
 ajn
-ajn
+trb
 ajn
 amr
 ajp
@@ -88811,9 +88252,9 @@ clW
 clW
 bOh
 cig
-cpd
-czM
-cpd
+aaa
+aaa
+aaa
 cDN
 aaa
 aaa
@@ -89068,9 +88509,9 @@ bOh
 bOh
 bOh
 ccw
-cpd
-czL
-cpd
+aaa
+aaa
+aaa
 cDL
 aaf
 aaa
@@ -89325,9 +88766,9 @@ clY
 clZ
 bOh
 aaa
-cpd
-cpM
-cpd
+aaa
+aaa
+aaa
 cCQ
 aaf
 aaa
@@ -89990,9 +89431,9 @@ aaf
 aaf
 aaf
 abp
-aeD
+aaa
 afp
-aeD
+aaa
 abp
 aaa
 aaa
@@ -90247,9 +89688,9 @@ aaf
 aaa
 aaa
 adR
-aeE
-afr
-aeE
+aaa
+aaa
+aaa
 adR
 aaa
 aaa
@@ -90504,9 +89945,9 @@ aaa
 aaa
 aaa
 aaa
-aeE
-afq
-aeE
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -90761,9 +90202,9 @@ aaa
 aaa
 aaa
 aaa
-aeE
-afs
-aeE
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa

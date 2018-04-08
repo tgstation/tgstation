@@ -116,7 +116,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	power_channel = ENVIRON
 	sprite_number = 8
 	use_power = IDLE_POWER_USE
-	interact_offline = TRUE
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	var/on = TRUE
 	var/breaker = 1
 	var/list/parts = list()
@@ -219,12 +219,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				return
 	return ..()
 
-
-/obj/machinery/gravity_generator/main/attack_hand(mob/user)
-	if(!..())
-		return interact(user)
-
-/obj/machinery/gravity_generator/main/interact(mob/user)
+/obj/machinery/gravity_generator/main/ui_interact(mob/user)
 	if(stat & BROKEN)
 		return
 	var/dat = "Gravity Generator Breaker: "

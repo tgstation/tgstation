@@ -47,7 +47,6 @@ Difficulty: Medium
 	vision_range = 13
 	wander = FALSE
 	elimination = 1
-	idle_vision_range = 13
 	appearance_flags = 0
 	mouse_opacity = MOUSE_OPACITY_ICON
 

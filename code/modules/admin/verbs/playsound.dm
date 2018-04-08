@@ -5,10 +5,6 @@
 		return
 
 	var/freq = 1
-	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-		freq = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
-		to_chat(src, "You feel the Honkmother messing with your song...")
-
 	var/vol = input(usr, "What volume would you like the sound to play at?",, 100) as null|num
 	if(!vol)
 		return
@@ -70,6 +66,7 @@
 	var/web_sound_input = input("Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound via youtube-dl") as text|null
 	if(istext(web_sound_input))
 		var/web_sound_url = ""
+		var/stop_web_sounds = FALSE
 		var/pitch
 		if(length(web_sound_input))
 
@@ -106,10 +103,6 @@
 						if("Cancel")
 							return
 
-					if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
-						pitch = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
-						to_chat(src, "You feel the Honkmother messing with your song...")
-
 					SSblackbox.record_feedback("nested tally", "played_url", 1, list("[ckey]", "[web_sound_input]"))
 					log_admin("[key_name(src)] played web sound: [web_sound_input]")
 					message_admins("[key_name(src)] played web sound: [web_sound_input]")
@@ -120,17 +113,22 @@
 		else //pressed ok with blank
 			log_admin("[key_name(src)] stopped web sound")
 			message_admins("[key_name(src)] stopped web sound")
-			web_sound_url = STOP_SOUNDS_URL
+			web_sound_url = null
+			stop_web_sounds = TRUE
 
-		if(web_sound_url)
-			if(!findtext(web_sound_url, GLOB.is_http_protocol))
-				to_chat(src, "<span class='boldwarning'>BLOCKED: Content URL not using http(s) protocol</span>")
-				to_chat(src, "<span class='warning'>The media provider returned a content URL that isn't using the HTTP or HTTPS protocol</span>")
+		if(web_sound_url && !findtext(web_sound_url, GLOB.is_http_protocol))
+			to_chat(src, "<span class='boldwarning'>BLOCKED: Content URL not using http(s) protocol</span>")
+			to_chat(src, "<span class='warning'>The media provider returned a content URL that isn't using the HTTP or HTTPS protocol</span>")
+			return
+		if(web_sound_url || stop_web_sounds)
 			for(var/m in GLOB.player_list)
 				var/mob/M = m
 				var/client/C = M.client
 				if((C.prefs.toggles & SOUND_MIDI) && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-					C.chatOutput.sendMusic(web_sound_url, pitch)
+					if(!stop_web_sounds)
+						C.chatOutput.sendMusic(web_sound_url, pitch)
+					else
+						C.chatOutput.stopMusic()
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Internet Sound")
 
@@ -159,5 +157,5 @@
 			SEND_SOUND(M, sound(null))
 			var/client/C = M.client
 			if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-				C.chatOutput.sendMusic(STOP_SOUNDS_URL)
+				C.chatOutput.stopMusic()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop All Playing Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

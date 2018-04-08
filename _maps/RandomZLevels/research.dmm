@@ -4199,8 +4199,7 @@
 /area/awaymission/research/interior/escapepods)
 "mS" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Pod Three";
-	req_access_txt = "0"
+	name = "Escape Pod Three"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -4260,7 +4259,7 @@
 /area/space/nearstation)
 "nb" = (
 /obj/structure/table/wood,
-/obj/item/spellbook/oneuse/random,
+/obj/item/book/granter/spell/random,
 /turf/open/floor/mineral/plasma,
 /area/space/nearstation)
 "nc" = (
@@ -4279,8 +4278,7 @@
 /area/awaymission/research/interior/engineering)
 "pt" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Pod Three";
-	req_access_txt = "0"
+	name = "Escape Pod Three"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8

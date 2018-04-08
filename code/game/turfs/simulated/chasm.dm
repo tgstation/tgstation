@@ -21,10 +21,10 @@
 	GET_COMPONENT(chasm_component, /datum/component/chasm)
 	chasm_component.drop(AM)
 
-/turf/open/chasm/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+/turf/open/chasm/MakeSlippery()
 	return
 
-/turf/open/chasm/MakeDry(wet_setting = TURF_WET_WATER)
+/turf/open/chasm/MakeDry()
 	return
 
 /turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)

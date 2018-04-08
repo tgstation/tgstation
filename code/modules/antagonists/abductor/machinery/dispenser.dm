@@ -24,7 +24,8 @@
 		amounts[i] = rand(1,5)
 
 /obj/machinery/abductor/gland_dispenser/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!isabductor(user))
 		return

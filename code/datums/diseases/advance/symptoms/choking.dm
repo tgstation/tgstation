@@ -105,7 +105,7 @@ Bonus
 		return
 	if(A.properties["stage_rate"] >= 8)
 		paralysis = TRUE
-	if(A.properties["transmission"] >= 8)
+	if(A.properties["transmittable"] >= 8)
 		power = 2
 
 /datum/symptom/asphyxiation/Activate(datum/disease/advance/A)
@@ -117,7 +117,7 @@ Bonus
 			to_chat(M, "<span class='warning'><b>[pick("Your windpipe feels thin.", "Your lungs feel small.")]</span>")
 			Asphyxiate_stage_3_4(M, A)
 			M.emote("gasp")
-		else
+		if(5)
 			to_chat(M, "<span class='userdanger'>[pick("Your lungs hurt!", "It hurts to breathe!")]</span>")
 			Asphyxiate(M, A)
 			M.emote("gasp")

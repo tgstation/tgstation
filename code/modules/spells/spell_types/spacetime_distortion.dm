@@ -111,6 +111,7 @@
 	else
 		walk_link(user)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/cross_action/spacetime_dist/attack_hand(mob/user)
 	walk_link(user)
 

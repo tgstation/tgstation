@@ -227,13 +227,6 @@
 
 	updateDialog()
 
-/obj/machinery/power/turbine/attack_hand(mob/user)
-
-	if(..())
-		return
-
-	interact(user)
-
 /obj/machinery/power/turbine/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		return
@@ -255,7 +248,7 @@
 
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/turbine/interact(mob/user)
+/obj/machinery/power/turbine/ui_interact(mob/user)
 
 	if(!Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && !issilicon(user))
 		user.unset_machine(src)
@@ -320,12 +313,6 @@
 				return
 	else
 		compressor = locate(/obj/machinery/power/compressor) in range(5, src)
-
-/obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
-	if(..())
-		return
-
-	ui_interact(user)
 
 /obj/machinery/computer/turbine_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)

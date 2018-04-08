@@ -31,13 +31,15 @@
 	playsound(get_turf(src), 'sound/items/party_horn.ogg', 50, 1, -1)
 	qdel(src)
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/fun_balloon/attack_ghost(mob/user)
 	if(!user.client || !user.client.holder || popped)
 		return
-	switch(alert("Pop [src]?","Fun Balloon","Yes","No"))
-		if("Yes")
-			effect()
-			pop()
+	var/confirmation = alert("Pop [src]?","Fun Balloon","Yes","No")
+	if(confirmation == "Yes" && !popped)
+		popped = TRUE
+		effect()
+		pop()
 
 /obj/effect/fun_balloon/sentience
 	name = "sentience fun balloon"

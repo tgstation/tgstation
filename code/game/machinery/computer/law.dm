@@ -36,7 +36,8 @@
 	circuit = /obj/item/circuitboard/computer/aiupload
 
 /obj/machinery/computer/upload/ai/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	src.current = select_active_ai(user)
@@ -60,7 +61,8 @@
 	circuit = /obj/item/circuitboard/computer/borgupload
 
 /obj/machinery/computer/upload/borg/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	src.current = select_active_free_borg(user)

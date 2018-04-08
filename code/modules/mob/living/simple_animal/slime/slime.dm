@@ -74,6 +74,12 @@
 	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
 	"cerulean", "sepia", "black", "pyrite")
 
+	///////////CORE-CROSSING CODE
+
+	var/effectmod //What core modification is being used.
+	var/applied = 0 //How many extracts of the modtype have been applied.
+
+
 /mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
@@ -226,7 +232,7 @@
 		var/mob/living/Food = A
 		if(CanFeedon(Food))
 			Feedon(Food)
-	..()
+	return ..()
 
 /mob/living/simple_animal/slime/doUnEquip(obj/item/W)
 	return
@@ -271,8 +277,6 @@
 	if(user.a_intent == INTENT_HARM)
 		discipline_slime(user)
 		return ..()
-
-
 
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
 	if(buckled)
@@ -343,7 +347,49 @@
 			force_effect = round(W.force/2)
 		if(prob(10 + force_effect))
 			discipline_slime(user)
+	if(istype(W, /obj/item/storage/bag/bio))
+		var/obj/item/storage/P = W
+		if(!effectmod)
+			to_chat(user, "<span class='warning'>The slime is not currently being mutated.</span>")
+			return
+		var/hasOutput = FALSE //Have we outputted text?
+		var/hasFound = FALSE //Have we found an extract to be added?
+		for(var/obj/item/slime_extract/S in P.contents)
+			if(S.effectmod == effectmod)
+				P.remove_from_storage(S, get_turf(src))
+				qdel(S)
+				applied++
+				hasFound = TRUE
+			if(applied >= SLIME_EXTRACT_CROSSING_REQUIRED)
+				to_chat(user, "<span class='notice'>You feed the slime as many of the extracts from the bag as you can, and it mutates!</span>")
+				playsound(src, 'sound/effects/attackblob.ogg', 50, 1)
+				spawn_corecross()
+				hasOutput = TRUE
+				break
+		if(!hasOutput)
+			if(!hasFound)
+				to_chat(user, "<span class='warning'>There are no extracts in the bag that this slime will accept!</span>")
+			else
+				to_chat(user, "<span class='notice'>You feed the slime some extracts from the bag.</span>")
+				playsound(src, 'sound/effects/attackblob.ogg', 50, 1)
+		return
 	..()
+
+/mob/living/simple_animal/slime/proc/spawn_corecross()
+	var/static/list/crossbreeds = subtypesof(/obj/item/slimecross)
+	visible_message("<span class='danger'>[src] shudders, its mutated core consuming the rest of its body!</span>")
+	playsound(src, 'sound/magic/smoke.ogg', 50, 1)
+	var/crosspath
+	for(var/X in crossbreeds)
+		var/obj/item/slimecross/S = X
+		if(initial(S.colour) == colour && initial(S.effect) == effectmod)
+			crosspath = S
+			break
+	if(crosspath)
+		new crosspath(loc)
+	else
+		visible_message("<span class='warning'>The mutated core shudders, and collapses into a puddle, unable to maintain its form.</span>")
+	qdel(src)
 
 /mob/living/simple_animal/slime/proc/apply_water()
 	adjustBruteLoss(rand(15,20))
@@ -424,6 +470,9 @@
 /mob/living/simple_animal/slime/get_mob_buckling_height(mob/seat)
 	if(..())
 		return 3
+
+/mob/living/simple_animal/slime/can_be_implanted()
+	return TRUE
 
 /mob/living/simple_animal/slime/random/Initialize(mapload, new_colour, new_is_adult)
 	. = ..(mapload, pick(slime_colours), prob(50))
