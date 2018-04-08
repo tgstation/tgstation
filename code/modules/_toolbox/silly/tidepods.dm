@@ -11,6 +11,7 @@
 /obj/item/reagent_containers/food/snacks/tidepod
 	name = "detergent pod"
 	desc = "It looks kind of tasty."
+	icon = 'icons/oldschool/objects.dmi'
 	icon_state = "tidepod"
 	list_reagents = list("tide" = 5)
 	filling_color = "#66ffcc"
@@ -25,6 +26,7 @@
 
 /obj/item/storage/box/tidepods
 	name = "Detergent Pods"
+	icon = 'icons/oldschool/objects.dmi'
 	icon_state = "tidepods"
 	desc = "Detergent pods for cleaning your clothing. Despite popular opinion, ingesting is a bad idea."
 	can_hold = list(/obj/item/reagent_containers/food/snacks/tidepod)
@@ -59,6 +61,7 @@
 
 /obj/item/reagent_containers/food/snacks/pizza/tidepod
 	name = "pod pizza"
+	icon = 'icons/oldschool/objects.dmi'
 	desc = "Greasy pizza with delicious pods."
 	icon_state = "tidepodpizza"
 	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/tidepod
@@ -68,7 +71,8 @@
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/tidepod
 	name = "pod pizza slice"
+	icon = 'icons/oldschool/objects.dmi'
 	desc = "A nutritious slice of pod pizza."
 	icon_state = "tidepodpizzaslice"
 	filling_color = "#A52A2A"
-	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
+	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "memes" = 1)

@@ -1,7 +1,7 @@
 //adding things to vending machines with out editing vending machine files
 /obj/machinery/vending/clothing/New()
 	if(type == /obj/machinery/vending/clothing)
-		products += list(/obj/item/clothing/under/tracksuit = 1,/obj/item/clothing/suit/hooded/filthypink = 1)
+		products += list(/obj/item/clothing/under/tracksuit/spawn_with_vodka = 1,/obj/item/clothing/suit/hooded/filthypink = 1)
 	. = ..()
 
 /obj/machinery/vending/autodrobe/New()
