@@ -1,0 +1,4 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - admin: "Removing notes now has an \"Are you sure\" dialog."
