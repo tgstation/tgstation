@@ -36,10 +36,14 @@ proc/Initialize_Falaskians_Shit()
 			dat += "<a href=\"[thediscordlink]\">Discord</a>"
 		dat += ")<br>"
 	if(SSticker)
-		if(GLOB.master_mode)
+		if(SSticker.current_state < GAME_STATE_PLAYING)
+			dat += "New Round Starting."
+		else if (SSticker.current_state > GAME_STATE_PLAYING)
+			dat += "Round has ended. New round soon."
+		else
 			dat += "Game Mode: [GLOB.master_mode]"
 	else
-		dat += "<b>STARTING</b>"
+		dat += "Restarting."
 	var/thepath = "config/hub_features.txt"
 	if(fexists(thepath))
 		var/list/hub_features = file2list(thepath)

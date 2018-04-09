@@ -46,6 +46,7 @@ GLOBAL_PROTECT(security_mode)
 
 	if(TEST_RUN_PARAMETER in params)
 		HandleTestRun()
+	update_status()
 
 /world/proc/HandleTestRun()
 	//trigger things to run the whole process
