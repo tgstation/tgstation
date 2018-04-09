@@ -31,7 +31,7 @@
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
 
-/turf/open/floor/plating/asteroid/MakeSlippery()
+/turf/open/floor/plating/asteroid/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
 /turf/open/floor/plating/asteroid/MakeDry()
