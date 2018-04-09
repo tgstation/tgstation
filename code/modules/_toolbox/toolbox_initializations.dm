@@ -41,7 +41,8 @@ proc/Initialize_Falaskians_Shit()
 		else if (SSticker.current_state > GAME_STATE_PLAYING)
 			dat += "Round has ended. New round soon."
 		else
-			dat += "Game Mode: [GLOB.master_mode]"
+			dat += "Game Mode: [capitalize(GLOB.master_mode)]<br>"
+			dat += "Round Duration: [time2text(world.time-SSticker.round_start_time, "hh:mm")]"
 	else
 		dat += "Restarting."
 	var/thepath = "config/hub_features.txt"

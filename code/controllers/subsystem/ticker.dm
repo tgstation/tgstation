@@ -65,6 +65,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/round_end_events
 	var/mode_result = "undefined"
 	var/end_state = "undefined"
+	var/last_hub_update = 0
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
@@ -202,6 +203,9 @@ SUBSYSTEM_DEF(ticker)
 				toggle_dooc(TRUE)
 				declare_completion(force_ending)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
+	if(world.time > last_hub_update)
+		world.update_status()
+		last_hub_update = world.time+600
 
 
 /datum/controller/subsystem/ticker/proc/setup()
