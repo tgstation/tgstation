@@ -1,0 +1,5 @@
+author: "Davidj361"
+delete-after: True
+changes: 
+  - bugfix: "Fixed paper bins dropping out of your hand or bag when grabbing a pen or paper."
+  - bugfix: "Paper bins not giving finger prints upon interaction."
