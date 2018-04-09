@@ -11,12 +11,17 @@
 		to_chat(user, "<span class='notice'>We return to normal.</span>")
 		user.digitalinvis = 0
 		user.digitalcamo = 0
+		user.remove_alt_appearance("digitalcamo")
 	else
 		to_chat(user, "<span class='notice'>We distort our form to hide from the AI</span>")
 		user.digitalcamo = 1
 		user.digitalinvis = 1
+		var/image/I = image(loc = user)
+		I.override = TRUE
+		user.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/AI, "digitalcamo", I, FALSE)
 	return TRUE
 
 /obj/effect/proc_holder/changeling/digitalcamo/on_refund(mob/user)
 	user.digitalcamo = 0
 	user.digitalinvis = 0
+	user.remove_alt_appearance("digitalcamo")
