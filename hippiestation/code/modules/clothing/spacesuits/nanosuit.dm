@@ -3,6 +3,7 @@
 	name = "nanosuit lining"
 	desc = "Foreign body resistant suit build below the nanosuit. Provides internal protection."
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
+	armor = list("melee" = 20, "bullet" = 1, "laser" = 0,"energy" = 5, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 80, "acid" = 50)
 
 /obj/item/clothing/under/syndicate/combat/nano/ComponentInitialize()
 	. = ..()
@@ -785,33 +786,11 @@ obj/item/clothing/suit/space/hardsuit/nano/dropped()
 
 
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
-	if(!has_active_hand()) //can't attack without a hand.
-		to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")
-		return
-
-	// Special glove functions:
-	// If the gloves do anything, have them return 1 to stop
-	// normal attack_hand() here.
-	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
-	if(proximity && istype(G) && G.Touch(A,1))
-		return
-
-	var/override = 0
-
-	for(var/datum/mutation/human/HM in dna.mutations)
-		override += HM.on_attack_hand(src, A, proximity)
-
 	var/datum/martial_art/nano/style = new
 	if(istype(src.mind.martial_art, /datum/martial_art/nano))
-		override += style.on_attack_hand(src, A, proximity)
-
-	if(override)
-		return
-
-	SendSignal(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
-	A.attack_hand(src)
-	SendSignal(COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY, src)
-
+		if(style.on_attack_hand(src, A, proximity))
+			return
+	..()
 
 /obj/item/storage/box/syndie_kit/nanosuit
 	name = "\improper Crynet Systems kit"

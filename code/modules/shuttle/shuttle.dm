@@ -32,7 +32,7 @@
 	// may result.
 	if(force)
 		..()
-		. = QDEL_HINT_HARDDEL_NOW
+		. = QDEL_HINT_QUEUE
 	else
 		return QDEL_HINT_LETMELIVE
 
@@ -183,6 +183,11 @@
 	highlight("#f00")
 	#endif
 
+/obj/docking_port/stationary/Destroy(force)
+	if(force)
+		SSshuttle.stationary -= src
+	. = ..()
+
 /obj/docking_port/stationary/proc/load_roundstart()
 	if(json_key)
 		var/sid = SSmapping.config.shuttles[json_key]
@@ -227,13 +232,14 @@
 			log_world("A transit dock was destroyed while something was docked to it.")
 		SSshuttle.transit -= src
 		if(owner)
+			if(owner.assigned_transit == src)
+				owner.assigned_transit = null
 			owner = null
 		if(assigned_turfs)
 			dezone()
 			assigned_turfs.Cut()
 		assigned_turfs = null
 	. = ..()
-
 
 /obj/docking_port/mobile
 	name = "shuttle"
