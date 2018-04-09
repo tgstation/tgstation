@@ -148,6 +148,7 @@ SUBSYSTEM_DEF(ticker)
 			if(CONFIG_GET(flag/irc_announce_new_game))
 				SERVER_TOOLS_CHAT_BROADCAST("New round starting on [SSmapping.config.map_name]!")
 			current_state = GAME_STATE_PREGAME
+			world.update_status()
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
 			fire()
@@ -196,6 +197,7 @@ SUBSYSTEM_DEF(ticker)
 
 			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
+				world.update_status()
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
 				declare_completion(force_ending)
@@ -298,6 +300,7 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	PostSetup()
+	world.update_status()
 
 	return TRUE
 
@@ -625,8 +628,7 @@ SUBSYSTEM_DEF(ticker)
 		'sound/toolbox/roundend/autism.ogg',
 		'sound/toolbox/roundend/heeman.ogg',
 		'sound/toolbox/roundend/rigged_from_the_start.ogg',
-		'sound/toolbox/roundend/seagulls.ogg',
-		'sound/toolbox/roundend/mrmemerswag.ogg'\
+		'sound/toolbox/roundend/seagulls.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))
