@@ -352,6 +352,11 @@
 		return TRUE
 	return FALSE
 
+/obj/item/warpwhistle/proc/end_effect(mob/living/carbon/user)
+	user.invisibility = initial(user.invisibility)
+	user.status_flags &= ~GODMODE
+	user.canmove = 1
+
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)
 		return
@@ -368,6 +373,7 @@
 	user.status_flags |= GODMODE
 	sleep(20)
 	if(interrupted(user))
+		end_effect(user)
 		return
 	var/breakout = 0
 	while(breakout < 50)
@@ -380,11 +386,9 @@
 		breakout += 1
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
+	end_effect(user)
 	if(interrupted(user))
 		return
-	user.invisibility = initial(user.invisibility)
-	user.status_flags &= ~GODMODE
-	user.canmove = 1
 	on_cooldown = 2
 	sleep(40)
 	on_cooldown = 0
