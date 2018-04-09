@@ -2798,6 +2798,7 @@
 #include "hippiestation\code\modules\atmospherics\unary_devices\vent_scrubber.dm"
 #include "hippiestation\code\modules\awaymissions\corpse.dm"
 #include "hippiestation\code\modules\cargo\packs.dm"
+#include "hippiestation\code\modules\client\client_colour.dm"
 #include "hippiestation\code\modules\client\client_procs.dm"
 #include "hippiestation\code\modules\client\preferences.dm"
 #include "hippiestation\code\modules\client\preferences_savefile.dm"
