@@ -269,4 +269,6 @@
 	for(var/slot in get_all_slots())//order matters, dependant slots go first
 		qdel(slot)
 	for(var/obj/item/I in held_items)
+		if(istype(src.dna.species,/datum/species/dullahan)&&istype(I,/obj/item/bodypart/head))
+			continue
 		qdel(I)

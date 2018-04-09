@@ -116,7 +116,7 @@ GLOBAL_DATUM(error_cache, /datum/error_viewer/error_cache)
 	//  from the same source hasn't been shown too recently
 	if (error_source.next_message_at <= world.time)
 		var/const/viewtext = "\[view]" // Nesting these in other brackets went poorly
-		//log_debug("Runtime in <b>[e.file]</b>, line <b>[e.line]</b>: <b>[html_encode(e.name)]</b> [error_entry.make_link(viewtext)]")
+		//log_debug("Runtime in <b>[e.file]</b>, line <b>[e.line]</b>: <b>[rhtml_encode(e.name)]</b> [error_entry.make_link(viewtext)]")
 		var/err_msg_delay
 		if(config)
 			err_msg_delay = CONFIG_GET(number/error_msg_delay)
@@ -134,7 +134,7 @@ GLOBAL_DATUM(error_cache, /datum/error_viewer/error_cache)
 		name = "\[[time_stamp()]] Uncaught exceptions"
 		return
 
-	name = "<b>\[[time_stamp()]]</b> Runtime in <b>[e.file]</b>, line <b>[e.line]</b>: <b>[html_encode(e.name)]</b>"
+	name = "<b>\[[time_stamp()]]</b> Runtime in <b>[e.file]</b>, line <b>[e.line]</b>: <b>[rhtml_encode(e.name)]</b>"
 
 /datum/error_viewer/error_source/show_to(user, datum/error_viewer/back_to, linear)
 	if (!istype(back_to))
@@ -156,7 +156,7 @@ GLOBAL_DATUM(error_cache, /datum/error_viewer/error_cache)
 
 /datum/error_viewer/error_entry/New(exception/e, list/desclines, skip_count)
 	if (!istype(e))
-		name = "<b>\[[time_stamp()]]</b> Uncaught exception: <b>[html_encode(e.name)]</b>"
+		name = "<b>\[[time_stamp()]]</b> Uncaught exception: <b>[rhtml_encode(e.name)]</b>"
 		return
 
 	if(skip_count)
@@ -164,12 +164,12 @@ GLOBAL_DATUM(error_cache, /datum/error_viewer/error_cache)
 		is_skip_count = TRUE
 		return
 
-	name = "<b>\[[time_stamp()]]</b> Runtime in <b>[e.file]</b>, line <b>[e.line]</b>: <b>[html_encode(e.name)]</b>"
+	name = "<b>\[[time_stamp()]]</b> Runtime in <b>[e.file]</b>, line <b>[e.line]</b>: <b>[rhtml_encode(e.name)]</b>"
 	exc = e
 	if (istype(desclines))
 		for (var/line in desclines)
 			// There's probably a better way to do this than non-breaking spaces...
-			desc += "<span class='runtime_line'>[html_encode(line)]</span><br>"
+			desc += "<span class='runtime_line'>[rhtml_encode(line)]</span><br>"
 
 	if (usr)
 		usr_ref = "[REF(usr)]"
