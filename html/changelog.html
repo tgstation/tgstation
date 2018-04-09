@@ -55,6 +55,86 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">09 April 2018</h2>
+			<h3 class="author">CosmicScientist updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Top Nanotrasen scientists have diagnosed two new phobias! Birds and chasms! Good luck Chief Engineers and Miners.</li>
+			</ul>
+			<h3 class="author">Dax Dupont updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="admin">Removing notes now has an "Are you sure" dialog.</li>
+			</ul>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Omegastation now has its own arrivals shuttle.</li>
+			</ul>
+			<h3 class="author">Mickyan updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Stinger, Grasshopper, Quadruple Sec, and Quintuple Sec have new sprites.</li>
+			</ul>
+			<h3 class="author">Naksu updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">Fixed an heirloom trait-related runtime</li>
+				<li class="code_imp">Fixed an incorrect signature in MakeSlippery causing runtimes</li>
+			</ul>
+			<h3 class="author">SpironoZeppeli updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">You can now wrench the supermatter shard</li>
+			</ul>
+			<h3 class="author">ninjanomnom updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">The arena shuttle should be working again.</li>
+				<li class="bugfix">The escape pods now reach their proper destination at round end</li>
+			</ul>
+
+			<h2 class="date">08 April 2018</h2>
+			<h3 class="author">AnturK updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Slime reflexes restored.</li>
+			</ul>
+			<h3 class="author">Dax Dupont updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Hugbox version of the VR sleeper you can't emag.</li>
+				<li class="admin">There's now two categorized vr landmarks for two teams for easy spawning. You can also now rebuild/refresh all the VR spawnpoints by calling build_spawnpoints(1) on any sleeper.</li>
+			</ul>
+			<h3 class="author">Naksu updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="admin">Admins can now access a new control panel for borgs via a new admin verb</li>
+			</ul>
+
+			<h2 class="date">07 April 2018</h2>
+			<h3 class="author">Davidj361 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Stacked sheets now have a cancel button when taking an amount from them.</li>
+			</ul>
+			<h3 class="author">Dax Dupont updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes dead chat announcements not using real name.</li>
+			</ul>
+			<h3 class="author">Naksu updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Trash bin anchoring/unanchoring now gives you a small text blip about what happened.</li>
+			</ul>
+			<h3 class="author">PKPenguin321 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Restored accidentally cut functionality to flashes. You can once again attach them to a signaller and signal them to trigger an AoE flash remotely.</li>
+			</ul>
+			<h3 class="author">SailorDave updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Mixed blood samples preserve their cloneability for podpeople if the samples are the same.</li>
+			</ul>
+			<h3 class="author">kevinz000 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">AIs can now latejoin!</li>
+				<li class="rscadd">Latejoining AIs will be sent to a special deactivated AI core. This AI core will spawn in the AI satellite chamber in place of an active AI if none is there at roundstart. These cores can be deactivated with a multitool, and moved around per usual, but not deconstructed. They can, however, be destroyed per usual.</li>
+				<li class="rscadd">AIs can only latejoin if atleast one of these cores exists and is in a valid area (Powered, on station, etc etc), and if the AI job slot isn't filled already by a roundstart or latejoin AI.</li>
+				<li class="code_imp">A few code internal debugging features have been added to help debug GC errors. QDEL_HINT_IFFAIL_FINDREFERENCE hint will make the garbage subsystem find references if the build is in TESTING mode, and qdel_and_then_find_ref_if_fail(datum) or calling qdel_then_if_fail_find_references will do the same.</li>
+			</ul>
+			<h3 class="author">robbym updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes examiner circuit failing to pulse 'not scanned' when reference is null  (#36881)</li>
+			</ul>
+
 			<h2 class="date">04 April 2018</h2>
 			<h3 class="author">Fludd12 updated:</h3>
 			<ul class="changes bgimages16">
@@ -1708,206 +1788,6 @@
 			<ul class="changes bgimages16">
 				<li class="bugfix">Defibrillator mounts no longer spam the error log while empty.</li>
 				<li class="bugfix">The various ships in the caravan ambush space ruin can now fly again.</li>
-			</ul>
-
-			<h2 class="date">05 February 2018</h2>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Regular cyborgs now start with a normal high capacity cell instead of a snowflake cell. Resulting in less confusing and 2.5MJ more electric charge.</li>
-				<li class="bugfix">Fixed name of the upgraded power cell</li>
-				<li class="refactor">Removed duplicate cell giving code in transformation proc.</li>
-				<li class="bugfix">Fixed the crematorium on meta and box.</li>
-			</ul>
-			<h3 class="author">Denton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Rearranged the mining vendor items by price and item group.</li>
-				<li class="tweak">In order to promote back-breaking physical labor, Nanotrasen has additionally made conscription kits available at mining equipment vendors.</li>
-			</ul>
-			<h3 class="author">Iamgoofball updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">Blood cultists can't space base anymore</li>
-			</ul>
-			<h3 class="author">MMMiracles updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">A once-thought abandoned arctic post has recently had its gateway coordinates re-enabled for access via the Gateway link. Contact your local Exploration Division for more details.</li>
-			</ul>
-			<h3 class="author">More Robust Than You updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Holorays are now properly deleted if you switch holopads automatically</li>
-			</ul>
-			<h3 class="author">Naksu and kevinz000 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Ores are no longer completely impervious to explosions, but rather "proper" ores are destroyed by the strongest explosions and sand is blown away everything but the weakest ones. This shouldn't affect ore spawns from explosions</li>
-				<li class="tweak">Lavaland bomb cap reduced to double the station bombcap.</li>
-				<li class="refactor">Ores are now stackable. Ore stacks now have the appearance of loose ores and are not called "sheets" by machines that consume them.</li>
-				<li class="code_imp">Material container component now uses the singular names of stack objects.</li>
-				<li class="refactor">/obj/item/ore/Crossed() is now removed in favor of the ore satchel utilizing a redirect component</li>
-			</ul>
-			<h3 class="author">ShiggyDiggyDo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="spellcheck">You no longer win double the articles at the arcade</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Research investigate logs now actually include the name of the researcher.</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes intelligence potions removing previously known mob languages</li>
-				<li class="tweak">Slime scanning now has a more readable output, especially when scanning multiple slimes at once</li>
-				<li class="tweak">Eggs from the abductor egg gland now have a random reagent instead of acid</li>
-			</ul>
-
-			<h2 class="date">04 February 2018</h2>
-			<h3 class="author">Buggy123 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Morgue trays now detect if a body inside them possesses a consciousness, and alerts people nearby</li>
-			</ul>
-			<h3 class="author">Cruix updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">The Rapid Piping Device can now dispense transit tubes.</li>
-			</ul>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added logout button to the record screen in the security records console.</li>
-				<li class="rscadd">Allows you to print photos that are in the security records.</li>
-			</ul>
-			<h3 class="author">Incoming5643 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">The ability to throw drinks without spilling them has been moved from something bartender's just know how to do to a book that they spawn with, the ability has also been made into a toggle.</li>
-				<li class="rscadd">Any number of people can read the book to learn the ability, and it can also be ordered in the bartending crate in cargo. Bartenders are encouraged to keep their trade secrets close to their stylish black vests.</li>
-			</ul>
-			<h3 class="author">Kor updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed mecha grav catapults not being included in techwebs.</li>
-			</ul>
-			<h3 class="author">MrDoomBringer updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">Conveyor Belts now look better when they are crowbar'd off the ground.</li>
-				<li class="rscadd">Due to complicated quantum-bluespace-entanglement shenanigans, the Bluespace Drop Pod upgrade for the express supply console is now slightly more difficult to research.</li>
-			</ul>
-			<h3 class="author">Robustin updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Vape Pens (e-cigs) will now consume reagents proportional to the vape size and static smoke production.</li>
-				<li class="bugfix">Command reports should now properly weight the appearance of modes based on their existence in our actual game rotation.</li>
-				<li class="balance">The current mode now has a 35% chance of not appearing in the report.</li>
-			</ul>
-			<h3 class="author">ShiggyDiggyDo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">You can now win stylish steampunk watches at your local arcade machine!</li>
-			</ul>
-			<h3 class="author">ShizCalev updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed some broken cultist & wizard antagonist ghost polls.</li>
-				<li class="rscadd">The Syndicate Comms Officer ghost role has been readded with a minor chance of actually existing.</li>
-			</ul>
-			<h3 class="author">Slignerd updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Following an immense number of complaints filed by security and command personnel, the Captain's spare ID will from now on be placed inside his locker. We fail to see how this would help the Captain access the spare in the event he lost his ID, but the complainants have been VERY insistent.</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The pirate ship can now fly again.</li>
-			</ul>
-			<h3 class="author">Xhuis updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Integration cog power generation has been increased to 10 W per second (up from 5 W per second.) Power consumed from the APC remains at 5 W per second.</li>
-				<li class="balance">Integration cogs will now continue generating power at half-speed when the APC they are in has no energy.</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Romerol is now effective on dead bodies, not just ones that are still alive.</li>
-			</ul>
-			<h3 class="author">nicbn updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Destroying windows will now spawn tiny shards</li>
-			</ul>
-
-			<h2 class="date">03 February 2018</h2>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Moved the lathe from box's cargo room to box's cargo office which miners now can access.</li>
-				<li class="tweak">Harmonized medbay storage access requirements so all maps allow all medbay personnel into medbay storage like on Meta and Delta.</li>
-				<li class="tweak">Moved service lathes into a dedicated service hall/storage area if they weren't accessible by janitor or bartender.</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">Removed the now-unused revenant spawn landmark.</li>
-			</ul>
-			<h3 class="author">Xhuis updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Servant cyborgs with the Standard module now correctly have Abscond.</li>
-				<li class="bugfix">Securing pipe fittings now transfers fingerprints to the new pipe.</li>
-				<li class="bugfix">The firelock below the Circuitry Lab airlock on Boxstation will no longer cover it up when the airlock is open.</li>
-			</ul>
-			<h3 class="author">uraniummeltdown updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Some airlock animations should no longer be glitchy and restart in the middle</li>
-			</ul>
-
-			<h2 class="date">02 February 2018</h2>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Hijack objectives will only be given out if there are 30 or more players.</li>
-			</ul>
-			<h3 class="author">DeityLink updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">You can now see the rays from a holopad displaying a hologram!</li>
-			</ul>
-			<h3 class="author">Epoc updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Soap now has inhand sprites</li>
-			</ul>
-			<h3 class="author">Xhuis updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Brass skewers now must be at least one tile apart.</li>
-				<li class="balance">Steam vents can no longer be placed within cardinal directions of other steam vents, and will not hide objects they're placed on top of.</li>
-				<li class="bugfix">Races that have eyes that look different from regular humans' no longer have white eyespots where human eyes appear.</li>
-			</ul>
-			<h3 class="author">Xhuis, Cosmic, Fwoosh, and epochayur updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added pineapples to botany, and a recipe for Hawaiian pizza.</li>
-			</ul>
-			<h3 class="author">improvedname updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">adds yeehaw to the dj's disco soundboard</li>
-			</ul>
-			<h3 class="author">oranges updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">removes ketrazine</li>
-			</ul>
-
-			<h2 class="date">01 February 2018</h2>
-			<h3 class="author">CosmicScientist updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">tomatoes and similar ovary laden edibles are fruit, not veg, beware plasmamen and mothmen</li>
-			</ul>
-			<h3 class="author">Denton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Added a missing distress signal to the space ambush ruin.</li>
-			</ul>
-			<h3 class="author">Jalleo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">Space ghost syndicate comms guy removed.</li>
-			</ul>
-			<h3 class="author">Jittai updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Cloning doesn't runtime (and indefinitely get stuck) on cloning non-humans.</li>
-				<li class="tweak">Some of the Morgue Trays and Crematoriums on Box, Delta, and Meta have been re-positioned to make use of their new directional states.</li>
-				<li class="imageadd">New Horizontal Coffin Sprites</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">The Whiteship spawn point is now a space ruin rather than being fixed every round.</li>
-			</ul>
-			<h3 class="author">Xhuis updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Servant golems no longer appear in the magic mirror race list.</li>
-				<li class="bugfix">Cogs now fucking work</li>
-			</ul>
-			<h3 class="author">cebutris updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="spellcheck">The text you get when you examine a stunbaton to see the battery level now uses the item's name instead of "baton"</li>
 			</ul>
 		</div>
 

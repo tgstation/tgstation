@@ -1,4 +1,0 @@
-author: "SailorDave"
-delete-after: True
-changes: 
-  - bugfix: "Mixed blood samples preserve their cloneability for podpeople if the samples are the same."

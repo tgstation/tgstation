@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Trash bin anchoring/unanchoring now gives you a small text blip about what happened."

@@ -137,6 +137,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/datum/looping_sound/supermatter/soundloop
 
+	var/moveable = FALSE
+
 /obj/machinery/power/supermatter_crystal/Initialize()
 	. = ..()
 	uid = gl_uid++
@@ -552,6 +554,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		radiation_pulse(src, 150, 4)
 
+/obj/machinery/power/supermatter_crystal/wrench_act(mob/user, obj/item/tool)
+	if (moveable)
+		default_unfasten_wrench(user, tool, time = 20)
+	return TRUE
 
 /obj/machinery/power/supermatter_crystal/CollidedWith(atom/movable/AM)
 	if(isliving(AM))
@@ -607,6 +613,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	anchored = FALSE
 	gasefficency = 0.125
 	explosion_power = 12
+  moveable = TRUE
 
 /obj/machinery/power/supermatter_crystal/shard/engine
 	is_main_engine = TRUE
