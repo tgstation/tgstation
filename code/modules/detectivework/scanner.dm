@@ -184,8 +184,11 @@
 /obj/item/device/detective_scanner/AltClick(mob/living/user)
 	if(!can_use(user))
 		return
-	if(!LAZYLEN(log) || scanning)
-		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner has no logs or is in use.</span>")
+	if(!LAZYLEN(log))
+		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner has no logs.</span>")
+		return
+	if(scanning)
+		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner is in use.</span>")
 		return
 	to_chat(user, "<span class='notice'>The scanner logs are cleared.</span>")
 	log = list()
@@ -193,8 +196,11 @@
 /obj/item/device/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
 	if(!can_use(user))
 		return
-	if(!LAZYLEN(log) || scanning)
-		to_chat(user, "<span class='notice'>The scanner has no logs or is in use.</span>")
+	if(!LAZYLEN(log))
+		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner has no logs.</span>")
+		return
+	if(scanning)
+		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner is in use.</span>")
 		return
 	to_chat(user, "<span class='notice'><B>Scanner Report</B></span>")
 	for(var/iterLog in log)
