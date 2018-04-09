@@ -31,14 +31,7 @@
 	return FALSE
 
 /obj/item/integrated_circuit/logic/binary/proc/comparable(var/datum/integrated_io/A, var/datum/integrated_io/B)
-	if(isnum(A.data))
-		if(isnum(B.data))
-			return TRUE
-	else
-		if(istext(A.data))
-			if(istext(B.data))
-				return TRUE
-	return FALSE
+	return (isnum(A.data) && isnum(B.data)) || (istext(A.data) && istext(B.data))
 
 /obj/item/integrated_circuit/logic/unary
 	inputs = list("A")
