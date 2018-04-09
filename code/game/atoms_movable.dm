@@ -1,6 +1,9 @@
+#define ATOM_THROW_DELAY 5
+
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
+	var/last_throw
 	var/anchored = FALSE
 	var/datum/thrownthing/throwing = null
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
@@ -412,13 +415,17 @@
 		step(src, AM.dir)
 	..()
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback) //If this returns FALSE then callback will not be called.
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback, time_capped = FALSE) //If this returns FALSE then callback will not be called.
 	. = FALSE
 	if (!target || (flags_1 & NODROP_1) || speed <= 0)
 		return
 
 	if (pulledby)
 		pulledby.stop_pulling()
+
+	if(time_capped && last_throw)
+		if(last_throw + ATOM_THROW_DELAY > world.time)
+			return
 
 	//They are moving! Wouldn't it be cool if we calculated their momentum and added it to the throw?
 	if (thrower && thrower.last_move && thrower.client && thrower.client.move_delay >= world.time + world.tick_lag*2)
@@ -445,6 +452,8 @@
 				return//no throw speed, the user was moving too fast.
 
 	. = TRUE // No failure conditions past this point.
+
+	last_throw = world.time
 
 	var/datum/thrownthing/TT = new()
 	TT.thrownthing = src

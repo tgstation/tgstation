@@ -199,8 +199,8 @@
 	icon_state = "poster2"
 
 /obj/structure/sign/poster/contraband/fun_police
-	name = "Fun Police"
-	desc = "A poster condemning the station's security forces."
+	name = "Groin Destroyer"
+	desc = "Groin... My only weakness..."
 	icon_state = "poster3"
 
 /obj/structure/sign/poster/contraband/lusty_xenomorph
@@ -408,6 +408,16 @@
 	name = "Masked Men"
 	desc = "A poster advertising a movie about some masked men."
 	icon_state = "poster44"
+
+/obj/structure/sign/poster/contraband/Gymposter_1
+	name = "Gym poster"
+	desc = "First part of big poster"
+	icon_state = "kachalka"
+
+/obj/structure/sign/poster/contraband/Gymposter_2
+	name = "Gym poster ¹2"
+	desc = "Second part of big poster"
+	icon_state = "kachalka_2"
 
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"

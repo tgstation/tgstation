@@ -37,7 +37,7 @@
 	return t
 
 //Removes a few problematic characters
-/proc/sanitize_simple(t,list/repl_chars = list("\n"="#","\t"="#"))
+/proc/sanitize_simple(t,list/repl_chars = list("\n"="#","\t"="#","ÿ"="&#255;"))
 	for(var/char in repl_chars)
 		var/index = findtext(t, char)
 		while(index)
@@ -47,20 +47,20 @@
 
 /proc/sanitize_filename(t)
 	return sanitize_simple(t, list("\n"="", "\t"="", "/"="", "\\"="", "?"="", "%"="", "*"="", ":"="", "|"="", "\""="", "<"="", ">"=""))
-
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(t,list/repl_chars = null)
-	return html_encode(sanitize_simple(t,repl_chars))
+	t = strip_macros(t)
+	return rhtml_encode(sanitize_simple(t,repl_chars))
 
 //Runs sanitize and strip_html_simple
-//I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
+//I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's rhtml_encode()
 /proc/strip_html(t,limit=MAX_MESSAGE_LEN)
 	return copytext((sanitize(strip_html_simple(t))),1,limit)
 
 //Runs byond's sanitization proc along-side strip_html_simple
-//I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' that html_encode() would cause
+//I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' that rhtml_encode() would cause
 /proc/adminscrub(t,limit=MAX_MESSAGE_LEN)
-	return copytext((html_encode(strip_html_simple(t))),1,limit)
+	return copytext((rhtml_encode(strip_html_simple(t))),1,limit)
 
 
 //Returns null if there is any bad text in the string
@@ -73,7 +73,7 @@
 			if(62,60,92,47)
 				return			//rejects the text if it contains these bad characters: <, >, \ or /
 			if(127 to 255)
-				return			//rejects weird letters like �
+				return			//rejects weird letters like ?
 			if(0 to 31)
 				return			//more weird stuff
 			if(32)
@@ -81,24 +81,25 @@
 			else
 				non_whitespace = 1
 	if(non_whitespace)
-		return text		//only accepts the text if it has some non-spaces
+		return sanitize_russian(text)
+
 
 // Used to get a properly sanitized input, of max_length
 // no_trim is self explanatory but it prevents the input from being trimed if you intend to parse newlines or whitespace.
 /proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
 	var/name = input(user, message, title, default) as text|null
 	if(no_trim)
-		return copytext(html_encode(name), 1, max_length)
+		return rhtml_encode(copytext(name, 1, max_length))
 	else
-		return trim(html_encode(name), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
+		return rhtml_encode(trim(name, max_length)) //trim is "outside" because rhtml_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
 // Used to get a properly sanitized multiline input, of max_length
 /proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
 	var/name = input(user, message, title, default) as message|null
 	if(no_trim)
-		return copytext(html_encode(name), 1, max_length)
+		return rhtml_encode(copytext(name, 1, max_length))
 	else
-		return trim(html_encode(name), max_length)
+		return rhtml_encode(trim(name, max_length))
 
 //Filters out undesirable characters from names
 /proc/reject_bad_name(t_in, allow_numbers=0, max_length=MAX_NAME_LEN)
@@ -174,7 +175,7 @@
 
 	return t_out
 
-//html_encode helper proc that returns the smallest non null of two numbers
+//rhtml_encode helper proc that returns the smallest non null of two numbers
 //or 0 if they're both null (needed because of findtext returning 0 when a value is not present)
 /proc/non_zero_min(a, b)
 	if(!a)
@@ -182,6 +183,37 @@
 	if(!b)
 		return a
 	return (a < b ? a : b)
+
+//this proc strips html properly, but it's not lazy like the other procs.
+//this means that it doesn't just remove < and > and call it a day. seriously, who the fuck thought that would be useful.
+//also limit the size of the input, if specified to
+/proc/strip_html_properly(var/input,var/max_length=MAX_MESSAGE_LEN)
+	if(!input)
+		return
+	var/opentag = 1
+	var/closetag = 1
+	while(1)
+		opentag = findtext(input, "<", opentag) //These store the position of < and > respectively.
+		if(opentag)
+			closetag = findtext(input, ">", opentag)
+			if(closetag)
+				input = copytext(input, 1, opentag) + copytext(input, closetag + 1)
+			else
+				break
+		else
+			break
+	if(max_length)
+		input = copytext(input,1,max_length)
+	return input
+/*
+/mob/verb/test_strip_html_properly()
+	ASSERT(strip_html_properly("I love <html>html. It's so amazing!") == "I love html. It's so amazing!")
+	ASSERT(strip_html_properly(">here is cool text< yo") == ">here is cool text< yo")
+	ASSERT(strip_html_properly("A<F>W<U>E<C>S<K>O<O>M<F>E<F>") == "AWESOME")
+	ASSERT(strip_html_properly("A>B>C>D>E>F>G") =="A>B>C>D>E>F>G")
+	ASSERT(strip_html_properly("G<F<E<D<C<B<A") == "G<F<E<D<C<B<A")
+	world.log << "test finished"
+*/
 
 /*
  * Text searches
@@ -297,7 +329,6 @@
 		return message
 	return copytext(message, 1, length + 1)
 
-
 /proc/stringmerge(text,compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever
 //is in the other string at the same spot (assuming it is not a replace char).
@@ -336,6 +367,30 @@
 	for(var/i = length(text); i > 0; i--)
 		new_text += copytext(text, i, i+1)
 	return new_text
+
+/proc/dd_splittext(text, separator, var/list/withinList)
+	var/textlength = length(text)
+	var/separatorlength = length(separator)
+	if(withinList && !withinList.len) withinList = null
+	var/list/textList = new()
+	var/searchPosition = 1
+	var/findPosition = 1
+	var/loops = 0
+	while(1)
+		if(loops >= 1000)
+			break
+		loops++
+
+		findPosition = findtext(text, separator, searchPosition, 0)
+		var/buggyText = copytext(text, searchPosition, findPosition)
+		if(!withinList || (buggyText in withinList)) textList += "[buggyText]"
+		if(!findPosition) return textList
+		searchPosition = findPosition + separatorlength
+		if(searchPosition > textlength)
+			textList += ""
+			return textList
+	return
+
 
 GLOBAL_LIST_INIT(zero_character_only, list("0"))
 GLOBAL_LIST_INIT(hex_characters, list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"))
@@ -570,6 +625,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	return t
 
+
+
 #define string2charlist(string) (splittext(string, regex("(.)")) - splittext(string, ""))
 
 /proc/rot13(text = "")
@@ -587,6 +644,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			ca -= 13
 		result += ascii2text(ca)
 	return jointext(result, "")
+
+
 
 //Takes a list of values, sanitizes it down for readability and character count,
 //then exports it as a json file at data/npc_saves/[filename].json.
@@ -766,4 +825,3 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			return "twelfth"
 		else
 			return "[number]\th"
-		

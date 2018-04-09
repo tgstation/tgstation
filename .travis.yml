@@ -12,13 +12,10 @@ env:
     - BUILD_TESTING=false
     - DM_MAPFILE="loadallmaps"
     matrix:
-    - BUILD_TOOLS=true
     - BUILD_TESTING=true
-    - BUILD_TESTING=false
 
 cache:
   directories:
-    - tgui/node_modules
     - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
 
 
@@ -28,18 +25,11 @@ addons:
       - libc6-i386
       - libgcc1:i386
       - libstdc++6:i386
-      - python3
-      - python3-pip
-
-install:
-  - tools/travis/install_build_tools.sh
 
 before_script:
-  - tools/travis/before_build_tools.sh
   - tools/travis/before_build_byond.sh
 
 script:
   - tools/travis/check_filedirs.sh tgstation.dme
-  - tools/travis/build_tools.sh
   - tools/travis/build_byond.sh
 

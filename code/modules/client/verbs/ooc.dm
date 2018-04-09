@@ -24,6 +24,14 @@
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	if(check_rights_for(src, R_ADMIN))
+	else
+		msg = replacetext(msg, "<p>", "")
+		msg = replacetext(msg, "</p>", "")
+		msg = replacetext(msg, "</font>", "")
+		msg = replacetext(msg, "font size", "")
+		msg = replacetext(msg, "color=", "")
+		msg = replacetext(msg, "face=", "")
 	var/raw_msg = msg
 
 	if(!msg)

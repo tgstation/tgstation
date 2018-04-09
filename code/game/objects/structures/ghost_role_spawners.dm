@@ -302,7 +302,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel and always remember: The customer is always right!"
-	death = FALSE
+	death = TRUE
 	roundstart = FALSE
 	random = TRUE
 	outfit = /datum/outfit/hotelstaff

@@ -232,7 +232,7 @@
 	else if(href_list["import"])
 		var/t = ""
 		do
-			t = html_encode(input(usr, "Please paste the entire song, formatted:", text("[]", name), t)  as message)
+			t = rhtml_encode(input(usr, "Please paste the entire song, formatted:", text("[]", name), t)  as message)
 			if(!in_range(instrumentObj, usr))
 				return
 
@@ -267,7 +267,7 @@
 			playsong(usr)
 
 	else if(href_list["newline"])
-		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
+		var/newline = rhtml_encode(input("Enter your line: ", instrumentObj.name) as text|null)
 		if(!newline || !in_range(instrumentObj, usr))
 			return
 		if(lines.len > MUSIC_MAXLINES)
@@ -284,7 +284,7 @@
 
 	else if(href_list["modifyline"])
 		var/num = round(text2num(href_list["modifyline"]),1)
-		var/content = html_encode(input("Enter your line: ", instrumentObj.name, lines[num]) as text|null)
+		var/content = rhtml_encode(input("Enter your line: ", instrumentObj.name, lines[num]) as text|null)
 		if(!content || !in_range(instrumentObj, usr))
 			return
 		if(lentext(content) > MUSIC_MAXLINECHARS)

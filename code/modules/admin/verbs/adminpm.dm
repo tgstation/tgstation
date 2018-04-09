@@ -114,7 +114,6 @@
 			msg = trim(msg)
 			if(!msg)
 				return
-
 			if(prefs.muted & MUTE_ADMINHELP)
 				to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 				return
@@ -128,13 +127,15 @@
 
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
-
+	//It simply doesn't work well without sanitizing
+/*
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0)||irc)//no sending html to the poor bots
-		msg = trim(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
+		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 		if(!msg)
 			return
-
+*/
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	var/rawmsg = msg
 
 	if(holder)

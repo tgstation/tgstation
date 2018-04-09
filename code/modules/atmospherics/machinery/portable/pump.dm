@@ -12,7 +12,6 @@
 	var/on = FALSE
 	var/direction = PUMP_OUT
 	var/obj/machinery/atmospherics/components/binary/pump/pump
-
 	volume = 1000
 
 /obj/machinery/portable_atmospherics/pump/Initialize()

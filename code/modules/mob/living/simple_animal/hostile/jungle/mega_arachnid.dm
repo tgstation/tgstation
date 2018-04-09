@@ -28,15 +28,12 @@
 	..()
 	if(target && ranged_cooldown > world.time && iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(!C.legcuffed && C.health < 50)
+		if(!C.legcuffed && C.health > 50) //it flees if it can't shoot and enemy is STRONK (healthy and not legcuffed)
 			retreat_distance = 9
 			minimum_distance = 9
-			alpha = 125
 			return
 	retreat_distance = 0
 	minimum_distance = 0
-	alpha = 255
-
 
 /mob/living/simple_animal/hostile/jungle/mega_arachnid/Aggro()
 	..()
@@ -64,3 +61,12 @@
 	flags_1 = DROPDEL_1
 	icon_state = "tentacle_end"
 	icon = 'icons/obj/projectiles.dmi'
+	armed = 1 //to make it trigger on crossed
+
+/obj/item/restraints/legcuffs/beartrap/mega_arachnid/New()
+	..()
+	addtimer(CALLBACK(src, .proc/disappear), 100)
+
+/obj/item/restraints/legcuffs/beartrap/mega_arachnid/proc/disappear()
+	if(!ismob(loc))
+		qdel(src)

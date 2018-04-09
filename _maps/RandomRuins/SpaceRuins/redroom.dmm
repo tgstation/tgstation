@@ -1,0 +1,51 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/obj/structure/lattice,/turf/open/space,/area/space)
+"c" = (/turf/closed/wall,/area/ruin)
+"d" = (/turf/closed/wall/rust,/area/ruin)
+"e" = (/obj/structure/curtain/red{density = 1; open = 0},/turf/open/floor/carpet/peaks,/area/ruin)
+"f" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"g" = (/turf/open/floor/carpet/peaks,/area/ruin)
+"h" = (/obj/structure/statue/sandstone/venus/afrodita,/turf/open/floor/carpet/peaks,/area/ruin)
+"i" = (/obj/item/device/flashlight/slamp,/turf/open/floor/carpet/peaks,/area/ruin)
+"j" = (/obj/structure/chair/comfy/arm,/turf/open/floor/carpet/peaks,/area/ruin)
+"k" = (/obj/structure/lattice,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"l" = (/obj/structure/lattice,/turf/open/floor/plating/airless,/area/ruin/unpowered/no_grav)
+"m" = (/obj/structure/chair/comfy/arm{tag = "icon-armchair (EAST)"; icon_state = "armchair"; dir = 4},/turf/open/floor/carpet/peaks,/area/ruin)
+"n" = (/obj/structure/table/wood/fancy,/obj/item/reagent_containers/food/drinks/mug{pixel_x = 4; pixel_y = 5},/turf/open/floor/carpet/peaks,/area/ruin)
+"o" = (/obj/structure/closet/crate/bin,/obj/item/device/tape/random,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"p" = (/obj/structure/curtain/red{icon_state = "open"},/turf/open/floor/carpet/peaks,/area/ruin)
+"q" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/hatch,/turf/open/floor/pod/dark,/area/ruin)
+"r" = (/obj/effect/turf_decal/sand,/turf/open/floor/plating/astplate{initial_gas_mix = "TEMP=2.7"},/area/ruin/unpowered/no_grav)
+"s" = (/obj/machinery/light/small{dir = 1},/turf/open/floor/plating/astplate{initial_gas_mix = "TEMP=2.7"},/area/ruin/unpowered/no_grav)
+"t" = (/turf/open/floor/plating/astplate{initial_gas_mix = "TEMP=2.7"},/area/ruin/unpowered/no_grav)
+"u" = (/obj/structure/statue/sandstone/venus{desc = "Ugh, this is merely an ugly amateurish replica of the other statue! The letters RIPGOAT are scribbled onto the base."; dir = 8},/turf/open/floor/plating/astplate{initial_gas_mix = "TEMP=2.7"},/area/ruin/unpowered/no_grav)
+"v" = (/turf/open/floor/plasteel/airless/asteroid{icon_state = "recharge_floor_asteroid"},/area/ruin/unpowered/no_grav)
+"w" = (/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered/no_grav)
+"x" = (/obj/structure/statue/sandstone/venus{dir = 4},/turf/open/floor/plating/astplate{initial_gas_mix = "TEMP=2.7"},/area/ruin/unpowered/no_grav)
+"y" = (/obj/effect/turf_decal/stripes/asteroid/line,/turf/open/floor/plating/astplate{initial_gas_mix = "TEMP=2.7"},/area/ruin/unpowered/no_grav)
+"z" = (/obj/item/statuebust,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"A" = (/obj/effect/overlay/palmtree_l,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"B" = (/turf/open/space,/obj/effect/turf_decal/sand,/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered/no_grav)
+"C" = (/turf/open/floor/plasteel/airless/asteroid{icon_state = "stairs-l"},/area/ruin/unpowered/no_grav)
+"D" = (/turf/open/floor/plasteel/airless/asteroid{icon_state = "stairs-m"},/area/ruin/unpowered/no_grav)
+"E" = (/turf/open/floor/plasteel/airless/asteroid{icon_state = "stairs-r"},/area/ruin/unpowered/no_grav)
+"F" = (/obj/effect/overlay/palmtree_r,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"G" = (/obj/effect/turf_decal/sand,/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+aaaaaaaaaaaabaaaaaa
+aaaaccdcccddcdcaaaa
+aaaaceeeeeeeeecaaaa
+aaafdegggggggedfaaa
+aaffdehggggggecfaaa
+afffdegijjiggecffaa
+bkkldegmgggggeclkbb
+affkdegngggggeckffa
+aaffdegggggggedoffa
+abklceeeepeeeedlkfa
+aaffdccccqcdcddfffa
+aaffrstuvwvxysrffaa
+aaafzfABCDEBFffffaa
+aaaafffrGwwrfffaaaa
+aaaaaafffGGrfaaaaaa
+"}
