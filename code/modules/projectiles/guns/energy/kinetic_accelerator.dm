@@ -21,8 +21,7 @@
 
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
-
-	var/empty_state = "kineticgun_empty"
+	
 	var/recharge_timerid
 
 /obj/item/gun/energy/kinetic_accelerator/examine(mob/user)
@@ -145,7 +144,7 @@
 
 /obj/item/gun/energy/kinetic_accelerator/update_icon()
 	if(!can_shoot())
-		add_overlay(empty_state)
+		add_overlay("[icon_state]_empty")
 	else
 		cut_overlays()
 
