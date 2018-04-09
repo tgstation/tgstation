@@ -25,3 +25,9 @@
 		else
 			I.special_attack = TRUE
 			to_chat(owner, "You enable [I]'s special attack")
+
+/datum/action/item_action/toggle_stick
+	name = "Get Hockey Stick"
+
+/datum/action/item_action/make_puck
+	name = "Fabricate Holopack"
