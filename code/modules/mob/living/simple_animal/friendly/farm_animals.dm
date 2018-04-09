@@ -29,39 +29,7 @@
 	stop_automated_movement_when_pulled = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
-/*
-/mob/living/simple_animal/hostile/retaliate/goat/maidan
-	name = "Space pig"
-	desc = "Ukrainian spy escaped from a space prison.."
-	icon_state = "loly"
-	icon_living = "loly"
-	icon_dead = "loly_dead"
-	icon_gib = "loly_gib"
-	speak = list("Слава Україні!","Крим наш!.","Героям слава!","куй куй чобіток подай батьку молоток не подаси молотка не підкую чобітка підожди сунку заколю свинку КВІІІІІІІІ")
-	speak_emote = list("brays")
-	emote_hear = list("brays.")
-	emote_see = list("кидает зигу.", "скачет.")
-	speak_chance = 5
-	turns_per_move = 5
-	see_in_dark = 6
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon = 6)
-	response_help  = "гладить по зашийку"
-	response_disarm = "хуячит по булкам ногой"
-	response_harm   = "пиздит ногами"
-	faction = list("neutral")
-	attack_same = 1
-	attacktext = "maidans"
-	attack_sound = 'sound/weapons/pig_bite.ogg'
-	health = 60
-	maxHealth = 60
 
-	harm_intent_damage = 8
-	obj_damage = 20
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	stop_automated_movement_when_pulled = 1
-	gold_core_spawnable = 1
-*/
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize()
 	udder = new()
 	. = ..()
@@ -188,9 +156,7 @@
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
 		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
-		Knockdown(60)
-		update_canmove()
-		addtimer(CALLBACK(src, .proc/update_canmove), 61)
+		Knockdown(60,ignore_canknockdown = TRUE)
 		icon_state = icon_dead
 		spawn(rand(20,50))
 			if(!stat && M)

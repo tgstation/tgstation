@@ -56,6 +56,7 @@
 
 /datum/trait/process()
 	if(QDELETED(trait_holder))
+		trait_holder = null
 		qdel(src)
 		return
 	if(trait_holder.stat == DEAD)
