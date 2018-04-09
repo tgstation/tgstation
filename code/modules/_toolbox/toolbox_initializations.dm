@@ -19,6 +19,8 @@ proc/Initialize_Falaskians_Shit()
 		src << sound('sound/items/bikehorn.ogg')
 		to_chat(src, "<span class='danger'>The discord URL is not set in the server configuration.</span>")
 
+
+GLOBAL_LIST_EMPTY(hub_features)
 /world/proc/update_status()
 	var/theservername = CONFIG_GET(string/servername)
 	if (!theservername)
@@ -39,23 +41,36 @@ proc/Initialize_Falaskians_Shit()
 		if(SSticker.current_state < GAME_STATE_PLAYING)
 			dat += "New Round Starting."
 		else if (SSticker.current_state > GAME_STATE_PLAYING)
-			dat += "Round has ended. New round soon."
+			dat += "New round soon."
 		else
-			dat += "Game Mode: [capitalize(GLOB.master_mode)]<br>"
-			dat += "Round Duration: [time2text(world.time-SSticker.round_start_time, "hh:mm")]"
+			dat += "Mode: [capitalize(GLOB.master_mode)]"
+			var/worldtime = max(world.time-SSticker.round_start_time,0)
+			var/hours = 0
+			var/minutes = 0
+			while(worldtime >= 36000)
+				hours++
+				worldtime -= 36000
+			while(worldtime >= 600)
+				minutes++
+				worldtime -= 600
+			if(minutes >= 300)
+				minutes++
+			if(length("[minutes]") < 2)
+				minutes = "0[minutes]"
+			dat += "<br>Round Time: [hours]:[minutes]"
 	else
 		dat += "Restarting."
-	var/thepath = "config/hub_features.txt"
-	if(fexists(thepath))
-		var/list/hub_features = file2list(thepath)
-		if(hub_features && hub_features.len)
+	if(GLOB)
+		if(!GLOB.hub_features.len)
+			GLOB.hub_features = file2list("config/hub_features.txt")
+		if(GLOB.hub_features.len)
 			dat += "<br>"
 			var/linecount = 1
-			for(var/line in hub_features)
+			for(var/line in GLOB.hub_features)
 				dat += "[line]"
-				if(linecount != hub_features.len)
+				if(linecount < GLOB.hub_features.len)
 					dat += "<br>"
-				linecount ++
+				linecount++
 	world.status = dat
 
 //modifying a player after hes equipped when spawning in as crew member.

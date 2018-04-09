@@ -107,6 +107,7 @@ Admin:
 /client/verb/changelog()
 	set name = "Changelog"
 	set category = "OOC"
+	return
 	var/datum/asset/changelog = get_asset_datum(/datum/asset/simple/changelog)
 	changelog.send(src)
 	src << browse('html/changelog.html', "window=changes;size=675x650")
