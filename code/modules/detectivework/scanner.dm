@@ -175,14 +175,10 @@
 
 /proc/get_timestamp()
 	return time2text(world.time + 432000, ":ss")
-
-/obj/item/device/detective_scanner/proc/can_use(mob/user)
-	if(isliving(user) && !user.incapacitated())
-		return TRUE
-	return FALSE
 	
 /obj/item/device/detective_scanner/AltClick(mob/living/user)
-	if(!can_use(user))
+	// Best way for checking if a player can use while not incapacitated, etc
+	if(!user.canUseTopic(src, be_close=TRUE))
 		return
 	if(!LAZYLEN(log))
 		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner has no logs.</span>")
@@ -194,13 +190,12 @@
 	log = list()
 
 /obj/item/device/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
-	if(!can_use(user))
-		return
+	// No need for can-use checks since the action button should do proper checks
 	if(!LAZYLEN(log))
-		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner has no logs.</span>")
+		to_chat(user, "<span class='notice'>Cannot display logs, the scanner has no logs.</span>")
 		return
 	if(scanning)
-		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner is in use.</span>")
+		to_chat(user, "<span class='notice'>Cannot display logs, the scanner is in use.</span>")
 		return
 	to_chat(user, "<span class='notice'><B>Scanner Report</B></span>")
 	for(var/iterLog in log)
