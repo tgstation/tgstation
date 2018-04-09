@@ -30338,18 +30338,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"btj" = (
-/obj/docking_port/stationary{
-	dir = 2;
-	dwidth = 4;
-	height = 17;
-	id = "arrivals_stationary";
-	name = "omega arrivals";
-	roundstart_template = /datum/map_template/shuttle/arrival/delta;
-	width = 9
-	},
-/turf/open/space/basic,
-/area/space)
 "btk" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -31447,6 +31435,18 @@
 /obj/item/wrench,
 /turf/open/space,
 /area/space/nearstation)
+"fsl" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 2;
+	height = 16;
+	id = "arrivals_stationary";
+	name = "omega arrivals";
+	roundstart_template = /datum/map_template/shuttle/arrival/omega;
+	width = 5
+	},
+/turf/open/space/basic,
+/area/space)
 "fsJ" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -77326,7 +77326,7 @@ bgU
 aaa
 aaa
 aaa
-aaa
+fsl
 aaa
 aaa
 aaa
@@ -77839,7 +77839,7 @@ blv
 bgU
 aaa
 aaa
-btj
+aaa
 aaa
 aaa
 aaa
