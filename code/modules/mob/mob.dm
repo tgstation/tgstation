@@ -107,13 +107,15 @@
 // vision_distance (optional) define how many tiles away the message can be seen.
 // ignored_mob (optional) doesn't show any message to a given mob if TRUE.
 
-/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
+/atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob, emote=FALSE)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
 	var/range = 7
 	if(vision_distance)
 		range = vision_distance
+	//speech bubble
+	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in get_hearers_in_view(range, src))
 		if(!M.client)
 			continue
@@ -138,6 +140,13 @@
 						continue
 
 		M.show_message(msg,1,blind_message,2)
+		if(emote)
+			speech_bubble_recipients.Add(M.client)
+	if(emote)
+		var/image/I = image('icons/mob/talk.dmi', src, "emote0", FLY_LAYER)
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
+		
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
@@ -146,15 +155,23 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/mob/audible_message(message, deaf_message, hearing_distance, self_message)
+/mob/audible_message(message, deaf_message, hearing_distance, self_message, emote=FALSE)
 	var/range = 7
 	if(hearing_distance)
 		range = hearing_distance
+	//speech bubble
+	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in get_hearers_in_view(range, src))
 		var/msg = message
 		if(self_message && M==src)
 			msg = self_message
 		M.show_message( msg, 2, deaf_message, 1)
+		if(emote)
+			speech_bubble_recipients.Add(M.client)
+	if(emote)
+		var/image/I = image('icons/mob/talk.dmi', src, "emote0", FLY_LAYER)
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions

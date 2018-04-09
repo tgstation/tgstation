@@ -58,9 +58,9 @@
 			M.show_message(msg)
 
 	if(emote_type == EMOTE_AUDIBLE)
-		user.audible_message(msg)
+		user.audible_message(msg, emote=TRUE)
 	else
-		user.visible_message(msg)
+		user.visible_message(msg, emote=TRUE)
 	log_talk(user,"[key_name(user)] : [msg]",LOGEMOTE)
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
