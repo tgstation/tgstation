@@ -1,7 +1,7 @@
 //Crytek Nanosuit
 /obj/item/clothing/under/syndicate/combat/nano
 	name = "nanosuit lining"
-	desc = "A robust suit to line the inside of your nanosuit. Provides internal protection."
+	desc = "Foreign body resistant suit build below the nanosuit. Provides internal protection."
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 
 /obj/item/clothing/under/syndicate/combat/nano/ComponentInitialize()
@@ -15,7 +15,7 @@
 
 /obj/item/clothing/mask/gas/nano_mask
 	name = "nanosuit gas mask"
-	desc = "A robust gas mask. Property of CryNet Systems." //More accurate
+	desc = "Operator mask. Property of CryNet Systems." //More accurate
 	icon_state = "syndicate"
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 
@@ -36,7 +36,7 @@
 
 /obj/item/clothing/shoes/combat/coldres/nanojump
 	name = "nanosuit boots"
-	desc = "High speed, no drag combat boots, now with an added layer of insulation. Property of CryNet Systems."
+	desc = "Boots part of a nanosuit. Slip resistant. Property of CryNet Systems."
 	flags_1 = NOSLIP_1
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -90,7 +90,7 @@
 
 /obj/item/clothing/gloves/combat/nano
 	name = "nano gloves"
-	desc = "These tactical gloves are fireproof and shock resistant. Property of CryNet Systems."
+	desc = "These tactical gloves are built into a nanosuit and are fireproof and shock resistant. Property of CryNet Systems."
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -108,7 +108,7 @@
 
 /obj/item/device/radio/headset/syndicate/alt/nano
 	name = "\proper the nanosuit's bowman headset"
-	desc = "The headset of the boss. Protects ears from flashbangs.\nChannels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
+	desc = "Operator communication headset. Property of CryNet Systems.\nChannels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
 	subspace_transmission = FALSE
@@ -129,7 +129,7 @@
 
 /obj/item/clothing/glasses/nano_goggles
 	name = "nanosuit goggles"
-	desc = "Goggles built into your nanosuit helmet. Property of CryNet."
+	desc = "Goggles built into a nanosuit helmet. Property of CryNet Systems."
 	alternate_worn_icon = 'hippiestation/icons/mob/nanosuit.dmi'
 	icon = 'hippiestation/icons/obj/nanosuit.dmi'
 	icon_state = "nvgmesonnano"
@@ -162,8 +162,8 @@
 	return
 
 /obj/item/clothing/glasses/nano_goggles/proc/nvgmode(mob/user, var/forced = FALSE)
-	to_chat(user, "<span class='[forced ? "warning":"notice"]'>[forced ? "The goggles turn":"You turn the goggles"] [on ? "on":"off"][forced ? "!":"."]</span>")
 	on = !on
+	to_chat(user, "<span class='[forced ? "warning":"notice"]'>[forced ? "The goggles turn":"You turn the goggles"] [on ? "on":"off"][forced ? "!":"."]</span>")
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.glasses == src)
@@ -196,10 +196,10 @@
 	icon_state = "nanosuit"
 	item_state = "nanosuit"
 	name = "nanosuit"
-	desc = "Some sort of alien future suit. It looks very robust."
+	desc = "Some sort of alien future suit. It looks very robust. Property of CryNet Systems."
 	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 65, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
-	var/armor_mode = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 45, "bomb" = 70, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 100)
-	var/normal_mode = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 65, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	var/normal_mode = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 45, "bomb" = 70, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 100)
+	var/armor_mode = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 65, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	allowed = list(/obj/item/tank/internals)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
@@ -221,6 +221,10 @@
 	var/datum/martial_art/nano/style = new
 	var/shutdown = FALSE
 	var/empdmg = 0
+	var/current_charges = 3
+	var/max_charges = 3 //How many charges total the shielding has
+	var/medical_delay = 200 //How long after we've been shot before we can start recharging. 20 seconds here
+	var/medical_cooldown = 0 //Time since we've last been shot
 
 /obj/item/clothing/suit/space/hardsuit/nano/ComponentInitialize()
 	. = ..()
@@ -323,6 +327,8 @@
 			toggle_mode("armor")
 	if(mode == "cloak")
 		cell.use(1)
+	if(world.time > medical_cooldown && current_charges < max_charges)
+		current_charges = CLAMP((current_charges + 1), 0, max_charges)
 
 
 /obj/item/clothing/suit/space/hardsuit/nano/proc/ntick()
@@ -358,7 +364,20 @@
 	if(mode == "cloak")
 		cell.charge = 0
 
+	if(prob(damage*2) && user.health < 50 && current_charges > 0)
+		medical_cooldown = world.time + medical_delay
+		current_charges--
+		heal_nano(user)
+
 	return 0
+
+/obj/item/clothing/suit/space/hardsuit/nano/proc/heal_nano(mob/living/carbon/human/user)
+	helmet.display_visor_message("Engaging emergency medical protocols")
+	sleep(20)
+	user.reagents.add_reagent("synaptizine", 5)
+	user.reagents.add_reagent("epinephrine" , 5)
+	user.reagents.add_reagent("salglu_solution", 5)
+
 
 /obj/item/clothing/suit/space/hardsuit/nano/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/nanosuit/armor))
@@ -489,7 +508,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/nano
 	name = "nanosuit helmet"
-	desc = "Some sort of alien future suit helmet. It looks very robust."
+	desc = "The cherry on top. Property of CryNet Systems."
 	alternate_worn_icon = 'hippiestation/icons/mob/nanosuit.dmi'
 	icon = 'hippiestation/icons/obj/nanosuit.dmi'
 	icon_state = "nanohelmet"
@@ -583,7 +602,7 @@
 	gloves = /obj/item/clothing/gloves/combat/nano
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
 	internals_slot = slot_r_store
-	implants = list(/obj/item/implant/explosive)
+	implants = list(/obj/item/implant/explosive/disintegrate)
 
 
 obj/item/clothing/suit/space/hardsuit/nano/dropped()
@@ -600,7 +619,7 @@ obj/item/clothing/suit/space/hardsuit/nano/dropped()
 			stat("Crynet Protocols : Engaged")
 			stat("Energy Charge:", "[NS.cell.charge]%")
 			stat("Mode:", "[NS.mode]")
-			stat("Overall Status:", "[stat > 1 ? "dead" : "[health]% healthy"]")
+			stat("Overall Status:", "[health]% healthy")
 			stat("Nutrition Status:", "[nutrition]")
 			stat("Oxygen Loss:", "[getOxyLoss()]")
 			stat("Toxin Levels:", "[getToxLoss()]")
@@ -737,7 +756,7 @@ obj/item/clothing/suit/space/hardsuit/nano/dropped()
 		..(user, 1)
 		visible_message("<span class='danger'>[user] smashes [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 		if(density)
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 0.5)//less ear rape
+			playsound(src, 'sound/effects/bang.ogg', 100, 0.5)//less ear rape
 		else
 			playsound(src, 'sound/effects/bang.ogg', 50, 0.5)//less ear rape
 		take_damage(nano_damage(), BRUTE, "melee", 0, get_dir(src, user))
@@ -800,3 +819,25 @@ obj/item/clothing/suit/space/hardsuit/nano/dropped()
 
 /obj/item/storage/box/syndie_kit/nanosuit/PopulateContents()
 	new /obj/item/clothing/suit/space/hardsuit/nano(src)
+
+/obj/item/implant/explosive/disintegrate
+	name = "disintegration implant"
+	desc = "Ashes to ashes."
+	icon_state = "explosive"
+
+/obj/item/implant/explosive/disintegrate/activate(cause)
+	if(!cause || !imp_in || active)
+		return 0
+	if(cause == "action_button" && !popup)
+		popup = TRUE
+		var/response = alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to vapourize!", "[name] Confirmation", "Yes", "No")
+		popup = FALSE
+		if(response == "No")
+			return 0
+	to_chat(imp_in, "<span class='notice'>You activate your [name].</span>")
+	active = TRUE
+	var/turf/dustturf = get_turf(imp_in)
+	var/area/A = get_area(dustturf)
+	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [A.name] [ADMIN_JMP(dustturf)], with cause of [cause].")
+	imp_in.dust()
+	qdel(src)
