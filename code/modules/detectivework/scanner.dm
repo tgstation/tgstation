@@ -24,7 +24,7 @@
 /datum/action/item_action/displayDetectiveScanResults/Trigger()
 	var/obj/item/device/detective_scanner/scanner = target
 	if(istype(scanner))
-		scanner.displayDetectiveScanResults()
+		scanner.displayDetectiveScanResults(usr)
 
 /obj/item/device/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)
@@ -177,9 +177,8 @@
 	return time2text(world.time + 432000, ":ss")
 
 /obj/item/device/detective_scanner/proc/can_use(mob/user)
-	if(isliving(user))
-		if(!user.incapacitated())
-			return TRUE
+	if(isliving(user) && !user.incapacitated())
+		return TRUE
 	return FALSE
 	
 /obj/item/device/detective_scanner/AltClick(mob/living/user)
@@ -191,12 +190,12 @@
 	to_chat(user, "<span class='notice'>The scanner logs are cleared.</span>")
 	log = list()
 
-/obj/item/device/detective_scanner/proc/displayDetectiveScanResults()
-	if(!can_use(usr))
+/obj/item/device/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
+	if(!can_use(user))
 		return
 	if(!LAZYLEN(log) || scanning)
-		to_chat(usr, "<span class='notice'>The scanner has no logs or is in use.</span>")
+		to_chat(user, "<span class='notice'>The scanner has no logs or is in use.</span>")
 		return
-	to_chat(usr, "<span class='notice'><B>Scanner Report</B></span>")
+	to_chat(user, "<span class='notice'><B>Scanner Report</B></span>")
 	for(var/iterLog in log)
-		to_chat(usr, iterLog)
+		to_chat(user, iterLog)
