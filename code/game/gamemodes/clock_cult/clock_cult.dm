@@ -45,7 +45,7 @@ Credit where due:
 ///////////
 
 /proc/is_servant_of_ratvar(mob/M)
-	return !isobserver(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/clockcult)
+	return istype(M) && !isobserver(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/clockcult)
 
 /proc/is_eligible_servant(mob/M)
 	if(!istype(M))
