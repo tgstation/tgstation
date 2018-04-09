@@ -20,38 +20,38 @@ proc/Initialize_Falaskians_Shit()
 		to_chat(src, "<span class='danger'>The discord URL is not set in the server configuration.</span>")
 
 /world/proc/update_status()
-	var/s = ""
 	var/theservername = CONFIG_GET(string/servername)
 	if (!theservername)
-		theservername = "Tool Box Station"
-	s += "<b>[theservername]</b>"
-	s += " ("
-	s += "<a href=\"http://toolboxrp.free-forum.net/\">" //Change this to wherever you want the hub to link to.
-	s += "Forums"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += "|"
-	s += "<a href=\"https://discord.gg/SwXyqCn\">Discord</a>"
-	s += ")"
-
-	var/list/features = list()
-
+		theservername = "Space Station 13"
+	var/dat = "<b>[theservername]</B> "
+	var/theforumurl = CONFIG_GET(string/forumurl)
+	var/thediscordlink = CONFIG_GET(string/discordurl)
+	if(theforumurl || thediscordlink)
+		dat += "("
+		if(theforumurl)
+			dat += "<a href=\"[theforumurl]\">Forums</a>"
+		if(theforumurl && thediscordlink)
+			dat += "|"
+		if(thediscordlink)
+			dat += "<a href=\"[thediscordlink]\">Discord</a>"
+		dat += ")<br>"
 	if(SSticker)
 		if(GLOB.master_mode)
-			features += "Game Mode: [GLOB.master_mode]"
+			dat += "Game Mode: [GLOB.master_mode]"
 	else
-		features += "<b>STARTING</b>"
-
-	if (!GLOB.enter_allowed)
-		features += "-closed"
-
-	features += "-Light RP - The Brink of Chaos"
-	features += "-High Security Standard"
-	features += "-Active Staff & Development"
-
-	if (features)
-		s += ":<br>[jointext(features, "<br>")]"
-
-	status = s
+		dat += "<b>STARTING</b>"
+	var/thepath = "config/hub_features.txt"
+	if(fexists(thepath))
+		var/list/hub_features = file2list(thepath)
+		if(hub_features && hub_features.len)
+			dat += "<br>"
+			var/linecount = 1
+			for(var/line in hub_features)
+				dat += "[line]"
+				if(linecount != hub_features.len)
+					dat += "<br>"
+				linecount ++
+	world.status = dat
 
 //modifying a player after hes equipped when spawning in as crew member.
 /datum/outfit/proc/update_toolbox_inventory(mob/living/carbon/human/H)

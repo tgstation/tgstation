@@ -625,8 +625,7 @@ SUBSYSTEM_DEF(ticker)
 		'sound/toolbox/roundend/autism.ogg',
 		'sound/toolbox/roundend/heeman.ogg',
 		'sound/toolbox/roundend/rigged_from_the_start.ogg',
-		'sound/toolbox/roundend/seagulls.ogg',
-		'sound/toolbox/roundend/mrmemerswag.ogg'\
+		'sound/toolbox/roundend/seagulls.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))
