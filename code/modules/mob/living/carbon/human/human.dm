@@ -703,7 +703,6 @@
 		if(bloody_hands)
 			bloody_hands = 0
 			update_inv_gloves()
-	update_icons()	//apply the now updated overlays to the mob
 
 /mob/living/carbon/human/wash_cream()
 	if(creamed) //clean both to prevent a rare bug
