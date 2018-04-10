@@ -1,0 +1,6 @@
+author: "Pipe fixes"
+delete-after: True
+changes: 
+  - bugfix: "Runtime in components_base.dm,91 what cause atmos machinery connection problems."
+  - bugfix: "Pipes release air in turf on Destroy(), again."
+  - bugfix: "Pipeline now cant be annihilated by merge(src). Pipes don't lose air on connecting more than to one pipe."

@@ -1,0 +1,4 @@
+author: "yorii"
+delete-after: True
+changes: 
+  - tweak: "Science goggles can now detect reagents in grenades."

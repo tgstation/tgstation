@@ -78,6 +78,15 @@
 	icon_state = "toolbox_blue_old"
 	has_latches = FALSE
 
+/obj/item/storage/toolbox/mechanical/old/heirloom
+	name = "toolbox" //this will be named "X family toolbox"
+	desc = "It's seen better days."
+	force = 5
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
+	return
+
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"

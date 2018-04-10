@@ -35,6 +35,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	density = FALSE
 	mob_size = MOB_SIZE_TINY
 	movement_type = FLYING
 	gold_core_spawnable = HOSTILE_SPAWN
@@ -56,7 +57,7 @@
 /mob/living/simple_animal/hostile/poison/bees/Initialize()
 	. = ..()
 	generate_bee_visuals()
-
+	AddComponent(/datum/component/swarming)
 
 /mob/living/simple_animal/hostile/poison/bees/Destroy()
 	if(beehome)
@@ -291,5 +292,5 @@
 		if(idle >= BEE_IDLE_ROAMING && prob(BEE_PROB_GOROAM))
 			toggle_ai(AI_ON)
 			forceMove(beehome.drop_location())
-	else  
+	else
 		..()

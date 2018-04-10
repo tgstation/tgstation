@@ -160,7 +160,8 @@
 	desc = "A small, twin-bladed machine capable of inflicting very deadly lacerations."
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSMOB
+	a_intent = INTENT_HARM
 	health = 25
 	maxHealth = 25
 	melee_damage_lower = 15
@@ -180,3 +181,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 	deathmessage = "is smashed into pieces!"
+
+/mob/living/simple_animal/hostile/viscerator/Initialize()
+	. = ..()
+	AddComponent(/datum/component/swarming)

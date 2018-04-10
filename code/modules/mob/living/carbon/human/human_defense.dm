@@ -647,6 +647,9 @@
 			for(var/X in bodyparts)
 				var/obj/item/bodypart/LB = X
 				missing -= LB.body_zone
+				if(LB.is_pseudopart) //don't show injury text for fake bodyparts; ie chainsaw arms or synthetic armblades
+					continue
+				var/limb_max_damage = LB.max_damage
 				var/status = ""
 				var/brutedamage = LB.brute_dam
 				var/burndamage = LB.burn_dam
@@ -663,20 +666,21 @@
 
 				else
 					if(brutedamage > 0)
-						status = "bruised"
-					if(brutedamage > 20)
-						status = "battered"
-					if(brutedamage > 40)
-						status = "mangled"
+						status = LB.light_brute_msg
+					if(brutedamage > (limb_max_damage*0.4))
+						status = LB.medium_brute_msg
+					if(brutedamage > (limb_max_damage*0.8))
+						status = LB.heavy_brute_msg
 					if(brutedamage > 0 && burndamage > 0)
 						status += " and "
-					if(burndamage > 40)
-						status += "peeling away"
 
-					else if(burndamage > 10)
-						status += "blistered"
+					if(burndamage > (limb_max_damage*0.8))
+						status += LB.heavy_burn_msg
+					else if(burndamage > (limb_max_damage*0.2))
+						status += LB.medium_burn_msg
 					else if(burndamage > 0)
-						status += "numb"
+						status += LB.light_burn_msg
+
 					if(status == "")
 						status = "OK"
 				var/no_damage
