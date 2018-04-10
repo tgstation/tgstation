@@ -49,14 +49,15 @@
 
 	return TRUE
 
-/obj/item/stack/ore/burn()
+/obj/item/stack/ore/fire_act(exposed_temperature, exposed_volume)
 	if(!refined_type)
 		return ..()
-	var/amountrefined = round(rand(0,100)/100*amount, 1)
+	var/probability = rand(0,100) / 100
+	var/amountrefined = round(probability*amount, 1)
 	if(amountrefined < 1)
 		return ..()
 	else
-		var/obj/item/stack/sheet/S = new refined_type(drop_location(), new_amount = amountrefined)
+		new refined_type(drop_location(), new_amount = amountrefined)
 		qdel(src)
 
 /obj/item/stack/ore/uranium
