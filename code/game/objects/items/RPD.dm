@@ -303,16 +303,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return ..()
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
-	var/temp_piping_layer = piping_layer
 	var/queued_p_type = recipe.id
 	var/queued_p_dir = p_dir
 	var/queued_p_flipped = p_flipped
-
-	// clicking on an existing component puts the new one on the same layer
-	if (mode == ATMOS_MODE && istype(A, /obj/machinery/atmospherics))
-		var/obj/machinery/atmospherics/AM = A
-		temp_piping_layer = AM.piping_layer
-		A = get_turf(user)
 
 	//make sure what we're clicking is valid for the current mode
 	var/static/list/make_pipe_whitelist
@@ -352,7 +345,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					if(do_after(user, atmos_build_speed, target = A))
 						activate()
 						var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(A))
-						PM.setAttachLayer(temp_piping_layer)
+						PM.setAttachLayer(piping_layer)
 				else
 					to_chat(user, "<span class='notice'>You start building a pipe...</span>")
 					if(do_after(user, atmos_build_speed, target = A))
@@ -367,8 +360,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 						P.update()
 						P.add_fingerprint(usr)
-						P.setPipingLayer(temp_piping_layer)
-						if(istype(P, /obj/machinery/atmospherics/pipe) && !istype(P, /obj/machinery/atmospherics/pipe/layer_manifold))
+						P.setPipingLayer(piping_layer)
+						if(findtext("[queued_p_type]", "/obj/machinery/atmospherics/pipe") && !findtext("[queued_p_type]", "layer_manifold"))
 							P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 
 			if(DISPOSALS_MODE) //Making disposals pipes
