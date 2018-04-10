@@ -108,8 +108,10 @@ GLOBAL_LIST_INIT(huds, list(
 		return
 	if (ismob(A))
 		var/mob/changeling = A
-		if ( (changeling.hiddenFlags & DIGITAL_CAMO) && isAI(M))
-			return
+		if ((changeling.hiddenFlags & DIGITAL_CAMO) && isAI(M))
+			// Also check if the hud that we are adding to is sec, med, diag, otherwise alternate appearance won't work for hiding the ling
+			if (istype(src, /datum/atom_hud/data/human/security) || istype(src, /datum/atom_hud/data/human/medical) || istype(src, /datum/atom_hud/data/diagnostic))
+				return
 	for(var/i in hud_icons)
 		if(A.hud_list[i])
 			M.client.images |= A.hud_list[i]
