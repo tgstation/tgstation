@@ -644,14 +644,14 @@
 	if(istype(I, /obj/item/stock_parts))
 		var/obj/item/stock_parts/S = I
 		if(istype(S, /obj/item/stock_parts/manipulator))
-			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
+			usermessage("[I] has been successfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_manip)
 					part_manip.forceMove(get_turf(src))
 				part_manip = I
 				changed = TRUE
 		if(istype(S, /obj/item/stock_parts/scanning_module))
-			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
+			usermessage("[I] has been successfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_scan)
 					part_scan.forceMove(get_turf(src))
