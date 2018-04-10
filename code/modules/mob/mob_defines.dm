@@ -84,9 +84,9 @@
 
 
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
-
-	var/digitalcamo = 0 // Can they be tracked by the AI?
-	var/digitalinvis = 0 //Are they ivisible to the AI?
+	
+	// These flags hold whether or not the mob has digitalcamo on
+	var/hiddenFlags = 0
 
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
 

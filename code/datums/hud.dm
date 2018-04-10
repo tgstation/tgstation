@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(huds, list(
 		return
 	if (ismob(A))
 		var/mob/changeling = A
-		if (changeling.digitalinvis && isAI(M))
+		if ( (changeling.hiddenFlags & DIGITAL_CAMO) && isAI(M))
 			return
 	for(var/i in hud_icons)
 		if(A.hud_list[i])
