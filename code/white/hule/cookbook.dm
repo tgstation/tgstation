@@ -14,6 +14,26 @@
 	title = "the Russian Cookbook"
 	tool_behaviour = TOOL_COOKBOOK
 	dat = {"<html><body>
+	<img src=https://pp.userapi.com/c306902/v306902481/11e6/7YOW5xnctHU.jpg>
+	<br>
+	<img src=https://pp.userapi.com/c306902/v306902481/1257/5swZEHEzVCs.jpg>
+	<br>
 	<img src=https://pp.userapi.com/c306902/v306902481/142e/YlRwVsqEQbY.jpg>
+	<br>
+	<img src=https://pp.userapi.com/c306902/v306902481/1480/6oFGL30v8DA.jpg>
+	<br>
+	<img src=https://pp.userapi.com/c306903/v306903481/2a80/074GF0u69Bo.jpg>
+	<br>
+	<img src=https://pp.userapi.com/c306903/v306903481/2cad/0TMt0vRWFEk.jpg>
+	<br>
+	<img src=https://pp.userapi.com/c319529/v319529481/227a/g0QZqwKnwIM.jpg>
 	</body>
 	</html>"}
+
+/datum/uplink_item/cookbook
+	name = "Cookbook"
+	category = "Devices and Tools"
+	desc = "Очень интересная и познавательная книга."
+	item = /obj/item/book/cookbook
+	cost = 5
+	surplus = 10
