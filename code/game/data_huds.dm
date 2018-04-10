@@ -25,6 +25,7 @@
 	hud_icons = list(STATUS_HUD, HEALTH_HUD)
 
 /datum/atom_hud/data/human/medical/basic
+	hideFlag = HIDE_DATA_HUDS
 
 /datum/atom_hud/data/human/medical/basic/proc/check_sensors(mob/living/carbon/human/H)
 	if(!istype(H))
@@ -46,6 +47,7 @@
 /datum/atom_hud/data/human/medical/advanced
 
 /datum/atom_hud/data/human/security
+	hideFlag = HIDE_DATA_HUDS
 
 /datum/atom_hud/data/human/security/basic
 	hud_icons = list(ID_HUD)
@@ -54,6 +56,7 @@
 	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD)
 
 /datum/atom_hud/data/diagnostic
+	hideFlag = HIDE_DATA_HUDS
 
 /datum/atom_hud/data/diagnostic/basic
 	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD)

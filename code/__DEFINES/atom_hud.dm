@@ -60,3 +60,7 @@
 #define NOTIFY_ORBIT "orbit"
 
 #define ADD_HUD_TO_COOLDOWN 20 //cooldown for being shown the images for any particular data hud
+
+// Flags for determining what huds to hide
+#define HIDE_ALL_HUDS 1
+#define HIDE_DATA_HUDS 2

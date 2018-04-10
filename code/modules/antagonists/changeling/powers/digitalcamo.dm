@@ -11,14 +11,16 @@
 		to_chat(user, "<span class='notice'>We return to normal.</span>")
 		user.hiddenFlags &= ~DIGITAL_CAMO
 		user.remove_alt_appearance("digitalcamo")
-		user.reload_huds_of_me()
+		for(var/mob in GLOB.ai_list)
+			user.showHudOf(mob, HIDE_DATA_HUDS)
 	else
 		to_chat(user, "<span class='notice'>We distort our form to hide from the AI</span>")
 		user.hiddenFlags |= DIGITAL_CAMO
 		var/image/I = image(loc = user)
 		I.override = TRUE
 		user.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/AI, "digitalcamo", I, FALSE)
-		user.reload_huds_of_me()
+		for(var/mob in GLOB.ai_list)
+			user.hideHudOf(mob, HIDE_DATA_HUDS)
 	return TRUE
 
 /obj/effect/proc_holder/changeling/digitalcamo/on_refund(mob/user)
