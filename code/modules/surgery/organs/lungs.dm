@@ -1,13 +1,3 @@
-#define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
-#define HEAT_GAS_DAMAGE_LEVEL_1 2
-#define HEAT_GAS_DAMAGE_LEVEL_2 4
-#define HEAT_GAS_DAMAGE_LEVEL_3 8
-
-#define COLD_GAS_DAMAGE_LEVEL_1 0.5
-#define COLD_GAS_DAMAGE_LEVEL_2 1.5
-#define COLD_GAS_DAMAGE_LEVEL_3 3
-
 /obj/item/organ/lungs
 	name = "lungs"
 	icon_state = "lungs"
@@ -369,13 +359,3 @@
 	cold_level_1_threshold = 200
 	cold_level_2_threshold = 140
 	cold_level_3_threshold = 100
-
-#undef HUMAN_MAX_OXYLOSS
-#undef HUMAN_CRIT_MAX_OXYLOSS
-#undef HEAT_GAS_DAMAGE_LEVEL_1
-#undef HEAT_GAS_DAMAGE_LEVEL_2
-#undef HEAT_GAS_DAMAGE_LEVEL_3
-
-#undef COLD_GAS_DAMAGE_LEVEL_1
-#undef COLD_GAS_DAMAGE_LEVEL_2
-#undef COLD_GAS_DAMAGE_LEVEL_3
