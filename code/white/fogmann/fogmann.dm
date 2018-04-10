@@ -252,6 +252,8 @@ obj/item/banner/engineering/atmos/mundane
 /obj/item/ammo_casing/shotgun/dart/sleeping/Initialize()
 	. = ..()
 	reagents.add_reagent("tirizene", 30)
+	reagents.add_reagent("skewium", 5)
+	reagents.add_reagent("spewium", 5)
 
 /obj/item/storage/box/sleeping
 	name = "box of tranquilizer darts"
@@ -263,3 +265,27 @@ obj/item/banner/engineering/atmos/mundane
 /obj/item/storage/box/sleeping/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/dart/sleeping(src)
+
+/obj/item/storage/book/ruchinese
+	name = "Russian-chinese dictionary"
+	desc = "Apply to the moths and flies."
+	icon = 'code/white/pieceofcrap.dmi'
+	icon_state = "slovar"
+	item_state = "bible"
+	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	force = 17
+	hitsound = 'code/white/fogmann/yebal.ogg'
+
+/obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user)
+	var/mob/living/carbon/human/H
+	if(H.dna.species.id == "human, moth")
+		playsound(src.loc, 'code/white/fogmann/blyead.ogg', 25, 1, -1)
+
+/datum/uplink_item/role_restricted/ruchinese
+	name = "Russian-chinese dictionary"
+	desc = "Старая книга, убившая прародителя мух и мотыльков. На ней до сих пор видны их засохшие внутренности."
+	item = /obj/item/storage/book/ruchinese
+	cost = 18
+	restricted_roles = list("Chaplain,  Curator, Assistant")
+	surplus = 5
