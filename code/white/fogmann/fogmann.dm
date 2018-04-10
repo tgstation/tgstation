@@ -252,8 +252,8 @@ obj/item/banner/engineering/atmos/mundane
 /obj/item/ammo_casing/shotgun/dart/sleeping/Initialize()
 	. = ..()
 	reagents.add_reagent("tirizene", 30)
-	reagents.add_reagent("skewium", 5)
-	reagents.add_reagent("spewium", 5)
+	reagents.add_reagent("skewium", 30)
+	reagents.add_reagent("spewium", 30)
 
 /obj/item/storage/box/sleeping
 	name = "box of tranquilizer darts"
@@ -266,7 +266,7 @@ obj/item/banner/engineering/atmos/mundane
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/dart/sleeping(src)
 
-/obj/item/storage/book/ruchinese
+/obj/item/book/ruchinese
 	name = "Russian-chinese dictionary"
 	desc = "Apply to the moths and flies."
 	icon = 'code/white/pieceofcrap.dmi'
@@ -276,16 +276,43 @@ obj/item/banner/engineering/atmos/mundane
 	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	force = 17
 	hitsound = 'code/white/fogmann/yebal.ogg'
+	dat = {"<html><body>
+	<img src=https://pp.userapi.com/c638421/v638421709/50c5d/RbBWfRq8b8Q.jpg>
+	</body>
+	</html>"}
 
-/obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user)
-	var/mob/living/carbon/human/H
-	if(H.dna.species.id == "human, moth")
-		playsound(src.loc, 'code/white/fogmann/blyead.ogg', 25, 1, -1)
+
+/obj/item/book/ruchinese/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] ебашит себ€ по голове книгой, видимо на станции нет мух!</span>")
+	var/delay_offset = 0
+	for(var/mob/M in viewers(src, 7))
+		var/mob/living/carbon/human/C = M
+		if (ishuman(M))
+			addtimer(CALLBACK(C, /mob/.proc/emote, "blyadiada"), delay_offset * 0.3)
+			delay_offset++
+	return (BRUTELOSS)
 
 /datum/uplink_item/role_restricted/ruchinese
 	name = "Russian-chinese dictionary"
 	desc = "—тара€ книга, убивша€ прародител€ мух и мотыльков. Ќа ней до сих пор видны их засохшие внутренности."
-	item = /obj/item/storage/book/ruchinese
+	item = /obj/item/book/ruchinese
 	cost = 18
 	restricted_roles = list("Chaplain,  Curator, Assistant")
 	surplus = 5
+
+/datum/emote/living/carbon/blyad
+	key = "blyadiada"
+	key_third_person = "blyads"
+	message = "blyads."
+	muzzle_ignore = FALSE
+	restraint_check = FALSE
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/blyad/run_emote(mob/living/user, params)
+	. = ..()
+	if (.)
+		if (ishuman(user))
+			if (!user.get_bodypart("tongue"))
+				return
+			var/blyad = pick('code/white/fogmann/blyead.ogg')
+			playsound(user, blyad, 25, 1, -1)
