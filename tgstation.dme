@@ -1032,6 +1032,7 @@
 #include "code\modules\_toolbox\medical\epibox.dm"
 #include "code\modules\_toolbox\silly\clothing.dm"
 #include "code\modules\_toolbox\silly\pokerchips.dm"
+#include "code\modules\_toolbox\silly\redphones.dm"
 #include "code\modules\_toolbox\silly\slurm.dm"
 #include "code\modules\_toolbox\silly\tidepods.dm"
 #include "code\modules\_toolbox\silly\trollcloset.dm"
