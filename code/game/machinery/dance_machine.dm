@@ -1,6 +1,6 @@
 /obj/machinery/jukebox
 	name = "jukebox"
-	desc = "A classic music player.."
+	desc = "A classic music player."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "jukebox"
 	anchored = TRUE
