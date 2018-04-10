@@ -3,7 +3,7 @@
 	name = "nanosuit lining"
 	desc = "Foreign body resistant suit build below the nanosuit. Provides internal protection."
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
-	armor = list("melee" = 20, "bullet" = 1, "laser" = 0,"energy" = 5, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 80, "acid" = 50)
+	armor = list("melee" = 20, "bullet" = 10, "laser" = 0,"energy" = 5, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 80, "acid" = 50)
 
 /obj/item/clothing/under/syndicate/combat/nano/ComponentInitialize()
 	. = ..()
