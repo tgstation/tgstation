@@ -1092,14 +1092,18 @@
 	else if(href_list["deletemessage"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/message_id = href_list["deletemessage"]
-		delete_message(message_id)
+		var/safety = alert("Delete message/note?",,"Yes","No");
+		if (safety == "Yes")
+			var/message_id = href_list["deletemessage"]
+			delete_message(message_id)
 
 	else if(href_list["deletemessageempty"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/message_id = href_list["deletemessageempty"]
-		delete_message(message_id, browse = 1)
+		var/safety = alert("Delete message/note?",,"Yes","No");
+		if (safety == "Yes")
+			var/message_id = href_list["deletemessageempty"]
+			delete_message(message_id, browse = TRUE)
 
 	else if(href_list["editmessage"])
 		if(!check_rights(R_ADMIN))
@@ -1914,6 +1918,16 @@
 				D.traitor_panel()
 		else
 			show_traitor_panel(M)
+
+	else if(href_list["borgpanel"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["borgpanel"])
+		if(!iscyborg(M))
+			to_chat(usr, "This can only be used on cyborgs")
+		else
+			open_borgopanel(M)
 
 	else if(href_list["initmind"])
 		if(!check_rights(R_ADMIN))

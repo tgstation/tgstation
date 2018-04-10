@@ -129,7 +129,7 @@
 	burnt_states = list("noslip-scorched1","noslip-scorched2")
 	slowdown = -0.3
 
-/turf/open/floor/noslip/MakeSlippery()
+/turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
 /turf/open/floor/oldshuttle

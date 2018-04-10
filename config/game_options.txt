@@ -434,8 +434,11 @@ ROUNDSTART_RACES plasmaman
 ## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
 #JOIN_WITH_MUTANT_HUMANS
 
-## Assistant slot cap. Set to -1 for unlimited.
-ASSISTANT_CAP -1
+##Overflow job. Default is assistant
+OVERFLOW_JOB Assistant
+
+## Overflow slot cap. Set to -1 for unlimited. If limited, it will still open up if every other job is full.
+OVERFLOW_CAP -1
 
 ## Starlight for exterior walls and breaches. Uncomment for starlight!
 ## This is disabled by default to make testing quicker, should be enabled on production servers or testing servers messing with lighting

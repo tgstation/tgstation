@@ -1,0 +1,6 @@
+author: "Davidj361"
+delete-after: True
+changes: 
+  - bugfix: "Detective can now write notes onto his printed scanner reports."
+  - tweak: "Detective scanner can have its logs erased via alt-click."
+  - tweak: "Detective scanner can display logs via the action button."
