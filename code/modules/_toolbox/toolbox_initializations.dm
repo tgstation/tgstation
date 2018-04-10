@@ -43,7 +43,6 @@ GLOBAL_LIST_EMPTY(hub_features)
 		else if (SSticker.current_state > GAME_STATE_PLAYING)
 			dat += "New round soon."
 		else
-			dat += "Mode: Secret"
 			var/worldtime = max(world.time-SSticker.round_start_time,0)
 			var/hours = 0
 			var/minutes = 0
@@ -61,7 +60,7 @@ GLOBAL_LIST_EMPTY(hub_features)
 				minutes++
 			if(length("[minutes]") < 2)
 				minutes = "0[minutes]"
-			dat += "<br>Round Time: [hours]:[minutes]"
+			dat += "Round Time: [hours]:[minutes]"
 	else
 		dat += "Restarting."
 	if(GLOB)

@@ -1256,6 +1256,12 @@
 		cmd_admin_mute(href_list["mute"], text2num(href_list["mute_type"]))
 
 	else if(href_list["c_mode"])
+		var/confirmtext = "Changing the Game Mode in this way will change it across rounds."
+		if(GLOB.master_mode == "secret")
+			confirmtext += " It is preferable that you use \"Force Secret Mode\" instead."
+		var/confirmCMode = alert(usr,confirmtext,"Change Game Mode","Continue","Cancel")
+		if(confirmCMode != "Continue")
+			return
 		return HandleCMode()
 
 	else if(href_list["f_secret"])

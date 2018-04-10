@@ -213,9 +213,11 @@
 /obj/item/phone/Hear(message, atom/movable/user, message_langs, raw_message, radio_freq, spans, message_mode)
 	if(!istype(user,/mob/living))
 		return
+	if(raw_message)
+		message = raw_message
 	send_voice(user, message)
 
-/obj/item/phone/proc/send_voice(var/mob/user, var/message)//The phone has its own hear proc to be called by hear_talk(). This prevents any issues caused when an admin uses the phonesay verb as a ghost.
+/obj/item/phone/proc/send_voice(var/mob/user, var/message)//The phone has its own hear proc to be called by Hear(). This prevents any issues caused when an admin uses the phonesay verb as a ghost.
 	if(((!user)|(!message)))
 		return
 	if(linkedphone && !ringing && !linkedphone.ringing)
@@ -307,13 +309,13 @@ The phone will be detected by this verb if it's carried by a mob or sitting on a
 	if(phone)
 		if(!message)
 			if(phone.linkedphone && !phone.ringing)
-				var/hangup = alert(usr, "Do you want to hang up?","Hang up?","Yes","No")
+				var/hangup = alert(mob, "Do you want to hang up?","Hang up?","Yes","No")
 				if(hangup != "Yes")
 					return
 			return phone.attack_self(usr)
 		if(phone.linkedphone && !phone.ringing && message)
-			to_chat(usr,"\blue The phone hears: <B>[mob.name]</B> says, \"[message]\"")
-			return phone.send_voice(usr, message, 1)
+			to_chat(mob,"<font color='blue'>The phone hears: <B>[mob.name]</B> says, \"[message]\"</font>")
+			return phone.send_voice(mob, message, 1)
 		return
 	else
 		to_chat(usr,"<span class='warning'>There is no phone under you.</span>")
