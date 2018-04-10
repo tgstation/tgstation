@@ -72,7 +72,8 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/respawn_character,
 	/client/proc/force_rules,
 	/datum/admins/proc/AdminFixStation,
-	/datum/admins/proc/space_jesus
+	/datum/admins/proc/space_jesus,
+	/client/proc/phonesay
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/DB_ban_panel, /client/proc/stickybanpanel))
