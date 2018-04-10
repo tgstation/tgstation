@@ -28,15 +28,16 @@
 			if(filterToxins)
 				//handle liver toxin filtration
 				var/toxamount
-				var/static/list/listOfToxinsInThisBitch = typesof(/datum/reagent/toxin)
-				for(var/I in listOfToxinsInThisBitch)
-					var/datum/reagent/toxin = I
-					toxamount += C.reagents.get_reagent_amount(initial(toxin.id))
-
+				var/static/list/listOfToxins = typesof(/datum/reagent/toxin)
+				for(var/I in C.reagents)
+					var/datum/reagent/pickedreagent = I
+					if(pickedreagent.type in listOfToxins)
+						toxamount += C.reagents.get_reagent_amount(initial(pickedreagent.id))
 				if(toxamount <= toxTolerance && toxamount > 0)
-					for(var/I in listOfToxinsInThisBitch)
-						var/datum/reagent/toxin = I //is this redundant because it's defined above?
-						C.reagents.remove_reagent(initial(toxin.id), 1)
+					for(var/I in C.reagents)
+						var/datum/reagent/pickedreagent = I
+						if(pickedreagent.type in listOfToxins)
+						C.reagents.remove_reagent(initial(pickedreagent.id), 1)
 				else if(toxamount > toxTolerance)
 					damage += toxamount*toxLethality
 
