@@ -28,6 +28,8 @@
 					return
 				state = PLASTIC_FLAPS_DETACHED
 				anchored = FALSE
+				CanAtmosPass = ATMOS_PASS_YES
+ 				air_update_turf(TRUE)
 				to_chat(user, "<span class='notice'>You unscrew [src] from the floor.</span>")
 		else if(state == PLASTIC_FLAPS_DETACHED)
 			user.visible_message("<span class='warning'>[user] screws [src] to the floor.</span>", "<span class='notice'>You start to screw [src] to the floor...</span>", "You hear rustling noises.")
@@ -36,6 +38,8 @@
 					return
 				state = PLASTIC_FLAPS_NORMAL
 				anchored = TRUE
+				CanAtmosPass = ATMOS_PASS_NO
+ 				air_update_turf(TRUE)
 				to_chat(user, "<span class='notice'>You screw [src] from the floor.</span>")
 	else if(istype(W, /obj/item/wirecutters))
 		if(state == PLASTIC_FLAPS_DETACHED)
