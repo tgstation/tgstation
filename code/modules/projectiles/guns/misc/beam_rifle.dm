@@ -183,6 +183,7 @@
 /obj/item/gun/energy/beam_rifle/Initialize()
 	. = ..()
 	current_tracers = list()
+	flags_2 |= SLOWS_WHILE_IN_HAND_2
 	START_PROCESSING(SSprojectiles, src)
 	zoom_lock_action = new(src)
 
