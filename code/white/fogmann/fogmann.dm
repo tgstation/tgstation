@@ -251,9 +251,9 @@ obj/item/banner/engineering/atmos/mundane
 
 /obj/item/ammo_casing/shotgun/dart/sleeping/Initialize()
 	. = ..()
-	reagents.add_reagent("tirizene", 30)
-	reagents.add_reagent("skewium", 30)
-	reagents.add_reagent("spewium", 30)
+	reagents.add_reagent("tirizene", 20)
+	reagents.add_reagent("skewium", 5)
+	reagents.add_reagent("spewium", 5)
 
 /obj/item/storage/box/sleeping
 	name = "box of tranquilizer darts"
