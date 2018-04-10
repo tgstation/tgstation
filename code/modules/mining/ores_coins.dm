@@ -52,17 +52,11 @@
 /obj/item/stack/ore/burn()
 	if(!refined_type)
 		return ..()
-	var/amountrefined = 0
-	for(var/i in 1 to amount)
-		var/probability = rand(30,70)
-		if(prob(probability))
-			amountrefined ++	
+	var/amountrefined = round(rand(0,100)/100*amount, 1)
 	if(amountrefined < 1)
 		return ..()
 	else
-		var/obj/item/stack/sheet/S = new refined_type(drop_location())
-		S.amount = amountrefined
-		S.update_icon()
+		var/obj/item/stack/sheet/S = new refined_type(drop_location(), new_amount = amountrefined)
 		qdel(src)
 
 /obj/item/stack/ore/uranium
