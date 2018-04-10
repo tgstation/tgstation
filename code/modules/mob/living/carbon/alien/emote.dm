@@ -12,7 +12,7 @@
 	message_alien = "hisses."
 	message_larva = "hisses softly."
 
-/datum/emote/living/alien/hiss/run_emote(mob/user, params)
+/datum/emote/living/alien/hiss/run_emote(mob/user, params, playerInvoked = FALSE)
 	. = ..()
 	if(. && isalienadult(user))
 		playsound(user.loc, "hiss", 40, 1, 1)
@@ -24,7 +24,7 @@
 	message_larva = "softly roars."
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/alien/roar/run_emote(mob/user, params)
+/datum/emote/living/alien/roar/run_emote(mob/user, params, playerInvoked = FALSE)
 	. = ..()
 	if(. && isalienadult(user))
 		playsound(user.loc, 'sound/voice/hiss5.ogg', 40, 1, 1)

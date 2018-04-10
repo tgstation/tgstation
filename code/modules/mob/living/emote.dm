@@ -46,7 +46,7 @@
 	message = "collapses!"
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/collapse/run_emote(mob/user, params)
+/datum/emote/living/collapse/run_emote(mob/user, params, playerInvoked = FALSE)
 	. = ..()
 	if(. && isliving(user))
 		var/mob/living/L = user
@@ -64,7 +64,13 @@
 		var/mob/living/carbon/C = user
 		return !C.silent
 
-/datum/emote/living/cough/run_emote(mob/user, params)
+/datum/emote/living/cough/run_emote(mob/user, params, playerInvoked = FALSE)
+	if (playerInvoked)
+		if (!isnull(cooldown_list[user.client.ckey]) && world.time < cooldown_list[user.client.ckey])
+			to_chat(user, "<span class='notice'>You cannot sound emote so soon.</span>")
+			return FALSE
+		else
+			cooldown_list[user.client.ckey] = world.time + cooldown
 	. = ..()
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -92,7 +98,7 @@
 	message_simple =  "stops moving..."
 	stat_allowed = UNCONSCIOUS
 
-/datum/emote/living/deathgasp/run_emote(mob/user, params)
+/datum/emote/living/deathgasp/run_emote(mob/user, params, playerInvoked = FALSE)
 	var/mob/living/simple_animal/S = user
 	if(istype(S) && S.deathmessage)
 		message_simple = S.deathmessage
@@ -111,7 +117,7 @@
 	key_third_person = "faints"
 	message = "faints."
 
-/datum/emote/living/faint/run_emote(mob/user, params)
+/datum/emote/living/faint/run_emote(mob/user, params, playerInvoked = FALSE)
 	. = ..()
 	if(. && isliving(user))
 		var/mob/living/L = user
@@ -124,7 +130,7 @@
 	restraint_check = TRUE
 	var/wing_time = 20
 
-/datum/emote/living/flap/run_emote(mob/user, params)
+/datum/emote/living/flap/run_emote(mob/user, params, playerInvoked = FALSE)
 	. = ..()
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -168,7 +174,13 @@
 		var/mob/living/carbon/C = user
 		return !C.silent
 
-/datum/emote/living/gasp/run_emote(mob/user, params)
+/datum/emote/living/gasp/run_emote(mob/user, params, playerInvoked = FALSE)
+	if (playerInvoked)
+		if (!isnull(cooldown_list[user.client.ckey]) && world.time < cooldown_list[user.client.ckey])
+			to_chat(user, "<span class='notice'>You cannot sound emote so soon.</span>")
+			return FALSE
+		else
+			cooldown_list[user.client.ckey] = world.time + cooldown
 	. = ..()
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -227,7 +239,7 @@
 		var/mob/living/carbon/C = user
 		return !C.silent
 
-/datum/emote/living/kiss/run_emote(mob/user, params)
+/datum/emote/living/kiss/run_emote(mob/user, params, playerInvoked = FALSE)
 	. = ..()
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -247,7 +259,13 @@
 		var/mob/living/carbon/C = user
 		return !C.silent
 
-/datum/emote/living/laugh/run_emote(mob/user, params)
+/datum/emote/living/laugh/run_emote(mob/user, params, playerInvoked = FALSE)
+	if (playerInvoked)
+		if (!isnull(cooldown_list[user.client.ckey]) && world.time < cooldown_list[user.client.ckey])
+			to_chat(user, "<span class='notice'>You cannot sound emote so soon.</span>")
+			return FALSE
+		else
+			cooldown_list[user.client.ckey] = world.time + cooldown
 	. = ..()
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -270,7 +288,13 @@
 		var/mob/living/carbon/C = user
 		return !C.silent
 
-/datum/emote/living/oof/run_emote(mob/user, params)
+/datum/emote/living/oof/run_emote(mob/user, params, playerInvoked = FALSE)
+	if (playerInvoked)
+		if (!isnull(cooldown_list[user.client.ckey]) && world.time < cooldown_list[user.client.ckey])
+			to_chat(user, "<span class='notice'>You cannot sound emote so soon.</span>")
+			return FALSE
+		else
+			cooldown_list[user.client.ckey] = world.time + cooldown
 	. = ..()
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -299,7 +323,7 @@
 	message_param = "points at %t."
 	restraint_check = TRUE
 
-/datum/emote/living/point/run_emote(mob/user, params)
+/datum/emote/living/point/run_emote(mob/user, params, playerInvoked = FALSE)
 	message_param = initial(message_param) // reset
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -356,7 +380,13 @@
 		var/mob/living/carbon/C = user
 		return !C.silent
 
-/datum/emote/living/sigh/run_emote(mob/user, params)
+/datum/emote/living/sigh/run_emote(mob/user, params, playerInvoked = FALSE)
+	if (playerInvoked)
+		if (!isnull(cooldown_list[user.client.ckey]) && world.time < cooldown_list[user.client.ckey])
+			to_chat(user, "<span class='notice'>You cannot sound emote so soon.</span>")
+			return FALSE
+		else
+			cooldown_list[user.client.ckey] = world.time + cooldown
 	. = ..()
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -388,7 +418,13 @@
 		var/mob/living/carbon/C = user
 		return !C.silent
 
-/datum/emote/living/sneeze/run_emote(mob/user, params)
+/datum/emote/living/sneeze/run_emote(mob/user, params, playerInvoked = FALSE)
+	if (playerInvoked)
+		if (!isnull(cooldown_list[user.client.ckey]) && world.time < cooldown_list[user.client.ckey])
+			to_chat(user, "<span class='notice'>You cannot sound emote so soon.</span>")
+			return FALSE
+		else
+			cooldown_list[user.client.ckey] = world.time + cooldown
 	. = ..()
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -423,7 +459,13 @@
 		var/mob/living/carbon/C = user
 		return !C.silent
 
-/datum/emote/living/snore/run_emote(mob/user, params)
+/datum/emote/living/snore/run_emote(mob/user, params, playerInvoked = FALSE)
+	if (playerInvoked)
+		if (!isnull(cooldown_list[user.client.ckey]) && world.time < cooldown_list[user.client.ckey])
+			to_chat(user, "<span class='notice'>You cannot sound emote so soon.</span>")
+			return FALSE
+		else
+			cooldown_list[user.client.ckey] = world.time + cooldown
 	. = ..()
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -452,7 +494,7 @@
 	message = "puts their hands on their head and falls to the ground, they surrender!"
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/surrender/run_emote(mob/user, params)
+/datum/emote/living/surrender/run_emote(mob/user, params, playerInvoked = FALSE)
 	. = ..()
 	if(. && isliving(user))
 		var/mob/living/L = user
@@ -505,7 +547,13 @@
 		var/mob/living/carbon/C = user
 		return !C.silent
 
-/datum/emote/living/yawn/run_emote(mob/user, params)
+/datum/emote/living/yawn/run_emote(mob/user, params, playerInvoked = FALSE)
+	if (playerInvoked)
+		if (!isnull(cooldown_list[user.client.ckey]) && world.time < cooldown_list[user.client.ckey])
+			to_chat(user, "<span class='notice'>You cannot sound emote so soon.</span>")
+			return FALSE
+		else
+			cooldown_list[user.client.ckey] = world.time + cooldown
 	. = ..()
 	if(. && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -533,7 +581,7 @@
 	else
 		. = FALSE
 
-/datum/emote/living/custom/run_emote(mob/user, params, type_override = null)
+/datum/emote/living/custom/run_emote(mob/user, params, type_override = null, playerInvoked = FALSE)
 	if(jobban_isbanned(user, "emote"))
 		to_chat(user, "You cannot send custom emotes (banned).")
 		return FALSE
@@ -567,7 +615,7 @@
 /datum/emote/living/help
 	key = "help"
 
-/datum/emote/living/help/run_emote(mob/user, params)
+/datum/emote/living/help/run_emote(mob/user, params, playerInvoked = FALSE)
 	var/list/keys = list()
 	var/list/message = list("Available emotes, you can use them with say \"*emote\": ")
 
@@ -606,7 +654,7 @@
 	key_third_person = "circles"
 	restraint_check = TRUE
 
-/datum/emote/living/circle/run_emote(mob/user, params)
+/datum/emote/living/circle/run_emote(mob/user, params, playerInvoked = FALSE)
 	. = ..()
 	var/obj/item/circlegame/N = new(user)
 	if(user.put_in_hands(N))
@@ -620,7 +668,7 @@
 	key_third_person = "slaps"
 	restraint_check = TRUE
 
-/datum/emote/living/slap/run_emote(mob/user, params)
+/datum/emote/living/slap/run_emote(mob/user, params, playerInvoked = FALSE)
 	. = ..()
 	if(!.)
 		return

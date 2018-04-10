@@ -72,7 +72,7 @@
 	key_third_person = "wags"
 	message = "wags their tail."
 
-/datum/emote/living/carbon/human/wag/run_emote(mob/user, params)
+/datum/emote/living/carbon/human/wag/run_emote(mob/user, params, playerInvoked = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -130,7 +130,7 @@
 	key_third_person = "wings"
 	message = "their wings."
 
-/datum/emote/living/carbon/human/wing/run_emote(mob/user, params)
+/datum/emote/living/carbon/human/wing/run_emote(mob/user, params, playerInvoked = FALSE)
 	. = ..()
 	if(.)
 		var/mob/living/carbon/human/H = user

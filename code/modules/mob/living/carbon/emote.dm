@@ -23,7 +23,13 @@
 	restraint_check = TRUE
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/carbon/clap/run_emote(mob/living/user, params)
+/datum/emote/living/carbon/clap/run_emote(mob/living/user, params, playerInvoked = FALSE)
+	if (playerInvoked)
+		if (!isnull(cooldown_list[user.client.ckey]) && world.time < cooldown_list[user.client.ckey])
+			to_chat(user, "<span class='notice'>You cannot sound emote so soon.</span>")
+			return FALSE
+		else
+			cooldown_list[user.client.ckey] = world.time + cooldown
 	. = ..()
 	if (.)
 		if (ishuman(user))
@@ -43,7 +49,13 @@
 	restraint_check = TRUE
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/carbon/snap/run_emote(mob/living/user, params)
+/datum/emote/living/carbon/snap/run_emote(mob/living/user, params, playerInvoked = FALSE)
+	if (playerInvoked)
+		if (!isnull(cooldown_list[user.client.ckey]) && world.time < cooldown_list[user.client.ckey])
+			to_chat(user, "<span class='notice'>You cannot sound emote so soon.</span>")
+			return FALSE
+		else
+			cooldown_list[user.client.ckey] = world.time + cooldown
 	. = ..()
 	if (.)
 		if (ishuman(user))
