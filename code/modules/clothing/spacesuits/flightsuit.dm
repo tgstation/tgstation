@@ -99,8 +99,8 @@
 	var/afterForceMove = FALSE
 	var/datum/component/mobhook
 	
-	var/I = "You shouldn't see this."
-	var/SuccessMessage = "[I] has been successfully installed into systems."
+
+	var/SuccessMessage = " has been successfully installed into systems."
 
 /obj/item/device/flightpack/proc/changeWearer(mob/changeto)
 	if(wearer)
@@ -647,35 +647,35 @@
 	if(istype(I, /obj/item/stock_parts))
 		var/obj/item/stock_parts/S = I
 		if(istype(S, /obj/item/stock_parts/manipulator))
-			usermessage("[SuccessMessage]", mob_override = user)
+			usermessage("[I][SuccessMessage]", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_manip)
 					part_manip.forceMove(get_turf(src))
 				part_manip = I
 				changed = TRUE
 		if(istype(S, /obj/item/stock_parts/scanning_module))
-			usermessage("[SuccessMessage]", mob_override = user)
+			usermessage("[I][SuccessMessage]", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_scan)
 					part_scan.forceMove(get_turf(src))
 				part_scan = I
 				changed = TRUE
 		if(istype(S, /obj/item/stock_parts/micro_laser))
-			usermessage("[SuccessMessage]", mob_override = user)
+			usermessage("[I][SuccessMessage]", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_laser)
 					part_laser.forceMove(get_turf(src))
 				part_laser = I
 				changed = TRUE
 		if(istype(S, /obj/item/stock_parts/matter_bin))
-			usermessage("[SuccessMessage]", mob_override = user)
+			usermessage("[I][SuccessMessage]", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_bin)
 					part_bin.forceMove(get_turf(src))
 				part_bin = I
 				changed = TRUE
 		if(istype(S, /obj/item/stock_parts/capacitor))
-			usermessage("[SuccessMessage]", mob_override = user)
+			usermessage("[I][SuccessMessage]", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_cap)
 					part_cap.forceMove(get_turf(src))
