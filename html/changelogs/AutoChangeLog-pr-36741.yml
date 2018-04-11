@@ -1,4 +1,0 @@
-author: "george99g"
-delete-after: True
-changes: 
-  - bugfix: "Suiciding will now deactivate all your genetics prescans."

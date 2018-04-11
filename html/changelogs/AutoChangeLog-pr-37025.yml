@@ -1,4 +1,0 @@
-author: "iskyp"
-delete-after: True
-changes: 
-  - code_imp: "/obj/item/machinery/power/supermatter_shard is now /obj/item/machinery/power/supermatter_crystal/shard. the crystal is the parent object."

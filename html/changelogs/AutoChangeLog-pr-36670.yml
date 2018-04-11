@@ -1,8 +1,0 @@
-author: "iskyp"
-delete-after: True
-changes: 
-  - bugfix: "makes dragnet non harmful"
-  - tweak: "pacifists can now use any disabler or stun setting on any energy gun"
-  - code_imp: "removed all of the pacifism check code from code/modules/mob/living/living.dm"
-  - code_imp: "gun objects no longer have a harmful variable, instead, ammo_casing objects now have a harmful variable, which is by default set to TRUE"
-  - code_imp: "if a pacifist fires a gun, it checks whether or not the round chambered is lethal, instead of whether or not the gun itself is lethal."
