@@ -1,5 +1,3 @@
-#define MEDAL_PREFIX "Swarmer Beacon"
-
 /*
 
 Swarmer Beacon
@@ -50,7 +48,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	health = 750
 	maxHealth = 750 //""""low-ish"""" HP because it's a passive boss, and the swarm itself is the real foe
 	mob_biotypes = list(MOB_ROBOTIC)
-	medal_type = MEDAL_PREFIX
+	medal_type = BOSS_MEDAL_SWARMERS
 	score_type = SWARMER_BEACON_SCORE
 	faction = list("mining", "boss", "swarmer")
 	weather_immunities = list("lava","ash")
@@ -293,7 +291,3 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	desc = "A catwalk-like mesh, produced by swarmers to allow them to navigate hostile terrain."
 	icon = 'icons/obj/smooth_structures/swarmer_catwalk.dmi'
 	icon_state = "swarmer_catwalk"
-
-
-
-#undef MEDAL_PREFIX

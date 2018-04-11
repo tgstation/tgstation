@@ -1356,8 +1356,6 @@
 #undef APC_UPOVERLAY_LOCKED
 #undef APC_UPOVERLAY_OPERATING
 
-#undef APC_UPDATE_ICON_COOLDOWN
-
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc
 	name = "power control module"

@@ -785,5 +785,3 @@ Difficulty: Very Hard
 #undef ACTIVATE_MOB_BUMP
 #undef ACTIVATE_WEAPON
 #undef ACTIVATE_MAGIC
-
-#undef MEDAL_PREFIX
