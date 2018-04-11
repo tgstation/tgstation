@@ -1,0 +1,4 @@
+author: "pigeonsk"
+delete-after: True
+changes: 
+  - tweak: "AI now requires silicon playtime instead of crew playtime for roundstart role"
