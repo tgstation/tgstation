@@ -56,6 +56,9 @@
 	if(teleporting)
 		to_chat(user, "<span class='warning'>ERROR: Launchpad busy.</span>")
 		return
+	if(is_centcom_level(loc.z))
+		to_chat(user, "<span class='warning'>ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible.</span>")
+		return
 
 	var/target_x = x + x_offset
 	var/target_y = y + y_offset
