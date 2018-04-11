@@ -14,6 +14,7 @@ AI
 	minimal_player_age = 30
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
+	exp_type_department = EXP_TYPE_SILICON
 	antag_rep = 20
 	var/do_special_check = TRUE
 
