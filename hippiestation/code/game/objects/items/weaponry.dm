@@ -100,3 +100,8 @@
 /obj/item/pimpstick/suicide_act(mob/user)
 		user.visible_message("<span class='suicide'>[user] is hitting [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to discipline [user.p_them()]self for being a mark-ass trick.</span>")
 		return (BRUTELOSS)
+
+/obj/item/melee/baseball_bat
+	icon_hippie = 'hippiestation/icons/obj/items_and_weapons.dmi'
+	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
+	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
