@@ -774,6 +774,28 @@
 	if(G)
 		G.reenter_corpse()
 
+//user: The mob that is suiciding
+/datum/mind/proc/suicide_log(mob/user)
+	var/turf/T = get_turf(user)
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		log_game("[key_name(user)] (job: [H.job ? "[H.job]" : "None"]) committed suicide at [get_area(user)][COORD(T)].")
+
+		//Go through all cloning computers and mark their records as suicided
+		for(var/obj/machinery/computer/cloning/C in world)
+			var/datum/data/record/R = find_record("ckey", user.ckey, C.records)
+			if(R)
+				R.fields["suiciding"] = TRUE
+
+		//Do the same for diskettes
+		for(var/obj/item/disk/data/D in world)
+			if(D.fields["ckey"] && D.fields["ckey"] == user.ckey)
+				D.fields["suiciding"] = TRUE
+
+		return
+
+	log_game("[key_name(user)] committed suicide at [get_area(user)][COORD(T)] as [user.type].")
 
 /datum/mind/proc/has_objective(objective_type)
 	for(var/datum/antagonist/A in antag_datums)

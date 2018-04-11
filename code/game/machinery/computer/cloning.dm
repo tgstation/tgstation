@@ -71,6 +71,9 @@
 		if(pod.occupant)
 			continue	//how though?
 
+		if(R.fields["suiciding"])
+			continue
+
 		if(pod.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["traits"]))
 			temp = "[R.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 			records -= R
@@ -220,7 +223,13 @@
 				dat += "<font class='bad'>Record not found.</font>"
 			else
 				dat += "<h4>[src.active_record.fields["name"]]</h4>"
-				dat += "Scan ID [src.active_record.fields["id"]] <a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]]'>Clone</a><br>"
+				dat += "Scan ID [src.active_record.fields["id"]] "
+
+				if(src.active_record.fields["suiciding"])
+					dat += "<span class='linkOff'>Clone</span><br>"
+					dat += "<font class='bad'>Subject's brain data is malformed.</font><br>"
+				else
+					dat += "<a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]]'>Clone</a><br>"
 
 				var/obj/item/implant/health/H = locate(src.active_record.fields["imp"])
 
@@ -244,6 +253,10 @@
 					if(diskette.fields["SE"])
 						L += "Structural Enzymes"
 					dat += english_list(L, "Empty", " + ", " + ")
+
+					if(diskette.fields["suiciding"])
+						dat += "<br><font class='bad'>Subject's brain data is malformed.</font>"
+
 					dat += "<br /><a href='byond://?src=[REF(src)];disk=load'>Load from Disk</a>"
 
 					dat += "<br /><a href='byond://?src=[REF(src)];disk=save'>Save to Disk</a>"
@@ -400,6 +413,9 @@
 			else if(pod.occupant)
 				temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			else if(C.fields["suiciding"])
+				temp = "[C.fields["name"]] => <font class='bad'>Subject's brain data is malformed.</font>"
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(pod.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["features"], C.fields["factions"], C.fields["traits"]))
 				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -474,6 +490,7 @@
 	R.fields["features"] = dna.features
 	R.fields["factions"] = mob_occupant.faction
 	R.fields["traits"] = list()
+	R.fields["suiciding"] = FALSE
 	for(var/V in mob_occupant.roundstart_traits)
 		var/datum/trait/T = V
 		R.fields["traits"] += T.type
