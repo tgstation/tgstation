@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "The blindness overlay applied during cloning now properly stretches for widescreen views."

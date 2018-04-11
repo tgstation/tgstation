@@ -1,5 +1,0 @@
-author: "neersighted"
-delete-after: True
-changes: 
-  - code_imp: "Reduced lag by speeding up logs 10000%"
-  - code_imp: "Logs now include millisecond-level timestamps"
