@@ -79,15 +79,6 @@
 		return 0
 	return ..()
 
-/obj/item/storage/lockbox/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
-	open = TRUE
-	update_icon()
-	return ..()
-/obj/item/storage/lockbox/remove_from_storage(obj/item/W, atom/new_location, burn = 0)
-	open = TRUE
-	update_icon()
-	return ..()
-
 /obj/item/storage/lockbox/loyalty
 	name = "lockbox of mindshield implants"
 	req_access = list(ACCESS_SECURITY)
@@ -146,28 +137,47 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/accessory/medal/conduct(src)
 
-/obj/item/storage/lockbox/medal/update_icon()
-	cut_overlays()
-	if(locked)
-		icon_state = "medalbox+l"
-		open = FALSE
-	else
-		icon_state = "medalbox"
+/obj/item/storage/lockbox/medal/remove_from_storage()
+	. = ..()
+	if(.)
 		if(open)
-			icon_state += "open"
-		if(broken)
-			icon_state += "+b"
-		if(contents && open)
-			for (var/i in 1 to contents.len)
-				var/obj/item/clothing/accessory/medal/M = contents[i]
-				var/mutable_appearance/medalicon = mutable_appearance(initial(icon), M.medaltype)
-				if(i > 1 && i <= 5)
-					medalicon.pixel_x += ((i-1)*3)
-				else if(i > 5)
-					medalicon.pixel_y -= 7
-					medalicon.pixel_x -= 2
-					medalicon.pixel_x += ((i-6)*3)
-				add_overlay(medalicon)
+			update_icon(TRUE)
+		else
+			open = TRUE
+			update_icon(FALSE) //We dont need to specify a medal to remove since we aren't showing them until now
+
+/obj/item/storage/lockbox/medal/handle_item_insertion()
+	. = ..()
+	if(.)
+		if(open)
+			update_icon(TRUE)
+		else
+			open = TRUE
+			update_icon(FALSE)
+
+/obj/item/storage/lockbox/medal/update_icon(medal_change = FALSE)
+	if(medal_change) //We're moving a medal and the case is already open
+		cut_overlays()
+	if(broken)
+		icon_state = icon_broken
+	else if(open)
+		icon_state = "medalboxopen"
+		for (var/i in 1 to contents.len)
+			var/obj/item/clothing/accessory/medal/M = contents[i]
+			var/mutable_appearance/medalicon = mutable_appearance(initial(icon), M.medaltype)
+			if(i > 1 && i <= 5)
+				medalicon.pixel_x += ((i-1)*3)
+			else if(i > 5)
+				medalicon.pixel_y -= 7
+				medalicon.pixel_x -= 2
+				medalicon.pixel_x += ((i-6)*3)
+			add_overlay(medalicon)
+	else if(!locked)
+		icon_state = icon_closed
+		cut_overlays()
+	else
+		icon_state = icon_locked
+
 
 /obj/item/storage/lockbox/medal/sec
 	name = "security medal box"

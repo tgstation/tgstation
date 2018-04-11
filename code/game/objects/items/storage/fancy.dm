@@ -53,13 +53,16 @@
 		update_icon()
 
 /obj/item/storage/fancy/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
-	fancy_open = TRUE
-	return ..()
+	. = ..()
+	if(.)
+		fancy_open = TRUE
+		update_icon()
 
 /obj/item/storage/fancy/remove_from_storage(obj/item/W, atom/new_location, burn = 0)
-	fancy_open = TRUE
-	return ..()
-
+	. = ..()
+	if(.)
+		fancy_open = TRUE
+		update_icon()
 /*
  * Donut Box
  */

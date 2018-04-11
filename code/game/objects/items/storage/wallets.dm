@@ -40,7 +40,6 @@
 			if(W == front_id)
 				front_id = null
 			refreshID()
-			update_icon()
 
 /obj/item/storage/wallet/proc/refreshID()
 	combined_access.Cut()
@@ -57,9 +56,10 @@
 			refreshID()
 
 /obj/item/storage/wallet/update_icon()
-	icon_state = "wallet"
 	if(front_id)
 		icon_state = "wallet_[front_id.icon_state]"
+	else
+		icon_state = "wallet"
 
 
 

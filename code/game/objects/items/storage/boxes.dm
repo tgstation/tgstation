@@ -34,7 +34,8 @@
 
 /obj/item/storage/box/Initialize(mapload)
 	. = ..()
-	update_icon()
+	if(illustration)
+		add_overlay(illustration)
 
 /obj/item/storage/box/suicide_act(mob/living/carbon/user)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
@@ -46,12 +47,6 @@
 		return BRUTELOSS
 	user.visible_message("<span class='suicide'>[user] beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
-
-/obj/item/storage/box/update_icon()
-	. = ..()
-	if(illustration)
-		cut_overlays()
-		add_overlay(illustration)
 
 /obj/item/storage/box/attack_self(mob/user)
 	..()
@@ -714,6 +709,16 @@ obj/item/storage/box/clown
 	resistance_flags = FLAMMABLE
 	foldable = null
 	var/design = NODESIGN
+
+/obj/item/storage/box/papersack/remove_from_storage()
+	. = ..()
+	if(.)
+		update_icon()
+
+/obj/item/storage/box/papersack/handle_item_insertion()
+	. = ..()
+	if(.)
+		update_icon()
 
 /obj/item/storage/box/papersack/update_icon()
 	if(contents.len == 0)
