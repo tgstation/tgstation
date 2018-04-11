@@ -56,7 +56,10 @@
 	if(teleporting)
 		to_chat(user, "<span class='warning'>ERROR: Launchpad busy.</span>")
 		return
-	if(is_centcom_level(loc.z))
+	
+	var/turf/dest = get_turf(src)
+
+	if(dest && is_centcom_level(dest.z))
 		to_chat(user, "<span class='warning'>ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible.</span>")
 		return
 
@@ -81,7 +84,6 @@
 	use_power(1000)
 
 	var/turf/source = target
-	var/turf/dest = get_turf(src)
 	var/list/log_msg = list()
 	log_msg += ": [key_name(user)] has teleported "
 
