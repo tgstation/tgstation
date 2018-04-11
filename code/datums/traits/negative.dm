@@ -255,7 +255,7 @@
 	var/mob/living/carbon/human/H = trait_holder
 	if(prob(2 + nearby_people))
 		H.stuttering = max(3, H.stuttering)
-	else if(prob(max(nearby_people, 3)) && !H.silent)
+	else if(prob(min(3, nearby_people)) && !H.silent)
 		to_chat(H, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
 		H.silent = max(10, H.silent)
 	else if(prob(0.5) && dumb_thing)
