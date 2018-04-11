@@ -104,3 +104,5 @@
 	var/list/mousemove_intercept_objects
 
 	var/datum/click_intercept
+
+	var/throwforce = 10
