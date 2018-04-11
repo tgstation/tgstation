@@ -15,6 +15,7 @@
 	name = "Apathetic"
 	desc = "You just don't care as much as other people. That's nice to have in a place like this, I guess."
 	value = 1
+	mood_trait = TRUE
 
 /datum/trait/apathetic/add()
 	GET_COMPONENT_FROM(mood, /datum/component/mood, trait_holder)
@@ -43,6 +44,7 @@
 	desc = "You sometimes just feel happy, for no reason at all."
 	value = 1
 	mob_trait = TRAIT_JOLLY
+	mood_trait = TRUE
 
 
 

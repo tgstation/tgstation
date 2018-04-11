@@ -8,6 +8,7 @@
 	gain_text = "<span class='danger'>You start feeling depressed.</span>"
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
 	medical_record_text = "Patient has a severe mood disorder causing them to experience sudden moments of sadness."
+	mood_trait = TRUE
 
 
 
@@ -15,6 +16,7 @@
 	name = "Family Heirloom"
 	desc = "You are the current owner of an heirloom. passed down for generations. You have to keep it safe!"
 	value = -1
+	mood_trait = TRUE
 	var/obj/item/heirloom
 	var/where_text
 

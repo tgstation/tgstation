@@ -8,6 +8,7 @@
 	var/gain_text
 	var/lose_text
 	var/medical_record_text //This text will appear on medical records for the trait. Not yet implemented
+	var/mood_trait = FALSE //if true, this trait affects mood and is unavailable if moodlets are disabled
 	var/mob_trait //if applicable, apply and remove this mob trait
 	var/mob/living/trait_holder
 
