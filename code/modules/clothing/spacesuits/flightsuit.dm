@@ -658,21 +658,21 @@
 				part_scan = I
 				changed = TRUE
 		if(istype(S, /obj/item/stock_parts/micro_laser))
-			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
+			usermessage("[I] has been successfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_laser)
 					part_laser.forceMove(get_turf(src))
 				part_laser = I
 				changed = TRUE
 		if(istype(S, /obj/item/stock_parts/matter_bin))
-			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
+			usermessage("[I] has been successfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_bin)
 					part_bin.forceMove(get_turf(src))
 				part_bin = I
 				changed = TRUE
 		if(istype(S, /obj/item/stock_parts/capacitor))
-			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
+			usermessage("[I] has been successfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_cap)
 					part_cap.forceMove(get_turf(src))
