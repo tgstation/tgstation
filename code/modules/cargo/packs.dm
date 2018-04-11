@@ -159,8 +159,7 @@
 		var/category = pick(uplink_items)
 		var/item = pick(uplink_items[category])
 		var/datum/uplink_item/I = uplink_items[category][item]
-
-		if(!I.surplus || prob(100 - I.surplus))
+		if(!I.surplus_nullcrates || prob(100 - I.surplus_nullcrates))
 			continue
 		if(crate_value < I.cost)
 			continue
