@@ -98,9 +98,6 @@
 	var/atom/movable/cached_pull		//recipe for disaster again.
 	var/afterForceMove = FALSE
 	var/datum/component/mobhook
-	
-
-	var/SuccessMessage = " has been successfully installed into systems."
 
 /obj/item/device/flightpack/proc/changeWearer(mob/changeto)
 	if(wearer)
@@ -643,6 +640,7 @@
 	suit = null
 
 /obj/item/device/flightpack/attackby(obj/item/I, mob/user, params)
+	var/SuccessMessage = " has been successfully installed into systems."
 	var/changed = FALSE
 	if(istype(I, /obj/item/stock_parts))
 		var/obj/item/stock_parts/S = I
