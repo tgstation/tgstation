@@ -91,7 +91,7 @@
 	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
 
 /datum/trait/brainproblems/on_process()
-	trait_holder.adjustBrainLoss(0.2)
+	trait_holder.adjustBrainLoss(0.2, 0)
 
 
 
