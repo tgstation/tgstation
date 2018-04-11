@@ -22,13 +22,14 @@
 "v" = (/obj/structure/rack,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/obj/machinery/light,/turf/open/indestructible,/area/awaymission/snowdin)
 "w" = (/obj/structure/rack,/obj/item/gun/ballistic/automatic/ar,/obj/item/gun/ballistic/automatic/ar,/obj/item/gun/ballistic/automatic/ar,/obj/item/gun/ballistic/automatic/ar,/obj/item/gun/ballistic/automatic/ar,/turf/open/indestructible,/area/awaymission/snowdin)
 "x" = (/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/obj/item/device/firing_pin,/turf/open/indestructible,/area/awaymission/snowdin)
-"y" = (/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/transforming/energy/sword,/obj/item/melee/transforming/energy/sword,/obj/item/melee/transforming/energy/sword,/obj/item/melee/transforming/energy/sword,/turf/open/indestructible,/area/awaymission/snowdin)
+"y" = (/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/transforming/energy/sword/saber,/obj/item/melee/transforming/energy/sword/saber,/obj/item/melee/transforming/energy/sword/saber,/obj/item/melee/transforming/energy/sword/saber,/turf/open/indestructible,/area/awaymission/snowdin)
+"z" = (/obj/machinery/recharger,/turf/open/indestructible,/area/awaymission/snowdin)
 
 (1,1,1) = {"
 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 bcdefgbcdefgbcdefgbcdefgbcdefgbcdefgbcdefgbcdefgba
-bhiiijbhiiijbhiiijbhiiijbhiiijbhiiijbhiiijbhiiijba
-bkxlimbkxlimbkxlimbkxlimbkxlimbkxlimbkxlimbkxlimba
+bhziijbhziijbhziijbhziijbhziijbhziijbhziijbhziijba
+bkzlxmbkzlxmbkzlxmbkzlxmbkzlxmbkzlxmbkzlimbkzlxmba
 bniiyobniiyobniiyobniiyobniiyobniiyobniiyobniiyoba
 bpqirsbpqirsbpqirsbpqirsbpqirsbpqirsbpqirsbpqirsba
 bbbibbbbbibbbbbibbbbbibbbbbibbbbbibbbbbibbbbbibbba
@@ -71,8 +72,8 @@ biiiiibiiiiibiiiiibiiiiibiiiiibiiiiibiiiiibiiiiiba
 bbbibbbbbibbbbbibbbbbibbbbbibbbbbibbbbbibbbbbibbba
 bcdifgbcdifgbcdifgbcdifgbcdifgbcdifgbcdifgbcdifgba
 bhiiyjbhiiyjbhiiyjbhiiyjbhiiyjbhiiyjbhiiyjbhiiyjba
-bkilxmbkilxmbkilxmbkilxmbkilxmbkilxmbkilxmbkilxmba
-bniiiobniiiobniiiobniiiobniiiobniiiobniiiobniiioba
+bkzlxmbkzlxmbkzlxmbkzlxmbkzlxmbkzlxmbkzlxmbkzlxmba
+bnziiobnziiobnziiobnziiobnziiobnziiobnziiobnziioba
 bpqvwsbpqvwsbpqvwsbpqvwsbpqvwsbpqvwsbpqvwsbpqvwsba
 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
 "}
