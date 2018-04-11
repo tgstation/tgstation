@@ -285,7 +285,7 @@
 			var/list/ded = SSblackbox.first_death
 			if(ded.len)
 				parts += "[GLOB.TAB]First Death: <b>[ded["name"]], [ded["role"]], at [ded["area"]]. Damage taken: [ded["damage"]].[ded["last_words"] ? " Their last words were: \"[ded["last_words"]]\"" : ""]</b>"
-			//fukken syntax parsing memes"
+			//ignore this comment, it fixes the broken sytax parsing caused by the " above
 			else
 				parts += "[GLOB.TAB]<i>Nobody died this shift!</i>"
 	return parts.Join("<br>")
