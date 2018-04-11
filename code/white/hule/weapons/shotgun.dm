@@ -1,7 +1,8 @@
 /obj/item/gun/ballistic/automatic/shotgun/small
 	name = "netu"
 	desc = "netu"
-	icon_state = "pistol"
+	icon = 'code/white/hule/weapons/weapons.dmi'
+	icon_state = "smshotgun"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_SMALL
 	weapon_weight = WEAPON_MEDIUM
@@ -12,25 +13,28 @@
 	burst_size = 1
 	fire_delay = 1
 
+/obj/item/gun/ballistic/automatic/shotgun/small/Initialize()
+	. = ..()
+	update_icon()
+
 /obj/item/gun/ballistic/automatic/shotgun/small/update_icon()
 	cut_overlays()
-//	if(magazine)
-//		icon_state = "shotmag"
-	icon_state = "pistol"
+	if(magazine)
+		add_overlay("[magazine.icon_state]")
+	icon_state = "smshotgun"
 
 /obj/item/gun/ballistic/automatic/shotgun/small/makeshift
 	name = "Captain's bane"
 	desc = "Гротескное изделие явно кустарного производства. Выглядит слегка ненадежно."
-	icon_state = "pistol"
-	item_state = "gun"
 	spawnwithmagazine = FALSE
 	var/jammed = FALSE
 	var/jamchance = 5
 
 /obj/item/ammo_box/magazine/m4s12g
-	name = "shotgun magazine (12g buckshot slugs)"
+	name = "shotgun magazine"
 	desc = "A shotgun magazine."
-	icon_state = "smg9mm-42"
+	icon = 'code/white/hule/weapons/weapons.dmi'
+	icon_state = "m4s12g"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	caliber = "shotgun"
 	max_ammo = 4
@@ -72,6 +76,6 @@
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 4)
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_COOKBOOK)
-	time = 200
+	time = 100
 	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
