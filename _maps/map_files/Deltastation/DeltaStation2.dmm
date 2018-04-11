@@ -9914,7 +9914,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "aAW" = (
-/obj/machinery/door/airlock/atmos/glass{
+/obj/machinery/door/airlock/atmos/glass/critical{
 	heat_proof = 1;
 	name = "Supermatter Chamber";
 	req_one_access_txt = "24;10"
@@ -100691,7 +100691,7 @@
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/misc_lab)
 "uYS" = (
-/obj/machinery/door/airlock/atmos/glass{
+/obj/machinery/door/airlock/atmos/glass/critical{
 	heat_proof = 1;
 	name = "Supermatter Chamber";
 	req_one_access_txt = "24;10"
