@@ -1,0 +1,4 @@
+author: "selea"
+delete-after: True
+changes: 
+  - bugfix: "fixed runtime in logic circuits, which was occured  with invalid input types."
