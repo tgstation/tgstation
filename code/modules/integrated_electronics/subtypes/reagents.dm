@@ -427,7 +427,7 @@ obj/item/integrated_circuit/reagent/storage/juicer
 
 /obj/item/integrated_circuit/reagent/storage/scan
 	name = "reagent scanner"
-	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u. On pulse this beaker will send list of contained reagents."
+	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u. On pulse this beaker will send list of contained reagents. Outputs associative list with key being the reagent and value being the amount."
 	icon_state = "reagent_scan"
 	extended_desc = "Mostly useful for reagent filter."
 
@@ -448,7 +448,7 @@ obj/item/integrated_circuit/reagent/storage/juicer
 		if(1)
 			var/cont[0]
 			for(var/datum/reagent/RE in reagents.reagent_list)
-				cont += RE.id
+				cont[RE.id] = RE.volume
 			set_pin_data(IC_OUTPUT, 3, cont)
 			push_data()
 		if(2)
@@ -457,7 +457,7 @@ obj/item/integrated_circuit/reagent/storage/juicer
 
 /obj/item/integrated_circuit/reagent/filter
 	name = "reagent filter"
-	desc = "Filtering liquids by list of desired or unwanted reagents."
+	desc = "Filtering liquids by list of desired or unwanted reagents. If list of reagents is associative, only keys will be considered."
 	icon_state = "reagent_filter"
 	extended_desc = "This is a filter which will move liquids from the source to the target. \
 	It will move all reagents, except those in the unwanted list, given the fourth pin if amount value is positive, \
