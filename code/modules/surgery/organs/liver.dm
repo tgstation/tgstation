@@ -28,16 +28,16 @@
 			if(filterToxins)
 				//handle liver toxin filtration
 				var/toxamount
-				var/static/list/listOfToxins = typesof(/datum/reagent/toxin)
-				for(var/I in C.reagents)
+				var/static/list/toxinstypecache = typecacheof(/datum/reagent/toxin)
+				for(var/I in C.reagents.reagent_list)
 					var/datum/reagent/pickedreagent = I
-					if(pickedreagent.type in listOfToxins)
+					if(is_type_in_typecache(pickedreagent, toxinstypecache))
 						toxamount += C.reagents.get_reagent_amount(initial(pickedreagent.id))
 				if(toxamount <= toxTolerance && toxamount > 0)
-					for(var/I in C.reagents)
+					for(var/I in C.reagents.reagent_list)
 						var/datum/reagent/pickedreagent = I
-						if(pickedreagent.type in listOfToxins)
-						C.reagents.remove_reagent(initial(pickedreagent.id), 1)
+						if(is_type_in_typecache(pickedreagent, toxinstypecache))
+							C.reagents.remove_reagent(initial(pickedreagent.id), 1)
 				else if(toxamount > toxTolerance)
 					damage += toxamount*toxLethality
 
