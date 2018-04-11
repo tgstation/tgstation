@@ -464,7 +464,7 @@
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if(R.id == reagent)
-			if(my_atom && isliving(my_atom))
+			if(my_atom && isliving(my_atom) && R.mobeffectactive)
 				var/mob/living/M = my_atom
 				R.on_mob_delete(M)
 			qdel(R)
@@ -567,7 +567,7 @@
 			my_atom.on_reagent_change(ADD_REAGENT)
 		if(!no_react)
 			handle_reactions()
-		if(isliving(my_atom))
+		if(isliving(my_atom)&&!QDELETED(R))
 			R.on_mob_add(my_atom)
 		return TRUE
 

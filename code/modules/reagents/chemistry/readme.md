@@ -143,6 +143,14 @@ Reagents are all the things you can mix and fille in bottles etc. This can be an
 			If you dont, the chemical will stay in the mob forever -
 			unless you write your own piece of code to slowly remove it.
 			(Should be pretty easy, 1 line of code)
+
+		on_mob_add()
+			Does something to when the reagent datum is first created in a mob(by injection or chem reaction).
+			If you return it make sure to set the reagents mobeffectactive var to TRUE so that on_mob_delete() can run.
+		
+		on_mob_delete()
+			Does something when the reagent datum is deleted from the mob, usualy undoing whatever the reagents on_mob_add() 	did.
+		
 ```
 
 ## Important variables:

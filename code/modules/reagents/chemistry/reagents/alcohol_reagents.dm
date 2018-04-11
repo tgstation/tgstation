@@ -552,11 +552,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	to_chat(M, "<span class='notice'>You feel [tough_text]!</span>")
 	M.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
 	M.health += 10
+	..()
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_delete(mob/living/M)
 	to_chat(M, "<span class='notice'>You no longer feel [tough_text].</span>")
 	M.maxHealth -= 10
 	M.health = min(M.health - 10, M.maxHealth) //This can indeed crit you if you're alive solely based on alchol ingestion
+	..()
 
 /datum/reagent/consumable/ethanol/tequila_sunrise
 	name = "Tequila Sunrise"
@@ -574,6 +576,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	to_chat(M, "<span class='notice'>You feel gentle warmth spread through your body!</span>")
 	light_holder = new(M)
 	light_holder.set_light(3, 0.7, "#FFCC00") //Tequila Sunrise makes you radiate dim light, like a sunrise!
+	..()
 
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/M)
 	if(QDELETED(light_holder))
@@ -585,6 +588,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_delete(mob/living/M)
 	to_chat(M, "<span class='notice'>The warmth in your body fades.</span>")
 	QDEL_NULL(light_holder)
+	..()
 
 /datum/reagent/consumable/ethanol/toxins_special
 	name = "Toxins Special"
@@ -651,6 +655,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			to_chat(H, "<span class='notice'>Now THAT is MANLY!</span>")
 			boozepwr = 5 //We've had worse in the mines
 			dorf_mode = TRUE
+	..()
 
 /datum/reagent/consumable/ethanol/manly_dorf/on_mob_life(mob/living/M)
 	if(dorf_mode)
@@ -693,7 +698,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Kahlua, Irish Cream, and cognac. You will get bombed."
 	shot_glass_icon_state = "b52glass"
 
-/datum/reagent/consumable/ethanol/b52/on_mob_add(mob/living/M)
+/datum/reagent/consumable/ethanol/b52/reaction_mob(mob/living/M)
 	playsound(M, 'sound/effects/explosion_distant.ogg', 100, FALSE)
 
 /datum/reagent/consumable/ethanol/irishcoffee
@@ -1464,7 +1469,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "If you're feeling low, count on the buttery flavor of our own bastion bourbon."
 	shot_glass_icon_state = "shotglassgreen"
 
-/datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_add(mob/living/L)
+/datum/reagent/consumable/ethanol/bastion_bourbon/reaction_mob(mob/living/L)
 	var/heal_points = 10
 	if(L.health <= 0)
 		heal_points = 20 //heal more if we're in softcrit
@@ -1545,5 +1550,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Crevice Spike"
 	glass_desc = "It'll either knock the drunkenness out of you or knock you out cold. Both, probably."
 
-/datum/reagent/consumable/ethanol/crevice_spike/on_mob_add(mob/living/L) //damage only applies when drink first enters system and won't again until drink metabolizes out
+/datum/reagent/consumable/ethanol/crevice_spike/reaction_mob(mob/living/L) //damage only applies when drink first enters system and won't again until drink metabolizes out
+	..()
 	L.adjustBruteLoss(3 * min(5,volume)) //minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you for the full 15
