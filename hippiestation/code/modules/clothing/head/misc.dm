@@ -22,7 +22,6 @@
 	name = "turban"
 	desc = "Allahu Akbar. Ashhadu an la ilaha illa Allah. Ashadu anna Muhammadan Rasool Allah. Hayya ala-s-Salah. Hayya ala-l-Falah. Allahu Akbar. La ilaha illa Allah."
 	icon_state = "turban"
-	alternate_screams = list('hippiestation/sound/misc/allah1.ogg', 'hippiestation/sound/misc/allah2.ogg', 'hippiestation/sound/misc/allah3.ogg')
 
 /*
 	Stackable hats
