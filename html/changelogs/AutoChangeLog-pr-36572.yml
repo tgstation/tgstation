@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - balance: "Hostile mobs capable of smashing structures will now smash their way through dense objects too."
