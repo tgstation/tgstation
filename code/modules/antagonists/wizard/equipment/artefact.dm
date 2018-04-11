@@ -355,7 +355,7 @@
 /obj/item/warpwhistle/proc/end_effect(mob/living/carbon/user)
 	user.invisibility = initial(user.invisibility)
 	user.status_flags &= ~GODMODE
-	user.canmove = 1
+	user.canmove = TRUE
 
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)
@@ -364,7 +364,7 @@
 	last_user = user
 	var/turf/T = get_turf(user)
 	playsound(T,'sound/magic/warpwhistle.ogg', 200, 1)
-	user.canmove = 0
+	user.canmove = FALSE
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
@@ -395,9 +395,7 @@
 
 /obj/item/warpwhistle/Destroy()
 	if(on_cooldown == 1 && last_user) //Flute got dunked somewhere in the teleport
-		last_user.invisibility = initial(last_user.invisibility)
-		last_user.status_flags &= ~GODMODE
-		last_user.canmove = 1
+		end_effect(last_user)
 	return ..()
 
 /obj/effect/temp_visual/tornado
