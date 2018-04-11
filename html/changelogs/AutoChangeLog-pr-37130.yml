@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - rscadd: "Cargo can now order tesla coil crates for 2500 credits."
