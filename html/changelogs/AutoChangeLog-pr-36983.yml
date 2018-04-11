@@ -1,0 +1,4 @@
+author: "ExcessiveUseOfCobblestone"
+delete-after: True
+changes: 
+  - code_imp: "Uplink Items now have 2 separate probabilities. One for the syndicate crate and one for cargo null crates. I encourage you to view uplink_items.dm and make changes."
