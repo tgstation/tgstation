@@ -38,6 +38,17 @@
 	select_name = "netting"
 	pellets = 6
 	variance = 40
+	var/obj/item/gun/D
+
+/obj/item/ammo_casing/energy/net/Initialize()
+	. = ..()
+	D = loc
+	if(!istype(D))
+		D = null
+
+/obj/item/ammo_casing/energy/net/newshot()
+	if(!BB)
+		BB = new projectile_type(src, D?.guntarget)
 
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/item/projectile/energy/trap

@@ -70,6 +70,16 @@
 	can_flashlight = 0
 	ammo_x_offset = 1
 
+/obj/item/gun/energy/e_gun/dragnet/proc/set_target(target, user)//called on beacon's attackby()
+	guntarget = target
+	to_chat(user, "<span class='notice'>[src] has locked onto [guntarget].</span>")
+
+/obj/item/gun/energy/e_gun/dragnet/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Hit a teleport beacon with it to set the bluespace netting teleport destination.</span>")
+	if(guntarget)
+		to_chat(user, "<span class='notice'>[src] has locked onto [guntarget].</span>")
+
 /obj/item/gun/energy/e_gun/dragnet/snare
 	name = "Energy Snare Launcher"
 	desc = "Fires an energy snare that slows the target down."
