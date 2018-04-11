@@ -398,8 +398,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 #define MAX_PROC_DEPTH 195 // 200 proc calls deep and shit breaks, this is a bit lower to give some safety room
 
-#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
-
 #define SYRINGE_DRAW 0
 #define SYRINGE_INJECT 1
 

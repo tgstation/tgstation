@@ -345,16 +345,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	return moblist
 
-//E = MC^2
-/proc/convert2energy(M)
-	var/E = M*(SPEED_OF_LIGHT_SQ)
-	return E
-
-//M = E/C^2
-/proc/convert2mass(E)
-	var/M = E/(SPEED_OF_LIGHT_SQ)
-	return M
-
 // Format a power value in W, kW, MW, or GW.
 /proc/DisplayPower(powerused)
 	if(powerused < 1000) //Less than a kW

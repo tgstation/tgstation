@@ -1,0 +1,6 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - rscadd: "The SM has a guaranteed 30 second final countdown before delamination now"
+  - balance: "The SM will take less damage from low pressure environments"
+  - balance: "The SM has a slightly reduced max damage per tick"

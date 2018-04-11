@@ -354,15 +354,7 @@
 	else
 		var/md5 = md5(AM.name)
 		for (var/i in 1 to 32)
-			#if DM_VERSION >= 513
-			#warning 512 is definitely stable now, remove the old code
-			#endif
-
-			#if DM_VERSION >= 512
 			. += hex2num(md5[i])
-			#else
-			. += hex2num(copytext(md5,i,i+1))
-			#endif
 		. = . % 9
 		AM.pixel_x = ((.%3)*6)
 		AM.pixel_y = -8 + (round( . / 3)*8)

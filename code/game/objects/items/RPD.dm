@@ -194,6 +194,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/datum/pipe_info/first_atmos
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
+	var/autowrench = FALSE
 
 /obj/item/pipe_dispenser/New()
 	. = ..()
@@ -415,6 +416,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			else
 				return ..()
 
+/obj/item/pipe_dispenser/AltClick(mob/living/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	autowrench = !autowrench
+	to_chat(user, "<span class='notice'>You [autowrench ? "enable" : "disable"] auto wrenching.</span>")
 
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)

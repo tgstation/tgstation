@@ -201,5 +201,3 @@ Difficulty: Medium
 	playsound(user, 'sound/magic/staff_change.ogg', 200, 0)
 	A.telegraph()
 	storm_cooldown = world.time + 200
-
-#undef MEDAL_PREFIX

@@ -300,6 +300,9 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/effect/turf_decal/bot,
+/obj/item/device/radio/intercom{
+	pixel_x = -30
+	},
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "H" = (
@@ -376,14 +379,16 @@
 	},
 /area/shuttle/arrival)
 "U" = (
-/obj/structure/frame/computer{
-	dir = 1
+/obj/machinery/computer{
+	dir = 1;
+	name = "Shuttle computer"
 	},
 /turf/open/floor/plasteel/blue,
 /area/shuttle/arrival)
 "V" = (
-/obj/structure/frame/computer{
-	dir = 1
+/obj/machinery/computer{
+	dir = 1;
+	name = "Shuttle computer"
 	},
 /turf/open/floor/plasteel/blue/side,
 /area/shuttle/arrival)

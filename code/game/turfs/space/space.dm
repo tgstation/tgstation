@@ -164,7 +164,7 @@
 		A.newtonian_move(A.inertia_dir)
 
 
-/turf/open/space/MakeSlippery()
+/turf/open/space/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
 /turf/open/space/singularity_act()

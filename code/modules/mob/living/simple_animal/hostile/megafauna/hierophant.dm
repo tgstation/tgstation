@@ -692,5 +692,3 @@ Difficulty: Hard
 	gpstag = "Zealous Signal"
 	desc = "Heed its words."
 	invisibility = 100
-
-#undef MEDAL_PREFIX

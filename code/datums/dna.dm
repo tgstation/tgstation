@@ -11,15 +11,17 @@
 	var/list/mutations = list()   //All mutations are from now on here
 	var/list/temporary_mutations = list() //Timers for temporary mutations
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
-	var/mob/living/carbon/holder
+	var/mob/living/holder
 
-/datum/dna/New(mob/living/carbon/new_holder)
+/datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
 		holder = new_holder
 
 /datum/dna/Destroy()
-	if(holder.dna == src)
-		holder.dna = null
+	if(iscarbon(holder))
+		var/mob/living/carbon/cholder = holder
+		if(cholder.dna == src)
+			cholder.dna = null
 	holder = null
 	QDEL_NULL(species)
 

@@ -55,6 +55,95 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">11 April 2018</h2>
+			<h3 class="author">Davidj361 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed paper bins dropping out of your hand or bag when grabbing a pen or paper.</li>
+				<li class="bugfix">Paper bins not giving finger prints upon interaction.</li>
+				<li class="bugfix">Detective can now write notes onto his printed scanner reports.</li>
+				<li class="tweak">Detective scanner can have its logs erased via alt-click.</li>
+				<li class="tweak">Detective scanner can display logs via the action button.</li>
+			</ul>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Added a missing intercom to the Delta arrivals shuttle.</li>
+			</ul>
+			<h3 class="author">ExcessiveUseOfCobblestone updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">Uplink Items now have 2 separate probabilities. One for the syndicate crate and one for cargo null crates. I encourage you to view uplink_items.dm and make changes.</li>
+			</ul>
+			<h3 class="author">Robustin updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Hostile mobs capable of smashing structures will now smash their way through dense objects too.</li>
+			</ul>
+			<h3 class="author">SpaceManiac updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">The blindness overlay applied during cloning now properly stretches for widescreen views.</li>
+				<li class="code_imp">Various macro consistency problems have been addressed.</li>
+			</ul>
+			<h3 class="author">YPOQ updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Eminences can hear clock cult chat again</li>
+			</ul>
+			<h3 class="author">george99g updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Suiciding will now deactivate all your genetics prescans.</li>
+			</ul>
+			<h3 class="author">iskyp updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">makes dragnet non harmful</li>
+				<li class="tweak">pacifists can now use any disabler or stun setting on any energy gun</li>
+				<li class="code_imp">removed all of the pacifism check code from code/modules/mob/living/living.dm</li>
+				<li class="code_imp">gun objects no longer have a harmful variable, instead, ammo_casing objects now have a harmful variable, which is by default set to TRUE</li>
+				<li class="code_imp">if a pacifist fires a gun, it checks whether or not the round chambered is lethal, instead of whether or not the gun itself is lethal.</li>
+				<li class="code_imp">/obj/item/machinery/power/supermatter_shard is now /obj/item/machinery/power/supermatter_crystal/shard. the crystal is the parent object.</li>
+			</ul>
+			<h3 class="author">neersighted updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">Reduced lag by speeding up logs 10000%</li>
+				<li class="code_imp">Logs now include millisecond-level timestamps</li>
+			</ul>
+			<h3 class="author">pigeonsk updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">AI now requires silicon playtime instead of crew playtime for roundstart role</li>
+			</ul>
+			<h3 class="author">selea updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">fixed runtime in logic circuits, which was occured  with invalid input types.</li>
+			</ul>
+
+			<h2 class="date">09 April 2018</h2>
+			<h3 class="author">CosmicScientist updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Top Nanotrasen scientists have diagnosed two new phobias! Birds and chasms! Good luck Chief Engineers and Miners.</li>
+			</ul>
+			<h3 class="author">Dax Dupont updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="admin">Removing notes now has an "Are you sure" dialog.</li>
+			</ul>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Omegastation now has its own arrivals shuttle.</li>
+			</ul>
+			<h3 class="author">Mickyan updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Stinger, Grasshopper, Quadruple Sec, and Quintuple Sec have new sprites.</li>
+			</ul>
+			<h3 class="author">Naksu updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">Fixed an heirloom trait-related runtime</li>
+				<li class="code_imp">Fixed an incorrect signature in MakeSlippery causing runtimes</li>
+			</ul>
+			<h3 class="author">SpironoZeppeli updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">You can now wrench the supermatter shard</li>
+			</ul>
+			<h3 class="author">ninjanomnom updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">The arena shuttle should be working again.</li>
+				<li class="bugfix">The escape pods now reach their proper destination at round end</li>
+			</ul>
+
 			<h2 class="date">08 April 2018</h2>
 			<h3 class="author">AnturK updated:</h3>
 			<ul class="changes bgimages16">
@@ -1675,135 +1764,6 @@
 			<h3 class="author">oranges updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="rscdel">Removed the saltmine grief shuttle</li>
-			</ul>
-
-			<h2 class="date">07 February 2018</h2>
-			<h3 class="author">DaedalusGame updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes Noblium Formation being multiplicative, so having 500 moles of tritium and 500 moles of nitrogen no longer produces 2500 moles of noblium (it should correctly produce 10 moles)</li>
-				<li class="bugfix">Fixes most reactions deleting more gas than exists and making gas out of nowhere</li>
-				<li class="bugfix">Fixes Stim Formation invoking a byond bug and not using its intended polynomial formula</li>
-				<li class="bugfix">Fixes Cryo Cells not having garbage_collect and clamping</li>
-				<li class="bugfix">Fixes Rad Collectors not having clamping</li>
-				<li class="bugfix">Fixes Division by Zero when Fusion has no impurities.</li>
-				<li class="bugfix">Removes a redundant line in lungs</li>
-				<li class="bugfix">Fixes rad_act signal not firing from turfs, living mobs, rad collectors and geiger counters</li>
-				<li class="bugfix">fixes lava burning into chasm tiles i hate hate hate hate them so much grrrr</li>
-				<li class="tweak">NT Scientists have started looking into data from small-scale detonations and found that there's still potential data to be gathered from explosive yields lower than 4.184 petajoules</li>
-			</ul>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Moved the pocket protector to lockers instead of on the uniform.</li>
-				<li class="rscadd">You can now insert holodisks into cameras and take a static holographic picture of someone!</li>
-				<li class="rscadd">Hologram recordings can now be offset slightly.</li>
-				<li class="rscadd">Posibrains have gotten a small firmware update, they will now play a sound on successful activation.</li>
-				<li class="rscadd">Killing a revenant will now result in an unique shuttle to be able to be bought. You probably won't like it though.</li>
-				<li class="rscadd">Fake emag now available.</li>
-			</ul>
-			<h3 class="author">Denton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="spellcheck">Mining drone upgrades are no longer referred to as "ugprade"</li>
-				<li class="tweak">Fungal tuberculosis spores can no longer be synthesized by machinery.</li>
-			</ul>
-			<h3 class="author">Kor updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Spawning as a syndicate comms officer will now activate an encrypted signal in the Lavaland Syndicate Base, to aid the crew in retaliating.</li>
-			</ul>
-			<h3 class="author">Ordo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Mamma-mia! The chef speaks-a so different now!</li>
-			</ul>
-			<h3 class="author">Robustin updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">The "construct shell" option from the cult archives structure will now only yield one shell instead of two.</li>
-				<li class="balance">Sacrificing suicide victims will now only yield an empty shard.</li>
-				<li class="balance">Synths and Androids are no longer available species at the magic mirror.</li>
-			</ul>
-			<h3 class="author">ShiggyDiggyDo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">You can now win Toy Daggers at your local arcade!</li>
-			</ul>
-			<h3 class="author">Skylar Lineman updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Nanotrasen has new intelligence that the newest batch of Syndicate agent equipment includes sticky explosives disguised as potatoes, designed to incite terror among whoever is unlucky enough to have one stuck onto their hands.</li>
-				<li class="rscadd">Nanotrasen's toy suppliers have also started making faux versions of these, with less-forceful attachment mechanisms and absolutely zero explosive materials for a child-safe experience. experimental: Explosive Hot Potatoes are now available for purchase by syndicate-affiliated cooks, botanists, clowns, and mimes.</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Pressure damage now takes effect in certain situations where it should have but did not.</li>
-			</ul>
-			<h3 class="author">Xhuis updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Nanotrasen's anomalous materials division has recently experienced a containment breach, during which a certain pizza box went missing. Be on the lookout for any slipups in cargo.</li>
-				<li class="spellcheck">Pizza margherita is now named "pizza margherita" (the proper way!) instead of just "margherita."</li>
-				<li class="tweak">Brass chairs now stop spinning after eight rotations, so you can't crash the server with them.</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Eggs now contain 5u of egg yolk. Breaking an egg in a glass container adds all reagents inside to the container. If you're laying abductor gland eggs, then you'll get 5u of egg yolk and 10u of random reagent. Egg glands now make you act like a chicken while laying eggs. Egg laying makes you use the aliennotice span.</li>
-			</ul>
-			<h3 class="author">kevinz000 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Explosive holoparasites must now be adjacent to turn objects into bombs, instead of being able to do so from any range.</li>
-			</ul>
-
-			<h2 class="date">06 February 2018</h2>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">AIs can no longer turn on broken APCs,</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Defibrillator mounts no longer spam the error log while empty.</li>
-				<li class="bugfix">The various ships in the caravan ambush space ruin can now fly again.</li>
-			</ul>
-
-			<h2 class="date">05 February 2018</h2>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Regular cyborgs now start with a normal high capacity cell instead of a snowflake cell. Resulting in less confusing and 2.5MJ more electric charge.</li>
-				<li class="bugfix">Fixed name of the upgraded power cell</li>
-				<li class="refactor">Removed duplicate cell giving code in transformation proc.</li>
-				<li class="bugfix">Fixed the crematorium on meta and box.</li>
-			</ul>
-			<h3 class="author">Denton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Rearranged the mining vendor items by price and item group.</li>
-				<li class="tweak">In order to promote back-breaking physical labor, Nanotrasen has additionally made conscription kits available at mining equipment vendors.</li>
-			</ul>
-			<h3 class="author">Iamgoofball updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">Blood cultists can't space base anymore</li>
-			</ul>
-			<h3 class="author">MMMiracles updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">A once-thought abandoned arctic post has recently had its gateway coordinates re-enabled for access via the Gateway link. Contact your local Exploration Division for more details.</li>
-			</ul>
-			<h3 class="author">More Robust Than You updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Holorays are now properly deleted if you switch holopads automatically</li>
-			</ul>
-			<h3 class="author">Naksu and kevinz000 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Ores are no longer completely impervious to explosions, but rather "proper" ores are destroyed by the strongest explosions and sand is blown away everything but the weakest ones. This shouldn't affect ore spawns from explosions</li>
-				<li class="tweak">Lavaland bomb cap reduced to double the station bombcap.</li>
-				<li class="refactor">Ores are now stackable. Ore stacks now have the appearance of loose ores and are not called "sheets" by machines that consume them.</li>
-				<li class="code_imp">Material container component now uses the singular names of stack objects.</li>
-				<li class="refactor">/obj/item/ore/Crossed() is now removed in favor of the ore satchel utilizing a redirect component</li>
-			</ul>
-			<h3 class="author">ShiggyDiggyDo updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="spellcheck">You no longer win double the articles at the arcade</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Research investigate logs now actually include the name of the researcher.</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes intelligence potions removing previously known mob languages</li>
-				<li class="tweak">Slime scanning now has a more readable output, especially when scanning multiple slimes at once</li>
-				<li class="tweak">Eggs from the abductor egg gland now have a random reagent instead of acid</li>
 			</ul>
 		</div>
 

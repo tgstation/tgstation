@@ -14,6 +14,7 @@ AI
 	minimal_player_age = 30
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
+	exp_type_department = EXP_TYPE_SILICON
 	antag_rep = 20
 	var/do_special_check = TRUE
 
@@ -83,8 +84,8 @@ Cyborg
 	exp_requirements = 120
 	exp_type = EXP_TYPE_CREW
 
-/datum/job/cyborg/equip(mob/living/carbon/human/H)
-	return H.Robotize(FALSE, FALSE)
+/datum/job/cyborg/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE)
+	return H.Robotize(FALSE, latejoin)
 
 /datum/job/cyborg/after_spawn(mob/living/silicon/robot/R, mob/M)
 	if(CONFIG_GET(flag/rename_cyborg))	//name can't be set in robot/New without the client

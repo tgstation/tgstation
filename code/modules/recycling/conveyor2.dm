@@ -268,10 +268,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		CHECK_TICK
 
 // attack with hand, switch position
-/obj/machinery/conveyor_switch/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/conveyor_switch/interact(mob/user)
 	add_fingerprint(user)
 	if(position == 0)
 		if(convdir)   //is it a oneway switch
