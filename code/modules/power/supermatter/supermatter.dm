@@ -54,15 +54,15 @@
 #define SUPERMATTER_DANGER_PERCENT 50
 #define SUPERMATTER_WARNING_PERCENT 100
 
-GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
+GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
-/obj/machinery/power/supermatter_shard
-	name = "supermatter shard"
-	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure."
+/obj/machinery/power/supermatter_crystal
+	name = "supermatter crystal"
+	desc = "A strangely translucent and iridescent crystal."
 	icon = 'icons/obj/supermatter.dmi'
-	icon_state = "darkmatter_shard"
+	icon_state = "darkmatter"
 	density = TRUE
-	anchored = FALSE
+	anchored = TRUE
 	var/uid = 1
 	var/static/gl_uid = 1
 	light_range = 4
@@ -70,9 +70,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	critical_machine = TRUE
 
-	var/gasefficency = 0.125
+	var/gasefficency = 0.15
 
-	var/base_icon_state = "darkmatter_shard"
+	var/base_icon_state = "darkmatter"
 
 	var/damage = 0
 	var/damage_archived = 0
@@ -86,7 +86,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	var/emergency_issued = FALSE
 
-	var/explosion_power = 12
+	var/explosion_power = 35
 	var/temp_factor = 30
 
 	var/lastwarning = 0				// Time in 1/10th of seconds since the last sent warning
@@ -137,9 +137,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	var/datum/looping_sound/supermatter/soundloop
 
-	var/moveable = TRUE
+	var/moveable = FALSE
 
-/obj/machinery/power/supermatter_shard/Initialize()
+/obj/machinery/power/supermatter_crystal/Initialize()
 	. = ..()
 	uid = gl_uid++
 	SSair.atmos_machinery += src
@@ -156,7 +156,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	soundloop = new(list(src), TRUE)
 
-/obj/machinery/power/supermatter_shard/Destroy()
+/obj/machinery/power/supermatter_crystal/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
 	SSair.atmos_machinery -= src
 	QDEL_NULL(radio)
@@ -167,7 +167,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	QDEL_NULL(soundloop)
 	return ..()
 
-/obj/machinery/power/supermatter_shard/examine(mob/user)
+/obj/machinery/power/supermatter_crystal/examine(mob/user)
 	..()
 	if(!ishuman(user))
 		return
@@ -180,12 +180,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 			to_chat(H, "<span class='danger'>You get headaches just from looking at it.</span>")
 		return
 
-/obj/machinery/power/supermatter_shard/get_spans()
+/obj/machinery/power/supermatter_crystal/get_spans()
 	return list(SPAN_ROBOT)
 
 #define CRITICAL_TEMPERATURE 10000
 
-/obj/machinery/power/supermatter_shard/proc/get_status()
+/obj/machinery/power/supermatter_crystal/proc/get_status()
 	var/turf/T = get_turf(src)
 	if(!T)
 		return SUPERMATTER_ERROR
@@ -212,7 +212,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		return SUPERMATTER_NORMAL
 	return SUPERMATTER_INACTIVE
 
-/obj/machinery/power/supermatter_shard/proc/alarm()
+/obj/machinery/power/supermatter_crystal/proc/alarm()
 	switch(get_status())
 		if(SUPERMATTER_DELAMINATING)
 			playsound(src, 'sound/misc/bloblarm.ogg', 100)
@@ -223,13 +223,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		if(SUPERMATTER_WARNING)
 			playsound(src, 'sound/machines/terminal_alert.ogg', 75)
 
-/obj/machinery/power/supermatter_shard/proc/get_integrity()
+/obj/machinery/power/supermatter_crystal/proc/get_integrity()
 	var/integrity = damage / explosion_point
 	integrity = round(100 - integrity * 100, 0.01)
 	integrity = integrity < 0 ? 0 : integrity
 	return integrity
 
-/obj/machinery/power/supermatter_shard/proc/explode()
+/obj/machinery/power/supermatter_crystal/proc/explode()
 	var/turf/T = get_turf(src)
 	for(var/mob/M in GLOB.player_list)
 		if(M.z == z)
@@ -251,7 +251,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 			E.energy = power
 		qdel(src)
 
-/obj/machinery/power/supermatter_shard/process_atmos()
+/obj/machinery/power/supermatter_crystal/process_atmos()
 	var/turf/T = loc
 
 	if(isnull(T))		// We have a null turf...something is wrong, stop processing this entity.
@@ -441,7 +441,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	return 1
 
-/obj/machinery/power/supermatter_shard/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/power/supermatter_crystal/bullet_act(obj/item/projectile/Proj)
 	var/turf/L = loc
 	if(!istype(L))
 		return FALSE
@@ -457,7 +457,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		damage += Proj.damage * config_bullet_energy
 	return FALSE
 
-/obj/machinery/power/supermatter_shard/singularity_act()
+/obj/machinery/power/supermatter_crystal/singularity_act()
 	var/gain = 100
 	investigate_log("Supermatter shard consumed by singularity.", INVESTIGATE_SINGULO)
 	message_admins("Singularity has consumed a supermatter shard and can now become stage six.")
@@ -469,7 +469,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	qdel(src)
 	return gain
 
-/obj/machinery/power/supermatter_shard/blob_act(obj/structure/blob/B)
+/obj/machinery/power/supermatter_crystal/blob_act(obj/structure/blob/B)
 	if(B && !isspaceturf(loc)) //does nothing in space
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 		damage += B.obj_integrity * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
@@ -482,20 +482,20 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 			"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 			Consume(B)
 
-/obj/machinery/power/supermatter_shard/attack_tk(mob/user)
+/obj/machinery/power/supermatter_crystal/attack_tk(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		to_chat(C, "<span class='userdanger'>That was a really dumb idea.</span>")
 		var/obj/item/bodypart/head/rip_u = C.get_bodypart(BODY_ZONE_HEAD)
 		rip_u.dismember(BURN) //nice try jedi
 
-/obj/machinery/power/supermatter_shard/attack_paw(mob/user)
+/obj/machinery/power/supermatter_crystal/attack_paw(mob/user)
 	dust_mob(user, cause = "monkey attack")
 
-/obj/machinery/power/supermatter_shard/attack_alien(mob/user)
+/obj/machinery/power/supermatter_crystal/attack_alien(mob/user)
 	dust_mob(user, cause = "alien attack")
 
-/obj/machinery/power/supermatter_shard/attack_animal(mob/living/simple_animal/S)
+/obj/machinery/power/supermatter_crystal/attack_animal(mob/living/simple_animal/S)
 	var/murder
 	if(!S.melee_damage_upper && !S.melee_damage_lower)
 		murder = S.friendly
@@ -506,20 +506,20 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	"<span class='userdanger'>You unwisely touch [src], and your vision glows brightly as your body crumbles to dust. Oops.</span>", \
 	"simple animal attack")
 
-/obj/machinery/power/supermatter_shard/attack_robot(mob/user)
+/obj/machinery/power/supermatter_crystal/attack_robot(mob/user)
 	if(Adjacent(user))
 		dust_mob(user, cause = "cyborg attack")
 
-/obj/machinery/power/supermatter_shard/attack_ai(mob/user)
+/obj/machinery/power/supermatter_crystal/attack_ai(mob/user)
 	return
 
-/obj/machinery/power/supermatter_shard/attack_hand(mob/living/user)
+/obj/machinery/power/supermatter_crystal/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return
 	dust_mob(user, cause = "hand")
 
-/obj/machinery/power/supermatter_shard/proc/dust_mob(mob/living/nom, vis_msg, mob_msg, cause)
+/obj/machinery/power/supermatter_crystal/proc/dust_mob(mob/living/nom, vis_msg, mob_msg, cause)
 	if(nom.incorporeal_move || nom.status_flags & GODMODE)
 		return
 	if(!vis_msg)
@@ -533,7 +533,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 	Consume(nom)
 
-/obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
+/obj/machinery/power/supermatter_crystal/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(W) || (W.flags_1 & ABSTRACT_1) || !istype(user))
 		return
 	if (istype(W, /obj/item/melee/roastingstick))
@@ -554,12 +554,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 		radiation_pulse(src, 150, 4)
 
-/obj/machinery/power/supermatter_shard/wrench_act(mob/user, obj/item/tool)
+/obj/machinery/power/supermatter_crystal/wrench_act(mob/user, obj/item/tool)
 	if (moveable)
 		default_unfasten_wrench(user, tool, time = 20)
 	return TRUE
 
-/obj/machinery/power/supermatter_shard/CollidedWith(atom/movable/AM)
+/obj/machinery/power/supermatter_crystal/CollidedWith(atom/movable/AM)
 	if(isliving(AM))
 		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... [AM.p_their()] body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
@@ -574,7 +574,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 
 	Consume(AM)
 
-/obj/machinery/power/supermatter_shard/proc/Consume(atom/movable/AM)
+/obj/machinery/power/supermatter_crystal/proc/Consume(atom/movable/AM)
 	if(isliving(AM))
 		var/mob/living/user = AM
 		if(user.status_flags & GODMODE)
@@ -602,29 +602,29 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 		else
 			L.show_message("<span class='italics'>You hear an unearthly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
 
-/obj/machinery/power/supermatter_shard/engine
+/obj/machinery/power/supermatter_crystal/engine
+	is_main_engine = TRUE
+
+/obj/machinery/power/supermatter_crystal/shard
+	name = "supermatter shard"
+	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure."
+	base_icon_state = "darkmatter_shard"
+	icon_state = "darkmatter_shard"
+	anchored = FALSE
+	gasefficency = 0.125
+	explosion_power = 12
+	moveable = TRUE
+
+/obj/machinery/power/supermatter_crystal/shard/engine
 	is_main_engine = TRUE
 
 // When you wanna make a supermatter shard for the dramatic effect, but
 // don't want it exploding suddenly
-/obj/machinery/power/supermatter_shard/hugbox
+/obj/machinery/power/supermatter_crystal/shard/hugbox
 	takes_damage = FALSE
 	produces_gas = FALSE
 
-/obj/machinery/power/supermatter_shard/crystal
-	name = "supermatter crystal"
-	desc = "A strangely translucent and iridescent crystal."
-	base_icon_state = "darkmatter"
-	icon_state = "darkmatter"
-	anchored = TRUE
-	gasefficency = 0.15
-	explosion_power = 35
-	moveable = FALSE
-
-/obj/machinery/power/supermatter_shard/crystal/engine
-	is_main_engine = TRUE
-
-/obj/machinery/power/supermatter_shard/proc/supermatter_pull(turf/center, pull_range = 10)
+/obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 10)
 	playsound(src.loc, 'sound/weapons/marauder.ogg', 100, 1, extrarange = 7)
 	for(var/atom/P in orange(pull_range,center))
 		if(ismovableatom(P))
@@ -638,7 +638,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 				step_towards(pulled_object,center)
 				step_towards(pulled_object,center)
 
-/obj/machinery/power/supermatter_shard/proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5)
+/obj/machinery/power/supermatter_crystal/proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5)
 	var/turf/L = pick(orange(anomalyrange, anomalycenter))
 	if(L)
 		switch(type)
@@ -650,7 +650,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 			if(PYRO_ANOMALY)
 				new /obj/effect/anomaly/pyro(L, 200)
 
-/obj/machinery/power/supermatter_shard/proc/supermatter_zap(atom/zapstart, range = 3, power)
+/obj/machinery/power/supermatter_crystal/proc/supermatter_zap(atom/zapstart, range = 3, power)
 	. = zapstart.dir
 	if(power < 1000)
 		return

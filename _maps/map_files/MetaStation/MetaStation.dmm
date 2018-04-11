@@ -73482,7 +73482,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dfa" = (
-/obj/machinery/power/supermatter_shard/crystal/engine,
+/obj/machinery/power/supermatter_crystal/engine,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "dfb" = (
