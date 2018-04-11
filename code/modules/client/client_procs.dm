@@ -236,7 +236,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 
 	. = ..()	//calls mob.Login()
-	#if DM_VERSION >= 512
+
 	if (byond_version >= 512)
 		if (!byond_build || byond_build < 1386)
 			message_admins("<span class='adminnotice'>[key_name(src)] has been detected as spoofing their byond version. Connection rejected.</span>")
@@ -254,7 +254,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			else
 				qdel(src)
 				return
-	#endif
+
 	if(SSinput.initialized)
 		set_macros()
 
