@@ -78,7 +78,7 @@
 		if(computer_id)
 			cidquery = " OR computerid = '[computer_id]' "
 
-		var/datum/DBQuery/query_ban_check = SSdbcore.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, duration, bantime, bantype, id FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
+		var/datum/DBQuery/query_ban_check = SSdbcore.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, duration, bantime, bantype, id, round_id FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query_ban_check.Execute())
 			return
 		while(query_ban_check.NextRow())
@@ -90,6 +90,7 @@
 			var/bantime = query_ban_check.item[6]
 			var/bantype = query_ban_check.item[7]
 			var/banid = query_ban_check.item[8]
+			var/ban_round_id = query_ban_check.item[9]
 			if (bantype == "ADMIN_PERMABAN" || bantype == "ADMIN_TEMPBAN")
 				//admin bans MUST match on ckey to prevent cid-spoofing attacks
 				//	as well as dynamic ip abuse
@@ -110,7 +111,7 @@
 			else
 				expires = " The is a permanent ban."
 
-			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban (BanID #[banid]) was applied by [ackey] on [bantime], [expires]"
+			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban (BanID #[banid]) was applied by [ackey] on [bantime] during round ID [ban_round_id], [expires]"
 
 			. = list("reason"="[bantype]", "desc"="[desc]")
 
