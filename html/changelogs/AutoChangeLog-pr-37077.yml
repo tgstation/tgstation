@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Warp whistle can no longer leave you stuck in an invisible state"

@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "Briefcase bluespace launch pads no longer work on the centcom Z level."
