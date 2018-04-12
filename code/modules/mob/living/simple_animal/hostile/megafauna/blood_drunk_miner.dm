@@ -263,4 +263,3 @@ Difficulty: Medium
 	invisibility = 100
 
 #undef MINER_DASH_RANGE
-#undef MEDAL_PREFIX

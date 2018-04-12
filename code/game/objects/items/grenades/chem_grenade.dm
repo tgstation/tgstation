@@ -579,3 +579,7 @@
 
 	beakers += B1
 	beakers += B2
+
+#undef READY
+#undef WIRED
+#undef EMPTY

@@ -88,6 +88,9 @@
 	opacity = 0
 	glass = TRUE
 
+/obj/machinery/door/airlock/engineering/glass/critical
+	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
+
 /obj/machinery/door/airlock/security/glass
 	opacity = 0
 	glass = TRUE
@@ -111,6 +114,9 @@
 /obj/machinery/door/airlock/atmos/glass
 	opacity = 0
 	glass = TRUE
+
+/obj/machinery/door/airlock/atmos/glass/critical
+	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
 
 /obj/machinery/door/airlock/science/glass
 	opacity = 0

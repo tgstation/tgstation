@@ -151,7 +151,7 @@ again.
 //shuttle window
 
 /obj/effect/spawner/structure/window/shuttle
-	name = "reinforced shuttle window spawner"
+	name = "shuttle window spawner"
 	icon_state = "swindow_spawner"
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/shuttle)
 
