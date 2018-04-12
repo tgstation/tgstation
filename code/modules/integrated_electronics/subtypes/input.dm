@@ -394,21 +394,20 @@
 	cooldown_per_use = 10
 
 /obj/item/integrated_circuit/input/turfscan/do_work()
-	var/atom/movable/H = get_pin_data_as_type(IC_INPUT, 1, /atom)
+	var/turf/H = get_pin_data_as_type(IC_INPUT, 1, /turf)
 	var/turf/T = get_turf(src)
-	var/turf/E = get_turf(H)
 	if(!istype(H)) //Invalid input
 		return
 
 	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
 		var/list/cont = new()
-		if(E.contents.len)
-			for(var/i = 1 to E.contents.len)
-				var/atom/U = E.contents[i]
-				cont += WEAKREF(U)
+		for(var/obj/U in H)
+			cont += WEAKREF(U)
+		for(var/mob/U in H)
+			cont += WEAKREF(U)
 		set_pin_data(IC_OUTPUT, 1, cont)
 		var/list/St = new()
-		for(var/obj/effect/decal/cleanable/crayon/I in E.contents)
+		for(var/obj/effect/decal/cleanable/crayon/I in H)
 			St.Add(I.icon_state)
 		if(St.len)
 			set_pin_data(IC_OUTPUT, 2, jointext(St, ",", 1, 0))
