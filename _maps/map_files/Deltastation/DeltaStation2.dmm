@@ -86629,7 +86629,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	req_access_txt = "9"
 	},
@@ -88355,7 +88355,7 @@
 /area/hallway/primary/aft)
 "dGg" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	req_access_txt = "6"
 	},
@@ -88482,7 +88482,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	req_access_txt = "5"
 	},
@@ -95249,7 +95249,7 @@
 	},
 /area/chapel/office)
 "dVb" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Morgue";
 	req_access_txt = "27"
 	},
@@ -95285,7 +95285,7 @@
 /area/chapel/main)
 "dVh" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Hall"
 	},
 /obj/structure/disposalpipe/segment{
@@ -95557,7 +95557,7 @@
 /area/chapel/main)
 "dVW" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Hall"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -96918,7 +96918,7 @@
 /turf/closed/wall,
 /area/chapel/office)
 "dZi" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Crematorium";
 	req_access_txt = "27"
 	},
@@ -98490,7 +98490,7 @@
 /turf/closed/wall,
 /area/chapel/main)
 "ecU" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Office";
 	req_access_txt = "27"
 	},
@@ -99564,7 +99564,7 @@
 	},
 /area/chapel/office)
 "efm" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Quarters";
 	req_access_txt = "27"
 	},

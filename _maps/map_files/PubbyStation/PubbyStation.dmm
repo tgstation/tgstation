@@ -24126,7 +24126,7 @@
 /area/medical/morgue)
 "biZ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	opacity = 1;
 	req_access_txt = "6"
@@ -26637,7 +26637,7 @@
 /area/medical/medbay/zone3)
 "bpG" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	opacity = 1;
 	req_access_txt = "6"
@@ -26696,7 +26696,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	opacity = 1;
 	req_access_txt = "6"
@@ -36726,7 +36726,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/dock)
 "bLq" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Monastery Transit";
 	opacity = 1
 	},
@@ -38211,7 +38211,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "bPn" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -38223,7 +38223,7 @@
 	},
 /area/chapel/dock)
 "bPo" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -41479,7 +41479,7 @@
 /turf/closed/wall,
 /area/chapel/main/monastery)
 "bWW" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -41489,7 +41489,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "bWX" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -43362,7 +43362,7 @@
 	},
 /area/chapel/main/monastery)
 "cbR" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Access";
 	opacity = 1
 	},
@@ -44010,7 +44010,7 @@
 /turf/open/floor/plasteel/asteroid,
 /area/chapel/office)
 "ceg" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Office";
 	opacity = 1;
 	req_access_txt = "22"
@@ -44031,7 +44031,7 @@
 /turf/closed/wall,
 /area/chapel/office)
 "cei" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -44044,7 +44044,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cej" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -44052,7 +44052,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cek" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -44060,7 +44060,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cel" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Access";
 	opacity = 1
 	},
@@ -44345,7 +44345,7 @@
 /turf/closed/wall,
 /area/chapel/office)
 "cfl" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Access";
 	opacity = 1
 	},
@@ -45488,7 +45488,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cjl" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Monastery Cemetary";
 	opacity = 1
 	},
@@ -45574,7 +45574,7 @@
 /turf/open/floor/plating,
 /area/chapel/main/monastery)
 "cjH" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Garden";
 	opacity = 1
 	},
@@ -45936,7 +45936,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
 "ckT" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -47705,7 +47705,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "crJ" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Crematorium";
 	opacity = 1;
 	req_access_txt = "27"
@@ -47952,7 +47952,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Office";
 	opacity = 1;
 	req_access_txt = "22"
@@ -48839,7 +48839,7 @@
 /turf/closed/wall/mineral/iron,
 /area/library/lounge)
 "cwg" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/structure/cable{
@@ -49084,7 +49084,7 @@
 /turf/open/floor/carpet,
 /area/library/lounge)
 "cxz" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -50177,7 +50177,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "jgr" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -50320,7 +50320,7 @@
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "lqy" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -50763,7 +50763,7 @@
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "vOw" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
