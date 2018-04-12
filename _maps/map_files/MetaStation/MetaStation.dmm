@@ -20494,7 +20494,7 @@
 /area/hallway/primary/fore)
 "aRX" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Courtroom";
 	opacity = 1
 	},
@@ -22480,7 +22480,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Courtroom";
 	opacity = 1
 	},
@@ -36804,7 +36804,7 @@
 /area/security/vacantoffice)
 "bzz" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom/abandoned{
+/obj/machinery/door/airlock/grunge/abandoned{
 	name = "Vacant Office";
 	opacity = 1;
 	req_access_txt = "32"
@@ -38615,7 +38615,7 @@
 /area/crew_quarters/bar)
 "bDG" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Club";
 	opacity = 1
 	},
@@ -39475,7 +39475,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Club";
 	opacity = 1
 	},
@@ -43495,7 +43495,7 @@
 /area/maintenance/port)
 "bOk" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Quiet Room";
 	opacity = 1
 	},
@@ -43504,7 +43504,7 @@
 /area/library)
 "bOl" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Quiet Room";
 	opacity = 1
 	},
@@ -62241,7 +62241,7 @@
 /area/medical/genetics/cloning)
 "cBc" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Genetics";
 	opacity = 1;
 	req_access_txt = "9"
@@ -63650,7 +63650,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	opacity = 1;
 	req_access_txt = "5"
@@ -64201,7 +64201,7 @@
 /area/medical/morgue)
 "cEY" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	opacity = 1;
 	req_access_txt = "6"
