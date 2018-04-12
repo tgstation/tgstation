@@ -60,9 +60,7 @@
 		if(amountrefined < 1)
 			qdel(src)
 		else
-			var/obj/item/stack/S = new refined_type(drop_location())
-			S.amount = 0
-			S.add(amountrefined)
+			new refined_type(drop_location(),amountrefined)
 			qdel(src)
 
 /obj/item/stack/ore/uranium
