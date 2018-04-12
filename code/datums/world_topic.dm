@@ -106,7 +106,7 @@
 					to_chat(C, "<font color='[GLOB.normal_ooc_colour]'><span class='ooc'><span class='prefix'>DISCORD OOC:</span> <EM>[input["ckey"]]:</EM> <span class='message'>[input["ooc"]]</span></span></font>")
 
 /datum/world_topic/ahelp
-	keyword = "ahelp"
+	keyword = "adminhelp"
 	require_comms_key = TRUE
 
 /datum/world_topic/ahelp/Run(list/input)
