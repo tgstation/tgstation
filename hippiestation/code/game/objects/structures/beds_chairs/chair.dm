@@ -48,10 +48,10 @@
 	var/mob/living/carbon/human/H = user
 	if(!H.get_num_arms())
 		if(!cannot_move)
+			cannot_move = TRUE
+			addtimer(CALLBACK(src, .proc/stopmove), 20)
 			to_chat(user, "<span class='warning'>You can't move the wheels without arms!</span>")
-		cannot_move = TRUE
-		addtimer(CALLBACK(src, .proc/stopmove), 20)
-		return			//No getting to the piece of code where it divides by the num of arms or else we'll divide by 0
+			return			//No getting to the piece of code where it divides by the num of arms or else we'll divide by 0
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			if((!Process_Spacemove(direction)) || (!has_gravity(src.loc)) || user.stat != CONSCIOUS || user.IsStun() || user.IsKnockdown() || (user.restrained()))
@@ -69,12 +69,16 @@
 			if(!timing)
 				timing = TRUE
 				moving = TRUE
-				addtimer(CALLBACK(src, .proc/movedelay), cooldown_amount/H.get_num_arms()) //This should half the speed if you have only one arm
+				sleep(cooldown_amount/H.get_num_arms()) //Moving doesn't seem to be possible with an addtimer, not sure why
 				step(src, direction)
 				addtimer(CALLBACK(src, .proc/changeflags), 3)
 
-/obj/structure/chair/movable/proc/movedelay(direction)
-	step(src, direction)
+/obj/structure/chair/movable/proc/movedelay(mob/user, direction)	//This isn't working when used in relaymove :(
+	if(has_buckled_mobs())
+		for(var/m in buckled_mobs)
+			var/mob/living/buckled_mob = m
+			buckled_mob.dir = direction
+			step(src, direction)
 
 /obj/structure/chair/movable/proc/changeflags()
 	timing = FALSE
