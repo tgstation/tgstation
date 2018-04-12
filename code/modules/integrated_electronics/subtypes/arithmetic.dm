@@ -236,13 +236,13 @@
 // Pi, because why the hell not? //
 /obj/item/integrated_circuit/arithmetic/pi
 	name = "pi constant circuit"
-	desc = "Not recommended for cooking. Outputs pi when it receives a pulse."
+	desc = "Not recommended for cooking. Outputs 3.1459 when it receives a pulse."
 	icon_state = "pi"
 	inputs = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	
 /obj/item/integrated_circuit/arithmetic/pi/Initialize()
-	..()
+	. = ..()
 	desc = "Not recommended for cooking. Outputs '[PI]' when it receives a pulse."
 
 /obj/item/integrated_circuit/arithmetic/pi/do_work()
