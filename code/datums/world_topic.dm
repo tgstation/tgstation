@@ -124,6 +124,8 @@
 	to_chat(recipient, "<font color='red'><i>Write to ahelp to reply.</i></font>")
 	to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(recipient, 1, 1)]</b>: [msg]</font>")
 
+	recipient.giveadminhelpverb() //reset ahelp CD to allow fast reply
+
 	admin_ticket_log(recipient, "<font color='blue'>PM From [s_admin]: [keywordparsedmsg]</font>")
 	//BWOINK
 	SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
