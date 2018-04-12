@@ -2304,13 +2304,11 @@
 "gY" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
-	baseturf_type = /turf/open/lava/smooth/lava_land_surface;
 	dir = 8;
 	dwidth = 2;
 	height = 5;
 	id = "laborcamp_away";
 	name = "labor camp";
-	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	width = 9
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3258,13 +3256,11 @@
 "Uq" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
-	baseturf_type = /turf/open/lava/smooth/lava_land_surface;
 	dir = 2;
 	dwidth = 11;
 	height = 22;
 	id = "whiteship_lavaland";
 	name = "lavaland wastes";
-	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	width = 35
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3272,13 +3268,11 @@
 "Wp" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
-	baseturf_type = /turf/open/lava/smooth/lava_land_surface;
 	dir = 8;
 	dwidth = 3;
 	height = 5;
 	id = "mining_away";
 	name = "lavaland mine";
-	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	width = 7
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,

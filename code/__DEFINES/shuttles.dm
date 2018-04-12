@@ -74,7 +74,5 @@
 #define SHUTTLE_DOCKER_BLOCKED 3
 
 //Shuttle defaults
-#define SHUTTLE_DEFAULT_TURF_TYPE /turf/open/space
-#define SHUTTLE_DEFAULT_BASETURF_TYPE /turf/open/space
 #define SHUTTLE_DEFAULT_SHUTTLE_AREA_TYPE /area/shuttle
 #define SHUTTLE_DEFAULT_UNDERLYING_AREA /area/space
