@@ -246,13 +246,16 @@
 	return src
 
 //How disposal handles getting a storage dump from a storage object
-/obj/machinery/disposal/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
+/obj/machinery/disposal/storage_contents_dump_act(datum/component/storage/src_object, mob/user)
+	. = ..()
+	if(.)
+		return
 	for(var/obj/item/I in src_object)
-		if(user.s_active != src_object)
+		if(user.active_storage != src_object)
 			if(I.on_found(user))
 				return
 		src_object.remove_from_storage(I, src)
-	return 1
+	return TRUE
 
 // Disposal bin
 // Holds items for disposal into pipe system
@@ -268,11 +271,12 @@
 
 // attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/storage/bag/trash))
+	if(istype(I, /obj/item/storage/bag/trash))	//Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
+		GET_COMPONENT_FROM(STR, /datum/component/storage, T)
 		to_chat(user, "<span class='warning'>You empty the bag.</span>")
 		for(var/obj/item/O in T.contents)
-			T.remove_from_storage(O,src)
+			STR.remove_from_storage(O,src)
 		T.update_icon()
 		update_icon()
 	else

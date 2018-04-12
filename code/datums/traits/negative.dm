@@ -53,9 +53,7 @@
 	if(!where)
 		where = "at your feet"
 		if(where == "in your backpack")
-			var/obj/item/storage/B = H.back
-			B.orient2hud(trait_holder)
-			B.show_to(trait_holder)
+			H.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, H)
 	where_text = "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>"
 
 /datum/trait/family_heirloom/post_add()

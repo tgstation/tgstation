@@ -801,7 +801,8 @@
 		return FALSE
 	var/ignore_bags = get_pin_data(IC_INPUT, 1)
 	if(ignore_bags)
-		if(istype(A, /obj/item/storage))
+		GET_COMPONENT_FROM(STR, /datum/component/storage, A)
+		if(STR)
 			return FALSE
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
