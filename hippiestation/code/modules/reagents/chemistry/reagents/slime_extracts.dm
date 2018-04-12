@@ -1,4 +1,4 @@
-/datum/chemical_reaction/slime/slimeunstable //Hopefully this overrides the mutation toxin that comes out of the green slimes
+/datum/chemical_reaction/slime/slimelizard //Hopefully this overrides the mutation toxin that comes out of the green slimes
 	name = "Unstable Mutation Toxin"
 	id = "unstablemuttoxin"
 	results = list("unstablemutationtoxin" = 1)
