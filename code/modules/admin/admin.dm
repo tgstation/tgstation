@@ -1,6 +1,7 @@
 
 ////////////////////////////////
 /proc/message_admins(msg)
+	webhook_send_garbage("ADMIN LOG", msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	to_chat(GLOB.admins, msg)
 

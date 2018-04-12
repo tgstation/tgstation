@@ -89,7 +89,7 @@
 	require_comms_key = TRUE
 
 /datum/world_topic/asay/Run(list/input)
-	msg = "<span class='adminobserver'><span class='prefix'>DISCORD ADMIN:</span> <EM>[input["admin"]]</EM>: <span class='message'>[input["asay"]]</span></span>"
+	var/msg = "<span class='adminobserver'><span class='prefix'>DISCORD ADMIN:</span> <EM>[input["admin"]]</EM>: <span class='message'>[input["asay"]]</span></span>"
 	to_chat(GLOB.admins, msg)
 
 /datum/world_topic/ooc
@@ -130,7 +130,7 @@
 	log_admin_private("PM: IRC -> [r_ckey]: [sanitize(msg)]")
 	for(var/client/X in GLOB.admins)
 		to_chat(X, "<font color='blue'><B>PM: DISCORD([s_admin]) -&gt; [key_name(recipient, X, 0)]</B> [keywordparsedmsg]</font>")
-
+	webhook_send_ahelp("[sanitize_russian(input["admin"])] -> [ckey(input["ckey"])]", sanitize_russian(input["response"]))
 
 /datum/world_topic/status
 	keyword = "status"

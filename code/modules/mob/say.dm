@@ -29,7 +29,8 @@
 		return
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
+	var/ckeyname = "[usr.ckey]/[usr.name]"
+	webhook_send_me(ckeyname, message)
 	usr.emote("me",1,message)
 
 /mob/proc/say_dead(var/message)
