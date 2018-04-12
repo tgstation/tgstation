@@ -1,4 +1,3 @@
-
 /obj/structure/chair
 	icon_hippie = 'hippiestation/icons/obj/chairs.dmi'
 	icon_state = "chair"
@@ -7,21 +6,6 @@
 	var/icon_selection
 	var/icon_overlay  //only need to use these two if the chair is movable AND has an overlay
 	var/buckledmob = FALSE //to stop the post_buckle glitching the icon
-
-/obj/structure/chair/movable/post_buckle_mob(mob/living/M)
-	. = ..()
-	if(!has_buckled_mobs())
-		handle_layer()
-	else
-		handle_rotation_overlayed()
-		buckledmob = TRUE
-
-/obj/structure/chair/movable/post_unbuckle_mob()
-	. = ..()
-	handle_layer()
-	if(!has_buckled_mobs() && is_movable)
-		overlays = null
-		buckledmob = FALSE
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
 	if(is_movable) //first snowflake check? :) so it begins!
@@ -42,16 +26,6 @@
 		qdel(src)
 	else
 		return ..()
-
-/obj/structure/chair/movable/proc/handle_rotation_overlayed()
-	has_buckled_mobs()
-	var/mob/living/buckled_mob
-	var/obj/structure/chair/movable
-	overlays = null
-	var/image/O = image(icon = icon_selection, icon_state = icon_overlay, layer = FLY_LAYER, dir = src.dir)
-	overlays += O
-	if(movable)
-		buckled_mob.dir = dir
 
 /obj/structure/chair/movable
 	var/delay = 10
@@ -83,6 +57,7 @@
 			if((!Process_Spacemove(direction)) || (!has_gravity(src.loc)) || user.stat != CONSCIOUS || user.IsStun() || user.IsKnockdown() || (user.restrained()))
 				return
 			var/mob/living/buckled_mob = m
+			H = m
 			if(!moving)
 				buckled_mob.dir = direction
 				dir = buckled_mob.dir
@@ -110,6 +85,16 @@
 	if(cannot_move) //to prevent any possible delayed addtimer spam
 		cannot_move = FALSE
 
+/obj/structure/chair/movable/proc/handle_rotation_overlayed()
+	has_buckled_mobs()
+	var/mob/living/buckled_mob
+	var/obj/structure/chair/movable
+	overlays = null
+	var/image/O = image(icon = icon_selection, icon_state = icon_overlay, layer = FLY_LAYER, dir = src.dir)
+	overlays += O
+	if(movable)
+		buckled_mob.dir = dir
+
 /obj/structure/chair/movable/Collide(atom/movable/M)
 	. = ..()
 	if(emulate_door_bumps)
@@ -129,6 +114,21 @@
 	has_overlay = TRUE
 	icon_selection = 'hippiestation/icons/obj/chairs.dmi'
 	icon_overlay = "wheelchair_overlay"
+
+/obj/structure/chair/movable/post_buckle_mob(mob/living/M)
+	. = ..()
+	if(!has_buckled_mobs())
+		handle_layer()
+	else
+		handle_rotation_overlayed()
+		buckledmob = TRUE
+
+/obj/structure/chair/movable/post_unbuckle_mob()
+	. = ..()
+	handle_layer()
+	if(!has_buckled_mobs())
+		overlays = null
+		buckledmob = FALSE
 
 /obj/structure/chair/movable/wheelchair/Moved(direction)
 	. = ..()
