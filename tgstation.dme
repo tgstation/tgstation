@@ -2595,6 +2595,7 @@
 #include "code\modules\vending\youtool.dm"
 #include "code\modules\VR\vr_human.dm"
 #include "code\modules\VR\vr_sleeper.dm"
+#include "code\modules\webhook\webhook.dm"
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
 #include "code\white\curses\curse_types.dm"

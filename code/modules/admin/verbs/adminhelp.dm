@@ -512,7 +512,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		else
 			current_ticket.AddInteraction("[key_name_admin(usr)] opened a new ticket.")
 			current_ticket.Close()
-
+	webhook_send_ahelp(src.ckey, msg)
 	new /datum/admin_help(msg, src, FALSE)
 
 //admin proc
