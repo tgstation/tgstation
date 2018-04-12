@@ -301,16 +301,16 @@
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
 	if(incapacitated())
-		return 0
-	if(src.has_trait(TRAIT_FAKEDEATH))
-		return 0
+		return FALSE
+	if(has_trait(TRAIT_FAKEDEATH))
+		return FALSE
 	if(!..())
-		return 0
-	visible_message("<b>[src]</b> points to [A]")
-	return 1
+		return FALSE
+	visible_message("<b>[src]</b> points at [A].", "<span class='notice'>You point at [A].</span>")
+	return TRUE
 
 /mob/living/verb/succumb(whispered as null)
-	set hidden = 1
+	set hidden = TRUE
 	if (InCritical())
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", INDIVIDUAL_ATTACK_LOG)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
@@ -321,7 +321,7 @@
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
 	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || (!ignore_restraints && restrained(ignore_grab)))
-		return 1
+		return TRUE
 
 /mob/living/proc/InCritical()
 	return (health <= HEALTH_THRESHOLD_CRIT && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
