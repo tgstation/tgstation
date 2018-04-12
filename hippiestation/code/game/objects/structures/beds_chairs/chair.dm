@@ -77,7 +77,7 @@
 			to_chat(user, "<span class='warning'>You can't move the wheels without arms!</span>")
 		cannot_move = TRUE
 		addtimer(CALLBACK(src, .proc/stopmove), 20)
-		return
+		return			//No getting to the piece of code where it divides by the num of arms or else we'll divide by 0
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			if((!Process_Spacemove(direction)) || (!has_gravity(src.loc)) || user.stat != CONSCIOUS || user.IsStun() || user.IsKnockdown() || (user.restrained()))
@@ -94,7 +94,7 @@
 			if(!timing)
 				timing = TRUE
 				moving = TRUE
-				addtimer(CALLBACK(src, .proc/movedelay), cooldown_amount) //Sorry but I can't find a better way to do this, and it works well kk
+				addtimer(CALLBACK(src, .proc/movedelay), cooldown_amount/H.get_num_arms()) //This should half the speed if you have only one arm
 				step(src, direction)
 				addtimer(CALLBACK(src, .proc/changeflags), 3)
 
@@ -125,7 +125,7 @@
 	buildstacktype = null
 	buildstackamount = null //no crafting 4 u, use teh crafting menu!!!1!
 	item_chair = null
-	cooldown_amount = 3
+	cooldown_amount = 5
 	has_overlay = TRUE
 	icon_selection = 'hippiestation/icons/obj/chairs.dmi'
 	icon_overlay = "wheelchair_overlay"
