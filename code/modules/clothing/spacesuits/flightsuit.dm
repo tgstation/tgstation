@@ -640,7 +640,7 @@
 	suit = null
 
 /obj/item/device/flightpack/attackby(obj/item/I, mob/user, params)
-	var/SuccessMessage = " has been successfully installed into systems."
+	var/const/SuccessMessage = " has been successfully installed into systems."
 	var/changed = FALSE
 	if(istype(I, /obj/item/stock_parts))
 		var/obj/item/stock_parts/S = I
