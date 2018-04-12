@@ -216,6 +216,7 @@
 		if(istype(T, /turf/open/space/transit))
 			T.ChangeTurf(/turf/open/space)
 			T.assemble_baseturfs(initial(T.baseturfs))
+			T.flags_1 |= UNUSED_TRANSIT_TURF_1
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
