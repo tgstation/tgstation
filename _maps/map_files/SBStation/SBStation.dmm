@@ -2312,7 +2312,6 @@
 	height = 13;
 	id = "ferry_home";
 	name = "port bay";
-	turf_type = /turf/open/space;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -7959,7 +7958,7 @@
 	},
 /area/hallway/primary/central)
 "atg" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	req_access_txt = "5"
 	},
@@ -11426,7 +11425,7 @@
 	id = "hopblast";
 	name = "HoP Blast door"
 	},
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Head of Personnel's Office";
 	req_access_txt = "57"
 	},
@@ -21619,7 +21618,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "aYk" = (
-/obj/machinery/door/airlock/engineering/glass{
+/obj/machinery/door/airlock/engineering/glass/critical{
 	heat_proof = 1;
 	name = "Supermatter Chamber";
 	req_access_txt = "10"
@@ -22053,6 +22052,7 @@
 /area/engine/supermatter)
 "aZq" = (
 /obj/machinery/door/airlock/highsecurity{
+	critical_machine = 1;
 	id_tag = "smengine";
 	name = "Supermatter Chamber";
 	req_access_txt = "10"
@@ -22387,7 +22387,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "bad" = (
-/obj/machinery/power/supermatter_shard/crystal/engine,
+/obj/machinery/power/supermatter_crystal/engine,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "bae" = (
@@ -24207,7 +24207,6 @@
 	height = 20;
 	id = "emergency_home";
 	name = "evac bay";
-	turf_type = /turf/open/space;
 	width = 25
 	},
 /turf/open/space/basic,

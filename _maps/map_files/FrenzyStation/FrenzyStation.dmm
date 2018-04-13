@@ -7753,7 +7753,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "sm" = (
-/obj/machinery/power/supermatter_shard/crystal/engine,
+/obj/machinery/power/supermatter_crystal/engine,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "sn" = (
