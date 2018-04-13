@@ -96,7 +96,7 @@
 				M.CollidedWith(m)
 
 /obj/structure/chair/movable/proc/changeflags()
-	timing = FALSE
+	timingf = FALSE
 	moving = FALSE
 	buckledmob = FALSE
 
