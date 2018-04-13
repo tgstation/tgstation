@@ -631,7 +631,7 @@
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if (R.id == reagent)
-			return R.volume
+			return max(R.volume,0)
 
 	return 0
 
