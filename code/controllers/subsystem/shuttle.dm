@@ -275,6 +275,9 @@ SUBSYSTEM_DEF(shuttle)
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_game("Shuttle call reason: [call_reason]")
+		webhook_send_roundstatus("shuttle called", list("reason" = call_reason, "seclevel" = get_security_level()))
+	else
+		webhook_send_roundstatus("shuttle called", list("reason" = "none", "seclevel" = get_security_level()))
 	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
 
 /datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
@@ -309,6 +312,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.cancel(get_area(user))
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.")
+		webhook_send_roundstatus("shuttle recalled")
 		var/area/A = get_area(user)
 		deadchat_broadcast("<span class='deadsay'><span class='name'>[user.real_name]</span> has recalled the shuttle at <span class='name'>[A.name]</span>.</span>", user)
 		return 1
@@ -357,6 +361,7 @@ SUBSYSTEM_DEF(shuttle)
 			emergency.request(null, set_coefficient = 2.5)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
+			webhook_send_roundstatus("shuttle autocalled")
 
 /datum/controller/subsystem/shuttle/proc/registerHostileEnvironment(datum/bad)
 	hostileEnvironments[bad] = TRUE
