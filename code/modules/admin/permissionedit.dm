@@ -112,7 +112,7 @@
 			return
 	switch(task)
 		if("add")
-			admin_ckey = add_admin(use_db)
+			admin_ckey = add_admin(null, use_db)
 			if(!admin_ckey)
 				return
 			change_admin_rank(admin_ckey, use_db)
@@ -130,11 +130,14 @@
 			sync_lastadminrank(admin_ckey, D)
 	edit_admin_permissions()
 
-/datum/admins/proc/add_admin(use_db)
-	. = ckey(input("New admin's ckey","Admin ckey") as text|null)
+/datum/admins/proc/add_admin(admin_ckey, use_db)
+	if(admin_ckey)
+		. = admin_ckey
+	else
+		. = ckey(input("New admin's ckey","Admin ckey") as text|null)
 	if(!.)
 		return FALSE
-	if(. in GLOB.admin_datums+GLOB.deadmins)
+	if(!admin_ckey && (. in GLOB.admin_datums+GLOB.deadmins))
 		to_chat(usr, "<span class='danger'>[.] is already an admin.</span>")
 		return FALSE
 	if(use_db)
@@ -195,19 +198,27 @@
 		GLOB.admin_ranks += R
 	if(use_db)
 		new_rank = sanitizeSQL(new_rank)
-		if(!R)
-			var/datum/DBQuery/query_add_rank = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_ranks")] (rank, flags, exclude_flags, can_edit_rights) VALUES ('[new_rank]', '0', '0', '0')")
+		//if a player was tempminned before having a permanent change made to their rank they won't yet be in the db
+		var/old_rank
+		var/datum/DBQuery/query_admin_in_db = SSdbcore.NewQuery("SELECT rank FROM [format_table_name("admin")] WHERE ckey = '[admin_ckey]'")
+		if(!query_admin_in_db.warn_execute())
+			return
+		if(!query_admin_in_db.NextRow())
+			add_admin(admin_ckey, TRUE)
+			old_rank = "NEW ADMIN"
+		else
+			old_rank = query_admin_in_db.item[1]
+		//similarly if a temp rank is created it won't be in the db if someone is permanently changed to it
+		var/datum/DBQuery/query_rank_in_db = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("admin_ranks")] WHERE rank = '[new_rank]'")
+		if(!query_rank_in_db.warn_execute())
+			return
+		if(!query_rank_in_db.NextRow())
+			var/datum/DBQuery/query_add_rank = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_ranks")] (rank, flags, exclude_flags, can_edit_flags) VALUES ('[new_rank]', '0', '0', '0')")
 			if(!query_add_rank.warn_execute())
 				return
 			var/datum/DBQuery/query_add_rank_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, adminckey, adminip, operation, log) VALUES ('[SQLtime()]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'add rank', 'New rank added: [admin_ckey]')")
 			if(!query_add_rank_log.warn_execute())
 				return
-		var/old_rank
-		var/datum/DBQuery/query_get_rank = SSdbcore.NewQuery("SELECT rank FROM [format_table_name("admin")] WHERE ckey = '[admin_ckey]'")
-		if(!query_get_rank.warn_execute())
-			return
-		if(query_get_rank.NextRow())
-			old_rank = query_get_rank.item[1]
 		var/datum/DBQuery/query_change_rank = SSdbcore.NewQuery("UPDATE [format_table_name("admin")] SET rank = '[new_rank]' WHERE ckey = '[admin_ckey]'")
 		if(!query_change_rank.warn_execute())
 			return

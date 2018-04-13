@@ -321,10 +321,10 @@
 /obj/item/integrated_circuit/input/examiner/do_work()
 	var/atom/movable/H = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	var/turf/T = get_turf(src)
-	if(!istype(H)) //Invalid input
-		return
 
-	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
+	if(!istype(H) || !(H in view(T)))
+		activate_pin(3)
+	else
 		set_pin_data(IC_OUTPUT, 1, H.name)
 		set_pin_data(IC_OUTPUT, 2, H.desc)
 		set_pin_data(IC_OUTPUT, 3, H.x-T.x)
@@ -341,8 +341,6 @@
 		set_pin_data(IC_OUTPUT, 9, H.opacity)
 		push_data()
 		activate_pin(2)
-	else
-		activate_pin(3)
 
 /obj/item/integrated_circuit/input/turfpoint
 	name = "tile pointer"

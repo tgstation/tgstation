@@ -46,6 +46,7 @@
 		if(!chosen)
 			return
 		current_tool = chosen
+		tool_behaviour = current_tool.tool_behaviour
 		playsound(loc, 'sound/items/rped.ogg', get_clamped_volume(), 1, -1)
 		update_icons()
 	else

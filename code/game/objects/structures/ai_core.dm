@@ -7,12 +7,14 @@
 	desc = "The framework for an artificial intelligence core."
 	max_integrity = 500
 	var/state = 0
-	var/datum/ai_laws/laws = new()
+	var/datum/ai_laws/laws
 	var/obj/item/circuitboard/circuit = null
 	var/obj/item/device/mmi/brain = null
+	var/can_deconstruct = TRUE
 
-/obj/structure/AIcore/New()
-	..()
+/obj/structure/AIcore/Initialize()
+	. = ..()
+	laws = new
 	laws.set_laws_config()
 
 /obj/structure/AIcore/Destroy()
@@ -24,11 +26,60 @@
 		brain = null
 	return ..()
 
+/obj/structure/AIcore/latejoin_inactive
+	name = "Networked AI core"
+	desc = "This AI core is connected by bluespace transmitters to NTNet, allowing for an AI personality to be downloaded to it on the fly mid-shift."
+	can_deconstruct = FALSE
+	icon_state = "ai-empty"
+	anchored = TRUE
+	state = AI_READY_CORE
+	var/available = TRUE
+	var/safety_checks = TRUE
+	var/active = TRUE
+
+/obj/structure/AIcore/latejoin_inactive/examine(mob/user)
+	. = ..()
+	to_chat(user, "Its transmitter seems to be [active? "on" : "off"].")
+
+/obj/structure/AIcore/latejoin_inactive/proc/is_available()			//If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
+	if(!available)
+		return FALSE
+	if(!safety_checks)
+		return TRUE
+	if(!active)
+		return FALSE
+	var/turf/T = get_turf(src)
+	var/area/A = get_area(src)
+	if(!A.blob_allowed)
+		return FALSE
+	if(!A.power_equip)
+		return FALSE
+	if(!SSmapping.level_trait(T.z,ZTRAIT_STATION))
+		return FALSE
+	if(!istype(T, /turf/open/floor))
+		return FALSE
+	return TRUE
+
+/obj/structure/AIcore/latejoin_inactive/attackby(obj/item/P, mob/user, params)
+	if(istype(P, /obj/item/device/multitool))
+		active = !active
+		to_chat(user, "You [active? "activate" : "deactivate"] [src]'s transimtters.")
+		return
+	return ..()
+
+/obj/structure/AIcore/latejoin_inactive/Initialize()
+	. = ..()
+	GLOB.latejoin_ai_cores += src
+
+/obj/structure/AIcore/latejoin_inactive/Destroy()
+	GLOB.latejoin_ai_cores -= src
+	return ..()
+
 /obj/structure/AIcore/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/wrench))
 		return default_unfasten_wrench(user, P, 20)
 	if(!anchored)
-		if(istype(P, /obj/item/weldingtool))
+		if(istype(P, /obj/item/weldingtool) && can_deconstruct)
 			if(state != EMPTY_CORE)
 				to_chat(user, "<span class='warning'>The core must be empty to deconstruct it!</span>")
 				return
@@ -259,7 +310,6 @@ That prevents a few funky behaviors.
 			return 0
 	return 1
 
-
 /obj/structure/AIcore/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(state != AI_READY_CORE || !..())
 		return
@@ -274,7 +324,6 @@ That prevents a few funky behaviors.
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
 		to_chat(user, "There is no AI loaded on this terminal!")
-
 
 /obj/item/circuitboard/aicore
 	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
