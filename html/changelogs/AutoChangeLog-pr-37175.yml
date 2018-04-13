@@ -1,7 +1,0 @@
-author: "Dax Dupont & Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Toxin loving species won't take liver damage from toxins."
-  - bugfix: "Liver now gets 0.01 damage per unit of toxin subtype reagent every 2 seconds instead of 0.5. IE 30 units of whatever won't kill you within 10 seconds anymore."
-  - bugfix: "Moved peacekeeper borg reagents to other_reagents so they don't do liver damage and they aren't really toxins"
-  - refactor: "Renamed borg synthpax path to be more inline and put them next to the other borg reagents."
