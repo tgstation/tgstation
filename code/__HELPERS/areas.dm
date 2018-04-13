@@ -84,10 +84,8 @@
 		thing.change_area(old_area, newA)
 
 	var/list/firedoors = oldA.firedoors
-	if(!LAZYLEN(firedoors))
-		continue
-	for(var/k in 1 to firedoors.len)
-		var/obj/machinery/door/firedoor/FD = firedoors[k]
+	for(var/door in firedoors)
+		var/obj/machinery/door/firedoor/FD = door
 		FD.CalculateAffectingAreas()
 
 	to_chat(creator, "<span class='notice'>You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered.</span>")
