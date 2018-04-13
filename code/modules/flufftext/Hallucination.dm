@@ -471,10 +471,13 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("monkey","corgi","carp","skeleton","demon","zombie")
 	feedback_details += "Type: [kind]"
+	var/list/nearby
+	if(skip_nearby)
+		nearby = get_hearers_in_view(7, target)
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(H == target)
 			continue
-		if(skip_nearby && (H in view(target)))
+		if(skip_nearby && (H in nearby))
 			continue
 		switch(kind)
 			if("monkey")//Monkey

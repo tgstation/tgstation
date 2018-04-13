@@ -321,7 +321,7 @@
 	display_name = "Computer Consoles"
 	description = "Computers and how they work."
 	prereq_ids = list("datatheory")
-	design_ids = list("cargo", "cargorequest", "stockexchange", "libraryconsole", "mining", "crewconsole", "comconsole", "idcardconsole", "seccamera")
+	design_ids = list("cargo", "cargorequest", "stockexchange", "libraryconsole", "mining", "crewconsole", "rdcamera", "comconsole", "idcardconsole", "seccamera")
 	research_cost = 2000
 	export_price = 5000
 

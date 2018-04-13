@@ -1918,7 +1918,7 @@
 /turf/closed/indestructible/riveted,
 /area/space)
 "fy" = (
-/obj/machinery/igniter,
+/obj/machinery/igniter/on,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
@@ -6967,21 +6967,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
-"tj" = (
-/obj/machinery/porta_turret/syndicate/pod,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/assault_pod)
-"tk" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/assault_pod)
-"tl" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Assault Pod";
-	opacity = 1;
-	req_access_txt = "150"
-	},
-/turf/open/floor/plating,
-/area/shuttle/assault_pod)
 "tn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -7302,21 +7287,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
-"uf" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/assault_pod)
-"ug" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/assault_pod)
-"uh" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/assault_pod)
 "ui" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -7542,13 +7512,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
-"uN" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/machinery/light,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/assault_pod)
 "uO" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Shuttle Control Office";
@@ -7776,19 +7739,6 @@
 /obj/item/toy/nuke,
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
-"vy" = (
-/obj/machinery/door/airlock/centcom{
-	aiControlDisabled = 1;
-	name = "Assault Pod";
-	opacity = 1;
-	req_access_txt = "150"
-	},
-/turf/open/floor/plating,
-/area/shuttle/assault_pod)
-"vz" = (
-/obj/machinery/computer/shuttle/syndicate/drop_pod,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/assault_pod)
 "vA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
@@ -8083,13 +8033,6 @@
 	dir = 2
 	},
 /area/syndicate_mothership/control)
-"wq" = (
-/obj/structure/chair,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/assault_pod)
 "wr" = (
 /obj/structure/chair{
 	dir = 4
@@ -8532,20 +8475,19 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "xN" = (
-/obj/machinery/door/airlock/centcom{
-	aiControlDisabled = 1;
-	name = "Assault Pod";
-	opacity = 1;
-	req_access_txt = "150"
-	},
-/obj/docking_port/mobile/assault_pod{
+/obj/docking_port/stationary{
+	area_type = /area/syndicate_mothership/control;
+	baseturf_type = /turf/open/space;
+	dir = 1;
 	dwidth = 3;
-	name = "steel rain";
-	port_direction = 4;
-	preferred_direction = 4
+	height = 7;
+	name = "escape pod loader";
+	roundstart_template = /datum/map_template/shuttle/assault_pod/default;
+	turf_type = /turf/open/floor/plating/airless;
+	width = 7
 	},
-/turf/open/floor/plating,
-/area/shuttle/assault_pod)
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership/control)
 "xO" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -12150,7 +12092,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Is" = (
-/obj/machinery/igniter,
+/obj/machinery/igniter/on,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/tdome/arena)
@@ -34918,11 +34860,11 @@ aa
 ku
 sl
 ti
-tj
-tk
-vy
-tk
-tj
+sk
+sk
+sk
+sk
+sk
 xM
 yk
 ku
@@ -35174,13 +35116,13 @@ hh
 aa
 ku
 sm
-tj
-tk
-uf
-ug
-uf
-tk
-tj
+sk
+sk
+sk
+sk
+sk
+sk
+sk
 yl
 ku
 aa
@@ -35431,13 +35373,13 @@ hh
 aa
 ku
 sn
-tk
-uf
-ug
-uh
-ug
-uf
-tk
+sk
+sk
+sk
+sk
+sk
+sk
+sk
 ym
 ku
 aa
@@ -35688,12 +35630,12 @@ hh
 aa
 ku
 sm
-tl
-ug
-uN
-vz
-wq
-ug
+sk
+sk
+sk
+sk
+sk
+sk
 xN
 yl
 ku
@@ -35945,13 +35887,13 @@ hh
 aa
 ku
 sm
-tk
-uh
-ug
-uf
-ug
-uh
-tk
+sk
+sk
+sk
+sk
+sk
+sk
+sk
 yl
 ku
 aa
@@ -36202,13 +36144,13 @@ hh
 aa
 ku
 so
-tj
-tk
-uh
-ug
-uh
-tk
-tj
+sk
+sk
+sk
+sk
+sk
+sk
+sk
 yl
 ku
 aa
@@ -36460,11 +36402,11 @@ aa
 ku
 sp
 tn
-tj
-tk
-vy
-tk
-tj
+sk
+sk
+sk
+sk
+sk
 xO
 xP
 ku

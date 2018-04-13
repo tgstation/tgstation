@@ -3,7 +3,7 @@
 	id = "moth"
 	say_mod = "flutters"
 	default_color = "00FF00"
-	species_traits = list(LIPS, SPECIES_ORGANIC, NOEYES)
+	species_traits = list(LIPS, NOEYES)
 	mutant_bodyparts = list("moth_wings")
 	default_features = list("moth_wings" = "Plain")
 	attack_verb = "slash"
