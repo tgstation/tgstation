@@ -37,7 +37,7 @@
 	update_icon()
 
 /obj/item/storage/box/suicide_act(mob/living/carbon/user)
-	var/obj/item/bodypart/head/myhead = user.get_bodypart("head")
+	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 	if(myhead)
 		user.visible_message("<span class='suicide'>[user] puts [user.p_their()] head into \the [src], and begins closing it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		myhead.dismember()
@@ -63,9 +63,6 @@
 		return
 	if(!ispath(foldable))
 		return
-
-	//Close any open UI windows first
-	close_all()
 
 	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
 	var/obj/item/I = new foldable
@@ -191,6 +188,14 @@
 /obj/item/storage/box/beakers/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/glass/beaker( src )
+
+/obj/item/storage/box/medsprays
+	name = "box of medical sprayers"
+	desc = "A box full of medical sprayers, with unscrewable caps and precision spray heads."
+
+/obj/item/storage/box/medsprays/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/medspray( src )
 
 /obj/item/storage/box/injectors
 	name = "box of DNA injectors"
@@ -352,7 +357,11 @@
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	icon_state = "donkpocketbox"
 	illustration=null
-	can_hold = list(/obj/item/reagent_containers/food/snacks/donkpocket)
+
+/obj/item/storage/box/donkpockets/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/donkpocket))
 
 /obj/item/storage/box/donkpockets/PopulateContents()
 	for(var/i in 1 to 6)
@@ -362,9 +371,13 @@
 	name = "monkey cube box"
 	desc = "Drymate brand monkey cubes. Just add water!"
 	icon_state = "monkeycubebox"
-	storage_slots = 7
-	can_hold = list(/obj/item/reagent_containers/food/snacks/monkeycube)
 	illustration = null
+
+/obj/item/storage/box/monkeycubes/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 7
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/monkeycube))
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
@@ -514,12 +527,15 @@
 	desc = "Eight wrappers of fun! Ages 8 and up. Not suitable for children."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "spbox"
-	storage_slots = 8
-	can_hold = list(/obj/item/toy/snappop)
+
+/obj/item/storage/box/snappops/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.can_hold = typecacheof(list(/obj/item/toy/snappop))
+	STR.max_items = 8
 
 /obj/item/storage/box/snappops/PopulateContents()
-	for(var/i in 1 to storage_slots)
-		new /obj/item/toy/snappop(src)
+	SendSignal(COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/toy/snappop)
 
 /obj/item/storage/box/matches
 	name = "matchbox"
@@ -527,14 +543,17 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "matchbox"
 	item_state = "zippo"
-	storage_slots = 10
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_BELT
-	can_hold = list(/obj/item/match)
+
+/obj/item/storage/box/matches/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 10
+	STR.can_hold = typecacheof(list(/obj/item/match))
 
 /obj/item/storage/box/matches/PopulateContents()
-	for(var/i in 1 to storage_slots)
-		new /obj/item/match(src)
+	SendSignal(COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/match)
 
 /obj/item/storage/box/matches/attackby(obj/item/match/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/match))
@@ -549,10 +568,14 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
-	storage_slots=21
-	can_hold = list(/obj/item/light/tube, /obj/item/light/bulb)
-	max_combined_w_class = 21
-	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
+
+/obj/item/storage/box/lights/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 21
+	STR.can_hold = typecacheof(list(/obj/item/light/tube, /obj/item/light/bulb))
+	STR.max_combined_w_class = 21
+	STR.click_gather = TRUE
 
 /obj/item/storage/box/lights/bulbs/PopulateContents()
 	for(var/i in 1 to 21)
@@ -934,3 +957,12 @@ obj/item/storage/box/clown
 /obj/item/storage/box/fountainpens/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/pen/fountain(src)
+
+/obj/item/storage/box/holy_grenades
+	name = "box of holy hand grenades"
+	desc = "Contains several grenades used to rapidly purge heresy."
+	illustration = "flashbang"
+
+/obj/item/storage/box/holy_grenades/PopulateContents()
+	for(var/i in 1 to 7)
+		new/obj/item/grenade/chem_grenade/holy(src)

@@ -150,6 +150,7 @@
 		if(100)
 			new /obj/item/clothing/head/bearpelt(src)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
 		to_chat(user, "<span class='notice'>The crate is locked with a Deca-code lock.</span>")
@@ -182,7 +183,7 @@
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
-	attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
+	return attack_hand(user) //this helps you not blow up so easily by overriding unlocking which results in an immediate boom.
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/W, mob/user)
 	if(locked)

@@ -88,6 +88,7 @@
 /obj/guardian_bomb/attackby(mob/living/user)
 	detonate(user)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/guardian_bomb/attack_hand(mob/living/user)
 	detonate(user)
 

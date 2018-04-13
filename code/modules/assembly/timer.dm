@@ -79,7 +79,8 @@
 		holder.update_icon()
 
 
-/obj/item/device/assembly/timer/interact(mob/user)//TODO: Have this use the wires
+/obj/item/device/assembly/timer/ui_interact(mob/user)//TODO: Have this use the wires
+	. = ..()
 	if(is_secured(user))
 		var/second = time % 60
 		var/minute = (time - second) / 60

@@ -13,6 +13,7 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=75, MAT_GLASS=25)
+	obj_flags = USES_TGUI
 
 	var/on = TRUE
 	var/frequency = FREQ_COMMON
@@ -105,6 +106,7 @@
 
 /obj/item/device/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "radio", name, 370, 220 + channels.len * 22, master_ui, state)
@@ -144,6 +146,9 @@
 				var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
 				tune = input("Tune frequency ([min]-[max]):", name, format_frequency(frequency)) as null|num
 				if(!isnull(tune) && !..())
+					if (tune < MIN_FREE_FREQ && tune <= MAX_FREE_FREQ / 10)
+						// allow typing 144.7 to get 1447
+						tune *= 10
 					. = TRUE
 			else if(adjust)
 				tune = frequency + adjust * 10

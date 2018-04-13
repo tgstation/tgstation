@@ -26,7 +26,8 @@
 	var/list/datum/icon_snapshot/disguises = list()
 
 /obj/machinery/abductor/console/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!isabductor(user))
 		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
@@ -166,6 +167,9 @@
 			c.console = src
 
 /obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
+	if(istype(target.get_item_by_slot(slot_head), /obj/item/clothing/head/foilhat))
+		say("Subject wearing specialized protective headgear, unable to get a proper scan!")
+		return
 	var/datum/icon_snapshot/entry = new
 	entry.name = target.name
 	entry.icon = target.icon

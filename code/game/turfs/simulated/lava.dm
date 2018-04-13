@@ -14,7 +14,10 @@
 /turf/open/lava/ex_act(severity, target)
 	contents_explosion(severity, target)
 
-/turf/open/lava/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+/turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
+	return
+
+/turf/open/lava/acid_act(acidpwr, acid_volume)
 	return
 
 /turf/open/lava/MakeDry(wet_setting = TURF_WET_WATER)
@@ -45,7 +48,7 @@
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
-			ChangeTurf(/turf/open/floor/plating)
+			PlaceOnTop(/turf/open/floor/plating)
 			return TRUE
 	return FALSE
 
@@ -122,6 +125,13 @@
 				var/mob/living/live = buckle_check
 				if("lava" in live.weather_immunities)
 					continue
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				var/obj/item/clothing/S = C.get_item_by_slot(slot_wear_suit)
+				var/obj/item/clothing/H = C.get_item_by_slot(slot_head)
+
+				if(S && H && S.flags_2 & LAVA_PROTECT_2 && H.flags_2 & LAVA_PROTECT_2)
+					return
 
 			L.adjustFireLoss(20)
 			if(L) //mobs turning into object corpses could get deleted here.

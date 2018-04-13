@@ -63,6 +63,9 @@
 /datum/atom_hud/abductor
 	hud_icons = list(GLAND_HUD)
 
+/datum/atom_hud/sentient_disease
+	hud_icons = list(SENTIENT_DISEASE_HUD)
+
 /* MED/SEC/DIAG HUD HOOKS */
 
 /*
@@ -78,7 +81,7 @@
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
 	var/threat
-	for(var/thing in viruses)
+	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			if(!threat || D.severity > threat) //a buffing virus gets an icon
@@ -175,19 +178,19 @@
 		holder.icon_state = "huddead"
 	else
 		switch(virus_threat)
-			if(VIRUS_SEVERITY_BIOHAZARD)
+			if(DISEASE_SEVERITY_BIOHAZARD)
 				holder.icon_state = "hudill5"
-			if(VIRUS_SEVERITY_DANGEROUS)
+			if(DISEASE_SEVERITY_DANGEROUS)
 				holder.icon_state = "hudill4"
-			if(VIRUS_SEVERITY_HARMFUL)
+			if(DISEASE_SEVERITY_HARMFUL)
 				holder.icon_state = "hudill3"
-			if(VIRUS_SEVERITY_MEDIUM)
+			if(DISEASE_SEVERITY_MEDIUM)
 				holder.icon_state = "hudill2"
-			if(VIRUS_SEVERITY_MINOR)
+			if(DISEASE_SEVERITY_MINOR)
 				holder.icon_state = "hudill1"
-			if(VIRUS_SEVERITY_NONTHREAT)
+			if(DISEASE_SEVERITY_NONTHREAT)
 				holder.icon_state = "hudill0"
-			if(VIRUS_SEVERITY_POSITIVE)
+			if(DISEASE_SEVERITY_POSITIVE)
 				holder.icon_state = "hudbuff"
 			if(null)
 				holder.icon_state = "hudhealthy"
@@ -443,14 +446,14 @@
 	var/image/holder = hud_list[DIAG_STAT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if((!isturf(loc))||hide) //if not on the ground dont show overlay
+	if((!isturf(loc))||hide) //if not on the ground don't show overlay
 		holder.icon_state = null
 	else if(!battery)
 		holder.icon_state = "hudoffline"
 	else if(battery.charge == 0)
 		holder.icon_state = "hudoffline"
 	else if(combat_circuits) //has a circuit that can harm people
-		holder.icon_state = "hudwarn"
+		holder.icon_state = prefered_hud_icon + "-red"
 	else //Bot is on and not dangerous
 		holder.icon_state = prefered_hud_icon
 

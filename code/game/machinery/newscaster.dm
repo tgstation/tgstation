@@ -263,12 +263,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	. = ..()
 	update_icon()
 
-/obj/machinery/newscaster/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/newscaster/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
-		return
+/obj/machinery/newscaster/ui_interact(mob/user)
+	. = ..()
 	if(ishuman(user) || issilicon(user))
 		var/mob/living/human_or_robot_user = user
 		var/dat

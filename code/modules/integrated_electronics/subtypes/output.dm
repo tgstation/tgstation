@@ -3,6 +3,7 @@
 
 /obj/item/integrated_circuit/output/screen
 	name = "small screen"
+	extended_desc = " use &lt;br&gt; to start a new line"
 	desc = "Takes any data type as an input, and displays it to the user upon examining."
 	icon_state = "screen"
 	inputs = list("displayed data" = IC_PINTYPE_ANY)
@@ -10,6 +11,7 @@
 	activators = list("load data" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 10
+	var/eol = "&lt;br&gt;"
 	var/stuff_to_display = null
 
 /obj/item/integrated_circuit/output/screen/disconnect_all()
@@ -30,7 +32,7 @@
 		if(d)
 			stuff_to_display = "[d]"
 	else
-		stuff_to_display = I.data
+		stuff_to_display = replacetext("[I.data]", eol , "<br>")
 
 /obj/item/integrated_circuit/output/screen/medium
 	name = "screen"
@@ -50,6 +52,7 @@
 	desc = "Takes any data type as an input and displays it to the user upon examining, and to all nearby beings when pulsed."
 	icon_state = "screen_large"
 	power_draw_per_use = 40
+	cooldown_per_use = 10
 
 /obj/item/integrated_circuit/output/screen/large/do_work()
 	..()
@@ -219,6 +222,7 @@
 	desc = "Takes any string as an input and will make the device say the string when pulsed."
 	extended_desc = "This unit is more advanced than the plain speaker circuit, able to transpose any valid text to speech."
 	icon_state = "speaker"
+	cooldown_per_use = 10
 	complexity = 12
 	inputs = list("text" = IC_PINTYPE_STRING)
 	outputs = list()
@@ -341,10 +345,14 @@
 /obj/item/integrated_circuit/output/diagnostic_hud
 	name = "AR interface"
 	desc = "Takes an icon name as an input, and will update the status hud when data is written to it."
-	extended_desc = "Takes an icon name as an input, and will update the status hud when data is written to it, this means it can change the icon and have the icon stay that way even if the circuit is removed. The acceptable inputs are 'alert' and 'move'. Any input other than that will return the icon to its default state. The danger warning and offline status will appear over any input from this circuit."
+	extended_desc = "Takes an icon name as an input, and will update the status hud when data is written to it, this means it can change the icon and have the icon stay that way even if the circuit is removed. The acceptable inputs are 'alert', 'move', 'working', 'patrol', 'called', and 'heart'. Any input other than that will return the icon to its default state."
 	var/list/icons = list(
 		"alert" = "hudalert",
-		"move" = "hudmove"
+		"move" = "hudmove",
+		"working" = "hudworkingleft",
+		"patrol" = "hudpatrolleft",
+		"called" = "hudcalledleft",
+		"heart" = "hudsentientleft"
 		)
 	complexity = 1
 	icon_state = "led"

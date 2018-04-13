@@ -16,6 +16,15 @@
 	var/list/log = list()
 	var/range = 8
 	var/view_check = TRUE
+	actions_types = list(/datum/action/item_action/displayDetectiveScanResults)
+
+/datum/action/item_action/displayDetectiveScanResults
+	name = "Display Forensic Scanner Results"
+
+/datum/action/item_action/displayDetectiveScanResults/Trigger()
+	var/obj/item/device/detective_scanner/scanner = target
+	if(istype(scanner))
+		scanner.displayDetectiveScanResults(usr)
 
 /obj/item/device/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)
@@ -36,6 +45,7 @@
 	P.info += jointext(log, "<BR>")
 	P.info += "<HR><B>Notes:</B><BR>"
 	P.info_links = P.info
+	P.updateinfolinks()
 
 	if(ismob(loc))
 		var/mob/M = loc
@@ -165,3 +175,28 @@
 
 /proc/get_timestamp()
 	return time2text(world.time + 432000, ":ss")
+	
+/obj/item/device/detective_scanner/AltClick(mob/living/user)
+	// Best way for checking if a player can use while not incapacitated, etc
+	if(!user.canUseTopic(src, be_close=TRUE))
+		return
+	if(!LAZYLEN(log))
+		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner has no logs.</span>")
+		return
+	if(scanning)
+		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner is in use.</span>")
+		return
+	to_chat(user, "<span class='notice'>The scanner logs are cleared.</span>")
+	log = list()
+
+/obj/item/device/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
+	// No need for can-use checks since the action button should do proper checks
+	if(!LAZYLEN(log))
+		to_chat(user, "<span class='notice'>Cannot display logs, the scanner has no logs.</span>")
+		return
+	if(scanning)
+		to_chat(user, "<span class='notice'>Cannot display logs, the scanner is in use.</span>")
+		return
+	to_chat(user, "<span class='notice'><B>Scanner Report</B></span>")
+	for(var/iterLog in log)
+		to_chat(user, iterLog)

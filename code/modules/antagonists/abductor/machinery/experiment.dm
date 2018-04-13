@@ -23,7 +23,8 @@
 	close_machine(target)
 
 /obj/machinery/abductor/experiment/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	experimentUI(user)

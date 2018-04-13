@@ -1,5 +1,3 @@
-#undef CURRENT_RESIDENT_FILE
-
 #define LIST_MODE_NUM 0
 #define LIST_MODE_TEXT 1
 #define LIST_MODE_FLAG 2
@@ -8,7 +6,7 @@
 	var/name	//read-only, this is determined by the last portion of the derived entry type
 	var/config_entry_value
 	var/default	//read-only, just set value directly
-	
+
 	var/resident_file	//the file which this was loaded from, if any
 	var/modified = FALSE	//set to TRUE if the default has been overridden by a config entry
 
@@ -19,7 +17,7 @@
 
 /datum/config_entry/New()
 	if(type == abstract_type)
-		CRASH("Abstract config entry [type] instatiated!")	
+		CRASH("Abstract config entry [type] instatiated!")
 	name = lowertext(type2top(type))
 	if(islist(config_entry_value))
 		var/list/L = config_entry_value
@@ -33,12 +31,12 @@
 
 /datum/config_entry/can_vv_get(var_name)
 	. = ..()
-	if(var_name == "value" || var_name == "default")
+	if(var_name == NAMEOF(src, config_entry_value) || var_name == NAMEOF(src, default))
 		. &= !(protection & CONFIG_ENTRY_HIDDEN)
 
 /datum/config_entry/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list("name", "default", "resident_file", "protection", "abstract_type", "modified", "dupes_allowed")
-	if(var_name == "value")
+	var/static/list/banned_edits = list(NAMEOF(src, name), NAMEOF(src, default), NAMEOF(src, resident_file), NAMEOF(src, protection), NAMEOF(src, abstract_type), NAMEOF(src, modified), NAMEOF(src, dupes_allowed))
+	if(var_name == NAMEOF(src, config_entry_value))
 		if(protection & CONFIG_ENTRY_LOCKED)
 			return FALSE
 		. = ValidateAndSet("[var_value]")

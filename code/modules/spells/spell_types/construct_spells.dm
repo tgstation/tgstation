@@ -202,6 +202,10 @@
 		revert_cast()
 		return
 
+	if(target.anti_magic_check(TRUE, TRUE))
+		to_chat(target, "<span class='warning'>You feel a freezing darkness closing in on you, but it rapidly dissipates.</span>")
+		return
+
 	to_chat(target, "<span class='userdanger'>A freezing darkness surrounds you...</span>")
 	target.playsound_local(get_turf(target), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
 	user.playsound_local(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
@@ -294,9 +298,11 @@
 	sound = 'sound/weapons/resonator_blast.ogg'
 	proj_trigger_range = 0
 	ignore_factions = list("cult")
+	check_holy = TRUE
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut
 	name = "Gauntlet Echo"
+	alpha = 180
 	amt_dam_brute = 30
 	amt_knockdown = 50
 	sound = 'sound/weapons/punch3.ogg'

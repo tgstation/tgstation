@@ -26,7 +26,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ON_BORDER_1			512		// item has priority to check when entering or leaving
 
 #define NOSLIP_1			1024 		//prevents from slipping on wet floors, in space etc
-#define _UNUSED_1		2048
 
 // BLOCK_GAS_SMOKE_EFFECT_1 only used in masks at the moment.
 #define BLOCK_GAS_SMOKE_EFFECT_1 4096	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!
@@ -60,6 +59,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
 #define NO_MAT_REDEMPTION_2		1024
 
+// LAVA_PROTECT used on the flags_2 variable for both SUIT and HEAD items, and stops lava damage. Must be present in both to stop lava damage.
+#define LAVA_PROTECT_2			2048
+
 //turf-only flags
 #define NOJAUNT_1				1
 #define UNUSED_TRANSIT_TURF_1	2
@@ -84,7 +86,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 
 //Movement Types
-#define IMMOBILE 0
 #define GROUND 1
 #define FLYING 2
 

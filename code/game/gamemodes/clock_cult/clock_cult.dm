@@ -45,7 +45,7 @@ Credit where due:
 ///////////
 
 /proc/is_servant_of_ratvar(mob/M)
-	return istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/clockcult)
+	return istype(M) && !isobserver(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/clockcult)
 
 /proc/is_eligible_servant(mob/M)
 	if(!istype(M))
@@ -74,14 +74,14 @@ Credit where due:
 	var/datum/antagonist/clockcult/C = new update_type(L.mind)
 	C.make_team = create_team
 	C.show_in_roundend = create_team //tutorial scarabs begone
-	
+
 	if(iscyborg(L))
 		var/mob/living/silicon/robot/R = L
 		if(R.deployed)
 			var/mob/living/silicon/ai/AI = R.mainframe
 			R.undeploy()
 			to_chat(AI, "<span class='userdanger'>Anomaly Detected. Returned to core!</span>") //The AI needs to be in its core to properly be converted
-	
+
 	. = L.mind.add_antag_datum(C)
 
 	if(!silent && L)
@@ -99,7 +99,7 @@ Credit where due:
 			" in an endless grey void.<br>It cannot be allowed to escape"].</span>")
 			L.playsound_local(get_turf(L), 'sound/ambience/antag/clockcultalr.ogg', 40, TRUE, frequency = 100000, pressure_affected = FALSE)
 			flash_color(L, flash_color = list("#BE8700", "#BE8700", "#BE8700", rgb(0,0,0)), flash_time = 5)
-	
+
 
 
 
@@ -155,7 +155,7 @@ Credit where due:
 		starter_servants += round(number_players / 10)
 	starter_servants = min(starter_servants, 8) //max 8 servants (that sould only happen with a ton of players)
 	while(starter_servants)
-		var/datum/mind/servant = pick(antag_candidates)
+		var/datum/mind/servant = antag_pick(antag_candidates)
 		servants_to_serve += servant
 		antag_candidates -= servant
 		servant.assigned_role = ROLE_SERVANT_OF_RATVAR

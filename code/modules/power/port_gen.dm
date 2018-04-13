@@ -17,6 +17,8 @@
 	var/base_icon = "portgen0"
 	var/datum/looping_sound/generator/soundloop
 
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_REQUIRES_ANCHORED
+
 /obj/machinery/power/port_gen/Initialize()
 	. = ..()
 	soundloop = new(list(src), active)
@@ -52,12 +54,6 @@
 		handleInactive()
 		update_icon()
 		soundloop.stop()
-
-/obj/machinery/power/port_gen/attack_hand(mob/user)
-	if(..())
-		return
-	if(!anchored)
-		return
 
 /obj/machinery/power/port_gen/examine(mob/user)
 	..()
@@ -211,27 +207,19 @@
 	obj_flags |= EMAGGED
 	emp_act(EMP_HEAVY)
 
-/obj/machinery/power/port_gen/pacman/attack_hand(mob/user)
-	..()
-	if (!anchored)
-		return
-
-	interact(user)
-
 /obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
 	interact(user)
 
 /obj/machinery/power/port_gen/pacman/attack_paw(mob/user)
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/interact(mob/user)
+/obj/machinery/power/port_gen/pacman/ui_interact(mob/user)
+	. = ..()
 	if (get_dist(src, user) > 1 )
 		if(!isAI(user))
 			user.unset_machine()
 			user << browse(null, "window=port_gen")
 			return
-
-	user.set_machine(src)
 
 	var/dat = text("<b>[name]</b><br>")
 	if (active)

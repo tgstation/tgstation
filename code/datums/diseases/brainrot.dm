@@ -2,7 +2,7 @@
 	name = "Brainrot"
 	max_stages = 4
 	spread_text = "On contact"
-	spread_flags = VIRUS_SPREAD_BLOOD | VIRUS_SPREAD_CONTACT_SKIN | VIRUS_SPREAD_CONTACT_FLUIDS
+	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
 	cure_text = "Mannitol"
 	cures = list("mannitol")
 	agent = "Cryptococcus Cosmosis"
@@ -10,7 +10,7 @@
 	cure_chance = 15//higher chance to cure, since two reagents are required
 	desc = "This disease destroys the braincells, causing brain fever, brain necrosis and general intoxication."
 	required_organs = list(/obj/item/organ/brain)
-	severity = VIRUS_SEVERITY_HARMFUL
+	severity = DISEASE_SEVERITY_HARMFUL
 
 /datum/disease/brainrot/stage_act() //Removed toxloss because damaging diseases are pretty horrible. Last round it killed the entire station because the cure didn't work -- Urist -ACTUALLY Removed rather than commented out, I don't see it returning - RR
 	..()

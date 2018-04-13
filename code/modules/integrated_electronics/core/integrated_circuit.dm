@@ -15,7 +15,8 @@
 	var/next_use = 0 				// Uses world.time
 	var/complexity = 1 				// This acts as a limitation on building machines, more resource-intensive components cost more 'space'.
 	var/size = 1					// This acts as a limitation on building machines, bigger components cost more 'space'. -1 for size 0
-	var/cooldown_per_use = 9		// Circuits are limited in how many times they can be work()'d by this variable.
+	var/cooldown_per_use = 1		// Circuits are limited in how many times they can be work()'d by this variable.
+	var/ext_cooldown = 0			// Circuits are limited in how many times they can be work()'d with external world by this variable.
 	var/power_draw_per_use = 0 		// How much power is drawn when work()'d.
 	var/power_draw_idle = 0			// How much power is drawn when doing nothing.
 	var/spawn_flags					// Used for world initializing, see the #defines above.
@@ -117,6 +118,10 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		displayed_name = input
 
 /obj/item/integrated_circuit/interact(mob/user)
+	ui_interact(user)
+
+/obj/item/integrated_circuit/ui_interact(mob/user)
+	. = ..()
 	if(!check_interactivity(user))
 		return
 
@@ -212,6 +217,9 @@ a creative player the means to solve many problems.  Circuits are held inside an
 	HTML += "</div>"
 
 	HTML += "<br><font color='0000AA'>Complexity: [complexity]</font>"
+	HTML += "<br><font color='0000AA'>Cooldown per use: [cooldown_per_use/10] sec</font>"
+	if(ext_cooldown)
+		HTML += "<br><font color='0000AA'>External manipulation cooldown: [ext_cooldown/10] sec</font>"
 	if(power_draw_idle)
 		HTML += "<br><font color='0000AA'>Power Draw: [power_draw_idle] W (Idle)</font>"
 	if(power_draw_per_use)
@@ -301,11 +309,15 @@ a creative player the means to solve many problems.  Circuits are held inside an
 /obj/item/integrated_circuit/proc/check_then_do_work(ord,var/ignore_power = FALSE)
 	if(world.time < next_use) 	// All intergrated circuits have an internal cooldown, to protect from spam.
 		return FALSE
+	if(assembly && ext_cooldown && (world.time < assembly.ext_next_use)) 	// Some circuits have external cooldown, to protect from spam.
+		return FALSE
 	if(power_draw_per_use && !ignore_power)
 		if(!check_power())
 			power_fail()
 			return FALSE
 	next_use = world.time + cooldown_per_use
+	if(assembly)
+		assembly.ext_next_use = world.time + ext_cooldown
 	do_work(ord)
 	return TRUE
 

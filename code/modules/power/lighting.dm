@@ -388,7 +388,7 @@
 		if(LIGHT_BROKEN)
 			to_chat(user, "The [fitting] has been smashed.")
 	if(cell)
-		to_chat(user, "Its backup power charge meter reads [(cell.charge / cell.maxcharge) * 100]%.")
+		to_chat(user, "Its backup power charge meter reads [round((cell.charge / cell.maxcharge) * 100, 0.1)]%.")
 
 
 
@@ -568,6 +568,9 @@
 // if hands aren't protected and the light is on, burn the player
 
 /obj/machinery/light/attack_hand(mob/living/carbon/human/user)
+	. = ..()
+	if(.)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 

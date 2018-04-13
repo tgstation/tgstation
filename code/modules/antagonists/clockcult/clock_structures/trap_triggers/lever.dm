@@ -7,6 +7,9 @@
 	icon_state = "lever"
 
 /obj/structure/destructible/clockwork/trap/trigger/lever/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	user.visible_message("<span class='notice'>[user] pulls [src]!</span>", "<span class='notice'>You pull [src]. It clicks, then lifts back upwards.</span>")
 	if(wired_to.len)
 		audible_message("<i>You hear gears clanking.</i>")

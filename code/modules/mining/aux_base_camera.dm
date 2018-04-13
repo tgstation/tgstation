@@ -173,18 +173,13 @@
 	if(!check_spot())
 		return
 
-
-	var/atom/movable/rcd_target
 	var/turf/target_turf = get_turf(remote_eye)
+	var/atom/rcd_target = target_turf
 
-	//Find airlocks
-	rcd_target = locate(/obj/machinery/door/airlock) in target_turf
-
-	if(!rcd_target)
-		rcd_target = locate (/obj/structure) in target_turf
-
-	if(!rcd_target || !rcd_target.anchored)
-		rcd_target = target_turf
+	//Find airlocks and other shite
+	for(var/obj/S in target_turf)
+		if(LAZYLEN(S.rcd_vals(owner,B.RCD)))
+			rcd_target = S //If we don't break out of this loop we'll get the last placed thing
 
 	owner.changeNext_move(CLICK_CD_RANGE)
 	B.RCD.afterattack(rcd_target, owner, TRUE) //Activate the RCD and force it to work remotely!

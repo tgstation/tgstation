@@ -47,12 +47,13 @@
 
 
 /obj/machinery/power/singularity_beacon/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(anchored)
 		return active ? Deactivate(user) : Activate(user)
 	else
 		to_chat(user, "<span class='warning'>You need to screw the beacon to the floor first!</span>")
-		return
-
 
 /obj/machinery/power/singularity_beacon/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/screwdriver))
@@ -104,7 +105,7 @@
 // SINGULO BEACON SPAWNER
 /obj/item/device/sbeacondrop
 	name = "suspicious beacon"
-	icon = 'icons/obj/radio.dmi'
+	icon = 'icons/obj/device.dmi'
 	icon_state = "beacon"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'

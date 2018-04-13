@@ -3,6 +3,7 @@
 	roundend_category = "traitors"
 	antagpanel_category = "Traitor"
 	job_rank = ROLE_TRAITOR
+	antag_moodlet = /datum/mood_event/focused
 	var/should_specialise = TRUE //do we split into AI and human, set to true on inital assignment only
 	var/ai_datum = /datum/antagonist/traitor/AI
 	var/human_datum = /datum/antagonist/traitor/human
@@ -11,7 +12,7 @@
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
 
-	
+
 
 /datum/antagonist/traitor/human
 	show_in_antagpanel = FALSE
@@ -56,9 +57,6 @@
 
 /datum/antagonist/traitor/on_removal()
 	SSticker.mode.traitors -= owner
-	for(var/O in objectives)
-		owner.objectives -= O
-	objectives = list()
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
 	owner.special_role = null
@@ -226,7 +224,7 @@
 	var/mob/living/silicon/ai/A = mob_override || owner.current
 	if(istype(A))
 		A.hack_software = TRUE
-	
+
 /datum/antagonist/traitor/AI/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/silicon/ai/A = mob_override || owner.current
@@ -320,6 +318,7 @@
 	var/TC_uses = 0
 	var/uplink_true = FALSE
 	var/purchases = ""
+	LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
 	var/datum/uplink_purchase_log/H = GLOB.uplink_purchase_logs_by_key[owner.key]
 	if(H)
 		TC_uses = H.total_spent
@@ -343,7 +342,7 @@
 			var/static/icon/badass = icon('icons/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
 		result += uplink_text
-	
+
 	result += objectives_text
 
 	var/special_role_text = lowertext(name)

@@ -124,7 +124,7 @@
 	if(!istype(T))
 		return
 	if(reac_volume >= 5)
-		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10, wet_time_to_add = reac_volume * 1.5)
+		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume * 1.5 SECONDS)
 		T.name = "deep-fried [initial(T.name)]"
 		T.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 
@@ -249,7 +249,7 @@
 	if(reac_volume >= 1) // Make Freezy Foam and anti-fire grenades!
 		if(isopenturf(T))
 			var/turf/open/OT = T
-			OT.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=10, wet_time_to_add=reac_volume) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
+			OT.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=100, wet_time_to_add=reac_volume SECONDS) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
 			OT.air.temperature -= MOLES_CELLSTANDARD*100*reac_volume/OT.air.heat_capacity() // reduces environment temperature by 5K per unit.
 
 /datum/reagent/consumable/condensedcapsaicin
@@ -378,7 +378,7 @@
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 
-/datum/reagent/mushroomhallucinogen
+/datum/reagent/drug/mushroomhallucinogen
 	name = "Mushroom Hallucinogen"
 	id = "mushroomhallucinogen"
 	description = "A strong hallucinogenic drug derived from certain species of mushroom."
@@ -433,7 +433,7 @@
 /datum/reagent/consumable/cornoil/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))
 		return
-	T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10, wet_time_to_add = reac_volume*2)
+	T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume*2 SECONDS)
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air(T.air.total_moles())
@@ -615,6 +615,19 @@
 			to_chat(M, "<span class = 'warning'>Your eyes sting!</span>")
 			M.blind_eyes(2)
 
+
+/datum/reagent/consumable/nutriment/stabilized
+	name = "Stabilized Nutriment"
+	id = "stabilizednutriment"
+	description = "A bioengineered protien-nutrient structure designed to decompose in high saturation. In layman's terms, it won't get you fat."
+	reagent_state = SOLID
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+	color = "#664330" // rgb: 102, 67, 48
+
+/datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/M)
+	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
+		M.nutrition -= 3*nutriment_factor
+	..()
 
 ////Lavaland Flora Reagents////
 

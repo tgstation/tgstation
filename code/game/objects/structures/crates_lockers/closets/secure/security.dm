@@ -57,7 +57,7 @@
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
 	new /obj/item/door_remote/civillian(src)
-	new /obj/item/circuitboard/machine/protolathe/department/service(src)
+	new /obj/item/circuitboard/machine/techfab/department/service(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
@@ -89,7 +89,7 @@
 	new /obj/item/gun/energy/e_gun/hos(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/pinpointer/nuke(src)
-	new /obj/item/circuitboard/machine/protolathe/department/security(src)
+	new /obj/item/circuitboard/machine/techfab/department/security(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"

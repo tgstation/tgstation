@@ -304,16 +304,19 @@ SUBSYSTEM_DEF(ticker)
 	mode.post_setup()
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count()
-	//Cleanup some stuff
-	for(var/obj/effect/landmark/start/S in GLOB.landmarks_list)
-		//Deleting Startpoints but we need the ai point to AI-ize people later
-		if(S.delete_after_roundstart)
-			qdel(S)
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
 	send2irc("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 	setup_done = TRUE
+
+	for(var/i in GLOB.start_landmarks_list)
+		var/obj/effect/landmark/start/S = i
+		if(istype(S))							//we can not runtime here. not in this important of a proc.
+			S.after_round_start()
+		else
+			stack_trace("[S] [S.type] found in start landmarks list, which isn't a start landmark!")
+
 
 //These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
@@ -361,6 +364,8 @@ SUBSYSTEM_DEF(ticker)
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
+			if(CONFIG_GET(flag/roundstart_traits))
+				SStraits.AssignTraits(player, N.client, TRUE)
 		CHECK_TICK
 	if(captainless)
 		for(var/mob/dead/new_player/N in GLOB.player_list)
@@ -612,6 +617,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
+	save_admin_data()
 	if(!round_end_sound)
 		round_end_sound = pick(\
 		'sound/roundend/newroundsexy.ogg',

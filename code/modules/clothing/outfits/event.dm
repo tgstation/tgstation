@@ -26,6 +26,5 @@
 
 	var/obj/item/storage/backpack/bag = H.back
 	var/obj/item/a_gift/gift = new(H)
-	while(bag.can_be_inserted(gift, 1))
-		bag.handle_item_insertion(gift, 1)
+	while(bag.SendSignal(COMSIG_TRY_STORAGE_INSERT, gift, null, TRUE, FALSE))
 		gift = new(H)

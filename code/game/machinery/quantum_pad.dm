@@ -69,6 +69,9 @@
 	return ..()
 
 /obj/machinery/quantumpad/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(panel_open)
 		to_chat(user, "<span class='warning'>The panel must be closed before operating this machine!</span>")
 		return
@@ -102,6 +105,9 @@
 	s.start()
 
 /obj/machinery/quantumpad/attack_ghost(mob/dead/observer/ghost)
+	. = ..()
+	if(.)
+		return
 	if(!linked_pad && map_pad_link_id)
 		initMappedLink()
 	if(linked_pad)

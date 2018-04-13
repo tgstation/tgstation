@@ -45,15 +45,8 @@
 	else
 		return ..()
 
-/obj/machinery/computer/teleporter/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/teleporter/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/teleporter/interact(mob/user)
+/obj/machinery/computer/teleporter/ui_interact(mob/user)
+	. = ..()
 	var/data = "<h3>Teleporter Status</h3>"
 	if(!power_station)
 		data += "<div class='statusDisplay'>No power station linked.</div>"
@@ -160,7 +153,7 @@
 	var/list/L = list()
 	var/list/areaindex = list()
 	if(regime_set == "Teleporter")
-		for(var/obj/item/device/radio/beacon/R in GLOB.teleportbeacons)
+		for(var/obj/item/device/beacon/R in GLOB.teleportbeacons)
 			if(is_eligible(R))
 				var/area/A = get_area(R)
 				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R

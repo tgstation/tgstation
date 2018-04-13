@@ -67,6 +67,9 @@
 	entries_by_type -= CE.type
 
 /datum/controller/configuration/proc/LoadEntries(filename, list/stack = list())
+	if(IsAdminAdvancedProcCall())
+		return
+
 	var/filename_to_test = world.system_type == MS_WINDOWS ? lowertext(filename) : filename
 	if(filename_to_test in stack)
 		log_config("Warning: Config recursion detected ([english_list(stack)]), breaking!")
@@ -162,7 +165,7 @@
 	var/datum/config_entry/E = entry_type
 	var/entry_is_abstract = initial(E.abstract_type) == entry_type
 	if(entry_is_abstract)
-		CRASH("Tried to retrieve an abstract config_entry: [entry_type]")
+		CRASH("Tried to set an abstract config_entry: [entry_type]")
 	E = entries_by_type[entry_type]
 	if(!E)
 		CRASH("Missing config entry for [entry_type]!")
@@ -255,7 +258,7 @@
 			if ("disabled")
 				currentmap = null
 			else
-				WRITE_FILE(GLOB.config_error_log, "Unknown command in map vote config: '[command]'")
+				log_config("Unknown command in map vote config: '[command]'")
 
 
 /datum/controller/configuration/proc/pick_mode(mode_name)

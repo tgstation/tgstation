@@ -12,7 +12,8 @@
 	idle_power_usage = 10
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/autolathe
-
+	layer = BELOW_OBJ_LAYER
+	
 	var/operating = FALSE
 	var/list/L = list()
 	var/list/LL = list()
@@ -57,7 +58,8 @@
 	QDEL_NULL(wires)
 	return ..()
 
-/obj/machinery/autolathe/interact(mob/user)
+/obj/machinery/autolathe/ui_interact(mob/user)
+	. = ..()
 	if(!is_operational())
 		return
 
@@ -131,7 +133,7 @@
 				flick("autolathe_o",src)//plays metal insertion animation
 			if (MAT_GLASS)
 				flick("autolathe_r",src)//plays glass insertion animation
-		use_power(max(1000, (MINERAL_MATERIAL_AMOUNT * amount_inserted / 100)))
+		use_power(min(1000, amount_inserted / 100))
 	updateUsrDialog()
 
 /obj/machinery/autolathe/Topic(href, href_list)

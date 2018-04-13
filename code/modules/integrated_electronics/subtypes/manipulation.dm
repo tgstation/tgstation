@@ -25,6 +25,7 @@
 	spawn_flags = IC_SPAWN_RESEARCH
 	action_flags = IC_ACTION_COMBAT
 	power_draw_per_use = 0
+	ext_cooldown = 1
 	var/mode = FALSE
 
 	var/stun_projectile = null		//stun mode projectile type
@@ -57,7 +58,7 @@
 		if(gun_properties["shot_delay"])
 			cooldown_per_use = gun_properties["shot_delay"]*10
 		if(cooldown_per_use<30)
-			cooldown_per_use = 40
+			cooldown_per_use = 30
 		if(gun_properties["reqpower"])
 			power_draw_per_use = gun_properties["reqpower"]
 		set_pin_data(IC_OUTPUT, 1, WEAKREF(installed_gun))
@@ -100,7 +101,6 @@
 		shootAt(locate(target_x, target_y, T.z))
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/proc/shootAt(turf/target)
-
 	var/turf/T = get_turf(src)
 	var/turf/U = target
 	if(!istype(T) || !istype(U))
@@ -122,8 +122,6 @@
 	else
 		A = new lethal_projectile(T)
 		playsound(loc, lethal_projectile_sound, 75, 1)
-
-
 	installed_gun.cell.use(shot.e_cost)
 	//Shooting Code:
 	A.preparePixelProjectile(target, src)
@@ -138,9 +136,11 @@
 	Pulsing the 'step towards dir' activator pin will cause the machine to move a meter in that direction, assuming it is not \
 	being held, or anchored in some way. It should be noted that the ability to move is dependant on the type of assembly that this circuit inhabits."
 	w_class = WEIGHT_CLASS_SMALL
-	complexity = 20
+	complexity = 10
+	cooldown_per_use = 8
+	ext_cooldown = 1
 	inputs = list("direction" = IC_PINTYPE_DIR)
-	outputs = list()
+	outputs = list("obstacle" = IC_PINTYPE_REF)
 	activators = list("step towards dir" = IC_PINTYPE_PULSE_IN,"on step"=IC_PINTYPE_PULSE_OUT,"blocked"=IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	action_flags = IC_ACTION_MOVEMENT
@@ -159,6 +159,8 @@
 					activate_pin(2)
 					return
 				else
+					set_pin_data(IC_OUTPUT, 1, WEAKREF(assembly.collw))
+					push_data()
 					activate_pin(3)
 					return FALSE
 	return FALSE
@@ -171,6 +173,7 @@
 					Beware: Once primed there is no aborting the process!"
 	icon_state = "grenade"
 	complexity = 30
+	cooldown_per_use = 10
 	inputs = list("detonation time" = IC_PINTYPE_NUMBER)
 	outputs = list()
 	activators = list("prime grenade" = IC_PINTYPE_PULSE_IN)
@@ -241,6 +244,7 @@
 	icon_state = "plant_m"
 	extended_desc = "The circuit accepts a reference to a hydroponic tray in an adjacent tile. \
 	Mode(0- harvest, 1-uproot weeds, 2-uproot plant) determinies action."
+	cooldown_per_use = 10
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 10
 	inputs = list("target" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_NUMBER)
@@ -300,7 +304,7 @@
 	extended_desc = "The circuit accepts a reference to an object to be grabbed and can store up to 10 objects. Modes: 1 to grab, 0 to eject the first object, and -1 to eject all objects."
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
-
+	cooldown_per_use = 5
 	complexity = 10
 	inputs = list("target" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_NUMBER)
 	outputs = list("first" = IC_PINTYPE_REF, "last" = IC_PINTYPE_REF, "amount" = IC_PINTYPE_NUMBER,"contents" = IC_PINTYPE_LIST)
@@ -308,6 +312,7 @@
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
 	var/max_items = 10
+
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
 	var/max_w_class = assembly.w_class
 	var/atom/movable/acting_object = get_object()
@@ -362,35 +367,51 @@
 	extended_desc = "The circuit accepts a reference to thing to be pulled. Modes: 0 for release. 1 for pull."
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
-
+	cooldown_per_use = 5
 	complexity = 10
-	inputs = list("target" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_INDEX)
+	inputs = list("target" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_INDEX,"dir" = IC_PINTYPE_DIR)
 	outputs = list("is pulling" = IC_PINTYPE_BOOLEAN)
-	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT,"released" = IC_PINTYPE_PULSE_OUT)
+	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT,"released" = IC_PINTYPE_PULSE_OUT,"pull to dir" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
+	ext_cooldown = 1
 	var/max_grab = GRAB_PASSIVE
 
-/obj/item/integrated_circuit/manipulation/claw/do_work()
+/obj/item/integrated_circuit/manipulation/claw/do_work(ord)
 	var/obj/acting_object = get_object()
 	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	var/mode = get_pin_data(IC_INPUT, 2)
-	mode = CLAMP(mode, GRAB_PASSIVE, max_grab)
-	if(AM)
-		if(check_target(AM, exclude_contents = TRUE))
-			acting_object.start_pulling(AM,mode)
+	switch(ord)
+		if(1)
+			mode = CLAMP(mode, GRAB_PASSIVE, max_grab)
+			if(AM)
+				if(check_target(AM, exclude_contents = TRUE))
+					acting_object.start_pulling(AM,mode)
+					if(acting_object.pulling)
+						set_pin_data(IC_OUTPUT, 1, TRUE)
+					else
+						set_pin_data(IC_OUTPUT, 1, FALSE)
+			push_data()
+
+		if(4)
 			if(acting_object.pulling)
-				set_pin_data(IC_OUTPUT, 1, TRUE)
-			else
-				set_pin_data(IC_OUTPUT, 1, FALSE)
-	push_data()
+				var/dir = get_pin_data(IC_INPUT, 3)
+				var/turf/G =get_step(get_turf(acting_object),dir)
+				var/atom/movable/pullee = acting_object.pulling
+				var/turf/Pl = get_turf(pullee)
+				var/turf/F = get_step_towards(Pl,G)
+				if(acting_object.Adjacent(F))
+					if(!step_towards(pullee, F))
+						F = get_step_towards2(Pl,G)
+						if(acting_object.Adjacent(F))
+							step_towards(pullee, F)
 	activate_pin(2)
 
 /obj/item/integrated_circuit/manipulation/claw/stop_pulling()
-	..()
 	set_pin_data(IC_OUTPUT, 1, FALSE)
-	activate_pin(2)
+	activate_pin(3)
 	push_data()
+	..()
 
 
 
@@ -400,9 +421,11 @@
 	extended_desc = "The first and second inputs need to be numbers which correspond to coordinates to throw objects at relative to the machine itself. \
 	The 'fire' activator will cause the mechanism to attempt to throw objects at the coordinates, if possible. Note that the \
 	projectile need to be inside the machine, or to be on an adjacent tile, and must be medium sized or smaller."
-	complexity = 15
+	complexity = 25
 	w_class = WEIGHT_CLASS_SMALL
 	size = 2
+	cooldown_per_use = 10
+	ext_cooldown = 1
 	inputs = list(
 		"target X rel" = IC_PINTYPE_NUMBER,
 		"target Y rel" = IC_PINTYPE_NUMBER,
@@ -448,3 +471,123 @@
 
 	A.forceMove(drop_location())
 	A.throw_at(locate(x_abs, y_abs, T.z), range, 3)
+
+/obj/item/integrated_circuit/manipulation/matman
+	name = "material manager"
+	desc = "It's module, designed to automatic storage and distribution of materials"
+	extended_desc = "The first input is ref to object of interaction.Second input used for interaction with stacks of materials.\
+					It accepts amount of sheets to insert.Inputs 3-13 used to direct mat transer between containers of machines.\
+					It accepts amount of material to transfer.Positive values means, that circuit will drain another machine.\
+					Negative ones means, that machine needs to be filled.Outputs shows current stored amounts of mats."
+	icon_state = "grabber"
+	complexity = 16
+	inputs = list(
+		"target" 				= IC_PINTYPE_REF,
+		"sheets to insert"	 	= IC_PINTYPE_NUMBER,
+		"Metal"				 	= IC_PINTYPE_NUMBER,
+		"Glass"					= IC_PINTYPE_NUMBER,
+		"Silver"				= IC_PINTYPE_NUMBER,
+		"Gold"					= IC_PINTYPE_NUMBER,
+		"Diamond"				= IC_PINTYPE_NUMBER,
+		"Uranium"				= IC_PINTYPE_NUMBER,
+		"Solid Plasma"			= IC_PINTYPE_NUMBER,
+		"Bluespace Mesh"		= IC_PINTYPE_NUMBER,
+		"Bananium"				= IC_PINTYPE_NUMBER,
+		"Titanium"				= IC_PINTYPE_NUMBER,
+		)
+	outputs = list(
+		"self ref" 				= IC_PINTYPE_REF,
+		"Total amount"		 	= IC_PINTYPE_NUMBER,
+		"Metal"				 	= IC_PINTYPE_NUMBER,
+		"Glass"					= IC_PINTYPE_NUMBER,
+		"Silver"				= IC_PINTYPE_NUMBER,
+		"Gold"					= IC_PINTYPE_NUMBER,
+		"Diamond"				= IC_PINTYPE_NUMBER,
+		"Uranium"				= IC_PINTYPE_NUMBER,
+		"Solid Plasma"			= IC_PINTYPE_NUMBER,
+		"Bluespace Mesh"		= IC_PINTYPE_NUMBER,
+		"Bananium"				= IC_PINTYPE_NUMBER,
+		"Titanium"				= IC_PINTYPE_NUMBER
+		)
+	activators = list(
+		"insert sheet" = IC_PINTYPE_PULSE_IN,
+		"transfer mats" = IC_PINTYPE_PULSE_IN,
+		"on success" = IC_PINTYPE_PULSE_OUT,
+		"on failure" = IC_PINTYPE_PULSE_OUT,
+		"push ref" = IC_PINTYPE_PULSE_IN,
+		"on push ref" = IC_PINTYPE_PULSE_IN
+		)
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 40
+	ext_cooldown = 1
+	cooldown_per_use = 10
+	var/list/mtypes = list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE)
+
+/obj/item/integrated_circuit/manipulation/matman/Initialize()
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
+	list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
+	FALSE, list(/obj/item/stack, /obj/item/stack/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
+	materials.max_amount =100000
+	materials.precise_insertion = TRUE
+	.=..()
+
+/obj/item/integrated_circuit/manipulation/matman/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
+	GET_COMPONENT(materials, /datum/component/material_container)
+	set_pin_data(IC_OUTPUT, 2, materials.total_amount)
+	for(var/I in 1 to mtypes.len)
+		var/datum/material/M = materials.materials[mtypes[I]]
+		if(M)
+			set_pin_data(IC_OUTPUT, I+2, M.amount)
+	push_data()
+
+/obj/item/integrated_circuit/manipulation/matman/proc/is_insertion_ready(mob/user)
+	return TRUE
+
+/obj/item/integrated_circuit/manipulation/matman/do_work(ord)
+	GET_COMPONENT(materials, /datum/component/material_container)
+	var/atom/movable/H = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
+	if(!check_target(H))
+		activate_pin(4)
+		return
+	var/turf/T = get_turf(H)
+	switch(ord)
+		if(1)
+			var/obj/item/stack/sheet/S = H
+			if(!S)
+				activate_pin(4)
+				return
+			if(materials.insert_stack(S, CLAMP(get_pin_data(IC_INPUT, 2),0,100), multiplier = 1) )
+				AfterMaterialInsert()
+				activate_pin(3)
+			else
+				activate_pin(4)
+		if(2)
+			GET_COMPONENT_FROM(mt, /datum/component/material_container, H)
+			var/suc
+			for(var/I in 1 to mtypes.len)
+				var/datum/material/M = materials.materials[mtypes[I]]
+				if(M)
+					var/U = CLAMP(get_pin_data(IC_INPUT, I+2),-100000,100000)
+					if(!U)
+						continue
+					if(!mt) //Invalid input
+						if(U>0)
+							if(materials.retrieve_amount(U, mtypes[I], T))
+								suc = TRUE
+					else
+						if(mt.transer_amt_to(materials, U, mtypes[I]))
+							suc = TRUE
+			if(suc)
+				AfterMaterialInsert()
+				activate_pin(3)
+			else
+				activate_pin(4)
+		if(4)
+			AfterMaterialInsert()
+			set_pin_data(IC_OUTPUT, 1, WEAKREF(src))
+			activate_pin(5)
+
+/obj/item/integrated_circuit/manipulation/matman/Destroy()
+	GET_COMPONENT(materials, /datum/component/material_container)
+	materials.retrieve_all()
+	.=..()
