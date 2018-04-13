@@ -70,7 +70,7 @@
 	if(Process_Grab()) //are we restrained by someone's grip?
 		return
 
-	if(mob.buckled)						//if we're buckled to something, tell it we moved.
+	if(mob.buckled)							//if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direct)
 
 	if(!mob.canmove)

@@ -73,13 +73,6 @@
 				step(src, direction)
 				addtimer(CALLBACK(src, .proc/changeflags), 3)
 
-/obj/structure/chair/movable/proc/movedelay(mob/user, direction)	//This isn't working when used in relaymove :(
-	if(has_buckled_mobs())
-		for(var/m in buckled_mobs)
-			var/mob/living/buckled_mob = m
-			buckled_mob.dir = direction
-			step(src, direction)
-
 /obj/structure/chair/movable/proc/changeflags()
 	timing = FALSE
 	moving = FALSE
