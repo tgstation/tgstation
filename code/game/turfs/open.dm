@@ -199,6 +199,9 @@
 		if(!(lube&SLIDE_ICE))
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
+		GET_COMPONENT_FROM(mood, /datum/component/mood, C)
+		if(mood)
+			mood.add_event("slipped", /datum/mood_event/slipped)
 		for(var/obj/item/I in C.held_items)
 			C.accident(I)
 

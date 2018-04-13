@@ -89,7 +89,21 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner.\n"
 
-
+	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+	if(mood)
+		switch(mood.shown_mood)
+			if(-INFINITY to MOOD_LEVEL_SAD4)
+				msg += "[t_He] look[p_s()] depressed.\n"
+			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
+				msg += "[t_He] look[p_s()] very sad.\n"
+			if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
+				msg += "[t_He] look[p_s()] a bit down.\n"
+			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
+				msg += "[t_He] look[p_s()] quite happy.\n"
+			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
+				msg += "[t_He] look[p_s()] very happy.\n"
+			if(MOOD_LEVEL_HAPPY4 to INFINITY)
+				msg += "[t_He] look[p_s()] ecstatic.\n"
 
 	msg += "*---------*</span>"
 

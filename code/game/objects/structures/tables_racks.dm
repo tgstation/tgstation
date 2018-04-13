@@ -95,7 +95,17 @@
 	pushed_mob.visible_message("<span class='danger'>[user] pushes [pushed_mob] onto [src].</span>", \
 								"<span class='userdanger'>[user] pushes [pushed_mob] onto [src].</span>")
 	add_logs(user, pushed_mob, "pushed")
-
+	if(!ishuman(pushed_mob))
+		return
+	var/mob/living/carbon/human/H = pushed_mob
+	GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+	if(mood)
+		if(iscatperson(H)) //Catpeople are a bit dumb and think its fun to be on a table
+			mood.add_event("table", /datum/mood_event/happytable)
+			H.startTailWag()
+			addtimer(CALLBACK(H, /mob/living/carbon/human.proc/endTailWag), 30)
+		else
+			mood.add_event("table", /datum/mood_event/table)
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1))

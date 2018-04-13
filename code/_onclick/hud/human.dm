@@ -283,6 +283,10 @@
 	healthdoll = new /obj/screen/healthdoll()
 	infodisplay += healthdoll
 
+	if(!CONFIG_GET(flag/disable_human_mood))
+		mood = new /obj/screen/mood()
+		infodisplay += mood
+
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style
 	pull_icon.update_icon(mymob)

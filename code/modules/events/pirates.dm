@@ -9,6 +9,12 @@
 	earliest_start = 30 MINUTES
 	gamemode_blacklist = list("nuclear")
 
+/datum/round_event_control/pirates/preRunEvent()
+	if (!SSmapping.empty_space)
+		return EVENT_CANT_RUN
+
+	return ..()
+
 /datum/round_event/pirates
 	startWhen = 60 //2 minutes to answer
 	var/datum/comm_message/threat

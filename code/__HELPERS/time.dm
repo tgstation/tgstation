@@ -144,7 +144,7 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 			else if(day && (!minute || !second))
 				hour = " and 1 hour"
 			else
-				day = "[truncate ? "hour" : "1 hour"]"
+				hour = "[truncate ? "hour" : "1 hour"]"
 	else
 		hour = null
 

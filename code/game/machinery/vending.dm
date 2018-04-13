@@ -850,7 +850,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	req_access_txt = "5"
 	products = list(/obj/item/reagent_containers/syringe = 12, /obj/item/reagent_containers/dropper = 3, /obj/item/stack/medical/gauze = 8, /obj/item/reagent_containers/pill/patch/styptic = 5, /obj/item/reagent_containers/pill/insulin = 10,
-				/obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/glass/bottle/charcoal = 4, /obj/item/reagent_containers/spray/medical/sterilizer = 1,
+				/obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/medspray/styptic = 2, /obj/item/reagent_containers/medspray/silver_sulf = 2, /obj/item/reagent_containers/glass/bottle/charcoal = 4, /obj/item/reagent_containers/medspray/sterilizine = 1,
 				/obj/item/reagent_containers/glass/bottle/epinephrine = 4, /obj/item/reagent_containers/glass/bottle/morphine = 4, /obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
 				/obj/item/reagent_containers/glass/bottle/toxin = 3, /obj/item/reagent_containers/syringe/antiviral = 6, /obj/item/reagent_containers/pill/salbutamol = 2, /obj/item/device/healthanalyzer = 4, /obj/item/device/sensor_device = 2, /obj/item/pinpointer/crew = 2)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 3, /obj/item/reagent_containers/pill/morphine = 4, /obj/item/reagent_containers/pill/charcoal = 6)
@@ -875,8 +875,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_deny = "wallmed-deny"
 	density = FALSE
 	products = list(/obj/item/reagent_containers/syringe = 3, /obj/item/reagent_containers/pill/patch/styptic = 5,
-					/obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/pill/charcoal = 2,
-					/obj/item/reagent_containers/spray/medical/sterilizer = 1)
+					/obj/item/reagent_containers/pill/patch/silver_sulf = 5, /obj/item/reagent_containers/medspray/styptic = 2, /obj/item/reagent_containers/medspray/silver_sulf = 2,
+					/obj/item/reagent_containers/pill/charcoal = 2, /obj/item/reagent_containers/medspray/sterilizine = 1)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 2, /obj/item/reagent_containers/pill/morphine = 2)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF

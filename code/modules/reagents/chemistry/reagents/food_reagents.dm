@@ -378,7 +378,7 @@
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 
-/datum/reagent/mushroomhallucinogen
+/datum/reagent/drug/mushroomhallucinogen
 	name = "Mushroom Hallucinogen"
 	id = "mushroomhallucinogen"
 	description = "A strong hallucinogenic drug derived from certain species of mushroom."

@@ -1840,12 +1840,12 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "fu" = (
-/obj/machinery/rnd/protolathe,
+/obj/machinery/rnd/production/protolathe,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "fv" = (
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/rnd/production/circuit_imprinter,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/dropper,
 /turf/open/floor/plasteel/white,

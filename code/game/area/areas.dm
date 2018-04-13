@@ -31,6 +31,9 @@
 
 	var/outdoors = FALSE //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
 
+	var/beauty = 0 //To see how clean/dirty this area is, only works with indoors areas.
+	var/areasize = 0 //Size of the area in tiles, only calculated for indoors areas.
+
 	var/power_equip = TRUE
 	var/power_light = TRUE
 	var/power_environ = TRUE
@@ -145,6 +148,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(!areas_in_z["[z]"])
 			areas_in_z["[z]"] = list()
 		areas_in_z["[z]"] += src
+	update_area_size()
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -497,6 +501,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			L.client.played = TRUE
 			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
 
+	GET_COMPONENT_FROM(mood, /datum/component/mood, L)
+	if(mood)
+		mood.update_beauty(src)
+
 /client/proc/ResetAmbiencePlayed()
 	played = FALSE
 
@@ -523,6 +531,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	valid_territory = FALSE
 	blob_allowed = FALSE
 	addSorted()
+
+/area/proc/update_area_size()
+	if(outdoors)
+		return FALSE
+	areasize = 0
+	for(var/turf/T in src.contents)
+		areasize++
 
 /area/AllowDrop()
 	CRASH("Bad op: area/AllowDrop() called")

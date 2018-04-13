@@ -27,8 +27,8 @@ doesn't have toxins access.
 	circuit = /obj/item/circuitboard/computer/rdconsole
 
 	var/obj/machinery/rnd/destructive_analyzer/linked_destroy	//Linked Destructive Analyzer
-	var/obj/machinery/rnd/protolathe/linked_lathe				//Linked Protolathe
-	var/obj/machinery/rnd/circuit_imprinter/linked_imprinter	//Linked Circuit Imprinter
+	var/obj/machinery/rnd/production/protolathe/linked_lathe				//Linked Protolathe
+	var/obj/machinery/rnd/production/circuit_imprinter/linked_imprinter	//Linked Circuit Imprinter
 
 	req_access = list(ACCESS_TOX)	//lA AND SETTING MANIPULATION REQUIRES SCIENTIST ACCESS.
 
@@ -70,16 +70,16 @@ doesn't have toxins access.
 			if(linked_destroy == null)
 				linked_destroy = D
 				D.linked_console = src
-		else if(istype(D, /obj/machinery/rnd/protolathe))
+		else if(istype(D, /obj/machinery/rnd/production/protolathe))
 			if(linked_lathe == null)
-				var/obj/machinery/rnd/protolathe/P = D
+				var/obj/machinery/rnd/production/protolathe/P = D
 				if(!P.console_link)
 					continue
 				linked_lathe = D
 				D.linked_console = src
-		else if(istype(D, /obj/machinery/rnd/circuit_imprinter))
+		else if(istype(D, /obj/machinery/rnd/production/circuit_imprinter))
 			if(linked_imprinter == null)
-				var/obj/machinery/rnd/circuit_imprinter/C = D
+				var/obj/machinery/rnd/production/circuit_imprinter/C = D
 				if(!C.console_link)
 					continue
 				linked_imprinter = D
@@ -720,11 +720,11 @@ doesn't have toxins access.
 	if(D.build_type)
 		var/lathes = list()
 		if(D.build_type & IMPRINTER)
-			lathes += "<span data-tooltip='Circuit Imprinter'>[machine_icon(/obj/machinery/rnd/circuit_imprinter)]</span>[RDSCREEN_NOBREAK]"
+			lathes += "<span data-tooltip='Circuit Imprinter'>[machine_icon(/obj/machinery/rnd/production/circuit_imprinter)]</span>[RDSCREEN_NOBREAK]"
 			if (linked_imprinter && D.id in stored_research.researched_designs)
 				l += "<A href='?src=[REF(src)];search=1;type=imprint;to_search=[D.name]'>Imprint</A>"
 		if(D.build_type & PROTOLATHE)
-			lathes += "<span data-tooltip='Protolathe'>[machine_icon(/obj/machinery/rnd/protolathe)]</span>[RDSCREEN_NOBREAK]"
+			lathes += "<span data-tooltip='Protolathe'>[machine_icon(/obj/machinery/rnd/production/protolathe)]</span>[RDSCREEN_NOBREAK]"
 			if (linked_lathe && D.id in stored_research.researched_designs)
 				l += "<A href='?src=[REF(src)];search=1;type=proto;to_search=[D.name]'>Construct</A>"
 		if(D.build_type & AUTOLATHE)

@@ -67,7 +67,10 @@
 		return INITIALIZE_HINT_QDEL
 	Reset()
 
-/obj/machinery/computer/arcade/proc/prizevend()
+/obj/machinery/computer/arcade/proc/prizevend(mob/user)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, user)
+	if(mood)
+		mood.add_event("arcade", /datum/mood_event/arcade)
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
 		SSmedals.UnlockMedal(MEDAL_PULSE, usr.client)
@@ -237,7 +240,7 @@
 				Reset()
 				obj_flags &= ~EMAGGED
 			else
-				prizevend()
+				prizevend(usr)
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
 
 
@@ -1031,7 +1034,7 @@
 		message_admins("[key_name_admin(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 	else
-		prizevend()
+		prizevend(usr)
 	obj_flags &= ~EMAGGED
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"

@@ -335,6 +335,9 @@
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
 	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, L)
+	if(mood)
+		mood.add_event("shower", /datum/mood_event/nice_shower)
 	if(iscarbon(L))
 		var/mob/living/carbon/M = L
 		. = TRUE
