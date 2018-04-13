@@ -487,7 +487,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/proc/move_hologram(mob/living/user, turf/new_turf)
 	if(LAZYLEN(masters) && masters[user])
 		var/area/holo_area = get_area(src)
-		if(new_turf.loc in holo_area.related)
+		if(new_turf.loc == holo_area)
 			var/obj/effect/overlay/holo_pad_hologram/holo = masters[user]
 			step_to(holo, new_turf)
 			holo.forceMove(new_turf)
