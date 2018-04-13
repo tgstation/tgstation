@@ -136,16 +136,18 @@
 				var oScreenLoc = tooltip.params.screenLoc.split(','); //o for original ok
 				var left;
 				var top;
+				var iconX;
+				var iconY;
 				var enteredX = 0;
 				var enteredY = 0;
 				if (paramsA.length > 2) {
 				//When screen-loc is sent via mouseparams
 				//icon-x
-				var iconX = paramsA[0];
+				iconX = paramsA[0];
 				iconX = iconX.split('=');
 				iconX = parseInt(iconX[1]);
 				//icon-y
-				var iconY = paramsA[1];
+				iconY = paramsA[1];
 				iconY = iconY.split('=');
 				iconY = parseInt(iconY[1]);
 				//screen-loc

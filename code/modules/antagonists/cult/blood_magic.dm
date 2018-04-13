@@ -7,8 +7,13 @@
 
 /datum/action/innate/cult/blood_magic/Grant()
 	..()
-	button.screen_loc = "6:-29,4:-2"
-	button.moved = "6:-29,4:-2"
+	button.screen_loc = DEFAULT_BLOODSPELLS
+	button.moved = DEFAULT_BLOODSPELLS
+	var/datum/action/innate/cult/tooltip/spells/tip = new(owner)
+	var/datum/action/innate/cult/tooltip/bloodsense/tip2 = new(owner)
+	tip.Grant(owner, src)
+	tip2.Grant(owner, src)
+
 
 /datum/action/innate/cult/blood_magic/Remove()
 	for(var/X in spells)
@@ -83,7 +88,50 @@
 		to_chat(owner, "<span class='warning'>Your wounds glows with power, you have prepared a [new_spell.name] invocation!</span>")
 	channeling = FALSE
 
-/datum/action/innate/cult/blood_spell //The next generation of talismans
+/datum/action/innate/cult/tooltip // Temporary and invisible buttons that automatically provide info to players
+	name = "Blood Cult Tooltip"
+	button_icon_state = ""
+	var/screenloc = DEFAULT_TOOLTIP
+	var/second_tip = ""
+	var/initial_delay = 0
+
+/datum/action/innate/cult/tooltip/proc/second_tip()
+	button.hide()
+	desc = second_tip
+	button.MouseEntered(screenloc,"mainwindow.tooltip", null)
+
+/datum/action/innate/cult/tooltip/proc/reveal_tip()
+	button.MouseEntered(screenloc,"mainwindow.tooltip", null)
+	if(second_tip)
+		addtimer(CALLBACK(button, /datum/tooltip.proc/hide), 80)
+		addtimer(CALLBACK(src, .proc/second_tip), 100)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 180)
+	else
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 80)
+
+/datum/action/innate/cult/tooltip/Grant()
+	..()
+	button.screen_loc = screenloc
+	button.moved = screenloc
+	button.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	button.alpha = 0
+	if(initial_delay)
+		addtimer(CALLBACK(src, .proc/reveal_tip), initial_delay)
+	else
+		reveal_tip()
+
+/datum/action/innate/cult/tooltip/spells
+	name = "Blood Spell Tooltip"
+	desc = "This is your blood magic spell bar. Use the button, preferably near an empowering rune, to prepare powerful blood spells!"
+	second_tip = "You can drag this button anywhere on your screen to adjust the location of the entire spellbar (upon the next spell update)."
+
+/datum/action/innate/cult/tooltip/bloodsense
+	name = "Blood Sense Tooltip"
+	desc = "This is your blood-sense tracker, mouse over for more information about your objective. It is also used to track targets."
+	screenloc = DEFAULT_BLOODALERT
+	initial_delay = 200
+
+/datum/action/innate/cult/blood_spell //The next generation of talismans, handles storage/creation of blood magic
 	name = "Blood Magic"
 	button_icon_state = "telerune"
 	desc = "Fear the Old Blood."
@@ -398,7 +446,7 @@
 //Stun
 /obj/item/melee/blood_magic/stun
 	name = "Stunning Aura "
-	color = "#ff0000" // red
+	color = RUNE_COLOR_RED
 	invocation = "Fuu ma'jin!"
 
 /obj/item/melee/blood_magic/stun/afterattack(atom/target, mob/living/carbon/user, proximity)

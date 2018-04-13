@@ -229,28 +229,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 		do_sacrifice(L, invokers)
 	animate(src, color = oldcolor, time = 5)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 5)
-	if(!Cult_team.cult_ascendent)
-		var/alive = 0
-		var/cultplayers = 0
-		for(var/I in GLOB.player_list)
-			var/mob/M = I
-			if(M.stat != DEAD)
-				if(iscultist(M))
-					++cultplayers
-				else
-					++alive
-		var/ratio = cultplayers/alive
-		if(ratio > CULT_RISEN && !Cult_team.cult_risen)
-			for(var/datum/mind/B in Cult_team.members)
-				if(B.current)
-					SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
-					to_chat(B.current, "<span class='cultlarge'>The veil weakens as your cult grows, your eyes begin to glow...")
-		if(ratio > CULT_ASCENDENT && !Cult_team.cult_ascendent)
-			for(var/datum/mind/B in Cult_team.members)
-				if(B.current)
-					SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
-					to_chat(B.current, "<span class='cultlarge'>Your cult is ascendent and your very blood pulses with power!")
-		rune_in_use = FALSE
+	Cult_team.check_size() // Triggers the eye glow or aura effects if the cult has grown large enough relative to the crew
+	rune_in_use = FALSE
+
+/proc/mouse_test(mob/user)
+	var/list/paramlist = params2list(user.client.mouseParams)
+	for(var/i in paramlist)
+		to_chat(world, "Param is [i] with contents [paramlist[i]]")
 
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
 	if(invokers.len < 2)
@@ -334,7 +319,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, 1)
 			sacrificial.gib()
 	return TRUE
-	
+
 
 
 /obj/effect/rune/empower

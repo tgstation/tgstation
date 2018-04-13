@@ -48,7 +48,7 @@ Notes:
 
 
 /datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
-	if (!thing || !params || (!title && !content) || !owner || !isnum(world.icon_size))
+	if (!thing || (!title && !content) || !owner || !isnum(world.icon_size))
 		return 0
 	if (!init)
 		//Initialize some vars
@@ -68,6 +68,7 @@ Notes:
 	// Strip macros from item names
 	title = replacetext(title, "\proper", "")
 	title = replacetext(title, "\improper", "")
+
 
 	//Make our dumb param object
 	params = {"{ "cursor": "[params]", "screenLoc": "[thing.screen_loc]" }"}
