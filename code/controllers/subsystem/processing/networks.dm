@@ -50,6 +50,6 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	var/addr_2 = copytext(hex,5,9)
 	var/addr_3 = copytext(hex,9,13)
 	var/addr_4 = copytext(hex,13,17)
-	. = "fc00:[addr_1]:[addr_2]:[addr_3]:[addr_4]"
+	. = "[addr_1]:[addr_2]:[addr_3]:[addr_4]"
 	if(interfaces_by_id[.])
 		return resolve_collisions? make_address("[num2text(rand(HID_RESTRICTED_END, 999999999999), 12)]"):null
