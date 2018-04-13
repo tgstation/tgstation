@@ -73,6 +73,28 @@
 				step(src, direction)
 				addtimer(CALLBACK(src, .proc/changeflags), 3)
 
+/obj/structure/chair/movable/post_buckle_mob(mob/living/M)
+	. = ..()
+	if(!has_buckled_mobs())
+		handle_layer()
+	else
+		handle_rotation_overlayed()
+		buckledmob = TRUE
+
+/obj/structure/chair/movable/post_unbuckle_mob()
+	. = ..()
+	handle_layer()
+	if(!has_buckled_mobs())
+		overlays = null
+		buckledmob = FALSE
+
+/obj/structure/chair/movable/Collide(atom/movable/M)
+	. = ..()
+	if(emulate_door_bumps)
+		if(istype(M, /obj/machinery/door) && has_buckled_mobs())
+			for(var/m in buckled_mobs)
+				M.CollidedWith(m)
+
 /obj/structure/chair/movable/proc/changeflags()
 	timing = FALSE
 	moving = FALSE
@@ -92,12 +114,7 @@
 	if(movable)
 		buckled_mob.dir = dir
 
-/obj/structure/chair/movable/Collide(atom/movable/M)
-	. = ..()
-	if(emulate_door_bumps)
-		if(istype(M, /obj/machinery/door) && has_buckled_mobs())
-			for(var/m in buckled_mobs)
-				M.CollidedWith(m)
+
 
 /obj/structure/chair/movable/wheelchair
 	name = "wheelchair"
@@ -111,21 +128,6 @@
 	has_overlay = TRUE
 	icon_selection = 'hippiestation/icons/obj/chairs.dmi'
 	icon_overlay = "wheelchair_overlay"
-
-/obj/structure/chair/movable/post_buckle_mob(mob/living/M)
-	. = ..()
-	if(!has_buckled_mobs())
-		handle_layer()
-	else
-		handle_rotation_overlayed()
-		buckledmob = TRUE
-
-/obj/structure/chair/movable/post_unbuckle_mob()
-	. = ..()
-	handle_layer()
-	if(!has_buckled_mobs())
-		overlays = null
-		buckledmob = FALSE
 
 /obj/structure/chair/movable/wheelchair/Moved(direction)
 	. = ..()
