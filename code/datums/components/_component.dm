@@ -122,14 +122,11 @@
 		. += current_type
 
 /datum/proc/SendSignal(sigtype, ...)
-	var/datum/comsig_log/log
-	var/start
-	if(GLOB && islist(GLOB.component_signal_log_items))
-		log = GLOB.component_signal_log_items[sigtype]
-		if(!log)
-			log = GLOB.component_signal_log_items[sigtype] = new /datum/comsig_log(sigtype)
-		start = world.tick_usage
-		log.calls++
+	var/datum/comsig_log/log = GLOB.component_signal_log_items[sigtype]
+	var/start = world.tick_usage
+	if(!log)
+		log = GLOB.component_signal_log_items[sigtype] = new /datum/comsig_log(sigtype)
+	log.calls++
 	//
 	var/list/comps = datum_components
 	if(!comps)
@@ -154,8 +151,7 @@
 			continue
 		. |= CB.InvokeAsync(arglist(arguments))
 	//
-	if(log)
-		log.time += TICK_USAGE_TO_MS(start)
+	log.time += TICK_USAGE_TO_MS(start)
 
 /datum/proc/GetComponent(c_type)
 	var/list/dc = datum_components
