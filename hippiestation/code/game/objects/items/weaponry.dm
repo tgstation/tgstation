@@ -105,3 +105,23 @@
 	icon_hippie = 'hippiestation/icons/obj/items_and_weapons.dmi'
 	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
 	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
+
+/obj/item/melee/baseball_bat/ablative
+	desc = "A smooth metal club used in baseball to hit the ball. Or to purify your adversaries."
+	icon = 'hippiestation/icons/obj/items_and_weapons.dmi'
+	icon_state = "hippie_bbat_metal"
+	item_state = "hippie_bbat_metal"
+	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
+	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
+
+/obj/item/melee/baseball_bat/spiked
+	name = "spiked baseball bat"
+	desc = "A wooden baseball bat with metal spikes crudely attached."
+	icon = 'hippiestation/icons/obj/items_and_weapons.dmi'
+	icon_state = "hippie_bbat_spiked"
+	item_state = "hippie_bbat_spiked"
+	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
+	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
+	force = 15 //for reference, normal bat has 10
+	throwforce = 15 // its got spikes sticking out of it - pre rebase comment :D
+	armour_penetration = 10
