@@ -27,20 +27,15 @@
 
 			if(filterToxins && !owner.has_trait(TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
-				var/toxamount
 				var/static/list/toxinstypecache = typecacheof(/datum/reagent/toxin)
 				for(var/I in C.reagents.reagent_list)
 					var/datum/reagent/pickedreagent = I
 					if(is_type_in_typecache(pickedreagent, toxinstypecache))
-						toxamount += C.reagents.get_reagent_amount(initial(pickedreagent.id))
-				if(toxamount <= toxTolerance && toxamount > 0)
-					for(var/I in C.reagents.reagent_list)
-						var/datum/reagent/pickedreagent = I
-						if(is_type_in_typecache(pickedreagent, toxinstypecache))
+						var/thisamount = C.reagents.get_reagent_amount(initial(pickedreagent.id))
+						if (thisamount <= toxTolerance && thisamount)
 							C.reagents.remove_reagent(initial(pickedreagent.id), 1)
-				else if(toxamount > toxTolerance)
-					damage += toxamount*toxLethality
-
+						else
+							damage += (thisamount*toxLethality)
 
 			//metabolize reagents
 			C.reagents.metabolize(C, can_overdose=TRUE)
@@ -80,7 +75,7 @@
 	alcohol_tolerance = 0.001
 	maxHealth = 200 //double the health of a normal liver
 	toxTolerance = 15 //can shrug off up to 15u of toxins
-	toxLethality = 0.3 //20% less damage than a normal liver
+	toxLethality = 0.008 //20% less damage than a normal liver
 
 /obj/item/organ/liver/cybernetic/emp_act(severity)
 	switch(severity)
