@@ -1426,7 +1426,6 @@
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_x = -28;
-	req_access_txt = "0";
 	use_power = 0
 	},
 /obj/machinery/iv_drip,

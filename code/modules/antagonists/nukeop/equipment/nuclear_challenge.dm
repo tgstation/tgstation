@@ -3,6 +3,8 @@
 #define CHALLENGE_MIN_PLAYERS 50
 #define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
+GLOBAL_LIST_EMPTY(jam_on_wardec)
+
 /obj/item/device/nuclear_challenge
 	name = "Declaration of War (Challenge Mode)"
 	icon_state = "gangtool-red"
@@ -13,6 +15,7 @@
 			Such a brazen move will attract the attention of powerful benefactors within the Syndicate, who will supply your team with a massive amount of bonus telecrystals.  \
 			Must be used within five minutes, or your benefactors will lose interest."
 	var/declaring_war = FALSE
+	var/uplink_type = /obj/item/device/radio/uplink/nuclear
 
 /obj/item/device/nuclear_challenge/attack_self(mob/living/user)
 	if(!check_allowed(user))
@@ -54,7 +57,10 @@
 		var/obj/item/circuitboard/computer/syndicate_shuttle/board = V
 		board.challenge = TRUE
 
-	new /obj/item/device/radio/uplink/nuclear(get_turf(user), user.key, CHALLENGE_TELECRYSTALS)
+	for(var/obj/machinery/computer/camera_advanced/shuttle_docker/D in GLOB.jam_on_wardec)
+		D.jammed = TRUE
+
+	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS)
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
 
@@ -80,6 +86,10 @@
 			return FALSE
 	return TRUE
 
+/obj/item/device/nuclear_challenge/clownops
+	uplink_type = /obj/item/device/radio/uplink/clownop
+
 #undef CHALLENGE_TELECRYSTALS
+#undef CHALLENGE_TIME_LIMIT
 #undef CHALLENGE_MIN_PLAYERS
 #undef CHALLENGE_SHUTTLE_DELAY

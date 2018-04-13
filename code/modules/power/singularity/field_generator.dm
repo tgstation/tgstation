@@ -65,6 +65,9 @@ field_generator power level display
 		calc_power()
 
 /obj/machinery/field/generator/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(state == FG_WELDED)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(active >= FG_CHARGING)

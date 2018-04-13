@@ -36,6 +36,7 @@
 		return
 	. = ..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/clockwork/city_of_cogs_rift/attack_hand(atom/movable/AM)
 	beckon(AM)
 
@@ -48,7 +49,8 @@
 				"<span class='notice'>You begin climbing through [src]...</span>")
 				if(!do_after(L, 30, target = L))
 					return
-		beckon(AM)
+		if(!istype(AM, /obj/effect/))
+			beckon(AM)
 
 /obj/effect/clockwork/city_of_cogs_rift/proc/beckon(atom/movable/AM)
 	var/turf/T = get_turf(pick(GLOB.city_of_cogs_spawns))

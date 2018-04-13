@@ -48,7 +48,8 @@
 		holder.update_icon()
 	return
 
-/obj/item/device/assembly/signaler/interact(mob/user, flag1)
+/obj/item/device/assembly/signaler/ui_interact(mob/user, flag1)
+	. = ..()
 	if(is_secured(user))
 		var/t1 = "-------"
 		var/dat = {"

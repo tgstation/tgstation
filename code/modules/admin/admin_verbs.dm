@@ -38,14 +38,12 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/datum/admins/proc/set_admin_notice, /*announcement all clients see when joining the server.*/
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
-	/datum/admins/proc/view_txt_log,	/*shows the server log (world_game_log) for today*/
-	/datum/admins/proc/view_atk_log,	/*shows the server combat-log, doesn't do anything presently*/
+	/client/proc/getserverlogs,		/*for accessing server logs*/
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
 	/client/proc/check_antagonists,		/*shows all antags*/
 	/datum/admins/proc/access_news_network,	/*allows access of newscasters*/
-	/client/proc/getserverlog,			/*allows us to fetch server logs (world_game_log) for other days*/
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
 	/client/proc/Getmob,				/*teleports a mob to our location*/
 	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
@@ -69,7 +67,8 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
 	/client/proc/toggleadminhelpsound,
-	/client/proc/respawn_character
+	/client/proc/respawn_character,
+	/datum/admins/proc/open_borgopanel
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/DB_ban_panel, /client/proc/stickybanpanel))
@@ -96,7 +95,8 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/mass_zombie_cure,
 	/client/proc/polymorph_all,
 	/client/proc/show_tip,
-	/client/proc/smite
+	/client/proc/smite,
+	/client/proc/admin_away
 	))
 GLOBAL_PROTECT(admin_verbs_spawn)
 GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character))
@@ -179,8 +179,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/datum/admins/proc/set_admin_notice,
 	/client/proc/admin_ghost,
 	/client/proc/toggle_view_range,
-	/datum/admins/proc/view_txt_log,
-	/datum/admins/proc/view_atk_log,
 	/client/proc/cmd_admin_subtle_message,
 	/client/proc/cmd_admin_check_contents,
 	/datum/admins/proc/access_news_network,
@@ -284,21 +282,8 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		/client/proc/play_web_sound,
 		GLOB.admin_verbs_spawn,
 		/*Debug verbs added by "show debug verbs"*/
-		/client/proc/Cell,
-		/client/proc/camera_view,
-		/client/proc/sec_camera_report,
-		/client/proc/intercom_view,
-		/client/proc/air_status,
-		/client/proc/atmosscan,
-		/client/proc/powerdebug,
-		/client/proc/count_objects_on_z_level,
-		/client/proc/count_objects_all,
-		/client/proc/cmd_assume_direct_control,
-		/client/proc/startSinglo,
-		/client/proc/set_server_fps,
-		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/cmd_admin_areatest_all,
-		/client/proc/cmd_admin_areatest_station,
+		GLOB.admin_verbs_debug_mapping,
+		/client/proc/disable_debug_verbs,
 		/client/proc/readmin
 		)
 

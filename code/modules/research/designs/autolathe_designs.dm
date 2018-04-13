@@ -423,6 +423,14 @@
 	build_path = /obj/item/device/healthanalyzer
 	category = list("initial", "Medical")
 
+/datum/design/pillbottle
+	name = "Pill Bottle"
+	id = "pillbottle"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 20, MAT_GLASS = 100)
+	build_path = /obj/item/storage/pill_bottle
+	category = list("initial", "Medical")
+
 /datum/design/beanbag_slug
 	name = "Beanbag Slug"
 	id = "beanbag_slug"

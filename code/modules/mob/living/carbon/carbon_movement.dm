@@ -24,9 +24,8 @@
 	if(movement_type & FLYING)
 		return 0
 	if(!(lube&SLIDE_ICE))
-		add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
+		add_logs(src, (O ? O : get_turf(src)), "slipped on the", null, ((lube & SLIDE) ? "(LUBE)" : null))
 	return loc.handle_slip(src, knockdown_amount, O, lube)
-
 
 /mob/living/carbon/Process_Spacemove(movement_dir = 0)
 	if(..())

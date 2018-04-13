@@ -64,7 +64,7 @@
 			squirrel.emote("scream")
 			playsound(squirrel, 'sound/effects/splat.ogg', 50, TRUE)
 			playsound(squirrel, 'sound/misc/desceration-03.ogg', 50, TRUE)
-			squirrel.apply_damage(20, BRUTE, "chest")
+			squirrel.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
 		mouse_opacity = MOUSE_OPACITY_OPAQUE //So players can interact with the tile it's on to pull them off
 		buckle_mob(squirrel, TRUE)
 	else
@@ -96,7 +96,7 @@
 		if(!do_after(user, 300, target = user))
 			user.visible_message("<span class='warning'>[user] slides back down [src]!</span>")
 			user.emote("scream")
-			user.apply_damage(10, BRUTE, "chest")
+			user.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
 			playsound(user, 'sound/misc/desceration-03.ogg', 50, TRUE)
 			wiggle_wiggle = FALSE
 			return

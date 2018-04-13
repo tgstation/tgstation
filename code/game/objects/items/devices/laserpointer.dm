@@ -89,7 +89,7 @@
 	//human/alien mobs
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(user.zone_selected == "eyes")
+		if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
 			add_logs(user, C, "shone in the eyes", src)
 
 			var/severity = 1

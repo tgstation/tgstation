@@ -104,6 +104,9 @@
 	qdel(src)
 
 /obj/structure/fireaxecabinet/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(open || broken)
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
@@ -121,7 +124,7 @@
 		return
 
 /obj/structure/fireaxecabinet/attack_paw(mob/living/user)
-	attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)

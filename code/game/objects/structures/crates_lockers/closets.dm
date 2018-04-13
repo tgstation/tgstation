@@ -207,7 +207,9 @@
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)
 	if(user in src)
 		return
-	if(!src.tool_interact(W,user))
+	if(src.tool_interact(W,user))
+		return 1 // No afterattack
+	else
 		return ..()
 
 /obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldnt be continued (because tool was used/closet was of wrong type), FALSE if otherwise
@@ -311,13 +313,14 @@
 	container_resist()
 
 /obj/structure/closet/attack_hand(mob/user)
-	..()
+	. = ..()
+	if(.)
+		return
 	if(user.lying && get_dist(src, user) > 0)
 		return
 
 	if(!toggle(user))
 		togglelock(user)
-		return
 
 /obj/structure/closet/attack_paw(mob/user)
 	return attack_hand(user)
@@ -339,7 +342,7 @@
 		return
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
-		attack_hand(usr)
+		return attack_hand(usr)
 	else
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 

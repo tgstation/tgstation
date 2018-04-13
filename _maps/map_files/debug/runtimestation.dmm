@@ -34,9 +34,7 @@
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
 "al" = (
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
+/obj/machinery/airalarm/unlocked{
 	pixel_y = 23
 	},
 /obj/structure/closet/secure_closet/atmospherics,
@@ -64,9 +62,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "ap" = (
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
+/obj/machinery/airalarm/unlocked{
 	pixel_y = 23
 	},
 /obj/machinery/power/apc{
@@ -98,9 +94,7 @@
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
+/obj/machinery/airalarm/unlocked{
 	pixel_y = 23
 	},
 /obj/structure/cable{
@@ -263,9 +257,8 @@
 	},
 /area/engine/atmos)
 "aO" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -313,8 +306,7 @@
 "aU" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Gravity Generator";
-	req_access_txt = "11";
-	req_one_access_txt = "0"
+	req_access_txt = "11"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -345,8 +337,7 @@
 "aX" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Gravity Generator";
-	req_access_txt = "11";
-	req_one_access_txt = "0"
+	req_access_txt = "11"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -382,9 +373,8 @@
 	},
 /area/engine/atmos)
 "bc" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -538,9 +528,7 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
+/obj/machinery/airalarm/unlocked{
 	pixel_y = 23
 	},
 /obj/machinery/autolathe/hacked,
@@ -570,9 +558,7 @@
 /turf/open/floor/plasteel,
 /area/science)
 "bG" = (
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
+/obj/machinery/airalarm/unlocked{
 	pixel_y = 23
 	},
 /obj/machinery/power/apc{
@@ -633,9 +619,7 @@
 /obj/item/reagent_containers/glass/beaker/bluespace,
 /obj/item/reagent_containers/glass/beaker/bluespace,
 /obj/item/reagent_containers/syringe,
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
+/obj/machinery/airalarm/unlocked{
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/dark,
@@ -658,9 +642,7 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "bU" = (
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
+/obj/machinery/airalarm/unlocked{
 	pixel_y = 23
 	},
 /obj/machinery/power/apc{
@@ -992,9 +974,7 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "cW" = (
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
+/obj/machinery/airalarm/unlocked{
 	pixel_y = 23
 	},
 /obj/structure/cable,
@@ -1023,9 +1003,7 @@
 /turf/open/floor/plasteel,
 /area/construction)
 "da" = (
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
+/obj/machinery/airalarm/unlocked{
 	pixel_y = 23
 	},
 /obj/machinery/power/apc{
@@ -1453,9 +1431,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
+/obj/machinery/airalarm/unlocked{
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel,

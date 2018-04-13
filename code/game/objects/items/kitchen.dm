@@ -48,7 +48,7 @@
 		icon_state = "fork"
 		forkload = null
 
-	else if(user.zone_selected == "eyes")
+	else if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
 		if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 			M = user
 		return eyestab(M,user)
@@ -78,7 +78,7 @@
 	AddComponent(/datum/component/butchering, 80 - force, 100, force - 10) //bonus chance increases depending on force
 
 /obj/item/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(user.zone_selected == "eyes")
+	if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
 		if(user.has_trait(TRAIT_CLUMSY) && prob(50))
 			M = user
 		return eyestab(M,user)

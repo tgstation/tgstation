@@ -59,6 +59,9 @@
 	shuffle_inplace(cards) // distribute blank cards throughout deck
 
 /obj/item/toy/cards/deck/cas/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(user.lying)
 		return
 	if(cards.len == 0)

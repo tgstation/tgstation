@@ -440,11 +440,19 @@
 		target = safepick(view(3,target))
 		if(!target)
 			return
+
+	var/mob/living/L = user
 	if(!Adjacent(target))
 		if(selected && selected.is_ranged())
+			if(L.has_trait(TRAIT_PACIFISM) && selected.harmful)
+				to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+				return
 			if(selected.action(target,params))
 				selected.start_cooldown()
 	else if(selected && selected.is_melee())
+		if(isliving(target) && selected.harmful && L.has_trait(TRAIT_PACIFISM))
+			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+			return
 		if(selected.action(target,params))
 			selected.start_cooldown()
 	else

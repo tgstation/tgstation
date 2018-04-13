@@ -2,7 +2,7 @@
 
 /obj/machinery/computer/cargo/express
 	name = "express supply console"
-	desc = "This console allows the user to purchase a package for double the price,\
+	desc = "This console allows the user to purchase a package \
 		with 1/40th of the delivery time: made possible by NanoTrasen's new \"Drop Pod Railgun\".\
 		All sales are near instantaneous - please choose carefully"
 	icon_screen = "supply_express"
@@ -58,7 +58,8 @@
 		meme_pack_data[P.group]["packs"] += list(list(
 			"name" = P.name,
 			"cost" = P.cost,
-			"id" = pack
+			"id" = pack,
+			"desc" = P.desc || P.name // If there is a description, use it. Otherwise use the pack's name.
 		))
 
 /obj/machinery/computer/cargo/express/ui_interact(mob/living/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
@@ -74,8 +75,7 @@
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
 	data["points"] = SSshuttle.points
 	data["supplies"] = list()
-	message = "For normally priced items, please use the standard Supply or Request Console. \
-		Sales are near-instantaneous - please choose carefully."
+	message = "Sales are near-instantaneous - please choose carefully."
 	if(SSshuttle.supplyBlocked)
 		message = blockade_warning
 	if(obj_flags & EMAGGED)

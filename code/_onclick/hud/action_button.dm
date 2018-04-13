@@ -9,6 +9,7 @@
 	var/appearance_cache
 
 	var/id
+	var/ordered = TRUE //If the button gets placed into the default bar
 
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
@@ -149,13 +150,14 @@
 				client.screen += A.button
 	else
 		for(var/datum/action/A in actions)
-			button_number++
 			A.UpdateButtonIcon()
 			var/obj/screen/movable/action_button/B = A.button
-			if(!B.moved)
-				B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
-			else
+			if(B.ordered)
+				button_number++
+			if(B.moved)
 				B.screen_loc = B.moved
+			else
+				B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
 			if(reload_screen)
 				client.screen += B
 

@@ -42,7 +42,7 @@
 			deadminlink = " <a class='small' href='?src=[REF(src)];[HrefToken()];editrights=deactivate;ckey=[adm_ckey]'>\[DA\]</a>"
 
 		output += "<tr>"
-		output += "<td style='text-align:right;'>[adm_ckey] [deadminlink]<a class='small' href='?src=[REF(src)];[HrefToken()];editrights=remove;ckey=[adm_ckey]'>\[-\]</a></td>"
+		output += "<td style='text-align:center;'>[adm_ckey]<br>[deadminlink]<a class='small' href='?src=[REF(src)];[HrefToken()];editrights=remove;ckey=[adm_ckey]'>\[-\]</a><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=sync;ckey=[adm_ckey]'>\[SYNC TGDB\]</a></td>"
 		output += "<td><a href='?src=[REF(src)];[HrefToken()];editrights=rank;ckey=[adm_ckey]'>[D.rank.name]</a></td>"
 		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.include_rights," ")]</a></td>"
 		output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;ckey=[adm_ckey]'>[rights2text(D.rank.exclude_rights," ", "-")]</a></td>"
@@ -72,8 +72,8 @@
 	var/use_db
 	var/task = href_list["editrights"]
 	var/skip
-	if(task == "activate" || task == "deactivate")
-		skip = 1
+	if(task == "activate" || task == "deactivate" || task == "sync")
+		skip = TRUE
 	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_admins) && task == "rank")
 		if(admin_ckey in GLOB.protected_admins)
 			to_chat(usr, "<span class='admin prefix'>Editing the rank of this admin is blocked by server configuration.</span>")
@@ -82,32 +82,37 @@
 		if(D.rank in GLOB.protected_ranks)
 			to_chat(usr, "<span class='admin prefix'>Editing the flags of this rank is blocked by server configuration.</span>")
 			return
-	if(check_rights(R_DBRANKS, 0))
+	if(CONFIG_GET(flag/load_legacy_ranks_only) && (task == "rank" || task == "permissions"))
+		to_chat(usr, "<span class='admin prefix'>Database rank loading is disabled, only temporary changes can be made to an admin's rank or permissions.</span>")
+		use_db = FALSE
+		skip = TRUE
+	if(check_rights(R_DBRANKS, FALSE))
 		if(!skip)
 			if(!SSdbcore.Connect())
 				to_chat(usr, "<span class='danger'>Unable to connect to database, changes are temporary only.</span>")
-				use_db = "Temporary"
-			if(!use_db)
+				use_db = FALSE
+			else
 				use_db = alert("Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", "Permanent", "Temporary", "Cancel")
 				if(use_db == "Cancel")
 					return
 				if(use_db == "Permanent")
-					use_db = 1
+					use_db = TRUE
 					admin_ckey = sanitizeSQL(admin_ckey)
 				else
-					use_db = 0
+					use_db = FALSE
 	if(task != "add")
 		D = GLOB.admin_datums[admin_ckey]
 		if(!D)
 			D = GLOB.deadmins[admin_ckey]
 		if(!D)
 			return
-		if(!check_if_greater_rights_than_holder(D))
+		if((task != "sync") && !check_if_greater_rights_than_holder(D))
 			message_admins("[key_name_admin(usr)] attempted to change the rank of [admin_ckey] without sufficient rights.")
 			log_admin("[key_name(usr)] attempted to change the rank of [admin_ckey] without sufficient rights.")
+			return
 	switch(task)
 		if("add")
-			admin_ckey = add_admin(use_db)
+			admin_ckey = add_admin(null, use_db)
 			if(!admin_ckey)
 				return
 			change_admin_rank(admin_ckey, use_db)
@@ -121,22 +126,28 @@
 			force_readmin(admin_ckey, D)
 		if("deactivate")
 			force_deadmin(admin_ckey, D)
+		if("sync")
+			sync_lastadminrank(admin_ckey, D)
 	edit_admin_permissions()
 
-/datum/admins/proc/add_admin(use_db)
-	. = sanitizeSQL(ckey(input("New admin's ckey","Admin ckey") as text|null))
+/datum/admins/proc/add_admin(admin_ckey, use_db)
+	if(admin_ckey)
+		. = admin_ckey
+	else
+		. = ckey(input("New admin's ckey","Admin ckey") as text|null)
 	if(!.)
-		return 0
-	if(. in GLOB.admin_datums+GLOB.deadmins)
+		return FALSE
+	if(!admin_ckey && (. in GLOB.admin_datums+GLOB.deadmins))
 		to_chat(usr, "<span class='danger'>[.] is already an admin.</span>")
-		return 0
+		return FALSE
 	if(use_db)
+		. = sanitizeSQL(.)
 		var/datum/DBQuery/query_add_admin = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin")] (ckey, rank) VALUES ('[.]', 'NEW ADMIN')")
 		if(!query_add_admin.warn_execute())
-			return 0
+			return FALSE
 		var/datum/DBQuery/query_add_admin_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, adminckey, adminip, operation, log) VALUES ('[SQLtime()]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'add admin', 'New admin added: [.]')")
 		if(!query_add_admin_log.warn_execute())
-			return 0
+			return FALSE
 
 /datum/admins/proc/remove_admin(admin_ckey, use_db, datum/admins/D)
 	if(alert("Are you sure you want to remove [admin_ckey]?","Confirm Removal","Do it","Cancel") == "Do it")
@@ -175,7 +186,7 @@
 			rank_names[R.name] = R
 	var/new_rank = input("Please select a rank", "New rank") as null|anything in rank_names
 	if(new_rank == "*New Rank*")
-		new_rank = sanitizeSQL(ckeyEx(input("Please input a new rank", "New custom rank") as text|null))
+		new_rank = ckeyEx(input("Please input a new rank", "New custom rank") as text|null)
 	if(!new_rank)
 		return
 	R = rank_names[new_rank]
@@ -186,19 +197,28 @@
 			R = new(new_rank) //blank new admin_rank
 		GLOB.admin_ranks += R
 	if(use_db)
-		if(!R)
-			var/datum/DBQuery/query_add_rank = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_ranks")] (rank, flags, exclude_flags, can_edit_rights) VALUES ('[new_rank]', '0', '0', '0')")
+		new_rank = sanitizeSQL(new_rank)
+		//if a player was tempminned before having a permanent change made to their rank they won't yet be in the db
+		var/old_rank
+		var/datum/DBQuery/query_admin_in_db = SSdbcore.NewQuery("SELECT rank FROM [format_table_name("admin")] WHERE ckey = '[admin_ckey]'")
+		if(!query_admin_in_db.warn_execute())
+			return
+		if(!query_admin_in_db.NextRow())
+			add_admin(admin_ckey, TRUE)
+			old_rank = "NEW ADMIN"
+		else
+			old_rank = query_admin_in_db.item[1]
+		//similarly if a temp rank is created it won't be in the db if someone is permanently changed to it
+		var/datum/DBQuery/query_rank_in_db = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("admin_ranks")] WHERE rank = '[new_rank]'")
+		if(!query_rank_in_db.warn_execute())
+			return
+		if(!query_rank_in_db.NextRow())
+			var/datum/DBQuery/query_add_rank = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_ranks")] (rank, flags, exclude_flags, can_edit_flags) VALUES ('[new_rank]', '0', '0', '0')")
 			if(!query_add_rank.warn_execute())
 				return
 			var/datum/DBQuery/query_add_rank_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, adminckey, adminip, operation, log) VALUES ('[SQLtime()]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'add rank', 'New rank added: [admin_ckey]')")
 			if(!query_add_rank_log.warn_execute())
 				return
-		var/old_rank
-		var/datum/DBQuery/query_get_rank = SSdbcore.NewQuery("SELECT rank FROM [format_table_name("admin")] WHERE ckey = '[admin_ckey]'")
-		if(!query_get_rank.warn_execute())
-			return
-		if(query_get_rank.NextRow())
-			old_rank = query_get_rank.item[1]
 		var/datum/DBQuery/query_change_rank = SSdbcore.NewQuery("UPDATE [format_table_name("admin")] SET rank = '[new_rank]' WHERE ckey = '[admin_ckey]'")
 		if(!query_change_rank.warn_execute())
 			return
@@ -208,7 +228,8 @@
 	if(D) //they were previously an admin
 		D.disassociate() //existing admin needs to be disassociated
 		D.rank = R //set the admin_rank as our rank
-		D.associate()
+		var/client/C = GLOB.directory[admin_ckey]
+		D.associate(C)
 	else
 		D = new(R, admin_ckey, TRUE) //new admin
 	message_admins("[key_name_admin(usr)] edited the admin rank of [admin_ckey] to [new_rank] [use_db ? "permanently" : "temporarily"]")
@@ -218,7 +239,7 @@
 	var/new_flags = input_bitfield(usr, "Include permission flags<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.include_rights, 350, 590, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
 	if(isnull(new_flags))
 		return
-	var/new_exclude_flags = input_bitfield(usr, "Exclude permission flags<br>Flags enabled here will be removed from a rank.<br>Note these take precedence over included flags.<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.exclude_rights, 350, 660, "red", usr.client.holder.rank.can_edit_rights)
+	var/new_exclude_flags = input_bitfield(usr, "Exclude permission flags<br>Flags enabled here will be removed from a rank.<br>Note these take precedence over included flags.<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.exclude_rights, 350, 670, "red", usr.client.holder.rank.can_edit_rights)
 	if(isnull(new_exclude_flags))
 		return
 	var/new_can_edit_flags = input_bitfield(usr, "Editable permission flags<br>These are the flags this rank is allowed to edit if they have access to the permissions panel.<br>They will be unable to modify admins to a rank that has a flag not included here.<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_ckey]"]", "admin_flags", D.rank.can_edit_rights, 350, 710, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
@@ -272,3 +293,11 @@
 		D.associate(C) //link up with the client and add verbs
 	message_admins("[key_name_admin(usr)] edited the permissions of [use_db ? " rank [D.rank.name] permanently" : "[admin_ckey] temporarily"]")
 	log_admin("[key_name(usr)] edited the permissions of [use_db ? " rank [D.rank.name] permanently" : "[admin_ckey] temporarily"]")
+
+/datum/admins/proc/sync_lastadminrank(admin_ckey, datum/admins/D)
+	var/sqlrank = sanitizeSQL(D.rank.name)
+	admin_ckey = sanitizeSQL(admin_ckey)
+	var/datum/DBQuery/query_sync_lastadminrank = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sqlrank]' WHERE ckey = '[admin_ckey]'")
+	if(!query_sync_lastadminrank.warn_execute())
+		return
+	to_chat(usr, "<span class='admin'>Sync of [admin_ckey] successful.</span>")

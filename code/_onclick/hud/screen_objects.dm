@@ -180,13 +180,18 @@
 
 /obj/screen/close
 	name = "close"
+	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
+	icon_state = "backpack_close"
+
+/obj/screen/close/Initialize(mapload, new_master)
+	. = ..()
+	master = new_master
 
 /obj/screen/close/Click()
-	if(istype(master, /obj/item/storage))
-		var/obj/item/storage/S = master
-		S.close(usr)
-	return 1
-
+	var/datum/component/storage/S = master
+	S.hide_from(usr)
+	return TRUE
 
 /obj/screen/drop
 	name = "drop"
@@ -346,19 +351,27 @@
 
 /obj/screen/storage
 	name = "storage"
+	icon_state = "block"
+	screen_loc = "7,7 to 10,8"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+
+/obj/screen/storage/Initialize(mapload, new_master)
+	. = ..()
+	master = new_master
 
 /obj/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
-		return 1
+		return TRUE
 	if(usr.stat || usr.IsUnconscious() || usr.IsKnockdown() || usr.IsStun())
-		return 1
+		return TRUE
 	if (ismecha(usr.loc)) // stops inventory actions in a mech
-		return 1
+		return TRUE
 	if(master)
 		var/obj/item/I = usr.get_active_held_item()
 		if(I)
 			master.attackby(I, usr, params)
-	return 1
+	return TRUE
 
 /obj/screen/throw_catch
 	name = "throw/catch"
@@ -374,7 +387,7 @@
 	name = "damage zone"
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
-	var/selecting = "chest"
+	var/selecting = BODY_ZONE_CHEST
 
 /obj/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
@@ -389,44 +402,44 @@
 		if(1 to 9) //Legs
 			switch(icon_x)
 				if(10 to 15)
-					choice = "r_leg"
+					choice = BODY_ZONE_R_LEG
 				if(17 to 22)
-					choice = "l_leg"
+					choice = BODY_ZONE_L_LEG
 				else
 					return 1
 		if(10 to 13) //Hands and groin
 			switch(icon_x)
 				if(8 to 11)
-					choice = "r_arm"
+					choice = BODY_ZONE_R_ARM
 				if(12 to 20)
-					choice = "groin"
+					choice = BODY_ZONE_PRECISE_GROIN
 				if(21 to 24)
-					choice = "l_arm"
+					choice = BODY_ZONE_L_ARM
 				else
 					return 1
 		if(14 to 22) //Chest and arms to shoulders
 			switch(icon_x)
 				if(8 to 11)
-					choice = "r_arm"
+					choice = BODY_ZONE_R_ARM
 				if(12 to 20)
-					choice = "chest"
+					choice = BODY_ZONE_CHEST
 				if(21 to 24)
-					choice = "l_arm"
+					choice = BODY_ZONE_L_ARM
 				else
 					return 1
 		if(23 to 30) //Head, but we need to check for eye or mouth
 			if(icon_x in 12 to 20)
-				choice = "head"
+				choice = BODY_ZONE_HEAD
 				switch(icon_y)
 					if(23 to 24)
 						if(icon_x in 15 to 17)
-							choice = "mouth"
+							choice = BODY_ZONE_PRECISE_MOUTH
 					if(26) //Eyeline, eyes are on 15 and 17
 						if(icon_x in 14 to 18)
-							choice = "eyes"
+							choice = BODY_ZONE_PRECISE_EYES
 					if(25 to 27)
 						if(icon_x in 15 to 17)
-							choice = "eyes"
+							choice = BODY_ZONE_PRECISE_EYES
 
 	return set_selected_zone(choice, usr)
 

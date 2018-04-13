@@ -17,11 +17,7 @@
 
 	var/mob/dead/observer/selected = pick_n_take(candidates)
 
-	var/mob/camera/disease/virus = new /mob/camera/disease(locate(1, 1, 1))
-	if(!virus.infect_patient_zero())
-		message_admins("Event attempted to spawn a sentient disease, but infection of patient zero failed.")
-		qdel(virus)
-		return WAITING_FOR_SOMETHING
+	var/mob/camera/disease/virus = new /mob/camera/disease(SSmapping.get_station_center())
 	virus.key = selected.key
 	INVOKE_ASYNC(virus, /mob/camera/disease/proc/pick_name)
 	message_admins("[key_name_admin(virus)] has been made into a sentient disease by an event.")

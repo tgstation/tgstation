@@ -351,6 +351,7 @@
 					T.ratvar_act(dist)
 					CHECK_TICK
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/structure/destructible/clockwork/massive/celestial_gateway/attack_ghost(mob/user)
 	if(!IsAdminGhost(user))
 		return ..()

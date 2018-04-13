@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
-		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr]\[[COORD(usr)]\])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+		log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -108,6 +108,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	switch(href_list["action"])
 		if("openLink")
 			src << link(href_list["link"])
+
+	var/datum/real_src = hsrc
+	if(QDELETED(real_src))
+		return
 
 	..()	//redirect to hsrc.Topic()
 
@@ -147,6 +151,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 GLOBAL_LIST_EMPTY(external_rsc_urls)
 #endif
 
+/client/can_vv_get(var_name)
+	return var_name != NAMEOF(src, holder) && ..()
+
+/client/vv_edit_var(var_name, var_value)
+	return var_name != NAMEOF(src, holder) && ..()
 
 /client/New(TopicData)
 	var/tdata = TopicData //save this for later use
@@ -227,7 +236,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 
 	. = ..()	//calls mob.Login()
-	#if DM_VERSION >= 512
+
 	if (byond_version >= 512)
 		if (!byond_build || byond_build < 1386)
 			message_admins("<span class='adminnotice'>[key_name(src)] has been detected as spoofing their byond version. Connection rejected.</span>")
@@ -245,7 +254,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			else
 				qdel(src)
 				return
-	#endif
+
 	if(SSinput.initialized)
 		set_macros()
 
@@ -528,7 +537,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/static/tokens = list()
 	var/static/cidcheck_failedckeys = list() //to avoid spamming the admins if the same guy keeps trying.
 	var/static/cidcheck_spoofckeys = list()
+	var/sql_ckey = sanitizeSQL(ckey)
+	var/datum/DBQuery/query_cidcheck = SSdbcore.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	query_cidcheck.Execute()
 
+	var/lastcid
+	if (query_cidcheck.NextRow())
+		lastcid = query_cidcheck.item[1]
 	var/oldcid = cidcheck[ckey]
 
 	if (oldcid)
@@ -547,7 +562,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			qdel(src)
 			return TRUE
 
-		if (oldcid != computer_id) //IT CHANGED!!!
+		if (oldcid != computer_id && computer_id != lastcid) //IT CHANGED!!!
 			cidcheck -= ckey //so they can try again after removing the cid randomizer.
 
 			to_chat(src, "<span class='userdanger'>Connection Error:</span>")
@@ -572,26 +587,17 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")
 				cidcheck_spoofckeys -= ckey
 			cidcheck -= ckey
-	else
-		var/sql_ckey = sanitizeSQL(ckey)
-		var/datum/DBQuery/query_cidcheck = SSdbcore.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
-		query_cidcheck.Execute()
+	else if (computer_id != lastcid)
+		cidcheck[ckey] = computer_id
+		tokens[ckey] = cid_check_reconnect()
 
-		var/lastcid
-		if (query_cidcheck.NextRow())
-			lastcid = query_cidcheck.item[1]
+		sleep(5 SECONDS) //browse is queued, we don't want them to disconnect before getting the browse() command.
 
-		if (computer_id != lastcid)
-			cidcheck[ckey] = computer_id
-			tokens[ckey] = cid_check_reconnect()
+		//we sleep after telling the client to reconnect, so if we still exist something is up
+		log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
 
-			sleep(5 SECONDS) //browse is queued, we don't want them to disconnect before getting the browse() command.
-
-			//we sleep after telling the client to reconnect, so if we still exist something is up
-			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
-
-			qdel(src)
-			return TRUE
+		qdel(src)
+		return TRUE
 
 /client/proc/cid_check_reconnect()
 	var/token = md5("[rand(0,9999)][world.time][rand(0,9999)][ckey][rand(0,9999)][address][rand(0,9999)][computer_id][rand(0,9999)]")
@@ -604,7 +610,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/proc/note_randomizer_user()
 	add_system_note("CID-Error", "Detected as using a cid randomizer.")
-	
+
 /client/proc/add_system_note(system_ckey, message)
 	var/sql_system_ckey = sanitizeSQL(system_ckey)
 	var/sql_ckey = sanitizeSQL(ckey)
@@ -632,6 +638,49 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			message_admins("<span class='adminnotice'>Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN.</span>")
 		ip_intel = res.intel
 
+/client/Click(atom/object, atom/location, control, params)
+	var/ab = FALSE
+	var/list/L = params2list(params)
+	if (object && object == middragatom && L["left"])
+		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
+	var/mcl = CONFIG_GET(number/minute_click_limit)
+	if (!holder && mcl)
+		var/minute = round(world.time, 600)
+		if (!clicklimiter)
+			clicklimiter = new(LIMITER_SIZE)
+		if (minute != clicklimiter[CURRENT_MINUTE])
+			clicklimiter[CURRENT_MINUTE] = minute
+			clicklimiter[MINUTE_COUNT] = 0
+		clicklimiter[MINUTE_COUNT] += 1+(ab)
+		if (clicklimiter[MINUTE_COUNT] > mcl)
+			var/msg = "Your previous click was ignored because you've done too many in a minute."
+			if (minute != clicklimiter[ADMINSWARNED_AT]) //only one admin message per-minute. (if they spam the admins can just boot/ban them)
+				clicklimiter[ADMINSWARNED_AT] = minute
+
+				msg += " Administrators have been informed."
+				if (ab)
+					log_game("[key_name(src)] is using the middle click aimbot exploit")
+					message_admins("[key_name_admin(src)] [ADMIN_FLW(usr)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit</span>")
+					add_system_note("aimbot", "Is using the middle click aimbot exploit")
+
+				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
+				message_admins("[key_name_admin(src)] [ADMIN_FLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
+			to_chat(src, "<span class='danger'>[msg]</span>")
+			return
+
+	var/scl = CONFIG_GET(number/second_click_limit)
+	if (!holder && scl)
+		var/second = round(world.time, 10)
+		if (!clicklimiter)
+			clicklimiter = new(LIMITER_SIZE)
+		if (second != clicklimiter[CURRENT_SECOND])
+			clicklimiter[CURRENT_SECOND] = second
+			clicklimiter[SECOND_COUNT] = 0
+		clicklimiter[SECOND_COUNT] += 1+(!!ab)
+		if (clicklimiter[SECOND_COUNT] > scl)
+			to_chat(src, "<span class='danger'>Your previous click was ignored because you've done too many in a second</span>")
+			return
+	..()
 
 /client/proc/add_verbs_from_config()
 	if(CONFIG_GET(flag/see_own_notes))
@@ -640,9 +689,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		verbs += /client/proc/self_playtime
 
 
-#undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT
-#undef MIN_CLIENT_VERSION
 
 //checks if a client is afk
 //3000 frames = 5 minutes
@@ -650,17 +697,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(inactivity > duration)
 		return inactivity
 	return FALSE
-
-// Byond seemingly calls stat, each tick.
-// Calling things each tick can get expensive real quick.
-// So we slow this down a little.
-// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
-/client/Stat()
-	. = ..()
-	if (holder)
-		stoplag(1)
-	else
-		stoplag(5)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
@@ -681,6 +717,12 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, SSassets.preload, register_asset = FALSE)
+		#if (PRELOAD_RSC == 0)
+		for (var/name in GLOB.vox_sounds)
+			var/file = GLOB.vox_sounds[name]
+			Export("##action=load_rsc", file)
+			stoplag()
+		#endif
 
 
 //Hook, override it to run code when dir changes
@@ -715,6 +757,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 	view = new_size
 	apply_clickcatcher()
+	mob.reload_fullscreen()
 	if (isliving(mob))
 		var/mob/living/M = mob
 		M.update_damage_hud()

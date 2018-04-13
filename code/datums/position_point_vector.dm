@@ -9,6 +9,19 @@
 #define RETURN_POINT_VECTOR(ATOM, ANGLE, SPEED) {new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED)}
 #define RETURN_POINT_VECTOR_INCREMENT(ATOM, ANGLE, SPEED, AMT) {new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED, AMT)}
 
+/proc/point_midpoint_points(datum/point/a, datum/point/b)	//Obviously will not support multiZ calculations! Same for the two below.
+	var/datum/point/P = new
+	P.x = a.x + (b.x - a.x) / 2
+	P.y = a.y + (b.y - a.y) / 2
+	P.z = a.z
+	return P
+
+/proc/pixel_length_between_points(datum/point/a, datum/point/b)
+	return sqrt(((b.x - a.x) ** 2) + ((b.y - a.y) ** 2))
+
+/proc/angle_between_points(datum/point/a, datum/point/b)
+	return ATAN2((b.y - a.y), (b.x - a.x))
+
 /datum/position			//For positions with map x/y/z and pixel x/y so you don't have to return lists. Could use addition/subtraction in the future I guess.
 	var/x = 0
 	var/y = 0
@@ -52,19 +65,6 @@
 
 /datum/position/proc/return_point()
 	return new /datum/point(src)
-
-/proc/point_midpoint_points(datum/point/a, datum/point/b)	//Obviously will not support multiZ calculations! Same for the two below.
-	var/datum/point/P = new
-	P.x = a.x + (b.x - a.x) / 2
-	P.y = a.y + (b.y - a.y) / 2
-	P.z = a.z
-	return P
-
-/proc/pixel_length_between_points(datum/point/a, datum/point/b)
-	return sqrt(((b.x - a.x) ** 2) + ((b.y - a.y) ** 2))
-
-/proc/angle_between_points(datum/point/a, datum/point/b)
-	return ATAN2((b.y - a.y), (b.x - a.x))
 
 /datum/point		//A precise point on the map in absolute pixel locations based on world.icon_size. Pixels are FROM THE EDGE OF THE MAP!
 	var/x = 0

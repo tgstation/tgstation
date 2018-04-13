@@ -71,7 +71,7 @@
 /obj/item/device/assembly/flash/proc/AOE_flash(bypass_checks = FALSE, range = 3, power = 5, targeted = FALSE, mob/user)
 	if(!bypass_checks && !try_use_flash())
 		return FALSE
-	var/list/mob/targets = get_flash_targets(loc, range, FALSE)
+	var/list/mob/targets = get_flash_targets(get_turf(src), range, FALSE)
 	if(user)
 		targets -= user
 	for(var/mob/living/carbon/C in targets)
@@ -150,7 +150,7 @@
 		return FALSE
 	if(!AOE_flash(FALSE, 3, 5, FALSE, user))
 		return FALSE
-	to_chat(user, "<span class='danger'>Your [src] emits a blinding light!</span>")
+	to_chat(user, "<span class='danger'>[src] emits a blinding light!</span>")
 
 /obj/item/device/assembly/flash/emp_act(severity)
 	if(!try_use_flash())
@@ -158,6 +158,11 @@
 	AOE_flash()
 	burn_out()
 	. = ..()
+
+/obj/item/device/assembly/flash/activate()//AOE flash on signal recieved
+	if(!..())
+		return
+	AOE_flash()
 
 /obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/human/H, mob/user)
 	if(istype(H) && ishuman(user) && H.stat != DEAD)
@@ -266,22 +271,22 @@
 					return
 				crit_fail = FALSE
 				times_used = 0
-				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 				update_icon()
 				flash.crit_fail = TRUE
 				flash.update_icon()
 				return
 	..()
 
-/obj/item/device/assembly/flash/shield/update_icon(flash = 0)
-	item_state = "flashshield"
+/obj/item/device/assembly/flash/shield/update_icon(flash = FALSE)
+	icon_state = "flashshield"
 	item_state = "flashshield"
 
 	if(crit_fail)
 		icon_state = "riot"
 		item_state = "riot"
 	else if(flash)
-		item_state = "flashshield_flash"
+		icon_state = "flashshield_flash"
 		item_state = "flashshield_flash"
 		addtimer(CALLBACK(src, .proc/update_icon), 5)
 

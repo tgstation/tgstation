@@ -6,7 +6,7 @@
 	name = "liver"
 	icon_state = "liver"
 	w_class = WEIGHT_CLASS_NORMAL
-	zone = "chest"
+	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LIVER
 	desc = "Pairing suggestion: chianti and fava beans."
 	var/damage = 0 //liver damage, 0 is no damage, damage=maxHealth causes liver failure
@@ -28,13 +28,16 @@
 			if(filterToxins)
 				//handle liver toxin filtration
 				var/toxamount
-				var/static/list/listOfToxinsInThisBitch = typesof(/datum/reagent/toxin)
-				for(var/datum/reagent/toxin/toxin in listOfToxinsInThisBitch)
-					toxamount += C.reagents.get_reagent_amount(initial(toxin.id))
-
+				var/static/list/toxinstypecache = typecacheof(/datum/reagent/toxin)
+				for(var/I in C.reagents.reagent_list)
+					var/datum/reagent/pickedreagent = I
+					if(is_type_in_typecache(pickedreagent, toxinstypecache))
+						toxamount += C.reagents.get_reagent_amount(initial(pickedreagent.id))
 				if(toxamount <= toxTolerance && toxamount > 0)
-					for(var/datum/reagent/toxin/toxin in listOfToxinsInThisBitch)
-						C.reagents.remove_reagent(initial(toxin.id), 1)
+					for(var/I in C.reagents.reagent_list)
+						var/datum/reagent/pickedreagent = I
+						if(is_type_in_typecache(pickedreagent, toxinstypecache))
+							C.reagents.remove_reagent(initial(pickedreagent.id), 1)
 				else if(toxamount > toxTolerance)
 					damage += toxamount*toxLethality
 
