@@ -14055,7 +14055,6 @@
 	height = 18;
 	id = "emergency_home";
 	name = "OmegaStation emergency evac bay";
-	turf_type = /turf/open/space;
 	width = 30
 	},
 /turf/open/space/basic,
@@ -18129,7 +18128,7 @@
 /turf/closed/wall/r_wall/rust,
 /area/engine/supermatter)
 "aLR" = (
-/obj/machinery/door/airlock/atmos/glass{
+/obj/machinery/door/airlock/atmos/glass/critical{
 	heat_proof = 1;
 	name = "Supermatter Chamber";
 	req_access_txt = "24"
@@ -18988,8 +18987,9 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aOa" = (
-/obj/machinery/power/supermatter_shard/crystal/engine{
-	anchored = 1
+/obj/machinery/power/supermatter_crystal/shard/engine{
+	anchored = 1;
+	moveable = 0
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -20488,7 +20488,7 @@
 /area/medical/morgue)
 "aRd" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	req_access_txt = "5"
 	},
@@ -22208,7 +22208,7 @@
 /area/medical/morgue)
 "aVf" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	req_access_txt = "5"
 	},
@@ -27272,7 +27272,7 @@
 /turf/closed/wall,
 /area/chapel/main)
 "bfz" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Crematorium";
 	req_access_txt = "27"
 	},
@@ -28142,7 +28142,7 @@
 /turf/closed/wall,
 /area/chapel/main)
 "bhr" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Crematorium";
 	req_access_txt = "27"
 	},
@@ -28214,7 +28214,7 @@
 /area/chapel/main)
 "bhy" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Hall"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -28795,7 +28795,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
 "biH" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Quarters";
 	req_access_txt = "27"
 	},
@@ -28839,7 +28839,7 @@
 /area/chapel/main)
 "biM" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Office";
 	req_access_txt = "27"
 	},
@@ -29843,7 +29843,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "blA" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Mass Driver Room";
 	req_access_txt = "27"
 	},
@@ -30338,18 +30338,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"btj" = (
-/obj/docking_port/stationary{
-	dir = 2;
-	dwidth = 4;
-	height = 17;
-	id = "arrivals_stationary";
-	name = "omega arrivals";
-	roundstart_template = /datum/map_template/shuttle/arrival/delta;
-	width = 9
-	},
-/turf/open/space/basic,
-/area/space)
 "btk" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -30547,7 +30535,6 @@
 	height = 13;
 	id = "ferry_home";
 	name = "port bay 2";
-	turf_type = /turf/open/space;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -31447,6 +31434,18 @@
 /obj/item/wrench,
 /turf/open/space,
 /area/space/nearstation)
+"fsl" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 2;
+	height = 16;
+	id = "arrivals_stationary";
+	name = "omega arrivals";
+	roundstart_template = /datum/map_template/shuttle/arrival/omega;
+	width = 5
+	},
+/turf/open/space/basic,
+/area/space)
 "fsJ" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -32878,7 +32877,6 @@
 	height = 17;
 	id = "syndicate_sw";
 	name = "southwest of station";
-	turf_type = /turf/open/space;
 	width = 23
 	},
 /turf/open/space,
@@ -35800,7 +35798,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "wUF" = (
-/obj/machinery/door/airlock/atmos/glass{
+/obj/machinery/door/airlock/atmos/glass/critical{
 	heat_proof = 1;
 	name = "Supermatter Chamber";
 	req_access_txt = "24"
@@ -77326,7 +77324,7 @@ bgU
 aaa
 aaa
 aaa
-aaa
+fsl
 aaa
 aaa
 aaa
@@ -77839,7 +77837,7 @@ blv
 bgU
 aaa
 aaa
-btj
+aaa
 aaa
 aaa
 aaa

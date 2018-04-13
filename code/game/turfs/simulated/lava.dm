@@ -14,7 +14,7 @@
 /turf/open/lava/ex_act(severity, target)
 	contents_explosion(severity, target)
 
-/turf/open/lava/MakeSlippery()
+/turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
 /turf/open/lava/acid_act(acidpwr, acid_volume)

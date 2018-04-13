@@ -9441,13 +9441,11 @@
 	width = 6
 	},
 /obj/docking_port/stationary{
-	baseturf_type = /turf/open/floor/engine;
 	dir = 4;
 	dwidth = 3;
 	height = 6;
 	id = "snowdin_excavation_top";
 	name = "snowdin excavation top";
-	turf_type = /turf/open/floor/engine;
 	width = 6
 	},
 /turf/open/floor/plating,
@@ -9478,13 +9476,11 @@
 /area/awaymission/snowdin/post/mining_dock)
 "xP" = (
 /obj/docking_port/stationary{
-	baseturf_type = /turf/open/floor/plating/snowed;
 	dir = 4;
 	dwidth = 3;
 	height = 6;
 	id = "snowdin_excavation_down";
 	name = "snowdin excavation down";
-	turf_type = /turf/open/floor/plating/snowed;
 	width = 6
 	},
 /turf/open/floor/plating,
@@ -13821,13 +13817,11 @@
 	width = 5
 	},
 /obj/docking_port/stationary{
-	baseturf_type = /turf/open/floor/engine;
 	dir = 4;
 	dwidth = 2;
 	height = 5;
 	id = "snowdin_mining_top";
 	name = "snowdin mining top";
-	turf_type = /turf/open/floor/engine;
 	width = 5
 	},
 /turf/open/floor/plating,
@@ -13874,13 +13868,11 @@
 "Kt" = (
 /obj/docking_port/stationary{
 	area_type = /area/awaymission/snowdin/post/mining_dock;
-	baseturf_type = /turf/open/floor/engine;
 	dir = 4;
 	dwidth = 2;
 	height = 5;
 	id = "snowdin_mining_down";
 	name = "snowdin mining bottom";
-	turf_type = /turf/open/floor/engine;
 	width = 5
 	},
 /turf/open/floor/plating,

@@ -428,7 +428,7 @@
 	. = ..()
 	var/static/i = 1
 	if(id == initial(id))
-		id = "[initial(id)] [i]"
+		id = "[initial(id)][i]"
 	if(name == initial(name))
 		name = "[initial(name)] [i]"
 

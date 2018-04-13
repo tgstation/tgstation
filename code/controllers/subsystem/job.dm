@@ -21,8 +21,21 @@ SUBSYSTEM_DEF(job)
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		LoadJobs()
 	generate_selectable_species()
+	set_overflow_role(CONFIG_GET(string/overflow_job))
 	..()
 
+/datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
+	var/datum/job/new_overflow = GetJob(new_overflow_role)
+	var/cap = CONFIG_GET(number/overflow_cap)
+
+	new_overflow.spawn_positions = cap
+	new_overflow.total_positions = cap
+
+	if(new_overflow_role != overflow_role)
+		var/datum/job/old_overflow = GetJob(overflow_role)
+		old_overflow.spawn_positions = initial(old_overflow.spawn_positions)
+		old_overflow.total_positions = initial(old_overflow.total_positions)
+		overflow_role = new_overflow_role
 
 /datum/controller/subsystem/job/proc/SetupOccupations(faction = "Station")
 	occupations = list()

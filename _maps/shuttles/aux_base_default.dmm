@@ -46,15 +46,6 @@
 /area/shuttle/auxillary_base)
 "y" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/docking_port/mobile{
-	dwidth = 4;
-	height = 9;
-	id = "aux_base";
-	name = "aux base";
-	port_direction = 2;
-	timid = 1;
-	width = 9
-	},
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "z" = (

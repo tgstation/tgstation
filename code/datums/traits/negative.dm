@@ -8,6 +8,7 @@
 	gain_text = "<span class='danger'>You start feeling depressed.</span>"
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
 	medical_record_text = "Patient has a severe mood disorder causing them to experience sudden moments of sadness."
+	mood_trait = TRUE
 
 
 
@@ -15,6 +16,7 @@
 	name = "Family Heirloom"
 	desc = "You are the current owner of an heirloom. passed down for generations. You have to keep it safe!"
 	value = -1
+	mood_trait = TRUE
 	var/obj/item/heirloom
 	var/where_text
 
@@ -51,9 +53,7 @@
 	if(!where)
 		where = "at your feet"
 		if(where == "in your backpack")
-			var/obj/item/storage/B = H.back
-			B.orient2hud(trait_holder)
-			B.show_to(trait_holder)
+			H.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, H)
 	where_text = "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>"
 
 /datum/trait/family_heirloom/post_add()
@@ -61,7 +61,7 @@
 	var/list/family_name = splittext(trait_holder.real_name, " ")
 	heirloom.name = "\improper [family_name[family_name.len]] family [heirloom.name]"
 
-/datum/trait/family_heirloom/process()
+/datum/trait/family_heirloom/on_process()
 	if(heirloom in trait_holder.GetAllContents())
 		trait_holder.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "family_heirloom_missing")
 		trait_holder.SendSignal(COMSIG_ADD_MOOD_EVENT, "family_heirloom", /datum/mood_event/family_heirloom)

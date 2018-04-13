@@ -174,7 +174,6 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	landing_zone.width = base_dock.width
 	landing_zone.height = base_dock.height
 	landing_zone.setDir(base_dock.dir)
-	landing_zone.turf_type = T.type
 	landing_zone.area_type = A.type
 
 	possible_destinations += "[landing_zone.id];"
@@ -320,7 +319,6 @@ obj/docking_port/stationary/public_mining_dock
 			Mport.width = SM.width
 			Mport.height = SM.height
 			Mport.setDir(dir)
-			Mport.turf_type = landing_spot.type
 			Mport.area_type = A.type
 
 			break

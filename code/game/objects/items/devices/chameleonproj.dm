@@ -31,7 +31,7 @@
 	if (isturf(user.loc) || istype(user.loc, /obj/structure) || active_dummy)
 		toggle(user)
 	else
-		to_chat(user, "<span class='userwarning'>You can't use [src] while inside something.</span>")
+		to_chat(user, "<span class='warning'>You can't use [src] while inside something!</span>")
 
 /obj/item/device/chameleon/afterattack(atom/target, mob/user , proximity)
 	if(!proximity)

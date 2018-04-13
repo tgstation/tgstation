@@ -49,15 +49,19 @@
 
 	return TRUE
 
-/obj/item/stack/ore/burn()
-	if(!refined_type)
-		return ..()
-	var/obj/item/stack/sheet/S = new refined_type(drop_location())
-	var/percent = rand(0.3,0.7)
-	var/amountrefined = round(amount*percent)
-	S.amount = amountrefined
-	S.update_icon()
-	qdel(src)
+/obj/item/stack/ore/fire_act(exposed_temperature, exposed_volume)
+	. = ..()
+	if(isnull(refined_type))
+		return
+	else
+		var/probability = (rand(0,100))/100
+		var/burn_value = probability*amount
+		var/amountrefined = round(burn_value, 1)
+		if(amountrefined < 1)
+			qdel(src)
+		else
+			new refined_type(drop_location(),amountrefined)
+			qdel(src)
 
 /obj/item/stack/ore/uranium
 	name = "uranium ore"

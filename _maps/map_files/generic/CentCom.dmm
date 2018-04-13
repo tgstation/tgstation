@@ -2526,10 +2526,6 @@
 /obj/machinery/capture_the_flag/red,
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
-"hH" = (
-/obj/effect/landmark/shuttle_import,
-/turf/open/space,
-/area/space)
 "hI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -3525,7 +3521,6 @@
 	height = 50;
 	id = "emergency_syndicate";
 	name = "Syndicate Auxillary Shuttle Dock";
-	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 50
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
@@ -8477,13 +8472,11 @@
 "xN" = (
 /obj/docking_port/stationary{
 	area_type = /area/syndicate_mothership/control;
-	baseturf_type = /turf/open/space;
 	dir = 1;
 	dwidth = 3;
 	height = 7;
 	name = "escape pod loader";
 	roundstart_template = /datum/map_template/shuttle/assault_pod/default;
-	turf_type = /turf/open/floor/plating/airless;
 	width = 7
 	},
 /turf/open/floor/plating/airless,
@@ -13394,7 +13387,6 @@
 "My" = (
 /obj/docking_port/stationary{
 	area_type = /area/syndicate_mothership;
-	baseturf_type = /turf/open/floor/plating/asteroid/snow;
 	dheight = 1;
 	dir = 8;
 	dwidth = 12;
@@ -13402,7 +13394,6 @@
 	id = "syndicate_away";
 	name = "syndicate recon outpost";
 	roundstart_template = /datum/map_template/shuttle/infiltrator/basic;
-	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 23
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
@@ -13506,6 +13497,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"VX" = (
+/obj/effect/landmark/shuttle_import,
+/turf/open/space/basic,
+/area/space)
 "Wc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -36021,7 +36016,7 @@ aa
 aa
 aa
 aa
-aa
+VX
 aa
 aa
 aa
@@ -44564,7 +44559,7 @@ aa
 aa
 aa
 aa
-hH
+ad
 aa
 aa
 aa
