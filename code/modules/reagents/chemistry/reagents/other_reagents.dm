@@ -41,7 +41,8 @@
 
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
-		data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning, or else we won't know who's even getting cloned, etc
+		if(data["blood_DNA"] != mix_data["blood_DNA"])
+			data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning if the DNA sample doesn't match.
 		if(data["viruses"] || mix_data["viruses"])
 
 			var/list/mix1 = data["viruses"]
@@ -586,7 +587,7 @@
 	..()
 	if(!istype(H))
 		return
-	if(!H.dna || !H.dna.species || !(H.dna.species.species_traits & SPECIES_ORGANIC))
+	if(!H.dna || !H.dna.species || !(MOB_ORGANIC in H.mob_biotypes))
 		return
 
 	if(isjellyperson(H))
@@ -1471,7 +1472,7 @@
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
-		F.ChangeTurf(/turf/open/floor/carpet)
+		F.PlaceOnTop(/turf/open/floor/carpet)
 	..()
 	return
 

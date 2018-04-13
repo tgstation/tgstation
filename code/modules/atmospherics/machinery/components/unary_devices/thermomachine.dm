@@ -164,28 +164,41 @@
 	icon_state_on = "freezer_1"
 	icon_state_open = "freezer-o"
 	max_temperature = T20C
-	min_temperature = 170
+	min_temperature = 170 //actual minimum temperature is defined by RefreshParts()
 	circuit = /obj/item/circuitboard/machine/thermomachine/freezer
+	
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
+	on = TRUE
+	icon_state = "freezer_1"
+	
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize()
+	. = ..()
+	if(target_temperature == initial(target_temperature))
+		target_temperature = min_temperature
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()
 	var/L
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
-	min_temperature = max(T0C - (initial(min_temperature) + L * 15), TCMB)
+	min_temperature = max(T0C - (initial(min_temperature) + L * 15), TCMB) //73.15K with T1 stock parts
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
 	name = "heater"
 	icon_state = "heater"
 	icon_state_on = "heater_1"
 	icon_state_open = "heater-o"
-	max_temperature = 140
+	max_temperature = 140 //actual maximum temperature is defined by RefreshParts()
 	min_temperature = T20C
 	circuit = /obj/item/circuitboard/machine/thermomachine/heater
 
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on
+	on = TRUE
+	icon_state = "heater_1"
+	
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/RefreshParts()
 	..()
 	var/L
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		L += M.rating
-	max_temperature = T20C + (initial(max_temperature) * L)
+	max_temperature = T20C + (initial(max_temperature) * L) //573.15K with T1 stock parts

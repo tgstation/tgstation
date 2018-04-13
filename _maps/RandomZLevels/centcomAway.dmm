@@ -3209,7 +3209,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "lK" = (
-/obj/machinery/igniter,
+/obj/machinery/igniter/on,
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},

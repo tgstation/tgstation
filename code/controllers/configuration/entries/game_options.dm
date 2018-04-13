@@ -226,9 +226,12 @@
 /datum/config_entry/keyed_number_list/law_weight
 	splitter = ","
 
-/datum/config_entry/number/assistant_cap
+/datum/config_entry/number/overflow_cap
 	config_entry_value = -1
 	min_val = -1
+
+/datum/config_entry/string/overflow_job
+	config_entry_value = "Assistant"
 
 /datum/config_entry/flag/starlight
 /datum/config_entry/flag/grey_assistants

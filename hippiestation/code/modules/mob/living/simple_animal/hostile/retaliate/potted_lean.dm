@@ -27,12 +27,16 @@
 	. = ..()
 
 /mob/living/simple_animal/hostile/retaliate/pottedlean/AttackingTarget()
-	if(prob(50))	
+	if(prob(50))
 		if(isliving(target))
 			var/mob/living/L = target
 			if(L.reagents)
 				L.reagents.add_reagent(attack_inject, rand(1,25))
 	. = ..()
 
-			
-			
+/mob/living/simple_animal/hostile/retaliate/pottedlean/attack_hand(mob/living/user)
+	if(user.a_intent == INTENT_HELP && user.reagents)
+		visible_message("<span class='notice'>[user] takes a sip from [src]</span>")
+		user.reagents.add_reagent(attack_inject, 10)
+	else
+		..()

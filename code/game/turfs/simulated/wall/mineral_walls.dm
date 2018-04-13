@@ -102,7 +102,7 @@
 
 /turf/closed/wall/mineral/plasma/proc/PlasmaBurn(temperature)
 	new girder_type(src)
-	src.ChangeTurf(/turf/open/floor/plasteel)
+	ScrapeAway()
 	var/turf/open/T = src
 	T.atmos_spawn_air("plasma=400;TEMP=[temperature]")
 
