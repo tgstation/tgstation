@@ -1,0 +1,4 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - bugfix: "SCP 194 now uses it's amount variable instead of a hardcoded number."
