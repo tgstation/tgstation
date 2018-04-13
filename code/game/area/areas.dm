@@ -87,15 +87,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 // ===
 
 
-//Not so necessary wrapper.
-/proc/area_contents(area/A)
-	if(!istype(A))
-		return null
-	return A.contents
-
-
-
-
 /area/Initialize()
 	icon_state = ""
 	layer = AREA_LAYER
