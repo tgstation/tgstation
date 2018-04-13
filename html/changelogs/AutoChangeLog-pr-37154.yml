@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Some strange baseturfs in lavaland structures and ruins should be fixed."

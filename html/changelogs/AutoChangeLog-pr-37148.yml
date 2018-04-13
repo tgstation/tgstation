@@ -1,4 +1,0 @@
-author: "Putnam"
-delete-after: True
-changes: 
-  - tweak: "rounded pi correctly"
