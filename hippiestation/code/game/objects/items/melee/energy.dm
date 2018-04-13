@@ -8,3 +8,5 @@
 		if(active)
 			icon_state = "sword[color]"
 			user.update_inv_hands()
+	else
+		..()
