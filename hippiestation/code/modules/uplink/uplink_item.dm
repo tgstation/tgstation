@@ -333,3 +333,10 @@
 
 /datum/uplink_item/device_tools/brainwash_disk
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer")
+
+//Nanosuit uplink item, available in all traitor rounds and nuke.
+/datum/uplink_item/dangerous/nanosuit
+	name = "CryNet Nanosuit"
+	desc = "Become a posthuman warrior. The items cannot be taken off once you wear them."
+	item = /obj/item/storage/box/syndie_kit/nanosuit
+	cost = 20

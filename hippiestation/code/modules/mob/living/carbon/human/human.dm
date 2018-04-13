@@ -25,8 +25,9 @@
 
 //Nanosuit fast cuff break for strength mode 2018/04/09
 /mob/living/carbon/human/cuff_resist(obj/item/I)
-	if(istype(mind.martial_art, /datum/martial_art/nano))
-		if(..(I, cuff_break = FAST_CUFFBREAK))
-			dropItemToGround(I)
-			return
+	if(istype(wear_suit, /obj/item/clothing/suit/space/hardsuit/nano))
+		var/obj/item/clothing/suit/space/hardsuit/nano/NS = wear_suit
+		if(NS.mode == "strength")
+			if(..(I, cuff_break = FAST_CUFFBREAK))
+				dropItemToGround(I)
 	..()
