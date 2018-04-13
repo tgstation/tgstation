@@ -240,9 +240,13 @@
 	icon_state = "pi"
 	inputs = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	
+/obj/item/integrated_circuit/arithmetic/pi/Initialize()
+	. = ..()
+	desc = "Not recommended for cooking. Outputs '[PI]' when it receives a pulse."
 
 /obj/item/integrated_circuit/arithmetic/pi/do_work()
-	set_pin_data(IC_OUTPUT, 1, 3.14159)
+	set_pin_data(IC_OUTPUT, 1, PI)
 	push_data()
 	activate_pin(2)
 
