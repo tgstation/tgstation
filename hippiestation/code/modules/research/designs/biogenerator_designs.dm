@@ -220,7 +220,7 @@
 
 /* Special Stuff*/
 
-/datum/design/strange_seed
+/datum/design/strange_seedf
 	name = "Pack of strange seeds"
 	id = "strange_seed"
 	build_type = BIOGENERATOR
