@@ -42,7 +42,7 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 
 /datum/controller/subsystem/processing/networks/proc/make_address(string)
 	if(!string)
-		return resolve_collisions? make_address("[num2text(rand(HID_RESTRICTED_END, 999999999999), 12)]"):.
+		return resolve_collisions? make_address("[num2text(rand(HID_RESTRICTED_END, 999999999999), 12)]"):null
 	var/hex = md5(string)
 	if(!hex)
 		return		//errored
