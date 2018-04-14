@@ -18,6 +18,8 @@
 //screen locations
 #define DEFAULT_BLOODSPELLS "6:-29,4:-2"
 #define DEFAULT_BLOODTIP "14:6,14:27"
-//#define DEFAULT_TOOLTIP "WEST+5:-29,NORTH-10:-2"
 #define DEFAULT_TOOLTIP "6:-29,5:-2"
+
+//misc
+#define SOULS_TO_REVIVE 3
 #define BLOODCULT_EYE "f00"
