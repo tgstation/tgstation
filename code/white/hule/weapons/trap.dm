@@ -54,13 +54,14 @@
 
 /obj/structure/boobytrap/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wirecutters) && !(flags_1&NODECONSTRUCT_1))
-		W.play_tool_sound(src)
-		if(prob(80) && user.mind.antag_datums == null && user != owner)
-			to_chat(user, "<span class='userdanger'>Дебил блядь! Кто тебя учил растяжки обезвреживать?</span>")
-			activate()
-			return
-		if(grenade)
-			grenade.forceMove(get_turf(user))
-		qdel(src)
+		if(do_after(user, 30, target = src))
+			W.play_tool_sound(src)
+			if(prob(80) && user.mind.antag_datums == null && user != owner)
+				to_chat(user, "<span class='userdanger'>Дебил блядь! Кто тебя учил растяжки обезвреживать?</span>")
+				activate()
+				return
+			if(grenade)
+				grenade.forceMove(get_turf(user))
+			qdel(src)
 	..()
 
