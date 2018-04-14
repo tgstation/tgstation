@@ -108,3 +108,16 @@
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
+/datum/trait/hlumi_eyes
+	name = "High Luminosity Eyes"
+	desc = "You decided to upgrade your weak fleshy eyes with these cool cybernetic ones, your vision is augumented!"
+	value = 1
+
+/datum/trait/hlumi_eyes/on_spawn()
+	var/mob/living/carbon/human/H = trait_holder
+	var/obj/item/organ/eyes/robotic/glow = new
+	glow.Insert(H, drop_if_replaced = FALSE)
+	H.regenerate_icons()
+
+/datum/trait/hlumi_eyes/post_add()
+	to_chat(trait_holder, "<span class='boldannounce'>Your eyes were replaced with a High Luminosity Eyes. You can change their color at will.</span>")
