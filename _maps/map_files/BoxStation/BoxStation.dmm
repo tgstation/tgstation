@@ -37603,9 +37603,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/device/slime_scanner{
-	step_x = 0
-	},
+/obj/item/device/slime_scanner,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel,
