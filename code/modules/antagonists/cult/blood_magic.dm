@@ -9,11 +9,13 @@
 	..()
 	button.screen_loc = DEFAULT_BLOODSPELLS
 	button.moved = DEFAULT_BLOODSPELLS
-  button.ordered = FALSE
+	button.ordered = FALSE
 	var/datum/action/innate/cult/tooltip/spells/tip = new(owner)
-	var/datum/action/innate/cult/tooltip/bloodsense/tip2 = new(owner)
+	var/datum/action/innate/cult/tooltip/spells/second/tip2 = new(owner)
+	var/datum/action/innate/cult/tooltip/bloodsense/tip3 = new(owner)
 	tip.Grant(owner, src)
 	tip2.Grant(owner, src)
+	tip3.Grant(owner, src)
 
 /datum/action/innate/cult/blood_magic/Remove()
 	for(var/X in spells)
@@ -91,30 +93,20 @@
 /datum/action/innate/cult/tooltip // Temporary and invisible buttons that automatically provide info to players
 	name = "Blood Cult Tooltip"
 	button_icon_state = ""
+	background_icon_state = null
 	var/screenloc = DEFAULT_TOOLTIP
-	var/second_tip = ""
 	var/initial_delay = 0
-
-/datum/action/innate/cult/tooltip/proc/second_tip()
-	button.hide()
-	desc = second_tip
-	button.MouseEntered(screenloc,"mainwindow.tooltip", null)
 
 /datum/action/innate/cult/tooltip/proc/reveal_tip()
 	button.MouseEntered(screenloc,"mainwindow.tooltip", null)
-	if(second_tip)
-		addtimer(CALLBACK(button, /datum/tooltip.proc/hide), 80)
-		addtimer(CALLBACK(src, .proc/second_tip), 100)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 180)
-	else
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 80)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/closeToolTip, owner), 75)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 80)
 
 /datum/action/innate/cult/tooltip/Grant()
 	..()
 	button.screen_loc = screenloc
 	button.moved = screenloc
 	button.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	button.alpha = 0
 	if(initial_delay)
 		addtimer(CALLBACK(src, .proc/reveal_tip), initial_delay)
 	else
@@ -123,12 +115,15 @@
 /datum/action/innate/cult/tooltip/spells
 	name = "Blood Spell Tooltip"
 	desc = "This is your blood magic spell bar. Use the button, preferably near an empowering rune, to prepare powerful blood spells!"
-	second_tip = "You can drag this button anywhere on your screen to adjust the location of the entire spellbar (upon the next spell update)."
+
+/datum/action/innate/cult/tooltip/spells/second
+	desc = "<u>You can drag this button anywhere on your screen to adjust the location of the entire spellbar (upon the next spell update).</u>"
+	initial_delay = 100
 
 /datum/action/innate/cult/tooltip/bloodsense
 	name = "Blood Sense Tooltip"
 	desc = "This is your blood-sense tracker, mouse over for more information about your objective. It is also used to track targets."
-	screenloc = DEFAULT_BLOODALERT
+	screenloc = DEFAULT_BLOODTIP
 	initial_delay = 200
 
 /datum/action/innate/cult/blood_spell //The next generation of talismans, handles storage/creation of blood magic
