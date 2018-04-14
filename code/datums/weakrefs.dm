@@ -6,11 +6,6 @@
 		if(!input.weak_reference)
 			input.weak_reference = new /datum/weakref(input)
 		return input.weak_reference
-	else
-		if(istext(input))
-			return input
-		if(isnum(input))
-			return input
 
 /datum/proc/create_weakref()		//Forced creation for admin proccalls
 	return WEAKREF(src)
