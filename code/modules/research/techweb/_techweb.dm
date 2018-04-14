@@ -158,6 +158,7 @@
 	boosted_nodes[N] = max(boosted_nodes[N], N.boost_item_paths[itempath])
 	if(N.autounlock_by_boost)
 		hidden_nodes -= N.id
+	update_node_status(N)
 	return TRUE
 
 /datum/techweb/proc/update_tiers(datum/techweb_node/base)

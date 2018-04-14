@@ -15,9 +15,17 @@
 	var/openable = TRUE
 	var/obj/item/electronics/airlock/electronics
 	var/start_showpiece_type = null //add type for items on display
+	var/list/start_showpieces = list() //Takes sublists in the form of list("type" = /obj/item/bikehorn, "trophy_message" = "henk")
+	var/trophy_message = ""
 
 /obj/structure/displaycase/Initialize()
 	. = ..()
+	if(start_showpieces.len && !start_showpiece_type) 
+		var/list/showpiece_entry = pick(start_showpieces)
+		if (showpiece_entry && showpiece_entry["type"])
+			start_showpiece_type = showpiece_entry["type"]
+			if (showpiece_entry["trophy_message"])
+				trophy_message = showpiece_entry["trophy_message"]
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
 	update_icon()
@@ -35,6 +43,9 @@
 		to_chat(user, "<span class='notice'>Hooked up with an anti-theft system.</span>")
 	if(showpiece)
 		to_chat(user, "<span class='notice'>There's [showpiece] inside.</span>")
+	if(trophy_message)
+		to_chat(user, "The plaque reads:")
+		to_chat(user, trophy_message)
 
 
 /obj/structure/displaycase/proc/dump()
@@ -144,9 +155,12 @@
 	update_icon()
 
 /obj/structure/displaycase/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/displaycase/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (showpiece && (broken || open))
 		to_chat(user, "<span class='notice'>You deactivate the hover field built into the case.</span>")
@@ -161,8 +175,6 @@
 		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", null, null, COMBAT_MESSAGE_RANGE)
 		user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 		take_damage(2)
-
-
 
 /obj/structure/displaycase_chassis
 	anchored = TRUE
@@ -213,7 +225,7 @@
 //The captains display case requiring specops ID access is intentional.
 //The lab cage and captains display case do not spawn with electronics, which is why req_access is needed.
 /obj/structure/displaycase/captain
-	alert = 1
+	alert = TRUE
 	start_showpiece_type = /obj/item/gun/energy/laser/captain
 	req_access = list(ACCESS_CENT_SPECOPS)
 
@@ -223,12 +235,9 @@
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(ACCESS_RD)
 
-
-
 /obj/structure/displaycase/trophy
 	name = "trophy display case"
 	desc = "Store your trophies of accomplishment in here, and they will stay forever."
-	var/trophy_message = ""
 	var/placer_key = ""
 	var/added_roundstart = TRUE
 	var/is_locked = TRUE
@@ -244,12 +253,6 @@
 /obj/structure/displaycase/trophy/Destroy()
 	GLOB.trophy_cases -= src
 	return ..()
-
-/obj/structure/displaycase/trophy/examine(mob/user)
-	..()
-	if(trophy_message)
-		to_chat(user, "The plaque reads:")
-		to_chat(user, trophy_message)
 
 /obj/structure/displaycase/trophy/attackby(obj/item/W, mob/user, params)
 

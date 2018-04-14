@@ -17,6 +17,8 @@
 	return ..()
 
 /obj/item/melee/transforming/energy/suicide_act(mob/user)
+	if(!active)
+		transform_weapon(user, TRUE)
 	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
 	return (BRUTELOSS|FIRELOSS)
 

@@ -111,6 +111,10 @@
 	name = "Cloning (Computer Board)"
 	build_path = /obj/machinery/computer/cloning
 
+/obj/item/circuitboard/computer/prototype_cloning
+	name = "Prototype Cloning (Computer Board)"
+	build_path = /obj/machinery/computer/prototype_cloning
+
 /obj/item/circuitboard/computer/arcade/battle
 	name = "Arcade Battle (Computer Board)"
 	build_path = /obj/machinery/computer/arcade/battle
@@ -231,6 +235,10 @@
 /obj/item/circuitboard/computer/mining
 	name = "Outpost Status Display (Computer Board)"
 	build_path = /obj/machinery/computer/security/mining
+
+/obj/item/circuitboard/computer/research
+	name = "Research Monitor (Computer Board)"
+	build_path = /obj/machinery/computer/security/research
 
 /obj/item/circuitboard/computer/comm_monitor
 	name = "Telecommunications Monitor (Computer Board)"

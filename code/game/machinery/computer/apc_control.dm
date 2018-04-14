@@ -46,7 +46,8 @@
 /obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
 	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.stat && !istype(APC.area, /area/ai_monitored) && !APC.area.outdoors
 
-/obj/machinery/computer/apc_control/interact(mob/living/user)
+/obj/machinery/computer/apc_control/ui_interact(mob/living/user)
+	. = ..()
 	var/dat
 	if(authenticated)
 		if(!checking_logs)
@@ -184,10 +185,10 @@
 		log_activity("checked APCs")
 	if(href_list["clear_logs"])
 		logs = list()
-	interact(usr) //Refresh the UI after a filter changes
+	ui_interact(usr) //Refresh the UI after a filter changes
 
 /obj/machinery/computer/apc_control/emag_act(mob/user)
-	if(!authenticated) 
+	if(!authenticated)
 		to_chat(user, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
 		authenticated = TRUE
 		log_activity("logged in")
@@ -199,7 +200,7 @@
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	var/op_string = operator && !(obj_flags & EMAGGED) ? operator : "\[NULL OPERATOR\]"
-	LAZYADD(logs, "<b>([worldtime2text()])</b> [op_string] [log_text]")
+	LAZYADD(logs, "<b>([station_time_timestamp()])</b> [op_string] [log_text]")
 
 /mob/proc/using_power_flow_console()
 	for(var/obj/machinery/computer/apc_control/A in range(1, src))

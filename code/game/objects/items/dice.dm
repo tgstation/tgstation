@@ -57,7 +57,7 @@
 
 /obj/item/dice/d1
 	name = "d1"
-	desc = "A die with one side. Deterministic!"
+	desc = "A die with only one side. Deterministic!"
 	icon_state = "d1"
 	sides = 1
 
@@ -131,7 +131,7 @@
 	name = "d100"
 	desc = "A die with one hundred sides! Probably not fairly weighted..."
 	icon_state = "d100"
-	w_class = WEIGHT_CLASS_SMALL	
+	w_class = WEIGHT_CLASS_SMALL
 	sides = 100
 
 /obj/item/dice/d100/update_icon()
@@ -149,7 +149,7 @@
 
 /obj/item/dice/fourdd6
 	name = "4d d6"
-	desc = "A die that exists in four dimensional space. Properly interpreting them can only be properly done with the help of a mathematician, a physicist, and a priest."
+	desc = "A die that exists in four dimensional space. Properly interpreting them can only be done with the help of a mathematician, a physicist, and a priest."
 	icon_state = "4dd6"
 	sides = 48
 	special_faces = list("Cube-Side: 1-1","Cube-Side: 1-2","Cube-Side: 1-3","Cube-Side: 1-4","Cube-Side: 1-5","Cube-Side: 1-6","Cube-Side: 2-1","Cube-Side: 2-2","Cube-Side: 2-3","Cube-Side: 2-4","Cube-Side: 2-5","Cube-Side: 2-6","Cube-Side: 3-1","Cube-Side: 3-2","Cube-Side: 3-3","Cube-Side: 3-4","Cube-Side: 3-5","Cube-Side: 3-6","Cube-Side: 4-1","Cube-Side: 4-2","Cube-Side: 4-3","Cube-Side: 4-4","Cube-Side: 4-5","Cube-Side: 4-6","Cube-Side: 5-1","Cube-Side: 5-2","Cube-Side: 5-3","Cube-Side: 5-4","Cube-Side: 5-5","Cube-Side: 5-6","Cube-Side: 6-1","Cube-Side: 6-2","Cube-Side: 6-3","Cube-Side: 6-4","Cube-Side: 6-5","Cube-Side: 6-6","Cube-Side: 7-1","Cube-Side: 7-2","Cube-Side: 7-3","Cube-Side: 7-4","Cube-Side: 7-5","Cube-Side: 7-6","Cube-Side: 8-1","Cube-Side: 8-2","Cube-Side: 8-3","Cube-Side: 8-4","Cube-Side: 8-5","Cube-Side: 8-6")
@@ -189,7 +189,7 @@
 
 /obj/item/dice/update_icon()
 	cut_overlays()
-	add_overlay("[src.icon_state][src.result]")
+	add_overlay("[src.icon_state]-[src.result]")
 
 /obj/item/dice/microwave_act(obj/machinery/microwave/M)
 	if(can_be_rigged)

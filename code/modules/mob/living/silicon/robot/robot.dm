@@ -81,16 +81,16 @@
 	var/obj/item/hat
 	var/hat_offset = -3
 	var/list/equippable_hats = list(/obj/item/clothing/head/caphat,
-	/obj/item/clothing/head/hardhat/cakehat,
+	/obj/item/clothing/head/hardhat,
 	/obj/item/clothing/head/centhat,
 	/obj/item/clothing/head/HoS,
+	/obj/item/clothing/head/beret,
+	/obj/item/clothing/head/kitty,
 	/obj/item/clothing/head/hopcap,
 	/obj/item/clothing/head/wizard,
 	/obj/item/clothing/head/nursehat,
 	/obj/item/clothing/head/sombrero,
 	/obj/item/clothing/head/witchunter_hat)
-
-	var/remote_range = 7 //How far can you interact with machines.
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
@@ -125,7 +125,7 @@
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new (src)
 		builtInCamera.c_tag = real_name
-		builtInCamera.network = list("SS13")
+		builtInCamera.network = list("ss13")
 		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
 			builtInCamera.status = 0
@@ -190,6 +190,9 @@
 	cell = null
 	return ..()
 
+/mob/living/silicon/robot/can_interact_with(atom/A)
+	. = ..()
+	return . || in_view_range(src, A)
 
 /mob/living/silicon/robot/proc/pick_module()
 	if(module.type != /obj/item/robot_module)
@@ -350,6 +353,9 @@
 	if (cleared)
 		queueAlarm("--- [class] alarm in [A.name] has been cleared.", class, 0)
 	return !cleared
+
+/mob/living/silicon/robot/can_interact_with(atom/A)
+	return !low_power_mode && ISINRANGE(A.x, x - interaction_range, x + interaction_range) && ISINRANGE(A.y, y - interaction_range, y + interaction_range)
 
 /mob/living/silicon/robot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weldingtool) && (user.a_intent != INTENT_HARM || user == src))

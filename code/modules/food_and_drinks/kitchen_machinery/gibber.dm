@@ -45,7 +45,7 @@
 		add_overlay("gridle")
 
 /obj/machinery/gibber/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/gibber/container_resist(mob/living/user)
 	go_out()
@@ -54,6 +54,9 @@
 	go_out()
 
 /obj/machinery/gibber/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
@@ -214,29 +217,13 @@
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
-	var/turf/input_plate
-
-/obj/machinery/gibber/autogibber/Initialize()
-	. = ..()
-	for(var/i in GLOB.cardinals)
-		var/obj/machinery/mineral/input/input_obj = locate() in get_step(loc, i)
-		if(input_obj)
-			if(isturf(input_obj.loc))
-				input_plate = input_obj.loc
-				qdel(input_obj)
-				break
-
-	if(!input_plate)
-		CRASH("Didn't find an input plate.")
-		return
+	var/input_dir = NORTH
 
 /obj/machinery/gibber/autogibber/CollidedWith(atom/movable/AM)
-	if(!input_plate)
-		return
-
+	var/atom/input = get_step(src, input_dir)
 	if(ismob(AM))
 		var/mob/M = AM
 
-		if(M.loc == input_plate)
+		if(M.loc == input)
 			M.forceMove(src)
 			M.gib()

@@ -511,7 +511,7 @@
 		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getBruteLoss()]</font><br>
 		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
 		"}
-		for(var/thing in M.viruses)
+		for(var/thing in M.diseases)
 			var/datum/disease/D = thing
 			dat += {"<h4>Infection Detected.</h4><br>
 					 Name: [D.name]<br>

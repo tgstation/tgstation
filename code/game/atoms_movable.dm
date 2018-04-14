@@ -74,9 +74,12 @@
 		if(gs==0)
 			stop_pulling()
 			return FALSE
-		// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
+		// Are we trying to pull something we are already pulling? Then enter grab cycle and end.
 		if(AM == pulling)
 			grab_state = gs
+			if(istype(AM,/mob/living))
+				var/mob/living/AMob = AM
+				AMob.grabbedby(src)
 			return TRUE
 		stop_pulling()
 	if(AM.pulledby)
@@ -289,6 +292,8 @@
 /atom/movable/Crossed(atom/movable/AM, oldloc)
 	SendSignal(COMSIG_MOVABLE_CROSSED, AM)
 
+/atom/movable/Uncrossed(atom/movable/AM)
+	SendSignal(COMSIG_MOVABLE_UNCROSSED, AM)
 
 //This is tg's equivalent to the byond bump, it used to be called bump with a second arg
 //to differentiate it, naturally everyone forgot about this immediately and so some things
@@ -378,6 +383,9 @@
 
 	if(throwing)
 		return 1
+	
+	if(!isturf(loc))
+		return 1
 
 	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
 		return 1
@@ -397,7 +405,7 @@
 	SSspacedrift.processing[src] = src
 	return 1
 
-/atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
+/atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = 0
 	SendSignal(COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
 	return hit_atom.hitby(src)
@@ -481,11 +489,11 @@
 	if(spin)
 		SpinAnimation(5, 1)
 
+	SendSignal(COMSIG_MOVABLE_THROW, TT, spin)
 	SSthrowing.processing[src] = TT
 	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
-
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
@@ -503,6 +511,13 @@
 		return 1
 	return ..()
 
+// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
+/atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S)
+	return
+
+// called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
+/atom/movable/proc/on_enter_storage(datum/component/storage/concrete/S)
+	return
 
 /atom/movable/proc/get_spacemove_backup()
 	var/atom/movable/dense_object_backup
@@ -528,7 +543,7 @@
 	return
 
 
-/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect && (visual_effect_icon || used_item))
 		do_item_attack_animation(A, visual_effect_icon, used_item)
 
@@ -536,9 +551,6 @@
 		return //don't do an animation if attacking self
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
-	var/final_pixel_y = initial(pixel_y)
-	if(end_pixel_y)
-		final_pixel_y = end_pixel_y
 
 	var/direction = get_dir(src, A)
 	if(direction & NORTH)
@@ -552,7 +564,7 @@
 		pixel_x_diff = -8
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
+	animate(src, pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, time = 2)
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
@@ -667,9 +679,8 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.transferItemToLoc(src, targetturf, TRUE)	//nodrops disks when?
-	else if(istype(loc, /obj/item/storage))
-		var/obj/item/storage/S = loc
-		S.remove_from_storage(src, targetturf)
+	else if(loc.SendSignal(COMSIG_CONTAINS_STORAGE))
+		loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, src, targetturf, TRUE)
 	else
 		forceMove(targetturf)
 	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
@@ -687,11 +698,18 @@
 			message_admins("[src] has been moved out of bounds in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
 
 /atom/movable/proc/in_bounds()
-	. = FALSE
+	var/static/list/allowed_shuttles = typecacheof(list(/area/shuttle/syndicate, /area/shuttle/escape, /area/shuttle/pod_1, /area/shuttle/pod_2, /area/shuttle/pod_3, /area/shuttle/pod_4))
 	var/turf/T = get_turf(src)
-	if (T && (is_centcom_level(T.z) || is_station_level(T.z) || is_transit_level(T.z)))
-		. = TRUE
+	if (!T)
+		return FALSE
+	if (is_station_level(T.z) || is_centcom_level(T.z))
+		return TRUE
+	if (is_transit_level(T.z))
+		var/area/A = T.loc
+		if (is_type_in_typecache(A, allowed_shuttles))
+			return TRUE
 
+	return FALSE
 
 /* Language procs */
 /atom/movable/proc/get_language_holder(shadow=TRUE)

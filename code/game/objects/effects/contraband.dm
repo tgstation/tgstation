@@ -60,6 +60,7 @@
 
 /obj/structure/sign/poster/Initialize()
 	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 75), 0)
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)
@@ -97,6 +98,9 @@
 			roll_and_drop(user.loc)
 
 /obj/structure/sign/poster/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(ruined)
 		return
 	visible_message("[user] rips [src] in a single, decisive motion!" )

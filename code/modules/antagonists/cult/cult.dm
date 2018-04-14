@@ -4,6 +4,7 @@
 	name = "Cultist"
 	roundend_category = "cultists"
 	antagpanel_category = "Cult"
+	antag_moodlet = /datum/mood_event/cult
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
 	var/datum/action/innate/cult/blood_magic/magic = new
@@ -35,9 +36,6 @@
 /datum/antagonist/cult/proc/add_objectives()
 	objectives |= cult_team.objectives
 	owner.objectives |= objectives
-
-/datum/antagonist/cult/proc/remove_objectives()
-	owner.objectives -= objectives
 
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)
@@ -97,10 +95,8 @@
 	else
 		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].</span>")
 		if(where == "backpack")
-			var/obj/item/storage/B = mob.back
-			B.orient2hud(mob)
-			B.show_to(mob)
-		return 1
+			mob.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, mob)
+		return TRUE
 
 /datum/antagonist/cult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -129,7 +125,6 @@
 	current.clear_alert("bloodsense")
 
 /datum/antagonist/cult/on_removal()
-	remove_objectives()
 	SSticker.mode.cult -= owner
 	SSticker.mode.update_cult_icons_removed(owner)
 	if(!silent)
@@ -244,7 +239,7 @@
 
 		var/datum/job/sacjob = SSjob.GetJob(sac_objective.target.assigned_role)
 		var/datum/preferences/sacface = sac_objective.target.current.client.prefs
-		var/icon/reshape = get_flat_human_icon(null, sacjob, sacface)
+		var/icon/reshape = get_flat_human_icon(null, sacjob, sacface, list(SOUTH))
 		reshape.Shift(SOUTH, 4)
 		reshape.Shift(EAST, 1)
 		reshape.Crop(7,4,26,31)

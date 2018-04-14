@@ -75,6 +75,7 @@ GLOBAL_LIST(round_end_notifiees)
 /datum/server_tools_command/notify
 	name = "notify"
 	help_text = "Pings the invoker when the round ends"
+	admin_only = TRUE
 
 /datum/server_tools_command/notify/Run(sender, params)
 	if(!SSticker.IsRoundInProgress() && SSticker.HasRoundStarted())

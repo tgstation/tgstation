@@ -87,6 +87,9 @@
 	return
 
 /obj/item/device/powersink/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	switch(mode)
 		if(DISCONNECTED)
 			..()

@@ -80,6 +80,7 @@
 /obj/item/defibrillator/ui_action_click()
 	toggle_paddles()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user)
 	if(loc == user)
 		if(slot_flags == SLOT_BACK)
@@ -96,9 +97,10 @@
 		return
 	else if(istype(loc, /obj/machinery/defibrillator_mount))
 		ui_action_click() //checks for this are handled in defibrillator.mount.dm
-	..()
+	return ..()
 
 /obj/item/defibrillator/MouseDrop(obj/over_object)
+	. = ..()
 	if(ismob(loc))
 		var/mob/M = loc
 		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
@@ -292,6 +294,32 @@
 	var/grab_ghost = FALSE
 	var/tlimit = DEFIB_TIME_LIMIT * 10
 
+	var/datum/component/mobhook
+
+/obj/item/twohanded/shockpaddles/equipped(mob/user, slot)
+	. = ..()
+	if(req_defib)
+		if (mobhook && mobhook.parent != user)
+			QDEL_NULL(mobhook)
+		if (!mobhook)
+			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/check_range))
+
+/obj/item/twohanded/shockpaddles/Moved()
+	. = ..()
+	check_range()
+
+/obj/item/twohanded/shockpaddles/proc/check_range()
+	if(!req_defib)
+		return
+	if(!in_range(src,defib))
+		var/mob/living/L = loc
+		if(istype(L))
+			to_chat(L, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
+			L.temporarilyRemoveItemFromInventory(src,TRUE)
+		else
+			visible_message("<span class='notice'>[src] snap back into [defib].</span>")
+			snap_back()
+
 /obj/item/twohanded/shockpaddles/proc/recharge(var/time)
 	if(req_defib || !time)
 		return
@@ -331,15 +359,22 @@
 /obj/item/twohanded/shockpaddles/dropped(mob/user)
 	if(!req_defib)
 		return ..()
+	if (mobhook)
+		QDEL_NULL(mobhook)
 	if(user)
 		var/obj/item/twohanded/offhand/O = user.get_inactive_held_item()
 		if(istype(O))
 			O.unwield()
 		to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
-		defib.on = 0
-		forceMove(defib)
-		defib.update_icon()
+		snap_back()
 	return unwield(user)
+
+/obj/item/twohanded/shockpaddles/proc/snap_back()
+	if(!defib)
+		return
+	defib.on = FALSE
+	forceMove(defib)
+	defib.update_icon()
 
 /obj/item/twohanded/shockpaddles/proc/check_defib_exists(mainunit, mob/living/carbon/M, obj/O)
 	if(!req_defib)
@@ -384,7 +419,7 @@
 	var/mob/living/carbon/H = M
 
 
-	if(user.zone_selected != "chest")
+	if(user.zone_selected != BODY_ZONE_CHEST)
 		to_chat(user, "<span class='warning'>You need to target your patient's chest with [src]!</span>")
 		return
 
@@ -474,7 +509,7 @@
 					H.visible_message("<span class='warning'>[H] thrashes wildly, clutching at their chest!</span>",
 						"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 				H.set_heartattack(TRUE)
-			H.apply_damage(50, BURN, "chest")
+			H.apply_damage(50, BURN, BODY_ZONE_CHEST)
 			add_logs(user, H, "overloaded the heart of", defib)
 			H.Knockdown(100)
 			H.Jitter(100)

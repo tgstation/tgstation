@@ -178,7 +178,7 @@ RSF
 	to_chat(user, "Fabricating Cookie..")
 	var/obj/item/reagent_containers/food/snacks/cookie/S = new /obj/item/reagent_containers/food/snacks/cookie(T)
 	if(toxin)
-		S.reagents.add_reagent("chloralhydrate2", 10)
+		S.reagents.add_reagent("chloralhydratedelayed", 10)
 	if (iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		R.cell.charge -= 100

@@ -88,6 +88,9 @@
 	opacity = 0
 	glass = TRUE
 
+/obj/machinery/door/airlock/engineering/glass/critical
+	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
+
 /obj/machinery/door/airlock/security/glass
 	opacity = 0
 	glass = TRUE
@@ -111,6 +114,9 @@
 /obj/machinery/door/airlock/atmos/glass
 	opacity = 0
 	glass = TRUE
+
+/obj/machinery/door/airlock/atmos/glass/critical
+	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
 
 /obj/machinery/door/airlock/science/glass
 	opacity = 0
@@ -302,7 +308,7 @@
 	CentCom Airlocks
 */
 
-/obj/machinery/door/airlock/centcom
+/obj/machinery/door/airlock/centcom //Use grunge as a station side version, as these have special effects related to them via phobias and such.
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_centcom
@@ -310,7 +316,12 @@
 	security_level = 6
 	explosion_block = 2
 
-/obj/machinery/door/airlock/centcom/abandoned
+/obj/machinery/door/airlock/grunge
+	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_grunge
+
+/obj/machinery/door/airlock/grunge/abandoned
 	abandoned = TRUE
 
 //////////////////////////////////
@@ -404,7 +415,7 @@
 	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_cult
 	hackProof = TRUE
-	aiControlDisabled = TRUE
+	aiControlDisabled = 1
 	req_access = list(ACCESS_BLOODCULT)
 	damage_deflection = 10
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
@@ -417,6 +428,19 @@
 
 /obj/machinery/door/airlock/cult/canAIControl(mob/user)
 	return (iscultist(user) && !isAllPowerCut())
+
+/obj/machinery/door/airlock/cult/obj_break(damage_flag)
+	if(!(flags_1 & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
+		stat |= BROKEN
+		if(!panel_open)
+			panel_open = TRUE
+		update_icon()
+
+/obj/machinery/door/airlock/cult/isElectrified()
+	return FALSE
+
+/obj/machinery/door/airlock/cult/hasPower()
+	return TRUE
 
 /obj/machinery/door/airlock/cult/allowed(mob/living/L)
 	if(!density)
@@ -487,7 +511,7 @@
 /obj/machinery/door/airlock/cult/weak
 	name = "brittle cult airlock"
 	desc = "An airlock hastily corrupted by blood magic, it is unusually brittle in this state."
-	normal_integrity = 180
+	normal_integrity = 150
 	damage_deflection = 5
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
@@ -498,7 +522,7 @@
 	icon = 'icons/obj/doors/airlocks/clockwork/pinion_airlock.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/clockwork/overlays.dmi'
 	hackProof = TRUE
-	aiControlDisabled = TRUE
+	aiControlDisabled = 1
 	req_access = list(ACCESS_CLOCKCULT)
 	use_power = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF

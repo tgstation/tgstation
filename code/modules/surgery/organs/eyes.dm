@@ -1,8 +1,8 @@
 /obj/item/organ/eyes
-	name = "eyes"
+	name = BODY_ZONE_PRECISE_EYES
 	icon_state = "eyeballs"
 	desc = "I see you!"
-	zone = "eyes"
+	zone = BODY_ZONE_PRECISE_EYES
 	slot = ORGAN_SLOT_EYES
 	gender = PLURAL
 
@@ -26,6 +26,8 @@
 			HMN.regenerate_icons()
 		else
 			eye_color = HMN.eye_color
+		if(HMN.has_trait(TRAIT_NIGHT_VISION) && !lighting_alpha)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
 	M.update_tint()
 	owner.update_sight()
 
@@ -44,7 +46,6 @@
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	actions_types = list(/datum/action/item_action/organ_action/use)
-	sight_flags = SEE_BLACKNESS
 	var/night_vision = TRUE
 
 /obj/item/organ/eyes/night_vision/ui_action_click()
@@ -74,6 +75,10 @@
 	name = "burning red eyes"
 	desc = "Even without their shadowy owner, looking at these eyes gives you a sense of dread."
 	icon_state = "burning_eyes"
+
+/obj/item/organ/eyes/night_vision/mushroom
+	name = "fung-eye"
+	desc = "While on the outside they look inert and dead, the eyes of mushroom people are actually very advanced."
 
 ///Robotic
 
@@ -128,12 +133,14 @@
 	eye.on = TRUE
 	eye.forceMove(M)
 	eye.update_brightness(M)
+	M.become_blind("flashlight_eyes")
 
 
 /obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
 	eye.on = FALSE
 	eye.update_brightness(M)
 	eye.forceMove(src)
+	M.cure_blind("flashlight_eyes")
 	..()
 
 // Welding shield implant

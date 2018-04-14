@@ -21,6 +21,26 @@
 	icon_state = "mixer_off_f"
 	flipped = TRUE
 
+/obj/machinery/atmospherics/components/trinary/mixer/airmix //For standard airmix to distro
+	name = "air mixer"
+	icon_state = "mixer_on"
+	node1_concentration = N2STANDARD
+	node2_concentration = O2STANDARD
+	on = TRUE
+	target_pressure = MAX_OUTPUT_PRESSURE
+	
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse
+	node1_concentration = O2STANDARD
+	node2_concentration = N2STANDARD
+	
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped
+	icon_state = "mixer_on_f"
+	flipped = TRUE
+	
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse
+	node1_concentration = O2STANDARD
+	node2_concentration = N2STANDARD
+	
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon()
 	cut_overlays()
 	for(var/direction in GLOB.cardinals)

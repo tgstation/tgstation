@@ -53,19 +53,26 @@
 			return
 		storedorgan = I
 		to_chat(user, "<span class='notice'>You insert the [I] into [src].</span>")
-	else if(istype(I, /obj/item/screwdriver))
-		if(!storedorgan)
-			to_chat(user, "<span class='notice'>There's no implant in [src] for you to remove.</span>")
-		else
-			var/turf/open/floorloc = get_turf(user)
-			floorloc.contents += contents
-			to_chat(user, "<span class='notice'>You remove the [storedorgan] from [src].</span>")
-			I.play_tool_sound(src)
-			storedorgan = null
-			if(uses != INFINITE)
-				uses--
-			if(!uses)
-				desc = "[initial(desc)] Looks like it's been used up."
+	else
+		return ..()
+
+/obj/item/device/autosurgeon/screwdriver_act(mob/living/user, obj/item/I)
+	if(!storedorgan)
+		to_chat(user, "<span class='notice'>There's no implant in [src] for you to remove.</span>")
+	else
+		var/atom/drop_loc = user.drop_location()
+		for(var/J in src)
+			var/atom/movable/AM = J
+			AM.forceMove(drop_loc)
+
+		to_chat(user, "<span class='notice'>You remove the [storedorgan] from [src].</span>")
+		I.play_tool_sound(src)
+		storedorgan = null
+		if(uses != INFINITE)
+			uses--
+		if(!uses)
+			desc = "[initial(desc)] Looks like it's been used up."
+	return TRUE
 
 /obj/item/device/autosurgeon/cmo
 	desc = "A single use autosurgeon that contains a medical heads-up display augment. A screwdriver can be used to remove it, but implants can't be placed back in."

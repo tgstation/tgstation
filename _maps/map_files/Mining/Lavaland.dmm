@@ -98,7 +98,7 @@
 /obj/machinery/camera{
 	c_tag = "Labor Camp Medical";
 	dir = 8;
-	network = list("Labor")
+	network = list("labor")
 	},
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
@@ -144,9 +144,7 @@
 /area/mine/laborcamp)
 "aB" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Infirmary";
-	req_access_txt = "0"
+	name = "Infirmary"
 	},
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
@@ -235,7 +233,7 @@
 /obj/machinery/camera{
 	c_tag = "Labor Camp External";
 	dir = 4;
-	network = list("Labor")
+	network = list("labor")
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -271,7 +269,7 @@
 /area/lavaland/surface/outdoors/explored)
 "aU" = (
 /obj/machinery/flasher{
-	id = "Labor"
+	id = "labor"
 	},
 /turf/closed/wall,
 /area/mine/laborcamp)
@@ -301,7 +299,7 @@
 	dir = 1
 	},
 /obj/machinery/button/door{
-	id = "Labor";
+	id = "labor";
 	name = "Labor Camp Lockdown";
 	pixel_y = 28;
 	req_access_txt = "2"
@@ -310,7 +308,7 @@
 /area/mine/laborcamp)
 "ba" = (
 /obj/machinery/door/poddoor/preopen{
-	id = "Labor";
+	id = "labor";
 	name = "labor camp blast door"
 	},
 /turf/open/floor/plasteel,
@@ -318,7 +316,7 @@
 "bb" = (
 /obj/machinery/camera{
 	c_tag = "Labor Camp Central";
-	network = list("Labor")
+	network = list("labor")
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
@@ -417,7 +415,7 @@
 /obj/machinery/camera{
 	c_tag = "EVA";
 	dir = 4;
-	network = list("MINE")
+	network = list("mine")
 	},
 /obj/machinery/airalarm{
 	dir = 4;
@@ -457,8 +455,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Prisoner Airlock";
-	req_access_txt = "0"
+	name = "Labor Camp Shuttle Prisoner Airlock"
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
@@ -500,7 +497,6 @@
 /area/mine/laborcamp)
 "bC" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/machinery/computer/shuttle/mining{
@@ -587,7 +583,7 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "bO" = (
-/obj/item/device/radio/beacon,
+/obj/item/device/beacon,
 /turf/open/floor/plasteel/purple/corner{
 	dir = 8
 	},
@@ -718,7 +714,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Labor Camp Monitoring";
-	network = list("Labor")
+	network = list("labor")
 	},
 /obj/structure/cable{
 	icon_state = "0-8"
@@ -757,8 +753,7 @@
 /obj/machinery/door/airlock/external{
 	glass = 1;
 	name = "Mining Shuttle Airlock";
-	opacity = 0;
-	req_access_txt = "0"
+	opacity = 0
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
@@ -806,9 +801,6 @@
 /turf/open/floor/plating,
 /area/mine/eva)
 "cq" = (
-/obj/effect/baseturf_helper/picky/lava_land/basalt{
-	whitelist = /turf/open/floor
-	},
 /turf/open/floor/mech_bay_recharge_floor,
 /area/mine/eva)
 "cr" = (
@@ -839,15 +831,12 @@
 /area/lavaland/surface/outdoors)
 "cw" = (
 /obj/machinery/computer/secure_data,
-/obj/effect/baseturf_helper/picky/lava_land/basalt{
-	whitelist = /turf/open/floor
-	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "cx" = (
 /obj/machinery/computer/security{
 	name = "Labor Camp Monitoring";
-	network = list("Labor")
+	network = list("labor")
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
@@ -915,8 +904,7 @@
 /area/mine/production)
 "cJ" = (
 /obj/machinery/door/airlock{
-	name = "Closet";
-	req_access_txt = "0"
+	name = "Closet"
 	},
 /turf/open/floor/plating,
 /area/mine/production)
@@ -1041,15 +1029,11 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
-/obj/effect/baseturf_helper/picky/lava_land/basalt{
-	whitelist = /turf/open/floor
-	},
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dc" = (
 /obj/structure/closet/crate,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/bot,
@@ -1112,7 +1096,6 @@
 	dir = 8
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/machinery/iv_drip,
@@ -1217,10 +1200,7 @@
 /obj/machinery/camera{
 	c_tag = "Communications Relay";
 	dir = 8;
-	network = list("MINE")
-	},
-/obj/effect/baseturf_helper/picky/lava_land/basalt{
-	whitelist = /turf/open/floor
+	network = list("mine")
 	},
 /turf/open/floor/circuit,
 /area/mine/maintenance)
@@ -1251,7 +1231,7 @@
 /obj/machinery/camera{
 	c_tag = "Sleeper Room";
 	dir = 1;
-	network = list("MINE")
+	network = list("mine")
 	},
 /turf/open/floor/plasteel/white,
 /area/mine/living_quarters)
@@ -1315,7 +1295,7 @@
 /obj/machinery/camera{
 	c_tag = "Shuttle Docking Foyer";
 	dir = 8;
-	network = list("MINE")
+	network = list("mine")
 	},
 /obj/machinery/newscaster{
 	pixel_x = 30;
@@ -1340,7 +1320,7 @@
 /obj/machinery/camera{
 	c_tag = "Processing Area Room";
 	dir = 8;
-	network = list("MINE")
+	network = list("mine")
 	},
 /obj/item/device/radio/intercom{
 	dir = 8;
@@ -1380,9 +1360,7 @@
 /area/mine/living_quarters)
 "dR" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
-	name = "Infirmary";
-	req_access_txt = "0"
+	name = "Infirmary"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -1461,13 +1439,12 @@
 "ed" = (
 /obj/machinery/camera{
 	c_tag = "Crew Area Hallway West";
-	network = list("MINE")
+	network = list("mine")
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "ee" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
@@ -1509,7 +1486,7 @@
 "ej" = (
 /obj/machinery/camera{
 	c_tag = "Crew Area Hallway East";
-	network = list("MINE")
+	network = list("mine")
 	},
 /turf/open/floor/plasteel/purple/corner{
 	dir = 1
@@ -1864,7 +1841,6 @@
 /area/mine/living_quarters)
 "fc" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/purple/corner{
@@ -1875,7 +1851,7 @@
 /obj/machinery/camera{
 	c_tag = "Storage";
 	dir = 2;
-	network = list("MINE")
+	network = list("mine")
 	},
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plasteel/brown{
@@ -1886,7 +1862,6 @@
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/carpet,
@@ -1981,7 +1956,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet,
@@ -1990,7 +1964,7 @@
 /obj/machinery/camera{
 	c_tag = "Dormitories";
 	dir = 4;
-	network = list("MINE")
+	network = list("mine")
 	},
 /turf/open/floor/plasteel/purple/corner{
 	dir = 1
@@ -2096,7 +2070,7 @@
 /obj/machinery/camera{
 	c_tag = "Crew Area";
 	dir = 1;
-	network = list("MINE")
+	network = list("mine")
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -32
@@ -2127,7 +2101,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet,
@@ -2158,7 +2131,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet,
@@ -2320,13 +2292,11 @@
 "gY" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
-	baseturf_type = /turf/open/lava/smooth/lava_land_surface;
 	dir = 8;
 	dwidth = 2;
 	height = 5;
 	id = "laborcamp_away";
 	name = "labor camp";
-	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	width = 9
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3274,13 +3244,11 @@
 "Uq" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
-	baseturf_type = /turf/open/lava/smooth/lava_land_surface;
 	dir = 2;
 	dwidth = 11;
 	height = 22;
 	id = "whiteship_lavaland";
 	name = "lavaland wastes";
-	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	width = 35
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3288,19 +3256,17 @@
 "Wp" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
-	baseturf_type = /turf/open/lava/smooth/lava_land_surface;
 	dir = 8;
 	dwidth = 3;
 	height = 5;
 	id = "mining_away";
 	name = "lavaland mine";
-	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	width = 7
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "Wt" = (
-/obj/effect/baseturf_helper/picky/lava_land/plating,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall,
 /area/mine/laborcamp/security)
 "Wz" = (
@@ -3331,8 +3297,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Prisoner Airlock";
-	req_access_txt = "0"
+	name = "Labor Camp Shuttle Prisoner Airlock"
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
@@ -3355,44 +3320,29 @@
 /obj/machinery/door/airlock/external{
 	glass = 1;
 	name = "Mining Shuttle Airlock";
-	opacity = 0;
-	req_access_txt = "0"
+	opacity = 0
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
 "WF" = (
-/obj/effect/baseturf_helper/picky/lava_land/plating,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall,
 /area/mine/laborcamp)
-"WG" = (
-/obj/effect/baseturf_helper/picky/lava_land/basalt{
-	whitelist = /turf/open/floor
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
 "WH" = (
-/obj/effect/baseturf_helper/picky/lava_land/plating,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall,
 /area/mine/eva)
 "WI" = (
-/obj/effect/baseturf_helper/picky/lava_land/plating,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall,
 /area/mine/production)
 "WJ" = (
-/obj/effect/baseturf_helper/picky/lava_land/plating,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall/r_wall,
 /area/mine/maintenance)
 "WK" = (
-/obj/effect/baseturf_helper/picky/lava_land/plating,
+/obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall,
-/area/mine/living_quarters)
-"WL" = (
-/obj/effect/baseturf_helper/picky/lava_land/basalt{
-	whitelist = /turf/open/floor
-	},
-/turf/open/floor/plasteel/purple/corner{
-	dir = 8
-	},
 /area/mine/living_quarters)
 
 (1,1,1) = {"
@@ -8752,7 +8702,7 @@ aq
 ba
 aq
 bj
-WG
+az
 az
 aq
 ca
@@ -13135,7 +13085,7 @@ dQ
 ec
 er
 dZ
-WL
+eL
 fh
 ft
 eL

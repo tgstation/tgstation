@@ -107,6 +107,10 @@
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		target = AM
+		
+		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [det_time] second fuse",0,1)
+		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(src)] with [det_time] second fuse")
+		
 		moveToNullspace()	//Yep
 
 		if(istype(AM, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
@@ -114,9 +118,6 @@
 			I.throw_speed = max(1, (I.throw_speed - 3))
 			I.throw_range = max(1, (I.throw_range - 3))
 			I.embedding = I.embedding.setRating(embed_chance = 0)
-
-		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [det_time] second fuse",0,1)
-		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(src)] with [det_time] second fuse")
 
 		target.add_overlay(plastic_overlay, TRUE)
 		if(!nadeassembly)
@@ -213,12 +214,8 @@
 		return
 	if(loc == AM)
 		return
-	if((istype(AM, /obj/item/storage/)) && !((istype(AM, /obj/item/storage/secure)) || (istype(AM, /obj/item/storage/lockbox)))) //If its storage but not secure storage OR a lockbox, then place it inside.
+	if(AM.SendSignal(COMSIG_CONTAINS_STORAGE) && !AM.SendSignal(COMSIG_IS_STORAGE_LOCKED))
 		return
-	if((istype(AM, /obj/item/storage/secure)) || (istype(AM, /obj/item/storage/lockbox)))
-		var/obj/item/storage/secure/S = AM
-		if(!S.locked) //Literal hacks, this works for lockboxes despite incorrect type casting, because they both share the locked var. But if its unlocked, place it inside, otherwise PLANTING C4!
-			return
 
 	to_chat(user, "<span class='notice'>You start planting the bomb...</span>")
 

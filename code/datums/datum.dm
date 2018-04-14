@@ -10,6 +10,10 @@
 	var/last_find_references = 0
 #endif
 
+#ifdef DATUMVAR_DEBUGGING_MODE
+	var/list/cached_vars
+#endif
+
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
@@ -38,3 +42,30 @@
 		dc.Cut()
 
 	return QDEL_HINT_QUEUE
+
+#ifdef DATUMVAR_DEBUGGING_MODE
+/datum/proc/save_vars()
+	cached_vars = list()
+	for(var/i in vars)
+		if(i == "cached_vars")
+			continue
+		cached_vars[i] = vars[i]
+
+/datum/proc/check_changed_vars()
+	. = list()
+	for(var/i in vars)
+		if(i == "cached_vars")
+			continue
+		if(cached_vars[i] != vars[i])
+			.[i] = list(cached_vars[i], vars[i])
+
+/datum/proc/txt_changed_vars()
+	var/list/l = check_changed_vars()
+	var/t = "[src]([REF(src)]) changed vars:"
+	for(var/i in l)
+		t += "\"[i]\" \[[l[i][1]]\] --> \[[l[i][2]]\] "
+	t += "."
+
+/datum/proc/to_chat_check_changed_vars(target = world)
+	to_chat(target, txt_changed_vars())
+#endif

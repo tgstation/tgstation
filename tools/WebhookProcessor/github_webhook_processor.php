@@ -216,7 +216,7 @@ function tag_pr($payload, $opened) {
 			$tags[] = 'Removal';
 	}
 
-	$remove = array();
+	$remove = array('Test Merge Candidate');
 
 	$mergeable = $payload['pull_request']['mergeable'];
 	if($mergeable === TRUE)	//only look for the false value
@@ -597,7 +597,7 @@ function checkchangelog($payload, $compile = true) {
 	$foundcltag = false;
 	foreach ($body as $line) {
 		$line = trim($line);
-		if (substr($line,0,4) == ':cl:' || substr($line,0,4) == '🆑') {
+		if (substr($line,0,4) == ':cl:' || substr($line,0,1) == '🆑') {
 			$incltag = true;
 			$foundcltag = true;
 			$pos = strpos($line, " ");

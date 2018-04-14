@@ -343,6 +343,14 @@
 	build_path = /obj/item/hatchet
 	category = list("initial","Misc")
 
+/datum/design/foilhat
+	name = "Tinfoil Hat"
+	id = "tinfoil_hat"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 5500)
+	build_path = /obj/item/clothing/head/foilhat
+	category = list("hacked", "Misc")
+
 /datum/design/scalpel
 	name = "Scalpel"
 	id = "scalpel"
@@ -413,6 +421,14 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 50)
 	build_path = /obj/item/device/healthanalyzer
+	category = list("initial", "Medical")
+
+/datum/design/pillbottle
+	name = "Pill Bottle"
+	id = "pillbottle"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 20, MAT_GLASS = 100)
+	build_path = /obj/item/storage/pill_bottle
 	category = list("initial", "Medical")
 
 /datum/design/beanbag_slug
@@ -590,7 +606,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 500)
 	build_path = /obj/item/flamethrower/full
-	category = list("hacked", "Weapons and ammo")
+	category = list("hacked", "Security")
 
 /datum/design/rcd
 	name = "Rapid Construction Device (RCD)"

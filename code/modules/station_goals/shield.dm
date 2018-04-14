@@ -15,10 +15,10 @@
 
 /datum/station_goal/station_shield/on_report()
 	//Unlock
-	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/misc/shield_sat]
+	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shield_sat]
 	P.special_enabled = TRUE
 
-	P = SSshuttle.supply_packs[/datum/supply_pack/misc/shield_sat_control]
+	P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shield_sat_control]
 	P.special_enabled = TRUE
 
 /datum/station_goal/station_shield/check_completion()
@@ -174,6 +174,6 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	to_chat(user, "<span class='notice'>You scramble the satellite's controller, increasing the chance of meteor strikes.</span>")
+	to_chat(user, "<span class='notice'>You access the satellite's debug mode, increasing the chance of meteor strikes.</span>")
 	if(active)
 		change_meteor_chance(2)

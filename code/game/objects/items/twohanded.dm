@@ -178,9 +178,9 @@
 	if(H != null)
 		to_chat(user, "<span class='notice'>[src] is too cumbersome to carry in one hand!</span>")
 		return
-	if(src.loc != user)
+	if(loc != user)
 		wield(user)
-	..()
+	. = ..()
 
 /obj/item/twohanded/required/equipped(mob/user, slot)
 	..()
@@ -233,6 +233,10 @@
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
+
+/obj/item/twohanded/fireaxe/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 100, 80, hitsound) //axes are not known for being precision butchering tools
 
 /obj/item/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
@@ -290,7 +294,7 @@
 	if(wielded)
 		user.visible_message("<span class='suicide'>[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 
-		var/obj/item/bodypart/head/myhead = user.get_bodypart("head")//stole from chainsaw code
+		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
 		var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
 		B.vital = FALSE//this cant possibly be a good idea
 		var/randdir
@@ -470,6 +474,10 @@
 	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
 
+/obj/item/twohanded/spear/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
+
 /obj/item/twohanded/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(explosive)
@@ -562,11 +570,15 @@
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	var/on = FALSE
 
+/obj/item/twohanded/required/chainsaw/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', TRUE)
+
 /obj/item/twohanded/required/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
 		user.visible_message("<span class='suicide'>[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		playsound(src, 'sound/weapons/chainsawhit.ogg', 100, 1)
-		var/obj/item/bodypart/head/myhead = user.get_bodypart("head")
+		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 		if(myhead)
 			myhead.dismember()
 	else
@@ -580,8 +592,10 @@
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
+	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	butchering.butchering_enabled = on
 
-	if(hitsound == "swing_hit")
+	if(on)
 		hitsound = 'sound/weapons/chainsawhit.ogg'
 	else
 		hitsound = "swing_hit"
@@ -691,14 +705,14 @@
 			"<span class='warning'>\"As you pick up [src] your arms ignite, reminding you of all your past sins.\"</span>")
 		if(ishuman(U))
 			var/mob/living/carbon/human/H = U
-			H.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+			H.apply_damage(rand(force/2, force), BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		else
 			U.adjustFireLoss(rand(force/2,force))
 
 /obj/item/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
 	if(user.mind && user.owns_soul() && !is_devil(user))
 		to_chat(user, "<span class ='warning'>[src] burns in your hands.</span>")
-		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+		user.apply_damage(rand(force/2, force), BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 	..()
 
 /obj/item/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
@@ -732,6 +746,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/twohanded/vibro_weapon/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 20, 105)
 
 /obj/item/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)

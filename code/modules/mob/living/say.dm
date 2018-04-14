@@ -59,6 +59,29 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"÷" = "cords"
 ))
 
+/mob/living/proc/Ellipsis(original_msg, chance = 50, keep_words)
+    if(chance <= 0)
+        return "..."
+    if(chance >= 100)
+        return original_msg
+
+    var/list
+        words = splittext(original_msg," ")
+        new_words = list()
+
+    var/new_msg = ""
+
+    for(var/w in words)
+        if(prob(chance))
+            new_words += "..."
+            if(!keep_words)
+                continue
+        new_words += w
+
+    new_msg = jointext(new_words," ")
+
+    return new_msg
+
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE)
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)

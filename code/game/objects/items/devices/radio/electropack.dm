@@ -27,13 +27,14 @@
 	SSradio.remove_object(src, frequency)
 	return ..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/device/electropack/attack_hand(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.back)
 			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
 			return
-	..()
+	return ..()
 
 /obj/item/device/electropack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/clothing/head/helmet))

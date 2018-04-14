@@ -95,6 +95,7 @@
 	. = ..()
 	QDEL_IN(src, 300)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/hallucination/simple/bluespace_stream/attack_hand(mob/user)
 	if(user != seer || !linked_to)
 		return
@@ -130,3 +131,6 @@
 	..()
 	psychotic_brawling.remove(owner)
 	QDEL_NULL(psychotic_brawling)
+
+/datum/brain_trauma/special/psychotic_brawling/bath_salts
+	name = "Chemical Violent Psychosis"

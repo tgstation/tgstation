@@ -17,7 +17,7 @@
 
 	var/obj/item/cavity_object
 
-	var/obj/item/bodypart/chest/CH = get_bodypart("chest")
+	var/obj/item/bodypart/chest/CH = get_bodypart(BODY_ZONE_CHEST)
 	if(CH.cavity_item)
 		cavity_object = CH.cavity_item
 		CH.cavity_item = null
@@ -62,9 +62,9 @@
 
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/thing in O.viruses)
+		O.diseases = diseases
+		diseases = list()
+		for(var/thing in O.diseases)
 			var/datum/disease/D = thing
 			D.affected_mob = O
 
@@ -78,9 +78,6 @@
 		O.setBrainLoss(getBrainLoss(), 0)
 		O.updatehealth()
 		O.radiation = radiation
-		for(var/T in get_traumas())
-			var/datum/brain_trauma/BT = T
-			O.gain_trauma(BT.type, BT.permanent)
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
@@ -109,7 +106,7 @@
 			var/obj/item/organ/I = X
 			I.Insert(O, 1)
 
-	var/obj/item/bodypart/chest/torso = O.get_bodypart("chest")
+	var/obj/item/bodypart/chest/torso = O.get_bodypart(BODY_ZONE_CHEST)
 	if(cavity_object)
 		torso.cavity_item = cavity_object //cavity item is given to the new chest
 		cavity_object.forceMove(O)
@@ -169,7 +166,7 @@
 
 	var/obj/item/cavity_object
 
-	var/obj/item/bodypart/chest/CH = get_bodypart("chest")
+	var/obj/item/bodypart/chest/CH = get_bodypart(BODY_ZONE_CHEST)
 	if(CH.cavity_item)
 		cavity_object = CH.cavity_item
 		CH.cavity_item = null
@@ -221,9 +218,9 @@
 
 	//keep viruses?
 	if (tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/thing in O.viruses)
+		O.diseases = diseases
+		diseases = list()
+		for(var/thing in O.diseases)
 			var/datum/disease/D = thing
 			D.affected_mob = O
 		O.med_hud_set_status()
@@ -238,9 +235,6 @@
 		O.setBrainLoss(getBrainLoss(), 0)
 		O.updatehealth()
 		O.radiation = radiation
-		for(var/T in get_traumas())
-			var/datum/brain_trauma/BT = T
-			O.gain_trauma(BT.type, BT.permanent)
 
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
@@ -270,7 +264,7 @@
 			I.Insert(O, 1)
 
 
-	var/obj/item/bodypart/chest/torso = get_bodypart("chest")
+	var/obj/item/bodypart/chest/torso = get_bodypart(BODY_ZONE_CHEST)
 	if(cavity_object)
 		torso.cavity_item = cavity_object //cavity item is given to the new chest
 		cavity_object.forceMove(O)
@@ -496,6 +490,8 @@
 /mob/living/carbon/proc/gorillize()
 	if(notransform)
 		return
+
+	SSblackbox.record_feedback("amount", "gorillas_created", 1)
 
 	var/Itemlist = get_equipped_items()
 	Itemlist += held_items

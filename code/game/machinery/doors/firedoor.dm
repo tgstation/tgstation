@@ -9,7 +9,7 @@
 	desc = "Apply crowbar."
 	icon = 'icons/obj/doors/Doorfireglass.dmi'
 	icon_state = "door_open"
-	opacity = 0
+	opacity = FALSE
 	density = FALSE
 	max_integrity = 300
 	resistance_flags = FIRE_PROOF
@@ -23,6 +23,7 @@
 	closingLayer = CLOSED_FIREDOOR_LAYER
 	assemblytype = /obj/structure/firelock_frame
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 70)
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	var/boltslocked = TRUE
 	var/list/affecting_areas
 
@@ -71,7 +72,7 @@
 		return
 	if(!density)
 		return ..()
-	return 0
+	return FALSE
 
 
 /obj/machinery/door/firedoor/power_change()
@@ -82,6 +83,9 @@
 		stat |= NOPOWER
 
 /obj/machinery/door/firedoor/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(operating || !density)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -140,14 +144,17 @@
 	else
 		close()
 
-/obj/machinery/door/firedoor/attack_ai(mob/user)
+/obj/machinery/door/firedoor/interact(mob/user)
+	if(!issilicon(user))
+		return TRUE
 	add_fingerprint(user)
 	if(welded || operating || stat & NOPOWER)
-		return
+		return TRUE
 	if(density)
 		open()
 	else
 		close()
+	return TRUE
 
 /obj/machinery/door/firedoor/attack_alien(mob/user)
 	add_fingerprint(user)
@@ -217,25 +224,25 @@
 
 /obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
 		return !density
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/door/firedoor/border_only/CheckExit(atom/movable/mover as mob|obj, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(loc, target) == dir)
 		return !density
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/door/firedoor/border_only/CanAtmosPass(turf/T)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/door/firedoor/heavy
 	name = "heavy firelock"
@@ -407,7 +414,6 @@
 									 "<span class='notice'>You begin slicing [src] apart...</span>")
 
 				if(C.use_tool(src, user, 40, volume=50, amount=1))
-					return
 					if(constructionStep != CONSTRUCTION_NOCIRCUIT)
 						return
 					user.visible_message("<span class='notice'>[user] cuts apart [src]!</span>", \
@@ -446,7 +452,7 @@
 
 /obj/structure/firelock_frame/heavy
 	name = "heavy firelock frame"
-	reinforced = 1
+	reinforced = TRUE
 
 #undef CONSTRUCTION_COMPLETE
 #undef CONSTRUCTION_PANEL_OPEN

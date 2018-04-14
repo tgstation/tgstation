@@ -45,11 +45,12 @@
 		new /datum/data/mining_equipment("Super Resonator",				/obj/item/resonator/upgraded,										2500),
 		new /datum/data/mining_equipment("Jump Boots",					/obj/item/clothing/shoes/bhop,										2500),
 		new /datum/data/mining_equipment("Luxury Shelter Capsule",		/obj/item/survivalcapsule/luxury,									3000),
-		new /datum/data/mining_equipment("Mining Drone",				/mob/living/simple_animal/hostile/mining_drone,						800),
-		new /datum/data/mining_equipment("Drone Melee Upgrade",			/obj/item/device/mine_bot_upgrade,									400),
-		new /datum/data/mining_equipment("Drone Health Upgrade",		/obj/item/device/mine_bot_upgrade/health,							400),
-		new /datum/data/mining_equipment("Drone Ranged Upgrade",		/obj/item/device/mine_bot_upgrade/cooldown,							600),
-		new /datum/data/mining_equipment("Drone AI Upgrade",			/obj/item/slimepotion/slime/sentience/mining,						1000),
+		new /datum/data/mining_equipment("Nanotrasen Minebot",			/mob/living/simple_animal/hostile/mining_drone,						800),
+		new /datum/data/mining_equipment("Minebot Melee Upgrade",		/obj/item/device/mine_bot_upgrade,									400),
+		new /datum/data/mining_equipment("Minebot Armor Upgrade",		/obj/item/device/mine_bot_upgrade/health,							400),
+		new /datum/data/mining_equipment("Minebot Cooldown Upgrade",	/obj/item/borg/upgrade/modkit/cooldown/minebot,						600),
+		new /datum/data/mining_equipment("Minebot AI Upgrade",			/obj/item/slimepotion/slime/sentience/mining,						1000),
+		new /datum/data/mining_equipment("KA Minebot Passthrough",		/obj/item/borg/upgrade/modkit/minebot_passthrough,					100),
 		new /datum/data/mining_equipment("KA White Tracer Rounds",		/obj/item/borg/upgrade/modkit/tracer,								100),
 		new /datum/data/mining_equipment("KA Adjustable Tracer Rounds",	/obj/item/borg/upgrade/modkit/tracer/adjustable,					150),
 		new /datum/data/mining_equipment("KA Super Chassis",			/obj/item/borg/upgrade/modkit/chassis_mod,							250),
@@ -79,14 +80,9 @@
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
-	return
 
-/obj/machinery/mineral/equipment_vendor/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/mineral/equipment_vendor/interact(mob/user)
+/obj/machinery/mineral/equipment_vendor/ui_interact(mob/user)
+	. = ..()
 	var/dat
 	dat +="<div class='statusDisplay'>"
 	if(istype(inserted_id))
@@ -166,31 +162,36 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/mining_voucher/voucher, mob/redeemer)
-	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
+	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator Kit", "Minebot Kit", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
 
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
 	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
 		return
+	var/drop_location = drop_location()
 	switch(selection)
 		if("Survival Capsule and Explorer's Webbing")
-			new /obj/item/storage/belt/mining/vendor(src.loc)
-		if("Resonator and Advanced Scanner")
-			new /obj/item/resonator(src.loc)
-			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
-		if("Mining Drone")
-			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
-			new /obj/item/weldingtool/hugetank(src.loc)
-			new /obj/item/clothing/glasses/welding(src.loc)
+			new /obj/item/storage/belt/mining/vendor(drop_location)
+		if("Resonator Kit")
+			new /obj/item/storage/belt/mining/alt(drop_location)
+			new /obj/item/device/t_scanner/adv_mining_scanner(drop_location)
+			new /obj/item/extinguisher/mini(drop_location)
+			new /obj/item/resonator(drop_location)
+		if("Minebot Kit")
+			new /mob/living/simple_animal/hostile/mining_drone(drop_location)
+			new /obj/item/weldingtool/hugetank(drop_location)
+			new /obj/item/clothing/head/welding(drop_location)
+			new /obj/item/borg/upgrade/modkit/minebot_passthrough(drop_location)
 		if("Extraction and Rescue Kit")
-			new /obj/item/extraction_pack(loc)
-			new /obj/item/fulton_core(loc)
-			new /obj/item/stack/marker_beacon/thirty(loc)
+			new /obj/item/extraction_pack(drop_location)
+			new /obj/item/fulton_core(drop_location)
+			new /obj/item/stack/marker_beacon/thirty(drop_location)
 		if("Crusher Kit")
-			new /obj/item/twohanded/required/kinetic_crusher(loc)
-			new /obj/item/storage/belt/mining/alt(loc)
-			new /obj/item/extinguisher/mini(loc)
+			new /obj/item/storage/belt/mining/alt(drop_location)
+			new /obj/item/device/t_scanner/adv_mining_scanner(drop_location)
+			new /obj/item/extinguisher/mini(drop_location)
+			new /obj/item/twohanded/required/kinetic_crusher(drop_location)
 		if("Mining Conscription Kit")
-			new /obj/item/storage/backpack/duffelbag/mining_conscript(loc)
+			new /obj/item/storage/backpack/duffelbag/mining_conscript(drop_location)
 
 	SSblackbox.record_feedback("tally", "mining_voucher_redeemed", 1, selection)
 	qdel(voucher)
@@ -277,8 +278,7 @@
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 
-/obj/item/storage/backpack/duffelbag/mining_conscript/Initialize()
-	. = ..()
+/obj/item/storage/backpack/duffelbag/mining_conscript/PopulateContents()
 	new /obj/item/pickaxe/mini(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)

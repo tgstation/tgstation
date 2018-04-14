@@ -44,6 +44,24 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/xlarge_beaker
+	name = "X-large Beaker"
+	id = "xlarge_beaker"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_GLASS = 2500, MAT_PLASTIC = 3000)
+	build_path = /obj/item/reagent_containers/glass/beaker/plastic
+	category = list("Medical Designs")
+
+/datum/design/meta_beaker
+	name = "Metamaterial Beaker"
+	id = "meta_beaker"
+	build_type = PROTOLATHE
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	materials = list(MAT_GLASS = 2500, MAT_PLASTIC = 3000, MAT_GOLD = 1000, MAT_TITANIUM = 1000)
+	build_path = /obj/item/reagent_containers/glass/beaker/meta
+	category = list("Medical Designs")
+
 /datum/design/bluespacesyringe
 	name = "Bluespace Syringe"
 	desc = "An advanced syringe that can hold 60 units of chemicals"
@@ -457,3 +475,103 @@
 	build_path = /obj/item/organ/lungs/cybernetic/upgraded
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/surgery_lobotomy
+	name = "Lobotomy Surgery Disk"
+	desc = "A disk containing the instructions for a Lobotomy surgery."
+	id = "surgery_lobotomy"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/disk/surgery/lobotomy
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/surgery_pacify
+	name = "Pacification Surgery Disk"
+	desc = "A disk containing the instructions for a Pacification surgery."
+	id = "surgery_pacify"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/disk/surgery/pacification
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/surgery_viral_bonding
+	name = "Viral Bonding Surgery Disk"
+	desc = "A disk containing the instructions for a Viral Bonding surgery."
+	id = "surgery_viral_bond"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/disk/surgery/viral_bonding
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/surgery_reconstruction
+	name = "Reconstruction Surgery Disk"
+	desc = "A disk containing the instructions for a Reconstruction surgery."
+	id = "surgery_reconstruction"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/disk/surgery/reconstruction
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/surgery_revival
+	name = "Revival Surgery Disk"
+	desc = "A disk containing the instructions for a Revival surgery."
+	id = "surgery_revival"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/disk/surgery/revival
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/surgery_brainwashing
+	name = "Brainwashing Surgery Disk"
+	desc = "A disk containing the instructions for a Brainwashing surgery."
+	id = "surgery_brainwashing"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/disk/surgery/brainwashing
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/surgery_nerve_splicing
+	name = "Nerve Splicing Surgery Disk"
+	desc = "A disk containing the instructions for a Nerve Splicing surgery."
+	id = "surgery_nerve_splice"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/disk/surgery/nerve_splicing
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/surgery_nerve_grounding
+	name = "Nerve Grounding Surgery Disk"
+	desc = "A disk containing the instructions for a Nerve Grounding surgery."
+	id = "surgery_nerve_ground"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/disk/surgery/nerve_grounding
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/surgery_vein_threading
+	name = "Vein Threading Surgery Disk"
+	desc = "A disk containing the instructions for a Vein Threading surgery."
+	id = "surgery_vein_thread"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/disk/surgery/vein_threading
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/surgery_necrotic_revival
+	name = "Necrotic Revival Surgery Disk"
+	desc = "A disk containing the instructions for a Necrotic Revival surgery."
+	id = "surgery_zombie"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/disk/surgery/necrotic_revival
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE

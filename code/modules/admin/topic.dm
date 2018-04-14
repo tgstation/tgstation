@@ -1092,14 +1092,18 @@
 	else if(href_list["deletemessage"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/message_id = href_list["deletemessage"]
-		delete_message(message_id)
+		var/safety = alert("Delete message/note?",,"Yes","No");
+		if (safety == "Yes")
+			var/message_id = href_list["deletemessage"]
+			delete_message(message_id)
 
 	else if(href_list["deletemessageempty"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/message_id = href_list["deletemessageempty"]
-		delete_message(message_id, browse = 1)
+		var/safety = alert("Delete message/note?",,"Yes","No");
+		if (safety == "Yes")
+			var/message_id = href_list["deletemessageempty"]
+			delete_message(message_id, browse = TRUE)
 
 	else if(href_list["editmessage"])
 		if(!check_rights(R_ADMIN))
@@ -1203,7 +1207,7 @@
 				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
 				ban_unban_log_save("[key_name(usr)] has banned [key_name(M)]. - Reason: [reason] - This will be removed in [mins] minutes.")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>")
-				to_chat(M, "<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes.</span>")
+				to_chat(M, "<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes. The round ID is [GLOB.round_id].</span>")
 				var/bran = CONFIG_GET(string/banappeals)
 				if(bran)
 					to_chat(M, "<span class='danger'>To try to resolve this matter head to [bran]</span>")
@@ -1228,7 +1232,7 @@
 					if("No")
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
 				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>")
-				to_chat(M, "<span class='danger'>This is a permanent ban.</span>")
+				to_chat(M, "<span class='danger'>This is a permanent ban. The round ID is [GLOB.round_id].</span>")
 				var/bran = CONFIG_GET(string/banappeals)
 				if(bran)
 					to_chat(M, "<span class='danger'>To try to resolve this matter head to [bran]</span>")
@@ -1362,7 +1366,7 @@
 		to_chat(M, "<span class='adminnotice'>You have been sent to Prison!</span>")
 
 		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
-		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] Prison!")
+		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to Prison!")
 
 	else if(href_list["sendbacktolobby"])
 		if(!check_rights(R_ADMIN))
@@ -1699,6 +1703,25 @@
 
 		src.manage_free_slots()
 
+
+	else if(href_list["customjobslot"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/Add = href_list["customjobslot"]
+
+		for(var/datum/job/job in SSjob.occupations)
+			if(job.title == Add)
+				var/newtime = null
+				newtime = input(usr, "How many jebs do you want?", "Add wanted posters", "[newtime]") as num|null
+				if(!newtime)
+					to_chat(src.owner, "Setting to amount of positions filled for the job")
+					job.total_positions = job.current_positions
+					break
+				job.total_positions = newtime
+
+		src.manage_free_slots()
+
 	else if(href_list["removejobslot"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1789,7 +1812,6 @@
 			message_admins("[src.owner] decided not to answer [key_name(H)]'s CentCom request.")
 			return
 
-		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
 		log_admin("[src.owner] replied to [key_name(H)]'s CentCom message with the message [input].")
 		message_admins("[src.owner] replied to [key_name(H)]'s CentCom message with: \"[input]\"")
 		to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\"")
@@ -1896,7 +1918,17 @@
 				D.traitor_panel()
 		else
 			show_traitor_panel(M)
-	
+
+	else if(href_list["borgpanel"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["borgpanel"])
+		if(!iscyborg(M))
+			to_chat(usr, "This can only be used on cyborgs")
+		else
+			open_borgopanel(M)
+
 	else if(href_list["initmind"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1905,7 +1937,7 @@
 			to_chat(usr, "This can only be used on instances on mindless mobs")
 			return
 		M.mind_initialize()
-		
+
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))
 			return
@@ -2404,6 +2436,15 @@
 		dat += thing_to_check
 
 		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
+
+	else if(href_list["modantagrep"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["mob"]) in GLOB.mob_list
+		var/client/C = M.client
+		usr.client.cmd_admin_mod_antag_rep(C, href_list["modantagrep"])
+		show_player_panel(M)
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

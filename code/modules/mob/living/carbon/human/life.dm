@@ -2,23 +2,21 @@
 
 //NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
 
-
-#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 10 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
-
-#define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
-#define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
-#define COLD_DAMAGE_LEVEL_3 3 //Amount of damage applied when your body temperature passes the 120K point
-
-//Note that gas heat damage is only applied once every FOUR ticks.
-#define HEAT_GAS_DAMAGE_LEVEL_1 2 //Amount of damage applied when the current breath's temperature just passes the 360.15k safety point
-#define HEAT_GAS_DAMAGE_LEVEL_2 4 //Amount of damage applied when the current breath's temperature passes the 400K point
-#define HEAT_GAS_DAMAGE_LEVEL_3 8 //Amount of damage applied when the current breath's temperature passes the 1000K point
-
-#define COLD_GAS_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when the current breath's temperature just passes the 260.15k safety point
-#define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
-#define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
+// bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
+// Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
+// The values here should add up to 1.
+// Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15% and the head has 30%
+#define THERMAL_PROTECTION_HEAD			0.3
+#define THERMAL_PROTECTION_CHEST		0.15
+#define THERMAL_PROTECTION_GROIN		0.15
+#define THERMAL_PROTECTION_LEG_LEFT		0.075
+#define THERMAL_PROTECTION_LEG_RIGHT	0.075
+#define THERMAL_PROTECTION_FOOT_LEFT	0.025
+#define THERMAL_PROTECTION_FOOT_RIGHT	0.025
+#define THERMAL_PROTECTION_ARM_LEFT		0.075
+#define THERMAL_PROTECTION_ARM_RIGHT	0.075
+#define THERMAL_PROTECTION_HAND_LEFT	0.025
+#define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -54,7 +52,7 @@
 
 /mob/living/carbon/human/handle_traits()
 	if(eye_blind)			//blindness, heals slowly over time
-		if(tinttotal >= TINT_BLIND) //covering your eyes heals blurry eyes faster
+		if(has_trait(TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
 			adjust_blindness(-3)
 		else
 			adjust_blindness(-1)
@@ -65,6 +63,16 @@
 		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
 		a_intent_change(INTENT_HELP)
 
+	if (getBrainLoss() >= 60 && !incapacitated(TRUE))
+		SendSignal(COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
+		if(prob(3))
+			if(prob(25))
+				emote("drool")
+			else
+				say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
+	else
+		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
+
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
 		..()
@@ -72,8 +80,7 @@
 /mob/living/carbon/human/breathe()
 	if(!dna.species.breathe(src))
 		..()
-#define HUMAN_MAX_OXYLOSS 3
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
+
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 
 	var/L = getorganslot(ORGAN_SLOT_LUNGS)
@@ -81,7 +88,7 @@
 	if(!L)
 		if(health >= HEALTH_THRESHOLD_CRIT)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
-		else if(!(NOCRITDAMAGE in dna.species.species_traits))
+		else if(!has_trait(TRAIT_NOCRITDAMAGE))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		failed_last_breath = 1
@@ -102,9 +109,6 @@
 		if(istype(L, /obj/item/organ/lungs))
 			var/obj/item/organ/lungs/lun = L
 			lun.check_breath(breath,src)
-
-#undef HUMAN_MAX_OXYLOSS
-#undef HUMAN_CRIT_MAX_OXYLOSS
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	dna.species.handle_environment(environment, src)
@@ -222,11 +226,7 @@
 	return thermal_protection_flags
 
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
-
-	if(dna.check_mutation(COLDRES))
-		return TRUE //Fully protected from the cold.
-
-	if(RESISTCOLD in dna.species.species_traits)
+	if(has_trait(TRAIT_RESISTCOLD))
 		return TRUE
 
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
@@ -272,16 +272,14 @@
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
 		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
-			. = 1
+			return TRUE
 	if(glasses)
 		if(glasses.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
-			. = 1
+			return TRUE
 	if(head)
 		if(head.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
-			. = 1
-	if(NOBREATH in dna.species.species_traits)
-		. = 1
-	return .
+			return TRUE
+	return ..()
 
 
 /mob/living/carbon/human/proc/handle_embedded_objects()
@@ -299,6 +297,7 @@
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
+					SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 /mob/living/carbon/human/proc/handle_active_genes()
 	for(var/datum/mutation/human/HM in dna.mutations)
@@ -308,14 +307,14 @@
 	if(!can_heartattack())
 		return
 
-	var/we_breath = (!(NOBREATH in dna.species.species_traits))
+	var/we_breath = !has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)
 
 
 	if(!undergoing_cardiac_arrest())
 		return
 
-	// Cardiac arrest, unless corazone
-	if(reagents.get_reagent_amount("corazone"))
+	// Cardiac arrest, unless heart is stabilized
+	if(has_trait(TRAIT_STABLEHEART))
 		return
 
 	if(we_breath)
@@ -416,4 +415,14 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(drunkenness >= 101)
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
 
-#undef HUMAN_MAX_OXYLOSS
+#undef THERMAL_PROTECTION_HEAD
+#undef THERMAL_PROTECTION_CHEST
+#undef THERMAL_PROTECTION_GROIN
+#undef THERMAL_PROTECTION_LEG_LEFT
+#undef THERMAL_PROTECTION_LEG_RIGHT
+#undef THERMAL_PROTECTION_FOOT_LEFT
+#undef THERMAL_PROTECTION_FOOT_RIGHT
+#undef THERMAL_PROTECTION_ARM_LEFT
+#undef THERMAL_PROTECTION_ARM_RIGHT
+#undef THERMAL_PROTECTION_HAND_LEFT
+#undef THERMAL_PROTECTION_HAND_RIGHT

@@ -3,17 +3,29 @@
 	desc = "It measures something."
 	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
 	icon_state = "meterX"
-	var/atom/target = null
+	layer = GAS_PUMP_LAYER
 	anchored = TRUE
 	power_channel = ENVIRON
-	var/frequency = 0
-	var/id_tag
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 	max_integrity = 150
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 40, "acid" = 0)
+	var/frequency = 0
+	var/atom/target
+	var/id_tag
 	var/target_layer = PIPING_LAYER_DEFAULT
+
+/obj/machinery/meter/atmos
+	frequency = FREQ_ATMOS_STORAGE
+
+/obj/machinery/meter/atmos/atmos_waste_loop
+	name = "waste loop gas flow meter"
+	id_tag = ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE
+
+/obj/machinery/meter/atmos/distro_loop
+	name = "distribution loop gas flow meter"
+	id_tag = ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION
 
 /obj/machinery/meter/Destroy()
 	SSair.atmos_machinery -= src
@@ -99,7 +111,6 @@
 	..()
 	to_chat(user, status())
 
-
 /obj/machinery/meter/wrench_act(mob/user, obj/item/I)
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	if (I.use_tool(src, user, 40, volume=50))
@@ -115,19 +126,11 @@
 		new /obj/item/pipe_meter(loc)
 	qdel(src)
 
-/obj/machinery/meter/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/meter/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/meter/attack_hand(mob/user)
-
+/obj/machinery/meter/interact(mob/user)
 	if(stat & (NOPOWER|BROKEN))
-		return 1
+		return
 	else
-		to_chat(usr, status())
-		return 1
+		to_chat(user, status())
 
 /obj/machinery/meter/singularity_pull(S, current_size)
 	..()

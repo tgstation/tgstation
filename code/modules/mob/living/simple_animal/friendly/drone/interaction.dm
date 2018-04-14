@@ -29,6 +29,7 @@
 				if("Nothing")
 					return
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/simple_animal/drone/attack_hand(mob/user)
 	if(ishuman(user))
 		if(stat == DEAD || status_flags & GODMODE || !can_be_held)

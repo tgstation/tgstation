@@ -3,6 +3,7 @@
 	antagpanel_category = "Ninja"
 	job_rank = ROLE_NINJA
 	show_name_in_check_antagonists = TRUE
+	antag_moodlet = /datum/mood_event/focused
 	var/helping_station = FALSE
 	var/give_objectives = TRUE
 	var/give_equipment = TRUE
@@ -13,14 +14,14 @@
 
 /datum/antagonist/ninja/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_ninja_icons_removed(M)	
+	update_ninja_icons_removed(M)
 
 /datum/antagonist/ninja/proc/equip_space_ninja(mob/living/carbon/human/H = owner.current)
 	return H.equipOutfit(/datum/outfit/ninja)
 
 /datum/antagonist/ninja/proc/addMemories()
 	antag_memory += "I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!<br>"
-	antag_memory += "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!<br>"
+	antag_memory += "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by clicking the initialize UI button, to use abilities like stealth)!<br>"
 	antag_memory += "Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.<br>"
 
 /datum/antagonist/ninja/proc/addObjectives(quantity = 6)
@@ -34,7 +35,7 @@
 					possible_targets[M] = 1						//good-guy
 
 	var/list/possible_objectives = list(1,2,3,4)
-	
+
 	while(objectives.len < quantity)
 		switch(pick_n_take(possible_objectives))
 			if(1)	//research
@@ -89,8 +90,8 @@
 				break
 	var/datum/objective/O = new /datum/objective/survive()
 	O.owner = owner
+	objectives += O
 	owner.objectives |= objectives
-
 
 /proc/remove_ninja(mob/living/L)
 	if(!L || !L.mind)
@@ -108,6 +109,7 @@
 	to_chat(owner.current, "I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
 	to_chat(owner.current, "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
 	to_chat(owner.current, "Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")
+	owner.announce_objectives()
 	return
 
 /datum/antagonist/ninja/on_gain()

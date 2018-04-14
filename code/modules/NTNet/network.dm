@@ -64,12 +64,14 @@
 	return FALSE
 
 /datum/ntnet/proc/log_data_transfer(datum/netdata/data)
-	logs += "[worldtime2text()] - [data.generate_netlog()]"
+	logs += "[station_time_timestamp()] - [data.generate_netlog()]"
+	if(logs.len > setting_maxlogcount)
+		logs = logs.Copy(logs.len - setting_maxlogcount, 0)
 	return
 
 // Simplified logging: Adds a log. log_string is mandatory parameter, source is optional.
 /datum/ntnet/proc/add_log(log_string, obj/item/computer_hardware/network_card/source = null)
-	var/log_text = "[worldtime2text()] - "
+	var/log_text = "[station_time_timestamp()] - "
 	if(source)
 		log_text += "[source.get_network_tag()] - "
 	else

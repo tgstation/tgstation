@@ -184,6 +184,7 @@
 	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Returns you to Reebe."
+	var/client_color
 
 /datum/clockwork_scripture/abscond/check_special_requirements()
 	if(is_reebe(invoker.z))
@@ -192,6 +193,7 @@
 	return TRUE
 
 /datum/clockwork_scripture/abscond/recital()
+	client_color = invoker.client.color
 	animate(invoker.client, color = "#AF0AAF", time = 50)
 	. = ..()
 
@@ -214,11 +216,11 @@
 		invoker.pulling.forceMove(T)
 	invoker.forceMove(T)
 	if(invoker.client)
-		animate(invoker.client, color = initial(invoker.client.color), time = 25)
+		animate(invoker.client, color = client_color, time = 25)
 
 /datum/clockwork_scripture/abscond/scripture_fail()
 	if(invoker && invoker.client)
-		animate(invoker.client, color = initial(invoker.client.color), time = 10)
+		animate(invoker.client, color = client_color, time = 10)
 
 
 //Replicant: Creates a new clockwork slab.

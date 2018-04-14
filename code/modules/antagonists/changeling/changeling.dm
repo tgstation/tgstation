@@ -7,6 +7,7 @@
 	roundend_category  = "changelings"
 	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
+	antag_moodlet = /datum/mood_event/focused
 
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
@@ -84,7 +85,6 @@
 			B.vital = TRUE
 			B.decoy_override = FALSE
 	remove_changeling_powers()
-	owner.objectives -= objectives
 	. = ..()
 
 /datum/antagonist/changeling/proc/remove_clownmut()

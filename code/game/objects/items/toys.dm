@@ -422,10 +422,11 @@
 		. = ..()
 
 /obj/item/toy/prize/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(loc == user)
 		attack_self(user)
-	else
-		. = ..()
 
 /obj/item/toy/prize/ripley
 	name = "toy Ripley"
@@ -504,7 +505,7 @@
 
 // Talking toys are language universal, and thus all species can use them
 /obj/item/toy/talking/attack_alien(mob/user)
-	. = attack_hand(user)
+	return attack_hand(user)
 
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
@@ -653,7 +654,8 @@
 	cards += "Ace of Clubs"
 	cards += "Ace of Diamonds"
 
-
+//ATTACK HAND IGNORING PARENT RETURN VALUE
+//ATTACK HAND NOT CALLING PARENT
 /obj/item/toy/cards/deck/attack_hand(mob/user)
 	if(user.lying)
 		return
@@ -721,6 +723,7 @@
 		return ..()
 
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
+	. = ..()
 	var/mob/living/M = usr
 	if(!istype(M) || usr.incapacitated() || usr.lying)
 		return
@@ -753,7 +756,8 @@
 	user.set_machine(src)
 	interact(user)
 
-/obj/item/toy/cards/cardhand/interact(mob/user)
+/obj/item/toy/cards/cardhand/ui_interact(mob/user)
+	. = ..()
 	var/dat = "You have:<BR>"
 	for(var/t in currenthand)
 		dat += "<A href='?src=[REF(src)];pick=[t]'>A [t].</A><BR>"
@@ -1074,7 +1078,7 @@
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
 	..()
-	to_chat(user, "<span class='info'>Station Time: [worldtime2text()]")
+	to_chat(user, "<span class='info'>Station Time: [station_time_timestamp()]")
 
 /*
  * Toy Dagger

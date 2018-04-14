@@ -173,7 +173,7 @@
 	var/datum/callback_select/CS = new(count, savereturns)
 	for (var/i in 1 to count)
 		CS.invoke_callback(i, callbacks[i], callback_args[i], savereturns)
-	
+
 	while(CS.pendingcount)
 		sleep(resolution*world.tick_lag)
 	return CS.finished

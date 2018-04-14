@@ -1,7 +1,7 @@
 //Plasma fire properties
 #define OXYGEN_BURN_RATE_BASE				1.4
 #define PLASMA_BURN_RATE_DELTA				9
-#define PLASMA_UPPER_TEMPERATURE			1370+T0C
+#define PLASMA_UPPER_TEMPERATURE			(1370+T0C)
 #define PLASMA_MINIMUM_OXYGEN_NEEDED		2
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
 #define PLASMA_OXYGEN_FULLBURN				10
@@ -13,7 +13,8 @@
 #define NITRYL_FORMATION_ENERGY				100000
 #define TRITIUM_BURN_OXY_FACTOR				100
 #define TRITIUM_BURN_TRIT_FACTOR			10
-#define TRITIUM_BURN_RADIOACTIVITY_FACTOR	1000000 //The neutrons gotta go somewhere. Completely arbitrary number.
+#define TRITIUM_BURN_RADIOACTIVITY_FACTOR	50000 //The neutrons gotta go somewhere. Completely arbitrary number.
+#define TRITIUM_MINIMUM_RADIATION_ENERGY	0.1 //minimum 0.01 moles trit or 10 moles oxygen to start producing rads
 #define SUPER_SATURATION_THRESHOLD			96
 #define STIMULUM_HEAT_SCALE					100000
 #define STIMULUM_FIRST_RISE					0.65
@@ -27,7 +28,7 @@
 #define PLASMA_FUSED_COEFFICENT				0.08
 #define CATALYST_COEFFICENT					0.01
 #define FUSION_PURITY_THRESHOLD				0.95
-#define FUSION_HEAT_DROPOFF					20000+T0C
+#define FUSION_HEAT_DROPOFF					(20000+T0C)
 #define NOBLIUM_FORMATION_ENERGY			2e9 //1 Mole of Noblium takes the planck energy to condense.
 /datum/controller/subsystem/air/var/list/gas_reactions //this is our singleton of all reactions
 
@@ -123,6 +124,8 @@
 
 		if(burned_fuel)
 			energy_released += FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel
+			if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY) //woah there let's not crash the server
+				radiation_pulse(location, energy_released/TRITIUM_BURN_RADIOACTIVITY_FACTOR)
 
 			ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
 			cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel/TRITIUM_BURN_OXY_FACTOR
@@ -143,8 +146,6 @@
 		if(temperature_scale > 0)
 			var/o2 = cached_gases[/datum/gas/oxygen] ? cached_gases[/datum/gas/oxygen][MOLES] : 0
 			oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
-			if (o2 > cached_gases[/datum/gas/plasma][MOLES]*PLASMA_OXYGEN_FULLBURN)
-				plasma_burn_rate = (cached_gases[/datum/gas/plasma][MOLES]*temperature_scale)/PLASMA_BURN_RATE_DELTA
 			if(o2 / cached_gases[/datum/gas/plasma][MOLES] > SUPER_SATURATION_THRESHOLD) //supersaturation. Form Tritium.
 				super_saturation = TRUE
 			if(o2 > cached_gases[/datum/gas/plasma][MOLES]*PLASMA_OXYGEN_FULLBURN)

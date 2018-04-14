@@ -9,6 +9,12 @@
 	earliest_start = 30 MINUTES
 	gamemode_blacklist = list("nuclear")
 
+/datum/round_event_control/pirates/preRunEvent()
+	if (!SSmapping.empty_space)
+		return EVENT_CANT_RUN
+
+	return ..()
+
 /datum/round_event/pirates
 	startWhen = 60 //2 minutes to answer
 	var/datum/comm_message/threat
@@ -57,7 +63,7 @@
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew ?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
 
-	var/datum/map_template/pirate_event_ship/ship = new
+	var/datum/map_template/shuttle/pirate/default/ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value
@@ -167,10 +173,6 @@
 	toggle_off()
 	QDEL_NULL(gps)
 	return ..()
-
-/datum/map_template/pirate_event_ship
-	name = "Pirate Ship"
-	mappath = "_maps/templates/pirate_ship.dmm"
 
 /obj/item/device/gps/internal/pirate
 	gpstag = "Nautical Signal"

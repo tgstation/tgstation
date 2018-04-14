@@ -89,7 +89,7 @@
 	//domestication
 	var/tame = 0
 
-	var/my_z // I don't want to confuse this with client registered_z 
+	var/my_z // I don't want to confuse this with client registered_z
 
 /mob/living/simple_animal/Initialize()
 	. = ..()
@@ -231,7 +231,7 @@
 		if( abs(areatemp - bodytemperature) > 5)
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
-			bodytemperature += diff
+			adjust_bodytemperature(diff)
 
 	if(!environment_is_safe(environment))
 		adjustHealth(unsuitable_atmos_damage)
@@ -505,7 +505,7 @@
 			H.update_icon()
 
 /mob/living/simple_animal/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE)
-	..(I, del_on_fail, merge_stacks)
+	. = ..(I, del_on_fail, merge_stacks)
 	update_inv_hands()
 
 /mob/living/simple_animal/update_inv_hands()
@@ -574,5 +574,5 @@
 /mob/living/simple_animal/onTransitZ(old_z, new_z)
 	..()
 	if (AIStatus == AI_Z_OFF)
-		SSidlenpcpool[old_z] -= src
+		SSidlenpcpool.idle_mobs_by_zlevel[old_z] -= src
 		toggle_ai(initial(AIStatus))

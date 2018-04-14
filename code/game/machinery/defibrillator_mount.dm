@@ -11,7 +11,6 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 1
 	power_channel = EQUIP
-	speed_process = TRUE //GAS GAS GAS
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_HEADS, ACCESS_SECURITY) //used to control clamps
 	var/obj/item/defibrillator/defib //this mount's defibrillator
 	var/clamps_locked = FALSE //if true, and a defib is loaded, it can't be removed without unlocking the clamps
@@ -35,16 +34,11 @@
 			to_chat(user, "<span class='notice'>Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.</span>")
 
 /obj/machinery/defibrillator_mount/process()
-	if(defib && defib.cell && defib.cell.charge < defib.cell.maxcharge)
-		use_power(20)
-		defib.cell.give(18) //90% efficiency, slightly better than the cell charger's 87.5%
-	if(defib && defib.paddles && isliving(defib.paddles.loc))
-		var/mob/living/L = defib.paddles.loc
-		if(!L.Adjacent(src))
-			to_chat(L, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
-			L.dropItemToGround(defib.paddles)
-	update_icon()
-
+	if(defib && defib.cell && defib.cell.charge < defib.cell.maxcharge && is_operational())
+		use_power(200)
+		defib.cell.give(180) //90% efficiency, slightly better than the cell charger's 87.5%
+		update_icon()
+	
 /obj/machinery/defibrillator_mount/update_icon()
 	cut_overlays()
 	if(defib)

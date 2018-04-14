@@ -13,7 +13,7 @@
 	layer = BELOW_MOB_LAYER
 	can_be_held = TRUE
 
-	var/network = "SS13"
+	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
 	var/ram = 100	// Used as currency to purchase different abilities

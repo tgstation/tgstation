@@ -3,6 +3,7 @@
 	roundend_category = "wizards/witches"
 	antagpanel_category = "Wizard"
 	job_rank = ROLE_WIZARD
+	antag_moodlet = /datum/mood_event/focused
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
@@ -108,8 +109,6 @@
 
 /datum/antagonist/wizard/on_removal()
 	unregister()
-	for(var/objective in objectives)
-		owner.objectives -= objective
 	owner.RemoveAllSpells() // TODO keep track which spells are wizard spells which innate stuff
 	return ..()
 

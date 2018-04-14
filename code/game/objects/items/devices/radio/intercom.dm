@@ -86,6 +86,9 @@
 	interact(user)
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	interact(user)
 
 /obj/item/device/radio/intercom/interact(mob/user)
