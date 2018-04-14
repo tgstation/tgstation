@@ -2,6 +2,21 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Xenobiology Lab - Aft-Port";
+	dir = 4;
+	network = list("SS13","RD")
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
 "aac" = (
 /obj/effect/landmark/carpspawn,
 /turf/open/space,
@@ -73684,21 +73699,6 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/maintenance/department/science/xenobiology)
-"ddf" = (
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Lab - Aft-Port";
-	dir = 4;
-	network = list("SS13","RD")
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/science/xenobiology)
 "ddg" = (
 /obj/machinery/portable_atmospherics/canister,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -111363,7 +111363,7 @@ dcU
 cTc
 dcX
 cSd
-ddf
+aab
 ddk
 cTj
 cTD
