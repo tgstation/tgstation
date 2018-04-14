@@ -6,15 +6,9 @@ All ShuttleMove procs go here
 
 // Called on every turf in the shuttle region, returns a bitflag for allowed movements of that turf
 // returns the new move_mode (based on the old)
-/turf/proc/fromShuttleMove(turf/newT, turf_type, list/baseturf_cache, move_mode)
-	if(!(move_mode & MOVE_AREA))
+/turf/proc/fromShuttleMove(turf/newT, move_mode)
+	if(!(move_mode & MOVE_AREA) || !isshuttleturf(src))
 		return move_mode
-	if(istype(src, turf_type))
-		if(length(baseturfs))
-			if(baseturf_cache[baseturfs[1]])
-				return move_mode
-		else if(baseturf_cache[baseturfs])
-			return move_mode
 
 	return move_mode | MOVE_TURF | MOVE_CONTENTS
 
@@ -54,7 +48,12 @@ All ShuttleMove procs go here
 	if(newT == src) // In case of in place shuttle rotation shenanigans.
 		return
 	//Destination turf changes
-	newT.CopyOnTop(src, 1, 0) // We only want a surface copy
+	//Baseturfs is definitely a list or this proc wouldnt be called
+	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
+	if(!shuttle_boundary)
+		CRASH("A turf queued to move via shuttle somehow had no skipover in baseturfs. [src]([type]):[loc]")
+	var/depth = baseturfs.len - shuttle_boundary + 1
+	newT.CopyOnTop(src, 1, depth)
 	//Air stuff
 	newT.blocks_air = TRUE
 	newT.air_update_turf(TRUE)
@@ -67,10 +66,12 @@ All ShuttleMove procs go here
 	return TRUE
 
 // Called on the new turf after everything has been moved
-/turf/proc/afterShuttleMove(turf/oldT, turf_type, baseturf_type, rotation)
+/turf/proc/afterShuttleMove(turf/oldT, rotation)
 	//Dealing with the turf we left behind
 	oldT.TransferComponents(src)
-	oldT.ChangeTurf(turf_type, baseturf_type, CHANGETURF_IGNORE_AIR) // TODO: make this oldT.ScrapeAway() which requires templating all shuttles
+	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
+	if(shuttle_boundary)
+		oldT.ScrapeAway(baseturfs.len - shuttle_boundary + 1)
 
 	if(rotation)
 		shuttleRotate(rotation) //see shuttle_rotate.dm

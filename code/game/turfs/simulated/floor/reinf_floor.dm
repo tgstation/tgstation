@@ -37,7 +37,7 @@
 		if(!istype(src, /turf/open/floor/engine))
 			return TRUE
 		new /obj/item/stack/rods(src, 2)
-		ChangeTurf(/turf/open/floor/plating)
+		ScrapeAway()
 	return TRUE
 
 /turf/open/floor/engine/acid_act(acidpwr, acid_volume)
@@ -55,14 +55,18 @@
 	switch(severity)
 		if(1)
 			if(prob(80))
-				ReplaceWithLattice()
+				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
+					ScrapeAway()
+					ReplaceWithLattice()
+				else
+					ScrapeAway(2)
 			else if(prob(50))
-				ScrapeAway()
+				ScrapeAway(2)
 			else
-				make_plating(1)
+				ScrapeAway()
 		if(2)
 			if(prob(50))
-				make_plating(1)
+				ScrapeAway()
 
 /turf/open/floor/engine/singularity_pull(S, current_size)
 	..()

@@ -31,17 +31,6 @@
 
 	var/list/dent_decals
 
-	var/static/list/dent_decal_list = list(
-	WALL_DENT_HIT = list(
-	mutable_appearance('icons/effects/effects.dmi', "impact1", BULLET_HOLE_LAYER),
-	mutable_appearance('icons/effects/effects.dmi', "impact2", BULLET_HOLE_LAYER),
-	mutable_appearance('icons/effects/effects.dmi', "impact3", BULLET_HOLE_LAYER)
-	),
-	WALL_DENT_SHOT = list(
-	mutable_appearance('icons/effects/effects.dmi', "bullet_hole", BULLET_HOLE_LAYER)
-	)
-	)
-
 /turf/closed/wall/examine(mob/user)
 	..()
 	deconstruction_hints(user)
@@ -199,11 +188,11 @@
 			return FALSE
 
 		to_chat(user, "<span class='notice'>You begin fixing dents on the wall...</span>")
-		if(W.use_tool(src, user, slicing_duration, volume=100))
+		if(W.use_tool(src, user, 0, volume=100))
 			if(iswallturf(src) && LAZYLEN(dent_decals))
 				to_chat(user, "<span class='notice'>You fix some dents on the wall.</span>")
 				cut_overlay(dent_decals)
-				LAZYCLEARLIST(dent_decals)
+				dent_decals.Cut()
 			return TRUE
 
 	return FALSE
@@ -302,12 +291,22 @@
 	if(LAZYLEN(dent_decals) >= MAX_DENT_DECALS)
 		return
 
-	var/mutable_appearance/decal = pick(dent_decal_list[denttype])
+	var/mutable_appearance/decal = mutable_appearance('icons/effects/effects.dmi', "", BULLET_HOLE_LAYER)
+	switch(denttype)
+		if(WALL_DENT_SHOT)
+			decal.icon_state = "bullet_hole"
+		if(WALL_DENT_HIT)
+			decal.icon_state = "impact[rand(1, 3)]"
+
 	decal.pixel_x = x
 	decal.pixel_y = y
 
-	cut_overlay(dent_decals)
-	LAZYADD(dent_decals, decal)
+	if(LAZYLEN(dent_decals))
+		cut_overlay(dent_decals)
+		dent_decals += decal
+	else
+		dent_decals = list(decal)
+
 	add_overlay(dent_decals)
 
 #undef MAX_DENT_DECALS

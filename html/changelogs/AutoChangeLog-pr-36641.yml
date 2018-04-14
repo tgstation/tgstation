@@ -1,6 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - code_imp: "Monkey AI is now much more efficient and no longer full of terrible, wasteful processes"
-  - tweak: "Monkeys will now move more and will only focus on nearby objects for stealing. This should result in more natural monkey behavior instead of the monkey staring furiously at random shit in the room for 5 minutes until it has a 50 item blacklist of shit it will refuse to touch from then on out."
-  - tweak: "The chance for a monkey to attack you for pulling it will now only happen when execute the initial grab, instead of a check that happens every tick."

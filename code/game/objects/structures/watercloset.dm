@@ -234,10 +234,7 @@
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/obj/machinery/shower/attack_hand(mob/M)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/shower/interact(mob/M)
 	on = !on
 	update_icon()
 	add_fingerprint(M)

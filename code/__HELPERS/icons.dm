@@ -1041,7 +1041,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	return 0
 
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key)
+/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals)
 	var/static/list/humanoid_icon_cache = list()
 	if(!icon_id || !humanoid_icon_cache[icon_id])
 		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key)
@@ -1053,26 +1053,11 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
-
-		body.setDir(NORTH)
-		COMPILE_OVERLAYS(body)
-		var/icon/partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=NORTH)
-
-		body.setDir(SOUTH)
-		COMPILE_OVERLAYS(body)
-		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=SOUTH)
-
-		body.setDir(WEST)
-		COMPILE_OVERLAYS(body)
-		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=WEST)
-
-		body.setDir(EAST)
-		COMPILE_OVERLAYS(body)
-		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=EAST)
+		for(var/D in showDirs)
+			body.setDir(D)
+			COMPILE_OVERLAYS(body)
+			var/icon/partial = getFlatIcon(body)
+			out_icon.Insert(partial,dir=D)
 
 		humanoid_icon_cache[icon_id] = out_icon
 		dummy_key? unset_busy_human_dummy(dummy_key) : qdel(body)

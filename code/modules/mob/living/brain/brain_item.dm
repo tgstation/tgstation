@@ -179,11 +179,18 @@
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
-/obj/item/organ/brain/proc/has_trauma_type(brain_trauma_type, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
+/obj/item/organ/brain/proc/has_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
 		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience))
 			return BT
+
+/obj/item/organ/brain/proc/get_traumas_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
+	. = list()
+	for(var/X in traumas)
+		var/datum/brain_trauma/BT = X
+		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience))
+			. += BT
 
 /obj/item/organ/brain/proc/can_gain_trauma(datum/brain_trauma/trauma, resilience)
 	if(!ispath(trauma))
@@ -267,13 +274,12 @@
 	gain_trauma(trauma_type, resilience)
 
 //Cure a random trauma of a certain resilience level
-/obj/item/organ/brain/proc/cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
-	var/datum/brain_trauma/trauma = has_trauma_type(resilience)
-	if(trauma)
-		qdel(trauma)
+/obj/item/organ/brain/proc/cure_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_BASIC)
+	var/list/traumas = get_traumas_type(brain_trauma_type, resilience)
+	if(LAZYLEN(traumas))
+		qdel(pick(traumas))
 
 /obj/item/organ/brain/proc/cure_all_traumas(resilience = TRAUMA_RESILIENCE_BASIC)
+	var/list/traumas = get_traumas_type(resilience = resilience)
 	for(var/X in traumas)
-		var/datum/brain_trauma/trauma = X
-		if(trauma.resilience <= resilience)
-			qdel(trauma)
+		qdel(X)

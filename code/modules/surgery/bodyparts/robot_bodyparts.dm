@@ -1,4 +1,10 @@
+#define ROBOTIC_LIGHT_BRUTE_MSG "marred"
+#define ROBOTIC_MEDIUM_BRUTE_MSG "dented"
+#define ROBOTIC_HEAVY_BRUTE_MSG "falling apart"
 
+#define ROBOTIC_LIGHT_BURN_MSG "scorched"
+#define ROBOTIC_MEDIUM_BURN_MSG "charred"
+#define ROBOTIC_HEAVY_BURN_MSG "smoldering"
 
 /obj/item/bodypart/l_arm/robot
 	name = "cyborg left arm"
@@ -10,6 +16,13 @@
 	icon_state = "borg_l_arm"
 	status = BODYPART_ROBOTIC
 
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
 /obj/item/bodypart/r_arm/robot
 	name = "cyborg right arm"
@@ -21,6 +34,13 @@
 	icon_state = "borg_r_arm"
 	status = BODYPART_ROBOTIC
 
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
 /obj/item/bodypart/l_leg/robot
 	name = "cyborg left leg"
@@ -32,6 +52,13 @@
 	icon_state = "borg_l_leg"
 	status = BODYPART_ROBOTIC
 
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
 /obj/item/bodypart/r_leg/robot
 	name = "cyborg right leg"
@@ -43,6 +70,13 @@
 	icon_state = "borg_r_leg"
 	status = BODYPART_ROBOTIC
 
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -52,6 +86,15 @@
 	flags_1 = CONDUCT_1
 	icon_state = "borg_chest"
 	status = BODYPART_ROBOTIC
+
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
 	var/wired = 0
 	var/obj/item/stock_parts/cell/cell = null
 
@@ -102,6 +145,15 @@
 	flags_1 = CONDUCT_1
 	icon_state = "borg_head"
 	status = BODYPART_ROBOTIC
+
+	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
+	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
+	heavy_brute_msg = ROBOTIC_HEAVY_BRUTE_MSG
+
+	light_burn_msg = ROBOTIC_LIGHT_BURN_MSG
+	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
+	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
+
 	var/obj/item/device/assembly/flash/handheld/flash1 = null
 	var/obj/item/device/assembly/flash/handheld/flash2 = null
 
@@ -189,3 +241,12 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon_state = "r_leg"
 	max_damage = 20
+
+
+#undef ROBOTIC_LIGHT_BRUTE_MSG
+#undef ROBOTIC_MEDIUM_BRUTE_MSG
+#undef ROBOTIC_HEAVY_BRUTE_MSG
+
+#undef ROBOTIC_LIGHT_BURN_MSG
+#undef ROBOTIC_MEDIUM_BURN_MSG
+#undef ROBOTIC_HEAVY_BURN_MSG

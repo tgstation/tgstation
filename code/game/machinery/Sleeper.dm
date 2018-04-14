@@ -58,8 +58,13 @@
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
+/obj/machinery/sleeper/Exited(atom/movable/user)
+	if (!state_open && user == occupant)
+		container_resist(user)
+
 /obj/machinery/sleeper/relaymove(mob/user)
-	container_resist(user)
+	if (!state_open)
+		container_resist(user)
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)

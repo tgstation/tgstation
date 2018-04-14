@@ -110,8 +110,12 @@
 	item_state = "briefcase"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
-	can_hold = list(/obj/item/photo)
 	resistance_flags = FLAMMABLE
+
+/obj/item/storage/photo_album/Initialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.can_hold = typecacheof(list(/obj/item/photo))
 
 /*
  * Camera

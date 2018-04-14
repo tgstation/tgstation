@@ -23,7 +23,7 @@
 
 	user.do_attack_animation(M)
 	M.Knockdown(100)
-	M.apply_effect(STUTTER, 5)
+	M.apply_effect(EFFECT_STUTTER, 5)
 
 	M.visible_message("<span class='danger'>[user] has prodded [M] with [src]!</span>", \
 					"<span class='userdanger'>[user] has prodded you with [src]!</span>")

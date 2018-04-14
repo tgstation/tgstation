@@ -21,7 +21,7 @@
 	strip_delay = 70
 	resistance_flags = NONE
 	permeability_coefficient = 0.05
-	pockets = /obj/item/storage/internal/pocket/shoes
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 
 //The super annoying version
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat
@@ -32,7 +32,7 @@
 	strip_delay = 70
 	resistance_flags = NONE
 	permeability_coefficient = 0.05
-	pockets = /obj/item/storage/internal/pocket/shoes
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	always_noslip = TRUE
 	var/max_recharge = 3000 //30 peels worth
 	var/recharge_rate = 34 //about 1/3 of a peel per tick
