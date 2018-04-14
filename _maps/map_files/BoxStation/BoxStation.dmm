@@ -37558,11 +37558,10 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bPE" = (
-/obj/structure/table/reinforced,
-/obj/item/device/slime_scanner,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bPF" = (
@@ -37604,6 +37603,9 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
+/obj/item/device/slime_scanner{
+	step_x = 0
+	},
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel,
