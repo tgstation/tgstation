@@ -46365,7 +46365,6 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
