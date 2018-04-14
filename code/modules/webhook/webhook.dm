@@ -34,6 +34,10 @@
 	var/list/query = list("ckey" = ckey, "token" = token)
 	webhook_send("token", query)
 
+/proc/webhook_send_status_update(var/event,var/data)
+	var/list/query = list("event" = event, "data" = data)
+	webhook_send("status_update", query)
+
 /proc/webhook_send(var/method, var/data)
 	if(!CONFIG_GET(string/webhook_address) || !CONFIG_GET(string/webhook_key))
 		return
