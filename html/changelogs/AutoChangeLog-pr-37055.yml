@@ -1,0 +1,4 @@
+author: "JohnGinnane"
+delete-after: True
+changes: 
+  - rscadd: "PDA messages you send are now displayed in the chat for your confirmation"
