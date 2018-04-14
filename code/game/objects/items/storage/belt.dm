@@ -32,7 +32,12 @@
 	desc = "Holds tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	can_hold = list(
+	content_overlays = TRUE
+
+/obj/item/storage/belt/ulility/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.can_hold = typecacheof(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
 		/obj/item/weldingtool,
@@ -49,8 +54,7 @@
 		/obj/item/clothing/gloves,
 		/obj/item/holosign_creator,
 		/obj/item/device/assembly/signaler
-		)
-	content_overlays = TRUE
+		))
 
 /obj/item/storage/belt/utility/chief
 	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
@@ -67,7 +71,6 @@
 	new /obj/item/extinguisher/mini(src)
 	new /obj/item/device/analyzer(src)
 	//much roomier now that we've managed to remove two tools
-
 
 /obj/item/storage/belt/utility/full/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -106,16 +109,17 @@
 	new /obj/item/device/multitool(src)
 	new /obj/item/stack/cable_coil(src, 30, "yellow")
 
-
-
-
 /obj/item/storage/belt/medical
 	name = "medical belt"
 	desc = "Can hold various medical equipment."
 	icon_state = "medicalbelt"
 	item_state = "medical"
-	max_w_class = WEIGHT_CLASS_BULKY
-	can_hold = list(
+
+/obj/item/storage/belt/medical/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.can_hold = typecacheof(list(
 		/obj/item/device/healthanalyzer,
 		/obj/item/dnainjector,
 		/obj/item/reagent_containers/dropper,
@@ -156,22 +160,26 @@
 		/obj/item/storage/bag/bio,
 		/obj/item/reagent_containers/blood,
 		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/pinpointer/crew,
 		/obj/item/gun/syringe/syndicate,
 		/obj/item/implantcase,
 		/obj/item/implant,
-		/obj/item/implanter
-		)
-
+		/obj/item/implanter,
+		/obj/item/pinpointer/crew
+		))
 
 /obj/item/storage/belt/security
 	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes."
 	icon_state = "securitybelt"
 	item_state = "security"//Could likely use a better one.
-	storage_slots = 5
-	max_w_class = WEIGHT_CLASS_NORMAL //Because the baton wouldn't fit otherwise. - Neerti
-	can_hold = list(
+	content_overlays = TRUE
+
+/obj/item/storage/belt/security/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 5
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(
 		/obj/item/melee/baton,
 		/obj/item/melee/classic_baton,
 		/obj/item/grenade,
@@ -187,10 +195,8 @@
 		/obj/item/melee/classic_baton/telescopic,
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves,
-		/obj/item/restraints/legcuffs/bola,
-		/obj/item/holosign_creator/security
-		)
-	content_overlays = TRUE
+		/obj/item/restraints/legcuffs/bola
+		))
 
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
@@ -200,17 +206,20 @@
 	new /obj/item/melee/baton/loaded(src)
 	update_icon()
 
-
 /obj/item/storage/belt/mining
 	name = "explorer's webbing"
 	desc = "A versatile chest rig, cherished by miners and hunters alike."
 	icon_state = "explorer1"
 	item_state = "explorer1"
-	storage_slots = 6
 	w_class = WEIGHT_CLASS_BULKY
-	max_w_class = WEIGHT_CLASS_BULKY //Pickaxes are big.
-	max_combined_w_class = 20 //Not an issue with this whitelist, probably.
-	can_hold = list(
+
+/obj/item/storage/belt/mining/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 6
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.max_combined_w_class = 20
+	STR.can_hold = typecacheof(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
 		/obj/item/weldingtool,
@@ -247,7 +256,7 @@
 		/obj/item/device/wormhole_jaunter,
 		/obj/item/storage/bag/plants,
 		/obj/item/stack/marker_beacon
-		)
+		))
 
 
 /obj/item/storage/belt/mining/vendor
@@ -260,19 +269,27 @@
 /obj/item/storage/belt/mining/primitive
 	name = "hunter's belt"
 	desc = "A versatile belt, woven from sinew."
-	storage_slots = 5
 	icon_state = "ebelt"
 	item_state = "ebelt"
+
+/obj/item/storage/belt/mining/primitive/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 5
 
 /obj/item/storage/belt/soulstone
 	name = "soul stone belt"
 	desc = "Designed for ease of access to the shards during a fight, as to not let a single enemy spirit slip away."
 	icon_state = "soulstonebelt"
 	item_state = "soulstonebelt"
-	storage_slots = 6
-	can_hold = list(
+
+/obj/item/storage/belt/soulstone/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 6
+	STR.can_hold = typecacheof(list(
 		/obj/item/device/soulstone
-		)
+		))
 
 /obj/item/storage/belt/soulstone/full/PopulateContents()
 	for(var/i in 1 to 6)
@@ -288,8 +305,12 @@
 	icon_state = "championbelt"
 	item_state = "champion"
 	materials = list(MAT_GOLD=400)
-	storage_slots = 1
-	can_hold = list(
+
+/obj/item/storage/belt/champion/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 1
+	STR.can_hold = list(
 		/obj/item/clothing/mask/luchador
 		)
 
@@ -298,7 +319,11 @@
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
 	icon_state = "militarywebbing"
 	item_state = "militarywebbing"
-	max_w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/storage/belt/military/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/storage/belt/military/abductor
 	name = "agent belt"
@@ -316,7 +341,6 @@
 	new /obj/item/device/multitool/abductor(src)
 	new /obj/item/stack/cable_coil(src,30,"white")
 
-
 /obj/item/storage/belt/military/army
 	name = "army belt"
 	desc = "A belt used by military forces."
@@ -328,25 +352,34 @@
 	desc = "A tactical assault belt."
 	icon_state = "assaultbelt"
 	item_state = "security"
-	storage_slots = 6
+
+/obj/item/storage/belt/military/assault/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 6
 
 /obj/item/storage/belt/grenade
 	name = "grenadier belt"
 	desc = "A belt for holding grenades."
 	icon_state = "grenadebeltnew"
 	item_state = "security"
-	max_w_class = WEIGHT_CLASS_BULKY
-	display_contents_with_number = TRUE
-	storage_slots = 30
-	max_combined_w_class = 60 //needs to be this high
-	can_hold = list(
+
+/obj/item/storage/belt/grenade/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 30
+	STR.display_numerical_stacking = TRUE
+	STR.max_combined_w_class = 60
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.can_hold = typecacheof(list(
 		/obj/item/grenade,
 		/obj/item/screwdriver,
 		/obj/item/lighter,
 		/obj/item/device/multitool,
 		/obj/item/reagent_containers/food/drinks/bottle/molotov,
 		/obj/item/grenade/plastic/c4,
-		)
+		))
+
 /obj/item/storage/belt/grenade/full/PopulateContents()
 	new /obj/item/grenade/flashbang(src)
 	new /obj/item/grenade/smokebomb(src)
@@ -382,10 +415,14 @@
 	desc = "A belt designed to hold various rods of power. A veritable fanny pack of exotic magic."
 	icon_state = "soulstonebelt"
 	item_state = "soulstonebelt"
-	storage_slots = 6
-	can_hold = list(
+
+/obj/item/storage/belt/wands/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 6
+	STR.can_hold = typecacheof(list(
 		/obj/item/gun/magic/wand
-		)
+		))
 
 /obj/item/storage/belt/wands/full/PopulateContents()
 	new /obj/item/gun/magic/wand/death(src)
@@ -404,9 +441,13 @@
 	desc = "A belt used to hold most janitorial supplies."
 	icon_state = "janibelt"
 	item_state = "janibelt"
-	storage_slots = 6
-	max_w_class = WEIGHT_CLASS_BULKY // Set to this so the  light replacer can fit.
-	can_hold = list(
+
+/obj/item/storage/belt/janitor/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 6
+	STR.max_w_class = WEIGHT_CLASS_BULKY // Set to this so the  light replacer can fit.
+	STR.can_hold = typecacheof(list(
 		/obj/item/grenade/chem_grenade,
 		/obj/item/device/lightreplacer,
 		/obj/item/device/flashlight,
@@ -417,32 +458,40 @@
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
 		/obj/item/device/assembly/mousetrap
-		)
+		))
 
 /obj/item/storage/belt/bandolier
 	name = "bandolier"
 	desc = "A bandolier for holding shotgun ammunition."
 	icon_state = "bandolier"
 	item_state = "bandolier"
-	storage_slots = 18
-	display_contents_with_number = TRUE
-	can_hold = list(
+
+/obj/item/storage/belt/bandolier/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 18
+	STR.display_numerical_stacking = TRUE
+	STR.can_hold = typecacheof(list(
 		/obj/item/ammo_casing/shotgun
-		)
+		))
 
 /obj/item/storage/belt/holster
 	name = "shoulder holster"
 	desc = "A holster to carry a handgun and ammo. WARNING: Badasses only."
 	icon_state = "holster"
 	item_state = "holster"
-	storage_slots = 3
-	max_w_class = WEIGHT_CLASS_NORMAL
-	can_hold = list(
+	alternate_worn_layer = UNDER_SUIT_LAYER
+
+/obj/item/storage/belt/holster/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 3
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box,
-		)
-	alternate_worn_layer = UNDER_SUIT_LAYER
+		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()
 	new /obj/item/gun/ballistic/revolver/detective(src)
@@ -454,8 +503,12 @@
 	desc = "A dorky fannypack for keeping small items in."
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
-	storage_slots = 3
-	max_w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/storage/belt/fannypack/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 3
+	STR.max_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/storage/belt/fannypack/black
 	name = "black fannypack"
@@ -512,26 +565,29 @@
 	desc = "An ornate sheath designed to hold an officer's blade."
 	icon_state = "sheath"
 	item_state = "sheath"
-	storage_slots = 1
-	rustle_jimmies = FALSE
 	w_class = WEIGHT_CLASS_BULKY
-	max_w_class = WEIGHT_CLASS_BULKY
-	can_hold = list(
+
+/obj/item/storage/belt/sabre/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 1
+	STR.rustle_sound = FALSE
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.can_hold = typecacheof(list(
 		/obj/item/melee/sabre
-		)
+		))
 
 /obj/item/storage/belt/sabre/examine(mob/user)
 	..()
-	if(contents.len)
+	if(length(contents))
 		to_chat(user, "<span class='notice'>Alt-click it to quickly draw the blade.</span>")
 
 /obj/item/storage/belt/sabre/AltClick(mob/user)
 	if(!iscarbon(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	if(contents.len)
+	if(length(contents))
 		var/obj/item/I = contents[1]
-		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\
-		)
+		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>")
 		user.put_in_hands(I)
 		update_icon()
 	else
@@ -547,7 +603,6 @@
 		var/mob/living/L = loc
 		L.regenerate_icons()
 	..()
-
 
 /obj/item/storage/belt/sabre/PopulateContents()
 	new /obj/item/melee/sabre(src)

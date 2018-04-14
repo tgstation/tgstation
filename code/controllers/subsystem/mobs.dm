@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(mobs)
 	var/list/currentrun = list()
 	var/static/list/clients_by_zlevel[][]
 	var/static/list/cubemonkeys = list()
-	var/cubemonkeycap = 20
+	var/cubemonkeycap = 64
 
 /datum/controller/subsystem/mobs/stat_entry()
 	..("P:[GLOB.mob_living_list.len]")

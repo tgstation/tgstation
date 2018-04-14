@@ -1,4 +1,0 @@
-author: "EvilJackCarver"
-delete-after: True
-changes: 
-  - bugfix: "Edited a certain part of the disco machine's dance to only target carbon-based (mob/living/carbon) lifeforms. pAI units will no longer spam chat with rest notifications when in range of the disco machine."

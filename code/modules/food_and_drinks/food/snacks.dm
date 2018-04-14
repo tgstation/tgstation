@@ -37,20 +37,20 @@
 	else
 		..()
 
-/obj/item/reagent_containers/food/snacks/proc/On_Consume()
-	if(!usr)
+/obj/item/reagent_containers/food/snacks/proc/On_Consume(mob/living/eater)
+	if(!eater)
 		return
 	if(!reagents.total_volume)
-		var/obj/item/trash_item = generate_trash(usr)
+		var/obj/item/trash_item = generate_trash(eater)
 		qdel(src)
-		usr.put_in_hands(trash_item)
+		eater.put_in_hands(trash_item)
 
 
 /obj/item/reagent_containers/food/snacks/attack_self(mob/user)
 	return
 
 
-/obj/item/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone)
+/obj/item/reagent_containers/food/snacks/attack(mob/living/M, mob/living/user, def_zone)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(!eatverb)
@@ -109,11 +109,12 @@
 				M.satiety -= junkiness
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
+				SendSignal(COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)
 				reagents.trans_to(M, bitesize)
 				bitecount++
-				On_Consume()
+				On_Consume(M)
 				checkLiked(fraction, M)
 				return 1
 

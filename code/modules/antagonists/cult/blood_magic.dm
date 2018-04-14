@@ -9,6 +9,7 @@
 	..()
 	button.screen_loc = "6:-29,4:-2"
 	button.moved = "6:-29,4:-2"
+	button.ordered = FALSE
 
 /datum/action/innate/cult/blood_magic/Remove()
 	for(var/X in spells)
@@ -103,6 +104,7 @@
 	all_magic = BM
 	..()
 	button.locked = TRUE
+	button.ordered = FALSE
 
 /datum/action/innate/cult/blood_spell/Remove()
 	if(all_magic)
@@ -589,6 +591,7 @@
 			SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else
 			to_chat(user, "<span class='warning'>The spell will not work on [target]!</span>")
+			return
 		..()
 
 //Armor: Gives the target a basic cultist combat loadout

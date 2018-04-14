@@ -84,8 +84,9 @@ Admin:
 \tF3 = asay
 \tF5 = Aghost (admin-ghost)
 \tF6 = player-panel
-\tF7 = admin-pm
+\tF7 = Buildmode
 \tF8 = Invisimin
+\tCtrl+F8 = Stealthmin
 </font>"}
 
 	mob.hotkey_help()

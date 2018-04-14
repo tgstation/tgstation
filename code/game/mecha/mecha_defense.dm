@@ -322,7 +322,7 @@
 			if(L)
 				L.ratvar_act()
 
-/obj/mecha/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+/obj/mecha/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect)
 		if(selected)
 			used_item = selected
