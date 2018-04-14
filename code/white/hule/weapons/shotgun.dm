@@ -70,7 +70,7 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/mshotgun
+/datum/crafting_recipe/mshotgunmag
 	name = "Makeshift Shotgun magazine"
 	result = /obj/item/ammo_box/magazine/m4s12g
 	reqs = list(/obj/item/stack/sheet/metal = 5,
