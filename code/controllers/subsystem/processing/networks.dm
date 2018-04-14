@@ -43,13 +43,9 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/processing/networks/proc/make_address(string)
 	if(!string)
 		return resolve_collisions? make_address("[num2text(rand(HID_RESTRICTED_END, 999999999999), 12)]"):.
-	var/hex = copytext(md5(string),1,25)
+	var/hex = md5(string)
 	if(!hex)
 		return		//errored
-	var/addr_1 = copytext(hex,1,5)
-	var/addr_2 = copytext(hex,5,9)
-	var/addr_3 = copytext(hex,9,13)
-	var/addr_4 = copytext(hex,13,17)
-	. = "[addr_1]:[addr_2]:[addr_3]:[addr_4]"
+	. = "[copytext(hex, 1, 9)]"		//16 ^ 8 possibilities I think.
 	if(interfaces_by_id[.])
 		return resolve_collisions? make_address("[num2text(rand(HID_RESTRICTED_END, 999999999999), 12)]"):null
