@@ -154,7 +154,7 @@
 			return 0
 
 	L.Knockdown(stunforce)
-	L.apply_effect(STUTTER, stunforce)
+	L.apply_effect(EFFECT_STUTTER, stunforce)
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey

@@ -3,6 +3,7 @@
 	real_name = "Construct"
 	desc = ""
 	gender = NEUTER
+	mob_biotypes = list(MOB_INORGANIC)
 	speak_emote = list("hisses")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"

@@ -21,8 +21,21 @@ SUBSYSTEM_DEF(job)
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		LoadJobs()
 	generate_selectable_species()
+	set_overflow_role(CONFIG_GET(string/overflow_job))
 	..()
 
+/datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
+	var/datum/job/new_overflow = GetJob(new_overflow_role)
+	var/cap = CONFIG_GET(number/overflow_cap)
+
+	new_overflow.spawn_positions = cap
+	new_overflow.total_positions = cap
+
+	if(new_overflow_role != overflow_role)
+		var/datum/job/old_overflow = GetJob(overflow_role)
+		old_overflow.spawn_positions = initial(old_overflow.spawn_positions)
+		old_overflow.total_positions = initial(old_overflow.total_positions)
+		overflow_role = new_overflow_role
 
 /datum/controller/subsystem/job/proc/SetupOccupations(faction = "Station")
 	occupations = list()
@@ -66,18 +79,18 @@ SUBSYSTEM_DEF(job)
 		SetupOccupations()
 	return type_occupations[jobtype]
 
-/datum/controller/subsystem/job/proc/AssignRole(mob/dead/new_player/player, rank, latejoin=0)
+/datum/controller/subsystem/job/proc/AssignRole(mob/dead/new_player/player, rank, latejoin = FALSE)
 	Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
 	if(player && player.mind && rank)
 		var/datum/job/job = GetJob(rank)
 		if(!job)
-			return 0
+			return FALSE
 		if(jobban_isbanned(player, rank))
-			return 0
+			return FALSE
 		if(!job.player_old_enough(player.client))
-			return 0
+			return FALSE
 		if(job.required_playtime_remaining(player.client))
-			return 0
+			return FALSE
 		var/position_limit = job.total_positions
 		if(!latejoin)
 			position_limit = job.spawn_positions
@@ -85,9 +98,9 @@ SUBSYSTEM_DEF(job)
 		player.mind.assigned_role = rank
 		unassigned -= player
 		job.current_positions++
-		return 1
+		return TRUE
 	Debug("AR has failed, Player: [player], Rank: [rank]")
-	return 0
+	return FALSE
 
 
 /datum/controller/subsystem/job/proc/FindOccupationCandidates(datum/job/job, level, flag)
@@ -224,6 +237,8 @@ SUBSYSTEM_DEF(job)
 	if(SSticker.triai)
 		for(var/datum/job/ai/A in occupations)
 			A.spawn_positions = 3
+		for(var/obj/effect/landmark/start/ai/secondary/S in GLOB.start_landmarks_list)
+			S.latejoin_active = TRUE
 
 	//Get the players who are ready
 	for(var/mob/dead/new_player/player in GLOB.player_list)
@@ -359,7 +374,7 @@ SUBSYSTEM_DEF(job)
 	return 1
 
 //Gives the player the stuff he should have with his rank
-/datum/controller/subsystem/job/proc/EquipRank(mob/M, rank, joined_late=0)
+/datum/controller/subsystem/job/proc/EquipRank(mob/M, rank, joined_late = FALSE)
 	var/mob/dead/new_player/N
 	var/mob/living/H
 	if(!joined_late)
@@ -382,6 +397,7 @@ SUBSYSTEM_DEF(job)
 			if(locate(/mob/living) in sloc.loc)
 				continue
 			S = sloc
+			sloc.used = TRUE
 			break
 		if(length(GLOB.jobspawn_overrides[rank]))
 			S = pick(GLOB.jobspawn_overrides[rank])
@@ -396,7 +412,7 @@ SUBSYSTEM_DEF(job)
 		H.mind.assigned_role = rank
 
 	if(job)
-		var/new_mob = job.equip(H)
+		var/new_mob = job.equip(H, null, null, joined_late)
 		if(ismob(new_mob))
 			H = new_mob
 			if(!joined_late)
@@ -404,18 +420,19 @@ SUBSYSTEM_DEF(job)
 			else
 				M = H
 
-	SSpersistence.antag_rep_change[M.client.ckey] += job.antag_rep
+		SSpersistence.antag_rep_change[M.client.ckey] += job.antag_rep
 
 	to_chat(M, "<b>You are the [rank].</b>")
-	to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
-	to_chat(M, "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>")
-	if(job.req_admin_notify)
-		to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
-	if(CONFIG_GET(number/minimal_access_threshold))
-		to_chat(M, "<FONT color='blue'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
+	if(job)
+		to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
+		to_chat(M, "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>")
+		if(job.req_admin_notify)
+			to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
+		if(CONFIG_GET(number/minimal_access_threshold))
+			to_chat(M, "<FONT color='blue'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
 
 	if(job && H)
-		job.after_spawn(H, M)
+		job.after_spawn(H, M, joined_late)
 
 	return H
 

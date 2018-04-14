@@ -109,5 +109,16 @@
 		var/mob/living/carbon/human/C = user
 		if(C.shoes == src && chained == 1)
 			to_chat(user, "<span class='warning'>You need help taking these off!</span>")
+			return FALSE
+	return ..()
+
+/obj/item/clothing/shoes/sneakers/orange/MouseDrop(atom/over)
+	var/mob/m = usr
+	if(ishuman(m))
+		var/mob/living/carbon/human/c = m
+		if(c.shoes == src && chained == 1)
+			to_chat(c, "<span class='warning'>You need help taking these off!</span>")
 			return
 	return ..()
+	
+	

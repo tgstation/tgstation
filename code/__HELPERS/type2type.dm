@@ -398,7 +398,28 @@
 
 	return covered_parts
 
+/proc/slot2body_zone(slot)
+	switch(slot)
+		if(slot_back, slot_wear_suit, slot_w_uniform, slot_belt, slot_wear_id)
+			return BODY_ZONE_CHEST
 
+		if(slot_gloves, slot_hands, slot_handcuffed)
+			return pick(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
+
+		if(slot_head, slot_neck, slot_neck, slot_ears)
+			return BODY_ZONE_HEAD
+
+		if(slot_wear_mask)
+			return BODY_ZONE_PRECISE_MOUTH
+
+		if(slot_glasses)
+			return BODY_ZONE_PRECISE_EYES
+
+		if(slot_shoes)
+			return pick(BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_L_FOOT)
+
+		if(slot_legcuffed)
+			return pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
 //adapted from http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
 /proc/heat2colour(temp)

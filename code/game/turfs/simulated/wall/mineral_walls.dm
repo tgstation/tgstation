@@ -102,7 +102,7 @@
 
 /turf/closed/wall/mineral/plasma/proc/PlasmaBurn(temperature)
 	new girder_type(src)
-	src.ChangeTurf(/turf/open/floor/plasteel)
+	ScrapeAway()
 	var/turf/open/T = src
 	T.atmos_spawn_air("plasma=400;TEMP=[temperature]")
 
@@ -130,7 +130,23 @@
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	hardness = 70
 	explosion_block = 0
-	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood)
+	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood/nonmetal)
+
+/turf/closed/wall/mineral/wood/attackby(obj/item/W, mob/user)
+	var/duration = (48/W.force) * 2 //In seconds, for now.
+	if(W.sharpness)
+		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/twohanded/fireaxe))
+			duration /= 4 //Much better with hatchets and axes.
+		if(do_after(user, duration*10, target=src)) //Into deciseconds.
+			dismantle_wall(FALSE,FALSE)
+			return
+	return ..()
+
+/turf/closed/wall/mineral/wood/nonmetal
+	desc = "A solidly wooden wall. It's a bit weaker than a wall made with metal."
+	girder_type = /obj/structure/barricade/wooden
+	hardness = 50
+	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood, /turf/closed/wall/mineral/wood/nonmetal)
 
 /turf/closed/wall/mineral/iron
 	name = "rough metal wall"
@@ -250,7 +266,7 @@
 /turf/closed/wall/mineral/plastitanium/overspace
 	icon_state = "map-overspace"
 	fixed_underlay = list("space"=1)
-	
+
 /turf/closed/wall/mineral/plastitanium/explosive/ex_act(severity)
 	var/datum/explosion/acted_explosion = null
 	for(var/datum/explosion/E in GLOB.explosions)

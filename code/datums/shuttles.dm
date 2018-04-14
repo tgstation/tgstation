@@ -21,6 +21,20 @@
 	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 
+/datum/map_template/shuttle/load(turf/T, centered)
+	. = ..()
+	if(!.)
+		return
+	var/list/turfs = block(	locate(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ]),
+							locate(.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ]))
+	for(var/i in 1 to turfs.len)
+		var/turf/place = turfs[i]
+		if(istype(place, /turf/open/space)) // This assumes all shuttles are loaded in a single spot then moved to their real destination.
+			continue
+		if(length(place.baseturfs) < 2) // Some snowflake shuttle shit
+			continue
+		place.baseturfs.Insert(3, /turf/baseturf_skipover/shuttle)
+
 //Whatever special stuff you want
 /datum/map_template/shuttle/proc/on_bought()
 	return
@@ -60,7 +74,21 @@
 	port_id = "infiltrator"
 	can_be_bought = FALSE
 
+/datum/map_template/shuttle/aux_base
+	port_id = "aux_base"
+	can_be_bought = FALSE
 
+/datum/map_template/shuttle/escape_pod
+	port_id = "escape_pod"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/assault_pod
+	port_id = "assault_pod"
+	can_be_bought = FALSE
+
+/datum/map_template/shuttle/pirate
+	port_id = "pirate"
+	can_be_bought = FALSE
 
 // Shuttles start here:
 
@@ -355,3 +383,27 @@
 /datum/map_template/shuttle/arrival/pubby
 	suffix = "pubby"
 	name = "arrival shuttle (Pubby)"
+
+/datum/map_template/shuttle/arrival/omega
+	suffix = "omega"
+	name = "arrival shuttle (Omega)"
+	
+/datum/map_template/shuttle/aux_base/default
+	suffix = "default"
+	name = "auxilliary base (Default)"
+
+/datum/map_template/shuttle/escape_pod/default
+	suffix = "default"
+	name = "escape pod (Default)"
+
+/datum/map_template/shuttle/escape_pod/large
+	suffix = "large"
+	name = "escape pod (Large)"
+
+/datum/map_template/shuttle/assault_pod/default
+	suffix = "default"
+	name = "assault pod (Default)"
+
+/datum/map_template/shuttle/pirate/default
+	suffix = "default"
+	name = "pirate ship (Default)"

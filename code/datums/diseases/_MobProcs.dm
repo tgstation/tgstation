@@ -17,6 +17,14 @@
 	if(HasDisease(D))
 		return FALSE
 
+	var/can_infect = FALSE
+	for(var/host_type in D.infectable_biotypes)
+		if(host_type in mob_biotypes)
+			can_infect = TRUE
+			break
+	if(!can_infect)
+		return FALSE
+
 	if(!(type in D.viable_mobtypes))
 		return FALSE
 
@@ -46,8 +54,12 @@
 
 	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
 		return
+
+	//Lefts and rights do not matter for arms and legs, they both run the same checks
 	if(!target_zone)
-		target_zone = pick(head_ch;BODY_ZONE_HEAD,body_ch;"body",hands_ch;"hands",feet_ch;"feet")
+		target_zone = pick(head_ch;BODY_ZONE_HEAD,body_ch;BODY_ZONE_CHEST,hands_ch;BODY_ZONE_L_ARM,feet_ch;BODY_ZONE_L_LEG)
+	else
+		target_zone = check_zone(target_zone)
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -63,14 +75,14 @@
 				if(passed && isobj(H.wear_neck))
 					Cl = H.wear_neck
 					passed = prob((Cl.permeability_coefficient*100) - 1)
-			if("body")
+			if(BODY_ZONE_CHEST)
 				if(isobj(H.wear_suit))
 					Cl = H.wear_suit
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(slot_w_uniform))
 					Cl = slot_w_uniform
 					passed = prob((Cl.permeability_coefficient*100) - 1)
-			if("hands")
+			if(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&HANDS)
 					Cl = H.wear_suit
 					passed = prob((Cl.permeability_coefficient*100) - 1)
@@ -78,7 +90,7 @@
 				if(passed && isobj(H.gloves))
 					Cl = H.gloves
 					passed = prob((Cl.permeability_coefficient*100) - 1)
-			if("feet")
+			if(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&FEET)
 					Cl = H.wear_suit
 					passed = prob((Cl.permeability_coefficient*100) - 1)
@@ -126,14 +138,6 @@
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
 	if(dna)
 		if(has_trait(TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
-			return FALSE
-
-		var/can_infect = FALSE
-		for(var/host_type in D.infectable_hosts)
-			if(host_type in dna.species.species_traits)
-				can_infect = TRUE
-				break
-		if(!can_infect)
 			return FALSE
 
 	for(var/thing in D.required_organs)
