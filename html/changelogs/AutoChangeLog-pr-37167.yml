@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscadd: "After a severe security breach occurred due to lazily configured Nanotrasen Network DHCP servers where attackers were able to hijack every airlock connected to the Nanotrasen Intranet, the Central Command engineering team reports that they have properly configured network address servers to give out (relatively) secure network IDs again. [NTNet addresses reverted to 16-hex format. they will now be randomized across a ~billion trillion possibilities instead of being 1-1000 every round for doors and stuff.]"
