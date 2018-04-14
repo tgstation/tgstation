@@ -2,6 +2,14 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
 "aby" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -27820,13 +27828,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plasteel,
-/area/science/xenobiology)
-"brX" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "brY" = (
@@ -94659,7 +94660,7 @@ blX
 blX
 bpq
 bqD
-brX
+aab
 btt
 buN
 bwe
