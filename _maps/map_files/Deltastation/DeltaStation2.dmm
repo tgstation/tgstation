@@ -112,6 +112,14 @@
 /obj/structure/cable,
 /turf/open/space,
 /area/solar/starboard/fore)
+"aap" = (
+/obj/machinery/newscaster{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/bz,
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
 "aas" = (
 /obj/docking_port/stationary/random{
 	id = "pod_lavaland1";
@@ -74671,13 +74679,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
-"dce" = (
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/science/xenobiology)
 "dcf" = (
 /obj/structure/table,
 /obj/item/crowbar,
@@ -128765,7 +128766,7 @@ cVF
 cWZ
 cYN
 dat
-dce
+aap
 cMY
 dfa
 dgp
