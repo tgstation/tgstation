@@ -519,7 +519,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!" //Depends on the name of the user - see below
 	icon_state = "1"
 	color = RUNE_COLOR_MEDIUMRED
-	var/static/revives_used = -3
+	var/static/revives_used = -SOULS_TO_REVIVE // Cultists get one "free" revive
 
 /obj/effect/rune/raise_dead/examine(mob/user)
 	..()
@@ -556,12 +556,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		invocation = initial(invocation)
 	..()
 	if(mob_to_revive.stat == DEAD)
-		var/diff = LAZYLEN(GLOB.sacrificed) - revives_used - 3
+		var/diff = LAZYLEN(GLOB.sacrificed) - revives_used - SOULS_TO_REVIVE
 		if(diff < 0)
 			to_chat(user, "<span class='warning'>Your cult must carry out [abs(diff)] more sacrifice\s before it can revive another cultist!</span>")
 			fail_invoke()
 			return
-		revives_used += 3
+		revives_used += SOULS_TO_REVIVE
 		mob_to_revive.revive(1, 1) //This does remove traits and such, but the rune might actually see some use because of it!
 		mob_to_revive.grab_ghost()
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
