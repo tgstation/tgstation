@@ -358,7 +358,7 @@
 
 /obj/item/integrated_circuit/input/turfpoint
 	name = "Tile pointer"
-	desc = "This circuit will get tile ref with given relative coordinates."
+	desc = "This circuit will get tile ref with given absolute coordinates."
 	extended_desc = "If the machine	cannot see the target, it will not be able to calculate the correct direction.\
 	This circuit works only inside an assembly."
 	icon_state = "numberpad"
@@ -374,8 +374,8 @@
 		activate_pin(3)
 		return
 	var/turf/T = get_turf(assembly)
-	var/target_x = CLAMP(T.x + get_pin_data(IC_INPUT, 1), 0, world.maxx)
-	var/target_y = CLAMP(T.y + get_pin_data(IC_INPUT, 2), 0, world.maxy)
+	var/target_x = CLAMP(get_pin_data(IC_INPUT, 1), 0, world.maxx)
+	var/target_y = CLAMP(get_pin_data(IC_INPUT, 2), 0, world.maxy)
 	var/turf/A = locate(target_x, target_y, T.z)
 	set_pin_data(IC_OUTPUT, 1, null)
 	if(!A || !(A in view(T)))
@@ -409,23 +409,22 @@
 	cooldown_per_use = 10
 
 /obj/item/integrated_circuit/input/turfscan/do_work()
-	var/atom/scanned_object = get_pin_data_as_type(IC_INPUT, 1, /atom)
+	var/turf/scanned_turf = get_pin_data_as_type(IC_INPUT, 1, /turf)
 	var/turf/circuit_turf = get_turf(src)
-	var/turf/scanned_turf = get_turf(scanned_object)
 	var/area_name = get_area_name(scanned_turf)
-	if(!istype(scanned_object)) //Invalid input
+	if(!istype(scanned_turf)) //Invalid input
 		return
 
-	if(scanned_object in view(circuit_turf)) // This is a camera. It can't examine things that it can't see.
+	if(scanned_turf in view(circuit_turf)) // This is a camera. It can't examine things that it can't see.
 		var/list/turf_contents = new()
-		if(scanned_turf.contents.len)
-			for(var/i = 1 to scanned_turf.contents.len)
-				var/atom/U = scanned_turf.contents[i]
-				turf_contents += WEAKREF(U)
+		for(var/obj/U in scanned_turf)
+			turf_contents += WEAKREF(U)
+		for(var/mob/U in scanned_turf)
+			turf_contents += WEAKREF(U)
 		set_pin_data(IC_OUTPUT, 1, turf_contents)
 		set_pin_data(IC_OUTPUT, 3, area_name)
 		var/list/St = new()
-		for(var/obj/effect/decal/cleanable/crayon/I in scanned_turf.contents)
+		for(var/obj/effect/decal/cleanable/crayon/I in scanned_turf)
 			St.Add(I.icon_state)
 		if(St.len)
 			set_pin_data(IC_OUTPUT, 2, jointext(St, ",", 1, 0))
