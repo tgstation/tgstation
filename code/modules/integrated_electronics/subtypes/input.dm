@@ -388,7 +388,7 @@
 
 /obj/item/integrated_circuit/input/turfscan
 	name = "tile analyzer"
-	desc = "This circuit can analyze the contents of the tile containing the referenced object, and can read letters on floor."
+	desc = "This circuit can analyze the contents of the scanned turf, and can read letters on the turf."
 	icon_state = "video_camera"
 	complexity = 5
 	inputs = list(
@@ -413,6 +413,7 @@
 	var/turf/circuit_turf = get_turf(src)
 	var/area_name = get_area_name(scanned_turf)
 	if(!istype(scanned_turf)) //Invalid input
+		activate_pin(3)
 		return
 
 	if(scanned_turf in view(circuit_turf)) // This is a camera. It can't examine things that it can't see.
@@ -425,78 +426,6 @@
 		set_pin_data(IC_OUTPUT, 3, area_name)
 		var/list/St = new()
 		for(var/obj/effect/decal/cleanable/crayon/I in scanned_turf)
-			St.Add(I.icon_state)
-		if(St.len)
-			set_pin_data(IC_OUTPUT, 2, jointext(St, ",", 1, 0))
-		push_data()
-		activate_pin(2)
-
-/obj/item/integrated_circuit/input/turfpoint
-	name = "tile pointer"
-	desc = "This circuit will get tile ref with given absolute coorinates."
-	extended_desc = "If the machine	cannot see the target, it will not be able to scan it.\
-	This circuit will only work in an assembly."
-	icon_state = "numberpad"
-	complexity = 5
-	inputs = list("X" = IC_PINTYPE_NUMBER,"Y" = IC_PINTYPE_NUMBER)
-	outputs = list("tile" = IC_PINTYPE_REF)
-	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT,"not scanned" = IC_PINTYPE_PULSE_OUT)
-	spawn_flags = IC_SPAWN_RESEARCH
-	power_draw_per_use = 40
-
-/obj/item/integrated_circuit/input/turfpoint/do_work()
-	if(!assembly)
-		activate_pin(3)
-		return
-	var/turf/T = get_turf(assembly)
-	var/target_x = CLAMP(get_pin_data(IC_INPUT, 1), 0, world.maxx)
-	var/target_y = CLAMP(get_pin_data(IC_INPUT, 2), 0, world.maxy)
-	var/turf/A = locate(target_x, target_y, T.z)
-	set_pin_data(IC_OUTPUT, 1, null)
-	if(!A || !(A in view(T)))
-		activate_pin(3)
-		return
-	else
-		set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
-	push_data()
-	activate_pin(2)
-
-/obj/item/integrated_circuit/input/turfscan
-	name = "tile analyzer"
-	desc = "This machine vision system can analyze contents of desired tile.And can read letters on floor."
-	icon_state = "video_camera"
-	complexity = 5
-	inputs = list(
-		"target" = IC_PINTYPE_REF
-		)
-	outputs = list(
-		"located ref" 		= IC_PINTYPE_LIST,
-		"Written letters" 	= IC_PINTYPE_STRING
-		)
-	activators = list(
-		"scan" = IC_PINTYPE_PULSE_IN,
-		"on scanned" = IC_PINTYPE_PULSE_OUT,
-		"not scanned" = IC_PINTYPE_PULSE_OUT
-		)
-	spawn_flags = IC_SPAWN_RESEARCH
-	power_draw_per_use = 40
-	cooldown_per_use = 10
-
-/obj/item/integrated_circuit/input/turfscan/do_work()
-	var/turf/H = get_pin_data_as_type(IC_INPUT, 1, /turf)
-	var/turf/T = get_turf(src)
-	if(!istype(H)) //Invalid input
-		return
-
-	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
-		var/list/cont = new()
-		for(var/obj/U in H)
-			cont += WEAKREF(U)
-		for(var/mob/U in H)
-			cont += WEAKREF(U)
-		set_pin_data(IC_OUTPUT, 1, cont)
-		var/list/St = new()
-		for(var/obj/effect/decal/cleanable/crayon/I in H)
 			St.Add(I.icon_state)
 		if(St.len)
 			set_pin_data(IC_OUTPUT, 2, jointext(St, ",", 1, 0))
