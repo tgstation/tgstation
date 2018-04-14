@@ -9,6 +9,7 @@
 		user.dropItemToGround(src)
 		src.forceMove(T)
 		T.grenade = src
+		T.owner = user
 		message_admins("[ADMIN_LOOKUPFLW(user)] поставил растяжку [ADMIN_COORDJMP(user)].")
 		log_game("[key_name(user)] поставил растяжку [COORD(user)].")
 	..()
@@ -22,9 +23,10 @@
 	can_buckle = TRUE
 	buckle_lying = TRUE
 	resistance_flags = FLAMMABLE
-	max_integrity = 100
-	integrity_failure = 30
+	max_integrity = 25
+	integrity_failure = 1
 	var/obj/item/grenade/grenade
+	var/mob/owner
 
 /obj/structure/boobytrap/proc/activate()
 	if(grenade)
@@ -40,7 +42,7 @@
 			return
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			if(H.m_intent == MOVE_INTENT_WALK || H.has_trait(TRAIT_LIGHT_STEP))
+			if(H.m_intent == MOVE_INTENT_WALK && H.has_trait(TRAIT_LIGHT_STEP))
 				return
 	activate()
 
@@ -53,7 +55,7 @@
 /obj/structure/boobytrap/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/wirecutters) && !(flags_1&NODECONSTRUCT_1))
 		W.play_tool_sound(src)
-		if(prob(75) && user.mind.antag_datums == null)
+		if(prob(80) && user.mind.antag_datums == null && user != owner)
 			to_chat(user, "<span class='userdanger'>Дебил блядь! Кто тебя учил растяжки обезвреживать?</span>")
 			activate()
 			return
