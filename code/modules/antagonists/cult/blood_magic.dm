@@ -107,6 +107,7 @@
 	button.screen_loc = screenloc
 	button.moved = screenloc
 	button.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	button.ordered = FALSE
 	if(initial_delay)
 		addtimer(CALLBACK(src, .proc/reveal_tip), initial_delay)
 	else
@@ -117,7 +118,8 @@
 	desc = "This is your blood magic spell bar. Use the button, preferably near an empowering rune, to prepare powerful blood spells!"
 
 /datum/action/innate/cult/tooltip/spells/second
-	desc = "<u>You can drag this button anywhere on your screen to adjust the location of the entire spellbar (upon the next spell update).</u>"
+	name = "Blood Spell Tooltip #2"
+	desc = "<u>You can drag this button anywhere on your screen to adjust the location of the entire spellbar</u> (upon the next spell update)."
 	initial_delay = 100
 
 /datum/action/innate/cult/tooltip/bloodsense
