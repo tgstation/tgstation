@@ -177,3 +177,19 @@
 	to_chat(user, "<span class='notice'>You access the satellite's debug mode, increasing the chance of meteor strikes.</span>")
 	if(active)
 		change_meteor_chance(2)
+
+/datum/supply_pack/engineering/shield_sat
+	name = "Shield Generator Satellite"
+	desc = "Protect the very existence of this station with these Anti-Meteor defenses. Contains three Shield Generator Satellites."
+	cost = 3000
+	special = TRUE
+	contains = list(
+					/obj/machinery/satellite/meteor_shield,
+					/obj/machinery/satellite/meteor_shield,
+					/obj/machinery/satellite/meteor_shield
+					)
+	crate_name= "shield sat crate"
+
+/obj/item/circuitboard/computer/sat_control
+	name = "Satellite Network Control (Computer Board)"
+	build_path = /obj/machinery/computer/sat_control

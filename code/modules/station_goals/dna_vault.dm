@@ -279,3 +279,39 @@
 			to_chat(H, "<span class='notice'>Your arms move as fast as lightning.</span>")
 			H.next_move_modifier = 0.5
 	power_lottery[H] = list()
+
+/obj/item/circuitboard/machine/dna_vault
+	name = "DNA Vault (Machine Board)"
+	build_path = /obj/machinery/dna_vault //No freebies!
+	req_components = list(
+		/obj/item/stock_parts/capacitor/super = 5,
+		/obj/item/stock_parts/manipulator/pico = 5,
+		/obj/item/stack/cable_coil = 2)
+
+/datum/supply_pack/engineering/dna_vault
+	name = "DNA Vault Parts"
+	desc = "Secure the longevity of the current state of humanity within this massive library of scientific knowledge, capable of granting superhuman powers and abilities. Highly advanced research is required for proper construction. Also contains five DNA probes."
+	cost = 12000
+	special = TRUE
+	contains = list(
+					/obj/item/circuitboard/machine/dna_vault,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe
+					)
+	crate_name= "dna vault parts crate"
+
+/datum/supply_pack/engineering/dna_probes
+	name = "DNA Vault Samplers"
+	desc = "Contains five DNA probes for use in the DNA vault."
+	cost = 3000
+	special = TRUE
+	contains = list(/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe
+					)
+	crate_name= "dna samplers crate"

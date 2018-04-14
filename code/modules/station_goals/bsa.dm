@@ -304,3 +304,40 @@
 	qdel(centerpiece.back)
 	qdel(centerpiece)
 	return cannon
+
+/datum/supply_pack/engineering/bsa
+	name = "Bluespace Artillery Parts"
+	desc = "The pride of Nanotrasen Naval Command. The legendary Bluespace Artillery Cannon is a devastating feat of human engineering and testament to wartime determination. Highly advanced research is required for proper construction. "
+	cost = 15000
+	special = TRUE
+	contains = list(/obj/item/circuitboard/machine/bsa/front,
+					/obj/item/circuitboard/machine/bsa/middle,
+					/obj/item/circuitboard/machine/bsa/back,
+					/obj/item/circuitboard/computer/bsa_control
+					)
+	crate_name= "bluespace artillery parts crate"
+
+/obj/item/circuitboard/machine/bsa/back
+	name = "Bluespace Artillery Generator (Machine Board)"
+	build_path = /obj/machinery/bsa/back //No freebies!
+	req_components = list(
+		/obj/item/stock_parts/capacitor/quadratic = 5,
+		/obj/item/stack/cable_coil = 2)
+
+/obj/item/circuitboard/machine/bsa/middle
+	name = "Bluespace Artillery Fusor (Machine Board)"
+	build_path = /obj/machinery/bsa/middle
+	req_components = list(
+		/obj/item/stack/ore/bluespace_crystal = 20,
+		/obj/item/stack/cable_coil = 2)
+
+/obj/item/circuitboard/machine/bsa/front
+	name = "Bluespace Artillery Bore (Machine Board)"
+	build_path = /obj/machinery/bsa/front
+	req_components = list(
+		/obj/item/stock_parts/manipulator/femto = 5,
+		/obj/item/stack/cable_coil = 2)
+
+/obj/item/circuitboard/computer/bsa_control
+	name = "Bluespace Artillery Controls (Computer Board)"
+	build_path = /obj/machinery/computer/bsa_control
