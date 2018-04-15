@@ -237,7 +237,7 @@
 
 // Flash the user during welding progress
 /obj/item/weldingtool/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
-	. = tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
+	. = ..()
 	if(. && user)
 		if (progress_flash_divisor == 0)
 			user.flash_act(min(light_intensity,1))
