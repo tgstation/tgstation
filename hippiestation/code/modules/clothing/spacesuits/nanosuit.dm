@@ -211,7 +211,7 @@
 	slowdown = 0.5
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 	actions_types = list(/datum/action/item_action/nanosuit/armor, /datum/action/item_action/nanosuit/cloak, /datum/action/item_action/nanosuit/speed, /datum/action/item_action/nanosuit/strength)
-	jetpack = /obj/item/tank/jetpack/suit
+	//jetpack = /obj/item/tank/jetpack/suit
 	permeability_coefficient = 0.01
 	var/mob/living/carbon/human/U = null
 	var/obj/item/stock_parts/cell/cell //What type of power cell this uses
@@ -247,6 +247,7 @@
 	if(!U.mind)
 		return //Not sure how this could happen.
 	shutdown = TRUE
+	mode = "none"
 	U.Knockdown(300)
 	U.AdjustStun(300)
 	U.Jitter(60)
@@ -308,6 +309,12 @@
 	if(U)
 		U = null
 	return ..()
+
+/obj/item/clothing/suit/space/hardsuit/nano/equipped(mob/living/carbon/user, slot)
+	..()
+	if(slot == slot_wear_suit)
+		var/obj/item/organ/cyberimp/chest/jet = new /obj/item/organ/cyberimp/chest/thrusters
+		jet.Insert(user)
 
 /obj/item/clothing/suit/space/hardsuit/nano/examine(mob/user)
 	..()
@@ -400,7 +407,7 @@
 	return TRUE
 
 /obj/item/clothing/suit/space/hardsuit/nano/proc/toggle_mode(var/suitmode, var/forced)
-	if(forced || can_toggle())
+	if(forced || (can_toggle() && mode != suitmode))
 		mode = suitmode
 		switch(suitmode)
 			if("armor")
@@ -415,7 +422,6 @@
 				if(!U.has_trait(TRAIT_HULK))//don't want to cuck our hulk push immunity
 					U.remove_trait(TRAIT_PUSHIMMUNE, "Strength Mode")
 				style.remove(U)
-				jetpack.full_speed = FALSE
 
 			if("cloak")
 				helmet.display_visor_message("Cloak Engaged!")
@@ -429,7 +435,6 @@
 				if(!U.has_trait(TRAIT_HULK))//don't want to cuck our hulk push immunity
 					U.remove_trait(TRAIT_PUSHIMMUNE, "Strength Mode")
 				style.remove(U)
-				jetpack.full_speed = FALSE
 
 			if("speed")
 				helmet.display_visor_message("Maximum Speed!")
@@ -445,7 +450,6 @@
 				if(!U.has_trait(TRAIT_HULK))//don't want to cuck our hulk push immunity
 					U.remove_trait(TRAIT_PUSHIMMUNE, "Strength Mode")
 				style.remove(U)
-				jetpack.full_speed = TRUE
 
 			if("strength")
 				helmet.display_visor_message("Maximum Strength!")
@@ -458,7 +462,6 @@
 				animate(U, alpha = 255, time = 5)
 				U.remove_trait(TRAIT_GOTTAGOFAST, "Speed Mode")
 				U.remove_trait(TRAIT_IGNORESLOWDOWN, "Speed Mode")
-				jetpack.full_speed = FALSE
 
 	U.update_inv_wear_suit()
 	update_icon()
@@ -601,9 +604,9 @@
 	ears = /obj/item/device/radio/headset/syndicate/alt/nano
 	shoes = /obj/item/clothing/shoes/combat/coldres/nanojump
 	gloves = /obj/item/clothing/gloves/combat/nano
-	r_pocket = /obj/item/tank/internals/emergency_oxygen/recharge
-	internals_slot = slot_s_store
 	implants = list(/obj/item/implant/explosive/disintegrate)
+	suit_store = /obj/item/tank/internals/emergency_oxygen/recharge
+	internals_slot = slot_s_store
 
 
 obj/item/clothing/suit/space/hardsuit/nano/dropped()
@@ -831,24 +834,24 @@ obj/item/clothing/suit/space/hardsuit/nano/dropped()
 	..()
 	air_contents.assert_gas(/datum/gas/oxygen)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	START_PROCESSING(SSobj, src)
 	return
 
 /obj/item/tank/internals/emergency_oxygen/recharge/process()
-	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit))
-		to_chat(user, "<span class='warning'>\The [src] must be connected to a hardsuit!</span>")
-		return
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		in_use = H.Move()
-	if(!in_use)
-		sleep(10)
-		if(air_contents.gases[/datum/gas/oxygen][MOLES] < (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
-			air_contents.assert_gas(/datum/gas/oxygen)
-			air_contents.gases[/datum/gas/oxygen][MOLES] = CLAMP(air_contents.total_moles()+(ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C),0,(10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+		if(!in_use)
+			sleep(10)
+			if(air_contents.gases[/datum/gas/oxygen][MOLES] < (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+				air_contents.assert_gas(/datum/gas/oxygen)
+				air_contents.gases[/datum/gas/oxygen][MOLES] = CLAMP(air_contents.total_moles()+(ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C),0,(10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 
 /obj/item/tank/internals/emergency_oxygen/recharge/equipped(mob/living/carbon/human/wearer, slot)
 	..()
-	START_PROCESSING(SSobj, src)
+	if(slot == slot_s_store)
+		flags_1 |= NODROP_1
+		START_PROCESSING(SSobj, src)
 
 /obj/item/tank/internals/emergency_oxygen/recharge/dropped(mob/living/carbon/human/wearer)
 	..()
