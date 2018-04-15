@@ -121,10 +121,10 @@
 				return
 		if(do_after(user,50, user))
 			to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
-			reading = FALSE
 			user.mind.AddSpell(S)
 			user.log_message("<font color='orange'>learned the spell [spellname] ([S]).</font>", INDIVIDUAL_ATTACK_LOG)
 			onlearned(user)
+		reading = FALSE
 
 /obj/item/book/granter/spell/recoil(mob/user)
 	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")
@@ -328,10 +328,10 @@
 				return
 		if(do_after(user,50, user))
 			to_chat(user, "[greet]")
-			reading = FALSE
 			MA.teach(user)
 			user.log_message("<font color='orange'>learned the martial art [martialname] ([MA]).</font>", INDIVIDUAL_ATTACK_LOG)
 			onlearned(user)
+		reading = FALSE
 
 /obj/item/book/granter/martial/cqc
 	martial = /datum/martial_art/cqc
