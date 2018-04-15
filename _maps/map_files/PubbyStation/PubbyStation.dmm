@@ -42686,19 +42686,6 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
-"cac" = (
-/obj/docking_port/stationary{
-	area_type = /area/construction/mining/aux_base;
-	dir = 2;
-	dwidth = 4;
-	height = 9;
-	id = "aux_base_zone";
-	name = "aux base zone";
-	roundstart_template = /datum/map_template/shuttle/aux_base/default;
-	width = 9
-	},
-/turf/open/floor/plating,
-/area/construction/mining/aux_base)
 "cad" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -50013,6 +50000,20 @@
 /obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"fmr" = (
+/obj/docking_port/stationary{
+	area_type = /area/construction/mining/aux_base;
+	dheight = 4;
+	dir = 2;
+	dwidth = 4;
+	height = 9;
+	id = "aux_base_zone";
+	name = "aux base zone";
+	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	width = 9
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "fon" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -75458,11 +75459,11 @@ bDi
 bXV
 ukn
 bZt
-cac
 bZs
 bZs
 bZs
 bZs
+fmr
 bZs
 bZs
 bZs
