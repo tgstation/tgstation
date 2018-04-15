@@ -59,8 +59,8 @@
 				return
 		if(do_after(user,50, user))
 			to_chat(user, "<span class='notice'>You feel like you've got a good handle on [actionname]!</span>")
-			reading = FALSE
 			G.Grant(user)
+		reading = FALSE
 
 /obj/item/book/granter/action/drink_fling
 	granted_action = /datum/action/innate/drink_fling
