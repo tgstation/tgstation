@@ -27794,6 +27794,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "brY" = (
@@ -45640,7 +45641,7 @@
 	invuln = 1;
 	luminosity = 3;
 	name = "Hardened Bomb-Test Camera";
-	network = list("ss13", "rd", "toxins");
+	network = list("ss13","rd","toxins");
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid/airless,
@@ -46668,7 +46669,7 @@
 	invuln = 1;
 	luminosity = 3;
 	name = "Hardened Bomb-Test Camera";
-	network = list("ss13", "rd", "toxins");
+	network = list("ss13","rd","toxins");
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid/airless,
