@@ -58,6 +58,11 @@
 
 	SetCollectBehavior()
 
+/mob/living/simple_animal/hostile/mining_drone/Destroy()
+	for (var/datum/action/innate/minedrone/action in actions)
+		qdel(action)
+	return ..()
+
 /mob/living/simple_animal/hostile/mining_drone/sentience_act()
 	..()
 	check_friendly_fire = 0
