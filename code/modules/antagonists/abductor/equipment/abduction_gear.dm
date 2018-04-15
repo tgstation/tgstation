@@ -365,7 +365,7 @@
 				continue
 			var/follow_ayy = FOLLOW_LINK(ded, user)
 			var/follow_reciever = FOLLOW_LINK(ded, L)
-			to_chat(ded, "[follow_ayy] <span class='name'>[user] Mind Message:</span> <span class='abductor'>[message]</span> [follow_reciever] <span class='name'>[L]</span>")
+			to_chat(ded, "[follow_ayy] <span class='name'>[user]</span> Mind Message: <span class='abductor'>[message]</span> [follow_reciever] <span class='name'>[L]</span>")
 
 
 /obj/item/device/firing_pin/abductor
