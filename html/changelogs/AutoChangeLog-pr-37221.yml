@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "Passive gates can be interacted with in unpowered areas"
