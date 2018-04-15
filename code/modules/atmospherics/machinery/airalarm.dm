@@ -643,10 +643,9 @@
 	var/area/A = get_area(src)
 
 	var/new_area_danger_level = 0
-	for(var/area/R in A.related)
-		for(var/obj/machinery/airalarm/AA in R)
-			if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
-				new_area_danger_level = max(new_area_danger_level,AA.danger_level)
+	for(var/obj/machinery/airalarm/AA in A)
+		if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
+			new_area_danger_level = max(new_area_danger_level,AA.danger_level)
 	if(A.atmosalert(new_area_danger_level,src)) //if area was in normal state or if area was in alert state
 		post_alert(new_area_danger_level)
 

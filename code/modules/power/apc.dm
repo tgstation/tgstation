@@ -911,12 +911,11 @@
 			update()
 		if("emergency_lighting")
 			emergency_lights = !emergency_lights
-			for(var/area/A in area.related)
-				for(var/obj/machinery/light/L in A)
-					if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
-						L.no_emergency = emergency_lights
-						INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
-					CHECK_TICK
+			for(var/obj/machinery/light/L in area)
+				if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
+					L.no_emergency = emergency_lights
+					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
+				CHECK_TICK
 	return 1
 
 /obj/machinery/power/apc/proc/toggle_breaker()
@@ -1281,12 +1280,11 @@
 		INVOKE_ASYNC(src, .proc/break_lights)
 
 /obj/machinery/power/apc/proc/break_lights()
-	for(var/area/A in area.related)
-		for(var/obj/machinery/light/L in A)
-			L.on = TRUE
-			L.break_light_tube()
-			L.on = FALSE
-			stoplag()
+	for(var/obj/machinery/light/L in area)
+		L.on = TRUE
+		L.break_light_tube()
+		L.on = FALSE
+		stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))
@@ -1322,12 +1320,11 @@
 /obj/machinery/power/apc/proc/set_nightshift(on)
 	set waitfor = FALSE
 	nightshift_lights = on
-	for(var/area/A in area.related)
-		for(var/obj/machinery/light/L in A)
-			if(L.nightshift_allowed)
-				L.nightshift_enabled = nightshift_lights
-				L.update(FALSE)
-			CHECK_TICK
+	for(var/obj/machinery/light/L in area)
+		if(L.nightshift_allowed)
+			L.nightshift_enabled = nightshift_lights
+			L.update(FALSE)
+		CHECK_TICK
 
 #undef UPSTATE_CELL_IN
 #undef UPSTATE_OPENED1
@@ -1355,8 +1352,6 @@
 #undef APC_UPOVERLAY_ENVIRON2
 #undef APC_UPOVERLAY_LOCKED
 #undef APC_UPOVERLAY_OPERATING
-
-#undef APC_UPDATE_ICON_COOLDOWN
 
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc

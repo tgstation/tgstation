@@ -95,10 +95,8 @@
 	else
 		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].</span>")
 		if(where == "backpack")
-			var/obj/item/storage/B = mob.back
-			B.orient2hud(mob)
-			B.show_to(mob)
-		return 1
+			mob.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, mob)
+		return TRUE
 
 /datum/antagonist/cult/apply_innate_effects(mob/living/mob_override)
 	. = ..()

@@ -16,7 +16,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	var/empty = 0
+	var/empty = FALSE
 
 /obj/item/storage/firstaid/regular
 	icon_state = "firstaid"
@@ -40,7 +40,6 @@
 /obj/item/storage/firstaid/ancient
 	icon_state = "firstaid"
 	desc = "A first aid kit with the ability to heal common types of injuries."
-
 
 /obj/item/storage/firstaid/ancient/PopulateContents()
 	if(empty)
@@ -142,7 +141,11 @@
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
 	icon_state = "bezerk"
-	max_w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/firstaid/tactical/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/firstaid/tactical/PopulateContents()
 	if(empty)
@@ -155,10 +158,10 @@
 	new /obj/item/reagent_containers/syringe/lethal/choral(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
 
-
 /*
  * Pill Bottles
  */
+
 /obj/item/storage/pill_bottle
 	name = "pill bottle"
 	desc = "It's an airtight container for storing medication."
@@ -168,24 +171,13 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	can_hold = list(/obj/item/reagent_containers/pill, /obj/item/dice)
-	allow_quick_gather = 1
-	use_to_pickup = 1
 
-/obj/item/storage/pill_bottle/MouseDrop(obj/over_object) //Quick pillbottle fix. -Agouri
-
-	if(ishuman(usr) || ismonkey(usr)) //Can monkeys even place items in the pocket slots? Leaving this in just in case~
-		var/mob/M = usr
-		if(!istype(over_object, /obj/screen) || !Adjacent(M))
-			return ..()
-		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
-			var/obj/screen/inventory/hand/H = over_object
-			if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
-				add_fingerprint(usr)
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
-			if(usr.s_active)
-				usr.s_active.close(usr)
-			src.show_to(usr)
+/obj/item/storage/pill_bottle/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.allow_quick_gather = TRUE
+	STR.click_gather = TRUE
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/dice))
 
 /obj/item/storage/pill_bottle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

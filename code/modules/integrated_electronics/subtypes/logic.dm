@@ -3,7 +3,7 @@
 	desc = "This tiny chip will decide for you!"
 	extended_desc = "Logic circuits will treat a null, 0, and a \"\" string value as FALSE and anything else as TRUE."
 	complexity = 1
-	outputs = list("result")
+	outputs = list("result" = IC_PINTYPE_BOOLEAN)
 	activators = list("compare" = IC_PINTYPE_PULSE_IN)
 	category_text = "Logic"
 	power_draw_per_use = 1
@@ -12,7 +12,7 @@
 	push_data()
 
 /obj/item/integrated_circuit/logic/binary
-	inputs = list("A","B")
+	inputs = list("A" = IC_PINTYPE_ANY,"B" = IC_PINTYPE_ANY)
 	activators = list("compare" = IC_PINTYPE_PULSE_IN, "on true result" = IC_PINTYPE_PULSE_OUT, "on false result" = IC_PINTYPE_PULSE_OUT)
 
 /obj/item/integrated_circuit/logic/binary/do_work()
@@ -30,8 +30,11 @@
 /obj/item/integrated_circuit/logic/binary/proc/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
 	return FALSE
 
+/obj/item/integrated_circuit/logic/binary/proc/comparable(var/datum/integrated_io/A, var/datum/integrated_io/B)
+	return (isnum(A.data) && isnum(B.data)) || (istext(A.data) && istext(B.data))
+
 /obj/item/integrated_circuit/logic/unary
-	inputs = list("A")
+	inputs = list("A" = IC_PINTYPE_ANY)
 	activators = list("compare" = IC_PINTYPE_PULSE_IN, "on compare" = IC_PINTYPE_PULSE_OUT)
 
 /obj/item/integrated_circuit/logic/unary/do_work()
@@ -46,7 +49,7 @@
 
 /obj/item/integrated_circuit/logic/binary/equals
 	name = "equal gate"
-	desc = "This gate compares two values, and outputs '1' if both are the same."
+	desc = "This gate compares two values, and outputs TRUE if both are the same."
 	icon_state = "equal"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -57,8 +60,8 @@
 	name = "JK latch"
 	desc = "This gate is a synchronized JK latch."
 	icon_state = "jklatch"
-	inputs = list("J","K")
-	outputs = list("Q","!Q")
+	inputs = list("J" = IC_PINTYPE_ANY,"K" = IC_PINTYPE_ANY)
+	outputs = list("Q" = IC_PINTYPE_BOOLEAN,"!Q" = IC_PINTYPE_BOOLEAN)
 	activators = list("pulse in C" = IC_PINTYPE_PULSE_IN, "pulse out Q" = IC_PINTYPE_PULSE_OUT, "pulse out !Q" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	var/lstate=FALSE
@@ -88,8 +91,8 @@
 	name = "RS latch"
 	desc = "This gate is a synchronized RS latch. If both R and S are true, state will not change."
 	icon_state = "sr_nor"
-	inputs = list("S","R")
-	outputs = list("Q","!Q")
+	inputs = list("S" = IC_PINTYPE_ANY,"R" = IC_PINTYPE_ANY)
+	outputs = list("Q" = IC_PINTYPE_BOOLEAN,"!Q" = IC_PINTYPE_BOOLEAN)
 	activators = list("pulse in C" = IC_PINTYPE_PULSE_IN, "pulse out Q" = IC_PINTYPE_PULSE_OUT, "pulse out !Q" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	var/lstate=FALSE
@@ -117,8 +120,8 @@
 	name = "gated D latch"
 	desc = "This gate is a synchronized gated D latch."
 	icon_state = "gated_d"
-	inputs = list("D","E")
-	outputs = list("Q","!Q")
+	inputs = list("D" = IC_PINTYPE_ANY,"E" = IC_PINTYPE_ANY)
+	outputs = list("Q" = IC_PINTYPE_BOOLEAN,"!Q" = IC_PINTYPE_BOOLEAN)
 	activators = list("pulse in C" = IC_PINTYPE_PULSE_IN, "pulse out Q" = IC_PINTYPE_PULSE_OUT, "pulse out !Q" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	var/lstate=FALSE
@@ -144,7 +147,7 @@
 
 /obj/item/integrated_circuit/logic/binary/not_equals
 	name = "not equal gate"
-	desc = "This gate compares two values, and outputs '1' if both are different."
+	desc = "This gate compares two values, and outputs TRUE if both are different."
 	icon_state = "not_equal"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -153,7 +156,7 @@
 
 /obj/item/integrated_circuit/logic/binary/and
 	name = "and gate"
-	desc = "This gate will output '1' if both inputs evaluate to true."
+	desc = "This gate will output TRUE if both inputs evaluate to true."
 	icon_state = "and"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -162,7 +165,7 @@
 
 /obj/item/integrated_circuit/logic/binary/or
 	name = "or gate"
-	desc = "This gate will output '1' if one of the inputs evaluate to true."
+	desc = "This gate will output TRUE if one of the inputs evaluate to true."
 	icon_state = "or"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -171,39 +174,43 @@
 
 /obj/item/integrated_circuit/logic/binary/less_than
 	name = "less than gate"
-	desc = "This will output '1' if the first input is less than the second input."
+	desc = "This will output TRUE if the first input is less than the second input."
 	icon_state = "less_than"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/logic/binary/less_than/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
-	return A.data < B.data
+	if(comparable(A, B))
+		return A.data < B.data
 
 /obj/item/integrated_circuit/logic/binary/less_than_or_equal
 	name = "less than or equal gate"
-	desc = "This will output '1' if the first input is less than, or equal to the second input."
+	desc = "This will output TRUE if the first input is less than, or equal to the second input."
 	icon_state = "less_than_or_equal"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/logic/binary/less_than_or_equal/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
-	return A.data <= B.data
+	if(comparable(A, B))
+		return A.data <= B.data
 
 /obj/item/integrated_circuit/logic/binary/greater_than
 	name = "greater than gate"
-	desc = "This will output '1' if the first input is greater than the second input."
+	desc = "This will output TRUE if the first input is greater than the second input."
 	icon_state = "greater_than"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/logic/binary/greater_than/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
-	return A.data > B.data
+	if(comparable(A, B))
+		return A.data > B.data
 
 /obj/item/integrated_circuit/logic/binary/greater_than_or_equal
 	name = "greater_than or equal gate"
-	desc = "This will output '1' if the first input is greater than, or equal to the second input."
+	desc = "This will output TRUE if the first input is greater than, or equal to the second input."
 	icon_state = "greater_than_or_equal"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/logic/binary/greater_than_or_equal/do_compare(var/datum/integrated_io/A, var/datum/integrated_io/B)
-	return A.data >= B.data
+	if(comparable(A, B))
+		return A.data >= B.data
 
 /obj/item/integrated_circuit/logic/unary/not
 	name = "not gate"

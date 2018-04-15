@@ -287,9 +287,7 @@
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
-	for(var/area/RA in A.related)
-		RA.partyreset()
-	return
+	A.partyreset()
 
 /obj/machinery/firealarm/partyalarm/alarm()
 	if (stat & (NOPOWER|BROKEN))
@@ -298,9 +296,7 @@
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
-	for(var/area/RA in A.related)
-		RA.partyalert()
-	return
+	A.partyalert()
 
 /obj/machinery/firealarm/partyalarm/ui_data(mob/user)
 	. = ..()

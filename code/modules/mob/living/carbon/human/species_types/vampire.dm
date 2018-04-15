@@ -2,8 +2,9 @@
 	name = "vampire"
 	id = "vampire"
 	default_color = "FFFFFF"
-	species_traits = list(SPECIES_UNDEAD,EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,DRINKSBLOOD)
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
+	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	exotic_bloodtype = "U"
 	use_skintones = TRUE

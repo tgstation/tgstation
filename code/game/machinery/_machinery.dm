@@ -413,10 +413,10 @@ Class Procs:
 								var/obj/item/stack/SN = new SB.merge_type(null,used_amt)
 								component_parts += SN
 							else
-								W.remove_from_storage(B, src)
-								component_parts += B
-								B.moveToNullspace()
-							W.handle_item_insertion(A, 1)
+								if(W.SendSignal(COMSIG_TRY_STORAGE_TAKE, B, src))
+									component_parts += B
+									B.moveToNullspace()
+							W.SendSignal(COMSIG_TRY_STORAGE_INSERT, A, null, null, TRUE)
 							component_parts -= A
 							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
@@ -481,15 +481,7 @@ Class Procs:
 /obj/machinery/proc/adjust_item_drop_location(atom/movable/AM)	// Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
 	var/md5 = md5(AM.name)										// Oh, and it's deterministic too. A specific item will always drop from the same slot.
 	for (var/i in 1 to 32)
-		#if DM_VERSION >= 513
-		#warning 512 is definitely stable now, remove the old code
-		#endif
-
-		#if DM_VERSION >= 512
 		. += hex2num(md5[i])
-		#else
-		. += hex2num(copytext(md5,i,i+1))
-		#endif
 	. = . % 9
 	AM.pixel_x = -8 + ((.%3)*8)
 	AM.pixel_y = -8 + (round( . / 3)*8)

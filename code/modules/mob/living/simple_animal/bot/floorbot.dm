@@ -339,7 +339,7 @@
 			if(mode == BOT_REPAIRING && F && src.loc == F)
 				F.broken = 0
 				F.burnt = 0
-				F.ChangeTurf(/turf/open/floor/plasteel)
+				F.PlaceOnTop(/turf/open/floor/plasteel)
 
 		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !isplatingturf(F))
 			anchored = TRUE
@@ -350,7 +350,7 @@
 			if(mode == BOT_REPAIRING && F && src.loc == F)
 				F.broken = 0
 				F.burnt = 0
-				F.ChangeTurf(initial(tiletype.turf_type))
+				F.PlaceOnTop(initial(tiletype.turf_type))
 				specialtiles -= 1
 				if(specialtiles == 0)
 					speak("Requesting refill of custom floortiles to continue replacing.")

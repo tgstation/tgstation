@@ -53,31 +53,36 @@
 
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
-/datum/job/proc/after_spawn(mob/living/H, mob/M)
+/datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	//do actions on H but send messages to M as the key may not have been transferred_yet
-
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
 		announce_head(H, head_announce)
 
+/datum/job/proc/override_latejoin_spawn(mob/living/carbon/human/H)		//Return TRUE to force latejoining to not automatically place the person in latejoin shuttle/whatever.
+	return FALSE
+
+//Used for a special check of whether to allow a client to latejoin as this job.
+/datum/job/proc/special_check_latejoin(client/C)
+	return TRUE
 
 //Don't override this unless the job transforms into a non-human (Silicons do this for example)
-/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE)
+/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE)
 	if(!H)
-		return 0
-
-	//Equip the rest of the gear
-	H.dna.species.before_equip_job(src, H, visualsOnly)
-
-	if(outfit)
-		H.equipOutfit(outfit, visualsOnly)
+		return FALSE
 
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
 		if(H.dna.species.id != "human")
 			H.set_species(/datum/species/human)
 			H.rename_self("human", H.client)
 		purrbation_remove(H, silent=TRUE)
+
+	//Equip the rest of the gear
+	H.dna.species.before_equip_job(src, H, visualsOnly)
+
+	if(outfit)
+		H.equipOutfit(outfit, visualsOnly)
 
 	H.dna.species.after_equip_job(src, H, visualsOnly)
 
@@ -106,8 +111,8 @@
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
 	if(available_in_days(C) == 0)
-		return 1	//Available in 0 days = available right now = player is old enough to play.
-	return 0
+		return TRUE	//Available in 0 days = available right now = player is old enough to play.
+	return FALSE
 
 
 /datum/job/proc/available_in_days(client/C)
@@ -123,7 +128,7 @@
 	return max(0, minimal_player_age - C.player_age)
 
 /datum/job/proc/config_check()
-	return 1
+	return TRUE
 
 /datum/job/proc/map_check()
 	return TRUE

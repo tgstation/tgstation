@@ -244,11 +244,10 @@
 		..()
 
 /obj/item/borg/upgrade/modkit/action(mob/living/silicon/robot/R)
-	if(..())
-		return
-
-	for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/H in R.module.modules)
-		return install(H, usr)
+	. = ..()
+	if (.)
+		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/H in R.module.modules)
+			return install(H, usr)
 
 /obj/item/borg/upgrade/modkit/proc/install(obj/item/gun/energy/kinetic_accelerator/KA, mob/user)
 	. = TRUE
@@ -281,9 +280,17 @@
 		to_chat(user, "<span class='notice'>You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits.</span>")
 		. = FALSE
 
+/obj/item/borg/upgrade/modkit/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		for(var/obj/item/gun/energy/kinetic_accelerator/cyborg/KA in R.module.modules)
+			uninstall(KA)
+
 /obj/item/borg/upgrade/modkit/proc/uninstall(obj/item/gun/energy/kinetic_accelerator/KA)
 	forceMove(get_turf(KA))
 	KA.modkits -= src
+
+
 
 /obj/item/borg/upgrade/modkit/proc/modify_projectile(obj/item/projectile/kinetic/K)
 

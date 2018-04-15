@@ -139,9 +139,8 @@
 	for(var/c in assembly_components)
 		var/obj/item/integrated_circuit/circuit = c
 		if(!circuit.removable)
-			builtin_components += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
-			builtin_components += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
-			builtin_components += "<a href='?src=[REF(circuit)];scan=1;return=1'>\[Copy Ref\]</a>"
+			builtin_components += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[R\]</a> | "
+			builtin_components += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a>"
 			builtin_components += "<br>"
 
 	// Put removable circuits (if any) in separate categories from non-removable
@@ -157,14 +156,13 @@
 	for(var/c in assembly_components)
 		var/obj/item/integrated_circuit/circuit = c
 		if(circuit.removable)
-			HTML += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a> | "
-			HTML += "<a href='?src=[REF(circuit)];rename=1;return=1'>\[Rename\]</a> | "
-			HTML += "<a href='?src=[REF(circuit)];scan=1;return=1'>\[Copy Ref\]</a> | "
-			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];remove=1'>\[Remove\]</a> | "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];up=1' style='text-decoration:none;'>&#8593;</a> "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];down=1' style='text-decoration:none;'>&#8595;</a>  "
 			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];top=1' style='text-decoration:none;'>&#10514;</a> "
-			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];bottom=1' style='text-decoration:none;'>&#10515;</a>"
+			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];bottom=1' style='text-decoration:none;'>&#10515;</a> | "
+			HTML += "<a href='?src=[REF(circuit)];component=[REF(circuit)];rename=1;return=1'>\[R\]</a> | "
+			HTML += "<a href='?src=[REF(src)];component=[REF(circuit)];remove=1'>\[-\]</a> | "
+			HTML += "<a href='?src=[REF(circuit)]'>[circuit.displayed_name]</a>"
 			HTML += "<br>"
 
 	HTML += "</body></html>"
