@@ -46,9 +46,11 @@ GLOBAL_LIST_EMPTY(chempiles)
 		for(var/obj/item/I in M.get_equipped_items())
 			if(I.body_parts_covered & FEET)
 				protection = I.permeability_coefficient
-		if(reagents.total_volume > 3)	//This should help stop those weird as hell microdosages - mostly a temp fix
-			reagents.trans_to(M, 2, protection)
-			CHECK_TICK
+		if(reagents)
+			for(var/datum/reagent/R in src.reagents.reagent_list)
+				if(reagents.get_reagent_amount(R) > 1)
+					reagents.trans_to(M, 2, protection)
+					CHECK_TICK
 
 /obj/effect/decal/cleanable/chempile/fire_act(exposed_temperature, exposed_volume)
 	if(reagents && reagents.chem_temp)
