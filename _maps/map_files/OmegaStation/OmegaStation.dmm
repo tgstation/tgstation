@@ -20669,7 +20669,6 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/structure/fans/tiny,
 /turf/open/floor/plasteel/vault/side,
 /area/tcommsat/server)
 "aRE" = (
