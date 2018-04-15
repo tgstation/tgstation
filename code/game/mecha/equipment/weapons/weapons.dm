@@ -50,7 +50,7 @@
 		playsound(chassis, fire_sound, 50, 1)
 
 		sleep(max(0, projectile_delay))
-	
+
 	if(kickback)
 		chassis.newtonian_move(turn(chassis.dir,180))
 	chassis.log_message("Fired from [src.name], targeting [target].")
@@ -426,8 +426,9 @@
 
 /obj/item/punching_glove/throw_impact(atom/hit_atom)
 	if(!..())
-		if(ismovableatom(hit_atom))
+		if(ismovableatom(hit_atom) && !istype(hit_atom, /obj/effect/clockwork/servant_blocker))
+			warning("Oingo hit [hit_atom] [hit_atom.type]")
 			var/atom/movable/AM = hit_atom
-			AM.throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
+			if (!(istype(AM, /obj/machinery/nuclearbomb) && AM.anchored))
+				AM.throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
 		qdel(src)
-
