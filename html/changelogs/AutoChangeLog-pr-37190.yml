@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Bluespace slime cookies can no longer be used to travel to CentCom"
