@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Ghosts can no longer interact with the round via teleporter effects of any kind"
