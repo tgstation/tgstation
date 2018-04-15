@@ -1,0 +1,4 @@
+author: "JohnGinnane"
+delete-after: True
+changes: 
+  - tweak: "Reorganised circuit component controls within an assembly, so they appear before the name of the component"
