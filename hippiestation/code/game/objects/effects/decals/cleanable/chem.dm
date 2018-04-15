@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(chempiles)
 		for(var/obj/item/I in M.get_equipped_items())
 			if(I.body_parts_covered & FEET)
 				protection = I.permeability_coefficient
-		if(reagents)
+		if(reagents < 1)	//This should stop those weird as hell microdosages
 			reagents.trans_to(M, 2, protection)
 			CHECK_TICK
 
