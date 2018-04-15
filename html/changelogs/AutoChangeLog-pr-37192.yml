@@ -1,0 +1,5 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Borgs can no longer accidentally end up inside a cryo cell"
+  - bugfix: "Shoving someone inside a cryo cell now has a small delay unless they are knocked down, stunned, sleeping or unconscious"
