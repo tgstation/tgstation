@@ -16,3 +16,7 @@
 /datum/map_template/shuttle/mining/sb
 	suffix = "sb"
 	name = "mining shuttle (SB)"
+
+/datum/map_template/shuttle/whiteship/sb
+	suffix = "sb"
+	name = "NT White Cruiser"
