@@ -426,9 +426,7 @@
 
 /obj/item/punching_glove/throw_impact(atom/hit_atom)
 	if(!..())
-		if(ismovableatom(hit_atom) && !istype(hit_atom, /obj/effect/clockwork/servant_blocker))
-			warning("Oingo hit [hit_atom] [hit_atom.type]")
+		if(ismovableatom(hit_atom))
 			var/atom/movable/AM = hit_atom
-			if (!(istype(AM, /obj/machinery/nuclearbomb) && AM.anchored))
-				AM.throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
+			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
 		qdel(src)

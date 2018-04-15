@@ -383,7 +383,7 @@
 
 	if(throwing)
 		return 1
-	
+
 	if(!isturf(loc))
 		return 1
 
@@ -414,6 +414,9 @@
 	if(!anchored && hitpush)
 		step(src, AM.dir)
 	..()
+
+/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
+	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback)
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback) //If this returns FALSE then callback will not be called.
 	. = FALSE
