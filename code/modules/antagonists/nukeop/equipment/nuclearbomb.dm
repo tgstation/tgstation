@@ -400,11 +400,6 @@
 	if(explosive)
 		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
-/obj/machinery/nuclearbomb/safe_throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
-	if (!anchored)
-		return ..()
-	return
-
 #define NUKERANGE 127
 /obj/machinery/nuclearbomb/proc/explode()
 	if(safety)
