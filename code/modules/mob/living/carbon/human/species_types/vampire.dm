@@ -39,7 +39,7 @@
 
 /datum/species/vampire/spec_life(mob/living/carbon/human/C)
 	. = ..()
-	if(istype(C.loc, /obj/structure/closet/coffin))
+	if(istype(C.loc, /obj/structure/closet/crate/coffin))
 		C.heal_overall_damage(4,4)
 		C.adjustToxLoss(-4)
 		C.adjustOxyLoss(-4)
