@@ -17,7 +17,7 @@
 #define TOXLOSS 		(1<<2)
 #define OXYLOSS 		(1<<3)
 #define SHAME 			(1<<4)
-#define MANUAL_SUICIDE 	(1<<5)	//suicide_act will do the actual killing.
+#define MANUAL_SUICIDE	(1<<5)	//suicide_act will do the actual killing.
 
 #define EFFECT_STUN		"stun"
 #define EFFECT_KNOCKDOWN		"knockdown"

@@ -21,14 +21,14 @@
 #define SAFE	(1<<4)
 
 //used in design to specify which machine can build it
-#define	IMPRINTER		(1<<0)	//For circuits. Uses glass/chemicals.
+#define IMPRINTER		(1<<0)	//For circuits. Uses glass/chemicals.
 #define PROTOLATHE		(1<<1)	//New stuff. Uses glass/metal/chemicals
-#define	AUTOLATHE		(1<<2)	//Uses glass/metal only.
+#define AUTOLATHE		(1<<2)	//Uses glass/metal only.
 #define CRAFTLATHE		(1<<3)	//Uses fuck if I know. For use eventually.
 #define MECHFAB			(1<<4) 	//Remember, objects utilising this flag should have construction_time and construction_cost vars.
 #define BIOGENERATOR	(1<<5) 	//Uses biomass
-#define LIMBGROWER 		(1<<6) 	//Uses synthetic flesh
-#define SMELTER 		(1<<7) 	//uses various minerals
+#define LIMBGROWER		(1<<6) 	//Uses synthetic flesh
+#define SMELTER			(1<<7) 	//uses various minerals
 //Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines
@@ -61,10 +61,10 @@
 #define MIN_NTNET_LOGS 10
 
 //Program bitflags
-#define PROGRAM_ALL 	(~0)
+#define PROGRAM_ALL		(~0)
 #define PROGRAM_CONSOLE	(1<<0)
-#define PROGRAM_LAPTOP 	(1<<1)
-#define PROGRAM_TABLET 	(1<<2)
+#define PROGRAM_LAPTOP	(1<<1)
+#define PROGRAM_TABLET	(1<<2)
 //Program states
 #define PROGRAM_STATE_KILLED 0
 #define PROGRAM_STATE_BACKGROUND 1
