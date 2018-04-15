@@ -961,8 +961,7 @@
 	},
 /obj/item/melee/transforming/energy/sword/pirate{
 	pixel_x = 12;
-	pixel_y = 7;
-	pixel_z = 0
+	pixel_y = 7
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
