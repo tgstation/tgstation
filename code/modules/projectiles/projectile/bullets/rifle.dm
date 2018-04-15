@@ -3,14 +3,14 @@
 /obj/item/projectile/bullet/a556
 	name = "5.56mm bullet"
 	damage = 35
-	speed = 2.9
+	speed = 0.2
 
 // 7.62 (Nagant Rifle)
 
 /obj/item/projectile/bullet/a762
 	name = "7.62 bullet"
 	damage = 60
-	speed = 1.7
+	speed = 0.3
 
 /obj/item/projectile/bullet/a762_enchanted
 	name = "enchanted 7.62 bullet"

@@ -10,12 +10,12 @@
 	name = "beanbag slug"
 	damage = 5
 	stamina = 80
-	speed = 2.1
+	speed = 0.3
 
 /obj/item/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
 	damage = 20
-	speed = 1.6
+	speed = 0.5
 
 /obj/item/projectile/bullet/incendiary/shotgun/dragonsbreath
 	name = "dragonsbreath pellet"

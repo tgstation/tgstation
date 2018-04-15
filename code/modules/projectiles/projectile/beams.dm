@@ -3,7 +3,7 @@
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 20
-	speed = 2.3
+	speed = 0.4
 	light_range = 2
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
@@ -39,7 +39,7 @@
 
 /obj/item/projectile/beam/weak
 	damage = 15
-	speed = 1.6
+	speed = 0.2
 	armour_penetration = 50
 
 /obj/item/projectile/beam/practice
@@ -84,7 +84,7 @@
 	name = "pulse"
 	icon_state = "u_laser"
 	damage = 50
-	speed = 2
+	speed = 0.3
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/pulse
@@ -165,7 +165,7 @@
 	name = "instagib laser"
 	icon_state = "purple_laser"
 	damage = 200
-	speed = 5.0
+	speed = 0.1
 	damage_type = BURN
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
 	light_color = LIGHT_COLOR_PURPLE

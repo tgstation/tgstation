@@ -16,7 +16,7 @@
 	var/anti_armour_damage = 200
 	armour_penetration = 100
 	dismemberment = 100
-	speed = 1.9
+	speed = 0.3
 
 /obj/item/projectile/bullet/a84mm/on_hit(atom/target, blocked = FALSE)
 	..()

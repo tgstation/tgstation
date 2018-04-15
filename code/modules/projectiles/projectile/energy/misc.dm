@@ -13,4 +13,4 @@
 	damage_type = TOX
 	knockdown = 100
 	range = 7
-	speed = 1.8
+	speed = 0.3
