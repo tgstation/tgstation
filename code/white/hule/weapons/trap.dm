@@ -1,10 +1,5 @@
 /obj/item/grenade/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = W
-		if(coil.get_amount() < 3)
-			to_chat(user, "<span class='warning'>You need three length of cable!</span>")
-			return
-		coil.use(3)
+	if(istype(W, /obj/item/wirekit))
 		var/obj/structure/boobytrap/T = new(get_turf(src))
 		user.dropItemToGround(src)
 		src.forceMove(T)
@@ -65,3 +60,19 @@
 			qdel(src)
 	..()
 
+/obj/item/wirekit
+	name = "Wiring kit"
+	desc = "Содержит все необходимое для создания растяжек."
+	icon = 'icons/obj/cigarettes.dmi'
+	icon_state = "matchbox"
+	item_state = "zippo"
+
+/datum/crafting_recipe/wiringkit
+	name = "Wiring kit"
+	result = /obj/item/wirekit
+	reqs = list(/obj/item/stack/cable_coil = 30,
+				/obj/item/stack/rods = 5)
+	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	time = 200
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
