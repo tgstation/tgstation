@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Admin loaded map templates can be designated as shuttles during the upload process. Make sure to load them on space first."
