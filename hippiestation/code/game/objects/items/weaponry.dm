@@ -118,8 +118,8 @@
 	name = "spiked baseball bat"
 	desc = "A wooden baseball bat with metal spikes crudely attached."
 	icon = 'hippiestation/icons/obj/items_and_weapons.dmi'
-	icon_state = "hippie_bbat_spiked"
-	item_state = "hippie_bbat_spiked"
+	icon_state = "hippie_bbat_spike"
+	item_state = "hippie_bbat_spike"
 	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
 	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
 	force = 15 //for reference, normal bat has 10
