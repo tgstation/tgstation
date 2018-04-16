@@ -11,7 +11,7 @@
 /obj/item/stack
 	icon = 'icons/obj/stack_objects.dmi'
 	gender = PLURAL
-	var/list/datum/stack_recipe/recipes
+	var/list/recipes = list() // /datum/stack_recipe
 	var/singular_name
 	var/amount = 1
 	var/max_amount = 50 //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
@@ -193,19 +193,7 @@
 		O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
 
-		//START: oh fuck i'm so sorry
-		if(istype(O, /obj/structure/windoor_assembly))
-			var/obj/structure/windoor_assembly/W = O
-			W.ini_dir = W.dir
-		else if(istype(O, /obj/structure/window))
-			var/obj/structure/window/W = O
-			W.ini_dir = W.dir
-		//END: oh fuck i'm so sorry
-
-		else if(istype(O, /obj/item/restraints/handcuffs/cable))
-			var/obj/item/cuffs = O
-			cuffs.item_color = item_color
-			cuffs.update_icon()
+		R.post_build(src, O)
 
 		if (QDELETED(O))
 			return //It's a stack and has already been merged
@@ -379,40 +367,3 @@
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)
 	if(M && M.dirty < 100)
 		M.dirty += amount
-
-/*
- * Recipe datum
- */
-/datum/stack_recipe
-	var/title = "ERROR"
-	var/result_type
-	var/req_amount = 1
-	var/res_amount = 1
-	var/max_res_amount = 1
-	var/time = 0
-	var/one_per_turf = FALSE
-	var/on_floor = FALSE
-	var/window_checks = FALSE
-	var/placement_checks = FALSE
-
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE)
-	src.title = title
-	src.result_type = result_type
-	src.req_amount = req_amount
-	src.res_amount = res_amount
-	src.max_res_amount = max_res_amount
-	src.time = time
-	src.one_per_turf = one_per_turf
-	src.on_floor = on_floor
-	src.window_checks = window_checks
-	src.placement_checks = placement_checks
-/*
- * Recipe list datum
- */
-/datum/stack_recipe_list
-	var/title = "ERROR"
-	var/list/recipes
-
-/datum/stack_recipe_list/New(title, recipes)
-	src.title = title
-	src.recipes = recipes
