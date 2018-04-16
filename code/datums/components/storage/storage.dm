@@ -614,9 +614,6 @@
 /datum/component/storage/proc/signal_can_insert(obj/item/I, mob/M, silent = FALSE)
 	return can_be_inserted(I, silent, M)
 
-/datum/component/storage/proc/show_to_ghost(mob/dead/observer/M)
-	return user_show_to_mob(M, TRUE)
-
 /datum/component/storage/proc/signal_show_attempt(mob/showto, force = FALSE)
 	return user_show_to_mob(showto, force)
 
