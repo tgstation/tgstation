@@ -96,6 +96,29 @@
 			return ..()
 
 // ----------------------------------------------------------------------------
+// Admin ghost stat panel
+
+/obj/effect/statclick/dead_radio
+	var/enabled = FALSE
+
+/obj/effect/statclick/dead_radio/Click()
+	var/mob/dead/M = usr
+	enabled = !enabled
+	name = "[enabled ? "Enabled" : "Disabled"] (click to toggle)"
+	if (M.client && check_rights_for(M.client, R_ADMIN))
+		SShullrot.set_ghost_ears(M.client, enabled)
+
+/client
+	var/obj/effect/statclick/dead_radio/hullrot_hear_all
+
+/mob/dead/Stat()
+	..()
+	if (client && check_rights_for(client, R_ADMIN) && SShullrot.can_fire && statpanel("Radio"))
+		if (!client.hullrot_hear_all)
+			client.hullrot_hear_all = new(null, "Disabled (click to toggle)")
+		stat("Ghost Ears", client.hullrot_hear_all)
+
+// ----------------------------------------------------------------------------
 // Location-based can-hear and can-speak checks
 
 /mob/living/proc/hullrot_update()

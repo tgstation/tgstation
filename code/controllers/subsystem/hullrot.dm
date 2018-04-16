@@ -255,3 +255,6 @@ SUBSYSTEM_DEF(hullrot)
 
 /datum/controller/subsystem/hullrot/proc/set_ghost(client/C)
 	control("SetGhost", C.ckey)
+
+/datum/controller/subsystem/hullrot/proc/set_ghost_ears(client/C, ears)
+	control("SetGhostEars", list("who" = C.ckey, "ears" = ears))
