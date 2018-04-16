@@ -4259,7 +4259,7 @@
 /area/space/nearstation)
 "nb" = (
 /obj/structure/table/wood,
-/obj/item/spellbook/oneuse/random,
+/obj/item/book/granter/spell/random,
 /turf/open/floor/mineral/plasma,
 /area/space/nearstation)
 "nc" = (

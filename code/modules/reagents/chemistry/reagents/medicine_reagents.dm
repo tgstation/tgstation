@@ -833,7 +833,7 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(prob(10))
-			C.cure_trauma_type(TRAUMA_RESILIENCE_BASIC)
+			C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 	..()
 
 /datum/reagent/medicine/mutadone

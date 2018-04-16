@@ -162,9 +162,9 @@
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
 				if(start_T && end_T)
-					var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
-					var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
-					add_logs(src, throwable_mob, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
+					var/start_T_descriptor = "tile in [get_area_name(start_T, TRUE)] ([start_T.x],[start_T.y],[start_T.z])"
+					var/end_T_descriptor = "tile at [get_area_name(end_T, TRUE)] ([end_T.x],[end_T.y],[end_T.z])"
+					add_logs(src, throwable_mob, "thrown", addition="grab from [start_T_descriptor] towards [end_T_descriptor]")
 
 	else if(!(I.flags_1 & (NODROP_1|ABSTRACT_1)))
 		thrown_thing = I
@@ -176,7 +176,7 @@
 
 	if(thrown_thing)
 		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
-		add_logs(src, thrown_thing, "has thrown")
+		add_logs(src, thrown_thing, "thrown")
 		newtonian_move(get_dir(target, src))
 		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
 

@@ -165,7 +165,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	beeper = !beeper
-	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "off" : "on"].</span>")
+	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
 
 /obj/structure/bodycontainer/morgue/update_icon()
 	if (!connected || connected.loc != src) // Open or tray is gone.
@@ -257,9 +257,9 @@ GLOBAL_LIST_EMPTY(crematoriums)
 				M.emote("scream")
 			if(user)
 				user.log_message("Cremated <b>[M]/[M.ckey]</b>", INDIVIDUAL_ATTACK_LOG)
-				log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
+				log_attack("[user]/[user.ckey] cremated [M]/[M.ckey]")
 			else
-				log_attack("\[[time_stamp()]\] <b>UNKNOWN</b> cremated <b>[M]/[M.ckey]</b>")
+				log_attack("UNKNOWN cremated [M]/[M.ckey]")
 			M.death(1)
 			if(M) //some animals get automatically deleted on death.
 				M.ghostize()

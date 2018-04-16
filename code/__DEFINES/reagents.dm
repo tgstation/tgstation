@@ -14,7 +14,7 @@
 #define AMOUNT_VISIBLE	32	// For non-transparent containers that still have the general amount of reagents in them visible.
 
 // Is an open container for all intents and purposes.
-#define OPENCONTAINER 	REFILLABLE | DRAINABLE | TRANSPARENT
+#define OPENCONTAINER 	(REFILLABLE | DRAINABLE | TRANSPARENT)
 
 
 #define TOUCH			1	// splashing

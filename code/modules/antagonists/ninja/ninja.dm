@@ -90,8 +90,8 @@
 				break
 	var/datum/objective/O = new /datum/objective/survive()
 	O.owner = owner
+	objectives += O
 	owner.objectives |= objectives
-
 
 /proc/remove_ninja(mob/living/L)
 	if(!L || !L.mind)
@@ -109,6 +109,7 @@
 	to_chat(owner.current, "I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
 	to_chat(owner.current, "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
 	to_chat(owner.current, "Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")
+	owner.announce_objectives()
 	return
 
 /datum/antagonist/ninja/on_gain()

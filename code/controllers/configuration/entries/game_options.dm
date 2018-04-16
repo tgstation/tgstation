@@ -199,7 +199,9 @@
 /datum/config_entry/number/slime_delay
 /datum/config_entry/number/animal_delay
 
-/datum/config_entry/number/gateway_delay	//How long the gateway takes before it activates. Default is half an hour.
+/datum/config_entry/flag/roundstart_away	//Will random away mission be loaded.
+
+/datum/config_entry/number/gateway_delay	//How long the gateway takes before it activates. Default is half an hour. Only matters if roundstart_away is enabled.
 	config_entry_value = 18000
 	min_val = 0
 
@@ -224,9 +226,12 @@
 /datum/config_entry/keyed_number_list/law_weight
 	splitter = ","
 
-/datum/config_entry/number/assistant_cap
+/datum/config_entry/number/overflow_cap
 	config_entry_value = -1
 	min_val = -1
+
+/datum/config_entry/string/overflow_job
+	config_entry_value = "Assistant"
 
 /datum/config_entry/flag/starlight
 /datum/config_entry/flag/grey_assistants

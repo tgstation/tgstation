@@ -254,7 +254,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || duration <= 0)
+	if(!M || !M.client || duration < 1)
 		return
 	var/client/C = M.client
 	var/oldx = C.pixel_x

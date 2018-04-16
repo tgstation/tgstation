@@ -22,6 +22,7 @@
 	icon_living = "syndicate"
 	icon_dead = "syndicate_dead"
 	icon_gib = "syndicate_gib"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "pokes"
@@ -160,7 +161,9 @@
 	desc = "A small, twin-bladed machine capable of inflicting very deadly lacerations."
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSMOB
+	a_intent = INTENT_HARM
+	mob_biotypes = list(MOB_ROBOTIC)
 	health = 25
 	maxHealth = 25
 	melee_damage_lower = 15
@@ -180,3 +183,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 	deathmessage = "is smashed into pieces!"
+
+/mob/living/simple_animal/hostile/viscerator/Initialize()
+	. = ..()
+	AddComponent(/datum/component/swarming)

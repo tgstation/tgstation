@@ -398,5 +398,3 @@ Difficulty: Hard
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum))
 		return 1
 	return 0
-
-#undef MEDAL_PREFIX
