@@ -3,9 +3,15 @@ CONTAINS:
 RPD
 */
 
-#define ATMOS_MODE 0
-#define DISPOSALS_MODE 1
-#define TRANSIT_MODE 2
+#define ATMOS_CATEGORY 0
+#define DISPOSALS_CATEGORY 1
+#define TRANSIT_CATEGORY 2
+
+#define BUILD_MODE 1
+#define WRENCH_MODE 2
+#define DESTROY_MODE 4
+#define PAINT_MODE 8
+
 
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 	"Pipes" = list(
@@ -188,14 +194,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/transit_build_speed = 5
 	var/destroy_speed = 5
 	var/paint_speed = 5
-	var/mode = ATMOS_MODE
+	var/category = ATMOS_CATEGORY
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/datum/pipe_info/recipe
 	var/static/datum/pipe_info/first_atmos
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
-	var/autowrench = FALSE
-	var/buildmode = FALSE
+	var/mode = BUILD_MODE | PAINT_MODE | DESTROY_MODE | WRENCH_MODE
 
 /obj/item/pipe_dispenser/New()
 	. = ..()
@@ -237,23 +242,22 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/ui_data(mob/user)
 	var/list/data = list(
-		"mode" = mode,
+		"category" = category,
 		"piping_layer" = piping_layer,
 		"preview_rows" = recipe.get_preview(p_dir),
 		"categories" = list(),
 		"selected_color" = paint_color,
 		"paint_colors" = GLOB.pipe_paint_colors,
-		"autowrench" = autowrench,
-		"buildmode" = buildmode
+		"mode" = mode
 	)
 
 	var/list/recipes
-	switch(mode)
-		if(ATMOS_MODE)
+	switch(category)
+		if(ATMOS_CATEGORY)
 			recipes = GLOB.atmos_pipe_recipes
-		if(DISPOSALS_MODE)
+		if(DISPOSALS_CATEGORY)
 			recipes = GLOB.disposal_pipe_recipes
-		if(TRANSIT_MODE)
+		if(TRANSIT_CATEGORY)
 			recipes = GLOB.transit_tube_recipes
 	for(var/c in recipes)
 		var/list/cat = recipes[c]
@@ -274,14 +278,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	switch(action)
 		if("color")
 			paint_color = params["paint_color"]
-		if("mode")
-			mode = text2num(params["mode"])
-			switch(mode)
-				if(DISPOSALS_MODE)
+		if("category")
+			category = text2num(params["category"])
+			switch(category)
+				if(DISPOSALS_CATEGORY)
 					recipe = first_disposal
-				if(ATMOS_MODE)
+				if(ATMOS_CATEGORY)
 					recipe = first_atmos
-				if(TRANSIT_MODE)
+				if(TRANSIT_CATEGORY)
 					recipe = first_transit
 			p_dir = NORTH
 			playeffect = FALSE
@@ -298,10 +302,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			p_dir = text2dir(params["dir"])
 			p_flipped = text2num(params["flipped"])
 			playeffect = FALSE
-		if("autowrench")
-			autowrench = !autowrench
-		if("buildmode")
-			buildmode = !buildmode
+		if("mode")
+			var/n = text2num(params["mode"])
+			if(n == 2 && !(mode&1) && !(mode&2))
+				mode |= 3
+			else if(mode&n)
+				mode &= ~n
+			else
+				mode |= n
+
 	if(playeffect)
 		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
@@ -315,7 +324,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/queued_p_dir = p_dir
 	var/queued_p_flipped = p_flipped
 
-	//make sure what we're clicking is valid for the current mode
+	//make sure what we're clicking is valid for the current category
 	var/static/list/make_pipe_whitelist
 	if(!make_pipe_whitelist)
 		make_pipe_whitelist = typecacheof(list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe))
@@ -323,8 +332,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	. = FALSE
 
-	//if we're clicking on an unwrenched pipe and we want to destroy it, destroy it
-	if(!buildmode && istype(A, /obj/item/pipe) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod) || istype(A, /obj/item/pipe_meter))
+	if((mode&DESTROY_MODE) && istype(A, /obj/item/pipe) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod) || istype(A, /obj/item/pipe_meter))
 		to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 		if(do_after(user, destroy_speed, target = A))
@@ -332,8 +340,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			qdel(A)
 		return
 
-	//if we're clicking on a pipe that can be painted and we want to paint it, paint it
-	else if(!buildmode && istype(A, /obj/machinery/atmospherics/pipe) && !istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
+	if((mode&PAINT_MODE) && findtext("[queued_p_type]", "/obj/machinery/atmospherics/pipe") && !findtext("[queued_p_type]", "layer_manifold"))
+		to_chat(user, "<span class='notice'>You start painting \the [A] [paint_color]...</span>")
+		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+		if(do_after(user, paint_speed, target = A))
+			A.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY) //paint the pipe
+			user.visible_message("<span class='notice'>[user] paints \the [A] [paint_color].</span>","<span class='notice'>You paint \the [A] [paint_color].</span>")
+		return
+
+	if((mode&PAINT_MODE) && istype(A, /obj/machinery/atmospherics/pipe) && !istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
 		var/obj/machinery/atmospherics/pipe/P = A
 		to_chat(user, "<span class='notice'>You start painting \the [P] [paint_color]...</span>")
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -342,9 +357,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
 		return
 
-	else
-		switch(mode) //if we've gotten this var, the target is valid
-			if(ATMOS_MODE) //Making pipes
+	if(mode&BUILD_MODE)
+		switch(category) //if we've gotten this var, the target is valid
+			if(ATMOS_CATEGORY) //Making pipes
 				if(!can_make_pipe)
 					return ..()
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -354,6 +369,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						activate()
 						var/obj/item/pipe_meter/PM = new /obj/item/pipe_meter(get_turf(A))
 						PM.setAttachLayer(piping_layer)
+						if(mode&WRENCH_MODE)
+							PM.wrench_act(user, src)
 				else
 					to_chat(user, "<span class='notice'>You start building a pipe...</span>")
 					if(do_after(user, atmos_build_speed, target = A))
@@ -371,8 +388,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						P.setPipingLayer(piping_layer)
 						if(findtext("[queued_p_type]", "/obj/machinery/atmospherics/pipe") && !findtext("[queued_p_type]", "layer_manifold"))
 							P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+						if(mode&WRENCH_MODE)
+							P.wrench_act(user, src)
 
-			if(DISPOSALS_MODE) //Making disposals pipes
+			if(DISPOSALS_CATEGORY) //Making disposals pipes
 				if(!can_make_pipe)
 					return ..()
 				A = get_turf(A)
@@ -393,9 +412,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 					C.add_fingerprint(usr)
 					C.update_icon()
+					if(mode&WRENCH_MODE)
+						C.wrench_act(user, src)
 					return
 
-			if(TRANSIT_MODE) //Making transit tubes
+			if(TRANSIT_CATEGORY) //Making transit tubes
 				if(!can_make_pipe)
 					return ..()
 				A = get_turf(A)
@@ -409,6 +430,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					if(queued_p_type == /obj/structure/c_transit_tube_pod)
 						var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(A)
 						pod.add_fingerprint(usr)
+						if(mode&WRENCH_MODE)
+							pod.wrench_act(user, src)
+
 					else
 						var/obj/structure/c_transit_tube/tube = new queued_p_type(A)
 						tube.dir = queued_p_dir
@@ -418,6 +442,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 							tube.simple_rotate_flip()
 
 						tube.add_fingerprint(usr)
+						if(mode&WRENCH_MODE)
+							tube.wrench_act(user, src)
 					return
 
 			else
@@ -426,6 +452,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 
-#undef ATMOS_MODE
-#undef DISPOSALS_MODE
-#undef TRANSIT_MODE
+#undef ATMOS_CATEGORY
+#undef DISPOSALS_CATEGORY
+#undef TRANSIT_CATEGORY
+
+#undef BUILD_MODE
+#undef DESTROY_MODE
+#undef PAINT_MODE
+#undef WRENCH_MODE
