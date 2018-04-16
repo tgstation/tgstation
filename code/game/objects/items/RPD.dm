@@ -340,22 +340,23 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			qdel(A)
 		return
 
-	if((mode&PAINT_MODE) && findtext("[queued_p_type]", "/obj/machinery/atmospherics/pipe") && !findtext("[queued_p_type]", "layer_manifold"))
-		to_chat(user, "<span class='notice'>You start painting \the [A] [paint_color]...</span>")
-		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-		if(do_after(user, paint_speed, target = A))
-			A.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY) //paint the pipe
-			user.visible_message("<span class='notice'>[user] paints \the [A] [paint_color].</span>","<span class='notice'>You paint \the [A] [paint_color].</span>")
-		return
-
-	if((mode&PAINT_MODE) && istype(A, /obj/machinery/atmospherics/pipe) && !istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
-		var/obj/machinery/atmospherics/pipe/P = A
-		to_chat(user, "<span class='notice'>You start painting \the [P] [paint_color]...</span>")
-		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-		if(do_after(user, paint_speed, target = A))
-			P.paint(GLOB.pipe_paint_colors[paint_color]) //paint the pipe
-			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
-		return
+	if((mode&PAINT_MODE))
+		if(istype(A, /obj/machinery/atmospherics/pipe) && !istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
+			var/obj/machinery/atmospherics/pipe/P = A
+			to_chat(user, "<span class='notice'>You start painting \the [P] [paint_color]...</span>")
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+			if(do_after(user, paint_speed, target = A))
+				P.paint(GLOB.pipe_paint_colors[paint_color]) //paint the pipe
+				user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
+			return
+		var/obj/item/pipe/P = A
+		if(istype(P) && findtext("[P.pipe_type]", "/obj/machinery/atmospherics/pipe") && !findtext("[P.pipe_type]", "layer_manifold"))
+			to_chat(user, "<span class='notice'>You start painting \the [A] [paint_color]...</span>")
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
+			if(do_after(user, paint_speed, target = A))
+				A.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY) //paint the pipe
+				user.visible_message("<span class='notice'>[user] paints \the [A] [paint_color].</span>","<span class='notice'>You paint \the [A] [paint_color].</span>")
+			return
 
 	if(mode&BUILD_MODE)
 		switch(category) //if we've gotten this var, the target is valid
