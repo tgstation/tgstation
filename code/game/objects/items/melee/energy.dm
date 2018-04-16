@@ -53,7 +53,7 @@
 	var/in_mouth = ""
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		if(C.wear_mask == src)
+		if(C.wear_mask)
 			in_mouth = ", barely missing their nose"
 	. = "<span class='warning'>[user] swings their [name][in_mouth]. They light their [A.name] in the process.</span>"
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
