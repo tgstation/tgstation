@@ -86,7 +86,7 @@
 	RegisterSignal(COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_hand)
 	RegisterSignal(COMSIG_ATOM_EMP_ACT, .proc/emp_act)
-	RegisterSignal(COMSIG_ATOM_ATTACK_GHOST, .proc/show_to_ghost)
+	RegisterSignal(COMSIG_ATOM_ATTACK_GHOST, .proc/show_to)
 	RegisterSignal(COMSIG_ATOM_EXITED, .proc/_removal_reset)
 
 	RegisterSignal(COMSIG_ITEM_PRE_ATTACK, .proc/preattack_intercept)
