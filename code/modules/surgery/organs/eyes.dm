@@ -16,7 +16,7 @@
 	var/see_invisible = SEE_INVISIBLE_LIVING
 	var/lighting_alpha
 
-/obj/item/organ/eyes/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = FALSE)
+/obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
 	..()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/HMN = owner
@@ -126,7 +126,7 @@
 /obj/item/organ/eyes/robotic/flashlight/emp_act(severity)
 	return
 
-/obj/item/organ/eyes/robotic/flashlight/Insert(var/mob/living/carbon/M, var/special = 0)
+/obj/item/organ/eyes/robotic/flashlight/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
 	..()
 	if(!eye)
 		eye = new /obj/item/device/flashlight/eyelight()
@@ -234,8 +234,8 @@
 /obj/item/organ/eyes/robotic/glow/emp_act()
 	if(active)
 		deactivate(silent = TRUE)
-
-/obj/item/organ/eyes/robotic/glow/Insert(var/mob/living/carbon/M)
+		
+/obj/item/organ/eyes/robotic/glow/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
 	if (mobhook && mobhook.parent != M)
 		QDEL_NULL(mobhook)
