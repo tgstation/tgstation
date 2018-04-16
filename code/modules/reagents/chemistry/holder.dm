@@ -569,6 +569,7 @@
 			handle_reactions()
 		if(isliving(my_atom)&&!QDELETED(R))
 			R.on_mob_add(my_atom)
+			R.mobeffectactive = TRUE
 		return TRUE
 
 	else
