@@ -59,12 +59,6 @@
 	toggle_mode(user, TRUE)
 
 /obj/item/clothing/glasses/meson/engine/process()
-	if(mode == MODE_MESON)
-		var/turf/T = get_turf(src)
-		if(T && is_mining_level(T.z))
-			toggle_mode(loc)
-		return
-
 	if(!ishuman(loc))
 		return
 	var/mob/living/carbon/human/user = loc
