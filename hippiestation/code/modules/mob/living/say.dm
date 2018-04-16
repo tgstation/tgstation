@@ -12,3 +12,10 @@
 		return FALSE
 
 	return TRUE
+
+/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE)
+	// If we're in soft crit and tried to talk, automatically make us whisper
+	if (stat == SOFT_CRIT && get_message_mode(message) != MODE_WHISPER)
+		message = "#" + message
+
+	. = ..()
