@@ -73058,19 +73058,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"ddG" = (
-/obj/docking_port/stationary{
-	area_type = /area/construction/mining/aux_base;
-	dir = 1;
-	dwidth = 4;
-	height = 9;
-	id = "aux_base_zone";
-	name = "aux base zone";
-	roundstart_template = /datum/map_template/shuttle/aux_base/default;
-	width = 9
-	},
-/turf/open/floor/plating,
-/area/construction/mining/aux_base)
 "ddO" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/plasteel/dark,
@@ -76946,6 +76933,20 @@
 /obj/structure/target_stake,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"obX" = (
+/obj/docking_port/stationary{
+	area_type = /area/construction/mining/aux_base;
+	dheight = 4;
+	dir = 1;
+	dwidth = 4;
+	height = 9;
+	id = "aux_base_zone";
+	name = "aux base zone";
+	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	width = 9
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "ocT" = (
 /obj/machinery/light{
 	dir = 1
@@ -89335,11 +89336,11 @@ aDa
 aDa
 aDa
 aDa
+obX
 aDa
 aDa
 aDa
 aDa
-ddG
 cWM
 cXR
 cYG

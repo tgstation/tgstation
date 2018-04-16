@@ -1270,19 +1270,6 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
-"agq" = (
-/obj/docking_port/stationary{
-	area_type = /area/construction/mining/aux_base;
-	dir = 4;
-	dwidth = 4;
-	height = 9;
-	id = "aux_base_zone";
-	name = "aux base zone";
-	roundstart_template = /datum/map_template/shuttle/aux_base/default;
-	width = 9
-	},
-/turf/open/floor/plating,
-/area/construction/mining/aux_base)
 "agB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -100551,6 +100538,20 @@
 	dir = 6
 	},
 /area/science/circuit)
+"lTo" = (
+/obj/docking_port/stationary{
+	area_type = /area/construction/mining/aux_base;
+	dheight = 4;
+	dir = 4;
+	dwidth = 4;
+	height = 9;
+	id = "aux_base_zone";
+	name = "aux base zone";
+	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	width = 9
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "lXM" = (
 /obj/structure/target_stake,
 /turf/open/floor/plasteel/white/side{
@@ -143766,7 +143767,7 @@ aeF
 aeF
 aeF
 aeF
-agq
+aeF
 aeF
 aeF
 aeF
@@ -144794,7 +144795,7 @@ aeF
 aeF
 aeF
 aeF
-aeF
+lTo
 aeF
 aeF
 aeF

@@ -51469,19 +51469,6 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
-"cCt" = (
-/obj/docking_port/stationary{
-	area_type = /area/construction/mining/aux_base;
-	dir = 8;
-	dwidth = 4;
-	height = 9;
-	id = "aux_base_zone";
-	name = "aux base zone";
-	roundstart_template = /datum/map_template/shuttle/aux_base/default;
-	width = 9
-	},
-/turf/open/floor/plating,
-/area/construction/mining/aux_base)
 "cCB" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
@@ -54325,6 +54312,20 @@
 "wkN" = (
 /turf/closed/wall,
 /area/science/circuit)
+"wph" = (
+/obj/docking_port/stationary{
+	area_type = /area/construction/mining/aux_base;
+	dheight = 4;
+	dir = 8;
+	dwidth = 4;
+	height = 9;
+	id = "aux_base_zone";
+	name = "aux base zone";
+	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	width = 9
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "wrp" = (
 /obj/machinery/light{
 	dir = 8
@@ -64517,7 +64518,7 @@ apN
 apN
 apN
 apN
-apN
+wph
 apN
 apN
 apN
@@ -65545,7 +65546,7 @@ apN
 apN
 apN
 apN
-cCt
+apN
 apN
 apN
 apN
