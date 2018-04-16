@@ -195,6 +195,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
 	var/autowrench = FALSE
+	var/buildmode = FALSE
 
 /obj/item/pipe_dispenser/New()
 	. = ..()
@@ -241,7 +242,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		"preview_rows" = recipe.get_preview(p_dir),
 		"categories" = list(),
 		"selected_color" = paint_color,
-		"paint_colors" = GLOB.pipe_paint_colors
+		"paint_colors" = GLOB.pipe_paint_colors,
+		"autowrench" = autowrench,
+		"buildmode" = buildmode
 	)
 
 	var/list/recipes
@@ -295,6 +298,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			p_dir = text2dir(params["dir"])
 			p_flipped = text2num(params["flipped"])
 			playeffect = FALSE
+		if("autowrench")
+			autowrench = !autowrench
+		if("buildmode")
+			buildmode = !buildmode
 	if(playeffect)
 		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
@@ -316,8 +323,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	. = FALSE
 
-	//if we're clicking on an unwrenched pipe, destroy it
-	if(istype(A, /obj/item/pipe) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod) || istype(A, /obj/item/pipe_meter))
+	//if we're clicking on an unwrenched pipe and we want to destroy it, destroy it
+	if(!buildmode && istype(A, /obj/item/pipe) || istype(A, /obj/structure/disposalconstruct) || istype(A, /obj/structure/c_transit_tube) || istype(A, /obj/structure/c_transit_tube_pod) || istype(A, /obj/item/pipe_meter))
 		to_chat(user, "<span class='notice'>You start destroying a pipe...</span>")
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 		if(do_after(user, destroy_speed, target = A))
@@ -325,8 +332,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			qdel(A)
 		return
 
-	//if we're clicking on a pipe that can be painted, paint it
-	else if(istype(A, /obj/machinery/atmospherics/pipe) && !istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
+	//if we're clicking on a pipe that can be painted and we want to paint it, paint it
+	else if(!buildmode && istype(A, /obj/machinery/atmospherics/pipe) && !istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
 		var/obj/machinery/atmospherics/pipe/P = A
 		to_chat(user, "<span class='notice'>You start painting \the [P] [paint_color]...</span>")
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -415,12 +422,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 			else
 				return ..()
-
-/obj/item/pipe_dispenser/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-	autowrench = !autowrench
-	to_chat(user, "<span class='notice'>You [autowrench ? "enable" : "disable"] auto wrenching.</span>")
 
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)

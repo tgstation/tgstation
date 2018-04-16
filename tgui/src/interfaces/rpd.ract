@@ -18,12 +18,18 @@
 {{/if}}
 <ui-display title='Category'>
 	<ui-section>
-		<ui-button icon='{{data.mode == 0 ? "check-square-o" : "square-o"}}' state='{{data.mode == 0 ? "selected" : null}}'
+		<ui-button icon='{{data.mode == 0 ? "check-square-o" : "square-o"}}' state='{{data.mode <= 0 ? "selected" : null}}'
 			action='mode' params='{"mode": 0}'>Atmospherics</ui-button>
 		<ui-button icon='{{data.mode == 1 ? "check-square-o" : "square-o"}}' state='{{data.mode == 1 ? "selected" : null}}'
 			action='mode' params='{"mode": 1}'>Disposals</ui-button>
 		<ui-button icon='{{data.mode == 2 ? "check-square-o" : "square-o"}}' state='{{data.mode == 2 ? "selected" : null}}'
 			action='mode' params='{"mode": 2}'>Transit Tubes</ui-button>
+	</ui-section>
+	<ui-section>
+		<ui-button icon='{{data.autowrench ? "check-square-o" : "square-o"}}' state='{{data.autowrench ? "selected" : null}}'
+			action='autowrench'>Auto Wrench</ui-button>
+		<ui-button icon='{{data.buildmode ? "square-o" : "check-square-o"}}' state='{{data.buildmode ? null : "selected"}}'
+			action='buildmode'>Destroy & Paint</ui-button>
 	</ui-section>
 	{{#if data.mode == 0}}
 		<ui-section label='Piping Layer'>
