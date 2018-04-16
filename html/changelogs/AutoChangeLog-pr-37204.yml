@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "The on-body icon for ancient bio suits is no longer broken."
