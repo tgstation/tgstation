@@ -1,0 +1,5 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - rscadd: "Added get current logs button for admins"
+  - refactor: "Removed verbs that have been replaced by other things like the combohud or ticket panel."
