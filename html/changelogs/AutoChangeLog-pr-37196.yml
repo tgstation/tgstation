@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - tweak: "Mining borgs and mining drones now have mesons and the engineering goggles' meson mode also works in lavaland again."
