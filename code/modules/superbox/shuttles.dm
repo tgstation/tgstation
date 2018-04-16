@@ -20,3 +20,20 @@
 /datum/map_template/shuttle/whiteship/sb
 	suffix = "sb"
 	name = "NT White Cruiser"
+
+// Handling for making maint airlocks public access when something docks
+/obj/machinery/door/airlock
+	var/emergency_when_docked = FALSE
+
+/obj/machinery/door/airlock/proc/emergency_dock(new_shuttledocked)
+	if (!emergency_when_docked)
+		return
+	if (shuttledocked == new_shuttledocked)
+		return
+	if (emergency == new_shuttledocked)
+		return
+	emergency = new_shuttledocked
+	update_icon()
+	if (cyclelinkedairlock)
+		cyclelinkedairlock.emergency = new_shuttledocked
+		cyclelinkedairlock.update_icon()

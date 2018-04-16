@@ -745,17 +745,6 @@
 "abA" = (
 /turf/closed/wall,
 /area/maintenance/port/fore)
-"abB" = (
-/obj/machinery/door/airlock/external{
-	req_access_txt = "13"
-	},
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "abC" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -24006,11 +23995,6 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
-"ber" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/light/small,
-/turf/open/space/basic,
-/area/space/nearstation)
 "bes" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -25045,6 +25029,18 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"fKw" = (
+/obj/structure/lattice/catwalk,
+/obj/docking_port/stationary{
+	dir = 1;
+	dwidth = 9;
+	height = 22;
+	id = "whiteship_home";
+	name = "SS13: Auxiliary Dock";
+	width = 19
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "fKN" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -25092,6 +25088,11 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
+"goT" = (
+/obj/structure/sign/warning/vacuum/external,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "gsg" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -26355,6 +26356,12 @@
 	},
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/storage)
+"ptb" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "pvM" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
@@ -27082,10 +27089,6 @@
 	},
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/storage)
-"uyx" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall,
-/area/maintenance/port/fore)
 "uyC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -27391,8 +27394,7 @@
 /area/medical/sleeper)
 "wxS" = (
 /obj/machinery/light/small{
-	brightness = 3;
-	dir = 8;
+	brightness = 2;
 	light_color = "#d1ffee"
 	},
 /turf/open/floor/plating,
@@ -27483,6 +27485,18 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/dorms)
+"xky" = (
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external/glass{
+	emergency_when_docked = 1;
+	req_access_txt = "13"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "xsc" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -57799,7 +57813,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aco
 abA
 abA
 abA
@@ -58050,14 +58064,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
 adP
 adP
 adP
 adP
 aZc
-ber
-abA
+aZc
+aco
+ptb
 wxS
 abA
 acI
@@ -58311,10 +58325,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aZc
-aZc
-abB
+fKw
+xky
+acI
 acI
 beD
 acI
@@ -58565,13 +58579,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
 adP
 adP
 adP
 aZc
 aZc
-uyx
+goT
+ptb
 acI
 acp
 acK
@@ -58827,7 +58841,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aco
 abA
 abA
 abA
