@@ -188,8 +188,9 @@
 
 		if(istype(the_target, /obj/machinery/porta_turret))
 			var/obj/machinery/porta_turret/P = the_target
-			if(P.faction in faction)
-				return FALSE
+			for(var/turret_faction in P.faction)
+				if(turret_faction in faction)
+					return FALSE
 			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
 				return FALSE
 			if(P.stat & BROKEN) //Or turrets that are already broken

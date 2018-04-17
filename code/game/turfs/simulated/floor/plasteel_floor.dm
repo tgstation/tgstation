@@ -21,6 +21,8 @@
 
 /turf/open/floor/plasteel/dark
 	icon_state = "darkfull"
+/turf/open/floor/plasteel/dark/airless
+	initial_gas_mix = "TEMP=2.7"
 /turf/open/floor/plasteel/dark/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/dark/telecomms/mainframe
