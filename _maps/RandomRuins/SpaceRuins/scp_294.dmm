@@ -191,7 +191,7 @@
 	dir = 9
 	},
 /mob/living/simple_animal/hostile/mimic{
-	faction = list("mimic","scp")
+	faction = "scp";
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
