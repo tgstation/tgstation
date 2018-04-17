@@ -57,13 +57,13 @@
 	name = "Schoolshooter 2.0"
 
 	glasses = /obj/item/clothing/glasses/sunglasses
-	gloves = /obj/item/clothing/gloves/fingerless
+	gloves = /obj/item/clothing/gloves/combat/maggloves
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/armor/vest/leather
 	shoes = /obj/item/clothing/shoes/combat
 	head = /obj/item/clothing/head/soft/black
 	suit_store = /obj/item/gun/ballistic/shotgun/boltaction/ptr
 	l_pocket = /obj/item/switchblade
-	r_pocket = /obj/item/ammo_casing/a15mm
+	r_pocket = /obj/item/wirekit
 	back = /obj/item/storage/backpack/satchel
 	backpack_contents = list(/obj/item/ammo_box/a15mm = 3, /obj/item/grenade/syndieminibomb/concussion = 2, /obj/item/grenade/plastic/c4 = 1)

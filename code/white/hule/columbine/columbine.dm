@@ -25,6 +25,6 @@
 	r_pocket = /obj/item/ammo_box/magazine/pistolm9mm
 	back = /obj/item/storage/backpack/satchel
 	backpack_contents = list(/obj/item/ammo_box/c9mm = 1, /obj/item/ammo_box/magazine/pistolm9mm = 1,
-							, /obj/item/grenade/syndieminibomb/concussion = 3, /obj/item/grenade/plastic/c4 = 2)
+							, /obj/item/grenade/syndieminibomb/concussion = 3, /obj/item/grenade/plastic/c4 = 2, /obj/item/wirekit = 1)
 
 

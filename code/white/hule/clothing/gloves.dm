@@ -37,3 +37,12 @@
 	if(active)
 		ui_action_click()
 	..()
+
+/datum/crafting_recipe/maggloves
+	name = "mag-pulse gloves"
+	result = /obj/item/clothing/gloves/combat/maggloves
+	time = 300
+	reqs = list(/obj/item/clothing/gloves/combat = 1, /obj/item/stock_parts/cell/high = 2,
+				/obj/item/stack/rods = 5, /obj/item/stack/cable_coil = 30)
+	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
+	category = CAT_CLOTHING

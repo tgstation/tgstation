@@ -66,6 +66,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "matchbox"
 	item_state = "zippo"
+	w_class = WEIGHT_CLASS_TINY
 
 /datum/crafting_recipe/wiringkit
 	name = "Wiring kit"
