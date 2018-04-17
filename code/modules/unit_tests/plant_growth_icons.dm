@@ -14,7 +14,7 @@
 		for(var/i in 1 to seed.growthstages)
 			if("[seed.icon_grow][i]" in states)
 				continue
-			tFail("[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!")
+			Fail("[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!")
 
 		if(!(seed.icon_dead in states))
 			Fail("[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon!")
