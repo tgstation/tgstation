@@ -3040,6 +3040,7 @@
 #include "hippiestation\code\modules\tts\tts.dm"
 #include "hippiestation\code\modules\uplink\uplink_item.dm"
 #include "hippiestation\code\modules\vehicles\pimpin_ride.dm"
+#include "hippiestation\code\modules\vehicles\wheelchair.dm"
 #include "hippiestation\code\modules\vending\_vending.dm"
 #include "hippiestation\code\modules\vending\autodrobe.dm"
 #include "hippiestation\code\modules\vending\boozeomat.dm"
