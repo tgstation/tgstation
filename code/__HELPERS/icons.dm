@@ -762,6 +762,23 @@ world
 	else
 		curdir = A.dir
 
+	//Let's check if the icon actually contains any diagonals, just skip if it's south to save (lot of) time
+	if(curdir != SOUTH)
+		var/icon/test_icon 
+		var/directionals_exist = FALSE
+		var/list/dirs_to_check = GLOB.cardinals - SOUTH
+		outer:
+			for(var/possible_dir in dirs_to_check)
+				test_icon = icon(curicon,curstate,possible_dir,frame=1)
+				for(var/x in 1 to world.icon_size)
+					for(var/y in 1 to world.icon_size)
+						if(!isnull(test_icon.GetPixel(x,y)))
+							directionals_exist = TRUE
+							break outer
+		if(!directionals_exist)
+			base_icon_dir = SOUTH
+
+
 	if(!base_icon_dir)
 		base_icon_dir = curdir
 
