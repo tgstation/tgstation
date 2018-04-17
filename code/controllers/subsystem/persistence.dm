@@ -263,7 +263,7 @@ SUBSYSTEM_DEF(persistence)
 		if(ukeys[tkey])
 			continue
 		else
-			. += trophy
+			. += list(trophy)
 			ukeys[tkey] = TRUE
 
 /datum/controller/subsystem/persistence/proc/SaveTrophy(obj/structure/displaycase/trophy/T)
