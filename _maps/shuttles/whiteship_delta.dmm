@@ -243,7 +243,7 @@
 /area/shuttle/abandoned)
 "az" = (
 /obj/structure/sink/kitchen{
-	pixel_z = 30
+	pixel_y = 30
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";

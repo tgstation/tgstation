@@ -20,6 +20,14 @@
 /mob/proc/changeNext_move(num)
 	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
 
+/mob/living/changeNext_move(num)
+	var/mod = next_move_modifier
+	var/adj = next_move_adjust
+	for(var/i in status_effects)
+		var/datum/status_effect/S = i
+		mod *= S.nextmove_modifier()
+		adj += S.nextmove_adjust()
+	next_move = world.time + ((num + adj)*mod)
 
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
@@ -189,23 +197,13 @@
 	return FALSE
 
 /atom/movable/proc/DirectAccess(atom/target)
-	if(target == src)
-		return TRUE
-	if(target == loc)
-		return TRUE
+	return (target == src || target == loc)
 
 /mob/DirectAccess(atom/target)
-	if(..())
-		return TRUE
-	if(target in contents) //This could probably use moving down and restricting to inventory only
-		return TRUE
-	return FALSE
+	return (..() || (target in contents))
 
 /mob/living/DirectAccess(atom/target)
-	if(..()) //Lightweight checks first
-		return TRUE
-	if(target in GetAllContents())
-		return TRUE
+	return (..() || (target in GetAllContents()))
 
 /atom/proc/AllowClick()
 	return FALSE
@@ -448,7 +446,7 @@
 	screen_loc = "CENTER"
 
 #define MAX_SAFE_BYOND_ICON_SCALE_TILES (MAX_SAFE_BYOND_ICON_SCALE_PX / world.icon_size)
-#define MAX_SAFE_BYOND_ICON_SCALE_PX 33 * 32			//Not using world.icon_size on purpose.
+#define MAX_SAFE_BYOND_ICON_SCALE_PX (33 * 32)			//Not using world.icon_size on purpose.
 
 /obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 15, view_size_y = 15)
 	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "catcher")
@@ -497,7 +495,7 @@
 	if(client && client.click_intercept)
 		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
 			return TRUE
-	
+
 	//Mob level intercept
 	if(click_intercept)
 		if(call(click_intercept, "InterceptClickOn")(src, params, A))

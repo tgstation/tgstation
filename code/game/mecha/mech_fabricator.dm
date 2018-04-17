@@ -247,14 +247,9 @@
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
 	return round(initial(D.construction_time)*time_coeff, roundto)
 
-/obj/machinery/mecha_part_fabricator/attack_hand(mob/user)
-	if(!(..()))
-		return interact(user)
-
-/obj/machinery/mecha_part_fabricator/interact(mob/user as mob)
+/obj/machinery/mecha_part_fabricator/ui_interact(mob/user as mob)
+	. = ..()
 	var/dat, left_part
-	if (..())
-		return
 	user.set_machine(src)
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)

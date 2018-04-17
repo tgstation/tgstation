@@ -7,6 +7,7 @@
 	interact(user)
 
 /datum/integrated_io/lists/proc/interact(mob/user)
+	. = ..()
 	var/list/my_list = data
 	var/t = "<h2>[src]</h2><br>"
 	t += "List length: [my_list.len]<br>"

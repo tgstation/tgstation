@@ -34,12 +34,11 @@
 	else
 		return ..()
 
-/obj/machinery/computer/med_data/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/med_data/ui_interact(mob/user)
+	. = ..()
 	var/dat
-	if(src.temp)
-		dat = text("<TT>[src.temp]</TT><BR><BR><A href='?src=[REF(src)];temp=1'>Clear Screen</A>")
+	if(temp)
+		dat = text("<TT>[temp]</TT><BR><BR><A href='?src=[REF(src)];temp=1'>Clear Screen</A>")
 	else
 		dat = text("Confirm Identity: <A href='?src=[REF(src)];scan=1'>[]</A><HR>", (src.scan ? text("[]", src.scan.name) : "----------"))
 		if(src.authenticated)
@@ -192,7 +191,6 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/med_data/Topic(href, href_list)
 	. = ..()

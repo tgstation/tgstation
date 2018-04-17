@@ -116,7 +116,7 @@
 	color = "#00ff80"
 
 /obj/effect/countdown/supermatter/get_value()
-	var/obj/machinery/power/supermatter_shard/S = attached_to
+	var/obj/machinery/power/supermatter_crystal/S = attached_to
 	if(!istype(S))
 		return
 	return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[round(S.get_integrity(), 1)]%</div>"

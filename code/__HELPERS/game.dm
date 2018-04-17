@@ -20,12 +20,6 @@
 		return null
 	return format_text ? format_text(A.name) : A.name
 
-/proc/get_area_by_name(N) //get area by its name
-	for(var/area/A in world)
-		if(A.name == N)
-			return A
-	return 0
-
 /proc/get_areas_in_range(dist=0, atom/center=usr)
 	if(!dist)
 		var/turf/T = get_turf(center)
@@ -248,7 +242,7 @@
 			. |= get_hearers_in_view(R.canhear_range, R)
 
 
-#define SIGN(X) ((X<0)?-1:1)
+#define SIGNV(X) ((X<0)?-1:1)
 
 /proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
 	var/turf/T
@@ -279,7 +273,7 @@
 			if(T.opacity)
 				return 0
 	return 1
-#undef SIGN
+#undef SIGNV
 
 
 /proc/isInSight(atom/A, atom/B)

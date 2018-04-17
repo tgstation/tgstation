@@ -98,6 +98,9 @@
 			roll_and_drop(user.loc)
 
 /obj/structure/sign/poster/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(ruined)
 		return
 	visible_message("[user] rips [src] in a single, decisive motion!" )

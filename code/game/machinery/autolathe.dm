@@ -12,7 +12,8 @@
 	idle_power_usage = 10
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/autolathe
-
+	layer = BELOW_OBJ_LAYER
+	
 	var/operating = FALSE
 	var/list/L = list()
 	var/list/LL = list()
@@ -57,7 +58,8 @@
 	QDEL_NULL(wires)
 	return ..()
 
-/obj/machinery/autolathe/interact(mob/user)
+/obj/machinery/autolathe/ui_interact(mob/user)
+	. = ..()
 	if(!is_operational())
 		return
 

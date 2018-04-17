@@ -52,6 +52,9 @@
 	return ..()
 
 /turf/open/floor/light/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!can_modify_colour)
 		return
 	if(!on)
@@ -63,10 +66,9 @@
 	if(currentcolor > coloredlights.len)
 		on = FALSE
 	update_icon()
-	..()  //I am not sure what the parent procs have for attack_hand, best to check later.
 
 /turf/open/floor/light/attack_ai(mob/user)
-	attack_hand(user)
+	return attack_hand(user)
 
 /turf/open/floor/light/attackby(obj/item/C, mob/user, params)
 	if(..())

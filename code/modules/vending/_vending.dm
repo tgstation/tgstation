@@ -296,60 +296,54 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
 
-/obj/machinery/vending/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/vending/attack_hand(mob/user)
-	var/dat = ""
-	if(panel_open && !isAI(user))
-		return wires.interact(user)
-	else
-		if(stat & (BROKEN|NOPOWER))
-			return
-
-		dat += "<h3>Select an item</h3>"
-		dat += "<div class='statusDisplay'>"
-		if(product_records.len == 0)
-			dat += "<font color = 'red'>No product loaded!</font>"
-		else
-			var/list/display_records = product_records
-			if(extended_inventory)
-				display_records = product_records + hidden_records
-			if(coin || bill)
-				display_records = product_records + coin_records
-			if((coin || bill) && extended_inventory)
-				display_records = product_records + hidden_records + coin_records
-			dat += "<ul>"
-			for (var/datum/data/vending_product/R in display_records)
-				dat += "<li>"
-				if(R.amount > 0)
-					dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
-				else
-					dat += "<span class='linkOff'>Sold out</span> "
-				dat += "<font color = '[R.display_color]'><b>[sanitize(R.product_name)]</b>:</font>"
-				dat += " <b>[R.amount]</b>"
-				dat += "</li>"
-			dat += "</ul>"
-		dat += "</div>"
-		if(premium.len > 0)
-			dat += "<b>Change Return:</b> "
-			if (coin || bill)
-				dat += "[(coin ? coin : "")][(bill ? bill : "")]&nbsp;&nbsp;<a href='byond://?src=[REF(src)];remove_coin=1'>Remove</a>"
-			else
-				dat += "<i>No money</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
-		if(istype(src, /obj/machinery/vending/snack))
-			dat += "<h3>Chef's Food Selection</h3>"
-			dat += "<div class='statusDisplay'>"
-			for (var/O in dish_quants)
-				if(dish_quants[O] > 0)
-					var/N = dish_quants[O]
-					dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
-					dat += "<B>[capitalize(O)]: [N]</B><br>"
-			dat += "</div>"
-	user.set_machine(src)
+/obj/machinery/vending/_try_interact(mob/user)
 	if(seconds_electrified && !(stat & NOPOWER))
 		if(shock(user, 100))
 			return
+	return ..()
+
+/obj/machinery/vending/interact(mob/user)
+	var/dat = ""
+
+	dat += "<h3>Select an item</h3>"
+	dat += "<div class='statusDisplay'>"
+	if(!product_records.len)
+		dat += "<font color = 'red'>No product loaded!</font>"
+	else
+		var/list/display_records = product_records
+		if(extended_inventory)
+			display_records = product_records + hidden_records
+		if(coin || bill)
+			display_records = product_records + coin_records
+		if((coin || bill) && extended_inventory)
+			display_records = product_records + hidden_records + coin_records
+		dat += "<ul>"
+		for (var/datum/data/vending_product/R in display_records)
+			dat += "<li>"
+			if(R.amount > 0)
+				dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
+			else
+				dat += "<span class='linkOff'>Sold out</span> "
+			dat += "<font color = '[R.display_color]'><b>[sanitize(R.product_name)]</b>:</font>"
+			dat += " <b>[R.amount]</b>"
+			dat += "</li>"
+		dat += "</ul>"
+	dat += "</div>"
+	if(premium.len > 0)
+		dat += "<b>Change Return:</b> "
+		if (coin || bill)
+			dat += "[(coin ? coin : "")][(bill ? bill : "")]&nbsp;&nbsp;<a href='byond://?src=[REF(src)];remove_coin=1'>Remove</a>"
+		else
+			dat += "<i>No money</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
+	if(istype(src, /obj/machinery/vending/snack))
+		dat += "<h3>Chef's Food Selection</h3>"
+		dat += "<div class='statusDisplay'>"
+		for (var/O in dish_quants)
+			if(dish_quants[O] > 0)
+				var/N = dish_quants[O]
+				dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
+				dat += "<B>[capitalize(O)]: [N]</B><br>"
+		dat += "</div>"
 
 	var/datum/browser/popup = new(user, "vending", (name))
 	popup.set_content(dat)

@@ -16,6 +16,7 @@
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	working_state = null
 	nopower_state = null
+	flags_1 = NODECONSTRUCT_1
 	var/static/list/shortcuts = list(
 		"meth" = "methamphetamine",
 		"tricord" = "tricordrazine"
@@ -74,7 +75,7 @@
 					return
 				else if(!beaker.reagents && !QDELETED(beaker))
 					beaker.create_reagents(beaker.volume)
-				beaker.reagents.add_reagent(input_reagent, 10)
+				beaker.reagents.add_reagent(input_reagent, amount)
 		if("makecup")
 			if(beaker)
 				return

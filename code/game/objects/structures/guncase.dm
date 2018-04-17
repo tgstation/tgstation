@@ -54,6 +54,9 @@
 		return ..()
 
 /obj/structure/guncase/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(iscyborg(user) || isalien(user))
 		return
 	if(contents.len && open)

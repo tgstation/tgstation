@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - balance: "Welding tools now flash the user as the weld progresses, not just when the welding is started."

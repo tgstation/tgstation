@@ -1,6 +1,6 @@
 //nutrition
 /datum/mood_event/nutrition/fat
-	description = "<span class='warning'><B>I'm so fat..</B></span>\n" //muh fatshaming
+	description = "<span class='warning'><B>I'm so fat...</B></span>\n" //muh fatshaming
 	mood_change = -4
 
 /datum/mood_event/nutrition/wellfed

@@ -67,6 +67,9 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		qdel(src)
 
 /obj/effect/rune/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>You aren't able to understand the words of [src].</span>")
 		return

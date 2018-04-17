@@ -703,7 +703,6 @@
 		if(bloody_hands)
 			bloody_hands = 0
 			update_inv_gloves()
-	update_icons()	//apply the now updated overlays to the mob
 
 /mob/living/carbon/human/wash_cream()
 	if(creamed) //clean both to prevent a rare bug
@@ -769,7 +768,7 @@
 		return
 	else
 		if(hud_used.healths)
-			var/health_amount = health - staminaloss
+			var/health_amount = health - getStaminaLoss()
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
 					if(SCREWYHUD_CRIT)
@@ -818,34 +817,6 @@
 			dna.remove_mutation(HM.name)
 	..()
 
-/mob/living/carbon/human/proc/influenceSin()
-	var/datum/objective/sintouched/O
-	switch(rand(1,7))//traditional seven deadly sins... except lust.
-		if(1) // acedia
-			log_game("[src] was influenced by the sin of Acedia.")
-			O = new /datum/objective/sintouched/acedia
-		if(2) // Gluttony
-			log_game("[src] was influenced by the sin of gluttony.")
-			O = new /datum/objective/sintouched/gluttony
-		if(3) // Greed
-			log_game("[src] was influenced by the sin of greed.")
-			O = new /datum/objective/sintouched/greed
-		if(4) // sloth
-			log_game("[src] was influenced by the sin of sloth.")
-			O = new /datum/objective/sintouched/sloth
-		if(5) // Wrath
-			log_game("[src] was influenced by the sin of wrath.")
-			O = new /datum/objective/sintouched/wrath
-		if(6) // Envy
-			log_game("[src] was influenced by the sin of envy.")
-			O = new /datum/objective/sintouched/envy
-		if(7) // Pride
-			log_game("[src] was influenced by the sin of pride.")
-			O = new /datum/objective/sintouched/pride
-	SSticker.mode.sintouched += src.mind
-	src.mind.objectives += O
-	src.mind.announce_objectives()
-
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()
 	if (dna && dna.species)
@@ -890,11 +861,16 @@
 	.["Toggle Purrbation"] = "?_src_=vars;[HrefToken()];purrbation=[REF(src)]"
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
-	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE) || (user != target) || !isliving(user) || stat || user.stat)//Get consent first :^)
-		. = ..()
-		return
-	buckle_mob(target, TRUE, TRUE)
+	//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
+	if(user == target && can_piggyback(target) && pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
+		buckle_mob(target,TRUE,TRUE)
 	. = ..()
+
+//Can C try to piggyback at all.
+/mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/C)
+	if(istype(C) && C.stat == CONSCIOUS)
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
@@ -904,24 +880,32 @@
 		return
 	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
 	riding_datum.ride_check_rider_incapacitated = TRUE
-	riding_datum.ride_check_ridden_incapacitated = TRUE
 	riding_datum.ride_check_rider_restrained = TRUE
 	riding_datum.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4)))
 	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled || (M.stat != CONSCIOUS))
 		return
-	visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
-	if(do_after(M, 15, target = src))
-		if(iscarbon(M))
-			if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
-				M.visible_message("<span class='warning'>[M] can't hang onto [src]!</span>")
-				return
-			if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
-				M.visible_message("<span class='warning'>[M] can't climb onto [src]!</span>")
-				return
-		. = ..(M, force, check_loc)
-		stop_pulling()
+	if(can_piggyback(M))
+		riding_datum.ride_check_ridden_incapacitated = TRUE
+		visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
+		if(do_after(M, 15, target = src))
+			if(can_piggyback(M))
+				if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+					M.visible_message("<span class='warning'>[M] can't hang onto [src]!</span>")
+					return
+				if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
+					M.visible_message("<span class='warning'>[M] can't climb onto [src]!</span>")
+					return
+			. = ..(M, force, check_loc)
+			stop_pulling()
+		else
+			visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
 	else
-		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
+		. = ..(M,force,check_loc)
+		stop_pulling()
+
+/mob/living/carbon/human/do_after_coefficent()
+	. = ..()
+	. *= physiology.do_after_speed
 
 /mob/living/carbon/human/species
 	var/race = null

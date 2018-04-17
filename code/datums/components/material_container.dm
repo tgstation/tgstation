@@ -194,6 +194,30 @@
 			return amt
 	return FALSE
 
+/datum/component/material_container/proc/transer_amt_to(var/datum/component/material_container/T, amt, id)
+	if((amt==0)||(!T)||(!id))
+		return FALSE
+	if(amt<0)
+		return T.transer_amt_to(src, -amt, id)
+	var/datum/material/M = materials[id]
+
+	if(M)
+		var/tr = min(amt, M.amount,T.can_insert_amount(amt, id))
+		if(tr)
+			use_amount_type(tr, id)
+			T.insert_amount(tr, id)
+			return tr
+	return FALSE
+
+/datum/component/material_container/proc/can_insert_amount(amt, id)
+	if(amt && id)
+		var/datum/material/M = materials[id]
+		if(M)
+			if((total_amount + amt) <= max_amount)
+				return amt
+			else
+				return	(max_amount-total_amount)
+
 /datum/component/material_container/proc/can_use_amount(amt, id, list/mats)
 	if(amt && id)
 		var/datum/material/M = materials[id]

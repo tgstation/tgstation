@@ -10,6 +10,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	desc = "A mysterious being that stands by its charge, ever vigilant."
 	speak_emote = list("hisses")
 	gender = NEUTER
+	mob_biotypes = list(MOB_INORGANIC)
 	bubble_icon = "guardian"
 	response_help  = "passes through"
 	response_disarm = "flails at"
@@ -656,11 +657,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/storage/box/syndie_kit/guardian
 	name = "holoparasite injector kit"
 
-/obj/item/storage/box/syndie_kit/guardian/Initialize()
-	. = ..()
+/obj/item/storage/box/syndie_kit/guardian/PopulateContents()
 	new /obj/item/guardiancreator/tech/choose/traitor(src)
 	new /obj/item/paper/guides/antag/guardian(src)
-	return
 
 /obj/item/guardiancreator/carp
 	name = "holocarp fishsticks"

@@ -10,7 +10,7 @@
 
 	density = FALSE
 	stat = DEAD
-	canmove = 0
+	canmove = FALSE
 
 	anchored = TRUE	//  don't get pushed around
 	var/mob/living/new_character	//for instant transfer once the round is set up
@@ -278,31 +278,49 @@
 	qdel(src)
 	return TRUE
 
-/mob/dead/new_player/proc/IsJobAvailable(rank)
+/proc/get_job_unavailable_error_message(retval, jobtitle)
+	switch(retval)
+		if(JOB_AVAILABLE)
+			return "[jobtitle] is available."
+		if(JOB_UNAVAILABLE_GENERIC)
+			return "[jobtitle] is unavailable."
+		if(JOB_UNAVAILABLE_BANNED)
+			return "You are currently banned from [jobtitle]."
+		if(JOB_UNAVAILABLE_PLAYTIME)
+			return "You do not have enough relevant playtime for [jobtitle]."
+		if(JOB_UNAVAILABLE_ACCOUNTAGE)
+			return "Your account is not old enough for [jobtitle]."
+		if(JOB_UNAVAILABLE_SLOTFULL)
+			return "[jobtitle] is already filled to capacity."
+	return "Error: Unknown job availability."
+
+/mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
-		return 0
+		return JOB_UNAVAILABLE_GENERIC
 	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
 		if(job.title == "Assistant")
 			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
-				return 1
+				return JOB_AVAILABLE
 			for(var/datum/job/J in SSjob.occupations)
 				if(J && J.current_positions < J.total_positions && J.title != job.title)
-					return 0
+					return JOB_UNAVAILABLE_SLOTFULL
 		else
-			return 0
+			return JOB_UNAVAILABLE_SLOTFULL
 	if(jobban_isbanned(src,rank))
-		return 0
-	if(!job.player_old_enough(src.client))
-		return 0
+		return JOB_UNAVAILABLE_BANNED
+	if(!job.player_old_enough(client))
+		return JOB_UNAVAILABLE_ACCOUNTAGE
 	if(job.required_playtime_remaining(client))
-		return 0
-	return 1
-
+		return JOB_UNAVAILABLE_PLAYTIME
+	if(latejoin && !job.special_check_latejoin(client))
+		return JOB_UNAVAILABLE_GENERIC
+	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
-	if(!IsJobAvailable(rank))
-		alert(src, "[rank] is not available. Please try another.")
+	var/error = IsJobUnavailable(rank)
+	if(error != JOB_AVAILABLE)
+		alert(src, get_job_unavailable_error_message(error, rank))
 		return FALSE
 
 	if(SSticker.late_join_disabled)
@@ -327,18 +345,20 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/character = create_character(TRUE)	//creates the human and transfers vars and mind
-	var/equip = SSjob.EquipRank(character, rank, 1)
+	var/equip = SSjob.EquipRank(character, rank, TRUE)
 	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
-	SSjob.SendToLateJoin(character)
+	var/datum/job/job = SSjob.GetJob(rank)
 
-	if(!arrivals_docked)
-		var/obj/screen/splash/Spl = new(character.client, TRUE)
-		Spl.Fade(TRUE)
-		character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
+	if(job && !job.override_latejoin_spawn(character))
+		SSjob.SendToLateJoin(character)
+		if(!arrivals_docked)
+			var/obj/screen/splash/Spl = new(character.client, TRUE)
+			Spl.Fade(TRUE)
+			character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
 
-	character.update_parallax_teleport()
+		character.update_parallax_teleport()
 
 	SSticker.minds += character.mind
 
@@ -373,7 +393,7 @@
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
 
-	if(CONFIG_GET(flag/roundstart_traits))
+	if(humanc && CONFIG_GET(flag/roundstart_traits))
 		SStraits.AssignTraits(humanc, humanc.client, TRUE)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
@@ -399,9 +419,8 @@
 
 	var/available_job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobAvailable(job.title))
+		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
 			available_job_count++;
-
 
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
 		if(prioritized_job.current_positions >= prioritized_job.total_positions)
@@ -422,7 +441,7 @@
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobAvailable(job.title))
+		if(job && IsJobUnavailable(job.title, TRUE) == JOB_AVAILABLE)
 			job_count++;
 			if (job_count > round(available_job_count / 2))
 				dat += "</div><div class='jobsColumn'>"

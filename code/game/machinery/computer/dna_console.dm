@@ -60,12 +60,8 @@
 			break
 	injectorready = world.time + INJECTOR_TIMEOUT
 
-/obj/machinery/computer/scan_consolenew/attack_hand(mob/user)
-	if(..())
-		return
-	ShowInterface(user)
-
-/obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user, last_change)
+/obj/machinery/computer/scan_consolenew/ui_interact(mob/user, last_change)
+	. = ..()
 	if(!user)
 		return
 	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 800, 630) // Set up the popup browser window
@@ -461,7 +457,7 @@
 				connected.locked = TRUE
 
 				current_screen = "working"
-				ShowInterface(usr)
+				ui_interact(usr)
 
 				sleep(radduration*10)
 				current_screen = "mainmenu"
@@ -507,7 +503,7 @@
 				if(connected)
 					connected.locked = locked_state
 
-	ShowInterface(usr,last_change)
+	ui_interact(usr,last_change)
 
 /obj/machinery/computer/scan_consolenew/proc/scramble(input,rs,rd)
 	var/length = length(input)

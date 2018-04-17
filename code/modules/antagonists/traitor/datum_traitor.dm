@@ -57,9 +57,6 @@
 
 /datum/antagonist/traitor/on_removal()
 	SSticker.mode.traitors -= owner
-	for(var/O in objectives)
-		owner.objectives -= O
-	objectives = list()
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
 	owner.special_role = null
@@ -227,7 +224,7 @@
 	var/mob/living/silicon/ai/A = mob_override || owner.current
 	if(istype(A))
 		A.hack_software = TRUE
-	
+
 /datum/antagonist/traitor/AI/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/silicon/ai/A = mob_override || owner.current

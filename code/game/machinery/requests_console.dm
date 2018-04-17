@@ -129,9 +129,8 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	GLOB.allConsoles -= src
 	return ..()
 
-/obj/machinery/requests_console/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/requests_console/ui_interact(mob/user)
+	. = ..()
 	var/dat = ""
 	if(!open)
 		switch(screen)

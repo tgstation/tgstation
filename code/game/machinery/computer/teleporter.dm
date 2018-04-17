@@ -45,15 +45,8 @@
 	else
 		return ..()
 
-/obj/machinery/computer/teleporter/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/teleporter/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/teleporter/interact(mob/user)
+/obj/machinery/computer/teleporter/ui_interact(mob/user)
+	. = ..()
 	var/data = "<h3>Teleporter Status</h3>"
 	if(!power_station)
 		data += "<div class='statusDisplay'>No power station linked.</div>"

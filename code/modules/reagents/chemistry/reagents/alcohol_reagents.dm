@@ -231,7 +231,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(10))
-		M.heal_bodypart_damage(1,0, 0)
+		M.heal_bodypart_damage(1)
 		. = 1
 	return ..() || .
 
@@ -1085,7 +1085,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bananahonk/on_mob_life(mob/living/M)
 	if((ishuman(M) && M.job in list("Clown") ) || ismonkey(M))
-		M.heal_bodypart_damage(1,1, 0)
+		M.heal_bodypart_damage(1,1)
 		. = 1
 	return ..() || .
 
@@ -1397,13 +1397,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#cc0000"
 	boozepwr = 35
 	taste_description = "an invigorating bitter freshness which suffuses your being; no enemy of the station will go unrobusted this day"
-	glass_icon_state = "glass_red"
+	glass_icon_state = "quadruple_sec"
 	glass_name = "Quadruple Sec"
 	glass_desc = "An intimidating and lawful beverage dares you to violate the law and make its day. Still can't drink it on duty, though."
 
 /datum/reagent/consumable/ethanol/quadruple_sec/on_mob_life(mob/living/M)
 	if(M.mind && M.mind.assigned_role in list("Security Officer", "Detective", "Head of Security", "Warden", "Lawyer")) //Securidrink in line with the screwderiver for engineers or nothing for mimes.
-		M.heal_bodypart_damage (1,1,1)
+		M.heal_bodypart_damage(1, 1)
 		M.adjustBruteLoss(-2,0)
 		. = 1
 	return ..()
@@ -1415,13 +1415,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#ff3300"
 	boozepwr = 80
 	taste_description = "THE LAW"
-	glass_icon_state = "glass_red"
+	glass_icon_state = "quintuple_sec"
 	glass_name = "Quintuple Sec"
 	glass_desc = "Now you are become law, destroyer of clowns."
 
 /datum/reagent/consumable/ethanol/quintuple_sec/on_mob_life(mob/living/M)
 	if(M.mind && M.mind.assigned_role in list("Security Officer", "Detective", "Head of Security", "Warden", "Lawyer")) //Securidrink in line with the screwderiver for engineers or nothing for mimes but STRONG..
-		M.heal_bodypart_damage (2,2,2)
+		M.heal_bodypart_damage(2,2,2)
 		M.adjustBruteLoss(-5,0)
 		M.adjustOxyLoss(-5,0)
 		M.adjustFireLoss(-5,0)
@@ -1436,7 +1436,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "00ff00"
 	boozepwr = 25
 	taste_description = "chocolate and mint dancing around your mouth"
-	glass_icon_state = "glass_green"
+	glass_icon_state = "grasshopper"
 	glass_name = "Grasshopper"
 	glass_desc = "You weren't aware edible beverages could be that green."
 
@@ -1447,7 +1447,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "ccff99"
 	boozepwr = 25
 	taste_description = "a slap on the face in the best possible way"
-	glass_icon_state = "glass_white"
+	glass_icon_state = "stinger"
 	glass_name = "Stinger"
 	glass_desc = "You wonder what would happen if you pointed this at a heat source..."
 

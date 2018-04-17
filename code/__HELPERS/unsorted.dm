@@ -345,16 +345,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	return moblist
 
-//E = MC^2
-/proc/convert2energy(M)
-	var/E = M*(SPEED_OF_LIGHT_SQ)
-	return E
-
-//M = E/C^2
-/proc/convert2mass(E)
-	var/M = E/(SPEED_OF_LIGHT_SQ)
-	return M
-
 // Format a power value in W, kW, MW, or GW.
 /proc/DisplayPower(powerused)
 	if(powerused < 1000) //Less than a kW
@@ -539,7 +529,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return assembled
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
-	if(!ignore_typecache)
+	if(!length(ignore_typecache))
 		return GetAllContents()
 	var/list/processing = list(src)
 	var/list/assembled = list()
@@ -1301,8 +1291,12 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	if(!istype(C))
 		return
 
+	var/animate_color = initial(C.color)
+	var/datum/client_colour/CC = C.mob.client_colours[1]
+	if(CC)
+		animate_color = CC.colour
 	C.color = flash_color
-	animate(C, color = initial(C.color), time = flash_time)
+	animate(C, color = animate_color, time = flash_time)
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 

@@ -28,7 +28,10 @@
 	disrupt()
 
 /obj/item/device/chameleon/attack_self(mob/user)
-	toggle(user)
+	if (isturf(user.loc) || istype(user.loc, /obj/structure) || active_dummy)
+		toggle(user)
+	else
+		to_chat(user, "<span class='warning'>You can't use [src] while inside something!</span>")
 
 /obj/item/device/chameleon/afterattack(atom/target, mob/user , proximity)
 	if(!proximity)
@@ -36,7 +39,7 @@
 	if(!check_sprite(target))
 		return
 	if(!active_dummy)
-		if(isitem(target) && !istype(target, /obj/item/disk/nuclear))
+		if(!(isturf(target) || istype(target, /obj/structure/falsewall) || ismob(target))) //NOT any of these
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
 			to_chat(user, "<span class='notice'>Scanned [target].</span>")
 			var/obj/temp = new/obj()
@@ -113,6 +116,7 @@
 /obj/effect/dummy/chameleon/attackby()
 	master.disrupt()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/dummy/chameleon/attack_hand()
 	master.disrupt()
 

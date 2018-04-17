@@ -95,6 +95,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		LAZYREMOVE(owner.antag_datums, src)
 		if(!silent && owner.current)
 			farewell()
+		owner.objectives -= objectives
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)

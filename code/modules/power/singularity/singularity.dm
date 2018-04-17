@@ -58,10 +58,9 @@
 		last_failed_movement = direct
 		return 0
 
-
 /obj/singularity/attack_hand(mob/user)
 	consume(user)
-	return 1
+	return TRUE
 
 /obj/singularity/attack_paw(mob/user)
 	consume(user)
@@ -114,7 +113,7 @@
 /obj/singularity/process()
 	if(current_size >= STAGE_TWO)
 		move()
-		radiation_pulse(src, min(5000, (energy*3)+1000), RAD_DISTANCE_COEFFICIENT*0.5)
+		radiation_pulse(src, min(5000, (energy*4.5)+1000), RAD_DISTANCE_COEFFICIENT*0.5)
 		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 	eat()
@@ -273,7 +272,7 @@
 /obj/singularity/proc/consume(atom/A)
 	var/gain = A.singularity_act(current_size, src)
 	src.energy += gain
-	if(istype(A, /obj/machinery/power/supermatter_shard) && !consumedSupermatter)
+	if(istype(A, /obj/machinery/power/supermatter_crystal) && !consumedSupermatter)
 		desc = "[initial(desc)] It glows fiercely with inner fire."
 		name = "supermatter-charged [initial(name)]"
 		consumedSupermatter = 1
@@ -414,7 +413,7 @@
 						to_chat(H, "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>")
 						return
 
-		M.apply_effect(60, STUN)
+		M.apply_effect(60, EFFECT_STUN)
 		M.visible_message("<span class='danger'>[M] stares blankly at the [src.name]!</span>", \
 						"<span class='userdanger'>You look directly into the [src.name] and feel weak.</span>")
 	return

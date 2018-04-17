@@ -66,6 +66,9 @@
 	var/list/ckeys_that_took = list()
 
 /obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!user.ckey)
 		return
 

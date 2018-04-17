@@ -299,10 +299,10 @@
 	return
 
 /mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
-	attack_hand(M)
+	return attack_hand(M)
 
 /mob/living/simple_animal/parrot/attack_alien(mob/living/carbon/alien/M)
-	attack_hand(M)
+	return attack_hand(M)
 
 //Simple animals
 /mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M)

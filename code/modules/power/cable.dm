@@ -533,6 +533,9 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	add_atom_colour(item_color, FIXED_COLOUR_PRIORITY)
 
 /obj/item/stack/cable_coil/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	var/obj/item/stack/cable_coil/new_cable = ..()
 	if(istype(new_cable))
 		new_cable.item_color = item_color

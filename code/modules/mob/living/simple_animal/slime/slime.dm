@@ -232,7 +232,7 @@
 		var/mob/living/Food = A
 		if(CanFeedon(Food))
 			Feedon(Food)
-	..()
+	return ..()
 
 /mob/living/simple_animal/slime/doUnEquip(obj/item/W)
 	return
@@ -277,8 +277,6 @@
 	if(user.a_intent == INTENT_HARM)
 		discipline_slime(user)
 		return ..()
-
-
 
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
 	if(buckled)
@@ -358,7 +356,7 @@
 		var/hasFound = FALSE //Have we found an extract to be added?
 		for(var/obj/item/slime_extract/S in P.contents)
 			if(S.effectmod == effectmod)
-				P.remove_from_storage(S, get_turf(src))
+				P.SendSignal(COMSIG_TRY_STORAGE_TAKE, S, get_turf(src), TRUE)
 				qdel(S)
 				applied++
 				hasFound = TRUE

@@ -85,7 +85,7 @@
 
 /obj/structure/destructible/clockwork/attack_ai(mob/user)
 	if(is_servant_of_ratvar(user))
-		attack_hand(user)
+		return attack_hand(user)
 
 /obj/structure/destructible/clockwork/attack_animal(mob/living/simple_animal/M)
 	if(is_servant_of_ratvar(M))

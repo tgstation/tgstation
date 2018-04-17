@@ -46,7 +46,8 @@ God bless America.
 		/obj/item/reagent_containers/glass,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/food/condiment,
-		/obj/item/storage/part_replacer))
+		/obj/item/storage/part_replacer,
+		/obj/item/his_grace))
 	var/datum/looping_sound/deep_fryer/fry_loop
 
 /obj/machinery/deepfryer/Initialize()
@@ -146,4 +147,4 @@ God bless America.
 		reagents.remove_any((reagents.total_volume/2))
 		C.Knockdown(60)
 		user.changeNext_move(CLICK_CD_MELEE)
-	..()
+	return ..()

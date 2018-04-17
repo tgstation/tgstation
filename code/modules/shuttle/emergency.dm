@@ -426,8 +426,23 @@
 
 /obj/docking_port/mobile/pod/Initialize()
 	. = ..()
-	if(id == "pod")
-		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
+	var/static/i = 1
+	if(id == initial(id))
+		id = "[initial(id)][i]"
+	if(name == initial(name))
+		name = "[initial(name)] [i]"
+
+	for(var/k in shuttle_areas)
+		var/area/place = k
+		for(var/obj/machinery/computer/shuttle/pod/pod_comp in place)
+			if(pod_comp.shuttleId == initial(pod_comp.shuttleId))
+				pod_comp.shuttleId = id
+			if(pod_comp.possible_destinations == initial(pod_comp.possible_destinations))
+				pod_comp.possible_destinations = "pod_lavaland[i]"
+
+	i++
+
+
 
 /obj/docking_port/mobile/pod/cancel()
 	return
@@ -528,9 +543,6 @@
 	else
 		to_chat(usr, "The storage unit will only unlock during a Red or Delta security alert.")
 
-/obj/item/storage/pod/attack_hand(mob/user)
-	return MouseDrop(user)
-
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
 	id = "backup"
@@ -549,7 +561,7 @@
 	SSshuttle.emergency = current_emergency
 	SSshuttle.backup_shuttle = src
 
-#undef TIMELEFT
+#undef TIME_LEFT
 #undef ENGINES_START_TIME
 #undef ENGINES_STARTED
 #undef IS_DOCKED

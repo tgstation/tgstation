@@ -57,7 +57,7 @@
 	new /obj/structure/table/reinforced/brass(A)
 
 /obj/structure/table/attack_paw(mob/user)
-	attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/table/attack_hand(mob/living/user)
 	if(Adjacent(user) && user.pulling && isliving(user.pulling))
@@ -78,8 +78,7 @@
 			else
 				return
 		user.stop_pulling()
-	else
-		..()
+	return ..()
 
 /obj/structure/table/attack_tk()
 	return FALSE
@@ -136,12 +135,7 @@
 	if(istype(I, /obj/item/storage/bag/tray))
 		var/obj/item/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
-			var/list/obj/item/oldContents = T.contents.Copy()
-			T.quick_empty()
-
-			for(var/obj/item/C in oldContents)
-				C.forceMove(drop_location())
-
+			I.SendSignal(COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
 			user.visible_message("[user] empties [I] on [src].")
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
@@ -475,13 +469,13 @@
 		. = . || (mover.pass_flags & PASSTABLE)
 
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
+	. = ..()
 	if ((!( istype(O, /obj/item) ) || user.get_active_held_item() != O))
 		return
 	if(!user.dropItemToGround(O))
 		return
 	if(O.loc != src.loc)
 		step(O, get_dir(O, src))
-
 
 /obj/structure/rack/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
@@ -497,13 +491,15 @@
 	attack_hand(user)
 
 /obj/structure/rack/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(user.IsKnockdown() || user.resting || user.lying || user.get_num_legs() < 2)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message("<span class='danger'>[user] kicks [src].</span>", null, null, COMBAT_MESSAGE_RANGE)
 	take_damage(rand(4,8), BRUTE, "melee", 1)
-
 
 /obj/structure/rack/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

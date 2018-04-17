@@ -322,7 +322,7 @@
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-	if(staminaloss)
+	if(getStaminaLoss())
 		adjustStaminaLoss(-3)
 
 	var/restingpwr = 1 + 4 * resting

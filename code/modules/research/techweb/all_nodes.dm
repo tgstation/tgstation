@@ -9,7 +9,8 @@
 	description = "NT default research technologies."
 	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani",
 	"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
-	"space_heater","xlarge_beaker")			//Default research tech, prevents bricking
+	"space_heater", "xlarge_beaker", "sec_rshot", "sec_bshot", "sec_slug", "sec_Islug", "sec_dart", "sec_38")			//Default research tech, prevents bricking
+
 
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech
@@ -320,7 +321,7 @@
 	display_name = "Computer Consoles"
 	description = "Computers and how they work."
 	prereq_ids = list("datatheory")
-	design_ids = list("cargo", "cargorequest", "stockexchange", "libraryconsole", "mining", "crewconsole", "comconsole", "idcardconsole", "seccamera")
+	design_ids = list("cargo", "cargorequest", "stockexchange", "libraryconsole", "mining", "crewconsole", "rdcamera", "comconsole", "idcardconsole", "seccamera")
 	research_cost = 2000
 	export_price = 5000
 

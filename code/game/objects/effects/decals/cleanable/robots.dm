@@ -10,7 +10,7 @@
 	blood_state = BLOOD_STATE_OIL
 	bloodiness = MAX_SHOE_BLOODINESS
 	mergeable_decal = FALSE
-	beauty = -200
+	beauty = -100
 
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions)
 	set waitfor = 0

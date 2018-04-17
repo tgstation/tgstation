@@ -298,12 +298,13 @@ LINEN BINS
 		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
 
 
-
 /obj/structure/bedsheetbin/attack_paw(mob/user)
 	return attack_hand(user)
 
-
 /obj/structure/bedsheetbin/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(user.lying)
 		return
 	if(amount >= 1)
