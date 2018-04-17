@@ -159,7 +159,7 @@ All ShuttleMove procs go here
 	. = ..()
 	for(var/obj/machinery/door/airlock/A in range(1, src))  // includes src
 		A.emergency_dock(FALSE)
-		A.shuttledocked = 0
+		A.shuttledocked = FALSE
 		A.air_tight = TRUE
 		INVOKE_ASYNC(A, /obj/machinery/door/.proc/close)
 
@@ -168,9 +168,9 @@ All ShuttleMove procs go here
 	for(var/obj/machinery/door/airlock/A in orange(1, src))  // does not include src
 		// Cycle linking is only disabled if we are actually adjacent to another airlock
 		emergency_dock(TRUE)
-		shuttledocked = 1
+		shuttledocked = TRUE
 		A.emergency_dock(TRUE)
-		A.shuttledocked = 1
+		A.shuttledocked = TRUE
 
 /obj/machinery/camera/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
