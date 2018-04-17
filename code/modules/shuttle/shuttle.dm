@@ -7,7 +7,6 @@
 /obj/docking_port
 	invisibility = INVISIBILITY_ABSTRACT
 	icon = 'icons/obj/device.dmi'
-	//icon = 'icons/dirsquare.dmi'
 	icon_state = "pinonfar"
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -22,8 +21,6 @@
 	var/dheight = 0	//position relative to covered area, parallel to dir
 
 	var/area_type
-	var/turf_type
-	var/baseturf_type
 	var/hidden = FALSE //are we invisible to shuttle navigation computers?
 
 	//these objects are indestructible
@@ -155,11 +152,7 @@
 /obj/docking_port/stationary
 	name = "dock"
 
-	turf_type = SHUTTLE_DEFAULT_TURF_TYPE
-	baseturf_type = SHUTTLE_DEFAULT_BASETURF_TYPE
 	area_type = SHUTTLE_DEFAULT_UNDERLYING_AREA
-
-	var/list/baseturf_cache
 
 	var/last_dock_time
 
@@ -173,7 +166,6 @@
 		id = "[SSshuttle.stationary.len]"
 	if(name == "dock")
 		name = "dock[SSshuttle.stationary.len]"
-	baseturf_cache = typecacheof(baseturf_type)
 
 	if(mapload)
 		for(var/turf/T in return_turfs())
@@ -210,7 +202,6 @@
 
 /obj/docking_port/stationary/transit
 	name = "In Transit"
-	turf_type = /turf/open/space/transit
 	var/list/turf/assigned_turfs = list()
 	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner
@@ -222,8 +213,9 @@
 /obj/docking_port/stationary/transit/proc/dezone()
 	for(var/i in 1 to assigned_turfs.len)
 		var/turf/T = assigned_turfs[i]
-		if(T.type == turf_type)
-			T.ChangeTurf(SHUTTLE_DEFAULT_TURF_TYPE, SHUTTLE_DEFAULT_BASETURF_TYPE)
+		if(istype(T, /turf/open/space/transit))
+			T.ChangeTurf(/turf/open/space)
+			T.assemble_baseturfs(initial(T.baseturfs))
 			T.flags_1 |= UNUSED_TRANSIT_TURF_1
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
@@ -433,18 +425,11 @@
 	// Not in a fancy way, it just ceases.
 	var/obj/docking_port/stationary/current_dock = get_docked()
 
-	var/turf_type = SHUTTLE_DEFAULT_TURF_TYPE
-	var/baseturf_type = SHUTTLE_DEFAULT_BASETURF_TYPE
 	var/underlying_area_type = SHUTTLE_DEFAULT_UNDERLYING_AREA
 	// If the shuttle is docked to a stationary port, restore its normal
 	// "empty" area and turf
-	if(current_dock)
-		if(current_dock.turf_type)
-			turf_type = current_dock.turf_type
-		if(current_dock.baseturf_type)
-			baseturf_type = current_dock.baseturf_type
-		if(current_dock.area_type)
-			underlying_area_type = current_dock.area_type
+	if(current_dock && current_dock.area_type)
+		underlying_area_type = current_dock.area_type
 
 	var/list/old_turfs = return_ordered_turfs(x, y, z, dir)
 	var/area/underlying_area = locate(underlying_area_type) in GLOB.sortedAreas
@@ -458,7 +443,14 @@
 		var/area/old_area = oldT.loc
 		underlying_area.contents += oldT
 		oldT.change_area(old_area, underlying_area)
-		oldT.empty(turf_type, baseturf_type)
+		oldT.empty(null)
+		
+		// Here we locate the bottomost shuttle boundary and remove all turfs above it
+		var/list/baseturf_cache = oldT.baseturfs
+		for(var/k in 1 to length(baseturf_cache))
+			if(ispath(baseturf_cache[k], /turf/baseturf_skipover/shuttle))
+				oldT.ScrapeAway(baseturf_cache.len - k + 1)
+				break
 
 	qdel(src, force=TRUE)
 

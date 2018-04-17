@@ -41,24 +41,8 @@
 	if(..())
 		return TRUE
 	if(istype(W, /obj/item/storage/bag/ore))
-		var/obj/item/storage/bag/ore/S = W
-		if(S.collection_mode == 1)
-			for(var/obj/item/stack/ore/O in contents)
-				O.attackby(W,user)
-				return
-
-	if(istype(W, /obj/item/stack/tile))
-		var/obj/item/stack/tile/Z = W
-		if(!Z.use(1))
-			return
-		var/turf/open/floor/T = PlaceOnTop(Z.turf_type)
-		if(istype(Z, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
-			var/obj/item/stack/tile/light/L = Z
-			var/turf/open/floor/light/F = T
-			F.state = L.state
-		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
-		return
-
+		for(var/obj/item/stack/ore/O in src)
+			W.SendSignal(COMSIG_PARENT_ATTACKBY, O)
 
 /turf/open/floor/plating/asteroid/singularity_act()
 	if(is_planet_level(z))

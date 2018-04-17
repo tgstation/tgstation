@@ -12,11 +12,11 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		var/thing = allowed_contents[i]
 		qdel(thing, force=TRUE)
 
-	var/turf/newT = ChangeTurf(turf_type, baseturf_type, flags)
-
-	SSair.remove_from_active(newT)
-	newT.CalculateAdjacentTurfs()
-	SSair.add_to_active(newT,1)
+	if(turf_type)
+		var/turf/newT = ChangeTurf(turf_type, baseturf_type, flags)
+		SSair.remove_from_active(newT)
+		newT.CalculateAdjacentTurfs()
+		SSair.add_to_active(newT,1)
 
 /turf/proc/copyTurf(turf/T)
 	if(T.type != type)

@@ -640,39 +640,40 @@
 	suit = null
 
 /obj/item/device/flightpack/attackby(obj/item/I, mob/user, params)
+	var/const/SuccessMessage = " has been successfully installed into systems."
 	var/changed = FALSE
 	if(istype(I, /obj/item/stock_parts))
 		var/obj/item/stock_parts/S = I
 		if(istype(S, /obj/item/stock_parts/manipulator))
-			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
+			usermessage("[I][SuccessMessage]", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_manip)
 					part_manip.forceMove(get_turf(src))
 				part_manip = I
 				changed = TRUE
 		if(istype(S, /obj/item/stock_parts/scanning_module))
-			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
+			usermessage("[I][SuccessMessage]", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_scan)
 					part_scan.forceMove(get_turf(src))
 				part_scan = I
 				changed = TRUE
 		if(istype(S, /obj/item/stock_parts/micro_laser))
-			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
+			usermessage("[I][SuccessMessage]", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_laser)
 					part_laser.forceMove(get_turf(src))
 				part_laser = I
 				changed = TRUE
 		if(istype(S, /obj/item/stock_parts/matter_bin))
-			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
+			usermessage("[I][SuccessMessage]", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_bin)
 					part_bin.forceMove(get_turf(src))
 				part_bin = I
 				changed = TRUE
 		if(istype(S, /obj/item/stock_parts/capacitor))
-			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
+			usermessage("[I][SuccessMessage]", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_cap)
 					part_cap.forceMove(get_turf(src))
@@ -822,13 +823,13 @@
 	if(shoes)
 		shoes.relink_suit(src)
 
-/obj/item/clothing/suit/space/hardsuit/flightsuit/attack_hand(mob/user)
+/obj/item/clothing/suit/space/hardsuit/flightsuit/allow_attack_hand_drop(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(src == H.wear_suit && locked)
 			usermessage("You can not take a locked hardsuit off! Unlock it first!", "boldwarning")
-			return
-	..()
+			return FALSE
+	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/dropped()
 	if(deployedpack)

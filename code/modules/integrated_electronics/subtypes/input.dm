@@ -81,7 +81,7 @@
 	desc = "A very small version of the common medical analyser. This allows the machine to know how healthy someone is."
 	icon_state = "medscan"
 	complexity = 4
-	inputs = list("\<REF\> target")
+	inputs = list("target" = IC_PINTYPE_REF)
 	outputs = list(
 		"total health %" = IC_PINTYPE_NUMBER,
 		"total missing health" = IC_PINTYPE_NUMBER
@@ -110,7 +110,7 @@
 	This type is much more precise, allowing the machine to know much more about the target than a normal analyzer."
 	icon_state = "medscan_adv"
 	complexity = 12
-	inputs = list("\<REF\> target")
+	inputs = list("target" = IC_PINTYPE_REF)
 	outputs = list(
 		"total health %"		= IC_PINTYPE_NUMBER,
 		"total missing health"	= IC_PINTYPE_NUMBER,
@@ -153,7 +153,7 @@
 	desc = "A very small version of the xenobio analyser. This allows the machine to know every needed properties of slime."
 	icon_state = "medscan_adv"
 	complexity = 12
-	inputs = list("\<REF\> target")
+	inputs = list("target" = IC_PINTYPE_REF)
 	outputs = list(
 		"colour"				= IC_PINTYPE_STRING,
 		"adult"					= IC_PINTYPE_BOOLEAN,
@@ -197,7 +197,7 @@
 			It cannot scan seeds nor fruits, only plants."
 	icon_state = "medscan_adv"
 	complexity = 12
-	inputs = list("\<REF\> target")
+	inputs = list("target" = IC_PINTYPE_REF)
 	outputs = list(
 		"plant type"		= IC_PINTYPE_STRING,
 		"age"		= IC_PINTYPE_NUMBER,
@@ -258,7 +258,7 @@
 	extended_desc = "This allows the machine to scan plants in trays for reagent and trait genes. \
 			It cannot scan seeds nor fruits, only plants."
 	inputs = list(
-		"\<REF\> target" = IC_PINTYPE_REF
+		"target" = IC_PINTYPE_REF
 	)
 	outputs = list(
 		"traits" = IC_PINTYPE_LIST,
@@ -394,21 +394,20 @@
 	cooldown_per_use = 10
 
 /obj/item/integrated_circuit/input/turfscan/do_work()
-	var/atom/movable/H = get_pin_data_as_type(IC_INPUT, 1, /atom)
+	var/turf/H = get_pin_data_as_type(IC_INPUT, 1, /turf)
 	var/turf/T = get_turf(src)
-	var/turf/E = get_turf(H)
 	if(!istype(H)) //Invalid input
 		return
 
 	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
 		var/list/cont = new()
-		if(E.contents.len)
-			for(var/i = 1 to E.contents.len)
-				var/atom/U = E.contents[i]
-				cont += WEAKREF(U)
+		for(var/obj/U in H)
+			cont += WEAKREF(U)
+		for(var/mob/U in H)
+			cont += WEAKREF(U)
 		set_pin_data(IC_OUTPUT, 1, cont)
 		var/list/St = new()
-		for(var/obj/effect/decal/cleanable/crayon/I in E.contents)
+		for(var/obj/effect/decal/cleanable/crayon/I in H)
 			St.Add(I.icon_state)
 		if(St.len)
 			set_pin_data(IC_OUTPUT, 2, jointext(St, ",", 1, 0))
@@ -448,8 +447,8 @@
 	extended_desc = "The first pin requires a ref to the kind of object that you want the locator to acquire. This means that it will \
 	give refs to nearby objects that are similar. If more than one valid object is found nearby, it will choose one of them at \
 	random."
-	inputs = list("desired type ref")
-	outputs = list("located ref")
+	inputs = list("desired type ref" = IC_PINTYPE_REF)
+	outputs = list("located ref" = IC_PINTYPE_REF)
 	activators = list("locate" = IC_PINTYPE_PULSE_IN,"found" = IC_PINTYPE_PULSE_OUT,
 		"not found" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -544,7 +543,7 @@
 	item by matching desired text in it's name and description. If more than one valid object is found nearby, it will choose one of them at \
 	random. The second pin is a radius."
 	inputs = list("desired type" = IC_PINTYPE_ANY, "radius" = IC_PINTYPE_NUMBER)
-	outputs = list("located ref")
+	outputs = list("located ref" = IC_PINTYPE_REF)
 	activators = list("locate" = IC_PINTYPE_PULSE_IN,"found" = IC_PINTYPE_PULSE_OUT,"not found" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 30
@@ -801,7 +800,8 @@
 		return FALSE
 	var/ignore_bags = get_pin_data(IC_INPUT, 1)
 	if(ignore_bags)
-		if(istype(A, /obj/item/storage))
+		GET_COMPONENT_FROM(STR, /datum/component/storage, A)
+		if(STR)
 			return FALSE
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()

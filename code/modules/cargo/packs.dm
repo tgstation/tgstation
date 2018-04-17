@@ -159,8 +159,7 @@
 		var/category = pick(uplink_items)
 		var/item = pick(uplink_items[category])
 		var/datum/uplink_item/I = uplink_items[category][item]
-
-		if(!I.surplus || prob(100 - I.surplus))
+		if(!I.surplus_nullcrates || prob(100 - I.surplus_nullcrates))
 			continue
 		if(crate_value < I.cost)
 			continue
@@ -757,15 +756,26 @@
 	crate_name = "solar panel crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
-/datum/supply_pack/engineering/engine/supermatter_shard
+/datum/supply_pack/engineering/engine/supermatter_crystal
 	name = "Supermatter Shard Crate"
 	desc = "The power of the heavens condensed into a single crystal. Requires CE access to open."
 	cost = 10000
 	access = ACCESS_CE
-	contains = list(/obj/machinery/power/supermatter_shard)
+	contains = list(/obj/machinery/power/supermatter_crystal/shard)
 	crate_name = "supermatter shard crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
+	
+/datum/supply_pack/engineering/engine/tesla_coils
+	name = "Tesla Coil Crate"
+	desc = "Whether it's high-voltage executions, creating research points, or just plain old power generation: This pack of four Tesla coils can do it all!"
+	cost = 2500
+	contains = list(/obj/machinery/power/tesla_coil,
+					/obj/machinery/power/tesla_coil,
+					/obj/machinery/power/tesla_coil,
+					/obj/machinery/power/tesla_coil)
+	crate_name = "tesla coil crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engineering/engine/tesla_gen
 	name = "Tesla Generator Crate"

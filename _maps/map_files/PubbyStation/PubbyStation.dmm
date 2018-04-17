@@ -3136,7 +3136,6 @@
 	height = 17;
 	id = "syndicate_ne";
 	name = "northeast of station";
-	turf_type = /turf/open/space;
 	width = 23
 	},
 /turf/open/space,
@@ -24127,7 +24126,7 @@
 /area/medical/morgue)
 "biZ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	opacity = 1;
 	req_access_txt = "6"
@@ -26638,7 +26637,7 @@
 /area/medical/medbay/zone3)
 "bpG" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	opacity = 1;
 	req_access_txt = "6"
@@ -26697,7 +26696,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	opacity = 1;
 	req_access_txt = "6"
@@ -28526,7 +28525,6 @@
 	height = 13;
 	id = "ferry_home";
 	name = "port bay 2";
-	turf_type = /turf/open/space;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -36728,7 +36726,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/dock)
 "bLq" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Monastery Transit";
 	opacity = 1
 	},
@@ -38213,7 +38211,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "bPn" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -38225,7 +38223,7 @@
 	},
 /area/chapel/dock)
 "bPo" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -41481,7 +41479,7 @@
 /turf/closed/wall,
 /area/chapel/main/monastery)
 "bWW" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -41491,7 +41489,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "bWX" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -42688,20 +42686,6 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
-"cac" = (
-/obj/docking_port/stationary{
-	area_type = /area/construction/mining/aux_base;
-	dir = 2;
-	dwidth = 4;
-	height = 9;
-	id = "aux_base_zone";
-	name = "aux base zone";
-	roundstart_template = /datum/map_template/shuttle/aux_base/default;
-	turf_type = /turf/open/floor/plating;
-	width = 9
-	},
-/turf/open/floor/plating,
-/area/construction/mining/aux_base)
 "cad" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -43365,7 +43349,7 @@
 	},
 /area/chapel/main/monastery)
 "cbR" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Access";
 	opacity = 1
 	},
@@ -44013,7 +43997,7 @@
 /turf/open/floor/plasteel/asteroid,
 /area/chapel/office)
 "ceg" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Office";
 	opacity = 1;
 	req_access_txt = "22"
@@ -44034,7 +44018,7 @@
 /turf/closed/wall,
 /area/chapel/office)
 "cei" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -44047,7 +44031,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cej" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -44055,7 +44039,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cek" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -44063,7 +44047,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cel" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Access";
 	opacity = 1
 	},
@@ -44348,7 +44332,7 @@
 /turf/closed/wall,
 /area/chapel/office)
 "cfl" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Access";
 	opacity = 1
 	},
@@ -45491,7 +45475,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cjl" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Monastery Cemetary";
 	opacity = 1
 	},
@@ -45563,7 +45547,6 @@
 	height = 22;
 	id = "whiteship_home";
 	name = "monastery";
-	turf_type = /turf/open/space;
 	width = 35
 	},
 /turf/open/space/basic,
@@ -45578,7 +45561,7 @@
 /turf/open/floor/plating,
 /area/chapel/main/monastery)
 "cjH" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Garden";
 	opacity = 1
 	},
@@ -45940,7 +45923,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
 "ckT" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -47709,7 +47692,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "crJ" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Crematorium";
 	opacity = 1;
 	req_access_txt = "27"
@@ -47956,7 +47939,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Office";
 	opacity = 1;
 	req_access_txt = "22"
@@ -48843,7 +48826,7 @@
 /turf/closed/wall/mineral/iron,
 /area/library/lounge)
 "cwg" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/structure/cable{
@@ -49088,7 +49071,7 @@
 /turf/open/floor/carpet,
 /area/library/lounge)
 "cxz" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -50017,6 +50000,20 @@
 /obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"fmr" = (
+/obj/docking_port/stationary{
+	area_type = /area/construction/mining/aux_base;
+	dheight = 4;
+	dir = 2;
+	dwidth = 4;
+	height = 9;
+	id = "aux_base_zone";
+	name = "aux base zone";
+	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	width = 9
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "fon" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -50181,7 +50178,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "jgr" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -50324,7 +50321,7 @@
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "lqy" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -50767,7 +50764,7 @@
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "vOw" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -75462,11 +75459,11 @@ bDi
 bXV
 ukn
 bZt
-cac
 bZs
 bZs
 bZs
 bZs
+fmr
 bZs
 bZs
 bZs
