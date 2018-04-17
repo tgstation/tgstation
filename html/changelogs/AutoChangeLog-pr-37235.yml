@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "Fixed martial arts/spell granters breaking on interrupt in final stage."

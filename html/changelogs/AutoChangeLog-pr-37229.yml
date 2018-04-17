@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "CentCom officials will now properly display the objectives the admin has assigned them."
