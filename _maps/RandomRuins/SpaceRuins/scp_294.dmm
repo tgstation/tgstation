@@ -295,7 +295,7 @@
 "aS" = (
 /obj/item/stack/tile/plasteel,
 /mob/living/simple_animal/hostile/mimic{
-	faction = list("scp")
+	faction = "scp";
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/has_grav/powered/scp_294)
