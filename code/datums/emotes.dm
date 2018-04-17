@@ -21,6 +21,9 @@
 	var/list/mob_type_ignore_stat_typecache
 	var/stat_allowed = CONSCIOUS
 	var/static/list/emote_list = list()
+	// Cooldowns for emotes with sound files involved
+	var/static/cooldown = 5 SECONDS
+	var/static/list/cooldown_list = list()
 
 /datum/emote/New()
 	if(key_third_person)
@@ -29,7 +32,7 @@
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
 	mob_type_ignore_stat_typecache = typecacheof(mob_type_ignore_stat_typecache)
 
-/datum/emote/proc/run_emote(mob/user, params, type_override)
+/datum/emote/proc/run_emote(mob/user, params, type_override, playerInvoked = FALSE)
 	. = TRUE
 	if(!can_run_emote(user))
 		return FALSE
@@ -58,9 +61,9 @@
 			M.show_message(msg)
 
 	if(emote_type == EMOTE_AUDIBLE)
-		user.audible_message(msg)
+		user.audible_message(msg, emote=TRUE)
 	else
-		user.visible_message(msg)
+		user.visible_message(msg, emote=TRUE)
 	log_talk(user,"[key_name(user)] : [msg]",LOGEMOTE)
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
@@ -118,7 +121,7 @@
 	var/vary = FALSE	//used for the honk borg emote
 	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
 
-/datum/emote/sound/run_emote(mob/user, params)
+/datum/emote/sound/run_emote(mob/user, params, playerInvoked = FALSE)
 	. = ..()
 	if(.)
 		playsound(user.loc, sound, 50, vary)

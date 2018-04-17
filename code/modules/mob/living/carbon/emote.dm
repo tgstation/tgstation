@@ -23,7 +23,13 @@
 	restraint_check = TRUE
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/carbon/clap/run_emote(mob/living/user, params)
+/datum/emote/living/carbon/clap/run_emote(mob/living/user, params, playerInvoked = FALSE)
+	if (playerInvoked)
+		if (!isnull(cooldown_list[user.client.ckey]) && world.time < cooldown_list[user.client.ckey])
+			to_chat(user, "<span class='notice'>You cannot sound emote so soon.</span>")
+			return FALSE
+		else
+			cooldown_list[user.client.ckey] = world.time + cooldown
 	. = ..()
 	if (.)
 		if (ishuman(user))
@@ -35,6 +41,28 @@
 				            'sound/misc/clap3.ogg',
 				            'sound/misc/clap4.ogg')
 			playsound(user, clap, 50, 1, -1)
+
+/datum/emote/living/carbon/snap
+	key = "snap"
+	message = "snaps their fingers."
+	muzzle_ignore = TRUE
+	restraint_check = TRUE
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/snap/run_emote(mob/living/user, params, playerInvoked = FALSE)
+	if (playerInvoked)
+		if (!isnull(cooldown_list[user.client.ckey]) && world.time < cooldown_list[user.client.ckey])
+			to_chat(user, "<span class='notice'>You cannot sound emote so soon.</span>")
+			return FALSE
+		else
+			cooldown_list[user.client.ckey] = world.time + cooldown
+	. = ..()
+	if (.)
+		if (ishuman(user))
+			// Need hands
+			if (user.get_bodypart("l_arm") || user.get_bodypart("r_arm"))
+				var/snapFingers = 'sound/effects/snapfingers.ogg'
+				playsound(user, snapFingers, 50, 1, -1)
 
 /datum/emote/living/carbon/gnarl
 	key = "gnarl"

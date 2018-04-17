@@ -26,7 +26,7 @@
 	key = "moodnone"
 	var/mood = null
 
-/datum/emote/slime/mood/run_emote(mob/user, params)
+/datum/emote/slime/mood/run_emote(mob/user, params, playerInvoked = FALSE)
 	. = ..()
 	var/mob/living/simple_animal/slime/S = user
 	S.mood = mood

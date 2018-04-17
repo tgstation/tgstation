@@ -142,7 +142,7 @@
 	to_chat(src, "<span class='warning'>You cannot speak, your other self is controlling your body!</span>")
 	return FALSE
 
-/mob/living/split_personality/emote(message)
+/mob/living/split_personality/emote(message, playerInvoked = FALSE)
 	return
 
 ///////////////BRAINWASHING////////////////////

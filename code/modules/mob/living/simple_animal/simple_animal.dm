@@ -259,7 +259,7 @@
 		verb_say = pick(speak_emote)
 	. = ..()
 
-/mob/living/simple_animal/emote(act, m_type=1, message = null)
+/mob/living/simple_animal/emote(act, m_type=1, message = null, playerInvoked = FALSE)
 	if(stat)
 		return
 	if(act == "scream")
