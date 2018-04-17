@@ -30,7 +30,7 @@
 					return
 				stored.attack_hand(src) // take out thing from belt
 				return
-			
+
 			if("B") // Put held thing in backpack or take out most recent thing from backpack
 				var/obj/item/thing = get_active_held_item()
 				var/obj/item/storage/equipped_backpack = get_item_by_slot(slot_back)
@@ -60,10 +60,4 @@
 					return
 				stored.attack_hand(src) // take out thing from backpack
 				return
-
-	switch(_key)
-		if("E")
-			quick_equip()
-			return
-
 	return ..()
