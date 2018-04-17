@@ -16,5 +16,6 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	damage_overlay_type = ""
 	species_traits = list(LIPS)
+	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	inherent_traits = list()
 	limbs_id = "skeleton"
