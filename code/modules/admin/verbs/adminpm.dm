@@ -114,7 +114,6 @@
 			msg = trim(msg)
 			if(!msg)
 				return
-
 			if(prefs.muted & MUTE_ADMINHELP)
 				to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 				return
@@ -128,13 +127,15 @@
 
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
-
+	//It simply doesn't work well without sanitizing
+/*
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0)||irc)//no sending html to the poor bots
-		msg = trim(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
+		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 		if(!msg)
 			return
-
+*/
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	var/rawmsg = msg
 
 	if(holder)
@@ -212,7 +213,7 @@
 		for(var/client/X in GLOB.admins)
 			if(X.key!=key && X.key!=recipient.key)	//check client/X is an admin and isn't the sender or recipient
 				to_chat(X, "<font color='blue'><B>PM: [key_name(src, X, 0)]-&gt;[key_name(recipient, X, 0)]:</B> [keywordparsedmsg]</font>" )
-
+	webhook_send_ahelp("PM: [key_name(src)]->[key_name(recipient)]", msg)
 
 
 #define IRC_AHELP_USAGE "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"

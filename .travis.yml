@@ -13,9 +13,7 @@ env:
     - BUILD_TESTING=false
     - DM_MAPFILE="loadallmaps"
     matrix:
-    - BUILD_TOOLS=true
     - BUILD_TESTING=true
-    - BUILD_TESTING=false
 
 cache:
   directories:
@@ -39,12 +37,14 @@ install:
   - tools/travis/install_build_tools.sh
 
 before_script:
-  - tools/travis/before_build_tools.sh
   - tools/travis/before_build_byond.sh
 
 script:
   - tools/travis/check_filedirs.sh tgstation.dme
+<<<<<<< HEAD
   - tools/travis/build_tools.sh
   - tools/travis/build_dependencies.sh
+=======
+>>>>>>> master
   - tools/travis/build_byond.sh
 

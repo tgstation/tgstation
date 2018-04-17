@@ -250,6 +250,16 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings, listen_ooc)()
 /datum/verbs/menu/Settings/listen_ooc/Get_checked(client/C)
 	return C.prefs.chat_toggles & CHAT_OOC
 
+TOGGLE_CHECKBOX(/datum/verbs/menu/Settings, listen_discord_ooc)()
+	set name = "Show/Hide Discord OOC"
+	set category = "Preferences"
+	set desc = "Show DOOC Chat"
+	usr.client.prefs.chat_toggles ^= CHAT_MUTED_DISCORD_OOC
+	usr.client.prefs.save_preferences()
+	to_chat(usr, "You will [(usr.client.prefs.chat_toggles & CHAT_MUTED_DISCORD_OOC) ? "no longer" : "now"] see messages on the Discord OOC channel.")
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Seeing DOOC", "[usr.client.prefs.chat_toggles & CHAT_MUTED_DISCORD_OOC ? "Disabled" : "Enabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/datum/verbs/menu/Settings/listen_discord_ooc/Get_checked(client/C)
+	return !(C.prefs.chat_toggles & CHAT_MUTED_DISCORD_OOC)
 
 GLOBAL_LIST_INIT(ghost_forms, list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
 							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
@@ -338,6 +348,14 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	to_chat(src, "[(prefs.toggles & INTENT_STYLE) ? "Clicking directly on intents selects them." : "Clicking on intents rotates selection clockwise."]")
 	prefs.save_preferences()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Intent Selection", "[prefs.toggles & INTENT_STYLE ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/listen_looc()
+	set name = "Show/Hide LOOC"
+	set category = "Preferences"
+	set desc = "Toggles seeing Local OutOfCharacter chat"
+	prefs.chat_toggles ^= CHAT_LOOC
+	prefs.save_preferences(src)
+	to_chat(src, "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel.")
 
 /client/verb/toggle_ghost_hud_pref()
 	set name = "Toggle Ghost HUD"

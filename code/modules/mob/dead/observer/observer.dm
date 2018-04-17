@@ -629,6 +629,37 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 
+/mob/dead/observer/verb/analyze_air()
+	set name = "Analyze Air"
+	set category = "Ghost"
+
+	var/turf/location = src.loc
+	if (!( istype(location, /turf) ))
+		return
+
+	var/datum/gas_mixture/environment = location.return_air()
+
+	var/pressure = environment.return_pressure()
+	var/volume = environment.return_volume()
+	var/total_moles = environment.total_moles()
+
+	to_chat(src,"<span class='info'> <B>Results:</B></span>", 1)
+	to_chat(src, "<span class='notice'>Local volume: [round(volume,0.01)] liters</span>")
+	if(abs(pressure - ONE_ATMOSPHERE) < 10)
+		to_chat(src,"<span class='info'> Pressure: [round(pressure,0.1)] kPa</span>", 1)
+	else
+		to_chat(src,"<span class='warning'> Pressure: [round(pressure,0.1)] kPa</span>", 1)
+	if(total_moles)
+		var/list/cached_gases = environment.gases
+
+		for(var/id in cached_gases)
+			var/gas_concentration = cached_gases[id][MOLES]/total_moles
+			if((id in GLOB.hardcoded_gases) || gas_concentration > 0.001) //ensures the four primary gases are always shown.
+				to_chat(src, "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
+
+
+		to_chat(src,"<span class='info'> Temperature: [round(environment.temperature-T0C)]&deg;C</span>", 1)
+
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/MouseDrop(atom/over)
 	if(!usr || !over)

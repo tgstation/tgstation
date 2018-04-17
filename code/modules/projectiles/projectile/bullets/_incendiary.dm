@@ -1,6 +1,7 @@
 /obj/item/projectile/bullet/incendiary
 	damage = 20
 	var/fire_stacks = 4
+	speed = 2.0
 
 /obj/item/projectile/bullet/incendiary/on_hit(atom/target, blocked = FALSE)
 	. = ..()

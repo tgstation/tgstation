@@ -274,9 +274,9 @@
 				else
 					M_job = "Ghost"
 
-			var/M_name = html_encode(M.name)
-			var/M_rname = html_encode(M.real_name)
-			var/M_key = html_encode(M.key)
+			var/M_name = rhtml_encode(M.name)
+			var/M_rname = rhtml_encode(M.real_name)
+			var/M_key = rhtml_encode(M.key)
 
 			//output for each mob
 			dat += {"

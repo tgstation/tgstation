@@ -266,3 +266,31 @@
 			G.anchored = TRUE
 			return TRUE
 	return FALSE
+
+//Joctopus Crawl
+//Secret Tau-Ceti development
+/turf/open/floor/attack_hand(mob/user as mob)
+	if(user.resting)
+		if(!density)
+			var/crawl_time = 5
+			var/atom/U
+			for(U in src)
+				if(U.density)
+					return
+			var/togo
+			if(src.y == user.y + 1)
+				togo = NORTH
+			else if(src.y == user.y - 1)
+				togo = SOUTH
+			else if(src.x == user.x + 1)
+				togo = EAST
+			else if(src.x == user.x - 1)
+				togo = WEST
+			visible_message("<span class='danger'>[user] trying to crawl on [src]!</span>", "<span class='userdanger'>You trying to crawl on [src].</span>")
+			if(do_after(user, crawl_time*2, 1, null))
+				step(user, togo)
+			return
+		else
+			..(user)
+	else
+		..(user)

@@ -1,0 +1,5 @@
+author: "Shadowlight213"
+delete-after: True
+changes: 
+  - rscadd: "You now can get a medal for wasting hours talking to the secret debug tile."
+  - bugfix: "Fixed runtime for the tile when poly's speech file doesn't exist."

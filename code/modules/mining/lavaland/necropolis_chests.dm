@@ -9,6 +9,10 @@
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
+	var/cursed_prob = 20
+
+/obj/structure/closet/crate/necropolis/tendril/cursed
+	cursed_prob = 100
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
 	var/loot = rand(1,27)
@@ -75,6 +79,9 @@
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
+	for(var/obj/item/I in contents)
+		if(prob(cursed_prob))
+			I.apply_curse(new /datum/curse/necropolis)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc

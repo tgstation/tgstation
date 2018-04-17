@@ -96,6 +96,10 @@
 		to_chat(user,"<span class='warning'>Error: No music tracks have been authorized for your station. Petition Central Command to resolve this issue.</span>")
 		playsound(src,'sound/misc/compiler-failure.ogg', 25, 1)
 		return
+	if(!songs.len)
+		to_chat(user,"<span class='warning'>Error: No music tracks have been authorized for your station. Petition Central Command to resolve this issue.</span>")
+		playsound(src,'sound/misc/compiler-failure.ogg', 25, 1)
+		return
 	var/list/dat = list()
 	dat +="<div class='statusDisplay' style='text-align:center'>"
 	dat += "<b><A href='?src=[REF(src)];action=toggle'>[!active ? "BREAK IT DOWN" : "SHUT IT DOWN"]<b></A><br>"

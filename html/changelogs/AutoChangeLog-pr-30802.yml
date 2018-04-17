@@ -1,0 +1,5 @@
+author: "CPTANT"
+delete-after: True
+changes: 
+  - balance: "Knockdown and unconcious now let you regenerate stamina damage."
+  - rscadd: "Sleeping regenerates more stamina damage."
