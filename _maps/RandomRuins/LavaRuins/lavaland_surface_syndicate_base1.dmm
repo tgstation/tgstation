@@ -3368,9 +3368,7 @@
 "jv" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/suit_storage_unit/radsuit{
-	name = "radiation suit storage unit"
-	},
+/obj/machinery/suit_storage_unit/radsuit,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jw" = (
