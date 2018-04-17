@@ -44,6 +44,7 @@
 	src = new(drop_location())
 	new /obj/item/stack/rods(drop_location(), 1)
 	new /obj/item/stack/sheet/metal(drop_location(), 1)
+	qdel(src)
 
 	..()
 
