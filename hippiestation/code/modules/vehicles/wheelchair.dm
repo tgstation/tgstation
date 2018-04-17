@@ -31,7 +31,7 @@
 	..()
 	if(resistance_flags & ON_FIRE)
 		to_chat(user, "<span class='warning'>It's on fire!</span>")
-	var/healthpercent = max_integrity
+	var/healthpercent = obj_integrity/max_integrity * 100
 	switch(healthpercent)
 		if(50 to 99)
 			to_chat(user,  "It looks slightly damaged.")
