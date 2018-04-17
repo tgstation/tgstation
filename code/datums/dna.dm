@@ -11,7 +11,7 @@
 	var/list/mutations = list()   //All mutations are from now on here
 	var/list/temporary_mutations = list() //Timers for temporary mutations
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
-	var/mob/living/holder
+	var/mob/living/carbon/holder
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))

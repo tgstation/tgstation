@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Fixed (dead) revenants being unable to deadchat or ahelp"

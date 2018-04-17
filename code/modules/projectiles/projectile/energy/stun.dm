@@ -3,6 +3,7 @@
 	icon_state = "spark"
 	color = "#FFFF00"
 	nodamage = 1
+	speed = 0.5
 	knockdown = 100
 	stutter = 5
 	jitter = 20

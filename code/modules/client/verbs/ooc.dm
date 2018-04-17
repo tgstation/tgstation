@@ -24,6 +24,14 @@
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	if(check_rights_for(src, R_ADMIN))
+	else
+		msg = replacetext(msg, "<p>", "")
+		msg = replacetext(msg, "</p>", "")
+		msg = replacetext(msg, "</font>", "")
+		msg = replacetext(msg, "font size", "")
+		msg = replacetext(msg, "color=", "")
+		msg = replacetext(msg, "face=", "")
 	var/raw_msg = msg
 
 	if(!msg)
@@ -68,6 +76,7 @@
 					to_chat(C, "<font color='[GLOB.normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>")
 			else if(!(key in C.prefs.ignoring))
 				to_chat(C, "<font color='[GLOB.normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>")
+	webhook_send_ooc(key, msg)
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
@@ -291,3 +300,10 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 		to_chat(src, "You can't ignore yourself.")
 		return
 	ignore_key(selection)
+
+/client/verb/bot_token(token as text)
+	set name = "Bot token"
+	set category = "OOC"
+	set desc = "Sends specific token to bot through webhook"
+
+	webhook_send_token(key, token)

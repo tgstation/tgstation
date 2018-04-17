@@ -146,6 +146,7 @@ SUBSYSTEM_DEF(ticker)
 			if(CONFIG_GET(flag/irc_announce_new_game))
 				SERVER_TOOLS_CHAT_BROADCAST("New round starting on [SSmapping.config.map_name]!")
 			current_state = GAME_STATE_PREGAME
+			webhook_send_roundstatus("lobby")
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
 			fire()
@@ -185,6 +186,8 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 				timeLeft = null
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
+			else
+				webhook_send_roundstatus("ingame")
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
@@ -195,6 +198,7 @@ SUBSYSTEM_DEF(ticker)
 			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(TRUE) // Turn it on
+				toggle_looc(TRUE)
 				toggle_dooc(TRUE)
 				declare_completion(force_ending)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
@@ -405,7 +409,7 @@ SUBSYSTEM_DEF(ticker)
 			m = pick(memetips)
 
 	if(m)
-		to_chat(world, "<font color='purple'><b>Tip of the round: </b>[html_encode(m)]</font>")
+		to_chat(world, "<font color='purple'><b>Tip of the round: </b>[rhtml_encode(m)]</font>")
 
 /datum/controller/subsystem/ticker/proc/check_queue()
 	var/hpc = CONFIG_GET(number/hard_popcap)

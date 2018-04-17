@@ -32,31 +32,31 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	//kinda localization -- rastaf0
 	//same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 	// Location
-	"Ãª" = "right hand",
-	"Ã¤" = "left hand",
-	"Ã¸" = "intercom",
+	"ê" = "right hand",
+	"ä" = "left hand",
+	"ø" = "intercom",
 
 	// Department
-	"Ã°" = "department",
-	"Ã±" = "Command",
-	"Ã²" = "Science",
-	"Ã¼" = "Medical",
-	"Ã³" = "Engineering",
-	"Ã»" = "Security",
-	"Ã£" = "Supply",
-	"Ã¬" = "Service",
+	"ð" = "department",
+	"ñ" = "Command",
+	"ò" = "Science",
+	"ü" = "Medical",
+	"ó" = "Engineering",
+	"û" = "Security",
+	"ã" = "Supply",
+	"ì" = "Service",
 
 	// Faction
-	"Ã¥" = "Syndicate",
-	"Ã­" = "CentCom",
+	"å" = "Syndicate",
+	"í" = "CentCom",
 
 	// Admin
-	"Ã§" = "admin",
-	"Ã¢" = "deadmin",
+	"ç" = "admin",
+	"â" = "deadmin",
 
 	// Misc
-	"Ã¹" = "AI Private",
-	"Ã·" = "cords"
+	"ù" = "AI Private",
+	"÷" = "cords"
 ))
 
 /mob/living/proc/Ellipsis(original_msg, chance = 50, keep_words)
@@ -346,7 +346,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	message = capitalize(message)
 
-	return message
+	return sanitize_russian(message)
 
 /mob/living/proc/radio(message, message_mode, list/spans, language)
 	var/obj/item/implant/radio/imp = locate() in src

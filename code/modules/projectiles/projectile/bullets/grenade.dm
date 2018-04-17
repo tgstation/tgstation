@@ -5,6 +5,7 @@
 	desc = "USE A WEEL GUN"
 	icon_state= "bolter"
 	damage = 60
+	speed = 0.3
 
 /obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = FALSE)
 	..()

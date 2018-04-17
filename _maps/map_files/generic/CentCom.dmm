@@ -8474,11 +8474,9 @@
 	area_type = /area/syndicate_mothership/control;
 	dir = 1;
 	dwidth = 3;
-	height = 7;
 	name = "escape pod loader";
 	roundstart_template = /datum/map_template/shuttle/assault_pod/default;
 	width = 7
-	},
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "xO" = (

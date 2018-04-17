@@ -10,6 +10,7 @@ GLOBAL_VAR_INIT(hub_visibility, FALSE)
 
 GLOBAL_VAR_INIT(ooc_allowed, TRUE)	// used with admin verbs to disable ooc - not a config option apparently
 GLOBAL_VAR_INIT(dooc_allowed, TRUE)
+GLOBAL_VAR_INIT(looc_allowed, TRUE)
 GLOBAL_VAR_INIT(enter_allowed, TRUE)
 GLOBAL_VAR_INIT(shuttle_frozen, FALSE)
 GLOBAL_VAR_INIT(shuttle_left, FALSE)

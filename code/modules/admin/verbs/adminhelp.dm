@@ -173,7 +173,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	id = ++ticket_counter
 	opened_at = world.time
 
-	name = msg
+	name = r_text2ascii(msg)
 
 	initiator = C
 	initiator_ckey = initiator.ckey
@@ -512,7 +512,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		else
 			current_ticket.AddInteraction("[key_name_admin(usr)] opened a new ticket.")
 			current_ticket.Close()
-
+	webhook_send_ahelp(src.ckey, msg)
 	new /datum/admin_help(msg, src, FALSE)
 
 //

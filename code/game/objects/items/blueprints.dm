@@ -61,7 +61,7 @@
 	if(!legend)
 		var/area/A = get_area()
 		if(get_area_type() == AREA_STATION)
-			. += "<p>According to \the [src], you are now in <b>\"[html_encode(A.name)]\"</b>.</p>"
+			. += "<p>According to \the [src], you are now in <b>\"[rhtml_encode(A.name)]\"</b>.</p>"
 			. += "<p><a href='?src=[REF(src)];edit_area=1'>Change area name</a></p>"
 		. += "<p><a href='?src=[REF(src)];view_legend=1'>View wire colour legend</a></p>"
 		if(!viewing)

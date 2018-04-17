@@ -294,6 +294,7 @@
 					setTimer(20)
 					return
 				mode = SHUTTLE_DOCKED
+				webhook_send_roundstatus("shuttle docked")
 				setTimer(SSshuttle.emergencyDockTime)
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/ai/shuttledock.ogg', "Priority")
@@ -350,6 +351,7 @@
 				launch_status = ENDGAME_LAUNCHED
 				setTimer(SSshuttle.emergencyEscapeTime * engine_coeff)
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
+				webhook_send_roundstatus("shuttle left")
 
 		if(SHUTTLE_STRANDED)
 			SSshuttle.checkHostileEnvironment()
@@ -393,6 +395,7 @@
 				dock_id(destination_dock)
 				mode = SHUTTLE_ENDGAME
 				timer = 0
+				webhook_send_roundstatus("shuttle escaped")
 
 /obj/docking_port/mobile/emergency/transit_failure()
 	..()

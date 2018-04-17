@@ -13,6 +13,7 @@
 	icon_dead = "tendril"
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
+	mob_size = MOB_SIZE_LARGE
 	health = 250
 	maxHealth = 250
 	max_mobs = 3

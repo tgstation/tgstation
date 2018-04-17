@@ -48,6 +48,7 @@
 
 
 
+
 /datum/trait/light_step
 	name = "Light Step"
 	desc = "You walk with a gentle step, making stepping on sharp objects quieter and less painful."
