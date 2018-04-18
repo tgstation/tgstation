@@ -1,6 +1,4 @@
 
-
-
 /**********************Asteroid**************************/
 
 /turf/open/floor/plating/asteroid //floor piece
@@ -33,7 +31,7 @@
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
 
-/turf/open/floor/plating/asteroid/MakeSlippery()
+/turf/open/floor/plating/asteroid/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
 /turf/open/floor/plating/asteroid/MakeDry()
@@ -53,7 +51,7 @@
 		var/obj/item/stack/tile/Z = W
 		if(!Z.use(1))
 			return
-		var/turf/open/floor/T = ChangeTurf(Z.turf_type)
+		var/turf/open/floor/T = PlaceOnTop(Z.turf_type)
 		if(istype(Z, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 			var/obj/item/stack/tile/light/L = Z
 			var/turf/open/floor/light/F = T
@@ -211,6 +209,9 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
+				if(istype(tunnel.loc, /area/mine/explored) || (istype(tunnel.loc, /area/lavaland/surface/outdoors) && !istype(tunnel.loc, /area/lavaland/surface/outdoors/unexplored)))
+					sanity = 0
+					break
 				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type, null, CHANGETURF_IGNORE_AIR)
 				C.going_backwards = FALSE
 				C.produce_tunnel_from_data(rand(10, 15), dir)
@@ -229,7 +230,7 @@
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
 	for(var/S in RANGE_TURFS(1, src))
 		var/turf/NT = S
-		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || istype(NT.loc, /area/lavaland/surface/outdoors/explored))
+		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || (istype(NT.loc, /area/lavaland/surface/outdoors) && !istype(NT.loc, /area/lavaland/surface/outdoors/unexplored)))
 			sanity = 0
 			break
 	if(!sanity)

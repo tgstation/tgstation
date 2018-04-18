@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(lighting)
 
 		create_all_lighting_objects()
 		initialized = TRUE
-	
+
 	fire(FALSE, TRUE)
 
 	..()
@@ -81,6 +81,9 @@ SUBSYSTEM_DEF(lighting)
 			break
 	if (i)
 		GLOB.lighting_update_objects.Cut(1, i+1)
+
+	else
+		return
 
 
 /datum/controller/subsystem/lighting/Recover()

@@ -14,8 +14,8 @@
 	blacklisted = 0
 	sexes = 0
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	mutant_organs = list(/obj/item/organ/tongue/bone)
 	damage_overlay_type = ""
 	species_traits = list(LIPS)
+	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	inherent_traits = list()
 	limbs_id = "skeleton"
