@@ -571,4 +571,4 @@
 			update_light()
 
 obj/item/device/flashlight/directional/CanItemAutoclick() //BURN THE SERVER DOWN
-	return 5
+	return 2
