@@ -117,15 +117,7 @@
 #define ANG_FALLOFF(C, T, E) CLAMP01((1.5 - getline_distance(T, E, C)) * (0.2 + sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2)) * 0.2) // For angles
 //#define ANG_FALLOFF(C, T, E) CLAMP01((1.5 - getline_distance(T, E, C)) * (0.5 + sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2)) * 0.2) // For angles
 #define APPLY_CORNER(C)                      \
-	if(isnull(directional))						 \
-		. = LUM_FALLOFF(C, pixel_turf);      \
-	else									 \
-		if(directional == 0 || directional == 180)			\
-			. = X_FALLOFF(C, pixel_turf); 	 \
-		else if(directional == 90 || directional == 270)	\
-			. = Y_FALLOFF(C, pixel_turf);	 \
-		else								 \
-			. = ANG_FALLOFF(C, pixel_turf, get_turf_in_angle(directional, pixel_turf, CEILING(light_range, 1)));	\
+	. = LUM_FALLOFF(C, pixel_turf);          \
 	. *= light_power;                        \
 	var/OLD = effect_str[C];                 \
                                              \
@@ -137,6 +129,39 @@
 		(. * lum_g) - (OLD * applied_lum_g), \
 		(. * lum_b) - (OLD * applied_lum_b)  \
 	);
+
+
+#define CARDINAL_CORNER(C)                      \
+	if(directional == 0 || directional == 180)	\
+		. = X_FALLOFF(C, pixel_turf);        \
+	else                                     \
+		. = Y_FALLOFF(C, pixel_turf);        \
+	. *= light_power;                        \
+	var/OLD = effect_str[C];                 \
+                                             \
+	effect_str[C] = .;                       \
+                                             \
+	C.update_lumcount                        \
+	(                                        \
+		(. * lum_r) - (OLD * applied_lum_r), \
+		(. * lum_g) - (OLD * applied_lum_g), \
+		(. * lum_b) - (OLD * applied_lum_b)  \
+	);
+
+#define ANGLE_CORNER(C)                      \
+	. = ANG_FALLOFF(C, pixel_turf, get_turf_in_angle(directional, pixel_turf, CEILING(light_range, 1)));	\
+	. *= light_power;                        \
+	var/OLD = effect_str[C];                 \
+                                             \
+	effect_str[C] = .;                       \
+                                             \
+	C.update_lumcount                        \
+	(                                        \
+		(. * lum_r) - (OLD * applied_lum_r), \
+		(. * lum_g) - (OLD * applied_lum_g), \
+		(. * lum_b) - (OLD * applied_lum_b)  \
+	);
+
 
 #define REMOVE_CORNER(C)                     \
 	. = -effect_str[C];                      \
@@ -263,6 +288,47 @@
 							corners[C] = 0
 						if(T.has_opaque_atom)
 							break
+				LAZYINITLIST(affecting_turfs)
+				var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
+				affecting_turfs += L
+				for (thing in L)
+					T = thing
+					LAZYADD(T.affecting_lights, src)
+				L = affecting_turfs - turfs // Now-gone turfs, remove us from the affecting lights.
+				affecting_turfs -= L
+				for (thing in L)
+					T = thing
+					LAZYREMOVE(T.affecting_lights, src)
+				LAZYINITLIST(effect_str)
+				if (needs_update == LIGHTING_VIS_UPDATE)
+					for (thing in  corners - effect_str) // New corners
+						C = thing
+						LAZYADD(C.affecting, src)
+						if (!C.active)
+							effect_str[C] = 0
+							continue
+						CARDINAL_CORNER(C)
+				else
+					L = corners - effect_str
+					for (thing in L) // New corners
+						C = thing
+						LAZYADD(C.affecting, src)
+						if (!C.active)
+							effect_str[C] = 0
+							continue
+						CARDINAL_CORNER(C)
+					for (thing in corners - L) // Existing corners
+						C = thing
+						if (!C.active)
+							effect_str[C] = 0
+							continue
+						CARDINAL_CORNER(C)
+				L = effect_str - corners
+				for (thing in L) // Old, now gone, corners.
+					C = thing
+					REMOVE_CORNER(C)
+					LAZYREMOVE(C.affecting, src)
+				effect_str -= L
 			else                                                       // Angular lighting
 				var/spread = 5
 				var/set_angle
@@ -281,6 +347,96 @@
 								corners[C] = 0
 							if(T.has_opaque_atom)
 								break
+				LAZYINITLIST(affecting_turfs)
+				var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
+				affecting_turfs += L
+				for (thing in L)
+					T = thing
+					LAZYADD(T.affecting_lights, src)
+				L = affecting_turfs - turfs // Now-gone turfs, remove us from the affecting lights.
+				affecting_turfs -= L
+				for (thing in L)
+					T = thing
+					LAZYREMOVE(T.affecting_lights, src)
+				LAZYINITLIST(effect_str)
+				if (needs_update == LIGHTING_VIS_UPDATE)
+					for (thing in  corners - effect_str) // New corners
+						C = thing
+						LAZYADD(C.affecting, src)
+						if (!C.active)
+							effect_str[C] = 0
+							continue
+						ANGLE_CORNER(C)
+				else
+					L = corners - effect_str
+					for (thing in L) // New corners
+						C = thing
+						LAZYADD(C.affecting, src)
+						if (!C.active)
+							effect_str[C] = 0
+							continue
+						ANGLE_CORNER(C)
+					for (thing in corners - L) // Existing corners
+						C = thing
+						if (!C.active)
+							effect_str[C] = 0
+							continue
+						ANGLE_CORNER(C)
+				L = effect_str - corners
+				for (thing in L) // Old, now gone, corners.
+					C = thing
+					REMOVE_CORNER(C)
+					LAZYREMOVE(C.affecting, src)
+				effect_str -= L
+
+			if(turfs.len <= 1) //Our directional light is probably shining directly onto a wall so change to a small default light to reflect, heh, this situation
+				light_range = 2
+				for(T in view(CEILING(light_range, 1), source_turf))
+					for (thing in T.get_corners())
+						C = thing
+						corners[C] = 0
+					turfs += T
+				LAZYINITLIST(affecting_turfs)
+				var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
+				affecting_turfs += L
+				for (thing in L)
+					T = thing
+					LAZYADD(T.affecting_lights, src)
+				L = affecting_turfs - turfs // Now-gone turfs, remove us from the affecting lights.
+				affecting_turfs -= L
+				for (thing in L)
+					T = thing
+					LAZYREMOVE(T.affecting_lights, src)
+				LAZYINITLIST(effect_str)
+				if (needs_update == LIGHTING_VIS_UPDATE)
+					for (thing in  corners - effect_str) // New corners
+						C = thing
+						LAZYADD(C.affecting, src)
+						if (!C.active)
+							effect_str[C] = 0
+							continue
+						APPLY_CORNER(C)
+				else
+					L = corners - effect_str
+					for (thing in L) // New corners
+						C = thing
+						LAZYADD(C.affecting, src)
+						if (!C.active)
+							effect_str[C] = 0
+							continue
+						APPLY_CORNER(C)
+					for (thing in corners - L) // Existing corners
+						C = thing
+						if (!C.active)
+							effect_str[C] = 0
+							continue
+						APPLY_CORNER(C)
+				L = effect_str - corners
+				for (thing in L) // Old, now gone, corners.
+					C = thing
+					REMOVE_CORNER(C)
+					LAZYREMOVE(C.affecting, src)
+				effect_str -= L
 		else
 			var/oldlum = source_turf.luminosity // Standard 360-degree lighting
 			source_turf.luminosity = CEILING(light_range, 1)
@@ -291,53 +447,48 @@
 				turfs += T
 			source_turf.luminosity = oldlum
 
-	LAZYINITLIST(affecting_turfs)
-	var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
-	affecting_turfs += L
-	for (thing in L)
-		T = thing
-		LAZYADD(T.affecting_lights, src)
+			LAZYINITLIST(affecting_turfs)
+			var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
+			affecting_turfs += L
+			for (thing in L)
+				T = thing
+				LAZYADD(T.affecting_lights, src)
+			L = affecting_turfs - turfs // Now-gone turfs, remove us from the affecting lights.
+			affecting_turfs -= L
+			for (thing in L)
+				T = thing
+				LAZYREMOVE(T.affecting_lights, src)
+			LAZYINITLIST(effect_str)
+			if (needs_update == LIGHTING_VIS_UPDATE)
+				for (thing in  corners - effect_str) // New corners
+					C = thing
+					LAZYADD(C.affecting, src)
+					if (!C.active)
+						effect_str[C] = 0
+						continue
+					APPLY_CORNER(C)
+			else
+				L = corners - effect_str
+				for (thing in L) // New corners
+					C = thing
+					LAZYADD(C.affecting, src)
+					if (!C.active)
+						effect_str[C] = 0
+						continue
+					APPLY_CORNER(C)
+				for (thing in corners - L) // Existing corners
+					C = thing
+					if (!C.active)
+						effect_str[C] = 0
+						continue
+					APPLY_CORNER(C)
 
-	L = affecting_turfs - turfs // Now-gone turfs, remove us from the affecting lights.
-	affecting_turfs -= L
-	for (thing in L)
-		T = thing
-		LAZYREMOVE(T.affecting_lights, src)
-
-	LAZYINITLIST(effect_str)
-	if (needs_update == LIGHTING_VIS_UPDATE)
-		for (thing in  corners - effect_str) // New corners
-			C = thing
-			LAZYADD(C.affecting, src)
-			if (!C.active)
-				effect_str[C] = 0
-				continue
-			APPLY_CORNER(C)
-	else
-		L = corners - effect_str
-		for (thing in L) // New corners
-			C = thing
-			LAZYADD(C.affecting, src)
-			if (!C.active)
-				effect_str[C] = 0
-				continue
-			APPLY_CORNER(C)
-
-
-		for (thing in corners - L) // Existing corners
-			C = thing
-			if (!C.active)
-				effect_str[C] = 0
-				continue
-			APPLY_CORNER(C)
-
-
-	L = effect_str - corners
-	for (thing in L) // Old, now gone, corners.
-		C = thing
-		REMOVE_CORNER(C)
-		LAZYREMOVE(C.affecting, src)
-	effect_str -= L
+			L = effect_str - corners
+			for (thing in L) // Old, now gone, corners.
+				C = thing
+				REMOVE_CORNER(C)
+				LAZYREMOVE(C.affecting, src)
+			effect_str -= L
 
 	applied_lum_r = lum_r
 	applied_lum_g = lum_g
