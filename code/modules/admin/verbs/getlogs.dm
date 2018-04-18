@@ -4,7 +4,17 @@
 	set desc = "View/retrieve logfiles."
 	set category = "Admin"
 
-	var/path = browse_files("data/logs/")
+	browseserverlogs()
+
+/client/proc/getcurrentlogs()
+	set name = "Get Current Logs"
+	set desc = "View/retrieve logfiles for the current round."
+	set category = "Admin"
+
+	browseserverlogs("[GLOB.log_directory]/")
+
+/client/proc/browseserverlogs(path = "data/logs/")
+	path = browse_files(path)
 	if(!path)
 		return
 

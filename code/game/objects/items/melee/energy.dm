@@ -53,9 +53,9 @@
 	var/in_mouth = ""
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		if(C.wear_mask == src)
+		if(C.wear_mask)
 			in_mouth = ", barely missing their nose"
-	. = "<span class='warning'>[user] swings their [src][in_mouth]. They light [A] in the process.</span>"
+	. = "<span class='warning'>[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [A.name] in the process.</span>"
 	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 	add_fingerprint(user)
 
