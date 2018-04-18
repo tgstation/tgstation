@@ -6,7 +6,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "f" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/shuttle{
 	dir = 4;
 	id = "QMLoad2"
 	},
@@ -54,7 +54,7 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "j" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/shuttle{
 	dir = 4;
 	id = "QMLoad"
 	},

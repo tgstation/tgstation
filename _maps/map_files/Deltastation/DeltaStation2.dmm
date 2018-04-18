@@ -4497,10 +4497,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/inverted{
 	dir = 5;
-	id = "garbage";
-	verted = -1
+	id = "garbage"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -5039,7 +5038,7 @@
 /area/maintenance/disposal)
 "aqG" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
+	dir = 8;
 	id = "garbage";
 	name = "disposal conveyor"
 	},
@@ -5741,10 +5740,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/inverted{
 	dir = 9;
-	id = "garbage";
-	verted = -1
+	id = "garbage"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -9807,7 +9805,8 @@
 /area/quartermaster/storage)
 "aAH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/conveyor_switch{
+/obj/machinery/conveyor_switch/oneway{
+	dir = 8;
 	id = "cargounload"
 	},
 /turf/open/floor/plasteel/brown{
@@ -12363,11 +12362,11 @@
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "aGp" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 6;
 	id = "cargodeliver"
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "aGq" = (
@@ -13295,7 +13294,7 @@
 /area/quartermaster/storage)
 "aHU" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/conveyor_switch{
+/obj/machinery/conveyor_switch/oneway{
 	id = "cargoload"
 	},
 /turf/open/floor/plasteel/brown{
@@ -13915,7 +13914,7 @@
 "aJg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
+	dir = 8;
 	id = "cargodeliver";
 	name = "delivery conveyor";
 	pixel_x = -12
@@ -15186,13 +15185,13 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aLY" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "cargoload"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/machinery/conveyor/inverted{
+	dir = 10;
+	id = "cargoload"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
@@ -100339,6 +100338,14 @@
 	dir = 1
 	},
 /area/science/circuit)
+"hdH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "cargoload"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
 "hic" = (
 /obj/structure/table/reinforced,
 /obj/item/device/integrated_electronics/analyzer,
@@ -100466,6 +100473,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral,
 /area/medical/morgue)
+"kam" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	dir = 5;
+	id = "QMLoad2"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
 "kwx" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/whitepurple/corner,
@@ -146365,11 +146380,11 @@ axm
 ayD
 ayD
 ayD
-ayD
+hdH
 azD
 aEg
 azD
-aGC
+kam
 aHV
 aHV
 aHV

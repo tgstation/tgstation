@@ -266,6 +266,16 @@ All ShuttleMove procs go here
 	if(level==1)
 		hide(T.intact)
 
+/obj/machinery/conveyor/shuttle/afterShuttleMove()
+	. = ..()
+	for(var/obj/machinery/conveyor/C in orange(1, src)) //Automatically assigned direction based on the dir of an adjacent conveyor belt to prevent desync
+		if(istype(C, /obj/machinery/conveyor/shuttle))
+			continue
+		setDir(C.dir)
+		verted = C.verted
+		operating = C.operating
+		update_move_direction()
+
 /************************************Item move procs************************************/
 
 /obj/item/storage/pod/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
