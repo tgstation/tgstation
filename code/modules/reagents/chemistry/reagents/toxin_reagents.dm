@@ -16,6 +16,27 @@
 		. = 1
 	..()
 
+/datum/reagent/toxin/antiheal
+	name = "Venomous Blight"
+	id = "spiderblight"
+	description = "A toxic venom that disrupts the body's ability to heal brute and burn injuries."
+	color = "#94ba57" // rgb: 148, 186, 87
+	taste_description = "bitterness"
+	taste_mult = 1.0
+	toxpwr = 1.5
+
+/datum/reagent/toxin/antiheal/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.apply_status_effect(STATUS_EFFECT_NOHEAL)
+
+/datum/reagent/toxin/antiheal/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_status_effect(STATUS_EFFECT_NOHEAL)
+	..()
+
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"
 	id = "amatoxin"
