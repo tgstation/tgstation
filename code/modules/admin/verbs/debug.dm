@@ -897,6 +897,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 
 	usr << browse(dellog.Join(), "window=dellog")
 
+#ifdef COMSIG_LOGGING_ENABLED
 /client/proc/cmd_display_comsig_log()
 	set category = "Debug"
 	set name = "Display comsig Log"
@@ -914,6 +915,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	L += "</ol>"
 
 	usr << browse(L.Join(), "window=L")
+#endif
 
 /client/proc/cmd_display_overlay_log()
 	set category = "Debug"
