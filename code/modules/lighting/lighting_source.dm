@@ -114,8 +114,8 @@
 #define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
 #define X_FALLOFF(C, T) CLAMP01((abs(C.y - T.y) + 0.5) * 0.2) // For North-South directional lighting so that it forms a "cone" of light
 #define Y_FALLOFF(C, T) CLAMP01((abs(C.x - T.x) + 0.5) * 0.2) // East/West
-#define ANG_FALLOFF(C, T, E) CLAMP01((1.5 - getline_distance(T, E, C)) * (0.5 + sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2)) * 0.2) // For angles
-
+#define ANG_FALLOFF(C, T, E) CLAMP01((1.5 - getline_distance(T, E, C)) * (0.2 + sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2)) * 0.2) // For angles
+//#define ANG_FALLOFF(C, T, E) CLAMP01((1.5 - getline_distance(T, E, C)) * (0.5 + sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2)) * 0.2) // For angles
 #define APPLY_CORNER(C)                      \
 	if(isnull(directional))						 \
 		. = LUM_FALLOFF(C, pixel_turf);      \

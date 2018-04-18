@@ -537,7 +537,6 @@
 	icon_state = "oldlight"
 	dir = 4
 	brightness_on = 3
-	var/pointing
 
 /obj/item/device/flashlight/directional/update_brightness(mob/user = null)
 	..()
@@ -564,10 +563,9 @@
 	..()
 	var/C = user.client
 	if(C)
-		pointing = mouse_angle_from_client(C)
 		dir = user.dir
 		if(light)
-			light.directional = round(pointing)
+			light.directional = round(mouse_angle_from_client(C), 1)
 			update_light()
 
 obj/item/device/flashlight/directional/CanItemAutoclick() //BURN THE SERVER DOWN
