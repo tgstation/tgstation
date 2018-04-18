@@ -321,7 +321,8 @@
 	growthstages = 3
 	rarity = 20
 	reagents_add = list("nutriment" = 0.1)
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF]
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 
 /obj/item/seeds/lavaland/polypore
 	name = "pack of polypore mycelium"
@@ -331,7 +332,6 @@
 	plantname = "Polypore Mushrooms"
 	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 
 // Porcini (Leafy mushroom)
 
@@ -343,7 +343,6 @@
 	plantname = "Porcini Mushrooms"
 	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_leaf
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 
 // Inocybe (Mushroom caps)
 
@@ -355,7 +354,6 @@
 	plantname = "Inocybe Mushrooms"
 	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_cap
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 
 // Embershroom (Mushroom stem)
 
@@ -367,4 +365,3 @@
 	plantname = "Embershroom Mushrooms"
 	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_stem
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/glow)
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
