@@ -264,18 +264,18 @@
 						if(T.has_opaque_atom)
 							break
 			else                                                       // Angular lighting
-				var/spread = 10
+				var/spread = 5
 				var/set_angle
-				for(var/i in 1 to 4)
+				for(var/i in 1 to 8)
 					if(i % 2 == 0)
 						set_angle = directional - spread
-						spread += 6
+						spread += 5
 					else
 						set_angle = directional + spread
 					tempTurf = get_turf_in_angle(set_angle, source_turf, CEILING(light_range, 1))
 					for(T in getline(source_turf,tempTurf))
-						if(T != source_turf && !(T in turfs))
-							turfs += T
+						if(T != source_turf)
+							turfs |= T
 							for (thing in T.get_corners())
 								C = thing
 								corners[C] = 0
