@@ -20,7 +20,7 @@
 
 /obj/structure/displaycase/Initialize()
 	. = ..()
-	if(start_showpieces.len && !start_showpiece_type) 
+	if(start_showpieces.len && !start_showpiece_type)
 		var/list/showpiece_entry = pick(start_showpieces)
 		if (showpiece_entry && showpiece_entry["type"])
 			start_showpiece_type = showpiece_entry["type"]
