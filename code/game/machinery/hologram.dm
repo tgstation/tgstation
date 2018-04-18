@@ -473,12 +473,14 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 //Try to transfer hologram to another pad that can project on T
 /obj/machinery/holopad/proc/transfer_to_nearby_pad(turf/T,mob/holo_owner)
+	var/obj/effect/overlay/holo_pad_hologram/h = masters[holo_owner]
+	if(!h || h.HC) //Holocalls can't change source.
+		return FALSE
 	for(var/pad in holopads)
 		var/obj/machinery/holopad/another = pad
 		if(another == src)
 			continue
 		if(another.validate_location(T))
-			var/obj/effect/overlay/holo_pad_hologram/h = masters[holo_owner]
 			unset_holo(holo_owner)
 			another.set_holo(holo_owner, h)
 			return TRUE
