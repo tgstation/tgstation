@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - rscadd: "Due to space OSHA lobbying, the Syndicate's lavaland base now contains a radsuit and decontamination shower."
+  - bugfix: "Suit storage units' suit/helmet compartments now accept non-spacesuit clothing (radsuits, EOD suits, firesuits and so on)."
