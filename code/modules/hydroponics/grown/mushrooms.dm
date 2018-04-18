@@ -321,7 +321,7 @@
 	growthstages = 3
 	rarity = 20
 	reagents_add = list("nutriment" = 0.1)
-	resistance_flags = FIRE_PROOF]
+	resistance_flags = FIRE_PROOF
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 
 /obj/item/seeds/lavaland/polypore
