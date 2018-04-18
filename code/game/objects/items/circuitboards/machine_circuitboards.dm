@@ -679,6 +679,10 @@
 	name = "Departmental Circuit Imprinter - Science (Machine Board)"
 	build_path = /obj/machinery/rnd/production/circuit_imprinter/department/science
 
+/obj/item/circuitboard/machine/circuit_imprinter/department/engineering
+	name = "Departmental Circuit Imprinter - Engineering (Machine Board)"
+	build_path = /obj/machinery/rnd/production/circuit_imprinter/department/engineering
+
 /obj/item/circuitboard/machine/destructive_analyzer
 	name = "Destructive Analyzer (Machine Board)"
 	build_path = /obj/machinery/rnd/destructive_analyzer
