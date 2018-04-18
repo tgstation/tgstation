@@ -232,7 +232,7 @@
 	id = "protolathe"
 	build_path = /obj/item/circuitboard/machine/protolathe
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+//	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/circuit_imprinter
 	name = "Machine Design (Circuit Imprinter Board)"
