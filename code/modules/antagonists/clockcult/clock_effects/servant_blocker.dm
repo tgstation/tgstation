@@ -42,3 +42,6 @@
 
 /obj/effect/clockwork/servant_blocker/ex_act(severity, target)
 	return
+
+/obj/effect/clockwork/servant_blocker/safe_throw_at()
+	return

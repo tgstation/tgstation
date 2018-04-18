@@ -50,7 +50,7 @@
 		playsound(chassis, fire_sound, 50, 1)
 
 		sleep(max(0, projectile_delay))
-	
+
 	if(kickback)
 		chassis.newtonian_move(turn(chassis.dir,180))
 	chassis.log_message("Fired from [src.name], targeting [target].")
@@ -428,6 +428,5 @@
 	if(!..())
 		if(ismovableatom(hit_atom))
 			var/atom/movable/AM = hit_atom
-			AM.throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
+			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
 		qdel(src)
-
