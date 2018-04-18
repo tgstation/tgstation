@@ -36,7 +36,7 @@
 	display_name = "Biological Processing"
 	description = "From slimes to kitchens."
 	prereq_ids = list("biotech")
-	design_ids = list("smartfridge", "gibber", "deepfryer", "monkey_recycler", "processor", "gibber", "microwave", "reagentgrinder", "dish_drive")
+	design_ids = list("smartfridge", "gibber", "deepfryer", "monkey_recycler", "processor", "slimeprocessor", "gibber", "microwave", "reagentgrinder", "dish_drive")
 	research_cost = 2500
 	export_price = 5000
 
