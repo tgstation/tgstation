@@ -364,6 +364,7 @@
 		//13
 		list(
 			"key" = /obj/item/stock_parts/capacitor,
+			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "Advanced scanner module is secured."
 		),
