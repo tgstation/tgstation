@@ -286,8 +286,8 @@
 	addiction_threshold = 50 // doesn't do shit though
 
 /datum/reagent/drug/pupupipi/on_mob_life(mob/living/M)
-	var/high_message = pick("You need mo' o' dat sweet brown juice...", "Your guts tingle...", "You feel lightheaded...")
 	if(prob(5))
+		var/high_message = pick("You need mo' o' dat sweet brown juice...", "Your guts tingle...", "You feel lightheaded...")
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.Jitter(30)
 	if(prob(15)) //once every six-ish ticks. is that ok?
@@ -296,10 +296,8 @@
 
 /datum/reagent/drug/pupupipi/overdose_process(mob/living/carbon/human/H)
 	CHECK_DNA_AND_SPECIES(H)
+	H.setBrainLoss(30)
 	if(ishuman(H))
 		to_chat(H, "<span class= 'userdanger'>Oh shit!</span>")
 		H.set_species(/datum/species/krokodil_addict)
-		H.setBrainLoss(30)
-	else
-		H.setBrainLoss(30)
 	..()
