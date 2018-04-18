@@ -19,6 +19,7 @@
 	var/mutable_appearance/beaker_overlay
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
+	var/has_panel_overlay = TRUE
 	var/macrotier = 1
 	var/obj/item/reagent_containers/beaker = null
 	var/list/dispensable_reagents = list(
@@ -70,6 +71,11 @@
 	QDEL_NULL(cell)
 	return ..()
 
+/obj/machinery/chem_dispenser/examine(mob/user)
+	..()
+	if(panel_open)
+		to_chat(user, "<span class='notice'>[src]'s maintenance hatch is open!</span>")
+
 /obj/machinery/chem_dispenser/process()
 	if (recharge_counter >= 4)
 		if(!is_operational())
@@ -94,13 +100,13 @@ obj/machinery/chem_dispenser/proc/work_animation()
 
 /obj/machinery/chem_dispenser/power_change()
 	..()
-	if(!powered() && nopower_state)
-		icon_state = nopower_state
-	else
-		icon_state = initial(icon_state)
+	icon_state = "[(nopower_state && !powered()) ? nopower_state : initial(icon_state)]"
 
-obj/machinery/chem_dispenser/update_icon()
+/obj/machinery/chem_dispenser/update_icon()
 	cut_overlays()
+	if(has_panel_overlay && panel_open)
+		add_overlay(mutable_appearance(icon, "[initial(icon_state)]_panel-o"))
+
 	if(beaker)
 		beaker_overlay = display_beaker()
 		add_overlay(beaker_overlay)
@@ -186,23 +192,32 @@ obj/machinery/chem_dispenser/update_icon()
 		return
 	switch(action)
 		if("amount")
+			if(!is_operational())
+				return
 			var/target = text2num(params["target"])
 			if(target in beaker.possible_transfer_amounts)
 				amount = target
 				work_animation()
 				. = TRUE
 		if("dispense")
+			if(!is_operational() || QDELETED(cell))
+				return
 			var/reagent = params["reagent"]
 			if(beaker && dispensable_reagents.Find(reagent))
 				var/datum/reagents/R = beaker.reagents
 				var/free = R.maximum_volume - R.total_volume
 				var/actual = min(amount, (cell.charge * powerefficiency)*10, free)
 
+				if(!cell.use(actual / powerefficiency))
+					say("Not enough energy to complete operation!")
+					return
 				R.add_reagent(reagent, actual)
-				cell.use(actual / powerefficiency)
+
 				work_animation()
 				. = TRUE
 		if("remove")
+			if(!is_operational())
+				return
 			var/amount = text2num(params["amount"])
 			if(beaker && amount in beaker.possible_transfer_amounts)
 				beaker.reagents.remove_all(amount)
@@ -217,6 +232,8 @@ obj/machinery/chem_dispenser/update_icon()
 				update_icon()
 				. = TRUE
 		if("dispense_recipe")
+			if(!is_operational() || QDELETED(cell))
+				return
 			var/recipe_to_use = params["recipe"]
 			var/list/chemicals_to_dispense = process_recipe_list(recipe_to_use)
 			var/res = get_macro_resolution()
@@ -228,16 +245,24 @@ obj/machinery/chem_dispenser/update_icon()
 					var/free = R.maximum_volume - R.total_volume
 					var/actual = min(round(chemicals_to_dispense[key], res), (cell.charge * powerefficiency)*10, free)
 					if(actual)
+						if(!cell.use(actual / powerefficiency))
+							say("Not enough energy to complete operation!")
+							return
 						R.add_reagent(r_id, actual)
-						cell.use(actual / powerefficiency)
 						work_animation()
 		if("clear_recipes")
+			if(!is_operational())
+				return
 			var/yesno = alert("Clear all recipes?",, "Yes","No")
 			if(yesno == "Yes")
 				saved_recipes = list()
 		if("add_recipe")
+			if(!is_operational())
+				return
 			var/name = stripped_input(usr,"Name","What do you want to name this recipe?", "Recipe", MAX_NAME_LEN)
 			var/recipe = stripped_input(usr,"Recipe","Insert recipe with chem IDs")
+			if(!usr.canUseTopic(src, !issilicon(usr)))
+				return
 			if(name && recipe)
 				var/list/first_process = splittext(recipe, ";")
 				if(!LAZYLEN(first_process))
@@ -263,7 +288,8 @@ obj/machinery/chem_dispenser/update_icon()
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
 	if(default_unfasten_wrench(user, I))
 		return
-	if(default_deconstruction_screwdriver(user, "dispenser-o", "dispenser", I))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+		update_icon()
 		return
 
 	if(exchange_parts(user, I))
@@ -338,9 +364,9 @@ obj/machinery/chem_dispenser/update_icon()
 	if (macrotier > 1)
 		. -= macrotier // 5 for tier1, 3 for 2, 2 for 3, 1 for 4.
 
-/obj/machinery/chem_dispenser/proc/check_macro(var/macro)
+/obj/machinery/chem_dispenser/proc/check_macro(macro)
 	var/res = get_macro_resolution()
-	for (var/reagent in splittext(macro, ";"))
+	for (var/reagent in splittext(trim(macro), ";"))
 		if (!check_macro_part(reagent, res))
 			return FALSE
 	return TRUE
@@ -383,6 +409,7 @@ obj/machinery/chem_dispenser/update_icon()
 	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "soda_dispenser"
+	has_panel_overlay = FALSE
 	amount = 10
 	pixel_y = 6
 	layer = WALL_OBJ_LAYER

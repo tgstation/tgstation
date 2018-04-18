@@ -1,6 +1,6 @@
 // Disposal bin and Delivery chute.
 
-#define SEND_PRESSURE 0.05*ONE_ATMOSPHERE
+#define SEND_PRESSURE (0.05*ONE_ATMOSPHERE)
 
 /obj/machinery/disposal
 	icon = 'icons/obj/atmospherics/pipes/disposal.dmi'
@@ -9,7 +9,8 @@
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
-	interaction_flags_machine = INTERACT_MACHINE_OPEN
+	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
+	obj_flags = CAN_BE_HIT | USES_TGUI
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/full_pressure = FALSE
 	var/pressure_charging = TRUE
@@ -245,13 +246,16 @@
 	return src
 
 //How disposal handles getting a storage dump from a storage object
-/obj/machinery/disposal/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
+/obj/machinery/disposal/storage_contents_dump_act(datum/component/storage/src_object, mob/user)
+	. = ..()
+	if(.)
+		return
 	for(var/obj/item/I in src_object)
-		if(user.s_active != src_object)
+		if(user.active_storage != src_object)
 			if(I.on_found(user))
 				return
 		src_object.remove_from_storage(I, src)
-	return 1
+	return TRUE
 
 // Disposal bin
 // Holds items for disposal into pipe system
@@ -267,11 +271,12 @@
 
 // attack by item places it in to disposal
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/storage/bag/trash))
+	if(istype(I, /obj/item/storage/bag/trash))	//Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
+		GET_COMPONENT_FROM(STR, /datum/component/storage, T)
 		to_chat(user, "<span class='warning'>You empty the bag.</span>")
 		for(var/obj/item/O in T.contents)
-			T.remove_from_storage(O,src)
+			STR.remove_from_storage(O,src)
 		T.update_icon()
 		update_icon()
 	else

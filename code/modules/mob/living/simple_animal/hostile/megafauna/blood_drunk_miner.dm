@@ -28,6 +28,7 @@ Difficulty: Medium
 	icon_state = "miner"
 	icon_living = "miner"
 	icon = 'icons/mob/broadMobs.dmi'
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	light_color = "#E4C7C5"
 	movement_type = GROUND
 	speak_emote = list("roars")
@@ -262,4 +263,3 @@ Difficulty: Medium
 	invisibility = 100
 
 #undef MINER_DASH_RANGE
-#undef MEDAL_PREFIX

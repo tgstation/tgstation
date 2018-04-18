@@ -881,9 +881,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center>"
 		dat += "<hr>"
 		dat += "<center><b>Current traits:</b> [all_traits.len ? all_traits.Join(", ") : "None"]</center>"
-		/*dat += "<center><font color='#AAFFAA'>[positive_traits.len] / [MAX_POSITIVE_TRAITS]</font> \
-		| <font color='#AAAAFF'>[neutral_traits.len] / [MAX_NEUTRAL_TRAITS]</font> \
-		| <font color='#FFAAAA'>[negative_traits.len] / [MAX_NEGATIVE_TRAITS]</font></center><br>"*/
 		dat += "<center>[all_traits.len] / [MAX_TRAITS] max traits<br>\
 		<b>Trait balance remaining:</b> [GetTraitBalance()]</center><br>"
 		for(var/V in SStraits.traits)
@@ -891,22 +888,35 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/trait_name = initial(T.name)
 			var/has_trait
 			var/trait_cost = initial(T.value) * -1
+			var/lock_reason = "This trait is unavailable."
+			var/trait_conflict = FALSE
 			for(var/_V in all_traits)
 				if(_V == trait_name)
 					has_trait = TRUE
+			if(initial(T.mood_trait) && CONFIG_GET(flag/disable_human_mood))
+				lock_reason = "Mood is disabled."
+				trait_conflict = TRUE
 			if(has_trait)
-				trait_cost *= -1 //invert it back, since we'd be regaining this amount
+				if(trait_conflict)
+					all_traits -= trait_name
+					has_trait = FALSE
+				else
+					trait_cost *= -1 //invert it back, since we'd be regaining this amount
 			if(trait_cost > 0)
 				trait_cost = "+[trait_cost]"
 			var/font_color = "#AAAAFF"
 			if(initial(T.value) != 0)
 				font_color = initial(T.value) > 0 ? "#AAFFAA" : "#FFAAAA"
-			if(has_trait)
-				dat += "<b><font color='[font_color]'>[trait_name]</font></b> - [initial(T.desc)] \
-				<a href='?_src_=prefs;preference=trait;task=update;trait=[trait_name]'>[has_trait ? "Lose" : "Take"] ([trait_cost] pts.)</a><br>"
-			else
+			if(trait_conflict)
 				dat += "<font color='[font_color]'>[trait_name]</font> - [initial(T.desc)] \
-				<a href='?_src_=prefs;preference=trait;task=update;trait=[trait_name]'>[has_trait ? "Lose" : "Take"] ([trait_cost] pts.)</a><br>"
+				<font color='red'><b>LOCKED: [lock_reason]</b></font><br>"
+			else
+				if(has_trait)
+					dat += "<b><font color='[font_color]'>[trait_name]</font></b> - [initial(T.desc)] \
+					<a href='?_src_=prefs;preference=trait;task=update;trait=[trait_name]'>[has_trait ? "Lose" : "Take"] ([trait_cost] pts.)</a><br>"
+				else
+					dat += "<font color='[font_color]'>[trait_name]</font> - [initial(T.desc)] \
+					<a href='?_src_=prefs;preference=trait;task=update;trait=[trait_name]'>[has_trait ? "Lose" : "Take"] ([trait_cost] pts.)</a><br>"
 		dat += "<br><center><a href='?_src_=prefs;preference=trait;task=reset'>Reset Traits</a></center>"
 
 	user << browse(null, "window=preferences")

@@ -21,7 +21,7 @@
 	GET_COMPONENT(chasm_component, /datum/component/chasm)
 	chasm_component.drop(AM)
 
-/turf/open/chasm/MakeSlippery()
+/turf/open/chasm/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
 /turf/open/chasm/MakeDry()

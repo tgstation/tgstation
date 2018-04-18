@@ -90,7 +90,7 @@
 	if(do_tick && !is_running)
 		is_running = TRUE
 		tick()
-	else if(is_running)
+	else if(!do_tick && is_running)
 		is_running = FALSE
 
 
