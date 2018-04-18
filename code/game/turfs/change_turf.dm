@@ -25,8 +25,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			O = new()
 			O.underlays.Add(T)
 		T.ChangeTurf(type)
-		for(var/group in decals)
-			T.add_decal(decals[group],group)
 		if(underlays.len)
 			T.underlays = O.underlays
 	if(T.icon_state != icon_state)
