@@ -323,20 +323,12 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/board/processor
-	name = "Machine Design (Food Processor Board)"
-	desc = "The circuit board for a food processor."
+	name = "Machine Design (Food/Slime Processor Board)"
+	desc = "The circuit board for a processing unit. Screwdrive the circuit to switch between food (default) or slime processing."
 	id = "processor"
 	build_path = /obj/item/circuitboard/machine/processor
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
-/datum/design/board/slimeprocessor
-	name = "Machine Design (Slime Processor Board)"
-	desc = "The circuit board for a slime processor."
-	id = "slimeprocessor"
-	build_path = /obj/item/circuitboard/machine/processor/slime
-	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/board/recycler
 	name = "Machine Design (Recycler Board)"
