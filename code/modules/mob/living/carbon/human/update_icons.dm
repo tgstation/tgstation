@@ -537,7 +537,7 @@ generate/load female uniform sprites matching all previously decided variables
 		standing.overlays.Add(worn_overlays)
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
-	
+
 	//Handle held offsets
 	var/mob/M = loc
 	if(istype(M))
@@ -546,11 +546,11 @@ generate/load female uniform sprites matching all previously decided variables
 			standing.pixel_x += L["x"] //+= because of center()ing
 			standing.pixel_y += L["y"]
 
- 	standing.alpha = alpha
- 	standing.color = color
- 
- 	return standing
- 
+	standing.alpha = alpha
+	standing.color = color
+
+	return standing
+
 
 /obj/item/proc/get_held_offsets()
 	var/list/L
