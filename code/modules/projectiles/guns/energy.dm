@@ -128,6 +128,7 @@
 	return
 
 /obj/item/gun/energy/update_icon()
+	..()
 	if(!automatic_charge_overlays)
 		return
 	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
