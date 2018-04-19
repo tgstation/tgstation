@@ -23,6 +23,31 @@
 	mood_change = 3
 	timeout = 3000
 
+/datum/mood_event/pet_corgi_dogperson
+	description = "<span class='nicegreen'>WHO'S A GOOD BOY? IS IT YOU? ARE YOU THE GOOD BOY???</span>\n"
+	mood_change = 5
+	timeout = 3000
+
+/datum/mood_event/pet_corgi_catperson
+	description = "<span class='nicegreen'>Hehe, dogs are cute.</span>\n"
+	mood_change = 1
+	timeout = 3000
+
+/datum/mood_event/pet_cat
+	description = "<span class='nicegreen'>I pet a cat, and it didn't even bite me!</span>\n"
+	mood_change = 3
+	timeout = 3000
+
+/datum/mood_event/pet_cat_catperson
+	description = "<span class='nicegreen'>I pet a cat and it was FLUFFY.</span>\n"
+	mood_change = 5
+	timeout = 3000
+
+/datum/mood_event/pet_cat_dogperson
+	description = "<span class='nicegreen'>Are all cats this content to laze around?</span>\n" //yes.
+	mood_change = 1
+	timeout = 3000
+
 /datum/mood_event/honk
 	description = "<span class='nicegreen'>Maybe clowns aren't so bad after all. Honk!</span>\n"
 	mood_change = 2

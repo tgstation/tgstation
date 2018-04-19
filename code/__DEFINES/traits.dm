@@ -59,6 +59,8 @@
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
+#define TRAIT_DOG_PERSON		"dog_person" //you like dogs more than cats!
+#define TRAIT_CAT_PERSON		"cat_person" //you like cats more than dogs!
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

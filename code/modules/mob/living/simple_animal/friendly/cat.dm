@@ -234,11 +234,20 @@
 		if("harm")
 			wuv(-1, M)
 
-/mob/living/simple_animal/pet/cat/proc/wuv(change, mob/M)
+/mob/living/simple_animal/pet/cat/proc/wuv(change, mob/living/M)
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD)
 				new /obj/effect/temp_visual/heart(loc)
+				if(M.has_trait(TRAIT_CAT_PERSON))
+					if(M.has_trait(TRAIT_DOG_PERSON))
+						M.SendSignal(COMSIG_ADD_MOOD_EVENT, "wuv", /datum/mood_event/pet_cat)
+					else
+						M.SendSignal(COMSIG_ADD_MOOD_EVENT, "wuv", /datum/mood_event/pet_cat_catperson)
+				else if(M.has_trait(TRAIT_DOG_PERSON))
+					M.SendSignal(COMSIG_ADD_MOOD_EVENT, "wuv", /datum/mood_event/pet_cat_dogperson)
+				else
+					M.SendSignal(COMSIG_ADD_MOOD_EVENT, "wuv", /datum/mood_event/pet_cat)
 				emote("me", 1, "purrs!")
 		else
 			if(M && stat != DEAD)
