@@ -353,19 +353,18 @@
 	if(!isturf(S.loc))
 		return
 	var/turf/T = get_turf(S)
-
-	var/obj/structure/spider/stickyweb/W = locate() in T
-	if(W)
-		to_chat(S, "<span class='warning'>There's already a web here!</span>")
-		return
+	var/levelup = FALSE
+	if(locate(/obj/structure/spider/stickyweb) in T)
+		levelup = TRUE
 
 	if(S.busy != SPINNING_WEB)
 		S.busy = SPINNING_WEB
-		S.visible_message("<span class='notice'>[S] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
+		S.visible_message("<span class='notice'>[S] begins to secrete a sticky substance.</span>","<span class='notice'>[levelup ? "You begin to lay a web." : "You begin to reinforce the web"]</span>")
 		S.stop_automated_movement = TRUE
 		if(do_after(S, 40, target = T))
 			if(S.busy == SPINNING_WEB && S.loc == T)
-				new /obj/structure/spider/stickyweb(T)
+				if(!levelup)
+					new /obj/structure/spider/stickyweb(T)
 		S.busy = SPIDER_IDLE
 		S.stop_automated_movement = FALSE
 	else
