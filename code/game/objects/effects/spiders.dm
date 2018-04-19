@@ -43,12 +43,15 @@
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return 1
-	else if(isliving(mover))
+	if(istype(mover, /obj/item/projectile))
+		return prob(30)
+	if(isliving(mover))
+		if(mover.pulledby)
+			if(istype(mover.pulledby, /mob/living/simple_animal/hostile/poison/giant_spider))
+				return 1
 		if(prob(50))
 			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
 			return 0
-	else if(istype(mover, /obj/item/projectile))
-		return prob(30)
 	return 1
 
 /obj/structure/spider/eggcluster
