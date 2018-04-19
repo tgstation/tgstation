@@ -29,30 +29,55 @@
 
 /obj/structure/spider/stickyweb
 	icon_state = "stickyweb1"
+	var/max_integrity = 10
+	var/mobwebbiness = 30 //prob that you get stuck in the web when moving through it
+	var/projectilewebbiness = 75 //same as above, but for projectiles.
+	var/level = 1 //used for picking sprites for the web
 
 /obj/structure/spider/stickyweb/Initialize()
-	switch(rand(1,3))
-		if(1)
-			icon_state = "stickyweb1"
-		if(2)
-			icon_state = "stickyweb2"
-		if(3)
-			icon_state = "stickyweb3"
+	var/T = getTurf(src)
+	if(istype(T, turf/closed))
+		switch(rand(1,3))
+			if(1)
+				icon_state = "stickywall[level]-1"
+			if(2)
+				icon_state = "stickywall[level]-2"
+			if(3)
+				icon_state = "stickywall[level]-3"
+	else	
+		switch(rand(1,3))
+			if(1)
+				icon_state = "stickyweb[level]-1"
+			if(2)
+				icon_state = "stickyweb[level]-2"
+			if(3)
+				icon_state = "stickyweb[level]-3"
 	. = ..()
 
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return 1
 	if(istype(mover, /obj/item/projectile))
-		return prob(30)
+		return prob(projectilewebbiness)
 	if(isliving(mover))
 		if(mover.pulledby)
 			if(istype(mover.pulledby, /mob/living/simple_animal/hostile/poison/giant_spider))
 				return 1
-		if(prob(50))
+		if(prob(mobwebbiness))
 			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
 			return 0
 	return 1
+
+/obj/structure/spider/stickyweb/medium
+	max_integrity = 20
+	mobwebbiness = 60
+	level = 2
+
+/obj/structure/spider/stickyweb/heavy
+	max_integrity = 40
+	mobwebbiness = 80
+	projectilewebbiness = 25
+	level = 3
 
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
