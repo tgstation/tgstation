@@ -3326,6 +3326,7 @@
 /area/centcom/supply)
 "jP" = (
 /obj/machinery/conveyor_switch/oneway{
+	dir = 8;
 	id = "XCCQMLoad";
 	pixel_x = 6
 	},

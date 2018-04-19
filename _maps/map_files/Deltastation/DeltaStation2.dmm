@@ -4497,19 +4497,19 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/conveyor/inverted{
-	dir = 5;
-	id = "garbage"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/corner,
+/obj/machinery/conveyor{
+	dir = 5;
+	id = "garbage"
+	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "apD" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/structure/disposalpipe/segment{
@@ -4528,7 +4528,7 @@
 /area/maintenance/disposal)
 "apE" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/structure/disposalpipe/segment{
@@ -4999,7 +4999,7 @@
 /area/maintenance/disposal)
 "aqE" = (
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 1;
 	id = "garbage"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -5293,7 +5293,7 @@
 /area/maintenance/disposal)
 "arg" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "garbage"
 	},
 /obj/machinery/door/window/eastright{
@@ -5740,21 +5740,21 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/conveyor/inverted{
-	dir = 9;
-	id = "garbage"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/machinery/conveyor{
+	dir = 9;
+	id = "garbage"
+	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "asf" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "garbage"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -5764,7 +5764,7 @@
 /area/maintenance/disposal)
 "asg" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "garbage"
 	},
 /obj/effect/decal/cleanable/blood/splatter,
@@ -5774,10 +5774,6 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "ash" = (
-/obj/machinery/conveyor{
-	dir = 6;
-	id = "garbage"
-	},
 /obj/machinery/door/window/eastright{
 	base_state = "left";
 	dir = 4;
@@ -5789,6 +5785,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
+	},
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -6510,10 +6510,6 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "atB" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "garbage"
-	},
 /obj/structure/disposaloutlet{
 	dir = 4
 	},
@@ -6527,7 +6523,7 @@
 /area/maintenance/disposal)
 "atC" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/structure/disposalpipe/segment{
@@ -6539,7 +6535,7 @@
 /area/maintenance/disposal)
 "atD" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -6550,7 +6546,7 @@
 /area/maintenance/disposal)
 "atE" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/machinery/recycler,
@@ -6564,13 +6560,13 @@
 	name = "Danger: Conveyor Access";
 	req_access_txt = "12"
 	},
-/obj/machinery/conveyor{
-	dir = 10;
-	id = "garbage"
-	},
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/machinery/conveyor/inverted{
+	dir = 10;
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -100477,7 +100473,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/conveyor{
 	dir = 5;
-	id = "QMLoad2"
+	id = "cargoload"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
