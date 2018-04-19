@@ -1,0 +1,6 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Oingo-boingo punch-face and meteor shot can no longer move gateways or Reebe servant blocker effects"
+  - bugfix: "Mechas piloted by servants of Ratvar now teleport to the servant side of Reebe when entering a rift"
+  - admin: "Gravity generators can now be thrown in buildmode"

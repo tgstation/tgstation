@@ -234,8 +234,6 @@
 		to_chat(user, "<span class='warning'>They won't fit in, as there is already stuff inside!</span>")
 		return
 	if(T.use(10))
-		if(user.s_active)
-			user.s_active.close(user)
 		var/obj/item/bot_assembly/floorbot/B = new
 		B.toolbox = type
 		user.put_in_hands(B)
@@ -311,7 +309,6 @@
 	A.firstaid = type
 	qdel(S)
 	qdel(src)
-
 
 /obj/item/bot_assembly/medbot/attackby(obj/item/W, mob/user, params)
 	..()

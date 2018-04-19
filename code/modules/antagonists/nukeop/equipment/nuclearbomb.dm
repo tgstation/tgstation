@@ -1,16 +1,3 @@
-#define NUKESTATE_INTACT		5
-#define NUKESTATE_UNSCREWED		4
-#define NUKESTATE_PANEL_REMOVED		3
-#define NUKESTATE_WELDED		2
-#define NUKESTATE_CORE_EXPOSED	1
-#define NUKESTATE_CORE_REMOVED	0
-
-#define NUKE_OFF_LOCKED		0
-#define NUKE_OFF_UNLOCKED	1
-#define NUKE_ON_TIMING		2
-#define NUKE_ON_EXPLODING	3
-
-
 /obj/machinery/nuclearbomb
 	name = "nuclear fission explosive"
 	desc = "You probably shouldn't stick around to see if this is armed."
@@ -59,9 +46,8 @@
 		set_safety()
 	GLOB.poi_list -= src
 	GLOB.nuke_list -= src
-	if(countdown)
-		qdel(countdown)
-	countdown = null
+	QDEL_NULL(countdown)
+	QDEL_NULL(core)
 	. = ..()
 
 /obj/machinery/nuclearbomb/examine(mob/user)
@@ -245,9 +231,6 @@
 		else
 			var/volume = (get_time_left() <= 20 ? 30 : 5)
 			playsound(loc, 'sound/items/timer.ogg', volume, 0)
-
-/obj/machinery/nuclearbomb/attack_paw(mob/user)
-	return attack_hand(user)
 
 /obj/machinery/nuclearbomb/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -459,10 +442,12 @@
 
 	//Cinematic
 	SSticker.mode.OnNukeExplosion(off_station)
-	var/bombz = z
-	Cinematic(get_cinematic_type(off_station),world,CALLBACK(SSticker,/datum/controller/subsystem/ticker/proc/station_explosion_detonation,src))
-	INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel,bombz)
+	really_actually_explode(off_station)
 	SSticker.roundend_check_paused = FALSE
+
+/obj/machinery/nuclearbomb/proc/really_actually_explode(off_station)
+	Cinematic(get_cinematic_type(off_station),world,CALLBACK(SSticker,/datum/controller/subsystem/ticker/proc/station_explosion_detonation,src))
+	INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, z)
 
 /obj/machinery/nuclearbomb/proc/get_cinematic_type(off_station)
 	if(off_station < 2)

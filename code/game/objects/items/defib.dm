@@ -80,6 +80,7 @@
 /obj/item/defibrillator/ui_action_click()
 	toggle_paddles()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user)
 	if(loc == user)
 		if(slot_flags == SLOT_BACK)
@@ -96,9 +97,10 @@
 		return
 	else if(istype(loc, /obj/machinery/defibrillator_mount))
 		ui_action_click() //checks for this are handled in defibrillator.mount.dm
-	..()
+	return ..()
 
 /obj/item/defibrillator/MouseDrop(obj/over_object)
+	. = ..()
 	if(ismob(loc))
 		var/mob/M = loc
 		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
@@ -417,7 +419,7 @@
 	var/mob/living/carbon/H = M
 
 
-	if(user.zone_selected != "chest")
+	if(user.zone_selected != BODY_ZONE_CHEST)
 		to_chat(user, "<span class='warning'>You need to target your patient's chest with [src]!</span>")
 		return
 
@@ -507,7 +509,7 @@
 					H.visible_message("<span class='warning'>[H] thrashes wildly, clutching at their chest!</span>",
 						"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 				H.set_heartattack(TRUE)
-			H.apply_damage(50, BURN, "chest")
+			H.apply_damage(50, BURN, BODY_ZONE_CHEST)
 			add_logs(user, H, "overloaded the heart of", defib)
 			H.Knockdown(100)
 			H.Jitter(100)
@@ -626,7 +628,7 @@
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = FALSE
-	
+
 /obj/item/twohanded/shockpaddles/cyborg/attack(mob/M, mob/user)
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user

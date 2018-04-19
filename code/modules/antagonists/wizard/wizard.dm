@@ -109,8 +109,6 @@
 
 /datum/antagonist/wizard/on_removal()
 	unregister()
-	for(var/objective in objectives)
-		owner.objectives -= objective
 	owner.RemoveAllSpells() // TODO keep track which spells are wizard spells which innate stuff
 	return ..()
 

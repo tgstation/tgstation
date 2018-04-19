@@ -36,20 +36,18 @@
 	del_on_death = TRUE
 	var/mode = MINEDRONE_COLLECT
 	var/light_on = 0
-
-	var/datum/action/innate/minedrone/toggle_light/toggle_light_action
-	var/datum/action/innate/minedrone/toggle_mode/toggle_mode_action
-	var/datum/action/innate/minedrone/dump_ore/dump_ore_action
 	var/obj/item/gun/energy/kinetic_accelerator/minebot/stored_gun
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize()
 	. = ..()
 	stored_gun = new(src)
-	toggle_light_action = new()
+	var/datum/action/innate/minedrone/toggle_light/toggle_light_action = new()
 	toggle_light_action.Grant(src)
-	toggle_mode_action = new()
+	var/datum/action/innate/minedrone/toggle_meson_vision/toggle_meson_vision_action = new()
+	toggle_meson_vision_action.Grant(src)
+	var/datum/action/innate/minedrone/toggle_mode/toggle_mode_action = new()
 	toggle_mode_action.Grant(src)
-	dump_ore_action = new()
+	var/datum/action/innate/minedrone/dump_ore/dump_ore_action = new()
 	dump_ore_action.Grant(src)
 	var/obj/item/implant/radio/mining/imp = new(src)
 	imp.implant(src)
@@ -59,6 +57,11 @@
 	access_card.access = M.get_access()
 
 	SetCollectBehavior()
+
+/mob/living/simple_animal/hostile/mining_drone/Destroy()
+	for (var/datum/action/innate/minedrone/action in actions)
+		qdel(action)
+	return ..()
 
 /mob/living/simple_animal/hostile/mining_drone/sentience_act()
 	..()
@@ -115,6 +118,9 @@
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
+	. = ..()
+	if(.)
+		return
 	if(M.a_intent == INTENT_HELP)
 		toggle_mode()
 		switch(mode)
@@ -123,7 +129,6 @@
 			if(MINEDRONE_ATTACK)
 				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 		return
-	..()
 
 /mob/living/simple_animal/hostile/mining_drone/CanPass(atom/movable/O)
 	if(istype(O, /obj/item/projectile/kinetic))
@@ -139,7 +144,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
 	mode = MINEDRONE_COLLECT
-	idle_vision_range = 9
+	vision_range = 9
 	search_objects = 2
 	wander = TRUE
 	ranged = FALSE
@@ -150,7 +155,7 @@
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
 	mode = MINEDRONE_ATTACK
-	idle_vision_range = 7
+	vision_range = 7
 	search_objects = 0
 	wander = FALSE
 	ranged = TRUE
@@ -190,6 +195,24 @@
 	if(mode != MINEDRONE_ATTACK && amount > 0)
 		SetOffenseBehavior()
 	. = ..()
+
+/datum/action/innate/minedrone/toggle_meson_vision
+	name = "Toggle Meson Vision"
+	button_icon_state = "meson"
+
+/datum/action/innate/minedrone/toggle_meson_vision/Activate()
+	var/mob/living/simple_animal/hostile/mining_drone/user = owner
+	if(user.sight & SEE_TURFS)
+		user.sight &= ~SEE_TURFS
+		user.lighting_alpha = initial(user.lighting_alpha)
+	else
+		user.sight |= SEE_TURFS
+		user.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+
+	user.sync_lighting_plane_alpha()
+
+	to_chat(user, "<span class='notice'>You toggle your meson vision [(user.sight & SEE_TURFS) ? "on" : "off"].</span>")
+
 
 /mob/living/simple_animal/hostile/mining_drone/proc/toggle_mode()
 	switch(mode)

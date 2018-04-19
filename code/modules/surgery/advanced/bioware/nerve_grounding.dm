@@ -1,4 +1,5 @@
 /obj/item/disk/surgery/nerve_grounding
+	name = "Nerve Grounding Surgery Disk"
 	desc = "The disk provides instructions on how to reroute the nervous system to ground electric shocks."
 	surgeries = list(/datum/surgery/advanced/bioware/nerve_grounding)
 
@@ -11,7 +12,7 @@
 				/datum/surgery_step/incise,
 				/datum/surgery_step/ground_nerves,
 				/datum/surgery_step/close)
-	possible_locs = list("chest")
+	possible_locs = list(BODY_ZONE_CHEST)
 	bioware_target = BIOWARE_NERVES
 
 /datum/surgery_step/ground_nerves

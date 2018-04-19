@@ -260,7 +260,7 @@
 			new /obj/item/gun/ballistic/revolver/mateba(drop_location())
 		if(15)
 			//Random One-use spellbook
-			new /obj/item/spellbook/oneuse/random(drop_location())
+			new /obj/item/book/granter/spell/random(drop_location())
 		if(16)
 			//Servant & Servant Summon
 			var/mob/living/carbon/human/H = new(drop_location())

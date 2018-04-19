@@ -10,6 +10,11 @@
 	var/material_drop_type = /obj/item/stack/sheet/metal
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
+
+/obj/structure/statue/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 1250), 0)
+
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -30,6 +35,9 @@
 	return ..()
 
 /obj/structure/statue/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	user.visible_message("[user] rubs some dust off from the [name]'s surface.", \
@@ -75,11 +83,11 @@
 
 /obj/structure/statue/uranium/attack_hand(mob/user)
 	radiate()
-	..()
+	. = ..()
 
 /obj/structure/statue/uranium/attack_paw(mob/user)
 	radiate()
-	..()
+	. = ..()
 
 /obj/structure/statue/uranium/proc/radiate()
 	if(!active)
@@ -234,7 +242,7 @@
 
 /obj/structure/statue/bananium/attack_hand(mob/user)
 	honk()
-	..()
+	. = ..()
 
 /obj/structure/statue/bananium/attack_paw(mob/user)
 	honk()

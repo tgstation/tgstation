@@ -105,24 +105,25 @@
 			update_icon()
 
 /obj/machinery/pdapainter/attack_hand(mob/user)
-	if(!..())
-		add_fingerprint(user)
+	. = ..()
+	if(.)
+		return
 
-		if(storedpda)
-			var/obj/item/device/pda/P
-			P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist
-			if(!P)
-				return
-			if(!in_range(src, user))
-				return
-			if(!storedpda)//is the pda still there?
-				return
-			storedpda.icon_state = P.icon_state
-			storedpda.desc = P.desc
-			ejectpda()
+	if(storedpda)
+		var/obj/item/device/pda/P
+		P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist
+		if(!P)
+			return
+		if(!in_range(src, user))
+			return
+		if(!storedpda)//is the pda still there?
+			return
+		storedpda.icon_state = P.icon_state
+		storedpda.desc = P.desc
+		ejectpda()
 
-		else
-			to_chat(user, "<span class='notice'>[src] is empty.</span>")
+	else
+		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
 
 /obj/machinery/pdapainter/verb/ejectpda()

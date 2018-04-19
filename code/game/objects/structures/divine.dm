@@ -8,7 +8,9 @@
 	can_buckle = 1
 
 /obj/structure/sacrificealtar/attack_hand(mob/living/user)
-	..()
+	. = ..()
+	if(.)
+		return
 	if(!has_buckled_mobs())
 		return
 	var/mob/living/L = locate() in buckled_mobs
@@ -29,6 +31,9 @@
 	var/last_process = 0
 
 /obj/structure/healingfountain/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(last_process + time_between_uses > world.time)
 		to_chat(user, "<span class='notice'>The fountain appears to be empty.</span>")
 		return

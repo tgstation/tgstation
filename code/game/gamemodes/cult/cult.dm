@@ -94,10 +94,9 @@
 				main_cult = C.cult_team
 	..()
 
-
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun , equip = FALSE) //BASE
 	if (!istype(cult_mind))
-		return 0
+		return FALSE
 
 	var/datum/antagonist/cult/new_cultist = new()
 	new_cultist.give_equipment = equip
@@ -105,7 +104,7 @@
 	if(cult_mind.add_antag_datum(new_cultist))
 		if(stun)
 			cult_mind.current.Unconscious(100)
-		return 1
+		return TRUE
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, silent, stun)
 	if(cult_mind.current)

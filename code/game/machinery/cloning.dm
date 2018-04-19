@@ -172,7 +172,7 @@
 	occupant = H
 
 	if(!clonename)	//to prevent null names
-		clonename = "clone ([rand(0,999)])"
+		clonename = "clone ([rand(1,999)])"
 	H.real_name = clonename
 
 	icon_state = "pod_1"
@@ -444,7 +444,7 @@
 	// brain function, they also have no limbs or internal organs.
 
 	if(!H.has_trait(TRAIT_NODISMEMBER))
-		var/static/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
+		var/static/list/zones = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 		for(var/zone in zones)
 			var/obj/item/bodypart/BP = H.get_bodypart(zone)
 			if(BP)

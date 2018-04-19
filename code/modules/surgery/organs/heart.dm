@@ -2,7 +2,7 @@
 	name = "heart"
 	desc = "I feel bad for the heartless bastard who lost this."
 	icon_state = "heart-on"
-	zone = "chest"
+	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_HEART
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1

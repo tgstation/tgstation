@@ -5,7 +5,7 @@
 /obj/machinery/space_heater
 	anchored = FALSE
 	density = TRUE
-	interact_open = TRUE
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "sheater-off"
 	name = "space heater"

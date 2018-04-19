@@ -20,8 +20,10 @@
 
 /obj/machinery/recycler/Initialize()
 	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
+	AddComponent(/datum/component/butchering, 1, amount_produced,amount_produced/5)
 	. = ..()
 	update_icon()
+	req_one_access = get_all_accesses() + get_all_centcom_access()
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0
@@ -34,6 +36,9 @@
 	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.max_amount = mat_mod
 	amount_produced = min(50, amt_made) + 50
+	GET_COMPONENT(butchering, /datum/component/butchering)
+	butchering.effectiveness = amount_produced
+	butchering.bonus_modifier = amount_produced/5
 
 /obj/machinery/recycler/examine(mob/user)
 	..()
@@ -110,7 +115,7 @@
 		if(brain_holder)
 			emergency_stop(AM)
 		else if(isliving(AM))
-			if(obj_flags & EMAGGED)
+			if((obj_flags & EMAGGED)||((!allowed(AM))&&(!ishuman(AM))))
 				crush_living(AM)
 			else
 				emergency_stop(AM)
@@ -125,16 +130,25 @@
 		playsound(src, item_recycle_sound, 50, 1)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
-	I.forceMove(loc)
 
-	GET_COMPONENT(materials, /datum/component/material_container)
-	var/material_amount = materials.get_item_material_amount(I)
-	if(!material_amount)
-		qdel(I)
+	I.forceMove(loc)
+	var/obj/item/grown/log/L = I
+	if(istype(L))
+		var/seed_modifier = 0
+		if(L.seed)
+			seed_modifier = round(L.seed.potency / 25)
+		new L.plank_type(src.loc, 1 + seed_modifier)
+		qdel(L)
 		return
-	materials.insert_item(I, multiplier = (amount_produced / 100))
-	qdel(I)
-	materials.retrieve_all()
+	else
+		GET_COMPONENT(materials, /datum/component/material_container)
+		var/material_amount = materials.get_item_material_amount(I)
+		if(!material_amount)
+			qdel(I)
+			return
+		materials.insert_item(I, multiplier = (amount_produced / 100))
+		qdel(I)
+		materials.retrieve_all()
 
 
 /obj/machinery/recycler/proc/emergency_stop(mob/living/L)
@@ -158,10 +172,8 @@
 	else
 		playsound(src, 'sound/effects/splat.ogg', 50, 1)
 
-	var/gib = TRUE
 	// By default, the emagged recycler will gib all non-carbons. (human simple animal mobs don't count)
 	if(iscarbon(L))
-		gib = FALSE
 		if(L.stat == CONSCIOUS)
 			L.say("ARRRRRRRRRRRGH!!!")
 		add_mob_blood(L)
@@ -178,12 +190,10 @@
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Unconscious(100)
-
-	// For admin fun, var edit emagged to 2.
-	if(gib)
-		L.gib()
-	else if(obj_flags & EMAGGED)
-		L.adjustBruteLoss(crush_damage)
+	L.adjustBruteLoss(crush_damage)
+	if(L.stat == DEAD && (L.butcher_results || L.guaranteed_butcher_results))
+		GET_COMPONENT(butchering, /datum/component/butchering)
+		butchering.Butcher(src,L)
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"

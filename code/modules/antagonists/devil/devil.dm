@@ -552,18 +552,6 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	parts += printobjectives(owner)
 	return parts.Join("<br>")
 
-/datum/antagonist/devil/roundend_report_footer()
-	//sintouched go here for now as a hack , TODO proper antag datum for these
-	var/list/parts = list()
-	if(SSticker.mode.sintouched.len)
-		parts += "<span class='header'>The sintouched were:</span>"
-		var/list/sintouchedUnique = uniqueList(SSticker.mode.sintouched)
-		for(var/S in sintouchedUnique)
-			var/datum/mind/sintouched_mind = S
-			parts += printplayer(sintouched_mind)
-			parts += printobjectives(sintouched_mind)
-	return parts.Join("<br>")
-
 //A simple super light weight datum for the codex gigas.
 /datum/fakeDevil
 	var/truename

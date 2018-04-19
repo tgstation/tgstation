@@ -13,6 +13,8 @@
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	flags_1 = PREVENT_CLICK_UNDER_1
 
+	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
+
 	var/secondsElectrified = 0
 	var/shockedby = list()
 	var/visible = TRUE
@@ -133,13 +135,11 @@
 			do_animate("deny")
 	return
 
-
-/obj/machinery/door/attack_ai(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/door/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	return try_to_activate_door(user)
-
 
 /obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))

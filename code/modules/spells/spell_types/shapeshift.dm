@@ -13,6 +13,8 @@
 
 	var/revert_on_death = TRUE
 	var/die_with_shapeshifted_form = TRUE
+	var/convert_damage = FALSE //If you want to convert the caster's health to the shift, and vice versa.
+	var/convert_damage_type = BRUTE //Since simplemobs don't have advanced damagetypes, what to convert damage back into.
 
 	var/shapeshift_type
 	var/list/possible_shapes = list(/mob/living/simple_animal/mouse,\
@@ -41,7 +43,7 @@
 			if(!shapeshift_type) //If you aren't gonna decide I am!
 				shapeshift_type = pick(animal_list)
 			shapeshift_type = animal_list[shapeshift_type]
-		
+
 		var/obj/shapeshift_holder/S = locate() in M
 		if(S)
 			Restore(M)
@@ -65,7 +67,7 @@
 	var/obj/shapeshift_holder/H = locate() in shape
 	if(!H)
 		return
-	
+
 	H.restore()
 
 	clothes_req = initial(clothes_req)
@@ -99,6 +101,9 @@
 		stored.mind.transfer_to(shape)
 	stored.forceMove(src)
 	stored.notransform = TRUE
+	if(source.convert_damage)
+		var/damapply = (stored.maxHealth - (stored.health + stored.maxHealth)/2) //Carbons go from -100 to 100 naturally, while simplemobs only go from 0 to 100. Can't do a direct conversion.
+		shape.apply_damage(damapply, source.convert_damage_type)
 	slink = soullink(/datum/soullink/shapeshift, stored , shape)
 	slink.source = src
 
@@ -146,6 +151,10 @@
 		shape.mind.transfer_to(stored)
 	if(death)
 		stored.death()
+	else if(source.convert_damage)
+		stored.revive(full_heal = TRUE)
+		var/damapply = (shape.maxHealth - 2*shape.health) //Since we halved incoming damage, double outgoing.
+		stored.apply_damage(damapply, source.convert_damage_type)
 	qdel(shape)
 	qdel(src)
 

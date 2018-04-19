@@ -73,7 +73,8 @@
 	return ..()
 
 /obj/machinery/recharger/attack_hand(mob/user)
-	if(issilicon(user))
+	. = ..()
+	if(.)
 		return
 
 	add_fingerprint(user)
@@ -84,9 +85,6 @@
 		charging = null
 		use_power = IDLE_POWER_USE
 		update_icon()
-
-/obj/machinery/recharger/attack_paw(mob/user)
-	return attack_hand(user)
 
 /obj/machinery/recharger/attack_tk(mob/user)
 	if(charging)

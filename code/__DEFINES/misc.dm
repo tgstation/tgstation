@@ -80,11 +80,11 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"
-#define UNDER_SUIT_LAYER			SUIT_LAYER+1
+#define UNDER_SUIT_LAYER			(SUIT_LAYER+1)
 
 //AND -1 MEANS "ABOVE", OK?, OK!?!
-#define ABOVE_SHOES_LAYER			SHOES_LAYER-1
-#define ABOVE_BODY_FRONT_LAYER		BODY_FRONT_LAYER-1
+#define ABOVE_SHOES_LAYER			(SHOES_LAYER-1)
+#define ABOVE_BODY_FRONT_LAYER		(BODY_FRONT_LAYER-1)
 
 
 //Security levels
@@ -180,15 +180,17 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define HAS_SENSORS 1
 #define LOCKED_SENSORS 2
 
-//Turf wet states
+//Wet floor type flags. Stronger ones should be higher in number.
 #define TURF_DRY		0
 #define TURF_WET_WATER	1
-#define TURF_WET_LUBE	2
-#define TURF_WET_ICE	3
-#define TURF_WET_PERMAFROST 4
+#define TURF_WET_PERMAFROST	2
+#define TURF_WET_ICE 4
+#define TURF_WET_LUBE	8
 
-//Maximum amount of time, (in approx. seconds.) a tile can be wet for.
-#define MAXIMUM_WET_TIME 300
+#define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
+
+//Maximum amount of time, (in deciseconds) a tile can be wet for.
+#define MAXIMUM_WET_TIME 5 MINUTES
 
 //unmagic-strings for types of polls
 #define POLLTYPE_OPTION		"OPTION"
@@ -260,7 +262,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_IGNORE_TRANSFORM			RESET_TRANSFORM
 #define APPEARANCE_IGNORE_COLOUR			RESET_COLOR
 #define	APPEARANCE_IGNORE_CLIENT_COLOUR		NO_CLIENT_COLOR
-#define APPEARANCE_IGNORE_COLOURING			RESET_COLOR|NO_CLIENT_COLOR
+#define APPEARANCE_IGNORE_COLOURING			(RESET_COLOR|NO_CLIENT_COLOR)
 #define APPEARANCE_IGNORE_ALPHA				RESET_ALPHA
 #define APPEARANCE_NORMAL_GLIDE				~LONG_GLIDE
 
@@ -268,15 +270,15 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_CONSIDER_TRANSFORM		~RESET_TRANSFORM
 #define APPEARANCE_CONSIDER_COLOUR			~RESET_COLOUR
 #define APPEARANCE_CONSIDER_CLIENT_COLOUR	~NO_CLIENT_COLOR
-#define APPEARANCE_CONSIDER_COLOURING		~RESET_COLOR|~NO_CLIENT_COLOR
+#define APPEARANCE_CONSIDER_COLOURING		(~RESET_COLOR|~NO_CLIENT_COLOR)
 #define APPEARANCE_CONSIDER_ALPHA			~RESET_ALPHA
 #define APPEARANCE_LONG_GLIDE				LONG_GLIDE
 
 */
 
 // Consider these images/atoms as part of the UI/HUD
-#define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE
-#define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE
+#define APPEARANCE_UI_IGNORE_ALPHA			(RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE)
+#define APPEARANCE_UI						(RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE)
 
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
@@ -396,8 +398,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 #define MAX_PROC_DEPTH 195 // 200 proc calls deep and shit breaks, this is a bit lower to give some safety room
 
-#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
-
 #define SYRINGE_DRAW 0
 #define SYRINGE_INJECT 1
 
@@ -420,6 +420,9 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //text files
 #define BRAIN_DAMAGE_FILE "traumas.json"
+#define ION_FILE "ion_laws.json"
+#define PIRATE_NAMES_FILE "pirates.json"
+
 
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15

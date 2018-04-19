@@ -79,8 +79,12 @@
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
 	icon_state = "detective"
 	var/candy_cooldown = 0
-	pockets = /obj/item/storage/internal/pocket/small/detective
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/detective
 	dog_fashion = /datum/dog_fashion/head/detective
+
+/obj/item/clothing/head/fedora/Initialize()
+	. = ..()
+	new /obj/item/reagent_containers/food/drinks/flask/det(src)
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	..()

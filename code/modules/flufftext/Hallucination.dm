@@ -471,10 +471,13 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("monkey","corgi","carp","skeleton","demon","zombie")
 	feedback_details += "Type: [kind]"
+	var/list/nearby
+	if(skip_nearby)
+		nearby = get_hearers_in_view(7, target)
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(H == target)
 			continue
-		if(skip_nearby && (H in view(target)))
+		if(skip_nearby && (H in nearby))
 			continue
 		switch(kind)
 			if("monkey")//Monkey
@@ -870,12 +873,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	//Rare audio
 		if("creepy")
 	//These sounds are (mostly) taken from Hidden: Source
-			var/static/list/hallucinations_creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/heart_beat.ogg', 'sound/effects/screech.ogg',\
-				'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',\
-				'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
-				'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
-				'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
-			target.playsound_local(null, pick(hallucinations_creepyasssounds), 50, 1)
+			target.playsound_local(null, pick(CREEPY_SOUNDS), 50, 1)
 		if("ratvar")
 			target.playsound_local(null, 'sound/effects/ratvar_rises.ogg', 100)
 			sleep(150)

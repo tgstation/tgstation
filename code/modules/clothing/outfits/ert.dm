@@ -254,9 +254,9 @@
 
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
 
-	belt = /obj/item/storage/belt/soulstone/full
+	belt = /obj/item/storage/belt/soulstone/full/chappy
 	backpack_contents = list(/obj/item/storage/box/engineer=1,
-		/obj/item/storage/box/holy_grenades=1,
+		/obj/item/grenade/chem_grenade/holy=1,
 		/obj/item/nullrod=1,
 		/obj/item/clothing/mask/gas/sechailer=1,
 		/obj/item/gun/energy/e_gun=1,

@@ -318,7 +318,7 @@
 	cyborg_base_icon = "engineer"
 	moduleselect_icon = "engineer"
 	magpulsing = TRUE
-	hat_offset = INFINITY // No hats
+	hat_offset = -4
 
 /obj/item/robot_module/security
 	name = "Security"
@@ -513,6 +513,7 @@
 	name = "Miner"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
+		/obj/item/borg/sight/meson,
 		/obj/item/storage/bag/ore/cyborg,
 		/obj/item/pickaxe/drill/cyborg,
 		/obj/item/shovel,

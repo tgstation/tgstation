@@ -112,7 +112,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aB" = (
-/obj/machinery/power/supermatter_shard/hugbox{
+/obj/machinery/power/supermatter_crystal/shard/hugbox{
 	anchored = 1;
 	base_icon_state = "darkmatter";
 	explosion_power = 20;
@@ -210,7 +210,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aV" = (
-/obj/machinery/power/supermatter_shard/hugbox{
+/obj/machinery/power/supermatter_crystal/shard/hugbox{
 	anchored = 1;
 	name = "anchored supermatter shard"
 	},

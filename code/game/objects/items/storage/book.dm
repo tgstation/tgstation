@@ -5,10 +5,14 @@
 	icon_state ="book"
 	throw_speed = 2
 	throw_range = 5
-	storage_slots = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE
 	var/title = "book"
+
+/obj/item/storage/book/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 1
 
 /obj/item/storage/book/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
@@ -96,9 +100,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		H.visible_message("<span class='notice'>[user] heals [H] with the power of [deity_name]!</span>")
 		to_chat(H, "<span class='boldnotice'>May the power of [deity_name] compel you to be healed!</span>")
 		playsound(src.loc, "punch", 25, 1, -1)
-		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
-		if(mood)
-			mood.add_event("blessing", /datum/mood_event/blessing)
+		H.SendSignal(COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return 1
 
 /obj/item/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
@@ -207,15 +209,13 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	attack_verb = list("attacked", "burned", "blessed", "damned", "scorched")
 	var/uses = 1
 
-
-
 /obj/item/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
 	if (uses)
 		H.mind.isholy = TRUE
 		uses -= 1
 		to_chat(H, "<span class='userdanger'>You try to open the book AND IT BITES YOU!</span>")
 		playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
-		H.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
+		H.apply_damage(5, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		to_chat(H, "<span class='notice'>Your name appears on the inside cover, in blood.</span>")
 		var/ownername = H.real_name
 		desc += "<span class='warning'>The name [ownername] is written in blood inside the cover.</span>"
