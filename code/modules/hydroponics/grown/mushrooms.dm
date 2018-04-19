@@ -323,12 +323,12 @@
 	reagents_add = list("nutriment" = 0.1)
 	resistance_flags = FIRE_PROOF
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	species = "polypore"		//Default to prevent CI failure.
 
 /obj/item/seeds/lavaland/polypore
 	name = "pack of polypore mycelium"
 	desc = "This mycelium grows into bracket mushrooms, also known as polypores. Woody and firm, shaft miners often use them for makeshift crafts."
 	icon_state = "mycelium-polypore"
-	species = "polypore"
 	plantname = "Polypore Mushrooms"
 	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/shavings
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
