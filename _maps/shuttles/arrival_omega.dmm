@@ -139,7 +139,7 @@
 /area/shuttle/arrival)
 "s" = (
 /obj/structure/table/reinforced,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	pixel_x = -30
 	},
 /obj/item/paper_bin,

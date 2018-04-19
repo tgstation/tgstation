@@ -1,4 +1,4 @@
-/obj/item/device/export_scanner
+/obj/item/export_scanner
 	name = "export scanner"
 	desc = "A device used to check objects against Nanotrasen exports database."
 	icon_state = "export_scanner"
@@ -10,12 +10,12 @@
 	siemens_coefficient = 1
 	var/obj/machinery/computer/cargo/cargo_console = null
 
-/obj/item/device/export_scanner/examine(user)
+/obj/item/export_scanner/examine(user)
 	..()
 	if(!cargo_console)
 		to_chat(user, "<span class='notice'>[src] is not currently linked to a cargo console.</span>")
 
-/obj/item/device/export_scanner/afterattack(obj/O, mob/user, proximity)
+/obj/item/export_scanner/afterattack(obj/O, mob/user, proximity)
 	if(!istype(O) || !proximity)
 		return
 

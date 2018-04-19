@@ -6,10 +6,10 @@
 	req_access_txt = "11" //Engineering Equipment access
 	products = list(/obj/item/clothing/glasses/meson/engine = 2, 
 					/obj/item/clothing/glasses/welding = 3,
-					/obj/item/device/multitool = 4, 
+					/obj/item/multitool = 4, 
 					/obj/item/construction/rcd/loaded = 3, 
 					/obj/item/grenade/chem_grenade/smart_metal_foam = 10,
-					/obj/item/device/geiger_counter = 5, 
+					/obj/item/geiger_counter = 5, 
 					/obj/item/stock_parts/cell/high = 10,
 					/obj/item/electronics/airlock = 10, 
 					/obj/item/electronics/apc = 10, 

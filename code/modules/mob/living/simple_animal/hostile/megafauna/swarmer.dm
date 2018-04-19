@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Initialize()
 	. = ..()
 	swarmer_caps = GLOB.AISwarmerCapsByType //for admin-edits
-	internal = new/obj/item/device/gps/internal/swarmer_beacon(src)
+	internal = new/obj/item/gps/internal/swarmer_beacon(src)
 	for(var/ddir in GLOB.cardinals)
 		new /obj/structure/swarmer/blockade (get_step(src, ddir))
 		var/mob/living/simple_animal/hostile/swarmer/ai/resource/R = new(loc)
@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 		summon_backup(25) //long range, only called max once per 15 seconds, so it's not deathlag
 
 
-/obj/item/device/gps/internal/swarmer_beacon
+/obj/item/gps/internal/swarmer_beacon
 	icon_state = null
 	gpstag = "Hungry Signal"
 	desc = "Transmited over the signal is a strange message repeated in every language you know of, and some you don't too..." //the message is "nom nom nom"

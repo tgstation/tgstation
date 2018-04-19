@@ -282,7 +282,7 @@
 		else
 			to_chat(user, "<span class='warning'>There is already something in [src]!</span>")
 
-	else if(istype(O, /obj/item/device/toner))
+	else if(istype(O, /obj/item/toner))
 		if(toner <= 0)
 			if(!user.temporarilyRemoveItemFromInventory(O))
 				return
@@ -373,7 +373,7 @@
 /*
  * Toner cartridge
  */
-/obj/item/device/toner
+/obj/item/toner
 	name = "toner cartridge"
 	icon_state = "tonercartridge"
 	grind_results = list("iodine" = 40, "iron" = 10)

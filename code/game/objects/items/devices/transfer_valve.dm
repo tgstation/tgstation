@@ -1,4 +1,4 @@
-/obj/item/device/transfer_valve
+/obj/item/transfer_valve
 	icon = 'icons/obj/assemblies.dmi'
 	name = "tank transfer valve"
 	icon_state = "valve_1"
@@ -9,15 +9,15 @@
 	w_class = WEIGHT_CLASS_BULKY
 	var/obj/item/tank/tank_one
 	var/obj/item/tank/tank_two
-	var/obj/item/device/assembly/attached_device
+	var/obj/item/assembly/attached_device
 	var/mob/attacher = null
 	var/valve_open = FALSE
 	var/toggle = 1
 
-/obj/item/device/transfer_valve/IsAssemblyHolder()
+/obj/item/transfer_valve/IsAssemblyHolder()
 	return TRUE
 
-/obj/item/device/transfer_valve/attackby(obj/item/item, mob/user, params)
+/obj/item/transfer_valve/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/tank))
 		if(tank_one && tank_two)
 			to_chat(user, "<span class='warning'>There are already two tanks attached, remove one first!</span>")
@@ -37,7 +37,7 @@
 		update_icon()
 //TODO: Have this take an assemblyholder
 	else if(isassembly(item))
-		var/obj/item/device/assembly/A = item
+		var/obj/item/assembly/A = item
 		if(A.secured)
 			to_chat(user, "<span class='notice'>The device is secured.</span>")
 			return
@@ -57,7 +57,7 @@
 		attacher = user
 	return
 
-/obj/item/device/transfer_valve/attack_self(mob/user)
+/obj/item/transfer_valve/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat = {"<B> Valve properties: </B>
 	<BR> <B> Attachment one:</B> [tank_one] [tank_one ? "<A href='?src=[REF(src)];tankone=1'>Remove</A>" : ""]
@@ -70,7 +70,7 @@
 	popup.open()
 	return
 
-/obj/item/device/transfer_valve/Topic(href, href_list)
+/obj/item/transfer_valve/Topic(href, href_list)
 	..()
 	if(!usr.canUseTopic(src))
 		return
@@ -100,16 +100,16 @@
 	attack_self(usr)
 	add_fingerprint(usr)
 
-/obj/item/device/transfer_valve/proc/process_activation(obj/item/device/D)
+/obj/item/transfer_valve/proc/process_activation(obj/item/D)
 	if(toggle)
 		toggle = FALSE
 		toggle_valve()
 		addtimer(CALLBACK(src, .proc/toggle_off), 5)	//To stop a signal being spammed from a proxy sensor constantly going off or whatever
 
-/obj/item/device/transfer_valve/proc/toggle_off()
+/obj/item/transfer_valve/proc/toggle_off()
 	toggle = TRUE
 
-/obj/item/device/transfer_valve/update_icon()
+/obj/item/transfer_valve/update_icon()
 	cut_overlays()
 	underlays = null
 
@@ -127,13 +127,13 @@
 	if(attached_device)
 		add_overlay("device")
 
-/obj/item/device/transfer_valve/proc/merge_gases()
+/obj/item/transfer_valve/proc/merge_gases()
 	tank_two.air_contents.volume += tank_one.air_contents.volume
 	var/datum/gas_mixture/temp
 	temp = tank_one.air_contents.remove_ratio(1)
 	tank_two.air_contents.merge(temp)
 
-/obj/item/device/transfer_valve/proc/split_gases()
+/obj/item/transfer_valve/proc/split_gases()
 	if (!valve_open || !tank_one || !tank_two)
 		return
 	var/ratio1 = tank_one.air_contents.volume/tank_two.air_contents.volume
@@ -147,7 +147,7 @@
 	it explodes properly when it gets a signal (and it does).
 	*/
 
-/obj/item/device/transfer_valve/proc/toggle_valve()
+/obj/item/transfer_valve/proc/toggle_valve()
 	if(!valve_open && tank_one && tank_two)
 		valve_open = TRUE
 		var/turf/bombturf = get_turf(src)
@@ -155,7 +155,7 @@
 
 		var/attachment = "no device"
 		if(attached_device)
-			if(istype(attached_device, /obj/item/device/assembly/signaler))
+			if(istype(attached_device, /obj/item/assembly/signaler))
 				attachment = "<A HREF='?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_device]</A>"
 			else
 				attachment = attached_device
@@ -197,5 +197,5 @@
 
 // this doesn't do anything but the timer etc. expects it to be here
 // eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
-/obj/item/device/transfer_valve/proc/c_state()
+/obj/item/transfer_valve/proc/c_state()
 	return

@@ -34,7 +34,7 @@
 	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
-	var/obj/item/device/pda/host_pda = null
+	var/obj/item/pda/host_pda = null
 	var/menu
 	var/datum/data/record/active1 = null //General
 	var/datum/data/record/active2 = null //Medical
@@ -51,7 +51,7 @@
 
 /obj/item/cartridge/Initialize()
 	. = ..()
-	var/obj/item/device/pda/pda = loc
+	var/obj/item/pda/pda = loc
 	if(istype(pda))
 		host_pda = pda
 
@@ -710,7 +710,7 @@ Code:
 	return ""
 
 //If the cartridge adds something to each potetial messaging target
-/obj/item/cartridge/proc/message_special(obj/item/device/pda/target)
+/obj/item/cartridge/proc/message_special(obj/item/pda/target)
 	return ""
 
 //This is called for special abilities of cartridges

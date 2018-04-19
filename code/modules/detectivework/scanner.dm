@@ -2,7 +2,7 @@
 
 // TODO: Split everything into easy to manage procs.
 
-/obj/item/device/detective_scanner
+/obj/item/detective_scanner
 	name = "forensic scanner"
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
 	icon_state = "forensicnew"
@@ -22,11 +22,11 @@
 	name = "Display Forensic Scanner Results"
 
 /datum/action/item_action/displayDetectiveScanResults/Trigger()
-	var/obj/item/device/detective_scanner/scanner = target
+	var/obj/item/detective_scanner/scanner = target
 	if(istype(scanner))
 		scanner.displayDetectiveScanResults(usr)
 
-/obj/item/device/detective_scanner/attack_self(mob/user)
+/obj/item/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)
 		scanning = 1
 		to_chat(user, "<span class='notice'>Printing report, please wait...</span>")
@@ -34,10 +34,10 @@
 	else
 		to_chat(user, "<span class='notice'>The scanner has no logs or is in use.</span>")
 
-/obj/item/device/detective_scanner/attack(mob/living/M, mob/user)
+/obj/item/detective_scanner/attack(mob/living/M, mob/user)
 	return
 
-/obj/item/device/detective_scanner/proc/PrintReport()
+/obj/item/detective_scanner/proc/PrintReport()
 	// Create our paper
 	var/obj/item/paper/P = new(get_turf(src))
 	P.name = "paper- 'Scanner Report'"
@@ -56,11 +56,11 @@
 	log = list()
 	scanning = 0
 
-/obj/item/device/detective_scanner/afterattack(atom/A, mob/user, params)
+/obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
 	scan(A, user)
 	return FALSE
 
-/obj/item/device/detective_scanner/proc/scan(atom/A, mob/user)
+/obj/item/detective_scanner/proc/scan(atom/A, mob/user)
 	set waitfor = 0
 	if(!scanning)
 		// Can remotely scan objects and mobs.
@@ -164,7 +164,7 @@
 		scanning = 0
 		return
 
-/obj/item/device/detective_scanner/proc/add_log(msg, broadcast = 1)
+/obj/item/detective_scanner/proc/add_log(msg, broadcast = 1)
 	if(scanning)
 		if(broadcast && ismob(loc))
 			var/mob/M = loc
@@ -176,7 +176,7 @@
 /proc/get_timestamp()
 	return time2text(world.time + 432000, ":ss")
 	
-/obj/item/device/detective_scanner/AltClick(mob/living/user)
+/obj/item/detective_scanner/AltClick(mob/living/user)
 	// Best way for checking if a player can use while not incapacitated, etc
 	if(!user.canUseTopic(src, be_close=TRUE))
 		return
@@ -189,7 +189,7 @@
 	to_chat(user, "<span class='notice'>The scanner logs are cleared.</span>")
 	log = list()
 
-/obj/item/device/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
+/obj/item/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
 	// No need for can-use checks since the action button should do proper checks
 	if(!LAZYLEN(log))
 		to_chat(user, "<span class='notice'>Cannot display logs, the scanner has no logs.</span>")

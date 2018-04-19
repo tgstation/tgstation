@@ -552,8 +552,8 @@
 				to_chat(user, "<span class='notice'>You place the power control board inside the frame.</span>")
 				qdel(W)
 
-	else if(istype(W, /obj/item/device/electroadaptive_pseudocircuit) && opened)
-		var/obj/item/device/electroadaptive_pseudocircuit/P = W
+	else if(istype(W, /obj/item/electroadaptive_pseudocircuit) && opened)
+		var/obj/item/electroadaptive_pseudocircuit/P = W
 		if(!has_electronics)
 			if(stat & BROKEN)
 				to_chat(user, "<span class='warning'>[src]'s frame is too damaged to support a circuit.</span>")
@@ -988,7 +988,7 @@
 				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
 				P.alert = FALSE
 
-/obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+/obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(card.AI)
 		to_chat(user, "<span class='warning'>[card] is already occupied!</span>")
 		return

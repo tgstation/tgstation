@@ -1,4 +1,4 @@
-/obj/item/device/soulstone
+/obj/item/soulstone
 	name = "soulstone shard"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
@@ -14,7 +14,7 @@
 	var/old_shard = FALSE
 	var/spent = FALSE
 
-/obj/item/device/soulstone/proc/was_used()
+/obj/item/soulstone/proc/was_used()
 	if(old_shard)
 		spent = TRUE
 		name = "dull [name]"
@@ -22,20 +22,20 @@
 			the 'Soul Stone'. The shard lies still, dull and lifeless; \
 			whatever spark it once held long extinguished."
 
-/obj/item/device/soulstone/anybody
+/obj/item/soulstone/anybody
 	usability = 1
 
-/obj/item/device/soulstone/anybody/chaplain
+/obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"
 	old_shard = TRUE
 
-/obj/item/device/soulstone/pickup(mob/living/user)
+/obj/item/soulstone/pickup(mob/living/user)
 	..()
 	if(!iscultist(user) && !iswizard(user) && !usability)
 		to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>")
 		user.Dizzy(120)
 
-/obj/item/device/soulstone/examine(mob/user)
+/obj/item/soulstone/examine(mob/user)
 	..()
 	if(usability || iscultist(user) || iswizard(user) || isobserver(user))
 		if (old_shard)
@@ -46,14 +46,14 @@
 		if(spent)
 			to_chat(user, "<span class='cult'>This shard is spent; it is now just a creepy rock.</span>")
 
-/obj/item/device/soulstone/Destroy() //Stops the shade from being qdel'd immediately and their ghost being sent back to the arrival shuttle.
+/obj/item/soulstone/Destroy() //Stops the shade from being qdel'd immediately and their ghost being sent back to the arrival shuttle.
 	for(var/mob/living/simple_animal/shade/A in src)
 		A.death()
 	return ..()
 
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
-/obj/item/device/soulstone/attack(mob/living/carbon/human/M, mob/living/user)
+/obj/item/soulstone/attack(mob/living/carbon/human/M, mob/living/user)
 	if(!iscultist(user) && !iswizard(user) && !usability)
 		user.Unconscious(100)
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
@@ -71,7 +71,7 @@
 
 ///////////////////Options for using captured souls///////////////////////////////////////
 
-/obj/item/device/soulstone/attack_self(mob/living/user)
+/obj/item/soulstone/attack_self(mob/living/user)
 	if(!in_range(src, user))
 		return
 	if(!iscultist(user) && !iswizard(user) && !usability)
@@ -80,7 +80,7 @@
 		return
 	release_shades(user)
 
-/obj/item/device/soulstone/proc/release_shades(mob/user)
+/obj/item/soulstone/proc/release_shades(mob/user)
 	for(var/mob/living/simple_animal/shade/A in src)
 		A.status_flags &= ~GODMODE
 		A.canmove = 1
@@ -111,8 +111,8 @@
 		to_chat(user, "<span class='cult'>A <b>Juggernaut</b>, which is very hard to kill and can produce temporary walls, but is slow.</span>")
 
 /obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/device/soulstone))
-		var/obj/item/device/soulstone/SS = O
+	if(istype(O, /obj/item/soulstone))
+		var/obj/item/soulstone/SS = O
 		if(!iscultist(user) && !iswizard(user) && !SS.usability)
 			to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you attempt to place the soulstone into the shell. It would be wise to be rid of this quickly.</span>")
 			user.Dizzy(120)
@@ -125,7 +125,7 @@
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 
 
-/obj/item/device/soulstone/proc/transfer_soul(choice as text, target, mob/user)
+/obj/item/soulstone/proc/transfer_soul(choice as text, target, mob/user)
 	switch(choice)
 		if("FORCE")
 			if(!iscarbon(target))		//TODO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
@@ -233,7 +233,7 @@
 	newstruct.cancel_camera()
 
 
-/obj/item/device/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/U, vic = 0)
+/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/U, vic = 0)
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
 	T.stop_sound_channel(CHANNEL_HEARTBEAT)
 	T.invisibility = INVISIBILITY_ABSTRACT
@@ -260,7 +260,7 @@
 		to_chat(U, "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from their body and stored within the soul stone.")
 
 
-/obj/item/device/soulstone/proc/getCultGhost(mob/living/carbon/human/T, mob/U)
+/obj/item/soulstone/proc/getCultGhost(mob/living/carbon/human/T, mob/U)
 	var/mob/dead/observer/chosen_ghost
 
 	for(var/mob/dead/observer/ghost in GLOB.player_list) //We put them back in their body

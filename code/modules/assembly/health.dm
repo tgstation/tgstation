@@ -1,4 +1,4 @@
-/obj/item/device/assembly/health
+/obj/item/assembly/health
 	name = "health sensor"
 	desc = "Used for scanning and monitoring health."
 	icon_state = "health"
@@ -10,17 +10,17 @@
 	var/health_scan
 	var/alarm_health = 0
 
-/obj/item/device/assembly/health/examine(mob/user)
+/obj/item/assembly/health/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Use a multitool to swap between \"detect death\" mode and \"detect critical state\" mode.</span>")
 
-/obj/item/device/assembly/health/activate()
+/obj/item/assembly/health/activate()
 	if(!..())
 		return 0//Cooldown check
 	toggle_scan()
 	return 0
 
-/obj/item/device/assembly/health/toggle_secure()
+/obj/item/assembly/health/toggle_secure()
 	secured = !secured
 	if(secured && scanning)
 		START_PROCESSING(SSobj, src)
@@ -30,8 +30,8 @@
 	update_icon()
 	return secured
 
-/obj/item/device/assembly/health/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/device/multitool))
+/obj/item/assembly/health/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/multitool))
 		if(alarm_health == 0)
 			alarm_health = -90
 			user.show_message("You toggle [src] to \"detect death\" mode.")
@@ -42,7 +42,7 @@
 	else
 		return ..()
 
-/obj/item/device/assembly/health/process()
+/obj/item/assembly/health/process()
 	if(!scanning || !secured)
 		return
 
@@ -63,7 +63,7 @@
 		return
 	return
 
-/obj/item/device/assembly/health/proc/toggle_scan()
+/obj/item/assembly/health/proc/toggle_scan()
 	if(!secured)
 		return 0
 	scanning = !scanning
@@ -73,7 +73,7 @@
 		STOP_PROCESSING(SSobj, src)
 	return
 
-/obj/item/device/assembly/health/ui_interact(mob/user as mob)//TODO: Change this to the wires thingy
+/obj/item/assembly/health/ui_interact(mob/user as mob)//TODO: Change this to the wires thingy
 	. = ..()
 	if(!secured)
 		user.show_message("<span class='warning'>The [name] is unsecured!</span>")
@@ -84,7 +84,7 @@
 	user << browse(dat, "window=hscan")
 	onclose(user, "hscan")
 
-/obj/item/device/assembly/health/Topic(href, href_list)
+/obj/item/assembly/health/Topic(href, href_list)
 	..()
 	if(!ismob(usr))
 		return

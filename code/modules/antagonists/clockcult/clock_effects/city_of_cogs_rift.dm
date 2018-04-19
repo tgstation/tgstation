@@ -72,6 +72,6 @@
 		var/mob/living/L = AM
 		L.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
 		L.clear_fullscreen("flash", 5)
-		var/obj/item/device/transfer_valve/TTV = locate() in L.GetAllContents()
+		var/obj/item/transfer_valve/TTV = locate() in L.GetAllContents()
 		if(TTV)
 			to_chat(L, "<span class='userdanger'>The air resonates with the Ark's presence; your explosives will be significantly dampened here!</span>")

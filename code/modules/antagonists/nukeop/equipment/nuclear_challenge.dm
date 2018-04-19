@@ -5,7 +5,7 @@
 
 GLOBAL_LIST_EMPTY(jam_on_wardec)
 
-/obj/item/device/nuclear_challenge
+/obj/item/nuclear_challenge
 	name = "Declaration of War (Challenge Mode)"
 	icon_state = "gangtool-red"
 	item_state = "radio"
@@ -15,9 +15,9 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 			Such a brazen move will attract the attention of powerful benefactors within the Syndicate, who will supply your team with a massive amount of bonus telecrystals.  \
 			Must be used within five minutes, or your benefactors will lose interest."
 	var/declaring_war = FALSE
-	var/uplink_type = /obj/item/device/radio/uplink/nuclear
+	var/uplink_type = /obj/item/radio/uplink/nuclear
 
-/obj/item/device/nuclear_challenge/attack_self(mob/living/user)
+/obj/item/nuclear_challenge/attack_self(mob/living/user)
 	if(!check_allowed(user))
 		return
 
@@ -66,7 +66,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 	qdel(src)
 
-/obj/item/device/nuclear_challenge/proc/check_allowed(mob/living/user)
+/obj/item/nuclear_challenge/proc/check_allowed(mob/living/user)
 	if(declaring_war)
 		to_chat(user, "You are already in the process of declaring war! Make your mind up.")
 		return FALSE
@@ -86,8 +86,8 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 			return FALSE
 	return TRUE
 
-/obj/item/device/nuclear_challenge/clownops
-	uplink_type = /obj/item/device/radio/uplink/clownop
+/obj/item/nuclear_challenge/clownops
+	uplink_type = /obj/item/radio/uplink/clownop
 
 #undef CHALLENGE_TELECRYSTALS
 #undef CHALLENGE_TIME_LIMIT

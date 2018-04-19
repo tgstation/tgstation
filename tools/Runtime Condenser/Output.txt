@@ -281,7 +281,7 @@ proc name: get fuel (/obj/item/weapon/weldingtool/proc/get_fuel)
 
 /obj/item/weapon/tank/internals/oxygen - 3 time(s).
 
-/obj/item/device/assembly/signaler - 3 time(s).
+/obj/item/assembly/signaler - 3 time(s).
 
 /datum/event - 3 time(s).
 
@@ -379,7 +379,7 @@ proc name: get fuel (/obj/item/weapon/weldingtool/proc/get_fuel)
 
 /obj/structure/table/optable - 1 time(s).
 
-/obj/item/device/pda/ai/pai - 1 time(s).
+/obj/item/pda/ai/pai - 1 time(s).
 
 /obj/item/stack/sheet/mineral/plasma - 1 time(s).
 
@@ -407,7 +407,7 @@ proc name: get fuel (/obj/item/weapon/weldingtool/proc/get_fuel)
 
 /obj/item/weapon/cartridge/hos - 1 time(s).
 
-/obj/item/device/pda/heads/hos - 1 time(s).
+/obj/item/pda/heads/hos - 1 time(s).
 
 /obj/item/ammo_casing/energy/electrode - 1 time(s).
 
@@ -423,7 +423,7 @@ proc name: get fuel (/obj/item/weapon/weldingtool/proc/get_fuel)
 
 /obj/item/weapon/card/id/syndicate - 1 time(s).
 
-/obj/item/device/radio - 1 time(s).
+/obj/item/radio - 1 time(s).
 
 /obj/machinery/r_n_d/circuit_imprinter - 1 time(s).
 

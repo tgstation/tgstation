@@ -6,7 +6,7 @@ HEALTH ANALYZER
 GAS ANALYZER
 
 */
-/obj/item/device/t_scanner
+/obj/item/t_scanner
 	name = "\improper T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
@@ -18,11 +18,11 @@ GAS ANALYZER
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=150)
 
-/obj/item/device/t_scanner/suicide_act(mob/living/carbon/user)
+/obj/item/t_scanner/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return TOXLOSS
 
-/obj/item/device/t_scanner/attack_self(mob/user)
+/obj/item/t_scanner/attack_self(mob/user)
 
 	on = !on
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
@@ -30,13 +30,13 @@ GAS ANALYZER
 	if(on)
 		START_PROCESSING(SSobj, src)
 
-/obj/item/device/t_scanner/process()
+/obj/item/t_scanner/process()
 	if(!on)
 		STOP_PROCESSING(SSobj, src)
 		return null
 	scan()
 
-/obj/item/device/t_scanner/proc/scan()
+/obj/item/t_scanner/proc/scan()
 	t_ray_scan(loc)
 
 /proc/t_ray_scan(mob/viewer, flick_time = 8, distance = 2)
@@ -57,7 +57,7 @@ GAS ANALYZER
 	if(t_ray_images.len)
 		flick_overlay(t_ray_images, list(viewer.client), flick_time)
 
-/obj/item/device/healthanalyzer
+/obj/item/healthanalyzer
 	name = "health analyzer"
 	icon_state = "health"
 	item_state = "healthanalyzer"
@@ -75,11 +75,11 @@ GAS ANALYZER
 	var/scanmode = 0
 	var/advanced = FALSE
 
-/obj/item/device/healthanalyzer/suicide_act(mob/living/carbon/user)
+/obj/item/healthanalyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
 	return BRUTELOSS
 
-/obj/item/device/healthanalyzer/attack_self(mob/user)
+/obj/item/healthanalyzer/attack_self(mob/user)
 	if(!scanmode)
 		to_chat(user, "<span class='notice'>You switch the health analyzer to scan chemical contents.</span>")
 		scanmode = 1
@@ -87,7 +87,7 @@ GAS ANALYZER
 		to_chat(user, "<span class='notice'>You switch the health analyzer to check physical health.</span>")
 		scanmode = 0
 
-/obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
+/obj/item/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
 	// Clumsiness/brain damage check
 	if ((user.has_trait(TRAIT_CLUMSY) || user.has_trait(TRAIT_DUMB)) && prob(50))
@@ -315,7 +315,7 @@ GAS ANALYZER
 			else
 				to_chat(user, "<span class='notice'>Subject is not addicted to any reagents.</span>")
 
-/obj/item/device/healthanalyzer/verb/toggle_mode()
+/obj/item/healthanalyzer/verb/toggle_mode()
 	set name = "Switch Verbosity"
 	set category = "Object"
 
@@ -329,13 +329,13 @@ GAS ANALYZER
 		if(0)
 			to_chat(usr, "The scanner no longer shows limb damage.")
 
-/obj/item/device/healthanalyzer/advanced
+/obj/item/healthanalyzer/advanced
 	name = "advanced health analyzer"
 	icon_state = "health_adv"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
 	advanced = TRUE
 
-/obj/item/device/analyzer
+/obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels. Alt-Click to use the built in barometer function."
 	name = "analyzer"
 	icon_state = "atmos"
@@ -354,11 +354,11 @@ GAS ANALYZER
 	var/cooldown_time = 250
 	var/accuracy // 0 is the best accuracy.
 
-/obj/item/device/analyzer/suicide_act(mob/living/carbon/user)
+/obj/item/analyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
 	return BRUTELOSS
 
-/obj/item/device/analyzer/attack_self(mob/user)
+/obj/item/analyzer/attack_self(mob/user)
 
 	add_fingerprint(user)
 
@@ -417,7 +417,7 @@ GAS ANALYZER
 			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
 
-/obj/item/device/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
+/obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	..()
 
 	if(user.canUseTopic(src))
@@ -460,17 +460,17 @@ GAS ANALYZER
 			else
 				to_chat(user, "<span class='warning'>[src]'s barometer function says a storm will land in approximately [butchertime(fixed)].</span>")
 		cooldown = TRUE
-		addtimer(CALLBACK(src,/obj/item/device/analyzer/proc/ping), cooldown_time)
+		addtimer(CALLBACK(src,/obj/item/analyzer/proc/ping), cooldown_time)
 
 
-/obj/item/device/analyzer/proc/ping()
+/obj/item/analyzer/proc/ping()
 	if(isliving(loc))
 		var/mob/living/L = loc
 		to_chat(L, "<span class='notice'>[src]'s barometer function is ready!</span>")
 	playsound(src, 'sound/machines/click.ogg', 100)
 	cooldown = FALSE
 
-/obj/item/device/analyzer/proc/butchertime(amount)
+/obj/item/analyzer/proc/butchertime(amount)
 	if(!amount)
 		return
 	if(accuracy)
@@ -481,7 +481,7 @@ GAS ANALYZER
 			amount += inaccurate
 	return DisplayTimeText(max(1,amount))
 
-/obj/item/device/slime_scanner
+/obj/item/slime_scanner
 	name = "slime scanner"
 	desc = "A device that analyzes a slime's internal composition and measures its stats."
 	icon_state = "adv_spectrometer"
@@ -495,7 +495,7 @@ GAS ANALYZER
 	throw_range = 7
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
 
-/obj/item/device/slime_scanner/attack(mob/living/M, mob/living/user)
+/obj/item/slime_scanner/attack(mob/living/M, mob/living/user)
 	if(user.stat || user.eye_blind)
 		return
 	if (!isslime(M))
