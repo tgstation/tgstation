@@ -47,7 +47,7 @@
 
 /obj/item/device/flashlight/attack(mob/living/carbon/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if(istype(M) && on && user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH))
+	if(istype(M) && on && user.zone_selected in list("eyes", "mouth"))
 
 		if((user.has_trait(TRAIT_CLUMSY) || user.has_trait(TRAIT_DUMB)) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
@@ -56,7 +56,7 @@
 			to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 			return
 
-		if(!M.get_bodypart(BODY_ZONE_HEAD))
+		if(!M.get_bodypart("head"))
 			to_chat(user, "<span class='warning'>[M] doesn't have a head!</span>")
 			return
 
@@ -65,7 +65,7 @@
 			return
 
 		switch(user.zone_selected)
-			if(BODY_ZONE_PRECISE_EYES)
+			if("eyes")
 				if((M.head && M.head.flags_cover & HEADCOVERSEYES) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) || (M.glasses && M.glasses.flags_cover & GLASSESCOVERSEYES))
 					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>")
 					return
@@ -90,7 +90,7 @@
 					else //they're okay!
 						to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
 
-			if(BODY_ZONE_PRECISE_MOUTH)
+			if("mouth")
 
 				if((M.head && M.head.flags_cover & HEADCOVERSMOUTH) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSMOUTH) ? "helmet" : "mask"] first.</span>")
@@ -100,7 +100,7 @@
 
 				var/list/mouth_organs = new
 				for(var/obj/item/organ/O in M.internal_organs)
-					if(O.zone == BODY_ZONE_PRECISE_MOUTH)
+					if(O.zone == "mouth")
 						mouth_organs.Add(O)
 				var/organ_list = ""
 				var/organ_count = LAZYLEN(mouth_organs)
@@ -324,9 +324,6 @@
 	brightness_on = 4
 	icon_state = "torch"
 	item_state = "torch"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	light_color = LIGHT_COLOR_ORANGE
 	on_damage = 10
 	slot_flags = null
 
@@ -375,7 +372,7 @@
 	return TRUE
 
 /obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && user.zone_selected in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH)) // call original attack when examining organs
+	if(on && user.zone_selected in list("eyes", "mouth")) // call original attack when examining organs
 		..()
 	return
 
@@ -533,14 +530,14 @@
 	flags_1 = CONDUCT_1 | DROPDEL_1
 	actions_types = list()
 
-
 /obj/item/device/flashlight/directional
 	name = "old flashlight"
 	desc = "This poor thing has seen better days, it only emits light in a single direction"
-	icon_state = "oldlight"
+	icon_state = "dlight"
 	dir = 4
 	brightness_on = 3
 	var/pointing
+	var/datum/component/mobhook
 
 /obj/item/device/flashlight/directional/update_brightness(mob/user = null)
 	..()
@@ -549,20 +546,6 @@
 			dir = user.dir //Someone is holding the light, so aim it where they are facing
 		light.directional = dir2angle(dir)
 		update_light()
-
-/obj/item/device/flashlight/directional/Initialize()
-	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/device/flashlight/directional/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
-
-/obj/item/device/flashlight/directional/process() //So that the light follows you when you turn without moving
-	if(ismob(loc) && on)
-		if(dir != loc.dir)
-			light.directional = 0
-			update_light()
 
 /obj/item/device/flashlight/directional/afterattack(atom/A, mob/living/user, flag, params)
 	..()
@@ -576,3 +559,23 @@
 
 obj/item/device/flashlight/directional/CanItemAutoclick() //BURN THE SERVER DOWN
 	return 2
+
+obj/item/device/flashlight/directional/proc/on_mob_turn()
+	if(ismob(loc) && on && !pointing)
+		light.directional = 1
+		update_light()
+
+obj/item/device/flashlight/directional/equipped(mob/user, slot)
+	. = ..()
+	if (mobhook && mobhook.parent != user)
+		QDEL_NULL(mobhook)
+	else
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_DIR_CHANGE), CALLBACK(src, .proc/on_mob_turn))
+
+obj/item/device/flashlight/directional/dropped()
+	. = ..()
+	QDEL_NULL(mobhook)
+
+obj/item/device/flashlight/directional/Destroy()
+	QDEL_NULL(mobhook) // mobhook is not our component
+	return ..()
