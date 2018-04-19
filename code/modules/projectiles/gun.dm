@@ -288,15 +288,6 @@
 /obj/item/gun/proc/reset_semicd()
 	semicd = FALSE
 
-	if(bayonet && can_bayonet)
-		var/state = "bayonet"							//Generic state.
-		if(bayonet.icon_state in icon_states('icons/obj/guns/bayonets.dmi'))		//Snowflake state?
-			state = bayonet.icon_state
-		var/mutable_appearance/knife_overlay = mutable_appearance('icons/obj/guns/bayonets.dmi', state)
-		knife_overlay.pixel_x = knife_x_offset
-		knife_overlay.pixel_y = knife_y_offset
-		add_overlay(knife_overlay)
-
 /obj/item/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == INTENT_HARM) //Flogging
 		if(bayonet)
