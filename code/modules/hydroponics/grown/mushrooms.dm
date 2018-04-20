@@ -324,6 +324,7 @@
 	resistance_flags = FIRE_PROOF
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "polypore"		//Default to prevent CI failure.
+	icon_harvest = null
 
 /obj/item/seeds/lavaland/polypore
 	name = "pack of polypore mycelium"
