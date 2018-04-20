@@ -1,0 +1,5 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - bugfix: "A cat is fine too. You can select cat parts again!"
+  - bugfix: "Default lizard tail was never properly defaulted, now it is."
