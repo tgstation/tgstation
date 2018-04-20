@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a number of conveyor belts leading to the incorrect direction."
-  - bugfix: "Fixed shuttle conveyor belts being out of sync with cargo's conveyors on some maps."
