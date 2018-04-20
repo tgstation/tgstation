@@ -5,7 +5,7 @@
 	desc = "It's stringy and sticky."
 	anchored = TRUE
 	density = FALSE
-	max_integrity = 15
+	max_integrity = 10
 
 
 
@@ -28,61 +28,53 @@
 		take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
-	icon_state = "stickyweb1"
-	var/max_integrity = 10
+	icon_state = "stickyweblight-1"
 	var/mobwebbiness = 30 //prob that you get stuck in the web when moving through it
 	var/projectilewebbiness = 75 //same as above, but for projectiles.
-	var/level = 1 //used for picking sprites for the web
+	var/spiderlevel = "light" //used for picking sprites for the web
 
 /obj/structure/spider/stickyweb/Initialize()
-	var/T = getTurf(src)
+	var/T = get_turf(src)
+	var/variant = rand(1,3)
 	if(istype(T, turf/closed))
-		switch(rand(1,3))
-			if(1)
-				icon_state = "stickywall[level]-1"
-			if(2)
-				icon_state = "stickywall[level]-2"
-			if(3)
-				icon_state = "stickywall[level]-3"
-	else	
-		switch(rand(1,3))
-			if(1)
-				icon_state = "stickyweb[level]-1"
-			if(2)
-				icon_state = "stickyweb[level]-2"
-			if(3)
-				icon_state = "stickyweb[level]-3"
+		icon_state = "stickywall[level]-[variant]"
+	else
+		icon_state = "stickyweb[level]-[variant]"
 	. = ..()
 
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
-		return 1
+		return TRUE
 	if(istype(mover, /obj/item/projectile))
-		return prob(projectilewebbiness)
+		if(prob(projectilewebbiness))
+			return TRUE
+		else
+			return FALSE
 	if(isliving(mover))
 		if(mover.pulledby)
 			if(istype(mover.pulledby, /mob/living/simple_animal/hostile/poison/giant_spider))
-				return 1
+				return TRUE
 		if(prob(mobwebbiness))
 			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/structure/spider/stickyweb/medium
 	max_integrity = 20
 	mobwebbiness = 60
-	level = 2
+	spiderlevel = "medium"
 
 /obj/structure/spider/stickyweb/heavy
 	max_integrity = 40
 	mobwebbiness = 80
 	projectilewebbiness = 25
-	level = 3
+	spiderlevel = "heavy"
 
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
 	desc = "They seem to pulse slightly with an inner life."
 	icon_state = "eggs"
+
 	var/amount_grown = 0
 	var/player_spiders = 0
 	var/directive = "" //Message from the mother
