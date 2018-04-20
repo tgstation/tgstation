@@ -36,10 +36,10 @@
 /obj/structure/spider/stickyweb/Initialize()
 	var/T = get_turf(src)
 	var/variant = rand(1,3)
-	if(istype(T, turf/closed))
-		icon_state = "stickywall[level]-[variant]"
+	if(istype(T, /turf/closed))
+		icon_state = "stickywall[spiderlevel]-[variant]"
 	else
-		icon_state = "stickyweb[level]-[variant]"
+		icon_state = "stickyweb[spiderlevel]-[variant]"
 	. = ..()
 
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target)
