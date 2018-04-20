@@ -1960,10 +1960,6 @@
 /turf/closed/wall,
 /area/crew_quarters/heads/hop)
 "adZ" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "cargounload"
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -28
@@ -1973,6 +1969,10 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/machinery/conveyor/inverted{
+	dir = 5;
+	id = "cargounload"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -2798,8 +2798,9 @@
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
 "afH" = (
-/obj/machinery/conveyor_switch{
-	id = "cargounload"
+/obj/machinery/conveyor_switch/oneway{
+	id = "cargounload";
+	dir = 8
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
@@ -3634,15 +3635,15 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "ahn" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "cargoload"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/corner,
+/obj/machinery/conveyor{
+	dir = 5;
+	id = "cargoload"
+	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aho" = (
@@ -4395,11 +4396,11 @@
 	},
 /area/quartermaster/storage)
 "aiL" = (
-/obj/machinery/conveyor_switch{
-	id = "cargoload"
-	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/machinery/conveyor_switch/oneway{
+	id = "cargoload"
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 5
