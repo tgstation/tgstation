@@ -62,7 +62,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/supply)
 "k" = (
-/obj/machinery/conveyor/shuttle{
+/obj/machinery/conveyor{
 	dir = 8;
 	id = "cargounload"
 	},
@@ -146,7 +146,7 @@
 	id = "cargoload";
 	name = "supply dock loading door"
 	},
-/obj/machinery/conveyor/shuttle{
+/obj/machinery/conveyor{
 	dir = 4;
 	id = "cargoload"
 	},
