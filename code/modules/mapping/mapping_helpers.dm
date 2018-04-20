@@ -171,7 +171,7 @@ GLOBAL_LIST_EMPTY(z_is_planet)
 	if(!ispath(component_type,/datum/component))
 		CRASH("Wrong component type in [src]")
 	var/turf/T = get_turf(src)
-	for(var/atom/A in T)
+	for(var/atom/A in T.GetAllContents())
 		if(A == src)
 			continue
 		if(target_name && A.name != target_name)
