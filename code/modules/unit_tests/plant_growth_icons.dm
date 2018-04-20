@@ -20,11 +20,11 @@
 		for(var/i in 1 to seed.growthstages)
 			if("[seed.icon_grow][i]" in states["[seed.growing_icon]"])
 				continue
-			Fail("[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!")
+			Fail("[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon! \[ICON_GROW\]")
 
 		if(!(seed.icon_dead in states["[seed.growing_icon]"]))
-			Fail("[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon!")
+			Fail("[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon! \[ICON_DEAD\]")
 
 		if(seed.icon_harvest) // mushrooms have no grown sprites, same for items with no product
 			if(!(seed.icon_harvest in states["[seed.growing_icon]"]))
-				Fail("[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon!")
+				Fail("[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon! \[ICON_HARVEST\]")
