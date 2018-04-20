@@ -194,7 +194,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	log_world(msg)
 
 	if (!current_runlevel)
-		SetRunLevel(1)
+		SetRunLevel(RUNLEVEL_LOBBY)
 
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
@@ -216,7 +216,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		old_runlevel = "NULL"
 
 	testing("MC: Runlevel changed from [old_runlevel] to [new_runlevel]")
-	current_runlevel = log(2, new_runlevel) + 1
+	current_runlevel = RUNLEVEL_FLAG_TO_INDEX(new_runlevel)
 	if(current_runlevel < 1)
 		CRASH("Attempted to set invalid runlevel: [new_runlevel]")
 
@@ -264,8 +264,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 		var/ss_runlevels = SS.runlevels
 		var/added_to_any = FALSE
-		for(var/I in 1 to GLOB.bitflags.len)
-			if(ss_runlevels & GLOB.bitflags[I])
+		for(var/I in 1 to GLOB.runlevel_flags.len)
+			if(ss_runlevels & GLOB.runlevel_flags[I])
 				while(runlevel_sorted_subsystems.len < I)
 					runlevel_sorted_subsystems += list(list())
 				runlevel_sorted_subsystems[I] += SS
