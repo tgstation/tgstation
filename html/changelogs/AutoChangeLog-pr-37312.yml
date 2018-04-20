@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "Fixes an exploit where tendrils/other spawners/anchored mobs in general could be buckled to things and thus moved around."
