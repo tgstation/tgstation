@@ -89,9 +89,11 @@
 
 		var/datum/antagonist/changeling/target_ling = target.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(target_ling)//If the target was a changeling, suck out their extra juice and objective points!
+			target_ling.remove_changeling_powers()
+			target_ling.geneticpoints = 0
 			changeling.chem_charges += min(target_ling.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += (target_ling.absorbedcount)
-
+			changeling.geneticpoints += 4
 			target_ling.stored_profiles.len = 1
 			target_ling.absorbedcount = 0
 
