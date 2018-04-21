@@ -254,7 +254,8 @@
 /obj/machinery/computer/bsa_control/proc/calibrate(mob/user)
 	var/list/gps_locators = list()
 	for(var/obj/item/device/gps/G in GLOB.GPS_list) //nulls on the list somehow
-		gps_locators[G.gpstag] = G
+		if(G.tracking)
+			gps_locators[G.gpstag] = G
 
 	var/list/options = gps_locators
 	if(area_aim)

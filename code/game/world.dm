@@ -100,7 +100,6 @@ GLOBAL_PROTECT(security_mode)
 	start_log(GLOB.world_pda_log)
 	start_log(GLOB.world_manifest_log)
 	start_log(GLOB.world_href_log)
-	start_log(GLOB.sql_error_log)
 	start_log(GLOB.world_qdel_log)
 	start_log(GLOB.world_runtime_log)
 

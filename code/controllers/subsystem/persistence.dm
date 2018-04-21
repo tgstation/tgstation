@@ -251,9 +251,20 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/CollectTrophies()
 	var/json_file = file("data/npc_saves/TrophyItems.json")
 	var/list/file_data = list()
-	file_data["data"] = saved_trophies
+	file_data["data"] = remove_duplicate_trophies(saved_trophies)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/remove_duplicate_trophies(list/trophies)
+	var/list/ukeys = list()
+	. = list()
+	for(var/trophy in trophies)
+		var/tkey = "[trophy["path"]]-[trophy["message"]]"
+		if(ukeys[tkey])
+			continue
+		else
+			. += list(trophy)
+			ukeys[tkey] = TRUE
 
 /datum/controller/subsystem/persistence/proc/SaveTrophy(obj/structure/displaycase/trophy/T)
 	if(!T.added_roundstart && T.showpiece)
