@@ -12,6 +12,7 @@
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
+	occupant_typecache = list(/mob/living/carbon, /mob/living/simple_animal)
 
 	var/on = FALSE
 	var/autoeject = FALSE
@@ -276,7 +277,12 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
-	close_machine(target)
+	if (target.IsKnockdown() || target.IsStun() || target.IsSleeping() || target.IsUnconscious())
+		close_machine(target)
+	else
+		user.visible_message("<b>[user]</b> starts shoving [target] inside [src].", "<span class='notice'>You start shoving [target] inside [src].</span>")
+		if (do_after(user, 25, target=target))
+			close_machine(target)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/glass))

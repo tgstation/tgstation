@@ -1,8 +1,8 @@
-#define WIRE_RECEIVE	1
-#define WIRE_PULSE	2
-#define WIRE_PULSE_SPECIAL	4
-#define WIRE_RADIO_RECEIVE	8
-#define WIRE_RADIO_PULSE	16
+#define WIRE_RECEIVE		(1<<0)
+#define WIRE_PULSE			(1<<1)
+#define WIRE_PULSE_SPECIAL	(1<<2)
+#define WIRE_RADIO_RECEIVE	(1<<3)
+#define WIRE_RADIO_PULSE	(1<<4)
 
 /obj/item/device/assembly
 	name = "assembly"

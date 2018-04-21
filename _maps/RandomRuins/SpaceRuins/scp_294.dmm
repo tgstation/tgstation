@@ -45,14 +45,12 @@
 "aj" = (
 /obj/machinery/porta_turret/syndicate/energy/heavy{
 	desc = "An energy blaster auto-turret designed to contain and terminate in case of a breach in security.";
-	faction = "scp";
+	faction = list("scp");
 	mode = 1;
 	name = "emergency containment breach turret"
 	},
 /obj/effect/turf_decal/box,
-/turf/open/floor/plasteel/dark{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/plasteel/dark/airless,
 /area/ruin/space/has_grav/powered/scp_294)
 "ak" = (
 /obj/effect/turf_decal/tile/beige/corner{
