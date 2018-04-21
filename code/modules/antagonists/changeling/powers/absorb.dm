@@ -91,6 +91,7 @@
 		if(target_ling)//If the target was a changeling, suck out their extra juice and objective points!
 			target_ling.remove_changeling_powers()
 			target_ling.geneticpoints = 0
+			target_ling.canrespec = 0
 			changeling.chem_charges += min(target_ling.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += (target_ling.absorbedcount)
 			changeling.geneticpoints += 4
