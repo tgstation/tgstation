@@ -335,7 +335,7 @@
 	desc = "The circuit board for a portable soda dispenser."
 	id = "soda_dispenser"
 	build_path = /obj/item/circuitboard/machine/chem_dispenser/drinks
-	departmental_flags = DEPARTMENTAL_FLAG_SERIVCE
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 	category = list ("Misc. Machinery")
 
 /datum/design/board/beer_dispenser
