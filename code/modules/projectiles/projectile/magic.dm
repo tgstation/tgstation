@@ -189,7 +189,6 @@
 							/mob/living/simple_animal/hostile/carp/ranged/chaos,
 							/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 							/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-							/mob/living/simple_animal/hostile/headcrab,
 							/mob/living/simple_animal/hostile/morph,
 							/mob/living/simple_animal/hostile/stickman,
 							/mob/living/simple_animal/hostile/stickman/dog,
