@@ -348,9 +348,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "metal"
 	var/cooldown = 30
 	var/max_cooldown = 30
-	var/list/blacklisted_stacks = list(
-		/obj/item/stack/telecrystal, /obj/item/stack/sheet/runed_metal, /obj/item/stack/tile/brass
-	)
+	var/list/blacklisted_stacks = list(/obj/item/stack/sheet/runed_metal)
 
 /datum/status_effect/stabilized/metal/New()
 	blacklisted_stacks = typecacheof(blacklisted_stacks)
