@@ -69,7 +69,7 @@
 		set_opacity(density)
 		opening = FALSE
 		update_icon()
-		air_update_turf(1)
+		air_update_turf(TRUE)
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(opening)
