@@ -50254,13 +50254,10 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "ccz" = (
-/obj/item/wrench,
-/obj/item/clothing/suit/apron,
-/obj/item/clothing/accessory/armband/hydro,
-/obj/structure/table/glass,
 /obj/effect/turf_decal/stripes/line{
-	dir = 9
+	dir = 1
 	},
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "ccA" = (
@@ -71958,7 +71955,7 @@
 "dbE" = (
 /obj/machinery/plantgenes,
 /obj/effect/turf_decal/stripes/line{
-	dir = 9
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
@@ -76713,6 +76710,14 @@
 "krD" = (
 /turf/closed/wall,
 /area/science/circuit)
+"kwI" = (
+/obj/item/wrench,
+/obj/item/clothing/suit/apron,
+/obj/item/clothing/accessory/armband/hydro,
+/obj/structure/table/glass,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "kys" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
@@ -112498,7 +112503,7 @@ bOW
 bQH
 bRV
 bST
-bUh
+kwI
 bVx
 bWS
 bYi

@@ -17551,10 +17551,10 @@
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aSF" = (
-/obj/machinery/chem_master/condimaster,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aSG" = (
@@ -49990,6 +49990,10 @@
 	dir = 1
 	},
 /area/science/circuit)
+"eIh" = (
+/obj/machinery/chem_master/condimaster,
+/turf/open/floor/plasteel/hydrofloor,
+/area/hydroponics)
 "eQR" = (
 /obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
@@ -77467,7 +77471,7 @@ aQJ
 aRL
 aSD
 aTT
-aTV
+eIh
 aRL
 aWR
 aXT

@@ -14550,8 +14550,8 @@
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "aKK" = (
-/obj/structure/closet/wardrobe/botanist,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/secure_closet/hydroponics,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aKL" = (
@@ -15272,6 +15272,7 @@
 /area/library)
 "aMI" = (
 /obj/machinery/light/small,
+/obj/structure/closet/wardrobe/botanist,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aMJ" = (
@@ -53670,6 +53671,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+"fGf" = (
+/obj/machinery/smartfridge/disks,
+/turf/open/floor/plasteel/hydrofloor,
+/area/hydroponics)
 "fKl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/event_spawn,
@@ -95368,7 +95373,7 @@ aFp
 aGW
 anf
 aIp
-aKI
+fGf
 aMA
 aIp
 aOX
