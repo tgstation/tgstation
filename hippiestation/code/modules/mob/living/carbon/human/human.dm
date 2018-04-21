@@ -22,13 +22,3 @@
 		return FALSE
 	else
 		return ..()
-
-/mob/living/carbon/human/resist_restraints()
-	if(istype(wear_suit, /obj/item/clothing/suit/space/hardsuit/nano))
-		var/obj/item/clothing/suit/space/hardsuit/nano/NS = wear_suit
-		if(NS.mode == "strength")
-			changeNext_move(CLICK_CD_BREAKOUT)
-			last_special = world.time + CLICK_CD_BREAKOUT
-			cuff_resist(cuff_break = FAST_CUFFBREAK)
-		else
-			..()
