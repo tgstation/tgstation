@@ -66,6 +66,7 @@
 		dropped(user)
 		return
 	user.anchored = TRUE
+	user.status_flags &= ~CANPUSH
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
@@ -76,6 +77,7 @@
 /obj/item/twohanded/ctf/dropped(mob/user)
 	..()
 	user.anchored = FALSE
+	user.status_flags |= CANPUSH
 	reset_cooldown = world.time + 200 //20 seconds
 	START_PROCESSING(SSobj, src)
 	for(var/mob/M in GLOB.player_list)
