@@ -348,6 +348,13 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "metal"
 	var/cooldown = 30
 	var/max_cooldown = 30
+	var/list/blacklisted_stacks = list(
+		/obj/item/stack/telecrystal, /obj/item/stack/sheet/runed_metal, /obj/item/stack/tile/brass
+	)
+
+/datum/status_effect/stabilized/metal/New()
+	blacklisted_stacks = typecacheof(blacklisted_stacks)
+	return ..()
 
 /datum/status_effect/stabilized/metal/tick()
 	if(cooldown > 0)
@@ -356,7 +363,7 @@ datum/status_effect/stabilized/blue/on_remove()
 		cooldown = max_cooldown
 		var/list/sheets = list()
 		for(var/obj/item/stack/sheet/S in owner.GetAllContents())
-			if(S.amount < S.max_amount)
+			if(S.amount < S.max_amount && !is_type_in_typecache(S, blacklisted_stacks))
 				sheets += S
 
 		if(sheets.len > 0)
