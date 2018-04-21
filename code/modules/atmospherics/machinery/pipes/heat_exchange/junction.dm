@@ -17,6 +17,16 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "junction"
 
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
+	
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/SetInitDirections()
 	switch(dir)
 		if(SOUTH)

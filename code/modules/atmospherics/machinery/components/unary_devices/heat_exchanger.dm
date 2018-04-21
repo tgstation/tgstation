@@ -13,6 +13,16 @@
 	var/update_cycle
 
 	pipe_state = "heunary"
+	
+/obj/machinery/atmospherics/components/unary/heat_exchanger/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/unary/heat_exchanger/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon()
 	if(nodes[1])

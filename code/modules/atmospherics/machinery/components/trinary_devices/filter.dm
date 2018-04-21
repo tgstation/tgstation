@@ -13,9 +13,29 @@
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "filter"
 
+/obj/machinery/atmospherics/components/trinary/filter/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/trinary/filter/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
+	
 /obj/machinery/atmospherics/components/trinary/filter/flipped
 	icon_state = "filter_off_f"
 	flipped = TRUE
+	
+/obj/machinery/atmospherics/components/trinary/filter/flipped/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/trinary/filter/flipped/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 // These two filter types have critical_machine flagged to on and thus causes the area they are in to be exempt from the Grid Check event.
 

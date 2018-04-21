@@ -19,6 +19,16 @@
 	layer = GAS_SCRUBBER_LAYER
 
 	pipe_state = "injector"
+	
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -65,6 +75,16 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
 	on = TRUE
+	
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/update_icon_nopipes()
 	cut_overlays()

@@ -29,6 +29,16 @@
 	var/radio_filter_in
 
 	pipe_state = "scrubber"
+	
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
@@ -42,6 +52,16 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on
 	on = TRUE
 	icon_state = "scrub_map_on"
+	
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/A = get_area(src)

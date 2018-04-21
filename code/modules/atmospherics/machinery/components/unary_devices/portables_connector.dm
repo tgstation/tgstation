@@ -10,6 +10,16 @@
 	layer = GAS_FILTER_LAYER
 	pipe_flags = PIPING_ONE_PER_TURF
 	pipe_state = "connector"
+	
+/obj/machinery/atmospherics/components/unary/portables_connector/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/unary/portables_connector/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 /obj/machinery/atmospherics/components/unary/portables_connector/New()
 	..()
@@ -20,6 +30,16 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible
 	level = 2
 
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
+	
 /obj/machinery/atmospherics/components/unary/portables_connector/process_atmos()
 	if(!connected_device)
 		return

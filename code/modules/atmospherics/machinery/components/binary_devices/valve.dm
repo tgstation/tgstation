@@ -19,9 +19,29 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	pipe_state = "mvalve"
 
 	var/switching = FALSE
+	
+/obj/machinery/atmospherics/components/binary/valve/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/binary/valve/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 /obj/machinery/atmospherics/components/binary/valve/open
 	open = TRUE
+	
+/obj/machinery/atmospherics/components/binary/valve/open/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/binary/valve/open/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 /obj/machinery/atmospherics/components/binary/valve/update_icon_nopipes(animation = 0)
 	normalize_dir()
@@ -73,6 +93,16 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	icon_state = "dvalve_map"
 	valve_type = "d"
 	pipe_state = "dvalve"
+	
+/obj/machinery/atmospherics/components/binary/valve/digital/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/binary/valve/digital/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 /obj/machinery/atmospherics/components/binary/valve/digital/attack_ai(mob/user)
 	return attack_hand(user)

@@ -17,10 +17,30 @@
 
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
+/obj/machinery/atmospherics/components/trinary/mixer/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/trinary/mixer/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
+	
 /obj/machinery/atmospherics/components/trinary/mixer/flipped
 	icon_state = "mixer_off_f"
 	flipped = TRUE
 
+/obj/machinery/atmospherics/components/trinary/mixer/flipped/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/trinary/mixer/flipped/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
+	
 /obj/machinery/atmospherics/components/trinary/mixer/airmix //For standard airmix to distro
 	name = "air mixer"
 	icon_state = "mixer_on"

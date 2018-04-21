@@ -28,10 +28,30 @@ Thus, the two variables affect pump operation are set in New():
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
+	
+/obj/machinery/atmospherics/components/binary/pump/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/binary/pump/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 /obj/machinery/atmospherics/components/binary/pump/on
 	on = TRUE
 	icon_state = "pump_on_map"
+	
+/obj/machinery/atmospherics/components/binary/pump/on/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+
+/obj/machinery/atmospherics/components/binary/pump/on/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 	
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
 	SSradio.remove_object(src,frequency)

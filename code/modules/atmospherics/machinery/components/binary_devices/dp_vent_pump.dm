@@ -31,10 +31,30 @@ Acts like a normal vent, but has an input AND output.
 	//EXT_BOUND: Do not pass external_pressure_bound
 	//INPUT_MIN: Do not pass input_pressure_min
 	//OUTPUT_MAX: Do not pass output_pressure_max
+	
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+	
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/on
 	on = TRUE
 	icon_state = "dpvent_map_on"
+	
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/on/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+	
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/on/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/Destroy()
 	SSradio.remove_object(src, frequency)
@@ -42,10 +62,30 @@ Acts like a normal vent, but has an input AND output.
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "large dual-port air vent"
+	
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+	
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/on
 	on = TRUE
 	icon_state = "dpvent_map_on"
+	
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/on/layer1
+	piping_layer = 1
+	pixel_x = -5
+	pixel_y = -5
+	
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/on/layer3
+	piping_layer = 3
+	pixel_x = 5
+	pixel_y = 5
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
 	..()
