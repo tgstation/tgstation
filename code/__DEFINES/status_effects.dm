@@ -80,6 +80,8 @@
 
 #define STATUS_EFFECT_SYPHONMARK /datum/status_effect/syphon_mark //tracks kills for the KA death syphon module
 
+#define STATUS_EFFECT_INLOVE /datum/status_effect/in_love //makes a heart effect around their date that only they can see.
+
 /////////////
 //  SLIME  //
 /////////////

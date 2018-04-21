@@ -4,7 +4,7 @@ Self-sustaining extracts:
 */
 /obj/item/slimecross/selfsustaining
 	name = "self-sustaining extract"
-	effect = "selfsustaining"
+	effect = "self-sustaining"
 	icon_state = "selfsustaining"
 	var/extract_type = /obj/item/slime_extract
 

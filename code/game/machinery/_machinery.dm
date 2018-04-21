@@ -111,6 +111,7 @@ Class Procs:
 	var/atom/movable/occupant = null
 	var/speed_process = FALSE // Process as fast as possible?
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
+	var/requires_prox = TRUE //Whether or not the machine requires users to be close for topic.
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
 
@@ -244,7 +245,7 @@ Class Procs:
 	..()
 	if(!can_interact(usr))
 		return 1
-	if(!usr.canUseTopic(src))
+	if(!usr.canUseTopic(src, be_close = requires_prox))
 		return 1
 	add_fingerprint(usr)
 	return 0
