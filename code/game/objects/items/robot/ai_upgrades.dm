@@ -18,6 +18,7 @@
 	else
 		to_chat(AI, "<span class='userdanger'>[user] has upgraded you with combat software!</span>")
 		AI.add_malf_picker()
+		AI.hack_software = TRUE
 	to_chat(user, "<span class='notice'>You upgrade [AI]. [src] is consumed in the process.</span>")
 	qdel(src)
 
