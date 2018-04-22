@@ -4,6 +4,12 @@
 	name = "station map"
 	desc = "A framed picture of the station."
 	max_integrity = 500
+	
+/obj/structure/sign/map/examine(mob/user)
+	..()
+	if(prob(1) || (SSevents.holidays && SSevents.holidays[APRIL_FOOLS])) // TODO: Enable at all times in hypercube-station
+		say("You are here.")
+		visible_message("points at [user].")
 
 /obj/structure/sign/map/left
 	icon_state = "map-left"
