@@ -6,7 +6,7 @@
 /obj/item/robot_suit
 	name = "cyborg endoskeleton"
 	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
-	icon =  'icons/obj/robot_parts.dmi'
+	icon = 'icons/mob/augmentation/augments.dmi'
 	icon_state = "robo_suit"
 	var/obj/item/bodypart/l_arm/robot/l_arm = null
 	var/obj/item/bodypart/r_arm/robot/r_arm = null
