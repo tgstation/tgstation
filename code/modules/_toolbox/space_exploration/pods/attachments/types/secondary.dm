@@ -190,7 +190,7 @@
 
 			var/list/turfs_below_pod = pod.GetTurfsUnderPod()
 			for(var/turf/T in turfs_below_pod)
-				for(var/obj/item/ore/ore in T)
+				for(var/obj/item/stack/ore/ore in T)
 					if(cargo.HasRoom())
 						var/result = cargo.PlaceInto(ore)
 						if(result != P_CARGOERROR_CLEAR)

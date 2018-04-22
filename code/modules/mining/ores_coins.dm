@@ -286,7 +286,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return
 	qdel(src)
 
-/obj/item/ore/stack/glass/ex_act(severity, target)
+/obj/item/stack/ore/glass/ex_act(severity, target)
 	if (severity == EXPLODE_NONE)
 		return
 	qdel(src)

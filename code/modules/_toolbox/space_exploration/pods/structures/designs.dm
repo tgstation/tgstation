@@ -142,7 +142,7 @@
 		name = "mining drill"
 		id = "pdrill"
 		//req_tech = list("engineering" = 1)
-		category = "Utility"
+		category = list("Utility")
 		build_type = PODFAB
 		build_path = /obj/item/pod_attachment/primary/melee/drill
 		materials = list(MAT_METAL = 4000)

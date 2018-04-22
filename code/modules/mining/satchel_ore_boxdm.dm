@@ -10,7 +10,7 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 
 /obj/structure/ore_box/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/ore))
+	if(istype(I, /obj/item/stack/ore))
 		user.transferItemToLoc(I, src)
 	else if(istype(I, /obj/item/storage))
 		var/obj/item/storage/S = I

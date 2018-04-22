@@ -166,4 +166,4 @@
 			minimum_pod_size = list(2, 2)
 			construction_cost = list("metal" = 2000)
 			//origin_tech = "engineering=1;materials=1"
-			can_hold = list(/obj/item/ore)
+			can_hold = list(/obj/item/stack/ore)
