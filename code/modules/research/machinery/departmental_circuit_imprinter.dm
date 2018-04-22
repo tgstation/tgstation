@@ -11,3 +11,8 @@
 	name = "department protolathe (Science)"
 	allowed_department_flags = DEPARTMENTAL_FLAG_ALL|DEPARTMENTAL_FLAG_SCIENCE
 	department_tag = "Science"
+
+/obj/machinery/rnd/production/circuit_imprinter/department/engineering
+	name = "department Circuit Imprinter (Engineering)"
+	allowed_department_flags = DEPARTMENTAL_FLAG_ALL|DEPARTMENTAL_FLAG_ENGINEERING
+	department_tag = "Engineering"
