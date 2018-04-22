@@ -15,7 +15,6 @@
 	bitesize = 4
 	w_class = WEIGHT_CLASS_SMALL
 	volume = 80
-	unique_rename = 1
 
 	var/ingMax = 12
 	var/list/ingredients = list()
@@ -57,7 +56,8 @@
 			update_overlays(S)
 			to_chat(user, "<span class='notice'>You add the [I.name] to the [name].</span>")
 			update_name(S)
-	else . = ..()
+	else
+		. = ..()
 
 
 /obj/item/reagent_containers/food/snacks/customizable/proc/update_name(obj/item/reagent_containers/food/snacks/S)
@@ -275,8 +275,8 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "wishsoup"
 
-/obj/item/reagent_containers/food/snacks/customizable/soup/New()
-	..()
+/obj/item/reagent_containers/food/snacks/customizable/soup/Initialize()
+	. = ..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 
 
@@ -290,7 +290,7 @@
 	desc = "A simple bowl, used for soups and salads."
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	materials = list(MAT_GLASS = 500)
 	w_class = WEIGHT_CLASS_NORMAL
 
@@ -308,10 +308,11 @@
 			else
 				var/obj/item/reagent_containers/food/snacks/customizable/A = new/obj/item/reagent_containers/food/snacks/customizable/salad(get_turf(src))
 				A.initialize_custom_food(src, S, user)
-	else . = ..()
+	else
+		. = ..()
 	return
 
-/obj/item/reagent_containers/glass/bowl/on_reagent_change()
+/obj/item/reagent_containers/glass/bowl/on_reagent_change(changetype)
 	..()
 	update_icon()
 

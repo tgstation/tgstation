@@ -76,12 +76,12 @@
 	screen_loc = ui_building
 
 /obj/screen/area_creator/Click()
-	if(usr.incapacitated())
-		return 1
+	if(usr.incapacitated() || (isobserver(usr) && !IsAdminGhost(usr)))
+		return TRUE
 	var/area/A = get_area(usr)
 	if(!A.outdoors)
 		to_chat(usr, "<span class='warning'>There is already a defined structure here.</span>")
-		return 1
+		return TRUE
 	create_area(usr)
 
 /obj/screen/language_menu
@@ -110,7 +110,7 @@
 
 	if(usr.incapacitated())
 		return 1
-	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return 1
 
 	if(hud && hud.mymob && slot_id)
@@ -167,7 +167,7 @@
 		return 1
 	if(usr.incapacitated() || isobserver(usr))
 		return 1
-	if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+	if (ismecha(usr.loc)) // stops inventory actions in a mech
 		return 1
 
 	if(hud.mymob.active_hand_index == held_index)
@@ -180,13 +180,18 @@
 
 /obj/screen/close
 	name = "close"
+	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
+	icon_state = "backpack_close"
+
+/obj/screen/close/Initialize(mapload, new_master)
+	. = ..()
+	master = new_master
 
 /obj/screen/close/Click()
-	if(istype(master, /obj/item/storage))
-		var/obj/item/storage/S = master
-		S.close(usr)
-	return 1
-
+	var/datum/component/storage/S = master
+	S.hide_from(usr)
+	return TRUE
 
 /obj/screen/drop
 	name = "drop"
@@ -196,7 +201,8 @@
 	plane = HUD_PLANE
 
 /obj/screen/drop/Click()
-	usr.drop_item_v()
+	if(usr.stat == CONSCIOUS)
+		usr.dropItemToGround(usr.get_active_held_item())
 
 /obj/screen/act_intent
 	name = "intent"
@@ -250,7 +256,7 @@
 		to_chat(C, "<span class='notice'>You are no longer running on internals.</span>")
 		icon_state = "internal0"
 	else
-		if(!C.getorganslot("breathing_tube"))
+		if(!C.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			if(!istype(C.wear_mask, /obj/item/clothing/mask))
 				to_chat(C, "<span class='warning'>You are not wearing an internals mask!</span>")
 				return 1
@@ -264,26 +270,26 @@
 
 		var/obj/item/I = C.is_holding_item_of_type(/obj/item/tank)
 		if(I)
-			to_chat(C, "<span class='notice'>You are now running on internals from the [I] on your [C.get_held_index_name(C.get_held_index_of_item(I))].</span>")
+			to_chat(C, "<span class='notice'>You are now running on internals from [I] in your [C.get_held_index_name(C.get_held_index_of_item(I))].</span>")
 			C.internal = I
 		else if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if(istype(H.s_store, /obj/item/tank))
-				to_chat(H, "<span class='notice'>You are now running on internals from the [H.s_store] on your [H.wear_suit].</span>")
+				to_chat(H, "<span class='notice'>You are now running on internals from [H.s_store] on your [H.wear_suit.name].</span>")
 				H.internal = H.s_store
 			else if(istype(H.belt, /obj/item/tank))
-				to_chat(H, "<span class='notice'>You are now running on internals from the [H.belt] on your belt.</span>")
+				to_chat(H, "<span class='notice'>You are now running on internals from [H.belt] on your belt.</span>")
 				H.internal = H.belt
 			else if(istype(H.l_store, /obj/item/tank))
-				to_chat(H, "<span class='notice'>You are now running on internals from the [H.l_store] in your left pocket.</span>")
+				to_chat(H, "<span class='notice'>You are now running on internals from [H.l_store] in your left pocket.</span>")
 				H.internal = H.l_store
 			else if(istype(H.r_store, /obj/item/tank))
-				to_chat(H, "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>")
+				to_chat(H, "<span class='notice'>You are now running on internals from [H.r_store] in your right pocket.</span>")
 				H.internal = H.r_store
 
 		//Separate so CO2 jetpacks are a little less cumbersome.
 		if(!C.internal && istype(C.back, /obj/item/tank))
-			to_chat(C, "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>")
+			to_chat(C, "<span class='notice'>You are now running on internals from [C.back] on your back.</span>")
 			C.internal = C.back
 
 		if(C.internal)
@@ -324,7 +330,8 @@
 	usr.stop_pulling()
 
 /obj/screen/pull/update_icon(mob/mymob)
-	if(!mymob) return
+	if(!mymob)
+		return
 	if(mymob.pulling)
 		icon_state = "pull"
 	else
@@ -344,19 +351,27 @@
 
 /obj/screen/storage
 	name = "storage"
+	icon_state = "block"
+	screen_loc = "7,7 to 10,8"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+
+/obj/screen/storage/Initialize(mapload, new_master)
+	. = ..()
+	master = new_master
 
 /obj/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
-		return 1
+		return TRUE
 	if(usr.stat || usr.IsUnconscious() || usr.IsKnockdown() || usr.IsStun())
-		return 1
-	if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
-		return 1
+		return TRUE
+	if (ismecha(usr.loc)) // stops inventory actions in a mech
+		return TRUE
 	if(master)
 		var/obj/item/I = usr.get_active_held_item()
 		if(I)
 			master.attackby(I, usr, params)
-	return 1
+	return TRUE
 
 /obj/screen/throw_catch
 	name = "throw/catch"
@@ -372,7 +387,7 @@
 	name = "damage zone"
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
-	var/selecting = "chest"
+	var/selecting = BODY_ZONE_CHEST
 
 /obj/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
@@ -387,44 +402,44 @@
 		if(1 to 9) //Legs
 			switch(icon_x)
 				if(10 to 15)
-					choice = "r_leg"
+					choice = BODY_ZONE_R_LEG
 				if(17 to 22)
-					choice = "l_leg"
+					choice = BODY_ZONE_L_LEG
 				else
 					return 1
 		if(10 to 13) //Hands and groin
 			switch(icon_x)
 				if(8 to 11)
-					choice = "r_arm"
+					choice = BODY_ZONE_R_ARM
 				if(12 to 20)
-					choice = "groin"
+					choice = BODY_ZONE_PRECISE_GROIN
 				if(21 to 24)
-					choice = "l_arm"
+					choice = BODY_ZONE_L_ARM
 				else
 					return 1
 		if(14 to 22) //Chest and arms to shoulders
 			switch(icon_x)
 				if(8 to 11)
-					choice = "r_arm"
+					choice = BODY_ZONE_R_ARM
 				if(12 to 20)
-					choice = "chest"
+					choice = BODY_ZONE_CHEST
 				if(21 to 24)
-					choice = "l_arm"
+					choice = BODY_ZONE_L_ARM
 				else
 					return 1
 		if(23 to 30) //Head, but we need to check for eye or mouth
 			if(icon_x in 12 to 20)
-				choice = "head"
+				choice = BODY_ZONE_HEAD
 				switch(icon_y)
 					if(23 to 24)
 						if(icon_x in 15 to 17)
-							choice = "mouth"
+							choice = BODY_ZONE_PRECISE_MOUTH
 					if(26) //Eyeline, eyes are on 15 and 17
 						if(icon_x in 14 to 18)
-							choice = "eyes"
+							choice = BODY_ZONE_PRECISE_EYES
 					if(25 to 27)
 						if(icon_x in 15 to 17)
-							choice = "eyes"
+							choice = BODY_ZONE_PRECISE_EYES
 
 	return set_selected_zone(choice, usr)
 
@@ -485,11 +500,6 @@
 	icon = 'icons/mob/screen_cyborg.dmi'
 	screen_loc = ui_borg_health
 
-/obj/screen/healths/deity
-	name = "Nexus Health"
-	icon_state = "deity_nexus"
-	screen_loc = ui_deityhealth
-
 /obj/screen/healths/blob
 	name = "blob health"
 	icon_state = "block"
@@ -541,15 +551,27 @@
 	name = "health doll"
 	screen_loc = ui_healthdoll
 
+/obj/screen/mood
+	name = "mood"
+	icon_state = "mood5"
+	screen_loc = ui_mood
+
+/obj/screen/mood/Click()
+	GET_COMPONENT_FROM(mood, /datum/component/mood, usr)
+	if(mood)
+		mood.print_mood()
+
 /obj/screen/splash
-	icon = 'config/title_screens/images/blank.png'
+	icon = 'icons/blank_title.png'
 	icon_state = ""
 	screen_loc = "1,1"
 	layer = SPLASHSCREEN_LAYER
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-/obj/screen/splash/New(client/C, visible, use_previous_title) //TODO: Make this use INITIALIZE_IMMEDIATE
+/obj/screen/splash/New(client/C, visible, use_previous_title) //TODO: Make this use INITIALIZE_IMMEDIATE, except its not easy
+	. = ..()
+
 	holder = C
 
 	if(!visible)
@@ -565,8 +587,6 @@
 		icon = SStitle.previous_icon
 
 	holder.screen += src
-
-	..()
 
 /obj/screen/splash/proc/Fade(out, qdel_after = TRUE)
 	if(QDELETED(src))

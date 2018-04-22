@@ -3,7 +3,7 @@
 //The ammo/gun is stored in a back slot item
 /obj/item/minigunpack
 	name = "backpack power source"
-	desc = "The massive external power source for the laser gatling gun"
+	desc = "The massive external power source for the laser gatling gun."
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "holstered"
 	item_state = "backpack"
@@ -29,6 +29,7 @@
 /obj/item/minigunpack/process()
 	overheat = max(0, overheat - heat_diffusion)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/minigunpack/attack_hand(var/mob/living/carbon/user)
 	if(src.loc == user)
 		if(!armed)
@@ -57,6 +58,7 @@
 		user.dropItemToGround(gun, TRUE)
 
 /obj/item/minigunpack/MouseDrop(atom/over_object)
+	. = ..()
 	if(armed)
 		return
 	if(iscarbon(usr))
@@ -97,7 +99,6 @@
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "minigun_spin"
 	item_state = "minigun"
-	origin_tech = "combat=6;powerstorage=5;magnets=4"
 	flags_1 = CONDUCT_1
 	slowdown = 1
 	slot_flags = null
@@ -109,12 +110,12 @@
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/laser.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
-	casing_ejector = 0
+	casing_ejector = FALSE
 	flags_2 = SLOWS_WHILE_IN_HAND_2
 	var/obj/item/minigunpack/ammo_pack
 
 /obj/item/gun/ballistic/minigun/Initialize()
-	if(istype(loc, /obj/item/minigunpack)) //We should spawn inside a ammo pack so let's use that one.
+	if(istype(loc, /obj/item/minigunpack)) //We should spawn inside an ammo pack so let's use that one.
 		ammo_pack = loc
 	else
 		return INITIALIZE_HINT_QDEL //No pack, no gun
@@ -130,7 +131,7 @@
 	else
 		qdel(src)
 
-/obj/item/gun/ballistic/minigun/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
+/obj/item/gun/ballistic/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(ammo_pack)
 		if(ammo_pack.overheat < ammo_pack.overheat_max)
 			ammo_pack.overheat += burst_size

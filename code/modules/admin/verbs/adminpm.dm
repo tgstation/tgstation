@@ -11,7 +11,7 @@
 	if( !ismob(M) || !M.client )
 		return
 	cmd_admin_pm(M.client,null)
-	SSblackbox.add_details("admin_verb","Admin PM Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 //shows a list of clients we could send PMs to, then forwards our choice to cmd_admin_pm
 /client/proc/cmd_admin_pm_panel()
@@ -33,7 +33,7 @@
 			targets["(No Mob) - [T]"] = T
 	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as null|anything in sortList(targets)
 	cmd_admin_pm(targets[target],null)
-	SSblackbox.add_details("admin_verb","Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_ahelp_reply(whom)
 	if(prefs.muted & MUTE_ADMINHELP)
@@ -50,7 +50,7 @@
 		if(holder)
 			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 		return
-	
+
 	var/datum/admin_help/AH = C.current_ticket
 
 	if(AH)
@@ -84,7 +84,7 @@
 			recipient = GLOB.directory[whom]
 	else if(istype(whom, /client))
 		recipient = whom
-	
+
 
 	if(irc)
 		if(!ircreplyamount)	//to prevent people from spamming irc
@@ -111,7 +111,7 @@
 		//get message text, limit it's length.and clean/escape html
 		if(!msg)
 			msg = input(src,"Message:", "Private message to [key_name(recipient, 0, 0)]") as text|null
-
+			msg = trim(msg)
 			if(!msg)
 				return
 
@@ -131,7 +131,7 @@
 
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0)||irc)//no sending html to the poor bots
-		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+		msg = trim(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
 		if(!msg)
 			return
 
@@ -185,7 +185,7 @@
 				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
 
 				//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
-				if(config.popup_admin_pm)
+				if(CONFIG_GET(flag/popup_admin_pm))
 					spawn()	//so we don't hold the caller proc up
 						var/sender = src
 						var/sendername = key
@@ -277,7 +277,7 @@
 		return "Error: Ticket could not be found"
 
 	var/static/stealthkey
-	var/adminname = config.showircname ? irc_tagged : "Administrator"
+	var/adminname = CONFIG_GET(flag/show_irc_name) ? irc_tagged : "Administrator"
 
 	if(!C)
 		return "Error: No client"

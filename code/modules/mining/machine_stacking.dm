@@ -4,11 +4,12 @@
 	name = "stacking machine console"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
+	desc = "Controls a stacking machine... in theory."
 	density = FALSE
 	anchored = TRUE
 	var/obj/machinery/mineral/stacking_machine/machine = null
 	var/machinedir = SOUTHEAST
-	speed_process = 1
+	speed_process = TRUE
 
 /obj/machinery/mineral/stacking_unit_console/Initialize()
 	. = ..()
@@ -18,8 +19,8 @@
 	else
 		qdel(src)
 
-/obj/machinery/mineral/stacking_unit_console/attack_hand(mob/user)
-
+/obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user)
+	. = ..()
 	var/obj/item/stack/sheet/s
 	var/dat
 
@@ -28,13 +29,11 @@
 	for(var/O in machine.stack_list)
 		s = machine.stack_list[O]
 		if(s.amount > 0)
-			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
+			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=[REF(src)];release=[s.type]'>Release</A><br>")
 
 	dat += text("<br>Stacking: [machine.stack_amt]<br><br>")
 
 	user << browse(dat, "window=console_stacking_machine")
-
-	return
 
 /obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
 	if(..())
@@ -42,7 +41,8 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["release"])
-		if(!(text2path(href_list["release"]) in machine.stack_list)) return //someone tried to spawn materials by spoofing hrefs
+		if(!(text2path(href_list["release"]) in machine.stack_list))
+			return //someone tried to spawn materials by spoofing hrefs
 		var/obj/item/stack/sheet/inp = machine.stack_list[text2path(href_list["release"])]
 		var/obj/item/stack/sheet/out = new inp.type()
 		out.amount = inp.amount
@@ -60,6 +60,7 @@
 	name = "stacking machine"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "stacker"
+	desc = "A machine that automatically stacks acquired materials. Controlled by a nearby console."
 	density = TRUE
 	anchored = TRUE
 	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
@@ -85,7 +86,7 @@
 		stack_list[inp.type] = s
 	var/obj/item/stack/sheet/storage = stack_list[inp.type]
 	storage.amount += inp.amount //Stack the sheets
-	inp.loc = null //Let the old sheet garbage collect
+	qdel(inp) //Let the old sheet garbage collect
 	while(storage.amount > stack_amt) //Get rid of excessive stackage
 		var/obj/item/stack/sheet/out = new inp.type()
 		out.amount = stack_amt

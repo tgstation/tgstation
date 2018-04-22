@@ -23,6 +23,7 @@
 	throw_range = 7
 	materials = list(MAT_METAL=10)
 	pressure_resistance = 2
+	grind_results = list("iron" = 2, "iodine" = 1)
 	var/colour = "black"	//what colour the ink is!
 	var/traitor_unlock_degrees = 0
 	var/degrees = 0
@@ -89,6 +90,10 @@
 						"Command Blue" = "pen-fountain-cb"
 						)
 
+/obj/item/pen/fountain/captain/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 200, 115) //the pen is mightier than the sword
+
 /obj/item/pen/fountain/captain/reskin_obj(mob/M)
 	..()
 	if(current_skin)
@@ -99,18 +104,12 @@
 	if(deg && (deg > 0 && deg <= 360))
 		degrees = deg
 		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")
+		GET_COMPONENT(hidden_uplink, /datum/component/uplink)
 		if(hidden_uplink && degrees == traitor_unlock_degrees)
 			to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
 			degrees = 0
+			hidden_uplink.locked = FALSE
 			hidden_uplink.interact(user)
-
-
-/obj/item/pen/attackby(obj/item/I, mob/user, params)
-	if(hidden_uplink)
-		return hidden_uplink.attackby(I, user, params)
-	else
-		return ..()
-
 
 /obj/item/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))
@@ -129,46 +128,34 @@
 		. = ..()
 
 /obj/item/pen/afterattack(obj/O, mob/living/user, proximity)
-	//Changing Name/Description of items. Only works if they have the 'unique_rename' var set
-	if(isobj(O) && proximity)
-		if(O.unique_rename)
-			var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
-			if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
-
-				if(penchoice == "Rename")
-					var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
-					var/oldname = O.name
-					if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
-						if(oldname == input)
-							to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
-							return
-						else
-							O.name = input
-							to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
-							return
-					else
-						to_chat(user, "You are too far away!")
-
-				if(penchoice == "Change description")
-					var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
-					if(!QDELETED(O) && user.canUseTopic(O, be_close = TRUE))
-						O.desc = input
-						to_chat(user, "You have successfully changed \the [O.name]'s description.")
-						return
-					else
-						to_chat(user, "You are too far away!")
-			else
-				to_chat(user, "You are too far away!")
+	//Changing Name/Description of items. Only works if they have the 'unique_rename' flag set
+	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
+		var/penchoice = input(user, "What would you like to edit?", "Rename or change description?") as null|anything in list("Rename","Change description")
+		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			return
+		if(penchoice == "Rename")
+			var/input = stripped_input(user,"What do you want to name \the [O.name]?", ,"", MAX_NAME_LEN)
+			var/oldname = O.name
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
-	else
-		return
+			if(oldname == input)
+				to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
+			else
+				O.name = input
+				to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
+
+		if(penchoice == "Change description")
+			var/input = stripped_input(user,"Describe \the [O.name] here", ,"", 100)
+			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+				return
+			O.desc = input
+			to_chat(user, "You have successfully changed \the [O.name]'s description.")
 
 /*
  * Sleepypens
  */
 /obj/item/pen/sleepy
-	origin_tech = "engineering=4;syndicate=2"
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 
 
 /obj/item/pen/sleepy/attack(mob/living/M, mob/user)
@@ -181,20 +168,23 @@
 				reagents.trans_to(M, reagents.total_volume)
 
 
-/obj/item/pen/sleepy/New()
+/obj/item/pen/sleepy/Initialize()
+	. = ..()
 	create_reagents(45)
-	reagents.add_reagent("chloralhydrate2", 20)
+	reagents.add_reagent("chloralhydratedelayed", 20)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
-	..()
 
 /*
  * (Alan) Edaggers
  */
 /obj/item/pen/edagger
-	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	var/on = FALSE
+
+/obj/item/pen/edagger/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg', TRUE)
 
 /obj/item/pen/edagger/attack_self(mob/living/user)
 	if(on)
@@ -203,7 +193,7 @@
 		w_class = initial(w_class)
 		name = initial(name)
 		hitsound = initial(hitsound)
-		embed_chance = initial(embed_chance)
+		embedding = embedding.setRating(embed_chance = EMBED_CHANCE)
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/saberoff.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
@@ -213,10 +203,12 @@
 		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
-		embed_chance = 100 //rule of cool
+		embedding = embedding.setRating(embed_chance = 100) //rule of cool
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
+	GET_COMPONENT_FROM(butchering, /datum/component/butchering, src)
+	butchering.butchering_enabled = on
 	update_icon()
 
 /obj/item/pen/edagger/update_icon()

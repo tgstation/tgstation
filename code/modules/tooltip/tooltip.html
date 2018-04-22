@@ -99,7 +99,8 @@
 			'tileSize': 32,
 			'control': '',
 			'params': {},
-			'clientView': 0,
+			'client_view_w': 0,
+			'client_view_h': 0,
 			'text': '',
 			'theme': '',
 			'padding': 2,
@@ -121,7 +122,7 @@
 				//Get the real icon size according to the client view
 				var mapWidth 		= map['view-size'].x,
 					mapHeight 		= map['view-size'].y,
-					tilesShown 		= (tooltip.clientView * 2) + 1,
+					tilesShown 		= tooltip.client_view_w
 					realIconSize 	= mapWidth / tilesShown,
 					resizeRatio		= realIconSize / tooltip.tileSize,
 					//Calculate letterboxing offsets	
@@ -230,10 +231,11 @@
 					tooltip.hide();
 				});
 			},
-			update: function(params, clientView, text, theme, special) {
+			update: function(params, client_vw , clien_vh , text, theme, special) {
 				//Assign our global object
 				tooltip.params = $.parseJSON(params);
-				tooltip.clientView = parseInt(clientView);
+				tooltip.client_view_w = parseInt(client_vw);
+				tooltip.client_view_h = parseInt(clien_vh);
 				tooltip.text = text;
 				tooltip.theme = theme;
 				tooltip.special = special;

@@ -9,15 +9,10 @@
 
 /obj/item/device/pda/clown/Initialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 120, NO_SLIP_WHEN_WALKING)
+	AddComponent(/datum/component/slippery, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, .proc/AfterSlip))
 
-/obj/item/device/pda/clown/ComponentActivated(datum/component/C)
-	..()
-	var/datum/component/slippery/S = C
-	if(!istype(S))
-		return
-	var/mob/living/carbon/human/M = S.slip_victim
-	if (istype(M) && (M.real_name != src.owner))
+/obj/item/device/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
+	if (istype(M) && (M.real_name != owner))
 		var/obj/item/cartridge/virus/clown/cart = cartridge
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
@@ -26,7 +21,7 @@
 /obj/item/device/pda/ai
 	icon_state = "NONE"
 	ttone = "data"
-	fon = 0
+	fon = FALSE
 	detonatable = FALSE
 
 /obj/item/device/pda/ai/attack_self(mob/user)
@@ -87,7 +82,7 @@
 	default_cartridge = /obj/item/cartridge/virus/mime
 	inserted_item = /obj/item/toy/crayon/mime
 	icon_state = "pda-mime"
-	silent = 1
+	silent = TRUE
 	ttone = "silence"
 
 /obj/item/device/pda/heads
@@ -179,7 +174,7 @@
 	inserted_item = /obj/item/pen/fountain
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
-	silent = 1 //Quiet in the library!
+	silent = TRUE //Quiet in the library!
 	overlays_x_offset = -3
 
 /obj/item/device/pda/clear

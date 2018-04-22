@@ -11,6 +11,7 @@
 	var/status = 0
 
 	var/last_pressure_delta = 0
+	pipe_flags = PIPING_ONE_PER_TURF
 
 	anchored = TRUE
 	density = TRUE
@@ -21,8 +22,8 @@
 
 /obj/machinery/atmospherics/components/binary/circulator/proc/return_transfer_air()
 
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
 
 	var/output_starting_pressure = air1.return_pressure()
 	var/input_starting_pressure = air2.return_pressure()
@@ -39,8 +40,6 @@
 		var/transfer_moles = pressure_delta*air1.volume/(air2.temperature * R_IDEAL_GAS_EQUATION)
 
 		last_pressure_delta = pressure_delta
-
-		//to_chat(world, "pressure_delta = [pressure_delta]; transfer_moles = [transfer_moles];")
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = air2.remove(transfer_moles)

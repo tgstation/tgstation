@@ -18,79 +18,56 @@
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK	//ERROOOOO
-	max_w_class = WEIGHT_CLASS_NORMAL
-	max_combined_w_class = 21
-	storage_slots = 21
-	resistance_flags = 0
+	resistance_flags = NONE
 	max_integrity = 300
+
+/obj/item/storage/backpack/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_combined_w_class = 21
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_items = 21
+
 
 /*
  * Backpack Types
  */
 
-/obj/item/storage/backpack/old
-	max_combined_w_class = 12
+/obj/item/storage/backpack/old/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_combined_w_class = 12
 
 /obj/item/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of Blue Space."
-	origin_tech = "bluespace=5;materials=4;engineering=4;plasmatech=5"
 	icon_state = "holdingpack"
 	item_state = "holdingpack"
-	max_w_class = WEIGHT_CLASS_GIGANTIC
-	max_combined_w_class = 35
 	resistance_flags = FIRE_PROOF
-	var/pshoom = 'sound/items/pshoom.ogg'
-	var/alt_sound = 'sound/items/pshoom_2.ogg'
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 60, acid = 50)
+	flags_2 = NO_MAT_REDEMPTION_2
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 50)
+	component_type = /datum/component/storage/concrete/bluespace/bag_of_holding
 
+/obj/item/storage/backpack/holding/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.allow_big_nesting = TRUE
+	STR.max_w_class = WEIGHT_CLASS_GIGANTIC
+	STR.max_combined_w_class = 35
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
-	user.drop_item()
+	user.dropItemToGround(src, TRUE)
 	user.Stun(100, ignore_canstun = TRUE)
 	sleep(20)
 	playsound(src, "rustle", 50, 1, -5)
 	qdel(user)
 	return
 
-/obj/item/storage/backpack/holding/dump_content_at(atom/dest_object, mob/user)
-	if(Adjacent(user))
-		var/atom/dumping_location = dest_object.get_dumping_location()
-		if(get_dist(user, dumping_location) < 8)
-			if(dumping_location.storage_contents_dump_act(src, user))
-				if(alt_sound && prob(1))
-					playsound(src, alt_sound, 40, 1)
-				else
-					playsound(src, pshoom, 40, 1)
-				user.Beam(dumping_location,icon_state="rped_upgrade",time=5)
-				return 1
-		to_chat(user, "The [src.name] buzzes.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
-	return 0
-
-/obj/item/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
-	if((istype(W, /obj/item/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/storage/backpack/holding)))
-		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [name]?", "Proceed", "Abort")
-		if(safety == "Abort" || !in_range(src, user) || !src || !W || user.incapacitated())
-			return
-		investigate_log("has become a singularity. Caused by [user.key]", INVESTIGATE_SINGULO)
-		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
-		qdel(W)
-		var/obj/singularity/singulo = new /obj/singularity (get_turf(src))
-		singulo.energy = 300 //should make it a bit bigger~
-		message_admins("[key_name_admin(user)] detonated a bag of holding")
-		log_game("[key_name(user)] detonated a bag of holding")
-		qdel(src)
-		singulo.process()
-		return
-	. = ..()
-
 /obj/item/storage/backpack/holding/singularity_act(current_size)
 	var/dist = max((current_size - 2),1)
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	return
-
 
 /obj/item/storage/backpack/santabag
 	name = "Santa's Gift Bag"
@@ -98,8 +75,12 @@
 	icon_state = "giftbag0"
 	item_state = "giftbag"
 	w_class = WEIGHT_CLASS_BULKY
-	max_w_class = WEIGHT_CLASS_NORMAL
-	max_combined_w_class = 60
+
+/obj/item/storage/backpack/santabag/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 60
 
 /obj/item/storage/backpack/santabag/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] places [src] over their head and pulls it tight! It looks like they aren't in the Christmas spirit...</span>")
@@ -146,7 +127,6 @@
 	desc = "It's a special backpack made exclusively for Nanotrasen officers."
 	icon_state = "captainpack"
 	item_state = "captainpack"
-	resistance_flags = 0
 
 /obj/item/storage/backpack/industrial
 	name = "industrial backpack"
@@ -178,14 +158,12 @@
 	desc = "A specially designed backpack. It's fire resistant and smells vaguely of plasma."
 	icon_state = "toxpack"
 	item_state = "toxpack"
-	resistance_flags = 0
 
 /obj/item/storage/backpack/virology
 	name = "virology backpack"
 	desc = "A backpack made of hypo-allergenic fibers. It's designed to help prevent the spread of disease. Smells like monkey."
 	icon_state = "viropack"
 	item_state = "viropack"
-
 
 /*
  * Satchel Types
@@ -201,7 +179,6 @@
 	name = "leather satchel"
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
-	resistance_flags = 0
 
 /obj/item/storage/backpack/satchel/leather/withwallet/PopulateContents()
 	new /obj/item/storage/wallet/random(src)
@@ -211,7 +188,6 @@
 	desc = "A tough satchel with extra pockets."
 	icon_state = "satchel-eng"
 	item_state = "engiepack"
-	resistance_flags = 0
 
 /obj/item/storage/backpack/satchel/med
 	name = "medical satchel"
@@ -242,7 +218,6 @@
 	desc = "Useful for holding research materials."
 	icon_state = "satchel-tox"
 	item_state = "satchel-tox"
-	resistance_flags = 0
 
 /obj/item/storage/backpack/satchel/hyd
 	name = "botanist satchel"
@@ -267,18 +242,26 @@
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
-	resistance_flags = 0
 
 /obj/item/storage/backpack/satchel/flat
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
-	max_combined_w_class = 15
 	level = 1
-	cant_hold = list(/obj/item/storage/backpack/satchel/flat) //muh recursive backpacks
+	component_type = /datum/component/storage/concrete/secret_satchel
 
-/obj/item/storage/backpack/satchel/flat/hide(var/intact)
+/obj/item/storage/backpack/stachel/flat/Initialize()
+	. = ..()
+	SSpersistence.new_secret_satchels += src
+
+/obj/item/storage/backpack/satchel/flat/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_combined_w_class = 15
+	STR.cant_hold = typecacheof(list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks
+
+/obj/item/storage/backpack/satchel/flat/hide(intact)
 	if(intact)
 		invisibility = INVISIBILITY_MAXIMUM
 		anchored = TRUE //otherwise you can start pulling, cover it, and drag around an invisible backpack.
@@ -287,10 +270,6 @@
 		invisibility = initial(invisibility)
 		anchored = FALSE
 		icon_state = initial(icon_state)
-
-/obj/item/storage/backpack/satchel/flat/Initialize(mapload)
-	..()
-	SSpersistence.new_secret_satchels += src
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
 	new /obj/item/stack/tile/plasteel(src)
@@ -303,12 +282,12 @@
 /obj/item/storage/backpack/satchel/flat/secret
 	var/list/reward_one_of_these = list() //Intended for map editing
 	var/list/reward_all_of_these = list() //use paths!
-	var/revealed = 0
+	var/revealed = FALSE
 
 /obj/item/storage/backpack/satchel/flat/secret/Initialize()
-	..()
+	. = ..()
 
-	if(isfloorturf(loc) && !istype(loc, /turf/open/floor/plating/))
+	if(isfloorturf(loc) && !isplatingturf(loc))
 		hide(1)
 
 /obj/item/storage/backpack/satchel/flat/secret/hide(intact)
@@ -319,7 +298,7 @@
 			new reward(src)
 		for(var/R in reward_all_of_these)
 			new R(src)
-		revealed = 1
+		revealed = TRUE
 
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"
@@ -327,14 +306,17 @@
 	icon_state = "duffel"
 	item_state = "duffel"
 	slowdown = 1
-	max_combined_w_class = 30
+
+/obj/item/storage/backpack/duffelbag/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_combined_w_class = 30
 
 /obj/item/storage/backpack/duffelbag/captain
 	name = "captain's duffel bag"
 	desc = "A large duffel bag for holding extra captainly goods."
 	icon_state = "duffel-captain"
 	item_state = "duffel-captain"
-	resistance_flags = 0
 
 /obj/item/storage/backpack/duffelbag/med
 	name = "medical duffel bag"
@@ -382,7 +364,6 @@
 	desc = "A large duffel bag for holding extra tools and supplies."
 	icon_state = "duffel-eng"
 	item_state = "duffel-eng"
-	resistance_flags = 0
 
 /obj/item/storage/backpack/duffelbag/drone
 	name = "drone duffel bag"
@@ -414,10 +395,13 @@
 	name = "suspicious looking duffel bag"
 	desc = "A large duffel bag for holding extra tactical supplies."
 	icon_state = "duffel-syndie"
-	item_state = "duffel-syndie"
-	origin_tech = "syndicate=1"
-	silent = 1
+	item_state = "duffel-syndieammo"
 	slowdown = 0
+
+/obj/item/storage/backpack/duffelbag/syndie/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.silent = TRUE
 
 /obj/item/storage/backpack/duffelbag/syndie/hitman
 	desc = "A large duffel bag for holding extra things. There is a Nanotrasen logo on the back."
@@ -517,7 +501,7 @@
 	new /obj/item/ammo_box/foambox/riot(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle
-	desc = "A large duffel bag containing a deadly chemicals, a chemical spray, chemical grenade, a Donksoft assault rifle, riot grade darts, a minature syringe gun, and a box of syringes"
+	desc = "A large duffel bag containing a deadly chemicals, a chemical spray, chemical grenade, a Donksoft assault rifle, riot grade darts, a minature syringe gun, and a box of syringes."
 
 /obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle/PopulateContents()
 	new /obj/item/reagent_containers/spray/chemsprayer/bioterror(src)
@@ -541,7 +525,7 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/firestarter/PopulateContents()
 	new /obj/item/clothing/under/syndicate/soviet(src)
-	new /obj/item/watertank/operator(src)
+	new /obj/item/watertank/op(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
 	new /obj/item/gun/ballistic/automatic/pistol/APS(src)
 	new /obj/item/ammo_box/magazine/pistolm9mm(src)
@@ -549,3 +533,18 @@
 	new /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka(src)
 	new /obj/item/reagent_containers/syringe/stimulants(src)
 	new /obj/item/grenade/syndieminibomb(src)
+
+// For ClownOps.
+/obj/item/storage/backpack/duffelbag/clown/syndie/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	slowdown = 0
+	STR.silent = TRUE
+
+/obj/item/storage/backpack/duffelbag/clown/syndie/PopulateContents()
+	new /obj/item/device/pda/clown(src)
+	new /obj/item/clothing/under/rank/clown(src)
+	new /obj/item/clothing/shoes/clown_shoes(src)
+	new /obj/item/clothing/mask/gas/clown_hat(src)
+	new /obj/item/bikehorn(src)
+	new /obj/item/implanter/sad_trombone(src)

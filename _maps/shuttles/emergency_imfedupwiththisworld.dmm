@@ -13,8 +13,7 @@
 	dwidth = 1;
 	height = 10;
 	name = "Oh Hi Mark";
-	width = 12;
-	timid = 1
+	width = 12
 	},
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/wood,
@@ -155,7 +154,9 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "D" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "E" = (

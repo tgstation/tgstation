@@ -15,7 +15,7 @@
  Override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
 
-	if(!category)
+	if(!category || QDELETED(src))
 		return
 
 	var/obj/screen/alert/thealert
@@ -101,7 +101,8 @@
 
 
 /obj/screen/alert/MouseEntered(location,control,params)
-	openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
+	if(!QDELETED(src))
+		openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
 
 
 /obj/screen/alert/MouseExited()
@@ -173,7 +174,7 @@
 
 /obj/screen/alert/verygross
 	name = "Very grossed out."
-	desc = "I'm not feeling very well.."
+	desc = "You're not feeling very well..."
 	icon_state = "gross2"
 
 /obj/screen/alert/disgusted
@@ -242,9 +243,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "fire"
 
 /obj/screen/alert/fire/Click()
-	if(isliving(usr))
-		var/mob/living/L = usr
-		return L.resist()
+	var/mob/living/L = usr
+	if(!istype(L) || !L.can_resist())
+		return
+	L.changeNext_move(CLICK_CD_RESIST)
+	if(L.canmove)
+		return L.resist_fire() //I just want to start a flame in your hearrrrrrtttttt.
 
 
 //ALIENS
@@ -299,42 +303,54 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/bloodsense/process()
 	var/atom/blood_target
-	if(GLOB.blood_target)
-		if(!get_turf(GLOB.blood_target))
-			GLOB.blood_target = null
+
+	var/datum/antagonist/cult/antag = mob_viewer.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(!antag)
+		return
+	var/datum/objective/sacrifice/sac_objective = locate() in antag.cult_team.objectives
+
+	if(antag.cult_team.blood_target)
+		if(!get_turf(antag.cult_team.blood_target))
+			antag.cult_team.blood_target = null
 		else
-			blood_target = GLOB.blood_target
+			blood_target = antag.cult_team.blood_target
 	if(Cviewer && Cviewer.seeking && Cviewer.master)
 		blood_target = Cviewer.master
 		desc = "Your blood sense is leading you to [Cviewer.master]"
 	if(!blood_target)
-		if(!GLOB.sac_complete)
+		if(sac_objective && !sac_objective.check_completion())
 			if(icon_state == "runed_sense0")
 				return
 			animate(src, transform = null, time = 1, loop = 0)
 			angle = 0
 			cut_overlays()
 			icon_state = "runed_sense0"
-			desc = "Nar-Sie demands that [GLOB.sac_mind] be sacrificed before the summoning ritual can begin."
-			add_overlay(GLOB.sac_image)
+			desc = "Nar-Sie demands that [sac_objective.target] be sacrificed before the summoning ritual can begin."
+			add_overlay(sac_objective.sac_image)
 		else
+			var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
+			if(!summon_objective)
+				return
+			desc = "The sacrifice is complete, summon Nar-Sie! The summoning can only take place in [english_list(summon_objective.summon_spots)]!"
 			if(icon_state == "runed_sense1")
 				return
 			animate(src, transform = null, time = 1, loop = 0)
 			angle = 0
 			cut_overlays()
 			icon_state = "runed_sense1"
-			desc = "The sacrifice is complete, summon Nar-Sie! The summoning can only take place in [english_list(GLOB.summon_spots)]!"
 			add_overlay(narnar)
 		return
 	var/turf/P = get_turf(blood_target)
 	var/turf/Q = get_turf(mob_viewer)
-	var/area/A = get_area(P)
-	if(P.z != Q.z) //The target is on a different Z level, we cannot sense that far.
+	if(!P || !Q || (P.z != Q.z)) //The target is on a different Z level, we cannot sense that far.
 		icon_state = "runed_sense2"
-		desc = "[blood_target] is no longer in your sector, you cannot sense its presence here."
+		desc = "You can no longer sense your target's presence."
 		return
-	desc = "You are currently tracking [blood_target] in [A.name]."
+	if(isliving(blood_target))
+		var/mob/living/real_target = blood_target
+		desc = "You are currently tracking [real_target.real_name] in [get_area_name(blood_target)]."
+	else
+		desc = "You are currently tracking [blood_target] in [get_area_name(blood_target)]."
 	var/target_angle = Get_Angle(Q, P)
 	var/target_dist = get_dist(P, Q)
 	cut_overlays()
@@ -375,90 +391,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /obj/screen/alert/clockwork
 	alerttooltipstyle = "clockcult"
 
-/obj/screen/alert/clockwork/scripture_reqs
-	name = "Next Tier Requirements"
-	desc = "You shouldn't be seeing this description unless you're very fast. If you're very fast, good job!"
-	icon_state = "no-servants-caches"
-
-/obj/screen/alert/clockwork/scripture_reqs/Initialize()
-	. = ..()
-	START_PROCESSING(SSprocessing, src)
-	process()
-
-/obj/screen/alert/clockwork/scripture_reqs/Destroy()
-	STOP_PROCESSING(SSprocessing, src)
-	return ..()
-
-/obj/screen/alert/clockwork/scripture_reqs/process()
-	if(GLOB.clockwork_gateway_activated)
-		mob_viewer.clear_alert("scripturereq")
-		return
-	var/current_state
-	for(var/i in SSticker.scripture_states)
-		if(!SSticker.scripture_states[i])
-			current_state = i
-			break
-	icon_state = "no"
-	if(!current_state)
-		name = "Current Objective"
-		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
-			var/area/gate_area = get_area(G)
-			desc = "<b>Protect the Ark at [gate_area.map_name]!</b>"
-			return
-		desc = "<b>All tiers of Scripture are unlocked.<br>\
-		Acquire components and summon the Ark.</b>"
-	else
-		name = "Next Tier Requirements"
-		var/validservants = 0
-		var/unconverted_ais_exist = get_unconverted_ais()
-		for(var/mob/living/L in GLOB.living_mob_list)
-			if(is_servant_of_ratvar(L) && (ishuman(L) || issilicon(L)))
-				validservants++
-		var/req_servants = 0
-		var/req_caches = 0
-		var/req_cv = 0
-		var/req_ai = FALSE
-		var/list/textlist = list("Requirements for <b>[current_state] Scripture:</b>")
-		switch(current_state) //get our requirements based on the tier
-			if(SCRIPTURE_SCRIPT)
-				req_servants = SCRIPT_SERVANT_REQ
-				req_caches = SCRIPT_CACHE_REQ
-			if(SCRIPTURE_APPLICATION)
-				req_servants = APPLICATION_SERVANT_REQ
-				req_caches = APPLICATION_CACHE_REQ
-				req_cv = APPLICATION_CV_REQ
-			if(SCRIPTURE_JUDGEMENT)
-				req_servants = JUDGEMENT_SERVANT_REQ
-				req_caches = JUDGEMENT_CACHE_REQ
-				req_cv = JUDGEMENT_CV_REQ
-				req_ai = TRUE
-		textlist += "<br><b>[validservants]/[req_servants]</b> Servants"
-		if(validservants < req_servants)
-			icon_state += "-servants" //in this manner, generate an icon key based on what we're missing
-		else
-			textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-		textlist += "<br><b>[GLOB.clockwork_caches]/[req_caches]</b> Tinkerer's Caches"
-		if(GLOB.clockwork_caches < req_caches)
-			icon_state += "-caches"
-		else
-			textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-		if(req_cv) //cv only shows up if the tier requires it
-			textlist += "<br><b>[GLOB.clockwork_construction_value]/[req_cv]</b> Construction Value"
-			if(GLOB.clockwork_construction_value < req_cv)
-				icon_state += "-cv"
-			else
-				textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-		if(req_ai) //same for ai
-			if(unconverted_ais_exist)
-				if(unconverted_ais_exist > 1)
-					textlist += "<br><b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
-				else
-					textlist += "<br><b>An unconverted AI exists!</b>"
-				icon_state += "-ai"
-			else
-				textlist += "<br>No unconverted AIs exist: <b><font color=#5A6068>\[CHECK\]</font></b>"
-		desc = textlist.Join()
-
 /obj/screen/alert/clockwork/infodump
 	name = "Global Records"
 	desc = "You shouldn't be seeing this description, because it should be dynamically generated."
@@ -469,44 +401,30 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
 	else
 		var/servants = 0
-		var/validservants = 0
-		var/unconverted_ais_exist = get_unconverted_ais()
-		var/list/textlist
-		for(var/mob/living/L in GLOB.living_mob_list)
+		var/list/textlist = list()
+		for(var/mob/living/L in GLOB.alive_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
-				if(ishuman(L) || issilicon(L))
-					validservants++
-		if(servants > 1)
-			if(validservants > 1)
-				textlist = list("<b>[servants]</b> Servants, <b>[validservants]</b> of which count towards scripture.<br>")
-			else
-				textlist = list("<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which counts":"none of which count"] towards scripture.<br>")
-		else
-			textlist = list("<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>")
-		textlist += "<b>[GLOB.clockwork_caches ? "[GLOB.clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
-		<b>[GLOB.clockwork_construction_value]</b> Construction Value.<br>"
-		textlist += "<b>[Floor(servants * 0.2)]</b> Tinkerer's Daemons can be active at once. <b>[LAZYLEN(GLOB.active_daemons)]</b> are active.<br>"
-		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
-			var/area/gate_area = get_area(G)
-			textlist += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
-			if(G.still_needs_components())
-				textlist += "Ark Components required:<br>"
-				for(var/i in G.required_components)
-					if(G.required_components[i])
-						textlist += "[get_component_icon(i)] <b><font color=[get_component_color_bright(i)]>[G.required_components[i]]</font></b> "
-				textlist += "<br>"
-			else
-				textlist += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
-			break
-		if(unconverted_ais_exist)
-			if(unconverted_ais_exist > 1)
-				textlist += "<b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
-			else
-				textlist += "<b>An unconverted AI exists!</b><br>"
+		var/datum/antagonist/clockcult/C = mob_viewer.mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
+		if(C && C.clock_team)
+			textlist += "[C.clock_team.eminence ? "There is an Eminence." : "<b>There is no Eminence! Get one ASAP!</b>"]<br>"
+		textlist += "There are currently <b>[servants]</b> servant[servants > 1 ? "s" : ""] of Ratvar.<br>"
 		for(var/i in SSticker.scripture_states)
 			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
 				textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
+		if(G)
+			var/time_info = G.get_arrival_time(FALSE)
+			var/time_name
+			if(G.seconds_until_activation)
+				time_name = "until the Ark activates"
+			else if(G.grace_period)
+				time_name = "of grace period remaining"
+			else if(G.progress_in_seconds)
+				time_name = "until the Ark finishes summoning"
+			if(time_info)
+				textlist += "<b>[time_info / 60] minutes</b> [time_name].<br>"
+		textlist += "<b>[DisplayPower(get_clockwork_power())] / [DisplayPower(MAX_CLOCKWORK_POWER)]</b> power available for use."
 		desc = textlist.Join()
 	..()
 
@@ -577,8 +495,10 @@ so as to remain in compliance with the most up-to-date laws."
 	var/atom/target = null
 
 /obj/screen/alert/hackingapc/Click()
-	if(!usr || !usr.client) return
-	if(!target) return
+	if(!usr || !usr.client)
+		return
+	if(!target)
+		return
 	var/mob/living/silicon/ai/AI = usr
 	var/turf/T = get_turf(target)
 	if(T)
@@ -601,7 +521,8 @@ so as to remain in compliance with the most up-to-date laws."
 	timeout = 300
 
 /obj/screen/alert/notify_cloning/Click()
-	if(!usr || !usr.client) return
+	if(!usr || !usr.client)
+		return
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
@@ -614,17 +535,20 @@ so as to remain in compliance with the most up-to-date laws."
 	var/action = NOTIFY_JUMP
 
 /obj/screen/alert/notify_action/Click()
-	if(!usr || !usr.client) return
-	if(!target) return
+	if(!usr || !usr.client)
+		return
+	if(!target)
+		return
 	var/mob/dead/observer/G = usr
-	if(!istype(G)) return
+	if(!istype(G))
+		return
 	switch(action)
 		if(NOTIFY_ATTACK)
 			target.attack_ghost(G)
 		if(NOTIFY_JUMP)
 			var/turf/T = get_turf(target)
 			if(T && isturf(T))
-				G.loc = T
+				G.forceMove(T)
 		if(NOTIFY_ORBIT)
 			G.ManualFollow(target)
 
@@ -644,9 +568,20 @@ so as to remain in compliance with the most up-to-date laws."
 	desc = "You're legcuffed, which slows you down considerably. Click the alert to free yourself."
 
 /obj/screen/alert/restrained/Click()
-	if(isliving(usr))
-		var/mob/living/L = usr
-		return L.resist()
+	var/mob/living/L = usr
+	if(!istype(L) || !L.can_resist())
+		return
+	L.changeNext_move(CLICK_CD_RESIST)
+	if((L.canmove) && (L.last_special <= world.time))
+		return L.resist_restraints()
+
+/obj/screen/alert/restrained/buckled/Click()
+	var/mob/living/L = usr
+	if(!istype(L) || !L.can_resist())
+		return
+	L.changeNext_move(CLICK_CD_RESIST)
+	if(L.last_special <= world.time)
+		return L.resist_buckle()
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
@@ -698,4 +633,5 @@ so as to remain in compliance with the most up-to-date laws."
 	. = ..()
 	severity = 0
 	master = null
+	mob_viewer = null
 	screen_loc = ""

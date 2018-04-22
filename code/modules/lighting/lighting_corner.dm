@@ -86,6 +86,10 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 
 // God that was a mess, now to do the rest of the corner code! Hooray!
 /datum/lighting_corner/proc/update_lumcount(var/delta_r, var/delta_g, var/delta_b)
+
+	if ((abs(delta_r)+abs(delta_g)+abs(delta_b)) == 0)
+		return
+
 	lum_r += delta_r
 	lum_g += delta_g
 	lum_b += delta_b
@@ -135,5 +139,5 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 		return QDEL_HINT_LETMELIVE
 
 	stack_trace("Ok, Look, TG, I need you to find whatever fucker decided to call qdel on a fucking lighting corner, then tell him very nicely and politely that he is 100% retarded and needs his head checked. Thanks. Send them my regards by the way.")
-	
+
 	return ..()

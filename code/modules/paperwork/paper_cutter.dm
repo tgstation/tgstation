@@ -12,8 +12,8 @@
 	pass_flags = PASSTABLE
 
 
-/obj/item/papercutter/New()
-	..()
+/obj/item/papercutter/Initialize()
+	. = ..()
 	storedcutter = new /obj/item/hatchet/cutterblade(src)
 	update_icon()
 
@@ -23,7 +23,7 @@
 		user.visible_message("<span class='suicide'>[user] is beheading [user.p_them()]self with [src.name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
-			var/obj/item/bodypart/BP = C.get_bodypart("head")
+			var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 			if(BP)
 				BP.drop_limb()
 				playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
@@ -44,31 +44,32 @@
 
 /obj/item/papercutter/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/paper) && !storedpaper)
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(P, src))
 			return
 		playsound(loc, "pageturn", 60, 1)
 		to_chat(user, "<span class='notice'>You place [P] in [src].</span>")
-		P.loc = src
 		storedpaper = P
 		update_icon()
 		return
 	if(istype(P, /obj/item/hatchet/cutterblade) && !storedcutter)
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(P, src))
 			return
 		to_chat(user, "<span class='notice'>You replace [src]'s [P].</span>")
-		P.loc = src
+		P.forceMove(src)
 		storedcutter = P
 		update_icon()
 		return
 	if(istype(P, /obj/item/screwdriver) && storedcutter)
-		playsound(src, P.usesound, 50, 1)
+		P.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>[storedcutter] has been [cuttersecured ? "unsecured" : "secured"].</span>")
 		cuttersecured = !cuttersecured
 		return
 	..()
 
-
 /obj/item/papercutter/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	add_fingerprint(user)
 	if(!storedcutter)
 		to_chat(user, "<span class='notice'>The cutting blade is gone! You can't use [src] now.</span>")
@@ -89,8 +90,8 @@
 		new /obj/item/paperslip(get_turf(src))
 		update_icon()
 
-
 /obj/item/papercutter/MouseDrop(atom/over_object)
+	. = ..()
 	var/mob/M = usr
 	if(M.incapacitated() || !Adjacent(M))
 		return
@@ -103,7 +104,6 @@
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 	add_fingerprint(M)
 
-
 /obj/item/paperslip
 	name = "paper slip"
 	desc = "A little slip of paper left over after a larger piece was cut. Whoa."
@@ -112,8 +112,8 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 
-/obj/item/paperslip/New()
-	..()
+/obj/item/paperslip/Initialize()
+	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 

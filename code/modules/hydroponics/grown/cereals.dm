@@ -22,6 +22,8 @@
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
 	foodtype = GRAIN
+	grind_results = list("flour" = 0)
+	tastes = list("wheat" = 1)
 
 // Oat
 /obj/item/seeds/wheat/oat
@@ -42,6 +44,8 @@
 	filling_color = "#556B2F"
 	bitesize_mod = 2
 	foodtype = GRAIN
+	grind_results = list("flour" = 0)
+	tastes = list("oat" = 1)
 
 // Rice
 /obj/item/seeds/wheat/rice
@@ -63,6 +67,8 @@
 	filling_color = "#FAFAD2"
 	bitesize_mod = 2
 	foodtype = GRAIN
+	grind_results = list("rice" = 0)
+	tastes = list("rice" = 1)
 
 //Meatwheat - grows into synthetic meat
 /obj/item/seeds/wheat/meat
@@ -83,12 +89,13 @@
 	bitesize_mod = 2
 	seed = /obj/item/seeds/wheat/meat
 	foodtype = MEAT | GRAIN
+	grind_results = list("flour" = 0, "blood" = 0)
+	tastes = list("meatwheat" = 1)
 
 /obj/item/reagent_containers/food/snacks/grown/meatwheat/attack_self(mob/living/user)
 	user.visible_message("<span class='notice'>[user] crushes [src] into meat.</span>", "<span class='notice'>You crush [src] into something that resembles meat.</span>")
 	playsound(user, 'sound/effects/blobattack.ogg', 50, 1)
-	var/obj/item/reagent_containers/food/snacks/meat/slab/meatwheat/M = new(get_turf(user))
-	user.drop_item()
+	var/obj/item/reagent_containers/food/snacks/meat/slab/meatwheat/M = new
 	qdel(src)
 	user.put_in_hands(M)
 	return 1

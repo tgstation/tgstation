@@ -48,6 +48,7 @@
 	var/datum/object = GLOBAL_PROC
 	var/delegate
 	var/list/arguments
+	var/datum/weakref/user
 
 /datum/callback/New(thingtocall, proctocall, ...)
 	if (thingtocall)
@@ -55,8 +56,10 @@
 	delegate = proctocall
 	if (length(args) > 2)
 		arguments = args.Copy(3)
+	if(usr)
+		user = WEAKREF(usr)
 
-/proc/ImmediateInvokeAsync(thingtocall, proctocall, ...)
+/world/proc/ImmediateInvokeAsync(thingtocall, proctocall, ...)
 	set waitfor = FALSE
 
 	if (!thingtocall)
@@ -70,15 +73,25 @@
 		call(thingtocall, proctocall)(arglist(calling_arguments))
 
 /datum/callback/proc/Invoke(...)
+	if(!usr)
+		var/datum/weakref/W = user
+		if(W)
+			var/mob/M = W.resolve()
+			if(M)
+				if (length(args))
+					return world.PushUsr(arglist(list(M, src) + args))
+				return world.PushUsr(M, src)
+
 	if (!object)
 		return
+
 	var/list/calling_arguments = arguments
 	if (length(args))
 		if (length(arguments))
 			calling_arguments = calling_arguments + args //not += so that it creates a new list so the arguments list stays clean
 		else
 			calling_arguments = args
-	if(var_edited)
+	if(datum_flags & DF_VAR_EDITED)
 		return WrapAdminProcCall(object, delegate, calling_arguments)
 	if (object == GLOBAL_PROC)
 		return call(delegate)(arglist(calling_arguments))
@@ -87,15 +100,26 @@
 //copy and pasted because fuck proc overhead
 /datum/callback/proc/InvokeAsync(...)
 	set waitfor = FALSE
+
+	if(!usr)
+		var/datum/weakref/W = user
+		if(W)
+			var/mob/M = W.resolve()
+			if(M)
+				if (length(args))
+					return world.PushUsr(arglist(list(M, src) + args))
+				return world.PushUsr(M, src)
+
 	if (!object)
 		return
+
 	var/list/calling_arguments = arguments
 	if (length(args))
 		if (length(arguments))
 			calling_arguments = calling_arguments + args //not += so that it creates a new list so the arguments list stays clean
 		else
 			calling_arguments = args
-	if(var_edited)
+	if(datum_flags & DF_VAR_EDITED)
 		return WrapAdminProcCall(object, delegate, calling_arguments)
 	if (object == GLOBAL_PROC)
 		return call(delegate)(arglist(calling_arguments))
@@ -131,7 +155,7 @@
 
 //runs a list of callbacks asynchronously, returning once all of them return.
 //callbacks can be repeated.
-//callbacks-args is a optional list of argument lists, in the same order as the callbacks,
+//callbacks-args is an optional list of argument lists, in the same order as the callbacks,
 //	the inner lists will be sent to the callbacks when invoked() as additional args.
 //can optionly save and return a list of return values, in the same order as the original list of callbacks
 //resolution is the number of byond ticks between checks.
@@ -149,7 +173,7 @@
 	var/datum/callback_select/CS = new(count, savereturns)
 	for (var/i in 1 to count)
 		CS.invoke_callback(i, callbacks[i], callback_args[i], savereturns)
-	
+
 	while(CS.pendingcount)
 		sleep(resolution*world.tick_lag)
 	return CS.finished

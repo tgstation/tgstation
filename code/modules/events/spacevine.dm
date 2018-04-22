@@ -5,6 +5,9 @@
 	max_occurrences = 3
 	min_players = 10
 
+/datum/round_event/spacevine
+	fakeable = FALSE
+
 /datum/round_event/spacevine/start()
 	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
 
@@ -167,9 +170,9 @@
 	var/turf/open/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
-		if(!GM.gases["o2"])
+		if(!GM.gases[/datum/gas/oxygen])
 			return
-		GM.gases["o2"][MOLES] -= severity * holder.energy
+		GM.gases[/datum/gas/oxygen][MOLES] = max(GM.gases[/datum/gas/oxygen][MOLES] - severity * holder.energy, 0)
 		GM.garbage_collect()
 
 /datum/spacevine_mutation/nitro_eater
@@ -182,9 +185,9 @@
 	var/turf/open/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
-		if(!GM.gases["n2"])
+		if(!GM.gases[/datum/gas/nitrogen])
 			return
-		GM.gases["n2"][MOLES] -= severity * holder.energy
+		GM.gases[/datum/gas/nitrogen][MOLES] = max(GM.gases[/datum/gas/nitrogen][MOLES] - severity * holder.energy, 0)
 		GM.garbage_collect()
 
 /datum/spacevine_mutation/carbondioxide_eater
@@ -197,9 +200,9 @@
 	var/turf/open/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
-		if(!GM.gases["co2"])
+		if(!GM.gases[/datum/gas/carbon_dioxide])
 			return
-		GM.gases["co2"][MOLES] -= severity * holder.energy
+		GM.gases[/datum/gas/carbon_dioxide][MOLES] = max(GM.gases[/datum/gas/carbon_dioxide][MOLES] - severity * holder.energy, 0)
 		GM.garbage_collect()
 
 /datum/spacevine_mutation/plasma_eater
@@ -212,9 +215,9 @@
 	var/turf/open/floor/T = holder.loc
 	if(istype(T))
 		var/datum/gas_mixture/GM = T.air
-		if(!GM.gases["plasma"])
+		if(!GM.gases[/datum/gas/plasma])
 			return
-		GM.gases["plasma"][MOLES] -= severity * holder.energy
+		GM.gases[/datum/gas/plasma][MOLES] = max(GM.gases[/datum/gas/plasma][MOLES] - severity * holder.energy, 0)
 		GM.garbage_collect()
 
 /datum/spacevine_mutation/thorns
@@ -352,11 +355,12 @@
 		for(var/datum/spacevine_mutation/SM in mutations)
 			SM.on_cross(src, crosser)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/spacevine/attack_hand(mob/user)
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_hit(src, user)
 	user_unbuckle_mob(user, user)
-
+	. = ..()
 
 /obj/structure/spacevine/attack_paw(mob/living/user)
 	for(var/datum/spacevine_mutation/SM in mutations)
@@ -390,7 +394,7 @@
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Delete Vines"] = "?_src_=\ref[src];[HrefToken()];purge_vines=1"
+	.["Delete Vines"] = "?_src_=[REF(src)];[HrefToken()];purge_vines=1"
 
 /datum/spacevine_controller/Topic(href, href_list)
 	if(..() || !check_rights(R_ADMIN, FALSE) || !usr.client.holder.CheckAdminHref(href, href_list))
@@ -468,7 +472,6 @@
 		else //If tile is fully grown
 			SV.entangle_mob()
 
-		//if(prob(25))
 		SV.spread()
 		if(i >= length)
 			break
@@ -507,11 +510,11 @@
 /obj/structure/spacevine/proc/spread()
 	var/direction = pick(GLOB.cardinals)
 	var/turf/stepturf = get_step(src,direction)
-	for(var/datum/spacevine_mutation/SM in mutations)
-		SM.on_spread(src, stepturf)
-		stepturf = get_step(src,direction) //in case turf changes, to make sure no runtimes happen
-	if(!locate(/obj/structure/spacevine, stepturf))
-		if(stepturf.Enter(src))
+	if (!isspaceturf(stepturf) && stepturf.Enter(src))
+		for(var/datum/spacevine_mutation/SM in mutations)
+			SM.on_spread(src, stepturf)
+			stepturf = get_step(src,direction) //in case turf changes, to make sure no runtimes happen
+		if(!locate(/obj/structure/spacevine, stepturf))
 			if(master)
 				master.spawn_spacevine_piece(stepturf, src)
 

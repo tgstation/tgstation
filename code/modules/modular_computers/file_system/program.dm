@@ -81,7 +81,7 @@
 	if(!access_to_check) // No required_access, allow it.
 		return 1
 
-	if(!transfer && computer && computer.emagged)	//emags can bypass the execution locks but not the download ones.
+	if(!transfer && computer && (computer.obj_flags & EMAGGED))	//emags can bypass the execution locks but not the download ones.
 		return 1
 
 	if(IsAdminGhost(user))

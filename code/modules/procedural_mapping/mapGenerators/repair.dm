@@ -20,11 +20,15 @@
 	if(!istype(mother, /datum/mapGenerator/repair/reload_station_map))
 		return
 	var/datum/mapGenerator/repair/reload_station_map/mother1 = mother
-	if(!(mother1.z in GLOB.station_z_levels))
-		return			//This is only for reloading station blocks!
 	GLOB.reloading_map = TRUE
 	var/static/dmm_suite/reloader = new
-	var/list/bounds = reloader.load_map(file(SSmapping.config.GetFullMapPath()),measureOnly = FALSE, no_changeturf = FALSE,x_offset = 0, y_offset = 0, z_offset = ZLEVEL_STATION_PRIMARY, cropMap=TRUE, lower_crop_x = mother1.x_low, lower_crop_y = mother1.y_low, upper_crop_x = mother1.x_high, upper_crop_y = mother1.y_high)
+	// This is kind of finicky on multi-Z maps but the reader would need to be
+	// changed to allow Z cropping and that's a mess
+	var/z_offset = SSmapping.station_start
+	var/list/bounds
+	for (var/path in SSmapping.config.GetFullMapPaths())
+		bounds = reloader.load_map(file(path), measureOnly = FALSE, no_changeturf = FALSE,x_offset = 0, y_offset = 0, z_offset = z_offset, cropMap=TRUE, lower_crop_x = mother1.x_low, lower_crop_y = mother1.y_low, upper_crop_x = mother1.x_high, upper_crop_y = mother1.y_high)
+		z_offset += bounds[MAP_MAXZ] - bounds[MAP_MINZ] + 1
 
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
@@ -32,8 +36,8 @@
 
 	repopulate_sorted_areas()
 
-	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
-	                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], SSmapping.station_start),
+	                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], z_offset - 1)))
 		set waitfor = FALSE
 		var/turf/B = L
 		atoms += B
@@ -87,13 +91,13 @@
 
 /datum/mapGenerator/repair/reload_station_map/defineRegion(turf/start, turf/end)
 	. = ..()
-	if(!(start.z in GLOB.station_z_levels) || !(end.z in GLOB.station_z_levels))
+	if(!is_station_level(start.z) || !is_station_level(end.z))
 		return
 	x_low = min(start.x, end.x)
 	y_low = min(start.y, end.y)
 	x_high = max(start.x, end.x)
 	y_high = max(start.y, end.y)
-	z = ZLEVEL_STATION_PRIMARY
+	z = SSmapping.station_start
 
 GLOBAL_VAR_INIT(reloading_map, FALSE)
 

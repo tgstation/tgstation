@@ -2,7 +2,7 @@
 
 SUBSYSTEM_DEF(processing)
 	name = "Processing"
-	priority = 25
+	priority = FIRE_PRIORITY_PROCESS
 	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING|SS_NO_INIT
 	wait = 10
 

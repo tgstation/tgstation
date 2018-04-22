@@ -63,6 +63,7 @@
 		return 1
 	return 0
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/silicon/attack_hand(mob/living/carbon/human/M)
 	switch(M.a_intent)
 		if ("help")

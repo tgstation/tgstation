@@ -6,7 +6,7 @@
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
 			new /obj/item/card/id/syndicate(src) // 2 tc
-			new /obj/item/clothing/shoes/chameleon(src) // 2 tc
+			new /obj/item/clothing/shoes/chameleon/noslip(src) // 2 tc
 			new /obj/item/device/camera_bug(src) // 1 tc
 			new /obj/item/device/multitool/ai_detect(src) // 1 tc
 			new /obj/item/device/encryptionkey/syndicate(src) // 2 tc
@@ -55,7 +55,7 @@
 			new /obj/item/melee/transforming/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/card/emag(src)
-			new /obj/item/clothing/shoes/chameleon(src)
+			new /obj/item/clothing/shoes/chameleon/noslip(src)
 			new /obj/item/device/encryptionkey/syndicate(src)
 			new /obj/item/grenade/syndieminibomb(src)
 
@@ -96,8 +96,8 @@
 			new /obj/item/dnainjector/telemut/darkbundle(src)
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/card/id/syndicate(src)
-			new /obj/item/clothing/shoes/chameleon(src) //because slipping while being a dark lord sucks
-			new /obj/item/spellbook/oneuse/summonitem(src)
+			new /obj/item/clothing/shoes/chameleon/noslip(src) //because slipping while being a dark lord sucks
+			new /obj/item/book/granter/spell/summonitem(src)
 
 		if("sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
 			new /obj/item/gun/ballistic/automatic/sniper_rifle(src) // 12 tc
@@ -192,8 +192,12 @@
 
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
-	can_hold = list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate)
-	max_w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/box/syndie_kit/space/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.can_hold = typecacheof(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
 
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
 	new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
@@ -212,12 +216,16 @@
 
 /obj/item/storage/box/syndie_kit/chemical
 	name = "boxed chemical kit"
-	storage_slots = 14
+
+/obj/item/storage/box/syndie_kit/chemical/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 14
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()
 	new /obj/item/reagent_containers/glass/bottle/polonium(src)
 	new /obj/item/reagent_containers/glass/bottle/venom(src)
-	new /obj/item/reagent_containers/glass/bottle/neurotoxin2(src)
+	new /obj/item/reagent_containers/glass/bottle/fentanyl(src)
 	new /obj/item/reagent_containers/glass/bottle/formaldehyde(src)
 	new /obj/item/reagent_containers/glass/bottle/spewium(src)
 	new /obj/item/reagent_containers/glass/bottle/cyanide(src)
@@ -303,5 +311,32 @@
 	new /obj/item/gun/ballistic/revolver/reverse(src)
 
 /obj/item/storage/box/syndie_kit/mimery/PopulateContents()
-	new /obj/item/spellbook/oneuse/mimery_blockade(src)
-	new /obj/item/spellbook/oneuse/mimery_guns(src)
+	new /obj/item/book/granter/spell/mimery_blockade(src)
+	new /obj/item/book/granter/spell/mimery_guns(src)
+
+/obj/item/storage/box/syndie_kit/imp_radio/PopulateContents()
+	new /obj/item/implanter/radio/syndicate(src)
+
+/obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
+	new /obj/item/clothing/under/rank/centcom_officer(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/device/radio/headset/headset_cent/empty(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
+	new /obj/item/storage/backpack/satchel(src)
+	new /obj/item/device/pda/heads(src)
+	new /obj/item/clipboard(src)
+
+/obj/item/storage/box/syndie_kit/chameleon/broken/PopulateContents()
+	new /obj/item/clothing/under/chameleon/broken(src)
+	new /obj/item/clothing/suit/chameleon/broken(src)
+	new /obj/item/clothing/gloves/chameleon/broken(src)
+	new /obj/item/clothing/shoes/chameleon/noslip/broken(src)
+	new /obj/item/clothing/glasses/chameleon/broken(src)
+	new /obj/item/clothing/head/chameleon/broken(src)
+	new /obj/item/clothing/mask/chameleon/broken(src)
+	new /obj/item/storage/backpack/chameleon/broken(src)
+	new /obj/item/device/radio/headset/chameleon/broken(src)
+	new /obj/item/stamp/chameleon/broken(src)
+	new /obj/item/device/pda/chameleon/broken(src)
+	// No chameleon laser, they can't randomise for //REASONS//

@@ -34,6 +34,7 @@
 
 	if(L.handcuffed || L.legcuffed) // Cuffing larvas ? Eh ?
 		to_chat(user, "<span class='danger'>You cannot evolve when you are cuffed.</span>")
+		return
 
 	if(L.amount_grown >= L.max_grown)	//TODO ~Carn
 		to_chat(L, "<span class='name'>You are growing into a beautiful alien! It is time to choose a caste.</span>")

@@ -4,7 +4,6 @@
 	actions_types = list(/datum/action/item_action/toggle_hood)
 	var/obj/item/clothing/head/hooded/hood
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
-	hooded = 1
 
 /obj/item/clothing/suit/hooded/New()
 	MakeHood()
@@ -94,8 +93,7 @@
 
 /obj/item/clothing/suit/toggle/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, be_close=TRUE))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	else
 		suit_toggle(user)
@@ -126,9 +124,9 @@
 	to_chat(user, "Alt-click on [src] to toggle the [togglename].")
 
 //Hardsuit toggle code
-/obj/item/clothing/suit/space/hardsuit/New()
+/obj/item/clothing/suit/space/hardsuit/Initialize()
 	MakeHelmet()
-	..()
+	. = ..()
 
 /obj/item/clothing/suit/space/hardsuit/Destroy()
 	if(helmet)

@@ -15,10 +15,10 @@
 			targetmob = M
 
 	if(usr.hud_used.inventory_shown && targetmob.hud_used)
-		usr.hud_used.inventory_shown = 0
+		usr.hud_used.inventory_shown = FALSE
 		usr.client.screen -= targetmob.hud_used.toggleable_inventory
 	else
-		usr.hud_used.inventory_shown = 1
+		usr.hud_used.inventory_shown = TRUE
 		usr.client.screen += targetmob.hud_used.toggleable_inventory
 
 	targetmob.hud_used.hidden_inventory_update(usr)
@@ -28,7 +28,7 @@
 	icon_state = "act_equip"
 
 /obj/screen/human/equip/Click()
-	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return 1
 	var/mob/living/carbon/human/H = usr
 	H.quick_equip()
@@ -283,6 +283,10 @@
 	healthdoll = new /obj/screen/healthdoll()
 	infodisplay += healthdoll
 
+	if(!CONFIG_GET(flag/disable_human_mood))
+		mood = new /obj/screen/mood()
+		infodisplay += mood
+
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style
 	pull_icon.update_icon(mymob)
@@ -309,10 +313,14 @@
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
 
+	update_locked_slots()
+
 /datum/hud/human/update_locked_slots()
 	if(!mymob)
 		return
 	var/mob/living/carbon/human/H = mymob
+	if(!istype(H) || !H.dna.species)
+		return
 	var/datum/species/S = H.dna.species
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
@@ -428,7 +436,7 @@
 
 	if(hud_used.hotkey_ui_hidden)
 		client.screen += hud_used.hotkeybuttons
-		hud_used.hotkey_ui_hidden = 0
+		hud_used.hotkey_ui_hidden = FALSE
 	else
 		client.screen -= hud_used.hotkeybuttons
-		hud_used.hotkey_ui_hidden = 1
+		hud_used.hotkey_ui_hidden = TRUE

@@ -25,6 +25,8 @@
 	trash = /obj/item/grown/corncob
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	juice_results = list("corn_starch" = 0)
+	tastes = list("corn" = 1)
 
 /obj/item/grown/corncob
 	name = "corn cob"
@@ -58,7 +60,7 @@
 /obj/item/grown/snapcorn
 	seed = /obj/item/seeds/corn/snapcorn
 	name = "snap corn"
-	desc = "A cob with snap pops"
+	desc = "A cob with snap pops."
 	icon_state = "snapcorn"
 	item_state = "corncob"
 	w_class = WEIGHT_CLASS_TINY
