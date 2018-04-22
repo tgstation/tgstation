@@ -2,6 +2,7 @@
 /obj/item/pressure_plate
 	name = "pressure plate"
 	desc = "An electronic device that triggers when stepped on."
+	icon = 'icons/obj/device.dmi'
 	item_state = "flash"
 	icon_state = "pressureplate"
 	level = 1

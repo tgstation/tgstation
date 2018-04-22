@@ -2990,19 +2990,17 @@
 /turf/open/floor/plating,
 /area/centcom/supply)
 "jc" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "XCCQMLoad2";
-	movedir = 2
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "XCCQMLoad2"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jd" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = 1;
 	id = "XCCQMLoad2";
 	pixel_x = 6
 	},
@@ -3070,25 +3068,23 @@
 	id = "XCCQMLoaddoor2";
 	name = "Supply Dock Loading Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "XCCQMLoad2";
-	movedir = 8
-	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "XCCQMLoad2"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jl" = (
 /obj/structure/plasticflaps,
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "XCCQMLoad2";
-	movedir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "XCCQMLoad2"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
@@ -3098,23 +3094,21 @@
 	id = "XCCQMLoaddoor2";
 	name = "Supply Dock Loading Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "XCCQMLoad2";
-	movedir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "XCCQMLoad2"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jn" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "XCCQMLoad2";
-	movedir = 2
-	},
 /obj/effect/turf_decal/stripes/end,
+/obj/machinery/conveyor/inverted{
+	dir = 10;
+	id = "XCCQMLoad2"
+	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jo" = (
@@ -3310,12 +3304,12 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jL" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "XCCQMLoad"
-	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
+	},
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "XCCQMLoad2"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
@@ -3330,20 +3324,9 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/centcom/supply)
-"jO" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "XCCQMLoad";
-	movedir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/centcom/supply)
 "jP" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = 1;
+	dir = 8;
 	id = "XCCQMLoad";
 	pixel_x = 6
 	},
@@ -53596,9 +53579,9 @@ iP
 jy
 jD
 jL
-jO
-jO
-jO
+jc
+jc
+jc
 iO
 iO
 iX

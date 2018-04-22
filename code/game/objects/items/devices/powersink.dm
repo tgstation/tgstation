@@ -3,6 +3,7 @@
 /obj/item/powersink
 	desc = "A nulling power sink which drains energy from electrical systems."
 	name = "power sink"
+	icon = 'icons/obj/device.dmi'
 	icon_state = "powersink0"
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'

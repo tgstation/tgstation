@@ -186,6 +186,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 
 /obj/item/assault_pod/mining
 	name = "Landing Field Designator"
+	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-purple"
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'

@@ -5,6 +5,7 @@
 /obj/item/detective_scanner
 	name = "forensic scanner"
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
+	icon = 'icons/obj/device.dmi'
 	icon_state = "forensicnew"
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
@@ -175,7 +176,7 @@
 
 /proc/get_timestamp()
 	return time2text(world.time + 432000, ":ss")
-	
+
 /obj/item/detective_scanner/AltClick(mob/living/user)
 	// Best way for checking if a player can use while not incapacitated, etc
 	if(!user.canUseTopic(src, be_close=TRUE))

@@ -15084,7 +15084,6 @@
 /area/maintenance/disposal)
 "aMF" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = 1;
 	id = "garbagestacked";
 	name = "disposal conveyor"
 	},
@@ -16123,14 +16122,14 @@
 	dir = 8
 	},
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 9;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aPh" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -16507,10 +16506,6 @@
 /turf/closed/wall,
 /area/maintenance/disposal)
 "aQl" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "garbage"
-	},
 /obj/structure/disposaloutlet{
 	dir = 4
 	},
@@ -16524,7 +16519,7 @@
 /area/maintenance/disposal)
 "aQm" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/structure/disposalpipe/segment{
@@ -16534,7 +16529,7 @@
 /area/maintenance/disposal)
 "aQn" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/machinery/recycler,
@@ -16542,7 +16537,7 @@
 /area/maintenance/disposal)
 "aQo" = (
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 1;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -17065,7 +17060,7 @@
 /area/maintenance/disposal)
 "aRx" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
+	dir = 8;
 	id = "garbage";
 	name = "disposal conveyor"
 	},
@@ -17817,7 +17812,7 @@
 	dir = 1
 	},
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /obj/machinery/airalarm{
@@ -17827,7 +17822,7 @@
 /area/quartermaster/storage)
 "aTo" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /obj/machinery/status_display{
@@ -17838,7 +17833,7 @@
 /area/quartermaster/storage)
 "aTp" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /obj/structure/sign/poster/official/random{
@@ -17848,7 +17843,7 @@
 /area/quartermaster/storage)
 "aTq" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /turf/open/floor/plating,
@@ -17859,7 +17854,7 @@
 	name = "supply dock loading door"
 	},
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /turf/open/floor/plating,
@@ -17867,7 +17862,7 @@
 "aTs" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /turf/open/floor/plating,
@@ -18842,7 +18837,6 @@
 /area/quartermaster/storage)
 "aVB" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
 	id = "QMLoad"
 	},
 /obj/machinery/button/door{
@@ -20033,7 +20027,7 @@
 /area/quartermaster/storage)
 "aYB" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = 1;
+	dir = 8;
 	id = "QMLoad2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -45627,7 +45621,7 @@
 	invuln = 1;
 	luminosity = 3;
 	name = "Hardened Bomb-Test Camera";
-	network = list("ss13", "rd", "toxins");
+	network = list("ss13","rd","toxins");
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid/airless,
@@ -46655,7 +46649,7 @@
 	invuln = 1;
 	luminosity = 3;
 	name = "Hardened Bomb-Test Camera";
-	network = list("ss13", "rd", "toxins");
+	network = list("ss13","rd","toxins");
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid/airless,
@@ -50654,6 +50648,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"tSS" = (
+/obj/machinery/conveyor/inverted{
+	dir = 10;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "tWt" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/departments/evac,
@@ -50824,6 +50825,13 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/cmo)
+"wMV" = (
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "wTO" = (
 /obj/machinery/vending/assist,
 /turf/open/floor/plasteel/purple/corner{
@@ -97499,8 +97507,8 @@ aaa
 aLo
 aMG
 aNX
-aPh
-aQo
+wMV
+tSS
 aRy
 aSn
 aTA

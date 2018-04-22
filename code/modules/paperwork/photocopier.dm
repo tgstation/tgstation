@@ -375,6 +375,7 @@
  */
 /obj/item/toner
 	name = "toner cartridge"
+	icon = 'icons/obj/device.dmi'
 	icon_state = "tonercartridge"
 	grind_results = list("iodine" = 40, "iron" = 10)
 	var/charges = 5

@@ -52,12 +52,12 @@
 #define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
 
 //Docking error flags
-#define DOCKING_SUCCESS 0
-#define DOCKING_BLOCKED 1
-#define DOCKING_IMMOBILIZED 2
-#define DOCKING_AREA_EMPTY 4
-#define DOCKING_NULL_DESTINATION 8
-#define DOCKING_NULL_SOURCE 16
+#define DOCKING_SUCCESS				0
+#define DOCKING_BLOCKED				(1<<0)
+#define DOCKING_IMMOBILIZED			(1<<1)
+#define DOCKING_AREA_EMPTY			(1<<2)
+#define DOCKING_NULL_DESTINATION	(1<<3)
+#define DOCKING_NULL_SOURCE			(1<<4)
 
 //Docking turf movements
 #define MOVE_TURF 1

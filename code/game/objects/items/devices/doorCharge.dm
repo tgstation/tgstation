@@ -1,6 +1,7 @@
 /obj/item/doorCharge
 	name = "airlock charge"
 	desc = null //Different examine for traitors
+	icon = 'icons/obj/device.dmi'
 	item_state = "electronic"
 	icon_state = "doorCharge"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'

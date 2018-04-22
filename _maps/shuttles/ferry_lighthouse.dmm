@@ -263,10 +263,9 @@
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "bg" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/inverted{
 	dir = 10;
-	id = "garbage";
-	verted = -1
+	id = "garbage"
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)

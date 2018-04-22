@@ -49,9 +49,8 @@
 /area/ruin/space/has_grav/deepstorage/crusher)
 "an" = (
 /obj/machinery/conveyor{
-	dir = 1;
-	id = "bunkerrecycle";
-	movedir = 2
+	dir = 2;
+	id = "bunkerrecycle"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
@@ -2985,6 +2984,20 @@
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/power)
+"rz" = (
+/obj/machinery/conveyor{
+	dir = 6;
+	id = "bunkerrecycle"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
+"Bb" = (
+/obj/machinery/conveyor{
+	dir = 10;
+	id = "bunkerrecycle"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
 
 (1,1,1) = {"
 aa
@@ -4610,9 +4623,9 @@ ab
 ab
 ab
 ag
+rz
 an
-an
-an
+Bb
 aQ
 bh
 bB
