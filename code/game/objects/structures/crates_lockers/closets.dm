@@ -33,6 +33,7 @@
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
+	var/lockable = TRUE
 
 
 /obj/structure/closet/Initialize(mapload)
@@ -81,7 +82,7 @@
 		to_chat(user, "<span class='notice'>It is <b>bolted</b> to the ground.</span>")
 	if(opened)
 		to_chat(user, "<span class='notice'>The parts are <b>welded</b> together.</span>")
-	else if(secure && !opened)
+	else if(secure && lockable && !opened)
 		to_chat(user, "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>")
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target)
