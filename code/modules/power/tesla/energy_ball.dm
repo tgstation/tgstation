@@ -190,7 +190,8 @@
 										/obj/machinery/gateway,
 										/obj/structure/lattice,
 										/obj/structure/grille,
-										/obj/machinery/the_singularitygen/tesla))
+										/obj/machinery/the_singularitygen/tesla,
+										/obj/machinery/power/rad_collector))
 
 	for(var/A in typecache_filter_multi_list_exclusion(oview(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
 		if(istype(A, /obj/machinery/power/tesla_coil))
