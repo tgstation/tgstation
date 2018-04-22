@@ -302,6 +302,7 @@
 		if(ADV_BUILDMODE)
 			if(left_click && alt_click)
 				objholder = object.type
+				to_chat(user, "<span class='notice'>[initial(object.name)] ([object.type]) selected.</span>")
 			else if(left_click)
 				if(ispath(objholder, /turf))
 					var/turf/T = get_turf(object)
