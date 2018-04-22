@@ -11,6 +11,7 @@
 	anchored = 1
 	density = 1
 	layer = 3.3
+	CanAtmosPass = ATMOS_PASS_PROC
 
 	var/obj/machinery/hangar_forcefield_generator/generator
 

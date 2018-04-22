@@ -50,7 +50,7 @@
 
 	proc/StartAttach(var/obj/pod/pod, var/mob/user)
 		to_chat(user,"<span class='info'>You start attaching the [src] to the [GetHardpointDisplayName()] of the [pod].</span>")
-		if(do_after(user, attachment_delay))
+		if(do_after(user, attachment_delay,target = pod))
 			user.doUnEquip(src, 1)
 			to_chat(user,"<span class='info'>You finished attaching the [src].</span>")
 			OnAttach(pod, user)
@@ -61,7 +61,7 @@
 			return 0
 
 		to_chat(user,"<span class='info'>You start detaching the [src] from the [GetHardpointDisplayName()] of the [pod].</span>")
-		if(do_after(user, detachment_delay))
+		if(do_after(user, detachment_delay,target = pod))
 			to_chat(user,"<span class='info'>You finish detaching the [src].</span>")
 			OnDetach(pod, user)
 

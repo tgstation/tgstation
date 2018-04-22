@@ -25,10 +25,10 @@
 			var/list/turfs = attached_to.GetDirectionalTurfs(attached_to.dir)
 			var/list/additions[length(turfs)]
 			var/needs_logging = 0
-
-			if(locate(/turf/closed/mineral) in turfs)
+			var/turf/closed/mineral/mineralwall = locate(/turf/closed/mineral) in turfs
+			if(mineralwall)
 				to_chat(user,"<span class='info'>You start [predicate]...</span>")
-				if(do_after(user, speed))
+				if(do_after(user, speed,target = mineralwall))
 					if(!length((turfs & attached_to.GetDirectionalTurfs(attached_to.dir))))
 						return 0
 					if(!UsePower(power_usage))

@@ -164,7 +164,7 @@
 				return 0
 
 		to_chat(H,"<span class='info'>You start to enter the [src]..</span>")
-		if(do_after(H, enter_delay))
+		if(do_after(H, enter_delay,target = src))
 			to_chat(H,"<span class='info'>You enter the [src].</span>")
 			H.loc = src
 			if(!as_passenger)
@@ -175,6 +175,7 @@
 				else
 					PrintSystemAlert("No power source installed.")
 				PrintSystemNotice("Integrity: [round((health / max_health) * 100)]%.")
+			playsound(H, 'sound/machines/windowdoor.ogg', 50, 1)
 
 		pod_log.LogOccupancy(H, !as_passenger)
 
@@ -287,7 +288,7 @@
 
 			to_chat(chosen_mob,"<span class='warning'>You are being pulled out of the pod by [user].</span>")
 			to_chat(user,"<span class='info'>You start to pull out [chosen_mob].</span>")
-			if(do_after(user, GLOB.pod_config.pod_pullout_delay))
+			if(do_after(user, GLOB.pod_config.pod_pullout_delay,target = src))
 				if(chosen_mob && (chosen_mob in GetOccupants()))
 					to_chat(chosen_mob,"<span class='warning'>You were pulled out of \the [src] from [user].</span>")
 					pod_log.LogOccupancy(chosen_mob, 1, user)
@@ -328,7 +329,7 @@
 				return 0
 			else
 				to_chat(user,"<span class='notice'>You start to install \the [I] into \the [src].</span>")
-				if(do_after(user, 20))
+				if(do_after(user, 20,target = src))
 					user.doUnEquip(I, 1)
 					I.loc = src
 					power_source = I
@@ -354,7 +355,7 @@
 			being_repaired = 1
 
 			to_chat(user,"<span class='info'>You start to add metal to \the [src].</span>")
-			while(do_after(user, 30) && M && M.amount)
+			while(do_after(user, 30,target = src) && M && M.amount)
 				to_chat(user,"<span class='info'>You add some metal to \the [src].</span>")
 				health += GLOB.pod_config.metal_repair_amount
 				update_icon()
@@ -386,7 +387,7 @@
 			being_repaired = 1
 
 			to_chat(user,"<span class='info'>You start to repair some damage on \the [src].</span>")
-			while(do_after(user, 30) && W.isOn())
+			while(do_after(user, 30,target = src) && W.isOn())
 				to_chat(user,"<span class='info'>You repair some damage.</span>")
 				health += GLOB.pod_config.welding_repair_amount
 				update_icon()

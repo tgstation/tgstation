@@ -65,9 +65,10 @@
 	display_name = "Advanced Space Pod Weaponry"
 	description = "High end Space Pod Projectiles."
 	prereq_ids = list("podscombatadvanced")
-	design_ids = list("p75mmr","p75ammo")
+	design_ids = list("p75mmr","p75ammo","syndicate_basic")
 	research_cost = 2500
 	export_price = 5000
+	hidden = 1
 
 /datum/techweb_node/p_disruptor
 	id = "pod_disruptor"

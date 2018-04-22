@@ -104,7 +104,7 @@
 					return 0
 
 				to_chat(usr,"<span class='info'>You start to detach the [internal_canister].</span>")
-				if(do_after(usr, 20))
+				if(do_after(usr, 20,target = src))
 					to_chat(usr,"<span class='info'>You detach the [internal_canister].</span>")
 					internal_canister.loc = get_turf(usr)
 					internal_canister = 0
@@ -128,7 +128,7 @@
 					return 0
 
 				to_chat(usr,"<span class='info'>You start to detach the [power_source].</span>")
-				if(do_after(usr, 10))
+				if(do_after(usr, 10,target = src))
 					to_chat(usr,"<span class='info'>You detach the [power_source].</span>")
 					power_source.loc = get_turf(usr)
 					power_source = 0
