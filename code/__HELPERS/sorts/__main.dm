@@ -27,7 +27,6 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sortInstance, new())
 	//Stores information regarding runs yet to be merged.
 	//Run i starts at runBase[i] and extends for runLen[i] elements.
 	//runBase[i] + runLen[i] == runBase[i+1]
-	//var/stackSize
 	var/list/runBases = list()
 	var/list/runLens = list()
 
@@ -326,8 +325,6 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sortInstance, new())
 			while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint-offset)) < 0)	//we are iterating backwards
 				lastOffset = offset
 				offset = (offset << 1) + 1	//1 3 7 15
-				//if(offset <= 0)	//int overflow, not an issue here since we are using floats
-				//	offset = maxOffset
 
 			if(offset > maxOffset)
 				offset = maxOffset
@@ -341,8 +338,6 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sortInstance, new())
 			while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint+offset)) >= 0)
 				lastOffset = offset
 				offset = (offset << 1) + 1
-				//if(offset <= 0)	//int overflow, not an issue here since we are using floats
-				//	offset = maxOffset
 
 			if(offset > maxOffset)
 				offset = maxOffset
@@ -575,7 +570,6 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sortInstance, new())
 
 		//If array is small, do an insertion sort
 		if(remaining < MIN_MERGE)
-			//var/initRunLen = countRunAndMakeAscending(start, end)
 			binarySort(start, end, start/*+initRunLen*/)
 			return
 
@@ -637,8 +631,6 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sortInstance, new())
 					break
 				++end1
 				++cursor1
-				//if(++cursor1 >= end1)
-				//	break
 
 				val2 = fetchElement(L,cursor2)
 

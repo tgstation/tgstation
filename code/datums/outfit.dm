@@ -85,7 +85,9 @@
 		if(backpack_contents)
 			for(var/path in backpack_contents)
 				var/number = backpack_contents[path]
-				for(var/i=0,i<number,i++)
+				if(!isnum(number))//Default to 1
+					number = 1
+				for(var/i in 1 to number)
 					H.equip_to_slot_or_del(new path(H),slot_in_backpack)
 
 	if(!H.head && toggle_helmet && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
@@ -102,10 +104,10 @@
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/implant/I = new implant_type(H)
-				I.implant(H, null, silent=TRUE)
+				I.implant(H, null, TRUE)
 
 	H.update_body()
-	return 1
+	return TRUE
 
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))

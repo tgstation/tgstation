@@ -25,8 +25,8 @@
 	tastes = list("fish" = 1)
 	foodtype = MEAT
 
-/obj/item/reagent_containers/food/snacks/carpmeat/New()
-	..()
+/obj/item/reagent_containers/food/snacks/carpmeat/Initialize()
+	. = ..()
 	eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
 
 /obj/item/reagent_containers/food/snacks/carpmeat/imitation
@@ -113,9 +113,10 @@
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 	tastes = list("meat" = 1)
 	foodtype = MEAT
+	var/roasted = FALSE
 
-/obj/item/reagent_containers/food/snacks/sausage/New()
-	..()
+/obj/item/reagent_containers/food/snacks/sausage/Initialize()
+	. = ..()
 	eatverb = pick("bite","chew","nibble","deep throat","gobble","chomp")
 
 /obj/item/reagent_containers/food/snacks/kebab
@@ -184,8 +185,13 @@
 	foodtype = MEAT | SUGAR
 
 /obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
-	visible_message("<span class='notice'>[src] expands!</span>")
-	new /mob/living/carbon/monkey(get_turf(src))
+	var/mob/spammer = get_mob_by_key(fingerprintslast)
+	var/mob/living/carbon/monkey/bananas = new(drop_location(), TRUE, spammer)
+	if (!QDELETED(bananas))
+		visible_message("<span class='notice'>[src] expands!</span>")
+		bananas.log_message("Spawned via [src] at [COORD(src)], Last attached mob: [key_name(spammer)].", INDIVIDUAL_ATTACK_LOG)
+	else if (!spammer) // Visible message in case there are no fingerprints
+		visible_message("<span class='notice'>[src] fails to expand!</span>")
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/enchiladas
@@ -210,8 +216,8 @@
 	tastes = list("soy" = 1, "vegetables" = 1)
 	foodtype = VEGETABLES
 
-/obj/item/reagent_containers/food/snacks/stewedsoymeat/New()
-	..()
+/obj/item/reagent_containers/food/snacks/stewedsoymeat/Initialize()
+	. = ..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")
 
 /obj/item/reagent_containers/food/snacks/boiledspiderleg
@@ -255,8 +261,8 @@
 	tastes = list("\"chicken\"" = 1)
 	foodtype = MEAT
 
-/obj/item/reagent_containers/food/snacks/nugget/New()
-	..()
+/obj/item/reagent_containers/food/snacks/nugget/Initialize()
+	. = ..()
 	var/shape = pick("lump", "star", "lizard", "corgi")
 	desc = "A 'chicken' nugget vaguely shaped like a [shape]."
 	icon_state = "nugget_[shape]"
@@ -269,3 +275,18 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	filling_color = "#800000"
 	tastes = list("meat" = 1, "butter" = 1)
+
+/obj/item/reagent_containers/food/snacks/kebab/rat
+	name = "rat-kebab"
+	desc = "Not so delicious rat meat, on a stick."
+	icon_state = "ratkebab"
+	w_class = WEIGHT_CLASS_NORMAL
+	list_reagents = list("nutriment" = 6, "vitamin" = 2)
+	tastes = list("rat meat" = 1, "metal" = 1)
+	foodtype = MEAT | GROSS
+
+/obj/item/reagent_containers/food/snacks/kebab/rat/double
+	name = "double rat-kebab"
+	icon_state = "doubleratkebab"
+	tastes = list("rat meat" = 2, "metal" = 1)
+	bonus_reagents = list("nutriment" = 6, "vitamin" = 2)

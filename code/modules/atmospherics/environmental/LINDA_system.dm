@@ -43,7 +43,7 @@
 		var/turf/T = get_step(src, direction)
 		if(!T)
 			continue
-		if(CANATMOSPASS(T, src))
+		if( !(blocks_air || T.blocks_air) && CANATMOSPASS(T, src) )
 			LAZYINITLIST(atmos_adjacent_turfs)
 			LAZYINITLIST(T.atmos_adjacent_turfs)
 			atmos_adjacent_turfs[T] = TRUE
@@ -106,7 +106,7 @@
         T.air_update_turf(1)
     air_update_turf(1)
 
-/atom/proc/atmos_spawn_air(text) //because a lot of people loves to copy paste awful code lets just make a easy proc to spawn your plasma fires
+/atom/proc/atmos_spawn_air(text) //because a lot of people loves to copy paste awful code lets just make an easy proc to spawn your plasma fires
 	var/turf/open/T = get_turf(src)
 	if(!istype(T))
 		return

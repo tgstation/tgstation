@@ -2,7 +2,10 @@
     "map_name": "Delta Station",
     "map_path": "map_files/Deltastation",
     "map_file": "DeltaStation2.dmm",
-    "minetype": "lavaland",
-    "transition_config": "default",
-    "allow_custom_shuttles": "yes"
+    "shuttles": {
+	    "emergency": "emergency_delta",
+	    "ferry": "ferry_fancy",
+	    "cargo": "cargo_delta",
+	    "whiteship": "whiteship_delta"
+    }
 }

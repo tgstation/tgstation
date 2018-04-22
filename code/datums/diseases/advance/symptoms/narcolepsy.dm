@@ -22,7 +22,7 @@ Bonus
 	level = 6
 	symptom_delay_min = 15
 	symptom_delay_max = 80
-	severity = 5
+	severity = 4
 	var/sleep_level = 0
 	var/sleepy_ticks = 0
 	var/stamina = FALSE
@@ -30,7 +30,8 @@ Bonus
 					  <b>Resistance 10:</b> Causes narcolepsy more often, increasing the chance of the host falling asleep."
 
 /datum/symptom/narcolepsy/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["transmittable"] >= 7) //stamina damage
 		stamina = TRUE
 	if(A.properties["resistance"] >= 10) //act more often

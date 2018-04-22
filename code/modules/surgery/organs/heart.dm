@@ -2,9 +2,8 @@
 	name = "heart"
 	desc = "I feel bad for the heartless bastard who lost this."
 	icon_state = "heart-on"
-	zone = "chest"
-	slot = "heart"
-	origin_tech = "biotech=5"
+	zone = BODY_ZONE_CHEST
+	slot = ORGAN_SLOT_HEART
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
 	var/icon_base = "heart"
@@ -50,11 +49,11 @@
 	return S
 
 /obj/item/organ/heart/on_life()
-	if(owner.client)
+	if(owner.client && beating)
 		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
-
 		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
 		var/mob/living/carbon/H = owner
+
 		if(H.health <= HEALTH_THRESHOLD_CRIT && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
 			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
@@ -64,16 +63,18 @@
 			beat = BEAT_NONE
 
 		if(H.jitteriness)
-			if(!beat || beat == BEAT_SLOW)
+			if(H.health > HEALTH_THRESHOLD_FULLCRIT && (!beat || beat == BEAT_SLOW))
 				H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
 				beat = BEAT_FAST
+		else if(beat == BEAT_FAST)
+			H.stop_sound_channel(CHANNEL_HEARTBEAT)
+			beat = BEAT_NONE
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
 	desc = "A heart that, when inserted, will force you to pump it manually."
 	icon_state = "cursedheart-off"
 	icon_base = "cursedheart"
-	origin_tech = "biotech=6"
 	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
@@ -89,7 +90,7 @@
 /obj/item/organ/heart/cursed/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
 	if(H == user && istype(H))
 		playsound(user,'sound/effects/singlebeat.ogg',40,1)
-		user.drop_item()
+		user.temporarilyRemoveItemFromInventory(src, TRUE)
 		Insert(user)
 	else
 		return ..()
@@ -148,7 +149,22 @@
 	name = "cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
 	icon_state = "heart-c"
-	origin_tech = "biotech=5"
+	synthetic = TRUE
 
 /obj/item/organ/heart/cybernetic/emp_act()
 	Stop()
+
+/obj/item/organ/heart/freedom
+	name = "heart of freedom"
+	desc = "This heart pumps with the passion to give... something freedom."
+	synthetic = TRUE //the power of freedom prevents heart attacks
+	var/min_next_adrenaline = 0
+
+/obj/item/organ/heart/freedom/on_life()
+	. = ..()
+	if(owner.health < 5 && world.time > min_next_adrenaline)
+		min_next_adrenaline = world.time + rand(250, 600) //anywhere from 4.5 to 10 minutes
+		to_chat(owner, "<span class='userdanger'>You feel yourself dying, but you refuse to give up!</span>")
+		owner.heal_overall_damage(15, 15)
+		if(owner.reagents.get_reagent_amount("ephedrine") < 20)
+			owner.reagents.add_reagent("ephedrine", 10)

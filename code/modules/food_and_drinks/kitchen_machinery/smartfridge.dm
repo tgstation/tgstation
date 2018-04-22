@@ -125,24 +125,18 @@
 		var/mob/M = O.loc
 		if(!M.transferItemToLoc(O, src))
 			to_chat(usr, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
-			return
+			return FALSE
+		else
+			return TRUE
 	else
-		if(istype(O.loc, /obj/item/storage))
-			var/obj/item/storage/S = O.loc
-			S.remove_from_storage(O,src)
-		O.forceMove(src)
-
-/obj/machinery/smartfridge/attack_paw(mob/user)
-	return src.attack_hand(user)
+		if(O.loc.SendSignal(COMSIG_CONTAINS_STORAGE))
+			return O.loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, O, src)
+		else
+			O.forceMove(src)
+			return TRUE
 
 /obj/machinery/smartfridge/attack_ai(mob/user)
 	return FALSE
-
-/obj/machinery/smartfridge/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-
 
 /obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -158,10 +152,11 @@
 	for (var/I in src)
 		var/atom/movable/O = I
 		if (!QDELETED(O))
-			if (listofitems[O.name])
-				listofitems[O.name]["amount"]++
+			var/md5name = md5(O.name)				// This needs to happen because of a bug in a TGUI component, https://github.com/ractivejs/ractive/issues/744
+			if (listofitems[md5name])				// which is fixed in a version we cannot use due to ie8 incompatibility
+				listofitems[md5name]["amount"]++	// The good news is, #30519 made smartfridge UIs non-auto-updating
 			else
-				listofitems[O.name] = list("name" = O.name, "type" = O.type, "amount" = 1)
+				listofitems[md5name] = list("name" = O.name, "type" = O.type, "amount" = 1)
 	sortList(listofitems)
 
 	.["contents"] = listofitems
@@ -193,6 +188,7 @@
 					break
 				if(O.name == params["name"])
 					O.forceMove(drop_location())
+					adjust_item_drop_location(O)
 					desired--
 			return TRUE
 	return FALSE
@@ -220,7 +216,7 @@
 	component_parts = null
 
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
-	new /obj/item/stack/sheet/mineral/wood(loc, 10)
+	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 	..()
 
 /obj/machinery/smartfridge/drying_rack/RefreshParts()
@@ -295,18 +291,18 @@
 	update_icon()
 
 /obj/machinery/smartfridge/drying_rack/proc/rack_dry()
-	for(var/obj/item/reagent_containers/food/snacks/S in contents)
+	for(var/obj/item/reagent_containers/food/snacks/S in src)
 		if(S.dried_type == S.type)//if the dried type is the same as the object's type, don't bother creating a whole new item...
 			S.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)
 			S.dry = TRUE
-			S.loc = get_turf(src)
+			S.forceMove(drop_location())
 		else
 			var/dried = S.dried_type
-			new dried(src.loc)
+			new dried(drop_location())
 			qdel(S)
 		return TRUE
-	for(var/obj/item/stack/sheet/wetleather/WL in contents)
-		var/obj/item/stack/sheet/leather/L = new(loc)
+	for(var/obj/item/stack/sheet/wetleather/WL in src)
+		var/obj/item/stack/sheet/leather/L = new(drop_location())
 		L.amount = WL.amount
 		qdel(WL)
 		return TRUE
@@ -325,7 +321,7 @@
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
-	if(!istype(O, /obj/item/reagent_containers) || !O.reagents || !O.reagents.reagent_list.len)
+	if(!istype(O, /obj/item/reagent_containers) || (O.flags_1 & ABSTRACT_1) || !O.reagents || !O.reagents.reagent_list.len)
 		return FALSE
 	if(istype(O, /obj/item/reagent_containers/glass) || istype(O, /obj/item/reagent_containers/food/drinks) || istype(O, /obj/item/reagent_containers/food/condiment))
 		return TRUE
@@ -373,13 +369,13 @@
 					return FALSE
 			return TRUE
 		return FALSE
-	if(!istype(O, /obj/item/reagent_containers))
+	if(!istype(O, /obj/item/reagent_containers) || (O.flags_1 & ABSTRACT_1))
 		return FALSE
 	if(istype(O, /obj/item/reagent_containers/pill)) // empty pill prank ok
 		return TRUE
 	if(!O.reagents || !O.reagents.reagent_list.len) // other empty containers not accepted
 		return FALSE
-	if(istype(O, /obj/item/reagent_containers/syringe) || istype(O, /obj/item/reagent_containers/glass/bottle) || istype(O, /obj/item/reagent_containers/glass/beaker) || istype(O, /obj/item/reagent_containers/spray))
+	if(istype(O, /obj/item/reagent_containers/syringe) || istype(O, /obj/item/reagent_containers/glass/bottle) || istype(O, /obj/item/reagent_containers/glass/beaker) || istype(O, /obj/item/reagent_containers/spray) || istype(O, /obj/item/reagent_containers/medspray))
 		return TRUE
 	return FALSE
 

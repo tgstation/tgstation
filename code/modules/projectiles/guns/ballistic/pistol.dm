@@ -3,9 +3,8 @@
 	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "combat=3;materials=2;syndicate=4"
 	mag_type = /obj/item/ammo_box/magazine/m10mm
-	can_suppress = 1
+	can_suppress = TRUE
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
@@ -13,7 +12,11 @@
 /obj/item/gun/ballistic/automatic/pistol/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
-	return
+
+/obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
+	. = ..()
+	var/obj/item/suppressor/S = new(src)
+	install_suppressor(S)
 
 /obj/item/gun/ballistic/automatic/pistol/m1911
 	name = "\improper M1911"
@@ -21,7 +24,7 @@
 	icon_state = "m1911"
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/m45
-	can_suppress = 0
+	can_suppress = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/deagle
 	name = "desert eagle"
@@ -29,7 +32,7 @@
 	icon_state = "deagle"
 	force = 14
 	mag_type = /obj/item/ammo_box/magazine/m50
-	can_suppress = 0
+	can_suppress = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/update_icon()
 	..()
@@ -55,9 +58,8 @@
 	desc = "The original russian version of a widely used Syndicate sidearm. Uses 9mm ammo."
 	icon_state = "aps"
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "combat=3;materials=2;syndicate=3"
 	mag_type = /obj/item/ammo_box/magazine/pistolm9mm
-	can_suppress = 0
+	can_suppress = FALSE
 	burst_size = 3
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
@@ -66,7 +68,6 @@
 	name = "flat gun"
 	desc = "A 2 dimensional gun.. what?"
 	icon_state = "flatgun"
-	origin_tech = "combat=3;materials=2;abductor=3"
 
 /obj/item/gun/ballistic/automatic/pistol/stickman/pickup(mob/living/user)
 	to_chat(user, "<span class='notice'>As you try to pick up [src], it slips out of your grip..</span>")

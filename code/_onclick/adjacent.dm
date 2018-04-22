@@ -29,10 +29,10 @@
 	var/turf/T0 = get_turf(neighbor)
 
 	if(T0 == src) //same turf
-		return 1
+		return TRUE
 
-	if(get_dist(src,T0) > 1) //too far
-		return 0
+	if(get_dist(src, T0) > 1 || z != T0.z) //too far
+		return FALSE
 
 	// Non diagonal case
 	if(T0.x == x || T0.y == y)
@@ -76,7 +76,8 @@
 
 // This is necessary for storage items not on your person.
 /obj/item/Adjacent(var/atom/neighbor, var/recurse = 1)
-	if(neighbor == loc) return 1
+	if(neighbor == loc)
+		return 1
 	if(isitem(loc))
 		if(recurse > 0)
 			return loc.Adjacent(neighbor,recurse - 1)

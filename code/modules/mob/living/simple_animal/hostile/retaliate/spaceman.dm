@@ -5,6 +5,7 @@
 	icon_living = "old"
 	icon_dead = "old_dead"
 	icon_gib = "clown_gib"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	gender = MALE
 	turns_per_move = 5
 	response_help = "pokes"
@@ -23,7 +24,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	del_on_death = 0
 
-/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace
+/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace //this should be in a different file
 	name = "Nanotrasen Private Security Officer"
 	desc = "An officer part of Nanotrasen's private security force."
 	icon = 'icons/mob/simple_human.dmi'

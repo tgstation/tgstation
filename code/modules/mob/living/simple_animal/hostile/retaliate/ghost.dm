@@ -4,6 +4,7 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	icon_living = "ghost"
+	mob_biotypes = list(MOB_SPIRIT)
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "passes through"
@@ -29,7 +30,7 @@
 	maxbodytemp = 1500
 	movement_type = FLYING
 	pressure_resistance = 300
-	gold_core_spawnable = 0 //too spooky for science
+	gold_core_spawnable = NO_SPAWN //too spooky for science
 	var/ghost_hair_style
 	var/ghost_hair_color
 	var/mutable_appearance/ghost_hair

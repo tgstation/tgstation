@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
@@ -11,11 +11,7 @@
 "c" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
-"d" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
 "e" = (
-/turf/open/floor/plasteel/freezer,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
 "f" = (
@@ -25,7 +21,9 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "g" = (
-/obj/machinery/computer/shuttle/ferry/request,
+/obj/machinery/computer/shuttle/ferry/request{
+	dir = 8
+	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "h" = (
@@ -112,22 +110,10 @@
 	height = 12;
 	id = "ferry";
 	name = "ferry shuttle";
-	roundstart_move = "ferry_away";
 	port_direction = 2;
-	width = 5;
-	timid = 1
+	width = 5
 	},
 /turf/open/floor/plasteel/freezer,
-/area/shuttle/transport)
-"r" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4
-	},
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"s" = (
-/turf/open/floor/plasteel/freezer,
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "t" = (
 /obj/structure/closet/chefcloset,
@@ -140,7 +126,7 @@
 "v" = (
 /obj/machinery/door/airlock/freezer{
 	name = "Meat Tradeship Backroom";
-	req_access = "28"
+	req_access_txt = "28"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
@@ -149,9 +135,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer,
-/area/shuttle/transport)
-"x" = (
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 
 (1,1,1) = {"

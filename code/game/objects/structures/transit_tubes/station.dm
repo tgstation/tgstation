@@ -7,6 +7,7 @@
 /obj/structure/transit_tube/station
 	name = "station tube station"
 	icon_state = "closed_station0"
+	desc = "The lynchpin of the transit system."
 	exit_delay = 1
 	enter_delay = 2
 	tube_construction = /obj/structure/c_transit_tube/station
@@ -58,6 +59,9 @@
 
 
 /obj/structure/transit_tube/station/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!pod_moving)
 		if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 			if(open_status == STATION_TUBE_OPEN)

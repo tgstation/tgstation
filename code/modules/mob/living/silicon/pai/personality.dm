@@ -31,7 +31,7 @@
 // returns 1 if loaded (or file was incompatible)
 // returns 0 if savefile did not exist
 
-/datum/paiCandidate/proc/savefile_load(mob/user, silent = 1)
+/datum/paiCandidate/proc/savefile_load(mob/user, silent = TRUE)
 	if (IsGuestKey(user.key))
 		return 0
 
@@ -42,7 +42,8 @@
 
 	var/savefile/F = new /savefile(path)
 
-	if(!F) return //Not everyone has a pai savefile.
+	if(!F)
+		return //Not everyone has a pai savefile.
 
 	var/version = null
 	F["version"] >> version

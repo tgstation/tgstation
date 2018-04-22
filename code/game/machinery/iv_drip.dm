@@ -10,14 +10,13 @@
 	var/mob/living/carbon/attached = null
 	var/mode = IV_INJECTING
 	var/obj/item/reagent_containers/beaker = null
-	var/list/drip_containers = list(/obj/item/reagent_containers/blood,
+	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
-									/obj/item/reagent_containers/glass)
+									/obj/item/reagent_containers/glass))
 
 /obj/machinery/iv_drip/Initialize()
 	. = ..()
 	update_icon()
-	drip_containers = typecacheof(drip_containers)
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null
@@ -67,6 +66,7 @@
 			add_overlay(filling_overlay)
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
+	. = ..()
 	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE) || !isliving(target))
 		return
 
@@ -95,10 +95,8 @@
 		if(beaker)
 			to_chat(user, "<span class='warning'>There is already a reagent container loaded!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(W, src))
 			return
-
-		W.forceMove(src)
 		beaker = W
 		to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
 		update_icon()
@@ -117,7 +115,7 @@
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 		to_chat(attached, "<span class='userdanger'>The IV drip needle is ripped out of you!</span>")
-		attached.apply_damage(3, BRUTE, pick("r_arm", "l_arm"))
+		attached.apply_damage(3, BRUTE, pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
 		attached = null
 		update_icon()
 		return PROCESS_KILL
@@ -153,6 +151,9 @@
 			update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!ishuman(user))
 		return
 	if(attached)
@@ -178,7 +179,7 @@
 		return
 
 	if(beaker)
-		beaker.forceMove(get_turf(src))
+		beaker.forceMove(drop_location())
 		beaker = null
 		update_icon()
 

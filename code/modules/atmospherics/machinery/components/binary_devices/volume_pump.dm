@@ -26,12 +26,16 @@ Thus, the two variables affect pump operation are set in New():
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+	construction_type = /obj/item/pipe/directional
+	pipe_state = "volumepump"
+
 /obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
 	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/on
 	on = TRUE
+	icon_state = "volpump_on_map"
 
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
 	if(!is_operational())
@@ -45,8 +49,8 @@ Thus, the two variables affect pump operation are set in New():
 	if(!on || !is_operational())
 		return
 
-	var/datum/gas_mixture/air1 = AIR1
-	var/datum/gas_mixture/air2 = AIR2
+	var/datum/gas_mixture/air1 = airs[1]
+	var/datum/gas_mixture/air2 = airs[2]
 
 // Pump mechanism just won't do anything if the pressure is too high/too low
 
@@ -74,17 +78,13 @@ Thus, the two variables affect pump operation are set in New():
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
-	signal.source = src
-
-	signal.data = list(
+	var/datum/signal/signal = new(list(
 		"tag" = id,
 		"device" = "APV",
 		"power" = on,
 		"transfer_rate" = transfer_rate,
 		"sigtype" = "status"
-	)
+	))
 	radio_connection.post_signal(src, signal)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -127,7 +127,7 @@ Thus, the two variables affect pump operation are set in New():
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				transfer_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
+				transfer_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
@@ -144,8 +144,8 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 
 	if("set_transfer_rate" in signal.data)
-		var/datum/gas_mixture/air1 = AIR1
-		transfer_rate = Clamp(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
+		var/datum/gas_mixture/air1 = airs[1]
+		transfer_rate = CLAMP(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
@@ -166,4 +166,3 @@ Thus, the two variables affect pump operation are set in New():
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
-

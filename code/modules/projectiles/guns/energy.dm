@@ -18,6 +18,7 @@
 	var/charge_tick = 0
 	var/charge_delay = 4
 	var/use_cyborg_cell = 0 //whether the gun's cell drains the cyborg user's cell to recharge
+	var/dead_cell = FALSE //set to true so the gun is given an empty cell
 
 /obj/item/gun/energy/emp_act(severity)
 	cell.use(round(cell.charge / severity))
@@ -34,7 +35,8 @@
 		cell = new cell_type(src)
 	else
 		cell = new(src)
-	cell.give(cell.maxcharge)
+	if(!dead_cell)
+		cell.give(cell.maxcharge)
 	update_ammo_types()
 	recharge_newshot(1)
 	if(selfcharge)
@@ -102,6 +104,16 @@
 	chambered = null //either way, released the prepared shot
 	recharge_newshot() //try to charge a new shot
 
+/obj/item/gun/energy/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(!chambered && can_shoot())
+		process_chamber()	// If the gun was drained and then recharged, load a new shot.
+	return ..()
+
+/obj/item/gun/energy/process_burst(mob/living/user, atom/target, message = TRUE, params = null, zone_override="", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
+	if(!chambered && can_shoot())
+		process_chamber()	// Ditto.
+	return ..()
+
 /obj/item/gun/energy/proc/select_fire(mob/living/user)
 	select++
 	if (select > ammo_type.len)
@@ -120,7 +132,7 @@
 	..()
 	if(!automatic_charge_overlays)
 		return
-	var/ratio = Ceiling((cell.charge / cell.maxcharge) * charge_sections)
+	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/iconState = "[icon_state]_charge"
 	var/itemState = null
@@ -150,7 +162,7 @@
 	toggle_gunlight()
 
 /obj/item/gun/energy/suicide_act(mob/user)
-	if (src.can_shoot() && can_trigger_gun(user))
+	if (can_shoot() && can_trigger_gun(user))
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		sleep(25)
 		if(user.is_holding(src))
@@ -165,7 +177,7 @@
 			return(OXYLOSS)
 	else
 		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brains out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
-		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
+		playsound(src, "gun_dry_fire", 30, 1)
 		return (OXYLOSS)
 
 

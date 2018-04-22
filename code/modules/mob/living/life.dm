@@ -1,18 +1,34 @@
 /mob/living/Life(seconds, times_fired)
 	set invisibility = 0
-	set background = BACKGROUND_ENABLED
 
 	if(digitalinvis)
 		handle_diginvis() //AI becomes unable to see mob
+
+	if((movement_type & FLYING) && !floating)	//TODO: Better floating
+		float(on = TRUE)
+
+	if (client || registered_z) // This is a temporary error tracker to make sure we've caught everything
+		var/turf/T = get_turf(src)
+		if (client && registered_z != T.z)
+#ifdef TESTING
+			message_admins("[src] [ADMIN_FLW(src)] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z]. If you could ask them how that happened and notify coderbus, it would be appreciated.")
+#endif
+			log_game("Z-TRACKING: [src] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z].")
+			update_z(T.z)
+		else if (!client && registered_z)
+			log_game("Z-TRACKING: [src] of type [src.type] has a Z-registration despite not having a client.")
+			update_z(null)
 
 	if (notransform)
 		return
 	if(!loc)
 		if(client)
 			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
-				loc = E.loc
+				forceMove(E.loc)
 				break
-			message_admins("[key_name_admin(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished.")
+			var/msg = "[key_name_admin(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
+			message_admins(msg)
+			send2irc_adminless_only("Mob", msg, R_ADMIN)
 			log_game("[key_name(src)] was found to have no .loc with an attached client.")
 		else
 			return
@@ -47,7 +63,7 @@
 		machine.check_eye(src)
 
 	if(stat != DEAD)
-		handle_disabilities() // eye, ear, brain damages
+		handle_traits() // eye, ear, brain damages
 	if(stat != DEAD)
 		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
@@ -89,7 +105,7 @@
 		ExtinguishMob()
 		return
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(!G.gases["o2"] || G.gases["o2"][MOLES] < 1)
+	if(!G.gases[/datum/gas/oxygen] || G.gases[/datum/gas/oxygen][MOLES] < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
@@ -103,10 +119,10 @@
 	if(confused)
 		confused = max(0, confused - 1)
 
-/mob/living/proc/handle_disabilities()
+/mob/living/proc/handle_traits()
 	//Eyes
 	if(eye_blind)			//blindness, heals slowly over time
-		if(!stat && !(disabilities & BLIND))
+		if(!stat && !(has_trait(TRAIT_BLIND)))
 			eye_blind = max(eye_blind-1,0)
 			if(client && !eye_blind)
 				clear_alert("blind")
@@ -117,8 +133,9 @@
 		eye_blurry = max(eye_blurry-1, 0)
 		if(client && !eye_blurry)
 			clear_fullscreen("blurry")
+	if(has_trait(TRAIT_PACIFISM) && a_intent == INTENT_HARM)
+		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
+		a_intent_change(INTENT_HELP)
 
 /mob/living/proc/update_damage_hud()
 	return
-
-

@@ -70,7 +70,7 @@
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	move_update_air(T)
 
 /obj/structure/alien/resin/wall
@@ -244,12 +244,15 @@
 			icon_state = "[base_icon]_hatched"
 
 /obj/structure/alien/egg/attack_paw(mob/living/user)
-	. = attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/alien/egg/attack_alien(mob/living/carbon/alien/user)
-	. = attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/alien/egg/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(user.getorgan(/obj/item/organ/alien/plasmavessel))
 		switch(status)
 			if(BURST)

@@ -207,13 +207,17 @@
 	name = "blue banner"
 	icon_state = "banner-blue"
 	item_state = "banner-blue"
-	desc = "A banner with the logo of the blue deity"
+	desc = "A banner with the logo of the blue deity."
 
 /obj/item/storage/backpack/bannerpack
 	name = "nanotrasen banner backpack"
 	desc = "It's a backpack with lots of extra room.  A banner with Nanotrasen's logo is attached, that can't be removed."
-	max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
 	icon_state = "bannerpack"
+
+/obj/item/storage/backpack/bannerpack/Initialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
 
 /obj/item/storage/backpack/bannerpack/red
 	name = "red banner backpack"
@@ -233,7 +237,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 2.0 //gotta pretend we're balanced.
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60)
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 40, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 
 /obj/item/clothing/suit/armor/plate/crusader/red
 	icon_state = "crusader-red"
@@ -247,7 +251,7 @@
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60)
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 40, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
 	icon_state = "crusader-blue"
@@ -261,7 +265,7 @@
 	desc = "A religious-looking hat."
 	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	flags_1 = 0
-	armor = list(melee = 60, bullet = 60, laser = 60, energy = 50, bomb = 70, bio = 50, rad = 50, fire = 60, acid = 60) //religion protects you from disease and radiation, honk.
+	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 50, "bomb" = 70, "bio" = 50, "rad" = 50, "fire" = 60, "acid" = 60) //religion protects you from disease and radiation, honk.
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 
@@ -320,7 +324,7 @@
 	desc = "Metal boots, they look heavy."
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60) //does this even do anything on boots?
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 40, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60) //does this even do anything on boots?
 	flags_1 = NOSLIP_1
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT

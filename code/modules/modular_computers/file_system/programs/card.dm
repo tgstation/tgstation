@@ -44,7 +44,7 @@
 	addtimer(CALLBACK(src, .proc/SetConfigCooldown), 0)
 
 /datum/computer_file/program/card_mod/proc/SetConfigCooldown()
-	change_position_cooldown = config.id_console_jobslot_delay
+	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
 
 /datum/computer_file/program/card_mod/event_idremoved(background, slot)
 	if(!slot || slot == 2)// slot being false means both are removed
@@ -159,7 +159,7 @@
 									<br>
 									[GLOB.data_core ? GLOB.data_core.get_manifest(0) : ""]
 									"}
-					if(!printer.print_text(contents,text("crew manifest ([])", worldtime2text())))
+					if(!printer.print_text(contents,text("crew manifest ([])", station_time_timestamp())))
 						to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
 						return
 					else
@@ -175,9 +175,8 @@
 						else
 							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/card/id))
-								if(!usr.drop_item())
+								if(!usr.transferItemToLoc(I, computer))
 									return
-								I.forceMove(computer)
 								card_slot.stored_card = I
 					if("auth")
 						if(auth_card)
@@ -191,9 +190,8 @@
 						else
 							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/card/id))
-								if(!usr.drop_item())
+								if(!usr.transferItemToLoc(I, computer))
 									return
-								I.forceMove(computer)
 								card_slot.stored_card2 = I
 		if("PRG_terminate")
 			if(computer && ((id_card.assignment in head_subordinates) || id_card.assignment == "Assistant"))
@@ -333,7 +331,7 @@
 				"desc_close" = status_close["desc"])))
 		data["slots"] = pos
 
-	data["src"] = "\ref[src]"
+	data["src"] = "[REF(src)]"
 	data["station_name"] = station_name()
 
 

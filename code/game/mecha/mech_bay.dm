@@ -4,7 +4,7 @@
 	icon_state = "recharge_floor"                           //        Some people just want to watch the world burn i guess
 
 /turf/open/floor/mech_bay_recharge_floor/break_tile()
-	src.ChangeTurf(/turf/open/floor/plating)
+	ScrapeAway()
 
 /turf/open/floor/mech_bay_recharge_floor/airless
 	icon_state = "recharge_floor_asteroid"
@@ -78,14 +78,6 @@
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 	light_color = LIGHT_COLOR_PINK
 
-/obj/machinery/computer/mech_bay_power_console/attack_ai(mob/user)
-	return interact(user)
-
-/obj/machinery/computer/mech_bay_power_console/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
 /obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -106,7 +98,7 @@
 	if(recharge_port && !QDELETED(recharge_port))
 		data["recharge_port"] = list("mech" = null)
 		if(recharge_port.recharging_mech && !QDELETED(recharge_port.recharging_mech))
-			data["recharge_port"]["mech"] = list("health" = recharge_port.recharging_mech.obj_integrity, "max_integrity" = recharge_port.recharging_mech.max_integrity, "cell" = null)
+			data["recharge_port"]["mech"] = list("health" = recharge_port.recharging_mech.obj_integrity, "maxhealth" = recharge_port.recharging_mech.max_integrity, "cell" = null)
 			if(recharge_port.recharging_mech.cell && !QDELETED(recharge_port.recharging_mech.cell))
 				data["recharge_port"]["mech"]["cell"] = list(
 				"critfail" = recharge_port.recharging_mech.cell.crit_fail,

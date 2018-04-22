@@ -1,7 +1,7 @@
 /datum/surgery/dental_implant
 	name = "dental implant"
 	steps = list(/datum/surgery_step/drill, /datum/surgery_step/insert_pill)
-	possible_locs = list("mouth")
+	possible_locs = list(BODY_ZONE_PRECISE_MOUTH)
 
 /datum/surgery_step/insert_pill
 	name = "insert pill"
@@ -15,8 +15,7 @@
 	if(!istype(tool))
 		return 0
 
-	user.drop_item()
-	tool.loc = target
+	user.transferItemToLoc(tool, target, TRUE)
 
 	var/datum/action/item_action/hands_free/activate_pill/P = new(tool)
 	P.button.name = "Activate [tool.name]"

@@ -12,6 +12,9 @@
 	var/insisting = 0
 
 /obj/machinery/wish_granter/attack_hand(mob/living/carbon/user)
+	. = ..()
+	if(.)
+		return
 	if(charges <= 0)
 		to_chat(user, "The Wish Granter lies silent.")
 		return
@@ -34,19 +37,7 @@
 		charges--
 		insisting = 0
 
-		user.dna.add_mutation(HULK)
-		user.dna.add_mutation(XRAY)
-		user.dna.add_mutation(COLDRES)
-		user.dna.add_mutation(TK)
-
-		SSticker.mode.traitors += user.mind
-		user.mind.special_role = "Avatar of the Wish Granter"
-
-		var/datum/objective/hijack/hijack = new
-		hijack.owner = user.mind
-		user.mind.objectives += hijack
-
-		user.mind.announce_objectives()
+		user.mind.add_antag_datum(/datum/antagonist/wishgranter)
 
 		to_chat(user, "You have a very bad feeling about this.")
 

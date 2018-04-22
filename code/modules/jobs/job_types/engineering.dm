@@ -17,6 +17,7 @@ Chief Engineer
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_ENGINEERING
+	antag_rep = 20
 
 	outfit = /datum/outfit/job/ce
 
@@ -41,7 +42,6 @@ Chief Engineer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/hardhat/white
 	gloves = /obj/item/clothing/gloves/color/black/ce
-	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/device/modular_computer/tablet/preset/advanced=1)
 
 	backpack = /obj/item/storage/backpack/industrial
@@ -77,13 +77,14 @@ Station Engineer
 	selection_color = "#fff5cc"
 	exp_requirements = 60
 	exp_type = EXP_TYPE_CREW
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/engineer
 
 	access = list(ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_TECH_STORAGE, ACCESS_MAINT_TUNNELS,
-									ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CONSTRUCTION, ACCESS_ATMOSPHERICS, ACCESS_TCOMSAT)
+									ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CONSTRUCTION, ACCESS_ATMOSPHERICS, ACCESS_TCOMSAT, ACCESS_MINERAL_STOREROOM)
 	minimal_access = list(ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_TECH_STORAGE, ACCESS_MAINT_TUNNELS,
-									ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CONSTRUCTION, ACCESS_TCOMSAT)
+									ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CONSTRUCTION, ACCESS_TCOMSAT, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/engineer
 	name = "Station Engineer"
@@ -96,7 +97,6 @@ Station Engineer
 	shoes = /obj/item/clothing/shoes/workboots
 	head = /obj/item/clothing/head/hardhat
 	r_pocket = /obj/item/device/t_scanner
-	accessory = /obj/item/clothing/accessory/pocketprotector/full
 
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng
@@ -134,12 +134,13 @@ Atmospheric Technician
 	selection_color = "#fff5cc"
 	exp_requirements = 60
 	exp_type = EXP_TYPE_CREW
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/atmos
 
 	access = list(ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_TECH_STORAGE, ACCESS_MAINT_TUNNELS,
-									ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CONSTRUCTION, ACCESS_ATMOSPHERICS)
-	minimal_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS, ACCESS_EMERGENCY_STORAGE, ACCESS_CONSTRUCTION)
+									ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CONSTRUCTION, ACCESS_ATMOSPHERICS, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS, ACCESS_EMERGENCY_STORAGE, ACCESS_CONSTRUCTION, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/atmos
 	name = "Atmospheric Technician"
@@ -150,7 +151,6 @@ Atmospheric Technician
 	ears = /obj/item/device/radio/headset/headset_eng
 	uniform = /obj/item/clothing/under/rank/atmospheric_technician
 	r_pocket = /obj/item/device/analyzer
-	accessory = /obj/item/clothing/accessory/pocketprotector/full
 
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng

@@ -13,7 +13,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/cookieSent   = FALSE // Has the client sent a cookie for analysis
 	var/broken       = FALSE
 	var/list/connectionHistory //Contains the connection history passed from chat cookie
-	var/adminMusicVolume = 100 //This is for the Play Global Sound verb
+	var/adminMusicVolume = 25 //This is for the Play Global Sound verb
 
 /datum/chatOutput/New(client/C)
 	owner = C
@@ -104,7 +104,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	sendClientData()
 
 	//do not convert to to_chat()
-	SEND_TEXT(owner, "<span class=\"userdanger\">If you can see this, update byond.</span>")
+	SEND_TEXT(owner, "<span class=\"userdanger\">Failed to load fancy chat, reverting to old chat. Certain features won't work.</span>")
 
 	pingLoop()
 
@@ -125,14 +125,19 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	C << output("[data]", "[window]:ehjaxCallback")
 
 /datum/chatOutput/proc/sendMusic(music, pitch)
+	if(!findtext(music, GLOB.is_http_protocol))
+		return
 	var/list/music_data = list("adminMusic" = url_encode(url_encode(music)))
 	if(pitch)
 		music_data["musicRate"] = pitch
 	ehjax_send(data = music_data)
 
+/datum/chatOutput/proc/stopMusic()
+	ehjax_send(data = "stopMusic")
+
 /datum/chatOutput/proc/setMusicVolume(volume = "")
 	if(volume)
-		adminMusicVolume = Clamp(text2num(volume), 0, 100)
+		adminMusicVolume = CLAMP(text2num(volume), 0, 100)
 
 //Sends client connection details to the chat to handle and save
 /datum/chatOutput/proc/sendClientData()
@@ -158,7 +163,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 				var/list/row = src.connectionHistory[i]
 				if (!row || row.len < 3 || (!row["ckey"] || !row["compid"] || !row["ip"])) //Passed malformed history object
 					return
-				if (world.IsBanned(row["ckey"], row["compid"], row["ip"]))
+				if (world.IsBanned(row["ckey"], row["compid"], row["ip"], real_bans_only=TRUE))
 					found = row
 					break
 

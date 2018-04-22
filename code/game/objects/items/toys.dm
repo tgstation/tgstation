@@ -14,13 +14,14 @@
  *		Cards
  *		Toy nuke
  *		Fake meteor
- *		Carp plushie
  *		Foam armblade
  *		Toy big red button
  *		Beach ball
  *		Toy xeno
  *      Kitty toys!
  *		Snowballs
+ *		Clockwork Watches
+ *		Toy Daggers
  */
 
 
@@ -40,7 +41,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "waterballoon-e"
 	item_state = "balloon-empty"
-	
+
 
 /obj/item/toy/balloon/New()
 	create_reagents(10)
@@ -50,7 +51,8 @@
 	return
 
 /obj/item/toy/balloon/afterattack(atom/A as mob|obj, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if (istype(A, /obj/structure/reagent_dispensers))
 		var/obj/structure/reagent_dispensers/RD = A
 		if(RD.reagents.total_volume <= 0)
@@ -182,7 +184,7 @@
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
 		user.show_message("<span class='warning'>*click*</span>", 2)
-		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(src, "gun_dry_fire", 30, 1)
 		return
 	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
 	src.bullets--
@@ -275,7 +277,7 @@
  */
 /obj/item/toy/foamblade
 	name = "foam armblade"
-	desc = "it says \"Sternside Changs #1 fan\" on it. "
+	desc = "It says \"Sternside Changs #1 fan\" on it."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamblade"
 	item_state = "arm_blade"
@@ -288,7 +290,7 @@
 
 /obj/item/toy/windupToolbox
 	name = "windup toolbox"
-	desc = "A replica toolbox that rumbles when you turn the key"
+	desc = "A replica toolbox that rumbles when you turn the key."
 	icon_state = "his_grace"
 	item_state = "artistic_toolbox"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
@@ -322,7 +324,6 @@
 	throw_range = 5
 	force_unwielded = 0
 	force_wielded = 0
-	origin_tech = null
 	attack_verb = list("attacked", "struck", "hit")
 
 /obj/item/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -421,10 +422,11 @@
 		. = ..()
 
 /obj/item/toy/prize/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(loc == user)
 		attack_self(user)
-	else
-		. = ..()
 
 /obj/item/toy/prize/ripley
 	name = "toy Ripley"
@@ -503,7 +505,7 @@
 
 // Talking toys are language universal, and thus all species can use them
 /obj/item/toy/talking/attack_alien(mob/user)
-	. = attack_hand(user)
+	return attack_hand(user)
 
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
@@ -607,6 +609,11 @@
 	var/card_throw_range = 7
 	var/list/card_attack_verb = list("attacked")
 
+/obj/item/toy/cards/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!</span>")
+	playsound(src, 'sound/items/cardshuffle.ogg', 50, 1)
+	return BRUTELOSS
+
 /obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj) // Applies variables for supporting multiple types of card deck
 	if(!istype(sourceobj))
 		return
@@ -647,7 +654,8 @@
 	cards += "Ace of Clubs"
 	cards += "Ace of Diamonds"
 
-
+//ATTACK HAND IGNORING PARENT RETURN VALUE
+//ATTACK HAND NOT CALLING PARENT
 /obj/item/toy/cards/deck/attack_hand(mob/user)
 	if(user.lying)
 		return
@@ -682,7 +690,7 @@
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
 		cards = shuffle(cards)
-		playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
+		playsound(src, 'sound/items/cardshuffle.ogg', 50, 1)
 		user.visible_message("[user] shuffles the deck.", "<span class='notice'>You shuffle the deck.</span>")
 		cooldown = world.time
 
@@ -715,6 +723,7 @@
 		return ..()
 
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
+	. = ..()
 	var/mob/living/M = usr
 	if(!istype(M) || usr.incapacitated() || usr.lying)
 		return
@@ -747,10 +756,11 @@
 	user.set_machine(src)
 	interact(user)
 
-/obj/item/toy/cards/cardhand/interact(mob/user)
+/obj/item/toy/cards/cardhand/ui_interact(mob/user)
+	. = ..()
 	var/dat = "You have:<BR>"
 	for(var/t in currenthand)
-		dat += "<A href='?src=\ref[src];pick=[t]'>A [t].</A><BR>"
+		dat += "<A href='?src=[REF(src)];pick=[t]'>A [t].</A><BR>"
 	dat += "Which card will you remove next?"
 	var/datum/browser/popup = new(user, "cardhand", "Hand of Cards", 400, 240)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -841,7 +851,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
 		if(cardUser.is_holding(src))
-			cardUser.visible_message("[cardUser] checks [cardUser.p_their()] card.", "<span class='notice'>The card reads: [cardname]</span>")
+			cardUser.visible_message("[cardUser] checks [cardUser.p_their()] card.", "<span class='notice'>The card reads: [cardname].</span>")
 		else
 			to_chat(cardUser, "<span class='warning'>You need to have the card in your hand to check it!</span>")
 
@@ -850,7 +860,7 @@
 	set name = "Flip Card"
 	set category = "Object"
 	set src in range(1)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
 		return
 	if(!flipped)
 		src.flipped = 1
@@ -939,7 +949,7 @@
 	card_throw_speed = 3
 	card_throw_range = 7
 	card_attack_verb = list("attacked", "sliced", "diced", "slashed", "cut")
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /*
  * Fake nuke
@@ -988,32 +998,6 @@
 		qdel(src)
 
 /*
- * Carp plushie
- */
-
-/obj/item/toy/carpplushie
-	name = "space carp plushie"
-	desc = "An adorable stuffed toy that resembles a space carp."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "carpplushie"
-	item_state = "carp_plushie"
-	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("bitten", "eaten", "fin slapped")
-	resistance_flags = FLAMMABLE
-	var/bitesound = 'sound/weapons/bite.ogg'
-
-//Attack mob
-/obj/item/toy/carpplushie/attack(mob/M, mob/user)
-	playsound(loc, bitesound, 20, 1)	//Play bite sound in local area
-	return ..()
-
-//Attack self
-/obj/item/toy/carpplushie/attack_self(mob/user)
-	playsound(src.loc, bitesound, 20, 1)
-	to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
-	return ..()
-
-/*
  * Toy big red button
  */
 /obj/item/toy/redbutton
@@ -1049,8 +1033,8 @@
 	throwforce = 12 //pelt your enemies to death with lumps of snow
 
 /obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
-	user.drop_item()
-	src.throw_at(target, throw_range, throw_speed)
+	if(user.dropItemToGround(src))
+		throw_at(target, throw_range, throw_speed)
 
 /obj/item/toy/snowball/throw_impact(atom/hit_atom)
 	if(!..())
@@ -1068,8 +1052,47 @@
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 
 /obj/item/toy/beach_ball/afterattack(atom/target as mob|obj|turf|area, mob/user)
-	user.drop_item()
-	src.throw_at(target, throw_range, throw_speed)
+	if(user.dropItemToGround(src))
+		throw_at(target, throw_range, throw_speed)
+
+/*
+ * Clockwork Watch
+ */
+
+/obj/item/toy/clockwork_watch
+	name = "steampunk watch"
+	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "dread_ipad"
+	slot_flags = SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	var/cooldown = 0
+
+/obj/item/toy/clockwork_watch/attack_self(mob/user)
+	if (cooldown < world.time)
+		cooldown = world.time + 1800 //3 minutes
+		user.visible_message("<span class='warning'>[user] rotates a cogwheel on [src].</span>", "<span class='notice'>You rotate a cogwheel on [src], it plays a loud noise!</span>", "<span class='italics'>You hear cogwheels turning.</span>")
+		playsound(src, 'sound/magic/clockwork/ark_activation.ogg', 50, 0)
+	else
+		to_chat(user, "<span class='alert'>The cogwheels are already turning!</span>")
+
+/obj/item/toy/clockwork_watch/examine(mob/user)
+	..()
+	to_chat(user, "<span class='info'>Station Time: [station_time_timestamp()]")
+
+/*
+ * Toy Dagger
+ */
+
+/obj/item/toy/toy_dagger
+	name = "toy dagger"
+	desc = "A cheap plastic replica of a dagger. Produced by THE ARM Toys, Inc."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "render"
+	item_state = "cultdagger"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 
 /*
  * Xenomorph action figure
@@ -1132,7 +1155,7 @@
 /obj/item/toy/figure/attack_self(mob/user as mob)
 	if(cooldown <= world.time)
 		cooldown = world.time + 50
-		to_chat(user, "<span class='notice'>The [src] says \"[toysay]\"</span>")
+		to_chat(user, "<span class='notice'>[src] says \"[toysay]\"</span>")
 		playsound(user, toysound, 20, 1)
 
 /obj/item/toy/figure/cmo

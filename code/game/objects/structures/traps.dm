@@ -1,6 +1,6 @@
 /obj/structure/trap
 	name = "IT'S A TRAP"
-	desc = "stepping on me is a guaranteed bad day"
+	desc = "Stepping on me is a guaranteed bad day."
 	icon = 'icons/obj/hand_of_god_structures.dmi'
 	icon_state = "trap"
 	density = FALSE
@@ -16,7 +16,7 @@
 	var/datum/effect_system/spark_spread/spark_system
 
 /obj/structure/trap/Initialize(mapload)
-	..()
+	. = ..()
 	spark_system = new
 	spark_system.set_up(4,1,src)
 	spark_system.attach(src)
@@ -105,7 +105,7 @@
 /obj/structure/trap/chill/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>You're frozen solid!</B></span>")
 	L.Knockdown(20)
-	L.bodytemperature -= 300
+	L.adjust_bodytemperature(-300)
 	L.apply_status_effect(/datum/status_effect/freon)
 
 

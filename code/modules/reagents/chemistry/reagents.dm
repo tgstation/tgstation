@@ -1,7 +1,3 @@
-#define SOLID 1
-#define LIQUID 2
-#define GAS 3
-
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
 //Various reagents
@@ -24,13 +20,14 @@
 	var/current_cycle = 0
 	var/volume = 0
 	var/color = "#000000" // rgb: 0, 0, 0
-	var/can_synth = 1
+	var/can_synth = TRUE
 	var/metabolization_rate = REAGENTS_METABOLISM //how fast the reagent is metabolized by the mob
 	var/overrides_metab = 0
 	var/overdose_threshold = 0
 	var/addiction_threshold = 0
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
+	var/self_consuming = FALSE
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -41,7 +38,7 @@
 		return 0
 	if(method == VAPOR) //smoke, foam, spray
 		if(M.reagents)
-			var/modifier = Clamp((1 - touch_protection), 0, 1)
+			var/modifier = CLAMP((1 - touch_protection), 0, 1)
 			var/amount = round(reac_volume*modifier, 0.1)
 			if(amount >= 0.5)
 				M.reagents.add_reagent(id, amount)
@@ -56,6 +53,10 @@
 /datum/reagent/proc/on_mob_life(mob/living/M)
 	current_cycle++
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
+	return
+
+// Called when this reagent is first added to a mob
+/datum/reagent/proc/on_mob_add(mob/M)
 	return
 
 // Called when this reagent is removed while inside a mob
@@ -76,10 +77,6 @@
 /datum/reagent/proc/on_update(atom/A)
 	return
 
-// Called every time reagent containers process.
-/datum/reagent/proc/on_tick(data)
-	return
-
 // Called when the reagent container is hit by an explosion
 /datum/reagent/proc/on_ex_act(severity)
 	return
@@ -90,24 +87,29 @@
 
 /datum/reagent/proc/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You feel like you took too much of [name]!</span>")
+	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/overdose, name)
 	return
 
 /datum/reagent/proc/addiction_act_stage1(mob/living/M)
+	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/withdrawal_light, name)
 	if(prob(30))
-		to_chat(M, "<span class='notice'>You feel like some [name] right about now.</span>")
+		to_chat(M, "<span class='notice'>You feel like having some [name] right about now.</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage2(mob/living/M)
+	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/withdrawal_medium, name)
 	if(prob(30))
 		to_chat(M, "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage3(mob/living/M)
+	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/withdrawal_severe, name)
 	if(prob(30))
 		to_chat(M, "<span class='danger'>You have an intense craving for [name].</span>")
 	return
 
 /datum/reagent/proc/addiction_act_stage4(mob/living/M)
+	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "[id]_overdose", /datum/mood_event/drugs/withdrawal_critical, name)
 	if(prob(30))
 		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
 	return

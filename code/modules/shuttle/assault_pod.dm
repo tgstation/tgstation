@@ -1,16 +1,17 @@
 /obj/docking_port/mobile/assault_pod
 	name = "assault pod"
 	id = "steel_rain"
+	timid = FALSE
 	dwidth = 3
 	width = 7
 	height = 7
 
 /obj/docking_port/mobile/assault_pod/request()
-	if(z == initial(src.z)) //No launching pods that have already launched
+	if(!(z in SSmapping.levels_by_trait(ZTRAIT_STATION))) //No launching pods that have already launched
 		return ..()
 
 
-/obj/docking_port/mobile/assault_pod/dock(obj/docking_port/stationary/S1)
+/obj/docking_port/mobile/assault_pod/initiate_docking(obj/docking_port/stationary/S1)
 	. = ..()
 	if(!istype(S1, /obj/docking_port/stationary/transit))
 		playsound(get_turf(src.loc), 'sound/effects/explosion1.ogg',50,1)
@@ -43,7 +44,7 @@
 	if(!T)
 		return
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
-	landing_zone.id = "assault_pod(\ref[src])"
+	landing_zone.id = "assault_pod([REF(src)])"
 	landing_zone.name = "Landing Zone"
 	landing_zone.dwidth = dwidth
 	landing_zone.dheight = dheight

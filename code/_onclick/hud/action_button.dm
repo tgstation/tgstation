@@ -8,15 +8,23 @@
 	var/button_icon_state
 	var/appearance_cache
 
+	var/id
+	var/ordered = TRUE //If the button gets placed into the default bar
+
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
+		if(locked)
+			to_chat(usr, "<span class='warning'>Action button \"[name]\" is locked, unlock it first.</span>")
+			return TRUE
 		moved = 0
 		usr.update_action_buttons() //redraw buttons that are no longer considered "moved"
 		return TRUE
 	if(modifiers["ctrl"])
 		locked = !locked
 		to_chat(usr, "<span class='notice'>Action button \"[name]\" [locked ? "" : "un"]locked.</span>")
+		if(id && usr.client) //try to (un)remember position
+			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
 	if(usr.next_click > world.time)
 		return
@@ -38,21 +46,30 @@
 /obj/screen/movable/action_button/hide_toggle/Click(location,control,params)
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
+		if(locked)
+			to_chat(usr, "<span class='warning'>Action button \"[name]\" is locked, unlock it first.</span>")
+			return TRUE
 		moved = FALSE
 		usr.update_action_buttons(TRUE)
 		return TRUE
 	if(modifiers["ctrl"])
 		locked = !locked
 		to_chat(usr, "<span class='notice'>Action button \"[name]\" [locked ? "" : "un"]locked.</span>")
+		if(id && usr.client) //try to (un)remember position
+			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
 	if(modifiers["alt"])
 		for(var/V in usr.actions)
 			var/datum/action/A = V
 			var/obj/screen/movable/action_button/B = A.button
 			B.moved = FALSE
+			if(B.id && usr.client)
+				usr.client.prefs.action_buttons_screen_locs["[B.name]_[B.id]"] = null
 			B.locked = usr.client.prefs.buttons_locked
 		locked = usr.client.prefs.buttons_locked
 		moved = FALSE
+		if(id && usr.client)
+			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = null
 		usr.update_action_buttons(TRUE)
 		to_chat(usr, "<span class='notice'>Action button positions have been reset.</span>")
 		return TRUE
@@ -78,7 +95,7 @@
 
 
 /obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(datum/hud/owner_hud)
-	var settings = owner_hud.get_action_buttons_icons()
+	var/settings = owner_hud.get_action_buttons_icons()
 	icon = settings["bg_icon"]
 	icon_state = settings["bg_state"]
 	hide_icon = settings["toggle_icon"]
@@ -92,7 +109,8 @@
 
 
 /obj/screen/movable/action_button/MouseEntered(location,control,params)
-	openToolTip(usr,src,params,title = name,content = desc,theme = actiontooltipstyle)
+	if(!QDELETED(src))
+		openToolTip(usr,src,params,title = name,content = desc,theme = actiontooltipstyle)
 
 
 /obj/screen/movable/action_button/MouseExited()
@@ -132,13 +150,14 @@
 				client.screen += A.button
 	else
 		for(var/datum/action/A in actions)
-			button_number++
 			A.UpdateButtonIcon()
 			var/obj/screen/movable/action_button/B = A.button
-			if(!B.moved)
-				B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
-			else
+			if(B.ordered)
+				button_number++
+			if(B.moved)
 				B.screen_loc = B.moved
+			else
+				B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
 			if(reload_screen)
 				client.screen += B
 

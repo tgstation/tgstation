@@ -2,7 +2,6 @@
 	icon = 'icons/obj/wallframe.dmi'
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT*2)
 	flags_1 = CONDUCT_1
-	origin_tech = "materials=1;engineering=1"
 	item_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -83,7 +82,7 @@
 // APC HULL
 /obj/item/wallframe/apc
 	name = "\improper APC frame"
-	desc = "Used for repairing or building APCs"
+	desc = "Used for repairing or building APCs."
 	icon_state = "apc"
 	result_path = /obj/machinery/power/apc
 	inverse = 1
@@ -121,5 +120,5 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "engineering=2;programming=1"
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
+	grind_results = list("iron" = 10, "silicon" = 10)

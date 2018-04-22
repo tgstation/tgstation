@@ -5,6 +5,7 @@
 	icon_state = "piratemelee"
 	icon_living = "piratemelee"
 	icon_dead = "piratemelee_dead"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "pushes"
@@ -13,6 +14,7 @@
 	speed = 0
 	maxHealth = 100
 	health = 100
+	spacewalk = TRUE
 
 	harm_intent_damage = 5
 	obj_damage = 60
@@ -28,6 +30,15 @@
 			/obj/item/melee/transforming/energy/sword/pirate)
 	del_on_death = 1
 	faction = list("pirate")
+	var/obj/effect/light_emitter/red_energy_sword/sord
+
+/mob/living/simple_animal/hostile/pirate/Initialize()
+	. = ..()
+	sord = new(src)
+
+/mob/living/simple_animal/hostile/pirate/Destroy()
+	QDEL_NULL(sord)
+	return ..()
 
 /mob/living/simple_animal/hostile/pirate/ranged
 	name = "Pirate Gunner"
@@ -51,6 +62,10 @@
 	minbodytemp = 0
 	speed = 1
 
+/mob/living/simple_animal/hostile/pirate/space/Initialize()
+	. = ..()
+	set_light(3)
+
 /mob/living/simple_animal/hostile/pirate/space/ranged
 	name = "Space Pirate Gunner"
 	icon_state = "piratespaceranged"
@@ -63,6 +78,3 @@
 	projectiletype = /obj/item/projectile/beam/laser
 	loot = list(/obj/effect/mob_spawn/human/corpse/pirate/ranged,
 			/obj/item/gun/energy/laser)
-
-/mob/living/simple_animal/hostile/pirate/space/Process_Spacemove(movement_dir = 0)
-	return 1

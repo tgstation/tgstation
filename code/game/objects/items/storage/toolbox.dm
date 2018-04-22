@@ -12,14 +12,13 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_BULKY
 	materials = list(MAT_METAL = 500)
-	origin_tech = "combat=1;engineering=1"
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 
 /obj/item/storage/toolbox/Initialize()
-	..()
+	. = ..()
 	if(has_latches)
 		if(prob(10))
 			latches = "double_latch"
@@ -79,6 +78,15 @@
 	icon_state = "toolbox_blue_old"
 	has_latches = FALSE
 
+/obj/item/storage/toolbox/mechanical/old/heirloom
+	name = "toolbox" //this will be named "X family toolbox"
+	desc = "It's seen better days."
+	force = 5
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
+	return
+
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"
@@ -101,10 +109,13 @@
 	name = "suspicious looking toolbox"
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
-	origin_tech = "combat=2;syndicate=1;engineering=2"
-	silent = 1
 	force = 15
 	throwforce = 18
+
+/obj/item/storage/toolbox/syndicate/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.silent = TRUE
 
 /obj/item/storage/toolbox/syndicate/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
@@ -138,11 +149,15 @@
 	has_latches = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
-	max_w_class = WEIGHT_CLASS_NORMAL
-	max_combined_w_class = 28
-	storage_slots = 28
 	attack_verb = list("robusted", "crushed", "smashed")
 	var/fabricator_type = /obj/item/clockwork/replica_fabricator/scarab
+
+/obj/item/storage/toolbox/brass/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 28
+	STR.max_items = 28
 
 /obj/item/storage/toolbox/brass/prefilled/PopulateContents()
 	new fabricator_type(src)
@@ -151,6 +166,10 @@
 	new /obj/item/wrench/brass(src)
 	new /obj/item/crowbar/brass(src)
 	new /obj/item/weldingtool/experimental/brass(src)
+
+/obj/item/storage/toolbox/brass/prefilled/servant
+	slot_flags = SLOT_BELT
+	fabricator_type = null
 
 /obj/item/storage/toolbox/brass/prefilled/ratvar
 	var/slab_type = /obj/item/clockwork/slab
@@ -169,9 +188,13 @@
 	desc = "A toolbox painted bright green. Why anyone would store art supplies in a toolbox is beyond you, but it has plenty of extra space."
 	icon_state = "green"
 	item_state = "artistic_toolbox"
-	max_combined_w_class = 20
-	storage_slots = 10
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
+
+/obj/item/storage/toolbox/artistic/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_combined_w_class = 20
+	STR.max_items = 10
 
 /obj/item/storage/toolbox/artistic/PopulateContents()
 	new/obj/item/storage/crayons(src)

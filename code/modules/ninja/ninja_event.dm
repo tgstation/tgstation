@@ -13,7 +13,7 @@ Contents:
 	name = "Space Ninja"
 	typepath = /datum/round_event/ghost_role/ninja
 	max_occurrences = 1
-	earliest_start = 30000 // 1 hour
+	earliest_start = 40 MINUTES
 	min_players = 15
 
 /datum/round_event/ghost_role/ninja
@@ -28,7 +28,6 @@ Contents:
 /datum/round_event/ghost_role/ninja/setup()
 	helping_station = rand(0,1)
 
-
 /datum/round_event/ghost_role/ninja/kill()
 	if(!success_spawn && control)
 		control.occurrences--
@@ -39,11 +38,9 @@ Contents:
 	//selecting a spawn_loc
 	if(!spawn_loc)
 		var/list/spawn_locs = list()
-		for(var/obj/effect/landmark/L in GLOB.landmarks_list)
+		for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
 			if(isturf(L.loc))
-				switch(L.name)
-					if("ninjaspawn","carpspawn")
-						spawn_locs += L.loc
+				spawn_locs += L.loc
 		if(!spawn_locs.len)
 			return kill()
 		spawn_loc = pick(spawn_locs)
@@ -51,7 +48,7 @@ Contents:
 		return MAP_ERROR
 
 	//selecting a candidate player
-	var/list/candidates = get_candidates("ninja", null, ROLE_NINJA)
+	var/list/candidates = get_candidates(ROLE_NINJA, null, ROLE_NINJA)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
@@ -59,26 +56,21 @@ Contents:
 	var/key = selected_candidate.key
 
 	//Prepare ninja player mind
-	var/datum/mind/Mind = create_ninja_mind(key)
+	var/datum/mind/Mind = new /datum/mind(key)
+	Mind.assigned_role = ROLE_NINJA
+	Mind.special_role = ROLE_NINJA
 	Mind.active = 1
-
-	//generate objectives - You'll generally get 6 objectives (Ninja is meant to be hardmode!)
-
 
 	//spawn the ninja and assign the candidate
 	var/mob/living/carbon/human/Ninja = create_space_ninja(spawn_loc)
 	Mind.transfer_to(Ninja)
-	var/datum/antagonist/ninja/ninjadatum = add_ninja(Ninja)
-	ninjadatum.equip_space_ninja()
-
-	Ninja.internal = Ninja.s_store
-	Ninja.update_internals_hud_icon(1)
+	var/datum/antagonist/ninja/ninjadatum = new
+	ninjadatum.helping_station = pick(TRUE,FALSE)
+	Mind.add_antag_datum(ninjadatum)
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
 		throw EXCEPTION("Ninja created with incorrect mind")
 
-
-	SSticker.mode.update_ninja_icons_added(Ninja)
 	spawned_mobs += Ninja
 	message_admins("[key_name_admin(Ninja)] has been made into a ninja by an event.")
 	log_game("[key_name(Ninja)] was spawned as a ninja by an event.")
@@ -95,22 +87,3 @@ Contents:
 	A.copy_to(new_ninja)
 	new_ninja.dna.update_dna_identity()
 	return new_ninja
-
-
-/proc/create_ninja_mind(key)
-	var/datum/mind/Mind = new /datum/mind(key)
-	Mind.assigned_role = "Space Ninja"
-	Mind.special_role = "Space Ninja"
-	SSticker.mode.traitors |= Mind			//Adds them to current traitor list. Which is really the extra antagonist list.
-	return Mind
-
-
-/datum/game_mode/proc/update_ninja_icons_added(var/mob/living/carbon/human/ninja)
-	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
-	ninjahud.join_hud(ninja)
-	set_antag_hud(ninja, "ninja")
-
-/datum/game_mode/proc/update_ninja_icons_removed(datum/mind/ninja_mind)
-	var/datum/atom_hud/antag/ninjahud = GLOB.huds[ANTAG_HUD_NINJA]
-	ninjahud.leave_hud(ninja_mind.current)
-	set_antag_hud(ninja_mind.current, null)

@@ -6,6 +6,7 @@
 	icon_living = "bear"
 	icon_dead = "bear_dead"
 	icon_gib = "bear_gib"
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	speak = list("RAWR!","Rawr!","GRR!","Growl!")
 	speak_emote = list("growls", "roars")
 	emote_hear = list("rawrs.","grumbles.","grawls.")
@@ -20,6 +21,7 @@
 	response_harm   = "hits"
 	maxHealth = 60
 	health = 60
+	spacewalk = TRUE
 	var/armored = FALSE
 
 	obj_damage = 60
@@ -35,7 +37,7 @@
 	maxbodytemp = 1500
 
 	faction = list("russian")
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
@@ -49,6 +51,7 @@
 	icon_living = "snowbear"
 	icon_dead = "snowbear_dead"
 	desc = "It's a polar bear, in space, but not actually in space."
+	weather_immunities = list("snow")
 
 /mob/living/simple_animal/hostile/bear/russian
 	name = "combat bear"
@@ -64,9 +67,6 @@
 	health = 120
 	maxHealth = 120
 	armored = TRUE
-
-/mob/living/simple_animal/hostile/bear/Process_Spacemove(movement_dir = 0)
-	return 1	//No drifting in space for space bears!
 
 /mob/living/simple_animal/hostile/bear/update_icons()
 	..()

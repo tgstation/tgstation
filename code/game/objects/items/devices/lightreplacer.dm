@@ -51,7 +51,7 @@
 
 	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
-	origin_tech = "magnets=3;engineering=4"
+	force = 8
 
 	var/max_uses = 20
 	var/uses = 0
@@ -149,7 +149,7 @@
 		to_chat(user, "<span class='notice'>You fill \the [src] with lights from \the [S]. " + status_string() + "</span>")
 
 /obj/item/device/lightreplacer/emag_act()
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
 	Emag()
 
@@ -157,7 +157,7 @@
 	to_chat(user, status_string())
 
 /obj/item/device/lightreplacer/update_icon()
-	icon_state = "lightreplacer[emagged]"
+	icon_state = "lightreplacer[(obj_flags & EMAGGED ? 1 : 0)]"
 
 /obj/item/device/lightreplacer/proc/status_string()
 	return "It has [uses] light\s remaining (plus [bulb_shards] fragment\s)."
@@ -169,7 +169,7 @@
 
 // Negative numbers will subtract
 /obj/item/device/lightreplacer/proc/AddUses(amount = 1)
-	uses = Clamp(uses + amount, 0, max_uses)
+	uses = CLAMP(uses + amount, 0, max_uses)
 
 /obj/item/device/lightreplacer/proc/AddShards(amount = 1, user)
 	bulb_shards += amount
@@ -192,7 +192,8 @@
 
 	if(target.status != LIGHT_OK)
 		if(CanUse(U))
-			if(!Use(U)) return
+			if(!Use(U))
+				return
 			to_chat(U, "<span class='notice'>You replace the [target.fitting] with \the [src].</span>")
 
 			if(target.status != LIGHT_EMPTY)
@@ -204,7 +205,7 @@
 
 			target.status = L2.status
 			target.switchcount = L2.switchcount
-			target.rigged = emagged
+			target.rigged = (obj_flags & EMAGGED ? 1 : 0)
 			target.brightness = L2.brightness
 			target.on = target.has_power()
 			target.update()
@@ -222,9 +223,9 @@
 		return
 
 /obj/item/device/lightreplacer/proc/Emag()
-	emagged = !emagged
+	obj_flags ^= EMAGGED
 	playsound(src.loc, "sparks", 100, 1)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		name = "shortcircuited [initial(name)]"
 	else
 		name = initial(name)

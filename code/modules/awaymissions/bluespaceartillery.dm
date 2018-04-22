@@ -25,16 +25,15 @@
 /obj/structure/artilleryplaceholder/decorative
 	density = FALSE
 
-/obj/machinery/artillerycontrol/attack_hand(mob/user)
-	user.set_machine(src)
+/obj/machinery/artillerycontrol/ui_interact(mob/user)
+	. = ..()
 	var/dat = "<B>Bluespace Artillery Control:</B><BR>"
 	dat += "Locked on<BR>"
 	dat += "<B>Charge progress: [reload]/[reload_cooldown]:</B><BR>"
-	dat += "<A href='byond://?src=\ref[src];fire=1'>Open Fire</A><BR>"
+	dat += "<A href='byond://?src=[REF(src)];fire=1'>Open Fire</A><BR>"
 	dat += "Deployment of weapon authorized by <br>Nanotrasen Naval Command<br><br>Remember, friendly fire is grounds for termination of your contract and life.<HR>"
 	user << browse(dat, "window=scroll")
 	onclose(user, "scroll")
-	return
 
 /obj/machinery/artillerycontrol/Topic(href, href_list)
 	if(..())

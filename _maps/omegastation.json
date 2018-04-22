@@ -2,7 +2,9 @@
     "map_name": "OmegaStation",
     "map_path": "map_files/OmegaStation",
     "map_file": "OmegaStation.dmm",
-    "minetype": "lavaland",
-    "transition_config": "default",
-    "allow_custom_shuttles": "yes"
+    "shuttles": {
+	    "emergency": "emergency_omega",
+	    "ferry": "ferry_fancy",
+	    "cargo": "cargo_delta"
+    }
 }

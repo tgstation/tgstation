@@ -12,6 +12,16 @@
 	result = /obj/item/reagent_containers/food/snacks/candiedapple
 	subcategory = CAT_MISCFOOD
 
+/datum/crafting_recipe/food/spiderlollipop
+ 	name = "Spider Lollipop"
+ 	reqs = list(/obj/item/stack/rods = 1,
+ 		/datum/reagent/consumable/sugar = 5,
+ 		/datum/reagent/water = 5,
+ 		/obj/item/reagent_containers/food/snacks/spiderling = 1
+ 	)
+ 	result = /obj/item/reagent_containers/food/snacks/spiderlollipop
+ 	subcategory = CAT_MISCFOOD
+
 /datum/crafting_recipe/food/chococoin
 	name = "Choco coin"
 	reqs = list(
@@ -276,7 +286,7 @@
 	name = "Lizard wine"
 	time = 40
 	reqs = list(
-		/obj/item/severedtail = 1,
+		/obj/item/organ/tail/lizard = 1,
 		/datum/reagent/consumable/ethanol = 100
 	)
 	result = /obj/item/reagent_containers/food/drinks/bottle/lizardwine
@@ -324,4 +334,14 @@
 		/obj/item/reagent_containers/food/snacks/no_raisin = 1,
 	)
 	result = /obj/item/reagent_containers/food/snacks/branrequests
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/ricepudding
+	name = "Rice pudding"
+	reqs = list(
+		/datum/reagent/consumable/milk = 5,
+		/datum/reagent/consumable/sugar = 5,
+		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/salad/ricepudding
 	subcategory = CAT_MISCFOOD

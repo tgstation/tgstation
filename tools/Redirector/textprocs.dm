@@ -54,11 +54,13 @@ proc
 	/////////////////////
 	dd_hassuffix(text, suffix)
 		var/start = length(text) - length(suffix)
-		if (start) return findtext(text, suffix, start)
+		if (start)
+			return findtext(text, suffix, start)
 
 	dd_hasSuffix(text, suffix)
 		var/start = length(text) - length(suffix)
-		if (start) return findtextEx(text, suffix, start)
+		if (start)
+			return findtextEx(text, suffix, start)
 
 	/////////////////////////////
 	// Turning text into lists //
@@ -111,7 +113,8 @@ proc
 		var/newText = "[the_list[1]]"										// Treats any object/number as text also.
 		var/count
 		for (count = 2, count <= total, count++)
-			if (separator) newText += separator
+			if (separator)
+				newText += separator
 			newText += "[the_list[count]]"
 		return newText
 

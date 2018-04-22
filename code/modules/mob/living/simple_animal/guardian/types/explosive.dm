@@ -14,7 +14,7 @@
 	..()
 	if(statpanel("Status"))
 		if(bomb_cooldown >= world.time)
-			stat(null, "Bomb Cooldown Remaining: [max(round((bomb_cooldown - world.time)*0.1, 0.1), 0)] seconds")
+			stat(null, "Bomb Cooldown Remaining: [DisplayTimeText(bomb_cooldown - world.time)]")
 
 /mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget()
 	. = ..()
@@ -33,10 +33,10 @@
 /mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
 	if(!istype(A))
 		return
-	if(src.loc == summoner)
+	if(loc == summoner)
 		to_chat(src, "<span class='danger'><B>You must be manifested to create bombs!</span></B>")
 		return
-	if(isobj(A))
+	if(isobj(A) && Adjacent(A))
 		if(bomb_cooldown <= world.time && !stat)
 			var/obj/guardian_bomb/B = new /obj/guardian_bomb(get_turf(A))
 			to_chat(src, "<span class='danger'><B>Success! Bomb armed!</span></B>")
@@ -54,7 +54,7 @@
 
 
 /obj/guardian_bomb/proc/disguise(obj/A)
-	A.loc = src
+	A.forceMove(src)
 	stored_obj = A
 	opacity = A.opacity
 	anchored = A.anchored
@@ -70,7 +70,7 @@
 /obj/guardian_bomb/proc/detonate(mob/living/user)
 	if(isliving(user))
 		if(user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
-			to_chat(user, "<span class='danger'><B>The [src] was boobytrapped!</span></B>")
+			to_chat(user, "<span class='danger'><B>[src] was boobytrapped!</span></B>")
 			to_chat(spawner, "<span class='danger'><B>Success! Your trap caught [user]</span></B>")
 			var/turf/T = get_turf(src)
 			stored_obj.forceMove(T)
@@ -88,6 +88,7 @@
 /obj/guardian_bomb/attackby(mob/living/user)
 	detonate(user)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/guardian_bomb/attack_hand(mob/living/user)
 	detonate(user)
 

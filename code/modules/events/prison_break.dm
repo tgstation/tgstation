@@ -28,7 +28,7 @@
 				areasToOpen += A
 
 
-/datum/round_event/grey_tide/announce()
+/datum/round_event/grey_tide/announce(fake)
 	if(areasToOpen && areasToOpen.len > 0)
 		priority_announce("Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
 	else
@@ -53,6 +53,8 @@
 				temp.update_icon()
 			else if(istype(O, /obj/machinery/door/airlock))
 				var/obj/machinery/door/airlock/temp = O
+				if(temp.critical_machine) //Skip doors in critical positions, such as the SM chamber.
+					continue
 				temp.prison_open()
 			else if(istype(O, /obj/machinery/door_timer))
 				var/obj/machinery/door_timer/temp = O

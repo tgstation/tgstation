@@ -10,7 +10,7 @@
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 
 	var/obj/item/noz
@@ -49,7 +49,7 @@
 			on = FALSE
 			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
 			return
-		noz.loc = user
+		noz.forceMove(user)
 	else
 		//Remove from their hands and put back "into" the tank
 		remove_noz()
@@ -75,16 +75,18 @@
 	return ..()
 
 /obj/item/watertank/attack_hand(mob/user)
-	if(src.loc == user)
-		ui_action_click()
+	. = ..()
+	if(.)
 		return
-	..()
+	if(loc == user)
+		ui_action_click()
 
 /obj/item/watertank/MouseDrop(obj/over_object)
-	var/mob/M = src.loc
+	var/mob/M = loc
 	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
+	return ..()
 
 /obj/item/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
@@ -92,6 +94,10 @@
 		return 1
 	else
 		return ..()
+
+/obj/item/watertank/dropped(mob/user)
+	..()
+	remove_noz()
 
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
@@ -109,8 +115,8 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
-	flags_1 = NODROP_1 | NOBLUDGEON_1
-	container_type = OPENCONTAINER_1
+	flags_1 = NOBLUDGEON_1
+	container_type = OPENCONTAINER
 	slot_flags = 0
 
 	var/obj/item/watertank/tank
@@ -120,14 +126,14 @@
 	if(check_tank_exists(parent_tank, src))
 		tank = parent_tank
 		reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
-		loc = tank
+		forceMove(tank)
 	return
 
 /obj/item/reagent_containers/spray/mister/dropped(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>The mister snaps back onto the watertank.</span>")
 	tank.on = 0
-	loc = tank
+	forceMove(tank)
 
 /obj/item/reagent_containers/spray/mister/attack_self()
 	return
@@ -142,7 +148,7 @@
 /obj/item/reagent_containers/spray/mister/Move()
 	..()
 	if(loc != tank.loc)
-		loc = tank.loc
+		forceMove(tank.loc)
 
 /obj/item/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
@@ -221,7 +227,6 @@
 	precision = 1
 	cooling_power = 5
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = NODROP_1 //Necessary to ensure that the nozzle and tank never separate
 	var/obj/item/watertank/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
@@ -233,13 +238,13 @@
 		tank = parent_tank
 		reagents = tank.reagents
 		max_water = tank.volume
-		loc = tank
+		forceMove(tank)
 
 
 /obj/item/extinguisher/mini/nozzle/Move()
 	..()
 	if(loc != tank.loc)
-		loc = tank
+		forceMove(tank)
 	return
 
 /obj/item/extinguisher/mini/nozzle/attack_self(mob/user)
@@ -265,7 +270,7 @@
 	..()
 	to_chat(user, "<span class='notice'>The nozzle snaps back onto the tank!</span>")
 	tank.on = 0
-	loc = tank
+	forceMove(tank)
 
 /obj/item/extinguisher/mini/nozzle/afterattack(atom/target, mob/user)
 	if(nozzle_mode == EXTINGUISHER)
@@ -287,7 +292,7 @@
 		resin_cooldown = TRUE
 		R.remove_any(100)
 		var/obj/effect/resin_container/A = new (get_turf(src))
-		log_game("[key_name_admin(user)] used Resin Launcher at [get_area(user)] [COORD(user)].")
+		log_game("[key_name(user)] used Resin Launcher at [get_area(user)] [COORD(user)].")
 		playsound(src,'sound/items/syringeproj.ogg',40,1)
 		for(var/a=0, a<5, a++)
 			step_towards(A, target)
@@ -348,8 +353,8 @@
 	var/usage_ratio = 5 //5 unit added per 1 removed
 	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
-	container_type = OPENCONTAINER_1
-	spillable = 0
+	container_type = OPENCONTAINER
+	spillable = FALSE
 	possible_transfer_amounts = list(5,10,15)
 
 /obj/item/reagent_containers/chemtank/ui_action_click()
@@ -439,7 +444,7 @@
 	user.update_inv_back() //for overlays update
 
 //Operator backpack spray
-/obj/item/watertank/operator
+/obj/item/watertank/op
 	name = "backpack water tank"
 	desc = "A New Russian backpack spray for systematic cleansing of carbon lifeforms."
 	icon_state = "waterbackpackjani"
@@ -448,7 +453,7 @@
 	volume = 2000
 	slowdown = 0
 
-/obj/item/watertank/operator/New()
+/obj/item/watertank/op/New()
 	..()
 	reagents.add_reagent("mutagen",350)
 	reagents.add_reagent("napalm",125)
@@ -458,8 +463,7 @@
 	reagents.add_reagent("plasma",250)
 	reagents.add_reagent("condensedcapsaicin",500)
 
-/obj/item/reagent_containers/spray/mister/operator
-	name = "janitor spray nozzle"
+/obj/item/reagent_containers/spray/mister/op
 	desc = "A mister nozzle attached to several extended water tanks. It suspiciously has a compressor in the system and is labelled entirely in New Cyrillic."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
@@ -470,5 +474,5 @@
 	amount_per_transfer_from_this = 100
 	possible_transfer_amounts = list(75,100,150)
 
-/obj/item/watertank/operator/make_noz()
-	return new /obj/item/reagent_containers/spray/mister/operator(src)
+/obj/item/watertank/op/make_noz()
+	return new /obj/item/reagent_containers/spray/mister/op(src)

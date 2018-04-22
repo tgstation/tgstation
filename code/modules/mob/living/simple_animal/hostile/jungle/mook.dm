@@ -13,6 +13,7 @@
 	icon_state = "mook"
 	icon_living = "mook"
 	icon_dead = "mook_dead"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	pixel_x = -16
 	maxHealth = 45
 	health = 45
@@ -209,7 +210,7 @@
 
 /obj/effect/temp_visual/mook_dust
 	name = "dust"
-	desc = "it's just a dust cloud!"
+	desc = "It's just a dust cloud!"
 	icon = 'icons/mob/jungle/mook.dmi'
 	icon_state = "mook_leap_cloud"
 	layer = BELOW_MOB_LAYER

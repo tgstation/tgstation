@@ -53,14 +53,14 @@
 	return O.attack_obj(src, user)
 
 /obj/item/clothing/mask/facehugger/attack_alien(mob/user) //can be picked up by aliens
-	attack_hand(user)
-	return
+	return attack_hand(user)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user)
 	if((stat == CONSCIOUS && !sterile) && !isalien(user))
 		if(Leap(user))
 			return
-	..()
+	. = ..()
 
 /obj/item/clothing/mask/facehugger/attack(mob/living/M, mob/user)
 	..()
@@ -131,7 +131,7 @@
 			return FALSE
 		var/mob/living/carbon/target = M
 		// gotta have a head to be implanted (no changelings or sentient plants)
-		if(!target.get_bodypart("head"))
+		if(!target.get_bodypart(BODY_ZONE_HEAD))
 			return FALSE
 
 		if(target.getorgan(/obj/item/organ/alien/hivenode) || target.getorgan(/obj/item/organ/body_egg/alien_embryo))
@@ -202,14 +202,13 @@
 			return
 
 	if(!sterile)
-		//target.contract_disease(new /datum/disease/alien_embryo(0)) //so infection chance is same as virus infection chance
 		target.visible_message("<span class='danger'>[src] falls limp after violating [target]'s face!</span>", \
 								"<span class='userdanger'>[src] falls limp after violating [target]'s face!</span>")
 
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
 
-		var/obj/item/bodypart/chest/LC = target.get_bodypart("chest")
+		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
 		if((!LC || LC.status != BODYPART_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
 			new /obj/item/organ/body_egg/alien_embryo(target)
 

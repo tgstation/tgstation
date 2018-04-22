@@ -22,28 +22,27 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	var/obj/machinery/computer/telecrystals/boss/linkedboss = null
 
 /obj/machinery/computer/telecrystals/uplinker/Initialize()
-	..()
+	. = ..()
 
 	var/ID = pick_n_take(GLOB.possible_uplinker_IDs)
 	if(!ID)
 		ID = rand(1,999)
 	name = "[name] [ID]"
 
-/obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user, params)
+/obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/I, mob/user, params)
 	if(uplinkholder)
-		to_chat(user, "<span class='notice'>The [src] already has an uplink in it.</span>")
+		to_chat(user, "<span class='notice'>[src] already has an uplink in it.</span>")
 		return
-	if(O.hidden_uplink)
-		var/obj/item/I = user.get_active_held_item()
-		if(!user.drop_item())
+	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, I)
+	if(hidden_uplink)
+		if(!user.transferItemToLoc(I, src))
 			return
 		uplinkholder = I
-		I.loc = src
 		I.add_fingerprint(user)
 		update_icon()
 		updateUsrDialog()
 	else
-		to_chat(user, "<span class='notice'>The [O] doesn't appear to be an uplink...</span>")
+		to_chat(user, "<span class='notice'>[I] doesn't appear to be an uplink...</span>")
 
 /obj/machinery/computer/telecrystals/uplinker/update_icon()
 	..()
@@ -52,44 +51,42 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /obj/machinery/computer/telecrystals/uplinker/proc/ejectuplink()
 	if(uplinkholder)
-		uplinkholder.loc = get_turf(src.loc)
+		uplinkholder.forceMove(drop_location())
 		uplinkholder = null
 		update_icon()
 
 /obj/machinery/computer/telecrystals/uplinker/proc/donateTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
+		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, uplinkholder)
 		if(amt < 0)
-			linkedboss.storedcrystals += uplinkholder.hidden_uplink.telecrystals
+			linkedboss.storedcrystals += hidden_uplink.telecrystals
 			if(addLog)
-				linkedboss.logTransfer("[src] donated [uplinkholder.hidden_uplink.telecrystals] telecrystals to [linkedboss].")
-			uplinkholder.hidden_uplink.telecrystals = 0
-		else if(amt <= uplinkholder.hidden_uplink.telecrystals)
-			uplinkholder.hidden_uplink.telecrystals -= amt
+				linkedboss.logTransfer("[src] donated [hidden_uplink.telecrystals] telecrystals to [linkedboss].")
+			hidden_uplink.telecrystals = 0
+		else if(amt <= hidden_uplink.telecrystals)
+			hidden_uplink.telecrystals -= amt
 			linkedboss.storedcrystals += amt
 			if(addLog)
 				linkedboss.logTransfer("[src] donated [amt] telecrystals to [linkedboss].")
 
 /obj/machinery/computer/telecrystals/uplinker/proc/giveTC(amt, addLog = 1)
 	if(uplinkholder && linkedboss)
+		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, uplinkholder)
 		if(amt < 0)
-			uplinkholder.hidden_uplink.telecrystals += linkedboss.storedcrystals
+			hidden_uplink.telecrystals += linkedboss.storedcrystals
 			if(addLog)
 				linkedboss.logTransfer("[src] received [linkedboss.storedcrystals] telecrystals from [linkedboss].")
 			linkedboss.storedcrystals = 0
 		else if(amt <= linkedboss.storedcrystals)
-			uplinkholder.hidden_uplink.telecrystals += amt
+			hidden_uplink.telecrystals += amt
 			linkedboss.storedcrystals -= amt
 			if(addLog)
 				linkedboss.logTransfer("[src] received [amt] telecrystals from [linkedboss].")
 
 ///////
 
-/obj/machinery/computer/telecrystals/uplinker/attack_hand(mob/user)
-	if(..())
-		return
-	src.add_fingerprint(user)
-	user.set_machine(src)
-
+/obj/machinery/computer/telecrystals/uplinker/ui_interact(mob/user)
+	. = ..()
 	var/dat = ""
 	if(linkedboss)
 		dat += "[linkedboss] has [linkedboss.storedcrystals] telecrystals available for distribution. <BR><BR>"
@@ -97,17 +94,17 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 		dat += "No linked management consoles detected. Scan for uplink stations using the management console.<BR><BR>"
 
 	if(uplinkholder)
-		dat += "[uplinkholder.hidden_uplink.telecrystals] telecrystals remain in this uplink.<BR>"
+		GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, uplinkholder)
+		dat += "[hidden_uplink.telecrystals] telecrystals remain in this uplink.<BR>"
 		if(linkedboss)
-			dat += "Donate TC: <a href='byond://?src=\ref[src];donate=1'>1</a> | <a href='byond://?src=\ref[src];donate=5'>5</a> | <a href='byond://?src=\ref[src];donate=-1'>All</a>"
-		dat += "<br><a href='byond://?src=\ref[src];eject=1'>Eject Uplink</a>"
+			dat += "Donate TC: <a href='byond://?src=[REF(src)];donate=1'>1</a> | <a href='byond://?src=[REF(src)];donate=5'>5</a> | <a href='byond://?src=[REF(src)];donate=-1'>All</a>"
+		dat += "<br><a href='byond://?src=[REF(src)];eject=1'>Eject Uplink</a>"
 
 
 	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Receive Station", 700, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/telecrystals/uplinker/Topic(href, href_list)
 	if(..())
@@ -139,7 +136,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	var/list/transferlog = list()
 
 /obj/machinery/computer/telecrystals/boss/proc/logTransfer(logmessage)
-	transferlog += ("<b>[worldtime2text()]</b> [logmessage]")
+	transferlog += ("<b>[station_time_timestamp()]</b> [logmessage]")
 
 /obj/machinery/computer/telecrystals/boss/proc/scanUplinkers()
 	for(var/obj/machinery/computer/telecrystals/uplinker/A in urange(scanrange, src.loc))
@@ -152,8 +149,9 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
 	..()
-	var/danger = GLOB.joined_player_list.len - SSticker.mode.syndicates.len
-	danger = Ceiling(danger, 10)
+	var/list/nukeops = get_antag_minds(/datum/antagonist/nukeop)
+	var/danger = GLOB.joined_player_list.len - nukeops.len
+	danger = CEILING(danger, 10)
 	scaleTC(danger)
 
 /obj/machinery/computer/telecrystals/boss/proc/scaleTC(amt)//Its own proc, since it'll probably need a lot of tweaks for balance, use a fancier algorhithm, etc.
@@ -161,15 +159,10 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /////////
 
-/obj/machinery/computer/telecrystals/boss/attack_hand(mob/user)
-	if(..())
-		return
-	src.add_fingerprint(user)
-	user.set_machine(src)
-
-
+/obj/machinery/computer/telecrystals/boss/ui_interact(mob/user)
+	. = ..()
 	var/dat = ""
-	dat += "<a href='byond://?src=\ref[src];scan=1'>Scan for TC stations.</a><BR>"
+	dat += "<a href='byond://?src=[REF(src)];scan=1'>Scan for TC stations.</a><BR>"
 	dat += "[storedcrystals] telecrystals are available for distribution. <BR>"
 	dat += "<BR><BR>"
 
@@ -177,13 +170,14 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	for(var/obj/machinery/computer/telecrystals/uplinker/A in TCstations)
 		dat += "[A.name] | "
 		if(A.uplinkholder)
-			dat += "[A.uplinkholder.hidden_uplink.telecrystals] telecrystals."
+			GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, A.uplinkholder)
+			dat += "[hidden_uplink.telecrystals] telecrystals."
 		if(storedcrystals)
-			dat+= "<BR>Add TC: <a href ='?src=\ref[src];target=\ref[A];give=1'>1</a> | <a href ='?src=\ref[src];target=\ref[A];give=5'>5</a> | <a href ='?src=\ref[src];target=\ref[A];give=10'>10</a> | <a href ='?src=\ref[src];target=\ref[A];give=-1'>All</a>"
+			dat+= "<BR>Add TC: <a href ='?src=[REF(src)];target=[REF(A)];give=1'>1</a> | <a href ='?src=[REF(src)];target=[REF(A)];give=5'>5</a> | <a href ='?src=[REF(src)];target=[REF(A)];give=10'>10</a> | <a href ='?src=[REF(src)];target=[REF(A)];give=-1'>All</a>"
 		dat += "<BR>"
 
 	if(TCstations.len && storedcrystals)
-		dat += "<BR><BR><a href='byond://?src=\ref[src];distrib=1'>Evenly distribute remaining TC.</a><BR><BR>"
+		dat += "<BR><BR><a href='byond://?src=[REF(src)];distrib=1'>Evenly distribute remaining TC.</a><BR><BR>"
 
 
 	for(var/entry in transferlog)
@@ -194,7 +188,6 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/telecrystals/boss/Topic(href, href_list)
 	if(..())

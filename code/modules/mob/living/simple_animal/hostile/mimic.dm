@@ -12,6 +12,7 @@
 	maxHealth = 250
 	health = 250
 	gender = NEUTER
+	mob_biotypes = list(MOB_INORGANIC)
 
 	harm_intent_damage = 5
 	melee_damage_lower = 8
@@ -27,7 +28,7 @@
 
 	faction = list("mimic")
 	move_to_delay = 9
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
@@ -43,9 +44,9 @@
 	. = ..()
 	if(mapload)	//eat shit
 		for(var/obj/item/I in loc)
-			I.loc = src
+			I.forceMove(src)
 
-/mob/living/simple_animal/hostile/mimic/crate/DestroySurroundings()
+/mob/living/simple_animal/hostile/mimic/crate/DestroyPathToTarget()
 	..()
 	if(prob(90))
 		icon_state = "[initial(icon_state)]open"
@@ -89,7 +90,7 @@
 	var/obj/structure/closet/crate/C = new(get_turf(src))
 	// Put loot in crate
 	for(var/obj/O in src)
-		O.loc = C
+		O.forceMove(C)
 	..()
 
 GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/cable, /obj/structure/window))
@@ -101,22 +102,26 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	var/destroy_objects = 0
 	var/knockdown_people = 0
 	var/static/mutable_appearance/googly_eyes = mutable_appearance('icons/mob/mob.dmi', "googly_eyes")
-	gold_core_spawnable = 0
+	var/overlay_googly_eyes = TRUE
+	var/idledamage = TRUE
+	gold_core_spawnable = NO_SPAWN
 
-/mob/living/simple_animal/hostile/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = 0)
+/mob/living/simple_animal/hostile/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = 0, no_googlies = FALSE)
 	. = ..()
+	if (no_googlies)
+		overlay_googly_eyes = FALSE
 	CopyObject(copy, creator, destroy_original)
 
 /mob/living/simple_animal/hostile/mimic/copy/Life()
 	..()
-	if(!target && !ckey) //Objects eventually revert to normal if no one is around to terrorize
+	if(idledamage && !target && !ckey) //Objects eventually revert to normal if no one is around to terrorize
 		adjustBruteLoss(1)
 	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
 		death()
 
 /mob/living/simple_animal/hostile/mimic/copy/death()
 	for(var/atom/movable/M in src)
-		M.loc = get_turf(src)
+		M.forceMove(get_turf(src))
 	..()
 
 /mob/living/simple_animal/hostile/mimic/copy/ListTargets()
@@ -127,24 +132,25 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	if(owner != creator)
 		LoseTarget()
 		creator = owner
-		faction |= "\ref[owner]"
+		faction |= "[REF(owner)]"
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject(obj/O)
-	if((isitem(O) || istype(O, /obj/structure)) && !is_type_in_list(O, GLOB.protected_objects))
+	if((isitem(O) || isstructure(O)) && !is_type_in_list(O, GLOB.protected_objects))
 		return 1
 	return 0
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/user, destroy_original = 0)
 	if(destroy_original || CheckObject(O))
-		O.loc = src
+		O.forceMove(src)
 		name = O.name
 		desc = O.desc
 		icon = O.icon
 		icon_state = O.icon_state
 		icon_living = icon_state
 		copy_overlays(O)
-		add_overlay(googly_eyes)
-		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
+		if (overlay_googly_eyes)
+			add_overlay(googly_eyes)
+		if(isstructure(O) || ismachinery(O))
 			health = (anchored * 50) + 50
 			destroy_objects = 1
 			if(O.density && O.anchored)
@@ -160,7 +166,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		maxHealth = health
 		if(user)
 			creator = user
-			faction += "\ref[creator]" // very unique
+			faction += "[REF(creator)]" // very unique
 		if(destroy_original)
 			qdel(O)
 		return 1
@@ -249,15 +255,15 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 				..()
 			else
 				visible_message("<span class='danger'>The <b>[src]</b> clears a jam!</span>")
-			Pewgun.chambered.loc = loc //rip revolver immersions, blame shotgun snowflake procs
+			Pewgun.chambered.forceMove(loc) //rip revolver immersions, blame shotgun snowflake procs
 			Pewgun.chambered = null
 			if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len)
 				Pewgun.chambered = Pewgun.magazine.get_round(0)
-				Pewgun.chambered.loc = Pewgun
+				Pewgun.chambered.forceMove(Pewgun)
 			Pewgun.update_icon()
 		else if(Pewgun.magazine && Pewgun.magazine.stored_ammo.len) //only true for pumpguns i think
 			Pewgun.chambered = Pewgun.magazine.get_round(0)
-			Pewgun.chambered.loc = Pewgun
+			Pewgun.chambered.forceMove(Pewgun)
 			visible_message("<span class='danger'>The <b>[src]</b> cocks itself!</span>")
 	else
 		ranged = 0 //BANZAIIII
