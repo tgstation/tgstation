@@ -56,6 +56,12 @@
 	if(teleporting)
 		to_chat(user, "<span class='warning'>ERROR: Launchpad busy.</span>")
 		return
+	
+	var/turf/dest = get_turf(src)
+
+	if(dest && is_centcom_level(dest.z))
+		to_chat(user, "<span class='warning'>ERROR: Launchpad not operative. Heavy area shielding makes teleporting impossible.</span>")
+		return
 
 	var/target_x = x + x_offset
 	var/target_y = y + y_offset
@@ -78,7 +84,6 @@
 	use_power(1000)
 
 	var/turf/source = target
-	var/turf/dest = get_turf(src)
 	var/list/log_msg = list()
 	log_msg += ": [key_name(user)] has teleported "
 
@@ -155,7 +160,7 @@
 		briefcase = loc
 	else
 		log_game("[src] has been spawned without a briefcase.")
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/machinery/launchpad/briefcase/Destroy()
 	QDEL_NULL(briefcase)
@@ -168,11 +173,10 @@
 
 /obj/machinery/launchpad/briefcase/MouseDrop(over_object, src_location, over_location)
 	. = ..()
-	if(over_object == usr && Adjacent(usr))
+	if(over_object == usr)
 		if(!briefcase || !usr.can_hold_items())
 			return
-		if(usr.incapacitated())
-			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
+		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
 			return
 		usr.visible_message("<span class='notice'>[usr] starts closing [src]...</span>", "<span class='notice'>You start closing [src]...</span>")
 		if(do_after(usr, 30, target = usr))
@@ -242,7 +246,6 @@
 	icon_state = "blpad-remote"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
-	origin_tech = "materials=3;magnets=2;bluespace=4;syndicate=3"
 	var/sending = TRUE
 	var/obj/machinery/launchpad/briefcase/pad
 

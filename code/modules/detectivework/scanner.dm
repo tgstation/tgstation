@@ -14,9 +14,17 @@
 	slot_flags = SLOT_BELT
 	var/scanning = 0
 	var/list/log = list()
-	origin_tech = "engineering=4;biotech=2;programming=5"
 	var/range = 8
 	var/view_check = TRUE
+	actions_types = list(/datum/action/item_action/displayDetectiveScanResults)
+
+/datum/action/item_action/displayDetectiveScanResults
+	name = "Display Forensic Scanner Results"
+
+/datum/action/item_action/displayDetectiveScanResults/Trigger()
+	var/obj/item/device/detective_scanner/scanner = target
+	if(istype(scanner))
+		scanner.displayDetectiveScanResults(usr)
 
 /obj/item/device/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)
@@ -37,6 +45,7 @@
 	P.info += jointext(log, "<BR>")
 	P.info += "<HR><B>Notes:</B><BR>"
 	P.info_links = P.info
+	P.updateinfolinks()
 
 	if(ismob(loc))
 		var/mob/M = loc
@@ -68,19 +77,13 @@
 
 		//Make our lists
 		var/list/fingerprints = list()
-		var/list/blood = list()
-		var/list/fibers = list()
+		var/list/blood = A.return_blood_DNA()
+		var/list/fibers = A.return_fibers()
 		var/list/reagents = list()
 
 		var/target_name = A.name
 
 		// Start gathering
-
-		if(A.blood_DNA && A.blood_DNA.len)
-			blood = A.blood_DNA.Copy()
-
-		if(A.suit_fibers && A.suit_fibers.len)
-			fibers = A.suit_fibers.Copy()
 
 		if(ishuman(A))
 
@@ -90,8 +93,7 @@
 
 		else if(!ismob(A))
 
-			if(A.fingerprints && A.fingerprints.len)
-				fingerprints = A.fingerprints.Copy()
+			fingerprints = A.return_fingerprints()
 
 			// Only get reagents from non-mobs.
 			if(A.reagents && A.reagents.reagent_list.len)
@@ -105,15 +107,16 @@
 						if(R.data["blood_DNA"] && R.data["blood_type"])
 							var/blood_DNA = R.data["blood_DNA"]
 							var/blood_type = R.data["blood_type"]
+							LAZYINITLIST(blood)
 							blood[blood_DNA] = blood_type
 
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
 		var/found_something = 0
-		add_log("<B>[worldtime2text()][get_timestamp()] - [target_name]</B>", 0)
+		add_log("<B>[station_time_timestamp()][get_timestamp()] - [target_name]</B>", 0)
 
 		// Fingerprints
-		if(fingerprints && fingerprints.len)
+		if(length(fingerprints))
 			sleep(30)
 			add_log("<span class='info'><B>Prints:</B></span>")
 			for(var/finger in fingerprints)
@@ -121,7 +124,7 @@
 			found_something = 1
 
 		// Blood
-		if (blood && blood.len)
+		if (length(blood))
 			sleep(30)
 			add_log("<span class='info'><B>Blood:</B></span>")
 			found_something = 1
@@ -129,7 +132,7 @@
 				add_log("Type: <font color='red'>[blood[B]]</font> DNA: <font color='red'>[B]</font>")
 
 		//Fibers
-		if(fibers && fibers.len)
+		if(length(fibers))
 			sleep(30)
 			add_log("<span class='info'><B>Fibers:</B></span>")
 			for(var/fiber in fibers)
@@ -137,7 +140,7 @@
 			found_something = 1
 
 		//Reagents
-		if(reagents && reagents.len)
+		if(length(reagents))
 			sleep(30)
 			add_log("<span class='info'><B>Reagents:</B></span>")
 			for(var/R in reagents)
@@ -168,7 +171,32 @@
 			to_chat(M, msg)
 		log += "&nbsp;&nbsp;[msg]"
 	else
-		CRASH("[src] \ref[src] is adding a log when it was never put in scanning mode!")
+		CRASH("[src] [REF(src)] is adding a log when it was never put in scanning mode!")
 
 /proc/get_timestamp()
 	return time2text(world.time + 432000, ":ss")
+	
+/obj/item/device/detective_scanner/AltClick(mob/living/user)
+	// Best way for checking if a player can use while not incapacitated, etc
+	if(!user.canUseTopic(src, be_close=TRUE))
+		return
+	if(!LAZYLEN(log))
+		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner has no logs.</span>")
+		return
+	if(scanning)
+		to_chat(user, "<span class='notice'>Cannot clear logs, the scanner is in use.</span>")
+		return
+	to_chat(user, "<span class='notice'>The scanner logs are cleared.</span>")
+	log = list()
+
+/obj/item/device/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
+	// No need for can-use checks since the action button should do proper checks
+	if(!LAZYLEN(log))
+		to_chat(user, "<span class='notice'>Cannot display logs, the scanner has no logs.</span>")
+		return
+	if(scanning)
+		to_chat(user, "<span class='notice'>Cannot display logs, the scanner is in use.</span>")
+		return
+	to_chat(user, "<span class='notice'><B>Scanner Report</B></span>")
+	for(var/iterLog in log)
+		to_chat(user, iterLog)

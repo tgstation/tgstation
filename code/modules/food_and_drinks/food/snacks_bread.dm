@@ -19,7 +19,7 @@
 
 /obj/item/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
-	desc = "Some plain old Earthen bread."
+	desc = "Some plain old earthen bread."
 	icon_state = "bread"
 	bonus_reagents = list("nutriment" = 7)
 	list_reagents = list("nutriment" = 10)
@@ -185,6 +185,40 @@
 	icon_state = ""
 	bitesize = 2
 
+/obj/item/reagent_containers/food/snacks/deepfryholder/Initialize(mapload, obj/item/fried)
+	. = ..()
+	name = fried.name //We'll determine the other stuff when it's actually removed
+	icon = fried.icon
+	overlays = fried.copy_overlays()
+	icon_state = fried.icon_state
+	desc = fried.desc
+	if(istype(fried, /obj/item/reagent_containers/food/snacks))
+		fried.reagents.trans_to(src, fried.reagents.total_volume)
+		qdel(fried)
+	else
+		fried.forceMove(src)
+
+/obj/item/reagent_containers/food/snacks/deepfryholder/proc/fry(cook_time = 30)
+	switch(cook_time)
+		if(0 to 15)
+			add_atom_colour(rgb(166,103,54), FIXED_COLOUR_PRIORITY)
+			name = "lightly-fried [name]"
+			desc = "[desc] It's been lightly fried in a deep fryer."
+		if(16 to 49)
+			add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
+			name = "fried [name]"
+			desc = "[desc] It's been fried, increasing its tastiness value by [rand(1, 75)]%."
+		if(50 to 59)
+			add_atom_colour(rgb(63,23,4), FIXED_COLOUR_PRIORITY)
+			name = "deep-fried [name]"
+			desc = "[desc] Deep-fried to perfection."
+		if(60 to INFINITY)
+			add_atom_colour(rgb(33,19,9), FIXED_COLOUR_PRIORITY)
+			name = "the physical manifestation of the very concept of fried foods"
+			desc = "A heavily-fried...something.  Who can tell anymore?"
+	filling_color = color
+	foodtype |= FRIED
+
 /obj/item/reagent_containers/food/snacks/butteredtoast
 	name = "buttered toast"
 	desc = "Butter lightly spread over a piece of toast."
@@ -205,3 +239,18 @@
 	list_reagents = list("nutriment" = 5)
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	tastes = list("butter" = 1, "biscuit" = 1)
+
+/obj/item/reagent_containers/food/snacks/butterdog
+	name = "butterdog"
+	desc = "Made from exotic butters."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "butterdog"
+	bitesize = 1
+	filling_color = "#F1F49A"
+	list_reagents = list("nutriment" = 5)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	tastes = list("butter", "exotic butter")
+
+/obj/item/reagent_containers/food/snacks/butterdog/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 80)

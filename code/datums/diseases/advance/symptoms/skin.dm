@@ -2,10 +2,10 @@
 //////////////////////////////////////
 Vitiligo
 
-	Extremely Noticable.
-	Decreases resistance slightly.
-	Reduces stage speed slightly.
-	Reduces transmission.
+	Hidden.
+	No change to resistance.
+	Increases stage speed.
+	Slightly increases transmittability.
 	Critical Level.
 
 BONUS
@@ -18,10 +18,10 @@ BONUS
 
 	name = "Vitiligo"
 	desc = "The virus destroys skin pigment cells, causing rapid loss of pigmentation in the host."
-	stealth = -3
-	resistance = -1
-	stage_speed = -1
-	transmittable = -2
+	stealth = 2
+	resistance = 0
+	stage_speed = 3
+	transmittable = 1
 	level = 5
 	severity = 1
 	symptom_delay_min = 25
@@ -47,10 +47,10 @@ BONUS
 //////////////////////////////////////
 Revitiligo
 
-	Extremely Noticable.
-	Decreases resistance slightly.
-	Reduces stage speed slightly.
-	Reduces transmission.
+	Slightly noticable.
+	Increases resistance.
+	Increases stage speed slightly.
+	Increases transmission.
 	Critical Level.
 
 BONUS
@@ -63,10 +63,10 @@ BONUS
 
 	name = "Revitiligo"
 	desc = "The virus causes increased production of skin pigment cells, making the host's skin grow darker over time."
-	stealth = -3
-	resistance = -1
-	stage_speed = -1
-	transmittable = -2
+	stealth = -1
+	resistance = 3
+	stage_speed = 1
+	transmittable = 2
 	level = 5
 	severity = 1
 	symptom_delay_min = 7

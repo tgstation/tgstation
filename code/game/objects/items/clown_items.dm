@@ -3,6 +3,7 @@
  *		Soap
  *		Bike Horns
  *		Air Horns
+ *		Canned Laughter
  */
 
 /*
@@ -15,11 +16,14 @@
 	gender = PLURAL
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "soap"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = NOBLUDGEON_1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	grind_results = list("lye" = 10)
 	var/cleanspeed = 50 //slower than mop
 	force_string = "robust... against germs"
 
@@ -57,14 +61,15 @@
 		return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
-	if(user.client && (target in user.client.screen))
+	target.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+	if(user.client && ((target in user.client.screen) && !user.is_holding(target)))
 		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
 	else if(istype(target, /obj/effect/decal/cleanable))
 		user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
 			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
 			qdel(target)
-	else if(ishuman(target) && user.zone_selected == "mouth")
+	else if(ishuman(target) && user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		var/mob/living/carbon/human/H = user
 		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
 		H.lip_style = null //removes lipstick
@@ -83,7 +88,7 @@
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			target.clean_blood()
+			target.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			target.wash_cream()
 	return
 
@@ -91,7 +96,6 @@
 /*
  * Bike Horns
  */
-
 
 /obj/item/bikehorn
 	name = "bike horn"
@@ -107,63 +111,58 @@
 	throw_speed = 3
 	throw_range = 7
 	attack_verb = list("HONKED")
-	var/next_usable = 0
-	var/honksound = 'sound/items/bikehorn.ogg'
-	var/cooldowntime = 20
+
+/obj/item/bikehorn/Initialize()
+	. = ..()
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
+
+/obj/item/weapon/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
+	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "honk", /datum/mood_event/honk)
 
 /obj/item/bikehorn/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] solemnly points the horn at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src.loc, honksound, 50, 1)
+	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 	return (BRUTELOSS)
 
-/obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!(next_usable > world.time))
-		playsound(loc, honksound, 50, 1, -1) //plays instead of tap.ogg!
-	return ..()
-
-/obj/item/bikehorn/attack_self(mob/user)
-	if(!(next_usable > world.time))
-		next_usable = world.time + cooldowntime
-		playsound(src.loc, honksound, 50, 1)
-		src.add_fingerprint(user)
-
-/obj/item/bikehorn/Crossed(mob/living/L)
-	if(isliving(L))
-		playsound(loc, honksound, 50, 1, -1)
-	..()
-
+//air horn
 /obj/item/bikehorn/airhorn
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-	honksound = 'sound/items/airhorn2.ogg'
-	cooldowntime = 50
-	origin_tech = "materials=4;engineering=4"
 
+/obj/item/bikehorn/airhorn/Initialize()
+	. = ..()
+	AddComponent(/datum/component/squeak, list('sound/items/airhorn2.ogg'=1), 50)
+
+//golden bikehorn
 /obj/item/bikehorn/golden
 	name = "golden bike horn"
 	desc = "Golden? Clearly, it's made with bananium! Honk!"
 	icon_state = "gold_horn"
 	item_state = "gold_horn"
+	var/flip_cooldown = 0
 
 /obj/item/bikehorn/golden/attack()
-	flip_mobs()
+	if(flip_cooldown < world.time)
+		flip_mobs()
 	return ..()
 
 /obj/item/bikehorn/golden/attack_self(mob/user)
-	flip_mobs()
+	if(flip_cooldown < world.time)
+		flip_mobs()
 	..()
 
 /obj/item/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
-	if(!(next_usable > world.time))
-		var/turf/T = get_turf(src)
-		for(M in ohearers(7, T))
-			if(ishuman(M) && M.can_hear())
-				var/mob/living/carbon/human/H = M
-				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
-					continue
-			M.emote("flip")
+	var/turf/T = get_turf(src)
+	for(M in ohearers(7, T))
+		if(ishuman(M) && M.can_hear())
+			var/mob/living/carbon/human/H = M
+			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+				continue
+		M.emote("flip")
+	flip_cooldown = world.time + 7
 
+//canned laughter
 /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter
 	name = "Canned Laughter"
 	desc = "Just looking at this makes you want to giggle."

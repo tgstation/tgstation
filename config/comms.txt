@@ -2,7 +2,9 @@
 #COMMS_KEY default_pwd
 
 ## World address and port for server recieving cross server messages
-#CROSS_SERVER_ADDRESS byond:\\address:port
+## Use '+' to denote spaces in ServerName
+## Repeat this entry to add more servers
+#CROSS_SERVER ServerName byond:\\address:port
 
 ## Name that the server calls itself in communications
 #CROSS_COMMS_NAME

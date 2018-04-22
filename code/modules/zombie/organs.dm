@@ -1,10 +1,9 @@
 /obj/item/organ/zombie_infection
 	name = "festering ooze"
 	desc = "A black web of pus and viscera."
-	zone = "head"
-	slot = "zombie_infection"
+	zone = BODY_ZONE_HEAD
+	slot = ORGAN_SLOT_ZOMBIE
 	icon_state = "blacktumor"
-	origin_tech = "biotech=5"
 	var/datum/species/old_species = /datum/species/human
 	var/living_transformation_time = 30
 	var/converts_living = FALSE
@@ -37,7 +36,7 @@
 
 /obj/item/organ/zombie_infection/on_find(mob/living/finder)
 	to_chat(finder, "<span class='warning'>Inside the head is a disgusting black \
-		web of pus and vicera, bound tightly around the brain like some \
+		web of pus and viscera, bound tightly around the brain like some \
 		biological harness.</span>")
 
 /obj/item/organ/zombie_infection/process()
@@ -48,7 +47,11 @@
 
 	if(timer_id)
 		return
+	if(owner.suiciding)
+		return
 	if(owner.stat != DEAD && !converts_living)
+		return
+	if(!owner.getorgan(/obj/item/organ/brain))
 		return
 	if(!iszombie(owner))
 		to_chat(owner, "<span class='cultlarge'>You can feel your heart stopping, but something isn't right... \

@@ -7,7 +7,6 @@
 
 
 
-/*-------TODOOOOOOOOOO--------*/ //fuck yooooooooooooou
 /mob/living/silicon/robot/proc/uneq_module(obj/item/O)
 	if(!O)
 		return 0
@@ -17,8 +16,7 @@
 		sight_mode &= ~S.sight_mode
 		update_sight()
 	else if(istype(O, /obj/item/storage/bag/tray/))
-		var/obj/item/storage/bag/tray/T = O
-		T.do_quick_empty()
+		O.SendSignal(COMSIG_TRY_STORAGE_QUICK_EMPTY)
 	if(client)
 		client.screen -= O
 	observer_screen_update(O,FALSE)
@@ -176,7 +174,8 @@
 
 //toggle_module(module) - Toggles the selection of the module slot specified by "module".
 /mob/living/silicon/robot/proc/toggle_module(module) //Module is 1-3
-	if(module < 1 || module > 3) return
+	if(module < 1 || module > 3)
+		return
 
 	if(module_selected(module))
 		deselect_module(module)

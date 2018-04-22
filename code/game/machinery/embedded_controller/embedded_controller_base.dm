@@ -11,7 +11,7 @@
 
 /datum/computer/file/embedded_program/proc/receive_user_command(command)
 
-/datum/computer/file/embedded_program/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
+/datum/computer/file/embedded_program/proc/receive_signal(datum/signal/signal)
 	return null
 
 /datum/computer/file/embedded_program/process()
@@ -26,15 +26,13 @@
 
 	var/on = TRUE
 
-/obj/machinery/embedded_controller/interact(mob/user)
+/obj/machinery/embedded_controller/ui_interact(mob/user)
+	. = ..()
 	user.set_machine(src)
 	var/datum/browser/popup = new(user, "computer", name) // Set up the popup browser window
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(return_text())
 	popup.open()
-
-/obj/machinery/embedded_controller/attack_hand(mob/user)
-	interact(user)
 
 /obj/machinery/embedded_controller/update_icon()
 
@@ -43,12 +41,9 @@
 /obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
 	return 0
 
-/obj/machinery/embedded_controller/receive_signal(datum/signal/signal, receive_method, receive_param)
-	if(!signal || signal.encryption) return
-
-	if(program)
-		program.receive_signal(signal, receive_method, receive_param)
-		//spawn(5) program.process() //no, program.process sends some signals and machines respond and we here again and we lag -rastaf0
+/obj/machinery/embedded_controller/receive_signal(datum/signal/signal)
+	if(istype(signal) && program)
+		program.receive_signal(signal)
 
 /obj/machinery/embedded_controller/Topic(href, href_list)
 	if(..())

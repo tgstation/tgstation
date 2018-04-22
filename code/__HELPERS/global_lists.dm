@@ -13,7 +13,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
 	//socks
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
-	//lizard bodyparts (blizzard intensifies)
+	//bodypart accessories (blizzard intensifies)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, GLOB.tails_list_lizard)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/lizard, GLOB.animated_tails_list_lizard)
@@ -29,14 +29,14 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, GLOB.animated_spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, GLOB.legs_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.r_wings_list,roundstart = TRUE)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/caps, GLOB.caps_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
-		if(S.roundstart)
-			GLOB.roundstart_species[S.id] = S.type
-		GLOB.species_list[S.id] = S.type
+		GLOB.species_list[S.id] = spath
 
 	//Surgeries
 	for(var/path in subtypesof(/datum/surgery))
@@ -47,29 +47,12 @@
 		var/datum/material/D = new path()
 		GLOB.materials_list[D.id] = D
 
-	//Techs
-	for(var/path in subtypesof(/datum/tech))
-		var/datum/tech/D = new path()
-		GLOB.tech_list[D.id] = D
-
 	//Emotes
 	for(var/path in subtypesof(/datum/emote))
 		var/datum/emote/E = new path()
 		E.emote_list[E.key] = E
 
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
-
-/* // Uncomment to debug chemical reaction list.
-/client/verb/debug_chemical_list()
-
-	for (var/reaction in chemical_reactions_list)
-		. += "chemical_reactions_list\[\"[reaction]\"\] = \"[chemical_reactions_list[reaction]]\"\n"
-		if(islist(chemical_reactions_list[reaction]))
-			var/list/L = chemical_reactions_list[reaction]
-			for(var/t in L)
-				. += "    has: [t]\n"
-	to_chat(world, .)
-*/
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.

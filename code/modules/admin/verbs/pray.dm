@@ -32,6 +32,12 @@
 		font_color = "red"
 		prayer_type = "CULTIST PRAYER"
 		deity = "Nar-Sie"
+	else if(isliving(usr))
+		var/mob/living/L = usr
+		if(L.has_trait(TRAIT_SPIRITUAL))
+			cross.icon_state = "holylight"
+			font_color = "blue"
+			prayer_type = "SPIRITUAL PRAYER"
 
 	msg = "<span class='adminnotice'>[icon2html(cross, GLOB.admins)]<b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]: </font>[ADMIN_FULLMONTY(src)] [ADMIN_SC(src)]:</b> [msg]</span>"
 
@@ -43,7 +49,7 @@
 					SEND_SOUND(C, sound('sound/effects/pray.ogg'))
 	to_chat(usr, "Your prayers have been received by the gods.")
 
-	SSblackbox.add_details("admin_verb","Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	//log_admin("HELP: [key_name(src)]: [msg]")
 
 /proc/CentCom_announce(text , mob/Sender)

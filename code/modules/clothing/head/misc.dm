@@ -6,7 +6,7 @@
 	desc = "It's good to be emperor."
 	item_state = "that"
 	flags_inv = 0
-	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 30, "bullet" = 15, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 80
 
 /obj/item/clothing/head/powdered_wig
@@ -25,7 +25,7 @@
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
-	desc = "it smells like fresh donut holes / <i>il sent comme des trous de beignets frais</i>"
+	desc = "It smells like fresh donut holes. / <i>Il sent comme des trous de beignets frais.</i>"
 	icon_state = "canada"
 	item_state = "canada"
 
@@ -185,9 +185,9 @@
 	name = "fedora"
 	icon_state = "fedora"
 	item_state = "fedora"
-	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 50)
+	armor = list("melee" = 25, "bullet" = 5, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 50)
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
-	pockets = /obj/item/storage/internal/pocket/small
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
@@ -236,7 +236,7 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("warned", "cautioned", "smashed")
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /obj/item/clothing/head/santa
 	name = "santa hat"
@@ -279,13 +279,13 @@
 	name = "crown"
 	desc = "A crown fit for a king, a petty king maybe."
 	icon_state = "crown"
-	armor = list(melee = 15, bullet = 0, laser = 0,energy = 15, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 15, "bullet" = 0, "laser" = 0,"energy" = 15, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/crown/fancy
 	name = "magnificent crown"
-	desc = "A crown worn by only the highest emperors of the land."
+	desc = "A crown worn by only the highest emperors of the <s>land</s> space."
 	icon_state = "fancycrown"
 
 /obj/item/clothing/head/scarecrow_hat

@@ -96,34 +96,62 @@
 /datum/industry/it/proc/latin_number(n)
 	if (n < 20 || !(n % 10))
 		switch(n)
-			if (0) return "Nihil"
-			if (1) return "Unus"
-			if (2) return "Duo"
-			if (3) return "Tres"
-			if (4) return "Quattour"
-			if (5) return "Quinque"
-			if (6) return "Sex"
-			if (7) return "Septem"
-			if (8) return "Octo"
-			if (9) return "Novem"
-			if (10) return "Decim"
-			if (11) return "Undecim"
-			if (12) return "Duodecim"
-			if (13) return "Tredecim"
-			if (14) return "Quattourdecim"
-			if (15) return "Quindecim"
-			if (16) return "Sedecim"
-			if (17) return "Septdecim"
-			if (18) return "Duodeviginti"
-			if (19) return "Undeviginti"
-			if (20) return "Viginti"
-			if (30) return "Triginta"
-			if (40) return "Quadriginta"
-			if (50) return "Quinquaginta"
-			if (60) return "Sexaginta"
-			if (70) return "Septuaginta"
-			if (80) return "Octoginta"
-			if (90) return "Nonaginta"
+			if (0)
+				return "Nihil"
+			if (1)
+				return "Unus"
+			if (2)
+				return "Duo"
+			if (3)
+				return "Tres"
+			if (4)
+				return "Quattour"
+			if (5)
+				return "Quinque"
+			if (6)
+				return "Sex"
+			if (7)
+				return "Septem"
+			if (8)
+				return "Octo"
+			if (9)
+				return "Novem"
+			if (10)
+				return "Decim"
+			if (11)
+				return "Undecim"
+			if (12)
+				return "Duodecim"
+			if (13)
+				return "Tredecim"
+			if (14)
+				return "Quattourdecim"
+			if (15)
+				return "Quindecim"
+			if (16)
+				return "Sedecim"
+			if (17)
+				return "Septdecim"
+			if (18)
+				return "Duodeviginti"
+			if (19)
+				return "Undeviginti"
+			if (20)
+				return "Viginti"
+			if (30)
+				return "Triginta"
+			if (40)
+				return "Quadriginta"
+			if (50)
+				return "Quinquaginta"
+			if (60)
+				return "Sexaginta"
+			if (70)
+				return "Septuaginta"
+			if (80)
+				return "Octoginta"
+			if (90)
+				return "Nonaginta"
 	else
 		return "[latin_number(n - (n % 10))] [lowertext(latin_number(n % 10))]"
 
@@ -131,7 +159,7 @@
 	var/list/products = list("generator", "laptop", "keyboard", "memory card", "display", "operating system", "processor", "graphics card", "nanobots", "power supply", "pAI", "mech", "capacitor", "cell")
 	var/list/prefix = list("the [company_name] ", "the high performance ", "the mobile ", "the portable ", "the professional ", "the extreme ", "the incredible ", "the blazing fast ", "the bleeding edge ", "the bluespace-powered ", null)
 	var/L = pick(consonant(), "Seed ", "Radiant ", "Robust ", "Pentathon ", "Athlete ", "Phantom ", "Semper Fi ")
-	var/N = rand(0,99)
+	var/N = rand(1, 99)
 	var/prefix2 = "[L][N][prob(5) ? " " + latin_number(N) : null]"
 	return "[pick(prefix)][prefix2] [pick(products)]"
 

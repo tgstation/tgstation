@@ -1,0 +1,53 @@
+<link rel='ractive' href='./rpd/dirsel.ract'>
+<link rel='ractive' href='./rpd/colorsel.ract'>
+
+{{#if data.mode >= 0}}
+	<dirsel/>
+{{/if}}
+{{#if data.mode == -2 || data.mode == 0}}
+	<colorsel/>
+{{/if}}
+<ui-display title='Utilities'>
+	<ui-section>
+		<ui-button icon='{{data.mode >= 0 ? "check-square-o" : "square-o"}}' state='{{data.mode >= 0 ? "selected" : null}}'
+			action='mode' params='{"mode": {{data.screen}}}'>Lay Pipes</ui-button>
+	</ui-section>
+	<ui-section>
+		<ui-button icon='{{data.mode == -1 ? "check-square-o" : "square-o"}}' state='{{data.mode == -1 ? "selected" : null}}'
+			action='mode' params='{"mode": -1}'>Eat Pipes</ui-button>
+	</ui-section>
+	<ui-section>
+		<ui-button icon='{{data.mode == -2 ? "check-square-o" : "square-o"}}' state='{{data.mode == -2 ? "selected" : null}}'
+			action='mode' params='{"mode": -2}'>Paint Pipes</ui-button>
+	</ui-section>
+</ui-display>
+<ui-display title='Category'>
+	<ui-section>
+		<ui-button icon='{{data.screen == 0 ? "check-square-o" : "square-o"}}' state='{{data.screen == 0 ? "selected" : null}}'
+			action='screen' params='{"screen": 0}'>Atmospherics</ui-button>
+		<ui-button icon='{{data.screen == 1 ? "check-square-o" : "square-o"}}' state='{{data.screen == 1 ? "selected" : null}}'
+			action='screen' params='{"screen": 1}'>Disposals</ui-button>
+		<ui-button icon='{{data.screen == 2 ? "check-square-o" : "square-o"}}' state='{{data.screen == 2 ? "selected" : null}}'
+			action='screen' params='{"screen": 2}'>Transit Tubes</ui-button>
+	</ui-section>
+	{{#if data.screen == 0}}
+		<ui-section label='Piping Layer'>
+			<ui-button state='{{data.piping_layer == 1 ? "selected" : null}}' action='piping_layer'
+				params='{"piping_layer": 1}'>1</ui-button>
+			<ui-button state='{{data.piping_layer == 2 ? "selected" : null}}' action='piping_layer'
+				params='{"piping_layer": 2}'>2</ui-button>
+			<ui-button state='{{data.piping_layer == 3 ? "selected" : null}}' action='piping_layer'
+				params='{"piping_layer": 3}'>3</ui-button>
+		</ui-section>
+	{{/if}}
+</ui-display>
+{{#each data.categories}}
+	<ui-display title='{{cat_name}}'>
+		{{#each recipes}}
+			<ui-section>
+				<ui-button state='{{selected ? "selected" : null}}' action='pipe_type'
+					params='{"pipe_type": {{pipe_index}}, "category": {{cat_name}}}'>{{pipe_name}}</ui-button>
+			</ui-section>
+		{{/each}}
+	</ui-display>
+{{/each}}

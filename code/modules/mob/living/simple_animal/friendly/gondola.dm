@@ -56,9 +56,6 @@
 /mob/living/simple_animal/pet/gondola/IsVocal() //Gondolas are the silent walker.
 	return FALSE
 
-/mob/living/simple_animal/pet/gondola/emote()
-	return
-
 #undef GONDOLA_HEIGHT
 #undef GONDOLA_COLOR
 #undef GONDOLA_MOUSTACHE

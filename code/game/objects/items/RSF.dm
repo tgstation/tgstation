@@ -14,7 +14,7 @@ RSF
 	density = FALSE
 	anchored = FALSE
 	flags_1 = NOBLUDGEON_1
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	var/matter = 0
 	var/mode = 1
 	w_class = WEIGHT_CLASS_NORMAL
@@ -133,18 +133,18 @@ RSF
 	return
 
 /obj/item/cookiesynth/emag_act(mob/user)
-	emagged = !emagged
-	if(emagged)
-		to_chat(user, "<span class='warning'>You short out the [src]'s reagent safety checker!</span>")
+	obj_flags ^= EMAGGED
+	if(obj_flags & EMAGGED)
+		to_chat(user, "<span class='warning'>You short out [src]'s reagent safety checker!</span>")
 	else
-		to_chat(user, "<span class='warning'>You reset the [src]'s reagent safety checker!</span>")
+		to_chat(user, "<span class='warning'>You reset [src]'s reagent safety checker!</span>")
 		toxin = 0
 
 /obj/item/cookiesynth/attack_self(mob/user)
 	var/mob/living/silicon/robot/P = null
 	if(iscyborg(user))
 		P = user
-	if(emagged&&!toxin)
+	if((obj_flags & EMAGGED)&&!toxin)
 		toxin = 1
 		to_chat(user, "Cookie Synthesizer Hacked")
 	else if(P.emagged&&!toxin)
@@ -166,7 +166,7 @@ RSF
 	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
 		return
 	if(matter < 1)
-		to_chat(user, "<span class='warning'>The [src] doesn't have enough matter left. Wait for it to recharge!</span>")
+		to_chat(user, "<span class='warning'>[src] doesn't have enough matter left. Wait for it to recharge!</span>")
 		return
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
@@ -178,7 +178,7 @@ RSF
 	to_chat(user, "Fabricating Cookie..")
 	var/obj/item/reagent_containers/food/snacks/cookie/S = new /obj/item/reagent_containers/food/snacks/cookie(T)
 	if(toxin)
-		S.reagents.add_reagent("chloralhydrate2", 10)
+		S.reagents.add_reagent("chloralhydratedelayed", 10)
 	if (iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		R.cell.charge -= 100

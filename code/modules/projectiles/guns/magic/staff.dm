@@ -2,10 +2,11 @@
 	slot_flags = SLOT_BACK
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	flags_2 = NO_MAT_REDEMPTION_2
 
 /obj/item/gun/magic/staff/change
 	name = "staff of change"
-	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
+	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	fire_sound = 'sound/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/change
 	icon_state = "staffofchange"
@@ -44,9 +45,9 @@
 	/obj/item/projectile/magic/death, /obj/item/projectile/magic/teleport, /obj/item/projectile/magic/door, /obj/item/projectile/magic/aoe/fireball,
 	/obj/item/projectile/magic/spellblade, /obj/item/projectile/magic/arcane_barrage)
 
-/obj/item/gun/magic/staff/chaos/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
+/obj/item/gun/magic/staff/chaos/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	chambered.projectile_type = pick(allowed_projectile_types)
-	. = ..(target, user, message, params, zone_override, bonus_spread)
+	. = ..()
 
 /obj/item/gun/magic/staff/door
 	name = "staff of door creation"
@@ -61,7 +62,7 @@
 
 /obj/item/gun/magic/staff/honk
 	name = "staff of the honkmother"
-	desc = "Honk"
+	desc = "Honk."
 	fire_sound = 'sound/items/airhorn.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/honk
 	icon_state = "honker"
@@ -84,6 +85,10 @@
 	block_chance = 50
 	sharpness = IS_SHARP
 	max_charges = 4
+
+/obj/item/gun/magic/staff/spellblade/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 15, 125, 0, hitsound)
 
 /obj/item/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)

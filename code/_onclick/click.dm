@@ -20,6 +20,14 @@
 /mob/proc/changeNext_move(num)
 	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
 
+/mob/living/changeNext_move(num)
+	var/mod = next_move_modifier
+	var/adj = next_move_adjust
+	for(var/i in status_effects)
+		var/datum/status_effect/S = i
+		mod *= S.nextmove_modifier()
+		adj += S.nextmove_adjust()
+	next_move = world.time + ((num + adj)*mod)
 
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
@@ -32,6 +40,7 @@
 */
 /atom/Click(location,control,params)
 	if(initialized)
+		SendSignal(COMSIG_CLICK, location, control, params)
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -60,9 +69,8 @@
 		return
 	next_click = world.time + 1
 
-	if(client && client.click_intercept)
-		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
-			return
+	if(check_click_intercept(params,A))
+		return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
@@ -95,7 +103,7 @@
 	if(!modifiers["catcher"] && A.IsObscured())
 		return
 
-	if(istype(loc, /obj/mecha))
+	if(ismecha(loc))
 		var/obj/mecha/M = loc
 		return M.click_action(A,src,params)
 
@@ -189,23 +197,13 @@
 	return FALSE
 
 /atom/movable/proc/DirectAccess(atom/target)
-	if(target == src)
-		return TRUE
-	if(target == loc)
-		return TRUE
+	return (target == src || target == loc)
 
 /mob/DirectAccess(atom/target)
-	if(..())
-		return TRUE
-	if(target in contents) //This could probably use moving down and restricting to inventory only
-		return TRUE
-	return FALSE
+	return (..() || (target in contents))
 
 /mob/living/DirectAccess(atom/target)
-	if(..()) //Lightweight checks first
-		return TRUE
-	if(target in GetAllContents())
-		return TRUE
+	return (..() || (target in GetAllContents()))
 
 /atom/proc/AllowClick()
 	return FALSE
@@ -281,11 +279,13 @@
 	return
 
 /mob/living/carbon/MiddleClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (iscarbon(A)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		swap_hand()
+	if(!stat && mind && iscarbon(A) && A != src)
+		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(C && C.chosen_sting)
+			C.chosen_sting.try_to_sting(src,A)
+			next_click = world.time + 5
+			return
+	swap_hand()
 
 /mob/living/simple_animal/drone/MiddleClickOn(atom/A)
 	swap_hand()
@@ -305,6 +305,7 @@
 	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(mob/user)
+	SendSignal(COMSIG_CLICK_SHIFT, user)
 	if(user.client && user.client.eye == user || user.client.eye == user.loc)
 		user.examinate(src)
 	return
@@ -319,12 +320,13 @@
 	return
 
 /atom/proc/CtrlClick(mob/user)
+	SendSignal(COMSIG_CLICK_CTRL, user)
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
 
 /mob/living/carbon/human/CtrlClick(mob/user)
-	if(ishuman(user) && Adjacent(user))
+	if(ishuman(user) && Adjacent(user) && !user.incapacitated())
 		if(world.time < user.next_move)
 			return FALSE
 		var/mob/living/carbon/human/H = user
@@ -341,13 +343,16 @@
 	return
 
 /mob/living/carbon/AltClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (iscarbon(A)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		..()
+	if(!stat && mind && iscarbon(A) && A != src)
+		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(C && C.chosen_sting)
+			C.chosen_sting.try_to_sting(src,A)
+			next_click = world.time + 5
+			return
+	..()
 
 /atom/proc/AltClick(mob/user)
+	SendSignal(COMSIG_CLICK_ALT, user)
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)
@@ -355,7 +360,6 @@
 		else
 			user.listed_turf = T
 			user.client.statpanel = T.name
-	user.Stat() //responsive ui pls
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)
@@ -373,6 +377,7 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
+	SendSignal(COMSIG_CLICK_CTRL_SHIFT)
 	return
 
 /*
@@ -381,13 +386,11 @@
 	Laser Eyes: as the name implies, handles this since nothing else does currently
 	face_atom: turns the mob towards what you clicked on
 */
-/mob/proc/LaserEyes(atom/A)
+/mob/proc/LaserEyes(atom/A, params)
 	return
 
-/mob/living/LaserEyes(atom/A)
+/mob/living/LaserEyes(atom/A, params)
 	changeNext_move(CLICK_CD_RANGE)
-	var/turf/T = get_turf(src)
-	var/turf/U = get_turf(A)
 
 	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
 	LE.icon = 'icons/effects/genetics.dmi'
@@ -396,10 +399,7 @@
 
 	LE.firer = src
 	LE.def_zone = get_organ_target()
-	LE.original = A
-	LE.current = T
-	LE.yo = U.y - T.y
-	LE.xo = U.x - T.x
+	LE.preparePixelProjectile(A, src, params)
 	LE.fire()
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
@@ -430,28 +430,38 @@
 		else
 			setDir(WEST)
 
+//debug
+/obj/screen/proc/scale_to(x1,y1)
+	if(!y1)
+		y1 = x1
+	var/matrix/M = new
+	M.Scale(x1,y1)
+	transform = M
+
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "flash"
+	icon_state = "catcher"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	screen_loc = "CENTER"
 
-/obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 7, view_size_y = 7)
-	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "flash")
-	if(view_size_x > 16 || view_size_y > 16)
-		newicon.Scale((16 * 2 + 1) * world.icon_size,(16 * 2 + 1) * world.icon_size)
-		icon = newicon
-		var/tx = view_size_x/16
-		var/ty = view_size_y/16
-		var/matrix/M = new
-		M.Scale(tx, ty)
-		transform = M
-		screen_loc = "CENTER-16,CENTER-16"
-	else
-		screen_loc = "CENTER-[view_size_x],CENTER-[view_size_y]"
-		newicon.Scale((view_size_x * 2 + 1) * world.icon_size,(view_size_y * 2 + 1) * world.icon_size)
-		icon = newicon
+#define MAX_SAFE_BYOND_ICON_SCALE_TILES (MAX_SAFE_BYOND_ICON_SCALE_PX / world.icon_size)
+#define MAX_SAFE_BYOND_ICON_SCALE_PX (33 * 32)			//Not using world.icon_size on purpose.
+
+/obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 15, view_size_y = 15)
+	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "catcher")
+	var/ox = min(MAX_SAFE_BYOND_ICON_SCALE_TILES, view_size_x)
+	var/oy = min(MAX_SAFE_BYOND_ICON_SCALE_TILES, view_size_y)
+	var/px = view_size_x * world.icon_size
+	var/py = view_size_y * world.icon_size
+	var/sx = min(MAX_SAFE_BYOND_ICON_SCALE_PX, px)
+	var/sy = min(MAX_SAFE_BYOND_ICON_SCALE_PX, py)
+	newicon.Scale(sx, sy)
+	icon = newicon
+	screen_loc = "CENTER-[(ox-1)*0.5],CENTER-[(oy-1)*0.5]"
+	var/matrix/M = new
+	M.Scale(px/sx, py/sy)
+	transform = M
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -459,7 +469,7 @@
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
+		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr.client ? usr.client.eye : usr))
 		params += "&catcher=1"
 		if(T)
 			T.Click(location, control, params)
@@ -479,3 +489,16 @@
 		else
 			view = 1
 		add_view_range(view)
+
+/mob/proc/check_click_intercept(params,A)
+	//Client level intercept
+	if(client && client.click_intercept)
+		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
+			return TRUE
+
+	//Mob level intercept
+	if(click_intercept)
+		if(call(click_intercept, "InterceptClickOn")(src, params, A))
+			return TRUE
+
+	return FALSE

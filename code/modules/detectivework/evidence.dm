@@ -40,12 +40,9 @@
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
-		if(istype(I.loc, /obj/item/storage))	//in a container.
-			var/obj/item/storage/U = I.loc
-			U.remove_from_storage(I, src)
-		if(user.is_holding(I))
-			user.dropItemToGround(I)
-		else
+		if(I.loc.SendSignal(COMSIG_CONTAINS_STORAGE))	//in a container.
+			I.loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, I, src)
+		if(!user.dropItemToGround(I))
 			return
 
 	user.visible_message("[user] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>",\
@@ -62,7 +59,7 @@
 	add_overlay("evidence")	//should look nicer for transparent stuff. not really that important, but hey.
 
 	desc = "An evidence bag containing [I]. [I.desc]"
-	I.loc = src
+	I.forceMove(src)
 	w_class = I.w_class
 	return 1
 

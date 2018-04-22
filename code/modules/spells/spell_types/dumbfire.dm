@@ -22,6 +22,10 @@
 
 	var/proj_lifespan = 100 //in deciseconds * proj_step_delay
 	var/proj_step_delay = 1 //lower = faster
+	var/list/ignore_factions = list() //Faction types that will be ignored
+
+	var/check_antimagic = TRUE
+	var/check_holy = FALSE
 
 /obj/effect/proc_holder/spell/dumbfire/choose_targets(mob/user = usr)
 
@@ -57,14 +61,14 @@
 
 	var/current_loc = user.loc
 
-	projectile.loc = current_loc
+	projectile.forceMove(current_loc)
 
 	for(var/i = 0,i < proj_lifespan,i++)
 		if(!projectile)
 			break
 
 		if(proj_insubstantial)
-			projectile.loc = get_step(projectile, projectile.dir)
+			projectile.forceMove(get_step(projectile, projectile.dir))
 		else
 			step(projectile, projectile.dir)
 
@@ -73,9 +77,19 @@
 			break
 
 		var/mob/living/L = locate(/mob/living) in range(projectile, proj_trigger_range) - user
-		if(L && L.stat != DEAD)
-			projectile.cast(L.loc,user=user)
-			break
+		if(L && L.stat != DEAD && L.anti_magic_check(check_antimagic, check_holy))
+			if(!ignore_factions.len)
+				projectile.cast(L.loc,user=user)
+				break
+			else
+				var/faction_check = FALSE
+				for(var/faction in L.faction)
+					if(ignore_factions.Find(faction))
+						faction_check = TRUE
+						break
+				if(!faction_check)
+					projectile.cast(L.loc,user=user)
+					break
 
 		if(proj_trail && projectile)
 			proj_trail(projectile)

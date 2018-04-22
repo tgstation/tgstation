@@ -28,7 +28,7 @@
 	..()
 	add_avail(power_gen)
 	if(panel_open && irradiate)
-		radiation_pulse(get_turf(src), 2, 3, 6) // Weak but noticeable.
+		radiation_pulse(src, 60)
 
 /obj/machinery/power/rtg/RefreshParts()
 	var/part_level = 0
@@ -46,11 +46,11 @@
 		return
 	return ..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/machinery/power/rtg/attack_hand(mob/user)
 	if(user.a_intent == INTENT_GRAB && user_buckle_mob(user.pulling, user, check_loc = 0))
 		return
-	..()
-
+	. = ..()
 
 /obj/machinery/power/rtg/advanced
 	desc = "An advanced RTG capable of moderating isotope decay, increasing power output but reducing lifetime. It uses plasma-fueled radiation collectors to increase output even further."

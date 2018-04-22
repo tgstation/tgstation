@@ -35,6 +35,7 @@
 	var/list/datum/tgui/children = list() // Children of this UI.
 	var/titlebar = TRUE
 	var/custom_browser_id = FALSE
+	var/ui_screen = "home"
 
  /**
   * public
@@ -57,7 +58,7 @@
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
-	src.window_id = browser_id ? browser_id : "\ref[src_object]-[ui_key]"
+	src.window_id = browser_id ? browser_id : "[REF(src_object)]-[ui_key]"
 	src.custom_browser_id = browser_id ? TRUE : FALSE
 
 	set_interface(interface)
@@ -100,7 +101,7 @@
 	var/debugable = check_rights_for(user.client, R_DEBUG)
 	user << browse(get_html(debugable), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
 	if (!custom_browser_id)
-		winset(user, window_id, "on-close=\"uiclose \ref[src]\"") // Instruct the client to signal UI when the window is closed.
+		winset(user, window_id, "on-close=\"uiclose [REF(src)]\"") // Instruct the client to signal UI when the window is closed.
 	SStgui.on_open(src)
 
  /**
@@ -201,7 +202,7 @@
 		html = replacetextEx(SStgui.basehtml, "{}", get_json(initial_data))
 	else
 		html = SStgui.basehtml
-	html = replacetextEx(html, "\[ref]", "\ref[src]")
+	html = replacetextEx(html, "\[ref]", "[REF(src)]")
 	html = replacetextEx(html, "\[style]", style)
 	return html
 
@@ -216,20 +217,20 @@
 	var/list/config_data = list(
 			"title"     = title,
 			"status"    = status,
-			"screen"	= src_object.ui_screen,
+			"screen"	= ui_screen,
 			"style"     = style,
 			"interface" = interface,
 			"fancy"     = user.client.prefs.tgui_fancy,
 			"locked"    = user.client.prefs.tgui_lock && !custom_browser_id,
 			"window"    = window_id,
-			"ref"       = "\ref[src]",
+			"ref"       = "[REF(src)]",
 			"user"      = list(
 				"name"  = user.name,
-				"ref"   = "\ref[user]"
+				"ref"   = "[REF(user)]"
 			),
 			"srcObject" = list(
 				"name" = "[src_object]",
-				"ref"  = "\ref[src_object]"
+				"ref"  = "[REF(src_object)]"
 			),
 			"titlebar" = titlebar
 		)
@@ -277,7 +278,7 @@
 			initialized = TRUE
 		if("tgui:view")
 			if(params["screen"])
-				src_object.ui_screen = params["screen"]
+				ui_screen = params["screen"]
 			SStgui.update_uis(src_object)
 		if("tgui:link")
 			user << link(params["url"])
@@ -299,7 +300,7 @@
   * optional force bool If the UI should be forced to update.
  **/
 /datum/tgui/process(force = 0)
-	var/datum/host = src_object.ui_host()
+	var/datum/host = src_object.ui_host(user)
 	if(!src_object || !host || !user) // If the object or user died (or something else), abort.
 		close()
 		return

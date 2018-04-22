@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(dbcore)
 	name = "Database"
-	flags = SS_NO_INIT|SS_NO_FIRE
+	flags = SS_NO_FIRE
 	init_order = INIT_ORDER_DBCORE
 	var/const/FAILED_DB_CONNECTION_CUTOFF = 5
 
@@ -17,6 +17,9 @@ SUBSYSTEM_DEF(dbcore)
 	var/const/IS_NOT_NULL = 4
 	var/const/IS_PRIMARY_KEY = 8
 	var/const/IS_UNSIGNED = 16
+	var/schema_mismatch = 0
+	var/db_minor = 0
+	var/db_major = 0
 // TODO: Investigate more recent type additions and see if I can handle them. - Nadrew
 
 	var/_db_con// This variable contains a reference to the actual database connection.
@@ -26,6 +29,18 @@ SUBSYSTEM_DEF(dbcore)
 	if(!_db_con)
 		_db_con = _dm_db_new_con()
 
+/datum/controller/subsystem/dbcore/Initialize()
+	//We send warnings to the admins during subsystem init, as the clients will be New'd and messages
+	//will queue properly with goonchat
+	switch(schema_mismatch)
+		if(1)
+			message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+		if(2)
+			message_admins("Could not get schema version from database")
+	
+	return ..()
+
+	
 /datum/controller/subsystem/dbcore/Recover()
 	_db_con = SSdbcore._db_con
 
@@ -33,7 +48,7 @@ SUBSYSTEM_DEF(dbcore)
 	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
 	if(SSdbcore.Connect())
 		var/sql_station_name = sanitizeSQL(station_name())
-		var/datum/DBQuery/query_round_end = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[SSticker.mode_result]', end_state = '[SSticker.end_state]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
+		var/datum/DBQuery/query_round_end = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[sanitizeSQL(SSticker.mode_result)]', end_state = '[sanitizeSQL(SSticker.end_state)]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
 		query_round_end.Execute()
 	if(IsConnected())
 		Disconnect()
@@ -54,32 +69,57 @@ SUBSYSTEM_DEF(dbcore)
 	if(failed_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect anymore.
 		return FALSE
 
-	if(!config.sql_enabled)
+	if(!CONFIG_GET(flag/sql_enabled))
 		return FALSE
 
-	var/user = global.sqlfdbklogin
-	var/pass = global.sqlfdbkpass
-	var/db = global.sqlfdbkdb
-	var/address = global.sqladdress
-	var/port = global.sqlport
+	var/user = CONFIG_GET(string/feedback_login)
+	var/pass = CONFIG_GET(string/feedback_password)
+	var/db = CONFIG_GET(string/feedback_database)
+	var/address = CONFIG_GET(string/address)
+	var/port = CONFIG_GET(number/port)
 
-	doConnect("dbi:mysql:[db]:[address]:[port]", user, pass)
+	_dm_db_connect(_db_con, "dbi:mysql:[db]:[address]:[port]", user, pass, Default_Cursor, null)
 	. = IsConnected()
 	if (!.)
 		log_sql("Connect() failed | [ErrorMsg()]")
 		++failed_connections
 
-/datum/controller/subsystem/dbcore/proc/doConnect(dbi_handler, user_handler, password_handler)
-	if(!config.sql_enabled)
-		return FALSE
-	return _dm_db_connect(_db_con, dbi_handler, user_handler, password_handler, Default_Cursor, null)
+/datum/controller/subsystem/dbcore/proc/CheckSchemaVersion()
+	if(CONFIG_GET(flag/sql_enabled))
+		if(SSdbcore.Connect())
+			log_world("Database connection established.")
+			var/datum/DBQuery/query_db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
+			query_db_version.Execute()
+			if(query_db_version.NextRow())
+				db_major = text2num(query_db_version.item[1])
+				db_minor = text2num(query_db_version.item[2])
+				if(db_major != DB_MAJOR_VERSION || db_minor != DB_MINOR_VERSION)
+					schema_mismatch = 1 // flag admin message about mismatch
+					log_sql("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+			else
+				schema_mismatch = 2 //flag admin message about no schema version
+				log_sql("Could not get schema version from database")
+		else
+			log_sql("Your server failed to establish a connection with the database.")
+	else
+		log_sql("Database is not enabled in configuration.")
+
+/datum/controller/subsystem/dbcore/proc/SetRoundID()
+	if(CONFIG_GET(flag/sql_enabled))
+		if(SSdbcore.Connect())
+			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
+			query_round_start.Execute()
+			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
+			query_round_last_id.Execute()
+			if(query_round_last_id.NextRow())
+				GLOB.round_id = query_round_last_id.item[1]
 
 /datum/controller/subsystem/dbcore/proc/Disconnect()
 	failed_connections = 0
 	return _dm_db_close(_db_con)
 
 /datum/controller/subsystem/dbcore/proc/IsConnected()
-	if(!config.sql_enabled)
+	if(!CONFIG_GET(flag/sql_enabled))
 		return FALSE
 	return _dm_db_is_connected(_db_con)
 
@@ -87,7 +127,7 @@ SUBSYSTEM_DEF(dbcore)
 	return _dm_db_quote(_db_con, str)
 
 /datum/controller/subsystem/dbcore/proc/ErrorMsg()
-	if(!config.sql_enabled)
+	if(!CONFIG_GET(flag/sql_enabled))
 		return "Database disabled by configuration"
 	return _dm_db_error_msg(_db_con)
 
@@ -185,13 +225,10 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	item = list()
 	_db_query = _dm_db_new_query()
 
-/datum/DBQuery/proc/Connect(datum/controller/subsystem/dbcore/connection_handler)
-	db_connection = connection_handler
-
 /datum/DBQuery/proc/warn_execute()
 	. = Execute()
 	if(!.)
-		to_chat(usr, "<span class='danger'>A SQL error occured during this operation, check the server logs.</span>")
+		to_chat(usr, "<span class='danger'>A SQL error occurred during this operation, check the server logs.</span>")
 
 /datum/DBQuery/proc/Execute(sql_query = sql, cursor_handler = default_cursor, log_error = TRUE)
 	Close()
@@ -240,7 +277,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	if(istext(column))
 		column = columns.Find(column)
 	if(!conversions)
-		conversions = list(column)
+		conversions = new /list(column)
 	else if(conversions.len < column)
 		conversions.len = column
 	conversions[column] = conversion
@@ -281,16 +318,29 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 
 /datum/DBColumn/proc/SqlTypeName(type_handler = sql_type)
 	switch(type_handler)
-		if(TINYINT) return "TINYINT"
-		if(SMALLINT) return "SMALLINT"
-		if(MEDIUMINT) return "MEDIUMINT"
-		if(INTEGER) return "INTEGER"
-		if(BIGINT) return "BIGINT"
-		if(FLOAT) return "FLOAT"
-		if(DOUBLE) return "DOUBLE"
-		if(DATE) return "DATE"
-		if(DATETIME) return "DATETIME"
-		if(TIMESTAMP) return "TIMESTAMP"
-		if(TIME) return "TIME"
-		if(STRING) return "STRING"
-		if(BLOB) return "BLOB"
+		if(TINYINT)
+			return "TINYINT"
+		if(SMALLINT)
+			return "SMALLINT"
+		if(MEDIUMINT)
+			return "MEDIUMINT"
+		if(INTEGER)
+			return "INTEGER"
+		if(BIGINT)
+			return "BIGINT"
+		if(FLOAT)
+			return "FLOAT"
+		if(DOUBLE)
+			return "DOUBLE"
+		if(DATE)
+			return "DATE"
+		if(DATETIME)
+			return "DATETIME"
+		if(TIMESTAMP)
+			return "TIMESTAMP"
+		if(TIME)
+			return "TIME"
+		if(STRING)
+			return "STRING"
+		if(BLOB)
+			return "BLOB"

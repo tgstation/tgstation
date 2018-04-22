@@ -1,18 +1,22 @@
+/obj/item/book/manual/random
+	icon_state = "random_book"
+
 /obj/item/book/manual/random/Initialize()
-	. = ..()
+	..()
 	var/static/banned_books = list(/obj/item/book/manual/random, /obj/item/book/manual/nuclear, /obj/item/book/manual/wiki)
 	var/newtype = pick(subtypesof(/obj/item/book/manual) - banned_books)
 	new newtype(loc)
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/book/random
+	icon_state = "random_book"
 	var/amount = 1
 	var/category = null
 
 /obj/item/book/random/Initialize()
-	. = ..()
+	..()
 	create_random_books(amount, src.loc, TRUE, category)
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/book/random/triple
 	amount = 3
@@ -20,6 +24,7 @@
 /obj/structure/bookcase/random
 	var/category = null
 	var/book_count = 2
+	icon_state = "random_bookcase"
 	anchored = TRUE
 	state = 2
 

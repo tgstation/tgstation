@@ -85,30 +85,30 @@
 
 
 
-/mob/living/proc/apply_effect(effect = 0,effecttype = STUN, blocked = FALSE)
+/mob/living/proc/apply_effect(effect = 0,effecttype = EFFECT_STUN, blocked = FALSE)
 	var/hit_percent = (100-blocked)/100
 	if(!effect || (hit_percent <= 0))
 		return 0
 	switch(effecttype)
-		if(STUN)
+		if(EFFECT_STUN)
 			Stun(effect * hit_percent)
-		if(KNOCKDOWN)
+		if(EFFECT_KNOCKDOWN)
 			Knockdown(effect * hit_percent)
-		if(UNCONSCIOUS)
+		if(EFFECT_UNCONSCIOUS)
 			Unconscious(effect * hit_percent)
-		if(IRRADIATE)
+		if(EFFECT_IRRADIATE)
 			radiation += max(effect * hit_percent, 0)
-		if(SLUR)
+		if(EFFECT_SLUR)
 			slurring = max(slurring,(effect * hit_percent))
-		if(STUTTER)
-			if(status_flags & CANSTUN) // stun is usually associated with stutter
+		if(EFFECT_STUTTER)
+			if((status_flags & CANSTUN) && !has_trait(TRAIT_STUNIMMUNE)) // stun is usually associated with stutter
 				stuttering = max(stuttering,(effect * hit_percent))
-		if(EYE_BLUR)
+		if(EFFECT_EYE_BLUR)
 			blur_eyes(effect * hit_percent)
-		if(DROWSY)
+		if(EFFECT_DROWSY)
 			drowsyness = max(drowsyness,(effect * hit_percent))
-		if(JITTER)
-			if(status_flags & CANSTUN)
+		if(EFFECT_JITTER)
+			if((status_flags & CANSTUN) && !has_trait(TRAIT_STUNIMMUNE))
 				jitteriness = max(jitteriness,(effect * hit_percent))
 	return 1
 
@@ -117,25 +117,25 @@
 	if(blocked >= 100)
 		return 0
 	if(stun)
-		apply_effect(stun, STUN, blocked)
+		apply_effect(stun, EFFECT_STUN, blocked)
 	if(knockdown)
-		apply_effect(knockdown, KNOCKDOWN, blocked)
+		apply_effect(knockdown, EFFECT_KNOCKDOWN, blocked)
 	if(unconscious)
-		apply_effect(unconscious, UNCONSCIOUS, blocked)
+		apply_effect(unconscious, EFFECT_UNCONSCIOUS, blocked)
 	if(irradiate)
-		apply_effect(irradiate, IRRADIATE, blocked)
+		apply_effect(irradiate, EFFECT_IRRADIATE, blocked)
 	if(slur)
-		apply_effect(slur, SLUR, blocked)
+		apply_effect(slur, EFFECT_SLUR, blocked)
 	if(stutter)
-		apply_effect(stutter, STUTTER, blocked)
+		apply_effect(stutter, EFFECT_STUTTER, blocked)
 	if(eyeblur)
-		apply_effect(eyeblur, EYE_BLUR, blocked)
+		apply_effect(eyeblur, EFFECT_EYE_BLUR, blocked)
 	if(drowsy)
-		apply_effect(drowsy, DROWSY, blocked)
+		apply_effect(drowsy, EFFECT_DROWSY, blocked)
 	if(stamina)
 		apply_damage(stamina, STAMINA, null, blocked)
 	if(jitter)
-		apply_effect(jitter, JITTER, blocked)
+		apply_effect(jitter, EFFECT_JITTER, blocked)
 	return 1
 
 
@@ -145,7 +145,7 @@
 /mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	bruteloss = Clamp((bruteloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
+	bruteloss = CLAMP((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -156,7 +156,7 @@
 /mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	oxyloss = Clamp((oxyloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
+	oxyloss = CLAMP((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -175,7 +175,7 @@
 /mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	toxloss = Clamp((toxloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
+	toxloss = CLAMP((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -194,7 +194,7 @@
 /mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	fireloss = Clamp((fireloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
+	fireloss = CLAMP((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -205,7 +205,7 @@
 /mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
-	cloneloss = Clamp((cloneloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
+	cloneloss = CLAMP((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -219,17 +219,13 @@
 	return amount
 
 /mob/living/proc/getBrainLoss()
-	return brainloss
+	. = 0
 
-/mob/living/proc/adjustBrainLoss(amount)
-	if(status_flags & GODMODE)
-		return 0
-	brainloss = Clamp((brainloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
+/mob/living/proc/adjustBrainLoss(amount, maximum = BRAIN_DAMAGE_DEATH)
+	return
 
 /mob/living/proc/setBrainLoss(amount)
-	if(status_flags & GODMODE)
-		return 0
-	brainloss = amount
+	return
 
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
@@ -240,34 +236,41 @@
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE)
 	return
 
-
 // heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_bodypart_damage(brute, burn, updating_health = 1)
-	adjustBruteLoss(-brute, 0) //zero as argument for no instant health update
-	adjustFireLoss(-burn, 0)
+/mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+	adjustBruteLoss(-brute, FALSE) //zero as argument for no instant health update
+	adjustFireLoss(-burn, FALSE)
+	adjustStaminaLoss(-stamina, FALSE)
 	if(updating_health)
 		updatehealth()
+		update_stamina()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_bodypart_damage(brute, burn, updating_health = 1)
-	adjustBruteLoss(brute, 0) //zero as argument for no instant health update
-	adjustFireLoss(burn, 0)
+/mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
+	adjustFireLoss(burn, FALSE)
+	adjustStaminaLoss(stamina, FALSE)
 	if(updating_health)
 		updatehealth()
+		update_stamina()
 
 // heal MANY bodyparts, in random order
-/mob/living/proc/heal_overall_damage(brute, burn, only_robotic = 0, only_organic = 1, updating_health = 1)
-	adjustBruteLoss(-brute, 0) //zero as argument for no instant health update
-	adjustFireLoss(-burn, 0)
+/mob/living/proc/heal_overall_damage(brute = 0, burn = 0, stamina = 0, only_robotic = FALSE, only_organic = TRUE, updating_health = TRUE)
+	adjustBruteLoss(-brute, FALSE) //zero as argument for no instant health update
+	adjustFireLoss(-burn, FALSE)
+	adjustStaminaLoss(-stamina, FALSE)
 	if(updating_health)
 		updatehealth()
+		update_stamina()
 
 // damage MANY bodyparts, in random order
-/mob/living/proc/take_overall_damage(brute, burn, updating_health = 1)
-	adjustBruteLoss(brute, 0) //zero as argument for no instant health update
-	adjustFireLoss(burn, 0)
+/mob/living/proc/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
+	adjustFireLoss(burn, FALSE)
+	adjustStaminaLoss(stamina, FALSE)
 	if(updating_health)
 		updatehealth()
+		update_stamina()
 
 //heal up to amount damage, in a given order
 /mob/living/proc/heal_ordered_damage(amount, list/damage_types)

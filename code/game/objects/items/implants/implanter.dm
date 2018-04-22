@@ -9,7 +9,6 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "materials=2;biotech=3"
 	materials = list(MAT_METAL=600, MAT_GLASS=200)
 	var/obj/item/implant/imp = null
 	var/imp_type = null
@@ -18,10 +17,8 @@
 /obj/item/implanter/update_icon()
 	if(imp)
 		icon_state = "implanter1"
-		origin_tech = imp.origin_tech
 	else
 		icon_state = "implanter0"
-		origin_tech = initial(origin_tech)
 
 
 /obj/item/implanter/attack(mob/living/M, mob/user)
@@ -46,10 +43,13 @@
 
 /obj/item/implanter/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You prod at [src] with [W]!</span>")
+			return
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)
 		if(user.get_active_held_item() != W)
 			return
-		if(!in_range(src, user) && loc != user)
+		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(t)
 			name = "implanter ([t])"
@@ -59,7 +59,7 @@
 		return ..()
 
 /obj/item/implanter/Initialize(mapload)
-	..()
+	. = ..()
 	if(imp_type)
 		imp = new imp_type(src)
 	update_icon()

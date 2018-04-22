@@ -62,12 +62,12 @@
 		TED = loc
 	else //admin must have spawned it
 		TED = new(src.loc)
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/gun/energy/chrono_gun/update_icon()
 	return
 
-/obj/item/gun/energy/chrono_gun/process_fire()
+/obj/item/gun/energy/chrono_gun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(field)
 		field_disconnect(field)
 	..()
@@ -163,7 +163,7 @@
 
 /obj/effect/chrono_field/New(loc, var/mob/living/target, var/obj/item/gun/energy/chrono_gun/G)
 	if(target && isliving(target) && G)
-		target.loc = src
+		target.forceMove(src)
 		src.captured = target
 		var/icon/mob_snapshot = getFlatIcon(target)
 		var/icon/cached_icon = new()
@@ -187,7 +187,7 @@
 
 /obj/effect/chrono_field/update_icon()
 	var/ttk_frame = 1 - (tickstokill / initial(tickstokill))
-	ttk_frame = Clamp(Ceiling(ttk_frame * CHRONO_FRAME_COUNT), 1, CHRONO_FRAME_COUNT)
+	ttk_frame = CLAMP(CEILING(ttk_frame * CHRONO_FRAME_COUNT, 1), 1, CHRONO_FRAME_COUNT)
 	if(ttk_frame != RPpos)
 		RPpos = ttk_frame
 		mob_underlay.icon_state = "frame[RPpos]"
@@ -198,7 +198,7 @@
 	if(captured)
 		if(tickstokill > initial(tickstokill))
 			for(var/atom/movable/AM in contents)
-				AM.loc = loc
+				AM.forceMove(drop_location())
 			qdel(src)
 		else if(tickstokill <= 0)
 			to_chat(captured, "<span class='boldnotice'>As the last essence of your being is erased from time, you begin to re-experience your most enjoyable memory. You feel happy...</span>")
@@ -213,7 +213,7 @@
 		else
 			captured.Unconscious(80)
 			if(captured.loc != src)
-				captured.loc = src
+				captured.forceMove(src)
 			update_icon()
 			if(gun)
 				if(gun.field_check(src))
@@ -240,9 +240,9 @@
 
 /obj/effect/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/GM = new
-	GM.assert_gases("o2","n2")
-	GM.gases["o2"][MOLES] = MOLES_O2STANDARD
-	GM.gases["n2"][MOLES] = MOLES_N2STANDARD
+	GM.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
+	GM.gases[/datum/gas/oxygen][MOLES] = MOLES_O2STANDARD
+	GM.gases[/datum/gas/nitrogen][MOLES] = MOLES_N2STANDARD
 	GM.temperature = T20C
 	return GM
 
@@ -250,6 +250,9 @@
 	return
 
 /obj/effect/chrono_field/singularity_act()
+	return
+
+/obj/effect/chrono_field/singularity_pull()
 	return
 
 /obj/effect/chrono_field/ex_act()

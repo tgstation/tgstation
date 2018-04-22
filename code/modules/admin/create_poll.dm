@@ -6,7 +6,7 @@
 	if(!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
-	var/polltype = input("Choose poll type.","Poll Type") in list("Single Option","Text Reply","Rating","Multiple Choice", "Instant Runoff Voting")|null
+	var/polltype = input("Choose poll type.","Poll Type") as null|anything in list("Single Option","Text Reply","Rating","Multiple Choice", "Instant Runoff Voting")
 	var/choice_amount = 0
 	switch(polltype)
 		if("Single Option")
@@ -18,10 +18,14 @@
 		if("Multiple Choice")
 			polltype = POLLTYPE_MULTI
 			choice_amount = input("How many choices should be allowed?","Select choice amount") as num|null
-			if(choice_amount == 0)
-				to_chat(src, "Multiple choice poll must have at least one choice allowed.")
-			else if (choice_amount == null)
-				return
+			switch(choice_amount)
+				if(0)
+					to_chat(src, "Multiple choice poll must have at least one choice allowed.")
+					return
+				if(1)
+					polltype = POLLTYPE_OPTION
+				if(null)
+					return
 		if ("Instant Runoff Voting")
 			polltype = POLLTYPE_IRV
 		else

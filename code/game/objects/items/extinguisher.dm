@@ -15,6 +15,7 @@
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
+	container_type = AMOUNT_VISIBLE
 	var/max_water = 50
 	var/last_use = 1
 	var/safety = TRUE
@@ -44,10 +45,21 @@
 	create_reagents(max_water)
 	reagents.add_reagent("water", max_water)
 
+/obj/item/extinguisher/suicide_act(mob/living/carbon/user)
+	if (!safety && (reagents.total_volume >= 1))
+		user.visible_message("<span class='suicide'>[user] puts the nozzle to [user.p_their()] mouth. It looks like [user.p_theyre()] trying to extinguish the spark of life!</span>")
+		afterattack(user,user)
+		return OXYLOSS
+	else if (safety && (reagents.total_volume >= 1))
+		user.visible_message("<span class='warning'>[user] puts the nozzle to [user.p_their()] mouth... The safety's still on!</span>")
+		return SHAME
+	else
+		user.visible_message("<span class='warning'>[user] puts the nozzle to [user.p_their()] mouth... [src] is empty!</span>")
+		return SHAME
+
 /obj/item/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
-	src.desc = "The safety is [safety ? "on" : "off"]."
 	to_chat(user, "The safety is [safety ? "on" : "off"].")
 	return
 
@@ -66,10 +78,10 @@
 
 /obj/item/extinguisher/examine(mob/user)
 	..()
+	to_chat(user, "The safety is [safety ? "on" : "off"].")
+
 	if(reagents.total_volume)
-		to_chat(user, "It contains [round(reagents.total_volume)] units.")
-	else
-		to_chat(user, "It is empty.")
+		to_chat(user, "<span class='notice'>Alt-click to empty it.</span>")
 
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(istype(target, /obj/structure/reagent_dispensers/watertank) && target.Adjacent(user))
@@ -155,25 +167,32 @@
 				if(precision)
 					the_targets -= my_target
 				var/datum/reagents/R = new/datum/reagents(5)
-				if(!W) return
+				if(!W)
+					return
 				W.reagents = R
 				R.my_atom = W
-				if(!W || !src) return
+				if(!W || !src)
+					return
 				src.reagents.trans_to(W,1)
 				for(var/b=0, b<power, b++)
 					step_towards(W,my_target)
-					if(!W || !W.reagents) return
+					if(!W || !W.reagents)
+						return
 					W.reagents.reaction(get_turf(W))
 					for(var/A in get_turf(W))
-						if(!W) return
+						if(!W)
+							return
 						W.reagents.reaction(A)
-					if(W.loc == my_target) break
+					if(W.loc == my_target)
+						break
 					sleep(2)
 
 	else
 		return ..()
 
 /obj/item/extinguisher/AltClick(mob/user)
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
 	EmptyExtinguisher(user)
 
 /obj/item/extinguisher/proc/EmptyExtinguisher(var/mob/user)
@@ -183,6 +202,6 @@
 		var/turf/T = get_turf(loc)
 		if(isopenturf(T))
 			var/turf/open/theturf = T
-			theturf.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
+			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")

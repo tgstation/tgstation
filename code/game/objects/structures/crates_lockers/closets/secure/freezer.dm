@@ -1,5 +1,12 @@
 /obj/structure/closet/secure_closet/freezer
 	icon_state = "freezer"
+	var/jones = FALSE
+
+/obj/structure/closet/secure_closet/freezer/ex_act()
+	if(!jones)
+		jones = TRUE
+	else
+		..()
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen Cabinet"

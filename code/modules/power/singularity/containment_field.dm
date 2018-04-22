@@ -9,7 +9,9 @@
 	density = FALSE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	use_power = NO_POWER_USE
-	luminosity = 4
+	interaction_flags_atom = NONE
+	interaction_flags_machine = NONE
+	light_range = 4
 	layer = ABOVE_OBJ_LAYER
 	var/obj/machinery/field/generator/FG1 = null
 	var/obj/machinery/field/generator/FG2 = null
@@ -19,6 +21,7 @@
 	FG2.fields -= src
 	return ..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/machinery/field/containment/attack_hand(mob/user)
 	if(get_dist(src, user) > 1)
 		return FALSE
@@ -57,8 +60,8 @@
 /obj/machinery/field/containment/Crossed(mob/mover)
 	if(isliving(mover))
 		shock(mover)
-	
-	if(istype(mover, /obj/machinery) || istype(mover, /obj/structure) || istype(mover, /obj/mecha))
+
+	if(ismachinery(mover) || isstructure(mover) || ismecha(mover))
 		bump_field(mover)
 
 /obj/machinery/field/containment/proc/set_master(master1,master2)
@@ -76,6 +79,7 @@
 
 /obj/machinery/field/containment/Move()
 	qdel(src)
+	return FALSE
 
 
 // Abstract Field Class
@@ -90,13 +94,13 @@
 	if(isliving(mover))
 		shock(mover)
 		return
-	if(istype(mover, /obj/machinery) || istype(mover, /obj/structure) || istype(mover, /obj/mecha))
+	if(ismachinery(mover) || isstructure(mover) || ismecha(mover))
 		bump_field(mover)
 		return
 
 
 /obj/machinery/field/CanPass(atom/movable/mover, turf/target)
-	if(hasShocked || isliving(mover) || istype(mover, /obj/machinery) || istype(mover, /obj/structure) || istype(mover, /obj/mecha))
+	if(hasShocked || isliving(mover) || ismachinery(mover) || isstructure(mover) || ismecha(mover))
 		return FALSE
 	return ..()
 

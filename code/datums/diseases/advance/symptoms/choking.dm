@@ -32,7 +32,8 @@ Bonus
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/choking/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stage_rate"] >= 8)
 		symptom_delay_min = 7
 		symptom_delay_max = 24
@@ -93,17 +94,21 @@ Bonus
 	stage_speed = -1
 	transmittable = -2
 	level = 7
-	severity = 3
+	severity = 6
 	base_message_chance = 15
 	symptom_delay_min = 14
 	symptom_delay_max = 30
 	var/paralysis = FALSE
+	threshold_desc = "<b>Stage Speed 8:</b> Additionally synthesizes pancuronium and sodium thiopental inside the host.<br>\
+					  <b>Transmission 8:</b> Doubles the damage caused by the symptom."
+
 
 /datum/symptom/asphyxiation/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["stage_rate"] >= 8)
 		paralysis = TRUE
-	if(A.properties["transmission"] >= 8)
+	if(A.properties["transmittable"] >= 8)
 		power = 2
 
 /datum/symptom/asphyxiation/Activate(datum/disease/advance/A)
@@ -115,7 +120,7 @@ Bonus
 			to_chat(M, "<span class='warning'><b>[pick("Your windpipe feels thin.", "Your lungs feel small.")]</span>")
 			Asphyxiate_stage_3_4(M, A)
 			M.emote("gasp")
-		else
+		if(5)
 			to_chat(M, "<span class='userdanger'>[pick("Your lungs hurt!", "It hurts to breathe!")]</span>")
 			Asphyxiate(M, A)
 			M.emote("gasp")

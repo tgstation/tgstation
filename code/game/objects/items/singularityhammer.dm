@@ -13,8 +13,7 @@
 	throw_range = 1
 	w_class = WEIGHT_CLASS_HUGE
 	var/charged = 5
-	origin_tech = "combat=4;bluespace=4;plasmatech=7"
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
 
@@ -51,14 +50,15 @@
 					var/obj/item/clothing/shoes/magboots/M = H.shoes
 					if(M.magpulse)
 						continue
-				H.apply_effect(20, KNOCKDOWN, 0)
+				H.apply_effect(20, EFFECT_KNOCKDOWN, 0)
 				step_towards(H,pull)
 				step_towards(H,pull)
 				step_towards(H,pull)
 	return
 
 /obj/item/twohanded/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if(wielded)
 		if(charged == 5)
 			charged = 0
@@ -83,7 +83,6 @@
 	throwforce = 30
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
-	origin_tech = "combat=4;powerstorage=7"
 
 /obj/item/twohanded/mjollnir/proc/shock(mob/living/target)
 	target.Stun(60)
