@@ -23,6 +23,7 @@
 	var/use_cyborg_cell = TRUE
 	var/ext_next_use = 0
 	var/atom/collw
+	var/obj/item/card/id/access_card
 	var/allowed_circuit_action_flags = IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE //which circuit flags are allowed
 	var/combat_circuits = 0 //number of combat cicuits in the assembly, used for diagnostic hud
 	var/long_range_circuits = 0 //number of long range cicuits in the assembly, used for diagnostic hud
@@ -66,6 +67,10 @@
 /obj/item/device/electronic_assembly/Collide(atom/AM)
 	collw = AM
 	.=..()
+	if((istype(collw, /obj/machinery/door/airlock) ||  istype(collw, /obj/machinery/door/window)) && (!isnull(access_card)))
+		var/obj/machinery/door/D = collw
+		if(D.check_access(access_card))
+			D.open()
 
 /obj/item/device/electronic_assembly/Initialize()
 	.=..()
@@ -81,10 +86,13 @@
 	diag_hud_set_circuitstat()
 	diag_hud_set_circuittracking()
 
+	access_card = new /obj/item/card/id(src)
+
 /obj/item/device/electronic_assembly/Destroy()
 	STOP_PROCESSING(SScircuit, src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.remove_from_hud(src)
+	QDEL_NULL(access_card)
 	return ..()
 
 /obj/item/device/electronic_assembly/process()

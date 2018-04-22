@@ -55,6 +55,53 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">21 April 2018</h2>
+			<h3 class="author">SailorDave updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">A new manipulation circuit, the Seed Extractor. Extracts seeds from produce, and outputs a list of the extracted seeds.</li>
+				<li class="rscadd">A new list circuit, the List Filter. Searches through a list for anything matching the desired element and outputs two lists: one containing just the matches, and the other with matches filtered out.</li>
+				<li class="rscadd">A new list circuit, the Set circuit. Removes duplicate entries from a list.</li>
+				<li class="tweak">The Plant Manipulation circuit can now plant seeds, and outputs a list of harvested plants.</li>
+				<li class="tweak">Reagent circuits can now irrigate connected hydroponic trays and inject blood samples into Replica pods.</li>
+				<li class="tweak">The Examiner circuit can now output worn items and other examined details of carbon and silicon mobs into the description pin, as well as the occupied turf of the scanned object, and can now scan turfs.</li>
+				<li class="tweak">The locomotion circuit now allows drones to move at base human speed, but cannot be stacked, and assemblies can now open doors they have access to like bots by bumping into them.</li>
+				<li class="bugfix">List Advanced Locator circuit now accepts refs as well as strings.</li>
+				<li class="bugfix">Fixed the Power Transmitter circuit not properly displaying a message when activated.</li>
+				<li class="bugfix">Medical Analyzer circuit can now properly scan non-human mobs.</li>
+			</ul>
+
+			<h2 class="date">20 April 2018</h2>
+			<h3 class="author">Astatineguy12 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Gygax construction now actually uses up the capacitor</li>
+			</ul>
+			<h3 class="author">Dax Dupont updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">A cat is fine too. You can select cat parts again!</li>
+				<li class="bugfix">Default lizard tail was never properly defaulted, now it is.</li>
+				<li class="bugfix">Fixes an exploit where tendrils/other spawners/anchored mobs in general could be buckled to things and thus moved around.</li>
+			</ul>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Due to space OSHA lobbying, the Syndicate's lavaland base now contains a radsuit and decontamination shower.</li>
+				<li class="bugfix">Suit storage units' suit/helmet compartments now accept non-spacesuit clothing (radsuits, EOD suits, firesuits and so on).</li>
+			</ul>
+			<h3 class="author">Naksu updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Oingo-boingo punch-face and meteor shot can no longer move gateways or Reebe servant blocker effects</li>
+				<li class="bugfix">Mechas piloted by servants of Ratvar now teleport to the servant side of Reebe when entering a rift</li>
+				<li class="admin">Gravity generators can now be thrown in buildmode</li>
+			</ul>
+			<h3 class="author">ShizCalev updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed a number of conveyor belts leading to the incorrect direction.</li>
+				<li class="bugfix">Fixed shuttle conveyor belts being out of sync with cargo's conveyors on some maps.</li>
+			</ul>
+			<h3 class="author">SpaceManiac updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Cycle-linking is no longer permanently disabled for airlocks on shuttles.</li>
+			</ul>
+
 			<h2 class="date">17 April 2018</h2>
 			<h3 class="author">Dax Dupont updated:</h3>
 			<ul class="changes bgimages16">
@@ -1595,121 +1642,6 @@
 			<h3 class="author">YPOQ updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">Bicycles are rideable again</li>
-			</ul>
-
-			<h2 class="date">17 February 2018</h2>
-			<h3 class="author">DaedalusGame updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">fixes lava and fire burning HE-pipes</li>
-				<li class="rscadd">added a subreaction for rainbow slime cores, injecting 5u of plasma now makes them explode into random slimecores.</li>
-				<li class="rscadd">added a slimejelly reaction to rainbow slime cores that does the above but all the cores that spawn get 5u each of plasma, water and blood injected. (aka chaos)</li>
-				<li class="code_imp">improved clusterbuster code with Initialize, addtimer, vars for sounds and payload spawners, etc</li>
-			</ul>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">After an incident where a very eager roboticist kept expanding a borg's size leading to a structural collapse of the entire station proper safety limitations have been implemented.</li>
-				<li class="bugfix">You can rotate freezers and cryo again.</li>
-				<li class="rscadd">Nanotrasen has invested in better reflective materials for it's reflectors. You can now make complex laser shows again.</li>
-			</ul>
-			<h3 class="author">Modafinil updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Adds new medicine chem that suppresses sleep and very lightly reduces stunrates, has a very low metabolic rate which is randomized and a low overdose treshold. Overdosing is a lethal oxyloss unless treated. (With epipen urgently and with charcoal/calomel before it puts you to sleep)</li>
-			</ul>
-			<h3 class="author">TankNut updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Corpses spawned in ruins have their suit sensors disabled</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="admin">Admins can use the Select Equipment verb on observers. Doing so will humanise them and then apply the equipment.</li>
-				<li class="bugfix">Species with RESISTHOT (golems, skeletons) can extinguish burning items as if they were wearing fireproof gloves.</li>
-			</ul>
-			<h3 class="author">jakeramsay007 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Jellypeople/Slimepeople now are able to speak their Slime language, as intended when it was added.</li>
-			</ul>
-			<h3 class="author">yorii updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">removes the maintenance panel examination message on poddoors (blast doors)</li>
-			</ul>
-
-			<h2 class="date">16 February 2018</h2>
-			<h3 class="author">AnturK updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscdel">Minimap gone from crew monitoring</li>
-			</ul>
-			<h3 class="author">DaedalusGame updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">made powercell rigging no longer set rigged to the plasma reagent datum what the hell and makes it use TRUE/FALSE defines</li>
-			</ul>
-			<h3 class="author">Denton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Emagging meteor shield satellites now shows you a message.</li>
-				<li class="spellcheck">Fixed a typo when emagging RnD servers.</li>
-			</ul>
-			<h3 class="author">MMMiracles updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">You can now produce a cryostatis variant of the shotgun dart after researching Medical Weaponry. Holds 10u and doesn't have reagents react inside it.</li>
-			</ul>
-			<h3 class="author">MetroidLover updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added the ability to gain smoke bomb charges by attacking the initiated ninja suit with a beaker containing smoke powder</li>
-			</ul>
-			<h3 class="author">More Robust Than You updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes SCP-294 losing its top sometimes</li>
-			</ul>
-			<h3 class="author">Naksu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">replaced some item-specific movement hooks with components</li>
-			</ul>
-			<h3 class="author">Xhuis updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Removing and printing integrated circuits will now attempt to place them into a free hand.</li>
-				<li class="tweak">You can now hit an integrated circuit printer with an unsecured electronic assembly to recycle all of the parts in the assembly en masse.</li>
-				<li class="tweak">You can now recycle empty electronic assemblies in an integrated circuit printer!</li>
-				<li class="soundadd">Integrated circuit printers now have sounds for printing circuits and assemblies.</li>
-				<li class="bugfix">The RPG loot event will no longer break circuit analyzers.</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Centcom now reports that thanks to extensive bioengineering, apples and oranges now taste of apples and oranges, rather than nothing as they did before.</li>
-			</ul>
-
-			<h2 class="date">15 February 2018</h2>
-			<h3 class="author">Kor updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Bluespace slime extracts now have a new chemical reaction with water, which create slime radio potions. When applied to a simple animal, that mob gains an internal radio.</li>
-			</ul>
-			<h3 class="author">MrStonedOne updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">You no longer need an aggressive grab to table someone.</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="refactor">Map initialization now supports stations with multiple z-levels.</li>
-				<li class="bugfix">The map reader no longer sometimes expands the world size inappropriately.</li>
-				<li class="tweak">Pride's Mirror's destination has become less predictable.</li>
-			</ul>
-
-			<h2 class="date">14 February 2018</h2>
-			<h3 class="author">Dax Dupont updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Integrated circuits no longer start upgraded.</li>
-				<li class="balance">The IC printers that are available on round start in the IC labs are no longer upgraded by default. You will need to research these as was intended</li>
-			</ul>
-			<h3 class="author">Frozenguy5 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">You can craft rat kebabs now.</li>
-			</ul>
-			<h3 class="author">Naksu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Chasms no longer eat shuttle docking ports, rendering them unusable and unresponsive</li>
-				<li class="tweak">The clogged vents event has been removed for pressing ceremonial reasons</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Transference potions now just rename the mob that you are transferring into with your name, rather than your name plus the old name of the mob.</li>
 			</ul>
 		</div>
 

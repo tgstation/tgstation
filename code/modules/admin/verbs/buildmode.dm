@@ -260,7 +260,11 @@
 	var/alt_click = pa.Find("alt")
 	var/ctrl_click = pa.Find("ctrl")
 
-	. = 1
+	//Clicking on UI elements shouldn't try to build things in nullspace.
+	if(istype(object,/obj/screen))
+		return FALSE
+
+	. = TRUE
 	switch(mode)
 		if(BASIC_BUILDMODE)
 			if(isturf(object) && left_click && !alt_click && !ctrl_click)

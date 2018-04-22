@@ -865,14 +865,17 @@ GLOBAL_LIST_EMPTY(allCasters)
 	NEWSPAPER.creationTime = GLOB.news_network.lastAction
 	paper_remaining--
 
+
+/obj/machinery/newscaster/proc/remove_alert()
+	alert = FALSE
+	update_icon()
+
 /obj/machinery/newscaster/proc/newsAlert(channel)
 	if(channel)
 		say("Breaking news from [channel]!")
-		alert ++
+		alert = TRUE
 		update_icon()
-		spawn(alert_delay)
-			alert --
-			update_icon()
+		addtimer(CALLBACK(src,.proc/remove_alert),alert_delay,TIMER_OVERRIDE)
 		playsound(loc, 'sound/machines/twobeep.ogg', 75, 1)
 	else
 		say("Attention! Wanted issue distributed!")
