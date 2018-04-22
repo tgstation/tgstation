@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	gas_overlay = "tritium"
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
-
+	fusion_power = 2
 /datum/gas/bz
 	id = "bz"
 	specific_heat = 20

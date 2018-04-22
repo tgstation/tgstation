@@ -195,73 +195,80 @@
 	priority = 2
 	name = "Plasmic Fusion"
 	id = "fusion"
-	var power_gases = list( //How much each added energy each gas is able to give to the fusion reaction
-		/datum/gas/carbon_dioxide = 2,
-		/datum/gas/stimulum = 7,
-		/datum/gas/pluoxium = 10,
-		/datum/gas/nitryl = 1.5,
-		/datum/gas/bz = 2,
-		/datum/gas/nitrous_oxide = 2
-	)
 
 
 /datum/gas_reaction/fusion/init_reqs()
 	min_requirements = list(
-		"ENER" = PLASMA_BINDING_ENERGY * 10,
-		/datum/gas/plasma = MINIMUM_HEAT_CAPACITY,
+		"ENER" = PLASMA_BINDING_ENERGY * 100,
+		/datum/gas/plasma = 50,
 		/datum/gas/carbon_dioxide = 1
 	)
 
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	var/turf/open/location = (istype(holder,/datum/pipeline)) ? get_turf(pick(holder.members)) : get_turf(holder)//Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
-	if(air.return_pressure() < 10*ONE_ATMOSPHERE)
-		//Fusion wont occur if there is too little pressure.
-		return NO_REACTION
+	var/turf/open/location
+	if (istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
+		var/datum/pipeline/fusion_pipenet = holder
+		location = get_turf(pick(fusion_pipenet.members))
+	else
+		location = get_turf(holder)
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/reaction_energy = THERMAL_ENERGY(air)
-	var/mediation = (air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES]) //This is the average heat capacity of the mixture,not including plasma.
+	var/reaction_energy
+
+	to_chat(world,"Reaction Energy: [reaction_energy]")
+	to_chat(world,"Holder: [holder]")
+
+	var/mediation = 100*(air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES]) //This is the average heat capacity of the mixture,not including plasma.
 	var/gas_power = 0
 	for (var/id in cached_gases)
 		gas_power += cached_gases[id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[id][MOLES]
 	var/plasma_fused = 0
-	var/power_ratio = gas_power/(mediation*10)
-	if (power_ratio > 1) //Mediation is overpowered, fusion reaction starts to break down.
-		plasma_fused = min(mediation,cached_gases[/datum/gas/plasma][MOLES])
-		reaction_energy += plasma_fused*PLASMA_BINDING_ENERGY
-		cached_gases[/datum/gas/plasma][MOLES] -= plasma_fused
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= gas_power/20
-		air.assert_gases(/datum/gas/bz,/datum/gas/nitrous_oxide)
-		cached_gases[/datum/gas/bz][MOLES] += gas_power/20
-		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gas_power/20
-		if (location)
-			empulse(location, mediation/20, mediation/10)
-			radiation_pulse(location, reaction_energy/(PLASMA_BINDING_ENERGY))
-	else if (power_ratio > 10) //Super-fusion. Fuses everything into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
-		gases_fused = air.total_moles()
+	var/power_ratio = min(gas_power/mediation,100)//100 is a lot, we really don't want to go over this.
+	if (power_ratio > 10) //Super-fusion. Fuses everything into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
+		to_chat(world,"Super fusion")
+		to_chat(world,"Mediation: [mediation]")
+		to_chat(world,"Gas Power: [gas_power], Plasma: [cached_gases[/datum/gas/plasma][MOLES]]")
+		var/gases_fused = air.total_moles()
 		reaction_energy += gases_fused*PLASMA_BINDING_ENERGY*(gas_power/(mediation*100))
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
-		assert_gas(/datum/gas/tritium)
+		air.assert_gas(/datum/gas/tritium)
 		cached_gases[/datum/gas/tritium][MOLES] += gases_fused
-		if (prob(power_ratio) //You really don't want this to happen
-			empulse(location, power_ratio/2, power_ratio)
-			radiation_pulse(location, power_ratio*1000)
-			explode(location,0,1,power_ratio/2,power_ratio,TRUE,TRUE)//Bypasses cap. Doesn't blow hole in station, but produces moderate devestation for long ranges. Be careful with this.
+		if (prob(power_ratio)) //You really don't want this to happen
+			empulse(location, power_ratio*0.5, power_ratio)
+			radiation_pulse(location, power_ratio*2000)
+			explosion(location,0,1,power_ratio*0.5,power_ratio,TRUE,TRUE)//Bypasses cap. Doesn't blow large hole in station, but produces moderate devestation for long ranges. Be careful with this.
 
-	else
+	else if (power_ratio > 1) //Mediation is overpowered, fusion reaction starts to break down.
+		to_chat(world,"Breakdown")
+		to_chat(world,"Mediation: [mediation]")
+		to_chat(world,"Gas Power: [gas_power], Plasma: [cached_gases[/datum/gas/plasma][MOLES]]")
 		plasma_fused = cached_gases[/datum/gas/plasma][MOLES]
-		reaction_energy += plasma_fused*PLASMA_BINDING_ENERGY*gas_power/mediation
-		air.assert_gases(/datum/gas/oxygen)
+		reaction_energy += plasma_fused*PLASMA_BINDING_ENERGY
 		cached_gases[/datum/gas/plasma][MOLES] -= plasma_fused
-		for (var/G in power_gases)
-			var/datum/gas/gas = G
-			cached_gases[gas][MOLES] = 0
-		cached_gases[/datum/gas/oxygen][MOLES] += gas_power
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] = 0
+		air.assert_gases(/datum/gas/bz,/datum/gas/nitrous_oxide)
+		cached_gases[/datum/gas/bz][MOLES] += gas_power*0.05
+		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gas_power*0.05
 		if (location)
-			radiation_pulse(location, reaction_energy/(PLASMA_BINDING_ENERGY*MAX_CATALYST_EFFICENCY))
+			empulse(location, mediation*0.05, mediation*0.1)
+			radiation_pulse(location, power_ratio*(reaction_energy)/(0.3*PLASMA_BINDING_ENERGY))
+	else
+		to_chat(world,"Normal fusion")
+		to_chat(world,"Mediation: [mediation]")
+		to_chat(world,"Gas Power: [gas_power], Plasma: [cached_gases[/datum/gas/plasma][MOLES]]")
+
+		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*PLASMA_BINDING_ENERGY*(gas_power/mediation)
+		air.assert_gas(/datum/gas/oxygen)
+		cached_gases[/datum/gas/oxygen][MOLES] += gas_power + cached_gases[/datum/gas/plasma][MOLES]
+		cached_gases[/datum/gas/plasma][MOLES] = 0
+		for (var/gas in cached_gases)
+			if (cached_gases[gas][GAS_META][META_GAS_FUSION_POWER])
+				cached_gases[gas][MOLES] = 0
+		if (location)
+			radiation_pulse(location, (reaction_energy)/(0.3*PLASMA_BINDING_ENERGY))
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
