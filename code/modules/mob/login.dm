@@ -2,7 +2,10 @@
 	GLOB.player_list |= src
 	lastKnownIP	= client.address
 	computer_id	= client.computer_id
-	log_access("Mob Login: [key_name(src)] was assigned to a [type]")
+	var/mindtext = ""
+	if(mind && mind.assigned_role)
+		mindtext = ". Assigned_role: \"mind.assigned_role\""
+	log_access("Mob Login: [key_name(src)] was assigned to a [type][mindtext]")
 	world.update_status()
 	client.screen = list()				//remove hud items just in case
 	client.images = list()

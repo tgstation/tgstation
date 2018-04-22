@@ -103,6 +103,15 @@
 					for(var/thing in diseases)
 						var/datum/disease/D = thing
 						stat("*", "[D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]")
+	if(istype(loc, /obj/pod))
+		var/obj/pod/pod = loc
+		if(pod.pilot == src)
+			stat("Integrity: ", "[round((pod.health / pod.max_health) * 100)]%")
+			if(pod.power_source)
+				stat("Charge: ", "[pod.power_source.charge]/[pod.power_source.maxcharge] ([pod.power_source.percent()]%)")
+			var/obj/item/pod_attachment/sensor/sensor = pod.GetAttachmentOnHardpoint(16)
+			if(sensor && istype(sensor, /obj/item/pod_attachment/sensor/gps))
+				stat("Position: ", "([pod.x], [pod.y], [pod.z])")
 
 
 /mob/living/carbon/human/show_inv(mob/user)

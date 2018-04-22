@@ -2440,6 +2440,16 @@
 		var/client/C = M.client
 		usr.client.cmd_admin_mod_antag_rep(C, href_list["modantagrep"])
 		show_player_panel(M)
+	//space pods
+	else if(href_list["view_pod_log"])
+		var/datum/pod_log/log = locate(href_list["view_pod_log"])
+		if(log)
+			return usr.client.debug_variables(log)
+
+	else if(href_list["view_pod_debug"])
+		var/obj/pod/pod = locate(href_list["view_pod_debug"])
+		if(pod && istype(pod))
+			pod.OpenDebugMenu(owner.mob)
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

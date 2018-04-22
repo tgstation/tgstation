@@ -470,6 +470,8 @@ Proc for attack log creation, because really why not
 
 
 /proc/log_talk(mob/user,message,logtype)
+	if(!user.ckey && !istype(user,/mob/living/carbon/human))
+		return
 	var/turf/say_turf = get_turf(user)
 
 	var/sayloc = ""

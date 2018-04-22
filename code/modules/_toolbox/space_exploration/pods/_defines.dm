@@ -1,0 +1,89 @@
+/*
+* Hardpoints
+*/
+
+#define P_HARDPOINT_ENGINE					1
+#define P_HARDPOINT_SHIELD					2
+#define P_HARDPOINT_PRIMARY_ATTACHMENT		4
+#define P_HARDPOINT_SECONDARY_ATTACHMENT	8
+#define P_HARDPOINT_SENSOR					16
+#define P_HARDPOINT_CARGO_HOLD				32
+#define P_HARDPOINT_ARMOR					64
+
+/*
+* Usage conditions
+*/
+
+#define P_ATTACHMENT_USAGE_ONTICK			1
+#define P_ATTACHMENT_USAGE_ONUSE			2
+
+/*
+* Attachment keybinds
+*/
+
+#define P_ATTACHMENT_KEYBIND_SINGLE			1
+#define P_ATTACHMENT_KEYBIND_SHIFT			2
+#define P_ATTACHMENT_KEYBIND_CTRL			4
+#define P_ATTACHMENT_KEYBIND_ALT			8
+#define P_ATTACHMENT_KEYBIND_MIDDLE			16
+#define P_ATTACHMENT_KEYBIND_CTRLSHIFT		32
+
+/*
+* Active status
+*/
+
+#define P_ATTACHMENT_ACTIVE					1
+#define P_ATTACHMENT_INACTIVE				2
+#define P_ATTACHMENT_PASSIVE				4
+
+/*
+* Damage
+*/
+
+#define P_DAMAGE_GENERAL		1
+#define P_DAMAGE_FIRE			2
+#define P_DAMAGE_EMPED			4
+
+#define P_DAMAGE_ABSORBED		1
+#define P_DAMAGE_REDUCED		2
+
+/*
+* Cargo Hold
+*/
+
+#define P_CARGOERROR_CLEAR		1
+#define P_CARGOERROR_TOOBIG		2
+#define P_CARGOERROR_FULL		4
+#define P_CARGOERROR_NA			8
+#define P_CARGOERROR_CANTHOLD	16
+
+/*
+* Construction
+*/
+
+#define P_CS_FRAME_WELDED	1
+#define P_CS_CIRCUITS		2
+#define P_CS_WIRES			4
+#define P_CS_CONTROL		8
+#define P_CS_ENGINE			16
+#define P_CS_COVERS			32
+#define P_CS_ACTION_WIRECUT	64
+#define P_CS_ACTION_WELD	128
+#define P_CS_ACTION_WRENCH	256
+#define P_CS_ACTION_SCREW	512
+#define P_CS_ACTION_MULTI	1024
+#define P_CS_CELL			2048
+
+#define P_C_ERROR_REQUIRES		1
+#define P_C_ERROR_ALREADY_HAS	2
+#define P_C_ERROR_NEEDS_TOOL	4
+
+/*
+* Attachment Use Proc Flags
+*/
+
+#define P_ATTACHMENT_LOG				1
+#define P_ATTACHMENT_IGNORE_POWER		2
+#define P_ATTACHMENT_IGNORE_EMPED		4
+#define P_ATTACHMENT_IGNORE_COOLDOWN 	8
+#define P_ATTACHMENT_PLAYSOUND			16
