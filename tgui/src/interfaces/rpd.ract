@@ -1,5 +1,6 @@
 <link rel='ractive' href='./rpd/dirsel.ract'>
 <link rel='ractive' href='./rpd/colorsel.ract'>
+<link rel='stylesheet' href='spritesheet_pipes.css'>
 
 {{#if data.mode >= 0}}
 	<dirsel/>

@@ -138,7 +138,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	return "makepipe=[id]&type=[dirtype]"
 
 /datum/pipe_info/meter
-	icon_state = "meterX"
+	icon_state = "meter"
 	dirtype = PIPE_ONEDIR
 
 /datum/pipe_info/meter/New(label)
@@ -228,7 +228,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/icon_states/multiple_icons/pipes)
+		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/pipes)
 		assets.send(user)
 
 		ui = new(user, src, ui_key, "rpd", name, 300, 550, master_ui, state)

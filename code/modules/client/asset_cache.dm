@@ -256,8 +256,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 	return out.Join("\n")
 
-/datum/asset/spritesheet/proc/Insert(sprite_name, icon/I, icon_state=null, dir=SOUTH, frame=1, moving=FALSE)
+/datum/asset/spritesheet/proc/Insert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
+	if (!I || !length(icon_states(I)))  // that direction or state doesn't exist
+		return
 	var/size_id = "[I.Width()]x[I.Height()]"
 	var/size = sizes[size_id]
 
@@ -484,20 +486,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	icon = 'icons/emoji.dmi'
 	generic_icon_names = TRUE
 
-/datum/asset/simple/icon_states/multiple_icons/pipes
-	icons = list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi', 'icons/obj/atmospherics/pipes/transit_tube.dmi')
-	prefix = "pipe"
+/datum/asset/spritesheet/pipes
+	name = "pipes"
 
-/datum/asset/simple/icon_states/multiple_icons/pipes/New()
-	directions = GLOB.alldirs
+/datum/asset/spritesheet/pipes/register()
+	for (var/each in list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi', 'icons/obj/atmospherics/pipes/transit_tube.dmi'))
+		InsertAll("", each, GLOB.alldirs)
 	..()
-
-/datum/asset/simple/icon_states/multiple_icons/pipes/register()
-	..()
-	var/meter = icon('icons/obj/atmospherics/pipes/simple.dmi', "meterX", SOUTH, frame, movement_states)
-	if(meter)
-		register_asset(sanitize_filename("[prefix].south.meterX.png"), fcopy_rsc(meter))
-
 
 // Representative icons for each research design
 /datum/asset/spritesheet/research_designs
