@@ -34,10 +34,10 @@
 	item_state = "utility"
 	content_overlays = TRUE
 
-/obj/item/storage/belt/ulility/ComponentInitialize()
+/obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.can_hold = typecacheof(list(
+	var/static/list/can_hold = typecacheof(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
 		/obj/item/weldingtool,
@@ -55,6 +55,7 @@
 		/obj/item/holosign_creator,
 		/obj/item/assembly/signaler
 		))
+	STR.can_hold = can_hold
 
 /obj/item/storage/belt/utility/chief
 	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
