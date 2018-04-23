@@ -20,6 +20,11 @@
 /datum/martial_art/cqc/proc/drop_restraining()
 	restraining = 0
 
+/datum/martial_art/cqc/can_use(mob/living/carbon/human/H)
+	if(just_a_cook && !(is_type_in_typecache(get_area(H), areas_under_siege)))
+		return FALSE
+	return ..()
+
 /datum/martial_art/cqc/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,SLAM_COMBO))
 		streak = ""
