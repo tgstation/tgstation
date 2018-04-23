@@ -34,7 +34,7 @@
 	item_state = "utility"
 	content_overlays = TRUE
 
-/obj/item/storage/belt/ulility/ComponentInitialize()
+/obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.can_hold = typecacheof(list(
