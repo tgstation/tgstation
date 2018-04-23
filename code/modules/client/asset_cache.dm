@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/spritesheet/register()
 	if (!name)
-		return
+		CRASH("spritesheet [type] cannot register without a name")
 	ensure_stripped()
 
 	var/res_name = "spritesheet_[name].css"
@@ -301,6 +301,14 @@ GLOBAL_LIST_EMPTY(asset_datums)
 #undef SPRSZ_ICON
 #undef SPRSZ_STRIPPED
 
+
+/datum/asset/spritesheet/simple
+	var/list/assets
+
+/datum/asset/spritesheet/simple/register()
+	for (var/key in assets)
+		Insert(key, assets[key])
+	..()
 
 //Generates assets based on iconstates of a single icon
 /datum/asset/simple/icon_states
@@ -411,19 +419,20 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"pda_dronephone.png"	= 'icons/pda_icons/pda_dronephone.png'
 	)
 
-/datum/asset/simple/paper
+/datum/asset/spritesheet/simple/paper
+	name = "paper"
 	assets = list(
-		"large_stamp-clown.png" = 'icons/stamp_icons/large_stamp-clown.png',
-		"large_stamp-deny.png" = 'icons/stamp_icons/large_stamp-deny.png',
-		"large_stamp-ok.png" = 'icons/stamp_icons/large_stamp-ok.png',
-		"large_stamp-hop.png" = 'icons/stamp_icons/large_stamp-hop.png',
-		"large_stamp-cmo.png" = 'icons/stamp_icons/large_stamp-cmo.png',
-		"large_stamp-ce.png" = 'icons/stamp_icons/large_stamp-ce.png',
-		"large_stamp-hos.png" = 'icons/stamp_icons/large_stamp-hos.png',
-		"large_stamp-rd.png" = 'icons/stamp_icons/large_stamp-rd.png',
-		"large_stamp-cap.png" = 'icons/stamp_icons/large_stamp-cap.png',
-		"large_stamp-qm.png" = 'icons/stamp_icons/large_stamp-qm.png',
-		"large_stamp-law.png" = 'icons/stamp_icons/large_stamp-law.png'
+		"stamp-clown" = 'icons/stamp_icons/large_stamp-clown.png',
+		"stamp-deny" = 'icons/stamp_icons/large_stamp-deny.png',
+		"stamp-ok" = 'icons/stamp_icons/large_stamp-ok.png',
+		"stamp-hop" = 'icons/stamp_icons/large_stamp-hop.png',
+		"stamp-cmo" = 'icons/stamp_icons/large_stamp-cmo.png',
+		"stamp-ce" = 'icons/stamp_icons/large_stamp-ce.png',
+		"stamp-hos" = 'icons/stamp_icons/large_stamp-hos.png',
+		"stamp-rd" = 'icons/stamp_icons/large_stamp-rd.png',
+		"stamp-cap" = 'icons/stamp_icons/large_stamp-cap.png',
+		"stamp-qm" = 'icons/stamp_icons/large_stamp-qm.png',
+		"stamp-law" = 'icons/stamp_icons/large_stamp-law.png'
 	)
 
 /datum/asset/simple/IRV
