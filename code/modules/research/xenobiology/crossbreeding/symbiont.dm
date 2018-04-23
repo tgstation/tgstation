@@ -187,6 +187,10 @@ Symbiont extracts:
 	slot = ORGAN_SLOT_RIGHT_HAND
 	var/datum/action/healinghand/action
 
+/obj/item/organ/healinghand/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It looks like a [zone == BODY_ZONE_R_ARM ? "right" : "left"] hand.</span>")
+
 /obj/item/organ/healinghand/Initialize()
 	. = ..()
 	action = new
@@ -353,6 +357,10 @@ Symbiont extracts:
 	zone = BODY_ZONE_R_LEG
 	slot = ORGAN_SLOT_RIGHT_LEG
 	var/datum/action/cooldown/joltjump/action
+
+/obj/item/organ/joltfoot/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It looks like a [zone == BODY_ZONE_R_LEG ? "right" : "left"] leg.</span>")
 
 /obj/item/organ/joltfoot/Initialize()
 	. = ..()
@@ -573,3 +581,30 @@ Symbiont extracts:
 		owner.visible_message("<span class='danger'>[owner] vomits pure, condensed flame onto [T]!")
 		var/datum/component/thermite/therm = T.AddComponent(/datum/component/thermite, 20)
 		therm.thermite_melt()
+
+//Frozen hand - Can freeze items on a 5 second cooldown, or people on a 20 second cooldown.
+
+/obj/item/organ/frozenhand
+	name = "frozen hand"
+	desc = "Moisture in the air crystallizes around it."
+	zone = BODY_ZONE_R_ARM
+	slot = ORGAN_SLOT_RIGHT_HAND
+	var/datum/action/cooldown/frozenhand/action
+
+/obj/item/organ/frozenhand/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It looks like a [zone == BODY_ZONE_R_ARM ? "right" : "left"] hand.</span>")
+
+/obj/item/organ/frozenhand/Initialize()
+	. = ..()
+	action = new
+
+/obj/item/organ/frozenhand/Insert()
+	. = ..()
+	action.Grant(owner)
+
+/obj/item/organ/frozenhand/Remove()
+	. = ..()
+	action.Remove(owner)
+
+/datum/action/cooldown/frozenhand
