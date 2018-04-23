@@ -1,0 +1,4 @@
+author: "Rinoka"
+delete-after: True
+changes: 
+  - bugfix: "phobias now actually make you fear things other than an apostrophe s."
