@@ -30,7 +30,7 @@
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
 	var/anger_modifier = 0
-	var/obj/item/device/gps/internal
+	var/obj/item/gps/internal
 	var/recovery_time = 0
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)

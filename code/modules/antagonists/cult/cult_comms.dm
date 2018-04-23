@@ -178,8 +178,8 @@
 							playsound(mobloc, 'sound/magic/exit_blood.ogg', 100, 1)
 							if(B.current != owner)
 								var/turf/final = pick(destinations)
-								if(istype(B.current.loc, /obj/item/device/soulstone))
-									var/obj/item/device/soulstone/S = B.current.loc
+								if(istype(B.current.loc, /obj/item/soulstone))
+									var/obj/item/soulstone/S = B.current.loc
 									S.release_shades(owner)
 								B.current.setDir(SOUTH)
 								new /obj/effect/temp_visual/cult/blood(final)

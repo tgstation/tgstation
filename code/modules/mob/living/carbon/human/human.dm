@@ -846,7 +846,7 @@
 /mob/living/carbon/human/Collide(atom/A)
 	..()
 	var/crashdir = get_dir(src, A)
-	var/obj/item/device/flightpack/FP = get_flightpack()
+	var/obj/item/flightpack/FP = get_flightpack()
 	if(FP)
 		FP.flight_impact(A, crashdir)
 

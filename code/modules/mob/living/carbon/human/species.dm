@@ -883,7 +883,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(!disable_warning)
 					to_chat(H, "The [I.name] is too big to attach.") //should be src?
 				return FALSE
-			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
+			if( istype(I, /obj/item/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return TRUE
 			return FALSE
 		if(slot_handcuffed)
@@ -1069,7 +1069,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/flightpack = 0
 	var/ignoreslow = 0
 	var/gravity = 0
-	var/obj/item/device/flightpack/F = H.get_flightpack()
+	var/obj/item/flightpack/F = H.get_flightpack()
 	if(istype(F) && F.flight)
 		flightpack = 1
 	if(H.movement_type & FLYING)

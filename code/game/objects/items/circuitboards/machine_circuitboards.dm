@@ -449,7 +449,7 @@
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/device/assembly/igniter = 1)
+		/obj/item/assembly/igniter = 1)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/mining_equipment_vendor

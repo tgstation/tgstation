@@ -21,7 +21,7 @@
 	item_type = /obj/item/twohanded/pitchfork/demonic/ascended
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/violin
-	item_type = /obj/item/device/instrument/violin/golden
+	item_type = /obj/item/instrument/violin/golden
 	desc = "A devil's instrument of choice.  Use this to summon/unsummon your golden violin."
 	invocation_type = "whisper"
 	invocation = "I aint have this much fun since Georgia."

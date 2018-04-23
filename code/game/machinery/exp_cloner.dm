@@ -141,8 +141,8 @@
 	LAZYREMOVE(pods, pod)
 
 /obj/machinery/computer/prototype_cloning/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		var/obj/item/device/multitool/P = W
+	if(istype(W, /obj/item/multitool))
+		var/obj/item/multitool/P = W
 
 		if(istype(P.buffer, /obj/machinery/clonepod/experimental))
 			if(get_area(P.buffer) != get_area(src))

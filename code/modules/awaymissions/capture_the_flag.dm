@@ -474,7 +474,7 @@
 
 /datum/outfit/ctf
 	name = "CTF"
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf
 	toggle_helmet = FALSE // see the whites of their eyes
@@ -530,7 +530,7 @@
 
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
 	..()
-	var/obj/item/device/radio/R = H.ears
+	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CTF_RED)
 	R.freqlock = TRUE
 	R.independent = TRUE
@@ -538,7 +538,7 @@
 
 /datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
 	..()
-	var/obj/item/device/radio/R = H.ears
+	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CTF_BLUE)
 	R.freqlock = TRUE
 	R.independent = TRUE

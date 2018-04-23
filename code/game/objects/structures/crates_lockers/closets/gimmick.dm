@@ -104,4 +104,4 @@
 	new /obj/item/clothing/suit/space/nasavoid(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/stock_parts/cell(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/multitool(src)

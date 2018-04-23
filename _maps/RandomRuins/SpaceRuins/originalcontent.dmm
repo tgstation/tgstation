@@ -537,7 +537,7 @@
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bA" = (
-/obj/item/device/toner,
+/obj/item/toner,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bB" = (
@@ -595,7 +595,7 @@
 /obj/item/paper/crumpled/ruins/originalcontent,
 /obj/item/paper/crumpled/ruins/originalcontent,
 /obj/item/paper/crumpled/ruins/originalcontent,
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "Pulpy Signal"
 	},
 /turf/open/indestructible/paper,

@@ -173,7 +173,7 @@
 	possible_colors = list("purple" = LIGHT_COLOR_LAVENDER)
 
 /obj/item/melee/transforming/energy/sword/saber/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/device/multitool))
+	if(istype(W, /obj/item/multitool))
 		if(!hacked)
 			hacked = TRUE
 			item_color = "rainbow"

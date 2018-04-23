@@ -15,7 +15,7 @@
 	return
 
 /obj/item/gun/energy/pulse/prize
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/pulse/prize/Initialize()
 	. = ..()
@@ -33,7 +33,7 @@
 	. = ..()
 
 /obj/item/gun/energy/pulse/loyalpin
-	pin = /obj/item/device/firing_pin/implant/mindshield
+	pin = /obj/item/firing_pin/implant/mindshield
 
 /obj/item/gun/energy/pulse/carbine
 	name = "pulse carbine"
@@ -48,7 +48,7 @@
 	flight_y_offset = 12
 
 /obj/item/gun/energy/pulse/carbine/loyalpin
-	pin = /obj/item/device/firing_pin/implant/mindshield
+	pin = /obj/item/firing_pin/implant/mindshield
 
 /obj/item/gun/energy/pulse/pistol
 	name = "pulse pistol"
@@ -60,7 +60,7 @@
 	cell_type = "/obj/item/stock_parts/cell/pulse/pistol"
 
 /obj/item/gun/energy/pulse/pistol/loyalpin
-	pin = /obj/item/device/firing_pin/implant/mindshield
+	pin = /obj/item/firing_pin/implant/mindshield
 
 /obj/item/gun/energy/pulse/destroyer
 	name = "pulse destroyer"

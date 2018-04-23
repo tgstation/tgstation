@@ -24,7 +24,7 @@
 	anchored = TRUE
 	var/start_active = FALSE //If it ignores the random chance to start broken on round start
 	var/invuln = null
-	var/obj/item/device/camera_bug/bug = null
+	var/obj/item/camera_bug/bug = null
 	var/obj/structure/camera_assembly/assembly = null
 	var/area/myarea = null
 
@@ -175,7 +175,7 @@
 /obj/machinery/camera/attackby(obj/item/I, mob/living/user, params)
 	// UPGRADES
 	if(panel_open)
-		if(istype(I, /obj/item/device/analyzer))
+		if(istype(I, /obj/item/analyzer))
 			if(!isXRay())
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
@@ -195,7 +195,7 @@
 				to_chat(user, "<span class='notice'>[src] already has that upgrade!</span>")
 			return
 
-		else if(istype(I, /obj/item/device/assembly/prox_sensor))
+		else if(istype(I, /obj/item/assembly/prox_sensor))
 			if(!isMotion())
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
@@ -207,10 +207,10 @@
 			return
 
 	// OTHER
-	if((istype(I, /obj/item/paper) || istype(I, /obj/item/device/pda)) && isliving(user))
+	if((istype(I, /obj/item/paper) || istype(I, /obj/item/pda)) && isliving(user))
 		var/mob/living/U = user
 		var/obj/item/paper/X = null
-		var/obj/item/device/pda/P = null
+		var/obj/item/pda/P = null
 
 		var/itemname = ""
 		var/info = ""
@@ -239,7 +239,7 @@
 				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		return
 
-	else if(istype(I, /obj/item/device/camera_bug))
+	else if(istype(I, /obj/item/camera_bug))
 		if(!can_use())
 			to_chat(user, "<span class='notice'>Camera non-functional.</span>")
 			return

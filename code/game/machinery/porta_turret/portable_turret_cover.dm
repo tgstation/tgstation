@@ -64,8 +64,8 @@
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
-	else if(istype(I, /obj/item/device/multitool) && !parent_turret.locked)
-		var/obj/item/device/multitool/M = I
+	else if(istype(I, /obj/item/multitool) && !parent_turret.locked)
+		var/obj/item/multitool/M = I
 		M.buffer = parent_turret
 		to_chat(user, "<span class='notice'>You add [parent_turret] to multitool buffer.</span>")
 	else
