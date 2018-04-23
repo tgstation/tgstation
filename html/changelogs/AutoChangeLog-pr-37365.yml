@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - admin: "Fuel tank logging now logs to both game and attack logs so it's more clear from logs what caused the explosion in game log and added coords to the messages as well."

@@ -1,5 +1,0 @@
-author: "iksyp"
-delete-after: True
-changes: 
-  - rscadd: "the beer and soda dispenser now have their own circuitboards, as well as design ids. you can unlock them through techwebs under the biotech node."
-  - bugfix: "beer and soda dispensers can no longer be turned into chem dispensers by deconstructing and reconstructing them."

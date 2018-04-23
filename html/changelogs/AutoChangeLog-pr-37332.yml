@@ -1,7 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "Changelings can now have an objective to have more genomes than any other changeling, rather than a set target."
-  - rscadd: "Changelings can now have an objective to absorb another changeling."
-  - rscadd: "Changelings now get bonus genetic points for buying powers when they absorb another changeling. Their chem storage cap will also be increased."
-  - rscadd: "Changelings absorbed by other changelings will lose all their powers, chems, and genetic points, making them unable to revive."
