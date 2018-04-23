@@ -3,8 +3,7 @@
 
 /datum/component/mirage_border/Initialize(turf/target, direction, range=world.view)
 	if(!isturf(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("[type] added to a [parent.type]")
+		return COMPONENT_INCOMPATIBLE
 	if(!target || !istype(target) || !direction)
 		. = COMPONENT_INCOMPATIBLE
 		CRASH("[type] improperly instanced with the following args: target=\[[target]\], direction=\[[direction]\], range=\[[range]\]")
@@ -30,8 +29,7 @@
 
 /datum/component/mirage_border/OnTransfer(atom/thing)
 	if(!isturf(thing))
-		stack_trace("[type] added to a [parent.type]")
-		qdel(src)
+		return COMPONENT_INCOMPATIBLE
 	holder.forceMove(thing)
 
 /obj/effect/abstract/mirage_holder
