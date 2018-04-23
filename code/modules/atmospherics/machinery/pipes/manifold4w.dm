@@ -38,27 +38,27 @@
 	layer = GAS_PIPE_VISIBLE_LAYER
 	
 /obj/machinery/atmospherics/pipe/manifold4w/general/visible/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/general/visible/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/general/hidden
 	level = PIPE_HIDDEN_LEVEL
 	
 /obj/machinery/atmospherics/pipe/manifold4w/general/hidden/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/general/hidden/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers
 	name="scrubbers pipe"
@@ -70,27 +70,27 @@
 	layer = GAS_PIPE_VISIBLE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden
 	level = PIPE_HIDDEN_LEVEL
 	
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/supply
 	name="air supply pipe"
@@ -102,27 +102,27 @@
 	layer = GAS_PIPE_VISIBLE_LAYER
 	
 /obj/machinery/atmospherics/pipe/manifold4w/supply/visible/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/supply/visible/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden
 	level = PIPE_HIDDEN_LEVEL
 
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 	
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain
 	name="main air supply pipe"
@@ -134,27 +134,27 @@
 	layer = GAS_PIPE_VISIBLE_LAYER
 	
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain/visible/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain/visible/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain/hidden
 	level = PIPE_HIDDEN_LEVEL
 	
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain/hidden/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/supplymain/hidden/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/yellow
 	pipe_color=rgb(255,198,0)
@@ -165,27 +165,27 @@
 	layer = GAS_PIPE_VISIBLE_LAYER
 	
 /obj/machinery/atmospherics/pipe/manifold4w/yellow/visible/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/yellow/visible/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/yellow/hidden
 	level = PIPE_HIDDEN_LEVEL
 	
 /obj/machinery/atmospherics/pipe/manifold4w/yellow/hidden/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/yellow/hidden/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/cyan
 	pipe_color=rgb(0,255,249)
@@ -196,27 +196,27 @@
 	layer = GAS_PIPE_VISIBLE_LAYER
 	
 /obj/machinery/atmospherics/pipe/manifold4w/cyan/visible/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/cyan/visible/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/cyan/hidden
 	level = PIPE_HIDDEN_LEVEL
 	
 /obj/machinery/atmospherics/pipe/manifold4w/cyan/hidden/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/cyan/hidden/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/green
 	pipe_color=rgb(30,255,0)
@@ -227,27 +227,27 @@
 	layer = GAS_PIPE_VISIBLE_LAYER
 	
 /obj/machinery/atmospherics/pipe/manifold4w/green/visible/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/green/visible/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/green/hidden
 	level = PIPE_HIDDEN_LEVEL
 	
 /obj/machinery/atmospherics/pipe/manifold4w/green/hidden/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/green/hidden/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/orange
 	pipe_color=rgb(255,129,25)
@@ -258,27 +258,27 @@
 	layer = GAS_PIPE_VISIBLE_LAYER
 	
 /obj/machinery/atmospherics/pipe/manifold4w/orange/visible/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/orange/visible/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/orange/hidden
 	level = PIPE_HIDDEN_LEVEL
 	
 /obj/machinery/atmospherics/pipe/manifold4w/orange/hidden/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/orange/hidden/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/purple
 	pipe_color=rgb(128,0,182)
@@ -289,27 +289,27 @@
 	layer = GAS_PIPE_VISIBLE_LAYER
 	
 /obj/machinery/atmospherics/pipe/manifold4w/purple/visible/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/purple/visible/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/purple/hidden
 	level = PIPE_HIDDEN_LEVEL
 	
 /obj/machinery/atmospherics/pipe/manifold4w/purple/hidden/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/purple/hidden/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/dark
 	pipe_color=rgb(69,69,69)
@@ -320,27 +320,27 @@
 	layer = GAS_PIPE_VISIBLE_LAYER
 	
 /obj/machinery/atmospherics/pipe/manifold4w/dark/visible/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/dark/visible/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/dark/hidden
 	level = PIPE_HIDDEN_LEVEL
 	
 /obj/machinery/atmospherics/pipe/manifold4w/dark/hidden/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/dark/hidden/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/violet
 	pipe_color=rgb(64,0,128)
@@ -351,27 +351,27 @@
 	layer = GAS_PIPE_VISIBLE_LAYER
 	
 /obj/machinery/atmospherics/pipe/manifold4w/violet/visible/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/violet/visible/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/violet/hidden
 	level = PIPE_HIDDEN_LEVEL
 	
 /obj/machinery/atmospherics/pipe/manifold4w/violet/hidden/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/violet/hidden/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/brown
 	pipe_color=rgb(178,100,56)
@@ -382,24 +382,24 @@
 	layer = GAS_PIPE_VISIBLE_LAYER
 	
 /obj/machinery/atmospherics/pipe/manifold4w/brown/visible/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/brown/visible/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/brown/hidden
 	level = PIPE_HIDDEN_LEVEL
 	
 /obj/machinery/atmospherics/pipe/manifold4w/brown/hidden/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/manifold4w/brown/hidden/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y

@@ -34,28 +34,28 @@
 	pipe_state = "uvent"
 	
 /obj/machinery/atmospherics/components/unary/vent_pump/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/on
 	on = TRUE
 	icon_state = "vent_map_on"
 	
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon
 	pump_direction = SIPHONING
@@ -64,28 +64,28 @@
 	external_pressure_bound = 0
 	
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on
 	on = TRUE
 	icon_state = "vent_map_siphon_on"
 	
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos
 	frequency = FREQ_ATMOS_STORAGE
@@ -138,28 +138,28 @@
 	power_channel = EQUIP
 	
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on
 	on = TRUE
 	icon_state = "vent_map_on"
 	
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon
 	pump_direction = SIPHONING
@@ -168,28 +168,28 @@
 	external_pressure_bound = 0
 	
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on
 	on = TRUE
 	icon_state = "vent_map_siphon_on"
 	
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos
 	frequency = FREQ_ATMOS_STORAGE

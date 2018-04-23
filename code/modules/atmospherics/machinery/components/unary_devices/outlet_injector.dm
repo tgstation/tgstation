@@ -21,14 +21,14 @@
 	pipe_state = "injector"
 	
 /obj/machinery/atmospherics/components/unary/outlet_injector/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -77,14 +77,14 @@
 	on = TRUE
 	
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/update_icon_nopipes()
 	cut_overlays()

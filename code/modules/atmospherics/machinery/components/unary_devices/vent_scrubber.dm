@@ -31,14 +31,14 @@
 	pipe_state = "scrubber"
 	
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
@@ -54,14 +54,14 @@
 	icon_state = "scrub_map_on"
 	
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/A = get_area(src)

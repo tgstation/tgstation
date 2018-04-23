@@ -13,14 +13,14 @@
 	pipe_state = "he"
 	
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer1
-	piping_layer = 1
-	pixel_x = -5
-	pixel_y = -5
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer3
-	piping_layer = 3
-	pixel_x = 5
-	pixel_y = 5
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/SetInitDirections()
 	if(dir in GLOB.diagonals)
