@@ -60,7 +60,7 @@
 
 /datum/component/storage/Initialize(datum/component/storage/concrete/master)
 	if(!isatom(parent))
-		. = COMPONENT_INCOMPATIBLE
+		return COMPONENT_INCOMPATIBLE
 	if(master)
 		change_master(master)
 	boxes = new(null, src)
