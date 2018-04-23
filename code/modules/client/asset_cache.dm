@@ -256,19 +256,32 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 	return out.Join("\n")
 
-/datum/asset/spritesheet/proc/Insert(sprite_name, icon/I)
+/datum/asset/spritesheet/proc/Insert(sprite_name, icon/I, icon_state=null, dir=SOUTH, frame=1, moving=FALSE)
+	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
 	var/size_id = "[I.Width()]x[I.Height()]"
 	var/size = sizes[size_id]
 
 	if (size)
-		var/frame = ++size[SPRSZ_COUNT]
+		var/position = size[SPRSZ_COUNT]++
 		var/icon/sheet = size[SPRSZ_ICON]
 		size[SPRSZ_STRIPPED] = null
-		sheet.Insert(icon(I, dir=SOUTH, frame=1), icon_state=sprite_name)
-		sprites[sprite_name] = list(size_id, frame)
+		sheet.Insert(I, icon_state=sprite_name)
+		sprites[sprite_name] = list(size_id, position)
 	else
-		sizes[size_id] = size = list(0, icon(I, dir=SOUTH, frame=1), null)
+		sizes[size_id] = size = list(1, I, null)
 		sprites[sprite_name] = list(size_id, 0)
+
+/datum/asset/spritesheet/proc/InsertAll(prefix, icon/I, list/directions)
+	if (length(prefix))
+		prefix = "[prefix]-"
+
+	if (!directions)
+		directions = list(SOUTH)
+
+	for (var/icon_state_name in icon_states(I))
+		for (var/direction in directions)
+			var/prefix2 = (directions.len > 1) ? "[dir2text(direction)]-" : ""
+			Insert("[prefix][prefix2][icon_state_name]", I, icon_state=icon_state_name, dir=direction)
 
 /datum/asset/spritesheet/proc/css_tag()
 	return {"<link rel="stylesheet" href="spritesheet_[name].css" />"}
@@ -276,7 +289,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/spritesheet/proc/icon_tag(sprite_name)
 	var/sprite = sprites[sprite_name]
 	if (!sprite)
-		return @"[?]"
+		return null
 	var/size_id = sprite[SPR_SIZE]
 	return {"<span class="[name][size_id] [sprite_name]"></span>"}
 
