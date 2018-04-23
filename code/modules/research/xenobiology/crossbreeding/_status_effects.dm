@@ -356,7 +356,7 @@ datum/status_effect/stabilized/blue/on_remove()
 		cooldown = max_cooldown
 		var/list/sheets = list()
 		for(var/obj/item/stack/sheet/S in owner.GetAllContents())
-			if(S.amount < S.max_amount)
+			if(S.amount < S.max_amount && !istype(S, /obj/item/stack/sheet/runed_metal))
 				sheets += S
 
 		if(sheets.len > 0)
