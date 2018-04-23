@@ -363,3 +363,5 @@
 	species = "ember"
 	plantname = "Embershroom Mushrooms"
 	product = /obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_stem
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/glow)
+	
