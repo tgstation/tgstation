@@ -47,13 +47,6 @@
 		return 1
 	return 0
 
-
-/obj/item/grown/Crossed(atom/movable/AM)
-	if(seed)
-		for(var/datum/plant_gene/trait/T in seed.genes)
-			T.on_cross(src, AM)
-	..()
-
 /obj/item/grown/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?
 		if(seed)
