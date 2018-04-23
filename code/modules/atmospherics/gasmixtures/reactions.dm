@@ -216,10 +216,6 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_energy
-
-	to_chat(world,"Reaction Energy: [reaction_energy]")
-	to_chat(world,"Holder: [holder]")
-
 	var/mediation = 100*(air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES]) //This is the average heat capacity of the mixture,not including plasma.
 	var/gas_power = 0
 	for (var/id in cached_gases)
@@ -227,9 +223,6 @@
 	var/plasma_fused = 0
 	var/power_ratio = min(gas_power/mediation,100)//100 is a lot, we really don't want to go over this.
 	if (power_ratio > 10) //Super-fusion. Fuses everything into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
-		to_chat(world,"Super fusion")
-		to_chat(world,"Mediation: [mediation]")
-		to_chat(world,"Gas Power: [gas_power], Plasma: [cached_gases[/datum/gas/plasma][MOLES]]")
 		var/gases_fused = air.total_moles()
 		reaction_energy += gases_fused*PLASMA_BINDING_ENERGY*(gas_power/(mediation*100))
 		for (var/id in cached_gases)
@@ -242,9 +235,6 @@
 			explosion(location,0,1,power_ratio*0.5,power_ratio,TRUE,TRUE)//Bypasses cap. Doesn't blow large hole in station, but produces moderate devestation for long ranges. Be careful with this.
 
 	else if (power_ratio > 1) //Mediation is overpowered, fusion reaction starts to break down.
-		to_chat(world,"Breakdown")
-		to_chat(world,"Mediation: [mediation]")
-		to_chat(world,"Gas Power: [gas_power], Plasma: [cached_gases[/datum/gas/plasma][MOLES]]")
 		plasma_fused = cached_gases[/datum/gas/plasma][MOLES]
 		reaction_energy += plasma_fused*PLASMA_BINDING_ENERGY
 		cached_gases[/datum/gas/plasma][MOLES] -= plasma_fused
@@ -256,10 +246,6 @@
 			empulse(location, mediation*0.05, mediation*0.1)
 			radiation_pulse(location, power_ratio*(reaction_energy)/(0.3*PLASMA_BINDING_ENERGY))
 	else
-		to_chat(world,"Normal fusion")
-		to_chat(world,"Mediation: [mediation]")
-		to_chat(world,"Gas Power: [gas_power], Plasma: [cached_gases[/datum/gas/plasma][MOLES]]")
-
 		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*PLASMA_BINDING_ENERGY*(gas_power/mediation)
 		air.assert_gas(/datum/gas/oxygen)
 		cached_gases[/datum/gas/oxygen][MOLES] += gas_power + cached_gases[/datum/gas/plasma][MOLES]
