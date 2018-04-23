@@ -37,9 +37,6 @@
 				to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
 				return 1
 
-		if(exchange_parts(user, I))
-			return
-
 		if(default_deconstruction_crowbar(I))
 			return
 

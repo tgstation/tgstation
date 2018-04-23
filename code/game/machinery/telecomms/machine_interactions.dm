@@ -18,10 +18,6 @@
 
 	if(default_deconstruction_screwdriver(user, icon_open, icon_closed, P))
 		return
-
-	else if(exchange_parts(user, P))
-		return
-
 	// Using a multitool lets you access the receiver's interface
 	else if(istype(P, /obj/item/device/multitool))
 		attack_hand(user)

@@ -59,9 +59,6 @@
 	if(default_deconstruction_screwdriver(user, "hydrotray3", "hydrotray3", I))
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_pry_open(I))
 		return
 

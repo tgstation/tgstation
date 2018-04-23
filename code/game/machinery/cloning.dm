@@ -279,9 +279,6 @@
 		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
 			return
 
-	if(exchange_parts(user, W))
-		return
-
 	if(default_deconstruction_crowbar(W))
 		return
 

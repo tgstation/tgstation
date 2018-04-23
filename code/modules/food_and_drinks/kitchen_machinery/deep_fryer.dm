@@ -89,8 +89,6 @@ God bless America.
 		return
 	if(default_unfasten_wrench(user, I))
 		return
-	else if(exchange_parts(user, I))
-		return
 	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
 		return
 	else
