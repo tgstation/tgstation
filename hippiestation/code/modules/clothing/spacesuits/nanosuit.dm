@@ -195,17 +195,16 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.glasses == src)
-			switch(on)
-				if(1)
-					darkness_view = 8
-					vision_flags = SEE_BLACKNESS
-					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-					H.add_client_colour(glass_colour_type)
-				if(0)
-					vision_flags = NONE
-					darkness_view = 2
-					lighting_alpha = null
-					H.remove_client_colour(glass_colour_type)
+			if(on)
+				darkness_view = 8
+				vision_flags = SEE_BLACKNESS
+				lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+				H.add_client_colour(glass_colour_type)
+			else
+				vision_flags = NONE
+				darkness_view = 2
+				lighting_alpha = null
+				H.remove_client_colour(glass_colour_type)
 			H.update_client_colour()
 			H.update_sight()
 
@@ -389,9 +388,9 @@
 		if(cell.charge > 0)
 			cell.use(CLAMP(hit_use + damage,1,cell.charge))
 			user.visible_message("<span class='danger'>[user]'s shields deflect [attack_text]!</span>")
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 		if(cell <= 20) //we instantly go out of armor if we get hit at critical energy
 			cell.charge = 0
 			//DisableModes()
@@ -405,7 +404,7 @@
 		current_charges--
 		heal_nano(user)
 
-	return 0
+	return FALSE
 
 /obj/item/clothing/suit/space/hardsuit/nano/proc/heal_nano(mob/living/carbon/human/user)
 	helmet.display_visor_message("Engaging emergency medical protocols")
@@ -645,10 +644,8 @@
 
 obj/item/clothing/suit/space/hardsuit/nano/dropped()
 	toggle_mode("none", TRUE)
-	STOP_PROCESSING(SSobj, src)
 	if(U)
 		U = null
-	qdel(src)
 	..()
 
 /mob/living/carbon/human/Stat()
@@ -697,7 +694,7 @@ obj/item/clothing/suit/space/hardsuit/nano/dropped()
 			add_logs(A, D, "grabbed", addition="aggressively")
 			A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
 
-	return 1
+	return TRUE
 
 /datum/martial_art/nano/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/D)
 	add_logs(A, D, "punched")
@@ -739,7 +736,7 @@ obj/item/clothing/suit/space/hardsuit/nano/dropped()
 			D.Knockdown(60)
 			D.visible_message("<span class='warning'>[A] knocks [D] the fuck out!!", \
 							"<span class='userdanger'>[A] knocks you the fuck out!!</span>")
-	return 1
+	return TRUE
 
 /datum/martial_art/nano/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/D)
 	var/obj/item/I = null
@@ -758,7 +755,7 @@ obj/item/clothing/suit/space/hardsuit/nano/dropped()
 							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")
 		playsound(D, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 	add_logs(A, D, "disarmed with krav maga", "[I ? " removing \the [I]" : ""]")
-	return 1
+	return TRUE
 
 
 /obj/proc/nano_damage() //the damage nanosuits do on punches to this object, is affected by melee armor
@@ -772,14 +769,14 @@ obj/item/clothing/suit/space/hardsuit/nano/dropped()
 		user.do_attack_animation(src, ATTACK_EFFECT_SMASH)
 
 /obj/item/attack_nano(mob/living/carbon/human/user)
-	return 0
+	return FALSE
 
 /obj/effect/attack_nano(mob/living/carbon/human/user, does_attack_animation = 0)
-	return 0
+	return FALSE
 
 /obj/structure/window/attack_nano(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(!can_be_reached(user))
-		return 1
+		return TRUE
 	. = ..()
 
 /obj/structure/grille/attack_nano(mob/living/carbon/human/user, does_attack_animation = 0)
@@ -802,8 +799,8 @@ obj/item/clothing/suit/space/hardsuit/nano/dropped()
 		else
 			playsound(src, 'sound/effects/bang.ogg', 50, 0.5)//less ear rape
 		take_damage(nano_damage(), BRUTE, "melee", 0, get_dir(src, user))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
@@ -880,13 +877,13 @@ obj/item/clothing/suit/space/hardsuit/nano/dropped()
 
 /obj/item/implant/explosive/disintegrate/activate(cause)
 	if(!cause || !imp_in || active)
-		return 0
+		return FALSE
 	if(cause == "action_button" && !popup)
 		popup = TRUE
 		var/response = alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to vapourize!", "[name] Confirmation", "Yes", "No")
 		popup = FALSE
 		if(response == "No")
-			return 0
+			return FALSE
 	to_chat(imp_in, "<span class='notice'>You activate your [name].</span>")
 	active = TRUE
 	var/turf/dustturf = get_turf(imp_in)
