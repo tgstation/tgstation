@@ -27358,6 +27358,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-4"
 	},
+/obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "blS" = (
@@ -100216,15 +100217,6 @@
 /obj/machinery/rnd/production/techfab/department/cargo,
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/office)
-"ehK" = (
-/obj/machinery/mineral/ore_redemption{
-	input_dir = 4;
-	output_dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/stripes/box,
-/turf/open/floor/plasteel/neutral,
-/area/quartermaster/miningoffice)
 "ehL" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -100656,6 +100648,12 @@
 	dir = 6
 	},
 /area/science/circuit)
+"rUL" = (
+/obj/machinery/mineral/ore_redemption,
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/plasteel/neutral,
+/area/quartermaster/miningoffice)
 "saw" = (
 /turf/closed/wall,
 /area/science/circuit)
@@ -144088,7 +144086,7 @@ bgK
 bii
 bjU
 blR
-baU
+rUL
 boO
 bqZ
 bsT
@@ -144600,7 +144598,7 @@ baU
 bfw
 bgG
 bik
-ehK
+baU
 baQ
 baQ
 boW
