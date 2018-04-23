@@ -40,7 +40,7 @@
 	junkiness = 20
 	filling_color = "#FFD700"
 	tastes = list("salt" = 1, "crisps" = 1)
-	foodtype = JUNKFOOD | VEGETABLES | FRIED
+	foodtype = JUNKFOOD | FRIED
 
 /obj/item/reagent_containers/food/snacks/no_raisin
 	name = "4no raisins"
