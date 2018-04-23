@@ -566,6 +566,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	return captured_amount >= target_amount
 
 
+//Changeling Objectives
+
 /datum/objective/absorb
 
 /datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
@@ -597,7 +599,47 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		absorbedcount += changeling.absorbedcount
 	return absorbedcount >= target_amount
 
+/datum/objective/absorb_most
+	explanation_text = "Extract more compatible genomes than any other Changeling."
 
+/datum/objective/absorb_most/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	var/absorbedcount = 0
+	for(var/datum/mind/M in owners)
+		if(!M)
+			continue
+		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
+		if(!changeling || !changeling.stored_profiles)
+			continue
+		absorbedcount += changeling.absorbedcount
+
+	for(var/datum/antagonist/changeling/changeling2 in GLOB.antagonists)
+		if(!changeling2.owner || !changeling2.stored_profiles || changeling2.absorbedcount < absorbedcount)
+			continue
+		return FALSE
+	return TRUE
+
+/datum/objective/absorb_changeling
+	explanation_text = "Absorb another Changeling."
+
+/datum/objective/absorb_changeling/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	for(var/datum/mind/M in owners)
+		if(!M)
+			continue
+		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
+		if(!changeling)
+			continue
+		var/total_genetic_points = changeling.geneticpoints
+
+		for(var/obj/effect/proc_holder/changeling/p in changeling.purchasedpowers)
+			total_genetic_points += p.dna_cost
+
+		if(total_genetic_points > initial(changeling.geneticpoints))
+			return TRUE
+	return FALSE
+
+//End Changeling Objectives
 
 /datum/objective/destroy
 	martyr_compatible = 1
