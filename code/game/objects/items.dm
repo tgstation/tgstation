@@ -144,9 +144,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	QDEL_NULL(rpg_loot)
 	return ..()
 
-/obj/item
-	icon = 'icons/obj/device.dmi'
-
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
 		return 0
