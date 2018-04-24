@@ -15,7 +15,7 @@
 
 /obj/effect/spawner/newbomb/Initialize()
 	. = ..()
-	var/obj/item/device/transfer_valve/V = new(src.loc)
+	var/obj/item/transfer_valve/V = new(src.loc)
 	var/obj/item/tank/internals/plasma/PT = new(V)
 	var/obj/item/tank/internals/oxygen/OT = new(V)
 
