@@ -92,7 +92,7 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize()
 	. = ..()
-	internal = new/obj/item/device/gps/internal/colossus(src)
+	internal = new/obj/item/gps/internal/colossus(src)
 
 /obj/effect/temp_visual/at_shield
 	name = "anti-toolbox field"
@@ -220,7 +220,7 @@ Difficulty: Very Hard
 		target.ex_act(EXPLODE_HEAVY)
 
 
-/obj/item/device/gps/internal/colossus
+/obj/item/gps/internal/colossus
 	icon_state = null
 	gpstag = "Angelic Signal"
 	desc = "Get in the fucking robot."
@@ -785,5 +785,3 @@ Difficulty: Very Hard
 #undef ACTIVATE_MOB_BUMP
 #undef ACTIVATE_WEAPON
 #undef ACTIVATE_MAGIC
-
-#undef MEDAL_PREFIX

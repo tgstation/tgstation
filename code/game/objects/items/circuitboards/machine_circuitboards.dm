@@ -449,7 +449,7 @@
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/device/assembly/igniter = 1)
+		/obj/item/assembly/igniter = 1)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/mining_equipment_vendor
@@ -609,6 +609,14 @@
 		/obj/item/stock_parts/cell = 1)
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/chem_dispenser/drinks
+	name = "Soda Dispenser (Machine Board)"
+	build_path = /obj/machinery/chem_dispenser/drinks
+
+/obj/item/circuitboard/machine/chem_dispenser/drinks/beer
+	name = "Booze Dispenser (Machine Board)"
+	build_path = /obj/machinery/chem_dispenser/drinks/beer
 
 /obj/item/circuitboard/machine/smoke_machine
 	name = "Smoke Machine (Machine Board)"

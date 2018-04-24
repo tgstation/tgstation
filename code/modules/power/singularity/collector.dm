@@ -103,7 +103,7 @@
 			disconnect_from_network()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/analyzer) && loaded_tank)
+	if(istype(W, /obj/item/analyzer) && loaded_tank)
 		atmosanalyzer_scan(loaded_tank.air_contents, user)
 	else if(istype(W, /obj/item/tank/internals/plasma))
 		if(!anchored)

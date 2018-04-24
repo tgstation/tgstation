@@ -439,8 +439,8 @@
 				constructionStep = CONSTRUCTION_GUTTED
 				update_icon()
 				return
-			if(istype(C, /obj/item/device/electroadaptive_pseudocircuit))
-				var/obj/item/device/electroadaptive_pseudocircuit/P = C
+			if(istype(C, /obj/item/electroadaptive_pseudocircuit))
+				var/obj/item/electroadaptive_pseudocircuit/P = C
 				if(!P.adapt_circuit(user, 30))
 					return
 				user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \

@@ -6,7 +6,7 @@ All ShuttleMove procs go here
 
 // Called on every turf in the shuttle region, returns a bitflag for allowed movements of that turf
 // returns the new move_mode (based on the old)
-/turf/proc/fromShuttleMove(turf/newT, turf_type, list/baseturf_cache, move_mode)
+/turf/proc/fromShuttleMove(turf/newT, move_mode)
 	if(!(move_mode & MOVE_AREA) || !isshuttleturf(src))
 		return move_mode
 
@@ -66,13 +66,12 @@ All ShuttleMove procs go here
 	return TRUE
 
 // Called on the new turf after everything has been moved
-/turf/proc/afterShuttleMove(turf/oldT, turf_type, baseturf_type, rotation)
+/turf/proc/afterShuttleMove(turf/oldT, rotation)
 	//Dealing with the turf we left behind
 	oldT.TransferComponents(src)
 	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
 	if(shuttle_boundary)
-		var/depth = baseturfs.len - shuttle_boundary + 1
-		oldT.ScrapeAway(depth)
+		oldT.ScrapeAway(baseturfs.len - shuttle_boundary + 1)
 
 	if(rotation)
 		shuttleRotate(rotation) //see shuttle_rotate.dm
@@ -158,17 +157,17 @@ All ShuttleMove procs go here
 
 /obj/machinery/door/airlock/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
-	shuttledocked = 0
-	for(var/obj/machinery/door/airlock/A in range(1, src))
-		A.shuttledocked = 0
+	for(var/obj/machinery/door/airlock/A in range(1, src))  // includes src
+		A.shuttledocked = FALSE
 		A.air_tight = TRUE
 		INVOKE_ASYNC(A, /obj/machinery/door/.proc/close)
 
 /obj/machinery/door/airlock/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	shuttledocked =  1
-	for(var/obj/machinery/door/airlock/A in range(1, src))
-		A.shuttledocked = 1
+	for(var/obj/machinery/door/airlock/A in orange(1, src))  // does not include src
+		// Cycle linking is only disabled if we are actually adjacent to another airlock
+		shuttledocked = TRUE
+		A.shuttledocked = TRUE
 
 /obj/machinery/camera/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()

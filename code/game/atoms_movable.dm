@@ -384,6 +384,9 @@
 	if(throwing)
 		return 1
 
+	if(!isturf(loc))
+		return 1
+
 	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
 		return 1
 
@@ -411,6 +414,9 @@
 	if(!anchored && hitpush)
 		step(src, AM.dir)
 	..()
+
+/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
+	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback)
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback) //If this returns FALSE then callback will not be called.
 	. = FALSE
@@ -486,11 +492,11 @@
 	if(spin)
 		SpinAnimation(5, 1)
 
+	SendSignal(COMSIG_MOVABLE_THROW, TT, spin)
 	SSthrowing.processing[src] = TT
 	if (SSthrowing.state == SS_PAUSED && length(SSthrowing.currentrun))
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
-
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
@@ -508,6 +514,13 @@
 		return 1
 	return ..()
 
+// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
+/atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S)
+	return
+
+// called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
+/atom/movable/proc/on_enter_storage(datum/component/storage/concrete/S)
+	return
 
 /atom/movable/proc/get_spacemove_backup()
 	var/atom/movable/dense_object_backup
@@ -669,9 +682,8 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.transferItemToLoc(src, targetturf, TRUE)	//nodrops disks when?
-	else if(istype(loc, /obj/item/storage))
-		var/obj/item/storage/S = loc
-		S.remove_from_storage(src, targetturf)
+	else if(loc.SendSignal(COMSIG_CONTAINS_STORAGE))
+		loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, src, targetturf, TRUE)
 	else
 		forceMove(targetturf)
 	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
@@ -701,7 +713,6 @@
 			return TRUE
 
 	return FALSE
-
 
 /* Language procs */
 /atom/movable/proc/get_language_holder(shadow=TRUE)

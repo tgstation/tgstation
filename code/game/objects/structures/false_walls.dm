@@ -62,7 +62,6 @@
 			opening = FALSE
 			return
 	addtimer(CALLBACK(src, /obj/structure/falsewall/proc/toggle_open), 5)
-	air_update_turf(1)
 
 /obj/structure/falsewall/proc/toggle_open()
 	if(!QDELETED(src))
@@ -70,6 +69,7 @@
 		set_opacity(density)
 		opening = FALSE
 		update_icon()
+		air_update_turf(TRUE)
 
 /obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	if(opening)

@@ -137,7 +137,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "z" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},

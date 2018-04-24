@@ -17,9 +17,7 @@
 						to_chat(user, "<span class='notice'>You can't fit anything in.</span>")
 					return
 				if(thing) // put thing in belt
-					if(equipped_belt.can_be_inserted(thing))
-						equipped_belt.handle_item_insertion(thing)
-					else
+					if(!equipped_belt.SendSignal(COMSIG_TRY_STORAGE_INSERT, thing, user.mob))
 						to_chat(user, "<span class='notice'>You can't fit anything in.</span>")
 					return
 				if(!equipped_belt.contents.len) // nothing to take out
@@ -47,9 +45,7 @@
 						to_chat(user, "<span class='notice'>You can't fit anything in.</span>")
 					return
 				if(thing) // put thing in backpack
-					if(equipped_backpack.can_be_inserted(thing))
-						equipped_backpack.handle_item_insertion(thing)
-					else
+					if(!equipped_backpack.SendSignal(COMSIG_TRY_STORAGE_INSERT, thing, user.mob))
 						to_chat(user, "<span class='notice'>You can't fit anything in.</span>")
 					return
 				if(!equipped_backpack.contents.len) // nothing to take out

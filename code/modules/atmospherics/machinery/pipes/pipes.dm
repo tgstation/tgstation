@@ -63,7 +63,7 @@
 	return parent.air.remove(amount)
 
 /obj/machinery/atmospherics/pipe/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/analyzer))
+	if(istype(W, /obj/item/analyzer))
 		atmosanalyzer_scan(parent.air, user)
 	if(istype(W, /obj/item/pipe_meter))
 		var/obj/item/pipe_meter/meter = W

@@ -8,7 +8,7 @@
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
-	radio_key = /obj/item/device/encryptionkey/headset_service
+	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = "Service" //Service
 	bot_type = CLEAN_BOT
 	model = "Cleanbot"
@@ -63,7 +63,7 @@
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/device/pda))
+	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>")
@@ -261,7 +261,7 @@
 
 	new /obj/item/reagent_containers/glass/bucket(Tsec)
 
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/assembly/prox_sensor(Tsec)
 
 	if(prob(50))
 		drop_part(robot_arm, Tsec)

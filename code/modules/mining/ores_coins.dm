@@ -49,15 +49,19 @@
 
 	return TRUE
 
-/obj/item/stack/ore/burn()
-	if(!refined_type)
-		return ..()
-	var/obj/item/stack/sheet/S = new refined_type(drop_location())
-	var/percent = rand(0.3,0.7)
-	var/amountrefined = round(amount*percent)
-	S.amount = amountrefined
-	S.update_icon()
-	qdel(src)
+/obj/item/stack/ore/fire_act(exposed_temperature, exposed_volume)
+	. = ..()
+	if(isnull(refined_type))
+		return
+	else
+		var/probability = (rand(0,100))/100
+		var/burn_value = probability*amount
+		var/amountrefined = round(burn_value, 1)
+		if(amountrefined < 1)
+			qdel(src)
+		else
+			new refined_type(drop_location(),amountrefined)
+			qdel(src)
 
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
@@ -206,7 +210,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	return ..()
 
 /obj/item/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
-	if(!wires && istype(I, /obj/item/device/assembly/igniter))
+	if(!wires && istype(I, /obj/item/assembly/igniter))
 		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
 		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)
@@ -223,7 +227,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		GibtoniteReaction(user)
 		return
 	if(primed)
-		if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool))
+		if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) || istype(I, /obj/item/multitool))
 			primed = FALSE
 			if(det_timer)
 				deltimer(det_timer)

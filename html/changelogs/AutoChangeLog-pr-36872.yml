@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - code_imp: "A few code internal debugging features have been added to help debug GC errors. QDEL_HINT_IFFAIL_FINDREFERENCE hint will make the garbage subsystem find references if the build is in TESTING mode, and qdel_and_then_find_ref_if_fail(datum) or calling qdel_then_if_fail_find_references will do the same."

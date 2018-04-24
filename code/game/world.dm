@@ -4,14 +4,14 @@ GLOBAL_VAR(security_mode)
 GLOBAL_VAR(restart_counter)
 GLOBAL_PROTECT(security_mode)
 
-//This happens after the Master subsystem news (it's a global datum)
+//This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 /world/New()
-	log_world("World loaded at [time_stamp()]")
+	log_world("World loaded at [time_stamp()]!")
 
 	SetupExternalRSC()
 
-	GLOB.config_error_log = GLOB.manifest_log = GLOB.world_pda_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = "data/logs/config_error.log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 
 	CheckSecurityMode()
 
@@ -81,24 +81,29 @@ GLOBAL_PROTECT(security_mode)
 			GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
 	else
 		GLOB.log_directory = "data/logs/[override_dir]"
-	GLOB.world_game_log = file("[GLOB.log_directory]/game.log")
-	GLOB.world_attack_log = file("[GLOB.log_directory]/attack.log")
-	GLOB.world_runtime_log = file("[GLOB.log_directory]/runtime.log")
-	GLOB.world_qdel_log = file("[GLOB.log_directory]/qdel.log")
-	GLOB.world_href_log = file("[GLOB.log_directory]/hrefs.html")
-	GLOB.world_pda_log = file("[GLOB.log_directory]/pda.log")
-	GLOB.sql_error_log = file("[GLOB.log_directory]/sql.log")
-	GLOB.manifest_log = file("[GLOB.log_directory]/manifest.log")
+
+	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
+	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
+	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
+	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
+	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
+	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
+	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
+	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
+
 #ifdef UNIT_TESTS
 	GLOB.test_log = file("[GLOB.log_directory]/tests.log")
-	WRITE_FILE(GLOB.test_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
+	start_log(GLOB.test_log)
 #endif
-	WRITE_FILE(GLOB.world_game_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
-	WRITE_FILE(GLOB.world_attack_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
-	WRITE_FILE(GLOB.world_runtime_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
-	WRITE_FILE(GLOB.world_pda_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
-	WRITE_FILE(GLOB.manifest_log, "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------")
-	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
+	start_log(GLOB.world_game_log)
+	start_log(GLOB.world_attack_log)
+	start_log(GLOB.world_pda_log)
+	start_log(GLOB.world_manifest_log)
+	start_log(GLOB.world_href_log)
+	start_log(GLOB.world_qdel_log)
+	start_log(GLOB.world_runtime_log)
+
+	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
@@ -121,7 +126,6 @@ GLOBAL_PROTECT(security_mode)
 		warning("/tg/station 13 uses many file operations, a few shell()s, and some external call()s. Trusted mode is recommended. You can download our source code for your own browsing and compilation at https://github.com/tgstation/tgstation")
 
 /world/Topic(T, addr, master, key)
-
 	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
 
 	var/static/list/topic_handlers = TopicHandlers()
@@ -134,7 +138,7 @@ GLOBAL_PROTECT(security_mode)
 			break
 
 	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_world_topic))
-		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
+		log_topic("\"[T]\", from:[addr], master:[master], key:[key]")
 
 	if(!handler)
 		return
@@ -210,9 +214,11 @@ GLOBAL_PROTECT(security_mode)
 
 		if(do_hard_reboot)
 			log_world("World hard rebooted at [time_stamp()]")
+			shutdown_logging() // See comment below.
 			SERVER_TOOLS_REBOOT_BYOND
 
 	log_world("World rebooted at [time_stamp()]")
+	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	..()
 
 /world/proc/update_status()

@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
-		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr]\[[COORD(usr)]\])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+		log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -236,7 +236,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 
 	. = ..()	//calls mob.Login()
-	#if DM_VERSION >= 512
+
 	if (byond_version >= 512)
 		if (!byond_build || byond_build < 1386)
 			message_admins("<span class='adminnotice'>[key_name(src)] has been detected as spoofing their byond version. Connection rejected.</span>")
@@ -254,7 +254,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			else
 				qdel(src)
 				return
-	#endif
+
 	if(SSinput.initialized)
 		set_macros()
 
@@ -610,7 +610,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/proc/note_randomizer_user()
 	add_system_note("CID-Error", "Detected as using a cid randomizer.")
-	
+
 /client/proc/add_system_note(system_ckey, message)
 	var/sql_system_ckey = sanitizeSQL(system_ckey)
 	var/sql_ckey = sanitizeSQL(ckey)
@@ -689,9 +689,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		verbs += /client/proc/self_playtime
 
 
-#undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT
-#undef MIN_CLIENT_VERSION
 
 //checks if a client is afk
 //3000 frames = 5 minutes
@@ -759,6 +757,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 	view = new_size
 	apply_clickcatcher()
+	mob.reload_fullscreen()
 	if (isliving(mob))
 		var/mob/living/M = mob
 		M.update_damage_hud()

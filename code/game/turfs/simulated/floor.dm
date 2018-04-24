@@ -99,7 +99,7 @@
 	return 1
 
 /turf/open/floor/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/open/floor/proc/gets_drilled()
 	return

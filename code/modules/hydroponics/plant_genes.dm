@@ -161,9 +161,6 @@
 /datum/plant_gene/trait/proc/on_consume(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
 
-/datum/plant_gene/trait/proc/on_cross(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
-	return
-
 /datum/plant_gene/trait/proc/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
 
@@ -190,23 +187,21 @@
 	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
 
-/datum/plant_gene/trait/slip/on_cross(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
-	if(iscarbon(target))
-		var/obj/item/seeds/seed = G.seed
-		var/mob/living/carbon/M = target
+/datum/plant_gene/trait/slip/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
+	..()
+	if(istype(G) && ispath(G.trash, /obj/item/grown))
+		return
+	var/obj/item/seeds/seed = G.seed
+	var/stun_len = seed.potency * rate
 
-		if(istype(G) && ispath(G.trash, /obj/item/grown))
-			return
-		var/stun_len = seed.potency * rate
+	if(!istype(G, /obj/item/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent("lube")))
+		stun_len /= 3
 
-		if(!istype(G, /obj/item/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent("lube")))
-			stun_len /= 3
+	G.AddComponent(/datum/component/slippery, min(stun_len,140), NONE, CALLBACK(src, .proc/handle_slip, G))
 
-		var/knockdown = min(stun_len, 140)
-
-		if(M.slip(knockdown, G))
-			for(var/datum/plant_gene/trait/T in seed.genes)
-				T.on_slip(G, M)
+/datum/plant_gene/trait/slip/proc/handle_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/M)
+	for(var/datum/plant_gene/trait/T in G.seed.genes)
+		T.on_slip(G, M)
 
 /datum/plant_gene/trait/cell_charge
 	// Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
