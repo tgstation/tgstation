@@ -520,7 +520,7 @@
 
 		var/duration
 
-		switch(alert("Temporary Ban?",,"Yes","No"))
+		switch(alert("Temporary Ban for [banned_key]?",,"Yes","No"))
 			if("Yes")
 				temp = 1
 				var/mins = 0
@@ -532,13 +532,13 @@
 					return
 				minutes = GLOB.CMinutes + mins
 				duration = GetExp(minutes)
-				reason = input(usr,"Please State Reason.","Reason",reason2) as message|null
+				reason = input(usr,"Please State Reason For Banning [banned_key].","Reason",reason2) as message|null
 				if(!reason)
 					return
 			if("No")
 				temp = 0
 				duration = "Perma"
-				reason = input(usr,"Please State Reason.","Reason",reason2) as message|null
+				reason = input(usr,"Please State Reason For Banning [banned_key].","Reason",reason2) as message|null
 				if(!reason)
 					return
 
@@ -953,13 +953,13 @@
 
 		//Banning comes first
 		if(notbannedlist.len) //at least 1 unbanned job exists in joblist so we have stuff to ban.
-			switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
+			switch(alert("Temporary Ban for [M.ckey]?",,"Yes","No", "Cancel"))
 				if("Yes")
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(mins <= 0)
 						to_chat(usr, "<span class='danger'>[mins] is not a valid duration.</span>")
 						return
-					var/reason = input(usr,"Please State Reason.","Reason") as message|null
+					var/reason = input(usr,"Please State Reason For Banning [M.ckey].","Reason") as message|null
 					if(!reason)
 						return
 
@@ -984,7 +984,7 @@
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
-					var/reason = input(usr,"Please State Reason","Reason") as message|null
+					var/reason = input(usr,"Please State Reason For Banning [M.ckey].","Reason") as message|null
 					if(reason)
 						var/msg
 						for(var/job in notbannedlist)
@@ -1192,13 +1192,13 @@
 		if(M.client && M.client.holder)
 			return	//admins cannot be banned. Even if they could, the ban doesn't affect them anyway
 
-		switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
+		switch(alert("Temporary Ban for [M.ckey]?",,"Yes","No", "Cancel"))
 			if("Yes")
 				var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 				if(mins <= 0)
 					to_chat(usr, "<span class='danger'>[mins] is not a valid duration.</span>")
 					return
-				var/reason = input(usr,"Please State Reason.","Reason") as message|null
+				var/reason = input(usr,"Please State Reason For Banning [M.ckey].","Reason") as message|null
 				if(!reason)
 					return
 				if(!DB_ban_record(BANTYPE_TEMP, M, mins, reason))
@@ -1221,7 +1221,7 @@
 					AH.Resolve()
 				qdel(M.client)
 			if("No")
-				var/reason = input(usr,"Please State Reason.","Reason") as message|null
+				var/reason = input(usr,"Please State Reason For Banning [M.ckey].","Reason") as message|null
 				if(!reason)
 					return
 				switch(alert(usr,"IP ban?",,"Yes","No","Cancel"))
