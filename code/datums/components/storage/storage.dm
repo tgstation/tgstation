@@ -523,6 +523,8 @@
 /datum/component/storage/proc/can_be_inserted(obj/item/I, stop_messages = FALSE, mob/M)
 	if(!istype(I) || (I.flags_1 & ABSTRACT_1))
 		return FALSE //Not an item
+	if(I == parent)
+		return FALSE	//no paradoxes for you
 	var/atom/real_location = real_location()
 	var/atom/parent = src.parent
 	if(real_location == I.loc)
@@ -607,7 +609,7 @@
 		O.update_icon()
 
 /datum/component/storage/proc/signal_insertion_attempt(obj/item/I, mob/M, silent = FALSE, force = FALSE)
-	if(!force && !can_be_inserted(I, TRUE, M))
+	if((!force && !can_be_inserted(I, TRUE, M)) || (I == parent))
 		return FALSE
 	return handle_item_insertion(I, silent, M)
 
