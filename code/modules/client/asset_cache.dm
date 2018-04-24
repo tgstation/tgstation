@@ -177,14 +177,31 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 //If you don't need anything complicated.
 /datum/asset/simple
+	_abstract = /datum/asset/simple
 	var/assets = list()
 	var/verify = FALSE
 
 /datum/asset/simple/register()
 	for(var/asset_name in assets)
 		register_asset(asset_name, assets[asset_name])
+
 /datum/asset/simple/send(client)
 	send_asset_list(client,assets,verify)
+
+
+// For registering or sending multiple others at once
+/datum/asset/group
+	_abstract = /datum/asset/group
+	var/list/children
+
+/datum/asset/group/register()
+	for(var/type in children)
+		get_asset_datum(type)
+
+/datum/asset/group/send(client/C)
+	for(var/type in children)
+		var/datum/asset/A = get_asset_datum(type)
+		A.send(C)
 
 
 // spritesheet implementation - coalesces various icons into a single .png file
@@ -476,6 +493,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"changelog.css" = 'html/changelog.css'
 	)
 
+/datum/asset/group/goonchat
+	children = list(/datum/asset/simple/goonchat, /datum/asset/spritesheet/goonchat)
+
 /datum/asset/simple/goonchat
 	verify = FALSE
 	assets = list(
@@ -491,6 +511,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
 	)
 
+/datum/asset/spritesheet/goonchat
+	name = "chat"
+
+/datum/asset/spritesheet/goonchat/register()
+	InsertAll("emoji", 'icons/emoji.dmi')
+	..()
+
 /datum/asset/simple/permissions
 	assets = list(
 		"padlock.png"	= 'html/padlock.png'
@@ -502,10 +529,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		set waitfor = FALSE
 		var/datum/language/L = new path ()
 		L.get_icon()
-
-/datum/asset/simple/icon_states/emojis
-	icon = 'icons/emoji.dmi'
-	generic_icon_names = TRUE
 
 /datum/asset/spritesheet/pipes
 	name = "pipes"
