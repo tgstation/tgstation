@@ -123,8 +123,8 @@
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			src.updateUsrDialog()
-	else if(istype(W, /obj/item/device/multitool))
-		var/obj/item/device/multitool/P = W
+	else if(istype(W, /obj/item/multitool))
+		var/obj/item/multitool/P = W
 
 		if(istype(P.buffer, /obj/machinery/clonepod))
 			if(get_area(P.buffer) != get_area(src))
@@ -330,7 +330,7 @@
 
 		else if (src.menu == 4)
 			var/obj/item/card/id/C = usr.get_active_held_item()
-			if (istype(C)||istype(C, /obj/item/device/pda))
+			if (istype(C)||istype(C, /obj/item/pda))
 				if(src.check_access(C))
 					src.temp = "[src.active_record.fields["name"]] => Record deleted."
 					src.records.Remove(active_record)

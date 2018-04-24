@@ -49,9 +49,8 @@
 /area/ruin/space/has_grav/deepstorage/crusher)
 "an" = (
 /obj/machinery/conveyor{
-	dir = 1;
-	id = "bunkerrecycle";
-	movedir = 2
+	dir = 2;
+	id = "bunkerrecycle"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
@@ -194,7 +193,7 @@
 /obj/item/storage/box/zipties,
 /obj/item/switchblade,
 /obj/effect/turf_decal/delivery,
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "DEEP"
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -283,15 +282,15 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "aR" = (
 /obj/structure/closet/cardboard,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight,
 /obj/item/shovel,
 /obj/item/pickaxe/drill,
 /obj/item/pickaxe/drill,
@@ -301,12 +300,12 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "aS" = (
 /obj/structure/closet/cardboard,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/tape/random,
-/obj/item/device/tape/random,
-/obj/item/device/tape/random,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/tape/random,
+/obj/item/tape/random,
+/obj/item/tape/random,
 /obj/item/storage/box/rxglasses,
 /obj/item/extinguisher,
 /obj/item/extinguisher,
@@ -1163,8 +1162,8 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "db" = (
 /obj/structure/table,
-/obj/item/device/healthanalyzer,
-/obj/item/device/healthanalyzer,
+/obj/item/healthanalyzer,
+/obj/item/healthanalyzer,
 /obj/item/stack/medical/gauze,
 /obj/item/stack/medical/gauze,
 /turf/open/floor/plasteel/dark,
@@ -1476,11 +1475,11 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "dP" = (
 /obj/structure/table,
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -4
 	},
-/obj/item/device/radio,
-/obj/item/device/radio{
+/obj/item/radio,
+/obj/item/radio{
 	pixel_x = 4
 	},
 /obj/machinery/airalarm{
@@ -1669,7 +1668,7 @@
 /area/ruin/space/has_grav/deepstorage/dorm)
 "ej" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -1972,18 +1971,18 @@
 "eP" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/drone,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare,
+/obj/item/flashlight/flare{
 	pixel_y = 6
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 6
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_y = 6
 	},
 /turf/open/floor/plasteel/dark,
@@ -2985,6 +2984,20 @@
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/power)
+"rz" = (
+/obj/machinery/conveyor{
+	dir = 6;
+	id = "bunkerrecycle"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
+"Bb" = (
+/obj/machinery/conveyor{
+	dir = 10;
+	id = "bunkerrecycle"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/deepstorage/crusher)
 
 (1,1,1) = {"
 aa
@@ -4610,9 +4623,9 @@ ab
 ab
 ab
 ag
+rz
 an
-an
-an
+Bb
 aQ
 bh
 bB

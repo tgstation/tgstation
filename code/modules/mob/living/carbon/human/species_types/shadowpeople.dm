@@ -203,8 +203,8 @@
 			disintegrate(I)
 
 /obj/item/light_eater/proc/disintegrate(obj/item/O)
-	if(istype(O, /obj/item/device/pda))
-		var/obj/item/device/pda/PDA = O
+	if(istype(O, /obj/item/pda))
+		var/obj/item/pda/PDA = O
 		PDA.set_light(0)
 		PDA.fon = FALSE
 		PDA.f_lum = 0

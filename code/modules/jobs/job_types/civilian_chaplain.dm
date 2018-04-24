@@ -88,8 +88,8 @@ Chaplain
 	name = "Chaplain"
 	jobtype = /datum/job/chaplain
 
-	belt = /obj/item/device/pda/chaplain
+	belt = /obj/item/pda/chaplain
 	uniform = /obj/item/clothing/under/rank/chaplain
-	backpack_contents = list(/obj/item/device/camera/spooky = 1)
+	backpack_contents = list(/obj/item/camera/spooky = 1)
 	backpack = /obj/item/storage/backpack/cultpack
 	satchel = /obj/item/storage/backpack/cultpack

@@ -26,7 +26,6 @@
 	var/explosion_level = 0	//for preventing explosion dodging
 	var/explosion_id = 0
 
-	var/list/decals
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
 
@@ -418,18 +417,6 @@
 	if(has_gravity(src))
 		playsound(src, "bodyfall", 50, 1)
 	faller.drop_all_held_items()
-
-/turf/proc/add_decal(decal,group)
-	LAZYINITLIST(decals)
-	if(!decals[group])
-		decals[group] = list()
-	decals[group] += decal
-	add_overlay(decals[group])
-
-/turf/proc/remove_decal(group)
-	LAZYINITLIST(decals)
-	cut_overlay(decals[group])
-	decals[group] = null
 
 /turf/proc/photograph(limit=20)
 	var/image/I = new()

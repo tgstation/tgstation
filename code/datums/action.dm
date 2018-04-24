@@ -273,8 +273,8 @@
 	desc = "Change the type of instrument your synthesizer is playing as."
 
 /datum/action/item_action/synthswitch/Trigger()
-	if(istype(target, /obj/item/device/instrument/piano_synth))
-		var/obj/item/device/instrument/piano_synth/synth = target
+	if(istype(target, /obj/item/instrument/piano_synth))
+		var/obj/item/instrument/piano_synth/synth = target
 		var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", "piano") as null|anything in synth.insTypes
 		if(!synth.insTypes[chosen])
 			return
@@ -433,8 +433,8 @@
 	desc = "Use the instrument specified"
 
 /datum/action/item_action/instrument/Trigger()
-	if(istype(target, /obj/item/device/instrument))
-		var/obj/item/device/instrument/I = target
+	if(istype(target, /obj/item/instrument))
+		var/obj/item/instrument/I = target
 		I.interact(usr)
 		return
 	return ..()

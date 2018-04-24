@@ -314,7 +314,7 @@
 	name = "Hotel Staff"
 	uniform = /obj/item/clothing/under/assistantformal
 	shoes = /obj/item/clothing/shoes/laceup
-	r_pocket = /obj/item/device/radio/off
+	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/mindshield)
 
@@ -387,7 +387,7 @@
 	name = "Demonic Friend"
 	uniform = /obj/item/clothing/under/assistantformal
 	shoes = /obj/item/clothing/shoes/laceup
-	r_pocket = /obj/item/device/radio/off
+	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/mindshield) //No revolutionaries, he's MY friend.
 	id = /obj/item/card/id
@@ -406,7 +406,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset/syndicate/alt
+	ears = /obj/item/radio/headset/syndicate/alt
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/weapons_auth)
 	id = /obj/item/card/id/syndicate
@@ -482,7 +482,7 @@
 	shoes = /obj/item/clothing/shoes/jackboots
 	id = /obj/item/card/id/away/old/sec
 	r_pocket = /obj/item/restraints/handcuffs
-	l_pocket = /obj/item/device/assembly/flash/handheld
+	l_pocket = /obj/item/assembly/flash/handheld
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsec/Destroy()

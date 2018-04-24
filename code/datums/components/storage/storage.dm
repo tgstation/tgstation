@@ -503,10 +503,10 @@
 	if(!istype(M))
 		return FALSE
 	A.add_fingerprint(M)
-	if(locked)
+	if(locked && !force)
 		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
 		return FALSE
-	if(M.CanReach(parent, view_only = TRUE))
+	if(force || M.CanReach(parent, view_only = TRUE))
 		show_to(M)
 
 /datum/component/storage/proc/mousedrop_recieve(atom/movable/O, mob/M)

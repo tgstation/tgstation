@@ -1,4 +1,4 @@
-/obj/item/device/modular_computer/tablet  //Its called tablet for theme of 90ies but actually its a "big smartphone" sized
+/obj/item/modular_computer/tablet  //Its called tablet for theme of 90ies but actually its a "big smartphone" sized
 	name = "tablet computer"
 	icon = 'icons/obj/modular_tablet.dmi'
 	icon_state = "tablet"
@@ -14,7 +14,7 @@
 	comp_light_luminosity = 2.3 //Same as the PDA
 	var/finish_color = null
 
-/obj/item/device/modular_computer/tablet/update_icon()
+/obj/item/modular_computer/tablet/update_icon()
 	..()
 	if(!finish_color)
 		finish_color = pick("red","blue","brown","green","black")

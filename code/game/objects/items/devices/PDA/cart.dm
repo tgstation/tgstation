@@ -1,18 +1,18 @@
-#define CART_SECURITY	(1<<0)
-#define CART_ENGINE	(1<<1)
-#define CART_ATMOS	(1<<2)
-#define CART_MEDICAL	(1<<3)
-#define CART_MANIFEST	(1<<4)
-#define CART_CLOWN	(1<<5)
-#define CART_MIME	(1<<6)
-#define CART_JANITOR	(1<<7)
+#define CART_SECURITY			(1<<0)
+#define CART_ENGINE				(1<<1)
+#define CART_ATMOS				(1<<2)
+#define CART_MEDICAL			(1<<3)
+#define CART_MANIFEST			(1<<4)
+#define CART_CLOWN				(1<<5)
+#define CART_MIME				(1<<6)
+#define CART_JANITOR			(1<<7)
 #define CART_REAGENT_SCANNER	(1<<8)
-#define CART_NEWSCASTER	(1<<9)
-#define CART_REMOTE_DOOR	(1<<10)
-#define CART_STATUS_DISPLAY	(1<<11)
-#define CART_QUARTERMASTER	(1<<12)
-#define CART_HYDROPONICS	(1<<13)
-#define CART_DRONEPHONE	(1<<14)
+#define CART_NEWSCASTER			(1<<9)
+#define CART_REMOTE_DOOR		(1<<10)
+#define CART_STATUS_DISPLAY		(1<<11)
+#define CART_QUARTERMASTER		(1<<12)
+#define CART_HYDROPONICS		(1<<13)
+#define CART_DRONEPHONE			(1<<14)
 
 
 /obj/item/cartridge
@@ -34,7 +34,7 @@
 	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
-	var/obj/item/device/pda/host_pda = null
+	var/obj/item/pda/host_pda = null
 	var/menu
 	var/datum/data/record/active1 = null //General
 	var/datum/data/record/active2 = null //Medical
@@ -51,7 +51,7 @@
 
 /obj/item/cartridge/Initialize()
 	. = ..()
-	var/obj/item/device/pda/pda = loc
+	var/obj/item/pda/pda = loc
 	if(istype(pda))
 		host_pda = pda
 
@@ -710,7 +710,7 @@ Code:
 	return ""
 
 //If the cartridge adds something to each potetial messaging target
-/obj/item/cartridge/proc/message_special(obj/item/device/pda/target)
+/obj/item/cartridge/proc/message_special(obj/item/pda/target)
 	return ""
 
 //This is called for special abilities of cartridges
