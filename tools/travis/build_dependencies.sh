@@ -6,9 +6,10 @@ if [ "$BUILD_TOOLS" = false ]; then
     curl https://sh.rustup.rs -sSf | sh -s -- -y --default-host i686-unknown-linux-gnu
     source ~/.profile
 
-    git clone --branch $RUST_G_VERSION https://github.com/tgstation/rust-g
+    git clone https://github.com/tgstation/rust-g
 
     cd rust-g
+    git checkout $RUST_G_VERSION
     cargo build --release
 
     mkdir -p ~/.byond/bin
