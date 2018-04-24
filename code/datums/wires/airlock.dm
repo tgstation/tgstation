@@ -81,13 +81,6 @@
 				if(usr)
 					A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 				add_logs(usr, A, "electrified")
-				sleep(10)
-				if(A)
-					while (A.secondsElectrified > 0)
-						A.secondsElectrified -= 1
-						if(A.secondsElectrified < 0)
-							A.set_electrified(0)
-						sleep(10)
 		if(WIRE_SAFETY)
 			A.safe = !A.safe
 			if(!A.density)
