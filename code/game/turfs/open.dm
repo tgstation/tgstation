@@ -1,4 +1,5 @@
 /turf/open
+	plane = FLOOR_PLANE
 	var/slowdown = 0 //negative for faster, positive for slower
 
 	var/mutable_appearance/wet_overlay
