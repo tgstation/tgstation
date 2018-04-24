@@ -1,6 +1,6 @@
 /datum/component/storage/concrete/bluespace/bag_of_holding/handle_item_insertion(obj/item/W, prevent_warning = FALSE, mob/living/user)
 	var/atom/A = parent
-	if((istype(W, /obj/item/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/storage/backpack/holding)))
+	if((A != W) && (istype(W, /obj/item/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/storage/backpack/holding)))
 		var/turf/loccheck = get_turf(A)
 		if(is_reebe(loccheck.z))
 			user.visible_message("<span class='warning'>An unseen force knocks [user] to the ground!</span>", "<span class='big_brass'>\"I think not!\"</span>")
