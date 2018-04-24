@@ -222,7 +222,7 @@
 
 /obj/item/hand_tele/suicide_act(mob/user)
 	if(iscarbon(user))
-		user.visible_message("<span class='suicide'>[user] is creating a weak portal and sticking their head through! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[user] is creating a weak portal and sticking [user.p_their()] head through! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		var/mob/living/carbon/itemUser = user
 		var/obj/item/bodypart/head/head = itemUser.get_bodypart(BODY_ZONE_HEAD)
 		head.drop_limb()
