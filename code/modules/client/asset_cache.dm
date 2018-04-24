@@ -161,8 +161,12 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		return new type()
 	return GLOB.asset_datums[type]
 
+/datum/asset
+	var/_abstract = /datum/asset
+
 /datum/asset/New()
 	GLOB.asset_datums[type] = src
+	register()
 
 /datum/asset/proc/register()
 	return
@@ -193,17 +197,14 @@ GLOBAL_LIST_EMPTY(asset_datums)
 #define SPRSZ_STRIPPED 3
 
 /datum/asset/spritesheet
-	var/_abstract = /datum/asset/spritesheet
+	_abstract = /datum/asset/spritesheet
 	var/name
 	var/list/sizes = list()    // "32x32" -> list(10, icon/normal, icon/stripped)
 	var/list/sprites = list()  // "foo_bar" -> list("32x32", 5)
 
 /datum/asset/spritesheet/register()
 	if (!name)
-		// sheets with no resources are ok to register
-		if (type != _abstract)
-			CRASH("spritesheet [type] cannot register without a name")
-		return
+		CRASH("spritesheet [type] cannot register without a name")
 	ensure_stripped()
 
 	var/res_name = "spritesheet_[name].css"
@@ -231,7 +232,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		// save flattened version
 		var/fname = "data/spritesheets/[name]_[size_id].png"
 		fcopy(size[SPRSZ_ICON], fname)
-		var/error = call("rust_g", "strip_dmi_metadata")(fname)
+		var/error = call("rust_g", "dmi_strip_metadata")(fname)
 		if(length(error))
 			stack_trace("Failed to strip [name]_[size_id].png: [error]")
 		size[SPRSZ_STRIPPED] = icon(fname)
@@ -266,6 +267,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		return
 	var/size_id = "[I.Width()]x[I.Height()]"
 	var/size = sizes[size_id]
+
+	if (sprites[sprite_name])
+		CRASH("duplicate sprite \"[sprite_name]\" in sheet [name] ([type])")
 
 	if (size)
 		var/position = size[SPRSZ_COUNT]++
@@ -317,6 +321,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 //Generates assets based on iconstates of a single icon
 /datum/asset/simple/icon_states
+	_abstract = /datum/asset/simple/icon_states
 	var/icon
 	var/list/directions = list(SOUTH)
 	var/frame = 1
@@ -342,6 +347,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			register_asset(asset_name, asset)
 
 /datum/asset/simple/icon_states/multiple_icons
+	_abstract = /datum/asset/simple/icon_states/multiple_icons
 	var/list/icons
 
 /datum/asset/simple/icon_states/multiple_icons/register()
