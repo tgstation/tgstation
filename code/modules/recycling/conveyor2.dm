@@ -138,7 +138,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
 		if(I.use_tool(src, user, 40, volume=40))
 			if(!(stat & BROKEN))
-				var/obj/machinery/conveyor/C = new/obj/item/conveyor_construct(src.loc)
+				var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
 				C.id = id
 				transfer_fingerprints_to(C)
 			to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
@@ -298,7 +298,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/crowbar))
-		var/obj/machinery/conveyor_switch/NC = new/obj/item/conveyor_switch_construct(src.loc)
+		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 		C.id = id
 		transfer_fingerprints_to(C)
 		to_chat(user, "<span class='notice'>You deattach the conveyor switch.</span>")
@@ -334,7 +334,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(A == user.loc)
 		to_chat(user, "<span class='notice'>You cannot place a conveyor belt under yourself.</span>")
 		return
-	var/obj/item/conveyor_construct/C = new/obj/machinery/conveyor(A, cdir, id)
+	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A, cdir, id)
 	transfer_fingerprints_to(C)
 	qdel(src)
 
@@ -361,7 +361,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(!found)
 		to_chat(user, "[icon2html(src, user)]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>")
 		return
-	var/obj/item/conveyor_switch_construct/NC = new/obj/machinery/conveyor_switch(A, id)
+	var/obj/machinery/conveyor_switch/NC = new/obj/machinery/conveyor_switch(A, id)
 	transfer_fingerprints_to(NC)
 	qdel(src)
 
