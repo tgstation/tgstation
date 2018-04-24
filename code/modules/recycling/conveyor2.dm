@@ -334,7 +334,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(A == user.loc)
 		to_chat(user, "<span class='notice'>You cannot place a conveyor belt under yourself.</span>")
 		return
-	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A, cdir, id)
+	var/obj/item/conveyor_construct/C = new/obj/machinery/conveyor(A, cdir, id)
 	transfer_fingerprints_to(C)
 	qdel(src)
 
@@ -348,7 +348,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/item/conveyor_switch_construct/Initialize()
 	. = ..()
-	id = rand() //this couldn't possibly go wrong
+	id = "[rand()]" //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
 	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
@@ -361,7 +361,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(!found)
 		to_chat(user, "[icon2html(src, user)]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>")
 		return
-	var/obj/machinery/conveyor_switch/NC = new/obj/machinery/conveyor_switch(A, id)
+	var/obj/item/conveyor_switch_construct/NC = new/obj/machinery/conveyor_switch(A, id)
 	transfer_fingerprints_to(NC)
 	qdel(src)
 
