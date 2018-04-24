@@ -523,7 +523,7 @@
 /datum/component/storage/proc/can_be_inserted(obj/item/I, stop_messages = FALSE, mob/M)
 	if(!istype(I) || (I.flags_1 & ABSTRACT_1))
 		return FALSE //Not an item
-	if(I == parent)
+	if(I == src.parent)
 		return FALSE	//no paradoxes for you
 	var/atom/real_location = real_location()
 	var/atom/parent = src.parent
