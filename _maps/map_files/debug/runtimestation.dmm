@@ -638,7 +638,7 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "bT" = (
-/obj/machinery/chem_dispenser/scp_294,
+/obj/machinery/chem_dispenser,
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "bU" = (
