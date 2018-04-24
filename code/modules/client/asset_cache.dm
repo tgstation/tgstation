@@ -218,6 +218,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/name
 	var/list/sizes = list()    // "32x32" -> list(10, icon/normal, icon/stripped)
 	var/list/sprites = list()  // "foo_bar" -> list("32x32", 5)
+	var/verify = FALSE
 
 /datum/asset/spritesheet/register()
 	if (!name)
@@ -236,9 +237,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/spritesheet/send(client/C)
 	if (!name)
 		return
-	send_asset(C, "spritesheet_[name].css", FALSE)
+	var/all = list("spritesheet_[name].css")
 	for(var/size_id in sizes)
-		send_asset(C, "[name]_[size_id].png", FALSE)
+		all += "[name]_[size_id].png"
+	send_asset_list(C, all, verify)
 
 /datum/asset/spritesheet/proc/ensure_stripped(sizes_to_strip = sizes)
 	for(var/size_id in sizes_to_strip)
@@ -516,6 +518,17 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/spritesheet/goonchat/register()
 	InsertAll("emoji", 'icons/emoji.dmi')
+
+	// pre-loading all lanugage icons also helps to avoid meta
+	InsertAll("language", 'icons/misc/language.dmi')
+	// catch languages which are pulling icons from another file
+	for(var/path in typesof(/datum/language))
+		var/datum/language/L = path
+		var/icon = initial(L.icon)
+		if (icon != 'icons/misc/language.dmi')
+			var/icon_state = initial(L.icon_state)
+			Insert("language-[icon_state]", icon, icon_state=icon_state)
+
 	..()
 
 /datum/asset/simple/permissions
