@@ -146,7 +146,8 @@
 		current_value += i_hate_this_code
 	if (current_value < 5)
 		current_value = 5
-
+	else if (current_value > 1000)
+		current_value = 1000
 	if (performance != 0)
 		performance = rand(900,1050) / 1000 * performance
 		if (abs(performance) < 0.2)
