@@ -53,7 +53,7 @@
 //weapons
 /datum/techweb_node/p_deathlaser
 	id = "pod_deathlaser"
-	display_name = "Advanced Space Pod Weaponry"
+	display_name = "Laser carbine Mk III"
 	description = "Powerful laser designed for a Space Pod."
 	prereq_ids = list("podscombatadvanced")
 	design_ids = list("pdeathlaser")
@@ -62,7 +62,7 @@
 
 /datum/techweb_node/p_r75
 	id = "pod_75mmr"
-	display_name = "Advanced Space Pod Weaponry"
+	display_name = "Space Pod .75 HE repeater"
 	description = "High end Space Pod Projectiles."
 	prereq_ids = list("podscombatadvanced")
 	design_ids = list("p75mmr","p75ammo")

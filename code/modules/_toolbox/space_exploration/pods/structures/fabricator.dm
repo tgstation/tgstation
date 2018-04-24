@@ -37,7 +37,7 @@
 								"Construction",
 								"Shield",
 								"Engine",
-								"Cargo hold",
+								"Cargo Hold",
 								"Sensor")
 
 /datum/techweb/specialized/autounlocking/podfab
