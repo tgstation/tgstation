@@ -946,7 +946,7 @@
 
 	var/mob/living/L = choice
 
-	message_admins("<span class='adminnotice'>[L] has been marked for death!</span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(L)][ADMIN_FLW(L)] has been marked for death by [key_name_admin(user)]!</span>")
 
 	var/datum/objective/survive/survive = new
 	survive.owner = L.mind
