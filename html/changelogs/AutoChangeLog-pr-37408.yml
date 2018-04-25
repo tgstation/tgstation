@@ -1,4 +1,0 @@
-author: "Barhandar"
-delete-after: True
-changes: 
-  - bugfix: "Pubbystation's field generators have been offset to no longer bisect the engine on roundstart setup."
