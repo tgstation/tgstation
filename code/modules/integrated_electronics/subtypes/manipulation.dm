@@ -45,7 +45,6 @@
 		if(installed_gun)
 			to_chat(user, "<span class='warning'>There's already a weapon installed.</span>")
 			return
-
 		user.transferItemToLoc(gun,src)
 		installed_gun = gun
 		var/list/gun_properties = gun.get_turret_properties()
@@ -79,7 +78,7 @@
 		to_chat(user, "<span class='notice'>There's no weapon to remove from the mechanism.</span>")
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/do_work()
-	if(!installed_gun)
+	if(!installed_gun || !installed_gun.handle_pins())
 		return
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(installed_gun))
 	push_data()
