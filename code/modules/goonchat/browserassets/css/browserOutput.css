@@ -119,6 +119,23 @@ a.popt {text-decoration: none;}
 	top: 0;
 	right: 0;
 }
+#debug {
+	position: fixed;
+	display:none;
+	background:white;
+	width:100%;
+}
+#debugOutput {
+	height:200px;
+	width:100%;
+	background: white;
+	overflow-y:scroll;
+	overflow-x:hidden;
+	border-bottom: solid black 1px;
+}
+.debugControl {
+	display:block;
+}
 #userBar .subCell {
 	background: #ddd;
     height: 30px;
