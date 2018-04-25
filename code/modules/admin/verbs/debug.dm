@@ -110,9 +110,13 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 GLOBAL_LIST_EMPTY(AdminProcCallSpamPrevention)
 GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 
-/proc/WrapAdminProcCall(target, procname, list/arguments)
+/proc/WrapAdminProcCall(datum/target, procname, list/arguments)
 	if(target && procname == "Del")
 		to_chat(usr, "Calling Del() is not allowed")
+		return
+
+	if(!target.CanProcCall(procname))
+		to_chat(usr, "Proccall on [target.type]/proc/[procname] is disallowed!")
 		return
 	var/current_caller = GLOB.AdminProcCaller
 	var/ckey = usr ? usr.client.ckey : GLOB.AdminProcCaller
@@ -137,7 +141,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		GLOB.AdminProcCaller = null
 
 //adv proc call this, ya nerds
-/world/proc/WrapAdminProcCall(target, procname, list/arguments)
+/world/proc/WrapAdminProcCall(datum/target, procname, list/arguments)
 	if(target == GLOBAL_PROC)
 		return call(procname)(arglist(arguments))
 	else if(target != world)
