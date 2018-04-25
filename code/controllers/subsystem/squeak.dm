@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(squeak)
 	trigger_migration(CONFIG_GET(number/mice_roundstart))
 	return ..()
 
-/datum/controller/subsystem/squeak/proc/trigger_migration(num_mice=10)
+/datum/controller/subsystem/squeak/proc/trigger_migration(num_mice=10,chewing_frenzie = 0)
 	if(!num_mice)
 		return
 	find_exposed_wires()
@@ -30,6 +30,9 @@ SUBSYSTEM_DEF(squeak)
 		if(M.environment_is_safe())
 			num_mice -= 1
 			M = null
+	if(chewing_frenzie)
+		for(var/mob/living/simple_animal/mouse/mouse in world)
+			mouse.wire_chewing_frenzie()
 
 /datum/controller/subsystem/squeak/proc/find_exposed_wires()
 	exposed_wires.Cut()

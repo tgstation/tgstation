@@ -150,18 +150,20 @@
 	staticOverlays.len = 0
 
 	if(seeStatic)
-		for(var/i in GLOB.mob_living_list)
-			var/mob/living/L = i
+		for(var/mob/living/L in world)
 			if(isdrone(L))
 				continue
 			var/image/chosen
 			if(staticChoice in L.staticOverlays)
 				chosen = L.staticOverlays[staticChoice]
 			else
-				chosen = L.staticOverlays["static"]
+				if(istype(L.staticOverlays,/list) && L.staticOverlays["static"])
+					chosen = L.staticOverlays["static"]
+			if(!istype(chosen))
+				chosen = image(getStaticIcon(new/icon(icon,icon_state)), loc = L)
+				chosen.override = 1
 			staticOverlays |= chosen
 			client.images |= chosen
-
 
 /mob/living/simple_animal/drone/generateStaticOverlay()
 	return

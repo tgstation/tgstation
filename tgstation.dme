@@ -1034,6 +1034,7 @@
 #include "code\modules\_toolbox\medical\epi_filler.dm"
 #include "code\modules\_toolbox\medical\epibox.dm"
 #include "code\modules\_toolbox\silly\clothing.dm"
+#include "code\modules\_toolbox\silly\mice.dm"
 #include "code\modules\_toolbox\silly\pokerchips.dm"
 #include "code\modules\_toolbox\silly\redphones.dm"
 #include "code\modules\_toolbox\silly\slurm.dm"

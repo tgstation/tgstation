@@ -34,6 +34,7 @@ GLOBAL_LIST_EMPTY(toolbox_statues)
 	var/icon/true_icon = new('icons/oldschool/chaos_overlay.dmi', "chaos_a_overlay")
 
 /obj/structure/statue/toolbox/New()
+	flags_1 |= NODECONSTRUCT_1
 	..()
 	GLOB.toolbox_statues += src
 	var/n = 0

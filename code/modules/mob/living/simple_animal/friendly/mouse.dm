@@ -23,7 +23,7 @@
 	mob_size = MOB_SIZE_TINY
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
-	var/chew_probability = 1
+	//var/chew_probability = 1
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
@@ -61,7 +61,7 @@
 			to_chat(M, "<span class='notice'>[icon2html(src, M)] Squeek!</span>")
 	..()
 
-/mob/living/simple_animal/mouse/handle_automated_action()
+/*/mob/living/simple_animal/mouse/handle_automated_action()
 	if(prob(chew_probability))
 		var/turf/open/floor/F = get_turf(src)
 		if(istype(F) && !F.intact)
@@ -74,7 +74,7 @@
 					death(toast=1)
 				else
 					C.deconstruct()
-					visible_message("<span class='warning'>[src] chews through the [C].</span>")
+					visible_message("<span class='warning'>[src] chews through the [C].</span>")*/
 
 /*
  * Mouse types

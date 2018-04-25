@@ -24,4 +24,4 @@
 		'sound/effects/mousesqueek.ogg')
 
 /datum/round_event/mice_migration/start()
-	SSsqueak.trigger_migration(rand(minimum_mice, maximum_mice))
+	SSsqueak.trigger_migration(rand(minimum_mice, maximum_mice),1)
