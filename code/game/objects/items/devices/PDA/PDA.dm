@@ -690,7 +690,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	add_overlay(icon_alert)
 
 /obj/item/pda/proc/send_to_all(mob/living/U)
-	if (last_everyone && world.time < last_everyone + 1800)
+	if (last_everyone && world.time < last_everyone + (2 MINUTES))
 		to_chat(U,"<span class='warning'>Send To All function is still on cooldown.")
 		return
 	send_message(U,get_viewable_pdas(), TRUE)
