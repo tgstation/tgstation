@@ -1,5 +1,5 @@
 /obj/vehicle/ridden/wheelchair
-	name = "Wheelchair"
+	name = "wheelchair"
 	desc = "A chair with big wheels. It looks like you can move in this on your own."
 	icon = 'hippiestation/icons/obj/vehicles.dmi'
 	icon_state = "wheelchair"
