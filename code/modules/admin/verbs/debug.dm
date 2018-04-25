@@ -15,7 +15,8 @@
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Debug Two") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
+/client/proc/goon_chat_debug()
+	chatOutput.enable_firebug()
 
 /* 21st Sept 2010
 Updated by Skie -- Still not perfect but better!

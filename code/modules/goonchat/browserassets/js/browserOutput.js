@@ -6,10 +6,9 @@
 ******************************************/
 
 //DEBUG STUFF
-var triggerError = attachErrorHandler('chatDebug', true);
 var escaper = encodeURIComponent || escape;
 var decoder = decodeURIComponent || unescape;
-window.onerror = function(msg, url, line, col, error) {
+/*window.onerror = function(msg, url, line, col, error) {
 	if (document.location.href.indexOf("proc=debug") <= 0) {
 		var extra = !col ? '' : ' | column: ' + col;
 		extra += !error ? '' : ' | error: ' + error;
@@ -18,7 +17,7 @@ window.onerror = function(msg, url, line, col, error) {
 		window.location = '?_src_=chat&proc=debug&param[error]='+escaper(debugLine);
 	}
 	return true;
-};
+};*/
 
 //Globals
 window.status = 'Output';
@@ -95,18 +94,46 @@ if (typeof String.prototype.trim !== 'function') {
 	};
 }
 
-//Shit fucking piece of crap that doesn't work god fuckin damn it
-function linkify(text) {
-	var rex = /((?:<a|<iframe|<img)(?:.*?(?:src="|href=").*?))?(?:(?:https?:\/\/)|(?:www\.))+(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&@#\/%?=~_|$!:,.;]+/ig;
-	return text.replace(rex, function ($0, $1) {
-		if(/^https?:\/\/.+/i.test($0)) {
-			return $1 ? $0: '<a href="'+$0+'">'+$0+'</a>';
-		}
-		else {
-			return $1 ? $0: '<a href="http://'+$0+'">'+$0+'</a>';
-		}
-	});
+//This works, don't fuck with it k, or I'll break your fingers
+function linkify(message) {
+        /* See stack overflow for the regex: https://stackoverflow.com/questions/6038061/regular-expression-to-find-urls-within-a-string 
+		 * it gets the domain, protocol, and query string as three match groups
+		 * 
+		 * Note that we only replace links within spans containing the linkify span text, so we don't replace stuff we need to not fuck up
+		 * like the src url for goonchat images, or other assets and so forth
+		 *
+		 * basically only ooc chat span messages have this span class, why also have a flag you then ask?
+		 * well, if we can avoid doing this function call at all, that's free performance from not doing
+		 * regexes over text
+		 * 
+		 * Hey why not do a proper js url parser? well, because I don't feel like dealing with possible ie8/9 backward compat issues, feel free to try
+         */
+		var rex = /(?:(http|byond|https):\/\/)?([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?/ig;
+		// Lets use jquery to find spans wtih the linkify class in the text and do a replace regex 
+		// on their html
+		var jqtext = $(message);
+		jqtext.find("span.linkify").html(function(index, oldhtml) {
+			return oldhtml.replace(rex, function (match, protocol, domain, querystring, matchindex, fullstring) {
+				// This sucks eggs, but it's the only way to detect links that are attached to an actual <a> element
+				// we can't linkify those because it would break asset cache serving
+				if(fullstring.substring(matchindex-5, matchindex-2) == "src") {
+					return match;//leave it alone, it's a href already (i.e asset cache or emojiii etc)
+				}
+                if (typeof protocol === 'undefined' || !protocol) {
+                        protocol = 'http' ;
+                }
+                if (typeof querystring === 'undefined') {
+                        querystring = '' ;
+                }
+                return '<a href="'+protocol+'://'+domain+querystring+'">'+domain+querystring+'</a>';
+			});
+		});
+		
+		// convert the processed jquery dom tree back to html for final insertion later in output processing
+		text = jqtext.html();
+		return text;   
 }
+
 
 function byondDecode(message) {
 	// Basically we url_encode twice server side so we can manually read the encoded version and actually do UTF-8.
@@ -283,8 +310,8 @@ function output(message, flag) {
 		}
 	}
 
-	//Url stuff
-	if (message.length && flag != 'preventLink') {
+	//If the link create flag is specified, do the linkify fandango
+	if (message.length && flag == 'createLink') {
 		message = linkify(message);
 	}
 

@@ -147,6 +147,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 	/client/proc/create_outfits,
 	/client/proc/modify_goals,
 	/client/proc/debug_huds,
+	/client/proc/goon_chat_debug,
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload,
 	/client/proc/jump_to_ruin,

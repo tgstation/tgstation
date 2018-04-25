@@ -139,6 +139,12 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if(volume)
 		adminMusicVolume = CLAMP(text2num(volume), 0, 100)
 
+//Don't call this, it will simply lock your client up and never enable firebug!
+/datum/chatOutput/proc/enable_firebug()
+	var/list/data = list("firebug" = TRUE)
+	data["trigger"] = "admin verb"
+	ehjax_send(data = data)
+	
 //Sends client connection details to the chat to handle and save
 /datum/chatOutput/proc/sendClientData()
 	//Get dem deets
@@ -185,7 +191,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 //Global chat procs
 
-/proc/to_chat(target, message)
+/proc/to_chat(target, message, linkify=FALSE)
 	if(!target)
 		return
 
@@ -196,6 +202,9 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	if(!istext(message))
 		return
+	var/flag = "normal"
+	if(linkify)
+		flag = "createLink"
 
 	if(target == world)
 		target = GLOB.clients
@@ -232,8 +241,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			C.chatOutput.messageQueue += message
 			continue
 
-		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
-		C << output(url_encode(url_encode(message)), "browseroutput:output")
+		// url_encode the message TWICE (list2params does it once), this way any UTF-8 characters are
+		//able to be decoded by the Javascript.
+		var/list/final = list(url_encode(message), flag)
+		C << output(list2params(final), "browseroutput:output")
 
 /proc/grab_client(target)
 	if(istype(target, /client))
