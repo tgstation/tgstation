@@ -762,10 +762,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		//Hacking a door
 		if("door_hack")
 			target.playsound_local(null, 'sound/items/screwdriver.ogg', 15, 1)
-			sleep(rand(10,30))
-			for(var/i = rand(1,3), i>0, i--)
-				target.playsound_local(null, 'sound/weapons/empty.ogg', 15, 1)
-				sleep(rand(10,30))
+			sleep(rand(40,80))
 			target.playsound_local(null, 'sound/machines/airlockforced.ogg', 15, 1)
 	qdel(src)
 
