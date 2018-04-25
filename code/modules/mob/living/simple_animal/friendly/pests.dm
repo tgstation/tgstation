@@ -1,55 +1,58 @@
 /mob/living/simple_animal/fly
-	name = "swarm of flies"
-	desc = "A swarm of flies, because the Janitor just isn't doing a good enough job."
+	name = "fly"
+	desc = "we went to space to escape flies, but they always seem to find us."
 	icon_state = "fly-10"
 	icon_living = "fly-10"
 	icon_dead = "fly_dead"
-	turns_per_move = 1
-	response_help = "shoos"
-	response_disarm = "shoos"
-	response_harm = "splats"
+	icon = 'icons/mob/bees.dmi'
+	gender = NEUTER
 	speak_emote = list("buzzes")
-	maxHealth = 10 //it's a swarm!!
+	emote_hear = list("buzzes")
+	turns_per_move = 0
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	retreat_distance = 2
+	minimum_distance = 2
+	friendly = "annoys"
+	attacktext = "seriously annoys"
+	response_help  = "shoos"
+	response_disarm = "swats away"
+	response_harm   = "squashes"
+	maxHealth = 10
 	health = 10
-	harm_intent_damage = 3 //you can only kill one of the flies in the swarm at a time
-	friendly = "nudges"
-	density = FALSE
-	movement_type = FLYING
+	spacewalk = TRUE
+	faction = list("hostile")
+	move_to_delay = 0
+	obj_damage = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	ventcrawler = VENTCRAWLER_ALWAYS
+	density = FALSE
 	mob_size = MOB_SIZE_TINY
-	gold_core_spawnable = FRIENDLY_SPAWN
-	verb_say = "buzzes"
-	verb_ask = "buzzes inquisitively"
-	verb_exclaim = "buzzes intensely"
-	verb_yell = "buzzes intensely"
+	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
+	movement_type = FLYING
+	gold_core_spawnable = HOSTILE_SPAWN
+	search_objects = 1 //have to find those plant trays!
 
-/mob/living/simple_animal/fly/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	health --
-	visible_message("the fly stops moving...")
-	if(stat)
-		icon_state = "fly-[health]"
-		health = maxHealth
+/mob/living/simple_animal/fly/Initialize()
+	. = ..()
+	AddComponent(/datum/component/swarming)
 
 /mob/living/simple_animal/fly/time
-	name = "swarm of time flies"
-	desc = "Radiation seems to have given this swarm of flies time bending powers."
+	name = "time fly"
+	desc = "Radiation seems to have given this little bugger time bending powers."
 	icon_state = "timefly-10"
 	icon_living = "timefly-10"
 	icon_dead = "timefly_dead"
+	var/obj/effect/proc_holder/spell/targeted/timewarp/twarp
 
-/mob/living/simple_animal/fly/time/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	health --
-	visible_message("the time fly stops moving...")
-	if(stat)
-		icon_state = "timefly-[health]"
-		maxHealth = health
-
-///mob/living/simple_animal/fly/time/AttackingTarget()
-//	. = ..()
-//	if(. && isliving(target)
-//	var/mob/living/L = target
-
+/mob/living/simple_animal/fly/time/AttackingTarget()
+	. = ..()
+	if(. && isliving(target)
+	var/mob/living/L = target
+	twarp = new
+	twarp.cast(L, src)
+	
 
 
 
@@ -69,7 +72,7 @@
 	action_icon_state = "ninja_cloak"
 	action_background_icon_state = "bg_alien"
 
-/obj/effect/proc_holder/spell/targeted/timewarp/cast(list/targets,mob/living/user = usr)
+/obj/effect/proc_holder/spell/targeted/timewarp/cast(list/targets,mob/living/user = usr
 	playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
 	visible_message("<span class='boldwarning'>[user] melts into the shadows!</span>")
 	user.SetStun(0, FALSE)
