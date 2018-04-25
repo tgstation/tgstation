@@ -614,7 +614,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/message = msg_input(user)
 	if(!message || !targets.len)
 		return
-	if((last_text && world.time < last_text + 10) || (everyone && last_everyone && world.time < last_everyone + 1800))
+	if((last_text && world.time < last_text + 10) || (everyone && last_everyone && world.time < last_everyone + (2 MINUTES)))
 		return
 
 	// Send the signal
