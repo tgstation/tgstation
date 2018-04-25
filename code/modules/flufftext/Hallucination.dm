@@ -1,81 +1,63 @@
-/*
-Ideas for the subtle effects of hallucination:
-
-Light up oxygen/plasma indicators (done)
-Cause health to look critical/dead, even when standing (done)
-Characters silently watching you
-Brief flashes of fire/space/bombs/c4/dangerous shit (done)
-Items that are rare/traitorous/don't exist appearing in your inventory slots (done)
-Strange audio (should be rare) (done)
-Gunshots/explosions/opening doors/less rare audio (done)
-
-*/
-
 #define HAL_LINES_FILE "hallucination.json"
 
-GLOBAL_LIST_INIT(hallucinations_minor, list(
-	/datum/hallucination/sounds,
-	/datum/hallucination/bolts,
-	/datum/hallucination/whispers,
-	/datum/hallucination/message,
-	/datum/hallucination/hudscrew))
-
-GLOBAL_LIST_INIT(hallucinations_medium, list(
-	/datum/hallucination/fake_alert,
-	/datum/hallucination/items,
-	/datum/hallucination/items_other,
-	/datum/hallucination/dangerflash,
-	/datum/hallucination/bolts,
-	/datum/hallucination/fake_flood,
-	/datum/hallucination/husks,
-	/datum/hallucination/battle,
-	/datum/hallucination/fire,
-	/datum/hallucination/self_delusion,
-	/datum/hallucination/stray_bullet))
-
-GLOBAL_LIST_INIT(hallucinations_major, list(
-	/datum/hallucination/fakeattacker,
-	/datum/hallucination/death,
-	/datum/hallucination/xeno_attack,
-	/datum/hallucination/singularity_scare,
-	/datum/hallucination/delusion,
-	/datum/hallucination/oh_yeah))
-
+GLOBAL_LIST_INIT(hallucination_list, list(
+	/datum/hallucination/whispers = 100,
+	/datum/hallucination/message = 60,
+	/datum/hallucination/sounds = 50,
+	/datum/hallucination/battle = 20,
+	/datum/hallucination/dangerflash = 15,
+	/datum/hallucination/hudscrew = 12,
+	/datum/hallucination/fake_alert = 12,
+	/datum/hallucination/weird_sounds = 8,
+	/datum/hallucination/stationwarning = 7,
+	/datum/hallucination/fake_flood = 7,
+	/datum/hallucination/stray_bullet = 7,
+	/datum/hallucination/bolts = 7,
+	/datum/hallucination/items_other = 7,
+	/datum/hallucination/husks = 7,
+	/datum/hallucination/items = 4,
+	/datum/hallucination/fire = 3,
+	/datum/hallucination/self_delusion = 2,
+	/datum/hallucination/delusion = 2,
+	/datum/hallucination/death = 1,
+	/datum/hallucination/oh_yeah = 1
+	))
+	
+	
 /mob/living/carbon/proc/handle_hallucinations()
+	if(!hallucination)
+		return
+		
+	hallucination--
+	
 	if(world.time < next_hallucination)
 		return
 
-	if(hallucination)
-		var/list/current = GLOB.hallucinations_minor
-		if(prob(25) && hallucination > 100)
-			current = GLOB.hallucinations_medium
-		else if(prob(10) && hallucination > 200)
-			current = GLOB.hallucinations_major
-		var/halpick = pick(current)
-		new halpick(src, FALSE)
+	var/halpick = pickweight(GLOB.hallucination_list)
+	new halpick(src, FALSE)
+	
+	next_hallucination = world.time + rand(10, 450)
 
 /mob/living/carbon/proc/set_screwyhud(hud_type)
 	hal_screwyhud = hud_type
 	update_health_hud()
 
 /datum/hallucination
+	var/natural = TRUE
 	var/mob/living/carbon/target
-	var/cost = 5 //affects the amount of hallucination reduced, and cooldown until the next hallucination
 	var/feedback_details //extra info for investigate
 
 /datum/hallucination/New(mob/living/carbon/T, forced = TRUE)
 	set waitfor = FALSE
 	target = T
-	if(!forced)
-		target.hallucination = max(0, target.hallucination - cost)
-		target.next_hallucination = world.time + (rand(cost * 0.5, cost * 3) * 10)
+	natural = !forced
 
 /datum/hallucination/proc/wake_and_restore()
 	target.set_screwyhud(SCREWYHUD_NONE)
 	target.SetSleeping(0)
 
 /datum/hallucination/Destroy()
-	target.investigate_log("was afflicted with a hallucination of type [type]. [feedback_details]", INVESTIGATE_HALLUCINATIONS)
+	target.investigate_log("was afflicted with a hallucination of type [type] by [natural?"hallucination status":"an external source"]. [feedback_details]", INVESTIGATE_HALLUCINATIONS)
 	target = null
 	return ..()
 
@@ -325,100 +307,81 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	QDEL_NULL(bubblegum)
 	return ..()
 
-/datum/hallucination/singularity_scare
-	//Singularity moving towards you.
-	//todo Hide where it moved with fake space images
-	var/obj/effect/hallucination/simple/singularity/s = null
-	cost = 75
-
-/datum/hallucination/singularity_scare/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
-	..()
-	var/turf/start = get_turf(T)
-	var/screen_border = pick(SOUTH,EAST,WEST,NORTH)
-	for(var/i in 1 to 13)
-		start = get_step(start,screen_border)
-	feedback_details += "Source: [start.x],[start.y],[start.z]"
-	s = new(start,target)
-	s.parent = src
-	for(var/i in 1 to 13)
-		sleep(10)
-		s.forceMove(get_step(get_turf(s),get_dir(s,target)))
-		s.Show()
-		s.Eat()
-	qdel(s)
-
-/obj/effect/hallucination/simple/singularity
-	image_icon = 'icons/effects/224x224.dmi'
-	image_state = "singularity_s7"
-	image_layer = MASSIVE_OBJ_LAYER
-	px = -96
-	py = -96
-	var/datum/hallucination/singularity_scare/parent
-
-/obj/effect/hallucination/simple/singularity/proc/Eat(atom/OldLoc, Dir)
-	var/target_dist = get_dist(src,target)
-	if(target_dist<=3) //"Eaten"
-		target.set_screwyhud(SCREWYHUD_DEAD)
-		target.SetUnconscious(160)
-		addtimer(CALLBACK(parent, /datum/hallucination/.proc/wake_and_restore), rand(30, 50))
-
 /datum/hallucination/battle
-	cost = 15
 
 /datum/hallucination/battle/New(mob/living/carbon/T, forced = TRUE, battle_type)
 	set waitfor = FALSE
 	..()
-	var/hits = rand(3,6)
 	if(!battle_type)
-		battle_type = pick("laser","esword","gun","stunprod","bomb")
+		battle_type = pick("laser","disabler","esword","gun","stunprod","bomb")
 	feedback_details += "Type: [battle_type]"
 	switch(battle_type)
-		if("laser") //Laser fight
-			for(var/i in 1 to hits)
+		if("laser")t
+			var/hits = 0
+			for(var/i in 1 to rand(5, 10))
 				target.playsound_local(null, 'sound/weapons/laser.ogg', 25, 1)
 				if(prob(50))
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, 'sound/weapons/sear.ogg', 25, 1), rand(10,20))
+					hits++
 				else
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, 'sound/weapons/effects/searwall.ogg', 25, 1), rand(10,20))
 				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
-			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
-		if("esword") //Esword fight
+				if(hits >= 4 && prob(70))
+					target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
+					break
+		if("disabler")
+			var/hits = 0
+			for(var/i in 1 to rand(5, 10))
+				target.playsound_local(null, DISABLERSOUND, 25, 1)
+				if(prob(50))
+					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, DISABLERHIT, 25, 1), rand(10,20))
+					hits++
+				else
+					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, DISABLERMISS, 25, 1), rand(10,20))
+				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
+				if(hits >= 3 && prob(70))
+					target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
+					break
+		if("esword")
 			target.playsound_local(null, 'sound/weapons/saberon.ogg',15, 1)
-			for(var/i=0,i<hits,i++)
+			for(var/i in 1 to shots)
 				target.playsound_local(null, 'sound/weapons/blade1.ogg', 25, 1)
-				sleep(rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 8))
-			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
-			target.playsound_local(null, 'sound/weapons/saberoff.ogg', 15, 1)
-		if("gun") //Gun fight
-			for(var/i in 1 to hits)
+				if(i == 4)
+					target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
+				sleep(rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 8))		
+				target.playsound_local(null, 'sound/weapons/saberoff.ogg', 15, 1)
+		if("gun")
+			var/hits = 0
+			for(var/i in 1 to rand(3, 6))
 				target.playsound_local(null, get_sfx("gunshot"), 25)
 				if(prob(60))
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, 'sound/weapons/pierce.ogg', 25, 1), rand(10,20))
+					hits++
 				else
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, "ricochet", 25, 1), rand(10,20))
 				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
-			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
+				if(hits >= 2 && prob(80))
+					target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
+					break
 		if("stunprod") //Stunprod + cablecuff
 			target.playsound_local(null, 'sound/weapons/egloves.ogg', 40, 1)
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
 			sleep(20)
 			target.playsound_local(null, 'sound/weapons/cablecuff.ogg', 15, 1)
 		if("bomb") // Tick Tock
-			for(var/i in 1 to hits)
+			for(var/i in 1 to rand(3, 11))
 				target.playsound_local(null, 'sound/items/timer.ogg', 25, 0)
 				sleep(15)
 	qdel(src)
 
 /datum/hallucination/items_other
-	cost = 10
 
 /datum/hallucination/items_other/New(mob/living/carbon/T, forced = TRUE, item_type)
 	set waitfor = FALSE
 	..()
 	var/item
 	if(!item_type)
-		item = pick(list("esword","dual_esword","stunpaper","clockspear","ttv","flash","armblade"))
+		item = pick(list("esword","taser","ebow","baton","dual_esword","clockspear","ttv","flash","armblade"))
 	else
 		item = item_type
 	feedback_details += "Item: [item]"
@@ -441,9 +404,13 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 					if("dual_esword")
 						target.playsound_local(H, 'sound/weapons/saberon.ogg',35,1)
 						A = image(image_file,H,"dualsaberred1", layer=ABOVE_MOB_LAYER)
-					if("stunpaper")
-						A = image(image_file,H,"paper", layer=ABOVE_MOB_LAYER)
-						A.color = rgb(255,0,0)
+					if("taser")
+						A = image(image_file,H,TASER_ICON, layer=ABOVE_MOB_LAYER)
+					if("ebow")
+						A = image(image_file,H,EBOW_ICON, layer=ABOVE_MOB_LAYER)
+					if("baton")
+						target.playsound_local(H, BATON_BUZZ,35,1)
+						A = image(image_file,H,BATON_ICON, layer=ABOVE_MOB_LAYER)
 					if("clockspear")
 						A = image(image_file,H,"ratvarian_spear", layer=ABOVE_MOB_LAYER)
 					if("ttv")
@@ -451,6 +418,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 					if("flash")
 						A = image(image_file,H,"flashtool", layer=ABOVE_MOB_LAYER)
 					if("armblade")
+						target.playsound_local(H, ARMBLADE_SQUELCH,35,1)
 						A = image(image_file,H,"arm_blade", layer=ABOVE_MOB_LAYER)
 				if(target.client)
 					target.client.images |= A
@@ -463,13 +431,12 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 
 /datum/hallucination/delusion
 	var/list/image/delusions = list()
-	cost = 50
 
-/datum/hallucination/delusion/New(mob/living/carbon/T, forced, force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null, custom_name = null)
+/datum/hallucination/delusion/New(mob/living/carbon/T, forced, force_kind = null , duration = 300,skip_nearby = TRUE, custom_icon = null, custom_icon_file = null, custom_name = null)
 	set waitfor = FALSE
 	. = ..()
 	var/image/A = null
-	var/kind = force_kind ? force_kind : pick("monkey","corgi","carp","skeleton","demon","zombie")
+	var/kind = force_kind ? force_kind : pick("nothing","monkey","corgi","carp","skeleton","demon","zombie")
 	feedback_details += "Type: [kind]"
 	var/list/nearby
 	if(skip_nearby)
@@ -480,6 +447,9 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		if(skip_nearby && (H in nearby))
 			continue
 		switch(kind)
+			if("nothing")
+				A = image(EMPTY_ICON,H,EMPTY_ICON)
+				A.name = "..."
 			if("monkey")//Monkey
 				A = image('icons/mob/monkey.dmi',H,"monkey1")
 				A.name = "Monkey ([rand(1,999)])"
@@ -516,7 +486,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 
 /datum/hallucination/self_delusion
 	var/image/delusion
-	cost = 40
 
 /datum/hallucination/self_delusion/New(mob/living/carbon/T, forced, force_kind = null , duration = 300, custom_icon = null, custom_icon_file = null, wabbajack = TRUE) //set wabbajack to false if you want to use another fake source
 	set waitfor = FALSE
@@ -556,173 +525,10 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		target.client.images.Remove(delusion)
 	return ..()
 
-/datum/hallucination/fakeattacker/New(mob/living/carbon/T, forced = TRUE)
-	set waitfor = FALSE
-	..()
-	var/mob/living/carbon/human/clone = null
-	var/clone_weapon = null
-
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(H.stat || H.lying)
-			continue
-		clone = H
-		feedback_details += "Clone of: [H.real_name]"
-		break
-
-	if(!clone)
-		return
-
-	var/static/list/non_fakeattack_weapons = list(/obj/item/gun/ballistic, /obj/item/ammo_box/a357,\
-	/obj/item/gun/energy/kinetic_accelerator/crossbow, /obj/item/melee/transforming/energy/sword/saber,\
-	/obj/item/storage/box/syndicate, /obj/item/storage/box/emps,\
-	/obj/item/cartridge/virus/syndicate, /obj/item/clothing/under/chameleon,\
-	/obj/item/clothing/shoes/chameleon/noslip, /obj/item/card/id/syndicate,\
-	/obj/item/clothing/mask/chameleon, /obj/item/clothing/glasses/thermal,\
-	/obj/item/chameleon, /obj/item/card/emag,	/obj/item/grenade/plastic/x4,\
-	/obj/item/storage/toolbox/syndicate, /obj/item/aiModule,\
-	/obj/item/radio/headset/syndicate,	/obj/item/grenade/plastic/c4,\
-	/obj/item/powersink, /obj/item/storage/box/syndie_kit,\
-	/obj/item/toy/syndicateballoon, /obj/item/gun/energy/laser/captain,\
-	/obj/item/hand_tele, /obj/item/construction/rcd, /obj/item/tank/jetpack,\
-	/obj/item/clothing/under/rank/captain, /obj/item/aicard,\
-	/obj/item/clothing/shoes/magboots, /obj/item/areaeditor/blueprints, /obj/item/disk/nuclear,\
-	/obj/item/clothing/suit/space/nasavoid, /obj/item/tank)
-
-	var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(get_turf(target),target)
-
-	for(var/obj/item/I in clone.held_items)
-		if(!(locate(I) in non_fakeattack_weapons))
-			clone_weapon = I.name
-			F.weap = I
-
-	F.name = clone.name
-	F.my_target = target
-	F.weapon_name = clone_weapon
-
-	F.left = image(clone,dir = WEST)
-	F.right = image(clone,dir = EAST)
-	F.up = image(clone,dir = NORTH)
-	F.down = image(clone,dir = SOUTH)
-
-	F.updateimage()
-	qdel(src)
-
-/obj/effect/fake_attacker
-	icon = null
-	icon_state = null
-	name = ""
-	desc = ""
-	density = FALSE
-	anchored = TRUE
-	opacity = 0
-	var/mob/living/carbon/human/my_target = null
-	var/weapon_name = null
-	var/obj/item/weap = null
-	var/image/stand_icon = null
-	var/image/currentimage = null
-	var/icon/base = null
-	var/skin_tone
-	var/mob/living/clone = null
-	var/image/left
-	var/image/right
-	var/image/up
-	var/collapse
-	var/image/down
-
-	max_integrity = 100
-
-/obj/effect/fake_attacker/attackby(obj/item/P, mob/living/user, params)
-	step_away(src,my_target,2)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	my_target.playsound_local(src, P.hitsound, 1)
-	my_target.visible_message("<span class='danger'>[my_target] flails around wildly.</span>", \
-							"<span class='danger'>[my_target] has attacked [src]!</span>")
-
-	obj_integrity -= P.force
-
-/obj/effect/fake_attacker/Crossed(mob/M, somenumber)
-	if(M == my_target)
-		step_away(src,my_target,2)
-		if(prob(30))
-			for(var/mob/O in oviewers(world.view , my_target))
-				to_chat(O, "<span class='danger'>[my_target] stumbles around.</span>")
-
-/obj/effect/fake_attacker/Initialize(mapload, mob/living/carbon/T)
-	..()
-	my_target = T
-	QDEL_IN(src, 300)
-	step_away(src,my_target,2)
-	INVOKE_ASYNC(src, .proc/attack_loop)
-
-
-/obj/effect/fake_attacker/proc/updateimage()
-//	del src.currentimage
-	if(src.dir == NORTH)
-		del src.currentimage
-		src.currentimage = new /image(up,src)
-	else if(src.dir == SOUTH)
-		del src.currentimage
-		src.currentimage = new /image(down,src)
-	else if(src.dir == EAST)
-		del src.currentimage
-		src.currentimage = new /image(right,src)
-	else if(src.dir == WEST)
-		del src.currentimage
-		src.currentimage = new /image(left,src)
-	SEND_IMAGE(my_target, currentimage)
-
-
-/obj/effect/fake_attacker/proc/attack_loop()
-	while(1)
-		sleep(rand(5,10))
-		if(obj_integrity < 0 || my_target.stat)
-			collapse()
-			continue
-		if(get_dist(src,my_target) > 1)
-			src.setDir(get_dir(src,my_target))
-			step_towards(src,my_target)
-			updateimage()
-		else
-			if(prob(15))
-				if(weapon_name)
-					my_target.playsound_local(my_target, weap.hitsound, weap.get_clamped_volume(), 1)
-					my_target.show_message("<span class='danger'>[src.name] has attacked [my_target] with [weapon_name]!</span>", 1)
-					my_target.staminaloss += 30
-					if(prob(20))
-						my_target.blur_eyes(3)
-					if(prob(33))
-						if(!locate(/obj/effect/overlay) in my_target.loc)
-							fake_blood(my_target)
-				else
-					my_target.playsound_local(my_target, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'), 25, 1)
-					my_target.show_message("<span class='userdanger'>[src.name] has punched [my_target]!</span>", 1)
-					my_target.staminaloss += 30
-					if(prob(33))
-						if(!locate(/obj/effect/overlay) in my_target.loc)
-							fake_blood(my_target)
-
-		if(prob(15))
-			step_away(src,my_target,2)
-
-/obj/effect/fake_attacker/proc/collapse()
-	collapse = 1
-	updateimage()
-	qdel(src)
-
-/obj/effect/fake_attacker/proc/fake_blood(mob/target)
-	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
-	O.name = "blood"
-	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
-	SEND_IMAGE(target, I)
-	QDEL_IN(O, 300)
-
-
 /datum/hallucination/bolts
-	var/list/doors = list()
-	cost = 25
+	var/list/locks = list()
 
-/datum/hallucination/bolts/New(mob/living/carbon/T, forced, door_number=-1) //-1 for severe, 1-2 for subtle
+/datum/hallucination/bolts/New(mob/living/carbon/T, forced, door_number = -1)
 	set waitfor = FALSE
 	..()
 	var/image/I = null
@@ -734,46 +540,70 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		if(!A.density)
 			continue
 		count++
-		I = image(A.overlays_file, get_turf(A), "lights_bolts",layer=A.layer+0.1)
-		doors += I
-		if(target.client)
-			target.client.images |= I
-			target.playsound_local(get_turf(A), 'sound/machines/boltsdown.ogg',30,0,3)
-		sleep(rand(6,12))
+		var/obj/effect/hallucination/fake_door_lock/lock = new
+		lock.target = target
+		lock.airlock = A
+		locks += lock
+		lock.lock()
+		sleep(rand(4,12))
 	sleep(100)
-	for(var/image/B in doors)
-		if(target.client)
-			target.client.images.Remove(B)
-			target.playsound_local(get_turf(B), 'sound/machines/boltsup.ogg',30,0,3)
-		sleep(rand(6,12))
+	for(var/obj/effect/fake_door_lock/lock in locks)
+		locks -= lock
+		lock.unlock()
+		sleep(rand(4,12))
 	qdel(src)
+	
+/obj/effect/hallucination/fake_door_lock
+	var/image/light
+	var/obj/machinery/door/airlock/airlock
+	
+/obj/effect/hallucination/fake_door_lock/Initialize()
+	light = image(airlock.overlays_file, get_turf(airlock), "lights_bolts",layer=airlock.layer+0.1)
+	
+/obj/effect/hallucination/fake_door_lock/proc/lock()
+	if(target.client)
+		target.client.images |= light
+		target.playsound_local(get_turf(airlock), 'sound/machines/boltsdown.ogg',30,0,3)
+
+/obj/effect/hallucination/fake_door_lock/proc/unlock()
+	if(target.client)
+		target.client.images.Remove(light)
+		target.playsound_local(get_turf(airlock), 'sound/machines/boltsup.ogg',30,0,3)
+	
+/obj/effect/hallucination/fake_door_lock/CanPass(atom/A)
+	if(A == target)
+		return FALSE
+	return TRUE
+	
+/obj/effect/hallucination/fake_door_lock/Bump(atom/A)
+	if(A == target)
+		SET_LIGHT TO FLASHING
+		target.playsound_local(get_turf(airlock), BOLTSBEEP,30,0,3)
 
 /datum/hallucination/whispers
-	cost = 15
 
 /datum/hallucination/whispers/New(mob/living/carbon/T, forced = TRUE)
 	set waitfor = FALSE
 	..()
 	var/target_name = target.first_name()
 	var/speak_messages = list("[pick_list_replacements(HAL_LINES_FILE, "suspicion")]",\
-	"[pick_list_replacements(HAL_LINES_FILE, "greetings")][target.first_name()]!",\
-	"[pick_list_replacements(HAL_LINES_FILE, "getout")]",\
-	"[pick_list_replacements(HAL_LINES_FILE, "weird")]",\
-	"[pick_list_replacements(HAL_LINES_FILE, "didyouhearthat")]",\
-	"[pick_list_replacements(HAL_LINES_FILE, "imatraitor")]",\
-	"[pick_list_replacements(HAL_LINES_FILE, "doubt")]",\
-	"[pick_list_replacements(HAL_LINES_FILE, "aggressive")]",\
-	"[pick_list_replacements(HAL_LINES_FILE, "help")]!!",\
-	"[pick_list_replacements(HAL_LINES_FILE, "escape")]",\
-	"I'm infected, [pick_list_replacements(HAL_LINES_FILE, "infection_advice")]!")
+		"[pick_list_replacements(HAL_LINES_FILE, "conversation")]",\
+		"[pick_list_replacements(HAL_LINES_FILE, "greetings")][target.first_name()]!",\
+		"[pick_list_replacements(HAL_LINES_FILE, "getout")]",\
+		"[pick_list_replacements(HAL_LINES_FILE, "weird")]",\
+		"[pick_list_replacements(HAL_LINES_FILE, "didyouhearthat")]",\
+		"[pick_list_replacements(HAL_LINES_FILE, "doubt")]",\
+		"[pick_list_replacements(HAL_LINES_FILE, "aggressive")]",\
+		"[pick_list_replacements(HAL_LINES_FILE, "help")]!!",\
+		"[pick_list_replacements(HAL_LINES_FILE, "escape")]",\
+		"I'm infected, [pick_list_replacements(HAL_LINES_FILE, "infection_advice")]!")
 
-	var/radio_messages = list("Set [target.first_name()] to arrest!",\
-	"[pick_list_replacements(HAL_LINES_FILE, "people")] is [pick_list_replacements(HAL_LINES_FILE, "accusations")]!",\
-	"Help!",\
-	"[pick_list_replacements(HAL_LINES_FILE, "threat")] in [pick_list_replacements(HAL_LINES_FILE, "location")][prob(50)?"!":"!!"]",\
-	"Where's [target.first_name()]?"\
-	,"[pick("C","Ai, c","Someone c","Rec")]all the shuttle!"\
-	,"AI [pick("rogue", "is dead")]!!")
+	var/radio_messages = list("[pick_list_replacements(HAL_LINES_FILE, "people")] is [pick_list_replacements(HAL_LINES_FILE, "accusations")]!",\
+		"Help!",\
+		"[pick_list_replacements(HAL_LINES_FILE, "threat")] in [pick_list_replacements(HAL_LINES_FILE, "location")][prob(50)?"!":"!!"]",\
+		"[pick("Where's [target.first_name()]?", "Set [target.first_name()] to arrest!")]"\
+		,"[pick("C","Ai, c","Someone c","Rec")]all the shuttle!"\
+		,"AI [pick("rogue", "is dead")]!!")
 
 	var/list/mob/living/carbon/people = list()
 	var/list/mob/living/carbon/person = null
@@ -811,40 +641,74 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	qdel(src)
 
 /datum/hallucination/message
-	cost = 15
 
 /datum/hallucination/message/New(mob/living/carbon/T, forced = TRUE)
 	set waitfor = FALSE
 	..()
-	var/chosen = pick("<span class='userdanger'>The light burns you!</span>", \
-		"<span class='danger'>You don't feel like yourself.</span>", \
-		"<span class='notice'>You hear something squeezing through the ducts...</span>", \
-		"<span class='notice'>You hear a distant scream.</span>", \
-		"<span class='notice'>You feel invincible, nothing can hurt you!</span>", \
-		"<span class='warning'>You feel a tiny prick!</span>", \
-		"<B>[target]</B> sneezes.", \
-		//The truth, revealed
-		"<span class='warning'>You're hallucinating.</span>", \
-		//Direct advice
-		"[pick_list_replacements(HAL_LINES_FILE, "advice")]")
+	var/list/mobpool = list()
+	var/mob/living/carbon/human/other
+	var/close_other = FALSE
+	for(var/mob/living/carbon/human/H in oview(target, 7)
+		if(get_dist(H, target) <= 1)
+			other = H
+			close_other = TRUE
+			break
+		mobpool += H
+	if(!other && mobpool.len)
+		other = pick(mobpool)
+		
+	var/message_pool = list()
+	if(other)
+		if(close_other)
+			message_pool.Add(list("<span class='warning'>You feel a tiny prick!</span>"))
+		if(other.back)BACKPACK
+			message_pool.Add(list("<span class='notice'>[other] puts the [pick(\
+				"revolver","energy sword","cryptographic sequencer","power sink","energy bow", //traitor stuff
+				"hybrid taser","stun baton","flash","syringe gun","circular saw","tank transfer valve", //threatening
+				CULTDAGGER,CULTTABLET,"spellbook" //cult
+				"pulse rifle",CAPTAINS'ID,"hand teleporter","hypospray",CAPTAINS'GUN,HOS GUN,"station's blueprints" //loot
+				)] in their [other.back]</span>"))
+				
+		message_pool.Add(list("<B>[other]</B> [pick("sneezes","coughs")]."))
+	
+	message_pool.Add("<span class='notice'>You hear something squeezing through the ducts...</span>", \
+		"<span class='notice'>Your [pick("arm", "leg", "back", "head")] itches.</span>",\
+		"<span class='warning'>You feel hot.</span>",
+		"<span class='warning'>You feel cold.</span>",
+		"<span class='warning'>Your stomach rumbles.</span>",
+		"<span class='warning'>Your head hurts.</span>",
+		"<span class='warning'>You hear a faint buzz in your head.</span>",
+		"<B>[target]</B> sneezes.")
+	if(prob(10))
+		message_pool.Add("<span class='warning'>Behind you.</span>",\
+			"<span class='warning'>You hear a faint laughter.</span>",
+			"<span class='warning'>You see something move.</span>",
+			"<span class='warning'>You hear skittering on the ceiling.</span>",
+			"<span class='warning'>You see an inhumanly tall silhouette moving in the distance.</span>"
+			)
+	if(prob(10))
+		message_pool.Add("[pick_list_replacements(HAL_LINES_FILE, "advice")]")
+	chosen = pick(message_pool)
 	feedback_details += "Message: [chosen]"
 	to_chat(target, chosen)
 	qdel(src)
 
 /datum/hallucination/sounds
-	cost = 15
 
 /datum/hallucination/sounds/New(mob/living/carbon/T, forced = TRUE, sound_type)
 	set waitfor = FALSE
 	..()
 	if(!sound_type)
-		sound_type = pick("airlock","explosion","far_explosion","glass","phone","summon_guns","alarm","beepsky","hallelujah","creepy","ratvar","shuttle_dock",
-		"wall_decon","door_hack","esword","blob_alert","tesla","malf_ai","meteors")
+		sound_type = pick("airlock","console","explosion","far_explosion","glass","alarm","beepsky","wall_decon","door_hack","tesla")
 	feedback_details += "Type: [sound_type]"
 	//Strange audio
 	switch(sound_type)
 		if("airlock")
 			target.playsound_local(null,'sound/machines/airlock.ogg', 15, 1)
+		if("console")
+			target.playsound_local(null,CONSOLESOUND, 15, 1)
+		if("console")
+			target.playsound_local(null,CONSOLESOUND, 15, 1)
 		if("explosion")
 			if(prob(50))
 				target.playsound_local(null,'sound/effects/explosion1.ogg', 50, 1)
@@ -854,34 +718,10 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 			target.playsound_local(null, 'sound/effects/explosionfar.ogg', 50, 1)
 		if("glass")
 			target.playsound_local(null, pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg'), 50, 1)
-		if("phone")
-			target.playsound_local(null, 'sound/weapons/ring.ogg', 15)
-			sleep(25)
-			target.playsound_local(null, 'sound/weapons/ring.ogg', 25)
-			sleep(25)
-			target.playsound_local(null, 'sound/weapons/ring.ogg', 35)
-			sleep(25)
-			target.playsound_local(null, 'sound/weapons/ring.ogg', 45)
-		if("summon_guns")
-			target.playsound_local(null, 'sound/magic/summon_guns.ogg', 50, 1)
 		if("alarm")
 			target.playsound_local(null, 'sound/machines/alarm.ogg', 100, 0)
 		if("beepsky")
 			target.playsound_local(null, 'sound/voice/bfreeze.ogg', 35, 0)
-		if("hallelujah")
-			target.playsound_local(null, 'sound/effects/pray_chaplain.ogg', 50)
-	//Rare audio
-		if("creepy")
-	//These sounds are (mostly) taken from Hidden: Source
-			target.playsound_local(null, pick(CREEPY_SOUNDS), 50, 1)
-		if("ratvar")
-			target.playsound_local(null, 'sound/effects/ratvar_rises.ogg', 100)
-			sleep(150)
-			target.playsound_local(null, 'sound/effects/ratvar_reveal.ogg', 100)
-		if("shuttle_dock")
-			to_chat(target, "<h1 class='alert'>Priority Announcement</h1>")
-			to_chat(target, "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>")
-			target.playsound_local(null, 'sound/ai/shuttledock.ogg', 100)
 		//Deconstructing a wall
 		if("wall_decon")
 			target.playsound_local(null, 'sound/items/welder.ogg', 15, 1)
@@ -896,31 +736,78 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 			for(var/i = rand(1,3), i>0, i--)
 				target.playsound_local(null, 'sound/weapons/empty.ogg', 15, 1)
 				sleep(rand(10,30))
-			target.playsound_local(null, 'sound/machines/airlockforced.ogg', 15, 1)
-		if("esword")
-			target.playsound_local(null, 'sound/weapons/saberon.ogg',35,1)
-		if("blob_alert")
-			to_chat(target, "<h1 class='alert'>Biohazard Alert</h1>")
-			to_chat(target, "<br><br><span class='alert'>Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.</span><br><br>")
-			target.playsound_local(null, 'sound/ai/outbreak5.ogg', 100, 0)
+			target.playsound_local(null, 'sound/machines/airlockforced.ogg', 15, 1)		
+	qdel(src)
+
+/datum/hallucination/weird_sounds
+
+/datum/hallucination/weird_sounds/New(mob/living/carbon/T, forced = TRUE, sound_type)
+	set waitfor = FALSE
+	..()
+	if(!sound_type)
+		sound_type = pick("phone","hallelujah","creepy","tesla")
+	feedback_details += "Type: [sound_type]"
+	//Strange audio
+	switch(sound_type)
+		if("phone")
+			target.playsound_local(null, 'sound/weapons/ring.ogg', 15)
+			sleep(25)
+			target.playsound_local(null, 'sound/weapons/ring.ogg', 15)
+			sleep(25)
+			target.playsound_local(null, 'sound/weapons/ring.ogg', 15)
+			sleep(25)
+			target.playsound_local(null, 'sound/weapons/ring.ogg', 15)
+		if("hallelujah")
+			target.playsound_local(null, 'sound/effects/pray_chaplain.ogg', 50)
+		if("laughter")
+			target.playsound_local(null, LAUGHTERSOUND, 50, 1)
+		if("creepy")
+		//These sounds are (mostly) taken from Hidden: Source
+			target.playsound_local(null, pick(CREEPY_SOUNDS), 50, 1)
 		if("tesla") //Tesla loose!
 			target.playsound_local(null, 'sound/magic/lightningbolt.ogg', 35, 1)
 			sleep(30)
 			target.playsound_local(null, 'sound/magic/lightningbolt.ogg', 65, 1)
 			sleep(30)
 			target.playsound_local(null, 'sound/magic/lightningbolt.ogg', 100, 1)
+		
+	qdel(src)
+	
+/datum/hallucination/stationmessage
+
+/datum/hallucination/stationmessage/New(mob/living/carbon/T, forced = TRUE, message)
+	set waitfor = FALSE
+	..()
+	if(!message)
+		message = pick("ratvar","shuttle_dock","blob_alert","malf_ai","meteors","supermatter")
+	feedback_details += "Type: [message]"
+	switch(message)
+		if("blob_alert")
+			to_chat(target, "<h1 class='alert'>Biohazard Alert</h1>")
+			to_chat(target, "<br><br><span class='alert'>Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.</span><br><br>")
+			SEND_SOUND(target, 'sound/ai/outbreak5.ogg')
+		if("ratvar")
+			target.playsound_local(C, 'sound/machines/clockcult/ark_deathrattle.ogg', 50, FALSE, pressure_affected = FALSE)
+			target.playsound_local(C, 'sound/effects/clockcult_gateway_disrupted.ogg', 50, FALSE, pressure_affected = FALSE)
+			sleep(27)
+			target.playsound_local(C, 'sound/effects/explosion_distant.ogg', 50, FALSE, pressure_affected = FALSE)
+		if("shuttle_dock")
+			to_chat(target, "<h1 class='alert'>Priority Announcement</h1>")
+			to_chat(target, "<br><br><span class='alert'>The Emergency Shuttle has docked with the station. You have 3 minutes to board the Emergency Shuttle.</span><br><br>")
+			SEND_SOUND(target, 'sound/ai/shuttledock.ogg')
 		if("malf_ai") //AI is doomsdaying!
 			to_chat(target, "<h1 class='alert'>Anomaly Alert</h1>")
 			to_chat(target, "<br><br><span class='alert'>Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.</span><br><br>")
-			target.playsound_local(null, 'sound/ai/aimalf.ogg', 100, 0)
+			SEND_SOUND(target, 'sound/ai/aimalf.ogg')
 		if("meteors") //Meteors inbound!
 			to_chat(target, "<h1 class='alert'>Meteor Alert</h1>")
 			to_chat(target, "<br><br><span class='alert'>Meteors have been detected on collision course with the station.</span><br><br>")
-			target.playsound_local(null, 'sound/ai/meteors.ogg', 100, 0)
-	qdel(src)
-
+			SEND_SOUND(target, 'sound/ai/meteors.ogg')
+		if("supermatter")
+			SEND_SOUND(target, 'sound/magic/charge.ogg')
+			to_chat(target, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
+	
 /datum/hallucination/hudscrew
-	cost = 10
 
 /datum/hallucination/hudscrew/New(mob/living/carbon/T, forced = TRUE)
 	set waitfor = FALSE
@@ -933,7 +820,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	qdel(src)
 
 /datum/hallucination/fake_alert
-	cost = 15
 
 /datum/hallucination/fake_alert/New(mob/living/carbon/T, forced = TRUE, specific, duration = 150)
 	set waitfor = FALSE
@@ -983,13 +869,12 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 		if("hacked")
 			target.throw_alert(alert_type, /obj/screen/alert/hacked, override = TRUE)
 		if("charge")
-			target.throw_alert(alert_type,/obj/screen/alert/emptycell, override = TRUE)
+			target.throw_alert(alert_type, /obj/screen/alert/emptycell, override = TRUE)
 	sleep(duration)
 	target.clear_alert(alert_type, clear_override = TRUE)
 	qdel(src)
 
 /datum/hallucination/items
-	cost = 15
 
 /datum/hallucination/items/New(mob/living/carbon/T, forced = TRUE)
 	set waitfor = FALSE
@@ -1052,7 +937,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	qdel(src)
 
 /datum/hallucination/dangerflash
-	cost = 15
 
 /datum/hallucination/dangerflash/New(mob/living/carbon/T, forced = TRUE)
 	set waitfor = FALSE
@@ -1087,7 +971,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	qdel(src)
 
 /datum/hallucination/death
-	cost = 40
 
 /datum/hallucination/death/New(mob/living/carbon/T, forced = TRUE)
 	set waitfor = FALSE
@@ -1107,8 +990,8 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 			fakemob = target //ever been so lonely you had to haunt yourself?
 		if(fakemob)
 			sleep(rand(20, 50))
-			to_chat(target, "<span class='deadsay'><b>DEAD: [fakemob.name]</b> says, \"[pick("rip","hey [target.first_name()]","you too?","is the AI rogue?",\
-			 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "abductors","double agents","viruses","badmins","you")]")]\"</span>")
+			to_chat(target, "<span class='deadsay'><b>DEAD: [fakemob.name]</b> says, \"[pick("rip","why did i just drop dead?","hey [target.first_name()]","git gud","you too?","is the AI rogue?",\
+			 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "this round","this","myself","admins","you")]")]\"</span>")
 	sleep(rand(70,90))
 	target.set_screwyhud(SCREWYHUD_NONE)
 	target.SetKnockdown(0)
@@ -1116,36 +999,56 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	qdel(src)
 
 /datum/hallucination/fire
-	cost = 25
+	var/active = TRUE
+	var/stage = 0
 
 /datum/hallucination/fire/New(mob/living/carbon/T, forced = TRUE)
 	set waitfor = FALSE
 	..()
+	target.fire_stacks = max(target.fire_stacks, 5) //Placebo flammability
 	var/image/fire_overlay = image('icons/mob/OnFire.dmi', target, "Standing", ABOVE_MOB_LAYER)
 	if(target.client)
 		target.client.images += fire_overlay
 	to_chat(target, "<span class='userdanger'>You're set on fire!</span>")
 	target.throw_alert("fire", /obj/screen/alert/fire, override = TRUE)
 	sleep(20)
-	target.throw_alert("temp", /obj/screen/alert/hot, 1, override = TRUE)
-	sleep(30)
-	target.clear_alert("temp", clear_override = TRUE)
-	target.throw_alert("temp", /obj/screen/alert/hot, 2, override = TRUE)
-	sleep(30)
-	target.clear_alert("temp", clear_override = TRUE)
-	target.throw_alert("temp", /obj/screen/alert/hot, 3, override = TRUE)
+	for(var/i in 1 to 3)
+		if(target.fire_stacks <= 0)
+			clear_fire()
+			return
+		stage++
+		update_temp()
+		sleep(30)
 	for(var/i in 1 to rand(5, 10))
+		if(target.fire_stacks <= 0)
+			clear_fire()
+			return
 		target.adjustStaminaLoss(15)
-		sleep(25)
+		sleep(20)
+	clear_fire()
+	
+/datum/hallucination/fire/proc/update_temp()
+	if(stage <= 0)
+		target.clear_alert("temp", clear_override = TRUE)
+	else
+		target.clear_alert("temp", clear_override = TRUE)
+		target.throw_alert("temp", /obj/screen/alert/hot, stage, override = TRUE)
+	
+/datum/hallucination/fire/proc/clear_fire()
+	if(!active)
+		return
+	active = FALSE
 	target.clear_alert("fire", clear_override = TRUE)
-	target.clear_alert("temp", clear_override = TRUE)
 	if(target.client)
 		target.client.images -= fire_overlay
 	QDEL_NULL(fire_overlay)
+	while(stage > 0)
+		stage--
+		update_alert()
+		sleep(30)
 	qdel(src)
 
 /datum/hallucination/husks
-	cost = 20
 
 /datum/hallucination/husks/New(mob/living/carbon/T, forced = TRUE)
 	set waitfor = FALSE
@@ -1178,7 +1081,6 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 
 //hallucination projectile code in code/modules/projectiles/projectile/special.dm
 /datum/hallucination/stray_bullet
-	cost = 15
 
 /datum/hallucination/stray_bullet/New(mob/living/carbon/C, forced = TRUE)
 	set waitfor = FALSE
@@ -1195,28 +1097,3 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	H.preparePixelProjectile(target, start)
 	H.fire()
 	qdel(src)
-
-//Reality Dissociation Syndrome hallucinations only trigger in special cases and have no cost
-/datum/hallucination/rds
-	cost = 0
-
-/datum/hallucination/rds/fourth_wall/New(mob/living/carbon/C, forced = TRUE)
-	..()
-	to_chat(C, "<span class='userdanger extremelybig'>[pick("Leave the server" , "Close the game window")] [pick("immediately", "right now")].</span>")
-
-/datum/hallucination/rds/supermatter/New(mob/living/carbon/C, forced = TRUE)
-	..()
-	SEND_SOUND(C, 'sound/magic/charge.ogg')
-	to_chat(C, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
-
-/datum/hallucination/rds/narsie/New(mob/living/carbon/C, forced = TRUE)
-	C.playsound_local(C, 'sound/creatures/narsie_rises.ogg', 50, FALSE, pressure_affected = FALSE)
-	to_chat(C, "<span class='narsie'>NAR-SIE HAS RISEN</span>")
-
-/datum/hallucination/rds/ark/New(mob/living/carbon/C, forced = TRUE)
-	set waitfor = FALSE
-	..()
-	C.playsound_local(C, 'sound/machines/clockcult/ark_deathrattle.ogg', 50, FALSE, pressure_affected = FALSE)
-	C.playsound_local(C, 'sound/effects/clockcult_gateway_disrupted.ogg', 50, FALSE, pressure_affected = FALSE)
-	sleep(27)
-	C.playsound_local(C, 'sound/effects/explosion_distant.ogg', 50, FALSE, pressure_affected = FALSE)
