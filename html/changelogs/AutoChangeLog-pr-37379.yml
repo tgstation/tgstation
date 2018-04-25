@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "Doors don't turn into Mike Pence when the shock wire is pulsed, only why it's cut."

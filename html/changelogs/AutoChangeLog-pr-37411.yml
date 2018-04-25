@@ -1,4 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - admin: "Logging and messaging for singularities now include the area and a jump link to the location where it happened."
