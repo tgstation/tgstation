@@ -199,7 +199,7 @@
 
 /datum/gas_reaction/fusion/init_reqs()
 	min_requirements = list(
-		"ENER" = PLASMA_BINDING_ENERGY * 100,
+		"ENER" = PLASMA_BINDING_ENERGY * 1000,
 		/datum/gas/plasma = 50,
 		/datum/gas/carbon_dioxide = 1
 	)
@@ -243,7 +243,7 @@
 		cached_gases[/datum/gas/bz][MOLES] += gas_power*0.05
 		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gas_power*0.05
 		if (location)
-			empulse(location, mediation*0.05, mediation*0.1)
+			empulse(location, mediation*0.002, mediation*0.004)
 			radiation_pulse(location, power_ratio*(reaction_energy)/(0.3*PLASMA_BINDING_ENERGY))
 	else
 		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*PLASMA_BINDING_ENERGY*(gas_power/mediation)
