@@ -23,6 +23,7 @@ Self-sustaining extracts:
 		A.extract = X
 		A.icon = icon
 		A.icon_state = icon_state
+		A.color = color
 	qdel(src)
 
 /obj/item/autoslime/Initialize()

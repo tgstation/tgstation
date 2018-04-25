@@ -176,7 +176,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	return FALSE
 
-/datum/atom_hud/alternate_appearance/basic/onePerson/New(key, image/I, target_sees_appearance = TRUE, mob/living/M)
-	..(key, I, target_sees_appearance)
+/datum/atom_hud/alternate_appearance/basic/onePerson/New(key, image/I, mob/living/M)
+	..(key, I, FALSE)
 	seer = M
 	add_hud_to(seer)

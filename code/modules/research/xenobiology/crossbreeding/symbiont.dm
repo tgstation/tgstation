@@ -7,12 +7,14 @@ Symbiont extracts:
 	name = "symbiont extract"
 	desc = "It beats with unnatural life. You can see something inside."
 	effect = "symbiont"
-	icon_state = "stabilized"
+	icon_state = "symbiont"
 	var/slime_organ
 
 /obj/item/slimecross/symbiont/attack_self(mob/user)
 	var/obj/item/organ/new_organ = new slime_organ(get_turf(user))
+	to_chat(user, "<span class='notice'>You mold [src] like clay, and shape it into [new_organ]!</span>")
 	after_spawn(new_organ, user)
+	qdel(src)
 
 /obj/item/slimecross/symbiont/proc/after_spawn(obj/item/organ/new_organ, mob/user)
 	return
@@ -53,15 +55,15 @@ Symbiont extracts:
 /obj/item/slimecross/symbiont/darkpurple
 	colour = "dark purple"
 	slime_organ =/obj/item/organ/liver/plasmatic
-/*
+
 /obj/item/slimecross/symbiont/darkblue
 	colour = "dark blue"
-	slime_organ =
+	slime_organ =/obj/item/organ/frozenhand
 
 /obj/item/slimecross/symbiont/silver
 	colour = "silver"
-	slime_organ =
-
+	slime_organ = /obj/item/organ/stomach/autocannibal
+/*
 /obj/item/slimecross/symbiont/bluespace
 	colour = "bluespace"
 	slime_organ =
@@ -123,6 +125,7 @@ Symbiont extracts:
 /obj/item/organ/stomach/slime
 	name = "slime stomach"
 	desc = "A grey, gooey, stomach-like organ."
+	icon_state = "slimestomach"
 
 /obj/item/organ/stomach/slime/on_life()
 	. = ..()
@@ -136,6 +139,7 @@ Symbiont extracts:
 /obj/item/organ/lungs/firebreath
 	name = "burning lungs"
 	desc = "They look like lungs, but they're hot to the touch, and smell violently of brimstone."
+	icon_state = "burninglungs"
 	safe_toxins_max = 0
 	heat_level_1_threshold = INFINITY
 	heat_level_2_threshold = INFINITY
@@ -151,8 +155,8 @@ Symbiont extracts:
 	breathweapon.Grant(owner)
 
 /obj/item/organ/lungs/firebreath/Remove()
-	. = ..()
 	breathweapon.Remove(owner)
+	. = ..()
 
 /datum/action/cooldown/firebreath
 	name = "Breathe Fire"
@@ -183,6 +187,7 @@ Symbiont extracts:
 /obj/item/organ/healinghand
 	name = "regenerative hand"
 	desc = "The palm glows with a hazy purple light."
+	icon_state = "regenhand"
 	zone = BODY_ZONE_R_ARM
 	slot = ORGAN_SLOT_RIGHT_HAND
 	var/datum/action/healinghand/action
@@ -201,8 +206,8 @@ Symbiont extracts:
 	action.Grant(owner)
 
 /obj/item/organ/healinghand/Remove()
-	. = ..()
 	action.Remove(owner)
+	. = ..()
 
 /datum/action/healinghand
 	name = "Healing Hand"
@@ -228,7 +233,7 @@ Symbiont extracts:
 			hand_item = new /obj/item/healingtouch(owner)
 			var/success = (linked_hand.zone == BODY_ZONE_R_ARM ? owner.put_in_r_hand(hand_item) : owner.put_in_l_hand(hand_item))
 			if(success)
-				to_chat(owner, "<span class='notice'>You feel a tingling sensation as your hand begins to glow purple</span>")
+				to_chat(owner, "<span class='notice'>You feel a tingling sensation as your hand begins to glow purple.</span>")
 				return
 			to_chat(owner, "<span class='warning'>Your hand flickers slightly, but falls dim.</span>")
 			qdel(hand_item)
@@ -273,6 +278,7 @@ Symbiont extracts:
 /obj/item/organ/lungs/omni
 	name = "stable lungs"
 	desc = "A set of clear, blue lungs. They seem to glow slightly in any condition."
+	icon_state = "stablelung"
 	safe_toxins_max = 0
 	safe_co2_max = 0
 	SA_para_min = INFINITY
@@ -284,6 +290,8 @@ Symbiont extracts:
 /obj/item/organ/heart/industrial
 	name = "industrial heart"
 	desc = "It looks more like an engine than an organ. Sieze the means of production!"
+	icon_base = "industrialheart"
+	icon_state = "industrialheart-on"
 	var/datum/action/internal_autolathe/action
 	var/obj/machinery/autolathe/internal/internal_lathe
 
@@ -299,8 +307,8 @@ Symbiont extracts:
 	action.Grant(owner)
 
 /obj/item/organ/heart/industrial/Remove()
-	. = ..()
 	action.Remove(owner)
+	. = ..()
 
 /datum/action/internal_autolathe
 	name = "Internal Autolathe"
@@ -354,13 +362,14 @@ Symbiont extracts:
 /obj/item/organ/joltfoot
 	name = "jolt foot"
 	desc = "It arcs with electricity."
+	icon_state = "joltfoot"
 	zone = BODY_ZONE_R_LEG
 	slot = ORGAN_SLOT_RIGHT_LEG
 	var/datum/action/cooldown/joltjump/action
 
 /obj/item/organ/joltfoot/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>It looks like a [zone == BODY_ZONE_R_LEG ? "right" : "left"] leg.</span>")
+	to_chat(user, "<span class='notice'>It looks like a [zone == BODY_ZONE_R_LEG ? "right" : "left"] foot.</span>")
 
 /obj/item/organ/joltfoot/Initialize()
 	. = ..()
@@ -371,8 +380,8 @@ Symbiont extracts:
 	action.Grant(owner)
 
 /obj/item/organ/joltfoot/Remove()
-	. = ..()
 	action.Remove(owner)
+	. = ..()
 
 /datum/action/cooldown/joltjump
 	name = "Jolt Jump"
@@ -393,7 +402,7 @@ Symbiont extracts:
 				break
 			var/blocked = FALSE
 			for(var/atom/A in J)
-				if(A.density)
+				if(!A.CanPass(owner,J) && !isliving(A))
 					blocked = TRUE
 					break
 			if(blocked)
@@ -436,12 +445,12 @@ Symbiont extracts:
 	linked_alert = owner.throw_alert("plasmaliver",/obj/screen/alert/plasma_liver)
 
 /obj/item/organ/liver/plasmatic/Remove()
-	. = ..()
 	snap_action.Remove(owner)
 	hand_action.Remove(owner)
 	burn_action.Remove(owner)
 	owner.clear_alert("plasmaliver")
 	linked_alert = null
+	. = ..()
 
 /obj/item/organ/liver/plasmatic/on_life()
 	var/mob/living/carbon/C = owner
@@ -587,6 +596,7 @@ Symbiont extracts:
 /obj/item/organ/frozenhand
 	name = "frozen hand"
 	desc = "Moisture in the air crystallizes around it."
+	icon_state = "frozenhand"
 	zone = BODY_ZONE_R_ARM
 	slot = ORGAN_SLOT_RIGHT_HAND
 	var/datum/action/cooldown/frozenhand/action
@@ -598,13 +608,489 @@ Symbiont extracts:
 /obj/item/organ/frozenhand/Initialize()
 	. = ..()
 	action = new
+	action.linked_hand = src
 
 /obj/item/organ/frozenhand/Insert()
 	. = ..()
 	action.Grant(owner)
 
 /obj/item/organ/frozenhand/Remove()
-	. = ..()
 	action.Remove(owner)
+	. = ..()
 
 /datum/action/cooldown/frozenhand
+	name = "Freezing Grasp"
+	desc = "Freeze an item in your hand in a block of ice, or expend much more power to freeze someone entirely!"
+	cooldown_time = 200
+	check_flags = AB_CHECK_STUN | AB_CHECK_CONSCIOUS | AB_CHECK_RESTRAINED
+	icon_icon = 'icons/obj/slimecrossing.dmi'
+	button_icon_state = "frozenhand"
+	var/obj/item/frozenhand/linked_item
+	var/obj/item/organ/frozenhand/linked_hand
+
+
+/datum/action/cooldown/frozenhand/Trigger()
+	. = ..()
+	if(.)
+		if(linked_item)
+			qdel(linked_item)
+			linked_item = null
+			to_chat(owner, "<span class='notice'>Your hand heats back up.</span>")
+		else
+			var/hand_busy = (linked_hand.zone == BODY_ZONE_R_ARM ? owner.get_item_for_held_index(2) : owner.get_item_for_held_index(1))
+			if(hand_busy)
+				owner.dropItemToGround(hand_busy)
+				freeze_item(hand_busy, owner)
+				StartCooldown()
+				next_use_time -= cooldown_time * 0.75 //With a cooldown of 20, sets the cooldown to 5 seconds.
+				return
+			linked_item = new /obj/item/frozenhand(owner)
+			linked_item.linked_action = src
+			var/success = (linked_hand.zone == BODY_ZONE_R_ARM ? owner.put_in_r_hand(linked_item) : owner.put_in_l_hand(linked_item))
+			if(success)
+				to_chat(owner, "<span class='notice'>You feel a prickly freezing sensation as your hand ices over.</span>")
+				return
+			to_chat(owner, "<span class='warning'>Your hand feels cool for a moment, but warms back up.</span>")
+			qdel(linked_item)
+			linked_item = null
+
+/datum/action/cooldown/frozenhand/proc/freeze_item(obj/item/I, mob/user)
+	to_chat(user, "<span class='notice'>You freeze [I] solid.</span>")
+	playsound(src, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	var/obj/item/frozenitem/ice = new /obj/item/frozenitem(get_turf(user))
+	ice.store(I)
+
+/obj/item/frozenitem
+	name = "ice cube"
+	desc = "It's completely frozen solid! Might take something warm to melt it."
+	icon = 'icons/obj/slimecrossing.dmi'
+	icon_state = "ice"
+
+/obj/item/frozenitem/proc/store(obj/item/I)
+	name = "frozen [I.name]"
+	switch(I.w_class)
+		if(WEIGHT_CLASS_TINY)
+			icon_state += "_tiny"
+		if(WEIGHT_CLASS_SMALL)
+			icon_state += "_small"
+		if(WEIGHT_CLASS_NORMAL)
+			icon_state += "_normal"
+	I.forceMove(src)
+
+/obj/item/frozenitem/attackby(obj/item/O, mob/user, params)
+	. = ..()
+	if(O.is_hot())
+		to_chat(user, "<span class='notice'>[src] melts.</span>")
+		qdel(src)
+
+/obj/item/frozenitem/fire_act(exposed_temperature, exposed_volume)
+	visible_message("<span class='notice'>[src] melts.</span>")
+	qdel(src)
+
+/obj/item/frozenitem/Destroy()
+	for(var/atom/movable/M in contents)
+		M.forceMove(get_turf(src))
+	..()
+
+/obj/item/frozenhand
+	name = "Frozen Hand"
+	desc = "Surprisingly, it's more of a pleasant chill than anything else."
+	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
+	icon = 'icons/obj/slimecrossing.dmi'
+	icon_state = "frozen_hand"
+	item_state = "frozenhand"
+	var/datum/action/cooldown/frozenhand/linked_action
+
+/obj/item/frozenhand/afterattack(atom/O, mob/user, proximity)
+	if(!proximity)
+		return
+	O.visible_message("<span class='danger'>[user] presses their frozen hand against [O]!</span>",
+		"<span class='userdanger'>[user] presses their frozen hand against you!</span>")
+	playsound(src, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	linked_action.linked_item = null
+	linked_action.StartCooldown()
+	if(istype(O, /obj/item))
+		var/obj/item/I = O
+		linked_action.freeze_item(I, user)
+		linked_action.next_use_time -= linked_action.cooldown_time * 0.75 //Just freezing an item, same as normal.
+	if(isliving(O))
+		var/mob/living/L = O
+		L.apply_status_effect(/datum/status_effect/freon)
+	qdel(src)
+
+//Autocannibalistic Stomach - If below NUTRITION_LEVEL_FED, starts draining blood and adding hunger. Stops when at or above NUTRITION_LEVEL_WELL_FED.
+
+/obj/item/organ/stomach/autocannibal
+	name = "autocannibalistic stomach"
+	desc = "It's disturbingly pale, and seems to be oddly active, even outside a body."
+	icon_state = "autocstomach"
+	var/draining = FALSE
+
+/obj/item/organ/stomach/autocannibal/on_life()
+	. = ..()
+	if(owner.nutrition < NUTRITION_LEVEL_FED && !draining && owner.blood_volume > (BLOOD_VOLUME_BAD + 10))
+		draining = TRUE
+		owner.throw_alert("autocannibal",/obj/screen/alert/stomach_autocannibal)
+	if((owner.nutrition >= NUTRITION_LEVEL_WELL_FED || owner.blood_volume <= BLOOD_VOLUME_BAD) && draining)
+		draining = FALSE
+		owner.clear_alert("autocannibal")
+	if(draining)
+		owner.blood_volume -= 3 //For the most part, this is roughly 6 times the blood regeneration rate for this level, but it won't be active always.
+		owner.nutrition += 6 //Two times the blood used.
+
+/obj/item/organ/stomach/autocannibal/Remove()
+	if(draining)
+		owner.clear_alert("autocannibal")
+	. = ..()
+
+/obj/screen/alert/stomach_autocannibal
+	name = "Autocannibalism"
+	desc = "Your stomach is drinking your blood to maintain nutrition."
+	icon_state = "autocstomach"
+
+//Warping Palm - You can pickup and place items anywhere on your screen.
+
+/obj/item/organ/warpingpalm
+	name = "warping palm"
+	desc = "There's a strange, blue-ish energy field in the center of the palm."
+	icon_state = "warpingpalm"
+	zone = BODY_ZONE_R_ARM
+	slot = ORGAN_SLOT_RIGHT_HAND
+	var/datum/action/cooldown/frozenhand/action
+
+/obj/item/organ/warpingpalm/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It looks like a [zone == BODY_ZONE_R_ARM ? "right" : "left"] hand.</span>")
+
+/obj/item/organ/warpingpalm/Insert()
+	. = ..()
+	var/datum/component/bluespace_hand/component = owner.GetComponent(/datum/component/bluespace_hand)
+	if(!component)
+		component = owner.AddComponent(/datum/component/bluespace_hand)
+	component.hand_indices |= (zone == BODY_ZONE_R_ARM ? 2 : 1)
+
+
+/obj/item/organ/warpingpalm/Remove()
+	var/datum/component/bluespace_hand/component = owner.GetComponent(/datum/component/bluespace_hand)
+	component.hand_indices -= (zone == BODY_ZONE_R_ARM ? 2 : 1)
+	if(!component.hand_indices.len)
+		qdel(component)
+	. = ..()
+
+/obj/item/organ/chronalfoot
+	name = "chronal foot"
+	desc = "Time is on your side - or, in this case, on your leg."
+	icon_state = "chronalfoot"
+	zone = BODY_ZONE_R_LEG
+	slot = ORGAN_SLOT_RIGHT_LEG
+	var/datum/component/redirect/component
+	var/obj/effect/chrono_echo/echo
+	var/datum/action/cooldown/timestep/cstep
+	var/datum/action/cooldown/timekick/kick
+
+/obj/item/organ/chronalfoot/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It looks like a [zone == BODY_ZONE_R_LEG ? "right" : "left"] foot.</span>")
+
+/obj/item/organ/chronalfoot/Initialize()
+	. = ..()
+	cstep = new
+	kick = new
+	cstep.linked_organ = src
+	kick.linked_organ = src
+
+/obj/item/organ/chronalfoot/Insert()
+	. = ..()
+	cstep.Grant(owner)
+	kick.Grant(owner)
+	echo = new /obj/effect/chrono_echo(get_turf(owner), owner)
+	component = owner.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(echo, /obj/effect/chrono_echo.proc/QueueMove))
+
+/obj/item/organ/chronalfoot/Remove()
+	cstep.Remove(owner)
+	kick.Remove(owner)
+	qdel(component)
+	component = null
+	qdel(echo)
+	echo = null
+	. = ..()
+
+/obj/effect/chrono_echo
+	name = "chronal echo"
+	desc = "An imprint in time itself."
+	var/image/overlay
+
+/obj/effect/chrono_echo/Initialize(mapload, mob/living/L)
+	. = ..()
+	var/image/I = image(icon = 'icons/effects/effects.dmi', icon_state = "blank", layer = ABOVE_MOB_LAYER, loc = src)
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/onePerson, "echo", I, L)
+	I.alpha = 150
+	I.appearance_flags = RESET_ALPHA
+	overlay = I
+
+/obj/effect/chrono_echo/proc/QueueMove(atom/A, _dir)
+	addtimer(CALLBACK(src, /obj/effect/chrono_echo.proc/MoveTo, get_turf(A), _dir), 50)
+
+/obj/effect/chrono_echo/proc/MoveTo(turf/T, _dir)
+	forceMove(T)
+	dir = _dir
+
+/obj/item/organ/chronalfoot/proc/EchoCooldown()
+	echo.overlay.alpha = 0
+	addtimer(CALLBACK(src, .proc/EchoResetAlpha), 50)
+
+/obj/item/organ/chronalfoot/proc/EchoResetAlpha()
+	echo.overlay.alpha = 150
+
+/datum/action/cooldown/timestep
+	name = "Time Step"
+	desc = "Step backwards through time, to where you once were."
+	cooldown_time = 55
+	check_flags = AB_CHECK_STUN | AB_CHECK_CONSCIOUS | AB_CHECK_RESTRAINED
+	icon_icon = 'icons/obj/slimecrossing.dmi'
+	button_icon_state = "timestep"
+	var/obj/item/organ/chronalfoot/linked_organ
+
+/datum/action/cooldown/timestep/Trigger()
+	. = ..()
+	if(!.)
+		return
+	owner.visible_message("<span class='warning'>[owner] steps into time itself!</span>", "<span class='notice'>You step backwards in time.</span>")
+	playsound(owner, 'sound/magic/timeparadox2.ogg', 50, TRUE, frequency = -1)
+	owner.forceMove(linked_organ.echo.loc)
+	StartCooldown()
+	linked_organ.kick.StartCooldown()
+	linked_organ.EchoCooldown()
+
+/datum/action/cooldown/timekick
+	name = "Time Kick"
+	desc = "Kick someone so hard, they feel it five seconds ago."
+	cooldown_time = 55
+	check_flags = AB_CHECK_STUN | AB_CHECK_CONSCIOUS | AB_CHECK_RESTRAINED
+	icon_icon = 'icons/obj/slimecrossing.dmi'
+	button_icon_state = "timekick"
+	background_icon_state = "bg_default"
+	var/obj/item/organ/chronalfoot/linked_organ
+
+/datum/action/cooldown/timekick/Trigger()
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/M = owner
+	if(!owner || !owner.client)
+		return
+	if(M.click_intercept)
+		if(M.click_intercept != src)
+			return
+		M.click_intercept = null
+		background_icon_state = "bg_default"
+		UpdateButtonIcon()
+		to_chat(owner, "<span class='notice'>You decide not to kick anyone.</span>")
+	else
+		M.click_intercept = src
+		M.click_intercept = src
+		background_icon_state = "bg_default_on"
+		UpdateButtonIcon()
+		to_chat(owner, "<span class='notice'>You prepare to kick someone through time.</span>")
+
+/datum/action/cooldown/timekick/proc/InterceptClickOn(mob/living/caller, params, atom/A)
+	if(caller.click_intercept && caller.click_intercept != src)
+		to_chat(caller, "<span class='warning'>Your click interceptor has been disabled. Call a coder!</span>")
+		caller.click_intercept = null
+		return TRUE
+	caller.face_atom(A)
+	if(get_dist(caller, A) > 1)
+		return TRUE
+	if(!isliving(A))
+		return TRUE
+	var/mob/living/L = A
+	caller.next_click = world.time + CLICK_CD_CLICK_ABILITY
+	L.adjustBruteLoss(15)
+	L.visible_message("<span class='danger'>[caller] kicks [L] with their chronal foot, sending [L] back in time!</span>",
+		"<span class='userdanger'>[caller] kicks you, and suddenly time flows backwards for a few moments!</span>")
+	playsound(L, 'sound/effects/hit_kick.ogg', 50)
+	playsound(L, 'sound/magic/timeparadox2.ogg', 50, TRUE, frequency = -1)
+	L.forceMove(linked_organ.echo.loc)
+	caller.click_intercept = null
+	background_icon_state = "bg_default"
+	StartCooldown()
+	linked_organ.cstep.StartCooldown()
+	linked_organ.EchoCooldown()
+	return FALSE
+
+//Replicant Eyes - Can produce a small eye thing that you can see out of, like a camera bug.
+
+/obj/item/organ/eyes/replicant
+	name = "replicant eyes"
+	desc = "They look <i>exactly</i> the same..."
+	icon_state = "replicant_eye"
+	var/list/eyes = list()
+	var/list/ids = list()
+	var/datum/action/cooldown/produce_eye/produce
+	var/datum/action/look_eye/look
+
+/obj/item/organ/eyes/replicant/Initialize()
+	. = ..()
+	produce = new
+	produce.linked_organ = src
+	look = new
+	look.linked_organ = src
+
+/obj/item/organ/eyes/replicant/Insert()
+	. = ..()
+	produce.Grant(owner)
+	look.Grant(owner)
+
+/obj/item/organ/eyes/replicant/Remove()
+	owner.reset_perspective(null)
+	produce.Remove(owner)
+	look.Remove(owner)
+	. = ..()
+
+/datum/action/cooldown/produce_eye
+	name = "Replicate Eye"
+	desc = "Replicate one of your eyes, to see through later."
+	cooldown_time = 600
+	check_flags = AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	icon_icon = 'icons/obj/slimecrossing.dmi'
+	button_icon_state = "produce_eye"
+	var/obj/item/organ/eyes/replicant/linked_organ
+
+/datum/action/cooldown/produce_eye/Trigger()
+	. = ..()
+	if(.)
+		to_chat(owner, "<span class='notice'>You start to replicate your eye.</span>")
+		if(do_after(owner, 50, target = get_turf(owner)))
+			owner.visible_message("<span class='notice'[owner] leans forwards, and an eye drops from [p_their(owner)] socket, swelling to a massive size!</span>")
+			var/obj/structure/replicant_eye/eye = new (get_turf(owner), linked_organ)
+			eye.name = "[owner]'s [eye.name]"
+			var/new_id = "no id"
+			new_id = sanitize(input(owner, "What is this eye's ID?", "Replicant Eye") as null|text)
+			while(new_id == "Reset View")
+				new_id = sanitize(input(owner, "Please choose a different ID.", "Replicant Eye",) as null|text)
+			var/id_choice = new_id
+			var/index = 0
+			while(id_choice in linked_organ.ids)
+				index++
+				id_choice = new_id + " \[[index]\]"
+			eye.idtag = id_choice
+			linked_organ.eyes += eye
+			linked_organ.ids += eye.idtag
+			StartCooldown()
+
+/datum/action/look_eye
+	name = "Cerulean Eyes"
+	desc = "Peer through one of your replicated eyes."
+	check_flags = AB_CHECK_STUN | AB_CHECK_CONSCIOUS
+	icon_icon = 'icons/obj/slimecrossing.dmi'
+	button_icon_state = "look_eye"
+	var/obj/item/organ/eyes/replicant/linked_organ
+	var/obj/structure/replicant_eye/current_eye
+
+/datum/action/look_eye/Trigger()
+	. = ..()
+	if(.)
+		var/list/id_list = list("Reset View")
+		id_list += linked_organ.ids
+		var/mob/living/preowner = owner
+		var/choice = input(owner, "Select an eye ID", "Replicant Eyes") as null|anything in id_list
+		if(preowner != owner)
+			return
+		if(!choice)
+			return
+		if(choice == "Reset View")
+			to_chat(owner, "<span class='notice'>You stop looking through your replicant eyes.</span>")
+			owner.reset_perspective(null)
+			if(current_eye)
+				current_eye.Deactivate()
+		else
+			var/index = linked_organ.ids.Find(choice)
+			if(!index)
+				return
+			to_chat(owner, "<span class='notice'>You start to look through the eye labeled [choice].</span>")
+			current_eye = linked_organ.eyes[index]
+			owner.reset_perspective(current_eye)
+			current_eye.Activate(src)
+
+/obj/structure/replicant_eye
+	name = "replicant eye"
+	desc = "A strange, disembodied cerulean eye."
+	icon = 'icons/obj/slimecrossing.dmi'
+	icon_state = "replicant_eye_closed"
+	density = FALSE
+	anchored = TRUE
+	max_integrity = 12
+	var/active = FALSE
+	var/idtag = "eye"
+	var/datum/action/look_eye/linked_action
+	var/obj/item/organ/eyes/replicant/linked_organ
+
+/obj/structure/replicant_eye/Initialize(mapload, obj/item/organ/eyes/replicant/organ)
+	linked_organ = organ
+
+/obj/structure/replicant_eye/examine(mob/user)
+	..()
+	to_chat(user, "<span class = 'notice'>It is currently [active ? "open" : "closed"].</span>")
+
+/obj/structure/replicant_eye/proc/Activate(datum/action/look_eye/action)
+	active = TRUE
+	icon_state = "replicant_eye_open"
+	linked_action = action
+
+/obj/structure/replicant_eye/proc/Deactivate()
+	active = FALSE
+	icon_state = "replicant_eye_closed"
+	linked_action = null
+
+/obj/structure/replicant_eye/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	user.visible_message("<span class='warning'>[user] pokes [src] in the [pick("pupil", "sclera")].</span>",
+		"<span class='warning'>You poke [src]. It tears up slightly.</span>")
+	obj_integrity -= 4
+
+/obj/structure/replicant_eye/Destroy()
+	visible_message("<span class='danger'>[src] falls apart into a puddle of good.</span>")
+	if(active)
+		to_chat(linked_action.owner,"<span class='warning'>Your replicant eye was destroyed!</span>")
+		linked_action.owner.reset_perspective(null)
+	linked_organ.eyes -= src
+	linked_organ.ids -= idtag
+	. =  ..()
+
+//Prism Appendix - Allows you to paint an object you're holding any color you please.
+
+/obj/item/organ/appendix/prism
+	name = "prism appendix"
+	desc = "Now you can be colorful <i>and</i> useless!"
+	icon_state = "prism_appendix"
+	var/datum/action/coloritem/action
+
+/obj/item/organ/appendix/prism/Initialize()
+	action = new
+
+/obj/item/organ/appendix/prism/Insert()
+	. = ..()
+	action.Grant(owner)
+
+/obj/item/organ/appendix/prism/Remove()
+	action.Remove(owner)
+	. = ..()
+
+/datum/action/coloritem
+	name = "Color Held Item"
+	desc = "Secrete paint from your prism appendix! Eugh!"
+	icon_icon = 'icons/obj/slimecrossing.dmi'
+	button_icon_state = "coloritem"
+	check_flags = AB_CHECK_STUN | AB_CHECK_CONSCIOUS | AB_CHECK_RESTRAINED
+
+/datum/action/coloritem/Trigger()
+	var/obj/item/I = owner.get_active_held_item()
+	if(!I)
+		return
+	var/newcolor = input(owner, "Choose the new color:", "Color change") as color|null
+	if(!newcolor)
+		return
+	I.add_atom_colour(newcolor, WASHABLE_COLOUR_PRIORITY)
+	return
