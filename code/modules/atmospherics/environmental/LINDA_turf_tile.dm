@@ -116,6 +116,8 @@
 	if(air)
 		var/list/gases = air.gases
 		for(var/id in gases)
+			if(GLOB.nonoverlay_gases[id])
+				continue
 			var/gas = gases[id]
 			var/gas_meta = gas[GAS_META]
 			var/gas_overlay = gas_meta[META_GAS_OVERLAY]

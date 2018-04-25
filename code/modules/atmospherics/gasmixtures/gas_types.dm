@@ -1,5 +1,5 @@
 GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)) //the main four gases, which were at one time hardcoded
-
+GLOBAL_LIST_INIT(nonoverlay_gases, typecacheof(list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/hypernoblium, /datum/gas/pluoxium, /datum/gas/bz, /datum/gas/stimulum))) 
 /proc/meta_gas_list()
 	. = subtypesof(/datum/gas)
 	for(var/gas_path in .)
