@@ -124,7 +124,8 @@ function linkify(message) {
 		});
 		
 		// convert the processed jquery dom tree back to html for final insertion later in output processing
-		text = jqtext.html();
+		// NB: outerHTML because we need the div it's living inside as well
+		text = jqtext[0].outerHTML
 		return text;   
 }
 
