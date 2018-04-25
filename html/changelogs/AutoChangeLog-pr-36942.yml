@@ -1,5 +1,0 @@
-author: "robbym"
-delete-after: True
-changes: 
-  - bugfix: "Fixes tile analyzer circuit"
-  - refactor: "Cleaned up tile analyzer code"

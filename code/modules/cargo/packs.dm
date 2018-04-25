@@ -97,8 +97,8 @@
 					/obj/item/clothing/suit/fire/firefighter,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas,
-					/obj/item/device/flashlight,
-					/obj/item/device/flashlight,
+					/obj/item/flashlight,
+					/obj/item/flashlight,
 					/obj/item/tank/internals/oxygen/red,
 					/obj/item/tank/internals/oxygen/red,
 					/obj/item/extinguisher,
@@ -186,8 +186,8 @@
 					/obj/item/clothing/head/radiation,
 					/obj/item/clothing/suit/radiation,
 					/obj/item/clothing/suit/radiation,
-					/obj/item/device/geiger_counter,
-					/obj/item/device/geiger_counter,
+					/obj/item/geiger_counter,
+					/obj/item/geiger_counter,
 					/obj/item/reagent_containers/food/drinks/bottle/vodka,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)
@@ -265,10 +265,10 @@
 	name = "Forensics Crate"
 	desc = "Stay hot on the criminal's heels with Nanotrasen's Detective Essentials(tm). Contains a forensics scanner, six evidence bags, camera, tape recorder, white crayon, and of course, a fedora. Requires Security access to open."
 	cost = 2000
-	contains = list(/obj/item/device/detective_scanner,
+	contains = list(/obj/item/detective_scanner,
 	                /obj/item/storage/box/evidence,
-	                /obj/item/device/camera,
-	                /obj/item/device/taperecorder,
+	                /obj/item/camera,
+	                /obj/item/taperecorder,
 	                /obj/item/toy/crayon/white,
 	                /obj/item/clothing/head/fedora/det_hat)
 	crate_name = "forensics crate"
@@ -654,16 +654,16 @@
 	name = "Antimatter Shielding Crate"
 	desc = "Contains ten Antimatter shields, somehow crammed into a crate."
 	cost = 2000
-	contains = list(/obj/item/device/am_shielding_container,
-					/obj/item/device/am_shielding_container,
-					/obj/item/device/am_shielding_container,
-					/obj/item/device/am_shielding_container,
-					/obj/item/device/am_shielding_container,
-					/obj/item/device/am_shielding_container,
-					/obj/item/device/am_shielding_container,
-					/obj/item/device/am_shielding_container,
-					/obj/item/device/am_shielding_container,
-					/obj/item/device/am_shielding_container) //10 shields: 3x3 containment and a core
+	contains = list(/obj/item/am_shielding_container,
+					/obj/item/am_shielding_container,
+					/obj/item/am_shielding_container,
+					/obj/item/am_shielding_container,
+					/obj/item/am_shielding_container,
+					/obj/item/am_shielding_container,
+					/obj/item/am_shielding_container,
+					/obj/item/am_shielding_container,
+					/obj/item/am_shielding_container,
+					/obj/item/am_shielding_container) //10 shields: 3x3 containment and a core
 	crate_name = "antimatter shielding crate"
 
 /datum/supply_pack/engineering/engine
@@ -803,11 +803,11 @@
 	special = TRUE
 	contains = list(
 					/obj/item/circuitboard/machine/dna_vault,
-					/obj/item/device/dna_probe,
-					/obj/item/device/dna_probe,
-					/obj/item/device/dna_probe,
-					/obj/item/device/dna_probe,
-					/obj/item/device/dna_probe
+					/obj/item/dna_probe,
+					/obj/item/dna_probe,
+					/obj/item/dna_probe,
+					/obj/item/dna_probe,
+					/obj/item/dna_probe
 					)
 	crate_name= "dna vault parts crate"
 
@@ -816,11 +816,11 @@
 	desc = "Contains five DNA probes for use in the DNA vault."
 	cost = 3000
 	special = TRUE
-	contains = list(/obj/item/device/dna_probe,
-					/obj/item/device/dna_probe,
-					/obj/item/device/dna_probe,
-					/obj/item/device/dna_probe,
-					/obj/item/device/dna_probe
+	contains = list(/obj/item/dna_probe,
+					/obj/item/dna_probe,
+					/obj/item/dna_probe,
+					/obj/item/dna_probe,
+					/obj/item/dna_probe
 					)
 	crate_name= "dna samplers crate"
 
@@ -1166,15 +1166,15 @@
 	contains = list(/obj/item/tank/internals/plasma,
 					/obj/item/tank/internals/plasma,
 					/obj/item/tank/internals/plasma,
-					/obj/item/device/assembly/igniter,
-					/obj/item/device/assembly/igniter,
-					/obj/item/device/assembly/igniter,
-					/obj/item/device/assembly/prox_sensor,
-					/obj/item/device/assembly/prox_sensor,
-					/obj/item/device/assembly/prox_sensor,
-					/obj/item/device/assembly/timer,
-					/obj/item/device/assembly/timer,
-					/obj/item/device/assembly/timer)
+					/obj/item/assembly/igniter,
+					/obj/item/assembly/igniter,
+					/obj/item/assembly/igniter,
+					/obj/item/assembly/prox_sensor,
+					/obj/item/assembly/prox_sensor,
+					/obj/item/assembly/prox_sensor,
+					/obj/item/assembly/timer,
+					/obj/item/assembly/timer,
+					/obj/item/assembly/timer)
 	crate_name = "plasma assembly crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
@@ -1183,9 +1183,9 @@
 	desc = "The tools you need to replace those finicky humans with a loyal robot army! Contains three proximity sensors, two high-powered cells, six flashes, and an electrical toolbox. Requires Robotics access to open."
 	cost = 1000
 	access = ACCESS_ROBOTICS
-	contains = list(/obj/item/device/assembly/prox_sensor,
-					/obj/item/device/assembly/prox_sensor,
-					/obj/item/device/assembly/prox_sensor,
+	contains = list(/obj/item/assembly/prox_sensor,
+					/obj/item/assembly/prox_sensor,
+					/obj/item/assembly/prox_sensor,
 					/obj/item/storage/toolbox/electrical,
 					/obj/item/storage/box/flashes,
 					/obj/item/stock_parts/cell/high,
@@ -1209,11 +1209,11 @@
 	name = "Tablet Crate"
 	desc = "What's a computer? Contains five cargo tablets."
 	cost = 5000
-	contains = list(/obj/item/device/modular_computer/tablet/preset/cargo,
-					/obj/item/device/modular_computer/tablet/preset/cargo,
-					/obj/item/device/modular_computer/tablet/preset/cargo,
-					/obj/item/device/modular_computer/tablet/preset/cargo,
-					/obj/item/device/modular_computer/tablet/preset/cargo)
+	contains = list(/obj/item/modular_computer/tablet/preset/cargo,
+					/obj/item/modular_computer/tablet/preset/cargo,
+					/obj/item/modular_computer/tablet/preset/cargo,
+					/obj/item/modular_computer/tablet/preset/cargo,
+					/obj/item/modular_computer/tablet/preset/cargo)
 	crate_name = "tablet crate"
 
 /datum/supply_pack/science/transfer_valves
@@ -1221,8 +1221,8 @@
 	desc = "The key ingredient for making a lot of people very angry very fast. Contains two tank transfer valves. Requires RD access to open."
 	cost = 6000
 	access = ACCESS_RD
-	contains = list(/obj/item/device/transfer_valve,
-					/obj/item/device/transfer_valve)
+	contains = list(/obj/item/transfer_valve,
+					/obj/item/transfer_valve)
 	crate_name = "tank transfer valves crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
@@ -1298,7 +1298,7 @@
 					/obj/item/reagent_containers/glass/bottle/ammonia,
 					/obj/item/hatchet,
 					/obj/item/cultivator,
-					/obj/item/device/plant_analyzer,
+					/obj/item/plant_analyzer,
 					/obj/item/clothing/gloves/botanic_leather,
 					/obj/item/clothing/suit/apron)
 	crate_name = "hydroponics crate"
@@ -1334,13 +1334,13 @@
 					/obj/item/reagent_containers/food/drinks/beer,
 					/obj/item/reagent_containers/food/drinks/beer,
 					/obj/item/reagent_containers/food/drinks/beer,
-					/obj/item/device/flashlight/glowstick,
-					/obj/item/device/flashlight/glowstick/red,
-					/obj/item/device/flashlight/glowstick/blue,
-					/obj/item/device/flashlight/glowstick/cyan,
-					/obj/item/device/flashlight/glowstick/orange,
-					/obj/item/device/flashlight/glowstick/yellow,
-					/obj/item/device/flashlight/glowstick/pink)
+					/obj/item/flashlight/glowstick,
+					/obj/item/flashlight/glowstick/red,
+					/obj/item/flashlight/glowstick/blue,
+					/obj/item/flashlight/glowstick/cyan,
+					/obj/item/flashlight/glowstick/orange,
+					/obj/item/flashlight/glowstick/yellow,
+					/obj/item/flashlight/glowstick/pink)
 	crate_name = "party equipment crate"
 
 /datum/supply_pack/organic/pizza
@@ -1617,14 +1617,14 @@
 	desc = "Get your sad station movin' and groovin' with this fine collection! Contains nine different instruments!"
 	cost = 5000
 	crate_name = "Big band musical instruments collection"
-	contains = list(/obj/item/device/instrument/violin,
-					/obj/item/device/instrument/guitar,
-					/obj/item/device/instrument/glockenspiel,
-					/obj/item/device/instrument/accordion,
-					/obj/item/device/instrument/saxophone,
-					/obj/item/device/instrument/trombone,
-					/obj/item/device/instrument/recorder,
-					/obj/item/device/instrument/harmonica,
+	contains = list(/obj/item/instrument/violin,
+					/obj/item/instrument/guitar,
+					/obj/item/instrument/glockenspiel,
+					/obj/item/instrument/accordion,
+					/obj/item/instrument/saxophone,
+					/obj/item/instrument/trombone,
+					/obj/item/instrument/recorder,
+					/obj/item/instrument/harmonica,
 					/obj/structure/piano/unanchored)
 
 /datum/supply_pack/misc/book_crate
@@ -1642,7 +1642,7 @@
 	desc = "High stacks of papers on your desk Are a big problem - make it Pea-sized with these bureacratic supplies! Contains six pens, some camera film, hand labeler supplies, a paper bin, three folders, two clipboards and two stamps."//that was too forced
 	cost = 1500
 	contains = list(/obj/structure/filingcabinet/chestdrawer/wheeled,
-					/obj/item/device/camera_film,
+					/obj/item/camera_film,
 					/obj/item/hand_labeler,
 					/obj/item/hand_labeler_refill,
 					/obj/item/hand_labeler_refill,
@@ -1733,7 +1733,7 @@
 	desc = "i uh... im not really sure what this does. wanna buy it?"
 	cost = 5000
 	contraband = TRUE
-	contains = list(/obj/item/device/firing_pin/clown)
+	contains = list(/obj/item/firing_pin/clown)
 	// It's /technically/ a toy. For the clown, at least.
 	crate_name = "toy crate"
 
@@ -1844,8 +1844,8 @@
 	access = ACCESS_QM
 	contains = list(/obj/item/pickaxe/mini,
 			/obj/item/clothing/glasses/meson,
-			/obj/item/device/t_scanner/adv_mining_scanner/lesser,
-			/obj/item/device/radio/headset/headset_cargo/mining,
+			/obj/item/t_scanner/adv_mining_scanner/lesser,
+			/obj/item/radio/headset/headset_cargo/mining,
 			/obj/item/storage/bag/ore,
 			/obj/item/clothing/suit/hooded/explorer,
 			/obj/item/clothing/mask/gas/explorer)
@@ -1856,12 +1856,12 @@
 	name = "Toner Crate"
 	desc = "Spent too much ink printing butt pictures? Fret not, with these six toner refills, you'll be printing butts 'till the cows come home!'"
 	cost = 1000
-	contains = list(/obj/item/device/toner,
-					/obj/item/device/toner,
-					/obj/item/device/toner,
-					/obj/item/device/toner,
-					/obj/item/device/toner,
-					/obj/item/device/toner)
+	contains = list(/obj/item/toner,
+					/obj/item/toner,
+					/obj/item/toner,
+					/obj/item/toner,
+					/obj/item/toner,
+					/obj/item/toner)
 	crate_name = "toner crate"
 
 /datum/supply_pack/misc/autodrobe

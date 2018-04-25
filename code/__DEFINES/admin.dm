@@ -1,12 +1,12 @@
 //A set of constants used to determine which type of mute an admin wishes to apply:
 //Please read and understand the muting/automuting stuff before changing these. MUTE_IC_AUTO etc = (MUTE_IC << 1)
 //Therefore there needs to be a gap between the flags for the automute flags
-#define MUTE_IC			1
-#define MUTE_OOC		2
-#define MUTE_PRAY		4
-#define MUTE_ADMINHELP	8
-#define MUTE_DEADCHAT	16
-#define MUTE_ALL		31
+#define MUTE_IC			(1<<0)
+#define MUTE_OOC		(1<<1)
+#define MUTE_PRAY		(1<<2)
+#define MUTE_ADMINHELP	(1<<3)
+#define MUTE_DEADCHAT	(1<<4)
+#define MUTE_ALL		(~0)
 
 //Some constants for DB_Ban
 #define BANTYPE_PERMA		1
@@ -20,21 +20,21 @@
 #define BANTYPE_ANY_JOB		9 //used to remove jobbans
 
 //Admin Permissions
-#define R_BUILDMODE		0x1
-#define R_ADMIN			0x2
-#define R_BAN			0x4
-#define R_FUN			0x8
-#define R_SERVER		0x10
-#define R_DEBUG			0x20
-#define R_POSSESS		0x40
-#define R_PERMISSIONS	0x80
-#define R_STEALTH		0x100
-#define R_POLL			0x200
-#define R_VAREDIT		0x400
-#define R_SOUNDS		0x800
-#define R_SPAWN			0x1000
-#define R_AUTOLOGIN		0x2000
-#define R_DBRANKS		0x4000
+#define R_BUILDMODE		(1<<0)
+#define R_ADMIN			(1<<1)
+#define R_BAN			(1<<2)
+#define R_FUN			(1<<3)
+#define R_SERVER		(1<<4)
+#define R_DEBUG			(1<<5)
+#define R_POSSESS		(1<<6)
+#define R_PERMISSIONS	(1<<7)
+#define R_STEALTH		(1<<8)
+#define R_POLL			(1<<9)
+#define R_VAREDIT		(1<<10)
+#define R_SOUNDS		(1<<11)
+#define R_SPAWN			(1<<12)
+#define R_AUTOLOGIN		(1<<13)
+#define R_DBRANKS		(1<<14)
 
 #define R_DEFAULT R_AUTOLOGIN
 

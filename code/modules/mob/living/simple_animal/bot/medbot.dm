@@ -16,7 +16,7 @@
 
 	status_flags = (CANPUSH | CANSTUN)
 
-	radio_key = /obj/item/device/encryptionkey/headset_med
+	radio_key = /obj/item/encryptionkey/headset_med
 	radio_channel = "Medical"
 
 	bot_type = MED_BOT
@@ -28,7 +28,7 @@
 	path_image_color = "#DDDDFF"
 
 	var/obj/item/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
-	var/healthanalyzer = /obj/item/device/healthanalyzer
+	var/healthanalyzer = /obj/item/healthanalyzer
 	var/firstaid = /obj/item/storage/firstaid
 	var/skin = null //Set to "tox", "ointment" or "o2" for the other two firstaid kits.
 	var/mob/living/carbon/patient = null
@@ -527,7 +527,7 @@
 	var/atom/Tsec = drop_location()
 
 	drop_part(firstaid, Tsec)
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/assembly/prox_sensor(Tsec)
 	drop_part(healthanalyzer, Tsec)
 
 	if(reagent_glass)

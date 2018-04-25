@@ -147,6 +147,9 @@
 		qdel(src)
 	return TRUE
 
+/obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/I)
+	return
+
 //Wheelys
 /obj/vehicle/ridden/scooter/wheelys
 	name = "Wheely-Heels"

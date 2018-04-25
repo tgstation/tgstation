@@ -12,7 +12,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/atom/target = null
 	var/mutable_appearance/plastic_overlay
-	var/obj/item/device/assembly_holder/nadeassembly = null
+	var/obj/item/assembly_holder/nadeassembly = null
 	var/assemblyattacher
 	var/directional = FALSE
 	var/aim_dir = NORTH
@@ -31,8 +31,8 @@
 	..()
 
 /obj/item/grenade/plastic/attackby(obj/item/I, mob/user, params)
-	if(!nadeassembly && istype(I, /obj/item/device/assembly_holder))
-		var/obj/item/device/assembly_holder/A = I
+	if(!nadeassembly && istype(I, /obj/item/assembly_holder))
+		var/obj/item/assembly_holder/A = I
 		if(!user.transferItemToLoc(I, src))
 			return ..()
 		nadeassembly = A

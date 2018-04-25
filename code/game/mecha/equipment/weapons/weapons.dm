@@ -50,7 +50,7 @@
 		playsound(chassis, fire_sound, 50, 1)
 
 		sleep(max(0, projectile_delay))
-	
+
 	if(kickback)
 		chassis.newtonian_move(turn(chassis.dir,180))
 	chassis.log_message("Fired from [src.name], targeting [target].")
@@ -369,7 +369,7 @@
 	name = "mousetrap mortar"
 	desc = "Equipment for clown exosuits. Launches armed mousetraps."
 	icon_state = "mecha_mousetrapmrtr"
-	projectile = /obj/item/device/assembly/mousetrap/armed
+	projectile = /obj/item/assembly/mousetrap/armed
 	fire_sound = 'sound/items/bikehorn.ogg'
 	projectiles = 15
 	missile_speed = 1.5
@@ -382,7 +382,7 @@
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/device/assembly/mousetrap/armed/M)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/assembly/mousetrap/armed/M)
 	M.secured = 1
 
 
@@ -428,6 +428,5 @@
 	if(!..())
 		if(ismovableatom(hit_atom))
 			var/atom/movable/AM = hit_atom
-			AM.throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
+			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
 		qdel(src)
-

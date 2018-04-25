@@ -1,6 +1,6 @@
 /mob/living/carbon/movement_delay()
 	var/FP = FALSE
-	var/obj/item/device/flightpack/F = get_flightpack()
+	var/obj/item/flightpack/F = get_flightpack()
 	if(istype(F) && F.flight)
 		FP = TRUE
 	. = ..(FP)
@@ -33,7 +33,7 @@
 	if(!isturf(loc))
 		return 0
 
-	var/obj/item/device/flightpack/F = get_flightpack()
+	var/obj/item/flightpack/F = get_flightpack()
 	if(istype(F) && (F.flight) && F.allow_thrust(0.01, src))
 		return 1
 

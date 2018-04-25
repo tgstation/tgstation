@@ -1,5 +1,5 @@
 // Plant analyzer
-/obj/item/device/plant_analyzer
+/obj/item/plant_analyzer
 	name = "plant analyzer"
 	desc = "A scanner used to evaluate a plant's various areas of growth."
 	icon = 'icons/obj/device.dmi'

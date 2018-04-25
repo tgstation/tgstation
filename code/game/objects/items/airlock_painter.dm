@@ -13,11 +13,11 @@
 	slot_flags = SLOT_BELT
 	usesound = 'sound/effects/spray2.ogg'
 
-	var/obj/item/device/toner/ink = null
+	var/obj/item/toner/ink = null
 
 /obj/item/airlock_painter/New()
 	..()
-	ink = new /obj/item/device/toner(src)
+	ink = new /obj/item/toner(src)
 
 //This proc doesn't just check if the painter can be used, but also uses it.
 //Only call this if you are certain that the painter will be used right after this check!
@@ -105,7 +105,7 @@
 
 
 /obj/item/airlock_painter/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/toner))
+	if(istype(W, /obj/item/toner))
 		if(ink)
 			to_chat(user, "<span class='notice'>[src] already contains \a [ink].</span>")
 			return

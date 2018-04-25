@@ -305,24 +305,24 @@
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/device/radio/headset/syndicate/alt{
+/obj/item/radio/headset/syndicate/alt{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/device/radio/headset/syndicate/alt,
-/obj/item/device/radio/headset/syndicate/alt{
+/obj/item/radio/headset/syndicate/alt,
+/obj/item/radio/headset/syndicate/alt{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -512,11 +512,11 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "ee" = (
 /obj/structure/rack,
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/device/flashlight,
+/obj/item/flashlight,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/brown{
 	dir = 1
@@ -649,27 +649,27 @@
 /area/ruin/unpowered/syndicate_lava_base/testlab)
 "eq" = (
 /obj/structure/table/reinforced,
-/obj/item/device/assembly/timer{
+/obj/item/assembly/timer{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/device/assembly/timer{
+/obj/item/assembly/timer{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/device/assembly/timer{
+/obj/item/assembly/timer{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/device/assembly/igniter,
-/obj/item/device/assembly/igniter,
-/obj/item/device/assembly/igniter,
-/obj/item/device/assembly/voice,
-/obj/item/device/assembly/voice,
-/obj/item/device/assembly/voice,
-/obj/item/device/assembly/signaler,
-/obj/item/device/assembly/signaler,
-/obj/item/device/assembly/signaler,
+/obj/item/assembly/igniter,
+/obj/item/assembly/igniter,
+/obj/item/assembly/igniter,
+/obj/item/assembly/voice,
+/obj/item/assembly/voice,
+/obj/item/assembly/voice,
+/obj/item/assembly/signaler,
+/obj/item/assembly/signaler,
+/obj/item/assembly/signaler,
 /obj/item/screwdriver/nuke,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -730,27 +730,27 @@
 	pixel_y = 3
 	},
 /obj/item/stack/cable_coil/white,
-/obj/item/device/assembly/igniter{
+/obj/item/assembly/igniter{
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/device/assembly/igniter{
+/obj/item/assembly/igniter{
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/device/assembly/igniter{
+/obj/item/assembly/igniter{
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/device/assembly/timer{
+/obj/item/assembly/timer{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/device/assembly/timer{
+/obj/item/assembly/timer{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/device/assembly/timer{
+/obj/item/assembly/timer{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -1018,7 +1018,7 @@
 /obj/machinery/light/small,
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/box/monkeycubes{
 	pixel_x = 4;
@@ -1244,7 +1244,7 @@
 	pixel_y = 28
 	},
 /obj/item/clothing/gloves/color/latex,
-/obj/item/device/healthanalyzer,
+/obj/item/healthanalyzer,
 /obj/item/clothing/glasses/hud/health,
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
@@ -1443,10 +1443,10 @@
 /obj/item/clothing/head/soft{
 	pixel_x = -8
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = 5
 	},
 /turf/open/floor/plasteel/brown{
@@ -2480,7 +2480,7 @@
 	},
 /obj/structure/closet/emcloset/anchored,
 /obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/device/flashlight/seclite,
+/obj/item/flashlight/seclite,
 /obj/item/clothing/mask/gas,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3367,21 +3367,22 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jv" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/toolcloset,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/suit_storage_unit/radsuit,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jw" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/firecloset/full{
-	anchored = 1
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/toolcloset{
+	anchored = 1
+	},
+/obj/item/crowbar,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jx" = (
@@ -3639,6 +3640,9 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "jT" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/firecloset/full{
+	anchored = 1
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -3651,16 +3655,19 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/rack{
-	dir = 8
-	},
-/obj/item/clothing/gloves/combat,
-/obj/item/crowbar,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/shower{
+	desc = "The HS-452. Installed recently by the DonkCo Hygiene Division.";
+	dir = 4;
+	name = "emergency shower"
+	},
+/obj/structure/sign/warning/radiation/rad_area{
+	pixel_y = -32
+	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "jW" = (
@@ -3953,9 +3960,18 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "kw" = (
 /obj/structure/table,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/clothing/mask/breath,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/gloves/combat{
+	pixel_y = -6
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -2;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/white/side,
 /area/ruin/unpowered/syndicate_lava_base/main)
 "kx" = (
@@ -4894,7 +4910,7 @@
 	},
 /obj/structure/closet/emcloset/anchored,
 /obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/device/flashlight/seclite,
+/obj/item/flashlight/seclite,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
@@ -5080,7 +5096,7 @@
 "mR" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/machinery/button/door{
 	id = "lavalandsyndi_telecomms";
 	name = "Telecomms Blast Door Control";
@@ -5117,7 +5133,7 @@
 	pixel_x = 2;
 	pixel_y = -3
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -5879,7 +5895,7 @@
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "oj" = (
 /obj/structure/table/reinforced,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	freerange = 1;
 	name = "Syndicate Radio Intercom"
 	},
@@ -5913,7 +5929,7 @@
 /obj/item/clothing/suit/space/syndicate,
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/clothing/head/helmet/space/syndicate,
-/obj/item/device/mining_scanner,
+/obj/item/mining_scanner,
 /obj/item/pickaxe,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/unpowered/syndicate_lava_base/arrivals)

@@ -258,10 +258,10 @@
 		if("Zealot's Blindfold")
 			pickedtype += /obj/item/clothing/glasses/hud/health/night/cultblind
 		if("Shuttle Curse")
-			pickedtype += /obj/item/device/shuttle_curse
+			pickedtype += /obj/item/shuttle_curse
 		if("Veil Walker Set")
-			pickedtype += /obj/item/device/cult_shift
-			pickedtype += /obj/item/device/flashlight/flare/culttorch
+			pickedtype += /obj/item/cult_shift
+			pickedtype += /obj/item/flashlight/flare/culttorch
 	if(src && !QDELETED(src) && anchored && pickedtype.len && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		for(var/N in pickedtype)
