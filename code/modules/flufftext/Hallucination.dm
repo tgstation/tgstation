@@ -689,16 +689,18 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 	var/list/message_pool = list()
 	if(other)
-		if(close_other)
-			message_pool.Add("<span class='warning'>You feel a tiny prick!</span>")
+		if(close_other) //increase the odds
+			for(var/i in 1 to 5)
+				message_pool.Add("<span class='warning'>You feel a tiny prick!</span>")
 		var/obj/item/storage/equipped_backpack = other.get_item_by_slot(slot_back)
 		if(istype(equipped_backpack))
-			message_pool.Add("<span class='notice'>[other] puts the [pick(\
-				"revolver","energy sword","cryptographic sequencer","power sink","energy bow",\
-				"hybrid taser","stun baton","flash","syringe gun","circular saw","tank transfer valve",\
-				"ritual dagger","clockwork slab","spellbook",\
-				"pulse rifle","captain's spare ID","hand teleporter","hypospray","antique laser gun","X-01 MultiPhase Energy Gun","station's blueprints"\
-				)] in their [equipped_backpack]</span>")
+			for(var/i in 1 to 5) //increase the odds
+				message_pool.Add("<span class='notice'>[other] puts the [pick(\
+					"revolver","energy sword","cryptographic sequencer","power sink","energy bow",\
+					"hybrid taser","stun baton","flash","syringe gun","circular saw","tank transfer valve",\
+					"ritual dagger","clockwork slab","spellbook",\
+					"pulse rifle","captain's spare ID","hand teleporter","hypospray","antique laser gun","X-01 MultiPhase Energy Gun","station's blueprints"\
+					)] into [equipped_backpack].</span>")
 
 		message_pool.Add("<B>[other]</B> [pick("sneezes","coughs")].")
 
