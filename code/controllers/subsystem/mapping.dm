@@ -189,7 +189,7 @@ SUBSYSTEM_DEF(mapping)
 		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
 
 	// load Reebe
-	LoadGroup(FailedZs, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE)
+	//LoadGroup(FailedZs, "Reebe", "map_files/generic", "City_of_Cogs.dmm", default_traits = ZTRAITS_REEBE)
 #endif
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
@@ -367,14 +367,14 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 				away_level = template.load_new_z()
 			else
 				return
-	
+
 	message_admins("Admin [key_name_admin(usr)] has loaded [away_name] away mission.")
 	log_admin("Admin [key_name(usr)] has loaded [away_name] away mission.")
 	if(!away_level)
 		message_admins("Loading [away_name] failed!")
 		return
-	
-	
+
+
 	if(GLOB.the_gateway)
 		//Link any found away gate with station gate
 		var/obj/machinery/gateway/centeraway/new_gate
