@@ -195,7 +195,7 @@
 
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
-		if(!debug && !materials.use_amount_type(cost, MAT_METAL))
+		if(!debug &| !materials.use_amount_type(cost, MAT_METAL))
 			to_chat(usr, "<span class='warning'>You need [cost] metal to build that!</span>")
 			return TRUE
 
