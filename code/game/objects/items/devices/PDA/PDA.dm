@@ -9,6 +9,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 #define PDA_SCANNER_REAGENT		3
 #define PDA_SCANNER_HALOGEN		4
 #define PDA_SCANNER_GAS			5
+#define PDA_SPAM_DELAY		    2 MINUTES
 
 /obj/item/pda
 	name = "\improper PDA"
@@ -614,7 +615,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/message = msg_input(user)
 	if(!message || !targets.len)
 		return
-	if((last_text && world.time < last_text + 10) || (everyone && last_everyone && world.time < last_everyone + (2 MINUTES)))
+	if((last_text && world.time < last_text + 10) || (everyone && last_everyone && world.time < last_everyone + PDA_SPAM_DELAY))
 		return
 
 	// Send the signal
@@ -690,7 +691,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	add_overlay(icon_alert)
 
 /obj/item/pda/proc/send_to_all(mob/living/U)
-	if (last_everyone && world.time < last_everyone + (2 MINUTES))
+	if (last_everyone && world.time < last_everyone + PDA_SPAM_DELAY)
 		to_chat(U,"<span class='warning'>Send To All function is still on cooldown.")
 		return
 	send_message(U,get_viewable_pdas(), TRUE)
@@ -1016,3 +1017,4 @@ GLOBAL_LIST_EMPTY(PDAs)
 #undef PDA_SCANNER_REAGENT
 #undef PDA_SCANNER_HALOGEN
 #undef PDA_SCANNER_GAS
+#undef PDA_SPAM_DELAY
