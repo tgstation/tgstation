@@ -188,7 +188,7 @@
 	taste_description = "sourness"
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/M)
-	M.hallucination += 10
+	M.hallucination += 5
 	return ..()
 
 /datum/reagent/toxin/plantbgone

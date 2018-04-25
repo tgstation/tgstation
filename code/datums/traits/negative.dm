@@ -218,15 +218,8 @@
 	if(prob(2)) //we'll all be mad soon enough
 		madness()
 
-/datum/trait/insanity/proc/madness(mad_fools)
-	set waitfor = FALSE
-	if(!mad_fools)
-		mad_fools = prob(20)
-	if(mad_fools)
-		var/hallucination_type = pick(subtypesof(/datum/hallucination/rds))
-		new hallucination_type (trait_holder, FALSE)
-	else
-		trait_holder.hallucination += rand(10, 50)
+/datum/trait/insanity/proc/madness()
+	trait_holder.hallucination += rand(10, 25)
 
 /datum/trait/insanity/post_add() //I don't /think/ we'll need this but for newbies who think "roleplay as insane" = "license to kill" it's probably a good thing to have
 	if(!trait_holder.mind || trait_holder.mind.special_role)

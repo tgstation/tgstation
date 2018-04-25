@@ -260,7 +260,7 @@
 		if(!ishuman(target) || iscultist(target))
 			return
 		var/mob/living/carbon/human/H = target
-		H.hallucination = max(H.hallucination, 240)
+		H.hallucination = max(H.hallucination, 120)
 		SEND_SOUND(ranged_ability_user, sound('sound/effects/ghost.ogg',0,1,50))
 		var/image/C = image('icons/effects/cult_effects.dmi',H,"bloodsparkles", ABOVE_MOB_LAYER)
 		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, FALSE)

@@ -323,7 +323,7 @@
 					return
 			else
 				return
-		else if(user.hallucinating() && ishuman(user) && prob(4) && !operating)
+		else if(user.hallucinating() && ishuman(user) && prob(1) && !operating)
 			var/mob/living/carbon/human/H = user
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves

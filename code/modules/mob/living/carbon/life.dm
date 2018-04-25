@@ -201,9 +201,9 @@
 	if(breath_gases[/datum/gas/bz])
 		var/bz_partialpressure = (breath_gases[/datum/gas/bz][MOLES]/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
-			hallucination += 20
+			hallucination += 10
 		else if(bz_partialpressure > 0.01)
-			hallucination += 5//Removed at 2 per tick so this will slowly build up
+			hallucination += 5
 	//TRITIUM
 	if(breath_gases[/datum/gas/tritium])
 		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
