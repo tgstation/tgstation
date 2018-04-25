@@ -40,6 +40,8 @@
 	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	if(!AM)
 		return FALSE
+	if(istype(AM, /obj/item/gun/energy))
+		return FALSE
 	if(!assembly)
 		return FALSE // Pointless to do everything else if there's no battery to draw from.
 	var/obj/item/stock_parts/cell/cell = AM.get_cell()

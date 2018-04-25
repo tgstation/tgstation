@@ -287,7 +287,7 @@
 /area/space/nearstation)
 "aS" = (
 /obj/structure/table,
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_y = 5
 	},
 /obj/item/storage/toolbox/syndicate,
@@ -422,7 +422,7 @@
 	},
 /obj/machinery/light,
 /obj/structure/table,
-/obj/item/device/analyzer,
+/obj/item/analyzer,
 /obj/item/wrench,
 /turf/open/floor/plating,
 /area/engine/atmos)

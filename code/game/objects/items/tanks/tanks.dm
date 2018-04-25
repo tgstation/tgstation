@@ -138,10 +138,10 @@
 
 /obj/item/tank/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
+	if((istype(W, /obj/item/analyzer)) && get_dist(user, src) <= 1)
 		atmosanalyzer_scan(air_contents, user)
 
-	else if(istype(W, /obj/item/device/assembly_holder))
+	else if(istype(W, /obj/item/assembly_holder))
 		bomb_assemble(W,user)
 	else
 		. = ..()
@@ -237,7 +237,7 @@
 	var/temperature = air_contents.return_pressure()
 
 	if(pressure > TANK_FRAGMENT_PRESSURE)
-		if(!istype(src.loc, /obj/item/device/transfer_valve))
+		if(!istype(src.loc, /obj/item/transfer_valve))
 			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 			log_game("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 		//Give the gas a chance to build up more pressure through reacting
@@ -250,7 +250,7 @@
 
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
-		if(istype(src.loc, /obj/item/device/transfer_valve))
+		if(istype(src.loc, /obj/item/transfer_valve))
 			qdel(src.loc)
 		else
 			qdel(src)

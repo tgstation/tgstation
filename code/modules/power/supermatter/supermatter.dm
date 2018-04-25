@@ -123,8 +123,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//How much hallucination should it produce per unit of power?
 	var/config_hallucination_power = 0.1
 
-	var/obj/item/device/radio/radio
-	var/radio_key = /obj/item/device/encryptionkey/headset_eng
+	var/obj/item/radio/radio
+	var/radio_key = /obj/item/encryptionkey/headset_eng
 	var/engineering_channel = "Engineering"
 	var/common_channel = null
 

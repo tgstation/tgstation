@@ -300,7 +300,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/effect/turf_decal/bot,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	pixel_x = -30
 	},
 /turf/open/floor/plasteel,

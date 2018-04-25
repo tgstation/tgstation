@@ -241,7 +241,7 @@
 	name = "Alien Multitool"
 	desc = "An advanced multitool obtained through Abductor technology."
 	id = "alien_multitool"
-	build_path = /obj/item/device/multitool/abductor
+	build_path = /obj/item/multitool/abductor
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	category = list("Equipment")

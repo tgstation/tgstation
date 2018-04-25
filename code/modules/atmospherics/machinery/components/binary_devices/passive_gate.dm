@@ -25,6 +25,16 @@ Passive gate is similar to the regular pump except:
 
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "passivegate"
+	
+/obj/machinery/atmospherics/components/binary/passive_gate/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/binary/passive_gate/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/binary/passive_gate/Destroy()
 	SSradio.remove_object(src,frequency)

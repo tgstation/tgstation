@@ -121,7 +121,7 @@
 	icon_state = "flashlight_eyes"
 	flash_protect = 2
 	tint = INFINITY
-	var/obj/item/device/flashlight/eyelight/eye
+	var/obj/item/flashlight/eyelight/eye
 
 /obj/item/organ/eyes/robotic/flashlight/emp_act(severity)
 	return
@@ -129,7 +129,7 @@
 /obj/item/organ/eyes/robotic/flashlight/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
 	..()
 	if(!eye)
-		eye = new /obj/item/device/flashlight/eyelight()
+		eye = new /obj/item/flashlight/eyelight()
 	eye.on = TRUE
 	eye.forceMove(M)
 	eye.update_brightness(M)

@@ -151,8 +151,8 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = W
+	if(istype(W, /obj/item/multitool))
+		var/obj/item/multitool/M = W
 		if(panel_open)
 			M.buffer = src
 			to_chat(user, "<span class='caution'>You download the data to the [W.name]'s buffer.</span>")
