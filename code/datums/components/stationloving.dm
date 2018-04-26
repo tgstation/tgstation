@@ -17,7 +17,7 @@
 		if (istype(newc))
 			inform_admins = newc.inform_admins
 		else if (LAZYLEN(arguments))
-			inform_admins = isnull(arguments[arguments[1]]) ? arguments[1] : arguments[arguments[1]]
+			inform_admins = arguments[1]
 
 /datum/component/stationloving/proc/relocate()
 	var/targetturf = find_safe_turf()
