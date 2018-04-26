@@ -81,8 +81,8 @@
 	response_help  = "shoos"
 	response_disarm = "swats away"
 	response_harm   = "squashes"
-	maxHealth = 10
-	health = 10
+	maxHealth = 1
+	health = 1
 	spacewalk = TRUE
 	faction = list("hostile")
 	move_to_delay = 0
@@ -104,6 +104,9 @@
 /mob/living/simple_animal/hostile/fly/time
 	name = "time fly"
 	desc = "Radiation seems to have given this swarm of flies a jump to the left and a step to the.... oh you get the idea!"
+	melee_damage_lower = 1
+	melee_damage_upper = 1
+	attacktext = "zaps"
 	icon_state = "timefly-10"
 	icon_living = "timefly-10"
 	icon_dead = "timefly_dead"
@@ -111,7 +114,10 @@
 	var/datum/action/innate/timewarp/twarpself
 
 /mob/living/simple_animal/hostile/fly/time/Initialize()
+	. = ..()
 	twarp = new
+	twarpself = new
+	twarpself.Grant(src)
 
 /mob/living/simple_animal/hostile/fly/time/AttackingTarget()
 	. = ..()
@@ -120,9 +126,25 @@
 		if(twarp)
 			twarp.cast(L, src)
 
+/datum/action/innate/timewarp
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	background_icon_state = "bg_alien"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "lay_web"
+	name = "Time Warp"
+	desc = "Warps you 10 seconds into the future! If, for some reason, you wanted to travel yourself 10 seconds into the future."
+	var/timewarpspell
+
+/datum/action/innate/timewarp/Activate()
+	if(!istype(owner, /mob/living/simple_animal/hostile/fly/time))
+		return
+	var/mob/living/simple_animal/hostile/fly/time/TF = owner
+	if(TF.twarp)
+		TF.twarp.cast(TF, TF)
+
 /obj/effect/proc_holder/spell/targeted/timewarp
 	name = "Time Warp!"
-	desc = "Warps you 10 seconds into the future! If, for some reason, you wanted to travel yourself 10 seconds into the future."
+	desc = "Warps you 10 seconds into the future! Whether you want to or not editon."
 	charge_max = 0
 	clothes_req = 0
 	phase_allowed = 1
