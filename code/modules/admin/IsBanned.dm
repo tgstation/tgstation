@@ -91,47 +91,48 @@
 			cidquery = " OR computerid = '[computer_id]' "
 
 		var/datum/DBQuery/query_ban_check = SSdbcore.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, duration, bantime, bantype, id, round_id FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
-		if(!query_ban_check.Execute())
-			return
-		while(query_ban_check.NextRow())
-			var/pckey = query_ban_check.item[1]
-			var/ackey = query_ban_check.item[2]
-			var/reason = query_ban_check.item[3]
-			var/expiration = query_ban_check.item[4]
-			var/duration = query_ban_check.item[5]
-			var/bantime = query_ban_check.item[6]
-			var/bantype = query_ban_check.item[7]
-			var/banid = query_ban_check.item[8]
-			var/ban_round_id = query_ban_check.item[9]
-			if (bantype == "ADMIN_PERMABAN" || bantype == "ADMIN_TEMPBAN")
-				//admin bans MUST match on ckey to prevent cid-spoofing attacks
-				//	as well as dynamic ip abuse
-				if (pckey != ckey)
-					continue
-			if (admin)
+		if(query_ban_check.Execute())
+
+			while(query_ban_check.NextRow())
+				var/pckey = query_ban_check.item[1]
+				var/ackey = query_ban_check.item[2]
+				var/reason = query_ban_check.item[3]
+				var/expiration = query_ban_check.item[4]
+				var/duration = query_ban_check.item[5]
+				var/bantime = query_ban_check.item[6]
+				var/bantype = query_ban_check.item[7]
+				var/banid = query_ban_check.item[8]
+				var/ban_round_id = query_ban_check.item[9]
 				if (bantype == "ADMIN_PERMABAN" || bantype == "ADMIN_TEMPBAN")
-					log_admin("The admin [key] is admin banned (#[banid]), and has been disallowed access")
-					if (message)
-						message_admins("<span class='adminnotice'>The admin [key] is admin banned (#[banid]), and has been disallowed access</span>")
+					//admin bans MUST match on ckey to prevent cid-spoofing attacks
+					//	as well as dynamic ip abuse
+					if (pckey != ckey)
+						continue
+				if (admin)
+					if (bantype == "ADMIN_PERMABAN" || bantype == "ADMIN_TEMPBAN")
+						log_admin("The admin [key] is admin banned (#[banid]), and has been disallowed access")
+						if (message)
+							message_admins("<span class='adminnotice'>The admin [key] is admin banned (#[banid]), and has been disallowed access</span>")
+					else
+						log_admin("The admin [key] has been allowed to bypass a matching ban on [pckey] (#[banid])")
+						if (message)
+							message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching ban on [pckey] (#[banid])</span>")
+							addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [pckey] (#[banid])</span>")
+						continue
+				var/expires = ""
+				if(text2num(duration) > 0)
+					expires = " The ban is for [duration] minutes and expires on [expiration] (server time)."
 				else
-					log_admin("The admin [key] has been allowed to bypass a matching ban on [pckey] (#[banid])")
-					if (message)
-						message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching ban on [pckey] (#[banid])</span>")
-						addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [pckey] (#[banid])</span>")
-					continue
-			var/expires = ""
-			if(text2num(duration) > 0)
-				expires = " The ban is for [duration] minutes and expires on [expiration] (server time)."
-			else
-				expires = " The is a permanent ban."
+					expires = " The is a permanent ban."
 
-			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban (BanID #[banid]) was applied by [ackey] on [bantime] during round ID [ban_round_id], [expires]"
-
-			. = list("reason"="[bantype]", "desc"="[desc]")
+				var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban (BanID #[banid]) was applied by [ackey] on [bantime] during round ID [ban_round_id], [expires]"
 
 
-			log_access("Failed Login: [key] [computer_id] [address] - Banned (#[banid]) [.["reason"]]")
-			return .
+				. = list("reason"="[bantype]", "desc"="[desc]")
+
+
+				log_access("Failed Login: [key] [computer_id] [address] - Banned (#[banid]) [.["reason"]]")
+				return .
 
 	var/list/ban = ..()	//default pager ban stuff
 	if (ban)
@@ -142,31 +143,6 @@
 		var/newmatch = FALSE
 		var/client/C = GLOB.directory[ckey]
 		var/list/cachedban = SSstickyban.cache[bannedckey]
-		if (!CONFIG_GET(flag/ban_legacy_system) && (SSdbcore.Connect() || length(SSstickyban.dbcache)))
-			ban = get_stickyban_from_ckey(bannedckey)
-			var/list/bancache = list()
-
-			//we need to re-add exempted bans but the exempt code needs to return when a user is exempt
-			//	so we spawn now since bancache is a reference and will have the entries we add later.
-			spawn(1)
-				for(var/bancacheckey in bancache)
-					world.SetConfig("ban", bancacheckey, bancache[bancacheckey])
-
-			while (ban["ckey"] && ban["keys"] && ban["keys"][ckey] && ban["keys"][ckey]["exempt"])
-				if (C || SSstickyban.confirmed_exempt[ckey]) //When we re-add the stickyban isbanned() will run on that user again. This avoids the unintentional recursion.
-					return
-				bancache[ban["ckey"]] = world.GetConfig("ban", ban["ckey"])
-				//Hacky way to ensure somebody exempt from one stickyban doesn't get exempt from all stickybans
-				world.SetConfig("ban", ban["ckey"], null)
-				var/list/newban = ..()
-				if (!newban || newban["ckey"] == ban["ckey"])
-					SSstickyban.confirmed_exempt[ckey] = TRUE
-					return
-				if (!newban["ckey"])
-					ban = newban
-					break
-				ban = get_stickyban_from_ckey(ban["ckey"])
-
 		//rogue ban in the process of being reverted.
 		if (cachedban && (cachedban["reverting"] || cachedban["timeout"]))
 			world.SetConfig("ban", bannedckey, null)
@@ -186,17 +162,16 @@
 			var/list/newmatches_connected = cachedban["existing_user_matches_this_round"]
 			var/list/newmatches_admin = cachedban["admin_matches_this_round"]
 
-			pendingmatches[ckey] = ckey
+
 
 			if (C)
 				newmatches_connected[ckey] = ckey
 				newmatches_connected = cachedban["existing_user_matches_this_round"]
+				pendingmatches[ckey] = ckey
+				sleep(STICKYBAN_ROGUE_CHECK_TIME)
+				pendingmatches -= ckey
 			if (admin)
 				newmatches_admin[ckey] = ckey
-
-			sleep(STICKYBAN_ROGUE_CHECK_TIME)
-
-			pendingmatches -= ckey
 
 			if (cachedban["reverting"] || cachedban["timeout"])
 				return null

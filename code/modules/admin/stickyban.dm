@@ -62,6 +62,8 @@
 			if (!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
 				var/datum/DBQuery/query_remove_stickyban = SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban")] WHERE ckey = '[sanitizeSQL(ckey)]'")
 				query_remove_stickyban.warn_execute()
+				var/datum/DBQuery/query_remove_stickyban_alts = SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = '[sanitizeSQL(ckey)]'")
+				query_remove_stickyban_alts.warn_execute()
 
 			log_admin_private("[key_name(usr)] removed [ckey]'s stickyban")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed [ckey]'s stickyban</span>")
@@ -78,7 +80,7 @@
 				to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!</span>")
 				return
 
-			var/key = ban["keys"][alt]
+			var/key = LAZYACCESS(ban["keys"], alt)
 			if (!key)
 				to_chat(usr, "<span class='adminnotice'>Error: [alt] is not linked to [ckey]'s sticky ban!</span>")
 				return
@@ -92,12 +94,13 @@
 				to_chat(usr, "<span class='adminnotice'>Error: The ban disappeared.</span>")
 				return
 
-			key = ban["keys"][alt]
+			key = LAZYACCESS(ban["keys"], alt)
+
 			if (!key)
 				to_chat(usr, "<span class='adminnotice'>Error: [alt] link to [ckey]'s sticky ban disappeared.</span>")
 				return
 
-			ban["keys"] -= alt
+			LAZYREMOVE(ban["keys"], alt)
 			world.SetConfig("ban",ckey,list2stickyban(ban))
 
 			SSstickyban.cache[ckey] = ban
@@ -145,16 +148,13 @@
 			var/ckey = data["ckey"]
 			if (!data["alt"])
 				return
-			if (CONFIG_GET(flag/ban_legacy_system) || !SSdbcore.Connect())
-				to_chat(usr, "<span class='adminnotice'>No database connection!</span>")
-				return
 			var/alt = ckey(data["alt"])
 			var/ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
 				to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!</span>")
 				return
 
-			var/key = ban["keys"][alt]
+			var/key = LAZYACCESS(ban["keys"], alt)
 			if (!key)
 				to_chat(usr, "<span class='adminnotice'>Error: [alt] is not linked to [ckey]'s sticky ban!</span>")
 				return
@@ -168,20 +168,22 @@
 				to_chat(usr, "<span class='adminnotice'>Error: The ban disappeared.</span>")
 				return
 
-			key = ban["keys"][alt]
-			if (!key)
-				to_chat(usr, "<span class='adminnotice'>Error: [alt] link to [ckey]'s sticky ban disappeared.</span>")
-				return
+			key = LAZYACCESS(ban["keys"], alt)
 
+			if (!key)
+				to_chat(usr, "<span class='adminnotice'>Error: [alt]'s link to [ckey]'s sticky ban disappeared.</span>")
+				return
+			LAZYREMOVE(ban["keys"], alt)
 			key["exempt"] = TRUE
+			LAZYSET(ban["whitelist"], alt, key)
 
 			world.SetConfig("ban",ckey,list2stickyban(ban))
 
 			SSstickyban.cache[ckey] = ban
 
-
-			var/datum/DBQuery/query_exempt_stickyban_alt = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 1 WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
-			query_exempt_stickyban_alt.warn_execute()
+			if (!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
+				var/datum/DBQuery/query_exempt_stickyban_alt = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 1 WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
+				query_exempt_stickyban_alt.warn_execute()
 
 			log_admin_private("[key_name(usr)] has exempted [alt] from [ckey]'s sticky ban")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has exempted [alt] from [ckey]'s sticky ban</span>")
@@ -192,18 +194,15 @@
 			var/ckey = data["ckey"]
 			if (!data["alt"])
 				return
-			if (CONFIG_GET(flag/ban_legacy_system) || !SSdbcore.Connect())
-				to_chat(usr, "<span class='adminnotice'>No database connection!</span>")
-				return
 			var/alt = ckey(data["alt"])
 			var/ban = get_stickyban_from_ckey(ckey)
 			if (!ban)
 				to_chat(usr, "<span class='adminnotice'>Error: No sticky ban for [ckey] found!</span>")
 				return
 
-			var/key = ban["keys"][alt]
+			var/key = LAZYACCESS(ban["whitelist"], alt)
 			if (!key)
-				to_chat(usr, "<span class='adminnotice'>Error: [alt] is not linked to [ckey]'s sticky ban!</span>")
+				to_chat(usr, "<span class='adminnotice'>Error: [alt] is not exempt from [ckey]'s sticky ban!</span>")
 				return
 
 			if (alert("Are you sure you want to unexempt [alt] from [ckey]'s sticky ban?","Are you sure","Yes","No") == "No")
@@ -215,20 +214,23 @@
 				to_chat(usr, "<span class='adminnotice'>Error: The ban disappeared.</span>")
 				return
 
-			key = ban["keys"][alt]
+			key = LAZYACCESS(ban["whitelist"], alt)
 			if (!key)
-				to_chat(usr, "<span class='adminnotice'>Error: [alt] link to [ckey]'s sticky ban disappeared.</span>")
+				to_chat(usr, "<span class='adminnotice'>Error: [alt]'s exemption from [ckey]'s sticky ban disappeared.</span>")
 				return
 
+			LAZYREMOVE(ban["whitelist"], alt)
 			key["exempt"] = FALSE
+			LAZYSET(ban["keys"], alt, key)
 
 			world.SetConfig("ban",ckey,list2stickyban(ban))
 
 			SSstickyban.cache[ckey] = ban
 
+			if (!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
 
-			var/datum/DBQuery/query_unexempt_stickyban_alt = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 0 WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
-			query_unexempt_stickyban_alt.warn_execute()
+				var/datum/DBQuery/query_unexempt_stickyban_alt = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 0 WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
+				query_unexempt_stickyban_alt.warn_execute()
 
 			log_admin_private("[key_name(usr)] has unexempted [alt] from [ckey]'s sticky ban")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has unexempted [alt] from [ckey]'s sticky ban</span>")
@@ -332,12 +334,15 @@
 	else
 		. += "LEGACY<br />"
 	. += "Caught keys<br />\n<ol>"
-	for (var/key in ban["keys"])
+	var/banned_keys = list()
+	if (ban["keys"])
+		banned_keys += ban["keys"]
+	if (ban["whitelist"])
+		banned_keys += ban["whitelist"]
+	for (var/key in banned_keys)
 		if (ckey(key) == ckey)
 			continue
-		var/exempt
-		if (!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
-			exempt = "<a href='?_src_=holder;[HrefToken()];stickyban=[(ban["keys"][key]["exempt"] ? "unexempt" : "exempt")]&ckey=[ckey]&alt=[ckey(key)]'>\[[(ban["keys"][key]["exempt"] ? "UE" : "E")]\]</a>"
+		var/exempt = "<a href='?_src_=holder;[HrefToken()];stickyban=[(ban["keys"][key]["exempt"] ? "unexempt" : "exempt")]&ckey=[ckey]&alt=[ckey(key)]'>\[[(ban["keys"][key]["exempt"] ? "UE" : "E")]\]</a>"
 		. += "<li><a href='?_src_=holder;[HrefToken()];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>[key][exempt]</li>"
 	. += "</ol>\n"
 
@@ -399,7 +404,7 @@
 	if (!length(.))
 		return null
 
-/proc/stickyban2list(ban)
+/proc/stickyban2list(ban, strictdb = TRUE)
 	if (!ban)
 		return null
 	. = params2list(ban)
@@ -410,6 +415,13 @@
 			var/ckey = ckey(key)
 			ckeys[ckey] = ckey //to make searching faster.
 		.["keys"] = ckeys
+	if (.["whitelist"])
+		var/keys = splittext(.["whitelist"], ",")
+		var/ckeys = list()
+		for (var/key in keys)
+			var/ckey = ckey(key)
+			ckeys[ckey] = ckey //to make searching faster.
+		.["whitelist"] = ckeys
 	.["type"] = splittext(.["type"], ",")
 	.["IP"] = splittext(.["IP"], ",")
 	.["computer_id"] = splittext(.["computer_id"], ",")
@@ -422,6 +434,8 @@
 	. = ban.Copy()
 	if (.["keys"])
 		.["keys"] = jointext(.["keys"], ",")
+	if (.["whitelist"])
+		.["whitelist"] = jointext(.["whitelist"], ",")
 	if (.["type"])
 		.["type"] = jointext(.["type"], ",")
 
