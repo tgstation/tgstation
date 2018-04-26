@@ -11,6 +11,4 @@
 	priority_announce("A recent bureaucratic error in the Organic Resources Department may result in personnel shortages in some departments and redundant staffing in others.", "Paperwork Mishap Alert")
 
 /datum/round_event/bureaucratic_error/start()
-	var/list/all_jobs = get_all_jobs()
-	picked_job = pick(all_jobs)
-	SSjob.set_overflow_role(picked_job)
+	set_overflow_role(pick(get_all_jobs()))
