@@ -14,7 +14,7 @@
 		if(GLOB.blobstart.len > 0)
 			targetturf = get_turf(pick(GLOB.blobstart))
 		else
-			throw EXCEPTION("Unable to find a blobstart landmark")
+			CRASH("Unable to find a blobstart landmark")
 
 	var/atom/movable/AM = parent
 	if(ismob(AM.loc))
