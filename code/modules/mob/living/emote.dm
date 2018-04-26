@@ -210,7 +210,7 @@
 			if(user.gender == FEMALE)
 				playsound(H, 'sound/voice/human/womanlaugh.ogg', 50, 1)
 			else
-				playsound(H, pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg'), 50, 1)
+				playsound(H, pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg', 'sound/voice/human/manlaugh3.ogg'), 50, 1)
 
 /datum/emote/living/look
 	key = "look"
