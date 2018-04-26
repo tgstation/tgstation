@@ -41,7 +41,9 @@
 	if(!AM)
 		return FALSE
 	if(istype(AM, /obj/item/gun/energy))
-		return FALSE
+		var/obj/item/gun/energy/E = AM
+		if(!istype(AM.loc,/obj/item/integrated_circuit/manipulation/weapon_firing) || !E.can_charge)  // Can only charge guns that are inside of the assembly's weapon firing mechanism and chargeable
+			return FALSE
 	if(!assembly)
 		return FALSE // Pointless to do everything else if there's no battery to draw from.
 	var/obj/item/stock_parts/cell/cell = AM.get_cell()
