@@ -48,13 +48,13 @@
 		return
 
 	if(panel_open)
-		if(istype(I, /obj/item/device/multitool))
-			var/obj/item/device/multitool/M = I
+		if(istype(I, /obj/item/multitool))
+			var/obj/item/multitool/M = I
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You save the data in [I]'s buffer.</span>")
 			return 1
-	else if(istype(I, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = I
+	else if(istype(I, /obj/item/multitool))
+		var/obj/item/multitool/M = I
 		if(istype(M.buffer, /obj/machinery/quantumpad))
 			linked_pad = M.buffer
 			to_chat(user, "<span class='notice'>You link [src] to the one in [I]'s buffer.</span>")
@@ -69,6 +69,9 @@
 	return ..()
 
 /obj/machinery/quantumpad/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(panel_open)
 		to_chat(user, "<span class='warning'>The panel must be closed before operating this machine!</span>")
 		return
@@ -102,6 +105,9 @@
 	s.start()
 
 /obj/machinery/quantumpad/attack_ghost(mob/dead/observer/ghost)
+	. = ..()
+	if(.)
+		return
 	if(!linked_pad && map_pad_link_id)
 		initMappedLink()
 	if(linked_pad)

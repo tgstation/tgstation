@@ -14,7 +14,7 @@
 	/datum/surgery_step/close)
 
 	species = list(/mob/living/carbon/human)
-	possible_locs = list("head")
+	possible_locs = list(BODY_ZONE_HEAD)
 
 /datum/surgery/advanced/brainwashing/can_start(mob/user, mob/living/carbon/target)
 	if(!..())

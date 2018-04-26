@@ -63,12 +63,13 @@
 		return ..()
 
 /obj/structure/flora/ash/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!harvested && !needs_sharp_harvest)
 		user.visible_message("<span class='notice'>[user] starts to harvest from [src].</span>","<span class='notice'>You begin to harvest from [src].</span>")
 		if(do_after(user, harvest_time, target = src))
 			harvest(user)
-	else
-		..()
 
 /obj/structure/flora/ash/tall_shroom //exists only so that the spawning check doesn't allow these spawning near other things
 	regrowth_time_low = 4200

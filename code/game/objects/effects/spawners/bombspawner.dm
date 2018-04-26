@@ -8,7 +8,7 @@
 
 /obj/effect/spawner/newbomb/Initialize()
 	. = ..()
-	var/obj/item/device/transfer_valve/V = new(src.loc)
+	var/obj/item/transfer_valve/V = new(src.loc)
 	var/obj/item/tank/internals/plasma/full/PT = new(V)
 	var/obj/item/tank/internals/oxygen/OT = new(V)
 
@@ -21,7 +21,7 @@
 	OT.master = V
 	
 	if(assembly_type)
-		var/obj/item/device/assembly/A = new assembly_type(V)
+		var/obj/item/assembly/A = new assembly_type(V)
 		V.attached_device = A
 		A.holder = V
 		A.toggle_secure()
@@ -31,16 +31,16 @@
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/newbomb/timer
-	assembly_type = /obj/item/device/assembly/timer
+	assembly_type = /obj/item/assembly/timer
 
 /obj/effect/spawner/newbomb/timer/syndicate
 	btemp1 = 150
 	btemp2 = 20
 
 /obj/effect/spawner/newbomb/proximity
-	assembly_type = /obj/item/device/assembly/prox_sensor
+	assembly_type = /obj/item/assembly/prox_sensor
 
 /obj/effect/spawner/newbomb/radio
-	assembly_type = /obj/item/device/assembly/signaler
+	assembly_type = /obj/item/assembly/signaler
 	
 

@@ -1,0 +1,5 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - bugfix: "Buildmode toggle now checks for permissions so the hotkey can't bypass it."
+  - admin: "Press F10 for dsay prompt."

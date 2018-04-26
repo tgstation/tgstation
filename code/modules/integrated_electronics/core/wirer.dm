@@ -3,7 +3,7 @@
 #define UNWIRE		"unwire"
 #define UNWIRING	"unwiring"
 
-/obj/item/device/integrated_electronics/wirer
+/obj/item/integrated_electronics/wirer
 	name = "circuit wirer"
 	desc = "It's a small wiring tool, with a wire roll, electric soldering iron, wire cutter, and more in one package. \
 	The wires used are generally useful for small electronics, such as circuitboards and breadboards, as opposed to larger wires \
@@ -15,10 +15,10 @@
 	var/datum/integrated_io/selected_io = null
 	var/mode = WIRE
 
-/obj/item/device/integrated_electronics/wirer/update_icon()
+/obj/item/integrated_electronics/wirer/update_icon()
 	icon_state = "wirer-[mode]"
 
-/obj/item/device/integrated_electronics/wirer/proc/wire(var/datum/integrated_io/io, mob/user)
+/obj/item/integrated_electronics/wirer/proc/wire(var/datum/integrated_io/io, mob/user)
 	if(!io.holder.assembly)
 		to_chat(user, "<span class='warning'>\The [io.holder] needs to be secured inside an assembly first.</span>")
 		return
@@ -76,7 +76,7 @@
 				[io.name] are not connected.</span>")
 				return
 
-/obj/item/device/integrated_electronics/wirer/attack_self(mob/user)
+/obj/item/integrated_electronics/wirer/attack_self(mob/user)
 	switch(mode)
 		if(WIRE)
 			mode = UNWIRE

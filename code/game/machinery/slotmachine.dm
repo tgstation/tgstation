@@ -108,14 +108,8 @@
 	spark_system.start()
 	playsound(src, "sparks", 50, 1)
 
-/obj/machinery/computer/slot_machine/attack_hand(mob/living/user)
-	. = ..() //Sanity checks.
-	if(.)
-		return .
-
-	interact(user)
-
-/obj/machinery/computer/slot_machine/interact(mob/living/user)
+/obj/machinery/computer/slot_machine/ui_interact(mob/living/user)
+	. = ..()
 	var/reeltext = {"<center><font face=\"courier new\">
 	/*****^*****^*****^*****^*****\\<BR>
 	| \[[reels[1][1]]\] | \[[reels[2][1]]\] | \[[reels[3][1]]\] | \[[reels[4][1]]\] | \[[reels[5][1]]\] |<BR>

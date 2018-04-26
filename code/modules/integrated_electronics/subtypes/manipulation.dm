@@ -101,7 +101,6 @@
 		shootAt(locate(target_x, target_y, T.z))
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/proc/shootAt(turf/target)
-
 	var/turf/T = get_turf(src)
 	var/turf/U = target
 	if(!istype(T) || !istype(U))
@@ -123,8 +122,6 @@
 	else
 		A = new lethal_projectile(T)
 		playsound(loc, lethal_projectile_sound, 75, 1)
-
-
 	installed_gun.cell.use(shot.e_cost)
 	//Shooting Code:
 	A.preparePixelProjectile(target, src)
@@ -139,8 +136,8 @@
 	Pulsing the 'step towards dir' activator pin will cause the machine to move a meter in that direction, assuming it is not \
 	being held, or anchored in some way. It should be noted that the ability to move is dependant on the type of assembly that this circuit inhabits."
 	w_class = WEIGHT_CLASS_SMALL
-	complexity = 20
-	cooldown_per_use = 8
+	complexity = 10
+	cooldown_per_use = 1
 	ext_cooldown = 1
 	inputs = list("direction" = IC_PINTYPE_DIR)
 	outputs = list("obstacle" = IC_PINTYPE_REF)
@@ -163,6 +160,7 @@
 					return
 				else
 					set_pin_data(IC_OUTPUT, 1, WEAKREF(assembly.collw))
+					push_data()
 					activate_pin(3)
 					return FALSE
 	return FALSE
@@ -242,61 +240,106 @@
 
 /obj/item/integrated_circuit/manipulation/plant_module
 	name = "plant manipulation module"
-	desc = "Used to uproot weeds or harvest plants in trays."
+	desc = "Used to uproot weeds and harvest/plant trays."
 	icon_state = "plant_m"
-	extended_desc = "The circuit accepts a reference to a hydroponic tray in an adjacent tile. \
-	Mode(0- harvest, 1-uproot weeds, 2-uproot plant) determinies action."
-	cooldown_per_use = 10
+	extended_desc = "The circuit accepts a reference to a hydroponic tray or an item in an adjacent tile. \
+	Mode input(0-harvest, 1-uproot weeds, 2-uproot plant, 3-plant seed) determines action. \
+	Harvesting returns a list of the harvested plants."
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 10
-	inputs = list("target" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_NUMBER)
-	outputs = list()
-	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out"=IC_PINTYPE_PULSE_OUT)
+	inputs = list("tray" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_NUMBER,"item" = IC_PINTYPE_REF)
+	outputs = list("result" = IC_PINTYPE_LIST)
+	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
 
 /obj/item/integrated_circuit/manipulation/plant_module/do_work()
 	..()
-	var/turf/T = get_turf(src)
+	var/obj/acting_object = get_object()
 	var/obj/OM = get_pin_data_as_type(IC_INPUT, 1, /obj)
-	if(istype(OM,/obj/structure/spacevine) && get_pin_data(IC_INPUT, 2) == 2)
-		qdel(OM)
+	var/obj/O = get_pin_data_as_type(IC_INPUT, 3, /obj/item)
+
+	if(!check_target(OM))
+		push_data()
 		activate_pin(2)
 		return
-	var/obj/machinery/hydroponics/AM = OM
-	if(!istype(AM)) //Invalid input
-		return FALSE
-	var/mob/living/M = get_turf(AM)
-	if(!M.Adjacent(T))
-		return //Can't reach
-	switch(get_pin_data(IC_INPUT, 2))
-		if(0)
-			if(AM.myseed)
-				if(AM.harvest)
-					AM.myseed.harvest()
-					AM.harvest = 0
-					AM.lastproduce = AM.age
-					if(!AM.myseed.get_gene(/datum/plant_gene/trait/repeated_harvest))
-						qdel(AM.myseed)
-						AM.myseed = null
-						AM.dead = 0
-					AM.update_icon()
-		if(1)
-			AM.weedlevel = 0
-		if(2)
-			if(AM.myseed) //Could be that they're just using it as a de-weeder
-				AM.age = 0
-				AM.plant_health = 0
-				if(AM.harvest)
-					AM.harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
-				qdel(AM.myseed)
-				AM.myseed = null
-			AM.weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
-			AM.dead = 0
-			AM.update_icon()
-		else
-			activate_pin(2)
-			return FALSE
+
+	if(istype(OM,/obj/structure/spacevine) && check_target(OM) && get_pin_data(IC_INPUT, 2) == 2)
+		qdel(OM)
+		push_data()
+		activate_pin(2)
+		return
+
+	var/obj/machinery/hydroponics/TR = OM
+	if(istype(TR))
+		switch(get_pin_data(IC_INPUT, 2))
+			if(0)
+				var/list/harvest_output = TR.attack_hand()
+				for(var/i in 1 to length(harvest_output))
+					harvest_output[i] = WEAKREF(harvest_output[i])
+
+				if(harvest_output.len)
+					set_pin_data(IC_OUTPUT, 1, harvest_output)
+					push_data()
+			if(1)
+				TR.weedlevel = 0
+			if(2)
+				if(TR.myseed) //Could be that they're just using it as a de-weeder
+					TR.age = 0
+					TR.plant_health = 0
+					if(TR.harvest)
+						TR.harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
+					qdel(TR.myseed)
+					TR.myseed = null
+				TR.weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
+				TR.dead = 0
+				TR.update_icon()
+			if(3)
+				if(!check_target(O))
+					activate_pin(2)
+					return FALSE
+
+				else if(istype(O, /obj/item/seeds) && !istype(O, /obj/item/seeds/sample))
+					if(!TR.myseed)
+						if(istype(O, /obj/item/seeds/kudzu))
+							investigate_log("had Kudzu planted in it by [acting_object] at ([x],[y],[z])","kudzu")
+						acting_object.visible_message("<span class='notice'>[acting_object] plants [O].</span>")
+						TR.dead = 0
+						TR.myseed = O
+						TR.age = 1
+						TR.plant_health = TR.myseed.endurance
+						TR.lastcycle = world.time
+						O.forceMove(TR)
+						TR.update_icon()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/manipulation/seed_extractor
+	name = "seed extractor module"
+	desc = "Used to extract seeds from grown produce."
+	icon_state = "plant_m"
+	extended_desc = "The circuit accepts a reference to a plant item and extracts seeds from it, outputting the results to a list."
+	complexity = 8
+	inputs = list("target" = IC_PINTYPE_REF)
+	outputs = list("result" = IC_PINTYPE_LIST)
+	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 50
+
+/obj/item/integrated_circuit/manipulation/seed_extractor/do_work()
+	..()
+	var/obj/O = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
+	if(!check_target(O))
+		push_data()
+		activate_pin(2)
+		return
+
+	var/list/seed_output = seedify(O, -1)
+	for(var/i in 1 to length(seed_output))
+		seed_output[i] = WEAKREF(seed_output[i])
+
+	if(seed_output.len)
+		set_pin_data(IC_OUTPUT, 1, seed_output)
+		push_data()
 	activate_pin(2)
 
 /obj/item/integrated_circuit/manipulation/grabber
@@ -314,6 +357,7 @@
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
 	var/max_items = 10
+
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
 	var/max_w_class = assembly.w_class
 	var/atom/movable/acting_object = get_object()
@@ -370,34 +414,49 @@
 	size = 3
 	cooldown_per_use = 5
 	complexity = 10
-	inputs = list("target" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_INDEX)
+	inputs = list("target" = IC_PINTYPE_REF,"mode" = IC_PINTYPE_INDEX,"dir" = IC_PINTYPE_DIR)
 	outputs = list("is pulling" = IC_PINTYPE_BOOLEAN)
-	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT,"released" = IC_PINTYPE_PULSE_OUT)
+	activators = list("pulse in" = IC_PINTYPE_PULSE_IN,"pulse out" = IC_PINTYPE_PULSE_OUT,"released" = IC_PINTYPE_PULSE_OUT,"pull to dir" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 50
 	ext_cooldown = 1
 	var/max_grab = GRAB_PASSIVE
 
-/obj/item/integrated_circuit/manipulation/claw/do_work()
+/obj/item/integrated_circuit/manipulation/claw/do_work(ord)
 	var/obj/acting_object = get_object()
 	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	var/mode = get_pin_data(IC_INPUT, 2)
-	mode = CLAMP(mode, GRAB_PASSIVE, max_grab)
-	if(AM)
-		if(check_target(AM, exclude_contents = TRUE))
-			acting_object.start_pulling(AM,mode)
+	switch(ord)
+		if(1)
+			mode = CLAMP(mode, GRAB_PASSIVE, max_grab)
+			if(AM)
+				if(check_target(AM, exclude_contents = TRUE))
+					acting_object.start_pulling(AM,mode)
+					if(acting_object.pulling)
+						set_pin_data(IC_OUTPUT, 1, TRUE)
+					else
+						set_pin_data(IC_OUTPUT, 1, FALSE)
+			push_data()
+
+		if(4)
 			if(acting_object.pulling)
-				set_pin_data(IC_OUTPUT, 1, TRUE)
-			else
-				set_pin_data(IC_OUTPUT, 1, FALSE)
-	push_data()
+				var/dir = get_pin_data(IC_INPUT, 3)
+				var/turf/G =get_step(get_turf(acting_object),dir)
+				var/atom/movable/pullee = acting_object.pulling
+				var/turf/Pl = get_turf(pullee)
+				var/turf/F = get_step_towards(Pl,G)
+				if(acting_object.Adjacent(F))
+					if(!step_towards(pullee, F))
+						F = get_step_towards2(Pl,G)
+						if(acting_object.Adjacent(F))
+							step_towards(pullee, F)
 	activate_pin(2)
 
 /obj/item/integrated_circuit/manipulation/claw/stop_pulling()
-	..()
 	set_pin_data(IC_OUTPUT, 1, FALSE)
-	activate_pin(2)
+	activate_pin(3)
 	push_data()
+	..()
 
 
 
@@ -407,7 +466,7 @@
 	extended_desc = "The first and second inputs need to be numbers which correspond to coordinates to throw objects at relative to the machine itself. \
 	The 'fire' activator will cause the mechanism to attempt to throw objects at the coordinates, if possible. Note that the \
 	projectile need to be inside the machine, or to be on an adjacent tile, and must be medium sized or smaller."
-	complexity = 15
+	complexity = 25
 	w_class = WEIGHT_CLASS_SMALL
 	size = 2
 	cooldown_per_use = 10
@@ -457,3 +516,124 @@
 
 	A.forceMove(drop_location())
 	A.throw_at(locate(x_abs, y_abs, T.z), range, 3)
+
+/obj/item/integrated_circuit/manipulation/matman
+	name = "material manager"
+	desc = "This circuit is designed for automatic storage and distribution of materials."
+	extended_desc = "The first input takes a ref of a machine with a material container. \
+					Second input is used for inserting material stacks into the internal material storage. \
+					Inputs 3-13 are used to transfer materials between target machine and circuit storage. \
+					Positive values will take that number of materials from another machine. \
+					Negative values will fill another machine from internal storage. Outputs show current stored amounts of mats."
+	icon_state = "grabber"
+	complexity = 16
+	inputs = list(
+		"target" 				= IC_PINTYPE_REF,
+		"sheets to insert"	 	= IC_PINTYPE_NUMBER,
+		"Metal"				 	= IC_PINTYPE_NUMBER,
+		"Glass"					= IC_PINTYPE_NUMBER,
+		"Silver"				= IC_PINTYPE_NUMBER,
+		"Gold"					= IC_PINTYPE_NUMBER,
+		"Diamond"				= IC_PINTYPE_NUMBER,
+		"Uranium"				= IC_PINTYPE_NUMBER,
+		"Solid Plasma"			= IC_PINTYPE_NUMBER,
+		"Bluespace Mesh"		= IC_PINTYPE_NUMBER,
+		"Bananium"				= IC_PINTYPE_NUMBER,
+		"Titanium"				= IC_PINTYPE_NUMBER,
+		)
+	outputs = list(
+		"self ref" 				= IC_PINTYPE_REF,
+		"Total amount"		 	= IC_PINTYPE_NUMBER,
+		"Metal"				 	= IC_PINTYPE_NUMBER,
+		"Glass"					= IC_PINTYPE_NUMBER,
+		"Silver"				= IC_PINTYPE_NUMBER,
+		"Gold"					= IC_PINTYPE_NUMBER,
+		"Diamond"				= IC_PINTYPE_NUMBER,
+		"Uranium"				= IC_PINTYPE_NUMBER,
+		"Solid Plasma"			= IC_PINTYPE_NUMBER,
+		"Bluespace Mesh"		= IC_PINTYPE_NUMBER,
+		"Bananium"				= IC_PINTYPE_NUMBER,
+		"Titanium"				= IC_PINTYPE_NUMBER
+		)
+	activators = list(
+		"insert sheet" = IC_PINTYPE_PULSE_IN,
+		"transfer mats" = IC_PINTYPE_PULSE_IN,
+		"on success" = IC_PINTYPE_PULSE_OUT,
+		"on failure" = IC_PINTYPE_PULSE_OUT,
+		"push ref" = IC_PINTYPE_PULSE_IN,
+		"on push ref" = IC_PINTYPE_PULSE_IN
+		)
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_draw_per_use = 40
+	ext_cooldown = 1
+	cooldown_per_use = 10
+	var/list/mtypes = list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE)
+
+/obj/item/integrated_circuit/manipulation/matman/Initialize()
+	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
+	list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
+	FALSE, list(/obj/item/stack, /obj/item/stack/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
+	materials.max_amount =100000
+	materials.precise_insertion = TRUE
+	.=..()
+
+/obj/item/integrated_circuit/manipulation/matman/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
+	GET_COMPONENT(materials, /datum/component/material_container)
+	set_pin_data(IC_OUTPUT, 2, materials.total_amount)
+	for(var/I in 1 to mtypes.len)
+		var/datum/material/M = materials.materials[mtypes[I]]
+		if(M)
+			set_pin_data(IC_OUTPUT, I+2, M.amount)
+	push_data()
+
+/obj/item/integrated_circuit/manipulation/matman/proc/is_insertion_ready(mob/user)
+	return TRUE
+
+/obj/item/integrated_circuit/manipulation/matman/do_work(ord)
+	GET_COMPONENT(materials, /datum/component/material_container)
+	var/atom/movable/H = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
+	if(!check_target(H))
+		activate_pin(4)
+		return
+	var/turf/T = get_turf(H)
+	switch(ord)
+		if(1)
+			var/obj/item/stack/sheet/S = H
+			if(!S)
+				activate_pin(4)
+				return
+			if(materials.insert_stack(S, CLAMP(get_pin_data(IC_INPUT, 2),0,100), multiplier = 1) )
+				AfterMaterialInsert()
+				activate_pin(3)
+			else
+				activate_pin(4)
+		if(2)
+			GET_COMPONENT_FROM(mt, /datum/component/material_container, H)
+			var/suc
+			for(var/I in 1 to mtypes.len)
+				var/datum/material/M = materials.materials[mtypes[I]]
+				if(M)
+					var/U = CLAMP(get_pin_data(IC_INPUT, I+2),-100000,100000)
+					if(!U)
+						continue
+					if(!mt) //Invalid input
+						if(U>0)
+							if(materials.retrieve_amount(U, mtypes[I], T))
+								suc = TRUE
+					else
+						if(mt.transer_amt_to(materials, U, mtypes[I]))
+							suc = TRUE
+			if(suc)
+				AfterMaterialInsert()
+				activate_pin(3)
+			else
+				activate_pin(4)
+		if(5)
+			set_pin_data(IC_OUTPUT, 1, WEAKREF(src))
+			AfterMaterialInsert()
+			activate_pin(6)
+
+/obj/item/integrated_circuit/manipulation/matman/Destroy()
+	GET_COMPONENT(materials, /datum/component/material_container)
+	materials.retrieve_all()
+	.=..()

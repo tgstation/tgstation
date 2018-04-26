@@ -14,6 +14,7 @@
 	flags_1 = ON_BORDER_1
 	opacity = 0
 	CanAtmosPass = ATMOS_PASS_PROC
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	var/obj/item/electronics/airlock/electronics = null
 	var/reinf = 0
 	var/shards = 2
@@ -201,10 +202,6 @@
 		take_damage(round(exposed_volume / 200), BURN, 0, 0)
 	..()
 
-
-/obj/machinery/door/window/attack_ai(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/door/window/emag_act(mob/user)
 	if(!operating && density && !(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
@@ -280,6 +277,9 @@
 						qdel(src)
 				return
 	return ..()
+
+/obj/machinery/door/window/interact(mob/user)		//for sillycones
+	try_to_activate_door(user)
 
 /obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user)
 	if(!hasPower())

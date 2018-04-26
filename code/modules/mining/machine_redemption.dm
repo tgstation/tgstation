@@ -13,6 +13,7 @@
 	req_access = list(ACCESS_MINERAL_STOREROOM)
 	speed_process = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_redemption
+	layer = BELOW_OBJ_LAYER
 	var/req_access_reclaim = ACCESS_MINING_STATION
 	var/obj/item/card/id/inserted_id
 	var/points = 0
@@ -172,7 +173,7 @@
 			interact(user)
 		return
 
-	if(istype(W, /obj/item/device/multitool) && panel_open)
+	if(istype(W, /obj/item/multitool) && panel_open)
 		input_dir = turn(input_dir, -90)
 		output_dir = turn(output_dir, -90)
 		to_chat(user, "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>")
@@ -188,11 +189,6 @@
 	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
 	..()
-
-/obj/machinery/mineral/ore_redemption/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
 
 /obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

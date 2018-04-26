@@ -603,3 +603,24 @@
 	results = list("squirt_cider" = 1)
 	required_reagents = list("water" = 1, "tomatojuice" = 1, "nutriment" = 1)
 	mix_message = "The mix swirls and turns a bright red that reminds you of an apple's skin."
+
+/datum/chemical_reaction/fringe_weaver
+	name = "Fringe Weaver"
+	id = "fringe_weaver"
+	results = list("fringe_weaver" = 10)
+	required_reagents = list("ethanol" = 9, "sugar" = 1) //9 karmotrine, 1 adelhyde
+	mix_message = "The mix turns a pleasant cream color and foams up."
+
+/datum/chemical_reaction/sugar_rush
+	name = "Sugar Rush"
+	id = "sugar_rush"
+	results = list("sugar_rush" = 4)
+	required_reagents = list("sugar" = 2, "lemonjuice" = 1, "wine" = 1) //2 adelhyde (sweet), 1 powdered delta (sour), 1 karmotrine (alcohol)
+	mix_message = "The mixture bubbles and brightens into a girly pink."
+
+/datum/chemical_reaction/crevice_spike
+	name = "Crevice Spike"
+	id = "crevice_spike"
+	results = list("crevice_spike" = 6)
+	required_reagents = list("limejuice" = 2, "capsaicin" = 4) //2 powdered delta (sour), 4 flanergide (spicy)
+	mix_message = "The mixture stings your eyes as it settles."

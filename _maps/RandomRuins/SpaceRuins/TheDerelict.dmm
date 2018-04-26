@@ -561,7 +561,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bQ" = (
-/obj/item/device/aicard,
+/obj/item/aicard,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
@@ -1386,7 +1386,7 @@
 /area/ruin/space/derelict/bridge/access)
 "eC" = (
 /obj/structure/table,
-/obj/item/device/paicard,
+/obj/item/paicard,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge)
 "eD" = (
@@ -1677,7 +1677,7 @@
 /area/ruin/space/derelict/bridge/access)
 "fy" = (
 /obj/structure/table,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/access)
 "fz" = (
@@ -3121,7 +3121,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kq" = (
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_x = -8;
 	pixel_y = 4
 	},
@@ -3494,7 +3494,7 @@
 /area/ruin/space/derelict/hallway/primary)
 "lI" = (
 /obj/structure/table,
-/obj/item/device/healthanalyzer,
+/obj/item/healthanalyzer,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "lJ" = (

@@ -1,7 +1,7 @@
 /datum/surgery/dental_implant
 	name = "dental implant"
 	steps = list(/datum/surgery_step/drill, /datum/surgery_step/insert_pill)
-	possible_locs = list("mouth")
+	possible_locs = list(BODY_ZONE_PRECISE_MOUTH)
 
 /datum/surgery_step/insert_pill
 	name = "insert pill"

@@ -388,7 +388,7 @@
 	req_access_txt = "201"
 	},
 /obj/item/storage/bag/plants/portaseeder,
-/obj/item/device/plant_analyzer,
+/obj/item/plant_analyzer,
 /obj/item/clothing/mask/bandana,
 /obj/item/hatchet,
 /turf/open/floor/plasteel/vault{
@@ -398,7 +398,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "bf" = (
 /obj/item/storage/belt/security,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
@@ -467,7 +467,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "bn" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -2166,7 +2166,7 @@
 "eX" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
@@ -3927,8 +3927,8 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "iO" = (
 /obj/structure/table,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plasteel{
 	dir = 8;
 	heat_capacity = 1e+006;
@@ -4787,7 +4787,7 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -4799,8 +4799,8 @@
 /obj/structure/sign/warning/biohazard{
 	pixel_y = 32
 	},
-/obj/item/device/assembly/prox_sensor,
-/obj/item/device/assembly/prox_sensor,
+/obj/item/assembly/prox_sensor,
+/obj/item/assembly/prox_sensor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -5230,7 +5230,7 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -32
 	},
@@ -5308,7 +5308,7 @@
 "lu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/item/reagent_containers/spray/pepper,
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
@@ -5989,9 +5989,9 @@
 "mB" = (
 /obj/structure/table,
 /obj/item/hand_labeler,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -6653,8 +6653,8 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/device/radio/off,
-/obj/item/device/laser_pointer,
+/obj/item/radio/off,
+/obj/item/laser_pointer,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
@@ -6715,10 +6715,10 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/device/taperecorder{
+/obj/item/taperecorder{
 	pixel_x = -3
 	},
-/obj/item/device/paicard{
+/obj/item/paicard{
 	pixel_x = 4
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -6734,7 +6734,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
@@ -7455,7 +7455,6 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "pa" = (
 /obj/machinery/air_sensor{
-	frequency = 1441;
 	id_tag = "UO45_air_sensor"
 	},
 /turf/open/floor/engine/air,
@@ -7765,9 +7764,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos{
 	dir = 2;
-	frequency = 1441;
 	icon_state = "in";
 	id_tag = "UO45_air_out";
 	name = "air out"
@@ -7778,9 +7776,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pF" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 2;
-	frequency = 1441;
 	id = "UO45_air_in"
 	},
 /turf/open/floor/engine{
@@ -8060,11 +8057,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ql" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	target_temperature = 80;
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -8331,7 +8324,7 @@
 	dir = 2;
 	pixel_y = 24
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 1;
 	heat_capacity = 1e+006
@@ -8340,7 +8333,6 @@
 "qK" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/computer/atmos_control/tank{
-	frequency = 1441;
 	input_tag = "UO45_air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "UO45_air_out";
@@ -8352,13 +8344,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qL" = (
-/obj/machinery/atmospherics/components/trinary/mixer{
-	dir = 1;
-	node1_concentration = 0.8;
-	node2_concentration = 0.2;
-	on = 1;
-	req_access = null;
-	target_pressure = 4500
+/obj/machinery/atmospherics/components/trinary/mixer/airmix{
+	dir = 1
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 5;
@@ -8704,8 +8691,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "rq" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/visible,
-/obj/machinery/meter{
-	frequency = 1441;
+/obj/machinery/meter/atmos{
 	id_tag = "UO45_distro_meter";
 	name = "Distribution Loop"
 	},
@@ -9360,7 +9346,6 @@
 "sr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
-	frequency = 1441;
 	id_tag = "UO45_mix_in";
 	name = "distro out"
 	},
@@ -9737,7 +9722,6 @@
 "tc" = (
 /obj/machinery/computer/atmos_control/tank{
 	dir = 8;
-	frequency = 1441;
 	input_tag = "UO45_mix_in";
 	name = "Gas Mix Tank Control";
 	output_tag = "UO45_mix_in";
@@ -9765,16 +9749,14 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "te" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 8;
-	frequency = 1441;
 	id = "UO45_mix_in"
 	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/undergroundoutpost45/engineering)
 "tf" = (
 /obj/machinery/air_sensor{
-	frequency = 1441;
 	id_tag = "UO45_mix_sensor"
 	},
 /turf/open/floor/engine/vacuum,
@@ -10005,7 +9987,7 @@
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plasteel/red/side{
 	dir = 4;
 	heat_capacity = 1e+006
@@ -10043,8 +10025,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 8
 	},
-/obj/machinery/meter{
-	frequency = 1441;
+/obj/machinery/meter/atmos{
 	id_tag = "UO45_waste_meter";
 	name = "Waste Loop"
 	},
@@ -10389,10 +10370,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "um" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "n2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2{
+	dir = 4
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 10;
@@ -10405,7 +10384,6 @@
 	},
 /obj/machinery/computer/atmos_control/tank{
 	dir = 1;
-	frequency = 1441;
 	input_tag = "UO45_n2_in";
 	name = "Nitrogen Supply Control";
 	output_tag = "UO45_n2_out";
@@ -10430,10 +10408,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "up" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "o2";
-	on = 1
+/obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
+	dir = 4
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 10;
@@ -10447,7 +10423,6 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/computer/atmos_control/tank{
 	dir = 1;
-	frequency = 1441;
 	input_tag = "UO45_o2_in";
 	name = "Oxygen Supply Control";
 	output_tag = "UO45_o2_out";
@@ -10533,7 +10508,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/computer/atmos_control{
 	dir = 4;
-	frequency = 1441;
 	name = "Tank Monitor";
 	sensors = list("UO45_n2_sensor" = "Nitrogen", "UO45_o2_sensor" = "Oxygen", "UO45_mix_sensor" = "Gas Mix Tank")
 	},
@@ -10716,7 +10690,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/computer/atmos_control{
 	dir = 4;
-	frequency = 1441;
 	level = 3;
 	name = "Distribution and Waste Monitor";
 	sensors = list("UO45_air_sensor" = "Mixed Air Supply Tank", "UO45_distro_meter" = "Distribution Loop", "UO45_waste_meter" = "Waste Loop")
@@ -10833,34 +10806,30 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vd" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	frequency = 1441;
 	id = "UO45_n2_in"
 	},
 /turf/open/floor/engine/n2,
 /area/awaymission/undergroundoutpost45/engineering)
 "ve" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 1;
-	frequency = 1441;
 	id_tag = "UO45_n2_out";
 	name = "nitrogen out"
 	},
 /turf/open/floor/engine/n2,
 /area/awaymission/undergroundoutpost45/engineering)
 "vf" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	frequency = 1441;
 	id = "UO45_o2_in"
 	},
 /turf/open/floor/engine/o2,
 /area/awaymission/undergroundoutpost45/engineering)
 "vg" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 1;
-	frequency = 1441;
 	id_tag = "UO45_o2_out";
 	name = "oxygen out"
 	},
@@ -11094,7 +11063,6 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "vD" = (
 /obj/machinery/air_sensor{
-	frequency = 1441;
 	id_tag = "UO45_n2_sensor"
 	},
 /obj/machinery/light/small,
@@ -11106,7 +11074,6 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "vF" = (
 /obj/machinery/air_sensor{
-	frequency = 1441;
 	id_tag = "UO45_o2_sensor"
 	},
 /obj/machinery/light/small,
@@ -12067,7 +12034,7 @@
 "xv" = (
 /obj/structure/table,
 /obj/item/pickaxe,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006

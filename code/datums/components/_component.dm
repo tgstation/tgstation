@@ -10,7 +10,7 @@
 	var/list/arguments = args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
-		CRASH("Incompatible [type] assigned to a [P]!")
+		CRASH("Incompatible [type] assigned to a [P.type]!")
 
 	_JoinParent(P)
 
@@ -105,14 +105,6 @@
 	return
 
 /datum/component/proc/_GetInverseTypeList(our_type = type)
-	#if DM_VERSION >= 513
-	#warning 512 is definitely stable now, remove the old code
-	#endif
-
-	#if DM_VERSION < 512
-	//remove this when we use 512 full time
-	set invisibility = 101
-	#endif
 	//we can do this one simple trick
 	var/current_type = parent_type
 	. = list(our_type, current_type)
@@ -241,7 +233,9 @@
 		//if we're taking to the same thing no need for anything
 		return
 	if(C.OnTransfer(src) == COMPONENT_INCOMPATIBLE)
+		var/c_type = C.type
 		qdel(C)
+		CRASH("Incompatible [c_type] transfer attempt to a [type]!")
 		return
 	C._RemoveFromParent()
 	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, C)

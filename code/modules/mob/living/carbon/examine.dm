@@ -28,12 +28,12 @@
 		appears_dead = 1
 		if(getorgan(/obj/item/organ/brain))
 			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive, with no signs of life.</span>\n"
-		else if(get_bodypart("head"))
+		else if(get_bodypart(BODY_ZONE_HEAD))
 			msg += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>\n"
 
 	var/list/missing = get_missing_limbs()
 	for(var/t in missing)
-		if(t=="head")
+		if(t==BODY_ZONE_HEAD)
 			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B></span>\n"
 			continue
 		msg += "<span class='warning'><B>[t_His] [parse_zone(t)] is missing!</B></span>\n"
@@ -108,3 +108,4 @@
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)
+	return msg

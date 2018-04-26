@@ -30,8 +30,8 @@
 	var/grab_ghost_when = CLONER_MATURE_CLONE
 
 	var/internal_radio = TRUE
-	var/obj/item/device/radio/radio
-	var/radio_key = /obj/item/device/encryptionkey/headset_med
+	var/obj/item/radio/radio
+	var/radio_key = /obj/item/encryptionkey/headset_med
 	var/radio_channel = "Medical"
 
 	var/obj/effect/countdown/clonepod/countdown
@@ -172,7 +172,7 @@
 	occupant = H
 
 	if(!clonename)	//to prevent null names
-		clonename = "clone ([rand(0,999)])"
+		clonename = "clone ([rand(1,999)])"
 	H.real_name = clonename
 
 	icon_state = "pod_1"
@@ -285,8 +285,8 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
-	if(istype(W, /obj/item/device/multitool))
-		var/obj/item/device/multitool/P = W
+	if(istype(W, /obj/item/multitool))
+		var/obj/item/multitool/P = W
 
 		if(istype(P.buffer, /obj/machinery/computer/cloning))
 			if(get_area(P.buffer) != get_area(src))
@@ -444,7 +444,7 @@
 	// brain function, they also have no limbs or internal organs.
 
 	if(!H.has_trait(TRAIT_NODISMEMBER))
-		var/static/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
+		var/static/list/zones = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 		for(var/zone in zones)
 			var/obj/item/bodypart/BP = H.get_bodypart(zone)
 			if(BP)

@@ -648,7 +648,7 @@
 
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	..()
-	if (istype(E, /obj/item/device/extinguisher_refill))
+	if (istype(E, /obj/item/extinguisher_refill))
 		if (extinguishes_left == 5)
 			to_chat(user, "<span class='notice'>The inbuilt extinguisher is full.</span>")
 			return
@@ -660,7 +660,7 @@
 		return
 	return
 
-/obj/item/device/extinguisher_refill
+/obj/item/extinguisher_refill
 	name = "envirosuit extinguisher cartridge"
 	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
 	icon_state = "plasmarefill"

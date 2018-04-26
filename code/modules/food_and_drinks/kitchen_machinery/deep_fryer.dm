@@ -41,12 +41,13 @@ God bless America.
 		/obj/item/crowbar,
 		/obj/item/wrench,
 		/obj/item/wirecutters,
-		/obj/item/device/multitool,
+		/obj/item/multitool,
 		/obj/item/weldingtool,
 		/obj/item/reagent_containers/glass,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/food/condiment,
-		/obj/item/storage/part_replacer))
+		/obj/item/storage/part_replacer,
+		/obj/item/his_grace))
 	var/datum/looping_sound/deep_fryer/fry_loop
 
 /obj/machinery/deepfryer/Initialize()
@@ -142,8 +143,8 @@ God bless America.
 		var/mob/living/carbon/C = user.pulling
 		user.visible_message("<span class = 'danger'>[user] dunks [C]'s face in [src]!</span>")
 		reagents.reaction(C, TOUCH)
-		C.apply_damage(min(30, reagents.total_volume), BURN, "head")
+		C.apply_damage(min(30, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		reagents.remove_any((reagents.total_volume/2))
 		C.Knockdown(60)
 		user.changeNext_move(CLICK_CD_MELEE)
-	..()
+	return ..()

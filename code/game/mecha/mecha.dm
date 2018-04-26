@@ -1,8 +1,8 @@
-#define MECHA_INT_FIRE 1
-#define MECHA_INT_TEMP_CONTROL 2
-#define MECHA_INT_SHORT_CIRCUIT 4
-#define MECHA_INT_TANK_BREACH 8
-#define MECHA_INT_CONTROL_LOST 16
+#define MECHA_INT_FIRE			(1<<0)
+#define MECHA_INT_TEMP_CONTROL	(1<<1)
+#define MECHA_INT_SHORT_CIRCUIT	(1<<2)
+#define MECHA_INT_TANK_BREACH	(1<<3)
+#define MECHA_INT_CONTROL_LOST	(1<<4)
 
 #define MELEE 1
 #define RANGED 2
@@ -57,7 +57,7 @@
 	var/datum/gas_mixture/cabin_air
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port = null
 
-	var/obj/item/device/radio/mech/radio
+	var/obj/item/radio/mech/radio
 	var/list/trackers = list()
 
 	var/max_temperature = 25000
@@ -118,7 +118,7 @@
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
-/obj/item/device/radio/mech //this has to go somewhere
+/obj/item/radio/mech //this has to go somewhere
 
 /obj/mecha/Initialize()
 	. = ..()
@@ -442,22 +442,17 @@
 			return
 
 	var/mob/living/L = user
-	var/obj/structure/closet/C = target
 	if(!Adjacent(target))
 		if(selected && selected.is_ranged())
-			if(L.has_trait(TRAIT_PACIFISM) && !selected.pacifist_safe)
+			if(L.has_trait(TRAIT_PACIFISM) && selected.harmful)
 				to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 				return
 			if(selected.action(target,params))
 				selected.start_cooldown()
 	else if(selected && selected.is_melee())
-		if(isliving(target) && !selected.pacifist_safe && L.has_trait(TRAIT_PACIFISM))
+		if(isliving(target) && selected.harmful && L.has_trait(TRAIT_PACIFISM))
 			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 			return
-		if(istype(C) && L.has_trait(TRAIT_PACIFISM) && !selected.pacifist_safe && !istype(selected,/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/))
-			for(var/mob/living/M in C)
-				to_chat(user, "<span class='warning'>There's someone in there! I don't want to hurt them.</span>")
-				return
 		if(selected.action(target,params))
 			selected.start_cooldown()
 	else
@@ -677,7 +672,7 @@
 			return
 		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'><span class='boldnotice'>Take control of exosuit?</span></a><br>")
 
-/obj/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+/obj/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(!..())
 		return
 
@@ -871,7 +866,7 @@
 	else
 		return 0
 
-/obj/mecha/proc/mmi_move_inside(obj/item/device/mmi/mmi_as_oc, mob/user)
+/obj/mecha/proc/mmi_move_inside(obj/item/mmi/mmi_as_oc, mob/user)
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		to_chat(user, "<span class='warning'>Consciousness matrix not detected!</span>")
 		return FALSE
@@ -896,7 +891,7 @@
 		to_chat(user, "<span class='notice'>You stop inserting the MMI.</span>")
 	return FALSE
 
-/obj/mecha/proc/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc, mob/user)
+/obj/mecha/proc/mmi_moved_inside(obj/item/mmi/mmi_as_oc, mob/user)
 	if(!(Adjacent(mmi_as_oc) && Adjacent(user)))
 		return FALSE
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
@@ -972,8 +967,8 @@
 		log_message("[mob_container] moved out.")
 		L << browse(null, "window=exosuit")
 
-		if(istype(mob_container, /obj/item/device/mmi))
-			var/obj/item/device/mmi/mmi = mob_container
+		if(istype(mob_container, /obj/item/mmi))
+			var/obj/item/mmi/mmi = mob_container
 			if(mmi.brainmob)
 				L.forceMove(mmi)
 				L.reset_perspective()

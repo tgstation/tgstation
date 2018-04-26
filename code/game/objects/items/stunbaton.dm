@@ -154,7 +154,7 @@
 			return 0
 
 	L.Knockdown(stunforce)
-	L.apply_effect(STUTTER, stunforce)
+	L.apply_effect(EFFECT_STUTTER, stunforce)
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
@@ -190,7 +190,7 @@
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = SLOT_BACK
-	var/obj/item/device/assembly/igniter/sparkler = 0
+	var/obj/item/assembly/igniter/sparkler = 0
 
 /obj/item/melee/baton/cattleprod/Initialize()
 	. = ..()

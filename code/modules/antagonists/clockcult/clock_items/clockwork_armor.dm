@@ -48,7 +48,7 @@
 			to_chat(user, "<span class='heavy_brass'>\"Do you have a hole in your head? You're about to.\"</span>")
 			to_chat(user, "<span class='userdanger'>The helmet tries to drive a spike through your head as you scramble to remove it!</span>")
 			user.emote("scream")
-			user.apply_damage(30, BRUTE, "head")
+			user.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
 			user.adjustBrainLoss(30)
 		addtimer(CALLBACK(user, /mob/living.proc/dropItemToGround), src, 1) //equipped happens before putting stuff on(but not before picking items up), 1). thus, we need to wait for it to be on before forcing it off.
 
@@ -68,7 +68,7 @@
 	heat_protection = CHEST|GROIN|LEGS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor = list("melee" = 60, "bullet" = 70, "laser" = -25, "energy" = 0, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
-	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
+	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/mmi/posibrain/soul_vessel)
 
 /obj/item/clothing/suit/armor/clockwork/Initialize()
 	. = ..()
@@ -114,7 +114,7 @@
 			to_chat(user, "<span class='heavy_brass'>\"I think this armor is too hot for you to handle.\"</span>")
 			to_chat(user, "<span class='userdanger'>The curiass emits a burst of flame as you scramble to get it off!</span>")
 			user.emote("scream")
-			user.apply_damage(15, BURN, "chest")
+			user.apply_damage(15, BURN, BODY_ZONE_CHEST)
 			user.adjust_fire_stacks(2)
 			user.IgniteMob()
 		addtimer(CALLBACK(user, /mob/living.proc/dropItemToGround, src, TRUE), 1)
@@ -175,8 +175,8 @@
 			to_chat(user, "<span class='heavy_brass'>\"Did you like having arms?\"</span>")
 			to_chat(user, "<span class='userdanger'>The gauntlets suddenly squeeze tight, crushing your arms before you manage to get them off!</span>")
 			user.emote("scream")
-			user.apply_damage(7, BRUTE, "l_arm")
-			user.apply_damage(7, BRUTE, "r_arm")
+			user.apply_damage(7, BRUTE, BODY_ZONE_L_ARM)
+			user.apply_damage(7, BRUTE, BODY_ZONE_R_ARM)
 		addtimer(CALLBACK(user, /mob/living.proc/dropItemToGround, src, TRUE), 1)
 
 /obj/item/clothing/shoes/clockwork
@@ -225,6 +225,6 @@
 			to_chat(user, "<span class='heavy_brass'>\"Let's see if you can dance with these.\"</span>")
 			to_chat(user, "<span class='userdanger'>The treads turn searing hot as you scramble to get them off!</span>")
 			user.emote("scream")
-			user.apply_damage(7, BURN, "l_leg")
-			user.apply_damage(7, BURN, "r_leg")
+			user.apply_damage(7, BURN, BODY_ZONE_L_LEG)
+			user.apply_damage(7, BURN, BODY_ZONE_R_LEG)
 		addtimer(CALLBACK(user, /mob/living.proc/dropItemToGround, src, TRUE), 1)

@@ -11,6 +11,7 @@
 	icon_state = "wabbajack_statue"
 	icon_state_on = "wabbajack_statue_on"
 	active = FALSE
+	allow_switch_interact = FALSE
 	var/list/active_tables = list()
 	var/tables_required = 2
 
@@ -39,10 +40,6 @@
 				[src] closes its eyes.</span>")
 		active = FALSE
 	update_icon()
-
-
-/obj/machinery/power/emitter/energycannon/magical/attack_hand(mob/user)
-	return
 
 /obj/machinery/power/emitter/energycannon/magical/attackby(obj/item/W, mob/user, params)
 	return

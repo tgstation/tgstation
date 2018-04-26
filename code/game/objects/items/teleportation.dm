@@ -55,7 +55,7 @@
 
 			if (sr)
 				temp += "<B>Beacon Signals:</B><BR>"
-				for(var/obj/item/device/beacon/W in GLOB.teleportbeacons)
+				for(var/obj/item/beacon/W in GLOB.teleportbeacons)
 					if (!W.renamed)
 						continue
 					var/turf/tr = get_turf(W)
@@ -136,7 +136,7 @@
 	. = ..()
 	active_portal_pairs = list()
 
-/obj/item/hand_tele/pre_attackby(atom/target, mob/user, params)
+/obj/item/hand_tele/pre_attack(atom/target, mob/user, params)
 	if(try_dispel_portal(target, user))
 		return FALSE
 	return ..()

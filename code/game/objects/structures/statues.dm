@@ -35,6 +35,9 @@
 	return ..()
 
 /obj/structure/statue/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
 	user.visible_message("[user] rubs some dust off from the [name]'s surface.", \
@@ -80,11 +83,11 @@
 
 /obj/structure/statue/uranium/attack_hand(mob/user)
 	radiate()
-	..()
+	. = ..()
 
 /obj/structure/statue/uranium/attack_paw(mob/user)
 	radiate()
-	..()
+	. = ..()
 
 /obj/structure/statue/uranium/proc/radiate()
 	if(!active)
@@ -239,7 +242,7 @@
 
 /obj/structure/statue/bananium/attack_hand(mob/user)
 	honk()
-	..()
+	. = ..()
 
 /obj/structure/statue/bananium/attack_paw(mob/user)
 	honk()

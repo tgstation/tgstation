@@ -12,10 +12,6 @@
 	var/mob/living/L = owner.current || mob_override
 	L.remove_trait(TRAIT_NOGUNS, "highlander")
 
-/datum/antagonist/highlander/on_removal()
-	owner.objectives -= objectives
-	. = ..()
-
 /datum/antagonist/highlander/proc/forge_objectives()
 	var/datum/objective/steal/steal_objective = new
 	steal_objective.owner = owner
@@ -51,7 +47,7 @@
 	for(var/obj/item/I in H.held_items)
 		qdel(I)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt/highlander(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), slot_ears)
+	H.equip_to_slot_or_del(new /obj/item/radio/headset/heads/captain(H), slot_ears)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), slot_l_store)

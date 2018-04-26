@@ -7,6 +7,9 @@
 	delivery_icon = "deliverybox"
 
 /obj/structure/closet/crate/large/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	add_fingerprint(user)
 	if(manifest)
 		tear_manifest(user)

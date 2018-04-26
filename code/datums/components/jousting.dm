@@ -18,8 +18,7 @@
 
 /datum/component/jousting/Initialize()
 	if(!isitem(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("Warning: Jousting component incorrectly applied to invalid parent type [parent.type]")
+		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	RegisterSignal(COMSIG_ITEM_DROPPED, .proc/on_drop)
 	RegisterSignal(COMSIG_ITEM_ATTACK, .proc/on_attack)

@@ -471,10 +471,13 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("monkey","corgi","carp","skeleton","demon","zombie")
 	feedback_details += "Type: [kind]"
+	var/list/nearby
+	if(skip_nearby)
+		nearby = get_hearers_in_view(7, target)
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(H == target)
 			continue
-		if(skip_nearby && (H in view(target)))
+		if(skip_nearby && (H in nearby))
 			continue
 		switch(kind)
 			if("monkey")//Monkey
@@ -575,13 +578,13 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	/obj/item/cartridge/virus/syndicate, /obj/item/clothing/under/chameleon,\
 	/obj/item/clothing/shoes/chameleon/noslip, /obj/item/card/id/syndicate,\
 	/obj/item/clothing/mask/chameleon, /obj/item/clothing/glasses/thermal,\
-	/obj/item/device/chameleon, /obj/item/card/emag,	/obj/item/grenade/plastic/x4,\
+	/obj/item/chameleon, /obj/item/card/emag,	/obj/item/grenade/plastic/x4,\
 	/obj/item/storage/toolbox/syndicate, /obj/item/aiModule,\
-	/obj/item/device/radio/headset/syndicate,	/obj/item/grenade/plastic/c4,\
-	/obj/item/device/powersink, /obj/item/storage/box/syndie_kit,\
+	/obj/item/radio/headset/syndicate,	/obj/item/grenade/plastic/c4,\
+	/obj/item/powersink, /obj/item/storage/box/syndie_kit,\
 	/obj/item/toy/syndicateballoon, /obj/item/gun/energy/laser/captain,\
 	/obj/item/hand_tele, /obj/item/construction/rcd, /obj/item/tank/jetpack,\
-	/obj/item/clothing/under/rank/captain, /obj/item/device/aicard,\
+	/obj/item/clothing/under/rank/captain, /obj/item/aicard,\
 	/obj/item/clothing/shoes/magboots, /obj/item/areaeditor/blueprints, /obj/item/disk/nuclear,\
 	/obj/item/clothing/suit/space/nasavoid, /obj/item/tank)
 

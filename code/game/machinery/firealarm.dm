@@ -172,7 +172,7 @@
 
 		switch(buildstage)
 			if(2)
-				if(istype(W, /obj/item/device/multitool))
+				if(istype(W, /obj/item/multitool))
 					detecting = !detecting
 					if (src.detecting)
 						user.visible_message("[user] has reconnected [src]'s detecting unit!", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
@@ -221,8 +221,8 @@
 					update_icon()
 					return
 
-				else if(istype(W, /obj/item/device/electroadaptive_pseudocircuit))
-					var/obj/item/device/electroadaptive_pseudocircuit/P = W
+				else if(istype(W, /obj/item/electroadaptive_pseudocircuit))
+					var/obj/item/electroadaptive_pseudocircuit/P = W
 					if(!P.adapt_circuit(user, 15))
 						return
 					user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
@@ -287,9 +287,7 @@
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
-	for(var/area/RA in A.related)
-		RA.partyreset()
-	return
+	A.partyreset()
 
 /obj/machinery/firealarm/partyalarm/alarm()
 	if (stat & (NOPOWER|BROKEN))
@@ -298,9 +296,7 @@
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
-	for(var/area/RA in A.related)
-		RA.partyalert()
-	return
+	A.partyalert()
 
 /obj/machinery/firealarm/partyalarm/ui_data(mob/user)
 	. = ..()

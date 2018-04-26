@@ -345,16 +345,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	return moblist
 
-//E = MC^2
-/proc/convert2energy(M)
-	var/E = M*(SPEED_OF_LIGHT_SQ)
-	return E
-
-//M = E/C^2
-/proc/convert2mass(E)
-	var/M = E/(SPEED_OF_LIGHT_SQ)
-	return M
-
 // Format a power value in W, kW, MW, or GW.
 /proc/DisplayPower(powerused)
 	if(powerused < 1000) //Less than a kW
@@ -539,7 +529,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return assembled
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
-	if(!ignore_typecache)
+	if(!length(ignore_typecache))
 		return GetAllContents()
 	var/list/processing = list(src)
 	var/list/assembled = list()
@@ -736,21 +726,21 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return
 
 /proc/parse_zone(zone)
-	if(zone == "r_hand")
+	if(zone == BODY_ZONE_PRECISE_R_HAND)
 		return "right hand"
-	else if (zone == "l_hand")
+	else if (zone == BODY_ZONE_PRECISE_L_HAND)
 		return "left hand"
-	else if (zone == "l_arm")
+	else if (zone == BODY_ZONE_L_ARM)
 		return "left arm"
-	else if (zone == "r_arm")
+	else if (zone == BODY_ZONE_R_ARM)
 		return "right arm"
-	else if (zone == "l_leg")
+	else if (zone == BODY_ZONE_L_LEG)
 		return "left leg"
-	else if (zone == "r_leg")
+	else if (zone == BODY_ZONE_R_LEG)
 		return "right leg"
-	else if (zone == "l_foot")
+	else if (zone == BODY_ZONE_PRECISE_L_FOOT)
 		return "left foot"
-	else if (zone == "r_foot")
+	else if (zone == BODY_ZONE_PRECISE_R_FOOT)
 		return "right foot"
 	else
 		return zone
@@ -841,7 +831,7 @@ GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 Checks if that loc and dir has an item on the wall
 */
 GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
-	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,
+	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
@@ -1301,8 +1291,12 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 	if(!istype(C))
 		return
 
+	var/animate_color = initial(C.color)
+	var/datum/client_colour/CC = C.mob.client_colours[1]
+	if(CC)
+		animate_color = CC.colour
 	C.color = flash_color
-	animate(C, color = initial(C.color), time = flash_time)
+	animate(C, color = animate_color, time = flash_time)
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
@@ -1572,3 +1566,54 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 /proc/get_random_drink()
 	return pick(subtypesof(/obj/item/reagent_containers/food/drinks))
+
+//For these two procs refs MUST be ref = TRUE format like typecaches!
+/proc/weakref_filter_list(list/things, list/refs)
+	if(!islist(things) || !islist(refs))
+		return
+	if(!refs.len)
+		return things
+	if(things.len > refs.len)
+		var/list/f = list()
+		for(var/i in refs)
+			var/datum/weakref/r = i
+			var/datum/d = r.resolve()
+			if(d)
+				f |= d
+		return things & f
+
+	else
+		. = list()
+		for(var/i in things)
+			if(!refs[WEAKREF(i)])
+				continue
+			. |= i
+
+/proc/weakref_filter_list_reverse(list/things, list/refs)
+	if(!islist(things) || !islist(refs))
+		return
+	if(!refs.len)
+		return things
+	if(things.len > refs.len)
+		var/list/f = list()
+		for(var/i in refs)
+			var/datum/weakref/r = i
+			var/datum/d = r.resolve()
+			if(d)
+				f |= d
+
+		return things - f
+	else
+		. = list()
+		for(var/i in things)
+			if(refs[WEAKREF(i)])
+				continue
+			. |= i
+
+/proc/special_list_filter(list/L, datum/callback/condition)
+	if(!islist(L) || !length(L) || !istype(condition))
+		return list()
+	. = list()
+	for(var/i in L)
+		if(condition.Invoke(i))
+			. |= i

@@ -12,7 +12,7 @@
 				/datum/surgery_step/incise,
 				/datum/surgery_step/ground_nerves,
 				/datum/surgery_step/close)
-	possible_locs = list("chest")
+	possible_locs = list(BODY_ZONE_CHEST)
 	bioware_target = BIOWARE_NERVES
 
 /datum/surgery_step/ground_nerves

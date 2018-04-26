@@ -281,7 +281,7 @@
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/cafe)
 "bb" = (
-/obj/item/device/radio,
+/obj/item/radio,
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/maint)
 "bc" = (
@@ -743,7 +743,7 @@
 /area/awaymission/centcomAway/maint)
 "da" = (
 /obj/structure/table,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/centcomAway/hangar)
 "db" = (
@@ -832,7 +832,7 @@
 /area/awaymission/centcomAway/cafe)
 "dr" = (
 /obj/structure/table/reinforced,
-/obj/item/device/t_scanner,
+/obj/item/t_scanner,
 /turf/open/floor/plasteel/yellow/side,
 /area/awaymission/centcomAway/general)
 "ds" = (
@@ -1116,7 +1116,7 @@
 /area/awaymission/centcomAway/maint)
 "ez" = (
 /obj/structure/table,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "eA" = (
@@ -1839,7 +1839,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	pixel_y = 25
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -2473,8 +2473,8 @@
 /area/awaymission/centcomAway/hangar)
 "js" = (
 /obj/structure/table,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault,
 /area/awaymission/centcomAway/hangar)
 "jt" = (
@@ -2485,7 +2485,7 @@
 /area/awaymission/centcomAway/hangar)
 "ju" = (
 /obj/structure/table,
-/obj/item/device/mmi,
+/obj/item/mmi,
 /turf/open/floor/plasteel/vault,
 /area/awaymission/centcomAway/hangar)
 "jv" = (
@@ -2762,17 +2762,17 @@
 /area/awaymission/centcomAway/general)
 "kn" = (
 /obj/structure/table,
-/obj/item/device/flashlight/flare,
+/obj/item/flashlight/flare,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/centcomAway/hangar)
 "ko" = (
 /obj/structure/table,
-/obj/item/device/flashlight/flare,
+/obj/item/flashlight/flare,
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "kp" = (
 /obj/structure/table,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
 "kq" = (
@@ -2863,7 +2863,7 @@
 "kC" = (
 /obj/item/clipboard,
 /obj/structure/table,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /obj/item/stamp,
 /turf/open/floor/plasteel/vault{
 	dir = 1
@@ -2972,14 +2972,14 @@
 /area/space/nearstation)
 "kW" = (
 /obj/structure/table,
-/obj/item/device/paicard,
+/obj/item/paicard,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/awaymission/centcomAway/thunderdome)
 "kX" = (
 /obj/structure/table,
-/obj/item/device/camera,
+/obj/item/camera,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -3088,7 +3088,7 @@
 /area/awaymission/centcomAway/thunderdome)
 "lq" = (
 /obj/structure/table/wood,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plasteel/redyellow{
 	dir = 5
 	},
@@ -3209,7 +3209,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/centcomAway/thunderdome)
 "lK" = (
-/obj/machinery/igniter,
+/obj/machinery/igniter/on,
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},
@@ -3226,8 +3226,8 @@
 /area/awaymission/centcomAway/thunderdome)
 "lM" = (
 /obj/structure/table/reinforced,
-/obj/item/device/taperecorder,
-/obj/item/device/tape/random,
+/obj/item/taperecorder,
+/obj/item/tape/random,
 /turf/open/floor/plasteel{
 	icon_state = "floor"
 	},

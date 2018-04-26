@@ -125,14 +125,14 @@
 					msg += " and [t_his] soul has departed"
 		msg += "...</span>\n"
 
-	if(get_bodypart("head") && !getorgan(/obj/item/organ/brain))
+	if(get_bodypart(BODY_ZONE_HEAD) && !getorgan(/obj/item/organ/brain))
 		msg += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>\n"
 
 	var/temp = getBruteLoss() //no need to calculate each of these twice
 
 	msg += "<span class='warning'>"
 
-	var/list/missing = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
+	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		missing -= BP.body_zone
@@ -143,12 +143,12 @@
 	var/l_limbs_missing = 0
 	var/r_limbs_missing = 0
 	for(var/t in missing)
-		if(t=="head")
+		if(t==BODY_ZONE_HEAD)
 			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B><span class='warning'>\n"
 			continue
-		if(t == "l_arm" || t == "l_leg")
+		if(t == BODY_ZONE_L_ARM || t == BODY_ZONE_L_LEG)
 			l_limbs_missing++
-		else if(t == "r_arm" || t == "r_leg")
+		else if(t == BODY_ZONE_R_ARM || t == BODY_ZONE_R_LEG)
 			r_limbs_missing++
 
 		msg += "<B>[capitalize(t_his)] [parse_zone(t)] is missing!</B>\n"
@@ -318,6 +318,7 @@
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)
+	return msg
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!
 	var/list/dat = list()

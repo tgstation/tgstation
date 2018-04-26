@@ -18,8 +18,30 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "mvalve"
 
+	var/switching = FALSE
+	
+/obj/machinery/atmospherics/components/binary/valve/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/binary/valve/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
+
 /obj/machinery/atmospherics/components/binary/valve/open
 	open = TRUE
+	
+/obj/machinery/atmospherics/components/binary/valve/open/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/binary/valve/open/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/binary/valve/update_icon_nopipes(animation = 0)
 	normalize_dir()
@@ -50,13 +72,20 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	return
 
 /obj/machinery/atmospherics/components/binary/valve/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	add_fingerprint(usr)
 	update_icon_nopipes(1)
+	if(switching)
+		return
+	switching = TRUE
 	sleep(10)
 	if(open)
 		close()
-		return
-	open()
+	else
+		open()
+	switching = FALSE
 
 /obj/machinery/atmospherics/components/binary/valve/digital		// can be controlled by AI
 	name = "digital valve"
@@ -64,9 +93,19 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	icon_state = "dvalve_map"
 	valve_type = "d"
 	pipe_state = "dvalve"
+	
+/obj/machinery/atmospherics/components/binary/valve/digital/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/binary/valve/digital/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/binary/valve/digital/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/atmospherics/components/binary/valve/digital/update_icon_nopipes(animation)
 	if(!is_operational())

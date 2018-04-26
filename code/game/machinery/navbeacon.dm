@@ -89,7 +89,7 @@
 
 		updateicon()
 
-	else if (istype(I, /obj/item/card/id)||istype(I, /obj/item/device/pda))
+	else if (istype(I, /obj/item/card/id)||istype(I, /obj/item/pda))
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked
@@ -108,10 +108,9 @@
 /obj/machinery/navbeacon/attack_paw()
 	return
 
-/obj/machinery/navbeacon/attack_hand(mob/user)
-	interact(user, 0)
-
-/obj/machinery/navbeacon/interact(mob/user, ai = 0)
+/obj/machinery/navbeacon/ui_interact(mob/user)
+	. = ..()
+	var/ai = isAI(user)
 	var/turf/T = loc
 	if(T.intact)
 		return		// prevent intraction when T-scanner revealed
