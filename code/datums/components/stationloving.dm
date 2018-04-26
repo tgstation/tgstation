@@ -1,4 +1,5 @@
 /datum/component/stationloving
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/inform_admins = FALSE
 	var/disallow_soul_imbue = TRUE
 
@@ -10,6 +11,13 @@
 	RegisterSignal(list(COMSIG_ITEM_IMBUE_SOUL), .proc/check_soul_imbue)
 	src.inform_admins = inform_admins
 	check_in_bounds() // Just in case something is being created outside of station/centcom
+
+/datum/component/stationloving/InheritComponent(datum/component/stationloving/newc, original, list/arguments)
+	if (original)
+		if (istype(newc))
+			inform_admins = newc.inform_admins
+		else if (LAZYLEN(arguments))
+			inform_admins = isnull(arguments[arguments[1]]) ? arguments[1] : arguments[arguments[1]]
 
 /datum/component/stationloving/proc/relocate()
 	var/targetturf = find_safe_turf()

@@ -642,11 +642,7 @@
 	var/datum/component/stationloving/component = GetComponent(/datum/component/stationloving)
 
 	if(state)
-		if (!component)
-			AddComponent(/datum/component/stationloving, inform_admins)
-		else if (component.inform_admins != inform_admins)
-			AddComponent(/datum/component/stationloving, inform_admins)
-		return
+		AddComponent(/datum/component/stationloving, inform_admins)
 	else
 		qdel(component)
 
