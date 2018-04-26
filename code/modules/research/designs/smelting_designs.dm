@@ -21,7 +21,7 @@
 	name = "Plasma + Glass alloy"
 	id = "plasmaglass"
 	build_type = SMELTER
-	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT * 0.5, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/plasmaglass
 	category = list("initial")
 
@@ -29,7 +29,7 @@
 	name = "Plasma + Metal + Glass alloy"
 	id = "plasmareinforcedglass"
 	build_type = SMELTER
-	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT/2, MAT_METAL = MINERAL_MATERIAL_AMOUNT/4  MAT_GLASS = MINERAL_MATERIAL_AMOUNT) // metal divided by 4 due to rods being a quarter of metal
+	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT * 0.5, MAT_METAL = MINERAL_MATERIAL_AMOUNT * 0.5,  MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/plasmarglass
 	category = list("initial")
 
@@ -37,7 +37,7 @@
 	name = "Titanium + Glass alloy"
 	id = "titaniumglass"
 	build_type = SMELTER
-	materials = list(MAT_TITANIUM = MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_TITANIUM = MINERAL_MATERIAL_AMOUNT * 0.5, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/titaniumglass
 	category = list("initial")
 
@@ -45,7 +45,7 @@
 	name = "Plasma + Titanium + Glass alloy"
 	id = "plastitaniumglass"
 	build_type = SMELTER
-	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT/2, MAT_TITANIUM = MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT * 0.5, MAT_TITANIUM = MINERAL_MATERIAL_AMOUNT * 0.5, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/plastitaniumglass
 	category = list("initial")
 
