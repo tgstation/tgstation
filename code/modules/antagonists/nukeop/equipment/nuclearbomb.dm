@@ -530,6 +530,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 		loneop_event_weight_increase_chance += 0.1
 	else
 		lastlocation = newturf
+		loneop_event_weight_increase_chance = 0
 
 /obj/item/disk/nuclear/examine(mob/user)
 	. = ..()
