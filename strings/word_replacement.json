@@ -64,3 +64,78 @@
         "wine": "vino"
     }
 }
+
+{
+    "french": {
+		"yes": "oui"
+		"no": "non"
+        "I'm": "j'", 
+        "am": "un", 
+        "and": "et", 
+		"the": "l'"
+		"I": "j'"
+		"for": "pour"
+		"with": "avec"
+		"of": "de"
+		
+		
+        "assistant": "ravageur",
+        "assistants": "ravageurs",
+        "baby": [
+            "enfant", 
+            "petit baguette"
+        ], 
+        "bad": "mal", 
+        "bye": [
+            "bon voyage", 
+            "adieu"
+			"au revoir"
+        ], 
+		"cake": "gateau"
+        "captain": "capitaine", 
+		"changeling": "changeur"
+        "cheese": [
+            "brie", 
+            "roquefort"
+			"camembert"
+        ], 
+        "cook": "cuisinier", 
+        "dad": "papa", 
+        "enemy": "silly english dog", 
+        "friend": "ami", 
+        "good": "bon", 
+        "greytide": "apache", 
+        "greytider": "apache",
+        "greytiders": "apaches",
+        "hello": [
+            "'allo", 
+            "bonjour"
+        ],   
+        "meat": [
+            "coq au vin", 
+            "boeuf"
+        ], 
+        "mom": "mama", 
+        "my": "mon", 
+        "nuke": "grand bombe", 
+        "op": "boche", 
+        "operative": "boche", 
+        "operatives": "boches", 
+        "ops": "boches", 
+        "sec": "securite", 
+        "security": "securite", 
+        "shitcurity": "gendarmerie", 
+        "shitsec": "gendarmerie",  
+        "spaghetti": "macaroni", 
+        "spicy": "epice", 
+        "thanks": "merci",  
+		"tomato": "tomate"
+        "traitor": "collaborateur", 
+        "want": "envie", 
+        "what's": "quel est", 
+        "who's": "qui est",  
+        "why": "porquoi", 
+        "wine": "vin"
+		"wizard": "sorcier"
+    }
+}
