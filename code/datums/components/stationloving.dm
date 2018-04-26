@@ -5,6 +5,7 @@
 	if(!ismovableatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(list(COMSIG_MOVABLE_Z_CHANGED), .proc/check_in_bounds)
+	RegisterSignal(list(COMSIG_PARENT_PREQDELETED), .proc/check_deletion)
 	src.inform_admins = inform_admins
 	check_in_bounds() // Just in case something is being created outside of station/centcom
 
@@ -52,7 +53,7 @@
 
 	return FALSE
 
-/datum/component/stationloving/proc/check_deletion(force) // TRUE = proceed with deletion, FALSE = QDEL_HINT_LETMELIVE, handled in /atom/movable/Destroy()
+/datum/component/stationloving/proc/check_deletion(force) // TRUE = interrupt deletion, FALSE = proceed with deletion
 
 	var/turf/T = get_turf(parent)
 
@@ -65,5 +66,5 @@
 		log_game("[parent] has been destroyed in [COORD(T)]. Moving it to [COORD(targetturf)].")
 		if(inform_admins)
 			message_admins("[parent] has been destroyed in [ADMIN_COORDJMP(T)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
-		return FALSE
-	return TRUE
+		return TRUE
+	return FALSE

@@ -252,12 +252,6 @@
 
 /atom/movable/Destroy(force)
 
-	var/datum/component/stationloving/component = GetComponent(/datum/component/stationloving)
-
-	if(component)
-		if (!component.check_deletion(force))
-			return QDEL_HINT_LETMELIVE
-
 	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
 
