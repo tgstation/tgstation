@@ -95,31 +95,6 @@
 		var/newmatch = FALSE
 		var/client/C = GLOB.directory[ckey]
 		var/list/cachedban = SSstickyban.cache[bannedckey]
-		if (!CONFIG_GET(flag/ban_legacy_system) && (SSdbcore.Connect() || length(SSstickyban.dbcache)))
-			ban = get_stickyban_from_ckey(bannedckey)
-			var/list/bancache = list()
-
-			//we need to re-add exempted bans but the exempt code needs to return when a user is exempt
-			//	so we spawn now since bancache is a reference and will have the entries we add later.
-			spawn(1)
-				for(var/bancacheckey in bancache)
-					world.SetConfig("ban", bancacheckey, bancache[bancacheckey])
-
-			while (ban["ckey"] && ban["keys"] && ban["keys"][ckey] && ban["keys"][ckey]["exempt"])
-				if (C || SSstickyban.confirmed_exempt[ckey]) //When we re-add the stickyban isbanned() will run on that user again. This avoids the unintentional recursion.
-					return
-				bancache[ban["ckey"]] = world.GetConfig("ban", ban["ckey"])
-				//Hacky way to ensure somebody exempt from one stickyban doesn't get exempt from all stickybans
-				world.SetConfig("ban", ban["ckey"], null)
-				var/list/newban = ..()
-				if (!newban || newban["ckey"] == ban["ckey"])
-					SSstickyban.confirmed_exempt[ckey] = TRUE
-					return
-				if (!newban["ckey"])
-					ban = newban
-					break
-				ban = get_stickyban_from_ckey(ban["ckey"])
-
 		//rogue ban in the process of being reverted.
 		if (cachedban && (cachedban["reverting"] || cachedban["timeout"]))
 			world.SetConfig("ban", bannedckey, null)
@@ -139,17 +114,16 @@
 			var/list/newmatches_connected = cachedban["existing_user_matches_this_round"]
 			var/list/newmatches_admin = cachedban["admin_matches_this_round"]
 
-			pendingmatches[ckey] = ckey
+
 
 			if (C)
 				newmatches_connected[ckey] = ckey
 				newmatches_connected = cachedban["existing_user_matches_this_round"]
+				pendingmatches[ckey] = ckey
+				sleep(STICKYBAN_ROGUE_CHECK_TIME)
+				pendingmatches -= ckey
 			if (admin)
 				newmatches_admin[ckey] = ckey
-
-			sleep(STICKYBAN_ROGUE_CHECK_TIME)
-
-			pendingmatches -= ckey
 
 			if (cachedban["reverting"] || cachedban["timeout"])
 				return null

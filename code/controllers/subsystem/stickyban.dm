@@ -87,9 +87,9 @@ SUBSYSTEM_DEF(stickyban)
 		var/ban = newdbcache[query_stickyban_matches.item[1]]
 		if (!ban)
 			continue
-		var/keys = ban["keys"]
+		var/keys = ban[query_stickyban_matches.item[4] ? "whitelist" : "keys"]
 		if (!keys)
-			keys = ban["keys"] = list()
+			keys = ban[query_stickyban_matches.item[4] ? "whitelist" : "keys"] = list()
 		keys[query_stickyban_matches.item[2]] = match
 
 	dbcache = newdbcache
@@ -107,18 +107,28 @@ SUBSYSTEM_DEF(stickyban)
 	if (!query_create_stickyban.warn_execute())
 		return
 
+	var/list/sqlkeys = list()
+
 	if (ban["keys"])
 		var/list/keys = splittext(ban["keys"], ",")
-		var/l = length(keys)
-		var/list/sqlkeys = new (l)
-		for (var/i in 1 to l)
-			var/key = keys[i]
+		for (var/key in keys)
 			var/list/sqlkey = list()
 			sqlkey["stickyban"] = "'[sanitizeSQL(ckey)]'"
 			sqlkey["matched_ckey"] = "'[sanitizeSQL(ckey(key))]'"
-			sqlkeys[i] = sqlkey
-		if (length(sqlkeys))
-			SSdbcore.MassInsert(format_table_name("stickyban_matched_ckey"), sqlkeys, FALSE, TRUE)
+			sqlkey["exempt"] = FALSE
+			sqlkeys += sqlkey
+
+	if (ban["whitelist"])
+		var/list/keys = splittext(ban["whitelist"], ",")
+		for (var/key in keys)
+			var/list/sqlkey = list()
+			sqlkey["stickyban"] = "'[sanitizeSQL(ckey)]'"
+			sqlkey["matched_ckey"] = "'[sanitizeSQL(ckey(key))]'"
+			sqlkey["exempt"] = TRUE
+			sqlkeys += sqlkey
+
+	if (length(sqlkeys))
+		SSdbcore.MassInsert(format_table_name("stickyban_matched_ckey"), sqlkeys, FALSE, TRUE)
 
 
 	return TRUE
