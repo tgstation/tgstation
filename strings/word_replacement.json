@@ -1,4 +1,5 @@
 {
+	{
     "italian": {
         "I'm": "I'm-a", 
         "am": "am-a", 
@@ -62,21 +63,22 @@
         "whose": "whose-a", 
         "why": "for-a what reason", 
         "wine": "vino"
-    }
-}
-
+		}
+	}
+	{
 
     "french": {
-		"yes": "oui"
-		"no": "non"
+		"yes": "oui",
+		"no": "non",
         "I'm": "j'", 
-        "am": "un", 
+        "am": "suis", 
+		"a": "un",
         "and": "et", 
-		"the": "l'"
-		"I": "j'"
-		"for": "pour"
-		"with": "avec"
-		"of": "de"
+		"the": "l'",
+		"I": "j'",
+		"for": "pour",
+		"with": "avec",
+		"of": "de",
 		
 		
         "assistant": "ravageur",
@@ -88,12 +90,12 @@
         "bad": "mal", 
         "bye": [
             "bon voyage", 
-            "adieu"
+            "adieu",
 			"au revoir"
         ], 
-		"cake": "gateau"
+		"cake": "gateau",
         "captain": "capitaine", 
-		"changeling": "changeur"
+		"changeling": "changeur",
         "cheese": [
             "brie", 
             "roquefort"
@@ -135,7 +137,8 @@
         "what's": "quel est", 
         "who's": "qui est",  
         "why": "porquoi", 
-        "wine": "vin"
+        "wine": "vin",
 		"wizard": "sorcier"
-    }
+		}
+	}
 }
