@@ -326,7 +326,7 @@
 /obj/item/clothing/head/frenchberet
 	name = "french beret"
 	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage military conflict, for some reason."
-	icon_state = "white beret"
+	icon_state = "beretblack"
 
 /obj/item/clothing/mask/frenchberet/speechModification(M)
 	if(copytext(M, 1, 2) != "*")
