@@ -523,11 +523,11 @@ This is here to make the tiles around the station mininuke change when it's arme
 		return
 	var/turf/newturf = get_turf(src)
 	if(istype(newturf) && lastlocation == newturf)
-		if(prob(loneop_event_weight_increase_chance))
+		if(loneop_event_weight_increase_chance > 5 && prob(loneop_event_weight_increase_chance - 5))
 			var/datum/round_event_control/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 			if(loneop)
 				loneop.weight += 1
-		loneop_event_weight_increase_chance += 0.1
+		loneop_event_weight_increase_chance += 0.01
 	else
 		lastlocation = newturf
 		loneop_event_weight_increase_chance = 0
