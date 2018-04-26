@@ -21,8 +21,16 @@
 	name = "Plasma + Glass alloy"
 	id = "plasmaglass"
 	build_type = SMELTER
-	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/plasmaglass
+	category = list("initial")
+
+/datum/design/plasmarglass_alloy
+	name = "Plasma + Metal + Glass alloy"
+	id = "plasmareinforcedglass"
+	build_type = SMELTER
+	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT/2, MAT_METAL = MINERAL_MATERIAL_AMOUNT/4  MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
+	build_path = /obj/item/stack/sheet/plasmarglass
 	category = list("initial")
 
 /datum/design/titaniumglass_alloy
