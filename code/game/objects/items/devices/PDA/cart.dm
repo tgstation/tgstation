@@ -207,8 +207,6 @@
 
 	frequency.post_signal(src, status_signal)
 
-#define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
-
 /obj/item/cartridge/proc/generate_menu(mob/user)
 	if(!host_pda)
 		return
@@ -716,5 +714,3 @@ Code:
 
 //This is called for special abilities of cartridges
 /obj/item/cartridge/proc/special(mov/living/user, list/params)
-
-#undef PDAIMG

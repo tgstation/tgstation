@@ -169,8 +169,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return attack_self(M)
 	return ..()
 
-#define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
-
 /obj/item/pda/attack_self(mob/user)
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
@@ -369,8 +367,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	user << browse(dat, "window=pda;size=400x450;border=1;can_resize=1;can_minimize=0")
 	onclose(user, "pda", src)
-
-#undef PDAIMG
 
 /obj/item/pda/Topic(href, href_list)
 	..()
