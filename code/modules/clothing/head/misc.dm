@@ -331,7 +331,7 @@
 /obj/item/clothing/mask/frenchberet/speechModification(M)
 	if(copytext(M, 1, 2) != "*")
 		M = " [M]"
-		var/list/french_words = strings("word_replacement.json", "french")
+		var/list/french_words = strings("french_replacement.json", "french")
 
 		for(var/key in french_words)
 			var/value = french_words[key]
