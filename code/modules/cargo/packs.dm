@@ -144,27 +144,17 @@
 
 /datum/supply_pack/emergency/syndicate
 	name = "NULL_ENTRY"
-	desc = "(#@&^$THIS PACKAGE CONTAINS 30TC WORTH OF SOME RANDOM SYNDICATE GEAR WE HAD LYING AROUND THE WAREHOUSE. GIVE EM HELL, OPERATIVE@&!*() "
+	desc = "(#@&^$THIS PACKAGE CONTAINS 100TC WORTH OF PURE ENTERTAINMENT FOR THE WHOLE CREW. GIVE EM HELL, OPERATIVE@&!*() "
 	hidden = TRUE
 	cost = 20000
-	contains = list()
+	contains = list(/obj/item/toy/syndicateballoon,
+					/obj/item/toy/syndicateballoon,
+					/obj/item/toy/syndicateballoon,
+					/obj/item/toy/syndicateballoon,
+					/obj/item/toy/syndicateballoon)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 	dangerous = TRUE
-
-/datum/supply_pack/emergency/syndicate/fill(obj/structure/closet/crate/C)
-	var/crate_value = 30
-	var/list/uplink_items = get_uplink_items(SSticker.mode)
-	while(crate_value)
-		var/category = pick(uplink_items)
-		var/item = pick(uplink_items[category])
-		var/datum/uplink_item/I = uplink_items[category][item]
-		if(!I.surplus_nullcrates || prob(100 - I.surplus_nullcrates))
-			continue
-		if(crate_value < I.cost)
-			continue
-		crate_value -= I.cost
-		new I.item(C)
 
 /datum/supply_pack/emergency/plasmaman
 	name = "Plasmaman Supply Kit"
@@ -765,7 +755,7 @@
 	crate_name = "supermatter shard crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
-	
+
 /datum/supply_pack/engineering/engine/tesla_coils
 	name = "Tesla Coil Crate"
 	desc = "Whether it's high-voltage executions, creating research points, or just plain old power generation: This pack of four Tesla coils can do it all!"
