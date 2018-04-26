@@ -1,11 +1,13 @@
 /datum/component/stationloving
 	var/inform_admins = FALSE
+	var/disallow_soul_imbue = TRUE
 
 /datum/component/stationloving/Initialize(inform_admins = FALSE)
 	if(!ismovableatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(list(COMSIG_MOVABLE_Z_CHANGED), .proc/check_in_bounds)
 	RegisterSignal(list(COMSIG_PARENT_PREQDELETED), .proc/check_deletion)
+	RegisterSignal(list(COMSIG_ITEM_TRY_IMBUE_SOUL), .proc/check_soul_imbue)
 	src.inform_admins = inform_admins
 	check_in_bounds() // Just in case something is being created outside of station/centcom
 
@@ -38,6 +40,9 @@
 		log_game("[parent] has been moved out of bounds in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
 		if(inform_admins)
 			message_admins("[parent] has been moved out of bounds in [ADMIN_COORDJMP(currentturf)]. Moving it to [ADMIN_COORDJMP(targetturf)].")
+
+/datum/component/stationloving/proc/check_soul_imbue()
+	return disallow_soul_imbue
 
 /datum/component/stationloving/proc/in_bounds()
 	var/static/list/allowed_shuttles = typecacheof(list(/area/shuttle/syndicate, /area/shuttle/escape, /area/shuttle/pod_1, /area/shuttle/pod_2, /area/shuttle/pod_3, /area/shuttle/pod_4))
