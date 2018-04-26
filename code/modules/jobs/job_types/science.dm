@@ -129,3 +129,13 @@ Roboticist
 	satchel = /obj/item/storage/backpack/satchel/tox
 
 	pda_slot = slot_l_store
+	
+/datum/job/roboticist/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	H.grant_language(/datum/language/drone)
+	H.grant_language(/datum/language/machine)
+	H.grant_language(/datum/language/swarmer)
