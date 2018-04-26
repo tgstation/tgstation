@@ -328,7 +328,7 @@
 	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage military conflict, for some reason."
 	icon_state = "beretblack"
 
-/obj/item/clothing/mask/frenchberet/speechModification(M)
+/obj/item/clothing/head/frenchberet/speechModification(M)
 	if(copytext(M, 1, 2) != "*")
 		M = " [M]"
 		var/list/french_words = strings("french_replacement.json", "french")
