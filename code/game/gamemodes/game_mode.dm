@@ -195,12 +195,12 @@
 
 
 /datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
+	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
+		return TRUE
 	if(!SSticker.setup_done || !gamemode_ready)
 		return FALSE
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
-	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
-		return TRUE
 	if(station_was_nuked)
 		return TRUE
 	var/list/continuous = CONFIG_GET(keyed_flag_list/continuous)
