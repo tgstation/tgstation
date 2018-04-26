@@ -8,7 +8,7 @@ env:
     - BYOND_MAJOR="512"
     - BYOND_MINOR="1418"
     - NODE_VERSION="4"
-    - RUST_G_VERSION="7ad78fbc918541bc0fbc17a85c3a0ccac59fcb21"
+    - RUST_G_VERSION="0.3.0"
     - BUILD_TOOLS=false
     - BUILD_TESTING=false
     - DM_MAPFILE="loadallmaps"
