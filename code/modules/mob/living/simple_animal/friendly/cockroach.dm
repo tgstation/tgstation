@@ -61,7 +61,7 @@
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 	beauty = -300
 
-/mob/living/simple_animal/fly
+/mob/living/simple_animal/hostile/fly
 	name = "fly"
 	desc = "We went to space to escape flies, but they always seem to find us."
 	icon_state = "fly-10"
@@ -97,11 +97,11 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	search_objects = 1 //have to find those plant trays!
 
-/mob/living/simple_animal/fly/Initialize()
+/mob/living/simple_animal/hostile/fly/Initialize()
 	. = ..()
 	AddComponent(/datum/component/swarming)
 
-/mob/living/simple_animal/fly/time
+/mob/living/simple_animal/hostile/fly/time
 	name = "time fly"
 	desc = "Radiation seems to have given this swarm of flies a jump to the left and a step to the.... oh you get the idea!"
 	icon_state = "timefly-10"
@@ -110,10 +110,10 @@
 	var/obj/effect/proc_holder/spell/targeted/timewarp/twarp
 	var/datum/action/innate/timewarp/twarpself
 
-/mob/living/simple_animal/fly/time/Initialize()
+/mob/living/simple_animal/hostile/fly/time/Initialize()
 	twarp = new
 
-/mob/living/simple_animal/fly/time/AttackingTarget()
+/mob/living/simple_animal/hostile/fly/time/AttackingTarget()
 	. = ..()
 	if(. && isliving(target))
 		var/mob/living/L = target
