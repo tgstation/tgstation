@@ -34,33 +34,47 @@
             "roquefort",
 			"camembert"
         ], 
+		"cigarette": "clope",
         "cook": "cuisinier", 
         "dad": "papa", 
         "enemy": "silly english dog", 
         "friend": "ami", 
         "good": "bon", 
-        "greytide": "apache", 
-        "greytider": "apache",
-        "greytiders": "apaches",
+        "greytide": "les gitans", 
+        "greytider": "les gitans",
+        "greytiders": "les gitans",
+		"hardsuit": "burkini",
         "hello": [
             "'allo", 
-            "bonjour"
-        ],   
+            "bonjour",
+			"salut"
+        ], 
+		"maint": "les banlieues",
         "meat": [
             "coq au vin", 
             "boeuf"
         ], 
-        "mom": "mama", 
+        "mom": "maman", 
         "my": "mon", 
-        "nuke": "grand bombe", 
+        "nuke": [
+			"grand bombe", 
+			"la baguette ultime"
+		],
         "op": "boche", 
         "operative": "boche", 
         "operatives": "boches", 
         "ops": "boches", 
         "sec": "securite", 
         "security": "securite", 
-        "shitcurity": "gendarmerie", 
-        "shitsec": "gendarmerie",  
+		"shit": "merde",
+        "shitcurity": [
+			"gendarmerie",
+			"les keufs"
+		],
+        "shitsec": [
+			"gendarmerie",
+			"les keufs"
+		],
         "spaghetti": "macaroni", 
         "spicy": "epice", 
         "thanks": "merci",  
@@ -73,4 +87,5 @@
         "wine": "vin",
 		"wizard": "sorcier"
 		}
-	}
+		
+}
