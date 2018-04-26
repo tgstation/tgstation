@@ -501,6 +501,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/fake = FALSE
+	var/turf/lastlocation
+	var/loneop_event_weight_increase_chance
 
 /obj/item/disk/nuclear/Initialize()
 	. = ..()
@@ -511,8 +513,23 @@ This is here to make the tiles around the station mininuke change when it's arme
 	else
 		GLOB.poi_list |= src
 		tell_the_admins = TRUE
+		START_PROCESSING(SSobj, src)
 
 	set_stationloving(TRUE, inform_admins=tell_the_admins)
+
+/obj/item/disk/nuclear/process()
+	if(fake)
+		STOP_PROCESSING(SSobj, src)
+		return
+	var/turf/newturf = get_turf(src)
+	if(istype(newturf) && lastlocation == newturf)
+		if(prob(loneop_event_weight_increase_chance))
+			var/datum/round_event_control/loneop = locate(/datum/round_event_control/operative) in SSevents.control
+			if(loneop)
+				loneop.weight += 1
+		loneop_event_weight_increase_chance += 0.1
+	else
+		lastlocation = newturf
 
 /obj/item/disk/nuclear/examine(mob/user)
 	. = ..()
