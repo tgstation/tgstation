@@ -1284,7 +1284,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
+/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, params, datum/martial_art/attacker_style)
 	if(!istype(M))
 		return
 	CHECK_DNA_AND_SPECIES(M)

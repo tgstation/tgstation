@@ -4,7 +4,7 @@
 
 	Otherwise pretty standard.
 */
-/mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
+/mob/living/carbon/human/UnarmedAttack(atom/A, proximity, params)
 
 	if(!has_active_hand()) //can't attack without a hand.
 		to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")
@@ -26,10 +26,10 @@
 		return
 
 	SendSignal(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
-	A.attack_hand(src)
+	A.attack_hand(src, params)
 
 //Return TRUE to cancel other attack hand effects that respect it.
-/atom/proc/attack_hand(mob/user)
+/atom/proc/attack_hand(mob/user, params)
 	. = FALSE
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
@@ -80,14 +80,35 @@
 /mob/living/carbon/RestrainedClickOn(atom/A)
 	return 0
 
-/mob/living/carbon/human/RangedAttack(atom/A, mouseparams)
+/mob/living/carbon/human/RangedAttack(atom/A, params)
+	params = params2list(params)
+	if(!has_active_hand())
+		to_chat(src, "<span class='notice'>You ponder your life choices and sigh.</span>")
+		return
+
+	if(incapacitated())
+		to_chat(src, "<span class='warning'>You are incapacitated!</span>")
+		return
+
+	if(params["right"])
+		switch(a_intent)
+			if(INTENT_HELP)
+				visible_message("<span class='notice'>[src] waves to [A].</span>", "<span class='notice'>You wave to [A].</span>")
+			if(INTENT_DISARM)
+				visible_message("<span class='notice'>[src] shoos away [A].</span>", "<span class='notice'>You shoo away [A].</span>")
+			if(INTENT_GRAB)
+				visible_message("<span class='notice'>[src] beckons [A] to come.</span>", "<span class='notice'>You beckon [A] to come.</span>") //This sounds lewder than it actually is. Fuck.
+			if(INTENT_HARM)
+				visible_message("<span class='notice'>[src] shakes [p_their()] fist at [A].</span>", "<span class='notice'>You shake your fist at [A].</span>")
+		return
+
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
 		if(istype(G) && G.Touch(A,0)) // for magic gloves
 			return
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_ranged_attack(src, A, mouseparams)
+		HM.on_ranged_attack(src, A, params)
 
 	if(isturf(A) && get_dist(src,A) <= 1)
 		src.Move_Pulled(A)

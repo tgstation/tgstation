@@ -45,6 +45,8 @@
 	var/obj/screen/internals
 	var/obj/screen/mood
 
+	var/obj/screen/combat_mode
+
 	var/ui_style_icon = 'icons/mob/screen_midnight.dmi'
 
 /datum/hud/New(mob/owner , ui_style = 'icons/mob/screen_midnight.dmi')

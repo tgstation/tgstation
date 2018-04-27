@@ -138,6 +138,14 @@
 	if(client && hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_on"
 
+/mob/living/carbon/proc/toggle_combat_mode()
+	combat_mode = !combat_mode
+	playsound_local(soundin = combat_mode? 'sound/effects/ui_toggle.ogg' : 'sound/effects/ui_toggleoff.ogg', vol = 100)
+	if(client)
+		client.show_popup_menus = !combat_mode
+		if(hud_used)
+			hud_used.combat_mode.update_icon(src)
+
 /mob/proc/throw_item(atom/target)
 	return
 
