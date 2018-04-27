@@ -480,7 +480,7 @@
 			H.attack_self(owner)
 			return
 	var/obj/item/I = target
-	if(owner.can_equip(I, slot_hands))
+	if(owner.can_equip(I, SLOT_HANDS))
 		owner.temporarilyRemoveItemFromInventory(I)
 		owner.put_in_hands(I)
 		I.attack_self(owner)

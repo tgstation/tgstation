@@ -189,7 +189,7 @@
 		if(M == user && contents.len > 0 && !user.wear_mask)
 			var/obj/item/clothing/mask/cigarette/W = cig
 			SendSignal(COMSIG_TRY_STORAGE_TAKE, W, M)
-			M.equip_to_slot_if_possible(W, slot_wear_mask)
+			M.equip_to_slot_if_possible(W, SLOT_WEAR_MASK)
 			contents -= W
 			to_chat(user, "<span class='notice'>You take a [icon_type] out of the pack.</span>")
 		else

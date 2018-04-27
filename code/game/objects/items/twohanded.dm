@@ -41,7 +41,7 @@
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
-	if(user.get_item_by_slot(slot_back) == src)
+	if(user.get_item_by_slot(SLOT_BACK) == src)
 		user.update_inv_back()
 	else
 		user.update_inv_hands()
@@ -191,7 +191,7 @@
 			return
 		qdel(O)
 		return
-	if(slot == slot_hands)
+	if(slot == SLOT_HANDS)
 		wield(user)
 	else
 		unwield(user)

@@ -30,59 +30,59 @@
 #define ITEM_SLOT_NECK			(1<<13)
 
 //SLOTS
-#define slot_back			1
-#define slot_wear_mask		2
-#define slot_handcuffed		3
-#define slot_hands			4 //wherever you provide a slot for hands you provide slot_hands
-								//slot_hands as a slot will pick ANY available hand
-#define slot_belt			5
-#define slot_wear_id		6
-#define slot_ears			7
-#define slot_glasses		8
-#define slot_gloves			9
-#define slot_neck			10
-#define slot_head			11
-#define slot_shoes			12
-#define slot_wear_suit		13
-#define slot_w_uniform		14
-#define slot_l_store		15
-#define slot_r_store		16
-#define slot_s_store		17
-#define slot_in_backpack	18
-#define slot_legcuffed		19
-#define slot_generic_dextrous_storage	20
+#define SLOT_BACK			1
+#define SLOT_WEAR_MASK		2
+#define SLOT_HANDCUFFED		3
+#define SLOT_HANDS			4 //wherever you provide a slot for hands you provide SLOT_HANDS
+								//SLOT_HANDS as a slot will pick ANY available hand
+#define SLOT_BELT			5
+#define SLOT_WEAR_ID		6
+#define SLOT_EARS			7
+#define SLOT_GLASSES		8
+#define SLOT_GLOVES			9
+#define SLOT_NECK			10
+#define SLOT_HEAD			11
+#define SLOT_SHOES			12
+#define SLOT_WEAR_SUIT		13
+#define SLOT_W_UNIFORM		14
+#define SLOT_L_STORE		15
+#define SLOT_R_STORE		16
+#define SLOT_S_STORE		17
+#define SLOT_IN_BACKPACK	18
+#define SLOT_LEGCUFFED		19
+#define SLOT_GENERC_DEXTROUS_STORAGE	20
 
-#define slots_amt			20 // Keep this up to date!
+#define SLOTS_AMT			20 // Keep this up to date!
 
 //I hate that this has to exist
 /proc/slotdefine2slotbit(slotdefine) //Keep this up to date with the value of SLOT BITMASKS and SLOTS (the two define sections above)
 	. = 0
 	switch(slotdefine)
-		if(slot_back)
+		if(SLOT_BACK)
 			. = ITEM_SLOT_BACK
-		if(slot_wear_mask)
+		if(SLOT_WEAR_MASK)
 			. = ITEM_SLOT_MASK
-		if(slot_neck)
+		if(SLOT_NECK)
 			. = ITEM_SLOT_NECK
-		if(slot_belt)
+		if(SLOT_BELT)
 			. = ITEM_SLOT_BELT
-		if(slot_wear_id)
+		if(SLOT_WEAR_ID)
 			. = ITEM_SLOT_ID
-		if(slot_ears)
+		if(SLOT_EARS)
 			. = ITEM_SLOT_EARS
-		if(slot_glasses)
+		if(SLOT_GLASSES)
 			. = ITEM_SLOT_EYES
-		if(slot_gloves)
+		if(SLOT_GLOVES)
 			. = ITEM_SLOT_GLOVES
-		if(slot_head)
+		if(SLOT_HEAD)
 			. = ITEM_SLOT_HEAD
-		if(slot_shoes)
+		if(SLOT_SHOES)
 			. = ITEM_SLOT_FEET
-		if(slot_wear_suit)
+		if(SLOT_WEAR_SUIT)
 			. = ITEM_SLOT_OCLOTHING
-		if(slot_w_uniform)
+		if(SLOT_W_UNIFORM)
 			. = ITEM_SLOT_ICLOTHING
-		if(slot_l_store, slot_r_store)
+		if(SLOT_L_STORE, SLOT_R_STORE)
 			. = ITEM_SLOT_POCKET
 
 

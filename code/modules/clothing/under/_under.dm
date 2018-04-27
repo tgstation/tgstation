@@ -65,7 +65,7 @@
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
-	if(attached_accessory && slot != slot_hands && ishuman(user))
+	if(attached_accessory && slot != SLOT_HANDS && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		attached_accessory.on_uniform_equip(src, user)
 		if(attached_accessory.above_suit)
