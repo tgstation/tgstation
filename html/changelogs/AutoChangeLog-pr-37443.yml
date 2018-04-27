@@ -1,4 +1,0 @@
-author: "Kor"
-delete-after: True
-changes: 
-  - rscadd: "Added the Bureaucratic Error event, which replaces the overflow role with a random job."

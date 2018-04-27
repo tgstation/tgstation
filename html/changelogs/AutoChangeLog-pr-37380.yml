@@ -1,6 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "RPEDs will no longer display machine contents twice."
-  - bugfix: "RPED can no longer hold everything."
-  - refactor: "Moves all the logic for exchanging parts into the RPEDs instead of having checks in every attack_by."
