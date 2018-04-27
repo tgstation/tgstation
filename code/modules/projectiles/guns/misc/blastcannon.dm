@@ -109,7 +109,7 @@
 
 /obj/item/projectile/blastwave/Range()
 	..()
-	var/amount_destruction = 0
+	var/amount_destruction = EXPLODE_NONE
 	if(heavyr)
 		amount_destruction = EXPLODE_DEVASTATE
 	else if(mediumr)
