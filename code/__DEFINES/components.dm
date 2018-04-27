@@ -82,6 +82,11 @@
 #define COMSIG_MOVABLE_UNBUCKLE "unbuckle"							//from base of atom/movable/unbuckle_mob(): (mob, force)
 #define COMSIG_MOVABLE_THROW "movable_throw"					//from base of atom/movable/throw_at(): (datum/thrownthing, spin)
 
+// /mob/living signals
+#define COMSIG_LIVING_RESIST "living_resist"					//from base of mob/living/resist() (/mob/living)
+#define COMSIG_LIVING_IGNITED "living_ignite"					//from base of mob/living/IgniteMob() (/mob/living)
+#define COMSIG_LIVING_EXTINGUISHED "living_extinguished"		//from base of mob/living/ExtinguishMob() (/mob/living)
+
 // /obj signals
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"				//from base of obj/deconstruct(): (disassembled)
 
@@ -108,6 +113,11 @@
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
 #define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"	//Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
+#define COMSIG_HUMAN_RANGED_ATTACK "human_ranged_attack"		//from /mob/living/carbon/human/RangedAttack(): (atom/target)
+
+// /mob/living/carbon signals
+#define COMSIG_CARBON_THROW_ITEM "carbon_throw_item"			//from /mob/living/carbon/throw_item(): (obj/item/I, atom/target)
+	#define COMPONENT_STOP_THROW 1								//Stops the item from successfully being thrown, but still removes throwing state.
 
 /*******Component Specific Signals*******/
 //Janitor

@@ -623,6 +623,7 @@
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
+	SendSignal(COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
 	if(!restrained(ignore_grab = 1) && pulledby)
 		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
@@ -941,6 +942,7 @@
 		new/obj/effect/dummy/fire(src)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
+		SendSignal(COMSIG_LIVING_IGNITED,src)
 		return TRUE
 	return FALSE
 
@@ -952,6 +954,7 @@
 			qdel(F)
 		clear_alert("fire")
 		SendSignal(COMSIG_CLEAR_MOOD_EVENT, "on_fire")
+		SendSignal(COMSIG_LIVING_EXTINGUISHED, src)
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person

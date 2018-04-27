@@ -390,15 +390,21 @@ Charged extracts:
 		to_chat(user, "<span class='warning'>You can't drink the love potion. What are you, a narcissist?</span>")
 		return ..()
 
+	if(M.has_status_effect(STATUS_EFFECT_INLOVE))
+		to_chat(user, "<span class='warning'>[M] is already lovestruck!</span>")
+		return ..()
+
 	M.visible_message("<span class='danger'>[user] starts to feed [M] a love potion!</span>",
 		"<span class='userdanger'>[user] starts to feed you a love potion!</span>")
 
 	if(!do_after(user, 50, target = M))
 		return
 	to_chat(user, "<span class='notice'>You feed [M] the love potion!</span>")
-	to_chat(M, "<span class='notice'>You develop feelings for [user], and anyone [p_they(user)] like.</span>")
+	var/is_lovey = pick("seems a lot more cute", "looks lighter and softer", "is someone you'd want to be around", "seems quite cuddly", "looks happy to see you")
+	to_chat(M, "<span class='notice'>You feel a slight flush, and suddenly [user] [is_lovey].</span>")
+	M.apply_status_effect(STATUS_EFFECT_INLOVE, user)
 	if(!("[REF(user)]" in M.faction) && M.mind)
-		M.mind.store_memory("You have strong feelings for [user].")
+		M.mind.store_memory("You are in love with [user].")
 	M.faction |= "[REF(user)]"
 	qdel(src)
 
