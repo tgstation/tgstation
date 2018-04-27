@@ -235,6 +235,8 @@
 		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 		return FALSE
 	for(var/obj/AM in T)
+		if(istype(AM,/obj/structure/grille))
+			continue
 		if(istype(AM,/obj/structure/table))
 			continue
 		if(AM.density)
