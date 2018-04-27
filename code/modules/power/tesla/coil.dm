@@ -56,9 +56,6 @@
 	if(default_deconstruction_screwdriver(user, "coil_open[anchored]", "coil[anchored]", W))
 		return
 
-	if(exchange_parts(user, W))
-		return
-
 	if(default_unfasten_wrench(user, W))
 		return
 
@@ -167,9 +164,6 @@
 
 /obj/machinery/power/grounding_rod/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grounding_rod_open[anchored]", "grounding_rod[anchored]", W))
-		return
-
-	if(exchange_parts(user, W))
 		return
 
 	if(default_unfasten_wrench(user, W))
