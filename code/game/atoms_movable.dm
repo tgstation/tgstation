@@ -615,37 +615,6 @@
 		animate(src, pixel_y = initial(pixel_y), time = 10)
 		floating = FALSE
 
-/* Stationloving
-*
-* A stationloving atom will always teleport back to the station
-* if it ever leaves the station z-levels or CentCom. It will also,
-* when Destroy() is called, will teleport to a random turf on the
-* station.
-*
-* The turf is guaranteed to be "safe" for normal humans, probably.
-* If the station is SUPER SMASHED UP, it might not work.
-*
-* Here are some important procs:
-* relocate()
-* moves the atom to a safe turf on the station
-*
-* check_in_bounds()
-* regularly called and checks if `in_bounds()` returns true. If false, it
-* triggers a `relocate()`.
-*
-* in_bounds()
-* By default, checks that the atom's z is the station z or centcom.
-*/
-
-/atom/movable/proc/set_stationloving(state, inform_admins=FALSE)
-
-	var/datum/component/stationloving/component = GetComponent(/datum/component/stationloving)
-
-	if(state)
-		AddComponent(/datum/component/stationloving, inform_admins)
-	else
-		qdel(component)
-
 /* Language procs */
 /atom/movable/proc/get_language_holder(shadow=TRUE)
 	if(language_holder)
