@@ -1,0 +1,12 @@
+/obj/vehicle/examine(mob/user)
+	..()
+	if(resistance_flags & ON_FIRE)
+		to_chat(user, "<span class='warning'>It's on fire!</span>")
+	var/healthpercent = obj_integrity/max_integrity * 100
+	switch(healthpercent)
+		if(50 to 99)
+			to_chat(user,  "It looks slightly damaged.")
+		if(25 to 50)
+			to_chat(user,  "It appears heavily damaged.")
+		if(0 to 25)
+			to_chat(user,  "<span class='warning'>It's falling apart!</span>")

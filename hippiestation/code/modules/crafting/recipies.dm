@@ -51,3 +51,11 @@
 	time = 100
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/wheelchair
+	name = "Wheelchair"
+	result = /obj/vehicle/ridden/wheelchair
+	reqs = list(/obj/item/stack/sheet/metal = 4,
+				/obj/item/stack/rods = 6)
+	time = 100
+	category = CAT_MISC
