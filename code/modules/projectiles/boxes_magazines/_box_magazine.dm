@@ -2,7 +2,6 @@
 /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"
 	desc = "A box of ammo."
-	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
