@@ -234,17 +234,18 @@
 	if(R.one_per_turf && (locate(R.result_type) in T))
 		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 		return FALSE
-	for(var/obj/AM in T)
-		if(istype(AM,/obj/structure/grille))
-			continue
-		if(istype(AM,/obj/structure/table))
-			continue
-		if(AM.density)
-			to_chat(usr, "<span class='warning'>There is a [AM.name] blocking you cant fit a [R.title] here!</span>")
+	if(R.on_floor)
+		if(!isfloorturf(T))
+			to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
 			return FALSE
-	if(R.on_floor && !isfloorturf(T))
-		to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
-		return FALSE
+		for(var/obj/AM in T)
+			if(istype(AM,/obj/structure/grille))
+				continue
+			if(istype(AM,/obj/structure/table))
+				continue
+			if(AM.density)
+				to_chat(usr, "<span class='warning'>There is a [AM.name] blocking you cant fit a [R.title] here!</span>")
+				return FALSE
 	if(R.placement_checks)
 		switch(R.placement_checks)
 			if(STACK_CHECK_CARDINALS)
