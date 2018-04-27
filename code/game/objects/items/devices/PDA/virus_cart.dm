@@ -77,7 +77,7 @@
 		else
 			var/turf/T = get_turf(target)
 			var/area/A = get_area(T)
-			message_admins("[key_name_admin(U)][ADMIN_FLW(U)] triggered a PDA explosion on [target.name] at [A] [ADMIN_COORDJMP(T)].")
+			message_admins("[!is_special_character(U) ? "Non-antag " : ""][key_name_admin(U)][ADMIN_FLW(U)] triggered a PDA explosion on [target.name] at [A] [ADMIN_COORDJMP(T)].")
 			var/message_log = "triggered a PDA explosion on [target.name] at at [A] [COORD(T)]."
 			U.log_message(message_log, INDIVIDUAL_ATTACK_LOG)
 			log_game("[key_name(U)] [message_log]")
