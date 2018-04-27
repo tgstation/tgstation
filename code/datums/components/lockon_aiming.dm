@@ -22,8 +22,7 @@
 
 /datum/component/lockon_aiming/Initialize(range, list/typecache, amount, list/immune, datum/callback/when_locked, icon, icon_state, datum/callback/target_callback)
 	if(!ismob(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("Lockon aiming component attempted to be added to a non mob!")
+		return COMPONENT_INCOMPATIBLE
 	if(target_callback)
 		can_target_callback = target_callback
 	else

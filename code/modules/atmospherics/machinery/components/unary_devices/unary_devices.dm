@@ -20,7 +20,7 @@
 	..(intact)
 
 /obj/machinery/atmospherics/components/unary/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/analyzer))
+	if(istype(W, /obj/item/analyzer))
 		atmosanalyzer_scan(airs[1], user)
 	else
 		return ..()

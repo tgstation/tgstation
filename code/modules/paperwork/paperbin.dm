@@ -18,6 +18,7 @@
 
 /obj/item/paper_bin/Initialize(mapload)
 	. = ..()
+	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	if(!mapload)
 		return
 	var/obj/item/pen/P = locate(/obj/item/pen) in src.loc
@@ -64,6 +65,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(bin_pen)
 		var/obj/item/pen/P = bin_pen
+		P.add_fingerprint(user)
 		P.forceMove(user.loc)
 		user.put_in_hands(P)
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
@@ -85,6 +87,7 @@
 					P.rigged = 1
 					P.updateinfolinks()
 
+		P.add_fingerprint(user)
 		P.forceMove(user.loc)
 		user.put_in_hands(P)
 		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")

@@ -55,7 +55,7 @@
 /area/shuttle/supply)
 "j" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "QMLoad"
 	},
 /obj/machinery/door/poddoor{

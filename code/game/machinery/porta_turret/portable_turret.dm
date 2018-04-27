@@ -21,7 +21,7 @@
 
 	var/base_icon_state = "standard"
 
-	var/emp_vunerable = 1 // Can be empd
+	var/emp_vunerable = TRUE // Can be empd
 
 	var/scan_range = 7
 	var/atom/base = null //for turrets inside other objects
@@ -34,7 +34,7 @@
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
 	var/locked = TRUE			//if the turret's behaviour control access is locked
-	var/controllock = 0		//if the turret responds to control panels
+	var/controllock = FALSE		//if the turret responds to control panels
 
 	var/installation = /obj/item/gun/energy/e_gun/turret		//the type of weapon installed by default
 	var/obj/item/gun/stored_gun = null
@@ -224,9 +224,11 @@
 /obj/machinery/porta_turret/power_change()
 	if(!anchored)
 		update_icon()
+		remove_control()
 		return
 	if(stat & BROKEN)
 		update_icon()
+		remove_control()
 	else
 		if( powered() )
 			stat &= ~NOPOWER
@@ -234,6 +236,7 @@
 		else
 			spawn(rand(0, 15))
 				stat |= NOPOWER
+				remove_control()
 				update_icon()
 
 
@@ -251,7 +254,7 @@
 					if(prob(50))
 						new /obj/item/stack/sheet/metal(loc, rand(1,4))
 					if(prob(50))
-						new /obj/item/device/assembly/prox_sensor(loc)
+						new /obj/item/assembly/prox_sensor(loc)
 				else
 					to_chat(user, "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>")
 				qdel(src)
@@ -272,7 +275,7 @@
 		else if(anchored)
 			anchored = FALSE
 			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
-			update_icon()
+			power_change()
 			invisibility = 0
 			qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
 
@@ -283,8 +286,8 @@
 			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
-	else if(istype(I, /obj/item/device/multitool) && !locked)
-		var/obj/item/device/multitool/M = I
+	else if(istype(I, /obj/item/multitool) && !locked)
+		var/obj/item/multitool/M = I
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You add [src] to multitool buffer.</span>")
 	else
@@ -296,7 +299,7 @@
 	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
 	visible_message("[src] hums oddly...")
 	obj_flags |= EMAGGED
-	controllock = 1
+	controllock = TRUE
 	on = FALSE //turns off the turret temporarily
 	update_icon()
 	sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
@@ -312,10 +315,12 @@
 		auth_weapons = pick(0, 1)
 		stun_all = pick(0, 0, 0, 0, 1)	//stun_all is a pretty big deal, so it's least likely to get turned on
 
-		on=0
+		on = FALSE
+		remove_control()
+
 		spawn(rand(60,600))
 			if(!on)
-				on=1
+				on = TRUE
 
 	..()
 
@@ -337,7 +342,7 @@
 /obj/machinery/porta_turret/obj_break(damage_flag)
 	if(!(flags_1 & NODECONSTRUCT_1) && !(stat & BROKEN))
 		stat |= BROKEN	//enables the BROKEN bit
-		update_icon()
+		power_change()
 		invisibility = 0
 		spark_system.start()	//creates some sparks because they look cool
 		qdel(cover)	//deletes the cover - no need on keeping it there!
@@ -583,10 +588,10 @@
 	var/obj/machinery/porta_turret/P = target
 	if(!istype(P))
 		return
-	P.remove_control(owner)
+	P.remove_control(FALSE)
 
 /obj/machinery/porta_turret/proc/give_control(mob/A)
-	if(manual_control)
+	if(manual_control || !can_interact(A))
 		return FALSE
 	remote_controller = A
 	if(!quit_action)
@@ -602,10 +607,12 @@
 	popUp()
 	return TRUE
 
-/obj/machinery/porta_turret/proc/remove_control()
+/obj/machinery/porta_turret/proc/remove_control(warning_message = TRUE)
 	if(!manual_control)
 		return FALSE
 	if(remote_controller)
+		if(warning_message)
+			to_chat(remote_controller, "<span class='warning'>Your uplink to [src] has been severed!</span>")
 		quit_action.Remove(remote_controller)
 		toggle_action.Remove(remote_controller)
 		remote_controller.click_intercept = null
@@ -617,6 +624,9 @@
 
 /obj/machinery/porta_turret/proc/InterceptClickOn(mob/living/caller, params, atom/A)
 	if(!manual_control)
+		return FALSE
+	if(!can_interact(caller))
+		remove_control()
 		return FALSE
 	add_logs(caller,A,"fired with manual turret control at")
 	target(A)
@@ -785,8 +795,8 @@
 	if(stat & BROKEN)
 		return
 
-	if (istype(I, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = I
+	if (istype(I, /obj/item/multitool))
+		var/obj/item/multitool/M = I
 		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
 			turrets |= M.buffer
 			to_chat(user, "You link \the [M.buffer] with \the [src]")

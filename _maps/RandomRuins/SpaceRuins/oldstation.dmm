@@ -284,7 +284,7 @@
 "aW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/device/megaphone,
+/obj/item/megaphone,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation/comm)
 "aX" = (
@@ -1648,7 +1648,7 @@
 "eV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -3191,7 +3191,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/gloves/color/fyellow/old,
 /obj/item/clothing/gloves/color/fyellow/old,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
 	},
@@ -3648,8 +3648,8 @@
 	dir = 4
 	},
 /obj/structure/closet/crate,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/item/storage/box/firingpins,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
@@ -4039,7 +4039,7 @@
 "kD" = (
 /obj/structure/table,
 /obj/item/crowbar,
-/obj/item/device/flashlight/glowstick,
+/obj/item/flashlight/glowstick,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
@@ -4110,7 +4110,7 @@
 "kN" = (
 /obj/structure/table,
 /obj/item/crowbar,
-/obj/item/device/flashlight/glowstick,
+/obj/item/flashlight/glowstick,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 8
@@ -4225,7 +4225,7 @@
 /area/ruin/space/has_grav/ancientstation)
 "kZ" = (
 /obj/structure/table/reinforced,
-/obj/item/device/healthanalyzer{
+/obj/item/healthanalyzer{
 	desc = "A prototype hand-held body scanner able to distinguish vital signs of the subject.";
 	name = "prototype health analyzer"
 	},

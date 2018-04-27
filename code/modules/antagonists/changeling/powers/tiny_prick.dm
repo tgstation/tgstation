@@ -50,9 +50,6 @@
 		return
 	if(!AStar(user, target.loc, /turf/proc/Distance, changeling.sting_range, simulated_only = 0))
 		return
-	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/changeling))
-		sting_feedback(user, target)
-		changeling.chem_charges -= chemical_cost //??
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)

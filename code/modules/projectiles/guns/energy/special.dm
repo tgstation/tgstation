@@ -49,7 +49,6 @@
 	modifystate = 1
 	ammo_x_offset = 1
 	selfcharge = 1
-	harmful = FALSE
 
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"
@@ -268,7 +267,7 @@
 /obj/item/gun/energy/temperature/security
 	name = "security temperature gun"
 	desc = "A weapon that can only be used to its full potential by the truly robust."
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/instakill
 	name = "instakill rifle"

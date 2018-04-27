@@ -26,7 +26,7 @@
 	"1. Interfere.\n"+\
 	"2. Kill.\n"+\
 	"3. Destroy."
-	default_storage = /obj/item/device/radio/uplink
+	default_storage = /obj/item/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	seeStatic = 0 //Our programming is superior.
 	hacked = TRUE
@@ -44,7 +44,7 @@
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
-	default_storage = /obj/item/device/radio/uplink/nuclear
+	default_storage = /obj/item/radio/uplink/nuclear
 
 /mob/living/simple_animal/drone/syndrone/badass/Initialize()
 	. = ..()

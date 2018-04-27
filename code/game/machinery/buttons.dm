@@ -5,7 +5,7 @@
 	icon_state = "doorctrl"
 	var/skin = "doorctrl"
 	power_channel = ENVIRON
-	var/obj/item/device/assembly/device
+	var/obj/item/assembly/device
 	var/obj/item/electronics/airlock/board
 	var/device_type = null
 	var/id = null
@@ -66,7 +66,7 @@
 		return
 
 	if(panel_open)
-		if(!device && istype(W, /obj/item/device/assembly))
+		if(!device && istype(W, /obj/item/assembly))
 			if(!user.transferItemToLoc(W, src))
 				to_chat(user, "<span class='warning'>\The [W] is stuck to you!</span>")
 				return
@@ -117,8 +117,8 @@
 	return attack_ai(user)
 
 /obj/machinery/button/proc/setup_device()
-	if(id && istype(device, /obj/item/device/assembly/control))
-		var/obj/item/device/assembly/control/A = device
+	if(id && istype(device, /obj/item/assembly/control))
+		var/obj/item/assembly/control/A = device
 		A.id = id
 	initialized_button = 1
 
@@ -183,11 +183,11 @@
 /obj/machinery/button/door/setup_device()
 	if(!device)
 		if(normaldoorcontrol)
-			var/obj/item/device/assembly/control/airlock/A = new(src)
+			var/obj/item/assembly/control/airlock/A = new(src)
 			device = A
 			A.specialfunctions = specialfunctions
 		else
-			device = new /obj/item/device/assembly/control(src)
+			device = new /obj/item/assembly/control(src)
 	..()
 
 /obj/machinery/button/massdriver
@@ -195,28 +195,28 @@
 	desc = "A remote control switch for a mass driver."
 	icon_state = "launcher"
 	skin = "launcher"
-	device_type = /obj/item/device/assembly/control/massdriver
+	device_type = /obj/item/assembly/control/massdriver
 
 /obj/machinery/button/ignition
 	name = "ignition switch"
 	desc = "A remote control switch for a mounted igniter."
 	icon_state = "launcher"
 	skin = "launcher"
-	device_type = /obj/item/device/assembly/control/igniter
+	device_type = /obj/item/assembly/control/igniter
 
 /obj/machinery/button/flasher
 	name = "flasher button"
 	desc = "A remote control switch for a mounted flasher."
 	icon_state = "launcher"
 	skin = "launcher"
-	device_type = /obj/item/device/assembly/control/flasher
+	device_type = /obj/item/assembly/control/flasher
 
 /obj/machinery/button/crematorium
 	name = "crematorium igniter"
 	desc = "Burn baby burn!"
 	icon_state = "launcher"
 	skin = "launcher"
-	device_type = /obj/item/device/assembly/control/crematorium
+	device_type = /obj/item/assembly/control/crematorium
 	req_access = list()
 	id = 1
 

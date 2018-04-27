@@ -12,7 +12,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/atom/target = null
 	var/mutable_appearance/plastic_overlay
-	var/obj/item/device/assembly_holder/nadeassembly = null
+	var/obj/item/assembly_holder/nadeassembly = null
 	var/assemblyattacher
 	var/directional = FALSE
 	var/aim_dir = NORTH
@@ -31,8 +31,8 @@
 	..()
 
 /obj/item/grenade/plastic/attackby(obj/item/I, mob/user, params)
-	if(!nadeassembly && istype(I, /obj/item/device/assembly_holder))
-		var/obj/item/device/assembly_holder/A = I
+	if(!nadeassembly && istype(I, /obj/item/assembly_holder))
+		var/obj/item/assembly_holder/A = I
 		if(!user.transferItemToLoc(I, src))
 			return ..()
 		nadeassembly = A
@@ -214,12 +214,8 @@
 		return
 	if(loc == AM)
 		return
-	if((istype(AM, /obj/item/storage/)) && !((istype(AM, /obj/item/storage/secure)) || (istype(AM, /obj/item/storage/lockbox)))) //If its storage but not secure storage OR a lockbox, then place it inside.
+	if(AM.SendSignal(COMSIG_CONTAINS_STORAGE) && !AM.SendSignal(COMSIG_IS_STORAGE_LOCKED))
 		return
-	if((istype(AM, /obj/item/storage/secure)) || (istype(AM, /obj/item/storage/lockbox)))
-		var/obj/item/storage/secure/S = AM
-		if(!S.locked) //Literal hacks, this works for lockboxes despite incorrect type casting, because they both share the locked var. But if its unlocked, place it inside, otherwise PLANTING C4!
-			return
 
 	to_chat(user, "<span class='notice'>You start planting the bomb...</span>")
 

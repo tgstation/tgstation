@@ -11,9 +11,10 @@ SUBSYSTEM_DEF(traumas)
 #define PHOBIA_FILE "phobia.json"
 
 /datum/controller/subsystem/traumas/Initialize()
+	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
 	phobia_types = list("spiders", "space", "security", "clowns", "greytide", "lizards",
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
-						"aliens", "strangers")
+						"aliens", "strangers", "birds", "falling")
 
 	phobia_words = list("spiders"   = strings(PHOBIA_FILE, "spiders"),
 						"space"     = strings(PHOBIA_FILE, "space"),
@@ -29,7 +30,9 @@ SUBSYSTEM_DEF(traumas)
 						"the supernatural"	= strings(PHOBIA_FILE, "the supernatural"),
 						"aliens"	= strings(PHOBIA_FILE, "aliens"),
 						"strangers"	= strings(PHOBIA_FILE, "strangers"),
-						"conspiracies" = strings(PHOBIA_FILE, "conspiracies")
+						"conspiracies" = strings(PHOBIA_FILE, "conspiracies"),
+						"birds" = strings(PHOBIA_FILE, "birds"),
+						"falling" = strings(PHOBIA_FILE, "falling")
 					   )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
@@ -44,7 +47,10 @@ SUBSYSTEM_DEF(traumas)
 					   /mob/living/simple_animal/hostile/clockwork, /mob/living/simple_animal/drone/cogscarab,
 					   /mob/living/simple_animal/revenant, /mob/living/simple_animal/shade)),
 					   "aliens"   = typecacheof(list(/mob/living/carbon/alien, /mob/living/simple_animal/slime)),
-					   "conspiracies" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/bot/ed209, /mob/living/simple_animal/drone))
+					   "conspiracies" = typecacheof(list(/mob/living/simple_animal/bot/secbot, /mob/living/simple_animal/bot/ed209, /mob/living/simple_animal/drone,
+					   /mob/living/simple_animal/pet/penguin)),
+					   "birds" = typecacheof(list(/mob/living/simple_animal/parrot, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken,
+					   /mob/living/simple_animal/pet/penguin))
 					   )
 
 	phobia_objs = list("snakes" = typecacheof(list(/obj/item/rod_of_asclepius)),
@@ -57,8 +63,8 @@ SUBSYSTEM_DEF(traumas)
 												 /obj/machinery/door/airlock/security)),
 
 					  "clowns"    = typecacheof(list(/obj/item/clothing/under/rank/clown, /obj/item/clothing/shoes/clown_shoes,
-												 /obj/item/clothing/mask/gas/clown_hat, /obj/item/device/instrument/bikehorn,
-												 /obj/item/device/pda/clown, /obj/item/grown/bananapeel)),
+												 /obj/item/clothing/mask/gas/clown_hat, /obj/item/instrument/bikehorn,
+												 /obj/item/pda/clown, /obj/item/grown/bananapeel)),
 
 					  "greytide"  = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
 												 /obj/item/twohanded/spear, /obj/item/clothing/mask/gas)),
@@ -76,22 +82,23 @@ SUBSYSTEM_DEF(traumas)
 												 /obj/item/clothing/under/rank/research_director/alt, /obj/item/clothing/under/rank/research_director/turtleneck,
 												 /obj/item/clothing/under/captainparade, /obj/item/clothing/under/hosparademale, /obj/item/clothing/under/hosparadefem,
 												 /obj/item/clothing/head/helmet/abductor, /obj/item/clothing/suit/armor/abductor/vest, /obj/item/abductor_baton,
-												 /obj/item/storage/belt/military/abductor, /obj/item/gun/energy/alien, /obj/item/device/abductor/silencer,
-												 /obj/item/device/abductor/gizmo, /obj/item/clothing/under/rank/centcom_officer,
+												 /obj/item/storage/belt/military/abductor, /obj/item/gun/energy/alien, /obj/item/abductor/silencer,
+												 /obj/item/abductor/gizmo, /obj/item/clothing/under/rank/centcom_officer,
 												 /obj/item/clothing/suit/space/hardsuit/ert, /obj/item/clothing/suit/space/hardsuit/ert/sec,
 												 /obj/item/clothing/suit/space/hardsuit/ert/engi, /obj/item/clothing/suit/space/hardsuit/ert/med,
 												 /obj/item/clothing/suit/space/hardsuit/deathsquad, /obj/item/clothing/head/helmet/space/hardsuit/deathsquad,
 												 /obj/machinery/door/airlock/centcom)),
 						"robots"   = typecacheof(list(/obj/machinery/computer/upload, /obj/item/aiModule/, /obj/machinery/recharge_station,
-						/obj/item/device/aicard, /obj/item/device/deactivated_swarmer, /obj/effect/mob_spawn/swarmer)),
+						/obj/item/aicard, /obj/item/deactivated_swarmer, /obj/effect/mob_spawn/swarmer)),
 
 						"doctors"   = typecacheof(list(/obj/item/clothing/under/rank/medical, /obj/item/clothing/under/rank/chemist,
 						/obj/item/clothing/under/rank/nursesuit, /obj/item/clothing/under/rank/chief_medical_officer,
 						/obj/item/reagent_containers/syringe, /obj/item/reagent_containers/pill/, /obj/item/reagent_containers/hypospray,
-						/obj/item/storage/firstaid, /obj/item/storage/pill_bottle, /obj/item/device/healthanalyzer,
+						/obj/item/storage/firstaid, /obj/item/storage/pill_bottle, /obj/item/healthanalyzer,
 						/obj/structure/sign/departments/medbay, /obj/machinery/door/airlock/medical, /obj/machinery/sleeper,
 						/obj/machinery/dna_scannernew, /obj/machinery/atmospherics/components/unary/cryo_cell, /obj/item/surgical_drapes,
-						/obj/item/retractor, /obj/item/hemostat, /obj/item/cautery, /obj/item/surgicaldrill, /obj/item/scalpel, /obj/item/circular_saw)),
+						/obj/item/retractor, /obj/item/hemostat, /obj/item/cautery, /obj/item/surgicaldrill, /obj/item/scalpel, /obj/item/circular_saw,
+						/obj/item/clothing/suit/bio_suit/plaguedoctorsuit, /obj/item/clothing/head/plaguedoctorhat, /obj/item/clothing/mask/gas/plaguedoctor)),
 
 						"authority"   = typecacheof(list(/obj/item/clothing/under/rank/captain,  /obj/item/clothing/under/rank/head_of_personnel,
 						/obj/item/clothing/under/rank/head_of_security, /obj/item/clothing/under/rank/research_director,
@@ -105,7 +112,7 @@ SUBSYSTEM_DEF(traumas)
 						/obj/item/clothing/suit/cultrobes, /obj/item/clothing/suit/space/hardsuit/cult,
 						/obj/item/clothing/suit/hooded/cultrobes, /obj/item/clothing/head/hooded/cult_hoodie, /obj/effect/rune,
 						/obj/item/stack/sheet/runed_metal, /obj/machinery/door/airlock/cult, /obj/singularity/narsie,
-						/obj/item/device/soulstone,
+						/obj/item/soulstone,
 						/obj/structure/destructible/clockwork, /obj/item/clockwork, /obj/item/clothing/suit/armor/clockwork,
 						/obj/item/clothing/glasses/judicial_visor, /obj/effect/clockwork/sigil/, /obj/item/stack/tile/brass,
 						/obj/machinery/door/airlock/clockwork,
@@ -116,20 +123,27 @@ SUBSYSTEM_DEF(traumas)
 
 						"aliens"   = typecacheof(list(/obj/item/clothing/mask/facehugger, /obj/item/organ/body_egg/alien_embryo,
 						/obj/structure/alien, /obj/item/toy/toy_xeno,
-						/obj/item/clothing/suit/armor/abductor, /obj/item/device/abductor, /obj/item/gun/energy/alien,
-						/obj/item/abductor_baton, /obj/item/device/radio/headset/abductor, /obj/item/scalpel/alien, /obj/item/hemostat/alien,
+						/obj/item/clothing/suit/armor/abductor, /obj/item/abductor, /obj/item/gun/energy/alien,
+						/obj/item/abductor_baton, /obj/item/radio/headset/abductor, /obj/item/scalpel/alien, /obj/item/hemostat/alien,
 						/obj/item/retractor/alien, /obj/item/circular_saw/alien, /obj/item/surgicaldrill/alien, /obj/item/cautery/alien,
 						/obj/item/clothing/head/helmet/abductor, /obj/structure/bed/abductor, /obj/structure/table_frame/abductor,
 						/obj/structure/table/abductor, /obj/structure/table/optable/abductor, /obj/structure/closet/abductor, /obj/item/organ/heart/gland,
 						/obj/machinery/abductor, /obj/item/crowbar/abductor, /obj/item/screwdriver/abductor, /obj/item/weldingtool/abductor,
-						/obj/item/wirecutters/abductor, /obj/item/wrench/abductor, /obj/item/stack/sheet/mineral/abductor))
+						/obj/item/wirecutters/abductor, /obj/item/wrench/abductor, /obj/item/stack/sheet/mineral/abductor)),
+						
+						"birds" = typecacheof(list(/obj/item/clothing/mask/gas/plaguedoctor, /obj/item/reagent_containers/food/snacks/cracker,
+						/obj/item/clothing/suit/chickensuit, /obj/item/clothing/head/chicken,
+						/obj/item/clothing/suit/toggle/owlwings, /obj/item/clothing/under/owl, /obj/item/clothing/mask/gas/owl_mask,
+						/obj/item/clothing/under/griffin, /obj/item/clothing/shoes/griffin, /obj/item/clothing/head/griffin,
+						/obj/item/clothing/head/helmet/space/freedom, /obj/item/clothing/suit/space/freedom))
 					   )
 
 	phobia_turfs = list("space" = typecacheof(list(/turf/open/space, /turf/open/floor/holofloor/space, /turf/open/floor/fakespace)),
 						"the supernatural" = typecacheof(list(/turf/open/floor/clockwork, /turf/closed/wall/clockwork,
 						/turf/open/floor/plasteel/cult, /turf/closed/wall/mineral/cult)),
 						"aliens" = typecacheof(list(/turf/open/floor/plating/abductor, /turf/open/floor/plating/abductor2,
-						/turf/open/floor/mineral/abductor, /turf/closed/wall/mineral/abductor))
+						/turf/open/floor/mineral/abductor, /turf/closed/wall/mineral/abductor)),
+						"falling" = typecacheof(list(/turf/open/chasm, /turf/open/floor/fakepit))
 						)
 
 	phobia_species = list("lizards"   = typecacheof(list(/datum/species/lizard)),

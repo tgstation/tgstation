@@ -155,7 +155,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/sepia/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] shapes itself into a camera!</span>")
-	new /obj/item/device/camera/timefreeze(get_turf(user))
+	new /obj/item/camera/timefreeze(get_turf(user))
 	..()
 
 /obj/item/slimecross/burning/cerulean
@@ -290,13 +290,13 @@ Burning extracts:
 
 //Misc. things added
 
-/obj/item/device/camera/timefreeze
+/obj/item/camera/timefreeze
 	name = "sepia-tinted camera"
 	desc = "They say a picture is like a moment stopped in time."
 	pictures_left = 1
 	pictures_max = 1
 
-/obj/item/device/camera/timefreeze/afterattack(atom/target, mob/user, flag)
+/obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
 	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))

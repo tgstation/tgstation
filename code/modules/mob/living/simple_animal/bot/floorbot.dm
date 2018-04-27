@@ -10,7 +10,7 @@
 	maxHealth = 25
 	spacewalk = TRUE
 
-	radio_key = /obj/item/device/encryptionkey/headset_eng
+	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = "Engineering"
 	bot_type = FLOOR_BOT
 	model = "Floorbot"
@@ -370,7 +370,7 @@
 
 	drop_part(toolbox, Tsec)
 
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/assembly/prox_sensor(Tsec)
 
 	if(specialtiles && tiletype != null)
 		empty_tiles()

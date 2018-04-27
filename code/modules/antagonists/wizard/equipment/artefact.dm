@@ -138,7 +138,7 @@
 
 /////////////////////////////////////////Necromantic Stone///////////////////
 
-/obj/item/device/necromantic_stone
+/obj/item/necromantic_stone
 	name = "necromantic stone"
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
 	icon = 'icons/obj/wizard.dmi'
@@ -150,10 +150,10 @@
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
 
-/obj/item/device/necromantic_stone/unlimited
+/obj/item/necromantic_stone/unlimited
 	unlimited = 1
 
-/obj/item/device/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
+/obj/item/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	if(!istype(M))
 		return ..()
 
@@ -183,7 +183,7 @@
 
 	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
-/obj/item/device/necromantic_stone/proc/check_spooky()
+/obj/item/necromantic_stone/proc/check_spooky()
 	if(unlimited) //no point, the list isn't used.
 		return
 
@@ -199,7 +199,7 @@
 	listclearnulls(spooky_scaries)
 
 //Funny gimmick, skeletons always seem to wear roman/ancient armour
-/obj/item/device/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
+/obj/item/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
 	for(var/obj/item/I in H)
 		H.dropItemToGround(I)
 
@@ -352,6 +352,11 @@
 		return TRUE
 	return FALSE
 
+/obj/item/warpwhistle/proc/end_effect(mob/living/carbon/user)
+	user.invisibility = initial(user.invisibility)
+	user.status_flags &= ~GODMODE
+	user.canmove = TRUE
+
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)
 		return
@@ -359,7 +364,7 @@
 	last_user = user
 	var/turf/T = get_turf(user)
 	playsound(T,'sound/magic/warpwhistle.ogg', 200, 1)
-	user.canmove = 0
+	user.canmove = FALSE
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
@@ -368,6 +373,7 @@
 	user.status_flags |= GODMODE
 	sleep(20)
 	if(interrupted(user))
+		end_effect(user)
 		return
 	var/breakout = 0
 	while(breakout < 50)
@@ -380,20 +386,16 @@
 		breakout += 1
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
+	end_effect(user)
 	if(interrupted(user))
 		return
-	user.invisibility = initial(user.invisibility)
-	user.status_flags &= ~GODMODE
-	user.canmove = 1
 	on_cooldown = 2
 	sleep(40)
 	on_cooldown = 0
 
 /obj/item/warpwhistle/Destroy()
 	if(on_cooldown == 1 && last_user) //Flute got dunked somewhere in the teleport
-		last_user.invisibility = initial(last_user.invisibility)
-		last_user.status_flags &= ~GODMODE
-		last_user.canmove = 1
+		end_effect(last_user)
 	return ..()
 
 /obj/effect/temp_visual/tornado
