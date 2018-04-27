@@ -459,7 +459,7 @@
 	..()
 
 
-
+/*
 /obj/item/integrated_circuit/manipulation/thrower
 	name = "thrower"
 	desc = "A compact launcher to throw things from inside or nearby tiles."
@@ -516,6 +516,7 @@
 
 	A.forceMove(drop_location())
 	A.throw_at(locate(x_abs, y_abs, T.z), range, 3)
+	*/
 
 /obj/item/integrated_circuit/manipulation/matman
 	name = "material manager"
