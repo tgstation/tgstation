@@ -24,7 +24,7 @@
 		if(slot_head)
 			if(head)
 				return 0
-			if(!((I.slot_flags & SLOT_HEAD) || (I.slot_flags & SLOT_MASK)))
+			if(!((I.slot_flags & ITEM_SLOT_HEAD) || (I.slot_flags & ITEM_SLOT_MASK)))
 				return 0
 			return 1
 		if(slot_generic_dextrous_storage)

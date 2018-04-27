@@ -735,7 +735,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(slot_wear_mask)
 			if(H.wear_mask)
 				return FALSE
-			if(!(I.slot_flags & SLOT_MASK))
+			if(!(I.slot_flags & ITEM_SLOT_MASK))
 				return FALSE
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
@@ -743,25 +743,25 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(slot_neck)
 			if(H.wear_neck)
 				return FALSE
-			if( !(I.slot_flags & SLOT_NECK) )
+			if( !(I.slot_flags & ITEM_SLOT_NECK) )
 				return FALSE
 			return TRUE
 		if(slot_back)
 			if(H.back)
 				return FALSE
-			if( !(I.slot_flags & SLOT_BACK) )
+			if( !(I.slot_flags & ITEM_SLOT_BACK) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_wear_suit)
 			if(H.wear_suit)
 				return FALSE
-			if( !(I.slot_flags & SLOT_OCLOTHING) )
+			if( !(I.slot_flags & ITEM_SLOT_OCLOTHING) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_gloves)
 			if(H.gloves)
 				return FALSE
-			if( !(I.slot_flags & SLOT_GLOVES) )
+			if( !(I.slot_flags & ITEM_SLOT_GLOVES) )
 				return FALSE
 			if(num_arms < 2)
 				return FALSE
@@ -769,7 +769,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(slot_shoes)
 			if(H.shoes)
 				return FALSE
-			if( !(I.slot_flags & SLOT_FEET) )
+			if( !(I.slot_flags & ITEM_SLOT_FEET) )
 				return FALSE
 			if(num_legs < 2)
 				return FALSE
@@ -788,13 +788,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return FALSE
-			if(!(I.slot_flags & SLOT_BELT))
+			if(!(I.slot_flags & ITEM_SLOT_BELT))
 				return
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_glasses)
 			if(H.glasses)
 				return FALSE
-			if(!(I.slot_flags & SLOT_EYES))
+			if(!(I.slot_flags & ITEM_SLOT_EYES))
 				return FALSE
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
@@ -802,7 +802,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(slot_head)
 			if(H.head)
 				return FALSE
-			if(!(I.slot_flags & SLOT_HEAD))
+			if(!(I.slot_flags & ITEM_SLOT_HEAD))
 				return FALSE
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
@@ -810,7 +810,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(slot_ears)
 			if(H.ears)
 				return FALSE
-			if(!(I.slot_flags & SLOT_EARS))
+			if(!(I.slot_flags & ITEM_SLOT_EARS))
 				return FALSE
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
@@ -818,7 +818,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(slot_w_uniform)
 			if(H.w_uniform)
 				return FALSE
-			if( !(I.slot_flags & SLOT_ICLOTHING) )
+			if( !(I.slot_flags & ITEM_SLOT_ICLOTHING) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_wear_id)
@@ -830,7 +830,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return FALSE
-			if( !(I.slot_flags & SLOT_ID) )
+			if( !(I.slot_flags & ITEM_SLOT_ID) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_l_store)
@@ -845,9 +845,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return FALSE
-			if(I.slot_flags & SLOT_DENYPOCKET)
+			if(I.slot_flags & ITEM_SLOT_DENYPOCKET)
 				return FALSE
-			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & SLOT_POCKET) )
+			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & ITEM_SLOT_POCKET) )
 				return TRUE
 		if(slot_r_store)
 			if(I.flags_1 & NODROP_1)
@@ -861,9 +861,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return FALSE
-			if(I.slot_flags & SLOT_DENYPOCKET)
+			if(I.slot_flags & ITEM_SLOT_DENYPOCKET)
 				return FALSE
-			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & SLOT_POCKET) )
+			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & ITEM_SLOT_POCKET) )
 				return TRUE
 			return FALSE
 		if(slot_s_store)

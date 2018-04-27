@@ -22,7 +22,7 @@
 	actions_types = list(/datum/action/item_action/flightpack/toggle_flight, /datum/action/item_action/flightpack/engage_boosters, /datum/action/item_action/flightpack/toggle_stabilizers, /datum/action/item_action/flightpack/change_power, /datum/action/item_action/flightpack/toggle_airbrake)
 	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 10, "bomb" = 30, "bio" = 100, "rad" = 75, "fire" = 100, "acid" = 75)
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	resistance_flags = FIRE_PROOF
 
 	var/processing_mode = FLIGHTSUIT_PROCESSING_FULL
@@ -546,7 +546,7 @@
 	..()
 
 /obj/item/flightpack/item_action_slot_check(slot)
-	if(slot == SLOT_BACK)
+	if(slot == ITEM_SLOT_BACK)
 		return TRUE
 
 /obj/item/flightpack/equipped(mob/user, slot)

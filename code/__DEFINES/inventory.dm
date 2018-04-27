@@ -14,20 +14,20 @@
 #define STORAGE_VIEW_DEPTH	2
 
 //ITEM INVENTORY SLOT BITMASKS
-#define SLOT_OCLOTHING	(1<<0)
-#define SLOT_ICLOTHING	(1<<1)
-#define SLOT_GLOVES		(1<<2)
-#define SLOT_EYES		(1<<3)
-#define SLOT_EARS		(1<<4)
-#define SLOT_MASK		(1<<5)
-#define SLOT_HEAD		(1<<6)
-#define SLOT_FEET		(1<<7)
-#define SLOT_ID			(1<<8)
-#define SLOT_BELT		(1<<9)
-#define SLOT_BACK		(1<<10)
-#define SLOT_POCKET		(1<<11) // this is to allow items with a w_class of WEIGHT_CLASS_NORMAL or WEIGHT_CLASS_BULKY to fit in pockets.
-#define SLOT_DENYPOCKET	(1<<12) // this is to deny items with a w_class of WEIGHT_CLASS_SMALL or WEIGHT_CLASS_TINY to fit in pockets.
-#define SLOT_NECK		(1<<13)
+#define ITEM_SLOT_OCLOTHING		(1<<0)
+#define ITEM_SLOT_ICLOTHING		(1<<1)
+#define ITEM_SLOT_GLOVES		(1<<2)
+#define ITEM_SLOT_EYES			(1<<3)
+#define ITEM_SLOT_EARS			(1<<4)
+#define ITEM_SLOT_MASK			(1<<5)
+#define ITEM_SLOT_HEAD			(1<<6)
+#define ITEM_SLOT_FEET			(1<<7)
+#define ITEM_SLOT_ID			(1<<8)
+#define ITEM_SLOT_BELT			(1<<9)
+#define ITEM_SLOT_BACK			(1<<10)
+#define ITEM_SLOT_POCKET		(1<<11) // this is to allow items with a w_class of WEIGHT_CLASS_NORMAL or WEIGHT_CLASS_BULKY to fit in pockets.
+#define ITEM_SLOT_DENYPOCKET	(1<<12) // this is to deny items with a w_class of WEIGHT_CLASS_SMALL or WEIGHT_CLASS_TINY to fit in pockets.
+#define ITEM_SLOT_NECK			(1<<13)
 
 //SLOTS
 #define slot_back			1
@@ -59,31 +59,31 @@
 	. = 0
 	switch(slotdefine)
 		if(slot_back)
-			. = SLOT_BACK
+			. = ITEM_SLOT_BACK
 		if(slot_wear_mask)
-			. = SLOT_MASK
+			. = ITEM_SLOT_MASK
 		if(slot_neck)
-			. = SLOT_NECK
+			. = ITEM_SLOT_NECK
 		if(slot_belt)
-			. = SLOT_BELT
+			. = ITEM_SLOT_BELT
 		if(slot_wear_id)
-			. = SLOT_ID
+			. = ITEM_SLOT_ID
 		if(slot_ears)
-			. = SLOT_EARS
+			. = ITEM_SLOT_EARS
 		if(slot_glasses)
-			. = SLOT_EYES
+			. = ITEM_SLOT_EYES
 		if(slot_gloves)
-			. = SLOT_GLOVES
+			. = ITEM_SLOT_GLOVES
 		if(slot_head)
-			. = SLOT_HEAD
+			. = ITEM_SLOT_HEAD
 		if(slot_shoes)
-			. = SLOT_FEET
+			. = ITEM_SLOT_FEET
 		if(slot_wear_suit)
-			. = SLOT_OCLOTHING
+			. = ITEM_SLOT_OCLOTHING
 		if(slot_w_uniform)
-			. = SLOT_ICLOTHING
+			. = ITEM_SLOT_ICLOTHING
 		if(slot_l_store, slot_r_store)
-			. = SLOT_POCKET
+			. = ITEM_SLOT_POCKET
 
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.

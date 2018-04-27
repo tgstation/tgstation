@@ -7,25 +7,25 @@
 		if(slot_wear_mask)
 			if(wear_mask)
 				return FALSE
-			if( !(I.slot_flags & SLOT_MASK) )
+			if( !(I.slot_flags & ITEM_SLOT_MASK) )
 				return FALSE
 			return TRUE
 		if(slot_neck)
 			if(wear_neck)
 				return FALSE
-			if( !(I.slot_flags & SLOT_NECK) )
+			if( !(I.slot_flags & ITEM_SLOT_NECK) )
 				return FALSE
 			return TRUE
 		if(slot_head)
 			if(head)
 				return FALSE
-			if( !(I.slot_flags & SLOT_HEAD) )
+			if( !(I.slot_flags & ITEM_SLOT_HEAD) )
 				return FALSE
 			return TRUE
 		if(slot_back)
 			if(back)
 				return FALSE
-			if( !(I.slot_flags & SLOT_BACK) )
+			if( !(I.slot_flags & ITEM_SLOT_BACK) )
 				return FALSE
 			return TRUE
 	return FALSE //Unsupported slot

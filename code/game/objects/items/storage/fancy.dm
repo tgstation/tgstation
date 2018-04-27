@@ -109,7 +109,7 @@
 	icon_type = "candle"
 	item_state = "candlebox5"
 	throwforce = 2
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/candle
 	fancy_open = TRUE
 
@@ -132,7 +132,7 @@
 	item_state = "cigpacket"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
 
