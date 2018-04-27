@@ -227,12 +227,17 @@
 		else
 			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 		return FALSE
+	var/turf/T = get_turf(usr)
 	if(R.window_checks && !valid_window_location(usr.loc, usr.dir))
 		to_chat(usr, "<span class='warning'>The [R.title] won't fit here!</span>")
 		return FALSE
 	if(R.one_per_turf && (locate(R.result_type) in usr.loc))
 		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 		return FALSE
+	for(var/atom/movable/AM in T)
+		if(AM.density)
+			to_chat(usr, "<span class='warning'>There is a [AM.name] blocking you cant fit a [R.title] here!</span>")
+			return FALSE
 	if(R.on_floor && !isfloorturf(usr.loc))
 		to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
 		return FALSE
@@ -395,7 +400,20 @@
 	var/window_checks = FALSE
 	var/placement_checks = FALSE
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE)
+/datum/stack_recipe/New(
+						title,
+						result_type,
+						req_amount = 1,
+						res_amount = 1,
+						max_res_amount = 1,
+						time = 0,
+						one_per_turf = FALSE,
+						on_floor = FALSE,
+						window_checks = FALSE,
+						placement_checks = FALSE
+						)
+
+
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
