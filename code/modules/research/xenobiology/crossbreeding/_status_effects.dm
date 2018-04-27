@@ -779,7 +779,7 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/adamantine/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.physiology.damage_resistance += 5
+		H.physiology.damage_resistance -= 5
 
 /datum/status_effect/stabilized/rainbow
 	id = "stabilizedrainbow"

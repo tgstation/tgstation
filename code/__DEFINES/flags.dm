@@ -39,8 +39,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_EMP_WIRES_2				(1<<1)
 #define HOLOGRAM_2					(1<<2)
 #define FROZEN_2					(1<<3)
-#define STATIONLOVING_2				(1<<4)
-#define INFORM_ADMINS_ON_RELOCATE_2	(1<<5)
 #define BANG_PROTECT_2				(1<<6)
 
 // An item worn in the ear slot with HEALS_EARS will heal your ears each
