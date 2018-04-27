@@ -1,0 +1,4 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - admin: "PDA explosions now have logging."
