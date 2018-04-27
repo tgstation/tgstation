@@ -18,3 +18,7 @@
 #define IN_INVENTORY			(1<<1) //is this item equipped into an inventory slot or hand of a mob? used for tooltips
 #define FORCE_STRING_OVERRIDE	(1<<2) // used for tooltips
 #define NEEDS_PERMIT			(1<<3) //Used by security bots to determine if this item is safe for public use.
+
+// Flags for the clothing_flags var on /obj/item/clothing
+
+#define LAVAPROTECT (1<<0)
