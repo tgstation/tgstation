@@ -509,7 +509,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/disk/nuclear/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/stationloving, (fake ? FALSE : TRUE))
+	AddComponent(/datum/component/stationloving, !fake)
 
 /obj/item/disk/nuclear/examine(mob/user)
 	. = ..()
