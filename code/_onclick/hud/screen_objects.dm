@@ -363,7 +363,7 @@
 /obj/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
 		return TRUE
-	if(usr.stat || usr.IsUnconscious() || usr.IsKnockdown() || usr.IsStun())
+	if(usr.incapacitated())
 		return TRUE
 	if (ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
