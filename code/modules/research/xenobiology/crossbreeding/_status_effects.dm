@@ -388,17 +388,17 @@ datum/status_effect/stabilized/blue/on_remove()
 		to_chat(owner, "<span class='notice'>[linked_extract] discharges some energy into a device you have.</span>")
 	return ..()
 
-/obj/item/hothands
+/obj/item/dummy/hothands
 	name = "burning fingertips"
 	desc = "You shouldn't see this."
 
-/obj/item/hothands/is_hot()
+/obj/item/dummy/hothands/is_hot()
 	return 290 //Below what's required to ignite plasma.
 
 /datum/status_effect/stabilized/darkpurple
 	id = "stabilizeddarkpurple"
 	colour = "dark purple"
-	var/obj/item/hothands/fire
+	var/obj/item/dummy/hothands/fire
 	examine_text = "<span class='notice'>Their fingertips burn brightly!</span>"
 
 /datum/status_effect/stabilized/darkpurple/on_apply()

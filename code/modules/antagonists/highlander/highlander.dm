@@ -70,7 +70,7 @@
 	H.put_in_hands(sword)
 
 
-	var/obj/item/bloodcrawl/antiwelder = new(H)
+	var/obj/item/dummy/bloodcrawl/antiwelder = new(H)
 	antiwelder.name = "compulsion of honor"
 	antiwelder.desc = "You are unable to hold anything in this hand until you're the last one left!"
 	antiwelder.icon_state = "bloodhand_right"
