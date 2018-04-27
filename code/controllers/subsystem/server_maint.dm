@@ -9,6 +9,9 @@ SUBSYSTEM_DEF(server_maint)
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
 
+/datum/controller/subsystem/server_maint/PreInit()
+	world.hub_password = "" //quickly! before the hubbies see us.
+
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
 	if (CONFIG_GET(flag/hub))
 		world.update_hub_visibility(TRUE)
