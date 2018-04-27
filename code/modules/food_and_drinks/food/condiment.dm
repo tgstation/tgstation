@@ -87,7 +87,7 @@
 /obj/item/reagent_containers/food/condiment/on_reagent_change(changetype)
 	if(!possible_states.len)
 		return
-	if(reagents.reagent_list.len > 0)
+	if(reagents.reagent_list.len)
 		var/main_reagent = reagents.get_master_reagent_id()
 		if(main_reagent in possible_states)
 			var/list/temp_list = possible_states[main_reagent]
@@ -131,7 +131,7 @@
 	possible_states = list()
 
 /obj/item/reagent_containers/food/condiment/saltshaker/on_reagent_change(changetype)
-	if(reagents.reagent_list.len == 0)
+	if(!reagents.reagent_list.len)
 		icon_state = "emptyshaker"
 	else
 		icon_state = "saltshakersmall"
@@ -260,7 +260,7 @@
 			qdel(src)
 
 /obj/item/reagent_containers/food/condiment/pack/on_reagent_change(changetype)
-	if(reagents.reagent_list.len > 0)
+	if(reagents.reagent_list.len)
 		var/main_reagent = reagents.get_master_reagent_id()
 		if(main_reagent in possible_states)
 			var/list/temp_list = possible_states[main_reagent]

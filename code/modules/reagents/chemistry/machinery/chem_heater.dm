@@ -103,7 +103,8 @@
 
 	var beakerContents[0]
 	if(beaker)
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+		for(var/id in beaker.reagents.reagent_list)
+			var/datum/reagent/R = beaker.reagents.reagent_list[id]
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 	return data

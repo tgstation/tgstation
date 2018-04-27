@@ -128,7 +128,7 @@
 		return
 	var/list/chems = list()
 	for(var/R in chems_needed)
-		var/datum/reagent/temp = GLOB.chemical_reagents_list[R]
+		var/datum/reagent/temp = SSreagents.reagents_by_id[R]
 		if(temp)
 			var/chemname = temp.name
 			chems += chemname

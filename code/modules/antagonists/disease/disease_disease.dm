@@ -54,6 +54,6 @@
 	cures = list(pick_n_take(not_used), pick_n_take(not_used))
 
 	// Get the cure name from the cure_id
-	var/datum/reagent/D1 = GLOB.chemical_reagents_list[cures[1]]
-	var/datum/reagent/D2 = GLOB.chemical_reagents_list[cures[2]]
+	var/datum/reagent/D1 = SSreagents.reagents_by_id[cures[1]]
+	var/datum/reagent/D2 = SSreagents.reagents_by_id[cures[2]]
 	cure_text = "[D1.name] and [D2.name]"

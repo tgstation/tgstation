@@ -172,18 +172,18 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_reagents()
 	if(patient.reagents)
-		for(var/datum/reagent/R in patient.reagents.reagent_list)
-			if(R.volume > 0)
-				. += "[R]: [round(R.volume,0.01)]<br />"
+		for(var/id in patient.reagents.reagent_list)
+			var/datum/reagent/R = patient.reagents.reagent_list[id]
+			. += "[R]: [round(R.volume,0.01)]<br />"
 	return . || "None"
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_available_reagents()
 	var/output
 	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
-	if(SG && SG.reagents && islist(SG.reagents.reagent_list))
-		for(var/datum/reagent/R in SG.reagents.reagent_list)
-			if(R.volume > 0)
-				output += "<a href=\"?src=[REF(src)];inject=[REF(R)];source=[REF(SG)]\">Inject [R.name]</a><br />"
+	if(SG && SG.reagents)
+		for(var/id in SG.reagents.reagent_list)
+			var/datum/reagent/R = SG.reagents.reagent_list
+			output += "<a href=\"?src=[REF(src)];inject=[REF(R)];source=[REF(SG)]\">Inject [R.name]</a><br />"
 	return output
 
 
@@ -326,19 +326,15 @@
 					mobs += M
 				var/mob/living/carbon/M = safepick(mobs)
 				if(M)
-					var/R
+					var/R = mechsyringe.reagents? mechsyringe.reagents.log_string() : "<NO REAGENTS>"
 					mechsyringe.visible_message("<span class=\"attack\"> [M] was hit by the syringe!</span>")
 					if(M.can_inject(null, 1))
-						if(mechsyringe.reagents)
-							for(var/datum/reagent/A in mechsyringe.reagents.reagent_list)
-								R += A.id + " ("
-								R += num2text(A.volume) + "),"
 						mechsyringe.icon_state = initial(mechsyringe.icon_state)
 						mechsyringe.icon = initial(mechsyringe.icon)
 						mechsyringe.reagents.reaction(M, INJECT)
 						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume)
 						M.take_bodypart_damage(2)
-						add_logs(originaloccupant, M, "shot", "syringegun")
+						add_logs(originaloccupant, M, "shot", "syringegun", R)
 					break
 				else if(mechsyringe.loc == trg)
 					mechsyringe.icon_state = initial(mechsyringe.icon_state)
@@ -481,7 +477,8 @@
 		occupant_message("<span class=\"alert\">No reagent info gained from [A].</span>")
 		return 0
 	occupant_message("Analyzing reagents...")
-	for(var/datum/reagent/R in A.reagents.reagent_list)
+	for(var/id in A.reagents.reagent_list)
+		var/datum/reagent/R = A.reagents.reagent_list[id]
 		if(R.can_synth && add_known_reagent(R.id,R.name))
 			occupant_message("Reagent analyzed, identified as [R.name] and added to database.")
 			send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())

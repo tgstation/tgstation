@@ -295,7 +295,7 @@
 		beaker = I
 		user.visible_message("[user] places [I] in [src].", \
 							"<span class='notice'>You place [I] in [src].</span>")
-		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
+		var/reagentlist = I.reagents.log_string()
 		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
 		return
 	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", I) || exchange_parts(user, I)) \
@@ -362,7 +362,8 @@
 	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
 	var/beakerContents = list()
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+		for(var/id in beaker.reagents.reagent_list)
+			var/datum/reagent/R = beaker.reagents.reagent_list[id]
 			beakerContents += list(list("name" = R.name, "volume" = R.volume))
 	data["beakerContents"] = beakerContents
 	return data

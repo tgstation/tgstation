@@ -119,7 +119,7 @@
 
 	data["chems"] = list()
 	for(var/chem in available_chems)
-		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
+		var/datum/reagent/R = SSreagents.reagents_by_id[chem]
 		data["chems"] += list(list("name" = R.name, "id" = R.id, "allowed" = chem_allowed(chem)))
 
 	data["occupant"] = list()
@@ -150,7 +150,8 @@
 		data["occupant"]["brainLoss"] = mob_occupant.getBrainLoss()
 		data["occupant"]["reagents"] = list()
 		if(occupant.reagents.reagent_list.len)
-			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
+			for(var/id in mob_occupant.reagents.reagent_list)
+				var/datum/reagent/R = mob_occupant.reagents.reagent_list[id]
 				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
 	return data
 

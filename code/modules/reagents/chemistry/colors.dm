@@ -6,7 +6,8 @@
 	var/vol_counter = 0
 	var/vol_temp
 
-	for(var/datum/reagent/R in reagent_list)
+	for(var/id in reagent_list)
+		var/datum/reagent/R = reagent_list
 		vol_temp = R.volume
 		vol_counter += vol_temp
 

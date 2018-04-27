@@ -27,7 +27,8 @@
 
 	//Always log attemped injects for admins
 	var/list/injected = list()
-	for(var/datum/reagent/R in reagents.reagent_list)
+	for(var/id in reagents.reagent_list)
+		var/datum/reagent/R = reagents.reagent_list[id]
 		injected += R.name
 	var/contained = english_list(injected)
 	add_logs(user, M, "attempted to inject", src, "([contained])")

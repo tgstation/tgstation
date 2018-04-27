@@ -86,7 +86,7 @@
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this)
 		if(units)
 			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
-			add_logs(usr, src, "has added [english_list(RC.reagents.reagent_list)] to [src]")
+			add_logs(usr, src, "has added [RC.reagents.log_string()] to [src]")
 			return
 	if(default_unfasten_wrench(user, I, 40))
 		on = FALSE
@@ -113,7 +113,8 @@
 	var/data = list()
 	var/TankContents[0]
 	var/TankCurrentVolume = 0
-	for(var/datum/reagent/R in reagents.reagent_list)
+	for(var/id in reagents.reagent_list)
+		var/datum/reagent/R = reagents.reagent_list[id]
 		TankContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 		TankCurrentVolume += R.volume
 	data["TankContents"] = TankContents
@@ -143,9 +144,14 @@
 			on = !on
 			update_icon()
 			if(on)
-				message_admins("[key_name_admin(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(src)].")
-				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [COORD(src)].")
-				add_logs(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)].")
+				var/list/IDs = list()
+				for(var/i in reagents.reagent_list)
+					var/datum/reagent/R = reagents.reagent_list[i]
+					IDs += "[i] ([R.volume])"
+				IDs = IDs.Join(", ")
+				message_admins("[key_name_admin(usr)] activated a smoke machine that contains [reagents.log_string()] at [ADMIN_COORDJMP(src)].")
+				log_game("[key_name(usr)] activated a smoke machine that contains [IDs] at [COORD(src)].")
+				add_logs(usr, src, "has activated [src] which contains [IDs].")
 		if("goScreen")
 			screen = params["screen"]
 			. = TRUE

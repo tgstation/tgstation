@@ -64,8 +64,10 @@
 			return 0
 
 		var/fullness = M.nutrition + 10
-		for(var/datum/reagent/consumable/C in M.reagents.reagent_list) //we add the nutrition value of what we're currently digesting
-			fullness += C.nutriment_factor * C.volume / C.metabolization_rate
+		var/list/found = M.reagents.get_reagent_list(/datum/reagent/consumable)
+		for(var/i in found) //we add the nutrition value of what we're currently digesting
+			var/datum/reagent/consumable/R = i
+			fullness += R.nutriment_factor * R.volume / R.metabolization_rate
 
 		if(M == user)								//If you're eating it yourself.
 			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )

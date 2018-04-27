@@ -117,8 +117,8 @@
 		power = 2
 
 /datum/symptom/heal/chem/Heal(mob/living/M, datum/disease/advance/A, actual_power)
-	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
-		M.reagents.remove_reagent(R.id, actual_power)
+	for(var/their_id in M.reagents.reagent_list) //Not just toxins!
+		M.reagents.remove_reagent(their_id, actual_power)
 		if(food_conversion)
 			M.nutrition += 0.3
 		if(prob(2))

@@ -839,11 +839,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 		if(3)
 			if(!isnull(A.reagents))
-				if(A.reagents.reagent_list.len > 0)
+				if(A.reagents.reagent_list.len)
 					var/reagents_length = A.reagents.reagent_list.len
 					to_chat(user, "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>")
 					for (var/re in A.reagents.reagent_list)
-						to_chat(user, "<span class='notice'>\t [re]</span>")
+						var/datum/reagent/R = A.reagents.reagent_list[re]
+						to_chat(user, "<span class='notice'>\t [R]</span>")
 				else
 					to_chat(user, "<span class='notice'>No active chemical agents found in [A].</span>")
 			else

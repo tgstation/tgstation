@@ -96,7 +96,8 @@
 		if(transferred > 0)
 			to_chat(user, "<span class='notice'>\The [src] has been refilled by [transferred] units.</span>")
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-			for(var/datum/reagent/water/R in reagents.reagent_list)
+			var/datum/reagent/water/R = reagents.get_reagent(/datum/reagent/water)
+			if(R)
 				R.cooling_temperature = cooling_power
 		else
 			to_chat(user, "<span class='warning'>\The [W] is empty!</span>")

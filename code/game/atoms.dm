@@ -164,7 +164,8 @@
 		if(istype(A, /datum/reagent))
 			if(!reagents)
 				reagents = new()
-			reagents.reagent_list.Add(A)
+			var/datum/reagent/R = A
+			reagents.reagent_list.[R.id] = R
 			reagents.conditional_update()
 		else if(ismovableatom(A))
 			var/atom/movable/M = A
@@ -258,12 +259,11 @@
 			to_chat(user, "It contains:")
 			if(reagents.reagent_list.len)
 				if(user.can_see_reagents()) //Show each individual reagent
-					for(var/datum/reagent/R in reagents.reagent_list)
+					for(var/id in reagents.reagent_list)
+						var/datum/reagent/R = reagents.reagent_list[id]
 						to_chat(user, "[R.volume] units of [R.name]")
 				else //Otherwise, just show the total volume
-					var/total_volume = 0
-					for(var/datum/reagent/R in reagents.reagent_list)
-						total_volume += R.volume
+					var/total_volume = reagents.total_volume
 					to_chat(user, "[total_volume] units of various reagents")
 			else
 				to_chat(user, "Nothing.")
@@ -438,12 +438,11 @@
 
 /atom/proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
 	M.reagents.trans_to(V, M.reagents.total_volume / 10)
-	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
-		if(istype(R, /datum/reagent/consumable))
-			var/datum/reagent/consumable/nutri_check = R
-			if(nutri_check.nutriment_factor >0)
-				M.reagents.remove_reagent(R.id,R.volume)
-
+	var/list/datum/reagent/consumable/found = M.reagents.get_reagent_list(/datum/reagent/consumable)
+	for(var/i in found)
+		var/datum/reagent/consumable/nutri_check = i
+		if(nutri_check.nutriment_factor >0)
+			M.reagents.remove_reagent(nutri_check.id,nutri_check.volume)
 
 //Hook for running code when a dir change occurs
 /atom/proc/setDir(newdir)

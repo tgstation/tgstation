@@ -150,14 +150,16 @@
 
 	var/beakerContents[0]
 	if(beaker)
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+		for(var/id in beaker.reagents.reagent_list)
+			var/datum/reagent/R = beaker.reagents.reagent_list[id]
 			beakerContents.Add(list(list("name" = R.name, "id" = R.id, "volume" = R.volume))) // list in a list because Byond merges the first list...
 		data["beakerContents"] = beakerContents
 
 	var/bufferContents[0]
 	if(reagents.total_volume)
-		for(var/datum/reagent/N in reagents.reagent_list)
-			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
+		for(var/id in beaker.reagents.reagent_list)
+			var/datum/reagent/R = beaker.reagents.reagent_list[id]
+			bufferContents.Add(list(list("name" = R.name, "id" = R.id, "volume" = R.volume))) // ^
 		data["bufferContents"] = bufferContents
 
 	return data
@@ -309,7 +311,7 @@
 			. = TRUE
 
 		if("analyze")
-			var/datum/reagent/R = GLOB.chemical_reagents_list[params["id"]]
+			var/datum/reagent/R = SSreagents.reagents_by_id[params["id"]]
 			if(R)
 				var/state = "Unknown"
 				if(initial(R.reagent_state) == 1)

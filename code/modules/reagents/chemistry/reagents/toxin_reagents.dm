@@ -669,7 +669,8 @@
 	if(current_cycle >=11 && prob(min(50,current_cycle)) && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.vomit(10, prob(10), prob(50), rand(0,4), TRUE, prob(30))
-		for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
+		for(var/id in M.reagents.reagent_list)
+			var/datum/reagent/R = M.reagents.reagent_list[id]
 			if(R != src)
 				H.reagents.remove_reagent(R.id,1)
 
@@ -791,8 +792,7 @@
 	var/remove_amt = 5
 	if(holder.has_reagent("calomel") || holder.has_reagent("pen_acid"))
 		remove_amt = 0.5
-	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
-		M.reagents.remove_reagent(R.id,remove_amt)
+	M.reagents.remove_all_type(/datum/reagent/medicine, remove_amt)
 	return ..()
 
 //ACID

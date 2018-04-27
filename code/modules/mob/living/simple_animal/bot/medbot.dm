@@ -365,8 +365,8 @@
 
 	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
 	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
-		for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
-			if(!C.reagents.has_reagent(R.id))
+		for(var/id in reagent_glass.reagents.reagent_list)
+			if(!C.reagents.has_reagent(id))
 				return TRUE
 
 	//They're injured enough for it!
@@ -465,8 +465,8 @@
 
 		//If the patient is injured but doesn't have our special reagent in them then we should give it to them first
 		if(reagent_id && use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
-			for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
-				if(!C.reagents.has_reagent(R.id))
+			for(var/id in reagent_glass.reagents.reagent_list)
+				if(!C.reagents.has_reagent(id))
 					reagent_id = "internal_beaker"
 					break
 
@@ -513,7 +513,7 @@
 	return
 
 /mob/living/simple_animal/bot/medbot/proc/check_overdose(mob/living/carbon/patient,reagent_id,injection_amount)
-	var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]
+	var/datum/reagent/R  = SSreagents.reagents_by_id[reagent_id]
 	if(!R.overdose_threshold) //Some chems do not have an OD threshold
 		return FALSE
 	var/current_volume = patient.reagents.get_reagent_amount(reagent_id)

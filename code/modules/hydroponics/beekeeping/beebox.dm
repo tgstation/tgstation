@@ -62,7 +62,7 @@
 	var/datum/reagent/R = null
 	if(random_reagent)
 		R = pick(subtypesof(/datum/reagent))
-		R = GLOB.chemical_reagents_list[initial(R.id)]
+		R = SSreagents.reagents_by_id[initial(R.id)]
 
 	queen_bee = new(src)
 	queen_bee.beehome = src

@@ -118,12 +118,12 @@
 			playsound(get_turf(src), 'sound/items/drink.ogg', 50, 1) //slurp
 			H.visible_message("<span class='alert'>[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound.</span>")
 			if(reagents)
-				for(var/datum/reagent/R in reagents.reagent_list)
-					if (istype(R, /datum/reagent/consumable))
-						var/datum/reagent/consumable/nutri_check = R
-						if(nutri_check.nutriment_factor >0)
-							H.nutrition += nutri_check.nutriment_factor * nutri_check.volume
-							reagents.remove_reagent(nutri_check.id,nutri_check.volume)
+				var/list/datum/reagent/consumable/found = reagents.get_reagent_list(/datum/reagent/consumable)
+				for(var/R in found)
+					var/datum/reagent/consumable/nutri_check = R
+					if(nutri_check.nutriment_factor >0)
+						H.nutrition += nutri_check.nutriment_factor * nutri_check.volume
+						reagents.remove_reagent(nutri_check.id,nutri_check.volume)
 			reagents.trans_to(H, reagents.total_volume)
 			qdel(src)
 

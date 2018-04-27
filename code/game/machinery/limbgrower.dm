@@ -197,7 +197,8 @@
 	dat += "<div class='statusDisplay'><h3>Browsing Chemical Storage:</h3><br>"
 	dat += materials_printout()
 
-	for(var/datum/reagent/R in reagents.reagent_list)
+	for(var/id in reagents.reagent_list)
+		var/datum/reagent/R = reagents.reagent_list[id]
 		dat += "[R.name]: [R.volume]"
 		dat += "<A href='?src=[REF(src)];disposeI=[R.id]'>Purge</A><BR>"
 

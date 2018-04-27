@@ -57,8 +57,8 @@ doesn't have toxins access.
 		var/datum/material/material = GLOB.materials_list[ID]
 		return material.name
 
-	else if(GLOB.chemical_reagents_list[ID])
-		var/datum/reagent/reagent = GLOB.chemical_reagents_list[ID]
+	else if(SSreagents.reagents_by_id[ID])
+		var/datum/reagent/reagent = SSreagents.reagents_by_id[ID]
 		return reagent.name
 	return "ERROR: Report This"
 
@@ -381,7 +381,8 @@ doesn't have toxins access.
 	l += ui_protolathe_header()
 	l += "<div class='statusDisplay'><A href='?src=[REF(src)];disposeallP=1'>Disposal All Chemicals in Storage</A>"
 	l += "<h3>Chemical Storage:</h3>"
-	for(var/datum/reagent/R in linked_lathe.reagents.reagent_list)
+	for(var/id in linked_lathe.reagents.reagent_list)
+		var/datum/reagent/R = linked_lathe.reagents.reagent_list[id]
 		l += "[R.name]: [R.volume]"
 		l += "<A href='?src=[REF(src)];disposeP=[R.id]'>Purge</A>"
 	l += "</div>"
@@ -476,7 +477,8 @@ doesn't have toxins access.
 	l += ui_circuit_header()
 	l += "<A href='?src=[REF(src)];disposeallI=1'>Disposal All Chemicals in Storage</A><div class='statusDisplay'>"
 	l += "<h3>Chemical Storage:</h3>"
-	for(var/datum/reagent/R in linked_imprinter.reagents.reagent_list)
+	for(var/id in linked_imprinter.reagents.reagent_list)
+		var/datum/reagent/R = linked_imprinter.reagents.reagent_list[id]
 		l += "[R.name]: [R.volume]"
 		l += "<A href='?src=[REF(src)];disposeI=[R.id]'>Purge</A>"
 	return l
