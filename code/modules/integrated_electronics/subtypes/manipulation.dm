@@ -81,6 +81,8 @@
 /obj/item/integrated_circuit/manipulation/weapon_firing/do_work()
 	if(!installed_gun)
 		return
+	if(!isturf(assembly.loc))
+		return
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(installed_gun))
 	push_data()
 	var/datum/integrated_io/xo = inputs[1]
