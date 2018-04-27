@@ -66,6 +66,7 @@
 		dropped(user)
 		return
 	user.anchored = TRUE
+	user.status_flags &= ~CANPUSH
 	for(var/mob/M in GLOB.player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
@@ -76,6 +77,7 @@
 /obj/item/twohanded/ctf/dropped(mob/user)
 	..()
 	user.anchored = FALSE
+	user.status_flags |= CANPUSH
 	reset_cooldown = world.time + 200 //20 seconds
 	START_PROCESSING(SSobj, src)
 	for(var/mob/M in GLOB.player_list)
@@ -472,7 +474,7 @@
 
 /datum/outfit/ctf
 	name = "CTF"
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf
 	toggle_helmet = FALSE // see the whites of their eyes
@@ -528,7 +530,7 @@
 
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
 	..()
-	var/obj/item/device/radio/R = H.ears
+	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CTF_RED)
 	R.freqlock = TRUE
 	R.independent = TRUE
@@ -536,7 +538,7 @@
 
 /datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
 	..()
-	var/obj/item/device/radio/R = H.ears
+	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CTF_BLUE)
 	R.freqlock = TRUE
 	R.independent = TRUE

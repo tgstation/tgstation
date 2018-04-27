@@ -108,7 +108,7 @@
 /area/shuttle/escape)
 "z" = (
 /obj/structure/table/reinforced,
-/obj/item/device/radio,
+/obj/item/radio,
 /obj/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9

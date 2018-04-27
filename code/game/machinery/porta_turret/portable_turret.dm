@@ -251,7 +251,7 @@
 					if(prob(50))
 						new /obj/item/stack/sheet/metal(loc, rand(1,4))
 					if(prob(50))
-						new /obj/item/device/assembly/prox_sensor(loc)
+						new /obj/item/assembly/prox_sensor(loc)
 				else
 					to_chat(user, "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>")
 				qdel(src)
@@ -283,8 +283,8 @@
 			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
-	else if(istype(I, /obj/item/device/multitool) && !locked)
-		var/obj/item/device/multitool/M = I
+	else if(istype(I, /obj/item/multitool) && !locked)
+		var/obj/item/multitool/M = I
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You add [src] to multitool buffer.</span>")
 	else
@@ -785,8 +785,8 @@
 	if(stat & BROKEN)
 		return
 
-	if (istype(I, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = I
+	if (istype(I, /obj/item/multitool))
+		var/obj/item/multitool/M = I
 		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
 			turrets |= M.buffer
 			to_chat(user, "You link \the [M.buffer] with \the [src]")

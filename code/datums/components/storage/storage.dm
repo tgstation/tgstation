@@ -60,7 +60,7 @@
 
 /datum/component/storage/Initialize(datum/component/storage/concrete/master)
 	if(!isatom(parent))
-		. = COMPONENT_INCOMPATIBLE
+		return COMPONENT_INCOMPATIBLE
 	if(master)
 		change_master(master)
 	boxes = new(null, src)
@@ -503,10 +503,10 @@
 	if(!istype(M))
 		return FALSE
 	A.add_fingerprint(M)
-	if(locked)
+	if(locked && !force)
 		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
 		return FALSE
-	if(M.CanReach(parent, view_only = TRUE))
+	if(force || M.CanReach(parent, view_only = TRUE))
 		show_to(M)
 
 /datum/component/storage/proc/mousedrop_recieve(atom/movable/O, mob/M)

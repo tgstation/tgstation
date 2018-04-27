@@ -138,7 +138,7 @@
 
 /////////////////////////////////////////Necromantic Stone///////////////////
 
-/obj/item/device/necromantic_stone
+/obj/item/necromantic_stone
 	name = "necromantic stone"
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
 	icon = 'icons/obj/wizard.dmi'
@@ -150,10 +150,10 @@
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
 
-/obj/item/device/necromantic_stone/unlimited
+/obj/item/necromantic_stone/unlimited
 	unlimited = 1
 
-/obj/item/device/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
+/obj/item/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	if(!istype(M))
 		return ..()
 
@@ -183,7 +183,7 @@
 
 	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
-/obj/item/device/necromantic_stone/proc/check_spooky()
+/obj/item/necromantic_stone/proc/check_spooky()
 	if(unlimited) //no point, the list isn't used.
 		return
 
@@ -199,7 +199,7 @@
 	listclearnulls(spooky_scaries)
 
 //Funny gimmick, skeletons always seem to wear roman/ancient armour
-/obj/item/device/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
+/obj/item/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
 	for(var/obj/item/I in H)
 		H.dropItemToGround(I)
 

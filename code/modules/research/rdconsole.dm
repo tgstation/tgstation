@@ -155,7 +155,7 @@ doesn't have toxins access.
 		if(stored_research == SSresearch.science_tech)
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[price]", "time" = SQLtime()))
 		if(stored_research.research_node(SSresearch.techweb_nodes[id]))
-			say("Sucessfully researched [TN.display_name].")
+			say("Successfully researched [TN.display_name].")
 			var/logname = "Unknown"
 			if(isAI(user))
 				logname = "AI: [user.name]"

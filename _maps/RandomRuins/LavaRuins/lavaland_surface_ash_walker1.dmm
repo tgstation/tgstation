@@ -107,7 +107,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/open/indestructible/boss/air,
 /area/ruin/unpowered/ash_walkers)
 "av" = (
@@ -152,7 +152,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/open/indestructible/boss/air,
 /area/ruin/unpowered/ash_walkers)
 "az" = (
@@ -165,7 +165,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/item/device/malf_upgrade,
+/obj/item/malf_upgrade,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aB" = (
@@ -479,10 +479,10 @@
 /area/ruin/unpowered/ash_walkers)
 "bn" = (
 /obj/structure/closet/crate/radiation,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/flashlight/flare,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/flare,
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
@@ -510,7 +510,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/open/indestructible/boss/air,
 /area/ruin/unpowered/ash_walkers)
 "bq" = (
@@ -549,7 +549,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/open/indestructible/boss/air,
 /area/ruin/unpowered/ash_walkers)
 "bv" = (
@@ -557,9 +557,9 @@
 	dir = 8
 	},
 /obj/structure/closet/crate,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "bw" = (
@@ -591,9 +591,9 @@
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "bz" = (
@@ -1015,7 +1015,7 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "cE" = (
@@ -1329,7 +1329,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "dx" = (
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /obj/structure/stone_tile/center,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,

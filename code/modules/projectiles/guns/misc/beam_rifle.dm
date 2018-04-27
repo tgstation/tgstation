@@ -82,7 +82,7 @@
 	cell_type = /obj/item/stock_parts/cell/infinite
 	aiming_time = 0
 	recoil = 0
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/beam_rifle/equipped(mob/user)
 	set_user(user)

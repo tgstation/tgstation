@@ -1,4 +1,4 @@
-/obj/item/device/assembly/control
+/obj/item/assembly/control
 	name = "blast door controller"
 	desc = "A small electronic device able to control a blast door remotely."
 	icon_state = "control"
@@ -7,12 +7,12 @@
 	var/can_change_id = 0
 	var/cooldown = 0//Door cooldowns
 
-/obj/item/device/assembly/control/examine(mob/user)
+/obj/item/assembly/control/examine(mob/user)
 	..()
 	if(id)
 		to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
 
-/obj/item/device/assembly/control/activate()
+/obj/item/assembly/control/activate()
 	cooldown = 1
 	var/openclose
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
@@ -24,7 +24,7 @@
 	cooldown = 0
 
 
-/obj/item/device/assembly/control/airlock
+/obj/item/assembly/control/airlock
 	name = "airlock controller"
 	desc = "A small electronic device able to control an airlock remotely."
 	id = "badmin" // Set it to null for MEGAFUN.
@@ -37,7 +37,7 @@
 				16= door safties (SAFE)
 	*/
 
-/obj/item/device/assembly/control/airlock/activate()
+/obj/item/assembly/control/airlock/activate()
 	cooldown = 1
 	var/doors_need_closing = FALSE
 	var/list/obj/machinery/door/airlock/open_or_close = list()
@@ -70,11 +70,11 @@
 	cooldown = 0
 
 
-/obj/item/device/assembly/control/massdriver
+/obj/item/assembly/control/massdriver
 	name = "mass driver controller"
 	desc = "A small electronic device able to control a mass driver."
 
-/obj/item/device/assembly/control/massdriver/activate()
+/obj/item/assembly/control/massdriver/activate()
 	cooldown = 1
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if (M.id == src.id)
@@ -96,11 +96,11 @@
 	cooldown = 0
 
 
-/obj/item/device/assembly/control/igniter
+/obj/item/assembly/control/igniter
 	name = "ignition controller"
 	desc = "A remote controller for a mounted igniter."
 
-/obj/item/device/assembly/control/igniter/activate()
+/obj/item/assembly/control/igniter/activate()
 	cooldown = 1
 	for(var/obj/machinery/sparker/M in GLOB.machines)
 		if (M.id == src.id)
@@ -116,11 +116,11 @@
 	cooldown = 0
 
 
-/obj/item/device/assembly/control/flasher
+/obj/item/assembly/control/flasher
 	name = "flasher controller"
 	desc = "A remote controller for a mounted flasher."
 
-/obj/item/device/assembly/control/flasher/activate()
+/obj/item/assembly/control/flasher/activate()
 	cooldown = 1
 	for(var/obj/machinery/flasher/M in GLOB.machines)
 		if(M.id == src.id)
@@ -130,11 +130,11 @@
 	cooldown = 0
 
 
-/obj/item/device/assembly/control/crematorium
+/obj/item/assembly/control/crematorium
 	name = "crematorium controller"
 	desc = "An evil-looking remote controller for a crematorium."
 
-/obj/item/device/assembly/control/crematorium/activate()
+/obj/item/assembly/control/crematorium/activate()
 	cooldown = 1
 	for (var/obj/structure/bodycontainer/crematorium/C in GLOB.crematoriums)
 		if (C.id == id)
