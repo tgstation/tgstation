@@ -43,8 +43,6 @@
 		if(linked_console)
 			disconnect_console()
 		return
-	if(exchange_parts(user, O))
-		return
 	if(default_deconstruction_crowbar(O))
 		return
 	if(is_refillable() && O.is_drainable())

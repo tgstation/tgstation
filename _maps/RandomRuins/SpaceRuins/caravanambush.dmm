@@ -165,7 +165,7 @@
 "aw" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/flashlight,
+/obj/item/flashlight,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 4;
@@ -1351,7 +1351,7 @@
 	amount = 10
 	},
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -1840,7 +1840,7 @@
 /obj/item/folder/yellow{
 	pixel_x = -6
 	},
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "Distress Signal"
 	},
 /turf/open/floor/plasteel/darkblue/side{
@@ -1872,8 +1872,8 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
+/obj/item/multitool,
+/obj/item/multitool,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter3)
 "gw" = (
@@ -2279,7 +2279,7 @@
 /obj/structure/table,
 /obj/item/stack/packageWrap,
 /obj/item/crowbar,
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -2305,7 +2305,7 @@
 "hK" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless,
@@ -2318,7 +2318,7 @@
 "hN" = (
 /obj/structure/rack,
 /obj/item/tank/internals/oxygen,
-/obj/item/device/radio,
+/obj/item/radio,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel/blue/corner{
 	dir = 4;
@@ -3171,7 +3171,7 @@
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/tank/internals/oxygen,
-/obj/item/device/radio,
+/obj/item/radio,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged5"
@@ -3869,7 +3869,7 @@
 "lx" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/darkred/side{
 	dir = 5

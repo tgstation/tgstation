@@ -209,8 +209,8 @@
 		place_poster(W,user)
 		return TRUE
 	//wall mounted IC assembly stuff
-	else if(istype(W, /obj/item/device/electronic_assembly/wallmount))
-		var/obj/item/device/electronic_assembly/wallmount/A = W
+	else if(istype(W, /obj/item/electronic_assembly/wallmount))
+		var/obj/item/electronic_assembly/wallmount/A = W
 		A.mount_assembly(src, user)
 		return TRUE
 

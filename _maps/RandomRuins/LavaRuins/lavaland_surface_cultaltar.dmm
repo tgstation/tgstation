@@ -60,7 +60,7 @@
 	color = "#ff0000";
 	used = 1
 	},
-/obj/item/device/cult_shift,
+/obj/item/cult_shift,
 /obj/effect/decal/remains/human,
 /obj/item/melee/cultblade/dagger,
 /obj/effect/step_trigger/sound_effect{

@@ -142,6 +142,7 @@
 		if(ADV_BUILDMODE)
 			dat += "***********************************************************"
 			dat += "Right Mouse Button on buildmode button = Set object type"
+			dat += "Left Mouse Button + alt on turf/obj    = Copy object type"
 			dat += "Left Mouse Button on turf/obj          = Place objects"
 			dat += "Right Mouse Button                     = Delete objects"
 			dat += ""
@@ -299,7 +300,10 @@
 				window.setDir(build_dir)
 				log_admin("Build Mode: [key_name(user)] built a window at ([object.x],[object.y],[object.z])")
 		if(ADV_BUILDMODE)
-			if(left_click)
+			if(left_click && alt_click)
+				objholder = object.type
+				to_chat(user, "<span class='notice'>[initial(object.name)] ([object.type]) selected.</span>")
+			else if(left_click)
 				if(ispath(objholder, /turf))
 					var/turf/T = get_turf(object)
 					log_admin("Build Mode: [key_name(user)] modified [T] ([T.x],[T.y],[T.z]) to [objholder]")

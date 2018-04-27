@@ -762,6 +762,19 @@ world
 	else
 		curdir = A.dir
 
+	//Try to remove/optimize this section ASAP, CPU hog.
+	//Determines if there's directionals.
+	if(!noIcon && curdir != SOUTH)
+		var/exist = FALSE
+		var/static/list/checkdirs = list(NORTH, EAST, WEST)
+		for(var/i in checkdirs)		//Not using GLOB for a reason.
+			if(length(icon_states(icon(curicon, curstate, i))))
+				exist = TRUE
+				break
+		if(!exist)
+			base_icon_dir = SOUTH
+	//
+
 	if(!base_icon_dir)
 		base_icon_dir = curdir
 
@@ -879,7 +892,6 @@ world
 
 	#undef BLANK
 	#undef SET_SELF
-	#undef APPLY_SELF_COLOR
 
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.

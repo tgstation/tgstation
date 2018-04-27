@@ -1409,7 +1409,7 @@
 
 		//26
 		list(
-			"key" = /obj/item/device/assembly/signaler/anomaly,
+			"key" = /obj/item/assembly/signaler/anomaly,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_WELDER,
 			"desc" = "Anomaly core socket is open.",

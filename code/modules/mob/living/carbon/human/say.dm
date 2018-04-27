@@ -69,7 +69,7 @@
 
 /mob/living/carbon/human/binarycheck()
 	if(ears)
-		var/obj/item/device/radio/headset/dongle = ears
+		var/obj/item/radio/headset/dongle = ears
 		if(!istype(dongle))
 			return 0
 		if(dongle.translate_binary)

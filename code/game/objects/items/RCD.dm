@@ -636,7 +636,7 @@ RLD
 			if(useResource(launchcost, user))
 				activate()
 				to_chat(user, "<span class='notice'>You fire a glowstick!</span>")
-				var/obj/item/device/flashlight/glowstick/G  = new /obj/item/device/flashlight/glowstick(start)
+				var/obj/item/flashlight/glowstick/G  = new /obj/item/flashlight/glowstick(start)
 				G.color = color_choice
 				G.light_color = G.color
 				G.throw_at(A, 9, 3, user)

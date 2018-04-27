@@ -8,7 +8,7 @@
 	max_integrity = 250
 	integrity_failure = 100
 	anchored = TRUE
-	var/obj/item/device/assembly/flash/handheld/bulb
+	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
@@ -60,7 +60,7 @@
 				bulb = null
 				power_change()
 
-	else if (istype(W, /obj/item/device/assembly/flash/handheld))
+	else if (istype(W, /obj/item/assembly/flash/handheld))
 		if (!bulb)
 			if(!user.transferItemToLoc(W, src))
 				return

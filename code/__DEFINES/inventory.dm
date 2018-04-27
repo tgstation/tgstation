@@ -151,7 +151,7 @@
 GLOBAL_LIST_INIT(advanced_hardsuit_allowed, typecacheof(list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
-	/obj/item/device/flashlight,
+	/obj/item/flashlight,
 	/obj/item/gun,
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(advanced_hardsuit_allowed, typecacheof(list(
 GLOBAL_LIST_INIT(security_hardsuit_allowed, typecacheof(list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
-	/obj/item/device/flashlight,
+	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
 	/obj/item/melee/baton,
@@ -172,9 +172,9 @@ GLOBAL_LIST_INIT(security_hardsuit_allowed, typecacheof(list(
 GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
-	/obj/item/device/detective_scanner,
-	/obj/item/device/flashlight,
-	/obj/item/device/taperecorder,
+	/obj/item/detective_scanner,
+	/obj/item/flashlight,
+	/obj/item/taperecorder,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
 	/obj/item/lighter,
@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
 GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
-	/obj/item/device/flashlight,
+	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
 	/obj/item/kitchen/knife/combat,
@@ -203,7 +203,7 @@ GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
 GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
-	/obj/item/device/flashlight,
+	/obj/item/flashlight,
 	/obj/item/storage/fancy/cigarettes,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,

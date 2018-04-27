@@ -99,7 +99,7 @@
 
 // Locates a pin in the assembly when given component number, pin type and pin number
 // Components list can be supplied from the outside, for use in savefiles
-/obj/item/device/electronic_assembly/proc/get_pin_ref(component_number, pin_type, pin_number, list/components)
+/obj/item/electronic_assembly/proc/get_pin_ref(component_number, pin_type, pin_number, list/components)
 	if(!components)
 		components = assembly_components
 
@@ -112,7 +112,7 @@
 
 // Same as get_pin_ref, but takes in a list of 3 parameters (same format as get_pin_parameters)
 // and performs extra sanity checks on parameters list and index numbers
-/obj/item/device/electronic_assembly/proc/get_pin_ref_list(list/parameters, list/components)
+/obj/item/electronic_assembly/proc/get_pin_ref_list(list/parameters, list/components)
 	if(!components)
 		components = assembly_components
 

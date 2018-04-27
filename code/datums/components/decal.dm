@@ -7,8 +7,7 @@
 
 /datum/component/decal/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_GOD, _color, _layer=TURF_LAYER, _description)
 	if(!isatom(parent) || !generate_appearance(_icon, _icon_state, _dir, _layer, _color))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("A turf decal was applied incorrectly to [parent.type]: icon:[_icon ? _icon : "none"] icon_state:[_icon_state ? _icon_state : "none"]")
+		return COMPONENT_INCOMPATIBLE
 	description = _description
 	cleanable = _cleanable
 

@@ -189,12 +189,12 @@
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stat != CONSCIOUS)
-				var/obj/item/device/soulstone/SS = new /obj/item/device/soulstone(src)
+				var/obj/item/soulstone/SS = new /obj/item/soulstone(src)
 				SS.attack(H, user)
 				if(!LAZYLEN(SS.contents))
 					qdel(SS)
 		if(istype(target, /obj/structure/constructshell) && contents.len)
-			var/obj/item/device/soulstone/SS = contents[1]
+			var/obj/item/soulstone/SS = contents[1]
 			if(istype(SS))
 				SS.transfer_soul("CONSTRUCT",target,user)
 				qdel(SS)
@@ -484,14 +484,14 @@
 	color = "#333333"
 	list_reagents = list("unholywater" = 50)
 
-/obj/item/device/shuttle_curse
+/obj/item/shuttle_curse
 	name = "cursed orb"
 	desc = "You peer within this smokey orb and glimpse terrible fates befalling the escape shuttle."
 	icon = 'icons/obj/cult.dmi'
 	icon_state ="shuttlecurse"
 	var/global/curselimit = 0
 
-/obj/item/device/shuttle_curse/attack_self(mob/living/user)
+/obj/item/shuttle_curse/attack_self(mob/living/user)
 	if(!iscultist(user))
 		user.dropItemToGround(src, TRUE)
 		user.Knockdown(100)
@@ -538,28 +538,28 @@
 		priority_announce("[message]", "System Failure", 'sound/misc/notice1.ogg')
 		curselimit++
 
-/obj/item/device/cult_shift
+/obj/item/cult_shift
 	name = "veil shifter"
 	desc = "This relic instantly teleports you, and anything you're pulling, forward by a moderate distance."
 	icon = 'icons/obj/cult.dmi'
 	icon_state ="shifter"
 	var/uses = 4
 
-/obj/item/device/cult_shift/examine(mob/user)
+/obj/item/cult_shift/examine(mob/user)
 	..()
 	if(uses)
 		to_chat(user, "<span class='cult'>It has [uses] use\s remaining.</span>")
 	else
 		to_chat(user, "<span class='cult'>It seems drained.</span>")
 
-/obj/item/device/cult_shift/proc/handle_teleport_grab(turf/T, mob/user)
+/obj/item/cult_shift/proc/handle_teleport_grab(turf/T, mob/user)
 	var/mob/living/carbon/C = user
 	if(C.pulling)
 		var/atom/movable/pulled = C.pulling
 		pulled.forceMove(T)
 		. = pulled
 
-/obj/item/device/cult_shift/attack_self(mob/user)
+/obj/item/cult_shift/attack_self(mob/user)
 	if(!uses || !iscarbon(user))
 		to_chat(user, "<span class='warning'>\The [src] is dull and unmoving in your hands.</span>")
 		return
@@ -592,7 +592,7 @@
 	else
 		to_chat(C, "<span class='danger'>The veil cannot be torn here!</span>")
 
-/obj/item/device/flashlight/flare/culttorch
+/obj/item/flashlight/flare/culttorch
 	name = "void torch"
 	desc = "Used by veteran cultists to instantly transport items to their needful bretheren."
 	w_class = WEIGHT_CLASS_SMALL
@@ -605,7 +605,7 @@
 	on = TRUE
 	var/charges = 5
 
-/obj/item/device/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
+/obj/item/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
 		return
 	if(!iscultist(user))
