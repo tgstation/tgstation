@@ -584,7 +584,7 @@
 			else
 				qdel(target)
 
-/obj/item/dummy/circlegame
+/obj/item/circlegame
 	name = "circled hand"
 	desc = "If somebody looks at this while it's below your waist, you get to bop them."
 	icon_state = "madeyoulook"
@@ -593,7 +593,7 @@
 	flags_1 = DROPDEL_1 | ABSTRACT_1
 	attack_verb = list("bopped")
 
-/obj/item/dummy/slapper
+/obj/item/slapper
 	name = "slapper"
 	desc = "This is how real men fight."
 	icon_state = "latexballon"
@@ -604,7 +604,7 @@
 	attack_verb = list("slapped")
 	hitsound = 'sound/effects/snap.ogg'
 
-/obj/item/dummy/slapper/attack(mob/M, mob/living/carbon/human/user)
+/obj/item/slapper/attack(mob/M, mob/living/carbon/human/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
 		L.endTailWag()

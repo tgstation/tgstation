@@ -14,7 +14,7 @@
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
-	var/obj/item/dummy/dullahan_relay/myhead
+	var/obj/item/dullahan_relay/myhead
 
 
 /datum/species/dullahan/check_roundstart_eligible()
@@ -30,14 +30,14 @@
 		head.drop_limb()
 		head.flags_1 = HEAR_1
 		head.throwforce = 25
-		myhead = new /obj/item/dummy/dullahan_relay (head, H)
+		myhead = new /obj/item/dullahan_relay (head, H)
 		H.put_in_hands(head)
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
 	H.flags_1 |= ~HEAR_1
 	H.reset_perspective(H)
 	if(myhead)
-		var/obj/item/dummy/dullahan_relay/DR = myhead
+		var/obj/item/dullahan_relay/DR = myhead
 		myhead = null
 		DR.owner = null
 		qdel(DR)
@@ -107,21 +107,21 @@
 			var/datum/species/dullahan/D = H.dna.species
 			D.update_vision_perspective(H)
 
-/obj/item/dummy/dullahan_relay
+/obj/item/dullahan_relay
 	var/mob/living/owner
 	flags_1 = HEAR_1
 
-/obj/item/dummy/dullahan_relay/Initialize(mapload,new_owner)
+/obj/item/dullahan_relay/Initialize(mapload,new_owner)
 	. = ..()
 	owner = new_owner
 	START_PROCESSING(SSobj, src)
 
-/obj/item/dummy/dullahan_relay/process()
+/obj/item/dullahan_relay/process()
 	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
 		. = PROCESS_KILL
 		qdel(src)
 
-/obj/item/dummy/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(!QDELETED(owner))
 		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
 		to_chat(owner,message)
@@ -129,7 +129,7 @@
 		qdel(src)
 
 
-/obj/item/dummy/dullahan_relay/Destroy()
+/obj/item/dullahan_relay/Destroy()
 	if(!QDELETED(owner))
 		var/mob/living/carbon/human/H = owner
 		if(H.dna.species.id == "dullahan")
