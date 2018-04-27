@@ -458,65 +458,6 @@
 	push_data()
 	..()
 
-
-
-/obj/item/integrated_circuit/manipulation/thrower
-	name = "thrower"
-	desc = "A compact launcher to throw things from inside or nearby tiles."
-	extended_desc = "The first and second inputs need to be numbers which correspond to coordinates to throw objects at relative to the machine itself. \
-	The 'fire' activator will cause the mechanism to attempt to throw objects at the coordinates, if possible. Note that the \
-	projectile need to be inside the machine, or to be on an adjacent tile, and must be medium sized or smaller."
-	complexity = 25
-	w_class = WEIGHT_CLASS_SMALL
-	size = 2
-	cooldown_per_use = 10
-	ext_cooldown = 1
-	inputs = list(
-		"target X rel" = IC_PINTYPE_NUMBER,
-		"target Y rel" = IC_PINTYPE_NUMBER,
-		"projectile" = IC_PINTYPE_REF
-		)
-	outputs = list()
-	activators = list(
-		"fire" = IC_PINTYPE_PULSE_IN
-	)
-	spawn_flags = IC_SPAWN_RESEARCH
-	action_flags = IC_ACTION_COMBAT
-	power_draw_per_use = 50
-
-/obj/item/integrated_circuit/manipulation/thrower/do_work()
-	var/max_w_class = assembly.w_class
-	var/target_x_rel = round(get_pin_data(IC_INPUT, 1))
-	var/target_y_rel = round(get_pin_data(IC_INPUT, 2))
-	var/obj/item/A = get_pin_data_as_type(IC_INPUT, 3, /obj/item)
-
-	if(!A || A.anchored || A.throwing)
-		return
-
-	if(max_w_class && (A.w_class > max_w_class))
-		return
-
-	// Is the target inside the assembly or close to it?
-	if(!check_target(A, exclude_components = TRUE))
-		return
-
-	var/turf/T = get_turf(get_object())
-	if(!T)
-		return
-
-	// If the item is in mob's inventory, try to remove it from there.
-	if(ismob(A.loc))
-		var/mob/living/M = A.loc
-		if(!M.temporarilyRemoveItemFromInventory(A))
-			return
-
-	var/x_abs = CLAMP(T.x + target_x_rel, 0, world.maxx)
-	var/y_abs = CLAMP(T.y + target_y_rel, 0, world.maxy)
-	var/range = round(CLAMP(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
-
-	A.forceMove(drop_location())
-	A.throw_at(locate(x_abs, y_abs, T.z), range, 3)
-
 /obj/item/integrated_circuit/manipulation/matman
 	name = "material manager"
 	desc = "This circuit is designed for automatic storage and distribution of materials."
