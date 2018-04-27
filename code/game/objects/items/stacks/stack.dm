@@ -228,17 +228,17 @@
 			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 		return FALSE
 	var/turf/T = get_turf(usr)
-	if(R.window_checks && !valid_window_location(usr.loc, usr.dir))
+	if(R.window_checks && !valid_window_location(T, usr.dir))
 		to_chat(usr, "<span class='warning'>The [R.title] won't fit here!</span>")
 		return FALSE
-	if(R.one_per_turf && (locate(R.result_type) in usr.loc))
+	if(R.one_per_turf && (locate(R.result_type) in T))
 		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 		return FALSE
 	for(var/atom/movable/AM in T)
 		if(AM.density)
 			to_chat(usr, "<span class='warning'>There is a [AM.name] blocking you cant fit a [R.title] here!</span>")
 			return FALSE
-	if(R.on_floor && !isfloorturf(usr.loc))
+	if(R.on_floor && !isfloorturf(T))
 		to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
 		return FALSE
 	if(R.placement_checks)
@@ -246,12 +246,12 @@
 			if(STACK_CHECK_CARDINALS)
 				var/turf/step
 				for(var/direction in GLOB.cardinals)
-					step = get_step(usr, direction)
+					step = get_step(T, direction)
 					if(locate(R.result_type) in step)
 						to_chat(usr, "<span class='warning'>\The [R.title] must not be built directly adjacent to another!</span>")
 						return FALSE
 			if(STACK_CHECK_ADJACENT)
-				if(locate(R.result_type) in range(1, usr))
+				if(locate(R.result_type) in range(1, T))
 					to_chat(usr, "<span class='warning'>\The [R.title] must be constructed at least one tile away from others of its type!</span>")
 					return FALSE
 	return TRUE
