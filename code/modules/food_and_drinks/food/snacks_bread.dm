@@ -192,6 +192,7 @@
 	overlays = fried.copy_overlays()
 	icon_state = fried.icon_state
 	desc = fried.desc
+	w_class = fried.w_class
 	if(istype(fried, /obj/item/reagent_containers/food/snacks))
 		fried.reagents.trans_to(src, fried.reagents.total_volume)
 		qdel(fried)
