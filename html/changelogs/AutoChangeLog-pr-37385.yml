@@ -1,0 +1,5 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - rscadd: "Clogged vents now scale like meteors."
+  - balance: "Clogged vents got nerfed."
