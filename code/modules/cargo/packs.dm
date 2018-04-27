@@ -146,7 +146,7 @@
 	name = "NULL_ENTRY"
 	desc = "(#@&^$THIS PACKAGE CONTAINS 30TC WORTH OF SOME RANDOM SYNDICATE GEAR WE HAD LYING AROUND THE WAREHOUSE. GIVE EM HELL, OPERATIVE@&!*() "
 	hidden = TRUE
-	cost = 15000
+	cost = 20000
 	contains = list()
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
