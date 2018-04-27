@@ -495,10 +495,10 @@
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
 	if(above_neck(target_zone))
-		if(head && head.flags_1 & THICKMATERIAL_1 && !penetrate_thick)
+		if(head && head.clothing_flags & THICKMATERIAL && !penetrate_thick)
 			. = 0
 	else
-		if(wear_suit && wear_suit.flags_1 & THICKMATERIAL_1 && !penetrate_thick)
+		if(wear_suit && wear_suit.clothing_flags & THICKMATERIAL && !penetrate_thick)
 			. = 0
 	if(!. && error_msg && user)
 		// Might need re-wording.

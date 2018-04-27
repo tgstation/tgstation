@@ -18,7 +18,7 @@
 /mob/living/carbon/human/bee_friendly()
 	if(dna && dna.species && dna.species.id == "pod") //bees pollinate plants, duh.
 		return 1
-	if((wear_suit && (wear_suit.flags_1 & THICKMATERIAL_1)) && (head && (head.flags_1 & THICKMATERIAL_1)))
+	if((wear_suit && (wear_suit.clothing_flags & THICKMATERIAL)) && (head && (head.clothing_flags & THICKMATERIAL)))
 		return 1
 	return 0
 

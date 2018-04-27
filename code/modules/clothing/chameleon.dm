@@ -331,8 +331,7 @@
 	item_state = "gas_alt"
 	resistance_flags = NONE
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-
-	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -408,7 +407,7 @@
 	icon_state = "black"
 	item_color = "black"
 	desc = "A pair of black shoes."
-	flags_1 = NOSLIP_1
+	clothing_flags = NOSLIP
 
 /obj/item/clothing/shoes/chameleon/noslip/broken/Initialize()
 	. = ..()
@@ -637,4 +636,3 @@
 /obj/item/pda/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
-

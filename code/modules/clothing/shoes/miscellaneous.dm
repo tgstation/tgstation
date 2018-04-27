@@ -23,7 +23,7 @@
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
 	permeability_coefficient = 0.01
-	flags_1 = NOSLIP_1
+	clothing_flags = NOSLIP
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 30, "rad" = 30, "fire" = 90, "acid" = 50)
 
 /obj/item/clothing/shoes/sandal
@@ -50,7 +50,7 @@
 	name = "galoshes"
 	icon_state = "galoshes"
 	permeability_coefficient = 0.01
-	flags_1 = NOSLIP_1
+	clothing_flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
 	strip_delay = 50
 	equip_delay_other = 50

@@ -357,7 +357,7 @@
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if((H.head && (H.head.flags_1 & THICKMATERIAL_1)) && (H.wear_suit && (H.wear_suit.flags_1 & THICKMATERIAL_1)))
+		if((H.head && (H.head.clothing_flags & THICKMATERIAL)) && (H.wear_suit && (H.wear_suit.clothing_flags & THICKMATERIAL)))
 			return FALSE // Skip over them if they have no exposed flesh.
 
 	if(declare_crit && C.health <= 0) //Critical condition! Call for help!

@@ -8,13 +8,13 @@
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube)
 	if(has_trait(TRAIT_NOSLIPALL))
 		return 0
-	if((isobj(shoes) && (shoes.flags_1&NOSLIP_1)) || has_trait(TRAIT_NOSLIPWATER) && !(lube&GALOSHES_DONT_HELP))
+	if((isobj(shoes) && (shoes.clothing_flags&NOSLIP)) || has_trait(TRAIT_NOSLIPWATER) && !(lube&GALOSHES_DONT_HELP))
 		return 0
 	return ..()
 
 /mob/living/carbon/human/experience_pressure_difference()
 	playsound(src, 'sound/effects/space_wind.ogg', 50, 1)
-	if(shoes && shoes.flags_1&NOSLIP_1)
+	if(shoes && shoes.clothing_flags&NOSLIP)
 		return 0
 	return ..()
 

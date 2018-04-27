@@ -122,7 +122,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	flags_1 = STOPSPRESSUREDMAGE_1
+	clothing_flags = STOPSPRESSUREDAMAGE
 	strip_delay = 80
 	dog_fashion = null
 
