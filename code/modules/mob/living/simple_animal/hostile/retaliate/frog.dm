@@ -25,6 +25,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = HOSTILE_SPAWN
+	var/stepped_sound = 'sound/effects/huuu.ogg'
 
 /mob/living/simple_animal/hostile/retaliate/frog/Initialize()
 	. = ..()
@@ -40,4 +41,4 @@
 	if(!stat && isliving(AM))
 		var/mob/living/L = AM
 		if(L.mob_size > MOB_SIZE_TINY)
-			playsound(src, 'sound/effects/huuu.ogg', 50, 1)
+			playsound(src, stepped_sound, 50, 1)
