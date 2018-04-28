@@ -9,6 +9,7 @@
 #define ON_BLUEPRINTS			(1<<5)  //Are we visible on the station blueprints at roundstart?
 #define UNIQUE_RENAME			(1<<6) // can you customize the description/name of the thing?
 #define USES_TGUI				(1<<7)	//put on things that use tgui on ui_interact instead of custom/old UI.
+#define FROZEN					(1<<8)
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
