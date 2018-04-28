@@ -142,6 +142,15 @@
 	if(density)
 		open()
 	else
+		if(user.has_trait(TRAIT_PACIFISM))
+			var/T = get_turf(src)
+			var/safe = TRUE
+			for(var/mob/living/L in T)
+				var/safe = FALSE
+				break
+			if(safe == FALSE)
+				to_chat(user, "<span class='notice'>You would hurt [L] by closing it!</span>")
+				return
 		close()
 
 /obj/machinery/door/firedoor/interact(mob/user)
