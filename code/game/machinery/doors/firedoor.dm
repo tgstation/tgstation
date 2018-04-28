@@ -142,17 +142,14 @@
 	if(density)
 		open()
 	else
-		if(iscarbon(user)
+		if(iscarbon(user))
 			var/mob/living/carbon/C = user
 			if(C.has_trait(TRAIT_PACIFISM))
 				var/T = get_turf(src)
-				var/safeclosing = TRUE
 				for(var/mob/living/L in T)
-					var/safeclosing = FALSE
-					break
-				if(safe == FALSE)
-					to_chat(user, "<span class='notice'>You would hurt [L] by closing it!</span>")
-					return
+					if((L.stat != DEAD) && !L.has_trait(TRAIT_FAKEDEATH))
+						to_chat(user, "<span class='notice'>Closing [src] would hurt [L]!</span>")
+						return
 		close()
 
 /obj/machinery/door/firedoor/interact(mob/user)
