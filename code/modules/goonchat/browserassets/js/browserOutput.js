@@ -9,10 +9,20 @@
 var escaper = encodeURIComponent || escape;
 var decoder = decodeURIComponent || unescape;
 
+window.onerror = function(msg, url, line, col, error) {
+	if (document.location.href.indexOf("proc=debug") <= 0) {
+		var extra = !col ? '' : ' | column: ' + col;
+		extra += !error ? '' : ' | error: ' + error;
+		extra += !navigator.userAgent ? '' : ' | user agent: ' + navigator.userAgent;
+		var debugLine = 'Error: ' + msg + ' | url: ' + url + ' | line: ' + line + extra;
+		window.location = '?_src_=chat&proc=debug&param[error]='+escaper(debugLine);
+	}
+	return true;
+};
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages, $last_message, $debug, $debugOutput, $debugInput, debugLevel, $debugLevel;
+var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages, $last_message, $debug, $debugOutput, $debugInput, debugLevel, $debugLevel, urlregex;
 var opts = {
 	//General
 	'messageCount': 0, //A count...of messages...
@@ -99,12 +109,12 @@ function linkify(message) {
 		 * 
 		 * Hey why not do a proper js url parser? well, because I don't feel like dealing with possible ie8/9 backward compat issues, feel free to try
          */
-		var rex = /(?:(http|byond|https):\/\/)?([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?/ig;
+		
 		// Lets use jquery to find spans wtih the linkify class in the text and do a replace regex 
 		// on their html
 		var jqtext = $(message);
 		jqtext.find("span.linkify").html(function(index, oldhtml) {
-			return oldhtml.replace(rex, function (match, protocol, domain, querystring, matchindex, fullstring) {
+			return oldhtml.replace(urlregex, function (match, protocol, domain, querystring, matchindex, fullstring) {
 				// This sucks eggs, but it's the only way to detect links that are attached to an actual <a> element
 				// we can't linkify those because it would break asset cache serving
 				if(fullstring.substring(matchindex-5, matchindex-2) == "src") {
@@ -580,6 +590,8 @@ $(function() {
 	// Ghetto console ftw
 	$("#debugbutton").click(evaluate_dbg_console);
 	$("#debuglogEnable").click(set_debug_level);
+	
+	urlregex = /(?:(http|byond|https):\/\/)?([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?/ig;
 
 	//Hey look it's a controller loop!
 	setInterval(function() {
