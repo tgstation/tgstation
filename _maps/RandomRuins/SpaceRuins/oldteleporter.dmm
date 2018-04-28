@@ -5,7 +5,7 @@
 "b" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/ruin/space/oldteleporter)
+/area/space/nearstation)
 "c" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/oldteleporter)
@@ -29,7 +29,9 @@
 	},
 /area/ruin/space/oldteleporter)
 "h" = (
-/obj/machinery/computer/teleporter,
+/obj/machinery/computer/teleporter{
+	dir = 1
+	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/oldteleporter)
 "i" = (

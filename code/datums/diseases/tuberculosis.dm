@@ -10,7 +10,7 @@
 	cure_chance = 5//like hell are you getting out of hell
 	desc = "A rare highly transmittable virulent virus. Few samples exist, rumoured to be carefully grown and cultured by clandestine bio-weapon specialists. Causes fever, blood vomiting, lung damage, weight loss, and fatigue."
 	required_organs = list(/obj/item/organ/lungs)
-	severity = VIRUS_SEVERITY_BIOHAZARD
+	severity = DISEASE_SEVERITY_BIOHAZARD
 	bypasses_immunity = TRUE // TB primarily impacts the lungs; it's also bacterial or fungal in nature; viral immunity should do nothing.
 
 /datum/disease/tuberculosis/stage_act() //it begins
@@ -55,6 +55,6 @@
 				affected_mob.nutrition = max(affected_mob.nutrition - 100, 0)
 			if(prob(15))
 				to_chat(affected_mob, "<span class='danger'>[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit", "You feel like taking off some clothes...")]</span>")
-				affected_mob.bodytemperature += 40
+				affected_mob.adjust_bodytemperature(40)
 	return
 

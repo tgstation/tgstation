@@ -7,16 +7,16 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
 	fire_sound = 'sound/weapons/blastcannon.ogg'
-	needs_permit = FALSE
+	item_flags = NONE
 	clumsy_check = FALSE
 	randomspread = FALSE
 
 	var/obj/item/device/transfer_valve/bomb
 
-/obj/item/gun/blastcannon/New()
+/obj/item/gun/blastcannon/Initialize()
+	. = ..()
 	if(!pin)
 		pin = new
-	return ..()
 
 /obj/item/gun/blastcannon/Destroy()
 	if(bomb)
@@ -28,7 +28,7 @@
 	if(bomb)
 		bomb.forceMove(user.loc)
 		user.put_in_hands(bomb)
-		user.visible_message("<span class='warning'>[user] detaches the [bomb] from the [src]</span>")
+		user.visible_message("<span class='warning'>[user] detaches [bomb] from [src].</span>")
 		bomb = null
 	update_icon()
 	return ..()
@@ -50,9 +50,9 @@
 			to_chat(user, "<span class='warning'>What good would an incomplete bomb do?</span>")
 			return FALSE
 		if(!user.transferItemToLoc(O, src))
-			to_chat(user, "<span class='warning'>The [O] seems to be stuck to your hand!</span>")
+			to_chat(user, "<span class='warning'>[O] seems to be stuck to your hand!</span>")
 			return FALSE
-		user.visible_message("<span class='warning'>[user] attaches the [O] to the [src]!</span>")
+		user.visible_message("<span class='warning'>[user] attaches [O] to [src]!</span>")
 		bomb = O
 		update_icon()
 		return TRUE
@@ -85,8 +85,7 @@
 	playsound(user, "explosion", 100, 1)
 	var/turf/starting = get_turf(user)
 	var/turf/targturf = get_turf(target)
-	var/area/A = get_area(user)
-	var/log_str = "Blast wave fired from [ADMIN_COORDJMP(starting)] ([A.name]) at [ADMIN_COORDJMP(targturf)] ([target.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
+	var/log_str = "Blast wave fired from [ADMIN_COORDJMP(starting)] ([get_area_name(user, TRUE)]) at [ADMIN_COORDJMP(targturf)] ([target.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
 	message_admins(log_str)
 	log_game(log_str)
 	var/obj/item/projectile/blastwave/BW = new(loc, heavy, medium, light)

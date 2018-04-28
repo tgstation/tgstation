@@ -35,19 +35,19 @@
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
 		return
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		power_station = locate(/obj/machinery/teleport/station, get_step(src, dir))
+	for(var/direction in GLOB.cardinals)
+		power_station = locate(/obj/machinery/teleport/station, get_step(src, direction))
 		if(power_station)
 			break
 	return power_station
 
 /obj/machinery/teleport/hub/CollidedWith(atom/movable/AM)
-	if(z == ZLEVEL_CENTCOM)
+	if(is_centcom_level(z))
 		to_chat(AM, "You can't use this here.")
+		return
 	if(is_ready())
 		teleport(AM)
 		use_power(5000)
-	return
 
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
@@ -77,7 +77,7 @@
 						to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
 						human.set_species(/datum/species/fly)
 
-					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
+					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), EFFECT_IRRADIATE, 0)
 			calibrated = 0
 	return
 
@@ -127,13 +127,13 @@
 	efficiency = E - 1
 
 /obj/machinery/teleport/station/proc/link_console_and_hub()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		teleporter_hub = locate(/obj/machinery/teleport/hub, get_step(src, dir))
+	for(var/direction in GLOB.cardinals)
+		teleporter_hub = locate(/obj/machinery/teleport/hub, get_step(src, direction))
 		if(teleporter_hub)
 			teleporter_hub.link_power_station()
 			break
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		teleporter_console = locate(/obj/machinery/computer/teleporter, get_step(src, dir))
+	for(var/direction in GLOB.cardinals)
+		teleporter_console = locate(/obj/machinery/computer/teleporter, get_step(src, direction))
 		if(teleporter_console)
 			teleporter_console.link_power_station()
 			break
@@ -183,32 +183,24 @@
 	else
 		return ..()
 
-/obj/machinery/teleport/station/attack_paw()
-	src.attack_hand()
-
-/obj/machinery/teleport/station/attack_ai()
-	src.attack_hand()
-
-/obj/machinery/teleport/station/attack_hand(mob/user)
-	if(!panel_open)
-		toggle(user)
+/obj/machinery/teleport/station/interact(mob/user)
+	toggle(user)
 
 /obj/machinery/teleport/station/proc/toggle(mob/user)
 	if(stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
 		return
 	if (teleporter_console.target)
 		if(teleporter_hub.panel_open || teleporter_hub.stat & (BROKEN|NOPOWER))
-			visible_message("<span class='alert'>The teleporter hub isn't responding.</span>")
+			to_chat(user, "<span class='alert'>The teleporter hub isn't responding.</span>")
 		else
-			src.engaged = !src.engaged
+			engaged = !engaged
 			use_power(5000)
-			visible_message("<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")
+			to_chat(user, "<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")
 	else
-		visible_message("<span class='alert'>No target detected.</span>")
-		src.engaged = 0
+		to_chat(user, "<span class='alert'>No target detected.</span>")
+		engaged = FALSE
 	teleporter_hub.update_icon()
-	src.add_fingerprint(user)
-	return
+	add_fingerprint(user)
 
 /obj/machinery/teleport/station/power_change()
 	..()

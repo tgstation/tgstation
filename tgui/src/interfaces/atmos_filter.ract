@@ -9,23 +9,9 @@
     <span>{{Math.round(adata.pressure)}} kPa</span>
   </ui-section>
   <ui-section label='Filter'>
-    <ui-button state='{{data.filter_type == "none" ? "selected" : null}}'
-      action='filter' params='{"mode": ""}'>Nothing</ui-button>
-    <ui-button state='{{data.filter_type == "plasma" ? "selected" : null}}'
-      action='filter' params='{"mode": "/datum/gas/plasma"}'>Plasma</ui-button>
-    <ui-button state='{{data.filter_type == "o2" ? "selected" : null}}'
-      action='filter' params='{"mode": "/datum/gas/oxygen"}'>O2</ui-button>
-    <ui-button state='{{data.filter_type == "n2" ? "selected" : null}}'
-      action='filter' params='{"mode": "/datum/gas/nitrogen"}'>N2</ui-button>
-    <ui-button state='{{data.filter_type == "co2" ? "selected" : null}}'
-      action='filter' params='{"mode": "/datum/gas/carbon_dioxide"}'>CO2</ui-button>
-    <ui-button state='{{data.filter_type == "n2o" ? "selected" : null}}'
-      action='filter' params='{"mode": "/datum/gas/nitrous_oxide"}'>N2O</ui-button>
-	<ui-button state='{{data.filter_type == "bz" ? "selected" : null}}'
-      action='filter' params='{"mode": "/datum/gas/bz"}'>BZ</ui-button>
-	<ui-button state='{{data.filter_type == "freon" ? "selected" : null}}'
-      action='filter' params='{"mode": "/datum/gas/freon"}'>Freon</ui-button>
-	<ui-button state='{{data.filter_type == "water_vapor" ? "selected" : null}}'
-      action='filter' params='{"mode": "/datum/gas/water_vapor"}'>Water Vapor</ui-button>
+    {{#each data.filter_types}}
+      <ui-button state='{{selected ? "selected" : null}}'
+        action='filter' params='{"mode": {{id}}}'>{{name}}</ui-button>
+    {{/each}}
 	</ui-section>
 </ui-display>

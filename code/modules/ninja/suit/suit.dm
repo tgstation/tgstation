@@ -19,7 +19,7 @@ Contents:
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/stock_parts/cell)
 	slowdown = 1
 	resistance_flags = LAVA_PROOF | ACID_PROOF
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 100, acid = 100)
+	armor = list("melee" = 60, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 100, "acid" = 100)
 	strip_delay = 12
 
 	actions_types = list(/datum/action/item_action/initialize_ninja_suit, /datum/action/item_action/ninjasmoke, /datum/action/item_action/ninjaboost, /datum/action/item_action/ninjapulse, /datum/action/item_action/ninjastar, /datum/action/item_action/ninjanet, /datum/action/item_action/ninja_sword_recall, /datum/action/item_action/ninja_stealth, /datum/action/item_action/toggle_glove)
@@ -28,7 +28,7 @@ Contents:
 	var/mob/living/carbon/human/affecting = null
 	var/obj/item/stock_parts/cell/cell
 	var/datum/effect_system/spark_spread/spark_system
-	var/list/stored_research = list()//For stealing station research.
+	var/datum/techweb/stored_research
 	var/obj/item/disk/tech_disk/t_disk//To copy design onto disk.
 	var/obj/item/energy_katana/energyKatana //For teleporting the katana back to the ninja (It's an ability)
 
@@ -45,31 +45,30 @@ Contents:
 	var/s_delay = 40//How fast the suit does certain things, lower is faster. Can be overridden in specific procs. Also determines adverse probability.
 	var/a_transfer = 20//How much radium is used per adrenaline boost.
 	var/a_maxamount = 7//Maximum number of adrenaline boosts.
+	var/s_maxamount = 20//Maximum number of smoke bombs.
 
 		//Support function variables.
 	var/s_active = 0//Stealth off.
 	var/s_busy = FALSE//Is the suit busy with a process? Like AI hacking. Used for safety functions.
 
 		//Ability function variables.
-	var/s_bombs = 10//Number of starting ninja smoke bombs.
+	var/s_bombs = 10//Number of smoke bombs.
 	var/a_boost = 3//Number of adrenaline boosters.
 
 
 /obj/item/clothing/suit/space/space_ninja/get_cell()
 	return cell
 
-/obj/item/clothing/suit/space/space_ninja/New()
-	..()
+/obj/item/clothing/suit/space/space_ninja/Initialize()
+	. = ..()
 
 	//Spark Init
-	spark_system = new()
+	spark_system = new
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
 	//Research Init
 	stored_research = new()
-	for(var/T in subtypesof(/datum/tech))//Store up on research.
-		stored_research += new T(src)
 
 	//Cell Init
 	cell = new/obj/item/stock_parts/cell/high
@@ -97,7 +96,7 @@ Contents:
 //This proc prevents the suit from being taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/human/H)
 	if(!istype(H))
-		return 0
+		return FALSE
 	if(!is_ninja(H))
 		to_chat(H, "<span class='danger'><B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...</span>")
 		H.gib()
@@ -152,7 +151,7 @@ Contents:
 	..()
 	if(s_initialized)
 		if(user == affecting)
-			to_chat(user, "All systems operational. Current energy capacity: <B>[DisplayPower(cell.charge)]</B>.")
+			to_chat(user, "All systems operational. Current energy capacity: <B>[DisplayEnergy(cell.charge)]</B>.")
 			to_chat(user, "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>.")
 			to_chat(user, "There are <B>[s_bombs]</B> smoke bomb\s remaining.")
 			to_chat(user, "There are <B>[a_boost]</B> adrenaline booster\s remaining.")

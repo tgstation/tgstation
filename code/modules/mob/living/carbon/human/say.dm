@@ -7,8 +7,8 @@
 
 /mob/living/carbon/human/treat_message(message)
 	message = dna.species.handle_speech(message,src)
-	if(viruses.len)
-		for(var/datum/disease/pierrot_throat/D in viruses)
+	if(diseases.len)
+		for(var/datum/disease/pierrot_throat/D in diseases)
 			var/list/temp_message = splittext(message, " ") //List each word in the message
 			var/list/pick_list = list()
 			for(var/i = 1, i <= temp_message.len, i++) //Create a second list for excluding words down the line
@@ -39,21 +39,21 @@
 				return real_name
 		else
 			return real_name
-	if(mind && mind.changeling && mind.changeling.mimicing)
-		return mind.changeling.mimicing
+	if(mind)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling && changeling.mimicing )
+			return changeling.mimicing
 	if(GetSpecialVoice())
 		return GetSpecialVoice()
 	return real_name
 
 /mob/living/carbon/human/IsVocal()
-	CHECK_DNA_AND_SPECIES(src)
-
 	// how do species that don't breathe talk? magic, that's what.
-	if(!(NOBREATH in dna.species.species_traits) && !getorganslot("lungs"))
-		return 0
+	if(!has_trait(TRAIT_NOBREATH, SPECIES_TRAIT) && !getorganslot(ORGAN_SLOT_LUNGS))
+		return FALSE
 	if(mind)
 		return !mind.miming
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/proc/SetSpecialVoice(new_voice)
 	if(new_voice)

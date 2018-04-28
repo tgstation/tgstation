@@ -260,7 +260,6 @@
 				adjusted_contents++
 				numbered_contents.Add( new/datum/numbered_display(I) )
 
-	//var/mob/living/carbon/human/H = user
 	var/row_num = 0
 	var/col_count = min(7,storage_slots) -1
 	if(adjusted_contents > 7)
@@ -424,9 +423,7 @@
 		return	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W, 0 , user))
-		if(contents.len >= storage_slots) //don't use items on the backpack if they don't fit
-			return 1
-		return 0
+		return 1
 
 	handle_item_insertion(W, 0 , user)
 

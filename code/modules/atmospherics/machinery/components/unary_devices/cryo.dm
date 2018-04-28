@@ -7,18 +7,19 @@
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 350
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 30, "acid" = 30)
 	layer = ABOVE_WINDOW_LAYER
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
 	var/on = FALSE
 	var/autoeject = FALSE
 	var/volume = 100
 
 	var/efficiency = 1
-	var/sleep_factor = 750
-	var/unconscious_factor = 1000
+	var/sleep_factor = 0.00125
+	var/unconscious_factor = 0.001
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.3
 
@@ -41,7 +42,7 @@
 
 	radio = new(src)
 	radio.keyslot = new radio_key
-	radio.subspace_transmission = 1
+	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
@@ -77,7 +78,7 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
 	if(beaker)
-		beaker.forceMove(loc)
+		beaker.forceMove(drop_location())
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
@@ -93,28 +94,24 @@
 	if(occupant)
 		var/image/occupant_overlay
 
-		if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
+		if(ismonkey(occupant)) // Monkey
+			occupant_overlay = image(CRYOMOBS, "monkey")
+		else if(isalienadult(occupant))
+			if(isalienroyal(occupant)) // Queen and prae
+				occupant_overlay = image(CRYOMOBS, "alienq")
+			else if(isalienhunter(occupant)) // Hunter
+				occupant_overlay = image(CRYOMOBS, "alienh")
+			else if(isaliensentinel(occupant)) // Sentinel
+				occupant_overlay = image(CRYOMOBS, "aliens")
+			else // Drone or other
+				occupant_overlay = image(CRYOMOBS, "aliend")
+
+		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
 			occupant_overlay = image(occupant.icon, occupant.icon_state)
 			occupant_overlay.copy_overlays(occupant)
 
-		else if(ismonkey(occupant)) // Monkey
-			occupant_overlay = image(CRYOMOBS, "monkey")
-			occupant_overlay.copy_overlays(occupant)
-
-		else if(!isalienadult(occupant))
+		else
 			occupant_overlay = image(CRYOMOBS, "generic")
-
-		else if(isalienroyal(occupant)) // Queen and prae
-			occupant_overlay = image(CRYOMOBS, "alienq")
-
-		else if(isalienhunter(occupant)) // Hunter
-			occupant_overlay = image(CRYOMOBS, "alienh")
-
-		else if(isaliensentinel(occupant)) // Sentinel
-			occupant_overlay = image(CRYOMOBS, "aliens")
-
-		else // Drone or other
-			occupant_overlay = image(CRYOMOBS, "aliend")
 
 		occupant_overlay.dir = SOUTH
 		occupant_overlay.pixel_y = 22
@@ -177,17 +174,18 @@
 			open_machine()
 		return
 
-	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air1 = airs[1]
 
 	if(air1.gases.len)
 		if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
-			mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 2000)
-			mob_occupant.Unconscious((mob_occupant.bodytemperature / unconscious_factor) * 2000)
+			mob_occupant.Sleeping((mob_occupant.bodytemperature * sleep_factor) * 2000)
+			mob_occupant.Unconscious((mob_occupant.bodytemperature * unconscious_factor) * 2000)
 		if(beaker)
 			if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
-				beaker.reagents.trans_to(occupant, 1, 10 * efficiency) // Transfer reagents, multiplied because cryo magic.
+				beaker.reagents.trans_to(occupant, 1, efficiency * 0.25) // Transfer reagents.
 				beaker.reagents.reaction(occupant, VAPOR)
-				air1.gases[/datum/gas/oxygen][MOLES] -= 2 / efficiency //Let's use gas for this
+				air1.gases[/datum/gas/oxygen][MOLES] -= max(0,air1.gases[/datum/gas/oxygen][MOLES] - 2 / efficiency) //Let's use gas for this
+				air1.garbage_collect()
 			if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
 				reagent_transfer = 0
 
@@ -199,9 +197,9 @@
 	if(!on)
 		return
 
-	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air1 = airs[1]
 
-	if(!NODE1 || !AIR1 || !air1.gases.len || air1.gases[/datum/gas/oxygen][MOLES] < 5) // Turn off if the machine won't work.
+	if(!nodes[1] || !airs[1] || !air1.gases.len || air1.gases[/datum/gas/oxygen][MOLES] < 5) // Turn off if the machine won't work.
 		on = FALSE
 		update_icon()
 		return
@@ -221,9 +219,10 @@
 			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * temperature_delta * (air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
 
 			air1.temperature = max(air1.temperature - heat / air_heat_capacity, TCMB)
-			mob_occupant.bodytemperature = max(mob_occupant.bodytemperature + heat / heat_capacity, TCMB)
+			mob_occupant.adjust_bodytemperature(heat / heat_capacity, TCMB)
 
-		air1.gases[/datum/gas/oxygen][MOLES] -= 0.5 / efficiency // Magically consume gas? Why not, we run on cryo magic.
+		air1.gases[/datum/gas/oxygen][MOLES] = max(0,air1.gases[/datum/gas/oxygen][MOLES] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
+		air1.garbage_collect()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/power_change()
 	..()
@@ -293,10 +292,15 @@
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
 		return
-	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-o", "pod-off", I) || exchange_parts(user, I)) \
+	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", I) || exchange_parts(user, I)) \
 		|| default_change_direction_wrench(user, I) \
 		|| default_pry_open(I) \
 		|| default_deconstruction_crowbar(I))
+		update_icon()
+		return
+	else if(istype(I, /obj/item/screwdriver))
+		to_chat(user, "<span class='notice'>You can't access the maintenance panel while the pod is " \
+		+ (on ? "active" : (occupant ? "full" : "open")) + ".</span>")
 		return
 	return ..()
 
@@ -339,14 +343,14 @@
 		data["occupant"]["toxLoss"] = round(mob_occupant.getToxLoss(), 1)
 		data["occupant"]["fireLoss"] = round(mob_occupant.getFireLoss(), 1)
 		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
-		if(mob_occupant.bodytemperature < 225)
+		if(mob_occupant.bodytemperature < TCRYO)
 			data["occupant"]["temperaturestatus"] = "good"
-		else if(mob_occupant.bodytemperature < 273.15)
+		else if(mob_occupant.bodytemperature < T0C)
 			data["occupant"]["temperaturestatus"] = "average"
 		else
 			data["occupant"]["temperaturestatus"] = "bad"
 
-	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air1 = airs[1]
 	data["cellTemperature"] = round(air1.temperature, 1)
 
 	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
@@ -378,7 +382,7 @@
 			. = TRUE
 		if("ejectbeaker")
 			if(beaker)
-				beaker.forceMove(loc)
+				beaker.forceMove(drop_location())
 				if(Adjacent(usr) && !issilicon(usr))
 					usr.put_in_hands(beaker)
 				beaker = null
@@ -398,10 +402,26 @@
 	return 0 // you can't see the pipe network when inside a cryo cell.
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/return_temperature()
-	var/datum/gas_mixture/G = AIR1
+	var/datum/gas_mixture/G = airs[1]
 
 	if(G.total_moles() > 10)
 		return G.temperature
 	return ..()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/default_change_direction_wrench(mob/user, obj/item/wrench/W)
+	. = ..()
+	if(.)
+		SetInitDirections()
+		var/obj/machinery/atmospherics/node = nodes[1]
+		if(node)
+			node.disconnect(src)
+			nodes[1] = null
+		nullifyPipenet(parents[1])
+		atmosinit()
+		node = nodes[1]
+		if(node)
+			node.atmosinit()
+			node.addMember(src)
+		build_network()
 
 #undef CRYOMOBS

@@ -32,7 +32,7 @@
 
 
  ////////// wildwest papers
- 
+
 /obj/item/paper/fluff/awaymissions/wildwest/grinder
 	info = "meat grinder requires sacri"
 
@@ -70,9 +70,7 @@
 	var/chargesa = 1
 	var/insistinga = 0
 
-/obj/machinery/wish_granter_dark/attack_hand(mob/living/carbon/human/user)
-	usr.set_machine(src)
-
+/obj/machinery/wish_granter_dark/interact(mob/living/carbon/human/user)
 	if(chargesa <= 0)
 		to_chat(user, "The Wish Granter lies silent.")
 		return
@@ -113,18 +111,12 @@
 			if("To Kill")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 				to_chat(user, "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart.")
-				SSticker.mode.traitors += user.mind
-				user.mind.special_role = "traitor"
-				var/datum/objective/hijack/hijack = new
-				hijack.owner = user.mind
-				user.mind.objectives += hijack
-				to_chat(user, "<B>Your inhibitions are swept away, the bonds of loyalty broken, you are free to murder as you please!</B>")
-				user.mind.announce_objectives()
+				user.mind.add_antag_datum(/datum/antagonist/wishgranter)
 				user.set_species(/datum/species/shadow)
 			if("Peace")
 				to_chat(user, "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>")
 				to_chat(user, "You feel as if you just narrowly avoided a terrible fate...")
-				for(var/mob/living/simple_animal/hostile/faithless/F in GLOB.mob_list)
+				for(var/mob/living/simple_animal/hostile/faithless/F in GLOB.mob_living_list)
 					F.death()
 
 
@@ -153,7 +145,7 @@
 	var/mob/living/carbon/human/M = AM
 
 	if(M.stat != DEAD && M.ckey)
-		visible_message("<span class='warning'>[M] triggered the [src]!</span>")
+		visible_message("<span class='warning'>[M] triggered [src]!</span>")
 		triggered = 1
 
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread

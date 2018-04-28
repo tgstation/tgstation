@@ -12,7 +12,7 @@
 	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
 	var/on = TRUE
 	var/code = 2
-	var/frequency = 1449
+	var/frequency = FREQ_ELECTROPACK
 	var/shock_cooldown = 0
 
 /obj/item/device/electropack/suicide_act(mob/user)
@@ -21,19 +21,20 @@
 
 /obj/item/device/electropack/Initialize()
 	. = ..()
-	SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
+	SSradio.add_object(src, frequency, RADIO_SIGNALER)
 
 /obj/item/device/electropack/Destroy()
 	SSradio.remove_object(src, frequency)
 	return ..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/device/electropack/attack_hand(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.back)
 			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
 			return
-	..()
+	return ..()
 
 /obj/item/device/electropack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/clothing/head/helmet))
@@ -67,7 +68,7 @@
 		if(href_list["freq"])
 			SSradio.remove_object(src, frequency)
 			frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
-			SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
+			SSradio.add_object(src, frequency, RADIO_SIGNALER)
 		else
 			if(href_list["code"])
 				code += text2num(href_list["code"])
@@ -98,7 +99,7 @@
 	return
 
 /obj/item/device/electropack/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption != code)
+	if(!signal || signal.data["code"] != code)
 		return
 
 	if(isliving(loc) && on)
@@ -127,19 +128,19 @@
 		return
 	user.set_machine(src)
 	var/dat = {"<TT>Turned [on ? "On" : "Off"] -
-<A href='?src=\ref[src];power=1'>Toggle</A><BR>
+<A href='?src=[REF(src)];power=1'>Toggle</A><BR>
 <B>Frequency/Code</B> for electropack:<BR>
 Frequency:
-<A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(frequency)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
-<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+<A href='byond://?src=[REF(src)];freq=-10'>-</A>
+<A href='byond://?src=[REF(src)];freq=-2'>-</A> [format_frequency(frequency)]
+<A href='byond://?src=[REF(src)];freq=2'>+</A>
+<A href='byond://?src=[REF(src)];freq=10'>+</A><BR>
 
 Code:
-<A href='byond://?src=\ref[src];code=-5'>-</A>
-<A href='byond://?src=\ref[src];code=-1'>-</A> [code]
-<A href='byond://?src=\ref[src];code=1'>+</A>
-<A href='byond://?src=\ref[src];code=5'>+</A><BR>
+<A href='byond://?src=[REF(src)];code=-5'>-</A>
+<A href='byond://?src=[REF(src)];code=-1'>-</A> [code]
+<A href='byond://?src=[REF(src)];code=1'>+</A>
+<A href='byond://?src=[REF(src)];code=5'>+</A><BR>
 </TT>"}
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")

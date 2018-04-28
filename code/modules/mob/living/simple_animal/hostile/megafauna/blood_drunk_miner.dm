@@ -1,5 +1,5 @@
 #define MINER_DASH_RANGE 4
-#define MEDAL_PREFIX "Blood-drunk Miner"
+
 /*
 
 BLOOD-DRUNK MINER
@@ -28,6 +28,7 @@ Difficulty: Medium
 	icon_state = "miner"
 	icon_living = "miner"
 	icon = 'icons/mob/broadMobs.dmi'
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	light_color = "#E4C7C5"
 	movement_type = GROUND
 	speak_emote = list("roars")
@@ -43,7 +44,7 @@ Difficulty: Medium
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
-	medal_type = MEDAL_PREFIX
+	medal_type = BOSS_MEDAL_MINER
 	var/obj/item/melee/transforming/cleaving_saw/miner/miner_saw
 	var/time_until_next_transform = 0
 	var/dashing = FALSE
@@ -93,7 +94,7 @@ Difficulty: Medium
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Move(atom/newloc)
-	if(dashing || (newloc && newloc.z == z && (istype(newloc, /turf/open/lava) || istype(newloc, /turf/open/chasm)))) //we're not stupid!
+	if(dashing || (newloc && newloc.z == z && (islava(newloc) || ischasm(newloc)))) //we're not stupid!
 		return FALSE
 	return ..()
 
@@ -114,7 +115,7 @@ Difficulty: Medium
 		if(L.stat == DEAD)
 			visible_message("<span class='danger'>[src] butchers [L]!</span>",
 			"<span class='userdanger'>You butcher [L], restoring your health!</span>")
-			if(!(z in GLOB.station_z_levels) || client) //NPC monsters won't heal while on station
+			if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 				if(guidance)
 					adjustHealth(-L.maxHealth)
 				else
@@ -129,7 +130,7 @@ Difficulty: Medium
 	INVOKE_ASYNC(src, .proc/quick_attack_loop)
 	return TRUE
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!used_item && !isturf(A))
 		used_item = miner_saw
 	..()
@@ -159,18 +160,18 @@ Difficulty: Medium
 		Shoot(target)
 		changeNext_move(CLICK_CD_RANGE)
 
+//I'm still of the belief that this entire proc needs to be wiped from existence.
+//  do not take my touching of it to be endorsement of it. ~mso
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/quick_attack_loop()
-	if(next_move <= world.time)
+	while(!QDELETED(target) && next_move <= world.time) //this is done this way because next_move can change to be sooner while we sleep.
 		stoplag(1)
-		.() //retry
-		return
-	sleep((next_move - world.time) * 1.5)
+	sleep((next_move - world.time) * 1.5) //but don't ask me what the fuck this is about
 	if(QDELETED(target))
 		return
 	if(dashing || next_move > world.time || !Adjacent(target))
 		if(dashing && next_move <= world.time)
 			next_move = world.time + 1
-		.() //recurse
+		INVOKE_ASYNC(src, .proc/quick_attack_loop) //lets try that again.
 		return
 	AttackingTarget()
 
@@ -186,7 +187,7 @@ Difficulty: Medium
 		var/turf_dist_to_target = 0
 		if(!QDELETED(dash_target))
 			turf_dist_to_target += get_dist(dash_target, O)
-		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !istype(O, /turf/open/lava) && !istype(O, /turf/open/chasm))
+		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !islava(O) && !ischasm(O))
 			var/valid = TRUE
 			for(var/turf/T in getline(own_turf, O))
 				if(is_blocked_turf(T, TRUE))

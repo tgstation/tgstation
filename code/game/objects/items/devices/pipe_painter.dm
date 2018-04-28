@@ -1,5 +1,3 @@
-GLOBAL_LIST_INIT(pipe_paint_colors, list("grey"=rgb(255,255,255), "red"=rgb(255,0,0), "blue"=rgb(0,0,255), "cyan"=rgb(0,256,249), "green"=rgb(30,255,0), "yellow"=rgb(255,198,0), "purple"=rgb(130,43,255)))
-
 /obj/item/device/pipe_painter
 	name = "pipe painter"
 	icon = 'icons/obj/bureaucracy.dmi'

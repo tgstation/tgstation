@@ -8,6 +8,7 @@
 	var/vmode = 1
 	circuit = /obj/item/circuitboard/computer/stockexchange
 	clockwork = TRUE //it'd look weird
+	interaction_flags_atom = INTERACT_ATOM_REQUIRES_DEXTERITY | INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_REQUIRES_ANCHORED
 
 	light_color = LIGHT_COLOR_GREEN
 
@@ -20,17 +21,8 @@
 		return 0
 	return SSshuttle.points
 
-/obj/machinery/computer/stockexchange/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/stockexchange/attack_robot(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/stockexchange/attack_hand(var/mob/user)
-	if(..())
-		return
-	user.machine = src
-
+/obj/machinery/computer/stockexchange/ui_interact(mob/user)
+	. = ..()
 	var/css={"<style>
 .change {
 	font-weight: bold;
@@ -68,8 +60,8 @@ a.updated {
 		var/list/LR = GLOB.stockExchange.last_read[S]
 		if (!(logged_in in LR))
 			LR[logged_in] = 0
-	dat += "<b>View mode:</b> <a href='?src=\ref[src];cycleview=1'>[vmode ? "Compact" : "Full"]</a> "
-	dat += "<b>Stock Transaction Log:</b> <a href='?src=\ref[src];show_logs=1'>Check</a><br>"
+	dat += "<b>View mode:</b> <a href='?src=[REF(src)];cycleview=1'>[vmode ? "Compact" : "Full"]</a> "
+	dat += "<b>Stock Transaction Log:</b> <a href='?src=[REF(src)];show_logs=1'>Check</a><br>"
 
 	dat += "<i>This is a work in progress. Certain features may not be available.</i>"
 
@@ -83,12 +75,12 @@ a.updated {
 			dat += "<hr /><div class='stock'><span class='company'>[S.name]</span> <span class='s_company'>([S.short_name])</span>[S.bankrupt ? " <b style='color:red'>BANKRUPT</b>" : null]<br>"
 			if (S.last_unification)
 				dat += "<b>Unified shares</b> [DisplayTimeText(world.time - S.last_unification)] ago.<br>"
-			dat += "<b>Current value per share:</b> [S.current_value] | <a href='?src=\ref[src];viewhistory=\ref[S]'>View history</a><br><br>"
+			dat += "<b>Current value per share:</b> [S.current_value] | <a href='?src=[REF(src)];viewhistory=[REF(S)]'>View history</a><br><br>"
 			dat += "You currently own <b>[mystocks]</b> shares in this company. There are [S.available_shares] purchasable shares on the market currently.<br>"
 			if (S.bankrupt)
 				dat += "You cannot buy or sell shares in a bankrupt company!<br><br>"
 			else
-				dat += "<a href='?src=\ref[src];buyshares=\ref[S]'>Buy shares</a> | <a href='?src=\ref[src];sellshares=\ref[S]'>Sell shares</a><br><br>"
+				dat += "<a href='?src=[REF(src)];buyshares=[REF(S)]'>Buy shares</a> | <a href='?src=[REF(src)];sellshares=[REF(S)]'>Sell shares</a><br><br>"
 			dat += "<b>Prominent products:</b><br>"
 			for (var/prod in S.products)
 				dat += "<i>[prod]</i><br>"
@@ -105,7 +97,7 @@ a.updated {
 						if (E.last_change > lrt && !E.hidden)
 							news = 1
 							break
-			dat += "<a href='?src=\ref[src];archive=\ref[S]'>View news archives</a>[news ? " <span style='color:red'>(updated)</span>" : null]</div>"
+			dat += "<a href='?src=[REF(src)];archive=[REF(S)]'>View news archives</a>[news ? " <span style='color:red'>(updated)</span>" : null]</div>"
 	else if (vmode == 1)
 		dat += "<b>Actions:</b> + Buy, - Sell, (A)rchives, (H)istory<br><br>"
 		dat += "<table class='stable'>"
@@ -159,8 +151,8 @@ a.updated {
 			if (S.bankrupt)
 				dat += "<span class='linkOff'>+</span> <span class='linkOff'>-</span> "
 			else
-				dat += "<a href='?src=\ref[src];buyshares=\ref[S]'>+</a> <a href='?src=\ref[src];sellshares=\ref[S]'>-</a> "
-			dat += "<a href='?src=\ref[src];archive=\ref[S]' class='[news ? "updated" : "default"]'>(A)</a> <a href='?src=\ref[src];viewhistory=\ref[S]'>(H)</a></td>"
+				dat += "<a href='?src=[REF(src)];buyshares=[REF(S)]'>+</a> <a href='?src=[REF(src)];sellshares=[REF(S)]'>-</a> "
+			dat += "<a href='?src=[REF(src)];archive=[REF(S)]' class='[news ? "updated" : "default"]'>(A)</a> <a href='?src=[REF(src)];viewhistory=[REF(S)]'>(H)</a></td>"
 
 			dat += "</tr>"
 
@@ -171,7 +163,6 @@ a.updated {
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/stockexchange/proc/sell_some_shares(var/datum/stock/S, var/mob/user)
 	if (!user || !S)
@@ -275,7 +266,7 @@ a.updated {
 			sell_some_shares(S, usr)
 
 	if (href_list["show_logs"])
-		var/dat = "<html><head><title>Stock Transaction Logs</title></head><body><h2>Stock Transaction Logs</h2><div><a href='?src=\ref[src];show_logs=1'>Refresh</a></div><br>"
+		var/dat = "<html><head><title>Stock Transaction Logs</title></head><body><h2>Stock Transaction Logs</h2><div><a href='?src=[REF(src)];show_logs=1'>Refresh</a></div><br>"
 		for(var/D in GLOB.stockExchange.logs)
 			var/datum/stock_log/L = D
 			if(istype(L, /datum/stock_log/buy))
@@ -297,7 +288,7 @@ a.updated {
 		if (logged_in && logged_in != "")
 			var/list/LR = GLOB.stockExchange.last_read[S]
 			LR[logged_in] = world.time
-		var/dat = "<html><head><title>News feed for [S.name]</title></head><body><h2>News feed for [S.name]</h2><div><a href='?src=\ref[src];archive=\ref[S]'>Refresh</a></div>"
+		var/dat = "<html><head><title>News feed for [S.name]</title></head><body><h2>News feed for [S.name]</h2><div><a href='?src=[REF(src)];archive=[REF(S)]'>Refresh</a></div>"
 		dat += "<div><h3>Events</h3>"
 		var/p = 0
 		for (var/datum/stockEvent/E in S.events)

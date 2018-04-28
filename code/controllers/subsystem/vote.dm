@@ -158,7 +158,7 @@ SUBSYSTEM_DEF(vote)
 
 			var/admin = FALSE
 			var/ckey = ckey(initiator_key)
-			if((GLOB.admin_datums[ckey]) || (ckey in GLOB.deadmins))
+			if(GLOB.admin_datums[ckey])
 				admin = TRUE
 
 			if(next_allowed_time > world.time && !admin)
@@ -190,13 +190,14 @@ SUBSYSTEM_DEF(vote)
 			text += "\n[question]"
 		log_vote(text)
 		var/vp = CONFIG_GET(number/vote_period)
-		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [DisplayTimeText(vp)] to vote.</font>")
+		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=[REF(src)]'>here</a> to place your votes.\nYou have [DisplayTimeText(vp)] to vote.</font>")
 		time_remaining = round(vp/10)
 		for(var/c in GLOB.clients)
 			var/client/C = c
 			var/datum/action/vote/V = new
 			if(question)
 				V.name = "Vote: [question]"
+			C.player_details.player_actions += V
 			V.Grant(C.mob)
 			generated_actions += V
 		return 1
@@ -223,36 +224,36 @@ SUBSYSTEM_DEF(vote)
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
-			. += "<li><a href='?src=\ref[src];vote=[i]'>[choices[i]]</a> ([votes] votes)</li>"
+			. += "<li><a href='?src=[REF(src)];vote=[i]'>[choices[i]]</a> ([votes] votes)</li>"
 		. += "</ul><hr>"
 		if(admin)
-			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
+			. += "(<a href='?src=[REF(src)];vote=cancel'>Cancel Vote</a>) "
 	else
 		. += "<h2>Start a vote:</h2><hr><ul><li>"
 		//restart
 		var/avr = CONFIG_GET(flag/allow_vote_restart)
 		if(trialmin || avr)
-			. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
+			. += "<a href='?src=[REF(src)];vote=restart'>Restart</a>"
 		else
 			. += "<font color='grey'>Restart (Disallowed)</font>"
 		if(trialmin)
-			. += "\t(<a href='?src=\ref[src];vote=toggle_restart'>[avr ? "Allowed" : "Disallowed"]</a>)"
+			. += "\t(<a href='?src=[REF(src)];vote=toggle_restart'>[avr ? "Allowed" : "Disallowed"]</a>)"
 		. += "</li><li>"
 		//gamemode
 		var/avm = CONFIG_GET(flag/allow_vote_mode)
 		if(trialmin || avm)
-			. += "<a href='?src=\ref[src];vote=gamemode'>GameMode</a>"
+			. += "<a href='?src=[REF(src)];vote=gamemode'>GameMode</a>"
 		else
 			. += "<font color='grey'>GameMode (Disallowed)</font>"
 		if(trialmin)
-			. += "\t(<a href='?src=\ref[src];vote=toggle_gamemode'>[avm ? "Allowed" : "Disallowed"]</a>)"
+			. += "\t(<a href='?src=[REF(src)];vote=toggle_gamemode'>[avm ? "Allowed" : "Disallowed"]</a>)"
 
 		. += "</li>"
 		//custom
 		if(trialmin)
-			. += "<li><a href='?src=\ref[src];vote=custom'>Custom</a></li>"
+			. += "<li><a href='?src=[REF(src)];vote=custom'>Custom</a></li>"
 		. += "</ul><hr>"
-	. += "<a href='?src=\ref[src];vote=close' style='position:absolute;right:50px'>Close</a>"
+	. += "<a href='?src=[REF(src)];vote=close' style='position:absolute;right:50px'>Close</a>"
 	return .
 
 
@@ -290,6 +291,7 @@ SUBSYSTEM_DEF(vote)
 	for(var/v in generated_actions)
 		var/datum/action/vote/V = v
 		if(!QDELETED(V))
+			V.remove_from_client()
 			V.Remove(V.owner)
 	generated_actions = list()
 
@@ -309,7 +311,16 @@ SUBSYSTEM_DEF(vote)
 /datum/action/vote/Trigger()
 	if(owner)
 		owner.vote()
+		remove_from_client()
 		Remove(owner)
 
 /datum/action/vote/IsAvailable()
 	return 1
+
+/datum/action/vote/proc/remove_from_client()
+	if(owner.client)
+		owner.client.player_details.player_actions -= src
+	else if(owner.ckey)
+		var/datum/player_details/P = GLOB.player_details[owner.ckey]
+		if(P)
+			P.player_actions -= src

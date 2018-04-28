@@ -18,12 +18,8 @@
 	else
 		return ..()
 
-/obj/machinery/computer/aifixer/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/aifixer/interact(mob/user)
+/obj/machinery/computer/aifixer/ui_interact(mob/user)
+	. = ..()
 
 	var/dat = ""
 
@@ -34,6 +30,12 @@
 
 		if (src.occupier.laws.zeroth)
 			laws += "<b>0:</b> [src.occupier.laws.zeroth]<BR>"
+
+		for (var/index = 1, index <= src.occupier.laws.hacked.len, index++)
+			var/law = src.occupier.laws.hacked[index]
+			if (length(law) > 0)
+				var/num = ionnum()
+				laws += "<b>[num]:</b> [law]<BR>"
 
 		for (var/index = 1, index <= src.occupier.laws.ion.len, index++)
 			var/law = src.occupier.laws.ion[index]
@@ -61,10 +63,10 @@
 		else
 			dat += "<span class='good'>AI functional</span>"
 		if (!src.active)
-			dat += {"<br><br><A href='byond://?src=\ref[src];fix=1'>Begin Reconstruction</A>"}
+			dat += {"<br><br><A href='byond://?src=[REF(src)];fix=1'>Begin Reconstruction</A>"}
 		else
 			dat += "<br><br>Reconstruction in process, please wait.<br>"
-	dat += {"<br><A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+	dat += {"<br><A href='?src=[REF(user)];mach_close=computer'>Close</A>"}
 	var/datum/browser/popup = new(user, "computer", "AI System Integrity Restorer", 400, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -78,7 +80,6 @@
 	occupier.adjustToxLoss(-1, 0)
 	occupier.adjustBruteLoss(-1, 0)
 	occupier.updatehealth()
-	occupier.updatehealth()
 	if(occupier.health >= 0 && occupier.stat == DEAD)
 		occupier.revive()
 	return occupier.health < 100
@@ -86,9 +87,11 @@
 /obj/machinery/computer/aifixer/process()
 	if(..())
 		if(active)
+			var/oldstat = occupier.stat
 			active = Fix()
+			if(oldstat != occupier.stat)
+				update_icon()
 		updateDialog()
-		update_icon()
 
 /obj/machinery/computer/aifixer/Topic(href, href_list)
 	if(..())
@@ -98,6 +101,7 @@
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
 		active = TRUE
 		add_fingerprint(usr)
+	updateUsrDialog()
 
 /obj/machinery/computer/aifixer/update_icon()
 	..()

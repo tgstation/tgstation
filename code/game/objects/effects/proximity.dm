@@ -63,7 +63,7 @@
 	for(var/I in 1 to old_checkers_len)
 		if(I <= old_checkers_used)
 			var/obj/effect/abstract/proximity_checker/pc = checkers_local[I]
-			pc.loc = turfs[I]
+			pc.forceMove(turfs[I])
 		else
 			qdel(checkers_local[I])	//delete the leftovers
 

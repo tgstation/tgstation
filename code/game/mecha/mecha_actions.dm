@@ -138,7 +138,7 @@
 	chassis.toggle_strafe()
 
 /obj/mecha/AltClick(mob/living/user)
-	if(user == occupant)
+	if((user == occupant) && user.canUseTopic(src))
 		toggle_strafe()
 
 /obj/mecha/proc/toggle_strafe()
@@ -209,7 +209,7 @@
 		chassis.leg_overload_mode = 0
 		chassis.bumpsmash = 0
 		chassis.step_in = initial(chassis.step_in)
-		chassis.step_energy_drain = initial(chassis.step_energy_drain)
+		chassis.step_energy_drain = chassis.normal_step_energy_drain
 		chassis.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
 	UpdateButtonIcon()
 
@@ -244,7 +244,7 @@
 			owner.client.change_view(12)
 			SEND_SOUND(owner, sound('sound/mecha/imag_enh.ogg',volume=50))
 		else
-			owner.client.change_view(world.view) //world.view - default mob view size
+			owner.client.change_view(CONFIG_GET(string/default_view)) //world.view - default mob view size
 		UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_switch_damtype

@@ -24,16 +24,17 @@
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
 	flags_1 = HEAR_1
-	var/can_move = 1
+	var/can_move = 0 //time of next allowed movement
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
+	var/normal_step_energy_drain = 10 //How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
 	var/step_energy_drain = 10
 	var/melee_energy_drain = 15
 	var/overload_step_energy_drain_min = 100
 	max_integrity = 300 //max_integrity is base health
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
-	armor = list(melee = 20, bullet = 10, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/obj/item/stock_parts/cell/cell
 	var/state = 0
@@ -136,8 +137,8 @@
 	log_message("[src.name] created.")
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
@@ -205,15 +206,15 @@
 
 /obj/mecha/CheckParts(list/parts_list)
 	..()
-	var/obj/item/C = locate(/obj/item/stock_parts/cell) in contents
-	cell = C
+	cell = locate(/obj/item/stock_parts/cell) in contents
 	var/obj/item/stock_parts/scanning_module/SM = locate() in contents
 	var/obj/item/stock_parts/capacitor/CP = locate() in contents
 	if(SM)
-		step_energy_drain = 20 - (5 * SM.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
+		normal_step_energy_drain = 20 - (5 * SM.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
+		step_energy_drain = normal_step_energy_drain
 		qdel(SM)
 	if(CP)
-		armor["energy"] += (CP.rating * 10) //Each level of capacitor protects the mech against emp by 10%
+		armor = armor.modifyRating(energy = (CP.rating * 10)) //Each level of capacitor protects the mech against emp by 10%
 		qdel(CP)
 
 ////////////////////////
@@ -229,9 +230,7 @@
 		C.forceMove(src)
 		cell = C
 		return
-	cell = new(src)
-	cell.charge = 15000
-	cell.maxcharge = 15000
+	cell = new /obj/item/stock_parts/cell/high/plus(src)
 
 /obj/mecha/proc/add_cabin()
 	cabin_air = new
@@ -247,7 +246,7 @@
 	radio.name = "[src] radio"
 	radio.icon = icon
 	radio.icon_state = icon_state
-	radio.subspace_transmission = 1
+	radio.subspace_transmission = TRUE
 
 /obj/mecha/proc/can_use(mob/user)
 	if(user != occupant)
@@ -371,15 +370,21 @@
 				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 3)
 			else
 				occupant.clear_alert("mech damage")
-		var/actual_loc = occupant.loc
-		if(istype(actual_loc, /obj/item/device/mmi))
-			var/obj/item/device/mmi/M = actual_loc
-			actual_loc = M.mecha
-		if(actual_loc != src) //something went wrong
-			occupant.clear_alert("charge")
-			occupant.clear_alert("mech damage")
-			RemoveActions(occupant, human_occupant=1)
-			occupant = null
+		var/atom/checking = occupant.loc
+		// recursive check to handle all cases regarding very nested occupants,
+		// such as brainmob inside brainitem inside MMI inside mecha
+		while (!isnull(checking))
+			if (isturf(checking))
+				// hit a turf before hitting the mecha, seems like they have
+				// been moved out
+				occupant.clear_alert("charge")
+				occupant.clear_alert("mech damage")
+				RemoveActions(occupant, human_occupant=1)
+				occupant = null
+				break
+			else if (checking == src)
+				break  // all good
+			checking = checking.loc
 
 	if(lights)
 		var/lights_energy_drain = 2
@@ -435,11 +440,19 @@
 		target = safepick(view(3,target))
 		if(!target)
 			return
+
+	var/mob/living/L = user
 	if(!Adjacent(target))
 		if(selected && selected.is_ranged())
+			if(L.has_trait(TRAIT_PACIFISM) && selected.harmful)
+				to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+				return
 			if(selected.action(target,params))
 				selected.start_cooldown()
 	else if(selected && selected.is_melee())
+		if(isliving(target) && selected.harmful && L.has_trait(TRAIT_PACIFISM))
+			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+			return
 		if(selected.action(target,params))
 			selected.start_cooldown()
 	else
@@ -502,7 +515,7 @@
 	return domove(direction)
 
 /obj/mecha/proc/domove(direction)
-	if(!can_move)
+	if(can_move >= world.time)
 		return 0
 	if(!Process_Spacemove(direction))
 		return 0
@@ -520,20 +533,18 @@
 		return 0
 
 	var/move_result = 0
+	var/oldloc = loc
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
 	else if(dir != direction && !strafe)
 		move_result = mechturn(direction)
 	else
 		move_result = mechstep(direction)
-	if(move_result)
+	if(move_result || loc != oldloc)// halfway done diagonal move still returns false
 		use_power(step_energy_drain)
-		can_move = 0
-		spawn(step_in)
-			can_move = 1
+		can_move = world.time + step_in
 		return 1
 	return 0
-
 
 /obj/mecha/proc/mechturn(direction)
 	setDir(direction)
@@ -573,9 +584,9 @@
 		if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
 			if(nextsmash < world.time)
 				obstacle.mech_melee_attack(src)
-				if(!obstacle || !obstacle.density)
-					step(src,dir)
 				nextsmash = world.time + smashcooldown
+				if(!obstacle || obstacle.CanPass(src,get_step(src,dir)))
+					step(src,dir)
 		if(isobj(obstacle))
 			var/obj/O = obstacle
 			if(!O.anchored)
@@ -645,7 +656,7 @@
 			to_chat(user, "[B.get_mecha_info()]")
 			break
 		//Nothing like a big, red link to make the player feel powerful!
-		to_chat(user, "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>")
+		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'><span class='userdanger'>ASSUME DIRECT CONTROL?</span></a><br>")
 	else
 		examine(user)
 		if(occupant)
@@ -659,7 +670,7 @@
 		if(!can_control_mech)
 			to_chat(user, "<span class='warning'>You cannot control exosuits without AI control beacons installed.</span>")
 			return
-		to_chat(user, "<a href='?src=\ref[user];ai_take_control=\ref[src]'><span class='boldnotice'>Take control of exosuit?</span></a><br>")
+		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'><span class='boldnotice'>Take control of exosuit?</span></a><br>")
 
 /obj/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(!..())
@@ -748,7 +759,7 @@
 		icon_state = initial(icon_state)
 		occupant = pilot_mob
 		pilot_mob.mecha = src
-		pilot_mob.loc = src
+		pilot_mob.forceMove(src)
 		GrantActions(pilot_mob)//needed for checks, and incase a badmin puts somebody in the mob
 
 /obj/mecha/proc/aimob_exit_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
@@ -959,7 +970,7 @@
 		if(istype(mob_container, /obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
-				L.loc = mmi
+				L.forceMove(mmi)
 				L.reset_perspective()
 			mmi.mecha = null
 			mmi.update_icon()
@@ -968,7 +979,7 @@
 		setDir(dir_in)
 
 	if(L && L.client)
-		L.client.change_view(world.view)
+		L.client.change_view(CONFIG_GET(string/default_view))
 		zoom_mode = 0
 
 /////////////////////////
@@ -999,7 +1010,7 @@
 
 /obj/mecha/proc/log_message(message as text,red=null)
 	log.len++
-	log[log.len] = list("time"="[worldtime2text()]","date","year"="[GLOB.year_integer+540]","message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
+	log[log.len] = list("time"="[station_time_timestamp()]","date","year"="[GLOB.year_integer+540]","message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)

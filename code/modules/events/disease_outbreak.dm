@@ -13,7 +13,7 @@
 	var/max_severity = 3
 
 
-/datum/round_event/disease_outbreak/announce()
+/datum/round_event/disease_outbreak/announce(fake)
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak7.ogg')
 
 /datum/round_event/disease_outbreak/setup()
@@ -22,27 +22,27 @@
 
 /datum/round_event/disease_outbreak/start()
 	var/advanced_virus = FALSE
-	max_severity = 3 + max(Floor((world.time - control.earliest_start)/6000),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
+	max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
 	if(prob(20 + (10 * max_severity)))
 		advanced_virus = TRUE
 
 	if(!virus_type && !advanced_virus)
 		virus_type = pick(/datum/disease/dnaspread, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
 
-	for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
+	for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
 		var/turf/T = get_turf(H)
 		if(!T)
 			continue
-		if(!(T.z in GLOB.station_z_levels))
+		if(!is_station_level(T.z))
 			continue
 		if(!H.client)
 			continue
 		if(H.stat == DEAD)
 			continue
-		if(VIRUSIMMUNE in H.dna.species.species_traits) //Don't pick someone who's virus immune, only for it to not do anything.
+		if(H.has_trait(TRAIT_VIRUSIMMUNE)) //Don't pick someone who's virus immune, only for it to not do anything.
 			continue
 		var/foundAlready = FALSE	// don't infect someone that already has a disease
-		for(var/thing in H.viruses)
+		for(var/thing in H.diseases)
 			foundAlready = TRUE
 			break
 		if(foundAlready)
@@ -51,7 +51,7 @@
 		var/datum/disease/D
 		if(!advanced_virus)
 			if(virus_type == /datum/disease/dnaspread)		//Dnaspread needs strain_data set to work.
-				if(!H.dna || (H.disabilities & BLIND))	//A blindness disease would be the worst.
+				if(!H.dna || (H.has_trait(TRAIT_BLIND)))	//A blindness disease would be the worst.
 					continue
 				D = new virus_type()
 				var/datum/disease/dnaspread/DS = D
@@ -63,7 +63,7 @@
 		else
 			D = make_virus(max_severity, max_severity)
 		D.carrier = TRUE
-		H.AddDisease(D)
+		H.ForceContractDisease(D, FALSE, TRUE)
 
 		if(advanced_virus)
 			var/datum/disease/advance/A = D
@@ -75,10 +75,9 @@
 		break
 
 /datum/round_event/disease_outbreak/proc/make_virus(max_symptoms, max_level)
-	if(max_symptoms > SYMPTOM_LIMIT)
-		max_symptoms = SYMPTOM_LIMIT
-	var/datum/disease/advance/A = new(FALSE, null)
-	A.symptoms = list()
+	if(max_symptoms > VIRUS_SYMPTOM_LIMIT)
+		max_symptoms = VIRUS_SYMPTOM_LIMIT
+	var/datum/disease/advance/A = new /datum/disease/advance()
 	var/list/datum/symptom/possible_symptoms = list()
 	for(var/symptom in subtypesof(/datum/symptom))
 		var/datum/symptom/S = symptom

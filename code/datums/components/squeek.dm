@@ -24,7 +24,8 @@
 	if(use_delay_override)
 		use_delay = use_delay_override
 
-	RegisterSignal(list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_MOVABLE_CROSSED, COMSIG_MOVABLE_COLLIDE, COMSIG_MOVABLE_IMPACT, COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ), .proc/play_squeak)
+	RegisterSignal(list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_MOVABLE_COLLIDE, COMSIG_MOVABLE_IMPACT, COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ), .proc/play_squeak)
+	RegisterSignal(COMSIG_MOVABLE_CROSSED, .proc/play_squeak_turf)
 	RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/use_squeak)
 	RegisterSignal(COMSIG_SHOES_STEP_ACTION, .proc/step_squeak)
 
@@ -41,6 +42,11 @@
 		steps = 0
 	else
 		steps++
+
+/datum/component/squeak/proc/play_squeak_turf()
+	var/atom/current_parent = parent
+	if(isturf(current_parent.loc))
+		play_squeak()
 
 /datum/component/squeak/proc/use_squeak()
 	if(last_use + use_delay < world.time)

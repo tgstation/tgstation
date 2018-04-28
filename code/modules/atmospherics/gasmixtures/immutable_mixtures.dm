@@ -19,9 +19,6 @@
 /datum/gas_mixture/immutable/merge()
 	return 0 //we're immutable.
 
-/datum/gas_mixture/immutable/heat_capacity_archived()
-	return heat_capacity()
-
 /datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	. = ..(sharer, 0)
 	garbage_collect()

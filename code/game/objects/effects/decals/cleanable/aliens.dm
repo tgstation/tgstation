@@ -6,9 +6,13 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
-	blood_DNA = list("UNKNOWN DNA" = "X*")
 	bloodiness = MAX_SHOE_BLOODINESS
 	blood_state = BLOOD_STATE_XENO
+	beauty = -75
+
+/obj/effect/decal/cleanable/xenoblood/Initialize()
+	. = ..()
+	add_blood_DNA(list("UNKNOWN DNA" = "X*"))
 
 /obj/effect/decal/cleanable/xenoblood/xsplatter
 	random_icon_states = list("xgibbl1", "xgibbl2", "xgibbl3", "xgibbl4", "xgibbl5")
@@ -20,7 +24,7 @@
 	icon_state = "xgib1"
 	layer = LOW_OBJ_LAYER
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
-	mergeable_decal = 0
+	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/proc/streak(list/directions)
 	set waitfor = 0
@@ -62,4 +66,7 @@
 /obj/effect/decal/cleanable/blood/xtracks
 	icon_state = "xtracks"
 	random_icon_states = null
-	blood_DNA = list("UNKNOWN DNA" = "X*")
+
+/obj/effect/decal/cleanable/blood/xtracks/Initialize()
+	. = ..()
+	add_blood_DNA(list("Unknown DNA" = "X*"))

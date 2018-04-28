@@ -23,6 +23,7 @@
 	desc = "Death to Nanotrasen. This variant comes in MECHA DEATH flavour."
 	wanted_objects = list()
 	search_objects = 0
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 
 	var/spawn_mecha_type = /obj/mecha/combat/marauder/mauler/loaded
 	var/obj/mecha/mecha //Ref to pilot's mecha instance
@@ -41,7 +42,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/no_mech/Initialize()
 	. = ..()
-	wanted_objects = typecacheof(/obj/mecha/combat, ignore_root_path=TRUE)
+	wanted_objects = typecacheof(/obj/mecha/combat, TRUE)
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/nanotrasen //nanotrasen are syndies! no it's just a weird path.
 	name = "Nanotrasen Mecha Pilot"
@@ -101,7 +102,7 @@
 	targets_from = src
 
 	//Find a new mecha
-	wanted_objects = typecacheof(/obj/mecha/combat, ignore_root_path=TRUE)
+	wanted_objects = typecacheof(/obj/mecha/combat, TRUE)
 	var/search_aggressiveness = 2
 	for(var/obj/mecha/combat/C in range(vision_range,src))
 		if(is_valid_mecha(C))
@@ -283,13 +284,12 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	if(mecha && loc == mecha)
-		mecha.relaymove(src, Dir)
-		return
-	..()
+		return mecha.relaymove(src, Dir)
+	return ..()
 
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/Goto(target, delay, minimum_distance)
 	if(mecha)
-		walk_to(mecha, target, minimum_distance, delay)
+		walk_to(mecha, target, minimum_distance, mecha.step_in)
 	else
 		..()

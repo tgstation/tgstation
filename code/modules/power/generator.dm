@@ -1,12 +1,3 @@
-// dummy generator object for testing
-
-/*/obj/machinery/power/generator/verb/set_amount(var/g as num)
-	set src in view(1)
-
-	gen_amount = g
-
-*/
-
 /obj/machinery/power/generator
 	name = "thermoelectric generator"
 	desc = "It's a high efficiency thermoelectric generator."
@@ -108,11 +99,11 @@
 		// update icon overlays only if displayed level has changed
 
 		if(hot_air)
-			var/datum/gas_mixture/hot_circ_air1 = hot_circ.AIR1
+			var/datum/gas_mixture/hot_circ_air1 = hot_circ.airs[1]
 			hot_circ_air1.merge(hot_air)
 
 		if(cold_air)
-			var/datum/gas_mixture/cold_circ_air1 = cold_circ.AIR1
+			var/datum/gas_mixture/cold_circ_air1 = cold_circ.airs[1]
 			cold_circ_air1.merge(cold_air)
 
 		update_icon()
@@ -132,21 +123,15 @@
 	lastgen -= power_output
 	..()
 
-/obj/machinery/power/generator/attack_hand(mob/user)
-	if(..())
-		user << browse(null, "window=teg")
-		return
-	interact(user)
-
 /obj/machinery/power/generator/proc/get_menu(include_link = 1)
 	var/t = ""
 	if(!powernet)
 		t += "<span class='bad'>Unable to connect to the power network!</span>"
 	else if(cold_circ && hot_circ)
-		var/datum/gas_mixture/cold_circ_air1 = cold_circ.AIR1
-		var/datum/gas_mixture/cold_circ_air2 = cold_circ.AIR2
-		var/datum/gas_mixture/hot_circ_air1 = hot_circ.AIR1
-		var/datum/gas_mixture/hot_circ_air2 = hot_circ.AIR2
+		var/datum/gas_mixture/cold_circ_air1 = cold_circ.airs[1]
+		var/datum/gas_mixture/cold_circ_air2 = cold_circ.airs[2]
+		var/datum/gas_mixture/hot_circ_air1 = hot_circ.airs[1]
+		var/datum/gas_mixture/hot_circ_air2 = hot_circ.airs[2]
 
 		t += "<div class='statusDisplay'>"
 
@@ -166,19 +151,16 @@
 	else
 		t += "<span class='bad'>Unable to locate all parts!</span>"
 	if(include_link)
-		t += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
+		t += "<BR><A href='?src=[REF(src)];close=1'>Close</A>"
 
 	return t
 
-/obj/machinery/power/generator/interact(mob/user)
-
-	user.set_machine(src)
+/obj/machinery/power/generator/ui_interact(mob/user)
+	. = ..()
 	var/datum/browser/popup = new(user, "teg", "Thermo-Electric Generator", 460, 300)
 	popup.set_content(get_menu())
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return 1
-
 
 /obj/machinery/power/generator/Topic(href, href_list)
 	if(..())

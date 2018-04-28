@@ -9,7 +9,9 @@
 	density = FALSE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	use_power = NO_POWER_USE
-	luminosity = 4
+	interaction_flags_atom = NONE
+	interaction_flags_machine = NONE
+	light_range = 4
 	layer = ABOVE_OBJ_LAYER
 	var/obj/machinery/field/generator/FG1 = null
 	var/obj/machinery/field/generator/FG2 = null
@@ -19,6 +21,7 @@
 	FG2.fields -= src
 	return ..()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/machinery/field/containment/attack_hand(mob/user)
 	if(get_dist(src, user) > 1)
 		return FALSE
@@ -76,6 +79,7 @@
 
 /obj/machinery/field/containment/Move()
 	qdel(src)
+	return FALSE
 
 
 // Abstract Field Class

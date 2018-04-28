@@ -6,6 +6,7 @@
 	icon_state = "gutlunch"
 	icon_living = "gutlunch"
 	icon_dead = "gutlunch"
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	speak_emote = list("warbles", "quavers")
 	emote_hear = list("trills.")
 	emote_see = list("sniffs.", "burps.")
@@ -23,7 +24,7 @@
 	friendly = "pinches"
 	a_intent = INTENT_HELP
 	ventcrawler = VENTCRAWLER_ALWAYS
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	stat_attack = UNCONSCIOUS
 	gender = NEUTER
 	stop_automated_movement = FALSE
@@ -123,7 +124,8 @@
 /obj/item/udder/gutlunch
 	name = "nutrient sac"
 
-/obj/item/udder/gutlunch/New()
+/obj/item/udder/gutlunch/Initialize()
+	. = ..()
 	reagents = new(50)
 	reagents.my_atom = src
 

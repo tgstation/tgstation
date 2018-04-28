@@ -25,10 +25,10 @@
 	return ..()
 
 /obj/machinery/gulag_item_reclaimer/emag_act(mob/user)
-	if(emagged) // emagging lets anyone reclaim all the items
+	if(obj_flags & EMAGGED) // emagging lets anyone reclaim all the items
 		return
 	req_access = list()
-	emagged = TRUE
+	obj_flags |= EMAGGED
 
 /obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/card/id/prisoner))
@@ -67,7 +67,7 @@
 		var/mob/thismob = i
 		var/list/mob_info = list()
 		mob_info["name"] = thismob.real_name
-		mob_info["mob"] = "\ref[thismob]"
+		mob_info["mob"] = "[REF(thismob)]"
 		mobs += list(mob_info)
 
 	data["mobs"] = mobs

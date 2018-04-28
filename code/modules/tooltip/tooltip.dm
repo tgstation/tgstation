@@ -41,21 +41,21 @@ Notes:
 
 /datum/tooltip/New(client/C)
 	if (C)
-		src.owner = C
-		src.owner << browse(file2text('code/modules/tooltip/tooltip.html'), "window=[src.control]")
+		owner = C
+		owner << browse(file2text('code/modules/tooltip/tooltip.html'), "window=[control]")
 
 	..()
 
 
 /datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
-	if (!thing || !params || (!title && !content) || !src.owner || !isnum(world.icon_size))
+	if (!thing || !params || (!title && !content) || !owner || !isnum(world.icon_size))
 		return 0
-	if (!src.init)
+	if (!init)
 		//Initialize some vars
-		src.init = 1
-		src.owner << output(list2params(list(world.icon_size, src.control)), "[src.control]:tooltip.init")
+		init = 1
+		owner << output(list2params(list(world.icon_size, control)), "[control]:tooltip.init")
 
-	src.showing = 1
+	showing = 1
 
 	if (title && content)
 		title = "<h1>[title]</h1>"
@@ -73,18 +73,19 @@ Notes:
 	params = {"{ "cursor": "[params]", "screenLoc": "[thing.screen_loc]" }"}
 
 	//Send stuff to the tooltip
-	src.owner << output(list2params(list(params, src.owner.view, "[title][content]", theme, special)), "[src.control]:tooltip.update")
+	var/view_size = getviewsize(owner.view)
+	owner << output(list2params(list(params, view_size[1] , view_size[2], "[title][content]", theme, special)), "[control]:tooltip.update")
 
 	//If a hide() was hit while we were showing, run hide() again to avoid stuck tooltips
-	src.showing = 0
-	if (src.queueHide)
-		src.hide()
+	showing = 0
+	if (queueHide)
+		hide()
 
 	return 1
 
 
 /datum/tooltip/proc/hide()
-	if (src.queueHide)
+	if (queueHide)
 		addtimer(CALLBACK(src, .proc/do_hide), 1)
 	else
 		do_hide()

@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -29,7 +29,7 @@
 /turf/open/floor/plasteel/darkgreen,
 /area/shuttle/escape)
 "ai" = (
-/obj/structure/sign/biohazard,
+/obj/structure/sign/warning/biohazard,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aj" = (
@@ -128,7 +128,9 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "az" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aA" = (
@@ -137,7 +139,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aB" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
@@ -152,7 +154,6 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	timid = 1;
 	name = "NT Lepton Violet"
 	},
 /turf/open/floor/plating,
@@ -253,7 +254,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aU" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aV" = (
@@ -314,7 +315,8 @@
 /area/shuttle/escape)
 "be" = (
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 1;
+	resistance_flags = 33
 	},
 /turf/open/lava/smooth/airless,
 /area/shuttle/escape)
@@ -325,9 +327,6 @@
 "bg" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"bh" = (
-/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "bi" = (
 /obj/machinery/light,

@@ -118,22 +118,6 @@
 #define NECK		2048
 #define FULL_BODY	4095
 
-// bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
-// Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
-// The values here should add up to 1.
-// Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15% and the head has 30%
-#define THERMAL_PROTECTION_HEAD			0.3
-#define THERMAL_PROTECTION_CHEST		0.15
-#define THERMAL_PROTECTION_GROIN		0.15
-#define THERMAL_PROTECTION_LEG_LEFT		0.075
-#define THERMAL_PROTECTION_LEG_RIGHT	0.075
-#define THERMAL_PROTECTION_FOOT_LEFT	0.025
-#define THERMAL_PROTECTION_FOOT_RIGHT	0.025
-#define THERMAL_PROTECTION_ARM_LEFT		0.075
-#define THERMAL_PROTECTION_ARM_RIGHT	0.075
-#define THERMAL_PROTECTION_HAND_LEFT	0.025
-#define THERMAL_PROTECTION_HAND_RIGHT	0.025
-
 //flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
 #define NO_FEMALE_UNIFORM			0
 #define FEMALE_UNIFORM_FULL			1
@@ -161,3 +145,73 @@
 
 #define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3			//Threshold of tint level to obscure vision fully
+
+//Allowed equipment lists for security vests and hardsuits.
+
+GLOBAL_LIST_INIT(advanced_hardsuit_allowed, typecacheof(list(
+	/obj/item/ammo_box,
+	/obj/item/ammo_casing,
+	/obj/item/device/flashlight,
+	/obj/item/gun,
+	/obj/item/melee/baton,
+	/obj/item/reagent_containers/spray/pepper,
+	/obj/item/restraints/handcuffs,
+	/obj/item/tank/internals)))
+
+GLOBAL_LIST_INIT(security_hardsuit_allowed, typecacheof(list(
+	/obj/item/ammo_box,
+	/obj/item/ammo_casing,
+	/obj/item/device/flashlight,
+	/obj/item/gun/ballistic,
+	/obj/item/gun/energy,
+	/obj/item/melee/baton,
+	/obj/item/reagent_containers/spray/pepper,
+	/obj/item/restraints/handcuffs,
+	/obj/item/tank/internals)))
+
+GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
+	/obj/item/ammo_box,
+	/obj/item/ammo_casing,
+	/obj/item/device/detective_scanner,
+	/obj/item/device/flashlight,
+	/obj/item/device/taperecorder,
+	/obj/item/gun/ballistic,
+	/obj/item/gun/energy,
+	/obj/item/lighter,
+	/obj/item/melee/baton,
+	/obj/item/melee/classic_baton,
+	/obj/item/reagent_containers/spray/pepper,
+	/obj/item/restraints/handcuffs,
+	/obj/item/storage/fancy/cigarettes,
+	/obj/item/tank/internals/emergency_oxygen,
+	/obj/item/tank/internals/plasmaman)))
+
+GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
+	/obj/item/ammo_box,
+	/obj/item/ammo_casing,
+	/obj/item/device/flashlight,
+	/obj/item/gun/ballistic,
+	/obj/item/gun/energy,
+	/obj/item/kitchen/knife/combat,
+	/obj/item/melee/baton,
+	/obj/item/melee/classic_baton/telescopic,
+	/obj/item/reagent_containers/spray/pepper,
+	/obj/item/restraints/handcuffs,
+	/obj/item/tank/internals/emergency_oxygen,
+	/obj/item/tank/internals/plasmaman)))
+
+GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
+	/obj/item/ammo_box,
+	/obj/item/ammo_casing,
+	/obj/item/device/flashlight,
+	/obj/item/storage/fancy/cigarettes,
+	/obj/item/gun/ballistic,
+	/obj/item/gun/energy,
+	/obj/item/lighter,
+	/obj/item/melee/baton,
+	/obj/item/melee/classic_baton/telescopic,
+	/obj/item/reagent_containers/spray/pepper,
+	/obj/item/restraints/handcuffs,
+	/obj/item/tank/internals/emergency_oxygen,
+	/obj/item/tank/internals/plasmaman,
+	/obj/item/toy)))

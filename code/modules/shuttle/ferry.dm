@@ -6,14 +6,17 @@
 	possible_destinations = "ferry_home;ferry_away"
 	req_access = list(ACCESS_CENT_GENERAL)
 
-	var/aiControlDisabled = 1
+	var/aiControlDisabled = TRUE
+	var/allow_emag = FALSE
 
-/obj/machinery/computer/shuttle/ferry/proc/canAIControl(mob/user)
-	return ((aiControlDisabled != 1));
+/obj/machinery/computer/shuttle/ferry/emag_act(mob/user)
+	if(!allow_emag)
+		to_chat(user, "<span class='warning'>[src]'s security firewall is far too powerful for you to bypass.</span>")
+		return FALSE
+	return ..()
 
-/obj/machinery/computer/shuttle/ferry/attack_ai(mob/user)
-	if(!src.canAIControl(user))
-		return
+/obj/machinery/computer/shuttle/ferry/attack_ai()
+	return aiControlDisabled? FALSE : ..()
 
 /obj/machinery/computer/shuttle/ferry/request
 	name = "ferry console"

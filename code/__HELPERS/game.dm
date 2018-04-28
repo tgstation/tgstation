@@ -14,15 +14,11 @@
 	var/turf/T = get_turf(A)
 	return T ? T.loc : null
 
-/proc/get_area_name(atom/X)
-	var/area/Y = get_area(X)
-	return Y.name
-
-/proc/get_area_by_name(N) //get area by its name
-	for(var/area/A in world)
-		if(A.name == N)
-			return A
-	return 0
+/proc/get_area_name(atom/X, format_text = FALSE)
+	var/area/A = isarea(X) ? X : get_area(X)
+	if(!A)
+		return null
+	return format_text ? format_text(A.name) : A.name
 
 /proc/get_areas_in_range(dist=0, atom/center=usr)
 	if(!dist)
@@ -77,7 +73,7 @@
 
 /proc/alone_in_area(area/the_area, mob/must_be_alone, check_type = /mob/living/carbon)
 	var/area/our_area = get_area(the_area)
-	for(var/C in GLOB.living_mob_list)
+	for(var/C in GLOB.alive_mob_list)
 		if(!istype(C, check_type))
 			continue
 		if(C == must_be_alone)
@@ -214,22 +210,31 @@
 /proc/get_hearers_in_view(R, atom/source)
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
-	var/list/hear = list()
+	. = list()
 
 	if(!T)
-		return hear
+		return
 
-	var/list/range = get_hear(R, T)
-	for(var/atom/movable/A in range)
-		hear |= recursive_hear_check(A)
+	var/list/processing_list = list()
+	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
+		processing_list += T.contents // We can shave off one iteration by assuming turfs cannot hear
+	else  // A variation of get_hear inlined here to take advantage of the compiler's fastpath for obj/mob in view
+		var/lum = T.luminosity
+		T.luminosity = 6 // This is the maximum luminosity
+		for(var/mob/M in view(R, T))
+			processing_list += M
+		for(var/obj/O in view(R, T))
+			processing_list += O
+		T.luminosity = lum
 
-	return hear
-
+	while(processing_list.len) // recursive_hear_check inlined here
+		var/atom/A = processing_list[1]
+		if(A.flags_1 & HEAR_1)
+			. += A
+		processing_list.Cut(1, 2)
+		processing_list += A.contents
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
-
-	set background = BACKGROUND_ENABLED
-
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/obj/item/device/radio/R in radios)
@@ -300,6 +305,7 @@
 		else
 			return get_step(start, EAST)
 
+
 /proc/try_move_adjacent(atom/movable/AM)
 	var/turf/T = get_turf(AM)
 	for(var/direction in GLOB.cardinals)
@@ -307,29 +313,12 @@
 			break
 
 /proc/get_mob_by_key(key)
-	for(var/mob/M in GLOB.mob_list)
-		if(M.ckey == lowertext(key))
+	var/ckey = ckey(key)
+	for(var/i in GLOB.player_list)
+		var/mob/M = i
+		if(M.ckey == ckey)
 			return M
 	return null
-
-// Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
-
-/proc/get_candidates(be_special_type, afk_bracket = CONFIG_GET(number/inactivity_period), jobbanType)
-	var/list/candidates = list()
-	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
-	var/afk_period = CONFIG_GET(number/afk_period)
-	while(!candidates.len && afk_bracket < afk_period)
-		for(var/mob/dead/observer/G in GLOB.player_list)
-			if(G.client != null)
-				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-					if(!G.client.is_afk(afk_bracket) && (be_special_type in G.client.prefs.be_special))
-						if (jobbanType)
-							if(!(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate")))
-								candidates += G.client
-						else
-							candidates += G.client
-		afk_bracket += 600 // Add a minute to the bracket, for every attempt
-	return candidates
 
 /proc/considered_alive(datum/mind/M, enforce_human = TRUE)
 	if(M && M.current)
@@ -361,7 +350,7 @@
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
-	addtimer(CALLBACK(GLOBAL_PROC, /.proc/remove_images_from_clients, I, show_to), duration)
+	addtimer(CALLBACK(GLOBAL_PROC, /.proc/remove_images_from_clients, I, show_to), duration, TIMER_CLIENT_TIME)
 
 /proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
 	var/list/viewing = list()
@@ -391,44 +380,6 @@
 					continue
 			active_players++
 	return active_players
-
-/datum/projectile_data
-	var/src_x
-	var/src_y
-	var/time
-	var/distance
-	var/power_x
-	var/power_y
-	var/dest_x
-	var/dest_y
-
-/datum/projectile_data/New(var/src_x, var/src_y, var/time, var/distance, \
-						   var/power_x, var/power_y, var/dest_x, var/dest_y)
-	src.src_x = src_x
-	src.src_y = src_y
-	src.time = time
-	src.distance = distance
-	src.power_x = power_x
-	src.power_y = power_y
-	src.dest_x = dest_x
-	src.dest_y = dest_y
-
-/proc/projectile_trajectory(src_x, src_y, rotation, angle, power)
-
-	// returns the destination (Vx,y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
-	// rotated at [rotation] and with the power of [power]
-	// Thanks to VistaPOWA for this function
-
-	var/power_x = power * cos(angle)
-	var/power_y = power * sin(angle)
-	var/time = 2* power_y / 10 //10 = g
-
-	var/distance = time * power_x
-
-	var/dest_x = src_x + distance*sin(rotation);
-	var/dest_y = src_y + distance*cos(rotation);
-
-	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
 /proc/showCandidatePollWindow(mob/M, poll_time, Question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
 	set waitfor = 0
@@ -482,7 +433,7 @@
 			if(!gametypeCheck.age_check(M.client))
 				continue
 		if(jobbanType)
-			if(jobban_isbanned(M, jobbanType) || jobban_isbanned(M, "Syndicate"))
+			if(jobban_isbanned(M, jobbanType) || jobban_isbanned(M, ROLE_SYNDICATE))
 				continue
 
 		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow)
@@ -545,7 +496,7 @@
 	winset(C, "mainwindow", "flash=5")
 
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
-	if(!SSticker.IsRoundInProgress() || !character)
+	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
 	var/area/A = get_area(character)
 	var/message = "<span class='game deadsay'><span class='name'>\

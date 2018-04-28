@@ -1,4 +1,5 @@
 #define HEART_RESPAWN_THRESHHOLD 40
+#define HEART_SPECIAL_SHADOWIFY 2
 
 /datum/species/shadow
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
@@ -8,7 +9,8 @@
 	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
-	species_traits = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
+	species_traits = list(NOBLOOD,NOEYES)
+	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH)
 
 	dangerous_existence = 1
 	mutanteyes = /obj/item/organ/eyes/night_vision
@@ -24,6 +26,10 @@
 		else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
 			H.heal_overall_damage(1,1)
 
+/datum/species/shadow/check_roundstart_eligible()
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		return TRUE
+	return ..()
 
 /datum/species/shadow/nightmare
 	name = "Nightmare"
@@ -32,7 +38,8 @@
 	burnmod = 1.5
 	blacklisted = TRUE
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR,NOHUNGER,NO_DNA_COPY,NOTRANSSTING)
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYES)
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER)
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
 	mutant_organs = list(/obj/item/organ/heart/nightmare)
 	mutant_brain = /obj/item/organ/brain/nightmare
@@ -60,7 +67,8 @@
 			return -1
 	return 0
 
-
+/datum/species/shadow/nightmare/check_roundstart_eligible()
+	return FALSE
 
 //Organs
 
@@ -111,14 +119,15 @@
 
 /obj/item/organ/heart/nightmare/Insert(mob/living/carbon/M, special = 0)
 	..()
-	blade = new/obj/item/light_eater
-	M.put_in_hands(blade)
+	if(special != HEART_SPECIAL_SHADOWIFY)
+		blade = new/obj/item/light_eater
+		M.put_in_hands(blade)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/heart/nightmare/Remove(mob/living/carbon/M, special = 0)
 	STOP_PROCESSING(SSobj, src)
 	respawn_progress = 0
-	if(blade)
+	if(blade && special != HEART_SPECIAL_SHADOWIFY)
 		QDEL_NULL(blade)
 		M.visible_message("<span class='warning'>\The [blade] disintegrates!</span>")
 	..()
@@ -141,6 +150,13 @@
 			playsound(owner,'sound/effects/singlebeat.ogg',40,1)
 	if(respawn_progress >= HEART_RESPAWN_THRESHHOLD)
 		owner.revive(full_heal = TRUE)
+		if(!(owner.dna.species.id == "shadow" || owner.dna.species.id == "nightmare"))
+			var/mob/living/carbon/old_owner = owner
+			Remove(owner, HEART_SPECIAL_SHADOWIFY)
+			old_owner.set_species(/datum/species/shadow)
+			Insert(old_owner, HEART_SPECIAL_SHADOWIFY)
+			to_chat(owner, "<span class='userdanger'>You feel the shadows invade your skin, leaping into the center of your chest! You're alive!</span>")
+			SEND_SOUND(owner, sound('sound/effects/ghost.ogg'))
 		owner.visible_message("<span class='warning'>[owner] staggers to their feet!</span>")
 		playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, 1)
 		respawn_progress = 0
@@ -148,7 +164,7 @@
 //Weapon
 
 /obj/item/light_eater
-	name = "light eater"
+	name = "light eater" //as opposed to heavy eater
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	force = 25
@@ -158,6 +174,10 @@
 	flags_1 = ABSTRACT_1 | NODROP_1 | DROPDEL_1
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
+
+/obj/item/light_eater/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 80, 70)
 
 /obj/item/light_eater/afterattack(atom/movable/AM, mob/user, proximity)
 	if(!proximity)
@@ -186,7 +206,7 @@
 	if(istype(O, /obj/item/device/pda))
 		var/obj/item/device/pda/PDA = O
 		PDA.set_light(0)
-		PDA.fon = 0
+		PDA.fon = FALSE
 		PDA.f_lum = 0
 		PDA.update_icon()
 		visible_message("<span class='danger'>The light in [PDA] shorts out!</span>")
@@ -195,4 +215,5 @@
 		O.burn()
 	playsound(src, 'sound/items/welder.ogg', 50, 1)
 
+#undef HEART_SPECIAL_SHADOWIFY
 #undef HEART_RESPAWN_THRESHHOLD

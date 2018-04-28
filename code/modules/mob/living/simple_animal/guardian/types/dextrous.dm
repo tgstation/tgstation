@@ -8,6 +8,7 @@
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Dextrous combat modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! It can hold stuff in its fins, sort of.</span>"
 	dextrous = 1
+	held_items = list(null, null)
 	environment_target_typecache = list(
 	/obj/machinery/door/window,
 	/obj/structure/window,
@@ -31,16 +32,9 @@
 
 		for(var/obj/item/I in held_items)
 			if(!(I.flags_1 & ABSTRACT_1))
-				if(I.blood_DNA)
-					msg += "<span class='warning'>It has [icon2html(I, user)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
-				else
-					msg += "It has [icon2html(I, user)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
-
+				msg += "It has [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 		if(internal_storage && !(internal_storage.flags_1&ABSTRACT_1))
-			if(internal_storage.blood_DNA)
-				msg += "<span class='warning'>It is holding [icon2html(internal_storage, user)] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
-			else
-				msg += "It is holding [icon2html(internal_storage, user)] \a [internal_storage] in its internal storage.\n"
+			msg += "It is holding [internal_storage.get_examine_string(user)] in its internal storage.\n"
 		msg += "*---------*</span>"
 		to_chat(user, msg)
 	else

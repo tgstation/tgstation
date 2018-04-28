@@ -15,6 +15,11 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	var/open = FALSE
 	var/valve_type = "m" //lets us have a nice, clean, OOP update_icon_nopipes()
 
+	construction_type = /obj/item/pipe/binary
+	pipe_state = "mvalve"
+
+	var/switching = FALSE
+
 /obj/machinery/atmospherics/components/binary/valve/open
 	open = TRUE
 
@@ -28,7 +33,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	open = TRUE
 	update_icon_nopipes()
 	update_parents()
-	var/datum/pipeline/parent1 = PARENT1
+	var/datum/pipeline/parent1 = parents[1]
 	parent1.reconcile_air()
 	investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 
@@ -47,22 +52,30 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	return
 
 /obj/machinery/atmospherics/components/binary/valve/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	add_fingerprint(usr)
 	update_icon_nopipes(1)
+	if(switching)
+		return
+	switching = TRUE
 	sleep(10)
 	if(open)
 		close()
-		return
-	open()
+	else
+		open()
+	switching = FALSE
 
 /obj/machinery/atmospherics/components/binary/valve/digital		// can be controlled by AI
 	name = "digital valve"
 	desc = "A digitally controlled valve."
 	icon_state = "dvalve_map"
 	valve_type = "d"
+	pipe_state = "dvalve"
 
 /obj/machinery/atmospherics/components/binary/valve/digital/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/atmospherics/components/binary/valve/digital/update_icon_nopipes(animation)
 	if(!is_operational())

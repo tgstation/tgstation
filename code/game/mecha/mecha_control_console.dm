@@ -9,10 +9,8 @@
 	var/screen = 0
 	var/stored_data
 
-/obj/machinery/computer/mecha/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/mecha/ui_interact(mob/user)
+	. = ..()
 	var/dat = "<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
@@ -23,37 +21,36 @@
 			var/answer = TR.get_mecha_info()
 			if(answer)
 				dat += {"<hr>[answer]<br/>
-						  <a href='?src=\ref[src];send_message=\ref[TR]'>Send message</a><br/>
-						  <a href='?src=\ref[src];get_log=\ref[TR]'>Show exosuit log</a> | <a style='color: #f00;' href='?src=\ref[src];shock=\ref[TR]'>(EMP pulse)</a><br>"}
+						  <a href='?src=[REF(src)];send_message=[REF(TR)]'>Send message</a><br/>
+						  <a href='?src=[REF(src)];get_log=[REF(TR)]'>Show exosuit log</a> | <a style='color: #f00;' href='?src=[REF(src)];shock=[REF(TR)]'>(EMP pulse)</a><br>"}
 
 	if(screen==1)
 		dat += "<h3>Log contents</h3>"
-		dat += "<a href='?src=\ref[src];return=1'>Return</a><hr>"
+		dat += "<a href='?src=[REF(src)];return=1'>Return</a><hr>"
 		dat += "[stored_data]"
 
-	dat += "<A href='?src=\ref[src];refresh=1'>(Refresh)</A><BR>"
+	dat += "<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><BR>"
 	dat += "</body></html>"
 
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 /obj/machinery/computer/mecha/Topic(href, href_list)
 	if(..())
 		return
-	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
+	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
 	if(href_list["send_message"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("send_message")
+		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("send_message")
 		var/message = stripped_input(usr,"Input message","Transmit message")
 		var/obj/mecha/M = MT.in_mecha()
 		if(trim(message) && M)
 			M.occupant_message(message)
 		return
 	if(href_list["shock"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("shock")
+		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("shock")
 		MT.shock()
 	if(href_list["get_log"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("get_log")
+		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("get_log")
 		stored_data = MT.get_mecha_log()
 		screen = 1
 	if(href_list["return"])
@@ -67,7 +64,6 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion2"
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "programming=2;magnets=2"
 	var/ai_beacon = FALSE //If this beacon allows for AI control. Exists to avoid using istype() on checking.
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
@@ -119,14 +115,13 @@
 /obj/item/mecha_parts/mecha_tracking/ai_control
 	name = "exosuit AI control beacon"
 	desc = "A device used to transmit exosuit data. Also allows active AI units to take control of said exosuit."
-	origin_tech = "programming=3;magnets=2;engineering=2"
 	ai_beacon = TRUE
 
 
 /obj/item/storage/box/mechabeacons
 	name = "exosuit tracking beacons"
 
-/obj/item/storage/box/mechabeacons/New()
+/obj/item/storage/box/mechabeacons/PopulateContents()
 	..()
 	new /obj/item/mecha_parts/mecha_tracking(src)
 	new /obj/item/mecha_parts/mecha_tracking(src)

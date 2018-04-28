@@ -15,6 +15,17 @@
 	var/power_output = 1
 	var/consumption = 0
 	var/base_icon = "portgen0"
+	var/datum/looping_sound/generator/soundloop
+
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_REQUIRES_ANCHORED
+
+/obj/machinery/power/port_gen/Initialize()
+	. = ..()
+	soundloop = new(list(src), active)
+
+/obj/machinery/power/port_gen/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
 
 /obj/machinery/power/port_gen/proc/HasFuel() //Placeholder for fuel check.
 	return 1
@@ -36,17 +47,13 @@
 		add_avail(power_gen * power_output)
 		UseFuel()
 		src.updateDialog()
+		soundloop.start()
 
 	else
 		active = 0
 		handleInactive()
 		update_icon()
-
-/obj/machinery/power/port_gen/attack_hand(mob/user)
-	if(..())
-		return
-	if(!anchored)
-		return
+		soundloop.stop()
 
 /obj/machinery/power/port_gen/examine(mob/user)
 	..()
@@ -184,7 +191,7 @@
 			return
 		else if(istype(O, /obj/item/screwdriver))
 			panel_open = !panel_open
-			playsound(src.loc, O.usesound, 50, 1)
+			O.play_tool_sound(src)
 			if(panel_open)
 				to_chat(user, "<span class='notice'>You open the access panel.</span>")
 			else
@@ -195,17 +202,10 @@
 	return ..()
 
 /obj/machinery/power/port_gen/pacman/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	emp_act(EMP_HEAVY)
-
-/obj/machinery/power/port_gen/pacman/attack_hand(mob/user)
-	..()
-	if (!anchored)
-		return
-
-	interact(user)
 
 /obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
 	interact(user)
@@ -213,27 +213,26 @@
 /obj/machinery/power/port_gen/pacman/attack_paw(mob/user)
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/interact(mob/user)
+/obj/machinery/power/port_gen/pacman/ui_interact(mob/user)
+	. = ..()
 	if (get_dist(src, user) > 1 )
 		if(!isAI(user))
 			user.unset_machine()
 			user << browse(null, "window=port_gen")
 			return
 
-	user.set_machine(src)
-
 	var/dat = text("<b>[name]</b><br>")
 	if (active)
-		dat += text("Generator: <A href='?src=\ref[src];action=disable'>On</A><br>")
+		dat += text("Generator: <A href='?src=[REF(src)];action=disable'>On</A><br>")
 	else
-		dat += text("Generator: <A href='?src=\ref[src];action=enable'>Off</A><br>")
-	dat += text("[capitalize(sheet_name)]: [sheets] - <A href='?src=\ref[src];action=eject'>Eject</A><br>")
+		dat += text("Generator: <A href='?src=[REF(src)];action=enable'>Off</A><br>")
+	dat += text("[capitalize(sheet_name)]: [sheets] - <A href='?src=[REF(src)];action=eject'>Eject</A><br>")
 	var/stack_percent = round(sheet_left * 100, 1)
 	dat += text("Current stack: [stack_percent]% <br>")
-	dat += text("Power output: <A href='?src=\ref[src];action=lower_power'>-</A> [power_gen * power_output] <A href='?src=\ref[src];action=higher_power'>+</A><br>")
+	dat += text("Power output: <A href='?src=[REF(src)];action=lower_power'>-</A> [power_gen * power_output] <A href='?src=[REF(src)];action=higher_power'>+</A><br>")
 	dat += text("Power current: [(powernet == null ? "Unconnected" : "[DisplayPower(avail())]")]<br>")
 	dat += text("Heat: [current_heat]<br>")
-	dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
+	dat += "<br><A href='?src=[REF(src)];action=close'>Close</A>"
 	user << browse(dat, "window=port_gen")
 	onclose(user, "port_gen")
 
@@ -262,7 +261,7 @@
 				power_output--
 				src.updateUsrDialog()
 		if (href_list["action"] == "higher_power")
-			if (power_output < 4 || emagged)
+			if (power_output < 4 || (obj_flags & EMAGGED))
 				power_output++
 				src.updateUsrDialog()
 		if (href_list["action"] == "close")

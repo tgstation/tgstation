@@ -108,10 +108,10 @@
 	name = "gatfruit"
 	desc = "It smells like burning."
 	icon_state = "gatfruit"
-	origin_tech = "combat=6"
 	trash = /obj/item/gun/ballistic/revolver
 	bitesize_mod = 2
 	foodtype = FRUIT
+	tastes = list("gunpowder" = 1)
 
 //Cherry Bombs
 /obj/item/seeds/cherry/bomb

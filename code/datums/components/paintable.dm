@@ -14,8 +14,8 @@
 
 /datum/component/spraycan_paintable/proc/Repaint(obj/item/toy/crayon/spraycan/spraycan, mob/living/user)
 	if(!istype(spraycan) || user.a_intent == INTENT_HARM)
-		return FALSE
-	. = TRUE
+		return
+	. = COMPONENT_NO_AFTERATTACK
 	if(spraycan.is_capped)
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return

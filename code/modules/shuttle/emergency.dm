@@ -36,14 +36,14 @@
 		var/name = ID.registered_name
 		var/job = ID.assignment
 
-		if(emagged)
+		if(obj_flags & EMAGGED)
 			name = Gibberish(name, 0)
 			job = Gibberish(job, 0)
 		A += list(list("name" = name, "job" = job))
 	data["authorizations"] = A
 
 	data["enabled"] = (IS_DOCKED && !ENGINES_STARTED)
-	data["emagged"] = emagged
+	data["emagged"] = obj_flags & EMAGGED ? 1 : 0
 	return data
 
 /obj/machinery/computer/emergency_shuttle/ui_act(action, params, datum/tgui/ui)
@@ -86,7 +86,7 @@
 	if((old_len != authorized.len) && !ENGINES_STARTED)
 		var/alert = (authorized.len > old_len)
 		var/repeal = (authorized.len < old_len)
-		var/remaining = auth_need - authorized.len
+		var/remaining = max(0, auth_need - authorized.len)
 		if(authorized.len && remaining)
 			minor_announce("[remaining] authorizations needed until shuttle is launched early", null, alert)
 		if(repeal)
@@ -119,16 +119,16 @@
 
 	if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
 		authorized.Cut()
-		emagged = FALSE
+		obj_flags &= ~EMAGGED
 
 	if(ENGINES_STARTED || (!IS_DOCKED))
 		return .
 
 	// Check to see if we've reached criteria for early launch
-	if((authorized.len >= auth_need) || emagged)
+	if((authorized.len >= auth_need) || (obj_flags & EMAGGED))
 		// shuttle timers use 1/10th seconds internally
 		SSshuttle.emergency.setTimer(ENGINES_START_TIME)
-		var/system_error = emagged ? "SYSTEM ERROR:" : null
+		var/system_error = obj_flags & EMAGGED ? "SYSTEM ERROR:" : null
 		minor_announce("The emergency shuttle will launch in \
 			[TIME_LEFT] seconds", system_error, alert=TRUE)
 		. = TRUE
@@ -138,18 +138,19 @@
 	if(!IS_DOCKED)
 		return
 
-	if(emagged || ENGINES_STARTED)	//SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
+	if((obj_flags & EMAGGED) || ENGINES_STARTED)	//SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
 		to_chat(user, "<span class='warning'>The shuttle is already about to launch!</span>")
 		return
 
 	var/time = TIME_LEFT
 	message_admins("[key_name_admin(user.client)] \
-	(<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=\ref[user]'>?</A>) \
-	(<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[user]'>FLW</A>) \
+	(<A HREF='?_src_=holder;[HrefToken()];adminmoreinfo=[REF(user)]'>?</A>) \
+	(<A HREF='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(user)]'>FLW</A>) \
 	has emagged the emergency shuttle [time] seconds before launch.", 0, 1)
 	log_game("[key_name(user)] has emagged the emergency shuttle in \
 		[COORD(src)] [time] seconds before launch.")
-	emagged = TRUE
+	obj_flags |= EMAGGED
+	SSshuttle.emergency.movement_force = list("KNOCKDOWN" = 60, "THROW" = 20)//YOUR PUNY SEATBELTS can SAVE YOU NOW, MORTAL
 	var/datum/species/S = new
 	for(var/i in 1 to 10)
 		// the shuttle system doesn't know who these people are, but they
@@ -184,7 +185,6 @@
 	height = 11
 	dir = EAST
 	port_direction = WEST
-	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
 
 /obj/docking_port/mobile/emergency/canDock(obj/docking_port/stationary/S)
@@ -262,7 +262,7 @@
 				if(shuttle_areas[get_area(player)])
 					has_people = TRUE
 					var/location = get_turf(player.mind.current)
-					if(!(player.mind.special_role == "traitor" || player.mind.special_role == "Syndicate" || player.mind.special_role == "blood brother") && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
+					if(!(player.mind.has_antag_datum(/datum/antagonist)) && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return FALSE
 
 	return has_people
@@ -290,7 +290,7 @@
 		if(SHUTTLE_CALL)
 			if(time_left <= 0)
 				//move emergency shuttle to station
-				if(dock(SSshuttle.getDock("emergency_home")) != DOCKING_SUCCESS)
+				if(initiate_docking(SSshuttle.getDock("emergency_home")) != DOCKING_SUCCESS)
 					setTimer(20)
 					return
 				mode = SHUTTLE_DOCKED
@@ -407,6 +407,7 @@
 /obj/docking_port/mobile/pod
 	name = "escape pod"
 	id = "pod"
+	timid = FALSE
 	dwidth = 1
 	width = 3
 	height = 4
@@ -415,7 +416,7 @@
 /obj/docking_port/mobile/pod/request()
 	var/obj/machinery/computer/shuttle/S = getControlConsole()
 
-	if(GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA || (S && S.emagged))
+	if(GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA || (S && (S.obj_flags & EMAGGED)))
 		if(launch_status == UNLAUNCHED)
 			launch_status = EARLY_LAUNCHED
 			return ..()
@@ -425,8 +426,23 @@
 
 /obj/docking_port/mobile/pod/Initialize()
 	. = ..()
-	if(id == "pod")
-		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
+	var/static/i = 1
+	if(id == initial(id))
+		id = "[initial(id)] [i]"
+	if(name == initial(name))
+		name = "[initial(name)] [i]"
+
+	for(var/k in shuttle_areas)
+		var/area/place = k
+		for(var/obj/machinery/computer/shuttle/pod/pod_comp in place)
+			if(pod_comp.shuttleId == initial(pod_comp.shuttleId))
+				pod_comp.shuttleId = id
+			if(pod_comp.possible_destinations == initial(pod_comp.possible_destinations))
+				pod_comp.possible_destinations = "pod_lavaland[i]"
+
+	i++
+
+
 
 /obj/docking_port/mobile/pod/cancel()
 	return
@@ -446,9 +462,9 @@
 	return
 
 /obj/machinery/computer/shuttle/pod/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
 
 /obj/docking_port/stationary/random
@@ -474,7 +490,7 @@
 			turfs -= T
 			T = pick(turfs)
 		else
-			src.loc = T
+			forceMove(T)
 			break
 
 //Pod suits/pickaxes
@@ -527,9 +543,6 @@
 	else
 		to_chat(usr, "The storage unit will only unlock during a Red or Delta security alert.")
 
-/obj/item/storage/pod/attack_hand(mob/user)
-	return MouseDrop(user)
-
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
 	id = "backup"
@@ -537,7 +550,6 @@
 	width = 8
 	height = 8
 	dir = EAST
-	roundstart_move = "backup_away"
 
 /obj/docking_port/mobile/emergency/backup/Initialize()
 	// We want to be a valid emergency shuttle

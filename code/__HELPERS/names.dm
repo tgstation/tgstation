@@ -1,5 +1,3 @@
-#define ION_FILE "ion_laws.json"
-
 /proc/lizard_name(gender)
 	if(gender == MALE)
 		return "[pick(GLOB.lizard_names_male)]-[pick(GLOB.lizard_names_male)]"
@@ -8,6 +6,9 @@
 
 /proc/plasmaman_name()
 	return "[pick(GLOB.plasmaman_names)] \Roman[rand(1,99)]"
+
+/proc/moth_name()
+	return "[pick(GLOB.moth_first)] [pick(GLOB.moth_last)]"
 
 /proc/church_name()
 	var/static/church_name
@@ -121,10 +122,6 @@ GLOBAL_VAR(command_name)
 	return new_station_name
 
 /proc/syndicate_name()
-	var/static/syndicate_name
-	if (syndicate_name)
-		return syndicate_name
-
 	var/name = ""
 
 	// Prefix
@@ -147,7 +144,6 @@ GLOBAL_VAR(command_name)
 		name += pick("-", "*", "")
 		name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
 
-	syndicate_name = name
 	return name
 
 

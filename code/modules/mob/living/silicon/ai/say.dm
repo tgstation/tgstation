@@ -7,7 +7,7 @@
 /mob/living/silicon/ai/compose_track_href(atom/movable/speaker, namepart)
 	var/mob/M = speaker.GetSource()
 	if(M)
-		return "<a href='?src=\ref[src];track=[html_encode(namepart)]'>"
+		return "<a href='?src=[REF(src)];track=[html_encode(namepart)]'>"
 	return ""
 
 /mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
@@ -30,15 +30,6 @@
 		return MODE_HOLOPAD
 	else
 		return ..()
-
-/mob/living/silicon/ai/handle_inherent_channels(message, message_mode, language)
-	. = ..()
-	if(.)
-		return .
-
-	if(message_mode == MODE_HOLOPAD)
-		holopad_talk(message, language)
-		return 1
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, language)
@@ -76,16 +67,21 @@
 	if(incapacitated())
 		return
 
-	var/dat = "Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR> \
-	<UL><LI>You can also click on the word to preview it.</LI>\
-	<LI>You can only say 30 words for every announcement.</LI>\
-	<LI>Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: 'Alpha . Test , Bravo'.</LI></UL>\
-	<font class='bad'>WARNING:</font><BR>Misuse of the announcement system will get you job banned.<HR>"
+	var/dat = {"
+	<font class='bad'>WARNING:</font> Misuse of the announcement system will get you job banned.<BR><BR>
+	Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR>
+	<UL><LI>You can also click on the word to PREVIEW it.</LI>
+	<LI>You can only say 30 words for every announcement.</LI>
+	<LI>Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: 'Alpha . Test , Bravo'.</LI>
+	<LI>Numbers are in word format, e.g. eight, sixty, etc </LI>
+	<LI>Sound effects begin with an 's' before the actual word, e.g. scensor</LI>
+	<LI>Use Ctrl+F to see if a word exists in the list.</LI></UL><HR>
+	"}
 
 	var/index = 0
 	for(var/word in GLOB.vox_sounds)
 		index++
-		dat += "<A href='?src=\ref[src];say_word=[word]'>[capitalize(word)]</A>"
+		dat += "<A href='?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
 		if(index != GLOB.vox_sounds.len)
 			dat += " / "
 
@@ -138,14 +134,6 @@
 
 	for(var/word in words)
 		play_vox_word(word, src.z, null)
-/*
-	for(var/mob/M in player_list)
-		if(M.client)
-			var/turf/T = get_turf(M)
-			var/turf/our_turf = get_turf(src)
-			if(T.z == our_turf.z)
-				to_chat(M, "<b><font size = 3><font color = red>AI announcement:</font color> [message]</font size></b>")
-*/
 
 
 /proc/play_vox_word(word, z_level, mob/only_listener)
@@ -171,6 +159,7 @@
 		return 1
 	return 0
 
+#undef VOX_DELAY
 #endif
 
 /mob/living/silicon/ai/could_speak_in_language(datum/language/dt)

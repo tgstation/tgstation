@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - bugfix: "Fixed trying to clear beaker in pandemic when the beaker is already removed causing a runtime."

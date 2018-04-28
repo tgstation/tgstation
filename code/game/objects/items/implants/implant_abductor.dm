@@ -4,7 +4,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "implant"
 	activated = 1
-	origin_tech = "materials=2;biotech=7;magnets=4;bluespace=4;abductor=5"
 	var/obj/machinery/abductor/pad/home
 	var/cooldown = 30
 
@@ -26,7 +25,7 @@
 	if(..())
 		var/obj/machinery/abductor/console/console
 		if(ishuman(target))
-			var/datum/antagonist/abductor/A = target.mind.has_antag_datum(ANTAG_DATUM_ABDUCTOR)
+			var/datum/antagonist/abductor/A = target.mind.has_antag_datum(/datum/antagonist/abductor)
 			if(A)
 				console = get_abductor_console(A.team.team_number)
 				home = console.pad
