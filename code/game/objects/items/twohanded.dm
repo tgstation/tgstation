@@ -41,7 +41,7 @@
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
-	if(user.get_item_by_slot(slot_back) == src)
+	if(user.get_item_by_slot(SLOT_BACK) == src)
 		user.update_inv_back()
 	else
 		user.update_inv_hands()
@@ -191,7 +191,7 @@
 			return
 		qdel(O)
 		return
-	if(slot == slot_hands)
+	if(slot == SLOT_HANDS)
 		wield(user)
 	else
 		unwield(user)
@@ -224,7 +224,7 @@
 	force = 5
 	throwforce = 15
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force_unwielded = 5
 	force_wielded = 24
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
@@ -458,7 +458,7 @@
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 18
 	throwforce = 20
@@ -744,7 +744,7 @@
 	sharpness = IS_SHARP
 	attack_verb = list("cut", "sliced", "diced")
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/twohanded/vibro_weapon/Initialize()
@@ -791,7 +791,7 @@
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	force = 11
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force_unwielded = 11
 	force_wielded = 20					//I have no idea how to balance
 	throwforce = 22

@@ -17,7 +17,7 @@
 	icon_state = "esniper"
 	item_state = "esniper"
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force = 15
 	materials = list()
 	recoil = 4

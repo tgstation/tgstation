@@ -151,7 +151,7 @@
 	var/duffelbag = /obj/item/storage/backpack/duffelbag
 	var/box = /obj/item/storage/box/survival
 
-	var/pda_slot = slot_belt
+	var/pda_slot = SLOT_BELT
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	switch(H.backbag)

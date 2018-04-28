@@ -4,7 +4,7 @@
 	name = "ears"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
-	slot_flags = SLOT_EARS
+	slot_flags = ITEM_SLOT_EARS
 	resistance_flags = NONE
 
 /obj/item/clothing/ears/earmuffs
@@ -23,7 +23,7 @@
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "headphones"
 	item_state = "headphones"
-	slot_flags = SLOT_EARS | SLOT_HEAD | SLOT_NECK		//Fluff item, put it whereever you want!
+	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD | ITEM_SLOT_NECK		//Fluff item, put it whereever you want!
 	actions_types = list(/datum/action/item_action/toggle_headphones)
 	var/headphones_on = FALSE
 

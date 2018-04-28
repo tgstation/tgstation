@@ -173,7 +173,7 @@
 
 /obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(slot == slot_wear_suit)
+	if(slot == SLOT_WEAR_SUIT)
 		disguise(user)
 
 /obj/item/clothing/suit/cardborg/dropped(mob/living/user)

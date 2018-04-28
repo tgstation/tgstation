@@ -10,7 +10,7 @@
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
 
 	flags_1 = CONDUCT_1 | NOBLUDGEON_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	usesound = 'sound/effects/spray2.ogg'
 
 	var/obj/item/toner/ink = null

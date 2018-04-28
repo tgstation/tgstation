@@ -438,7 +438,7 @@
 	desc = "Somehow, it's in two places at once."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "cultpack"
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/item/shared_storage/red
@@ -558,7 +558,7 @@
 	inhand_y_dimension = 64
 	icon_state = "cleaving_saw"
 	icon_state_on = "cleaving_saw_open"
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	attack_verb_off = list("attacked", "sawed", "sliced", "torn", "ripped", "diced", "cut")
 	attack_verb_on = list("cleaved", "swiped", "slashed", "chopped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -816,7 +816,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon = 'icons/obj/guns/magic.dmi'
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	force = 25
 	damtype = BURN
@@ -993,7 +993,7 @@
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	force = 15
 	attack_verb = list("clubbed", "beat", "pummeled")
