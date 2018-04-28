@@ -24211,7 +24211,7 @@
 /area/maintenance/port)
 "aZp" = (
 /obj/structure/table/wood,
-/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted,
+/obj/item/gun/ballistic/automatic/toy/pistol,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aZq" = (

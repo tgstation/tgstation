@@ -5726,7 +5726,7 @@
 /area/maintenance/starboard/fore)
 "asc" = (
 /obj/structure/table/wood,
-/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted,
+/obj/item/gun/ballistic/automatic/toy/pistol,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
