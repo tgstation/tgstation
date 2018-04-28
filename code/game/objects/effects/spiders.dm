@@ -68,141 +68,17 @@
 	if(amount_grown >= 100)
 		var/num = rand(3,12)
 		for(var/i=0, i<num, i++)
-			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(src.loc)
-			S.poison_type = poison_type
-			S.poison_per_bite = poison_per_bite
-			S.faction = faction.Copy()
-			S.directive = directive
-			if(player_spiders)
-				S.player_spiders = 1
+			if(prob(25))
+				var/mob/living/simple_animal/spiderling/giant/S = new(drop_location())
+				S.grown_poison_type = poison_type
+				S.grown_poison_per_bite = poison_per_bite
+				S.faction = faction.Copy()
+				S.directive = directive
+				if(player_spiders)
+					S.player_controlled = 1
+			else
+				new /mob/living/simple_animal/spiderling(drop_location())
 		qdel(src)
-
-/obj/structure/spider/spiderling
-	name = "spiderling"
-	desc = "It never stays still for long."
-	icon_state = "spiderling"
-	anchored = FALSE
-	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
-	max_integrity = 3
-	var/amount_grown = 0
-	var/grow_as = null
-	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
-	var/travelling_in_vent = 0
-	var/player_spiders = 0
-	var/directive = "" //Message from the mother
-	var/poison_type = "toxin"
-	var/poison_per_bite = 5
-	var/list/faction = list("spiders")
-
-/obj/structure/spider/spiderling/Destroy()
-	new/obj/item/reagent_containers/food/snacks/spiderling(get_turf(src))
-	. = ..()
-
-/obj/structure/spider/spiderling/Initialize()
-	. = ..()
-	pixel_x = rand(6,-6)
-	pixel_y = rand(6,-6)
-	START_PROCESSING(SSobj, src)
-	AddComponent(/datum/component/swarming)
-
-/obj/structure/spider/spiderling/hunter
-	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
-
-/obj/structure/spider/spiderling/nurse
-	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse
-
-/obj/structure/spider/spiderling/midwife
-	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife
-
-/obj/structure/spider/spiderling/viper
-	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper
-
-/obj/structure/spider/spiderling/tarantula
-	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
-
-/obj/structure/spider/spiderling/Collide(atom/user)
-	if(istype(user, /obj/structure/table))
-		forceMove(user.loc)
-	else
-		..()
-
-/obj/structure/spider/spiderling/process()
-	if(travelling_in_vent)
-		if(isturf(loc))
-			travelling_in_vent = 0
-			entry_vent = null
-	else if(entry_vent)
-		if(get_dist(src, entry_vent) <= 1)
-			var/list/vents = list()
-			var/datum/pipeline/entry_vent_parent = entry_vent.parents[1]
-			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
-				vents.Add(temp_vent)
-			if(!vents.len)
-				entry_vent = null
-				return
-			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
-			if(prob(50))
-				visible_message("<B>[src] scrambles into the ventillation ducts!</B>", \
-								"<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
-
-			spawn(rand(20,60))
-				forceMove(exit_vent)
-				var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
-				spawn(travel_time)
-
-					if(!exit_vent || exit_vent.welded)
-						forceMove(entry_vent)
-						entry_vent = null
-						return
-
-					if(prob(50))
-						audible_message("<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
-					sleep(travel_time)
-
-					if(!exit_vent || exit_vent.welded)
-						forceMove(entry_vent)
-						entry_vent = null
-						return
-					forceMove(exit_vent.loc)
-					entry_vent = null
-					var/area/new_area = get_area(loc)
-					if(new_area)
-						new_area.Entered(src)
-	//=================
-
-	else if(prob(33))
-		var/list/nearby = oview(10, src)
-		if(nearby.len)
-			var/target_atom = pick(nearby)
-			walk_to(src, target_atom)
-			if(prob(40))
-				src.visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
-	else if(prob(10))
-		//ventcrawl!
-		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
-			if(!v.welded)
-				entry_vent = v
-				walk_to(src, entry_vent, 1)
-				break
-	if(isturf(loc))
-		amount_grown += rand(0,2)
-		if(amount_grown >= 100)
-			if(!grow_as)
-				if(prob(3))
-					grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider/tarantula, /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife)
-				else
-					grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider, /mob/living/simple_animal/hostile/poison/giant_spider/hunter, /mob/living/simple_animal/hostile/poison/giant_spider/nurse)
-			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
-			S.poison_per_bite = poison_per_bite
-			S.poison_type = poison_type
-			S.faction = faction.Copy()
-			S.directive = directive
-			if(player_spiders)
-				S.playable_spider = TRUE
-				notify_ghosts("Spider [S.name] can be controlled", null, enter_link="<a href=?src=[REF(S)];activate=1>(Click to play)</a>", source=S, action=NOTIFY_ATTACK)
-			qdel(src)
-
-
 
 /obj/structure/spider/cocoon
 	name = "cocoon"
