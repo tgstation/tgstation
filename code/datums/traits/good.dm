@@ -14,7 +14,7 @@
 /datum/trait/apathetic
 	name = "Apathetic"
 	desc = "You just don't care as much as other people. That's nice to have in a place like this, I guess."
-	value = 1
+	value = 2
 	mood_trait = TRUE
 
 /datum/trait/apathetic/add()
