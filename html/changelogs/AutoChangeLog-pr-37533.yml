@@ -1,0 +1,4 @@
+author: "oranges"
+delete-after: True
+changes: 
+  - rscdel: "Pet collars can no longer be equipped on humans"
