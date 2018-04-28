@@ -20,7 +20,7 @@
 /datum/trait/apathetic/add()
 	GET_COMPONENT_FROM(mood, /datum/component/mood, trait_holder)
 	if(mood)
-		mood.mood_modifier = 0.8
+		mood.mood_modifier = 0.2
 
 /datum/trait/apathetic/remove()
 	GET_COMPONENT_FROM(mood, /datum/component/mood, trait_holder)
