@@ -28,10 +28,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 
-#define SLOWS_WHILE_IN_HAND_2		(1<<0)
+
 #define NO_EMP_WIRES_2				(1<<1)
 #define HOLOGRAM_2					(1<<2)
-#define FROZEN_2					(1<<3)
+
 #define BANG_PROTECT_2				(1<<6)
 
 // An item worn in the ear slot with HEALS_EARS will heal your ears each
@@ -46,9 +46,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 // TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
 #define TESLA_IGNORE_2				(1<<9)
-
-// Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
-#define NO_MAT_REDEMPTION_2			(1<<10)
 
 //turf-only flags
 #define NOJAUNT_1				(1<<0)

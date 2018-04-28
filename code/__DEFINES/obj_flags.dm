@@ -20,6 +20,7 @@
 #define FORCE_STRING_OVERRIDE	(1<<2) // used for tooltips
 #define NEEDS_PERMIT			(1<<3) //Used by security bots to determine if this item is safe for public use.
 #define SLOWS_WHILE_IN_HAND		(1<<4)
+#define NO_MAT_REDEMPTION			(1<<5) // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
