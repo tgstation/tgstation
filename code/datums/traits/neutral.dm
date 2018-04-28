@@ -14,7 +14,7 @@
 
 /datum/trait/pineapple_liker
 	name = "Ananas Affinity"
-	desc = "You find yourself greatly enjoying fruits of the ananas genius. You can't seem to ever get enough of their sweet goodness!"
+	desc = "You find yourself greatly enjoying fruits of the ananas genus. You can't seem to ever get enough of their sweet goodness!"
 	value = 0
 	gain_text = "<span class='notice'>You feel an intense craving for pineapple.</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
@@ -31,7 +31,7 @@
 
 /datum/trait/pineapple_hater
 	name = "Ananas Aversion"
-	desc = "You find yourself greatly detesting fruits of the ananas genius. Serious, how the hell can anyone say these things are good? And what kind of madman would even dare putting it on a pizza!?"
+	desc = "You find yourself greatly detesting fruits of the ananas genus. Serious, how the hell can anyone say these things are good? And what kind of madman would even dare putting it on a pizza!?"
 	value = 0
 	gain_text = "<span class='notice'>You find yourself pondering what kind of idiot actually enjoys pineapples...</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
