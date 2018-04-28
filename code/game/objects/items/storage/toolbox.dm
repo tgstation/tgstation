@@ -168,7 +168,7 @@
 	new /obj/item/weldingtool/experimental/brass(src)
 
 /obj/item/storage/toolbox/brass/prefilled/servant
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	fabricator_type = null
 
 /obj/item/storage/toolbox/brass/prefilled/ratvar

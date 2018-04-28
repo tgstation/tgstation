@@ -264,7 +264,7 @@
 /obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
 	if(!isliving(user))
 		return
-	if(!istype(user.get_item_by_slot(slot_shoes), /obj/item/clothing/shoes/wheelys))
+	if(!istype(user.get_item_by_slot(SLOT_SHOES), /obj/item/clothing/shoes/wheelys))
 		to_chat(user, "<span class='warning'>You must be wearing the wheely-heels to use them!</span>")
 		return
 	if(!(W.is_occupant(user)))

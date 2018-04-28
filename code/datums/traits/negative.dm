@@ -58,9 +58,9 @@
 		/obj/item/dice/d20)
 	heirloom = new heirloom_type(get_turf(trait_holder))
 	var/list/slots = list(
-		"in your backpack" = slot_in_backpack,
-		"in your left pocket" = slot_l_store,
-		"in your right pocket" = slot_r_store
+		"in your backpack" = SLOT_IN_BACKPACK,
+		"in your left pocket" = SLOT_L_STORE,
+		"in your right pocket" = SLOT_R_STORE
 	)
 	var/where = H.equip_in_one_of_slots(heirloom, slots)
 	if(!where)
@@ -121,7 +121,7 @@
 	var/mob/living/carbon/human/H = trait_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
 	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, slot_glasses)
+	H.equip_to_slot(glasses, SLOT_GLASSES)
 	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
 
 

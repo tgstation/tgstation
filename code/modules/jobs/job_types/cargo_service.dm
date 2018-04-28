@@ -111,7 +111,7 @@ Shaft Miner
 	mask = /obj/item/clothing/mask/gas/explorer
 	glasses = /obj/item/clothing/glasses/meson
 	suit_store = /obj/item/tank/internals/oxygen
-	internals_slot = slot_s_store
+	internals_slot = SLOT_S_STORE
 	backpack_contents = list(
 		/obj/item/storage/bag/ore=1,
 		/obj/item/kitchen/knife/combat/survival=1,
@@ -220,7 +220,7 @@ Cook
 	var/list/possible_boxes = subtypesof(/obj/item/storage/box/ingredients)
 	var/chosen_box = pick(possible_boxes)
 	var/obj/item/storage/box/I = new chosen_box(src)
-	H.equip_to_slot_or_del(I,slot_in_backpack)
+	H.equip_to_slot_or_del(I,SLOT_IN_BACKPACK)
 	var/datum/martial_art/cqc/under_siege/justacook = new
 	justacook.teach(H)
 

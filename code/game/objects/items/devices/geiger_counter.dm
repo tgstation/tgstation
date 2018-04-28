@@ -17,7 +17,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
 
 	var/grace = RAD_GRACE_PERIOD

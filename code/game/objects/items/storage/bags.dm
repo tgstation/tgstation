@@ -17,7 +17,7 @@
 
 //  Generic non-item
 /obj/item/storage/bag
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/storage/bag/ComponentInitialize()
 	. = ..()
@@ -94,7 +94,7 @@
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
-	slot_flags = SLOT_BELT | SLOT_POCKET
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKET
 	w_class = WEIGHT_CLASS_NORMAL
 	component_type = /datum/component/storage/concrete/stack
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it

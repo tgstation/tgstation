@@ -45,7 +45,7 @@
 		inv_box.icon = ui_style
 		inv_box.icon_state = "suit_storage"
 		inv_box.screen_loc = ui_id
-		inv_box.slot_id = slot_generic_dextrous_storage
+		inv_box.slot_id = SLOT_GENERC_DEXTROUS_STORAGE
 		static_inventory += inv_box
 
 		using = new /obj/screen/guardian/Communicate()

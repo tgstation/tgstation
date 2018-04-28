@@ -236,14 +236,14 @@
 
 	if(!slot_priority)
 		slot_priority = list( \
-			slot_back, slot_wear_id,\
-			slot_w_uniform, slot_wear_suit,\
-			slot_wear_mask, slot_head, slot_neck,\
-			slot_shoes, slot_gloves,\
-			slot_ears, slot_glasses,\
-			slot_belt, slot_s_store,\
-			slot_l_store, slot_r_store,\
-			slot_generic_dextrous_storage\
+			SLOT_BACK, SLOT_WEAR_ID,\
+			SLOT_W_UNIFORM, SLOT_WEAR_SUIT,\
+			SLOT_WEAR_MASK, SLOT_HEAD, SLOT_NECK,\
+			SLOT_SHOES, SLOT_GLOVES,\
+			SLOT_EARS, SLOT_GLASSES,\
+			SLOT_BELT, SLOT_S_STORE,\
+			SLOT_L_STORE, SLOT_R_STORE,\
+			SLOT_GENERC_DEXTROUS_STORAGE\
 		)
 
 	for(var/slot in slot_priority)

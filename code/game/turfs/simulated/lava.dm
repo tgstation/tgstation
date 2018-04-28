@@ -127,8 +127,8 @@
 					continue
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
-				var/obj/item/clothing/S = C.get_item_by_slot(slot_wear_suit)
-				var/obj/item/clothing/H = C.get_item_by_slot(slot_head)
+				var/obj/item/clothing/S = C.get_item_by_slot(SLOT_WEAR_SUIT)
+				var/obj/item/clothing/H = C.get_item_by_slot(SLOT_HEAD)
 
 				if(S && H && S.flags_2 & LAVA_PROTECT_2 && H.flags_2 & LAVA_PROTECT_2)
 					return
