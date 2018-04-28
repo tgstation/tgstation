@@ -219,5 +219,43 @@
 		"as (unknown)",
 		"unknown",
 		"stranger danger"
+	],
+
+"birds": [
+		"birdemic",
+		"bird",
+		"beak",
+		"poly",
+		"wing",
+		"claw",
+		"peck",
+		"cracker",
+		"kiki yaya",
+		"ki ki ya ya",
+		"vox",
+		"flap",
+		"feather",
+		"avian",
+		"aviary",
+		"owl",
+		"griffin",
+		"kakaw",
+		"ka kaw",
+		"eagle",
+		"chick",
+		"fowl"
+	],
+
+"falling": [
+		"hold on",
+		"hang in there",
+		"chasm",
+		"pit",
+		"hole",
+		"fall",
+		"fell",
+		"let go",
+		"i'll catch you",
+		"slip"
 	]
 }

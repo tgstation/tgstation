@@ -40,6 +40,8 @@
 	var/atom/movable/AM = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
 	if(!AM)
 		return FALSE
+	if(istype(AM, /obj/item/gun/energy))
+		return FALSE
 	if(!assembly)
 		return FALSE // Pointless to do everything else if there's no battery to draw from.
 	var/obj/item/stock_parts/cell/cell = AM.get_cell()
@@ -75,9 +77,10 @@
 
 /obj/item/integrated_circuit/power/transmitter/large/do_work()
 	if(..()) // If the above code succeeds, do this below.
+		var/atom/movable/acting_object = get_object()
 		if(prob(20))
 			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(12, 1, src)
 			s.start()
-			visible_message("<span class='warning'>\The [assembly] makes some sparks!</span>")
+			acting_object.visible_message("<span class='warning'>\The [acting_object] makes some sparks!</span>")
 		return TRUE

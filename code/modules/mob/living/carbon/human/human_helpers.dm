@@ -16,7 +16,7 @@
 	if(id)
 		. = id.assignment
 	else
-		var/obj/item/device/pda/pda = wear_id
+		var/obj/item/pda/pda = wear_id
 		if(istype(pda))
 			. = pda.ownjob
 		else
@@ -30,7 +30,7 @@
 	var/obj/item/card/id/id = get_idcard()
 	if(id)
 		return id.registered_name
-	var/obj/item/device/pda/pda = wear_id
+	var/obj/item/pda/pda = wear_id
 	if(istype(pda))
 		return pda.owner
 	return if_no_id
@@ -64,9 +64,9 @@
 //Useful when player is being seen by other mobs
 /mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
 	var/obj/item/storage/wallet/wallet = wear_id
-	var/obj/item/device/pda/pda = wear_id
+	var/obj/item/pda/pda = wear_id
 	var/obj/item/card/id/id = wear_id
-	var/obj/item/device/modular_computer/tablet/tablet = wear_id
+	var/obj/item/modular_computer/tablet/tablet = wear_id
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(id))

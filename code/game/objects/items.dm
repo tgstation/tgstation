@@ -144,9 +144,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	QDEL_NULL(rpg_loot)
 	return ..()
 
-/obj/item/device
-	icon = 'icons/obj/device.dmi'
-
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
 		return 0
@@ -279,10 +276,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP))		//See if we're supposed to auto pickup.
 		return
 
-	if(istype(loc, /obj/item/storage))
-		//If the item is in a storage item, take it out
-		var/obj/item/storage/S = loc
-		S.remove_from_storage(src, user.loc)
+	//If the item is in a storage item, take it out
+	loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
 
 	if(throwing)
 		throwing.finalize(FALSE)
@@ -295,15 +290,16 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!user.put_in_active_hand(src))
 		dropped(user)
 
+/obj/item/proc/allow_attack_hand_drop(mob/user)
+	return TRUE
+
 /obj/item/attack_paw(mob/user)
 	if(!user)
 		return
 	if(anchored)
 		return
 
-	if(istype(loc, /obj/item/storage))
-		var/obj/item/storage/S = loc
-		S.remove_from_storage(src, user.loc)
+	loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
 
 	if(throwing)
 		throwing.finalize(FALSE)
@@ -336,63 +332,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			R.activate_module(src)
 			R.hud_used.update_robot_modules_display()
 
-// Due to storage type consolidation this should get used more now.
-// I have cleaned it up a little, but it could probably use more.  -Sayu
-// The lack of ..() is intentional, do not add one
-// added one, fuck the police
-/obj/item/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/storage))
-		var/obj/item/storage/S = W
-		if(S.use_to_pickup)
-			if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
-				if(isturf(loc))
-					var/list/rejections = list()
-
-					var/list/things = loc.contents.Copy()
-					if (S.collection_mode == 2)
-						things = typecache_filter_list(things, typecacheof(type))
-
-					var/len = things.len
-					if(!len)
-						to_chat(user, "<span class='notice'>You failed to pick up anything with [S].</span>")
-						return
-					var/datum/progressbar/progress = new(user, len, loc)
-
-					while (do_after(user, 10, TRUE, S, FALSE, CALLBACK(src, .proc/handle_mass_pickup, S, things, loc, rejections, progress)))
-						stoplag(1)
-
-					qdel(progress)
-
-					to_chat(user, "<span class='notice'>You put everything you could [S.preposition] [S].</span>")
-					return
-
-			else if(S.can_be_inserted(src))
-				S.handle_item_insertion(src)
-				return
-	return ..()
-
-/obj/item/proc/handle_mass_pickup(obj/item/storage/S, list/things, atom/thing_loc, list/rejections, datum/progressbar/progress)
-	for(var/obj/item/I in things)
-		things -= I
-		if(I.loc != thing_loc)
-			continue
-		if(I.type in rejections) // To limit bag spamming: any given type only complains once
-			continue
-		if(!S.can_be_inserted(I, stop_messages = TRUE))	// Note can_be_inserted still makes noise when the answer is no
-			if(S.contents.len >= S.storage_slots)
-				break
-			rejections += I.type	// therefore full bags are still a little spammy
-			continue
-
-		S.handle_item_insertion(I, TRUE)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
-
-		if (TICK_CHECK)
-			progress.update(progress.goal - things.len)
-			return TRUE
-
-	progress.update(progress.goal - things.len)
-	return FALSE
-
 /obj/item/proc/GetDeconstructableContents()
 	return GetAllContents() - src
 
@@ -422,17 +361,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	SendSignal(COMSIG_ITEM_PICKUP, user)
 	item_flags |= IN_INVENTORY
 
-/obj/item/proc/allow_attack_hand_drop(mob/user)
-	return TRUE
-
-// called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
-/obj/item/proc/on_exit_storage(obj/item/storage/S)
-	return
-
-// called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
-/obj/item/proc/on_enter_storage(obj/item/storage/S)
-	return
-
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
 /obj/item/proc/on_found(mob/finder)
 	return
@@ -452,7 +380,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
-	if(slot == slot_in_backpack || slot == slot_legcuffed) //these aren't true slots, so avoid granting actions there
+	if(slot == SLOT_IN_BACKPACK || slot == SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
 		return FALSE
 	return TRUE
 
@@ -597,12 +525,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
 	if(!newLoc)
-		return 0
-	if(istype(loc, /obj/item/storage))
-		var/obj/item/storage/S = loc
-		S.remove_from_storage(src,newLoc)
-		return 1
-	return 0
+		return FALSE
+	if(loc.SendSignal(COMSIG_CONTAINS_STORAGE))
+		return loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, src, newLoc, TRUE)
+	return FALSE
 
 /obj/item/proc/get_belt_overlay() //Returns the icon used for overlaying the object on a belt
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
@@ -612,29 +538,29 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	var/mob/owner = loc
 	var/flags = slot_flags
-	if(flags & SLOT_OCLOTHING)
+	if(flags & ITEM_SLOT_OCLOTHING)
 		owner.update_inv_wear_suit()
-	if(flags & SLOT_ICLOTHING)
+	if(flags & ITEM_SLOT_ICLOTHING)
 		owner.update_inv_w_uniform()
-	if(flags & SLOT_GLOVES)
+	if(flags & ITEM_SLOT_GLOVES)
 		owner.update_inv_gloves()
-	if(flags & SLOT_EYES)
+	if(flags & ITEM_SLOT_EYES)
 		owner.update_inv_glasses()
-	if(flags & SLOT_EARS)
+	if(flags & ITEM_SLOT_EARS)
 		owner.update_inv_ears()
-	if(flags & SLOT_MASK)
+	if(flags & ITEM_SLOT_MASK)
 		owner.update_inv_wear_mask()
-	if(flags & SLOT_HEAD)
+	if(flags & ITEM_SLOT_HEAD)
 		owner.update_inv_head()
-	if(flags & SLOT_FEET)
+	if(flags & ITEM_SLOT_FEET)
 		owner.update_inv_shoes()
-	if(flags & SLOT_ID)
+	if(flags & ITEM_SLOT_ID)
 		owner.update_inv_wear_id()
-	if(flags & SLOT_BELT)
+	if(flags & ITEM_SLOT_BELT)
 		owner.update_inv_belt()
-	if(flags & SLOT_BACK)
+	if(flags & ITEM_SLOT_BACK)
 		owner.update_inv_back()
-	if(flags & SLOT_NECK)
+	if(flags & ITEM_SLOT_NECK)
 		owner.update_inv_neck()
 
 /obj/item/proc/is_hot()
@@ -659,7 +585,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(ismob(location))
 		var/mob/M = location
 		var/success = FALSE
-		if(src == M.get_item_by_slot(slot_wear_mask))
+		if(src == M.get_item_by_slot(SLOT_WEAR_MASK))
 			success = TRUE
 		if(success)
 			location = get_turf(M)

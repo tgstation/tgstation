@@ -1694,7 +1694,7 @@
 /area/awaymission/spacebattle/cruiser)
 "gL" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green,
+/obj/item/flashlight/lamp/green,
 /turf/open/floor/wood,
 /area/awaymission/spacebattle/cruiser)
 "gM" = (
@@ -1925,7 +1925,7 @@
 /area/awaymission/spacebattle/cruiser)
 "hE" = (
 /obj/structure/table/wood,
-/obj/item/device/instrument/violin,
+/obj/item/instrument/violin,
 /turf/open/floor/wood,
 /area/awaymission/spacebattle/cruiser)
 "hF" = (

@@ -45,7 +45,7 @@
 "i" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "STV5"
 	},
 /turf/open/floor/plasteel/dark,

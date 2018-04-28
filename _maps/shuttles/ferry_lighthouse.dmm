@@ -142,7 +142,7 @@
 /area/shuttle/transport)
 "aK" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green,
+/obj/item/flashlight/lamp/green,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aL" = (
@@ -263,10 +263,9 @@
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "bg" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/inverted{
 	dir = 10;
-	id = "garbage";
-	verted = -1
+	id = "garbage"
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)

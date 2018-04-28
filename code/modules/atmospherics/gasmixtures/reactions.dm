@@ -1,10 +1,8 @@
 //Plasma fire properties
 #define OXYGEN_BURN_RATE_BASE				1.4
 #define PLASMA_BURN_RATE_DELTA				9
-#define PLASMA_UPPER_TEMPERATURE			1370+T0C
 #define PLASMA_MINIMUM_OXYGEN_NEEDED		2
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
-#define PLASMA_OXYGEN_FULLBURN				10
 #define FIRE_CARBON_ENERGY_RELEASED			100000	//Amount of heat released per mole of burnt carbon into the tile
 #define FIRE_HYDROGEN_ENERGY_RELEASED		280000 // Amount of heat released per mole of burnt hydrogen and/or tritium(hydrogen isotope)
 #define FIRE_PLASMA_ENERGY_RELEASED			3000000	//Amount of heat released per mole of burnt plasma into the tile
@@ -28,7 +26,7 @@
 #define PLASMA_FUSED_COEFFICENT				0.08
 #define CATALYST_COEFFICENT					0.01
 #define FUSION_PURITY_THRESHOLD				0.95
-#define FUSION_HEAT_DROPOFF					20000+T0C
+#define FUSION_HEAT_DROPOFF					(20000+T0C)
 #define NOBLIUM_FORMATION_ENERGY			2e9 //1 Mole of Noblium takes the planck energy to condense.
 /datum/controller/subsystem/air/var/list/gas_reactions //this is our singleton of all reactions
 
@@ -362,10 +360,8 @@
 
 #undef OXYGEN_BURN_RATE_BASE
 #undef PLASMA_BURN_RATE_DELTA
-#undef PLASMA_UPPER_TEMPERATURE
 #undef PLASMA_MINIMUM_OXYGEN_NEEDED
 #undef PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO
-#undef PLASMA_OXYGEN_FULLBURN
 #undef FIRE_CARBON_ENERGY_RELEASED
 #undef FIRE_PLASMA_ENERGY_RELEASED
 #undef WATER_VAPOR_FREEZE

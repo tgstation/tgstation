@@ -99,10 +99,7 @@
 /obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
-
-	else if(exchange_parts(user, P))
-		return
-
+		
 	else if(default_pry_open(P))
 		return
 

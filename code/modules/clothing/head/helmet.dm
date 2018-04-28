@@ -22,7 +22,7 @@
 
 /obj/item/clothing/head/helmet/sec/attackby(obj/item/I, mob/user, params)
 	if(issignaler(I))
-		var/obj/item/device/assembly/signaler/S = I
+		var/obj/item/assembly/signaler/S = I
 		if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
 			to_chat(user, "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>")
 			return
@@ -260,8 +260,8 @@
 		..()
 
 /obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/flashlight/seclite))
-		var/obj/item/device/flashlight/seclite/S = I
+	if(istype(I, /obj/item/flashlight/seclite))
+		var/obj/item/flashlight/seclite/S = I
 		if(can_flashlight)
 			if(!F)
 				if(!user.transferItemToLoc(S, src))
@@ -280,7 +280,7 @@
 
 	if(istype(I, /obj/item/screwdriver))
 		if(F)
-			for(var/obj/item/device/flashlight/seclite/S in src)
+			for(var/obj/item/flashlight/seclite/S in src)
 				to_chat(user, "<span class='notice'>You unscrew the seclite from [src].</span>")
 				F = null
 				S.forceMove(user.drop_location())

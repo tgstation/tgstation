@@ -46,9 +46,6 @@
 	if(default_deconstruction_screwdriver(user, "processor", "processor1", O))
 		return
 
-	if(exchange_parts(user, O))
-		return
-
 	if(default_pry_open(O))
 		return
 
@@ -64,8 +61,8 @@
 		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
 			var/datum/food_processor_process/P = select_recipe(S)
 			if(P)
-				T.remove_from_storage(S, src)
-				loaded++
+				if(T.SendSignal(COMSIG_TRY_STORAGE_TAKE, S, src))
+					loaded++
 
 		if(loaded)
 			to_chat(user, "<span class='notice'>You insert [loaded] items into [src].</span>")

@@ -82,6 +82,15 @@
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
 
+/obj/structure/window/shuttle/survival_pod/spawner/north
+	dir = NORTH
+
+/obj/structure/window/shuttle/survival_pod/spawner/east
+	dir = EAST
+
+/obj/structure/window/shuttle/survival_pod/spawner/west
+	dir = WEST
+
 /obj/structure/window/reinforced/survival_pod
 	name = "pod window"
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
@@ -130,7 +139,7 @@
 		add_overlay("sleeper_cover")
 
 //Computer
-/obj/item/device/gps/computer
+/obj/item/gps/computer
 	name = "pod computer"
 	icon_state = "pod_computer"
 	icon = 'icons/obj/lavaland/pod_computer.dmi'
@@ -138,18 +147,18 @@
 	density = TRUE
 	pixel_y = -32
 
-/obj/item/device/gps/computer/wrench_act(mob/living/user, obj/item/I)
+/obj/item/gps/computer/wrench_act(mob/living/user, obj/item/I)
 	if(flags_1 & NODECONSTRUCT_1)
 		return TRUE
 
 	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
 		"<span class='notice'>You start to disassemble [src]...</span>", "You hear clanking and banging noises.")
 	if(I.use_tool(src, user, 20, volume=50))
-		new /obj/item/device/gps(loc)
+		new /obj/item/gps(loc)
 		qdel(src)
 	return TRUE
 
-/obj/item/device/gps/computer/attack_hand(mob/user)
+/obj/item/gps/computer/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
@@ -187,7 +196,7 @@
 		var/obj/item/storage/pill_bottle/dice/D = new(src)
 		load(D)
 	else
-		var/obj/item/device/instrument/guitar/G = new(src)
+		var/obj/item/instrument/guitar/G = new(src)
 		load(G)
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
