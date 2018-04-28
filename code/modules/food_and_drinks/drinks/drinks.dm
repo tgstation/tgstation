@@ -497,3 +497,10 @@
 	desc = "There is no air shortage. Do not drink."
 	icon_state = "air"
 	list_reagents = list("nitrogen" = 24, "oxygen" = 6)
+
+/obj/item/reagent_containers/food/drinks/bottle/sake
+	name = "Traditional Sake"
+	desc = "Sweet as can be, and burns like fire going down."
+	icon_state = "sakebottle"
+	list_reagents = list("sake" = 100)
+
