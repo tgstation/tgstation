@@ -718,6 +718,20 @@
 						to_chat(src, "<span class='danger'>Your thinking is clouded and distant.</span>")
 					else if(oxyloss > 30)
 						to_chat(src, "<span class='danger'>You're choking!</span>")
+
+			if(nutrition > NUTRITION_LEVEL_FULL)
+				to_chat(src, "<span class='info'>You're completely stuffed!</span>")
+			else if(nutrition > NUTRITION_LEVEL_WELL_FED)
+				to_chat(src, "<span class='info'>You're well fed!</span>")
+			else if(nutrition > NUTRITION_LEVEL_FED)
+				to_chat(src, "<span class='info'>You're not hungry.</span>")
+			else if(nutrition > NUTRITION_LEVEL_HUNGRY)
+				to_chat(src, "<span class='info'>You feel a bit hungry.</span>")
+			else if(nutrition > NUTRITION_LEVEL_STARVING)
+				to_chat(src, "<span class='info'>You feel quite hungry.</span>")
+			else if(nutrition >= 0)
+				to_chat(src, "<span class='danger'>You're starving!</span>")
+
 			if(roundstart_traits.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
 		else
