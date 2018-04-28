@@ -271,6 +271,21 @@
 			return
 		create_message("note", banckey, null, banreason, null, null, 0, 0)
 
+	else if(href_list["editrightsbrowser"])
+		edit_admin_permissions(0)
+
+	else if(href_list["editrightsbrowserlog"])
+		edit_admin_permissions(1, href_list["editrightstarget"], href_list["editrightsoperation"], href_list["editrightspage"])
+
+	if(href_list["editrightsbrowsermanage"])
+		if(href_list["editrightschange"])
+			change_admin_rank(href_list["editrightschange"], TRUE)
+		else if(href_list["editrightsremove"])
+			remove_admin(href_list["editrightsremove"], TRUE)
+		else if(href_list["editrightsremoverank"])
+			remove_rank(href_list["editrightsremoverank"])
+		edit_admin_permissions(2)
+
 	else if(href_list["editrights"])
 		edit_rights_topic(href_list)
 
