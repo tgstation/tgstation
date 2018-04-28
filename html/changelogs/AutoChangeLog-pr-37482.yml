@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - bugfix: "slime pressurization potions are no longer consumed when attempting to apply them on already-spaceproof clothing"

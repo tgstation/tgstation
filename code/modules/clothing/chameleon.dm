@@ -63,8 +63,8 @@
 		// it's NODROP_1
 		D.dropItemToGround(target, TRUE)
 		qdel(old_headgear)
-		// where is `slot_head` defined? WHO KNOWS
-		D.equip_to_slot(new_headgear, slot_head)
+		// where is `SLOT_HEAD` defined? WHO KNOWS
+		D.equip_to_slot(new_headgear, SLOT_HEAD)
 	return 1
 
 

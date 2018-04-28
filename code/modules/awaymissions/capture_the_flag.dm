@@ -496,10 +496,10 @@
 	W.update_label(W.registered_name, W.assignment)
 
 	// The shielded hardsuit is already NODROP_1
-	no_drops += H.get_item_by_slot(slot_gloves)
-	no_drops += H.get_item_by_slot(slot_shoes)
-	no_drops += H.get_item_by_slot(slot_w_uniform)
-	no_drops += H.get_item_by_slot(slot_ears)
+	no_drops += H.get_item_by_slot(SLOT_GLOVES)
+	no_drops += H.get_item_by_slot(SLOT_SHOES)
+	no_drops += H.get_item_by_slot(SLOT_W_UNIFORM)
+	no_drops += H.get_item_by_slot(SLOT_EARS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
 		I.flags_1 |= NODROP_1

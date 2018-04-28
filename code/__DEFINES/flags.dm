@@ -12,7 +12,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 //FLAGS BITMASK
 
-
 #define NODROP_1					(1<<1)		// This flag makes it so that an item literally cannot be removed at all, or at least that's how it should be. Only deleted.
 #define NOBLUDGEON_1				(1<<2)		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
 

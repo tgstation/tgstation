@@ -1,5 +1,0 @@
-author: "Fox McCloud"
-delete-after: True
-changes: 
-  - tweak: "Removed acid requirement from basic network card and basic data disk"
-  - tweak: "grinding circuitboards no longer generates acid"

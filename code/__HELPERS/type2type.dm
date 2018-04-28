@@ -400,25 +400,25 @@
 
 /proc/slot2body_zone(slot)
 	switch(slot)
-		if(slot_back, slot_wear_suit, slot_w_uniform, slot_belt, slot_wear_id)
+		if(SLOT_BACK, SLOT_WEAR_SUIT, SLOT_W_UNIFORM, SLOT_BELT, SLOT_WEAR_ID)
 			return BODY_ZONE_CHEST
 
-		if(slot_gloves, slot_hands, slot_handcuffed)
+		if(SLOT_GLOVES, SLOT_HANDS, SLOT_HANDCUFFED)
 			return pick(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
 
-		if(slot_head, slot_neck, slot_neck, slot_ears)
+		if(SLOT_HEAD, SLOT_NECK, SLOT_NECK, SLOT_EARS)
 			return BODY_ZONE_HEAD
 
-		if(slot_wear_mask)
+		if(SLOT_WEAR_MASK)
 			return BODY_ZONE_PRECISE_MOUTH
 
-		if(slot_glasses)
+		if(SLOT_GLASSES)
 			return BODY_ZONE_PRECISE_EYES
 
-		if(slot_shoes)
+		if(SLOT_SHOES)
 			return pick(BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_L_FOOT)
 
-		if(slot_legcuffed)
+		if(SLOT_LEGCUFFED)
 			return pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
 //adapted from http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/

@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - admin: "You can now use alt click in advanced buildmode to to copy the targeted object for placement with left click."

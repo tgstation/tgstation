@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - rscadd: "You can now see objects and turfs past the map edge borders."

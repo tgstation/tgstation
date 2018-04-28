@@ -1,4 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - rscadd: "Analyzers now show temperature in Kelvin as well as Celsuis"
