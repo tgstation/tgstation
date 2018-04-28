@@ -2306,6 +2306,7 @@
 #include "code\modules\reagents\chemistry\machinery\smoke_machine.dm"
 #include "code\modules\reagents\chemistry\reagents\alcohol_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\blob_reagents.dm"
+#include "code\modules\reagents\chemistry\reagents\cit_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\drink_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\drug_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\food_reagents.dm"
