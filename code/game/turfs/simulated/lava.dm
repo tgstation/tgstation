@@ -130,7 +130,7 @@
 				var/obj/item/clothing/S = C.get_item_by_slot(SLOT_WEAR_SUIT)
 				var/obj/item/clothing/H = C.get_item_by_slot(SLOT_HEAD)
 
-				if(S && H && S.flags_2 & LAVA_PROTECT_2 && H.flags_2 & LAVA_PROTECT_2)
+				if(S && H && S.clothing_flags & LAVAPROTECT && H.clothing_flags & LAVAPROTECT)
 					return
 
 			L.adjustFireLoss(20)

@@ -724,9 +724,9 @@
 	if(suit)
 		active = toggle
 		if(active)
-			src.flags_1 |= NOSLIP_1
+			clothing_flags |= NOSLIP
 		if(!active)
-			src.flags_1 &= ~NOSLIP_1
+			clothing_flags &= ~NOSLIP
 
 /obj/item/clothing/shoes/flightshoes/item_action_slot_check(slot)
 	return slot == SLOT_SHOES

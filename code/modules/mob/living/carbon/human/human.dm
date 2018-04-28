@@ -494,12 +494,17 @@
 		. = 0
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
-	if(above_neck(target_zone))
-		if(head && head.flags_1 & THICKMATERIAL_1 && !penetrate_thick)
-			. = 0
-	else
-		if(wear_suit && wear_suit.flags_1 & THICKMATERIAL_1 && !penetrate_thick)
-			. = 0
+	if (!penetrate_thick)
+		if(above_neck(target_zone))
+			if(head && is_type_in_typecache(head, GLOB.typecache_clothing))
+				var/obj/item/clothing/CH = head
+				if (CH.clothing_flags & THICKMATERIAL)
+					. = 0
+		else
+			if(wear_suit && is_type_in_typecache(wear_suit, GLOB.typecache_clothing))
+				var/obj/item/clothing/CS = wear_suit
+				if (CS.clothing_flags & THICKMATERIAL)
+					. = 0
 	if(!. && error_msg && user)
 		// Might need re-wording.
 		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [p_their()] head" : "on [p_their()] body"].</span>")

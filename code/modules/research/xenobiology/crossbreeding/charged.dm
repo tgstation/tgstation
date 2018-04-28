@@ -329,7 +329,7 @@ Charged extracts:
 	if(!istype(C))
 		to_chat(user, "<span class='warning'>The potion can only be used on clothing!</span>")
 		return
-	if(C.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && C.flags_1 & STOPSPRESSUREDMAGE_1)
+	if(C.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && C.clothing_flags & STOPSPRESSUREDAMAGE)
 		to_chat(user, "<span class='warning'>The [C] is already pressure-resistant!</span>")
 		return ..()
 	to_chat(user, "<span class='notice'>You slather the blue gunk over the [C], making it airtight.</span>")
@@ -338,7 +338,7 @@ Charged extracts:
 	C.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
 	C.min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	C.cold_protection = C.body_parts_covered
-	C.flags_1 |= STOPSPRESSUREDMAGE_1
+	C.clothing_flags |= STOPSPRESSUREDAMAGE
 	uses--
 	if(!uses)
 		qdel(src)
@@ -371,7 +371,9 @@ Charged extracts:
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	C.add_atom_colour("#800000", FIXED_COLOUR_PRIORITY)
 	C.resistance_flags |= LAVA_PROOF
-	C.flags_2 |= LAVA_PROTECT_2
+	if (istype(C, /obj/item/clothing))
+		var/obj/item/clothing/CL = C
+		CL.clothing_flags |= LAVAPROTECT
 	uses--
 	if(!uses)
 		qdel(src)

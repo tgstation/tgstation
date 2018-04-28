@@ -279,7 +279,7 @@
 	icon_state = "bee"
 	item_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS
-	flags_1 = THICKMATERIAL_1
+	clothing_flags = THICKMATERIAL
 	hoodtype = /obj/item/clothing/head/hooded/bee_hood
 
 /obj/item/clothing/head/hooded/bee_hood
@@ -287,7 +287,7 @@
 	desc = "A hood attached to a bee costume."
 	icon_state = "bee"
 	body_parts_covered = HEAD
-	flags_1 = THICKMATERIAL_1
+	clothing_flags = THICKMATERIAL
 	flags_inv = HIDEHAIR|HIDEEARS
 	dynamic_hair_suffix = ""
 

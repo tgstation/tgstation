@@ -11,12 +11,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DF_VAR_EDITED	(1<<1)
 
 //FLAGS BITMASK
-#define STOPSPRESSUREDMAGE_1		(1<<0)	//This flag is used on the flags_1 variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & ITEM_SLOT_BACK) if you see it anywhere
-//To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
 
 #define NODROP_1					(1<<1)		// This flag makes it so that an item literally cannot be removed at all, or at least that's how it should be. Only deleted.
 #define NOBLUDGEON_1				(1<<2)		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
-#define MASKINTERNALS_1				(1<<3)		// mask allows internals
+
 #define HEAR_1						(1<<4)		// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
 #define CHECK_RICOCHET_1			(1<<5)		// Projectiels will check ricochet on things impacted that have this.
 #define CONDUCT_1					(1<<6)		// conducts electricity (metal etc.)
@@ -25,11 +23,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define OVERLAY_QUEUED_1			(1<<8)		// atom queued to SSoverlay
 #define ON_BORDER_1					(1<<9)		// item has priority to check when entering or leaving
 
-#define NOSLIP_1					(1<<10) 		//prevents from slipping on wet floors, in space etc
-
-// BLOCK_GAS_SMOKE_EFFECT_1 only used in masks at the moment.
-#define BLOCK_GAS_SMOKE_EFFECT_1	(1<<12)	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!
-#define THICKMATERIAL_1				(1<<13)	//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
 #define DROPDEL_1					(1<<14)	// When dropped, it calls qdel on itself
 #define PREVENT_CLICK_UNDER_1		(1<<15)	//Prevent clicking things below it on the same turf eg. doors/ fulltile windows
 
@@ -56,9 +49,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
 #define NO_MAT_REDEMPTION_2			(1<<10)
-
-// LAVA_PROTECT used on the flags_2 variable for both SUIT and HEAD items, and stops lava damage. Must be present in both to stop lava damage.
-#define LAVA_PROTECT_2				(1<<11)
 
 //turf-only flags
 #define NOJAUNT_1				(1<<0)
