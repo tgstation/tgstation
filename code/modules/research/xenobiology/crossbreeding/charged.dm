@@ -329,7 +329,7 @@ Charged extracts:
 	if(!istype(C))
 		to_chat(user, "<span class='warning'>The potion can only be used on clothing!</span>")
 		return
-	if(C.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && STOPSPRESSUREDMAGE_1 in C.flags_1)
+	if(C.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && C.flags_1 & STOPSPRESSUREDMAGE_1)
 		to_chat(user, "<span class='warning'>The [C] is already pressure-resistant!</span>")
 		return ..()
 	to_chat(user, "<span class='notice'>You slather the blue gunk over the [C], making it airtight.</span>")

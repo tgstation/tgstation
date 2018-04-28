@@ -83,9 +83,6 @@
 		update_icon()
 		return
 
-	if(exchange_parts(user, O))
-		return
-
 	if(default_deconstruction_crowbar(O))
 		return
 

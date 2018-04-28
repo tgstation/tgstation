@@ -150,7 +150,7 @@
 
 /obj/item/integrated_circuit/input/slime_scanner
 	name = "slime_scanner"
-	desc = "A very small version of the xenobio analyser. This allows the machine to know every needed properties of slime."
+	desc = "A very small version of the xenobio analyser. This allows the machine to know every needed properties of slime. Output mutation list is non associative."
 	icon_state = "medscan_adv"
 	complexity = 12
 	inputs = list("target" = IC_PINTYPE_REF)
@@ -259,7 +259,7 @@
 
 /obj/item/integrated_circuit/input/gene_scanner
 	name = "gene scanner"
-	desc = "This circuit will scan plant for traits and reagent genes."
+	desc = "This circuit will scan plant for traits and reagent genes. Output is non-associative."
 	extended_desc = "This allows the machine to scan plants in trays for reagent and trait genes. \
 			It cannot scan seeds nor fruits, only plants."
 	inputs = list(
@@ -501,7 +501,7 @@
 	complexity = 6
 	name = "list advanced locator"
 	desc = "This is needed for certain devices that demand list of names for a targets to act upon. This type locates something \
-	that is standing in given radius up to 8 meters"
+	that is standing in given radius up to 8 meters. Output is non-associative. Input will only consider keys if associative."
 	extended_desc = "The first pin requires a list of kinds of objects that you want the locator to acquire. It will locate nearby objects by name and description, \
 	and will then provide a list of all found objects which are similar. \
 	The second pin is a radius."
@@ -688,8 +688,8 @@
 	will pulse whatever's connected to it. Pulsing the first activation pin will send a message. Message \
 	can be send to multiple recepients. Addresses must be separated with ; symbol."
 	icon_state = "signal"
-	complexity = 4
-	cooldown_per_use = 5
+	complexity = 2
+	cooldown_per_use = 1
 	inputs = list(
 		"target NTNet addresses"= IC_PINTYPE_STRING,
 		"data to send"			= IC_PINTYPE_STRING,
@@ -700,19 +700,20 @@
 		"address received"			= IC_PINTYPE_STRING,
 		"data received"				= IC_PINTYPE_STRING,
 		"secondary text received"	= IC_PINTYPE_STRING,
-		"passkey"					= IC_PINTYPE_STRING
+		"passkey"					= IC_PINTYPE_STRING,
+		"is_broadcast"				= IC_PINTYPE_BOOLEAN
 		)
 	activators = list("send data" = IC_PINTYPE_PULSE_IN, "on data received" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	action_flags = IC_ACTION_LONG_RANGE
 	power_draw_per_use = 50
-	var/datum/ntnet_connection/exonet = null
 	var/address
 
 /obj/item/integrated_circuit/input/ntnet_packet/Initialize()
 	. = ..()
 	var/datum/component/ntnet_interface/net = LoadComponent(/datum/component/ntnet_interface)
 	address = net.hardware_id
+	net.differentiate_broadcast = FALSE
 	desc += "<br>This circuit's NTNet hardware address is: [address]"
 
 /obj/item/integrated_circuit/input/ntnet_packet/do_work()
@@ -723,17 +724,60 @@
 
 	var/datum/netdata/data = new
 	data.recipient_ids = splittext(target_address, ";")
-	data.plaintext_data = message
-	data.plaintext_data_secondary = text
-	data.encrypted_passkey = key
+	data.standard_format_data(message, text, key)
 	ntnet_send(data)
 
 /obj/item/integrated_circuit/input/ntnet_recieve(datum/netdata/data)
 	set_pin_data(IC_OUTPUT, 1, data.sender_id)
-	set_pin_data(IC_OUTPUT, 2, data.plaintext_data)
-	set_pin_data(IC_OUTPUT, 3, data.plaintext_data_secondary)
-	set_pin_data(IC_OUTPUT, 4, data.encrypted_passkey)
+	set_pin_data(IC_OUTPUT, 2, data.data["data"])
+	set_pin_data(IC_OUTPUT, 3, data.data["data_secondary"])
+	set_pin_data(IC_OUTPUT, 4, data.data["encrypted_passkey"])
+	set_pin_data(IC_OUTPUT, 5, data.broadcast)
 
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/input/ntnet_advanced
+	name = "Low level NTNet transreciever"
+	desc = "Enables the sending and receiving of messages on NTNet via packet data protocol. Allows advanced control of message contents and signalling. Must use associative lists. Outputs associative list. Has a slower transmission rate than normal NTNet circuits, due to increased data processing complexity.."
+	extended_desc = "Data can be send or received using the second pin on each side, \
+	with additonal data reserved for the third pin. When a message is received, the second activation pin \
+	will pulse whatever's connected to it. Pulsing the first activation pin will send a message. Message \
+	can be send to multiple recepients. Addresses must be separated with ; symbol."
+	icon_state = "signal"
+	complexity = 4
+	cooldown_per_use = 10
+	inputs = list(
+		"target NTNet addresses"= IC_PINTYPE_STRING,
+		"data"					= IC_PINTYPE_LIST,
+		)
+	outputs = list("recieved data" = IC_PINTYPE_LIST, "is_broadcast" = IC_PINTYPE_BOOLEAN)
+	activators = list("send data" = IC_PINTYPE_PULSE_IN, "on data received" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_LONG_RANGE
+	power_draw_per_use = 50
+	var/address
+
+/obj/item/integrated_circuit/input/ntnet_advanced/Initialize()
+	. = ..()
+	var/datum/component/ntnet_interface/net = LoadComponent(/datum/component/ntnet_interface)
+	address = net.hardware_id
+	net.differentiate_broadcast = FALSE
+	desc += "<br>This circuit's NTNet hardware address is: [address]"
+
+/obj/item/integrated_circuit/input/ntnet_advanced/do_work()
+	var/target_address = get_pin_data(IC_INPUT, 1)
+	var/list/message = get_pin_data(IC_INPUT, 2)
+	if(!islist(message))
+		message = list()
+	var/datum/netdata/data = new
+	data.recipient_ids = splittext(target_address, ";")
+	data.data = message
+	ntnet_send(data)
+
+/obj/item/integrated_circuit/input/ntnet_advanced/ntnet_recieve(datum/netdata/data)
+	set_pin_data(IC_OUTPUT, 1, data.data)
+	set_pin_data(IC_OUTPUT, 2, data.broadcast)
 	push_data()
 	activate_pin(2)
 

@@ -60,22 +60,12 @@
 			to_chat(user, "<span class='notice'>You link [src] to the one in [I]'s buffer.</span>")
 			return 1
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_deconstruction_crowbar(I))
 		return
 
 	return ..()
 
-/obj/machinery/quantumpad/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(panel_open)
-		to_chat(user, "<span class='warning'>The panel must be closed before operating this machine!</span>")
-		return
-
+/obj/machinery/quantumpad/interact(mob/user)
 	if(!linked_pad || QDELETED(linked_pad))
 		if(!map_pad_link_id || !initMappedLink())
 			to_chat(user, "<span class='warning'>There is no linked pad!</span>")
@@ -96,7 +86,7 @@
 	if(linked_pad.stat & NOPOWER)
 		to_chat(user, "<span class='warning'>Linked pad is not responding to ping.</span>")
 		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	doteleport(user)
 
 /obj/machinery/quantumpad/proc/sparks()

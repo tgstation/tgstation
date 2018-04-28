@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DF_VAR_EDITED	(1<<1)
 
 //FLAGS BITMASK
-#define STOPSPRESSUREDMAGE_1		(1<<0)	//This flag is used on the flags_1 variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
+#define STOPSPRESSUREDMAGE_1		(1<<0)	//This flag is used on the flags_1 variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & ITEM_SLOT_BACK) if you see it anywhere
 //To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
 
 #define NODROP_1					(1<<1)		// This flag makes it so that an item literally cannot be removed at all, or at least that's how it should be. Only deleted.
@@ -39,8 +39,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_EMP_WIRES_2				(1<<1)
 #define HOLOGRAM_2					(1<<2)
 #define FROZEN_2					(1<<3)
-#define STATIONLOVING_2				(1<<4)
-#define INFORM_ADMINS_ON_RELOCATE_2	(1<<5)
 #define BANG_PROTECT_2				(1<<6)
 
 // An item worn in the ear slot with HEALS_EARS will heal your ears each

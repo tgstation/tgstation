@@ -1,0 +1,9 @@
+author: "as334"
+delete-after: True
+changes: 
+  - rscadd: "Fusion is back"
+  - rscadd: "Fusion now happens with large quantities of hot plasma and CO2, consuming all the plasma rapidly and producing large amounts of energy. Other gases can also effect the performance of the reaction."
+  - rscadd: "Fusion now produces radiation. Be careful around reactors."
+  - bugfix: "fixes fusion dividing by zero and destroying everything"
+  - code_imp: "Gas reactions now have access to where they are occurring"
+  - bugfix: "Prevents some other reactions from producing matter from nothing"

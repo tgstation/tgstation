@@ -1,5 +1,5 @@
 /obj/item/gun/magic/staff
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	flags_2 = NO_MAT_REDEMPTION_2

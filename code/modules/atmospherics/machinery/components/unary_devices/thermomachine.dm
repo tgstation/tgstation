@@ -80,8 +80,6 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
-	if(exchange_parts(user, I))
-		return
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/I)

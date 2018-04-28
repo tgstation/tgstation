@@ -4,7 +4,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tanks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tanks_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	hitsound = 'sound/weapons/smash.ogg'
 	pressure_resistance = ONE_ATMOSPHERE * 5
 	force = 5
@@ -241,9 +241,9 @@
 			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 			log_game("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
 		//Give the gas a chance to build up more pressure through reacting
-		air_contents.react()
-		air_contents.react()
-		air_contents.react()
+		air_contents.react(src)
+		air_contents.react(src)
+		air_contents.react(src)
 		pressure = air_contents.return_pressure()
 		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 		var/turf/epicenter = get_turf(loc)

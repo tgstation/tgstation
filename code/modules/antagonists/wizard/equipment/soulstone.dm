@@ -8,7 +8,7 @@
 	layer = HIGH_OBJ_LAYER
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = WEIGHT_CLASS_TINY
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	var/usability = 0
 
 	var/old_shard = FALSE

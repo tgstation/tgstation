@@ -70,9 +70,6 @@
 		updateUsrDialog()
 		return
 
-	if(exchange_parts(user, O))
-		return
-
 	if(panel_open && default_deconstruction_crowbar(O))
 		return
 

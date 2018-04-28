@@ -68,8 +68,6 @@
 			default_deconstruction_crowbar(G)
 			return
 
-		if(exchange_parts(user, G))
-			return
 	return ..()
 
 /obj/machinery/recharger/attack_hand(mob/user)

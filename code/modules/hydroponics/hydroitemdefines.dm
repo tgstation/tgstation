@@ -8,7 +8,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
 
 // *************************************
@@ -112,7 +112,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	armour_penetration = 20
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/swiping = FALSE

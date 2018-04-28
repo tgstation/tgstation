@@ -62,9 +62,6 @@
 	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", O))
 		return
 
-	if(exchange_parts(user, O))
-		return
-
 	if(default_pry_open(O))
 		return
 

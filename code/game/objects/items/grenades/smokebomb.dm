@@ -5,7 +5,7 @@
 	icon_state = "smokewhite"
 	det_time = 20
 	item_state = "flashbang"
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	var/datum/effect_system/smoke_spread/bad/smoke
 
 /obj/item/grenade/smokebomb/New()

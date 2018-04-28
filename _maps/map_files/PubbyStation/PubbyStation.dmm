@@ -50138,6 +50138,10 @@
 	},
 /turf/open/floor/carpet,
 /area/library)
+"iyV" = (
+/obj/machinery/jukebox,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/bar)
 "izB" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod"
@@ -82613,7 +82617,7 @@ aSS
 aUg
 aVf
 aWi
-bah
+iyV
 aYe
 aZb
 bag

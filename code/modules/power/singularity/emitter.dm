@@ -291,9 +291,6 @@
 		wires.interact(user)
 		return
 
-	else if(exchange_parts(user, I))
-		return
-
 	return ..()
 
 /obj/machinery/power/emitter/emag_act(mob/user)
