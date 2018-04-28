@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "Circuit ntnet components buffed. Added a new low level ntnet component that can send custom data instead of just the two plaintext and one passkey format, which things will use by default. Ntnet now uses a list for their data instead of three variables. they also have lowered complexity for the now weakened normal network component, and has lower cooldowns."
