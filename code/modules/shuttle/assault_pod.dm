@@ -22,6 +22,7 @@
 	name = "Assault Pod Targetting Device"
 	icon_state = "gangtool-red"
 	item_state = "radio"
+	icon = 'icons/obj/device.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	desc = "Used to select a landing zone for assault pods."
