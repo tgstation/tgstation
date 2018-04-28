@@ -111,7 +111,7 @@
 	fire_sound = 'sound/weapons/laser.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
 	casing_ejector = FALSE
-	flags_2 = SLOWS_WHILE_IN_HAND_2
+	item_flags = NEEDS_PERMIT | SLOWS_WHILE_IN_HAND
 	var/obj/item/minigunpack/ammo_pack
 
 /obj/item/gun/ballistic/minigun/Initialize()
@@ -146,5 +146,3 @@
 
 /obj/item/gun/ballistic/minigun/dropped(mob/living/user)
 	ammo_pack.attach_gun(user)
-
-
