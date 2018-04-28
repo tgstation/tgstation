@@ -272,7 +272,70 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	else
 		to_chat(M, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
 
+	grant_department_bonus(H, department)
 
+
+/datum/job/officer/grant_department_bonus(mob/living/carbon/human/H, department)
+	var/random = rand(1,3)
+
+	var/flavour_text
+
+	switch(department)
+		if(SEC_DEPT_SUPPLY)
+			switch(rand)
+				if(1)
+					var/gun_path = pick(/obj/item/gun/ballistic/shotgun/automatic/combat, /obj/item/gun/ballistic/shotgun/boltaction, /obj/item/gun/ballistic/automatic/wt550)
+					var/gun = new gun_path
+					H.put_in_hands(gun)
+					flavour_text = "For Close Encounters: Whether inspired by a bad experience with mining fauna, or simply from your connections with the Cargo Techs and their arms shipments, you've acquired an appreciation for classic solid projectile weapons. You carry one with you at all times."
+				if(2)
+					flavour_text "Contraband: Whether confinscated, or given as a bribe to make you look the other way, you are enjoying your own slice of Cargos more illicit side. You have a [contraband item]
+					var/contraband = (//traitor items?)
+				if(3)
+					flavour_text "Friend of Miners: Whether you've gone toe to toe against hostile natives, or the miners just pity a friendly face stuck on the station, they've taken a liking to you, and gifted you [mining_item]
+					var/mining_gift = pick(lavaland item? mining gear?)
+
+		if(SEC DEPT_ENGINEERING)
+			switch(rand)
+				if(1)
+					flavour_text "Handy With Tools: You've learned to help out around Engineering during quiet stretches of your shift. You are in the habit of carrying your own set of tools with you."
+					//toolbelt and yellow gloves? Maybe special tools?
+				if(2)
+					flavour_text "Breacher: Your time in the Engineering Department has taught you respect for the mighty RCD."
+					//RCD obviously
+				if(3)
+					flavour_text "EVA Patrol:
+					//Special softsuit
+		if(SEC_DEPT_MEDICAL)
+
+		//Medical experiment. Special organs or third arm
+
+		//Combat Medic: Compact Defib, medkit, maybe a special white helmet if we can get sprites
+
+		// Chem injector? Implant?
+
+		if(SEC_DEPT_SCIENCE)
+		//Robot rebuild. Random assortment of augmetics.
+
+		//Experimental Weapon/Armour. Strange gun or reactive armour.
+
+		//
+
+		else //basic security officer
+		random = rand(1,5)
+		//More of these per round so the list will be longer with its own rand
+
+		//Rapid Fire. Slightly lower click delay on shooting/melee
+
+		//Backup weapon. That disabler pistol that never got used.
+
+		//Close Quarters Expert: Baton with a parry chance? Compact shield?
+
+		//Lightning Reflexes: 10% chance to dodge from a martial art?
+
+		//Tough as Nails: Reduced damage from attacks, done from species
+
+		//Jaded: No mood penalty from dirty areas/blood
 
 /datum/outfit/job/security
 	name = "Security Officer"
