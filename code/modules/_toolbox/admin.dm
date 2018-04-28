@@ -98,13 +98,32 @@ GLOBAL_VAR_INIT(override_lobby_player_count,0)
 							if(O.started_as_observer)
 								entry += " - <font color='gray'>Observing</font>"
 							else
-								entry += " - <font color='black'><b>DEAD</b></font>"
+								entry += " - <font color='gray'><b>Ghost</b></font>"
 						else
 							entry += " - <font color='black'><b>DEAD</b></font>"
 				if(is_special_character(C.mob))
-					var/antagtext = "Antagonist"
-					if(C.mob.mind && C.mob.mind.special_role && lowertext(C.mob.mind.special_role) != "traitor" && lowertext(C.mob.mind.special_role) != "changeling" && lowertext(C.mob.mind.special_role) != "mode")
-						antagtext = "[C.mob.mind.special_role]"
+					var/list/skip_texts = list("mode")
+					var/list/antag_texts = list()
+					if(C.mob.mind)
+						if(C.mob.mind.special_role && !(lowertext(C.mob.mind.special_role) in skip_texts))
+							antag_texts += "[lowertext(C.mob.mind.special_role)]"
+						if(C.mob.mind.antag_datums.len)
+							for(var/datum/antagonist/DA in C.mob.mind.antag_datums)
+								if(DA.name)
+									if(lowertext(DA.name) in skip_texts)
+										continue
+									if(lowertext(DA.name) in antag_texts)
+										continue
+									antag_texts += "[lowertext(DA.name)]"
+					var/antagtext = ""
+					if(antag_texts.len)
+						for(var/text in antag_texts)
+							antagtext += "[text]"
+							antag_texts -= text
+							if(antag_texts.len)
+								antagtext += ", "
+					if(!antagtext)
+						antagtext = "Antagonist"
 					entry += " - <b><font color='red'>[antagtext]</font></b>"
 					if(C.mob.mind && istype(C.mob,/mob/living))
 						for(var/datum/antagonist/changeling/changeling in C.mob.mind.antag_datums)
@@ -115,6 +134,8 @@ GLOBAL_VAR_INIT(override_lobby_player_count,0)
 						for(var/datum/antagonist/changeling/changeling in C.mob.mind.antag_datums)
 							entry += " - <b><font>Non Antag Ling</font></b>-(<i><font color=#800080><b>[changeling.changelingID]</b></font></i>)"
 							break
+			if(C.mob.mind && C.mob.mind.assigned_role && !(C.mob.mind in GLOB.Original_Minds))
+				entry += " - <b><font>[C.mob.mind.assigned_role]</font></b>"
 			var/list/sharedlist = list()
 			for(var/client/S in C.shared_ips)
 				if(S == C)
@@ -149,6 +170,52 @@ GLOBAL_VAR_INIT(override_lobby_player_count,0)
 			entry += " ([round(C.avgping, 1)]ms)"
 			Lines += entry
 	return Lines
+
+//our version of this proc.
+/proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
+	if(!SSticker.HasRoundStarted())
+		return FALSE
+	if(!istype(M))
+		return FALSE
+	if(issilicon(M))
+		if(iscyborg(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
+			return FALSE
+		else if(isAI(M))
+			var/mob/living/silicon/ai/A = M
+			if(A.laws && A.laws.zeroth && A.mind && A.mind.special_role)
+				return TRUE
+		return FALSE
+	if(M.mind && M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
+		switch(SSticker.mode.config_tag)
+			if("revolution")
+				if(is_revolutionary(M))
+					return 2
+			if("cult")
+				if(M.mind in SSticker.mode.cult)
+					return 2
+			if("nuclear")
+				if(M.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE))
+					return 2
+			if("changeling")
+				if(M.mind.has_antag_datum(/datum/antagonist/changeling,TRUE))
+					return 2
+			if("wizard")
+				if(iswizard(M))
+					return 2
+			if("apprentice")
+				if(M.mind in SSticker.mode.apprentices)
+					return 2
+			if("monkey")
+				if(isliving(M))
+					var/mob/living/L = M
+					if(L.diseases && (locate(/datum/disease/transformation/jungle_fever) in L.diseases))
+						return 2
+		return TRUE
+	if(M.mind && LAZYLEN(M.mind.antag_datums)) //they have an antag datum!
+		for(var/datum/antagonist/A in M.mind.antag_datums)
+			if(A.show_in_roundend)
+				return TRUE
+	return FALSE
 
 /*/area/proc/area_to_dmm()
 	var/list/mapentriestextfirst = list()

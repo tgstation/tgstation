@@ -28,6 +28,7 @@
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 	var/antag_datum = /datum/antagonist/traitor //what type of antag to create
 	var/traitors_required = TRUE //Will allow no traitors
+	var/minimum_traitors = 1
 
 
 /datum/game_mode/traitor/pre_setup()
@@ -42,9 +43,9 @@
 
 	var/tsc = CONFIG_GET(number/traitor_scaling_coeff)
 	if(tsc)
-		num_traitors = max(1, min(round(num_players() / (tsc * 2)) + 2 + num_modifier, round(num_players() / tsc) + num_modifier))
+		num_traitors = max(minimum_traitors, min(round(num_players() / (tsc * 2)) + 2 + num_modifier, round(num_players() / tsc) + num_modifier))
 	else
-		num_traitors = max(1, min(num_players(), traitors_possible))
+		num_traitors = max(minimum_traitors, min(num_players(), traitors_possible))
 
 	for(var/j = 0, j < num_traitors, j++)
 		if (!antag_candidates.len)

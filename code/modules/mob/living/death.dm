@@ -44,6 +44,8 @@
 
 
 /mob/living/death(gibbed)
+	if(client)
+		to_chat(src,"<font color='red' size='3'><B>You have died.</B></font><BR><font color='blue'><B>If you feel this death was illegitimate. Please adminhelp and an admin will investigate this death for you.<B></font>")
 	stat = DEAD
 	unset_machine()
 	timeofdeath = world.time

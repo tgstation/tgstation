@@ -329,7 +329,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/hallucinating()
 	return FALSE
 
-/proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
+/*/proc/is_special_character(mob/M) // returns 1 for special characters and 2 for heroes of gamemode //moved out of admins.dm because things other than admin procs were calling this.
 	if(!SSticker.HasRoundStarted())
 		return FALSE
 	if(!istype(M))
@@ -370,7 +370,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return TRUE
 	if(M.mind && LAZYLEN(M.mind.antag_datums)) //they have an antag datum!
 		return TRUE
-	return FALSE
+	return FALSE*/
 
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1

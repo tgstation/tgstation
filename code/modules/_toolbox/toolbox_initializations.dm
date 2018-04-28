@@ -101,3 +101,9 @@ GLOBAL_LIST_EMPTY(hub_features)
 /client
 	var/list/shared_ips = list()
 	var/list/shared_ids = list()
+
+//giving detective back his telescopic baton
+/datum/outfit/job/detective/New()
+	backpack_contents.Remove(/obj/item/melee/classic_baton)
+	backpack_contents[/obj/item/melee/classic_baton/telescopic] = 1
+	. = ..()

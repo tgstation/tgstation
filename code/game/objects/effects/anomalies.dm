@@ -277,6 +277,21 @@
 	S.amount_grown = SLIME_EVOLUTION_THRESHOLD
 	S.Evolve()
 	offer_control(S)
+	if(S && S.mind)
+		if(prob(33))
+			S.mind.special_role = "Evil Slime"
+			var/evilslimetext = "<font size='3' color='red'>You are an <B>EVIL</B> slime. Destroy all non slimes!</font>"
+			if(S.client)
+				to_chat(S, "[evilslimetext]")
+			if(!istext(S.mind.memory))
+				S.mind.memory = ""
+			if(S.mind.memory)
+				S.mind.memory += "<BR>"
+			S.mind.memory += "[evilslimetext]"
+		else
+			if(S.client)
+				S.set_colour(pick("blue","green"))
+				to_chat(S, "<font size='3' color='blue'>You are a <B>Good</B> slime. Try to be nice and helpful. Feel free to defend your self should it be needed.</font>")
 
 /////////////////////
 

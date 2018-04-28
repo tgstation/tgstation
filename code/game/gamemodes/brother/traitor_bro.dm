@@ -26,10 +26,11 @@
 
 	var/list/datum/mind/possible_brothers = get_players_for_role(ROLE_BROTHER)
 
+	var/num_players = num_players()
 	var/num_teams = team_amount
 	var/bsc = CONFIG_GET(number/brother_scaling_coeff)
 	if(bsc)
-		num_teams = max(1, round(num_players() / bsc))
+		num_teams = max(1, round(num_players / bsc))
 
 	for(var/j = 1 to num_teams)
 		if(possible_brothers.len < min_team_size || antag_candidates.len <= required_enemies)
@@ -45,6 +46,8 @@
 			bro.restricted_roles = restricted_jobs
 			log_game("[bro.key] (ckey) has been selected as a Brother")
 		pre_brother_teams += team
+	if(num_players < 10)
+		minimum_traitors = 0
 	return ..()
 
 /datum/game_mode/traitor/bros/post_setup()

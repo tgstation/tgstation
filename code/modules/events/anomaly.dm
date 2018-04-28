@@ -8,7 +8,7 @@
 
 /datum/round_event/anomaly
 	var/area/impact_area
-	var/obj/effect/anomaly/newAnomaly
+	var/obj/effect/anomaly/newAnomaly = /obj/effect/anomaly/flux
 	announceWhen	= 1
 
 
@@ -28,6 +28,11 @@
 	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/start()
-	var/turf/T = safepick(get_area_turfs(impact_area))
-	if(T)
-		newAnomaly = new /obj/effect/anomaly/flux(T)
+	var/list/aturfs = get_area_turfs(impact_area)
+	for(var/turf/T in aturfs)
+		if(T.density)
+			aturfs -= T
+	var/turf/T = safepick(aturfs)
+	if(ispath(newAnomaly) && T)
+		newAnomaly = new newAnomaly(T)
+		newAnomaly.layer = GASFIRE_LAYER+0.01

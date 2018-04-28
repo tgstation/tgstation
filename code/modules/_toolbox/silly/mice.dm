@@ -3,6 +3,7 @@
 	var/chew_wires_untill = 0
 	var/wire_view_range = 7
 	var/chance_to_die_from_shock = 100
+	var/wires_to_chew = 3
 
 /mob/living/simple_animal/mouse/proc/check_wire_los(obj/structure/cable/C)
 	if(!C)
@@ -34,15 +35,23 @@
 	return 0
 
 /mob/living/simple_animal/mouse/handle_automated_action()
-	if(chew_wires_untill >= world.time)
+	if(chew_wires_untill >= world.time || FUCKING_KILL_THIS_CABLE)
 		seek_wire_to_chew()
 	else if(chew_wires_untill > 0)
 		chew_wires_untill = 0
 
 /mob/living/simple_animal/mouse/proc/seek_wire_to_chew()
-	if(!FUCKING_KILL_THIS_CABLE)
+	if(!FUCKING_KILL_THIS_CABLE && wires_to_chew != 0)
 		var/list/cables = list()
+		var/list/supermatters = list()
+		for(var/obj/machinery/power/supermatter_shard/shard in world)
+			var/area/shardA = get_area(shard)
+			if(shard)
+				supermatters += shardA.type
 		for(var/obj/structure/cable/C in range(wire_view_range,src))
+			var/area/A = get_area(C)
+			if(A.type in supermatters)
+				continue
 			if(!istype(C.loc,/turf/open/floor/plating))
 				continue
 			if(!check_wire_los(C))
@@ -75,8 +84,13 @@
 			visible_message("<span class='warning'>[src] chews through the [C].[die ? " It's toast!" : ""]</span>")
 			if(die)
 				death(toast=1)
+			if(wires_to_chew > 0)
+				wires_to_chew--
+				if(wires_to_chew == 0)
+					wires_to_chew = initial(wires_to_chew)
+					chew_wires_untill = initial(chew_wires_untill)
 			return 1
 	return 0
 
-/mob/living/simple_animal/mouse/proc/wire_chewing_frenzie(duration = 1200)
+/mob/living/simple_animal/mouse/proc/wire_chewing_frenzie(duration = 600)
 	chew_wires_untill = world.time+duration

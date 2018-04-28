@@ -20,7 +20,7 @@
 
 /obj/structure/displaycase/Initialize()
 	. = ..()
-	if(start_showpieces.len && !start_showpiece_type) 
+	if(start_showpieces.len && !start_showpiece_type)
 		var/list/showpiece_entry = pick(start_showpieces)
 		if (showpiece_entry && showpiece_entry["type"])
 			start_showpiece_type = showpiece_entry["type"]
@@ -227,7 +227,7 @@
 /obj/structure/displaycase/captain
 	alert = TRUE
 	start_showpiece_type = /obj/item/gun/energy/laser/captain
-	req_access = list(ACCESS_CENT_SPECOPS)
+	req_access = list(ACCESS_CAPTAIN)
 
 /obj/structure/displaycase/labcage
 	name = "lab cage"
