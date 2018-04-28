@@ -23,6 +23,7 @@
 		var/obj/item/clothing/C = target
 		if(C.armor.melee < 60)
 			C.armor = C.armor.setRating(melee = min(C.armor.melee + 10, 60))
+			C.desc = initial(C.desc) + " " + "It's strengthened with [(C.armor.melee - 30)*0.1] goliath plate\s." //cannot get initial() of lists and armor object is initialized with zeroes, and all four applicable items use 30 as default
 			to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 			use(1)
 		else
