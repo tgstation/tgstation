@@ -405,18 +405,7 @@
 	var/window_checks = FALSE
 	var/placement_checks = FALSE
 
-/datum/stack_recipe/New(
-						title,
-						result_type,
-						req_amount = 1,
-						res_amount = 1,
-						max_res_amount = 1,
-						time = 0,
-						one_per_turf = FALSE,
-						on_floor = FALSE,
-						window_checks = FALSE,
-						placement_checks = FALSE
-						)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE )
 
 
 	src.title = title
