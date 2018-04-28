@@ -18,7 +18,7 @@
 	return ..()
 
 /datum/component/wearertargeting/proc/checkMobHook(mob/user, slot)
-	if ((slot in valid_slots) && istype(user, /mob/living))
+	if ((slot in valid_slots) && istype(user, mobtype))
 		if (mobhook && mobhook.parent != user)
 			QDEL_NULL(mobhook)
 		if (!mobhook)
