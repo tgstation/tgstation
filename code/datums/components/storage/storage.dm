@@ -108,7 +108,7 @@
 	LAZYCLEARLIST(is_using)
 	return ..()
 
-/datum/component/storage/OnTransfer(datum/new_parent)
+/datum/component/storage/PreTransfer()
 	update_actions()
 
 /datum/component/storage/proc/update_actions()
