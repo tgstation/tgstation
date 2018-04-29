@@ -26,6 +26,10 @@
 	for(var/i in slaves)
 		var/datum/component/storage/slave = i
 		slave.change_master(null)
+	if(_contents_limbo)
+		for(var/i in _contents_limbo)
+			qdel(i)
+	_user_limbo = null
 	return ..()
 
 /datum/component/storage/concrete/master()
