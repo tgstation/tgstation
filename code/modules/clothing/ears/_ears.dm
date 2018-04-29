@@ -19,7 +19,7 @@
 
 /obj/item/clothing/ears/earmuffs/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earhealing)
+	AddComponent(/datum/component/earhealing)
 
 /obj/item/clothing/ears/headphones
 	name = "headphones"

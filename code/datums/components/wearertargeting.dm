@@ -1,5 +1,4 @@
 // A dummy parent type used for easily making components that target an item's wearer rather than the item itself.
-// Look at earhealing for an example
 
 /datum/component/wearertargeting
 	var/datum/component/mobhook
