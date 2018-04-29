@@ -30,6 +30,10 @@
 #define APC_ELECTRONICS_INSTALLED 1 // Installed but not secured
 #define APC_ELECTRONICS_SECURED 2 // Installed and secured
 
+#define APC_COVER_CLOSED 0
+#define APC_COVER_OPENED 1
+#define APC_COVER_REMOVED 2
+
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire connection to power network through a terminal
 
@@ -56,7 +60,7 @@
 	var/obj/item/stock_parts/cell/cell
 	var/start_charge = 90				// initial cell charge %
 	var/cell_type = /obj/item/stock_parts/cell/upgraded		//Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
-	var/opened = 0 //0=closed, 1=opened, 2=cover removed
+	var/opened = APC_COVER_CLOSED
 	var/shorted = 0
 	var/lighting = 3
 	var/equipment = 3
@@ -146,7 +150,7 @@
 			pixel_x = -25
 	if (building)
 		area = get_area(src)
-		opened = 1
+		opened = APC_COVER_OPENED
 		operating = FALSE
 		name = "[area.name] APC"
 		stat |= MAINT
@@ -217,7 +221,7 @@
 		return
 	if(opened)
 		if(has_electronics && terminal)
-			to_chat(user, "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"].")
+			to_chat(user, "The cover is [opened==APC_COVER_REMOVED?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"].")
 		else
 			to_chat(user, "It's [ !terminal ? "not" : "" ] wired up.")
 			to_chat(user, "The electronics are[!has_electronics?"n't":""] installed.")
@@ -315,9 +319,9 @@
 	if(stat & MAINT)
 		update_state |= UPSTATE_MAINT
 	if(opened)
-		if(opened==1)
+		if(opened==APC_COVER_OPENED)
 			update_state |= UPSTATE_OPENED1
-		if(opened==2)
+		if(opened==APC_COVER_REMOVED)
 			update_state |= UPSTATE_OPENED2
 	else if((obj_flags & EMAGGED) || malfai)
 		update_state |= UPSTATE_BLUESCREEN
@@ -433,8 +437,8 @@
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				QDEL_NULL(integration_cog)
 			return
-		else if (opened!=2) //cover isn't removed
-			opened = 0
+		else if (opened!=APC_COVER_REMOVED)
+			opened = APC_COVER_CLOSED
 			coverlocked = TRUE //closing cover relocks it
 			update_icon()
 			return
@@ -446,7 +450,7 @@
 			to_chat(user, "<span class='warning'>Exposed wires prevents you from opening it!</span>")
 			return
 		else
-			opened = 1
+			opened = APC_COVER_OPENED
 			update_icon()
 			return
 
@@ -494,7 +498,7 @@
 							"<span class='notice'>You start welding the APC frame...</span>", \
 							"<span class='italics'>You hear welding.</span>")
 		if(W.use_tool(src, user, 50, volume=50, amount=3))
-			if ((stat & BROKEN) || opened==2)
+			if ((stat & BROKEN) || opened==APC_COVER_REMOVED)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\
 					"[user.name] has cut [src] apart with [W].",\
@@ -611,16 +615,16 @@
 			to_chat(user, "<span class='warning'>[src] has both electronics and a cell.</span>")
 			return
 	else if (istype(W, /obj/item/wallframe/apc) && opened)
-		if (!(stat & BROKEN || opened==2 || obj_integrity < max_integrity)) // There is nothing to repair
+		if (!(stat & BROKEN || opened==APC_COVER_REMOVED || obj_integrity < max_integrity)) // There is nothing to repair
 			to_chat(user, "<span class='warning'>You found no reason for repairing this APC</span>")
 			return
-		if (!(stat & BROKEN) && opened==2) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
+		if (!(stat & BROKEN) && opened==APC_COVER_REMOVED) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
 			user.visible_message("[user.name] replaces missing APC's cover.",\
 							"<span class='notice'>You begin to replace APC's cover...</span>")
 			if(do_after(user, 20, target = src)) // replacing cover is quicker than replacing whole frame
 				to_chat(user, "<span class='notice'>You replace missing APC's cover.</span>")
 				qdel(W)
-				opened = 1
+				opened = APC_COVER_OPENED
 				update_icon()
 			return
 		if (has_electronics)
@@ -633,8 +637,8 @@
 			qdel(W)
 			stat &= ~BROKEN
 			obj_integrity = max_integrity
-			if (opened==2)
-				opened = 1
+			if (opened==APC_COVER_REMOVED)
+				opened = APC_COVER_OPENED
 			update_icon()
 	else if(istype(W, /obj/item/clockwork/integration_cog) && is_servant_of_ratvar(user))
 		if(integration_cog)
@@ -643,7 +647,7 @@
 		if(!opened)
 			user.visible_message("<span class='warning'>[user] slices [src]'s cover lock, and it swings wide open!</span>", \
 			"<span class='alloy'>You slice [src]'s cover lock apart with [W], and the cover swings open.</span>")
-			opened = TRUE
+			opened = APC_COVER_OPENED
 			update_icon()
 		else
 			user.visible_message("<span class='warning'>[user] presses [W] into [src]!</span>", \
@@ -659,7 +663,7 @@
 			integration_cog = W
 			START_PROCESSING(SSfastprocess, W)
 			playsound(src, 'sound/machines/clockcult/steam_whoosh.ogg', 50, FALSE)
-			opened = FALSE
+			opened = APC_COVER_CLOSED
 			locked = FALSE
 			update_icon()
 		return
@@ -706,8 +710,9 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
 			set_broken()
-		if(opened != 2)
-			opened = 2
+		if(opened != APC_COVER_REMOVED)
+			opened = APC_COVER_REMOVED
+			coverlocked = FALSE
 			visible_message("<span class='warning'>The APC cover is knocked down!</span>")
 			update_icon()
 
@@ -1348,6 +1353,10 @@
 #undef APC_ELECTRONICS_MISSING
 #undef APC_ELECTRONICS_INSTALLED
 #undef APC_ELECTRONICS_SECURED
+
+#undef APC_COVER_CLOSED
+#undef APC_COVER_OPENED
+#undef APC_COVER_REMOVED
 
 //update_overlay
 #undef APC_UPOVERLAY_CHARGEING0
