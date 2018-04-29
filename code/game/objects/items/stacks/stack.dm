@@ -244,7 +244,7 @@
 			if(istype(AM,/obj/structure/table))
 				continue
 			if(AM.density)
-				to_chat(usr, "<span class='warning'>There is a [AM.name] blocking you cant fit a [R.title] here!</span>")
+				to_chat(usr, "<span class='warning'>Theres a [AM.name] here. You cant make a [R.title] here!</span>")
 				return FALSE
 	if(R.placement_checks)
 		switch(R.placement_checks)
