@@ -4,7 +4,7 @@
 	if(digitalinvis)
 		handle_diginvis() //AI becomes unable to see mob
 
-	if((movement_type & FLYING) && !floating)	//TODO: Better floating
+	if(is_flying() && !floating)	//TODO: Better floating
 		float(on = TRUE)
 
 	if (client || registered_z) // This is a temporary error tracker to make sure we've caught everything

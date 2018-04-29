@@ -40,11 +40,12 @@
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
-#define TRAIT_DEPRESSION			"depression"
+#define TRAIT_DEPRESSION		"depression"
 #define TRAIT_JOLLY				"jolly"
 #define TRAIT_NOCRITDAMAGE		"no_crit"
 #define TRAIT_NOSLIPWATER		"noslip_water"
 #define TRAIT_NOSLIPALL			"noslip_all"
+#define TRAIT_FLIGHT			"flight"
 
 
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
@@ -61,16 +62,17 @@
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
 
 // common trait sources
-#define TRAIT_GENERIC "generic"
-#define EYE_DAMAGE "eye_damage"
-#define GENETIC_MUTATION "genetic"
-#define OBESITY "obesity"
-#define MAGIC_TRAIT "magic"
-#define TRAUMA_TRAIT "trauma"
-#define SPECIES_TRAIT "species"
-#define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
+#define TRAIT_INNATE 			"innate"		//spawned with it
+#define TRAIT_GENERIC 			"generic"		//in case a trait should always have the same source
+#define EYE_DAMAGE 				"eye_damage"	//for physical eye damage
+#define GENETIC_MUTATION 		"genetic"		//Genetic Mutations
+#define MAGIC_TRAIT 			"magic"			//Generic Magic
+#define TRAUMA_TRAIT 			"trauma"		//Brain Traumas
+#define SPECIES_TRAIT 			"species"		//Added by species on gain
+#define ROUNDSTART_TRAIT 		"roundstart" 	//cannot be removed without admin intervention
 
 // unique trait sources, still defines
+#define OBESITY "obesity"
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
 #define CHANGELING_HIVEMIND_MUTE "ling_mute"

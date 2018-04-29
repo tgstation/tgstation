@@ -281,7 +281,7 @@
 				var/mob/living/simple_animal/SA = L
 				if(SA.mob_size > MOB_SIZE_TINY)
 					snap = 1
-			if(L.movement_type & FLYING)
+			if(L.is_flying())
 				snap = 0
 			if(snap)
 				armed = 0

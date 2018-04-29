@@ -1072,7 +1072,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/flightpack/F = H.get_flightpack()
 	if(istype(F) && F.flight)
 		flightpack = 1
-	if(H.movement_type & FLYING)
+	if(H.is_flying())
 		flight = 1
 
 	if(H.has_gravity())
