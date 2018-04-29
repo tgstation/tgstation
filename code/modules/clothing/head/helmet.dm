@@ -227,6 +227,12 @@
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
 
+/obj/item/clothing/head/helmet/knight/ancient
+	name = "ancient helmet"
+	desc = "None may pass!"
+	icon_state = "knight_ancient"
+	item_state = "knight_ancient"
+
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
 	desc = "An intimidating tribal helmet, it doesn't look very comfortable."

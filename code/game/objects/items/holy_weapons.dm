@@ -50,10 +50,11 @@
 	new /obj/item/clothing/suit/armor/riot/knight/templar(src)
 
 /obj/item/storage/box/holy/student
-	name = "Scholar Kit"
+	name = "Profane Scholar Kit"
 
 /obj/item/storage/box/holy/student/PopulateContents()
-	new /obj/item/clothing/suit/studentuni
+	new /obj/item/clothing/suit/studentuni(src)
+	new /obj/item/clothing/head/cage(src)
 
 /obj/item/clothing/suit/studentuni
 	name = "student robe"
@@ -63,8 +64,22 @@
 	body_parts_covered = ARMS|CHEST
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
-/obj/item/storage/box/holy/giantdad
-	name = "Old Armor Kit"
+/obj/item/clothing/head/cage
+	name = "cage"
+	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
+	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = "cage"
+	item_state = "cage"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	dynamic_hair_suffix = ""
+
+/obj/item/storage/box/holy/sentinel
+	name = "Stone Sentinel Kit"
+
+/obj/item/storage/box/holy/sentinel/PopulateContents()
+	new /obj/item/clothing/suit/armor/riot/knight/ancient(src)
+	new /obj/item/clothing/head/helmet/knight/ancient(src)
 
 /obj/item/storage/box/holy/witchhunter
 	name = "Witchhunter Kit"
@@ -81,16 +96,26 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
-/obj/item/storage/box/holy/spellcaster
-	name = "Novice Spellcaster Kit"
+/obj/item/clothing/head/witchunter_hat
+	name = "witchunter hat"
+	desc = "This hat saw much use back in the day."
+	icon_state = "witchhunterhat"
+	item_state = "witchhunterhat"
+	flags_cover = HEADCOVERSEYES
+
+/obj/item/storage/box/holy/partykit
+	name = "Chaplain Mentor Kit"
 
 /obj/item/storage/box/holy/spellcaster/PopulateContents()
-	new /obj/item/clothing/suit/hooded/chaplain_hoodie
-	//smoke spellbook
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie/leader(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie
-	name = "chaplain hoodie"
-	desc = "This suit says to you 'hush'!"
+	name = "follower hoodie"
+	desc = "I'm ready to learn."
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -98,11 +123,23 @@
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
 
 /obj/item/clothing/head/hooded/chaplain_hood
-	name = "chaplain hood"
-	desc = "For protecting your identity when immolating demons."
+	name = "follower hood"
+	desc = "I shall do as you say."
 	icon_state = "chaplain_hood"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+
+/obj/item/clothing/suit/hooded/chaplain_hoodie/leader
+	name = "leader hoodie"
+	desc = "Pay attention, class!"
+	icon_state = "chaplain_hoodie_leader"
+	item_state = "chaplain_hoodie_leader"
+	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood/leader
+
+/obj/item/clothing/head/hooded/chaplain_hood/leader
+	name = "leader hood"
+	desc = "Instruction begins!"
+	icon_state = "chaplain_hood_leader"
 
 
 // CHAPLAIN NULLROD AND CUSTOM WEAPONS //
