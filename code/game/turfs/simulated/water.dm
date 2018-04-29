@@ -7,6 +7,7 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	slowdown = 1
+	bullet_sizzle = TRUE
 
 /turf/open/water/Initialize()
 	. = ..()

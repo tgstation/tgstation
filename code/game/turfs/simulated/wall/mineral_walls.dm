@@ -167,6 +167,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/snow
 	canSmoothWith = null
 	girder_type = null
+	bullet_sizzle = TRUE
 
 /turf/closed/wall/mineral/abductor
 	name = "alien wall"

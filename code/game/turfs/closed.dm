@@ -102,6 +102,7 @@
 	desc = "An extremely densely-packed rock, sheeted over with centuries worth of ice and snow."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "snowrock"
+	bullet_sizzle = TRUE
 
 /turf/closed/indestructible/rock/snow/ice
 	name = "iced rock"

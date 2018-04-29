@@ -144,6 +144,7 @@
 	baseturfs = /turf/open/floor/plating/ice
 	slowdown = 1
 	attachment_holes = FALSE
+	bullet_sizzle = TRUE
 
 /turf/open/floor/plating/ice/Initialize()
 	. = ..()

@@ -93,6 +93,7 @@
 	floor_tile = null
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	slowdown = 2
+	bullet_sizzle = TRUE
 
 /turf/open/floor/grass/snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return

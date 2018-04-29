@@ -44,6 +44,7 @@
 /turf/open/floor/holofloor/beach/water
 	name = "water"
 	icon_state = "water"
+	bullet_sizzle = TRUE
 
 /turf/open/floor/holofloor/asteroid
 	name = "asteroid"
@@ -110,6 +111,7 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 	slowdown = 2
+	bullet_sizzle = TRUE
 
 /turf/open/floor/holofloor/snow/cold
 	initial_gas_mix = "nob=7500;TEMP=2.7"
