@@ -121,7 +121,7 @@
 	icon_state = active ? "sat_active" : "sat_inactive"
 
 /obj/machinery/satellite/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/multitool))
+	if(istype(I, /obj/item/multitool))
 		to_chat(user, "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[(obj_flags & EMAGGED) ? "DEBUG_MODE //" : ""]</span>")
 	else
 		return ..()
@@ -193,3 +193,11 @@
 /obj/item/circuitboard/computer/sat_control
 	name = "Satellite Network Control (Computer Board)"
 	build_path = /obj/machinery/computer/sat_control
+
+/datum/supply_pack/engineering/shield_sat_control
+	name = "Shield System Control Board"
+	desc = "A control system for the Shield Generator Satellite system."
+	cost = 5000
+	special = TRUE
+	contains = list(/obj/item/circuitboard/computer/sat_control)
+	crate_name= "shield control board crate"

@@ -59,9 +59,6 @@
 	if(default_deconstruction_screwdriver(user, "hydrotray3", "hydrotray3", I))
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_pry_open(I))
 		return
 
@@ -761,7 +758,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src] already has seeds in it!</span>")
 
-	else if(istype(O, /obj/item/device/plant_analyzer))
+	else if(istype(O, /obj/item/plant_analyzer))
 		if(myseed)
 			to_chat(user, "*** <B>[myseed.plantname]</B> ***" )
 			to_chat(user, "- Plant Age: <span class='notice'>[age]</span>")

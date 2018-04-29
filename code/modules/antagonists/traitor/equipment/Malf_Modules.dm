@@ -666,6 +666,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		active = FALSE
 		return
 	if(!owner_AI.can_place_transformer(src))
+		active = FALSE
 		return
 	var/turf/T = get_turf(owner_AI.eyeobj)
 	var/obj/machinery/transformer/conveyor = new(T)

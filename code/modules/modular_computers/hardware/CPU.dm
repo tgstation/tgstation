@@ -12,7 +12,7 @@
 	var/max_idle_programs = 2 // 2 idle, + 1 active = 3 as said in description.
 	device_type = MC_CPU
 
-/obj/item/computer_hardware/processor_unit/on_remove(obj/item/device/modular_computer/MC, mob/user)
+/obj/item/computer_hardware/processor_unit/on_remove(obj/item/modular_computer/MC, mob/user)
 	MC.shutdown_computer()
 
 /obj/item/computer_hardware/processor_unit/small

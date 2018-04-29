@@ -105,8 +105,8 @@ D [1]/  ||
 	push_data()
 
 /datum/integrated_io/proc/handle_wire(datum/integrated_io/linked_pin, obj/item/tool, action, mob/living/user)
-	if(istype(tool, /obj/item/device/multitool))
-		var/obj/item/device/multitool/multitool = tool
+	if(istype(tool, /obj/item/multitool))
+		var/obj/item/multitool/multitool = tool
 		switch(action)
 			if("wire")
 				multitool.wire(src, user)
@@ -119,15 +119,15 @@ D [1]/  ||
 				ask_for_pin_data(user)
 				return TRUE
 
-	else if(istype(tool, /obj/item/device/integrated_electronics/wirer))
-		var/obj/item/device/integrated_electronics/wirer/wirer = tool
+	else if(istype(tool, /obj/item/integrated_electronics/wirer))
+		var/obj/item/integrated_electronics/wirer/wirer = tool
 		if(linked_pin)
 			wirer.wire(linked_pin, user)
 		else
 			wirer.wire(src, user)
 
-	else if(istype(tool, /obj/item/device/integrated_electronics/debugger))
-		var/obj/item/device/integrated_electronics/debugger/debugger = tool
+	else if(istype(tool, /obj/item/integrated_electronics/debugger))
+		var/obj/item/integrated_electronics/debugger/debugger = tool
 		debugger.write_data(src, user)
 		return TRUE
 

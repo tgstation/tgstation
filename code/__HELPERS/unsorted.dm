@@ -831,7 +831,7 @@ GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 Checks if that loc and dir has an item on the wall
 */
 GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
-	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,
+	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,

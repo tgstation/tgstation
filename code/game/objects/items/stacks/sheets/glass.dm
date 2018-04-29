@@ -285,7 +285,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 
 
 /obj/item/shard/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/lightreplacer))
+	if(istype(I, /obj/item/lightreplacer))
 		I.attackby(src, user)
 	else
 		return ..()

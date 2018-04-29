@@ -97,8 +97,8 @@
 		if("swipeidseclevel")
 			var/mob/M = usr
 			var/obj/item/card/id/I = M.get_active_held_item()
-			if (istype(I, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = I
+			if (istype(I, /obj/item/pda))
+				var/obj/item/pda/pda = I
 				I = pda.id
 			if (I && istype(I))
 				if(ACCESS_CAPTAIN in I.access)

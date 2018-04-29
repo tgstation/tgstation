@@ -6,7 +6,7 @@
 
 	w_class = WEIGHT_CLASS_TINY	// w_class limits which devices can contain this component.
 	// 1: PDAs/Tablets, 2: Laptops, 3-4: Consoles only
-	var/obj/item/device/modular_computer/holder = null
+	var/obj/item/modular_computer/holder = null
 	// Computer that holds this hardware, if any.
 
 	var/power_usage = 0 			// If the hardware uses extra power, change this.
@@ -33,7 +33,7 @@
 
 /obj/item/computer_hardware/attackby(obj/item/I, mob/living/user)
 	// Multitool. Runs diagnostics
-	if(istype(I, /obj/item/device/multitool))
+	if(istype(I, /obj/item/multitool))
 		to_chat(user, "***** DIAGNOSTICS REPORT *****")
 		diagnostics(user)
 		to_chat(user, "******************************")
@@ -83,15 +83,15 @@
 		to_chat(user, "<span class='notice'>It seems to be slightly damaged.</span>")
 
 // Component-side compatibility check.
-/obj/item/computer_hardware/proc/can_install(obj/item/device/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/proc/can_install(obj/item/modular_computer/M, mob/living/user = null)
 	return can_install
 
 // Called when component is installed into PC.
-/obj/item/computer_hardware/proc/on_install(obj/item/device/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/proc/on_install(obj/item/modular_computer/M, mob/living/user = null)
 	return
 
 // Called when component is removed from PC.
-/obj/item/computer_hardware/proc/on_remove(obj/item/device/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/proc/on_remove(obj/item/modular_computer/M, mob/living/user = null)
 	try_eject(forced = 1)
 
 // Called when someone tries to insert something in it - paper in printer, card in card reader, etc.

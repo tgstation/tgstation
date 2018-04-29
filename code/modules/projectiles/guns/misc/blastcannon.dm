@@ -11,7 +11,7 @@
 	clumsy_check = FALSE
 	randomspread = FALSE
 
-	var/obj/item/device/transfer_valve/bomb
+	var/obj/item/transfer_valve/bomb
 
 /obj/item/gun/blastcannon/Initialize()
 	. = ..()
@@ -44,8 +44,8 @@
 		desc = initial(desc)
 
 /obj/item/gun/blastcannon/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/device/transfer_valve))
-		var/obj/item/device/transfer_valve/T = O
+	if(istype(O, /obj/item/transfer_valve))
+		var/obj/item/transfer_valve/T = O
 		if(!T.tank_one || !T.tank_two)
 			to_chat(user, "<span class='warning'>What good would an incomplete bomb do?</span>")
 			return FALSE
@@ -65,7 +65,7 @@
 	temp.merge(bomb.tank_one.air_contents.remove_ratio(1))
 	temp.merge(bomb.tank_two.air_contents.remove_ratio(2))
 	for(var/i in 1 to 6)
-		temp.react()
+		temp.react(src)
 	var/pressure = temp.return_pressure()
 	qdel(temp)
 	if(pressure < TANK_FRAGMENT_PRESSURE)

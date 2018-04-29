@@ -81,7 +81,7 @@
 /obj/item/implant/radio
 	name = "internal radio implant"
 	activated = TRUE
-	var/obj/item/device/radio/radio
+	var/obj/item/radio/radio
 	var/radio_key
 	var/subspace_transmission = FALSE
 	icon = 'icons/obj/radio.dmi'
@@ -105,18 +105,18 @@
 	radio.recalculateChannels()
 
 /obj/item/implant/radio/mining
-	radio_key = /obj/item/device/encryptionkey/headset_cargo
+	radio_key = /obj/item/encryptionkey/headset_cargo
 
 /obj/item/implant/radio/syndicate
 	desc = "Are you there God? It's me, Syndicate Comms Agent."
-	radio_key = /obj/item/device/encryptionkey/syndicate
+	radio_key = /obj/item/encryptionkey/syndicate
 	subspace_transmission = TRUE
 
 /obj/item/implant/radio/slime
 	name = "slime radio"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "adamantine_resonator"
-	radio_key = /obj/item/device/encryptionkey/headset_sci
+	radio_key = /obj/item/encryptionkey/headset_sci
 	subspace_transmission = TRUE
 
 /obj/item/implant/radio/get_data()

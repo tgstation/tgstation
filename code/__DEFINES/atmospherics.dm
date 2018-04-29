@@ -9,7 +9,7 @@
 #define META_GAS_OVERLAY		4
 #define META_GAS_DANGER			5
 #define META_GAS_ID				6
-
+#define META_GAS_FUSION_POWER   7
 //ATMOS
 //stuff you should probably leave well alone!
 #define R_IDEAL_GAS_EQUATION	8.31	//kPa*L/(K*mol)
@@ -56,6 +56,8 @@
 #define FIRE_SPREAD_RADIOSITY_SCALE			0.85
 #define FIRE_GROWTH_RATE					40000	//For small fires
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		(100+T0C)
+#define PLASMA_UPPER_TEMPERATURE			(1370+T0C)
+#define PLASMA_OXYGEN_FULLBURN				10
 
 //GASES
 #define MIN_TOXIC_GAS_DAMAGE				1

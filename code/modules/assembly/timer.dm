@@ -1,4 +1,4 @@
-/obj/item/device/assembly/timer
+/obj/item/assembly/timer
 	name = "timer"
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
 	icon_state = "timer"
@@ -10,28 +10,28 @@
 	var/saved_time = 5
 	var/loop = 0
 
-/obj/item/device/assembly/timer/suicide_act(mob/living/user)
+/obj/item/assembly/timer/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] looks at the timer and decides [user.p_their()] fate! It looks like [user.p_theyre()] going to commit suicide!</span>")
 	activate()//doesnt rely on timer_end to prevent weird metas where one person can control the timer and therefore someone's life. (maybe that should be how it works...)
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), time*10)//kill yourself once the time runs out
 	return MANUAL_SUICIDE
 
-/obj/item/device/assembly/timer/proc/manual_suicide(mob/living/user)
+/obj/item/assembly/timer/proc/manual_suicide(mob/living/user)
 	user.visible_message("<span class='suicide'>[user]'s time is up!</span>")
 	user.adjustOxyLoss(200)
 	user.death(0)
 
-/obj/item/device/assembly/timer/New()
+/obj/item/assembly/timer/New()
 	..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/device/assembly/timer/describe()
+/obj/item/assembly/timer/describe()
 	if(timing)
 		return "The timer is counting down from [time]!"
 	return "The timer is set for [time] seconds."
 
 
-/obj/item/device/assembly/timer/activate()
+/obj/item/assembly/timer/activate()
 	if(!..())
 		return 0//Cooldown check
 	timing = !timing
@@ -39,7 +39,7 @@
 	return 1
 
 
-/obj/item/device/assembly/timer/toggle_secure()
+/obj/item/assembly/timer/toggle_secure()
 	secured = !secured
 	if(secured)
 		START_PROCESSING(SSobj, src)
@@ -50,7 +50,7 @@
 	return secured
 
 
-/obj/item/device/assembly/timer/proc/timer_end()
+/obj/item/assembly/timer/proc/timer_end()
 	if(!secured || next_activate > world.time)
 		return FALSE
 	pulse(0)
@@ -60,7 +60,7 @@
 	update_icon()
 
 
-/obj/item/device/assembly/timer/process()
+/obj/item/assembly/timer/process()
 	if(timing)
 		time--
 		if(time <= 0)
@@ -69,7 +69,7 @@
 			time = saved_time
 
 
-/obj/item/device/assembly/timer/update_icon()
+/obj/item/assembly/timer/update_icon()
 	cut_overlays()
 	attached_overlays = list()
 	if(timing)
@@ -79,7 +79,7 @@
 		holder.update_icon()
 
 
-/obj/item/device/assembly/timer/ui_interact(mob/user)//TODO: Have this use the wires
+/obj/item/assembly/timer/ui_interact(mob/user)//TODO: Have this use the wires
 	. = ..()
 	if(is_secured(user))
 		var/second = time % 60
@@ -93,7 +93,7 @@
 		popup.open()
 
 
-/obj/item/device/assembly/timer/Topic(href, href_list)
+/obj/item/assembly/timer/Topic(href, href_list)
 	..()
 	if(usr.incapacitated() || !in_range(loc, usr))
 		usr << browse(null, "window=timer")
@@ -102,7 +102,7 @@
 
 	if(href_list["time"])
 		timing = text2num(href_list["time"])
-		if(timing && istype(holder, /obj/item/device/transfer_valve))
+		if(timing && istype(holder, /obj/item/transfer_valve))
 			var/timer_message = "[ADMIN_LOOKUPFLW(usr)] activated [src] attachment on [holder]."
 			message_admins(timer_message)
 			GLOB.bombers += timer_message

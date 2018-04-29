@@ -106,18 +106,18 @@
 /obj/structure/rack,
 /obj/item/storage/bag/ore,
 /obj/item/pickaxe,
-/obj/item/device/flashlight,
+/obj/item/flashlight,
 /obj/item/clothing/glasses/meson,
-/obj/item/device/mining_scanner,
+/obj/item/mining_scanner,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "av" = (
 /obj/structure/rack,
 /obj/item/storage/bag/ore,
-/obj/item/device/flashlight,
+/obj/item/flashlight,
 /obj/item/pickaxe,
 /obj/item/clothing/glasses/meson,
-/obj/item/device/mining_scanner,
+/obj/item/mining_scanner,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aw" = (
@@ -164,7 +164,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "aE" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
 	dir = 2;
 	name = "Prison Intercom (General)";
@@ -384,10 +384,10 @@
 "bn" = (
 /obj/structure/table,
 /obj/item/pickaxe,
-/obj/item/device/gps/mining,
-/obj/item/device/gps/mining,
-/obj/item/device/gps/mining,
-/obj/item/device/gps/mining,
+/obj/item/gps/mining,
+/obj/item/gps/mining,
+/obj/item/gps/mining,
+/obj/item/gps/mining,
 /turf/open/floor/plasteel/purple/side{
 	dir = 9
 	},
@@ -583,7 +583,7 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "bO" = (
-/obj/item/device/beacon,
+/obj/item/beacon,
 /turf/open/floor/plasteel/purple/corner{
 	dir = 8
 	},
@@ -926,7 +926,7 @@
 /turf/closed/wall,
 /area/mine/living_quarters)
 "cO" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
 	pixel_x = -28
@@ -1322,7 +1322,7 @@
 	dir = 8;
 	network = list("mine")
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
 	pixel_x = 28
@@ -1934,7 +1934,7 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fq" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
 	pixel_x = 28
@@ -2059,7 +2059,7 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "fI" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
 	pixel_x = -28

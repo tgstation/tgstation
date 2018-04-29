@@ -143,7 +143,7 @@
 	var/piece_of_shit_fuck = current_value - 500
 	var/i_hate_this_code = (speculation / rand(25000, 50000) + performance / rand(100, 800)) * current_value
 	if(i_hate_this_code < fucking_stock_spikes || i_hate_this_code > piece_of_shit_fuck)
-		current_value += i_hate_this_code
+		current_value = i_hate_this_code
 	if (current_value < 5)
 		current_value = 5
 
