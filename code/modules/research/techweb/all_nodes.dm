@@ -110,7 +110,7 @@
 	id = "anomaly_research"
 	display_name = "Anomaly Research"
 	description = "Unlock the potential of the mysterious anomalies that appear on station."
-	prereq_ids = list("engineering_adv", "practical_bluespace")
+	prereq_ids = list("adv_engi", "practical_bluespace")
 	design_ids = list("reactive_armour")
 	research_cost = 2500
 	export_price = 5000
