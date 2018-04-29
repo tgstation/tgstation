@@ -11,7 +11,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,27)
+	var/loot = rand(1,28)
 	switch(loot)
 		if(1)
 			new /obj/item/shared_storage/red(src)
@@ -75,6 +75,8 @@
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
+		if(28)
+			new /obj/item/clothing/neck/necklace/memento_mori(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -191,6 +193,65 @@
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
+
+//Memento Mori
+/obj/item/clothing/neck/necklace/memento_mori
+	name = "Memento Mori"
+	desc = "A golden pendant. An inscription on it says: \"Certain death tomorrow means certain life today.\""
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "memento_mori"
+	actions_types = list(/datum/action/item_action/hands_free/memento_mori)
+	var/mob/living/carbon/human/active_owner
+	var/death_timer_id
+
+/obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
+	if(slot == SLOT_NECK)
+		return TRUE
+
+/obj/item/clothing/neck/necklace/memento_mori/ui_action_click(mob/user, action)
+	if(!active_owner)
+		if(ishuman(user))
+			memento(user)
+	else
+		to_chat(user, "<span class='warning'>You try to free your lifeforce from the pendant...</span>")
+		if(do_after(user, 40, target = src))
+			mori()
+
+/obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
+	..()
+	if(active_owner)
+		mori()
+
+/obj/item/clothing/neck/necklace/memento_mori/proc/memento(mob/living/carbon/human/user)
+	to_chat(user, "<span class='warning'>You feel your life being drained by the pendant...</span>")
+	if(do_after(user, 40, target = src))
+		to_chat(user, "<span class='notice'>Your lifeforce is now linked to the pendant! You feel a looming death ahead of you, and yet you instinctively know that until then, you won't die.</span>")
+		to_chat(user, "<span class='warning'>You also feel that removing the pendant now would be a really bad idea.</span>")
+		user.add_trait(TRAIT_NODEATH, "memento_mori")
+		user.add_trait(TRAIT_NOHARDCRIT, "memento_mori")
+		user.add_trait(TRAIT_NOCRITDAMAGE, "memento_mori")
+		icon_state = "memento_mori_active"
+		active_owner = user
+		if(death_timer_id)
+			deltimer(death_timer_id)
+		death_timer_id = addtimer(CALLBACK(.proc/mori), world.time + 9000, TIMER_STOPPABLE) //15 minutes
+
+/obj/item/clothing/neck/necklace/memento_mori/proc/mori()
+	if(death_timer_id)
+		deltimer(death_timer_id)
+	death_timer_id = null
+	icon_state = "memento_mori"
+	if(!active_owner)
+		return
+	var/mob/living/carbon/human/H = active_owner //to avoid infinite looping when dust unequips the pendant
+	active_owner = null
+	to_chat(H, "<span class='userdanger'>You feel your life rapidly slipping away from you!</span>")
+	H.dust(TRUE, TRUE)
+
+/datum/action/item_action/hands_free/memento_mori
+	check_flags = 0
+	name = "Memento Mori"
+	desc = "Bind your life to the pendant, preserving it yet dooming it."
 
 //Wisp Lantern
 /obj/item/wisp_lantern
