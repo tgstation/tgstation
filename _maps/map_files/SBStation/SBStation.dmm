@@ -25379,6 +25379,10 @@
 	dir = 1;
 	id = "garbage"
 	},
+/obj/machinery/conveyor/inverted{
+	icon_state = "conveyor_map_inverted";
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "igv" = (
@@ -25417,9 +25421,9 @@
 /turf/closed/wall,
 /area/crew_quarters/dorms)
 "ipT" = (
-/obj/machinery/conveyor{
-	dir = 5;
-	id = "garbage"
+/obj/machinery/conveyor/inverted{
+	icon_state = "conveyor_map_inverted";
+	dir = 5
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -25446,11 +25450,11 @@
 	name = "\improper STAY CLEAR HEAVY MACHINERY";
 	pixel_y = 32
 	},
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "garbage"
-	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/conveyor/inverted{
+	icon_state = "conveyor_map_inverted";
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "iEL" = (
@@ -25495,10 +25499,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/conveyor{
-	dir = 2;
-	id = "garbage"
-	},
+/obj/machinery/conveyor/inverted,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "jbs" = (
@@ -25553,9 +25554,9 @@
 /obj/structure/sign/warning/vacuum{
 	pixel_x = -32
 	},
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "garbage"
+/obj/machinery/conveyor/inverted{
+	icon_state = "conveyor_map_inverted";
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -25870,7 +25871,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/closed/wall,
+/obj/structure/falsewall,
+/turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "mji" = (
 /obj/machinery/power/apc{
@@ -26048,9 +26050,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "garbage"
+/obj/machinery/conveyor/inverted{
+	icon_state = "conveyor_map_inverted";
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -26179,11 +26181,11 @@
 /obj/machinery/recycler{
 	eat_dir = 4
 	},
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "garbage"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/conveyor/inverted{
+	icon_state = "conveyor_map_inverted";
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "oCx" = (
@@ -26349,6 +26351,9 @@
 	},
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/storage)
+"prI" = (
+/turf/closed/wall,
+/area/space)
 "psv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -26621,9 +26626,9 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "qSY" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "garbage"
+/obj/machinery/conveyor/inverted{
+	icon_state = "conveyor_map_inverted";
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -26960,12 +26965,12 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "tDt" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "garbage"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/machinery/conveyor/inverted{
+	icon_state = "conveyor_map_inverted";
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -27076,18 +27081,6 @@
 	dir = 5
 	},
 /area/quartermaster/miningdock)
-"uqG" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "QMLoad"
-	},
-/obj/machinery/status_display{
-	name = "cargo display";
-	pixel_x = -32;
-	pixel_y = 0;
-	supply_display = 1
-	},
-/turf/open/floor/plasteel/brown,
-/area/quartermaster/storage)
 "uyC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -27141,6 +27134,18 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"uHR" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "QMLoad"
+	},
+/obj/machinery/status_display{
+	name = "cargo display";
+	pixel_x = 0;
+	pixel_y = -32;
+	supply_display = 1
+	},
+/turf/open/floor/plasteel/brown,
+/area/quartermaster/storage)
 "uKt" = (
 /obj/machinery/button/massdriver{
 	id = "trash";
@@ -27453,15 +27458,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/medical/genetics)
-"wZa" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/door/poddoor/shutters{
-	id = "warehouse";
-	name = "warehouse shutters"
-	},
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "xaG" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -27544,11 +27540,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "Cargo - Mining Dock";
-	dir = 8;
-	network = list("SS13")
-	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -27617,6 +27608,11 @@
 	supply_display = 1
 	},
 /obj/structure/cable/white,
+/obj/machinery/camera{
+	c_tag = "Cargo - Mining Dock";
+	dir = 8;
+	network = list("SS13")
+	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
 	},
@@ -54528,7 +54524,7 @@ axU
 beK
 aKn
 axU
-aaa
+prI
 aZc
 aZc
 aLU
@@ -54784,7 +54780,7 @@ aGZ
 aIc
 aJl
 tIr
-axU
+uHR
 aNE
 adP
 adP
@@ -55041,7 +55037,7 @@ aFX
 aFX
 aFX
 tIr
-uqG
+aKt
 aNE
 aNE
 aLU
@@ -57341,7 +57337,7 @@ axU
 azf
 aFX
 aBO
-wZa
+aCQ
 aEc
 aFl
 aGc
