@@ -31,13 +31,13 @@
 /obj/item/ammo_casing/chemgun/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	if(!BB)
 		return
-	if(istype(loc, /obj/item/gun/chem))
-		var/obj/item/gun/chem/CG = loc
-		if(CG.syringes_left <= 0)
+	if(istype(loc, /obj/item/gun/syringe/chem))
+		var/obj/item/gun/syringe/chem/CG = loc
+		if(CG.syringes.len <= 0)
 			return
 		CG.reagents.trans_to(BB, 15)
 		BB.name = "chemical dart"
-		CG.syringes_left--
+		CG.syringes.len--
 	..()
 
 /obj/item/ammo_casing/dnainjector
