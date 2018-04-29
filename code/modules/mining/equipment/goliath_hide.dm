@@ -21,13 +21,16 @@
 		return
 	if(is_type_in_typecache(target, goliath_platable_armor_typecache))
 		var/obj/item/clothing/C = target
-		if(C.armor.melee < 60)
-			C.armor = C.armor.setRating(melee = min(C.armor.melee + 10, 60))
-			C.desc = initial(C.desc) + " " + "It's strengthened with [(C.armor.melee - 30)*0.1] goliath plate\s." //cannot get initial() of lists and armor object is initialized with zeroes, and all four applicable items use 30 as default
-			to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
-			use(1)
-		else
+		var/datum/component/goliath_plate/G = C.GetComponent(/datum/component/goliath_plate)
+		if(!G)
+			G = C.AddComponent(/datum/component/goliath_plate) //amount initialized to 0
+		if(C.armor.melee >= 60) //early returns and all that
 			to_chat(user, "<span class='warning'>You can't improve [C] any further!</span>")
+			return
+		C.armor = C.armor.setRating(melee = min(C.armor.melee + 10, 60))
+		to_chat(user, "<span class='info'>You strengthen [C], improving its resistance against melee attacks.</span>")
+		use(1)
+		G.amount++ //it's also stupid but it works
 	else if(istype(target, /obj/mecha/working/ripley))
 		var/obj/mecha/working/ripley/D = target
 		if(D.hides < 3)
