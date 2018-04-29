@@ -1356,3 +1356,20 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	else
 		message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
 		log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")
+
+/client/proc/cmd_admin_man_up(mob/M in GLOB.mob_list)
+	set category = "Special Verbs"
+	set name = "Man Up"
+
+	if(!M)
+		return
+	if(!check_rights(R_ADMIN))
+		return
+
+	to_chat(M, "<span class='warning bold reallybig'>Man up, and deal with it.</span><br><span class='warning big'>Move on.</span>")
+
+	log_admin("Man up: [key_name(usr)] told [key_name(M)] to man up")
+	var/message = "<span class='adminnotice'>[key_name_admin(usr)] told [key_name_admin(M)] to man up.</span>"
+	message_admins(message)
+	admin_ticket_log(M, message)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Man Up")
