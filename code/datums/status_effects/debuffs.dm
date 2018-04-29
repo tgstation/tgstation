@@ -148,6 +148,39 @@
 	if(owner.m_intent == MOVE_INTENT_WALK)
 		owner.toggle_move_intent()
 
+/datum/status_effect/twop //a lot like belligerent, you just can't run.
+	id = "twop"
+	duration = 300 //30 seconds!
+	tick_interval = 0 //tick as fast as possible
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = /obj/screen/alert/status_effect/belligerent
+
+/obj/screen/alert/status_effect/belligerent
+	name = "Tranquil Walk of Peace"
+	desc = "<b><font color=##e5e050>Stop. Slow. You are grounded.</font></b>"
+	icon_state = "belligerent"
+	alerttooltipstyle = "clockcult"
+
+/datum/status_effect/twop/on_apply()
+	return do_movement_toggle(TRUE)
+
+/datum/status_effect/twop/tick()
+	if(!do_movement_toggle())
+		qdel(src)
+
+/datum/status_effect/twop/proc/do_movement_toggle(force_damage)
+	var/number_legs = owner.get_num_legs()
+	if(iscarbon(owner) && !owner.anti_magic_check() && number_legs)
+		if(owner.m_intent != MOVE_INTENT_WALK)
+			to_chat(owner, "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>")
+			owner.toggle_move_intent()
+		return TRUE
+	return FALSE
+
+/datum/status_effect/twop/on_remove()
+	if(owner.m_intent == MOVE_INTENT_WALK)
+		owner.toggle_move_intent()
+
 /datum/status_effect/maniamotor
 	id = "maniamotor"
 	duration = -1

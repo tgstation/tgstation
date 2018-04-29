@@ -11,7 +11,8 @@
 /obj/item/holybeacon/attack_self(mob/user)
 	if(user.mind && (user.mind.isholy) && !used)
 		beacon_armor(user)
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 60, 1)
+	else
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 60, 1)
 
 /obj/item/holybeacon/proc/beacon_armor(mob/M)
 	if(SSreligion.holy_weapon_type)
@@ -23,7 +24,7 @@
 		var/atom/A = V
 		display_names += initial(A.name)
 
-	var/choice = input(M,"What theme would you like for your holy armor?","Holy Armor Theme") as null|anything in display_names
+	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
 	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || used)
 		return
 
@@ -104,7 +105,7 @@
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/storage/box/holy/partykit
-	name = "Chaplain Mentor Kit"
+	name = "Followers of the Chaplain Kit"
 
 /obj/item/storage/box/holy/spellcaster/PopulateContents()
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie/leader(src)

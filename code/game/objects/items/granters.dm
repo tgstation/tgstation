@@ -229,12 +229,20 @@
 	user.Stun(40, ignore_canstun = TRUE)
 	user.petrify(30)
 
+/obj/item/book/granter/spell/twop
+	spell = /obj/effect/proc_holder/spell/aoe_turf/twop
+	spellname = "tranquil walk of peace"
+	icon_state ="bookknock"
+	desc = "This book has to be opened very slowly."
+	remarks = list("Begin the walk of peace...", "Stop... Take it slow...", "Slow down, book. I still haven't finished this page...", "The book won't start moving...", "I'd need a Great Magic Barrier to block the effect...", "Defines peace perfectly...", "Who would use this to flee...")
+
+
 /obj/item/book/granter/spell/knock
 	spell = /obj/effect/proc_holder/spell/aoe_turf/knock
 	spellname = "knock"
 	icon_state ="bookknock"
 	desc = "This book is hard to hold closed properly."
-	remarks = list("Open Sesame!", "So THAT'S the magic password!", "Slow down, book. I still haven't finished this page...", "The book won't stop moving!", "I think this is hurting the spine of the book...", "I can't get to the next page, it's stuck t I'm good, it just turned to the next page on it's own.", "Yeah, staff of doors does the same thing. Go figure...")
+	remarks = list("Open Sesame!", "So THAT'S the magic password!", "Slow down, book. I still haven't finished this page...", "The book won't stop moving!", "I think this is hurting the spine of the book...", "I can't get to the next page, it's stuck t- I'm good, it just turned to the next page on it's own.", "Yeah, staff of doors does the same thing. Go figure...")
 
 /obj/item/book/granter/spell/knock/recoil(mob/living/user)
 	..()

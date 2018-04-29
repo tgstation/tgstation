@@ -232,6 +232,7 @@
 	desc = "None may pass!"
 	icon_state = "knight_ancient"
 	item_state = "knight_ancient"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
