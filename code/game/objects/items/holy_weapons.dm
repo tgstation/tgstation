@@ -1,3 +1,43 @@
+/obj/item/holybeacon
+	name = "armaments beacon"
+	desc = "Contains a set of armaments for the chaplain."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gangtool-red"
+	item_state = "radio"
+	var/used = FALSE
+
+/obj/item/holybeacon/attack_self(mob/user)
+	if(user.mind && (user.mind.isholy) && !used)
+		beacon_armor(user)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 60, 1)
+
+/obj/item/holybeacon/proc/beacon_armor(mob/M)
+	if(SSreligion.holy_weapon_type)
+		return
+	var/obj/item/nullrod/holy_armor
+	var/list/holy_armor_list = typesof(/obj/item/storage/box)
+	var/list/display_names = list()
+	for(var/V in holy_armor_list)
+		var/atom/A = V
+		display_names += initial(A.name)
+
+	var/choice = input(M,"What theme would you like for your holy armor?","Holy Armor Theme") as null|anything in display_names
+	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
+		return
+
+	var/index = display_names.Find(choice)
+	var/A = holy_armor_list[index]
+
+	holy_armor = new A
+
+	SSreligion.holy_armor_type = holy_armor.type
+
+	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
+
+	if(holy_armor)
+		used = TRUE
+		M.put_in_active_hand(holy_weapon)
+
 /obj/item/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar-Sie and Ratvar's followers."
