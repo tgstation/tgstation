@@ -302,9 +302,9 @@
 
 /obj/item/storage/backpack/satchel/flat/prison/PopulateContents()
 	new /obj/item/screwdriver(src)
-	new /obj/item/device/radio(src)
-	new /obj/item/device/assembly/signaler(src)
-	new /obj/item/device/assembly/signaler(src)
+	new /obj/item/radio(src)
+	new /obj/item/assembly/signaler(src)
+	new /obj/item/assembly/signaler(src)
 
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"

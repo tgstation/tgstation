@@ -19,7 +19,7 @@
 	..()
 	MAP_JOB_CHECK
 	id = /obj/item/card/id/gold
-	ears = /obj/item/device/radio/headset/heads/captain/alt
+	ears = /obj/item/radio/headset/heads/captain/alt
 	backpack_contents[/obj/item/station_charter] = 1
 
 // Lieutenant - a CentCom representative to replace the Head of Personnel.
@@ -44,23 +44,23 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	gloves = /obj/item/clothing/gloves/color/black
-	ears = /obj/item/device/radio/headset/headset_cent/commander
+	ears = /obj/item/radio/headset/headset_cent/commander
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	head = /obj/item/clothing/head/centhat
 	belt = /obj/item/gun/ballistic/revolver/mateba
 	r_pocket = /obj/item/lighter
-	l_pocket = /obj/item/device/pda/heads/hop
+	l_pocket = /obj/item/pda/heads/hop
 	back = /obj/item/storage/backpack/satchel/leather
 	id = /obj/item/card/id
 
 	backpack = /obj/item/storage/backpack/satchel/leather
 	satchel = /obj/item/storage/backpack/satchel/leather
 	duffelbag = /obj/item/storage/backpack/duffelbag/sec
-	pda_slot = slot_l_store
+	pda_slot = SLOT_L_STORE
 
 	implants = list(/obj/item/implant/mindshield)
-	backpack_contents -= /obj/item/device/modular_computer/tablet/preset/advanced
+	backpack_contents -= /obj/item/modular_computer/tablet/preset/advanced
 	backpack_contents[/obj/item/storage/wallet/random] = 1
 
 /datum/outfit/job/hop/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

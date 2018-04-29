@@ -38,17 +38,17 @@
 		var/mob/living/carbon/human/H = AM
 		if (!H.head || istype(H.head, /obj/item/clothing/head/wizard))
 			qdel(H.head)
-			H.equip_to_slot_or_del(new head(H), slot_head)
+			H.equip_to_slot_or_del(new head(H), SLOT_HEAD)
 		if (!H.wear_suit || istype(H.wear_suit, /obj/item/clothing/suit/wizrobe))
 			qdel(H.wear_suit)
-			H.equip_to_slot_or_del(new suit(H), slot_wear_suit)
+			H.equip_to_slot_or_del(new suit(H), SLOT_WEAR_SUIT)
 		if (!H.wear_neck || istype(H.wear_neck, /obj/item/bedsheet))
 			qdel(H.wear_neck)
-			H.equip_to_slot_or_del(new sheet(H), slot_neck)
+			H.equip_to_slot_or_del(new sheet(H), SLOT_NECK)
 		if (!H.ears)
-			H.equip_to_slot_or_del(new /obj/item/device/radio/headset(H), slot_ears)
-		if (istype(H.ears, /obj/item/device/radio/headset))
-			var/obj/item/device/radio/headset/R = H.ears
+			H.equip_to_slot_or_del(new /obj/item/radio/headset(H), SLOT_EARS)
+		if (istype(H.ears, /obj/item/radio/headset))
+			var/obj/item/radio/headset/R = H.ears
 			R.freqlock = TRUE
 			R.frequency = freq
 			R.subspace_transmission = FALSE

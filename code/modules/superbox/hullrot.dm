@@ -15,10 +15,10 @@
 		var/list/keys_used = list()
 
 		var/turf/T = get_turf(src)
-		for (var/obj/item/device/radio/R in view(1))
-			if (!istype(R, /obj/item/device/radio/intercom) && !(R in src))
+		for (var/obj/item/radio/R in view(1))
+			if (!istype(R, /obj/item/radio/intercom) && !(R in src))
 				continue  // can't talk into a non-intercom you're not holding
-			if (!R.on || R.wires.is_cut(WIRE_TX) || (istype(R, /obj/item/device/radio/headset) && !R.listening))
+			if (!R.on || R.wires.is_cut(WIRE_TX) || (istype(R, /obj/item/radio/headset) && !R.listening))
 				stat(null, "\the [R] (off)")
 				continue  // can't talk into a disabled radio
 			if (R.subspace_transmission && !R.independent && (!SShullrot.subspace_groups || !SShullrot.subspace_groups["[T.z]"]))
@@ -192,7 +192,7 @@
 	// Hot and heard radio frequencies
 	var/list/hot_freqs = list()
 	var/list/hear_freqs = list()
-	for(var/obj/item/device/radio/R in hearers)
+	for(var/obj/item/radio/R in hearers)
 		if (get_dist(audio_source, R) > R.canhear_range || !R.on)
 			continue
 		if (R.subspace_transmission && !R.independent && (!SShullrot.subspace_groups || !SShullrot.subspace_groups["[T.z]"]))
@@ -230,12 +230,12 @@
 	if(. && client)
 		hullrot_needs_update = TRUE
 
-/obj/item/device/radio/equipped(mob/living/user, slot)
+/obj/item/radio/equipped(mob/living/user, slot)
 	..()
 	if (isliving(user) && user.client)
 		user.hullrot_update()
 
-/obj/item/device/radio/dropped(mob/living/user)
+/obj/item/radio/dropped(mob/living/user)
 	..()
 	if (isliving(user) && user.client)
 		user.hullrot_update()
@@ -244,16 +244,16 @@
 	for (var/mob/living/M in get_hearers_in_view(range, src))
 		M.hullrot_needs_update = TRUE
 
-/obj/item/device/radio/Initialize()
+/obj/item/radio/Initialize()
 	..()
 	hullrot_check_all_hearers(canhear_range)
 
-/obj/item/device/radio/ui_act(action, params, datum/tgui/ui)
+/obj/item/radio/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if (action in list("frequency", "listen", "broadcast", "channel", "subspace"))
 		hullrot_check_all_hearers(canhear_range)
 
-/obj/item/device/radio/emp_act()
+/obj/item/radio/emp_act()
 	. = ..()
 	hullrot_check_all_hearers(canhear_range)
 	addtimer(CALLBACK(src, .proc/hullrot_check_all_hearers, canhear_range), 201)  // un-EMP delay + 1
@@ -305,7 +305,7 @@
 	var/obj/machinery/holopad/T = current
 	if (istype(T) && T.masters[src])
 		return T
-	if (istype(loc, /obj/item/device/aicard))
+	if (istype(loc, /obj/item/aicard))
 		return loc
 	return src
 
