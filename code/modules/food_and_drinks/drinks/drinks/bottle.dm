@@ -306,12 +306,14 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/sake/Initialize()
 	. = ..()
-	if(prob(25))
+	if(prob(10))
 		name = "Fluffy Tail Sake"
 		desc += " On the bottle is a picture of a kitsune with nine touchable tails."
-	else if(prob(33))
+		icon_state = "sakebottle_k"
+	else if(prob(10))
 		name = "Inubashiri's Home Brew"
 		desc += " Awoo."
+		icon_state = "sakebottle_i"
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 
