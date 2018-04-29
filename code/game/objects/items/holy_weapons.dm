@@ -1,3 +1,5 @@
+// CHAPLAIN CUSTOM ARMORS //
+
 /obj/item/holybeacon
 	name = "armaments beacon"
 	desc = "Contains a set of armaments for the chaplain."
@@ -15,14 +17,14 @@
 	if(SSreligion.holy_weapon_type)
 		return
 	var/obj/item/nullrod/holy_armor
-	var/list/holy_armor_list = typesof(/obj/item/storage/box)
+	var/list/holy_armor_list = typesof(/obj/item/storage/box/holy)
 	var/list/display_names = list()
 	for(var/V in holy_armor_list)
 		var/atom/A = V
 		display_names += initial(A.name)
 
 	var/choice = input(M,"What theme would you like for your holy armor?","Holy Armor Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
+	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || used)
 		return
 
 	var/index = display_names.Find(choice)
@@ -36,7 +38,74 @@
 
 	if(holy_armor)
 		used = TRUE
-		M.put_in_active_hand(holy_weapon)
+		M.put_in_active_hand(holy_armor)
+
+/obj/item/storage/box/holy
+
+/obj/item/storage/box/holy/crusader
+	name = "Templar Kit"
+
+/obj/item/storage/box/holy/crusader/PopulateContents()
+	new /obj/item/clothing/head/helmet/knight/templar(src)
+	new /obj/item/clothing/suit/armor/riot/knight/templar(src)
+
+/obj/item/storage/box/holy/student
+	name = "Scholar Kit"
+
+/obj/item/storage/box/holy/student/PopulateContents()
+	new /obj/item/clothing/suit/studentuni
+
+/obj/item/clothing/suit/studentuni
+	name = "student robe"
+	desc = "The uniform of a bygone institute of learning."
+	icon_state = "studentuni"
+	item_state = "studentuni"
+	body_parts_covered = ARMS|CHEST
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+
+/obj/item/storage/box/holy/giantdad
+	name = "Old Armor Kit"
+
+/obj/item/storage/box/holy/witchhunter
+	name = "Witchhunter Kit"
+
+/obj/item/storage/box/holy/witchhunter/PopulateContents()
+	new /obj/item/clothing/suit/witchhunter(src)
+	new /obj/item/clothing/head/witchunter_hat(src)
+
+/obj/item/clothing/suit/witchhunter
+	name = "witchunter garb"
+	desc = "This worn outfit saw much use back in the day."
+	icon_state = "witchhunter"
+	item_state = "witchhunter"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+
+/obj/item/storage/box/holy/spellcaster
+	name = "Novice Spellcaster Kit"
+
+/obj/item/storage/box/holy/spellcaster/PopulateContents()
+	new /obj/item/clothing/suit/hooded/chaplain_hoodie
+	//smoke spellbook
+
+/obj/item/clothing/suit/hooded/chaplain_hoodie
+	name = "chaplain hoodie"
+	desc = "This suit says to you 'hush'!"
+	icon_state = "chaplain_hoodie"
+	item_state = "chaplain_hoodie"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
+
+/obj/item/clothing/head/hooded/chaplain_hood
+	name = "chaplain hood"
+	desc = "For protecting your identity when immolating demons."
+	icon_state = "chaplain_hood"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+
+
+// CHAPLAIN NULLROD AND CUSTOM WEAPONS //
 
 /obj/item/nullrod
 	name = "null rod"
