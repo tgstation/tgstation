@@ -107,7 +107,7 @@ GLOBAL_VAR_INIT(override_lobby_player_count,0)
 					if(C.mob.mind)
 						if(C.mob.mind.special_role && !(lowertext(C.mob.mind.special_role) in skip_texts))
 							antag_texts += "[lowertext(C.mob.mind.special_role)]"
-						if(C.mob.mind.antag_datums.len)
+						if(istype(C.mob.mind.antag_datums,/list) && C.mob.mind.antag_datums.len)
 							for(var/datum/antagonist/DA in C.mob.mind.antag_datums)
 								if(DA.name)
 									if(lowertext(DA.name) in skip_texts)
