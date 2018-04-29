@@ -26351,9 +26351,6 @@
 	},
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/storage)
-"prI" = (
-/turf/closed/wall,
-/area/space)
 "psv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -54524,7 +54521,7 @@ axU
 beK
 aKn
 axU
-prI
+axU
 aZc
 aZc
 aLU
@@ -54781,7 +54778,7 @@ aIc
 aJl
 tIr
 uHR
-aNE
+axU
 adP
 adP
 aLU
