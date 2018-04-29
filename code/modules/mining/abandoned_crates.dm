@@ -10,6 +10,7 @@
 	var/attempts = 10
 	var/codelen = 4
 	tamperproof = 90
+	lockable = FALSE
 
 /obj/structure/closet/crate/secure/loot/Initialize()
 	. = ..()
@@ -153,7 +154,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
-		to_chat(user, "<span class='notice'>The crate is locked with a Deca-code lock.</span>")
+		to_chat(user, "<span class='notice'>The crate is locked with a Deca-Code lock.</span>")
 		var/input = input(usr, "Enter [codelen] digits. All digits must be unique.", "Deca-Code Lock", "") as text
 		if(user.canUseTopic(src, BE_CLOSE))
 			var/list/sanitised = list()
