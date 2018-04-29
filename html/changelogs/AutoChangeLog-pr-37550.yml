@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - bugfix: "Wearing a bucket no longer connects your head to the vacuum of space"
