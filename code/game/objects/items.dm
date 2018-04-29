@@ -380,7 +380,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
-	if(slot == slot_in_backpack || slot == slot_legcuffed) //these aren't true slots, so avoid granting actions there
+	if(slot == SLOT_IN_BACKPACK || slot == SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
 		return FALSE
 	return TRUE
 
@@ -538,29 +538,29 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	var/mob/owner = loc
 	var/flags = slot_flags
-	if(flags & SLOT_OCLOTHING)
+	if(flags & ITEM_SLOT_OCLOTHING)
 		owner.update_inv_wear_suit()
-	if(flags & SLOT_ICLOTHING)
+	if(flags & ITEM_SLOT_ICLOTHING)
 		owner.update_inv_w_uniform()
-	if(flags & SLOT_GLOVES)
+	if(flags & ITEM_SLOT_GLOVES)
 		owner.update_inv_gloves()
-	if(flags & SLOT_EYES)
+	if(flags & ITEM_SLOT_EYES)
 		owner.update_inv_glasses()
-	if(flags & SLOT_EARS)
+	if(flags & ITEM_SLOT_EARS)
 		owner.update_inv_ears()
-	if(flags & SLOT_MASK)
+	if(flags & ITEM_SLOT_MASK)
 		owner.update_inv_wear_mask()
-	if(flags & SLOT_HEAD)
+	if(flags & ITEM_SLOT_HEAD)
 		owner.update_inv_head()
-	if(flags & SLOT_FEET)
+	if(flags & ITEM_SLOT_FEET)
 		owner.update_inv_shoes()
-	if(flags & SLOT_ID)
+	if(flags & ITEM_SLOT_ID)
 		owner.update_inv_wear_id()
-	if(flags & SLOT_BELT)
+	if(flags & ITEM_SLOT_BELT)
 		owner.update_inv_belt()
-	if(flags & SLOT_BACK)
+	if(flags & ITEM_SLOT_BACK)
 		owner.update_inv_back()
-	if(flags & SLOT_NECK)
+	if(flags & ITEM_SLOT_NECK)
 		owner.update_inv_neck()
 
 /obj/item/proc/is_hot()
@@ -585,7 +585,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(ismob(location))
 		var/mob/M = location
 		var/success = FALSE
-		if(src == M.get_item_by_slot(slot_wear_mask))
+		if(src == M.get_item_by_slot(SLOT_WEAR_MASK))
 			success = TRUE
 		if(success)
 			location = get_turf(M)

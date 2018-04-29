@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
 	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	obj_flags = UNIQUE_RENAME
 	var/gpstag = "COM0"
 	var/emped = FALSE

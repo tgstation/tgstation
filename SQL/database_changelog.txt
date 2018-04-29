@@ -2,11 +2,19 @@ Any time you make a change to the schema files, remember to increment the databa
 
 The latest database version is 4.1; The query to update the schema revision table is:
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (4, 1);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (4, 2);
 or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (4, 1);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (4, 2);
 
 In any query remember to add a prefix to the table names if you use one.
+
+----------------------------------------------------
+
+Version 4.2, 17 April 2018, by Jordie0608
+Modified table 'admin', adding the columns 'round_id' and 'target'
+ALTER TABLE `admin_log`
+	ADD COLUMN `round_id` INT UNSIGNED NOT NULL AFTER `datetime`,
+	ADD COLUMN `target` VARCHAR(32) NOT NULL AFTER `operation`;
 
 ----------------------------------------------------
 
@@ -40,7 +48,6 @@ ALTER TABLE `admin_ranks`
 	DROP COLUMN `id`,
 	DROP PRIMARY KEY,
 	ADD PRIMARY KEY (`rank`);
-
 
 ----------------------------------------------------
 

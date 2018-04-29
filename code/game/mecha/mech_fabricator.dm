@@ -401,9 +401,6 @@
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return TRUE
 
-	if(exchange_parts(user, W))
-		return TRUE
-
 	if(default_deconstruction_crowbar(W))
 		return TRUE
 

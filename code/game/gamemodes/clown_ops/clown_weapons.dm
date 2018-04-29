@@ -15,7 +15,7 @@
 /obj/item/clothing/shoes/clown_shoes/combat
 	name = "combat clown shoes"
 	desc = "advanced clown shoes that protect the wearer and render them nearly immune to slipping on their own peels. They also squeek at 100% capacity."
-	flags_1 = NOSLIP_1
+	clothing_flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN
 	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 10, "rad" = 0, "fire" = 70, "acid" = 50)
 	strip_delay = 70
@@ -209,7 +209,7 @@
 		if(!istype(M.wear_mask, /obj/item/clothing/mask/gas/clown_hat) && !istype(M.wear_mask, /obj/item/clothing/mask/gas/mime) )
 			if(!M.wear_mask || M.dropItemToGround(M.wear_mask))
 				var/obj/item/clothing/mask/fakemoustache/sticky/the_stash = new /obj/item/clothing/mask/fakemoustache/sticky()
-				M.equip_to_slot_or_del(the_stash, slot_wear_mask, TRUE, TRUE, TRUE, TRUE)
+				M.equip_to_slot_or_del(the_stash, SLOT_WEAR_MASK, TRUE, TRUE, TRUE, TRUE)
 
 /obj/item/clothing/mask/fakemoustache/sticky
 	var/unstick_time = 600

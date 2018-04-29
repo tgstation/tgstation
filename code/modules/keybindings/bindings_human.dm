@@ -3,12 +3,12 @@
 		switch(_key)
 			if("E") // Put held thing in belt or take out most recent thing from belt
 				var/obj/item/thing = get_active_held_item()
-				var/obj/item/storage/equipped_belt = get_item_by_slot(slot_belt)
+				var/obj/item/storage/equipped_belt = get_item_by_slot(SLOT_BELT)
 				if(!equipped_belt) // We also let you equip a belt like this
 					if(!thing)
 						to_chat(user, "<span class='notice'>You have no belt to take something out of.</span>")
 						return
-					equip_to_slot_if_possible(thing, slot_belt)
+					equip_to_slot_if_possible(thing, SLOT_BELT)
 					return
 				if(!istype(equipped_belt)) // not a storage item
 					if(!thing)
@@ -31,12 +31,12 @@
 
 			if("B") // Put held thing in backpack or take out most recent thing from backpack
 				var/obj/item/thing = get_active_held_item()
-				var/obj/item/storage/equipped_backpack = get_item_by_slot(slot_back)
+				var/obj/item/storage/equipped_backpack = get_item_by_slot(SLOT_BACK)
 				if(!equipped_backpack) // We also let you equip a backpack like this
 					if(!thing)
 						to_chat(user, "<span class='notice'>You have no backpack to take something out of.</span>")
 						return
-					equip_to_slot_if_possible(thing, slot_back)
+					equip_to_slot_if_possible(thing, SLOT_BACK)
 					return
 				if(!istype(equipped_backpack)) // not a storage item
 					if(!thing)

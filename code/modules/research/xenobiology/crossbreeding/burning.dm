@@ -386,7 +386,7 @@ Burning extracts:
 	item_state = "adamshield"
 	w_class = WEIGHT_CLASS_HUGE
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	block_chance = 75
 	throw_range = 1 //How far do you think you're gonna throw a solid crystalline shield...?
 	throw_speed = 2

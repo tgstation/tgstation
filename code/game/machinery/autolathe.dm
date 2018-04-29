@@ -93,9 +93,6 @@
 		updateUsrDialog()
 		return TRUE
 
-	if(exchange_parts(user, O))
-		return TRUE
-
 	if(default_deconstruction_crowbar(O))
 		return TRUE
 
