@@ -282,7 +282,7 @@
 	display_name = "Electromagnetic Theory"
 	description = "Study into usage of frequencies in the electromagnetic spectrum."
 	prereq_ids = list("base")
-	design_ids = list("holosign", "inducer", "tray_goggles", "holopad")
+	design_ids = list("holosign", "holosignsec", "holosignengi", "holosignatmos", "inducer", "tray_goggles", "holopad")
 	research_cost = 2500
 	export_price = 5000
 
@@ -371,6 +371,15 @@
 	prereq_ids = list("comp_recordkeeping", "emp_basic")
 	design_ids = list("health_hud", "security_hud", "diagnostic_hud", "scigoggles")
 	research_cost = 1500
+	export_price = 5000
+	
+/datum/techweb_node/advsunglasses
+	id = "advsunglasses"
+	display_name = "Advanced Sunglasses"
+	description = "Stylish, yet useful!"
+	prereq_ids = list("integrated_HUDs")
+	design_ids = list("sunhudmed", "sunhudsec", "beergoggles")
+	research_cost = 2500
 	export_price = 5000
 
 /datum/techweb_node/NVGtech
