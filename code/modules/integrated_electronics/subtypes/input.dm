@@ -823,7 +823,7 @@
 	power_draw_per_use = 120
 
 /obj/item/integrated_circuit/input/sensor/sense(atom/A, mob/user, prox)
-	if(!prox || !A || (ismob(thing) && !isliving(thing)))
+	if(!prox || !A || (ismob(A) && !isliving(A)))
 		return FALSE
 	if(!check_then_do_work())
 		return FALSE
@@ -850,7 +850,7 @@
 	power_draw_per_use = 120
 
 /obj/item/integrated_circuit/input/sensor/ranged/sense(atom/A, mob/user)
-	if(!user || !A || (ismob(thing) && !isliving(thing)))
+	if(!user || !A || (ismob(A) && !isliving(A)))
 		return FALSE
 	if(user.client)
 		if(!(A in view(user.client)))
