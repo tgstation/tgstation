@@ -442,7 +442,7 @@
 				rangers[M] = TRUE
 				M.playsound_local(get_turf(M), null, 75, channel = CHANNEL_JUKEBOX, S = song_played)
 		for(var/mob/L in rangers)
-			if(!(M in view(7,src)))
+			if(!(L in view(7,src)))
 				rangers -= L
 				if(!L || !L.client)
 					continue
