@@ -105,6 +105,7 @@
 	copy_overlays(target)
 	alpha = max(alpha, 150)	//fucking chameleons
 	transform = initial(transform)
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	pixel_y = initial(pixel_y)
 	pixel_x = initial(pixel_x)
 
@@ -126,6 +127,7 @@
 	form = null
 	alpha = initial(alpha)
 	color = initial(color)
+	mouse_opacity = initial(mouse_opacity)
 	maptext = null
 
 	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
