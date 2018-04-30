@@ -109,7 +109,7 @@
 // Biosuits
 /datum/export/gear/biohood
 	cost = 50
-	unit_name = "biosuit hood"
+	unit_name = "biosuit //"
 	export_types = list(/obj/item/clothing/head/bio_hood)
 
 /datum/export/gear/biosuit
