@@ -142,17 +142,17 @@
 
 /obj/item/integrated_circuit/converter/concatenator
 	name = "concatenator"
-	desc = "This joins many strings together to get one big string."
+	desc = "This can join up to 8 strings together to get one big string."
 	complexity = 4
 	inputs = list(
-		"A" = IC_PINTYPE_STRING,
-		"B" = IC_PINTYPE_STRING,
-		"C" = IC_PINTYPE_STRING,
-		"D" = IC_PINTYPE_STRING,
-		"E" = IC_PINTYPE_STRING,
-		"F" = IC_PINTYPE_STRING,
-		"G" = IC_PINTYPE_STRING,
-		"H" = IC_PINTYPE_STRING
+		"input 1" = IC_PINTYPE_STRING,
+		"input 2" = IC_PINTYPE_STRING,
+		"input 3" = IC_PINTYPE_STRING,
+		"input 4" = IC_PINTYPE_STRING,
+		"input 5" = IC_PINTYPE_STRING,
+		"input 6" = IC_PINTYPE_STRING,
+		"input 7" = IC_PINTYPE_STRING,
+		"input 8" = IC_PINTYPE_STRING
 		)
 	outputs = list("result" = IC_PINTYPE_STRING)
 	activators = list("concatenate" = IC_PINTYPE_PULSE_IN, "on concatenated" = IC_PINTYPE_PULSE_OUT)
@@ -168,6 +168,40 @@
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
 	activate_pin(2)
+
+/obj/item/integrated_circuit/converter/concatenator/small
+	name = "small concatenator"
+	desc = "This can join up to 4 strings together to get one big string."
+	complexity = 2
+	inputs = list(
+		"input 1" = IC_PINTYPE_STRING,
+		"input 2" = IC_PINTYPE_STRING,
+		"input 3" = IC_PINTYPE_STRING,
+		"input 4" = IC_PINTYPE_STRING
+		)
+
+/obj/item/integrated_circuit/converter/concatenator/large
+	name = "large concatenator"
+	desc = "This can join up to 16 strings together to get one very big string."
+	complexity = 6
+	inputs = list(
+		"input 1" = IC_PINTYPE_STRING,
+		"input 2" = IC_PINTYPE_STRING,
+		"input 3" = IC_PINTYPE_STRING,
+		"input 4" = IC_PINTYPE_STRING,
+		"input 5" = IC_PINTYPE_STRING,
+		"input 6" = IC_PINTYPE_STRING,
+		"input 7" = IC_PINTYPE_STRING,
+		"input 8" = IC_PINTYPE_STRING,
+		"input 9" = IC_PINTYPE_STRING,
+		"input 10" = IC_PINTYPE_STRING,
+		"input 11" = IC_PINTYPE_STRING,
+		"input 12" = IC_PINTYPE_STRING,
+		"input 13" = IC_PINTYPE_STRING,
+		"input 14" = IC_PINTYPE_STRING,
+		"input 15" = IC_PINTYPE_STRING,
+		"input 16" = IC_PINTYPE_STRING
+		)
 
 /obj/item/integrated_circuit/converter/separator
 	name = "separator"
@@ -216,17 +250,21 @@
 	outputs = list(
 		"position" = IC_PINTYPE_NUMBER
 		)
-	activators = list("search" = IC_PINTYPE_PULSE_IN, "after search" = IC_PINTYPE_PULSE_OUT)
+	activators = list("search" = IC_PINTYPE_PULSE_IN, "found" = IC_PINTYPE_PULSE_OUT, "not found" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 
 
 /obj/item/integrated_circuit/converter/findstring/do_work()
+	var/position = findtext(get_pin_data(IC_INPUT, 1),get_pin_data(IC_INPUT, 2))
 
-	set_pin_data(IC_OUTPUT, 1, findtext(get_pin_data(IC_INPUT, 1),get_pin_data(IC_INPUT, 2)) )
+	set_pin_data(IC_OUTPUT, 1, position)
 	push_data()
 
-	activate_pin(2)
+	if(position)
+		activate_pin(2)
+	else
+		activate_pin(3)
 
 /obj/item/integrated_circuit/converter/exploders
 	name = "string exploder"
