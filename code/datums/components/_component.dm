@@ -10,7 +10,7 @@
 	var/list/arguments = args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
-		CRASH("Incompatible [type] assigned to a [P]!")
+		CRASH("Incompatible [type] assigned to a [P.type]!")
 
 	_JoinParent(P)
 
@@ -233,7 +233,9 @@
 		//if we're taking to the same thing no need for anything
 		return
 	if(C.OnTransfer(src) == COMPONENT_INCOMPATIBLE)
+		var/c_type = C.type
 		qdel(C)
+		CRASH("Incompatible [c_type] transfer attempt to a [type]!")
 		return
 	C._RemoveFromParent()
 	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, C)

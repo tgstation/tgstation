@@ -148,8 +148,6 @@
 		send_console_message()
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
-	if(exchange_parts(user, W))
-		return
 	GET_COMPONENT(materials, /datum/component/material_container)
 	if(default_pry_open(W))
 		materials.retrieve_all()

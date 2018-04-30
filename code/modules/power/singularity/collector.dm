@@ -15,6 +15,7 @@
 //	use_power = NO_POWER_USE
 	max_integrity = 350
 	integrity_failure = 80
+	circuit = /obj/item/circuitboard/machine/rad_collector
 	var/obj/item/tank/internals/plasma/loaded_tank = null
 	var/last_power = 0
 	var/active = 0
@@ -112,6 +113,9 @@
 		if(loaded_tank)
 			to_chat(user, "<span class='warning'>There's already a plasma tank loaded!</span>")
 			return TRUE
+		if(panel_open) 
+			to_chat(user, "<span class='warning'>Close the maintenance panel first!</span>")
+			return TRUE
 		if(!user.transferItemToLoc(W, src))
 			return
 		loaded_tank = W
@@ -133,12 +137,21 @@
 	default_unfasten_wrench(user, I, 0)
 	return TRUE
 
+/obj/machinery/power/rad_collector/screwdriver_act(mob/living/user, obj/item/I)
+	if(loaded_tank)
+		to_chat(user, "<span class='warning'>Remove the plasma tank first!</span>")
+	else
+		default_deconstruction_screwdriver(user, icon_state, icon_state, I)
+	return TRUE
+
 /obj/machinery/power/rad_collector/crowbar_act(mob/living/user, obj/item/I)
 	if(loaded_tank)
 		if(locked)
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 			return TRUE
 		eject()
+		return TRUE
+	if(default_deconstruction_crowbar(I))
 		return TRUE
 	to_chat(user, "<span class='warning'>There isn't a tank loaded!</span>")
 	return TRUE

@@ -1,0 +1,5 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - code_imp: "HEALS_EARS_2 is removed in favor of the earhealing component"
+  - code_imp: "wearertargeting component is available to subtype for components that want to target the wearer of an item rather than the item itself"

@@ -69,8 +69,6 @@
 	if(default_deconstruction_screwdriver(user, "dnamod", "dnamod", I))
 		update_icon()
 		return
-	if(exchange_parts(user, I))
-		return
 	if(default_deconstruction_crowbar(I))
 		return
 	if(iscyborg(user))
