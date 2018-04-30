@@ -96,7 +96,6 @@
 /datum/antagonist/rev/head/admin_add(datum/mind/new_owner,mob/admin)
 	give_flash = TRUE
 	give_hud = TRUE
-	remove_clumsy = TRUE
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has head-rev'ed [new_owner.current].")
 	log_admin("[key_name(admin)] has head-rev'ed [new_owner.current].")
@@ -122,14 +121,11 @@
 	//This is probably overkill but making these impact state annoys me
 	var/old_give_flash = give_flash
 	var/old_give_hud = give_hud
-	var/old_remove_clumsy = remove_clumsy
 	give_flash = TRUE
 	give_hud = FALSE
-	remove_clumsy = FALSE
 	equip_rev()
 	give_flash = old_give_flash
 	give_hud = old_give_hud
-	remove_clumsy = old_remove_clumsy
 
 /datum/antagonist/rev/head/proc/admin_repair_flash(mob/admin)
 	var/list/L = owner.current.get_contents()
@@ -148,7 +144,6 @@
 /datum/antagonist/rev/head
 	name = "Head Revolutionary"
 	hud_type = "rev_head"
-	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
 	var/give_hud = TRUE
 
@@ -227,9 +222,8 @@
 	if(!istype(H))
 		return
 
-	if(remove_clumsy && owner.assigned_role == "Clown")
-		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-		H.dna.remove_mutation(CLOWNMUT)
+	if(owner.assigned_role == "Clown")
+		to_chat(owner, "Even though you perfectly intend on murdering those disgusting bureaucrats, you're still a <b>clumsy</b> clown. Be careful with weapons!")
 
 	if(give_flash)
 		var/obj/item/assembly/flash/T = new(H)
@@ -357,7 +351,7 @@
 
 	for(var/datum/antagonist/A in heads | get_team_antags())
 		parts += A.antag_listing_entry()
-	
+
 	parts += "</table>"
 	parts += antag_listing_footer()
 	common_part = parts.Join()

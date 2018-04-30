@@ -46,14 +46,7 @@
 		var/mob/living/carbon/human/traitor_mob = owner.current
 		if(traitor_mob && istype(traitor_mob))
 			if(!silent)
-				to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-			traitor_mob.dna.remove_mutation(CLOWNMUT)
-
-/datum/antagonist/traitor/remove_innate_effects()
-	if(owner.assigned_role == "Clown")
-		var/mob/living/carbon/human/traitor_mob = owner.current
-		if(traitor_mob && istype(traitor_mob))
-			traitor_mob.dna.add_mutation(CLOWNMUT)
+				to_chat(traitor_mob, "Despite your training, your clownish nature trumps all, so you may have to be creative to accomplish your objectives as weapons will be unwieldy.")
 
 /datum/antagonist/traitor/on_removal()
 	SSticker.mode.traitors -= owner

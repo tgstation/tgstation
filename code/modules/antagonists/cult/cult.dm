@@ -71,7 +71,7 @@
 	if(!istype(H))
 		return
 	if (owner.assigned_role == "Clown")
-		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+		to_chat(owner, "No matter how devoted you are to Nar'Sie, you're still a <b>clumsy</b> clown. Be careful with weapons!")
 		H.dna.remove_mutation(CLOWNMUT)
 	. += cult_give_item(/obj/item/melee/cultblade/dagger, H)
 	if(metal)

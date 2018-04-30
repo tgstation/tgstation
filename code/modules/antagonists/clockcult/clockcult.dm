@@ -80,6 +80,8 @@
 	current.faction |= "ratvar"
 	current.grant_language(/datum/language/ratvar)
 	current.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
+	if(owner.assigned_role == "Clown")
+		to_chat(current, "No matter how devoted you are to Ratvar, you're still a <b>clumsy</b> clown. Be careful with weapons!")
 	if(issilicon(current))
 		var/mob/living/silicon/S = current
 		if(iscyborg(S))

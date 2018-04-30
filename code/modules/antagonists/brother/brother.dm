@@ -22,7 +22,13 @@
 	owner.objectives += objectives
 	owner.special_role = special_role
 	finalize_brother()
+	warn_clownmut()
 	return ..()
+
+/datum/antagonist/brother/proc/warn_clownmut()
+	if(owner)
+		if(owner.assigned_role == "Clown")
+			to_chat(owner, "You're just going to have to prove them you're worthy for the syndicate despite your <b>clumsy</b> nature. Be careful with weapons!")
 
 /datum/antagonist/brother/on_removal()
 	SSticker.mode.brothers -= owner
