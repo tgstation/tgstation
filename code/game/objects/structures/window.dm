@@ -384,9 +384,6 @@
 /obj/structure/window/spawner/north
 	dir = NORTH
 
-/obj/structure/window/unanchored
-	anchored = FALSE
-
 /obj/structure/window/reinforced
 	name = "reinforced window"
 	desc = "A window that is reinforced with metal rods."
@@ -407,9 +404,6 @@
 
 /obj/structure/window/reinforced/spawner/north
 	dir = NORTH
-
-/obj/structure/window/reinforced/unanchored
-	anchored = FALSE
 
 /obj/structure/window/plasma
 	name = "plasma window"
@@ -433,9 +427,6 @@
 /obj/structure/window/plasma/spawner/north
 	dir = NORTH
 
-/obj/structure/window/plasma/unanchored
-	anchored = FALSE
-
 /obj/structure/window/plasma/reinforced
 	name = "reinforced plasma window"
 	desc = "A window made out of a plasma-silicate alloy and a rod matrice. It looks hopelessly tough to break and is most likely nigh fireproof."
@@ -455,9 +446,6 @@
 
 /obj/structure/window/plasma/reinforced/spawner/north
 	dir = NORTH
-
-/obj/structure/window/plasma/reinforced/unanchored
-	anchored = FALSE
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
@@ -480,9 +468,6 @@
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	glass_amount = 2
 
-/obj/structure/window/fulltile/unanchored
-	anchored = FALSE
-
 /obj/structure/window/plasma/fulltile
 	icon = 'icons/obj/smooth_structures/plasma_window.dmi'
 	icon_state = "plasmawindow"
@@ -494,9 +479,6 @@
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	glass_amount = 2
 
-/obj/structure/window/plasma/fulltile/unanchored
-	anchored = FALSE
-
 /obj/structure/window/plasma/reinforced/fulltile
 	icon = 'icons/obj/smooth_structures/rplasma_window.dmi'
 	icon_state = "rplasmawindow"
@@ -506,9 +488,6 @@
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smooth = SMOOTH_TRUE
 	glass_amount = 2
-
-/obj/structure/window/plasma/reinforced/fulltile/unanchored
-	anchored = FALSE
 
 /obj/structure/window/reinforced/fulltile
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
@@ -522,9 +501,6 @@
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	level = 3
 	glass_amount = 2
-
-/obj/structure/window/reinforced/fulltile/unanchored
-	anchored = FALSE
 
 /obj/structure/window/reinforced/tinted/fulltile
 	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
@@ -571,9 +547,6 @@
 /obj/structure/window/shuttle/tinted
 	opacity = TRUE
 
-/obj/structure/window/shuttle/unanchored
-	anchored = FALSE
-
 /obj/structure/window/plastitanium
 	name = "plastitanium window"
 	desc = "An evil looking window of plasma and titanium."
@@ -593,9 +566,6 @@
 	level = 3
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
-
-/obj/structure/window/plastitanium/unanchored
-	anchored = FALSE
 
 /obj/structure/window/reinforced/clockwork
 	name = "brass window"
@@ -649,9 +619,6 @@
 		animate(src, color = previouscolor, time = 8)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
-/obj/structure/window/reinforced/clockwork/unanchored
-	anchored = FALSE
-
 /obj/structure/window/reinforced/clockwork/fulltile
 	icon_state = "clockwork_window"
 	smooth = SMOOTH_TRUE
@@ -662,9 +629,6 @@
 	max_integrity = 120
 	level = 3
 	glass_amount = 2
-
-/obj/structure/window/reinforced/clockwork/fulltile/unanchored
-	anchored = FALSE
 
 /obj/structure/window/paperframe
 	name = "paper frame"
