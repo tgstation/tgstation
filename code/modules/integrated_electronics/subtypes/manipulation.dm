@@ -491,7 +491,7 @@
 	var/target_y_rel = round(get_pin_data(IC_INPUT, 2))
 	var/obj/item/A = get_pin_data_as_type(IC_INPUT, 3, /obj/item)
 
-	if(!A || A.anchored || A.throwing)
+	if(!A || A.anchored || A.throwing || A == assembly)
 		return
 
 	if(max_w_class && (A.w_class > max_w_class))
