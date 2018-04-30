@@ -1,3 +1,6 @@
+#define STOCK_MARKET_SPECPERF_MOD_MIN 0.9
+#define STOCK_MARKET_SPECPERF_MOD_MAX 1.2
+
 /datum/borrow
 	var/broker = ""
 	var/borrower = ""
@@ -139,11 +142,7 @@
 			speculation += rand(-400, 0) / 1000 * speculation
 			if (prob(1) && prob(5)) // pop that bubble
 				speculation += rand(-4000, 0) / 1000 * speculation
-	var/fucking_stock_spikes = current_value + 500
-	var/piece_of_shit_fuck = current_value - 500
-	var/i_hate_this_code = (speculation / rand(25000, 50000) + performance / rand(100, 800)) * current_value
-	if(i_hate_this_code < fucking_stock_spikes || i_hate_this_code > piece_of_shit_fuck)
-		current_value = i_hate_this_code
+	current_value = CLAMP((speculation / rand(25000, 50000) + performance / rand(100, 800)) * current_value, current_value*STOCK_MARKET_SPECPERF_MOD_MIN, current_value*STOCK_MARKET_SPECPERF_MOD_MAX)
 	if (current_value < 5)
 		current_value = 5
 
@@ -310,3 +309,6 @@
 
 /datum/stock/proc/displayValues(var/mob/user)
 	user << browse(plotBarGraph(values, "[name] share value per share"), "window=stock_[name];size=450x450")
+
+#undef STOCK_MARKET_SPECPERF_MOD_MIN
+#undef STOCK_MARKET_SPECPERF_MOD_MAX
