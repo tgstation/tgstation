@@ -8,7 +8,6 @@ What are the archived variables for?
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
-GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide))) // These gasses cannot react amongst themselves
 
 /proc/init_gaslist_cache()
 	. = list()

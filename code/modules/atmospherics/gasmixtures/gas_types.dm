@@ -1,4 +1,5 @@
 GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)) //the main four gases, which were at one time hardcoded
+GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/pluoxium, /datum/gas/stimulum, /datum/gas/nitryl))) //unable to react amongst themselves
 
 /proc/meta_gas_list()
 	. = subtypesof(/datum/gas)
@@ -11,10 +12,24 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 		gas_info[META_GAS_MOLES_VISIBLE] = initial(gas.moles_visible)
 		if(initial(gas.moles_visible) != null)
 			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas(initial(gas.gas_overlay))
-		gas_info[META_GAS_FUSION_POWER] = initial(gas.dangerous)
+		gas_info[META_GAS_FUSION_POWER] = initial(gas.fusion_power)
 		gas_info[META_GAS_DANGER] = initial(gas.dangerous)
 		gas_info[META_GAS_ID] = initial(gas.id)
 		.[gas_path] = gas_info
+
+/proc/nonreactive_gas_list() //all the gases not included in _any_ reaction
+	var/list/nonreactive_gases = GLOB.meta_gas_info.Copy()
+	for(var/g in GLOB.meta_gas_info)
+		var/datum/gas/gas = g
+		for(var/r in SSair.gas_reactions)
+			if(!gas in nonreactive_gases) //if its been removed already we can move on
+				continue
+			var/datum/gas_reaction/reaction = r
+			if((gas in reaction.min_requirements) || (gas in reaction.max_requirements)) //if the gas is mentioned in the requirements of a reaction
+				nonreactive_gases -= gas
+	. = list()
+	for(var/path in nonreactive_gases)
+		. += new path
 
 /proc/gas_id2path(id)
 	var/list/meta_gas = GLOB.meta_gas_info
@@ -124,6 +139,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 	specific_heat = 80
 	name = "Pluoxium"
 	fusion_power = 10
+
 /obj/effect/overlay/gas
 	icon = 'icons/effects/tile_effects.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
