@@ -241,7 +241,7 @@
 	item_state = "flashshield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force = 10
 	throwforce = 5
 	throw_speed = 2

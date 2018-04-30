@@ -3,8 +3,7 @@
 
 /datum/component/cleaning/Initialize()
 	if(!ismovableatom(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("[type] added to a [parent.type]")
+		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(list(COMSIG_MOVABLE_MOVED), .proc/Clean)
 
 /datum/component/cleaning/proc/Clean()

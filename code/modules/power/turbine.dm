@@ -112,9 +112,6 @@
 			stat |= BROKEN
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	default_deconstruction_crowbar(I)
 
 /obj/machinery/power/compressor/process()
@@ -241,9 +238,6 @@
 		else
 			to_chat(user, "<span class='alert'>Compressor not connected.</span>")
 			stat |= BROKEN
-		return
-
-	if(exchange_parts(user, I))
 		return
 
 	default_deconstruction_crowbar(I)

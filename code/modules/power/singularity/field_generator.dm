@@ -335,8 +335,10 @@ field_generator power level display
 			if(O.last_warning && temp)
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0
-					message_admins("A singulo exists and a containment field has failed.",1)
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.", INVESTIGATE_SINGULO)
+					var/turf/T = get_turf(src)
+					var/area/A = get_area(T)
+					message_admins("A singulo exists and a containment field has failed at [A] [ADMIN_COORDJMP(T)].")
+					investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [A] [COORD(T)].", INVESTIGATE_SINGULO)
 			O.last_warning = world.time
 
 /obj/machinery/field/generator/shock(mob/living/user)

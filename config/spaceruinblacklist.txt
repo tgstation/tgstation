@@ -37,7 +37,6 @@
 #_maps/RandomRuins/SpaceRuins/oldteleporter.dmm
 #_maps/RandomRuins/SpaceRuins/onehalf.dmm
 #_maps/RandomRuins/SpaceRuins/originalcontent.dmm
-#_maps/RandomRuins/SpaceRuins/scp_294.dmm
 #_maps/RandomRuins/SpaceRuins/shuttlerelic.dmm
 #_maps/RandomRuins/SpaceRuins/spacehotel.dmm
 #_maps/RandomRuins/SpaceRuins/thederelict.dmm

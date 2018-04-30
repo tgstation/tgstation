@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	var/inhand_overlay //If applicable, this overlay will be applied to the slab's inhand
 
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 
 	var/busy //If the slab is currently being used by something

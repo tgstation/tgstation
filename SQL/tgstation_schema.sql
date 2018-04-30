@@ -33,9 +33,11 @@ DROP TABLE IF EXISTS `admin_log`;
 CREATE TABLE `admin_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
   `adminckey` varchar(32) NOT NULL,
   `adminip` int(10) unsigned NOT NULL,
   `operation` enum('add admin','remove admin','change admin rank','add rank','remove rank','change rank flags') NOT NULL,
+  `target` varchar(32) NOT NULL,
   `log` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -17,7 +17,6 @@
       "data"
     ],
     "dlls": [
-      "libmariadb.dll",
-      "rust_g.dll"
+      "libmariadb.dll"
     ]
   }

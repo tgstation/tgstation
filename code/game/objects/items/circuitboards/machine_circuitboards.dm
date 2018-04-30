@@ -534,6 +534,17 @@
 		/obj/item/stock_parts/capacitor = 1)
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high/empty)
 
+/obj/item/circuitboard/machine/rad_collector
+	name = "Radiation Collector (Machine Board)"
+	build_path = /obj/machinery/power/rad_collector
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stack/sheet/plasmarglass = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/manipulator = 1)
+	needs_anchored = FALSE
+
 /obj/item/circuitboard/machine/tesla_coil
 	name = "Tesla Controller (Machine Board)"
 	desc = "You can use a screwdriver to switch between Research and Power Generation"
