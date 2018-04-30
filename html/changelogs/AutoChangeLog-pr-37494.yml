@@ -1,0 +1,5 @@
+author: "Jalleo"
+delete-after: True
+changes: 
+  - bugfix: "a certain exploit that can occur in regards to creating certain items in a particular manner"
+  - tweak: "readds emitter field generator and rad collector wrenching times. Someone override it when adding the wrench_act."
