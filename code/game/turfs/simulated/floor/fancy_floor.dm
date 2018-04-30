@@ -67,6 +67,7 @@
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
 	flags_1 = NONE
+	bullet_bounce_sound = null
 	var/ore_type = /obj/item/stack/ore/glass
 	var/turfverb = "uproot"
 
@@ -143,6 +144,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/turf/open/floor/carpet)
 	flags_1 = NONE
+	bullet_bounce_sound = null
 
 /turf/open/floor/carpet/examine(mob/user)
 	..()

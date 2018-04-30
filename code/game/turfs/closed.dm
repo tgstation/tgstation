@@ -44,6 +44,7 @@
 	icon = 'icons/blank_title.png'
 	icon_state = ""
 	layer = FLY_LAYER
+	bullet_bounce_sound = null
 
 /turf/closed/indestructible/splashscreen/New()
 	SStitle.splash_turf = src
@@ -103,6 +104,7 @@
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "snowrock"
 	bullet_sizzle = TRUE
+	bullet_bounce_sound = null
 
 /turf/closed/indestructible/rock/snow/ice
 	name = "iced rock"
