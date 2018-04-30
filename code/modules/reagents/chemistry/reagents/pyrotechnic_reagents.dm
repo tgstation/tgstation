@@ -273,7 +273,7 @@
 			var/datum/gas_mixture/G = T.air
 			if(G.temperature > T20C)
 				G.temperature = max(G.temperature/2,T20C)
-			G.react()
+			G.react(src)
 			qdel(hotspot)
 
 /datum/reagent/firefighting_foam/reaction_obj(obj/O, reac_volume)

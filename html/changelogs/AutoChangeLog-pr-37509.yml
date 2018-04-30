@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - tweak: "You can now see how well fed you are by self-inspecting."

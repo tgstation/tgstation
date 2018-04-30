@@ -146,9 +146,6 @@ Possible to do for anyone motivated enough:
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
 		return
 
-	if(exchange_parts(user, P))
-		return
-
 	if(default_pry_open(P))
 		return
 

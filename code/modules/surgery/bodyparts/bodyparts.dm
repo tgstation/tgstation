@@ -219,6 +219,9 @@
 		owner.update_hair()
 		owner.update_damage_overlays()
 
+/obj/item/bodypart/proc/is_organic_limb()
+	return (status == BODYPART_ORGANIC)
+
 //we inform the bodypart of the changes that happened to the owner, or give it the informations from a source mob.
 /obj/item/bodypart/proc/update_limb(dropping_limb, mob/living/carbon/source)
 	var/mob/living/carbon/C
@@ -227,17 +230,17 @@
 		if(!original_owner)
 			original_owner = source
 	else if(original_owner && owner != original_owner) //Foreign limb
-		no_update = 1
+		no_update = TRUE
 	else
 		C = owner
-		no_update = 0
+		no_update = FALSE
 
-	if(C.has_trait(TRAIT_HUSK))
+	if(C.has_trait(TRAIT_HUSK) && is_organic_limb())
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
 		should_draw_greyscale = FALSE
-		no_update = 1
+		no_update = TRUE
 
 	if(no_update)
 		return
@@ -282,7 +285,7 @@
 		dmg_overlay_type = "robotic"
 
 	if(dropping_limb)
-		no_update = 1 //when attached, the limb won't be affected by the appearance changes of its mob owner.
+		no_update = TRUE //when attached, the limb won't be affected by the appearance changes of its mob owner.
 
 //to update the bodypart's icon when not attached to a mob
 /obj/item/bodypart/proc/update_icon_dropped()
@@ -316,7 +319,7 @@
 	. += limb
 
 	if(animal_origin)
-		if(status == BODYPART_ORGANIC)
+		if(is_organic_limb())
 			limb.icon = 'icons/mob/animal_parts.dmi'
 			if(species_id == "husk")
 				limb.icon_state = "[animal_origin]_husk_[body_zone]"
@@ -332,7 +335,7 @@
 	if((body_zone != BODY_ZONE_HEAD && body_zone != BODY_ZONE_CHEST))
 		should_draw_gender = FALSE
 
-	if(status == BODYPART_ORGANIC)
+	if(is_organic_limb())
 		if(should_draw_greyscale)
 			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 			if(should_draw_gender)
@@ -357,6 +360,9 @@
 			limb.icon_state = "[body_zone]_[icon_gender]"
 		else
 			limb.icon_state = "[body_zone]"
+		if(aux_zone)
+			aux = image(limb.icon, "[aux_zone]", -aux_layer, image_dir)
+			. += aux
 		return
 
 

@@ -38,9 +38,7 @@
 	power_gen = initial(power_gen) * part_level
 
 /obj/machinery/power/rtg/attackby(obj/item/I, mob/user, params)
-	if(exchange_parts(user, I))
-		return
-	else if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), I))
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), I))
 		return
 	else if(default_deconstruction_crowbar(I))
 		return

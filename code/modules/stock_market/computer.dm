@@ -1,5 +1,6 @@
 /obj/machinery/computer/stockexchange
 	name = "stock exchange computer"
+	desc = "A console that connects to the galactic stock market. Stocks trading involves substantial risk of loss and is not suitable for every cargo technician."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "oldcomp"
 	icon_screen = "stock_computer"

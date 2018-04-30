@@ -292,9 +292,6 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		update_icon()
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_deconstruction_crowbar(I))
 		return
 	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())

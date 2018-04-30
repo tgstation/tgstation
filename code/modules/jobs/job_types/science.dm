@@ -56,7 +56,7 @@ Research Director
 	mask = /obj/item/clothing/mask/breath
 	suit = /obj/item/clothing/suit/space/hardsuit/rd
 	suit_store = /obj/item/tank/internals/oxygen
-	internals_slot = slot_s_store
+	internals_slot = SLOT_S_STORE
 
 /*
 Scientist
@@ -128,4 +128,4 @@ Roboticist
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/tox
 
-	pda_slot = slot_l_store
+	pda_slot = SLOT_L_STORE
