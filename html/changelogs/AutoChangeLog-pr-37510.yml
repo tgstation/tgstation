@@ -1,0 +1,4 @@
+author: "JJRcop"
+delete-after: True
+changes: 
+  - bugfix: "Integrated circuits can no longer throw themselves."
