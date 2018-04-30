@@ -222,6 +222,12 @@
 	if(active_owner)
 		mori()
 
+//Just in case
+/obj/item/clothing/neck/necklace/memento_mori/Destroy()
+	if(active_owner)
+		mori()
+	return ..()
+
 /obj/item/clothing/neck/necklace/memento_mori/proc/memento(mob/living/carbon/human/user)
 	to_chat(user, "<span class='warning'>You feel your life being drained by the pendant...</span>")
 	if(do_after(user, 40, target = src))
