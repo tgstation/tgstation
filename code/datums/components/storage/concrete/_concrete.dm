@@ -26,9 +26,7 @@
 	for(var/i in slaves)
 		var/datum/component/storage/slave = i
 		slave.change_master(null)
-	if(_contents_limbo)
-		for(var/i in _contents_limbo)
-			qdel(i)
+	QDEL_LIST(_contents_limbo)
 	_user_limbo = null
 	return ..()
 
@@ -46,7 +44,7 @@
 		_contents_limbo = list()
 		for(var/atom/movable/AM in parent)
 			_contents_limbo += AM
-			AM.forceMove(null)
+			AM.moveToNullspace()
 
 /datum/component/storage/concrete/PostTransfer()
 	if(!isatom(parent))

@@ -28,7 +28,7 @@
 	return ..()
 
 /datum/component/mirage_border/PreTransfer()
-	holder.forceMove(null)
+	holder.moveToNullspace()
 
 /datum/component/mirage_border/PostTransfer()
 	if(!isturf(parent))
