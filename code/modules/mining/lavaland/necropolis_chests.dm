@@ -202,7 +202,6 @@
 	icon_state = "memento_mori"
 	actions_types = list(/datum/action/item_action/hands_free/memento_mori)
 	var/mob/living/carbon/human/active_owner
-	var/death_timer_id
 
 /obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
 	if(slot == SLOT_NECK)
@@ -225,21 +224,14 @@
 /obj/item/clothing/neck/necklace/memento_mori/proc/memento(mob/living/carbon/human/user)
 	to_chat(user, "<span class='warning'>You feel your life being drained by the pendant...</span>")
 	if(do_after(user, 40, target = src))
-		to_chat(user, "<span class='notice'>Your lifeforce is now linked to the pendant! You feel a looming death ahead of you, and yet you instinctively know that until then, you won't die.</span>")
-		to_chat(user, "<span class='warning'>You also feel that removing the pendant now would be a really bad idea.</span>")
+		to_chat(user, "<span class='notice'>Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die.</span>")
 		user.add_trait(TRAIT_NODEATH, "memento_mori")
 		user.add_trait(TRAIT_NOHARDCRIT, "memento_mori")
 		user.add_trait(TRAIT_NOCRITDAMAGE, "memento_mori")
 		icon_state = "memento_mori_active"
 		active_owner = user
-		if(death_timer_id)
-			deltimer(death_timer_id)
-		death_timer_id = addtimer(CALLBACK(.proc/mori), world.time + 9000, TIMER_STOPPABLE) //15 minutes
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/mori()
-	if(death_timer_id)
-		deltimer(death_timer_id)
-	death_timer_id = null
 	icon_state = "memento_mori"
 	if(!active_owner)
 		return
