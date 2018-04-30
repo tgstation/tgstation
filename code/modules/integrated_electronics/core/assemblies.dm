@@ -10,7 +10,7 @@
 	icon_state = "setup_small"
 	flags_1 = NOBLUDGEON_1
 	materials = list()		// To be filled later
-	var/label = ""
+	var/label
 	var/list/assembly_components = list()
 	var/max_components = IC_MAX_SIZE_BASE
 	var/max_complexity = IC_COMPLEXITY_BASE
@@ -57,8 +57,8 @@
 
 /obj/item/electronic_assembly/examine(mob/user)
 	. = ..()
-	if(label != "")
-		to_chat(user, "The label reads: " + label)
+	if(!label)
+		to_chat(user, "The label reads: [label")
 	else
 		to_chat(user, "The label is blank.")
 	if(can_anchor)
