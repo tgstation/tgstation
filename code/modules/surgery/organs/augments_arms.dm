@@ -81,8 +81,8 @@
 		"<span class='notice'>[holder] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='italics'>You hear a short mechanical noise.</span>")
 
-	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
-		var/obj/item/device/assembly/flash/F = holder
+	if(istype(holder, /obj/item/assembly/flash/armimplant))
+		var/obj/item/assembly/flash/F = holder
 		F.set_light(0)
 
 	owner.transferItemToLoc(holder, src, TRUE)
@@ -100,8 +100,8 @@
 	holder.slot_flags = null
 	holder.materials = null
 
-	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
-		var/obj/item/device/assembly/flash/F = holder
+	if(istype(holder, /obj/item/assembly/flash/armimplant))
+		var/obj/item/assembly/flash/F = holder
 		F.set_light(7)
 
 	var/obj/item/arm_item = owner.get_active_held_item()
@@ -183,7 +183,7 @@
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contains all necessary tools."
 	normal_items = list(/obj/item/screwdriver/cyborg, /obj/item/wrench/cyborg, /obj/item/weldingtool/largetank/cyborg,
-		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/device/multitool/cyborg)
+		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/multitool/cyborg)
 	emag_items = list(/obj/item/kitchen/knife/combat/cyborg)
 
 /obj/item/organ/cyberimp/arm/toolset/l
@@ -203,13 +203,14 @@
 /obj/item/organ/cyberimp/arm/flash
 	name = "integrated high-intensity photon projector" //Why not
 	desc = "An integrated projector mounted onto a user's arm that is able to be used as a powerful flash."
-	normal_items = list(/obj/item/device/assembly/flash/armimplant)
+	normal_items = list(/obj/item/assembly/flash/armimplant)
 
 /obj/item/organ/cyberimp/arm/flash/Initialize()
 	. = ..()
-	if(locate(/obj/item/device/assembly/flash/armimplant) in items_list)
-		var/obj/item/device/assembly/flash/armimplant/F = locate(/obj/item/device/assembly/flash/armimplant) in items_list
+	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
+		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
 		F.I = src
+
 
 /obj/item/organ/cyberimp/arm/baton
 	name = "arm electrification implant"
@@ -219,12 +220,12 @@
 /obj/item/organ/cyberimp/arm/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm."
-	normal_items = list(/obj/item/melee/transforming/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
+	normal_items = list(/obj/item/melee/transforming/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/borg/stun, /obj/item/assembly/flash/armimplant)
 
 /obj/item/organ/cyberimp/arm/combat/Initialize()
 	. = ..()
-	if(locate(/obj/item/device/assembly/flash/armimplant) in items_list)
-		var/obj/item/device/assembly/flash/armimplant/F = locate(/obj/item/device/assembly/flash/armimplant) in items_list
+	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
+		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
 		F.I = src
 
 /obj/item/organ/cyberimp/arm/surgery
