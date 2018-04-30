@@ -1,7 +1,7 @@
 #define HAL_LINES_FILE "hallucination.json"
 
 GLOBAL_LIST_INIT(hallucination_list, list(
-	/datum/hallucination/whispers = 100,
+	/datum/hallucination/chat = 100,
 	/datum/hallucination/message = 60,
 	/datum/hallucination/sounds = 50,
 	/datum/hallucination/battle = 20,
@@ -315,7 +315,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		sourcelocs += T
 	var/turf/source = pick(sourcelocs)
 	if(!battle_type)
-		battle_type = pick("laser","disabler","esword","gun","stunprod","bomb")
+		battle_type = pick("laser","disabler","esword","gun","stunprod","harmbaton","bomb")
 	feedback_details += "Type: [battle_type]"
 	switch(battle_type)
 		if("laser")
@@ -370,6 +370,13 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			target.playsound_local(source, get_sfx("bodyfall"), 25, 1)
 			sleep(20)
 			target.playsound_local(source, 'sound/weapons/cablecuff.ogg', 15, 1)
+		if("harmbaton") //zap n slap
+			target.playsound_local(source, 'sound/weapons/egloves.ogg', 40, 1)
+			target.playsound_local(source, get_sfx("bodyfall"), 25, 1)
+			sleep(20)
+			for(var/i in 1 to rand(5, 12))
+				target.playsound_local(source, "swing_hit", 50, 1)
+				sleep(rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 8))
 		if("bomb") // Tick Tock
 			for(var/i in 1 to rand(3, 11))
 				target.playsound_local(source, 'sound/items/timer.ogg', 25, 0)
@@ -578,9 +585,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /datum/hallucination/bolts
 	var/list/locks = list()
 
-/datum/hallucination/bolts/New(mob/living/carbon/C, forced, door_number = -1)
+/datum/hallucination/bolts/New(mob/living/carbon/C, forced, door_number)
 	set waitfor = FALSE
 	..()
+	if(!door_number)
+		door_number = rand(0,4) //if 0 bolts all visible doors
 	var/count = 0
 	feedback_details += "Door amount: [door_number]"
 	for(var/obj/machinery/door/airlock/A in range(7, target))
@@ -624,9 +633,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		return FALSE
 	return TRUE
 
-/datum/hallucination/whispers
+/datum/hallucination/chat
 
-/datum/hallucination/whispers/New(mob/living/carbon/C, forced = TRUE)
+/datum/hallucination/chat/New(mob/living/carbon/C, forced = TRUE, force_radio, specific_message)
 	set waitfor = FALSE
 	..()
 	var/target_name = target.first_name()
@@ -661,8 +670,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			if(get_dist(target,H)<get_dist(target,person))
 				person = H
 		people += H
-	if(person) //Basic talk
-		var/chosen = capitalize(pick(speak_messages))
+	if(person && !force_radio) //Basic talk
+		var/chosen = specific_message
+		if(!chosen)
+			chosen = capitalize(pick(speak_messages))
 		chosen = replacetext(chosen, "%TARGETNAME%", target_name)
 		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
 		var/message = target.compose_message(person,understood_language,chosen,null,person.get_spans(),face_name = TRUE)
@@ -673,7 +684,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			sleep(30)
 			target.client.images.Remove(speech_overlay)
 	else // Radio talk
-		var/chosen = capitalize(pick(radio_messages))
+		var/chosen = specific_message
+		if(!chosen)
+			chosen = capitalize(pick(radio_messages))
 		chosen = replacetext(chosen, "%TARGETNAME%", target_name)
 		var/list/humans = list()
 		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
@@ -748,12 +761,16 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		sourcelocs += T
 	var/turf/source = pick(sourcelocs)
 	if(!sound_type)
-		sound_type = pick("airlock","console","explosion","far_explosion","glass","alarm","beepsky","wall_decon","door_hack","tesla")
+		sound_type = pick("airlock","airlock_pry","console","explosion","far_explosion","mech","glass","alarm","beepsky","mech","wall_decon","door_hack","tesla")
 	feedback_details += "Type: [sound_type]"
 	//Strange audio
 	switch(sound_type)
 		if("airlock")
-			target.playsound_local(source,'sound/machines/airlock.ogg', 15, 1)
+			target.playsound_local(source,'sound/machines/airlock.ogg', 30, 1)
+		if("airlock_pry")
+			target.playsound_local(source,'sound/machines/airlock_alien_prying.ogg', 100, 1)
+			sleep(50)
+			target.playsound_local(source, 'sound/machines/airlockforced.ogg', 30, 1)
 		if("console")
 			target.playsound_local(source,'sound/machines/terminal_prompt.ogg', 25, 1)
 		if("explosion")
@@ -769,18 +786,28 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			target.playsound_local(source, 'sound/machines/alarm.ogg', 100, 0)
 		if("beepsky")
 			target.playsound_local(source, 'sound/voice/bfreeze.ogg', 35, 0)
+		if("mech")
+			var/mech_dir = pick(GLOB.cardinals)
+			for(var/i in 1 to rand(4,9))
+				if(prob(75))
+					target.playsound_local(source, 'sound/mecha/mechstep.ogg', 40, 1)
+					source = get_step(source, mech_dir)
+				else
+					target.playsound_local(source, 'sound/mecha/mechturn.ogg', 40, 1)
+					mech_dir = pick(GLOB.cardinals)
+				sleep(10)
 		//Deconstructing a wall
 		if("wall_decon")
-			target.playsound_local(source, 'sound/items/welder.ogg', 15, 1)
+			target.playsound_local(source, 'sound/items/welder.ogg', 50, 1)
 			sleep(105)
-			target.playsound_local(source, 'sound/items/welder2.ogg', 15, 1)
+			target.playsound_local(source, 'sound/items/welder2.ogg', 50, 1)
 			sleep(15)
-			target.playsound_local(source, 'sound/items/ratchet.ogg', 15, 1)
+			target.playsound_local(source, 'sound/items/ratchet.ogg', 50, 1)
 		//Hacking a door
 		if("door_hack")
-			target.playsound_local(source, 'sound/items/screwdriver.ogg', 15, 1)
+			target.playsound_local(source, 'sound/items/screwdriver.ogg', 50, 1)
 			sleep(rand(40,80))
-			target.playsound_local(source, 'sound/machines/airlockforced.ogg', 15, 1)
+			target.playsound_local(source, 'sound/machines/airlockforced.ogg', 30, 1)
 	qdel(src)
 
 /datum/hallucination/weird_sounds
@@ -793,7 +820,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		sourcelocs += T
 	var/turf/source = pick(sourcelocs)
 	if(!sound_type)
-		sound_type = pick("phone","hallelujah","creepy","tesla")
+		sound_type = pick("phone","hallelujah","highlander","hyperspace","game_over","creepy","tesla")
 	feedback_details += "Type: [sound_type]"
 	//Strange audio
 	switch(sound_type)
@@ -805,8 +832,14 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			target.playsound_local(source, 'sound/weapons/ring.ogg', 15)
 			sleep(25)
 			target.playsound_local(source, 'sound/weapons/ring.ogg', 15)
+		if("hyperspace")
+			target.playsound_local(null, 'sound/effects/hyperspace_begin.ogg', 50)
 		if("hallelujah")
 			target.playsound_local(source, 'sound/effects/pray_chaplain.ogg', 50)
+		if("highlander")
+			target.playsound_local(null, 'sound/misc/highlander.ogg', 50)
+		if("game_over")
+			target.playsound_local(source, 'sound/misc/compiler-failure.ogg', 50)
 		if("laughter")
 			if(prob(50))
 				target.playsound_local(source, 'sound/voice/human/womanlaugh.ogg', 50, 1)
