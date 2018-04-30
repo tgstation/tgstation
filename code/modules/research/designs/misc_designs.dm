@@ -63,41 +63,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-	
-/////////////////////////////////////////
-//////////////Sunglasses/////////////////
-/////////////////////////////////////////
-	
-/datum/design/sunhudmed
-	name = "Medical HUDSunglasses"
-	desc = "Sunglasses with a medical HUD."
-	id = "sunhudmed"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
-	build_path = /obj/item/clothing/glasses/hud/health/sunglasses
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	
-/datum/design/sunhudsec
-	name = "Security HUDSunglasses"
-	desc = "Sunglasses with a security HUD."
-	id = "sunhudsec"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
-	build_path = /obj/item/clothing/glasses/hud/security/sunglasses
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
-/datum/design/beergoggles
-	name = "Beer Goggles"
-	desc = "A pair of sunglasses outfitted with apparatus to scan reagents."
-	id = "beergoggles"
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
-	build_path = /obj/item/clothing/glasses/sunglasses/reagent
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-	
 /////////////////////////////////////////
 //////////////////Misc///////////////////
 /////////////////////////////////////////
@@ -351,7 +316,7 @@
 	desc = "A holographic projector that creates holographic security barriers."
 	id = "holosignsec"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
 	build_path = /obj/item/holosign_creator/security
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -361,7 +326,7 @@
 	desc = "A holographic projector that creates holographic engineering barriers."
 	id = "holosignengi"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
 	build_path = /obj/item/holosign_creator/engineering
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -371,7 +336,7 @@
 	desc = "A holographic projector that creates holographic barriers that prevent changes in atmospheric conditions."
 	id = "holosignatmos"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
 	build_path = /obj/item/holosign_creator/atmos
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
