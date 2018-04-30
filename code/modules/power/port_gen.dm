@@ -173,9 +173,6 @@
 		return
 	else if(!active)
 
-		if(exchange_parts(user, O))
-			return
-
 		if(istype(O, /obj/item/wrench))
 
 			if(!anchored && !isinspace())

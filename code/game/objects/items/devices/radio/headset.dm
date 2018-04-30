@@ -7,7 +7,7 @@
 	subspace_transmission = TRUE
 	canhear_range = 0 // can't hear headsets from very far away
 
-	slot_flags = SLOT_EARS
+	slot_flags = ITEM_SLOT_EARS
 	var/obj/item/encryptionkey/keyslot2 = null
 	dog_fashion = null
 

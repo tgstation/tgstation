@@ -55,9 +55,6 @@
 	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
 		return
 
-	if(exchange_parts(user, O))
-		return
-
 	if(default_pry_open(O))
 		return
 

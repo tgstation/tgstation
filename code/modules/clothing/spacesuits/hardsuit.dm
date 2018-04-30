@@ -48,12 +48,12 @@
 		soundloop.stop(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot)
-	if(slot == slot_head)
+	if(slot == SLOT_HEAD)
 		return 1
 
 /obj/item/clothing/head/helmet/space/hardsuit/equipped(mob/user, slot)
 	..()
-	if(slot != slot_head)
+	if(slot != SLOT_HEAD)
 		if(suit)
 			suit.RemoveHelmet()
 			soundloop.stop(user)
@@ -119,7 +119,7 @@
 		if(jetpack)
 			to_chat(user, "<span class='warning'>[src] already has a jetpack installed.</span>")
 			return
-		if(src == user.get_item_by_slot(slot_wear_suit)) //Make sure the player is not wearing the suit before applying the upgrade.
+		if(src == user.get_item_by_slot(SLOT_WEAR_SUIT)) //Make sure the player is not wearing the suit before applying the upgrade.
 			to_chat(user, "<span class='warning'>You cannot install the upgrade to [src] while wearing it.</span>")
 			return
 
@@ -131,7 +131,7 @@
 		if(!jetpack)
 			to_chat(user, "<span class='warning'>[src] has no jetpack installed.</span>")
 			return
-		if(src == user.get_item_by_slot(slot_wear_suit))
+		if(src == user.get_item_by_slot(SLOT_WEAR_SUIT))
 			to_chat(user, "<span class='warning'>You cannot remove the jetpack from [src] while wearing it.</span>")
 			return
 
@@ -144,7 +144,7 @@
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	..()
 	if(jetpack)
-		if(slot == slot_wear_suit)
+		if(slot == SLOT_WEAR_SUIT)
 			for(var/X in jetpack.actions)
 				var/datum/action/A = X
 				A.Grant(user)
@@ -157,7 +157,7 @@
 			A.Remove(user)
 
 /obj/item/clothing/suit/space/hardsuit/item_action_slot_check(slot)
-	if(slot == slot_wear_suit) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
+	if(slot == SLOT_WEAR_SUIT) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
 		return 1
 
 	//Engineering
@@ -263,7 +263,7 @@
 	var/obj/item/clothing/suit/space/hardsuit/syndi/linkedsuit = null
 	actions_types = list(/datum/action/item_action/toggle_helmet_mode)
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
-	visor_flags = STOPSPRESSUREDMAGE_1
+	visor_flags = STOPSPRESSUREDAMAGE
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon()
 	icon_state = "hardsuit[on]-[item_color]"
@@ -283,7 +283,7 @@
 		name = initial(name)
 		desc = initial(desc)
 		set_light(brightness_on)
-		flags_1 |= visor_flags
+		clothing_flags |= visor_flags
 		flags_cover |= HEADCOVERSEYES | HEADCOVERSMOUTH
 		flags_inv |= visor_flags_inv
 		cold_protection |= HEAD
@@ -292,7 +292,7 @@
 		name += " (combat)"
 		desc = alt_desc
 		set_light(0)
-		flags_1 &= ~visor_flags
+		clothing_flags &= ~visor_flags
 		flags_cover &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 		flags_inv &= ~visor_flags_inv
 		cold_protection &= ~HEAD
@@ -313,13 +313,13 @@
 			linkedsuit.name = initial(linkedsuit.name)
 			linkedsuit.desc = initial(linkedsuit.desc)
 			linkedsuit.slowdown = 1
-			linkedsuit.flags_1 |= STOPSPRESSUREDMAGE_1
+			linkedsuit.clothing_flags |= STOPSPRESSUREDAMAGE
 			linkedsuit.cold_protection |= CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 		else
 			linkedsuit.name += " (combat)"
 			linkedsuit.desc = linkedsuit.alt_desc
 			linkedsuit.slowdown = 0
-			linkedsuit.flags_1 &= ~(STOPSPRESSUREDMAGE_1)
+			linkedsuit.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			linkedsuit.cold_protection &= ~(CHEST | GROIN | LEGS | FEET | ARMS | HANDS)
 
 		linkedsuit.icon_state = "hardsuit[on]-[item_color]"
@@ -460,7 +460,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if (slot == slot_head)
+	if (slot == SLOT_HEAD)
 		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
 		DHUD.add_hud_to(user)
 
@@ -615,7 +615,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/ancient/equipped(mob/user, slot)
 	. = ..()
-	if (slot == slot_wear_suit)
+	if (slot == SLOT_WEAR_SUIT)
 		if (mobhook && mobhook.parent != user)
 			QDEL_NULL(mobhook)
 		if (!mobhook)
@@ -704,7 +704,7 @@
 	icon_state = "ert_medical"
 	item_state = "ert_medical"
 	item_color = "ert_medical"
-	flags_1 = STOPSPRESSUREDMAGE_1 | THICKMATERIAL_1 | NODROP_1 //Dont want people changing into the other teams gear
+	flags_1 = NODROP_1 //Dont want people changing into the other teams gear
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
 	armor = list("melee" = 0, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 95)
 	slowdown = 0

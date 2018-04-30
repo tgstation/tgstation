@@ -8,7 +8,7 @@
 
 	flags_1 = CONDUCT_1 | HEAR_1
 	flags_2 = NO_EMP_WIRES_2
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL

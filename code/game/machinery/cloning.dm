@@ -134,8 +134,11 @@
 	clonemind = locate(mindref) in SSticker.minds
 	if(!istype(clonemind))	//not a mind
 		return FALSE
-	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
-		return FALSE
+	if(clonemind.current)
+		if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
+			return FALSE
+		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
+			return FALSE
 	if(clonemind.active)	//somebody is using that mind
 		if( ckey(clonemind.key)!=ckey )
 			return FALSE
@@ -143,6 +146,8 @@
 		// get_ghost() will fail if they're unable to reenter their body
 		var/mob/dead/observer/G = clonemind.get_ghost()
 		if(!G)
+			return FALSE
+		if(G.suiciding) // The ghost came from a body that is suiciding.
 			return FALSE
 	if(clonemind.damnation_type) //Can't clone the damned.
 		INVOKE_ASYNC(src, .proc/horrifyingsound)
@@ -278,9 +283,6 @@
 	if(!(occupant || mess))
 		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
 			return
-
-	if(exchange_parts(user, W))
-		return
 
 	if(default_deconstruction_crowbar(W))
 		return
