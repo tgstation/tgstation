@@ -852,7 +852,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/lock_suit(mob/wearer)
 	user = wearer
-	user.visible_message("<span class='notice'>[wearer]'s flight suit locks around them, powered buckles and straps automatically adjusting to [wearer.p_their()] body!</span>")
+	user.visible_message("<span class='notice'>[wearer]'s flight suit locks around [wearer.p_them()], powered buckles and straps automatically adjusting to [wearer.p_their()] body!</span>")
 	playsound(src.loc, 'sound/items/rped.ogg', 65, 1)
 	resync()
 	strip_delay = locked_strip_delay

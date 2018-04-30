@@ -202,7 +202,7 @@
 		if(occupant || helmet || suit || storage)
 			return
 		if(target == user)
-			user.visible_message("<span class='warning'>[user] slips into [src] and closes the door behind them!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
+			user.visible_message("<span class='warning'>[user] slips into [src] and closes the door behind [user.p_them()]!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
 		else
 			target.visible_message("<span class='warning'>[user] pushes [target] into [src] and shuts its door!<span>", "<span class='userdanger'>[user] shoves you into [src] and shuts the door!</span>")
 		close_machine(target)
