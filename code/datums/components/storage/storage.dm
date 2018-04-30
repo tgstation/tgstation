@@ -239,7 +239,9 @@
 		if(I.loc != real_location)
 			continue
 		remove_from_storage(I, target)
-		I.on_found()
+		if(trigger_on_found)
+			if(I.on_found())
+				return FALSE
 		if(TICK_CHECK)
 			progress.update(progress.goal - length(things))
 			return TRUE
