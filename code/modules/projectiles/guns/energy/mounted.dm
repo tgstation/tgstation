@@ -9,9 +9,6 @@
 	can_flashlight = 0
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses neural signals instead
 
-/obj/item/gun/energy/e_gun/advtaser/mounted/dropped()//if somebody manages to drop this somehow...
-	..()
-
 /obj/item/gun/energy/laser/mounted
 	name = "mounted laser"
 	desc = "An arm mounted cannon that fires lethal lasers."
@@ -21,6 +18,3 @@
 	force = 5
 	selfcharge = 1
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
-
-/obj/item/gun/energy/laser/mounted/dropped()
-	..()
