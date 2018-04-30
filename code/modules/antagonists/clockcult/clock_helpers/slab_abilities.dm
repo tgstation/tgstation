@@ -35,13 +35,13 @@
 	if(iscarbon(target) && target.Adjacent(ranged_ability_user))
 		var/mob/living/carbon/L = target
 		if(is_servant_of_ratvar(L))
-			to_chat(ranged_ability_user, "<span class='neovgre'>\"They're a servant.\"</span>")
+			to_chat(ranged_ability_user, "<span class='neovgre'>\"[L.p_theyre(TRUE)] a servant.\"</span>")
 			return TRUE
 		else if(L.stat)
 			to_chat(ranged_ability_user, "<span class='neovgre'>\"There is use in shackling the dead, but for examples.\"</span>")
 			return TRUE
 		else if (istype(L.handcuffed,/obj/item/restraints/handcuffs/clockwork))
-			to_chat(ranged_ability_user, "<span class='neovgre'>\"They are already helpless, no?\"</span>")
+			to_chat(ranged_ability_user, "<span class='neovgre'>\"[L.p_theyre(TRUE)] already helpless, no?\"</span>")
 			return TRUE
 
 		playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE)

@@ -300,7 +300,7 @@
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
 	if(!state_open && occupant && (user in src) && user.stat == 0) // Check they're still here.
-		visible_message("<span class='notice'>You see [user] bursts out of [src]!</span>", \
+		visible_message("<span class='notice'>You see [user] burst out of [src]!</span>", \
 			"<span class='notice'>You escape the cramped confines of [src]!</span>")
 		open_machine()
 

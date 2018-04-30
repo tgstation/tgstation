@@ -960,7 +960,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H == L)
 			continue
-		to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Whoever they were, friend or foe, go kill [L.p_them()]!</span>")
+		to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_theyve(TRUE)] been marked red! Whoever [L.p_they()] [L.p_were()], friend or foe, go kill [L.p_them()]!</span>")
 		H.put_in_hands(new /obj/item/kitchen/knife/butcher(H), TRUE)
 
 	qdel(src)
@@ -1018,7 +1018,7 @@
 	user.visible_message("<span class='suicide'>[user] holds [src] into the air! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
 	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)
-	user.visible_message("<span class='hierophant_warning'>[user] fades out, leaving their belongings behind!</span>")
+	user.visible_message("<span class='hierophant_warning'>[user] fades out, leaving [user.p_their()] belongings behind!</span>")
 	for(var/obj/item/I in user)
 		if(I != src)
 			user.dropItemToGround(I)

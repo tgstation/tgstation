@@ -78,7 +78,7 @@
 			return
 		if("Nominate Yourself")
 			eminence_nominee = nominee
-			hierophant_message("<span class='brass'><b>[nominee] nominates themselves as the Eminence!</b> You may object by interacting with the eminence spire. The vote will otherwise pass in 30 seconds.</span>")
+			hierophant_message("<span class='brass'><b>[nominee] nominates [nominee.p_them()]self as the Eminence!</b> You may object by interacting with the eminence spire. The vote will otherwise pass in 30 seconds.</span>")
 		if("Nominate Ghosts")
 			eminence_nominee = "ghosts"
 			hierophant_message("<span class='brass'><b>[nominee] proposes selecting an Eminence from ghosts!</b> You may object by interacting with the eminence spire. The vote will otherwise pass in 30 seconds.</span>")

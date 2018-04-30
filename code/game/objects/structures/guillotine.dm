@@ -1,6 +1,6 @@
 #define GUILLOTINE_BLADE_MAX_SHARP  10 // This is maxiumum sharpness and will decapitate without failure
 #define GUILLOTINE_DECAP_MIN_SHARP  7  // Minimum amount of sharpness for decapitation. Any less and it will just do severe brute damage
-#define GUILLOTINE_ANIMATION_LENGTH 9 // How many deciseconds the animation is 
+#define GUILLOTINE_ANIMATION_LENGTH 9 // How many deciseconds the animation is
 #define GUILLOTINE_BLADE_RAISED     1
 #define GUILLOTINE_BLADE_MOVING     2
 #define GUILLOTINE_BLADE_DROPPED    3
@@ -158,7 +158,7 @@
 		add_fingerprint(user)
 		if (blade_status == GUILLOTINE_BLADE_SHARPENING)
 			return
-		
+
 		if (blade_status == GUILLOTINE_BLADE_RAISED)
 			if (blade_sharpness < GUILLOTINE_BLADE_MAX_SHARP)
 				blade_status = GUILLOTINE_BLADE_SHARPENING
@@ -187,7 +187,7 @@
 		return FALSE
 
 	if (!istype(M, /mob/living/carbon/human))
-		to_chat(usr, "<span class='warning'>It doesn't look like they can fit into this properly!</span>")
+		to_chat(usr, "<span class='warning'>It doesn't look like [M.p_they()] can fit into this properly!</span>")
 		return FALSE // Can't decapitate non-humans
 
 	if (blade_status != GUILLOTINE_BLADE_RAISED)

@@ -517,7 +517,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(L.incapacitated(TRUE, TRUE))
 		if(istype(L.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
 			to_chat(user, "<span class='warning'>The specimen's protective headgear is interfering with the sleep inducement!</span>")
-			L.visible_message("<span class='danger'>[user] tried to induced sleep in [L] with [src], but their headgear protected them!</span>", \
+			L.visible_message("<span class='danger'>[user] tried to induced sleep in [L] with [src], but [L.p_their()] headgear protected them!</span>", \
 								"<span class='userdanger'>You feel a strange wave of heavy drowsiness wash over you, but your headgear deflects most of it!</span>")
 			L.drowsyness += 2
 			return
@@ -529,7 +529,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	else
 		if(istype(L.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
 			to_chat(user, "<span class='warning'>The specimen's protective headgear is completely blocking our sleep inducement methods!</span>")
-			L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src], but their headgear completely protected them!</span>", \
+			L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src], but [L.p_their()] headgear completely protected them!</span>", \
 								"<span class='userdanger'>Any sense of drowsiness is quickly diminished as your headgear deflects the effects!</span>")
 			return
 		L.drowsyness += 1

@@ -76,13 +76,13 @@
 					drained_mobs.Add(target)
 					target.death(0)
 				else
-					to_chat(src, "<span class='revenwarning'>[target ? "[target] has":"They have"] been drawn out of your grasp. The link has been broken.</span>")
+					to_chat(src, "<span class='revenwarning'>[target ? "[target] has":"[target.p_theyve(TRUE)]"] been drawn out of your grasp. The link has been broken.</span>")
 					if(target) //Wait, target is WHERE NOW?
 						target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
 											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
 				qdel(B)
 			else
-				to_chat(src, "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"their"] soul. The link has been broken.</span>")
+				to_chat(src, "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"[target.p_their()]"] soul. The link has been broken.</span>")
 	draining = FALSE
 	essence_drained = 0
 
