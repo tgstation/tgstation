@@ -26,12 +26,11 @@
 
 /obj/item/organ/cyberimp/arm/proc/create_items(var/list/arg_items, var/emag = 0)
 	for(var/listitem in arg_items)
-		if(ispath(listitem) && !(locate(listitem) in items_list))
-			var/obj/item/I = new listitem(src)
-			I.AddComponent(/datum/component/magnet_drop, src)
-			if(emag)
-				to_chat(usr, "<span class='notice'>You unlock [src]'s integrated [I.name]!</span>")
-			items_list += I
+		var/obj/item/I = new listitem(src)
+		I.AddComponent(/datum/component/magnet_drop, src)
+		if(emag)
+			to_chat(owner, "<span class='notice'>You unlock [src]'s integrated [I.name]!</span>")
+		items_list += I
 
 /obj/item/organ/cyberimp/arm/proc/SetSlotFromZone()
 	switch(zone)
@@ -95,7 +94,6 @@
 
 	holder = item
 
-	//holder.flags_1 |= NODROP_1
 	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
 	holder.materials = null
@@ -158,7 +156,7 @@
 		..()
 
 /obj/item/organ/cyberimp/arm/emag_act()
-	create_items(emag_items, 1)
+	create_items(emag_items, TRUE)
 
 /obj/item/organ/cyberimp/arm/gun/laser
 	name = "arm-mounted laser implant"
@@ -210,7 +208,6 @@
 	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
 		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
 		F.I = src
-
 
 /obj/item/organ/cyberimp/arm/baton
 	name = "arm electrification implant"
