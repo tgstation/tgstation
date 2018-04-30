@@ -435,14 +435,14 @@
 	if(world.time < stop && active)
 		var/sound/song_played = sound(selection.song_path)
 
-		for(var/mob/M in range(10,src))
+		for(var/mob/M in view(7,src))
 			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
 				continue
 			if(!(M in rangers))
 				rangers[M] = TRUE
-				M.playsound_local(get_turf(M), null, 100, channel = CHANNEL_JUKEBOX, S = song_played)
+				M.playsound_local(get_turf(M), null, 75, channel = CHANNEL_JUKEBOX, S = song_played)
 		for(var/mob/L in rangers)
-			if(get_dist(src,L) > 10)
+			if(!(L in view(7,src)))
 				rangers -= L
 				if(!L || !L.client)
 					continue
