@@ -624,3 +624,11 @@
 	results = list("crevice_spike" = 6)
 	required_reagents = list("limejuice" = 2, "capsaicin" = 4) //2 powdered delta (sour), 4 flanergide (spicy)
 	mix_message = "The mixture stings your eyes as it settles."
+
+/datum/chemical_reaction/sake
+	name = "sake"
+	id = "sake"
+	results = list("sake" = 10)
+	required_reagents = list("rice" = 10)
+	required_catalysts = list("enzyme" = 5)
+	mix_message = "The rice grains ferment into a clear, sweet-smelling liquid."
