@@ -58,7 +58,7 @@
 /obj/item/electronic_assembly/examine(mob/user)
 	. = ..()
 	if(!label)
-		to_chat(user, "The label reads: [label")
+		to_chat(user, "The label reads: [label]")
 	else
 		to_chat(user, "The label is blank.")
 	if(can_anchor)
