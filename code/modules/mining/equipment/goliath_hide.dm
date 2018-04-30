@@ -20,17 +20,8 @@
 	if(!proximity_flag)
 		return
 	if(is_type_in_typecache(target, goliath_platable_armor_typecache))
-		var/obj/item/clothing/C = target
-		var/datum/component/goliath_plate/G = C.GetComponent(/datum/component/goliath_plate)
-		if(!G)
-			G = C.AddComponent(/datum/component/goliath_plate) //amount initialized to 0
-		if(C.armor.melee >= 60) //early returns and all that
-			to_chat(user, "<span class='warning'>You can't improve [C] any further!</span>")
-			return
-		C.armor = C.armor.setRating(melee = min(C.armor.melee + 10, 60))
-		to_chat(user, "<span class='info'>You strengthen [C], improving its resistance against melee attacks.</span>")
-		use(1)
-		G.amount++ //it's also stupid but it works
+		target.LoadComponent(/datum/component/goliath_plate,src,user)
+		//component does the rest of the job, including additional applications
 	else if(istype(target, /obj/mecha/working/ripley))
 		var/obj/mecha/working/ripley/D = target
 		if(D.hides < 3)
