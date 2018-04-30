@@ -20319,7 +20319,6 @@
 /area/hallway/primary/central)
 "aZj" = (
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /obj/machinery/status_display{
 	dir = 4;
 	layer = 4;
@@ -22775,7 +22774,6 @@
 /area/science/robotics/mechbay)
 "bfB" = (
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /obj/machinery/requests_console{
 	department = "Cargo Bay";
 	departmentType = 2;
