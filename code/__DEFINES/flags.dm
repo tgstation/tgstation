@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // for /datum/var/datum_flags
 #define DF_USE_TAG		(1<<0)
 #define DF_VAR_EDITED	(1<<1)
+#define DF_OVERLAY_QUEUED (1<<2) // atom queued to SSoverlay
 
 //FLAGS BITMASK
 
@@ -20,7 +21,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define CONDUCT_1					(1<<6)		// conducts electricity (metal etc.)
 #define ABSTRACT_1					(1<<7)		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
 #define NODECONSTRUCT_1				(1<<7)		// For machines and structures that should not break into parts, eg, holodeck stuff
-#define OVERLAY_QUEUED_1			(1<<8)		// atom queued to SSoverlay
+#define OVERLAY_QUEUED_1			(1<<8)
 #define ON_BORDER_1					(1<<9)		// item has priority to check when entering or leaving
 
 #define DROPDEL_1					(1<<14)	// When dropped, it calls qdel on itself
@@ -31,8 +32,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define NO_EMP_WIRES_2				(1<<1)
 #define HOLOGRAM_2					(1<<2)
-
-#define BANG_PROTECT_2				(1<<6)
 
 // A mob with OMNITONGUE has no restriction in the ability to speak
 // languages that they know. So even if they wouldn't normally be able to

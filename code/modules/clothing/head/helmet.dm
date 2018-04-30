@@ -13,9 +13,12 @@
 	resistance_flags = NONE
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
-	flags_2 = BANG_PROTECT_2
 
 	dog_fashion = /datum/dog_fashion/head/helmet
+
+/obj/item/clothing/head/helmet/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
 
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = 1

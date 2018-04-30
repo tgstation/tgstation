@@ -24,10 +24,6 @@
 
 /mob/living/carbon/get_ear_protection()
 	var/number = ..()
-	if(ears && (ears.flags_2 & BANG_PROTECT_2))
-		number += 1
-	if(head && (head.flags_2 & BANG_PROTECT_2))
-		number += 1
 	var/obj/item/organ/ears/E = getorganslot(ORGAN_SLOT_EARS)
 	if(!E)
 		number = INFINITY
@@ -327,6 +323,9 @@
 
 
 /mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
+	var/list/reflist = list(intensity) // Need to wrap this in a list so we can pass a reference
+	SendSignal(COMSIG_CARBON_SOUNDBANG, reflist)
+	intensity = reflist[1]
 	var/ear_safety = get_ear_protection()
 	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	var/effect_amount = intensity - ear_safety
