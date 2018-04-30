@@ -1,5 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - balance: "Adds a cooldown to PDA send to all messages."
-  - bugfix: "Last sent message cooldown actually works now."
