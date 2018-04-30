@@ -8,7 +8,7 @@
 	density = TRUE
 	req_access = list(ACCESS_BAR)
 	var/active = FALSE
-	var/list/listeners = list()
+	var/list/rangers = list()
 	var/stop = 0
 	var/list/songs = list()
 	var/datum/track/selection = null
@@ -379,7 +379,7 @@
 		sleep(speed)
 		for(var/i in 1 to speed)
 			M.setDir(pick(GLOB.cardinals))
-			for(var/mob/living/carbon/NS in listeners)
+			for(var/mob/living/carbon/NS in rangers)
 				NS.lay_down(TRUE)		//specifically excludes silicons to prevent pAI chat spam
 		 time--
 
@@ -423,12 +423,12 @@
 	lying_prev = 0
 
 /obj/machinery/jukebox/proc/dance_over()
-	for(var/mob/living/L in listeners)
+	for(var/mob/living/L in rangers)
 		if(!L || !L.client)
 			continue
 		L.stop_sound_channel(CHANNEL_JUKEBOX)
 	playing_song = null
-	listeners = list()
+	rangers = list()
 
 /obj/machinery/jukebox/disco/dance_over()
 	..()
@@ -438,15 +438,15 @@
 /obj/machinery/jukebox/process()
 	if(world.time < stop && active)
 
-		for(var/mob/M in view(7,src))
+		for(var/mob/M in range(10,src))
 			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
 				continue
-			if(!(M in listeners))
-				listeners[M] = TRUE
+			if(!(M in rangers))
+				rangers[M] = TRUE
 				playing_song.volume = 100
 				SEND_SOUND(M, playing_song)
-		for(var/mob/L in listeners)
-			if(!(L in view(7,src)))
+		for(var/mob/L in rangers)
+			if(get_dist(src,L) > 10)
 				playing_song.volume = 0
 				SEND_SOUND(L, playing_song)
 			else
@@ -464,6 +464,6 @@
 /obj/machinery/jukebox/disco/process()
 	. = ..()
 	if(active)
-		for(var/mob/M in view(7,src))
+		for(var/mob/M in rangers)
 			if(prob(5+(allowed(M)*4)) && M.canmove)
 				dance(M)
