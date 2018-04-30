@@ -250,7 +250,7 @@
 	outputs = list(
 		"position" = IC_PINTYPE_NUMBER
 		)
-	activators = list("search" = IC_PINTYPE_PULSE_IN, "found" = IC_PINTYPE_PULSE_OUT, "not found" = IC_PINTYPE_PULSE_OUT)
+	activators = list("search" = IC_PINTYPE_PULSE_IN, "after search" = IC_PINTYPE_PULSE_OUT, "found" = IC_PINTYPE_PULSE_OUT, "not found" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 
@@ -261,10 +261,11 @@
 	set_pin_data(IC_OUTPUT, 1, position)
 	push_data()
 
+	activate_pin(2)
 	if(position)
-		activate_pin(2)
-	else
 		activate_pin(3)
+	else
+		activate_pin(4)
 
 /obj/item/integrated_circuit/converter/exploders
 	name = "string exploder"
