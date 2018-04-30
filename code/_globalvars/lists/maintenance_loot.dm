@@ -104,5 +104,11 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/storage/secure/briefcase = 3,
 	/obj/item/storage/toolbox/artistic = 2,
 	/obj/item/toy/eightball = 1,
+	/obj/item/gun/ballistic/automatic/toy = 2,
+	/obj/item/gun/ballistic/automatic/toy/pistol = 2,
+	/obj/item/gun/ballistic/shotgun/toy = 2,
+	/obj/item/gun/ballistic/shotgun/toy/crossbow = 2,
+	/obj/item/gun/ballistic/automatic/c20r/toy/unrestricted = 2,
+	/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted = 1,
 	"" = 3
 	))

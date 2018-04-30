@@ -14,9 +14,6 @@
 	item_flags = NONE
 	casing_ejector = FALSE
 
-/obj/item/gun/ballistic/automatic/toy/unrestricted
-	pin = /obj/item/firing_pin
-
 /obj/item/gun/ballistic/automatic/toy/pistol
 	name = "foam force pistol"
 	desc = "A small, easily concealable toy handgun. Ages 8 and up."
@@ -39,12 +36,6 @@
 	magazine = new /obj/item/ammo_box/magazine/toy/pistol/riot(src)
 	return ..()
 
-/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted
-	pin = /obj/item/firing_pin
-
-/obj/item/gun/ballistic/automatic/toy/pistol/riot/unrestricted
-	pin = /obj/item/firing_pin
-
 /obj/item/gun/ballistic/shotgun/toy
 	name = "foam force shotgun"
 	desc = "A toy shotgun with wood furniture and a four-shell capacity underneath. Ages 8 and up."
@@ -61,9 +52,6 @@
 	..()
 	if(chambered && !chambered.BB)
 		qdel(chambered)
-
-/obj/item/gun/ballistic/shotgun/toy/unrestricted
-	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/shotgun/toy/crossbow
 	name = "foam force crossbow"
