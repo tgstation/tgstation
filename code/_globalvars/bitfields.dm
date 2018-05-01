@@ -122,7 +122,6 @@ GLOBAL_LIST_INIT(bitfields, list(
 	"flags_2" = list(
 		"NO_EMP_WIRES_2" = NO_EMP_WIRES_2,
 		"HOLOGRAM_2" = HOLOGRAM_2,
-		"OMNITONGUE_2" = OMNITONGUE_2,
 		"TESLA_IGNORE_2" = TESLA_IGNORE_2
 		),
 	"clothing_flags" = list(

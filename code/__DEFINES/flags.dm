@@ -32,12 +32,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_EMP_WIRES_2				(1<<1)
 #define HOLOGRAM_2					(1<<2)
 
-// A mob with OMNITONGUE has no restriction in the ability to speak
-// languages that they know. So even if they wouldn't normally be able to
-// through mob or tongue restrictions, this flag allows them to ignore
-// those restrictions.
-#define OMNITONGUE_2				(1<<8)
-
 // TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
 #define TESLA_IGNORE_2				(1<<9)
 
