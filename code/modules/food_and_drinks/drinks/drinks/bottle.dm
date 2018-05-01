@@ -361,6 +361,16 @@
 	list_reagents = list("limejuice" = 100)
 	foodtype = FRUIT
 
+/obj/item/reagent_containers/food/drinks/bottle/grenadine
+	name = "Jester Grenadine"
+	desc = "Contains 0% real cherries!"
+	icon_state = "grenadine"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	isGlass = TRUE
+	list_reagents = list("grenadine" = 100)
+	foodtype = FRUIT
+
 
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov

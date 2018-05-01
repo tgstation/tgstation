@@ -431,6 +431,7 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"shamblers",
 		"sugar",
 		"orangejuice",
+		"grenadine",
 		"limejuice",
 		"tomatojuice",
 		"lemonjuice"

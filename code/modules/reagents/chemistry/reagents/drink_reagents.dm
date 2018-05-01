@@ -721,3 +721,12 @@
 	description = "Milk for cool kids."
 	color = "#7D4E29"
 	taste_description = "chocolate milk"
+
+/datum/reagent/consumable/grenadine
+	name = "Grenadine"
+	id = "grenadine"
+	description = "Not cherry flavored!"
+	color = "#EA1D26"
+	taste_description = "sweet pomegranates"
+	glass_name = "glass of grenadine"
+	glass_desc = "Delicious flavored syrup."
