@@ -6,6 +6,7 @@
 	var/path = SelectTgsApi(tgs_version)
 	if(!path)
 		TGS_ERROR_LOG("Found unsupported API version: [tgs_version]. If this is a valid version please report this, backporting is done on demand.")
+		return
 
 	var/datum/tgs_api/new_api = new path
 	TGS_INFO_LOG("Activated tgstation-server API for version [tgs_version]")
