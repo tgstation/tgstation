@@ -524,28 +524,38 @@
 	var/datum/integrated_io/I = inputs[1]
 	var/datum/integrated_io/O = outputs[1]
 	O.data = null
-	var/turf/T = get_turf(src)
-	var/list/nearby_things = view(radius,T)
-	var/list/valid_things = list()
 	var/list/input_list = list()
 	input_list = I.data
-	for(var/item in input_list)
-		if(!isnull(item) && !isnum(item))
-			if(istext(item))
-				for(var/atom/thing in nearby_things)
-					if(findtext(addtext(thing.name," ",thing.desc), item, 1, 0) )
+	if(length(input_list))	//if there is no input don't do anything.
+		var/turf/T = get_turf(src)
+		var/list/nearby_things = view(radius,T)
+		var/list/valid_things = list()
+		for(var/item in input_list)
+			if(!isnull(item) && !isnum(item))
+				if(istext(item))
+					for(var/i in nearby_things)
+						var/atom/thing = i
+						if(ismob(thing) && !isliving(thing))
+							continue
+						if(findtext(addtext(thing.name," ",thing.desc), item, 1, 0) )
+							valid_things.Add(WEAKREF(thing))
+				else
+					var/atom/A = item
+					var/desired_type = A.type
+					for(var/i in nearby_things)
+						var/atom/thing = i
+						if(thing.type != desired_type)
+							continue
+						if(ismob(thing) && !isliving(thing))
+							continue
 						valid_things.Add(WEAKREF(thing))
-			else
-				var/atom/A = item
-				var/desired_type = A.type
-				for(var/atom/thing in nearby_things)
-					if(thing.type != desired_type)
-						continue
-					valid_things.Add(WEAKREF(thing))
-	if(valid_things.len)
-		O.data = valid_things
-		O.push_data()
-		activate_pin(2)
+		if(valid_things.len)
+			O.data = valid_things
+			O.push_data()
+			activate_pin(2)
+		else
+			O.push_data()
+			activate_pin(3)
 	else
 		O.push_data()
 		activate_pin(3)
@@ -583,12 +593,18 @@
 		var/atom/A = I.data.resolve()
 		var/desired_type = A.type
 		if(desired_type)
-			for(var/atom/thing in nearby_things)
+			for(var/i in nearby_things)
+				var/atom/thing = i
+				if(ismob(thing) && !isliving(thing))
+					continue
 				if(thing.type == desired_type)
 					valid_things.Add(thing)
 	else if(istext(I.data))
 		var/DT = I.data
-		for(var/atom/thing in nearby_things)
+		for(var/i in nearby_things)
+			var/atom/thing = i
+			if(ismob(thing) && !isliving(thing))
+				continue
 			if(findtext(addtext(thing.name," ",thing.desc), DT, 1, 0) )
 				valid_things.Add(thing)
 	if(valid_things.len)
@@ -598,10 +614,6 @@
 	else
 		O.push_data()
 		activate_pin(3)
-
-
-
-
 
 /obj/item/integrated_circuit/input/signaler
 	name = "integrated signaler"
@@ -854,8 +866,8 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 120
 
-/obj/item/integrated_circuit/input/sensor/sense(var/atom/A,mob/user,prox)
-	if(!prox)
+/obj/item/integrated_circuit/input/sensor/sense(atom/A, mob/user, prox)
+	if(!prox || !A || (ismob(A) && !isliving(A)))
 		return FALSE
 	if(!check_then_do_work())
 		return FALSE
@@ -881,8 +893,8 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 120
 
-/obj/item/integrated_circuit/input/sensor/ranged/sense(var/atom/A,mob/user)
-	if(!user)
+/obj/item/integrated_circuit/input/sensor/ranged/sense(atom/A, mob/user)
+	if(!user || !A || (ismob(A) && !isliving(A)))
 		return FALSE
 	if(user.client)
 		if(!(A in view(user.client)))
