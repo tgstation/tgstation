@@ -359,12 +359,31 @@ function check_dismiss_changelog_review($payload){
 				dismiss_review($payload, $R['id'], 'Changelog added/fixed.');
 }
 
+function check_webeditor($payload, $opening) {
+	if(is_maintainer($payload, $payload['pull_request']['user']['login']))
+		return;
+	$githubgpgkeyid = '04AEE18F83AFDEB23';
+	$commits = json_decode(apisend($payload['pull_request']['commits_url']), TRUE);
+	foreach($commits as $commit) {
+		if(!$commit['commit']['verification']['verified'])
+			return false;
+		$sig = $commit['commit']['verification']['signature'];
+		$keyid = substr(bin2hex(base64_decode(substr(str_replace('\n', '', $sig),53,12))),0,-1);
+		if(strtoupper($keyid) != $githubgpgkeyid)
+			return false;
+	}
+	if($opening)
+		create_comment($payload, 'Pull requests made via the GitHub web editor are guarranteed to not be tested and only prove to shame you as coder.');
+	return true;
+}
+
 function handle_pr($payload) {
 	global $no_changelog;
 	$action = 'opened';
 	$validated = validate_user($payload);
 	switch ($payload["action"]) {
 		case 'opened':
+			check_webeditor($payload, true);
 			list($labels, $remove) = tag_pr($payload, true);
 			set_labels($payload, $labels, $remove);
 			if($no_changelog)
@@ -449,6 +468,10 @@ function pr_balances(){
 //returns the difference in PR balance a pull request would cause
 function get_pr_code_friendliness($payload, $oldbalance = null){
 	global $startingPRBalance;
+
+	if(check_webeditor($payload, false))
+		return -3;
+
 	if($oldbalance == null)
 		$oldbalance = $startingPRBalance;
 	$labels = get_pr_labels_array($payload);
