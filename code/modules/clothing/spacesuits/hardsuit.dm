@@ -115,6 +115,7 @@
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
+	. = ..()
 	if(istype(I, /obj/item/tank/jetpack/suit))
 		if(jetpack)
 			to_chat(user, "<span class='warning'>[src] already has a jetpack installed.</span>")
