@@ -34,7 +34,7 @@
 
 /obj/item/reagent_containers/food/snacks/fetacheesslice
 	name = "feta cheese slice"
-	desc = "A wedge of delicious Feta. The cheese wheel it was cut from can't have gone far."
+	desc = "A slice of delicious Feta. The cheese wheel it was cut from can't have gone far."
 	icon_state = "fetacheeseslice"
 	filling_color = "#CFD4DA"
 	list_reagents = list("nutriment" = 3, "vitamin" = 1)
