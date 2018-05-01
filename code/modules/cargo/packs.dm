@@ -1332,7 +1332,7 @@
 					/obj/item/flashlight/glowstick/pink)
 	crate_name = "party equipment crate"
 
-/datum/supply_pack/service/janitor/lightbulbs
+/datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
 	desc = "May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs."
 	cost = 1000
@@ -1356,7 +1356,7 @@
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
 
-/datum/supply_pack/service/vending
+/datum/supply_pack/service/vending/bartending
 	name = "Bartending Supply Crate"
 	desc = "Bring on the booze with six vending machine refills, as well as a free book containing the well-kept secrets to the bartending trade!"
 	cost = 2000
@@ -1541,7 +1541,7 @@
 	crate_name = "potted plants crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
-/datum/supply_pack/organic/hydroponics/seeds
+/datum/supply_pack/organic/seeds
 	name = "Seeds Crate"
 	desc = "Big things have small beginnings. Contains thirteen different seeds."
 	cost = 1000
@@ -1561,7 +1561,7 @@
 	crate_name = "seeds crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
-/datum/supply_pack/organic/hydroponics/exoticseeds
+/datum/supply_pack/organic/exoticseeds
 	name = "Exotic Seeds Crate"
 	desc = "Any entrepreneuring botanist's dream. Contains twelve different seeds, including three replica-pod seeds and two mystery seeds!"
 	cost = 1500
