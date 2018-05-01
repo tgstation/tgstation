@@ -29,7 +29,7 @@
 	slices_num = 5
 	list_reagents = list("nutriment" = 15, "vitamin" = 5)
 	w_class = WEIGHT_CLASS_NORMAL
-	tastes = list("sweet" = 1)
+	tastes = list("tangy" = 1)
 	foodtype = DAIRY
 
 /obj/item/reagent_containers/food/snacks/fetacheesslice
@@ -38,7 +38,7 @@
 	icon_state = "fetacheeseslice"
 	filling_color = "#CFD4DA"
 	list_reagents = list("nutriment" = 3, "vitamin" = 1)
-	tastes = list("something sweet" = 1)
+	tastes = list("tangy" = 1)
 	foodtype = DAIRY
 	
 /obj/item/reagent_containers/food/snacks/watermelonslice
