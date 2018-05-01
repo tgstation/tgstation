@@ -153,6 +153,10 @@
 	req_access = null
 	req_one_access = null
 
+/obj/machinery/airalarm/syndicate //general syndicate access
+	req_access = null
+	req_access_txt = "150"
+
 //all air alarms in area are connected via magic
 /area
 	var/list/air_vent_names = list()
