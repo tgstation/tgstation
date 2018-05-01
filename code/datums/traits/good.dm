@@ -113,7 +113,7 @@
 
 /datum/trait/hlumi_eyes
 	name = "High-Luminosity Eyes"
-	desc = "Your eyes have been cybernetically enhanced, high-Luminosity allow you to change your eye color at a moment's notice and shine light away from yourself"
+	desc = "Your eyes have been cybernetically enhanced, high-luminosity allow you to change your eye color at a moment's notice and shine light away from yourself"
 	value = 1
 
 /datum/trait/hlumi_eyes/on_spawn()
