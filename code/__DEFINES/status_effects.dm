@@ -7,8 +7,6 @@
 
 #define STATUS_EFFECT_REPLACE 2 //if it allows only one, but new instances replace
 
-#define BASIC_STATUS_EFFECT /datum/status_effect //Has no effect.
-
 ///////////
 // BUFFS //
 ///////////
@@ -31,6 +29,8 @@
 #define STATUS_EFFECT_FLESHMEND /datum/status_effect/fleshmend //Very fast healing; suppressed by fire, and heals less fire damage
 
 #define STATUS_EFFECT_EXERCISED /datum/status_effect/exercised //Prevents heart disease
+
+#define STATUS_EFFECT_HIPPOCRATIC_OATH /datum/status_effect/hippocraticOath //Gives you an aura of healing as well as regrowing the Rod of Asclepius if lost
 
 /////////////
 // DEBUFFS //
@@ -79,3 +79,10 @@
 #define STATUS_EFFECT_CRUSHERDAMAGETRACKING /datum/status_effect/crusher_damage //tracks total kinetic crusher damage on a target
 
 #define STATUS_EFFECT_SYPHONMARK /datum/status_effect/syphon_mark //tracks kills for the KA death syphon module
+
+/////////////
+//  SLIME  //
+/////////////
+
+#define STATUS_EFFECT_RAINBOWPROTECTION /datum/status_effect/rainbow_protection //Invulnerable and pacifistic
+#define STATUS_EFFECT_SLIMESKIN /datum/status_effect/slimeskin //Increased armor

@@ -1,6 +1,6 @@
 /obj/machinery/computer/operating
 	name = "operating computer"
-	desc = "Used to monitor the vitals of a patient during surgery."
+	desc = "Monitors patient vitals and displays surgery steps. Can be loaded with surgery disks to perform experimental procedures."
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/operating
@@ -69,16 +69,21 @@
 				data["procedures"] = list()
 				for(var/datum/surgery/procedure in patient.surgeries)
 					var/datum/surgery_step/surgery_step = procedure.get_surgery_step()
+					var/chems_needed = surgery_step.get_chem_list()
 					var/alternative_step
+					var/alt_chems_needed = ""
 					if(surgery_step.repeatable)
 						var/datum/surgery_step/next_step = procedure.get_surgery_next_step()
 						if(next_step)
 							alternative_step = capitalize(next_step.name)
+							alt_chems_needed = next_step.get_chem_list()
 						else
 							alternative_step = "Finish operation"
 					data["procedures"] += list(list(
 						"name" = capitalize(procedure.name),
 						"next_step" = capitalize(surgery_step.name),
-						"alternative_step" = alternative_step
+						"chems_needed" = chems_needed,
+						"alternative_step" = alternative_step,
+						"alt_chems_needed" = alt_chems_needed
 					))
 	return data

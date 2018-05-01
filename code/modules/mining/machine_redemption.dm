@@ -13,6 +13,7 @@
 	req_access = list(ACCESS_MINERAL_STOREROOM)
 	speed_process = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_redemption
+	layer = BELOW_OBJ_LAYER
 	var/req_access_reclaim = ACCESS_MINING_STATION
 	var/obj/item/card/id/inserted_id
 	var/points = 0
@@ -147,8 +148,6 @@
 		send_console_message()
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
-	if(exchange_parts(user, W))
-		return
 	GET_COMPONENT(materials, /datum/component/material_container)
 	if(default_pry_open(W))
 		materials.retrieve_all()
@@ -172,7 +171,7 @@
 			interact(user)
 		return
 
-	if(istype(W, /obj/item/device/multitool) && panel_open)
+	if(istype(W, /obj/item/multitool) && panel_open)
 		input_dir = turn(input_dir, -90)
 		output_dir = turn(output_dir, -90)
 		to_chat(user, "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>")
@@ -188,11 +187,6 @@
 	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
 	..()
-
-/obj/machinery/mineral/ore_redemption/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
 
 /obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -257,26 +251,23 @@
 		if("Release")
 
 			if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user
-				if(params["id"] == "all")
-					materials.retrieve_all(get_step(src, output_dir))
+				var/mat_id = params["id"]
+				if(!materials.materials[mat_id])
+					return
+				var/datum/material/mat = materials.materials[mat_id]
+				var/stored_amount = mat.amount / MINERAL_MATERIAL_AMOUNT
+
+				if(!stored_amount)
+					return
+
+				var/desired = 0
+				if (params["sheets"])
+					desired = text2num(params["sheets"])
 				else
-					var/mat_id = params["id"]
-					if(!materials.materials[mat_id])
-						return
-					var/datum/material/mat = materials.materials[mat_id]
-					var/stored_amount = mat.amount / MINERAL_MATERIAL_AMOUNT
+					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 
-					if(!stored_amount)
-						return
-
-					var/desired = 0
-					if (params["sheets"])
-						desired = text2num(params["sheets"])
-					else
-						desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
-
-					var/sheets_to_remove = round(min(desired,50,stored_amount))
-					materials.retrieve_sheets(sheets_to_remove, mat_id, get_step(src, output_dir))
+				var/sheets_to_remove = round(min(desired,50,stored_amount))
+				materials.retrieve_sheets(sheets_to_remove, mat_id, get_step(src, output_dir))
 
 			else
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")

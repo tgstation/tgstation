@@ -462,9 +462,10 @@
 
 /obj/item/toy/plush/narplush
 	name = "nar'sie plushie"
-	desc = "A small stuffed doll of the elder god nar'sie. Who thought this was a good children's toy?"
+	desc = "A small stuffed doll of the elder god Nar'Sie. Who thought this was a good children's toy?"
 	icon_state = "narplush"
 	var/clashing
+	var/is_invoker = TRUE
 	gender = FEMALE	//it's canon if the toy is
 
 /obj/item/toy/plush/narplush/Moved()
@@ -472,6 +473,10 @@
 	var/obj/item/toy/plush/plushvar/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
 		P.clash_of_the_plushies(src)
+
+/obj/item/toy/plush/narplush/hugbox
+	desc = "A small stuffed doll of the elder god Nar'Sie. Who thought this was a good children's toy? <b>It looks sad.</b>"
+	is_invoker = FALSE
 
 /obj/item/toy/plush/lizardplushie
 	name = "lizard plushie"

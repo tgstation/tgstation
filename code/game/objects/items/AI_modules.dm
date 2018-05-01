@@ -49,7 +49,7 @@ AI MODULES
 	//Handle the lawcap
 	if(law_datum)
 		var/tot_laws = 0
-		for(var/lawlist in list(law_datum.inherent, law_datum.supplied, law_datum.ion, laws))
+		for(var/lawlist in list(law_datum.devillaws, law_datum.inherent, law_datum.supplied, law_datum.ion, law_datum.hacked, laws))
 			for(var/mylaw in lawlist)
 				if(mylaw != "")
 					tot_laws++
@@ -301,9 +301,11 @@ AI MODULES
 	if(law_datum.owner)
 		law_datum.owner.clear_supplied_laws()
 		law_datum.owner.clear_ion_laws()
+		law_datum.owner.clear_hacked_laws()
 	else
 		law_datum.clear_supplied_laws()
 		law_datum.clear_ion_laws()
+		law_datum.clear_hacked_laws()
 
 
 /******************** Purge ********************/
@@ -469,14 +471,14 @@ AI MODULES
 	if(law_datum.owner)
 		to_chat(law_datum.owner, "<span class='warning'>BZZZZT</span>")
 		if(!overflow)
-			law_datum.owner.add_ion_law(laws[1])
+			law_datum.owner.add_hacked_law(laws[1])
 		else
-			law_datum.owner.replace_random_law(laws[1],list(LAW_ION,LAW_INHERENT,LAW_SUPPLIED))
+			law_datum.owner.replace_random_law(laws[1],list(LAW_ION,LAW_HACKED,LAW_INHERENT,LAW_SUPPLIED))
 	else
 		if(!overflow)
-			law_datum.add_ion_law(laws[1])
+			law_datum.add_hacked_law(laws[1])
 		else
-			law_datum.replace_random_law(laws[1],list(LAW_ION,LAW_INHERENT,LAW_SUPPLIED))
+			law_datum.replace_random_law(laws[1],list(LAW_ION,LAW_HACKED,LAW_INHERENT,LAW_SUPPLIED))
 	return laws[1]
 
 /******************* Ion Module *******************/

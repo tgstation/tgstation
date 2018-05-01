@@ -15,7 +15,7 @@
 		/obj/item/gun/energy,
 		/obj/item/melee/baton,
 		/obj/item/ammo_box/magazine/recharge,
-		/obj/item/device/modular_computer))
+		/obj/item/modular_computer))
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
@@ -68,12 +68,11 @@
 			default_deconstruction_crowbar(G)
 			return
 
-		if(exchange_parts(user, G))
-			return
 	return ..()
 
 /obj/machinery/recharger/attack_hand(mob/user)
-	if(issilicon(user))
+	. = ..()
+	if(.)
 		return
 
 	add_fingerprint(user)
@@ -84,9 +83,6 @@
 		charging = null
 		use_power = IDLE_POWER_USE
 		update_icon()
-
-/obj/machinery/recharger/attack_paw(mob/user)
-	return attack_hand(user)
 
 /obj/machinery/recharger/attack_tk(mob/user)
 	if(charging)

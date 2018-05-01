@@ -6,6 +6,7 @@
 	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
 	antagpanel_category = "Revolution"
 	job_rank = ROLE_REV
+	antag_moodlet = /datum/mood_event/revolution
 	var/hud_type = "rev"
 	var/datum/team/revolution/rev_team
 
@@ -111,7 +112,7 @@
 
 /datum/antagonist/rev/head/proc/admin_take_flash(mob/admin)
 	var/list/L = owner.current.get_contents()
-	var/obj/item/device/assembly/flash/flash = locate() in L
+	var/obj/item/assembly/flash/flash = locate() in L
 	if (!flash)
 		to_chat(admin, "<span class='danger'>Deleting flash failed!</span>")
 		return
@@ -132,7 +133,7 @@
 
 /datum/antagonist/rev/head/proc/admin_repair_flash(mob/admin)
 	var/list/L = owner.current.get_contents()
-	var/obj/item/device/assembly/flash/flash = locate() in L
+	var/obj/item/assembly/flash/flash = locate() in L
 	if (!flash)
 		to_chat(admin, "<span class='danger'>Repairing flash failed!</span>")
 	else
@@ -231,11 +232,11 @@
 		H.dna.remove_mutation(CLOWNMUT)
 
 	if(give_flash)
-		var/obj/item/device/assembly/flash/T = new(H)
+		var/obj/item/assembly/flash/T = new(H)
 		var/list/slots = list (
-			"backpack" = slot_in_backpack,
-			"left pocket" = slot_l_store,
-			"right pocket" = slot_r_store
+			"backpack" = SLOT_IN_BACKPACK,
+			"left pocket" = SLOT_L_STORE,
+			"right pocket" = SLOT_R_STORE
 		)
 		var/where = H.equip_in_one_of_slots(T, slots)
 		if (!where)
@@ -347,7 +348,20 @@
 	return result.Join()
 
 /datum/team/revolution/antag_listing_entry()
-	var/common_part = ..()
+	var/common_part = ""
+	var/list/parts = list()
+	parts += "<b>[antag_listing_name()]</b><br>"
+	parts += "<table cellspacing=5>"
+
+	var/list/heads = get_team_antags(/datum/antagonist/rev/head,TRUE)
+
+	for(var/datum/antagonist/A in heads | get_team_antags())
+		parts += A.antag_listing_entry()
+	
+	parts += "</table>"
+	parts += antag_listing_footer()
+	common_part = parts.Join()
+
 	var/heads_report = "<b>Heads of Staff</b><br>"
 	heads_report += "<table cellspacing=5>"
 	for(var/datum/mind/N in SSjob.get_living_heads())

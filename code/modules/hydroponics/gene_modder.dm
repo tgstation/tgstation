@@ -69,8 +69,6 @@
 	if(default_deconstruction_screwdriver(user, "dnamod", "dnamod", I))
 		update_icon()
 		return
-	if(exchange_parts(user, I))
-		return
 	if(default_deconstruction_crowbar(I))
 		return
 	if(iscyborg(user))
@@ -98,14 +96,8 @@
 	else
 		..()
 
-
-/obj/machinery/plantgenes/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/plantgenes/interact(mob/user)
-	user.set_machine(src)
+/obj/machinery/plantgenes/ui_interact(mob/user)
+	. = ..()
 	if(!user)
 		return
 

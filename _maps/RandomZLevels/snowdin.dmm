@@ -102,7 +102,7 @@
 /area/awaymission/snowdin/post/research)
 "ay" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/post/research)
 "az" = (
@@ -126,7 +126,7 @@
 /area/awaymission/snowdin/post/research)
 "aD" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/item/pen,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/post/research)
@@ -304,7 +304,7 @@
 /area/awaymission/snowdin/post/research)
 "bd" = (
 /obj/structure/window,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/post/research)
 "be" = (
@@ -472,7 +472,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/item/tome,
@@ -487,7 +486,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
@@ -511,7 +509,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
@@ -523,7 +520,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
@@ -537,7 +533,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_y = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
@@ -1624,7 +1619,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/effect/decal/cleanable/cobweb,
@@ -2174,7 +2168,7 @@
 /turf/open/floor/plasteel/cmo,
 /area/awaymission/snowdin/post)
 "fz" = (
-/obj/item/device/flashlight/pen,
+/obj/item/flashlight/pen,
 /turf/open/floor/plasteel/cmo,
 /area/awaymission/snowdin/post)
 "fA" = (
@@ -2744,7 +2738,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3098,7 +3091,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = null;
 	name = "Medbay Storage";
 	req_access_txt = "45"
 	},
@@ -5952,7 +5944,7 @@
 	req_access_txt = "201"
 	},
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash,
+/obj/item/assembly/flash,
 /obj/item/storage/box/rubbershot,
 /obj/structure/fireaxecabinet{
 	pixel_y = 32
@@ -6349,7 +6341,7 @@
 /area/awaymission/snowdin/post/cavern2)
 "pb" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	pixel_x = -5;
 	pixel_y = 5
 	},
@@ -6869,12 +6861,8 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/awaymission/snowdin/post/engineering)
 "qx" = (
-/obj/machinery/atmospherics/components/trinary/mixer/flipped{
-	dir = 4;
-	node1_concentration = 0.8;
-	node2_concentration = 0.1;
-	on = 1;
-	target_pressure = 4500
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/engineering)
@@ -7375,9 +7363,8 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post)
 "rI" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	frequency = 1441;
 	id = "syndie_lavaland_inc_in";
 	pixel_x = 5;
 	pixel_y = 5
@@ -7718,16 +7705,13 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/igniter{
-	id = "snowdin_turbine_ignitor";
-	luminosity = 2;
-	on = 0
+	id = "snowdin_turbine_ignitor"
 	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/snowdin/post/engineering)
 "sC" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	frequency = 1441;
 	id = "snowdin_incin_in"
 	},
 /turf/open/floor/engine/vacuum,
@@ -8722,9 +8706,8 @@
 	},
 /area/awaymission/snowdin/cave/mountain)
 "vG" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	frequency = 1441;
 	id = "snowdin_incin_in"
 	},
 /turf/open/floor/plating/snowed/cavern,
@@ -9458,13 +9441,11 @@
 	width = 6
 	},
 /obj/docking_port/stationary{
-	baseturf_type = /turf/open/floor/engine;
 	dir = 4;
 	dwidth = 3;
 	height = 6;
 	id = "snowdin_excavation_top";
 	name = "snowdin excavation top";
-	turf_type = /turf/open/floor/engine;
 	width = 6
 	},
 /turf/open/floor/plating,
@@ -9495,13 +9476,11 @@
 /area/awaymission/snowdin/post/mining_dock)
 "xP" = (
 /obj/docking_port/stationary{
-	baseturf_type = /turf/open/floor/plating/snowed;
 	dir = 4;
 	dwidth = 3;
 	height = 6;
 	id = "snowdin_excavation_down";
 	name = "snowdin excavation down";
-	turf_type = /turf/open/floor/plating/snowed;
 	width = 6
 	},
 /turf/open/floor/plating,
@@ -10504,7 +10483,7 @@
 /area/awaymission/snowdin/post/minipost)
 "AF" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -10641,7 +10620,6 @@
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = -25;
-	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /turf/open/floor/plating/snowed/smoothed,
@@ -11291,7 +11269,7 @@
 	},
 /area/awaymission/snowdin/cave)
 "CY" = (
-/obj/item/device/aicard,
+/obj/item/aicard,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -12503,7 +12481,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Gn" = (
-/obj/structure/plasticflaps/mining,
+/obj/structure/plasticflaps,
 /obj/machinery/conveyor{
 	dir = 2;
 	id = "snowdin_belt_mine"
@@ -13074,8 +13052,7 @@
 "Ic" = (
 /obj/machinery/door/airlock/research{
 	name = "Robotics Lab";
-	req_access_txt = "29";
-	req_one_access_txt = "0"
+	req_access_txt = "29"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -13425,7 +13402,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "Jf" = (
-/obj/structure/plasticflaps/mining,
+/obj/structure/plasticflaps,
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "snowdin_belt_mine"
@@ -13837,17 +13814,14 @@
 	height = 5;
 	id = "snowdin_mining";
 	name = "mining elevator";
-	timid = 0;
 	width = 5
 	},
 /obj/docking_port/stationary{
-	baseturf_type = /turf/open/floor/engine;
 	dir = 4;
 	dwidth = 2;
 	height = 5;
 	id = "snowdin_mining_top";
 	name = "snowdin mining top";
-	turf_type = /turf/open/floor/engine;
 	width = 5
 	},
 /turf/open/floor/plating,
@@ -13894,13 +13868,11 @@
 "Kt" = (
 /obj/docking_port/stationary{
 	area_type = /area/awaymission/snowdin/post/mining_dock;
-	baseturf_type = /turf/open/floor/engine;
 	dir = 4;
 	dwidth = 2;
 	height = 5;
 	id = "snowdin_mining_down";
 	name = "snowdin mining bottom";
-	turf_type = /turf/open/floor/engine;
 	width = 5
 	},
 /turf/open/floor/plating,

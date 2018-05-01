@@ -511,7 +511,7 @@
 		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getBruteLoss()]</font><br>
 		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
 		"}
-		for(var/thing in M.viruses)
+		for(var/thing in M.diseases)
 			var/datum/disease/D = thing
 			dat += {"<h4>Infection Detected.</h4><br>
 					 Name: [D.name]<br>
@@ -612,7 +612,7 @@
 	[(pda.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
 	if(!pda.toff)
-		for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
+		for (var/obj/item/pda/P in sortNames(get_viewable_pdas()))
 			if (P == pda)
 				continue
 			dat += "<li><a href='byond://?src=[REF(src)];software=pdamessage;target=[REF(P)]'>[P]</a>"

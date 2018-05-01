@@ -18,13 +18,13 @@
 	var/lit = FALSE	//on or off
 	var/operating = FALSE//cooldown
 	var/obj/item/weldingtool/weldtool = null
-	var/obj/item/device/assembly/igniter/igniter = null
+	var/obj/item/assembly/igniter/igniter = null
 	var/obj/item/tank/internals/plasma/ptank = null
 	var/warned_admins = FALSE //for the message_admins() when lit
 	//variables for prebuilt flamethrowers
 	var/create_full = FALSE
 	var/create_with_tank = FALSE
-	var/igniter_type = /obj/item/device/assembly/igniter
+	var/igniter_type = /obj/item/assembly/igniter
 	trigger_guard = TRIGGER_GUARD_NORMAL
 
 /obj/item/flamethrower/Destroy()
@@ -101,7 +101,7 @@
 		return
 
 	else if(isigniter(W))
-		var/obj/item/device/assembly/igniter/I = W
+		var/obj/item/assembly/igniter/I = W
 		if(I.secured)
 			return
 		if(igniter)
@@ -125,7 +125,7 @@
 		update_icon()
 		return
 
-	else if(istype(W, /obj/item/device/analyzer) && ptank)
+	else if(istype(W, /obj/item/analyzer) && ptank)
 		atmosanalyzer_scan(ptank.air_contents, user)
 	else
 		return ..()
@@ -167,7 +167,7 @@
 /obj/item/flamethrower/CheckParts(list/parts_list)
 	..()
 	weldtool = locate(/obj/item/weldingtool) in contents
-	igniter = locate(/obj/item/device/assembly/igniter) in contents
+	igniter = locate(/obj/item/assembly/igniter) in contents
 	weldtool.status = FALSE
 	igniter.secured = FALSE
 	status = TRUE
@@ -240,11 +240,11 @@
 		return 1 //It hit the flamethrower, not them
 
 
-/obj/item/device/assembly/igniter/proc/flamethrower_process(turf/open/location)
+/obj/item/assembly/igniter/proc/flamethrower_process(turf/open/location)
 	location.hotspot_expose(700,2)
 
-/obj/item/device/assembly/igniter/cold/flamethrower_process(turf/open/location)
+/obj/item/assembly/igniter/cold/flamethrower_process(turf/open/location)
 	return
 
-/obj/item/device/assembly/igniter/proc/ignite_turf(obj/item/flamethrower/F,turf/open/location,release_amount = 0.05)
+/obj/item/assembly/igniter/proc/ignite_turf(obj/item/flamethrower/F,turf/open/location,release_amount = 0.05)
 	F.default_ignite(location,release_amount)

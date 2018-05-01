@@ -12,6 +12,8 @@
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
+
 	var/minimum_timer = 90
 	var/timer_set = 90
 	var/maximum_timer = 60000
@@ -173,12 +175,6 @@
 		. = ..()
 		if((old_integ > obj_integrity) && active && !defused && (payload in src))
 			to_chat(user, "<span class='warning'>That seems like a really bad idea...</span>")
-
-/obj/machinery/syndicatebomb/attack_hand(mob/user)
-	interact(user)
-
-/obj/machinery/syndicatebomb/attack_ai()
-	return
 
 /obj/machinery/syndicatebomb/interact(mob/user)
 	wires.interact(user)
@@ -503,7 +499,7 @@
 
 ///Syndicate Detonator (aka the big red button)///
 
-/obj/item/device/syndicatedetonator
+/obj/item/syndicatedetonator
 	name = "big red button"
 	desc = "Your standard issue bomb synchronizing button. Five second safety delay to prevent 'accidents'."
 	icon = 'icons/obj/assemblies.dmi'
@@ -516,7 +512,7 @@
 	var/detonated =	0
 	var/existant =	0
 
-/obj/item/device/syndicatedetonator/attack_self(mob/user)
+/obj/item/syndicatedetonator/attack_self(mob/user)
 	if(timer < world.time)
 		for(var/obj/machinery/syndicatebomb/B in GLOB.machines)
 			if(B.active)

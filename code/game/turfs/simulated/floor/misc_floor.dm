@@ -129,7 +129,7 @@
 	burnt_states = list("noslip-scorched1","noslip-scorched2")
 	slowdown = -0.3
 
-/turf/open/floor/noslip/MakeSlippery()
+/turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
 /turf/open/floor/oldshuttle
@@ -240,3 +240,11 @@
 	icon_state = "sepia"
 	desc = "Time seems to flow very slowly around these tiles."
 	floor_tile = /obj/item/stack/tile/sepia
+
+
+/turf/open/floor/bronze
+	name = "clockwork floor"
+	desc = "Some heavy bronze tiles."
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "clockwork_floor"
+	floor_tile = /obj/item/stack/tile/bronze

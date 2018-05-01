@@ -1,30 +1,30 @@
 //update_state
-#define UPSTATE_CELL_IN 1
-#define UPSTATE_OPENED1 2
-#define UPSTATE_OPENED2 4
-#define UPSTATE_MAINT 8
-#define UPSTATE_BROKE 16
-#define UPSTATE_BLUESCREEN 32
-#define UPSTATE_WIREEXP 64
-#define UPSTATE_ALLGOOD 128
+#define UPSTATE_CELL_IN		(1<<0)
+#define UPSTATE_OPENED1		(1<<1)
+#define UPSTATE_OPENED2		(1<<2)
+#define UPSTATE_MAINT		(1<<3)
+#define UPSTATE_BROKE		(1<<4)
+#define UPSTATE_BLUESCREEN	(1<<5)
+#define UPSTATE_WIREEXP		(1<<6)
+#define UPSTATE_ALLGOOD		(1<<7)
 
 #define APC_RESET_EMP "emp"
 
 //update_overlay
-#define APC_UPOVERLAY_CHARGEING0 1
-#define APC_UPOVERLAY_CHARGEING1 2
-#define APC_UPOVERLAY_CHARGEING2 4
-#define APC_UPOVERLAY_EQUIPMENT0 8
-#define APC_UPOVERLAY_EQUIPMENT1 16
-#define APC_UPOVERLAY_EQUIPMENT2 32
-#define APC_UPOVERLAY_LIGHTING0 64
-#define APC_UPOVERLAY_LIGHTING1 128
-#define APC_UPOVERLAY_LIGHTING2 256
-#define APC_UPOVERLAY_ENVIRON0 512
-#define APC_UPOVERLAY_ENVIRON1 1024
-#define APC_UPOVERLAY_ENVIRON2 2048
-#define APC_UPOVERLAY_LOCKED 4096
-#define APC_UPOVERLAY_OPERATING 8192
+#define APC_UPOVERLAY_CHARGEING0	(1<<0)
+#define APC_UPOVERLAY_CHARGEING1	(1<<1)
+#define APC_UPOVERLAY_CHARGEING2	(1<<2)
+#define APC_UPOVERLAY_EQUIPMENT0	(1<<3)
+#define APC_UPOVERLAY_EQUIPMENT1	(1<<4)
+#define APC_UPOVERLAY_EQUIPMENT2	(1<<5)
+#define APC_UPOVERLAY_LIGHTING0		(1<<6)
+#define APC_UPOVERLAY_LIGHTING1		(1<<7)
+#define APC_UPOVERLAY_LIGHTING2		(1<<8)
+#define APC_UPOVERLAY_ENVIRON0		(1<<9)
+#define APC_UPOVERLAY_ENVIRON1		(1<<10)
+#define APC_UPOVERLAY_ENVIRON2		(1<<11)
+#define APC_UPOVERLAY_LOCKED		(1<<12)
+#define APC_UPOVERLAY_OPERATING		(1<<13)
 
 
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
@@ -40,7 +40,7 @@
 
 /obj/machinery/power/apc
 	name = "area power controller"
-	desc = "A control terminal for the area electrical systems."
+	desc = "A control terminal for the area's electrical systems."
 
 	icon_state = "apc0"
 	anchored = TRUE
@@ -49,7 +49,7 @@
 	max_integrity = 200
 	integrity_failure = 50
 	resistance_flags = FIRE_PROOF
-	interact_open = TRUE
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 
 	var/lon_range = 1.5
 	var/area/area
@@ -95,6 +95,9 @@
 	var/update_state = -1
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
+
+/obj/machinery/power/apc/unlocked
+	locked = FALSE
 
 /obj/machinery/power/apc/highcap/five_k
 	cell_type = /obj/item/stock_parts/cell/upgraded/plus
@@ -378,7 +381,7 @@
 /obj/machinery/power/apc/attackby(obj/item/W, mob/living/user, params)
 
 	if(issilicon(user) && get_dist(src,user)>1)
-		return src.attack_hand(user)
+		return attack_hand(user)
 	if (istype(W, /obj/item/crowbar)) //Using crowbar
 		if (opened) // a) on open apc
 			if (has_electronics==1)
@@ -549,8 +552,8 @@
 				to_chat(user, "<span class='notice'>You place the power control board inside the frame.</span>")
 				qdel(W)
 
-	else if(istype(W, /obj/item/device/electroadaptive_pseudocircuit) && opened)
-		var/obj/item/device/electroadaptive_pseudocircuit/P = W
+	else if(istype(W, /obj/item/electroadaptive_pseudocircuit) && opened)
+		var/obj/item/electroadaptive_pseudocircuit/P = W
 		if(!has_electronics)
 			if(stat & BROKEN)
 				to_chat(user, "<span class='warning'>[src]'s frame is too damaged to support a circuit.</span>")
@@ -681,7 +684,7 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 15 && (!(stat & BROKEN) || malfai))
+	if(damage_flag == "melee" && damage_amount < 10 && (!(stat & BROKEN) || malfai))
 		return 0
 	. = ..()
 
@@ -718,6 +721,9 @@
 // attack with hand - remove cell (if cover open) or interact with the APC
 
 /obj/machinery/power/apc/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!user)
 		return
 	if(usr == user && opened && (!issilicon(user)))
@@ -731,7 +737,6 @@
 		return
 	if((stat & MAINT) && !opened) //no board; no interface
 		return
-	..()
 
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -906,12 +911,11 @@
 			update()
 		if("emergency_lighting")
 			emergency_lights = !emergency_lights
-			for(var/area/A in area.related)
-				for(var/obj/machinery/light/L in A)
-					if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
-						L.no_emergency = emergency_lights
-						INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
-					CHECK_TICK
+			for(var/obj/machinery/light/L in area)
+				if(!initial(L.no_emergency)) //If there was an override set on creation, keep that override
+					L.no_emergency = emergency_lights
+					INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
+				CHECK_TICK
 	return 1
 
 /obj/machinery/power/apc/proc/toggle_breaker()
@@ -984,7 +988,7 @@
 				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
 				P.alert = FALSE
 
-/obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+/obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(card.AI)
 		to_chat(user, "<span class='warning'>[card] is already occupied!</span>")
 		return
@@ -1276,12 +1280,11 @@
 		INVOKE_ASYNC(src, .proc/break_lights)
 
 /obj/machinery/power/apc/proc/break_lights()
-	for(var/area/A in area.related)
-		for(var/obj/machinery/light/L in A)
-			L.on = TRUE
-			L.break_light_tube()
-			L.on = FALSE
-			stoplag()
+	for(var/obj/machinery/light/L in area)
+		L.on = TRUE
+		L.break_light_tube()
+		L.on = FALSE
+		stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
 	if(!prob(prb))
@@ -1317,12 +1320,11 @@
 /obj/machinery/power/apc/proc/set_nightshift(on)
 	set waitfor = FALSE
 	nightshift_lights = on
-	for(var/area/A in area.related)
-		for(var/obj/machinery/light/L in A)
-			if(L.nightshift_allowed)
-				L.nightshift_enabled = nightshift_lights
-				L.update(FALSE)
-			CHECK_TICK
+	for(var/obj/machinery/light/L in area)
+		if(L.nightshift_allowed)
+			L.nightshift_enabled = nightshift_lights
+			L.update(FALSE)
+		CHECK_TICK
 
 #undef UPSTATE_CELL_IN
 #undef UPSTATE_OPENED1
@@ -1350,8 +1352,6 @@
 #undef APC_UPOVERLAY_ENVIRON2
 #undef APC_UPOVERLAY_LOCKED
 #undef APC_UPOVERLAY_OPERATING
-
-#undef APC_UPDATE_ICON_COOLDOWN
 
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc

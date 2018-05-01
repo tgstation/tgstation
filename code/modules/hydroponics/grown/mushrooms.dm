@@ -23,9 +23,6 @@
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("morphine" = 0.35, "charcoal" = 0.35, "nutriment" = 0)
 
-
-
-
 /obj/item/reagent_containers/food/snacks/grown/mushroom/reishi
 	seed = /obj/item/seeds/reishi
 	name = "reishi"

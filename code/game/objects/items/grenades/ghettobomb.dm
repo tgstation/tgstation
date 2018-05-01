@@ -12,7 +12,7 @@
 	throw_speed = 3
 	throw_range = 7
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	active = 0
 	det_time = 50
 	display_timer = 0

@@ -515,28 +515,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 	new /datum/admin_help(msg, src, FALSE)
 
-//admin proc
-/client/proc/cmd_admin_ticket_panel()
-	set name = "Show Ticket List"
-	set category = "Admin"
-
-	if(!check_rights(R_ADMIN, TRUE))
-		return
-
-	var/browse_to
-
-	switch(input("Display which ticket list?") as null|anything in list("Active Tickets", "Closed Tickets", "Resolved Tickets"))
-		if("Active Tickets")
-			browse_to = AHELP_ACTIVE
-		if("Closed Tickets")
-			browse_to = AHELP_CLOSED
-		if("Resolved Tickets")
-			browse_to = AHELP_RESOLVED
-		else
-			return
-
-	GLOB.ahelp_tickets.BrowseTickets(browse_to)
-
 //
 // LOGGING
 //

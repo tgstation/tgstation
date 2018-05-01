@@ -37,6 +37,8 @@ SUBSYSTEM_DEF(dbcore)
 			message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 		if(2)
 			message_admins("Could not get schema version from database")
+	
+	return ..()
 
 	
 /datum/controller/subsystem/dbcore/Recover()
@@ -275,7 +277,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	if(istext(column))
 		column = columns.Find(column)
 	if(!conversions)
-		conversions = list(column)
+		conversions = new /list(column)
 	else if(conversions.len < column)
 		conversions.len = column
 	conversions[column] = conversion

@@ -9,7 +9,7 @@
 	item_state = "defibunit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force = 5
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
@@ -80,25 +80,27 @@
 /obj/item/defibrillator/ui_action_click()
 	toggle_paddles()
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user)
 	if(loc == user)
-		if(slot_flags == SLOT_BACK)
-			if(user.get_item_by_slot(slot_back) == src)
+		if(slot_flags == ITEM_SLOT_BACK)
+			if(user.get_item_by_slot(SLOT_BACK) == src)
 				ui_action_click()
 			else
 				to_chat(user, "<span class='warning'>Put the defibrillator on your back first!</span>")
 
-		else if(slot_flags == SLOT_BELT)
-			if(user.get_item_by_slot(slot_belt) == src)
+		else if(slot_flags == ITEM_SLOT_BELT)
+			if(user.get_item_by_slot(SLOT_BELT) == src)
 				ui_action_click()
 			else
 				to_chat(user, "<span class='warning'>Strap the defibrillator's belt on first!</span>")
 		return
 	else if(istype(loc, /obj/machinery/defibrillator_mount))
 		ui_action_click() //checks for this are handled in defibrillator.mount.dm
-	..()
+	return ..()
 
 /obj/item/defibrillator/MouseDrop(obj/over_object)
+	. = ..()
 	if(ismob(loc))
 		var/mob/M = loc
 		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
@@ -184,7 +186,7 @@
 
 /obj/item/defibrillator/equipped(mob/user, slot)
 	..()
-	if((slot_flags == SLOT_BACK && slot != slot_back) || (slot_flags == SLOT_BELT && slot != slot_belt))
+	if((slot_flags == ITEM_SLOT_BACK && slot != SLOT_BACK) || (slot_flags == ITEM_SLOT_BELT && slot != SLOT_BELT))
 		remove_paddles(user)
 		update_icon()
 
@@ -237,7 +239,7 @@
 	icon_state = "defibcompact"
 	item_state = "defibcompact"
 	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/defibrillator/compact/item_action_slot_check(slot, mob/user)
 	if(slot == user.getBeltSlot())
@@ -307,6 +309,8 @@
 	check_range()
 
 /obj/item/twohanded/shockpaddles/proc/check_range()
+	if(!req_defib)
+		return
 	if(!in_range(src,defib))
 		var/mob/living/L = loc
 		if(istype(L))
@@ -415,7 +419,7 @@
 	var/mob/living/carbon/H = M
 
 
-	if(user.zone_selected != "chest")
+	if(user.zone_selected != BODY_ZONE_CHEST)
 		to_chat(user, "<span class='warning'>You need to target your patient's chest with [src]!</span>")
 		return
 
@@ -505,7 +509,7 @@
 					H.visible_message("<span class='warning'>[H] thrashes wildly, clutching at their chest!</span>",
 						"<span class='userdanger'>You feel a horrible agony in your chest!</span>")
 				H.set_heartattack(TRUE)
-			H.apply_damage(50, BURN, "chest")
+			H.apply_damage(50, BURN, BODY_ZONE_CHEST)
 			add_logs(user, H, "overloaded the heart of", defib)
 			H.Knockdown(100)
 			H.Jitter(100)

@@ -28,13 +28,13 @@
 	return ..()
 
 /obj/item/clothing/glasses/judicial_visor/item_action_slot_check(slot, mob/user)
-	if(slot != slot_glasses)
+	if(slot != SLOT_GLASSES)
 		return 0
 	return ..()
 
 /obj/item/clothing/glasses/judicial_visor/equipped(mob/living/user, slot)
 	..()
-	if(slot != slot_glasses)
+	if(slot != SLOT_GLASSES)
 		update_status(FALSE)
 		if(blaster.ranged_ability_user)
 			blaster.remove_ranged_ability()
@@ -55,13 +55,13 @@
 	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
 /obj/item/clothing/glasses/judicial_visor/proc/check_on_mob(mob/user)
-	if(user && src != user.get_item_by_slot(slot_glasses)) //if we happen to check and we AREN'T in the slot, we need to remove our shit from whoever we got dropped from
+	if(user && src != user.get_item_by_slot(SLOT_GLASSES)) //if we happen to check and we AREN'T in the slot, we need to remove our shit from whoever we got dropped from
 		update_status(FALSE)
 		if(blaster.ranged_ability_user)
 			blaster.remove_ranged_ability()
 
 /obj/item/clothing/glasses/judicial_visor/attack_self(mob/user)
-	if(is_servant_of_ratvar(user) && src == user.get_item_by_slot(slot_glasses))
+	if(is_servant_of_ratvar(user) && src == user.get_item_by_slot(SLOT_GLASSES))
 		blaster.toggle(user)
 
 /obj/item/clothing/glasses/judicial_visor/proc/update_status(change_to)
@@ -89,7 +89,7 @@
 	if(!src)
 		return 0
 	recharging = FALSE
-	if(user && src == user.get_item_by_slot(slot_glasses))
+	if(user && src == user.get_item_by_slot(SLOT_GLASSES))
 		to_chat(user, "<span class='brass'>Your [name] hums. It is ready.</span>")
 	else
 		active = FALSE
@@ -115,7 +115,7 @@
 /obj/effect/proc_holder/judicial_visor/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return
-	if(ranged_ability_user.incapacitated() || !visor || visor != ranged_ability_user.get_item_by_slot(slot_glasses))
+	if(ranged_ability_user.incapacitated() || !visor || visor != ranged_ability_user.get_item_by_slot(SLOT_GLASSES))
 		remove_ranged_ability()
 		return
 
@@ -189,10 +189,11 @@
 	for(var/mob/living/L in range(1, src))
 		if(is_servant_of_ratvar(L))
 			continue
-		if(L.null_rod_check())
-			var/obj/item/I = L.null_rod_check()
-			L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
-			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
+		if(L.anti_magic_check())
+			var/atom/I = L.anti_magic_check()
+			if(isitem(I))
+				L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
+				"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
 			continue
 		L.Knockdown(15) //knocks down briefly when exploding
 		if(!iscultist(L))

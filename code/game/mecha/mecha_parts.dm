@@ -12,26 +12,19 @@
 /obj/item/mecha_parts/chassis
 	name = "Mecha Chassis"
 	icon_state = "backbone"
-	var/datum/construction/construct
+	interaction_flags_item = NONE			//Don't pick us up!!
 	var/construct_type
 
 /obj/item/mecha_parts/chassis/Initialize()
 	. = ..()
 	if(construct_type)
-		construct = new construct_type(src)
-
-/obj/item/mecha_parts/chassis/attackby(obj/item/W, mob/user, params)
-	if(!construct || !construct.action(W, user))
-		return ..()
-
-/obj/item/mecha_parts/chassis/attack_hand()
-	return
+		AddComponent(construct_type)
 
 /////////// Ripley
 
 /obj/item/mecha_parts/chassis/ripley
 	name = "\improper Ripley chassis"
-	construct_type = /datum/construction/unordered/mecha_chassis/ripley
+	construct_type = /datum/component/construction/unordered/mecha_chassis/ripley
 
 /obj/item/mecha_parts/part/ripley_torso
 	name = "\improper Ripley torso"
@@ -62,7 +55,7 @@
 
 /obj/item/mecha_parts/chassis/odysseus
 	name = "\improper Odysseus chassis"
-	construct_type = /datum/construction/unordered/mecha_chassis/odysseus
+	construct_type = /datum/component/construction/unordered/mecha_chassis/odysseus
 
 /obj/item/mecha_parts/part/odysseus_head
 	name = "\improper Odysseus head"
@@ -98,7 +91,7 @@
 
 /obj/item/mecha_parts/chassis/gygax
 	name = "\improper Gygax chassis"
-	construct_type = /datum/construction/unordered/mecha_chassis/gygax
+	construct_type = /datum/component/construction/unordered/mecha_chassis/gygax
 
 /obj/item/mecha_parts/part/gygax_torso
 	name = "\improper Gygax torso"
@@ -141,7 +134,7 @@
 
 /obj/item/mecha_parts/chassis/durand
 	name = "\improper Durand chassis"
-	construct_type = /datum/construction/unordered/mecha_chassis/durand
+	construct_type = /datum/component/construction/unordered/mecha_chassis/durand
 
 /obj/item/mecha_parts/part/durand_torso
 	name = "\improper Durand torso"
@@ -183,14 +176,14 @@
 
 /obj/item/mecha_parts/chassis/firefighter
 	name = "\improper Firefighter chassis"
-	construct_type = /datum/construction/unordered/mecha_chassis/firefighter
+	construct_type = /datum/component/construction/unordered/mecha_chassis/firefighter
 
 
 ////////// HONK
 
 /obj/item/mecha_parts/chassis/honker
 	name = "\improper H.O.N.K chassis"
-	construct_type = /datum/construction/unordered/mecha_chassis/honker
+	construct_type = /datum/component/construction/unordered/mecha_chassis/honker
 
 /obj/item/mecha_parts/part/honker_torso
 	name = "\improper H.O.N.K torso"
@@ -227,7 +220,7 @@
 
 /obj/item/mecha_parts/chassis/phazon
 	name = "\improper Phazon chassis"
-	construct_type = /datum/construction/unordered/mecha_chassis/phazon
+	construct_type = /datum/component/construction/unordered/mecha_chassis/phazon
 
 /obj/item/mecha_parts/part/phazon_torso
 	name="\improper Phazon torso"

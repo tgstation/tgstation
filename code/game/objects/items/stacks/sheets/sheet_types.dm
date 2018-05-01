@@ -9,6 +9,7 @@
  * Paper Frames
  * Runed Metal (cult)
  * Brass (clockwork cult)
+ * Bronze (bake brass)
  */
 
 /*
@@ -413,6 +414,53 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 /obj/item/stack/tile/brass/fifty
 	amount = 50
 
+/*
+ * Bronze
+ */
+
+GLOBAL_LIST_INIT(bronze_recipes, list ( \
+	new/datum/stack_recipe("wall gear", /obj/structure/girder/bronze, 2, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
+	null,
+	new/datum/stack_recipe("bronze hat", /obj/item/clothing/head/bronze), \
+	new/datum/stack_recipe("bronze suit", /obj/item/clothing/suit/bronze), \
+	new/datum/stack_recipe("bronze boots", /obj/item/clothing/shoes/bronze), \
+	null,
+	new/datum/stack_recipe("bronze chair", /obj/structure/chair/bronze, 1, time = 0, one_per_turf = TRUE, on_floor = TRUE), \
+))
+
+/obj/item/stack/tile/bronze
+	name = "brass"
+	desc = "On closer inspection, what appears to be wholly-unsuitable-for-building brass is actually more structurally stable bronze."
+	singular_name = "bronze sheet"
+	icon_state = "sheet-brass"
+	item_state = "sheet-brass"
+	icon = 'icons/obj/stack_objects.dmi'
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	throwforce = 10
+	max_amount = 50
+	throw_speed = 1
+	throw_range = 3
+	turf_type = /turf/open/floor/bronze
+	novariants = FALSE
+	grind_results = list("iron" = 5, "copper" = 3) //we have no "tin" reagent so this is the closest thing
+
+/obj/item/stack/tile/bronze/attack_self(mob/living/user)
+	if(is_servant_of_ratvar(user)) //still lets them build with it, just gives a message
+		to_chat(user, "<span class='danger'>Wha... what is this cheap imitation crap? This isn't brass at all!</span>")
+	..()
+
+/obj/item/stack/tile/bronze/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.bronze_recipes
+	. = ..()
+	pixel_x = 0
+	pixel_y = 0
+
+/obj/item/stack/tile/bronze/thirty
+	amount = 30
+
+/*
+ * Lesser and Greater gems - unused
+ */
 /obj/item/stack/sheet/lessergem
 	name = "lesser gems"
 	desc = "Rare kind of gems which are only gained by blood sacrifice to minor deities. They are needed in crafting powerful objects."
@@ -460,6 +508,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	singular_name = "plastic sheet"
 	icon_state = "sheet-plastic"
 	item_state = "sheet-plastic"
+	materials = list(MAT_PLASTIC=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 7
 	merge_type = /obj/item/stack/sheet/plastic
 
