@@ -55,9 +55,6 @@
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_pry_open(I))
 		return
 
@@ -110,7 +107,7 @@
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
 		var/obj/item/bodypart/head/as_head = AM
-		var/obj/item/device/mmi/as_mmi = AM
+		var/obj/item/mmi/as_mmi = AM
 		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /mob/living/brain)
 		if(brain_holder)
 			emergency_stop(AM)

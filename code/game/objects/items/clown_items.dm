@@ -116,7 +116,7 @@
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
 
-/obj/item/weapon/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	M.SendSignal(COMSIG_ADD_MOOD_EVENT, "honk", /datum/mood_event/honk)
 
 /obj/item/bikehorn/suicide_act(mob/user)

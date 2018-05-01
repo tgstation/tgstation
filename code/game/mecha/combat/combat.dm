@@ -11,7 +11,7 @@
 	else
 		return 0
 
-/obj/mecha/combat/mmi_moved_inside(obj/item/device/mmi/mmi_as_oc,mob/user)
+/obj/mecha/combat/mmi_moved_inside(obj/item/mmi/mmi_as_oc,mob/user)
 	if(..())
 		if(occupant.client && occupant.client.mouse_pointer_icon == initial(occupant.client.mouse_pointer_icon))
 			occupant.client.mouse_pointer_icon = 'icons/mecha/mecha_mouse.dmi'

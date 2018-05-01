@@ -17,7 +17,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = SLOT_BACK	//ERROOOOO
+	slot_flags = ITEM_SLOT_BACK	//ERROOOOO
 	resistance_flags = NONE
 	max_integrity = 300
 
@@ -44,7 +44,7 @@
 	icon_state = "holdingpack"
 	item_state = "holdingpack"
 	resistance_flags = FIRE_PROOF
-	flags_2 = NO_MAT_REDEMPTION_2
+	item_flags = NO_MAT_REDEMPTION
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 50)
 	component_type = /datum/component/storage/concrete/bluespace/bag_of_holding
 
@@ -379,7 +379,7 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/stack/cable_coil/random(src)
 	new /obj/item/wirecutters(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/multitool(src)
 
 /obj/item/storage/backpack/duffelbag/clown
 	name = "clown's duffel bag"
@@ -439,7 +439,7 @@
 	new /obj/item/surgical_drapes(src)
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
-	new /obj/item/device/mmi/syndie(src)
+	new /obj/item/mmi/syndie(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo
 	name = "ammunition duffel bag"
@@ -542,7 +542,7 @@
 	STR.silent = TRUE
 
 /obj/item/storage/backpack/duffelbag/clown/syndie/PopulateContents()
-	new /obj/item/device/pda/clown(src)
+	new /obj/item/pda/clown(src)
 	new /obj/item/clothing/under/rank/clown(src)
 	new /obj/item/clothing/shoes/clown_shoes(src)
 	new /obj/item/clothing/mask/gas/clown_hat(src)

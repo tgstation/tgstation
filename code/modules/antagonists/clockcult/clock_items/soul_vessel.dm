@@ -1,5 +1,5 @@
 //Soul vessel: An ancient positronic brain that serves only Ratvar.
-/obj/item/device/mmi/posibrain/soul_vessel
+/obj/item/mmi/posibrain/soul_vessel
 	name = "soul vessel"
 	desc = "A heavy brass cube, three inches to a side, with a single protruding cogwheel."
 	var/clockwork_desc = "A soul vessel, an ancient relic that can attract the souls of the damned or simply rip a mind from an unconscious or dead human.\n\
@@ -25,35 +25,35 @@
 	force_replace_ai_name = TRUE
 	overrides_aicore_laws = TRUE
 
-/obj/item/device/mmi/posibrain/soul_vessel/Initialize()
+/obj/item/mmi/posibrain/soul_vessel/Initialize()
 	. = ..()
 	radio.on = FALSE
 	laws = new /datum/ai_laws/ratvar()
 	braintype = picked_name
 	GLOB.all_clockwork_objects += src
 
-/obj/item/device/mmi/posibrain/soul_vessel/Destroy()
+/obj/item/mmi/posibrain/soul_vessel/Destroy()
 	GLOB.all_clockwork_objects -= src
 	return ..()
 
-/obj/item/device/mmi/posibrain/soul_vessel/examine(mob/user)
+/obj/item/mmi/posibrain/soul_vessel/examine(mob/user)
 	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
 
-/obj/item/device/mmi/posibrain/soul_vessel/transfer_personality(mob/candidate)
+/obj/item/mmi/posibrain/soul_vessel/transfer_personality(mob/candidate)
 	. = ..()
 	if(.)
 		add_servant_of_ratvar(brainmob, TRUE)
 
-/obj/item/device/mmi/posibrain/soul_vessel/attack_self(mob/living/user)
+/obj/item/mmi/posibrain/soul_vessel/attack_self(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>You fiddle around with [src], to no avail.</span>")
 		return FALSE
 	..()
 
-/obj/item/device/mmi/posibrain/soul_vessel/attack(mob/living/target, mob/living/carbon/human/user)
+/obj/item/mmi/posibrain/soul_vessel/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!is_servant_of_ratvar(user) || !ishuman(target))
 		..()
 		return

@@ -308,7 +308,7 @@
 	CentCom Airlocks
 */
 
-/obj/machinery/door/airlock/centcom
+/obj/machinery/door/airlock/centcom //Use grunge as a station side version, as these have special effects related to them via phobias and such.
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_centcom
@@ -316,7 +316,12 @@
 	security_level = 6
 	explosion_block = 2
 
-/obj/machinery/door/airlock/centcom/abandoned
+/obj/machinery/door/airlock/grunge
+	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_grunge
+
+/obj/machinery/door/airlock/grunge/abandoned
 	abandoned = TRUE
 
 //////////////////////////////////

@@ -93,8 +93,6 @@
 			return
 	if(default_change_direction_wrench(user, I))
 		return
-	if(exchange_parts(user, I))
-		return
 	if(default_pry_open(I))
 		return
 	if(default_deconstruction_crowbar(I))

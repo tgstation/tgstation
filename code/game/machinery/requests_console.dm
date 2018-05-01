@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	var/message = "";
 	var/dpt = ""; //the department which will be receiving the message
 	var/priority = -1 ; //Priority of the message being sent
-	var/obj/item/device/radio/Radio
+	var/obj/item/radio/Radio
 	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	var/receive_ore_updates = FALSE //If ore redemption machines will send an update when it receives new ores.
 	max_integrity = 300
@@ -121,7 +121,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			if(!("[department]" in GLOB.req_console_information))
 				GLOB.req_console_information += department
 
-	Radio = new /obj/item/device/radio(src)
+	Radio = new /obj/item/radio(src)
 	Radio.listening = 0
 
 /obj/machinery/requests_console/Destroy()

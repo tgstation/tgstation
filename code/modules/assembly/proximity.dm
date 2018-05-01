@@ -1,4 +1,4 @@
-/obj/item/device/assembly/prox_sensor
+/obj/item/assembly/prox_sensor
 	name = "proximity sensor"
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
 	icon_state = "prox"
@@ -10,29 +10,29 @@
 	var/time = 10
 	var/sensitivity = 1
 
-/obj/item/device/assembly/prox_sensor/proc/toggle_scan()
+/obj/item/assembly/prox_sensor/proc/toggle_scan()
 
 
-/obj/item/device/assembly/prox_sensor/proc/sense()
+/obj/item/assembly/prox_sensor/proc/sense()
 
 
-/obj/item/device/assembly/prox_sensor/Initialize()
+/obj/item/assembly/prox_sensor/Initialize()
 	. = ..()
 	proximity_monitor = new(src, 0)
 
-/obj/item/device/assembly/prox_sensor/describe()
+/obj/item/assembly/prox_sensor/describe()
 	if(timing)
 		return "<span class='notice'>The proximity sensor is arming.</span>"
 	return "The proximity sensor is [scanning?"armed":"disarmed"]."
 
-/obj/item/device/assembly/prox_sensor/activate()
+/obj/item/assembly/prox_sensor/activate()
 	if(!..())
 		return 0//Cooldown check
 	timing = !timing
 	update_icon()
 	return 1
 
-/obj/item/device/assembly/prox_sensor/toggle_secure()
+/obj/item/assembly/prox_sensor/toggle_secure()
 	secured = !secured
 	if(!secured)
 		if(scanning)
@@ -45,13 +45,13 @@
 	return secured
 
 
-/obj/item/device/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
+/obj/item/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
 	if (istype(AM, /obj/effect/beam))
 		return
 	sense()
 
 
-/obj/item/device/assembly/prox_sensor/sense()
+/obj/item/assembly/prox_sensor/sense()
 	if(!scanning || !secured || next_activate > world.time)
 		return 0
 	pulse(0)
@@ -59,7 +59,7 @@
 	next_activate = world.time + 30
 
 
-/obj/item/device/assembly/prox_sensor/process()
+/obj/item/assembly/prox_sensor/process()
 	if(timing)
 		time--
 		if(time <= 0)
@@ -67,20 +67,20 @@
 			toggle_scan(1)
 			time = initial(time)
 
-/obj/item/device/assembly/prox_sensor/toggle_scan(scan)
+/obj/item/assembly/prox_sensor/toggle_scan(scan)
 	if(!secured)
 		return 0
 	scanning = scan
 	proximity_monitor.SetRange(scanning ? sensitivity : 0)
 	update_icon()
 
-/obj/item/device/assembly/prox_sensor/proc/sensitivity_change(value)
+/obj/item/assembly/prox_sensor/proc/sensitivity_change(value)
 	var/sense = min(max(sensitivity + value, 0), 5)
 	sensitivity = sense
 	if(scanning && proximity_monitor.SetRange(sense))
 		sense()
 
-/obj/item/device/assembly/prox_sensor/update_icon()
+/obj/item/assembly/prox_sensor/update_icon()
 	cut_overlays()
 	attached_overlays = list()
 	if(timing)
@@ -93,7 +93,7 @@
 		holder.update_icon()
 	return
 
-/obj/item/device/assembly/prox_sensor/ui_interact(mob/user)//TODO: Change this to the wires thingy
+/obj/item/assembly/prox_sensor/ui_interact(mob/user)//TODO: Change this to the wires thingy
 	. = ..()
 	if(is_secured(user))
 		var/second = time % 60
@@ -108,7 +108,7 @@
 		return
 
 
-/obj/item/device/assembly/prox_sensor/Topic(href, href_list)
+/obj/item/assembly/prox_sensor/Topic(href, href_list)
 	..()
 	if(usr.incapacitated() || !in_range(loc, usr))
 		usr << browse(null, "window=prox")

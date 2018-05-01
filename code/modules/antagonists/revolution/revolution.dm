@@ -112,7 +112,7 @@
 
 /datum/antagonist/rev/head/proc/admin_take_flash(mob/admin)
 	var/list/L = owner.current.get_contents()
-	var/obj/item/device/assembly/flash/flash = locate() in L
+	var/obj/item/assembly/flash/flash = locate() in L
 	if (!flash)
 		to_chat(admin, "<span class='danger'>Deleting flash failed!</span>")
 		return
@@ -133,7 +133,7 @@
 
 /datum/antagonist/rev/head/proc/admin_repair_flash(mob/admin)
 	var/list/L = owner.current.get_contents()
-	var/obj/item/device/assembly/flash/flash = locate() in L
+	var/obj/item/assembly/flash/flash = locate() in L
 	if (!flash)
 		to_chat(admin, "<span class='danger'>Repairing flash failed!</span>")
 	else
@@ -232,11 +232,11 @@
 		H.dna.remove_mutation(CLOWNMUT)
 
 	if(give_flash)
-		var/obj/item/device/assembly/flash/T = new(H)
+		var/obj/item/assembly/flash/T = new(H)
 		var/list/slots = list (
-			"backpack" = slot_in_backpack,
-			"left pocket" = slot_l_store,
-			"right pocket" = slot_r_store
+			"backpack" = SLOT_IN_BACKPACK,
+			"left pocket" = SLOT_L_STORE,
+			"right pocket" = SLOT_R_STORE
 		)
 		var/where = H.equip_in_one_of_slots(T, slots)
 		if (!where)

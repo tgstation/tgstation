@@ -80,7 +80,7 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "ap" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
@@ -165,7 +165,7 @@
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/table,
-/obj/item/device/multitool/ai_detect,
+/obj/item/multitool/ai_detect,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aF" = (

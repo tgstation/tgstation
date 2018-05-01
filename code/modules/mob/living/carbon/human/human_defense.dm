@@ -44,7 +44,7 @@
 			return spec_return
 
 	if(mind)
-		if(mind.martial_art && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
+		if(mind.martial_art && !incapacitated(FALSE, TRUE) && mind.martial_art.can_use(src) && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 			if(prob(mind.martial_art.deflection_chance))
 				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
 					if(mind.martial_art.deflection_chance >= 100) //if they can NEVER be hit, lets clue sec in ;)
@@ -113,7 +113,7 @@
 
 /mob/living/carbon/human/proc/check_block()
 	if(mind)
-		if(mind.martial_art && prob(mind.martial_art.block_chance) && in_throw_mode && !stat && !IsKnockdown() && !IsStun())
+		if(mind.martial_art && prob(mind.martial_art.block_chance) && mind.martial_art.can_use(src) && in_throw_mode && !incapacitated(FALSE, TRUE))
 			return TRUE
 	return FALSE
 
@@ -718,6 +718,21 @@
 						to_chat(src, "<span class='danger'>Your thinking is clouded and distant.</span>")
 					else if(oxyloss > 30)
 						to_chat(src, "<span class='danger'>You're choking!</span>")
+
+			switch(nutrition)
+				if(NUTRITION_LEVEL_FULL to INFINITY)
+					to_chat(src, "<span class='info'>You're completely stuffed!</span>")
+				if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+					to_chat(src, "<span class='info'>You're well fed!</span>")
+				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+					to_chat(src, "<span class='info'>You're not hungry.</span>")
+				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+					to_chat(src, "<span class='info'>You could use a bite to eat.</span>")
+				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+					to_chat(src, "<span class='info'>You feel quite hungry.</span>")
+				if(0 to NUTRITION_LEVEL_STARVING)
+					to_chat(src, "<span class='danger'>You're starving!</span>")
+
 			if(roundstart_traits.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
 		else

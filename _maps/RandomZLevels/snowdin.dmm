@@ -102,7 +102,7 @@
 /area/awaymission/snowdin/post/research)
 "ay" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/post/research)
 "az" = (
@@ -126,7 +126,7 @@
 /area/awaymission/snowdin/post/research)
 "aD" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/item/pen,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/post/research)
@@ -304,7 +304,7 @@
 /area/awaymission/snowdin/post/research)
 "bd" = (
 /obj/structure/window,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/post/research)
 "be" = (
@@ -2168,7 +2168,7 @@
 /turf/open/floor/plasteel/cmo,
 /area/awaymission/snowdin/post)
 "fz" = (
-/obj/item/device/flashlight/pen,
+/obj/item/flashlight/pen,
 /turf/open/floor/plasteel/cmo,
 /area/awaymission/snowdin/post)
 "fA" = (
@@ -5944,7 +5944,7 @@
 	req_access_txt = "201"
 	},
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash,
+/obj/item/assembly/flash,
 /obj/item/storage/box/rubbershot,
 /obj/structure/fireaxecabinet{
 	pixel_y = 32
@@ -6341,7 +6341,7 @@
 /area/awaymission/snowdin/post/cavern2)
 "pb" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	pixel_x = -5;
 	pixel_y = 5
 	},
@@ -10483,7 +10483,7 @@
 /area/awaymission/snowdin/post/minipost)
 "AF" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -11269,7 +11269,7 @@
 	},
 /area/awaymission/snowdin/cave)
 "CY" = (
-/obj/item/device/aicard,
+/obj/item/aicard,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},

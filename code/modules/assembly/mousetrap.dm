@@ -1,4 +1,4 @@
-/obj/item/device/assembly/mousetrap
+/obj/item/assembly/mousetrap
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
@@ -7,14 +7,14 @@
 	var/armed = 0
 
 
-/obj/item/device/assembly/mousetrap/examine(mob/user)
+/obj/item/assembly/mousetrap/examine(mob/user)
 	..()
 	if(armed)
 		to_chat(user, "The mousetrap is armed!")
 	else
 		to_chat(user, "The mousetrap is not armed.")
 
-/obj/item/device/assembly/mousetrap/activate()
+/obj/item/assembly/mousetrap/activate()
 	if(..())
 		armed = !armed
 		if(!armed)
@@ -27,10 +27,10 @@
 		if(usr)
 			playsound(usr.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 
-/obj/item/device/assembly/mousetrap/describe()
+/obj/item/assembly/mousetrap/describe()
 	return "The pressure switch is [armed?"primed":"safe"]."
 
-/obj/item/device/assembly/mousetrap/update_icon()
+/obj/item/assembly/mousetrap/update_icon()
 	if(armed)
 		icon_state = "mousetraparmed"
 	else
@@ -38,7 +38,7 @@
 	if(holder)
 		holder.update_icon()
 
-/obj/item/device/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
+/obj/item/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)
 		return
 	var/obj/item/bodypart/affecting = null
@@ -72,7 +72,7 @@
 	pulse(0)
 
 
-/obj/item/device/assembly/mousetrap/attack_self(mob/living/carbon/human/user)
+/obj/item/assembly/mousetrap/attack_self(mob/living/carbon/human/user)
 	if(!armed)
 		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
@@ -91,7 +91,7 @@
 
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/device/assembly/mousetrap/attack_hand(mob/living/carbon/human/user)
+/obj/item/assembly/mousetrap/attack_hand(mob/living/carbon/human/user)
 	if(armed)
 		if((user.has_trait(TRAIT_DUMB) || user.has_trait(TRAIT_CLUMSY)) && prob(50))
 			var/which_hand = BODY_ZONE_PRECISE_L_HAND
@@ -104,7 +104,7 @@
 	return ..()
 
 
-/obj/item/device/assembly/mousetrap/Crossed(atom/movable/AM as mob|obj)
+/obj/item/assembly/mousetrap/Crossed(atom/movable/AM as mob|obj)
 	if(armed)
 		if(ismob(AM))
 			var/mob/MM = AM
@@ -122,7 +122,7 @@
 	..()
 
 
-/obj/item/device/assembly/mousetrap/on_found(mob/finder)
+/obj/item/assembly/mousetrap/on_found(mob/finder)
 	if(armed)
 		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
@@ -131,13 +131,13 @@
 	return 0
 
 
-/obj/item/device/assembly/mousetrap/hitby(A as mob|obj)
+/obj/item/assembly/mousetrap/hitby(A as mob|obj)
 	if(!armed)
 		return ..()
 	visible_message("<span class='warning'>[src] is triggered by [A].</span>")
 	triggered(null)
 
 
-/obj/item/device/assembly/mousetrap/armed
+/obj/item/assembly/mousetrap/armed
 	icon_state = "mousetraparmed"
 	armed = 1

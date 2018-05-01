@@ -101,7 +101,7 @@
 
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
-	new /obj/item/device/radio/off(src)
+	new /obj/item/radio/off(src)
 
 /obj/item/storage/box/survival_mining/PopulateContents()
 	new /obj/item/clothing/mask/gas/explorer(src)
@@ -118,7 +118,7 @@
 
 /obj/item/storage/box/engineer/radio/PopulateContents()
 	..() // we want the regular items too.
-	new /obj/item/device/radio/off(src)
+	new /obj/item/radio/off(src)
 
 // Syndie survival box
 /obj/item/storage/box/syndie/PopulateContents()
@@ -133,7 +133,7 @@
 
 /obj/item/storage/box/security/radio/PopulateContents()
 	..() // we want the regular stuff too
-	new /obj/item/device/radio/off(src)
+	new /obj/item/radio/off(src)
 
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
@@ -225,7 +225,7 @@
 
 /obj/item/storage/box/flashes/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/device/assembly/flash/handheld(src)
+		new /obj/item/assembly/flash/handheld(src)
 
 /obj/item/storage/box/wall_flash
 	name = "wall-mounted flash kit"
@@ -238,11 +238,11 @@
 
 	new /obj/item/wallframe/button(src)
 	new /obj/item/electronics/airlock(src)
-	var/obj/item/device/assembly/control/flasher/remote = new(src)
+	var/obj/item/assembly/control/flasher/remote = new(src)
 	remote.id = id
 	var/obj/item/wallframe/flasher/frame = new(src)
 	frame.id = id
-	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/screwdriver(src)
 
 
@@ -399,10 +399,10 @@
 	illustration = "pda"
 
 /obj/item/storage/box/PDAs/PopulateContents()
-	new /obj/item/device/pda(src)
-	new /obj/item/device/pda(src)
-	new /obj/item/device/pda(src)
-	new /obj/item/device/pda(src)
+	new /obj/item/pda(src)
+	new /obj/item/pda(src)
+	new /obj/item/pda(src)
+	new /obj/item/pda(src)
 	new /obj/item/cartridge/head(src)
 
 	var/newcart = pick(	/obj/item/cartridge/engineering,
@@ -453,7 +453,7 @@
 
 /obj/item/storage/box/firingpins/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/device/firing_pin(src)
+		new /obj/item/firing_pin(src)
 
 /obj/item/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
@@ -462,8 +462,8 @@
 
 /obj/item/storage/box/lasertagpins/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/device/firing_pin/tag/red(src)
-		new /obj/item/device/firing_pin/tag/blue(src)
+		new /obj/item/firing_pin/tag/red(src)
+		new /obj/item/firing_pin/tag/blue(src)
 
 /obj/item/storage/box/handcuffs
 	name = "box of spare handcuffs"
@@ -511,7 +511,7 @@
 
 /obj/item/storage/box/mousetraps/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/device/assembly/mousetrap(src)
+		new /obj/item/assembly/mousetrap(src)
 
 /obj/item/storage/box/pillbottles
 	name = "box of pill bottles"
@@ -544,7 +544,7 @@
 	icon_state = "matchbox"
 	item_state = "zippo"
 	w_class = WEIGHT_CLASS_TINY
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
@@ -719,7 +719,7 @@ obj/item/storage/box/clown
 #define NANOTRASEN "NanotrasenStandard"
 #define SYNDI "SyndiSnacks"
 #define HEART "Heart"
-#define SMILE "SmileyFace"
+#define SMILEY "SmileyFace"
 
 /obj/item/storage/box/papersack
 	name = "paper sack"
@@ -741,7 +741,7 @@ obj/item/storage/box/clown
 		if(contents.len)
 			to_chat(user, "<span class='warning'>You can't modify [src] with items still inside!</span>")
 			return
-		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILE, "Cancel")
+		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILEY, "Cancel")
 		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) in designs
 		if(get_dist(usr, src) > 1)
 			to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
@@ -762,7 +762,7 @@ obj/item/storage/box/clown
 				desc = "The design on this paper sack is a remnant of the notorious 'SyndieSnacks' program."
 			if(HEART)
 				desc = "A paper sack with a heart etched onto the side."
-			if(SMILE)
+			if(SMILEY)
 				desc = "A paper sack with a crude smile etched onto the side."
 		return 0
 	else if(W.is_sharp())
@@ -783,7 +783,7 @@ obj/item/storage/box/clown
 #undef NANOTRASEN
 #undef SYNDI
 #undef HEART
-#undef SMILE
+#undef SMILEY
 
 /obj/item/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
 	name = "ingredients box"

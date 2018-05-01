@@ -37,7 +37,7 @@
 	..()
 
 /mob/living/simple_animal/shade/canSuicide()
-	if(istype(loc, /obj/item/device/soulstone)) //do not suicide inside the soulstone
+	if(istype(loc, /obj/item/soulstone)) //do not suicide inside the soulstone
 		return 0
 	return ..()
 
@@ -57,8 +57,8 @@
 		return ..()
 
 /mob/living/simple_animal/shade/attackby(obj/item/O, mob/user, params)  //Marker -Agouri
-	if(istype(O, /obj/item/device/soulstone))
-		var/obj/item/device/soulstone/SS = O
+	if(istype(O, /obj/item/soulstone))
+		var/obj/item/soulstone/SS = O
 		SS.transfer_soul("SHADE", src, user)
 	else
 		. = ..()

@@ -207,13 +207,13 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
-#define HOLDING 1
-#define CONNECTED 2
-#define EMPTY 4
-#define LOW 8
-#define MEDIUM 16
-#define FULL 32
-#define DANGER 64
+#define HOLDING		(1<<0)
+#define CONNECTED	(1<<1)
+#define EMPTY		(1<<2)
+#define LOW			(1<<3)
+#define MEDIUM		(1<<4)
+#define FULL		(1<<5)
+#define DANGER		(1<<6)
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
 		cut_overlays()

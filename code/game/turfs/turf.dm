@@ -26,9 +26,12 @@
 	var/explosion_level = 0	//for preventing explosion dodging
 	var/explosion_id = 0
 
-	var/list/decals
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
+
+	var/bullet_bounce_sound = 'sound/weapons/bulletremove.ogg' //sound played when a shell casing is ejected ontop of the turf.
+	var/bullet_sizzle = FALSE //used by ammo_casing/bounce_away() to determine if the shell casing should make a sizzle sound when it's ejected over the turf
+							//IE if the turf is supposed to be water, set TRUE.
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
@@ -185,7 +188,7 @@
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
-		if(O.flags_2 & FROZEN_2)
+		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()
 
 /turf/proc/is_plasteel_floor()
@@ -418,18 +421,6 @@
 	if(has_gravity(src))
 		playsound(src, "bodyfall", 50, 1)
 	faller.drop_all_held_items()
-
-/turf/proc/add_decal(decal,group)
-	LAZYINITLIST(decals)
-	if(!decals[group])
-		decals[group] = list()
-	decals[group] += decal
-	add_overlay(decals[group])
-
-/turf/proc/remove_decal(group)
-	LAZYINITLIST(decals)
-	cut_overlay(decals[group])
-	decals[group] = null
 
 /turf/proc/photograph(limit=20)
 	var/image/I = new()

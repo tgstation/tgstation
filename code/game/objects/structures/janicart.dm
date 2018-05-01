@@ -11,7 +11,7 @@
 	var/obj/item/storage/bag/trash/mybag	= null
 	var/obj/item/mop/mymop = null
 	var/obj/item/reagent_containers/spray/cleaner/myspray = null
-	var/obj/item/device/lightreplacer/myreplacer = null
+	var/obj/item/lightreplacer/myreplacer = null
 	var/signs = 0
 	var/const/max_signs = 4
 
@@ -64,9 +64,9 @@
 			update_icon()
 		else
 			to_chat(user, fail_msg)
-	else if(istype(I, /obj/item/device/lightreplacer))
+	else if(istype(I, /obj/item/lightreplacer))
 		if(!myreplacer)
-			var/obj/item/device/lightreplacer/l=I
+			var/obj/item/lightreplacer/l=I
 			l.janicart_insert(user,src)
 		else
 			to_chat(user, fail_msg)

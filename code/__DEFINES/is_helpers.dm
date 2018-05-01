@@ -163,13 +163,13 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
 
 //Assemblies
-#define isassembly(O) (istype(O, /obj/item/device/assembly))
+#define isassembly(O) (istype(O, /obj/item/assembly))
 
-#define isigniter(O) (istype(O, /obj/item/device/assembly/igniter))
+#define isigniter(O) (istype(O, /obj/item/assembly/igniter))
 
-#define isprox(O) (istype(O, /obj/item/device/assembly/prox_sensor))
+#define isprox(O) (istype(O, /obj/item/assembly/prox_sensor))
 
-#define issignaler(O) (istype(O, /obj/item/device/assembly/signaler))
+#define issignaler(O) (istype(O, /obj/item/assembly/signaler))
 
 GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 	/obj/item/stack/sheet/glass,

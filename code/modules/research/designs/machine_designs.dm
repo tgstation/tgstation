@@ -330,6 +330,22 @@
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/board/soda_dispenser
+	name = "Machine Design (Portable Soda Dispenser Board)"
+	desc = "The circuit board for a portable soda dispenser."
+	id = "soda_dispenser"
+	build_path = /obj/item/circuitboard/machine/chem_dispenser/drinks
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	category = list ("Misc. Machinery")
+
+/datum/design/board/beer_dispenser
+	name = "Machine Design (Portable Booze Dispenser Board)"
+	desc = "The circuit board for a portable booze dispenser."
+	id = "beer_dispenser"
+	build_path = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	category = list ("Misc. Machinery")
+
 /datum/design/board/slimeprocessor
 	name = "Machine Design (Slime Processor Board)"
 	desc = "The circuit board for a slime processor."
@@ -400,6 +416,14 @@
 	desc = "The circuit board for a tesla coil."
 	id = "tesla_coil"
 	build_path = /obj/item/circuitboard/machine/tesla_coil
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/rad_collector
+	name = "Machine Design (Radiation Collector Board)"
+	desc = "The circuit board for a radiation collector array."
+	id = "rad_collector"
+	build_path = /obj/item/circuitboard/machine/rad_collector
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 

@@ -296,7 +296,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			//Mutant stuff
 			var/mutant_category = 0
 
-			if("tail_lizard" in pref_species.mutant_bodyparts)
+			if("tail_lizard" in pref_species.default_features)
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -309,7 +309,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
-			if("snout" in pref_species.mutant_bodyparts)
+			if("snout" in pref_species.default_features)
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -322,7 +322,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
-			if("horns" in pref_species.mutant_bodyparts)
+			if("horns" in pref_species.default_features)
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -335,7 +335,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
-			if("frills" in pref_species.mutant_bodyparts)
+			if("frills" in pref_species.default_features)
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -348,7 +348,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
-			if("spines" in pref_species.mutant_bodyparts)
+			if("spines" in pref_species.default_features)
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -361,7 +361,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
-			if("body_markings" in pref_species.mutant_bodyparts)
+			if("body_markings" in pref_species.default_features)
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -374,7 +374,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
-			if("legs" in pref_species.mutant_bodyparts)
+			if("legs" in pref_species.default_features)
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -387,7 +387,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
-			if("moth_wings" in pref_species.mutant_bodyparts)
+			if("moth_wings" in pref_species.default_features)
 				if(!mutant_category)
 					dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -402,7 +402,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			if(CONFIG_GET(flag/join_with_mutant_humans))
 
-				if("tail_human" in pref_species.mutant_bodyparts)
+				if("tail_human" in pref_species.default_features)
 					if(!mutant_category)
 						dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -415,7 +415,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "</td>"
 						mutant_category = 0
 
-				if("ears" in pref_species.mutant_bodyparts)
+				if("ears" in pref_species.default_features)
 					if(!mutant_category)
 						dat += APPEARANCE_CATEGORY_COLUMN
 
@@ -428,7 +428,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						dat += "</td>"
 						mutant_category = 0
 
-				if("wings" in pref_species.mutant_bodyparts && GLOB.r_wings_list.len >1)
+				if("wings" in pref_species.default_features && GLOB.r_wings_list.len >1)
 					if(!mutant_category)
 						dat += APPEARANCE_CATEGORY_COLUMN
 

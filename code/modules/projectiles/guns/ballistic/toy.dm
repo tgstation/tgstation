@@ -15,7 +15,7 @@
 	casing_ejector = FALSE
 
 /obj/item/gun/ballistic/automatic/toy/unrestricted
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/automatic/toy/pistol
 	name = "foam force pistol"
@@ -40,10 +40,10 @@
 	return ..()
 
 /obj/item/gun/ballistic/automatic/toy/pistol/unrestricted
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/automatic/toy/pistol/riot/unrestricted
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/shotgun/toy
 	name = "foam force shotgun"
@@ -63,7 +63,7 @@
 		qdel(chambered)
 
 /obj/item/gun/ballistic/shotgun/toy/unrestricted
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/shotgun/toy/crossbow
 	name = "foam force crossbow"
@@ -73,7 +73,7 @@
 	item_state = "crossbow"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy/crossbow
 	fire_sound = 'sound/items/syringeproj.ogg'
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/gun/ballistic/automatic/c20r/toy //This is the syndicate variant with syndicate firing pin and riot darts.
@@ -87,7 +87,7 @@
 	clumsy_check = FALSE
 
 /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted //Use this for actual toys
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 	mag_type = /obj/item/ammo_box/magazine/toy/smgm45
 
 /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot
@@ -104,7 +104,7 @@
 	clumsy_check = FALSE
 
 /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted //Use this for actual toys
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 	mag_type = /obj/item/ammo_box/magazine/toy/m762
 
 /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted/riot

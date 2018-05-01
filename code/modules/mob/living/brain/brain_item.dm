@@ -144,7 +144,7 @@
 /obj/item/organ/brain/proc/get_brain_damage()
 	var/brain_damage_threshold = max_integrity * BRAIN_DAMAGE_INTEGRITY_MULTIPLIER
 	var/offset_integrity = obj_integrity - (max_integrity - brain_damage_threshold)
-	. = (1 - (offset_integrity / brain_damage_threshold)) * BRAIN_DAMAGE_DEATH
+	. = round((1 - (offset_integrity / brain_damage_threshold)) * BRAIN_DAMAGE_DEATH,0.1)
 
 /obj/item/organ/brain/proc/adjust_brain_damage(amount, maximum)
 	var/adjusted_amount
@@ -157,7 +157,7 @@
 	else
 		adjusted_amount = amount
 
-	adjusted_amount *= BRAIN_DAMAGE_INTEGRITY_MULTIPLIER
+	adjusted_amount = round(adjusted_amount * BRAIN_DAMAGE_INTEGRITY_MULTIPLIER,0.1)
 	if(adjusted_amount)
 		if(adjusted_amount >= 0.1)
 			take_damage(adjusted_amount)
