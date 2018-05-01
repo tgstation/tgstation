@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Cargo packs have been reorganized to shrink the big engineering, food&livestock and misc categories."
