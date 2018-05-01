@@ -722,6 +722,16 @@
 	color = "#7D4E29"
 	taste_description = "chocolate milk"
 
+/datum/reagent/consumable/menthol
+	name = "Menthol"
+	id = "menthol"
+	description = "Tastes naturally minty, and imparts a very mild numbing sensation."
+	color = "#80AF9C"
+	taste_description = "mint"
+	glass_icon_state = "glass_green"
+	glass_name = "glass of menthol"
+	glass_desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
+
 /datum/reagent/consumable/grenadine
 	name = "Grenadine"
 	id = "grenadine"
