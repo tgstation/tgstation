@@ -246,7 +246,7 @@
 	var/obj/item/clothing/neck/necklace/memento_mori/MM = target
 	if(!MM.active_owner)
 		if(ishuman(owner))
-			memento(owner)
+			MM.memento(owner)
 	else
 		to_chat(owner, "<span class='warning'>You try to free your lifeforce from the pendant...</span>")
 		if(do_after(owner, 40, target = owner))
