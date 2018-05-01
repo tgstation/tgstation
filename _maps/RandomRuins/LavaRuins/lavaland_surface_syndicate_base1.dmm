@@ -1297,6 +1297,8 @@
 /obj/item/stock_parts/scanning_module/triphasic{
 	pixel_x = -4
 	},
+/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/stock_parts/matter_bin/bluespace,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "ft" = (
