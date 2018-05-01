@@ -361,6 +361,15 @@
 	list_reagents = list("limejuice" = 100)
 	foodtype = FRUIT
 
+/obj/item/reagent_containers/food/drinks/bottle/menthol
+	name = "menthol"
+	desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
+	icon_state = "mentholbox"
+	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	isGlass = FALSE
+	list_reagents = list("menthol" = 100)
 
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov
