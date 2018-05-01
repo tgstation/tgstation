@@ -240,7 +240,7 @@
 		to_chat(src, "<span class='warning'>You feel lightheaded.</span>")
 	else if(prev_brainloss < BRAIN_DAMAGE_SEVERE && brainloss >= BRAIN_DAMAGE_SEVERE)
 		to_chat(src, "<span class='warning'>You feel less in control of your thoughts.</span>")
-	else if(prev_brainloss < (BRAIN_DAMAGE_DEATH - 20) && (BRAIN_DAMAGE_DEATH - 20))
+	else if(prev_brainloss < (BRAIN_DAMAGE_DEATH - 20) && brainloss >= (BRAIN_DAMAGE_DEATH - 20))
 		to_chat(src, "<span class='warning'>You can feel your mind flickering on and off...</span>")
 
 /mob/living/carbon/setBrainLoss(amount)
