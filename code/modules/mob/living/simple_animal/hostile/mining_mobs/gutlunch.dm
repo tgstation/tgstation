@@ -123,6 +123,7 @@
 //Gutlunch udder
 /obj/item/udder/gutlunch
 	name = "nutrient sac"
+	milktype = "milk"
 
 /obj/item/udder/gutlunch/Initialize()
 	. = ..()
