@@ -396,7 +396,7 @@
 			air.temperature = max(((air.temperature*old_heat_capacity + stim_energy_change)/new_heat_capacity),TCMB)
 		return REACTING
 
-/datum/gas_reaction/nobliumformation //Hyper-Nobelium formation is extrememly endothermic, but requires high temperatures to start. Due to its high mass, hyper-nobelium uses large amounts of nitrogen and tritium. BZ can be used as a catalyst to make it less endothermic.
+/datum/gas_reaction/nobliumformation //Hyper-Noblium formation is extrememly endothermic, but requires high temperatures to start. Due to its high mass, hyper-nobelium uses large amounts of nitrogen and tritium. BZ can be used as a catalyst to make it less endothermic.
 	priority = 6
 	name = "Hyper-Noblium condensation"
 	id = "nobformation"
@@ -415,8 +415,8 @@
 	var/energy_taken = nob_formed*(NOBLIUM_FORMATION_ENERGY/(max(cached_gases[/datum/gas/bz][MOLES],1)))
 	if ((cached_gases[/datum/gas/tritium][MOLES] - 10*nob_formed < 0) || (cached_gases[/datum/gas/nitrogen][MOLES] - 20*nob_formed < 0))
 		return NO_REACTION
-	cached_gases[/datum/gas/tritium][MOLES] = max(cached_gases[/datum/gas/tritium][MOLES]- 10*nob_formed,0)
-	cached_gases[/datum/gas/nitrogen][MOLES] = max(cached_gases[/datum/gas/nitrogen][MOLES]- 20*nob_formed,0)
+	cached_gases[/datum/gas/tritium][MOLES] -= 10*nob_formed
+	cached_gases[/datum/gas/nitrogen][MOLES] -= 20*nob_formed
 	cached_gases[/datum/gas/hypernoblium][MOLES]+= nob_formed
 
 
