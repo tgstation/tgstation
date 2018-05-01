@@ -1136,7 +1136,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#CD6839"
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	boozepwr = 25
-	taste_description = "the season that <i>falls</i> between summer and winter."
+	taste_description = "the season that <i>falls</i> between summer and winter"
 	glass_icon_state = "whiskeyglass"
 	glass_name = "hard cider"
 	glass_desc = "Tastes like autumn... no wait, fall!"
