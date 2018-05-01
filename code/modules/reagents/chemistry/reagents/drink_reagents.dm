@@ -1,4 +1,4 @@
-
+fo
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////// DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////
@@ -227,6 +227,16 @@
 		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	..()
+
+/datum/reagent/consumable/milk/goatmilk
+	name = "Goat Milk"
+	id = "goatmilk"
+	description = "An liquid produced by goats."
+	color = "#DFDFDF" // rgb: 223, 223, 223
+	taste_description = "something very sweet"
+	glass_icon_state = "glass_white"
+	glass_name = "glass of goats milk"
+	glass_desc = "White and nutritious goodness! From space goats."
 
 /datum/reagent/consumable/soymilk
 	name = "Soy Milk"
