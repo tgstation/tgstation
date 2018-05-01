@@ -287,6 +287,12 @@
 		mood = new /obj/screen/mood()
 		infodisplay += mood
 
+	combat_mode = new /obj/screen/combat_mode
+	combat_mode.icon = ui_style
+	combat_mode.update_icon(mymob)
+	combat_mode.screen_loc = ui_combat_mode
+	static_inventory += combat_mode
+
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style
 	pull_icon.update_icon(mymob)

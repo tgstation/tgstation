@@ -349,30 +349,6 @@
 		var/mob/living/L = usr
 		L.resist()
 
-/obj/screen/storage
-	name = "storage"
-	icon_state = "block"
-	screen_loc = "7,7 to 10,8"
-	layer = HUD_LAYER
-	plane = HUD_PLANE
-
-/obj/screen/storage/Initialize(mapload, new_master)
-	. = ..()
-	master = new_master
-
-/obj/screen/storage/Click(location, control, params)
-	if(world.time <= usr.next_move)
-		return TRUE
-	if(usr.incapacitated())
-		return TRUE
-	if (ismecha(usr.loc)) // stops inventory actions in a mech
-		return TRUE
-	if(master)
-		var/obj/item/I = usr.get_active_held_item()
-		if(I)
-			master.attackby(I, usr, params)
-	return TRUE
-
 /obj/screen/throw_catch
 	name = "throw/catch"
 	icon = 'icons/mob/screen_midnight.dmi'
@@ -382,92 +358,6 @@
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
-
-/obj/screen/zone_sel
-	name = "damage zone"
-	icon_state = "zone_sel"
-	screen_loc = ui_zonesel
-	var/selecting = BODY_ZONE_CHEST
-
-/obj/screen/zone_sel/Click(location, control,params)
-	if(isobserver(usr))
-		return
-
-	var/list/PL = params2list(params)
-	var/icon_x = text2num(PL["icon-x"])
-	var/icon_y = text2num(PL["icon-y"])
-	var/choice
-
-	switch(icon_y)
-		if(1 to 9) //Legs
-			switch(icon_x)
-				if(10 to 15)
-					choice = BODY_ZONE_R_LEG
-				if(17 to 22)
-					choice = BODY_ZONE_L_LEG
-				else
-					return 1
-		if(10 to 13) //Hands and groin
-			switch(icon_x)
-				if(8 to 11)
-					choice = BODY_ZONE_R_ARM
-				if(12 to 20)
-					choice = BODY_ZONE_PRECISE_GROIN
-				if(21 to 24)
-					choice = BODY_ZONE_L_ARM
-				else
-					return 1
-		if(14 to 22) //Chest and arms to shoulders
-			switch(icon_x)
-				if(8 to 11)
-					choice = BODY_ZONE_R_ARM
-				if(12 to 20)
-					choice = BODY_ZONE_CHEST
-				if(21 to 24)
-					choice = BODY_ZONE_L_ARM
-				else
-					return 1
-		if(23 to 30) //Head, but we need to check for eye or mouth
-			if(icon_x in 12 to 20)
-				choice = BODY_ZONE_HEAD
-				switch(icon_y)
-					if(23 to 24)
-						if(icon_x in 15 to 17)
-							choice = BODY_ZONE_PRECISE_MOUTH
-					if(26) //Eyeline, eyes are on 15 and 17
-						if(icon_x in 14 to 18)
-							choice = BODY_ZONE_PRECISE_EYES
-					if(25 to 27)
-						if(icon_x in 15 to 17)
-							choice = BODY_ZONE_PRECISE_EYES
-
-	return set_selected_zone(choice, usr)
-
-/obj/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
-	if(isobserver(user))
-		return
-
-	if(choice != selecting)
-		selecting = choice
-		update_icon(usr)
-	return 1
-
-/obj/screen/zone_sel/update_icon(mob/user)
-	cut_overlays()
-	add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[selecting]"))
-	user.zone_selected = selecting
-
-/obj/screen/zone_sel/alien
-	icon = 'icons/mob/screen_alien.dmi'
-
-/obj/screen/zone_sel/alien/update_icon(mob/user)
-	cut_overlays()
-	add_overlay(mutable_appearance('icons/mob/screen_alien.dmi', "[selecting]"))
-	user.zone_selected = selecting
-
-/obj/screen/zone_sel/robot
-	icon = 'icons/mob/screen_cyborg.dmi'
-
 
 /obj/screen/flash
 	name = "flash"
@@ -486,70 +376,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = UI_DAMAGE_LAYER
 	plane = FULLSCREEN_PLANE
-
-/obj/screen/healths
-	name = "health"
-	icon_state = "health0"
-	screen_loc = ui_health
-
-/obj/screen/healths/alien
-	icon = 'icons/mob/screen_alien.dmi'
-	screen_loc = ui_alien_health
-
-/obj/screen/healths/robot
-	icon = 'icons/mob/screen_cyborg.dmi'
-	screen_loc = ui_borg_health
-
-/obj/screen/healths/blob
-	name = "blob health"
-	icon_state = "block"
-	screen_loc = ui_internal
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/obj/screen/healths/blob/naut
-	name = "health"
-	icon = 'icons/mob/blob.dmi'
-	icon_state = "nauthealth"
-
-/obj/screen/healths/blob/naut/core
-	name = "overmind health"
-	screen_loc = ui_health
-	icon_state = "corehealth"
-
-/obj/screen/healths/guardian
-	name = "summoner health"
-	icon = 'icons/mob/guardian.dmi'
-	icon_state = "base"
-	screen_loc = ui_health
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/obj/screen/healths/clock
-	icon = 'icons/mob/actions.dmi'
-	icon_state = "bg_clock"
-	screen_loc = ui_health
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/obj/screen/healths/clock/gear
-	icon = 'icons/mob/clockwork_mobs.dmi'
-	icon_state = "bg_gear"
-	screen_loc = ui_internal
-
-/obj/screen/healths/revenant
-	name = "essence"
-	icon = 'icons/mob/actions.dmi'
-	icon_state = "bg_revenant"
-	screen_loc = ui_health
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/obj/screen/healths/construct
-	icon = 'icons/mob/screen_construct.dmi'
-	icon_state = "artificer_health0"
-	screen_loc = ui_construct_health
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/obj/screen/healthdoll
-	name = "health doll"
-	screen_loc = ui_healthdoll
 
 /obj/screen/mood
 	name = "mood"
