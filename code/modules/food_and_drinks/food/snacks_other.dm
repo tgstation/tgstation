@@ -40,6 +40,7 @@
 	list_reagents = list("nutriment" = 3, "vitamin" = 1)
 	tastes = list("something sweet" = 1)
 	foodtype = DAIRY
+	
 /obj/item/reagent_containers/food/snacks/watermelonslice
 	name = "watermelon slice"
 	desc = "A slice of watery goodness."
