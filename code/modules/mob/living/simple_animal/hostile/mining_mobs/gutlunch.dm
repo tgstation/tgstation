@@ -123,7 +123,7 @@
 //Gutlunch udder
 /obj/item/udder/gutlunch
 	name = "nutrient sac"
-	milktype = "milk"
+	milktype = "cream"
 
 /obj/item/udder/gutlunch/Initialize()
 	. = ..()
@@ -132,7 +132,7 @@
 
 /obj/item/udder/gutlunch/generateMilk()
 	if(prob(60))
-		reagents.add_reagent("cream", rand(2, 5))
+		reagents.add_reagent("[milktype]", rand(2, 5))
 	if(prob(45))
 		reagents.add_reagent("salglu_solution", rand(2,5))
 
