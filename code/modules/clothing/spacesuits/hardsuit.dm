@@ -115,7 +115,6 @@
 	..()
 
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
-	. = ..()
 	if(istype(I, /obj/item/tank/jetpack/suit))
 		if(jetpack)
 			to_chat(user, "<span class='warning'>[src] already has a jetpack installed.</span>")
@@ -140,6 +139,7 @@
 		jetpack.forceMove(drop_location())
 		jetpack = null
 		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
+	return ..()
 
 
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
