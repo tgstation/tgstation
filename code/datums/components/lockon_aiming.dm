@@ -238,5 +238,5 @@
 		cd++
 		CHECK_TICK
 
-/datum/component/lockon_aiming/OnTransfer(datum/new_parent)
-	CRASH("Warning: Lockon aiming component transfer attempted, but transfer behavior is not implemented!")
+/datum/component/lockon_aiming/PostTransfer(datum/new_parent)
+	return COMPONENT_INCOMPATIBLE

@@ -433,7 +433,8 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"orangejuice",
 		"limejuice",
 		"tomatojuice",
-		"lemonjuice"
+		"lemonjuice",
+		"menthol"
 	)
 	emagged_reagents = list(
 		"thirteenloko",
@@ -465,7 +466,8 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"hcider",
 		"creme_de_menthe",
 		"creme_de_cacao",
-		"triple_sec"
+		"triple_sec",
+		"sake"
 	)
 	emagged_reagents = list(
 		"ethanol",
