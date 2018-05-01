@@ -209,7 +209,7 @@ fo
 /datum/reagent/consumable/milk
 	name = "Milk"
 	id = "milk"
-	description = "An opaque white liquid produced by the mammary glands of mammals."
+	description = "An opaque white liquid produced by the mammary glands of cows."
 	color = "#DFDFDF" // rgb: 223, 223, 223
 	taste_description = "milk"
 	glass_icon_state = "glass_white"
@@ -231,7 +231,7 @@ fo
 /datum/reagent/consumable/milk/goatmilk
 	name = "Goat Milk"
 	id = "goatmilk"
-	description = "An liquid produced by goats."
+	description = "An white liquid produced by the mammary gland of goats."
 	color = "#DFDFDF" // rgb: 223, 223, 223
 	taste_description = "something very sweet"
 	glass_icon_state = "glass_white"
