@@ -111,7 +111,7 @@
 /datum/trait/hlumi_eyes
 	name = "High Luminosity Eyes"
 	desc = "You decided to upgrade your weak fleshy eyes with these cool cybernetic ones, your vision is augumented!"
-	value = 1
+	value = 2
 
 /datum/trait/hlumi_eyes/on_spawn()
 	var/mob/living/carbon/human/H = trait_holder
