@@ -23,7 +23,7 @@
 
 /obj/item/reagent_containers/food/snacks/store/fetacheesewheel
 	name = "feta cheese wheel"
-	desc = "A big wheel of delcious Feta."
+	desc = "A big wheel of delcious feta."
 	icon_state = "fetacheesewheel"
 	slice_path = /obj/item/reagent_containers/food/snacks/fetacheesslice
 	slices_num = 5
