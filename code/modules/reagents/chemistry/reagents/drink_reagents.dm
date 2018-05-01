@@ -721,7 +721,6 @@
 	description = "Milk for cool kids."
 	color = "#7D4E29"
 	taste_description = "chocolate milk"
-
 /datum/reagent/consumable/menthol
 	name = "Menthol"
 	id = "menthol"

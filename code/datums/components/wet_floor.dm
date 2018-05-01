@@ -135,12 +135,14 @@
 	for(var/i in time_left_list)
 		. |= text2num(i)
 
-/datum/component/wet_floor/OnTransfer(datum/to_datum)
-	if(!isopenturf(to_datum))
-		return COMPONENT_INCOMPATIBLE
+/datum/component/wet_floor/PreTransfer()
 	var/turf/O = parent
 	O.cut_overlay(current_overlay)
-	var/turf/T = to_datum
+
+/datum/component/wet_floor/PostTransfer()
+	if(!isopenturf(parent))
+		return COMPONENT_INCOMPATIBLE
+	var/turf/T = parent
 	T.add_overlay(current_overlay)
 
 /datum/component/wet_floor/proc/add_wet(type, duration_minimum = 0, duration_add = 0, duration_maximum = MAXIMUM_WET_TIME, _permanent = FALSE)

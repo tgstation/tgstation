@@ -23,10 +23,12 @@
 	remove()
 	return ..()
 
-/datum/component/decal/OnTransfer(atom/thing)
+/datum/component/decal/PreTransfer()
 	remove()
-	remove(thing)
-	apply(thing)
+
+/datum/component/decal/PostTransfer()
+	remove()
+	apply()
 
 /datum/component/decal/proc/generate_appearance(_icon, _icon_state, _dir, _layer, _color)
 	if(!_icon || !_icon_state)

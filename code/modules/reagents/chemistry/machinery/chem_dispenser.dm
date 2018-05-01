@@ -436,7 +436,6 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"tomatojuice",
 		"lemonjuice",
 		"menthol"
-
 	)
 	emagged_reagents = list(
 		"thirteenloko",
