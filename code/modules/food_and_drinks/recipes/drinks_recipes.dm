@@ -661,4 +661,4 @@
 	name = "Mojito"
 	id = "mojito"
 	results = list("mojito" = 5)
-	required_reagents = list("rum" = 1, "sugar" = 1, "limejuice" = 1, "sodawater" = 1, "creme_de_menthe" = 1)
+	required_reagents = list("rum" = 1, "sugar" = 1, "limejuice" = 1, "sodawater" = 1, "menthol" = 1)
