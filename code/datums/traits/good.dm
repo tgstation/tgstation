@@ -113,7 +113,7 @@
 
 /datum/trait/hlumi_eyes
 	name = "High-Luminosity Eyes"
-	desc = "Your eyes have been cybernetically enhanced, High-Luminosity allow you to change your eye color at moments notice and shine light towards you."
+	desc = "Your eyes have been cybernetically enhanced, high-Luminosity allow you to change your eye color at a moment's notice and shine light away from yourself"
 	value = 1
 
 /datum/trait/hlumi_eyes/on_spawn()
@@ -123,4 +123,4 @@
 	H.regenerate_icons()
 
 /datum/trait/hlumi_eyes/post_add()
-	to_chat(trait_holder, "<span class='boldnotice'>Your eyes have been enhanced with a cybernetic prototype High-Luminosity eyes.</span>")
+	to_chat(trait_holder, "<span class='boldnotice'>Your eyes have been enhanced with cybernetic high-luminosity eyes.</span>")
