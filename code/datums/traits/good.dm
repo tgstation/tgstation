@@ -108,9 +108,12 @@
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
+
+
+
 /datum/trait/hlumi_eyes
-	name = "High Luminosity Eyes"
-	desc = "You decided to upgrade your weak fleshy eyes with these cool cybernetic ones, your vision is augumented!"
+	name = "High-Luminosity Eyes"
+	desc = "Your eyes have been cybernetically enhanced, High-Luminosity allow you to change your eye color at moments notice and shine light towards you."
 	value = 1
 
 /datum/trait/hlumi_eyes/on_spawn()
@@ -120,4 +123,4 @@
 	H.regenerate_icons()
 
 /datum/trait/hlumi_eyes/post_add()
-	to_chat(trait_holder, "<span class='boldannounce'>Your eyes were replaced with a High Luminosity Eyes. You can change their color at will.</span>")
+	to_chat(trait_holder, "<span class='boldnotice'>Your eyes have been enhanced with a cybernetic prototype High-Luminosity eyes.</span>")
