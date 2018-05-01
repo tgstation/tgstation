@@ -205,17 +205,7 @@
 	var/mob/living/carbon/human/active_owner
 
 /obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
-	if(slot == SLOT_NECK)
-		return TRUE
-
-/obj/item/clothing/neck/necklace/memento_mori/ui_action_click(mob/user, action)
-	if(!active_owner)
-		if(ishuman(user))
-			memento(user)
-	else
-		to_chat(user, "<span class='warning'>You try to free your lifeforce from the pendant...</span>")
-		if(do_after(user, 40, target = src))
-			mori()
+	return slot == SLOT_NECK
 
 /obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
 	..()
@@ -230,7 +220,7 @@
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/memento(mob/living/carbon/human/user)
 	to_chat(user, "<span class='warning'>You feel your life being drained by the pendant...</span>")
-	if(do_after(user, 40, target = src))
+	if(do_after(user, 40, target = user))
 		to_chat(user, "<span class='notice'>Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die.</span>")
 		user.add_trait(TRAIT_NODEATH, "memento_mori")
 		user.add_trait(TRAIT_NOHARDCRIT, "memento_mori")
@@ -248,9 +238,19 @@
 	H.dust(TRUE, TRUE)
 
 /datum/action/item_action/hands_free/memento_mori
-	check_flags = 0
+	check_flags = NONE
 	name = "Memento Mori"
-	desc = "Bind your life to the pendant, preserving it yet dooming it."
+	desc = "Bind your life to the pendant."
+
+/datum/action/item_action/hands_free/memento_mori/Trigger()
+	var/obj/item/clothing/neck/necklace/memento_mori/MM = target
+	if(!MM.active_owner)
+		if(ishuman(owner))
+			memento(owner)
+	else
+		to_chat(owner, "<span class='warning'>You try to free your lifeforce from the pendant...</span>")
+		if(do_after(owner, 40, target = owner))
+			MM.mori()
 
 //Wisp Lantern
 /obj/item/wisp_lantern
