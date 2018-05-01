@@ -126,7 +126,7 @@
 		if(user.transferItemToLoc(I, src))
 			jetpack = I
 			to_chat(user, "<span class='notice'>You successfully install the jetpack into [src].</span>")
-
+		return
 	else if(istype(I, /obj/item/screwdriver))
 		if(!jetpack)
 			to_chat(user, "<span class='warning'>[src] has no jetpack installed.</span>")
@@ -139,6 +139,7 @@
 		jetpack.forceMove(drop_location())
 		jetpack = null
 		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
+		return
 	return ..()
 
 
