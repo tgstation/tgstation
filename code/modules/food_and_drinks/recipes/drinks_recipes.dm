@@ -632,7 +632,7 @@
 	required_reagents = list("rice" = 10)
 	required_catalysts = list("enzyme" = 5)
 	mix_message = "The rice grains ferment into a clear, sweet-smelling liquid."
-<<<<<<< .mine
+
 
 /datum/chemical_reaction/alexander
 	name = "Alexander"
@@ -664,8 +664,6 @@
 	results = list("mojito" = 5)
 	required_reagents = list("rum" = 1, "sugar" = 1, "limejuice" = 1, "sodawater" = 1, "menthol" = 1)
 
-=======
-
 /datum/chemical_reaction/alexander
 	name = "Alexander"
 	id = "alexander"
@@ -696,4 +694,3 @@
 	results = list("mojito" = 5)
 	required_reagents = list("rum" = 1, "sugar" = 1, "limejuice" = 1, "sodawater" = 1, "menthol" = 1)
 
->>>>>>> .theirs
