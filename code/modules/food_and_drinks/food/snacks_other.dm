@@ -21,6 +21,26 @@
 	tastes = list("cheese" = 1)
 	foodtype = DAIRY
 
+/obj/item/reagent_containers/food/snacks/store/fetacheesewheel
+	name = "feta cheese wheel"
+	desc = "A big wheel of delcious Feta."
+	icon_state = "fetacheesewheel"
+	slice_path = /obj/item/reagent_containers/food/snacks/fetacheesslice
+	slices_num = 5
+	list_reagents = list("nutriment" = 15, "vitamin" = 5)
+	w_class = WEIGHT_CLASS_NORMAL
+	tastes = list("sweet" = 1)
+	foodtype = DAIRY
+
+/obj/item/reagent_containers/food/snacks/fetacheesslice
+	name = "feta cheese slice"
+	desc = "A wedge of delicious Feta. The cheese wheel it was cut from can't have gone far."
+	icon_state = "fetacheeseslice"
+	filling_color = "#CFD4DA"
+	list_reagents = list("nutriment" = 3, "vitamin" = 1)
+	tastes = list("something sweet" = 1)
+	foodtype = DAIRY
+
 /obj/item/reagent_containers/food/snacks/watermelonslice
 	name = "watermelon slice"
 	desc = "A slice of watery goodness."
@@ -559,7 +579,7 @@
 	icon_state = "pineapple_slice"
 	filling_color = "#F6CB0B"
 	tastes = list("pineapple" = 1)
-	foodtype = FRUIT | PINEAPPLE
+	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/snacks/tinychocolate
 	name = "chocolate"
