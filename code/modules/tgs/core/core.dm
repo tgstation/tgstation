@@ -20,10 +20,10 @@
 
 	var/list/version_bits = splittext(tgs_version, ".")
 
-	var/super = text2num(version_bits[0])
-	var/major = text2num(version_bits[1])
-	var/minor = text2num(version_bits[2])
-	var/patch = text2num(version_bits[3])
+	var/super = text2num(version_bits[1])
+	var/major = text2num(version_bits[2])
+	var/minor = text2num(version_bits[3])
+	var/patch = text2num(version_bits[4])
 
 	switch(super)
 		if(3)
