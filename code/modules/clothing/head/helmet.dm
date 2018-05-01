@@ -206,11 +206,12 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
-	// old knight helmets do not offer protection against loud noises
-	flags_2 = NONE
+
 
 /obj/item/clothing/head/helmet/knight/Initialize(mapload)
 	. = ..()
+	var/datum/component = GetComponent(/datum/component/wearertargeting/earprotection)
+	qdel(component)
 
 /obj/item/clothing/head/helmet/knight/blue
 	icon_state = "knight_blue"
