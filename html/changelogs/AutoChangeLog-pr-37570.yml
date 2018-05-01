@@ -1,4 +1,0 @@
-author: "BuffEngineering"
-delete-after: True
-changes: 
-  - bugfix: "Nanotrasen has graciously connected the port bow solar's SMES to the main grid."
