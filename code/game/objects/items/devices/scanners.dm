@@ -425,7 +425,6 @@ SLIME SCANNER
 		var/n2_concentration = env_gases[/datum/gas/nitrogen][MOLES]/total_moles
 		var/co2_concentration = env_gases[/datum/gas/carbon_dioxide][MOLES]/total_moles
 		var/plasma_concentration = env_gases[/datum/gas/plasma][MOLES]/total_moles
-		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
 			to_chat(user, "<span class='info'>Nitrogen: [round(n2_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/nitrogen][MOLES], 0.01)] mol)</span>")
@@ -446,6 +445,8 @@ SLIME SCANNER
 			to_chat(user, "<span class='alert'>Plasma: [round(plasma_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/plasma][MOLES], 0.01)] mol)</span>")
 		else
 			to_chat(user, "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/plasma][MOLES], 0.01)] mol)</span>")
+
+		environment.garbage_collect()
 
 		for(var/id in env_gases)
 			if(id in GLOB.hardcoded_gases)
@@ -533,8 +534,8 @@ SLIME SCANNER
 		var/volume = air_contents.return_volume() //could just do mixture.volume... but safety, I guess?
 
 		if(total_moles > 0)
-			to_chat(user, "<span class='notice'>Moles: [round(total_moles, 0.01)]</span>")
-			to_chat(user, "<span class='notice'>Volume: [volume]</span>")
+			to_chat(user, "<span class='notice'>Moles: [round(total_moles, 0.01)] mol</span>")
+			to_chat(user, "<span class='notice'>Volume: [volume] L</span>")
 			to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.01)] kPa</span>")
 
 			var/list/cached_gases = air_contents.gases
