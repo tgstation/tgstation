@@ -3,7 +3,7 @@
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
-	var/list/content_in_item = list()
+	var/list/content_in_item
 	var/component_type = /datum/component/storage/concrete
 
 /obj/item/storage/get_dumping_location(obj/item/storage/source,mob/user)
