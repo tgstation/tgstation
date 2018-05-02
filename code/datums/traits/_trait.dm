@@ -120,7 +120,7 @@ Use this as a guideline
 	var/mob/living/carbon/human/H = trait_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
 	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, slot_glasses)
+	H.equip_to_slot(glasses, SLOT_GLASSES)
 	H.regenerate_icons()
 
 //This whole proc is called automatically

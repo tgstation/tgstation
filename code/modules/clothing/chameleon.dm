@@ -63,8 +63,8 @@
 		// it's NODROP_1
 		D.dropItemToGround(target, TRUE)
 		qdel(old_headgear)
-		// where is `slot_head` defined? WHO KNOWS
-		D.equip_to_slot(new_headgear, slot_head)
+		// where is `SLOT_HEAD` defined? WHO KNOWS
+		D.equip_to_slot(new_headgear, SLOT_HEAD)
 	return 1
 
 
@@ -331,8 +331,7 @@
 	item_state = "gas_alt"
 	resistance_flags = NONE
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-
-	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -408,7 +407,7 @@
 	icon_state = "black"
 	item_color = "black"
 	desc = "A pair of black shoes."
-	flags_1 = NOSLIP_1
+	clothing_flags = NOSLIP
 
 /obj/item/clothing/shoes/chameleon/noslip/broken/Initialize()
 	. = ..()
@@ -420,7 +419,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/chameleon)
 	clumsy_check = 0
 	item_flags = NONE
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 	cell_type = /obj/item/stock_parts/cell/bluespace
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -601,40 +600,39 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/device/radio/headset/chameleon
+/obj/item/radio/headset/chameleon
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/device/radio/headset/chameleon/Initialize()
+/obj/item/radio/headset/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/device/radio/headset
+	chameleon_action.chameleon_type = /obj/item/radio/headset
 	chameleon_action.chameleon_name = "Headset"
 	chameleon_action.initialize_disguises()
 
-/obj/item/device/radio/headset/chameleon/emp_act(severity)
+/obj/item/radio/headset/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
 
-/obj/item/device/radio/headset/chameleon/broken/Initialize()
+/obj/item/radio/headset/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/device/pda/chameleon
+/obj/item/pda/chameleon
 	name = "PDA"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/device/pda/chameleon/Initialize()
+/obj/item/pda/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/device/pda
+	chameleon_action.chameleon_type = /obj/item/pda
 	chameleon_action.chameleon_name = "PDA"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/device/pda/heads, /obj/item/device/pda/ai, /obj/item/device/pda/ai/pai), only_root_path = TRUE)
+	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/pda/heads, /obj/item/pda/ai, /obj/item/pda/ai/pai), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
-/obj/item/device/pda/chameleon/emp_act(severity)
+/obj/item/pda/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
 
-/obj/item/device/pda/chameleon/broken/Initialize()
+/obj/item/pda/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
-

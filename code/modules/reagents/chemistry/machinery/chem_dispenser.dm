@@ -292,9 +292,6 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		update_icon()
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_deconstruction_crowbar(I))
 		return
 	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
@@ -413,6 +410,7 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	amount = 10
 	pixel_y = 6
 	layer = WALL_OBJ_LAYER
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks
 	working_state = null
 	nopower_state = null
 	dispensable_reagents = list(
@@ -435,7 +433,8 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"orangejuice",
 		"limejuice",
 		"tomatojuice",
-		"lemonjuice"
+		"lemonjuice",
+		"menthol"
 	)
 	emagged_reagents = list(
 		"thirteenloko",
@@ -450,6 +449,7 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "booze_dispenser"
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	dispensable_reagents = list(
 		"beer",
 		"kahlua",
@@ -466,7 +466,8 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"hcider",
 		"creme_de_menthe",
 		"creme_de_cacao",
-		"triple_sec"
+		"triple_sec",
+		"sake"
 	)
 	emagged_reagents = list(
 		"ethanol",

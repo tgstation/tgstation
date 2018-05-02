@@ -88,6 +88,7 @@
 	icon = 'icons/misc/beach.dmi'
 	flags_1 = NONE
 	attachment_holes = FALSE
+	bullet_bounce_sound = null
 
 /turf/open/floor/plating/beach/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -144,6 +145,7 @@
 	baseturfs = /turf/open/floor/plating/ice
 	slowdown = 1
 	attachment_holes = FALSE
+	bullet_sizzle = TRUE
 
 /turf/open/floor/plating/ice/Initialize()
 	. = ..()

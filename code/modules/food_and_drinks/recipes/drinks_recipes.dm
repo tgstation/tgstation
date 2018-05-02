@@ -624,3 +624,41 @@
 	results = list("crevice_spike" = 6)
 	required_reagents = list("limejuice" = 2, "capsaicin" = 4) //2 powdered delta (sour), 4 flanergide (spicy)
 	mix_message = "The mixture stings your eyes as it settles."
+
+/datum/chemical_reaction/sake
+	name = "sake"
+	id = "sake"
+	results = list("sake" = 10)
+	required_reagents = list("rice" = 10)
+	required_catalysts = list("enzyme" = 5)
+	mix_message = "The rice grains ferment into a clear, sweet-smelling liquid."
+
+/datum/chemical_reaction/alexander
+	name = "Alexander"
+	id = "alexander"
+	results = list("alexander" = 3)
+	required_reagents = list("cognac" = 1, "creme_de_cacao" = 1, "cream" = 1)
+
+/datum/chemical_reaction/sidecar
+	name = "Sidecar"
+	id = "sidecar"
+	results = list("sidecar" = 4)
+	required_reagents = list("cognac" = 2, "triple_sec" = 1, "lemonjuice" = 1)
+
+/datum/chemical_reaction/between_the_sheets
+	name = "Between the Sheets"
+	id = "between_the_sheets"
+	results = list("between_the_sheets" = 5)
+	required_reagents = list("rum" = 1, "sidecar" = 4)
+
+/datum/chemical_reaction/kamikaze
+	name = "Kamikaze"
+	id = "kamikaze"
+	results = list("kamikaze" = 3)
+	required_reagents = list("vodka" = 1, "triple_sec" = 1, "limejuice" = 1)
+
+/datum/chemical_reaction/mojito
+	name = "Mojito"
+	id = "mojito"
+	results = list("mojito" = 5)
+	required_reagents = list("rum" = 1, "sugar" = 1, "limejuice" = 1, "sodawater" = 1, "menthol" = 1)

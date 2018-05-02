@@ -24,7 +24,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	req_one_access = list(ACCESS_CARGO, ACCESS_CONSTRUCTION, ACCESS_HEADS, ACCESS_RESEARCH)
 	var/possible_destinations
 	clockwork = TRUE
-	var/obj/item/device/gps/internal/base/locator
+	var/obj/item/gps/internal/base/locator
 	circuit = /obj/item/circuitboard/computer/auxillary_base
 
 /obj/machinery/computer/auxillary_base/Initialize()
@@ -184,20 +184,19 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	return ZONE_SET
 
 
-/obj/item/device/assault_pod/mining
+/obj/item/assault_pod/mining
 	name = "Landing Field Designator"
 	icon_state = "gangtool-purple"
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	icon = 'icons/obj/device.dmi'
 	desc = "Deploy to designate the landing zone of the auxillary base."
 	w_class = WEIGHT_CLASS_SMALL
 	shuttle_id = "colony_drop"
 	var/setting = FALSE
 	var/no_restrictions = FALSE //Badmin variable to let you drop the colony ANYWHERE.
 
-/obj/item/device/assault_pod/mining/attack_self(mob/living/user)
+/obj/item/assault_pod/mining/attack_self(mob/living/user)
 	if(setting)
 		return
 
@@ -231,7 +230,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		if(BAD_TURF)
 			to_chat(user, "<span class='warning'>The landing zone contains turfs unsuitable for a base. Make sure you've removed all walls and dangerous terrain from the landing zone.</span>")
 
-/obj/item/device/assault_pod/mining/unrestricted
+/obj/item/assault_pod/mining/unrestricted
 	name = "omni-locational landing field designator"
 	desc = "Allows the deployment of the mining base ANYWHERE. Use with caution."
 	no_restrictions = TRUE

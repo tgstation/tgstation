@@ -241,7 +241,7 @@
 	name = "Alien Multitool"
 	desc = "An advanced multitool obtained through Abductor technology."
 	id = "alien_multitool"
-	build_path = /obj/item/device/multitool/abductor
+	build_path = /obj/item/multitool/abductor
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
 	category = list("Equipment")
@@ -310,6 +310,36 @@
 	build_path = /obj/item/holosign_creator
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	
+/datum/design/holosignsec
+	name = "Security Holobarrier Projector"
+	desc = "A holographic projector that creates holographic security barriers."
+	id = "holosignsec"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
+	build_path = /obj/item/holosign_creator/security
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	
+/datum/design/holosignengi
+	name = "Engineering Holobarrier Projector"
+	desc = "A holographic projector that creates holographic engineering barriers."
+	id = "holosignengi"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
+	build_path = /obj/item/holosign_creator/engineering
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	
+/datum/design/holosignatmos
+	name = "ATMOS Holofan Projector"
+	desc = "A holographic projector that creates holographic barriers that prevent changes in atmospheric conditions."
+	id = "holosignatmos"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_GOLD = 1000, MAT_SILVER = 1000)
+	build_path = /obj/item/holosign_creator/atmos
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /////////////////////////////////////////
 ////////////Tools//////////////

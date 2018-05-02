@@ -46,11 +46,11 @@
 		qdel(I)
 	for(var/obj/item/I in H.held_items)
 		qdel(I)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt/highlander(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), slot_ears)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), slot_l_store)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt/highlander(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/radio/headset/heads/captain(H), SLOT_EARS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), SLOT_L_STORE)
 	for(var/obj/item/pinpointer/nuke/P in H)
 		P.attack_self(H)
 	var/obj/item/card/id/W = new(H)
@@ -61,7 +61,7 @@
 	W.registered_name = H.real_name
 	W.flags_1 |= NODROP_1
 	W.update_label(H.real_name)
-	H.equip_to_slot_or_del(W, slot_wear_id)
+	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	sword = new(H)
 	if(!GLOB.highlander)

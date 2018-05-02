@@ -230,12 +230,12 @@
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
 	for(var/obj/item/I in Mob_Contents)
-		if(istype(I, /obj/item/device/pda))
-			var/obj/item/device/pda/P = I
+		if(istype(I, /obj/item/pda))
+			var/obj/item/pda/P = I
 			P.lock_code = ""
 
-		else if(istype(I, /obj/item/device/radio))
-			var/obj/item/device/radio/R = I
+		else if(istype(I, /obj/item/radio))
+			var/obj/item/radio/R = I
 			R.traitor_frequency = 0
 
 /datum/mind/proc/remove_all_antag() //For the Lazy amongst us.
@@ -257,8 +257,8 @@
 	. = TRUE
 
 	var/list/all_contents = traitor_mob.GetAllContents()
-	var/obj/item/device/pda/PDA = locate() in all_contents
-	var/obj/item/device/radio/R = locate() in all_contents
+	var/obj/item/pda/PDA = locate() in all_contents
+	var/obj/item/radio/R = locate() in all_contents
 	var/obj/item/pen/P
 
 	if (PDA) // Prioritize PDA pen, otherwise the pocket protector pens will be chosen, which causes numerous ahelps about missing uplink

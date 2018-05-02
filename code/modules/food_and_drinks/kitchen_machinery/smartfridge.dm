@@ -55,9 +55,6 @@
 	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
 		return
 
-	if(exchange_parts(user, O))
-		return
-
 	if(default_pry_open(O))
 		return
 
@@ -347,12 +344,12 @@
 /obj/machinery/smartfridge/extract/accept_check(obj/item/O)
 	if(istype(O, /obj/item/slime_extract))
 		return TRUE
-	if(istype(O, /obj/item/device/slime_scanner))
+	if(istype(O, /obj/item/slime_scanner))
 		return TRUE
 	return FALSE
 
 /obj/machinery/smartfridge/extract/preloaded
-	initial_contents = list(/obj/item/device/slime_scanner = 2)
+	initial_contents = list(/obj/item/slime_scanner = 2)
 
 // -----------------------------
 // Chemistry Medical Smartfridge

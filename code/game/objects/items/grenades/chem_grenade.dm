@@ -13,7 +13,7 @@
 	var/list/beakers = list()
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle)
 	var/affected_area = 3
-	var/obj/item/device/assembly_holder/nadeassembly = null
+	var/obj/item/assembly_holder/nadeassembly = null
 	var/assemblyattacher
 	var/ignition_temp = 10 // The amount of heat added to the reagents when this grenade goes off.
 	var/threatscale = 1 // Used by advanced grenades to make them slightly more worthy.
@@ -78,9 +78,9 @@
 			else
 				to_chat(user, "<span class='warning'>[I] is empty!</span>")
 
-	else if(stage == EMPTY && istype(I, /obj/item/device/assembly_holder))
+	else if(stage == EMPTY && istype(I, /obj/item/assembly_holder))
 		. = 1 // no afterattack
-		var/obj/item/device/assembly_holder/A = I
+		var/obj/item/assembly_holder/A = I
 		if(isigniter(A.a_left) == isigniter(A.a_right))	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 			return
 		if(!user.transferItemToLoc(I, src))
@@ -254,7 +254,7 @@
 	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
 
 /obj/item/grenade/chem_grenade/adv_release/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/multitool))
+	if(istype(I, /obj/item/multitool))
 		switch(unit_spread)
 			if(0 to 24)
 				unit_spread += 5

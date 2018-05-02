@@ -7,7 +7,7 @@
 	head = /obj/item/clothing/head/santa
 	back = /obj/item/storage/backpack/santabag
 	mask = /obj/item/clothing/mask/breath
-	r_pocket = /obj/item/device/flashlight
+	r_pocket = /obj/item/flashlight
 	gloves = /obj/item/clothing/gloves/color/red
 	belt = /obj/item/tank/internals/emergency_oxygen/double
 	id = /obj/item/card/id/gold
