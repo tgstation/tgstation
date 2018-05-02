@@ -633,13 +633,6 @@
 	required_catalysts = list("enzyme" = 5)
 	mix_message = "The rice grains ferment into a clear, sweet-smelling liquid."
 
-
-/datum/chemical_reaction/alexander
-	name = "Alexander"
-	id = "alexander"
-	results = list("alexander" = 3)
-	required_reagents = list("cognac" = 1, "creme_de_cacao" = 1, "cream" = 1)
-
 /datum/chemical_reaction/sidecar
 	name = "Sidecar"
 	id = "sidecar"
