@@ -10,8 +10,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
-	// god does not offer protection against loud noises
-	flags_2 = NONE
 
 /obj/item/clothing/suit/armor/riot/chaplain
 	name = "crusader armour"
@@ -64,20 +62,8 @@
 	name = "Templar Kit"
 
 /obj/item/storage/box/holy/PopulateContents()
-	new /obj/item/clothing/head/helmet/knight/templar(src)
-	new /obj/item/clothing/suit/armor/riot/knight/templar(src)
-
-/obj/item/clothing/head/helmet/chaplain/ancient
-	name = "ancient helmet"
-	desc = "None may pass!"
-	icon_state = "knight_ancient"
-	item_state = "knight_ancient"
-
-/obj/item/clothing/suit/armor/riot/chaplain/ancient
-	name = "ancient armour"
-	desc = "Defend the treasure..."
-	icon_state = "knight_ancient"
-	item_state = "knight_ancient"
+	new /obj/item/clothing/head/helmet/chaplain(src)
+	new /obj/item/clothing/suit/armor/riot/chaplain(src)
 
 /obj/item/storage/box/holy/student
 	name = "Profane Scholar Kit"
@@ -108,15 +94,27 @@
 	name = "Stone Sentinel Kit"
 
 /obj/item/storage/box/holy/sentinel/PopulateContents()
-	new /obj/item/clothing/suit/armor/riot/knight/ancient(src)
-	new /obj/item/clothing/head/helmet/knight/ancient(src)
+	new /obj/item/clothing/suit/armor/riot/chaplain/ancient(src)
+	new /obj/item/clothing/head/helmet/chaplain/ancient(src)
+
+/obj/item/clothing/head/helmet/chaplain/ancient
+	name = "ancient helmet"
+	desc = "None may pass!"
+	icon_state = "knight_ancient"
+	item_state = "knight_ancient"
+
+/obj/item/clothing/suit/armor/riot/chaplain/ancient
+	name = "ancient armour"
+	desc = "Defend the treasure..."
+	icon_state = "knight_ancient"
+	item_state = "knight_ancient"
 
 /obj/item/storage/box/holy/witchhunter
 	name = "Witchhunter Kit"
 
 /obj/item/storage/box/holy/witchhunter/PopulateContents()
-	new /obj/item/clothing/suit/witchhunter(src)
-	new /obj/item/clothing/head/witchunter_hat(src)
+	new /obj/item/clothing/suit/armor/riot/chaplain/witchhunter(src)
+	new /obj/item/clothing/head/helmet/chaplain/witchunter_hat(src)
 
 /obj/item/clothing/suit/armor/riot/chaplain/witchhunter
 	name = "witchunter garb"
