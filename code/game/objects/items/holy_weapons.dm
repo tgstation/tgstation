@@ -34,7 +34,7 @@
 /obj/item/holybeacon/proc/beacon_armor(mob/M)
 	if(SSreligion.holy_armor_type)
 		return
-	var/obj/item/nullrod/holy_armor
+	var/obj/item/storage/box/holy/holy_armor_box
 	var/list/holy_armor_list = typesof(/obj/item/storage/box/holy)
 	var/list/display_names = list()
 	for(var/V in holy_armor_list)
@@ -48,15 +48,15 @@
 	var/index = display_names.Find(choice)
 	var/A = holy_armor_list[index]
 
-	holy_armor = new A
+	holy_armor_box = new A
 
-	SSreligion.holy_armor_type = holy_armor.type
+	SSreligion.holy_armor_type = holy_armor_box.type
 
 	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
 
-	if(holy_armor)
+	if(holy_armor_box)
 		used = TRUE
-		M.put_in_active_hand(holy_armor)
+		M.put_in_active_hand(holy_armor_box)
 
 /obj/item/storage/box/holy
 	name = "Templar Kit"
