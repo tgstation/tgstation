@@ -15,7 +15,7 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 60, 1)
 
 /obj/item/holybeacon/proc/beacon_armor(mob/M)
-	if(SSreligion.holy_weapon_type)
+	if(SSreligion.holy_armor_type)
 		return
 	var/obj/item/nullrod/holy_armor
 	var/list/holy_armor_list = typesof(/obj/item/storage/box/holy)
