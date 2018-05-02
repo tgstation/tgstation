@@ -38,29 +38,63 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 // Updates what the aiEye can see. It is recommended you use this when the aiEye moves or it's location is set.
 
-/datum/cameranet/proc/visibility(mob/camera/aiEye/ai)
-	// 0xf = 15
-	var/x1 = max(0, ai.x - 16) & ~(CHUNK_SIZE - 1)
-	var/y1 = max(0, ai.y - 16) & ~(CHUNK_SIZE - 1)
-	var/x2 = min(world.maxx, ai.x + 16) & ~(CHUNK_SIZE - 1)
-	var/y2 = min(world.maxy, ai.y + 16) & ~(CHUNK_SIZE - 1)
+/datum/cameranet/proc/visibility(list/moved_eyes, client/C, list/other_eyes)
+	if(!islist(moved_eyes))
+		moved_eyes = moved_eyes ? list(moved_eyes) : list()
+	if(islist(other_eyes))
+		other_eyes = (other_eyes - moved_eyes)
+	else
+		other_eyes = list()
 
-	var/list/visibleChunks = list()
+	var/list/chunks_pre_seen = list()
+	var/list/chunks_post_seen = list()
 
-	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
-		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-			visibleChunks |= getCameraChunk(x, y, ai.z)
+	for(var/V in moved_eyes)
+		var/mob/camera/aiEye/eye = V
+		if(C)
+			chunks_pre_seen |= eye.visibleCameraChunks
+		// 0xf = 15
+		var/static_range = eye.static_visibility_range
+		var/x1 = max(0, eye.x - static_range) & ~(CHUNK_SIZE - 1)
+		var/y1 = max(0, eye.y - static_range) & ~(CHUNK_SIZE - 1)
+		var/x2 = min(world.maxx, eye.x + static_range) & ~(CHUNK_SIZE - 1)
+		var/y2 = min(world.maxy, eye.y + static_range) & ~(CHUNK_SIZE - 1)
 
-	var/list/remove = ai.visibleCameraChunks - visibleChunks
-	var/list/add = visibleChunks - ai.visibleCameraChunks
+		var/list/visibleChunks = list()
 
-	for(var/chunk in remove)
-		var/datum/camerachunk/c = chunk
-		c.remove(ai)
+		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
+			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
+				visibleChunks |= getCameraChunk(x, y, eye.z)
 
-	for(var/chunk in add)
-		var/datum/camerachunk/c = chunk
-		c.add(ai)
+		var/list/remove = eye.visibleCameraChunks - visibleChunks
+		var/list/add = visibleChunks - eye.visibleCameraChunks
+
+		for(var/chunk in remove)
+			var/datum/camerachunk/c = chunk
+			c.remove(eye, FALSE)
+
+		for(var/chunk in add)
+			var/datum/camerachunk/c = chunk
+			c.add(eye, FALSE)
+
+		if(C)
+			chunks_post_seen |= eye.visibleCameraChunks
+
+	if(C)
+		for(var/V in other_eyes)
+			var/mob/camera/aiEye/eye = V
+			chunks_post_seen |= eye.visibleCameraChunks
+
+		var/list/remove = chunks_pre_seen - chunks_post_seen
+		var/list/add = chunks_post_seen - chunks_pre_seen
+
+		for(var/chunk in remove)
+			var/datum/camerachunk/c = chunk
+			C.images -= c.obscured
+
+		for(var/chunk in add)
+			var/datum/camerachunk/c = chunk
+			C.images += c.obscured
 
 // Updates the chunks that the turf is located in. Use this when obstacles are destroyed or	when doors open.
 

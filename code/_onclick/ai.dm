@@ -26,6 +26,14 @@
 		return
 	next_click = world.time + 1
 
+	if(multicam_on)
+		var/turf/T = get_turf(A)
+		if(T)
+			for(var/obj/screen/movable/pic_in_pic/ai/P in T.vis_locs)
+				if(P.ai == src)
+					P.Click(params)
+					break
+
 	if(check_click_intercept(params,A))
 		return
 
