@@ -1,5 +1,24 @@
 // CHAPLAIN CUSTOM ARMORS //
 
+/obj/item/clothing/head/helmet/chaplain
+	name = "crusader helmet"
+	desc = "Deus Vult."
+	icon_state = "knight_templar"
+	item_state = "knight_templar"
+	armor = list("melee" = 41, "bullet" = 15, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 0, "acid" = 50)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	strip_delay = 80
+	dog_fashion = null
+	// god does not offer protection against loud noises
+	flags_2 = NONE
+
+/obj/item/clothing/suit/armor/riot/chaplain
+	name = "crusader armour"
+	desc = "God wills it!"
+	icon_state = "knight_templar"
+	item_state = "knight_templar"
+
 /obj/item/holybeacon
 	name = "armaments beacon"
 	desc = "Contains a set of armaments for the chaplain."
@@ -42,13 +61,26 @@
 		M.put_in_active_hand(holy_armor)
 
 /obj/item/storage/box/holy
-
-/obj/item/storage/box/holy/crusader
 	name = "Templar Kit"
 
-/obj/item/storage/box/holy/crusader/PopulateContents()
+/obj/item/storage/box/holy/PopulateContents()
 	new /obj/item/clothing/head/helmet/knight/templar(src)
 	new /obj/item/clothing/suit/armor/riot/knight/templar(src)
+
+/obj/item/clothing/head/helmet/knight/ancient
+	name = "ancient helmet"
+	desc = "None may pass!"
+	icon_state = "knight_ancient"
+	item_state = "knight_ancient"
+
+/obj/item/clothing/suit/armor/riot/knight/ancient
+	name = "ancient armour"
+	desc = "Defend the treasure..."
+	icon_state = "knight_ancient"
+	item_state = "knight_ancient"
+
+/obj/item/storage/box/holy/crusader
+
 
 /obj/item/storage/box/holy/student
 	name = "Profane Scholar Kit"
