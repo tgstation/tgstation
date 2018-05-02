@@ -67,20 +67,17 @@
 	new /obj/item/clothing/head/helmet/knight/templar(src)
 	new /obj/item/clothing/suit/armor/riot/knight/templar(src)
 
-/obj/item/clothing/head/helmet/knight/ancient
+/obj/item/clothing/head/helmet/chaplain/ancient
 	name = "ancient helmet"
 	desc = "None may pass!"
 	icon_state = "knight_ancient"
 	item_state = "knight_ancient"
 
-/obj/item/clothing/suit/armor/riot/knight/ancient
+/obj/item/clothing/suit/armor/riot/chaplain/ancient
 	name = "ancient armour"
 	desc = "Defend the treasure..."
 	icon_state = "knight_ancient"
 	item_state = "knight_ancient"
-
-/obj/item/storage/box/holy/crusader
-
 
 /obj/item/storage/box/holy/student
 	name = "Profane Scholar Kit"
@@ -89,7 +86,7 @@
 	new /obj/item/clothing/suit/studentuni(src)
 	new /obj/item/clothing/head/cage(src)
 
-/obj/item/clothing/suit/studentuni
+/obj/item/clothing/suit/armor/riot/chaplain/studentuni
 	name = "student robe"
 	desc = "The uniform of a bygone institute of learning."
 	icon_state = "studentuni"
@@ -97,7 +94,7 @@
 	body_parts_covered = ARMS|CHEST
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
-/obj/item/clothing/head/cage
+/obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
 	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
 	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
@@ -121,7 +118,7 @@
 	new /obj/item/clothing/suit/witchhunter(src)
 	new /obj/item/clothing/head/witchunter_hat(src)
 
-/obj/item/clothing/suit/witchhunter
+/obj/item/clothing/suit/armor/riot/chaplain/witchhunter
 	name = "witchunter garb"
 	desc = "This worn outfit saw much use back in the day."
 	icon_state = "witchhunter"
@@ -129,7 +126,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
-/obj/item/clothing/head/witchunter_hat
+/obj/item/clothing/head/helmet/chaplain/witchunter_hat
 	name = "witchunter hat"
 	desc = "This hat saw much use back in the day."
 	icon_state = "witchhunterhat"
