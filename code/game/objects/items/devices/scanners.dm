@@ -363,7 +363,7 @@ SLIME SCANNER
 	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
 	return BRUTELOSS
 
-/obj/item/analyzer/afterattack(holder, mob/user, proximity_flags)
+/obj/item/analyzer/afterattack(obj/holder, mob/user, proximity_flags)
 	if(holder.Adjacent(user))
 		//there has to be a better way to do this
 		if (istype(holder, /obj/item/tank))
