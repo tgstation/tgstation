@@ -14,34 +14,19 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define NODROP_1					(1<<1)		// This flag makes it so that an item literally cannot be removed at all, or at least that's how it should be. Only deleted.
 #define NOBLUDGEON_1				(1<<2)		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
-
-#define HEAR_1						(1<<4)		// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
-#define CHECK_RICOCHET_1			(1<<5)		// Projectiels will check ricochet on things impacted that have this.
-#define CONDUCT_1					(1<<6)		// conducts electricity (metal etc.)
-#define ABSTRACT_1					(1<<7)		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
+#define HEAR_1						(1<<3)		// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
+#define CHECK_RICOCHET_1			(1<<4)		// Projectiels will check ricochet on things impacted that have this.
+#define CONDUCT_1					(1<<5)		// conducts electricity (metal etc.)
+#define ABSTRACT_1					(1<<6)		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
 #define NODECONSTRUCT_1				(1<<7)		// For machines and structures that should not break into parts, eg, holodeck stuff
 #define OVERLAY_QUEUED_1			(1<<8)		// atom queued to SSoverlay
 #define ON_BORDER_1					(1<<9)		// item has priority to check when entering or leaving
+#define DROPDEL_1					(1<<10)	// When dropped, it calls qdel on itself
+#define PREVENT_CLICK_UNDER_1		(1<<11)	//Prevent clicking things below it on the same turf eg. doors/ fulltile windows
+#define NO_EMP_WIRES_1				(1<<12)
+#define HOLOGRAM_1					(1<<13)
+#define TESLA_IGNORE_1				(1<<14) // TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
 
-#define DROPDEL_1					(1<<14)	// When dropped, it calls qdel on itself
-#define PREVENT_CLICK_UNDER_1		(1<<15)	//Prevent clicking things below it on the same turf eg. doors/ fulltile windows
-
-/* Secondary atom flags, for the flags_2 var, denoted with a _2 */
-
-
-#define NO_EMP_WIRES_2				(1<<1)
-#define HOLOGRAM_2					(1<<2)
-
-#define BANG_PROTECT_2				(1<<6)
-
-// A mob with OMNITONGUE has no restriction in the ability to speak
-// languages that they know. So even if they wouldn't normally be able to
-// through mob or tongue restrictions, this flag allows them to ignore
-// those restrictions.
-#define OMNITONGUE_2				(1<<8)
-
-// TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
-#define TESLA_IGNORE_2				(1<<9)
 
 //turf-only flags
 #define NOJAUNT_1				(1<<0)
@@ -50,7 +35,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_DEATHRATTLE_1		(1<<4) // Do not notify deadchat about any deaths that occur on this turf.
 #define NO_RUINS_1				(1<<5) //Blocks ruins spawning on the turf
 #define NO_LAVA_GEN_1			(1<<6) //Blocks lava rivers being generated on the turf
-//#define CHECK_RICOCHET_1		32		//Same thing as atom flag.
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
