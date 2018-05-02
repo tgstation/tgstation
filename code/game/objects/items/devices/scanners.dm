@@ -343,7 +343,7 @@ SLIME SCANNER
 	desc = "A hand-held environmental scanner which reports current gas levels. Alt-Click to use the built in barometer function."
 	name = "analyzer"
 	icon = 'icons/obj/device.dmi'
-	icon_state = "atmos"
+	icon_state = "analyzer"
 	item_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -520,7 +520,7 @@ SLIME SCANNER
 
 /obj/item/analyzer/proc/atmosanalyzer_scan(mixture, mob/user, obj/target = src)
 	var/obj/icon = target
-	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(src))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
+	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(src))] [target].", "<span class='notice'>You use the [advanced ? "advanced analyzer" : "analyzer"] on [icon2html(icon, user)] [target].</span>")
 	to_chat(user, "<span class='boldnotice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
 
 	var/rounding_precision = advanced ? 0.01 : 1
@@ -559,8 +559,8 @@ SLIME SCANNER
 /obj/item/analyzer/advanced
 	desc = "A more robust version of normal analyzers, utilized by toxins scientists and engineers. Alt-Click to use the built in barometer function."
 	name = "advanced analyzer"
-	icon_state = "atmos"
-	item_state = "analyzer_advanced"
+	icon_state = "adv_analyzer"
+	item_state = "analyzer" //same inhand as regular analyzers
 	advanced = TRUE //advanced analyzer.
 
 //slime scanner
