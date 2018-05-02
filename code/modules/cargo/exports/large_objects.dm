@@ -27,7 +27,7 @@
 	exclude_types = list()
 
 /datum/export/large/crate/coffin
-	cost = 50//so botany doesnt meme points too hard
+	cost = 250//50 wooden crates cost 2000 points, and you can make 10 coffins in seconds with those planks. Each coffin selling for 250 means you can make a net gain of 500 points for wasting your time making coffins.
 	unit_name = "coffin"
 	export_types = list(/obj/structure/closet/crate/coffin)
 
