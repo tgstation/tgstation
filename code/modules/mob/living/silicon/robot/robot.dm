@@ -90,7 +90,7 @@
 	/obj/item/clothing/head/wizard,
 	/obj/item/clothing/head/nursehat,
 	/obj/item/clothing/head/sombrero,
-	/obj/item/clothing/head/witchunter_hat)
+	/obj/item/clothing/head/helmet/chaplain/witchunter_hat)
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
