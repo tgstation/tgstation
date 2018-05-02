@@ -27,5 +27,7 @@
 //Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"
 
 /obj/item/storage/proc/PopulateContents()
+	if(isnull(content_in_item))
+		return
 	for(var/A in content_in_item)
 		new A(src)
