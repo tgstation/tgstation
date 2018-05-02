@@ -11762,10 +11762,12 @@
 	},
 /area/crew_quarters/bar)
 "aEY" = (
+/obj/structure/table/wood,
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
-/obj/machinery/jukebox,
+/obj/item/clipboard,
+/obj/item/toy/figure/bartender,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "aEZ" = (
@@ -11781,7 +11783,6 @@
 	name = "Station Intercom";
 	pixel_y = 26
 	},
-/obj/item/toy/figure/bartender,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
