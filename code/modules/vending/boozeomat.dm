@@ -20,6 +20,7 @@
 					/obj/item/reagent_containers/food/drinks/bottle/orangejuice = 4,
 					/obj/item/reagent_containers/food/drinks/bottle/tomatojuice = 4,
 					/obj/item/reagent_containers/food/drinks/bottle/limejuice = 4,
+					/obj/item/reagent_containers/food/drinks/bottle/grenadine = 4,
 					/obj/item/reagent_containers/food/drinks/bottle/menthol = 4,
 					/obj/item/reagent_containers/food/drinks/bottle/cream = 4,
 					/obj/item/reagent_containers/food/drinks/soda_cans/tonic = 8,
@@ -39,5 +40,5 @@
 /obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
-	charges = list(59, 4, 0)//of 178 standard, 12 contraband
-	init_charges = list(59, 4, 0)
+	charges = list(61, 4, 0)//of 182 standard, 12 contraband
+	init_charges = list(61, 4, 0)
