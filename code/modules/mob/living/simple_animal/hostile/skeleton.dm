@@ -53,7 +53,7 @@
 				/obj/item/clothing/suit/hooded/wintercoat)
 
 
-/mob/living/simple_animal/hostile/skeleton/chaplain
+/mob/living/simple_animal/hostile/skeleton/templar
 	name = "undead templar"
 	desc = "The reanimated remains of a holy templar knight."
 	icon_state = "templar"
