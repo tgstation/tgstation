@@ -70,7 +70,7 @@
 	new /obj/item/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 	new /obj/item/extinguisher/mini(src)
-	new /obj/item/analyzer(src)
+	new /obj/item/analyzer/advanced(src)
 	//much roomier now that we've managed to remove two tools
 
 /obj/item/storage/belt/utility/full/PopulateContents()

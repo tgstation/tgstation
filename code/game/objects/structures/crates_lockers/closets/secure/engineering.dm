@@ -88,7 +88,7 @@
 	new /obj/item/pipe_dispenser(src)
 	new /obj/item/storage/toolbox/mechanical(src)
 	new /obj/item/tank/internals/emergency_oxygen/engi(src)
-	new /obj/item/analyzer(src)
+	new /obj/item/analyzer/advanced(src)
 	new /obj/item/holosign_creator/atmos(src)
 	new /obj/item/watertank/atmos(src)
 	new /obj/item/clothing/suit/fire/atmos(src)

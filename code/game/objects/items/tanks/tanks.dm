@@ -138,10 +138,7 @@
 
 /obj/item/tank/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if((istype(W, /obj/item/analyzer)) && get_dist(user, src) <= 1)
-		atmosanalyzer_scan(air_contents, user)
-
-	else if(istype(W, /obj/item/assembly_holder))
+	if(istype(W, /obj/item/assembly_holder))
 		bomb_assemble(W,user)
 	else
 		. = ..()

@@ -4,6 +4,7 @@ CONTAINS:
 T-RAY
 HEALTH ANALYZER
 GAS ANALYZER
+SLIME SCANNER
 
 */
 /obj/item/t_scanner
@@ -356,13 +357,46 @@ GAS ANALYZER
 	var/cooldown = FALSE
 	var/cooldown_time = 250
 	var/accuracy // 0 is the best accuracy.
+	var/advanced = FALSE //advanced analyzer?
 
 /obj/item/analyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
 	return BRUTELOSS
 
-/obj/item/analyzer/attack_self(mob/user)
+/obj/item/analyzer/afterattack(holder, mob/user, proximity_flags)
+	if(holder.Adjacent(user))
+		//there has to be a better way to do this
+		if (istype(holder, /obj/item/tank))
+			var/obj/item/tank/T = holder
+			atmosanalyzer_scan(T.air_contents, user, T)
 
+		else if (istype(holder, /obj/item/onetankbomb))
+			var/obj/item/onetankbomb/OT = holder
+			atmosanalyzer_scan(OT.bombtank.air_contents, user, OT)
+
+		else if (istype(holder, /obj/machinery/portable_atmospherics))
+			var/obj/machinery/portable_atmospherics/PA = holder
+			atmosanalyzer_scan(PA.air_contents, user, PA)
+
+		else if (istype(holder, /obj/machinery/atmospherics/pipe))
+			var/obj/machinery/atmospherics/pipe/P = holder
+			atmosanalyzer_scan(P.parent.air, user, P)
+
+		else if (istype(holder, /obj/machinery/atmospherics/components))
+			var/obj/machinery/atmospherics/components/C = holder
+			atmosanalyzer_scan(C.airs, user, C, advanced)
+
+		else if (istype(holder, /obj/machinery/power/rad_collector))
+			var/obj/machinery/power/rad_collector/RC = holder
+			if(RC.loaded_tank)
+				atmosanalyzer_scan(RC.loaded_tank.air_contents, user, RC)
+
+		else if (istype(holder, /obj/item/flamethrower))
+			var/obj/item/flamethrower/F = holder
+			if(F.ptank)
+				atmosanalyzer_scan(F.ptank.air_contents, user, F)
+
+/obj/item/analyzer/attack_self(mob/user)
 	add_fingerprint(user)
 
 	if (user.stat || user.eye_blind)
@@ -374,14 +408,15 @@ GAS ANALYZER
 
 	var/datum/gas_mixture/environment = location.return_air()
 
+	var/rounding_precision = advanced ? 0.01 : 1
 	var/pressure = environment.return_pressure()
 	var/total_moles = environment.total_moles()
 
 	to_chat(user, "<span class='info'><B>Results:</B></span>")
 	if(abs(pressure - ONE_ATMOSPHERE) < 10)
-		to_chat(user, "<span class='info'>Pressure: [round(pressure,0.1)] kPa</span>")
+		to_chat(user, "<span class='info'>Pressure: [round(pressure, rounding_precision)] kPa</span>")
 	else
-		to_chat(user, "<span class='alert'>Pressure: [round(pressure,0.1)] kPa</span>")
+		to_chat(user, "<span class='alert'>Pressure: [round(pressure, rounding_precision)] kPa</span>")
 	if(total_moles)
 		var/list/env_gases = environment.gases
 
@@ -393,32 +428,31 @@ GAS ANALYZER
 		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
-			to_chat(user, "<span class='info'>Nitrogen: [round(n2_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='info'>Nitrogen: [round(n2_concentration*100, rounding_precision)] %</span>")
 		else
-			to_chat(user, "<span class='alert'>Nitrogen: [round(n2_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='alert'>Nitrogen: [round(n2_concentration*100, rounding_precision)] %</span>")
 
 		if(abs(o2_concentration - O2STANDARD) < 2)
-			to_chat(user, "<span class='info'>Oxygen: [round(o2_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='info'>Oxygen: [round(o2_concentration*100, rounding_precision)] %</span>")
 		else
-			to_chat(user, "<span class='alert'>Oxygen: [round(o2_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='alert'>Oxygen: [round(o2_concentration*100, rounding_precision)] %</span>")
 
 		if(co2_concentration > 0.01)
-			to_chat(user, "<span class='alert'>CO2: [round(co2_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='alert'>CO2: [round(co2_concentration*100, rounding_precision)] %</span>")
 		else
-			to_chat(user, "<span class='info'>CO2: [round(co2_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='info'>CO2: [round(co2_concentration*100, rounding_precision)] %</span>")
 
 		if(plasma_concentration > 0.005)
-			to_chat(user, "<span class='alert'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>")
+			to_chat(user, "<span class='alert'>Plasma: [round(plasma_concentration*100, rounding_precision)] %</span>")
 		else
-			to_chat(user, "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>")
-
+			to_chat(user, "<span class='info'>Plasma: [round(plasma_concentration*100, rounding_precision)] %</span>")
 
 		for(var/id in env_gases)
 			if(id in GLOB.hardcoded_gases)
 				continue
 			var/gas_concentration = env_gases[id][MOLES]/total_moles
-			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
-		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C ([round(environment.temperature)]K)</span>")
+			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, rounding_precision)] %</span>")
+		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C ([round(environment.temperature, rounding_precision)] K)</span>")
 
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	..()
@@ -465,7 +499,6 @@ GAS ANALYZER
 		cooldown = TRUE
 		addtimer(CALLBACK(src,/obj/item/analyzer/proc/ping), cooldown_time)
 
-
 /obj/item/analyzer/proc/ping()
 	if(isliving(loc))
 		var/mob/living/L = loc
@@ -483,6 +516,53 @@ GAS ANALYZER
 		if(prob(50))
 			amount += inaccurate
 	return DisplayTimeText(max(1,amount))
+
+/obj/item/analyzer/proc/atmosanalyzer_scan(mixture, mob/user, obj/target = src)
+	var/obj/icon = target
+	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(src))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
+	to_chat(user, "<span class='boldnotice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
+
+	var/rounding_precision = advanced ? 0.01 : 1
+
+	var/list/airs = islist(mixture) ? mixture : list(mixture)
+	for(var/g in airs)
+		if(airs.len > 1) //not a unary gas mixture
+			to_chat(user, "<span class='boldnotice'>Node [airs.Find(g)]</span>")
+		var/datum/gas_mixture/air_contents = g
+
+		var/total_moles = air_contents.total_moles()
+		var/pressure = air_contents.return_pressure()
+
+		if(total_moles > 0)
+			to_chat(user, "<span class='notice'>Pressure: [round(pressure,rounding_precision)] kPa</span>")
+
+			var/list/cached_gases = air_contents.gases
+			for(var/id in cached_gases)
+				var/gas_concentration = cached_gases[id][MOLES]/total_moles
+				if(advanced) //show all gases, all the time + moles
+					to_chat(user, "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, rounding_precision)] % ([round(cached_gases[id][MOLES], rounding_precision)] mol)</span>")
+				else //only show if the gases are hardcoded/above a threshold
+					if((id in GLOB.hardcoded_gases) || gas_concentration > 0.001) //ensures the four primary gases are always shown.
+						to_chat(user, "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, rounding_precision)] %</span>")
+
+			to_chat(user, "<span class='notice'>Temperature: [round(air_contents.temperature-T0C, rounding_precision)] &deg;C ([round(air_contents.temperature, rounding_precision)] K)</span>")
+		else
+			if(airs.len > 1)
+				to_chat(user, "<span class='notice'>This node is empty!</span>")
+			else
+				to_chat(user, "<span class='notice'>[target] is empty!</span>")
+	return
+
+//advanced analyzer
+
+/obj/item/analyzer/advanced
+	desc = "A more robust version of normal analyzers, utilized by toxins scientists and engineers. Alt-Click to use the built in barometer function."
+	name = "advanced analyzer"
+	icon_state = "atmos"
+	item_state = "analyzer_advanced"
+	advanced = TRUE //advanced analyzer.
+
+//slime scanner
 
 /obj/item/slime_scanner
 	name = "slime scanner"

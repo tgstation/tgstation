@@ -27,9 +27,6 @@
 		add_overlay("bomb_assembly")
 
 /obj/item/onetankbomb/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/analyzer))
-		bombtank.attackby(W, user)
-		return
 	if(istype(W, /obj/item/wrench) && !status)	//This is basically bomb assembly code inverted. apparently it works.
 
 		to_chat(user, "<span class='notice'>You disassemble [src].</span>")

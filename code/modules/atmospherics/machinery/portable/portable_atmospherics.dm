@@ -138,8 +138,6 @@
 					"<span class='notice'>You fasten [src] to the port.</span>", \
 					"<span class='italics'>You hear a ratchet.</span>")
 				update_icon()
-	else if(istype(W, /obj/item/analyzer) && Adjacent(user))
-		atmosanalyzer_scan(air_contents, user)
 	else
 		return ..()
 

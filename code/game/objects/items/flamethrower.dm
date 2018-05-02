@@ -125,8 +125,6 @@
 		update_icon()
 		return
 
-	else if(istype(W, /obj/item/analyzer) && ptank)
-		atmosanalyzer_scan(ptank.air_contents, user)
 	else
 		return ..()
 
