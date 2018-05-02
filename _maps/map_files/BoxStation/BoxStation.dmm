@@ -33594,7 +33594,7 @@
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
-/obj/item/analyzer/advanced,
+/obj/item/analyzer,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bGA" = (

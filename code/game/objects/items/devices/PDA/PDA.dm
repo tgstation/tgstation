@@ -857,7 +857,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				to_chat(user, "<span class='notice'>No significant chemical agents found in [A].</span>")
 
 		if(PDA_SCANNER_GAS)
-			var/obj/item/analyzer/advanced/temp = new /obj/item/analyzer/advanced
+			var/obj/item/analyzer/temp = new /obj/item/analyzer
 			temp.afterattack(A, user, proximity) //not sure if this is the best way to go about this
 			qdel(temp)
 
