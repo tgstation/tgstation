@@ -414,15 +414,3 @@
 /obj/item/clothing/suit/armor/riot/knight/red
 	icon_state = "knight_red"
 	item_state = "knight_red"
-
-/obj/item/clothing/suit/armor/riot/knight/templar
-	name = "crusader armour"
-	desc = "God wills it!"
-	icon_state = "knight_templar"
-	item_state = "knight_templar"
-
-/obj/item/clothing/suit/armor/riot/knight/ancient
-	name = "ancient armour"
-	desc = "Defend the treasure..."
-	icon_state = "knight_ancient"
-	item_state = "knight_ancient"
