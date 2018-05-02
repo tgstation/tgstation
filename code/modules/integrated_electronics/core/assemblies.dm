@@ -3,7 +3,7 @@
 
 /obj/item/electronic_assembly
 	name = "electronic assembly"
-	obj_flags = CAN_BE_HIT
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	desc = "It's a case, for building small electronics with."
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/assemblies/electronic_setups.dmi'
@@ -401,6 +401,8 @@
 	return TRUE
 
 /obj/item/electronic_assembly/attackby(obj/item/I, mob/living/user)
+	if (istype(I, /obj/item/pen))
+		label = stripped_input(user, "What would you like to label this device?")
 	if(can_anchor && default_unfasten_wrench(user, I, 20))
 		return
 	if(istype(I, /obj/item/integrated_circuit))
