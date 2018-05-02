@@ -9,7 +9,7 @@
 	item_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	materials = list(MAT_METAL=30000)
+	materials = list(MAT_METAL = 30000)
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
@@ -21,19 +21,19 @@
 	var/caliber
 	var/multiload = 1
 	var/start_empty = 0
-	var/list/bullet_cost = list() 
-	var/list/base_cost = list() // override this one as well if you override bullet_cost
+	var/list/bullet_cost
+	var/list/base_cost// override this one as well if you override bullet_cost
 
 /obj/item/ammo_box/Initialize()
 	. = ..()
-	if (!bullet_cost.len)
+	if (!bullet_cost)
 		for (var/material in materials)
 			var/material_amount = materials[material]
-			base_cost[material] = material_amount * 0.10
+			LAZYSET(base_cost, material, (material_amount * 0.10))
 
 			material_amount *= 0.90 // 10% for the container
 			material_amount /= max_ammo
-			bullet_cost[material] = material_amount
+			LAZYSET(bullet_cost, material, material_amount)
 	if(!start_empty)
 		for(var/i = 1, i <= max_ammo, i++)
 			stored_ammo += new ammo_type(src)
