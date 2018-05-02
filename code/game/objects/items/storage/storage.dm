@@ -3,6 +3,7 @@
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
+	var/list/content_in_item = list()
 	var/component_type = /datum/component/storage/concrete
 
 /obj/item/storage/get_dumping_location(obj/item/storage/source,mob/user)
@@ -26,3 +27,5 @@
 //Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"
 
 /obj/item/storage/proc/PopulateContents()
+	for(var/A in content_in_item)
+		new A(src)
