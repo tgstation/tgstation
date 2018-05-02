@@ -439,7 +439,7 @@ SLIME SCANNER
 
 		if(co2_concentration > 0.01)
 			to_chat(user, "<span class='alert'>CO2: [round(co2_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/carbon_dioxide][MOLES], 0.01)] mol)</span>")
-		els
+		else
 			to_chat(user, "<span class='info'>CO2: [round(co2_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/carbon_dioxide][MOLES], 0.01)] mol)</span>")
 
 		if(plasma_concentration > 0.005)
