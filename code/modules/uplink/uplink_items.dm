@@ -1218,7 +1218,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/implants/storage
 	name = "Storage Implant"
-	desc = "An implant injected into the body, and later activated at the user's will. It will open a small subspace \
+	desc = "An implant injected into the body, and later activated at the user's will. It will open a small bluespace \
 			pocket capable of storing two items."
 	item = /obj/item/storage/box/syndie_kit/imp_storage
 	cost = 8
