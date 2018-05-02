@@ -69,6 +69,8 @@
 	else
 		bombtank.release()
 
+//Assembly / attached device memes
+
 /obj/item/onetankbomb/Crossed(atom/movable/AM as mob|obj) //for mousetraps
 	if(bombassembly)
 		bombassembly.Crossed(AM)
@@ -76,6 +78,16 @@
 /obj/item/onetankbomb/on_found(mob/finder) //for mousetraps
 	if(bombassembly)
 		bombassembly.on_found(finder)
+
+/obj/item/onetankbomb/Move()
+	. = ..()
+	if(bombassembly)
+		bombassembly.Move()
+
+/obj/item/onetankbomb/dropped()
+	. = ..()
+	if(bombassembly)
+		bombassembly.dropped()
 
 
 // ---------- Procs below are for tanks that are used exclusively in 1-tank bombs ----------

@@ -163,8 +163,9 @@ Code:
 	toggle_safety()
 	return 1
 
-/obj/item/assembly/signaler/reciever/describe()
-	return "The radio receiver is [on?"on":"off"]."
+/obj/item/assembly/signaler/reciever/examine(mob/user)
+	..()
+	to_chat(user, "The radio receiver is [on?"on":"off"].")
 
 /obj/item/assembly/signaler/reciever/receive_signal(datum/signal/signal)
 	if(!on)

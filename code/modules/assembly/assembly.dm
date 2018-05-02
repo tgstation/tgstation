@@ -16,6 +16,8 @@
 	throw_speed = 3
 	throw_range = 7
 
+	var/is_position_sensitive = FALSE	//set to true if the device has different icons for each position.
+										//This will prevent things such as visible lasers from facing the incorrect direction when transformed by assembly_holder's update_icon()
 	var/secured = TRUE
 	var/list/attached_overlays = null
 	var/obj/item/assembly_holder/holder = null
@@ -30,14 +32,18 @@
 
 /obj/item/assembly/proc/on_attach()
 
-/obj/item/assembly/proc/on_detach()
+/obj/item/assembly/proc/on_detach() //call this when detaching it from a device. handles any special functions that need to be updated ex post facto
+	if(!holder)
+		return FALSE
+	forceMove(holder.drop_location())
+	holder = null
+	return TRUE
 
 /obj/item/assembly/proc/holder_movement()							//Called when the holder is moved
-	return
-
-/obj/item/assembly/proc/describe()									// Called by grenades to describe the state of the trigger (time left, etc)
-	return "The trigger assembly looks broken!"
-
+	if(!holder)
+		return FALSE
+	setDir(holder.dir)
+	return TRUE
 
 /obj/item/assembly/proc/is_secured(mob/user)
 	if(!secured)

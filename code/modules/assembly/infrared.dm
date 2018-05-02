@@ -3,6 +3,7 @@
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon_state = "infrared"
 	materials = list(MAT_METAL=1000, MAT_GLASS=500)
+	is_position_sensitive = TRUE
 
 	var/on = FALSE
 	var/visible = FALSE
@@ -17,23 +18,27 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/assembly/infra/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	QDEL_LIST(beams)
 	return ..()
 
-/obj/item/assembly/infra/describe()
-	return "The infrared trigger is [on?"on":"off"]."
+/obj/item/assembly/infra/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The infrared trigger is [on?"on":"off"].</span>")
 
 /obj/item/assembly/infra/activate()
 	if(!..())
-		return 0//Cooldown check
+		return FALSE//Cooldown check
 	on = !on
+	refreshBeam()
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/assembly/infra/toggle_secure()
 	secured = !secured
 	if(secured)
 		START_PROCESSING(SSobj, src)
+		refreshBeam()
 	else
 		QDEL_LIST(beams)
 		STOP_PROCESSING(SSobj, src)
@@ -46,13 +51,20 @@
 	if(on)
 		add_overlay("infrared_on")
 		attached_overlays += "infrared_on"
+		if(visible && secured)
+			add_overlay("infrared_visible")
+			attached_overlays += "infrared_visible"
 
 	if(holder)
 		holder.update_icon()
 	return
 
 /obj/item/assembly/infra/dropped()
-	refreshBeam()
+	. = ..()
+	if(holder)
+		holder_movement() //sync the dir of the device as well if it's contained in a TTV or an assembly holder
+	else
+		refreshBeam()
 
 /obj/item/assembly/infra/process()
 	if(!on || !secured)
@@ -61,7 +73,7 @@
 
 /obj/item/assembly/infra/proc/refreshBeam()
 	QDEL_LIST(beams)
-	if(throwing || !on || !secured || !(isturf(loc) || holder && isturf(holder.loc)))
+	if(throwing || !on || !secured || !(isturf(loc) || (holder && isturf(holder.loc))))
 		return
 	var/turf/T = get_turf(src)
 	var/_dir = dir
@@ -69,6 +81,11 @@
 	if(_T)
 		for(var/i in 1 to maxlength)
 			var/obj/effect/beam/i_beam/I = new(T)
+			if(istype(holder, /obj/item/assembly_holder))
+				var/obj/item/assembly_holder/assembly_holder = holder
+				I.icon_state = "[initial(I.icon_state)]_[(assembly_holder.a_left == src) ? "l":"r"]" //Sync the offset of the beam with the position of the sensor.
+			else if(istype(holder, /obj/item/transfer_valve))
+				I.icon_state = "[initial(I.icon_state)]_ttv"
 			I.density = TRUE
 			if(!I.Move(_T))
 				qdel(I)
@@ -82,6 +99,12 @@
 			T = _T
 			_T = get_step(_T, _dir)
 			CHECK_TICK
+
+/obj/item/assembly/infra/on_detach()
+	. = ..()
+	if(!.)
+		return
+	refreshBeam()
 
 /obj/item/assembly/infra/attack_hand()
 	. = ..()
@@ -102,12 +125,6 @@
 		return
 	setDir(olddir)
 	olddir = null
-
-/obj/item/assembly/infra/holder_movement()
-	if(!holder)
-		return 0
-	refreshBeam()
-	return 1
 
 /obj/item/assembly/infra/proc/trigger_beam(atom/movable/AM, turf/location)
 	refreshBeam()
@@ -150,6 +167,7 @@
 		refreshBeam()
 	if(href_list["visible"])
 		visible = !(visible)
+		update_icon()
 		refreshBeam()
 	if(href_list["close"])
 		usr << browse(null, "window=infra")

@@ -9,10 +9,7 @@
 
 /obj/item/assembly/mousetrap/examine(mob/user)
 	..()
-	if(armed)
-		to_chat(user, "The mousetrap is armed!")
-	else
-		to_chat(user, "The mousetrap is not armed.")
+	to_chat(user, "The pressure plate is [armed?"primed":"safe"].")
 
 /obj/item/assembly/mousetrap/activate()
 	if(..())
@@ -26,9 +23,6 @@
 		update_icon()
 		if(usr)
 			playsound(usr.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
-
-/obj/item/assembly/mousetrap/describe()
-	return "The pressure switch is [armed?"primed":"safe"]."
 
 /obj/item/assembly/mousetrap/update_icon()
 	if(armed)

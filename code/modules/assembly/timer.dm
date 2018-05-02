@@ -25,11 +25,9 @@
 	..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/assembly/timer/describe()
-	if(timing)
-		return "The timer is counting down from [time]!"
-	return "The timer is set for [time] seconds."
-
+/obj/item/assembly/timer/examine(mob/user)
+	..()
+	to_chat(user, "The timer is [timing ? "counting down from [time]":"set for [time] seconds"].")
 
 /obj/item/assembly/timer/activate()
 	if(!..())
