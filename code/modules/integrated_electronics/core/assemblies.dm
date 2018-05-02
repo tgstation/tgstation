@@ -3,14 +3,13 @@
 
 /obj/item/electronic_assembly
 	name = "electronic assembly"
-	obj_flags = CAN_BE_HIT
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	desc = "It's a case, for building small electronics with."
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/assemblies/electronic_setups.dmi'
 	icon_state = "setup_small"
 	flags_1 = NOBLUDGEON_1
 	materials = list()		// To be filled later
-	var/label
 	var/list/assembly_components = list()
 	var/max_components = IC_MAX_SIZE_BASE
 	var/max_complexity = IC_COMPLEXITY_BASE
@@ -57,10 +56,6 @@
 
 /obj/item/electronic_assembly/examine(mob/user)
 	. = ..()
-	if(!label)
-		to_chat(user, "The label reads: [label]")
-	else
-		to_chat(user, "The label is blank.")
 	if(can_anchor)
 		to_chat(user, "<span class='notice'>The anchoring bolts [anchored ? "are" : "can be"] <b>wrenched</b> in place and the maintainence panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
 	else
