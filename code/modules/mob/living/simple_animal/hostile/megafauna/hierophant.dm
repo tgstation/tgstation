@@ -78,7 +78,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize()
 	. = ..()
-	internal = new/obj/item/device/gps/internal/hierophant(src)
+	internal = new/obj/item/gps/internal/hierophant(src)
 	spawned_beacon = new(loc)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/spawn_crusher_loot()
@@ -687,10 +687,8 @@ Difficulty: Hard
 	else
 		return ..()
 
-/obj/item/device/gps/internal/hierophant
+/obj/item/gps/internal/hierophant
 	icon_state = null
 	gpstag = "Zealous Signal"
 	desc = "Heed its words."
 	invisibility = 100
-
-#undef MEDAL_PREFIX

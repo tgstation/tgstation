@@ -24,7 +24,6 @@
 	var/state = 0
 	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
 
-
 /obj/structure/bookcase/examine(mob/user)
 	..()
 	if(!anchored)
@@ -39,7 +38,6 @@
 		if(2)
 			to_chat(user, "<span class='notice'>There's a <b>small crack</b> visible on the shelf.</span>")
 
-
 /obj/structure/bookcase/Initialize(mapload)
 	. = ..()
 	if(!mapload)
@@ -51,7 +49,6 @@
 		if(istype(I, /obj/item/book))
 			I.forceMove(src)
 	update_icon()
-
 
 /obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
 	switch(state)
@@ -81,15 +78,15 @@
 				state = 0
 
 		if(2)
+			GET_COMPONENT_FROM(STR, /datum/component/storage, I)
 			if(is_type_in_list(I, allowed_books))
 				if(!user.transferItemToLoc(I, src))
 					return
 				update_icon()
-			else if(istype(I, /obj/item/storage/bag/books))
-				var/obj/item/storage/bag/books/B = I
-				for(var/obj/item/T in B.contents)
+			else if(STR)
+				for(var/obj/item/T in I.contents)
 					if(istype(T, /obj/item/book) || istype(T, /obj/item/spellbook))
-						B.remove_from_storage(T, src)
+						STR.remove_from_storage(T, src)
 				to_chat(user, "<span class='notice'>You empty \the [I] into \the [src].</span>")
 				update_icon()
 			else if(istype(I, /obj/item/pen))

@@ -75,18 +75,10 @@
 	if (prob(50))
 		qdel(src)
 
-/obj/machinery/chem_master/power_change()
-	if(powered())
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
-
 /obj/machinery/chem_master/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", I))
 		return
 
-	else if(exchange_parts(user, I))
-		return
 	else if(default_deconstruction_crowbar(I))
 		return
 
@@ -150,9 +142,9 @@
 
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
+		GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
 		data["pillBotContent"] = bottle.contents.len
-		data["pillBotMaxContent"] = bottle.storage_slots
-
+		data["pillBotMaxContent"] = STRB.max_items
 
 	var/beakerContents[0]
 	if(beaker)
@@ -165,7 +157,6 @@
 		for(var/datum/reagent/N in reagents.reagent_list)
 			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
-
 
 	return data
 
@@ -225,21 +216,27 @@
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
 				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/pill/P
+				var/target_loc = drop_location()
+				var/drop_threshold = INFINITY
+				if(bottle)
+					GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+					if(STRB)
+						drop_threshold = STRB.max_items - bottle.contents.len
 
 				for(var/i = 0; i < amount; i++)
-					if(bottle && bottle.contents.len < bottle.storage_slots)
-						P = new/obj/item/reagent_containers/pill(bottle)
+					if(i < drop_threshold)
+						P = new(target_loc)
 					else
-						P = new/obj/item/reagent_containers/pill(drop_location())
+						P = new(drop_location())
 					P.name = trim("[name] pill")
 					adjust_item_drop_location(P)
 					reagents.trans_to(P,vol_each)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/food/condiment/pack/P = new/obj/item/reagent_containers/food/condiment/pack(drop_location())
 
@@ -261,7 +258,7 @@
 					return
 				vol_each = min(reagents.total_volume / amount, 40)
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 				return
 			var/obj/item/reagent_containers/pill/P
 
@@ -279,7 +276,7 @@
 
 			if(condi)
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/food/condiment/P = new(drop_location())
 				P.originalname = name
@@ -292,7 +289,7 @@
 					amount_full = round(reagents.total_volume / 30)
 					vol_part = reagents.total_volume % 30
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 
 				var/obj/item/reagent_containers/glass/bottle/P
@@ -360,15 +357,7 @@
 	else
 		var/md5 = md5(AM.name)
 		for (var/i in 1 to 32)
-			#if DM_VERSION >= 513
-			#warning 512 is definitely stable now, remove the old code
-			#endif
-
-			#if DM_VERSION >= 512
 			. += hex2num(md5[i])
-			#else
-			. += hex2num(copytext(md5,i,i+1))
-			#endif
 		. = . % 9
 		AM.pixel_x = ((.%3)*6)
 		AM.pixel_y = -8 + (round( . / 3)*8)

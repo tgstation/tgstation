@@ -10,8 +10,7 @@
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("Some good for nothing loser put a mood component on something that isn't even a living mob.")
+		return COMPONENT_INCOMPATIBLE
 	START_PROCESSING(SSmood, src)
 	owner = parent
 	soundloop = new(list(owner), FALSE, TRUE)

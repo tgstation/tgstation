@@ -52,7 +52,7 @@
 /area/ruin/space/has_grav/powered/aesthetic)
 "m" = (
 /obj/structure/table/reinforced,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /turf/open/floor/plasteel/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "n" = (
@@ -88,7 +88,7 @@
 /turf/open/floor/plasteel/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "t" = (
-/obj/item/device/instrument/eguitar,
+/obj/item/instrument/eguitar,
 /turf/open/floor/holofloor/beach,
 /area/ruin/space/has_grav/powered/aesthetic)
 "u" = (
@@ -104,7 +104,7 @@
 /area/ruin/space/has_grav/powered/aesthetic)
 "x" = (
 /obj/structure/closet/crate/bin,
-/obj/item/device/tape/random,
+/obj/item/tape/random,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "y" = (

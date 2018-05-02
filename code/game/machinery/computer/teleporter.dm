@@ -5,7 +5,7 @@
 	icon_keyboard = "teleport_key"
 	light_color = LIGHT_COLOR_BLUE
 	circuit = /obj/item/circuitboard/computer/teleporter
-	var/obj/item/device/gps/locked
+	var/obj/item/gps/locked
 	var/regime_set = "Teleporter"
 	var/id
 	var/obj/machinery/teleport/station/power_station
@@ -34,8 +34,8 @@
 	return power_station
 
 /obj/machinery/computer/teleporter/attackby(obj/I, mob/living/user, params)
-	if(istype(I, /obj/item/device/gps))
-		var/obj/item/device/gps/L = I
+	if(istype(I, /obj/item/gps))
+		var/obj/item/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
 			if(!user.transferItemToLoc(L, src))
 				to_chat(user, "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>")
@@ -153,7 +153,7 @@
 	var/list/L = list()
 	var/list/areaindex = list()
 	if(regime_set == "Teleporter")
-		for(var/obj/item/device/beacon/R in GLOB.teleportbeacons)
+		for(var/obj/item/beacon/R in GLOB.teleportbeacons)
 			if(is_eligible(R))
 				var/area/A = get_area(R)
 				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R

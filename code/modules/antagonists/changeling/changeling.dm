@@ -19,6 +19,7 @@
 	var/datum/changelingprofile/first_prof = null
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
+	var/trueabsorbs = 0//dna gained using absorb, not dna sting
 	var/chem_charges = 20
 	var/chem_storage = 75
 	var/chem_recharge_rate = 1
@@ -367,11 +368,21 @@
 		if(!CTO.escape_objective_compatible)
 			escape_objective_possible = FALSE
 			break
-
-	var/datum/objective/absorb/absorb_objective = new
-	absorb_objective.owner = owner
-	absorb_objective.gen_amount_goal(6, 8)
-	objectives += absorb_objective
+	var/changeling_objective = rand(1,3)
+	switch(changeling_objective)
+		if(1)
+			var/datum/objective/absorb/absorb_objective = new
+			absorb_objective.owner = owner
+			absorb_objective.gen_amount_goal(6, 8)
+			objectives += absorb_objective
+		if(2)
+			var/datum/objective/absorb_changeling/ac = new
+			ac.owner = owner
+			objectives += ac
+		if(3)
+			var/datum/objective/absorb_most/ac = new
+			ac.owner = owner
+			objectives += ac
 
 	if(prob(60))
 		if(prob(85))

@@ -82,7 +82,7 @@
 /area/holodeck/rec_center/lounge)
 "ao" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	layer = 3.3
 	},
 /turf/open/floor/holofloor{
@@ -312,7 +312,7 @@
 /area/holodeck/rec_center/court)
 "aY" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_y = 4
 	},
 /turf/open/floor/holofloor/carpet,
@@ -341,7 +341,7 @@
 /area/holodeck/rec_center/bunker)
 "bd" = (
 /obj/structure/table/wood,
-/obj/item/device/instrument/violin,
+/obj/item/instrument/violin,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/lounge)
 "be" = (
@@ -754,7 +754,7 @@
 /area/holodeck/rec_center/medical)
 "ct" = (
 /obj/structure/table/glass,
-/obj/item/device/healthanalyzer,
+/obj/item/healthanalyzer,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -1918,7 +1918,7 @@
 /turf/closed/indestructible/riveted,
 /area/space)
 "fy" = (
-/obj/machinery/igniter,
+/obj/machinery/igniter/on,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
@@ -2526,10 +2526,6 @@
 /obj/machinery/capture_the_flag/red,
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
-"hH" = (
-/obj/effect/landmark/shuttle_import,
-/turf/open/space,
-/area/space)
 "hI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -2755,15 +2751,15 @@
 /area/centcom/control)
 "iv" = (
 /obj/structure/table/reinforced,
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/device/radio,
+/obj/item/radio,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -2799,7 +2795,7 @@
 "iy" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs/cable/zipties,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -2994,19 +2990,17 @@
 /turf/open/floor/plating,
 /area/centcom/supply)
 "jc" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "XCCQMLoad2";
-	movedir = 2
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "XCCQMLoad2"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jd" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = 1;
 	id = "XCCQMLoad2";
 	pixel_x = 6
 	},
@@ -3074,25 +3068,23 @@
 	id = "XCCQMLoaddoor2";
 	name = "Supply Dock Loading Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "XCCQMLoad2";
-	movedir = 8
-	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "XCCQMLoad2"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jl" = (
 /obj/structure/plasticflaps,
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "XCCQMLoad2";
-	movedir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "XCCQMLoad2"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
@@ -3102,23 +3094,21 @@
 	id = "XCCQMLoaddoor2";
 	name = "Supply Dock Loading Door"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "XCCQMLoad2";
-	movedir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "XCCQMLoad2"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jn" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "XCCQMLoad2";
-	movedir = 2
-	},
 /obj/effect/turf_decal/stripes/end,
+/obj/machinery/conveyor/inverted{
+	dir = 10;
+	id = "XCCQMLoad2"
+	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jo" = (
@@ -3314,12 +3304,12 @@
 /turf/open/floor/plasteel,
 /area/centcom/supply)
 "jL" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "XCCQMLoad"
-	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
+	},
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "XCCQMLoad2"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
@@ -3334,20 +3324,9 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/centcom/supply)
-"jO" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "XCCQMLoad";
-	movedir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/centcom/supply)
 "jP" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = 1;
+	dir = 8;
 	id = "XCCQMLoad";
 	pixel_x = 6
 	},
@@ -3450,7 +3429,7 @@
 /area/centcom/control)
 "kc" = (
 /obj/item/book/manual/wiki/security_space_law,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -3459,7 +3438,7 @@
 "kd" = (
 /obj/item/wrench,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -3525,7 +3504,6 @@
 	height = 50;
 	id = "emergency_syndicate";
 	name = "Syndicate Auxillary Shuttle Dock";
-	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 50
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
@@ -3843,7 +3821,7 @@
 "lb" = (
 /obj/structure/table/wood,
 /obj/machinery/door/window,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	desc = "Talk smack through this.";
 	syndie = 1
 	},
@@ -3861,7 +3839,7 @@
 /area/centcom/control)
 "ld" = (
 /obj/structure/table/wood,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	desc = "Talk smack through this.";
 	syndie = 1
 	},
@@ -3879,7 +3857,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/device/megaphone,
+/obj/item/megaphone,
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
@@ -3966,7 +3944,7 @@
 /obj/structure/table/reinforced,
 /obj/item/wrench,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -3975,7 +3953,7 @@
 "lv" = (
 /obj/structure/table/reinforced,
 /obj/item/gun/ballistic/automatic/wt550,
-/obj/item/device/flashlight/seclite,
+/obj/item/flashlight/seclite,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -4159,7 +4137,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	desc = "Talk smack through this.";
 	pixel_x = -32;
 	syndie = 1
@@ -4299,7 +4277,7 @@
 /area/centcom/control)
 "mn" = (
 /obj/structure/table/wood,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	desc = "Talk smack through this.";
 	syndie = 1
 	},
@@ -4548,7 +4526,7 @@
 "mX" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs/cable/zipties,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -4694,7 +4672,7 @@
 "nt" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
-/obj/item/device/camera,
+/obj/item/camera,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -4994,9 +4972,9 @@
 /area/centcom/ferry)
 "of" = (
 /obj/structure/table/wood,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /obj/item/storage/box/handcuffs,
-/obj/item/device/flashlight/seclite,
+/obj/item/flashlight/seclite,
 /obj/structure/noticeboard{
 	pixel_y = 28
 	},
@@ -5007,7 +4985,7 @@
 "og" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
-/obj/item/device/camera,
+/obj/item/camera,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = 32
 	},
@@ -5048,7 +5026,7 @@
 /area/centcom/ferry)
 "ol" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Captain's Desk";
@@ -5685,7 +5663,7 @@
 /obj/item/cartridge/quartermaster{
 	pixel_y = 6
 	},
-/obj/item/device/gps/mining,
+/obj/item/gps/mining,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -5742,7 +5720,7 @@
 /obj/item/folder/red,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -5811,7 +5789,7 @@
 /area/centcom/ferry)
 "qj" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/vault,
 /area/centcom/ferry)
 "qk" = (
@@ -6159,7 +6137,7 @@
 "rk" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -6170,7 +6148,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
-/obj/item/device/radio/headset/headset_cent,
+/obj/item/radio/headset/headset_cent,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -6268,7 +6246,7 @@
 /turf/open/floor/wood,
 /area/centcom/ferry)
 "rw" = (
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -6462,7 +6440,7 @@
 /obj/structure/table/reinforced,
 /obj/item/wrench,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -6536,7 +6514,7 @@
 /area/syndicate_mothership/control)
 "sf" = (
 /obj/structure/table/wood,
-/obj/item/device/paicard,
+/obj/item/paicard,
 /turf/open/floor/plasteel/bar{
 	dir = 2
 	},
@@ -6693,7 +6671,7 @@
 "sA" = (
 /obj/item/clipboard,
 /obj/structure/table/reinforced,
-/obj/item/device/detective_scanner,
+/obj/item/detective_scanner,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -6967,21 +6945,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
-"tj" = (
-/obj/machinery/porta_turret/syndicate/pod,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/assault_pod)
-"tk" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/assault_pod)
-"tl" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Assault Pod";
-	opacity = 1;
-	req_access_txt = "150"
-	},
-/turf/open/floor/plating,
-/area/shuttle/assault_pod)
 "tn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -7071,7 +7034,7 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/red,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -7170,7 +7133,7 @@
 /area/centcom/ferry)
 "tH" = (
 /obj/item/gun/energy/pulse/carbine/loyalpin,
-/obj/item/device/flashlight/seclite,
+/obj/item/flashlight/seclite,
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
 	dir = 1;
@@ -7302,21 +7265,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
-"uf" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/assault_pod)
-"ug" = (
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/assault_pod)
-"uh" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/assault_pod)
 "ui" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -7505,7 +7453,7 @@
 /area/wizard_station)
 "uD" = (
 /obj/structure/table/wood/fancy,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	desc = "Talk smack through this.";
 	syndie = 1
 	},
@@ -7542,13 +7490,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
-"uN" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/machinery/light,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/assault_pod)
 "uO" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Shuttle Control Office";
@@ -7766,7 +7707,7 @@
 /area/syndicate_mothership/control)
 "vw" = (
 /obj/structure/table/wood,
-/obj/item/device/syndicatedetonator{
+/obj/item/syndicatedetonator{
 	desc = "This gaudy button can be used to instantly detonate syndicate bombs that have been activated on the station. It is also fun to press."
 	},
 /turf/open/floor/wood,
@@ -7776,19 +7717,6 @@
 /obj/item/toy/nuke,
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
-"vy" = (
-/obj/machinery/door/airlock/centcom{
-	aiControlDisabled = 1;
-	name = "Assault Pod";
-	opacity = 1;
-	req_access_txt = "150"
-	},
-/turf/open/floor/plating,
-/area/shuttle/assault_pod)
-"vz" = (
-/obj/machinery/computer/shuttle/syndicate/drop_pod,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/assault_pod)
 "vA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
@@ -7916,7 +7844,7 @@
 	},
 /area/centcom/control)
 "vL" = (
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -8083,13 +8011,6 @@
 	dir = 2
 	},
 /area/syndicate_mothership/control)
-"wq" = (
-/obj/structure/chair,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/assault_pod)
 "wr" = (
 /obj/structure/chair{
 	dir = 4
@@ -8276,7 +8197,7 @@
 /area/wizard_station)
 "wP" = (
 /obj/structure/table/wood/fancy,
-/obj/item/device/camera/spooky,
+/obj/item/camera/spooky,
 /turf/open/floor/carpet,
 /area/wizard_station)
 "wQ" = (
@@ -8532,20 +8453,17 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "xN" = (
-/obj/machinery/door/airlock/centcom{
-	aiControlDisabled = 1;
-	name = "Assault Pod";
-	opacity = 1;
-	req_access_txt = "150"
-	},
-/obj/docking_port/mobile/assault_pod{
+/obj/docking_port/stationary{
+	area_type = /area/syndicate_mothership/control;
+	dir = 1;
 	dwidth = 3;
-	name = "steel rain";
-	port_direction = 4;
-	preferred_direction = 4
+	height = 7;
+	name = "escape pod loader";
+	roundstart_template = /datum/map_template/shuttle/assault_pod/default;
+	width = 7
 	},
-/turf/open/floor/plating,
-/area/shuttle/assault_pod)
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership/control)
 "xO" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -8950,7 +8868,7 @@
 "zg" = (
 /obj/structure/table/reinforced,
 /obj/item/gun/ballistic/automatic/wt550,
-/obj/item/device/flashlight/seclite,
+/obj/item/flashlight/seclite,
 /obj/structure/noticeboard{
 	pixel_y = 28
 	},
@@ -9048,7 +8966,7 @@
 "zy" = (
 /obj/structure/table,
 /obj/item/gun/energy/ionrifle{
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -9237,7 +9155,7 @@
 "Aj" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs,
-/obj/item/device/radio,
+/obj/item/radio,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -9363,7 +9281,7 @@
 /area/centcom/ferry)
 "AL" = (
 /obj/structure/table/reinforced,
-/obj/item/device/flashlight/seclite,
+/obj/item/flashlight/seclite,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -9532,7 +9450,7 @@
 "Bw" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
 "Bx" = (
@@ -9563,7 +9481,7 @@
 "BA" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs/cable/zipties,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -9766,7 +9684,7 @@
 "BZ" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
-/obj/item/device/radio/headset/headset_cent,
+/obj/item/radio/headset/headset_cent,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -9804,7 +9722,7 @@
 "Ce" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs/cable/zipties,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -9855,7 +9773,7 @@
 /obj/item/folder/red,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -9943,15 +9861,15 @@
 	},
 /area/centcom/ferry)
 "CA" = (
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/device/radio,
+/obj/item/radio,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -10025,7 +9943,7 @@
 "CH" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -10302,7 +10220,7 @@
 "DA" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -10899,7 +10817,7 @@
 /area/centcom/holding)
 "Fe" = (
 /obj/structure/rack,
-/obj/item/device/camera,
+/obj/item/camera,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "Ff" = (
@@ -11048,7 +10966,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "FC" = (
-/obj/item/device/camera,
+/obj/item/camera,
 /turf/open/floor/plating/beach/sand,
 /area/centcom/holding)
 "FD" = (
@@ -12150,7 +12068,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Is" = (
-/obj/machinery/igniter,
+/obj/machinery/igniter/on,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/tdome/arena)
@@ -12624,15 +12542,15 @@
 	},
 /area/tdome/tdomeadmin)
 "JP" = (
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/device/radio{
+/obj/item/radio{
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/device/radio,
+/obj/item/radio,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -12806,7 +12724,7 @@
 /obj/item/folder/red,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -12814,7 +12732,7 @@
 "Kq" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
-/obj/item/device/radio/headset/headset_cent,
+/obj/item/radio/headset/headset_cent,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -13154,7 +13072,7 @@
 /area/centcom/evac)
 "Ln" = (
 /obj/structure/table,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "Lo" = (
@@ -13256,7 +13174,7 @@
 /area/centcom/evac)
 "LE" = (
 /obj/structure/table,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "LF" = (
@@ -13284,7 +13202,7 @@
 /area/centcom/evac)
 "LJ" = (
 /obj/structure/table,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -13452,7 +13370,6 @@
 "My" = (
 /obj/docking_port/stationary{
 	area_type = /area/syndicate_mothership;
-	baseturf_type = /turf/open/floor/plating/asteroid/snow;
 	dheight = 1;
 	dir = 8;
 	dwidth = 12;
@@ -13460,7 +13377,6 @@
 	id = "syndicate_away";
 	name = "syndicate recon outpost";
 	roundstart_template = /datum/map_template/shuttle/infiltrator/basic;
-	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 23
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
@@ -13564,6 +13480,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"VX" = (
+/obj/effect/landmark/shuttle_import,
+/turf/open/space/basic,
+/area/space)
 "Wc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -34918,11 +34838,11 @@ aa
 ku
 sl
 ti
-tj
-tk
-vy
-tk
-tj
+sk
+sk
+sk
+sk
+sk
 xM
 yk
 ku
@@ -35174,13 +35094,13 @@ hh
 aa
 ku
 sm
-tj
-tk
-uf
-ug
-uf
-tk
-tj
+sk
+sk
+sk
+sk
+sk
+sk
+sk
 yl
 ku
 aa
@@ -35431,13 +35351,13 @@ hh
 aa
 ku
 sn
-tk
-uf
-ug
-uh
-ug
-uf
-tk
+sk
+sk
+sk
+sk
+sk
+sk
+sk
 ym
 ku
 aa
@@ -35688,12 +35608,12 @@ hh
 aa
 ku
 sm
-tl
-ug
-uN
-vz
-wq
-ug
+sk
+sk
+sk
+sk
+sk
+sk
 xN
 yl
 ku
@@ -35945,13 +35865,13 @@ hh
 aa
 ku
 sm
-tk
-uh
-ug
-uf
-ug
-uh
-tk
+sk
+sk
+sk
+sk
+sk
+sk
+sk
 yl
 ku
 aa
@@ -36079,7 +35999,7 @@ aa
 aa
 aa
 aa
-aa
+VX
 aa
 aa
 aa
@@ -36202,13 +36122,13 @@ hh
 aa
 ku
 so
-tj
-tk
-uh
-ug
-uh
-tk
-tj
+sk
+sk
+sk
+sk
+sk
+sk
+sk
 yl
 ku
 aa
@@ -36460,11 +36380,11 @@ aa
 ku
 sp
 tn
-tj
-tk
-vy
-tk
-tj
+sk
+sk
+sk
+sk
+sk
 xO
 xP
 ku
@@ -44622,7 +44542,7 @@ aa
 aa
 aa
 aa
-hH
+ad
 aa
 aa
 aa
@@ -53659,9 +53579,9 @@ iP
 jy
 jD
 jL
-jO
-jO
-jO
+jc
+jc
+jc
 iO
 iO
 iX

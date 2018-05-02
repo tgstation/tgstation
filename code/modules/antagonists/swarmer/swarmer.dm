@@ -1,5 +1,5 @@
 ////Deactivated swarmer shell////
-/obj/item/device/deactivated_swarmer
+/obj/item/deactivated_swarmer
 	name = "deactivated swarmer"
 	desc = "A shell of swarmer that was completely powered down. It can no longer activate itself."
 	icon = 'icons/mob/swarmer.dmi'
@@ -45,7 +45,7 @@
 		user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
 			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
 			"<span class='italics'>You hear clicking.</span>")
-		new /obj/item/device/deactivated_swarmer(get_turf(src))
+		new /obj/item/deactivated_swarmer(get_turf(src))
 		qdel(src)
 	else
 		..()
@@ -60,6 +60,7 @@
 	speak_emote = list("tones")
 	initial_language_holder = /datum/language_holder/swarmer
 	bubble_icon = "swarmer"
+	mob_biotypes = list(MOB_ROBOTIC)
 	health = 40
 	maxHealth = 40
 	status_flags = CANPUSH
@@ -398,7 +399,7 @@
 			to_chat(S, "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
 			return FALSE
 
-/obj/item/device/deactivated_swarmer/IntegrateAmount()
+/obj/item/deactivated_swarmer/IntegrateAmount()
 	return 50
 
 /obj/machinery/hydroponics/soil/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)

@@ -358,7 +358,7 @@
 	invisibility = 101
 	},
 /obj/structure/table,
-/obj/item/device/flashlight/lamp/bananalamp,
+/obj/item/flashlight/lamp/bananalamp,
 /turf/open/indestructible{
 	icon_state = "white"
 	},

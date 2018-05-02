@@ -271,8 +271,7 @@
 					// The shuttle template we loaded isn't "timid" which means
 					// it's already registered with the shuttles subsystem.
 					// This is a bad thing.
-					var/m = "Template [S] is non-timid! Unloading."
-					WARNING(m)
+					stack_trace("Template [S] is non-timid! Unloading.")
 					M.jumpToNullSpace()
 					return
 				else

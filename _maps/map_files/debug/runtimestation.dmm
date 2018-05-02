@@ -257,9 +257,8 @@
 	},
 /area/engine/atmos)
 "aO" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -288,7 +287,7 @@
 /area/space/nearstation)
 "aS" = (
 /obj/structure/table,
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_y = 5
 	},
 /obj/item/storage/toolbox/syndicate,
@@ -374,9 +373,8 @@
 	},
 /area/engine/atmos)
 "bc" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -424,7 +422,7 @@
 	},
 /obj/machinery/light,
 /obj/structure/table,
-/obj/item/device/analyzer,
+/obj/item/analyzer,
 /obj/item/wrench,
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -640,7 +638,7 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "bT" = (
-/obj/machinery/chem_dispenser/scp_294,
+/obj/machinery/chem_dispenser,
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "bU" = (

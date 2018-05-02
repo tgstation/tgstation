@@ -5,7 +5,7 @@
 	item_state = "baton"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 10
 	throwforce = 7
 	w_class = WEIGHT_CLASS_NORMAL
@@ -154,7 +154,7 @@
 			return 0
 
 	L.Knockdown(stunforce)
-	L.apply_effect(STUTTER, stunforce)
+	L.apply_effect(EFFECT_STUTTER, stunforce)
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
@@ -189,8 +189,8 @@
 	stunforce = 100
 	hitcost = 2000
 	throw_hit_chance = 10
-	slot_flags = SLOT_BACK
-	var/obj/item/device/assembly/igniter/sparkler = 0
+	slot_flags = ITEM_SLOT_BACK
+	var/obj/item/assembly/igniter/sparkler = 0
 
 /obj/item/melee/baton/cattleprod/Initialize()
 	. = ..()

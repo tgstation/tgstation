@@ -81,9 +81,9 @@
 
 /datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
 	var/list/slots = list(
-		"backpack" = slot_in_backpack,
-		"left pocket" = slot_l_store,
-		"right pocket" = slot_r_store
+		"backpack" = SLOT_IN_BACKPACK,
+		"left pocket" = SLOT_L_STORE,
+		"right pocket" = SLOT_R_STORE
 	)
 
 	var/T = new item_path(mob)
@@ -95,10 +95,8 @@
 	else
 		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].</span>")
 		if(where == "backpack")
-			var/obj/item/storage/B = mob.back
-			B.orient2hud(mob)
-			B.show_to(mob)
-		return 1
+			mob.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, mob)
+		return TRUE
 
 /datum/antagonist/cult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -241,7 +239,7 @@
 
 		var/datum/job/sacjob = SSjob.GetJob(sac_objective.target.assigned_role)
 		var/datum/preferences/sacface = sac_objective.target.current.client.prefs
-		var/icon/reshape = get_flat_human_icon(null, sacjob, sacface)
+		var/icon/reshape = get_flat_human_icon(null, sacjob, sacface, list(SOUTH))
 		reshape.Shift(SOUTH, 4)
 		reshape.Shift(EAST, 1)
 		reshape.Crop(7,4,26,31)

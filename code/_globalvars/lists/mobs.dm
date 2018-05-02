@@ -31,3 +31,5 @@ GLOBAL_LIST_EMPTY(language_datum_instances)
 GLOBAL_LIST_EMPTY(all_languages)
 
 GLOBAL_LIST_EMPTY(sentient_disease_instances)
+
+GLOBAL_LIST_EMPTY(latejoin_ai_cores)

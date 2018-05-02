@@ -4,39 +4,39 @@
 // Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_by_slot(slot_id)
 	switch(slot_id)
-		if(slot_back)
+		if(SLOT_BACK)
 			return back
-		if(slot_wear_mask)
+		if(SLOT_WEAR_MASK)
 			return wear_mask
-		if(slot_neck)
+		if(SLOT_NECK)
 			return wear_neck
-		if(slot_handcuffed)
+		if(SLOT_HANDCUFFED)
 			return handcuffed
-		if(slot_legcuffed)
+		if(SLOT_LEGCUFFED)
 			return legcuffed
-		if(slot_belt)
+		if(SLOT_BELT)
 			return belt
-		if(slot_wear_id)
+		if(SLOT_WEAR_ID)
 			return wear_id
-		if(slot_ears)
+		if(SLOT_EARS)
 			return ears
-		if(slot_glasses)
+		if(SLOT_GLASSES)
 			return glasses
-		if(slot_gloves)
+		if(SLOT_GLOVES)
 			return gloves
-		if(slot_head)
+		if(SLOT_HEAD)
 			return head
-		if(slot_shoes)
+		if(SLOT_SHOES)
 			return shoes
-		if(slot_wear_suit)
+		if(SLOT_WEAR_SUIT)
 			return wear_suit
-		if(slot_w_uniform)
+		if(SLOT_W_UNIFORM)
 			return w_uniform
-		if(slot_l_store)
+		if(SLOT_L_STORE)
 			return l_store
-		if(slot_r_store)
+		if(SLOT_R_STORE)
 			return r_store
-		if(slot_s_store)
+		if(SLOT_S_STORE)
 			return s_store
 	return null
 
@@ -84,17 +84,17 @@
 
 	var/not_handled = FALSE //Added in case we make this type path deeper one day
 	switch(slot)
-		if(slot_belt)
+		if(SLOT_BELT)
 			belt = I
 			update_inv_belt()
-		if(slot_wear_id)
+		if(SLOT_WEAR_ID)
 			wear_id = I
 			sec_hud_set_ID()
 			update_inv_wear_id()
-		if(slot_ears)
+		if(SLOT_EARS)
 			ears = I
 			update_inv_ears()
-		if(slot_glasses)
+		if(SLOT_GLASSES)
 			glasses = I
 			var/obj/item/clothing/glasses/G = I
 			if(G.glass_colour_type)
@@ -107,13 +107,13 @@
 			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 				update_sight()
 			update_inv_glasses()
-		if(slot_gloves)
+		if(SLOT_GLOVES)
 			gloves = I
 			update_inv_gloves()
-		if(slot_shoes)
+		if(SLOT_SHOES)
 			shoes = I
 			update_inv_shoes()
-		if(slot_wear_suit)
+		if(SLOT_WEAR_SUIT)
 			wear_suit = I
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_inv_w_uniform()
@@ -121,17 +121,17 @@
 				stop_pulling() //can't pull if restrained
 				update_action_buttons_icon() //certain action buttons will no longer be usable.
 			update_inv_wear_suit()
-		if(slot_w_uniform)
+		if(SLOT_W_UNIFORM)
 			w_uniform = I
 			update_suit_sensors()
 			update_inv_w_uniform()
-		if(slot_l_store)
+		if(SLOT_L_STORE)
 			l_store = I
 			update_inv_pockets()
-		if(slot_r_store)
+		if(SLOT_R_STORE)
 			r_store = I
 			update_inv_pockets()
-		if(slot_s_store)
+		if(SLOT_S_STORE)
 			s_store = I
 			update_inv_s_store()
 		else

@@ -58,8 +58,13 @@
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
+/obj/machinery/sleeper/Exited(atom/movable/user)
+	if (!state_open && user == occupant)
+		container_resist(user)
+
 /obj/machinery/sleeper/relaymove(mob/user)
-	container_resist(user)
+	if (!state_open)
+		container_resist(user)
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)
@@ -87,8 +92,6 @@
 		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 			return
 	if(default_change_direction_wrench(user, I))
-		return
-	if(exchange_parts(user, I))
 		return
 	if(default_pry_open(I))
 		return

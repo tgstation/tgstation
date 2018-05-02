@@ -180,13 +180,18 @@
 
 /obj/screen/close
 	name = "close"
+	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
+	icon_state = "backpack_close"
+
+/obj/screen/close/Initialize(mapload, new_master)
+	. = ..()
+	master = new_master
 
 /obj/screen/close/Click()
-	if(istype(master, /obj/item/storage))
-		var/obj/item/storage/S = master
-		S.close(usr)
-	return 1
-
+	var/datum/component/storage/S = master
+	S.hide_from(usr)
+	return TRUE
 
 /obj/screen/drop
 	name = "drop"
@@ -259,7 +264,7 @@
 				var/obj/item/clothing/mask/M = C.wear_mask
 				if(M.mask_adjusted) // if mask on face but pushed down
 					M.adjustmask(C) // adjust it back
-				if( !(M.flags_1 & MASKINTERNALS_1) )
+				if( !(M.clothing_flags & MASKINTERNALS) )
 					to_chat(C, "<span class='warning'>You are not wearing an internals mask!</span>")
 					return
 
@@ -346,19 +351,27 @@
 
 /obj/screen/storage
 	name = "storage"
+	icon_state = "block"
+	screen_loc = "7,7 to 10,8"
+	layer = HUD_LAYER
+	plane = HUD_PLANE
+
+/obj/screen/storage/Initialize(mapload, new_master)
+	. = ..()
+	master = new_master
 
 /obj/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
-		return 1
-	if(usr.stat || usr.IsUnconscious() || usr.IsKnockdown() || usr.IsStun())
-		return 1
+		return TRUE
+	if(usr.incapacitated())
+		return TRUE
 	if (ismecha(usr.loc)) // stops inventory actions in a mech
-		return 1
+		return TRUE
 	if(master)
 		var/obj/item/I = usr.get_active_held_item()
 		if(I)
 			master.attackby(I, usr, params)
-	return 1
+	return TRUE
 
 /obj/screen/throw_catch
 	name = "throw/catch"
