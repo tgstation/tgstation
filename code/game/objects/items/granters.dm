@@ -229,14 +229,6 @@
 	user.Stun(40, ignore_canstun = TRUE)
 	user.petrify(30)
 
-/obj/item/book/granter/spell/twop
-	spell = /obj/effect/proc_holder/spell/aoe_turf/twop
-	spellname = "tranquil walk of peace"
-	icon_state ="bookknock"
-	desc = "This book has to be opened very slowly."
-	remarks = list("Begin the walk of peace...", "Stop... Take it slow...", "Slow down, book. I still haven't finished this page...", "The book won't start moving...", "I'd need a Great Magic Barrier to block the effect...", "Defines peace perfectly...", "Who would use this to flee...")
-
-
 /obj/item/book/granter/spell/knock
 	spell = /obj/effect/proc_holder/spell/aoe_turf/knock
 	spellname = "knock"
