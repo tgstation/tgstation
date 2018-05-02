@@ -314,6 +314,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
+/obj/item/clothing/mask/cigarette/rollie/nicotine
+	list_reagents = list("nicotine" = 15)	
+
 /obj/item/clothing/mask/cigarette/rollie/trippy
 	list_reagents = list("nicotine" = 15, "mushroomhallucinogen" = 35)
 	starts_lit = TRUE
