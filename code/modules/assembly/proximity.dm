@@ -66,7 +66,7 @@
 	time--
 	if(time <= 0)
 		timing = FALSE
-		toggle_scan(1)
+		toggle_scan(TRUE)
 		time = initial(time)
 
 /obj/item/assembly/prox_sensor/proc/toggle_scan(scan)
