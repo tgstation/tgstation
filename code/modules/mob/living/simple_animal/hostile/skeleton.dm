@@ -53,7 +53,7 @@
 				/obj/item/clothing/suit/hooded/wintercoat)
 
 
-/mob/living/simple_animal/hostile/skeleton/templar
+/mob/living/simple_animal/hostile/skeleton/chaplain
 	name = "undead templar"
 	desc = "The reanimated remains of a holy templar knight."
 	icon_state = "templar"
@@ -72,8 +72,8 @@
 	melee_damage_upper = 30
 	deathmessage = "collapses into a pile of bones, its gear clanging as it hits the ground!"
 	loot = list(/obj/effect/decal/remains/human,
-				/obj/item/clothing/suit/armor/riot/knight/templar,
-				/obj/item/clothing/head/helmet/knight/templar,
+				/obj/item/clothing/suit/armor/riot/chaplain,
+				/obj/item/clothing/head/helmet/chaplain,
 				/obj/item/claymore/weak{name = "holy sword"})
 
 /mob/living/simple_animal/hostile/skeleton/ice
