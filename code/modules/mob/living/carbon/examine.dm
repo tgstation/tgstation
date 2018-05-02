@@ -86,7 +86,7 @@
 		else if(InCritical())
 			msg += "[t_His] breathing is shallow and labored.\n"
 
-		if(digitalcamo)
+		if(hiddenFlags & DIGITAL_CAMO)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner.\n"
 
 	GET_COMPONENT_FROM(mood, /datum/component/mood, src)

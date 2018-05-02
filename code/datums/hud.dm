@@ -32,9 +32,9 @@ GLOBAL_LIST_INIT(huds, list(
 	var/list/atom/hudatoms = list() //list of all atoms which display this hud
 	var/list/mob/hudusers = list() //list with all mobs who can see the hud
 	var/list/hud_icons = list() //these will be the indexes for the atom's hud_list
-
 	var/list/next_time_allowed = list() //mobs associated with the next time this hud can be added to them
 	var/list/queued_to_see = list() //mobs that have triggered the cooldown and are queued to see the hud, but do not yet
+	var/hideFlag = HIDE_ALL_HUDS
 
 /datum/atom_hud/New()
 	GLOB.all_huds += src
@@ -108,7 +108,11 @@ GLOBAL_LIST_INIT(huds, list(
 		return
 	for(var/i in hud_icons)
 		if(A.hud_list[i])
-			M.client.images |= A.hud_list[i]
+			// Does the target mob's hide flag match our current hud's hideFlag?
+			if(M.hidden_atoms[A] & hideFlag)
+				M.client.images -= A.hud_list[i]
+			else
+				M.client.images |= A.hud_list[i]
 
 //MOB PROCS
 /mob/proc/reload_huds()
@@ -125,3 +129,11 @@ GLOBAL_LIST_INIT(huds, list(
 
 /mob/dead/new_player/add_click_catcher()
 	return
+
+/mob/proc/hideHudOf(mob/inMob, flag)
+	inMob.hidden_atoms[src] |= flag
+	inMob.reload_huds()
+
+/mob/proc/showHudOf(mob/inMob, flag)
+	inMob.hidden_atoms[src] &= ~flag
+	inMob.reload_huds()
