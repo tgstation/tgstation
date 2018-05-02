@@ -69,8 +69,8 @@
 	name = "Profane Scholar Kit"
 
 /obj/item/storage/box/holy/student/PopulateContents()
-	new /obj/item/clothing/suit/studentuni(src)
-	new /obj/item/clothing/head/cage(src)
+	new /obj/item/clothing/suit/armor/riot/chaplain/studentuni(src)
+	new /obj/item/clothing/head/helmet/chaplain/cage(src)
 
 /obj/item/clothing/suit/armor/riot/chaplain/studentuni
 	name = "student robe"
