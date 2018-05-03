@@ -637,6 +637,7 @@
 	var/frequency = FREQ_SIGNALER
 	var/code = DEFAULT_SIGNALER_CODE
 	var/datum/radio_frequency/radio_connection
+	var/hearing_range = 1
 
 /obj/item/integrated_circuit/input/signaler/Initialize()
 	. = ..()
@@ -690,7 +691,9 @@
 		return 0
 
 	activate_pin(3)
-	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
+	for(var/mob/CHM in get_hearers_in_view(hearing_range, src))
+		CHM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, 1)
 
 /obj/item/integrated_circuit/input/ntnet_packet
 	name = "NTNet networking circuit"

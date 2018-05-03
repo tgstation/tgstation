@@ -2,10 +2,10 @@
 	name = "blast door controller"
 	desc = "A small electronic device able to control a blast door remotely."
 	icon_state = "control"
-	attachable = 1
+	attachable = TRUE
 	var/id = null
 	var/can_change_id = 0
-	var/cooldown = 0//Door cooldowns
+	var/cooldown = FALSE //Door cooldowns
 
 /obj/item/assembly/control/examine(mob/user)
 	..()
@@ -13,7 +13,7 @@
 		to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
 
 /obj/item/assembly/control/activate()
-	cooldown = 1
+	cooldown = TRUE
 	var/openclose
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if(M.id == src.id)
@@ -21,7 +21,7 @@
 				openclose = M.density
 			INVOKE_ASYNC(M, openclose ? /obj/machinery/door/poddoor.proc/open : /obj/machinery/door/poddoor.proc/close)
 	sleep(10)
-	cooldown = 0
+	cooldown = FALSE
 
 
 /obj/item/assembly/control/airlock
@@ -38,7 +38,7 @@
 	*/
 
 /obj/item/assembly/control/airlock/activate()
-	cooldown = 1
+	cooldown = TRUE
 	var/doors_need_closing = FALSE
 	var/list/obj/machinery/door/airlock/open_or_close = list()
 	for(var/obj/machinery/door/airlock/D in GLOB.airlocks)
@@ -67,7 +67,7 @@
 		INVOKE_ASYNC(D, doors_need_closing ? /obj/machinery/door/airlock.proc/close : /obj/machinery/door/airlock.proc/open)
 
 	sleep(10)
-	cooldown = 0
+	cooldown = FALSE
 
 
 /obj/item/assembly/control/massdriver
@@ -75,7 +75,7 @@
 	desc = "A small electronic device able to control a mass driver."
 
 /obj/item/assembly/control/massdriver/activate()
-	cooldown = 1
+	cooldown = TRUE
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, /obj/machinery/door/poddoor.proc/open)
@@ -93,7 +93,7 @@
 			INVOKE_ASYNC(M, /obj/machinery/door/poddoor.proc/close)
 
 	sleep(10)
-	cooldown = 0
+	cooldown = FALSE
 
 
 /obj/item/assembly/control/igniter
@@ -101,7 +101,7 @@
 	desc = "A remote controller for a mounted igniter."
 
 /obj/item/assembly/control/igniter/activate()
-	cooldown = 1
+	cooldown = TRUE
 	for(var/obj/machinery/sparker/M in GLOB.machines)
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, /obj/machinery/sparker.proc/ignite)
@@ -113,7 +113,7 @@
 			M.icon_state = "igniter[M.on]"
 
 	sleep(30)
-	cooldown = 0
+	cooldown = FALSE
 
 
 /obj/item/assembly/control/flasher
@@ -121,13 +121,13 @@
 	desc = "A remote controller for a mounted flasher."
 
 /obj/item/assembly/control/flasher/activate()
-	cooldown = 1
+	cooldown = TRUE
 	for(var/obj/machinery/flasher/M in GLOB.machines)
 		if(M.id == src.id)
 			INVOKE_ASYNC(M, /obj/machinery/flasher.proc/flash)
 
 	sleep(50)
-	cooldown = 0
+	cooldown = FALSE
 
 
 /obj/item/assembly/control/crematorium
@@ -135,10 +135,10 @@
 	desc = "An evil-looking remote controller for a crematorium."
 
 /obj/item/assembly/control/crematorium/activate()
-	cooldown = 1
+	cooldown = TRUE
 	for (var/obj/structure/bodycontainer/crematorium/C in GLOB.crematoriums)
 		if (C.id == id)
 			C.cremate(usr)
 
 	sleep(50)
-	cooldown = 0
+	cooldown = FALSE

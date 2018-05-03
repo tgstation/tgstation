@@ -2,14 +2,15 @@
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
+	item_state = "mousetrap"
 	materials = list(MAT_METAL=100)
-	attachable = 1
-	var/armed = 0
+	attachable = TRUE
+	var/armed = FALSE
 
 
 /obj/item/assembly/mousetrap/examine(mob/user)
 	..()
-	to_chat(user, "The pressure plate is [armed?"primed":"safe"].")
+	to_chat(user, "<span class='notice'>The pressure plate is [armed?"primed":"safe"].</span>")
 
 /obj/item/assembly/mousetrap/activate()
 	if(..())
@@ -19,10 +20,9 @@
 				var/mob/living/carbon/human/user = usr
 				if((user.has_trait(TRAIT_DUMB) || user.has_trait(TRAIT_CLUMSY)) && prob(50))
 					to_chat(user, "<span class='warning'>Your hand slips, setting off the trigger!</span>")
-					pulse(0)
+					pulse(FALSE)
 		update_icon()
-		if(usr)
-			playsound(usr.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
+		playsound(src, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 
 /obj/item/assembly/mousetrap/update_icon()
 	if(armed)
@@ -39,11 +39,11 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(H.has_trait(TRAIT_PIERCEIMMUNE))
-			playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
-			armed = 0
+			playsound(src, 'sound/effects/snap.ogg', 50, 1)
+			armed = TRUE
 			update_icon()
-			pulse(0)
-			return 0
+			pulse(FALSE)
+			return FALSE
 		switch(type)
 			if("feet")
 				if(!H.shoes)
@@ -60,10 +60,10 @@
 		var/mob/living/simple_animal/mouse/M = target
 		visible_message("<span class='boldannounce'>SPLAT!</span>")
 		M.splat()
-	playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
-	armed = 0
+	playsound(src, 'sound/effects/snap.ogg', 50, 1)
+	armed = FALSE
 	update_icon()
-	pulse(0)
+	pulse(FALSE)
 
 
 /obj/item/assembly/mousetrap/attack_self(mob/living/carbon/human/user)
@@ -81,7 +81,7 @@
 		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
 	update_icon()
-	playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
+	playsound(src, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -121,8 +121,8 @@
 		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
 		triggered(finder, (finder.active_hand_index % 2 == 0) ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND)
-		return 1	//end the search!
-	return 0
+		return TRUE	//end the search!
+	return FALSE
 
 
 /obj/item/assembly/mousetrap/hitby(A as mob|obj)
@@ -134,4 +134,4 @@
 
 /obj/item/assembly/mousetrap/armed
 	icon_state = "mousetraparmed"
-	armed = 1
+	armed = TRUE

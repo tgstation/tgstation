@@ -3,6 +3,7 @@
 #define WIRE_PULSE_SPECIAL	(1<<2)
 #define WIRE_RADIO_RECEIVE	(1<<3)
 #define WIRE_RADIO_PULSE	(1<<4)
+#define ASSEMBLY_BEEP_VOLUME 5
 
 /obj/item/assembly
 	name = "assembly"
@@ -53,7 +54,7 @@
 
 
 //Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
-/obj/item/assembly/proc/pulsed(radio = 0)
+/obj/item/assembly/proc/pulsed(radio = FALSE)
 	if(wire_type & WIRE_RECEIVE)
 		INVOKE_ASYNC(src, .proc/activate)
 	if(radio && (wire_type & WIRE_RADIO_RECEIVE))
@@ -62,7 +63,7 @@
 
 
 //Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
-/obj/item/assembly/proc/pulse(radio = 0)
+/obj/item/assembly/proc/pulse(radio = FALSE)
 	if(connected && wire_type)
 		connected.pulse_assembly(src)
 		return TRUE
@@ -97,21 +98,19 @@
 		else
 			to_chat(user, "<span class='warning'>Both devices must be in attachable mode to be attached together.</span>")
 		return
-	if(istype(W, /obj/item/screwdriver))
-		if(toggle_secure())
-			to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
-		else
-			to_chat(user, "<span class='notice'>\The [src] can now be attached!</span>")
-		return
 	..()
 
+/obj/item/assembly/screwdriver_act(mob/living/user, obj/item/I)
+	if(toggle_secure())
+		to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
+	else
+		to_chat(user, "<span class='notice'>\The [src] can now be attached!</span>")
+	add_fingerprint(user)
+	return TRUE
 
 /obj/item/assembly/examine(mob/user)
 	..()
-	if(secured)
-		to_chat(user, "\The [src] is secured and ready to be used.")
-	else
-		to_chat(user, "\The [src] can be attached to other things.")
+	to_chat(user, "<span class='notice'>\The [src] [secured? "is secured and ready to be used!" : "can be attached to other things."]</span>")
 
 
 /obj/item/assembly/attack_self(mob/user)

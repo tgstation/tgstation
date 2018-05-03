@@ -11,6 +11,7 @@
 	var/list/obj/effect/beam/i_beam/beams
 	var/olddir = 0
 	var/datum/component/redirect/listener
+	var/hearing_range = 3
 
 /obj/item/assembly/infra/Initialize()
 	. = ..()
@@ -20,7 +21,7 @@
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_LIST(beams)
-	return ..()
+	. = ..()
 
 /obj/item/assembly/infra/examine(mob/user)
 	..()
@@ -73,7 +74,15 @@
 
 /obj/item/assembly/infra/proc/refreshBeam()
 	QDEL_LIST(beams)
-	if(throwing || !on || !secured || !(isturf(loc) || (holder && isturf(holder.loc))))
+	if(throwing || !on || !secured)
+		return
+	if(holder)
+		if(holder.master) //incase the sensor is part of an assembly that's contained in another item, such as a single tank bomb
+			if(!holder.master.IsSpecialAssembly() || !isturf(holder.master.loc))
+				return
+		else if(!isturf(holder.loc)) //else just check where the holder is
+			return
+	else if(!isturf(loc)) //or just where the fuck we are in general
 		return
 	var/turf/T = get_turf(src)
 	var/_dir = dir
@@ -131,8 +140,10 @@
 	switchListener(location)
 	if(!secured || !on || next_activate > world.time)
 		return FALSE
-	pulse(0)
-	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 3)
+	pulse(FALSE)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
+	for(var/mob/CHM in get_hearers_in_view(hearing_range, src))
+		CHM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, 1)
 	next_activate =  world.time + 30
 
 /obj/item/assembly/infra/proc/switchListener(turf/newloc)
@@ -148,7 +159,9 @@
 	. = ..()
 	if(is_secured(user))
 		user.set_machine(src)
-		var/dat = "<TT><B>Infrared Laser</B>\n<B>Status</B>: [on ? "<A href='?src=[REF(src)];state=0'>On</A>" : "<A href='?src=[REF(src)];state=1'>Off</A>"]<BR>\n<B>Visibility</B>: [visible ? "<A href='?src=[REF(src)];visible=0'>Visible</A>" : "<A href='?src=[REF(src)];visible=1'>Invisible</A>"]<BR>\n</TT>"
+		var/dat = "<TT><B>Infrared Laser</B></TT>"
+		dat += "<BR><B>Status</B>: [on ? "<A href='?src=[REF(src)];state=0'>On</A>" : "<A href='?src=[REF(src)];state=1'>Off</A>"]"
+		dat += "<BR><B>Visibility</B>: [visible ? "<A href='?src=[REF(src)];visible=0'>Visible</A>" : "<A href='?src=[REF(src)];visible=1'>Invisible</A>"]"
 		dat += "<BR><BR><A href='?src=[REF(src)];refresh=1'>Refresh</A>"
 		dat += "<BR><BR><A href='?src=[REF(src)];close=1'>Close</A>"
 		user << browse(dat, "window=infra")

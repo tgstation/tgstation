@@ -7,13 +7,14 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_METAL=400, MAT_GLASS=120)
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
-	attachable = 1
+	attachable = TRUE
 
 	var/code = DEFAULT_SIGNALER_CODE
 	var/frequency = FREQ_SIGNALER
 	var/delay = 0
 	var/datum/radio_frequency/radio_connection
 	var/suicider = null
+	var/hearing_range = 1
 
 /obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] eats \the [src]! If it is signaled, [user.p_they()] will die!</span>")
@@ -27,15 +28,14 @@
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(0)
 
-/obj/item/assembly/signaler/New()
-	..()
-	spawn(40)
-		set_frequency(frequency)
+/obj/item/assembly/signaler/Initialize()
+	. = ..()
+	set_frequency(frequency)
 
 
 /obj/item/assembly/signaler/Destroy()
 	SSradio.remove_object(src,frequency)
-	return ..()
+	. = ..()
 
 /obj/item/assembly/signaler/activate()
 	if(!..())//cooldown processing
@@ -80,7 +80,7 @@ Code:
 /obj/item/assembly/signaler/Topic(href, href_list)
 	..()
 
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(!usr.canUseTopic(src, BE_CLOSE))
 		usr << browse(null, "window=radio")
 		onclose(usr, "radio")
 		return
@@ -131,17 +131,20 @@ Code:
 	return
 
 /obj/item/assembly/signaler/receive_signal(datum/signal/signal)
+	. = FALSE
 	if(!signal)
-		return 0
+		return
 	if(signal.data["code"] != code)
-		return 0
+		return
 	if(!(src.wires & WIRE_RADIO_RECEIVE))
-		return 0
+		return
 	if(suicider)
 		manual_suicide(suicider)
-	pulse(1)
-	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
-	return
+	pulse(TRUE)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
+	for(var/mob/CHM in get_hearers_in_view(hearing_range, src))
+		CHM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, 1)
+	return TRUE
 
 
 /obj/item/assembly/signaler/proc/set_frequency(new_frequency)
@@ -161,11 +164,11 @@ Code:
 
 /obj/item/assembly/signaler/reciever/activate()
 	toggle_safety()
-	return 1
+	return TRUE
 
 /obj/item/assembly/signaler/reciever/examine(mob/user)
 	..()
-	to_chat(user, "The radio receiver is [on?"on":"off"].")
+	to_chat(user, "<span class='notice'>The radio receiver is [on?"on":"off"].</span>")
 
 /obj/item/assembly/signaler/reciever/receive_signal(datum/signal/signal)
 	if(!on)
@@ -184,11 +187,12 @@ Code:
 
 /obj/item/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
 	if(!signal)
-		return 0
+		return FALSE
 	if(signal.data["code"] != code)
-		return 0
+		return FALSE
 	for(var/obj/effect/anomaly/A in get_turf(src))
 		A.anomalyNeutralize()
+	return TRUE
 
 /obj/item/assembly/signaler/anomaly/attack_self()
 	return
@@ -196,4 +200,6 @@ Code:
 /obj/item/assembly/signaler/cyborg
 
 /obj/item/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, params)
+	return
+/obj/item/assembly/signaler/cyborg/screwdriver_act(mob/living/user, obj/item/I)
 	return

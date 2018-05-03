@@ -15,7 +15,7 @@
 	var/obj/item/assembly/a_right = null
 
 /obj/item/assembly_holder/IsAssemblyHolder()
-	return 1
+	return TRUE
 
 
 /obj/item/assembly_holder/proc/assemble(obj/item/assembly/A, obj/item/assembly/A2, mob/user)
@@ -125,12 +125,12 @@
 
 /obj/item/assembly_holder/proc/process_activation(obj/D, normal = 1, special = 1)
 	if(!D)
-		return 0
+		return FALSE
 	if((normal) && (a_right) && (a_left))
 		if(a_right != D)
-			a_right.pulsed(0)
+			a_right.pulsed(FALSE)
 		if(a_left != D)
-			a_left.pulsed(0)
+			a_left.pulsed(FALSE)
 	if(master)
 		master.receive_signal()
-	return 1
+	return TRUE
