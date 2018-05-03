@@ -97,6 +97,7 @@
 		a_right.attack_hand()
 
 /obj/item/assembly_holder/screwdriver_act(mob/user, obj/item/tool)
+	to_chat(user, "<span class='notice'>You disassemble [src]!</span>")
 	if(a_left)
 		a_left.on_detach()
 		a_left = null

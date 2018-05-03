@@ -33,10 +33,10 @@
 /obj/item/assembly/health/multitool_act(mob/living/user, obj/item/I)
 	if(alarm_health == 0)
 		alarm_health = -90
-		user.show_message("You toggle [src] to \"detect death\" mode.")
+		to_chat(user, "<span class='notice'>You toggle [src] to \"detect death\" mode.</span>")
 	else
 		alarm_health = 0
-		user.show_message("You toggle [src] to \"detect critical state\" mode.")
+		to_chat(user, "<span class='notice'>You toggle [src] to \"detect critical state\" mode.</span>")
 	return TRUE
 
 /obj/item/assembly/health/process()
