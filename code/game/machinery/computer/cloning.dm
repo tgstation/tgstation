@@ -474,8 +474,8 @@
 	R.fields["features"] = dna.features
 	R.fields["factions"] = mob_occupant.faction
 	R.fields["traits"] = list()
-	for(var/V in mob_occupant.roundstart_traits)
-		var/datum/trait/T = V
+	for(var/V in mob_occupant.roundstart_quirks)
+		var/datum/quirk/T = V
 		R.fields["traits"] += T.type
 
 	if (!isnull(mob_occupant.mind)) //Save that mind so traitors can continue traitoring after cloning.

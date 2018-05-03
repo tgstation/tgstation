@@ -512,7 +512,8 @@ MICE_ROUNDSTART 10
 ## Determines if players are allowed to print integrated circuits, uncomment to allow.
 #IC_PRINTING
 
-## Uncomment to allow roundstart trait selection in the character setup menu.
+## Uncomment to allow roundstart quirk selection in the character setup menu.
+## This used to be named traits, hence the config name, but it handles quirks, not the other kind of trait!
 ROUNDSTART_TRAITS
 
 ## Uncomment to disable human moods.
