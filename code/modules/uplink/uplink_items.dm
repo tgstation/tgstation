@@ -936,14 +936,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/surgery
 	cost = 3
 
-/datum/uplink_item/device_tools/brainwash_disk
-	name = "Brainwashing Surgery Program"
-	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
-	Insert into an Operating Console to enable the procedure."
-	item = /obj/item/disk/surgery/brainwashing
-	restricted_roles = list("Medical Doctor")
-	cost = 5
-
 /datum/uplink_item/device_tools/military_belt
 	name = "Chest Rig"
 	desc = "A robust seven-slot set of webbing that is capable of holding all manner of tactical equipment."
@@ -1357,6 +1349,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 20
 	restricted_roles = list("Assistant")
 	surplus = 0
+
+/datum/uplink_item/role_restricted/brainwash_disk
+	name = "Brainwashing Surgery Program"
+	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
+	Insert into an Operating Console to enable the procedure."
+	item = /obj/item/disk/surgery/brainwashing
+	restricted_roles = list("Medical Doctor")
+	cost = 5
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"
