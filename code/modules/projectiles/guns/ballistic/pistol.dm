@@ -1,5 +1,5 @@
 /obj/item/gun/ballistic/automatic/pistol
-	name = "stechkin mod 1 pistol"
+	name = "stechkin pistol"
 	desc = "A small, easily concealable .45 handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
