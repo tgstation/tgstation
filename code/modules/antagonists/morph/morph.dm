@@ -109,8 +109,8 @@
 	pixel_x = initial(pixel_x)
 
 	//Morphed is weaker
-	melee_damage_lower = 5
-	melee_damage_upper = 5
+	melee_damage_lower = 0
+	melee_damage_upper = 0
 	speed = 0
 
 	morph_time = world.time + MORPH_COOLDOWN
