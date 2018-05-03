@@ -395,7 +395,7 @@
 	owner.visible_message("<span class='danger'>[owner] begins swinging the sword with inhuman strength!</span>")
 	var/oldcolor = owner.color
 	owner.color = "#ff0000"
-	owner.add_stun_absorption("bloody bastard sword", duration, 2, "doesn't even flinch as the sword's power courses through [owner.p_them()]!", "You shrug off the stun!", " glowing with a blazing red aura!")
+	owner.add_stun_absorption("bloody bastard sword", duration, 2, "doesn't even flinch as the sword's power courses through them!", "You shrug off the stun!", " glowing with a blazing red aura!")
 	owner.spin(duration,1)
 	animate(owner, color = oldcolor, time = duration, easing = EASE_IN)
 	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), duration)
