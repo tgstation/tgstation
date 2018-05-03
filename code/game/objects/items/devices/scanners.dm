@@ -358,7 +358,6 @@ SLIME SCANNER
 	var/cooldown = FALSE
 	var/cooldown_time = 250
 	var/accuracy // 0 is the best accuracy.
-	var/advanced = FALSE //advanced analyzer?
 
 /obj/item/analyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
@@ -385,7 +384,7 @@ SLIME SCANNER
 
 		else if (istype(holder, /obj/machinery/atmospherics/components))
 			var/obj/machinery/atmospherics/components/C = holder
-			atmosanalyzer_scan(C.airs, user, C, advanced)
+			atmosanalyzer_scan(C.airs, user, C)
 
 		else if (istype(holder, /obj/machinery/power/rad_collector))
 			var/obj/machinery/power/rad_collector/RC = holder
