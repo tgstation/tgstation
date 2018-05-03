@@ -74,7 +74,7 @@
 /area/awaymission/spacebattle/syndicate2)
 "as" = (
 /obj/structure/table/reinforced,
-/obj/item/ammo_casing/c10mm,
+/obj/item/ammo_casing/c45,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate2)
 "at" = (
@@ -521,22 +521,22 @@
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "cw" = (
-/obj/item/ammo_casing/c10mm,
-/obj/item/ammo_casing/c10mm,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
 /turf/open/floor/plasteel{
 	icon_state = "damaged2"
 	},
 /area/awaymission/spacebattle/cruiser)
 "cx" = (
 /obj/item/stack/sheet/metal,
-/obj/item/ammo_casing/c10mm,
+/obj/item/ammo_casing/c45,
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "cy" = (
-/obj/item/ammo_casing/c10mm,
-/obj/item/ammo_casing/c10mm,
-/obj/item/ammo_casing/c10mm,
-/obj/item/ammo_casing/c10mm,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "cz" = (
@@ -607,12 +607,12 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "cL" = (
-/obj/item/ammo_casing/c10mm,
-/obj/item/ammo_casing/c10mm,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "cM" = (
-/obj/item/ammo_casing/c10mm,
+/obj/item/ammo_casing/c45,
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "cN" = (
@@ -1260,16 +1260,16 @@
 "fp" = (
 /obj/effect/mob_spawn/human/syndicatesoldier,
 /obj/item/gun/ballistic/automatic/c20r,
-/obj/item/ammo_casing/c10mm,
-/obj/item/ammo_casing/c10mm,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plasteel/blue/side{
 	dir = 1
 	},
 /area/awaymission/spacebattle/cruiser)
 "fq" = (
-/obj/item/ammo_casing/c10mm,
-/obj/item/ammo_casing/c10mm,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
 /turf/open/floor/plasteel/blue/side{
 	dir = 1
 	},
@@ -1393,8 +1393,8 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "fK" = (
-/obj/item/ammo_casing/c10mm,
-/obj/item/ammo_casing/c10mm,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
 /turf/open/floor/plasteel/blue/side{
 	dir = 0
 	},
@@ -1414,15 +1414,15 @@
 "fN" = (
 /obj/effect/mob_spawn/human/syndicatesoldier,
 /obj/item/gun/ballistic/automatic/c20r,
-/obj/item/ammo_casing/c10mm,
-/obj/item/ammo_casing/c10mm,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plasteel/blue/side{
 	dir = 0
 	},
 /area/awaymission/spacebattle/cruiser)
 "fO" = (
-/obj/item/ammo_casing/c10mm,
+/obj/item/ammo_casing/c45,
 /turf/open/floor/plasteel/blue/corner{
 	dir = 8
 	},
@@ -2454,8 +2454,8 @@
 	name = "Walter Strider"
 	},
 /obj/item/gun/ballistic/shotgun/automatic/combat,
-/obj/item/ammo_casing/c10mm,
-/obj/item/ammo_casing/c10mm,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plasteel{
 	icon_state = "damaged3"
@@ -2468,8 +2468,8 @@
 /area/awaymission/spacebattle/cruiser)
 "jO" = (
 /obj/item/ammo_casing/shotgun,
-/obj/item/ammo_casing/c10mm,
-/obj/item/ammo_casing/c10mm,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plasteel/blue/side{
 	dir = 0
@@ -2697,10 +2697,10 @@
 /turf/open/space,
 /area/space/nearstation)
 "kG" = (
-/obj/item/ammo_casing/c10mm,
-/obj/item/ammo_casing/c10mm,
-/obj/item/ammo_casing/c10mm,
-/obj/item/ammo_casing/c10mm,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
+/obj/item/ammo_casing/c45,
 /mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/spacebattle/cruiser)

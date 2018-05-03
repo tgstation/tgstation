@@ -219,7 +219,7 @@
 /area/awaymission/wildwest/mines)
 "ba" = (
 /obj/effect/mine/sound/bwoink,
-/obj/item/ammo_box/c10mm,
+/obj/item/ammo_box/c45,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -236,7 +236,7 @@
 /turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "be" = (
-/obj/item/ammo_box/c10mm,
+/obj/item/ammo_box/c45,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -300,7 +300,7 @@
 /area/space/nearstation)
 "bs" = (
 /obj/effect/mine/sound/bwoink,
-/obj/item/ammo_box/c10mm,
+/obj/item/ammo_box/c45,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "bt" = (
@@ -613,7 +613,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "ck" = (
-/obj/item/ammo_box/c10mm,
+/obj/item/ammo_box/c45,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "cl" = (
@@ -687,7 +687,7 @@
 /area/awaymission/wildwest/mines)
 "cB" = (
 /obj/effect/mine/gas/plasma,
-/obj/item/ammo_box/c10mm,
+/obj/item/ammo_box/c45,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -979,7 +979,7 @@
 /area/awaymission/wildwest/mines)
 "dv" = (
 /obj/effect/mine/gas/plasma,
-/obj/item/ammo_box/c10mm,
+/obj/item/ammo_box/c45,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "dw" = (
