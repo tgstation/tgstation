@@ -2490,6 +2490,7 @@
 #include "code\modules\superbox\medals.dm"
 #include "code\modules\superbox\missions.dm"
 #include "code\modules\superbox\plaques.dm"
+#include "code\modules\superbox\sabotage.dm"
 #include "code\modules\superbox\sciencestation.dm"
 #include "code\modules\superbox\shuttles.dm"
 #include "code\modules\superbox\swars.dm"
