@@ -1,10 +1,9 @@
-//Used to process and handle roundstart trait datums
-//Trait datums are separate from trait strings:
-// - Trait strings are used for faster checking in code
-// - Trait datums are stored and hold different effects, as well as being a vector for applying trait string
+//Used to process and handle roundstart quirks
+// - Quirk strings are used for faster checking in code
+// - Quirk datums are stored and hold different effects, as well as being a vector for applying trait string
 PROCESSING_SUBSYSTEM_DEF(quirks)
 	name = "Quirks"
-	init_order = INIT_ORDER_TRAITS
+	init_order = INIT_ORDER_QUIRKS
 	flags = SS_BACKGROUND
 	wait = 10
 	runlevels = RUNLEVEL_GAME

@@ -1,5 +1,5 @@
-//every trait in this folder should be coded around being applied on spawn
-//these are NOT "mob traits" like GOTTAGOFAST, but exist as a medium to apply them and other different effects
+//every quirk in this folder should be coded around being applied on spawn
+//these are NOT "mob quirks" like GOTTAGOFAST, but exist as a medium to apply them and other different effects
 /datum/quirk
 	var/name = "Test Quirk"
 	var/desc = "This is a test quirk."
