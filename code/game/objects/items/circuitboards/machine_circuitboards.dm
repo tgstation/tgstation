@@ -870,13 +870,11 @@
 	build_path = /obj/machinery/mineral/stacking_unit_console
 	req_components = list(
 		/obj/item/stack/sheet/glass = 2,
-		/obj/item/stock_parts/micro_laser = 2,
 		/obj/item/stock_parts/manipulator = 2)
 
 /obj/item/circuitboard/machine/stacking_machine
 	name = "Stacking Machine (Machine Board)"
 	build_path = /obj/machinery/mineral/stacking_machine
 	req_components = list(
-		/obj/item/stock_parts/micro_laser = 2,
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/matter_bin = 2)
