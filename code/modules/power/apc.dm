@@ -384,15 +384,6 @@
 /obj/machinery/power/apc/crowbar_act(mob/user, obj/item/W)
 	. = TRUE
 	if (opened)
-		if(cell)
-			user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
-			var/turf/T = get_turf(user)
-			cell.forceMove(T)
-			cell.update_icon()
-			cell = null
-			charging = 0
-			update_icon()
-			return
 		if (has_electronics == APC_ELECTRONICS_INSTALLED)
 			if (terminal)
 				to_chat(user, "<span class='warning'>Disconnect the wires first!</span>")
@@ -457,8 +448,14 @@
 /obj/machinery/power/apc/screwdriver_act(mob/living/user, obj/item/W)
 	. = TRUE
 	if(opened)
-		if (cell)
-			to_chat(user, "<span class='warning'>Close the APC first!</span>")
+		if(cell)
+			user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
+			var/turf/T = get_turf(user)
+			cell.forceMove(T)
+			cell.update_icon()
+			cell = null
+			charging = 0
+			update_icon()
 			return
 		else
 			switch (has_electronics)
