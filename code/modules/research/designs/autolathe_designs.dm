@@ -712,14 +712,6 @@
 	build_path = /obj/item/ammo_box/a357
 	category = list("hacked", "Security")
 
-/datum/design/c10mm
-	name = "Ammo Box (10mm)"
-	id = "c10mm"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000)
-	build_path = /obj/item/ammo_box/c10mm
-	category = list("hacked", "Security")
-
 /datum/design/c45
 	name = "Ammo Box (.45)"
 	id = "c45"

@@ -1,9 +1,9 @@
 /obj/item/gun/ballistic/automatic/pistol
-	name = "stechkin pistol"
-	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
+	name = "stechkin mod 1 pistol"
+	desc = "A small, easily concealable .45 handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
-	mag_type = /obj/item/ammo_box/magazine/m10mm
+	mag_type = /obj/item/ammo_box/magazine/m45
 	can_suppress = TRUE
 	burst_size = 1
 	fire_delay = 0
@@ -23,7 +23,7 @@
 	desc = "A classic .45 handgun with a small magazine capacity."
 	icon_state = "m1911"
 	w_class = WEIGHT_CLASS_NORMAL
-	mag_type = /obj/item/ammo_box/magazine/m45
+	mag_type = /obj/item/ammo_box/magazine/m45/m1911
 	can_suppress = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/deagle

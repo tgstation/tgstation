@@ -396,32 +396,18 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 40
 
 /datum/uplink_item/ammo/pistol
-	name = "10mm Handgun Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds \
+	name = ".45 Handgun Magazine"
+	desc = "An additional 8-round .45 magazine; compatible with the Stechkin Pistol. These rounds \
 			are dirt cheap but are half as effective as .357 rounds."
-	item = /obj/item/ammo_box/magazine/m10mm
+	item = /obj/item/ammo_box/magazine/m45
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
-/datum/uplink_item/ammo/pistolap
-	name = "10mm Armour Piercing Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds are less effective at injuring the target but penetrate protective gear."
-	item = /obj/item/ammo_box/magazine/m10mm/ap
-	cost = 2
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
-
 /datum/uplink_item/ammo/pistolfire
-	name = "10mm Incendiary Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. Loaded with incendiary rounds which ignite the target."
-	item = /obj/item/ammo_box/magazine/m10mm/fire
+	name = ".45 Incendiary Magazine"
+	desc = "An additional 8-round .45 magazine; compatible with the Stechkin Pistol. Loaded with incendiary rounds which ignite the target."
+	item = /obj/item/ammo_box/magazine/m45/fire
 	cost = 2
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
-
-/datum/uplink_item/ammo/pistolhp
-	name = "10mm Hollow Point Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds are more damaging but ineffective against armour."
-	item = /obj/item/ammo_box/magazine/m10mm/hp
-	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/pistolaps

@@ -1,38 +1,22 @@
-/obj/item/ammo_box/magazine/m10mm
-	name = "pistol magazine (10mm)"
-	desc = "A gun magazine."
-	icon_state = "9x19p"
-	ammo_type = /obj/item/ammo_casing/c10mm
-	caliber = "10mm"
-	max_ammo = 8
-	multiple_sprites = 2
-
-/obj/item/ammo_box/magazine/m10mm/fire
-	name = "pistol magazine (10mm incendiary)"
-	icon_state = "9x19pI"
-	desc = "A gun magazine. Loaded with rounds which ignite the target."
-	ammo_type = /obj/item/ammo_casing/c10mm/fire
-
-/obj/item/ammo_box/magazine/m10mm/hp
-	name = "pistol magazine (10mm HP)"
-	icon_state = "9x19pH"
-	desc= "A gun magazine. Loaded with hollow-point rounds, extremely effective against unarmored targets, but nearly useless against protective clothing."
-	ammo_type = /obj/item/ammo_casing/c10mm/hp
-
-/obj/item/ammo_box/magazine/m10mm/ap
-	name = "pistol magazine (10mm AP)"
-	icon_state = "9x19pA"
-	desc= "A gun magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets."
-	ammo_type = /obj/item/ammo_casing/c10mm/ap
-
 /obj/item/ammo_box/magazine/m45
 	name = "handgun magazine (.45)"
-	icon_state = "45-8"
+	icon_state = "9x19p"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
 	max_ammo = 8
+	multiple_sprites = 2
 
-/obj/item/ammo_box/magazine/m45/update_icon()
+/obj/item/ammo_box/magazine/m45/fire
+	name = "handgun magazine (.45 incendiary)"
+	icon_state = "9x19pI"
+	desc = "A gun magazine. Loaded with rounds which ignite the target."
+	ammo_type = /obj/item/ammo_casing/c45/inc
+
+/obj/item/ammo_box/magazine/m45/m1911
+	icon_state = "45-8"
+	max_ammo = 8
+
+/obj/item/ammo_box/magazine/m45/m1911/update_icon()
 	..()
 	icon_state = "45-[ammo_count() ? "8" : "0"]"
 

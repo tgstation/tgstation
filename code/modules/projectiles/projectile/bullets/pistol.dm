@@ -14,23 +14,13 @@
 	damage = 10
 	fire_stacks = 1
 
-// 10mm (Stechkin)
+// .45 (M1911, C20r, Stetchkin)
 
-/obj/item/projectile/bullet/c10mm
-	name = "10mm bullet"
+/obj/item/projectile/bullet/c45
+	name = ".45 bullet"
 	damage = 30
 
-/obj/item/projectile/bullet/c10mm_ap
-	name = "10mm armor-piercing bullet"
-	damage = 27
-	armour_penetration = 40
-
-/obj/item/projectile/bullet/c10mm_hp
-	name = "10mm hollow-point bullet"
-	damage = 40
-	armour_penetration = -50
-
-/obj/item/projectile/bullet/incendiary/c10mm
-	name = "10mm incendiary bullet"
+/obj/item/projectile/bullet/incendiary/c45
+	name = ".45 incendiary bullet"
 	damage = 15
 	fire_stacks = 2
