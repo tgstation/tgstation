@@ -11742,7 +11742,7 @@
 	dir = 8;
 	pixel_x = 23
 	},
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aEi" = (
@@ -13433,7 +13433,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aIo" = (
@@ -20066,7 +20066,7 @@
 /obj/item/shard{
 	icon_state = "small"
 	},
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /obj/item/light/bulb,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
@@ -33070,7 +33070,7 @@
 /area/maintenance/department/engine)
 "bDj" = (
 /obj/item/trash/candy,
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -34334,7 +34334,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "bFL" = (
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "bFM" = (
@@ -38232,7 +38232,7 @@
 /area/maintenance/department/engine)
 "bPq" = (
 /obj/item/trash/chips,
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
 "bPr" = (
@@ -43060,7 +43060,7 @@
 "cba" = (
 /obj/structure/table,
 /obj/item/storage/fancy/cigarettes/cigpack_robustgold,
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "cbb" = (
