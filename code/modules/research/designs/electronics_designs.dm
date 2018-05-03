@@ -9,7 +9,7 @@
 	id = "intellicard"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 1000, MAT_GOLD = 200)
-	build_path = /obj/item/device/aicard
+	build_path = /obj/item/aicard
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
@@ -19,7 +19,7 @@
 	id = "paicard"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 500, MAT_METAL = 500)
-	build_path = /obj/item/device/paicard
+	build_path = /obj/item/paicard
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
@@ -62,7 +62,7 @@
 	id = "icprinter"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 5000, MAT_METAL = 10000)
-	build_path = /obj/item/device/integrated_circuit_printer
+	build_path = /obj/item/integrated_circuit_printer
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 

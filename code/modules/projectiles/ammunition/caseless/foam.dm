@@ -6,6 +6,7 @@
 	icon = 'icons/obj/guns/toy.dmi'
 	icon_state = "foamdart"
 	var/modified = 0
+	harmful = FALSE
 
 /obj/item/ammo_casing/caseless/foam_dart/update_icon()
 	..()
@@ -32,6 +33,7 @@
 	else if (istype(A, /obj/item/pen))
 		if(modified)
 			if(!FD.pen)
+				harmful = TRUE
 				if(!user.transferItemToLoc(A, FD))
 					return
 				FD.pen = A
@@ -59,3 +61,4 @@
 	desc = "Whose smart idea was it to use toys as crowd control? Ages 18 and up."
 	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/riot
 	icon_state = "foamdart_riot"
+	materials = list(MAT_METAL = 1000)

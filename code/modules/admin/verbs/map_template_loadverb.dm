@@ -34,8 +34,14 @@
 	if(copytext("[map]",-4) != ".dmm")
 		to_chat(usr, "Bad map file: [map]")
 		return
-
-	var/datum/map_template/M = new(map, "[map]")
+	var/datum/map_template/M
+	switch(alert(usr, "What kind of map is this?", "Map type", "Normal", "Shuttle", "Cancel"))
+		if("Normal")
+			M = new /datum/map_template(map, "[map]")
+		if("Shuttle")
+			M = new /datum/map_template/shuttle(map, "[map]")
+		else
+			return
 	if(M.preload_size(map))
 		to_chat(usr, "Map template '[map]' ready to place ([M.width]x[M.height])")
 		SSmapping.map_templates[M.name] = M

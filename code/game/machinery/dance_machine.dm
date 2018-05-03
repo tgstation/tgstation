@@ -1,6 +1,6 @@
 /obj/machinery/jukebox
 	name = "jukebox"
-	desc = "A classic music player.."
+	desc = "A classic music player."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "jukebox"
 	anchored = TRUE
@@ -83,14 +83,14 @@
 
 /obj/machinery/jukebox/ui_interact(mob/user)
 	. = ..()
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
 	if (!anchored)
 		to_chat(user,"<span class='warning'>This device must be anchored by a wrench!</span>")
 		return
 	if(!allowed(user))
 		to_chat(user,"<span class='warning'>Error: Access Denied.</span>")
 		user.playsound_local(src,'sound/misc/compiler-failure.ogg', 25, 1)
-		return
-	if(!Adjacent(user) && !isAI(user))
 		return
 	if(!songs.len)
 		to_chat(user,"<span class='warning'>Error: No music tracks have been authorized for your station. Petition Central Command to resolve this issue.</span>")
@@ -156,56 +156,56 @@
 	var/turf/cen = get_turf(src)
 	FOR_DVIEW(var/turf/t, 3, get_turf(src),INVISIBILITY_LIGHTING)
 		if(t.x == cen.x && t.y > cen.y)
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
 			L.light_color = LIGHT_COLOR_RED
 			L.light_power = 30-(get_dist(src,L)*8)
 			L.range = 1+get_dist(src, L)
 			spotlights+=L
 			continue
 		if(t.x == cen.x && t.y < cen.y)
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
 			L.light_color = LIGHT_COLOR_PURPLE
 			L.light_power = 30-(get_dist(src,L)*8)
 			L.range = 1+get_dist(src, L)
 			spotlights+=L
 			continue
 		if(t.x > cen.x && t.y == cen.y)
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
 			L.light_color = LIGHT_COLOR_YELLOW
 			L.light_power = 30-(get_dist(src,L)*8)
 			L.range = 1+get_dist(src, L)
 			spotlights+=L
 			continue
 		if(t.x < cen.x && t.y == cen.y)
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
 			L.light_color = LIGHT_COLOR_GREEN
 			L.light_power = 30-(get_dist(src,L)*8)
 			L.range = 1+get_dist(src, L)
 			spotlights+=L
 			continue
 		if((t.x+1 == cen.x && t.y+1 == cen.y) || (t.x+2==cen.x && t.y+2 == cen.y))
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
 			L.light_color = LIGHT_COLOR_ORANGE
 			L.light_power = 30-(get_dist(src,L)*8)
 			L.range = 1.4+get_dist(src, L)
 			spotlights+=L
 			continue
 		if((t.x-1 == cen.x && t.y-1 == cen.y) || (t.x-2==cen.x && t.y-2 == cen.y))
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
 			L.light_color = LIGHT_COLOR_CYAN
 			L.light_power = 30-(get_dist(src,L)*8)
 			L.range = 1.4+get_dist(src, L)
 			spotlights+=L
 			continue
 		if((t.x-1 == cen.x && t.y+1 == cen.y) || (t.x-2==cen.x && t.y+2 == cen.y))
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
 			L.light_color = LIGHT_COLOR_BLUEGREEN
 			L.light_power = 30-(get_dist(src,L)*8)
 			L.range = 1.4+get_dist(src, L)
 			spotlights+=L
 			continue
 		if((t.x+1 == cen.x && t.y-1 == cen.y) || (t.x+2==cen.x && t.y-2 == cen.y))
-			var/obj/item/device/flashlight/spotlight/L = new /obj/item/device/flashlight/spotlight(t)
+			var/obj/item/flashlight/spotlight/L = new /obj/item/flashlight/spotlight(t)
 			L.light_color = LIGHT_COLOR_BLUE
 			L.light_power = 30-(get_dist(src,L)*8)
 			L.range = 1.4+get_dist(src, L)
@@ -244,7 +244,7 @@
 	for(var/obj/reveal in sparkles)
 		reveal.alpha = 255
 	while(active)
-		for(var/obj/item/device/flashlight/spotlight/glow in spotlights) // The multiples reflects custom adjustments to each colors after dozens of tests
+		for(var/obj/item/flashlight/spotlight/glow in spotlights) // The multiples reflects custom adjustments to each colors after dozens of tests
 			if(QDELETED(src) || !active || QDELETED(glow))
 				return
 			if(glow.light_color == LIGHT_COLOR_RED)

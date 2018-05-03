@@ -159,7 +159,7 @@
 	for(var/obj/I in contents)
 		if(I.resistance_flags & FREEZE_PROOF)
 			return
-		if(!(I.flags_2 & FROZEN_2)) //let it go
+		if(!(I.obj_flags & FROZEN))
 			I.make_frozen_visual()
 	for(var/mob/living/L in contents)
 		if(L.bodytemperature <= 50)

@@ -1,0 +1,4 @@
+author: "Spellbooks Take 2"
+delete-after: True
+changes: 
+  - imageadd: "Magical Spellbooks are now animated."

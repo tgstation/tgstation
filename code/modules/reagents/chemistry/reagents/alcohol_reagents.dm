@@ -561,10 +561,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/tequila_sunrise
 	name = "Tequila Sunrise"
 	id = "tequilasunrise"
-	description = "Tequila and orange juice. Much like a Screwdriver, only Mexican~"
+	description = "Tequila, Grenadine, and Orange Juice."
 	color = "#FFE48C" // rgb: 255, 228, 140
 	boozepwr = 45
-	taste_description = "oranges"
+	taste_description = "oranges with a hint of pomegranate"
 	glass_icon_state = "tequilasunriseglass"
 	glass_name = "tequila Sunrise"
 	glass_desc = "Oh great, now you feel nostalgic about sunrises back on Terra..."
@@ -1136,10 +1136,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#CD6839"
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	boozepwr = 25
-	taste_description = "apples"
+	taste_description = "the season that <i>falls</i> between summer and winter"
 	glass_icon_state = "whiskeyglass"
 	glass_name = "hard cider"
-	glass_desc = "Tastes like autumn."
+	glass_desc = "Tastes like autumn... no wait, fall!"
 	shot_glass_icon_state = "shotglassbrown"
 
 
@@ -1397,7 +1397,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#cc0000"
 	boozepwr = 35
 	taste_description = "an invigorating bitter freshness which suffuses your being; no enemy of the station will go unrobusted this day"
-	glass_icon_state = "glass_red"
+	glass_icon_state = "quadruple_sec"
 	glass_name = "Quadruple Sec"
 	glass_desc = "An intimidating and lawful beverage dares you to violate the law and make its day. Still can't drink it on duty, though."
 
@@ -1415,7 +1415,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#ff3300"
 	boozepwr = 80
 	taste_description = "THE LAW"
-	glass_icon_state = "glass_red"
+	glass_icon_state = "quintuple_sec"
 	glass_name = "Quintuple Sec"
 	glass_desc = "Now you are become law, destroyer of clowns."
 
@@ -1436,7 +1436,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "00ff00"
 	boozepwr = 25
 	taste_description = "chocolate and mint dancing around your mouth"
-	glass_icon_state = "glass_green"
+	glass_icon_state = "grasshopper"
 	glass_name = "Grasshopper"
 	glass_desc = "You weren't aware edible beverages could be that green."
 
@@ -1447,7 +1447,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "ccff99"
 	boozepwr = 25
 	taste_description = "a slap on the face in the best possible way"
-	glass_icon_state = "glass_white"
+	glass_icon_state = "stinger"
 	glass_name = "Stinger"
 	glass_desc = "You wonder what would happen if you pointed this at a heat source..."
 
@@ -1547,3 +1547,69 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/crevice_spike/on_mob_add(mob/living/L) //damage only applies when drink first enters system and won't again until drink metabolizes out
 	L.adjustBruteLoss(3 * min(5,volume)) //minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you for the full 15
+
+/datum/reagent/consumable/ethanol/sake
+	name = "Sake"
+	id = "sake"
+	description = "A sweet rice wine of questionable legality and extreme potency."
+	color = "#DDDDDD"
+	boozepwr = 70
+	taste_description = "sweet rice wine"
+	glass_icon_state = "sakecup"
+	glass_name = "cup of sake"
+	glass_desc = "A traditional cup of sake."
+
+/datum/reagent/consumable/ethanol/alexander
+	name = "Alexander"
+	id = "alexander"
+	description = "A creamy, indulgent delight that is stronger than it seems."
+	color = "#F5E9D3"
+	boozepwr = 80
+	taste_description = "bitter, creamy cacao"
+	glass_icon_state = "alexander"
+	glass_name = "Alexander"
+	glass_desc = "A creamy, indulgent delight that is stronger than it seems."
+
+/datum/reagent/consumable/ethanol/sidecar
+	name = "Sidecar"
+	id = "sidecar"
+	description = "The one ride you’ll gladly give up the wheel for."
+	color = "#FFC55B"
+	boozepwr = 80
+	taste_description = "delicious freedom"
+	glass_icon_state = "sidecar"
+	glass_name = "Sidecar"
+	glass_desc = "The one ride you’ll gladly give up the wheel for."
+
+/datum/reagent/consumable/ethanol/between_the_sheets
+	name = "Between the Sheets"
+	id = "between_the_sheets"
+	description = "A provocatively named classic."
+	color = "#F4C35A"
+	boozepwr = 80
+	taste_description = "seduction"
+	glass_icon_state = "between_the_sheets"
+	glass_name = "Between the Sheets"
+	glass_desc = "A provocatively named classic."
+
+/datum/reagent/consumable/ethanol/kamikaze
+	name = "Kamikaze"
+	id = "kamikaze"
+	description = "Divinely windy."
+	color = "#EEF191"
+	boozepwr = 60
+	taste_description = "divine windiness"
+	glass_icon_state = "kamikaze"
+	glass_name = "Kamikaze"
+	glass_desc = "Divinely windy."
+
+/datum/reagent/consumable/ethanol/mojito
+	name = "Mojito"
+	id = "mojito"
+	description = "A drink that looks as refreshing as it tastes."
+	color = "#DFFAD9"
+	boozepwr = 30
+	taste_description = "refreshing mint"
+	glass_icon_state = "mojito"
+	glass_name = "Mojito"
+	glass_desc = "A drink that looks as refreshing as it tastes."

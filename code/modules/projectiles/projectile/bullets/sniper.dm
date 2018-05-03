@@ -18,7 +18,7 @@
 /obj/item/projectile/bullet/p50/soporific
 	name =".50 soporific bullet"
 	armour_penetration = 0
-	nodamage = TRUE
+	damage = 0
 	dismemberment = 0
 	knockdown = 0
 	breakthings = FALSE

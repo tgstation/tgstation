@@ -52,7 +52,6 @@
 	var/safe = FALSE 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
 	var/no_air = null
-	var/list/related			// the other areas of the same type as this
 
 	var/parallax_movedir = 0
 
@@ -88,27 +87,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 // ===
 
 
-// Added to fix mech fabs 05/2013 ~Sayu
-// This is necessary due to lighting subareas.  If you were to go in assuming that things in
-// the same logical /area have the parent /area object... well, you would be mistaken.  If you
-// want to find machines, mobs, etc, in the same logical area, you will need to check all the
-// related areas.  This returns a master contents list to assist in that.
-/proc/area_contents(area/A)
-	if(!istype(A))
-		return null
-	var/list/contents = list()
-	for(var/area/LSA in A.related)
-		contents += LSA.contents
-	return contents
-
-
-
-
 /area/Initialize()
 	icon_state = ""
 	layer = AREA_LAYER
 	uid = ++global_uid
-	related = list(src)
 	map_name = name // Save the initial (the name set in the map) name of the area.
 	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
@@ -195,11 +177,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/atmosalert(danger_level, obj/source)
 	if(danger_level != atmosalm)
 		if (danger_level==2)
-			var/list/cameras = list()
-			for(var/area/RA in related)
-				for (var/item in RA.cameras)
-					var/obj/machinery/camera/C = item
-					cameras += C
 
 			for (var/item in GLOB.silicon_mobs)
 				var/mob/living/silicon/aiPlayer = item
@@ -254,18 +231,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(always_unpowered == 1) //no fire alarms in space/asteroid
 		return
 
-	var/list/cameras = list()
-
-	for(var/area/RA in related)
-		if (!( RA.fire ))
-			RA.set_fire_alarm_effect()
-			RA.ModifyFiredoors(FALSE)
-			for(var/item in RA.firealarms)
-				var/obj/machinery/firealarm/F = item
-				F.update_icon()
-		for (var/item in RA.cameras)
-			var/obj/machinery/camera/C = item
-			cameras += C
+	if (!fire)
+		set_fire_alarm_effect()
+		ModifyFiredoors(FALSE)
+		for(var/item in firealarms)
+			var/obj/machinery/firealarm/F = item
+			F.update_icon()
 
 	for (var/item in GLOB.alert_consoles)
 		var/obj/machinery/computer/station_alert/a = item
@@ -283,15 +254,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	START_PROCESSING(SSobj, src)
 
 /area/proc/firereset(obj/source)
-	for(var/area/RA in related)
-		if (RA.fire)
-			RA.fire = 0
-			RA.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-			RA.updateicon()
-			RA.ModifyFiredoors(TRUE)
-			for(var/item in RA.firealarms)
-				var/obj/machinery/firealarm/F = item
-				F.update_icon()
+	if (fire)
+		fire = 0
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		updateicon()
+		ModifyFiredoors(TRUE)
+		for(var/item in firealarms)
+			var/obj/machinery/firealarm/F = item
+			F.update_icon()
 
 	for (var/item in GLOB.silicon_mobs)
 		var/mob/living/silicon/aiPlayer = item
@@ -310,8 +280,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/process()
 	if(firedoors_last_closed_on + 100 < world.time)	//every 10 seconds
-		for(var/area/RA in related)
-			RA.ModifyFiredoors(FALSE)
+		ModifyFiredoors(FALSE)
 
 /area/proc/close_and_lock_door(obj/machinery/door/DOOR)
 	set waitfor = FALSE
@@ -323,17 +292,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid
 		return
 
-	var/list/cameras = list()
-
-	for(var/area/RA in related)
-		//Trigger alarm effect
-		RA.set_fire_alarm_effect()
-		//Lockdown airlocks
-		for(var/obj/machinery/door/DOOR in RA)
-			close_and_lock_door(DOOR)
-		for (var/item in RA.cameras)
-			var/obj/machinery/camera/C = item
-			cameras += C
+	//Trigger alarm effect
+	set_fire_alarm_effect()
+	//Lockdown airlocks
+	for(var/obj/machinery/door/DOOR in src)
+		close_and_lock_door(DOOR)
 
 	for (var/i in GLOB.silicon_mobs)
 		var/mob/living/silicon/SILICON = i
@@ -429,10 +392,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 // called when power status changes
 
 /area/proc/power_change()
-	for(var/area/RA in related)
-		for(var/obj/machinery/M in RA)	// for each machine in the area
-			M.power_change()				// reverify power status (to update icons etc.)
-		RA.updateicon()
+	for(var/obj/machinery/M in src)	// for each machine in the area
+		M.power_change()				// reverify power status (to update icons etc.)
+	updateicon()
 
 /area/proc/usage(chan)
 	var/used = 0
@@ -553,3 +515,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/drop_location()
 	CRASH("Bad op: area/drop_location() called")
+
+// A hook so areas can modify the incoming args
+/area/proc/PlaceOnTopReact(list/new_baseturfs, turf/fake_turf_type, flags)
+	return flags

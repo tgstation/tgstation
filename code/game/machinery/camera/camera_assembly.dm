@@ -14,7 +14,7 @@
 	icon_state = "camera1"
 	max_integrity = 150
 	//	Motion, EMP-Proof, X-Ray
-	var/static/list/possible_upgrades = typecacheof(list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/device/analyzer))
+	var/static/list/possible_upgrades = typecacheof(list(/obj/item/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/analyzer))
 	var/list/upgrades
 	var/state = 1
 

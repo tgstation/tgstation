@@ -4,7 +4,7 @@
 	stat = DEAD
 
 	if(!gibbed && container)//If not gibbed but in a container.
-		var/obj/item/device/mmi = container
+		var/obj/item/mmi = container
 		mmi.visible_message("<span class='warning'>[src]'s MMI flatlines!</span>", \
 					"<span class='italics'>You hear something flatline.</span>")
 		mmi.update_icon()

@@ -55,8 +55,6 @@
 			power_station.engaged = 0 //hub with panel open is off, so the station must be informed.
 			update_icon()
 		return
-	if(exchange_parts(user, W))
-		return
 	if(default_deconstruction_crowbar(W))
 		return
 	return ..()
@@ -151,8 +149,8 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = W
+	if(istype(W, /obj/item/multitool))
+		var/obj/item/multitool/M = W
 		if(panel_open)
 			M.buffer = src
 			to_chat(user, "<span class='caution'>You download the data to the [W.name]'s buffer.</span>")
@@ -167,9 +165,6 @@
 		return
 	else if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
-		return
-
-	else if(exchange_parts(user, W))
 		return
 
 	else if(default_deconstruction_crowbar(W))

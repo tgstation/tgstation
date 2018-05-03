@@ -1,0 +1,5 @@
+author: "Hyacinth"
+delete-after: True
+changes: 
+  - rscadd: "Grenadine is now available in the bar!"
+  - tweak: "Tequila sunrises now require grenadine to make!"

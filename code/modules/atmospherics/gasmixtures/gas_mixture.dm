@@ -410,7 +410,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 
 	return ""
 
-/datum/gas_mixture/react(turf/open/dump_location)
+/datum/gas_mixture/react(datum/holder)
 	. = NO_REACTION
 	var/list/cached_gases = gases
 	if(!cached_gases.len)
@@ -459,7 +459,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 			*/
 
-			. |= reaction.react(src, dump_location)
+			. |= reaction.react(src, holder)
 			if (. & STOP_REACTIONS)
 				break
 	if(.)

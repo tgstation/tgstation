@@ -1,0 +1,6 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - balance: "After successful lobbying by the Space Ancap Federation ammo is no longer free. Material redemption cost is now determined by the amount of bullets left."
+  - balance: ".38 ammo is now cheaper to produce."
+  - balance: "Casings now give a little bit of metal. mostly for immersion sake."

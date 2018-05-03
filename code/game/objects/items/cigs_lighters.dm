@@ -86,7 +86,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		..()
 
 /obj/item/proc/help_light_cig(mob/living/M)
-	var/mask_item = M.get_item_by_slot(slot_wear_mask)
+	var/mask_item = M.get_item_by_slot(SLOT_WEAR_MASK)
 	if(istype(mask_item, /obj/item/clothing/mask/cigarette))
 		return mask_item
 
@@ -129,7 +129,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.add_reagent_list(list_reagents)
 	if(starts_lit)
 		light()
-	AddComponent(/datum/component/knockoff,90,list(BODY_ZONE_PRECISE_MOUTH),list(slot_wear_mask))//90% to knock off when wearing a mask
+	AddComponent(/datum/component/knockoff,90,list(BODY_ZONE_PRECISE_MOUTH),list(SLOT_WEAR_MASK))//90% to knock off when wearing a mask
 
 /obj/item/clothing/mask/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -314,6 +314,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
+/obj/item/clothing/mask/cigarette/rollie/nicotine
+	list_reagents = list("nicotine" = 15)	
+
 /obj/item/clothing/mask/cigarette/rollie/trippy
 	list_reagents = list("nicotine" = 15, "mushroomhallucinogen" = 35)
 	starts_lit = TRUE
@@ -486,7 +489,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "zippo"
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	var/lit = 0
 	var/fancy = TRUE
 	heat = 1500
@@ -706,7 +709,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			to_chat(user, "<span class='notice'>You close the cap on [src].</span>")
 			cut_overlays()
 
-	if(istype(O, /obj/item/device/multitool))
+	if(istype(O, /obj/item/multitool))
 		if(screw && !(obj_flags & EMAGGED))//also kinky
 			if(!super)
 				cut_overlays()
@@ -746,7 +749,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
-	if(slot == slot_wear_mask)
+	if(slot == SLOT_WEAR_MASK)
 		if(!screw)
 			to_chat(user, "<span class='notice'>You start puffing on the vape.</span>")
 			reagents.set_reacting(TRUE)
@@ -756,7 +759,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/vape/dropped(mob/user)
 	var/mob/living/carbon/C = user
-	if(C.get_item_by_slot(slot_wear_mask) == src)
+	if(C.get_item_by_slot(SLOT_WEAR_MASK) == src)
 		reagents.set_reacting(FALSE)
 		STOP_PROCESSING(SSobj, src)
 

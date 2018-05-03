@@ -97,7 +97,7 @@
 	icon_state = "2-4"
 	},
 /obj/effect/landmark/start/ai/secondary,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	anyai = 1;
 	broadcasting = 0;
 	freerange = 1;
@@ -145,7 +145,7 @@
 	pixel_y = 24
 	},
 /obj/effect/landmark/start/ai/secondary,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	anyai = 1;
 	broadcasting = 0;
 	freerange = 1;
@@ -269,7 +269,7 @@
 /area/ai_monitored/turret_protected/ai)
 "acy" = (
 /obj/effect/landmark/start/ai,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 0;
 	freerange = 1;
 	listening = 1;
@@ -277,14 +277,14 @@
 	pixel_x = -27;
 	pixel_y = -9
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	anyai = 1;
 	freerange = 1;
 	listening = 0;
 	name = "Custom Channel";
 	pixel_y = -31
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	anyai = 1;
 	broadcasting = 0;
 	freerange = 1;
@@ -346,7 +346,7 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "acE" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 1;
 	frequency = 1447;
 	listening = 0;
@@ -518,10 +518,10 @@
 	pixel_x = 3;
 	pixel_y = -4
 	},
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/mmi,
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/mmi,
+/obj/item/assembly/prox_sensor{
 	pixel_x = -8;
 	pixel_y = 4
 	},
@@ -673,7 +673,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 1;
 	frequency = 1447;
 	listening = 0;
@@ -1077,7 +1077,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "aeD" = (
-/obj/item/device/plant_analyzer,
+/obj/item/plant_analyzer,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "aeE" = (
@@ -1397,7 +1397,7 @@
 /area/security/prison)
 "afq" = (
 /obj/structure/table,
-/obj/item/device/instrument/harmonica,
+/obj/item/instrument/harmonica,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "afr" = (
@@ -1446,7 +1446,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "afy" = (
 /obj/effect/landmark/start/cyborg,
-/obj/item/device/beacon,
+/obj/item/beacon,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "afz" = (
@@ -1587,7 +1587,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool{
+/obj/item/multitool{
 	layer = 5
 	},
 /obj/item/extinguisher{
@@ -1661,7 +1661,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "agg" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -28
 	},
@@ -1877,7 +1877,7 @@
 	c_tag = "Permabrig Cell 2";
 	network = list("ss13","prison")
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
 	dir = 2;
 	name = "Prison Intercom (General)";
@@ -1918,7 +1918,7 @@
 	c_tag = "Permabrig Cell 1";
 	network = list("ss13","prison")
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
 	dir = 2;
 	name = "Prison Intercom (General)";
@@ -2081,7 +2081,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "ahj" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	freerange = 0;
 	frequency = 1459;
 	name = "Station Intercom (General)";
@@ -2092,7 +2092,7 @@
 	pixel_y = 5
 	},
 /obj/item/clothing/mask/balaclava,
-/obj/item/device/mmi,
+/obj/item/mmi,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
@@ -2101,7 +2101,7 @@
 /obj/item/folder/red{
 	pixel_x = 3
 	},
-/obj/item/device/taperecorder{
+/obj/item/taperecorder{
 	pixel_x = -3
 	},
 /turf/open/floor/plasteel/dark,
@@ -2208,7 +2208,7 @@
 /area/security/execution/transfer)
 "ahx" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/open/floor/plasteel/dark,
 /area/security/execution/transfer)
@@ -2573,7 +2573,7 @@
 /obj/item/razor{
 	pixel_x = -6
 	},
-/obj/item/device/assembly/signaler{
+/obj/item/assembly/signaler{
 	pixel_x = 4
 	},
 /obj/structure/extinguisher_cabinet{
@@ -2762,7 +2762,7 @@
 /area/security/prison)
 "aiK" = (
 /obj/structure/table,
-/obj/item/device/electropack,
+/obj/item/electropack,
 /turf/open/floor/plasteel/red/side,
 /area/security/prison)
 "aiL" = (
@@ -2858,7 +2858,7 @@
 /area/maintenance/department/security/brig)
 "aiY" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "aiZ" = (
@@ -3136,7 +3136,6 @@
 	height = 17;
 	id = "syndicate_ne";
 	name = "northeast of station";
-	turf_type = /turf/open/space;
 	width = 23
 	},
 /turf/open/space,
@@ -3532,7 +3531,7 @@
 /area/maintenance/department/crew_quarters/dorms)
 "akr" = (
 /obj/machinery/washing_machine,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
 	pixel_x = -31
@@ -3577,7 +3576,7 @@
 /area/maintenance/department/security/brig)
 "akx" = (
 /obj/structure/bodycontainer/crematorium,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -27
@@ -3635,7 +3634,7 @@
 	},
 /area/security/brig)
 "akD" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	freerange = 0;
 	frequency = 1459;
 	name = "Station Intercom (General)";
@@ -4040,7 +4039,7 @@
 /area/security/main)
 "alC" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = -4;
 	pixel_y = 12
 	},
@@ -4327,7 +4326,7 @@
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
 	dir = 8
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
 	pixel_x = -31
@@ -4652,7 +4651,7 @@
 	c_tag = "Brig Control Room";
 	dir = 2
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
 	pixel_y = 24
@@ -4769,9 +4768,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"ann" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_1)
 "anp" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -5047,7 +5043,7 @@
 	c_tag = "Head of Security's Office";
 	dir = 1
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
 	pixel_y = -27
@@ -5096,16 +5092,9 @@
 /area/maintenance/department/crew_quarters/dorms)
 "aob" = (
 /obj/structure/closet/emcloset,
-/obj/item/device/camera,
+/obj/item/camera,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"aoc" = (
-/obj/machinery/computer/shuttle/monastery_shuttle,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
 "aod" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -5328,27 +5317,6 @@
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"aoE" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
-"aoF" = (
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
-"aoG" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
 "aoH" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -5473,7 +5441,7 @@
 /obj/structure/rack,
 /obj/item/crowbar,
 /obj/item/wrench,
-/obj/item/device/laser_pointer/red,
+/obj/item/laser_pointer/red,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "aoY" = (
@@ -5700,23 +5668,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/item/device/camera_film,
+/obj/item/camera_film,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/department/crew_quarters/dorms)
-"apx" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
-"apy" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
 "apz" = (
 /obj/structure/chair{
 	dir = 8
@@ -5888,24 +5844,6 @@
 "apX" = (
 /turf/closed/wall,
 /area/crew_quarters/dorms)
-"apY" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/item/storage/pod{
-	pixel_x = -24
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
-"apZ" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/item/device/radio/intercom{
-	pixel_x = 30
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
 "aqa" = (
 /obj/structure/cable{
 	icon_state = "0-4"
@@ -6053,7 +5991,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 29
 	},
@@ -6260,33 +6198,17 @@
 	},
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/dorms)
-"aqX" = (
-/obj/structure/shuttle/engine/propulsion/burst,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/pod_1)
 "aqY" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Shuttle Airlock"
-	},
 /obj/docking_port/stationary{
+	dir = 1;
 	dwidth = 2;
 	height = 6;
-	id = "monastery_shuttle_station";
-	name = "station";
+	name = "large escape pod loader";
+	roundstart_template = /datum/map_template/shuttle/escape_pod/large;
 	width = 5
 	},
-/obj/docking_port/mobile{
-	dwidth = 2;
-	height = 6;
-	id = "pod1";
-	launch_status = 0;
-	name = "monastery shuttle";
-	port_direction = 2;
-	width = 5;
-	timid = 0
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/pod_1)
+/turf/open/space/basic,
+/area/space)
 "aqZ" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
@@ -6438,7 +6360,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "arx" = (
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/structure/table/glass,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -6686,11 +6608,11 @@
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
 	name = "emergency lifejacket"
 	},
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight,
+/obj/item/flashlight,
 /turf/open/floor/plasteel,
 /area/gateway)
 "arZ" = (
@@ -6702,22 +6624,22 @@
 /area/gateway)
 "asa" = (
 /obj/structure/table,
-/obj/item/device/radio/off{
+/obj/item/radio/off{
 	pixel_y = 6
 	},
-/obj/item/device/radio/off{
+/obj/item/radio/off{
 	pixel_x = 6;
 	pixel_y = 4
 	},
-/obj/item/device/radio/off{
+/obj/item/radio/off{
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /obj/structure/sign/warning/biohazard{
 	pixel_x = 32
 	},
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plasteel,
 /area/gateway)
 "asb" = (
@@ -6970,7 +6892,7 @@
 /area/security/brig)
 "asJ" = (
 /obj/item/folder/red,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
 	},
@@ -7480,7 +7402,7 @@
 	},
 /area/bridge)
 "atU" = (
-/obj/item/device/beacon,
+/obj/item/beacon,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 1
 	},
@@ -7571,7 +7493,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	freerange = 0;
 	frequency = 1459;
 	name = "Station Intercom (General)";
@@ -7697,7 +7619,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/department/security/brig)
 "aux" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
 	dir = 2;
 	name = "Prison Intercom (General)";
@@ -8264,7 +8186,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = -28
@@ -8337,14 +8259,14 @@
 /area/bridge)
 "avY" = (
 /obj/structure/table/glass,
-/obj/item/device/aicard,
+/obj/item/aicard,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "avZ" = (
 /obj/structure/table/glass,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/laser_pointer/blue,
+/obj/item/assembly/flash/handheld,
+/obj/item/laser_pointer/blue,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "awa" = (
@@ -8737,7 +8659,7 @@
 	id = "Secure Gate";
 	name = "brig shutters"
 	},
-/obj/item/device/radio,
+/obj/item/radio,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -9134,7 +9056,7 @@
 /area/crew_quarters/heads/captain)
 "axU" = (
 /obj/machinery/computer/card,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -9492,7 +9414,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayQ" = (
-/obj/item/device/beacon,
+/obj/item/beacon,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "ayR" = (
@@ -9609,7 +9531,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = -28
@@ -9706,7 +9628,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = -28
@@ -9801,7 +9723,7 @@
 /area/crew_quarters/dorms)
 "azx" = (
 /obj/structure/table/wood,
-/obj/item/device/paicard,
+/obj/item/paicard,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -10136,7 +10058,7 @@
 /area/hallway/primary/fore)
 "aAp" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green,
+/obj/item/flashlight/lamp/green,
 /obj/machinery/light_switch{
 	dir = 9;
 	pixel_x = -22
@@ -10178,7 +10100,7 @@
 /area/crew_quarters/heads/captain)
 "aAv" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green,
+/obj/item/flashlight/lamp/green,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "aAw" = (
@@ -10362,7 +10284,7 @@
 "aAW" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plating,
 /area/maintenance/solars/port)
 "aAX" = (
@@ -10572,7 +10494,7 @@
 /area/bridge)
 "aBz" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green,
+/obj/item/flashlight/lamp/green,
 /obj/item/storage/secure/safe{
 	pixel_x = -22;
 	pixel_y = 4
@@ -10785,7 +10707,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = 28
@@ -10955,7 +10877,7 @@
 "aCt" = (
 /obj/structure/table,
 /obj/item/wrench,
-/obj/item/device/analyzer,
+/obj/item/analyzer,
 /obj/machinery/requests_console{
 	department = "Tool Storage";
 	departmentType = 0;
@@ -10969,7 +10891,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high/plus,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -10983,15 +10905,15 @@
 /area/storage/primary)
 "aCv" = (
 /obj/structure/table,
-/obj/item/device/assembly/igniter{
+/obj/item/assembly/igniter{
 	pixel_x = -8;
 	pixel_y = -4
 	},
-/obj/item/device/assembly/igniter,
+/obj/item/assembly/igniter,
 /obj/machinery/camera{
 	c_tag = "Primary Tool Storage"
 	},
-/obj/item/device/assembly/voice,
+/obj/item/assembly/voice,
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
@@ -11001,14 +10923,14 @@
 /area/storage/primary)
 "aCw" = (
 /obj/structure/table,
-/obj/item/device/assembly/signaler,
-/obj/item/device/assembly/signaler,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
+/obj/item/assembly/signaler,
+/obj/item/assembly/signaler,
+/obj/item/multitool,
+/obj/item/multitool,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
-/obj/item/device/flashlight,
+/obj/item/flashlight,
 /obj/item/electronics/airlock,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
@@ -11357,7 +11279,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = -26
@@ -11613,7 +11535,7 @@
 	c_tag = "AI Upload Center";
 	dir = 1
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 1;
 	frequency = 1447;
 	listening = 0;
@@ -11820,7 +11742,7 @@
 	dir = 8;
 	pixel_x = 23
 	},
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aEi" = (
@@ -11844,11 +11766,11 @@
 /area/maintenance/department/cargo)
 "aEm" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp{
+/obj/item/flashlight/lamp{
 	pixel_x = 3;
 	pixel_y = 6
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -27
@@ -12171,7 +12093,7 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = 27
@@ -12187,7 +12109,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -27
@@ -12318,7 +12240,7 @@
 /obj/structure/table/wood,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "aFq" = (
@@ -12344,7 +12266,7 @@
 	pixel_y = -7
 	},
 /obj/item/electronics/apc,
-/obj/item/device/t_scanner,
+/obj/item/t_scanner,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -12373,7 +12295,7 @@
 /area/storage/primary)
 "aFw" = (
 /obj/structure/table/wood,
-/obj/item/device/camera,
+/obj/item/camera,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "aFx" = (
@@ -12431,7 +12353,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/device/taperecorder,
+/obj/item/taperecorder,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aFE" = (
@@ -12633,8 +12555,8 @@
 "aGe" = (
 /obj/structure/rack,
 /obj/item/wirecutters,
-/obj/item/device/flashlight,
-/obj/item/device/gps,
+/obj/item/flashlight,
+/obj/item/gps,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 10
 	},
@@ -12646,14 +12568,14 @@
 "aGg" = (
 /obj/structure/table,
 /obj/item/crowbar,
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_x = -8;
 	pixel_y = 4
 	},
 /obj/item/clothing/gloves/color/fyellow,
 /obj/item/clothing/gloves/color/fyellow,
-/obj/item/device/assembly/timer,
-/obj/item/device/radio,
+/obj/item/assembly/timer,
+/obj/item/radio,
 /turf/open/floor/plasteel/neutral/side,
 /area/storage/primary)
 "aGh" = (
@@ -13511,7 +13433,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aIo" = (
@@ -14885,7 +14807,7 @@
 /area/security/checkpoint/supply)
 "aMf" = (
 /obj/machinery/computer/secure_data,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -15162,7 +15084,6 @@
 /area/maintenance/disposal)
 "aMF" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = 1;
 	id = "garbagestacked";
 	name = "disposal conveyor"
 	},
@@ -15328,7 +15249,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -28
 	},
@@ -15425,7 +15346,7 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/shoes/magboots,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -27
@@ -15475,7 +15396,7 @@
 "aNu" = (
 /obj/structure/closet/crate,
 /obj/item/melee/flyswatter,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -27
@@ -15599,7 +15520,7 @@
 /area/quartermaster/sorting)
 "aNK" = (
 /obj/structure/table,
-/obj/item/device/destTagger,
+/obj/item/destTagger,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -15833,7 +15754,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "aOt" = (
 /obj/structure/table,
-/obj/item/device/instrument/glockenspiel{
+/obj/item/instrument/glockenspiel{
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/redblue,
@@ -16201,14 +16122,14 @@
 	dir = 8
 	},
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 9;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aPh" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -16431,7 +16352,7 @@
 /area/storage/eva)
 "aPM" = (
 /obj/structure/table,
-/obj/item/device/beacon,
+/obj/item/beacon,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 10
@@ -16551,7 +16472,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/warehouse)
 "aQd" = (
-/obj/item/device/flashlight,
+/obj/item/flashlight,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/warehouse)
@@ -16585,10 +16506,6 @@
 /turf/closed/wall,
 /area/maintenance/disposal)
 "aQl" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "garbage"
-	},
 /obj/structure/disposaloutlet{
 	dir = 4
 	},
@@ -16602,7 +16519,7 @@
 /area/maintenance/disposal)
 "aQm" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/structure/disposalpipe/segment{
@@ -16612,7 +16529,7 @@
 /area/maintenance/disposal)
 "aQn" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "garbage"
 	},
 /obj/machinery/recycler,
@@ -16620,7 +16537,7 @@
 /area/maintenance/disposal)
 "aQo" = (
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 1;
 	id = "garbage"
 	},
 /turf/open/floor/plating,
@@ -17143,7 +17060,7 @@
 /area/maintenance/disposal)
 "aRx" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
+	dir = 8;
 	id = "garbage";
 	name = "disposal conveyor"
 	},
@@ -17634,10 +17551,10 @@
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aSF" = (
-/obj/machinery/chem_master/condimaster,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/smartfridge/disks,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aSG" = (
@@ -17698,7 +17615,7 @@
 	},
 /area/maintenance/department/crew_quarters/bar)
 "aSN" = (
-/obj/item/device/assembly/mousetrap,
+/obj/item/assembly/mousetrap,
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
 	},
@@ -17895,7 +17812,7 @@
 	dir = 1
 	},
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /obj/machinery/airalarm{
@@ -17905,7 +17822,7 @@
 /area/quartermaster/storage)
 "aTo" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /obj/machinery/status_display{
@@ -17916,7 +17833,7 @@
 /area/quartermaster/storage)
 "aTp" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /obj/structure/sign/poster/official/random{
@@ -17926,7 +17843,7 @@
 /area/quartermaster/storage)
 "aTq" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /turf/open/floor/plating,
@@ -17937,7 +17854,7 @@
 	name = "supply dock loading door"
 	},
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /turf/open/floor/plating,
@@ -17945,7 +17862,7 @@
 "aTs" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "QMLoad"
 	},
 /turf/open/floor/plating,
@@ -18217,7 +18134,7 @@
 /area/hydroponics)
 "aTX" = (
 /obj/structure/kitchenspike,
-/obj/item/device/assembly/mousetrap,
+/obj/item/assembly/mousetrap,
 /obj/item/reagent_containers/food/snacks/deadmouse,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
@@ -18762,7 +18679,7 @@
 	pixel_x = 28;
 	req_access_txt = "28"
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -18920,7 +18837,6 @@
 /area/quartermaster/storage)
 "aVB" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
 	id = "QMLoad"
 	},
 /obj/machinery/button/door{
@@ -19185,7 +19101,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -19253,7 +19169,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -19416,7 +19332,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -19859,7 +19775,7 @@
 /area/hydroponics)
 "aXX" = (
 /obj/machinery/hydroponics/constructable,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -19939,7 +19855,7 @@
 "aYh" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/device/instrument/guitar,
+/obj/item/instrument/guitar,
 /turf/open/floor/plasteel/darkred/side{
 	dir = 1
 	},
@@ -20111,7 +20027,7 @@
 /area/quartermaster/storage)
 "aYB" = (
 /obj/machinery/conveyor_switch/oneway{
-	convdir = 1;
+	dir = 8;
 	id = "QMLoad2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -20134,8 +20050,8 @@
 /area/maintenance/department/cargo)
 "aYE" = (
 /obj/structure/table,
-/obj/item/device/assembly/igniter,
-/obj/item/device/assembly/igniter,
+/obj/item/assembly/igniter,
+/obj/item/assembly/igniter,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
@@ -20150,7 +20066,7 @@
 /obj/item/shard{
 	icon_state = "small"
 	},
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /obj/item/light/bulb,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
@@ -20186,7 +20102,7 @@
 /area/security/checkpoint/customs)
 "aYK" = (
 /obj/structure/closet/secure_closet/security,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -20255,7 +20171,7 @@
 /area/crew_quarters/kitchen)
 "aYU" = (
 /obj/machinery/processor,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -20403,7 +20319,6 @@
 /area/hallway/primary/central)
 "aZj" = (
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /obj/machinery/status_display{
 	dir = 4;
 	layer = 4;
@@ -20556,7 +20471,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -20815,7 +20730,7 @@
 /area/crew_quarters/bar)
 "bao" = (
 /obj/machinery/computer/slot_machine,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -20854,7 +20769,7 @@
 "bas" = (
 /obj/structure/table,
 /obj/item/pen,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = -26
@@ -20964,7 +20879,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = -26
@@ -21429,7 +21344,7 @@
 "bbN" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard)
 "bbO" = (
@@ -21620,7 +21535,7 @@
 /area/crew_quarters/bar)
 "bcq" = (
 /obj/item/clothing/glasses/monocle,
-/obj/item/device/instrument/recorder,
+/obj/item/instrument/recorder,
 /obj/structure/table/wood/fancy,
 /turf/open/floor/carpet{
 	icon_state = "carpetsymbol"
@@ -22456,7 +22371,7 @@
 /area/crew_quarters/bar)
 "bez" = (
 /obj/structure/table/wood,
-/obj/item/device/instrument/trombone,
+/obj/item/instrument/trombone,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -22859,7 +22774,6 @@
 /area/science/robotics/mechbay)
 "bfB" = (
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /obj/machinery/requests_console{
 	department = "Cargo Bay";
 	departmentType = 2;
@@ -22886,7 +22800,7 @@
 /obj/machinery/computer/security/mining{
 	dir = 8
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -35
 	},
@@ -23063,7 +22977,7 @@
 /obj/structure/chair{
 	name = "Throne of Custodia"
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -23339,7 +23253,7 @@
 /area/space)
 "bgU" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -23365,7 +23279,7 @@
 /area/crew_quarters/lounge)
 "bgY" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -24088,7 +24002,7 @@
 /area/crew_quarters/lounge)
 "biK" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -24115,7 +24029,7 @@
 /area/crew_quarters/lounge)
 "biN" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -24130,7 +24044,7 @@
 /area/crew_quarters/lounge)
 "biO" = (
 /obj/structure/table/glass,
-/obj/item/device/healthanalyzer{
+/obj/item/healthanalyzer{
 	layer = 3.1
 	},
 /obj/item/pen{
@@ -24204,7 +24118,7 @@
 /area/medical/morgue)
 "biZ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	opacity = 1;
 	req_access_txt = "6"
@@ -24509,7 +24423,7 @@
 	pixel_y = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -24630,10 +24544,10 @@
 /area/science/research/lobby)
 "bkq" = (
 /obj/structure/table,
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "RD0"
 	},
-/obj/item/device/assembly/igniter{
+/obj/item/assembly/igniter{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -25012,7 +24926,7 @@
 "blr" = (
 /obj/structure/table,
 /obj/item/folder/white,
-/obj/item/device/healthanalyzer,
+/obj/item/healthanalyzer,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -25033,7 +24947,7 @@
 /area/hallway/primary/aft)
 "blv" = (
 /obj/structure/table,
-/obj/item/device/paicard,
+/obj/item/paicard,
 /obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel/green/side{
 	dir = 9
@@ -25217,7 +25131,7 @@
 /area/science/server)
 "blP" = (
 /obj/effect/landmark/event_spawn,
-/obj/item/device/beacon,
+/obj/item/beacon,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -25786,7 +25700,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bnq" = (
-/obj/item/device/beacon,
+/obj/item/beacon,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
 	},
@@ -26003,13 +25917,13 @@
 /obj/item/stack/sheet/plasteel{
 	amount = 10
 	},
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 23
@@ -26094,7 +26008,7 @@
 "boe" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -28
@@ -26304,7 +26218,7 @@
 	name = "Medbay RC";
 	pixel_x = -32
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 0;
 	freerange = 0;
 	frequency = 1485;
@@ -26647,7 +26561,7 @@
 /area/medical/genetics)
 "bpy" = (
 /obj/machinery/clonepod,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 0;
 	freerange = 0;
 	frequency = 1485;
@@ -26715,7 +26629,7 @@
 /area/medical/medbay/zone3)
 "bpG" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	opacity = 1;
 	req_access_txt = "6"
@@ -26774,7 +26688,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Morgue";
 	opacity = 1;
 	req_access_txt = "6"
@@ -26962,7 +26876,7 @@
 	},
 /obj/item/storage/belt/utility,
 /obj/item/reagent_containers/glass/beaker/large,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -27
@@ -27072,8 +26986,8 @@
 	pixel_y = 3
 	},
 /obj/item/stack/sheet/metal/fifty,
-/obj/item/device/assembly/timer,
-/obj/item/device/assembly/timer,
+/obj/item/assembly/timer,
+/obj/item/assembly/timer,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "bqv" = (
@@ -27611,7 +27525,7 @@
 /area/science/research/lobby)
 "brw" = (
 /obj/structure/closet/wardrobe/robotics_black,
-/obj/item/device/radio/headset/headset_sci{
+/obj/item/radio/headset/headset_sci{
 	pixel_x = -3
 	},
 /turf/open/floor/plasteel/vault{
@@ -27627,19 +27541,19 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "bry" = (
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_x = -8;
 	pixel_y = 4
 	},
@@ -27872,6 +27786,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "brY" = (
@@ -28128,7 +28043,7 @@
 "bsE" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 0;
 	freerange = 0;
 	frequency = 1485;
@@ -28210,7 +28125,7 @@
 /obj/machinery/chem_dispenser{
 	layer = 2.7
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = 29
@@ -28313,9 +28228,9 @@
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
-/obj/item/device/healthanalyzer,
-/obj/item/device/healthanalyzer,
-/obj/item/device/healthanalyzer,
+/obj/item/healthanalyzer,
+/obj/item/healthanalyzer,
+/obj/item/healthanalyzer,
 /obj/item/stack/cable_coil,
 /obj/item/stack/cable_coil,
 /obj/structure/table,
@@ -28353,9 +28268,9 @@
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
 "btd" = (
-/obj/item/device/mmi,
-/obj/item/device/mmi,
-/obj/item/device/mmi,
+/obj/item/mmi,
+/obj/item/mmi,
+/obj/item/mmi,
 /obj/structure/table,
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
@@ -28405,11 +28320,11 @@
 /area/science/explab)
 "btl" = (
 /obj/structure/table,
-/obj/item/device/electropack,
-/obj/item/device/healthanalyzer,
-/obj/item/device/assembly/signaler,
+/obj/item/electropack,
+/obj/item/healthanalyzer,
+/obj/item/assembly/signaler,
 /obj/machinery/light,
-/obj/item/device/assembly/voice,
+/obj/item/assembly/voice,
 /obj/machinery/camera{
 	c_tag = "Experimentation Lab";
 	dir = 1;
@@ -28423,7 +28338,7 @@
 	pixel_y = 5
 	},
 /obj/item/stack/cable_coil,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/item/screwdriver,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
@@ -28603,7 +28518,6 @@
 	height = 13;
 	id = "ferry_home";
 	name = "port bay 2";
-	turf_type = /turf/open/space;
 	width = 5
 	},
 /turf/open/space/basic,
@@ -28971,7 +28885,7 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "buB" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = -28
@@ -29369,7 +29283,7 @@
 	},
 /area/hallway/primary/aft)
 "bvv" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -28;
@@ -30071,7 +29985,7 @@
 /obj/structure/rack,
 /obj/item/stack/packageWrap,
 /obj/item/hand_labeler,
-/obj/item/device/radio/headset/headset_med,
+/obj/item/radio/headset/headset_med,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -30769,8 +30683,8 @@
 "byf" = (
 /obj/structure/table,
 /obj/item/storage/box/disks,
-/obj/item/device/flashlight/pen,
-/obj/item/device/flashlight/pen,
+/obj/item/flashlight/pen,
+/obj/item/flashlight/pen,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -31038,7 +30952,7 @@
 /obj/item/stock_parts/manipulator,
 /obj/item/stock_parts/scanning_module,
 /obj/item/stock_parts/scanning_module,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/lab)
 "byI" = (
@@ -32394,7 +32308,7 @@
 	dir = 8;
 	pixel_x = 23
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 8;
 	freerange = 1;
 	name = "Station Intercom (Telecomms)";
@@ -32510,7 +32424,7 @@
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "bBN" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -32608,7 +32522,7 @@
 "bBZ" = (
 /obj/structure/table,
 /obj/item/pen,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -27
@@ -32731,7 +32645,7 @@
 "bCm" = (
 /obj/structure/table/glass,
 /obj/item/clothing/neck/stethoscope,
-/obj/item/device/healthanalyzer,
+/obj/item/healthanalyzer,
 /turf/open/floor/plasteel/blue,
 /area/medical/sleeper)
 "bCn" = (
@@ -33156,7 +33070,7 @@
 /area/maintenance/department/engine)
 "bDj" = (
 /obj/item/trash/candy,
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -33920,7 +33834,7 @@
 /obj/machinery/computer/mecha{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = -26
@@ -33934,7 +33848,7 @@
 	},
 /area/crew_quarters/heads/hor)
 "bES" = (
-/obj/item/device/aicard,
+/obj/item/aicard,
 /obj/item/circuitboard/aicore,
 /obj/machinery/requests_console{
 	announcementConsole = 1;
@@ -34086,19 +34000,19 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bFi" = (
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_x = -4;
 	pixel_y = 1
 	},
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_x = 8;
 	pixel_y = 9
 	},
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_x = 9;
 	pixel_y = -2
 	},
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_y = 2
 	},
 /obj/structure/table/reinforced,
@@ -34118,7 +34032,7 @@
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
-/obj/item/device/analyzer,
+/obj/item/analyzer,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bFl" = (
@@ -34420,7 +34334,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "bFL" = (
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "bFM" = (
@@ -34506,7 +34420,7 @@
 /area/medical/surgery)
 "bFV" = (
 /obj/structure/table/glass,
-/obj/item/device/flashlight/pen,
+/obj/item/flashlight/pen,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/lipstick/black,
 /obj/machinery/power/apc{
@@ -34658,18 +34572,18 @@
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/mixing)
 "bGo" = (
-/obj/item/device/assembly/signaler{
+/obj/item/assembly/signaler{
 	pixel_y = 8
 	},
-/obj/item/device/assembly/signaler{
+/obj/item/assembly/signaler{
 	pixel_x = -8;
 	pixel_y = 5
 	},
-/obj/item/device/assembly/signaler{
+/obj/item/assembly/signaler{
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/item/device/assembly/signaler{
+/obj/item/assembly/signaler{
 	pixel_x = -2;
 	pixel_y = -2
 	},
@@ -34677,37 +34591,37 @@
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/mixing)
 "bGp" = (
-/obj/item/device/transfer_valve{
+/obj/item/transfer_valve{
 	pixel_x = -5
 	},
-/obj/item/device/transfer_valve{
+/obj/item/transfer_valve{
 	pixel_x = -5
 	},
-/obj/item/device/transfer_valve,
-/obj/item/device/transfer_valve,
-/obj/item/device/transfer_valve{
+/obj/item/transfer_valve,
+/obj/item/transfer_valve,
+/obj/item/transfer_valve{
 	pixel_x = 5
 	},
-/obj/item/device/transfer_valve{
+/obj/item/transfer_valve{
 	pixel_x = 5
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/mixing)
 "bGq" = (
-/obj/item/device/assembly/timer{
+/obj/item/assembly/timer{
 	pixel_x = 5;
 	pixel_y = 4
 	},
-/obj/item/device/assembly/timer{
+/obj/item/assembly/timer{
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/device/assembly/timer{
+/obj/item/assembly/timer{
 	pixel_x = 6;
 	pixel_y = -4
 	},
-/obj/item/device/assembly/timer,
+/obj/item/assembly/timer,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/mixing)
@@ -34924,7 +34838,7 @@
 	icon_state = "shower";
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 0;
 	freerange = 0;
 	frequency = 1485;
@@ -35061,10 +34975,10 @@
 	},
 /area/science/research/lobby)
 "bHk" = (
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "RD0"
 	},
-/obj/item/device/assembly/prox_sensor{
+/obj/item/assembly/prox_sensor{
 	pixel_x = -8;
 	pixel_y = 4
 	},
@@ -35318,7 +35232,7 @@
 /area/maintenance/department/engine)
 "bHS" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /obj/effect/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
@@ -35358,7 +35272,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 0;
 	freerange = 0;
 	frequency = 1485;
@@ -35387,7 +35301,7 @@
 /area/medical/virology)
 "bIb" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 0;
 	freerange = 0;
 	frequency = 1485;
@@ -35487,7 +35401,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 0;
 	freerange = 0;
 	frequency = 1485;
@@ -35890,7 +35804,7 @@
 /obj/structure/table/glass,
 /obj/item/book/manual/wiki/infections,
 /obj/item/hand_labeler,
-/obj/item/device/radio/headset/headset_med,
+/obj/item/radio/headset/headset_med,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -36467,7 +36381,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
-/obj/item/device/beacon,
+/obj/item/beacon,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bKA" = (
@@ -36635,7 +36549,7 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -36805,7 +36719,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/dock)
 "bLq" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Monastery Transit";
 	opacity = 1
 	},
@@ -37412,7 +37326,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 8;
 	freerange = 1;
 	name = "Station Intercom (Telecomms)";
@@ -37615,7 +37529,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = 27
@@ -38176,7 +38090,7 @@
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/device/multitool{
+/obj/item/multitool{
 	layer = 4
 	},
 /turf/open/floor/plasteel/yellow/side,
@@ -38185,9 +38099,9 @@
 /obj/structure/table,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/storage/belt/utility,
-/obj/item/device/t_scanner,
-/obj/item/device/t_scanner,
-/obj/item/device/t_scanner,
+/obj/item/t_scanner,
+/obj/item/t_scanner,
+/obj/item/t_scanner,
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/atmos)
 "bOX" = (
@@ -38290,7 +38204,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "bPn" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -38302,7 +38216,7 @@
 	},
 /area/chapel/dock)
 "bPo" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -38318,7 +38232,7 @@
 /area/maintenance/department/engine)
 "bPq" = (
 /obj/item/trash/chips,
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
 "bPr" = (
@@ -38559,7 +38473,7 @@
 /turf/open/floor/plating/asteroid,
 /area/chapel/asteroid/monastery)
 "bQe" = (
-/obj/item/device/flashlight/lantern{
+/obj/item/flashlight/lantern{
 	on = 1
 	},
 /turf/open/floor/plating/asteroid,
@@ -38650,16 +38564,16 @@
 /area/storage/tech)
 "bQs" = (
 /obj/structure/table,
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
@@ -38668,7 +38582,7 @@
 /area/storage/tech)
 "bQt" = (
 /obj/structure/table,
-/obj/item/device/aicard,
+/obj/item/aicard,
 /obj/item/aiModule/reset,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/airalarm{
@@ -39013,7 +38927,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -39656,7 +39570,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/device/beacon,
+/obj/item/beacon,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "bSG" = (
@@ -39771,7 +39685,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bSS" = (
-/obj/item/device/beacon,
+/obj/item/beacon,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bST" = (
@@ -40025,7 +39939,7 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/device/t_scanner,
+/obj/item/t_scanner,
 /turf/open/floor/plasteel/darkgreen,
 /area/storage/tech)
 "bTA" = (
@@ -40034,7 +39948,7 @@
 	pixel_x = 2;
 	pixel_y = 4
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/machinery/requests_console{
 	department = "Tech storage";
 	pixel_y = -32
@@ -40157,7 +40071,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = 30;
@@ -40352,7 +40266,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 24
@@ -40826,7 +40740,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/engine)
+/area/construction/mining/aux_base)
 "bVr" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
@@ -40863,7 +40777,7 @@
 /obj/item/wallframe/camera,
 /obj/item/wallframe/camera,
 /obj/item/wallframe/camera,
-/obj/item/device/assault_pod/mining,
+/obj/item/assault_pod/mining,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -41558,7 +41472,7 @@
 /turf/closed/wall,
 /area/chapel/main/monastery)
 "bWW" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -41568,7 +41482,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "bWX" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -41590,7 +41504,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bXc" = (
-/obj/item/device/flashlight,
+/obj/item/flashlight,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bXd" = (
@@ -42088,7 +42002,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/engine)
+/area/construction/mining/aux_base)
 "bYG" = (
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 8;
@@ -42372,7 +42286,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -42535,32 +42449,14 @@
 	},
 /area/maintenance/department/engine)
 "bZs" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
 "bZt" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"bZu" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/docking_port/stationary/public_mining_dock{
 	dir = 2
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"bZv" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
 "bZw" = (
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/plating,
@@ -42779,19 +42675,16 @@
 /area/maintenance/department/engine)
 "cab" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"cac" = (
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"cad" = (
-/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
+"cad" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "cae" = (
 /obj/structure/plasticflaps{
 	opacity = 1
@@ -43145,11 +43038,11 @@
 /area/chapel/main/monastery)
 "caV" = (
 /obj/machinery/holopad,
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/open/floor/plasteel/chapel,
 /area/chapel/main/monastery)
 "caW" = (
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/open/floor/plasteel/chapel{
 	dir = 8
 	},
@@ -43167,7 +43060,7 @@
 "cba" = (
 /obj/structure/table,
 /obj/item/storage/fancy/cigarettes/cigpack_robustgold,
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "cbb" = (
@@ -43181,7 +43074,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -27
@@ -43219,7 +43112,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/glass,
-/obj/item/device/flashlight,
+/obj/item/flashlight,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cbg" = (
@@ -43449,7 +43342,7 @@
 	},
 /area/chapel/main/monastery)
 "cbR" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Access";
 	opacity = 1
 	},
@@ -43691,7 +43584,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "ccL" = (
-/obj/item/device/flashlight/lantern{
+/obj/item/flashlight/lantern{
 	on = 1
 	},
 /turf/open/floor/plasteel/asteroid{
@@ -43714,15 +43607,6 @@
 /obj/structure/table/optable,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
-"ccP" = (
-/obj/machinery/light,
-/obj/machinery/camera{
-	c_tag = "Auxillary Mining Base";
-	dir = 1;
-	network = list("ss13","auxbase")
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "ccQ" = (
 /obj/machinery/field/generator,
 /turf/open/floor/plating,
@@ -43738,7 +43622,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 30
 	},
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "ENG0"
 	},
 /turf/open/floor/plating,
@@ -43942,28 +43826,6 @@
 /obj/item/cigbutt,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
-"cdF" = (
-/obj/structure/closet/secure_closet/miner/unlocked,
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"cdG" = (
-/obj/docking_port/mobile/auxillary_base{
-	dheight = 5;
-	dir = 1;
-	dwidth = 5;
-	height = 11;
-	width = 11
-	},
-/obj/machinery/bluespace_beacon,
-/obj/machinery/computer/auxillary_base,
-/turf/closed/wall,
-/area/shuttle/auxillary_base)
-"cdH" = (
-/obj/structure/mining_shuttle_beacon{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "cdI" = (
 /obj/machinery/field/generator,
 /obj/machinery/camera{
@@ -44128,7 +43990,7 @@
 /turf/open/floor/plasteel/asteroid,
 /area/chapel/office)
 "ceg" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Office";
 	opacity = 1;
 	req_access_txt = "22"
@@ -44149,7 +44011,7 @@
 /turf/closed/wall,
 /area/chapel/office)
 "cei" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -44162,7 +44024,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cej" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -44170,7 +44032,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cek" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel";
 	opacity = 1
 	},
@@ -44178,7 +44040,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cel" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Access";
 	opacity = 1
 	},
@@ -44196,12 +44058,6 @@
 	},
 /turf/open/floor/plating/asteroid,
 /area/chapel/asteroid/monastery)
-"cep" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "ceq" = (
 /obj/machinery/power/emitter,
 /turf/open/floor/plating,
@@ -44469,7 +44325,7 @@
 /turf/closed/wall,
 /area/chapel/office)
 "cfl" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Access";
 	opacity = 1
 	},
@@ -44814,22 +44670,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
-"cgo" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
 "cgp" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"cgq" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 6
+	dir = 1
 	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/construction/mining/aux_base)
 "cgr" = (
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/transit_tube,
@@ -44929,7 +44775,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main/monastery)
 "cgO" = (
@@ -45179,7 +45025,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -45217,7 +45063,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/device/instrument/violin,
+/obj/item/instrument/violin,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -45622,7 +45468,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cjl" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Monastery Cemetary";
 	opacity = 1
 	},
@@ -45694,7 +45540,6 @@
 	height = 22;
 	id = "whiteship_home";
 	name = "monastery";
-	turf_type = /turf/open/space;
 	width = 35
 	},
 /turf/open/space/basic,
@@ -45709,7 +45554,7 @@
 /turf/open/floor/plating,
 /area/chapel/main/monastery)
 "cjH" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Garden";
 	opacity = 1
 	},
@@ -45732,7 +45577,7 @@
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -45775,7 +45620,7 @@
 	invuln = 1;
 	luminosity = 3;
 	name = "Hardened Bomb-Test Camera";
-	network = list("ss13", "rd", "toxins");
+	network = list("ss13","rd","toxins");
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid/airless,
@@ -46019,7 +45864,7 @@
 /turf/closed/mineral/random/low_chance,
 /area/asteroid/nearstation/bomb_site)
 "ckL" = (
-/obj/item/device/beacon,
+/obj/item/beacon,
 /turf/open/floor/plating/airless,
 /area/asteroid/nearstation/bomb_site)
 "ckM" = (
@@ -46071,7 +45916,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library/lounge)
 "ckT" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -46136,7 +45981,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "clj" = (
-/obj/item/device/flashlight/lantern{
+/obj/item/flashlight/lantern{
 	on = 1
 	},
 /turf/open/floor/plating/asteroid/airless,
@@ -46295,7 +46140,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
-/obj/item/device/beacon,
+/obj/item/beacon,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "clS" = (
@@ -46391,7 +46236,7 @@
 "cmf" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/radio,
+/obj/item/radio,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
@@ -46429,7 +46274,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 26
 	},
@@ -46803,7 +46648,7 @@
 	invuln = 1;
 	luminosity = 3;
 	name = "Hardened Bomb-Test Camera";
-	network = list("ss13", "rd", "toxins");
+	network = list("ss13","rd","toxins");
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid/airless,
@@ -46925,7 +46770,7 @@
 	c_tag = "Brig Equipment Room";
 	dir = 2
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 29
 	},
@@ -46953,11 +46798,6 @@
 /obj/structure/punching_bag,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
-"cnW" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/pod_1)
 "cnX" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -47162,7 +47002,7 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/secondary/exit/departure_lounge)
 "coT" = (
-/obj/item/device/beacon,
+/obj/item/beacon,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "coV" = (
@@ -47316,7 +47156,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "cpt" = (
-/obj/item/device/beacon,
+/obj/item/beacon,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -47845,7 +47685,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "crJ" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Crematorium";
 	opacity = 1;
 	req_access_txt = "27"
@@ -47982,7 +47822,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "csn" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 26
@@ -48092,7 +47932,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Chapel Office";
 	opacity = 1;
 	req_access_txt = "22"
@@ -48979,7 +48819,7 @@
 /turf/closed/wall/mineral/iron,
 /area/library/lounge)
 "cwg" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/structure/cable{
@@ -49158,7 +48998,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "cwO" = (
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cwR" = (
@@ -49224,7 +49064,7 @@
 /turf/open/floor/carpet,
 /area/library/lounge)
 "cxz" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -49462,7 +49302,7 @@
 /area/library)
 "czo" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
+/obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -49518,7 +49358,7 @@
 /area/library)
 "czC" = (
 /obj/structure/table/wood/fancy,
-/obj/item/device/flashlight/lantern{
+/obj/item/flashlight/lantern{
 	on = 1;
 	pixel_y = 8
 	},
@@ -49562,7 +49402,7 @@
 /area/library)
 "czO" = (
 /obj/structure/table/wood,
-/obj/item/device/instrument/saxophone,
+/obj/item/instrument/saxophone,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "czP" = (
@@ -49657,7 +49497,7 @@
 /area/library)
 "cAt" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lantern{
+/obj/item/flashlight/lantern{
 	pixel_y = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -49674,7 +49514,7 @@
 /area/library)
 "cAv" = (
 /obj/structure/table/wood,
-/obj/item/device/camera,
+/obj/item/camera,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -50143,16 +49983,34 @@
 /area/quartermaster/office)
 "ejp" = (
 /obj/structure/table/reinforced,
-/obj/item/device/integrated_circuit_printer,
-/obj/item/device/integrated_electronics/wirer,
+/obj/item/integrated_circuit_printer,
+/obj/item/integrated_electronics/wirer,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
 	},
 /area/science/circuit)
+"eIh" = (
+/obj/machinery/chem_master/condimaster,
+/turf/open/floor/plasteel/hydrofloor,
+/area/hydroponics)
 "eQR" = (
 /obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"fmr" = (
+/obj/docking_port/stationary{
+	area_type = /area/construction/mining/aux_base;
+	dheight = 4;
+	dir = 2;
+	dwidth = 4;
+	height = 9;
+	id = "aux_base_zone";
+	name = "aux base zone";
+	roundstart_template = /datum/map_template/shuttle/aux_base/default;
+	width = 9
+	},
+/turf/open/floor/plating,
+/area/construction/mining/aux_base)
 "fon" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -50261,7 +50119,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/device/integrated_electronics/debugger,
+/obj/item/integrated_electronics/debugger,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
 	},
@@ -50317,7 +50175,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "jgr" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -50460,7 +50318,7 @@
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "lqy" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -50550,8 +50408,8 @@
 	pixel_x = 10
 	},
 /obj/structure/rack,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
+/obj/item/multitool,
+/obj/item/multitool,
 /obj/item/screwdriver,
 /obj/item/screwdriver,
 /turf/open/floor/plasteel/white,
@@ -50589,6 +50447,9 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"oEA" = (
+/turf/closed/wall,
+/area/construction/mining/aux_base)
 "oEG" = (
 /obj/machinery/bookbinder,
 /turf/open/floor/plasteel/purple/side{
@@ -50625,7 +50486,7 @@
 /area/engine/break_room)
 "ptq" = (
 /obj/structure/table/reinforced,
-/obj/item/device/integrated_electronics/analyzer,
+/obj/item/integrated_electronics/analyzer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "pWF" = (
@@ -50666,7 +50527,7 @@
 	pixel_x = 20;
 	pixel_y = -6
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
 	pixel_x = 27;
@@ -50790,6 +50651,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"tSS" = (
+/obj/machinery/conveyor/inverted{
+	dir = 10;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "tWt" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/departments/evac,
@@ -50810,9 +50678,13 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/device/integrated_electronics/analyzer,
+/obj/item/integrated_electronics/analyzer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"ukn" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/construction/mining/aux_base)
 "ulu" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -50861,8 +50733,8 @@
 	network = list("rd");
 	pixel_y = 32
 	},
-/obj/item/device/integrated_circuit_printer,
-/obj/item/device/integrated_electronics/debugger,
+/obj/item/integrated_circuit_printer,
+/obj/item/integrated_electronics/debugger,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
 	},
@@ -50879,7 +50751,7 @@
 /area/crew_quarters/fitness/recreation)
 "vJd" = (
 /obj/structure/table/reinforced,
-/obj/item/device/integrated_electronics/wirer,
+/obj/item/integrated_electronics/wirer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
 "vMX" = (
@@ -50896,7 +50768,7 @@
 /turf/open/floor/plasteel,
 /area/science/circuit)
 "vOw" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Library"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -50956,6 +50828,13 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/cmo)
+"wMV" = (
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "garbage"
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "wTO" = (
 /obj/machinery/vending/assist,
 /turf/open/floor/plasteel/purple/corner{
@@ -74047,19 +73926,19 @@ bva
 bva
 bDi
 bva
-bva
-bva
-bva
-bva
-bva
-bva
-bva
-bva
-bva
-cqy
-cqy
-bva
-bva
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+ukn
+ukn
+oEA
+oEA
 aaa
 aaa
 aaa
@@ -74304,7 +74183,7 @@ bva
 bWj
 bWZ
 bXS
-bva
+oEA
 bZs
 cab
 cab
@@ -74315,8 +74194,8 @@ cab
 cab
 cab
 cab
-cgo
-bva
+bZs
+oEA
 aaa
 aaa
 aaa
@@ -74561,19 +74440,19 @@ bVt
 bWk
 bXa
 bXT
-cqy
+ukn
 bZt
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-cqy
+ukn
 aaa
 aaa
 aaa
@@ -74820,17 +74699,17 @@ bDi
 bSw
 bYF
 bZt
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-cqy
+ukn
 aaa
 aaa
 aaa
@@ -75075,19 +74954,19 @@ bVu
 bNX
 bDi
 bDi
-cqy
+ukn
 bZt
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-cqy
+ukn
 aaa
 aaa
 aaa
@@ -75332,19 +75211,19 @@ bVv
 bSw
 bPC
 bXU
-bva
+oEA
 bZt
-cac
-cac
-cac
-cac
-cdF
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-bva
+oEA
 aaa
 aaa
 aaa
@@ -75589,19 +75468,19 @@ bVw
 bDi
 bDi
 bXV
-cqy
-bZu
-cac
-cac
-cac
-ccP
-cdG
-cep
-cac
-cac
-cac
+ukn
+bZt
+bZs
+bZs
+bZs
+bZs
+fmr
+bZs
+bZs
+bZs
+bZs
 cgp
-bva
+oEA
 aaa
 aaa
 aaa
@@ -75846,19 +75725,19 @@ bVx
 bPC
 bXb
 bDi
-bva
+oEA
 bZt
-cac
-cac
-cac
-cac
-cdH
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-bva
+oEA
 aaa
 aaa
 aaa
@@ -76103,19 +75982,19 @@ bVy
 bDi
 bXc
 bDi
-cqy
+ukn
 bZt
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-cqy
+ukn
 aaa
 aaa
 aaa
@@ -76362,17 +76241,17 @@ bSw
 bDi
 bVq
 bZt
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-cqy
+ukn
 aaa
 aaa
 aaa
@@ -76617,19 +76496,19 @@ bVz
 bWm
 bSw
 bNX
-cqy
+ukn
 bZt
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
-cac
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
+bZs
 cgp
-cqy
+ukn
 aaa
 aaa
 aaa
@@ -76874,8 +76753,8 @@ bva
 bva
 bDi
 cBj
-bva
-bZv
+oEA
+bZs
 cad
 cad
 cad
@@ -76885,8 +76764,8 @@ cad
 cad
 cad
 cad
-cgq
-bva
+bZs
+oEA
 aaa
 aaa
 aaa
@@ -77131,19 +77010,19 @@ bDi
 bDi
 bNK
 bva
-bva
-bva
-bva
-bva
-bva
-bva
-bva
-bva
-bva
-cqy
-cqy
-bva
-bva
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+oEA
+ukn
+ukn
+oEA
+oEA
 aaa
 aaa
 aaa
@@ -77591,7 +77470,7 @@ aQJ
 aRL
 aSD
 aTT
-aTV
+eIh
 aRL
 aWR
 aXT
@@ -81258,8 +81137,8 @@ cgv
 cgV
 bBW
 bBW
-aaa
 cgV
+aaa
 aaa
 bBW
 bBW
@@ -81515,8 +81394,8 @@ cgv
 bBW
 bBW
 bBW
-aaa
 abI
+aaa
 aaa
 bBW
 bBW
@@ -81772,8 +81651,8 @@ cgv
 bBW
 bBW
 aaa
-aaa
 abI
+aaa
 aaa
 aaa
 bBW
@@ -82032,9 +81911,9 @@ aaa
 cii
 cis
 ciG
-aaa
-aaa
-aaa
+abI
+abI
+cgV
 cfV
 bTE
 abI
@@ -82283,15 +82162,15 @@ cfd
 cfw
 cfW
 cgw
-cgV
-abI
-abI
+aaa
+aaa
+aaa
 cij
 cit
 ciH
-abI
-abI
-cgV
+aaa
+aaa
+aaa
 cfV
 bTE
 abI
@@ -82540,9 +82419,9 @@ cfe
 cfx
 cfa
 cgv
-aaa
-aaa
-aaa
+cgV
+abI
+abI
 cik
 ciu
 ciI
@@ -82801,8 +82680,8 @@ bBW
 bBW
 aaa
 aaa
-abI
 aaa
+abI
 aaa
 bBW
 bBW
@@ -83058,8 +82937,8 @@ bBW
 bBW
 aaa
 aaa
-abI
 aaa
+abI
 aaa
 bBW
 bBW
@@ -83315,8 +83194,8 @@ cgV
 bBW
 aaa
 aaa
-cgV
 aaa
+cgV
 bBW
 bBW
 cgV
@@ -90151,11 +90030,11 @@ alf
 aaa
 aaa
 aaa
-ann
-ann
-cnW
-ann
-aqX
+aaa
+aaa
+aaa
+aaa
+aaa
 apX
 apX
 aul
@@ -90407,12 +90286,12 @@ akn
 alg
 aaa
 aaa
-ann
-ann
-aoE
-apx
-apY
-aqX
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 ash
 ash
 ash
@@ -90664,11 +90543,11 @@ ako
 alg
 aaa
 aaa
-cnW
-aoc
-aoF
-aoF
-aoF
+aaa
+aaa
+aaa
+aaa
+aaa
 aqY
 asi
 atk
@@ -90921,12 +90800,12 @@ akn
 alg
 aaa
 aaa
-ann
-ann
-aoG
-apy
-apZ
-aqX
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 asj
 atl
 aum
@@ -91179,11 +91058,11 @@ alh
 aaa
 aaa
 aaa
-ann
-ann
-cnW
-ann
-aqX
+aaa
+aaa
+aaa
+aaa
+aaa
 apX
 apX
 apX
@@ -97631,8 +97510,8 @@ aaa
 aLo
 aMG
 aNX
-aPh
-aQo
+wMV
+tSS
 aRy
 aSn
 aTA

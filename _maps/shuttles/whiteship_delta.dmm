@@ -167,11 +167,11 @@
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/storage/toolbox/emergency,
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = -6;
 	pixel_y = -2
 	},
@@ -243,7 +243,7 @@
 /area/shuttle/abandoned)
 "az" = (
 /obj/structure/sink/kitchen{
-	pixel_z = 30
+	pixel_y = 30
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -272,7 +272,7 @@
 	},
 /obj/item/grenade/chem_grenade/metalfoam,
 /obj/item/relic,
-/obj/item/device/t_scanner,
+/obj/item/t_scanner,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;
 	name = "3maintenance loot spawner"
@@ -452,7 +452,7 @@
 /obj/item/clothing/suit/apron,
 /obj/item/shovel/spade,
 /obj/item/cultivator,
-/obj/item/device/plant_analyzer,
+/obj/item/plant_analyzer,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -651,7 +651,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "ITVSAC";
 	pixel_x = -1;
 	pixel_y = 2
@@ -1654,7 +1654,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/item/device/megaphone,
+/obj/item/megaphone,
 /turf/open/floor/plasteel/blue/corner{
 	dir = 4
 	},
@@ -1688,7 +1688,7 @@
 	name = "dust"
 	},
 /obj/structure/table,
-/obj/item/device/camera,
+/obj/item/camera,
 /turf/open/floor/plasteel/blue/side{
 	dir = 5
 	},
@@ -1815,7 +1815,7 @@
 	name = "dust"
 	},
 /obj/structure/table,
-/obj/item/device/pda/clear,
+/obj/item/pda/clear,
 /turf/open/floor/plasteel/blue/side,
 /area/shuttle/abandoned)
 "dv" = (
@@ -1834,7 +1834,7 @@
 	name = "dust"
 	},
 /obj/structure/table,
-/obj/item/device/radio,
+/obj/item/radio,
 /turf/open/floor/plasteel/blue/side,
 /area/shuttle/abandoned)
 "dx" = (

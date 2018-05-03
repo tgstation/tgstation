@@ -34,7 +34,7 @@
 
 /obj/item/grown/attackby(obj/item/O, mob/user, params)
 	..()
-	if (istype(O, /obj/item/device/plant_analyzer))
+	if (istype(O, /obj/item/plant_analyzer))
 		var/msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>\n"
 		if(seed)
 			msg += seed.get_analyzer_text()
@@ -46,13 +46,6 @@
 	if(reagents)
 		return 1
 	return 0
-
-
-/obj/item/grown/Crossed(atom/movable/AM)
-	if(seed)
-		for(var/datum/plant_gene/trait/T in seed.genes)
-			T.on_cross(src, AM)
-	..()
 
 /obj/item/grown/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?

@@ -1,0 +1,5 @@
+author: "Cobby (Stolen from GrayRachnid)"
+delete-after: True
+changes: 
+  - tweak: "The processor has now been generalized techweb-wise into the \"food/slime processor\"."
+  - rscadd: "The processor can now be made by Science."

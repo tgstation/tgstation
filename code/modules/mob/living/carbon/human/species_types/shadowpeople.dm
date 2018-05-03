@@ -37,7 +37,7 @@
 	limbs_id = "shadow"
 	burnmod = 1.5
 	blacklisted = TRUE
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
+	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYES)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER)
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
@@ -203,8 +203,8 @@
 			disintegrate(I)
 
 /obj/item/light_eater/proc/disintegrate(obj/item/O)
-	if(istype(O, /obj/item/device/pda))
-		var/obj/item/device/pda/PDA = O
+	if(istype(O, /obj/item/pda))
+		var/obj/item/pda/PDA = O
 		PDA.set_light(0)
 		PDA.fon = FALSE
 		PDA.f_lum = 0

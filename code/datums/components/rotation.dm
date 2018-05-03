@@ -1,15 +1,15 @@
-#define ROTATION_ALTCLICK 1
-#define ROTATION_WRENCH 2
-#define ROTATION_VERBS 4
-#define ROTATION_COUNTERCLOCKWISE 8
-#define ROTATION_CLOCKWISE 16
-#define ROTATION_FLIP 32
+#define ROTATION_ALTCLICK			(1<<0)
+#define ROTATION_WRENCH				(1<<1)
+#define ROTATION_VERBS				(1<<2)
+#define ROTATION_COUNTERCLOCKWISE	(1<<3)
+#define ROTATION_CLOCKWISE			(1<<4)
+#define ROTATION_FLIP				(1<<5)
 
 /datum/component/simple_rotation
 	var/datum/callback/can_user_rotate //Checks if user can rotate
 	var/datum/callback/can_be_rotated  //Check if object can be rotated at all
 	var/datum/callback/after_rotation     //Additional stuff to do after rotation
-	
+
 	var/rotation_flags = NONE
 	var/default_rotation_direction = ROTATION_CLOCKWISE
 

@@ -29,9 +29,6 @@
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
 		return
 
-	if(exchange_parts(user, O))
-		return
-
 	if(default_pry_open(O))
 		return
 
