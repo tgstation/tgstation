@@ -499,7 +499,7 @@ SLIME SCANNER
 		var/total_moles = air_contents.total_moles()
 		var/pressure = air_contents.return_pressure()
 		var/volume = air_contents.return_volume() //could just do mixture.volume... but safety, I guess?
-		var/temperature = air_contents.temperature //could just do mixture.volume... but safety, I guess?
+		var/temperature = air_contents.temperature
 
 		if(total_moles > 0)
 			to_chat(user, "<span class='notice'>Moles: [round(total_moles, 0.01)] mol</span>")
