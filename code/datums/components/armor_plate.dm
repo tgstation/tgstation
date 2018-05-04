@@ -49,10 +49,6 @@
 		if(amount >= maxamount)
 			to_chat(user, "<span class='warning'>You can't improve [R] any further!</span>")
 			return
-		amount++
-		R.armor = R.armor.attachArmor(added_armor)
-		R.update_icon()
-		to_chat(user, "<span class='info'>You strengthen [R], improving its resistance against melee, bullet and laser damage.</span>")
 		if(istype(I,/obj/item/stack))
 			I.use(1)
 		else
@@ -60,6 +56,10 @@
 				to_chat(user, "<span class='warning'>[I] cannot be used for armoring while there's something inside!</span>")
 				return
 			qdel(I)
+		amount++
+		R.armor = R.armor.attachArmor(added_armor)
+		R.update_icon()
+		to_chat(user, "<span class='info'>You strengthen [R], improving its resistance against melee, bullet and laser damage.</span>")
 	else
 		if(amount >= maxamount)
 			to_chat(user, "<span class='warning'>You can't improve [O] any further!</span>")
