@@ -1,0 +1,5 @@
+author: "Fox McCloud"
+delete-after: True
+changes: 
+  - bugfix: "Fixes recycler not recycling bluespace and plastic objects"
+  - bugfix: "Fixes objects with material components always showing their materials on examine"
