@@ -200,6 +200,9 @@
 /datum/holiday/starwars/greet()
 	return "May the 4th be with you!"
 
+/datum/holiday/starwars/getStationPrefix()
+	return pick("Force","Imperial","Midi-chlorian","Mandalorian","Wookie","High Ground")
+
 /datum/holiday/doctor
 	name = "Doctor's Day"
 	begin_day = 1
