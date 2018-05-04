@@ -10,7 +10,7 @@ In any query remember to add a prefix to the table names if you use one.
 
 ----------------------------------------------------
 
-Version 4.3, 5 April 2018, by Jordie0608
+Version 4.3, 5 May 2018, by Jordie0608
 Modified table `round`, renaming column `start_datetime` to `initialize_datetime` and `end_datetime` to `shutdown_datetime` and adding columns to replace both under the same name in preparation for changes to TGS server initialization.
 
 ALTER TABLE `round`
