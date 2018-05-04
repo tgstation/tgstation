@@ -158,7 +158,7 @@
 	for(var/CHM in get_hearers_in_view(hearing_range, src))
 		if(ismob(CHM))
 			var/mob/LM = CHM
-			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, 1)
+			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	next_activate =  world.time + 30
 
 /obj/item/assembly/infra/proc/switchListener(turf/newloc)

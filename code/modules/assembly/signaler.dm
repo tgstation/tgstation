@@ -18,7 +18,7 @@
 
 /obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] eats \the [src]! If it is signaled, [user.p_they()] will die!</span>")
-	playsound(src, 'sound/items/eatfood.ogg', 50, 1)
+	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	user.transferItemToLoc(src, user, TRUE)
 	suicider = user
 	return MANUAL_SUICIDE
@@ -145,7 +145,7 @@ Code:
 	for(var/CHM in get_hearers_in_view(hearing_range, src))
 		if(ismob(CHM))
 			var/mob/LM = CHM
-			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, 1)
+			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	return TRUE
 
 

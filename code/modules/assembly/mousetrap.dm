@@ -22,7 +22,7 @@
 					to_chat(user, "<span class='warning'>Your hand slips, setting off the trigger!</span>")
 					pulse(FALSE)
 		update_icon()
-		playsound(src, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
+		playsound(src, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
 
 /obj/item/assembly/mousetrap/update_icon()
 	if(armed)
@@ -39,7 +39,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(H.has_trait(TRAIT_PIERCEIMMUNE))
-			playsound(src, 'sound/effects/snap.ogg', 50, 1)
+			playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 			armed = FALSE
 			update_icon()
 			pulse(FALSE)
@@ -60,7 +60,7 @@
 		var/mob/living/simple_animal/mouse/M = target
 		visible_message("<span class='boldannounce'>SPLAT!</span>")
 		M.splat()
-	playsound(src, 'sound/effects/snap.ogg', 50, 1)
+	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 	armed = FALSE
 	update_icon()
 	pulse(FALSE)
@@ -81,7 +81,7 @@
 		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
 	update_icon()
-	playsound(src, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
+	playsound(src, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
 
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE

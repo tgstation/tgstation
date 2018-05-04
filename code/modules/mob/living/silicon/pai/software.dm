@@ -171,7 +171,7 @@
 			if(href_list["send"])
 				signaler.send_activation()
 				audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
-				playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, 1)
+				playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 
 			if(href_list["freq"])
 				var/new_frequency = (signaler.frequency + text2num(href_list["freq"]))

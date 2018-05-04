@@ -56,7 +56,7 @@
 		if(health_scan <= alarm_health)
 			pulse()
 			audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
-			playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, 1)
+			playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 			toggle_scan()
 		return
 	return
