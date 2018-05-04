@@ -502,3 +502,46 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"ammonia",
 		"ash",
 		"diethylamine")
+
+/obj/machinery/chem_dispenser/full //fully upgraded stock parts
+	
+/obj/machinery/chem_dispenser/debug/Initialize()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
+	component_parts += new /obj/item/stack/sheet/glass(null)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	RefreshParts()
+	
+/obj/machinery/chem_dispenser/full/debug //RIP SCP-294
+	name = "debug chemical dispenser"
+	desc = "If you see this, yell at a coder."
+	dispensable_reagents = list(
+		"adminordrazine",
+		"stablemutationtoxin",
+		"mulligan",
+		"slime_toxin",
+		"lizardmutationtoxin",
+		"flymutationtoxin",
+		"mothmutationtoxin",
+		"podmutationtoxin",
+		"jellymutationtoxin",
+		"golemmutationtoxin",
+		"abductormutationtoxin",
+		"androidmutationtoxin",
+		"skeletonmutationtoxin",
+		"zombiemutationtoxin",
+		"ashmutationtoxin",
+		"shadowmutationtoxin",
+		"plasmamutationtoxin",
+		"amutationtoxin",
+		"gluttonytoxin",
+		"flightpotion",
+		"magillitis",
+		"nanomachines",
+		"xenomicrobes"
+	)
