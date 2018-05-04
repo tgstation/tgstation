@@ -73,6 +73,7 @@
 		attached_device.on_found(finder)
 
 /obj/item/transfer_valve/Crossed(atom/movable/AM as mob|obj)
+	. = ..()
 	if(attached_device)
 		attached_device.Crossed(AM)
 

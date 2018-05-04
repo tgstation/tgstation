@@ -20,8 +20,7 @@
 			if(openclose == null)
 				openclose = M.density
 			INVOKE_ASYNC(M, openclose ? /obj/machinery/door/poddoor.proc/open : /obj/machinery/door/poddoor.proc/close)
-	sleep(10)
-	cooldown = FALSE
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
 
 /obj/item/assembly/control/airlock
@@ -66,8 +65,7 @@
 	for(var/D in open_or_close)
 		INVOKE_ASYNC(D, doors_need_closing ? /obj/machinery/door/airlock.proc/close : /obj/machinery/door/airlock.proc/open)
 
-	sleep(10)
-	cooldown = FALSE
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
 
 /obj/item/assembly/control/massdriver
@@ -92,8 +90,7 @@
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, /obj/machinery/door/poddoor.proc/close)
 
-	sleep(10)
-	cooldown = FALSE
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
 
 /obj/item/assembly/control/igniter
@@ -112,9 +109,7 @@
 			M.on = !M.on
 			M.icon_state = "igniter[M.on]"
 
-	sleep(30)
-	cooldown = FALSE
-
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 30)
 
 /obj/item/assembly/control/flasher
 	name = "flasher controller"
@@ -126,8 +121,7 @@
 		if(M.id == src.id)
 			INVOKE_ASYNC(M, /obj/machinery/flasher.proc/flash)
 
-	sleep(50)
-	cooldown = FALSE
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
 
 
 /obj/item/assembly/control/crematorium
@@ -140,5 +134,4 @@
 		if (C.id == id)
 			C.cremate(usr)
 
-	sleep(50)
-	cooldown = FALSE
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)

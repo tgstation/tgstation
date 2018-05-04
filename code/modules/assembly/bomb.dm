@@ -84,6 +84,7 @@
 //Assembly / attached device memes
 
 /obj/item/onetankbomb/Crossed(atom/movable/AM as mob|obj) //for mousetraps
+	. = ..()
 	if(bombassembly)
 		bombassembly.Crossed(AM)
 
