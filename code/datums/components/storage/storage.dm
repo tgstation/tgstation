@@ -232,13 +232,15 @@
 		stoplag(1)
 	qdel(progress)
 
-/datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress)
+/datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found = TRUE)
 	var/atom/real_location = real_location()
 	for(var/obj/item/I in things)
 		things -= I
 		if(I.loc != real_location)
 			continue
 		remove_from_storage(I, target)
+		if(trigger_on_found && I.on_found())
+			return FALSE
 		if(TICK_CHECK)
 			progress.update(progress.goal - length(things))
 			return TRUE
