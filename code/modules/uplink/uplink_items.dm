@@ -881,6 +881,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			sightings, however."
 	item = /obj/item/storage/box/syndie_kit/space
 	cost = 4
+	exclude_modes = list(/datum/game_mode/nuclear) //free
 
 /datum/uplink_item/suits/hardsuit
 	name = "Syndicate Hardsuit"
@@ -891,7 +892,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Nanotrasen crew who spot these suits are known to panic."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi
 	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
+	exclude_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/suits/hardsuit
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list()
 
 /datum/uplink_item/suits/hardsuit/elite
 	name = "Elite Syndicate Hardsuit"
