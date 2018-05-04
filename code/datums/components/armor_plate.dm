@@ -56,6 +56,9 @@
 		if(istype(I,/obj/item/stack))
 			I.use(1)
 		else
+			if(length(I.contents))
+				to_chat(user, "<span class='warning'>[I] cannot be used for armoring while there's something inside!</span>")
+				return
 			qdel(I)
 	else
 		if(amount >= maxamount)
