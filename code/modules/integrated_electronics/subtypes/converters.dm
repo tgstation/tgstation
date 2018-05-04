@@ -267,6 +267,25 @@
 	else
 		activate_pin(4)
 
+/obj/item/integrated_circuit/converter/stringlength
+	name = "get length"
+	desc = "This circuit will return the number of characters in a string."
+	complexity = 1
+	inputs = list(
+		"string" = IC_PINTYPE_STRING
+		)
+	outputs = list(
+		"length" = IC_PINTYPE_NUMBER
+		)
+	activators = list("get length" = IC_PINTYPE_PULSE_IN, "on acquisition" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/converter/stringlength/do_work()
+	set_pin_data(IC_OUTPUT, 1, length(get_pin_data(IC_INPUT, 1)))
+	push_data()
+
+	activate_pin(2)
+
 /obj/item/integrated_circuit/converter/exploders
 	name = "string exploder"
 	desc = "This splits a single string into a list of strings."
