@@ -20,6 +20,16 @@
 	name = ".45 bullet"
 	damage = 30
 
+/obj/item/projectile/bullet/c45/ap
+	name = ".45 armor-piercing bullet"
+	damage = 27
+	armour_penetration = 40
+
+/obj/item/projectile/bullet/c45/hp
+	name = ".45 hollow-point bullet"
+	damage = 40
+	armour_penetration = -50
+
 /obj/item/projectile/bullet/incendiary/c45
 	name = ".45 incendiary bullet"
 	damage = 15

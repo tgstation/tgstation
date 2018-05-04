@@ -410,6 +410,20 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/ammo/pistolap
+	name = ".45 Armor Piercing Magazine"
+	desc = "An additional 8-round .45 magazine; compatible with the Stechkin Pistol. These rounds are less effective at injuring the target but penetrate protective gear."
+	item = /obj/item/ammo_box/magazine/m45/ap
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/ammo/pistolhp
+	name = ".45 Hollow Point Magazine"
+	desc = "An additional 8-round .45 magazine; compatible with the Stechkin Pistol. These rounds are more damaging but ineffective against armour."
+	item = /obj/item/ammo_box/magazine/m45/hp
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/ammo/pistolaps
 	name = "9mm Handgun Magazine"
 	desc = "An additional 15-round 9mm magazine, compatible with the Stetchkin APS pistol, found in the Spetsnaz Pyro bundle."
@@ -477,10 +491,34 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/ammo/smg
 	name = ".45 SMG Magazine"
-	desc = "An additional 20-round .45 magazine suitable for use with the C-20r submachine gun. \
+	desc = "An additional 24-round .45 magazine suitable for use with the C-20r submachine gun. \
 			These bullets pack a lot of punch that can knock most targets down, but do limited overall damage."
 	item = /obj/item/ammo_box/magazine/smgm45
 	cost = 3
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/smginc
+	name = ".45 SMG Incendiary Magazine"
+	desc = "An additional 24-round .45 magazine compatible with the C-20r submachine gun. \
+			This magazine is loaded with incendiary rounds which ignite their target, but do less damage upon contact."
+	item = /obj/item/ammo_box/magazine/smgm45/fire
+	cost = 6
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/smgap
+	name = ".45 SMG Armor Piercing Magazine"
+	desc = "An additional 24-round .45 magazine compatible with the C-20r submachine gun. \
+			This magazine is loaded with armor piercing rounds which do less damage upon contact, but cut cleanly through protective gear."
+	item = /obj/item/ammo_box/magazine/smgm45/ap
+	cost = 6
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/smghp
+	name = ".45 SMG Hollow Point Magazine"
+	desc = "An additional 24-round .45 magazine compatible with the C-20r submachine gun. \
+			This magazine is loaded with hollow point rounds which do more damage upon contact, but less on armor."
+	item = /obj/item/ammo_box/magazine/smgm45/hp
+	cost = 6
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/smg/bag

@@ -23,7 +23,7 @@
 	desc = "A classic .45 handgun with a small magazine capacity."
 	icon_state = "m1911"
 	w_class = WEIGHT_CLASS_NORMAL
-	mag_type = /obj/item/ammo_box/magazine/m45/m1911
+	mag_type = /obj/item/ammo_box/magazine/m1911
 	can_suppress = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/deagle

@@ -68,6 +68,18 @@
 	..()
 	icon_state = "c20r45-[round(ammo_count(),2)]"
 
+/obj/item/ammo_box/magazine/smgm45/fire
+	name = "SMG magazine (.45 incendiary)"
+	ammo_type = /obj/item/ammo_casing/c45/inc
+
+/obj/item/ammo_box/magazine/smgm45/ap
+	name = "SMG magazine (.45 armor-piercing)"
+	ammo_type = /obj/item/ammo_casing/c45/ap
+
+/obj/item/ammo_box/magazine/smgm45/hp
+	name = "SMG magazine (.45 hollow-point)"
+	ammo_type = /obj/item/ammo_casing/c45/hp
+
 /obj/item/ammo_box/magazine/tommygunm45
 	name = "drum magazine (.45)"
 	icon_state = "drum45"

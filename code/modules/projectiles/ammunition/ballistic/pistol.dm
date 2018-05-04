@@ -11,6 +11,16 @@
 	desc = "A .45 incendiary bullet casing."
 	projectile_type = /obj/item/projectile/bullet/incendiary/c45
 
+/obj/item/ammo_casing/c45/hp
+	name = ".45 hollow-point bullet casing"
+	desc = "A .45 hollow-point bullet casing."
+	projectile_type = /obj/item/projectile/bullet/c45/hp
+
+/obj/item/ammo_casing/c45/ap
+	name = ".45 armor-piercing bullet casing"
+	desc = "A .45 armor-piercing bullet casing."
+	projectile_type = /obj/item/projectile/bullet/c45/ap
+
 // 9mm (Stechkin APS)
 
 /obj/item/ammo_casing/c9mm

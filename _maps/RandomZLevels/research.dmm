@@ -1406,8 +1406,8 @@
 /obj/structure/rack,
 /obj/item/gun/ballistic/automatic/pistol/m1911,
 /obj/item/gun/ballistic/automatic/pistol/m1911,
-/obj/item/ammo_box/magazine/m45/m1911,
-/obj/item/ammo_box/magazine/m45/m1911,
+/obj/item/ammo_box/magazine/m1911,
+/obj/item/ammo_box/magazine/m1911,
 /turf/open/floor/plasteel/red,
 /area/awaymission/research/interior/security)
 "eq" = (
