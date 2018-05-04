@@ -61,10 +61,13 @@
 		if(amount >= maxamount)
 			to_chat(user, "<span class='warning'>You can't improve [O] any further!</span>")
 			return
-		O.armor = O.armor.attachArmor(added_armor)
-		to_chat(user, "<span class='info'>You strengthen [O], improving its resistance against melee attacks.</span>")
 		if(istype(I,/obj/item/stack)) //could I un-indent this code and leave just one instance of it here?
 			I.use(1)
 		else
+			if(length(I.contents))
+				to_chat(user, "<span class='warning'>[I] cannot be used for armoring while there's something inside!</span>")
+				return
 			qdel(I)
+		O.armor = O.armor.attachArmor(added_armor)
+		to_chat(user, "<span class='info'>You strengthen [O], improving its resistance against melee attacks.</span>")
 		amount++
