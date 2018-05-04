@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - code_imp: "The commit hashes shown in Show Server Revision are now long enough to autolink when copied into issue reports."
