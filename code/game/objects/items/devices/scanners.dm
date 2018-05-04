@@ -353,6 +353,7 @@ SLIME SCANNER
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	tool_behaviour = TOOL_ANALYZER
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
 	grind_results = list("mercury" = 5, "iron" = 5, "silicon" = 5)
 	var/cooldown = FALSE
@@ -362,39 +363,6 @@ SLIME SCANNER
 /obj/item/analyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!</span>")
 	return BRUTELOSS
-
-/obj/item/analyzer/afterattack(obj/holder, mob/user, proximity_flags)
-	if(holder.Adjacent(user))
-		//there has to be a better way to do this
-		if (istype(holder, /obj/item/tank))
-			var/obj/item/tank/T = holder
-			atmosanalyzer_scan(T.air_contents, user, T)
-
-		else if (istype(holder, /obj/item/onetankbomb))
-			var/obj/item/onetankbomb/OT = holder
-			atmosanalyzer_scan(OT.bombtank.air_contents, user, OT)
-
-		else if (istype(holder, /obj/machinery/portable_atmospherics))
-			var/obj/machinery/portable_atmospherics/PA = holder
-			atmosanalyzer_scan(PA.air_contents, user, PA)
-
-		else if (istype(holder, /obj/machinery/atmospherics/pipe))
-			var/obj/machinery/atmospherics/pipe/P = holder
-			atmosanalyzer_scan(P.parent.air, user, P)
-
-		else if (istype(holder, /obj/machinery/atmospherics/components))
-			var/obj/machinery/atmospherics/components/C = holder
-			atmosanalyzer_scan(C.airs, user, C)
-
-		else if (istype(holder, /obj/machinery/power/rad_collector))
-			var/obj/machinery/power/rad_collector/RC = holder
-			if(RC.loaded_tank)
-				atmosanalyzer_scan(RC.loaded_tank.air_contents, user, RC)
-
-		else if (istype(holder, /obj/item/flamethrower))
-			var/obj/item/flamethrower/F = holder
-			if(F.ptank)
-				atmosanalyzer_scan(F.ptank.air_contents, user, F)
 
 /obj/item/analyzer/attack_self(mob/user)
 	add_fingerprint(user)
@@ -517,8 +485,8 @@ SLIME SCANNER
 			amount += inaccurate
 	return DisplayTimeText(max(1,amount))
 
-/obj/item/analyzer/proc/atmosanalyzer_scan(mixture, mob/user, obj/target = src)
-	var/obj/icon = target
+/proc/atmosanalyzer_scan(mixture, mob/living/user, atom/target = src)
+	var/icon = target
 	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(src))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	to_chat(user, "<span class='boldnotice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
 

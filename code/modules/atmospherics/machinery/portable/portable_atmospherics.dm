@@ -141,6 +141,9 @@
 	else
 		return ..()
 
+/obj/machinery/portable_atmospherics/analyzer_act(mob/living/user, obj/item/I)
+	atmosanalyzer_scan(air_contents, user, src)
+
 /obj/machinery/portable_atmospherics/attacked_by(obj/item/I, mob/user)
 	if(I.force < 10 && !(stat & BROKEN))
 		take_damage(0)

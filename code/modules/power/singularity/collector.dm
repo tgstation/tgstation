@@ -168,6 +168,10 @@
 	to_chat(user, "<span class='warning'>You [bitcoinmining ? "enable":"disable"] the research point production feature of [src].</span>")
 	return TRUE
 
+/obj/machinery/power/rad_collector/analyzer_act(mob/living/user, obj/item/I)
+	if(loaded_tank)
+		loaded_tank.analyzer_act(user, I)
+
 /obj/machinery/power/rad_collector/examine(mob/user)
 	. = ..()
 	if(active)
