@@ -23,7 +23,7 @@
 		var/mob/living/L = buckled_mobs[1]
 		if(iscarbon(L))
 			L.Knockdown(100)
-			L.visible_message("<span class='warning'>[L] is maimed as the skewer shatters while still in their body!</span>")
+			L.visible_message("<span class='warning'>[L] is maimed as the skewer shatters while still in [L.p_their()] body!</span>")
 			L.adjustBruteLoss(15)
 		unbuckle_mob(L)
 	return ..()

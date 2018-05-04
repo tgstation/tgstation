@@ -37,7 +37,7 @@
 	resistance_flags = FLAMMABLE
 
 /obj/item/stack/packageWrap/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] begins wrapping themselves in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] begins wrapping [user.p_them()]self in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(use(3))
 		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(user.loc))
 		P.icon_state = "deliverypackage5"

@@ -288,7 +288,7 @@
 
 			for(var/obj/item/I in L.held_items)
 				if(!holding)
-					holding += "[L.p_they(TRUE)] [L.p_are()] holding \a [I]"
+					holding += "[L.p_theyre(TRUE)] holding \a [I]"
 				else
 					holding += " and \a [I]"
 			holding = holding.Join()

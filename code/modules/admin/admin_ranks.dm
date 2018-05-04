@@ -156,7 +156,7 @@ GLOBAL_PROTECT(protected_ranks)
 			else
 				while(query_load_admin_ranks.NextRow())
 					var/skip
-					var/rank_name = query_load_admin_ranks.item[1]
+					var/rank_name = ckeyEx(query_load_admin_ranks.item[1])
 					for(var/datum/admin_rank/R in GLOB.admin_ranks)
 						if(R.name == rank_name) //this rank was already loaded from txt override
 							skip = 1

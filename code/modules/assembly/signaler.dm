@@ -24,7 +24,7 @@
 	return MANUAL_SUICIDE
 
 /obj/item/assembly/signaler/proc/manual_suicide(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user]'s \the [src] recieves a signal, killing them instantly!</span>")
+	user.visible_message("<span class='suicide'>[user]'s \the [src] recieves a signal, killing [user.p_them()] instantly!</span>")
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(0)
 

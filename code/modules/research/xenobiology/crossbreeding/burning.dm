@@ -256,7 +256,7 @@ Burning extracts:
 	var/mob/living/L = user
 	if(!istype(L))
 		return
-	user.visible_message("<span class='danger'>[src] absorbs [user], transforming them into a slime!</span>")
+	user.visible_message("<span class='danger'>[src] absorbs [user], transforming [user.p_them()] into a slime!</span>")
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform/S = new()
 	S.remove_on_restore = TRUE
 	user.mind.AddSpell(S)

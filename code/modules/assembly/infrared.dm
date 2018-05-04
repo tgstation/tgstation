@@ -1,6 +1,6 @@
 /obj/item/assembly/infra
 	name = "infrared emitter"
-	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared"
 	materials = list(MAT_METAL=1000, MAT_GLASS=500)
 	is_position_sensitive = TRUE
@@ -17,6 +17,19 @@
 	. = ..()
 	beams = list()
 	START_PROCESSING(SSobj, src)
+
+/obj/item/assembly/infra/ComponentInitialize()
+	. = ..()
+	AddComponent(
+		/datum/component/simple_rotation,
+		ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS,
+		null,
+		null,
+		CALLBACK(src,.proc/after_rotation)
+		)
+
+/obj/item/assembly/infra/proc/after_rotation()
+	refreshBeam()
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -189,23 +202,6 @@
 		return
 	if(usr)
 		attack_self(usr)
-
-/obj/item/assembly/infra/verb/rotate()//This could likely be better
-	set name = "Rotate Infrared Laser"
-	set category = "Object"
-	set src in usr
-
-	if(!usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
-		return
-
-	setDir(turn(dir, -90))
-
-/obj/item/assembly/infra/AltClick(mob/user)
-	..()
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
-		return
-	else
-		rotate()
 
 /obj/item/assembly/infra/setDir()
 	. = ..()

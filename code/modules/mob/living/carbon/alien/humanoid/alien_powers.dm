@@ -159,7 +159,7 @@ Doesn't work on other aliens/AI.*/
 
 			return 0
 	else
-		to_chat(src, "<span class='noticealien'>Target is too far away.</span>")
+		to_chat(src, "<span class='noticealien'>[target] is too far away.</span>")
 		return 0
 
 

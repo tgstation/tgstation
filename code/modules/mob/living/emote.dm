@@ -240,7 +240,7 @@
 				message_param = "tries to point at %t with a leg, <span class='userdanger'>falling down</span> in the process!"
 				H.Knockdown(20)
 			else
-				message_param = "<span class='userdanger'>bumps their head on the ground</span> trying to motion towards %t."
+				message_param = "<span class='userdanger'>bumps [user.p_their()] head on the ground</span> trying to motion towards %t."
 				H.adjustBrainLoss(5)
 	..()
 
