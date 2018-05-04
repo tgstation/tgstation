@@ -1,8 +1,7 @@
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, only_dead_mobs)
 	if(isarea(source))
 		throw EXCEPTION("playsound(): source is an area")
 		return
-
 	var/turf/turf_source = get_turf(source)
 
 	//allocate a channel if necessary now so its the same for everyone
@@ -11,9 +10,13 @@
  	// Looping through the player list has the added bonus of working for mobs inside containers
 	var/sound/S = sound(get_sfx(soundin))
 	var/maxdistance = (world.view + extrarange)
-	var/list/listeners = GLOB.player_list
-	if(!ignore_walls) //these sounds don't carry through walls
-		listeners = listeners & hearers(maxdistance,turf_source)
+	var/list/listeners
+	if (only_dead_mobs)
+		listeners = GLOB.dead_mob_list
+	else
+		listeners = GLOB.player_list
+		if(!ignore_walls) //these sounds don't carry through walls
+			listeners = listeners & hearers(maxdistance,turf_source)
 	for(var/P in listeners)
 		var/mob/M = P
 		if(!M || !M.client)
