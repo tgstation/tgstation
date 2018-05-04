@@ -499,6 +499,7 @@ SLIME SCANNER
 		var/total_moles = air_contents.total_moles()
 		var/pressure = air_contents.return_pressure()
 		var/volume = air_contents.return_volume() //could just do mixture.volume... but safety, I guess?
+		var/temperature = air_contents.temperature //could just do mixture.volume... but safety, I guess?
 
 		if(total_moles > 0)
 			to_chat(user, "<span class='notice'>Moles: [round(total_moles, 0.01)] mol</span>")
@@ -509,6 +510,8 @@ SLIME SCANNER
 			for(var/id in cached_gases)
 				var/gas_concentration = cached_gases[id][MOLES]/total_moles
 				to_chat(user, "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] % ([round(cached_gases[id][MOLES], 0.01)] mol)</span>")
+			to_chat(user, "<span class='notice'>Temperature: [round(temperature - T0C,0.01)] &deg;C ([round(temperature, 0.01)] K)</span>")
+
 		else
 			if(airs.len > 1)
 				to_chat(user, "<span class='notice'>This node is empty!</span>")
