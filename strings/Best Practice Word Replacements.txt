@@ -10,4 +10,4 @@ HOW TO MAKE A CONSISTENT AND EASILY EDITED WORD REPLACEMENT FILE FOR A LANGUAGE
 8) Close your root object with } and save
 9) Check the file by copying all and pasting in a JSON formatter of your choice ( https://jsonformatter.curiousconcept.com/ is a useful one) and make sure that it is a valid filetype. Travis will choke on it otherwise.
 10) Get yelled at for spelling mistakes
-11) You now have a working word replacement file!
+11) You now have a working word replacement file! 
