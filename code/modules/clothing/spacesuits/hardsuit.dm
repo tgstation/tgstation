@@ -86,7 +86,7 @@
 	soundloop.last_radiation = rad_record
 
 /obj/item/clothing/head/helmet/space/hardsuit/emp_act(severity)
-	..()
+	. = ..()
 	display_visor_message("[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!")
 
 

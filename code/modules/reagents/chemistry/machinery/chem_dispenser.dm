@@ -315,6 +315,9 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	return cell
 
 /obj/machinery/chem_dispenser/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	var/list/datum/reagents/R = list()
 	var/total = min(rand(7,15), FLOOR(cell.charge*powerefficiency, 1))
 	var/datum/reagents/Q = new(total*10)
@@ -330,7 +333,6 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	cell.emp_act(severity)
 	work_animation()
 	visible_message("<span class='danger'>[src] malfunctions, spraying chemicals everywhere!</span>")
-	..()
 
 
 /obj/machinery/chem_dispenser/RefreshParts()

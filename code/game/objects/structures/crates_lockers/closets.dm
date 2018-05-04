@@ -436,9 +436,13 @@
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
 
 /obj/structure/closet/emp_act(severity)
-	for(var/obj/O in src)
-		O.emp_act(severity)
-	if(secure && !broken)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if (!(. & EMP_PROTECT_CONTENTS))
+		for(var/obj/O in src)
+			O.emp_act(severity)
+	if(secure && !broken && !(. & EMP_PROTECT_SELF))
 		if(prob(50 / severity))
 			locked = !locked
 			update_icon()
@@ -448,8 +452,6 @@
 			else
 				req_access = list()
 				req_access += pick(get_all_accesses())
-	..()
-
 
 /obj/structure/closet/contents_explosion(severity, target)
 	for(var/atom/A in contents)

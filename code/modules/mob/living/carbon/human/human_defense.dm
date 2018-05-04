@@ -469,6 +469,9 @@
 
 
 /mob/living/carbon/human/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
 	var/informed = FALSE
 	for(var/obj/item/bodypart/L in src.bodyparts)
 		if(L.status == BODYPART_ROBOTIC)
@@ -482,7 +485,6 @@
 				if(2)
 					L.receive_damage(0,5)
 					Stun(100)
-	..()
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	var/list/damaged = list()

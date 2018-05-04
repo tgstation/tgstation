@@ -31,7 +31,9 @@
 
 
 /obj/machinery/mass_driver/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(stat & (BROKEN|NOPOWER))
 		return
 	drive()
-	..(severity)

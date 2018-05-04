@@ -58,6 +58,9 @@
 		air_update_turf() // Update the environment if needed.
 
 /obj/machinery/portable_atmospherics/pump/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(is_operational())
 		if(prob(50 / severity))
 			on = !on
@@ -65,7 +68,6 @@
 			direction = PUMP_OUT
 		pump.target_pressure = rand(0, 100 * ONE_ATMOSPHERE)
 		update_icon()
-	..()
 
 /obj/machinery/portable_atmospherics/pump/replace_tank(mob/living/user, close_valve)
 	. = ..()
