@@ -13,7 +13,6 @@
 	var/pin_removeable = 0 // Can be replaced by any pin.
 	var/obj/item/gun/gun
 
-
 /obj/item/firing_pin/New(newloc)
 	..()
 	if(istype(newloc, /obj/item/gun))
@@ -54,7 +53,7 @@
 	return
 
 /obj/item/firing_pin/proc/pin_auth(mob/living/user)
-	return 1
+	return TRUE
 
 /obj/item/firing_pin/proc/auth_fail(mob/living/user)
 	user.show_message(fail_message, 1)
@@ -77,12 +76,12 @@
 	name = "test-range firing pin"
 	desc = "This safety firing pin allows weapons to be fired within proximity to a firing range."
 	fail_message = "<span class='warning'>TEST RANGE CHECK FAILED.</span>"
-	pin_removeable = 1
+	pin_removeable = TRUE
 
 /obj/item/firing_pin/test_range/pin_auth(mob/living/user)
 	for(var/obj/machinery/magnetic_controller/M in range(user, 3))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 // Implant pin, checks for implant
@@ -93,11 +92,11 @@
 	var/obj/item/implant/req_implant = null
 
 /obj/item/firing_pin/implant/pin_auth(mob/living/user)
-	if(istype(user))
+	if(user)
 		for(var/obj/item/implant/I in user.implants)
 			if(req_implant && I.type == req_implant)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /obj/item/firing_pin/implant/mindshield
 	name = "mindshield firing pin"
@@ -119,23 +118,23 @@
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object."
 	color = "#FFFF00"
 	fail_message = "<span class='warning'>HONK!</span>"
-	force_replace = 1
+	force_replace = TRUE
 
 /obj/item/firing_pin/clown/pin_auth(mob/living/user)
-	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-	return 0
+	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
+	return FALSE
 
 // Ultra-honk pin, clown's deadly joke item.
 // A gun with ultra-honk pin is useful for clown and useless for everyone else.
 /obj/item/firing_pin/clown/ultra/pin_auth(mob/living/user)
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-	if(!(user.has_trait(TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown"))
-		return 0
-	return 1
+	if(user && (!(user.has_trait(TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown")))
+		return FALSE
+	return TRUE
 
 /obj/item/firing_pin/clown/ultra/gun_insert(mob/living/user, obj/item/gun/G)
 	..()
-	G.clumsy_check = 0
+	G.clumsy_check = FALSE
 
 /obj/item/firing_pin/clown/ultra/gun_remove(mob/living/user)
 	gun.clumsy_check = initial(gun.clumsy_check)
@@ -144,7 +143,7 @@
 // Now two times deadlier!
 /obj/item/firing_pin/clown/ultra/selfdestruct
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object. It has a small nitrobananium charge on it."
-	selfdestruct = 1
+	selfdestruct = TRUE
 
 
 // DNA-keyed pin.
@@ -165,15 +164,14 @@
 			to_chat(user, "<span class='notice'>DNA-LOCK SET.</span>")
 
 /obj/item/firing_pin/dna/pin_auth(mob/living/carbon/user)
-	if(istype(user) && user.dna && user.dna.unique_enzymes)
+	if(user && user.dna && user.dna.unique_enzymes)
 		if(user.dna.unique_enzymes == unique_enzymes)
-			return 1
-
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/firing_pin/dna/auth_fail(mob/living/carbon/user)
 	if(!unique_enzymes)
-		if(istype(user) && user.dna && user.dna.unique_enzymes)
+		if(user && user.dna && user.dna.unique_enzymes)
 			unique_enzymes = user.dna.unique_enzymes
 			to_chat(user, "<span class='notice'>DNA-LOCK SET.</span>")
 	else
@@ -181,8 +179,7 @@
 
 /obj/item/firing_pin/dna/dredd
 	desc = "This is a DNA-locked firing pin which only authorizes one user. Attempt to fire once to DNA-link. It has a small explosive charge on it."
-	selfdestruct = 1
-
+	selfdestruct = TRUE
 
 // Laser tag pins
 /obj/item/firing_pin/tag
@@ -196,9 +193,9 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/M = user
 		if(istype(M.wear_suit, suit_requirement))
-			return 1
+			return TRUE
 	to_chat(user, "<span class='warning'>You need to be wearing [tagcolor] laser tag armor!</span>")
-	return 0
+	return FALSE
 
 /obj/item/firing_pin/tag/red
 	name = "red laser tag firing pin"

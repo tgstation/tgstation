@@ -129,7 +129,7 @@ RLD
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_matter = 160
-	flags_2 = NO_MAT_REDEMPTION_2
+	item_flags = NO_MAT_REDEMPTION
 	has_ammobar = TRUE
 	var/mode = 1
 	var/ranged = FALSE

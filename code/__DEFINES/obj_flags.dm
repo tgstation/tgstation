@@ -9,6 +9,7 @@
 #define ON_BLUEPRINTS			(1<<5)  //Are we visible on the station blueprints at roundstart?
 #define UNIQUE_RENAME			(1<<6) // can you customize the description/name of the thing?
 #define USES_TGUI				(1<<7)	//put on things that use tgui on ui_interact instead of custom/old UI.
+#define FROZEN					(1<<8)
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -18,6 +19,8 @@
 #define IN_INVENTORY			(1<<1) //is this item equipped into an inventory slot or hand of a mob? used for tooltips
 #define FORCE_STRING_OVERRIDE	(1<<2) // used for tooltips
 #define NEEDS_PERMIT			(1<<3) //Used by security bots to determine if this item is safe for public use.
+#define SLOWS_WHILE_IN_HAND		(1<<4)
+#define NO_MAT_REDEMPTION			(1<<5) // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

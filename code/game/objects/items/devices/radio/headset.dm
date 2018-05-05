@@ -50,7 +50,10 @@
 	desc = "A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs. \nTo access the syndicate channel, use ; before speaking."
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
-	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
+
+/obj/item/radio/headset/syndicate/alt/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
 /obj/item/radio/headset/syndicate/alt/leader
 	name = "team leader headset"
@@ -78,7 +81,10 @@
 	desc = "This is used by your elite security force. Protects ears from flashbangs.\nTo access the security channel, use :s."
 	icon_state = "sec_headset_alt"
 	item_state = "sec_headset_alt"
-	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
+
+/obj/item/radio/headset/headset_sec/alt/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
 /obj/item/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -130,7 +136,10 @@
 	desc = "The headset of the boss. Protects ears from flashbangs.\nChannels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
-	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
+
+/obj/item/radio/headset/heads/captain/alt/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
 /obj/item/radio/headset/heads/rd
 	name = "\proper the research director's headset"
@@ -149,7 +158,10 @@
 	desc = "The headset of the man in charge of keeping order and protecting the station. Protects ears from flashbangs.\nTo access the security channel, use :s. For command, use :c."
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
-	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
+
+/obj/item/radio/headset/heads/hos/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
 /obj/item/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"
@@ -207,7 +219,10 @@
 	icon_state = "cent_headset_alt"
 	item_state = "cent_headset_alt"
 	keyslot = null
-	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
+
+/obj/item/radio/headset/headset_cent/alt/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
 /obj/item/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "

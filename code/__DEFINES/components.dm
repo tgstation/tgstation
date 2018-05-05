@@ -72,6 +72,9 @@
 #define COMSIG_AREA_ENTERED "area_entered" 						//from base of area/Entered(): (atom/movable/M)
 #define COMSIG_AREA_EXITED "area_exited" 							//from base of area/Exited(): (atom/movable/M)
 
+// /turf signals
+#define COMSIG_TURF_CHANGE "turf_change"						//from base of turf/ChangeTurf(): (path, list/new_baseturfs, flags, list/transferring_comps)
+
 // /atom/movable signals
 #define COMSIG_MOVABLE_MOVED "movable_moved"					//from base of atom/movable/Moved(): (/atom, dir)
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"                //from base of atom/movable/Crossed(): (/atom/movable)
@@ -83,6 +86,10 @@
 #define COMSIG_MOVABLE_UNBUCKLE "unbuckle"							//from base of atom/movable/unbuckle_mob(): (mob, force)
 #define COMSIG_MOVABLE_THROW "movable_throw"					//from base of atom/movable/throw_at(): (datum/thrownthing, spin)
 #define COMSIG_MOVABLE_Z_CHANGED "movable_ztransit" //from base of atom/movable/onTransitZ(): (old_z, new_z)
+
+// /mob/living/carbon signals
+#define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
+
 // /obj signals
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"				//from base of obj/deconstruct(): (disassembled)
 

@@ -10,3 +10,4 @@
 #define SUGAR 		(1<<9)
 #define GROSS 		(1<<10)
 #define TOXIC 		(1<<11)
+#define PINEAPPLE	(1<<12)

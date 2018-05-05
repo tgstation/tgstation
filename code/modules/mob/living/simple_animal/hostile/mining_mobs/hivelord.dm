@@ -192,7 +192,7 @@
 		L = new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(H.loc)
 	else
 		L = new(H.loc)
-	visible_message("<span class='warning'>[L] staggers to their feet!</span>")
+	visible_message("<span class='warning'>[L] staggers to [L.p_their()] feet!</span>")
 	H.death()
 	H.adjustBruteLoss(1000)
 	L.stored_mob = H

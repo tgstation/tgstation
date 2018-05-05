@@ -19,9 +19,6 @@ Mineral Sheets
 		- Abductor
 */
 
-/obj/item/stack/sheet/mineral
-	icon = 'icons/obj/stack_objects.dmi'
-
 /obj/item/stack/sheet/mineral/Initialize(mapload)
 	pixel_x = rand(-4, 4)
 	pixel_y = rand(-4, 4)
@@ -335,16 +332,6 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 	. = ..()
 
 /****************************** Others ****************************/
-
-/*
- * Enriched Uranium
- */
-/obj/item/stack/sheet/mineral/enruranium
-	name = "enriched uranium"
-	icon_state = "sheet-enruranium"
-	item_state = "sheet-enruranium"
-	singular_name = "enriched uranium sheet"
-	materials = list(MAT_URANIUM=3000)
 
 /*
  * Adamantine

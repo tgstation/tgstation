@@ -1115,7 +1115,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(H.back)
 			. += H.back.slowdown
 		for(var/obj/item/I in H.held_items)
-			if(I.flags_2 & SLOWS_WHILE_IN_HAND_2)
+			if(I.item_flags & SLOWS_WHILE_IN_HAND)
 				. += I.slowdown
 		var/health_deficiency = (100 - H.health + H.staminaloss)
 		if(health_deficiency >= 40)

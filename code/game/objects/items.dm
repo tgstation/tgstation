@@ -347,7 +347,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/proc/dropped(mob/user)
-	SendSignal(COMSIG_ITEM_DROPPED, user)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
@@ -456,7 +455,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 							"<span class='userdanger'>[user] stabs you in the eye with [src]!</span>")
 	else
 		user.visible_message( \
-			"<span class='danger'>[user] has stabbed themself in the eyes with [src]!</span>", \
+			"<span class='danger'>[user] has stabbed [user.p_them()]self in the eyes with [src]!</span>", \
 			"<span class='userdanger'>You stab yourself in the eyes with [src]!</span>" \
 		)
 	if(is_human_victim)

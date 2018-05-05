@@ -224,10 +224,6 @@
 	name = "Supply Request Console (Computer Board)"
 	build_path = /obj/machinery/computer/cargo/request
 
-/obj/item/circuitboard/computer/stockexchange
-	name = "circuit board (Stock Exchange Console)"
-	build_path = /obj/machinery/computer/stockexchange
-
 /obj/item/circuitboard/computer/operating
 	name = "Operating Computer (Computer Board)"
 	build_path = /obj/machinery/computer/operating

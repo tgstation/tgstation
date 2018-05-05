@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /
 		gas_info[META_GAS_MOLES_VISIBLE] = initial(gas.moles_visible)
 		if(initial(gas.moles_visible) != null)
 			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas(initial(gas.gas_overlay))
-		gas_info[META_GAS_FUSION_POWER] = initial(gas.dangerous)
+		gas_info[META_GAS_FUSION_POWER] = initial(gas.fusion_power)
 		gas_info[META_GAS_DANGER] = initial(gas.dangerous)
 		gas_info[META_GAS_ID] = initial(gas.id)
 		.[gas_path] = gas_info
