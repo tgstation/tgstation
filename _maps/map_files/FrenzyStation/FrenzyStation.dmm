@@ -905,7 +905,6 @@
 /area/quartermaster/storage)
 "cq" = (
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /obj/structure/cable/white{
 	icon_state = "0-2"
 	},

@@ -1033,7 +1033,6 @@
 /turf/open/floor/plating,
 /area/construction)
 "cL" = (
-/obj/machinery/computer/stockexchange,
 /obj/structure/table,
 /obj/machinery/light_switch{
 	pixel_x = 28
