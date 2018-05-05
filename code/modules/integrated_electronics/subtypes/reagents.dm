@@ -99,7 +99,7 @@
 
 /obj/item/integrated_circuit/reagent/injector
 	name = "integrated hypo-injector"
-	desc = "This scary looking thing is able to pump liquids into whatever it's pointed at."
+	desc = "This scary looking thing is able to pump liquids into, or suck liquids out of whatever it's pointed at."
 	icon_state = "injector"
 	extended_desc = "This autoinjector can push up to 30 units of reagents into another container or someone else outside of the machine. The target \
 	must be adjacent to the machine, and if it is a person, they cannot be wearing thick clothing. Negative given amounts makes the injector suck out reagents instead."
@@ -485,7 +485,7 @@ obj/item/integrated_circuit/reagent/storage/juicer
 	desc = "Filters liquids by list of desired or unwanted reagents."
 	icon_state = "reagent_filter"
 	extended_desc = "This is a filter which will move liquids from the source to its target. \
-	If the amount in the fourth pin is positive, it will move all reagents except those in the unwanted list \
+	If the amount in the fourth pin is positive, it will move all reagents except those in the unwanted list. \
 	If the amount in the fourth pin is negative, it will only move the reagents in the wanted list. \
 	The third pin determines how many reagents are moved per pulse, between 0 and 50. Amount is given for each separate reagent."
 
