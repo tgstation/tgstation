@@ -44,6 +44,8 @@
 	item_state = "roman_shield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+
+/obj/item/shield/riot/roman/toy
 	block_chance = 0
 
 /obj/item/shield/riot/buckler
