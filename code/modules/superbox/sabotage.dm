@@ -94,7 +94,7 @@
 		. = FALSE
 
 /datum/antagonist/traitor/human/forge_single_objective()
-	if (prob(20))
+	if (prob(70) && !(locate(/datum/objective/sabotage) in owner.objectives))
 		var/datum/objective/sabotage/sabotage_objective = new
 		sabotage_objective.owner = owner
 		sabotage_objective.pick_target_machine()
