@@ -520,6 +520,7 @@ obj/machinery/chem_dispenser/proc/work_animation()
 /obj/machinery/chem_dispenser/full/debug //RIP SCP-294
 	name = "debug chemical dispenser"
 	desc = "If you see this, yell at a coder."
+	cell_type = /obj/item/stock_parts/cell/infinite
 	dispensable_reagents = list(
 		"adminordrazine",
 		"stablemutationtoxin",
