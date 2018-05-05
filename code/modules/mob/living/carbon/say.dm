@@ -45,3 +45,13 @@
 		var/datum/brain_trauma/trauma = T
 		message = trauma.on_hear(message, speaker, message_language, raw_message, radio_freq)
 	return ..()
+
+
+/mob/living/carbon/LanguageMod
+	var/obj/item/isEquipped = get_worn_item()		//Anything you're wearing can affect speech
+	if(!isEqupped)									//If we're not wearing anything, don't waste time checking
+		return message
+	else
+		if(isEquipped)
+				message = item.speechModification(message)	//Modify speech from the items that are present and then return it.
+	return message
