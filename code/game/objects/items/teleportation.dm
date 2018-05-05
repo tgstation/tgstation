@@ -227,7 +227,7 @@
 		var/obj/item/bodypart/head/head = itemUser.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
 			head.drop_limb()
-			var/list/safeLevels = SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS) + SSmapping.levels_by_trait(ZTRAIT_LAVA_RUINS) + SSmapping.levels_by_trait(ZTRAIT_STATION) + SSmapping.levels_by_trait(ZTRAIT_MINING)
+			var/list/safeLevels = SSmapping.levels_by_any_trait(list(ZTRAIT_SPACE_RUINS, ZTRAIT_LAVA_RUINS, ZTRAIT_STATION, ZTRAIT_MINING))
 			head.forceMove(locate(rand(1, world.maxx), rand(1, world.maxy), pick(safeLevels)))
 			itemUser.visible_message("<span class='suicide'>The portal snaps closed taking [user]'s head with it!</span>")
 		else
