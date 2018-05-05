@@ -650,69 +650,6 @@
 	cost = 1000
 	crate_name = "toolbox crate"
 
-/datum/supply_pack/engineering/bsa
-	name = "Bluespace Artillery Parts"
-	desc = "The pride of Nanotrasen Naval Command. The legendary Bluespace Artillery Cannon is a devastating feat of human engineering and testament to wartime determination. Highly advanced research is required for proper construction. "
-	cost = 15000
-	special = TRUE
-	contains = list(/obj/item/circuitboard/machine/bsa/front,
-					/obj/item/circuitboard/machine/bsa/middle,
-					/obj/item/circuitboard/machine/bsa/back,
-					/obj/item/circuitboard/computer/bsa_control
-					)
-	crate_name= "bluespace artillery parts crate"
-
-/datum/supply_pack/engineering/dna_vault
-	name = "DNA Vault Parts"
-	desc = "Secure the longevity of the current state of humanity within this massive library of scientific knowledge, capable of granting superhuman powers and abilities. Highly advanced research is required for proper construction. Also contains five DNA probes."
-	cost = 12000
-	special = TRUE
-	contains = list(
-					/obj/item/circuitboard/machine/dna_vault,
-					/obj/item/dna_probe,
-					/obj/item/dna_probe,
-					/obj/item/dna_probe,
-					/obj/item/dna_probe,
-					/obj/item/dna_probe
-					)
-	crate_name= "dna vault parts crate"
-
-/datum/supply_pack/engineering/dna_probes
-	name = "DNA Vault Samplers"
-	desc = "Contains five DNA probes for use in the DNA vault."
-	cost = 3000
-	special = TRUE
-	contains = list(/obj/item/dna_probe,
-					/obj/item/dna_probe,
-					/obj/item/dna_probe,
-					/obj/item/dna_probe,
-					/obj/item/dna_probe
-					)
-	crate_name= "dna samplers crate"
-
-
-/datum/supply_pack/engineering/shield_sat
-	name = "Shield Generator Satellite"
-	desc = "Protect the very existence of this station with these Anti-Meteor defenses. Contains three Shield Generator Satellites."
-	cost = 3000
-	special = TRUE
-	contains = list(
-					/obj/machinery/satellite/meteor_shield,
-					/obj/machinery/satellite/meteor_shield,
-					/obj/machinery/satellite/meteor_shield
-					)
-	crate_name= "shield sat crate"
-
-
-/datum/supply_pack/engineering/shield_sat_control
-	name = "Shield System Control Board"
-	desc = "A control system for the Shield Generator Satellite system."
-	cost = 5000
-	special = TRUE
-	contains = list(/obj/item/circuitboard/computer/sat_control)
-	crate_name= "shield control board crate"
-
-
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////// Engine Construction /////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
