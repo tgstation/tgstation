@@ -93,7 +93,7 @@
 		MA.alpha = 180
 		MA.maptext = "[strength]k"
 		MA.color = "#64C864"
-		MA.layer = AREA_LAYER
+		MA.layer = FLY_LAYER
 		pic.appearance = MA
 		flick_overlay(pic, list(user.client), 8)
 
