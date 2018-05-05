@@ -721,7 +721,6 @@
 	description = "Milk for cool kids."
 	color = "#7D4E29"
 	taste_description = "chocolate milk"
-
 /datum/reagent/consumable/menthol
 	name = "Menthol"
 	id = "menthol"
@@ -731,3 +730,12 @@
 	glass_icon_state = "glass_green"
 	glass_name = "glass of menthol"
 	glass_desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
+
+/datum/reagent/consumable/grenadine
+	name = "Grenadine"
+	id = "grenadine"
+	description = "Not cherry flavored!"
+	color = "#EA1D26"
+	taste_description = "sweet pomegranates"
+	glass_name = "glass of grenadine"
+	glass_desc = "Delicious flavored syrup."
