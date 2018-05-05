@@ -516,33 +516,3 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	component_parts += new /obj/item/stack/sheet/glass(null)
 	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
 	RefreshParts()
-	
-/obj/machinery/chem_dispenser/full/debug //RIP SCP-294
-	name = "debug chemical dispenser"
-	desc = "If you see this, yell at a coder."
-	cell_type = /obj/item/stock_parts/cell/infinite
-	dispensable_reagents = list(
-		"adminordrazine",
-		"stablemutationtoxin",
-		"mulligan",
-		"slime_toxin",
-		"lizardmutationtoxin",
-		"flymutationtoxin",
-		"mothmutationtoxin",
-		"podmutationtoxin",
-		"jellymutationtoxin",
-		"golemmutationtoxin",
-		"abductormutationtoxin",
-		"androidmutationtoxin",
-		"skeletonmutationtoxin",
-		"zombiemutationtoxin",
-		"ashmutationtoxin",
-		"shadowmutationtoxin",
-		"plasmamutationtoxin",
-		"amutationtoxin",
-		"gluttonytoxin",
-		"flightpotion",
-		"magillitis",
-		"nanomachines",
-		"xenomicrobes"
-	)
