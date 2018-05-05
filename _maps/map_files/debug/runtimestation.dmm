@@ -185,12 +185,6 @@
 /obj/machinery/door/airlock/external/glass,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"aD" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/engine/engineering)
 "aE" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -2943,7 +2937,7 @@ ae
 ac
 ac
 aj
-aD
+Vy
 aj
 ac
 ac
