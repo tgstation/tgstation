@@ -151,7 +151,8 @@
 			is_beaker_ready = TRUE
 			beaker_contents = "<B>The beaker contains:</B><br>"
 			var/anything = FALSE
-			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+			for(var/id in beaker.reagents.reagent_list)
+				var/datum/reagent/R = beaker.reagents.reagent_list[id]
 				anything = TRUE
 				beaker_contents += "[R.volume] - [R.name]<br>"
 			if(!anything)

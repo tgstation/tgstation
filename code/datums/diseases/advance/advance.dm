@@ -253,8 +253,9 @@
 		cures = list(advance_cures[res])
 
 		// Get the cure name from the cure_id
-		var/datum/reagent/D = GLOB.chemical_reagents_list[cures[1]]
-		cure_text = D.name
+		var/datum/reagent/D = SSreagents.reagents_by_id[cures[1]]
+		if(D)
+			cure_text = D.name
 
 // Randomly generate a symptom, has a chance to lose or gain a symptom.
 /datum/disease/advance/proc/Evolve(min_level, max_level, ignore_mutable = FALSE)

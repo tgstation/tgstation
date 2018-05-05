@@ -204,7 +204,8 @@
 	var/list/l = list()
 	l += "<div class='statusDisplay'><A href='?src=[REF(src)];disposeall=1'>Disposal All Chemicals in Storage</A>"
 	l += "<h3>Chemical Storage:</h3>"
-	for(var/datum/reagent/R in reagents.reagent_list)
+	for(var/id in reagents.reagent_list)
+		var/datum/reagent/R = reagents.reagent_list[id]
 		l += "[R.name]: [R.volume]"
 		l += "<A href='?src=[REF(src)];dispose=[R.id]'>Purge</A>"
 	l += "</div>"

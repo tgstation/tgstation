@@ -155,7 +155,8 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	var/beakerContents[0]
 	var/beakerCurrentVolume = 0
 	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+		for(var/id in beaker.reagents.reagent_list)
+			var/datum/reagent/R = beaker.reagents.reagent_list[id]
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 			beakerCurrentVolume += R.volume
 	data["beakerContents"] = beakerContents
@@ -175,7 +176,7 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	if(user.hallucinating())
 		is_hallucinating = TRUE
 	for(var/re in dispensable_reagents)
-		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]
+		var/datum/reagent/temp = SSreagents.reagents_by_id[re]
 		if(temp)
 			var/chemname = temp.name
 			if(is_hallucinating && prob(5))

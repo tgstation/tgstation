@@ -177,8 +177,9 @@
 	var/reagent_note
 	if(reagents && reagents.reagent_list)
 		reagent_note = " REAGENTS:"
-		for(var/datum/reagent/R in reagents.reagent_list)
-			reagent_note += R.id + " ("
+		for(var/id in reagents.reagent_list)
+			var/datum/reagent/R = reagents.reagent_list
+			reagent_note += id + " ("
 			reagent_note += num2text(R.volume) + ") "
 
 	add_logs(firer, L, "shot", src, reagent_note)

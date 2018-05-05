@@ -281,7 +281,7 @@ GAS ANALYZER
 			var/blood_percent =  round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
 			var/blood_type = C.dna.blood_type
 			if(blood_id != "blood")//special blood substance
-				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
+				var/datum/reagent/R = SSreagents.reagents_by_id[blood_id]
 				if(R)
 					blood_type = R.name
 				else
@@ -306,7 +306,8 @@ GAS ANALYZER
 		if(M.reagents)
 			if(M.reagents.reagent_list.len)
 				to_chat(user, "<span class='notice'>Subject contains the following reagents:</span>")
-				for(var/datum/reagent/R in M.reagents.reagent_list)
+				for(var/id in M.reagents.reagent_list)
+					var/datum/reagent/R = M.reagents.reagent_list[id]
 					to_chat(user, "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]")
 			else
 				to_chat(user, "<span class='notice'>Subject contains no reagents.</span>")

@@ -61,7 +61,8 @@
 
 /obj/effect/decal/cleanable/ex_act()
 	if(reagents)
-		for(var/datum/reagent/R in reagents.reagent_list)
+		for(var/id in reagents.reagent_list)
+			var/datum/reagent/R = reagents.reagent_list
 			R.on_ex_act()
 	..()
 

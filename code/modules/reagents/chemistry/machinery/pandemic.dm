@@ -34,7 +34,7 @@
 /obj/machinery/computer/pandemic/proc/get_by_index(thing, index)
 	if(!beaker || !beaker.reagents)
 		return
-	var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
+	var/datum/reagent/blood/B = beaker.reagents.get_reagent(/datum/reagent/blood)
 	if(B && B.data[thing])
 		return B.data[thing][index]
 
@@ -148,7 +148,7 @@
 				data["has_beaker"] = TRUE
 				if(!beaker.reagents.total_volume || !beaker.reagents.reagent_list)
 					data["beaker_empty"] = TRUE
-				var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
+				var/datum/reagent/blood/B = beaker.reagents.get_reagent(/datum/reagent/blood)
 				if(B)
 					data["has_blood"] = TRUE
 					data["blood"] = list()

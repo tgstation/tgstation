@@ -33,13 +33,13 @@
 			to_chat(user, "<span class='notice'>You scan the grenade and detect the following reagents:</span>")
 			for(var/obj/item/reagent_containers/glass/G in beakers)
 				var/textcount = thtotext(++count)
-				for(var/datum/reagent/R in G.reagents.reagent_list)
+				for(var/id in G.reagents.reagent_list)
+					var/datum/reagent/R = G.reagents.reagent_list[id]
 					to_chat(user, "<span class='notice'>[R.volume] units of [R.name] in the [textcount] beaker.</span>")
 			if(beakers.len == 1)
 				to_chat(user, "<span class='notice'>You detect no second beaker in the grenade.</span>")
 		else
 			to_chat(user, "<span class='notice'>You scan the grenade, but detect nothing.</span>")
-
 
 /obj/item/grenade/chem_grenade/attack_self(mob/user)
 	if(stage == READY && !active)
@@ -47,7 +47,6 @@
 			nadeassembly.attack_self(user)
 		else
 			..()
-
 
 /obj/item/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))

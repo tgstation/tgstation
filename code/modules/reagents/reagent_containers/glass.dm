@@ -21,19 +21,15 @@
 
 	if(istype(M))
 		if(user.a_intent == INTENT_HARM)
-			var/R
 			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
 							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
-			if(reagents)
-				for(var/datum/reagent/A in reagents.reagent_list)
-					R += A.id + " ("
-					R += num2text(A.volume) + "),"
+			var/logstring = reagents.log_string()
 			if(isturf(target) && reagents.reagent_list.len && thrownby)
-				add_logs(thrownby, target, "splashed [english_list(reagents.reagent_list)]", "at [target][COORD(target)]")
-				log_game("[key_name(thrownby)] splashed [english_list(reagents.reagent_list)] at [COORD(target)].")
-				message_admins("[key_name_admin(thrownby)] splashed [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(target)].")
+				add_logs(thrownby, target, "splashed [logstring]", "at [target][COORD(target)]")
+				log_game("[key_name(thrownby)] splashed [logstring] at [COORD(target)].")
+				message_admins("[key_name_admin(thrownby)] splashed [logstring] at [ADMIN_COORDJMP(target)].")
 			reagents.reaction(M, TOUCH)
-			add_logs(user, M, "splashed", R)
+			add_logs(user, M, "splashed", logstring)
 			reagents.clear_reagents()
 		else
 			if(M != user)

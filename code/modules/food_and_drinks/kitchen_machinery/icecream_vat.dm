@@ -84,7 +84,8 @@
 	dat += "<b>Chocolate cones:</b> <a href='?src=[REF(src)];cone=[CONE_CHOC]'><b>Dispense</b></a> <a href='?src=[REF(src)];make=[CONE_CHOC];amount=1'><b>Make</b></a> <a href='?src=[REF(src)];make=[CONE_CHOC];amount=5'><b>x5</b></a> [product_types[CONE_CHOC]] cones left. (Ingredients: flour, sugar, coco powder)<br></div>"
 	dat += "<br>"
 	dat += "<b>VAT CONTENT</b><br>"
-	for(var/datum/reagent/R in reagents.reagent_list)
+	for(var/id in reagents.reagent_list)
+		var/datum/reagent/R = reagents.reagent_list[id]
 		dat += "[R.name]: [R.volume]"
 		dat += "<A href='?src=[REF(src)];disposeI=[R.id]'>Purge</A><BR>"
 	dat += "<a href='?src=[REF(src)];refresh=1'>Refresh</a> <a href='?src=[REF(src)];close=1'>Close</a>"

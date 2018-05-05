@@ -109,8 +109,8 @@ Borg Hypospray
 			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>")
 
 	var/list/injected = list()
-	for(var/datum/reagent/RG in R.reagent_list)
-		injected += RG.name
+	for(var/id in R.reagent_list)
+		injected += id
 	add_logs(user, M, "injected", src, "(CHEMICALS: [english_list(injected)])")
 
 /obj/item/reagent_containers/borghypo/attack_self(mob/user)
@@ -119,7 +119,7 @@ Borg Hypospray
 		return
 	mode = chosen_reagent
 	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
-	var/datum/reagent/R = GLOB.chemical_reagents_list[reagent_ids[mode]]
+	var/datum/reagent/R = SSreagents.reagents_by_id[reagent_ids[mode]]
 	to_chat(user, "<span class='notice'>[src] is now dispensing '[R.name]'.</span>")
 	return
 
@@ -129,13 +129,13 @@ Borg Hypospray
 	DescribeContents()	//Because using the standardized reagents datum was just too cool for whatever fuckwit wrote this
 
 /obj/item/reagent_containers/borghypo/proc/DescribeContents()
-	var/empty = 1
+	var/empty = TRUE
 
 	for(var/datum/reagents/RS in reagent_list)
-		var/datum/reagent/R = locate() in RS.reagent_list
+		var/datum/reagent/R = RS.get_reagent(/datum/reagent)
 		if(R)
 			to_chat(usr, "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>")
-			empty = 0
+			empty = FALSE
 
 	if(empty)
 		to_chat(usr, "<span class='warning'>It is currently empty! Allow some time for the internal syntheszier to produce more.</span>")
@@ -217,7 +217,7 @@ Borg Shaker
 	var/empty = 1
 
 	var/datum/reagents/RS = reagent_list[mode]
-	var/datum/reagent/R = locate() in RS.reagent_list
+	var/datum/reagent/R = RS.get_reagent(/datum/reagent)
 	if(R)
 		to_chat(usr, "<span class='notice'>It currently has [R.volume] unit\s of [R.name] stored.</span>")
 		empty = 0

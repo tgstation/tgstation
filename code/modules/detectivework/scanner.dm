@@ -99,7 +99,8 @@
 			// Only get reagents from non-mobs.
 			if(A.reagents && A.reagents.reagent_list.len)
 
-				for(var/datum/reagent/R in A.reagents.reagent_list)
+				for(var/id in A.reagents.reagent_list)
+					var/datum/reagent/R = A.reagents.reagent_list[id]
 					reagents[R.name] = R.volume
 
 					// Get blood data from the blood reagent.

@@ -27,15 +27,14 @@
 
 			if(filterToxins && !owner.has_trait(TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
-				var/static/list/toxinstypecache = typecacheof(/datum/reagent/toxin)
-				for(var/I in C.reagents.reagent_list)
-					var/datum/reagent/pickedreagent = I
-					if(is_type_in_typecache(pickedreagent, toxinstypecache))
-						var/thisamount = C.reagents.get_reagent_amount(initial(pickedreagent.id))
-						if (thisamount <= toxTolerance && thisamount)
-							C.reagents.remove_reagent(initial(pickedreagent.id), 1)
-						else
-							damage += (thisamount*toxLethality)
+				var/list/datum/reagent/found_toxins = C.reagents.get_reagent_list(/datum/reagent/toxin)
+				for(var/i in found_toxins)
+					var/datum/reagent/pickedreagent = i
+					var/thisamount = C.reagents.get_reagent_amount(initial(pickedreagent.id))
+					if (thisamount <= toxTolerance && thisamount)
+						C.reagents.remove_reagent(initial(pickedreagent.id), 1)
+					else
+						damage += (thisamount*toxLethality)
 
 			//metabolize reagents
 			C.reagents.metabolize(C, can_overdose=TRUE)

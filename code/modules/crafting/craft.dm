@@ -104,8 +104,9 @@
 			if(istype(I, /obj/item/reagent_containers))
 				var/obj/item/reagent_containers/RC = I
 				if(RC.is_drainable())
-					for(var/datum/reagent/A in RC.reagents.reagent_list)
-						.["other"][A.type] += A.volume
+					for(var/id in RC.reagents.reagent_list)
+						var/datum/reagent/R = RC.reagents.reagent_list[id]
+						.["other"][R.type] += R.volume
 			.["other"][I.type] += 1
 
 /datum/personal_crafting/proc/check_tools(mob/user, datum/crafting_recipe/R, list/contents)
@@ -216,7 +217,7 @@
 						else
 							surroundings -= RC
 							amt -= RG.volume
-							RC.reagents.reagent_list -= RG
+							RC.reagents.reagent_list -= RG.id
 							RC.reagents.conditional_update(RC)
 							RGNT = locate(RG.type) in Deletion
 							RGNT.volume += RG.volume
