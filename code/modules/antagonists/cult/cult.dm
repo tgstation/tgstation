@@ -1,7 +1,7 @@
 #define SUMMON_POSSIBILITIES 3
 
 /datum/antagonist/cult
-	name = "shit antag"
+	name = "Cultist"
 	roundend_category = "cultists"
 	antagpanel_category = "Cult"
 	antag_moodlet = /datum/mood_event/cult
