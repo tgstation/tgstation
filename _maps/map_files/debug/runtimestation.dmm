@@ -629,7 +629,7 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "bS" = (
-/obj/machinery/chem_dispenser/full,
+/obj/machinery/chem_dispenser/fullupgrade,
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "bU" = (

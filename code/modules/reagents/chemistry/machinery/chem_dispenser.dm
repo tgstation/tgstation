@@ -503,9 +503,9 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"ash",
 		"diethylamine")
 
-/obj/machinery/chem_dispenser/full //fully upgraded stock parts
+/obj/machinery/chem_dispenser/fullupgrade //fully upgraded stock parts
 	
-/obj/machinery/chem_dispenser/debug/Initialize()
+/obj/machinery/chem_dispenser/fullupgrade/Initialize()
 	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(null)
