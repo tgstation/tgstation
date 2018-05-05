@@ -107,3 +107,12 @@ GLOBAL_LIST_EMPTY(hub_features)
 	backpack_contents.Remove(/obj/item/melee/classic_baton)
 	backpack_contents[/obj/item/melee/classic_baton/telescopic] = 1
 	. = ..()
+
+/datum/outfit/job/warden/New()
+	suit_store = /obj/item/gun/energy/laser/scatter/shotty
+	. = ..()
+
+/obj/structure/closet/secure_closet/warden/PopulateContents()
+	. = ..()
+	for(var/obj/item/gun/ballistic/shotgun/automatic/combat/compact/C in src)
+		qdel(C)

@@ -63,10 +63,17 @@
 	name = "Space Jesus"
 	real_name = "Space Jesus"
 	equipOutfit(/datum/outfit/jesus)
-	var/datum/dna/D = dna
+	var/datum/dna/D = dna //00000050600012d5ab193
+	skin_tone = "caucasian3"
+	lip_color = "white"
+	eye_color = "000"
+	facial_hair_style = "Full Beard"
+	facial_hair_color = "000"
+	hair_style = "Long Fringe"
+	hair_color = "000"
 	if (istype(D))
-		D.uni_identity = "00000050600012d5ab193" // Space Jesus look
-		updateappearance()
+		D.update_dna_identity()
+	updateappearance()
 
 /mob/living/carbon/human/jesus/get_spans()
 	. = ..()

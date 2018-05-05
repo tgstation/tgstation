@@ -46,6 +46,8 @@
 
 /obj/machinery/power/smes/Initialize()
 	. = ..()
+	for(var/obj/structure/cable/C in loc)
+		C.mergeConnectedNetworksOnTurf()
 	dir_loop:
 		for(var/d in GLOB.cardinals)
 			var/turf/T = get_step(src, d)
@@ -151,6 +153,8 @@
 	//disassembling the terminal
 	if(istype(I, /obj/item/wirecutters) && terminal && panel_open)
 		terminal.dismantle(user, I)
+		if(terminal && !isturf(terminal.loc))
+			terminal = null
 		return
 
 	//crowbarring it !
