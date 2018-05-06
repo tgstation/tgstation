@@ -27,6 +27,8 @@ GLOBAL_PROTECT(security_mode)
 
 	TgsNew()
 
+	GLOB.revdata = new
+
 	load_admins()
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
