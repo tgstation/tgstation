@@ -291,6 +291,7 @@
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
+	to_chat(user, "<span class='warning'>A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!</span>")
 	temp = "If you die in the game, you die for real!"
 	player_hp = 30
 	player_mp = 10
