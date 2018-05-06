@@ -6,25 +6,23 @@
 	var/path = SelectTgsApi(tgs_version)
 	if(!path)
 		TGS_ERROR_LOG("Found unsupported API version: [tgs_version]. If this is a valid version please report this, backporting is done on demand.")
-		return
 
+	TGS_INFO_LOG("Activating API for version [tgs_version]")
 	var/datum/tgs_api/new_api = new path
-	TGS_INFO_LOG("Activated tgstation-server API for version [tgs_version]")
 
 	var/result = new_api.OnWorldNew(event_handler ? event_handler : new /datum/tgs_event_handler/tgs_default)
 	if(result && result != TGS_UNIMPLEMENTED)
 		TGS_WRITE_GLOBAL(tgs, new_api)
+	else
+		TGS_ERROR_LOG("Failed to activate API!")
 
 /world/proc/SelectTgsApi(tgs_version)
-	//remove the old 3.0 header
-	tgs_version = replacetext(tgs_version, "/tg/station 13 Server v", "")
-
 	var/list/version_bits = splittext(tgs_version, ".")
 
-	var/super = text2num(version_bits[1])
-	var/major = text2num(version_bits[2])
-	var/minor = text2num(version_bits[3])
-	var/patch = text2num(version_bits[4])
+	var/super = text2num(version_bits[0])
+	var/major = text2num(version_bits[1])
+	var/minor = text2num(version_bits[2])
+	var/patch = text2num(version_bits[3])
 
 	switch(super)
 		if(3)
