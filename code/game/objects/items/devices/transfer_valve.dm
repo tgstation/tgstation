@@ -57,6 +57,36 @@
 		attacher = user
 	return
 
+//Attached device memes
+/obj/item/transfer_valve/Move()
+	. = ..()
+	if(attached_device)
+		attached_device.holder_movement()
+
+/obj/item/transfer_valve/dropped()
+	. = ..()
+	if(attached_device)
+		attached_device.dropped()
+
+/obj/item/transfer_valve/on_found(mob/finder)
+	if(attached_device)
+		attached_device.on_found(finder)
+
+/obj/item/transfer_valve/Crossed(atom/movable/AM as mob|obj)
+	. = ..()
+	if(attached_device)
+		attached_device.Crossed(AM)
+
+/obj/item/transfer_valve/attack_hand()//Triggers mousetraps
+	. = ..()
+	if(.)
+		return
+	if(attached_device)
+		attached_device.attack_hand()
+
+//These keep attached devices synced up, for example a TTV with a mouse trap being found in a bag so it's triggered, or moving the TTV with an infrared beam sensor to update the beam's direction.
+
+
 /obj/item/transfer_valve/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat = {"<B> Valve properties: </B>
@@ -90,8 +120,7 @@
 		toggle_valve()
 	else if(attached_device)
 		if(href_list["rem_device"])
-			attached_device.forceMove(drop_location())
-			attached_device.holder = null
+			attached_device.on_detach()
 			attached_device = null
 			update_icon()
 		if(href_list["device"])
@@ -126,6 +155,10 @@
 		underlays += J
 	if(attached_device)
 		add_overlay("device")
+		if(istype(attached_device, /obj/item/assembly/infra))
+			var/obj/item/assembly/infra/sensor = attached_device
+			if(sensor.on && sensor.visible)
+				add_overlay("proxy_beam")
 
 /obj/item/transfer_valve/proc/merge_gases()
 	tank_two.air_contents.volume += tank_one.air_contents.volume
