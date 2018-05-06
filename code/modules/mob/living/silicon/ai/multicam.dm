@@ -12,9 +12,9 @@
 	aiEye.screen = src
 
 /obj/screen/movable/pic_in_pic/ai/Destroy()
-	. = ..()
 	set_ai(null)
-	qdel(aiEye)
+	QDEL_NULL(aiEye)
+	return ..()
 
 /obj/screen/movable/pic_in_pic/ai/Click()
 	..()
@@ -112,9 +112,9 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	GLOB.ai_camera_room_landmark = src
 
 /obj/effect/landmark/ai_multicam_room/Destroy()
-	. = ..()
 	if(GLOB.ai_camera_room_landmark == src)
 		GLOB.ai_camera_room_landmark = null
+	return ..()
 
 //Dummy camera eyes
 

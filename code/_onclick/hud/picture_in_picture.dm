@@ -19,12 +19,12 @@
 	make_backgrounds()
 
 /obj/screen/movable/pic_in_pic/Destroy()
-	. = ..()
 	for(var/C in shown_to)
 		unshow_to(C)
-	qdel(button_x)
-	qdel(button_shrink)
-	qdel(button_expand)
+	QDEL_NULL(button_x)
+	QDEL_NULL(button_shrink)
+	QDEL_NULL(button_expand)
+	return ..()
 
 /obj/screen/movable/pic_in_pic/component_click(obj/screen/component_button/component, params)
 	if(component == button_x)
@@ -135,7 +135,7 @@
 
 /obj/screen/movable/pic_in_pic/proc/show_to(client/C)
 	if(C)
-		shown_to |= C
+		shown_to[C] = 1
 		C.screen += src
 
 /obj/screen/movable/pic_in_pic/proc/unshow_to(client/C)
