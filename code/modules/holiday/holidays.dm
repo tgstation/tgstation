@@ -382,6 +382,8 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 
 /datum/holiday/ramadan/end
 	name = "End of Ramadan"
+	
+//someday somoene will remove all food onboard station to justify ramadan traditions and making pork gib you and double the food onboard at the end of 
 
 /datum/holiday/ramadan/end/shouldCelebrate(dd, mm, yy, ww, ddd)
 	if (round(((world.realtime - 312768000) / 864000) % 354.373435326843) == 0)
