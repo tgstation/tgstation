@@ -232,6 +232,7 @@
 	var/mob/living/carbon/human/slipee = AM
 	slipee.slip(min(P.potency*1.6,140),H)
 
+
 /datum/plant_gene/trait/cell_charge
 	// Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
 	// Generates sparks on squash.

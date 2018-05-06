@@ -24,7 +24,6 @@
 	var/list/quirks = null
 	var/contains_sample = 0
 
-
 /obj/item/seeds/replicapod/Initialize()
 	. = ..()
 
@@ -117,24 +116,19 @@
 		for(var/V in quirks)
 			new V(podman)
 		var/datum/species/pod/POD = new()
-		world << "0"
 		if(genes.len)
-			world << "1"
 			var/list/chemtraits = list()
 			for(var/datum/plant_gene/reagent/R in genes)
 				chemtraits += R
 			if(chemtraits.len)
 				var/datum/plant_gene/reagent/R = pick(chemtraits)
 				POD.exotic_blood = R.reagent_id
-				world << "4 [POD.exotic_blood]"
 			var/list/genetraits = list()
 			for(var/datum/plant_gene/trait/T in genes)
 				genetraits += T
-			world << "2"
 			if(genetraits.len)
 				var/datum/plant_gene/trait/T = pick(genetraits)
 				POD.mutation = new T.type  //let me tell you a story about datums that get deleted
-				world << "3 [POD.mutation]"
 		POD.potency = potency
 		POD.yield = yield
 		podman.hardset_dna(null,null,podman.real_name,"P", POD,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
