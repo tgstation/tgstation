@@ -1666,3 +1666,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/negates_gravity(mob/living/carbon/human/H)
 	return 0
+
+
+/datum/species/proc/Crossed(mob/living/carbon/human/H,AM as mob|obj)
+
+
+/datum/species/proc/on_admin_forced(mob/M, mob/living/carbon/human/H) //When an admin forces our species through the little dropdown menu

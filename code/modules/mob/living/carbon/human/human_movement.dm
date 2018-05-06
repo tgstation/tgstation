@@ -63,3 +63,6 @@
 	if(..())
 		return 1
 	return dna.species.space_move(src)
+
+	dna.species.Crossed(AM)
+

@@ -138,6 +138,8 @@
 	var/rate = 0.05
 	var/examine_line = ""
 	var/trait_id // must be set and equal for any two traits of the same type
+	var/datum/species/pod/POD
+	var/feeling = "normal" //When a pod person gets the trait. "You feel [feeling]"
 
 /datum/plant_gene/trait/Copy()
 	var/datum/plant_gene/trait/G = ..()
@@ -176,12 +178,33 @@
 /datum/plant_gene/trait/proc/on_throw_impact(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
 	return
 
+/datum/plant_gene/trait/proc/pod_on_gain(datum/species/pod/P,mob/living/carbon/C)
+	if(!P || !C)
+		return
+	to_chat(C,"You feel [feeling]")
+
+/datum/plant_gene/trait/proc/pod_on_loss(datum/species/pod/P,mob/living/carbon/C)
+
+/datum/plant_gene/trait/proc/pod_special_attacked_by(datum/species/pod/P,mob/living/carbon/human/H,obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+
+/datum/plant_gene/trait/proc/pod_Crossed(datum/species/pod/P,mob/living/carbon/human/H,AM as mob|obj)
+
+/datum/plant_gene/trait/proc/pod_harm(datum/species/pod/P,mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+
 /datum/plant_gene/trait/squash
 	// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
 	// Also splashes everything in target turf with reagents and applies other trait effects (teleporting, etc) to the target by on_squash.
 	// For code, see grown.dm
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
+
+/datum/plant_gene/trait/squash/pod_special_attacked_by(datum/species/pod/P,mob/living/carbon/human/H,obj/item/I,mob/living/user)
+	if(I.damtype == BRUTE && I.force > max(10+(P.potency/10),18))
+		H.gib()
+		return TRUE
+	else if(I.damtype == BRUTE)
+		to_chat(user,"<span_class='warning'>Your attack bounces right back!</span>")
+		return TRUE
 
 /datum/plant_gene/trait/slip
 	// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
@@ -207,6 +230,12 @@
 		if(M.slip(knockdown, G))
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_slip(G, M)
+
+/datum/plant_gene/trait/slip/pod_Crossed(datum/species/pod/P,mob/living/carbon/human/H,AM as mob|obj)
+	if(!ishuman(AM))
+		return
+	var/mob/living/carbon/human/slipee = AM
+	slipee.slip(min(P.potency*1.6,140),H)
 
 /datum/plant_gene/trait/cell_charge
 	// Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
@@ -243,7 +272,9 @@
 		if(batteries_recharged)
 			to_chat(target, "<span class='notice'>Your batteries are recharged!</span>")
 
-
+/datum/plant_gene/trait/cell_charge/pod_harm(datum/species/pod/P,mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(prob(P.potency/2))
+		target.electrocute_act(10*P.potency, user, 1, 1)
 
 /datum/plant_gene/trait/glow
 	// Makes plant glow. Makes plant in tray glow too.
@@ -253,6 +284,7 @@
 	examine_line = "<span class='info'>It emits a soft glow.</span>"
 	trait_id = "glow"
 	var/glow_color = "#C3E381"
+	var/obj/effect/dummy/luminescent_glow/glow  //only for pod people
 
 /datum/plant_gene/trait/glow/proc/glow_range(obj/item/seeds/S)
 	return 1.4 + S.potency*rate
@@ -264,6 +296,19 @@
 	..()
 	G.set_light(glow_range(G.seed), glow_power(G.seed), glow_color)
 
+/datum/plant_gene/trait/glow/pod_on_gain(datum/species/pod/P,mob/living/carbon/C)
+	..()
+	glow = new(C)
+	glow.set_light(1.4 + P.potency*rate, pod_get_light(P), C.dna.species.default_features["mcolor"])
+
+/datum/plant_gene/trait/glow/proc/pod_get_light(datum/species/pod/P)
+	return P.potency*(rate + 0.01)
+
+/datum/plant_gene/trait/glow/pod_on_loss(datum/species/pod/P,mob/living/carbon/C)
+	if(glow)
+		qdel(glow)
+		glow = null
+
 /datum/plant_gene/trait/glow/shadow
 	//makes plant emit slightly purple shadows
 	//adds -potency*(rate*0.2) light power to products
@@ -273,6 +318,9 @@
 
 /datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/S)
 	return -max(S.potency*(rate*0.2), 0.2)
+
+/datum/plant_gene/trait/glow/shadow/pod_get_light(datum/species/pod/P)
+	return -max(P.potency*(rate*0.2), 0.2)
 
 /datum/plant_gene/trait/glow/red
 	name = "Red Electrical Glow"
@@ -308,6 +356,9 @@
 		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
 		qdel(G)
 
+/datum/plant_gene/trait/teleport/pod_special_attacked_by(datum/species/pod/P,mob/living/carbon/human/H,obj/item/I,mob/living/user)
+	if(H.stat != DEAD && prob(P.potency/2))
+		do_teleport(H, get_turf(H), P.yield*2)
 
 /datum/plant_gene/trait/noreact
 	// Makes plant reagents not react until squashed.
@@ -321,6 +372,13 @@
 	G.reagents.set_reacting(TRUE)
 	G.reagents.handle_reactions()
 
+/datum/plant_gene/trait/noreact/pod_on_gain(datum/species/pod/P,mob/living/carbon/C)
+	..()
+	C.reagents.set_reacting(FALSE)
+
+/datum/plant_gene/trait/noreact/pod_on_loss(datum/species/pod/P,mob/living/carbon/C)
+	C.reagents.set_reacting(TRUE)
+	C.reagents.handle_reactions()
 
 /datum/plant_gene/trait/maxchem
 	// 2x to max reagents volume.
@@ -331,6 +389,14 @@
 	..()
 	G.reagents.maximum_volume *= rate
 
+/datum/plant_gene/trait/maxchem/pod_on_gain(datum/species/pod/P,mob/living/carbon/C)
+	C.resize = 1.2
+	C.update_transform()
+
+/datum/plant_gene/trait/maxchem/pod_on_loss(datum/species/pod/P,mob/living/carbon/C)
+	C.resize = 1/6*5
+	C.update_transform()
+
 /datum/plant_gene/trait/repeated_harvest
 	name = "Perennial Growth"
 
@@ -340,6 +406,15 @@
 	if(istype(S, /obj/item/seeds/replicapod))
 		return FALSE
 	return TRUE
+
+/datum/plant_gene/trait/repeated_harvest/pod_on_gain(datum/species/pod/P,mob/living/carbon/C)
+	P.species_traits += FACEHAIR
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		H.facial_hair_color = "#4ffe00"  //grassbeard
+		H.facial_hair_style = random_facial_hair_style(MALE) //genderneutral beards
+		H.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
+		H.update_hair()
 
 /datum/plant_gene/trait/battery
 	name = "Capacitive Cell Production"
@@ -381,6 +456,15 @@
 			G.reagents.reaction(L, INJECT, fraction)
 			G.reagents.trans_to(L, injecting_amount)
 			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")
+
+/datum/plant_gene/trait/stinging/pod_harm(datum/species/pod/P,mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(user.blood_volume < BLOOD_VOLUME_OKAY)
+		return
+	if(target.can_inject(user, 1))
+		user.transfer_blood_to(target, yield)
+	. = ..()
+
+
 
 /datum/plant_gene/trait/smoke
 	name = "gaseous decomposition"

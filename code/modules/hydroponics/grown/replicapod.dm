@@ -17,7 +17,6 @@
 	var/realName = null
 	var/datum/mind/mind = null
 	var/blood_gender = null
-	var/blood_type = null
 	var/list/features = null
 	var/factions = null
 	var/list/traits = null
@@ -32,7 +31,6 @@
 					ckey = bloodSample.data["ckey"]
 					realName = bloodSample.data["real_name"]
 					blood_gender = bloodSample.data["gender"]
-					blood_type = bloodSample.data["blood_type"]
 					features = bloodSample.data["features"]
 					factions = bloodSample.data["factions"]
 					traits = bloodSample.data["traits"]
@@ -103,7 +101,28 @@
 			features["mcolor"] = "#59CE00"
 		for(var/V in traits)
 			new V(podman)
-		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+		var/datum/species/pod/POD = new()
+		world << "0"
+		if(genes.len)
+			world << "1"
+			var/list/chemtraits = list()
+			for(var/datum/plant_gene/reagent/R in genes)
+				chemtraits += R
+			if(chemtraits.len)
+				var/datum/plant_gene/reagent/R = pick(chemtraits)
+				POD.exotic_blood = R.reagent_id
+				world << "4 [POD.exotic_blood]"
+			var/list/genetraits = list()
+			for(var/datum/plant_gene/trait/T in genes)
+				genetraits += T
+			world << "2"
+			if(genetraits.len)
+				var/datum/plant_gene/trait/T = pick(genetraits)
+				POD.mutation = new T.type  //let me tell you a story about datums that get deleted
+				world << "3 [POD.mutation]"
+		POD.potency = potency
+		POD.yield = yield
+		podman.hardset_dna(null,null,podman.real_name,"P", POD,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two

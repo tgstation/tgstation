@@ -83,6 +83,24 @@
 		M.satiety += 30
 	. = ..()
 
+/datum/reagent/consumable/nutriment/chlorophyll
+	name = "Chlorophyll"
+	id = "chlorophyll"
+	description = "A very nutritios organic compound that can be best described as 'plant blood'."
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+	color = "#4ffe00" //green
+	taste_description = "plant"
+	brute_heal = 1.5
+	burn_heal = 1.5
+
+/datum/reagent/consumable/nutriment/chlorophyll/on_mob_life(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(istype(H.dna.species, /datum/species/pod)) //dont want them constantly drinking their own fucking blood
+			return
+	. = ..()
+
+
 /datum/reagent/consumable/cooking_oil
 	name = "Cooking Oil"
 	id = "cooking_oil"
@@ -687,3 +705,6 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#eef442" // rgb: 238, 244, 66
 	taste_description = "mournful honking"
+
+
+
