@@ -559,7 +559,7 @@
 	icon_state = "pineapple_slice"
 	filling_color = "#F6CB0B"
 	tastes = list("pineapple" = 1)
-	foodtype = FRUIT
+	foodtype = FRUIT | PINEAPPLE
 
 /obj/item/reagent_containers/food/snacks/tinychocolate
 	name = "chocolate"

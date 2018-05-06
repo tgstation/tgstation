@@ -180,7 +180,7 @@
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
 		I.plane = ABOVE_HUD_PLANE
-		I.equipped(src, slot_hands)
+		I.equipped(src, SLOT_HANDS)
 		if(I.pulledby)
 			I.pulledby.stop_pulling()
 		update_inv_hands()
@@ -381,7 +381,7 @@
 		dropItemToGround(I)
 	drop_all_held_items()
 
-/obj/item/proc/equip_to_best_slot(var/mob/M)
+/obj/item/proc/equip_to_best_slot(mob/M)
 	if(src != M.get_active_held_item())
 		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
 		return FALSE
@@ -393,28 +393,16 @@
 		if(equip_delay_self)
 			return
 
-	if(M.s_active && M.s_active.can_be_inserted(src,1))	//if storage active insert there
-		M.s_active.handle_item_insertion(src)
+	if(M.active_storage && M.active_storage.parent && M.active_storage.parent.SendSignal(COMSIG_TRY_STORAGE_INSERT, src,M))
 		return TRUE
 
-	var/obj/item/storage/S = M.get_inactive_held_item()
-	if(istype(S) && S.can_be_inserted(src,1))	//see if we have box in other hand
-		S.handle_item_insertion(src)
-		return TRUE
-
-	S = M.get_item_by_slot(slot_belt)
-	if(istype(S) && S.can_be_inserted(src,1))		//else we put in belt
-		S.handle_item_insertion(src)
-		return TRUE
-
-	S = M.get_item_by_slot(slot_generic_dextrous_storage)	//else we put in whatever is in drone storage
-	if(istype(S) && S.can_be_inserted(src,1))
-		S.handle_item_insertion(src)
-
-	S = M.get_item_by_slot(slot_back)	//else we put in backpack
-	if(istype(S) && S.can_be_inserted(src,1))
-		S.handle_item_insertion(src)
-		return TRUE
+	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(SLOT_BELT), M.get_item_by_slot(SLOT_GENERC_DEXTROUS_STORAGE), M.get_item_by_slot(SLOT_BACK))
+	for(var/i in possible)
+		if(!i)
+			continue
+		var/obj/item/I = i
+		if(I.SendSignal(COMSIG_TRY_STORAGE_INSERT, src, M))
+			return TRUE
 
 	to_chat(M, "<span class='warning'>You are unable to equip that!</span>")
 	return FALSE
@@ -430,10 +418,10 @@
 
 //used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
 /mob/proc/getBackSlot()
-	return slot_back
+	return SLOT_BACK
 
 /mob/proc/getBeltSlot()
-	return slot_belt
+	return SLOT_BELT
 
 
 

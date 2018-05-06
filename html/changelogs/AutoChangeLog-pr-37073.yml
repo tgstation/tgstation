@@ -1,6 +1,0 @@
-author: "Garen"
-delete-after: True
-changes: 
-  - bugfix: "Added missing parameter types to circuits."
-  - bugfix: "Fixes two datatypes appearing for some input circuits."
-  - tweak: "Logic circuits now output booleans rather than 1's and 0's, this is purely cosmetic."

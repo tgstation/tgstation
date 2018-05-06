@@ -41,11 +41,8 @@
 	if(..())
 		return TRUE
 	if(istype(W, /obj/item/storage/bag/ore))
-		var/obj/item/storage/bag/ore/S = W
-		if(S.collection_mode == 1)
-			for(var/obj/item/stack/ore/O in contents)
-				O.attackby(W,user)
-				return
+		for(var/obj/item/stack/ore/O in src)
+			W.SendSignal(COMSIG_PARENT_ATTACKBY, O)
 
 /turf/open/floor/plating/asteroid/singularity_act()
 	if(is_planet_level(z))
@@ -282,6 +279,8 @@
 	planetary_atmos = TRUE
 	archdrops = list(/obj/item/stack/sheet/mineral/snow = list(ARCH_PROB = 100, ARCH_MAXDROP = 5))
 	burnt_states = list("snow_dug")
+	bullet_sizzle = TRUE
+	bullet_bounce_sound = null
 
 /turf/open/floor/plating/asteroid/snow/burn_tile()
 	if(!burnt)

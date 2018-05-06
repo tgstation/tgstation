@@ -38,7 +38,7 @@
 /area/shuttle/abandoned)
 "ak" = (
 /obj/structure/table,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "al" = (
@@ -228,7 +228,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bc" = (
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bd" = (

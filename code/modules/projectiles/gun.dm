@@ -8,7 +8,7 @@
 	icon_state = "detective"
 	item_state = "gun"
 	flags_1 =  CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	materials = list(MAT_METAL=2000)
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 5
@@ -39,9 +39,9 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 
-	var/obj/item/device/firing_pin/pin = /obj/item/device/firing_pin //standard firing pin for most guns
+	var/obj/item/firing_pin/pin = /obj/item/firing_pin //standard firing pin for most guns
 
-	var/obj/item/device/flashlight/gun_light
+	var/obj/item/flashlight/gun_light
 	var/can_flashlight = 0
 	var/obj/item/kitchen/knife/bayonet
 	var/can_bayonet = FALSE
@@ -328,10 +328,10 @@
 /obj/item/gun/attackby(obj/item/I, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
-	else if(istype(I, /obj/item/device/flashlight/seclite))
+	else if(istype(I, /obj/item/flashlight/seclite))
 		if(!can_flashlight)
 			return ..()
-		var/obj/item/device/flashlight/seclite/S = I
+		var/obj/item/flashlight/seclite/S = I
 		if(!gun_light)
 			if(!user.transferItemToLoc(I, src))
 				return
@@ -356,7 +356,7 @@
 			update_icon()
 	else if(istype(I, /obj/item/screwdriver))
 		if(gun_light)
-			var/obj/item/device/flashlight/seclite/S = gun_light
+			var/obj/item/flashlight/seclite/S = gun_light
 			to_chat(user, "<span class='notice'>You unscrew the seclite from \the [src].</span>")
 			gun_light = null
 			S.forceMove(get_turf(user))
@@ -451,7 +451,7 @@
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)
 		qdel(pin)
-	pin = new /obj/item/device/firing_pin
+	pin = new /obj/item/firing_pin
 
 /////////////
 // ZOOMING //

@@ -17,6 +17,7 @@
 	layer = SPACE_LAYER
 	light_power = 0.25
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	bullet_bounce_sound = null
 
 
 /turf/open/space/basic/New()	//Do not convert to Initialize

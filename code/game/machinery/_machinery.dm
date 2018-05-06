@@ -413,10 +413,10 @@ Class Procs:
 								var/obj/item/stack/SN = new SB.merge_type(null,used_amt)
 								component_parts += SN
 							else
-								W.remove_from_storage(B, src)
-								component_parts += B
-								B.moveToNullspace()
-							W.handle_item_insertion(A, 1)
+								if(W.SendSignal(COMSIG_TRY_STORAGE_TAKE, B, src))
+									component_parts += B
+									B.moveToNullspace()
+							W.SendSignal(COMSIG_TRY_STORAGE_INSERT, A, null, null, TRUE)
 							component_parts -= A
 							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!

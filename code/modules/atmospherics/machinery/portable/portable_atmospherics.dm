@@ -35,7 +35,7 @@
 
 /obj/machinery/portable_atmospherics/process_atmos()
 	if(!connected_port) // Pipe network handles reactions if connected.
-		air_contents.react()
+		air_contents.react(src)
 	else
 		update_icon()
 
@@ -138,7 +138,7 @@
 					"<span class='notice'>You fasten [src] to the port.</span>", \
 					"<span class='italics'>You hear a ratchet.</span>")
 				update_icon()
-	else if(istype(W, /obj/item/device/analyzer) && Adjacent(user))
+	else if(istype(W, /obj/item/analyzer) && Adjacent(user))
 		atmosanalyzer_scan(air_contents, user)
 	else
 		return ..()

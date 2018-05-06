@@ -12,11 +12,11 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		var/thing = allowed_contents[i]
 		qdel(thing, force=TRUE)
 
-	var/turf/newT = ChangeTurf(turf_type, baseturf_type, flags)
-
-	SSair.remove_from_active(newT)
-	newT.CalculateAdjacentTurfs()
-	SSair.add_to_active(newT,1)
+	if(turf_type)
+		var/turf/newT = ChangeTurf(turf_type, baseturf_type, flags)
+		SSair.remove_from_active(newT)
+		newT.CalculateAdjacentTurfs()
+		SSair.add_to_active(newT,1)
 
 /turf/proc/copyTurf(turf/T)
 	if(T.type != type)
@@ -25,8 +25,6 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			O = new()
 			O.underlays.Add(T)
 		T.ChangeTurf(type)
-		for(var/group in decals)
-			T.add_decal(decals[group],group)
 		if(underlays.len)
 			T.underlays = O.underlays
 	if(T.icon_state != icon_state)
@@ -70,10 +68,19 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	blueprint_data = null
 
 	var/list/old_baseturfs = baseturfs
-	changing_turf = TRUE
 
+	var/list/transferring_comps = list()
+	SendSignal(COMSIG_TURF_CHANGE, path, new_baseturfs, flags, transferring_comps)
+	for(var/i in transferring_comps)
+		var/datum/component/comp = i
+		comp.RemoveComponent()
+
+	changing_turf = TRUE
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
+
+	for(var/i in transferring_comps)
+		W.TakeComponent(i)
 
 	if(new_baseturfs)
 		W.baseturfs = new_baseturfs

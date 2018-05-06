@@ -195,15 +195,15 @@
 #define AI_Z_OFF	4
 
 //determines if a mob can smash through it
-#define ENVIRONMENT_SMASH_NONE 0
-#define ENVIRONMENT_SMASH_STRUCTURES 1 //crates, lockers, ect
-#define ENVIRONMENT_SMASH_WALLS 2   //walls
-#define ENVIRONMENT_SMASH_RWALLS 4  //rwalls
+#define ENVIRONMENT_SMASH_NONE			0
+#define ENVIRONMENT_SMASH_STRUCTURES	(1<<0) 	//crates, lockers, ect
+#define ENVIRONMENT_SMASH_WALLS			(1<<1)  //walls
+#define ENVIRONMENT_SMASH_RWALLS		(1<<2)	//rwalls
 
-#define NO_SLIP_WHEN_WALKING 1
-#define SLIDE 2
-#define GALOSHES_DONT_HELP 4
-#define SLIDE_ICE 8
+#define NO_SLIP_WHEN_WALKING	(1<<0)
+#define SLIDE					(1<<1)
+#define GALOSHES_DONT_HELP		(1<<2)
+#define SLIDE_ICE				(1<<3)
 
 #define MAX_CHICKENS 50
 
@@ -215,12 +215,12 @@
 #define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
 
 //Secbot and ED209 judgement criteria bitflag values
-#define JUDGE_EMAGGED 1
-#define JUDGE_IDCHECK 2
-#define JUDGE_WEAPONCHECK 4
-#define JUDGE_RECORDCHECK 8
+#define JUDGE_EMAGGED		(1<<0)
+#define JUDGE_IDCHECK		(1<<1)
+#define JUDGE_WEAPONCHECK	(1<<2)
+#define JUDGE_RECORDCHECK	(1<<3)
 //ED209's ignore monkeys
-#define JUDGE_IGNOREMONKEYS 16
+#define JUDGE_IGNOREMONKEYS	(1<<4)
 
 #define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
 
@@ -258,7 +258,7 @@
 
 // Roundstart trait system
 
-#define MAX_TRAITS 6 //The maximum amount of traits one character can have at roundstart
+#define MAX_QUIRKS 6 //The maximum amount of quirks one character can have at roundstart
 
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5

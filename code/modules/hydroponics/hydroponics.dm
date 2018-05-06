@@ -4,7 +4,7 @@
 	icon_state = "hydrotray"
 	density = TRUE
 	anchored = TRUE
-	pixel_y = 8
+	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
@@ -57,9 +57,6 @@
 
 /obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "hydrotray3", "hydrotray3", I))
-		return
-
-	if(exchange_parts(user, I))
 		return
 
 	if(default_pry_open(I))
@@ -761,7 +758,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src] already has seeds in it!</span>")
 
-	else if(istype(O, /obj/item/device/plant_analyzer))
+	else if(istype(O, /obj/item/plant_analyzer))
 		if(myseed)
 			to_chat(user, "*** <B>[myseed.plantname]</B> ***" )
 			to_chat(user, "- Plant Age: <span class='notice'>[age]</span>")
@@ -787,11 +784,8 @@
 
 	else if(istype(O, /obj/item/storage/bag/plants))
 		attack_hand(user)
-		var/obj/item/storage/bag/plants/S = O
 		for(var/obj/item/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
-			if(!S.can_be_inserted(G))
-				return
-			S.handle_item_insertion(G, 1)
+			O.SendSignal(COMSIG_TRY_STORAGE_INSERT, G, user, TRUE)
 
 	else if(istype(O, /obj/item/wrench) && unwrenchable)
 		if(using_irrigation)
@@ -853,7 +847,8 @@
 	if(issilicon(user)) //How does AI know what plant is?
 		return
 	if(harvest)
-		myseed.harvest(user)
+		return myseed.harvest(user)
+
 	else if(dead)
 		dead = 0
 		to_chat(user, "<span class='notice'>You remove the dead plant from [src].</span>")
@@ -861,9 +856,10 @@
 		myseed = null
 		update_icon()
 	else
-		examine(user)
+		if(user)
+			examine(user)
 
-/obj/machinery/hydroponics/proc/update_tray(mob/user = usr)
+/obj/machinery/hydroponics/proc/update_tray(mob/user)
 	harvest = 0
 	lastproduce = age
 	if(istype(myseed, /obj/item/seeds/replicapod))

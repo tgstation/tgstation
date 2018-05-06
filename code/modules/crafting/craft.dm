@@ -84,7 +84,7 @@
 		if(T.Adjacent(user))
 			for(var/B in T)
 				var/atom/movable/AM = B
-				if(AM.flags_2 & HOLOGRAM_2)
+				if(AM.flags_1 & HOLOGRAM_1)
 					continue
 				. += AM
 
@@ -93,7 +93,7 @@
 	.["tool_behaviour"] = list()
 	.["other"] = list()
 	for(var/obj/item/I in get_environment(user))
-		if(I.flags_2 & HOLOGRAM_2)
+		if(I.flags_1 & HOLOGRAM_1)
 			continue
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I

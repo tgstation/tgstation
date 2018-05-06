@@ -20,8 +20,7 @@
 
 /datum/component/riding/Initialize()
 	if(!ismovableatom(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("RIDING COMPONENT ASSIGNED TO NON ATOM MOVABLE!")
+		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
 	RegisterSignal(COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
@@ -209,7 +208,7 @@
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
 	user.Knockdown(60)
-	user.visible_message("<span class='warning'>[AM] pushes [user] off of them!</span>")
+	user.visible_message("<span class='warning'>[AM] pushes [user] off of [AM.p_them()]!</span>")
 
 /datum/component/riding/cyborg
 

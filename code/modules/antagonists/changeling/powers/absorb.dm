@@ -53,6 +53,7 @@
 
 	if(!changeling.has_dna(target.dna))
 		changeling.add_new_profile(target)
+		changeling.trueabsorbs++
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
 		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
@@ -78,8 +79,8 @@
 				recent_speech[spoken_memory] = say_log[spoken_memory]
 
 		if(recent_speech.len)
-			changeling.antag_memory += "<B>Some of [target]'s speech patterns, we should study these to better impersonate them!</B><br>"
-			to_chat(user, "<span class='boldnotice'>Some of [target]'s speech patterns, we should study these to better impersonate them!</span>")
+			changeling.antag_memory += "<B>Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]!</B><br>"
+			to_chat(user, "<span class='boldnotice'>Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]!</span>")
 			for(var/spoken_memory in recent_speech)
 				changeling.antag_memory += "\"[recent_speech[spoken_memory]]\"<br>"
 				to_chat(user, "<span class='notice'>\"[recent_speech[spoken_memory]]\"</span>")
@@ -89,9 +90,16 @@
 
 		var/datum/antagonist/changeling/target_ling = target.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(target_ling)//If the target was a changeling, suck out their extra juice and objective points!
+			to_chat(user, "<span class='boldnotice'>[target] was one of us. We have absorbed their power.</span>")
+			target_ling.remove_changeling_powers()
+			changeling.geneticpoints += round(target_ling.geneticpoints/2)
+			target_ling.geneticpoints = 0
+			target_ling.canrespec = 0
+			changeling.chem_storage += round(target_ling.chem_storage/2)
 			changeling.chem_charges += min(target_ling.chem_charges, changeling.chem_storage)
+			target_ling.chem_charges = 0
+			target_ling.chem_storage = 0
 			changeling.absorbedcount += (target_ling.absorbedcount)
-
 			target_ling.stored_profiles.len = 1
 			target_ling.absorbedcount = 0
 
