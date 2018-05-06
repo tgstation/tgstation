@@ -124,6 +124,10 @@
 	// Save modified name
 	if(initial(name) != name)
 		assembly_params["name"] = name
+	
+	// Save modified description
+	if(initial(desc) != desc)
+		assembly_params["desc"] = desc
 
 	// Save panel status
 	if(opened)
@@ -151,6 +155,10 @@
 	// Load modified name, if any.
 	if(assembly_params["name"])
 		name = assembly_params["name"]
+		
+	// Load modified description, if any.
+	if(assembly_params["desc"])
+		desc = assembly_params["desc"]
 
 	// Load panel status
 	if(assembly_params["opened"])
