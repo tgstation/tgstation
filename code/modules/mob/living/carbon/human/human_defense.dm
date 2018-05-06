@@ -733,8 +733,8 @@
 				if(0 to NUTRITION_LEVEL_STARVING)
 					to_chat(src, "<span class='danger'>You're starving!</span>")
 
-			if(roundstart_traits.len)
-				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
+			if(roundstart_quirks.len)
+				to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string()].</span>")
 		else
 			if(wear_suit)
 				wear_suit.add_fingerprint(M)
