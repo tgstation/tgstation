@@ -1613,6 +1613,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "seduction"
 	glass_icon_state = "between_the_sheets"
 	glass_name = "Between the Sheets"
+	glass_desc = "The only drink that comes with a label reminding you of Nanotrasen's zero-tolerance promiscuity policy."
 
 /datum/reagent/consumable/ethanol/between_the_sheets/on_mob_life(mob/living/L)
 	if(L.IsSleeping())
@@ -1636,11 +1637,20 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "kamikaze"
 	glass_name = "Kamikaze"
 	glass_desc = "A drink you don't exactly make friends with."
+	var/mutable_appearance/explosion_overlay
+
+/datum/reagent/consumable/ethanol/kamikaze/on_mob_add(mob/living/L)
+	explosion_overlay = mutable_appearance('icons/effects/effects.dmi', "explosion_indef")
+	explosion_overlay.alpha = 50
+	L.add_overlay(explosion_overlay)
 
 /datum/reagent/consumable/ethanol/kamikaze/on_mob_life(mob/living/L)
-	for(var/mob/living/victim in view(3,L)) //for every living being the drinker can see, the victim takes 1 damage and the drinker takes 3.
+	for(var/mob/living/victim in view(3,L)) //every victim takes 1 damage, but the user takes 2 per individual affected.
 		victim.adjustFireLoss(1)
-		L.adjustFireLoss(3)
+		L.adjustFireLoss(2)
+
+/datum/reagent/consumable/ethanol/kamikaze/on_mob_delete(mob/living/L)
+	L.cut_overlay(explosion_overlay)
 
 /datum/reagent/consumable/ethanol/mojito
 	name = "Mojito"
