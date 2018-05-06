@@ -30,7 +30,7 @@
 				recharging = FALSE
 				return
 
-/obj/effect/proc_holder/spell/targeted/touch/charge_check(mob/user)
+/obj/effect/proc_holder/spell/targeted/touch/charge_check(mob/user,silent = FALSE)
 	if(!QDELETED(attached_hand)) //Charge doesn't matter when putting the hand away.
 		return TRUE
 	else

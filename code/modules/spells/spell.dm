@@ -227,15 +227,17 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		action.UpdateButtonIcon()
 	return 1
 
-/obj/effect/proc_holder/spell/proc/charge_check(mob/user)
+/obj/effect/proc_holder/spell/proc/charge_check(mob/user, silent = FALSE)
 	switch(charge_type)
 		if("recharge")
 			if(charge_counter < charge_max)
-				to_chat(user, still_recharging_msg)
+				if(!silent)
+					to_chat(user, still_recharging_msg)
 				return FALSE
 		if("charges")
 			if(!charge_counter)
-				to_chat(user, "<span class='notice'>[name] has no charges left.</span>")
+				if(!silent)
+					to_chat(user, "<span class='notice'>[name] has no charges left.</span>")
 				return FALSE
 	return TRUE
 
@@ -500,7 +502,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
 		return FALSE
 
-	if(!charge_check(user))
+	if(!charge_check(user,TRUE))
 		return FALSE
 
 	if(user.stat && !stat_allowed)
