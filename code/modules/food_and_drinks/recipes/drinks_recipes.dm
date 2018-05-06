@@ -654,8 +654,8 @@
 /datum/chemical_reaction/kamikaze
 	name = "Kamikaze"
 	id = "kamikaze"
-	results = list("kamikaze" = 3)
-	required_reagents = list("vodka" = 1, "triple_sec" = 1, "limejuice" = 1)
+	results = list("kamikaze" = 1)
+	required_reagents = list("vodka" = 3, "triple_sec" = 3, "limejuice" = 3)
 
 /datum/chemical_reaction/mojito
 	name = "Mojito"
