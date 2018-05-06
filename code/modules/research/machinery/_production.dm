@@ -284,6 +284,10 @@
 		materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["ejectsheet"])
 	updateUsrDialog()
 
+/obj/machinery/rnd/production/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	. = ..()
+	interact(user)
+
 /obj/machinery/rnd/production/proc/ui_screen_main()
 	var/list/l = list()
 	l += "<form name='search' action='?src=[REF(src)]'>\
