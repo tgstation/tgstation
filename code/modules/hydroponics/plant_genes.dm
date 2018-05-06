@@ -461,7 +461,7 @@
 	if(user.blood_volume < BLOOD_VOLUME_OKAY)
 		return
 	if(target.can_inject(user, 1))
-		user.transfer_blood_to(target, yield)
+		user.transfer_blood_to(target, P.yield)
 	. = ..()
 
 

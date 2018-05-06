@@ -64,5 +64,6 @@
 		return 1
 	return dna.species.space_move(src)
 
+/mob/living/carbon/human/Crossed(AM as mob|obj)
 	dna.species.Crossed(AM)
 
