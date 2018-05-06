@@ -1645,9 +1645,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	L.add_overlay(explosion_overlay)
 
 /datum/reagent/consumable/ethanol/kamikaze/on_mob_life(mob/living/L)
-	for(var/mob/living/victim in view(3,L)) //every victim takes 1 damage, but the user takes 2 per individual affected.
-		victim.adjustFireLoss(1)
-		L.adjustFireLoss(2)
+	var/victimnum = 0
+	explosion_overlay.alpha = CLAMP(explosion_overlay.alpha,0,100)
+	for(var/mob/living/victim in oview(3,L)) //every victim takes flat 1 damage, but the user takes 2 per individual affected.
+			victim.adjustFireLoss(1)
+			L.adjustFireLoss(2)
+			explosion_overlay.alpha += 1
+			victimnum++
+	if(!victimnum) //No one is nearby so you take decreased damage.
+		L.adjustFireLoss(1)
+		explosion_overlay.alpha -= 1
+		if(explosion_overlay.alpha <= 0) //can be -1 until next tick
+			metabolization_rate = (initial(metabolization_rate)*5) //The overlay is gone so the drink rapidly dissapates. Congrats, you defused the -explosive- i mean drink!
 
 /datum/reagent/consumable/ethanol/kamikaze/on_mob_delete(mob/living/L)
 	L.cut_overlay(explosion_overlay)
