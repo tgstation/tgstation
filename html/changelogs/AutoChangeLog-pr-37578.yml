@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "The top-left menus (icon scaling, ghost preferences, etc.) now work again."
