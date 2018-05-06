@@ -4,12 +4,11 @@
 	icon_state = "largecrate"
 	density = TRUE
 	material_drop = /obj/item/stack/sheet/mineral/wood
+	material_drop_amount = 4
 	delivery_icon = "deliverybox"
+	integrity_failure = 0 //Makes the crate break when integrity reaches 0, instead of opening and becoming an invisible sprite.
 
 /obj/structure/closet/crate/large/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
 	add_fingerprint(user)
 	if(manifest)
 		tear_manifest(user)
@@ -18,7 +17,7 @@
 
 /obj/structure/closet/crate/large/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/crowbar))
-		var/turf/T = get_turf(src)
+		//var/turf/T = get_turf(src)
 		if(manifest)
 			tear_manifest(user)
 
@@ -27,11 +26,18 @@
 							 "<span class='italics'>You hear splitting wood.</span>")
 		playsound(src.loc, 'sound/weapons/slashmiss.ogg', 75, 1)
 
-		for(var/i in 1 to rand(2, 5))
-			new material_drop(src)
+		var/turf/T = get_turf(src)
+		for(var/i in 1 to 4)
+			new material_drop(src) //Drop 4 planks, same as the material_drop_amount if destroyed
 		for(var/atom/movable/AM in contents)
 			AM.forceMove(T)
 
 		qdel(src)
+
 	else
-		return ..()
+		if(user.a_intent == INTENT_HARM)	//Only return  ..() if intent is harm, otherwise return 0 or just end it.
+			return ..()						//Stops it from opening and turning invisible when items are used on it.
+
+		else
+			return 0 //Just stop. Do nothing. Don't turn into an invisible sprite. Don't open like a locker.
+					//The large crate has no non-attack interactions other than the crowbar, anyway.
