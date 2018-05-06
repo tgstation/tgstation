@@ -40,7 +40,10 @@
 	if(!command_type)
 		return FALSE
 	var/datum/tgs_chat_command/stc = new command_type
-	return stc.Run(sender, params) || TRUE
+	var/datum/tgs_chat_user/user = new
+	user.friendly_name = sender
+	user.mention = sender
+	return stc.Run(user, params) || TRUE
 
 /*
 
