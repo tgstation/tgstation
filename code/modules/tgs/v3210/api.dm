@@ -57,6 +57,7 @@
 	return splittext(trim_left(trim_right(file2text(filename))), "\n")
 
 /datum/tgs_api/v3210/OnWorldNew(datum/tgs_event_handler/event_handler)	//don't use event handling in this version
+	. = FALSE
 	comms_key = world.params[SERVICE_WORLD_PARAM]
 	instance_name = world.params[SERVICE_INSTANCE_PARAM]
 	if(!instance_name)
@@ -72,9 +73,10 @@
 
 	if(world.system_type != MS_WINDOWS)
 		TGS_ERROR_LOG("This API version is only supported on Windows. Not running on Windows. Aborting initialization!")
-		return FALSE
+		return
 	ListServiceCustomCommands(TRUE)
 	ExportService("[SERVICE_REQUEST_API_VERSION] [ApiVersion()]", TRUE)
+	return TRUE
 
 //nothing to do for v3
 /datum/tgs_api/v3210/OnInitializationComplete()
