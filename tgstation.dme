@@ -1018,6 +1018,7 @@
 #include "code\modules\_toolbox\fal_new_player_cam.dm"
 #include "code\modules\_toolbox\ghost_stuff.dm"
 #include "code\modules\_toolbox\graffiti.dm"
+#include "code\modules\_toolbox\hairstyles.dm"
 #include "code\modules\_toolbox\items.dm"
 #include "code\modules\_toolbox\lootdrop_trash.dm"
 #include "code\modules\_toolbox\mob_additions.dm"

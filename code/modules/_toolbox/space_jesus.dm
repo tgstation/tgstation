@@ -63,7 +63,7 @@
 	name = "Space Jesus"
 	real_name = "Space Jesus"
 	equipOutfit(/datum/outfit/jesus)
-	var/datum/dna/D = dna //00000050600012d5ab193
+	var/datum/dna/D = dna
 	skin_tone = "caucasian3"
 	lip_color = "white"
 	eye_color = "000"

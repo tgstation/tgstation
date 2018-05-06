@@ -189,7 +189,7 @@
 	. = ..()
 	name = fried.name //We'll determine the other stuff when it's actually removed
 	icon = fried.icon
-	overlays = fried.copy_overlays()
+	copy_overlays(fried)
 	icon_state = fried.icon_state
 	desc = fried.desc
 	if(istype(fried, /obj/item/reagent_containers/food/snacks))

@@ -47,19 +47,8 @@
 
 
 /obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
-		return
-
-	if(exchange_parts(user, I))
-		return
-
-	if(default_pry_open(I))
-		return
-
-	if(default_unfasten_wrench(user, I))
-		return
-
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I) || exchange_parts(user, I) || default_pry_open(I) || default_unfasten_wrench(user, I) || default_deconstruction_crowbar(I))
+		update_icon()
 		return
 	return ..()
 
