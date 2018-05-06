@@ -29,7 +29,7 @@
 	pixel_y = -5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/dark,
@@ -564,8 +564,8 @@
 	layer = 2.9
 	},
 /obj/item/storage/belt/utility,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "bx" = (
@@ -615,8 +615,8 @@
 	layer = 2.9
 	},
 /obj/item/storage/belt/utility,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
@@ -717,7 +717,7 @@
 	layer = 2.9
 	},
 /obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/pirate)
 "bL" = (
@@ -1077,7 +1077,7 @@
 /obj/item/storage/belt/utility{
 	pixel_x = 4
 	},
-/obj/item/device/analyzer{
+/obj/item/analyzer{
 	pixel_x = 3;
 	pixel_y = 2
 	},
@@ -1614,7 +1614,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/yellow/corner,

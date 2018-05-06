@@ -181,7 +181,7 @@
 
 		if(PTURRET_SENSORS_ON)
 			to_chat(user, "<span class='notice'>You remove the prox sensor from the turret frame.</span>")
-			new /obj/item/device/assembly/prox_sensor(loc)
+			new /obj/item/assembly/prox_sensor(loc)
 			build_step = PTURRET_GUN_EQUIPPED
 
 /obj/machinery/porta_turret_construct/attack_ai()

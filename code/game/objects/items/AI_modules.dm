@@ -568,3 +568,9 @@ AI MODULES
 		laws += generate_ion_law()
 	..()
 	laws = list()
+
+/******************H.O.G.A.N.***************/
+
+/obj/item/aiModule/core/full/hulkamania
+	name = "'H.O.G.A.N.' Core AI Module"
+	law_id = "hulkamania"

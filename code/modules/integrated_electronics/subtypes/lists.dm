@@ -84,6 +84,7 @@
 		"on failure" = IC_PINTYPE_PULSE_OUT,
 		)
 	icon_state = "addition"
+	complexity = 2
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	cooldown_per_use = 1
 
@@ -100,6 +101,91 @@
 		activate_pin(3)
 
 
+/obj/item/integrated_circuit/lists/filter
+	name = "filter circuit"
+	desc = "This circuit will search through a list for anything matching the desired element(s) and outputs two lists: \
+	one containing just matching elements, and one with matching elements filtered out."
+	extended_desc = "Sample accepts lists. If no match is found, original list is sent to output 1."
+	inputs = list(
+		"input list" = IC_PINTYPE_LIST,
+		"sample" = IC_PINTYPE_ANY
+		)
+	outputs = list(
+		"list filtered" = IC_PINTYPE_LIST,
+		"list matched" = IC_PINTYPE_LIST
+		)
+	activators = list(
+		"compute" = IC_PINTYPE_PULSE_IN,
+		"on match" = IC_PINTYPE_PULSE_OUT,
+		"on no match" = IC_PINTYPE_PULSE_OUT
+		)
+	complexity = 6
+	icon_state = "addition"
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/lists/filter/do_work()
+	var/list/input_list = get_pin_data(IC_INPUT, 1)
+	var/sample = get_pin_data(IC_INPUT, 2)
+	var/list/sample_list = islist(sample) ? uniqueList(sample) : null
+	var/list/output_list1 = input_list.Copy()
+	var/list/output_list2 = list()
+	var/list/output = list()
+
+	for(var/input_item in input_list)
+		if(sample_list)
+			for(var/sample_item in sample_list)
+				if(!isnull(sample_item))
+					if(istext(input_item) && istext(sample_item) && findtext(input_item, sample_item))
+						output += input_item
+					if(istype(input_item, /atom) && istext(sample_item))
+						var/atom/input_item_atom = input_item
+						if(istext(sample_item) && findtext(input_item_atom.name, sample_item))
+							output += input_item
+				if(!istext(input_item))
+					if(input_item == sample_item)
+						output += input_item
+		else
+			if(!isnull(sample))
+				if(istext(input_item) && istext(sample) && findtext(input_item, sample))
+					output += input_item
+					continue
+				if(istype(input_item, /atom) && istext(sample))
+					var/atom/input_itema = input_item
+					if(findtext(input_itema.name, sample))
+						output += input_item
+			if(!istext(input_item))
+				if(input_item == sample)
+					output += input_item
+
+	output_list1.Remove(output)
+	output_list2.Add(output)
+	set_pin_data(IC_OUTPUT, 1, output_list1)
+	set_pin_data(IC_OUTPUT, 2, output_list2)
+	push_data()
+
+	output_list1 ~! input_list ? activate_pin(2) : activate_pin(3)
+
+/obj/item/integrated_circuit/lists/listset
+	name = "list set circuit"
+	desc = "This circuit will remove any duplicate entries from a list."
+	extended_desc = "If there are no duplicate entries, result list will be unchanged."
+	inputs = list(
+		"list" = IC_PINTYPE_LIST
+		)
+	outputs = list(
+		"list filtered" = IC_PINTYPE_LIST
+		)
+	icon_state = "addition"
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/lists/listset/do_work()
+	var/list/input_list = get_pin_data(IC_INPUT, 1)
+	input_list = uniqueList(input_list)
+
+	set_pin_data(IC_OUTPUT, 1, input_list)
+	push_data()
+	activate_pin(2)
+
 /obj/item/integrated_circuit/lists/at
 	name = "at circuit"
 	desc = "This circuit will pick an element from a list by the input index."
@@ -114,7 +200,7 @@
 	activators = list(
 		"compute" = IC_PINTYPE_PULSE_IN,
 		"on success" = IC_PINTYPE_PULSE_OUT,
-		"on failure" = IC_PINTYPE_PULSE_OUT,
+		"on failure" = IC_PINTYPE_PULSE_OUT
 		)
 	icon_state = "addition"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH

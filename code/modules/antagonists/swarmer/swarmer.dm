@@ -1,5 +1,5 @@
 ////Deactivated swarmer shell////
-/obj/item/device/deactivated_swarmer
+/obj/item/deactivated_swarmer
 	name = "deactivated swarmer"
 	desc = "A shell of swarmer that was completely powered down. It can no longer activate itself."
 	icon = 'icons/mob/swarmer.dmi'
@@ -45,7 +45,7 @@
 		user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
 			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
 			"<span class='italics'>You hear clicking.</span>")
-		new /obj/item/device/deactivated_swarmer(get_turf(src))
+		new /obj/item/deactivated_swarmer(get_turf(src))
 		qdel(src)
 	else
 		..()
@@ -302,10 +302,6 @@
 	to_chat(S, "<span class='warning'>This device's destruction would result in the extermination of everything in the area. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/dominator/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>This device is attempting to corrupt our entire network; attempting to interact with it is too risky. Aborting.</span>")
-	return FALSE
-
 /obj/effect/rune/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>Searching... sensor malfunction! Target lost. Aborting.</span>")
 	return FALSE
@@ -399,7 +395,7 @@
 			to_chat(S, "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
 			return FALSE
 
-/obj/item/device/deactivated_swarmer/IntegrateAmount()
+/obj/item/deactivated_swarmer/IntegrateAmount()
 	return 50
 
 /obj/machinery/hydroponics/soil/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)

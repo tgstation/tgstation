@@ -35,7 +35,7 @@
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/healthanalyzer(src)
 
 /obj/item/storage/firstaid/ancient
 	icon_state = "firstaid"
@@ -74,7 +74,7 @@
 	new /obj/item/reagent_containers/pill/oxandrolone(src)
 	new /obj/item/reagent_containers/pill/oxandrolone(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/healthanalyzer(src)
 
 /obj/item/storage/firstaid/toxin
 	name = "toxin treatment kit"
@@ -97,7 +97,7 @@
 		new /obj/item/reagent_containers/syringe/charcoal(src)
 	for(var/i in 1 to 2)
 		new /obj/item/storage/pill_bottle/charcoal(src)
-	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/healthanalyzer(src)
 
 /obj/item/storage/firstaid/o2
 	name = "oxygen deprivation treatment kit"
@@ -116,7 +116,7 @@
 		new /obj/item/reagent_containers/pill/salbutamol(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/healthanalyzer(src)
 
 /obj/item/storage/firstaid/brute
 	name = "brute trauma treatment kit"
@@ -135,7 +135,7 @@
 		new /obj/item/reagent_containers/pill/patch/styptic(src)
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/healthanalyzer(src)
 
 /obj/item/storage/firstaid/tactical
 	name = "combat medical kit"

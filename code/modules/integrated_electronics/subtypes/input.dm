@@ -70,7 +70,7 @@
 	power_draw_per_use = 4
 
 /obj/item/integrated_circuit/input/textpad/ask_for_input(mob/user)
-	var/new_input = stripped_input(user, "Enter some words, please.",displayed_name)
+	var/new_input = stripped_multiline_input(user, "Enter some words, please.",displayed_name)
 	if(istext(new_input) && user.IsAdvancedToolUser())
 		set_pin_data(IC_OUTPUT, 1, new_input)
 		push_data()
@@ -91,7 +91,7 @@
 	power_draw_per_use = 40
 
 /obj/item/integrated_circuit/input/med_scanner/do_work()
-	var/mob/living/carbon/human/H = get_pin_data_as_type(IC_INPUT, 1, /mob/living/carbon/human)
+	var/mob/living/H = get_pin_data_as_type(IC_INPUT, 1, /mob/living)
 	if(!istype(H)) //Invalid input
 		return
 	if(H.Adjacent(get_turf(src))) // Like normal analysers, it can't be used at range.
@@ -125,7 +125,7 @@
 	power_draw_per_use = 80
 
 /obj/item/integrated_circuit/input/adv_med_scanner/do_work()
-	var/mob/living/carbon/human/H = get_pin_data_as_type(IC_INPUT, 1, /mob/living/carbon/human)
+	var/mob/living/H = get_pin_data_as_type(IC_INPUT, 1, /mob/living)
 	if(!istype(H)) //Invalid input
 		return
 	if(H in view(get_turf(src))) // Like medbot's analyzer it can be used in range..
@@ -150,7 +150,7 @@
 
 /obj/item/integrated_circuit/input/slime_scanner
 	name = "slime_scanner"
-	desc = "A very small version of the xenobio analyser. This allows the machine to know every needed properties of slime."
+	desc = "A very small version of the xenobio analyser. This allows the machine to know every needed properties of slime. Output mutation list is non associative."
 	icon_state = "medscan_adv"
 	complexity = 12
 	inputs = list("target" = IC_PINTYPE_REF)
@@ -216,7 +216,10 @@
 		"Nutrition level"			= IC_PINTYPE_NUMBER,
 		"harvest"			= IC_PINTYPE_NUMBER,
 		"dead"			= IC_PINTYPE_NUMBER,
-		"plant health"			= IC_PINTYPE_NUMBER
+		"plant health"			= IC_PINTYPE_NUMBER,
+		"self sustaining"		= IC_PINTYPE_NUMBER,
+		"using irrigation" 		= IC_PINTYPE_NUMBER,
+		"connected trays"		= IC_PINTYPE_LIST
 	)
 	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
@@ -248,13 +251,15 @@
 		set_pin_data(IC_OUTPUT, 16, H.harvest)
 		set_pin_data(IC_OUTPUT, 17, H.dead)
 		set_pin_data(IC_OUTPUT, 18, H.plant_health)
-
+		set_pin_data(IC_OUTPUT, 19, H.self_sustaining)
+		set_pin_data(IC_OUTPUT, 20, H.using_irrigation)
+		set_pin_data(IC_OUTPUT, 21, H.FindConnected())
 	push_data()
 	activate_pin(2)
 
 /obj/item/integrated_circuit/input/gene_scanner
 	name = "gene scanner"
-	desc = "This circuit will scan plant for traits and reagent genes."
+	desc = "This circuit will scan plant for traits and reagent genes. Output is non-associative."
 	extended_desc = "This allows the machine to scan plants in trays for reagent and trait genes. \
 			It cannot scan seeds nor fruits, only plants."
 	inputs = list(
@@ -309,6 +314,7 @@
 		"amount of reagents"	= IC_PINTYPE_NUMBER,
 		"density"				= IC_PINTYPE_BOOLEAN,
 		"opacity"				= IC_PINTYPE_BOOLEAN,
+		"occupied turf"			= IC_PINTYPE_REF
 		)
 	activators = list(
 		"scan" = IC_PINTYPE_PULSE_IN,
@@ -319,7 +325,7 @@
 	power_draw_per_use = 80
 
 /obj/item/integrated_circuit/input/examiner/do_work()
-	var/atom/movable/H = get_pin_data_as_type(IC_INPUT, 1, /atom/movable)
+	var/atom/H = get_pin_data_as_type(IC_INPUT, 1, /atom)
 	var/turf/T = get_turf(src)
 
 	if(!istype(H) || !(H in view(T)))
@@ -327,6 +333,13 @@
 	else
 		set_pin_data(IC_OUTPUT, 1, H.name)
 		set_pin_data(IC_OUTPUT, 2, H.desc)
+
+		if(istype(H, /mob/living))
+			var/mob/living/M = H
+			var/msg = M.examine()
+			if(msg)
+				set_pin_data(IC_OUTPUT, 2, msg)
+
 		set_pin_data(IC_OUTPUT, 3, H.x-T.x)
 		set_pin_data(IC_OUTPUT, 4, H.y-T.y)
 		set_pin_data(IC_OUTPUT, 5, sqrt((H.x-T.x)*(H.x-T.x)+ (H.y-T.y)*(H.y-T.y)))
@@ -339,19 +352,20 @@
 		set_pin_data(IC_OUTPUT, 7, tr)
 		set_pin_data(IC_OUTPUT, 8, H.density)
 		set_pin_data(IC_OUTPUT, 9, H.opacity)
+		set_pin_data(IC_OUTPUT, 10, get_turf(H))
 		push_data()
 		activate_pin(2)
 
 /obj/item/integrated_circuit/input/turfpoint
-	name = "tile pointer"
-	desc = "This circuit will get tile ref with given absolute coorinates."
-	extended_desc = "If the machine	cannot see the target, it will not be able to scan it.\
-	This circuit will only work in an assembly."
+	name = "Tile pointer"
+	desc = "This circuit will get tile ref with given absolute coordinates."
+	extended_desc = "If the machine	cannot see the target, it will not be able to calculate the correct direction.\
+	This circuit works only inside an assembly."
 	icon_state = "numberpad"
 	complexity = 5
 	inputs = list("X" = IC_PINTYPE_NUMBER,"Y" = IC_PINTYPE_NUMBER)
 	outputs = list("tile" = IC_PINTYPE_REF)
-	activators = list("scan" = IC_PINTYPE_PULSE_IN, "on scanned" = IC_PINTYPE_PULSE_OUT,"not scanned" = IC_PINTYPE_PULSE_OUT)
+	activators = list("calculate dir" = IC_PINTYPE_PULSE_IN, "on calculated" = IC_PINTYPE_PULSE_OUT,"not calculated" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
 	power_draw_per_use = 40
 
@@ -374,7 +388,7 @@
 
 /obj/item/integrated_circuit/input/turfscan
 	name = "tile analyzer"
-	desc = "This machine vision system can analyze contents of desired tile.And can read letters on floor."
+	desc = "This circuit can analyze the contents of the scanned turf, and can read letters on the turf."
 	icon_state = "video_camera"
 	complexity = 5
 	inputs = list(
@@ -382,7 +396,8 @@
 		)
 	outputs = list(
 		"located ref" 		= IC_PINTYPE_LIST,
-		"Written letters" 	= IC_PINTYPE_STRING
+		"Written letters" 	= IC_PINTYPE_STRING,
+		"area"				= IC_PINTYPE_STRING
 		)
 	activators = list(
 		"scan" = IC_PINTYPE_PULSE_IN,
@@ -394,20 +409,23 @@
 	cooldown_per_use = 10
 
 /obj/item/integrated_circuit/input/turfscan/do_work()
-	var/turf/H = get_pin_data_as_type(IC_INPUT, 1, /turf)
-	var/turf/T = get_turf(src)
-	if(!istype(H)) //Invalid input
+	var/turf/scanned_turf = get_pin_data_as_type(IC_INPUT, 1, /turf)
+	var/turf/circuit_turf = get_turf(src)
+	var/area_name = get_area_name(scanned_turf)
+	if(!istype(scanned_turf)) //Invalid input
+		activate_pin(3)
 		return
 
-	if(H in view(T)) // This is a camera. It can't examine thngs,that it can't see.
-		var/list/cont = new()
-		for(var/obj/U in H)
-			cont += WEAKREF(U)
-		for(var/mob/U in H)
-			cont += WEAKREF(U)
-		set_pin_data(IC_OUTPUT, 1, cont)
+	if(scanned_turf in view(circuit_turf)) // This is a camera. It can't examine things that it can't see.
+		var/list/turf_contents = new()
+		for(var/obj/U in scanned_turf)
+			turf_contents += WEAKREF(U)
+		for(var/mob/U in scanned_turf)
+			turf_contents += WEAKREF(U)
+		set_pin_data(IC_OUTPUT, 1, turf_contents)
+		set_pin_data(IC_OUTPUT, 3, area_name)
 		var/list/St = new()
-		for(var/obj/effect/decal/cleanable/crayon/I in H)
+		for(var/obj/effect/decal/cleanable/crayon/I in scanned_turf)
 			St.Add(I.icon_state)
 		if(St.len)
 			set_pin_data(IC_OUTPUT, 2, jointext(St, ",", 1, 0))
@@ -483,7 +501,7 @@
 	complexity = 6
 	name = "list advanced locator"
 	desc = "This is needed for certain devices that demand list of names for a targets to act upon. This type locates something \
-	that is standing in given radius up to 8 meters"
+	that is standing in given radius up to 8 meters. Output is non-associative. Input will only consider keys if associative."
 	extended_desc = "The first pin requires a list of kinds of objects that you want the locator to acquire. It will locate nearby objects by name and description, \
 	and will then provide a list of all found objects which are similar. \
 	The second pin is a radius."
@@ -506,29 +524,38 @@
 	var/datum/integrated_io/I = inputs[1]
 	var/datum/integrated_io/O = outputs[1]
 	O.data = null
-	var/turf/T = get_turf(src)
-	var/list/nearby_things = view(radius,T)
-	var/list/valid_things = list()
-	var/list/GI = list()
-	GI = I.data
-	for(var/G in GI)
-		if(isweakref(G))									//It should search by refs. But don't want.will fix it later.
-			var/datum/integrated_io/G1
-			G1.data = G
-			var/atom/A = G1.data.resolve()
-			var/desired_type = A.type
-			for(var/atom/thing in nearby_things)
-				if(thing.type != desired_type)
-					continue
-				valid_things.Add(WEAKREF(thing))
-		else if(istext(G))
-			for(var/atom/thing in nearby_things)
-				if(findtext(addtext(thing.name," ",thing.desc), G, 1, 0) )
-					valid_things.Add(WEAKREF(thing))
-	if(valid_things.len)
-		O.data = valid_things
-		O.push_data()
-		activate_pin(2)
+	var/list/input_list = list()
+	input_list = I.data
+	if(length(input_list))	//if there is no input don't do anything.
+		var/turf/T = get_turf(src)
+		var/list/nearby_things = view(radius,T)
+		var/list/valid_things = list()
+		for(var/item in input_list)
+			if(!isnull(item) && !isnum(item))
+				if(istext(item))
+					for(var/i in nearby_things)
+						var/atom/thing = i
+						if(ismob(thing) && !isliving(thing))
+							continue
+						if(findtext(addtext(thing.name," ",thing.desc), item, 1, 0) )
+							valid_things.Add(WEAKREF(thing))
+				else
+					var/atom/A = item
+					var/desired_type = A.type
+					for(var/i in nearby_things)
+						var/atom/thing = i
+						if(thing.type != desired_type)
+							continue
+						if(ismob(thing) && !isliving(thing))
+							continue
+						valid_things.Add(WEAKREF(thing))
+		if(valid_things.len)
+			O.data = valid_things
+			O.push_data()
+			activate_pin(2)
+		else
+			O.push_data()
+			activate_pin(3)
 	else
 		O.push_data()
 		activate_pin(3)
@@ -566,12 +593,18 @@
 		var/atom/A = I.data.resolve()
 		var/desired_type = A.type
 		if(desired_type)
-			for(var/atom/thing in nearby_things)
+			for(var/i in nearby_things)
+				var/atom/thing = i
+				if(ismob(thing) && !isliving(thing))
+					continue
 				if(thing.type == desired_type)
 					valid_things.Add(thing)
 	else if(istext(I.data))
 		var/DT = I.data
-		for(var/atom/thing in nearby_things)
+		for(var/i in nearby_things)
+			var/atom/thing = i
+			if(ismob(thing) && !isliving(thing))
+				continue
 			if(findtext(addtext(thing.name," ",thing.desc), DT, 1, 0) )
 				valid_things.Add(thing)
 	if(valid_things.len)
@@ -581,10 +614,6 @@
 	else
 		O.push_data()
 		activate_pin(3)
-
-
-
-
 
 /obj/item/integrated_circuit/input/signaler
 	name = "integrated signaler"
@@ -608,6 +637,7 @@
 	var/frequency = FREQ_SIGNALER
 	var/code = DEFAULT_SIGNALER_CODE
 	var/datum/radio_frequency/radio_connection
+	var/hearing_range = 1
 
 /obj/item/integrated_circuit/input/signaler/Initialize()
 	. = ..()
@@ -661,7 +691,11 @@
 		return 0
 
 	activate_pin(3)
-	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 1)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
+	for(var/CHM in get_hearers_in_view(hearing_range, src))
+		if(ismob(CHM))
+			var/mob/LM = CHM
+			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 
 /obj/item/integrated_circuit/input/ntnet_packet
 	name = "NTNet networking circuit"
@@ -671,8 +705,8 @@
 	will pulse whatever's connected to it. Pulsing the first activation pin will send a message. Message \
 	can be send to multiple recepients. Addresses must be separated with ; symbol."
 	icon_state = "signal"
-	complexity = 4
-	cooldown_per_use = 5
+	complexity = 2
+	cooldown_per_use = 1
 	inputs = list(
 		"target NTNet addresses"= IC_PINTYPE_STRING,
 		"data to send"			= IC_PINTYPE_STRING,
@@ -683,19 +717,20 @@
 		"address received"			= IC_PINTYPE_STRING,
 		"data received"				= IC_PINTYPE_STRING,
 		"secondary text received"	= IC_PINTYPE_STRING,
-		"passkey"					= IC_PINTYPE_STRING
+		"passkey"					= IC_PINTYPE_STRING,
+		"is_broadcast"				= IC_PINTYPE_BOOLEAN
 		)
 	activators = list("send data" = IC_PINTYPE_PULSE_IN, "on data received" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	action_flags = IC_ACTION_LONG_RANGE
 	power_draw_per_use = 50
-	var/datum/ntnet_connection/exonet = null
 	var/address
 
 /obj/item/integrated_circuit/input/ntnet_packet/Initialize()
 	. = ..()
 	var/datum/component/ntnet_interface/net = LoadComponent(/datum/component/ntnet_interface)
 	address = net.hardware_id
+	net.differentiate_broadcast = FALSE
 	desc += "<br>This circuit's NTNet hardware address is: [address]"
 
 /obj/item/integrated_circuit/input/ntnet_packet/do_work()
@@ -706,17 +741,60 @@
 
 	var/datum/netdata/data = new
 	data.recipient_ids = splittext(target_address, ";")
-	data.plaintext_data = message
-	data.plaintext_data_secondary = text
-	data.encrypted_passkey = key
+	data.standard_format_data(message, text, key)
 	ntnet_send(data)
 
 /obj/item/integrated_circuit/input/ntnet_recieve(datum/netdata/data)
 	set_pin_data(IC_OUTPUT, 1, data.sender_id)
-	set_pin_data(IC_OUTPUT, 2, data.plaintext_data)
-	set_pin_data(IC_OUTPUT, 3, data.plaintext_data_secondary)
-	set_pin_data(IC_OUTPUT, 4, data.encrypted_passkey)
+	set_pin_data(IC_OUTPUT, 2, data.data["data"])
+	set_pin_data(IC_OUTPUT, 3, data.data["data_secondary"])
+	set_pin_data(IC_OUTPUT, 4, data.data["encrypted_passkey"])
+	set_pin_data(IC_OUTPUT, 5, data.broadcast)
 
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/input/ntnet_advanced
+	name = "Low level NTNet transreciever"
+	desc = "Enables the sending and receiving of messages on NTNet via packet data protocol. Allows advanced control of message contents and signalling. Must use associative lists. Outputs associative list. Has a slower transmission rate than normal NTNet circuits, due to increased data processing complexity.."
+	extended_desc = "Data can be send or received using the second pin on each side, \
+	with additonal data reserved for the third pin. When a message is received, the second activation pin \
+	will pulse whatever's connected to it. Pulsing the first activation pin will send a message. Message \
+	can be send to multiple recepients. Addresses must be separated with ; symbol."
+	icon_state = "signal"
+	complexity = 4
+	cooldown_per_use = 10
+	inputs = list(
+		"target NTNet addresses"= IC_PINTYPE_STRING,
+		"data"					= IC_PINTYPE_LIST,
+		)
+	outputs = list("recieved data" = IC_PINTYPE_LIST, "is_broadcast" = IC_PINTYPE_BOOLEAN)
+	activators = list("send data" = IC_PINTYPE_PULSE_IN, "on data received" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	action_flags = IC_ACTION_LONG_RANGE
+	power_draw_per_use = 50
+	var/address
+
+/obj/item/integrated_circuit/input/ntnet_advanced/Initialize()
+	. = ..()
+	var/datum/component/ntnet_interface/net = LoadComponent(/datum/component/ntnet_interface)
+	address = net.hardware_id
+	net.differentiate_broadcast = FALSE
+	desc += "<br>This circuit's NTNet hardware address is: [address]"
+
+/obj/item/integrated_circuit/input/ntnet_advanced/do_work()
+	var/target_address = get_pin_data(IC_INPUT, 1)
+	var/list/message = get_pin_data(IC_INPUT, 2)
+	if(!islist(message))
+		message = list()
+	var/datum/netdata/data = new
+	data.recipient_ids = splittext(target_address, ";")
+	data.data = message
+	ntnet_send(data)
+
+/obj/item/integrated_circuit/input/ntnet_advanced/ntnet_recieve(datum/netdata/data)
+	set_pin_data(IC_OUTPUT, 1, data.data)
+	set_pin_data(IC_OUTPUT, 2, data.broadcast)
 	push_data()
 	activate_pin(2)
 
@@ -793,8 +871,8 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 120
 
-/obj/item/integrated_circuit/input/sensor/sense(var/atom/A,mob/user,prox)
-	if(!prox)
+/obj/item/integrated_circuit/input/sensor/sense(atom/A, mob/user, prox)
+	if(!prox || !A || (ismob(A) && !isliving(A)))
 		return FALSE
 	if(!check_then_do_work())
 		return FALSE
@@ -820,8 +898,8 @@
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	power_draw_per_use = 120
 
-/obj/item/integrated_circuit/input/sensor/ranged/sense(var/atom/A,mob/user)
-	if(!user)
+/obj/item/integrated_circuit/input/sensor/ranged/sense(atom/A, mob/user)
+	if(!user || !A || (ismob(A) && !isliving(A)))
 		return FALSE
 	if(user.client)
 		if(!(A in view(user.client)))
@@ -974,9 +1052,9 @@
 		activate_pin(3)
 
 /obj/item/integrated_circuit/input/matscan
-	name = "material scaner"
-	desc = "It's special module, designed to get information about material containers of different machinery.\
-			Like ORM, lathes, etc."
+	name = "material scanner"
+	desc = "This special module is designed to get information about material containers of different machinery, \
+			like ORM, lathes, etc."
 	icon_state = "video_camera"
 	complexity = 6
 	inputs = list(

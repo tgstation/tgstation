@@ -798,7 +798,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		var/list/nametemp = list()
 		var/find
 		var/datum/picture/selection
-		var/obj/item/device/camera/siliconcam/targetcam = null
+		var/obj/item/camera/siliconcam/targetcam = null
 		if(isAI(user))
 			var/mob/living/silicon/ai/R = user
 			targetcam = R.aicamera
@@ -830,8 +830,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.wear_id)
-			if(istype(human_user.wear_id, /obj/item/device/pda))
-				var/obj/item/device/pda/P = human_user.wear_id
+			if(istype(human_user.wear_id, /obj/item/pda))
+				var/obj/item/pda/P = human_user.wear_id
 				if(P.id)
 					scanned_user = "[P.id.registered_name] ([P.id.assignment])"
 				else

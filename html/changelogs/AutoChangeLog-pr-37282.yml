@@ -1,4 +1,0 @@
-author: "Astatineguy12"
-delete-after: True
-changes: 
-  - bugfix: "Gygax construction now actually uses up the capacitor"

@@ -60,7 +60,7 @@
 
 /datum/component/storage/Initialize(datum/component/storage/concrete/master)
 	if(!isatom(parent))
-		. = COMPONENT_INCOMPATIBLE
+		return COMPONENT_INCOMPATIBLE
 	if(master)
 		change_master(master)
 	boxes = new(null, src)
@@ -108,7 +108,7 @@
 	LAZYCLEARLIST(is_using)
 	return ..()
 
-/datum/component/storage/OnTransfer(datum/new_parent)
+/datum/component/storage/PreTransfer()
 	update_actions()
 
 /datum/component/storage/proc/update_actions()
@@ -232,13 +232,15 @@
 		stoplag(1)
 	qdel(progress)
 
-/datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress)
+/datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found = TRUE)
 	var/atom/real_location = real_location()
 	for(var/obj/item/I in things)
 		things -= I
 		if(I.loc != real_location)
 			continue
 		remove_from_storage(I, target)
+		if(trigger_on_found && I.on_found())
+			return FALSE
 		if(TICK_CHECK)
 			progress.update(progress.goal - length(things))
 			return TRUE
@@ -503,10 +505,10 @@
 	if(!istype(M))
 		return FALSE
 	A.add_fingerprint(M)
-	if(locked)
+	if(locked && !force)
 		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
 		return FALSE
-	if(M.CanReach(parent, view_only = TRUE))
+	if(force || M.CanReach(parent, view_only = TRUE))
 		show_to(M)
 
 /datum/component/storage/proc/mousedrop_recieve(atom/movable/O, mob/M)
@@ -523,48 +525,50 @@
 /datum/component/storage/proc/can_be_inserted(obj/item/I, stop_messages = FALSE, mob/M)
 	if(!istype(I) || (I.flags_1 & ABSTRACT_1))
 		return FALSE //Not an item
+	if(I == parent)
+		return FALSE	//no paradoxes for you
 	var/atom/real_location = real_location()
-	var/atom/parent = src.parent
+	var/atom/host = parent
 	if(real_location == I.loc)
 		return FALSE //Means the item is already in the storage item
 	if(locked)
 		if(M)
-			parent.add_fingerprint(M)
-			to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
+			host.add_fingerprint(M)
+			to_chat(M, "<span class='warning'>[host] seems to be locked!</span>")
 		return FALSE
 	if(real_location.contents.len >= max_items)
 		if(!stop_messages)
-			to_chat(M, "<span class='warning'>[parent] is full, make some space!</span>")
+			to_chat(M, "<span class='warning'>[host] is full, make some space!</span>")
 		return FALSE //Storage item is full
 	if(length(can_hold))
 		if(!is_type_in_typecache(I, can_hold))
 			if(!stop_messages)
-				to_chat(M, "<span class='warning'>[parent] cannot hold [I]!</span>")
+				to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 			return FALSE
 	if(is_type_in_typecache(I, cant_hold)) //Check for specific items which this container can't hold.
 		if(!stop_messages)
-			to_chat(M, "<span class='warning'>[parent] cannot hold [I]!</span>")
+			to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 		return FALSE
 	if(I.w_class > max_w_class)
 		if(!stop_messages)
-			to_chat(M, "<span class='warning'>[I] is too big for [parent]!</span>")
+			to_chat(M, "<span class='warning'>[I] is too big for [host]!</span>")
 		return FALSE
 	var/sum_w_class = I.w_class
 	for(var/obj/item/_I in real_location)
 		sum_w_class += _I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 	if(sum_w_class > max_combined_w_class)
 		if(!stop_messages)
-			to_chat(M, "<span class='warning'>[I] won't fit in [parent], make some space!</span>")
+			to_chat(M, "<span class='warning'>[I] won't fit in [host], make some space!</span>")
 		return FALSE
-	if(isitem(parent))
-		var/obj/item/IP = parent
+	if(isitem(host))
+		var/obj/item/IP = host
 		GET_COMPONENT_FROM(STR_I, /datum/component/storage, I)
 		if((I.w_class >= IP.w_class) && STR_I && !allow_big_nesting)
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[IP] cannot hold [I] as it's a storage item of the same size!</span>")
 			return FALSE //To prevent the stacking of same sized storage items.
 	if(I.flags_1 & NODROP_1) //SHOULD be handled in unEquip, but better safe than sorry.
-		to_chat(M, "<span class='warning'>\the [I] is stuck to your hand, you can't put it in \the [parent]!</span>")
+		to_chat(M, "<span class='warning'>\the [I] is stuck to your hand, you can't put it in \the [host]!</span>")
 		return FALSE
 	var/datum/component/storage/concrete/master = master()
 	if(!istype(master))
@@ -607,7 +611,7 @@
 		O.update_icon()
 
 /datum/component/storage/proc/signal_insertion_attempt(obj/item/I, mob/M, silent = FALSE, force = FALSE)
-	if(!force && !can_be_inserted(I, TRUE, M))
+	if((!force && !can_be_inserted(I, TRUE, M)) || (I == parent))
 		return FALSE
 	return handle_item_insertion(I, silent, M)
 

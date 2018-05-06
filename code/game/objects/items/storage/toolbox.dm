@@ -48,12 +48,12 @@
 	new /obj/item/extinguisher/mini(src)
 	switch(rand(1,3))
 		if(1)
-			new /obj/item/device/flashlight(src)
+			new /obj/item/flashlight(src)
 		if(2)
-			new /obj/item/device/flashlight/glowstick(src)
+			new /obj/item/flashlight/glowstick(src)
 		if(3)
-			new /obj/item/device/flashlight/flare(src)
-	new /obj/item/device/radio/off(src)
+			new /obj/item/flashlight/flare(src)
+	new /obj/item/radio/off(src)
 
 /obj/item/storage/toolbox/emergency/old
 	name = "rusty red toolbox"
@@ -70,7 +70,7 @@
 	new /obj/item/wrench(src)
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
-	new /obj/item/device/analyzer(src)
+	new /obj/item/analyzer(src)
 	new /obj/item/wirecutters(src)
 
 /obj/item/storage/toolbox/mechanical/old
@@ -96,7 +96,7 @@
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/screwdriver(src)
 	new /obj/item/wirecutters(src)
-	new /obj/item/device/t_scanner(src)
+	new /obj/item/t_scanner(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/stack/cable_coil(src,30,pickedcolor)
 	new /obj/item/stack/cable_coil(src,30,pickedcolor)
@@ -123,7 +123,7 @@
 	new /obj/item/weldingtool/largetank(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/wirecutters(src, "red")
-	new /obj/item/device/multitool(src)
+	new /obj/item/multitool(src)
 	new /obj/item/clothing/gloves/combat(src)
 
 /obj/item/storage/toolbox/drone
@@ -139,7 +139,7 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/stack/cable_coil(src,30,pickedcolor)
 	new /obj/item/wirecutters(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/multitool(src)
 
 /obj/item/storage/toolbox/brass
 	name = "brass box"
@@ -168,7 +168,7 @@
 	new /obj/item/weldingtool/experimental/brass(src)
 
 /obj/item/storage/toolbox/brass/prefilled/servant
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	fabricator_type = null
 
 /obj/item/storage/toolbox/brass/prefilled/ratvar
