@@ -90,7 +90,7 @@
 /mob/living/carbon/true_devil/resist_buckle()
 	if(buckled)
 		buckled.user_unbuckle_mob(src,src)
-		visible_message("<span class='warning'>[src] easily breaks out of their handcuffs!</span>", \
+		visible_message("<span class='warning'>[src] easily breaks out of [p_their()] handcuffs!</span>", \
 					"<span class='notice'>With just a thought your handcuffs fall off.</span>")
 
 /mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)

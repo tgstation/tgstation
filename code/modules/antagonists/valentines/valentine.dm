@@ -19,7 +19,7 @@
 	. = ..()
 
 /datum/antagonist/valentine/greet()
-	to_chat(owner, "<span class='warning'><B>You're on a date with [date.name]! Protect them at all costs. This takes priority over all other loyalties.</B></span>")
+	to_chat(owner, "<span class='warning'><B>You're on a date with [date.name]! Protect [date.p_them()] at all costs. This takes priority over all other loyalties.</B></span>")
 
 //Squashed up a bit
 /datum/antagonist/valentine/roundend_report()
@@ -31,6 +31,6 @@
 				break
 
 	if(objectives_complete)
-		return "<span class='greentext big'>[owner.name] protected their date</span>"
+		return "<span class='greentext big'>[owner.name] protected [owner.p_their()] date</span>"
 	else
 		return "<span class='redtext big'>[owner.name] date failed!</span>"

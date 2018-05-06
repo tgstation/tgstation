@@ -1,94 +1,94 @@
-//every trait in this folder should be coded around being applied on spawn
-//these are NOT "mob traits" like GOTTAGOFAST, but exist as a medium to apply them and other different effects
-/datum/trait
-	var/name = "Test Trait"
-	var/desc = "This is a test trait."
+//every quirk in this folder should be coded around being applied on spawn
+//these are NOT "mob quirks" like GOTTAGOFAST, but exist as a medium to apply them and other different effects
+/datum/quirk
+	var/name = "Test Quirk"
+	var/desc = "This is a test quirk."
 	var/value = 0
 	var/human_only = TRUE
 	var/gain_text
 	var/lose_text
 	var/medical_record_text //This text will appear on medical records for the trait. Not yet implemented
-	var/mood_trait = FALSE //if true, this trait affects mood and is unavailable if moodlets are disabled
+	var/mood_quirk = FALSE //if true, this quirk affects mood and is unavailable if moodlets are disabled
 	var/mob_trait //if applicable, apply and remove this mob trait
-	var/mob/living/trait_holder
+	var/mob/living/quirk_holder
 
-/datum/trait/New(mob/living/trait_mob, spawn_effects)
+/datum/quirk/New(mob/living/quirk_mob, spawn_effects)
 	..()
-	if(!trait_mob || (human_only && !ishuman(trait_mob)) || trait_mob.has_trait_datum(type))
+	if(!quirk_mob || (human_only && !ishuman(quirk_mob)) || quirk_mob.has_quirk(type))
 		qdel(src)
-	trait_holder = trait_mob
-	SStraits.trait_objects += src
-	to_chat(trait_holder, gain_text)
-	trait_holder.roundstart_traits += src
+	quirk_holder = quirk_mob
+	SSquirks.quirk_objects += src
+	to_chat(quirk_holder, gain_text)
+	quirk_holder.roundstart_quirks += src
 	if(mob_trait)
-		trait_holder.add_trait(mob_trait, ROUNDSTART_TRAIT)
-	START_PROCESSING(SStraits, src)
+		quirk_holder.add_trait(mob_trait, ROUNDSTART_TRAIT)
+	START_PROCESSING(SSquirks, src)
 	add()
 	if(spawn_effects)
 		on_spawn()
 		addtimer(CALLBACK(src, .proc/post_add), 30)
 
-/datum/trait/Destroy()
-	STOP_PROCESSING(SStraits, src)
+/datum/quirk/Destroy()
+	STOP_PROCESSING(SSquirks, src)
 	remove()
-	if(trait_holder)
-		to_chat(trait_holder, lose_text)
-		trait_holder.roundstart_traits -= src
+	if(quirk_holder)
+		to_chat(quirk_holder, lose_text)
+		quirk_holder.roundstart_quirks -= src
 		if(mob_trait)
-			trait_holder.remove_trait(mob_trait, ROUNDSTART_TRAIT, TRUE)
-	SStraits.trait_objects -= src
+			quirk_holder.remove_trait(mob_trait, ROUNDSTART_TRAIT, TRUE)
+	SSquirks.quirk_objects -= src
 	return ..()
 
-/datum/trait/proc/transfer_mob(mob/living/to_mob)
-	trait_holder.roundstart_traits -= src
-	to_mob.roundstart_traits += src
+/datum/quirk/proc/transfer_mob(mob/living/to_mob)
+	quirk_holder.roundstart_quirks -= src
+	to_mob.roundstart_quirks += src
 	if(mob_trait)
-		trait_holder.remove_trait(mob_trait, ROUNDSTART_TRAIT)
+		quirk_holder.remove_trait(mob_trait, ROUNDSTART_TRAIT)
 		to_mob.add_trait(mob_trait, ROUNDSTART_TRAIT)
-	trait_holder = to_mob
+	quirk_holder = to_mob
 	on_transfer()
 
-/datum/trait/proc/add() //special "on add" effects
-/datum/trait/proc/on_spawn() //these should only trigger when the character is being created for the first time, i.e. roundstart/latejoin
-/datum/trait/proc/remove() //special "on remove" effects
-/datum/trait/proc/on_process() //process() has some special checks, so this is the actual process
-/datum/trait/proc/post_add() //for text, disclaimers etc. given after you spawn in with the trait
-/datum/trait/proc/on_transfer() //code called when the trait is transferred to a new mob
+/datum/quirk/proc/add() //special "on add" effects
+/datum/quirk/proc/on_spawn() //these should only trigger when the character is being created for the first time, i.e. roundstart/latejoin
+/datum/quirk/proc/remove() //special "on remove" effects
+/datum/quirk/proc/on_process() //process() has some special checks, so this is the actual process
+/datum/quirk/proc/post_add() //for text, disclaimers etc. given after you spawn in with the trait
+/datum/quirk/proc/on_transfer() //code called when the trait is transferred to a new mob
 
-/datum/trait/process()
-	if(QDELETED(trait_holder))
-		trait_holder = null
+/datum/quirk/process()
+	if(QDELETED(quirk_holder))
+		quirk_holder = null
 		qdel(src)
 		return
-	if(trait_holder.stat == DEAD)
+	if(quirk_holder.stat == DEAD)
 		return
 	on_process()
 
 /mob/living/proc/get_trait_string(medical) //helper string. gets a string of all the traits the mob has
 	var/list/dat = list()
 	if(!medical)
-		for(var/V in roundstart_traits)
-			var/datum/trait/T = V
+		for(var/V in roundstart_quirks)
+			var/datum/quirk/T = V
 			dat += T.name
 		if(!dat.len)
 			return "None"
 		return dat.Join(", ")
 	else
-		for(var/V in roundstart_traits)
-			var/datum/trait/T = V
+		for(var/V in roundstart_quirks)
+			var/datum/quirk/T = V
 			dat += T.medical_record_text
 		if(!dat.len)
 			return "None"
 		return dat.Join("<br>")
 
 /mob/living/proc/cleanse_trait_datums() //removes all trait datums
-	for(var/V in roundstart_traits)
-		var/datum/trait/T = V
+	for(var/V in roundstart_quirks)
+		var/datum/quirk/T = V
 		qdel(T)
 
 /mob/living/proc/transfer_trait_datums(mob/living/to_mob)
-	for(var/V in roundstart_traits)
-		var/datum/trait/T = V
+	for(var/V in roundstart_quirks)
+		var/datum/quirk/T = V
 		T.transfer_mob(to_mob)
 
 /*
@@ -96,7 +96,7 @@
 Commented version of Nearsighted to help you add your own traits
 Use this as a guideline
 
-/datum/trait/nearsighted
+/datum/quirk/nearsighted
 	name = "Nearsighted"
 	///The trait's name
 
@@ -116,8 +116,8 @@ Use this as a guideline
 	medical_record_text = "Subject has permanent nearsightedness."
 	///These three are self-explanatory
 
-/datum/trait/nearsighted/on_spawn()
-	var/mob/living/carbon/human/H = trait_holder
+/datum/quirk/nearsighted/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
 	H.put_in_hands(glasses)
 	H.equip_to_slot(glasses, SLOT_GLASSES)
