@@ -17,7 +17,6 @@
 
 /obj/structure/closet/crate/large/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/crowbar))
-		//var/turf/T = get_turf(src)
 		if(manifest)
 			tear_manifest(user)
 
