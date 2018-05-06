@@ -357,8 +357,11 @@
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if((H.head && (H.head.flags_1 & THICKMATERIAL_1)) && (H.wear_suit && (H.wear_suit.flags_1 & THICKMATERIAL_1)))
-			return FALSE // Skip over them if they have no exposed flesh.
+		if (H.wear_suit && H.head && is_type_in_typecache(H.wear_suit, GLOB.typecache_clothing) && is_type_in_typecache(H.wear_suit, GLOB.typecache_clothing))
+			var/obj/item/clothing/CS = H.wear_suit
+			var/obj/item/clothing/CH = H.head
+			if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
+				return FALSE // Skip over them if they have no exposed flesh.
 
 	if(declare_crit && C.health <= 0) //Critical condition! Call for help!
 		declare(C)

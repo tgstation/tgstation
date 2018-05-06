@@ -264,7 +264,7 @@
 				var/obj/item/clothing/mask/M = C.wear_mask
 				if(M.mask_adjusted) // if mask on face but pushed down
 					M.adjustmask(C) // adjust it back
-				if( !(M.flags_1 & MASKINTERNALS_1) )
+				if( !(M.clothing_flags & MASKINTERNALS) )
 					to_chat(C, "<span class='warning'>You are not wearing an internals mask!</span>")
 					return
 
@@ -363,7 +363,7 @@
 /obj/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
 		return TRUE
-	if(usr.stat || usr.IsUnconscious() || usr.IsKnockdown() || usr.IsStun())
+	if(usr.incapacitated())
 		return TRUE
 	if (ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE

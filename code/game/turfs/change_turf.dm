@@ -68,10 +68,19 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	blueprint_data = null
 
 	var/list/old_baseturfs = baseturfs
-	changing_turf = TRUE
 
+	var/list/transferring_comps = list()
+	SendSignal(COMSIG_TURF_CHANGE, path, new_baseturfs, flags, transferring_comps)
+	for(var/i in transferring_comps)
+		var/datum/component/comp = i
+		comp.RemoveComponent()
+
+	changing_turf = TRUE
 	qdel(src)	//Just get the side effects and call Destroy
 	var/turf/W = new path(src)
+
+	for(var/i in transferring_comps)
+		W.TakeComponent(i)
 
 	if(new_baseturfs)
 		W.baseturfs = new_baseturfs

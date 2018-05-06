@@ -6,9 +6,8 @@
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
 
-	flags_1 = CONDUCT_1 | HEAR_1
-	flags_2 = NO_EMP_WIRES_2
-	slot_flags = SLOT_BELT
+	flags_1 = CONDUCT_1 | HEAR_1 | NO_EMP_WIRES_1
+	slot_flags = ITEM_SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
@@ -44,7 +43,7 @@
 	//FREQ_BROADCASTING = 2
 
 /obj/item/radio/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] starts bouncing [src] off their head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
 /obj/item/radio/proc/set_frequency(new_frequency)
@@ -365,7 +364,6 @@
 	name = "cyborg radio"
 	subspace_switchable = TRUE
 	dog_fashion = null
-	flags_2 = NO_EMP_WIRES_2
 
 /obj/item/radio/borg/Initialize(mapload)
 	. = ..()

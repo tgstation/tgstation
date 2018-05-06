@@ -10,7 +10,7 @@
 	var/list/arguments = args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
-		CRASH("Incompatible [type] assigned to a [P]!")
+		CRASH("Incompatible [type] assigned to a [P.type]!")
 
 	_JoinParent(P)
 
@@ -101,7 +101,10 @@
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
 
-/datum/component/proc/OnTransfer(datum/new_parent)
+/datum/component/proc/PreTransfer()
+	return
+
+/datum/component/proc/PostTransfer()
 	return
 
 /datum/component/proc/_GetInverseTypeList(our_type = type)
@@ -225,21 +228,26 @@
 	if(!.)
 		return AddComponent(arglist(args))
 
-/datum/proc/TakeComponent(datum/component/C)
-	if(!C)
+/datum/component/proc/RemoveComponent()
+	if(!parent)
 		return
-	var/datum/helicopter = C.parent
-	if(helicopter == src)
-		//if we're taking to the same thing no need for anything
+	var/datum/old_parent = parent
+	PreTransfer()
+	_RemoveFromParent()
+	old_parent.SendSignal(COMSIG_COMPONENT_REMOVING, src)
+
+/datum/proc/TakeComponent(datum/component/target)
+	if(!target)
 		return
-	if(C.OnTransfer(src) == COMPONENT_INCOMPATIBLE)
-		qdel(C)
-		return
-	C._RemoveFromParent()
-	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, C)
-	C.parent = src
-	if(C == AddComponent(C))
-		C._JoinParent()
+	if(target.parent)
+		target.RemoveComponent()
+	target.parent = src
+	if(target.PostTransfer() == COMPONENT_INCOMPATIBLE)
+		var/c_type = target.type
+		qdel(target)
+		CRASH("Incompatible [c_type] transfer attempt to a [type]!")
+	if(target == AddComponent(target))
+		target._JoinParent()
 
 /datum/proc/TransferComponents(datum/target)
 	var/list/dc = datum_components

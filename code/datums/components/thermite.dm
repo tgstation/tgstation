@@ -21,10 +21,7 @@
 		)
 
 /datum/component/thermite/Initialize(_amount)
-	if(!istype(parent, /turf))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("A thermite component has been applied to an incorrect object. parent: [parent]")
-	if(blacklist[parent.type])
+	if(!istype(parent, /turf) || blacklist[parent.type])
 		return COMPONENT_INCOMPATIBLE
 	if(immunelist[parent.type])
 		_amount*=0 //Yeah the overlay can still go on it and be cleaned but you arent burning down a diamond wall

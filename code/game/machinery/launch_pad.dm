@@ -37,9 +37,6 @@
 				to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
 				return 1
 
-		if(exchange_parts(user, I))
-			return
-
 		if(default_deconstruction_crowbar(I))
 			return
 
@@ -245,7 +242,7 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "blpad-remote"
 	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	var/sending = TRUE
 	var/obj/machinery/launchpad/briefcase/pad
 

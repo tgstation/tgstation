@@ -762,6 +762,19 @@ world
 	else
 		curdir = A.dir
 
+	//Try to remove/optimize this section ASAP, CPU hog.
+	//Determines if there's directionals.
+	if(!noIcon && curdir != SOUTH)
+		var/exist = FALSE
+		var/static/list/checkdirs = list(NORTH, EAST, WEST)
+		for(var/i in checkdirs)		//Not using GLOB for a reason.
+			if(length(icon_states(icon(curicon, curstate, i))))
+				exist = TRUE
+				break
+		if(!exist)
+			base_icon_dir = SOUTH
+	//
+
 	if(!base_icon_dir)
 		base_icon_dir = curdir
 
@@ -879,7 +892,6 @@ world
 
 	#undef BLANK
 	#undef SET_SELF
-	#undef APPLY_SELF_COLOR
 
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
@@ -1060,19 +1072,19 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	// Used to make the frozen item visuals for Freon.
 	if(resistance_flags & FREEZE_PROOF)
 		return
-	if(!(flags_2 & FROZEN_2))
+	if(!(obj_flags & FROZEN))
 		name = "frozen [name]"
 		add_atom_colour(GLOB.freon_color_matrix, TEMPORARY_COLOUR_PRIORITY)
 		alpha -= 25
-		flags_2 |= FROZEN_2
+		obj_flags |= FROZEN
 
 //Assumes already frozed
 /obj/proc/make_unfrozen()
-	if(flags_2 & FROZEN_2)
+	if(obj_flags & FROZEN)
 		name = replacetext(name, "frozen ", "")
 		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, GLOB.freon_color_matrix)
 		alpha += 25
-		flags_2 &= ~FROZEN_2
+		obj_flags &= ~FROZEN
 
 
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,

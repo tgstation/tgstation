@@ -10,8 +10,9 @@
 
 /datum/component/storage/concrete/rped/can_be_inserted(obj/item/I, stop_messages, mob/M)
 	. = ..()
-	if(!I.get_part_rating() && !stop_messages)
-		to_chat(M, "<span class='warning'>[parent] only accepts machine parts!</span>")
+	if(!I.get_part_rating())
+		if (!stop_messages)
+			to_chat(M, "<span class='warning'>[parent] only accepts machine parts!</span>")
 		return FALSE
 
 /datum/component/storage/concrete/bluespace/rped
@@ -26,6 +27,7 @@
 
 /datum/component/storage/concrete/bluespace/rped/can_be_inserted(obj/item/I, stop_messages, mob/M)
 	. = ..()
-	if(!I.get_part_rating() && !stop_messages)
-		to_chat(M, "<span class='warning'>[parent] only accepts machine parts!</span>")
+	if(!I.get_part_rating())
+		if (!stop_messages)
+			to_chat(M, "<span class='warning'>[parent] only accepts machine par	ts!</span>")
 		return FALSE
