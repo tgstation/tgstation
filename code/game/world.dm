@@ -17,6 +17,10 @@ GLOBAL_PROTECT(security_mode)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
+	TgsNew()
+
+	GLOB.revdata = new
+	
 	config.Load()
 
 	//SetupLogs depends on the RoundID, so lets check
@@ -24,10 +28,6 @@ GLOBAL_PROTECT(security_mode)
 	SSdbcore.CheckSchemaVersion()
 	SSdbcore.SetRoundID()
 	SetupLogs()
-
-	TgsNew()
-
-	GLOB.revdata = new
 
 	load_admins()
 	LoadVerbs(/datum/verbs/menu)
