@@ -161,6 +161,13 @@
 	suffix = "lavaland_surface_fountain_hall.dmm"
 	cost = 5
 
+/datum/map_template/ruin/lavaland/crypt
+	name = "Necropolis Crypt"
+	id = "crypt"
+	description = "An old crypt for the necropolis, protected by ancient, greatsword wielding guardians."
+	suffix = "lavaland_surface_tomb.dmm"
+	cost = 10
+
 /datum/map_template/ruin/lavaland/survivalcapsule
 	name = "Survival Capsule Ruins"
 	id = "survivalcapsule"

@@ -1,0 +1,83 @@
+"a" = (/obj/structure/stone_tile/surrounding_tile,/obj/structure/stone_tile/surrounding_tile{dir = 1},/obj/structure/stone_tile/center,/obj/structure/stone_tile/surrounding_tile{dir = 8},/obj/structure/stone_tile/surrounding_tile{dir = 4},/mob/living/simple_animal/hostile/cryptguard/leader,/turf/open/indestructible/boss,/area/ruin/unpowered)
+"b" = (/obj/structure/sign/mural1/bot,/turf/closed/indestructible/riveted/boss,/area/ruin/unpowered)
+"c" = (/obj/structure/stone_tile,/obj/structure/stone_tile{dir = 8},/obj/structure/stone_tile{dir = 1},/obj/structure/stone_tile/cracked{dir = 4},/mob/living/simple_animal/hostile/cryptguard,/turf/open/indestructible/boss/air,/area/ruin/unpowered)
+"e" = (/turf/closed/indestructible/riveted/boss,/area/ruin/unpowered)
+"f" = (/obj/structure/stone_tile/surrounding/cracked,/obj/structure/stone_tile/surrounding/cracked{icon_state = "cracked_surrounding1"; dir = 1},/turf/open/lava/smooth/lava_land_surface,/area/ruin/unpowered)
+"g" = (/obj/structure/stone_tile/block{dir = 8},/turf/open/lava/smooth/lava_land_surface,/area/ruin/unpowered)
+"h" = (/obj/structure/stone_tile/surrounding,/obj/structure/stone_tile/center/cracked,/obj/effect/decal/cleanable/blood,/mob/living/simple_animal/hostile/cryptguard,/turf/open/indestructible/boss,/area/ruin/unpowered)
+"i" = (/turf/open/chasm,/area/ruin/unpowered)
+"j" = (/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/block/cracked{dir = 8},/turf/open/indestructible/boss/air,/area/ruin/unpowered)
+"k" = (/obj/structure/stone_tile{dir = 8},/obj/structure/stone_tile{dir = 4},/obj/structure/stone_tile/surrounding_tile,/obj/structure/stone_tile/surrounding_tile{dir = 1},/turf/open/chasm,/area/ruin/unpowered)
+"l" = (/obj/effect/decal/remains/human,/obj/item/flashlight/lantern,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"m" = (/obj/item/flashlight/lantern,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"n" = (/obj/structure/stone_tile,/obj/structure/stone_tile{dir = 8},/obj/structure/stone_tile{dir = 1},/obj/structure/stone_tile/cracked{dir = 4},/obj/effect/decal/cleanable/blood,/turf/open/indestructible/boss/air,/area/ruin/unpowered)
+"o" = (/obj/structure/stone_tile/surrounding/burnt,/turf/open/lava/smooth/lava_land_surface,/area/ruin/unpowered)
+"p" = (/obj/structure/stone_tile{dir = 8},/obj/structure/stone_tile{dir = 4},/obj/structure/stone_tile/surrounding_tile,/obj/structure/stone_tile/surrounding_tile{dir = 1},/turf/open/indestructible/boss,/area/ruin/unpowered)
+"q" = (/obj/structure/stone_tile{dir = 1},/obj/structure/stone_tile/surrounding_tile{dir = 8},/obj/structure/stone_tile/surrounding_tile{dir = 4},/obj/structure/stone_tile,/turf/open/chasm,/area/ruin/unpowered)
+"r" = (/obj/structure/stone_tile/slab,/turf/open/indestructible/boss,/area/ruin/unpowered)
+"s" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"t" = (/obj/structure/stone_tile/block{dir = 8},/obj/structure/stone_tile/surrounding_tile,/turf/open/chasm,/area/ruin/unpowered)
+"u" = (/obj/structure/stone_tile{dir = 1},/obj/structure/stone_tile/surrounding_tile{dir = 8},/obj/structure/stone_tile/surrounding_tile{dir = 4},/obj/structure/stone_tile,/turf/open/indestructible/boss,/area/ruin/unpowered)
+"v" = (/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/surrounding_tile{dir = 8},/turf/open/chasm,/area/ruin/unpowered)
+"w" = (/obj/structure/stone_tile/block/cracked{dir = 8},/obj/structure/stone_tile/surrounding_tile{dir = 1},/turf/open/chasm,/area/ruin/unpowered)
+"x" = (/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/surrounding_tile{dir = 4},/turf/open/chasm,/area/ruin/unpowered)
+"y" = (/obj/structure/stone_tile/cracked{dir = 4},/obj/structure/stone_tile{dir = 8},/obj/structure/stone_tile/surrounding_tile{dir = 1},/obj/structure/stone_tile/surrounding_tile,/turf/open/chasm,/area/ruin/unpowered)
+"z" = (/obj/structure/stone_tile/block{dir = 4},/turf/open/lava/smooth/lava_land_surface,/area/ruin/unpowered)
+"A" = (/obj/structure/stone_tile,/obj/structure/stone_tile/surrounding_tile{dir = 8},/obj/structure/stone_tile/surrounding_tile{dir = 4},/obj/structure/stone_tile{dir = 1},/turf/open/chasm,/area/ruin/unpowered)
+"B" = (/obj/structure/stone_tile/surrounding_tile,/obj/structure/stone_tile/surrounding_tile{dir = 8},/obj/structure/stone_tile/center,/obj/structure/stone_tile/block{dir = 1},/turf/open/indestructible/boss,/area/ruin/unpowered)
+"C" = (/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/surrounding_tile{dir = 8},/turf/open/indestructible/boss,/area/ruin/unpowered)
+"D" = (/obj/structure/stone_tile/surrounding_tile{dir = 8},/obj/structure/stone_tile/surrounding_tile,/obj/structure/stone_tile/center,/obj/structure/stone_tile/block/cracked{dir = 1},/turf/open/indestructible/boss,/area/ruin/unpowered)
+"E" = (/obj/structure/stone_tile/surrounding,/obj/structure/stone_tile/center/cracked,/turf/open/indestructible/boss,/area/ruin/unpowered)
+"F" = (/obj/structure/stone_tile,/obj/structure/stone_tile{dir = 8},/obj/structure/stone_tile{dir = 1},/obj/structure/stone_tile/cracked{dir = 4},/obj/effect/decal/cleanable/blood,/turf/open/indestructible/boss,/area/ruin/unpowered)
+"G" = (/obj/structure/stone_tile,/obj/structure/stone_tile{dir = 8},/obj/structure/stone_tile{dir = 1},/obj/structure/stone_tile/cracked{dir = 4},/turf/open/indestructible/boss,/area/ruin/unpowered)
+"H" = (/obj/structure/necropolis_gate,/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/block/cracked{dir = 8},/obj/structure/fans/tiny/invisible,/turf/open/indestructible/boss,/area/ruin/unpowered)
+"I" = (/obj/structure/stone_tile,/obj/structure/stone_tile{dir = 8},/obj/structure/stone_tile{dir = 1},/obj/structure/stone_tile/cracked{dir = 4},/turf/open/indestructible/boss/air,/area/ruin/unpowered)
+"J" = (/obj/structure/stone_tile/block{dir = 8},/obj/structure/stone_tile/surrounding_tile,/turf/open/indestructible/boss,/area/ruin/unpowered)
+"K" = (/obj/structure/necropolis_gate,/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/block/cracked{dir = 8},/obj/structure/fans/tiny/invisible,/turf/open/indestructible/boss/air,/area/ruin/unpowered)
+"L" = (/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/block/cracked{dir = 8},/turf/open/indestructible/boss,/area/ruin/unpowered)
+"M" = (/obj/effect/decal/remains/human,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"N" = (/obj/structure/stone_tile/block,/obj/structure/stone_tile{dir = 1},/obj/structure/stone_tile{dir = 4},/turf/open/indestructible/boss,/area/ruin/unpowered)
+"O" = (/obj/structure/stone_tile/block{dir = 1},/obj/structure/stone_tile/cracked,/obj/structure/stone_tile{dir = 8},/turf/open/indestructible/boss,/area/ruin/unpowered)
+"P" = (/obj/structure/stone_tile/block{dir = 4},/obj/structure/stone_tile/surrounding_tile{dir = 4},/turf/open/indestructible/boss,/area/ruin/unpowered)
+"Q" = (/obj/structure/stone_tile/block/cracked{dir = 8},/obj/structure/stone_tile/surrounding_tile{dir = 1},/turf/open/indestructible/boss,/area/ruin/unpowered)
+"R" = (/obj/structure/stone_tile/cracked{dir = 4},/obj/structure/stone_tile{dir = 8},/obj/structure/stone_tile/surrounding_tile{dir = 1},/obj/structure/stone_tile/surrounding_tile,/turf/open/indestructible/boss,/area/ruin/unpowered)
+"S" = (/obj/structure/stone_tile,/obj/structure/stone_tile/surrounding_tile{dir = 8},/obj/structure/stone_tile/surrounding_tile{dir = 4},/obj/structure/stone_tile{dir = 1},/turf/open/indestructible/boss,/area/ruin/unpowered)
+"T" = (/obj/structure/sign/mural1/top,/turf/closed/indestructible/riveted/boss,/area/ruin/unpowered)
+
+(1,1,1) = {"
+sssssssssssssss
+sssssssssssssss
+sssssssssssssss
+sssssseeessssss
+ssssseeeeesssss
+sssseefaoeessss
+sssseeBrDeessss
+sssseeeKeeessss
+ssseeecjheeesss
+ssseegpNuzeesss
+ssseegCrJzeesss
+ssseegPrQzeesss
+ssseegROSzeesss
+ssseeeFrGeeesss
+ssseeeeHeeeesss
+ssseeeGLEeeesss
+ssseeikNqieesss
+ssseTitrvieesss
+sssebiwrxieesss
+ssseeiyOAieesss
+ssseeenrIeeesss
+sssseeeKeeessss
+sssssslsmssssss
+sssssssssMsssss
+sssseessseessss
+sssseesMseessss
+sssssssssssssss
+ssssssMssssssss
+sssseessseessss
+sssseessseessss
+sssssssssssssss
+sssssssssssssss
+sssssssssssssss
+sssssssssssssss
+sssssssssssssss
+"}
