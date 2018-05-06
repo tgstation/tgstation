@@ -302,8 +302,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		recharging = TRUE
 	if(sound)
 		playMagSound()
-	else
-		cast(targets,user=user)
+	cast(targets,user=user)
 	after_cast(targets)
 	if(action)
 		action.UpdateButtonIcon()
