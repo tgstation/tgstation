@@ -46,3 +46,6 @@
 
 // Data limits.
 #define IC_MAX_LIST_LENGTH			500
+
+#define CIRCUIT_LIST_VALID_KEY(thing) (istext(thing) || isweakref(thing))
+#define CIRCUIT_LIST_VALID_VALUE(thing) (!islist(thing))
