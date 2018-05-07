@@ -19,6 +19,7 @@
 	var/realName = null
 	var/datum/mind/mind = null
 	var/blood_gender = null
+	var/blood_type = null
 	var/list/features = null
 	var/factions = null
 	var/list/quirks = null
