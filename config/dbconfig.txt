@@ -3,7 +3,7 @@
 ## administration, and the in game library.
 
 ## Should SQL be enabled? Uncomment to enable
-SQL_ENABLED
+#SQL_ENABLED
 
 ## Server the MySQL database can be found at.
 ## Examples: localhost, 200.135.5.43, www.mysqldb.com, etc.
