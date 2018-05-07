@@ -109,12 +109,6 @@
 					to_chat(M, "The screen bursts into static.")
 			..()
 
-/obj/machinery/camera/tesla_act(var/power)//EMP proof upgrade also makes it tesla immune
-	if(isEmpProof())
-		return
-	..()
-	qdel(src)//to prevent bomb testing camera from exploding over and over forever
-
 /obj/machinery/camera/ex_act(severity, target)
 	if(invuln)
 		return

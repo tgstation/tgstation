@@ -463,15 +463,14 @@ Class Procs:
 /obj/machinery/proc/can_be_overridden()
 	. = 1
 
-
-/obj/machinery/tesla_act(power, explosive = FALSE)
+/obj/machinery/tesla_act(power, tesla_flags, shocked_objects)
 	..()
-	if(prob(85) && explosive)
-		explosion(src.loc, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
-	else if(prob(50))
-		emp_act(EMP_LIGHT)
-	else
-		ex_act(EXPLODE_HEAVY)
+	if(prob(85) && (tesla_flags & TESLA_MACHINE_EXPLOSIVE))
+		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
+	if(tesla_flags & TESLA_OBJ_DAMAGE)
+		take_damage(power/2000, BURN, "energy")
+		if(prob(40))
+			emp_act(EMP_LIGHT)
 
 /obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
