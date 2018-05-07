@@ -1140,6 +1140,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 	return .
 
+
+
+/datum/species/proc/on_move(mob/living/carbon/human/H)
+
+
 //////////////////
 // ATTACK PROCS //
 //////////////////
@@ -1179,7 +1184,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 
 
-/datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+/datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style) //the datum belongs to target, fuck you
 	if(user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
@@ -1233,6 +1238,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.forcesay(GLOB.hit_appends)
 		else if(target.lying)
 			target.forcesay(GLOB.hit_appends)
+		if(target.dna && target.dna.species)
+			user.dna.species.on_harm(user,target, attacker_style)
+
+
+/datum/species/proc/on_harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)//this one is owned by user
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())
@@ -1668,7 +1678,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return 0
 
 
-/datum/species/proc/Crossed(mob/living/carbon/human/H,AM as mob|obj)
+/datum/species/proc/Crossed(mob/living/carbon/human/H,atom/movable/AM)
 
 
 /datum/species/proc/on_admin_forced(mob/M, mob/living/carbon/human/H) //When an admin forces our species through the little dropdown menu

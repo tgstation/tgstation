@@ -124,6 +124,7 @@
 			if(chemtraits.len)
 				var/datum/plant_gene/reagent/R = pick(chemtraits)
 				POD.exotic_blood = R.reagent_id
+				podman.reagents.add_reagent(R.reagent_id, 200) //you gotta get used to it first. also filters out really bad chems since they'll die without care
 			var/list/genetraits = list()
 			for(var/datum/plant_gene/trait/T in genes)
 				genetraits += T

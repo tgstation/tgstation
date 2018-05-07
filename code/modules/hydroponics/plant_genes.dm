@@ -178,7 +178,7 @@
 /datum/plant_gene/trait/proc/pod_on_gain(datum/species/pod/P,mob/living/carbon/C)
 	if(!P || !C)
 		return
-	to_chat(C,"You feel [feeling]")
+	to_chat(C,"<span class='notice'><b>You feel [feeling].</b>")
 
 /datum/plant_gene/trait/proc/pod_on_loss(datum/species/pod/P,mob/living/carbon/C)
 
@@ -187,6 +187,10 @@
 /datum/plant_gene/trait/proc/pod_Crossed(datum/species/pod/P,mob/living/carbon/human/H,AM as mob|obj)
 
 /datum/plant_gene/trait/proc/pod_harm(datum/species/pod/P,mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+
+/datum/plant_gene/trait/proc/pod_on_move(datum/species/pod/P, mob/living/carbon/human/H)
+
+/datum/plant_gene/trait/proc/pod_spec_life(mob/living/carbon/human/H, datum/species/pod/P)
 
 /datum/plant_gene/trait/squash
 	// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
@@ -197,7 +201,7 @@
 	feeling = "soft"
 
 /datum/plant_gene/trait/squash/pod_special_attacked_by(datum/species/pod/P,mob/living/carbon/human/H,obj/item/I,mob/living/user)
-	if(I.damtype == BRUTE && I.force > min(10+(P.potency/10),18))
+	if(I.damtype == BRUTE && I.force >= min(10+(P.potency/10),18))
 		H.gib()
 		return TRUE
 	else if(I.damtype == BRUTE)
@@ -228,12 +232,21 @@
 	for(var/datum/plant_gene/trait/T in G.seed.genes)
 		T.on_slip(G, M)
 
-/datum/plant_gene/trait/slip/pod_Crossed(datum/species/pod/P,mob/living/carbon/human/H,AM as mob|obj)
+/datum/plant_gene/trait/slip/pod_Crossed(datum/species/pod/P,mob/living/carbon/human/H,atom/movable/AM)
 	if(!ishuman(AM))
 		return
 	var/mob/living/carbon/human/slipee = AM
-	slipee.slip(min(P.potency*1.6,140),H)
+	slipee.slip(P.potency/2,H)
 
+
+/datum/plant_gene/trait/slip/pod_on_move(datum/species/pod/P, mob/living/carbon/human/H)
+	if(!ishuman(H))
+		return
+	var/obj/item/flightpack/F = H.get_flightpack()
+	if((F && F.flight) || (H.movement_type & FLYING) || !H.has_gravity())
+		return
+	if(!H.shoes || prob(2))
+		H.slip(15, get_turf(H), SLIDE) //we're very slippery
 
 /datum/plant_gene/trait/cell_charge
 	// Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
@@ -272,8 +285,15 @@
 			to_chat(target, "<span class='notice'>Your batteries are recharged!</span>")
 
 /datum/plant_gene/trait/cell_charge/pod_harm(datum/species/pod/P,mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(user.gloves)
+		var/obj/item/clothing/gloves/G = user.gloves
+		if(G.siemens_coefficient == 0)
+			return
+
 	if(prob(P.potency/2))
-		target.electrocute_act(10*P.potency, user, 1, 1)
+		target.electrocute_act(P.potency/5, user, 1, 1)
+		user.electrocute_act(P.potency/8, user, 1, 1)
+		playsound(get_turf(user), 'sound/machines/defib_zap.ogg', 50, 1)
 
 /datum/plant_gene/trait/glow
 	// Makes plant glow. Makes plant in tray glow too.
@@ -299,7 +319,7 @@
 /datum/plant_gene/trait/glow/pod_on_gain(datum/species/pod/P,mob/living/carbon/C)
 	..()
 	glow = new(C)
-	glow.set_light(1.4 + P.potency*rate, pod_get_light(P), C.dna.species.default_features["mcolor"])
+	glow.set_light(1.4 + P.potency*rate, pod_get_light(P), C.dna.features["mcolor"])
 
 /datum/plant_gene/trait/glow/proc/pod_get_light(datum/species/pod/P)
 	return P.potency*(rate + 0.01)
@@ -362,6 +382,10 @@
 /datum/plant_gene/trait/teleport/pod_special_attacked_by(datum/species/pod/P,mob/living/carbon/human/H,obj/item/I,mob/living/user)
 	if(H.stat != DEAD && prob(P.potency/2))
 		do_teleport(H, get_turf(H), P.yield*2)
+
+/datum/plant_gene/trait/teleport/pod_spec_life(mob/living/carbon/human/H, datum/species/pod/P)
+	if(prob(4))
+		do_teleport(H, get_turf(H), P.yield)
 
 /datum/plant_gene/trait/noreact
 	// Makes plant reagents not react until squashed.
@@ -469,14 +493,17 @@
 /datum/plant_gene/trait/stinging/pod_harm(datum/species/pod/P,mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(user.blood_volume < BLOOD_VOLUME_OKAY)
 		return
-	if(target.can_inject(user, 1))
+	if(prob(min(P.potency,100)-1) && target.can_inject(user, 1))
 		user.transfer_blood_to(target, P.yield)
+	var/obj/item/bodypart/BP = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+	BP.receive_damage(2)
 	. = ..()
-
-
 
 /datum/plant_gene/trait/smoke
 	name = "gaseous decomposition"
+	var/last_smoke
+	var/cooldown = 200 //20 second CD
+	feeling = "gassy"
 
 /datum/plant_gene/trait/smoke/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
 	var/datum/effect_system/smoke_spread/chem/S = new
@@ -486,6 +513,15 @@
 	S.set_up(G.reagents, smoke_amount, splat_location, 0)
 	S.start()
 	G.reagents.clear_reagents()
+
+/datum/plant_gene/trait/smoke/pod_special_attacked_by(datum/species/pod/P,mob/living/carbon/human/H,obj/item/I,mob/living/user)
+	if(prob(P.potency/3) && (world.time - last_smoke) > cooldown)
+		last_smoke = world.time
+		var/datum/effect_system/smoke_spread/chem/S = new
+		S.attach(H)
+		H.transfer_blood_to(S.chemholder, P.yield)
+		S.set_up(null,max(1,round(P.yield/3)),get_turf(H),0)
+		S.start()
 
 /datum/plant_gene/trait/fire_resistance // Lavaland
 	name = "Fire Resistance"
@@ -497,6 +533,19 @@
 /datum/plant_gene/trait/fire_resistance/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
 	if(!(G.resistance_flags & FIRE_PROOF))
 		G.resistance_flags |= FIRE_PROOF
+
+/datum/plant_gene/trait/fire_resistance/pod_on_gain(datum/species/pod/P,mob/living/carbon/C)
+	..()
+	P.burnmod = (min(100-P.potency,100))*0.01
+	P.heatmod = (min(100-P.potency,100))*0.01
+	if(P.potency >= 100)
+		C.weather_immunities |= "lava"
+		C.weather_immunities |= "ash"
+
+/datum/plant_gene/trait/fire_resist/pod_on_loss(datum/species/pod/P,mob/living/carbon/C)
+	if(P.potency >= 100)  //good thing there's no way to change a podmans potency
+		C.weather_immunities -= "lava"
+		C.weather_immunities -= "ash"
 
 /datum/plant_gene/trait/plant_type // Parent type
 	name = "you shouldn't see this"

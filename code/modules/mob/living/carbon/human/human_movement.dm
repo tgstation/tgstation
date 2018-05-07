@@ -38,7 +38,8 @@
 	. = ..()
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_move(src, NewLoc)
-
+	if(dna && dna.species)
+		dna.species.on_move(src)
 	if(shoes)
 		if(!lying && !buckled)
 			if(loc == NewLoc)
@@ -71,6 +72,6 @@
 		return 1
 	return dna.species.space_move(src)
 
-/mob/living/carbon/human/Crossed(AM as mob|obj)
+/mob/living/carbon/human/Crossed(atom/movable/AM)
 	dna.species.Crossed(AM)
 

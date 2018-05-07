@@ -21,6 +21,7 @@
 	. = ..()
 	C.faction |= "plants"
 	C.faction |= "vines"
+	to_chat(C, "<span class='notice'>You are a podman. <b>You will quickly shrivel up and die if you are in the dark for too long.</b><br>You have inherited the traits of your seeds and may use it to your advantage.</span>")
 	if(mutation)
 		mutation.pod_on_gain(src,C)
 
@@ -34,20 +35,29 @@
 /datum/species/pod/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
 		return
+	if(mutation)
+		mutation.pod_spec_life(H)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
 		light_amount = min(1,T.get_lumcount()) - 0.5
+		if(light_amount <= 0)
+			H.adjustOxyLoss(3)
+	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
+		H.take_overall_damage(2,0)
+		/*
 		H.nutrition += light_amount * 10
+
 		if(H.nutrition > NUTRITION_LEVEL_FULL)
 			H.nutrition = NUTRITION_LEVEL_FULL
+
 		if(light_amount > 0.2) //if there's enough light, heal
 			H.heal_overall_damage(1,1)
 			H.adjustToxLoss(-1)
 			H.adjustOxyLoss(-1)
+		*/
 
-	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		H.take_overall_damage(2,0)
+
 
 /datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "plantbgone")
@@ -79,11 +89,11 @@
 			return
 	. = ..()
 
-/datum/species/pod/Crossed(mob/living/carbon/human/H,AM as mob|obj)
+/datum/species/pod/Crossed(mob/living/carbon/human/H,atom/movable/AM)
 	if(mutation)
 		mutation.pod_Crossed(src,H,AM)
 
-/datum/species/pod/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+/datum/species/pod/on_harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	..()
 	if(mutation)
 		mutation.pod_harm(src,user,target,attacker_style)
@@ -104,4 +114,8 @@
 			qdel(mutation)
 		mutation = new trait_type()
 		mutation.pod_on_gain(src,H)
+
+/datum/species/pod/on_move(mob/living/carbon/human/H)
+	if(mutation)
+		mutation.pod_on_move(src, H)
 
