@@ -72,6 +72,3 @@
 		return 1
 	return dna.species.space_move(src)
 
-/mob/living/carbon/human/Crossed(atom/movable/AM)
-	dna.species.Crossed(AM)
-
