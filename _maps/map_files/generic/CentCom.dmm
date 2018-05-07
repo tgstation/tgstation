@@ -6943,6 +6943,16 @@
 	},
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
+"tm" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	id_tag = "ninjaholdingsuicide";
+	locked = 1;
+	name = "SUICIDE CHAMBER"
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/centcom/holding)
 "tn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -8246,6 +8256,14 @@
 	dir = 2
 	},
 /area/syndicate_mothership/control)
+"wZ" = (
+/obj/structure/table,
+/obj/item/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
+/turf/open/floor/plasteel/freezer{
+	dir = 2
+	},
+/area/centcom/holding)
 "xb" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -10776,6 +10794,7 @@
 /area/centcom/holding)
 "Fb" = (
 /obj/structure/closet/secure_closet/bar{
+	locked = 0;
 	req_access_txt = "25"
 	},
 /obj/machinery/light{
@@ -11598,13 +11617,6 @@
 "Hk" = (
 /obj/structure/table,
 /obj/item/gun/ballistic/automatic/toy/pistol,
-/turf/open/floor/plasteel/cafeteria,
-/area/centcom/holding)
-"Hl" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/light,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "Hm" = (
@@ -13397,6 +13409,10 @@
 	},
 /turf/open/floor/wood,
 /area/wizard_station)
+"MW" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
 "Nk" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome";
@@ -13425,6 +13441,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"NN" = (
+/turf/open/lava/smooth,
+/area/centcom/holding)
 "NU" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom";
@@ -13452,6 +13471,24 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"PS" = (
+/turf/open/chasm,
+/area/centcom/holding)
+"QY" = (
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
+/obj/machinery/light,
+/obj/machinery/button/door{
+	id = "ninjaholdingsuicide";
+	name = "SUICIDE CHAMBER BOLTS";
+	normaldoorcontrol = 1;
+	pixel_x = 4;
+	pixel_y = -24;
+	specialfunctions = 4
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
 "Un" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome";
@@ -39484,7 +39521,7 @@ aa
 aa
 ED
 EZ
-EZ
+wZ
 FU
 Gs
 GA
@@ -42053,17 +42090,17 @@ aa
 aa
 aa
 ED
-Fh
+MW
 FB
 Fh
 Fh
 Fh
 Fh
-FB
+QY
 ED
-aa
-aa
-aa
+ED
+ED
+ED
 aa
 aa
 aa
@@ -42316,11 +42353,11 @@ Fi
 Fi
 GB
 GB
-Hl
+GB
+tm
+NN
+PS
 ED
-aa
-aa
-aa
 aa
 aa
 aa
@@ -42575,9 +42612,9 @@ Fi
 GZ
 Hm
 ED
-aa
-aa
-aa
+ED
+ED
+ED
 aa
 aa
 aa
