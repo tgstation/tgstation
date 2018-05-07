@@ -33,7 +33,7 @@
 	head = /obj/item/clothing/head/fedora/det_hat
 	r_hand = /obj/item/gun/ballistic
 	l_hand = null
-	r_pocket = /obj/item/ammo_box/c10mm
+	r_pocket = /obj/item/ammo_box/c45
 
 /datum/outfit/tournament/janitor
 	name = "tournament janitor"

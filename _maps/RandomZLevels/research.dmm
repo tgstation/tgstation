@@ -1253,9 +1253,6 @@
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plasteel/darkpurple,
 /area/awaymission/research/interior/genetics)
-"dP" = (
-/turf/open/floor/plasteel/darkpurple,
-/area/awaymission/research/interior/genetics)
 "dQ" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -1409,8 +1406,8 @@
 /obj/structure/rack,
 /obj/item/gun/ballistic/automatic/pistol/m1911,
 /obj/item/gun/ballistic/automatic/pistol/m1911,
-/obj/item/ammo_box/magazine/m45,
-/obj/item/ammo_box/magazine/m45,
+/obj/item/ammo_box/magazine/m1911,
+/obj/item/ammo_box/magazine/m1911,
 /turf/open/floor/plasteel/red,
 /area/awaymission/research/interior/security)
 "eq" = (
@@ -36975,7 +36972,7 @@ fc
 fE
 ea
 cK
-dP
+cK
 dt
 cK
 cK
@@ -37735,7 +37732,7 @@ cJ
 cK
 cK
 cK
-dP
+cK
 ea
 ez
 fg
@@ -38005,7 +38002,7 @@ ea
 hV
 cK
 cK
-dP
+cK
 iI
 cx
 cd

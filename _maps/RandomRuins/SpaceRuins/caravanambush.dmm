@@ -685,12 +685,12 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/ammo_box/c10mm,
-/obj/item/ammo_box/magazine/m10mm{
+/obj/item/ammo_box/c45,
+/obj/item/ammo_box/magazine/m45{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/ammo_box/magazine/m10mm,
+/obj/item/ammo_box/magazine/m45,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
 "hX" = (

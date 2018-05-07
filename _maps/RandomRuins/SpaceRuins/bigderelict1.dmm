@@ -1469,7 +1469,7 @@
 /obj/item/gun/ballistic/automatic/pistol/m1911{
 	spawnwithmagazine = 0
 	},
-/obj/item/ammo_box/magazine/m45,
+/obj/item/ammo_box/magazine/m1911,
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dv" = (
@@ -1769,7 +1769,7 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/space/has_grav/derelictoutpost)
 "dS" = (
-/obj/item/ammo_box/magazine/m45,
+/obj/item/ammo_box/magazine/m1911,
 /obj/structure/alien/weeds{
 	color = "#4BAE56";
 	desc = "A thick gelatinous surface covers the floor.  Someone get the golashes.";

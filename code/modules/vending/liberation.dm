@@ -16,7 +16,7 @@
 					/obj/item/gun/ballistic/automatic/ar = 2)
 	premium = list(/obj/item/ammo_box/magazine/smgm9mm = 2,
 		           /obj/item/ammo_box/magazine/m50 = 4,
-		           /obj/item/ammo_box/magazine/m45 = 2,
+		           /obj/item/ammo_box/magazine/m1911 = 2,
 		           /obj/item/ammo_box/magazine/m75 = 2)
 	contraband = list(/obj/item/clothing/under/patriotsuit = 1,
 		              /obj/item/bedsheet/patriot = 3)

@@ -1,25 +1,25 @@
-// 10mm (Stechkin)
+// .45 (M1911, C20r, Stetchkin)
 
-/obj/item/ammo_casing/c10mm
-	name = ".10mm bullet casing"
-	desc = "A 10mm bullet casing."
-	caliber = "10mm"
-	projectile_type = /obj/item/projectile/bullet/c10mm
+/obj/item/ammo_casing/c45
+	name = ".45 bullet casing"
+	desc = "A .45 bullet casing."
+	caliber = ".45"
+	projectile_type = /obj/item/projectile/bullet/c45
 
-/obj/item/ammo_casing/c10mm/ap
-	name = ".10mm armor-piercing bullet casing"
-	desc = "A 10mm armor-piercing bullet casing."
-	projectile_type = /obj/item/projectile/bullet/c10mm_ap
+/obj/item/ammo_casing/c45/inc
+	name = ".45 incendiary bullet casing"
+	desc = "A .45 incendiary bullet casing."
+	projectile_type = /obj/item/projectile/bullet/incendiary/c45
 
-/obj/item/ammo_casing/c10mm/hp
-	name = ".10mm hollow-point bullet casing"
-	desc = "A 10mm hollow-point bullet casing."
-	projectile_type = /obj/item/projectile/bullet/c10mm_hp
+/obj/item/ammo_casing/c45/hp
+	name = ".45 hollow-point bullet casing"
+	desc = "A .45 hollow-point bullet casing."
+	projectile_type = /obj/item/projectile/bullet/c45/hp
 
-/obj/item/ammo_casing/c10mm/fire
-	name = ".10mm incendiary bullet casing"
-	desc = "A 10mm incendiary bullet casing."
-	projectile_type = /obj/item/projectile/bullet/incendiary/c10mm
+/obj/item/ammo_casing/c45/ap
+	name = ".45 armor-piercing bullet casing"
+	desc = "A .45 armor-piercing bullet casing."
+	projectile_type = /obj/item/projectile/bullet/c45/ap
 
 // 9mm (Stechkin APS)
 

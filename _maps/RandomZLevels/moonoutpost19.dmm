@@ -1598,10 +1598,10 @@
 	name = "personal closet";
 	req_access_txt = "150"
 	},
-/obj/item/ammo_box/magazine/m10mm{
+/obj/item/ammo_box/magazine/m45{
 	icon_state = "9x19p-8"
 	},
-/obj/item/ammo_box/magazine/m10mm{
+/obj/item/ammo_box/magazine/m45{
 	icon_state = "9x19p-8"
 	},
 /obj/item/suppressor,

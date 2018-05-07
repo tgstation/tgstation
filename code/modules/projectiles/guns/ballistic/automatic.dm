@@ -387,7 +387,7 @@
 	icon_state = "surplus"
 	item_state = "moistnugget"
 	weapon_weight = WEAPON_HEAVY
-	mag_type = /obj/item/ammo_box/magazine/m10mm/rifle
+	mag_type = /obj/item/ammo_box/magazine/m45/rifle
 	fire_delay = 30
 	burst_size = 1
 	can_unsuppress = TRUE
