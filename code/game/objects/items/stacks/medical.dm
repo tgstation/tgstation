@@ -127,6 +127,26 @@
 	self_delay = 20
 	max_amount = 12
 
+/obj/item/stack/medical/gauze/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/wirecutters))
+		if(get_amount() < 2)
+			to_chat(user, "<span class='warning'>You need at least two gauze to do this!</span>")
+			return
+
+		if(W.use_tool(src, user, 0, volume=40))
+			var/obj/item/stack/sheet/cloth/new_item = new(usr.loc)
+			user.visible_message("[user.name] cut [src] into pieces of cloth with [W].", \
+						 "<span class='notice'>You cut [src] into pieces of cloth with [W].</span>", \
+						 "<span class='italics'>You hear cutting.</span>")
+			var/obj/item/stack/medical/gauze/R = src
+			src = null
+			var/replace = (user.get_inactive_held_item()==R)
+			R.use(2)
+			if (!R && replace)
+				user.put_in_hands(new_item)
+	else
+		return ..()	
+
 /obj/item/stack/medical/gauze/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins tightening \the [src] around [user.p_their()] neck! It looks like [user.p_they()] forgot how to use medical supplies!</span>")
 	return OXYLOSS
