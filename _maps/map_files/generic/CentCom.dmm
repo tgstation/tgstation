@@ -7260,6 +7260,10 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"tY" = (
+/mob/living/simple_animal/bot/medbot,
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
 "ud" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "nukeop_ready";
@@ -12196,6 +12200,13 @@
 	dir = 4
 	},
 /area/tdome/arena)
+"IK" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks,
+/turf/open/floor/plasteel/freezer{
+	dir = 2
+	},
+/area/centcom/holding)
 "IL" = (
 /obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/stripes/line{
@@ -13471,8 +13482,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"OE" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/plasteel/freezer{
+	dir = 2
+	},
+/area/centcom/holding)
 "PS" = (
 /turf/open/chasm,
+/area/centcom/holding)
+"Qc" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/plasteel/freezer{
+	dir = 2
+	},
 /area/centcom/holding)
 "QY" = (
 /obj/structure/chair/stool{
@@ -13515,6 +13540,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"VP" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
 "VX" = (
 /obj/effect/landmark/shuttle_import,
 /turf/open/space/basic,
@@ -39520,7 +39551,7 @@ aa
 aa
 aa
 ED
-EZ
+OE
 wZ
 FU
 Gs
@@ -40297,7 +40328,7 @@ EZ
 FB
 Fh
 Fh
-Fh
+tY
 Hz
 HH
 HH
@@ -40548,13 +40579,13 @@ aa
 aa
 aa
 ED
-Fc
+Qc
 Fa
 FW
 FB
 Fh
 Fh
-Fh
+VP
 Hy
 HH
 HH
@@ -40805,7 +40836,7 @@ aa
 aa
 aa
 ED
-Fa
+IK
 Fa
 FX
 FB
