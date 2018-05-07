@@ -1,0 +1,84 @@
+"a" = (/turf/open/space/basic,/area/space)
+"b" = (/turf/closed/indestructible/riveted,/area/awaymission/vr/murderdome)
+"c" = (/obj/structure/rack,/obj/item/gun/energy/beam_rifle,/obj/item/gun/energy/beam_rifle,/obj/item/gun/energy/beam_rifle,/obj/item/gun/energy/beam_rifle,/obj/item/gun/energy/beam_rifle,/obj/item/gun/energy/beam_rifle,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"d" = (/obj/structure/rack,/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"e" = (/obj/structure/rack,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"f" = (/obj/structure/rack,/obj/item/gun/ballistic/automatic/m90/unrestricted,/obj/item/gun/ballistic/automatic/m90/unrestricted,/obj/item/gun/ballistic/automatic/m90/unrestricted,/obj/item/gun/ballistic/automatic/m90/unrestricted,/obj/item/gun/ballistic/automatic/m90/unrestricted,/obj/item/gun/ballistic/automatic/c20r/unrestricted,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"g" = (/obj/structure/rack,/obj/item/gun/ballistic/automatic/tommygun,/obj/item/gun/ballistic/automatic/tommygun,/obj/item/gun/ballistic/automatic/tommygun,/obj/item/gun/ballistic/automatic/tommygun,/obj/item/gun/ballistic/automatic/tommygun,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"h" = (/obj/structure/rack,/obj/item/gun/energy/decloner,/obj/item/gun/energy/decloner,/obj/item/gun/energy/decloner,/obj/item/gun/energy/decloner,/obj/item/gun/energy/decloner,/obj/item/gun/energy/decloner,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"i" = (/obj/machinery/recharger,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"j" = (/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"k" = (/obj/structure/rack,/obj/item/gun/ballistic/automatic/proto/unrestricted,/obj/item/gun/ballistic/automatic/proto/unrestricted,/obj/item/gun/ballistic/automatic/proto/unrestricted,/obj/item/gun/ballistic/automatic/proto/unrestricted,/obj/item/gun/ballistic/automatic/proto/unrestricted,/obj/item/gun/ballistic/automatic/c20r/unrestricted,/obj/item/gun/ballistic/automatic/c20r/unrestricted,/obj/item/gun/ballistic/automatic/c20r/unrestricted,/obj/item/gun/ballistic/automatic/c20r/unrestricted,/obj/item/gun/ballistic/automatic/c20r/unrestricted,/obj/item/gun/ballistic/automatic/c20r/unrestricted,/obj/item/gun/ballistic/automatic/c20r/unrestricted,/obj/item/gun/ballistic/automatic/c20r/unrestricted,/obj/item/gun/ballistic/automatic/c20r/unrestricted,/obj/item/gun/ballistic/automatic/c20r/unrestricted,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"l" = (/obj/structure/rack,/obj/item/gun/energy/laser/scatter,/obj/item/gun/energy/laser/scatter,/obj/item/gun/energy/laser/scatter,/obj/item/gun/energy/laser/scatter,/obj/item/gun/energy/laser/scatter,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"m" = (/obj/effect/landmark/vr_spawn,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"n" = (/obj/item/firing_pin,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"o" = (/obj/structure/rack,/obj/item/gun/ballistic/shotgun/automatic/combat,/obj/item/gun/ballistic/shotgun/automatic/combat,/obj/item/gun/ballistic/shotgun/automatic/combat,/obj/item/gun/ballistic/shotgun/automatic/combat,/obj/item/gun/ballistic/shotgun/automatic/combat,/obj/item/gun/ballistic/shotgun/automatic/combat,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"p" = (/obj/structure/rack,/obj/item/gun/energy/xray,/obj/item/gun/energy/xray,/obj/item/gun/energy/xray,/obj/item/gun/energy/xray,/obj/item/gun/energy/xray,/obj/item/gun/energy/xray,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"q" = (/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/baton/loaded,/obj/item/melee/transforming/energy/sword/saber,/obj/item/melee/transforming/energy/sword/saber,/obj/item/melee/transforming/energy/sword/saber,/obj/item/melee/transforming/energy/sword/saber,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"r" = (/obj/structure/rack,/obj/item/gun/ballistic/shotgun/boltaction,/obj/item/gun/ballistic/shotgun/boltaction,/obj/item/gun/ballistic/shotgun/boltaction,/obj/item/gun/ballistic/shotgun/boltaction,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"s" = (/obj/structure/rack,/obj/item/gun/energy/e_gun/nuclear,/obj/item/gun/energy/e_gun/nuclear,/obj/item/gun/energy/e_gun/nuclear,/obj/item/gun/energy/e_gun/nuclear,/obj/item/gun/energy/e_gun/nuclear,/obj/item/gun/energy/e_gun/nuclear,/obj/item/gun/energy/e_gun/nuclear,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"t" = (/obj/structure/rack,/obj/item/gun/energy/pulse/carbine,/obj/item/gun/energy/pulse/carbine,/obj/item/gun/energy/pulse/carbine,/obj/item/gun/energy/pulse/carbine,/obj/item/gun/energy/pulse/carbine,/obj/item/gun/energy/pulse/carbine,/obj/item/gun/energy/pulse/carbine,/obj/item/gun/energy/pulse/carbine,/obj/item/gun/energy/pulse/carbine,/obj/item/gun/energy/pulse/carbine,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"u" = (/obj/structure/rack,/obj/item/gun/ballistic/automatic/ar,/obj/item/gun/ballistic/automatic/ar,/obj/item/gun/ballistic/automatic/ar,/obj/item/gun/ballistic/automatic/ar,/obj/item/gun/ballistic/automatic/ar,/obj/machinery/light,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"v" = (/obj/structure/rack,/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"w" = (/obj/machinery/light,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"x" = (/turf/closed/indestructible/fakeglass,/area/awaymission/vr/murderdome)
+"y" = (/obj/structure/barricade/security/ctf,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"z" = (/obj/structure/barricade/security/ctf,/obj/structure/barricade/security/ctf,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"A" = (/turf/open/indestructible/sound,/area/awaymission/vr/murderdome)
+"B" = (/obj/structure/barricade/security/ctf,/turf/open/indestructible/sound,/area/awaymission/vr/murderdome)
+"C" = (/obj/structure/barricade/security/ctf,/obj/structure/barricade/security/ctf,/turf/open/indestructible/sound,/area/awaymission/vr/murderdome)
+"D" = (/obj/structure/rack,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/obj/item/gun/ballistic/automatic/wt550,/obj/machinery/light,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+"E" = (/obj/structure/rack,/obj/item/gun/ballistic/automatic/ar,/obj/item/gun/ballistic/automatic/ar,/obj/item/gun/ballistic/automatic/ar,/obj/item/gun/ballistic/automatic/ar,/obj/item/gun/ballistic/automatic/ar,/turf/open/indestructible,/area/awaymission/vr/murderdome)
+
+(1,1,1) = {"
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
+bcdefgbcdefgbcdefgbcdefgbcdefgbcdefgbcdefgbcdefgba
+bhijjkbhijjkbhijjkbhijjkbhijjkbhijjkbhijjkbhijjkba
+blimnoblimnoblimnoblimnoblimnoblimnoblimjoblimnoba
+bpjjqrbpjjqrbpjjqrbpjjqrbpjjqrbpjjqrbpjjqrbpjjqrba
+bstjuvbstjuvbstjuvbstjuvbstjuvbstjuvbstjuvbstjuvba
+bbbjbbbbbjbbbbbjbbbbbjbbbbbjbbbbbjbbbbbjbbbbbjbbba
+bjjwjjjjjwjjjjjwjjjjjwjjjjjwjjjjjwjjjjjwjjjjjwjjba
+bjjbjjbjjbjjbjjbjjbjjbjjbjjbjjbjjbjjbjjbjjbjjbjjba
+bbjbjbbbjbjbbbjbjbbbjbjbbbjbjbbbjbjbbbjbjbbbjbjbba
+bjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjba
+bjjwjjjjjwjjjjjwjjjjjwjjjjjwjjjjjwjjjjjwjjjjjwjjba
+bjjxjjjjjxjjjjjxjjjjjxjjjjjxjjjjjxjjjjjxjjjjjxjjba
+bjxxxjjjxxxjjjxxxjjjxxxjjjxxxjjjxxxjjjxxxjjjxxxjba
+bjjxjjjjjxjjjjjxjjjjjxjjjjjxjjjjjxjjjjjxjjjjjxjjba
+bjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjba
+bjjjjjwjjjjjwjjjjjwjjjjjwjjjjjwjjjjjwjjjjjwjjjjjba
+bbjyjbbbjjjbbbjyjbbbjjjbbbjyjbbbjjjbbbjyjbbbjjjbba
+bjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjba
+bjjyjjjjjjjjjjjzjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjba
+bjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjba
+bjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjba
+bjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjba
+bjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjba
+bjjyjjwjjjjjwjjyjjwjjjjjwjjyjjwjjjjjwjjyjjwjjjjjba
+bbABAbbbACAbbbABAbbbABAbbbABAbbbABAbbbABAbbbABAbba
+bjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjba
+bjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjba
+bjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjba
+bjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjba
+bjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjjjjjjjjjjyjjba
+bjjjjjwjjyjjwjjjjjwjjyjjwjjjjjwjjyjjwjjjjjwjjyjjba
+bbjjjbbbjyjbbbjjjbbbjyjbbbjjjbbbjyjbbbjjjbbbjyjbba
+bjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjba
+bjjwjjjjjwjjjjjwjjjjjwjjjjjwjjjjjwjjjjjwjjjjjwjjba
+bjjxjjjjjxjjjjjxjjjjjxjjjjjxjjjjjxjjjjjxjjjjjxjjba
+bjxxxjjjxxxjjjxxxjjjxxxjjjxxxjjjxxxjjjxxxjjjxxxjba
+bjjxjjjjjxjjjjjxjjjjjxjjjjjxjjjjjxjjjjjxjjjjjxjjba
+bjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjba
+bjjwjjjjjjjjjjjwjjjjjwjjjjjwjjjjjwjjjjjwjjjjjwjjba
+bbjbjbbbjbjbbbjbjbbbjbjbbbjbjbbbjbjbbbjbjbbbjbjbba
+bjjbjjwjjbjjwjjbjjwjjbjjwjjbjjwjjbjjwjjbjjwjjbjjba
+bjjjjjbjjjjjbjjjjjbjjjjjbjjjjjbjjjjjbjjjjjbjjjjjba
+bbbjbbbbbjbbbbbjbbbbbjbbbbbjbbbbbjbbbbbjbbbbbjbbba
+bcdjfgbcdjfgbcdjfgbcdjfgbcdjfgbcdjfgbcdjfgbcdjfgba
+bhjjqkbhjjqkbhjjqkbhjjqkbhjjqkbhjjqkbhjjqkbhjjqkba
+blimnoblimnoblimnoblimnoblimnoblimnoblimnoblimnoba
+bpijjrbpijjrbpijjrbpijjrbpijjrbpijjrbpijjrbpijjrba
+bstDEvbstDEvbstDEvbstDEvbstDEvbstDEvbstDEvbstDEvba
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbba
+"}
