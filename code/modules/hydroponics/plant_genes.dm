@@ -194,6 +194,7 @@
 	// For code, see grown.dm
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
+	feeling = "soft"
 
 /datum/plant_gene/trait/squash/pod_special_attacked_by(datum/species/pod/P,mob/living/carbon/human/H,obj/item/I,mob/living/user)
 	if(I.damtype == BRUTE && I.force > max(10+(P.potency/10),18))
@@ -209,6 +210,7 @@
 	name = "Slippery Skin"
 	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
+	feeling = "slick"
 
 /datum/plant_gene/trait/slip/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
 	..()
@@ -240,6 +242,7 @@
 	// Also affects plant batteries see capatative cell production datum
 	name = "Electrical Activity"
 	rate = 0.2
+	feeling = "charged"
 
 /datum/plant_gene/trait/cell_charge/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	var/power = G.seed.potency*rate
@@ -281,6 +284,7 @@
 	trait_id = "glow"
 	var/glow_color = "#C3E381"
 	var/obj/effect/dummy/luminescent_glow/glow  //only for pod people
+	feeling = "bright"
 
 /datum/plant_gene/trait/glow/proc/glow_range(obj/item/seeds/S)
 	return 1.4 + S.potency*rate
@@ -311,6 +315,7 @@
 	name = "Shadow Emission"
 	rate = 0.04
 	glow_color = "#AAD84B"
+	feeling = "depressed"
 
 /datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/S)
 	return -max(S.potency*(rate*0.2), 0.2)
@@ -326,6 +331,7 @@
 	name = "Strong Bioluminescence"
 	rate = 0.05
 	glow_color = null
+	feeling = "very bright"
 
 
 /datum/plant_gene/trait/teleport
@@ -333,6 +339,7 @@
 	// Teleport radius is calculated as max(round(potency*rate), 1)
 	name = "Bluespace Activity"
 	rate = 0.1
+	feeling = "uncertain"
 
 /datum/plant_gene/trait/teleport/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
 	if(isliving(target))
@@ -359,6 +366,7 @@
 /datum/plant_gene/trait/noreact
 	// Makes plant reagents not react until squashed.
 	name = "Separated Chemicals"
+	feeling = "ignorant"
 
 /datum/plant_gene/trait/noreact/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
 	..()
@@ -380,12 +388,14 @@
 	// 2x to max reagents volume.
 	name = "Densified Chemicals"
 	rate = 2
+	feeling = "bloated"
 
 /datum/plant_gene/trait/maxchem/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
 	..()
 	G.reagents.maximum_volume *= rate
 
 /datum/plant_gene/trait/maxchem/pod_on_gain(datum/species/pod/P,mob/living/carbon/C)
+	..()
 	C.resize = 1.2
 	C.update_transform()
 
@@ -395,6 +405,7 @@
 
 /datum/plant_gene/trait/repeated_harvest
 	name = "Perennial Growth"
+	feeling = "manly"
 
 /datum/plant_gene/trait/repeated_harvest/can_add(obj/item/seeds/S)
 	if(!..())
@@ -404,6 +415,7 @@
 	return TRUE
 
 /datum/plant_gene/trait/repeated_harvest/pod_on_gain(datum/species/pod/P,mob/living/carbon/C)
+	..()
 	P.species_traits += FACEHAIR
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
@@ -442,6 +454,7 @@
 
 /datum/plant_gene/trait/stinging
 	name = "Hypodermic Prickles"
+	feeling = "stabby"
 
 /datum/plant_gene/trait/stinging/on_throw_impact(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
 	if(isliving(target) && G.reagents && G.reagents.total_volume)
