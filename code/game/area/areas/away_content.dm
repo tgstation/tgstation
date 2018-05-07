@@ -28,6 +28,6 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	icon_state = "awaycontent1"
 	
 /area/awaymission/vr/murderdome
-	name = "Murder Dome"
+	name = "Murderdome"
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
