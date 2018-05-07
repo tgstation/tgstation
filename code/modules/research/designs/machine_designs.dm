@@ -122,7 +122,7 @@
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 	category = list ("Medical Machinery")
 
-/datum/design/board/sleeper
+/datum/design/board/vr_sleeper
 	name = "Machine Design (VR Sleeper Board)"
 	desc = "The circuit board for a VR sleeper."
 	id = "vr_sleeper"
