@@ -144,8 +144,6 @@
 			R.use(2)
 			if (!R && replace)
 				user.put_in_hands(new_item)
-	else
-		return ..()	
 
 /obj/item/stack/medical/gauze/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins tightening \the [src] around [user.p_their()] neck! It looks like [user.p_they()] forgot how to use medical supplies!</span>")
