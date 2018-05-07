@@ -10,6 +10,7 @@
 	state_open = TRUE
 	anchored = TRUE
 	occupant_typecache = list(/mob/living/carbon/human) // turned into typecache in Initialize
+	circuit = /obj/item/circuitboard/machine/vr_sleeper
 	var/you_die_in_the_game_you_die_for_real = FALSE
 	var/datum/effect_system/spark_spread/sparks
 	var/mob/living/carbon/human/virtual_reality/vr_human
@@ -26,17 +27,17 @@
 	build_spawnpoints()
 	update_icon()
 
-/obj/machinery/vr_sleeper/attack_hand(mob/user)
-	. = ..()
-	if(.)
+/obj/machinery/vr_sleeper/attackby(obj/item/I, mob/user, params)
+	if(!state_open && !occupant)
+		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
+			return
+	if(default_change_direction_wrench(user, I))
 		return
-	if(occupant)
-		ui_interact(user)
-	else
-		if(state_open)
-			close_machine()
-		else
-			open_machine()
+	if(default_pry_open(I))
+		return
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
 
 /obj/machinery/vr_sleeper/relaymove(mob/user)
 	open_machine()
@@ -49,6 +50,10 @@
 	cleanup_vr_human()
 	QDEL_NULL(sparks)
 	return ..()
+
+/obj/machinery/vr_sleeper/hugbox
+	desc = "A sleeper modified to alter the subconscious state of the user, allowing them to visit virtual worlds. Seems slightly more secure."
+	flags_1 = NODECONSTRUCT_1
 
 /obj/machinery/vr_sleeper/hugbox/emag_act(mob/user)
 	return
@@ -70,8 +75,6 @@
 
 /obj/machinery/vr_sleeper/close_machine()
 	..()
-	if(occupant)
-		ui_interact(occupant)
 
 /obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
