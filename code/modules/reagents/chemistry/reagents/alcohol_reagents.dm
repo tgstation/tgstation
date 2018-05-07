@@ -1647,7 +1647,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/kamikaze/on_mob_life(mob/living/L)
 	var/victimnum = 0
 	explosion_overlay.alpha = CLAMP(explosion_overlay.alpha,0,100)
-	for(var/mob/living/victim in oview(3,L)) //every victim takes flat 1 damage, but the user takes 2 per individual affected.
+	for(var/mob/living/victim in oview(1,L)) //every victim takes flat 1 damage, but the user takes 2 per individual affected.
 		victim.adjustFireLoss(1)
 		L.adjustFireLoss(2)
 		explosion_overlay.alpha += 1
