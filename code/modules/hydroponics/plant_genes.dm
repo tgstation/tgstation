@@ -197,7 +197,7 @@
 	feeling = "soft"
 
 /datum/plant_gene/trait/squash/pod_special_attacked_by(datum/species/pod/P,mob/living/carbon/human/H,obj/item/I,mob/living/user)
-	if(I.damtype == BRUTE && I.force > max(10+(P.potency/10),18))
+	if(I.damtype == BRUTE && I.force > min(10+(P.potency/10),18))
 		H.gib()
 		return TRUE
 	else if(I.damtype == BRUTE)
