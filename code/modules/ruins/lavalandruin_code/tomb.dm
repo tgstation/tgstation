@@ -31,9 +31,18 @@
 			to_chat(src, "<span class='warning'>You're already attacking!</span>")
 		return
 	swiping = TRUE
+	//putting vars up here since all attacks are done for each direction, saves me from a mindflood//
 	var/turf/T = get_turf(target)
 	var/turf/Tstep = get_step(T, dir)
 	var/turf/Tstepstep = get_step(Tstep, dir)
+	var/turf/src_turf = get_turf(src)
+	var/dir_to_target = get_dir(src_turf, get_turf(target))
+	var/angle1 = 0
+	var/angle2 = -45
+	var/angle3 = 45
+	var/turf/Tcleave1 = get_step(src_turf, turn(dir_to_target, angle1))
+	var/turf/Tcleave2 = get_step(src_turf, turn(dir_to_target, angle2))
+	var/turf/Tcleave3 = get_step(src_turf, turn(dir_to_target, angle3))
 	var/atktype = pick("cleave", "lunge")
 	visible_message("<span class='warning'>[src] winds up to [atktype] with it's greatsword...</span>", "<span class='notice'>You begin to wind up a [atktype]...</span>")
 	var/atkexecuted = "[atktype][dir]
@@ -55,33 +64,21 @@
 			new /obj/effect/temp_visual/attackwarn(Tstep, src, 2, 0)
 			new /obj/effect/temp_visual/attackwarn(Tstepstep, src, 3, 0)
 		if("cleave1")
-			var/turf/src_turf = get_turf(src)
-			var/dir_to_target = get_dir(src_turf, get_turf(target))
-			var/static/list/cleave_angles = list(0, -45, 45) //YOINK THANKS CLEAVING SAW
-			for(var/i in cleave_angles)
-				var/turf/Tcleave = get_step(src_turf, turn(dir_to_target, i))
-				new /obj/effect/temp_visual/attackwarn(Tcleave, src)
+			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 0, 1)
+			new /obj/effect/temp_visual/attackwarn(Tcleave2, src, 1, 1)
+			new /obj/effect/temp_visual/attackwarn(Tcleave3, src, -1, 1)
 		if("cleave2")
-			var/turf/src_turf = get_turf(src)
-			var/dir_to_target = get_dir(src_turf, get_turf(target))
-			var/static/list/cleave_angles = list(0, -45, 45) //YOINK THANKS CLEAVING SAW
-			for(var/i in cleave_angles)
-				var/turf/Tcleave = get_step(src_turf, turn(dir_to_target, i))
-				new /obj/effect/temp_visual/attackwarn(Tcleave, src)
+			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 0, -1)
+			new /obj/effect/temp_visual/attackwarn(Tcleave2, src, 1, -1)
+			new /obj/effect/temp_visual/attackwarn(Tcleave3, src, -1, -1)
 		if("cleave4")
-			var/turf/src_turf = get_turf(src)
-			var/dir_to_target = get_dir(src_turf, get_turf(target))
-			var/static/list/cleave_angles = list(0, -45, 45) //YOINK THANKS CLEAVING SAW
-			for(var/i in cleave_angles)
-				var/turf/Tcleave = get_step(src_turf, turn(dir_to_target, i))
-				new /obj/effect/temp_visual/attackwarn(Tcleave, src)
+			new /obj/effect/temp_visual/attackwarn(Tcleave, src, -1, 0)
+			new /obj/effect/temp_visual/attackwarn(Tcleave2, src, -1, 1)
+			new /obj/effect/temp_visual/attackwarn(Tcleave3, src, -1, -1)
 		if("cleave8")
-			var/turf/src_turf = get_turf(src)
-			var/dir_to_target = get_dir(src_turf, get_turf(target))
-			var/static/list/cleave_angles = list(0, -45, 45) //YOINK THANKS CLEAVING SAW
-			for(var/i in cleave_angles)
-				var/turf/Tcleave = get_step(src_turf, turn(dir_to_target, i))
-				new /obj/effect/temp_visual/attackwarn(Tcleave, src)
+			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 1, 0)
+			new /obj/effect/temp_visual/attackwarn(Tcleave2, src, 1, 1)
+			new /obj/effect/temp_visual/attackwarn(Tcleave3, src, 1, -1)
 
 /obj/effect/temp_visual/attackwarn
 	name = "incoming attack"
