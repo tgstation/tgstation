@@ -187,19 +187,20 @@
 
 	return cached_results[id] ? REACTING : NO_REACTION
 
-//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again.
+//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again).
 /datum/gas_reaction/fusion
-	exclude = TRUE
+	exclude = FALSE
 	priority = 2
 	name = "Plasmic Fusion"
 	id = "fusion"
 
 
+//Since fusion isn't really intended to happen in successive chains, the requirements are very high
 /datum/gas_reaction/fusion/init_reqs()
 	min_requirements = list(
 		"ENER" = PLASMA_BINDING_ENERGY * 1000,
-		/datum/gas/plasma = 50,
-		/datum/gas/carbon_dioxide = 1
+		/datum/gas/plasma = 500,
+		/datum/gas/tritium = 500
 	)
 
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
@@ -214,12 +215,14 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_energy
+
 	var/mediation = 100*(air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES]) //This is the average heat capacity of the mixture,not including plasma.
 	var/gas_power = 0
 	for (var/id in cached_gases)
 		gas_power += cached_gases[id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[id][MOLES]
-	var/plasma_fused = 0
-	var/power_ratio = min(gas_power/mediation,100)//100 is a lot, we really don't want to go over this.
+
+	var/power_ratio = gas_power/mediation
+
 	if (power_ratio > 10) //Super-fusion. Fuses everything into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
 		var/gases_fused = air.total_moles()
 		reaction_energy += gases_fused*PLASMA_BINDING_ENERGY*(gas_power/(mediation*100))
@@ -227,32 +230,31 @@
 			cached_gases[id][MOLES] = 0
 		air.assert_gas(/datum/gas/tritium)
 		cached_gases[/datum/gas/tritium][MOLES] += gases_fused
-		if (prob(power_ratio)) //You really don't want this to happen
-			empulse(location, power_ratio*0.5, power_ratio)
-			radiation_pulse(location, power_ratio*2000)
-			explosion(location,0,1,power_ratio*0.5,power_ratio,TRUE,TRUE)//Bypasses cap. Doesn't blow large hole in station, but produces moderate devestation for long ranges. Be careful with this.
+		if (location && prob(power_ratio)) //You don't really want this to happen
+			radiation_pulse(location, power_ratio * 10)
+			explosion(location,0,0,3,power_ratio / 2,TRUE,TRUE)//A tiny explosion with a large shockwave. People will know you're doing fusion.
 
 	else if (power_ratio > 1) //Mediation is overpowered, fusion reaction starts to break down.
-		plasma_fused = cached_gases[/datum/gas/plasma][MOLES]
-		reaction_energy += plasma_fused*PLASMA_BINDING_ENERGY
-		cached_gases[/datum/gas/plasma][MOLES] -= plasma_fused
+		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*PLASMA_BINDING_ENERGY
+		cached_gases[/datum/gas/plasma][MOLES] = 0
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] = 0
 		air.assert_gases(/datum/gas/bz,/datum/gas/nitrous_oxide)
 		cached_gases[/datum/gas/bz][MOLES] += gas_power*0.05
 		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gas_power*0.05
-		if (location)
-			empulse(location, mediation*0.002, mediation*0.004)
-			radiation_pulse(location, power_ratio*(reaction_energy)/(0.3*PLASMA_BINDING_ENERGY))
+		if (location && prob(power_ratio * 5)) //Fairly high chance of happening
+			radiation_pulse(location, reaction_energy / (PLASMA_BINDING_ENERGY * 100))
+
 	else
-		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*PLASMA_BINDING_ENERGY*(gas_power/mediation)
+		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*PLASMA_BINDING_ENERGY*power_ratio
 		air.assert_gas(/datum/gas/oxygen)
 		cached_gases[/datum/gas/oxygen][MOLES] += gas_power + cached_gases[/datum/gas/plasma][MOLES]
 		cached_gases[/datum/gas/plasma][MOLES] = 0
 		for (var/gas in cached_gases)
 			if (cached_gases[gas][GAS_META][META_GAS_FUSION_POWER])
 				cached_gases[gas][MOLES] = 0
-		if (location)
-			radiation_pulse(location, (reaction_energy)/(0.3*PLASMA_BINDING_ENERGY))
+		if (location && prob(power_ratio * 10)) //Won't happen often, but the threat is there
+			radiation_pulse(location, reaction_energy / (PLASMA_BINDING_ENERGY * 100))
+
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
