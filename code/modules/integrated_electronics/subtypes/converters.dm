@@ -240,7 +240,7 @@
 /obj/item/integrated_circuit/converter/indexer
 	name = "indexer"
 	desc = "This circuit takes a string and an index value, then returns the character found at in the string at the given index."
-	extended_desc = "Make sure the index is not longer or shorter than the string length. If you don't, the circuit will return null."
+	extended_desc = "Make sure the index is not longer or shorter than the string length. If you don't, the circuit will return empty."
 	icon_state = "split"
 	complexity = 4
 	inputs = list(
@@ -317,7 +317,8 @@
 	name = "string exploder"
 	desc = "This splits a single string into a list of strings."
 	extended_desc = "This circuit splits a given string into a list of strings based on the string and given delimiter. \
-	For example, 'eat this burger' will be converted to list('eat','this','burger')."
+	For example, 'eat this burger' will be converted to list('eat','this','burger'). Leave the delimiter null to get a list \
+	of every individual character."
 	icon_state = "split"
 	complexity = 4
 	inputs = list(
