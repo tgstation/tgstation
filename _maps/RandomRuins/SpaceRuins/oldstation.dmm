@@ -4045,7 +4045,7 @@
 /area/ruin/space/has_grav/ancientstation)
 "kE" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "kF" = (

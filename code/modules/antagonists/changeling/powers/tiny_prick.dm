@@ -138,7 +138,7 @@
 
 	var/obj/item/held = target.get_active_held_item()
 	if(held && !target.dropItemToGround(held))
-		to_chat(user, "<span class='warning'>[held] is stuck to their hand, you cannot grow a false armblade over it!</span>")
+		to_chat(user, "<span class='warning'>[held] is stuck to [target.p_their()] hand, you cannot grow a false armblade over it!</span>")
 		return
 
 	if(ismonkey(target))
@@ -155,7 +155,7 @@
 /obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/melee/arm_blade/false/blade)
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 	target.visible_message("<span class='warning'>With a sickening crunch, \
-	[target] reforms their [blade.name] into an arm!</span>",
+	[target] reforms [target.p_their()] [blade.name] into an arm!</span>",
 	"<span class='warning'>[blade] reforms back to normal.</span>",
 	"<span class='italics>You hear organic matter ripping and tearing!</span>")
 

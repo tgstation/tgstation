@@ -16,7 +16,7 @@
 
 /obj/item/clockwork/component/attack_self(mob/living/user)
 	if(is_servant_of_ratvar(user))
-		user.visible_message("<span class='notice'>[user] crushes [src] in their hand!</span>", \
+		user.visible_message("<span class='notice'>[user] crushes [src] in [user.p_their()] hand!</span>", \
 		"<span class='alloy'>You crush [src], capturing its escaping energy for use as power.</span>")
 		playsound(user, 'sound/effects/pop_expl.ogg', 50, TRUE)
 		adjust_clockwork_power(POWER_WALL_TOTAL)

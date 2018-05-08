@@ -1,4 +1,0 @@
-author: "Evsey9"
-delete-after: True
-changes: 
-  - balance: "Integrated Circuit weapon mechanisms now work only when outside of any containers and hands, due to reports of severe injury caused by activating them while still holding them."

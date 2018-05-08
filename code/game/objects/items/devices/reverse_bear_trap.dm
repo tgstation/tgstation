@@ -83,7 +83,7 @@
 
 /obj/item/reverse_bear_trap/attack(mob/living/target, mob/living/user)
 	if(target.get_item_by_slot(SLOT_HEAD))
-		to_chat(user, "<span class='warning'>Remove their headgear first!</span>")
+		to_chat(user, "<span class='warning'>Remove [target.p_their()] headgear first!</span>")
 		return
 	target.visible_message("<span class='warning'>[user] starts forcing [src] onto [target]'s head!</span>", \
 	"<span class='userdanger'>[target] starts forcing [src] onto your head!</span>", "<i>You hear clanking.</i>")
@@ -106,7 +106,7 @@
 		playsound(src, 'sound/effects/snap.ogg', 75, TRUE)
 	else
 		var/mob/living/carbon/human/jill = loc
-		jill.visible_message("<span class='boldwarning'>[src] goes off in [jill]'s mouth, ripping their head apart!</span>", "<span class='userdanger'>[src] goes off!</span>")
+		jill.visible_message("<span class='boldwarning'>[src] goes off in [jill]'s mouth, ripping [jill.p_their()] head apart!</span>", "<span class='userdanger'>[src] goes off!</span>")
 		jill.emote("scream")
 		playsound(src, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)

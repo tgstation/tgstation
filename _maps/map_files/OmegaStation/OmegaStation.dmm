@@ -4949,7 +4949,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
 "ajM" = (
-/obj/machinery/computer/stockexchange,
 /obj/structure/table/reinforced,
 /obj/machinery/requests_console{
 	department = "Cargo Office";
@@ -6485,7 +6484,6 @@
 	},
 /area/hallway/primary/starboard/fore)
 "amv" = (
-/obj/machinery/computer/stockexchange,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/brown{
 	dir = 10

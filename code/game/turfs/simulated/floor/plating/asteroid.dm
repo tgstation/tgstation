@@ -279,6 +279,8 @@
 	planetary_atmos = TRUE
 	archdrops = list(/obj/item/stack/sheet/mineral/snow = list(ARCH_PROB = 100, ARCH_MAXDROP = 5))
 	burnt_states = list("snow_dug")
+	bullet_sizzle = TRUE
+	bullet_bounce_sound = null
 
 /turf/open/floor/plating/asteroid/snow/burn_tile()
 	if(!burnt)

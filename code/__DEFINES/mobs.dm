@@ -258,7 +258,7 @@
 
 // Roundstart trait system
 
-#define MAX_TRAITS 6 //The maximum amount of traits one character can have at roundstart
+#define MAX_QUIRKS 6 //The maximum amount of quirks one character can have at roundstart
 
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5

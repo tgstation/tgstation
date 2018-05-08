@@ -57,15 +57,6 @@
 	..()
 	. = 1
 
-/datum/reagent/drug/menthol
-	name = "Menthol"
-	id = "menthol"
-	description = "Tastes naturally minty, and imparts a very mild numbing sensation."
-	taste_description = "mint"
-	reagent_state = LIQUID
-	color = "#80AF9C"
-	trippy = FALSE
-
 /datum/reagent/drug/crank
 	name = "Crank"
 	id = "crank"
