@@ -99,7 +99,7 @@
 
 /obj/item/integrated_circuit/reagent/injector
 	name = "integrated hypo-injector"
-	desc = "This scary looking thing is able to pump liquids into, or suck liquids out of whatever it's pointed at."
+	desc = "This scary looking thing is able to pump liquids into, or suck liquids out of, whatever it's pointed at."
 	icon_state = "injector"
 	extended_desc = "This autoinjector can push up to 30 units of reagents into another container or someone else outside of the machine. The target \
 	must be adjacent to the machine, and if it is a person, they cannot be wearing thick clothing. Negative given amounts makes the injector suck out reagents instead."

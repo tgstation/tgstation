@@ -75,7 +75,7 @@
 /obj/item/integrated_circuit/smart/advanced_pathfinder
 	name = "advanced pathfinder"
 	desc = "This circuit uses a complex processor for long-range pathfinding."
-	extended_desc = "This circuit uses absolute coordinates for its target. A path will be generated to the target, taking the obstacle input into account, \
+	extended_desc = "This circuit uses absolute coordinates to find its target. A path will be generated to the target, taking obstacles into account, \
 	and pathing around any instances of said input. The passkey provided from a card reader is used to calculate a valid path through airlocks."
 	icon_state = "numberpad"
 	complexity = 40

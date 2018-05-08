@@ -157,7 +157,7 @@
 
 /obj/item/integrated_circuit/output/sound/beeper
 	name = "beeper circuit"
-	desc = "Takes a sound name as an input, and will play that sound when pulsed. This circuit has a variety of beeps, boops, and buzzes to choose from."
+	desc = "Takes a sound name as an input, and will play said sound when pulsed. This circuit has a variety of beeps, boops, and buzzes to choose from."
 	sounds = list(
 		"beep"			= 'sound/machines/twobeep.ogg',
 		"chime"			= 'sound/machines/chime.ogg',
@@ -172,7 +172,7 @@
 
 /obj/item/integrated_circuit/output/sound/beepsky
 	name = "securitron sound circuit"
-	desc = "Takes a sound name as an input, and will play that sound when pulsed. This circuit is similar to those used in Securitrons."
+	desc = "Takes a sound name as an input, and will play said sound when pulsed. This circuit is similar to those used in Securitrons."
 	sounds = list(
 		"creep"			= 'sound/voice/bcreep.ogg',
 		"criminal"		= 'sound/voice/bcriminal.ogg',
@@ -187,7 +187,7 @@
 
 /obj/item/integrated_circuit/output/sound/medbot
 	name = "medbot sound circuit"
-	desc = "Takes a sound name as an input, and will play that sound when pulsed. This circuit is often found in medical robots."
+	desc = "Takes a sound name as an input, and will play said sound when pulsed. This circuit is often found in medical robots."
 	sounds = list(
 		"surgeon"		= 'sound/voice/msurgeon.ogg',
 		"radar"			= 'sound/voice/mradar.ogg',
@@ -209,7 +209,7 @@
 
 /obj/item/integrated_circuit/output/sound/vox
 	name = "ai vox sound circuit"
-	desc = "Takes a sound name as an input, and will play that sound when pulsed. This circuit is often found in AI announcement systems."
+	desc = "Takes a sound name as an input, and will play said sound when pulsed. This circuit is often found in AI announcement systems."
 	spawn_flags = IC_SPAWN_RESEARCH
 
 /obj/item/integrated_circuit/output/sound/vox/Initialize()

@@ -134,7 +134,7 @@
 	desc = "This allows a machine to move in a given direction."
 	icon_state = "locomotion"
 	extended_desc = "The circuit accepts a 'dir' number as a direction to move towards.<br>\
-	Pulsing the 'step towards dir' activator pin will cause the machine to move one meter in that direction, assuming it is not \
+	Pulsing the 'step towards dir' activator pin will cause the machine to move one step in that direction, assuming it is not \
 	being held, or anchored in some way. It should be noted that the ability to move is dependant on the type of assembly that this circuit inhabits; only drone assemblies can move."
 	w_class = WEIGHT_CLASS_SMALL
 	complexity = 10
@@ -170,7 +170,7 @@
 	name = "grenade primer"
 	desc = "This circuit comes with the ability to attach most types of grenades and prime them at will."
 	extended_desc = "The time between priming and detonation is limited to between 1 to 12 seconds, but is optional. \
-					If unset, not a number, or a number less than 1 the grenade's built-in timing will be used. \
+					If the input is not set, not a number, or a number less than 1, the grenade's built-in timing will be used. \
 					Beware: Once primed, there is no aborting the process!"
 	icon_state = "grenade"
 	complexity = 30
@@ -410,7 +410,7 @@
 	name = "pulling claw"
 	desc = "Circuit which can pull things.."
 	icon_state = "pull_claw"
-	extended_desc = "This circuit accepts a reference to the thing to be pulled. Modes: 0 for release. 1 for pull."
+	extended_desc = "This circuit accepts a reference to a thing to be pulled. Modes: 0 for release. 1 for pull."
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
 	cooldown_per_use = 5

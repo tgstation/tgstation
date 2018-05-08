@@ -212,7 +212,7 @@
 
 /obj/item/integrated_circuit/arithmetic/average
 	name = "average circuit"
-	desc = "This circuit is of average quality. However, it will compute the average of the numbers you give it."
+	desc = "This circuit is of average quality. It will compute the average of the numbers you give it."
 	extended_desc = "Note that null pins are ignored, whereas a pin containing 0 is included in the averaging calculation."
 	icon_state = "average"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH

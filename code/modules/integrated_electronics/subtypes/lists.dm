@@ -189,7 +189,7 @@
 /obj/item/integrated_circuit/lists/at
 	name = "at circuit"
 	desc = "This circuit will pick an element from a list by the input index."
-	extended_desc = "If there is no element at the given index, the result list will be null."
+	extended_desc = "If there is no element at the given index, the result will be null."
 	inputs = list(
 		"list" = IC_PINTYPE_LIST,
 		"index" = IC_PINTYPE_INDEX

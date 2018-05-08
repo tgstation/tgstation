@@ -698,7 +698,7 @@
 	extended_desc = "Data can be sent or received using the second pin on each side, \
 	with additonal data reserved for the third pin. When a message is received, the second activation pin \
 	will pulse whatever is connected to it. Pulsing the first activation pin will send a message. Messages \
-	can be sent to multiple recepients. Addresses must be separated with a ; symbol, a semicolon."
+	can be sent to multiple recepients. Addresses must be separated with a semicolon, like this: Address1;Address2;Etc."
 	icon_state = "signal"
 	complexity = 2
 	cooldown_per_use = 1
@@ -755,7 +755,7 @@
 	extended_desc = "Data can be sent or received using the second pin on each side, \
 	with additonal data reserved for the third pin. When a message is received, the second activation pin \
 	will pulse whatever is connected to it. Pulsing the first activation pin will send a message. Messages \
-	can be sent to multiple recepients. Addresses must be separated with ; symbol, a semicolon."
+	can be sent to multiple recepients. Addresses must be separated with a semicolon, like this: Address1;Address2;Etc."
 	icon_state = "signal"
 	complexity = 4
 	cooldown_per_use = 10
@@ -797,7 +797,7 @@
 /obj/item/integrated_circuit/input/gps
 	name = "global positioning system"
 	desc = "This allows you to easily know the position of a machine containing this device."
-	extended_desc = "The GPS's coordinates are absolute, not relative."
+	extended_desc = "The coordinates that the GPS outputs are absolute, not relative."
 	icon_state = "gps"
 	complexity = 4
 	inputs = list()
@@ -976,9 +976,9 @@
 
 /obj/item/integrated_circuit/input/externalbm
 	name = "external battery monitor"
-	desc = "This can read the battery state of any device in view"
+	desc = "This can read the battery state of any device in view."
 	icon_state = "externalbm"
-	extended_desc = "This circuit will give you the values of charge, max charge, and the current percentage of any device or battery in view."
+	extended_desc = "This circuit will give you the charge, max charge, and the current percentage values of any device or battery in view."
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 2
 	inputs = list("target" = IC_PINTYPE_REF)
@@ -1011,7 +1011,7 @@
 
 /obj/item/integrated_circuit/input/ntnetsc
 	name = "NTNet scanner"
-	desc = "This can return the NTNet IDs of a component inside the given object such as an airlock, if there are any."
+	desc = "This can return the NTNet IDs of a component inside the given object, if there are any."
 	icon_state = "signalsc"
 	w_class = WEIGHT_CLASS_TINY
 	complexity = 2
