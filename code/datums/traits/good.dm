@@ -118,8 +118,8 @@
 
 /datum/trait/hlumi_eyes/on_spawn()
 	var/mob/living/carbon/human/H = trait_holder
-	var/obj/item/organ/eyes/robotic/glow = new
-	glow.Insert(H, drop_if_replaced = FALSE)
+	var/obj/item/organ/eyes/robotic/glow/hlumi = new
+	hlumi.Insert(H, drop_if_replaced = FALSE)
 	H.regenerate_icons()
 
 /datum/trait/hlumi_eyes/post_add()
