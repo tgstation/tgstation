@@ -18359,12 +18359,10 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aVA" = (
-/obj/effect/spawner/structure/window,
-/obj/machinery/door/poddoor/preopen{
-	id = "barShutters";
-	name = "privacy shutters"
-	},
-/turf/open/floor/plating,
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aVB" = (
 /obj/structure/table,
@@ -25547,7 +25545,6 @@
 /obj/item/clipboard,
 /obj/item/pen/red,
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bnH" = (
@@ -28553,7 +28550,6 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "buF" = (
@@ -30056,7 +30052,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/brown{
 	dir = 2
 	},
@@ -53723,10 +53718,6 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
-"gYO" = (
-/obj/machinery/jukebox,
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
 "gZG" = (
 /obj/structure/closet/crate/freezer/surplus_limbs,
 /obj/item/reagent_containers/glass/beaker/synthflesh,
@@ -91530,9 +91521,9 @@ aND
 aJC
 aab
 aRg
+aQc
 aac
 aQc
-gYO
 aXk
 aQc
 aQc
@@ -91787,8 +91778,8 @@ aJC
 aJC
 aJI
 aJI
-aJI
 aSI
+aJI
 aVA
 aJI
 aYK
