@@ -306,7 +306,10 @@
 /obj/item/integrated_circuit/converter/exploders/do_work()
 	var/strin = get_pin_data(IC_INPUT, 1)
 	var/delimiter = get_pin_data(IC_INPUT, 2)
-	set_pin_data(IC_OUTPUT, 1, splittext(strin, delimiter))
+	if(delimiter)
+		set_pin_data(IC_OUTPUT, 1, splittext(strin, delimiter))
+	else
+		set_pin_data(IC_OUTPUT, 1, string2charlist(strin))
 	push_data()
 
 	activate_pin(2)
