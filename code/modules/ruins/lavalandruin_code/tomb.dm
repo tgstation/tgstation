@@ -124,7 +124,7 @@
 	QDEL_NULL(mobhook)
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
-		if(istype(L, /mob/living/simple_animal/hostile/cryptguard)
+		if(istype(L, /mob/living/simple_animal/hostile/cryptguard))
 			continue //don't kys!
 		to_chat(L, "<span class='danger'>You are curb stomped by [createdby]!</span>")
 		L.adjustBruteLoss(hit_damage)
