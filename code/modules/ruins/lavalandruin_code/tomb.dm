@@ -23,7 +23,6 @@
 	loot = list(/obj/mecha/combat/stone/loaded)
 	var/woke = FALSE //cannot take damage if true
 	var/swiping = FALSE
-	var/powerful = FALSE //the boss can move while setting up attacks, the small ones cannot
 
 /mob/living/simple_animal/hostile/cryptguard/AttackingTarget()
 	if(swiping == TRUE)
@@ -124,13 +123,14 @@
 	createdby.swiping = FALSE
 	..()
 //hit
-
+/*
 /mob/living/simple_animal/hostile/cryptguard/Move()
 	if(swiping == TRUE)
 		if(client)
 			to_chat(src, "<span class='warning'>You can't move while swinging a sword like this!</span>")
 		return
 	..()
+*/
 
 /mob/living/simple_animal/hostile/cryptguard/proc/awaken()
 	woke = TRUE
