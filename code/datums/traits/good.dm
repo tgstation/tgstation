@@ -117,10 +117,10 @@
 	value = 1
 
 /datum/quirk/hlumi_eyes/on_spawn()
-	var/mob/living/carbon/human/H = trait_holder
+	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/organ/eyes/robotic/glow/hlumi = new
 	hlumi.Insert(H, drop_if_replaced = FALSE)
 	H.regenerate_icons()
 
 /datum/quirk/hlumi_eyes/post_add()
-	to_chat(trait_holder, "<span class='boldnotice'>Your eyes have been enhanced with cybernetic high-luminosity eyes.</span>")
+	to_chat(quirk_holder, "<span class='boldnotice'>Your eyes have been enhanced with cybernetic high-luminosity eyes.</span>")
