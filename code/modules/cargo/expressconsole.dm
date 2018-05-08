@@ -87,11 +87,8 @@
 		ui = new(user, src, ui_key, "cargo_express", name, 1000, 800, master_ui, state)
 		ui.open()
 
-
 /obj/machinery/computer/cargo/express/ui_data(mob/user)
 	var/canBeacon = beacon && (isturf(beacon.loc) || ismob(beacon.loc))
-	//if (beacon)
-		//message_admins("alright so: usingbeacon = [usingBeacon] and beacon = [beacon] and isturf(b) = [(beacon) ? isturf(beacon.loc) : 5] and ismob(b) = [(beacon) ? ismob(beacon.loc) : 5] okay? and ifnally, : canBeacon is[canBeacon]")
 	var/list/data = list()
 	data["locked"] = locked
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
@@ -114,7 +111,6 @@
 		message = "BEACON ERROR: MUST BE EXPOSED"//beacon's loc/user's loc must be a turf
 	if(obj_flags & EMAGGED)
 		message = "(&!#@ERROR: ROUTING_#PROTOCOL MALF(*CT#ON. $UG%ESTE@ ACT#0N: !^/PULS3-%E)ET CIR*)ITB%ARD."
-
 	data["message"] = message
 	if(!meme_pack_data)
 		packin_up()
@@ -138,7 +134,7 @@
 			cooldown = 10//a ~ten second cooldown for printing beacons to prevent spam
 			var/obj/item/supplypod_beacon/C = new /obj/item/supplypod_beacon(loc)
 			C.link_console(src)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
-			printed_beacons++//printed_beacons starts at 0
+			printed_beacons++//printed_beacons starts at 0, so the first one out will be called beacon # 1
 			beacon.name = "Supply Pod Beacon #[printed_beacons]"
 			SSshuttle.points -= BEACON_COST
 
