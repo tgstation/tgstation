@@ -83,11 +83,7 @@
 	if(new_area)
 		new_area.Entered(src)
 
-/mob/living/simple_animal/spiderling/Life()
-	..()
-	if(client)
-		return
-
+/mob/living/simple_animal/spiderling/handle_automated_movement()
 	if(entry_vent)
 		if(get_dist(src, entry_vent) <= 1)
 			start_enter_vent()
@@ -100,6 +96,8 @@
 				entry_vent = v
 				walk_to(src, entry_vent, 1)
 				break
+	else
+		..()
 
 //eventually grows into a giant spider
 /mob/living/simple_animal/spiderling/giant

@@ -68,16 +68,13 @@
 	if(amount_grown >= 100)
 		var/num = rand(3,12)
 		for(var/i=0, i<num, i++)
-			if(prob(25))
-				var/mob/living/simple_animal/spiderling/giant/S = new(drop_location())
-				S.grown_poison_type = poison_type
-				S.grown_poison_per_bite = poison_per_bite
-				S.faction = faction.Copy()
-				S.directive = directive
-				if(player_spiders)
-					S.player_controlled = 1
-			else
-				new /mob/living/simple_animal/spiderling(drop_location())
+			var/mob/living/simple_animal/spiderling/giant/S = new(drop_location())
+			S.grown_poison_type = poison_type
+			S.grown_poison_per_bite = poison_per_bite
+			S.faction = faction.Copy()
+			S.directive = directive
+			if(player_spiders)
+				S.player_controlled = 1
 		qdel(src)
 
 /obj/structure/spider/cocoon
