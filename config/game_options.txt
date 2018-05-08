@@ -347,6 +347,7 @@ RANDOM_LAWS corporate
 #RANDOM_LAWS liveandletlive
 #RANDOM_LAWS peacekeeper
 #RANDOM_LAWS reporter
+#RANDOM_LAWS hulkamania
 
 ## Bad idea laws. Probably shouldn't enable these
 #RANDOM_LAWS syndie
@@ -379,6 +380,7 @@ LAW_WEIGHT drone,3
 LAW_WEIGHT liveandletlive,3
 LAW_WEIGHT peacekeeper,3
 LAW_WEIGHT reporter,4
+LAW_WEIGHT hulkamania,4
 
 ## Bad idea laws. Probably shouldn't enable these
 LAW_WEIGHT syndie,0
@@ -510,7 +512,8 @@ MICE_ROUNDSTART 10
 ## Determines if players are allowed to print integrated circuits, uncomment to allow.
 #IC_PRINTING
 
-## Uncomment to allow roundstart trait selection in the character setup menu.
+## Uncomment to allow roundstart quirk selection in the character setup menu.
+## This used to be named traits, hence the config name, but it handles quirks, not the other kind of trait!
 ROUNDSTART_TRAITS
 
 ## Uncomment to disable human moods.

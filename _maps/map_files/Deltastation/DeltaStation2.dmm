@@ -8271,7 +8271,6 @@
 /area/quartermaster/storage)
 "axi" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -10314,7 +10313,7 @@
 /area/quartermaster/warehouse)
 "aBM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/deadcockroach,
+/obj/effect/decal/cleanable/insectguts,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -11762,10 +11761,12 @@
 	},
 /area/crew_quarters/bar)
 "aEY" = (
+/obj/structure/table/wood,
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
-/obj/machinery/jukebox,
+/obj/item/clipboard,
+/obj/item/toy/figure/bartender,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "aEZ" = (
@@ -11781,7 +11782,6 @@
 	name = "Station Intercom";
 	pixel_y = 26
 	},
-/obj/item/toy/figure/bartender,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -18185,7 +18185,6 @@
 /area/quartermaster/storage)
 "aSm" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
 "aSn" = (
@@ -18990,7 +18989,6 @@
 /area/quartermaster/office)
 "aTP" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -21686,7 +21684,6 @@
 /area/quartermaster/qm)
 "aZh" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -22464,7 +22461,6 @@
 /area/quartermaster/office)
 "baP" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -23229,7 +23225,6 @@
 /area/quartermaster/miningoffice)
 "bcx" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/brown{
 	dir = 5
 	},
@@ -27340,7 +27335,6 @@
 /area/hallway/primary/fore)
 "blO" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23

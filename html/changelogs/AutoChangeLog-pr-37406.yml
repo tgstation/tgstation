@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Added ambient occlusion. You can toggle this on or off in the game preferences menu."

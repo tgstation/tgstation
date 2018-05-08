@@ -168,6 +168,17 @@ GLOBAL_LIST_EMPTY(cinematics)
 	sleep(70)
 	special()
 
+/datum/cinematic/cult_nuke
+	id = CINEMATIC_CULT_NUKE
+
+/datum/cinematic/cult_nuke/content()
+	flick("intro_nuke",screen)
+	sleep(35)
+	flick("station_explode_fade_red",screen)
+	cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
+	special()
+	screen.icon_state = "summary_cult"
+
 /datum/cinematic/nuke_annihilation
 	id = CINEMATIC_ANNIHILATION
 

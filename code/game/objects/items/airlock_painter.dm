@@ -72,7 +72,7 @@
 
 		// TODO maybe add some colorful vomit?
 
-		user.visible_message("<span class='suicide'>[user] vomits out their [L]!</span>")
+		user.visible_message("<span class='suicide'>[user] vomits out [user.p_their()] [L]!</span>")
 		playsound(user.loc, 'sound/effects/splat.ogg', 50, 1)
 
 		L.forceMove(T)

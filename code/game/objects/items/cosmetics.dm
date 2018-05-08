@@ -53,13 +53,13 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.is_mouth_covered())
-			to_chat(user, "<span class='warning'>Remove [ H == user ? "your" : "their" ] mask!</span>")
+			to_chat(user, "<span class='warning'>Remove [ H == user ? "your" : "[H.p_their()]" ] mask!</span>")
 			return
 		if(H.lip_style)	//if they already have lipstick on
 			to_chat(user, "<span class='warning'>You need to wipe off the old lipstick first!</span>")
 			return
 		if(H == user)
-			user.visible_message("<span class='notice'>[user] does their lips with \the [src].</span>", \
+			user.visible_message("<span class='notice'>[user] does [user.p_their()] lips with \the [src].</span>", \
 								 "<span class='notice'>You take a moment to apply \the [src]. Perfect!</span>")
 			H.lip_style = "lipstick"
 			H.lip_color = colour
@@ -142,10 +142,10 @@
 				return
 
 			if(H == user) //shaving yourself
-				user.visible_message("[user] starts to shave their facial hair with [src].", \
+				user.visible_message("[user] starts to shave [user.p_their()] facial hair with [src].", \
 									 "<span class='notice'>You take a moment to shave your facial hair with [src]...</span>")
 				if(do_after(user, 50, target = H))
-					user.visible_message("[user] shaves his facial hair clean with [src].", \
+					user.visible_message("[user] shaves [user.p_their()] facial hair clean with [src].", \
 										 "<span class='notice'>You finish shaving with [src]. Fast and clean!</span>")
 					shave(H, location)
 			else
@@ -170,10 +170,10 @@
 				return
 
 			if(H == user) //shaving yourself
-				user.visible_message("[user] starts to shave their head with [src].", \
+				user.visible_message("[user] starts to shave [user.p_their()] head with [src].", \
 									 "<span class='notice'>You start to shave your head with [src]...</span>")
 				if(do_after(user, 5, target = H))
-					user.visible_message("[user] shaves his head with [src].", \
+					user.visible_message("[user] shaves [user.p_their()] head with [src].", \
 										 "<span class='notice'>You finish shaving with [src].</span>")
 					shave(H, location)
 			else

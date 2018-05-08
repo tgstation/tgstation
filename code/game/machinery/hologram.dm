@@ -32,6 +32,7 @@ Possible to do for anyone motivated enough:
 	desc = "It's a floor-mounted device for projecting holographic images."
 	icon_state = "holopad0"
 	layer = LOW_OBJ_LAYER
+	plane = FLOOR_PLANE
 	flags_1 = HEAR_1
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
@@ -66,7 +67,7 @@ Possible to do for anyone motivated enough:
 	flags_1 = NODECONSTRUCT_1
 	on_network = FALSE
 	var/proximity_range = 1
-	
+
 /obj/machinery/holopad/tutorial/Initialize(mapload)
 	. = ..()
 	if(proximity_range)
@@ -86,7 +87,7 @@ Possible to do for anyone motivated enough:
 		replay_stop()
 	else if(disk && disk.record)
 		replay_start()
-	
+
 /obj/machinery/holopad/tutorial/HasProximity(atom/movable/AM)
 	if (!isliving(AM))
 		return
@@ -487,7 +488,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(QDELETED(user) || user.incapacitated() || !user.client)
 		return FALSE
 	return TRUE
-		
+
 //Can we display holos there
 //Area check instead of line of sight check because this is a called a lot if AI wants to move around.
 /obj/machinery/holopad/proc/validate_location(turf/T,check_los = FALSE)
