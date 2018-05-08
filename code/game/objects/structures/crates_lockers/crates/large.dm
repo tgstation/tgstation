@@ -1,6 +1,6 @@
 /obj/structure/closet/crate/large
 	name = "large crate"
-	desc = "A hefty wooden crate."
+	desc = "A hefty wooden crate. You'll need a crowbar to get it open."
 	icon_state = "largecrate"
 	density = TRUE
 	material_drop = /obj/item/stack/sheet/mineral/wood
@@ -26,8 +26,8 @@
 		playsound(src.loc, 'sound/weapons/slashmiss.ogg', 75, 1)
 
 		var/turf/T = get_turf(src)
-		for(var/i in 1 to 4)
-			new material_drop(src) //Drop 4 planks, same as the material_drop_amount if destroyed
+		for(var/i in 1 to material_drop_amount)
+			new material_drop(src)
 		for(var/atom/movable/AM in contents)
 			AM.forceMove(T)
 
@@ -38,5 +38,6 @@
 			return ..()						//Stops it from opening and turning invisible when items are used on it.
 
 		else
-			return 0 //Just stop. Do nothing. Don't turn into an invisible sprite. Don't open like a locker.
+			to_chat(user, "<span class='warning'>You need a crowbar to pry this open!</span>")
+			return FALSE //Just stop. Do nothing. Don't turn into an invisible sprite. Don't open like a locker.
 					//The large crate has no non-attack interactions other than the crowbar, anyway.
