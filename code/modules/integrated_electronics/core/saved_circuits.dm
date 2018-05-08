@@ -125,10 +125,6 @@
 	if(initial(name) != name)
 		assembly_params["name"] = name
 
-	// Save panel status
-	if(opened)
-		assembly_params["opened"] = TRUE
-
 	// Save modified color
 	if(initial(detail_color) != detail_color)
 		assembly_params["detail_color"] = detail_color
@@ -151,10 +147,6 @@
 	// Load modified name, if any.
 	if(assembly_params["name"])
 		name = assembly_params["name"]
-
-	// Load panel status
-	if(assembly_params["opened"])
-		opened = TRUE
 
 	if(assembly_params["detail_color"])
 		detail_color = assembly_params["detail_color"]
