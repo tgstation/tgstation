@@ -255,9 +255,8 @@
 
 /obj/item/integrated_circuit/converter/indexer/do_work()
 	var/strin = get_pin_data(IC_INPUT, 1)
-	var/len = length(strin)
 	var/ind = get_pin_data(IC_INPUT, 2)
-	if(ind > 0 && ind <= len)
+	if(ind > 0 && ind <= length(strin))
 		set_pin_data(IC_OUTPUT, 1, strin[ind])
 	else
 		set_pin_data(IC_OUTPUT, 1, "")
