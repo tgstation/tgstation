@@ -62,6 +62,22 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	target = null
 	return ..()
 
+//Returns a random turf in a ring around the target mob, useful for sound hallucinations
+/datum/hallucination/proc/random_far_turf()
+	var/x_based = prob(50)
+	var/first_offset = pick(-8,-7,-6,-5,5,6,7,8)
+	var/second_offset = rand(-8,8)
+	var/x_off
+	var/y_off
+	if(x_based)
+		x_off = first_offset
+		y_off = second_offset
+	else
+		y_off = first_offset
+		x_off = second_offset
+	var/turf/T = locate(target.x + x_off, target.y + y_off, target.z)
+	return T
+
 /obj/effect/hallucination
 	invisibility = INVISIBILITY_OBSERVER
 	anchored = TRUE
@@ -310,10 +326,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /datum/hallucination/battle/New(mob/living/carbon/C, forced = TRUE, battle_type)
 	set waitfor = FALSE
 	..()
-	var/list/turf/sourcelocs = list()
-	for(var/turf/open/T in range(world.view+1,target)-range(world.view-2,target))
-		sourcelocs += T
-	var/turf/source = pick(sourcelocs)
+	var/turf/source = random_far_turf()
 	if(!battle_type)
 		battle_type = pick("laser","disabler","esword","gun","stunprod","harmbaton","bomb")
 	feedback_details += "Type: [battle_type]"
@@ -327,7 +340,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 					hits++
 				else
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, 'sound/weapons/effects/searwall.ogg', 25, 1), rand(5,10))
-				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
+				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 6))
 				if(hits >= 4 && prob(70))
 					target.playsound_local(source, get_sfx("bodyfall"), 25, 1)
 					break
@@ -340,17 +353,17 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 					hits++
 				else
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, 'sound/weapons/effects/searwall.ogg', 25, 1), rand(5,10))
-				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
+				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 6))
 				if(hits >= 3 && prob(70))
 					target.playsound_local(source, get_sfx("bodyfall"), 25, 1)
 					break
 		if("esword")
 			target.playsound_local(source, 'sound/weapons/saberon.ogg',15, 1)
 			for(var/i in 1 to rand(4, 8))
-				target.playsound_local(source, 'sound/weapons/blade1.ogg', 25, 1)
+				target.playsound_local(source, 'sound/weapons/blade1.ogg', 50, 1)
 				if(i == 4)
 					target.playsound_local(source, get_sfx("bodyfall"), 25, 1)
-				sleep(rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 8))
+				sleep(rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 6))
 			target.playsound_local(source, 'sound/weapons/saberoff.ogg', 15, 1)
 		if("gun")
 			var/hits = 0
@@ -361,7 +374,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 					hits++
 				else
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, "ricochet", 25, 1), rand(5,10))
-				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
+				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 6))
 				if(hits >= 2 && prob(80))
 					target.playsound_local(source, get_sfx("bodyfall"), 25, 1)
 					break
@@ -376,7 +389,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			sleep(20)
 			for(var/i in 1 to rand(5, 12))
 				target.playsound_local(source, "swing_hit", 50, 1)
-				sleep(rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 8))
+				sleep(rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 4))
 		if("bomb") // Tick Tock
 			for(var/i in 1 to rand(3, 11))
 				target.playsound_local(source, 'sound/items/timer.ogg', 25, 0)
@@ -756,10 +769,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /datum/hallucination/sounds/New(mob/living/carbon/C, forced = TRUE, sound_type)
 	set waitfor = FALSE
 	..()
-	var/list/turf/sourcelocs = list()
-	for(var/turf/open/T in range(world.view+1,target)-range(world.view-2,target))
-		sourcelocs += T
-	var/turf/source = pick(sourcelocs)
+	var/turf/source = random_far_turf()
 	if(!sound_type)
 		sound_type = pick("airlock","airlock_pry","console","explosion","far_explosion","mech","glass","alarm","beepsky","mech","wall_decon","door_hack","tesla")
 	feedback_details += "Type: [sound_type]"
@@ -815,10 +825,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /datum/hallucination/weird_sounds/New(mob/living/carbon/C, forced = TRUE, sound_type)
 	set waitfor = FALSE
 	..()
-	var/list/turf/sourcelocs = list()
-	for(var/turf/open/T in range(world.view+1,target)-range(world.view-2,target))
-		sourcelocs += T
-	var/turf/source = pick(sourcelocs)
+	var/turf/source = random_far_turf()
 	if(!sound_type)
 		sound_type = pick("phone","hallelujah","highlander","hyperspace","game_over","creepy","tesla")
 	feedback_details += "Type: [sound_type]"

@@ -232,7 +232,7 @@
 		madness()
 
 /datum/quirk/insanity/proc/madness()
-	trait_holder.hallucination += rand(10, 25)
+	quirk_holder.hallucination += rand(10, 25)
 
 /datum/quirk/insanity/post_add() //I don't /think/ we'll need this but for newbies who think "roleplay as insane" = "license to kill" it's probably a good thing to have
 	if(!quirk_holder.mind || quirk_holder.mind.special_role)
