@@ -44,14 +44,15 @@
 	var/turf/Tcleave2 = get_step(src_turf, turn(dir_to_target, angle2))
 	var/turf/Tcleave3 = get_step(src_turf, turn(dir_to_target, angle3))
 	var/atktype = pick("cleave", "lunge", "energy blast", "curb stomp")
-	if(target.stat == UNCONSCIOUS)
-		atktype = "curb stomp"
+	//if(target.stat == UNCONSCIOUS)
+	//	atktype = "curb stomp"
 	if(atktype == "energy blast")
 		visible_message("<span class='warning'>[src] begins to shudder...</span>", "<span class='notice'>You ready a blast of necropolis magic...</span>")
 	else
 		visible_message("<span class='warning'>[src] readies a [atktype]...</span>", "<span class='notice'>You begin to ready a [atktype]...</span>")
+	var/atkexecuted
 	if(atktype == "cleave" || atktype == "lunge")
-		var/atkexecuted = "[atktype][dir]"
+		atkexecuted = "[atktype][dir]"
 	else
 		atkexecuted = "[atktype]"
 	switch(atkexecuted)
@@ -72,29 +73,29 @@
 			new /obj/effect/temp_visual/attackwarn(Tstep, src, 2, 0)
 			new /obj/effect/temp_visual/attackwarn(Tstepstep, src, 3, 0)
 		if("cleave1")
-			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 0, 1)
+			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 0, 1)
 			new /obj/effect/temp_visual/attackwarn(Tcleave2, src, 1, 1)
 			new /obj/effect/temp_visual/attackwarn(Tcleave3, src, -1, 1)
 		if("cleave2")
-			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 0, -1)
+			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 0, -1)
 			new /obj/effect/temp_visual/attackwarn(Tcleave2, src, 1, -1)
 			new /obj/effect/temp_visual/attackwarn(Tcleave3, src, -1, -1)
 		if("cleave4")
-			new /obj/effect/temp_visual/attackwarn(Tcleave, src, -1, 0)
+			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, -1, 0)
 			new /obj/effect/temp_visual/attackwarn(Tcleave2, src, -1, 1)
 			new /obj/effect/temp_visual/attackwarn(Tcleave3, src, -1, -1)
 		if("cleave8")
-			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 1, 0)
+			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
 			new /obj/effect/temp_visual/attackwarn(Tcleave2, src, 1, 1)
 			new /obj/effect/temp_visual/attackwarn(Tcleave3, src, 1, -1)
 		if("energy blast")
-			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 1, 0)
-			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 1, 0)
-			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 1, 0)
-			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 1, 0)
+			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
+			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
+			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
+			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
 		if("curb stomp")
 			forceMove(target)
-			/obj/effect/temp_visual/attackwarn/execute(T, src, 0, 0)
+			/obj/effect/temp_visual/attackwarn/execute(src.loc, src, 0, 0)
 
 /obj/effect/temp_visual/attackwarn
 	name = "incoming attack"
@@ -139,7 +140,7 @@
 	mobhook = src.createdby.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED), CALLBACK(src, .proc/on_mob_move))
 
 /obj/effect/temp_visual/attackwarn/proc/on_mob_move()
-	var/target_turf = get_turf(locate(created_by.x + offset_x, created_by.y + offset_y))
+	var/target_turf = get_turf(locate(createdby.x + offset_x, createdby.y + offset_y))
 	if(istype(target_turf, /turf))
 		forceMove(target_turf)
 
