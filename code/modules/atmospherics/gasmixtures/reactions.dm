@@ -231,7 +231,7 @@
 		air.assert_gas(/datum/gas/tritium)
 		cached_gases[/datum/gas/tritium][MOLES] += gases_fused
 		if (location && prob(power_ratio)) //You don't really want this to happen
-			radiation_pulse(location, power_ratio * 10)
+			radiation_pulse(location, power_ratio * 5)
 			explosion(location,0,0,3,power_ratio / 2,TRUE,TRUE)//A tiny explosion with a large shockwave. People will know you're doing fusion.
 
 	else if (power_ratio > 1) //Mediation is overpowered, fusion reaction starts to break down.
@@ -241,7 +241,7 @@
 		air.assert_gases(/datum/gas/bz,/datum/gas/nitrous_oxide)
 		cached_gases[/datum/gas/bz][MOLES] += gas_power*0.05
 		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gas_power*0.05
-		if (location && prob(power_ratio * 5)) //Fairly high chance of happening
+		if (location && prob(power_ratio * 5)) //Fairly good chances of happening
 			radiation_pulse(location, reaction_energy / (PLASMA_BINDING_ENERGY * 100))
 
 	else
