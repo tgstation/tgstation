@@ -237,6 +237,33 @@
 
 	activate_pin(2)
 
+/obj/item/integrated_circuit/converter/indexer
+	name = "indexer"
+	desc = "This circuit takes a string and an index value, then returns the character found at in the string at the given index."
+	extended_desc = "Make sure the index is not longer or shorter than the string length. If you don't, the circuit will return null."
+	icon_state = "split"
+	complexity = 4
+	inputs = list(
+		"string to index" = IC_PINTYPE_STRING,
+		"index" = IC_PINTYPE_NUMBER,
+		)
+	outputs = list(
+		"found character" = IC_PINTYPE_STRING
+		)
+	activators = list("index" = IC_PINTYPE_PULSE_IN, "on indexed" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/converter/indexer/do_work()
+	var/strin = get_pin_data(IC_INPUT, 1)
+	var/len = length(strin)
+	var/ind = get_pin_data(IC_INPUT, 2)
+	if(ind > 0 && ind <= len)
+		set_pin_data(IC_OUTPUT, 1, strin[ind])
+	else
+		set_pin_data(IC_OUTPUT, 1, "")
+	push_data()
+	activate_pin(2)
+
 /obj/item/integrated_circuit/converter/findstring
 	name = "find text"
 	desc = "This gives position of sample in the string. Or returns 0."
