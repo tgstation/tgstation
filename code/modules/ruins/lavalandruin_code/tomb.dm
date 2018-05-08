@@ -95,7 +95,7 @@
 			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
 		if("curb stomp")
 			forceMove(target)
-			/obj/effect/temp_visual/attackwarn/execute(src.loc, src, 0, 0)
+			new /obj/effect/temp_visual/attackwarn/execute(src.loc, src, 0, 0)
 
 /obj/effect/temp_visual/attackwarn
 	name = "incoming attack"
