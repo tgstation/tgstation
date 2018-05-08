@@ -43,10 +43,18 @@
 	var/turf/Tcleave1 = get_step(src_turf, turn(dir_to_target, angle1))
 	var/turf/Tcleave2 = get_step(src_turf, turn(dir_to_target, angle2))
 	var/turf/Tcleave3 = get_step(src_turf, turn(dir_to_target, angle3))
-	var/atktype = pick("cleave", "lunge")
-	visible_message("<span class='warning'>[src] winds up to [atktype] with it's greatsword...</span>", "<span class='notice'>You begin to wind up a [atktype]...</span>")
-	var/atkexecuted = "[atktype][dir]
-	switch(atktype)
+	var/atktype = pick("cleave", "lunge", "energy blast", "curb stomp")
+	if(target.stat == UNCONSCIOUS)
+		atktype = "curb stomp"
+	if(atktype == "energy blast")
+		visible_message("<span class='warning'>[src] begins to shudder...</span>", "<span class='notice'>You ready a blast of necropolis magic...</span>")
+	else
+		visible_message("<span class='warning'>[src] readies a [atktype]...</span>", "<span class='notice'>You begin to ready a [atktype]...</span>")
+	if(atktype == "cleave" || atktype == "lunge")
+		var/atkexecuted = "[atktype][dir]"
+	else
+		atkexecuted = "[atktype]"
+	switch(atkexecuted)
 		if("lunge1")
 			new /obj/effect/temp_visual/attackwarn(T, src, 0, 1)
 			new /obj/effect/temp_visual/attackwarn(Tstep, src, 0, 2)
@@ -79,6 +87,14 @@
 			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 1, 0)
 			new /obj/effect/temp_visual/attackwarn(Tcleave2, src, 1, 1)
 			new /obj/effect/temp_visual/attackwarn(Tcleave3, src, 1, -1)
+		if("energy blast")
+			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 1, 0)
+			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 1, 0)
+			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 1, 0)
+			new /obj/effect/temp_visual/attackwarn(Tcleave, src, 1, 0)
+		if("curb stomp")
+			forceMove(target)
+			/obj/effect/temp_visual/attackwarn/execute(T, src, 0, 0)
 
 /obj/effect/temp_visual/attackwarn
 	name = "incoming attack"
@@ -100,6 +116,21 @@
 	duration = 12
 	hit_damage = 50
 
+/obj/effect/temp_visual/attackwarn/execute
+	duration = 25
+	hit_damage = 100
+
+/obj/effect/temp_visual/attackwarn/execute/Destroy()
+	QDEL_NULL(mobhook)
+	var/turf/T = get_turf(src)
+	for(var/mob/living/L in T)
+		if(istype(L, /mob/living/simple_animal/hostile/cryptguard)
+			continue //don't kys!
+		to_chat(L, "<span class='danger'>You are curb stomped by [createdby]!</span>")
+		L.adjustBruteLoss(hit_damage)
+		QDEL_NULL(L) //remind me to not do this
+	createdby.swiping = FALSE
+
 /obj/effect/temp_visual/attackwarn/Initialize(mapload, createdby, offset_x, offset_y)
 	..(mapload)
 	src.createdby = createdby
@@ -117,7 +148,7 @@
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
 		to_chat(L, "<span class='danger'>You are hit by [createdby]'s greatsword!</span>")
-		L.adjustBruteLoss(30)
+		L.adjustBruteLoss(hit_damage)
 	createdby.swiping = FALSE
 	..()
 //hit
