@@ -46,3 +46,28 @@
 					riding_datum.force_dismount(M)
 			else
 				R.unbuckle_all_mobs()
+
+/datum/emote/clap
+	key = "clap"
+	key_third_person = "claps"
+	message = "claps."
+	muzzle_ignore = TRUE
+	restraint_check = TRUE
+	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/dead/observer)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer)
+
+/datum/emote/clap/run_emote(mob/user, params)
+	. = ..()
+	if (.)
+		var/clap = pick('sound/misc/clap1.ogg',
+				        'sound/misc/clap2.ogg',
+				        'sound/misc/clap3.ogg',
+				        'sound/misc/clap4.ogg')
+		if (ishuman(user))
+			// Need hands to clap
+			var/mob/living/carbon/human/H = user
+			if (!H.get_bodypart("l_arm") || !H.get_bodypart("r_arm"))
+				return
+			playsound(H, clap, 50, 1, -1)
+		else if (isobserver(user))
+			playsound(user, clap, 50, 1, -1, 0, null, 0, FALSE, TRUE, TRUE)
