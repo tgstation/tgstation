@@ -534,20 +534,14 @@
 /obj/machinery/autolathe/hacked,
 /turf/open/floor/plasteel,
 /area/science)
-"bC" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/science)
 "bD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/machinery/robotic_fabricator,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/mecha_part_fabricator,
 /turf/open/floor/plasteel,
 /area/science)
 "bE" = (
@@ -634,10 +628,6 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "bS" = (
-/obj/machinery/chem_dispenser,
-/turf/open/floor/plasteel/dark,
-/area/medical/chemistry)
-"bT" = (
 /obj/machinery/chem_dispenser,
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
@@ -1321,6 +1311,9 @@
 /turf/open/floor/plating,
 /area/science)
 "gY" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/science)
 "hD" = (
@@ -1440,6 +1433,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
+"AP" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/science)
 "BB" = (
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
 /obj/structure/table,
@@ -1460,7 +1459,7 @@
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "Ct" = (
-/obj/item/disk/tech_disk/debug,
+/obj/machinery/rnd/production/circuit_imprinter/department,
 /turf/open/floor/plasteel,
 /area/science)
 "CV" = (
@@ -1473,6 +1472,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/rnd/destructive_analyzer,
 /turf/open/floor/plasteel,
 /area/science)
 "In" = (
@@ -1490,7 +1490,7 @@
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "NZ" = (
-/obj/machinery/rnd/production/protolathe,
+/obj/machinery/rnd/production/protolathe/department,
 /turf/open/floor/plasteel,
 /area/science)
 "Qt" = (
@@ -1500,6 +1500,13 @@
 /obj/machinery/door/airlock/external/glass,
 /turf/open/floor/plating,
 /area/medical/medbay)
+"RY" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/item/disk/tech_disk/debug,
+/turf/open/floor/plasteel,
+/area/science)
 "Ut" = (
 /obj/structure/closet/secure_closet/medical3,
 /turf/open/floor/plasteel,
@@ -2301,9 +2308,9 @@ aw
 ba
 bk
 bt
-bC
-cb
 fT
+cb
+AP
 pA
 kQ
 bN
@@ -2409,7 +2416,7 @@ aO
 bc
 bm
 ah
-NZ
+bF
 cc
 Ct
 gd
@@ -2463,8 +2470,8 @@ aP
 aP
 bn
 ah
-bF
-cc
+NZ
+RY
 co
 bA
 wS
@@ -3327,7 +3334,7 @@ aX
 aI
 aI
 ak
-bT
+bS
 pQ
 Xg
 Ce

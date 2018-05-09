@@ -15,16 +15,18 @@
 	var/sheet_type
 	var/list/materials
 	var/show_on_examine
+	var/disable_attackby
 	var/list/allowed_typecache
 	var/last_inserted_id
 	var/precise_insertion = FALSE
 	var/datum/callback/precondition
 	var/datum/callback/after_insert
 
-/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition, datum/callback/_after_insert)
+/datum/component/material_container/Initialize(list/mat_list, max_amt = 0, _show_on_examine = FALSE, list/allowed_types, datum/callback/_precondition, datum/callback/_after_insert, _disable_attackby)
 	materials = list()
 	max_amount = max(0, max_amt)
 	show_on_examine = _show_on_examine
+	disable_attackby = _disable_attackby
 	if(allowed_types)
 		allowed_typecache = typecacheof(allowed_types)
 	precondition = _precondition
@@ -43,17 +45,20 @@
 			materials[id] = new mat_path()
 
 /datum/component/material_container/proc/OnExamine(mob/user)
-	for(var/I in materials)
-		var/datum/material/M = materials[I]
-		var/amt = amount(M.id)
-		if(amt)
-			to_chat(user, "<span class='notice'>It has [amt] units of [lowertext(M.name)] stored.</span>")
+	if(show_on_examine)
+		for(var/I in materials)
+			var/datum/material/M = materials[I]
+			var/amt = amount(M.id)
+			if(amt)
+				to_chat(user, "<span class='notice'>It has [amt] units of [lowertext(M.name)] stored.</span>")
 
 /datum/component/material_container/proc/OnAttackBy(obj/item/I, mob/living/user)
 	var/list/tc = allowed_typecache
+	if(disable_attackby)
+		return
 	if(user.a_intent != INTENT_HELP)
 		return
-	if((I.flags_2 & (HOLOGRAM_2 | NO_MAT_REDEMPTION_2)) || (tc && !is_type_in_typecache(I, tc)))
+	if((I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION) || (tc && !is_type_in_typecache(I, tc)))
 		to_chat(user, "<span class='warning'>[parent] won't accept [I]!</span>")
 		return
 	. = COMPONENT_NO_AFTERATTACK

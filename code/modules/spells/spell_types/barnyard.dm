@@ -28,7 +28,7 @@
 		return
 
 	if(!(target in oview(range)))
-		to_chat(user, "<span class='notice'>They are too far away!</span>")
+		to_chat(user, "<span class='notice'>[target.p_theyre(TRUE)] too far away!</span>")
 		return
 
 	if(target.anti_magic_check())

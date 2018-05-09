@@ -146,7 +146,7 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/pineapple
 	bonus_reagents = list("nutriment" = 6, "vitamin" = 6)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 2, "ham" = 2)
-	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT
+	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT | PINEAPPLE
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/pineapple
 	name = "\improper Hawaiian pizza slice"
@@ -154,7 +154,7 @@
 	icon_state = "pineapplepizzaslice"
 	filling_color = "#FF4500"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 2, "ham" = 2)
-	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT
+	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT | PINEAPPLE
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/custom
 	name = "pizza slice"

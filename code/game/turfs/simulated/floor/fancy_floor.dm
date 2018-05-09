@@ -67,6 +67,7 @@
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
 	flags_1 = NONE
+	bullet_bounce_sound = null
 	var/ore_type = /obj/item/stack/ore/glass
 	var/turfverb = "uproot"
 
@@ -93,6 +94,7 @@
 	floor_tile = null
 	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	slowdown = 2
+	bullet_sizzle = TRUE
 
 /turf/open/floor/grass/snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -142,6 +144,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/turf/open/floor/carpet)
 	flags_1 = NONE
+	bullet_bounce_sound = null
 
 /turf/open/floor/carpet/examine(mob/user)
 	..()

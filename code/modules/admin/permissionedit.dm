@@ -64,13 +64,16 @@
 			output += "[admin_ckey] has non-existant rank [admin_rank] | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightschange=[admin_ckey]'>\[Change Rank\]</a> | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremove=[admin_ckey]'>\[Remove\]</a>"
 			output += "<hr style='background:#000000; border:0; height:1px'>"
 		output += "<h3>Unused ranks</h3>"
-		var/datum/DBQuery/query_check_unused_rank = SSdbcore.NewQuery("SELECT [format_table_name("admin_ranks")].rank FROM [format_table_name("admin_ranks")] LEFT JOIN [format_table_name("admin")] ON [format_table_name("admin")].rank = [format_table_name("admin_ranks")].rank WHERE [format_table_name("admin")].rank IS NULL")
+		var/datum/DBQuery/query_check_unused_rank = SSdbcore.NewQuery("SELECT [format_table_name("admin_ranks")].rank, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")] LEFT JOIN [format_table_name("admin")] ON [format_table_name("admin")].rank = [format_table_name("admin_ranks")].rank WHERE [format_table_name("admin")].rank IS NULL")
 		if(!query_check_unused_rank.warn_execute())
 			return
 		while(query_check_unused_rank.NextRow())
 			var/admin_rank = query_check_unused_rank.item[1]
-			output += "Rank [admin_rank] is not held by any admin | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremoverank=[admin_rank]'>\[Remove\]</a>"
-			output += "<hr style='background:#000000; border:0; height:1px'>"
+			output += {"Rank [admin_rank] is not held by any admin | <a href='?_src_=holder;[HrefToken()];editrightsbrowsermanage=1;editrightsremoverank=[admin_rank]'>\[Remove\]</a>
+			<br>Permissions: [rights2text(text2num(query_check_unused_rank.item[2])," ")]
+			<br>Denied: [rights2text(text2num(query_check_unused_rank.item[3])," ", "-")]
+			<br>Allowed to edit: [rights2text(text2num(query_check_unused_rank.item[4])," ", "*")]
+			<hr style='background:#000000; border:0; height:1px'>"}
 	else if(!action)
 		output += {"<head>
 		<title>Permissions Panel</title>
@@ -193,7 +196,7 @@
 	if(use_db)
 		. = sanitizeSQL(.)
 		//if an admin exists without a datum they won't be caught by the above
-		var/datum/DBQuery/query_admin_in_db = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("admin_ranks")] WHERE ckey = '[.]'")
+		var/datum/DBQuery/query_admin_in_db = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("admin")] WHERE ckey = '[.]'")
 		if(!query_admin_in_db.warn_execute())
 			return FALSE
 		if(query_admin_in_db.NextRow())

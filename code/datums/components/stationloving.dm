@@ -28,13 +28,7 @@
 			CRASH("Unable to find a blobstart landmark")
 
 	var/atom/movable/AM = parent
-	if(ismob(AM.loc))
-		var/mob/M = AM.loc
-		M.transferItemToLoc(AM, targetturf, TRUE)	//nodrops disks when?
-	else if(AM.loc.SendSignal(COMSIG_CONTAINS_STORAGE))
-		AM.loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, src, targetturf, TRUE)
-	else
-		AM.forceMove(targetturf)
+	AM.forceMove(targetturf)
 	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
 	return targetturf
 

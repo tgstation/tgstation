@@ -4,6 +4,7 @@
 	layer = SPACE_LAYER
 	baseturfs = /turf/open/indestructible/reebe_void
 	planetary_atmos = TRUE
+	bullet_bounce_sound = null //forever falling
 
 /turf/open/indestructible/reebe_void/Initialize(mapload)
 	. = ..()
