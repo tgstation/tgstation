@@ -277,6 +277,28 @@ CREATE TABLE `role_time`
  `minutes` INT UNSIGNED NOT NULL,
  PRIMARY KEY (`ckey`, `job`)
  ) ENGINE = InnoDB;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `role_time`
+--
+
+DROP TABLE IF EXISTS `role_time_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+
+CREATE TABLE IF NOT EXISTS `role_time_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ckey` varchar(32) NOT NULL,
+  `job` varchar(128) NOT NULL,
+  `delta` int(11) NOT NULL,
+  `datetime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `ckey` (`ckey`),
+  KEY `job` (`job`),
+  KEY `datetime` (`datetime`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `player`
@@ -427,6 +449,18 @@ CREATE TABLE `schema_revision` (
   `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`major`, `minor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DELIMITER
+$$
+CREATE TRIGGER `role_timeTlogupdate` AFTER UPDATE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.CKEY, NEW.job, NEW.minutes-OLD.minutes);
+END
+$$
+CREATE TRIGGER `role_timeTloginsert` AFTER INSERT ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.ckey, NEW.job, NEW.minutes);
+END
+$$
+CREATE TRIGGER `role_timeTlogdelete` AFTER DELETE  ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (OLD.ckey, OLD.job, 0-OLD.minutes);
+END
+$$
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
