@@ -1,0 +1,4 @@
+author: "Firecage & Bluespace"
+delete-after: True
+changes: 
+  - balance: "Replaces the Roman Shield and Roman helmets in the Autodrobe with fake versions with neither block chance nor armour values."
