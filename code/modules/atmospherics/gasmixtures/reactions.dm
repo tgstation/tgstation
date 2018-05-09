@@ -22,7 +22,8 @@
 #define REACTION_OPPRESSION_THRESHOLD		5
 #define NOBLIUM_FORMATION_ENERGY			2e9 //1 Mole of Noblium takes the planck energy to condense.
 //Plasma fusion properties
-#define PLASMA_BINDING_ENERGY				3000000
+#define PLASMA_BINDING_ENERGY				3000000000 //Amount of energy it takes to start a fusion reaction
+#define FUSION_RELEASE_ENERGY				4500000 //Amount of energy released in the fusion process
 #define FUSION_RADIOACTIVITY_FACTOR			50000000 //Completely arbitrary
 #define FUSION_HIGH_RADIOACTIVITY_FACTOR	25000000 //Also arbitrary, but less so
 #define FUSION_MEDIATION_FACTOR				100
@@ -202,7 +203,7 @@
 //Since fusion isn't really intended to happen in successive chains, the requirements are very high
 /datum/gas_reaction/fusion/init_reqs()
 	min_requirements = list(
-		"ENER" = PLASMA_BINDING_ENERGY * 1000,
+		"ENER" = PLASMA_BINDING_ENERGY,
 		/datum/gas/plasma = 500,
 		/datum/gas/tritium = 500
 	)
@@ -229,7 +230,7 @@
 
 	if (power_ratio > FUSION_HIGH_TIER) //Super-fusion. Fuses everything into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
 		var/gases_fused = air.total_moles()
-		reaction_energy += gases_fused*PLASMA_BINDING_ENERGY*(gas_power/(mediation*FUSION_MEDIATION_FACTOR))
+		reaction_energy += gases_fused*FUSION_RELEASE_ENERGY*(gas_power/(mediation*FUSION_MEDIATION_FACTOR))
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
 		air.assert_gas(/datum/gas/tritium)
@@ -239,7 +240,7 @@
 			explosion(location,0,0,3,power_ratio * 0.5,TRUE,TRUE)//A tiny explosion with a large shockwave. People will know you're doing fusion.
 
 	else if (power_ratio > FUSION_MID_TIER) //Mediation is overpowered, fusion reaction starts to break down.
-		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*PLASMA_BINDING_ENERGY
+		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*FUSION_RELEASE_ENERGY
 		cached_gases[/datum/gas/plasma][MOLES] = 0
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] = 0
 		air.assert_gases(/datum/gas/bz,/datum/gas/nitrous_oxide)
@@ -249,7 +250,7 @@
 			radiation_pulse(location, reaction_energy / FUSION_RADIOACTIVITY_FACTOR)
 
 	else
-		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*PLASMA_BINDING_ENERGY*power_ratio
+		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*FUSION_RELEASE_ENERGY*power_ratio
 		air.assert_gas(/datum/gas/oxygen)
 		cached_gases[/datum/gas/oxygen][MOLES] += gas_power + cached_gases[/datum/gas/plasma][MOLES]
 		cached_gases[/datum/gas/plasma][MOLES] = 0
