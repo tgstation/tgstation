@@ -9,9 +9,9 @@
 **Wiki** https://tgstation13.org/wiki/Main_Page <BR>
 **IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
 
-## We have a zero tolerance policy on harassment of contributors and community members on our Github. This is not 4chan, this is not the game server, and this is not the forums. You will follow the Github Terms of Service. Harassment of users on our repository will result in your postings being deleted and reports being filed with Github Support to request a suspension of your account.
+## We have a zero tolerance policy on harassment of contributors and community members on our GitHub. This is not 4chan, this is not the game server, and this is not the forums. You will follow the GitHub Terms of Service. Harassment of users on our repository will result in your postings being deleted and reports being filed with GitHub Support to request a suspension of your account.
 
-### Please consult the Github Terms of Service for further information here: https://help.github.com/articles/github-terms-of-service/
+### Please consult the GitHub Terms of Service for further information here: https://help.github.com/articles/github-terms-of-service/
  
 ## DOWNLOADING
 
