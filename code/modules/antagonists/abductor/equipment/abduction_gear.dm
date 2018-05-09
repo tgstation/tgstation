@@ -360,6 +360,12 @@
 		to_chat(L, "<span class='italics'>You hear a voice in your head saying: </span><span class='abductor'>[message]</span>")
 		to_chat(user, "<span class='notice'>You send the message to your target.</span>")
 		log_talk(user,"[key_name(user)] sent an abductor mind message to [L]/[L.ckey]: '[message]'", LOGSAY)
+		for(var/ded in GLOB.dead_mob_list)
+			if(!isobserver(ded))
+				continue
+			var/follow_ayy = FOLLOW_LINK(ded, user)
+			var/follow_reciever = FOLLOW_LINK(ded, L)
+			to_chat(ded, "[follow_ayy] <span class='name'>[user]</span> Mind Message: <span class='abductor'>[message]</span> [follow_reciever] <span class='name'>[L]</span>")
 
 
 /obj/item/firing_pin/abductor
