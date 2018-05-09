@@ -305,7 +305,7 @@
 
 /datum/gas_reaction/bzformation/init_reqs()
 	min_requirements = list(
-		/datum/gas/tritium = 10,
+		/datum/gas/nitrous_oxide = 10,
 		/datum/gas/plasma = 10
 	)
 
