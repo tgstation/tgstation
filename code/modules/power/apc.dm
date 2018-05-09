@@ -34,6 +34,10 @@
 #define APC_COVER_OPENED 1
 #define APC_COVER_REMOVED 2
 
+#define APC_NOT_CHARGING 0
+#define APC_CHARGING 1
+#define APC_FULLY_CHARGED 2
+
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire connection to power network through a terminal
 
@@ -66,7 +70,7 @@
 	var/equipment = 3
 	var/environ = 3
 	var/operating = TRUE
-	var/charging = 0
+	var/charging = APC_NOT_CHARGING
 	var/chargemode = 1
 	var/chargecount = 0
 	var/locked = TRUE
@@ -291,11 +295,11 @@
 	// And now, separately for cleanness, the lighting changing
 	if(update_state & UPSTATE_ALLGOOD)
 		switch(charging)
-			if(0)
+			if(APC_NOT_CHARGING)
 				light_color = LIGHT_COLOR_RED
-			if(1)
+			if(APC_CHARGING)
 				light_color = LIGHT_COLOR_BLUE
-			if(2)
+			if(APC_FULLY_CHARGED)
 				light_color = LIGHT_COLOR_GREEN
 		set_light(lon_range)
 	else if(update_state & UPSTATE_BLUESCREEN)
@@ -339,9 +343,9 @@
 
 		if(!charging)
 			update_overlay |= APC_UPOVERLAY_CHARGEING0
-		else if(charging == 1)
+		else if(charging == APC_CHARGING)
 			update_overlay |= APC_UPOVERLAY_CHARGEING1
-		else if(charging == 2)
+		else if(charging == APC_FULLY_CHARGED)
 			update_overlay |= APC_UPOVERLAY_CHARGEING2
 
 		if (!equipment)
@@ -384,15 +388,6 @@
 /obj/machinery/power/apc/crowbar_act(mob/user, obj/item/W)
 	. = TRUE
 	if (opened)
-		if(cell)
-			user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
-			var/turf/T = get_turf(user)
-			cell.forceMove(T)
-			cell.update_icon()
-			cell = null
-			charging = 0
-			update_icon()
-			return
 		if (has_electronics == APC_ELECTRONICS_INSTALLED)
 			if (terminal)
 				to_chat(user, "<span class='warning'>Disconnect the wires first!</span>")
@@ -457,8 +452,14 @@
 /obj/machinery/power/apc/screwdriver_act(mob/living/user, obj/item/W)
 	. = TRUE
 	if(opened)
-		if (cell)
-			to_chat(user, "<span class='warning'>Close the APC first!</span>")
+		if(cell)
+			user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
+			var/turf/T = get_turf(user)
+			cell.forceMove(T)
+			cell.update_icon()
+			cell = null
+			charging = APC_NOT_CHARGING
+			update_icon()
 			return
 		else
 			switch (has_electronics)
@@ -745,7 +746,7 @@
 			user.put_in_hands(cell)
 			cell.update_icon()
 			src.cell = null
-			charging = 0
+			charging = APC_NOT_CHARGING
 			src.update_icon()
 		return
 	if((stat & MAINT) && !opened) //no board; no interface
@@ -888,7 +889,7 @@
 		if("charge")
 			chargemode = !chargemode
 			if(!chargemode)
-				charging = 0
+				charging = APC_NOT_CHARGING
 				update_icon()
 			. = TRUE
 		if("channel")
@@ -1125,10 +1126,10 @@
 			if((cell.charge/GLOB.CELLRATE + excess) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
 				cell.charge = min(cell.maxcharge, cell.charge + GLOB.CELLRATE * excess)	//recharge with what we can
 				add_load(excess)		// so draw what we can from the grid
-				charging = 0
+				charging = APC_NOT_CHARGING
 
 			else	// not enough power available to run the last tick!
-				charging = 0
+				charging = APC_NOT_CHARGING
 				chargecount = 0
 				// This turns everything off in the case that there is still a charge left on the battery, just not enough to run the room.
 				equipment = autoset(equipment, 0)
@@ -1168,7 +1169,7 @@
 				area.poweralert(1, src)
 
 		// now trickle-charge the cell
-		if(chargemode && charging == 1 && operating)
+		if(chargemode && charging == APC_CHARGING && operating)
 			if(excess > 0)		// check to make sure we have enough to charge
 				// Max charge is capped to % per second constant
 				var/ch = min(excess*GLOB.CELLRATE, cell.maxcharge*GLOB.CHARGELEVEL)
@@ -1176,13 +1177,13 @@
 				cell.give(ch) // actually recharge the cell
 
 			else
-				charging = 0		// stop charging
+				charging = APC_NOT_CHARGING		// stop charging
 				chargecount = 0
 
 		// show cell as fully charged if so
 		if(cell.charge >= cell.maxcharge)
 			cell.charge = cell.maxcharge
-			charging = 2
+			charging = APC_FULLY_CHARGED
 
 		if(chargemode)
 			if(!charging)
@@ -1194,7 +1195,7 @@
 				if(chargecount == 10)
 
 					chargecount = 0
-					charging = 1
+					charging = APC_CHARGING
 
 		else // chargemode off
 			charging = 0
@@ -1202,7 +1203,7 @@
 
 	else // no cell, switch everything off
 
-		charging = 0
+		charging = APC_NOT_CHARGING
 		chargecount = 0
 		equipment = autoset(equipment, 0)
 		lighting = autoset(lighting, 0)
@@ -1357,6 +1358,10 @@
 #undef APC_COVER_CLOSED
 #undef APC_COVER_OPENED
 #undef APC_COVER_REMOVED
+
+#undef APC_NOT_CHARGING
+#undef APC_CHARGING
+#undef APC_FULLY_CHARGED
 
 //update_overlay
 #undef APC_UPOVERLAY_CHARGEING0
