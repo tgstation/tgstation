@@ -111,12 +111,12 @@
 
 /obj/machinery/power/port_gen/pacman/DropFuel()
 	if(sheets)
+		var/obj/item/stack/sheet/S = sheet_path
 		var/fail_safe = FALSE
 		while(sheets > 0 && fail_safe < 100)
 			fail_safe += 1
-			var/obj/item/stack/sheet/S = new sheet_path(loc)
-			var/amount = min(sheets, S.max_amount)
-			S.amount = amount
+			var/amount = min(sheets, initial(S.max_amount))
+			new sheet_path(drop_location(), amount)
 			sheets -= amount
 
 /obj/machinery/power/port_gen/pacman/UseFuel()
