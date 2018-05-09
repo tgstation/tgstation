@@ -5,6 +5,7 @@
 	drop_all_on_destroy = TRUE
 	drop_all_on_deconstruct = TRUE
 	silent = TRUE
+	allow_big_nesting = TRUE
 
 /datum/component/storage/concrete/implant/Initialize()
 	. = ..()

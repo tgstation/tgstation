@@ -217,16 +217,16 @@
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
-		"Amethyst" = rgb(130,43,255), //supplymain
-		"Blue" = rgb(0,0,255),
-		"Brown" = rgb(178,100,56),
-		"Cyan" = rgb(0,255,249),
-		"Dark" = rgb(69,69,69),
-		"Green" = rgb(30,255,0),
-		"Grey" = rgb(255,255,255),
-		"Orange" = rgb(255,129,25),
-		"Purple" = rgb(128,0,182),
-		"Red" = rgb(255,0,0),
-		"Violet" = rgb(64,0,128),
-		"Yellow" = rgb(255,198,0)
-		))
+		"amethyst" = rgb(130,43,255), //supplymain
+		"blue" = rgb(0,0,255),
+		"brown" = rgb(178,100,56),
+		"cyan" = rgb(0,255,249),
+		"dark" = rgb(69,69,69),
+		"green" = rgb(30,255,0),
+		"grey" = rgb(255,255,255),
+		"orange" = rgb(255,129,25),
+		"purple" = rgb(128,0,182),
+		"red" = rgb(255,0,0),
+		"violet" = rgb(64,0,128),
+		"yellow" = rgb(255,198,0)
+))

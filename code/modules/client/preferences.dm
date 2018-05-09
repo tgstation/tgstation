@@ -76,12 +76,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		//Mob preview
 	var/icon/preview_icon = null
 
-		//Trait list
-	var/list/positive_traits = list()
-	var/list/negative_traits = list()
-	var/list/neutral_traits = list()
-	var/list/all_traits = list()
-	var/list/character_traits = list()
+		//Quirk list
+	var/list/positive_quirks = list()
+	var/list/negative_quirks = list()
+	var/list/neutral_quirks = list()
+	var/list/all_quirks = list()
+	var/list/character_quirks = list()
 
 		//Jobs, uses bitflags
 	var/job_civilian_high = 0
@@ -112,6 +112,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/clientfps = 0
 
 	var/parallax
+
+	var/ambientocclusion = TRUE
 
 	var/uplink_spawn_loc = UPLINK_PDA
 
@@ -190,9 +192,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<center><h2>Occupation Choices</h2>"
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
 			if(CONFIG_GET(flag/roundstart_traits))
-				dat += "<center><h2>Trait Setup</h2>"
-				dat += "<a href='?_src_=prefs;preference=trait;task=menu'>Configure Traits</a><br></center>"
-				dat += "<center><b>Current traits:</b> [all_traits.len ? all_traits.Join(", ") : "None"]</center>"
+				dat += "<center><h2>Quirk Setup</h2>"
+				dat += "<a href='?_src_=prefs;preference=trait;task=menu'>Configure Quirks</a><br></center>"
+				dat += "<center><b>Current quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
 			dat += "<h2>Identity</h2>"
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
 			if(jobban_isbanned(user, "appearance"))
@@ -507,6 +509,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					dat += "High"
 			dat += "</a><br>"
+
+			dat += "<b>Ambient Occlusion:</b> <a href='?_src_=prefs;preference=ambientocclusion'>[ambientocclusion ? "Enabled" : "Disabled"]</a><br>"
+
 			if (CONFIG_GET(flag/maprotation))
 				var/p_map = preferred_map
 				if (!p_map)
@@ -864,72 +869,72 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					return job_engsec_low
 	return 0
 
-/datum/preferences/proc/SetTraits(mob/user)
-	if(!SStraits)
-		to_chat(user, "<span class='danger'>The trait subsystem is still initializing! Try again in a minute.</span>")
+/datum/preferences/proc/SetQuirks(mob/user)
+	if(!SSquirks)
+		to_chat(user, "<span class='danger'>The quirk subsystem is still initializing! Try again in a minute.</span>")
 		return
 
 	var/list/dat = list()
-	if(!SStraits.traits.len)
-		dat += "The trait subsystem hasn't finished initializing, please hold..."
+	if(!SSquirks.quirks.len)
+		dat += "The quirk subsystem hasn't finished initializing, please hold..."
 		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center><br>"
 
 	else
-		dat += "<center><b>Choose trait setup</b></center><br>"
-		dat += "<div align='center'>Left-click to add or remove traits. You need one negative trait for every positive trait.<br>\
-		Traits are applied at roundstart and cannot normally be removed.</div>"
+		dat += "<center><b>Choose quirk setup</b></center><br>"
+		dat += "<div align='center'>Left-click to add or remove quirks. You need negative quirks to have positive ones.<br>\
+		Quirks are applied at roundstart and cannot normally be removed.</div>"
 		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center>"
 		dat += "<hr>"
-		dat += "<center><b>Current traits:</b> [all_traits.len ? all_traits.Join(", ") : "None"]</center>"
-		dat += "<center>[all_traits.len] / [MAX_TRAITS] max traits<br>\
-		<b>Trait balance remaining:</b> [GetTraitBalance()]</center><br>"
-		for(var/V in SStraits.traits)
-			var/datum/trait/T = SStraits.traits[V]
-			var/trait_name = initial(T.name)
-			var/has_trait
-			var/trait_cost = initial(T.value) * -1
+		dat += "<center><b>Current quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
+		dat += "<center>[all_quirks.len] / [MAX_QUIRKS] max quirks<br>\
+		<b>Quirk balance remaining:</b> [GetQuirkBalance()]</center><br>"
+		for(var/V in SSquirks.quirks)
+			var/datum/quirk/T = SSquirks.quirks[V]
+			var/quirk_name = initial(T.name)
+			var/has_quirk
+			var/quirk_cost = initial(T.value) * -1
 			var/lock_reason = "This trait is unavailable."
-			var/trait_conflict = FALSE
-			for(var/_V in all_traits)
-				if(_V == trait_name)
-					has_trait = TRUE
-			if(initial(T.mood_trait) && CONFIG_GET(flag/disable_human_mood))
+			var/quirk_conflict = FALSE
+			for(var/_V in all_quirks)
+				if(_V == quirk_name)
+					has_quirk = TRUE
+			if(initial(T.mood_quirk) && CONFIG_GET(flag/disable_human_mood))
 				lock_reason = "Mood is disabled."
-				trait_conflict = TRUE
-			if(has_trait)
-				if(trait_conflict)
-					all_traits -= trait_name
-					has_trait = FALSE
+				quirk_conflict = TRUE
+			if(has_quirk)
+				if(quirk_conflict)
+					all_quirks -= quirk_name
+					has_quirk = FALSE
 				else
-					trait_cost *= -1 //invert it back, since we'd be regaining this amount
-			if(trait_cost > 0)
-				trait_cost = "+[trait_cost]"
+					quirk_cost *= -1 //invert it back, since we'd be regaining this amount
+			if(quirk_cost > 0)
+				quirk_cost = "+[quirk_cost]"
 			var/font_color = "#AAAAFF"
 			if(initial(T.value) != 0)
 				font_color = initial(T.value) > 0 ? "#AAFFAA" : "#FFAAAA"
-			if(trait_conflict)
-				dat += "<font color='[font_color]'>[trait_name]</font> - [initial(T.desc)] \
+			if(quirk_conflict)
+				dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
 				<font color='red'><b>LOCKED: [lock_reason]</b></font><br>"
 			else
-				if(has_trait)
-					dat += "<b><font color='[font_color]'>[trait_name]</font></b> - [initial(T.desc)] \
-					<a href='?_src_=prefs;preference=trait;task=update;trait=[trait_name]'>[has_trait ? "Lose" : "Take"] ([trait_cost] pts.)</a><br>"
+				if(has_quirk)
+					dat += "<b><font color='[font_color]'>[quirk_name]</font></b> - [initial(T.desc)] \
+					<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Lose" : "Take"] ([quirk_cost] pts.)</a><br>"
 				else
-					dat += "<font color='[font_color]'>[trait_name]</font> - [initial(T.desc)] \
-					<a href='?_src_=prefs;preference=trait;task=update;trait=[trait_name]'>[has_trait ? "Lose" : "Take"] ([trait_cost] pts.)</a><br>"
+					dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
+					<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Lose" : "Take"] ([quirk_cost] pts.)</a><br>"
 		dat += "<br><center><a href='?_src_=prefs;preference=trait;task=reset'>Reset Traits</a></center>"
 
 	user << browse(null, "window=preferences")
-	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Trait Preferences</div>", 900, 600) //no reason not to reuse the occupation window, as it's cleaner that way
+	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Quirk Preferences</div>", 900, 600) //no reason not to reuse the occupation window, as it's cleaner that way
 	popup.set_window_options("can_close=0")
 	popup.set_content(dat.Join())
 	popup.open(0)
 	return
 
-/datum/preferences/proc/GetTraitBalance()
+/datum/preferences/proc/GetQuirkBalance()
 	var/bal = 0
-	for(var/V in all_traits)
-		var/datum/trait/T = SStraits.traits[V]
+	for(var/V in all_quirks)
+		var/datum/quirk/T = SSquirks.quirks[V]
 		bal -= initial(T.value)
 	return bal
 
@@ -986,55 +991,55 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				user << browse(null, "window=mob_occupation")
 				ShowChoices(user)
 			if("update")
-				var/trait = href_list["trait"]
-				if(!SStraits.traits[trait])
+				var/quirk = href_list["trait"]
+				if(!SSquirks.quirks[quirk])
 					return
-				var/value = SStraits.trait_points[trait]
+				var/value = SSquirks.quirk_points[quirk]
 				if(value == 0)
-					if(trait in neutral_traits)
-						neutral_traits -= trait
-						all_traits -= trait
+					if(quirk in neutral_quirks)
+						neutral_quirks -= quirk
+						all_quirks -= quirk
 					else
-						if(all_traits.len >= MAX_TRAITS)
-							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+						if(all_quirks.len >= MAX_QUIRKS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] quirks!</span>")
 							return
-						neutral_traits += trait
-						all_traits += trait
+						neutral_quirks += quirk
+						all_quirks += quirk
 				else
-					var/balance = GetTraitBalance()
-					if(trait in positive_traits)
-						positive_traits -= trait
-						all_traits -= trait
-					else if(trait in negative_traits)
+					var/balance = GetQuirkBalance()
+					if(quirk in positive_quirks)
+						positive_quirks -= quirk
+						all_quirks -= quirk
+					else if(quirk in negative_quirks)
 						if(balance + value < 0)
 							to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
 							return
-						negative_traits -= trait
-						all_traits -= trait
+						negative_quirks -= quirk
+						all_quirks -= quirk
 					else if(value > 0)
-						if(all_traits.len >= MAX_TRAITS)
-							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+						if(all_quirks.len >= MAX_QUIRKS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] quirks!</span>")
 							return
 						if(balance - value < 0)
-							to_chat(user, "<span class='warning'>You don't have enough balance to gain this trait!</span>")
+							to_chat(user, "<span class='warning'>You don't have enough balance to gain this quirk!</span>")
 							return
-						positive_traits += trait
-						all_traits += trait
+						positive_quirks += quirk
+						all_quirks += quirk
 					else
-						if(all_traits.len >= MAX_TRAITS)
-							to_chat(user, "<span class='warning'>You can't have more than [MAX_TRAITS] traits!</span>")
+						if(all_quirks.len >= MAX_QUIRKS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] quirks!</span>")
 							return
-						negative_traits += trait
-						all_traits += trait
-				SetTraits(user)
+						negative_quirks += quirk
+						all_quirks += quirk
+				SetQuirks(user)
 			if("reset")
-				all_traits = list()
-				positive_traits = list()
-				negative_traits = list()
-				neutral_traits = list()
-				SetTraits(user)
+				all_quirks = list()
+				positive_quirks = list()
+				negative_quirks = list()
+				neutral_quirks = list()
+				SetQuirks(user)
 			else
-				SetTraits(user)
+				SetQuirks(user)
 		return TRUE
 
 	switch(href_list["task"])
@@ -1486,6 +1491,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					parallax = WRAP(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
 					if (parent && parent.mob && parent.mob.hud_used)
 						parent.mob.hud_used.update_parallax_pref(parent.mob)
+
+				if("ambientocclusion")
+					ambientocclusion = !ambientocclusion
+					if(parent && parent.screen && parent.screen.len)
+						var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
+						PM.filters -= AMBIENT_OCCLUSION
+						if(ambientocclusion)
+							PM.filters += AMBIENT_OCCLUSION
 
 				if("save")
 					save_preferences()
