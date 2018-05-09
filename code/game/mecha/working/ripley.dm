@@ -32,7 +32,7 @@
 
 /obj/mecha/working/ripley/Destroy()
 	GET_COMPONENT(C,/datum/component/armor_plate)
-	for(var/i=1, i <= C.amount, i++)
+	for(var/i in 1 to C.amount)
 		new C.upgrade_item(loc) //If a goliath-plated ripley gets killed, all the plates drop
 	for(var/atom/movable/A in cargo)
 		A.forceMove(drop_location())
