@@ -139,10 +139,10 @@
 	required_reagents = list("tequila" = 2, "kahlua" = 1)
 
 /datum/chemical_reaction/tequila_sunrise
-	name = "tequila Sunrise"
+	name = "Tequila Sunrise"
 	id = "tequilasunrise"
-	results = list("tequilasunrise" = 3)
-	required_reagents = list("tequila" = 2, "orangejuice" = 1)
+	results = list("tequilasunrise" = 5)
+	required_reagents = list("tequila" = 2, "orangejuice" = 2, "grenadine" = 1)
 
 /datum/chemical_reaction/toxins_special
 	name = "Toxins Special"
@@ -662,3 +662,4 @@
 	id = "mojito"
 	results = list("mojito" = 5)
 	required_reagents = list("rum" = 1, "sugar" = 1, "limejuice" = 1, "sodawater" = 1, "menthol" = 1)
+

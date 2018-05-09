@@ -451,7 +451,7 @@
 	name = "Speed Loader (.38)"
 	id = "c38"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000)
+	materials = list(MAT_METAL = 20000)
 	build_path = /obj/item/ammo_box/c38
 	category = list("initial", "Security")
 

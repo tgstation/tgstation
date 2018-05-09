@@ -5,8 +5,7 @@
 	item_state = "plastic-explosive"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
-	flags_1 = NOBLUDGEON_1
-	flags_2 = NO_EMP_WIRES_2
+	flags_1 = NOBLUDGEON_1 | NO_EMP_WIRES_1
 	det_time = 10
 	display_timer = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -107,10 +106,10 @@
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		target = AM
-		
+
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [det_time] second fuse",0,1)
 		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(src)] with [det_time] second fuse")
-		
+
 		moveToNullspace()	//Yep
 
 		if(istype(AM, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.

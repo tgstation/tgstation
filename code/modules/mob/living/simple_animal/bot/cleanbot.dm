@@ -181,7 +181,7 @@
 		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,
-		/obj/effect/decal/cleanable/deadcockroach,
+		/obj/effect/decal/cleanable/insectguts,
 		/obj/effect/decal/remains
 		)
 

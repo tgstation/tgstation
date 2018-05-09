@@ -371,6 +371,15 @@
 	isGlass = FALSE
 	list_reagents = list("menthol" = 100)
 
+/obj/item/reagent_containers/food/drinks/bottle/grenadine
+	name = "Jester Grenadine"
+	desc = "Contains 0% real cherries!"
+	icon_state = "grenadine"
+	isGlass = TRUE
+	list_reagents = list("grenadine" = 100)
+	foodtype = FRUIT
+
+
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov
 	name = "molotov cocktail"

@@ -13,9 +13,12 @@
 	resistance_flags = NONE
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
-	flags_2 = BANG_PROTECT_2
 
 	dog_fashion = /datum/dog_fashion/head/helmet
+
+/obj/item/clothing/head/helmet/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
 
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = 1
@@ -203,11 +206,12 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
-	// old knight helmets do not offer protection against loud noises
-	flags_2 = NONE
+
 
 /obj/item/clothing/head/helmet/knight/Initialize(mapload)
 	. = ..()
+	var/datum/component = GetComponent(/datum/component/wearertargeting/earprotection)
+	qdel(component)
 
 /obj/item/clothing/head/helmet/knight/blue
 	icon_state = "knight_blue"

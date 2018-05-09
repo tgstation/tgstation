@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 //	You do not need to raise this if you are adding new values that have sane defaults.
-//	Only raise this value when changing the meaning/format/name/layout of an existing value 
+//	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
 #define SAVEFILE_VERSION_MAX	20
 
@@ -34,7 +34,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return savefile_version
 	return -1
 
-//should these procs get fairly long 
+//should these procs get fairly long
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
 //SAVEFILE_VERSION_MAX and then delete any obsolete if clauses
 //from these procs.
@@ -258,11 +258,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_med"]		>> job_engsec_med
 	S["job_engsec_low"]		>> job_engsec_low
 
-	//Traits
-	S["all_traits"]			>> all_traits
-	S["positive_traits"]	>> positive_traits
-	S["negative_traits"]	>> negative_traits
-	S["neutral_traits"]		>> neutral_traits
+	//Quirks
+	S["all_quirks"]			>> all_quirks
+	S["positive_quirks"]	>> positive_quirks
+	S["negative_quirks"]	>> negative_quirks
+	S["neutral_quirks"]		>> neutral_quirks
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -319,10 +319,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
 
-	all_traits = SANITIZE_LIST(all_traits)
-	positive_traits = SANITIZE_LIST(positive_traits)
-	negative_traits = SANITIZE_LIST(negative_traits)
-	neutral_traits = SANITIZE_LIST(neutral_traits)
+	all_quirks = SANITIZE_LIST(all_quirks)
+	positive_quirks = SANITIZE_LIST(positive_quirks)
+	negative_quirks = SANITIZE_LIST(negative_quirks)
+	neutral_quirks = SANITIZE_LIST(neutral_quirks)
 
 	return 1
 
@@ -387,11 +387,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["job_engsec_med"]		, job_engsec_med)
 	WRITE_FILE(S["job_engsec_low"]		, job_engsec_low)
 
-	//Traits
-	WRITE_FILE(S["all_traits"]		, all_traits)
-	WRITE_FILE(S["positive_traits"]		, positive_traits)
-	WRITE_FILE(S["negative_traits"]		, negative_traits)
-	WRITE_FILE(S["neutral_traits"]		, neutral_traits)
+	//Quirks
+	WRITE_FILE(S["all_quirks"]			, all_quirks)
+	WRITE_FILE(S["positive_quirks"]		, positive_quirks)
+	WRITE_FILE(S["negative_quirks"]		, negative_quirks)
+	WRITE_FILE(S["neutral_quirks"]		, neutral_quirks)
 
 	return 1
 
