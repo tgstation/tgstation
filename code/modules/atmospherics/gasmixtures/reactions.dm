@@ -232,7 +232,7 @@
 		cached_gases[/datum/gas/tritium][MOLES] += gases_fused
 		if (location && prob(power_ratio)) //You don't really want this to happen
 			radiation_pulse(location, power_ratio * 5)
-			explosion(location,0,0,3,power_ratio / 2,TRUE,TRUE)//A tiny explosion with a large shockwave. People will know you're doing fusion.
+			explosion(location,0,0,3,power_ratio * 0.5,TRUE,TRUE)//A tiny explosion with a large shockwave. People will know you're doing fusion.
 
 	else if (power_ratio > 1) //Mediation is overpowered, fusion reaction starts to break down.
 		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*PLASMA_BINDING_ENERGY
