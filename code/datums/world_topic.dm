@@ -168,9 +168,16 @@
 	.["security_level"] = get_security_level()
 	.["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
 	// Amount of world's ticks in seconds, useful for calculating round duration
+	
+	//Time dilation stats.
+	.["time_dilation_current"] = SStime_track ? SStime_track.time_dilation_current : 0
+	.["time_dilation_avg"] = SStime_track ? SStime_track.time_dilation_avg : 0
+	.["time_dilation_avg_slow"] = SStime_track ? SStime_track.time_dilation_avg_slow : 0
+	.["time_dilation_avg_fast"] = SStime_track ? SStime_track.time_dilation_avg_fast : 0
 
 	if(SSshuttle && SSshuttle.emergency)
 		.["shuttle_mode"] = SSshuttle.emergency.mode
 		// Shuttle status, see /__DEFINES/stat.dm
 		.["shuttle_timer"] = SSshuttle.emergency.timeLeft()
 		// Shuttle timer, in seconds
+	
