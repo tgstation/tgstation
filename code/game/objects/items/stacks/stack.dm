@@ -36,7 +36,11 @@
 /obj/item/stack/Initialize(mapload, new_amount=null , merge = TRUE)
 	. = ..()
 	if(new_amount)
-		amount = new_amount
+		if(new_amount > max_amount)
+			amount = max_amount
+			new type(loc, new_amount - max_amount, merge)
+		else
+			amount = new_amount
 	if(!merge_type)
 		merge_type = type
 	if(merge)

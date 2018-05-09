@@ -111,13 +111,8 @@
 
 /obj/machinery/power/port_gen/pacman/DropFuel()
 	if(sheets)
-		var/obj/item/stack/sheet/S = sheet_path
-		var/fail_safe = FALSE
-		while(sheets > 0 && fail_safe < 100)
-			fail_safe += 1
-			var/amount = min(sheets, initial(S.max_amount))
-			new sheet_path(drop_location(), amount)
-			sheets -= amount
+		new sheet_path(drop_location(), sheets)
+		sheets = 0
 
 /obj/machinery/power/port_gen/pacman/UseFuel()
 	var/needed_sheets = 1 / (time_per_sheet * consumption / power_output)

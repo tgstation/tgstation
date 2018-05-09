@@ -36,12 +36,7 @@
 			continue
 		grassAmt += 1 + round(G.seed.potency * tile_coefficient)
 		qdel(G)
-	var/obj/item/stack/tile/GT = stacktype
-	var/atom/Tsec = user.drop_location()
-	while(grassAmt > 0)
-		var/amount = min(grassAmt, initial(GT.max_amount))
-		new stacktype(Tsec, amount)
-		grassAmt -= amount
+	new stacktype(user.drop_location(), grassAmt)
 	qdel(src)
 
 // Carpet
