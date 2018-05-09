@@ -13,7 +13,8 @@
 		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		qdel(W)
 		var/obj/singularity/singulo = new /obj/singularity (get_turf(A))
-		singulo.energy = 300 //should make it a bit bigger~
+		singulo.energy = 600 //Puts it at stage 3 initially, since it doesn't move anymore.
+		singulo.move_self = 0
 		message_admins("[key_name_admin(user)] detonated a bag of holding")
 		log_game("[key_name(user)] detonated a bag of holding")
 		qdel(A)
