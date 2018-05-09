@@ -129,7 +129,8 @@
 		return ..()
 
 /obj/item/flamethrower/analyzer_act(mob/living/user, obj/item/I)
-	ptank.analyzer_act(user, I)
+	if(ptank)
+		ptank.analyzer_act(user, I)
 
 
 /obj/item/flamethrower/attack_self(mob/user)
