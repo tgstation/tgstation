@@ -1,0 +1,8 @@
+author: "PKPenguin321"
+delete-after: True
+changes: 
+  - rscadd: "There are now two new variants of the concatenator integrated circuit. Small, which only takes 4 inputs, and large, which takes 16. Small uses 50% less complexity, large uses 50% more."
+  - rscadd: "There's a new string length circuit, which simply returns the length of a given  string."
+  - rscadd: "There's a new indexer circuit, which takes a string and an index and returns the character found at the index of the given string."
+  - tweak: "The find text integrated circuit now has two new pulse outs, one that runs when it finds the text and one that runs when it does not."
+  - tweak: "Leaving the delimiter in the explode text circuit null will now return all of the input string's characters in a list."
