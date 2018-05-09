@@ -20,14 +20,18 @@
 #define STIMULUM_SECOND_RISE				0.0009
 #define STIMULUM_ABSOLUTE_DROP				0.00000335
 #define REACTION_OPPRESSION_THRESHOLD		5
-	//Plasma fusion properties
-#define PLASMA_BINDING_ENERGY				3000000
-#define MAX_CATALYST_EFFICENCY				9
-#define PLASMA_FUSED_COEFFICENT				0.08
-#define CATALYST_COEFFICENT					0.01
-#define FUSION_PURITY_THRESHOLD				0.95
-#define FUSION_HEAT_DROPOFF					(20000+T0C)
 #define NOBLIUM_FORMATION_ENERGY			2e9 //1 Mole of Noblium takes the planck energy to condense.
+//Plasma fusion properties
+#define PLASMA_BINDING_ENERGY				3000000
+#define FUSION_RADIOACTIVITY_FACTOR			50000000 //Completely arbitrary
+#define FUSION_HIGH_RADIOACTIVITY_FACTOR	25000000 //Also arbitrary, but less so
+#define FUSION_MEDIATION_FACTOR				100
+#define FUSION_GAS_CREATION_FACTOR			0.05 //BZ and N2O
+#define FUSION_LOW_TIER_RAD_PROB_FACTOR		10
+#define FUSION_MID_TIER_RAD_PROB_FACTOR		5
+#define FUSION_HIGH_TIER					10
+#define FUSION_MID_TIER						1
+
 /datum/controller/subsystem/air/var/list/gas_reactions //this is our singleton of all reactions
 
 /proc/init_gas_reactions()
@@ -216,33 +220,33 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_energy
 
-	var/mediation = 100*(air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES]) //This is the average heat capacity of the mixture,not including plasma.
+	var/mediation = FUSION_MEDIATION_FACTOR*(air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES]) //This is the average heat capacity of the mixture,not including plasma.
 	var/gas_power = 0
 	for (var/id in cached_gases)
 		gas_power += cached_gases[id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[id][MOLES]
 
 	var/power_ratio = gas_power/mediation
 
-	if (power_ratio > 10) //Super-fusion. Fuses everything into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
+	if (power_ratio > FUSION_HIGH_TIER) //Super-fusion. Fuses everything into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
 		var/gases_fused = air.total_moles()
-		reaction_energy += gases_fused*PLASMA_BINDING_ENERGY*(gas_power/(mediation*100))
+		reaction_energy += gases_fused*PLASMA_BINDING_ENERGY*(gas_power/(mediation*FUSION_MEDIATION_FACTOR))
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
 		air.assert_gas(/datum/gas/tritium)
 		cached_gases[/datum/gas/tritium][MOLES] += gases_fused
 		if (location && prob(power_ratio)) //You don't really want this to happen
-			radiation_pulse(location, power_ratio * 5)
+			radiation_pulse(location, reaction_energy / FUSION_HIGH_RADIOACTIVITY_FACTOR)
 			explosion(location,0,0,3,power_ratio * 0.5,TRUE,TRUE)//A tiny explosion with a large shockwave. People will know you're doing fusion.
 
-	else if (power_ratio > 1) //Mediation is overpowered, fusion reaction starts to break down.
+	else if (power_ratio > FUSION_MID_TIER) //Mediation is overpowered, fusion reaction starts to break down.
 		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*PLASMA_BINDING_ENERGY
 		cached_gases[/datum/gas/plasma][MOLES] = 0
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] = 0
 		air.assert_gases(/datum/gas/bz,/datum/gas/nitrous_oxide)
-		cached_gases[/datum/gas/bz][MOLES] += gas_power*0.05
-		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gas_power*0.05
-		if (location && prob(power_ratio * 5)) //Fairly good chances of happening
-			radiation_pulse(location, reaction_energy / (PLASMA_BINDING_ENERGY * 100))
+		cached_gases[/datum/gas/bz][MOLES] += gas_power*FUSION_GAS_CREATION_FACTOR
+		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gas_power*FUSION_GAS_CREATION_FACTOR
+		if (location && prob(power_ratio * FUSION_MID_TIER_RAD_PROB_FACTOR)) //Fairly good chances of happening
+			radiation_pulse(location, reaction_energy / FUSION_RADIOACTIVITY_FACTOR)
 
 	else
 		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*PLASMA_BINDING_ENERGY*power_ratio
@@ -252,8 +256,8 @@
 		for (var/gas in cached_gases)
 			if (cached_gases[gas][GAS_META][META_GAS_FUSION_POWER])
 				cached_gases[gas][MOLES] = 0
-		if (location && prob(power_ratio * 10)) //Won't happen often, but the threat is there
-			radiation_pulse(location, reaction_energy / (PLASMA_BINDING_ENERGY * 100))
+		if (location && prob(power_ratio * FUSION_LOW_TIER_RAD_PROB_FACTOR)) //Won't happen often, but the threat is there
+			radiation_pulse(location, reaction_energy / FUSION_RADIOACTIVITY_FACTOR)
 
 	if(reaction_energy > 0)
 		var/new_heat_capacity = air.heat_capacity()
