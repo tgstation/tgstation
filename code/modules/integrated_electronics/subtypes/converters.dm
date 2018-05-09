@@ -144,19 +144,16 @@
 	name = "concatenator"
 	desc = "This can join up to 8 strings together to get one big string."
 	complexity = 4
-	inputs = list(
-		"input 1" = IC_PINTYPE_STRING,
-		"input 2" = IC_PINTYPE_STRING,
-		"input 3" = IC_PINTYPE_STRING,
-		"input 4" = IC_PINTYPE_STRING,
-		"input 5" = IC_PINTYPE_STRING,
-		"input 6" = IC_PINTYPE_STRING,
-		"input 7" = IC_PINTYPE_STRING,
-		"input 8" = IC_PINTYPE_STRING
-		)
+	inputs = list()
 	outputs = list("result" = IC_PINTYPE_STRING)
 	activators = list("concatenate" = IC_PINTYPE_PULSE_IN, "on concatenated" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	var/number_of_pins = 8
+
+/obj/item/integrated_circuit/converter/concatenator/Initialize()
+	for(var/i = 1 to number_of_pins)
+		inputs["input [i]"] = IC_PINTYPE_STRING
+	. = ..()
 
 /obj/item/integrated_circuit/converter/concatenator/do_work()
 	var/result = null
@@ -173,35 +170,13 @@
 	name = "small concatenator"
 	desc = "This can join up to 4 strings together to get one big string."
 	complexity = 2
-	inputs = list(
-		"input 1" = IC_PINTYPE_STRING,
-		"input 2" = IC_PINTYPE_STRING,
-		"input 3" = IC_PINTYPE_STRING,
-		"input 4" = IC_PINTYPE_STRING
-		)
+	number_of_pins = 4
 
 /obj/item/integrated_circuit/converter/concatenator/large
 	name = "large concatenator"
 	desc = "This can join up to 16 strings together to get one very big string."
 	complexity = 6
-	inputs = list(
-		"input 1" = IC_PINTYPE_STRING,
-		"input 2" = IC_PINTYPE_STRING,
-		"input 3" = IC_PINTYPE_STRING,
-		"input 4" = IC_PINTYPE_STRING,
-		"input 5" = IC_PINTYPE_STRING,
-		"input 6" = IC_PINTYPE_STRING,
-		"input 7" = IC_PINTYPE_STRING,
-		"input 8" = IC_PINTYPE_STRING,
-		"input 9" = IC_PINTYPE_STRING,
-		"input 10" = IC_PINTYPE_STRING,
-		"input 11" = IC_PINTYPE_STRING,
-		"input 12" = IC_PINTYPE_STRING,
-		"input 13" = IC_PINTYPE_STRING,
-		"input 14" = IC_PINTYPE_STRING,
-		"input 15" = IC_PINTYPE_STRING,
-		"input 16" = IC_PINTYPE_STRING
-		)
+	number_of_pins = 16
 
 /obj/item/integrated_circuit/converter/separator
 	name = "separator"
