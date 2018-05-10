@@ -23,6 +23,7 @@
 	var/obj/item/flashlight/F = null
 	var/can_flashlight = 0
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
+	var/speech_modification = 0 //This is binary for the moment, later updates could include 'degrees' of speechmod
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
 	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
