@@ -42,7 +42,7 @@
 	tgui_id = "ntos_cameras"
 	ui_x = 600
 	ui_y = 400
-	ui_header = "alarm_green.gif"		//PLACEHOLDER
+	ui_header = "camera.gif"		//PLACEHOLDER
 	var/screen_number = SCREEN_HOME
 	
 	var/current_user		//used in break_watch() as a fallback
