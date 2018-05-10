@@ -170,10 +170,10 @@
 	// Amount of world's ticks in seconds, useful for calculating round duration
 	
 	//Time dilation stats.
-	.["time_dilation_current"] = SStime_track ? SStime_track.time_dilation_current : 0
-	.["time_dilation_avg"] = SStime_track ? SStime_track.time_dilation_avg : 0
-	.["time_dilation_avg_slow"] = SStime_track ? SStime_track.time_dilation_avg_slow : 0
-	.["time_dilation_avg_fast"] = SStime_track ? SStime_track.time_dilation_avg_fast : 0
+	.["time_dilation_current"] = SStime_track.time_dilation_current
+	.["time_dilation_avg"] = SStime_track.time_dilation_avg
+	.["time_dilation_avg_slow"] = SStime_track.time_dilation_avg_slow
+	.["time_dilation_avg_fast"] = SStime_track.time_dilation_avg_fast
 
 	if(SSshuttle && SSshuttle.emergency)
 		.["shuttle_mode"] = SSshuttle.emergency.mode
