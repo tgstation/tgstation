@@ -35,7 +35,7 @@
 
 /obj/item/stack/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
-	if(new_amount)
+	if(new_amount != null)
 		amount = new_amount
 	while(amount > max_amount)
 		amount -= max_amount
