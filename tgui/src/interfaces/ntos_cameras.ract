@@ -1,13 +1,9 @@
 <link rel='ractive' href='./ntosheader.ract'>
 <ntosheader/>
 
-<ui-display title='Prototype version!'>
-<br>This version is intended for demonstrative purposes only. Some buttons, settings, and information may be nonfunctional or may not function as intended. UI is not final and subject to change.<br>
-</ui-display>
-
 {{#if data.screen == 0}}
 	<h2>NTNet Remote Camera Feed Interface</h2>
-	<br>Welcome to the NTNet Remote Camera Feed Interface. Please choose an option below.<br>
+	<br>Welcome to the NTNet Remote Camera Feed Interface. Please choose an option below.<br><br>
 	<ui-button action='PRG_list' icon='folder'>List cameras</ui-button>
 	<ui-button action='PRG_F5' icon='refresh'>Reload camera list</ui-button>
 	
@@ -15,6 +11,7 @@
 {{#if data.screen == 1}}
 	<ui-button action='PRG_home' icon='home'>Home</ui-button> <ui-button action='PRG_F5' icon='refresh'>Reload camera list</ui-button><br>
 	<ui-display title='Detected Cameras'>
+	<span><em>(Hint: You can search for a specific camera using Ctrl-F)</em></span><br><br>
 	{{#each data.cameras}}
 		<ui-button action='PRG_details' params='{"target" : "{{camera_name}}"}' style = '{{camera_status ? null : "danger"}}'>{{camera_status ? "Online" : "Offline"}} - Details</ui-button> {{camera_name}}<br><br>
 	{{/each}}
@@ -41,6 +38,7 @@
 	<ui-button action='PRG_home' icon='home'>Home</ui-button>
 	
 	<ui-display title='Viewing feed: {{data.name}}'><br>
+	<span>You are currently viewing {{data.name}}'s camera feed. Move or click the button to close the feed.</span>
 	<br><br><ui-button action='PRG_home' icon='remove'>Close feed</ui-button>
 	</ui-display>
 {{/if}}
