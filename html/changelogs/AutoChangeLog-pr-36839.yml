@@ -1,4 +1,0 @@
-author: "george99g"
-delete-after: True
-changes: 
-  - bugfix: "Committing suicide will now stop you from being cloned via prescans."

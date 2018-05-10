@@ -9,6 +9,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 #define PDA_SCANNER_REAGENT		3
 #define PDA_SCANNER_HALOGEN		4
 #define PDA_SCANNER_GAS			5
+#define PDA_SPAM_DELAY		    2 MINUTES
 
 /obj/item/pda
 	name = "\improper PDA"
@@ -52,6 +53,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/toff = FALSE //If TRUE, messenger disabled
 	var/tnote = null //Current Texts
 	var/last_text //No text spamming
+	var/last_everyone //No text for everyone spamming
 	var/last_noise //Also no honk spamming that's bad too
 	var/ttone = "beep" //The ringtone!
 	var/lock_code = "" // Lockcode to unlock uplink
@@ -609,11 +611,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 		t = Gibberish(t, 100)
 	return t
 
-/obj/item/pda/proc/send_message(mob/living/user, list/obj/item/pda/targets)
+/obj/item/pda/proc/send_message(mob/living/user, list/obj/item/pda/targets, everyone)
 	var/message = msg_input(user)
 	if(!message || !targets.len)
 		return
-	if(last_text && world.time < last_text + 5)
+	if((last_text && world.time < last_text + 10) || (everyone && last_everyone && world.time < last_everyone + PDA_SPAM_DELAY))
 		return
 
 	// Send the signal
@@ -658,6 +660,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	to_chat(user, "<span class='info'>Message sent to [target_text]: \"[message]\"</span>")
 	// Reset the photo
 	photo = null
+	last_text = world.time 
+	if (everyone)
+		last_everyone = world.time
 
 /obj/item/pda/proc/receive_message(datum/signal/subspace/pda/signal)
 	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=Message;target=[REF(signal.source)]'>[signal.data["name"]]</a> ([signal.data["job"]]):</b></i><br>[signal.format_message()]<br>"
@@ -686,7 +691,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	add_overlay(icon_alert)
 
 /obj/item/pda/proc/send_to_all(mob/living/U)
-	send_message(U,get_viewable_pdas())
+	if (last_everyone && world.time < last_everyone + PDA_SPAM_DELAY)
+		to_chat(U,"<span class='warning'>Send To All function is still on cooldown.")
+		return
+	send_message(U,get_viewable_pdas(), TRUE)
 
 /obj/item/pda/proc/create_message(mob/living/U, obj/item/pda/P)
 	send_message(U,list(P))
@@ -1009,3 +1017,4 @@ GLOBAL_LIST_EMPTY(PDAs)
 #undef PDA_SCANNER_REAGENT
 #undef PDA_SCANNER_HALOGEN
 #undef PDA_SCANNER_GAS
+#undef PDA_SPAM_DELAY

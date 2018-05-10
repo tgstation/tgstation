@@ -812,16 +812,18 @@
 		to_chat(usr, "<span class='warning'>The [name] is already occupied!</span>")
 		log_append_to_last("Permission denied.")
 		return
-	var/passed
 	if(dna_lock)
+		var/passed = FALSE
 		if(user.has_dna())
 			var/mob/living/carbon/C = user
 			if(C.dna.unique_enzymes==dna_lock)
-				passed = 1
-	else if(operation_allowed(user))
-		passed = 1
-	if(!passed)
-		to_chat(user, "<span class='warning'>Access denied.</span>")
+				passed = TRUE
+		if (!passed)
+			to_chat(user, "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>")
+			log_append_to_last("Permission denied.")
+			return
+	if(!operation_allowed(user))
+		to_chat(user, "<span class='warning'>Access denied. Insufficient operation keycodes.</span>")
 		log_append_to_last("Permission denied.")
 		return
 	if(user.buckled)

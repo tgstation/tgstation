@@ -118,6 +118,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	to_chat(C, "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>")
 	qdel(src)
 
+/obj/item/stack/ore/glass/ex_act(severity, target)
+	if (severity == EXPLODE_NONE)
+		return
+	qdel(src)
+
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"
 	icon_state = "volcanic_sand"
@@ -300,10 +305,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return
 	qdel(src)
 
-/obj/item/ore/stack/glass/ex_act(severity, target)
-	if (severity == EXPLODE_NONE)
-		return
-	qdel(src)
 
 /*****************************Coin********************************/
 
@@ -368,7 +369,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	value = 20
 	materials = list(MAT_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list("silver" = 4)
-	
+
 /obj/item/coin/diamond
 	name = "diamond coin"
 	cmineral = "diamond"
