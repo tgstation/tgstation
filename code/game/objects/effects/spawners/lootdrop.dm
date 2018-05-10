@@ -208,6 +208,7 @@
 				)
 
 // Tech storage circuit board spawners
+// For these, make sure that lootcount equals the number of list items
 
 /obj/effect/spawner/lootdrop/techstorage
 	name = "generic circuit board spawner"
