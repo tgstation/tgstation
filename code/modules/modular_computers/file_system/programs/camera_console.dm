@@ -23,6 +23,7 @@
 #define NOT_WATCHING 0				//we are not watching a camera
 #define WATCHING 1					//we are watching a camera
 #define WANT_TO_STOP_WATCHING 2		//we want to stop watching a camera
+//end variable-specific defines
 
 
 /datum/computer_file/program/camera_monitor
@@ -42,7 +43,7 @@
 	ui_x = 600
 	ui_y = 400
 	ui_header = "alarm_green.gif"		//PLACEHOLDER
-	var/screen_number = SCREEN_HOME		//debugging stuff
+	var/screen_number = SCREEN_HOME
 	
 	var/current_user		//used in break_watch() as a fallback
 	
@@ -94,8 +95,7 @@
 		if(A)
 			fiveoh.Add(list(list(
 			"camera_name" = C.c_tag,
-			"camera_status" = C.can_use(),
-			"camera_ref" = REF(C)								//unused, but retained for debug purposes
+			"camera_status" = C.can_use()
 			)))
 	
 	if(!(sel in camera_list))
@@ -136,14 +136,14 @@
 		break_watch()
 
 /datum/computer_file/program/camera_monitor/proc/break_watch(mob/living/user, intentional)
-	if(isnull(user))		//checks to suppress runtiming while using consoles/laptops on tables, etc.
+	if(isnull(user))				//checks to suppress runtiming while using consoles/laptops on tables, etc.
 		if(isnull(current_user))
 			user = usr		
 		else
 			user = current_user
 
 	user.reset_perspective(null)
-	if(!intentional)		//the user did not disconnect, so show the disconnect notif.
+	if(!intentional)				//the user did not disconnect, so show the disconnect notif.
 		screen_number = SCREEN_LOST
 	
 /datum/computer_file/program/camera_monitor/proc/camera_error(mob/living/user, reason)
@@ -159,7 +159,7 @@
 		data["active"] = sel.can_use()
 		data["location_x"] = sel.x
 		data["location_y"] = sel.y
-		data["location_z"] = sel.z		//there's gotta be a better way to do that.
+		data["location_z"] = sel.z		//there's gotta be a better way to do this - used to display a camera's coords
 		data["networks"] = sel.network
 		data["name"] = sel.c_tag
 		data["area"] = get_area(sel)
@@ -175,7 +175,7 @@
 
 	switch(action)
 		if("PRG_home")
-			if(watching == WATCHING)			//exit the callback loop
+			if(watching == WATCHING)					//exit the callback loop
 				watching = WANT_TO_STOP_WATCHING
 			break_watch(usr, intentional = TRUE)
 			sel = null
@@ -204,7 +204,7 @@
 			screen_number = SCREEN_VIEW
 			start_watch(usr, target_camera = sel)
 			return TRUE
-		if("PRG_ramclear")			//An error has occurred. Wipe volatile data.
+		if("PRG_ramclear")					//An error has occurred. Wipe volatile data.
 			screen_number = SCREEN_WIPE
 			orig_x = null
 			orig_y = null
