@@ -1,0 +1,64 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+<ui-display title='Prototype version!'>
+<br>This version is intended for demonstrative purposes only. Some buttons, settings, and information may be nonfunctional or may not function as intended. UI is not final and subject to change.<br>
+</ui-display>
+
+{{#if data.screen == 0}}
+	<h2>NTNet Remote Camera Feed Interface</h2>
+	<br>Welcome to the NTNet Remote Camera Feed Interface. Please choose an option below.<br>
+	<ui-button action='PRG_list' icon='folder'>List cameras</ui-button>
+	<ui-button action='PRG_F5' icon='refresh'>Reload camera list</ui-button>
+	
+{{/if}}
+{{#if data.screen == 1}}
+	<ui-button action='PRG_home' icon='home'>Home</ui-button> <ui-button action='PRG_F5' icon='refresh'>Reload camera list</ui-button><br>
+	<ui-display title='Detected Cameras'>
+	{{#each data.cameras}}
+		<ui-button action='PRG_details' params='{"target" : "{{camera_name}}"}' style = '{{camera_status ? null : "danger"}}'>{{camera_status ? "Online" : "Offline"}} - Details</ui-button> {{camera_name}}<br><br>
+	{{/each}}
+	</ui-display>
+{{/if}}
+{{#if data.screen == 2}}
+	<ui-button action='PRG_home' icon='home'>Home</ui-button> <ui-button action='PRG_list' icon='chevron-left'>Back to camera list</ui-button>
+	<ui-display title='Camera Details'><br>
+	<ui-section label='Camera name'>
+			<span>{{data.name}}</span><br>
+	</ui-section>
+	<ui-section label='Camera location'>
+			<span>{{data.area}}</span><br>
+			<span>(GPS coordinates: {{data.location_x}}, {{data.location_y}}, {{data.location_z}})</span><br>
+	</ui-section>
+	<ui-section label='Camera status'> 
+			<span class={{data.active ? 'good' : 'bad'}}>{{data.active ? "Online" : "Offline"}}</span>
+	</ui-section>
+	</ui-display>
+
+	<ui-button action='PRG_viewfeed' state='{{data.active ? null : "disabled"}}' icon='video-camera' params='{"target" : "{{camera_name}}"}'>View feed</ui-button>
+{{/if}}
+{{#if data.screen == 3}}
+	<ui-button action='PRG_home' icon='home'>Home</ui-button>
+	
+	<ui-display title='Viewing feed: {{data.name}}'><br>
+	<br><br><ui-button action='PRG_home' icon='remove'>Close feed</ui-button>
+	</ui-display>
+{{/if}}
+{{#if data.screen == 4}}
+	<ui-button action='PRG_home' icon='home'>Home</ui-button>
+	
+	<ui-display title='Feed interrupted'>
+	<span>The camera feed was disconnected because either you moved, the camera lost connection, or an error in the program caused an unexpected disconnect.</span>
+	</ui-display>
+{{/if}}
+{{#if data.screen == 5}}
+	<ui-display title='SYSTEM ERROR'><br>
+	<span>A system error has occurred, and the program cannot continue. You should probably post an issue report on the Github about this.<br>Press the button below to wipe all volatile data, including some critical data, and return to the home screen.</span>
+	<br><br><ui-button action='PRG_ramclear' icon='warning' style='danger'>Return to home screen - THIS WILL CLEAR ALL VOLATILE DATA</ui-button>
+	</ui-display>
+{{/if}}
+{{#if data.screen == 6}}
+	<ui-display title='SYSTEM ERROR'><br>
+	<span>A system error has occurred, and the program cannot continue. Press the button below to wipe all volatile data, including some critical data, and return to the home screen.<br><br>Clearing volatile data, please wait.</span>
+	</ui-display>
+{{/if}}
