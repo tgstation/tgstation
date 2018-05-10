@@ -121,17 +121,8 @@
 	if(!comps)
 		return NONE
 	var/list/arguments = args.Copy(2)
-	var/target = comps[/datum/component]
-	if(!length(target))
-		var/datum/component/C = target
-		if(!C.enabled)
-			return NONE
-		var/datum/callback/CB = C.signal_procs[sigtype]
-		if(!CB)
-			return NONE
-		return CB.InvokeAsync(arglist(arguments))
 	. = NONE
-	for(var/I in target)
+	for(var/I in comps[/datum/component])
 		var/datum/component/C = I
 		if(!C.enabled)
 			continue
