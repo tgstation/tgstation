@@ -47,7 +47,7 @@
 /obj/item/clothing/mask/fakemoustache/italian/speechModification(M)
 	if(copytext(M, 1, 2) != "*")
 		M = " [M]"
-		var/list/italian_words = strings("word_replacement.json", "italian")
+		var/list/italian_words = strings("italian_replacement.json", "italian")
 
 		for(var/key in italian_words)
 			var/value = italian_words[key]

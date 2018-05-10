@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - bugfix: "the default bulldog shotgun ammo makes sense now"

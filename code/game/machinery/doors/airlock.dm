@@ -323,12 +323,12 @@
 					return
 			else
 				return
-		else if(user.hallucinating() && ishuman(user) && prob(4) && !operating)
+		else if(user.hallucinating() && ishuman(user) && prob(1) && !operating)
 			var/mob/living/carbon/human/H = user
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
 				if(G.siemens_coefficient)//not insulated
-					hallucinate_shock(H)
+					new /datum/hallucination/shock(H)
 					return
 	if (cyclelinkedairlock)
 		if (!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency && allowed(user))
@@ -337,34 +337,6 @@
 			else
 				addtimer(CALLBACK(cyclelinkedairlock, .proc/close), 2)
 	..()
-
-/obj/machinery/door/airlock/proc/hallucinate_shock(mob/living/user)
-	var/image/shock_image = image(user, user, dir = user.dir)
-	var/image/electrocution_skeleton_anim = image('icons/mob/human.dmi', user, icon_state = "electrocuted_base", layer=ABOVE_MOB_LAYER)
-	shock_image.color = rgb(0,0,0)
-	shock_image.override = TRUE
-	electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
-
-	to_chat(user, "<span class='userdanger'>You feel a powerful shock course through your body!</span>")
-	if(user.client)
-		user.client.images |= shock_image
-		user.client.images |= electrocution_skeleton_anim
-	addtimer(CALLBACK(src, .proc/reset_hallucinate_shock_animation, user, shock_image, electrocution_skeleton_anim), 40)
-	user.playsound_local(get_turf(src), "sparks", 100, 1)
-	user.staminaloss += 50
-	user.Stun(40)
-	user.jitteriness += 1000
-	user.do_jitter_animation(user.jitteriness)
-	addtimer(CALLBACK(src, .proc/hallucinate_shock_drop, user), 20)
-
-/obj/machinery/door/airlock/proc/reset_hallucinate_shock_animation(mob/living/user, shock_image, electrocution_skeleton_anim)
-	if(user.client)
-		user.client.images.Remove(shock_image)
-		user.client.images.Remove(electrocution_skeleton_anim)
-
-/obj/machinery/door/airlock/proc/hallucinate_shock_drop(mob/living/user)
-	user.jitteriness = max(user.jitteriness - 990, 10) //Still jittery, but vastly less
-	user.Knockdown(60)
 
 /obj/machinery/door/airlock/proc/isElectrified()
 	if(src.secondsElectrified != NOT_ELECTRIFIED)
