@@ -22,12 +22,19 @@
 #define REACTION_OPPRESSION_THRESHOLD		5
 #define NOBLIUM_FORMATION_ENERGY			2e9 //1 Mole of Noblium takes the planck energy to condense.
 //Plasma fusion properties
-#define PLASMA_BINDING_ENERGY				3000000000 //Amount of energy it takes to start a fusion reaction
-#define FUSION_RELEASE_ENERGY				4500000 //Amount of energy released in the fusion process
-#define FUSION_RADIOACTIVITY_FACTOR			50000000 //Completely arbitrary
-#define FUSION_HIGH_RADIOACTIVITY_FACTOR	25000000 //Also arbitrary, but less so
-#define FUSION_MEDIATION_FACTOR				100
-#define FUSION_GAS_CREATION_FACTOR			0.05 //BZ and N2O
+#define PLASMA_BINDING_ENERGY				3e9 //Amount of energy it takes to start a fusion reaction
+#define FUSION_RELEASE_ENERGY				4.5e9 //Amount of energy released in the fusion process
+#define FUSION_RADIOACTIVITY_FACTOR			5e11 //Completely arbitrary
+#define FUSION_HIGH_RADIOACTIVITY_FACTOR	2.5e11 //Also arbitrary, but less so
+#define FUSION_TEMPERATURE_THRESHOLD		1000
+#define FUSION_MOLE_THRESHOLD				250
+#define FUSION_MEDIATION_FACTOR				80
+#define FUSION_HIGH_REACTION_ENERGY_FACTOR	20
+#define FUSION_GAS_CREATION_FACTOR			0.75 //trit
+#define FUSION_GAS_CREATION_FACTOR			0.45 //BZ and N2O
+#define FUSION_GAS_CREATION_FACTOR			0.48 //O2 and CO2
+#define FUSION_EFFICIENCY_BASE				60
+#define FUSION_EFFICIENCY_DIVISOR			0.6
 #define FUSION_LOW_TIER_RAD_PROB_FACTOR		10
 #define FUSION_MID_TIER_RAD_PROB_FACTOR		5
 #define FUSION_HIGH_TIER					10
@@ -203,9 +210,10 @@
 //Since fusion isn't really intended to happen in successive chains, the requirements are very high
 /datum/gas_reaction/fusion/init_reqs()
 	min_requirements = list(
+		"TEMP" = FUSION_TEMPERATURE_THRESHOLD,
 		"ENER" = PLASMA_BINDING_ENERGY,
-		/datum/gas/plasma = 500,
-		/datum/gas/tritium = 500
+		/datum/gas/plasma = FUSION_MOLE_THRESHOLD,
+		/datum/gas/tritium = FUSION_MOLE_THRESHOLD
 	)
 
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
@@ -222,41 +230,44 @@
 	var/reaction_energy
 
 	var/mediation = FUSION_MEDIATION_FACTOR*(air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES]) //This is the average heat capacity of the mixture,not including plasma.
+
+	var/moles_excluding_plasma = air.total_moles() - cached_gases[/datum/gas/plasma][MOLES]
+	var/plasma_differential = (cached_gases[/datum/gas/plasma][MOLES] - moles_excluding_plasma) / air.total_moles()
+	var/reaction_efficiency = FUSION_EFFICIENCY_BASE ** ( (plasma_differential ** 2) / FUSION_EFFICIENCY_DIVISOR) //https://www.desmos.com/calculator/6jjx3vdrvx
+	var/gases_fused = air.total_moles()
+
 	var/gas_power = 0
 	for (var/id in cached_gases)
-		gas_power += cached_gases[id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[id][MOLES]
+		gas_power += reaction_efficiency * (cached_gases[id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[id][MOLES])
 
 	var/power_ratio = gas_power/mediation
 
 	if (power_ratio > FUSION_HIGH_TIER) //Super-fusion. Fuses everything into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
-		var/gases_fused = air.total_moles()
-		reaction_energy += gases_fused*FUSION_RELEASE_ENERGY*(gas_power/(mediation*FUSION_MEDIATION_FACTOR))
+		reaction_energy += gases_fused*FUSION_RELEASE_ENERGY*(power_ratio / FUSION_HIGH_REACTION_ENERGY_FACTOR)
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
-		air.assert_gas(/datum/gas/tritium)
-		cached_gases[/datum/gas/tritium][MOLES] += gases_fused
+		cached_gases[/datum/gas/tritium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_HIGH //25% of the gas is converted to energy, 75% to tritium
 		if (location && prob(power_ratio)) //You don't really want this to happen
 			radiation_pulse(location, reaction_energy / FUSION_HIGH_RADIOACTIVITY_FACTOR)
 			explosion(location,0,0,3,power_ratio * 0.5,TRUE,TRUE)//A tiny explosion with a large shockwave. People will know you're doing fusion.
 
 	else if (power_ratio > FUSION_MID_TIER) //Mediation is overpowered, fusion reaction starts to break down.
 		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*FUSION_RELEASE_ENERGY
-		cached_gases[/datum/gas/plasma][MOLES] = 0
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] = 0
+		for (var/id in cached_gases)
+			cached_gases[id][MOLES] = 0
 		air.assert_gases(/datum/gas/bz,/datum/gas/nitrous_oxide)
-		cached_gases[/datum/gas/bz][MOLES] += gas_power*FUSION_GAS_CREATION_FACTOR
-		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gas_power*FUSION_GAS_CREATION_FACTOR
+		cached_gases[/datum/gas/bz][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_MID //10% of the gas is converted to energy, 90% to BZ and N2O
+		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_MID
 		if (location && prob(power_ratio * FUSION_MID_TIER_RAD_PROB_FACTOR)) //Fairly good chances of happening
 			radiation_pulse(location, reaction_energy / FUSION_RADIOACTIVITY_FACTOR)
 
 	else
 		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*FUSION_RELEASE_ENERGY*power_ratio
-		air.assert_gas(/datum/gas/oxygen)
-		cached_gases[/datum/gas/oxygen][MOLES] += gas_power + cached_gases[/datum/gas/plasma][MOLES]
-		cached_gases[/datum/gas/plasma][MOLES] = 0
 		for (var/gas in cached_gases)
-			if (cached_gases[gas][GAS_META][META_GAS_FUSION_POWER])
-				cached_gases[gas][MOLES] = 0
+			cached_gases[gas][MOLES] = 0
+		air.assert_gases(/datum/gas/oxygen, /datum/gas/carbon_dioxide)
+		cached_gases[/datum/gas/oxygen][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_LOW //4% of the gas is converted to energy, 94% to oxygen and CO2
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_LOW
 		if (location && prob(power_ratio * FUSION_LOW_TIER_RAD_PROB_FACTOR)) //Won't happen often, but the threat is there
 			radiation_pulse(location, reaction_energy / FUSION_RADIOACTIVITY_FACTOR)
 
