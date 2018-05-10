@@ -22,17 +22,17 @@
 #define REACTION_OPPRESSION_THRESHOLD		5
 #define NOBLIUM_FORMATION_ENERGY			2e9 //1 Mole of Noblium takes the planck energy to condense.
 //Plasma fusion properties
-#define PLASMA_BINDING_ENERGY				3e9 //Amount of energy it takes to start a fusion reaction
-#define FUSION_RELEASE_ENERGY				4.5e9 //Amount of energy released in the fusion process
-#define FUSION_RADIOACTIVITY_FACTOR			5e11 //Completely arbitrary
-#define FUSION_HIGH_RADIOACTIVITY_FACTOR	2.5e11 //Also arbitrary, but less so
+#define PLASMA_BINDING_ENERGY				3000000000 //Amount of energy it takes to start a fusion reaction
+#define FUSION_RELEASE_ENERGY				4500000000 //Amount of energy released in the fusion process
+#define FUSION_RADIOACTIVITY_FACTOR			500000000000 //Completely arbitrary
+#define FUSION_HIGH_RADIOACTIVITY_FACTOR	250000000000 //Also arbitrary, but less so
 #define FUSION_TEMPERATURE_THRESHOLD		1000
 #define FUSION_MOLE_THRESHOLD				250
 #define FUSION_MEDIATION_FACTOR				80
 #define FUSION_HIGH_REACTION_ENERGY_FACTOR	20
-#define FUSION_GAS_CREATION_FACTOR			0.75 //trit
-#define FUSION_GAS_CREATION_FACTOR			0.45 //BZ and N2O
-#define FUSION_GAS_CREATION_FACTOR			0.48 //O2 and CO2
+#define FUSION_GAS_CREATION_FACTOR_HIGH		0.75 //trit - one gas, so its higher than the other two
+#define FUSION_GAS_CREATION_FACTOR_MID		0.45 //BZ and N2O
+#define FUSION_GAS_CREATION_FACTOR_LOW		0.48 //O2 and CO2
 #define FUSION_EFFICIENCY_BASE				60
 #define FUSION_EFFICIENCY_DIVISOR			0.6
 #define FUSION_LOW_TIER_RAD_PROB_FACTOR		10
