@@ -43,8 +43,10 @@
 	var/turf/Tcleave2 = get_step(src_turf, turn(dir_to_target, angle2))
 	var/turf/Tcleave3 = get_step(src_turf, turn(dir_to_target, angle3))
 	var/atktype = pick("cleave", "lunge", "energy blast", "curb stomp")
-	//if(target.stat == UNCONSCIOUS)
-	//	atktype = "curb stomp"
+	if(iscarbon(target))
+		var/mob/living/carbon/C
+		if(C.stat == UNCONSCIOUS)
+			atktype = "curb stomp"
 	if(atktype == "energy blast")
 		visible_message("<span class='warning'>[src] begins to shudder...</span>", "<span class='notice'>You ready a blast of necropolis magic...</span>")
 	else
@@ -87,7 +89,7 @@
 			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
 			new /obj/effect/temp_visual/attackwarn(Tcleave2, src, 1, 1)
 			new /obj/effect/temp_visual/attackwarn(Tcleave3, src, 1, -1)
-		if("energy blast")
+		if("energy blast") //doesn't work atm.
 			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
 			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
 			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
@@ -163,9 +165,7 @@
 
 /mob/living/simple_animal/hostile/cryptguard/proc/awaken()
 	woke = TRUE
-	if(istype(src, /mob/living/simple_animal/hostile/cryptguard/leader))
-		name = "\improper Antikythera"
-	else
+	if(!istype(src, /mob/living/simple_animal/hostile/cryptguard/leader))
 		name = "crypt guardian"
 		icon_state = "crypt-1"
 	toggle_ai(AI_ON)
@@ -187,16 +187,18 @@
 
 /mob/living/simple_animal/hostile/cryptguard/leader
 	name = "giant statue"
-	desc = "An incredibly lifelike stone carving depicting a valiant hero."
-	powerful = TRUE
+	desc = "An incredibly lifelike stone carving depicting a large battle machine."
 	sentience_type = SENTIENCE_BOSS
 	loot = list(/obj/mecha/combat/stone/loaded)
 	var/list/guards = list()
+	var/obj/structure/necropolis_gate/trapgate = list()
 
 /mob/living/simple_animal/hostile/cryptguard/leader/Initialize()
 	. = ..()
 	for(var/mob/living/simple_animal/hostile/cryptguard/statues in orange(10, get_turf(src)))
 		guards += statues
+	for(var/obj/structure/necropolis_gate/gates in range(10, get_turf(src)))
+		trapgate += gates
 
 /mob/living/simple_animal/hostile/cryptguard/leader/AttackingTarget()
 	swiping = TRUE
@@ -254,9 +256,6 @@
 	if(finalboss == FALSE)
 		say("Welcome... To your tomb.")
 		sleep(5)
-		var/turf/T = get_turf(target)
-		var/turf/Tstep = get_step(T, dir)
-		forceMove(Tstep)
 		for(var/mob/living/simple_animal/hostile/cryptguard/goonstve in guards)
 			goonstve.say("Defend... the treasure...")
 			goonstve.awaken()
@@ -268,10 +267,10 @@
 
 //LOOT (THE MECH)//
 
-/obj/mecha/combat/stone
+/obj/mecha/combat/necropolis
 	desc = "The guardians of the necropolis, before the dragons arrived."
 	name = "\improper Antikythera"
-	icon_state = "durand"
+	icon_state = "antikythera"
 	step_in = 4
 	dir_in = 1 //Facing North.
 	max_integrity = 400
@@ -280,12 +279,14 @@
 	max_temperature = 30000
 	infra_luminosity = 8
 	force = 40
-	wreckage = /obj/structure/mecha_wreckage/durand
+	wreckage = /obj/structure/mecha_wreckage/necropolis
 
 /obj/mecha/combat/stone/loaded/Initialize()
 	..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	ME.attach(src)
+
+/obj/structure/mecha_wreckage/necropolis
 
 ///replace with sword, and add it to the mech
 
@@ -313,3 +314,14 @@
 /obj/structure/sign/mural2/bot
 	icon_state = "mural2-bot"
 
+/obj/effect/cryptlight
+	name = "crystal"
+	desc = "a glittering, shining gem affixed to the wall."
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "crys"
+
+/obj/structure/closet/crate/sarcophagus
+	name = "sarcophagus"
+	desc = "Holds the dead."
+	icon_state = "sarc"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
