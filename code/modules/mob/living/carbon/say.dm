@@ -60,3 +60,20 @@
 				message = item.speechModification(message)	//Modify speech from the items that are present and then return it.
 
 	return message
+
+	//Just moving this part into saycode for now, under construction don't look it's ugly
+
+	if(copytext(M, 1, 2) != "*")
+		M = " [M]"
+		var/list/language_words = strings("lanugage_replacement.json", "language")
+
+		for(var/key in words)
+			var/value = language_words[key]
+			if(islist(value))
+				value = pick(value)
+
+			M = replacetextEx(M, " [uppertext(key)]", " [uppertext(value)]")
+			M = replacetextEx(M, " [capitalize(key)]", " [capitalize(value)]")
+			M = replacetextEx(M, " [key]", " [value]")
+
+	return trim(M)
