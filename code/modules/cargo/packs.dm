@@ -1701,9 +1701,9 @@
 /datum/supply_pack/critter/exotic
 	name = "Exotic Speciment Crate"
 	desc = "desciprtion is WIP"
-	var/contraband = TRUE
+	contraband = TRUE
 	cost = 7000
-	num_contained = 1
+	var/num_contained = 1
 	contains = list(/mob/living/simple_animal/hostile/retaliate/poison/snake,
 					/mob/living/simple_animal/hostile/bear/snow,
 					/mob/living/simple_animal/hostile/bear,
