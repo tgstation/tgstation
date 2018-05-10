@@ -131,7 +131,6 @@
 	if(get_amount() < 2)
 		to_chat(user, "<span class='warning'>You need at least two gauze to do this!</span>")
 		return
-
 	var/obj/item/stack/sheet/cloth/new_item = new(usr.loc)
 	user.visible_message("[user] cut [src] into pieces of cloth with [I].", \
 				 "<span class='notice'>You cut [src] into pieces of cloth with [I].</span>", \
