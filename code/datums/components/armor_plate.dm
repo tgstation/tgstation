@@ -1,7 +1,7 @@
 /datum/component/armor_plate
 	var/amount = 0
 	var/maxamount = 3
-	var/upgrade_item = /obj/item/stack/sheet/animalhide/goliath_hide
+	var/obj/item/upgrade_item = /obj/item/stack/sheet/animalhide/goliath_hide //typecast to retrieve its name variable in examine proc
 	var/datum/armor/added_armor = list("melee" = 10)
 
 /datum/component/armor_plate/Initialize(_maxamount,obj/item/_upgrade_item,datum/armor/_added_armor)
@@ -10,6 +10,7 @@
 
 	RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/examine)
 	RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/applyplate)
+	RegisterSignal(COMSIG_PARENT_PREQDELETED, .proc/dropplates)
 
 	if(_maxamount)
 		maxamount = _maxamount
@@ -26,6 +27,7 @@
 		added_armor = getArmor(arglist(added_armor))
 
 /datum/component/armor_plate/proc/examine(mob/user)
+	//upgrade_item could also be typecast here instead
 	if(ismecha(parent))
 		if(amount)
 			if(amount < maxamount)
@@ -74,3 +76,8 @@
 		O.armor = O.armor.attachArmor(added_armor)
 		to_chat(user, "<span class='info'>You strengthen [O], improving its resistance against melee attacks.</span>")
 		amount++
+
+/datum/component/armor_plate/proc/dropplates(force)
+	var/obj/dad = parent
+	for(var/i in 1 to amount)
+		new upgrade_item(dad.loc) //it will probably drop plates into thing's contents if you're not on turf
