@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - tweak: "The access denied message when entering a mech now distinguishes between DNA lock and ID requirements."

@@ -387,16 +387,14 @@
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()
-	. = list()
-	. |= list(src)
-	for(var/obj/o in .)
-		var/list/newlist = list()
-		o.SendSignal(COMSIG_TRY_STORAGE_RETURN_INVENTORY, newlist)
-		. |= newlist
-	for(var/obj/item/clothing/under/U in .)
-		. |= U.contents
-	for(var/obj/item/folder/F in .)
-		. |= F.contents
+	var/list/ret = list()
+	ret |= contents						//add our contents
+	for(var/i in ret.Copy())			//iterate storage objects
+		var/atom/A = i
+		A.SendSignal(COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret)
+	for(var/obj/item/folder/F in ret.Copy())		//very snowflakey-ly iterate folders
+		ret |= F.contents
+	return ret
 
 // Living mobs use can_inject() to make sure that the mob is not syringe-proof in general.
 /mob/living/proc/can_inject()
