@@ -1,5 +1,0 @@
-author: "cacogen and nicbn"
-delete-after: True
-changes: 
-  - tweak: "You can now select RPD modes individually."
-  - tweak: "RPD autowrenching is now a tgui action rather than an Alt Click option."
