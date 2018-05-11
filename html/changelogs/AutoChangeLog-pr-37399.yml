@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - refactor: "Large groups of PNG assets are now transmitted in spritesheets, greatly improving load times."

@@ -65,8 +65,8 @@
 	var/where = H.equip_in_one_of_slots(heirloom, slots)
 	if(!where)
 		where = "at your feet"
-		if(where == "in your backpack")
-			H.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, H)
+	else if(where == "in your backpack")
+		H.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, H)
 	where_text = "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>"
 
 /datum/quirk/family_heirloom/post_add()
