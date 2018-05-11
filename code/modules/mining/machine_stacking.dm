@@ -44,8 +44,7 @@
 		if(!(text2path(href_list["release"]) in machine.stack_list))
 			return //someone tried to spawn materials by spoofing hrefs
 		var/obj/item/stack/sheet/inp = machine.stack_list[text2path(href_list["release"])]
-		var/obj/item/stack/sheet/out = new inp.type()
-		out.amount = inp.amount
+		var/obj/item/stack/sheet/out = new inp.type(null, inp.amount)
 		inp.amount = 0
 		machine.unload_mineral(out)
 
@@ -81,14 +80,12 @@
 
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
 	if(!(inp.type in stack_list)) //It's the first of this sheet added
-		var/obj/item/stack/sheet/s = new inp.type(src,0)
-		s.amount = 0
+		var/obj/item/stack/sheet/s = new inp.type(src, 0)
 		stack_list[inp.type] = s
 	var/obj/item/stack/sheet/storage = stack_list[inp.type]
 	storage.amount += inp.amount //Stack the sheets
 	qdel(inp) //Let the old sheet garbage collect
 	while(storage.amount > stack_amt) //Get rid of excessive stackage
-		var/obj/item/stack/sheet/out = new inp.type()
-		out.amount = stack_amt
+		var/obj/item/stack/sheet/out = new inp.type(null, stack_amt)
 		unload_mineral(out)
 		storage.amount -= stack_amt

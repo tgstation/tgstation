@@ -14,13 +14,12 @@
 	grind_results = list("silicon" = 20, "copper" = 5)
 
 /obj/item/stack/light_w/attackby(obj/item/O, mob/user, params)
-
+	var/atom/Tsec = user.drop_location()
 	if(istype(O, /obj/item/wirecutters))
-		var/obj/item/stack/cable_coil/CC = new (user.loc)
-		CC.amount = 5
+		var/obj/item/stack/cable_coil/CC = new (Tsec, 5)
 		CC.add_fingerprint(user)
 		amount--
-		var/obj/item/stack/sheet/glass/G = new (user.loc)
+		var/obj/item/stack/sheet/glass/G = new (Tsec)
 		G.add_fingerprint(user)
 		if(amount <= 0)
 			qdel(src)
@@ -28,7 +27,6 @@
 	else if(istype(O, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
 		if (M.use(1))
-			use(1)
 			var/obj/item/L = new /obj/item/stack/tile/light(user.loc)
 			to_chat(user, "<span class='notice'>You make a light tile.</span>")
 			L.add_fingerprint(user)
