@@ -34,6 +34,7 @@
 	icon_state = "secskirt"
 	item_state = "r_suit"
 	item_color = "secskirt"
+	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/warden
 	name = "security suit"
