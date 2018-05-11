@@ -427,6 +427,8 @@ Proc for attack log creation, because really why not
 				step(X, pick(NORTH, SOUTH, EAST, WEST))
 
 /proc/deadchat_broadcast(message, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+	//Linkify targets
+	message = "<span class='linkify'>[message]</span>"
 	for(var/mob/M in GLOB.player_list)
 		var/datum/preferences/prefs
 		if(M.client && M.client.prefs)
@@ -466,9 +468,9 @@ Proc for attack log creation, because really why not
 				var/turf_link = TURF_LINK(M, turf_target)
 				rendered_message = "[turf_link] [message]"
 
-			to_chat(M, rendered_message)
+			to_chat(M, rendered_message, linkify=TRUE)
 		else
-			to_chat(M, message)
+			to_chat(M, message, linkify=TRUE)
 
 
 /proc/log_talk(mob/user,message,logtype)

@@ -6,9 +6,9 @@
 ******************************************/
 
 //DEBUG STUFF
-var triggerError = attachErrorHandler('chatDebug', true);
 var escaper = encodeURIComponent || escape;
 var decoder = decodeURIComponent || unescape;
+
 window.onerror = function(msg, url, line, col, error) {
 	if (document.location.href.indexOf("proc=debug") <= 0) {
 		var extra = !col ? '' : ' | column: ' + col;
@@ -22,7 +22,7 @@ window.onerror = function(msg, url, line, col, error) {
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages, $last_message;
+var $messages, $subOptions, $subAudio, $selectedSub, $contextMenu, $filterMessages, $last_message, $debug, $debugOutput, $debugInput, debugLevel, $debugLevel, urlregex;
 var opts = {
 	//General
 	'messageCount': 0, //A count...of messages...
@@ -95,23 +95,66 @@ if (typeof String.prototype.trim !== 'function') {
 	};
 }
 
-//Shit fucking piece of crap that doesn't work god fuckin damn it
-function linkify(text) {
-	var rex = /((?:<a|<iframe|<img)(?:.*?(?:src="|href=").*?))?(?:(?:https?:\/\/)|(?:www\.))+(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&@#\/%?=~_|$!:,.;]+/ig;
-	return text.replace(rex, function ($0, $1) {
-		if(/^https?:\/\/.+/i.test($0)) {
-			return $1 ? $0: '<a href="'+$0+'">'+$0+'</a>';
-		}
-		else {
-			return $1 ? $0: '<a href="http://'+$0+'">'+$0+'</a>';
-		}
-	});
+//This works, don't fuck with it k, or I'll break your fingers
+function linkify(message) {
+        /* See stack overflow for the regex: https://stackoverflow.com/questions/6038061/regular-expression-to-find-urls-within-a-string 
+		 * it gets the domain, protocol, and query string as three match groups
+		 * 
+		 * Note that we only replace links within spans containing the linkify span text, so we don't replace stuff we need to not fuck up
+		 * like the src url for goonchat images, or other assets and so forth
+		 *
+		 * basically only ooc chat span messages have this span class, why also have a flag you then ask?
+		 * well, if we can avoid doing this function call at all, that's free performance from not doing
+		 * regexes over text
+		 * 
+		 * Hey why not do a proper js url parser? well, because I don't feel like dealing with possible ie8/9 backward compat issues, feel free to try
+         */
+		
+		// Lets use jquery to find spans wtih the linkify class in the text and do a replace regex 
+		// on their html
+		var jqtext = $(message);
+		jqtext.find("span.linkify").html(function(index, oldhtml) {
+			return oldhtml.replace(urlregex, function (match, protocol, domain, querystring, matchindex, fullstring) {
+				// This sucks eggs, but it's the only way to detect links that are attached to an actual <a> element
+				// we can't linkify those because it would break asset cache serving
+				if(fullstring.substring(matchindex-5, matchindex-2) == "src") {
+					debugLog("Skipping this match, it has a src prepended: so is likely an asset: " + match, 3)
+					return match;//leave it alone, it's a href already (i.e asset cache or emojiii etc)
+				}
+                if (typeof protocol === 'undefined' || !protocol) {
+                        protocol = 'http' ;
+                }
+                if (typeof querystring === 'undefined') {
+                        querystring = '' ;
+                }
+				debugLog("Linkified match:" + match + " protocol:" + protocol + " domain:" + domain + " querystring:" + querystring + 
+				" matchindex:" + matchindex, 2)
+                return '<a href="'+protocol+'://'+domain+querystring+'">'+domain+querystring+'</a>';
+			});
+		});
+		
+		// convert the processed jquery dom tree back to html for final insertion later in output processing
+		// NB: outerHTML because we need the div it's living inside as well
+		text = jqtext[0].outerHTML
+		return text;   
 }
 
+function debugLog(message, level) {
+	//Not high enough level to display, skip
+	if(level > debugLevel) {
+		return;
+	}
+	//Actually append the message
+	var entry = document.createElement('span');
+	var $entry = $(entry);
+	$entry.text(message);
+	$debugOutput.prepend("<br></br>");
+	$debugOutput.prepend($entry);
+}
 function byondDecode(message) {
 	// Basically we url_encode twice server side so we can manually read the encoded version and actually do UTF-8.
 	// The replace for + is because FOR SOME REASON, BYOND replaces spaces with a + instead of %20, and a plus with %2b.
-	// Marvelous.
+	// Marvellous.
 	message = message.replace(/\+/g, "%20");
 	message = decoder(message);
 	return message;
@@ -203,56 +246,6 @@ function output(message, flag) {
 	//The behemoth of filter-code (for Admin message filters)
 	//Note: This is proooobably hella inefficient
 	var filteredOut = false;
-	if (opts.hasOwnProperty('showMessagesFilters') && !opts.showMessagesFilters['All'].show) {
-		//Get this filter type (defined by class on message)
-		var messageHtml = $.parseHTML(message),
-			messageClasses;
-		if (opts.hasOwnProperty('filterHideAll') && opts.filterHideAll) {
-			var internal = false;
-			messageClasses = (!!$(messageHtml).attr('class') ? $(messageHtml).attr('class').split(/\s+/) : false);
-			if (messageClasses) {
-				for (var i = 0; i < messageClasses.length; i++) { //Every class
-					if (messageClasses[i] == 'internal') {
-						internal = true;
-						break;
-					}
-				}
-			}
-			if (!internal) {
-				filteredOut = 'All';
-			}
-		} else {
-			//If the element or it's child have any classes
-			if (!!$(messageHtml).attr('class') || !!$(messageHtml).children().attr('class')) {
-				messageClasses = $(messageHtml).attr('class').split(/\s+/);
-				if (!!$(messageHtml).children().attr('class')) {
-					messageClasses = messageClasses.concat($(messageHtml).children().attr('class').split(/\s+/));
-				}
-				var tempCount = 0;
-				for (var i = 0; i < messageClasses.length; i++) { //Every class
-					var thisClass = messageClasses[i];
-					$.each(opts.showMessagesFilters, function(key, val) { //Every filter
-						if (key !== 'All' && val.show === false && typeof val.match != 'undefined') {
-							for (var i = 0; i < val.match.length; i++) {
-								var matchClass = val.match[i];
-								if (matchClass == thisClass) {
-									filteredOut = key;
-									break;
-								}
-							}
-						}
-						if (filteredOut) return false;
-					});
-					if (filteredOut) break;
-					tempCount++;
-				}
-			} else {
-				if (!opts.showMessagesFilters['Misc'].show) {
-					filteredOut = 'Misc';
-				}
-			}
-		}
-	}
 
 	//Stuff we do along with appending a message
 	var atBottom = false;
@@ -283,8 +276,8 @@ function output(message, flag) {
 		}
 	}
 
-	//Url stuff
-	if (message.length && flag != 'preventLink') {
+	//If the link create flag is specified, do the linkify fandango
+	if (message.length && flag == 'createLink') {
 		message = linkify(message);
 	}
 
@@ -470,13 +463,11 @@ function ehjaxCallback(data) {
 			sendVolumeUpdate();
 		} else if (data.firebug) {
 			if (data.trigger) {
-				internalOutput('<span class="internal boldnshit">Loading firebug console, triggered by '+data.trigger+'...</span>', 'internal');
+				debugLog('toggling ghetto console, triggered by '+data.trigger+'...', 1);
 			} else {
-				internalOutput('<span class="internal boldnshit">Loading firebug console...</span>', 'internal');
+				debugLog('toggling ghetto console...', 1);
 			}
-			var firebugEl = document.createElement('script');
-			firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
-			document.body.appendChild(firebugEl);
+			$("#debug").toggle();
 		} else if (data.adminMusic) {
 			if (typeof data.adminMusic === 'string') {
 				var adminMusic = byondDecode(data.adminMusic);
@@ -562,6 +553,18 @@ function handleToggleClick($sub, $toggle) {
 	}
 }
 
+// Used in the debug console, calls eval on the text input and spits it out to the debug Output div
+function evaluate_dbg_console() {
+		var text = $debugInput.val();
+		debugLog("Return value: " + JSON.stringify(eval(text)), 1);
+}
+
+// Debug console, set the level of the debug state
+function set_debug_level() {
+	debugLevel = $debugLevel.val();
+	debugLog("Debug value set to:" + debugLevel, 1);
+}
+
 /*****************************************
 *
 * DOM READY
@@ -574,10 +577,21 @@ if (typeof $ === 'undefined') {
 }
 
 $(function() {
+	debugLevel = 1;//default to normal debug level
 	$messages = $('#messages');
+	$debug = $('#debug');
+	$debugOutput = $('#debugOutput');
+	$debugInput = $('#debugInput');
 	$subOptions = $('#subOptions');
 	$subAudio = $('#subAudio');
 	$selectedSub = $subOptions;
+	//This is a select input, not the actual level
+	$debugLevel = $("#debugLevel");
+	// Ghetto console ftw
+	$("#debugbutton").click(evaluate_dbg_console);
+	$("#debuglogEnable").click(set_debug_level);
+	
+	urlregex = /(?:(http|byond|https):\/\/)?([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?/ig;
 
 	//Hey look it's a controller loop!
 	setInterval(function() {
@@ -696,7 +710,7 @@ $(function() {
 			return false;
 		}
 
-		if ($target.is('a') || $target.parent('a').length || $target.is('input') || $target.is('textarea')) {
+		if ($target.is('a') || $target.parent('a').length || $target.is('input') || $target.is('textarea') || $target.is('button') || $target.is('select')) {
 			opts.preventFocus = true;
 		} else {
 			opts.preventFocus = false;
