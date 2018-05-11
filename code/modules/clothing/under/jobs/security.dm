@@ -28,6 +28,12 @@
 	item_state = "gy_suit"
 	item_color = "security"
 
+/obj/item/clothing/under/rank/security/skirt
+	name = "security jumpskirt"
+	desc = "A supposedly tactical piece of clothing of questionable protection and even more questionable origins."
+	icon_state = "secskirt"
+	item_state = "r_suit"
+	item_color = "secskirt"
 
 /obj/item/clothing/under/rank/warden
 	name = "security suit"
@@ -38,7 +44,7 @@
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
 	strip_delay = 50
 	alt_covers_chest = TRUE
-	sensor_mode = 3
+	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
 /obj/item/clothing/under/rank/warden/grey
