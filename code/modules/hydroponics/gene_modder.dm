@@ -363,9 +363,11 @@
 
 /obj/machinery/plantgenes/proc/eject_disk()
 	if (disk && !operation)
-		disk.forceMove(drop_location())
 		if(Adjacent(usr) && !issilicon(usr))
-			usr.put_in_hands(disk)
+			if (!usr.put_in_hands(disk))
+				disk.forceMove(drop_location())
+		else
+			disk.forceMove(drop_location())
 		disk = null
 		update_genes()
 
