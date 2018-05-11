@@ -33,5 +33,5 @@
 
 /obj/effect/forcefield/mime/advanced
 	name = "invisible blockade"
-	desc = "You're goona be here a while."
+	desc = "You're gonna be here awhile."
 	timeleft = 600
