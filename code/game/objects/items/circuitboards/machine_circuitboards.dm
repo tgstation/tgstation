@@ -651,7 +651,7 @@
 /obj/item/circuitboard/machine/chem_master
 	name = "ChemMaster 3000 (Machine Board)"
 	build_path = /obj/machinery/chem_master
-	desc = "You could turn the \"mode selection\" dial using a screwdriver."
+	desc = "You can turn the \"mode selection\" dial using a screwdriver."
 	req_components = list(
 		/obj/item/reagent_containers/glass/beaker = 2,
 		/obj/item/stock_parts/manipulator = 1,
