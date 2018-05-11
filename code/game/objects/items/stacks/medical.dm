@@ -132,7 +132,7 @@
 		to_chat(user, "<span class='warning'>You need at least two gauze to do this!</span>")
 		return
 	var/obj/item/stack/sheet/cloth/new_item = new(usr.loc)
-	user.visible_message("[user] cut [src] into pieces of cloth with [I].", \
+	user.visible_message("[user] cuts [src] into pieces of cloth with [I].", \
 				 "<span class='notice'>You cut [src] into pieces of cloth with [I].</span>", \
 				 "<span class='italics'>You hear cutting.</span>")
 	var/obj/item/stack/medical/gauze/R = src
