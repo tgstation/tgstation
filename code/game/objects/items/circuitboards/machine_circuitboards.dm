@@ -204,6 +204,7 @@
 
 /obj/item/circuitboard/machine/vendor
 	name = "Booze-O-Mat Vendor (Machine Board)"
+	desc = "You could turn the \"brand selection\" dial using a screwdriver."
 	build_path = /obj/machinery/vending/boozeomat
 	req_components = list(
 							/obj/item/vending_refill/boozeomat = 3)

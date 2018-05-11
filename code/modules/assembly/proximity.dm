@@ -9,34 +9,45 @@
 	var/timing = FALSE
 	var/time = 10
 	var/sensitivity = 1
+	var/hearing_range = 3
 
 /obj/item/assembly/prox_sensor/Initialize()
 	. = ..()
-	proximity_monitor = new(src, 0, FALSE)
+	proximity_monitor = new(src, 0)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/assembly/prox_sensor/Destroy()
-	set_timing(FALSE)  // stops processing if necessary
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
 
-/obj/item/assembly/prox_sensor/describe()
-	if(timing)
-		return "<span class='notice'>The proximity sensor is arming.</span>"
-	return "The proximity sensor is [scanning?"armed":"disarmed"]."
+/obj/item/assembly/prox_sensor/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The proximity sensor is [timing ? "arming" : (scanning ? "armed" : "disarmed")].</span>")
 
 /obj/item/assembly/prox_sensor/activate()
 	if(!..())
-		return FALSE //Cooldown check
-	set_timing(!timing)
+		return FALSE//Cooldown check
+	if(!scanning)
+		timing = !timing
+	else
+		scanning = FALSE
 	update_icon()
 	return TRUE
 
 /obj/item/assembly/prox_sensor/toggle_secure()
 	secured = !secured
 	if(!secured)
-		set_timing(FALSE)
 		if(scanning)
-			toggle_scan(FALSE)
+			toggle_scan()
+			proximity_monitor.host = src
+		timing = FALSE
+		STOP_PROCESSING(SSobj, src)
+	else
+		START_PROCESSING(SSobj, src)
+		proximity_monitor.host = loc
 	update_icon()
 	return secured
+
 
 /obj/item/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
 	if (istype(AM, /obj/effect/beam))
@@ -46,22 +57,29 @@
 
 /obj/item/assembly/prox_sensor/proc/sense()
 	if(!scanning || !secured || next_activate > world.time)
-		return 0
-	pulse(0)
-	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 3)
+		return FALSE
+	pulse(FALSE)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
+	for(var/CHM in get_hearers_in_view(hearing_range, src))
+		if(ismob(CHM))
+			var/mob/LM = CHM
+			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	next_activate = world.time + 30
+	return TRUE
+
 
 /obj/item/assembly/prox_sensor/process()
-	if(timing)
-		time -= SSobj.wait / 10
-		if(time <= 0)
-			set_timing(FALSE)
-			toggle_scan(TRUE)
-			time = initial(time)
+	if(!timing)
+		return
+	time--
+	if(time <= 0)
+		timing = FALSE
+		toggle_scan(TRUE)
+		time = initial(time)
 
 /obj/item/assembly/prox_sensor/proc/toggle_scan(scan)
 	if(!secured)
-		return
+		return FALSE
 	scanning = scan
 	proximity_monitor.SetRange(scanning ? sensitivity : 0)
 	update_icon()
@@ -71,13 +89,6 @@
 	sensitivity = sense
 	if(scanning && proximity_monitor.SetRange(sense))
 		sense()
-
-/obj/item/assembly/prox_sensor/proc/set_timing(new_timing)
-	if (new_timing && !timing)
-		START_PROCESSING(SSprocessing, src)
-	else if (timing && !new_timing)
-		STOP_PROCESSING(SSprocessing, src)
-	timing = new_timing
 
 /obj/item/assembly/prox_sensor/update_icon()
 	cut_overlays()
@@ -97,8 +108,11 @@
 	if(is_secured(user))
 		var/second = time % 60
 		var/minute = (time - second) / 60
-		var/dat = "<TT><B>Proximity Sensor</B>\n[(timing ? "<A href='?src=[REF(src)];time=0'>Arming</A>" : "<A href='?src=[REF(src)];time=1'>Not Arming</A>")] [minute]:[second]\n<A href='?src=[REF(src)];tp=-30'>-</A> <A href='?src=[REF(src)];tp=-1'>-</A> <A href='?src=[REF(src)];tp=1'>+</A> <A href='?src=[REF(src)];tp=30'>+</A>\n</TT>"
-		dat += "<BR><A href='?src=[REF(src)];scanning=[scanning?"0'>Armed":"1'>Unarmed"]</A> (Movement sensor active when armed!)"
+		var/dat = "<TT><B>Proximity Sensor</B></TT>"
+		if(!scanning)
+			dat += "<BR>[(timing ? "<A href='?src=[REF(src)];time=0'>Arming</A>" : "<A href='?src=[REF(src)];time=1'>Not Arming</A>")] [minute]:[second]"
+			dat += "<BR><A href='?src=[REF(src)];tp=-30'>-</A> <A href='?src=[REF(src)];tp=-1'>-</A> <A href='?src=[REF(src)];tp=1'>+</A> <A href='?src=[REF(src)];tp=30'>+</A>"
+		dat += "<BR><A href='?src=[REF(src)];scanning=[scanning?"0'>Armed":"1'>Unarmed (Movement sensor active when armed!)"]</A>"
 		dat += "<BR>Detection range: <A href='?src=[REF(src)];sense=down'>-</A> [sensitivity] <A href='?src=[REF(src)];sense=up'>+</A>"
 		dat += "<BR><BR><A href='?src=[REF(src)];refresh=1'>Refresh</A>"
 		dat += "<BR><BR><A href='?src=[REF(src)];close=1'>Close</A>"
@@ -121,7 +135,7 @@
 		toggle_scan(text2num(href_list["scanning"]))
 
 	if(href_list["time"])
-		set_timing(text2num(href_list["time"]))
+		timing = text2num(href_list["time"])
 		update_icon()
 
 	if(href_list["tp"])

@@ -13,11 +13,14 @@
 	var/obj/item/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
 
+/obj/item/onetankbomb/IsSpecialAssembly()
+	return TRUE
 
 /obj/item/onetankbomb/examine(mob/user)
 	bombtank.examine(user)
 
 /obj/item/onetankbomb/update_icon()
+	cut_overlays()
 	if(bombtank)
 		icon = bombtank.icon
 		icon_state = bombtank.icon_state
@@ -30,29 +33,37 @@
 	if(istype(W, /obj/item/analyzer))
 		bombtank.attackby(W, user)
 		return
-	if(istype(W, /obj/item/wrench) && !status)	//This is basically bomb assembly code inverted. apparently it works.
+	add_fingerprint(user)
+	..()
 
-		to_chat(user, "<span class='notice'>You disassemble [src].</span>")
-
+/obj/item/onetankbomb/wrench_act(mob/living/user, obj/item/I)
+	to_chat(user, "<span class='notice'>You disassemble [src]!</span>")
+	if(bombassembly)
 		bombassembly.forceMove(drop_location())
 		bombassembly.master = null
 		bombassembly = null
-
+	if(bombtank)
 		bombtank.forceMove(drop_location())
 		bombtank.master = null
 		bombtank = null
+	qdel(src)
+	return TRUE
 
-		qdel(src)
+/obj/item/onetankbomb/welder_act(mob/living/user, obj/item/I)
+	. = FALSE
+	if(status)
+		to_chat(user, "<span class='notice'>[bombtank] already has a pressure hole!</span>")
 		return
-	var/obj/item/weldingtool/WT = W
-	if((istype(WT) && WT.welding))
-		if(!status)
-			status = TRUE
-			GLOB.bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
-			message_admins("[key_name_admin(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]")
-			to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
-	add_fingerprint(user)
-	..()
+	if(!I.tool_start_check(user, amount=0))
+		return
+	if(I.use_tool(src, user, 0, volume=40))
+		status = TRUE
+		GLOB.bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
+		message_admins("[key_name_admin(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]")
+		to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
+		add_fingerprint(user)
+		return TRUE
+
 
 /obj/item/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
 	bombassembly.attack_self(user, TRUE)
@@ -60,22 +71,46 @@
 	return
 
 /obj/item/onetankbomb/receive_signal()	//This is mainly called by the sensor through sense() to the holder, and from the holder to here.
-	visible_message("[icon2html(src, viewers(src))] *beep* *beep*", "*beep* *beep*")
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
+	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	sleep(10)
-	if(!src)
+	if(QDELETED(src))
 		return
 	if(status)
 		bombtank.ignite()	//if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
 	else
 		bombtank.release()
 
+//Assembly / attached device memes
+
 /obj/item/onetankbomb/Crossed(atom/movable/AM as mob|obj) //for mousetraps
+	. = ..()
 	if(bombassembly)
 		bombassembly.Crossed(AM)
 
 /obj/item/onetankbomb/on_found(mob/finder) //for mousetraps
 	if(bombassembly)
 		bombassembly.on_found(finder)
+
+/obj/item/onetankbomb/attack_hand() //also for mousetraps
+	. = ..()
+	if(.)
+		return
+	if(bombassembly)
+		bombassembly.attack_hand()
+
+/obj/item/onetankbomb/Move()
+	. = ..()
+	if(bombassembly)
+		bombassembly.setDir(dir)
+		bombassembly.Move()
+
+/obj/item/onetankbomb/dropped()
+	. = ..()
+	if(bombassembly)
+		bombassembly.dropped()
+
+
 
 
 // ---------- Procs below are for tanks that are used exclusively in 1-tank bombs ----------

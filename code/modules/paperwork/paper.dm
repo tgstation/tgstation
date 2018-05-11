@@ -66,7 +66,7 @@
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to fold it.</span>")
 
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
+	var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/paper)
 	assets.send(user)
 
 	if(in_range(user, src) || isobserver(user))
@@ -300,7 +300,10 @@
 		if(!in_range(src, user))
 			return
 
-		stamps += "<img src=large_[P.icon_state].png>"
+		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
+		if (isnull(stamps))
+			stamps = sheet.css_tag()
+		stamps += sheet.icon_tag(P.icon_state)
 		var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[P.icon_state]")
 		stampoverlay.pixel_x = rand(-2, 2)
 		stampoverlay.pixel_y = rand(-3, 2)
