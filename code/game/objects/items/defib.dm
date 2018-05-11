@@ -170,7 +170,6 @@
 			to_chat(user, "<span class='warning'>You need a free hand to hold the paddles!</span>")
 			update_icon()
 			return
-		paddles.forceMove(user)
 	else
 		//Remove from their hands and back onto the defib unit
 		paddles.unwield()
