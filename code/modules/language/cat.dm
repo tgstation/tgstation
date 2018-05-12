@@ -3,8 +3,6 @@
 	name = "Cat language"
 	desc = "Language used by cats"
 	speech_verb = "meows"
-	ask_verb = "pawnders"
-	exclaim_verb = "hisses"
 	whisper_verb = "purrs"
 	key = "c"
 	flags = TONGUELESS_SPEECH
