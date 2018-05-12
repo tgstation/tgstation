@@ -42,7 +42,7 @@
 	category = list("initial")
 
 /datum/design/plarglass_alloy
-	name = "Reinforced Plasma + Glass alloy"
+	name = "Plasma + Reinforced Glass alloy"
 	id = "plasmarglass"
 	build_type = SMELTER
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.5, MAT_PLASMA = MINERAL_MATERIAL_AMOUNT, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
