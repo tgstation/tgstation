@@ -4,15 +4,15 @@
 #define PLASMA_MINIMUM_OXYGEN_NEEDED		2
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
 #define FIRE_CARBON_ENERGY_RELEASED			100000	//Amount of heat released per mole of burnt carbon into the tile
-#define FIRE_HYDROGEN_ENERGY_RELEASED		280000 // Amount of heat released per mole of burnt hydrogen and/or tritium(hydrogen isotope)
+#define FIRE_HYDROGEN_ENERGY_RELEASED		280000  //Amount of heat released per mole of burnt hydrogen and/or tritium(hydrogen isotope)
 #define FIRE_PLASMA_ENERGY_RELEASED			3000000	//Amount of heat released per mole of burnt plasma into the tile
 //General assmos defines.
 #define WATER_VAPOR_FREEZE					200
 #define NITRYL_FORMATION_ENERGY				100000
 #define TRITIUM_BURN_OXY_FACTOR				100
 #define TRITIUM_BURN_TRIT_FACTOR			10
-#define TRITIUM_BURN_RADIOACTIVITY_FACTOR	50000 //The neutrons gotta go somewhere. Completely arbitrary number.
-#define TRITIUM_MINIMUM_RADIATION_ENERGY	0.1 //minimum 0.01 moles trit or 10 moles oxygen to start producing rads
+#define TRITIUM_BURN_RADIOACTIVITY_FACTOR	50000 	//The neutrons gotta go somewhere. Completely arbitrary number.
+#define TRITIUM_MINIMUM_RADIATION_ENERGY	0.1  	//minimum 0.01 moles trit or 10 moles oxygen to start producing rads
 #define SUPER_SATURATION_THRESHOLD			96
 #define STIMULUM_HEAT_SCALE					100000
 #define STIMULUM_FIRST_RISE					0.65
@@ -20,25 +20,28 @@
 #define STIMULUM_SECOND_RISE				0.0009
 #define STIMULUM_ABSOLUTE_DROP				0.00000335
 #define REACTION_OPPRESSION_THRESHOLD		5
-#define NOBLIUM_FORMATION_ENERGY			2e9 //1 Mole of Noblium takes the planck energy to condense.
+#define NOBLIUM_FORMATION_ENERGY			2e9 	//1 Mole of Noblium takes the planck energy to condense.
 //Plasma fusion properties
-#define PLASMA_BINDING_ENERGY				3000000000 //Amount of energy it takes to start a fusion reaction
-#define FUSION_RELEASE_ENERGY				4500000000 //Amount of energy released in the fusion process
-#define FUSION_RADIOACTIVITY_FACTOR			500000000000 //Completely arbitrary
-#define FUSION_HIGH_RADIOACTIVITY_FACTOR	250000000000 //Also arbitrary, but less so
-#define FUSION_TEMPERATURE_THRESHOLD		1000
-#define FUSION_MOLE_THRESHOLD				250
-#define FUSION_MEDIATION_FACTOR				80
-#define FUSION_HIGH_REACTION_ENERGY_FACTOR	20
-#define FUSION_GAS_CREATION_FACTOR_HIGH		0.75 //trit - one gas, so its higher than the other two
-#define FUSION_GAS_CREATION_FACTOR_MID		0.45 //BZ and N2O
-#define FUSION_GAS_CREATION_FACTOR_LOW		0.48 //O2 and CO2
-#define FUSION_EFFICIENCY_BASE				60
-#define FUSION_EFFICIENCY_DIVISOR			0.6
-#define FUSION_LOW_TIER_RAD_PROB_FACTOR		10
+#define FUSION_ENERGY_THRESHOLD				3e9 	//Amount of energy it takes to start a fusion reaction
+#define FUSION_TEMPERATURE_THRESHOLD		1000 	//Temperature required to start a fusion reaction
+#define FUSION_MOLE_THRESHOLD				250 	//Mole count required (tritium/plasma) to start a fusion reaction
+#define FUSION_RELEASE_ENERGY_HIGH			1e10 	//Amount of energy released in the fusion process, high tier
+#define FUSION_RELEASE_ENERGY_MID			8e9 	//Amount of energy released in the fusion process, mid tier
+#define FUSION_RELEASE_ENERGY_LOW			4e9 	//Amount of energy released in the fusion process, low tier
+#define FUSION_RADIOACTIVITY_FACTOR			5e11 	//Completely arbitrary
+#define FUSION_MEDIATION_FACTOR				80 		//Also arbitrary
+#define FUSION_REACTION_ENERGY_FACTOR_HIGH	10
+#define FUSION_REACTION_ENERGY_FACTOR_MID	4
+#define FUSION_REACTION_ENERGY_FACTOR_LOW	2
+#define FUSION_GAS_CREATION_FACTOR_HIGH		0.75 	//trit - one gas, so its higher than the other two
+#define FUSION_GAS_CREATION_FACTOR_MID		0.45 	//BZ and N2O
+#define FUSION_GAS_CREATION_FACTOR_LOW		0.48 	//O2 and CO2
 #define FUSION_MID_TIER_RAD_PROB_FACTOR		5
+#define FUSION_LOW_TIER_RAD_PROB_FACTOR		10
 #define FUSION_HIGH_TIER					10
 #define FUSION_MID_TIER						1
+#define FUSION_EFFICIENCY_BASE				60
+#define FUSION_EFFICIENCY_DIVISOR			0.6
 
 /datum/controller/subsystem/air/var/list/gas_reactions //this is our singleton of all reactions
 
@@ -211,7 +214,7 @@
 /datum/gas_reaction/fusion/init_reqs()
 	min_requirements = list(
 		"TEMP" = FUSION_TEMPERATURE_THRESHOLD,
-		"ENER" = PLASMA_BINDING_ENERGY,
+		"ENER" = FUSION_ENERGY_THRESHOLD,
 		/datum/gas/plasma = FUSION_MOLE_THRESHOLD,
 		/datum/gas/tritium = FUSION_MOLE_THRESHOLD
 	)
@@ -243,16 +246,16 @@
 	var/power_ratio = gas_power/mediation
 
 	if (power_ratio > FUSION_HIGH_TIER) //Super-fusion. Fuses everything into one big atom which then turns to tritium instantly. Very dangerous, but super cool.
-		reaction_energy += gases_fused*FUSION_RELEASE_ENERGY*(power_ratio / FUSION_HIGH_REACTION_ENERGY_FACTOR)
+		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_HIGH * (power_ratio / FUSION_REACTION_ENERGY_FACTOR_HIGH)
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
 		cached_gases[/datum/gas/tritium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_HIGH //25% of the gas is converted to energy, 75% to tritium
 		if (location && prob(power_ratio)) //You don't really want this to happen
-			radiation_pulse(location, reaction_energy / FUSION_HIGH_RADIOACTIVITY_FACTOR)
+			radiation_pulse(location, reaction_energy / FUSION_RADIOACTIVITY_FACTOR)
 			explosion(location,0,0,3,power_ratio * 0.5,TRUE,TRUE)//A tiny explosion with a large shockwave. People will know you're doing fusion.
 
 	else if (power_ratio > FUSION_MID_TIER) //Mediation is overpowered, fusion reaction starts to break down.
-		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*FUSION_RELEASE_ENERGY
+		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_MID * (power_ratio / FUSION_REACTION_ENERGY_FACTOR_MID)
 		for (var/id in cached_gases)
 			cached_gases[id][MOLES] = 0
 		air.assert_gases(/datum/gas/bz,/datum/gas/nitrous_oxide)
@@ -261,8 +264,8 @@
 		if (location && prob(power_ratio * FUSION_MID_TIER_RAD_PROB_FACTOR)) //Fairly good chances of happening
 			radiation_pulse(location, reaction_energy / FUSION_RADIOACTIVITY_FACTOR)
 
-	else
-		reaction_energy += cached_gases[/datum/gas/plasma][MOLES]*FUSION_RELEASE_ENERGY*power_ratio
+	else //Gas power is overpowered. Fusion isn't nearly as powerful.
+		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_LOW * (power_ratio / FUSION_REACTION_ENERGY_FACTOR_LOW)
 		for (var/gas in cached_gases)
 			cached_gases[gas][MOLES] = 0
 		air.assert_gases(/datum/gas/oxygen, /datum/gas/carbon_dioxide)
