@@ -131,16 +131,13 @@
 	if(get_amount() < 2)
 		to_chat(user, "<span class='warning'>You need at least two gauze to do this!</span>")
 		return
-	var/obj/item/stack/sheet/cloth/new_item = new(usr.loc)
+	new /obj/item/stack/sheet/cloth(user.drop_location())
 	user.visible_message("[user] cuts [src] into pieces of cloth with [I].", \
 				 "<span class='notice'>You cut [src] into pieces of cloth with [I].</span>", \
 				 "<span class='italics'>You hear cutting.</span>")
 	var/obj/item/stack/medical/gauze/R = src
 	src = null
-	var/replace = (user.get_inactive_held_item()==R)
 	R.use(2)
-	if (!QDELETED(R) && replace)
-		user.put_in_hands(new_item)
 
 /obj/item/stack/medical/gauze/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins tightening \the [src] around [user.p_their()] neck! It looks like [user.p_they()] forgot how to use medical supplies!</span>")
