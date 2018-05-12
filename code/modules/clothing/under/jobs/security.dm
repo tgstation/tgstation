@@ -28,6 +28,13 @@
 	item_state = "gy_suit"
 	item_color = "security"
 
+/obj/item/clothing/under/rank/security/strapon
+	name = "tactical strap-on dildo"
+	desc = "A strap-on dildo that provides full body armor through nanomachine technology."
+	icon_state = "strapon"
+	item_state = "strapon"
+	item_color = "strapon"
+	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/warden
 	name = "security suit"
