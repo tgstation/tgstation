@@ -147,6 +147,9 @@
 
 /*******Non-Signal Component Related Defines*******/
 
+//Redirection component init flags
+#define REDIRECT_TRANSFER_WITH_TURF 1
+
 //Arch
 #define ARCH_PROB "probability"					//Probability for each item
 #define ARCH_MAXDROP "max_drop_amount"				//each item's max drop amount
