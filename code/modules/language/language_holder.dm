@@ -136,10 +136,6 @@
 	languages = list(/datum/language/common)
 	shadow_languages = list(/datum/language/common, /datum/language/machine, /datum/language/draconic)
 
-/datum/language_holder/cat
-	languages = list(/datum/language/common, /datum/language/cat)
-	only_speaks_language = /datum/language/cat
-
 /datum/language_holder/universal/New()
 	..()
 	grant_all_languages(omnitongue=TRUE)
