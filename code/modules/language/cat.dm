@@ -1,7 +1,7 @@
 // 'cat' language; spoken by cats
 /datum/language/cat
-	name = "Internyational Galactic"
-	desc = "Language used by catpeople"
+	name = "Cat language"
+	desc = "Language used by cats"
 	speech_verb = "meows"
     ask_verb = "pawnders"
     exclaim_verb = "hisses"
