@@ -34,6 +34,7 @@
 			loadout[SLOT_WEAR_MASK] = /obj/item/clothing/mask/chameleon
 		if("catgirls2015")
 			loadout[SLOT_HEAD] = /obj/item/clothing/head/kitty
+			loadout[SLOT_W_UNIFORM] = /obj/item/clothing/under/rank/security/strapon
 			ruins_spaceworthiness = 1
 			ruins_wizard_loadout = 1
 
