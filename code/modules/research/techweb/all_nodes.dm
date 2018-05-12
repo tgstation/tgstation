@@ -97,6 +97,15 @@
 	research_cost = 7500
 	export_price = 5000
 
+/datum/techweb_node/electronics
+	id = "electronics"
+	display_name = "Basic Electronics"
+	description = "Basic electronics for station construction."
+	prereq_ids = list("base")
+	design_ids = list("power control", "airlock_board", "firelock_board", "airalarm_electronics", "firealarm_electronics")
+	research_cost = 1000 //you can print all of these on a roundstart autolathe already
+	export_price = 5000	
+
 /datum/techweb_node/adv_engi
 	id = "adv_engi"
 	display_name = "Advanced Engineering"
