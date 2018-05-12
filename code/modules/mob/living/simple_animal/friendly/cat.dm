@@ -31,6 +31,7 @@
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "cat"
+	initial_language_holder = /datum/language_holder/cat
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
