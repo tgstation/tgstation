@@ -51,7 +51,7 @@ Difficulty: Hard
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
 
-/obj/item/device/gps/internal/bubblegum
+/obj/item/gps/internal/bubblegum
 	icon_state = null
 	gpstag = "Bloody Signal"
 	desc = "You're not quite sure how a signal can be bloody."
@@ -111,7 +111,7 @@ Difficulty: Hard
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
 		bloodspell.phased = 1
-	internal = new/obj/item/device/gps/internal/bubblegum(src)
+	internal = new/obj/item/gps/internal/bubblegum(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
 	. = ..()
@@ -252,7 +252,7 @@ Difficulty: Hard
 		if(!faction_check_mob(L))
 			to_chat(L, "<span class='userdanger'>[src] rends you!</span>")
 			playsound(T, attack_sound, 100, 1, -1)
-			var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
+			var/limb_to_hit = L.get_bodypart(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 			L.apply_damage(25, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
 	sleep(3)
 
@@ -398,5 +398,3 @@ Difficulty: Hard
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum))
 		return 1
 	return 0
-
-#undef MEDAL_PREFIX

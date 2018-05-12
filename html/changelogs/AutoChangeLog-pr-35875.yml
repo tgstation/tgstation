@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Players can no longer kill themselves by whispering inside clone pods."

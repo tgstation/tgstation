@@ -47,13 +47,12 @@ Difficulty: Medium
 	vision_range = 13
 	wander = FALSE
 	elimination = 1
-	idle_vision_range = 13
 	appearance_flags = 0
 	mouse_opacity = MOUSE_OPACITY_ICON
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize()
 	. = ..()
-	internal = new/obj/item/device/gps/internal/legion(src)
+	internal = new/obj/item/gps/internal/legion(src)
 
 /mob/living/simple_animal/hostile/megafauna/legion/GiveTarget(new_target)
 	. = ..()
@@ -139,7 +138,7 @@ Difficulty: Medium
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
 
-/obj/item/device/gps/internal/legion
+/obj/item/gps/internal/legion
 	icon_state = null
 	gpstag = "Echoing Signal"
 	desc = "The message repeats."
@@ -154,7 +153,7 @@ Difficulty: Medium
 	icon_state = "staffofstorms"
 	item_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	force = 25
 	damtype = BURN
@@ -202,5 +201,3 @@ Difficulty: Medium
 	playsound(user, 'sound/magic/staff_change.ogg', 200, 0)
 	A.telegraph()
 	storm_cooldown = world.time + 200
-
-#undef MEDAL_PREFIX

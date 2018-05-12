@@ -16,8 +16,7 @@
 		sight_mode &= ~S.sight_mode
 		update_sight()
 	else if(istype(O, /obj/item/storage/bag/tray/))
-		var/obj/item/storage/bag/tray/T = O
-		T.do_quick_empty()
+		O.SendSignal(COMSIG_TRY_STORAGE_QUICK_EMPTY)
 	if(client)
 		client.screen -= O
 	observer_screen_update(O,FALSE)
@@ -64,7 +63,7 @@
 	else
 		to_chat(src, "<span class='warning'>You need to disable a module first!</span>")
 	if(.)
-		O.equipped(src, slot_hands)
+		O.equipped(src, SLOT_HANDS)
 		O.mouse_opacity = initial(O.mouse_opacity)
 		O.layer = ABOVE_HUD_LAYER
 		O.plane = ABOVE_HUD_PLANE

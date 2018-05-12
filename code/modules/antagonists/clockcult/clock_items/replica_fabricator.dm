@@ -66,11 +66,10 @@
 		new/obj/item/stack/tile/brass(user.loc, 5)
 		to_chat(user, "<span class='brass'>You use [get_clockwork_power() ? "some":"all"] of [src]'s power to produce <b>5</b> brass sheets. It now has access to <b>[DisplayPower(get_clockwork_power())]</b> of power.</span>")
 
-/obj/item/clockwork/replica_fabricator/pre_attackby(atom/target, mob/living/user, params)
+/obj/item/clockwork/replica_fabricator/pre_attack(atom/target, mob/living/user, params)
 	if(!target || !user || !is_servant_of_ratvar(user) || istype(target, /obj/item/storage))
 		return TRUE
 	return fabricate(target, user)
-	return TRUE
 
 //A note here; return values are for if we CAN BE PUT ON A TABLE, not IF WE ARE SUCCESSFUL, unless no_table_check is TRUE
 /obj/item/clockwork/replica_fabricator/proc/fabricate(atom/target, mob/living/user, silent, no_table_check)

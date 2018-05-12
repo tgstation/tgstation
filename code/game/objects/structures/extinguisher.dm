@@ -68,6 +68,9 @@
 
 
 /obj/structure/extinguisher_cabinet/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(iscyborg(user) || isalien(user))
 		return
 	if(stored_extinguisher)
@@ -95,7 +98,7 @@
 
 
 /obj/structure/extinguisher_cabinet/attack_paw(mob/user)
-	attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/extinguisher_cabinet/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))

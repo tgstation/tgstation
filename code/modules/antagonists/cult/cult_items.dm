@@ -33,10 +33,8 @@
 	desc = "A sword humming with unholy energy. It glows with a dim red light."
 	icon_state = "cultblade"
 	item_state = "cultblade"
-	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
 	sharpness = IS_SHARP
 	w_class = WEIGHT_CLASS_BULKY
@@ -45,6 +43,9 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
 
+/obj/item/melee/cultblade/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 40, 100)
 
 /obj/item/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!iscultist(user))
@@ -54,7 +55,7 @@
 							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.apply_damage(rand(force/2, force), BRUTE, pick("l_arm", "r_arm"))
+			H.apply_damage(rand(force/2, force), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		else
 			user.adjustBruteLoss(rand(force/2,force))
 		return
@@ -76,7 +77,7 @@
 			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
 			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
 			user.emote("scream")
-			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
+			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 			user.dropItemToGround(src)
 
 /obj/item/twohanded/required/cult_bastard
@@ -100,7 +101,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	actions_types = list()
-	flags_2 = SLOWS_WHILE_IN_HAND_2
+	item_flags = SLOWS_WHILE_IN_HAND
 	var/datum/action/innate/dash/cult/jaunt
 	var/datum/action/innate/cult/spin2win/linked_action
 	var/spinning = FALSE
@@ -112,6 +113,7 @@
 	set_light(4)
 	jaunt = new(src)
 	linked_action = new(src)
+	AddComponent(/datum/component/butchering, 50, 80)
 
 /obj/item/twohanded/required/cult_bastard/examine(mob/user)
 	if(contents.len)
@@ -143,7 +145,7 @@
 			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
 			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
 			user.emote("scream")
-			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
+			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 			user.dropItemToGround(src, TRUE)
 			user.Knockdown(50)
 			return
@@ -185,12 +187,12 @@
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stat != CONSCIOUS)
-				var/obj/item/device/soulstone/SS = new /obj/item/device/soulstone(src)
+				var/obj/item/soulstone/SS = new /obj/item/soulstone(src)
 				SS.attack(H, user)
 				if(!LAZYLEN(SS.contents))
 					qdel(SS)
 		if(istype(target, /obj/structure/constructshell) && contents.len)
-			var/obj/item/device/soulstone/SS = contents[1]
+			var/obj/item/soulstone/SS = contents[1]
 			if(istype(SS))
 				SS.transfer_soul("CONSTRUCT",target,user)
 				qdel(SS)
@@ -480,14 +482,14 @@
 	color = "#333333"
 	list_reagents = list("unholywater" = 50)
 
-/obj/item/device/shuttle_curse
+/obj/item/shuttle_curse
 	name = "cursed orb"
 	desc = "You peer within this smokey orb and glimpse terrible fates befalling the escape shuttle."
 	icon = 'icons/obj/cult.dmi'
 	icon_state ="shuttlecurse"
 	var/global/curselimit = 0
 
-/obj/item/device/shuttle_curse/attack_self(mob/living/user)
+/obj/item/shuttle_curse/attack_self(mob/living/user)
 	if(!iscultist(user))
 		user.dropItemToGround(src, TRUE)
 		user.Knockdown(100)
@@ -534,28 +536,28 @@
 		priority_announce("[message]", "System Failure", 'sound/misc/notice1.ogg')
 		curselimit++
 
-/obj/item/device/cult_shift
+/obj/item/cult_shift
 	name = "veil shifter"
 	desc = "This relic instantly teleports you, and anything you're pulling, forward by a moderate distance."
 	icon = 'icons/obj/cult.dmi'
 	icon_state ="shifter"
 	var/uses = 4
 
-/obj/item/device/cult_shift/examine(mob/user)
+/obj/item/cult_shift/examine(mob/user)
 	..()
 	if(uses)
 		to_chat(user, "<span class='cult'>It has [uses] use\s remaining.</span>")
 	else
 		to_chat(user, "<span class='cult'>It seems drained.</span>")
 
-/obj/item/device/cult_shift/proc/handle_teleport_grab(turf/T, mob/user)
+/obj/item/cult_shift/proc/handle_teleport_grab(turf/T, mob/user)
 	var/mob/living/carbon/C = user
 	if(C.pulling)
 		var/atom/movable/pulled = C.pulling
 		pulled.forceMove(T)
 		. = pulled
 
-/obj/item/device/cult_shift/attack_self(mob/user)
+/obj/item/cult_shift/attack_self(mob/user)
 	if(!uses || !iscarbon(user))
 		to_chat(user, "<span class='warning'>\The [src] is dull and unmoving in your hands.</span>")
 		return
@@ -588,7 +590,7 @@
 	else
 		to_chat(C, "<span class='danger'>The veil cannot be torn here!</span>")
 
-/obj/item/device/flashlight/flare/culttorch
+/obj/item/flashlight/flare/culttorch
 	name = "void torch"
 	desc = "Used by veteran cultists to instantly transport items to their needful bretheren."
 	w_class = WEIGHT_CLASS_SMALL
@@ -601,7 +603,7 @@
 	on = TRUE
 	var/charges = 5
 
-/obj/item/device/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
+/obj/item/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
 		return
 	if(!iscultist(user))
@@ -662,6 +664,10 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/spear/spear_act
 
+/obj/item/twohanded/cult_spear/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 100, 90)
+
 /obj/item/twohanded/cult_spear/Destroy()
 	if(spear_act)
 		qdel(spear_act)
@@ -681,7 +687,7 @@
 			else
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
-			if(!L.null_rod_check())
+			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
 					L.Knockdown(100)
 				else
@@ -768,7 +774,6 @@
 	impact_effect_type = /obj/effect/temp_visual/dir_setting/bloodsplatter
 
 /obj/item/projectile/magic/arcane_barrage/blood/Collide(atom/target)
-	colliding = TRUE
 	var/turf/T = get_turf(target)
 	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
 	if(iscultist(target))
@@ -782,7 +787,6 @@
 				M.adjustHealth(-5)
 		new /obj/effect/temp_visual/cult/sparks(T)
 		qdel(src)
-		colliding = FALSE
 	else
 		..()
 
@@ -974,7 +978,7 @@
 			else
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
-			if(!L.null_rod_check())
+			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
 					L.Knockdown(60)
 				else

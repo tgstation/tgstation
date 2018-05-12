@@ -63,7 +63,7 @@ Doesn't work on other aliens/AI.*/
 	var/obj/machinery/atmospherics/components/unary/atmos_thing = locate() in user.loc
 	if(atmos_thing)
 		var/rusure = alert(user, "Laying eggs and shaping resin here would block access to [atmos_thing]. Do you want to continue?", "Blocking Atmospheric Component", "Yes", "No")
-		if(rusure != "No")
+		if(rusure != "Yes")
 			return FALSE
 	return TRUE
 
@@ -159,7 +159,7 @@ Doesn't work on other aliens/AI.*/
 
 			return 0
 	else
-		to_chat(src, "<span class='noticealien'>Target is too far away.</span>")
+		to_chat(src, "<span class='noticealien'>[target] is too far away.</span>")
 		return 0
 
 

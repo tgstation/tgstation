@@ -46,8 +46,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if(!owner)
 		return
 
-	var/datum/asset/stuff = get_asset_datum(/datum/asset/simple/goonchat)
-	stuff.register()
+	var/datum/asset/stuff = get_asset_datum(/datum/asset/group/goonchat)
 	stuff.send(owner)
 
 	owner << browse(file('code/modules/goonchat/browserassets/html/browserOutput.html'), "window=browseroutput")
@@ -125,10 +124,15 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	C << output("[data]", "[window]:ehjaxCallback")
 
 /datum/chatOutput/proc/sendMusic(music, pitch)
+	if(!findtext(music, GLOB.is_http_protocol))
+		return
 	var/list/music_data = list("adminMusic" = url_encode(url_encode(music)))
 	if(pitch)
 		music_data["musicRate"] = pitch
 	ehjax_send(data = music_data)
+
+/datum/chatOutput/proc/stopMusic()
+	ehjax_send(data = "stopMusic")
 
 /datum/chatOutput/proc/setMusicVolume(volume = "")
 	if(volume)

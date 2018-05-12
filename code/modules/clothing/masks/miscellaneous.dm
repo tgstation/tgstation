@@ -47,7 +47,7 @@
 /obj/item/clothing/mask/fakemoustache/italian/speechModification(M)
 	if(copytext(M, 1, 2) != "*")
 		M = " [M]"
-		var/list/italian_words = strings("word_replacement.json", "italian")
+		var/list/italian_words = strings("italian_replacement.json", "italian")
 
 		for(var/key in italian_words)
 			var/value = italian_words[key]
@@ -222,8 +222,8 @@ obj/item/clothing/mask/frog/cursed
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
-	slot_flags = SLOT_MASK
-	adjusted_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_MASK
+	adjusted_flags = ITEM_SLOT_HEAD
 	icon_state = "bandbotany"
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)

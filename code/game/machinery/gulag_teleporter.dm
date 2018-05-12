@@ -47,6 +47,7 @@ The console is located at computer/gulag_teleporter.dm
 	update_icon()
 
 /obj/machinery/gulag_teleporter/interact(mob/user)
+	. = ..()
 	if(locked)
 		to_chat(user, "<span class='warning'>[src] is locked!</span>")
 		return

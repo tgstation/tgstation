@@ -35,13 +35,13 @@
 	if(iscarbon(target) && target.Adjacent(ranged_ability_user))
 		var/mob/living/carbon/L = target
 		if(is_servant_of_ratvar(L))
-			to_chat(ranged_ability_user, "<span class='neovgre'>\"They're a servant.\"</span>")
+			to_chat(ranged_ability_user, "<span class='neovgre'>\"[L.p_theyre(TRUE)] a servant.\"</span>")
 			return TRUE
 		else if(L.stat)
 			to_chat(ranged_ability_user, "<span class='neovgre'>\"There is use in shackling the dead, but for examples.\"</span>")
 			return TRUE
-		else if(L.handcuffed)
-			to_chat(ranged_ability_user, "<span class='neovgre'>\"They are already helpless, no?\"</span>")
+		else if (istype(L.handcuffed,/obj/item/restraints/handcuffs/clockwork))
+			to_chat(ranged_ability_user, "<span class='neovgre'>\"[L.p_theyre(TRUE)] already helpless, no?\"</span>")
 			return TRUE
 
 		playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE)
@@ -49,7 +49,7 @@
 		"<span class='neovgre_small'>You begin shaping replicant alloy into manacles around [L]'s wrists...</span>")
 		to_chat(L, "<span class='userdanger'>[ranged_ability_user] begins forming manacles around your wrists!</span>")
 		if(do_mob(ranged_ability_user, L, 30))
-			if(!L.handcuffed)
+			if(!(istype(L.handcuffed,/obj/item/restraints/handcuffs/clockwork)))
 				L.handcuffed = new/obj/item/restraints/handcuffs/clockwork(L)
 				L.update_handcuffed()
 				to_chat(ranged_ability_user, "<span class='neovgre_small'>You shackle [L].</span>")
@@ -92,7 +92,7 @@
 			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] does not yet serve Ratvar.\"</span>")
 			return TRUE
 		if(L.stat == DEAD)
-			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_theyre(TRUE)] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
 			return TRUE
 
 		var/brutedamage = L.getBruteLoss()
@@ -182,13 +182,14 @@
 		var/mob/living/L = target
 		if(is_servant_of_ratvar(L) || L.stat || L.has_status_effect(STATUS_EFFECT_KINDLE))
 			return
-		var/obj/O = L.null_rod_check()
+		var/atom/O = L.anti_magic_check()
 		playsound(L, 'sound/magic/fireball.ogg', 50, TRUE, frequency = 1.25)
 		if(O)
-			L.visible_message("<span class='warning'>[L]'s eyes flare with dim light as they stumble!</span>", \
-			"<span class='userdanger'>Your [O] glows white-hot against you as it absorbs some sort of power!</span>")
-			L.adjustFireLoss(5)
-			L.Stun(40)
+			if(isitem(O))
+				L.visible_message("<span class='warning'>[L]'s eyes flare with dim light!</span>", \
+				"<span class='userdanger'>Your [O] glows white-hot against you as it absorbs [src]'s power!</span>")
+			else if(ismob(O))
+				L.visible_message("<span class='warning'>[L]'s eyes flare with dim light!</span>")
 			playsound(L, 'sound/weapons/sear.ogg', 50, TRUE)
 		else
 			L.visible_message("<span class='warning'>[L]'s eyes blaze with brilliant light!</span>", \
@@ -219,10 +220,10 @@
 			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] does not yet serve Ratvar.\"</span>")
 			return TRUE
 		if(L.stat == DEAD)
-			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_theyre(TRUE)] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
 			return TRUE
 		if(islist(L.stun_absorption) && L.stun_absorption["vanguard"] && L.stun_absorption["vanguard"]["end_time"] > world.time)
-			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] already shielded by a Vanguard.\"</span>")
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_theyre(TRUE)] already shielded by a Vanguard.\"</span>")
 			return TRUE
 
 		successful = TRUE

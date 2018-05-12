@@ -91,7 +91,7 @@
 	return ..()
 
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
-	new_spawn.real_name = "Wish Granter's Victim ([rand(0,999)])"
+	new_spawn.real_name = "Wish Granter's Victim ([rand(1,999)])"
 	var/wish = rand(1,4)
 	switch(wish)
 		if(1)
@@ -161,6 +161,9 @@
 		new_spawn.mind.assigned_role = "Free Golem"
 
 /obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(isgolem(user) && can_transfer)
 		var/transfer_choice = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
 		if(transfer_choice != "Yes")
@@ -173,7 +176,6 @@
 		create(ckey = user.ckey,name = user.real_name)
 		user.death()
 		return
-	..()
 
 /obj/effect/mob_spawn/human/golem/servant
 	has_owner = TRUE
@@ -312,7 +314,7 @@
 	name = "Hotel Staff"
 	uniform = /obj/item/clothing/under/assistantformal
 	shoes = /obj/item/clothing/shoes/laceup
-	r_pocket = /obj/item/device/radio/off
+	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/mindshield)
 
@@ -356,7 +358,7 @@
 /obj/effect/mob_spawn/human/demonic_friend/Initialize(mapload, datum/mind/owner_mind, obj/effect/proc_holder/spell/targeted/summon_friend/summoning_spell)
 	. = ..()
 	owner = owner_mind
-	flavour_text = "<span class='big bold'>You have been given a reprieve from your eternity of torment, to be [owner.name]'s friend for their short mortal coil.</span><b> Be aware that if you do not live up to [owner.name]'s expectations, they can send you back to hell with a single thought.  [owner.name]'s death will also return you to hell.</b>"
+	flavour_text = "<span class='big bold'>You have been given a reprieve from your eternity of torment, to be [owner.name]'s friend for [owner.p_their()] short mortal coil.</span><b> Be aware that if you do not live up to [owner.name]'s expectations, they can send you back to hell with a single thought.  [owner.name]'s death will also return you to hell.</b>"
 	var/area/A = get_area(src)
 	if(!mapload && A)
 		notify_ghosts("\A friendship shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
@@ -385,7 +387,7 @@
 	name = "Demonic Friend"
 	uniform = /obj/item/clothing/under/assistantformal
 	shoes = /obj/item/clothing/shoes/laceup
-	r_pocket = /obj/item/device/radio/off
+	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/mindshield) //No revolutionaries, he's MY friend.
 	id = /obj/item/card/id
@@ -404,7 +406,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset/syndicate/alt
+	ears = /obj/item/radio/headset/syndicate/alt
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/weapons_auth)
 	id = /obj/item/card/id/syndicate
@@ -480,7 +482,7 @@
 	shoes = /obj/item/clothing/shoes/jackboots
 	id = /obj/item/card/id/away/old/sec
 	r_pocket = /obj/item/restraints/handcuffs
-	l_pocket = /obj/item/device/assembly/flash/handheld
+	l_pocket = /obj/item/assembly/flash/handheld
 	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsec/Destroy()
@@ -533,9 +535,6 @@
 /obj/effect/mob_spawn/human/oldsci/Destroy()
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
-
-
-#define PIRATE_NAMES_FILE "pirates.json"
 
 /obj/effect/mob_spawn/human/pirate
 	name = "space pirate sleeper"

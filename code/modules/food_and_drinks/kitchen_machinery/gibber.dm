@@ -45,7 +45,7 @@
 		add_overlay("gridle")
 
 /obj/machinery/gibber/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/gibber/container_resist(mob/living/user)
 	go_out()
@@ -54,6 +54,9 @@
 	go_out()
 
 /obj/machinery/gibber/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
@@ -96,10 +99,7 @@
 /obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
-
-	else if(exchange_parts(user, P))
-		return
-
+		
 	else if(default_pry_open(P))
 		return
 

@@ -60,9 +60,6 @@
 	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_deconstruction_crowbar(I))
 		return
 

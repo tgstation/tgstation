@@ -7,6 +7,7 @@
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	ventcrawler = VENTCRAWLER_NUDE
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
@@ -16,7 +17,7 @@
 
 
 
-/mob/living/carbon/monkey/Initialize()
+/mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
@@ -31,8 +32,19 @@
 
 	. = ..()
 
+	if (cubespawned)
+		if (LAZYLEN(SSmobs.cubemonkeys) > SSmobs.cubemonkeycap)
+			if (spawner)
+				to_chat(spawner, "<span class='warning'>Bluespace harmonics prevent the spawning of more than [SSmobs.cubemonkeycap] monkeys on the station at one time!</span>")
+			return INITIALIZE_HINT_QDEL
+		SSmobs.cubemonkeys += src
+
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
+
+/mob/living/carbon/monkey/Destroy()
+	SSmobs.cubemonkeys -= src
+	return ..()
 
 /mob/living/carbon/monkey/create_internal_organs()
 	internal_organs += new /obj/item/organ/appendix
@@ -156,5 +168,5 @@
 	. = ..()
 	if(prob(10))
 		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
-		equip_to_slot_or_del(helmet,slot_head)
+		equip_to_slot_or_del(helmet,SLOT_HEAD)
 		helmet.attack_self(src) // todo encapsulate toggle

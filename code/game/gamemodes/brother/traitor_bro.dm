@@ -37,7 +37,7 @@
 		var/datum/team/brother_team/team = new
 		var/team_size = prob(10) ? min(3, possible_brothers.len) : 2
 		for(var/k = 1 to team_size)
-			var/datum/mind/bro = pick(possible_brothers)
+			var/datum/mind/bro = antag_pick(possible_brothers)
 			possible_brothers -= bro
 			antag_candidates -= bro
 			team.add_member(bro)

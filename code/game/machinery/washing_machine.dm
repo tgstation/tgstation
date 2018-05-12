@@ -65,8 +65,7 @@
 	return
 
 /obj/item/stack/sheet/hairlesshide/machine_wash(obj/machinery/washing_machine/WM)
-	var/obj/item/stack/sheet/wetleather/WL = new(loc)
-	WL.amount = amount
+	new /obj/item/stack/sheet/wetleather(drop_location(), amount)
 	qdel(src)
 
 /obj/item/clothing/suit/hooded/ian_costume/machine_wash(obj/machinery/washing_machine/WM)
@@ -220,6 +219,9 @@
 		return ..()
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] is busy.</span>")
 		return

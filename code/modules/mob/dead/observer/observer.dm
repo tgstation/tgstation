@@ -91,6 +91,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 				name = random_unique_name(gender)
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
+
+		suiciding = body.suiciding // Transfer whether they committed suicide.
+
 		if(ishuman(body))
 			var/mob/living/carbon/human/body_human = body
 			if(HAIR in body_human.dna.species.species_traits)
@@ -279,8 +282,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
 		ghostize(0)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
-	return
 
+/mob/camera/verb/ghost()
+	set category = "OOC"
+	set name = "Ghost"
+	set desc = "Relinquish your life and enter the land of the dead."
+
+	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+	if(response != "Ghost")
+		return
+	ghostize(0)
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)
@@ -302,9 +313,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			x--
 
 	Moved(oldloc, direct)
-
-/mob/dead/observer/is_active()
-	return 0
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
@@ -625,7 +633,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/MouseDrop(atom/over)
 	if(!usr || !over)
 		return
-	if (isobserver(usr) && usr.client.holder && isliving(over))
+	if (isobserver(usr) && usr.client.holder && (isliving(over) || iscameramob(over)) )
 		if (usr.client.holder.cmd_ghost_drag(src,over))
 			return
 

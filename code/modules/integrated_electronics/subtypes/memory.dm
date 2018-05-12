@@ -79,10 +79,26 @@
 	activators = list("push data" = IC_PINTYPE_PULSE_IN)
 	var/accepting_refs = FALSE
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	number_of_pins = 0
 
 /obj/item/integrated_circuit/memory/constant/do_work()
 	var/datum/integrated_io/O = outputs[1]
 	O.push_data()
+
+/obj/item/integrated_circuit/memory/constant/emp_act()
+	for(var/i in 1 to activators.len)
+		var/datum/integrated_io/activate/A = activators[i]
+		A.scramble()
+
+/obj/item/integrated_circuit/memory/constant/save_special()
+	var/datum/integrated_io/O = outputs[1]
+	if(istext(O.data) || isnum(O.data))
+		return O.data
+
+/obj/item/integrated_circuit/memory/constant/load_special(special_data)
+	var/datum/integrated_io/O = outputs[1]
+	if(istext(special_data) || isnum(special_data))
+		O.data = special_data
 
 /obj/item/integrated_circuit/memory/constant/attack_self(mob/user)
 	var/datum/integrated_io/O = outputs[1]

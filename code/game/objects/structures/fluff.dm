@@ -104,7 +104,8 @@
 	icon_state = "driverseat"
 
 /obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user)
-	playsound(src.loc, 'sound/items/carhorn.ogg', 50, 1)
+	playsound(src, 'sound/items/carhorn.ogg', 50, 1)
+	. = ..()
 
 /obj/structure/fluff/paper
 	name = "dense lining of papers"

@@ -86,31 +86,31 @@
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target)
 	if(wall_mounted)
-		return 1
+		return TRUE
 	return !density
 
 /obj/structure/closet/proc/can_open(mob/living/user)
 	if(welded || locked)
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				to_chat(user, "<span class='danger'>There's something large on top of [src], preventing it from opening.</span>" )
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/structure/closet/proc/can_close(mob/living/user)
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/closet/closet in T)
 		if(closet != src && !closet.wall_mounted)
-			return 0
+			return FALSE
 	for(var/mob/living/L in T)
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				to_chat(user, "<span class='danger'>There's something too large in [src], preventing it from closing.</span>")
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/structure/closet/proc/dump_contents()
 	var/atom/L = drop_location()
@@ -180,14 +180,14 @@
 
 /obj/structure/closet/proc/close(mob/living/user)
 	if(!opened || !can_close(user))
-		return 0
+		return FALSE
 	take_contents()
 	playsound(loc, close_sound, 15, 1, -3)
 	climb_time = initial(climb_time)
 	opened = FALSE
 	density = TRUE
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/structure/closet/proc/toggle(mob/living/user)
 	if(opened)
@@ -207,7 +207,9 @@
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)
 	if(user in src)
 		return
-	if(!src.tool_interact(W,user))
+	if(src.tool_interact(W,user))
+		return 1 // No afterattack
+	else
 		return ..()
 
 /obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldnt be continued (because tool was used/closet was of wrong type), FALSE if otherwise
@@ -311,13 +313,14 @@
 	container_resist()
 
 /obj/structure/closet/attack_hand(mob/user)
-	..()
+	. = ..()
+	if(.)
+		return
 	if(user.lying && get_dist(src, user) > 0)
 		return
 
 	if(!toggle(user))
 		togglelock(user)
-		return
 
 /obj/structure/closet/attack_paw(mob/user)
 	return attack_hand(user)
@@ -339,7 +342,7 @@
 		return
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
-		attack_hand(usr)
+		return attack_hand(usr)
 	else
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 
@@ -385,7 +388,7 @@
 /obj/structure/closet/proc/bust_open()
 	welded = FALSE //applies to all lockers
 	locked = FALSE //applies to critter crates and secure lockers only
-	broken = 1 //applies to secure lockers only
+	broken = TRUE //applies to secure lockers only
 	open()
 
 /obj/structure/closet/AltClick(mob/user)
@@ -397,7 +400,14 @@
 	else
 		togglelock(user)
 
-/obj/structure/closet/proc/togglelock(mob/living/user)
+/obj/structure/closet/CtrlShiftClick(mob/living/user)
+	if(!user.has_trait(TRAIT_SKITTISH))
+		return ..()
+	if(!user.canUseTopic(src) || !isturf(user.loc))
+		return
+	dive_into(user)
+
+/obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	if(secure && !broken)
 		if(allowed(user))
 			if(iscarbon(user))
@@ -406,7 +416,7 @@
 			user.visible_message("<span class='notice'>[user] [locked ? null : "un"]locks [src].</span>",
 							"<span class='notice'>You [locked ? null : "un"]lock [src].</span>")
 			update_icon()
-		else
+		else if(!silent)
 			to_chat(user, "<span class='notice'>Access Denied</span>")
 	else if(secure && broken)
 		to_chat(user, "<span class='warning'>\The [src] is broken!</span>")
@@ -417,7 +427,7 @@
 						"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
 						"<span class='italics'>You hear a faint electrical spark.</span>")
 		playsound(src, "sparks", 50, 1)
-		broken = 1
+		broken = TRUE
 		locked = FALSE
 		update_icon()
 
@@ -456,3 +466,24 @@
 
 /obj/structure/closet/return_temperature()
 	return
+
+/obj/structure/closet/proc/dive_into(mob/living/user)
+	var/turf/T1 = get_turf(user)
+	var/turf/T2 = get_turf(src)
+	if(!opened)
+		if(locked)
+			togglelock(user, TRUE)
+		if(!open(user))
+			to_chat(user, "<span class='warning'>It won't budge!</span>")
+			return
+	step_towards(user, T2)
+	T1 = get_turf(user)
+	if(T1 == T2)
+		user.resting = TRUE //so people can jump into crates without slamming the lid on their head
+		if(!close(user))
+			to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
+			user.resting = FALSE
+			return
+		user.resting = FALSE
+		togglelock(user)
+		T1.visible_message("<span class='warning'>[user] dives into [src]!</span>")

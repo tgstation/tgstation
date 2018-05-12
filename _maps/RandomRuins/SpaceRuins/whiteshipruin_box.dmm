@@ -20,7 +20,7 @@
 /area/ruin/space/has_grav/whiteship/box)
 "af" = (
 /obj/structure/table,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "ag" = (
@@ -254,7 +254,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "aU" = (
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "aV" = (

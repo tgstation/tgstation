@@ -1,5 +1,5 @@
 // Plant analyzer
-/obj/item/device/plant_analyzer
+/obj/item/plant_analyzer
 	name = "plant analyzer"
 	desc = "A scanner used to evaluate a plant's various areas of growth."
 	icon = 'icons/obj/device.dmi'
@@ -8,7 +8,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
 
 // *************************************
@@ -90,6 +90,10 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
 
+/obj/item/hatchet/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 70, 100)
+
 /obj/item/hatchet/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
@@ -108,22 +112,26 @@
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	armour_penetration = 20
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/swiping = FALSE
+
+/obj/item/scythe/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 90, 105)
 
 /obj/item/scythe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		var/obj/item/bodypart/BP = C.get_bodypart("head")
+		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
 			playsound(src,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 	return (BRUTELOSS)
 
-/obj/item/scythe/pre_attackby(atom/A, mob/living/user, params)
+/obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
 	if(swiping || !istype(A, /obj/structure/spacevine) || get_turf(A) == get_turf(user))
 		return ..()
 	else

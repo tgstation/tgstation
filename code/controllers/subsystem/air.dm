@@ -165,7 +165,6 @@ SUBSYSTEM_DEF(air)
 		currentrun.len--
 		if(!M || (M.process_atmos(seconds) == PROCESS_KILL))
 			atmos_machinery.Remove(M)
-		M.SendSignal(COMSIG_MACHINE_PROCESS_ATMOS)
 		if(MC_TICK_CHECK)
 			return
 
@@ -393,5 +392,5 @@ SUBSYSTEM_DEF(air)
 #undef SSAIR_ACTIVETURFS
 #undef SSAIR_EXCITEDGROUPS
 #undef SSAIR_HIGHPRESSURE
-#undef SSAIR_HOTSPOT
+#undef SSAIR_HOTSPOTS
 #undef SSAIR_SUPERCONDUCTIVITY

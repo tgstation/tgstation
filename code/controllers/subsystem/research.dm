@@ -1,7 +1,6 @@
 
 SUBSYSTEM_DEF(research)
 	name = "Research"
-	flags = SS_KEEP_TIMING
 	priority = FIRE_PRIORITY_RESEARCH
 	wait = 10
 	init_order = INIT_ORDER_RESEARCH

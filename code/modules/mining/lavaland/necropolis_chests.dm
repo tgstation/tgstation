@@ -14,11 +14,11 @@
 	var/loot = rand(1,27)
 	switch(loot)
 		if(1)
-			new /obj/item/device/shared_storage/red(src)
+			new /obj/item/shared_storage/red(src)
 		if(2)
 			new /obj/item/clothing/suit/space/hardsuit/cult(src)
 		if(3)
-			new /obj/item/device/soulstone/anybody(src)
+			new /obj/item/soulstone/anybody(src)
 		if(4)
 			new /obj/item/katana/cursed(src)
 		if(5)
@@ -33,7 +33,7 @@
 			else
 				new /obj/item/disk/design_disk/modkit_disc/rapid_repeater(src)
 		if(9)
-			new /obj/item/organ/brain/alien(src)
+			new /obj/item/rod_of_asclepius(src)
 		if(10)
 			new /obj/item/organ/heart/cursed/wizard(src)
 		if(11)
@@ -54,11 +54,11 @@
 			else
 				new /obj/item/disk/design_disk/modkit_disc/bounty(src)
 		if(18)
-			new /obj/item/device/warp_cube/red(src)
+			new /obj/item/warp_cube/red(src)
 		if(19)
-			new /obj/item/device/wisp_lantern(src)
+			new /obj/item/wisp_lantern(src)
 		if(20)
-			new /obj/item/device/immortality_talisman(src)
+			new /obj/item/immortality_talisman(src)
 		if(21)
 			new /obj/item/gun/magic/hook(src)
 		if(22)
@@ -69,18 +69,17 @@
 			new /obj/item/reagent_containers/food/drinks/bottle/holywater/hell(src)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
 		if(25)
-			new /obj/item/spellbook/oneuse/summonitem(src)
+			new /obj/item/book/granter/spell/summonitem(src)
 		if(26)
 			new /obj/item/book_of_babel(src)
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
 
-
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
 	name = "KA Mod Disk"
-	desc = "A design disc containing the design for a unique kinetic accelerator modkit."
+	desc = "A design disc containing the design for a unique kinetic accelerator modkit. It's compatible with a research console."
 	icon_state = "datadisk1"
 	var/modkit_design = /datum/design/unique_modkit
 
@@ -140,8 +139,61 @@
 
 //Spooky special loot
 
+//Rod of Asclepius
+/obj/item/rod_of_asclepius
+	name = "Rod of Asclepius"
+	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding it's way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "asclepius_dormant"
+	var/activated = FALSE
+	var/usedHand
+
+/obj/item/rod_of_asclepius/attack_self(mob/user)
+	if(activated)
+		return
+	if(!iscarbon(user))
+		to_chat(user, "<span class='warning'>The snake carving seems to come alive, if only for a moment, before returning to it's dormant state, almost as if it finds you incapable of holding it's oath.</span>")
+		return
+	var/mob/living/carbon/itemUser = user
+	usedHand = itemUser.get_held_index_of_item(src)
+	if(itemUser.has_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH))
+		to_chat(user, "<span class='warning'>You can't possibly handle the responsibility of more than one rod!</span>")
+		return
+	var/failText = "<span class='warning'>The snake seems unsatisfied with your incomplete oath and returns to it's previous place on the rod, returning to its dormant, wooden state. You must stand still while completing your oath!</span>"
+	to_chat(itemUser, "<span class='notice'>The wooden snake that was carved into the rod seems to suddenly come alive and begins to slither down your arm! The compulsion to help others grows abnormally strong...</span>")
+	if(do_after(itemUser, 40, target = itemUser))
+		itemUser.say("I swear to fulfill, to the best of my ability and judgment, this covenant:")
+	else
+		to_chat(itemUser, failText)
+		return
+	if(do_after(itemUser, 20, target = itemUser))
+		itemUser.say("I will apply, for the benefit of the sick, all measures that are required, avoiding those twin traps of overtreatment and therapeutic nihilism.")
+	else
+		to_chat(itemUser, failText)
+		return
+	if(do_after(itemUser, 30, target = itemUser))
+		itemUser.say("I will remember that I remain a member of society, with special obligations to all my fellow human beings, those sound of mind and body as well as the infirm.")
+	else
+		to_chat(itemUser, failText)
+		return
+	if(do_after(itemUser, 30, target = itemUser))
+		itemUser.say("If I do not violate this oath, may I enjoy life and art, respected while I live and remembered with affection thereafter. May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.")
+	else
+		to_chat(itemUser, failText)
+		return
+	to_chat(itemUser, "<span class='notice'>The snake, satisfied with your oath, attaches itself and the rod to your forearm with an inseparable grip. Your thoughts seem to only revolve around the core idea of helping others, and harm is nothing more than a distant, wicked memory...</span>")
+	var/datum/status_effect/hippocraticOath/effect = itemUser.apply_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH)
+	effect.hand = usedHand
+	activated()
+
+/obj/item/rod_of_asclepius/proc/activated()
+	flags_1 = NODROP_1 | DROPDEL_1
+	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
+	icon_state = "asclepius_active"
+	activated = TRUE
+
 //Wisp Lantern
-/obj/item/device/wisp_lantern
+/obj/item/wisp_lantern
 	name = "spooky lantern"
 	desc = "This lantern gives off no light, but is home to a friendly wisp."
 	icon = 'icons/obj/lighting.dmi'
@@ -151,7 +203,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	var/obj/effect/wisp/wisp
 
-/obj/item/device/wisp_lantern/attack_self(mob/user)
+/obj/item/wisp_lantern/attack_self(mob/user)
 	if(!wisp)
 		to_chat(user, "<span class='warning'>The wisp has gone missing!</span>")
 		return
@@ -177,11 +229,11 @@
 		icon_state = "lantern-blue"
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
-/obj/item/device/wisp_lantern/Initialize()
+/obj/item/wisp_lantern/Initialize()
 	. = ..()
 	wisp = new(src)
 
-/obj/item/device/wisp_lantern/Destroy()
+/obj/item/wisp_lantern/Destroy()
 	if(wisp)
 		if(wisp.loc == src)
 			qdel(wisp)
@@ -198,16 +250,16 @@
 	layer = ABOVE_ALL_MOB_LAYER
 
 //Red/Blue Cubes
-/obj/item/device/warp_cube
+/obj/item/warp_cube
 	name = "blue cube"
 	desc = "A mysterious blue cube."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "blue_cube"
 	var/teleport_color = "#3FBAFD"
-	var/obj/item/device/warp_cube/linked
+	var/obj/item/warp_cube/linked
 	var/teleporting = FALSE
 
-/obj/item/device/warp_cube/attack_self(mob/user)
+/obj/item/warp_cube/attack_self(mob/user)
 	if(!linked)
 		to_chat(user, "[src] fizzles uselessly.")
 		return
@@ -240,16 +292,16 @@
 	user.forceMove(get_turf(link_holder))
 	qdel(link_holder)
 
-/obj/item/device/warp_cube/red
+/obj/item/warp_cube/red
 	name = "red cube"
 	desc = "A mysterious red cube."
 	icon_state = "red_cube"
 	teleport_color = "#FD3F48"
 
-/obj/item/device/warp_cube/red/Initialize()
+/obj/item/warp_cube/red/Initialize()
 	. = ..()
 	if(!linked)
-		var/obj/item/device/warp_cube/blue = new(src.loc)
+		var/obj/item/warp_cube/blue = new(src.loc)
 		linked = blue
 		blue.linked = src
 
@@ -315,7 +367,7 @@
 
 
 //Immortality Talisman
-/obj/item/device/immortality_talisman
+/obj/item/immortality_talisman
 	name = "Immortality Talisman"
 	desc = "A dread talisman that can render you completely invulnerable."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
@@ -323,16 +375,20 @@
 	actions_types = list(/datum/action/item_action/immortality)
 	var/cooldown = 0
 
+/obj/item/immortality_talisman/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
+
 /datum/action/item_action/immortality
 	name = "Immortality"
 
-/obj/item/device/immortality_talisman/Destroy(force)
+/obj/item/immortality_talisman/Destroy(force)
 	if(force)
 		. = ..()
 	else
 		return QDEL_HINT_LETMELIVE
 
-/obj/item/device/immortality_talisman/attack_self(mob/user)
+/obj/item/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
 		SSblackbox.record_feedback("amount", "immortality_talisman_uses", 1)
 		cooldown = world.time + 600
@@ -346,7 +402,7 @@
 		user.status_flags |= GODMODE
 		addtimer(CALLBACK(src, .proc/return_to_reality, user, Z), 100)
 
-/obj/item/device/immortality_talisman/proc/return_to_reality(mob/user, obj/effect/immortality_talisman/Z)
+/obj/item/immortality_talisman/proc/return_to_reality(mob/user, obj/effect/immortality_talisman/Z)
 	user.status_flags &= ~GODMODE
 	user.notransform = 0
 	user.forceMove(get_turf(Z))
@@ -377,79 +433,34 @@
 
 //Shared Bag
 
-//Internal
-
-/obj/item/storage/backpack/shared
-	name = "paradox bag"
-	desc = "Somehow, it's in two places at once."
-	max_combined_w_class = 60
-	max_w_class = WEIGHT_CLASS_NORMAL
-
-
-//External
-
-/obj/item/device/shared_storage
+/obj/item/shared_storage
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "cultpack"
-	slot_flags = SLOT_BACK
-	var/obj/item/storage/backpack/shared/bag
+	slot_flags = ITEM_SLOT_BACK
+	resistance_flags = INDESTRUCTIBLE
 
-
-/obj/item/device/shared_storage/red
+/obj/item/shared_storage/red
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
 
-/obj/item/device/shared_storage/red/Initialize()
+/obj/item/shared_storage/red/Initialize()
 	. = ..()
-	if(!bag)
-		var/obj/item/storage/backpack/shared/S = new(src)
-		var/obj/item/device/shared_storage/blue = new(src.loc)
+	var/datum/component/storage/STR = AddComponent(/datum/component/storage/concrete)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 60
+	STR.max_items = 21
+	new /obj/item/shared_storage/blue(drop_location(), STR)
 
-		src.bag = S
-		blue.bag = S
-
-
-/obj/item/device/shared_storage/attackby(obj/item/W, mob/user, params)
-	if(bag)
-		bag.forceMove(user)
-		bag.attackby(W, user, params)
-
-
-/obj/item/device/shared_storage/attack_hand(mob/living/carbon/user)
-	if(!iscarbon(user))
-		return
-	if(loc == user && user.back && user.back == src)
-		if(bag)
-			bag.forceMove(user)
-			bag.attack_hand(user)
-	else
-		..()
-
-
-/obj/item/device/shared_storage/MouseDrop(atom/over_object)
-	if(iscarbon(usr) || isdrone(usr))
-		var/mob/M = usr
-
-		if(!over_object)
-			return
-
-		if(ismecha(usr.loc))
-			return
-
-		if(!M.incapacitated())
-			playsound(loc, "rustle", 50, 1, -5)
-
-
-			if(istype(over_object, /obj/screen/inventory/hand))
-				var/obj/screen/inventory/hand/H = over_object
-				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-
-			add_fingerprint(usr)
-
-
-
+/obj/item/shared_storage/blue/Initialize(mapload, datum/component/storage/concrete/master)
+	. = ..()
+	if(!istype(master))
+		return INITIALIZE_HINT_QDEL
+	var/datum/component/storage/STR = AddComponent(/datum/component/storage, master)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 60
+	STR.max_items = 21
 
 //Book of Babel
 
@@ -547,7 +558,7 @@
 	inhand_y_dimension = 64
 	icon_state = "cleaving_saw"
 	icon_state_on = "cleaving_saw_open"
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	attack_verb_off = list("attacked", "sawed", "sliced", "torn", "ripped", "diced", "cut")
 	attack_verb_on = list("cleaved", "swiped", "slashed", "chopped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -637,7 +648,7 @@
 		if(2)
 			new /obj/item/lava_staff(src)
 		if(3)
-			new /obj/item/spellbook/oneuse/sacredflame(src)
+			new /obj/item/book/granter/spell/sacredflame(src)
 			new /obj/item/gun/magic/wand/fireball(src)
 		if(4)
 			new /obj/item/dragons_blood(src)
@@ -671,6 +682,7 @@
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
+	AddComponent(/datum/component/butchering, 150, 90)
 
 /obj/item/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
@@ -784,7 +796,7 @@
 	agent = "dragon's blood"
 	desc = "What do dragons have to do with Space Station 13?"
 	stage_prob = 20
-	severity = VIRUS_SEVERITY_BIOHAZARD
+	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = 0
 	stage1	= list("Your bones ache.")
 	stage2	= list("Your skin feels scaly.")
@@ -804,7 +816,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon = 'icons/obj/guns/magic.dmi'
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	force = 25
 	damtype = BURN
@@ -934,13 +946,13 @@
 
 	var/mob/living/L = choice
 
-	message_admins("<span class='adminnotice'>[L] has been marked for death!</span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(L)][ADMIN_FLW(L)] has been marked for death by [key_name_admin(user)]!</span>")
 
 	var/datum/objective/survive/survive = new
 	survive.owner = L.mind
 	L.mind.objectives += survive
 	add_logs(user, L, "took out a blood contract on", src)
-	to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you!</span>")
+	to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you! KILL THEM ALL!</span>")
 	L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
 	var/obj/effect/mine/pickup/bloodbath/B = new(L)
 	INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, L)
@@ -948,7 +960,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H == L)
 			continue
-		to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_they(TRUE)] [L.p_have()] been marked red! Go kill [L.p_them()]!</span>")
+		to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_theyve(TRUE)] been marked red! Whoever [L.p_they()] [L.p_were()], friend or foe, go kill [L.p_them()]!</span>")
 		H.put_in_hands(new /obj/item/kitchen/knife/butcher(H), TRUE)
 
 	qdel(src)
@@ -981,7 +993,7 @@
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	force = 15
 	attack_verb = list("clubbed", "beat", "pummeled")
@@ -1006,7 +1018,7 @@
 	user.visible_message("<span class='suicide'>[user] holds [src] into the air! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
 	playsound(user,'sound/machines/airlockopen.ogg', 75, TRUE)
-	user.visible_message("<span class='hierophant_warning'>[user] fades out, leaving their belongings behind!</span>")
+	user.visible_message("<span class='hierophant_warning'>[user] fades out, leaving [user.p_their()] belongings behind!</span>")
 	for(var/obj/item/I in user)
 		if(I != src)
 			user.dropItemToGround(I)

@@ -90,7 +90,7 @@
 /mob/living/carbon/true_devil/resist_buckle()
 	if(buckled)
 		buckled.user_unbuckle_mob(src,src)
-		visible_message("<span class='warning'>[src] easily breaks out of their handcuffs!</span>", \
+		visible_message("<span class='warning'>[src] easily breaks out of [p_their()] handcuffs!</span>", \
 					"<span class='notice'>With just a thought your handcuffs fall off.</span>")
 
 /mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
@@ -141,6 +141,7 @@
 		return 0
 	return ..()
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /mob/living/carbon/true_devil/attack_ghost(mob/dead/observer/user as mob)
 	if(ascended || user.mind.soulOwner == src.mind)
 		var/mob/living/simple_animal/imp/S = new(get_turf(loc))
@@ -162,7 +163,8 @@
 	//They're immune to fire.
 
 /mob/living/carbon/true_devil/attack_hand(mob/living/carbon/human/M)
-	if(..())
+	. = ..()
+	if(.)
 		switch(M.a_intent)
 			if ("harm")
 				var/damage = rand(1, 5)
