@@ -26111,8 +26111,6 @@
 /area/science/xenobiology)
 "bqF" = (
 /obj/machinery/computer/camera_advanced/xenobio{
-	tag = "icon-computer (NORTH)";
-	icon_state = "computer";
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -27588,8 +27586,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteyellow/corner{
-	tag = "icon-whiteyellowcorner (NORTH)";
-	icon_state = "whiteyellowcorner";
 	dir = 1
 	},
 /area/medical/chemistry)
@@ -47850,8 +47846,6 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (SOUTHEAST)";
-	icon_state = "darkgreen";
 	dir = 6
 	},
 /area/science/xenobiology)
@@ -48688,9 +48682,7 @@
 	},
 /obj/machinery/power/emitter/anchored{
 	dir = 4;
-	icon_state = "emitter";
 	state = 2;
-	tag = "icon-emitter (EAST)"
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
@@ -49381,8 +49373,6 @@
 /area/maintenance/department/security/brig)
 "ihX" = (
 /obj/effect/turf_decal/arrows{
-	tag = "icon-arrows (WEST)";
-	icon_state = "arrows";
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -50364,8 +50354,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "lwE" = (
 /obj/effect/turf_decal/box/corners{
-	tag = "icon-box_corners (WEST)";
-	icon_state = "box_corners";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -51377,9 +51365,7 @@
 	},
 /obj/machinery/power/emitter/anchored{
 	dir = 8;
-	icon_state = "emitter";
 	state = 2;
-	tag = "icon-emitter (WEST)"
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
@@ -51703,8 +51689,6 @@
 /area/maintenance/department/engine)
 "pQM" = (
 /obj/effect/turf_decal/box/corners{
-	tag = "icon-box_corners (NORTH)";
-	icon_state = "box_corners";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -51929,8 +51913,6 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/darkgreen/corner{
-	tag = "icon-darkgreencorners (WEST)";
-	icon_state = "darkgreencorners";
 	dir = 8
 	},
 /area/science/xenobiology)
@@ -52113,8 +52095,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/corner{
-	tag = "icon-darkgreencorners (WEST)";
-	icon_state = "darkgreencorners";
 	dir = 8
 	},
 /area/science/xenobiology)
@@ -52262,8 +52242,6 @@
 /area/science/xenobiology)
 "ryL" = (
 /obj/effect/turf_decal/box/corners{
-	tag = "icon-box_corners (EAST)";
-	icon_state = "box_corners";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -53256,8 +53234,6 @@
 /obj/structure/table/glass,
 /obj/item/paper_bin,
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (SOUTHWEST)";
-	icon_state = "darkgreen";
 	dir = 10
 	},
 /area/science/xenobiology)
@@ -54188,8 +54164,6 @@
 	},
 /obj/item/wrench,
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTHEAST)";
-	icon_state = "darkgreen";
 	dir = 5
 	},
 /area/science/xenobiology)
@@ -54572,8 +54546,6 @@
 	network = list("xeno","rd")
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (SOUTHWEST)";
-	icon_state = "darkgreen";
 	dir = 10
 	},
 /area/science/xenobiology)
