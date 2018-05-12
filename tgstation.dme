@@ -1623,6 +1623,7 @@
 #include "code\modules\keybindings\setup.dm"
 #include "code\modules\language\aphasia.dm"
 #include "code\modules\language\beachbum.dm"
+#include "code\modules\language\cat.dm"
 #include "code\modules\language\codespeak.dm"
 #include "code\modules\language\common.dm"
 #include "code\modules\language\draconic.dm"

@@ -195,3 +195,10 @@
 
 /obj/item/organ/tongue/robot/get_spans()
 	return ..() | SPAN_ROBOT
+
+/obj/item/organ/tongue/cat
+	name = "cat tongue"
+	desc = "A fleshy muscle mostly used for grooming yourself. Has spikes."
+	icon_state = "tonguelizard"
+	say_mod = "meows"
+	taste_sensitivity = 10
