@@ -1342,6 +1342,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	restricted_roles = list("Clown")
 	surplus = 0 //No fun unless you're the clown!
 
+/datum/uplink_item/role_restricted/fueltank
+	name = "High-Capacity Fuel Tank"
+	desc = "You'll never run out of welding fuel with this bad boy."
+	item = /obj/structure/reagent_dispensers/fueltank/syndicate
+	cost = 5
+	restricted_roles = list("Assistant", "Station Engineer", "Chief Engineer", "Atmospheric Technician")
+	surplus = 0 // It won't fit in the crate. Too big.
+
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
