@@ -66,10 +66,8 @@ Charged extracts:
 	colour = "metal"
 
 /obj/item/slimecross/charged/metal/do_effect(mob/user)
-	var/obj/item/stack/sheet/metal/M = new(get_turf(user))
-	M.amount = 25
-	var/obj/item/stack/sheet/plasteel/P = new(get_turf(user))
-	P.amount = 10
+	new /obj/item/stack/sheet/metal(get_turf(user), 25)
+	new /obj/item/stack/sheet/plasteel(get_turf(user), 10)
 	user.visible_message("<span class='notice'>[src] grows into a plethora of metals!</span>")
 	..()
 
@@ -85,8 +83,7 @@ Charged extracts:
 	colour = "dark purple"
 
 /obj/item/slimecross/charged/darkpurple/do_effect(mob/user)
-	var/obj/item/stack/sheet/mineral/plasma/M = new(get_turf(user))
-	M.amount = 10
+	new /obj/item/stack/sheet/mineral/plasma(get_turf(user), 10)
 	user.visible_message("<span class='notice'>[src] produces a large amount of plasma!</span>")
 	..()
 
@@ -113,8 +110,7 @@ Charged extracts:
 	colour = "bluespace"
 
 /obj/item/slimecross/charged/bluespace/do_effect(mob/user)
-	var/obj/item/stack/sheet/bluespace_crystal/M = new(get_turf(user))
-	M.amount = 10
+	new /obj/item/stack/sheet/bluespace_crystal(get_turf(user), 10)
 	user.visible_message("<span class='notice'>[src] produces several sheets of polycrystal!</span>")
 	..()
 
@@ -138,8 +134,7 @@ Charged extracts:
 	colour = "pyrite"
 
 /obj/item/slimecross/charged/pyrite/do_effect(mob/user)
-	var/obj/item/stack/sheet/mineral/bananium/M = new(get_turf(user))
-	M.amount = 10
+	new /obj/item/stack/sheet/mineral/bananium(get_turf(user), 10)
 	user.visible_message("<span class='warning'>[src] solidifies with a horrifying banana stench!</span>")
 	..()
 
