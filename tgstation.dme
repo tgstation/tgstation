@@ -2476,6 +2476,7 @@
 #include "code\modules\spells\spell_types\wizard.dm"
 #include "code\modules\station_goals\shield.dm"
 #include "code\modules\station_goals\station_goal.dm"
+#include "code\modules\superbox\away.dm"
 #include "code\modules\superbox\crashland.dm"
 #include "code\modules\superbox\frenzystation.dm"
 #include "code\modules\superbox\geoscape.dm"

@@ -1,0 +1,123 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/machinery/gateway{
+	dir = 9
+	},
+/obj/effect/turf_decal/bot_white/right,
+/turf/open/floor/plasteel/vault{
+	dir = 1
+	},
+/area/template_noop)
+"c" = (
+/obj/machinery/gateway{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/template_noop)
+"d" = (
+/obj/machinery/gateway{
+	dir = 5
+	},
+/obj/effect/turf_decal/bot_white/left,
+/turf/open/floor/plasteel/vault{
+	dir = 4
+	},
+/area/template_noop)
+"e" = (
+/obj/machinery/gateway{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/template_noop)
+"f" = (
+/obj/machinery/gateway/centerstation,
+/turf/open/floor/plasteel/dark,
+/area/template_noop)
+"g" = (
+/obj/machinery/gateway{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/template_noop)
+"h" = (
+/obj/machinery/gateway{
+	dir = 10
+	},
+/obj/effect/turf_decal/bot_white/left,
+/obj/structure/rack,
+/obj/item/storage/belt/utility/full,
+/obj/item/device/radio/off,
+/turf/open/floor/plasteel/vault{
+	dir = 4
+	},
+/area/template_noop)
+"i" = (
+/obj/machinery/gateway,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/template_noop)
+"j" = (
+/obj/machinery/gateway{
+	dir = 6
+	},
+/obj/effect/turf_decal/bot_white/right,
+/obj/structure/rack,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/paper/pamphlet/gateway,
+/turf/open/floor/plasteel/vault{
+	dir = 1
+	},
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+e
+h
+a
+"}
+(3,1,1) = {"
+a
+c
+f
+i
+a
+"}
+(4,1,1) = {"
+a
+d
+g
+j
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+"}
