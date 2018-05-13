@@ -19,6 +19,11 @@
 
 /obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user)
 	. = ..()
+
+	if(!machine)
+		to_chat(user, "<span class='notice'>The [src] is not linked to a machine!</span>")
+		return
+
 	var/obj/item/stack/sheet/s
 	var/dat
 
@@ -34,8 +39,8 @@
 	user << browse(dat, "window=console_stacking_machine")
 
 /obj/machinery/mineral/stacking_unit_console/multitool_act(mob/living/user, obj/item/I)
-	var/obj/item/multitool/M = I
 	if(istype(I, /obj/item/multitool))
+		var/obj/item/multitool/M = I
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
 		return TRUE
@@ -89,7 +94,7 @@
 	if(istype(I, /obj/item/multitool))
 		var/obj/item/multitool/M = I
 		if(!istype(M.buffer, /obj/machinery/mineral/stacking_unit_console))
-			to_chat(user, "<span class='warning'>The [I] has no linkage data in it's buffer.</span>")
+			to_chat(user, "<span class='warning'>The [I] has no linkage data in its buffer.</span>")
 			return FALSE
 		else
 			CONSOLE = M.buffer
