@@ -3,6 +3,7 @@
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared"
 	materials = list(MAT_METAL=1000, MAT_GLASS=500)
+	is_position_sensitive = TRUE
 
 	var/on = FALSE
 	var/visible = FALSE
@@ -10,6 +11,7 @@
 	var/list/obj/effect/beam/i_beam/beams
 	var/olddir = 0
 	var/datum/component/redirect/listener
+	var/hearing_range = 3
 
 /obj/item/assembly/infra/Initialize()
 	. = ..()
@@ -30,23 +32,27 @@
 	refreshBeam()
 
 /obj/item/assembly/infra/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	QDEL_LIST(beams)
-	return ..()
+	. = ..()
 
-/obj/item/assembly/infra/describe()
-	return "The infrared trigger is [on?"on":"off"]."
+/obj/item/assembly/infra/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The infrared trigger is [on?"on":"off"].</span>")
 
 /obj/item/assembly/infra/activate()
 	if(!..())
-		return 0//Cooldown check
+		return FALSE//Cooldown check
 	on = !on
+	refreshBeam()
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/assembly/infra/toggle_secure()
 	secured = !secured
 	if(secured)
 		START_PROCESSING(SSobj, src)
+		refreshBeam()
 	else
 		QDEL_LIST(beams)
 		STOP_PROCESSING(SSobj, src)
@@ -59,13 +65,20 @@
 	if(on)
 		add_overlay("infrared_on")
 		attached_overlays += "infrared_on"
+		if(visible && secured)
+			add_overlay("infrared_visible")
+			attached_overlays += "infrared_visible"
 
 	if(holder)
 		holder.update_icon()
 	return
 
 /obj/item/assembly/infra/dropped()
-	refreshBeam()
+	. = ..()
+	if(holder)
+		holder_movement() //sync the dir of the device as well if it's contained in a TTV or an assembly holder
+	else
+		refreshBeam()
 
 /obj/item/assembly/infra/process()
 	if(!on || !secured)
@@ -74,7 +87,15 @@
 
 /obj/item/assembly/infra/proc/refreshBeam()
 	QDEL_LIST(beams)
-	if(throwing || !on || !secured || !(isturf(loc) || holder && isturf(holder.loc)))
+	if(throwing || !on || !secured)
+		return
+	if(holder)
+		if(holder.master) //incase the sensor is part of an assembly that's contained in another item, such as a single tank bomb
+			if(!holder.master.IsSpecialAssembly() || !isturf(holder.master.loc))
+				return
+		else if(!isturf(holder.loc)) //else just check where the holder is
+			return
+	else if(!isturf(loc)) //or just where the fuck we are in general
 		return
 	var/turf/T = get_turf(src)
 	var/_dir = dir
@@ -82,6 +103,11 @@
 	if(_T)
 		for(var/i in 1 to maxlength)
 			var/obj/effect/beam/i_beam/I = new(T)
+			if(istype(holder, /obj/item/assembly_holder))
+				var/obj/item/assembly_holder/assembly_holder = holder
+				I.icon_state = "[initial(I.icon_state)]_[(assembly_holder.a_left == src) ? "l":"r"]" //Sync the offset of the beam with the position of the sensor.
+			else if(istype(holder, /obj/item/transfer_valve))
+				I.icon_state = "[initial(I.icon_state)]_ttv"
 			I.density = TRUE
 			if(!I.Move(_T))
 				qdel(I)
@@ -95,6 +121,12 @@
 			T = _T
 			_T = get_step(_T, _dir)
 			CHECK_TICK
+
+/obj/item/assembly/infra/on_detach()
+	. = ..()
+	if(!.)
+		return
+	refreshBeam()
 
 /obj/item/assembly/infra/attack_hand()
 	. = ..()
@@ -116,19 +148,17 @@
 	setDir(olddir)
 	olddir = null
 
-/obj/item/assembly/infra/holder_movement()
-	if(!holder)
-		return 0
-	refreshBeam()
-	return 1
-
 /obj/item/assembly/infra/proc/trigger_beam(atom/movable/AM, turf/location)
 	refreshBeam()
 	switchListener(location)
 	if(!secured || !on || next_activate > world.time)
 		return FALSE
-	pulse(0)
-	audible_message("[icon2html(src, hearers(src))] *beep* *beep*", null, 3)
+	pulse(FALSE)
+	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
+	for(var/CHM in get_hearers_in_view(hearing_range, src))
+		if(ismob(CHM))
+			var/mob/LM = CHM
+			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	next_activate =  world.time + 30
 
 /obj/item/assembly/infra/proc/switchListener(turf/newloc)
@@ -144,7 +174,9 @@
 	. = ..()
 	if(is_secured(user))
 		user.set_machine(src)
-		var/dat = "<TT><B>Infrared Laser</B>\n<B>Status</B>: [on ? "<A href='?src=[REF(src)];state=0'>On</A>" : "<A href='?src=[REF(src)];state=1'>Off</A>"]<BR>\n<B>Visibility</B>: [visible ? "<A href='?src=[REF(src)];visible=0'>Visible</A>" : "<A href='?src=[REF(src)];visible=1'>Invisible</A>"]<BR>\n</TT>"
+		var/dat = "<TT><B>Infrared Laser</B></TT>"
+		dat += "<BR><B>Status</B>: [on ? "<A href='?src=[REF(src)];state=0'>On</A>" : "<A href='?src=[REF(src)];state=1'>Off</A>"]"
+		dat += "<BR><B>Visibility</B>: [visible ? "<A href='?src=[REF(src)];visible=0'>Visible</A>" : "<A href='?src=[REF(src)];visible=1'>Invisible</A>"]"
 		dat += "<BR><BR><A href='?src=[REF(src)];refresh=1'>Refresh</A>"
 		dat += "<BR><BR><A href='?src=[REF(src)];close=1'>Close</A>"
 		user << browse(dat, "window=infra")
@@ -163,6 +195,7 @@
 		refreshBeam()
 	if(href_list["visible"])
 		visible = !(visible)
+		update_icon()
 		refreshBeam()
 	if(href_list["close"])
 		usr << browse(null, "window=infra")

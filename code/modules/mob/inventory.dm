@@ -326,7 +326,10 @@
 		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
 		if(!no_move && !(I.flags_1 & DROPDEL_1))	//item may be moved/qdel'd immedietely, don't bother moving it
-			I.forceMove(newloc)
+			if (isnull(newloc))
+				I.moveToNullspace()
+			else
+				I.forceMove(newloc)
 		I.dropped(src)
 	return TRUE
 

@@ -320,8 +320,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
-	var/list/L = get_contents()
-	for(var/obj/O in L)
+	for(var/obj/O in contents)
 		O.emp_act(severity)
 
 /mob/living/singularity_act()

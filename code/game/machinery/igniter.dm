@@ -3,6 +3,7 @@
 	desc = "It's useful for igniting plasma."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter0"
+	plane = FLOOR_PLANE
 	var/id = null
 	var/on = FALSE
 	anchored = TRUE
