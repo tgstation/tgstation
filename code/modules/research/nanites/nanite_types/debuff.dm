@@ -12,7 +12,7 @@
 
 /datum/reagent/nanites/programmed/pacifying
 	name = "Pacifying Nanites"
-	description = "Pacifies the host while active."
+	description = "Prevents direct aggression from the host while active."
 	id = "pacifying_nanites"
 	metabolization_rate = 1
 	rogue_types = list("paralyzing_nanites")

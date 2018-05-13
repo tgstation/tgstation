@@ -4,7 +4,7 @@
 	name = "Necrotic Nanites"
 	description = "Causes physical damage inside the host."
 	id = "necrotic_nanites"
-	metabolization_rate = 1
+	metabolization_rate = 1.25
 	rogue_types = list("regenerative_nanites","bloodheal_nanites")
 
 /datum/reagent/nanites/programmed/necrotic/nanite_life(mob/living/M)
@@ -12,19 +12,19 @@
 
 /datum/reagent/nanites/programmed/brain_decay
 	name = "Brain-Eating Nanites"
-	description = "Causes brain damage to the host."
+	description = "Damages brain cells, gradually decreasing the host's cognitive functions."
 	id = "braindecay_nanites"
 	metabolization_rate = 1
 	rogue_types = list("brainheal_nanites")
 
 /datum/reagent/nanites/programmed/brain_decay/nanite_life(mob/living/M)
-	M.adjustBrainLoss(1, TRUE)
+	M.adjustBrainLoss(1)
 
 /datum/reagent/nanites/programmed/pyro
 	name = "Pyroclastic Nanites"
-	description = "Heats and ignites the host."
+	description = "Ignites the user while active."
 	id = "pyro_nanites"
-	metabolization_rate = 3
+	metabolization_rate = 4
 	rogue_types = list("temperature_nanites","cryo_nanites")
 
 /datum/reagent/nanites/programmed/pyro/check_conditions(mob/living/M)
@@ -72,4 +72,4 @@
 	M.adjustOxyLoss(4, 0)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		C.losebreath += 2
+		C.losebreath = min(C.losebreath, 3)

@@ -50,7 +50,7 @@
 
 /datum/reagent/nanites/programmed/purging
 	name = "Purging Nanites"
-	description = "Fixes toxin damage inside the host, while also purging chemicals."
+	description = "Purges toxins and chemicals from the host's bloodstream."
 	id = "purging_nanites"
 	metabolization_rate = 0.75
 	rogue_types = list("toxic_nanites")
@@ -76,7 +76,7 @@
 
 /datum/reagent/nanites/programmed/brain_heal
 	name = "Brain-Restoring Nanites"
-	description = "Cures the host's brain damage."
+	description = "Fixes neural connections in the host's brain, reversing brain damage and minor traumas."
 	id = "brainheal_nanites"
 	metabolization_rate = 1
 	rogue_types = list("braindecay_nanites")
@@ -94,7 +94,7 @@
 
 /datum/reagent/nanites/programmed/blood_restoring
 	name = "Blood-Restoring Nanites"
-	description = "Stimulated blood regeneration."
+	description = "Replaces the host's lost blood."
 	id = "bloodheal_nanites"
 	metabolization_rate = 0.75
 	rogue_types = list("necrotic_nanites")
@@ -102,7 +102,7 @@
 /datum/reagent/nanites/programmed/blood_restoring/check_conditions(mob/living/M)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(C.blood_volume > BLOOD_VOLUME_SAFE)
+		if(C.blood_volume >= BLOOD_VOLUME_SAFE)
 			return FALSE
 	else
 		return FALSE
