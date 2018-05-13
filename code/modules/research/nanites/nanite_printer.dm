@@ -7,7 +7,7 @@
 	categories = list(
 						"Utility Nanites",
 						"Medical Nanites",
-						"Augmentation Nanites',
+						"Augmentation Nanites",
 						"Dangerous Nanites",
 						"Suppression Nanites"
 						)

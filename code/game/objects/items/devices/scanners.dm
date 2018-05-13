@@ -332,10 +332,16 @@ SLIME SCANNER
 /proc/chemscan(mob/living/user, mob/living/M)
 	if(istype(M))
 		if(M.reagents)
+			var/nanite_volume = 0
 			if(M.reagents.reagent_list.len)
 				to_chat(user, "<span class='notice'>Subject contains the following reagents:</span>")
 				for(var/datum/reagent/R in M.reagents.reagent_list)
+					if(istype(R, /datum/reagent/nanites))
+						nanite_volume += R.volume
+						continue
 					to_chat(user, "<span class='notice'>[R.volume] units of [R.name][R.overdosed == 1 ? "</span> - <span class='boldannounce'>OVERDOSING</span>" : ".</span>"]")
+				if(nanite_volume)
+					to_chat(user, "<span class='notice'>[nanite_volume] units of nanites.")
 			else
 				to_chat(user, "<span class='notice'>Subject contains no reagents.</span>")
 			if(M.reagents.addiction_list.len)
