@@ -95,9 +95,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/chem_dispenser,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/chem_dispenser/fullupgrade,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "cA" = (
@@ -1000,8 +1000,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/chem_dispenser,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/chem_dispenser/fullupgrade,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "eV" = (
@@ -1263,42 +1263,12 @@
 	dir = 8
 	},
 /obj/structure/closet/crate,
-/obj/item/stock_parts/capacitor/quadratic,
-/obj/item/stock_parts/capacitor/quadratic,
-/obj/item/stock_parts/cell/bluespace{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/stock_parts/cell/bluespace{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/stock_parts/manipulator/femto{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/stock_parts/manipulator/femto{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/stock_parts/matter_bin/bluespace{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/stock_parts/matter_bin/bluespace{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/stock_parts/micro_laser/quadultra,
-/obj/item/stock_parts/micro_laser/quadultra,
-/obj/item/stock_parts/scanning_module/triphasic{
-	pixel_x = -4
-	},
-/obj/item/stock_parts/scanning_module/triphasic{
-	pixel_x = -4
-	},
-/obj/item/stock_parts/matter_bin/bluespace,
-/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/circuitboard/machine/processor,
+/obj/item/circuitboard/machine/gibber,
+/obj/item/circuitboard/machine/deep_fryer,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "ft" = (
