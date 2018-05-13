@@ -73,6 +73,8 @@
 		slave.refresh_mob_views()
 
 /datum/component/storage/concrete/emp_act(severity)
+	if(emp_shielded)
+		return
 	var/atom/real_location = real_location()
 	for(var/i in real_location)
 		var/atom/A = i
