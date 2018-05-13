@@ -1,4 +1,0 @@
-author: "YPOQ"
-delete-after: True
-changes: 
-  - bugfix: "The paddle/nozzles of defibs, backpack water tanks, and gatling lasers work again"

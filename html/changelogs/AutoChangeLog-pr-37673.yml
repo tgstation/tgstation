@@ -1,6 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Runtimestation's RTGs are now connected to the powernet."
-  - code_imp: "Added chem_dispenser/fullupgrade as well as chem_synthesizer for testing."
-  - tweak: "Replaced runtimestation's two chem dispensers with those subtypes."

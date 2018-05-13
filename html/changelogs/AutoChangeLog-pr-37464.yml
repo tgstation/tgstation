@@ -1,5 +1,0 @@
-author: "Frozenguy5"
-delete-after: True
-changes: 
-  - tweak: "You can now make plasma reinforced glass at the ORM."
-  - tweak: "Titanium glass is now worth 0.5 titanium + 1 glass. Plastitanium glass is now worth 0.5 titanium + 0.5 plasma + 1 glass. Therefore these glass sheets are cheaper to make."

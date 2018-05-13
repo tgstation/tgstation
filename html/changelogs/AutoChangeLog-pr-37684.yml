@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "Teleporters linked to other teleporters now teleport into the other teleporter's hub, instead of the power station."
-  - bugfix: "Teleporters now no longer consume power if teleportation fails."
