@@ -62,7 +62,7 @@
 
 	var/obj/O = parent
 	amount++
-	O.armor.attachArmor(added_armor)
+	O.armor = O.armor.attachArmor(added_armor)
 
 	if(ismecha(O))
 		var/obj/mecha/R = O
@@ -74,6 +74,5 @@
 
 /datum/component/armor_plate/proc/dropplates(force)
 	if(ismecha(parent)) //items didn't drop the plates before and it causes erroneous behavior for the time being with collapsible helmets
-		var/obj/dad = parent
 		for(var/i in 1 to amount)
-			new upgrade_item(dad.loc)
+			new upgrade_item(get_turf(parent))
