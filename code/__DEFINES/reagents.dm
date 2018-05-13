@@ -23,6 +23,9 @@
 #define PATCH			4	// patches
 #define INJECT			5	// injection
 
+#define CHEM_SYNTH_NEVER	0
+#define CHEM_SYNTH_NORMAL	1
+#define CHEM_SYNTH_NANITES	2
 
 //defines passed through to the on_reagent_change proc
 #define DEL_REAGENT		1	// reagent deleted (fully cleared)

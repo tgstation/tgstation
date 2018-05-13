@@ -600,8 +600,7 @@
 		if (R.id == reagent)
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
-			amount = CLAMP(amount, 0, R.volume)
-			R.volume -= amount
+			R.remove_amount(amount)
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
@@ -777,7 +776,7 @@
 	if(!random_reagents.len)
 		for(var/thing  in subtypesof(/datum/reagent))
 			var/datum/reagent/R = thing
-			if(initial(R.can_synth))
+			if(initial(R.synth_type) == CHEM_SYNTH_NORMAL)
 				random_reagents += initial(R.id)
 	var/picked_reagent = pick(random_reagents)
 	return picked_reagent

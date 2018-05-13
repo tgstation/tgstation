@@ -645,7 +645,7 @@
 	id = "gluttonytoxin"
 	description = "An advanced corruptive toxin produced by something terrible."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	can_synth = FALSE
+	synth_type = CHEM_SYNTH_NEVER
 	taste_description = "decay"
 
 /datum/reagent/gluttonytoxin/reaction_mob(mob/M, method=TOUCH, reac_volume)
@@ -1111,15 +1111,15 @@
 		M.emote("drool")
 	..()
 
-/datum/reagent/nanites
+/datum/reagent/nanomachines
 	name = "Nanomachines"
 	id = "nanomachines"
 	description = "Microscopic construction robots."
 	color = "#535E66" // rgb: 83, 94, 102
-	can_synth = FALSE
+	synth_type = CHEM_SYNTH_NEVER
 	taste_description = "sludge"
 
-/datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+/datum/reagent/nanomachines/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
 	if(!isliving(M))
 		return
 	var/mob/living/L = M
@@ -1131,7 +1131,7 @@
 	id = "xenomicrobes"
 	description = "Microbes with an entirely alien cellular structure."
 	color = "#535E66" // rgb: 83, 94, 102
-	can_synth = FALSE
+	synth_type = CHEM_SYNTH_NEVER
 	taste_description = "sludge"
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
@@ -1146,7 +1146,7 @@
 	id = "fungalspores"
 	description = "Active fungal spores."
 	color = "#92D17D" // rgb: 146, 209, 125
-	can_synth = FALSE
+	synth_type = CHEM_SYNTH_NEVER
 	taste_description = "slime"
 
 /datum/reagent/fungalspores/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
@@ -1702,7 +1702,7 @@
 		of the host body."
 	color = "#123524" // RGB (18, 53, 36)
 	metabolization_rate = INFINITY
-	can_synth = FALSE
+	synth_type = CHEM_SYNTH_NEVER
 	taste_description = "brains"
 
 /datum/reagent/romerol/reaction_mob(mob/living/carbon/human/H, method=TOUCH, reac_volume)
