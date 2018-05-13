@@ -317,8 +317,7 @@
 		return shock_damage
 
 /mob/living/emp_act(severity)
-	var/list/L = src.get_contents()
-	for(var/obj/O in L)
+	for(var/obj/O in contents)
 		O.emp_act(severity)
 	..()
 
