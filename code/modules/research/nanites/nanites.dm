@@ -219,3 +219,14 @@
 		return FALSE
 	next_trigger = current_cycle + trigger_cooldown
 	return TRUE
+
+/datum/reagent/nanites/programmed/proc/get_timer_type_text()
+	switch(data["timer_type"])
+		if(NANITE_TIMER_DEACTIVATE)
+			return "Deactivate"
+		if(NANITE_TIMER_SELFDESTRUCT)
+			return "Self-Destruct"
+		if(NANITE_TIMER_TRIGGER)
+			return "Trigger"
+		if(NANITE_TIMER_RESET)
+			return "Reset Activation Timer"

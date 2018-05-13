@@ -718,7 +718,7 @@
 
 /obj/item/circuitboard/machine/nanite_dispenser
 	name = "Nanite Dispenser (Machine Board)"
-	build_path = /obj/machinery/chem_dispenser/nanites
+	//build_path = /obj/machinery/chem_dispenser/nanites TODO
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/capacitor = 1,

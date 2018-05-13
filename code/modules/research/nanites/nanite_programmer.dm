@@ -56,16 +56,7 @@
 		data["deactivation_code"] = nanites.data["deactivation_code"]
 		data["kill_code"] = nanites.data["kill_code"]
 		data["trigger_code"] = nanites.data["trigger_code"]
-
-		switch(nanites.data["timer_type"])
-			if(NANITE_TIMER_DEACTIVATE)
-				data["timer_type"] = "Deactivate"
-			if(NANITE_TIMER_SELFDESTRUCT)
-				data["timer_type"] = "Self-Destruct"
-			if(NANITE_TIMER_TRIGGER)
-				data["timer_type"] = "Trigger"
-			if(NANITE_TIMER_RESET)
-				data["timer_type"] = "Reset Activation Timer"
+		data["timer_type"] = nanites.get_timer_type_text()
 
 		if(istype(nanites, /datum/reagent/nanites/programmed/relay))
 			var/datum/reagent/nanites/programmed/relay/S = nanites

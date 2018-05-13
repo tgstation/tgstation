@@ -20,7 +20,7 @@
 
 /datum/design/nanites/aggressive_replicating
 	name = "Aggressive-Replicating Nanites"
-	description = "Nanites able to replicate rapidly by consuming organic matter. Causes internal damage while doing so."
+	desc = "Nanites able to replicate rapidly by consuming organic matter. Causes internal damage while doing so."
 	id = "aggressive_nanites"
 	build_path = /obj/item/reagent_containers/hypospray/medipen/nanite/aggressive_replicating
 	category = list("Utility Nanites")
@@ -55,7 +55,7 @@
 
 /datum/design/nanites/emp
 	name = "EMP Nanites"
-	description = "Causes an EMP around the host when triggered."
+	desc = "Causes an EMP around the host when triggered."
 	id = "emp_nanites"
 	build_path = /obj/item/reagent_containers/hypospray/medipen/nanite/emp
 	category = list("Utility Nanites")
@@ -189,14 +189,14 @@
 
 /datum/design/nanites/shock
 	name = "Shock Nanites"
-	description = "Shocks the host when triggered."
+	desc = "Shocks the host when triggered."
 	id = "shock_nanites"
 	build_path = /obj/item/reagent_containers/hypospray/medipen/nanite/shock
 	category = list("Suppressing Nanites")
 
 /datum/design/nanites/sleepy
 	name = "Sleep Nanites"
-	description = "Causes near-instant narcolepsy when triggered."
+	desc = "Causes near-instant narcolepsy when triggered."
 	id = "sleep_nanites"
 	build_path = /obj/item/reagent_containers/hypospray/medipen/nanite/sleepy
 	category = list("Suppressing Nanites")
