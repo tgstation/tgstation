@@ -1,0 +1,4 @@
+author: "Alexch2"
+delete-after: True
+changes: 
+  - bugfix: "Large crates no longer behave like lockers. They no longer open into invisible sprites when damaged, interacted with, when \"toggle open\" is used, or when non-crowbar items are used on them."
