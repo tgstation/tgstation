@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(nanite_signal_mobs)
 
 /datum/reagent/nanites/programmed/aggressive_replicating
 	name = "Aggressive-Replicating Nanites"
-	description = "Nanites able to replicate rapidly by converting organic matter. Causes internal damage while doing so."
+	description = "Nanites able to replicate rapidly by consuming organic matter. Causes internal damage while doing so."
 	id = "aggressive_nanites"
 	metabolization_rate = 0
 	rogue_types = list("replicating_nanites")
@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY(nanite_signal_mobs)
 	name = "Infective Nanites"
 	description = "Coordinates nanite movement, making nanites able to infect nearby potential hosts."
 	id = "infective_nanites"
-	metabolization_rate = 0
+	metabolization_rate = 0.50
 	rogue_types = list("aggressive_nanites")
 
 /datum/reagent/nanites/programmed/infective/nanite_life(mob/living/M)
@@ -70,7 +70,7 @@ GLOBAL_LIST_EMPTY(nanite_signal_mobs)
 
 /datum/reagent/nanites/programmed/relay
 	name = "Relay Nanites"
-	description = "Relays remote nanite signals."
+	description = "Relays remote nanite signals from long distances."
 	id = "relay_nanites"
 	metabolization_rate = 0
 	rogue_types = list("inert_nanites")

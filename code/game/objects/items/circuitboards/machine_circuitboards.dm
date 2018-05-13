@@ -742,6 +742,31 @@
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/micro_laser = 2)
 
+/obj/item/circuitboard/machine/nanite_dispenser
+	name = "Nanite Dispenser (Machine Board)"
+	build_path = /obj/machinery/chem_dispenser/nanites
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/cell = 1)
+
+/obj/item/circuitboard/machine/nanite_printer
+	name = "Nanite Printer (Machine Board)"
+	build_path = /obj/machinery/rnd/production/nanite_printer
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/scanning_module = 1)
+
+/obj/item/circuitboard/machine/nanite_programmer
+	name = "Nanite Programmer (Machine Board)"
+	build_path = /obj/machinery/nanite_programmer
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/scanning_module = 1)
+
 /obj/item/circuitboard/machine/protolathe
 	name = "Protolathe (Machine Board)"
 	build_path = /obj/machinery/rnd/production/protolathe

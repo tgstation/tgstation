@@ -2,7 +2,7 @@
 
 /datum/reagent/nanites/programmed/nervous
 	name = "Nervous Nanites"
-	description = "Reduces stunning effects on the host."
+	description = "Acts as a secondary nervous system, reducing the amount of time the host is stunned."
 	id = "nervous_nanites"
 	metabolization_rate = 1.5
 	rogue_types = list("paralyzing_nanites")

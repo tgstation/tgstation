@@ -3,6 +3,7 @@
 	desc = "A device that can program nanite epipens to adjust their functionality."
 	var/obj/item/reagent_containers/hypospray/medipen/nanite/sample
 	var/datum/reagent/nanites/programmed/nanites
+	circuit = /obj/item/circuitboard/machine/nanite_programmer
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "nanite_programmer"
 	use_power = IDLE_POWER_USE
