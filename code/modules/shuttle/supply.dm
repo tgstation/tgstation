@@ -114,17 +114,22 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		setupExports()
 
 	var/msg = ""
+	var/matched_bounty = FALSE
 	var/sold_atoms = ""
 
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
 		for(var/atom/movable/AM in shuttle_area)
-			if(AM.anchored || iscameramob(AM))
+			if((AM.anchored && !istype(AM, /obj/mecha)) || iscameramob(AM))
 				continue
+			matched_bounty = bounty_ship_item_and_contents(AM, dry_run = FALSE)
 			sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 
 	if(sold_atoms)
 		sold_atoms += "."
+
+	if(matched_bounty)
+		msg += "Bounty items received. An update has been sent to all bounty consoles. "
 
 	for(var/a in GLOB.exports_list)
 		var/datum/export/E = a
