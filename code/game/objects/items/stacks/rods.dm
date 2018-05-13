@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=1000)
+	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT*0.5) //1000, 2 rods per 1 metal sheet
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
