@@ -49931,6 +49931,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
+"dvD" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "dAF" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 4
@@ -50430,6 +50437,10 @@
 	dir = 5
 	},
 /area/science/circuit)
+"nWN" = (
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "onw" = (
 /turf/open/floor/plasteel/purple/side{
 	dir = 4
@@ -91067,12 +91078,12 @@ apX
 apX
 apX
 avl
-awv
-avk
+dvD
+nWN
 aIh
 azA
-avk
-avk
+nWN
+nWN
 aDk
 aEd
 aFb

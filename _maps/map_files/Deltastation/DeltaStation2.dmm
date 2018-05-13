@@ -58692,12 +58692,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cwd" = (
-/obj/item/twohanded/required/kirbyplants/random,
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 1
-	},
-/area/crew_quarters/fitness/recreation)
-"cwe" = (
+/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -60101,6 +60096,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -100669,6 +100665,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"twt" = (
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4
+	},
+/area/crew_quarters/fitness/recreation)
 "tCh" = (
 /turf/closed/wall,
 /area/science/misc_lab)
@@ -154407,7 +154409,7 @@ clA
 aad
 aad
 cuM
-cwe
+cwd
 cxx
 czh
 cAz
@@ -154664,7 +154666,7 @@ clA
 aaa
 aaa
 cuM
-cwe
+cwd
 cxy
 czi
 cAA
@@ -155692,7 +155694,7 @@ ajr
 aad
 aad
 cuM
-cwi
+twt
 cxy
 czk
 cAD
@@ -155949,7 +155951,7 @@ aaa
 aaa
 aaa
 cuM
-cwi
+twt
 cxy
 czl
 cAE
@@ -156206,7 +156208,7 @@ aad
 ajr
 aad
 cuM
-cwi
+twt
 cwi
 czm
 cAF
