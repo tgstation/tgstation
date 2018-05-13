@@ -29,11 +29,11 @@ GLOBAL_LIST_EMPTY(bounties_list)
 /datum/bounty/proc/compatible_with(other_bounty)
 	return TRUE
 
-/datum/bounty/proc/mark_high_priority(scale_cost = 2)
+/datum/bounty/proc/mark_high_priority(scale_reward = 2)
 	if(high_priority)
 		return
 	high_priority = TRUE
-	reward *= scale_cost
+	reward = round(reward * scale_reward)
 
 // This proc is called when the shuttle docks at CentCom.
 // It handles items shipped for bounties.
@@ -91,11 +91,11 @@ GLOBAL_LIST_EMPTY(bounties_list)
 			return new subtype
 
 /proc/setup_bounties()
-	for(var/i = 0; i < 2; ++i)
+	for(var/i = 0; i < 3; ++i)
 		var/subtype = pick(subtypesof(/datum/bounty/item/assistant))
 		try_add_bounty(new subtype)
 
-	for(var/i = 0; i < 1; ++i)
+	for(var/i = 0; i < 2; ++i)
 		var/list/subtype = pick(subtypesof(/datum/bounty/item/mech))
 		try_add_bounty(new subtype)
 
@@ -117,4 +117,8 @@ GLOBAL_LIST_EMPTY(bounties_list)
 
 	var/datum/bounty/B = pick(GLOB.bounties_list)
 	B.mark_high_priority()
+
+	// Generate these last; they can't be high priority.
+	try_add_bounty(new /datum/bounty/item/alien_organs)
+	try_add_bounty(new /datum/bounty/item/syndicate_documents)
 

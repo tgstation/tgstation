@@ -31,8 +31,8 @@
 		setup_bounties()
 
 	var/dat = ""
-	dat += "<a href='byond://?src=[REF(src)];refresh=1'>Refresh</a>"
-	dat += "<a href='byond://?src=[REF(src)];refresh=1;choice=Print'>Print Paper</a>"
+	dat += "<a href='?src=[REF(src)];refresh=1'>Refresh</a>"
+	dat += "<a href='?src=[REF(src)];refresh=1;choice=Print'>Print Paper</a>"
 	dat += "<p>Credits: <b>[SSshuttle.points]</b></p>"
 	dat += {"<table style="text-align:center;" border="1" cellspacing="0" width="100%">"}
 	dat += "<tr><th>Name</th><th>Description</th><th>Reward</th><th>Completion</th><th>Status</th></tr>"
@@ -84,8 +84,9 @@
 				B.claim()
 
 	if(href_list["refresh"])
-		updateUsrDialog()
 		playsound(src, "terminal_type", 25, 0)
+
+	updateUsrDialog()
 
 
 

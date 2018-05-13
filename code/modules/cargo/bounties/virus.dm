@@ -1,5 +1,5 @@
 /datum/bounty/virus
-	reward = 4000
+	reward = 5000
 	var/shipped = FALSE
 	var/stat_value = 0
 	var/stat_name = ""

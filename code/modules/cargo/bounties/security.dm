@@ -38,13 +38,13 @@
 /datum/bounty/item/security/hardsuit
 	name = "Security Hardsuit"
 	description = "Space pirates are heading towards CentCom! Quick! Ship a security hardsuit to aid the fight!"
-	reward = 1200
+	reward = 2000
 	wanted_types = list(/obj/item/clothing/suit/space/hardsuit/security)
 
 /datum/bounty/item/security/krav_maga
 	name = "Krav Maga Gloves"
 	description = "Chef Howerwitz of CentCom is trying to take a kung-fu Pizza out of the oven, but his mitts aren't up to the task. Ship them a pair of Krav Maga gloves to do the job right."
-	reward = 1500
+	reward = 2000
 	wanted_types = list(/obj/item/clothing/gloves/krav_maga)
 
 /datum/bounty/item/security/recharger

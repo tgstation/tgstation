@@ -73,7 +73,7 @@
 
 /datum/bounty/item/assistant/extendohand
 	name = "Extendo-Hand"
-	description = "Commander Berty is getting old, and just can't bend over to get the TV remote anymore. Help them out and ship out an extendo-hand."
+	description = "Commander Betsy is getting old, and can't bend over to get the TV remote anymore. Help them out and ship an extendo-hand."
 	reward = 3000
 	wanted_types = list(/obj/item/extendohand)
 
@@ -94,7 +94,7 @@
 /datum/bounty/item/assistant/briefcase
 	name = "Briefcase"
 	description = "Central Command will be holding a business convention this year. Ship a few briefcases in support."
-	reward = 3000
+	reward = 2000
 	required_count = 3
 	wanted_types = list(/obj/item/storage/briefcase)
 
@@ -104,4 +104,34 @@
 	reward = 4000
 	required_count = 2
 	wanted_types = list(/obj/item/clothing/glasses/sunglasses)
+
+/datum/bounty/item/assistant/gondola_hide
+	name = "Gondola Hide"
+	description = "Central Command has recently learned of strange creatures called Gondalas. If you catch one, ship its hide back to CentCom."
+	reward = 8000
+	wanted_types = list(/obj/item/stack/sheet/animalhide/gondola)
+
+/datum/bounty/item/assistant/monkey_hide
+	name = "Monkey Hide"
+	description = "One of the scientists at CentCom is interested in testing products on monkey skin. Your mission is to acquire a monkey's hide and ship it."
+	reward = 2000
+	wanted_types = list(/obj/item/stack/sheet/animalhide/monkey)
+
+/datum/bounty/item/assistant/heart
+	name = "Heart"
+	description = "Commander Johnson is in critical condition after suffering a heart attack. Doctors say he needs a new heart fast. Ship one, pronto!"
+	reward = 4000
+	wanted_types = list(/obj/item/organ/heart)
+
+/datum/bounty/item/assistant/lung
+	name = "Lung"
+	description = "A recent explosion at Central Command has left staff with punctured lungs. Ship a spare lung to be rewarded."
+	reward = 4000
+	wanted_types = list(/obj/item/organ/lungs)
+
+/datum/bounty/item/assistant/appendix
+	name = "Appendix"
+	description = "Chef Gibb of Central Command wants to prepare a meal using a very special delicacy: an appendix. If you ship one, he'll pay."
+	reward = 4000
+	wanted_types = list(/obj/item/organ/appendix)
 
