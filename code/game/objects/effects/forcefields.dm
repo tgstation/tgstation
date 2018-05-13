@@ -27,7 +27,7 @@
 ///////////Mimewalls///////////
 
 /obj/effect/forcefield/mime
-	icon_state = "empty"
+	icon_state = "nothing"
 	name = "invisible wall"
 	desc = "You have a bad feeling about this."
 
