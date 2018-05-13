@@ -72,7 +72,7 @@
 		if(!is_servant_of_ratvar(user))
 			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
 			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
-			user.Dizzy(120)
+			user.Dizzy(30)
 		else
 			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
 			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
@@ -137,7 +137,7 @@
 		if(!is_servant_of_ratvar(user))
 			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
 			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
-			user.Dizzy(80)
+			user.Dizzy(30)
 			user.dropItemToGround(src, TRUE)
 			user.Knockdown(30)
 			return
