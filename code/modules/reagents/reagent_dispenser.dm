@@ -115,6 +115,15 @@
 		return
 	return ..()
 
+/obj/structure/reagent_dispensers/fueltank/syndicate
+	name = "high-capacity fuel tank"
+	desc = "A highly pressurized tank made to hold elephantine amounts of welding fuel."
+	icon_state = "fuel_high"
+	tank_volume = 100000
+
+/obj/structure/reagent_dispensers/fueltank/syndicate/boom()
+	explosion(get_turf(src), 0, 3, 7, flame_range = 7)
+	qdel(src)
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "pepper spray refiller"
