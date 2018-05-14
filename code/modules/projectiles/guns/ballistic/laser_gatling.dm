@@ -40,7 +40,6 @@
 					to_chat(user, "<span class='warning'>You need a free hand to hold the gun!</span>")
 					return
 				update_icon()
-				gun.forceMove(user)
 				user.update_inv_back()
 		else
 			to_chat(user, "<span class='warning'>You are already holding the gun!</span>")
