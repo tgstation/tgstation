@@ -131,7 +131,6 @@
 
 
 
-
 /datum/quirk/unarmed_boxer
 	name = "Unarmed Style: Boxer"
 	desc = "A balanced style. Your punches are stronger and more precise. (NOTE: Only take one unarmed style)"
