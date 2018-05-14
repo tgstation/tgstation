@@ -37,10 +37,10 @@ SUBSYSTEM_DEF(dbcore)
 			message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 		if(2)
 			message_admins("Could not get schema version from database")
-	
+
 	return ..()
 
-	
+
 /datum/controller/subsystem/dbcore/Recover()
 	_db_con = SSdbcore._db_con
 
@@ -231,10 +231,20 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		to_chat(usr, "<span class='danger'>A SQL error occurred during this operation, check the server logs.</span>")
 
 /datum/DBQuery/proc/Execute(sql_query = sql, cursor_handler = default_cursor, log_error = TRUE)
+	log_qdl("Query execution started at [SQLtime()] | [REALTIMEOFDAY]")
+	var/stime = REALTIMEOFDAY
+	log_qdl("Query used: [sql]")
 	Close()
 	. = _dm_db_execute(_db_query, sql_query, db_connection._db_con, cursor_handler, null)
 	if(!. && log_error)
 		log_sql("[ErrorMsg()] | Query used: [sql]")
+	log_qdl("Query execution ended at [SQLtime()] | [REALTIMEOFDAY]")
+	if((REALTIMEOFDAY - stime) > 70)
+		log_qdl("Possible query overrun detected.")
+		bother_admins()
+
+/proc/bother_admins()
+	message_admins("HEY! A database query may have overrun. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
 
 /datum/DBQuery/proc/NextRow()
 	return _dm_db_next_row(_db_query,item,conversions)
