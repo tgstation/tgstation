@@ -58437,15 +58437,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/storage)
-"ctk" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "ctl" = (
 /obj/machinery/camera{
 	active_power_usage = 0;
@@ -113546,7 +113537,7 @@ cJa
 cpG
 kVo
 dDu
-ctk
+kVo
 cuc
 cuZ
 dyp
