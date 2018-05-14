@@ -100,6 +100,7 @@
 		var/target_x = CLAMP(T.x + xo.data, 0, world.maxx)
 		var/target_y = CLAMP(T.y + yo.data, 0, world.maxy)
 
+		assembly.visible_message("<span class='danger'>[assembly] fires [installed_gun]!</span>")
 		shootAt(locate(target_x, target_y, T.z))
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/proc/shootAt(turf/target)
@@ -524,6 +525,7 @@
 	var/y_abs = CLAMP(T.y + target_y_rel, 0, world.maxy)
 	var/range = round(CLAMP(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
 
+	assembly.visible_message("<span class='danger'>[assembly] has thrown [A]!</span>")
 	A.forceMove(drop_location())
 	A.throw_at(locate(x_abs, y_abs, T.z), range, 3)
 
