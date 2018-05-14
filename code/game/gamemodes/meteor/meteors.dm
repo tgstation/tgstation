@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/proc/ram_turf(turf/T)
 	//first bust whatever is in the turf
 	for(var/atom/A in T)
-		if(A != src && !QDELETED(src))
+		if(A != src && !QDELETED(A))
 			if(isliving(A))
 				A.visible_message("<span class='warning'>[src] slams into [A].</span>", "<span class='userdanger'>[src] slams into you!.</span>")
 			A.ex_act(hitpwr)
