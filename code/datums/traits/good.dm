@@ -65,7 +65,7 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/datum/species/species = H.dna.species
 	species.heatmod = species.heatmod - 0.2
-	species.coldmod = species.coldmod - 0.1
+	species.coldmod = species.coldmod + 0.1
 
 
 
@@ -158,7 +158,7 @@
 /datum/quirk/unarmed_martialart/add()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/datum/species/species = H.dna.species
-	species.punchdamagelow = initial(species.punchdamagelow) +4
+	species.punchdamagelow = initial(species.punchdamagelow) +3
 	species.punchdamagehigh =  initial(species.punchdamagehigh) // Overrides this value to default in case another unarmed style is also picked
 	species.punchstunthreshold = initial(species.punchstunthreshold) // see above
 	species.attack_verb = "karate chopp"// not a typo, attack msg adds -ed
