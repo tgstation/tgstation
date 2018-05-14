@@ -24,7 +24,7 @@ doesn't have toxins access.
 	var/datum/techweb/stored_research					//Reference to global science techweb.
 	var/obj/item/disk/tech_disk/t_disk	//Stores the technology disk.
 	var/obj/item/disk/design_disk/d_disk	//Stores the design disk.
-	circuit = /obj/item/circuitboard/computer/rdconsole
+	circuit = /obj/item/circuitboard/computer/rdconsole/production
 
 	var/obj/machinery/rnd/destructive_analyzer/linked_destroy	//Linked Destructive Analyzer
 	var/obj/machinery/rnd/production/protolathe/linked_lathe				//Linked Protolathe
