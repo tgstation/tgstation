@@ -170,7 +170,8 @@
 
 			if(href_list["send"])
 				signaler.send_activation()
-				audible_message("[icon2html(src, world)] *beep* *beep*")
+				audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
+				playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 
 			if(href_list["freq"])
 				var/new_frequency = (signaler.frequency + text2num(href_list["freq"]))
@@ -382,7 +383,7 @@
 		else
 			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
-		to_chat(P, "[M] does not seem like [M.p_they()] [M.p_are()] going to provide a DNA sample willingly.")
+		to_chat(P, "[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly.")
 
 // -=-=-=-= Software =-=-=-=-=- //
 

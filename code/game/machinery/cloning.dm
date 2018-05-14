@@ -126,7 +126,7 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions, list/traits)
+/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions, list/quirks)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -203,7 +203,7 @@
 	if(H)
 		H.faction |= factions
 
-		for(var/V in traits)
+		for(var/V in quirks)
 			new V(H)
 
 		H.set_cloned_appearance()

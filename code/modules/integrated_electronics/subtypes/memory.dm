@@ -79,6 +79,7 @@
 	activators = list("push data" = IC_PINTYPE_PULSE_IN)
 	var/accepting_refs = FALSE
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	number_of_pins = 0
 
 /obj/item/integrated_circuit/memory/constant/do_work()
 	var/datum/integrated_io/O = outputs[1]

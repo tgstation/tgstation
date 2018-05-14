@@ -1,7 +1,7 @@
 /obj/item/robot_module
 	name = "Default"
 	icon = 'icons/obj/module.dmi'
-	icon_state = "std_module"
+	icon_state = "std_mod"
 	w_class = WEIGHT_CLASS_GIGANTIC
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'

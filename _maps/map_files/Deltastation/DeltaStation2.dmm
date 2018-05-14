@@ -32717,30 +32717,17 @@
 /area/hallway/primary/port)
 "bwJ" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/robotics{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/computer/mecha_control,
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/effect/spawner/lootdrop/techstorage/command,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bwK" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/communications{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/computer/card,
-/obj/item/circuitboard/computer/crew{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/structure/cable/white{
 	icon_state = "2-8"
 	},
@@ -32751,25 +32738,18 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/spawner/lootdrop/techstorage/AI,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bwL" = (
 /obj/structure/rack,
-/obj/item/circuitboard/aicore{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/computer/aiupload,
-/obj/item/circuitboard/computer/borgupload{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/effect/spawner/lootdrop/techstorage/RnD_secure,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bwM" = (
@@ -37168,32 +37148,14 @@
 /area/storage/tech)
 "bET" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/scan_consolenew{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/computer/med_data,
-/obj/item/circuitboard/computer/pandemic{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/bot,
-/obj/item/circuitboard/machine/smoke_machine,
+/obj/effect/spawner/lootdrop/techstorage/service,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bEU" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/aifixer{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/computer/rdconsole,
-/obj/item/circuitboard/machine/rdserver{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/bot,
-/obj/item/circuitboard/machine/autolathe,
+/obj/effect/spawner/lootdrop/techstorage/medical,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bEV" = (
@@ -38078,30 +38040,14 @@
 /area/storage/tech)
 "bGD" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/cloning{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/machine/clonescanner,
-/obj/item/circuitboard/machine/clonepod{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/bot,
+/obj/effect/spawner/lootdrop/techstorage/security,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bGE" = (
 /obj/structure/rack,
-/obj/item/circuitboard/machine/destructive_analyzer{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/machine/mechfab,
-/obj/item/circuitboard/machine/circuit_imprinter{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/bot,
+/obj/effect/spawner/lootdrop/techstorage/rnd,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bGF" = (
@@ -38970,7 +38916,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/item/circuitboard/machine/autolathe,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bIu" = (
@@ -39923,31 +39868,16 @@
 /area/storage/tech)
 "bKp" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/security{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/computer/prisoner,
-/obj/item/circuitboard/computer/secure_data{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
+/obj/item/electronics/apc,
+/obj/item/electronics/airalarm,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bKq" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/atmos_alert{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/computer/powermonitor,
-/obj/item/circuitboard/computer/stationalert{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/bot,
+/obj/effect/spawner/lootdrop/techstorage/engineering,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bKr" = (
@@ -40844,30 +40774,14 @@
 	pixel_y = 3
 	},
 /obj/item/circuitboard/machine/teleporter_station,
-/obj/item/circuitboard/computer/teleporter{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bMi" = (
 /obj/structure/rack,
-/obj/item/circuitboard/machine/telecomms/server{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/machine/telecomms/relay,
-/obj/item/circuitboard/machine/telecomms/receiver,
-/obj/item/circuitboard/machine/telecomms/processor,
-/obj/item/circuitboard/machine/telecomms/hub,
-/obj/item/circuitboard/machine/telecomms/bus,
-/obj/item/circuitboard/machine/telecomms/broadcaster{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/bot,
+/obj/effect/spawner/lootdrop/techstorage/tcomms,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bMj" = (

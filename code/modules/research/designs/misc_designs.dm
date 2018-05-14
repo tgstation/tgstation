@@ -354,3 +354,17 @@
 	build_path = /obj/item/weldingtool/experimental
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/////////////////////////////////////////
+////////////Armour//////////////
+/////////////////////////////////////////
+
+/datum/design/reactive_armour
+	name = "Reactive Armour Shell"
+	desc = "An experimental suit of armour capable of utilizing an implanted anomaly core to protect the user."
+	id = "reactive_armour"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_DIAMOND = 5000, MAT_URANIUM = 8000, MAT_SILVER = 4500, MAT_GOLD = 5000)
+	build_path = /obj/item/reactive_armour_shell
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
