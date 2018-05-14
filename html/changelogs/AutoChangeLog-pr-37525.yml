@@ -1,4 +1,0 @@
-author: "Barhandar"
-delete-after: True
-changes: 
-  - rscadd: "Amount of goliath plates is now shown in examine for explorer suits and mining hardsuits."
