@@ -49976,7 +49976,7 @@
 /area/ai_monitored/turret_protected/aisat/hallway)
 "cwr" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cws" = (
 /obj/effect/spawner/structure/window/reinforced,
