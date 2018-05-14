@@ -29,6 +29,21 @@
 
 
 
+/datum/quirk/cold_res
+	name = "Cold-Defying"
+	desc = "You're used to cold environments. You take less damage from intense cold, but slightly more damage from heat"
+	value = 1
+	gain_text = "<span class='notice'>You feel at ease in the cold.</span>"
+	lose_text = "<span class='notice'>You no longer feel at ease in the cold.</span>"
+
+/datum/quirk/cold_res/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
+	species.coldmod = species.coldmod - 0.2
+	species.heatmod = species.heatmod + 0.1
+
+
+
 /datum/quirk/freerunning
 	name = "Freerunning"
 	desc = "You're great at quick moves! You can climb tables more quickly."
@@ -36,6 +51,21 @@
 	mob_trait = TRAIT_FREERUNNING
 	gain_text = "<span class='notice'>You feel lithe on your feet!</span>"
 	lose_text = "<span class='danger'>You feel clumsy again.</span>"
+
+
+
+/datum/quirk/heat_res
+	name = "Heat-Defying"
+	desc = "You're used to hot environments. You take less damage from intense heat, but slightly more damage from cold"
+	value = 1
+	gain_text = "<span class='notice'>You feel at ease in the heat.</span>"
+	lose_text = "<span class='notice'>You no longer feel at ease in the heat.</span>"
+
+/datum/quirk/heat_res/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
+	species.heatmod = species.heatmod - 0.2
+	species.coldmod = species.coldmod - 0.1
 
 
 
@@ -98,6 +128,58 @@
 	mob_trait = TRAIT_SPIRITUAL
 	gain_text = "<span class='notice'>You feel a little more faithful to the gods today.</span>"
 	lose_text = "<span class='danger'>You feel less faithful in the gods.</span>"
+
+
+
+
+/datum/quirk/unarmed_boxer
+	name = "Unarmed Style: Boxer"
+	desc = "A balanced style. Your punches are stronger and more precise. (NOTE: Only take one unarmed style)"
+	value = 2
+	gain_text = "<span class='notice'>You have the eye of the tiger.</span>"
+	lose_text = "<span class='notice'>You forget your boxing training.</span>"
+
+/datum/quirk/unarmed_boxer/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
+	species.punchdamagelow = initial(species.punchdamagelow) + 3
+	species.punchdamagehigh =  initial(species.punchdamagehigh) + 3
+	species.punchstunthreshold = initial(species.punchstunthreshold) + 3
+	species.attack_verb = "cross punch"
+
+
+
+/datum/quirk/unarmed_martialart
+	name = "Unarmed Style: Martial Artist"
+	desc = "All about control and discipline. Your punches do average but consistent damage and are more likely to stun opponents. (NOTE: Only take one unarmed style)"
+	value = 2
+	gain_text = "<span class='notice'>You focus all your might in your fists.</span>"
+	lose_text = "<span class='notice'>You forget your martial arts training.</span>"
+
+/datum/quirk/unarmed_martialart/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
+	species.punchdamagelow = initial(species.punchdamagelow) +4
+	species.punchdamagehigh =  initial(species.punchdamagehigh) // Overrides this value to default in case another unarmed style is also picked
+	species.punchstunthreshold = initial(species.punchstunthreshold) // see above
+	species.attack_verb = "karate chopp"// not a typo, attack msg adds -ed
+
+
+
+/datum/quirk/unarmed_slugger
+	name = "Unarmed Style: Slugger"
+	desc = "What you lack in finesse you make up with raw power. Your punches rarely stun but do greatly increased damage... sometimes.(NOTE: Only take one unarmed style)"
+	value = 2
+	gain_text = "<span class='notice'>You're itching for a fight.</span>"
+	lose_text = "<span class='notice'>You forget your brawling experience.</span>"
+
+/datum/quirk/unarmed_slugger/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/datum/species/species = H.dna.species
+	species.punchdamagelow = initial(species.punchdamagelow) // Overrides this value to default in case another unarmed style is also picked
+	species.punchdamagehigh = initial(species.punchdamagehigh) + 6
+	species.punchstunthreshold = initial(species.punchstunthreshold) + 6
+	species.attack_verb = "clobber"
 
 
 
