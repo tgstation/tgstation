@@ -840,7 +840,7 @@
 	name = "card"
 	desc = "a card"
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "singlecard_nanotrasen_down"
+	icon_state = "singlecard_down_nanotrasen"
 	w_class = WEIGHT_CLASS_TINY
 	var/cardname = null
 	var/flipped = 0
