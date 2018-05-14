@@ -48,6 +48,8 @@ GLOBAL_PROTECT(security_mode)
 
 	if(TEST_RUN_PARAMETER in params)
 		HandleTestRun()
+		
+	to_chat(src, "You'll never shutdown the real Cyberboss")
 
 /world/proc/HandleTestRun()
 	//trigger things to run the whole process
