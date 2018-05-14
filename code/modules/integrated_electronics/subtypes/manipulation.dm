@@ -45,7 +45,6 @@
 		if(installed_gun)
 			to_chat(user, "<span class='warning'>There's already a weapon installed.</span>")
 			return
-
 		user.transferItemToLoc(gun,src)
 		installed_gun = gun
 		var/list/gun_properties = gun.get_turret_properties()
@@ -79,7 +78,9 @@
 		to_chat(user, "<span class='notice'>There's no weapon to remove from the mechanism.</span>")
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/do_work()
-	if(!installed_gun)
+	if(!installed_gun || !installed_gun.handle_pins())
+		return
+	if(!isturf(assembly.loc))
 		return
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(installed_gun))
 	push_data()
@@ -490,7 +491,7 @@
 	var/target_y_rel = round(get_pin_data(IC_INPUT, 2))
 	var/obj/item/A = get_pin_data_as_type(IC_INPUT, 3, /obj/item)
 
-	if(!A || A.anchored || A.throwing)
+	if(!A || A.anchored || A.throwing || A == assembly)
 		return
 
 	if(max_w_class && (A.w_class > max_w_class))
@@ -572,7 +573,7 @@
 /obj/item/integrated_circuit/manipulation/matman/Initialize()
 	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
 	list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
-	FALSE, list(/obj/item/stack, /obj/item/stack/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
+	FALSE, list(/obj/item/stack), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
 	materials.max_amount =100000
 	materials.precise_insertion = TRUE
 	.=..()

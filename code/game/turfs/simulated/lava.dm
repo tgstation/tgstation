@@ -10,6 +10,7 @@
 	light_range = 2
 	light_power = 0.75
 	light_color = LIGHT_COLOR_LAVA
+	bullet_bounce_sound = 'sound/items/welder2.ogg'
 
 /turf/open/lava/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -130,7 +131,7 @@
 				var/obj/item/clothing/S = C.get_item_by_slot(SLOT_WEAR_SUIT)
 				var/obj/item/clothing/H = C.get_item_by_slot(SLOT_HEAD)
 
-				if(S && H && S.flags_2 & LAVA_PROTECT_2 && H.flags_2 & LAVA_PROTECT_2)
+				if(S && H && S.clothing_flags & LAVAPROTECT && H.clothing_flags & LAVAPROTECT)
 					return
 
 			L.adjustFireLoss(20)

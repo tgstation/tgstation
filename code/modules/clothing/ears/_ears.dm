@@ -15,7 +15,11 @@
 	strip_delay = 15
 	equip_delay_other = 25
 	resistance_flags = FLAMMABLE
-	flags_2 = BANG_PROTECT_2|HEALS_EARS_2
+
+/obj/item/clothing/ears/earmuffs/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/earhealing)
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
 /obj/item/clothing/ears/headphones
 	name = "headphones"

@@ -144,6 +144,7 @@
 /obj/item/destTagger
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
+	icon = 'icons/obj/device.dmi'
 	icon_state = "cargotagger"
 	var/currTag = 0
 	//The whole system for the sorttype var is determined based on the order of this list,

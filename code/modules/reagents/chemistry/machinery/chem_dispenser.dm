@@ -431,9 +431,11 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"shamblers",
 		"sugar",
 		"orangejuice",
+		"grenadine",
 		"limejuice",
 		"tomatojuice",
-		"lemonjuice"
+		"lemonjuice",
+		"menthol"
 	)
 	emagged_reagents = list(
 		"thirteenloko",
@@ -465,7 +467,8 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"hcider",
 		"creme_de_menthe",
 		"creme_de_cacao",
-		"triple_sec"
+		"triple_sec",
+		"sake"
 	)
 	emagged_reagents = list(
 		"ethanol",
@@ -499,3 +502,17 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"ammonia",
 		"ash",
 		"diethylamine")
+
+/obj/machinery/chem_dispenser/fullupgrade //fully upgraded stock parts
+	
+/obj/machinery/chem_dispenser/fullupgrade/Initialize()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
+	component_parts += new /obj/item/stack/sheet/glass(null)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	RefreshParts()

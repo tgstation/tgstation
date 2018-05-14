@@ -106,6 +106,15 @@
 	research_cost = 2500
 	export_price = 5000
 
+/datum/techweb_node/anomaly
+	id = "anomaly_research"
+	display_name = "Anomaly Research"
+	description = "Unlock the potential of the mysterious anomalies that appear on station."
+	prereq_ids = list("adv_engi", "practical_bluespace")
+	design_ids = list("reactive_armour")
+	research_cost = 2500
+	export_price = 5000
+
 /datum/techweb_node/high_efficiency
 	id = "high_efficiency"
 	display_name = "High Efficiency Parts"
@@ -152,7 +161,6 @@
 	design_ids = list("bs_rped","minerbag_holding", "bluespacebeaker", "bluespacesyringe", "bluespacebodybag", "phasic_scanning", "roastingstick")
 	research_cost = 5000
 	export_price = 5000
-
 
 /datum/techweb_node/bluespace_power
 	id = "bluespace_power"
@@ -282,7 +290,7 @@
 	display_name = "Electromagnetic Theory"
 	description = "Study into usage of frequencies in the electromagnetic spectrum."
 	prereq_ids = list("base")
-	design_ids = list("holosign", "inducer", "tray_goggles", "holopad")
+	design_ids = list("holosign", "holosignsec", "holosignengi", "holosignatmos", "inducer", "tray_goggles", "holopad")
 	research_cost = 2500
 	export_price = 5000
 
@@ -321,7 +329,7 @@
 	display_name = "Computer Consoles"
 	description = "Computers and how they work."
 	prereq_ids = list("datatheory")
-	design_ids = list("cargo", "cargorequest", "stockexchange", "libraryconsole", "mining", "crewconsole", "rdcamera", "comconsole", "idcardconsole", "seccamera")
+	design_ids = list("cargo", "cargorequest", "libraryconsole", "mining", "crewconsole", "rdcamera", "comconsole", "idcardconsole", "seccamera")
 	research_cost = 2000
 	export_price = 5000
 
@@ -867,7 +875,7 @@
 	display_name = "Illegal Technology"
 	description = "Dangerous research used to create dangerous objects."
 	prereq_ids = list("adv_engi", "adv_weaponry", "explosive_weapons")
-	design_ids = list("decloner", "borg_syndicate_module", "suppressor", "largecrossbow")
+	design_ids = list("decloner", "borg_syndicate_module", "suppressor", "largecrossbow", "donksofttoyvendor")
 	research_cost = 10000
 	export_price = 5000
 	hidden = TRUE

@@ -27,10 +27,13 @@
 	QDEL_NULL(holder)
 	return ..()
 
-/datum/component/mirage_border/OnTransfer(atom/thing)
-	if(!isturf(thing))
+/datum/component/mirage_border/PreTransfer()
+	holder.moveToNullspace()
+
+/datum/component/mirage_border/PostTransfer()
+	if(!isturf(parent))
 		return COMPONENT_INCOMPATIBLE
-	holder.forceMove(thing)
+	holder.forceMove(parent)
 
 /obj/effect/abstract/mirage_holder
 	name = "Mirage holder"

@@ -58,7 +58,7 @@
 	var/projectile_damage = 30
 	var/projectile_stun = 0
 	var/projectile_setting_pierce = TRUE
-	var/delay = 65
+	var/delay = 25
 	var/lastfire = 0
 
 	//ZOOMING
@@ -182,6 +182,7 @@
 
 /obj/item/gun/energy/beam_rifle/Initialize()
 	. = ..()
+	fire_delay = delay
 	current_tracers = list()
 	START_PROCESSING(SSprojectiles, src)
 	zoom_lock_action = new(src)

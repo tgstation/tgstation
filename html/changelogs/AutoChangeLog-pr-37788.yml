@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - admin: "Admin-healing someone will now rejuvenate their mood as well."

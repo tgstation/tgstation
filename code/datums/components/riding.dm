@@ -208,7 +208,7 @@
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
 	user.Knockdown(60)
-	user.visible_message("<span class='warning'>[AM] pushes [user] off of them!</span>")
+	user.visible_message("<span class='warning'>[AM] pushes [user] off of [AM.p_them()]!</span>")
 
 /datum/component/riding/cyborg
 
