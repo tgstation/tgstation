@@ -84,3 +84,16 @@
 
 /datum/quirk/monochromatic/remove()
 	quirk_holder.remove_client_colour(/datum/client_colour/monochrome)
+
+
+
+/datum/quirk/oblood
+	name = "O- Blood Type"
+	desc = "You're a universal blood donor! Good luck finding compatible blood if you're the one in need, though."
+	value = 0
+	gain_text = "<span class='notice'>Your blood is rare and precious!</span>"
+	lose_text = "<span class='notice'>The blood in your veins feels.. different?</span>"
+
+/datum/quirk/oblood/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.dna.blood_type = "O-"
