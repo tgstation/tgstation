@@ -13517,6 +13517,13 @@
 /obj/machinery/biogenerator,
 /turf/open/floor/plasteel/whitegreen,
 /area/centcom/holding)
+"OH" = (
+/obj/machinery/vr_sleeper{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/centcom/holding)
 "OI" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/beaker,
@@ -13527,6 +13534,15 @@
 	locked = 0
 	},
 /turf/open/floor/plasteel/cafeteria,
+/area/centcom/holding)
+"OY" = (
+/obj/machinery/vr_sleeper{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
 /area/centcom/holding)
 "Ph" = (
 /obj/structure/toilet{
@@ -14085,6 +14101,15 @@
 "YP" = (
 /obj/machinery/door/airlock/wood{
 	req_one_access_txt = "0"
+	},
+/turf/open/floor/wood,
+/area/centcom/holding)
+"Zd" = (
+/obj/machinery/vr_sleeper{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
@@ -38516,10 +38541,10 @@ Ym
 Ff
 PT
 Om
+OY
 Om
 Om
-Om
-Om
+OY
 Om
 ED
 aa
@@ -39034,7 +39059,7 @@ Nn
 Ff
 VD
 Ff
-Nn
+OH
 ED
 aa
 aa
@@ -39548,7 +39573,7 @@ Nn
 Ff
 VD
 Ff
-Nn
+OH
 ED
 aa
 aa
@@ -40058,10 +40083,10 @@ Ym
 Ff
 PT
 Tp
+Zd
 Tp
 Tp
-Tp
-Tp
+Zd
 Tp
 ED
 aa
