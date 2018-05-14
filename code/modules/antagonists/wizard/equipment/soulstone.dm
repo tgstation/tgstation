@@ -33,7 +33,6 @@
 	..()
 	if(!iscultist(user) && !iswizard(user) && !usability)
 		to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>")
-		user.Dizzy(30)
 
 /obj/item/soulstone/examine(mob/user)
 	..()
