@@ -4,21 +4,18 @@
  *
  * Heavily referenced from the Supermatter Monitoring program, as that also had
  * the 'list all -> details of one' format I was going for.
- *
- * TODO TODO TODO
- * - Make users able to filter only certain cameras (e.g. engineering)
  */
 
 // Begin screen-number defines.
-#define SCREEN_HOME 0
-#define SCREEN_LIST 1
-#define SCREEN_INFO 2
-#define SCREEN_VIEW 3
-#define SCREEN_LOST 4
-#define SCREEN_ERROR 5
-#define SCREEN_WIPE 6
-#define SCREEN_CFG 7			//future functionality
-#define SCREEN_REFR 8
+#define SCREEN_HOME 0		//home screen
+#define SCREEN_LIST 1		//camera list
+#define SCREEN_INFO 2		//camera details
+#define SCREEN_VIEW 3		//viewing feed
+#define SCREEN_LOST 4		//feed disconnected (moved, cam cut, etc)
+#define SCREEN_ERROR 5		//system error with ramclear button
+#define SCREEN_WIPE 6		//system error mid-ramclear
+#define SCREEN_CFG 7		//help and settings
+#define SCREEN_REFR 8		//refreshing camera feed
 //end screen number defines
 
 //begin variable-specific defines
@@ -44,18 +41,18 @@
 	tgui_id = "ntos_cameras"
 	ui_x = 600
 	ui_y = 400
-	ui_header = "camera.gif"		//PLACEHOLDER
+	ui_header = "camera.gif"
 	var/screen_number = SCREEN_HOME
 	
 	var/current_user		//used in break_watch() as a fallback
 	
 	//camera lists
-	var/list/camera_list = list()	//basic list
+	var/list/camera_list = list()		//basic list
 	var/list/fiveoh = list()			//detailed list
 	
 	var/number_of_cameras = 0
 	
-	var/obj/machinery/camera/sel			//currently selected camera
+	var/obj/machinery/camera/sel				//currently selected camera
 	var/watching = NOT_WATCHING					//are we watching a camera?
 
 	//what network do we want to filter?
@@ -79,9 +76,9 @@
 	screen_number = SCREEN_HOME
 
 /datum/computer_file/program/camera_monitor/kill_program(forced = FALSE)
-	sel = null
-	camera_list = null
-	break_watch(usr, intentional = TRUE)
+	sel = null					//reset the selected camera
+	camera_list = null			//clear the camera list
+	break_watch(usr, intentional = TRUE)		//kick the user off the camera, if they're on one
 	..()
 
 /datum/computer_file/program/camera_monitor/proc/force_error()					//debug proc, not called elsewhere
@@ -96,7 +93,7 @@
 	fiveoh = list()
 	
 
-	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)		//create a basic list of eligible cameras first
 		if ((is_station_level(C.z) || is_mining_level(C.z)) && C.c_tag)
 			var/list/network_overlap = desired_networks & C.network
 			if(network_overlap.len)			//if the desired networks and the camera's networks have at least one matching entry, add it
@@ -104,13 +101,13 @@
 
 	camera_list = camera_sort(camera_list)						//sort eligible camera list
 	
-	for (var/obj/machinery/camera/C in camera_list)				//use sorted list to generate a list of camera details
+	for (var/obj/machinery/camera/C in camera_list)				//use sorted list to generate a detailed list
 		var/area/A = get_area(C)
 		if(A)
 			fiveoh.Add(list(list(
-			"camera_name" = C.c_tag,
-			"camera_status" = C.can_use(),
-			"camera_network" = C.network
+			"camera_name" = C.c_tag,			//camera tag (E.g. "Bridge #1")
+			"camera_status" = C.can_use(),		//Camera status (true == active)
+			"camera_network" = C.network		//List of networks the camera is on
 			)))
 	
 	if(!(sel in camera_list))
@@ -118,7 +115,7 @@
 	
 	number_of_cameras = camera_list.len
 
-/datum/computer_file/program/camera_monitor/proc/set_desired_network(mob/living/user)		//set the user's desired network. Camera list is not reloaded here.
+/datum/computer_file/program/camera_monitor/proc/set_desired_network(mob/living/user)		//set the user's desired network
 	var/input = stripped_input(user, "Which network(s) would you like to filter? Separate networks with a comma (NO SPACES).\nFor example: 'SS13,Mine,Secret' will show cameras that are on any of the SS13, Mining or Secret networks.", "Set Network", "SS13")	//someone's going to nitpick about the lack of oxford comma here, i just know it.
 	if(screen_number != SCREEN_CFG)		//Did the user not realise the window was open?
 		return FALSE
@@ -153,14 +150,14 @@
 	
 	if(C)
 		var/camera_fail = FALSE
-		if(!C.can_use() || user.eye_blind || user.incapacitated() || !in_range(computer, user))
+		if(!C.can_use() || user.eye_blind || user.incapacitated() || !in_range(computer, user))		//camera deactivated, user blinded, user incapacitated, user walked away
 			camera_fail = TRUE
 		
 		if(camera_fail)
 			break_watch(usr)
 			return FALSE
 			
-		if((computer.loc.x != orig_x) || (computer.loc.y != orig_y) || (computer.loc.z != orig_z))
+		if((computer.loc.x != orig_x) || (computer.loc.y != orig_y) || (computer.loc.z != orig_z))		//if the laptop moved, kill the feed
 			watching = WANT_TO_STOP_WATCHING
 			break_watch(usr)
 
@@ -173,7 +170,7 @@
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
 			user.clear_fullscreen("flash", 5)
 		
-		addtimer(CALLBACK(src, .proc/start_watch, user, sel), 5)
+		addtimer(CALLBACK(src, .proc/start_watch, user, sel), 5)		//check the above twice a second
 	else
 		break_watch()
 
@@ -185,14 +182,14 @@
 			user = current_user
 
 	user.reset_perspective(null)
-	if(!intentional)				//the user did not disconnect, so show the disconnect notif.
+	if(!intentional)				//the user did not initiate the disconnect, so show the disconnect notif.
 		screen_number = SCREEN_LOST
 	
 /datum/computer_file/program/camera_monitor/proc/camera_error(mob/living/user, reason)
 	crash_reason = reason
 	screen_number = SCREEN_ERROR
 	watching = WANT_TO_STOP_WATCHING
-	stack_trace("Fatal error in mobile camera system: \"[reason]\". User: [user]. Location: ([user.x], [user.y], [user.z]).")
+	stack_trace("Fatal error in mobile camera system: \"[reason]\". User: [user]. Location: ([user.x], [user.y], [user.z]).")		//log it
 	break_watch(usr, intentional = TRUE)		//also called in ramclear screen
 
 /datum/computer_file/program/camera_monitor/ui_data()
@@ -206,7 +203,7 @@
 		data["networks"] = sel.network
 		data["name"] = sel.c_tag
 		data["area"] = get_area(sel)
-		data["ref"] = REF(sel)
+		data["ref"] = REF(sel)			//unused
 	data["screen"] = screen_number
 	data["cameras"] = fiveoh
 	data["number_of_cameras"] = number_of_cameras
@@ -272,7 +269,7 @@
 			sleep(10)
 			screen_number = SCREEN_HOME
 			return TRUE
-		if("PRG_settings")			//Settings menu - future functionality
+		if("PRG_settings")			//Settings menu
 			screen_number = SCREEN_CFG
 			return TRUE
 		if("PRG_setnet")			//Set desired network
