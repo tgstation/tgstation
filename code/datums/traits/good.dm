@@ -115,12 +115,11 @@
 	name = "High-Luminosity Eyes"
 	desc = "Your eyes have been cybernetically enhanced, high-luminosity allow you to change your eye color at a moment's notice and shine light away from yourself"
 	value = 1
+	gain_text = "<span class='boldnotice'>Your eyes have been enhanced with cybernetic high-luminosity eyes.</span>")
 
 /datum/quirk/hlumi_eyes/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/organ/eyes/robotic/glow/hlumi = new
 	hlumi.Insert(H, drop_if_replaced = FALSE)
 	H.regenerate_icons()
-
-/datum/quirk/hlumi_eyes/post_add()
-	to_chat(quirk_holder, "<span class='boldnotice'>Your eyes have been enhanced with cybernetic high-luminosity eyes.</span>")
+	
