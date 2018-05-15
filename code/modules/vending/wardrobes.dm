@@ -18,13 +18,18 @@
 					/obj/item/clothing/shoes/jackboots = 3,
 					/obj/item/clothing/head/beret/sec = 3,
 					/obj/item/clothing/head/soft/sec = 3,
-					/obj/item/clothing/mask/bandana/red = 3)
+					/obj/item/clothing/mask/bandana/red = 3,
+					/obj/item/clothing/under/rank/security/skirt = 3,
+					/obj/item/clothing/under/rank/security/grey = 3)
+	premium = list(/obj/item/clothing/under/rank/security/navyblue = 3,
+					/obj/item/clothing/suit/security/officer = 3,
+					/obj/item/clothing/head/beret/sec/navyofficer = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 
 /obj/item/vending_refill/wardrobe/sec_wardrobe
 	machine_name = "SecDrobe"
-	charges = list(8, 0, 0)
-	init_charges = list(8, 0, 0)
+	charges = list(10, 0, 3)
+	init_charges = list(10, 0, 3)
 
 /obj/machinery/vending/wardrobe/medi_wardrobe
 	name = "\improper MediDrobe"
