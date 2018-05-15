@@ -29,6 +29,7 @@
 	egg.Insert(victim)
 	if(mind) // Let's make this a feature //sounds good to me!
 		egg.origin = mind
+		egg.init_origin = mind
 	else if(isnull(origin))
 		notify_ghosts("A mindless headslug has implanted a being!", source = egg, action=NOTIFY_ATTACK, flashwindow = FALSE)
 	else
@@ -59,6 +60,7 @@
 /obj/item/organ/body_egg/changeling_egg
 	name = "changeling egg"
 	desc = "Twitching and disgusting."
+	var/datum/mind/init_origin //only to pull from sentienced slugs in case they leave (we want proper enslavement)
 	var/datum/mind/origin
 	var/time = 0
 	var/cooldown = 60
@@ -87,7 +89,10 @@
 				Remove(owner)
 				qdel(src)
 		else if(time > cooldown)
-			notify_ghosts("A changeling is about to burst! Click to become the changeling!", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+			if(init_origin && init_origin.enslaved_mob)
+				notify_ghosts("An enslaved changeling is about to burst! Click to become the changeling!", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+			else
+				notify_ghosts("An unbound changeling is about to burst! Click to become the changeling!", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
 			cooldown = time + cooldown // (x*2cooldown)+cooldown where x is the amount of times the above notification is thrown. tldr it gets longer each time it's thrown.
 
 /obj/item/organ/body_egg/changeling_egg/proc/Pop()
@@ -99,6 +104,9 @@
 
 	if(origin)
 		origin.transfer_to(M)
+		if((init_origin != origin) && init_origin.enslaved_mob) //edge
+			origin.enslave_mind_to_creator(init_origin.enslaved_mob)
+			to_chat(origin.current, "<span class='warning'><b>NOTE:</b> The individual you're filling in for was bound to [origin.enslaved_mob.real_name].</span>")
 		var/datum/antagonist/changeling/C = origin.has_antag_datum(/datum/antagonist/changeling)
 		if(!C)
 			C = origin.add_antag_datum(/datum/antagonist/changeling/xenobio)
