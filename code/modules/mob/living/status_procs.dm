@@ -146,12 +146,12 @@
 	else
 		status_traits[trait] |= list(source)
 
-/mob/living/proc/add_trait_datum(trait, spawn_effects) //separate proc due to the way these ones are handled
-	if(has_trait(trait))
+/mob/living/proc/add_quirk(quirk, spawn_effects) //separate proc due to the way these ones are handled
+	if(has_trait(quirk))
 		return
-	if(!SStraits || !SStraits.traits[trait])
+	if(!SSquirks || !SSquirks.quirks[quirk])
 		return
-	var/datum/trait/T = SStraits.traits[trait]
+	var/datum/quirk/T = SSquirks.quirks[quirk]
 	new T (src, spawn_effects)
 	return TRUE
 
@@ -180,8 +180,8 @@
 	if(!LAZYLEN(status_traits[trait]))
 		status_traits -= trait
 
-/mob/living/proc/remove_trait_datum(trait)
-	var/datum/trait/T = roundstart_traits[trait]
+/mob/living/proc/remove_quirk(quirk)
+	var/datum/quirk/T = roundstart_quirks[quirk]
 	if(T)
 		qdel(T)
 		return TRUE
@@ -201,8 +201,8 @@
 	else if(LAZYLEN(status_traits[trait]))
 		return TRUE
 
-/mob/living/proc/has_trait_datum(trait)
-	return roundstart_traits[trait]
+/mob/living/proc/has_quirk(quirk)
+	return roundstart_quirks[quirk]
 
 /mob/living/proc/remove_all_traits()
 	status_traits = list()

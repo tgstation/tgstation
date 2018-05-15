@@ -220,7 +220,7 @@
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
 			if(M.stat)
-				M.visible_message("[M] vanishes as they are reclaimed for recycling!")
+				M.visible_message("[M] vanishes as [M.p_theyre()] reclaimed for recycling!")
 				X.monkeys = round(X.monkeys + 0.2,0.1)
 				qdel(M)
 	else

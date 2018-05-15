@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(ticker)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
 			if(CONFIG_GET(flag/irc_announce_new_game))
-				SERVER_TOOLS_CHAT_BROADCAST("New round starting on [SSmapping.config.map_name]!")
+				world.TgsTargetedChatBroadcast("New round starting on [SSmapping.config.map_name]!", FALSE)
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
@@ -282,6 +282,7 @@ SUBSYSTEM_DEF(ticker)
 
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	round_start_time = world.time
+	SSdbcore.SetRoundStart()
 
 	to_chat(world, "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>")
 	SEND_SOUND(world, sound('sound/ai/welcome.ogg'))
@@ -365,7 +366,7 @@ SUBSYSTEM_DEF(ticker)
 			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
 			if(CONFIG_GET(flag/roundstart_traits))
-				SStraits.AssignTraits(player, N.client, TRUE)
+				SSquirks.AssignQuirks(player, N.client, TRUE)
 		CHECK_TICK
 	if(captainless)
 		for(var/mob/dead/new_player/N in GLOB.player_list)

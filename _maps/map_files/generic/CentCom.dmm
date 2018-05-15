@@ -4178,7 +4178,6 @@
 /area/syndicate_mothership)
 "mb" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -5254,7 +5253,6 @@
 /area/centcom/ferry)
 "oM" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},

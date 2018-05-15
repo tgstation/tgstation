@@ -63,9 +63,9 @@
 # ShizCalev
 
 /_maps/ @ShizCalev
+/icons/ @ShizCalev
 /sound/ @ShizCalev
 
 # Multiple Owners
 
 /code/controllers/subsystem/air.dm @duncathan @MrStonedOne
-/icons/ @ShizCalev @WJohn

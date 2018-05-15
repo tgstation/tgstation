@@ -70,7 +70,7 @@
 
 	message = src.say_quote(message, get_spans())
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
-
+	log_message("DEAD: [message]", INDIVIDUAL_SAY_LOG)
 	deadchat_broadcast(rendered, follow_target = src, speaker_key = K)
 
 /mob/proc/check_emote(message)

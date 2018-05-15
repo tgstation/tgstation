@@ -17,6 +17,7 @@
 	armor = list("melee" = 30, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 90, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 	anchored = TRUE
 	anchorable = FALSE
+	var/generated = FALSE
 	var/datum/supply_order/SupplyOrder
 
 /obj/structure/closet/supplypod/bluespacepod
@@ -45,7 +46,9 @@
 /obj/structure/closet/supplypod/open()
 	var/turf/T = get_turf(src)
 	opened = TRUE
-	SupplyOrder.generate(T)//not called during populateContents as supplyorder generation requires a turf
+	if(!generated)
+		generated = TRUE
+		SupplyOrder.generate(T)//not called during populateContents as supplyorder generation requires a turf
 	update_icon()
 	playsound(src, open_sound, 15, 1, -3)
 	if(istype(src,/obj/structure/closet/supplypod/bluespacepod))
@@ -62,6 +65,7 @@
 //------------------------------------FALLING SUPPLY POD-------------------------------------//
 /obj/effect/temp_visual/DPfall
 	icon = 'icons/obj/2x2.dmi'
+	icon_state = "supplypod_falling"
 	pixel_x = -16
 	pixel_y = -5
 	pixel_z = 200

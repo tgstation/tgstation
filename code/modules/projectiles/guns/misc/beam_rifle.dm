@@ -436,7 +436,7 @@
 
 /obj/item/projectile/beam/beam_rifle
 	name = "particle beam"
-	icon = ""
+	icon = null
 	hitsound = 'sound/effects/explosion3.ogg'
 	damage = 0				//Handled manually.
 	damage_type = BURN

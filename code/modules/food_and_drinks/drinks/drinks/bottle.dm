@@ -361,6 +361,24 @@
 	list_reagents = list("limejuice" = 100)
 	foodtype = FRUIT
 
+/obj/item/reagent_containers/food/drinks/bottle/menthol
+	name = "menthol"
+	desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
+	icon_state = "mentholbox"
+	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	isGlass = FALSE
+	list_reagents = list("menthol" = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/grenadine
+	name = "Jester Grenadine"
+	desc = "Contains 0% real cherries!"
+	icon_state = "grenadine"
+	isGlass = TRUE
+	list_reagents = list("grenadine" = 100)
+	foodtype = FRUIT
+
 
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov
