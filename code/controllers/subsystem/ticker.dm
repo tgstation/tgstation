@@ -282,6 +282,7 @@ SUBSYSTEM_DEF(ticker)
 
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	round_start_time = world.time
+	SSdbcore.SetRoundStart()
 
 	to_chat(world, "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>")
 	SEND_SOUND(world, sound('sound/ai/welcome.ogg'))
