@@ -33,7 +33,6 @@
 	..()
 	if(!iscultist(user) && !iswizard(user) && !usability)
 		to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you pick up the soulstone. It would be wise to be rid of this quickly.</span>")
-		user.Dizzy(120)
 
 /obj/item/soulstone/examine(mob/user)
 	..()
@@ -115,7 +114,7 @@
 		var/obj/item/soulstone/SS = O
 		if(!iscultist(user) && !iswizard(user) && !SS.usability)
 			to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you attempt to place the soulstone into the shell. It would be wise to be rid of this quickly.</span>")
-			user.Dizzy(120)
+			user.Dizzy(30)
 			return
 		SS.transfer_soul("CONSTRUCT",src,user)
 		SS.was_used()

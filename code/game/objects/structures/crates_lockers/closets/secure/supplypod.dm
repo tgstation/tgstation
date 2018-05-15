@@ -65,6 +65,7 @@
 //------------------------------------FALLING SUPPLY POD-------------------------------------//
 /obj/effect/temp_visual/DPfall
 	icon = 'icons/obj/2x2.dmi'
+	icon_state = "supplypod_falling"
 	pixel_x = -16
 	pixel_y = -5
 	pixel_z = 200
