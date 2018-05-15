@@ -92,7 +92,7 @@
 	if(crit_fail || (world.time < last_trigger + cooldown))
 		return FALSE
 	last_trigger = world.time
-	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	times_used++
 	flash_recharge()
 	update_icon(TRUE)
@@ -194,6 +194,8 @@
 
 /obj/item/assembly/flash/cyborg/attackby(obj/item/W, mob/user, params)
 	return
+/obj/item/assembly/flash/cyborg/screwdriver_act(mob/living/user, obj/item/I)
+	return
 
 /obj/item/assembly/flash/memorizer
 	name = "memorizer"
@@ -225,7 +227,7 @@
 		return FALSE
 	overheat = TRUE
 	addtimer(CALLBACK(src, .proc/cooldown), flashcd)
-	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	update_icon(1)
 	return TRUE
 
@@ -271,7 +273,7 @@
 					return
 				crit_fail = FALSE
 				times_used = 0
-				playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				update_icon()
 				flash.crit_fail = TRUE
 				flash.update_icon()

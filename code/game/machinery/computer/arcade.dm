@@ -291,6 +291,7 @@
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
+	to_chat(user, "<span class='warning'>A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!</span>")
 	temp = "If you die in the game, you die for real!"
 	player_hp = 30
 	player_mp = 10
@@ -614,7 +615,7 @@
 						L.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 					var/S = new /obj/singularity/academy(usr.loc)
 					addtimer(CALLBACK(src, /atom/movable/proc/say, "[S] winks out, just as suddenly as it appeared."), 50)
-					QDEL_IN(src, 50)
+					QDEL_IN(S, 50)
 			else
 				event = null
 				turns += 1

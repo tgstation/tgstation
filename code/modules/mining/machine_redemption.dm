@@ -303,13 +303,12 @@
 					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 				var/amount = round(min(desired,50,smelt_amount))
 				materials.use_amount(alloy.materials, amount)
-				var/output = new alloy.build_path(src)
-				if(istype(output, /obj/item/stack/sheet))
-					var/obj/item/stack/sheet/produced_alloy = output
-					produced_alloy.amount = amount
-					unload_mineral(produced_alloy)
+				var/output
+				if(ispath(alloy.build_path, /obj/item/stack/sheet))
+					output = new alloy.build_path(src, amount)
 				else
-					unload_mineral(output)
+					output = new alloy.build_path(src)
+				unload_mineral(output)
 			else
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			return TRUE

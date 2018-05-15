@@ -1,6 +1,0 @@
-<ui-display title='Color'>
-	{{#each data.paint_colors}}
-		<ui-button state='{{selected ? "selected" : null}}' action='color'
-			params='{"paint_color": {{color_name}}}'>{{color_name}}</ui-button>
-	{{/each}}
-</ui-display>
