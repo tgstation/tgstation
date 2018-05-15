@@ -20,7 +20,7 @@
 	a_intent = INTENT_HARM
 	wander = FALSE
 	del_on_death = 1
-	loot = list(/obj/mecha/combat/stone/loaded)
+	loot = list(/obj/effect/temp_visual/cryptguard_death)
 	var/woke = FALSE //cannot take damage if true
 	var/swiping = FALSE
 
@@ -39,14 +39,21 @@
 	var/angle1 = 0
 	var/angle2 = -45
 	var/angle3 = 45
+	var/angle4 = 135
+	var/angle5 = -135
 	var/turf/Tcleave1 = get_step(src_turf, turn(dir_to_target, angle1))
 	var/turf/Tcleave2 = get_step(src_turf, turn(dir_to_target, angle2))
 	var/turf/Tcleave3 = get_step(src_turf, turn(dir_to_target, angle3))
-	var/atktype = pick("cleave", "lunge", "energy blast", "curb stomp")
+	var/turf/Tcleave4 = get_step(src_turf, turn(dir_to_target, angle4))
+	var/turf/Tcleave5 = get_step(src_turf, turn(dir_to_target, angle5))
+	//var/turf/Tdiagonal1 =
+	var/atktype = pick("cleave", "lunge") //to do:"energy blast"
 	if(iscarbon(target))
-		var/mob/living/carbon/C
+		var/mob/living/carbon/C = target
 		if(C.stat == UNCONSCIOUS)
 			atktype = "curb stomp"
+	if(dir_to_target != NORTH && dir_to_target != SOUTH && dir_to_target != EAST && dir_to_target != WEST)
+		atktype = "energy blast"
 	if(atktype == "energy blast")
 		visible_message("<span class='warning'>[src] begins to shudder...</span>", "<span class='notice'>You ready a blast of necropolis magic...</span>")
 	else
@@ -89,14 +96,14 @@
 			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
 			new /obj/effect/temp_visual/attackwarn(Tcleave2, src, 1, 1)
 			new /obj/effect/temp_visual/attackwarn(Tcleave3, src, 1, -1)
-		if("energy blast") //doesn't work atm.
-			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
-			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
-			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
-			new /obj/effect/temp_visual/attackwarn(Tcleave1, src, 1, 0)
+		if("energy blast")
+			new /obj/effect/temp_visual/attackwarn(Tcleave2, src, 1, 1)
+			new /obj/effect/temp_visual/attackwarn(Tcleave3, src, 1, -1)
+			new /obj/effect/temp_visual/attackwarn(Tcleave4, src, -1, 1)
+			new /obj/effect/temp_visual/attackwarn(Tcleave5, src, -1, -1)
 		if("curb stomp")
-			forceMove(target)
-			new /obj/effect/temp_visual/attackwarn/execute(src.loc, src, 0, 0)
+			forceMove(T)
+			new /obj/effect/temp_visual/attackwarn/execute(T, src, 0, 0)
 
 /obj/effect/temp_visual/attackwarn
 	name = "incoming attack"
@@ -130,8 +137,10 @@
 			continue //don't kys!
 		to_chat(L, "<span class='danger'>You are curb stomped by [createdby]!</span>")
 		L.adjustBruteLoss(hit_damage)
-		QDEL_NULL(L) //remind me to not do this
+		sleep(3)
+		L.gib() //remind me to not do this
 	createdby.swiping = FALSE
+	..()
 
 /obj/effect/temp_visual/attackwarn/Initialize(mapload, createdby, offset_x, offset_y)
 	..(mapload)
@@ -153,15 +162,12 @@
 		L.adjustBruteLoss(hit_damage)
 	createdby.swiping = FALSE
 	..()
-//hit
-/*
+
+//todo hit
+
 /mob/living/simple_animal/hostile/cryptguard/Move()
-	if(swiping == TRUE)
-		if(client)
-			to_chat(src, "<span class='warning'>You can't move while swinging a sword like this!</span>")
-		return
+	playsound(src,'sound/effects/stonedoorfast.ogg',40,1)
 	..()
-*/
 
 /mob/living/simple_animal/hostile/cryptguard/proc/awaken()
 	woke = TRUE
@@ -188,8 +194,11 @@
 /mob/living/simple_animal/hostile/cryptguard/leader
 	name = "giant statue"
 	desc = "An incredibly lifelike stone carving depicting a large battle machine."
+	icon_state = "antikytherasword-sleeping"
+	icon = 'icons/mecha/mecha.dmi'
 	sentience_type = SENTIENCE_BOSS
 	loot = list(/obj/mecha/combat/stone/loaded)
+	var/quest = FALSE
 	var/list/guards = list()
 	var/obj/structure/necropolis_gate/trapgate = list()
 
@@ -239,6 +248,21 @@
 				var/turf/Tsurge3 = get_step(src_turf, turn(dir_to_target, i))
 				new /obj/effect/temp_visual/attackwarn/slow(Tsurge3, src)
 
+/mob/living/simple_animal/hostile/cryptguard/leader/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(woke == FALSE)
+		var/madeit = FALSE
+		for(var/mob/living/simple_animal/hostile/cryptguard/goon in guards)
+			if(goon.woke == TRUE && goon.stat != DEAD)
+				break
+			if(goon.stat != DEAD)
+				break
+			madeit = TRUE
+		if(madeit == TRUE)//if you're looking  to put this in a shitcode thread you might want to look a little closer ;)
+			say("Your hubris! It will be your downfall, silly mortal! I am the true defender of the necropolis!")
+			awaken()
+		return
+	..()
+
 /mob/living/simple_animal/hostile/cryptguard/leader/attack_hand(mob/user)
 	if(woke)
 		return
@@ -254,16 +278,20 @@
 	if(isleep == FALSE)
 		return
 	if(finalboss == FALSE)
-		say("Welcome... To your tomb.")
+		say("You are trespassing.")
+		icon_state = "antikytherasword"
+		if(trapgate.open == TRUE)
+			trapgate.toggle_the_gate()
+		trapgate.locked = TRUE
 		sleep(5)
 		for(var/mob/living/simple_animal/hostile/cryptguard/goonstve in guards)
-			goonstve.say("Defend... the treasure...")
+			goonstve.say("...")
 			goonstve.awaken()
 	else
-		say("ENOUGH OF YOUR VANDALISM!!")
-		sleep(10)
-		say("YOU SHALL PAY... FOR YOUR INSOLENCE!!")
-		awaken()
+		if(quest == FALSE)
+			say("A worthy combatant! If you're not intending on trying to kill me, return with proof you've gotten rid of the foul serpents that plague these lands and i'll reward you.")
+			quest = TRUE
+			return
 
 //LOOT (THE MECH)//
 
@@ -305,7 +333,7 @@
 
 /obj/structure/sign/mural2
 	name = "dusty mural"
-	desc = "Guardians of the necropolis?"
+	desc = "Some old war against a terrible monster."
 	max_integrity = 500
 
 /obj/structure/sign/mural2/top
@@ -325,3 +353,7 @@
 	desc = "Holds the dead."
 	icon_state = "sarc"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/structure/closet/crate/sarcophagus/skeleton/PopulateContents()
+	..()
+	new /obj/effect/mob_spawn/human/corpse/charredskeleton(src)
