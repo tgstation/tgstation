@@ -715,7 +715,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////// Engine Construction /////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////	
+//////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/engine
 	group = "Engine Construction"
@@ -851,7 +851,7 @@
 	crate_name = "supermatter shard crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
-	
+
 /datum/supply_pack/engine/tesla_coils
 	name = "Tesla Coil Crate"
 	desc = "Whether it's high-voltage executions, creating research points, or just plain old power generation: This pack of four Tesla coils can do it all!"
@@ -1406,7 +1406,7 @@
 					/obj/item/vending_refill/cola,
 					/obj/item/vending_refill/cola)
 	crate_name = "soft drinks supply crate"
-	
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1713,6 +1713,29 @@
 	contains = list(/obj/item/vending_refill/autodrobe,
 					/obj/item/vending_refill/autodrobe)
 	crate_name = "autodrobe supply crate"
+
+/datum/supply_pack/costumes_toys/wardrobes
+	name = "Wardrobe Supply Crate"
+	desc = "This crate contains various refills to various wardrobe vending machines."
+	cost = 5000
+	contains = list(/obj/item/vending_refill/wardrobe/sec_wardrobe,
+					/obj/item/vending_refill/wardrobe/medi_wardrobe,
+					/obj/item/vending_refill/wardrobe/engi_wardrobe,
+					/obj/item/vending_refill/wardrobe/atmos_wardrobe,
+					/obj/item/vending_refill/wardrobe/cargo_wardrobe,
+					/obj/item/vending_refill/wardrobe/robo_wardrobe,
+					/obj/item/vending_refill/wardrobe/science_wardrobe,
+					/obj/item/vending_refill/wardrobe/hydro_wardrobe,
+					/obj/item/vending_refill/wardrobe/curator_wardrobe,
+					/obj/item/vending_refill/wardrobe/bar_wardrobe,
+					/obj/item/vending_refill/wardrobe/chef_wardrobe,
+					/obj/item/vending_refill/wardrobe/jani_wardrobe,
+					/obj/item/vending_refill/wardrobe/law_wardrobe,
+					/obj/item/vending_refill/wardrobe/chap_wardrobe,
+					/obj/item/vending_refill/wardrobe/chem_wardrobe,
+					/obj/item/vending_refill/wardrobe/gene_wardrobe,
+					/obj/item/vending_refill/wardrobe/viro_wardrobe)
+	crate_name = "wardrobe vendor refills"
 
 /datum/supply_pack/costumes_toys/randomised
 	name = "Collectable Hats Crate"

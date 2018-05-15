@@ -161,7 +161,7 @@
 /obj/machinery/vending/wardrobe/hydro_wardrobe
 	name = "Hydrobe"
 	desc = "A machine with a catchy name. It dispenses botany related clothing and gear."
-	product_ads = ""
+	product_ads = "Do you love soil? Then buy our clothes!"
 	req_access_txt = "35"
 	vend_reply = "Thank you for using the Hydrobe!"
 	products = list(/obj/item/storage/backpack/botany = 2,
@@ -181,7 +181,7 @@
 /obj/machinery/vending/wardrobe/curator_wardrobe
 	name = "CuraDrobe"
 	desc = "A lowstock vendor only capable of vending clothing for curators and librarians."
-	product_ads = ""
+	product_ads = "Our clothes are endorsed by treasure hunters everywhere!"
 	req_access_txt = "37"
 	vend_reply = "Thank you for using the CuraDrobe!"
 	products = list(/obj/item/clothing/head/fedora/curator = 1,
@@ -227,7 +227,7 @@
 /obj/machinery/vending/wardrobe/chef_wardrobe
 	name = "ChefDrobe"
 	desc = "This vending machine might not dispense meat, but it certainly dispenses chef related clothing."
-	product_ads = ""
+	product_ads = "Our clothes are gauranteed to protect you from food splatters!"
 	req_access_txt = "28"
 	vend_reply = "Thank you for using the ChefDrobe!"
 	products = list(/obj/item/clothing/under/waiter = 2,
@@ -251,7 +251,7 @@
 /obj/machinery/vending/wardrobe/jani_wardrobe
 	name = "JaniDrobe"
 	desc = "A self cleaning vending machine capable of dispensing clothing for janitors."
-	product_ads = ""
+	product_ads = "Come and get your janitorial clothing, now endorsed by lizard janitors everywhere!"
 	req_access_txt = "26"
 	vend_reply = "Thank you for using the JaniDrobe!"
 	products = list(/obj/item/clothing/under/rank/janitor = 1,
@@ -303,7 +303,7 @@
 /obj/machinery/vending/wardrobe/chap_wardrobe
 	name = "ChapDrobe"
 	desc = "This most blessed and holy machine vends clothing only suitable for chaplains to gaze upon."
-	product_ads = ""
+	product_ads = "Are you being botheres by cultists or pesky reverants? Then come and dress like the holy man!"
 	req_access_txt = "22"
 	vend_reply = "Thank you for using the ChapDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector/cosmetology = 1,
@@ -331,7 +331,7 @@
 /obj/machinery/vending/wardrobe/chem_wardrobe
 	name = "ChemDrobe"
 	desc = "A vending machine for dispensing chemistry related clothing."
-	product_ads = ""
+	product_ads = "Our clothes are 0.5% more resistant to acid spills! Get yours now!"
 	req_access_txt = "33"
 	vend_reply = "Thank you for using the ChemDrobe!"
 	products = list(/obj/item/clothing/under/rank/chemist = 2,
@@ -350,7 +350,7 @@
 /obj/machinery/vending/wardrobe/gene_wardrobe
 	name = "GeneDrobe"
 	desc = "A machine for dispensing clothing related to genetics."
-	product_ads = ""
+	product_ads = "Perfect for the mad scientist in you!"
 	req_access_txt = "9"
 	vend_reply = "Thank you for using the GeneDrobe!"
 	products = list(/obj/item/clothing/under/rank/geneticist = 2,
@@ -368,7 +368,7 @@
 /obj/machinery/vending/wardrobe/viro_wardrobe
 	name = "ViroDrobe"
 	desc = "An unsterilized machine for dispending virology related clothing."
-	product_ads = ""
+	product_ads = " Virusses getting you down? Then upgrade to sterilized clothing today!"
 	req_access_txt = "39"
 	vend_reply = "Thank you for using the ViroDrobe"
 	products = list(/obj/item/clothing/under/rank/virologist = 2,
