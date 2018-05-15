@@ -81,7 +81,7 @@
 				continue
 			if(length(list("ss13","mine")&camera.network))
 				bugged_cameras[camera.c_tag] = camera
-	sortList(bugged_cameras)
+	bugged_cameras = sortList(bugged_cameras)
 	return bugged_cameras
 
 
