@@ -53,6 +53,8 @@ Head of Security
 	r_pocket = /obj/item/assembly/flash/handheld
 	l_pocket = /obj/item/restraints/handcuffs
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+	l_hand = /obj/item/gun/ballistic/automatic/atlauncher
+	r_hand = /obj/item/gun/ballistic/automatic/atlauncher
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec
@@ -105,6 +107,8 @@ Warden
 	l_pocket = /obj/item/restraints/handcuffs
 	suit_store = /obj/item/gun/energy/e_gun/advtaser
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+	l_hand = /obj/item/gun/ballistic/automatic/atlauncher
+	r_hand = /obj/item/gun/ballistic/automatic/atlauncher
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec
@@ -154,6 +158,8 @@ Detective
 		/obj/item/detective_scanner=1,\
 		/obj/item/melee/classic_baton=1)
 	mask = /obj/item/clothing/mask/cigarette
+	l_hand = /obj/item/gun/ballistic/automatic/atlauncher
+	r_hand = /obj/item/gun/ballistic/automatic/atlauncher
 
 	implants = list(/obj/item/implant/mindshield)
 
@@ -289,6 +295,8 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	r_pocket = /obj/item/assembly/flash/handheld
 	suit_store = /obj/item/gun/energy/e_gun/advtaser
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+	l_hand = /obj/item/gun/ballistic/automatic/atlauncher
+	r_hand = /obj/item/gun/ballistic/automatic/atlauncher
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec
