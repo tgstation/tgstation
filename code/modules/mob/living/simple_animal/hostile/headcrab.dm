@@ -80,7 +80,7 @@
 	time++
 	if(time >= true_hatch_time)
 		if(origin)
-			if(!isghost(origin.current)) //if you're doing something else when it's time to pop then you lose the role.
+			if(!isobserver(origin.current)) //if you're doing something else when it's time to pop then you lose the role.
 				origin = null
 			else
 				Pop()
