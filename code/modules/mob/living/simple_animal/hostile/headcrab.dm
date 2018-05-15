@@ -89,7 +89,7 @@
 				Remove(owner)
 				qdel(src)
 		else if(time > cooldown)
-			if(init_origin && init_origin.enslaved_mob)
+			if(init_origin && init_origin.enslaved_to)
 				notify_ghosts("An enslaved changeling is about to burst! Click to become the changeling!", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
 			else
 				notify_ghosts("An unbound changeling is about to burst! Click to become the changeling!", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
@@ -104,9 +104,9 @@
 
 	if(origin)
 		origin.transfer_to(M)
-		if((init_origin != origin) && init_origin.enslaved_mob) //edge
-			origin.enslave_mind_to_creator(init_origin.enslaved_mob)
-			to_chat(origin.current, "<span class='warning'><b>NOTE:</b> The individual you're filling in for was bound to [origin.enslaved_mob.real_name].</span>")
+		if((init_origin != origin) && init_origin.enslaved_to) //edge
+			origin.enslave_mind_to_creator(init_origin.enslaved_to)
+			to_chat(origin.current, "<span class='warning'><b>NOTE:</b> The individual you're filling in for was bound to [origin.enslaved_to.real_name].</span>")
 		var/datum/antagonist/changeling/C = origin.has_antag_datum(/datum/antagonist/changeling)
 		if(!C)
 			C = origin.add_antag_datum(/datum/antagonist/changeling/xenobio)
