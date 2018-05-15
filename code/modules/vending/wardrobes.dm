@@ -9,7 +9,6 @@
 	name = "\improper SecDrobe"
 	desc = "A vending machine for security and security-related clothing!"
 	product_ads = "Beat perps in style!; It's red so you can't see the blood!; You have the right to be fashionable!; Now you can be the fashion police you always wanted to be!"
-	req_access_txt = "1"
 	vend_reply = "Thank you for using the SecDrobe!"
 	products = list(/obj/item/clothing/suit/hooded/wintercoat/security = 1,
 					/obj/item/storage/backpack/security = 1,
@@ -31,7 +30,6 @@
 	name = "\improper MediDrobe"
 	desc = "A vending machine rumoured to be capable in dispensing clothing for medical personnel."
 	product_ads = "Make those blood stains look fashionable!!"
-	req_access_txt = "5"
 	vend_reply = "Thank you for using the MediDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 1,
 					/obj/item/storage/backpack/duffelbag/med = 1,
@@ -58,8 +56,7 @@
 /obj/machinery/vending/wardrobe/engi_wardrobe
 	name = "EngiDrobe"
 	desc = "A vending machine reknowned for vending industrial grade clothing."
-	product_ads = "Gauranteed to protect your feet from industrial accidents!; Afraid of radiation? Then wear yellow!"
-	req_access_txt = "11"
+	product_ads = "Guaranteed to protect your feet from industrial accidents!; Afraid of radiation? Then wear yellow!"
 	vend_reply = "Thank you for using the EngiDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 1,
 					/obj/item/storage/backpack/duffelbag/engineering = 1,
@@ -80,8 +77,7 @@
 /obj/machinery/vending/wardrobe/atmos_wardrobe
 	name = "AtmosDrobe"
 	desc = "This relatively unknown vending machine delivers clothing for Atmospherics Technicions, an equally unknown job."
-	product_ads = "Get your inflammible clothing right here!!!"
-	req_access_txt = "24"
+	product_ads = "Get your inflammable clothing right here!!!"
 	vend_reply = "Thank you for using the AtmosDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 1,
 					/obj/item/storage/backpack/duffelbag/engineering = 1,
@@ -101,7 +97,6 @@
 	name = "CargoDrobe"
 	desc = "A highly advanced vending machine for buying cargo related clothing for free."
 	product_ads = "Upgraded Assistant Style! Pick yours today!"
-	req_access_txt = "31"
 	vend_reply = "Thank you for using the CargoDrobe!"
 	products = list(/obj/item/clothing/suit/hooded/wintercoat/cargo = 1,
 					/obj/item/clothing/under/rank/cargotech = 3,
@@ -120,7 +115,6 @@
 	name = "RoboDrobe"
 	desc = "A vending machine designed to dispense clothing known only to roboticists."
 	product_ads = "You turn me TRUE, use defines!, 0100001101101100011011110111010001101000011010010110111001100111001000000110100001100101011100100110010100100001"
-	req_access_txt = "29"
 	vend_reply = "Thank you for using the RoboDrobe!"
 	products = list(/obj/item/clothing/glasses/hud/diagnostic = 2,
 					/obj/item/clothing/under/rank/roboticist = 2,
@@ -140,7 +134,6 @@
 	name = "SciDrobe"
 	desc = "A simple vending machine suitable to dispense well tailored science clothing. Endorsed by Cubans."
 	product_ads = "Longing for the smell of flesh plasma? Buy your science clothing now!"
-	req_access_txt = "7" //Toxins access. Unable to locate one for generic science access.
 	vend_reply = "Thank you for using the SciDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 1,
 					/obj/item/storage/backpack/science = 2,
@@ -162,7 +155,6 @@
 	name = "Hydrobe"
 	desc = "A machine with a catchy name. It dispenses botany related clothing and gear."
 	product_ads = "Do you love soil? Then buy our clothes!"
-	req_access_txt = "35"
 	vend_reply = "Thank you for using the Hydrobe!"
 	products = list(/obj/item/storage/backpack/botany = 2,
 					/obj/item/storage/backpack/satchel/hyd = 2,
@@ -182,7 +174,6 @@
 	name = "CuraDrobe"
 	desc = "A lowstock vendor only capable of vending clothing for curators and librarians."
 	product_ads = "Our clothes are endorsed by treasure hunters everywhere!"
-	req_access_txt = "37"
 	vend_reply = "Thank you for using the CuraDrobe!"
 	products = list(/obj/item/clothing/head/fedora/curator = 1,
 					/obj/item/clothing/suit/curator = 1,
@@ -200,8 +191,7 @@
 /obj/machinery/vending/wardrobe/bar_wardrobe
 	name = "BarDrobe"
 	desc = "A stylish vendor to dispense the most stylish bar clothing!"
-	product_ads = "Gauranteed to prevent stains from spilled drinks!"
-	req_access_txt = "25"
+	product_ads = "Guaranteed to prevent stains from spilled drinks!"
 	vend_reply = "Thank you for using the BarDrobe!"
 	products = list(/obj/item/clothing/head/that = 2,
 					/obj/item/radio/headset/headset_srv = 2,
@@ -227,8 +217,7 @@
 /obj/machinery/vending/wardrobe/chef_wardrobe
 	name = "ChefDrobe"
 	desc = "This vending machine might not dispense meat, but it certainly dispenses chef related clothing."
-	product_ads = "Our clothes are gauranteed to protect you from food splatters!"
-	req_access_txt = "28"
+	product_ads = "Our clothes are guaranteed to protect you from food splatters!"
 	vend_reply = "Thank you for using the ChefDrobe!"
 	products = list(/obj/item/clothing/under/waiter = 2,
 					/obj/item/radio/headset/headset_srv = 2,
@@ -252,7 +241,6 @@
 	name = "JaniDrobe"
 	desc = "A self cleaning vending machine capable of dispensing clothing for janitors."
 	product_ads = "Come and get your janitorial clothing, now endorsed by lizard janitors everywhere!"
-	req_access_txt = "26"
 	vend_reply = "Thank you for using the JaniDrobe!"
 	products = list(/obj/item/clothing/under/rank/janitor = 1,
 					/obj/item/cartridge/janitor = 1,
@@ -280,7 +268,6 @@
 	name = "LawDrobe"
 	desc = "Objection! This wardrobe dispenses the rule of law... and lawyer clothing."
 	product_ads = "OBJECTION! Get the rule of law for yourself!"
-	req_access_txt = "38"
 	vend_reply = "Thank you for using the JaniDrobe!"
 	products = list(/obj/item/clothing/under/lawyer/female = 1,
 					/obj/item/clothing/under/lawyer/black = 1,
@@ -304,7 +291,6 @@
 	name = "ChapDrobe"
 	desc = "This most blessed and holy machine vends clothing only suitable for chaplains to gaze upon."
 	product_ads = "Are you being botheres by cultists or pesky reverants? Then come and dress like the holy man!"
-	req_access_txt = "22"
 	vend_reply = "Thank you for using the ChapDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector/cosmetology = 1,
 					/obj/item/clothing/under/rank/chaplain = 1,
@@ -332,7 +318,6 @@
 	name = "ChemDrobe"
 	desc = "A vending machine for dispensing chemistry related clothing."
 	product_ads = "Our clothes are 0.5% more resistant to acid spills! Get yours now!"
-	req_access_txt = "33"
 	vend_reply = "Thank you for using the ChemDrobe!"
 	products = list(/obj/item/clothing/under/rank/chemist = 2,
 					/obj/item/clothing/shoes/sneakers/white = 2,
@@ -351,7 +336,6 @@
 	name = "GeneDrobe"
 	desc = "A machine for dispensing clothing related to genetics."
 	product_ads = "Perfect for the mad scientist in you!"
-	req_access_txt = "9"
 	vend_reply = "Thank you for using the GeneDrobe!"
 	products = list(/obj/item/clothing/under/rank/geneticist = 2,
 					/obj/item/clothing/shoes/sneakers/white = 2,
@@ -369,7 +353,6 @@
 	name = "ViroDrobe"
 	desc = "An unsterilized machine for dispending virology related clothing."
 	product_ads = " Virusses getting you down? Then upgrade to sterilized clothing today!"
-	req_access_txt = "39"
 	vend_reply = "Thank you for using the ViroDrobe"
 	products = list(/obj/item/clothing/under/rank/virologist = 2,
 					/obj/item/clothing/shoes/sneakers/white = 2,
