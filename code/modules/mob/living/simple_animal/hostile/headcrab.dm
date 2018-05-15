@@ -87,7 +87,7 @@
 				Remove(owner)
 				qdel(src)
 		else if(time > cooldown)
-			notify_ghosts("A changeling is about to burst!", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+			notify_ghosts("A changeling is about to burst! Click to become the changeling!", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
 			cooldown = time + cooldown // (x*2cooldown)+cooldown where x is the amount of times the above notification is thrown. tldr it gets longer each time it's thrown.
 
 /obj/item/organ/body_egg/changeling_egg/proc/Pop()
