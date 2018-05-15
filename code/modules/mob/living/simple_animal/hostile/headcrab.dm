@@ -72,7 +72,7 @@
 /obj/item/organ/body_egg/changeling_egg/attack_ghost(mob/dead/observer/user)
 	. = ..()
 	if(isnull(origin) && !QDELETED(user) && user.mind) //you managed to be pulled (IE cloning) right as you attacked.
-	 	origin = user.mind
+		origin = user.mind
 		to_chat(user, "<span class='notice'>You will later spawn as a changeling, please remain as a ghost during this time or you may lose your spot!</span>")
 
 /obj/item/organ/body_egg/changeling_egg/egg_process()
