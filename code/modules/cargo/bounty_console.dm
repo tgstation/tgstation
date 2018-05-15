@@ -12,17 +12,21 @@
 	. = ..()
 	printer_ready = world.time + PRINTER_TIMEOUT
 
-
 /obj/machinery/computer/bounty/proc/print_paper()
-	var/obj/item/paper/P = new /obj/item/paper(loc)
-	P.name = "paper - Bounties"
-	P.info = "<h2>Nanotrasen Cargo Bounties</h2></br>"
+	new /obj/item/paper/bounty_printout(loc)
+
+/obj/item/paper/bounty_printout
+	name = "paper - Bounties"
+
+/obj/item/paper/bounty_printout/Initialize()
+	. = ..()
+	info = "<h2>Nanotrasen Cargo Bounties</h2></br>"
 	for(var/datum/bounty/B in GLOB.bounties_list)
 		if(B.claimed)
 			continue
-		P.info += "<h3>[B.name]</h3>"
-		P.info += "<ul><li>Reward: [B.reward] credits</li>"
-		P.info += "<li>Completed: [B.completion_string()]</li></ul>"
+		info += "<h3>[B.name]</h3>"
+		info += "<ul><li>Reward: [B.reward_string()]</li>"
+		info += "<li>Completed: [B.completion_string()]</li></ul>"
 
 /obj/machinery/computer/bounty/ui_interact(mob/user)
 	. = ..()
@@ -48,11 +52,11 @@
 		if(B.high_priority)
 			dat += text("<td><b>[]</b></td>", B.name)
 			dat += text("<td><b>High Priority:</b> []</td>", B.description)
-			dat += text("<td><b>[]</b> Credits</td>", B.reward)
+			dat += text("<td><b>[]</b></td>", B.reward_string())
 		else
 			dat += text("<td>[]</td>", B.name)
 			dat += text("<td>[]</td>", B.description)
-			dat += text("<td>[] Credits</td>", B.reward)
+			dat += text("<td>[]</td>", B.reward_string())
 		dat += text("<td>[]</td>", B.completion_string())
 		if(B.can_claim())
 			dat += text("<td><A href='?src=[REF(src)];refresh=1;choice=Claim;d_rec=[REF(B)]'>Claim</a></td>")
@@ -63,7 +67,7 @@
 		dat += "</tr>"
 	dat += "</table>"
 
-	var/datum/browser/popup = new(user, "bounties", "Nanotrasen Bounties", 800, 600)
+	var/datum/browser/popup = new(user, "bounties", "Nanotrasen Bounties", 700, 600)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
