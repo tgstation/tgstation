@@ -143,7 +143,7 @@
 	materials = list()
 
 /obj/item/kitchen/knife/combat/cyborg
-	name = "cyborg knife"
+	name = "knife"
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "knife"
 	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
