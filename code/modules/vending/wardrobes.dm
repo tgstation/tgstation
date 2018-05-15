@@ -28,7 +28,7 @@
 
 /obj/machinery/vending/wardrobe/medi_wardrobe
 	name = "\improper MediDrobe"
-	desc = "A vending machine rumoured to be capable in dispensing clothing for medical personnel."
+	desc = "A vending machine rumoured to be capable of dispensing clothing for medical personnel."
 	product_ads = "Make those blood stains look fashionable!!"
 	vend_reply = "Thank you for using the MediDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 1,
@@ -55,7 +55,7 @@
 
 /obj/machinery/vending/wardrobe/engi_wardrobe
 	name = "EngiDrobe"
-	desc = "A vending machine reknowned for vending industrial grade clothing."
+	desc = "A vending machine renowned for vending industrial grade clothing."
 	product_ads = "Guaranteed to protect your feet from industrial accidents!; Afraid of radiation? Then wear yellow!"
 	vend_reply = "Thank you for using the EngiDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 1,
@@ -76,7 +76,7 @@
 
 /obj/machinery/vending/wardrobe/atmos_wardrobe
 	name = "AtmosDrobe"
-	desc = "This relatively unknown vending machine delivers clothing for Atmospherics Technicions, an equally unknown job."
+	desc = "This relatively unknown vending machine delivers clothing for Atmospherics Technicians, an equally unknown job."
 	product_ads = "Get your inflammable clothing right here!!!"
 	vend_reply = "Thank you for using the AtmosDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 1,
