@@ -2464,15 +2464,15 @@
 	else if(href_list["slowquery"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/a = href_list["slowquery"]
-		if(a == "yes")
-			log_qdl("[usr.key] | reported hang")
-			if(alert(usr, "Had you just press any admin buttons?", "Query hang report", "Yes", "No") == "Yes")
-				var/s = input(usr,"What were you just doing?","Query hang report") as null|text
-				if(s)
-					log_qdl("[usr.key] | [s]")
-		else if(a == "no")
-			log_qdl("[usr.key] | reported no hang")
+		var/answer = href_list["slowquery"]
+		if(answer == "yes")
+			log_query_debug("[usr.key] | Reported a server hang")
+			if(alert(usr, "Had you just press any admin buttons?", "Query server hang report", "Yes", "No") == "Yes")
+				var/response = input(usr,"What were you just doing?","Query server hang report") as null|text
+				if(response)
+					log_query_debug("[usr.key] | [response]")
+		else if(answer == "no")
+			log_query_debug("[usr.key] | Reported no server hang")
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))
