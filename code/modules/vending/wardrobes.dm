@@ -8,7 +8,7 @@
 /obj/machinery/vending/wardrobe/sec_wardrobe
 	name = "\improper SecDrobe"
 	desc = "A vending machine for security and security-related clothing!"
-	product_ads = "Beat perps in style!; It's red so you can't see the blood!; You have the right to be fashionable!; Now you can be the fashion police you always wanted to be!"
+	product_ads = "Beat perps in style!;It's red so you can't see the blood!;You have the right to be fashionable!;Now you can be the fashion police you always wanted to be!"
 	vend_reply = "Thank you for using the SecDrobe!"
 	products = list(/obj/item/clothing/suit/hooded/wintercoat/security = 1,
 					/obj/item/storage/backpack/security = 1,
@@ -61,7 +61,7 @@
 /obj/machinery/vending/wardrobe/engi_wardrobe
 	name = "EngiDrobe"
 	desc = "A vending machine renowned for vending industrial grade clothing."
-	product_ads = "Guaranteed to protect your feet from industrial accidents!; Afraid of radiation? Then wear yellow!"
+	product_ads = "Guaranteed to protect your feet from industrial accidents!;Afraid of radiation? Then wear yellow!"
 	vend_reply = "Thank you for using the EngiDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 1,
 					/obj/item/storage/backpack/duffelbag/engineering = 1,
@@ -119,7 +119,7 @@
 /obj/machinery/vending/wardrobe/robo_wardrobe
 	name = "RoboDrobe"
 	desc = "A vending machine designed to dispense clothing known only to roboticists."
-	product_ads = "You turn me TRUE, use defines!, 0100001101101100011011110111010001101000011010010110111001100111001000000110100001100101011100100110010100100001"
+	product_ads = "You turn me TRUE, use defines!;0100001101101100011011110111010001101000011010010110111001100111001000000110100001100101011100100110010100100001"
 	vend_reply = "Thank you for using the RoboDrobe!"
 	products = list(/obj/item/clothing/glasses/hud/diagnostic = 2,
 					/obj/item/clothing/under/rank/roboticist = 2,
