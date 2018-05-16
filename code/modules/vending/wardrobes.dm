@@ -359,7 +359,7 @@
 /obj/machinery/vending/wardrobe/viro_wardrobe
 	name = "ViroDrobe"
 	desc = "An unsterilized machine for dispending virology related clothing."
-	product_ads = " Virsses getting you down? Then upgrade to sterilized clothing today!"
+	product_ads = " Viruses getting you down? Then upgrade to sterilized clothing today!"
 	vend_reply = "Thank you for using the ViroDrobe"
 	products = list(/obj/item/clothing/under/rank/virologist = 2,
 					/obj/item/clothing/shoes/sneakers/white = 2,
