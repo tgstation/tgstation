@@ -252,13 +252,13 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings, listen_ooc)()
 
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings, toggleroundendreport)()
-	set name = "Toggle Endround Report Popup"
+	set name = "Toggle Roundend Report Popup"
 	set category = "Preferences"
 	set desc = "Roundend Report"
 	usr.client.prefs.toggles ^= AUTOOPEN_ROUNDEND_REPORT
 	usr.client.prefs.save_preferences()
 	to_chat(usr, "You will [(usr.client.prefs.toggles & AUTOOPEN_ROUNDEND_REPORT) ? "now" : "no longer"] automatically see roundend reports.")
-	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Endround Report", "[usr.client.prefs.toggles & AUTOOPEN_ROUNDEND_REPORT ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Roundend Report", "[usr.client.prefs.toggles & AUTOOPEN_ROUNDEND_REPORT ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /datum/verbs/menu/Settings/toggleroundendreport/Get_checked(client/C)
 	return C.prefs.toggles & AUTOOPEN_ROUNDEND_REPORT
 
