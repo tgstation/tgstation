@@ -158,7 +158,7 @@
 	desc = "A timeless classic."
 	ingredients_placement = INGREDIENTS_STACKPLUSTOP
 	icon = 'icons/obj/food/burgerbread.dmi'
-	icon_state = "bun"
+	icon_state = "custburg"
 	foodtype = GRAIN
 
 

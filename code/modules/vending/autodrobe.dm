@@ -114,11 +114,11 @@
 		              /obj/item/clothing/mask/muzzle = 2)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2,
 		           /obj/item/clothing/head/pirate/captain = 2,
-		           /obj/item/clothing/head/helmet/roman = 1,
-		           /obj/item/clothing/head/helmet/roman/legionaire = 1,
+		           /obj/item/clothing/head/helmet/roman/fake = 1,
+		           /obj/item/clothing/head/helmet/roman/legionaire/fake = 1,
 		           /obj/item/clothing/under/roman = 1,
 		           /obj/item/clothing/shoes/roman = 1,
-		           /obj/item/shield/riot/roman = 1,
+		           /obj/item/shield/riot/roman/fake = 1,
 		           /obj/item/skub = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
 

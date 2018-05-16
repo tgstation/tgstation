@@ -153,7 +153,7 @@
 				H.confused += 15
 				H.adjustBrainLoss(10, 160)
 			if(3)
-				H.hallucination += 80
+				H.hallucination += 60
 
 /obj/item/organ/heart/gland/pop
 	cooldown_low = 900

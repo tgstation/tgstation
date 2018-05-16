@@ -65,8 +65,8 @@
 	var/where = H.equip_in_one_of_slots(heirloom, slots)
 	if(!where)
 		where = "at your feet"
-		if(where == "in your backpack")
-			H.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, H)
+	else if(where == "in your backpack")
+		H.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, H)
 	where_text = "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>"
 
 /datum/quirk/family_heirloom/post_add()
@@ -231,15 +231,8 @@
 	if(prob(2)) //we'll all be mad soon enough
 		madness()
 
-/datum/quirk/insanity/proc/madness(mad_fools)
-	set waitfor = FALSE
-	if(!mad_fools)
-		mad_fools = prob(20)
-	if(mad_fools)
-		var/hallucination_type = pick(subtypesof(/datum/hallucination/rds))
-		new hallucination_type (quirk_holder, FALSE)
-	else
-		quirk_holder.hallucination += rand(10, 50)
+/datum/quirk/insanity/proc/madness()
+	quirk_holder.hallucination += rand(10, 25)
 
 /datum/quirk/insanity/post_add() //I don't /think/ we'll need this but for newbies who think "roleplay as insane" = "license to kill" it's probably a good thing to have
 	if(!quirk_holder.mind || quirk_holder.mind.special_role)
