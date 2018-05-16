@@ -194,7 +194,7 @@
 "dL" = (/obj/machinery/mineral/processing_unit{dir = 1; output_dir = 2},/turf/open/floor/plating,/area/mine/laborcamp)
 "dM" = (/obj/machinery/computer/rdconsole{name = "Pod Manufacturing R&D Console"},/turf/open/floor/plasteel,/area/pod_hangar/mining)
 "dN" = (/obj/structure/table,/obj/machinery/cell_charger,/obj/item/stock_parts/cell/high,/obj/item/stock_parts/cell/high,/turf/open/floor/plasteel,/area/pod_hangar/mining)
-"dO" = (/obj/structure/table,/obj/item/storage/toolbox/mechanical,/turf/open/floor/plasteel,/area/pod_hangar/mining)
+"dO" = (/obj/structure/table,/obj/item/storage/toolbox/mechanical,/obj/item/book/manual/podmanual,/turf/open/floor/plasteel,/area/pod_hangar/mining)
 "dP" = (/obj/structure/table,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/glass,/obj/item/stack/cable_coil/red,/obj/machinery/light,/turf/open/floor/plasteel,/area/pod_hangar/mining)
 "dQ" = (/obj/machinery/mecha_part_fabricator/podfab{dir = 1},/turf/open/floor/plasteel,/area/pod_hangar/mining)
 "dR" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/cable{icon_state = "1-2"},/turf/open/floor/plasteel,/area/pod_hangar/mining)

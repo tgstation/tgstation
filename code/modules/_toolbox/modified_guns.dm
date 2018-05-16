@@ -38,5 +38,5 @@
 		shaded_charge = 0
 		ammo_x_offset = 2
 		charge_sections = 5
-		update_icon()
 	. = ..()
+	update_icon()

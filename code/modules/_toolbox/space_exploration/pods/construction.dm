@@ -430,3 +430,54 @@
 #undef P_C_ERROR_ALREADY_HAS
 #undef P_C_ERROR_NEEDS_TOOL
 #undef P_CS_CELL
+
+/obj/item/book/manual/podmanual
+	name = "Pod construction guide"
+	icon_state ="bookEngineering"
+	author = "Pody Mcpodface"
+	title = "Pod Construction Guide"
+	dat = {"
+		<html>
+		<head>
+		<title>Page Title</title>
+		</head>
+		<body>
+
+		<B><font size='4'>This is a guide on how to construct a space pod from scratch.</font></B><BR><BR>
+
+		<B>You will need the following parts from the Pod Fabricator:</B><BR>
+		left frame<BR>
+		right frame<BR>
+		pod circuit module<BR>
+		pod control module<BR>
+		pod covers module<BR>
+		pod armor module(any)<BR>
+		pod engine module(any)<BR>
+		Power cell(any)<BR><BR>
+
+		<B>Construction</B><BR>
+		Follow these steps once you have all the parts ready.<BR><BR>
+		<B>Step 1:</B> Hold either the left or right frame modules in your hand and click it in your hand to unpackage it on to the floor below your feet. Do this for both the left and right
+
+		frames.<BR>
+		<B>Step 2:</B> Make sure both frames are arranged together to form the correct shape.<BR>
+		<B>Step 3:</B> Use a welding tool to secure the frames together in to one piece.<BR>
+		<B>Step 4:</B> Attach the pod circuit module to the frame.<BR>
+		<B>Step 5:</B> Use a screwdriver on the frame to secure the circuits in place.<BR>
+		<B>Step 6:</B> Attach the engine module to the frame.<BR>
+		<B>Step 7:</B> Use a wrench on the frame to bolt the engine in place.<BR>
+		<B>Step 8:</B> Add wires to the frame.<BR>
+		<B>Step 9:</B> Use wirecutters on the frame to connect the wires together.<BR>
+		<B>Step 10:</B> Attach pod covers to the frame.<BR>
+		<B>Step 11:</B> Use a welding tool on the frame to secure the pod covers.<BR>
+		<B>Step 12:</B> Attach the pod control module to the frame.<BR>
+		<B>Step 13:</B> Use a multitool on the frame to configure the control module.<BR>
+		<B>Step 14:</B> Attach the power cell to the frame.<BR>
+		<B>Step 15:</B> Use a screwdriver on the frame to secure it the power cell.<BR>
+		<B>Step 16:</B> Attach pod armor to the frame.<BR>
+		<BR>
+		Your space pod is now complete! You can now begin adding upgrades to your pod.
+
+		</body>
+		</html>
+		"}
