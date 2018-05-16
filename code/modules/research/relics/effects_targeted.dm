@@ -239,8 +239,8 @@
 	var/faction = "neutral"
 
 /datum/relic_effect/targeted/tame/activate(obj/item/A,mob/living/target,mob/user)
-	if(istype(target) && !(faction in target.factions))
-		target.factions |= faction
+	if(istype(target) && !(faction in target.faction))
+		target.faction |= faction
 		to_chat(target,"<span class='notice'>You feel tame.</span>")
 
 /datum/relic_effect/targeted/fireworks/activate(obj/item/A,atom/target,mob/user)
@@ -428,7 +428,7 @@
 
 /datum/relic_target/ranged/line/get_targets(obj/item/A, atom/target)
 	. = list()
-	if(target in get_line(distance,get_turf(A)))
+	if(target in getline(distance,get_turf(A)))
 		. += get_turf(target)
 
 /datum/relic_target/ranged/crowfoot

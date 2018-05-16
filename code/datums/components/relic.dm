@@ -51,6 +51,6 @@
 	process_callbacks += callback
 
 /datum/component/relic/proc/add_attackby(callback)
-	if(!LAZYLEN(process_callbacks))
-		callback.RegisterSignal(COMSIG_PARENT_ATTACKBY, CALLBACK(src, .proc/attackby, parent))
+	if(!LAZYLEN(attackby_callbacks))
+		RegisterSignal(COMSIG_PARENT_ATTACKBY, CALLBACK(src, .proc/attackby, parent))
 	attackby_callbacks += callback

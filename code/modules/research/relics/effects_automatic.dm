@@ -67,7 +67,7 @@
 	if(!..())
 		return
 	var/datum/gas_mixture/environment = A.return_air()
-	if(environment && environment.get_pressure() < max_pressure)
+	if(environment && environment.return_pressure() < max_pressure)
 		var/datum/gas_mixture/merger = new
 		merger.assert_gas(spawn_id)
 		merger.gases[spawn_id][MOLES] = produced_moles
