@@ -204,8 +204,9 @@
 /mob/living/proc/has_quirk(quirk)
 	return roundstart_quirks[quirk]
 
-/mob/living/proc/remove_all_traits()
-	status_traits = list()
+/mob/living/proc/remove_all_traits(leave_roundstart = FALSE)
+	for(var/kebab in status_traits)
+		remove_trait(kebab, null, leave_roundstart)
 
 /////////////////////////////////// TRAIT PROCS ////////////////////////////////////
 
