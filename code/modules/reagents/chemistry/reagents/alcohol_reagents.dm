@@ -1671,8 +1671,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return ..()
 
 /datum/reagent/consumable/ethanol/fanciulli/on_mob_add(mob/living/M)
-	if(L.health > 0)
-		L.adjustStaminaLoss(20)
+	if(M.health > 0)
+		M.adjustStaminaLoss(20)
 		. = TRUE
 	..()
 
@@ -1698,7 +1698,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return ..()
 
 /datum/reagent/consumable/ethanol/branca_menta/on_mob_add(mob/living/M)
-	if(L.health > 0)
-		L.adjustStaminaLoss(35)
+	if(M.health > 0)
+		M.adjustStaminaLoss(35)
 		. = TRUE
 	..()
