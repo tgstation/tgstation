@@ -1,0 +1,6 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - code_imp: "Added /syndicate subtypes for air alarms and APCs."
+  - bugfix: "Added missing stock parts to the syndicate lavaland base."
+  - tweak: "Added kitchen related circuit boards to the syndie lavaland base."
