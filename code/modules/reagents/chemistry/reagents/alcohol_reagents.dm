@@ -1621,7 +1621,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#1B2E24" // rgb: 27, 46, 36
 	boozepwr = 80
 	taste_description = "utter bitterness"
-	glass_icon_state = "fernetpuro"
 	glass_name = "glass of fernet"
 	glass_desc = "A glass of pure Fernet. Only an absolute madman would drink this alone." //Hi Kevum
 
