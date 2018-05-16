@@ -14,7 +14,7 @@
 	<ui-display title='Detected Cameras'>
 		<span><em>(Hint: You can search for a specific camera using Ctrl-F)</em></span><br><br>
 		{{#each data.cameras}}
-			<ui-button action='PRG_details' params='{"target" : "{{camera_name}}"}' style = '{{camera_status ? null : "danger"}}'>{{camera_status ? "Online" : "Offline"}} - Details</ui-button> {{camera_name}}<br><br>
+			<ui-button action='PRG_viewfeed' state='{{camera_status ? null : "disabled"}}' icon='video-camera' params='{"target" : "{{camera_name}}"}'>{{camera_status ? "View feed" : "Feed error"}}</ui-button> <ui-button action='PRG_details' params='{"target" : "{{camera_name}}"}' style = '{{camera_status ? null : "danger"}}'> Details</ui-button> {{camera_name}}<br><br>
 		{{else}}
 			<ui-subdisplay title='No cameras found.'>
 			<em>Please check your desired network filters and try reloading the camera list. For further assistance, contact Nanotrasen Technical Support.</em>
