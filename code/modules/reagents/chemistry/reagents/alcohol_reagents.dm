@@ -1663,6 +1663,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "fanciulli"
 	glass_name = "glass of fanciulli"
 	glass_desc = "A glass of Fanciulli. It's just Manhattan with Fernet."
+	
+/datum/reagent/consumable/ethanol/fanciulli/on_mob_life(mob/living/M)
+	
+	M.nutrition = max(M.nutrition - 5, 0)
+	M.overeatduration = 0
+	return ..()
 
 /datum/reagent/consumable/ethanol/fanciulli/on_mob_add(mob/living/M)
 	if(L.health > 0)
@@ -1685,6 +1691,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/branca_menta/on_mob_life(mob/living/M)
 	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT, T0C)
+	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
+		M.adjustToxLoss(1*REM, 0)
+	M.nutrition = max(M.nutrition - 5, 0)
+	M.overeatduration = 0
 	return ..()
 
 /datum/reagent/consumable/ethanol/branca_menta/on_mob_add(mob/living/M)
