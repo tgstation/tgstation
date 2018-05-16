@@ -84,3 +84,27 @@
 	E.visible_message("<span class='warning'>[E] knocks over [O].</span>")
 	E.investigate_log("Experimentor has splashed [O].", INVESTIGATE_EXPERIMENTOR)
 	chem_splash(get_turf(E),3,list(O.reagents))
+
+/datum/experiment/enable_improve
+	weight = 20
+	experiment_type = /datum/experiment_type/poke
+	base_points = 250
+	critical = TRUE
+
+/datum/experiment/enable_improve/can_perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = ..()
+	if(. && E.linked_console)
+		var/datum/techweb/web = E.linked_console.stored_research
+		. = web.all_experiment_types[/datum/experiment_type/improve].hidden || web.all_experiment_types[/datum/experiment_type/improve].uses <= 0
+
+/datum/experiment/enable_clone/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+	. = ..()
+	if(E.linked_console)
+		var/datum/techweb/web = E.linked_console.stored_research
+		var/datum/experiment_type/clone/mode = web.all_experiment_types[/datum/experiment_type/improve]
+		mode.hidden = FALSE
+		mode.uses = E.bad_thing_coeff
+		E.experiments[mode.type] = mode //Give it to this experimentor. Others need to relink to unlock.
+
+		E.visible_message("[E] has activated an unknown subroutine!")
+		playsound(E, 'sound/effects/genetics.ogg', 50, 1)

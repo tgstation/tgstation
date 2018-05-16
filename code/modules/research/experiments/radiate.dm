@@ -11,7 +11,7 @@
 	. = ..()
 	if(. && E.linked_console)
 		var/datum/techweb/web = E.linked_console.stored_research
-		. = web.all_experiment_types[/datum/experiment_type/clone].hidden //Only perform if clonemode is not enabled
+		. = web.all_experiment_types[/datum/experiment_type/clone].hidden || web.all_experiment_types[/datum/experiment_type/radiate].uses <= 0 //Only perform if clonemode is not enabled or is out of uses
 
 /datum/experiment/enable_clone/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
