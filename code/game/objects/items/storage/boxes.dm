@@ -966,3 +966,45 @@ obj/item/storage/box/clown
 /obj/item/storage/box/holy_grenades/PopulateContents()
 	for(var/i in 1 to 7)
 		new/obj/item/grenade/chem_grenade/holy(src)
+
+/obj/item/storage/box/stockparts/basic //for ruins where it's a bad idea to give access to an autolathe/protolathe, but still want to make stock parts accessible
+	name = "box of stock parts"
+	desc = "Contains a variety of basic stock parts."
+
+/obj/item/storage/box/stockparts/basic/PopulateContents()
+	new /obj/item/stock_parts/capacitor(src)
+	new /obj/item/stock_parts/capacitor(src)
+	new /obj/item/stock_parts/capacitor(src)
+	new /obj/item/stock_parts/scanning_module(src)
+	new /obj/item/stock_parts/scanning_module(src)
+	new /obj/item/stock_parts/scanning_module(src)
+	new /obj/item/stock_parts/manipulator(src)
+	new /obj/item/stock_parts/manipulator(src)
+	new /obj/item/stock_parts/manipulator(src)
+	new /obj/item/stock_parts/micro_laser(src)
+	new /obj/item/stock_parts/micro_laser(src)
+	new /obj/item/stock_parts/micro_laser(src)
+	new /obj/item/stock_parts/matter_bin(src)
+	new /obj/item/stock_parts/matter_bin(src)
+	new /obj/item/stock_parts/matter_bin(src)
+
+/obj/item/storage/box/stockparts/deluxe
+	name = "box of deluxe stock parts"
+	desc = "Contains a variety of deluxe stock parts."
+
+/obj/item/storage/box/stockparts/deluxe/PopulateContents()
+	new /obj/item/stock_parts/capacitor/quadratic(src)
+	new /obj/item/stock_parts/capacitor/quadratic(src)
+	new /obj/item/stock_parts/capacitor/quadratic(src)
+	new /obj/item/stock_parts/scanning_module/triphasic(src)
+	new /obj/item/stock_parts/scanning_module/triphasic(src)
+	new /obj/item/stock_parts/scanning_module/triphasic(src)
+	new /obj/item/stock_parts/manipulator/femto(src)
+	new /obj/item/stock_parts/manipulator/femto(src)
+	new /obj/item/stock_parts/manipulator/femto(src)
+	new /obj/item/stock_parts/micro_laser/quadultra(src)
+	new /obj/item/stock_parts/micro_laser/quadultra(src)
+	new /obj/item/stock_parts/micro_laser/quadultra(src)
+	new /obj/item/stock_parts/matter_bin/bluespace(src)
+	new /obj/item/stock_parts/matter_bin/bluespace(src)
+	new /obj/item/stock_parts/matter_bin/bluespace(src)
