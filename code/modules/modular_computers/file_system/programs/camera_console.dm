@@ -243,12 +243,20 @@
 			for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
 				if(C.c_tag == new_ctag)
 					sel = C
-			
 			if(isnull(sel))
 				camera_error(reason = "Selected camera is null")
+			
 			screen_number = SCREEN_INFO
 			return TRUE
 		if("PRG_viewfeed")			//View camera feed
+			var/new_ctag = params["target"]
+			for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+				if(C.c_tag == new_ctag)
+					sel = C
+			if(isnull(sel))
+				camera_error(reason = "Selected camera is null")
+			
+			
 			orig_x = computer.loc.x
 			orig_y = computer.loc.y
 			orig_z = computer.loc.z
