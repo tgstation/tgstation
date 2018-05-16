@@ -171,7 +171,7 @@
 	refill_canister = /obj/item/vending_refill/wardrobe/hydro_wardrobe
 
 /obj/item/vending_refill/wardrobe/hydro_wardrobe
-	machine_name = "SciDrobe"
+	machine_name = "HyDrobe"
 	charges = list(6, 0, 0)
 	init_charges = list(6, 0, 0)
 
@@ -201,8 +201,10 @@
 	products = list(/obj/item/clothing/head/that = 2,
 					/obj/item/radio/headset/headset_srv = 2,
 					/obj/item/clothing/under/sl_suit = 2,
-					/obj/item/clothing/under/rank/bartender = 2,
-					/obj/item/clothing/accessory/waistcoat = 2,
+					/obj/item/clothing/under/rank/bartender = 2
+					/obj/item/clothing/under/rank/bartender/purple = 1,
+					/obj/item/clothing/accessory/waistcoat = 2
+					/obj/item/clothing/suit/apron/purple_bartender = 1,
 					/obj/item/clothing/head/soft/black = 2,
 					/obj/item/clothing/shoes/sneakers/black = 2,
 					/obj/item/reagent_containers/glass/rag = 2,
@@ -215,7 +217,7 @@
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
 
 /obj/item/vending_refill/wardrobe/bar_wardrobe
-	machine_name = "CuraDrobe"
+	machine_name = "BarDrobe"
 	charges = list(8, 0, 0)
 	init_charges = list(8, 0, 0)
 
@@ -273,7 +275,7 @@
 	name = "LawDrobe"
 	desc = "Objection! This wardrobe dispenses the rule of law... and lawyer clothing."
 	product_ads = "OBJECTION! Get the rule of law for yourself!"
-	vend_reply = "Thank you for using the JaniDrobe!"
+	vend_reply = "Thank you for using the LawDrobe!"
 	products = list(/obj/item/clothing/under/lawyer/female = 1,
 					/obj/item/clothing/under/lawyer/black = 1,
 					/obj/item/clothing/under/lawyer/red = 1,
@@ -295,7 +297,7 @@
 /obj/machinery/vending/wardrobe/chap_wardrobe
 	name = "ChapDrobe"
 	desc = "This most blessed and holy machine vends clothing only suitable for chaplains to gaze upon."
-	product_ads = "Are you being botheres by cultists or pesky reverants? Then come and dress like the holy man!"
+	product_ads = "Are you being bothered by cultists or pesky revenants? Then come and dress like the holy man!"
 	vend_reply = "Thank you for using the ChapDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector/cosmetology = 1,
 					/obj/item/clothing/under/rank/chaplain = 1,
@@ -357,7 +359,7 @@
 /obj/machinery/vending/wardrobe/viro_wardrobe
 	name = "ViroDrobe"
 	desc = "An unsterilized machine for dispending virology related clothing."
-	product_ads = " Virusses getting you down? Then upgrade to sterilized clothing today!"
+	product_ads = " Virsses getting you down? Then upgrade to sterilized clothing today!"
 	vend_reply = "Thank you for using the ViroDrobe"
 	products = list(/obj/item/clothing/under/rank/virologist = 2,
 					/obj/item/clothing/shoes/sneakers/white = 2,
