@@ -53,7 +53,7 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
-	if(slot == slot_wear_suit) //we only give the mob the ability to activate the vest if he's actually wearing it.
+	if(slot == SLOT_WEAR_SUIT) //we only give the mob the ability to activate the vest if he's actually wearing it.
 		return 1
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
@@ -207,7 +207,7 @@
 /obj/item/abductor/gizmo/proc/scan(atom/target, mob/living/user)
 	if(ishuman(target))
 		console.AddSnapshot(target)
-		to_chat(user, "<span class='notice'>You scan [target] and add them to the database.</span>")
+		to_chat(user, "<span class='notice'>You scan [target] and add [target.p_them()] to the database.</span>")
 
 /obj/item/abductor/gizmo/proc/mark(atom/target, mob/living/user)
 	if(marked == target)
@@ -338,7 +338,7 @@
 		if(QDELETED(G))
 			return
 
-		if(istype(C.get_item_by_slot(slot_head), /obj/item/clothing/head/foilhat))
+		if(istype(C.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
 			to_chat(user, "<span class='warning'>Your target seems to have some sort of protective headgear on, blocking the message from being sent!</span>")
 			return
 
@@ -425,7 +425,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	item_state = "wonderprod"
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 7
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/toggle_mode)
@@ -515,9 +515,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
 	if(L.incapacitated(TRUE, TRUE))
-		if(istype(L.get_item_by_slot(slot_head), /obj/item/clothing/head/foilhat))
+		if(istype(L.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
 			to_chat(user, "<span class='warning'>The specimen's protective headgear is interfering with the sleep inducement!</span>")
-			L.visible_message("<span class='danger'>[user] tried to induced sleep in [L] with [src], but their headgear protected them!</span>", \
+			L.visible_message("<span class='danger'>[user] tried to induced sleep in [L] with [src], but [L.p_their()] headgear protected [L.p_them()]!</span>", \
 								"<span class='userdanger'>You feel a strange wave of heavy drowsiness wash over you, but your headgear deflects most of it!</span>")
 			L.drowsyness += 2
 			return
@@ -527,9 +527,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		L.Sleeping(1200)
 		add_logs(user, L, "put to sleep")
 	else
-		if(istype(L.get_item_by_slot(slot_head), /obj/item/clothing/head/foilhat))
+		if(istype(L.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
 			to_chat(user, "<span class='warning'>The specimen's protective headgear is completely blocking our sleep inducement methods!</span>")
-			L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src], but their headgear completely protected them!</span>", \
+			L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src], but [L.p_their()] headgear completely protected [L.p_them()]!</span>", \
 								"<span class='userdanger'>Any sense of drowsiness is quickly diminished as your headgear deflects the effects!</span>")
 			return
 		L.drowsyness += 1
@@ -620,11 +620,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "abductor_headset"
 	item_state = "abductor_headset"
 	keyslot2 = new /obj/item/encryptionkey/heads/captain
-	flags_2 = BANG_PROTECT_2
 
 /obj/item/radio/headset/abductor/Initialize(mapload)
 	. = ..()
 	make_syndie()
+
+/obj/item/radio/headset/abductor/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
 /obj/item/radio/headset/abductor/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/screwdriver))

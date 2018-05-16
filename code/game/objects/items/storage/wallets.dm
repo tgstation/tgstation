@@ -4,7 +4,7 @@
 	icon_state = "wallet"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
-	slot_flags = SLOT_ID
+	slot_flags = ITEM_SLOT_ID
 
 	var/obj/item/card/id/front_id = null
 	var/list/combined_access
@@ -38,16 +38,20 @@
 
 /obj/item/storage/wallet/Exited(atom/movable/AM)
 	. = ..()
-	refreshID()
+	// The loc has not actually changed yet when this proc is called, so call
+	// refreshID and have it ignore the outgoing atom.
+	refreshID(AM)
 
-/obj/item/storage/wallet/proc/refreshID()
-	if(!(front_id in src))
+/obj/item/storage/wallet/proc/refreshID(atom/movable/removed)
+	LAZYCLEARLIST(combined_access)
+	if(!(front_id in src) || front_id == removed)
 		front_id = null
 	for(var/obj/item/card/id/I in contents)
-		LAZYINITLIST(combined_access)
-		LAZYCLEARLIST(combined_access)
+		if(I == removed)
+			continue
 		if(!front_id)
 			front_id = I
+		LAZYINITLIST(combined_access)
 		combined_access |= I.access
 	update_icon()
 

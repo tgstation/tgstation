@@ -6,7 +6,7 @@
 	item_state = "pen"
 	var/pointer_icon_state
 	flags_1 = CONDUCT_1 | NOBLUDGEON_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
 	w_class = WEIGHT_CLASS_SMALL
 	var/turf/pointer_loc
@@ -100,9 +100,9 @@
 
 			//chance to actually hit the eyes depends on internal component
 			if(prob(effectchance * diode.rating) && C.flash_act(severity))
-				outmsg = "<span class='notice'>You blind [C] by shining [src] in their eyes.</span>"
+				outmsg = "<span class='notice'>You blind [C] by shining [src] in [C.p_their()] eyes.</span>"
 			else
-				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at their eyes!</span>"
+				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at [C.p_their()] eyes!</span>"
 
 	//robots
 	else if(iscyborg(target))
@@ -113,9 +113,9 @@
 			S.flash_act(affect_silicon = 1)
 			S.Knockdown(rand(100,200))
 			to_chat(S, "<span class='danger'>Your sensors were overloaded by a laser!</span>")
-			outmsg = "<span class='notice'>You overload [S] by shining [src] at their sensors.</span>"
+			outmsg = "<span class='notice'>You overload [S] by shining [src] at [S.p_their()] sensors.</span>"
 		else
-			outmsg = "<span class='warning'>You fail to overload [S] by shining [src] at their sensors!</span>"
+			outmsg = "<span class='warning'>You fail to overload [S] by shining [src] at [S.p_their()] sensors!</span>"
 
 	//cameras
 	else if(istype(target, /obj/machinery/camera))

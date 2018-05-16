@@ -1,6 +1,6 @@
 /obj/machinery/computer/operating
 	name = "operating computer"
-	desc = "Used to monitor the vitals of a patient during surgery."
+	desc = "Monitors patient vitals and displays surgery steps. Can be loaded with surgery disks to perform experimental procedures."
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/operating

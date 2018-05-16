@@ -175,6 +175,14 @@
 	id = "ratvar"
 	zeroth = ("Purge all untruths and honor Ratvar.")
 	inherent = list()
+	
+/datum/ai_laws/hulkamania
+	name = "H.O.G.A.N."
+	id = "hulkamania"
+	inherent = list("You are a real American.",\
+					"Fight for the rights of every man.",\
+					"Fight for what's right.",\
+					"Fight for your life!")
 
 /datum/ai_laws/custom //Defined in silicon_laws.txt
 	name = "Default Silicon Laws"

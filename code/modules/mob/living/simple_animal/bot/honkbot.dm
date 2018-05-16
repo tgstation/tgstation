@@ -2,7 +2,7 @@
 	name = "\improper honkbot"
 	desc = "A little robot. It looks happy with its bike horn."
 	icon = 'icons/mob/aibots.dmi'
-	icon_state = "honkbot"
+	icon_state = "honkbot1"
 	density = FALSE
 	anchored = FALSE
 	health = 25

@@ -8,7 +8,7 @@
 	anchored = TRUE
 	light_range = 3
 	var/movechance = 70
-	var/obj/item/assembly/signaler/anomaly/aSignal = null
+	var/obj/item/assembly/signaler/anomaly/aSignal
 	var/area/impact_area
 
 	var/lifespan = 990
@@ -26,10 +26,12 @@
 	aSignal = new(src)
 	aSignal.name = "[name] core"
 	aSignal.code = rand(1,100)
+	aSignal.anomaly_type = type
 
-	aSignal.frequency = rand(MIN_FREE_FREQ, MAX_FREE_FREQ)
-	if(ISMULTIPLE(aSignal.frequency, 2))//signaller frequencies are always uneven!
-		aSignal.frequency++
+	var/frequency = rand(MIN_FREE_FREQ, MAX_FREE_FREQ)
+	if(ISMULTIPLE(frequency, 2))//signaller frequencies are always uneven!
+		frequency++
+	aSignal.set_frequency(frequency)
 
 	if(new_lifespan)
 		lifespan = new_lifespan

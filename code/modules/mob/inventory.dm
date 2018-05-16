@@ -180,7 +180,7 @@
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
 		I.plane = ABOVE_HUD_PLANE
-		I.equipped(src, slot_hands)
+		I.equipped(src, SLOT_HANDS)
 		if(I.pulledby)
 			I.pulledby.stop_pulling()
 		update_inv_hands()
@@ -326,7 +326,10 @@
 		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
 		if(!no_move && !(I.flags_1 & DROPDEL_1))	//item may be moved/qdel'd immedietely, don't bother moving it
-			I.forceMove(newloc)
+			if (isnull(newloc))
+				I.moveToNullspace()
+			else
+				I.forceMove(newloc)
 		I.dropped(src)
 	return TRUE
 
@@ -396,7 +399,7 @@
 	if(M.active_storage && M.active_storage.parent && M.active_storage.parent.SendSignal(COMSIG_TRY_STORAGE_INSERT, src,M))
 		return TRUE
 
-	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(slot_belt), M.get_item_by_slot(slot_generic_dextrous_storage), M.get_item_by_slot(slot_back))
+	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(SLOT_BELT), M.get_item_by_slot(SLOT_GENERC_DEXTROUS_STORAGE), M.get_item_by_slot(SLOT_BACK))
 	for(var/i in possible)
 		if(!i)
 			continue
@@ -418,10 +421,10 @@
 
 //used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
 /mob/proc/getBackSlot()
-	return slot_back
+	return SLOT_BACK
 
 /mob/proc/getBeltSlot()
-	return slot_belt
+	return SLOT_BELT
 
 
 

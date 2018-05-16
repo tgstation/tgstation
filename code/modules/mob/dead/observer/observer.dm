@@ -91,6 +91,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 				name = random_unique_name(gender)
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
+
+		suiciding = body.suiciding // Transfer whether they committed suicide.
+
 		if(ishuman(body))
 			var/mob/living/carbon/human/body_human = body
 			if(HAIR in body_human.dna.species.species_traits)
@@ -310,9 +313,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			x--
 
 	Moved(oldloc, direct)
-
-/mob/dead/observer/is_active()
-	return 0
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
@@ -583,6 +583,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/list/possessible = list()
 	for(var/mob/living/L in GLOB.alive_mob_list)
+		if(istype(L,/mob/living/carbon/human/dummy) || !get_turf(L)) //Haha no.
+			continue
 		if(!(L in GLOB.player_list) && !L.mind)
 			possessible += L
 

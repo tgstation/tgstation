@@ -474,3 +474,4 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 /turf/template_noop
 	name = "Turf Passthrough"
 	icon_state = "noop"
+	bullet_bounce_sound = null

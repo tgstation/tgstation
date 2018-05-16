@@ -53,6 +53,7 @@
 
 	if(!changeling.has_dna(target.dna))
 		changeling.add_new_profile(target)
+		changeling.trueabsorbs++
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
 		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
@@ -78,8 +79,8 @@
 				recent_speech[spoken_memory] = say_log[spoken_memory]
 
 		if(recent_speech.len)
-			changeling.antag_memory += "<B>Some of [target]'s speech patterns, we should study these to better impersonate them!</B><br>"
-			to_chat(user, "<span class='boldnotice'>Some of [target]'s speech patterns, we should study these to better impersonate them!</span>")
+			changeling.antag_memory += "<B>Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]!</B><br>"
+			to_chat(user, "<span class='boldnotice'>Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]!</span>")
 			for(var/spoken_memory in recent_speech)
 				changeling.antag_memory += "\"[recent_speech[spoken_memory]]\"<br>"
 				to_chat(user, "<span class='notice'>\"[recent_speech[spoken_memory]]\"</span>")

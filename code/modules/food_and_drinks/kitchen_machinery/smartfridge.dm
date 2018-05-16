@@ -55,9 +55,6 @@
 	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
 		return
 
-	if(exchange_parts(user, O))
-		return
-
 	if(default_pry_open(O))
 		return
 
@@ -302,8 +299,7 @@
 			qdel(S)
 		return TRUE
 	for(var/obj/item/stack/sheet/wetleather/WL in src)
-		var/obj/item/stack/sheet/leather/L = new(drop_location())
-		L.amount = WL.amount
+		new /obj/item/stack/sheet/leather(drop_location(), WL.amount)
 		qdel(WL)
 		return TRUE
 	return FALSE

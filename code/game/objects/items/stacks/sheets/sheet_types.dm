@@ -113,6 +113,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 /obj/item/stack/sheet/metal/twenty
 	amount = 20
 
+/obj/item/stack/sheet/metal/ten
+	amount = 10
+
 /obj/item/stack/sheet/metal/five
 	amount = 5
 
@@ -126,7 +129,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	return ..()
 
 /obj/item/stack/sheet/metal/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins whacking themselves over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] begins whacking [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
 /*
@@ -341,6 +344,11 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
 		return
+	var/turf/T = get_turf(user) //we may have moved. adjust as needed...
+	var/area/A = get_area(user)
+	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !A.blob_allowed))
+		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
+		return FALSE
 	return ..()
 
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)

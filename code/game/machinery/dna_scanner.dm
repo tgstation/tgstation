@@ -133,9 +133,6 @@
 		update_icon()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_pry_open(I))
 		return
 

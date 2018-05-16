@@ -229,7 +229,7 @@
 			state = EM_UNSECURED
 
 /obj/machinery/power/emitter/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I, 0)
+	default_unfasten_wrench(user, I)
 	return TRUE
 
 /obj/machinery/power/emitter/welder_act(mob/living/user, obj/item/I)
@@ -289,9 +289,6 @@
 
 	else if(is_wire_tool(I) && panel_open)
 		wires.interact(user)
-		return
-
-	else if(exchange_parts(user, I))
 		return
 
 	return ..()

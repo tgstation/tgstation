@@ -74,7 +74,7 @@
 
 /obj/item/clothing/glasses/wraith_spectacles/equipped(mob/living/user, slot)
 	..()
-	if(slot != slot_glasses || up)
+	if(slot != SLOT_GLASSES || up)
 		return
 	if(user.has_trait(TRAIT_BLIND))
 		to_chat(user, "<span class='heavy_brass'>\"You're blind, idiot. Stop embarrassing yourself.\"</span>" )
