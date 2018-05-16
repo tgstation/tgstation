@@ -101,7 +101,7 @@
 /obj/machinery/vending/wardrobe/cargo_wardrobe
 	name = "CargoDrobe"
 	desc = "A highly advanced vending machine for buying cargo related clothing for free."
-	product_ads = "Upgraded Assistant Style! Pick yours today!"
+	product_ads = "Upgraded Assistant Style! Pick yours today!;These shorts are comfy and easy to wear, get yours now!"
 	vend_reply = "Thank you for using the CargoDrobe!"
 	products = list(/obj/item/clothing/suit/hooded/wintercoat/cargo = 1,
 					/obj/item/clothing/under/rank/cargotech = 3,
@@ -119,7 +119,7 @@
 /obj/machinery/vending/wardrobe/robo_wardrobe
 	name = "RoboDrobe"
 	desc = "A vending machine designed to dispense clothing known only to roboticists."
-	product_ads = "You turn me TRUE, use defines!;0100001101101100011011110111010001101000011010010110111001100111001000000110100001100101011100100110010100100001"
+	product_ads = "You turn me TRUE, use defines!;0110001101101100011011110111010001101000011001010111001101101000011001010111001001100101"
 	vend_reply = "Thank you for using the RoboDrobe!"
 	products = list(/obj/item/clothing/glasses/hud/diagnostic = 2,
 					/obj/item/clothing/under/rank/roboticist = 2,
@@ -138,7 +138,7 @@
 /obj/machinery/vending/wardrobe/science_wardrobe
 	name = "SciDrobe"
 	desc = "A simple vending machine suitable to dispense well tailored science clothing. Endorsed by Cubans."
-	product_ads = "Longing for the smell of flesh plasma? Buy your science clothing now!"
+	product_ads = "Longing for the smell of flesh plasma? Buy your science clothing now!;Made with 10% Auxetics, so you don't have to worry losing your arm!"
 	vend_reply = "Thank you for using the SciDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 1,
 					/obj/item/storage/backpack/science = 2,
@@ -159,7 +159,7 @@
 /obj/machinery/vending/wardrobe/hydro_wardrobe
 	name = "Hydrobe"
 	desc = "A machine with a catchy name. It dispenses botany related clothing and gear."
-	product_ads = "Do you love soil? Then buy our clothes!"
+	product_ads = "Do you love soil? Then buy our clothes!,Get outfits to match your green thumb here!"
 	vend_reply = "Thank you for using the Hydrobe!"
 	products = list(/obj/item/storage/backpack/botany = 2,
 					/obj/item/storage/backpack/satchel/hyd = 2,
@@ -297,7 +297,7 @@
 /obj/machinery/vending/wardrobe/chap_wardrobe
 	name = "ChapDrobe"
 	desc = "This most blessed and holy machine vends clothing only suitable for chaplains to gaze upon."
-	product_ads = "Are you being bothered by cultists or pesky revenants? Then come and dress like the holy man!"
+	product_ads = "Are you being bothered by cultists or pesky revenants? Then come and dress like the holy man!;Clothes for men of the cloth!"
 	vend_reply = "Thank you for using the ChapDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector/cosmetology = 1,
 					/obj/item/clothing/under/rank/chaplain = 1,
