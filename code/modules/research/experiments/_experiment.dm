@@ -76,7 +76,7 @@
 /datum/experiment/destroy/transform/proc/make_transform_item(atom/location)
 
 /datum/experiment/proc/is_valid_critical(obj/item/O)
-	if(istype(O,/obj/item/device/transfer_valve))
+	if(istype(O,/obj/item/transfer_valve))
 		return is_valid_bomb(O)
 	else if(istype(O,/obj/item/slime_extract))
 		return is_valid_slimecore(O)
@@ -84,14 +84,14 @@
 		return is_valid_grenade(O)
 	return TRUE
 
-/datum/experiment/proc/is_valid_bomb(obj/item/device/transfer_valve/O)
+/datum/experiment/proc/is_valid_bomb(obj/item/transfer_valve/O)
 	return O.tank_one && O.tank_two && O.attached_device
 
 /datum/experiment/proc/is_valid_slimecore(obj/item/slime_extract/O)
 	return O.Uses > 0
 
 /datum/experiment/proc/is_valid_grenade(obj/item/grenade/chem_grenade/O)
-	return O.stage == READY
+	return O.stage == 3 //state=3 means state=READY //looks stupid but READY is undefined at the end of the chem_grenade file so we can't use it here
 
 /datum/experiment/proc/is_relic_undiscovered(obj/item/relic/O)
 	return !O.revealed

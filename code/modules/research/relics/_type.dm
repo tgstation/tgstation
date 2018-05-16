@@ -121,7 +121,7 @@
 
 /datum/relic_type/reagent_container/pre_generate(obj/item/relic/A)
 	if(prob(90))
-		var/datum/relic_effect/activate/eff = add_one_random_effect(/datum/relic_effect/activate/reagent)
+		var/datum/relic_effect/eff = add_one_random_effect(/datum/relic_effect/reagents)
 		eff.range = rand(1,6) //Reagent containers have attack_self defined so we need after_attack
 	add_one_random_effect(/datum/relic_effect/reagents)
 	if(prob(70))

@@ -5,7 +5,7 @@
 	..()
 	comp.add_process(CALLBACK(src, .proc/process, A))
 
-/datum/relic_effect/automatic/proc/process(obj/item/A)
+/datum/relic_effect/automatic/process(obj/item/A)
 	return active
 
 /datum/relic_effect/automatic/refuel
@@ -18,13 +18,13 @@
 		fuel_values[pick_n_take(possible_fuels)] = rand(1,200)
 
 /datum/relic_effect/automatic/refuel/process(obj/item/A)
-	if(!..() || !reagents || !reagents.total_volume)
+	if(!..() || !A.reagents || !A.reagents.total_volume)
 		return
-	var/list/cached_reagents = reagents.reagent_list
+	var/list/cached_reagents = A.reagents.reagent_list
 	for(var/datum/reagent/R in cached_reagents)
 		if(possible_fuels[R.id] > 0)
 			//give power here and increase temp of the mix
-			reagents.remove_reagent(R.id, R.metabolization_rate)
+			A.reagents.remove_reagent(R.id, R.metabolization_rate)
 
 /datum/relic_effect/automatic/refuel/biofuels
 	possible_fuels = list("blood","milk","carbon","corn_oil","soy_milk","nutriment","sugar")
@@ -51,13 +51,14 @@
 			C.give(power_output)
 
 /datum/relic_effect/automatic/gas_producer
-	var/gas_type
+	var/spawn_id
 	var/produced_moles
+	var/produced_temp
 	var/max_pressure
 	var/static/list/valid_types = list("o2","n2","co2","plasma","n2o","bz","tritium","water_vapor","no2")
 
 /datum/relic_effect/automatic/gas_producer/init()
-	gas_type = pick(valid_types)
+	spawn_id = pick(valid_types)
 	produced_moles = rand(1,20)
 	produced_temp = T20C
 	max_pressure = rand(ONE_ATMOSPHERE*1000,ONE_ATMOSPHERE*25000)/1000
@@ -66,7 +67,7 @@
 	if(!..())
 		return
 	var/datum/gas_mixture/environment = A.return_air()
-	if(environment && environment.get_pressure < max_pressure)
+	if(environment && environment.get_pressure() < max_pressure)
 		var/datum/gas_mixture/merger = new
 		merger.assert_gas(spawn_id)
 		merger.gases[spawn_id][MOLES] = produced_moles

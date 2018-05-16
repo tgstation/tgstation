@@ -1,6 +1,6 @@
 //this is designed to replace the destructive analyzer
 
-GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item/grenade,/obj/item/device/aicard,/obj/item/storage/backpack/holding,/obj/item/slime_extract,/obj/item/device/onetankbomb,/obj/item/device/transfer_valve))
+GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item/grenade,/obj/item/aicard,/obj/item/storage/backpack/holding,/obj/item/slime_extract,/obj/item/onetankbomb,/obj/item/transfer_valve))
 
 /datum/experiment_type
 	var/name = "Adminhelp"

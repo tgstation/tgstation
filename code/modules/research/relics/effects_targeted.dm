@@ -71,7 +71,7 @@
 /datum/relic_effect/targeted/grenade/clean
 	hint = list("Analysis revealed a hidden compartment containing an unknown variant of space cleaner.")
 	weight = 50
-	grenade_type = /obj/item/grenade/cleaner
+	grenade_type = /obj/item/grenade/chem_grenade/cleaner
 
 /datum/relic_effect/targeted/corgi_cannon
 	hint = list("Depth-scans conclude that it is filled with orange-white speckled cubes.")
@@ -90,7 +90,6 @@
 /datum/relic_effect/targeted/fix_lights/activate(obj/item/A,atom/target,mob/user)
 	if(!..())
 		return
-	var/success = FALSE
 	for(var/obj/machinery/light/M in get_turf(target))
 		M.fix()
 		playsound(target, "sparks", rand(25,50), 1)
@@ -132,7 +131,7 @@
 	R.throw_at(pick(oview(spread,get_turf(target))),10,1)
 
 /datum/relic_effect/targeted/thrown/proc/create_item(obj/item/A) //Use this to setup an item to throw at people
-	var/obj/item/I = new item_type(get_turf(A))
+	return new item_type(get_turf(A))
 
 /datum/relic_effect/targeted/thrown/rapid_dupe
 	firstname = list("annoying","multiplying","duplicating","numerifying","dumb","fragmenting")
@@ -185,7 +184,7 @@
 
 /datum/relic_effect/targeted/hallucination
 	weight = 50
-	var/list/hallucinations = list(/datum/hallucination/whispers,/datum/hallucination/xeno_attack,/datum/hallucination/delusion)
+	var/list/hallucinations = list(/datum/hallucination/hudscrew,/datum/hallucination/xeno_attack,/datum/hallucination/delusion)
 
 /datum/relic_effect/targeted/hallucination/activate(obj/item/A,mob/target,mob/user)
 	if(istype(target))
@@ -207,7 +206,8 @@
 /datum/relic_effect/targeted/lube/activate(obj/item/A,atom/target,mob/user)
 	var/turf/T = get_turf(target)
 	if(isfloorturf(T))
-		T.MakeSlippery(TURF_WET_LUBE)
+		var/turf/open/floor/T2
+		T2.MakeSlippery(TURF_WET_LUBE)
 
 /datum/relic_effect/targeted/repair_robot
 	weight = 20
@@ -257,8 +257,8 @@
 
 /datum/relic_effect/targeted/bolt_door/activate(obj/item/A,atom/target,mob/user)
 	var/turf/T = get_turf(target)
-	for(var/obj/machinery/door/airlock/A in T)
-		A.bolt()
+	for(var/obj/machinery/door/airlock/D in T)
+		D.bolt()
 
 /datum/relic_effect/targeted/zombify/activate(obj/item/A,mob/living/carbon/human/target,mob/user)
 	if(istype(target) && target.stat == DEAD)
@@ -278,7 +278,7 @@
 /datum/relic_effect/targeted/equip_mask/activate(obj/item/A,mob/living/carbon/human/target,mob/user)
 	if(istype(target) && !target.wear_mask)
 		var/obj/item/clothing/mask/I = new mask_type()
-		if(target.equip_to_slot_or_del(I,slot_wear_mask))
+		if(target.equip_to_slot_or_del(I,SLOT_WEAR_MASK))
 			to_chat(target,"<span class='warning'>Suddenly [I] appears [location_string]!</span>")
 
 /datum/relic_effect/targeted/equip_mask/cigar
@@ -373,9 +373,8 @@
 		piercing = TRUE
 
 /datum/relic_effect/targeted/reagent/inject/activate(obj/item/A, mob/living/target, mob/living/user)
-	if(reagents && target.reagents && target.can_inject(user, FALSE, penetrate_thick = piercing))
-		reagents.trans_to(target,chem_amt,chem_multiplier)
-			target.reagents.add_reagent(id,applied_chems[id])
+	if(A.reagents && target.reagents && target.can_inject(user, FALSE, penetrate_thick = piercing))
+		A.reagents.trans_to(target,chem_amt,chem_multiplier)
 
 /datum/relic_effect/targeted/ignite
 	weight = 20
@@ -419,7 +418,7 @@
 /datum/relic_target/ranged/long
 	distance = 5
 
-/datum/relic_target/ranged/proc/get_targets(obj/item/A, atom/target)
+/datum/relic_target/ranged/get_targets(obj/item/A, atom/target)
 	. = list()
 	if(target in oview(distance,get_turf(A)))
 		. += get_turf(target)
@@ -427,7 +426,7 @@
 /datum/relic_target/ranged/line
 	distance = 5
 
-/datum/relic_target/ranged/line/proc/get_targets(obj/item/A, atom/target)
+/datum/relic_target/ranged/line/get_targets(obj/item/A, atom/target)
 	. = list()
 	if(target in get_line(distance,get_turf(A)))
 		. += get_turf(target)
@@ -437,7 +436,7 @@
 	var/feet = 3
 	var/spread = 10
 
-/datum/relic_target/ranged/crowfoot/proc/get_targets(obj/item/A, atom/target)
+/datum/relic_target/ranged/crowfoot/get_targets(obj/item/A, atom/target)
 	. = list()
 	if(target in oview(distance,get_turf(A)))
 		. += get_turf(target)

@@ -45,7 +45,7 @@
 	experiment_type = /datum/experiment_type/poke
 
 /datum/experiment/open_bomb/init()
-	valid_types = typecacheof(/obj/item/device/transfer_valve)
+	valid_types = typecacheof(/obj/item/transfer_valve)
 
 /datum/experiment/open_bomb/can_perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
@@ -59,7 +59,7 @@
 	addtimer(CALLBACK(src, .proc/open, E, O), 30)
 	E.reset_time += 30
 
-/datum/experiment/open_bomb/proc/open(obj/machinery/rnd/experimentor/E,obj/item/device/transfer_valve/O)
+/datum/experiment/open_bomb/proc/open(obj/machinery/rnd/experimentor/E,obj/item/transfer_valve/O)
 	if(E.loaded_item == O)
 		O.toggle_valve()
 		E.visible_message("<span class='danger'>[E] has opened the [O]!</span>")

@@ -33,7 +33,7 @@
 /datum/component/relic/proc/reset_cooldown()
 	cooldown = FALSE
 
-/datum/component/relic/proc/process()
+/datum/component/relic/process()
 	for(var/datum/callback/cb in process_callbacks)
 		cb.InvokeAsync()
 
