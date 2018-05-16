@@ -1371,9 +1371,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 							H.gain_trauma(/datum/brain_trauma/mild/concussion)
 					else
 						if(!I.is_sharp())
-							H.adjustBrainLoss(I.force / 5)
+							H.adjustBrainLoss(I.force * 0.2)
 
-					if(prob(I.force + ((100 - H.health)/2)) && H != user)
+					if(!I.is_sharp() && prob(I.force + ((100 - H.health) * 0.5)) && H != user) // rev deconversion through blunt trauma.
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
 						if(rev)
 							rev.remove_revolutionary(FALSE, user)
