@@ -30,5 +30,5 @@ FEEDBACK_LOGIN username
 FEEDBACK_PASSWORD password
 
 ## Time in deciseconds for a query to execute before alerting a for possible slow query timeout.
-## While enabled all queries and their execution times are logged.
+## While enabled queries and their execution times are logged if they exceed this value.
 #QUERY_DEBUG_LOG_TIMEOUT 70

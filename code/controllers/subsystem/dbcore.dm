@@ -234,17 +234,17 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	var/start_time
 	var/timeout = CONFIG_GET(number/query_debug_log_timeout)
 	if(timeout)
-		log_query_debug("Query execution started at [SQLtime()] | [REALTIMEOFDAY]")
 		start_time = REALTIMEOFDAY
-		log_query_debug("Query used: [sql]")
 	Close()
 	. = _dm_db_execute(_db_query, sql_query, db_connection._db_con, cursor_handler, null)
 	if(!. && log_error)
 		log_sql("[ErrorMsg()] | Query used: [sql]")
-	log_query_debug("Query execution ended at [SQLtime()] | [REALTIMEOFDAY]")
 	if(timeout)
 		if((REALTIMEOFDAY - start_time) > timeout)
+			log_query_debug("Query execution started at [start_time]")
+			log_query_debug("Query execution ended at [REALTIMEOFDAY]")
 			log_query_debug("Possible slow query timeout detected.")
+			log_query_debug("Query used: [sql]")
 			slow_query_check()
 
 /datum/DBQuery/proc/slow_query_check()
