@@ -673,8 +673,8 @@
 /datum/chemical_reaction/fanciulli
 	name = "Fanciulli"
 	id = "fanciulli"
-	results = list("fanciulli" = 3)
-	required_reagents = list("whiskey" = 1, "vermouth" = 1, "fernet" = 1)
+	results = list("fanciulli" = 2)
+	required_reagents = list("manhattan" = 1, "fernet" = 1)
 
 /datum/chemical_reaction/branca_menta
 	name = "Branca Menta"
