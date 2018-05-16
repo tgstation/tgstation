@@ -201,9 +201,9 @@
 	products = list(/obj/item/clothing/head/that = 2,
 					/obj/item/radio/headset/headset_srv = 2,
 					/obj/item/clothing/under/sl_suit = 2,
-					/obj/item/clothing/under/rank/bartender = 2
+					/obj/item/clothing/under/rank/bartender = 2,
 					/obj/item/clothing/under/rank/bartender/purple = 1,
-					/obj/item/clothing/accessory/waistcoat = 2
+					/obj/item/clothing/accessory/waistcoat = 2,
 					/obj/item/clothing/suit/apron/purple_bartender = 1,
 					/obj/item/clothing/head/soft/black = 2,
 					/obj/item/clothing/shoes/sneakers/black = 2,
