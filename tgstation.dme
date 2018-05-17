@@ -794,6 +794,7 @@
 #include "code\game\objects\items\circuitboards\computer_circuitboards.dm"
 #include "code\game\objects\items\circuitboards\machine_circuitboards.dm"
 #include "code\game\objects\items\devices\aicard.dm"
+#include "code\game\objects\items\devices\anomaly_neutralizer.dm"
 #include "code\game\objects\items\devices\beacon.dm"
 #include "code\game\objects\items\devices\camera_bug.dm"
 #include "code\game\objects\items\devices\chameleonproj.dm"
