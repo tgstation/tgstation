@@ -47637,6 +47637,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"dbi" = (
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "dci" = (
 /obj/structure/rack,
 /obj/item/gun/energy/laser/practice,
@@ -48524,6 +48528,13 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/engine/engineering)
+"fIu" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
 "fIN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -94904,12 +94915,12 @@ apX
 apX
 apX
 avl
-awv
-avk
+fIu
+dbi
 aIh
 azA
-avk
-avk
+dbi
+dbi
 aDk
 aEd
 aFb
