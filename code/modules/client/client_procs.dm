@@ -204,6 +204,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = prefs.clientfps
 
+	if(fexists(roundend_report_file()))
+		verbs += /client/proc/show_previous_roundend_report
+
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
 	var/alert_mob_dupe_login = FALSE
 	if(CONFIG_GET(flag/log_access))
