@@ -158,7 +158,7 @@
 	QDEL_NULL(mobhook)
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
-		to_chat(L, "<span class='danger'>You are hit by [createdby]'s greatsword!</span>")
+		to_chat(L, "<span class='danger'>You are hit by [createdby]!</span>")
 		L.adjustBruteLoss(hit_damage)
 	createdby.swiping = FALSE
 	..()
@@ -315,6 +315,10 @@
 	ME.attach(src)
 
 /obj/structure/mecha_wreckage/necropolis
+	salvage_num = 15
+	crowbar_salvage = list(/obj/item/stack/ore/iron)
+	wirecutters_salvage = list()
+	welder_salvage = list()
 
 ///replace with sword, and add it to the mech
 
