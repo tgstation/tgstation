@@ -31224,6 +31224,13 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"dQC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel/redyellow,
+/area/crew_quarters/bar/atrium)
 "dWc" = (
 /turf/closed/mineral/random/labormineral,
 /area/space)
@@ -31612,6 +31619,10 @@
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/asteroid/nearstation)
+"gPY" = (
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel/redyellow,
+/area/crew_quarters/bar/atrium)
 "gSv" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -77801,8 +77812,8 @@ aEX
 aFO
 aGO
 aHT
-asg
-avi
+gPY
+dQC
 avi
 axP
 ard
@@ -79382,7 +79393,7 @@ bfP
 bjc
 bfP
 bfP
-dWc
+aad
 aaa
 aaa
 aaa

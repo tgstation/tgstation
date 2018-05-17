@@ -583,6 +583,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/list/possessible = list()
 	for(var/mob/living/L in GLOB.alive_mob_list)
+		if(istype(L,/mob/living/carbon/human/dummy) || !get_turf(L)) //Haha no.
+			continue
 		if(!(L in GLOB.player_list) && !L.mind)
 			possessible += L
 

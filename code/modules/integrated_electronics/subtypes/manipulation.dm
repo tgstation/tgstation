@@ -7,7 +7,8 @@
 	extended_desc = "The firing mechanism can slot in any energy weapon. \
 	The first and second inputs need to be numbers which correspond to coordinates for the gun to fire at relative to the machine itself. \
 	The 'fire' activator will cause the mechanism to attempt to fire the weapon at the coordinates, if possible. Mode is switch between \
-	lethal (TRUE) or stun (FALSE) modes. It uses the internal battery of the weapon."
+	lethal (TRUE) or stun (FALSE) modes. It uses the internal battery of the weapon. If you wish to fire the gun while the circuit is in \
+	hand, you will need to use an assembly that is a gun."
 	complexity = 20
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
@@ -80,7 +81,7 @@
 /obj/item/integrated_circuit/manipulation/weapon_firing/do_work()
 	if(!installed_gun || !installed_gun.handle_pins())
 		return
-	if(!isturf(assembly.loc))
+	if(!isturf(assembly.loc) && !(assembly.can_fire_equipped && ishuman(assembly.loc)))
 		return
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(installed_gun))
 	push_data()
@@ -99,6 +100,7 @@
 		var/target_x = CLAMP(T.x + xo.data, 0, world.maxx)
 		var/target_y = CLAMP(T.y + yo.data, 0, world.maxy)
 
+		assembly.visible_message("<span class='danger'>[assembly] fires [installed_gun]!</span>")
 		shootAt(locate(target_x, target_y, T.z))
 
 /obj/item/integrated_circuit/manipulation/weapon_firing/proc/shootAt(turf/target)
@@ -347,7 +349,7 @@
 	name = "grabber"
 	desc = "A circuit with it's own inventory for items, used to grab and store things."
 	icon_state = "grabber"
-	extended_desc = "The circuit accepts a reference to an object to be grabbed and can store up to 10 objects. Modes: 1 to grab, 0 to eject the first object, and -1 to eject all objects."
+	extended_desc = "The circuit accepts a reference to an object to be grabbed and can store up to 10 objects. Modes: 1 to grab, 0 to eject the first object, and -1 to eject all objects. If you throw something from a grabbers inventory with a thrower then the grabber will update its outputs accordingly."
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
 	cooldown_per_use = 5
@@ -384,6 +386,10 @@
 				var/obj/item/U
 				for(U in contents)
 					U.forceMove(T)
+	update_outputs()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/manipulation/grabber/proc/update_outputs()
 	if(contents.len)
 		set_pin_data(IC_OUTPUT, 1, WEAKREF(contents[1]))
 		set_pin_data(IC_OUTPUT, 2, WEAKREF(contents[contents.len]))
@@ -393,7 +399,6 @@
 	set_pin_data(IC_OUTPUT, 3, contents.len)
 	set_pin_data(IC_OUTPUT, 4, contents)
 	push_data()
-	activate_pin(2)
 
 /obj/item/integrated_circuit/manipulation/grabber/attack_self(var/mob/user)
 	if(contents.len)
@@ -401,9 +406,7 @@
 		var/obj/item/U
 		for(U in contents)
 			U.forceMove(T)
-	set_pin_data(IC_OUTPUT, 1, null)
-	set_pin_data(IC_OUTPUT, 2, null)
-	set_pin_data(IC_OUTPUT, 3, contents.len)
+	update_outputs()
 	push_data()
 
 /obj/item/integrated_circuit/manipulation/claw
@@ -466,7 +469,8 @@
 	desc = "A compact launcher to throw things from inside or nearby tiles."
 	extended_desc = "The first and second inputs need to be numbers which correspond to coordinates to throw objects at relative to the machine itself. \
 	The 'fire' activator will cause the mechanism to attempt to throw objects at the coordinates, if possible. Note that the \
-	projectile need to be inside the machine, or to be on an adjacent tile, and must be medium sized or smaller."
+	projectile need to be inside the machine, or to be on an adjacent tile, and must be medium sized or smaller. The assembly \
+	must also be a gun if you wish to throw something while the assembly is in hand."
 	complexity = 25
 	w_class = WEIGHT_CLASS_SMALL
 	size = 2
@@ -497,6 +501,9 @@
 	if(max_w_class && (A.w_class > max_w_class))
 		return
 
+	if(!assembly.can_fire_equipped && ishuman(assembly.loc))
+		return
+
 	// Is the target inside the assembly or close to it?
 	if(!check_target(A, exclude_components = TRUE))
 		return
@@ -511,12 +518,20 @@
 		if(!M.temporarilyRemoveItemFromInventory(A))
 			return
 
+	// If the item is in a grabber circuit we'll update the grabber's outputs after we've thrown it.
+	var/obj/item/integrated_circuit/manipulation/grabber/G = A.loc
+
 	var/x_abs = CLAMP(T.x + target_x_rel, 0, world.maxx)
 	var/y_abs = CLAMP(T.y + target_y_rel, 0, world.maxy)
 	var/range = round(CLAMP(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
 
+	assembly.visible_message("<span class='danger'>[assembly] has thrown [A]!</span>")
 	A.forceMove(drop_location())
 	A.throw_at(locate(x_abs, y_abs, T.z), range, 3)
+
+	// If the item came from a grabber now we can update the outputs since we've thrown it.
+	if(G)
+		G.update_outputs()
 
 /obj/item/integrated_circuit/manipulation/matman
 	name = "material manager"
