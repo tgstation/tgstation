@@ -122,7 +122,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		for(var/atom/movable/AM in shuttle_area)
 			if(iscameramob(AM))
 				continue
-			matched_bounty = bounty_ship_item_and_contents(AM, dry_run = FALSE)
+			if(bounty_ship_item_and_contents(AM, dry_run = FALSE))
+				matched_bounty = TRUE
 			if(!AM.anchored)
 				sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 

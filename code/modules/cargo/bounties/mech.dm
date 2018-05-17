@@ -1,4 +1,5 @@
 /datum/bounty/item/mech/New()
+	..()
 	description = "Upper management has requested one [name] mech be sent as soon as possible. Ship it to receive a large payment."
 
 /datum/bounty/item/mech/ship(obj/O)
@@ -7,6 +8,7 @@
 	if(istype(O, /obj/mecha))
 		var/obj/mecha/M = O
 		M.wreckage = null // So the mech doesn't explode.
+	..()
 
 /datum/bounty/item/mech/mark_high_priority(scale_reward)
 	return ..(max(scale_reward * 0.7, 1.2))

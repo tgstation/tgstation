@@ -26,7 +26,7 @@
 	var/required_bounties = 5
 
 /datum/bounty/more_bounties/can_claim()
-	return completed_bounty_count() >= required_bounties
+	return ..() && completed_bounty_count() >= required_bounties
 
 /datum/bounty/more_bounties/completion_string()
 	return "[min(required_bounties, completed_bounty_count())]/[required_bounties] Bounties"
