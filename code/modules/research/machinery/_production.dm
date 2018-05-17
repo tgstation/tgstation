@@ -3,10 +3,10 @@
 	desc = "Makes researched and prototype items with materials and energy."
 	container_type = OPENCONTAINER
 	layer = BELOW_OBJ_LAYER
-	var/consoleless_interface = FALSE			//Whether it can be used without a console.
+	requires_console = FALSE
+	var/consoleless_interface = TRUE			//Whether it can be used without a console.
 	var/efficiency_coeff = 1				//Materials needed / coeff = actual.
 	var/list/categories = list()
-	var/datum/component/material_container/materials			//Store for hyper speed!
 	var/allowed_department_flags = ALL
 	var/production_animation				//What's flick()'d on print.
 	var/allowed_buildtypes = NONE
@@ -19,13 +19,14 @@
 	var/screen = RESEARCH_FABRICATOR_SCREEN_MAIN
 	var/selected_category
 
-/obj/machinery/rnd/production/Initialize()
+/obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		GLOB.silo_access_lathes[src] = TRUE
+	else
+		GLOB.silo_access_lathes[src] = FALSE
+
 	create_reagents(0)
-	materials = AddComponent(/datum/component/material_container,
-		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC), 0,
-		FALSE, list(/obj/item/stack), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
-	materials.precise_insertion = TRUE
 	RefreshParts()
 	matching_designs = list()
 	cached_designs = list()
@@ -69,10 +70,6 @@
 		for(var/obj/item/reagent_containers/glass/G in component_parts)
 			reagents.maximum_volume += G.volume
 			G.reagents.trans_to(src, G.reagents.total_volume)
-	if(materials)
-		materials.max_amount = 0
-		for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-			materials.max_amount += M.rating * 75000
 	var/total_rating = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		total_rating += M.rating
@@ -83,7 +80,6 @@
 /obj/machinery/rnd/production/on_deconstruction()
 	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
-	materials.retrieve_all()
 	return ..()
 
 /obj/machinery/rnd/production/proc/do_print(path, amount, list/matlist, notify_admins)
@@ -97,8 +93,10 @@
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 
 /obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
+	if(!GLOB.ore_silo)
+		return 0
 	var/list/all_materials = being_built.reagents_list + being_built.materials
-
+	GET_COMPONENT_FROM(materials, /datum/component/material_container, GLOB.ore_silo)
 	var/A = materials.amount(M)
 	if(!A)
 		A = reagents.get_reagent_amount(M)
@@ -106,6 +104,12 @@
 	return round(A / max(1, (all_materials[M]/efficiency_coeff)))
 
 /obj/machinery/rnd/production/proc/user_try_print_id(id, amount)
+	if(!GLOB.ore_silo)
+		say("No ore silo detected! Please construct additional silos.")
+		return FALSE
+	if(!GLOB.silo_access_lathes[src])
+		say("This machine is currently blacklisted from the ore silos. Please consult your local Quartermaster.")
+		return FALSE
 	if((!istype(linked_console) && requires_console) || !id)
 		return FALSE
 	if(istext(amount))
@@ -128,6 +132,7 @@
 	power = min(3000, power)
 	use_power(power)
 	var/list/efficient_mats = list()
+	GET_COMPONENT_FROM(materials, /datum/component/material_container, GLOB.ore_silo)
 	for(var/MAT in D.materials)
 		efficient_mats[MAT] = D.materials[MAT]/efficiency_coeff
 	if(!materials.has_materials(efficient_mats, amount))
@@ -161,8 +166,6 @@
 	var/list/ui = list()
 	ui += ui_header()
 	switch(screen)
-		if(RESEARCH_FABRICATOR_SCREEN_MATERIALS)
-			ui += ui_screen_materials()
 		if(RESEARCH_FABRICATOR_SCREEN_CHEMICALS)
 			ui += ui_screen_chemicals()
 		if(RESEARCH_FABRICATOR_SCREEN_SEARCH)
@@ -181,23 +184,9 @@
 	var/list/l = list()
 	l += "<div class='statusDisplay'><b>[host_research.organization] [department_tag] Department Lathe</b>"
 	l += "Security protocols: [(obj_flags & EMAGGED)? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
-	l += "<A href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_MATERIALS]'><B>Material Amount:</B> [materials.total_amount] / [materials.max_amount]</A>"
 	l += "<A href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_CHEMICALS]'><B>Chemical volume:</B> [reagents.total_volume] / [reagents.maximum_volume]</A>"
 	l += "<a href='?src=[REF(src)];sync_research=1'>Synchronize Research</a>"
 	l += "<a href='?src=[REF(src)];switch_screen=[RESEARCH_FABRICATOR_SCREEN_MAIN]'>Main Screen</a></div>[RDSCREEN_NOBREAK]"
-	return l
-
-/obj/machinery/rnd/production/proc/ui_screen_materials()
-	var/list/l = list()
-	l += "<div class='statusDisplay'><h3>Material Storage:</h3>"
-	for(var/mat_id in materials.materials)
-		var/datum/material/M = materials.materials[mat_id]
-		l += "* [M.amount] of [M.name]: "
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
-		l += ""
-	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
 
 /obj/machinery/rnd/production/proc/ui_screen_chemicals()
@@ -280,8 +269,6 @@
 		reagents.del_reagent(ls["dispose"])
 	if(ls["disposeall"]) //Causes the protolathe to dispose of all it's reagents.
 		reagents.clear_reagents()
-	if(ls["ejectsheet"]) //Causes the protolathe to eject a sheet of material
-		materials.retrieve_sheets(text2num(ls["eject_amt"]), ls["ejectsheet"])
 	updateUsrDialog()
 
 /obj/machinery/rnd/production/proc/ui_screen_main()
