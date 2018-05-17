@@ -178,13 +178,13 @@ GLOBAL_LIST_EMPTY(z_is_planet)
 			continue
 		if(target_type && !istype(A,target_type))
 			continue
-		var/cargs = build_args()
+		var/cargs = list(component_type) + build_args()
 		A.AddComponent(arglist(cargs))
 		qdel(src)
 		return
 
 /obj/effect/mapping_helpers/component_injector/proc/build_args()
-	return list(component_type)
+	return list()
 
 /obj/effect/mapping_helpers/component_injector/infective
 	name = "Infective Injector"
@@ -196,4 +196,19 @@ GLOBAL_LIST_EMPTY(z_is_planet)
 	if(!ispath(disease_type,/datum/disease))
 		CRASH("Wrong disease type passed in.")
 	var/datum/disease/D = new disease_type()
-	return list(component_type,D)
+	return list(D)
+
+/obj/effect/mapping_helpers/component_injector/atom_linker
+	name = "Atom Linker"
+	component_type = /datum/component/atom_linker
+	map_text = "NEEDS ID"
+	var/target_type
+
+/obj/effect/mapping_helpers/component_injector/atom_linker/Initialize()
+	. = ..()
+	if(map_text == "NEEDS ID")
+		. = INITIALIZE_HINT_QDEL
+		CRASH("[type] at ([COORD(src)]) is missing link id! Set it using map_text")
+
+/obj/effect/mapping_helpers/component_injector/infective/build_args()
+	return list(map_text)
