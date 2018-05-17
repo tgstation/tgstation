@@ -10,6 +10,7 @@
 	level_max = 0 //cannot be improved
 	cooldown_min = 100
 	include_user = 1
+	vr_cancast = FALSE
 
 	var/obj/marked_item
 

@@ -145,6 +145,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/smoke_amt = 0 //cropped at 10
 
 	var/centcom_cancast = 1 //Whether or not the spell should be allowed on z2
+	var/vr_cancast = TRUE 
+	var/static/list/vr_areas = list()
 
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "spell_default"
@@ -161,7 +163,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			return 0
 
 	var/turf/T = get_turf(user)
-	if(is_centcom_level(T.z) && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
+	var/area/A = get_area(user)
+	if((is_centcom_level(T.z) && !centcom_cancast) || (is_type_in_typecache(A, /area/awaymission/vr) && !vr_cancast)) //Certain spells are not allowed on the centcom zlevel
 		to_chat(user, "<span class='notice'>You can't cast this spell here.</span>")
 		return 0
 
@@ -262,7 +265,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/Initialize()
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
-
+	vr_areas = typecacheof(/area/awaymission/vr)
 	still_recharging_msg = "<span class='notice'>[name] is still recharging.</span>"
 	charge_counter = charge_max
 
