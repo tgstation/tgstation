@@ -1,0 +1,8 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - rscadd: "Added the MURDERDOME VR player versus player combat arena, filled with the most powerful weapons Centcom could think of to murder each other peacefully. Contact your nearest vendors for VR sleepers."
+  - tweak: "VR landmarks now accept outfits."
+  - tweak: "VR Sleepers can now be constructed and researched."
+  - tweak: "VR Sleepers now respond to mouse drops like sleepers!"
+  - bugfix: "VR sleepers no longer close or open inappropriately."
