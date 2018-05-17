@@ -16,6 +16,7 @@
 	level_max = 0 //cannot be improved
 	cooldown_min = 10
 	include_user = 1
+	vr_cancast = FALSE 	
 
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "skeleton"
