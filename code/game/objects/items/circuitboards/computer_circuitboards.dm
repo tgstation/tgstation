@@ -111,6 +111,10 @@
 	name = "Cloning (Computer Board)"
 	build_path = /obj/machinery/computer/cloning
 
+/obj/item/circuitboard/computer/prototype_cloning
+	name = "Prototype Cloning (Computer Board)"
+	build_path = /obj/machinery/computer/prototype_cloning
+
 /obj/item/circuitboard/computer/arcade/battle
 	name = "Arcade Battle (Computer Board)"
 	build_path = /obj/machinery/computer/arcade/battle
@@ -149,6 +153,10 @@
 /obj/item/circuitboard/computer/gulag_teleporter_console
 	name = "Labor Camp teleporter console (Computer Board)"
 	build_path = /obj/machinery/computer/gulag_teleporter_computer
+
+/obj/item/circuitboard/computer/rdconsole/production
+	name = "R&D Console Production Only (Computer Board)"
+	build_path = /obj/machinery/computer/rdconsole/production
 
 /obj/item/circuitboard/computer/rdconsole
 	name = "R&D Console (Computer Board)"
@@ -220,10 +228,6 @@
 	name = "Supply Request Console (Computer Board)"
 	build_path = /obj/machinery/computer/cargo/request
 
-/obj/item/circuitboard/computer/stockexchange
-	name = "circuit board (Stock Exchange Console)"
-	build_path = /obj/machinery/computer/stockexchange
-
 /obj/item/circuitboard/computer/operating
 	name = "Operating Computer (Computer Board)"
 	build_path = /obj/machinery/computer/operating
@@ -231,6 +235,10 @@
 /obj/item/circuitboard/computer/mining
 	name = "Outpost Status Display (Computer Board)"
 	build_path = /obj/machinery/computer/security/mining
+
+/obj/item/circuitboard/computer/research
+	name = "Research Monitor (Computer Board)"
+	build_path = /obj/machinery/computer/security/research
 
 /obj/item/circuitboard/computer/comm_monitor
 	name = "Telecommunications Monitor (Computer Board)"

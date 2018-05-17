@@ -79,7 +79,7 @@
 	return 1
 
 /datum/teleport/proc/playSpecials(atom/location,datum/effect_system/effect,sound)
-	if(location)
+	if(location && !isobserver(teleatom))
 		if(effect)
 			INVOKE_ASYNC(src, .proc/do_effect, location, effect)
 		if(sound)

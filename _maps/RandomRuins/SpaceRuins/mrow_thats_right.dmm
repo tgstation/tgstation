@@ -309,7 +309,7 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "ba" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/cat_man)
 "bb" = (
@@ -317,7 +317,7 @@
 	dir = 4
 	},
 /obj/structure/closet/cabinet,
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "kitty"
 	},
 /turf/open/floor/carpet,
@@ -733,9 +733,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "cl" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 8;
-	frequency = 1441;
 	id_tag = "n2o_out_cat";
 	name = "n2o out"
 	},
@@ -768,9 +767,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/cat_man)
 "cs" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
 	dir = 1;
-	frequency = 1441;
 	id_tag = "o2_out_cat";
 	name = "freezer vent"
 	},

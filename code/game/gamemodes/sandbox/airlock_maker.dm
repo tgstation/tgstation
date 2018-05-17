@@ -8,7 +8,9 @@
 	var/datum/airlock_maker/maker = null
 
 /obj/structure/door_assembly/attack_hand()
-	..()
+	. = ..()
+	if(.)
+		return
 	if(maker)
 		maker.interact()
 

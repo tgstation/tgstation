@@ -54,3 +54,7 @@
 	icon_state = "holymelon"
 	filling_color = "#FFD700"
 	dried_type = null
+
+/obj/item/reagent_containers/food/snacks/grown/holymelon/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE) //deliver us from evil o melon god

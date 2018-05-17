@@ -10,11 +10,10 @@
 		return
 
 	var/list/turfs = list()
-	for(var/area/Ar in A.related)
-		for(var/turf/T in Ar)
-			if(T.density)
-				continue
-			turfs.Add(T)
+	for(var/turf/T in A)
+		if(T.density)
+			continue
+		turfs.Add(T)
 
 	var/turf/T = safepick(turfs)
 	if(!T)
@@ -96,7 +95,7 @@
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Jump To Key") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/Getmob(mob/M in GLOB.mob_list)
+/client/proc/Getmob(mob/M in GLOB.mob_list - GLOB.dummy_mob_list)
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport"

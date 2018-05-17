@@ -165,6 +165,29 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 
+/obj/item/reagent_containers/glass/beaker/plastic
+	name = "x-large beaker"
+	desc = "An extra-large beaker. Can hold up to 120 units."
+	icon_state = "beakerwhite"
+	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
+	volume = 120
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(10,15,20,25,30,60,120)
+
+/obj/item/reagent_containers/glass/beaker/plastic/update_icon()
+	icon_state = "beakerlarge" // hack to lets us reuse the large beaker reagent fill states
+	..()
+	icon_state = "beakerwhite"
+
+/obj/item/reagent_containers/glass/beaker/meta
+	name = "metamaterial beaker"
+	desc = "A large beaker. Can hold up to 180 units."
+	icon_state = "beakergold"
+	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
+	volume = 180
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(10,15,20,25,30,60,120,180)
+
 /obj/item/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
 	desc = "A cryostasis beaker that allows for chemical storage without \
@@ -231,18 +254,18 @@
 	possible_transfer_amounts = list(10,15,20,25,30,50,70)
 	volume = 70
 	flags_inv = HIDEHAIR
-	slot_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD
 	resistance_flags = NONE
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 50) //Weak melee protection, because you can wear it on your head
 	slot_equipment_priority = list( \
-		slot_back, slot_wear_id,\
-		slot_w_uniform, slot_wear_suit,\
-		slot_wear_mask, slot_head, slot_neck,\
-		slot_shoes, slot_gloves,\
-		slot_ears, slot_glasses,\
-		slot_belt, slot_s_store,\
-		slot_l_store, slot_r_store,\
-		slot_generic_dextrous_storage
+		SLOT_BACK, SLOT_WEAR_ID,\
+		SLOT_W_UNIFORM, SLOT_WEAR_SUIT,\
+		SLOT_WEAR_MASK, SLOT_HEAD, SLOT_NECK,\
+		SLOT_SHOES, SLOT_GLOVES,\
+		SLOT_EARS, SLOT_GLASSES,\
+		SLOT_BELT, SLOT_S_STORE,\
+		SLOT_L_STORE, SLOT_R_STORE,\
+		SLOT_GENERC_DEXTROUS_STORAGE
 	)
 
 /obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
@@ -263,17 +286,17 @@
 
 /obj/item/reagent_containers/glass/bucket/equipped(mob/user, slot)
 	..()
-	if(slot == slot_head && reagents.total_volume)
+	if(slot == SLOT_HEAD && reagents.total_volume)
 		to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
 		reagents.reaction(user, TOUCH)
 		reagents.clear_reagents()
 
 /obj/item/reagent_containers/glass/bucket/equip_to_best_slot(var/mob/M)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
-		var/index = slot_equipment_priority.Find(slot_head)
-		slot_equipment_priority.Remove(slot_head)
+		var/index = slot_equipment_priority.Find(SLOT_HEAD)
+		slot_equipment_priority.Remove(SLOT_HEAD)
 		. = ..()
-		slot_equipment_priority.Insert(index, slot_head)
+		slot_equipment_priority.Insert(index, SLOT_HEAD)
 		return
 	return ..()
 

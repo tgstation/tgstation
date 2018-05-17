@@ -17,10 +17,8 @@
 	req_access = list(ACCESS_TCOMSAT)
 	circuit = /obj/item/circuitboard/computer/comm_server
 
-/obj/machinery/computer/telecomms/server/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/telecomms/server/ui_interact(mob/user)
+	. = ..()
 	var/dat = "<TITLE>Telecommunication Server Monitor</TITLE><center><b>Telecommunications Server Monitor</b></center>"
 
 	switch(screen)

@@ -62,7 +62,7 @@
 /datum/export/weapon/flash
 	cost = 10
 	unit_name = "handheld flash"
-	export_types = list(/obj/item/device/assembly/flash)
+	export_types = list(/obj/item/assembly/flash)
 	include_subtypes = TRUE
 
 /datum/export/weapon/handcuffs
@@ -103,7 +103,7 @@
 /datum/export/weapon/immortality_talisman
 	cost = 10000
 	unit_name = "Immortality Talisman"
-	export_types = list(/obj/item/device/immortality_talisman)
+	export_types = list(/obj/item/immortality_talisman)
 	
 /datum/export/weapon/babel
 	cost = 10000
@@ -128,17 +128,17 @@
 /datum/export/weapon/red //second half of telecube
 	cost = 5000
 	unit_name = "Red Cube"
-	export_types = list(/obj/item/device/warp_cube/red)
+	export_types = list(/obj/item/warp_cube/red)
 	
 /datum/export/weapon/blue //first half of telecube
 	cost = 5000
 	unit_name = "Blue Cube"
-	export_types = list(/obj/item/device/warp_cube)
+	export_types = list(/obj/item/warp_cube)
 	
 /datum/export/weapon/wisplantern //thermals on lavaland
 	cost = 10000
 	unit_name = "Wisp Lantern"
-	export_types = list(/obj/item/device/wisp_lantern)
+	export_types = list(/obj/item/wisp_lantern)
 	
 /datum/export/weapon/flight //if xenobiology ever reaches the point to get these without shuttle being called they deserve it
 	cost = 10000

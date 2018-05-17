@@ -27,8 +27,8 @@ doesn't have toxins access.
 	circuit = /obj/item/circuitboard/computer/rdconsole
 
 	var/obj/machinery/rnd/destructive_analyzer/linked_destroy	//Linked Destructive Analyzer
-	var/obj/machinery/rnd/protolathe/linked_lathe				//Linked Protolathe
-	var/obj/machinery/rnd/circuit_imprinter/linked_imprinter	//Linked Circuit Imprinter
+	var/obj/machinery/rnd/production/protolathe/linked_lathe				//Linked Protolathe
+	var/obj/machinery/rnd/production/circuit_imprinter/linked_imprinter	//Linked Circuit Imprinter
 
 	req_access = list(ACCESS_TOX)	//lA AND SETTING MANIPULATION REQUIRES SCIENTIST ACCESS.
 
@@ -50,6 +50,7 @@ doesn't have toxins access.
 	var/research_control = TRUE
 
 /obj/machinery/computer/rdconsole/production
+	circuit = /obj/item/circuitboard/computer/rdconsole/production
 	research_control = FALSE
 
 /proc/CallMaterialName(ID)
@@ -70,16 +71,16 @@ doesn't have toxins access.
 			if(linked_destroy == null)
 				linked_destroy = D
 				D.linked_console = src
-		else if(istype(D, /obj/machinery/rnd/protolathe))
+		else if(istype(D, /obj/machinery/rnd/production/protolathe))
 			if(linked_lathe == null)
-				var/obj/machinery/rnd/protolathe/P = D
+				var/obj/machinery/rnd/production/protolathe/P = D
 				if(!P.console_link)
 					continue
 				linked_lathe = D
 				D.linked_console = src
-		else if(istype(D, /obj/machinery/rnd/circuit_imprinter))
+		else if(istype(D, /obj/machinery/rnd/production/circuit_imprinter))
 			if(linked_imprinter == null)
-				var/obj/machinery/rnd/circuit_imprinter/C = D
+				var/obj/machinery/rnd/production/circuit_imprinter/C = D
 				if(!C.console_link)
 					continue
 				linked_imprinter = D
@@ -155,7 +156,7 @@ doesn't have toxins access.
 		if(stored_research == SSresearch.science_tech)
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[price]", "time" = SQLtime()))
 		if(stored_research.research_node(SSresearch.techweb_nodes[id]))
-			say("Sucessfully researched [TN.display_name].")
+			say("Successfully researched [TN.display_name].")
 			var/logname = "Unknown"
 			if(isAI(user))
 				logname = "AI: [user.name]"
@@ -217,6 +218,8 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/proc/ui_header()
 	var/list/l = list()
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	l += "[sheet.css_tag()][RDSCREEN_NOBREAK]"
 	l += "<div class='statusDisplay'><b>[stored_research.organization] Research and Development Network</b>"
 	l += "Available points: [round(stored_research.research_points)] (+[round(stored_research.last_bitcoins * 60)] / minute)"
 	l += "Security protocols: [obj_flags & EMAGGED ? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
@@ -280,7 +283,7 @@ doesn't have toxins access.
 		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
 			continue
-		if(!(D.departmental_flags & linked_lathe.allowed_department_flags))
+		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
 			continue
 		var/temp_material
 		var/c = 50
@@ -291,9 +294,9 @@ doesn't have toxins access.
 			t = linked_lathe.check_mat(D, M)
 			temp_material += " | "
 			if (t < 1)
-				temp_material += "<span class='bad'>[all_materials[M]*coeff] [CallMaterialName(M)]</span>"
+				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_material += " [all_materials[M]*coeff] [CallMaterialName(M)]"
+				temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
 			c = min(c,t)
 
 		if (c >= 1)
@@ -332,7 +335,7 @@ doesn't have toxins access.
 	l += ui_protolathe_header()
 	var/coeff = linked_lathe.efficiency_coeff
 	for(var/datum/design/D in matching_designs)
-		if(!(D.departmental_flags & linked_lathe.allowed_department_flags))
+		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
 			continue
 		var/temp_material
 		var/c = 50
@@ -342,9 +345,9 @@ doesn't have toxins access.
 			t = linked_lathe.check_mat(D, M)
 			temp_material += " | "
 			if (t < 1)
-				temp_material += "<span class='bad'>[all_materials[M]*coeff] [CallMaterialName(M)]</span>"
+				temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
 			else
-				temp_material += " [all_materials[M]*coeff] [CallMaterialName(M)]"
+				temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
 			c = min(c,t)
 
 		if (c >= 1)
@@ -422,7 +425,7 @@ doesn't have toxins access.
 		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
 			continue
-		if(!(D.departmental_flags & linked_imprinter.allowed_department_flags))
+		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
 			continue
 		var/temp_materials
 		var/check_materials = TRUE
@@ -451,7 +454,7 @@ doesn't have toxins access.
 
 	var/coeff = linked_imprinter.efficiency_coeff
 	for(var/datum/design/D in matching_designs)
-		if(!(D.departmental_flags & linked_imprinter.allowed_department_flags))
+		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
 			continue
 		var/temp_materials
 		var/check_materials = TRUE
@@ -720,11 +723,11 @@ doesn't have toxins access.
 	if(D.build_type)
 		var/lathes = list()
 		if(D.build_type & IMPRINTER)
-			lathes += "<span data-tooltip='Circuit Imprinter'>[machine_icon(/obj/machinery/rnd/circuit_imprinter)]</span>[RDSCREEN_NOBREAK]"
+			lathes += "<span data-tooltip='Circuit Imprinter'>[machine_icon(/obj/machinery/rnd/production/circuit_imprinter)]</span>[RDSCREEN_NOBREAK]"
 			if (linked_imprinter && D.id in stored_research.researched_designs)
 				l += "<A href='?src=[REF(src)];search=1;type=imprint;to_search=[D.name]'>Imprint</A>"
 		if(D.build_type & PROTOLATHE)
-			lathes += "<span data-tooltip='Protolathe'>[machine_icon(/obj/machinery/rnd/protolathe)]</span>[RDSCREEN_NOBREAK]"
+			lathes += "<span data-tooltip='Protolathe'>[machine_icon(/obj/machinery/rnd/production/protolathe)]</span>[RDSCREEN_NOBREAK]"
 			if (linked_lathe && D.id in stored_research.researched_designs)
 				l += "<A href='?src=[REF(src)];search=1;type=proto;to_search=[D.name]'>Construct</A>"
 		if(D.build_type & AUTOLATHE)
@@ -1012,13 +1015,8 @@ doesn't have toxins access.
 
 	updateUsrDialog()
 
-/obj/machinery/computer/rdconsole/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/rdconsole/interact(mob/user)
-	user.set_machine(src)
+/obj/machinery/computer/rdconsole/ui_interact(mob/user)
+	. = ..()
 	var/datum/browser/popup = new(user, "rndconsole", name, 900, 600)
 	popup.add_stylesheet("techwebs", 'html/browser/techwebs.css')
 	popup.set_content(generate_ui())

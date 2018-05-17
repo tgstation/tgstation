@@ -57,6 +57,9 @@
 	return
 
 /obj/effect/portal/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(get_turf(user) == get_turf(src))
 		teleport(user)
 	if(Adjacent(user))
@@ -138,16 +141,16 @@
 	return ..()
 
 /obj/effect/portal/attack_ghost(mob/dead/observer/O)
-	if(!teleport(O))
+	if(!teleport(O, TRUE))
 		return ..()
 
-/obj/effect/portal/proc/teleport(atom/movable/M)
-	if(!istype(M) || istype(M, /obj/effect) || (ismecha(M) && !mech_sized) || (!isobj(M) && !ismob(M))) //Things that shouldn't teleport.
+/obj/effect/portal/proc/teleport(atom/movable/M, force = FALSE)
+	if(!force && (!istype(M) || istype(M, /obj/effect) || (ismecha(M) && !mech_sized) || (!isobj(M) && !ismob(M)))) //Things that shouldn't teleport.
 		return
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
 		return FALSE
-	if(!ismecha(M) && !istype(M, /obj/item/projectile) && M.anchored && !allow_anchored)
+	if(!force && (!ismecha(M) && !istype(M, /obj/item/projectile) && M.anchored && !allow_anchored))
 		return
 	if(ismegafauna(M))
 		message_admins("[M] has used a portal at [ADMIN_COORDJMP(src)] made by [usr].")

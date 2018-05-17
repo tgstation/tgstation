@@ -22,7 +22,7 @@
 	return ..()
 
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
-	if(iscyborg(user) || istype(I, /obj/item/device/multitool))
+	if(iscyborg(user) || istype(I, /obj/item/multitool))
 		toggle_lock(user)
 	else if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP && !broken)
 		if(obj_integrity < max_integrity)
@@ -104,6 +104,9 @@
 	qdel(src)
 
 /obj/structure/fireaxecabinet/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(open || broken)
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
@@ -121,7 +124,7 @@
 		return
 
 /obj/structure/fireaxecabinet/attack_paw(mob/living/user)
-	attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)

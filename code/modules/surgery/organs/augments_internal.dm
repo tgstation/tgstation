@@ -26,7 +26,7 @@
 	desc = "Injectors of extra sub-routines for the brain."
 	icon_state = "brain_implant"
 	implant_overlay = "brain_implant_overlay"
-	zone = "head"
+	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/organ/cyberimp/brain/emp_act(severity)
@@ -125,7 +125,7 @@
 
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth
-	zone = "mouth"
+	zone = BODY_ZONE_PRECISE_MOUTH
 
 /obj/item/organ/cyberimp/mouth/breathing_tube
 	name = "breathing tube implant"
@@ -148,10 +148,10 @@
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
 	var/list/boxed = list(
-		/obj/item/device/autosurgeon/thermal_eyes,
-		/obj/item/device/autosurgeon/xray_eyes,
-		/obj/item/device/autosurgeon/anti_stun,
-		/obj/item/device/autosurgeon/reviver)
+		/obj/item/autosurgeon/thermal_eyes,
+		/obj/item/autosurgeon/xray_eyes,
+		/obj/item/autosurgeon/anti_stun,
+		/obj/item/autosurgeon/reviver)
 	var/amount = 5
 
 /obj/item/storage/box/cyber_implants/PopulateContents()

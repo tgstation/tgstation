@@ -34,8 +34,10 @@ Iconnery
 	var/turf/T = loc
 	if(level == 2 || !T.intact)
 		showpipe = TRUE
+		plane = GAME_PLANE
 	else
 		showpipe = FALSE
+		plane = FLOOR_PLANE
 
 	if(!showpipe)
 		return //no need to update the pipes if they aren't showing
@@ -54,10 +56,10 @@ Pipenet stuff; housekeeping
 */
 
 /obj/machinery/atmospherics/components/nullifyNode(i)
-	..()
 	if(nodes[i])
 		nullifyPipenet(parents[i])
 		QDEL_NULL(airs[i])
+	..()
 
 /obj/machinery/atmospherics/components/on_construction()
 	..()

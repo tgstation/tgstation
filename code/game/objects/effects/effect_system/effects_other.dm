@@ -88,8 +88,8 @@
 	auto_process = FALSE
 
 /datum/effect_system/trail_follow/ion/flight/set_dir(obj/effect/particle_effect/ion_trails/I)
-	if(istype(holder, /obj/item/device/flightpack))
-		var/obj/item/device/flightpack/F = holder
+	if(istype(holder, /obj/item/flightpack))
+		var/obj/item/flightpack/F = holder
 		if(istype(F.wearer))
 			I.setDir(F.wearer.dir)
 

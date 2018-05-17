@@ -2,9 +2,10 @@
 	name = "igniter"
 	desc = "It's useful for igniting plasma."
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "igniter1"
+	icon_state = "igniter0"
+	plane = FLOOR_PLANE
 	var/id = null
-	var/on = TRUE
+	var/on = FALSE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
@@ -13,21 +14,19 @@
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 70, "energy" = 50, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
 	resistance_flags = FIRE_PROOF
 
-/obj/machinery/igniter/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/igniter/attack_paw(mob/user)
-	return src.attack_hand(user)
+/obj/machinery/igniter/on
+	on = TRUE
+	icon_state = "igniter1"
 
 /obj/machinery/igniter/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	add_fingerprint(user)
 
 	use_power(50)
-	src.on = !( src.on )
-	src.icon_state = text("igniter[]", src.on)
-	return
+	on = !( on )
+	icon_state = "igniter[on]"
 
 /obj/machinery/igniter/process()	//ugh why is this even in process()?
 	if (src.on && !(stat & NOPOWER) )
