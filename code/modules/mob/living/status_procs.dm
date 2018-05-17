@@ -204,9 +204,25 @@
 /mob/living/proc/has_quirk(quirk)
 	return roundstart_quirks[quirk]
 
-/mob/living/proc/remove_all_traits(leave_roundstart = FALSE)
+/mob/living/proc/remove_all_traits(remove_species_traits = FALSE, remove_organ_traits = FALSE, remove_quirks = FALSE)
+
+	var/list/blacklisted_sources = list()
+	if(!remove_species_traits)
+		blacklisted_sources += SPECIES_TRAIT
+	if(!remove_organ_traits)
+		blacklisted_sources += ORGAN_TRAIT
+	if(!remove_quirks)
+		blacklisted_sources += ROUNDSTART_TRAIT
+
 	for(var/kebab in status_traits)
-		remove_trait(kebab, null, leave_roundstart)
+		var/skip
+		for(var/S in blacklisted_sources)
+			if(S in status_traits[kebab])
+				skip = TRUE
+				break
+		if(!skip)
+			remove_trait(kebab, null, TRUE)
+		CHECK_TICK
 
 /////////////////////////////////// TRAIT PROCS ////////////////////////////////////
 
