@@ -337,7 +337,8 @@
 /datum/controller/subsystem/ticker/proc/display_report(popcount)
 	GLOB.common_report = build_roundend_report()
 	for(var/client/C in GLOB.clients)
-		show_roundend_report(C,GLOB.common_report, popcount)
+		if(C.prefs.toggles & AUTOOPEN_ROUNDEND_REPORT)
+			show_roundend_report(C,GLOB.common_report, popcount)
 		give_show_report_button(C)
 		CHECK_TICK
 
@@ -450,7 +451,7 @@
 	var/datum/action/report/R = new
 	C.player_details.player_actions += R
 	R.Grant(C.mob)
-	to_chat(C,"<a href='?src=[REF(R)];report=1'>Show roundend report again</a>")
+	to_chat(C,"<a href='?src=[REF(R)];report=1'>Show roundend report[C.prefs.toggles & AUTOOPEN_ROUNDEND_REPORT?" again":""]</a>")
 
 /datum/action/report
 	name = "Show roundend report"
