@@ -30,7 +30,8 @@
 		if (SP_LAUNCH)
 			launched = TRUE
 			playsound(src,'sound/machines/triple_beep.ogg',50,0)
-			playsound(loc,'sound/machines/warning-buzzer.ogg',50,0)
+			playsound(src,'sound/machines/warning-buzzer.ogg',50,0)
+			addtimer(CALLBACK(src, .proc/endLaunch), 33)//wait 3.3 seconds (time it takes for supplypod to land), then update icon
 		if (SP_UNLINK)
 			linked = FALSE
 			playsound(src,'sound/machines/synth_no.ogg',50,0)
@@ -42,7 +43,6 @@
 	cut_overlays()
 	if (launched)
 		add_overlay("sp_green")
-		addtimer(CALLBACK(src, .proc/endLaunch), 33)//wait 3.3 seconds (time it takes for supplypod to land), then update icon
 	else if (ready)
 		add_overlay("sp_yellow")
 	else if (linked)
@@ -95,14 +95,14 @@
 	if (express_console)
 		unlink_console()
 	else
-		visible_message("<span class='notice'>There is no linked console!</span>")
+		to_chat(user, "<span class='notice'>There is no linked console!</span>")
 
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/pen)) //give a tag that is visible from the linked express console
-		var/tag = stripped_input(user, "What would you like the tag to be?")
+		var/new_beacon_name = stripped_input(user, "What would you like the tag to be?")
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
-		if(tag)
+		if(new_beacon_name)
 			name += " ([tag])"
 		return
 	else	

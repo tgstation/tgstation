@@ -130,13 +130,13 @@
 			usingBeacon = TRUE
 			if (beacon)
 				beacon.update_status(SP_READY) //turns on the beacon's ready light
-		if("printBeacon")//cooldown conditional is located in cargo_express.ract
+		if("printBeacon")
 			cooldown = 10//a ~ten second cooldown for printing beacons to prevent spam
-			var/obj/item/supplypod_beacon/C = new /obj/item/supplypod_beacon(loc)
+			var/obj/item/supplypod_beacon/C = new /obj/item/supplypod_beacon(drop_location())
 			C.link_console(src)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
 			printed_beacons++//printed_beacons starts at 0, so the first one out will be called beacon # 1
 			beacon.name = "Supply Pod Beacon #[printed_beacons]"
-			SSshuttle.points -= BEACON_COST
+			SSshuttle.points -= BEACON_COST//check for this is under ui_data
 
 		if("add")//Generate Supply Order first
 			var/id = text2path(params["id"])
