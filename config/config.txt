@@ -220,13 +220,15 @@ CHECK_RANDOMIZER
 # GITHUBURL https://www.github.com/tgstation/tgstation
 
 ## Round specific stats address
-## Link to round specific logs parsed IE statbus. RoundID is filled in automatically by ticker/Reboot()
+## Link to round specific parsed logs; IE statbus. It is appended with the RoundID automatically by ticker/Reboot()
 ## This will take priority over the game logs address during reboot.
-# ROUNDSTATSURL https://atlantaned.space/statbus/round.php?round=
+## Example: https://atlantaned.space/statbus/round.php?round=
+# ROUNDSTATSURL
 
 ## Game Logs address
-## Incase you don't have a fancy parsing system, but still want players to be able to find where you keep logs.
-# GAMELOGURL https://tgstation13.org/parsed-logs/basil/data/logs/
+## Incase you don't have a fancy parsing system, but still want players to be able to find where you keep your server's logs.
+## Example: https://tgstation13.org/parsed-logs/basil/data/logs/
+# GAMELOGURL
 
 ## Github repo id
 ##This can be found by going to https://api.github.com/users/<user name here>/repos
