@@ -468,7 +468,8 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"creme_de_menthe",
 		"creme_de_cacao",
 		"triple_sec",
-		"sake"
+		"sake",
+		"fernet"
 	)
 	emagged_reagents = list(
 		"ethanol",
