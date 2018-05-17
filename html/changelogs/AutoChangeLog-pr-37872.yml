@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Adminorazine will no longer kill ash lizards."
+  - bugfix: "Adminorazine will no longer remove quirks."
