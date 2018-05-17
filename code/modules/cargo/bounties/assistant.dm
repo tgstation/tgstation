@@ -19,7 +19,7 @@
 
 /datum/bounty/item/assistant/stunprod
 	name = "Stunprod"
-	description = "CentCom demands a stunprod to use against dissedents. Craft one, then ship it."
+	description = "CentCom demands a stunprod to use against dissidents. Craft one, then ship it."
 	reward = 1300
 	wanted_types = list(/obj/item/melee/baton/cattleprod)
 
@@ -106,7 +106,7 @@
 
 /datum/bounty/item/assistant/gondola_hide
 	name = "Gondola Hide"
-	description = "Central Command has recently learned of strange creatures called Gondalas. If you catch one, ship its hide back to CentCom."
+	description = "Central Command has recently learned of strange creatures called Gondolas. If you catch one, ship its hide back to CentCom."
 	reward = 8000
 	wanted_types = list(/obj/item/stack/sheet/animalhide/gondola)
 
