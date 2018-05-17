@@ -24,4 +24,5 @@
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/device/laser_pointer(src)
 	new /obj/item/door_remote/research_director(src)
+	new /obj/item/storage/box/firingpins(src)
 	new /obj/item/circuitboard/machine/protolathe/department/science(src)
