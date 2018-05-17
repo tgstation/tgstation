@@ -2,6 +2,7 @@
 
 /mob/living/carbon/human/virtual_reality
 	var/mob/living/carbon/human/real_me //The human controlling us, can be any human (including virtual ones... inception...)
+	var/datum/mind/real_mind
 	var/obj/machinery/vr_sleeper/vr_sleeper
 	var/datum/action/quit_vr/quit_action
 
@@ -10,7 +11,6 @@
 	. = ..()
 	quit_action = new()
 	quit_action.Grant(src)
-
 
 /mob/living/carbon/human/virtual_reality/death()
 	revert_to_reality()
@@ -33,15 +33,15 @@
 
 
 /mob/living/carbon/human/virtual_reality/proc/revert_to_reality(refcleanup = TRUE, deathchecks = TRUE)
-	if(real_me && mind)
-		mind.transfer_to(real_me)
+	if(real_mind && mind)
+		real_mind.key = mind.key
 		if(deathchecks && vr_sleeper && vr_sleeper.you_die_in_the_game_you_die_for_real)
 			real_me.death(0)
 	if(refcleanup)
 		vr_sleeper.vr_human = null
 		vr_sleeper = null
 		real_me = null
-
+		real_mind = null
 
 /datum/action/quit_vr
 	name = "Quit Virtual Reality"

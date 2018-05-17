@@ -156,8 +156,10 @@
 	if(H)
 		cleanup_vr_human()
 		vr_human = new /mob/living/carbon/human/virtual_reality(location)
+		vr_human.mind_initialize()
 		vr_human.vr_sleeper = src
 		vr_human.real_me = H
+		vr_human.real_mind = H.mind
 		H.dna.transfer_identity(vr_human)
 		vr_human.name = H.name
 		vr_human.real_name = H.real_name
@@ -169,7 +171,7 @@
 			var/datum/outfit/O = new outfit()
 			O.equip(vr_human)
 		if(transfer && H.mind)
-			H.mind.transfer_to(vr_human)
+			vr_human.mind.key = H.mind.key
 
 
 /obj/machinery/vr_sleeper/proc/cleanup_vr_human()
