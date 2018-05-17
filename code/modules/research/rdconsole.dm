@@ -50,6 +50,7 @@ doesn't have toxins access.
 	var/research_control = TRUE
 
 /obj/machinery/computer/rdconsole/production
+	circuit = /obj/item/circuitboard/computer/rdconsole/production
 	research_control = FALSE
 
 /proc/CallMaterialName(ID)

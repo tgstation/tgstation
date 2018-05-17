@@ -663,3 +663,21 @@
 	results = list("mojito" = 5)
 	required_reagents = list("rum" = 1, "sugar" = 1, "limejuice" = 1, "sodawater" = 1, "menthol" = 1)
 
+/datum/chemical_reaction/fernet_cola
+	name = "Fernet Cola"
+	id = "fernet_cola"
+	results = list("fernet_cola" = 2)
+	required_reagents = list("fernet" = 1, "cola" = 1)
+
+
+/datum/chemical_reaction/fanciulli
+	name = "Fanciulli"
+	id = "fanciulli"
+	results = list("fanciulli" = 2)
+	required_reagents = list("manhattan" = 1, "fernet" = 1)
+
+/datum/chemical_reaction/branca_menta
+	name = "Branca Menta"
+	id = "branca_menta"
+	results = list("branca_menta" = 3)
+	required_reagents = list("fernet" = 1, "creme_de_menthe" = 1, "ice" = 1)

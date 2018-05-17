@@ -170,7 +170,6 @@
 			to_chat(user, "<span class='warning'>You need a free hand to hold the paddles!</span>")
 			update_icon()
 			return
-		paddles.forceMove(user)
 	else
 		//Remove from their hands and back onto the defib unit
 		paddles.unwield()
@@ -276,8 +275,8 @@
 	name = "defibrillator paddles"
 	desc = "A pair of plastic-gripped paddles with flat metal surfaces that are used to deliver powerful electric shocks."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "defibpaddles"
-	item_state = "defibpaddles"
+	icon_state = "defibpaddles0"
+	item_state = "defibpaddles0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 

@@ -49,7 +49,6 @@
 			on = FALSE
 			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
 			return
-		noz.forceMove(user)
 	else
 		//Remove from their hands and put back "into" the tank
 		remove_noz()

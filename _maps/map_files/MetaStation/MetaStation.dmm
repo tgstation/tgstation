@@ -4122,14 +4122,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
-"aiW" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 8
-	},
-/area/crew_quarters/fitness/recreation)
 "aiX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
@@ -5182,9 +5174,7 @@
 	},
 /area/crew_quarters/fitness/recreation)
 "alk" = (
-/obj/structure/chair{
-	dir = 8
-	},
+/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -5889,11 +5879,6 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
-"amB" = (
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 1
-	},
-/area/crew_quarters/fitness/recreation)
 "amC" = (
 /obj/structure/chair{
 	dir = 4
@@ -6366,6 +6351,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "anJ" = (
@@ -7230,14 +7216,7 @@
 /area/maintenance/port/fore)
 "apx" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/secure_data{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/circuitboard/computer/security{
-	pixel_x = 1;
-	pixel_y = -1
-	},
+/obj/effect/spawner/lootdrop/techstorage/service,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "apy" = (
@@ -23388,45 +23367,20 @@
 /area/storage/tech)
 "aYj" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/pandemic{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/computer/rdconsole,
-/obj/item/circuitboard/machine/rdserver{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/circuitboard/machine/destructive_analyzer,
-/obj/item/circuitboard/computer/aifixer,
-/obj/item/circuitboard/computer/teleporter,
-/obj/item/circuitboard/machine/circuit_imprinter,
-/obj/item/circuitboard/machine/mechfab,
+/obj/effect/spawner/lootdrop/techstorage/engineering,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "aYk" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/mining,
-/obj/item/circuitboard/machine/autolathe{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/circuitboard/computer/arcade/battle,
 /obj/machinery/ai_status_display{
 	pixel_y = 31
 	},
+/obj/effect/spawner/lootdrop/techstorage/medical,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "aYl" = (
 /obj/structure/rack,
-/obj/item/circuitboard/machine/telecomms/processor,
-/obj/item/circuitboard/machine/telecomms/receiver,
-/obj/item/circuitboard/machine/telecomms/server,
-/obj/item/circuitboard/machine/telecomms/bus,
-/obj/item/circuitboard/machine/telecomms/broadcaster,
-/obj/item/circuitboard/computer/message_monitor{
-	pixel_y = -5
-	},
+/obj/effect/spawner/lootdrop/techstorage/rnd,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "aYm" = (
@@ -24989,14 +24943,7 @@
 /area/maintenance/starboard/fore)
 "bbk" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/borgupload{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/item/circuitboard/computer/aiupload{
-	pixel_x = 2;
-	pixel_y = -2
-	},
+/obj/effect/spawner/lootdrop/techstorage/AI,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "bbl" = (
@@ -25027,15 +24974,7 @@
 /area/storage/tech)
 "bbn" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/cloning,
-/obj/item/circuitboard/computer/med_data{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/circuitboard/machine/clonescanner,
-/obj/item/circuitboard/machine/clonepod,
-/obj/item/circuitboard/computer/scan_consolenew,
-/obj/item/circuitboard/machine/smoke_machine,
+/obj/effect/spawner/lootdrop/techstorage/security,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "bbo" = (
@@ -25043,19 +24982,8 @@
 /area/maintenance/solars/port/fore)
 "bbp" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/powermonitor{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/circuitboard/computer/stationalert{
-	pixel_x = 1;
-	pixel_y = -1
-	},
-/obj/item/circuitboard/computer/atmos_alert{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/spawner/lootdrop/techstorage/tcomms,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "bbq" = (
@@ -25553,18 +25481,7 @@
 /area/storage/tech)
 "bcv" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/crew{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/item/circuitboard/computer/card{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/obj/item/circuitboard/computer/communications{
-	pixel_x = 5;
-	pixel_y = -5
-	},
+/obj/effect/spawner/lootdrop/techstorage/RnD_secure,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "bcw" = (
@@ -26260,14 +26177,7 @@
 /area/maintenance/starboard/fore)
 "bdX" = (
 /obj/structure/rack,
-/obj/item/circuitboard/computer/robotics{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/circuitboard/computer/mecha_control{
-	pixel_x = 1;
-	pixel_y = -1
-	},
+/obj/effect/spawner/lootdrop/techstorage/command,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "bdY" = (
@@ -58437,15 +58347,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/storage)
-"ctk" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "ctl" = (
 /obj/machinery/camera{
 	active_power_usage = 0;
@@ -76496,6 +76397,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"etr" = (
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "evy" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -77284,6 +77189,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"vlx" = (
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8
+	},
+/area/crew_quarters/fitness/recreation)
 "vyx" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
@@ -113546,7 +113457,7 @@ cJa
 cpG
 kVo
 dDu
-ctk
+kVo
 cuc
 cuZ
 dyp
@@ -114493,11 +114404,11 @@ acP
 afz
 agz
 dBY
-ahl
-aiW
-aja
+vlx
+vlx
+etr
 alk
-amB
+alk
 anK
 aoZ
 aqk
