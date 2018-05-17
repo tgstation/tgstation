@@ -202,6 +202,7 @@ GLOBAL_LIST_EMPTY(z_is_planet)
 	name = "Atom Linker"
 	component_type = /datum/component/atom_linker
 	map_text = "NEEDS ID"
+	late = FALSE
 	var/target_type
 
 /obj/effect/mapping_helpers/component_injector/atom_linker/Initialize()
