@@ -71,22 +71,7 @@
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome)
 "k" = (
-/obj/structure/rack,
-/obj/item/gun/ballistic/automatic/proto/unrestricted,
-/obj/item/gun/ballistic/automatic/proto/unrestricted,
-/obj/item/gun/ballistic/automatic/proto/unrestricted,
-/obj/item/gun/ballistic/automatic/proto/unrestricted,
-/obj/item/gun/ballistic/automatic/proto/unrestricted,
-/obj/item/gun/ballistic/automatic/c20r/unrestricted,
-/obj/item/gun/ballistic/automatic/c20r/unrestricted,
-/obj/item/gun/ballistic/automatic/c20r/unrestricted,
-/obj/item/gun/ballistic/automatic/c20r/unrestricted,
-/obj/item/gun/ballistic/automatic/c20r/unrestricted,
-/obj/item/gun/ballistic/automatic/c20r/unrestricted,
-/obj/item/gun/ballistic/automatic/c20r/unrestricted,
-/obj/item/gun/ballistic/automatic/c20r/unrestricted,
-/obj/item/gun/ballistic/automatic/c20r/unrestricted,
-/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/machinery/vending/liberationstation,
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome)
 "l" = (
