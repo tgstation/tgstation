@@ -611,6 +611,10 @@
 	uniform = /obj/item/clothing/under/color/random
 	shoes = /obj/item/clothing/shoes/winterboots
 	suit = /obj/item/clothing/suit/hooded/wintercoat
+	back = /obj/item/storage/backpack
+	mask = /obj/item/clothing/mask/gas/syndicate
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
+	internals_slot = SLOT_R_STORE
 
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	mob_gender = FEMALE
