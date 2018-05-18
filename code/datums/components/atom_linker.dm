@@ -8,6 +8,10 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	
+	if(!istext(id))
+		. = COMPONENT_INCOMPATIBLE
+		CRASH("Non-text id!")
+
 	src.id = id
 	linked_components = linker_lists[id]
 	if(!linked_components)
