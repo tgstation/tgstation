@@ -1253,13 +1253,14 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_SPEW)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
 	if(QDELETED(target) || !punishment)
 		return
-
+	
+	var/failmsg
 	switch(punishment)
 		if(ADMIN_PUNISHMENT_LIGHTNING)
 			var/turf/T = get_step(get_step(target, NORTH), NORTH)
@@ -1281,11 +1282,23 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			var/turf/startT = spaceDebrisStartLoc(startside, T.z)
 			var/turf/endT = spaceDebrisFinishLoc(startside, T.z)
 			new /obj/effect/immovablerod(startT, endT,target)
-
-	var/msg = "[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment]."
-	message_admins(msg)
-	admin_ticket_log(target, msg)
-	log_admin("[key_name(usr)] punished [key_name(target)] with [punishment].")
+		if(ADMIN_PUNISHMENT_SPEW)
+			if(iscarbon(target))
+				var/mob/living/carbon/C = target
+				C.vomit(0, TRUE, TRUE, 4)
+				to_chat(C, "<span class='userdanger'>You feel something lumpy come up as you suddenly need to vomit.</span>")
+				C.spew_organ(5, 20)
+			else
+				failmsg = "Spewapalooza failed! You did not select a carbon mob!"
+	
+	if(!isnull(failmsg))
+		to_chat(usr, failmsg)
+		return
+	else
+		var/msg = "[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment]."
+		message_admins(msg)
+		admin_ticket_log(target, msg)
+		log_admin("[key_name(usr)] punished [key_name(target)] with [punishment].")
 
 
 /client/proc/trigger_centcom_recall()
