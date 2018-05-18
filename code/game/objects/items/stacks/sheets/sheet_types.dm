@@ -344,6 +344,11 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	if(!iscultist(user))
 		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
 		return
+	var/turf/T = get_turf(user) //we may have moved. adjust as needed...
+	var/area/A = get_area(user)
+	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !A.blob_allowed))
+		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
+		return FALSE
 	return ..()
 
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)

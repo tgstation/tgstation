@@ -2461,6 +2461,19 @@
 		usr.client.cmd_admin_mod_antag_rep(C, href_list["modantagrep"])
 		show_player_panel(M)
 
+	else if(href_list["slowquery"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/answer = href_list["slowquery"]
+		if(answer == "yes")
+			log_query_debug("[usr.key] | Reported a server hang")
+			if(alert(usr, "Had you just press any admin buttons?", "Query server hang report", "Yes", "No") == "Yes")
+				var/response = input(usr,"What were you just doing?","Query server hang report") as null|text
+				if(response)
+					log_query_debug("[usr.key] | [response]")
+		else if(answer == "no")
+			log_query_debug("[usr.key] | Reported no server hang")
+
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))
 		return

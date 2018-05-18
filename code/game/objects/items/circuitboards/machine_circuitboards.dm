@@ -7,6 +7,15 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 2)
 
+/obj/item/circuitboard/machine/vr_sleeper
+	name = "VR Sleeper (Machine Board)"
+	build_path = /obj/machinery/vr_sleeper
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stock_parts/scanning_module = 2,
+		/obj/item/stack/sheet/glass = 2)
+
 /obj/item/circuitboard/machine/announcement_system
 	name = "Announcement System (Machine Board)"
 	build_path = /obj/machinery/announcement_system
@@ -837,6 +846,13 @@
 /obj/item/circuitboard/machine/vending/donksofttoyvendor
 	name = "Donksoft Toy Vendor (Machine Board)"
 	build_path = /obj/machinery/vending/donksofttoyvendor
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/vending_refill/donksoft = 3)
+
+/obj/item/circuitboard/machine/vending/syndicatedonksofttoyvendor
+	name = "Syndicate Donksoft Toy Vendor (Machine Board)"
+	build_path = /obj/machinery/vending/toyliberationstation
 	req_components = list(
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/vending_refill/donksoft = 3)

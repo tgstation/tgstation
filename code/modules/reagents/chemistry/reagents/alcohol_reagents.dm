@@ -1613,3 +1613,91 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "mojito"
 	glass_name = "Mojito"
 	glass_desc = "A drink that looks as refreshing as it tastes."
+	
+/datum/reagent/consumable/ethanol/fernet
+	name = "Fernet"
+	id = "fernet"
+	description = "An incredibly bitter herbal liqueur used as a digestif."
+	color = "#1B2E24" // rgb: 27, 46, 36
+	boozepwr = 80
+	taste_description = "utter bitterness"
+	glass_name = "glass of fernet"
+	glass_desc = "A glass of pure Fernet. Only an absolute madman would drink this alone." //Hi Kevum
+
+/datum/reagent/consumable/ethanol/fernet/on_mob_life(mob/living/M)
+
+	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
+		M.adjustToxLoss(1*REM, 0)
+	M.nutrition = max(M.nutrition - 5, 0)
+	M.overeatduration = 0
+	return ..()
+
+/datum/reagent/consumable/ethanol/fernet_cola
+	name = "Fernet Cola"
+	id = "fernet_cola"
+	description = "A very popular and bittersweet digestif, ideal after a heavy meal. Best served on a sawed-off cola bottle as per tradition."
+	color = "#390600" // rgb: 57, 6, 0
+	boozepwr = 25
+	taste_description = "sweet relief"
+	glass_icon_state = "godlyblend"
+	glass_name = "glass of fernet cola"
+	glass_desc = "A sawed-off cola bottle filled with Fernet Cola. Nothing better after eating like a lardass."
+
+/datum/reagent/consumable/ethanol/fernetcola/on_mob_life(mob/living/M)
+
+	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
+		M.adjustToxLoss(0.5*REM, 0)
+	M.nutrition = max(M.nutrition - 3, 0)
+	M.overeatduration = 0
+	return ..()
+
+/datum/reagent/consumable/ethanol/fanciulli
+
+	name = "Fanciulli"
+	id = "fanciulli"
+	description = "What if the Manhattan coctail ACTUALLY used a bitter herb liquour? Helps you sobers up." //also causes a bit of stamina damage to symbolize the afterdrink lazyness
+	color = "#CA933F" // rgb: 202, 147, 63
+	boozepwr = -10
+	taste_description = "a sweet sobering mix"
+	glass_icon_state = "fanciulli"
+	glass_name = "glass of fanciulli"
+	glass_desc = "A glass of Fanciulli. It's just Manhattan with Fernet."
+	
+/datum/reagent/consumable/ethanol/fanciulli/on_mob_life(mob/living/M)
+	
+	M.nutrition = max(M.nutrition - 5, 0)
+	M.overeatduration = 0
+	return ..()
+
+/datum/reagent/consumable/ethanol/fanciulli/on_mob_add(mob/living/M)
+	if(M.health > 0)
+		M.adjustStaminaLoss(20)
+		. = TRUE
+	..()
+
+
+/datum/reagent/consumable/ethanol/branca_menta
+	name = "Branca Menta"
+	id = "branca_menta"
+	description = "A refreshing mixture of bitter Fernet with mint creme liquour."
+	color = "#4B5746" // rgb: 75, 87, 70
+	boozepwr = 35
+	taste_description = "a bitter freshness"
+	glass_icon_state= "minted_fernet"
+	glass_name = "glass of branca menta"
+	glass_desc = "A glass of Branca Menta, perfect for those lazy and hot sunday summer afternoons." //Get lazy literally by drinking this
+
+
+/datum/reagent/consumable/ethanol/branca_menta/on_mob_life(mob/living/M)
+	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT, T0C)
+	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
+		M.adjustToxLoss(1*REM, 0)
+	M.nutrition = max(M.nutrition - 5, 0)
+	M.overeatduration = 0
+	return ..()
+
+/datum/reagent/consumable/ethanol/branca_menta/on_mob_add(mob/living/M)
+	if(M.health > 0)
+		M.adjustStaminaLoss(35)
+		. = TRUE
+	..()

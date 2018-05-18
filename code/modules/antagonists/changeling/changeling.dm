@@ -353,7 +353,10 @@
 	if(GLOB.changeling_team_objective_type)
 		var/datum/objective/changeling_team_objective/team_objective = new GLOB.changeling_team_objective_type
 		team_objective.owner = owner
-		objectives += team_objective
+		if(team_objective.prepare())//Setting up succeeded
+			objectives += team_objective
+		else
+			qdel(team_objective)
 	return
 
 /datum/antagonist/changeling/proc/forge_objectives()
