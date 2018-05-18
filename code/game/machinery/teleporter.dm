@@ -47,7 +47,6 @@
 		return
 	if(is_ready())
 		teleport(AM)
-		use_power(5000)
 
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
@@ -61,13 +60,15 @@
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj, turf/T)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
-	if (!com)
+	if (QDELETED(com))
 		return
-	if (!com.target)
+	if (QDELETED(com.target))
+		com.target = null
 		visible_message("<span class='alert'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if (ismovableatom(M))
 		if(do_teleport(M, com.target))
+			use_power(5000)
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M

@@ -20,7 +20,7 @@ GLOBAL_PROTECT(security_mode)
 	TgsNew()
 
 	GLOB.revdata = new
-	
+
 	config.Load()
 
 	//SetupLogs depends on the RoundID, so lets check
@@ -92,6 +92,7 @@ GLOBAL_PROTECT(security_mode)
 	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
 	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
 	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
+	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = file("[GLOB.log_directory]/tests.log")

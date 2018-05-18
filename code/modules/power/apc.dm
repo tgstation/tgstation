@@ -105,6 +105,9 @@
 
 /obj/machinery/power/apc/unlocked
 	locked = FALSE
+	
+/obj/machinery/power/apc/syndicate //general syndicate access
+	req_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/power/apc/highcap/five_k
 	cell_type = /obj/item/stock_parts/cell/upgraded/plus

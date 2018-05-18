@@ -23,8 +23,8 @@
 			if(line)
 				var/datum/tgs_revision_information/test_merge/tm = line
 				var/tmcommit = tm.commit
-				log_world("Test merge active of PR #[line] commit [tmcommit]")
-				SSblackbox.record_feedback("nested tally", "testmerged_prs", 1, list("[line]", "[tmcommit]"))
+				log_world("Test merge active of PR #[tm.number] commit [tmcommit]")
+				SSblackbox.record_feedback("nested tally", "testmerged_prs", 1, list("[tm.number]", "[tmcommit]"))
 		if(originmastercommit)
 			log_world("Based off origin/master commit [originmastercommit]")
 	else if(originmastercommit)
