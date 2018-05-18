@@ -103,7 +103,27 @@
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome)
 "n" = (
-/obj/item/firing_pin,
+/obj/structure/rack,
+/obj/item/gun/ballistic/automatic/proto/unrestricted,
+/obj/item/gun/ballistic/automatic/proto/unrestricted,
+/obj/item/gun/ballistic/automatic/proto/unrestricted,
+/obj/item/gun/ballistic/automatic/proto/unrestricted,
+/obj/item/gun/ballistic/automatic/proto/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/l6_saw,
+/obj/item/gun/ballistic/automatic/l6_saw,
+/obj/item/gun/ballistic/automatic/l6_saw,
+/obj/item/gun/ballistic/automatic/l6_saw,
+/obj/item/gun/ballistic/automatic/l6_saw,
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome)
 "o" = (
@@ -140,11 +160,7 @@
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome)
 "r" = (
-/obj/structure/rack,
-/obj/item/gun/ballistic/shotgun/boltaction,
-/obj/item/gun/ballistic/shotgun/boltaction,
-/obj/item/gun/ballistic/shotgun/boltaction,
-/obj/item/gun/ballistic/shotgun/boltaction,
+/obj/item/storage/box/firingpins,
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome)
 "s" = (
@@ -238,6 +254,44 @@
 /obj/item/gun/ballistic/automatic/ar,
 /obj/item/gun/ballistic/automatic/ar,
 /obj/item/gun/ballistic/automatic/ar,
+/turf/open/indestructible,
+/area/awaymission/vr/murderdome)
+"F" = (
+/obj/structure/rack,
+/obj/item/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/automatic/atlauncher,
+/obj/item/gun/ballistic/automatic/atlauncher,
+/obj/item/gun/ballistic/automatic/atlauncher,
+/obj/item/gun/ballistic/automatic/atlauncher,
+/obj/item/gun/ballistic/automatic/atlauncher,
+/turf/open/indestructible,
+/area/awaymission/vr/murderdome)
+"G" = (
+/obj/structure/rack,
+/obj/item/gun/ballistic/automatic/proto/unrestricted,
+/obj/item/gun/ballistic/automatic/proto/unrestricted,
+/obj/item/gun/ballistic/automatic/proto/unrestricted,
+/obj/item/gun/ballistic/automatic/proto/unrestricted,
+/obj/item/gun/ballistic/automatic/proto/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+/obj/item/gun/ballistic/automatic/l6_saw,
+/obj/item/gun/ballistic/automatic/l6_saw,
+/obj/item/gun/ballistic/automatic/l6_saw,
+/obj/item/gun/ballistic/automatic/l6_saw,
+/obj/item/gun/ballistic/automatic/l6_saw,
+/obj/item/gun/ballistic/automatic/l6_saw,
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome)
 
@@ -347,7 +401,7 @@ b
 "}
 (3,1,1) = {"
 b
-d
+k
 i
 i
 j
@@ -390,7 +444,7 @@ j
 j
 j
 b
-d
+k
 j
 i
 i
@@ -453,7 +507,7 @@ b
 b
 f
 j
-n
+r
 q
 u
 b
@@ -496,7 +550,7 @@ j
 b
 f
 q
-n
+r
 j
 E
 b
@@ -504,9 +558,9 @@ b
 (6,1,1) = {"
 b
 g
-k
+n
 o
-r
+F
 v
 b
 j
@@ -547,9 +601,9 @@ j
 j
 b
 g
-k
+n
 o
-r
+F
 v
 b
 "}
@@ -659,7 +713,7 @@ b
 "}
 (9,1,1) = {"
 b
-d
+k
 i
 i
 j
@@ -702,7 +756,7 @@ j
 j
 j
 b
-d
+k
 j
 i
 i
@@ -765,7 +819,7 @@ b
 b
 f
 j
-n
+r
 q
 u
 b
@@ -808,7 +862,7 @@ j
 b
 f
 q
-n
+r
 j
 E
 b
@@ -816,9 +870,9 @@ b
 (12,1,1) = {"
 b
 g
-k
+n
 o
-r
+F
 v
 b
 j
@@ -859,9 +913,9 @@ j
 j
 b
 g
-k
+n
 o
-r
+F
 v
 b
 "}
@@ -971,7 +1025,7 @@ b
 "}
 (15,1,1) = {"
 b
-d
+k
 i
 i
 j
@@ -1014,7 +1068,7 @@ j
 j
 j
 b
-d
+k
 j
 i
 i
@@ -1077,7 +1131,7 @@ b
 b
 f
 j
-n
+r
 q
 u
 b
@@ -1120,7 +1174,7 @@ j
 b
 f
 q
-n
+r
 j
 E
 b
@@ -1128,9 +1182,9 @@ b
 (18,1,1) = {"
 b
 g
-k
+n
 o
-r
+F
 v
 b
 j
@@ -1171,9 +1225,9 @@ j
 j
 b
 g
-k
+G
 o
-r
+F
 v
 b
 "}
@@ -1283,7 +1337,7 @@ b
 "}
 (21,1,1) = {"
 b
-d
+k
 i
 i
 j
@@ -1326,7 +1380,7 @@ j
 j
 j
 b
-d
+k
 j
 i
 i
@@ -1389,7 +1443,7 @@ b
 b
 f
 j
-n
+r
 q
 u
 b
@@ -1432,7 +1486,7 @@ j
 b
 f
 q
-n
+r
 j
 E
 b
@@ -1440,9 +1494,9 @@ b
 (24,1,1) = {"
 b
 g
-k
+n
 o
-r
+F
 v
 b
 j
@@ -1483,9 +1537,9 @@ j
 j
 b
 g
-k
+n
 o
-r
+F
 v
 b
 "}
@@ -1595,7 +1649,7 @@ b
 "}
 (27,1,1) = {"
 b
-d
+k
 i
 i
 j
@@ -1638,7 +1692,7 @@ j
 j
 j
 b
-d
+k
 j
 i
 i
@@ -1701,7 +1755,7 @@ b
 b
 f
 j
-n
+r
 q
 u
 b
@@ -1744,7 +1798,7 @@ j
 b
 f
 q
-n
+r
 j
 E
 b
@@ -1752,9 +1806,9 @@ b
 (30,1,1) = {"
 b
 g
-k
+n
 o
-r
+F
 v
 b
 j
@@ -1795,9 +1849,9 @@ j
 j
 b
 g
-k
+n
 o
-r
+F
 v
 b
 "}
@@ -1907,7 +1961,7 @@ b
 "}
 (33,1,1) = {"
 b
-d
+k
 i
 i
 j
@@ -1950,7 +2004,7 @@ j
 j
 j
 b
-d
+k
 j
 i
 i
@@ -2013,7 +2067,7 @@ b
 b
 f
 j
-n
+r
 q
 u
 b
@@ -2056,7 +2110,7 @@ j
 b
 f
 q
-n
+r
 j
 E
 b
@@ -2064,9 +2118,9 @@ b
 (36,1,1) = {"
 b
 g
-k
+n
 o
-r
+F
 v
 b
 j
@@ -2107,9 +2161,9 @@ j
 j
 b
 g
-k
+n
 o
-r
+F
 v
 b
 "}
@@ -2262,7 +2316,7 @@ j
 j
 j
 b
-d
+k
 j
 i
 i
@@ -2325,7 +2379,7 @@ b
 b
 f
 j
-j
+r
 q
 u
 b
@@ -2368,7 +2422,7 @@ j
 b
 f
 q
-n
+r
 j
 E
 b
@@ -2376,9 +2430,9 @@ b
 (42,1,1) = {"
 b
 g
-k
+n
 o
-r
+F
 v
 b
 j
@@ -2419,9 +2473,9 @@ j
 j
 b
 g
-k
+n
 o
-r
+F
 v
 b
 "}
@@ -2531,7 +2585,7 @@ b
 "}
 (45,1,1) = {"
 b
-d
+k
 i
 i
 j
@@ -2574,7 +2628,7 @@ j
 j
 j
 b
-d
+k
 j
 i
 i
@@ -2637,7 +2691,7 @@ b
 b
 f
 j
-n
+r
 q
 u
 b
@@ -2680,7 +2734,7 @@ j
 b
 f
 q
-n
+r
 j
 E
 b
@@ -2688,9 +2742,9 @@ b
 (48,1,1) = {"
 b
 g
-k
+n
 o
-r
+F
 v
 b
 j
@@ -2731,9 +2785,9 @@ j
 j
 b
 g
-k
+n
 o
-r
+F
 v
 b
 "}
