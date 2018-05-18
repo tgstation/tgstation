@@ -41,7 +41,7 @@
 /datum/bounty/item/chef/pie
 	name = "Pie"
 	description = "3.14159? No! CentCom management wants edible pie! Ship a whole one."
-	reward = 3141
+	reward = 3142
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/pie)
 
 /datum/bounty/item/chef/salad
@@ -111,7 +111,7 @@
 
 /datum/bounty/item/chef/kebab
 	name = "Kebabs"
-	description = "Remove all kebab from station you are worst food. Ship to CentCom to remove from the premises."
+	description = "Remove all kebab from station you are best food. Ship to CentCom to remove from the premises."
 	reward = 4000
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/kebab)

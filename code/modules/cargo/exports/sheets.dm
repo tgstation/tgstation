@@ -106,8 +106,3 @@
 	message = "of adamantine"
 	export_types = list(/obj/item/stack/sheet/mineral/adamantine)
 
-/datum/export/stack/mythril
-	cost = 15000
-	message = "of mythril"
-	export_types = list(/obj/item/stack/sheet/mineral/mythril)
-
