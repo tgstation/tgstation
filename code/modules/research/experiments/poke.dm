@@ -97,7 +97,7 @@
 		var/datum/techweb/web = E.linked_console.stored_research
 		. = web.all_experiment_types[/datum/experiment_type/improve].hidden || web.all_experiment_types[/datum/experiment_type/improve].uses <= 0
 
-/datum/experiment/enable_clone/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+/datum/experiment/enable_improve/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
 	if(E.linked_console)
 		var/datum/techweb/web = E.linked_console.stored_research
