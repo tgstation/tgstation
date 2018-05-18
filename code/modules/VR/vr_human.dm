@@ -34,7 +34,7 @@
 
 /mob/living/carbon/human/virtual_reality/proc/revert_to_reality(refcleanup = TRUE, deathchecks = TRUE)
 	if(real_mind && mind)
-		real_mind.key = mind.key
+		real_mind.current.ckey = ckey
 		if(deathchecks && vr_sleeper && vr_sleeper.you_die_in_the_game_you_die_for_real)
 			real_me.death(0)
 	if(refcleanup)

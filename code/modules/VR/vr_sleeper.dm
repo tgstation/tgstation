@@ -171,7 +171,7 @@
 			var/datum/outfit/O = new outfit()
 			O.equip(vr_human)
 		if(transfer && H.mind)
-			vr_human.mind.key = H.mind.key
+			vr_human.ckey = H.ckey
 
 
 /obj/machinery/vr_sleeper/proc/cleanup_vr_human()
