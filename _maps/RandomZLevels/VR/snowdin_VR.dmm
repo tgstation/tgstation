@@ -464,7 +464,7 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
 "by" = (
-/obj/structure/closet/cabinet,
+/obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat/science,
 /obj/item/clothing/shoes/winterboots,
 /obj/machinery/button/door{
@@ -478,7 +478,7 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
 "bz" = (
-/obj/structure/closet/cabinet,
+/obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat/science,
 /obj/item/clothing/shoes/winterboots,
 /obj/machinery/button/door{
@@ -502,7 +502,7 @@
 	},
 /area/awaymission/snowdin/post/dorm)
 "bB" = (
-/obj/structure/closet/cabinet,
+/obj/structure/closet,
 /obj/item/clothing/shoes/winterboots,
 /obj/machinery/button/door{
 	id = "snowdindormresearch1";
@@ -514,7 +514,7 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
 "bC" = (
-/obj/structure/closet/cabinet,
+/obj/structure/closet,
 /obj/machinery/button/door{
 	id = "snowdindormhydro2";
 	name = "Dorm Bolt Control";
@@ -525,7 +525,7 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/post/dorm)
 "bD" = (
-/obj/structure/closet/cabinet,
+/obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat/hydro,
 /obj/item/clothing/shoes/winterboots,
 /obj/machinery/button/door{
@@ -1611,7 +1611,7 @@
 	},
 /area/awaymission/snowdin/post/dorm)
 "ef" = (
-/obj/structure/closet/cabinet,
+/obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat/security,
 /obj/item/clothing/shoes/winterboots,
 /obj/machinery/button/door{
@@ -2218,7 +2218,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post)
 "fF" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/structure/closet,
 /obj/item/clothing/under/assistantformal,
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
@@ -2998,7 +2998,7 @@
 	},
 /area/awaymission/snowdin/cave/cavern)
 "hG" = (
-/obj/structure/closet/cabinet,
+/obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat/captain{
 	name = "overseer's winter coat"
 	},
@@ -6731,7 +6731,7 @@
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "qk" = (
-/obj/structure/closet/cabinet,
+/obj/structure/closet,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/snowdin/post/cavern2)
 "ql" = (
@@ -8108,7 +8108,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/closet/cabinet,
+/obj/structure/closet,
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -13029,7 +13029,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/snowdin/post/mining_main)
 "Ir" = (
-/obj/structure/closet/cabinet,
+/obj/structure/closet,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/snowdin/post/mining_main)
 "Is" = (
