@@ -171,7 +171,6 @@
 	medical_record_text = "Patient possesses a strong tremor in both hands."
 
 
-
 /datum/quirk/prosopagnosia
 	name = "Prosopagnosia"
 	desc = "You have a mental disorder that prevents you from being able to recognize faces at all."
@@ -179,41 +178,65 @@
 	mob_trait = TRAIT_PROSOPAGNOSIA
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
 
-
-
 /datum/quirk/prosthetic_limb
 	name = "Prosthetic Limb"
 	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a random prosthetic!"
 	value = -1
-	var/slot_string = "limb"
+	var/limb_slot
 
 /datum/quirk/prosthetic_limb/on_spawn()
-	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	limb_slot = limb_slot || pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/bodypart/old_part = H.get_bodypart(limb_slot)
 	var/obj/item/bodypart/prosthetic
 	switch(limb_slot)
 		if(BODY_ZONE_L_ARM)
 			prosthetic = new/obj/item/bodypart/l_arm/robot/surplus(quirk_holder)
-			slot_string = "left arm"
 		if(BODY_ZONE_R_ARM)
 			prosthetic = new/obj/item/bodypart/r_arm/robot/surplus(quirk_holder)
-			slot_string = "right arm"
 		if(BODY_ZONE_L_LEG)
 			prosthetic = new/obj/item/bodypart/l_leg/robot/surplus(quirk_holder)
-			slot_string = "left leg"
 		if(BODY_ZONE_R_LEG)
 			prosthetic = new/obj/item/bodypart/r_leg/robot/surplus(quirk_holder)
-			slot_string = "right leg"
 	prosthetic.replace_limb(H)
 	qdel(old_part)
 	H.regenerate_icons()
-
+	
 /datum/quirk/prosthetic_limb/post_add()
+	var/slot_string
+	switch(limb_slot)
+		if(BODY_ZONE_L_ARM)
+			slot_string = "left arm"
+		if(BODY_ZONE_R_ARM)
+			slot_string = "right arm"
+		if(BODY_ZONE_L_LEG)
+			slot_string = "left leg"
+		if(BODY_ZONE_R_LEG)
+			slot_string = "right leg"
 	to_chat(quirk_holder, "<span class='boldannounce'>Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment.</span>")
 
+#define CHOSEN_PROSTHETIC_DESC(X) "An accident caused you to lose your ##X. Because of this, you now have a prosthetic!"
 
+/datum/quirk/prosthetic_limb/r_arm
+	name = "Prosthetic Right Arm"
+	desc = "An accident caused you to lose your right arm. Because of this, you now have a prosthetic!"
+	limb_slot = BODY_ZONE_R_ARM
+	
+/datum/quirk/prosthetic_limb/l_arm
+	name = "Prosthetic Left Arm"
+	desc = "An accident caused you to lose your left arm. Because of this, you now have a prosthetic!"
+	limb_slot = BODY_ZONE_L_ARM
+
+/datum/quirk/prosthetic_limb/r_leg
+	name = "Prosthetic Right Leg"
+	desc = "An accident caused you to lose your right leg. Because of this, you now have a prosthetic!"
+	limb_slot = BODY_ZONE_R_LEG
+	
+/datum/quirk/prosthetic_limb/l_leg
+	name = "Prosthetic Left Leg"
+	desc = "An accident caused you to lose your left leg. Because of this, you now have a prosthetic!"
+	limb_slot = BODY_ZONE_L_LEG
 
 /datum/quirk/insanity
 	name = "Reality Dissociation Syndrome"
