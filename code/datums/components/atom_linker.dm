@@ -21,7 +21,7 @@
 		linker_lists[id] = null
 	return ..()
 
-/datum/component/atom_linker/GetLinks()
+/datum/component/atom_linker/proc/GetLinks()
 	return linked_components.Copy()
 
 /datum/admins/proc/ViewLinkedAtoms()
