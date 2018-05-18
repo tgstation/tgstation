@@ -384,12 +384,6 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
-"ci" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/centcomAway/maint)
 "cj" = (
 /obj/machinery/door/airlock/external,
 /turf/open/indestructible,
@@ -425,12 +419,6 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
-"cu" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/centcomAway/maint)
 "cv" = (
 /obj/structure/sign/warning/vacuum,
 /turf/closed/indestructible/riveted,
@@ -536,10 +524,6 @@
 /obj/item/stamp,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/centcomAway/hangar)
-"cZ" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end,
-/turf/open/indestructible,
-/area/awaymission/centcomAway/maint)
 "da" = (
 /obj/structure/table,
 /obj/item/assembly/flash/handheld,
@@ -8445,12 +8429,12 @@ bc
 hM
 aV
 aa
-fu
+zk
 gW
 gW
 gW
 gW
-fu
+zk
 aa
 aV
 bd
@@ -8575,12 +8559,12 @@ bd
 hN
 aV
 aa
-fv
+zk
 gW
 gW
 gW
 gW
-fv
+zk
 aa
 aV
 bd
@@ -8705,12 +8689,12 @@ bd
 hO
 aV
 aa
-fv
+zk
 gW
 gW
 gW
 gW
-fv
+zk
 aa
 aV
 bd
@@ -8835,12 +8819,12 @@ bd
 hP
 aV
 aa
-fv
+zk
 gW
 gW
 gW
 gW
-fv
+zk
 aa
 aV
 bd
@@ -8965,12 +8949,12 @@ bd
 bQ
 aV
 aa
-fv
+zk
 gW
 gW
 gW
 gW
-fv
+zk
 aa
 aV
 bd
@@ -9095,12 +9079,12 @@ hG
 hG
 aV
 aa
-fw
+zk
 gW
 gW
 gW
 gW
-fw
+zk
 aa
 aV
 aV
@@ -13874,11 +13858,11 @@ bh
 ag
 ag
 ac
-at
-aB
-aB
-aB
-ba
+ad
+ad
+ad
+ad
+ad
 ac
 ag
 ag
@@ -14134,11 +14118,11 @@ ag
 ag
 ag
 ab
-ci
-cu
-cu
-cu
-cZ
+aS
+aS
+aS
+aS
+aS
 ab
 ag
 ag
