@@ -50,7 +50,9 @@
 					/obj/item/clothing/suit/toggle/labcoat = 3,
 					/obj/item/clothing/suit/toggle/labcoat/emt = 3,
 					/obj/item/clothing/shoes/sneakers/white = 3,
-					/obj/item/clothing/head/soft/emt = 3)
+					/obj/item/clothing/head/soft/emt = 3,
+					/obj/item/clothing/suit/apron/surgical = 1,
+					/obj/item/clothing/mask/surgical = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 
 /obj/item/vending_refill/wardrobe/medi_wardrobe
@@ -159,7 +161,7 @@
 /obj/machinery/vending/wardrobe/hydro_wardrobe
 	name = "Hydrobe"
 	desc = "A machine with a catchy name. It dispenses botany related clothing and gear."
-	product_ads = "Do you love soil? Then buy our clothes!,Get outfits to match your green thumb here!"
+	product_ads = "Do you love soil? Then buy our clothes!;Get outfits to match your green thumb here!"
 	vend_reply = "Thank you for using the Hydrobe!"
 	products = list(/obj/item/storage/backpack/botany = 2,
 					/obj/item/storage/backpack/satchel/hyd = 2,
