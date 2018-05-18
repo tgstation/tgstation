@@ -186,6 +186,9 @@
 /obj/effect/landmark/vr_spawn/team_2
 	vr_category = "team_2"	
 
+/obj/effect/landmark/vr_spawn/syndicate // Multiple missions will use syndicate gear
+	vr_outfit = /datum/outfit/syndicate
+
 /datum/outfit/vr_basic
 	name = "basic vr"
 	uniform = /obj/item/clothing/under/color/random

@@ -100,9 +100,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
 "aG" = (
-/obj/effect/landmark/vr_spawn{
-	vr_outfit = /datum/outfit/syndicate
-	},
+/obj/effect/landmark/vr_spawn/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
 "aH" = (
@@ -778,9 +776,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "eJ" = (
-/obj/effect/landmark/vr_spawn{
-	vr_outfit = /datum/outfit/syndicate
-	},
+/obj/effect/landmark/vr_spawn/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "eK" = (
@@ -1712,9 +1708,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark/vr_spawn{
-	vr_outfit = /datum/outfit/syndicate
-	},
+/obj/effect/landmark/vr_spawn/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "jK" = (
@@ -1735,9 +1729,7 @@
 /area/awaymission/centcomAway/hangar)
 "jM" = (
 /obj/structure/chair,
-/obj/effect/landmark/vr_spawn{
-	vr_outfit = /datum/outfit/syndicate
-	},
+/obj/effect/landmark/vr_spawn/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "jN" = (
@@ -1783,9 +1775,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/effect/landmark/vr_spawn{
-	vr_outfit = /datum/outfit/syndicate
-	},
+/obj/effect/landmark/vr_spawn/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "kf" = (
@@ -1989,9 +1979,7 @@
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
-/obj/effect/landmark/vr_spawn{
-	vr_outfit = /datum/outfit/syndicate
-	},
+/obj/effect/landmark/vr_spawn/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/thunderdome)
 "ll" = (
@@ -2537,9 +2525,7 @@
 /turf/open/space/basic,
 /area/space)
 "VC" = (
-/obj/effect/landmark/vr_spawn{
-	vr_outfit = /datum/outfit/syndicate
-	},
+/obj/effect/landmark/vr_spawn/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/hangar)
 

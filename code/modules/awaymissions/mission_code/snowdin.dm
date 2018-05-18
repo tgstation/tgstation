@@ -606,6 +606,12 @@
 	id = /obj/item/card/id/syndicate
 	implants = list(/obj/item/implant/exile)
 
+/datum/outfit/snowtide
+	name = "Assistant Snow Outfit"
+	uniform = /obj/item/clothing/under/color/random
+	shoes = /obj/item/clothing/shoes/winterboots
+	suit = /obj/item/clothing/suit/hooded/wintercoat
+
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	mob_gender = FEMALE
 
@@ -666,4 +672,5 @@
 /obj/effect/turf_decal/snowdin_station_sign/up/seven
 	icon_state = "AOPU7"
 
-
+/obj/effect/landmark/vr_spawn/snowdin
+	vr_outfit = /datum/outfit/snowtide
