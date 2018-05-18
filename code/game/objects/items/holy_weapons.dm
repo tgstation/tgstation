@@ -39,7 +39,7 @@
 	var/list/display_names = list()
 	for(var/V in holy_armor_list)
 		var/atom/A = V
-		display_names += (initial(A.name) = A)
+		display_names += list(initial(A.name) = A)
 
 	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
 	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || used)
