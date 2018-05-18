@@ -167,10 +167,10 @@
 /obj/structure/closet/crate/goldcrate/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
-		new /obj/item/stack/sheet/mineral/gold(src)
+		new /obj/item/stack/sheet/mineral/gold(src, merge=FALSE)
 	new /obj/item/storage/belt/champion(src)
 
-obj/structure/closet/crate/silvercrate
+/obj/structure/closet/crate/silvercrate
 	name = "silver crate"
 
 /obj/structure/closet/crate/silvercrate/PopulateContents()
