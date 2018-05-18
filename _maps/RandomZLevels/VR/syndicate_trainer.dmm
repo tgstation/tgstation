@@ -2505,6 +2505,12 @@
 /obj/structure/fans/tiny,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/maint)
+"Rc" = (
+/obj/effect/landmark/vr_spawn/syndicate{
+	vr_outfit = /datum/outfit/syndicate/full
+	},
+/turf/open/floor/plating/airless,
+/area/awaymission/centcomAway/maint)
 "TP" = (
 /turf/open/space/basic,
 /area/space)
@@ -15683,7 +15689,7 @@ hQ
 aa
 aa
 hQ
-cl
+Rc
 hQ
 aa
 aa
