@@ -10790,6 +10790,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/item/mining_voucher,
 /turf/open/floor/plasteel/blue/side{
 	dir = 1
 	},
@@ -12666,6 +12667,7 @@
 	},
 /obj/structure/closet/secure_closet/quartermaster,
 /obj/item/stamp/qm,
+/obj/item/mining_voucher,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -25374,13 +25376,10 @@
 	id = "Disposal Exit";
 	name = "disposal exit vent"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "garbage"
-	},
 /obj/machinery/conveyor/inverted{
+	dir = 1;
 	icon_state = "conveyor_map_inverted";
-	dir = 1
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -25421,8 +25420,9 @@
 /area/crew_quarters/dorms)
 "ipT" = (
 /obj/machinery/conveyor/inverted{
+	dir = 5;
 	icon_state = "conveyor_map_inverted";
-	dir = 5
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -25451,8 +25451,9 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/conveyor/inverted{
+	dir = 4;
 	icon_state = "conveyor_map_inverted";
-	dir = 4
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -25498,7 +25499,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/conveyor/inverted,
+/obj/machinery/conveyor/inverted{
+	id = "garbage"
+	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "jbs" = (
@@ -25554,8 +25557,9 @@
 	pixel_x = -32
 	},
 /obj/machinery/conveyor/inverted{
+	dir = 1;
 	icon_state = "conveyor_map_inverted";
-	dir = 1
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -26050,8 +26054,9 @@
 	dir = 8
 	},
 /obj/machinery/conveyor/inverted{
+	dir = 1;
 	icon_state = "conveyor_map_inverted";
-	dir = 1
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -26182,8 +26187,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/conveyor/inverted{
+	dir = 4;
 	icon_state = "conveyor_map_inverted";
-	dir = 4
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -26623,8 +26629,9 @@
 /area/maintenance/disposal)
 "qSY" = (
 /obj/machinery/conveyor/inverted{
+	dir = 1;
 	icon_state = "conveyor_map_inverted";
-	dir = 1
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -26965,8 +26972,9 @@
 	dir = 4
 	},
 /obj/machinery/conveyor/inverted{
+	dir = 1;
 	icon_state = "conveyor_map_inverted";
-	dir = 1
+	id = "garbage"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
