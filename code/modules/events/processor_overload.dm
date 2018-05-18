@@ -27,7 +27,7 @@
 
 
 /datum/round_event/processor_overload/start()
-	for(var/obj/machinery/telecomms/processor/P in GLOB.telecomms_list)
+	for(var/obj/machinery/telecomms/processor/P in GetLinkedAtomsWithId(/obj/machinery/telecomms))
 		if(prob(10))
 			// Damage the surrounding area to indicate that it popped
 			explosion(get_turf(P), 0, 0, 2)

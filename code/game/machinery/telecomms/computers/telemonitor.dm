@@ -49,7 +49,7 @@
 			dat += "<br>Current Network: [network]<br>"
 			dat += "Selected Network Entity: [SelectedMachine.name] ([SelectedMachine.id])<br>"
 			dat += "Linked Entities: <ol>"
-			for(var/obj/machinery/telecomms/T in SelectedMachine.links)
+			for(var/obj/machinery/telecomms/T in SelectedMachine.TCLinks())
 				if(!T.hide)
 					dat += "<li><a href='?src=[REF(src)];viewmachine=[T.id]'>[REF(T.id)] [T.name]</a> ([T.id])</li>"
 			dat += "</ol>"

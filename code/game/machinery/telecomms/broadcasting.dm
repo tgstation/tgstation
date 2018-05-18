@@ -81,9 +81,10 @@
 		current = current.original
 
 /datum/signal/subspace/proc/send_to_receivers()
-	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
+	var/list/tcomms = GetLinkedAtomsWithId(/obj/machinery/telecomms)
+	for(var/obj/machinery/telecomms/receiver/R in tcomms)
 		R.receive_signal(src)
-	for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
+	for(var/obj/machinery/telecomms/allinone/R in tcomms)
 		R.receive_signal(src)
 
 /datum/signal/subspace/proc/broadcast()
