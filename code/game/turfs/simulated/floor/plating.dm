@@ -11,6 +11,7 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = FALSE
+	baseturfs = /turf/open/space
 	var/attachment_holes = TRUE
 
 /turf/open/floor/plating/examine(mob/user)
@@ -55,7 +56,7 @@
 			to_chat(user, "<span class='notice'>You begin reinforcing the floor...</span>")
 			if(do_after(user, 30, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
-					ChangeTurf(/turf/open/floor/engine)
+					PlaceOnTop(/turf/open/floor/engine)
 					playsound(src, 'sound/items/deconstruct.ogg', 80, 1)
 					R.use(2)
 					to_chat(user, "<span class='notice'>You reinforce the floor.</span>")
@@ -70,7 +71,7 @@
 			var/obj/item/stack/tile/W = C
 			if(!W.use(1))
 				return
-			var/turf/open/floor/T = ChangeTurf(W.turf_type)
+			var/turf/open/floor/T = PlaceOnTop(W.turf_type)
 			if(istype(W, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 				var/obj/item/stack/tile/light/L = W
 				var/turf/open/floor/light/F = T
@@ -78,15 +79,18 @@
 			playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 		else
 			to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>")
-	else if(istype(C, /obj/item/weldingtool))
-		var/obj/item/weldingtool/welder = C
-		if( welder.isOn() && (broken || burnt) )
-			if(welder.remove_fuel(0,user))
-				to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
-				playsound(src, welder.usesound, 80, 1)
-				icon_state = icon_plating
-				burnt = 0
-				broken = 0
+
+/turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
+	if((broken || burnt) && I.use_tool(src, user, 0, volume=80))
+		to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
+		icon_state = icon_plating
+		burnt = FALSE
+		broken = FALSE
+
+	return TRUE
+
+/turf/open/floor/plating/make_plating()
+	return
 
 /turf/open/floor/plating/foam
 	name = "metal foam plating"
@@ -123,3 +127,6 @@
 /turf/open/floor/plating/foam/ex_act()
 	..()
 	ScrapeAway()
+
+/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/tool/I, tool_type)
+	return

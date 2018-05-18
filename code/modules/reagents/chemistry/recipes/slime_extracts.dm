@@ -314,7 +314,7 @@
 /datum/chemical_reaction/slime/slimeglow/on_reaction(datum/reagents/holder)
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime begins to emit a soft light. Squeezing it will cause it to grow brightly.</span>")
-	new /obj/item/device/flashlight/slime(T)
+	new /obj/item/flashlight/slime(T)
 	..()
 
 //Purple
@@ -501,8 +501,19 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimecrystal/on_reaction(datum/reagents/holder, created_volume)
-	var/obj/item/ore/bluespace_crystal/BC = new (get_turf(holder.my_atom))
+	var/obj/item/stack/ore/bluespace_crystal/BC = new (get_turf(holder.my_atom))
 	BC.visible_message("<span class='notice'>The [BC.name] appears out of thin air!</span>")
+	..()
+
+/datum/chemical_reaction/slime/slimeradio
+	name = "Slime Radio"
+	id = "m_radio"
+	required_reagents = list("water" = 1)
+	required_container = /obj/item/slime_extract/bluespace
+	required_other = 1
+
+/datum/chemical_reaction/slime/slimeradio/on_reaction(datum/reagents/holder, created_volume)
+	new /obj/item/slimepotion/slime/slimeradio(get_turf(holder.my_atom))
 	..()
 
 //Cerulean
@@ -550,8 +561,8 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimecamera/on_reaction(datum/reagents/holder)
-	new /obj/item/device/camera(get_turf(holder.my_atom))
-	new /obj/item/device/camera_film(get_turf(holder.my_atom))
+	new /obj/item/camera(get_turf(holder.my_atom))
+	new /obj/item/camera_film(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/slimefloor
@@ -598,9 +609,33 @@
 	required_other = 1
 	required_container = /obj/item/slime_extract/rainbow
 
-/datum/chemical_reaction/slime/slimeRNG/on_reaction(datum/reagents/holder)
-	var/mob/living/simple_animal/slime/random/S = new (get_turf(holder.my_atom))
-	S.visible_message("<span class='danger'>Infused with plasma, the core begins to quiver and grow, and a new baby slime emerges from it!</span>")
+/datum/chemical_reaction/slime/slimeRNG/on_reaction(datum/reagents/holder, created_volume)
+	if(created_volume >= 5)
+		var/obj/item/grenade/clusterbuster/slime/S = new (get_turf(holder.my_atom))
+		S.visible_message("<span class='danger'>Infused with plasma, the core begins to expand uncontrollably!</span>")
+		S.icon_state = "[S.base_state]_active"
+		S.active = TRUE
+		addtimer(CALLBACK(S, /obj/item/grenade.proc/prime), rand(15,60))
+		qdel(holder.my_atom) //deleto
+	else
+		var/mob/living/simple_animal/slime/random/S = new (get_turf(holder.my_atom))
+		S.visible_message("<span class='danger'>Infused with plasma, the core begins to quiver and grow, and a new baby slime emerges from it!</span>")
+	..()
+
+/datum/chemical_reaction/slime/slimebomb
+	name = "Clusterblorble"
+	id = "slimebomb"
+	required_reagents = list("slimejelly" = 1)
+	required_other = 1
+	required_container = /obj/item/slime_extract/rainbow
+
+/datum/chemical_reaction/slime/slimebomb/on_reaction(datum/reagents/holder, created_volume)
+	var/obj/item/grenade/clusterbuster/slime/volatile/S = new (holder.my_atom.loc)
+	S.visible_message("<span class='danger'>Infused with slime jelly, the core begins to expand uncontrollably!</span>")
+	S.icon_state = "[S.base_state]_active"
+	S.active = TRUE
+	addtimer(CALLBACK(S, /obj/item/grenade.proc/prime), rand(15,60))
+	qdel(holder.my_atom) //deleto
 	..()
 
 /datum/chemical_reaction/slime/slime_transfer

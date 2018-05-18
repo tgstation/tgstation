@@ -67,6 +67,16 @@
 		update_icon()
 	..()
 
+/obj/machinery/portable_atmospherics/pump/replace_tank(mob/living/user, close_valve)
+	. = ..()
+	if(.)
+		if(close_valve)
+			if(on)
+				on = FALSE
+				update_icon()
+		else if(on && holding && direction == PUMP_OUT)
+			investigate_log("[key_name(user)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
+
 
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
@@ -105,11 +115,15 @@
 					var/area/A = get_area(src)
 					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [A][ADMIN_JMP(src)]")
 					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [A][COORD(src)]")
+			else if(on && direction == PUMP_OUT)
+				investigate_log("[key_name(usr)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("direction")
 			if(direction == PUMP_OUT)
 				direction = PUMP_IN
 			else
+				if(on && holding)
+					investigate_log("[key_name(usr)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
 				direction = PUMP_OUT
 			. = TRUE
 		if("pressure")

@@ -67,6 +67,9 @@
 	entries_by_type -= CE.type
 
 /datum/controller/configuration/proc/LoadEntries(filename, list/stack = list())
+	if(IsAdminAdvancedProcCall())
+		return
+
 	var/filename_to_test = world.system_type == MS_WINDOWS ? lowertext(filename) : filename
 	if(filename_to_test in stack)
 		log_config("Warning: Config recursion detected ([english_list(stack)]), breaking!")
@@ -162,7 +165,7 @@
 	var/datum/config_entry/E = entry_type
 	var/entry_is_abstract = initial(E.abstract_type) == entry_type
 	if(entry_is_abstract)
-		CRASH("Tried to retrieve an abstract config_entry: [entry_type]")
+		CRASH("Tried to set an abstract config_entry: [entry_type]")
 	E = entries_by_type[entry_type]
 	if(!E)
 		CRASH("Missing config entry for [entry_type]!")
@@ -187,7 +190,7 @@
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
 				mode_reports[M.config_tag] = M.generate_report()
-				if(M.probability)
+				if(probabilities[M.config_tag]>0)
 					mode_false_report_weight[M.config_tag] = M.false_report_weight
 				else
 					mode_false_report_weight[M.config_tag] = 1
@@ -236,9 +239,10 @@
 
 		switch (command)
 			if ("map")
-				currentmap = new ("_maps/[data].json")
+				currentmap = load_map_config("_maps/[data].json")
 				if(currentmap.defaulted)
 					log_config("Failed to load map config for [data]!")
+					currentmap = null
 			if ("minplayers","minplayer")
 				currentmap.config_min_users = text2num(data)
 			if ("maxplayers","maxplayer")
@@ -254,7 +258,7 @@
 			if ("disabled")
 				currentmap = null
 			else
-				WRITE_FILE(GLOB.config_error_log, "Unknown command in map vote config: '[command]'")
+				log_config("Unknown command in map vote config: '[command]'")
 
 
 /datum/controller/configuration/proc/pick_mode(mode_name)

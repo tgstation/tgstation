@@ -20,8 +20,6 @@
 
 /datum/config_entry/string/cross_comms_name
 
-GLOBAL_VAR_INIT(medals_enabled, TRUE)	//will be auto set to false if the game fails contacting the medal hub to prevent unneeded calls.
-
 /datum/config_entry/string/medal_hub_address
 
 /datum/config_entry/string/medal_hub_password

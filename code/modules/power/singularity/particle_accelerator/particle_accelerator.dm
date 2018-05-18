@@ -27,7 +27,7 @@
 	anchored = FALSE
 	density = TRUE
 	max_integrity = 500
-	armor = list(melee = 30, bullet = 20, laser = 20, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 80)
+	armor = list("melee" = 30, "bullet" = 20, "laser" = 20, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 80)
 
 	var/obj/machinery/particle_accelerator/control_box/master = null
 	var/construction_state = PA_CONSTRUCTION_UNSECURED
@@ -65,7 +65,7 @@
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
 			if(istype(W, /obj/item/wrench) && !isinspace())
-				playsound(loc, W.usesound, 75, 1)
+				W.play_tool_sound(src, 75)
 				anchored = TRUE
 				user.visible_message("[user.name] secures the [name] to the floor.", \
 					"You secure the external bolts.")
@@ -73,7 +73,7 @@
 				did_something = TRUE
 		if(PA_CONSTRUCTION_UNWIRED)
 			if(istype(W, /obj/item/wrench))
-				playsound(loc, W.usesound, 75, 1)
+				W.play_tool_sound(src, 75)
 				anchored = FALSE
 				user.visible_message("[user.name] detaches the [name] from the floor.", \
 					"You remove the external bolts.")

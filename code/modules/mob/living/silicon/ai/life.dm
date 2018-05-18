@@ -50,7 +50,7 @@
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(src)
 	switch(requires_power)
-		if(POWER_REQ_NONE)
+		if(NONE)
 			return FALSE
 		if(POWER_REQ_ALL)
 			return !T || !A || ((!A.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
@@ -121,11 +121,10 @@
 		T = get_turf(src)
 		AIarea = get_area(src)
 		if(AIarea)
-			for(var/area/A in AIarea.related)
-				for (var/obj/machinery/power/apc/APC in A)
-					if (!(APC.stat & BROKEN))
-						theAPC = APC
-						break
+			for (var/obj/machinery/power/apc/APC in AIarea)
+				if (!(APC.stat & BROKEN))
+					theAPC = APC
+					break
 		if (!theAPC)
 			switch(PRP)
 				if(1)

@@ -64,8 +64,6 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define GATEWAY_RATVAR_ARRIVAL 600 //when progress is at or above this, game over ratvar's here everybody go home
 
-#define ARK_SUMMON_COST 5 //how many of each component an Ark costs to summon
-
 //Objective text define
 #define CLOCKCULT_OBJECTIVE "Construct the Ark of the Clockwork Justicar and free Ratvar."
 

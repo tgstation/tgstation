@@ -61,6 +61,9 @@
 "m" = (
 /obj/machinery/door/airlock/external,
 /obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "n" = (
@@ -151,6 +154,9 @@
 /area/ruin/powered/seedvault)
 "z" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
 "B" = (

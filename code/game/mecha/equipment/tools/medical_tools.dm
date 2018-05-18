@@ -2,10 +2,9 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical
 
-/obj/item/mecha_parts/mecha_equipment/medical/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/medical/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
-
 
 /obj/item/mecha_parts/mecha_equipment/medical/can_attach(obj/mecha/medical/M)
 	if(..() && istype(M))
@@ -71,7 +70,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/patient_insertion_check(mob/living/carbon/target)
 	if(target.buckled)
-		occupant_message("<span class='warning'>[target] will not fit into the sleeper because [target.p_they()] [target.p_are()] buckled to [target.buckled]!</span>")
+		occupant_message("<span class='warning'>[target] will not fit into the sleeper because [target.p_theyre()] buckled to [target.buckled]!</span>")
 		return
 	if(target.has_buckled_mobs())
 		occupant_message("<span class='warning'>[target] will not fit into the sleeper because of the creatures attached to it!</span>")
@@ -256,8 +255,8 @@
 	range = MELEE|RANGED
 	equip_cooldown = 10
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Initialize()
+	. = ..()
 	create_reagents(max_volume)
 	reagents.set_reacting(FALSE)
 	syringes = new
@@ -534,8 +533,8 @@
 	var/obj/item/gun/medbeam/mech/medigun
 	materials = list(MAT_METAL = 15000, MAT_GLASS = 8000, MAT_PLASMA = 3000, MAT_GOLD = 8000, MAT_DIAMOND = 2000)
 
-/obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/Initialize()
+	. = ..()
 	medigun = new(src)
 
 

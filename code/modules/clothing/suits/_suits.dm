@@ -3,8 +3,8 @@
 	name = "suit"
 	var/fire_resist = T0C+100
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
-	slot_flags = SLOT_OCLOTHING
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	slot_flags = ITEM_SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
 	var/togglename = null
 	var/suittoggled = FALSE

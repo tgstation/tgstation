@@ -8,15 +8,15 @@
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
 		/datum/reagent/consumable/blackpepper = 1,
-		/obj/item/reagent_containers/food/snacks/boiledegg = 1
+		/obj/item/reagent_containers/food/snacks/egg = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/friedegg
 	subcategory = CAT_EGG
 
 /datum/crafting_recipe/food/omelette
-	name = "omelette"
+	name = "Omelette"
 	reqs = list(
-		/obj/item/reagent_containers/food/snacks/boiledegg = 2,
+		/obj/item/reagent_containers/food/snacks/egg = 2,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/omelette

@@ -4,6 +4,7 @@
 	//- floor_tile is now a path, and not a tile obj
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
+	baseturfs = /turf/open/floor/plating
 
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
@@ -59,21 +60,25 @@
 
 	switch(severity)
 		if(1)
-			ScrapeAway()
+			ScrapeAway(2)
 		if(2)
 			switch(pick(1,2;75,3))
 				if(1)
-					src.ReplaceWithLattice()
+					if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
+						ScrapeAway()
+						ReplaceWithLattice()
+					else
+						ScrapeAway(2)
 					if(prob(33))
 						new /obj/item/stack/sheet/metal(src)
 				if(2)
-					ScrapeAway()
+					ScrapeAway(2)
 				if(3)
 					if(prob(80))
-						src.break_tile_to_plating()
+						ScrapeAway()
 					else
-						src.break_tile()
-					src.hotspot_expose(1000,CELL_VOLUME)
+						break_tile()
+					hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33))
 						new /obj/item/stack/sheet/metal(src)
 		if(3)
@@ -94,13 +99,15 @@
 	return 1
 
 /turf/open/floor/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/open/floor/proc/gets_drilled()
 	return
 
 /turf/open/floor/proc/break_tile_to_plating()
 	var/turf/open/floor/plating/T = make_plating()
+	if(!istype(T))
+		return
 	T.break_tile()
 
 /turf/open/floor/proc/break_tile()
@@ -119,7 +126,7 @@
 	burnt = 1
 
 /turf/open/floor/proc/make_plating()
-	return ChangeTurf(/turf/open/floor/plating)
+	return ScrapeAway()
 
 /turf/open/floor/ChangeTurf(path, new_baseturf, flags)
 	if(!isfloorturf(src))
@@ -139,11 +146,12 @@
 		return 1
 	if(..())
 		return 1
-	if(intact && istype(C, /obj/item/crowbar))
-		return pry_tile(C, user)
 	if(intact && istype(C, /obj/item/stack/tile))
 		try_replace_tile(C, user, params)
 	return 0
+
+/turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
+	return intact ? pry_tile(I, user) : FALSE
 
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
@@ -156,8 +164,8 @@
 		return
 	P.attackby(T, user, params)
 
-/turf/open/floor/proc/pry_tile(obj/item/C, mob/user, silent = FALSE)
-	playsound(src, C.usesound, 80, 1)
+/turf/open/floor/proc/pry_tile(obj/item/I, mob/user, silent = FALSE)
+	I.play_tool_sound(src, 80)
 	return remove_tile(user, silent)
 
 /turf/open/floor/proc/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)

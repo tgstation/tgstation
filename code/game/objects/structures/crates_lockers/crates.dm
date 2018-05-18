@@ -17,6 +17,8 @@
 
 /obj/structure/closet/crate/New()
 	..()
+	if(icon_state == "[initial(icon_state)]open")
+		opened = TRUE
 	update_icon()
 
 /obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target)
@@ -37,10 +39,11 @@
 		add_overlay("manifest")
 
 /obj/structure/closet/crate/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(manifest)
 		tear_manifest(user)
-		return
-	..()
 
 /obj/structure/closet/crate/open(mob/living/user)
 	. = ..()
@@ -87,8 +90,8 @@
 
 /obj/structure/closet/crate/freezer/blood/PopulateContents()
 	. = ..()
-	new /obj/item/reagent_containers/blood/empty(src)
-	new /obj/item/reagent_containers/blood/empty(src)
+	new /obj/item/reagent_containers/blood(src)
+	new /obj/item/reagent_containers/blood(src)
 	new /obj/item/reagent_containers/blood/AMinus(src)
 	new /obj/item/reagent_containers/blood/BMinus(src)
 	new /obj/item/reagent_containers/blood/BPlus(src)

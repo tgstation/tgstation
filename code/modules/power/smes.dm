@@ -98,10 +98,6 @@
 		update_icon()
 		return
 
-	//exchanging parts using the RPE
-	if(exchange_parts(user, I))
-		return
-
 	//building and linking a terminal
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/dir = get_dir(user,src)

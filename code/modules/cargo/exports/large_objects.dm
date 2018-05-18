@@ -92,7 +92,7 @@
 /datum/export/large/supermatter
 	cost = 9000
 	unit_name = "supermatter shard"
-	export_types = list(/obj/machinery/power/supermatter_shard)
+	export_types = list(/obj/machinery/power/supermatter_crystal/shard)
 
 // Misc
 /datum/export/large/iv
@@ -101,7 +101,7 @@
 	export_types = list(/obj/machinery/iv_drip)
 
 /datum/export/large/barrier
-	cost = 325
+	cost = 100
 	unit_name = "security barrier"
 	export_types = list(/obj/item/grenade/barrier, /obj/structure/barricade/security)
 

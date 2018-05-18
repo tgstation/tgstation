@@ -24,18 +24,15 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	req_one_access = list(ACCESS_CARGO, ACCESS_CONSTRUCTION, ACCESS_HEADS, ACCESS_RESEARCH)
 	var/possible_destinations
 	clockwork = TRUE
-	var/obj/item/device/gps/internal/base/locator
+	var/obj/item/gps/internal/base/locator
 	circuit = /obj/item/circuitboard/computer/auxillary_base
 
 /obj/machinery/computer/auxillary_base/Initialize()
 	. = ..()
 	locator = new(src)
 
-/obj/machinery/computer/auxillary_base/attack_hand(mob/user)
-	if(..(user))
-		return
-	add_fingerprint(usr)
-
+/obj/machinery/computer/auxillary_base/ui_interact(mob/user)
+	. = ..()
 	var/list/options = params2list(possible_destinations)
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 	var/dat = "[is_station_level(z) ? "Docking clamps engaged. Standing by." : "Mining Shuttle Uplink: [M ? M.getStatusText() : "*OFFLINE*"]"]<br>"
@@ -144,9 +141,11 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		return
 	if(!no_restrictions)
 		var/static/list/disallowed_turf_types = typecacheof(list(
+			/turf/closed,
 			/turf/open/lava,
-			/turf/closed/indestructible,
 			/turf/open/indestructible,
+			)) - typecacheof(list(
+			/turf/closed/mineral,
 			))
 
 		if(!is_mining_level(T.z))
@@ -175,7 +174,6 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	landing_zone.width = base_dock.width
 	landing_zone.height = base_dock.height
 	landing_zone.setDir(base_dock.dir)
-	landing_zone.turf_type = T.type
 	landing_zone.area_type = A.type
 
 	possible_destinations += "[landing_zone.id];"
@@ -186,20 +184,19 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	return ZONE_SET
 
 
-/obj/item/device/assault_pod/mining
+/obj/item/assault_pod/mining
 	name = "Landing Field Designator"
 	icon_state = "gangtool-purple"
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	icon = 'icons/obj/device.dmi'
 	desc = "Deploy to designate the landing zone of the auxillary base."
 	w_class = WEIGHT_CLASS_SMALL
 	shuttle_id = "colony_drop"
 	var/setting = FALSE
 	var/no_restrictions = FALSE //Badmin variable to let you drop the colony ANYWHERE.
 
-/obj/item/device/assault_pod/mining/attack_self(mob/living/user)
+/obj/item/assault_pod/mining/attack_self(mob/living/user)
 	if(setting)
 		return
 
@@ -231,9 +228,9 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		if(BAD_COORDS)
 			to_chat(user, "<span class='warning'>Location is too close to the edge of the station's scanning range. Move several paces away and try again.</span>")
 		if(BAD_TURF)
-			to_chat(user, "<span class='warning'>The landing zone contains turfs unsuitable for a base.</span>")
+			to_chat(user, "<span class='warning'>The landing zone contains turfs unsuitable for a base. Make sure you've removed all walls and dangerous terrain from the landing zone.</span>")
 
-/obj/item/device/assault_pod/mining/unrestricted
+/obj/item/assault_pod/mining/unrestricted
 	name = "omni-locational landing field designator"
 	desc = "Allows the deployment of the mining base ANYWHERE. Use with caution."
 	no_restrictions = TRUE
@@ -242,11 +239,19 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 /obj/docking_port/mobile/auxillary_base
 	name = "auxillary base"
 	id = "colony_drop"
+	timid = FALSE
 	//Reminder to map-makers to set these values equal to the size of your base.
 	dheight = 4
 	dwidth = 4
 	width = 9
 	height = 9
+
+/obj/docking_port/mobile/auxillary_base/takeoff(list/old_turfs, list/new_turfs, list/moved_atoms, rotation, movement_direction, old_dock, area/underlying_old_area)
+	for(var/i in new_turfs)
+		var/turf/place = i
+		if(istype(place, /turf/closed/mineral))
+			place.ScrapeAway()
+	return ..()
 
 obj/docking_port/stationary/public_mining_dock
 	name = "public mining base dock"
@@ -270,6 +275,9 @@ obj/docking_port/stationary/public_mining_dock
 	var/console_range = 15 //Wifi range of the beacon to find the aux base console
 
 /obj/structure/mining_shuttle_beacon/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(anchored)
 		to_chat(user, "<span class='warning'>Landing zone already set.</span>")
 		return
@@ -310,7 +318,6 @@ obj/docking_port/stationary/public_mining_dock
 			Mport.width = SM.width
 			Mport.height = SM.height
 			Mport.setDir(dir)
-			Mport.turf_type = landing_spot.type
 			Mport.area_type = A.type
 
 			break

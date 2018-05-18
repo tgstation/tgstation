@@ -70,7 +70,7 @@
 	update_icon()
 
 /obj/item/pet_carrier/AltClick(mob/living/user)
-	if(open || !user.canUseTopic(src, be_close=TRUE))
+	if(open || !user.canUseTopic(src, BE_CLOSE))
 		return
 	locked = !locked
 	to_chat(user, "<span class='notice'>You flip the lock switch [locked ? "down" : "up"].</span>")
@@ -151,7 +151,8 @@
 		add_overlay("[locked ? "" : "un"]locked")
 
 /obj/item/pet_carrier/MouseDrop(atom/over_atom)
-	if(isopenturf(over_atom) && usr.Adjacent(over_atom) && open && occupants.len)
+	. = ..()
+	if(isopenturf(over_atom) && usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)) && usr.Adjacent(over_atom) && open && occupants.len)
 		usr.visible_message("<span class='notice'>[usr] unloads [src].</span>", \
 		"<span class='notice'>You unload [src] onto [over_atom].</span>")
 		for(var/V in occupants)
@@ -163,7 +164,7 @@
 		return
 	user.visible_message("<span class='notice'>[user] starts loading [target] into [src].</span>", \
 	"<span class='notice'>You start loading [target] into [src]...</span>", null, null, target)
-	to_chat(target, "<span class='userdanger'>[user] starts loading you into their [name]!</span>")
+	to_chat(target, "<span class='userdanger'>[user] starts loading you into [user.p_their()] [name]!</span>")
 	if(!do_mob(user, target, 30))
 		return
 	if(target in occupants)
@@ -173,7 +174,7 @@
 		return
 	user.visible_message("<span class='notice'>[user] loads [target] into [src]!</span>", \
 	"<span class='notice'>You load [target] into [src].</span>", null, null, target)
-	to_chat(target, "<span class='userdanger'>[user] loads you into their [name]!</span>")
+	to_chat(target, "<span class='userdanger'>[user] loads you into [user.p_their()] [name]!</span>")
 	add_occupant(target)
 
 /obj/item/pet_carrier/proc/add_occupant(mob/living/occupant)

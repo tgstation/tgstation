@@ -11,6 +11,7 @@ Quartermaster
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/quartermaster
 
@@ -21,8 +22,8 @@ Quartermaster
 	name = "Quartermaster"
 	jobtype = /datum/job/qm
 
-	belt = /obj/item/device/pda/quartermaster
-	ears = /obj/item/device/radio/headset/headset_cargo
+	belt = /obj/item/pda/quartermaster
+	ears = /obj/item/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargo
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -41,6 +42,7 @@ Cargo Technician
 	spawn_positions = 2
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
+	antag_rep = 14
 
 	outfit = /datum/outfit/job/cargo_tech
 
@@ -51,10 +53,10 @@ Cargo Technician
 	name = "Cargo Technician"
 	jobtype = /datum/job/cargo_tech
 
-	belt = /obj/item/device/pda/cargo
-	ears = /obj/item/device/radio/headset/headset_cargo
+	belt = /obj/item/pda/cargo
+	ears = /obj/item/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargotech
-	l_hand = /obj/item/device/export_scanner
+	l_hand = /obj/item/export_scanner
 
 /*
 Shaft Miner
@@ -69,6 +71,7 @@ Shaft Miner
 	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/miner
 
@@ -79,13 +82,13 @@ Shaft Miner
 	name = "Shaft Miner (Lavaland)"
 	jobtype = /datum/job/mining
 
-	belt = /obj/item/device/pda/shaftminer
-	ears = /obj/item/device/radio/headset/headset_cargo/mining
+	belt = /obj/item/pda/shaftminer
+	ears = /obj/item/radio/headset/headset_cargo/mining
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	gloves = /obj/item/clothing/gloves/color/black
 	uniform = /obj/item/clothing/under/rank/miner/lavaland
 	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
-	r_pocket = /obj/item/device/flashlight/seclite
+	r_pocket = /obj/item/flashlight/seclite
 	backpack_contents = list(
 		/obj/item/storage/bag/ore=1,\
 		/obj/item/kitchen/knife/combat/survival=1,\
@@ -108,12 +111,12 @@ Shaft Miner
 	mask = /obj/item/clothing/mask/gas/explorer
 	glasses = /obj/item/clothing/glasses/meson
 	suit_store = /obj/item/tank/internals/oxygen
-	internals_slot = slot_s_store
+	internals_slot = SLOT_S_STORE
 	backpack_contents = list(
 		/obj/item/storage/bag/ore=1,
 		/obj/item/kitchen/knife/combat/survival=1,
 		/obj/item/mining_voucher=1,
-		/obj/item/device/t_scanner/adv_mining_scanner/lesser=1,
+		/obj/item/t_scanner/adv_mining_scanner/lesser=1,
 		/obj/item/gun/energy/kinetic_accelerator=1,\
 		/obj/item/stack/marker_beacon/ten=1)
 
@@ -147,11 +150,12 @@ Bartender
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	antag_rep = 14
 
 	outfit = /datum/outfit/job/bartender
 
-	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS)
-	minimal_access = list(ACCESS_BAR)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM)
 
 
 /datum/outfit/job/bartender
@@ -159,11 +163,11 @@ Bartender
 	jobtype = /datum/job/bartender
 
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	belt = /obj/item/device/pda/bar
-	ears = /obj/item/device/radio/headset/headset_srv
+	belt = /obj/item/pda/bar
+	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/bartender
 	suit = /obj/item/clothing/suit/armor/vest
-	backpack_contents = list(/obj/item/storage/box/beanbag=1)
+	backpack_contents = list(/obj/item/storage/box/beanbag=1,/obj/item/book/granter/action/drink_fling=1)
 	shoes = /obj/item/clothing/shoes/laceup
 
 /*
@@ -180,21 +184,23 @@ Cook
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/cooks = 0 //Counts cooks amount
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/cook
 
-	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE)
-	minimal_access = list(ACCESS_KITCHEN, ACCESS_MORGUE)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/cook
 	name = "Cook"
 	jobtype = /datum/job/cook
 
-	belt = /obj/item/device/pda/cook
-	ears = /obj/item/device/radio/headset/headset_srv
+	belt = /obj/item/pda/cook
+	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
 	head = /obj/item/clothing/head/chefhat
+	mask = /obj/item/clothing/mask/fakemoustache/italian
 	backpack_contents = list(/obj/item/sharpener = 1)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -214,7 +220,9 @@ Cook
 	var/list/possible_boxes = subtypesof(/obj/item/storage/box/ingredients)
 	var/chosen_box = pick(possible_boxes)
 	var/obj/item/storage/box/I = new chosen_box(src)
-	H.equip_to_slot_or_del(I,slot_in_backpack)
+	H.equip_to_slot_or_del(I,SLOT_IN_BACKPACK)
+	var/datum/martial_art/cqc/under_siege/justacook = new
+	justacook.teach(H)
 
 /*
 Botanist
@@ -229,11 +237,12 @@ Botanist
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/botanist
 
-	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE)
-	minimal_access = list(ACCESS_HYDROPONICS, ACCESS_MORGUE)
+	access = list(ACCESS_HYDROPONICS, ACCESS_BAR, ACCESS_KITCHEN, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_HYDROPONICS, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM)
 	// Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS
 	// Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT
 	// Given Morgue access because they have a viable means of cloning.
@@ -243,12 +252,12 @@ Botanist
 	name = "Botanist"
 	jobtype = /datum/job/hydro
 
-	belt = /obj/item/device/pda/botanist
-	ears = /obj/item/device/radio/headset/headset_srv
+	belt = /obj/item/pda/botanist
+	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/hydroponics
 	suit = /obj/item/clothing/suit/apron
 	gloves  =/obj/item/clothing/gloves/botanic_leather
-	suit_store = /obj/item/device/plant_analyzer
+	suit_store = /obj/item/plant_analyzer
 
 	backpack = /obj/item/storage/backpack/botany
 	satchel = /obj/item/storage/backpack/satchel/hyd
@@ -268,17 +277,18 @@ Janitor
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/global/janitors = 0
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/janitor
 
-	access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS)
-	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS)
+	access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
 
 /datum/outfit/job/janitor
 	name = "Janitor"
 	jobtype = /datum/job/janitor
 
-	belt = /obj/item/device/pda/janitor
-	ears = /obj/item/device/radio/headset/headset_srv
+	belt = /obj/item/pda/janitor
+	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/janitor
-	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)

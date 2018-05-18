@@ -27,6 +27,10 @@
 		if(isnewplayer(M))
 			continue
 		if (M.stat == DEAD || (M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
-			M.show_message(rendered, 2)
+			to_chat(M, rendered)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Dsay") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/get_dead_say()
+	var/msg = input(src, null, "dsay \"text\"") as text
+	dsay(msg)

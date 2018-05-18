@@ -101,8 +101,7 @@
 
 		if(ASSEMBLY_FOURTH_STEP)
 			if(istype(W, /obj/item/weldingtool))
-				var/obj/item/weldingtool/WT = W
-				if(WT.remove_fuel(0,user))
+				if(W.use_tool(src, user, 0, volume=40))
 					name = "shielded frame assembly"
 					to_chat(user, "<span class='notice'>You weld the vest to [src].</span>")
 					build_step++
@@ -183,9 +182,8 @@
 
 		if(8)
 			if(istype(W, /obj/item/screwdriver))
-				playsound(loc, W.usesound, 100, 1)
 				to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
-				if(do_after(user, 40*W.toolspeed, 0, src, 1))
+				if(W.use_tool(src, user, 40, volume=100))
 					name = "armed [name]"
 					to_chat(user, "<span class='notice'>Taser gun attached.</span>")
 					build_step++
@@ -236,8 +234,6 @@
 		to_chat(user, "<span class='warning'>They won't fit in, as there is already stuff inside!</span>")
 		return
 	if(T.use(10))
-		if(user.s_active)
-			user.s_active.close(user)
 		var/obj/item/bot_assembly/floorbot/B = new
 		B.toolbox = type
 		user.put_in_hands(B)
@@ -279,7 +275,7 @@
 	icon_state = "firstaid_arm"
 	created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
-	var/healthanalyzer = /obj/item/device/healthanalyzer
+	var/healthanalyzer = /obj/item/healthanalyzer
 	var/firstaid = /obj/item/storage/firstaid
 
 /obj/item/bot_assembly/medbot/Initialize()
@@ -314,12 +310,11 @@
 	qdel(S)
 	qdel(src)
 
-
 /obj/item/bot_assembly/medbot/attackby(obj/item/W, mob/user, params)
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(istype(W, /obj/item/device/healthanalyzer))
+			if(istype(W, /obj/item/healthanalyzer))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				healthanalyzer = W.type
@@ -391,14 +386,13 @@
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
 			if(istype(I, /obj/item/weldingtool))
-				var/obj/item/weldingtool/WT = I
-				if(WT.remove_fuel(0, user))
+				if(I.use_tool(src, user, 0, volume=40))
 					add_overlay("hs_hole")
 					to_chat(user, "<span class='notice'>You weld a hole in [src]!</span>")
 					build_step++
 
 			else if(istype(I, /obj/item/screwdriver)) //deconstruct
-				new /obj/item/device/assembly/signaler(Tsec)
+				new /obj/item/assembly/signaler(Tsec)
 				new /obj/item/clothing/head/helmet/sec(Tsec)
 				to_chat(user, "<span class='notice'>You disconnect the signaler from the helmet.</span>")
 				qdel(src)
@@ -414,8 +408,7 @@
 				build_step++
 
 			else if(istype(I, /obj/item/weldingtool)) //deconstruct
-				var/obj/item/weldingtool/WT = I
-				if(WT.remove_fuel(0, user))
+				if(I.use_tool(src, user, 0, volume=40))
 					cut_overlay("hs_hole")
 					to_chat(user, "<span class='notice'>You weld the hole in [src] shut!</span>")
 					build_step--
@@ -433,7 +426,7 @@
 
 			else if(istype(I, /obj/item/screwdriver)) //deconstruct
 				cut_overlay("hs_eye")
-				new /obj/item/device/assembly/prox_sensor(Tsec)
+				new /obj/item/assembly/prox_sensor(Tsec)
 				to_chat(user, "<span class='notice'>You detach the proximity sensor from [src].</span>")
 				build_step--
 

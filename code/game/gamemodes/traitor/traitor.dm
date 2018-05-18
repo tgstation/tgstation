@@ -49,7 +49,7 @@
 	for(var/j = 0, j < num_traitors, j++)
 		if (!antag_candidates.len)
 			break
-		var/datum/mind/traitor = pick(antag_candidates)
+		var/datum/mind/traitor = antag_pick(antag_candidates)
 		pre_traitors += traitor
 		traitor.special_role = traitor_name
 		traitor.restricted_roles = restricted_jobs
@@ -79,7 +79,7 @@
 		return
 	if((SSticker.mode.traitors.len + pre_traitors.len) <= (traitorcap - 2) || prob(100 / (tsc * 2)))
 		if(ROLE_TRAITOR in character.client.prefs.be_special)
-			if(!jobban_isbanned(character, ROLE_TRAITOR) && !jobban_isbanned(character, "Syndicate"))
+			if(!jobban_isbanned(character, ROLE_TRAITOR) && !jobban_isbanned(character, ROLE_SYNDICATE))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						add_latejoin_traitor(character.mind)

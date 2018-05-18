@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	var/inhand_overlay //If applicable, this overlay will be applied to the slab's inhand
 
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 
 	var/busy //If the slab is currently being used by something
@@ -36,14 +36,15 @@
 	speed_multiplier = 0
 	no_cost = TRUE
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clockwork/slab/debug/attack_hand(mob/living/user)
-	..()
 	if(!is_servant_of_ratvar(user))
 		add_servant_of_ratvar(user)
+	return ..()
 
 /obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
 	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture."
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard)
+	quickbound = list(/datum/clockwork_scripture/abscond, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard)
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
@@ -143,8 +144,8 @@
 		playsound(get_turf(user), 'sound/weapons/sear.ogg', 50, 1)
 		user.dropItemToGround(src)
 		user.emote("scream")
-		user.apply_damage(5, BURN, "l_arm")
-		user.apply_damage(5, BURN, "r_arm")
+		user.apply_damage(5, BURN, BODY_ZONE_L_ARM)
+		user.apply_damage(5, BURN, BODY_ZONE_R_ARM)
 		return 0
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>")
@@ -160,7 +161,7 @@
 	access_display(user)
 
 /obj/item/clockwork/slab/AltClick(mob/living/user)
-	if(is_servant_of_ratvar(user) && linking)
+	if(is_servant_of_ratvar(user) && linking && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		linking = null
 		to_chat(user, "<span class='notice'>Object link canceled.</span>")
 

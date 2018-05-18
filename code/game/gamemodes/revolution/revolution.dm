@@ -28,6 +28,7 @@
 	var/max_headrevs = 3
 	var/datum/team/revolution/revolution
 	var/list/datum/mind/headrev_candidates = list()
+	var/end_when_heads_dead = TRUE
 
 ///////////////////////////
 //Announces the game type//
@@ -51,7 +52,7 @@
 	for (var/i=1 to max_headrevs)
 		if (antag_candidates.len==0)
 			break
-		var/datum/mind/lenin = pick(antag_candidates)
+		var/datum/mind/lenin = antag_pick(antag_candidates)
 		antag_candidates -= lenin
 		headrev_candidates += lenin
 		lenin.restricted_roles = restricted_jobs
@@ -135,7 +136,7 @@
 		if(finished)
 			SSshuttle.clearHostileEnvironment(src)
 		return ..()
-	if(finished != 0)
+	if(finished != 0 && end_when_heads_dead)
 		return TRUE
 	else
 		return ..()
@@ -190,3 +191,30 @@
 	return "Employee unrest has spiked in recent weeks, with several attempted mutinies on heads of staff. Some crew have been observed using flashbulb devices to blind their colleagues, \
 		who then follow their orders without question and work towards dethroning departmental leaders. Watch for behavior such as this with caution. If the crew attempts a mutiny, you and \
 		your heads of staff are fully authorized to execute them using lethal weaponry - they will be later cloned and interrogated at Central Command."
+
+/datum/game_mode/revolution/extended
+	name = "extended_revolution"
+	config_tag = "extended_revolution"
+	end_when_heads_dead = FALSE
+
+/datum/game_mode/revolution/speedy
+	name = "speedy_revolution"
+	config_tag = "speedy_revolution"
+	end_when_heads_dead = FALSE
+	var/endtime = null
+	var/fuckingdone = FALSE
+
+/datum/game_mode/revolution/speedy/pre_setup()
+	endtime = world.time + 20 MINUTES
+	return ..()
+
+/datum/game_mode/revolution/speedy/process()
+	. = ..()
+	if(check_counter == 0)
+		if (world.time > endtime && !fuckingdone)
+			fuckingdone = TRUE
+			for (var/obj/machinery/nuclearbomb/N in GLOB.nuke_list)
+				if (!N.timing)
+					N.timer_set = 200
+					N.set_safety()
+					N.set_active()

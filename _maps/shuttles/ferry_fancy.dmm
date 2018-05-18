@@ -72,7 +72,6 @@
 	name = "ferry shuttle";
 	port_direction = 1;
 	preferred_direction = 4;
-	timid = 1;
 	width = 5
 	},
 /turf/open/floor/pod/light,

@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - balance: "BZ gas now makes lings lose their chems and hivemind access. The chem loss is gradual."

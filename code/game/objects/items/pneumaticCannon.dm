@@ -13,7 +13,7 @@
 	item_state = "bulldog"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 60, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 50)
 	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
 	var/loadedWeightClass = 0 //The weight of items currently in the cannon
 	var/obj/item/tank/internals/tank = null //The gas tank that is drawn from to fire things
@@ -149,7 +149,7 @@
 		return
 	if(user.has_trait(TRAIT_CLUMSY) && prob(75) && clumsyCheck && iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.visible_message("<span class='warning'>[C] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
+		C.visible_message("<span class='warning'>[C] loses [C.p_their()] grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
 		C.dropItemToGround(src, TRUE)
 		if(prob(10))
 			target = get_turf(user)

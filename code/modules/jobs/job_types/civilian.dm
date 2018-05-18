@@ -11,6 +11,7 @@ Clown
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	antag_rep = 14
 
 	outfit = /datum/outfit/job/clown
 
@@ -24,7 +25,7 @@ Clown
 	name = "Clown"
 	jobtype = /datum/job/clown
 
-	belt = /obj/item/device/pda/clown
+	belt = /obj/item/pda/clown
 	uniform = /obj/item/clothing/under/rank/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat
@@ -33,7 +34,7 @@ Clown
 		/obj/item/stamp/clown = 1,
 		/obj/item/reagent_containers/spray/waterflower = 1,
 		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/device/instrument/bikehorn = 1,
+		/obj/item/instrument/bikehorn = 1,
 		)
 
 	implants = list(/obj/item/implant/sad_trombone)
@@ -72,6 +73,7 @@ Mime
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	antag_rep = 14
 
 	outfit = /datum/outfit/job/mime
 
@@ -85,11 +87,11 @@ Mime
 	name = "Mime"
 	jobtype = /datum/job/mime
 
-	belt = /obj/item/device/pda/mime
+	belt = /obj/item/pda/mime
 	uniform = /obj/item/clothing/under/rank/mime
 	mask = /obj/item/clothing/mask/gas/mime
 	gloves = /obj/item/clothing/gloves/color/white
-	head = /obj/item/clothing/head/beret
+	head = /obj/item/clothing/head/frenchberet
 	suit = /obj/item/clothing/suit/suspenders
 	backpack_contents = list(/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing=1)
 
@@ -122,6 +124,7 @@ Curator
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	antag_rep = 14
 
 	outfit = /datum/outfit/job/curator
 
@@ -132,11 +135,11 @@ Curator
 	name = "Curator"
 	jobtype = /datum/job/curator
 
-	belt = /obj/item/device/pda/curator
+	belt = /obj/item/pda/curator
 	uniform = /obj/item/clothing/under/rank/curator
 	l_hand = /obj/item/storage/bag/books
 	r_pocket = /obj/item/key/displaycase
-	l_pocket = /obj/item/device/laser_pointer
+	l_pocket = /obj/item/laser_pointer
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(
 		/obj/item/melee/curator_whip = 1,
@@ -152,7 +155,7 @@ Curator
 		return
 
 	H.grant_all_languages(omnitongue=TRUE)
-	H.gain_trauma(/datum/brain_trauma/mild/phobia, FALSE, "snakes") //why does it have to be snakes...
+	H.gain_trauma(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_SURGERY, "snakes") //why does it have to be snakes...
 /*
 Lawyer
 */
@@ -167,6 +170,7 @@ Lawyer
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	var/lawyers = 0 //Counts lawyer amount
+	antag_rep = 17
 
 	outfit = /datum/outfit/job/lawyer
 
@@ -177,13 +181,13 @@ Lawyer
 	name = "Lawyer"
 	jobtype = /datum/job/lawyer
 
-	belt = /obj/item/device/pda/lawyer
-	ears = /obj/item/device/radio/headset/headset_sec
+	belt = /obj/item/pda/lawyer
+	ears = /obj/item/radio/headset/headset_sec
 	uniform = /obj/item/clothing/under/lawyer/bluesuit
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/storage/briefcase/lawyer
-	l_pocket = /obj/item/device/laser_pointer
+	l_pocket = /obj/item/laser_pointer
 	r_pocket = /obj/item/clothing/accessory/lawyers_badge
 
 

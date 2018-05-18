@@ -35,19 +35,20 @@
 /obj/structure/ladder/LateInitialize()
 	// By default, discover ladders above and below us vertically
 	var/turf/T = get_turf(src)
+	var/obj/structure/ladder/L
 
 	if (!down)
-		for (var/obj/structure/ladder/L in locate(T.x, T.y, T.z - 1))
+		L = locate() in SSmapping.get_turf_below(T)
+		if (L)
 			down = L
 			L.up = src  // Don't waste effort looping the other way
 			L.update_icon()
-			break
 	if (!up)
-		for (var/obj/structure/ladder/L in locate(T.x, T.y, T.z + 1))
+		L = locate() in SSmapping.get_turf_above(T)
+		if (L)
 			up = L
 			L.down = src  // Don't waste effort looping the other way
 			L.update_icon()
-			break
 
 	update_icon()
 
@@ -109,6 +110,9 @@
 		add_fingerprint(user)
 
 /obj/structure/ladder/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	use(user)
 
 /obj/structure/ladder/attack_paw(mob/user)
@@ -121,8 +125,10 @@
 	if(R.Adjacent(src))
 		return use(R)
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/structure/ladder/attack_ghost(mob/dead/observer/user)
 	use(user, TRUE)
+	return ..()
 
 /obj/structure/ladder/proc/show_fluff_message(going_up, mob/user)
 	if(going_up)

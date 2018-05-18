@@ -63,8 +63,8 @@
 		// it's NODROP_1
 		D.dropItemToGround(target, TRUE)
 		qdel(old_headgear)
-		// where is `slot_head` defined? WHO KNOWS
-		D.equip_to_slot(new_headgear, slot_head)
+		// where is `SLOT_HEAD` defined? WHO KNOWS
+		D.equip_to_slot(new_headgear, SLOT_HEAD)
 	return 1
 
 
@@ -180,7 +180,7 @@
 	random_sensor = FALSE
 	resistance_flags = NONE
 	can_adjust = FALSE
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -213,7 +213,7 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	resistance_flags = NONE
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -238,7 +238,7 @@
 	icon_state = "meson"
 	item_state = "meson"
 	resistance_flags = NONE
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -264,7 +264,7 @@
 	item_state = "ygloves"
 
 	resistance_flags = NONE
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -290,7 +290,7 @@
 	item_color = "grey"
 
 	resistance_flags = NONE
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -313,7 +313,7 @@
 	// The camohat, I mean, holographic hat projection, is part of the
 	// drone itself.
 	flags_1 = NODROP_1
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	// which means it offers no protection, it's just air and light
 
 /obj/item/clothing/head/chameleon/drone/Initialize()
@@ -330,9 +330,8 @@
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
 	resistance_flags = NONE
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
-
-	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -365,7 +364,7 @@
 /obj/item/clothing/mask/chameleon/drone
 	//Same as the drone chameleon hat, undroppable and no protection
 	flags_1 = NODROP_1
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	// Can drones use the voice changer part? Let's not find out.
 	vchange = 0
 
@@ -387,8 +386,8 @@
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
-	pockets = /obj/item/storage/internal/pocket/shoes
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -408,7 +407,7 @@
 	icon_state = "black"
 	item_color = "black"
 	desc = "A pair of black shoes."
-	flags_1 = NOSLIP_1
+	clothing_flags = NOSLIP
 
 /obj/item/clothing/shoes/chameleon/noslip/broken/Initialize()
 	. = ..()
@@ -420,7 +419,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/chameleon)
 	clumsy_check = 0
 	item_flags = NONE
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 	cell_type = /obj/item/stock_parts/cell/bluespace
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -579,15 +578,20 @@
 /obj/item/storage/belt/chameleon
 	name = "toolbelt"
 	desc = "Holds tools."
-	silent = 1
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/storage/belt/chameleon/Initialize()
 	. = ..()
+
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/storage/belt
 	chameleon_action.chameleon_name = "Belt"
 	chameleon_action.initialize_disguises()
+
+/obj/item/storage/belt/chameleon/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.silent = TRUE
 
 /obj/item/storage/belt/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
@@ -596,40 +600,39 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/device/radio/headset/chameleon
+/obj/item/radio/headset/chameleon
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/device/radio/headset/chameleon/Initialize()
+/obj/item/radio/headset/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/device/radio/headset
+	chameleon_action.chameleon_type = /obj/item/radio/headset
 	chameleon_action.chameleon_name = "Headset"
 	chameleon_action.initialize_disguises()
 
-/obj/item/device/radio/headset/chameleon/emp_act(severity)
+/obj/item/radio/headset/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
 
-/obj/item/device/radio/headset/chameleon/broken/Initialize()
+/obj/item/radio/headset/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/device/pda/chameleon
+/obj/item/pda/chameleon
 	name = "PDA"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/device/pda/chameleon/Initialize()
+/obj/item/pda/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/device/pda
+	chameleon_action.chameleon_type = /obj/item/pda
 	chameleon_action.chameleon_name = "PDA"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/device/pda/heads, /obj/item/device/pda/ai, /obj/item/device/pda/ai/pai), only_root_path = TRUE)
+	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/pda/heads, /obj/item/pda/ai, /obj/item/pda/ai/pai), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
-/obj/item/device/pda/chameleon/emp_act(severity)
+/obj/item/pda/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
 
-/obj/item/device/pda/chameleon/broken/Initialize()
+/obj/item/pda/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
-

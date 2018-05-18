@@ -25,22 +25,22 @@ GLOBAL_PROTECT(exp_to_update)
 		return (job_requirement - my_exp)
 
 /datum/job/proc/get_exp_req_amount()
-	if(title in GLOB.command_positions)
+	if(title in (GLOB.command_positions | list("AI")))
 		var/uerhh = CONFIG_GET(number/use_exp_restrictions_heads_hours)
 		if(uerhh)
 			return uerhh * 60
 	return exp_requirements
 
 /datum/job/proc/get_exp_req_type()
-	if(title in GLOB.command_positions)
+	if(title in (GLOB.command_positions | list("AI")))
 		if(CONFIG_GET(flag/use_exp_restrictions_heads_department) && exp_type_department)
 			return exp_type_department
 	return exp_type
 
 /proc/job_is_xp_locked(jobtitle)
-	if(!CONFIG_GET(flag/use_exp_restrictions_heads) && jobtitle in GLOB.command_positions)
+	if(!CONFIG_GET(flag/use_exp_restrictions_heads) && jobtitle in (GLOB.command_positions | list("AI")))
 		return FALSE
-	if(!CONFIG_GET(flag/use_exp_restrictions_other) && !(jobtitle in GLOB.command_positions))
+	if(!CONFIG_GET(flag/use_exp_restrictions_other) && !(jobtitle in (GLOB.command_positions | list("AI"))))
 		return FALSE
 	return TRUE
 
@@ -143,7 +143,7 @@ GLOBAL_PROTECT(exp_to_update)
 		L.update_exp_list(mins,ann)
 
 /datum/controller/subsystem/blackbox/proc/update_exp_db()
-	SSdbcore.MassInsert(format_table_name("role_time"),GLOB.exp_to_update,TRUE)
+	SSdbcore.MassInsert(format_table_name("role_time"), GLOB.exp_to_update, "ON DUPLICATE KEY UPDATE minutes = minutes + VALUES(minutes)")
 	LAZYCLEARLIST(GLOB.exp_to_update)
 
 //resets a client's exp to what was in the db.
@@ -194,20 +194,10 @@ GLOBAL_PROTECT(exp_to_update)
 		return -1
 	if(!SSdbcore.Connect())
 		return -1
-	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = '[sanitizeSQL(ckey)]'")
-	if(!exp_read.Execute())
+	if (!isnum(minutes))
 		return -1
 	var/list/play_records = list()
-	while(exp_read.NextRow())
-		play_records[exp_read.item[1]] = text2num(exp_read.item[2])
 
-	for(var/rtype in SSjob.name_occupations)
-		if(!play_records[rtype])
-			play_records[rtype] = 0
-	for(var/rtype in GLOB.exp_specialmap)
-		if(!play_records[rtype])
-			play_records[rtype] = 0
-	var/list/old_records = play_records.Copy()
 	if(isliving(mob))
 		if(mob.stat != DEAD)
 			var/rolefound = FALSE
@@ -236,24 +226,33 @@ GLOBAL_PROTECT(exp_to_update)
 			if(!rolefound)
 				play_records["Unknown"] += minutes
 		else
-			play_records[EXP_TYPE_GHOST] += minutes
-			if(announce_changes)
-				to_chat(src,"<span class='notice'>You got: [minutes] Ghost EXP!</span>")
+			if(holder && !holder.deadmined)
+				play_records[EXP_TYPE_ADMIN] += minutes
+				if(announce_changes)
+					to_chat(src,"<span class='notice'>You got: [minutes] Admin EXP!</span>")
+			else
+				play_records[EXP_TYPE_GHOST] += minutes
+				if(announce_changes)
+					to_chat(src,"<span class='notice'>You got: [minutes] Ghost EXP!</span>")
 	else if(isobserver(mob))
 		play_records[EXP_TYPE_GHOST] += minutes
 		if(announce_changes)
 			to_chat(src,"<span class='notice'>You got: [minutes] Ghost EXP!</span>")
 	else if(minutes)	//Let "refresh" checks go through
 		return
-	prefs.exp = play_records
 
 	for(var/jtype in play_records)
-		if(play_records[jtype] != old_records[jtype])
-			LAZYINITLIST(GLOB.exp_to_update)
-			GLOB.exp_to_update.Add(list(list(
-				"job" = "'[sanitizeSQL(jtype)]'",
-				"ckey" = "'[sanitizeSQL(ckey)]'",
-				"minutes" = play_records[jtype])))
+		var/jvalue = play_records[jtype]
+		if (!jvalue)
+			continue
+		if (!isnum(jvalue))
+			CRASH("invalid job value [jtype]:[jvalue]")
+		LAZYINITLIST(GLOB.exp_to_update)
+		GLOB.exp_to_update.Add(list(list(
+			"job" = "'[sanitizeSQL(jtype)]'",
+			"ckey" = "'[sanitizeSQL(ckey)]'",
+			"minutes" = jvalue)))
+		prefs.exp[jtype] += jvalue
 	addtimer(CALLBACK(SSblackbox,/datum/controller/subsystem/blackbox/proc/update_exp_db),20,TIMER_OVERRIDE|TIMER_UNIQUE)
 
 

@@ -49,7 +49,6 @@
 #define RADIO_FROM_AIRALARM "from_airalarm"
 #define RADIO_SIGNALER "signaler"
 #define RADIO_ATMOSIA "atmosia"
-#define RADIO_NAVBEACONS "navbeacons"
 #define RADIO_AIRLOCK "airlock"
 #define RADIO_MAGNETS "magnets"
 

@@ -46,8 +46,6 @@
 	var/ricochets_max = 2
 	var/ricochet_chance = 30
 
-	var/colliding = FALSE	//pause processing..
-
 	//Hitscan
 	var/hitscan = FALSE		//Whether this is hitscan. If it is, speed is basically ignored.
 	var/list/beam_segments	//assoc list of datum/point or datum/point/vector, start = end. Used for hitscan effect generation.
@@ -57,6 +55,15 @@
 	var/muzzle_type
 	var/impact_type
 
+	//Homing
+	var/homing = FALSE
+	var/atom/homing_target
+	var/homing_turn_speed = 10		//Angle per tick.
+	var/homing_inaccuracy_min = 0		//in pixels for these. offsets are set once when setting target.
+	var/homing_inaccuracy_max = 0
+	var/homing_offset_x = 0
+	var/homing_offset_y = 0
+
 	var/ignore_source_check = FALSE
 
 	var/damage = 10
@@ -65,6 +72,7 @@
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = /obj/item/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
+	var/decayedRange
 	var/is_reflectable = FALSE // Can it be reflected or not?
 		//Effects
 	var/stun = 0
@@ -85,6 +93,7 @@
 /obj/item/projectile/Initialize()
 	. = ..()
 	permutated = list()
+	decayedRange = range
 
 /obj/item/projectile/proc/Range()
 	range--
@@ -103,7 +112,7 @@
 	if(get_bodypart(hit_zone))
 		return hit_zone
 	else //when a limb is missing the damage is actually passed to the chest
-		return "chest"
+		return BODY_ZONE_CHEST
 
 /obj/item/projectile/proc/prehit(atom/target)
 	return TRUE
@@ -190,7 +199,6 @@
 	beam_segments[beam_index] = null
 
 /obj/item/projectile/Collide(atom/A)
-	colliding = TRUE
 	var/datum/point/pcache = trajectory.copy_to()
 	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
@@ -206,7 +214,6 @@
 			trajectory_ignore_forcemove = TRUE
 			forceMove(get_turf(A))
 			trajectory_ignore_forcemove = FALSE
-			colliding = FALSE
 			return FALSE
 
 	var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
@@ -225,7 +232,6 @@
 			trajectory_ignore_forcemove = TRUE
 			forceMove(target_turf)
 			trajectory_ignore_forcemove = FALSE
-		colliding = FALSE
 		return FALSE
 
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
@@ -235,17 +241,14 @@
 		trajectory_ignore_forcemove = FALSE
 		if(A)
 			permutated.Add(A)
-		colliding = FALSE
 		return FALSE
 	else
 		var/atom/alt = select_target(A)
 		if(alt)
 			if(!prehit(alt))
-				colliding = FALSE
 				return FALSE
 			alt.bullet_act(src, def_zone)
 	qdel(src)
-	colliding = FALSE
 	return TRUE
 
 /obj/item/projectile/proc/select_target(atom/A)				//Selects another target from a wall if we hit a wall.
@@ -293,11 +296,6 @@
 	var/turf/ending = return_predicted_turf_after_moves(moves, forced_angle)
 	return getline(current, ending)
 
-/obj/item/projectile/proc/before_z_change(turf/oldloc, turf/newloc)
-	var/datum/point/pcache = trajectory.copy_to()
-	if(hitscan)
-		store_hitscan_collision(pcache)
-
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return TRUE	//Bullets don't drift in space
 
@@ -327,7 +325,7 @@
 /obj/item/projectile/proc/fire(angle, atom/direct_target)
 	//If no angle needs to resolve it from xo/yo!
 	if(!log_override && firer && original)
-		add_logs(firer, original, "fired at", src, " [get_area(src)]")
+		add_logs(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 	if(direct_target)
 		if(prehit(direct_target))
 			direct_target.bullet_act(src, def_zone)
@@ -350,8 +348,10 @@
 		var/matrix/M = new
 		M.Turn(Angle)
 		transform = M
+	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
-	trajectory = new(starting.x, starting.y, starting.z, 0, 0, Angle, pixel_speed)
+	trajectory_ignore_forcemove = FALSE
+	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, pixel_speed)
 	last_projectile_move = world.time
 	fired = TRUE
 	if(hitscan)
@@ -371,14 +371,31 @@
 	return TRUE
 
 /obj/item/projectile/forceMove(atom/target)
+	if(!isloc(target) || !isloc(loc) || !z)
+		return ..()
+	var/zc = target.z != z
+	var/old = loc
+	if(zc)
+		before_z_change(old, target)
 	. = ..()
 	if(trajectory && !trajectory_ignore_forcemove && isturf(target))
+		if(hitscan)
+			finalize_hitscan_and_generate_tracers(FALSE)
 		trajectory.initialize_location(target.x, target.y, target.z, 0, 0)
+		if(hitscan)
+			record_hitscan_start(RETURN_PRECISE_POINT(src))
+	if(zc)
+		after_z_change(old, target)
+
+/obj/item/projectile/proc/after_z_change(atom/olcloc, atom/newloc)
+
+/obj/item/projectile/proc/before_z_change(atom/oldloc, atom/newloc)
 
 /obj/item/projectile/proc/record_hitscan_start(datum/point/pcache)
-	beam_segments = list()	//initialize segment list with the list for the first segment
-	beam_index = pcache
-	beam_segments[beam_index] = null	//record start.
+	if(pcache)
+		beam_segments = list()
+		beam_index = pcache
+		beam_segments[beam_index] = null	//record start.
 
 /obj/item/projectile/proc/process_hitscan()
 	var/safety = range * 3
@@ -401,13 +418,20 @@
 		var/matrix/M = new
 		M.Turn(Angle)
 		transform = M
+	if(homing)
+		process_homing()
 	trajectory.increment(trajectory_multiplier)
 	var/turf/T = trajectory.return_turf()
+	if(!istype(T))
+		qdel(src)
+		return
 	if(T.z != loc.z)
+		var/old = loc
 		before_z_change(loc, T)
 		trajectory_ignore_forcemove = TRUE
 		forceMove(T)
 		trajectory_ignore_forcemove = FALSE
+		after_z_change(old, loc)
 		if(!hitscanning)
 			pixel_x = trajectory.return_px()
 			pixel_y = trajectory.return_py()
@@ -424,34 +448,55 @@
 		Collide(original)
 	Range()
 
+/obj/item/projectile/proc/process_homing()			//may need speeding up in the future performance wise.
+	if(!homing_target)
+		return FALSE
+	var/datum/point/PT = RETURN_PRECISE_POINT(homing_target)
+	PT.x += CLAMP(homing_offset_x, 1, world.maxx)
+	PT.y += CLAMP(homing_offset_y, 1, world.maxy)
+	var/angle = closer_angle_difference(Angle, angle_between_points(RETURN_PRECISE_POINT(src), PT))
+	setAngle(Angle + CLAMP(angle, -homing_turn_speed, homing_turn_speed))
+
+/obj/item/projectile/proc/set_homing_target(atom/A)
+	if(!A || (!isturf(A) && !isturf(A.loc)))
+		return FALSE
+	homing = TRUE
+	homing_target = A
+	homing_offset_x = rand(homing_inaccuracy_min, homing_inaccuracy_max)
+	homing_offset_y = rand(homing_inaccuracy_min, homing_inaccuracy_max)
+	if(prob(50))
+		homing_offset_x = -homing_offset_x
+	if(prob(50))
+		homing_offset_y = -homing_offset_y
+
 //Returns true if the target atom is on our current turf and above the right layer
 /obj/item/projectile/proc/can_hit_target(atom/target, var/list/passthrough)
 	return (target && ((target.layer >= PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(target)) && (loc == get_turf(target)) && (!(target in passthrough)))
 
+//Spread is FORCED!
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = 0)
 	var/turf/curloc = get_turf(source)
 	var/turf/targloc = get_turf(target)
+	trajectory_ignore_forcemove = TRUE
 	forceMove(get_turf(source))
+	trajectory_ignore_forcemove = FALSE
 	starting = get_turf(source)
 	original = target
 	if(targloc || !params)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		setAngle(Get_Angle(src, targloc))
+		setAngle(Get_Angle(src, targloc) + spread)
 
 	if(isliving(source) && params)
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
 		p_x = calculated[2]
 		p_y = calculated[3]
 
-		if(spread)
-			setAngle(calculated[1] + spread)
-		else
-			setAngle(calculated[1])
+		setAngle(calculated[1] + spread)
 	else if(targloc)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		setAngle(Get_Angle(src, targloc))
+		setAngle(Get_Angle(src, targloc) + spread)
 	else
 		stack_trace("WARNING: Projectile [type] fired without either mouse parameters, or a target atom to aim at!")
 		qdel(src)
@@ -494,14 +539,24 @@
 
 /obj/item/projectile/Destroy()
 	if(hitscan)
-		if(loc)
-			var/datum/point/pcache = trajectory.copy_to()
-			beam_segments[beam_index] = pcache
-		generate_hitscan_tracers()
+		finalize_hitscan_and_generate_tracers()
 	STOP_PROCESSING(SSprojectiles, src)
+	cleanup_beam_segments()
+	qdel(trajectory)
 	return ..()
 
-/obj/item/projectile/proc/generate_hitscan_tracers(cleanup = TRUE, duration = 3)
+/obj/item/projectile/proc/cleanup_beam_segments()
+	QDEL_LIST_ASSOC(beam_segments)
+	beam_segments = list()
+	qdel(beam_index)
+
+/obj/item/projectile/proc/finalize_hitscan_and_generate_tracers(impacting = TRUE)
+	if(trajectory && beam_index)
+		var/datum/point/pcache = trajectory.copy_to()
+		beam_segments[beam_index] = pcache
+	generate_hitscan_tracers(null, null, impacting)
+
+/obj/item/projectile/proc/generate_hitscan_tracers(cleanup = TRUE, duration = 3, impacting = TRUE)
 	if(!length(beam_segments))
 		return
 	if(tracer_type)
@@ -515,7 +570,7 @@
 		M.Turn(original_angle)
 		thing.transform = M
 		QDEL_IN(thing, duration)
-	if(impact_type && duration > 0)
+	if(impacting && impact_type && duration > 0)
 		var/datum/point/p = beam_segments[beam_segments[beam_segments.len]]
 		var/atom/movable/thing = new impact_type
 		p.move_atom_to_src(thing)
@@ -524,9 +579,7 @@
 		thing.transform = M
 		QDEL_IN(thing, duration)
 	if(cleanup)
-		QDEL_LIST(beam_segments)
-		beam_segments = null
-		QDEL_NULL(beam_index)
+		cleanup_beam_segments()
 
 /obj/item/projectile/experience_pressure_difference()
 	return

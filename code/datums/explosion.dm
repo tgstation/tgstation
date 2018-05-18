@@ -4,7 +4,7 @@ GLOBAL_LIST_EMPTY(explosions)
 //Against my better judgement, I will return the explosion datum
 //If I see any GC errors for it I will find you
 //and I will gib you
-/proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0 , silent = FALSE, smoke = FALSE)
+/proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0, silent = FALSE, smoke = FALSE)
 	return new /datum/explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
 
 //This datum creates 3 async tasks
@@ -401,7 +401,7 @@ GLOBAL_LIST_EMPTY(explosions)
 		A.color = null
 		A.maptext = ""
 
-/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = 1, ignorecap = 1, flame_range = 0 ,silent = 0, smoke = 1)
+/proc/dyn_explosion(turf/epicenter, power, flash_range, adminlog = TRUE, ignorecap = TRUE, flame_range = 0, silent = FALSE, smoke = TRUE)
 	if(!power)
 		return
 	var/range = 0

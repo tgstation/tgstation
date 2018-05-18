@@ -16,7 +16,7 @@
 
 /obj/item/clockwork/component/attack_self(mob/living/user)
 	if(is_servant_of_ratvar(user))
-		user.visible_message("<span class='notice'>[user] crushes [src] in their hand!</span>", \
+		user.visible_message("<span class='notice'>[user] crushes [src] in [user.p_their()] hand!</span>", \
 		"<span class='alloy'>You crush [src], capturing its escaping energy for use as power.</span>")
 		playsound(user, 'sound/effects/pop_expl.ogg', 50, TRUE)
 		adjust_clockwork_power(POWER_WALL_TOTAL)
@@ -28,7 +28,7 @@
 		to_chat(user, "<span class='[message_span]'>[cultist_message]</span>")
 		if(user.mind && user.mind.isholy)
 			to_chat(user, "<span class='boldannounce'>The power of your faith melts away [src]!</span>")
-			var/obj/item/ore/slag/wrath = new /obj/item/ore/slag
+			var/obj/item/stack/ore/slag/wrath = new /obj/item/stack/ore/slag
 			qdel(src)
 			user.put_in_active_hand(wrath)
 	if(is_servant_of_ratvar(user) && prob(20))

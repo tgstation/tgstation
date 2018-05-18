@@ -12,6 +12,8 @@
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
+
 	var/minimum_timer = 90
 	var/timer_set = 90
 	var/maximum_timer = 60000
@@ -116,14 +118,14 @@
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>")
 			else
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor.</span>")
-				playsound(loc, I.usesound, 50, 1)
+				I.play_tool_sound(src)
 				anchored = TRUE
 				if(active)
 					to_chat(user, "<span class='notice'>The bolts lock in place.</span>")
 		else
 			if(!active)
 				to_chat(user, "<span class='notice'>You wrench the bomb from the floor.</span>")
-				playsound(loc, I.usesound, 50, 1)
+				I.play_tool_sound(src)
 				anchored = FALSE
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
@@ -159,18 +161,12 @@
 	else if(istype(I, /obj/item/weldingtool))
 		if(payload || !wires.is_all_cut() || !open_panel)
 			return
-		var/obj/item/weldingtool/WT = I
-		if(!WT.isOn())
-			return
-		if(WT.get_fuel() < 5) //uses up 5 fuel.
-			to_chat(user, "<span class='warning'>You need more fuel to complete this task!</span>")
+
+		if(!I.tool_start_check(user, amount=5))  //uses up 5 fuel
 			return
 
-		playsound(loc, WT.usesound, 50, 1)
 		to_chat(user, "<span class='notice'>You start to cut [src] apart...</span>")
-		if(do_after(user, 20*I.toolspeed, target = src))
-			if(!WT.isOn() || !WT.remove_fuel(5, user))
-				return
+		if(I.use_tool(src, user, 20, volume=50, amount=5)) //uses up 5 fuel
 			to_chat(user, "<span class='notice'>You cut [src] apart.</span>")
 			new /obj/item/stack/sheet/plasteel( loc, 5)
 			qdel(src)
@@ -179,12 +175,6 @@
 		. = ..()
 		if((old_integ > obj_integrity) && active && !defused && (payload in src))
 			to_chat(user, "<span class='warning'>That seems like a really bad idea...</span>")
-
-/obj/machinery/syndicatebomb/attack_hand(mob/user)
-	interact(user)
-
-/obj/machinery/syndicatebomb/attack_ai()
-	return
 
 /obj/machinery/syndicatebomb/interact(mob/user)
 	wires.interact(user)
@@ -253,8 +243,8 @@
 	open_panel = TRUE
 	timer_set = 120
 
-/obj/machinery/syndicatebomb/empty/New()
-	..()
+/obj/machinery/syndicatebomb/empty/Initialize()
+	. = ..()
 	wires.cut_all()
 
 /obj/machinery/syndicatebomb/self_destruct
@@ -448,7 +438,7 @@
 
 /obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/crowbar) && beakers.len > 0)
-		playsound(loc, I.usesound, 50, 1)
+		I.play_tool_sound(src)
 		for (var/obj/item/B in beakers)
 			B.forceMove(drop_location())
 			beakers -= B
@@ -509,7 +499,7 @@
 
 ///Syndicate Detonator (aka the big red button)///
 
-/obj/item/device/syndicatedetonator
+/obj/item/syndicatedetonator
 	name = "big red button"
 	desc = "Your standard issue bomb synchronizing button. Five second safety delay to prevent 'accidents'."
 	icon = 'icons/obj/assemblies.dmi'
@@ -522,7 +512,7 @@
 	var/detonated =	0
 	var/existant =	0
 
-/obj/item/device/syndicatedetonator/attack_self(mob/user)
+/obj/item/syndicatedetonator/attack_self(mob/user)
 	if(timer < world.time)
 		for(var/obj/machinery/syndicatebomb/B in GLOB.machines)
 			if(B.active)

@@ -7,6 +7,7 @@
 	roundend_category  = "changelings"
 	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
+	antag_moodlet = /datum/mood_event/focused
 
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
@@ -18,6 +19,7 @@
 	var/datum/changelingprofile/first_prof = null
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
 	var/absorbedcount = 0
+	var/trueabsorbs = 0//dna gained using absorb, not dna sting
 	var/chem_charges = 20
 	var/chem_storage = 75
 	var/chem_recharge_rate = 1
@@ -76,8 +78,14 @@
 	. = ..()
 
 /datum/antagonist/changeling/on_removal()
+	//We'll be using this from now on
+	var/mob/living/carbon/C = owner.current
+	if(istype(C))
+		var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
+		if(B && (B.decoy_override != initial(B.decoy_override)))
+			B.vital = TRUE
+			B.decoy_override = FALSE
 	remove_changeling_powers()
-	owner.objectives -= objectives
 	. = ..()
 
 /datum/antagonist/changeling/proc/remove_clownmut()
@@ -345,7 +353,10 @@
 	if(GLOB.changeling_team_objective_type)
 		var/datum/objective/changeling_team_objective/team_objective = new GLOB.changeling_team_objective_type
 		team_objective.owner = owner
-		objectives += team_objective
+		if(team_objective.prepare())//Setting up succeeded
+			objectives += team_objective
+		else
+			qdel(team_objective)
 	return
 
 /datum/antagonist/changeling/proc/forge_objectives()
@@ -360,11 +371,21 @@
 		if(!CTO.escape_objective_compatible)
 			escape_objective_possible = FALSE
 			break
-
-	var/datum/objective/absorb/absorb_objective = new
-	absorb_objective.owner = owner
-	absorb_objective.gen_amount_goal(6, 8)
-	objectives += absorb_objective
+	var/changeling_objective = rand(1,3)
+	switch(changeling_objective)
+		if(1)
+			var/datum/objective/absorb/absorb_objective = new
+			absorb_objective.owner = owner
+			absorb_objective.gen_amount_goal(6, 8)
+			objectives += absorb_objective
+		if(2)
+			var/datum/objective/absorb_changeling/ac = new
+			ac.owner = owner
+			objectives += ac
+		if(3)
+			var/datum/objective/absorb_most/ac = new
+			ac.owner = owner
+			objectives += ac
 
 	if(prob(60))
 		if(prob(85))
@@ -389,7 +410,7 @@
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = owner
 			if(team_mode) //No backstabbing while in a team
-				kill_objective.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+				kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
 			else
 				kill_objective.find_target()
 			objectives += kill_objective
@@ -397,7 +418,7 @@
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
 			if(team_mode)
-				maroon_objective.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+				maroon_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
 			else
 				maroon_objective.find_target()
 			objectives += maroon_objective
@@ -419,7 +440,7 @@
 			var/datum/objective/escape/escape_with_identity/identity_theft = new
 			identity_theft.owner = owner
 			if(team_mode)
-				identity_theft.find_target_by_role(role = "Changeling", role_type = 1, invert = 1)
+				identity_theft.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
 			else
 				identity_theft.find_target()
 			objectives += identity_theft

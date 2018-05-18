@@ -3,6 +3,7 @@
 /mob/living/simple_animal/imp
 	name = "imp"
 	real_name = "imp"
+	unique_name = TRUE
 	desc = "A large, menacing creature covered in armored black scales."
 	speak_emote = list("cackles")
 	emote_hear = list("cackles","screeches")
@@ -12,6 +13,7 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "imp"
 	icon_living = "imp"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	speed = 1
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1

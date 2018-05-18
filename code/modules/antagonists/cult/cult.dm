@@ -4,8 +4,10 @@
 	name = "Cultist"
 	roundend_category = "cultists"
 	antagpanel_category = "Cult"
+	antag_moodlet = /datum/mood_event/cult
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
+	var/datum/action/innate/cult/blood_magic/magic = new
 	job_rank = ROLE_CULTIST
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
@@ -35,9 +37,6 @@
 	objectives |= cult_team.objectives
 	owner.objectives |= objectives
 
-/datum/antagonist/cult/proc/remove_objectives()
-	owner.objectives -= objectives
-
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)
 	QDEL_NULL(vote)
@@ -58,7 +57,7 @@
 	var/mob/living/current = owner.current
 	add_objectives()
 	if(give_equipment)
-		equip_cultist()
+		equip_cultist(TRUE)
 	SSticker.mode.cult += owner // Only add after they've been given objectives
 	SSticker.mode.update_cult_icons_added(owner)
 	current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
@@ -67,26 +66,24 @@
 		current.client.images += cult_team.blood_target_image
 
 
-/datum/antagonist/cult/proc/equip_cultist(tome=FALSE)
+/datum/antagonist/cult/proc/equip_cultist(metal=TRUE)
 	var/mob/living/carbon/H = owner.current
 	if(!istype(H))
 		return
 	if (owner.assigned_role == "Clown")
 		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		H.dna.remove_mutation(CLOWNMUT)
-
-	if(tome)
-		. += cult_give_item(/obj/item/tome, H)
-	else
-		. += cult_give_item(/obj/item/paper/talisman/supply, H)
+	. += cult_give_item(/obj/item/melee/cultblade/dagger, H)
+	if(metal)
+		. += cult_give_item(/obj/item/stack/sheet/runed_metal/ten, H)
 	to_chat(owner, "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>")
 
 
 /datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
 	var/list/slots = list(
-		"backpack" = slot_in_backpack,
-		"left pocket" = slot_l_store,
-		"right pocket" = slot_r_store
+		"backpack" = SLOT_IN_BACKPACK,
+		"left pocket" = SLOT_L_STORE,
+		"right pocket" = SLOT_R_STORE
 	)
 
 	var/T = new item_path(mob)
@@ -98,10 +95,8 @@
 	else
 		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].</span>")
 		if(where == "backpack")
-			var/obj/item/storage/B = mob.back
-			B.orient2hud(mob)
-			B.show_to(mob)
-		return 1
+			mob.back.SendSignal(COMSIG_TRY_STORAGE_SHOW, mob)
+		return TRUE
 
 /datum/antagonist/cult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -110,10 +105,11 @@
 		current = mob_override
 	current.faction |= "cult"
 	current.grant_language(/datum/language/narsie)
-	current.verbs += /mob/living/proc/cult_help
-	if(!cult_team.cult_mastered)
+	if(!cult_team.cult_master)
 		vote.Grant(current)
 	communion.Grant(current)
+	if(ishuman(current))
+		magic.Grant(current)
 	current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
 
 /datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)
@@ -123,17 +119,16 @@
 		current = mob_override
 	current.faction -= "cult"
 	current.remove_language(/datum/language/narsie)
-	current.verbs -= /mob/living/proc/cult_help
 	vote.Remove(current)
 	communion.Remove(current)
+	magic.Remove(current)
 	current.clear_alert("bloodsense")
 
 /datum/antagonist/cult/on_removal()
-	remove_objectives()
 	SSticker.mode.cult -= owner
 	SSticker.mode.update_cult_icons_removed(owner)
 	if(!silent)
-		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_they()] just reverted to their old faith!</span>", null, null, null, owner.current)
+		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!</span>", null, null, null, owner.current)
 		to_chat(owner.current, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant.</span>")
 		owner.current.log_message("<font color=#960000>Has renounced the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(cult_team.blood_target && cult_team.blood_target_image && owner.current.client)
@@ -153,16 +148,16 @@
 
 /datum/antagonist/cult/get_admin_commands()
 	. = ..()
-	.["Tome"] = CALLBACK(src,.proc/admin_give_tome)
-	.["Amulet"] = CALLBACK(src,.proc/admin_give_amulet)
+	.["Dagger"] = CALLBACK(src,.proc/admin_give_dagger)
+	.["Dagger and Metal"] = CALLBACK(src,.proc/admin_give_metal)
 
-/datum/antagonist/cult/proc/admin_give_tome(mob/admin)
-	if(equip_cultist(owner.current,1))
-		to_chat(admin, "<span class='danger'>Spawning tome failed!</span>")
+/datum/antagonist/cult/proc/admin_give_dagger(mob/admin)
+	if(!equip_cultist(FALSE))
+		to_chat(admin, "<span class='danger'>Spawning dagger failed!</span>")
 
-/datum/antagonist/cult/proc/admin_give_amulet(mob/admin)
-	if (equip_cultist(owner.current))
-		to_chat(admin, "<span class='danger'>Spawning amulet failed!</span>")
+/datum/antagonist/cult/proc/admin_give_metal(mob/admin)
+	if (!equip_cultist(TRUE))
+		to_chat(admin, "<span class='danger'>Spawning runed metal failed!</span>")
 
 /datum/antagonist/cult/master
 	ignore_implant = TRUE
@@ -218,7 +213,7 @@
 	var/blood_target_reset_timer
 
 	var/cult_vote_called = FALSE
-	var/cult_mastered = FALSE
+	var/mob/living/cult_master
 	var/reckoning_complete = FALSE
 
 
@@ -244,7 +239,7 @@
 
 		var/datum/job/sacjob = SSjob.GetJob(sac_objective.target.assigned_role)
 		var/datum/preferences/sacface = sac_objective.target.current.client.prefs
-		var/icon/reshape = get_flat_human_icon(null, sacjob, sacface)
+		var/icon/reshape = get_flat_human_icon(null, sacjob, sacface, list(SOUTH))
 		reshape.Shift(SOUTH, 4)
 		reshape.Shift(EAST, 1)
 		reshape.Crop(7,4,26,31)
@@ -271,7 +266,7 @@
 
 /datum/objective/sacrifice/update_explanation_text()
 	if(target)
-		explanation_text = "Sacrifice [target], the [target.assigned_role] via invoking a Sacrifice rune with them on it and three acolytes around it."
+		explanation_text = "Sacrifice [target], the [target.assigned_role] via invoking a Sacrifice rune with [target.p_them()] on it and three acolytes around it."
 	else
 		explanation_text = "The veil has already been weakened here, proceed to the final objective."
 

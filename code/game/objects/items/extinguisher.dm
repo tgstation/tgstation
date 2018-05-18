@@ -191,6 +191,8 @@
 		return ..()
 
 /obj/item/extinguisher/AltClick(mob/user)
+	if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
 	EmptyExtinguisher(user)
 
 /obj/item/extinguisher/proc/EmptyExtinguisher(var/mob/user)
@@ -200,6 +202,6 @@
 		var/turf/T = get_turf(loc)
 		if(isopenturf(T))
 			var/turf/open/theturf = T
-			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
+			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")

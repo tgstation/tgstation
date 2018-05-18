@@ -1,6 +1,9 @@
 
 //the essential proc to call when an obj must receive damage of any kind.
 /obj/proc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
+	if(QDELETED(src))
+		stack_trace("[src] taking damage after deletion")
+		return
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(!(resistance_flags & INDESTRUCTIBLE) && obj_integrity > 0)
@@ -227,11 +230,20 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	tesla_zap(src, 3, power_bounced)
 	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 
+//The surgeon general warns that being buckled to certain objects recieving powerful shocks is greatly hazardous to your health
+//Only tesla coils and grounding rods currently call this because mobs are already targeted over all other objects, but this might be useful for more things later.
+/obj/proc/tesla_buckle_check(var/strength)
+	if(has_buckled_mobs())
+		for(var/m in buckled_mobs)
+			var/mob/living/buckled_mob = m
+			buckled_mob.electrocute_act((CLAMP(round(strength/400), 10, 90) + rand(-5, 5)), src, tesla_shock = 1)
+
 /obj/proc/reset_shocked()
 	obj_flags &= ~BEING_SHOCKED
 
 //the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
 /obj/proc/deconstruct(disassembled = TRUE)
+	SendSignal(COMSIG_OBJ_DECONSTRUCT, disassembled)
 	qdel(src)
 
 //what happens when the obj's health is below integrity_failure level.

@@ -35,6 +35,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	layer = MOB_LAYER
 	var/jobspawn_override = FALSE
 	var/delete_after_roundstart = TRUE
+	var/used = FALSE
+
+/obj/effect/landmark/start/proc/after_round_start()
+	if(delete_after_roundstart)
+		qdel(src)
 
 /obj/effect/landmark/start/New()
 	GLOB.start_landmarks_list += src
@@ -186,7 +191,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "AI"
 	icon_state = "AI"
 	delete_after_roundstart = FALSE
+	var/primary_ai = TRUE
+	var/latejoin_active = TRUE
 
+/obj/effect/landmark/start/ai/after_round_start()
+	if(latejoin_active && !used)
+		new /obj/structure/AIcore/latejoin_inactive(loc)
+	return ..()
+
+/obj/effect/landmark/start/ai/secondary
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "ai_spawn"
+	primary_ai = FALSE
+	latejoin_active = FALSE
 
 //Department Security spawns
 
@@ -273,17 +290,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/observer_start
 	name = "Observer-Start"
 	icon_state = "observer_start"
-
-// revenant spawn.
-/obj/effect/landmark/revenantspawn
-	name = "revnantspawn"
-	icon_state = "revenant_spawn"
-
-// triple ais.
-/obj/effect/landmark/tripai
-	name = "tripai"
-	icon_state = "ai_spawn"
-	layer = MOB_LAYER
 
 // xenos.
 /obj/effect/landmark/xeno_spawn

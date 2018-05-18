@@ -12,3 +12,18 @@
 #define APPRENTICE_BLUESPACE "bluespace"
 #define APPRENTICE_ROBELESS "robeless"
 #define APPRENTICE_HEALING "healing"
+
+
+//ERT Types
+#define ERT_BLUE "Blue"
+#define ERT_RED  "Red"
+#define ERT_AMBER "Amber"
+#define ERT_DEATHSQUAD "Deathsquad"
+
+//ERT subroles
+#define ERT_SEC "sec"
+#define ERT_MED "med"
+#define ERT_ENG "eng"
+#define ERT_LEADER "leader"
+#define DEATHSQUAD "ds"
+#define DEATHSQUAD_LEADER "ds_leader"

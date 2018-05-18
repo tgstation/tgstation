@@ -111,6 +111,7 @@
 	trash = /obj/item/gun/ballistic/revolver
 	bitesize_mod = 2
 	foodtype = FRUIT
+	tastes = list("gunpowder" = 1)
 
 //Cherry Bombs
 /obj/item/seeds/cherry/bomb

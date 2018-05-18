@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "Blood contracts now only show living players and real names"

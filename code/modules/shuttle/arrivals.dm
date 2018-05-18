@@ -20,11 +20,7 @@
 	var/perma_docked = FALSE	//highlander with RESPAWN??? OH GOD!!!
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
-	if(!timid)
-		register()
-		
 	. = ..()
-
 	preferred_direction = dir
 	return INITIALIZE_HINT_LATELOAD	//for latejoin list
 
@@ -112,10 +108,14 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
-	for(var/M in (GLOB.alive_mob_list & GLOB.player_list))
-		var/mob/living/L = M
-		if((get_area(M) in areas) && L.stat != DEAD)
-			return TRUE
+	for(var/V in GLOB.player_list)
+		var/mob/M = V
+		if((get_area(M) in areas) && M.stat != DEAD)
+			if(!iscameramob(M))
+				return TRUE
+			var/mob/camera/C = M
+			if(C.move_on_shuttle)
+				return TRUE
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/NukeDiskCheck()

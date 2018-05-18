@@ -9,8 +9,14 @@
 	'sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 
 /obj/structure/punching_bag/attack_hand(mob/user as mob)
-		flick("[icon_state]2", src)
-		playsound(src.loc, pick(src.hit_sounds), 25, 1, -1)
+	. = ..()
+	if(.)
+		return
+	flick("[icon_state]2", src)
+	playsound(loc, pick(hit_sounds), 25, 1, -1)
+	if(isliving(user))
+		var/mob/living/L = user
+		L.apply_status_effect(STATUS_EFFECT_EXERCISED)
 
 /obj/structure/stacklifter
 	name = "Weight Machine"
@@ -21,6 +27,9 @@
 	anchored = TRUE
 
 /obj/structure/stacklifter/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(obj_flags & IN_USE)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
@@ -49,6 +58,7 @@
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnesslifter"
 		to_chat(user, finishmessage)
+		user.apply_status_effect(STATUS_EFFECT_EXERCISED)
 
 /obj/structure/weightlifter
 	name = "Weight Machine"
@@ -59,6 +69,9 @@
 	anchored = TRUE
 
 /obj/structure/weightlifter/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(obj_flags & IN_USE)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
@@ -94,3 +107,4 @@
 		icon_state = "fitnessweight"
 		cut_overlay(swole_overlay)
 		to_chat(user, "[finishmessage]")
+		user.apply_status_effect(STATUS_EFFECT_EXERCISED)

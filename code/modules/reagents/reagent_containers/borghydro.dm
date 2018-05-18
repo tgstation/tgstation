@@ -67,6 +67,21 @@ Borg Hypospray
 
 	modes[reagent] = modes.len + 1
 
+/obj/item/reagent_containers/borghypo/proc/del_reagent(reagent)
+	reagent_ids -= reagent
+	var/datum/reagents/RG
+	var/datum/reagents/TRG
+	for(var/i in 1 to reagent_ids.len)
+		TRG = reagent_list[i]
+		if (TRG.has_reagent(reagent))
+			RG = TRG
+			break
+	if (RG)
+		reagent_list -= RG
+		RG.del_reagent(reagent)
+
+		modes[reagent] = modes.len - 1
+
 /obj/item/reagent_containers/borghypo/proc/regenerate_reagents()
 	if(iscyborg(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
@@ -165,7 +180,7 @@ Borg Shaker
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
 
-	reagent_ids = list("beer", "orangejuice", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequila", "vermouth", "wine", "kahlua", "cognac", "ale")
+	reagent_ids = list("beer", "orangejuice", "grenadine" ,"limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequila", "vermouth", "wine", "kahlua", "cognac", "ale", "fernet")
 
 /obj/item/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
 	return //Can't inject stuff with a shaker, can we? //not with that attitude
@@ -220,7 +235,7 @@ Borg Shaker
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
 
-	reagent_ids = list("beer2")
+	reagent_ids = list("fakebeer")
 
 /obj/item/reagent_containers/borghypo/peace
 	name = "Peace Hypospray"
@@ -231,7 +246,7 @@ Borg Shaker
 /obj/item/reagent_containers/borghypo/peace/hacked
 	desc = "Everything's peaceful in death!"
 	icon_state = "borghypo_s"
-	reagent_ids = list("dizzysolution","tiresolution","synthpax","tirizene","sulfonal","sodium_thiopental","cyanide","neurotoxin2")
+	reagent_ids = list("dizzysolution","tiresolution","synthpax","tirizene","sulfonal","sodium_thiopental","cyanide","fentanyl")
 	accepts_reagent_upgrades = FALSE
 
 /obj/item/reagent_containers/borghypo/epi

@@ -55,6 +55,7 @@
 /obj/structure/fluff/paper{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "ak" = (
@@ -536,7 +537,7 @@
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bA" = (
-/obj/item/device/toner,
+/obj/item/toner,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bB" = (
@@ -594,7 +595,7 @@
 /obj/item/paper/crumpled/ruins/originalcontent,
 /obj/item/paper/crumpled/ruins/originalcontent,
 /obj/item/paper/crumpled/ruins/originalcontent,
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "Pulpy Signal"
 	},
 /turf/open/indestructible/paper,
@@ -893,6 +894,22 @@
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/stickman/ranged,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
+"wr" = (
+/obj/machinery/door/airlock/freezer{
+	name = "airlock";
+	opacity = 0
+	},
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 
@@ -2521,7 +2538,7 @@ aa
 ah
 aj
 an
-aj
+wr
 av
 ap
 ap

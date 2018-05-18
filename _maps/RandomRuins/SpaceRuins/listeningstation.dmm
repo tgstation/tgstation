@@ -12,9 +12,8 @@
 /obj/machinery/computer/message_monitor{
 	dir = 2
 	},
-/obj/machinery/airalarm{
-	pixel_y = 24;
-	req_access = 150
+/obj/machinery/airalarm/syndicate{
+	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -54,7 +53,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	freerange = 1;
 	name = "Syndicate Radio Intercom";
 	pixel_x = -30
@@ -86,7 +85,7 @@
 "al" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_y = -12
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -103,8 +102,10 @@
 	},
 /area/ruin/space/has_grav/listeningstation)
 "an" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 4;
 	id_tag = "syndie_listeningpost_external";
 	req_access_txt = "150"
 	},
@@ -119,8 +120,10 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "ap" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 8;
 	id_tag = "syndie_listeningpost_external";
 	req_access_txt = "150"
 	},
@@ -205,10 +208,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/syndicate{
 	dir = 4;
-	pixel_x = -24;
-	req_access = 150
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
@@ -272,8 +274,8 @@
 /obj/structure/rack{
 	dir = 8
 	},
-/obj/item/device/multitool,
-/obj/item/device/radio/headset/syndicate/alt,
+/obj/item/multitool,
+/obj/item/radio/headset/syndicate/alt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
@@ -282,7 +284,7 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/device/mining_scanner,
+/obj/item/mining_scanner,
 /obj/item/pickaxe,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
@@ -511,9 +513,8 @@
 	},
 /area/ruin/space/has_grav/listeningstation)
 "aU" = (
-/obj/machinery/airalarm{
-	pixel_y = 24;
-	req_access = 150
+/obj/machinery/airalarm/syndicate{
+	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -633,10 +634,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/syndicate{
 	dir = 8;
-	pixel_x = 24;
-	req_access = 150
+	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -773,8 +773,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock{
-	name = "Cabin";
-	req_access_txt = "0"
+	name = "Cabin"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -804,11 +803,10 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/syndicate{
 	dir = 4;
 	name = "Syndicate Listening Post APC";
-	pixel_x = 24;
-	req_access = 150
+	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -892,7 +890,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "bx" = (
-/obj/effect/mob_spawn/human/lavaland_syndicate/comms{
+/obj/effect/mob_spawn/human/lavaland_syndicate/comms/space{
 	assignedrole = "Space Syndicate";
 	dir = 8;
 	flavour_text = "<span class='big bold'>You are a syndicate agent,</span><b> assigned to a small listening post station situated near your hated enemy's top secret research facility: Space Station 13. <b>Monitor enemy activity as best you can, and try to keep a low profile. <font size=6>DON'T</font> abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
@@ -940,11 +938,9 @@
 	},
 /obj/machinery/iv_drip,
 /obj/machinery/light/small,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/syndicate{
 	dir = 1;
-	pixel_y = -24;
-	req_access = null;
-	req_access_txt = "150"
+	pixel_y = -24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{

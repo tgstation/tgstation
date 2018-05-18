@@ -101,12 +101,15 @@
 			playsound(src, 'sound/effects/refill.ogg', 50, 1)
 			W.update_icon()
 		else
+			var/turf/T = get_turf(src)
+			var/area/A = get_area(T)
 			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
-			var/message_admins = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
+			var/message_admins = "[key_name_admin(user)] triggered a fueltank explosion via welding tool at [A] [ADMIN_COORDJMP(T)]."
 			GLOB.bombers += message_admins
 			message_admins(message_admins)
-			var/message_log = "triggered a fueltank explosion via welding tool."
+			var/message_log = "triggered a fueltank explosion via welding tool at [A] [COORD(T)]."
 			user.log_message(message_log, INDIVIDUAL_ATTACK_LOG)
+			log_game("[key_name(user)] [message_log]")
 			log_attack("[key_name(user)] [message_log]")
 			boom()
 		return
@@ -146,6 +149,9 @@
 		to_chat(user, "There are no paper cups left.")
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!paper_cups)
 		to_chat(user, "<span class='warning'>There aren't any cups left!</span>")
 		return
@@ -153,7 +159,6 @@
 	var/obj/item/reagent_containers/food/drinks/sillycup/S = new(get_turf(src))
 	user.put_in_hands(S)
 	paper_cups--
-
 
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"

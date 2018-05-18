@@ -7,6 +7,7 @@
 	var/static/list/falling_atoms = list() // Atoms currently falling into chasms
 	var/static/list/forbidden_types = typecacheof(list(
 		/obj/singularity,
+		/obj/docking_port,
 		/obj/structure/lattice,
 		/obj/structure/stone_tile,
 		/obj/item/projectile,
@@ -69,8 +70,8 @@
 			return FALSE
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		if(istype(H.belt, /obj/item/device/wormhole_jaunter))
-			var/obj/item/device/wormhole_jaunter/J = H.belt
+		if(istype(H.belt, /obj/item/wormhole_jaunter))
+			var/obj/item/wormhole_jaunter/J = H.belt
 			//To freak out any bystanders
 			H.visible_message("<span class='boldwarning'>[H] falls into [parent]!</span>")
 			J.chasm_react(H)

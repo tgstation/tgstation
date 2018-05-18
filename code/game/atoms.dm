@@ -3,8 +3,8 @@
 	plane = GAME_PLANE
 	var/level = 2
 
-	var/flags_1 = 0
-	var/flags_2 = 0
+	var/flags_1 = NONE
+	var/interaction_flags_atom = NONE
 	var/container_type = NONE
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
 	var/datum/reagents/reagents = null
@@ -222,7 +222,7 @@
 
 /atom/proc/emp_act(severity)
 	SendSignal(COMSIG_ATOM_EMP_ACT, severity)
-	if(istype(wires) && !(flags_2 & NO_EMP_WIRES_2))
+	if(istype(wires) && !(flags_1 & NO_EMP_WIRES_1))
 		wires.emp_pulse()
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
@@ -304,6 +304,9 @@
 	if(AM && isturf(AM.loc))
 		step(AM, turn(AM.dir, 180))
 
+/atom/proc/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
+	return
+
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
 	if(get_blood_id() != "blood")
@@ -354,9 +357,6 @@
 /atom/proc/handle_fall()
 	return
 
-/atom/proc/handle_slip()
-	return
-
 /atom/proc/singularity_act()
 	return
 
@@ -370,7 +370,7 @@
 	SendSignal(COMSIG_ATOM_EMAG_ACT)
 
 /atom/proc/rad_act(strength)
-	SendSignal(COMSIG_ATOM_RAD_ACT)
+	SendSignal(COMSIG_ATOM_RAD_ACT, strength)
 
 /atom/proc/narsie_act()
 	SendSignal(COMSIG_ATOM_NARSIE_ACT)
@@ -386,13 +386,31 @@
 	return FALSE
 
 /atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-	return 0
+	if(GetComponent(/datum/component/storage))
+		return component_storage_contents_dump_act(src_object, user)
+	return FALSE
+
+/atom/proc/component_storage_contents_dump_act(datum/component/storage/src_object, mob/user)
+	var/list/things = src_object.contents()
+	var/datum/progressbar/progress = new(user, things.len, src)
+	GET_COMPONENT(STR, /datum/component/storage)
+	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
+		stoplag(1)
+	qdel(progress)
+	to_chat(user, "<span class='notice'>You dump as much of [src_object.parent]'s contents into [STR.insert_preposition]to [src] as you can.</span>")
+	STR.orient2hud(user)
+	src_object.orient2hud(user)
+	if(user.active_storage) //refresh the HUD to show the transfered contents
+		user.active_storage.close(user)
+		user.active_storage.show_to(user)
+	return TRUE
 
 /atom/proc/get_dumping_location(obj/item/storage/source,mob/user)
 	return null
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
+	SendSignal(COMSIG_ATOM_CONTENTS_DEL, A)
 
 //called when the turf the atom resides on is ChangeTurfed
 /atom/proc/HandleTurfChange(turf/T)
@@ -525,8 +543,8 @@
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
 
-/atom/Exited(atom/movable/AM)
-	SendSignal(COMSIG_ATOM_EXITED, AM)
+/atom/Exited(atom/movable/AM, atom/newLoc)
+	SendSignal(COMSIG_ATOM_EXITED, AM, newLoc)
 
 /atom/proc/return_temperature()
 	return
@@ -534,38 +552,38 @@
 // Tool behavior procedure. Redirects to tool-specific procs by default.
 // You can override it to catch all tool interactions, for use in complex deconstruction procs.
 // Just don't forget to return ..() in the end.
-/atom/proc/tool_act(mob/living/user, obj/item/tool, tool_type)
+/atom/proc/tool_act(mob/living/user, obj/item/I, tool_type)
 	switch(tool_type)
 		if(TOOL_CROWBAR)
-			return crowbar_act(user, tool)
+			return crowbar_act(user, I)
 		if(TOOL_MULTITOOL)
-			return multitool_act(user, tool)
+			return multitool_act(user, I)
 		if(TOOL_SCREWDRIVER)
-			return screwdriver_act(user, tool)
+			return screwdriver_act(user, I)
 		if(TOOL_WRENCH)
-			return wrench_act(user, tool)
+			return wrench_act(user, I)
 		if(TOOL_WIRECUTTER)
-			return wirecutter_act(user, tool)
+			return wirecutter_act(user, I)
 		if(TOOL_WELDER)
-			return welder_act(user, tool)
+			return welder_act(user, I)
 
 // Tool-specific behavior procs. To be overridden in subtypes.
-/atom/proc/crowbar_act(mob/living/user, obj/item/tool)
+/atom/proc/crowbar_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/multitool_act(mob/living/user, obj/item/tool)
+/atom/proc/multitool_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/screwdriver_act(mob/living/user, obj/item/tool)
+/atom/proc/screwdriver_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/wrench_act(mob/living/user, obj/item/tool)
+/atom/proc/wrench_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/wirecutter_act(mob/living/user, obj/item/tool)
+/atom/proc/wirecutter_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/welder_act(mob/living/user, obj/item/tool)
+/atom/proc/welder_act(mob/living/user, obj/item/I)
 	return
 
 /atom/proc/GenerateTag()

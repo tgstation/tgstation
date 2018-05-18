@@ -17,6 +17,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ae" = (
@@ -39,9 +40,9 @@
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
 	preferred_direction = 4;
-	timid = 1;
 	width = 28
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "ag" = (
@@ -181,7 +182,7 @@
 /obj/item/roller{
 	pixel_y = 4
 	},
-/obj/item/device/healthanalyzer,
+/obj/item/healthanalyzer,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -198,7 +199,7 @@
 	},
 /obj/item/grenade/chem_grenade/metalfoam,
 /obj/item/relic,
-/obj/item/device/t_scanner,
+/obj/item/t_scanner,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;
 	name = "3maintenance loot spawner"
@@ -215,8 +216,7 @@
 /obj/item/cigbutt,
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /obj/item/tank/internals/oxygen/red,
 /obj/item/tank/internals/air,
@@ -239,11 +239,11 @@
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/storage/toolbox/emergency,
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/device/flashlight/flare{
+/obj/item/flashlight/flare{
 	pixel_x = -6;
 	pixel_y = -2
 	},
@@ -316,10 +316,10 @@
 /obj/structure/table,
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
+/obj/item/radio/off,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -601,6 +601,9 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aY" = (
@@ -687,7 +690,7 @@
 	name = "dust"
 	},
 /obj/structure/table,
-/obj/item/device/camera,
+/obj/item/camera,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bi" = (
@@ -803,7 +806,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "NTREC1";
 	pixel_x = -1;
 	pixel_y = 2
@@ -817,6 +820,9 @@
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
@@ -1104,7 +1110,7 @@
 	name = "dust"
 	},
 /obj/structure/table,
-/obj/item/device/megaphone,
+/obj/item/megaphone,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bU" = (
@@ -1134,7 +1140,7 @@
 /area/shuttle/abandoned)
 "bW" = (
 /obj/structure/table,
-/obj/item/device/radio/off{
+/obj/item/radio/off{
 	pixel_y = 6
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -1288,7 +1294,7 @@
 /area/shuttle/abandoned)
 "cl" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood/empty{
+/obj/item/reagent_containers/blood{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -1326,7 +1332,7 @@
 	name = "dust"
 	},
 /obj/item/wirecutters,
-/obj/item/device/plant_analyzer,
+/obj/item/plant_analyzer,
 /obj/item/reagent_containers/glass/bucket,
 /obj/machinery/light/small/built{
 	dir = 8
@@ -1420,7 +1426,6 @@
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_x = -28;
-	req_access_txt = "0";
 	use_power = 0
 	},
 /obj/machinery/iv_drip,
@@ -1627,6 +1632,19 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
+"YT" = (
+/obj/machinery/door/airlock/titanium{
+	name = "recovery shuttle external airlock"
+	},
+/obj/effect/decal/cleanable/dirt{
+	desc = "A thin layer of dust coating the floor.";
+	name = "dust"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/abandoned)
 
 (1,1,1) = {"
 aa
@@ -1636,7 +1654,7 @@ aa
 aa
 ab
 ab
-ad
+YT
 ab
 ab
 aa

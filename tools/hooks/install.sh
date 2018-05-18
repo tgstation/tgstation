@@ -1,4 +1,5 @@
 #!/bin/bash
+shopt -s nullglob
 cd "$(dirname "$0")"
 for f in *.hook; do
 	echo Installing hook: ${f%.hook}

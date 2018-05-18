@@ -59,9 +59,11 @@
 	color = "#FF0000"
 	max_integrity = 20
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = ABOVE_MOB_LAYER
 
 /obj/structure/emergency_shield/invoker/emp_act(severity)
 	return
+
 
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"
@@ -118,6 +120,9 @@
 			update_icon()
 
 /obj/machinery/shieldgen/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(locked)
 		to_chat(user, "<span class='warning'>The machine is locked, you are unable to use it!</span>")
 		return
@@ -142,7 +147,7 @@
 
 /obj/machinery/shieldgen/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/screwdriver))
-		playsound(src.loc, W.usesound, 100, 1)
+		W.play_tool_sound(src, 100)
 		panel_open = !panel_open
 		if(panel_open)
 			to_chat(user, "<span class='notice'>You open the panel and expose the wiring.</span>")
@@ -168,11 +173,11 @@
 			to_chat(user, "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>")
 			return
 		if(!anchored && !isinspace())
-			playsound(src.loc, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			to_chat(user, "<span class='notice'>You secure \the [src] to the floor!</span>")
 			anchored = TRUE
 		else if(anchored)
-			playsound(src.loc, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			to_chat(user, "<span class='notice'>You unsecure \the [src] from the floor!</span>")
 			if(active)
 				to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")
@@ -356,6 +361,9 @@
 		return ..()
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!anchored)
 		to_chat(user, "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>")
 		return
@@ -418,9 +426,6 @@
 	gen_primary = null
 	gen_secondary = null
 	return ..()
-
-/obj/machinery/shieldwall/attack_hand(mob/user)
-	return
 
 /obj/machinery/shieldwall/process()
 	if(needs_power)

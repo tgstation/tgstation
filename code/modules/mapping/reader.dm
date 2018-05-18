@@ -94,7 +94,7 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 			var/zcrd = text2num(dmmRegex.group[5]) + z_offset - 1
 
 			var/zexpansion = zcrd > world.maxz
-			if(zexpansion)
+			if(zexpansion && !measureOnly)
 				if(cropMap)
 					continue
 				else
@@ -474,3 +474,4 @@ GLOBAL_DATUM_INIT(_preloader, /dmm_suite/preloader, new)
 /turf/template_noop
 	name = "Turf Passthrough"
 	icon_state = "noop"
+	bullet_bounce_sound = null

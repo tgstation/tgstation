@@ -2,7 +2,7 @@
 	name = "body egg"
 	desc = "All slimy and yuck."
 	icon_state = "innards"
-	zone = "chest"
+	zone = BODY_ZONE_CHEST
 	slot = "parasite_egg"
 
 /obj/item/organ/body_egg/on_find(mob/living/finder)

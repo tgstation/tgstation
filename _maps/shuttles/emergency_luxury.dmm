@@ -24,7 +24,6 @@
 	dwidth = 5;
 	height = 14;
 	name = "Luxury emergency shuttle";
-	timid = 1;
 	width = 25
 	},
 /obj/machinery/door/airlock/gold,

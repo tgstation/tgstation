@@ -54,7 +54,7 @@
 	user.visible_message("<span class='suicide'>[user] is ripping [user.p_their()] brains out! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(isliving(user))
 		var/mob/living/L = user
-		var/obj/item/bodypart/O = L.get_bodypart("head")
+		var/obj/item/bodypart/O = L.get_bodypart(BODY_ZONE_HEAD)
 		if(O)
 			O.dismember()
 	return (BRUTELOSS)

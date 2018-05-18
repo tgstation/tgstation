@@ -3,6 +3,7 @@
 //They cannot be cured with chemicals, and require brain surgery to solve.
 
 /datum/brain_trauma/severe
+	resilience = TRAUMA_RESILIENCE_SURGERY
 
 /datum/brain_trauma/severe/mute
 	name = "Mutism"
@@ -159,7 +160,7 @@
 				to_chat(owner, "<span class='warning'>You feel really lonely...</span>")
 			else
 				to_chat(owner, "<span class='warning'>You're going mad with loneliness!</span>")
-				owner.hallucination += 20
+				owner.hallucination += 30
 
 		if(5)
 			if(!high_stress)

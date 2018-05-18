@@ -3,7 +3,7 @@
 	name = "banhammer"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "toyhammer"
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	force = 1
 	w_class = WEIGHT_CLASS_TINY
@@ -11,7 +11,7 @@
 	throw_range = 7
 	attack_verb = list("banned")
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/banhammer/suicide_act(mob/user)
@@ -19,7 +19,7 @@
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/banhammer/attack(mob/M, mob/user)
-	if(user.zone_selected == "head")
+	if(user.zone_selected == BODY_ZONE_HEAD)
 		M.visible_message("<span class='danger'>[user] are stroking the head of [M] with a bangammer</span>", "<span class='userdanger'>[user] are stroking the head with a bangammer</span>", "you hear a bangammer stroking a head");
 	else
 		M.visible_message("<span class='danger'>[M] has been banned FOR NO REISIN by [user]</span>", "<span class='userdanger'>You have been banned FOR NO REISIN by [user]</span>", "you hear a banhammer banning someone")
@@ -34,7 +34,7 @@
 	item_state = "sord"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 2
 	throwforce = 1
 	w_class = WEIGHT_CLASS_NORMAL
@@ -55,7 +55,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 40
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
@@ -63,8 +63,12 @@
 	block_chance = 50
 	sharpness = IS_SHARP
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
+
+/obj/item/claymore/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 40, 105)
 
 /obj/item/claymore/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -109,7 +113,8 @@
 
 /obj/item/claymore/highlander/dropped(mob/living/user)
 	user.remove_trait(TRAIT_IGNORESLOWDOWN, HIGHLANDER)
-	qdel(src) //If this ever happens, it's because you lost an arm
+	if(!QDELETED(src))
+		qdel(src) //If this ever happens, it's because you lost an arm
 
 /obj/item/claymore/highlander/examine(mob/user)
 	..()
@@ -200,7 +205,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 40
 	throwforce = 10
 	w_class = WEIGHT_CLASS_HUGE
@@ -209,7 +214,7 @@
 	block_chance = 50
 	sharpness = IS_SHARP
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/katana/cursed
@@ -242,7 +247,7 @@
 		user.put_in_hands(S)
 		to_chat(user, "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>")
 
-	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags_1 & NODROP_1))
+	else if(istype(I, /obj/item/assembly/igniter) && !(I.flags_1 & NODROP_1))
 		var/obj/item/melee/baton/cattleprod/P = new /obj/item/melee/baton/cattleprod
 
 		remove_item_from_storage(user)
@@ -377,7 +382,7 @@
 	name = "stick"
 	desc = "A great tool to drag someone else's drinks across the bar."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "stick"
+	icon_state = "cane"
 	item_state = "stick"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
@@ -437,6 +442,10 @@
 	throw_speed = 5
 	throw_range = 2
 	attack_verb = list("busted")
+
+/obj/item/statuebust/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 1000), 0)
 
 /obj/item/tailclub
 	name = "tail club"
@@ -567,7 +576,7 @@
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
 		if(is_type_in_typecache(target, strong_against))
-			new /obj/effect/decal/cleanable/deadcockroach(get_turf(target))
+			new /obj/effect/decal/cleanable/insectguts(target.drop_location())
 			to_chat(user, "<span class='warning'>You easily splat the [target].</span>")
 			if(istype(target, /mob/living/))
 				var/mob/living/bug = target
@@ -599,7 +608,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/L = M
 		L.endTailWag()
-	if(user.a_intent != INTENT_HARM && ((user.zone_selected == "mouth") || (user.zone_selected == "eyes") || (user.zone_selected == "head")))
+	if(user.a_intent != INTENT_HARM && ((user.zone_selected == BODY_ZONE_PRECISE_MOUTH) || (user.zone_selected == BODY_ZONE_PRECISE_EYES) || (user.zone_selected == BODY_ZONE_HEAD)))
 		user.do_attack_animation(M)
 		playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message("<span class='danger'>[user] slaps [M]!</span>",

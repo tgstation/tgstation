@@ -195,6 +195,13 @@ SUBSYSTEM_DEF(shuttle)
 		if(emergency.timeLeft(1) > emergencyCallTime * 0.4)
 			emergency.request(null, set_coefficient = 0.4)
 
+/datum/controller/subsystem/shuttle/proc/block_recall(lockout_timer)
+	emergencyNoRecall = TRUE
+	addtimer(CALLBACK(src, .proc/unblock_recall), lockout_timer)
+
+/datum/controller/subsystem/shuttle/proc/unblock_recall()
+	emergencyNoRecall = FALSE
+
 /datum/controller/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(M.id == id)
@@ -264,7 +271,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/A = get_area(user)
 
 	log_game("[key_name(user)] has called the shuttle.")
-	deadchat_broadcast("<span class='deadsay'><span class='name'>[user.name]</span> has called the shuttle at <span class='name'>[A.name]</span>.</span>", user)
+	deadchat_broadcast("<span class='deadsay'><span class='name'>[user.real_name]</span> has called the shuttle at <span class='name'>[A.name]</span>.</span>", user)
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_game("Shuttle call reason: [call_reason]")
@@ -303,13 +310,11 @@ SUBSYSTEM_DEF(shuttle)
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.")
 		var/area/A = get_area(user)
-		deadchat_broadcast("<span class='deadsay'><span class='name'>[user.name]</span> has recalled the shuttle at <span class='name'>[A.name]</span>.</span>", user)
+		deadchat_broadcast("<span class='deadsay'><span class='name'>[user.real_name]</span> has recalled the shuttle at <span class='name'>[A.name]</span>.</span>", user)
 		return 1
 
 /datum/controller/subsystem/shuttle/proc/canRecall()
-	if(!emergency || emergency.mode != SHUTTLE_CALL)
-		return
-	if(SSticker.mode.name == "meteor")
+	if(!emergency || emergency.mode != SHUTTLE_CALL || emergencyNoRecall || SSticker.mode.name == "meteor")
 		return
 	var/security_num = seclevel2num(get_security_level())
 	switch(security_num)
@@ -547,7 +552,6 @@ SUBSYSTEM_DEF(shuttle)
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.assigned_turfs = proposed_zone
 	new_transit_dock.name = "Transit for [M.id]/[M.name]"
-	new_transit_dock.turf_type = transit_path
 	new_transit_dock.owner = M
 	new_transit_dock.assigned_area = A
 

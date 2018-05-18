@@ -13,7 +13,7 @@
 	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/sandwich
 	filling_color = "#FFA500"
 	list_reagents = list("nutriment" = 2)
-	slot_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD
 	customfoodfilling = 0 //to avoid infinite bread-ception
 	foodtype = GRAIN
 
@@ -192,6 +192,15 @@
 	overlays = fried.copy_overlays()
 	icon_state = fried.icon_state
 	desc = fried.desc
+	w_class = fried.w_class
+	slowdown = fried.slowdown
+	equip_delay_self = fried.equip_delay_self
+	equip_delay_other = fried.equip_delay_other
+	strip_delay = fried.strip_delay
+	species_exception = fried.species_exception
+	item_flags = fried.item_flags
+	obj_flags = fried.obj_flags
+
 	if(istype(fried, /obj/item/reagent_containers/food/snacks))
 		fried.reagents.trans_to(src, fried.reagents.total_volume)
 		qdel(fried)

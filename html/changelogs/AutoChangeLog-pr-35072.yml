@@ -1,8 +1,0 @@
-author: "Jittai"
-delete-after: True
-changes: 
-  - imageadd: "Crematoriums and Morgue Trays now have directional states."
-  - bugfix: "Morgue Trays now checks for cloneable people like the dna-scanner does. (ghosts can roam now)"
-  - bugfix: "Cremated mice no longer leave behind snackable bodies."
-  - bugfix: "Ash does not get instantly deleted in the crematorium upon creation. Ash also piles up. (aesthetically only)"
-  - tweak: "Morgue/Crematorium Trays make a slight rolling sound."

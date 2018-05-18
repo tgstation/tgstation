@@ -4,7 +4,6 @@ SUBSYSTEM_DEF(overlays)
 	wait = 1
 	priority = FIRE_PRIORITY_OVERLAYS
 	init_order = INIT_ORDER_OVERLAY
-	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_SETUP
 
 	var/list/queue
 	var/list/stats

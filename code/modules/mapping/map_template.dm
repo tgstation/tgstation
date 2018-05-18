@@ -52,7 +52,7 @@
 	var/x = round((world.maxx - width)/2)
 	var/y = round((world.maxy - height)/2)
 
-	var/datum/space_level/level = SSmapping.add_new_zlevel(name, UNAFFECTED, list(ZTRAIT_AWAY = TRUE))
+	var/datum/space_level/level = SSmapping.add_new_zlevel(name, list(ZTRAIT_AWAY = TRUE))
 	var/list/bounds = maploader.load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
 	if(!bounds)
 		return FALSE
@@ -64,6 +64,8 @@
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
 	log_game("Z-level [name] loaded at at [x],[y],[world.maxz]")
+
+	return level
 
 /datum/map_template/proc/load(turf/T, centered = FALSE)
 	if(centered)
@@ -86,7 +88,7 @@
 	initTemplateBounds(bounds)
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
-	return TRUE
+	return bounds
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
 	var/turf/placement = T

@@ -1,22 +1,22 @@
-#define ROTATION_ALTCLICK 1
-#define ROTATION_WRENCH 2
-#define ROTATION_VERBS 4
-#define ROTATION_COUNTERCLOCKWISE 8
-#define ROTATION_CLOCKWISE 16
-#define ROTATION_FLIP 32
+#define ROTATION_ALTCLICK			(1<<0)
+#define ROTATION_WRENCH				(1<<1)
+#define ROTATION_VERBS				(1<<2)
+#define ROTATION_COUNTERCLOCKWISE	(1<<3)
+#define ROTATION_CLOCKWISE			(1<<4)
+#define ROTATION_FLIP				(1<<5)
 
 /datum/component/simple_rotation
 	var/datum/callback/can_user_rotate //Checks if user can rotate
 	var/datum/callback/can_be_rotated  //Check if object can be rotated at all
 	var/datum/callback/after_rotation     //Additional stuff to do after rotation
-	
+
 	var/rotation_flags = NONE
 	var/default_rotation_direction = ROTATION_CLOCKWISE
-	
+
 /datum/component/simple_rotation/Initialize(rotation_flags = NONE ,can_user_rotate,can_be_rotated,after_rotation)
 	if(!ismovableatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	
+
 	//throw if no rotation direction is specificed ?
 
 	src.rotation_flags = rotation_flags
@@ -25,7 +25,7 @@
 		src.can_user_rotate = can_user_rotate
 	else
 		src.can_user_rotate = CALLBACK(src,.proc/default_can_user_rotate)
-	
+
 	if(can_be_rotated)
 		src.can_be_rotated = can_be_rotated
 	else
@@ -89,8 +89,7 @@
 	after_rotation.Invoke(user,rotation_type)
 
 /datum/component/simple_rotation/proc/default_can_user_rotate(mob/living/user, rotation_type)
-	if(!istype(user) || !user.Adjacent(parent) || user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+	if(!istype(user) || !user.canUseTopic(parent, BE_CLOSE, NO_DEXTERY))
 		return FALSE
 	return TRUE
 

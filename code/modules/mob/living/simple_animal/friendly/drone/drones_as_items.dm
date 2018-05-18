@@ -12,7 +12,7 @@
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_maint_hat"//yes reuse the _hat state.
 	layer = BELOW_MOB_LAYER
-	
+
 	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 	var/seasonal_hats = TRUE //If TRUE, and there are no default hats, different holidays will grant different hats
 	var/static/list/possible_seasonal_hats //This is built automatically in build_seasonal_hats() but can also be edited by admins!
@@ -39,6 +39,7 @@
 	GLOB.poi_list -= src
 	. = ..()
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/item/drone_shell/attack_ghost(mob/user)
 	if(jobban_isbanned(user,"drone"))
 		return
@@ -58,7 +59,7 @@
 	if(!D.default_hatmask && seasonal_hats && possible_seasonal_hats.len)
 		var/hat_type = pick(possible_seasonal_hats)
 		var/obj/item/new_hat = new hat_type(D)
-		D.equip_to_slot_or_del(new_hat, slot_head)
+		D.equip_to_slot_or_del(new_hat, SLOT_HEAD)
 	D.admin_spawned = admin_spawned
 	D.key = user.key
 	qdel(src)

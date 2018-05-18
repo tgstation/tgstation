@@ -6,7 +6,7 @@
 	icon = 'icons/effects/effects.dmi'
 	anchored = TRUE
 	max_integrity = 1
-	armor = list(melee = 0, bullet = 50, laser = 50, energy = 50, bomb = 0, bio = 0, rad = 0, fire = 20, acid = 20)
+	armor = list("melee" = 0, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
 	var/obj/item/holosign_creator/projector
 
 /obj/structure/holosign/New(loc, source_projector)
@@ -22,6 +22,9 @@
 	return ..()
 
 /obj/structure/holosign/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
 	take_damage(5 , BRUTE, "melee", 1)
@@ -112,6 +115,9 @@
 	shockcd = FALSE
 
 /obj/structure/holosign/barrier/cyborg/hacked/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(!shockcd)
 		if(ismob(user))
 			var/mob/living/M = user

@@ -14,15 +14,16 @@
 	ventcrawler = VENTCRAWLER_NONE
 	density = TRUE
 	pass_flags =  0
-	var/ascended = FALSE
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = CANPUSH
 	spacewalk = TRUE
 	mob_size = MOB_SIZE_LARGE
-	var/mob/living/oldform
-	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
+	held_items = list(null, null)
 	bodyparts = list(/obj/item/bodypart/chest/devil, /obj/item/bodypart/head/devil, /obj/item/bodypart/l_arm/devil,
 					 /obj/item/bodypart/r_arm/devil, /obj/item/bodypart/r_leg/devil, /obj/item/bodypart/l_leg/devil)
+	var/ascended = FALSE
+	var/mob/living/oldform
+	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
 
 /mob/living/carbon/true_devil/Initialize()
 	create_bodyparts() //initialize bodyparts
@@ -89,15 +90,17 @@
 /mob/living/carbon/true_devil/resist_buckle()
 	if(buckled)
 		buckled.user_unbuckle_mob(src,src)
-		visible_message("<span class='warning'>[src] easily breaks out of their handcuffs!</span>", \
+		visible_message("<span class='warning'>[src] easily breaks out of [p_their()] handcuffs!</span>", \
 					"<span class='notice'>With just a thought your handcuffs fall off.</span>")
 
 /mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(incapacitated())
-		return 0
+		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
+		return FALSE
 	if(be_close && !in_range(M, src))
-		return 0
-	return 1
+		to_chat(src, "<span class='warning'>You are too far away!</span>")
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/true_devil/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	return 666
@@ -138,6 +141,7 @@
 		return 0
 	return ..()
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /mob/living/carbon/true_devil/attack_ghost(mob/dead/observer/user as mob)
 	if(ascended || user.mind.soulOwner == src.mind)
 		var/mob/living/simple_animal/imp/S = new(get_turf(loc))
@@ -159,7 +163,8 @@
 	//They're immune to fire.
 
 /mob/living/carbon/true_devil/attack_hand(mob/living/carbon/human/M)
-	if(..())
+	. = ..()
+	if(.)
 		switch(M.a_intent)
 			if ("harm")
 				var/damage = rand(1, 5)

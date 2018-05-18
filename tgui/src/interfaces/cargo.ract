@@ -82,7 +82,7 @@
     <tab name='{{name}}'>
       {{#each packs}}
         <ui-section label='{{name}}' candystripe right>
-          <ui-button action='add' params='{"id": "{{id}}"}'>{{cost}} Credits</ui-button>
+          <ui-button tooltip='{{desc}}' tooltip-side='left' action='add' params='{"id": "{{id}}"}'>{{cost}} Credits</ui-button>
         </ui-section>
       {{/each}}
     </tab>

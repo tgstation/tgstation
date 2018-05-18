@@ -11,7 +11,7 @@
 	throwforce = 10
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 40)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 40)
 	resistance_flags = FIRE_PROOF
 	var/click_delay = 1.5
 	var/fisto_setting = 1
@@ -44,7 +44,7 @@
 				fisto_setting = 3
 			if(3)
 				fisto_setting = 1
-		playsound(loc, W.usesound, 50, 1)
+		W.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>")
 	else if(istype(W, /obj/item/screwdriver))
 		if(tank)
@@ -79,7 +79,7 @@
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
 		return
 	target.apply_damage(force * fisto_setting, BRUTE)
-	target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>", \
+	target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as [user.p_they()] punch[user.p_es()] [target.name]!</span>", \
 		"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
 	new /obj/effect/temp_visual/kinetic_blast(target.loc)
 	playsound(loc, 'sound/weapons/resonator_blast.ogg', 50, 1)

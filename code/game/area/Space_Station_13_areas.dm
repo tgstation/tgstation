@@ -95,16 +95,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	. = ..()
 	set_dynamic_lighting()
 
-/area/planet/clown
-	name = "Clown Planet"
-	icon_state = "honk"
-	requires_power = FALSE
-
-/area/telesciareas
-	name = "Cosmic Anomaly"
-	icon_state = "telesci"
-	requires_power = FALSE
-
 
 //STATION13
 
@@ -258,103 +248,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "disposal"
 
 /area/maintenance/disposal/incinerator
-//	/area/maintenance/incinerator
 	name = "Incinerator"
 	icon_state = "disposal"
-
-
-//Cere / Asteroid Specific
-
-/area/maintenance/asteroid/aft/science
-	name = "Aft Maintenance"
-	icon_state = "amaint"
-
-/area/maintenance/asteroid/aft/arrivals
-	name = "Aft Maintenance"
-	icon_state = "amaint"
-
-/area/maintenance/asteroid/central
-	name = "Central Asteroid Maintenance"
-	icon_state = "maintcentral"
-
-/area/maintenance/asteroid/disposal
-	icon_state = "disposal"
-
-/area/maintenance/asteroid/disposal/north
-	name = "Northern Disposal"
-
-/area/maintenance/asteroid/disposal/north/east
-	name = "North-Eastern Disposal"
-
-/area/maintenance/asteroid/disposal/north/west
-	name = "North-Western Disposal"
-
-/area/maintenance/asteroid/disposal/east
-	name = "Eastern Disposal"
-
-/area/maintenance/asteroid/disposal/west
-	name = "Western Disposal"
-
-/area/maintenance/asteroid/disposal/west/secondary
-	name = "Secondary Western Disposal"
-
-/area/maintenance/asteroid/disposal/south
-	name = "Southern Disposal"
-
-/area/maintenance/asteroid/disposal/south/west
-	name = "South-Western Disposal"
-
-/area/maintenance/asteroid/disposal/external/east
-	name = "Eastern External Waste Belt"
-
-/area/maintenance/asteroid/disposal/external/north
-	name = "Northern External Waste Belt"
-
-/area/maintenance/asteroid/disposal/external/southeast
-	name = "South-Eastern External Waste Belt"
-
-/area/maintenance/asteroid/disposal/external/southwest
-	name = "South-Western External Waste Belt"
-
-/area/maintenance/asteroid/fore/cargo_west
-	name = "Fore Asteroid Maintenance"
-	icon_state = "fmaint"
-
-/area/maintenance/asteroid/fore/cargo_south
-	name = "Fore Asteroid Maintenance"
-	icon_state = "fmaint"
-
-/area/maintenance/asteroid/fore/com_west
-	name = "Fore Asteroid Maintenance"
-	icon_state = "fmaint"
-
-/area/maintenance/asteroid/fore/com_north
-	name = "Fore Asteroid Maintenance"
-	icon_state = "fmaint"
-
-/area/maintenance/asteroid/fore/com_east
-	name = "Fore Asteroid Maintenance"
-	icon_state = "fmaint"
-
-/area/maintenance/asteroid/fore/com_south
-	name = "Fore Asteroid Maintenance"
-	icon_state = "fmaint"
-
-/area/maintenance/asteroid/port/neast
-	name = "Port Asteroid Maintenance"
-	icon_state = "pmaint"
-
-/area/maintenance/asteroid/port/east
-	name = "Port Asteroid Maintenance"
-	icon_state = "pmaint"
-
-/area/maintenance/asteroid/port/west
-	name = "Port Asteroid Maintenance"
-	icon_state = "pmaint"
-
-/area/maintenance/asteroid/starboard
-	name = "Starboard Asteroid Maintenance"
-	icon_state = "smaint"
 
 
 //Hallway
@@ -418,42 +313,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/secondary/service
 	name = "Service Hallway"
 	icon_state = "hall_service"
-
-/area/hallway/secondary/bridges/cargo_ai
-	name = "Cargo-AI-Command Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/com_engi
-	name = "Command-Engineering Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/com_serv
-	name = "Command-Service Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/dock_med
-	name = "Docking-Medical Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/engi_med
-	name = "Engineering-Medical Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/med_cargo
-	name = "Medical-Cargo Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/sci_dock
-	name = "Science-Docking Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/serv_engi
-	name = "Service-Engineering Bridge"
-	icon_state = "yellow"
-
-/area/hallway/secondary/bridges/serv_sci
-	name = "Service-Science Bridge"
-	icon_state = "yellow"
 
 //Command
 
@@ -745,18 +604,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	flags_1 = NONE
 	ambientsounds = ENGINEERING
 
-/area/solar/asteroid/aft
-	name = "Aft Asteroid Solar"
-	icon_state = "panelsA"
-
-/area/solar/asteroid/command
-	name = "Command Asteroid Solar"
-	icon_state = "panelsA"
-
-/area/solar/asteroid/fore
-	name = "Fore Asteroid Solar"
-	icon_state = "panelsA"
-
 /area/solar/fore
 	name = "Fore Solar Array"
 	icon_state = "yellow"
@@ -803,18 +650,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/solars
 	name = "Solar Maintenance"
 	icon_state = "yellow"
-
-/area/maintenance/solars/asteroid/aft
-	name = "Aft Asteroid Solar Maintenance"
-	icon_state = "SolarcontrolA"
-
-/area/maintenance/solars/asteroid/command
-	name = "Command Asteroid Solar Maintenance"
-	icon_state = "SolarcontrolP"
-
-/area/maintenance/solars/asteroid/fore
-	name = "Fore Asteroid Solar Maintenance"
-	icon_state = "SolarcontrolP"
 
 /area/maintenance/solars/port
 	name = "Port Solar Maintenance"
@@ -871,22 +706,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "teleporter"
 	music = "signal"
 	ambientsounds = ENGINEERING
-
-/area/teleporter/quantum/cargo
-	name = "Cargo Quantum Pad"
-	icon_state = "teleporter"
-
-/area/teleporter/quantum/docking
-	name = "Docking Quantum Pad"
-	icon_state = "teleporter"
-
-/area/teleporter/quantum/research
-	name = "Research Quantum Pad"
-	icon_state = "teleporter"
-
-/area/teleporter/quantum/security
-	name = "Security Quantum Pad"
-	icon_state = "teleporter"
 
 /area/gateway
 	name = "Gateway"
@@ -1457,11 +1276,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/turret_protected/AIsatextAP
 	name = "AI Sat Ext"
 	icon_state = "storage"
-
-/area/ai_monitored/turret_protected/NewAIMain
-	name = "AI Main New"
-	icon_state = "storage"
-
 
 
 // Telecommunications Satellite
