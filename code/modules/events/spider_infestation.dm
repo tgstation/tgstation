@@ -31,9 +31,9 @@
 
 	while((spawncount >= 1) && vents.len)
 		var/obj/vent = pick(vents)
-		var/spawn_type = /obj/structure/spider/spiderling
+		var/spawn_type = /mob/living/simple_animal/spiderling/giant
 		if(prob(66))
-			spawn_type = /obj/structure/spider/spiderling/nurse
+			spawn_type = /mob/living/simple_animal/spiderling/giant/nurse
 		spawn_atom_to_turf(spawn_type, vent, 1, FALSE)
 		vents -= vent
 		spawncount--
