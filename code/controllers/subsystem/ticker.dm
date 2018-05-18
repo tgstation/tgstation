@@ -615,9 +615,9 @@ SUBSYSTEM_DEF(ticker)
 	var/statspage = CONFIG_GET(string/roundstatsurl)
 	var/gamelogloc = CONFIG_GET(string/gamelogurl)
 	if(statspage)
-		to_chat(world, "<span class='info'>Round statistics and logs can be viewed at [statspage][GLOB.round_id]</span>")
+		to_chat(world, "<span class='info'>Round statistics and logs can be viewed <a href=\"[statspage][GLOB.round_id]\">at this website!</a></span>")
 	else if(gamelogloc)
-		to_chat(world, "<span class='info'>Round logs can be located at [gamelogloc]</span>")
+		to_chat(world, "<span class='info'>Round logs can be located <a href=\"[gamelogloc]\">at this website!</a></span>")
 
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
 
