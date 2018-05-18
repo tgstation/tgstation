@@ -16,7 +16,9 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_nodes_starting = list()	//associative id = node datum
 	var/list/techweb_boost_items = list()		//associative double-layer path = list(id = point_discount)
 	var/list/techweb_nodes_hidden = list()		//Nodes that should be hidden by default.
-	var/list/techweb_point_items = list()		//path = value
+	var/list/techweb_point_items = list(		//path = value
+	/obj/item/assembly/signaler/anomaly = 10000
+	)
 	var/list/errored_datums = list()
 	//----------------------------------------------
 	var/single_server_income = 54.3
