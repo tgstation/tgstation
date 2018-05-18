@@ -167,7 +167,7 @@
 /obj/structure/closet/crate/goldcrate/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
-		new /obj/item/stack/sheet/mineral/gold(src, merge = FALSE)
+		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
 	new /obj/item/storage/belt/champion(src)
 
 /obj/structure/closet/crate/silvercrate
