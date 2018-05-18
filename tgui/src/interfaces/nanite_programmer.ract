@@ -1,0 +1,38 @@
+<ui-display title='Nanite Programming Console'>
+{{#if !data.has_nanites}}
+  <ui-notice>Insert a nanite injector.</ui-notice>
+{{else}}
+  <ui-button icon='eject' action='eject'>Eject Sample</ui-button>
+  <ui-section label='Nanite Info'>
+    Type: {{data.name}}<br>
+    Description: {{data.desc}}<br>
+  	Decay Rate: {{data.decay_rate}}u per cycle<br>
+    {{#if data.can_trigger}}
+      Trigger Cost: {{data.trigger_cost}}u<br>
+    {{/if}}
+    <br>
+    Status: <ui-button
+              icon='{{data.activated ? "toggle-on" : "toggle-off" }}'
+              action='toggle_active'>
+              {{data.activated ? "Active" : "Inactive" }}
+            </ui-button>
+  </ui-section>
+
+  <ui-section label='Settings'>
+    Activation Delay: {{data.activation_delay}} <ui-button icon='pencil' action='set_activation_delay'>Set</ui-button><br>
+    Timer: {{data.timer}} <ui-button icon='pencil' action='set_timer'>Set</ui-button><br>
+    Timer Type: {{data.timer_type}} <ui-button icon='pencil' action='set_timer_type'>Set</ui-button><br>
+  </ui-section>
+
+  <ui-section label='Codes'>
+    Activation Code: {{data.activation_code}} <ui-button icon='pencil' action='set_code' params='{"target_code": "activation"}'>Set</ui-button><br>
+    Deactivation Code: {{data.deactivation_code}} <ui-button icon='pencil' action='set_code' params='{"target_code": "deactivation"}'>Set</ui-button><br>
+    Kill Code: {{data.kill_code}} <ui-button icon='pencil' action='set_code' params='{"target_code": "kill"}'>Set</ui-button><br>
+    {{#if data.can_trigger}}
+      Trigger Code: {{data.trigger_code}} <ui-button icon='pencil' action='set_code' params='{"target_code": "trigger"}'>Set</ui-button><br>
+    {{/if}}
+    {{#if data.is_relay}}
+      Relay Code: {{data.relay_code}} <ui-button icon='pencil' action='set_code' params='{"target_code": "relay"}'>Set</ui-button><br>
+    {{/if}}
+  </ui-section>
+{{/if}}

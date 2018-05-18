@@ -75,11 +75,9 @@
 /obj/machinery/chem_dispenser/chem_synthesizer/proc/find_reagent(input)
 	. = FALSE
 	if(GLOB.chemical_reagents_list[input]) //prefer IDs!
-		var/datum/reagent/R = GLOB.chemical_reagents_list[input]
-		if(R.can_synth_debug)
-			return input
+		return input
 	else
 		for(var/X in GLOB.chemical_reagents_list)
 			var/datum/reagent/R = GLOB.chemical_reagents_list[X]
-			if(R.can_synth_debug && input == replacetext(lowertext(R.name), " ", ""))
+			if(input == replacetext(lowertext(R.name), " ", ""))
 				return X

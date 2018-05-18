@@ -432,3 +432,10 @@
 	required_reagents = list("stabilizing_agent" = 1,"fluorosurfactant" = 1,"carbon" = 1)
 	required_temp = 200
 	is_cold_recipe = 1
+
+/datum/chemical_reaction/reagent_explosion/nanite_detonation
+	name = "Nanite Detonation"
+	id = "nanite_detonation"
+	required_reagents = list("idle_nanites" = 1)
+	required_catalysts = list("nanite_detonator" = 1)
+	strengthdiv = 8
