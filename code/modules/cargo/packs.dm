@@ -1649,8 +1649,9 @@
 	. = ..()
 	if(prob(50))
 		var/mob/living/simple_animal/pet/dog/corgi/D = locate() in .
-		qdel(D)
-		new /mob/living/simple_animal/pet/dog/corgi/Lisa(.)
+		if(D.gender == FEMALE)
+			qdel(D)
+			new /mob/living/simple_animal/pet/dog/corgi/Lisa(.)
 
 /datum/supply_pack/critter/cow
 	name = "Cow Crate"

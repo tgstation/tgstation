@@ -153,7 +153,7 @@
 				H.confused += 15
 				H.adjustBrainLoss(10, 160)
 			if(3)
-				H.hallucination += 80
+				H.hallucination += 60
 
 /obj/item/organ/heart/gland/pop
 	cooldown_low = 900
@@ -272,10 +272,10 @@
 
 /obj/item/organ/heart/gland/electric/Insert(mob/living/carbon/M, special = 0)
 	..()
-	owner.add_trait(TRAIT_SHOCKIMMUNE, "abductor_gland")
+	owner.add_trait(TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
 
 /obj/item/organ/heart/gland/electric/Remove(mob/living/carbon/M, special = 0)
-	owner.remove_trait(TRAIT_SHOCKIMMUNE, "abductor_gland")
+	owner.remove_trait(TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
 	..()
 
 /obj/item/organ/heart/gland/electric/activate()

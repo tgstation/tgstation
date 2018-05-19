@@ -108,10 +108,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	switch(href_list["action"])
 		if("openLink")
 			src << link(href_list["link"])
-
-	var/datum/real_src = hsrc
-	if(QDELETED(real_src))
-		return
+	if (hsrc)
+		var/datum/real_src = hsrc
+		if(QDELETED(real_src))
+			return
 
 	..()	//redirect to hsrc.Topic()
 
@@ -374,7 +374,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		winset(src, "[topmenu.type]", "parent=menu;name=[url_encode(topmenuname)]")
 		var/list/entries = topmenu.Generate_list(src)
 		for (var/child in entries)
-			winset(src, "[url_encode(child)]", "[entries[child]]")
+			winset(src, "[child]", "[entries[child]]")
 			if (!ispath(child, /datum/verbs/menu))
 				var/atom/verb/verbpath = child
 				if (copytext(verbpath.name,1,2) != "@")

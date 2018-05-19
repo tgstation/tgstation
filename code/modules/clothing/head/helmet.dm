@@ -161,11 +161,19 @@
 	strip_delay = 100
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/roman/fake
+	desc = "An ancient helmet made of plastic and leather."
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
 /obj/item/clothing/head/helmet/roman/legionaire
 	name = "roman legionaire helmet"
 	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
 	icon_state = "roman_c"
 	item_state = "roman_c"
+
+/obj/item/clothing/head/helmet/roman/legionaire/fake
+	desc = "An ancient helmet made of plastic and leather. Has a red crest on top of it."
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 /obj/item/clothing/head/helmet/gladiator
 	name = "gladiator helmet"

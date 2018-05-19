@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - bugfix: "Drinking too much Gargle Blaster, Nuka Cola or Neurotoxin no longer breaks time and space."
