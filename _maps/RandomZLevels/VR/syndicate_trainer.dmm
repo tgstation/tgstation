@@ -791,8 +791,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "eS" = (
-/obj/machinery/telecomms/relay/preset/ruskie,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/telecomms/allinone/indestructable,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "eT" = (
@@ -1105,10 +1105,6 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/turf/open/indestructible,
-/area/awaymission/centcomAway/general)
-"gv" = (
-/obj/machinery/telecomms/allinone/indestructable,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "gw" = (
@@ -1717,12 +1713,6 @@
 /obj/effect/landmark/vr_spawn/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
-"kc" = (
-/obj/machinery/modular_computer/console{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/space)
 "kf" = (
 /obj/machinery/button/door{
 	id = "XCCFerry";
@@ -2197,12 +2187,6 @@
 /obj/structure/table/reinforced,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/thunderdome)
-"mx" = (
-/obj/machinery/door/airlock/external,
-/turf/open/floor/plasteel/bar{
-	dir = 2
-	},
-/area/awaymission/centcomAway/maint)
 "my" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -2435,10 +2419,6 @@
 /obj/item/reagent_containers/food/drinks/ice,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/thunderdome)
-"rC" = (
-/obj/machinery/modular_computer/console,
-/turf/open/indestructible,
-/area/space)
 "sL" = (
 /obj/machinery/door/airlock/external{
 	name = "Arrival Airlock"
@@ -2449,12 +2429,6 @@
 "zk" = (
 /turf/closed/indestructible/fakeglass,
 /area/awaymission/centcomAway/general)
-"BZ" = (
-/obj/machinery/modular_computer/console{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/space)
 "GJ" = (
 /obj/structure/chair,
 /turf/open/indestructible,
@@ -2471,12 +2445,6 @@
 /obj/effect/landmark/vr_spawn/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/hangar)
-"XQ" = (
-/obj/machinery/modular_computer/console{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/space)
 
 (1,1,1) = {"
 aa
@@ -9926,8 +9894,8 @@ ac
 aF
 aQ
 ac
-mx
-mx
+cj
+cj
 ac
 aF
 aQ
@@ -10527,8 +10495,8 @@ mm
 kS
 aa
 aa
-aa
-aa
+TP
+TP
 aa
 aa
 aa
@@ -10657,8 +10625,8 @@ la
 kS
 aa
 aa
-aa
-rC
+TP
+TP
 aa
 aa
 aa
@@ -10787,8 +10755,8 @@ mo
 kS
 aa
 aa
-aa
-kc
+TP
+TP
 aa
 aa
 aa
@@ -10917,8 +10885,8 @@ mo
 kS
 aa
 aa
-aa
-BZ
+TP
+TP
 aa
 aa
 aa
@@ -11047,8 +11015,8 @@ lc
 kS
 aa
 aa
-aa
-XQ
+TP
+TP
 aa
 aa
 aa
@@ -11374,7 +11342,7 @@ gW
 gW
 gW
 fv
-gv
+iW
 gG
 gW
 gW
