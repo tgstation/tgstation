@@ -17,7 +17,6 @@
 	. = ..()
 	E.visible_message("<span class='notice'>A duplicate [O] pops out!</span>")
 	E.investigate_log("Experimentor has cloned [O]", INVESTIGATE_EXPERIMENTOR)
-	//E.eject_item() //experimental
 	var/turf/T = get_turf(pick(oview(1,E)))
 	new O.type(T)
 	var/datum/experiment_type/clone/mode = E.experiments[/datum/experiment_type/clone]

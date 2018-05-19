@@ -106,5 +106,5 @@
 		mode.uses = E.bad_thing_coeff
 		E.experiments[mode.type] = mode //Give it to this experimentor. Others need to relink to unlock.
 
-		E.visible_message("[E] has activated an unknown subroutine!")
+		E.visible_message("[E] displays a message: New data discovered. Potential optimizations availible.")
 		playsound(E, 'sound/effects/genetics.ogg', 50, 1)

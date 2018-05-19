@@ -13,16 +13,14 @@
 	if(!mode || mode.uses <= 0)
 		. = FALSE
 
-/datum/experiment/clone/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
+/datum/experiment/improve/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
-
-	//E.eject_item() //experimental
 
 	if(istype(O, /obj/item/stock_parts))
 		var/obj/item/stock_parts/P = O
 		if(P.rating <= 4)
 			P.rating *= 3
-			E.visible_message("<span class='notice'>[E] uses its data to optimize [P]!</span>")
+			E.visible_message("<span class='notice'>[E] uses its data to improve [P]!</span>")
 			E.investigate_log("Experimentor has improved [O]", INVESTIGATE_EXPERIMENTOR)
 			P.name = "improved " + P.name
 
