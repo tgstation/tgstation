@@ -37,7 +37,7 @@
 	activate_pin(2)
 
 /obj/item/integrated_circuit/smart/coord_basic_pathfinder
-	name = "coordinte pathfinder"
+	name = "coordinate pathfinder"
 	desc = "This complex circuit is able to determine what direction a given target is."
 	extended_desc = "This circuit uses absolute coordinates to determine where the target is. If the machine \
 	cannot see the target, it will not be able to calculate the correct direction. \
