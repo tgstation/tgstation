@@ -805,7 +805,7 @@
 	if(!random_reagents.len)
 		for(var/thing  in subtypesof(/datum/reagent))
 			var/datum/reagent/R = thing
-			if(initial(R.synth_type) == CHEM_SYNTH_NORMAL)
+			if(initial(R.can_synth))
 				random_reagents += initial(R.id)
 	var/picked_reagent = pick(random_reagents)
 	return picked_reagent
