@@ -202,6 +202,9 @@
 		var/list/cameras = flatten_list(bugged_cameras)
 		var/obj/machinery/camera/C = locate(href_list["monitor"]) in cameras
 		if(C && istype(C))
+			if(!T || C.z != T.z)
+				to_chat(usr, "<span class='warning'>You can't get a signal!</span>")
+				return
 			track_mode = BUGMODE_MONITOR
 			current = C
 			usr.reset_perspective(null)
@@ -221,6 +224,9 @@
 		var/list/cameras = flatten_list(bugged_cameras)
 		var/obj/machinery/camera/C = locate(href_list["emp"]) in cameras
 		if(C && istype(C) && C.bug == src)
+			if(!T || C.z != T.z)
+				to_chat(usr, "<span class='warning'>You can't get a signal!</span>")
+				return
 			C.emp_act(EMP_HEAVY)
 			C.bug = null
 			bugged_cameras -= C.c_tag
