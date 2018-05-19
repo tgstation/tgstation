@@ -205,7 +205,7 @@
 		MB.RunOver(src)
 
 	spreadFire(AM)
-
+	dna.species.Crossed(AM)
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))

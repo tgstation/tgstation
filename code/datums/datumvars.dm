@@ -1168,6 +1168,7 @@
 				var/newtype = GLOB.species_list[result]
 				admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [H] to [result]")
 				H.set_species(newtype)
+				H.dna.species.on_admin_forced(usr, H)
 
 		else if(href_list["editbodypart"])
 			if(!check_rights(R_SPAWN))

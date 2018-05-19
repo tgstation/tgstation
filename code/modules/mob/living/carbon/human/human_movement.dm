@@ -38,7 +38,8 @@
 	. = ..()
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_move(src, NewLoc)
-
+	if(dna && dna.species)
+		dna.species.on_move(src)
 	if(shoes)
 		if(!lying && !buckled)
 			if(loc == NewLoc)
@@ -70,3 +71,4 @@
 	if(..())
 		return 1
 	return dna.species.space_move(src)
+

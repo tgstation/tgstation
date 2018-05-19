@@ -116,7 +116,24 @@
 			features["mcolor"] = "#59CE00"
 		for(var/V in quirks)
 			new V(podman)
-		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+		var/datum/species/pod/POD = new()
+		if(genes.len)
+			var/list/chemtraits = list()
+			for(var/datum/plant_gene/reagent/R in genes)
+				chemtraits += R
+			if(chemtraits.len)
+				var/datum/plant_gene/reagent/R = pick(chemtraits)
+				POD.exotic_blood = R.reagent_id
+				podman.reagents.add_reagent(R.reagent_id, 200) //you gotta get used to it first. also filters out really bad chems since they'll die without care
+			var/list/genetraits = list()
+			for(var/datum/plant_gene/trait/T in genes)
+				genetraits += T
+			if(genetraits.len)
+				var/datum/plant_gene/trait/T = pick(genetraits)
+				POD.mutation = new T.type  //let me tell you a story about datums that get deleted
+		POD.potency = potency
+		POD.yield = yield
+		podman.hardset_dna(null,null,podman.real_name,"P", POD,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two

@@ -7,7 +7,7 @@
 	if(!target || !istype(target) || !direction)
 		. = COMPONENT_INCOMPATIBLE
 		CRASH("[type] improperly instanced with the following args: target=\[[target]\], direction=\[[direction]\], range=\[[range]\]")
-	
+
 	holder = new(parent)
 
 	var/x = target.x
