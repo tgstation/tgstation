@@ -606,13 +606,12 @@
 	id = /obj/item/card/id/syndicate
 	implants = list(/obj/item/implant/exile)
 
-/datum/outfit/snowtide
-	name = "Assistant Snow Outfit"
-	uniform = /obj/item/clothing/under/color/random
+/datum/outfit/vr/snowtide
+	name = "Snowdin Outfit"
 	shoes = /obj/item/clothing/shoes/winterboots
 	suit = /obj/item/clothing/suit/hooded/wintercoat
 	back = /obj/item/storage/backpack
-	mask = /obj/item/clothing/mask/gas/syndicate
+	mask = /obj/item/clothing/mask/breath
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
 	internals_slot = SLOT_R_STORE
 
@@ -677,4 +676,4 @@
 	icon_state = "AOPU7"
 
 /obj/effect/landmark/vr_spawn/snowdin
-	vr_outfit = /datum/outfit/snowtide
+	vr_outfit = /datum/outfit/vr/snowtide

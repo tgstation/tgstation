@@ -140,9 +140,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
 "aR" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "101"
-	},
+/obj/machinery/door/airlock/maintenance,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/maint)
 "aS" = (
@@ -424,9 +422,7 @@
 /turf/closed/indestructible/riveted,
 /area/awaymission/centcomAway/maint)
 "cx" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "101"
-	},
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
 "cB" = (
@@ -501,7 +497,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "cU" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/modular_computer/console{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -668,9 +664,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/hangar)
 "dQ" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "101"
-	},
+/obj/machinery/door/airlock/maintenance,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
 "dY" = (
@@ -1114,9 +1108,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "gv" = (
-/obj/structure/table/reinforced,
-/obj/item/hand_labeler,
-/obj/item/hand_labeler_refill,
+/obj/machinery/telecomms/allinone/indestructable,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "gw" = (
@@ -1173,7 +1165,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "gN" = (
-/obj/machinery/computer/robotics{
+/obj/machinery/modular_computer/console{
 	dir = 4
 	},
 /turf/open/indestructible,
@@ -1191,7 +1183,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "gQ" = (
-/obj/machinery/computer/med_data{
+/obj/machinery/modular_computer/console{
 	dir = 8
 	},
 /turf/open/indestructible,
@@ -1216,20 +1208,8 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
-"gY" = (
-/obj/machinery/computer/card{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/centcomAway/general)
 "gZ" = (
 /obj/structure/chair/office/dark,
-/turf/open/indestructible,
-/area/awaymission/centcomAway/general)
-"ha" = (
-/obj/machinery/computer/crew{
-	dir = 8
-	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "hb" = (
@@ -1237,7 +1217,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/courtroom)
 "hc" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/airlock/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "hd" = (
@@ -1277,19 +1257,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "hl" = (
-/obj/machinery/computer/secure_data{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/centcomAway/general)
-"hm" = (
-/obj/machinery/computer/communications{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/centcomAway/general)
-"hn" = (
-/obj/machinery/computer/security{
+/obj/machinery/modular_computer/console{
 	dir = 1
 	},
 /turf/open/indestructible,
@@ -1582,8 +1550,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "iW" = (
-/obj/machinery/computer/card/centcom,
-/obj/item/card/id/centcom,
+/obj/machinery/modular_computer/console,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "iY" = (
@@ -1612,10 +1579,6 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
-"jf" = (
-/obj/structure/frame/computer,
-/turf/open/indestructible,
-/area/awaymission/centcomAway/general)
 "jg" = (
 /obj/structure/table/reinforced,
 /obj/item/pen,
@@ -1629,12 +1592,6 @@
 /area/awaymission/centcomAway/general)
 "jk" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/indestructible,
-/area/awaymission/centcomAway/general)
-"jp" = (
-/obj/machinery/computer/card{
-	dir = 1
-	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "jq" = (
@@ -1665,9 +1622,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/hangar)
 "jw" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "101"
-	},
+/obj/machinery/door/airlock/maintenance,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "jx" = (
@@ -1762,6 +1717,12 @@
 /obj/effect/landmark/vr_spawn/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
+"kc" = (
+/obj/machinery/modular_computer/console{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/space)
 "kf" = (
 /obj/machinery/button/door{
 	id = "XCCFerry";
@@ -1811,12 +1772,6 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
-"kt" = (
-/obj/machinery/computer/secure_data{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/centcomAway/general)
 "ku" = (
 /obj/item/paper_bin,
 /obj/structure/table/reinforced,
@@ -1828,12 +1783,6 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/centcomAway/general)
-"ky" = (
-/obj/machinery/computer/card{
-	dir = 8
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
@@ -2200,7 +2149,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/thunderdome)
 "mo" = (
-/obj/structure/frame/computer{
+/obj/machinery/modular_computer/console{
 	dir = 1
 	},
 /turf/open/indestructible,
@@ -2486,6 +2435,10 @@
 /obj/item/reagent_containers/food/drinks/ice,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/thunderdome)
+"rC" = (
+/obj/machinery/modular_computer/console,
+/turf/open/indestructible,
+/area/space)
 "sL" = (
 /obj/machinery/door/airlock/external{
 	name = "Arrival Airlock"
@@ -2496,6 +2449,12 @@
 "zk" = (
 /turf/closed/indestructible/fakeglass,
 /area/awaymission/centcomAway/general)
+"BZ" = (
+/obj/machinery/modular_computer/console{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/space)
 "GJ" = (
 /obj/structure/chair,
 /turf/open/indestructible,
@@ -2505,12 +2464,6 @@
 /obj/structure/fans/tiny,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/maint)
-"Rc" = (
-/obj/effect/landmark/vr_spawn/syndicate{
-	vr_outfit = /datum/outfit/syndicate/full
-	},
-/turf/open/floor/plating/airless,
-/area/awaymission/centcomAway/maint)
 "TP" = (
 /turf/open/space/basic,
 /area/space)
@@ -2518,6 +2471,12 @@
 /obj/effect/landmark/vr_spawn/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/hangar)
+"XQ" = (
+/obj/machinery/modular_computer/console{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -7292,14 +7251,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
 aa
 aa
 aa
@@ -7422,14 +7381,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
 aa
 aa
 aa
@@ -7552,14 +7511,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
 aa
 aa
 aa
@@ -7682,14 +7641,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
 aa
 aa
 aa
@@ -7812,14 +7771,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
 aa
 aa
 aa
@@ -7942,14 +7901,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
 aa
 aa
 aa
@@ -8072,14 +8031,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
 aa
 aa
 aa
@@ -8202,14 +8161,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+TP
+TP
+TP
+TP
+TP
+TP
+TP
+TP
 aa
 aa
 aa
@@ -10663,8 +10622,8 @@ gW
 gW
 kj
 gw
-kt
-ky
+gQ
+gQ
 kC
 gW
 gW
@@ -10699,7 +10658,7 @@ kS
 aa
 aa
 aa
-aa
+rC
 aa
 aa
 aa
@@ -10779,7 +10738,7 @@ gW
 gW
 gW
 iV
-jf
+iW
 gW
 eu
 eu
@@ -10829,7 +10788,7 @@ kS
 aa
 aa
 aa
-aa
+kc
 aa
 aa
 aa
@@ -10959,7 +10918,7 @@ kS
 aa
 aa
 aa
-aa
+BZ
 aa
 aa
 aa
@@ -11028,7 +10987,7 @@ fw
 gs
 gW
 gN
-gY
+gN
 hj
 fu
 gW
@@ -11089,7 +11048,7 @@ kS
 aa
 aa
 aa
-aa
+XQ
 aa
 aa
 aa
@@ -11419,7 +11378,7 @@ gv
 gG
 gW
 gW
-hm
+hl
 fv
 gW
 gW
@@ -11549,7 +11508,7 @@ gw
 gW
 gW
 gZ
-hn
+hl
 fv
 gW
 gW
@@ -11808,7 +11767,7 @@ gf
 gy
 gW
 gQ
-ha
+gQ
 lM
 fw
 gW
@@ -12080,7 +12039,7 @@ gW
 gW
 eJ
 gW
-jp
+hl
 eu
 eu
 eu
@@ -12615,8 +12574,8 @@ gW
 gW
 kj
 gw
-kt
-ky
+gQ
+gQ
 kJ
 eu
 aa
@@ -15689,7 +15648,7 @@ hQ
 aa
 aa
 hQ
-Rc
+cl
 hQ
 aa
 aa

@@ -13545,10 +13545,6 @@
 	dir = 4
 	},
 /area/awaymission/snowdin/post/mining_main)
-"JQ" = (
-/obj/effect/baseturf_helper/asteroid/snow,
-/turf/closed/wall/rust,
-/area/shuttle/snowdin/elevator2)
 "JR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/firedoor,
@@ -14039,6 +14035,12 @@
 	dir = 5
 	},
 /area/awaymission/snowdin/cave)
+"QX" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/awaymission/snowdin/post/mining_main)
 "SX" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -27148,7 +27150,7 @@ ae
 FZ
 HZ
 HX
-HX
+QX
 IW
 Jj
 Gq
@@ -28180,7 +28182,7 @@ II
 IY
 Go
 Jx
-JQ
+KP
 JR
 Kn
 JR

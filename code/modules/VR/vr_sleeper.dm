@@ -180,7 +180,7 @@
 
 /obj/effect/landmark/vr_spawn //places you can spawn in VR, auto selected by the vr_sleeper during get_vr_spawnpoint()
 	var/vr_category = "default" //So we can have specific sleepers, eg: "Basketball VR Sleeper", etc.
-	var/vr_outfit = /datum/outfit/vr_basic
+	var/vr_outfit = /datum/outfit/vr
 
 /obj/effect/landmark/vr_spawn/team_1
 	vr_category = "team_1"
@@ -189,9 +189,4 @@
 	vr_category = "team_2"	
 
 /obj/effect/landmark/vr_spawn/syndicate // Multiple missions will use syndicate gear
-	vr_outfit = /datum/outfit/syndicate
-
-/datum/outfit/vr_basic
-	name = "basic vr"
-	uniform = /obj/item/clothing/under/color/random
-	shoes = /obj/item/clothing/shoes/sneakers/black
+	vr_outfit = /datum/outfit/vr/syndicate

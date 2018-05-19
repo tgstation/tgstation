@@ -987,6 +987,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/encryptionkey/binary
 	cost = 5
 	surplus = 75
+	restricted = TRUE
 
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
@@ -995,6 +996,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/encryptionkey/syndicate
 	cost = 2
 	surplus = 75
+	restricted = TRUE
 
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector"
@@ -1119,6 +1121,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 30
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	restricted = TRUE
 
 /datum/uplink_item/device_tools/shield
 	name = "Energy Shield"
