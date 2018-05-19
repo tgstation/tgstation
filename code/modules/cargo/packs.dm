@@ -1699,6 +1699,27 @@
 					/mob/living/simple_animal/hostile/retaliate/poison/snake)
 	crate_name = "snake crate"
 
+/datum/supply_pack/critter/exotic
+	name = "Exotic Speciment Crate"
+	desc = "#@&^$YARR%& £WE-SELL--BEAST=#;&!THEY$#</span>@HOSTILE^$£@IT#BIT MY ARM&#£(AUUGH"
+	contraband = TRUE
+	cost = 7000
+	var/num_contained = 1
+	contains = list(/mob/living/simple_animal/hostile/retaliate/poison/snake,
+					/mob/living/simple_animal/hostile/bear/snow,
+					/mob/living/simple_animal/hostile/bear,
+					/mob/living/simple_animal/hostile/gorilla,
+					/mob/living/simple_animal/hostile/jungle/leaper,
+					/mob/living/simple_animal/hostile/jungle/mega_arachnid,
+					/mob/living/simple_animal/hostile/asteroid/fugu,
+					/mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice,
+					/mob/living/simple_animal/hostile/carp/megacarp,
+					/mob/living/simple_animal/hostile/asteroid/basilisk,
+					/mob/living/simple_animal/hostile/asteroid/hivelord,
+					/mob/living/simple_animal/hostile/venus_human_trap,
+					/mob/living/simple_animal/hostile/pirate/ranged) //he fell into the crate					
+	crate_name = "exotic speciment crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Costumes & Toys /////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
