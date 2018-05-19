@@ -1238,7 +1238,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Like having your brain smashed out by a slice of lemon wrapped around a large gold brick."
 
 /datum/reagent/consumable/ethanol/gargle_blaster/on_mob_life(mob/living/M)
-	M.dizziness +=6
+	M.dizziness +=1.5
 	switch(current_cycle)
 		if(15 to 45)
 			if(!M.slurring)
@@ -1267,7 +1267,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
 	M.Knockdown(60, 1, 0)
-	M.dizziness +=6
+	M.dizziness +=2
 	switch(current_cycle)
 		if(15 to 45)
 			if(!M.slurring)
