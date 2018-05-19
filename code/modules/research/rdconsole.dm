@@ -193,7 +193,7 @@ doesn't have toxins access.
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
-		to_chat(user, "<span class='notice'>You disable the security protocols</span>")
+		to_chat(user, "<span class='notice'>You disable the security protocols.</span>")
 		playsound(src, "sparks", 75, 1)
 		obj_flags |= EMAGGED
 	return ..()
