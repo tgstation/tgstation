@@ -267,6 +267,7 @@
 "aP" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/turf_decal/delivery,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/ruin/powered/seedvault)
 "aQ" = (
