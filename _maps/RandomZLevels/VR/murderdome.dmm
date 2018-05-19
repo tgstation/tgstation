@@ -240,6 +240,10 @@
 /obj/item/gun/ballistic/automatic/ar,
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome)
+"P" = (
+/obj/machinery/telecomms/allinone,
+/turf/open/indestructible,
+/area/awaymission/vr/murderdome)
 
 (1,1,1) = {"
 b
@@ -2790,7 +2794,7 @@ b
 b
 "}
 (50,1,1) = {"
-a
+P
 a
 a
 a

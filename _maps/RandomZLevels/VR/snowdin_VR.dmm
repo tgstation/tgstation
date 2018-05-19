@@ -11612,6 +11612,7 @@
 /turf/open/floor/plasteel/vault,
 /area/awaymission/snowdin/cave)
 "Ed" = (
+/obj/machinery/telecomms/allinone/indestructable,
 /turf/open/floor/circuit/red,
 /area/awaymission/snowdin/cave)
 "Ee" = (
