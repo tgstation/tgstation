@@ -96,13 +96,13 @@
 // Weird Stuff
 
 /datum/export/stack/abductor
-	cost = 5000
+	cost = 1000
 	message = "of alien alloy"
 	export_types = list(/obj/item/stack/sheet/mineral/abductor)
 
 /datum/export/stack/adamantine
 	unit_name = "bar"
-	cost = 10000
+	cost = 500
 	message = "of adamantine"
 	export_types = list(/obj/item/stack/sheet/mineral/adamantine)
 
