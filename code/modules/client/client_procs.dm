@@ -514,7 +514,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	. = player_age
 
 /client/proc/findJoinDate()
-	var/list/http = world.Export("https://secure.byond.com/members/[ckey]?format=text")
+	var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")
 	if(!http)
 		log_world("Failed to connect to byond age check for [ckey]")
 		return
