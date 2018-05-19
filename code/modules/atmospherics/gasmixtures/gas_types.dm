@@ -17,20 +17,6 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 		gas_info[META_GAS_ID] = initial(gas.id)
 		.[gas_path] = gas_info
 
-/proc/nonreactive_gas_list() //all the gases not included in _any_ reaction
-	var/list/nonreactive_gases = GLOB.meta_gas_info.Copy()
-	for(var/g in GLOB.meta_gas_info)
-		var/datum/gas/gas = g
-		for(var/r in SSair.gas_reactions)
-			if(!gas in nonreactive_gases) //if its been removed already we can move on
-				continue
-			var/datum/gas_reaction/reaction = r
-			if((gas in reaction.min_requirements) || (gas in reaction.max_requirements)) //if the gas is mentioned in the requirements of a reaction
-				nonreactive_gases -= gas
-	. = list()
-	for(var/path in nonreactive_gases)
-		. += new path
-
 /proc/gas_id2path(id)
 	var/list/meta_gas = GLOB.meta_gas_info
 	if(id in meta_gas)

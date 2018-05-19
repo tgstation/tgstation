@@ -46,7 +46,7 @@
 
 /datum/gas_reaction
 	//regarding the requirements lists: the minimum or maximum requirements must be non-zero.
-	//when in doubt, use MINIMUM_HEAT_CAPACITY.
+	//when in doubt, use MINIMUM_MOLE_COUNT.
 	var/list/min_requirements
 	var/list/max_requirements
 	var/exclude = FALSE //do it this way to allow for addition/removal of reactions midmatch in the future
@@ -101,8 +101,8 @@
 /datum/gas_reaction/tritfire/init_reqs()
 	min_requirements = list(
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
-		/datum/gas/tritium = MINIMUM_HEAT_CAPACITY,
-		/datum/gas/oxygen = MINIMUM_HEAT_CAPACITY
+		/datum/gas/tritium = MINIMUM_MOLE_COUNT,
+		/datum/gas/oxygen = MINIMUM_MOLE_COUNT
 	)
 
 /datum/gas_reaction/tritfire/react(datum/gas_mixture/air, datum/holder)
@@ -159,8 +159,8 @@
 /datum/gas_reaction/plasmafire/init_reqs()
 	min_requirements = list(
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
-		/datum/gas/plasma = MINIMUM_HEAT_CAPACITY,
-		/datum/gas/oxygen = MINIMUM_HEAT_CAPACITY
+		/datum/gas/plasma = MINIMUM_MOLE_COUNT,
+		/datum/gas/oxygen = MINIMUM_MOLE_COUNT
 	)
 
 /datum/gas_reaction/plasmafire/react(datum/gas_mixture/air, datum/holder)
