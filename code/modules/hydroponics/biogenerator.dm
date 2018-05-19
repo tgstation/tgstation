@@ -262,8 +262,7 @@
 		if(!check_cost(D.materials, amount))
 			return FALSE
 
-		var/obj/item/stack/product = new D.build_path(loc)
-		product.amount = amount
+		new D.build_path(drop_location(), amount)
 		for(var/R in D.make_reagents)
 			beaker.reagents.add_reagent(R, D.make_reagents[R]*amount)
 	else

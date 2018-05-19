@@ -790,7 +790,7 @@
 	set_module = /obj/item/robot_module/janitor
 
 /mob/living/silicon/robot/modules/syndicate
-	icon_state = "syndie_bloodhound"
+	icon_state = "synd_sec"
 	faction = list(ROLE_SYNDICATE)
 	bubble_icon = "syndibot"
 	req_access = list(ACCESS_SYNDICATE)
@@ -818,7 +818,7 @@
 	return
 
 /mob/living/silicon/robot/modules/syndicate/medical
-	icon_state = "syndi-medi"
+	icon_state = "synd_medical"
 	playstyle_string = "<span class='big bold'>You are a Syndicate medical cyborg!</span><br>\
 						<b>You are armed with powerful medical tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
 						Your hypospray will produce Restorative Nanites, a wonder-drug that will heal most types of bodily damages, including clone and brain damage. It also produces morphine for offense. \
