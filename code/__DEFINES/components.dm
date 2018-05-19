@@ -87,6 +87,9 @@
 #define COMSIG_MOVABLE_THROW "movable_throw"					//from base of atom/movable/throw_at(): (datum/thrownthing, spin)
 #define COMSIG_MOVABLE_Z_CHANGED "movable_ztransit" //from base of atom/movable/onTransitZ(): (old_z, new_z)
 
+// /mob/living signals
+#define COMSIG_LIVING_ELECTROCUTE_ACT "living_electrocute_act"		//from base of mob/living/electrocute_act(): (shock_damage)
+
 // /mob/living/carbon signals
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
 
@@ -129,6 +132,8 @@
 
 //NTnet
 #define COMSIG_COMPONENT_NTNET_RECIEVE "ntnet_recieve"			//called on an object by its NTNET connection component on recieve. (sending_id(number), sending_netname(text), data(datum/netdata))
+
+#define COMSIG_NANITE_SIGNAL "nanite_signal"					//Called when sending a nanite signal to a mob. (code(1-9999))
 
 // /datum/component/storage signals
 #define COMSIG_CONTAINS_STORAGE "is_storage"						//() - returns bool.

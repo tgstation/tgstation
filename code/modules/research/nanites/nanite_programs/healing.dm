@@ -1,0 +1,134 @@
+//Programs that heal the host in some way.
+
+/datum/nanite_program/regenerative
+	name = "Accelerated Regeneration"
+	desc = "The nanites boost the host's natural regeneration, increasing their healing speed."
+	use_rate = 1.5
+	rogue_types = list(/datum/nanite_program/necrotic)
+
+/datum/nanite_program/regenerative/check_conditions()
+	if(!host_mob.getBruteLoss() && !host_mob.getFireLoss())
+		return FALSE
+	if(iscarbon(host_mob))
+		var/mob/living/carbon/C = host_mob
+		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = BODYPART_ORGANIC)
+		if(!parts.len)
+			return FALSE
+	. = ..()
+
+/datum/nanite_program/regenerative/active_effect()
+	if(iscarbon(host_mob))
+		var/mob/living/carbon/C = host_mob
+		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = BODYPART_ORGANIC)
+		if(!parts.len)
+			return
+		for(var/obj/item/bodypart/L in parts)
+			if(L.heal_damage(1/parts.len, 1/parts.len))
+				host_mob.update_damage_overlays()
+	else
+		host_mob.adjustBruteLoss(-1, TRUE)
+		host_mob.adjustFireLoss(-1, TRUE)
+
+/datum/nanite_program/temperature
+	name = "Temperature Adjustment"
+	desc = "The nanites adjust the host's internal temperature to an ideal level."
+	use_rate = 2.5
+	rogue_types = list(/datum/nanite_program/pyro,/datum/nanite_program/cryo)
+
+/datum/nanite_program/temperature/check_conditions()
+	if(host_mob.bodytemperature > (BODYTEMP_NORMAL - 30) && host_mob.bodytemperature < (BODYTEMP_NORMAL + 30))
+		return FALSE
+	. = ..()
+
+/datum/nanite_program/temperature/active_effect()
+	if(host_mob.bodytemperature > BODYTEMP_NORMAL)
+		host_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	else if(host_mob.bodytemperature < (BODYTEMP_NORMAL + 1))
+		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+
+/datum/nanite_program/purging
+	name = "Blood Purification"
+	desc = "The nanites purge toxins and chemicals from the host's bloodstream."
+	use_rate = 1
+	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
+
+/datum/nanite_program/purging/check_conditions()
+	var/foreign_reagent = LAZYLEN(host_mob.reagents.reagent_list)
+	if(!host_mob.getToxLoss() && !foreign_reagent)
+		return FALSE
+	. = ..()
+
+/datum/nanite_program/purging/active_effect()
+	host_mob.adjustToxLoss(-1)
+	for(var/datum/reagent/R in host_mob.reagents.reagent_list)
+		host_mob.reagents.remove_reagent(R.id,1)
+
+/datum/nanite_program/brain_heal
+	name = "Neural Regeneration"
+	desc = "The nanites fix neural connections in the host's brain, reversing brain damage and minor traumas."
+	use_rate = 1.5
+	rogue_types = list(/datum/nanite_program/brain_decay)
+
+/datum/nanite_program/brain_heal/check_conditions()
+	if(!host_mob.getBrainLoss())
+		return FALSE
+	. = ..()
+
+/datum/nanite_program/brain_heal/active_effect()
+	host_mob.adjustBrainLoss(-1, TRUE)
+	if(iscarbon(host_mob) && prob(10))
+		var/mob/living/carbon/C = host_mob
+		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+
+/datum/nanite_program/blood_restoring
+	name = "Blood Regeneration"
+	desc = "The nanites stimulate and boost blood cell production in the host."
+	use_rate = 1
+	rogue_types = list(/datum/nanite_program/suffocating)
+
+/datum/nanite_program/blood_restoring/check_conditions()
+	if(iscarbon(host_mob))
+		var/mob/living/carbon/C = host_mob
+		if(C.blood_volume >= BLOOD_VOLUME_SAFE)
+			return FALSE
+	else
+		return FALSE
+	. = ..()
+
+/datum/nanite_program/blood_restoring/active_effect()
+	if(iscarbon(host_mob))
+		var/mob/living/carbon/C = host_mob
+		C.blood_volume += 2
+
+/datum/nanite_program/repairing
+	name = "Mechanical Repair"
+	desc = "The nanites fix damage in the host's mechanical limbs."
+	use_rate = 0.5 //much more efficient than organic healing
+	rogue_types = list(/datum/nanite_program/necrotic)
+
+/datum/nanite_program/repairing/check_conditions()
+	if(!host_mob.getBruteLoss() && !host_mob.getFireLoss())
+		return FALSE
+
+	if(iscarbon(host_mob))
+		var/mob/living/carbon/C = host_mob
+		var/list/parts = C.get_damaged_bodyparts(TRUE, TRUE, status = BODYPART_ROBOTIC)
+		if(!parts.len)
+			return FALSE
+	else
+		if(!(MOB_ROBOTIC in host_mob.mob_biotypes))
+			return FALSE
+	. = ..()
+
+/datum/nanite_program/repairing/active_effect(mob/living/M)
+	if(iscarbon(host_mob))
+		var/mob/living/carbon/C = host_mob
+		var/list/parts = C.get_damaged_bodyparts(TRUE, TRUE, status = BODYPART_ROBOTIC)
+		if(!parts.len)
+			return
+		for(var/obj/item/bodypart/L in parts)
+			if(L.heal_damage(1/parts.len, 1/parts.len))
+				host_mob.update_damage_overlays()
+	else
+		host_mob.adjustBruteLoss(-1, TRUE)
+		host_mob.adjustFireLoss(-1, TRUE)

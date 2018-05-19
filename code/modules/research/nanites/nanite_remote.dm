@@ -46,6 +46,8 @@
 /obj/item/nanite_remote/update_icon()
 	..()
 	cut_overlays()
+	if(obj_flags & EMAGGED)
+		add_overlay("nanite_remote_emagged")
 	if(locked)
 		add_overlay("nanite_remote_locked")
 
@@ -66,15 +68,13 @@
 				signal_mob(L, code)
 		if(REMOTE_MODE_RELAY)
 			to_chat(user, "<span class='notice'>You activate [src], signaling all connected relay nanites.<span>")
-			for(var/M in GLOB.nanite_signal_mobs)
-				signal_relay(M, code, relay_code)
+			signal_relay(code, relay_code)
 
 /obj/item/nanite_remote/proc/signal_mob(mob/living/M, code)
-	for(var/datum/reagent/nanites/programmed/N in M.reagents.reagent_list)
-		N.receive_signal(code)
+	M.SendSignal(COMSIG_NANITE_SIGNAL, code)
 
-/obj/item/nanite_remote/proc/signal_relay(mob/living/M, code, relay_code)
-	for(var/datum/reagent/nanites/programmed/relay/N in M.reagents.reagent_list)
+/obj/item/nanite_remote/proc/signal_relay(code, relay_code)
+	for(var/datum/nanite_program/relay/N in SSnanites.nanite_relays)
 		N.relay_signal(code, relay_code)
 
 /obj/item/nanite_remote/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)

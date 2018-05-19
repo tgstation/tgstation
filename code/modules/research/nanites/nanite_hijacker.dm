@@ -1,16 +1,20 @@
-/obj/machinery/nanite_programmer
-	name = "nanite programmer"
-	desc = "A device that can edit nanite program disks to adjust their functionality."
+/obj/item/nanite_hijacker
+	name = "nanite remote control" //fake name
+	desc = "A device that can load nanite programming disks, edit them at will, and imprint them to nanites remotely."
+	w_class = WEIGHT_CLASS_SMALL
+	icon = 'icons/obj/device.dmi'
+	icon_state = "nanite_remote"
 	var/obj/item/disk/nanite_program/disk
 	var/datum/nanite_program/program
-	circuit = /obj/item/circuitboard/machine/nanite_programmer
-	icon = 'icons/obj/machines/research.dmi'
-	icon_state = "nanite_programmer"
-	use_power = IDLE_POWER_USE
-	anchored = TRUE
-	density = TRUE
 
-/obj/machinery/nanite_programmer/attackby(obj/item/I, mob/user)
+/obj/item/nanite_hijacker/AltClick(mob/user)
+	..()
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	if(disk)
+		eject()
+
+/obj/item/nanite_hijacker/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I
 		if(disk)
@@ -22,20 +26,32 @@
 	else
 		..()
 
-/obj/machinery/nanite_programmer/proc/eject()
+/obj/item/nanite_hijacker/proc/eject()
 	if(!disk)
 		return
 	disk.forceMove(drop_location()) //TODO: put in mob active hand
 	disk = null
 	program = null
 
-/obj/machinery/nanite_programmer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/item/nanite_hijacker/afterattack(atom/target, mob/user, etc)
+	if(!disk || !disk.program)
+		return
+	if(isliving(target))
+		GET_COMPONENT_FROM(nanites, /datum/component/nanites, target)
+		if(nanites)
+			to_chat(user, "<span class='notice'>You insert the currently loaded program into [target]'s nanites.</span>")
+			nanites.add_program(program.copy())
+		else
+			to_chat(user, "<span class='notice'>No nanites detected.</span>")
+
+//Same UI as the nanite programmer, as it pretty much does the same
+/obj/item/nanite_hijacker/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "nanite_programmer", name, 600, 800, master_ui, state)
+		ui = new(user, src, ui_key, "nanite_programmer", "Internal Nanite Programmer", 420, 800, master_ui, state)
 		ui.open()
 
-/obj/machinery/nanite_programmer/ui_data()
+/obj/item/nanite_hijacker/ui_data()
 	var/list/data = list()
 	var/has_program = istype(program)
 	data["has_program"] = has_program
@@ -62,9 +78,7 @@
 			data["relay_code"] = S.relay_code
 	return data
 
-/obj/machinery/nanite_programmer/ui_act(action, params)
-	if(..())
-		return
+/obj/item/nanite_hijacker/ui_act(action, params)
 	switch(action)
 		if("eject")
 			eject()
@@ -105,8 +119,7 @@
 		if("set_timer")
 			var/timer = input("Set timer in seconds (10-3600):", name, program.timer) as null|num
 			if(!isnull(timer))
-				if(!timer == 0)
-					timer = CLAMP(round(timer, 1),10,3600)
+				timer = CLAMP(round(timer, 1),10,3600)
 				program.timer = timer
 			. = TRUE
 		if("set_timer_type")
@@ -122,3 +135,10 @@
 					if("Reset Activation Timer")
 						program.timer_type = NANITE_TIMER_RESET
 			. = TRUE
+
+
+#undef REMOTE_MODE_OFF
+#undef REMOTE_MODE_SELF
+#undef REMOTE_MODE_TARGET
+#undef REMOTE_MODE_AOE
+#undef REMOTE_MODE_RELAY

@@ -121,7 +121,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 		var/nanite_sensors = FALSE
-		if(H in GLOB.nanite_monitored_mobs)
+		if(H in SSnanites.nanite_monitored_mobs)
 			nanite_sensors = TRUE
 		// Check if their z-level is correct and if they are wearing a uniform.
 		// Accept H.z==0 as well in case the mob is inside an object.
