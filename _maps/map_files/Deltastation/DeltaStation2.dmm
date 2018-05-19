@@ -32281,23 +32281,10 @@
 	},
 /area/security/nuke_storage)
 "bvQ" = (
-/obj/structure/closet/crate{
-	name = "Silver Crate"
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/coin/silver{
-	pixel_x = -6
-	},
-/obj/item/coin/silver{
-	pixel_x = 6
-	},
-/obj/item/coin/silver{
-	pixel_x = 6
-	},
-/obj/item/coin/silver,
-/obj/item/coin/silver,
+/obj/structure/closet/crate/silvercrate,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -35270,17 +35257,12 @@
 	},
 /area/security/nuke_storage)
 "bBU" = (
-/obj/structure/closet/crate{
-	name = "Gold Crate"
-	},
-/obj/item/storage/belt/champion,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
 	},
 /obj/machinery/light/small,
-/obj/item/stack/sheet/mineral/gold,
-/obj/item/stack/sheet/mineral/gold,
+/obj/structure/closet/crate/goldcrate,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
