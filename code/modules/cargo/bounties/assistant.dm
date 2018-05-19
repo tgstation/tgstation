@@ -1,7 +1,7 @@
 /datum/bounty/item/assistant/strange_object
 	name = "Strange Object"
 	description = "Nanotrasen has taken an interest in strange objects. Find one in maint, and ship it off to CentCom right away."
-	reward = 1500
+	reward = 1200
 	wanted_types = list(/obj/item/relic)
 
 /datum/bounty/item/assistant/scooter
@@ -53,7 +53,7 @@
 /datum/bounty/item/assistant/clown_box
 	name = "Clown Box"
 	description = "The universe needs laughter. Stamp cardboard with a clown stamp and ship it out."
-	reward = 1800
+	reward = 1500
 	wanted_types = list(/obj/item/storage/box/clown)
 
 /datum/bounty/item/assistant/cheesiehonkers
@@ -100,14 +100,14 @@
 /datum/bounty/item/assistant/sunglasses
 	name = "Sunglasses"
 	description = "A famous blues duo is passing through the sector, but they've lost their shades and they can't perform. Ship new sunglasses to CentCom to rectify this."
-	reward = 3500
+	reward = 3000
 	required_count = 2
 	wanted_types = list(/obj/item/clothing/glasses/sunglasses)
 
 /datum/bounty/item/assistant/gondola_hide
 	name = "Gondola Hide"
 	description = "Central Command has recently learned of strange creatures called Gondolas. If you catch one, ship its hide back to CentCom."
-	reward = 8000
+	reward = 5000
 	wanted_types = list(/obj/item/stack/sheet/animalhide/gondola)
 
 /datum/bounty/item/assistant/monkey_hide
@@ -119,26 +119,26 @@
 /datum/bounty/item/assistant/heart
 	name = "Heart"
 	description = "Commander Johnson is in critical condition after suffering a heart attack. Doctors say he needs a new heart fast. Ship one, pronto!"
-	reward = 4000
+	reward = 3000
 	wanted_types = list(/obj/item/organ/heart)
 
 /datum/bounty/item/assistant/lung
 	name = "Lungs"
 	description = "A recent explosion at Central Command has left multiple staff with punctured lungs. Ship spare lungs to be rewarded."
-	reward = 3500
+	reward = 3000
 	required_count = 1
 	wanted_types = list(/obj/item/organ/lungs)
 
 /datum/bounty/item/assistant/appendix
 	name = "Appendix"
 	description = "Chef Gibb of Central Command wants to prepare a meal using a very special delicacy: an appendix. If you ship one, he'll pay."
-	reward = 3500
+	reward = 3000
 	wanted_types = list(/obj/item/organ/appendix)
 
 /datum/bounty/item/assistant/lizard_tail
 	name = "Lizard Tail"
 	description = "The Wizard Federation has made off with Nanotrasen's supply of lizard tails. While CentCom is dealing with the wizards, can the station spare a tail of their own?"
-	reward = 3500
+	reward = 3000
 	wanted_types = list(/obj/item/organ/tail/lizard)
 
 /datum/bounty/item/assistant/shard
@@ -164,7 +164,7 @@
 /datum/bounty/item/assistant/hand_tele
 	name = "Hand Tele"
 	description = "Central Command has come up with a genius idea: Why not teleport cargo rather than ship it? Send over a hand tele, receive payment, then wait 6-8 years while they deliberate."
-	reward = 2500
+	reward = 2000
 	wanted_types = list(/obj/item/hand_tele)
 
 /datum/bounty/item/assistant/geranium
@@ -218,7 +218,7 @@
 /datum/bounty/item/assistant/chainsaw
 	name = "Chainsaw"
 	description = "The chef at CentCom is having trouble butchering her animals. She requests one chainsaw, please."
-	reward = 3000
+	reward = 2500
 	wanted_types = list(/obj/item/twohanded/required/chainsaw)
 
 /datum/bounty/item/assistant/ied
@@ -258,12 +258,12 @@
 /datum/bounty/item/assistant/corgimeat
 	name = "Raw Corgi Meat"
 	description = "The Syndicate recently stole all of CentCom's corgi meat. Ship out a replacement immediately."
-	reward = 6000
+	reward = 3000
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi)
 
 /datum/bounty/item/chef/action_figures
 	name = "Action Figures"
-	description = "The vice president's son saw an ad for action figures on the telescreen, and now he won't shut up about them. Ship some to ease his complaints."
+	description = "The vice president's son saw an ad for action figures on the telescreen and now he won't shut up about them. Ship some to ease his complaints."
 	reward = 4000
 	required_count = 5
 	wanted_types = list(/obj/item/toy/figure)

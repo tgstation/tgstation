@@ -7,35 +7,35 @@
 /datum/bounty/item/chef/soup
 	name = "Soup"
 	description = "To quell the homeless uprising, Nanotrasen will be serving soup to all underpaid workers. Ship any type of soup."
-	reward = 4000
+	reward = 3000
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/soup)
 
 /datum/bounty/item/chef/popcorn
 	name = "Popcorn Bags"
 	description = "Upper management wants to host a movie night. Ship bags of popcorn for the occasion."
-	reward = 3500
+	reward = 3000
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/popcorn)
 
 /datum/bounty/item/chef/onionrings
 	name = "Onion Rings"
 	description = "Nanotrasen is remembering Saturn day. Ship onion rings to show the station's support."
-	reward = 3500
+	reward = 3000
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/onionrings)
 
 /datum/bounty/item/chef/icecreamsandwich
 	name = "Ice Cream Sandwiches"
 	description = "Upper management has been screaming non-stop for ice cream. Please send some."
-	reward = 5000
+	reward = 4000
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/icecreamsandwich)
 
 /datum/bounty/item/chef/bread
 	name = "Bread"
 	description = "Problems with central planning have led to bread prices skyrocketing. Ship some bread to ease tensions."
-	reward = 1500
+	reward = 1000
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/store/bread, /obj/item/reagent_containers/food/snacks/breadslice, /obj/item/reagent_containers/food/snacks/bun, /obj/item/reagent_containers/food/snacks/pizzabread, /obj/item/reagent_containers/food/snacks/rawpastrybase) 
 
 /datum/bounty/item/chef/pie
@@ -47,14 +47,14 @@
 /datum/bounty/item/chef/salad
 	name = "Salad or Rice Bowls"
 	description = "CentCom management is going on a health binge. Your order is to ship salad or rice bowls."
-	reward = 3500
+	reward = 3000
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/salad)
 
 /datum/bounty/item/chef/carrotfries
 	name = "Carrot Fries"
 	description = "Night sight can mean life or death! A shipment of carrot fries is the order."
-	reward = 4000
+	reward = 3500
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/carrotfries)
 
@@ -73,7 +73,7 @@
 /datum/bounty/item/chef/cubancarp
 	name = "Cuban Carp"
 	description = "To celebrate the birth of Castro XXVII, ship one cuban carp to CentCom."
-	reward = 10000
+	reward = 8000
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/cubancarp)
 
 /datum/bounty/item/chef/hotdog
@@ -92,7 +92,7 @@
 /datum/bounty/item/chef/eggplantparm
 	name = "Eggplant Parmigianas"
 	description = "A famous singer will be arriving at CentCom, and their contract demands that they only be served Eggplant Parmigiana. Ship some, please!"
-	reward = 4000
+	reward = 3500
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/eggplantparm)
 
@@ -106,20 +106,20 @@
 /datum/bounty/item/chef/chawanmushi
 	name = "Chawanmushi"
 	description = "Nanotrasen wants to improve relations with its sister company, Japanotrasen. Ship Chawanmushi immediately."
-	reward = 11000
+	reward = 8000
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/chawanmushi)
 
 /datum/bounty/item/chef/kebab
 	name = "Kebabs"
 	description = "Remove all kebab from station you are best food. Ship to CentCom to remove from the premises."
-	reward = 4000
+	reward = 3500
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/kebab)
 
 /datum/bounty/item/chef/soylentgreen
 	name = "Soylent Green"
 	description = "CentCom has heard wonderful things about the product 'Soylent Green', and would love to try some. If you endulge them, expect a pleasant bonus."
-	reward = 6000
+	reward = 5000
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/soylentgreen)
 
 /datum/bounty/item/chef/pancakes
