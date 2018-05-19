@@ -12,7 +12,7 @@
 	var/blobbernaut_message = "slams" //blobbernaut attack verb
 	var/message = "The blob strikes you" //message sent to any mob hit by the blob
 	var/message_living = null //extension to first mob sent to only living mobs i.e. silicons have no skin to be burnt
-	synth_type = CHEM_SYNTH_NEVER
+	can_synth = FALSE
 
 /datum/reagent/blob/proc/send_message(mob/living/M)
 	var/totalmessage = message
