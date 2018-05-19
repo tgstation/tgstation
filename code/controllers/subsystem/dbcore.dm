@@ -243,10 +243,24 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		to_chat(usr, "<span class='danger'>A SQL error occurred during this operation, check the server logs.</span>")
 
 /datum/DBQuery/proc/Execute(sql_query = sql, cursor_handler = default_cursor, log_error = TRUE)
+	var/start_time
+	var/timeout = CONFIG_GET(number/query_debug_log_timeout)
+	if(timeout)
+		start_time = REALTIMEOFDAY
 	Close()
 	. = _dm_db_execute(_db_query, sql_query, db_connection._db_con, cursor_handler, null)
 	if(!. && log_error)
 		log_sql("[ErrorMsg()] | Query used: [sql]")
+	if(timeout)
+		if((REALTIMEOFDAY - start_time) > timeout)
+			log_query_debug("Query execution started at [start_time]")
+			log_query_debug("Query execution ended at [REALTIMEOFDAY]")
+			log_query_debug("Possible slow query timeout detected.")
+			log_query_debug("Query used: [sql]")
+			slow_query_check()
+
+/datum/DBQuery/proc/slow_query_check()
+	message_admins("HEY! A database query may have timed out. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
 
 /datum/DBQuery/proc/NextRow()
 	return _dm_db_next_row(_db_query,item,conversions)
