@@ -68,7 +68,7 @@ D [1]/  ||
 			result += "<br>"
 			var/pos = 0
 			for(var/line in my_list)
-				result += "[display_data(line)]"
+				result += "[display_data(line)] = [display_data(my_list[line])]"
 				pos++
 				if(pos != my_list.len)
 					result += ",<br>"
