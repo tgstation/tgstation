@@ -728,6 +728,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			them for longer. Beware, it has a chance to detonate your PDA."
 	item = /obj/item/cartridge/virus/syndicate
 	cost = 6
+	restricted = TRUE
 
 /datum/uplink_item/stealthy_weapons/suppressor
 	name = "Universal Suppressor"
@@ -803,6 +804,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			telecrystals normally."
 	item = /obj/item/cartridge/virus/frame
 	cost = 4
+	restricted = TRUE
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"
@@ -1211,6 +1213,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 4
 	// An empty uplink is kinda useless.
 	surplus = 0
+	restricted = TRUE
 
 /datum/uplink_item/implants/adrenal
 	name = "Adrenal Implant"
