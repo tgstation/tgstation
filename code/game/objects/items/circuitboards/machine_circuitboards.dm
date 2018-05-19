@@ -882,3 +882,17 @@
 		return
 	transmit = !transmit
 	to_chat(user, "<span class='notice'>You [transmit ? "enable" : "disable"] the board's automatic disposal transmission.</span>")
+
+/obj/item/circuitboard/machine/stacking_unit_console
+	name = "Stacking Machine Console (Machine Board)"
+	build_path = /obj/machinery/mineral/stacking_unit_console
+	req_components = list(
+		/obj/item/stack/sheet/glass = 2,
+		/obj/item/stack/cable_coil = 5)
+
+/obj/item/circuitboard/machine/stacking_machine
+	name = "Stacking Machine (Machine Board)"
+	build_path = /obj/machinery/mineral/stacking_machine
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/matter_bin = 2)
