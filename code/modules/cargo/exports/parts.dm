@@ -19,3 +19,8 @@
 	cost = 2000
 	unit_name = "deactivated alien deconstruction drone"
 	export_types = list(/obj/item/deactivated_swarmer)
+
+/datum/export/pyroclastic_anomaly
+	cost = 10000
+	unit_name = "A rare disarmed anomaly core"
+	export_types = list(/obj/effect/anomaly/pyro)
