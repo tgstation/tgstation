@@ -1,0 +1,5 @@
+author: "iksyp"
+delete-after: True
+changes: 
+  - rscadd: "stacking machines and their consoles no longer dissapear into the shadow realm when broken"
+  - rscadd: "you can link the stacking machine and its console by using a multitool"
