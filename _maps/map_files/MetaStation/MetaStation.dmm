@@ -4122,14 +4122,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
-"aiW" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 8
-	},
-/area/crew_quarters/fitness/recreation)
 "aiX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
@@ -5182,9 +5174,7 @@
 	},
 /area/crew_quarters/fitness/recreation)
 "alk" = (
-/obj/structure/chair{
-	dir = 8
-	},
+/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -5889,11 +5879,6 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
-"amB" = (
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 1
-	},
-/area/crew_quarters/fitness/recreation)
 "amC" = (
 /obj/structure/chair{
 	dir = 4
@@ -6366,6 +6351,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "anJ" = (
@@ -76411,6 +76397,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"etr" = (
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "evy" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -77199,6 +77189,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"vlx" = (
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8
+	},
+/area/crew_quarters/fitness/recreation)
 "vyx" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
@@ -114408,11 +114404,11 @@ acP
 afz
 agz
 dBY
-ahl
-aiW
-aja
+vlx
+vlx
+etr
 alk
-amB
+alk
 anK
 aoZ
 aqk

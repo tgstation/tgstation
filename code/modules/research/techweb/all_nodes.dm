@@ -18,7 +18,7 @@
 	display_name = "Biological Technology"
 	description = "What makes us tick."	//the MC, silly!
 	prereq_ids = list("base")
-	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "sleeper", "pandemic", "defibmount", "operating", "soda_dispenser", "beer_dispenser")
+	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "sleeper", "vr_sleeper", "pandemic", "defibmount", "operating", "soda_dispenser", "beer_dispenser")
 	research_cost = 2500
 	export_price = 5000
 

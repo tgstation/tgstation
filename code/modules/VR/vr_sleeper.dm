@@ -10,13 +10,13 @@
 	state_open = TRUE
 	anchored = TRUE
 	occupant_typecache = list(/mob/living/carbon/human) // turned into typecache in Initialize
+	circuit = /obj/item/circuitboard/machine/vr_sleeper
 	var/you_die_in_the_game_you_die_for_real = FALSE
 	var/datum/effect_system/spark_spread/sparks
 	var/mob/living/carbon/human/virtual_reality/vr_human
 	var/static/list/available_vr_spawnpoints
 	var/vr_category = "default" //Specific category of spawn points to pick from
 	var/allow_creating_vr_humans = TRUE //So you can have vr_sleepers that always spawn you as a specific person or 1 life/chance vr games
-	var/outfit = /datum/outfit/vr_basic
 
 /obj/machinery/vr_sleeper/Initialize()
 	. = ..()
@@ -26,17 +26,17 @@
 	build_spawnpoints()
 	update_icon()
 
-/obj/machinery/vr_sleeper/attack_hand(mob/user)
-	. = ..()
-	if(.)
+/obj/machinery/vr_sleeper/attackby(obj/item/I, mob/user, params)
+	if(!state_open && !occupant)
+		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
+			return
+	if(default_change_direction_wrench(user, I))
 		return
-	if(occupant)
-		ui_interact(user)
-	else
-		if(state_open)
-			close_machine()
-		else
-			open_machine()
+	if(default_pry_open(I))
+		return
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()
 
 /obj/machinery/vr_sleeper/relaymove(mob/user)
 	open_machine()
@@ -49,6 +49,10 @@
 	cleanup_vr_human()
 	QDEL_NULL(sparks)
 	return ..()
+
+/obj/machinery/vr_sleeper/hugbox
+	desc = "A sleeper modified to alter the subconscious state of the user, allowing them to visit virtual worlds. Seems slightly more secure."
+	flags_1 = NODECONSTRUCT_1
 
 /obj/machinery/vr_sleeper/hugbox/emag_act(mob/user)
 	return
@@ -68,10 +72,10 @@
 			SStgui.close_user_uis(occupant, src)
 		..()
 
-/obj/machinery/vr_sleeper/close_machine()
-	..()
-	if(occupant)
-		ui_interact(occupant)
+/obj/machinery/vr_sleeper/MouseDrop_T(mob/target, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+		return
+	close_machine(target)
 
 /obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -96,9 +100,10 @@
 				else
 					if(allow_creating_vr_humans)
 						to_chat(occupant, "<span class='warning'>Virtual avatar not found, attempting to create one...</span>")
-						var/turf/T = get_vr_spawnpoint()
+						var/obj/effect/landmark/vr_spawn/V = get_vr_spawnpoint()
+						var/turf/T = get_turf(V)
 						if(T)
-							build_virtual_human(occupant, T)
+							build_virtual_human(occupant, T, V.vr_outfit)
 							to_chat(vr_human, "<span class='notice'>Transfer successful! you are now playing as [vr_human] in VR!</span>")
 						else
 							to_chat(occupant, "<span class='warning'>Virtual world misconfigured, aborting transfer</span>")
@@ -145,12 +150,9 @@
 	if(!available_vr_spawnpoints || !available_vr_spawnpoints.len) //(re)build spawnpoint lists
 		available_vr_spawnpoints = list()
 		for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
-			available_vr_spawnpoints[V.vr_category] = list()
-			var/turf/T = get_turf(V)
-			if(T)
-				available_vr_spawnpoints[V.vr_category] |= T
+			LAZYADD(available_vr_spawnpoints[V.vr_category], V)
 
-/obj/machinery/vr_sleeper/proc/build_virtual_human(mob/living/carbon/human/H, location, transfer = TRUE)
+/obj/machinery/vr_sleeper/proc/build_virtual_human(mob/living/carbon/human/H, location, var/datum/outfit/outfit, transfer = TRUE)
 	if(H)
 		cleanup_vr_human()
 		vr_human = new /mob/living/carbon/human/virtual_reality(location)
@@ -176,6 +178,7 @@
 
 /obj/effect/landmark/vr_spawn //places you can spawn in VR, auto selected by the vr_sleeper during get_vr_spawnpoint()
 	var/vr_category = "default" //So we can have specific sleepers, eg: "Basketball VR Sleeper", etc.
+	var/vr_outfit = /datum/outfit/vr_basic
 
 /obj/effect/landmark/vr_spawn/team_1
 	vr_category = "team_1"
