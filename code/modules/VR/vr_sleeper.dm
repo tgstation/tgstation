@@ -89,7 +89,7 @@
 	switch(action)
 		if("vr_connect")
 			var/mob/living/carbon/human/human_occupant = occupant
-			if(human_occupant && human_occupant.mind)
+			if(human_occupant && human_occupant.mind && usr == occupant)
 				to_chat(occupant, "<span class='warning'>Transferring to virtual reality...</span>")
 				if(vr_human)
 					SStgui.close_user_uis(occupant, src)
@@ -130,13 +130,15 @@
 	if(vr_human && !QDELETED(vr_human))
 		data["can_delete_avatar"] = TRUE
 		var/status
-		switch(user.stat)
+		switch(vr_human.stat)
 			if(CONSCIOUS)
 				status = "Conscious"
 			if(DEAD)
 				status = "Dead"
 			if(UNCONSCIOUS)
 				status = "Unconscious"
+			if(SOFT_CRIT)
+				status = "Barely Conscious"
 		data["vr_avatar"] = list("name" = vr_human.name, "status" = status, "health" = vr_human.health, "maxhealth" = vr_human.maxHealth)
 	data["toggle_open"] = state_open
 	data["isoccupant"] = (user == occupant)

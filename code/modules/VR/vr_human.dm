@@ -36,12 +36,13 @@
 /mob/living/carbon/human/virtual_reality/proc/revert_to_reality(deathchecks = TRUE)
 	if(real_mind && mind)
 		real_mind.current.ckey = ckey
-		if(deathchecks)
-			if(vr_sleeper)
-				if(vr_sleeper.you_die_in_the_game_you_die_for_real)
-					real_mind.current.death(0)
-				vr_sleeper.vr_human = null
-			vr_sleeper = null
+		real_mind.current.stop_sound_channel(CHANNEL_HEARTBEAT)
+		if(deathchecks && vr_sleeper)
+			if(vr_sleeper.you_die_in_the_game_you_die_for_real)
+				real_mind.current.death(0)
+	if(deathchecks && vr_sleeper)
+		vr_sleeper.vr_human = null
+		vr_sleeper = null
 	real_mind = null
 
 /datum/action/quit_vr
