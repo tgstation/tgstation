@@ -100,6 +100,8 @@ Shaft Miner
 	duffelbag = /obj/item/storage/backpack/duffelbag
 	box = /obj/item/storage/box/survival_mining
 
+	chameleon_extras = /obj/item/gun/energy/kinetic_accelerator
+
 /datum/outfit/job/miner/asteroid
 	name = "Shaft Miner (Asteroid)"
 	uniform = /obj/item/clothing/under/rank/miner
