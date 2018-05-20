@@ -3106,19 +3106,16 @@
 "jr" = (
 /obj/structure/sign/directions/security{
 	dir = 1;
-	icon_state = "direction_sec";
 	pixel_x = 32;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 1;
-	icon_state = "direction_eng";
 	pixel_x = 32;
 	pixel_y = 33
 	},
 /obj/structure/sign/directions/science{
 	dir = 1;
-	icon_state = "direction_sci";
 	pixel_x = 32;
 	pixel_y = 26
 	},

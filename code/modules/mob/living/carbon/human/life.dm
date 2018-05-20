@@ -378,10 +378,10 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 						ballmer_percent = (-abs(drunkenness - 13.35) / 0.9) + 1
 					if(prob(5))
 						say(pick(GLOB.ballmer_good_msg))
-					SSresearch.science_tech.research_points += (BALLMER_POINTS * ballmer_percent)
+					SSresearch.science_tech.add_points_all(TECHWEB_POINT_TYPE_DEFAULT, (BALLMER_POINTS * ballmer_percent))
 				if(drunkenness > 26) // by this point you're into windows ME territory
 					if(prob(5))
-						SSresearch.science_tech.research_points -= BALLMER_POINTS
+						SSresearch.science_tech.remove_points_all(TECHWEB_POINT_TYPE_DEFAULT, BALLMER_POINTS)
 						say(pick(GLOB.ballmer_windows_me_msg))
 		if(drunkenness >= 41)
 			if(prob(25))
