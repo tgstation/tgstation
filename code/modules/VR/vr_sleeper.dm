@@ -60,6 +60,7 @@
 /obj/machinery/vr_sleeper/emag_act(mob/user)
 	you_die_in_the_game_you_die_for_real = TRUE
 	sparks.start()
+	addtimer(CALLBACK(src, .proc/emagNotify), 150)
 
 /obj/machinery/vr_sleeper/update_icon()
 	icon_state = "[initial(icon_state)][state_open ? "-open" : ""]"
@@ -140,6 +141,7 @@
 				status = "Barely Conscious"
 		data["vr_avatar"] = list("name" = vr_human.name, "status" = status, "health" = vr_human.health, "maxhealth" = vr_human.maxHealth)
 	data["toggle_open"] = state_open
+	data["emagged"] = you_die_in_the_game_you_die_for_real
 	data["isoccupant"] = (user == occupant)
 	return data
 
@@ -179,6 +181,10 @@
 	if(vr_human)
 		vr_human.vr_sleeper = null // Prevents race condition where a new human could get created out of order and set to null.
 		QDEL_NULL(vr_human)
+
+/obj/machinery/vr_sleeper/proc/emagNotify() 
+	if(vr_human)
+		vr_human.Dizzy(10)
 
 /obj/effect/landmark/vr_spawn //places you can spawn in VR, auto selected by the vr_sleeper during get_vr_spawnpoint()
 	var/vr_category = "default" //So we can have specific sleepers, eg: "Basketball VR Sleeper", etc.
