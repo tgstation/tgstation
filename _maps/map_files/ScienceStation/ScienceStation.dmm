@@ -3508,6 +3508,9 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/security/brig)
 "iB" = (
@@ -3567,6 +3570,9 @@
 /obj/item/pen,
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -3646,6 +3652,9 @@
 /obj/effect/landmark/start/warden,
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -4357,6 +4366,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "km" = (
@@ -4374,6 +4386,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -4512,6 +4527,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "kC" = (
@@ -6294,6 +6310,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "oG" = (
@@ -8821,6 +8838,9 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "tN" = (
@@ -8831,6 +8851,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "tO" = (
@@ -8979,6 +9000,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/security/brig)
 "ui" = (
@@ -9027,9 +9051,11 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "up" = (
-/obj/effect/stable_vortex{
-	dest_x = 112;
-	dest_y = 128
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal/deliveryChute{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -9227,6 +9253,9 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/red/line,
 /obj/effect/turf_decal/caution/red,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "uS" = (
@@ -9259,6 +9288,9 @@
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -10066,6 +10098,9 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -11890,6 +11925,9 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/box/white,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "Au" = (
@@ -13432,6 +13470,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"Ll" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "Lp" = (
 /obj/structure/closet/secure_closet/miner,
 /obj/effect/turf_decal/stripes/line{
@@ -42291,13 +42337,13 @@ cw
 cC
 cw
 wI
-AP
-AP
-AP
-AP
-AP
-AP
-AP
+Ll
+Ll
+Ll
+Ll
+Ll
+Ll
+Ll
 kB
 oF
 tN
