@@ -402,7 +402,7 @@
 
 /obj/item/electronic_assembly/attackby(obj/item/I, mob/living/user)
 	if(can_anchor && default_unfasten_wrench(user, I, 20))
-		return
+		return TRUE
 	if(istype(I, /obj/item/integrated_circuit))
 		if(!user.canUnEquip(I))
 			return FALSE
@@ -451,6 +451,7 @@
 			S.attackby_react(I,user,user.a_intent)
 		if(user.a_intent != INTENT_HELP)
 			return ..()
+		return TRUE
 
 
 /obj/item/electronic_assembly/attack_self(mob/user)
