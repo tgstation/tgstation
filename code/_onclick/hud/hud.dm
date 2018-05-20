@@ -196,6 +196,7 @@
 				screenmob.client.screen -= infodisplay
 
 	for(var/thing in plane_masters)
+		plane_masters[thing].backdrop(screenmob)
 		screenmob.client.screen += plane_masters[thing]
 
 	hud_version = display_hud_version
