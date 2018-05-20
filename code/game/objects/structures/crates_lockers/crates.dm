@@ -177,3 +177,16 @@
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/coin/silver(src)
+
+/obj/structure/closet/crate/beekeeping
+	name = "beekeeping crate"
+	icon_state = "hydrocrate"
+
+/obj/structure/closet/crate/beekeeping/PopulateContents()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/honey_frame(src)
+	new /obj/item/queen_bee/bought(src)
+	new /obj/item/clothing/head/beekeeper_head(src)
+	new /obj/item/clothing/suit/beekeeper_suit(src)
+	new /obj/item/melee/flyswatter(src)

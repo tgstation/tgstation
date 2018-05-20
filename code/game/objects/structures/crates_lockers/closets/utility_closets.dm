@@ -173,3 +173,25 @@
 	..()
 	for(var/i in 1 to 8)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+/*
+ * Hydroponics for the livegiver lavaland ruin
+ */
+/obj/structure/closet/hydroponics_deluxe
+	name = "deluxe hydroponics locker"
+	icon_state = "hydro"
+
+/obj/structure/closet/hydroponics_deluxe/PopulateContents()
+	..()
+	for(var/i in 1 to 4)
+		new /obj/item/shovel/spade(src)
+	for(var/i in 1 to 4)
+		new /obj/item/plant_analyzer(src)
+	for(var/i in 1 to 4)
+		new /obj/item/cultivator(src)
+	for(var/i in 1 to 4)
+		new /obj/item/hatchet(src)
+	for(var/i in 1 to 4)
+		new /obj/item/storage/bag/plants(src)
+	for(var/i in 1 to 4)
+		new /obj/item/clothing/shoes/sneakers/green(src)
