@@ -23,3 +23,5 @@
 /obj/item/projectile/bullet/a357
 	name = ".357 bullet"
 	damage = 60
+	knockdown = 60
+	stamina = 50
