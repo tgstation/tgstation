@@ -6826,9 +6826,7 @@
 	freq = 1400;
 	location = "Security"
 	},
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -11197,9 +11195,7 @@
 	freq = 1400;
 	location = "Engineering"
 	},
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -15805,9 +15801,7 @@
 /area/hallway/primary/fore)
 "aHC" = (
 /obj/structure/sign/directions/security{
-	desc = "A direction sign, pointing out which way the security department is.";
 	dir = 1;
-	icon_state = "direction_sec";
 	pixel_y = 8
 	},
 /turf/closed/wall,
@@ -17317,9 +17311,7 @@
 	name = "MuleBot Supply Access";
 	req_access_txt = "50"
 	},
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aLa" = (
@@ -19166,9 +19158,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aPm" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
 	dir = 4;
@@ -21633,21 +21623,14 @@
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "aUB" = (
 /obj/structure/sign/directions/security{
-	desc = "A direction sign, pointing out which way the security department is.";
 	dir = 1;
-	icon_state = "direction_sec";
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the engineering department is.";
-	dir = 4;
-	icon_state = "direction_eng"
+	dir = 4
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the bridge is.";
+/obj/structure/sign/directions/command{
 	dir = 2;
-	icon_state = "direction_bridge";
-	name = "bridge";
 	pixel_y = -8
 	},
 /turf/closed/wall/r_wall,
@@ -21683,21 +21666,11 @@
 	},
 /area/hallway/primary/fore)
 "aUF" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the escape arm is.";
-	icon_state = "direction_evac";
-	name = "escape arm"
-	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the medical department is.";
-	icon_state = "direction_med";
-	name = "medical department";
+/obj/structure/sign/directions/evac,
+/obj/structure/sign/directions/medical{
 	pixel_y = 8
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the research department is.";
-	icon_state = "direction_sci";
-	name = "research department";
+/obj/structure/sign/directions/science{
 	pixel_y = -8
 	},
 /turf/closed/wall,
@@ -24489,10 +24462,7 @@
 	},
 /area/quartermaster/office)
 "bay" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Cargo department is.";
-	icon_state = "direction_supply";
-	name = "cargo department";
+/obj/structure/sign/directions/supply{
 	pixel_y = -5
 	},
 /turf/closed/wall,
@@ -25181,9 +25151,7 @@
 /turf/open/floor/plating,
 /area/quartermaster/office)
 "bbO" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/machinery/conveyor{
 	backwards = 1;
 	dir = 2;
@@ -25986,7 +25954,6 @@
 	pixel_y = 5
 	},
 /obj/item/radio/intercom{
-	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
@@ -26875,21 +26842,14 @@
 /area/hallway/primary/central)
 "bfG" = (
 /obj/structure/sign/directions/security{
-	desc = "A direction sign, pointing out which way the security department is.";
 	dir = 1;
-	icon_state = "direction_sec";
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the engineering department is.";
-	dir = 4;
-	icon_state = "direction_eng"
+	dir = 4
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the bridge is.";
+/obj/structure/sign/directions/command{
 	dir = 2;
-	icon_state = "direction_bridge";
-	name = "bridge";
 	pixel_y = -8
 	},
 /turf/closed/wall/r_wall,
@@ -28408,7 +28368,6 @@
 	},
 /obj/machinery/light/small,
 /obj/item/radio/intercom{
-	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = -28
 	},
@@ -29002,9 +28961,7 @@
 	dir = 1;
 	id = "packageExternal"
 	},
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -29284,7 +29241,6 @@
 /area/bridge)
 "bkD" = (
 /obj/item/radio/intercom{
-	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 29
 	},
@@ -30000,11 +29956,8 @@
 /turf/open/floor/plating,
 /area/quartermaster/office)
 "bmj" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Supply department is.";
+/obj/structure/sign/directions/supply{
 	dir = 1;
-	icon_state = "direction_supply";
-	name = "cargo department";
 	pixel_y = 8
 	},
 /turf/closed/wall,
@@ -30029,21 +29982,14 @@
 /area/hallway/primary/port)
 "bmm" = (
 /obj/structure/sign/directions/security{
-	desc = "A direction sign, pointing out which way the security department is.";
 	dir = 1;
-	icon_state = "direction_sec";
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the engineering department is.";
-	dir = 4;
-	icon_state = "direction_eng"
+	dir = 4
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the bridge is.";
+/obj/structure/sign/directions/command{
 	dir = 2;
-	icon_state = "direction_bridge";
-	name = "bridge";
 	pixel_y = -8
 	},
 /turf/closed/wall/r_wall,
@@ -30122,9 +30068,7 @@
 	freq = 1400;
 	location = "Bridge"
 	},
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/maintenance/central)
@@ -30296,21 +30240,11 @@
 	},
 /area/hallway/primary/central)
 "bmL" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the escape arm is.";
-	icon_state = "direction_evac";
-	name = "escape arm"
-	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the medical department is.";
-	icon_state = "direction_med";
-	name = "medical department";
+/obj/structure/sign/directions/evac,
+/obj/structure/sign/directions/medical{
 	pixel_y = 8
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the research department is.";
-	icon_state = "direction_sci";
-	name = "research department";
+/obj/structure/sign/directions/science{
 	pixel_y = -8
 	},
 /turf/closed/wall,
@@ -30366,9 +30300,7 @@
 /area/maintenance/starboard)
 "bmU" = (
 /obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the engineering department is.";
 	dir = 4;
-	icon_state = "direction_eng";
 	pixel_y = 8
 	},
 /turf/closed/wall,
@@ -31374,9 +31306,7 @@
 	freq = 1400;
 	location = "Bar"
 	},
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
@@ -33611,7 +33541,6 @@
 /obj/item/hand_tele,
 /obj/structure/window/reinforced,
 /obj/item/radio/intercom{
-	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = 27
 	},
@@ -34075,21 +34004,11 @@
 /turf/open/floor/wood,
 /area/library)
 "bui" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the escape arm is.";
-	icon_state = "direction_evac";
-	name = "escape arm"
-	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the medical department is.";
-	icon_state = "direction_med";
-	name = "medical department";
+/obj/structure/sign/directions/evac,
+/obj/structure/sign/directions/medical{
 	pixel_y = 8
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the research department is.";
-	icon_state = "direction_sci";
-	name = "research department";
+/obj/structure/sign/directions/science{
 	pixel_y = -8
 	},
 /turf/closed/wall,
@@ -34276,7 +34195,6 @@
 	icon_state = "1-2"
 	},
 /obj/item/radio/intercom{
-	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -26
 	},
@@ -35119,7 +35037,6 @@
 	pixel_y = 3
 	},
 /obj/item/radio/intercom{
-	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 28
 	},
@@ -35959,7 +35876,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/item/radio/intercom{
-	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -26
 	},
@@ -36908,7 +36824,6 @@
 /area/crew_quarters/heads/captain/private)
 "bAf" = (
 /obj/item/radio/intercom{
-	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_y = -26
 	},
@@ -37451,23 +37366,16 @@
 /turf/open/floor/wood,
 /area/library)
 "bBy" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the bridge is.";
+/obj/structure/sign/directions/command{
 	dir = 4;
-	icon_state = "direction_bridge";
-	name = "bridge";
 	pixel_y = -8
 	},
 /obj/structure/sign/directions/security{
-	desc = "A direction sign, pointing out which way the security department is.";
 	dir = 1;
-	icon_state = "direction_sec";
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the engineering department is.";
-	dir = 4;
-	icon_state = "direction_eng"
+	dir = 4
 	},
 /turf/closed/wall,
 /area/hallway/secondary/command)
@@ -37516,11 +37424,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "bBD" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the bridge is.";
+/obj/structure/sign/directions/command{
 	dir = 1;
-	icon_state = "direction_bridge";
-	name = "bridge";
 	pixel_y = -8
 	},
 /turf/closed/wall/r_wall,
@@ -37654,11 +37559,8 @@
 /turf/open/floor/plasteel/vault,
 /area/bridge)
 "bBN" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the bridge is.";
+/obj/structure/sign/directions/command{
 	dir = 1;
-	icon_state = "direction_bridge";
-	name = "bridge";
 	pixel_y = -8
 	},
 /turf/closed/wall/r_wall,
@@ -37676,21 +37578,14 @@
 /area/maintenance/central)
 "bBP" = (
 /obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the engineering department is.";
-	dir = 4;
-	icon_state = "direction_eng"
+	dir = 4
 	},
 /obj/structure/sign/directions/security{
-	desc = "A direction sign, pointing out which way the security department is.";
 	dir = 1;
-	icon_state = "direction_sec";
 	pixel_y = 8
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the bridge is.";
+/obj/structure/sign/directions/command{
 	dir = 8;
-	icon_state = "direction_bridge";
-	name = "bridge";
 	pixel_y = -8
 	},
 /turf/closed/wall,
@@ -37910,7 +37805,6 @@
 /area/engine/atmos)
 "bCr" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 0;
 	name = "Waste to Filter"
 	},
 /turf/open/floor/plasteel,
@@ -37934,7 +37828,6 @@
 /area/engine/atmos)
 "bCw" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
 	name = "Air to Mix"
 	},
 /obj/machinery/atmospherics/pipe/simple/purple/visible{
@@ -39500,9 +39393,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
 	dir = 4;
@@ -39811,23 +39702,13 @@
 	},
 /area/hallway/primary/central)
 "bGx" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the research department is.";
-	icon_state = "direction_sci";
-	name = "research department";
+/obj/structure/sign/directions/science{
 	pixel_y = -8
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the medical department is.";
-	icon_state = "direction_med";
-	name = "medical department";
+/obj/structure/sign/directions/medical{
 	pixel_y = 8
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the escape arm is.";
-	icon_state = "direction_evac";
-	name = "escape arm"
-	},
+/obj/structure/sign/directions/evac,
 /turf/closed/wall/r_wall,
 /area/ai_monitored/storage/eva)
 "bGy" = (
@@ -39990,21 +39871,11 @@
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bGU" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the escape arm is.";
-	icon_state = "direction_evac";
-	name = "escape arm"
-	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the medical department is.";
-	icon_state = "direction_med";
-	name = "medical department";
+/obj/structure/sign/directions/evac,
+/obj/structure/sign/directions/medical{
 	pixel_y = 8
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the research department is.";
-	icon_state = "direction_sci";
-	name = "research department";
+/obj/structure/sign/directions/science{
 	pixel_y = -8
 	},
 /turf/closed/wall,
@@ -41634,21 +41505,18 @@
 /area/engine/atmos)
 "bKA" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
 	name = "Air to Ports"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bKB" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
 	name = "Mix to Ports"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bKC" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
 	name = "Pure to Ports"
 	},
 /turf/open/floor/plasteel,
@@ -42945,7 +42813,6 @@
 	dir = 4
 	},
 /obj/item/radio/intercom{
-	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = 29
 	},
@@ -43209,7 +43076,6 @@
 	pixel_x = -27
 	},
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
 	name = "Port Mix to West Ports"
 	},
 /obj/machinery/light/small{
@@ -43219,7 +43085,6 @@
 /area/engine/atmos)
 "bNU" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
 	name = "Port Mix to East Ports"
 	},
 /obj/item/crowbar,
@@ -45651,7 +45516,6 @@
 /area/engine/atmos)
 "bTk" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
 	name = "Port to Filter"
 	},
 /obj/machinery/light/small{
@@ -46194,9 +46058,7 @@
 	freq = 1400;
 	location = "Kitchen"
 	},
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -46856,7 +46718,6 @@
 /area/engine/atmos)
 "bVL" = (
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
 	name = "Port to Fuel Pipe"
 	},
 /turf/open/floor/plasteel,
@@ -48045,7 +47906,6 @@
 /obj/item/radio/off,
 /obj/item/radio/off,
 /obj/item/radio/intercom{
-	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = 27
 	},
@@ -48427,21 +48287,14 @@
 /area/medical/medbay/central)
 "bZe" = (
 /obj/structure/sign/directions/security{
-	desc = "A direction sign, pointing out which way the security department is.";
 	dir = 1;
-	icon_state = "direction_sec";
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the engineering department is.";
-	dir = 4;
-	icon_state = "direction_eng"
+	dir = 4
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the bridge is.";
+/obj/structure/sign/directions/command{
 	dir = 1;
-	icon_state = "direction_bridge";
-	name = "bridge";
 	pixel_y = -8
 	},
 /turf/closed/wall,
@@ -48477,23 +48330,13 @@
 	},
 /area/hallway/primary/aft)
 "bZi" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the medical department is.";
+/obj/structure/sign/directions/medical{
 	dir = 8;
-	icon_state = "direction_med";
-	name = "medical department";
 	pixel_y = 8
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the escape arm is.";
-	icon_state = "direction_evac";
-	name = "escape arm"
-	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the research department is.";
+/obj/structure/sign/directions/evac,
+/obj/structure/sign/directions/science{
 	dir = 4;
-	icon_state = "direction_sci";
-	name = "research department";
 	pixel_y = -8
 	},
 /turf/closed/wall,
@@ -48784,9 +48627,7 @@
 	freq = 1400;
 	location = "Medbay"
 	},
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -49805,7 +49646,6 @@
 	pixel_y = -29
 	},
 /obj/item/radio/intercom{
-	dir = 0;
 	name = "Station Intercom (General)";
 	pixel_x = -27;
 	pixel_y = -10
@@ -50157,9 +49997,7 @@
 	freq = 1400;
 	location = "Hydroponics"
 	},
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -54423,9 +54261,7 @@
 /turf/open/floor/plasteel,
 /area/science/research)
 "clJ" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
 	freq = 1400;
@@ -57462,9 +57298,7 @@
 	},
 /area/hallway/primary/aft)
 "crI" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
 	dir = 1;
@@ -61059,9 +60893,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/blue/side{
-	dir = 0
-	},
+/turf/open/floor/plasteel/blue/side,
 /area/medical/genetics)
 "czd" = (
 /obj/machinery/light_switch{
@@ -66926,9 +66758,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cKG" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
 	dir = 1;

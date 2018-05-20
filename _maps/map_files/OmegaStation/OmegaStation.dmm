@@ -1505,9 +1505,7 @@
 /area/bridge)
 "acZ" = (
 /obj/structure/chair/comfy/brown{
-	color = "#c45c57";
-	dir = 4;
-	icon_state = "comfychair"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -3352,9 +3350,7 @@
 /area/crew_quarters/heads/captain/private)
 "agQ" = (
 /obj/structure/chair/comfy/brown{
-	color = "#c45c57";
-	dir = 4;
-	icon_state = "comfychair"
+	dir = 4
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -4912,9 +4908,7 @@
 	},
 /area/hallway/primary/starboard/fore)
 "ajH" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -5926,17 +5920,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "alt" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Supply department is.";
-	dir = 4;
-	icon_state = "direction_supply";
-	name = "supply department"
+/obj/structure/sign/directions/supply{
+	dir = 4
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Command department is.";
+/obj/structure/sign/directions/command{
 	dir = 1;
-	icon_state = "direction_bridge";
-	name = "command department";
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/science{
@@ -7073,11 +7061,8 @@
 /obj/structure/sign/directions/security{
 	dir = 8
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Command department is.";
+/obj/structure/sign/directions/command{
 	dir = 1;
-	icon_state = "direction_bridge";
-	name = "command department";
 	pixel_y = 8
 	},
 /turf/closed/wall,
@@ -10220,9 +10205,7 @@
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "atU" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -11478,9 +11461,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "awN" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
 	name = "Atmospherics Lockdown Blast door"
@@ -17435,9 +17416,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "aKj" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
+/obj/structure/plasticflaps/opaque,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -19105,11 +19084,8 @@
 	},
 /area/hallway/primary/central)
 "aOr" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Supply department is.";
-	dir = 4;
-	icon_state = "direction_supply";
-	name = "supply department"
+/obj/structure/sign/directions/supply{
+	dir = 4
 	},
 /obj/structure/sign/directions/science{
 	pixel_y = -8
@@ -27990,11 +27966,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bgX" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Supply department is.";
-	dir = 1;
-	icon_state = "direction_supply";
-	name = "supply department"
+/obj/structure/sign/directions/supply{
+	dir = 1
 	},
 /obj/structure/sign/directions/science{
 	dir = 1;
@@ -34348,8 +34321,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/vault/corner{
-	tag = "icon-vaultcorner (NORTH)";
-	icon_state = "vaultcorner";
 	dir = 1
 	},
 /area/ai_monitored/turret_protected/ai)
@@ -35128,17 +35099,11 @@
 /turf/closed/wall/r_wall/rust,
 /area/ai_monitored/nuke_storage)
 "sOF" = (
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Supply department is.";
-	dir = 4;
-	icon_state = "direction_supply";
-	name = "supply department"
+/obj/structure/sign/directions/supply{
+	dir = 4
 	},
-/obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Command department is.";
+/obj/structure/sign/directions/command{
 	dir = 1;
-	icon_state = "direction_bridge";
-	name = "command department";
 	pixel_y = 8
 	},
 /obj/structure/sign/directions/science{
