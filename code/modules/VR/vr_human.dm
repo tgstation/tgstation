@@ -24,6 +24,9 @@
 			return
 		revert_to_reality(FALSE)
 
+/mob/living/carbon/human/virtual_reality/ghostize()
+	stack_trace("Ghostize was called on a virtual reality mob")
+
 /mob/living/carbon/human/virtual_reality/ghost()
 	set category = "OOC"
 	set name = "Ghost"

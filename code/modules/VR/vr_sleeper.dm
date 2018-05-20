@@ -91,9 +91,8 @@
 			var/mob/living/carbon/human/human_occupant = occupant
 			if(human_occupant && human_occupant.mind && usr == occupant)
 				to_chat(occupant, "<span class='warning'>Transferring to virtual reality...</span>")
-				if(vr_human)
+				if(vr_human && vr_human.stat == CONSCIOUS && !vr_human.real_mind)
 					SStgui.close_user_uis(occupant, src)
-					vr_human.revert_to_reality(FALSE)
 					vr_human.real_mind = human_occupant.mind
 					vr_human.ckey = human_occupant.ckey
 					to_chat(vr_human, "<span class='notice'>Transfer successful! you are now playing as [vr_human] in VR!</span>")
@@ -114,7 +113,7 @@
 		if("delete_avatar")
 			if(!occupant || usr == occupant)
 				if(vr_human)
-					QDEL_NULL(vr_human)
+					cleanup_vr_human()
 			else
 				to_chat(usr, "<span class='warning'>The VR Sleeper's safeties prevent you from doing that.</span>")
 			. = TRUE
@@ -178,7 +177,8 @@
 
 /obj/machinery/vr_sleeper/proc/cleanup_vr_human()
 	if(vr_human)
-		vr_human.death(FALSE)
+		vr_human.vr_sleeper = null // Prevents race condition where a new human could get created out of order and set to null.
+		QDEL_NULL(vr_human)
 
 /obj/effect/landmark/vr_spawn //places you can spawn in VR, auto selected by the vr_sleeper during get_vr_spawnpoint()
 	var/vr_category = "default" //So we can have specific sleepers, eg: "Basketball VR Sleeper", etc.
