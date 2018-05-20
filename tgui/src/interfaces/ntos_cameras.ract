@@ -1,0 +1,101 @@
+<link rel='ractive' href='./ntosheader.ract'>
+<ntosheader/>
+
+{{#if data.screen == 0}}
+	<h2>NTNet Remote Camera Feed Interface</h2>
+	<br>Welcome to the NTNet Remote Camera Feed Interface. Please choose an option below.<br><br>
+	<ui-button action='PRG_list' icon='folder'>List cameras</ui-button><br>
+	<ui-button action='PRG_F5' icon='refresh'>Reload camera list</ui-button><br>
+	<ui-button action='PRG_settings' icon='cogs'>Help and Settings</ui-button><br>
+	
+{{/if}}
+{{#if data.screen == 1}}
+	<ui-button action='PRG_home' icon='home'>Home</ui-button> <ui-button action='PRG_F5' icon='refresh'>Reload camera list</ui-button><br>
+	<ui-display title='Detected Cameras'>
+		<span><em>(Hint: You can search for a specific camera using Ctrl-F)</em></span><br><br>
+		{{#each data.cameras}}
+			<ui-button action='PRG_viewfeed' state='{{camera_status ? null : "disabled"}}' icon='video-camera' params='{"target" : "{{camera_name}}"}'>{{camera_status ? "View feed" : "Feed error"}}</ui-button> <ui-button action='PRG_details' params='{"target" : "{{camera_name}}"}' style = '{{camera_status ? null : "danger"}}'> Details</ui-button> {{camera_name}}<br><br>
+		{{else}}
+			<ui-subdisplay title='No cameras found.'>
+			<em>Please check your desired network filters and try reloading the camera list. For further assistance, contact Nanotrasen Technical Support.</em>
+			</ui-subdisplay>
+		{{/each}}
+	</ui-display>
+{{/if}}
+{{#if data.screen == 2}}
+	<ui-button action='PRG_home' icon='home'>Home</ui-button> <ui-button action='PRG_list' icon='chevron-left'>Back to camera list</ui-button>
+	<ui-display title='Camera Details'><br>
+		<ui-section label='Camera name'>
+				<span>{{data.name}}</span><br>
+		</ui-section>
+		<ui-section label='Camera location'>
+				<span>{{data.area}}</span><br>
+				<span>(GPS coordinates: {{data.location_x}}, {{data.location_y}}, {{data.location_z}})</span><br>
+		</ui-section>
+		<ui-section label='Detected networks'>
+				<span>{{data.networks}}</span><br>
+		</ui-section>
+		<ui-section label='Camera status'> 
+				<span class={{data.active ? 'good' : 'bad'}}>{{data.active ? "Online" : "Offline"}}</span>
+		</ui-section>
+	</ui-display>
+
+	<ui-button action='PRG_viewfeed' state='{{data.active ? null : "disabled"}}' icon='video-camera' params='{"target" : "{{camera_name}}"}'>View feed</ui-button>
+{{/if}}
+{{#if data.screen == 3}}
+	<ui-button action='PRG_home' icon='home'>Home</ui-button>
+	
+	<ui-display title='Viewing feed: {{data.name}}'><br>
+		<span>You are currently viewing {{data.name}}'s camera feed. Move or click the button to close the feed.</span>
+		<br><br><ui-button action='PRG_list' icon='remove'>Close feed</ui-button>
+	</ui-display>
+{{/if}}
+{{#if data.screen == 4}}
+	<ui-button action='PRG_home' icon='home'>Home</ui-button>
+	
+	<ui-display title='Feed interrupted'>
+		<span>The camera feed was disconnected because either you moved, the camera lost connection, or an error in the program caused an unexpected disconnect.</span>
+	</ui-display>
+{{/if}}
+{{#if data.screen == 5}}
+	<ui-display title='SYSTEM ERROR'><br>
+		<span>A system error has occurred, and the program cannot continue. You should probably post an issue report on the Github about this.<br>Press the button below to wipe all volatile data, including some critical data, and return to the home screen.</span>
+		<br><br><ui-button action='PRG_ramclear' icon='warning' style='danger'>Return to home screen - THIS WILL CLEAR ALL VOLATILE DATA</ui-button>
+		<br><br>
+		<ui-subdisplay title='Debug information'><br>
+			{{#if data.debug_message}}
+				{{data.debug_message}}
+			{{else}}
+				<span>No debugging information available...</span>
+			{{/if}}
+		</ui-subdisplay>
+	</ui-display>
+{{/if}}
+{{#if data.screen == 6}}
+	<ui-display title='SYSTEM ERROR'><br>
+		<span>A system error has occurred, and the program cannot continue. Press the button below to wipe all volatile data, including some critical data, and return to the home screen.<br><br>Clearing volatile data, please wait.</span>
+	</ui-display>
+{{/if}}
+{{#if data.screen == 7}}
+	<ui-button action='PRG_home' icon='home'>Home</ui-button>
+	<ui-display title='Help and Settings'><br>
+		<ui-subdisplay title='Networking status'>
+			<ui-section label='Current network string'>
+				<span>{{data.network_setting}}</span><br><br>
+			</ui-section>
+			<ui-section label='Cameras detected'>
+				<span>{{data.number_of_cameras}}</span>
+			</ui-section>
+		</ui-subdisplay>
+		<ui-subdisplay title='Networking configuration'>
+			<ui-button action='PRG_setnet' icon='pencil-square-o'>Change networks...</ui-button> <ui-button action='PRG_F5' icon='refresh'>Reload camera list</ui-button><br>
+			<br><br><span class="average bold">Caution: Changing networks will reload camera list.</span>
+	</ui-display>
+
+{{/if}}
+
+{{#if data.screen == 8}}
+		<ui-display title='Generating camera list...'>
+		<span>Currently generating the camera list. Please wait...</span>
+	</ui-display>
+{{/if}}
