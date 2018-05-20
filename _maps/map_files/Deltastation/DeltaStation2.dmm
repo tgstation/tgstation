@@ -18171,6 +18171,7 @@
 /area/quartermaster/storage)
 "aSm" = (
 /obj/structure/table/reinforced,
+/obj/item/paper_bin,
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
 "aSn" = (
@@ -19102,9 +19103,10 @@
 	},
 /area/quartermaster/storage)
 "aUa" = (
-/obj/structure/table/reinforced,
-/obj/item/paper_bin,
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/computer/bounty{
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
@@ -20883,9 +20885,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/qm)
 "aXD" = (
-/obj/machinery/computer/security/mining{
-	dir = 8
-	},
 /obj/machinery/requests_console{
 	department = "Quartermaster's Desk";
 	name = "Quartermaster RC";
@@ -20897,6 +20896,9 @@
 	},
 /obj/machinery/light_switch{
 	pixel_x = 23
+	},
+/obj/machinery/computer/bounty{
+	dir = 8
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
@@ -22444,7 +22446,6 @@
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/office)
 "baP" = (
-/obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -22455,6 +22456,9 @@
 	dir = 8;
 	name = "Station Intercom (General)";
 	pixel_x = 28
+	},
+/obj/machinery/computer/bounty{
+	dir = 8
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 6
@@ -24253,12 +24257,6 @@
 /area/hydroponics)
 "beR" = (
 /obj/structure/cable/white,
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "Hydroponics APC";
-	areastring = "/area/hydroponics";
-	pixel_y = -26
-	},
 /turf/open/floor/plasteel/greenblue/side,
 /area/hydroponics)
 "beS" = (
@@ -24272,10 +24270,6 @@
 /turf/open/floor/plasteel/greenblue/side,
 /area/hydroponics)
 "beU" = (
-/obj/machinery/light_switch{
-	pixel_x = 8;
-	pixel_y = -26
-	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hydroponics)
@@ -100585,6 +100579,16 @@
 	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/misc_lab)
+"uJX" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/computer/bounty{
+	dir = 8
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/heads/hop)
 "uYS" = (
 /obj/machinery/door/airlock/atmos/glass/critical{
 	heat_proof = 1;
@@ -136806,7 +136810,7 @@ caP
 bZb
 caP
 cge
-caP
+uJX
 cjB
 ckX
 cmA

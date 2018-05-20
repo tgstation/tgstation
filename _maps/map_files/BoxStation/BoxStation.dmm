@@ -27984,8 +27984,9 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "btB" = (
-/obj/structure/table,
-/obj/machinery/recharger,
+/obj/machinery/computer/bounty{
+	dir = 4
+	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 9
 	},
@@ -28003,6 +28004,7 @@
 	pixel_y = 7
 	},
 /obj/item/pen,
+/obj/item/stamp/hop,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
 "btE" = (
@@ -28549,7 +28551,11 @@
 "buO" = (
 /obj/structure/table,
 /obj/item/folder/blue,
-/obj/item/stamp/hop,
+/obj/item/stack/packageWrap{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
 "buP" = (
@@ -28903,22 +28909,14 @@
 	},
 /area/science/research)
 "bvF" = (
-/obj/structure/table,
-/obj/item/cartridge/quartermaster{
-	pixel_x = 6;
-	pixel_y = 5
-	},
-/obj/item/cartridge/quartermaster,
-/obj/item/cartridge/quartermaster{
-	pixel_x = -4;
-	pixel_y = 7
-	},
 /obj/machinery/requests_console{
 	department = "Cargo Bay";
 	departmentType = 2;
 	pixel_x = -30
 	},
-/obj/item/coin/silver,
+/obj/machinery/computer/bounty{
+	dir = 4
+	},
 /turf/open/floor/plasteel/brown{
 	dir = 9
 	},
@@ -29157,11 +29155,7 @@
 /area/crew_quarters/heads/hop)
 "bwk" = (
 /obj/structure/table,
-/obj/item/hand_labeler,
-/obj/item/stack/packageWrap{
-	pixel_x = -1;
-	pixel_y = -1
-	},
+/obj/machinery/recharger,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
 "bwl" = (
@@ -29950,6 +29944,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/stamp/qm,
 /turf/open/floor/plasteel/brown{
 	dir = 2
 	},
@@ -29972,10 +29967,19 @@
 "byg" = (
 /obj/structure/table,
 /obj/item/clipboard,
-/obj/item/stamp/qm,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/cartridge/quartermaster{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/cartridge/quartermaster{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/cartridge/quartermaster,
+/obj/item/coin/silver,
 /turf/open/floor/plasteel/brown{
 	dir = 2
 	},
@@ -53484,6 +53488,15 @@
 "gjl" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
+"goZ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/computer/bounty{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "gsz" = (
 /obj/machinery/camera{
 	c_tag = "Fitness Room South";
@@ -76951,7 +76964,7 @@ bnG
 bnz
 bpA
 bbR
-bkM
+goZ
 jlm
 bud
 eyM

@@ -4943,12 +4943,14 @@
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
 "ajM" = (
-/obj/structure/table/reinforced,
 /obj/machinery/requests_console{
 	department = "Cargo Office";
 	departmentType = 0;
 	name = "Cargo Office RC";
 	pixel_x = 32
+	},
+/obj/machinery/computer/bounty{
+	dir = 8
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
@@ -6472,7 +6474,9 @@
 	},
 /area/hallway/primary/starboard/fore)
 "amv" = (
-/obj/structure/table/reinforced,
+/obj/machinery/computer/bounty{
+	dir = 4
+	},
 /turf/open/floor/plasteel/brown{
 	dir = 10
 	},
@@ -18681,12 +18685,6 @@
 /area/hydroponics)
 "aNq" = (
 /obj/machinery/hydroponics/constructable,
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "Hydroponics APC";
-	areastring = "/area/hydroponics";
-	pixel_y = -26
-	},
 /obj/structure/cable/white,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -31204,9 +31202,6 @@
 /obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
-"dWc" = (
-/turf/closed/mineral/random/labormineral,
-/area/space)
 "dYC" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1

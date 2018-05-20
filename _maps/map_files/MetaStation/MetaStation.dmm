@@ -18465,7 +18465,6 @@
 /obj/machinery/camera/autoname{
 	dir = 2
 	},
-/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
@@ -18478,24 +18477,37 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
 /area/quartermaster/qm)
 "aNQ" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/computer/bounty,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
 /area/quartermaster/qm)
 "aNR" = (
 /obj/structure/table,
+/obj/item/cartridge/quartermaster{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/cartridge/quartermaster{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/cartridge/quartermaster,
+/obj/item/gps{
+	gpstag = "QM0"
+	},
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -19652,6 +19664,7 @@
 /area/quartermaster/qm)
 "aQs" = (
 /obj/structure/disposalpipe/segment,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aQt" = (
@@ -19661,18 +19674,6 @@
 /obj/machinery/status_display{
 	pixel_x = 32;
 	supply_display = 1
-	},
-/obj/item/cartridge/quartermaster{
-	pixel_x = 6;
-	pixel_y = 5
-	},
-/obj/item/cartridge/quartermaster,
-/obj/item/cartridge/quartermaster{
-	pixel_x = -4;
-	pixel_y = 7
-	},
-/obj/item/gps{
-	gpstag = "QM0"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
@@ -24430,15 +24431,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "baw" = (
-/obj/item/stamp{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/stamp/denied{
-	pixel_x = 4;
-	pixel_y = -2
-	},
-/obj/structure/table/reinforced,
 /obj/structure/noticeboard{
 	desc = "A board for pinning important notices upon. Probably helpful for keeping track of requests.";
 	name = "requests board";
@@ -24450,13 +24442,13 @@
 	departmentType = 2;
 	pixel_y = 30
 	},
-/obj/item/pen/red,
+/obj/machinery/computer/bounty,
 /turf/open/floor/plasteel/brown{
 	dir = 9
 	},
 /area/quartermaster/office)
 "bax" = (
-/obj/structure/table/reinforced,
+/obj/machinery/computer/cargo,
 /turf/open/floor/plasteel/brown{
 	dir = 5
 	},
@@ -25817,12 +25809,19 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bdp" = (
-/obj/machinery/computer/cargo{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/table/reinforced,
+/obj/item/stamp/denied{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/stamp{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pen/red,
 /turf/open/floor/plasteel/brown{
 	dir = 4
 	},
@@ -30033,6 +30032,9 @@
 	network = list("prison");
 	pixel_y = 30
 	},
+/obj/item/folder/blue,
+/obj/item/storage/secure/briefcase,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bmq" = (
@@ -31007,12 +31009,12 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hop)
 "bom" = (
-/obj/item/folder/blue,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/structure/table/wood,
-/obj/item/assembly/flash/handheld,
+/obj/machinery/computer/bounty{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bon" = (
@@ -32276,15 +32278,6 @@
 	},
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 1
-	},
-/area/bridge)
-"bqR" = (
-/obj/machinery/light_switch{
-	pixel_x = 8;
-	pixel_y = -26
-	},
-/turf/open/floor/plasteel/darkblue/side{
-	dir = 10
 	},
 /area/bridge)
 "bqS" = (
@@ -105743,7 +105736,7 @@ bjf
 bkG
 bmF
 boz
-bqR
+boy
 bsU
 bsU
 bsU
