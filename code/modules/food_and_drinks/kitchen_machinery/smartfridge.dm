@@ -185,8 +185,8 @@
 					break
 				if(O.name == params["name"])
 					O.forceMove(drop_location())
-					if(desired == 1 && Adjacent(user) && !issilicon(user))
-						user.put_in_hands(O)
+					if(desired == 1 && Adjacent(usr) && !issilicon(usr))
+						usr.put_in_hands(O)
 					else
 						adjust_item_drop_location(O)
 					desired--
