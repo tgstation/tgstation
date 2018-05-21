@@ -1,5 +1,8 @@
 {
     "map_name": "Runtime Station",
     "map_path": "map_files/debug",
-    "map_file": "runtimestation.dmm"
+    "map_file": "runtimestation.dmm",
+    "minetype": null,
+    "space_ruin_levels": 0,
+    "space_empty_levels": 0
 }
