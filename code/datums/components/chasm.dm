@@ -66,8 +66,10 @@
 	//Flies right over the chasm
 	if(ismob(AM))
 		var/mob/M = AM
-		if(M.buckled && (M.buckled.buckled != M) && !droppable(M.buckled))		//middle statement to prevent infinite loops just in case!
-			return FALSE
+		if(M.buckled)		//middle statement to prevent infinite loops just in case!
+			var/mob/buckled_to = M.buckled
+			if((!ismob(M.buckled) || (buckled_to.buckled != M)) && !droppable(M.buckled))
+				return FALSE
 		if(M.is_flying())
 			return FALSE
 		if(ishuman(AM))
