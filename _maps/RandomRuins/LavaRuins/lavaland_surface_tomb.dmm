@@ -1,0 +1,58 @@
+"a" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/space)
+"b" = (/turf/closed/indestructible/riveted/boss,/area/space)
+"c" = (/obj/structure/closet/crate/sarcophagus,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/space)
+"d" = (/obj/structure/closet/crate/sarcophagus,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"e" = (/turf/closed/indestructible/riveted/boss,/area/ruin/unpowered)
+"f" = (/turf/open/indestructible/boss,/area/ruin/unpowered)
+"g" = (/mob/living/simple_animal/hostile/cryptguard,/turf/open/indestructible/boss,/area/ruin/unpowered)
+"h" = (/mob/living/simple_animal/hostile/cryptguard/leader,/turf/open/indestructible/boss,/area/ruin/unpowered)
+"i" = (/turf/open/indestructible/boss,/area/space)
+"j" = (/obj/effect/cryptlight{icon_state = "crys"; dir = 4},/turf/open/indestructible/boss,/area/ruin/unpowered)
+"k" = (/obj/effect/cryptlight{icon_state = "crys"; dir = 8},/turf/open/indestructible/boss,/area/space)
+"l" = (/obj/effect/cryptlight{icon_state = "crys"; dir = 1},/turf/open/indestructible/boss,/area/ruin/unpowered)
+"m" = (/obj/structure/necropolis_gate,/turf/open/indestructible/boss,/area/ruin/unpowered)
+"n" = (/obj/structure/necropolis_gate,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"s" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+sssssssssssssssaaaaaaaaaa
+sssssssssssssssaaaaaaaaaa
+sssssssssssssssaaaaaaaaaa
+sssssssssssssssaaaaaaaaaa
+sssssesssssssssaabaaaaaaa
+sssseeeeeeeeeeebbbbaaaaaa
+ssssseffgffhffgiibaaaaaaa
+sssssefffffffffiibaaaaaaa
+sssssefffffffffiibaaaaaaa
+sssssejffffffffikbaaaaaaa
+sssssefffffffffiibaaaaaaa
+sssssefffffffffiibaaaaaaa
+ssesseffflffflfiibaabaaaa
+seeeeeeeeeemeeebbbbbbbaaa
+ssesssssessssseaacaabaaaa
+ssesssssessssseaaaaabaaaa
+ssesssssessssseaaaacbaaaa
+ssessssssssssssaaaaabaaaa
+ssessssssssssssaaaaabaaaa
+ssesssssessssseaaaacbaaaa
+ssesssssessssseaaaaabaaaa
+ssessdssessssseaacaabaaaa
+seeeeeeeeeeneeebbbbbbbaaa
+ssessssssssssssaaaaabaaaa
+sssssssseessseeaaaaaaaaaa
+sssssssseessseeaaaaaaaaaa
+sssssssssssssssaaaaaaaaab
+sssssssseessseeaaaaaaaaaa
+sssssssseessseeaaaaaaaaaa
+sssssssssssssssaaaaaaaaaa
+"}
