@@ -1490,9 +1490,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					ambientocclusion = !ambientocclusion
 					if(parent && parent.screen && parent.screen.len)
 						var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
-						PM.filters -= AMBIENT_OCCLUSION
-						if(ambientocclusion)
-							PM.filters += AMBIENT_OCCLUSION
+						PM.backdrop(parent.mob)
 
 				if("save")
 					save_preferences()
