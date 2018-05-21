@@ -22,7 +22,6 @@ def states_equal(left, right):
     for attr in ('loop', 'rewind', 'movement', 'dirs', 'delays', 'hotspots', 'framecount'):
         lval, rval = getattr(left, attr), getattr(right, attr)
         if lval != rval:
-            print(f"    {attr}: {lval!r} != {rval!r}")
             result = False
 
     # frames
@@ -51,24 +50,30 @@ def three_way_merge(base, left, right):
         print(f"    Base: {base.width} x {base.height}")
         print(f"    Ours: {left.width} x {left.height}")
         print(f"    Theirs: {right.width} x {right.height}")
-        return None
+        return True, None
 
     base_states, left_states, right_states = dictify(base), dictify(left), dictify(right)
 
     new_left = {k: v for k, v in left_states.items() if k not in base_states}
     new_right = {k: v for k, v in right_states.items() if k not in base_states}
     new_both = {}
+    conflicts = []
     for key, state in list(new_left.items()):
         in_right = new_right.get(key, None)
         if in_right:
             if states_equal(state, in_right):
-                # Allow it, but don't add it a second time
+                # allow it
                 new_both[key] = state
-                del new_left[key]
-                del new_right[key]
             else:
-                print(f"    {state.name!r}: added different in both!")
-                return None
+                # generate conflict states
+                print(f" C: {state.name!r}: added differently in both!")
+                state.name = f"{state.name} !CONFLICT! left"
+                conflicts.append(state)
+                in_right.name = f"{state.name} !CONFLICT! right"
+                conflicts.append(in_right)
+            # don't add it a second time
+            del new_left[key]
+            del new_right[key]
 
     final_states = []
     # add states that are currently in the base
@@ -111,8 +116,14 @@ def three_way_merge(base, left, right):
             final_states.append(in_left)  # either or
         else:
             # changed in both
-            print(f"    {state.name!r}: changed different in both!")
-            return None
+            name = state.name
+            print(f" C: {name!r}: changed differently in both!")
+            state.name = f"{name} !CONFLICT! base"
+            conflicts.append(state)
+            in_left.name = f"{name} !CONFLICT! left"
+            conflicts.append(in_left)
+            in_right.name = f"{name} !CONFLICT! right"
+            conflicts.append(in_right)
 
     # add states which both left and right added the same
     for key, state in new_both.items():
@@ -129,9 +140,10 @@ def three_way_merge(base, left, right):
         print(f"    {state.name!r}: added in right")
         final_states.append(state)
 
+    final_states.extend(conflicts)
     merged = dmi.Dmi(base.width, base.height)
     merged.states = final_states
-    return merged
+    return len(conflicts), merged
 
 def main(path, original, left, right):
     print(f"Merging icon: {path}")
@@ -140,13 +152,19 @@ def main(path, original, left, right):
     icon_left = dmi.Dmi.from_file(left)
     icon_right = dmi.Dmi.from_file(right)
 
-    merged = three_way_merge(icon_orig, icon_left, icon_right)
-    if merged is None:
-        print("!!! Manual merge required!")
-        return 1
-    else:
+    trouble, merged = three_way_merge(icon_orig, icon_left, icon_right)
+    if merged:
         merged.to_file(left)
-        return 0
+    if trouble:
+        print("!!! Manual merge required!")
+        if merged:
+            print("    A best-effort merge was performed. You must edit the icon and remove all")
+            print("    icon states marked with !CONFLICT!, leaving only the desired icon.")
+        else:
+            print("    The icon was totally unable to be merged, you must start with one version")
+            print("    or the other and manually resolve the conflict.")
+        print("    Information about which states conflicted is listed above.")
+    return trouble
 
 if __name__ == '__main__':
     if len(sys.argv) != 6:
