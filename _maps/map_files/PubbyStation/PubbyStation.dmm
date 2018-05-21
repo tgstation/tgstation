@@ -13885,7 +13885,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aKr" = (
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /obj/item/toy/figure/curator,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
