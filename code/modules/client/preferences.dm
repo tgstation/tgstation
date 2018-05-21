@@ -194,7 +194,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(CONFIG_GET(flag/roundstart_traits))
 				dat += "<center><h2>Quirk Setup</h2>"
 				dat += "<a href='?_src_=prefs;preference=trait;task=menu'>Configure Quirks</a><br></center>"
-				dat += "<center><b>Current quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
+				dat += "<center><b>Current Quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
 			dat += "<h2>Identity</h2>"
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
 			if(jobban_isbanned(user, "appearance"))
@@ -886,7 +886,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center>"
 		dat += "<hr>"
 		dat += "<center><b>Current quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
-		dat += "<center>[all_quirks.len] / [MAX_QUIRKS] max quirks<br>\
+		dat += "<center>[positive_quirks.len] / [MAX_QUIRKS] max positive quirks<br>\
 		<b>Quirk balance remaining:</b> [GetQuirkBalance()]</center><br>"
 		for(var/V in SSquirks.quirks)
 			var/datum/quirk/T = SSquirks.quirks[V]
@@ -1000,9 +1000,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						neutral_quirks -= quirk
 						all_quirks -= quirk
 					else
-						if(all_quirks.len >= MAX_QUIRKS)
-							to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] quirks!</span>")
-							return
 						neutral_quirks += quirk
 						all_quirks += quirk
 				else
@@ -1017,8 +1014,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						negative_quirks -= quirk
 						all_quirks -= quirk
 					else if(value > 0)
-						if(all_quirks.len >= MAX_QUIRKS)
-							to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] quirks!</span>")
+						if(positive_quirks.len >= MAX_QUIRKS)
+							to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] positive quirks!</span>")
 							return
 						if(balance - value < 0)
 							to_chat(user, "<span class='warning'>You don't have enough balance to gain this quirk!</span>")
@@ -1026,9 +1023,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						positive_quirks += quirk
 						all_quirks += quirk
 					else
-						if(all_quirks.len >= MAX_QUIRKS)
-							to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] quirks!</span>")
-							return
 						negative_quirks += quirk
 						all_quirks += quirk
 				SetQuirks(user)
@@ -1496,9 +1490,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					ambientocclusion = !ambientocclusion
 					if(parent && parent.screen && parent.screen.len)
 						var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
-						PM.filters -= AMBIENT_OCCLUSION
-						if(ambientocclusion)
-							PM.filters += AMBIENT_OCCLUSION
+						PM.backdrop(parent.mob)
 
 				if("save")
 					save_preferences()

@@ -144,7 +144,8 @@ This file contains the cult dagger and rune list code
 	if(locate(/obj/effect/rune) in T)
 		to_chat(user, "<span class='cult'>There is already a rune here.</span>")
 		return FALSE
-	if(!is_station_level(T.z) && !is_mining_level(T.z))
+	var/area/A = get_area(T)
+	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !A.blob_allowed))
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
 		return FALSE
 	return TRUE

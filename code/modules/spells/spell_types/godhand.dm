@@ -13,10 +13,7 @@
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
-
-/obj/item/melee/touch_attack/Initialize()
-	attached_spell = loc
-	. = ..()
+	var/charges = 1
 
 /obj/item/melee/touch_attack/attack(mob/target, mob/living/carbon/user)
 	if(!iscarbon(user)) //Look ma, no hands
@@ -29,13 +26,13 @@
 /obj/item/melee/touch_attack/afterattack(atom/target, mob/user, proximity)
 	user.say(catchphrase)
 	playsound(get_turf(user), on_use_sound,50,1)
-	if(attached_spell)
-		attached_spell.attached_hand = null
-	qdel(src)
+	charges--
+	if(charges <= 0)
+		qdel(src)
 
 /obj/item/melee/touch_attack/Destroy()
 	if(attached_spell)
-		attached_spell.attached_hand = null
+		attached_spell.on_hand_destroy(src)
 	return ..()
 
 /obj/item/melee/touch_attack/disintegrate

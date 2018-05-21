@@ -157,9 +157,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 //get an assetdatum or make a new one
 /proc/get_asset_datum(var/type)
-	if (!(type in GLOB.asset_datums))
-		return new type()
-	return GLOB.asset_datums[type]
+	return GLOB.asset_datums[type] || new type()
 
 /datum/asset
 	var/_abstract = /datum/asset
@@ -469,7 +467,12 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/simple/IRV
 	assets = list(
 		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',
-		"jquery-1.10.2.min.js" = 'html/IRV/jquery-1.10.2.min.js'
+	)
+
+/datum/asset/group/IRV
+	children = list(
+		/datum/asset/simple/jquery,
+		/datum/asset/simple/IRV
 	)
 
 /datum/asset/simple/changelog
@@ -496,12 +499,21 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	)
 
 /datum/asset/group/goonchat
-	children = list(/datum/asset/simple/goonchat, /datum/asset/spritesheet/goonchat)
+	children = list(
+		/datum/asset/simple/jquery,
+		/datum/asset/simple/goonchat,
+		/datum/asset/spritesheet/goonchat
+	)
+
+/datum/asset/simple/jquery
+	verify = FALSE
+	assets = list(
+		"jquery.min.js"            = 'code/modules/goonchat/browserassets/js/jquery.min.js',
+	)
 
 /datum/asset/simple/goonchat
 	verify = FALSE
 	assets = list(
-		"jquery.min.js"            = 'code/modules/goonchat/browserassets/js/jquery.min.js',
 		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
 		"errorHandler.js"          = 'code/modules/goonchat/browserassets/js/errorHandler.js',
 		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',

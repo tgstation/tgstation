@@ -1,5 +1,3 @@
-// Various tools and handheld engineering devices.
-
 /datum/export/toolbox
 	cost = 4
 	unit_name = "toolbox"
@@ -34,7 +32,6 @@
 	export_types = list(/obj/item/wirecutters)
 
 
-// Welding tools
 /datum/export/weldingtool
 	cost = 5
 	unit_name = "welding tool"
@@ -52,7 +49,6 @@
 	export_types = list(/obj/item/weldingtool/largetank, /obj/item/weldingtool/hugetank)
 
 
-// Fire extinguishers
 /datum/export/extinguisher
 	cost = 15
 	unit_name = "fire extinguisher"
@@ -65,7 +61,6 @@
 	export_types = list(/obj/item/extinguisher/mini)
 
 
-// Flashlights
 /datum/export/flashlight
 	cost = 5
 	unit_name = "flashlight"
@@ -83,7 +78,6 @@
 	export_types = list(/obj/item/flashlight/seclite)
 
 
-// Analyzers and Scanners
 /datum/export/analyzer
 	cost = 5
 	unit_name = "analyzer"
@@ -102,18 +96,17 @@
 	exclude_types = list(/obj/item/radio/mech)
 
 
-// High-tech tools.
 /datum/export/rcd
-	cost = 100 // 15 metal -> 75 credits, +25 credits for production
+	cost = 100
 	unit_name = "rapid construction device"
 	export_types = list(/obj/item/construction/rcd)
 
 /datum/export/rcd_ammo
-	cost = 60 // 6 metal, 4 glass -> 50 credits, +10 credits
+	cost = 60
 	unit_name = "compressed matter cardridge"
 	export_types = list(/obj/item/rcd_ammo)
 
 /datum/export/rpd
-	cost = 350 // 37.5 metal, 18.75 glass -> 281.25 credits, + some
+	cost = 100
 	unit_name = "rapid piping device"
 	export_types = list(/obj/item/pipe_dispenser)
