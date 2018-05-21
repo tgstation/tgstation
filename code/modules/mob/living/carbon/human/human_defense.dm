@@ -708,7 +708,7 @@
 					if(toxloss > 10)
 						to_chat(src, "<span class='danger'>You feel sick.</span>")
 					else if(toxloss > 20)
-						to_chat(src, "<span class='danger'>You feel nauseous.</span>")
+						to_chat(src, "<span class='danger'>You feel nauseated.</span>")
 					else if(toxloss > 40)
 						to_chat(src, "<span class='danger'>You feel very unwell!</span>")
 				if(oxyloss)
