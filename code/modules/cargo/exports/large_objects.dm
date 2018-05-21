@@ -31,7 +31,6 @@
 	unit_name = "coffin"
 	export_types = list(/obj/structure/closet/crate/coffin)
 
-// Reagent dispensers.
 /datum/export/large/reagent_dispenser
 	cost = 100 // +0-400 depending on amount of reagents left
 	var/contents_cost = 400
