@@ -37,10 +37,11 @@
 	activate_pin(2)
 
 /obj/item/integrated_circuit/smart/coord_basic_pathfinder
-	name = "coordinte pathfinder"
+	name = "coordinate pathfinder"
 	desc = "This complex circuit is able to determine what direction a given target is."
-	extended_desc = "This circuit uses absolute coordintes to determine where the target is. If the machine \
-	cannot see the target, it will not be able to calculate the correct direction.This circuit is working only in assembly."
+	extended_desc = "This circuit uses absolute coordinates to determine where the target is. If the machine \
+	cannot see the target, it will not be able to calculate the correct direction. \
+	This circuit will only work while inside an assembly."
 	icon_state = "numberpad"
 	complexity = 5
 	inputs = list("X" = IC_PINTYPE_NUMBER,"Y" = IC_PINTYPE_NUMBER,"ignore obstacles" = IC_PINTYPE_BOOLEAN)
@@ -74,8 +75,8 @@
 /obj/item/integrated_circuit/smart/advanced_pathfinder
 	name = "advanced pathfinder"
 	desc = "This circuit uses a complex processor for long-range pathfinding."
-	extended_desc = "This circuit uses absolute coordinates for target. A path will be generated taking obstacle input into account, \
-	pathing around any instances of said input. The passkey provided from a card reader is used to create a valid path through doorways."
+	extended_desc = "This circuit uses absolute coordinates to find its target. A path will be generated to the target, taking obstacles into account, \
+	and pathing around any instances of said input. The passkey provided from a card reader is used to calculate a valid path through airlocks."
 	icon_state = "numberpad"
 	complexity = 40
 	cooldown_per_use = 50

@@ -1076,8 +1076,7 @@
 /area/awaymission/wildwest/mines)
 "dO" = (
 /obj/structure/chair/comfy/beige{
-	dir = 1;
-	icon_state = "comfychair"
+	dir = 1
 	},
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)

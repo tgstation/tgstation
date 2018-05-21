@@ -16,6 +16,7 @@
 					/obj/item/reagent_containers/food/drinks/bottle/absinthe = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/grappa = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/sake = 5,
+					/obj/item/reagent_containers/food/drinks/bottle/fernet = 5,
 					/obj/item/reagent_containers/food/drinks/ale = 6,
 					/obj/item/reagent_containers/food/drinks/bottle/orangejuice = 4,
 					/obj/item/reagent_containers/food/drinks/bottle/tomatojuice = 4,

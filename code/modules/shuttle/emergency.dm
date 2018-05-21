@@ -415,14 +415,15 @@
 
 /obj/docking_port/mobile/pod/request()
 	var/obj/machinery/computer/shuttle/S = getControlConsole()
-
-	if(GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA || (S && (S.obj_flags & EMAGGED)))
+	if(!istype(S, /obj/machinery/computer/shuttle/pod))
+		return ..()
+	if(GLOB.security_level >= SEC_LEVEL_RED || (S && (S.obj_flags & EMAGGED)))
 		if(launch_status == UNLAUNCHED)
 			launch_status = EARLY_LAUNCHED
 			return ..()
 	else
 		to_chat(usr, "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>")
-		return 1
+		return TRUE
 
 /obj/docking_port/mobile/pod/Initialize()
 	. = ..()

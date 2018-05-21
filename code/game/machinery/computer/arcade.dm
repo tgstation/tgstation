@@ -507,9 +507,9 @@
 					if(ORION_TRAIL_ILLNESS)
 						var/severity = rand(1,3) //pray to RNGesus. PRAY, PIGS
 						if(severity == 1)
-							to_chat(M, "<span class='userdanger'>You suddenly feel slightly nauseous.</span>" )
+							to_chat(M, "<span class='userdanger'>You suddenly feel slightly nauseated.</span>" )
 						if(severity == 2)
-							to_chat(usr, "<span class='userdanger'>You suddenly feel extremely nauseous and hunch over until it passes.</span>")
+							to_chat(usr, "<span class='userdanger'>You suddenly feel extremely nauseated and hunch over until it passes.</span>")
 							M.Stun(60)
 						if(severity >= 3) //you didn't pray hard enough
 							to_chat(M, "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>")
