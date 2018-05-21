@@ -41,7 +41,7 @@
 			C.reagents.metabolize(C, can_overdose=TRUE)
 
 			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
-				to_chat(C, "<span class='notice'>You feel [pick("nauseous", "dull pain in your lower body", "confused")].</span>")
+				to_chat(C, "<span class='notice'>You feel [pick("nauseated", "a dull pain in your lower body", "confused")].</span>")
 
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth

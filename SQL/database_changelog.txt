@@ -1,12 +1,25 @@
 Any time you make a change to the schema files, remember to increment the database schema version. Generally increment the minor number, major should be reserved for significant changes to the schema. Both values go up to 255.
 
-The latest database version is 4.3; The query to update the schema revision table is:
+The latest database version is 4.4; The query to update the schema revision table is:
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (4, 3);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (4, 4);
 or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (4, 3);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (4, 4);
 
 In any query remember to add a prefix to the table names if you use one.
+
+----------------------------------------------------
+
+Version 4.4, 9 May 2018, by Jordie0608
+Modified table `round`, renaming column `start_datetime` to `initialize_datetime` and `end_datetime` to `shutdown_datetime` and adding columns to replace both under the same name in preparation for changes to TGS server initialization.
+
+ALTER TABLE `round`
+	ALTER `start_datetime` DROP DEFAULT;
+ALTER TABLE `round`
+	CHANGE COLUMN `start_datetime` `initialize_datetime` DATETIME NOT NULL AFTER `id`,
+	ADD COLUMN `start_datetime` DATETIME NULL DEFAULT NULL AFTER `initialize_datetime`,
+	CHANGE COLUMN `end_datetime` `shutdown_datetime` DATETIME NULL DEFAULT NULL AFTER `start_datetime`,
+	ADD COLUMN `end_datetime` DATETIME NULL DEFAULT NULL AFTER `shutdown_datetime`;
 
 ----------------------------------------------------
 

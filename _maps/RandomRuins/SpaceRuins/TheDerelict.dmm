@@ -848,7 +848,6 @@
 "cQ" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -1560,7 +1559,6 @@
 "fg" = (
 /obj/structure/table,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -2001,7 +1999,6 @@
 "gB" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -2855,7 +2852,6 @@
 /area/ruin/space/derelict/medical/chapel)
 "jz" = (
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -3130,7 +3126,6 @@
 "kr" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -3314,7 +3309,6 @@
 "la" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},

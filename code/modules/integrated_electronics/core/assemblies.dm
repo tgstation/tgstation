@@ -3,7 +3,7 @@
 
 /obj/item/electronic_assembly
 	name = "electronic assembly"
-	obj_flags = CAN_BE_HIT
+	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	desc = "It's a case, for building small electronics with."
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/assemblies/electronic_setups.dmi'
@@ -17,6 +17,7 @@
 	var/obj/item/stock_parts/cell/battery // Internal cell which most circuits need to work.
 	var/cell_type = /obj/item/stock_parts/cell
 	var/can_charge = TRUE //Can it be charged in a recharger?
+	var/can_fire_equipped = FALSE //Can it fire/throw weapons when the assembly is being held?
 	var/charge_sections = 4
 	var/charge_tick = FALSE
 	var/charge_delay = 4
@@ -603,7 +604,11 @@
 /obj/item/electronic_assembly/medium/gun
 	name = "type-e electronic mechanism"
 	icon_state = "setup_medium_gun"
-	desc = "It's a case, for building medium-sized electronics with. This one resembles a gun, or some type of tool, if you're feeling optimistic."
+	item_state = "circuitgun"
+	desc = "It's a case, for building medium-sized electronics with. This one resembles a gun, or some type of tool, if you're feeling optimistic. It can fire guns and throw items while the user is holding it."
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	can_fire_equipped = TRUE
 
 /obj/item/electronic_assembly/medium/radio
 	name = "type-f electronic mechanism"

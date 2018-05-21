@@ -37,19 +37,18 @@ SUBSYSTEM_DEF(dbcore)
 			message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 		if(2)
 			message_admins("Could not get schema version from database")
-	
+
 	return ..()
 
-	
+
 /datum/controller/subsystem/dbcore/Recover()
 	_db_con = SSdbcore._db_con
 
 /datum/controller/subsystem/dbcore/Shutdown()
 	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
 	if(SSdbcore.Connect())
-		var/sql_station_name = sanitizeSQL(station_name())
-		var/datum/DBQuery/query_round_end = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[sanitizeSQL(SSticker.mode_result)]', end_state = '[sanitizeSQL(SSticker.end_state)]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
-		query_round_end.Execute()
+		var/datum/DBQuery/query_round_shutdown = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = '[sanitizeSQL(SSticker.end_state)]' WHERE id = [GLOB.round_id]")
+		query_round_shutdown.Execute()
 	if(IsConnected())
 		Disconnect()
 
@@ -107,12 +106,25 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/SetRoundID()
 	if(CONFIG_GET(flag/sql_enabled))
 		if(SSdbcore.Connect())
-			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
-			query_round_start.Execute()
+			var/datum/DBQuery/query_round_initialize = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
+			query_round_initialize.Execute()
 			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
 			query_round_last_id.Execute()
 			if(query_round_last_id.NextRow())
 				GLOB.round_id = query_round_last_id.item[1]
+
+/datum/controller/subsystem/dbcore/proc/SetRoundStart()
+	if(CONFIG_GET(flag/sql_enabled))
+		if(SSdbcore.Connect())
+			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET start_datetime = Now() WHERE id = [GLOB.round_id]")
+			query_round_start.Execute()
+
+/datum/controller/subsystem/dbcore/proc/SetRoundEnd()
+	if(CONFIG_GET(flag/sql_enabled))
+		if(SSdbcore.Connect())
+			var/sql_station_name = sanitizeSQL(station_name())
+			var/datum/DBQuery/query_round_end = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[sanitizeSQL(SSticker.mode_result)]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
+			query_round_end.Execute()
 
 /datum/controller/subsystem/dbcore/proc/Disconnect()
 	failed_connections = 0
@@ -231,10 +243,24 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		to_chat(usr, "<span class='danger'>A SQL error occurred during this operation, check the server logs.</span>")
 
 /datum/DBQuery/proc/Execute(sql_query = sql, cursor_handler = default_cursor, log_error = TRUE)
+	var/start_time
+	var/timeout = CONFIG_GET(number/query_debug_log_timeout)
+	if(timeout)
+		start_time = REALTIMEOFDAY
 	Close()
 	. = _dm_db_execute(_db_query, sql_query, db_connection._db_con, cursor_handler, null)
 	if(!. && log_error)
 		log_sql("[ErrorMsg()] | Query used: [sql]")
+	if(timeout)
+		if((REALTIMEOFDAY - start_time) > timeout)
+			log_query_debug("Query execution started at [start_time]")
+			log_query_debug("Query execution ended at [REALTIMEOFDAY]")
+			log_query_debug("Possible slow query timeout detected.")
+			log_query_debug("Query used: [sql]")
+			slow_query_check()
+
+/datum/DBQuery/proc/slow_query_check()
+	message_admins("HEY! A database query may have timed out. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
 
 /datum/DBQuery/proc/NextRow()
 	return _dm_db_next_row(_db_query,item,conversions)

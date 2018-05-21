@@ -220,7 +220,7 @@
 		log_game("[i]s[total_antagonists[i]].")
 
 	CHECK_TICK
-
+	SSdbcore.SetRoundEnd()
 	//Collects persistence features
 	if(mode.allow_persistence_save)
 		SSpersistence.CollectData()
