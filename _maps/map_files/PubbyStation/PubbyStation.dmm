@@ -13885,13 +13885,8 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aKr" = (
-<<<<<<< HEAD
 /obj/structure/closet/coffin,
 /obj/item/toy/figure/curator,
-=======
-/obj/structure/closet/crate/coffin,
-/obj/item/toy/figure/lawyer,
->>>>>>> file
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aKy" = (
