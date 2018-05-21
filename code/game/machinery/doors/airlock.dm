@@ -1070,10 +1070,8 @@
 	else
 		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
-	if(autoclose && normalspeed)
-		addtimer(CALLBACK(src, .proc/autoclose), 150)
-	else if(autoclose && !normalspeed)
-		addtimer(CALLBACK(src, .proc/autoclose), 15)
+	if(autoclose)
+		autoclose_in(normalspeed ? 150 : 15)
 
 	if(!density)
 		return TRUE
@@ -1106,7 +1104,7 @@
 	if(safe)
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
-				addtimer(CALLBACK(src, .proc/autoclose), 60)
+				autoclose_in(60)
 				return
 
 	if(forced < 2)
