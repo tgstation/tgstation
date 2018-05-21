@@ -310,7 +310,7 @@
 			message_cooldown = world.time + 50
 			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 		return
-	container_resist()
+	container_resist(user)
 
 /obj/structure/closet/attack_hand(mob/user)
 	. = ..()
