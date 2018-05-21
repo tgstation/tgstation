@@ -64,8 +64,10 @@
 	if(is_type_in_typecache(AM, forbidden_types) || AM.throwing || AM.floating)
 		return FALSE
 	//Flies right over the chasm
-	if(isliving(AM))
+	if(ismob(AM))
 		var/mob/M = AM
+		if(M.buckled && (M.buckled.buckled != M) && !droppable(M.buckled))		//middle statement to prevent infinite loops just in case!
+			return FALSE
 		if(M.is_flying())
 			return FALSE
 	if(ishuman(AM))
