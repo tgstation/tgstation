@@ -80,8 +80,8 @@
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
-	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+	for(var/v in stored_research.researched_design_ids)
+		var/datum/design/D = get_techweb_design_by_id(v)
 		if(D.build_type & MECHFAB)
 			if(!(set_name in D.category))
 				continue
@@ -161,8 +161,8 @@
 
 /obj/machinery/mecha_part_fabricator/proc/add_part_set_to_queue(set_name)
 	if(set_name in part_sets)
-		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
+		for(var/v in stored_research.researched_design_ids)
+			var/datum/design/D = get_techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
 				if(set_name in D.category)
 					add_to_queue(D)
@@ -319,8 +319,8 @@
 				screen = "parts"
 	if(href_list["part"])
 		var/T = afilter.getStr("part")
-		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
+		for(var/v in stored_research.researched_design_ids)
+			var/datum/design/D = get_techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					if(!processing_queue)
@@ -330,8 +330,8 @@
 					break
 	if(href_list["add_to_queue"])
 		var/T = afilter.getStr("add_to_queue")
-		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
+		for(var/v in stored_research.researched_design_ids)
+			var/datum/design/D = get_techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					add_to_queue(D)
@@ -368,8 +368,8 @@
 		sync()
 	if(href_list["part_desc"])
 		var/T = afilter.getStr("part_desc")
-		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
+		for(var/v in stored_research.researched_design_ids)
+			var/datum/design/D = get_techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					var/obj/part = D.build_path

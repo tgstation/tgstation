@@ -108,7 +108,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/dpath = loaded_item.type
 		var/list/worths = TN.boost_item_paths[dpath]
 		var/list/differences = list()
-		var/list/already_boosted = linked_console.stored_research.boosted_nodes[TN.id]
+		var/list/already_boosted = linked_console.stored_research.boosted_node_ids[TN.id]
 		for(var/i in worths)
 			var/used = already_boosted? already_boosted[i] : 0
 			var/value = min(worths[i], TN.research_costs[i]) - used
@@ -123,7 +123,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return FALSE
 		SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[TN.id]", "[loaded_item.type]"))
 		if(destroy_item(loaded_item))
-			linked_console.stored_research.boost_with_path(SSresearch.techweb_nodes[TN.id], dpath)
+			linked_console.stored_research.boost_with_path(get_techweb_node_by_id(TN.id), dpath)
 
 	else
 		var/list/point_value = techweb_item_point_check(loaded_item)

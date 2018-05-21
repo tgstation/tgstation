@@ -209,8 +209,8 @@
 		data["materials"] += list(list("name" = M.name, "id" = M.id, "amount" = sheet_amount, "value" = ore_values[M.id] * point_upgrade))
 
 	data["alloys"] = list()
-	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+	for(var/v in stored_research.researched_design_ids)
+		var/datum/design/D = get_techweb_design_by_id(v)
 		data["alloys"] += list(list("name" = D.name, "id" = D.id, "amount" = can_smelt_alloy(D)))
 	data["diskDesigns"] = list()
 	if(inserted_disk)
@@ -293,7 +293,7 @@
 			return TRUE
 		if("Smelt")
 			var/alloy_id = params["id"]
-			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
+			var/datum/design/alloy = stored_research.is_design_researched_id(alloy_id)
 			if((check_access(inserted_id) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				var/desired = 0
@@ -314,7 +314,7 @@
 			return TRUE
 		if("SmeltAll")
 			var/alloy_id = params["id"]
-			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
+			var/datum/design/alloy = stored_research.is_design_researched_id(alloy_id)
 			if((check_access(inserted_id) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				while(smelt_amount > 0)

@@ -29,8 +29,8 @@ other types of metals and chemistry for reagents).
 //DESIGNS ARE GLOBAL. DO NOT CREATE OR DESTROY THEM AT RUNTIME OUTSIDE OF INIT, JUST REFERENCE THEM TO WHATEVER YOU'RE DOING! //why are you yelling?
 
 /datum/design						//Datum for object designs, used in construction
-	var/name = "Name"					//Name of the created object.
-	var/desc = "Desc"					//Description of the created object.
+	var/name = DESIGN_NAME_IGNORE					//Name of the created object.
+	var/desc = DESIGN_DESC_IGNORE					//Description of the created object.
 	var/id = DESIGN_ID_IGNORE						//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols
 	var/build_type = null				//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
@@ -43,17 +43,92 @@ other types of metals and chemistry for reagents).
 	var/lathe_time_factor = 1			//How many times faster than normal is this to build on the protolathe
 	var/dangerous_construction = FALSE	//notify and log for admin investigations if this is printed.
 	var/departmental_flags = ALL			//bitflags for deplathes.
-	var/list/datum/techweb_node/unlocked_by = list()
+	var/list/unlocking_node_ids = list()
 	var/icon_cache
-
-/datum/design/Destroy()
-	CRASH("DESIGN DATUMS SHOULD NOT EVER BE DESTROYED AS THEY ARE ONLY MEANT TO BE IN A GLOBAL LIST AND REFERENCED FOR US.")
-	return ..()
 
 /datum/design/proc/icon_html(client/user)
 	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
 	sheet.send(user)
 	return sheet.icon_tag(id)
+
+/datum/design/Destroy()
+	SSresearch.designs -= id
+	return ..()
+
+/datum/design/serialize_list(list/options)
+	var/list/jsonlist = list()
+	if(istext(name))
+		jsonlist["name"] = name
+	if(istext(desc))
+		jsonlist["desc"] = desc
+	if(istext(id))
+		jsonlist["id"] = id
+	if(isnum(build_type))
+		jsonlist["build_type"] = build_type
+	if(islist(materials))
+		jsonlist["materials"] = materials
+	if(isnum(construction_time))
+		jsonlist["construction_time"] = construction_time
+	if(ispath(build_path))
+		jsonlist["build_path"] = build_path
+	if(islist(make_reagents))
+		jsonlist["make_reagents"] = make_reagents
+	if(islist(category))
+		jsonlist["category"] = category
+	if(islist(reagents_list))
+		jsonlist["reagents_list"] = reagents_list
+	if(isnum(maxstack))
+		jsonlist["maxstack"] = maxstack
+	if(isnum(lathe_time_factor))
+		jsonlist["lathe_time_factor"] = lathe_time_factor
+	if(isnum(dangerous_construction))
+		jsonlist["dangerous_construction"] = dangerous_construction
+	if(isnum(departmental_flags))
+		jsonlist["departmental_flags"] = departmental_flags
+	return jsonlist
+
+/datum/design/deserialize_list(list/jsonlist, list/options)
+	if(!islist(jsonlist))
+		if(!istext(jsonlist))
+			CRASH("Invalid json")
+			return
+		jsonlist = json_decode(jsonlist)
+		if(!islist(jsonlist))
+			CRASH("Invalid json")
+			return
+	if(istext(jsonlist["name"]))
+		name = jsonlist["name"]
+	if(istext(jsonlist["desc"]))
+		desc = jsonlist["desc"]
+	if(istext(jsonlist["id"]))
+		id = jsonlist["id"]
+	if(isnum(jsonlist["build_type"]))
+		build_type = jsonlist["build_type"]
+	if(islist(jsonlist["materials"]))
+		var/list/L = jsonlist["materials"]
+		materials = L.Copy()
+	if(isnum(jsonlist["construction_time"]))
+		construction_time = jsonlist["construction_time"]
+	if(jsonlist["build_path"])
+		if(!ispath(jsonlist["build_path"]))
+			jsonlist["build_path"] = text2path(jsonlist["build_path"])
+		if(ispath(jsonlist["build_path"]))
+			build_path = jsonlist["build_path"]
+	if(islist(jsonlist["make_reagents"]))
+		var/list/L = jsonlist["make_reagents"]
+		make_reagents = L.Copy()
+	if(islist(jsonlist["category"]))
+		var/list/L = jsonlist["category"]
+		category = L.Copy()
+	if(isnum(jsonlist["maxstack"]))
+		maxstack = jsonlist["maxstack"]
+	if(isnum(jsonlist["lathe_time_factor"]))
+		lathe_time_factor = jsonlist["lathe_time_factor"]
+	if(isnum(jsonlist["dangerous_construction"]))
+		dangerous_construction = jsonlist["dangerous_construction"]
+	if(isnum(jsonlist["departmental_flags"]))
+		departmental_flags = jsonlist["departmental_flags"]
+	return src
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

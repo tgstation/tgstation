@@ -122,8 +122,8 @@
 	dat += "<br><br>"
 	dat += "<b>Smelt Alloys</b><br>"
 
-	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+	for(var/v in stored_research.researched_design_ids)
+		var/datum/design/D = get_techweb_design_by_id(v)
 		dat += "<span class=\"res_name\">[D.name] "
 		if (selected_alloy == D.id)
 			dat += " <i>Smelting</i>"
@@ -166,7 +166,7 @@
 
 
 /obj/machinery/mineral/processing_unit/proc/smelt_alloy()
-	var/datum/design/alloy = stored_research.isDesignResearchedID(selected_alloy) //check if it's a valid design
+	var/datum/design/alloy = stored_research.is_design_researched_id(selected_alloy) //check if it's a valid design
 	if(!alloy)
 		on = FALSE
 		return
