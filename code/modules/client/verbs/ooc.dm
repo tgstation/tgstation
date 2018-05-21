@@ -293,7 +293,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	ignore_key(selection)
 
 /client/proc/show_previous_roundend_report()
-	set name = "Your last round"
+	set name = "Your Last Round"
 	set category = "OOC"
 	set desc = "View the last round end report you've seen"
 
