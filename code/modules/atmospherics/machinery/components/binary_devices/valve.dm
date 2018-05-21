@@ -93,6 +93,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	icon_state = "dvalve_map"
 	valve_type = "d"
 	pipe_state = "dvalve"
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	
 /obj/machinery/atmospherics/components/binary/valve/digital/layer1
 	piping_layer = PIPING_LAYER_MIN
@@ -103,9 +104,6 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	piping_layer = PIPING_LAYER_MAX
 	pixel_x = PIPING_LAYER_P_X
 	pixel_y = PIPING_LAYER_P_Y
-
-/obj/machinery/atmospherics/components/binary/valve/digital/attack_ai(mob/user)
-	return attack_hand(user)
 
 /obj/machinery/atmospherics/components/binary/valve/digital/update_icon_nopipes(animation)
 	if(!is_operational())
