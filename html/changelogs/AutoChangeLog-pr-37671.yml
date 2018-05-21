@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - code_imp: "Added EMP protection component, replaced various bespoke ways things handled EMP proofness"
