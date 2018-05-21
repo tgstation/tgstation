@@ -101,7 +101,8 @@
 
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(src.loc)
-	pushed_mob.lay_down()
+	pushed_mob.resting = TRUE
+	pushed_mob.update_canmove()
 	pushed_mob.visible_message("<span class='notice'>[user] places [pushed_mob] onto [src].</span>", \
 								"<span class='notice'>[user] places [pushed_mob] onto [src].</span>")
 	add_logs(user, pushed_mob, "placed")
