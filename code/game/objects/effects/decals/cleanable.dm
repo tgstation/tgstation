@@ -9,7 +9,7 @@
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	if (random_icon_states && length(random_icon_states) > 0)
+	if (random_icon_states && (icon_state == initial(icon_state)) && length(random_icon_states) > 0)
 		icon_state = pick(random_icon_states)
 	create_reagents(300)
 	if(loc && isturf(loc))

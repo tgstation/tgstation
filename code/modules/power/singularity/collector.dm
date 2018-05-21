@@ -66,7 +66,7 @@
 			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide][MOLES] += gasdrained*2
 			loaded_tank.air_contents.garbage_collect()
 			var/bitcoins_mined = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000)
-			SSresearch.science_tech.research_points += bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE
+			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
 			last_power-=bitcoins_mined
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)

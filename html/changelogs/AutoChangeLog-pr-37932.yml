@@ -1,0 +1,4 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - tweak: "The BoH dialog now has Abort instead of Proceed as an default option."

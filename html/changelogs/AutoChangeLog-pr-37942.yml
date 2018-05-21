@@ -1,0 +1,4 @@
+author: "armhulen"
+delete-after: True
+changes: 
+  - rscdel: "chameleon guns are disabled for breaking the server"

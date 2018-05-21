@@ -743,7 +743,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			var/mob/M = loc
 			M.put_in_hands(inserted_item)
 		else
-			inserted_item.forceMove(get_turf(src))
+			inserted_item.forceMove(drop_location())
 		to_chat(usr, "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>")
 		inserted_item = null
 		update_icon()
