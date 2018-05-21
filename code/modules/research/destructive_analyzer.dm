@@ -58,12 +58,14 @@ Note: Must be placed within 3 tiles of the R&D Console
 		icon_state = initial(icon_state)
 
 /obj/machinery/rnd/destructive_analyzer/proc/reclaim_materials_from(obj/item/thing)
+	if(!GLOB.ore_silo)
+		return
+	GET_COMPONENT_FROM(materials, /datum/component/material_container, GLOB.ore_silo)
 	. = 0
-	if(linked_console && linked_console.linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
-		for(var/material in thing.materials)
-			var/can_insert = min((linked_console.linked_lathe.materials.max_amount - linked_console.linked_lathe.materials.total_amount), (max(thing.materials[material]*(decon_mod/10), thing.materials[material])))
-			linked_console.linked_lathe.materials.insert_amount(can_insert, material)
-			. += can_insert
+	for(var/material in thing.materials)
+		var/can_insert = max(thing.materials[material]*(decon_mod/10), thing.materials[material])
+		materials.insert_amount(can_insert, material)
+		. += can_insert
 
 /obj/machinery/rnd/destructive_analyzer/proc/destroy_item(obj/item/thing, innermode = FALSE)
 	if(QDELETED(thing) || QDELETED(src) || QDELETED(linked_console))
