@@ -8,6 +8,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	desc = "A pipe with a valve that can be used to disable flow of gas through it."
 
 	can_unwrench = TRUE
+	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN		//Intentionally no allow_silicon flag
 
 	var/frequency = 0
 	var/id = null
@@ -68,13 +69,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	else if(dir==WEST)
 		setDir(EAST)
 
-/obj/machinery/atmospherics/components/binary/valve/attack_ai(mob/user)
-	return
-
-/obj/machinery/atmospherics/components/binary/valve/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/atmospherics/components/binary/valve/interact(mob/user)
 	add_fingerprint(usr)
 	update_icon_nopipes(1)
 	if(switching)
@@ -93,7 +88,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	icon_state = "dvalve_map"
 	valve_type = "d"
 	pipe_state = "dvalve"
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN | INTERACT_MACHINE_OPEN_SILICON
 	
 /obj/machinery/atmospherics/components/binary/valve/digital/layer1
 	piping_layer = PIPING_LAYER_MIN
