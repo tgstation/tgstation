@@ -1,0 +1,17 @@
+##TECHWEBS MODIFICATION EXAMPLE FILE FORMAT
+
+#######
+##To add/overwrite a node, do this. The value is a JSON encoded list of the node's variables by variable = value, from the node's serialize_json() proc.
+#NODE_ADD 
+
+##To remove a node, do this. The value is the node's ID.
+#NODE_REMOVE adv_robotics
+
+##To add/overwrite a design, do this. The value is a JSON encoded list of the design's variables by variable = value, from the design's serialize_json() proc.
+#DESIGN_ADD 
+
+##To remove a design, do this. The value is the design's ID.
+#DESIGN_REMOVE ai_upload
+
+#######
+

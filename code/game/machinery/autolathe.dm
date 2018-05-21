@@ -13,7 +13,7 @@
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
-	
+
 	var/operating = FALSE
 	var/list/L = list()
 	var/list/LL = list()
@@ -149,7 +149,7 @@
 
 			/////////////////
 			//href protection
-			being_built = stored_research.isDesignResearchedID(href_list["make"])
+			being_built = stored_research.is_design_researched_id(href_list["make"])
 			if(!being_built)
 				return
 
@@ -175,8 +175,8 @@
 		if(href_list["search"])
 			matching_designs.Cut()
 
-			for(var/v in stored_research.researched_designs)
-				var/datum/design/D = stored_research.researched_designs[v]
+			for(var/v in stored_research.researched_design_ids)
+				var/datum/design/D = get_techweb_design_by_id(v)
 				if(findtext(D.name,href_list["to_search"]))
 					matching_designs.Add(D)
 			updateUsrDialog()
@@ -250,8 +250,8 @@
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
 	dat += materials_printout()
 
-	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+	for(var/v in stored_research.researched_design_ids)
+		var/datum/design/D = get_techweb_design_by_id(v)
 		if(!(selected_category in D.category))
 			continue
 
@@ -364,8 +364,8 @@
 
 /obj/machinery/autolathe/proc/adjust_hacked(state)
 	hacked = state
-	for(var/id in SSresearch.techweb_designs)
-		var/datum/design/D = SSresearch.techweb_designs[id]
+	for(var/id in SSresearch.designs)
+		var/datum/design/D = get_techweb_design_by_id(id)
 		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
 			if(hacked)
 				stored_research.add_design(D)

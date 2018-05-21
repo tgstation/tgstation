@@ -95,7 +95,7 @@
 
 			/////////////////
 			//href protection
-			being_built = stored_research.isDesignResearchedID(href_list["make"]) //check if it's a valid design
+			being_built = stored_research.is_design_researched_id(href_list["make"]) //check if it's a valid design
 			if(!being_built)
 				return
 
@@ -177,8 +177,8 @@
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
 	dat += materials_printout()
 
-	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+	for(var/v in stored_research.researched_design_ids)
+		var/datum/design/D = get_techweb_design_by_id(v)
 		if(!(selected_category in D.category))
 			continue
 		if(disabled || !can_build(D))
@@ -219,8 +219,8 @@
 /obj/machinery/limbgrower/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	for(var/id in SSresearch.techweb_designs)
-		var/datum/design/D = SSresearch.techweb_designs[id]
+	for(var/id in SSresearch.designs)
+		var/datum/design/D = SSresearch.designs[id]
 		if((D.build_type & LIMBGROWER) && ("emagged" in D.category))
 			stored_research.add_design(D)
 	to_chat(user, "<span class='warning'>A warning flashes onto the screen, stating that safety overrides have been deactivated!</span>")
