@@ -274,7 +274,7 @@
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				if(autoclose)
-					addtimer(CALLBACK(src, .proc/autoclose), 60)
+					autoclose_in(60)
 				return
 
 	operating = TRUE
@@ -325,6 +325,9 @@
 /obj/machinery/door/proc/autoclose()
 	if(!QDELETED(src) && !density && !operating && !locked && !welded && autoclose)
 		close()
+
+/obj/machinery/door/proc/autoclose_in(wait)
+	addtimer(CALLBACK(src, .proc/autoclose), wait, TIMER_UNIQUE | TIMER_NO_HASH_WAIT | TIMER_OVERRIDE)
 
 /obj/machinery/door/proc/requiresID()
 	return 1

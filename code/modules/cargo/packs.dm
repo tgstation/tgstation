@@ -715,7 +715,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////// Engine Construction /////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////	
+//////////////////////////////////////////////////////////////////////////////
 
 /datum/supply_pack/engine
 	group = "Engine Construction"
@@ -851,7 +851,7 @@
 	crate_name = "supermatter shard crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
-	
+
 /datum/supply_pack/engine/tesla_coils
 	name = "Tesla Coil Crate"
 	desc = "Whether it's high-voltage executions, creating research points, or just plain old power generation: This pack of four Tesla coils can do it all!"
@@ -1406,7 +1406,7 @@
 					/obj/item/vending_refill/cola,
 					/obj/item/vending_refill/cola)
 	crate_name = "soft drinks supply crate"
-	
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1713,6 +1713,65 @@
 	contains = list(/obj/item/vending_refill/autodrobe,
 					/obj/item/vending_refill/autodrobe)
 	crate_name = "autodrobe supply crate"
+
+/datum/supply_pack/costumes_toys/wardrobes/general
+	name = "General Wardrobes Supply Crate"
+	desc = "This crate contains refills for the CuraDrobe, BarDrobe, ChefDrobe, JaniDrobe, ChapDrobe."
+	cost = 3750
+	contains = list(/obj/item/vending_refill/wardrobe/curator_wardrobe,
+					/obj/item/vending_refill/wardrobe/bar_wardrobe,
+					/obj/item/vending_refill/wardrobe/chef_wardrobe,
+					/obj/item/vending_refill/wardrobe/jani_wardrobe,
+					/obj/item/vending_refill/wardrobe/chap_wardrobe)
+	crate_name = "general wardrobes vendor refills"
+
+/datum/supply_pack/costumes_toys/wardrobes/cargo
+	name = "Cargo Department Supply Crate"
+	desc = "This crate contains a refill for the CargoDrobe."
+	cost = 750
+	contains = list(/obj/item/vending_refill/wardrobe/cargo_wardrobe)
+	crate_name = "cargo department supply crate"
+
+/datum/supply_pack/costumes_toys/wardrobes/security
+	name = "Security Department Supply Crate"
+	desc = "This crate contains refills for the SecDrobe and LawDrobe."
+	cost = 1500
+	contains = list(/obj/item/vending_refill/wardrobe/sec_wardrobe,
+					/obj/item/vending_refill/wardrobe/law_wardrobe)
+	crate_name = "security department supply crate"
+
+/datum/supply_pack/costumes_toys/wardrobes/medical
+	name = "Medical Department Wardrobe Supply Crate"
+	desc = "This crate contains refills for the MediDrobe, ChemDrobe, GeneDrobe, and ViroDrobe."
+	cost = 3000
+	contains = list(/obj/item/vending_refill/wardrobe/medi_wardrobe,
+					/obj/item/vending_refill/wardrobe/chem_wardrobe,
+					/obj/item/vending_refill/wardrobe/gene_wardrobe,
+					/obj/item/vending_refill/wardrobe/viro_wardrobe)
+	crate_name = "medical department wardrobe supply crate"
+
+/datum/supply_pack/costumes_toys/wardrobes/engineering
+	name = "Engineering Department Wardrobe Supply Crate"
+	desc = "This crate contains refills for the EngiDrobe and AtmosDrobe."
+	cost = 1500
+	contains = list(/obj/item/vending_refill/wardrobe/engi_wardrobe,
+					/obj/item/vending_refill/wardrobe/atmos_wardrobe)
+	crate_name = "engineering department wardrobe supply crate"
+
+/datum/supply_pack/costumes_toys/wardrobes/science
+	name = "Science Department Wardrobe Supply Crate"
+	desc = "This crate contains refills for the SciDrobe and RoboDrobe."
+	cost = 1500
+	contains = list(/obj/item/vending_refill/wardrobe/robo_wardrobe,
+					/obj/item/vending_refill/wardrobe/science_wardrobe)
+	crate_name = "science department wardrobe supply crate"
+
+/datum/supply_pack/costumes_toys/wardrobes/hydroponics
+	name = "Hydrobe Supply Crate"
+	desc = "This crate contains a refill for the Hydrobe."
+	cost = 750
+	contains = list(/obj/item/vending_refill/wardrobe/hydro_wardrobe)
+	crate_name = "hydrobe supply crate"
 
 /datum/supply_pack/costumes_toys/randomised
 	name = "Collectable Hats Crate"
