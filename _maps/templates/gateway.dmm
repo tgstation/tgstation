@@ -58,7 +58,7 @@
 /obj/effect/turf_decal/bot_white/left,
 /obj/structure/rack,
 /obj/item/storage/belt/utility/full,
-/obj/item/device/radio/off,
+/obj/item/radio/off,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},

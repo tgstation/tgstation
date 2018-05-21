@@ -76,11 +76,11 @@
 "h" = (
 /obj/structure/table/wood,
 /obj/machinery/recharger,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26
 	},
-/obj/item/device/radio/headset,
+/obj/item/radio/headset,
 /obj/item/tank/jetpack/void,
 /turf/open/floor/wood,
 /area/shuttle{
@@ -270,8 +270,8 @@
 /obj/item/coin/plasma,
 /obj/item/coin/plasma,
 /obj/item/coin/plasma,
-/obj/item/plasma_fist_scroll,
-/obj/item/device/pda/toxins,
+/obj/item/book/granter/martial/plasma_fist,
+/obj/item/pda/toxins,
 /obj/item/clothing/accessory/medal/plasma,
 /turf/open/floor/wood,
 /area/shuttle{
@@ -325,7 +325,7 @@
 	})
 "F" = (
 /obj/item/storage/box/lights/mixed,
-/obj/item/device/lightreplacer,
+/obj/item/lightreplacer,
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_y = 32;
@@ -395,7 +395,6 @@
 	height = 20;
 	id = "freighter_away";
 	name = "deep space";
-	turf_type = /turf/open/space;
 	width = 25
 	},
 /obj/structure/fans/tiny/invisible,
