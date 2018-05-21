@@ -221,9 +221,10 @@
 	return
 
 /atom/proc/emp_act(severity)
-	SendSignal(COMSIG_ATOM_EMP_ACT, severity)
-	if(istype(wires) && !(flags_1 & NO_EMP_WIRES_1))
+	var/protection = SendSignal(COMSIG_ATOM_EMP_ACT, severity)
+	if(!(protection & EMP_PROTECT_WIRES) && istype(wires))
 		wires.emp_pulse()
+	return protection // Pass the protection value collected here upwards
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
 	SendSignal(COMSIG_ATOM_BULLET_ACT, P, def_zone)

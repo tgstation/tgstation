@@ -26,6 +26,9 @@
 	move_update_air(T)
 
 /obj/structure/emergency_shield/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	switch(severity)
 		if(1)
 			qdel(src)

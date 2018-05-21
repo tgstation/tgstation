@@ -208,6 +208,9 @@
 			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/machinery/door/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		INVOKE_ASYNC(src, .proc/open)
 	if(prob(severity*10 - 20))
@@ -215,7 +218,6 @@
 			secondsElectrified = -1
 			shockedby += "\[[time_stamp()]\]EM Pulse"
 			addtimer(CALLBACK(src, .proc/unelectrify), 300)
-	..()
 
 /obj/machinery/door/proc/unelectrify()
 	secondsElectrified = 0

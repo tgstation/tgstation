@@ -489,9 +489,11 @@
 		choice.ask_for_input(user)
 
 /obj/item/electronic_assembly/emp_act(severity)
-	..()
-	for(var/i in 1 to contents.len)
-		var/atom/movable/AM = contents[i]
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
+	for(var/I in src)
+		var/atom/movable/AM = I
 		AM.emp_act(severity)
 
 // Returns true if power was successfully drawn.

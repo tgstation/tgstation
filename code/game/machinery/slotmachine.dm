@@ -152,7 +152,8 @@
 		balance = 0
 
 /obj/machinery/computer/slot_machine/emp_act(severity)
-	if(stat & (NOPOWER|BROKEN))
+	. = ..()
+	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 	if(prob(15 * severity))
 		return

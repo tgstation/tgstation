@@ -29,7 +29,8 @@
 	synthesizing = FALSE
 
 /obj/item/organ/cyberimp/chest/nutriment/emp_act(severity)
-	if(!owner)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
 		return
 	owner.reagents.add_reagent("bad_food", poison_amount / severity)
 	to_chat(owner, "<span class='warning'>You feel like your insides are burning.</span>")
@@ -89,7 +90,8 @@
 		revive_cost += 40
 
 /obj/item/organ/cyberimp/chest/reviver/emp_act(severity)
-	if(!owner)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
 		return
 
 	if(reviving)
@@ -198,4 +200,3 @@
 
 	toggle(silent = TRUE)
 	return 0
-
