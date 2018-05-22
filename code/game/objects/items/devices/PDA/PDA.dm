@@ -661,7 +661,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	to_chat(user, "<span class='info'>Message sent to [target_text]: \"[message]\"</span>")
 	// Reset the photo
 	photo = null
-	last_text = world.time 
+	last_text = world.time
 	if (everyone)
 		last_everyone = world.time
 
@@ -743,7 +743,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			var/mob/M = loc
 			M.put_in_hands(inserted_item)
 		else
-			inserted_item.forceMove(get_turf(src))
+			inserted_item.forceMove(drop_location())
 		to_chat(usr, "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>")
 		inserted_item = null
 		update_icon()
@@ -999,11 +999,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP
 /obj/item/pda/emp_act(severity)
-	for(var/atom/A in src)
-		A.emp_act(severity)
-	emped += 1
-	spawn(200 * severity)
-		emped -= 1
+	. = ..()
+	if (!(. & EMP_PROTECT_CONTENTS))
+		for(var/atom/A in src)
+			A.emp_act(severity)
+	if (!(. & EMP_PROTECT_SELF))
+		emped += 1
+		spawn(200 * severity)
+			emped -= 1
 
 /proc/get_viewable_pdas()
 	. = list()

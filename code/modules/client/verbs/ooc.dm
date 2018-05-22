@@ -291,3 +291,10 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 		to_chat(src, "You can't ignore yourself.")
 		return
 	ignore_key(selection)
+
+/client/proc/show_previous_roundend_report()
+	set name = "Your Last Round"
+	set category = "OOC"
+	set desc = "View the last round end report you've seen"
+
+	SSticker.show_roundend_report(src, TRUE)

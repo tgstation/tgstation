@@ -51,6 +51,9 @@
 			return
 
 /obj/item/lazarus_injector/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(!malfunctioning)
 		malfunctioning = 1
 

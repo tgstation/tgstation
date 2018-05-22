@@ -23,9 +23,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ON_BORDER_1					(1<<9)		// item has priority to check when entering or leaving
 #define DROPDEL_1					(1<<10)	// When dropped, it calls qdel on itself
 #define PREVENT_CLICK_UNDER_1		(1<<11)	//Prevent clicking things below it on the same turf eg. doors/ fulltile windows
-#define NO_EMP_WIRES_1				(1<<12)
-#define HOLOGRAM_1					(1<<13)
-#define TESLA_IGNORE_1				(1<<14) // TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
+#define HOLOGRAM_1					(1<<12)
+#define TESLA_IGNORE_1				(1<<13) // TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
 
 
 //turf-only flags
@@ -75,3 +74,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define TESLA_MOB_STUN				(1<<4)
 
 #define TESLA_DEFAULT_FLAGS ALL
+
+//EMP protection
+#define EMP_PROTECT_SELF (1<<0)
+#define EMP_PROTECT_CONTENTS (1<<1)
+#define EMP_PROTECT_WIRES (1<<2)
+

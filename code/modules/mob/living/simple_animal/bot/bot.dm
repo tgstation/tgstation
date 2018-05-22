@@ -320,6 +320,9 @@
 	return ..()
 
 /mob/living/simple_animal/bot/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	var/was_on = on
 	stat |= EMPED
 	new /obj/effect/temp_visual/emp(loc)

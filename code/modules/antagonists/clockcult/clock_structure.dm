@@ -117,6 +117,9 @@
 			to_chat(user, "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>")
 
 /obj/structure/destructible/clockwork/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(anchored && unanchored_icon)
 		anchored = FALSE
 		update_anchored(null, obj_integrity > max_integrity * 0.25)
@@ -203,6 +206,9 @@
 		toggle()
 
 /obj/structure/destructible/clockwork/powered/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(forced_disable(TRUE))
 		new /obj/effect/temp_visual/emp(loc)
 

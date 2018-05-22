@@ -59,6 +59,9 @@ field_generator power level display
 	fields = list()
 	connected_gens = list()
 
+/obj/machinery/field/generator/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)
@@ -150,10 +153,6 @@ field_generator power level display
 		..()
 	if(!anchored)
 		step(src, get_dir(M, src))
-
-/obj/machinery/field/generator/emp_act()
-	return 0
-
 
 /obj/machinery/field/generator/blob_act(obj/structure/blob/B)
 	if(active)

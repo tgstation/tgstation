@@ -12,7 +12,7 @@
 /obj/screen/plane_master/proc/Hide(override)
 	alpha = override || hide_alpha
 
-//Why do plane masters need a backdrop sometimes? Read http://www.byond.com/forum/?post=2141928
+//Why do plane masters need a backdrop sometimes? Read https://secure.byond.com/forum/?post=2141928
 //Trust me, you need one. Period. If you don't think you do, you're doing something extremely wrong.
 /obj/screen/plane_master/proc/backdrop(mob/mymob)
 
@@ -29,6 +29,7 @@
 	blend_mode = BLEND_OVERLAY
 
 /obj/screen/plane_master/game_world/backdrop(mob/mymob)
+	filters = list()
 	if(istype(mymob) && mymob.client && mymob.client.prefs && mymob.client.prefs.ambientocclusion)
 		filters += AMBIENT_OCCLUSION
 

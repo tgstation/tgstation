@@ -458,8 +458,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "bm" = (
 /obj/structure/chair/comfy/beige{
-	dir = 1;
-	icon_state = "comfychair"
+	dir = 1
 	},
 /turf/open/floor/plasteel/grimy{
 	heat_capacity = 1e+006
@@ -6238,10 +6237,9 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "mZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Air to Distro";
-	on = 1
+	name = "Air to Distro"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -8749,10 +8747,9 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Mix to Exterior";
-	on = 1
+	name = "Mix to Exterior"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -9649,10 +9646,9 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sU" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
-	name = "Waste In";
-	on = 1
+	name = "Waste In"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -9688,10 +9684,8 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sY" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
-	name = "Mix to Filter";
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Mix to Filter"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -10043,20 +10037,18 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tH" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "N2 Outlet Pump";
-	on = 1
+	name = "N2 Outlet Pump"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tI" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "O2 Outlet Pump";
-	on = 1
+	name = "O2 Outlet Pump"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
@@ -10064,10 +10056,9 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tJ" = (
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "Unfiltered to Mix";
-	on = 1
+	name = "Unfiltered to Mix"
 	},
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = 32
@@ -10336,20 +10327,17 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/components/binary/pump{
+/obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
-	name = "External to Filter";
-	on = 1
+	name = "External to Filter"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "uk" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 0;
-	name = "Air to External";
-	on = 1
+/obj/machinery/atmospherics/components/binary/pump/on{
+	name = "Air to External"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006

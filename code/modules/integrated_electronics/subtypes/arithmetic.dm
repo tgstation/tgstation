@@ -94,7 +94,7 @@
 
 /obj/item/integrated_circuit/arithmetic/division
 	name = "division circuit"
-	desc = "This circuit can divide numbers, just don't think about trying to divide by zero!"
+	desc = "This circuit can divide numbers. Don't even think about trying to divide by zero!"
 	extended_desc = "The order that the calculation goes is;<br>\
 	result = ((((A / B) / C) / D) ... ) and so on, until all pins have been divided. \
 	Null pins, and pins containing 0, are ignored. Pin A <b>must</b> be a number or the circuit will not function."
@@ -142,8 +142,8 @@
 
 /obj/item/integrated_circuit/arithmetic/sign
 	name = "sign circuit"
-	desc = "This will say if a number is positive, negative, or zero."
-	extended_desc = "Will output 1, -1, or 0, depending on if A is a postive number, a negative number, or zero, respectively."
+	desc = "This circuit can tell if a number is positive, negative, or zero."
+	extended_desc = "Will output 1, -1, or 0, depending on if A is a positive number, a negative number, or zero, respectively."
 	icon_state = "sign"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
@@ -212,8 +212,8 @@
 
 /obj/item/integrated_circuit/arithmetic/average
 	name = "average circuit"
-	desc = "This circuit is of average quality, however it will compute the average for numbers you give it."
-	extended_desc = "Note that null pins are ignored, where as a pin containing 0 is included in the averaging calculation."
+	desc = "This circuit is of average quality. It will compute the average of the numbers you give it."
+	extended_desc = "Note that null pins are ignored, whereas a pin containing 0 is included in the averaging calculation."
 	icon_state = "average"
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
@@ -240,7 +240,7 @@
 	icon_state = "pi"
 	inputs = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	
+
 /obj/item/integrated_circuit/arithmetic/pi/Initialize()
 	. = ..()
 	desc = "Not recommended for cooking. Outputs '[PI]' when it receives a pulse."
@@ -276,7 +276,7 @@
 
 /obj/item/integrated_circuit/arithmetic/square_root
 	name = "square root circuit"
-	desc = "This outputs the square root of a number you input."
+	desc = "This outputs the square root of the number you input."
 	icon_state = "square_root"
 	inputs = list("A" = IC_PINTYPE_NUMBER)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH

@@ -92,7 +92,7 @@
 
 /obj/item/integrated_circuit/output/light/advanced
 	name = "advanced light"
-	desc = "A light that takes a hexadecimal color value and a brightness value, and can be toggled on/off with a pulse."
+	desc = "A light that takes a hexadecimal color value and a brightness value, and can be toggled on/off by pulsing it."
 	icon_state = "light_adv"
 	complexity = 8
 	inputs = list(
