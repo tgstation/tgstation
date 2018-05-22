@@ -30,7 +30,6 @@
 /area/awaymission/moonoutpost19/hive
 	name = "The Hive"
 	always_unpowered = FALSE
-	has_gravity = FALSE
 	power_environ = FALSE
 	power_equip = FALSE
 	power_light = FALSE
