@@ -263,7 +263,7 @@ SUBSYSTEM_DEF(air)
 			currentrun |= T
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
-	else if(T.initialized)
+	else if(T.flags_1 & INITIALIZED_1)
 		for(var/turf/S in T.atmos_adjacent_turfs)
 			add_to_active(S)
 	else if(map_loading)
