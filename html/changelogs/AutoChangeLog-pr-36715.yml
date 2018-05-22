@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Sniper rifles will no longer oneshot mechs (although they still deal high damage)."
-  - bugfix: "Sniper rifles no longer knock down walls they hit."

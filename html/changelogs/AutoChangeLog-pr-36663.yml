@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "Slimepeople now transfer their roundstart traits when swapping bodies."

@@ -111,13 +111,8 @@
 
 /obj/machinery/power/port_gen/pacman/DropFuel()
 	if(sheets)
-		var/fail_safe = FALSE
-		while(sheets > 0 && fail_safe < 100)
-			fail_safe += 1
-			var/obj/item/stack/sheet/S = new sheet_path(loc)
-			var/amount = min(sheets, S.max_amount)
-			S.amount = amount
-			sheets -= amount
+		new sheet_path(drop_location(), sheets)
+		sheets = 0
 
 /obj/machinery/power/port_gen/pacman/UseFuel()
 	var/needed_sheets = 1 / (time_per_sheet * consumption / power_output)
@@ -172,9 +167,6 @@
 		updateUsrDialog()
 		return
 	else if(!active)
-
-		if(exchange_parts(user, O))
-			return
 
 		if(istype(O, /obj/item/wrench))
 

@@ -26,9 +26,12 @@
 	var/explosion_level = 0	//for preventing explosion dodging
 	var/explosion_id = 0
 
-	var/list/decals
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
+
+	var/bullet_bounce_sound = 'sound/weapons/bulletremove.ogg' //sound played when a shell casing is ejected ontop of the turf.
+	var/bullet_sizzle = FALSE //used by ammo_casing/bounce_away() to determine if the shell casing should make a sizzle sound when it's ejected over the turf
+							//IE if the turf is supposed to be water, set TRUE.
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
@@ -94,6 +97,9 @@
 	..()
 
 /turf/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.Move_Pulled(src)
 
 /turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
@@ -182,7 +188,7 @@
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
-		if(O.flags_2 & FROZEN_2)
+		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()
 
 /turf/proc/is_plasteel_floor()
@@ -266,15 +272,18 @@
 /turf/proc/Bless()
 	new /obj/effect/blessing(src)
 
-/turf/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-	if(src_object.contents.len)
+/turf/storage_contents_dump_act(datum/component/storage/src_object, mob/user)
+	. = ..()
+	if(.)
+		return
+	if(length(src_object.contents()))
 		to_chat(usr, "<span class='notice'>You start dumping out the contents...</span>")
-		if(!do_after(usr,20,target=src_object))
+		if(!do_after(usr,20,target=src_object.parent))
 			return FALSE
 
-	var/list/things = src_object.contents.Copy()
+	var/list/things = src_object.contents()
 	var/datum/progressbar/progress = new(user, things.len, src)
-	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /obj/item/storage.proc/mass_remove_from_storage, src, things, progress)))
+	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress)))
 		stoplag(1)
 	qdel(progress)
 
@@ -334,7 +343,7 @@
 
 	for(var/V in contents)
 		var/atom/A = V
-		if(A.level >= affecting_level)
+		if(!QDELETED(A) && A.level >= affecting_level)
 			if(ismovableatom(A))
 				var/atom/movable/AM = A
 				if(!AM.ex_check(explosion_id))
@@ -412,18 +421,6 @@
 	if(has_gravity(src))
 		playsound(src, "bodyfall", 50, 1)
 	faller.drop_all_held_items()
-
-/turf/proc/add_decal(decal,group)
-	LAZYINITLIST(decals)
-	if(!decals[group])
-		decals[group] = list()
-	decals[group] += decal
-	add_overlay(decals[group])
-
-/turf/proc/remove_decal(group)
-	LAZYINITLIST(decals)
-	cut_overlay(decals[group])
-	decals[group] = null
 
 /turf/proc/photograph(limit=20)
 	var/image/I = new()

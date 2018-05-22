@@ -12,10 +12,8 @@
 /obj/machinery/computer/message_monitor{
 	dir = 2
 	},
-/obj/machinery/airalarm{
-	pixel_y = 24;
-	req_access = null;
-	req_access_txt = "150"
+/obj/machinery/airalarm/syndicate{
+	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -55,7 +53,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	freerange = 1;
 	name = "Syndicate Radio Intercom";
 	pixel_x = -30
@@ -87,7 +85,7 @@
 "al" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
-/obj/item/device/flashlight{
+/obj/item/flashlight{
 	pixel_y = -12
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -210,11 +208,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/syndicate{
 	dir = 4;
-	pixel_x = -24;
-	req_access = null;
-	req_access_txt = "150"
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
@@ -278,8 +274,8 @@
 /obj/structure/rack{
 	dir = 8
 	},
-/obj/item/device/multitool,
-/obj/item/device/radio/headset/syndicate/alt,
+/obj/item/multitool,
+/obj/item/radio/headset/syndicate/alt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
@@ -288,7 +284,7 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/device/mining_scanner,
+/obj/item/mining_scanner,
 /obj/item/pickaxe,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
@@ -517,10 +513,8 @@
 	},
 /area/ruin/space/has_grav/listeningstation)
 "aU" = (
-/obj/machinery/airalarm{
-	pixel_y = 24;
-	req_access = null;
-	req_access_txt = "150"
+/obj/machinery/airalarm/syndicate{
+	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -640,11 +634,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/syndicate{
 	dir = 8;
-	pixel_x = 24;
-	req_access = null;
-	req_access_txt = "150"
+	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -811,12 +803,10 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/syndicate{
 	dir = 4;
 	name = "Syndicate Listening Post APC";
-	pixel_x = 24;
-	req_access = null;
-	req_access_txt = "150"
+	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -948,11 +938,9 @@
 	},
 /obj/machinery/iv_drip,
 /obj/machinery/light/small,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/syndicate{
 	dir = 1;
-	pixel_y = -24;
-	req_access = null;
-	req_access_txt = "150"
+	pixel_y = -24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{

@@ -5,7 +5,7 @@
 	name = "ominous beacon"
 	desc = "This looks suspicious..."
 	icon = 'icons/obj/singularity.dmi'
-	icon_state = "beacon"
+	icon_state = "beacon0"
 
 	anchored = FALSE
 	density = TRUE
@@ -103,7 +103,7 @@
 	icon_state = "beaconsynd0"
 
 // SINGULO BEACON SPAWNER
-/obj/item/device/sbeacondrop
+/obj/item/sbeacondrop
 	name = "suspicious beacon"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "beacon"
@@ -114,7 +114,7 @@
 	var/droptype = /obj/machinery/power/singularity_beacon/syndicate
 
 
-/obj/item/device/sbeacondrop/attack_self(mob/user)
+/obj/item/sbeacondrop/attack_self(mob/user)
 	if(user)
 		to_chat(user, "<span class='notice'>Locked In.</span>")
 		new droptype( user.loc )
@@ -122,14 +122,14 @@
 		qdel(src)
 	return
 
-/obj/item/device/sbeacondrop/bomb
+/obj/item/sbeacondrop/bomb
 	desc = "A label on it reads: <i>Warning: Activating this device will send a high-ordinance explosive to your location</i>."
 	droptype = /obj/machinery/syndicatebomb
 
-/obj/item/device/sbeacondrop/powersink
+/obj/item/sbeacondrop/powersink
 	desc = "A label on it reads: <i>Warning: Activating this device will send a power draining device to your location</i>."
-	droptype = /obj/item/device/powersink
+	droptype = /obj/item/powersink
 
-/obj/item/device/sbeacondrop/clownbomb
+/obj/item/sbeacondrop/clownbomb
 	desc = "A label on it reads: <i>Warning: Activating this device will send a silly explosive to your location</i>."
 	droptype = /obj/machinery/syndicatebomb/badmin/clown

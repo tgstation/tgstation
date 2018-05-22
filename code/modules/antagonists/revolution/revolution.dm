@@ -112,7 +112,7 @@
 
 /datum/antagonist/rev/head/proc/admin_take_flash(mob/admin)
 	var/list/L = owner.current.get_contents()
-	var/obj/item/device/assembly/flash/flash = locate() in L
+	var/obj/item/assembly/flash/flash = locate() in L
 	if (!flash)
 		to_chat(admin, "<span class='danger'>Deleting flash failed!</span>")
 		return
@@ -133,7 +133,7 @@
 
 /datum/antagonist/rev/head/proc/admin_repair_flash(mob/admin)
 	var/list/L = owner.current.get_contents()
-	var/obj/item/device/assembly/flash/flash = locate() in L
+	var/obj/item/assembly/flash/flash = locate() in L
 	if (!flash)
 		to_chat(admin, "<span class='danger'>Repairing flash failed!</span>")
 	else
@@ -201,12 +201,13 @@
 
 /datum/antagonist/rev/farewell()
 	if(ishuman(owner.current))
-		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like they just remembered their real allegiance!</span>", null, null, null, owner.current)
+		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!</span>", null, null, null, owner.current)
 		to_chat(owner, "<span class='userdanger'>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</span>")
 	else if(issilicon(owner.current))
 		owner.current.visible_message("<span class='deconversion_message'>The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.</span>", null, null, null, owner.current)
 		to_chat(owner, "<span class='userdanger'>The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you.</span>")
 
+//blunt trauma deconversions call this through species.dm spec_attacked_by()
 /datum/antagonist/rev/proc/remove_revolutionary(borged, deconverter)
 	log_attack("[owner.current] (Key: [key_name(owner.current)]) has been deconverted from the revolution by [deconverter] (Key: [key_name(deconverter)])!")
 	if(borged)
@@ -232,11 +233,11 @@
 		H.dna.remove_mutation(CLOWNMUT)
 
 	if(give_flash)
-		var/obj/item/device/assembly/flash/T = new(H)
+		var/obj/item/assembly/flash/T = new(H)
 		var/list/slots = list (
-			"backpack" = slot_in_backpack,
-			"left pocket" = slot_l_store,
-			"right pocket" = slot_r_store
+			"backpack" = SLOT_IN_BACKPACK,
+			"left pocket" = SLOT_L_STORE,
+			"right pocket" = SLOT_R_STORE
 		)
 		var/where = H.equip_in_one_of_slots(T, slots)
 		if (!where)
@@ -348,7 +349,20 @@
 	return result.Join()
 
 /datum/team/revolution/antag_listing_entry()
-	var/common_part = ..()
+	var/common_part = ""
+	var/list/parts = list()
+	parts += "<b>[antag_listing_name()]</b><br>"
+	parts += "<table cellspacing=5>"
+
+	var/list/heads = get_team_antags(/datum/antagonist/rev/head,TRUE)
+
+	for(var/datum/antagonist/A in heads | get_team_antags())
+		parts += A.antag_listing_entry()
+
+	parts += "</table>"
+	parts += antag_listing_footer()
+	common_part = parts.Join()
+
 	var/heads_report = "<b>Heads of Staff</b><br>"
 	heads_report += "<table cellspacing=5>"
 	for(var/datum/mind/N in SSjob.get_living_heads())

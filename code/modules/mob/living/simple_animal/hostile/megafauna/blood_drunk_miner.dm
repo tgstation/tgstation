@@ -28,6 +28,7 @@ Difficulty: Medium
 	icon_state = "miner"
 	icon_living = "miner"
 	icon = 'icons/mob/broadMobs.dmi'
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	light_color = "#E4C7C5"
 	movement_type = GROUND
 	speak_emote = list("roars")
@@ -77,7 +78,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize()
 	. = ..()
-	internal = new/obj/item/device/gps/internal/miner(src)
+	internal = new/obj/item/gps/internal/miner(src)
 	miner_saw = new(src)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -255,11 +256,10 @@ Difficulty: Medium
 	sleep(4)
 	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
 
-/obj/item/device/gps/internal/miner
+/obj/item/gps/internal/miner
 	icon_state = null
 	gpstag = "Resonant Signal"
 	desc = "The sweet blood, oh, it sings to me."
 	invisibility = 100
 
 #undef MINER_DASH_RANGE
-#undef MEDAL_PREFIX

@@ -1,8 +1,8 @@
 /obj/item/gun/magic/staff
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	flags_2 = NO_MAT_REDEMPTION_2
+	item_flags = NEEDS_PERMIT | NO_MAT_REDEMPTION
 
 /obj/item/gun/magic/staff/change
 	name = "staff of change"
@@ -27,7 +27,6 @@
 	ammo_type = /obj/item/ammo_casing/magic/heal
 	icon_state = "staffofhealing"
 	item_state = "staffofhealing"
-	harmful = FALSE
 
 /obj/item/gun/magic/staff/healing/handle_suicide() //Stops people trying to commit suicide to heal themselves
 	return
@@ -60,7 +59,6 @@
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = 1
-	harmful = FALSE
 
 /obj/item/gun/magic/staff/honk
 	name = "staff of the honkmother"
@@ -71,7 +69,6 @@
 	item_state = "honker"
 	max_charges = 4
 	recharge_rate = 8
-	harmful = FALSE
 
 /obj/item/gun/magic/staff/spellblade
 	name = "spellblade"

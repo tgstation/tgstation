@@ -55,9 +55,6 @@
 	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
 		return
 
-	if(exchange_parts(user, O))
-		return
-
 	if(default_pry_open(O))
 		return
 
@@ -125,12 +122,15 @@
 		var/mob/M = O.loc
 		if(!M.transferItemToLoc(O, src))
 			to_chat(usr, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
-			return
+			return FALSE
+		else
+			return TRUE
 	else
-		if(istype(O.loc, /obj/item/storage))
-			var/obj/item/storage/S = O.loc
-			S.remove_from_storage(O,src)
-		O.forceMove(src)
+		if(O.loc.SendSignal(COMSIG_CONTAINS_STORAGE))
+			return O.loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, O, src)
+		else
+			O.forceMove(src)
+			return TRUE
 
 /obj/machinery/smartfridge/attack_ai(mob/user)
 	return FALSE
@@ -299,14 +299,15 @@
 			qdel(S)
 		return TRUE
 	for(var/obj/item/stack/sheet/wetleather/WL in src)
-		var/obj/item/stack/sheet/leather/L = new(drop_location())
-		L.amount = WL.amount
+		new /obj/item/stack/sheet/leather(drop_location(), WL.amount)
 		qdel(WL)
 		return TRUE
 	return FALSE
 
 /obj/machinery/smartfridge/drying_rack/emp_act(severity)
-	..()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	atmos_spawn_air("TEMP=1000")
 
 
@@ -344,12 +345,12 @@
 /obj/machinery/smartfridge/extract/accept_check(obj/item/O)
 	if(istype(O, /obj/item/slime_extract))
 		return TRUE
-	if(istype(O, /obj/item/device/slime_scanner))
+	if(istype(O, /obj/item/slime_scanner))
 		return TRUE
 	return FALSE
 
 /obj/machinery/smartfridge/extract/preloaded
-	initial_contents = list(/obj/item/device/slime_scanner = 2)
+	initial_contents = list(/obj/item/slime_scanner = 2)
 
 // -----------------------------
 // Chemistry Medical Smartfridge

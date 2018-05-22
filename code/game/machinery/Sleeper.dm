@@ -58,8 +58,13 @@
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
+/obj/machinery/sleeper/Exited(atom/movable/user)
+	if (!state_open && user == occupant)
+		container_resist(user)
+
 /obj/machinery/sleeper/relaymove(mob/user)
-	container_resist(user)
+	if (!state_open)
+		container_resist(user)
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)
@@ -73,9 +78,11 @@
 			to_chat(occupant, "[enter_message]")
 
 /obj/machinery/sleeper/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(is_operational() && occupant)
 		open_machine()
-	..(severity)
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -87,8 +94,6 @@
 		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 			return
 	if(default_change_direction_wrench(user, I))
-		return
-	if(exchange_parts(user, I))
 		return
 	if(default_pry_open(I))
 		return

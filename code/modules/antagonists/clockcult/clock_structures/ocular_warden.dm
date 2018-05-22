@@ -112,8 +112,12 @@
 			continue
 		if(is_servant_of_ratvar(L) || (L.has_trait(TRAIT_BLIND)) || L.anti_magic_check(TRUE, TRUE))
 			continue
-		if(L.stat || L.restrained() || L.buckled || L.lying)
+		if(L.stat || L.lying)
 			continue
+		if (iscarbon(L))
+			var/mob/living/carbon/c = L
+			if (istype(c.handcuffed,/obj/item/restraints/handcuffs/clockwork))
+				continue
 		if(ishostile(L))
 			var/mob/living/simple_animal/hostile/H = L
 			if(("ratvar" in H.faction) || (!H.mind && "neutral" in H.faction))

@@ -6,13 +6,12 @@
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	flags_1 = NOBLUDGEON_1
-	flags_2 = NO_EMP_WIRES_2
 	det_time = 10
 	display_timer = 0
 	w_class = WEIGHT_CLASS_SMALL
 	var/atom/target = null
 	var/mutable_appearance/plastic_overlay
-	var/obj/item/device/assembly_holder/nadeassembly = null
+	var/obj/item/assembly_holder/nadeassembly = null
 	var/assemblyattacher
 	var/directional = FALSE
 	var/aim_dir = NORTH
@@ -20,9 +19,13 @@
 	var/can_attach_mob = FALSE
 	var/full_damage_on_mobs = FALSE
 
-/obj/item/grenade/plastic/New()
+/obj/item/grenade/plastic/Initialize()
+	. = ..()
 	plastic_overlay = mutable_appearance(icon, "[item_state]2", HIGH_OBJ_LAYER)
-	..()
+
+/obj/item/grenade/plastic/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/grenade/plastic/Destroy()
 	qdel(nadeassembly)
@@ -31,8 +34,8 @@
 	..()
 
 /obj/item/grenade/plastic/attackby(obj/item/I, mob/user, params)
-	if(!nadeassembly && istype(I, /obj/item/device/assembly_holder))
-		var/obj/item/device/assembly_holder/A = I
+	if(!nadeassembly && istype(I, /obj/item/assembly_holder))
+		var/obj/item/assembly_holder/A = I
 		if(!user.transferItemToLoc(I, src))
 			return ..()
 		nadeassembly = A
@@ -107,10 +110,10 @@
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		target = AM
-		
+
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_COORDJMP(target)] with [det_time] second fuse",0,1)
 		log_game("[key_name(user)] planted [name] on [target.name] at [COORD(src)] with [det_time] second fuse")
-		
+
 		moveToNullspace()	//Yep
 
 		if(istype(AM, /obj/item)) //your crappy throwing star can't fly so good with a giant brick of c4 on it.
@@ -214,12 +217,8 @@
 		return
 	if(loc == AM)
 		return
-	if((istype(AM, /obj/item/storage/)) && !((istype(AM, /obj/item/storage/secure)) || (istype(AM, /obj/item/storage/lockbox)))) //If its storage but not secure storage OR a lockbox, then place it inside.
+	if(AM.SendSignal(COMSIG_CONTAINS_STORAGE) && !AM.SendSignal(COMSIG_IS_STORAGE_LOCKED))
 		return
-	if((istype(AM, /obj/item/storage/secure)) || (istype(AM, /obj/item/storage/lockbox)))
-		var/obj/item/storage/secure/S = AM
-		if(!S.locked) //Literal hacks, this works for lockboxes despite incorrect type casting, because they both share the locked var. But if its unlocked, place it inside, otherwise PLANTING C4!
-			return
 
 	to_chat(user, "<span class='notice'>You start planting the bomb...</span>")
 

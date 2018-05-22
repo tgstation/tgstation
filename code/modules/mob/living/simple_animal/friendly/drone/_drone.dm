@@ -35,6 +35,7 @@
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = (CANPUSH | CANSTUN | CANKNOCKDOWN)
 	gender = NEUTER
+	mob_biotypes = list(MOB_ROBOTIC)
 	speak_emote = list("chirps")
 	bubble_icon = "machine"
 	initial_language_holder = /datum/language_holder/drone
@@ -48,6 +49,7 @@
 	dextrous = TRUE
 	dextrous_hud_type = /datum/hud/dextrous/drone
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	see_in_dark = 7
 	can_be_held = TRUE
 	held_items = list(null, null)
 	var/staticChoice = "static"
@@ -87,10 +89,10 @@
 
 	if(default_storage)
 		var/obj/item/I = new default_storage(src)
-		equip_to_slot_or_del(I, slot_generic_dextrous_storage)
+		equip_to_slot_or_del(I, SLOT_GENERC_DEXTROUS_STORAGE)
 	if(default_hatmask)
 		var/obj/item/I = new default_hatmask(src)
-		equip_to_slot_or_del(I, slot_head)
+		equip_to_slot_or_del(I, SLOT_HEAD)
 
 	access_card.flags_1 |= NODROP_1
 
@@ -217,6 +219,9 @@
 
 
 /mob/living/simple_animal/drone/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	Stun(100)
 	to_chat(src, "<span class='danger'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>")
 	if(severity == 1)

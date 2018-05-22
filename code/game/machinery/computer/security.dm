@@ -783,8 +783,9 @@ What a mess.*/
 	printing = FALSE
 
 /obj/machinery/computer/secure_data/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
+	. = ..()
+
+	if(stat & (BROKEN|NOPOWER) || . & EMP_PROTECT_SELF)
 		return
 
 	for(var/datum/data/record/R in GLOB.data_core.security)
@@ -816,8 +817,6 @@ What a mess.*/
 		else if(prob(1))
 			qdel(R)
 			continue
-
-	..(severity)
 
 /obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = 0, record1, record2)
 	if(user)

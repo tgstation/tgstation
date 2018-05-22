@@ -47,7 +47,6 @@
 		return
 	if(is_ready())
 		teleport(AM)
-		use_power(5000)
 
 /obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
@@ -55,21 +54,21 @@
 			power_station.engaged = 0 //hub with panel open is off, so the station must be informed.
 			update_icon()
 		return
-	if(exchange_parts(user, W))
-		return
 	if(default_deconstruction_crowbar(W))
 		return
 	return ..()
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj, turf/T)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
-	if (!com)
+	if (QDELETED(com))
 		return
-	if (!com.target)
+	if (QDELETED(com.target))
+		com.target = null
 		visible_message("<span class='alert'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if (ismovableatom(M))
 		if(do_teleport(M, com.target))
+			use_power(5000)
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
@@ -77,7 +76,7 @@
 						to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
 						human.set_species(/datum/species/fly)
 
-					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
+					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), EFFECT_IRRADIATE, 0)
 			calibrated = 0
 	return
 
@@ -151,8 +150,8 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = W
+	if(istype(W, /obj/item/multitool))
+		var/obj/item/multitool/M = W
 		if(panel_open)
 			M.buffer = src
 			to_chat(user, "<span class='caution'>You download the data to the [W.name]'s buffer.</span>")
@@ -167,9 +166,6 @@
 		return
 	else if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
-		return
-
-	else if(exchange_parts(user, W))
 		return
 
 	else if(default_deconstruction_crowbar(W))

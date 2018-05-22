@@ -19,8 +19,7 @@
 	if(!check_rights())
 		return
 
-	if(!isobserver(usr))
-		log_game("[key_name(usr)] checked the player panel while in game.")
+	log_admin("[key_name(usr)] checked the individual player panel for [key_name(M)][isobserver(usr)?"":" while in game"].")
 
 	if(!M)
 		to_chat(usr, "You seem to be selecting a mob that doesn't exist anymore.")
@@ -59,6 +58,8 @@
 		body += "<a href='?_src_=holder;[HrefToken()];traitor=[REF(M)]'>TP</a> - "
 	else
 		body += "<a href='?_src_=holder;[HrefToken()];initmind=[REF(M)]'>Init Mind</a> - "
+	if (iscyborg(M))
+		body += "<a href='?_src_=holder;[HrefToken()];borgpanel=[REF(M)]'>BP</a> - "
 	body += "<a href='?priv_msg=[M.ckey]'>PM</a> - "
 	body += "<a href='?_src_=holder;[HrefToken()];subtlemessage=[REF(M)]'>SM</a> - "
 	body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a> - "
@@ -431,7 +432,7 @@
 		return
 
 	var/list/options = list("Regular Restart", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
-	if(SERVER_TOOLS_PRESENT)
+	if(world.TgsAvailable())
 		options += "Server Restart (Kill and restart DD)";
 
 	var/rebootconfirm
@@ -456,7 +457,7 @@
 					world.Reboot(fast_track = TRUE)
 				if("Server Restart (Kill and restart DD)")
 					to_chat(world, "Server restart - [init_by]")
-					SERVER_TOOLS_REBOOT_BYOND
+					world.TgsEndProcess()
 
 /datum/admins/proc/end_round()
 	set category = "Server"
@@ -768,11 +769,7 @@
 		var/J_totPos = html_encode(job.total_positions)
 		dat += "<tr><td>[J_title]:</td> <td>[J_opPos]/[job.total_positions < 0 ? " (unlimited)" : J_totPos]"
 
-		if(job.title == "AI" || job.title == "Cyborg")
-			dat += " </td><td>(Cannot Late Join)</td>"
-			continue
-		else
-			dat += "</td>"
+		dat += "</td>"
 		dat += "<td>"
 		if(job.total_positions >= 0)
 			dat += "<A href='?src=[REF(src)];[HrefToken()];customjobslot=[job.title]'>Custom</A> | "

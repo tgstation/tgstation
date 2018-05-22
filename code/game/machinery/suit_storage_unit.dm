@@ -103,6 +103,12 @@
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
+/obj/machinery/suit_storage_unit/radsuit
+	name = "radiation suit storage unit"
+	suit_type = /obj/item/clothing/suit/radiation
+	helmet_type = /obj/item/clothing/head/radiation
+	storage_type = /obj/item/geiger_counter
+
 /obj/machinery/suit_storage_unit/open
 	state_open = TRUE
 	density = FALSE
@@ -196,7 +202,7 @@
 		if(occupant || helmet || suit || storage)
 			return
 		if(target == user)
-			user.visible_message("<span class='warning'>[user] slips into [src] and closes the door behind them!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
+			user.visible_message("<span class='warning'>[user] slips into [src] and closes the door behind [user.p_them()]!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
 		else
 			target.visible_message("<span class='warning'>[user] pushes [target] into [src] and shuts its door!<span>", "<span class='userdanger'>[user] shoves you into [src] and shuts the door!</span>")
 		close_machine(target)
@@ -294,20 +300,20 @@
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
 	if(!state_open && occupant && (user in src) && user.stat == 0) // Check they're still here.
-		visible_message("<span class='notice'>You see [user] bursts out of [src]!</span>", \
+		visible_message("<span class='notice'>You see [user] burst out of [src]!</span>", \
 			"<span class='notice'>You escape the cramped confines of [src]!</span>")
 		open_machine()
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
 	if(state_open && is_operational())
-		if(istype(I, /obj/item/clothing/suit/space))
+		if(istype(I, /obj/item/clothing/suit))
 			if(suit)
 				to_chat(user, "<span class='warning'>The unit already contains a suit!.</span>")
 				return
 			if(!user.transferItemToLoc(I, src))
 				return
 			suit = I
-		else if(istype(I, /obj/item/clothing/head/helmet))
+		else if(istype(I, /obj/item/clothing/head))
 			if(helmet)
 				to_chat(user, "<span class='warning'>The unit already contains a helmet!</span>")
 				return

@@ -56,7 +56,7 @@
 	var/list/spawners = GLOB.mob_spawners[name]
 	LAZYREMOVE(spawners, src)
 	if(!LAZYLEN(spawners))
-		LAZYREMOVE(GLOB.mob_spawners,name)
+		GLOB.mob_spawners -= name
 	return ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
@@ -182,7 +182,7 @@
 		H.equipOutfit(outfit)
 		if(disable_pda)
 			// We don't want corpse PDAs to show up in the messenger list.
-			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H
+			var/obj/item/pda/PDA = locate(/obj/item/pda) in H
 			if(PDA)
 				PDA.toff = TRUE
 		if(disable_sensors)
@@ -312,7 +312,7 @@
 /obj/effect/mob_spawn/human/doctor/alive/equip(mob/living/carbon/human/H)
 	..()
 	// Remove radio and PDA so they wouldn't annoy station crew.
-	var/list/del_types = list(/obj/item/device/pda, /obj/item/device/radio/headset)
+	var/list/del_types = list(/obj/item/pda, /obj/item/radio/headset)
 	for(var/del_type in del_types)
 		var/obj/item/I = locate(del_type) in H
 		qdel(I)
@@ -410,7 +410,7 @@
 
 /datum/outfit/nanotrasenbridgeofficercorpse
 	name = "Bridge Officer Corpse"
-	ears = /obj/item/device/radio/headset/heads/hop
+	ears = /obj/item/radio/headset/heads/hop
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/sneakers/black
@@ -428,7 +428,7 @@
 	name = "Nanotrasen Private Security Commander"
 	uniform = /obj/item/clothing/under/rank/centcom_commander
 	suit = /obj/item/clothing/suit/armor/bulletproof
-	ears = /obj/item/device/radio/headset/heads/captain
+	ears = /obj/item/radio/headset/heads/captain
 	glasses = /obj/item/clothing/glasses/eyepatch
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	head = /obj/item/clothing/head/centhat

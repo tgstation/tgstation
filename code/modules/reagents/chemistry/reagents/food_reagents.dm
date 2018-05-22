@@ -438,7 +438,7 @@
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air(T.air.total_moles())
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
-		lowertemp.react()
+		lowertemp.react(src)
 		T.assume_air(lowertemp)
 		qdel(hotspot)
 
@@ -624,7 +624,7 @@
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
 
-/datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
+/datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/M)
 	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
 		M.nutrition -= 3*nutriment_factor
 	..()

@@ -91,7 +91,7 @@
 		head_attack_message = " on the head"
 		//Knockdown the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
-			target.apply_effect(min(armor_duration, 200) , KNOCKDOWN) // Never knockdown more than a flash!
+			target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN) // Never knockdown more than a flash!
 
 	//Display an attack message.
 	if(target != user)
@@ -298,6 +298,29 @@
 	icon_state = "grappabottle"
 	list_reagents = list("grappa" = 100)
 
+/obj/item/reagent_containers/food/drinks/bottle/sake
+	name = "Ryo's traditional sake"
+	desc = "Sweet as can be, and burns like fire going down."
+	icon_state = "sakebottle"
+	list_reagents = list("sake" = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/sake/Initialize()
+	. = ..()
+	if(prob(10))
+		name = "Fluffy Tail Sake"
+		desc += " On the bottle is a picture of a kitsune with nine touchable tails."
+		icon_state = "sakebottle_k"
+	else if(prob(10))
+		name = "Inubashiri's Home Brew"
+		desc += " Awoo."
+		icon_state = "sakebottle_i"
+
+/obj/item/reagent_containers/food/drinks/bottle/fernet
+	name = "Fernet Bronca"
+	desc = "A bottle of pure Fernet Bronca, produced in Cordoba Space Station"
+	icon_state = "fernetbottle"
+	list_reagents = list("fernet" = 100)
+
 //////////////////////////JUICES AND STUFF ///////////////////////
 
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
@@ -342,6 +365,24 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = FALSE
 	list_reagents = list("limejuice" = 100)
+	foodtype = FRUIT
+
+/obj/item/reagent_containers/food/drinks/bottle/menthol
+	name = "menthol"
+	desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
+	icon_state = "mentholbox"
+	item_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	isGlass = FALSE
+	list_reagents = list("menthol" = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/grenadine
+	name = "Jester Grenadine"
+	desc = "Contains 0% real cherries!"
+	icon_state = "grenadine"
+	isGlass = TRUE
+	list_reagents = list("grenadine" = 100)
 	foodtype = FRUIT
 
 

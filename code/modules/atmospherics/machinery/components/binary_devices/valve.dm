@@ -8,6 +8,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	desc = "A pipe with a valve that can be used to disable flow of gas through it."
 
 	can_unwrench = TRUE
+	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN		//Intentionally no allow_silicon flag
 
 	var/frequency = 0
 	var/id = null
@@ -19,9 +20,29 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	pipe_state = "mvalve"
 
 	var/switching = FALSE
+	
+/obj/machinery/atmospherics/components/binary/valve/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/binary/valve/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/binary/valve/open
 	open = TRUE
+	
+/obj/machinery/atmospherics/components/binary/valve/open/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/components/binary/valve/open/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/binary/valve/update_icon_nopipes(animation = 0)
 	normalize_dir()
@@ -48,13 +69,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	else if(dir==WEST)
 		setDir(EAST)
 
-/obj/machinery/atmospherics/components/binary/valve/attack_ai(mob/user)
-	return
-
-/obj/machinery/atmospherics/components/binary/valve/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/atmospherics/components/binary/valve/interact(mob/user)
 	add_fingerprint(usr)
 	update_icon_nopipes(1)
 	if(switching)
@@ -73,9 +88,17 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	icon_state = "dvalve_map"
 	valve_type = "d"
 	pipe_state = "dvalve"
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN | INTERACT_MACHINE_OPEN_SILICON
+	
+/obj/machinery/atmospherics/components/binary/valve/digital/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
 
-/obj/machinery/atmospherics/components/binary/valve/digital/attack_ai(mob/user)
-	return attack_hand(user)
+/obj/machinery/atmospherics/components/binary/valve/digital/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/binary/valve/digital/update_icon_nopipes(animation)
 	if(!is_operational())

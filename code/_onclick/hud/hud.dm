@@ -33,7 +33,7 @@
 	var/list/obj/screen/hotkeybuttons = list() //the buttons that can be used via hotkeys
 	var/list/infodisplay = list() //the screen objects that display mob info (health, alien plasma, etc...)
 	var/list/screenoverlays = list() //the screen objects used as whole screen overlays (flash, damageoverlay, etc...)
-	var/list/inv_slots[slots_amt] // /obj/screen/inventory objects, ordered by their slot ID.
+	var/list/inv_slots[SLOTS_AMT] // /obj/screen/inventory objects, ordered by their slot ID.
 	var/list/hand_slots // /obj/screen/inventory/hand objects, assoc list of "[held_index]" = object
 	var/list/obj/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
 
@@ -196,7 +196,9 @@
 				screenmob.client.screen -= infodisplay
 
 	for(var/thing in plane_masters)
-		screenmob.client.screen += plane_masters[thing]
+		var/obj/screen/plane_master/PM = plane_masters[thing]
+		PM.backdrop(screenmob)
+		screenmob.client.screen += PM
 
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)

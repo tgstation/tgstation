@@ -1,5 +1,6 @@
 /obj/machinery/recharge_station
 	name = "cyborg recharging station"
+	desc = "This device recharges cyborgs and resupplies them with materials."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
 	density = FALSE
@@ -42,19 +43,17 @@
 	open_machine()
 
 /obj/machinery/recharge_station/emp_act(severity)
+	. = ..()
 	if(!(stat & (BROKEN|NOPOWER)))
-		if(occupant)
+		if(occupant && !(. & EMP_PROTECT_CONTENTS))
 			occupant.emp_act(severity)
-		open_machine()
-	..()
+		if (!(. & EMP_PROTECT_SELF))
+			open_machine()
 
 /obj/machinery/recharge_station/attackby(obj/item/P, mob/user, params)
 	if(state_open)
 		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
 			return
-
-	if(exchange_parts(user, P))
-		return
 
 	if(default_pry_open(P))
 		return

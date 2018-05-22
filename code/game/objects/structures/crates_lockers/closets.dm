@@ -86,31 +86,31 @@
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target)
 	if(wall_mounted)
-		return 1
+		return TRUE
 	return !density
 
 /obj/structure/closet/proc/can_open(mob/living/user)
 	if(welded || locked)
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				to_chat(user, "<span class='danger'>There's something large on top of [src], preventing it from opening.</span>" )
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/structure/closet/proc/can_close(mob/living/user)
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/closet/closet in T)
 		if(closet != src && !closet.wall_mounted)
-			return 0
+			return FALSE
 	for(var/mob/living/L in T)
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				to_chat(user, "<span class='danger'>There's something too large in [src], preventing it from closing.</span>")
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/structure/closet/proc/dump_contents()
 	var/atom/L = drop_location()
@@ -180,14 +180,14 @@
 
 /obj/structure/closet/proc/close(mob/living/user)
 	if(!opened || !can_close(user))
-		return 0
+		return FALSE
 	take_contents()
 	playsound(loc, close_sound, 15, 1, -3)
 	climb_time = initial(climb_time)
 	opened = FALSE
 	density = TRUE
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/structure/closet/proc/toggle(mob/living/user)
 	if(opened)
@@ -207,7 +207,9 @@
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)
 	if(user in src)
 		return
-	if(!src.tool_interact(W,user))
+	if(src.tool_interact(W,user))
+		return 1 // No afterattack
+	else
 		return ..()
 
 /obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldnt be continued (because tool was used/closet was of wrong type), FALSE if otherwise
@@ -308,7 +310,7 @@
 			message_cooldown = world.time + 50
 			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 		return
-	container_resist()
+	container_resist(user)
 
 /obj/structure/closet/attack_hand(mob/user)
 	. = ..()
@@ -386,7 +388,7 @@
 /obj/structure/closet/proc/bust_open()
 	welded = FALSE //applies to all lockers
 	locked = FALSE //applies to critter crates and secure lockers only
-	broken = 1 //applies to secure lockers only
+	broken = TRUE //applies to secure lockers only
 	open()
 
 /obj/structure/closet/AltClick(mob/user)
@@ -425,7 +427,7 @@
 						"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
 						"<span class='italics'>You hear a faint electrical spark.</span>")
 		playsound(src, "sparks", 50, 1)
-		broken = 1
+		broken = TRUE
 		locked = FALSE
 		update_icon()
 
@@ -434,9 +436,13 @@
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 1)
 
 /obj/structure/closet/emp_act(severity)
-	for(var/obj/O in src)
-		O.emp_act(severity)
-	if(secure && !broken)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if (!(. & EMP_PROTECT_CONTENTS))
+		for(var/obj/O in src)
+			O.emp_act(severity)
+	if(secure && !broken && !(. & EMP_PROTECT_SELF))
 		if(prob(50 / severity))
 			locked = !locked
 			update_icon()
@@ -446,8 +452,6 @@
 			else
 				req_access = list()
 				req_access += pick(get_all_accesses())
-	..()
-
 
 /obj/structure/closet/contents_explosion(severity, target)
 	for(var/atom/A in contents)
@@ -468,16 +472,17 @@
 /obj/structure/closet/proc/dive_into(mob/living/user)
 	var/turf/T1 = get_turf(user)
 	var/turf/T2 = get_turf(src)
-	if(!open() && !opened)
-		togglelock(user, TRUE)
-		if(!open())
+	if(!opened)
+		if(locked)
+			togglelock(user, TRUE)
+		if(!open(user))
 			to_chat(user, "<span class='warning'>It won't budge!</span>")
 			return
 	step_towards(user, T2)
 	T1 = get_turf(user)
 	if(T1 == T2)
 		user.resting = TRUE //so people can jump into crates without slamming the lid on their head
-		if(!close())
+		if(!close(user))
 			to_chat(user, "<span class='warning'>You can't get [src] to close!</span>")
 			user.resting = FALSE
 			return

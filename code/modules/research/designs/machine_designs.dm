@@ -122,6 +122,14 @@
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
 	category = list ("Medical Machinery")
 
+/datum/design/board/vr_sleeper
+	name = "Machine Design (VR Sleeper Board)"
+	desc = "The circuit board for a VR sleeper."
+	id = "vr_sleeper"
+	build_path = /obj/item/circuitboard/machine/vr_sleeper
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	category = list ("Medical Machinery")
+
 /datum/design/board/cryotube
 	name = "Machine Design (Cryotube Board)"
 	desc = "The circuit board for a cryotube."
@@ -323,20 +331,28 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/board/processor
-	name = "Machine Design (Food Processor Board)"
-	desc = "The circuit board for a food processor."
+	name = "Machine Design (Food/Slime Processor Board)"
+	desc = "The circuit board for a processing unit. Screwdrive the circuit to switch between food (default) or slime processing."
 	id = "processor"
 	build_path = /obj/item/circuitboard/machine/processor
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/board/slimeprocessor
-	name = "Machine Design (Slime Processor Board)"
-	desc = "The circuit board for a slime processor."
-	id = "slimeprocessor"
-	build_path = /obj/item/circuitboard/machine/processor/slime
+/datum/design/board/soda_dispenser
+	name = "Machine Design (Portable Soda Dispenser Board)"
+	desc = "The circuit board for a portable soda dispenser."
+	id = "soda_dispenser"
+	build_path = /obj/item/circuitboard/machine/chem_dispenser/drinks
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/beer_dispenser
+	name = "Machine Design (Portable Booze Dispenser Board)"
+	desc = "The circuit board for a portable booze dispenser."
+	id = "beer_dispenser"
+	build_path = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	category = list ("Misc. Machinery")
 
 /datum/design/board/recycler
 	name = "Machine Design (Recycler Board)"
@@ -403,6 +419,14 @@
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/rad_collector
+	name = "Machine Design (Radiation Collector Board)"
+	desc = "The circuit board for a radiation collector array."
+	id = "rad_collector"
+	build_path = /obj/item/circuitboard/machine/rad_collector
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/grounding_rod
 	name = "Machine Design (Grounding Rod Board)"
 	desc = "The circuit board for a grounding rod."
@@ -466,3 +490,19 @@
 	build_path = /obj/item/circuitboard/machine/dish_drive
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/board/stacking_unit_console
+	name = "Machine Design (Stacking Machine Console)"
+	desc = "The circuit board for a Stacking Machine Console."
+	id = "stack_console"
+	build_path = /obj/item/circuitboard/machine/stacking_unit_console
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/board/stacking_machine
+	name = "Machine Design (Stacking Machine)"
+	desc = "The circuit board for a Stacking Machine."
+	id = "stack_machine"
+	build_path = /obj/item/circuitboard/machine/stacking_machine
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING

@@ -98,10 +98,6 @@
 		update_icon()
 		return
 
-	//exchanging parts using the RPE
-	if(exchange_parts(user, I))
-		return
-
 	//building and linking a terminal
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/dir = get_dir(user,src)
@@ -412,6 +408,9 @@
 
 
 /obj/machinery/power/smes/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	input_attempt = rand(0,1)
 	inputting = input_attempt
 	output_attempt = rand(0,1)
@@ -423,7 +422,6 @@
 		charge = 0
 	update_icon()
 	log_smes("an emp")
-	..()
 
 /obj/machinery/power/smes/engineering
 	charge = 1.5e6 // Engineering starts with some charge for singulo

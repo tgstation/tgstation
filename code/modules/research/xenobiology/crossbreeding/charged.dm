@@ -66,10 +66,8 @@ Charged extracts:
 	colour = "metal"
 
 /obj/item/slimecross/charged/metal/do_effect(mob/user)
-	var/obj/item/stack/sheet/metal/M = new(get_turf(user))
-	M.amount = 25
-	var/obj/item/stack/sheet/plasteel/P = new(get_turf(user))
-	P.amount = 10
+	new /obj/item/stack/sheet/metal(get_turf(user), 25)
+	new /obj/item/stack/sheet/plasteel(get_turf(user), 10)
 	user.visible_message("<span class='notice'>[src] grows into a plethora of metals!</span>")
 	..()
 
@@ -85,8 +83,7 @@ Charged extracts:
 	colour = "dark purple"
 
 /obj/item/slimecross/charged/darkpurple/do_effect(mob/user)
-	var/obj/item/stack/sheet/mineral/plasma/M = new(get_turf(user))
-	M.amount = 10
+	new /obj/item/stack/sheet/mineral/plasma(get_turf(user), 10)
 	user.visible_message("<span class='notice'>[src] produces a large amount of plasma!</span>")
 	..()
 
@@ -113,8 +110,7 @@ Charged extracts:
 	colour = "bluespace"
 
 /obj/item/slimecross/charged/bluespace/do_effect(mob/user)
-	var/obj/item/stack/sheet/bluespace_crystal/M = new(get_turf(user))
-	M.amount = 10
+	new /obj/item/stack/sheet/bluespace_crystal(get_turf(user), 10)
 	user.visible_message("<span class='notice'>[src] produces several sheets of polycrystal!</span>")
 	..()
 
@@ -122,7 +118,7 @@ Charged extracts:
 	colour = "sepia"
 
 /obj/item/slimecross/charged/sepia/do_effect(mob/user)
-	new /obj/item/device/camera/spooky(get_turf(user))
+	new /obj/item/camera/spooky(get_turf(user))
 	user.visible_message("<span class='notice'>[src] flickers in a strange, ethereal manner, and produces a camera!</span>")
 	..()
 
@@ -138,8 +134,7 @@ Charged extracts:
 	colour = "pyrite"
 
 /obj/item/slimecross/charged/pyrite/do_effect(mob/user)
-	var/obj/item/stack/sheet/mineral/bananium/M = new(get_turf(user))
-	M.amount = 10
+	new /obj/item/stack/sheet/mineral/bananium(get_turf(user), 10)
 	user.visible_message("<span class='warning'>[src] solidifies with a horrifying banana stench!</span>")
 	..()
 
@@ -329,7 +324,7 @@ Charged extracts:
 	if(!istype(C))
 		to_chat(user, "<span class='warning'>The potion can only be used on clothing!</span>")
 		return
-	if(C.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && STOPSPRESSUREDMAGE_1 in C.flags_1)
+	if(C.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && C.clothing_flags & STOPSPRESSUREDAMAGE)
 		to_chat(user, "<span class='warning'>The [C] is already pressure-resistant!</span>")
 		return ..()
 	to_chat(user, "<span class='notice'>You slather the blue gunk over the [C], making it airtight.</span>")
@@ -338,7 +333,7 @@ Charged extracts:
 	C.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
 	C.min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	C.cold_protection = C.body_parts_covered
-	C.flags_1 |= STOPSPRESSUREDMAGE_1
+	C.clothing_flags |= STOPSPRESSUREDAMAGE
 	uses--
 	if(!uses)
 		qdel(src)
@@ -371,7 +366,9 @@ Charged extracts:
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	C.add_atom_colour("#800000", FIXED_COLOUR_PRIORITY)
 	C.resistance_flags |= LAVA_PROOF
-	C.flags_2 |= LAVA_PROTECT_2
+	if (istype(C, /obj/item/clothing))
+		var/obj/item/clothing/CL = C
+		CL.clothing_flags |= LAVAPROTECT
 	uses--
 	if(!uses)
 		qdel(src)

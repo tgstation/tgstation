@@ -50,7 +50,7 @@
 "ak" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs,
-/obj/item/device/assembly/flash,
+/obj/item/assembly/flash,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "al" = (
@@ -621,8 +621,7 @@
 /area/shuttle/escape)
 "bF" = (
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bG" = (
@@ -642,8 +641,7 @@
 	pixel_y = -6
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bI" = (
@@ -791,8 +789,7 @@
 "bT" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bU" = (
@@ -806,8 +803,7 @@
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "bW" = (
@@ -884,8 +880,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	dir = 9;
-	icon_state = "darkgreen"
+	dir = 9
 	},
 /area/shuttle/escape)
 "ci" = (

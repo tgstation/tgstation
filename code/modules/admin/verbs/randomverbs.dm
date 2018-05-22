@@ -553,7 +553,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Delete"
 
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_SPAWN|R_DEBUG))
 		return
 
 	admin_delete(A)
@@ -1001,25 +1001,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	"}
 	usr << browse(dat, "window=dressup;size=550x600")
 
-/client/proc/toggle_antag_hud()
-	set category = "Admin"
-	set name = "Toggle AntagHUD"
-	set desc = "Toggles the Admin AntagHUD"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/adding_hud = !has_antag_hud()
-
-	for(var/datum/atom_hud/H in GLOB.huds)
-		if(istype(H, /datum/atom_hud/antag))
-			(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
-
-	to_chat(usr, "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"].")
-	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
-	log_admin("[key_name(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Antag HUD", "[adding_hud ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/toggle_combo_hud()
 	set category = "Admin"
 	set name = "Toggle Combo HUD"
@@ -1036,10 +1017,11 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	for(var/datum/atom_hud/antag/H in GLOB.huds) // add antag huds
 		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 
-	if (adding_hud)
-		mob.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
-	else
-		mob.lighting_alpha = initial(mob.lighting_alpha)
+	if(prefs.toggles & COMBOHUD_LIGHTING)
+		if(adding_hud)
+			mob.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+		else
+			mob.lighting_alpha = initial(mob.lighting_alpha)
 
 	mob.update_sight()
 
@@ -1060,6 +1042,30 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	for(var/obj/machinery/shuttle_manipulator/M in GLOB.machines)
 		M.ui_interact(usr)
+
+/client/proc/run_weather()
+	set category = "Fun"
+	set name = "Run Weather"
+	set desc = "Triggers a weather on the z-level you choose."
+
+	if(!holder)
+		return
+
+	var/weather_type = input("Choose a weather", "Weather")  as null|anything in subtypesof(/datum/weather)
+	if(!weather_type)
+		return
+
+	var/z_level = input("Z-Level to target? Leave blank to target current Z-Level.", "Z-Level")  as num|null
+	if(!isnum(z_level))
+		if(!src.mob)
+			return
+		z_level = src.mob.z
+
+	SSweather.run_weather(weather_type, z_level)
+
+	message_admins("[key_name_admin(usr)] started weather of type [weather_type] on the z-level [z_level].")
+	log_admin("[key_name(usr)] started weather of type [weather_type] on the z-level [z_level].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Run Weather")
 
 /client/proc/mass_zombie_infection()
 	set category = "Fun"
@@ -1231,9 +1237,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			NT.Insert(H, drop_if_replaced = FALSE)
 		else
 			tail.Remove(H)
-
-	H.dna.features["ears"] = "None"
-	H.dna.features["tail_human"] = "None"
 
 	if(!silent)
 		to_chat(H, "You are no longer a cat.")

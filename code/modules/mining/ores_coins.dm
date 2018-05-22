@@ -49,6 +49,20 @@
 
 	return TRUE
 
+/obj/item/stack/ore/fire_act(exposed_temperature, exposed_volume)
+	. = ..()
+	if(isnull(refined_type))
+		return
+	else
+		var/probability = (rand(0,100))/100
+		var/burn_value = probability*amount
+		var/amountrefined = round(burn_value, 1)
+		if(amountrefined < 1)
+			qdel(src)
+		else
+			new refined_type(drop_location(),amountrefined)
+			qdel(src)
+
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
@@ -102,6 +116,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
 	C.confused += 5
 	to_chat(C, "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>")
+	qdel(src)
+
+/obj/item/stack/ore/glass/ex_act(severity, target)
+	if (severity == EXPLODE_NONE)
+		return
 	qdel(src)
 
 /obj/item/stack/ore/glass/basalt
@@ -196,7 +215,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	return ..()
 
 /obj/item/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
-	if(!wires && istype(I, /obj/item/device/assembly/igniter))
+	if(!wires && istype(I, /obj/item/assembly/igniter))
 		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
 		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)
@@ -213,7 +232,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		GibtoniteReaction(user)
 		return
 	if(primed)
-		if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool))
+		if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) || istype(I, /obj/item/multitool))
 			primed = FALSE
 			if(det_timer)
 				deltimer(det_timer)
@@ -286,10 +305,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return
 	qdel(src)
 
-/obj/item/ore/stack/glass/ex_act(severity, target)
-	if (severity == EXPLODE_NONE)
-		return
-	qdel(src)
 
 /*****************************Coin********************************/
 
@@ -345,6 +360,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_gold_heads"
 	value = 50
 	materials = list(MAT_GOLD = MINERAL_MATERIAL_AMOUNT*0.2)
+	grind_results = list("gold" = 4)
 
 /obj/item/coin/silver
 	name = "silver coin"
@@ -352,6 +368,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_silver_heads"
 	value = 20
 	materials = list(MAT_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
+	grind_results = list("silver" = 4)
 
 /obj/item/coin/diamond
 	name = "diamond coin"
@@ -359,6 +376,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_diamond_heads"
 	value = 500
 	materials = list(MAT_DIAMOND = MINERAL_MATERIAL_AMOUNT*0.2)
+	grind_results = list("carbon" = 4)
 
 /obj/item/coin/iron
 	name = "iron coin"
@@ -366,6 +384,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_iron_heads"
 	value = 1
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
+	grind_results = list("iron" = 4)
 
 /obj/item/coin/plasma
 	name = "plasma coin"
@@ -373,6 +392,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_plasma_heads"
 	value = 100
 	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT*0.2)
+	grind_results = list("plasma" = 4)
 
 /obj/item/coin/uranium
 	name = "uranium coin"
@@ -380,6 +400,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_uranium_heads"
 	value = 80
 	materials = list(MAT_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
+	grind_results = list("uranium" = 4)
 
 /obj/item/coin/bananium
 	name = "bananium coin"
@@ -387,6 +408,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_bananium_heads"
 	value = 1000 //makes the clown cry
 	materials = list(MAT_BANANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
+	grind_results = list("banana" = 4)
 
 /obj/item/coin/adamantine
 	name = "adamantine coin"
@@ -407,6 +429,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	sideslist = list("heads")
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
 	value = 1
+	grind_results = list("iron" = 4)
 
 /obj/item/coin/antagtoken
 	name = "antag token"
@@ -415,6 +438,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
 	sideslist = list("valid", "salad")
 	value = 0
+	grind_results = list("sodiumchloride" = 4)
 
 /obj/item/coin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))

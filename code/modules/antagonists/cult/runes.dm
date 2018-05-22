@@ -299,7 +299,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			else
 				to_chat(M, "<span class='cultlarge'>\"I accept this meager sacrifice.\"</span>")
 
-	var/obj/item/device/soulstone/stone = new /obj/item/device/soulstone(get_turf(src))
+	var/obj/item/soulstone/stone = new /obj/item/soulstone(get_turf(src))
 	if(sacrificial.mind && !sacrificial.suiciding)
 		stone.invisibility = INVISIBILITY_MAXIMUM //so it's not picked up during transfer_soul()
 		stone.transfer_soul("FORCE", sacrificial, usr)
@@ -708,6 +708,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target died")
 		return
+	if(cultist_to_summon.pulledby || cultist_to_summon.buckled)
+		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is being held in place!</span>")
+		fail_invoke()
+		log_game("Summon Cultist rune failed - target restrained")
+		return
 	if(!iscultist(cultist_to_summon))
 		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is not a follower of the Geometer!</span>")
 		fail_invoke()
@@ -1056,7 +1061,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /proc/hudFix(mob/living/carbon/human/target)
 	if(!target || !target.client)
 		return
-	var/obj/O = target.get_item_by_slot(slot_glasses)
+	var/obj/O = target.get_item_by_slot(SLOT_GLASSES)
 	if(istype(O, /obj/item/clothing/glasses/hud/security))
 		var/datum/atom_hud/AH = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 		AH.add_hud_to(target)

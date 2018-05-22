@@ -499,7 +499,7 @@
 
 ///Syndicate Detonator (aka the big red button)///
 
-/obj/item/device/syndicatedetonator
+/obj/item/syndicatedetonator
 	name = "big red button"
 	desc = "Your standard issue bomb synchronizing button. Five second safety delay to prevent 'accidents'."
 	icon = 'icons/obj/assemblies.dmi'
@@ -512,7 +512,7 @@
 	var/detonated =	0
 	var/existant =	0
 
-/obj/item/device/syndicatedetonator/attack_self(mob/user)
+/obj/item/syndicatedetonator/attack_self(mob/user)
 	if(timer < world.time)
 		for(var/obj/machinery/syndicatebomb/B in GLOB.machines)
 			if(B.active)

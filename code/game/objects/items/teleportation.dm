@@ -55,7 +55,7 @@
 
 			if (sr)
 				temp += "<B>Beacon Signals:</B><BR>"
-				for(var/obj/item/device/beacon/W in GLOB.teleportbeacons)
+				for(var/obj/item/beacon/W in GLOB.teleportbeacons)
 					if (!W.renamed)
 						continue
 					var/turf/tr = get_turf(W)
@@ -219,3 +219,17 @@
 		if(active_portal_pairs[i] == P)
 			return DESTINATION_PORTAL
 	return FALSE
+
+/obj/item/hand_tele/suicide_act(mob/user)
+	if(iscarbon(user))
+		user.visible_message("<span class='suicide'>[user] is creating a weak portal and sticking [user.p_their()] head through! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		var/mob/living/carbon/itemUser = user
+		var/obj/item/bodypart/head/head = itemUser.get_bodypart(BODY_ZONE_HEAD)
+		if(head)
+			head.drop_limb()
+			var/list/safeLevels = SSmapping.levels_by_any_trait(list(ZTRAIT_SPACE_RUINS, ZTRAIT_LAVA_RUINS, ZTRAIT_STATION, ZTRAIT_MINING))
+			head.forceMove(locate(rand(1, world.maxx), rand(1, world.maxy), pick(safeLevels)))
+			itemUser.visible_message("<span class='suicide'>The portal snaps closed taking [user]'s head with it!</span>")
+		else
+			itemUser.visible_message("<span class='suicide'>[user] looks even further depressed as they realize they do not have a head...and suddenly dies of shame!</span>")
+		return (BRUTELOSS)

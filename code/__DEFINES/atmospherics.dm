@@ -9,7 +9,7 @@
 #define META_GAS_OVERLAY		4
 #define META_GAS_DANGER			5
 #define META_GAS_ID				6
-
+#define META_GAS_FUSION_POWER   7
 //ATMOS
 //stuff you should probably leave well alone!
 #define R_IDEAL_GAS_EQUATION	8.31	//kPa*L/(K*mol)
@@ -39,8 +39,8 @@
 #define MINIMUM_TEMPERATURE_TO_MOVE					(T20C+100)			//or this (or both, obviously)
 #define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND		4		//Minimum temperature difference before group processing is suspended
 #define MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER		0.5		//Minimum temperature difference before the gas temperatures are just set to be equal
-#define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		T20C+10
-#define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	T20C+200
+#define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		(T20C+10)
+#define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	(T20C+200)
 
 //HEAT TRANSFER COEFFICIENTS
 //Must be between 0 and 1. Values closer to 1 equalize temperature faster
@@ -51,11 +51,13 @@
 #define HEAT_CAPACITY_VACUUM				7000	//a hack to help make vacuums "cold", sacrificing realism for gameplay
 
 //FIRE
-#define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	150+T0C
-#define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	100+T0C
+#define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	(150+T0C)
+#define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	(100+T0C)
 #define FIRE_SPREAD_RADIOSITY_SCALE			0.85
 #define FIRE_GROWTH_RATE					40000	//For small fires
-#define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
+#define PLASMA_MINIMUM_BURN_TEMPERATURE		(100+T0C)
+#define PLASMA_UPPER_TEMPERATURE			(1370+T0C)
+#define PLASMA_OXYGEN_FULLBURN				10
 
 //GASES
 #define MIN_TOXIC_GAS_DAMAGE				1
@@ -201,10 +203,10 @@
 #define PIPING_LAYER_P_Y 5
 #define PIPING_LAYER_LCHANGE 0.05
 
-#define PIPING_ALL_LAYER 1					//intended to connect with all layers, check for all instead of just one.
-#define PIPING_ONE_PER_TURF 2 				//can only be built if nothing else with this flag is on the tile already.
-#define PIPING_DEFAULT_LAYER_ONLY 4			//can only exist at PIPING_LAYER_DEFAULT
-#define PIPING_CARDINAL_AUTONORMALIZE 8		//north/south east/west doesn't matter, auto normalize on build.
+#define PIPING_ALL_LAYER				(1<<0)	//intended to connect with all layers, check for all instead of just one.
+#define PIPING_ONE_PER_TURF				(1<<1) 	//can only be built if nothing else with this flag is on the tile already.
+#define PIPING_DEFAULT_LAYER_ONLY		(1<<2)	//can only exist at PIPING_LAYER_DEFAULT
+#define PIPING_CARDINAL_AUTONORMALIZE	(1<<3)	//north/south east/west doesn't matter, auto normalize on build.
 
 //HELPERS
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
@@ -215,16 +217,16 @@
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
-		"Amethyst" = rgb(130,43,255), //supplymain
-		"Blue" = rgb(0,0,255),
-		"Brown" = rgb(178,100,56),
-		"Cyan" = rgb(0,255,249),
-		"Dark" = rgb(69,69,69),
-		"Green" = rgb(30,255,0),
-		"Grey" = rgb(255,255,255),
-		"Orange" = rgb(255,129,25),
-		"Purple" = rgb(128,0,182),
-		"Red" = rgb(255,0,0),
-		"Violet" = rgb(64,0,128),
-		"Yellow" = rgb(255,198,0)
-		))
+		"amethyst" = rgb(130,43,255), //supplymain
+		"blue" = rgb(0,0,255),
+		"brown" = rgb(178,100,56),
+		"cyan" = rgb(0,255,249),
+		"dark" = rgb(69,69,69),
+		"green" = rgb(30,255,0),
+		"grey" = rgb(255,255,255),
+		"orange" = rgb(255,129,25),
+		"purple" = rgb(128,0,182),
+		"red" = rgb(255,0,0),
+		"violet" = rgb(64,0,128),
+		"yellow" = rgb(255,198,0)
+))

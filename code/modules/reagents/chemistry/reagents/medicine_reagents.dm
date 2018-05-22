@@ -833,7 +833,7 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(prob(10))
-			C.cure_trauma_type(TRAUMA_RESILIENCE_BASIC)
+			C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 	..()
 
 /datum/reagent/medicine/mutadone
@@ -1093,7 +1093,7 @@
 	. = 1
 
 /datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
-	M.hallucination = min(max(0, M.hallucination + 10), 50)
+	M.hallucination = min(max(0, M.hallucination + 5), 60)
 	M.adjustToxLoss(5 * REM, 0)
 	..()
 	. = 1

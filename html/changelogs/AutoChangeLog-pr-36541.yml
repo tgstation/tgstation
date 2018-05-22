@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Bees (and similar swarming mobs)  are now able to occupy the same tile as other bees! When doing so, their icons are offset to make them seem like a proper swarm."
-  - tweak: "Bees will now dodge bullets not directly aimed at them. Why are you firing guns at bees"

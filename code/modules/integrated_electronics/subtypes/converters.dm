@@ -69,7 +69,7 @@
 
 /obj/item/integrated_circuit/converter/refcode
 	name = "reference encoder"
-	desc = "This circuit can encode a reference into a string, which can then be read by an EPV2 circuit."
+	desc = "This circuit can encode a reference into a string, which can then be read by a reference decoder circuit."
 	icon_state = "ref-string"
 	inputs = list("input" = IC_PINTYPE_REF)
 	outputs = list("output" = IC_PINTYPE_STRING)
@@ -88,7 +88,7 @@
 
 /obj/item/integrated_circuit/converter/refdecode
 	name = "reference decoder"
-	desc = "This circuit can convert an encoded reference to actual reference."
+	desc = "This circuit can convert an encoded reference to an actual reference."
 	icon_state = "ref-string"
 	inputs = list("input" = IC_PINTYPE_STRING)
 	outputs = list("output" = IC_PINTYPE_REF)
@@ -142,21 +142,18 @@
 
 /obj/item/integrated_circuit/converter/concatenator
 	name = "concatenator"
-	desc = "This joins many strings together to get one big string."
+	desc = "This can join up to 8 strings together to get one big string."
 	complexity = 4
-	inputs = list(
-		"A" = IC_PINTYPE_STRING,
-		"B" = IC_PINTYPE_STRING,
-		"C" = IC_PINTYPE_STRING,
-		"D" = IC_PINTYPE_STRING,
-		"E" = IC_PINTYPE_STRING,
-		"F" = IC_PINTYPE_STRING,
-		"G" = IC_PINTYPE_STRING,
-		"H" = IC_PINTYPE_STRING
-		)
+	inputs = list()
 	outputs = list("result" = IC_PINTYPE_STRING)
 	activators = list("concatenate" = IC_PINTYPE_PULSE_IN, "on concatenated" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	var/number_of_pins = 8
+
+/obj/item/integrated_circuit/converter/concatenator/Initialize()
+	for(var/i = 1 to number_of_pins)
+		inputs["input [i]"] = IC_PINTYPE_STRING
+	. = ..()
 
 /obj/item/integrated_circuit/converter/concatenator/do_work()
 	var/result = null
@@ -169,10 +166,22 @@
 	push_data()
 	activate_pin(2)
 
+/obj/item/integrated_circuit/converter/concatenator/small
+	name = "small concatenator"
+	desc = "This can join up to 4 strings together to get one big string."
+	complexity = 2
+	number_of_pins = 4
+
+/obj/item/integrated_circuit/converter/concatenator/large
+	name = "large concatenator"
+	desc = "This can join up to 16 strings together to get one very big string."
+	complexity = 6
+	number_of_pins = 16
+
 /obj/item/integrated_circuit/converter/separator
 	name = "separator"
-	desc = "This splits as single string into two at the relative split point."
-	extended_desc = "This circuits splits a given string into two, based on the string, and the index value. \
+	desc = "This splits a single string into two at the relative split point."
+	extended_desc = "This circuit splits a given string into two, based on the string and the index value. \
 	The index splits the string <b>after</b> the given index, including spaces. So 'a person' with an index of '3' \
 	will split into 'a p' and 'erson'."
 	icon_state = "split"
@@ -203,11 +212,38 @@
 
 	activate_pin(2)
 
+/obj/item/integrated_circuit/converter/indexer
+	name = "indexer"
+	desc = "This circuit takes a string and an index value, then returns the character found at in the string at the given index."
+	extended_desc = "Make sure the index is not longer or shorter than the string length. If you don't, the circuit will return empty."
+	icon_state = "split"
+	complexity = 4
+	inputs = list(
+		"string to index" = IC_PINTYPE_STRING,
+		"index" = IC_PINTYPE_NUMBER,
+		)
+	outputs = list(
+		"found character" = IC_PINTYPE_STRING
+		)
+	activators = list("index" = IC_PINTYPE_PULSE_IN, "on indexed" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/converter/indexer/do_work()
+	var/strin = get_pin_data(IC_INPUT, 1)
+	var/ind = get_pin_data(IC_INPUT, 2)
+	if(ind > 0 && ind <= length(strin))
+		set_pin_data(IC_OUTPUT, 1, strin[ind])
+	else
+		set_pin_data(IC_OUTPUT, 1, "")
+	push_data()
+	activate_pin(2)
+
 /obj/item/integrated_circuit/converter/findstring
 	name = "find text"
-	desc = "This gives position of sample in the string. Or returns 0."
+	desc = "This outputs the position of the sample in the string, or returns 0."
 	extended_desc = "The first pin is the string to be examined. The second pin is the sample to be found. \
-	For example, 'eat this burger' will give you position 4. This circuit isn't case sensitive."
+	For example, inputting 'my wife has caught on fire' with 'has' as the sample will give you position 9. \
+	This circuit isn't case sensitive, and it does not ignore spaces."
 	complexity = 4
 	inputs = list(
 		"string" = IC_PINTYPE_STRING,
@@ -216,14 +252,38 @@
 	outputs = list(
 		"position" = IC_PINTYPE_NUMBER
 		)
-	activators = list("search" = IC_PINTYPE_PULSE_IN, "after search" = IC_PINTYPE_PULSE_OUT)
+	activators = list("search" = IC_PINTYPE_PULSE_IN, "after search" = IC_PINTYPE_PULSE_OUT, "found" = IC_PINTYPE_PULSE_OUT, "not found" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
 
 
 /obj/item/integrated_circuit/converter/findstring/do_work()
+	var/position = findtext(get_pin_data(IC_INPUT, 1),get_pin_data(IC_INPUT, 2))
 
-	set_pin_data(IC_OUTPUT, 1, findtext(get_pin_data(IC_INPUT, 1),get_pin_data(IC_INPUT, 2)) )
+	set_pin_data(IC_OUTPUT, 1, position)
+	push_data()
+
+	activate_pin(2)
+	if(position)
+		activate_pin(3)
+	else
+		activate_pin(4)
+
+/obj/item/integrated_circuit/converter/stringlength
+	name = "get length"
+	desc = "This circuit will return the number of characters in a string."
+	complexity = 1
+	inputs = list(
+		"string" = IC_PINTYPE_STRING
+		)
+	outputs = list(
+		"length" = IC_PINTYPE_NUMBER
+		)
+	activators = list("get length" = IC_PINTYPE_PULSE_IN, "on acquisition" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/converter/stringlength/do_work()
+	set_pin_data(IC_OUTPUT, 1, length(get_pin_data(IC_INPUT, 1)))
 	push_data()
 
 	activate_pin(2)
@@ -232,7 +292,8 @@
 	name = "string exploder"
 	desc = "This splits a single string into a list of strings."
 	extended_desc = "This circuit splits a given string into a list of strings based on the string and given delimiter. \
-	For example, 'eat this burger' will be converted to list('eat','this','burger')."
+	For example, 'eat this burger' will be converted to list('eat','this','burger'). Leave the delimiter null to get a list \
+	of every individual character."
 	icon_state = "split"
 	complexity = 4
 	inputs = list(
@@ -248,7 +309,10 @@
 /obj/item/integrated_circuit/converter/exploders/do_work()
 	var/strin = get_pin_data(IC_INPUT, 1)
 	var/delimiter = get_pin_data(IC_INPUT, 2)
-	set_pin_data(IC_OUTPUT, 1, splittext(strin, delimiter))
+	if(delimiter == null)
+		set_pin_data(IC_OUTPUT, 1, string2charlist(strin))
+	else
+		set_pin_data(IC_OUTPUT, 1, splittext(strin, delimiter))
 	push_data()
 
 	activate_pin(2)
@@ -350,7 +414,7 @@
 /obj/item/integrated_circuit/converter/rgb2hex
 	name = "rgb to hexadecimal"
 	desc = "This circuit can convert a RGB (Red, Green, Blue) color to a Hexadecimal RGB color."
-	extended_desc = "The first pin controls red amount, the second pin controls green amount, and the third controls blue amount. All go from 0-255."
+	extended_desc = "The first pin controls red amount, the second pin controls green amount, and the third controls blue amount. They all go from 0-255."
 	icon_state = "rgb-hex"
 	inputs = list(
 		"red" = IC_PINTYPE_NUMBER,

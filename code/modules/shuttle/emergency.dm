@@ -415,19 +415,35 @@
 
 /obj/docking_port/mobile/pod/request()
 	var/obj/machinery/computer/shuttle/S = getControlConsole()
-
-	if(GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA || (S && (S.obj_flags & EMAGGED)))
+	if(!istype(S, /obj/machinery/computer/shuttle/pod))
+		return ..()
+	if(GLOB.security_level >= SEC_LEVEL_RED || (S && (S.obj_flags & EMAGGED)))
 		if(launch_status == UNLAUNCHED)
 			launch_status = EARLY_LAUNCHED
 			return ..()
 	else
 		to_chat(usr, "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>")
-		return 1
+		return TRUE
 
 /obj/docking_port/mobile/pod/Initialize()
 	. = ..()
-	if(id == "pod")
-		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
+	var/static/i = 1
+	if(id == initial(id))
+		id = "[initial(id)][i]"
+	if(name == initial(name))
+		name = "[initial(name)] [i]"
+
+	for(var/k in shuttle_areas)
+		var/area/place = k
+		for(var/obj/machinery/computer/shuttle/pod/pod_comp in place)
+			if(pod_comp.shuttleId == initial(pod_comp.shuttleId))
+				pod_comp.shuttleId = id
+			if(pod_comp.possible_destinations == initial(pod_comp.possible_destinations))
+				pod_comp.possible_destinations = "pod_lavaland[i]"
+
+	i++
+
+
 
 /obj/docking_port/mobile/pod/cancel()
 	return
@@ -546,7 +562,7 @@
 	SSshuttle.emergency = current_emergency
 	SSshuttle.backup_shuttle = src
 
-#undef TIMELEFT
+#undef TIME_LEFT
 #undef ENGINES_START_TIME
 #undef ENGINES_STARTED
 #undef IS_DOCKED

@@ -2,7 +2,7 @@
 
 /obj/machinery/computer/cargo/express
 	name = "express supply console"
-	desc = "This console allows the user to purchase a package for double the price,\
+	desc = "This console allows the user to purchase a package \
 		with 1/40th of the delivery time: made possible by NanoTrasen's new \"Drop Pod Railgun\".\
 		All sales are near instantaneous - please choose carefully"
 	icon_screen = "supply_express"
@@ -20,7 +20,7 @@
 
 
 /obj/machinery/computer/cargo/express/attackby(obj/item/W, mob/living/user, params)
-	if((istype(W, /obj/item/card/id) || istype(W, /obj/item/device/pda)) && allowed(user))
+	if((istype(W, /obj/item/card/id) || istype(W, /obj/item/pda)) && allowed(user))
 		locked = !locked
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the interface.</span>")
 		return
@@ -75,8 +75,7 @@
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
 	data["points"] = SSshuttle.points
 	data["supplies"] = list()
-	message = "For normally priced items, please use the standard Supply or Request Console. \
-		Sales are near-instantaneous - please choose carefully."
+	message = "Sales are near-instantaneous - please choose carefully."
 	if(SSshuttle.supplyBlocked)
 		message = blockade_warning
 	if(obj_flags & EMAGGED)
@@ -112,7 +111,7 @@
 			var/area/landingzone
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
 			if(!(obj_flags & EMAGGED))
-				if(SO.pack.cost * 2 <= SSshuttle.points)
+				if(SO.pack.cost <= SSshuttle.points)
 					landingzone = locate(/area/quartermaster/storage) in GLOB.sortedAreas
 					for(var/turf/open/floor/T in landingzone.contents)
 						if(is_blocked_turf(T))

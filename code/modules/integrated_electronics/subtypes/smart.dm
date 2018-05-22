@@ -37,10 +37,11 @@
 	activate_pin(2)
 
 /obj/item/integrated_circuit/smart/coord_basic_pathfinder
-	name = "coordinte pathfinder"
+	name = "coordinate pathfinder"
 	desc = "This complex circuit is able to determine what direction a given target is."
-	extended_desc = "This circuit uses absolute coordintes to determine where the target is. If the machine \
-	cannot see the target, it will not be able to calculate the correct direction.This circuit is working only in assembly."
+	extended_desc = "This circuit uses absolute coordinates to determine where the target is. If the machine \
+	cannot see the target, it will not be able to calculate the correct direction. \
+	This circuit will only work while inside an assembly."
 	icon_state = "numberpad"
 	complexity = 5
 	inputs = list("X" = IC_PINTYPE_NUMBER,"Y" = IC_PINTYPE_NUMBER,"ignore obstacles" = IC_PINTYPE_BOOLEAN)
@@ -73,9 +74,9 @@
 
 /obj/item/integrated_circuit/smart/advanced_pathfinder
 	name = "advanced pathfinder"
-	desc = "This complex circuit using complex processor for path planning."
-	extended_desc = "This circuit uses global coordinates for target. It will count as obstacle turf with given ref.Passkey\
-	is the same as used in door remotes."
+	desc = "This circuit uses a complex processor for long-range pathfinding."
+	extended_desc = "This circuit uses absolute coordinates to find its target. A path will be generated to the target, taking obstacles into account, \
+	and pathing around any instances of said input. The passkey provided from a card reader is used to calculate a valid path through airlocks."
 	icon_state = "numberpad"
 	complexity = 40
 	cooldown_per_use = 50
@@ -100,7 +101,8 @@
 	var/list/Pl = json_decode(XorEncrypt(hextostr(Ps, TRUE), SScircuit.cipherkey))
 	if(Pl&&islist(Pl))
 		idc.access = Pl
-	var/list/P = cir_get_path_to(assembly, locate(get_pin_data(IC_INPUT, 1),get_pin_data(IC_INPUT, 2),assembly.z), /turf/proc/Distance_cardinal, 0, 200, id=idc, exclude=get_turf(get_pin_data_as_type(IC_INPUT,3, /atom)), simulated_only = 0)
+	var/turf/a_loc = get_turf(assembly)
+	var/list/P = cir_get_path_to(assembly, locate(get_pin_data(IC_INPUT, 1),get_pin_data(IC_INPUT, 2),a_loc.z), /turf/proc/Distance_cardinal, 0, 200, id=idc, exclude=get_turf(get_pin_data_as_type(IC_INPUT,3, /atom)), simulated_only = 0)
 
 	if(!P)
 		activate_pin(3)

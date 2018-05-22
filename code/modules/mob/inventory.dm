@@ -180,7 +180,7 @@
 		held_items[hand_index] = I
 		I.layer = ABOVE_HUD_LAYER
 		I.plane = ABOVE_HUD_PLANE
-		I.equipped(src, slot_hands)
+		I.equipped(src, SLOT_HANDS)
 		if(I.pulledby)
 			I.pulledby.stop_pulling()
 		update_inv_hands()
@@ -208,8 +208,8 @@
 
 
 //Puts the item into our active hand if possible. returns TRUE on success.
-/mob/proc/put_in_active_hand(obj/item/I)
-	return put_in_hand(I, active_hand_index)
+/mob/proc/put_in_active_hand(obj/item/I, forced = FALSE)
+	return put_in_hand(I, active_hand_index, forced)
 
 
 //Puts the item into our inactive hand if possible, returns TRUE on success
@@ -220,7 +220,7 @@
 //Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
 //If both fail it drops it on the floor and returns FALSE.
 //This is probably the main one you need to know :)
-/mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE)
+/mob/proc/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, forced = FALSE)
 	if(!I)
 		return FALSE
 
@@ -244,14 +244,14 @@
 						to_chat(usr, "<span class='notice'>Your [inactive_stack.name] stack now contains [inactive_stack.get_amount()] [inactive_stack.singular_name]\s.</span>")
 						return TRUE
 
-	if(put_in_active_hand(I))
+	if(put_in_active_hand(I, forced))
 		return TRUE
 
 	var/hand = get_empty_held_index_for_side("l")
 	if(!hand)
 		hand =  get_empty_held_index_for_side("r")
 	if(hand)
-		if(put_in_hand(I, hand))
+		if(put_in_hand(I, hand, forced))
 			return TRUE
 	if(del_on_fail)
 		qdel(I)
@@ -326,7 +326,10 @@
 		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
 		if(!no_move && !(I.flags_1 & DROPDEL_1))	//item may be moved/qdel'd immedietely, don't bother moving it
-			I.forceMove(newloc)
+			if (isnull(newloc))
+				I.moveToNullspace()
+			else
+				I.forceMove(newloc)
 		I.dropped(src)
 	return TRUE
 
@@ -381,7 +384,7 @@
 		dropItemToGround(I)
 	drop_all_held_items()
 
-/obj/item/proc/equip_to_best_slot(var/mob/M)
+/obj/item/proc/equip_to_best_slot(mob/M)
 	if(src != M.get_active_held_item())
 		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
 		return FALSE
@@ -393,28 +396,16 @@
 		if(equip_delay_self)
 			return
 
-	if(M.s_active && M.s_active.can_be_inserted(src,1))	//if storage active insert there
-		M.s_active.handle_item_insertion(src)
+	if(M.active_storage && M.active_storage.parent && M.active_storage.parent.SendSignal(COMSIG_TRY_STORAGE_INSERT, src,M))
 		return TRUE
 
-	var/obj/item/storage/S = M.get_inactive_held_item()
-	if(istype(S) && S.can_be_inserted(src,1))	//see if we have box in other hand
-		S.handle_item_insertion(src)
-		return TRUE
-
-	S = M.get_item_by_slot(slot_belt)
-	if(istype(S) && S.can_be_inserted(src,1))		//else we put in belt
-		S.handle_item_insertion(src)
-		return TRUE
-
-	S = M.get_item_by_slot(slot_generic_dextrous_storage)	//else we put in whatever is in drone storage
-	if(istype(S) && S.can_be_inserted(src,1))
-		S.handle_item_insertion(src)
-
-	S = M.get_item_by_slot(slot_back)	//else we put in backpack
-	if(istype(S) && S.can_be_inserted(src,1))
-		S.handle_item_insertion(src)
-		return TRUE
+	var/list/obj/item/possible = list(M.get_inactive_held_item(), M.get_item_by_slot(SLOT_BELT), M.get_item_by_slot(SLOT_GENERC_DEXTROUS_STORAGE), M.get_item_by_slot(SLOT_BACK))
+	for(var/i in possible)
+		if(!i)
+			continue
+		var/obj/item/I = i
+		if(I.SendSignal(COMSIG_TRY_STORAGE_INSERT, src, M))
+			return TRUE
 
 	to_chat(M, "<span class='warning'>You are unable to equip that!</span>")
 	return FALSE
@@ -430,10 +421,10 @@
 
 //used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
 /mob/proc/getBackSlot()
-	return slot_back
+	return SLOT_BACK
 
 /mob/proc/getBeltSlot()
-	return slot_belt
+	return SLOT_BELT
 
 
 

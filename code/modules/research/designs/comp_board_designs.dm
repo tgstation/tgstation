@@ -30,6 +30,14 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/board/rdcamera
+	name = "Computer Design (Research Monitor)"
+	desc = "Allows for the construction of circuit boards used to build research camera computers."
+	id = "rdcamera"
+	build_path = /obj/item/circuitboard/computer/research
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/xenobiocamera
 	name = "Computer Design (Xenobiology Console)"
 	desc = "Allows for the construction of circuit boards used to build xenobiology camera computers."
@@ -214,11 +222,11 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
-/datum/design/board/stockexchange
-	name = "Computer Design (Stock Exchange Console)"
-	desc = "Allows for the construction of circuit boards used to build a Stock Exchange Console."
-	id = "stockexchange"
-	build_path = /obj/item/circuitboard/computer/stockexchange
+/datum/design/board/bounty
+	name = "Computer Design (Bounty Console)"
+	desc = "Allows for the construction of circuit boards used to build a Bounty Console."
+	id = "bounty"
+	build_path = /obj/item/circuitboard/computer/bounty
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 

@@ -153,6 +153,9 @@
 	req_access = null
 	req_one_access = null
 
+/obj/machinery/airalarm/syndicate //general syndicate access
+	req_access = list(ACCESS_SYNDICATE)
+
 //all air alarms in area are connected via magic
 /area
 	var/list/air_vent_names = list()
@@ -643,10 +646,9 @@
 	var/area/A = get_area(src)
 
 	var/new_area_danger_level = 0
-	for(var/area/R in A.related)
-		for(var/obj/machinery/airalarm/AA in R)
-			if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
-				new_area_danger_level = max(new_area_danger_level,AA.danger_level)
+	for(var/obj/machinery/airalarm/AA in A)
+		if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
+			new_area_danger_level = max(new_area_danger_level,AA.danger_level)
 	if(A.atmosalert(new_area_danger_level,src)) //if area was in normal state or if area was in alert state
 		post_alert(new_area_danger_level)
 
@@ -668,7 +670,7 @@
 				to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 				update_icon()
 				return
-			else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
+			else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/pda))// trying to unlock the interface with an ID card
 				togglelock(user)
 			else if(panel_open && is_wire_tool(W))
 				wires.interact(user)
@@ -716,8 +718,8 @@
 					qdel(W)
 				return
 
-			if(istype(W, /obj/item/device/electroadaptive_pseudocircuit))
-				var/obj/item/device/electroadaptive_pseudocircuit/P = W
+			if(istype(W, /obj/item/electroadaptive_pseudocircuit))
+				var/obj/item/electroadaptive_pseudocircuit/P = W
 				if(!P.adapt_circuit(user, 25))
 					return
 				user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \

@@ -700,7 +700,7 @@
 "cD" = (
 /obj/structure/table/wood,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cE" = (
@@ -1076,8 +1076,7 @@
 /area/awaymission/wildwest/mines)
 "dO" = (
 /obj/structure/chair/comfy/beige{
-	dir = 1;
-	icon_state = "comfychair"
+	dir = 1
 	},
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)

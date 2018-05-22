@@ -10,8 +10,7 @@
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("Some good for nothing loser put a mood component on something that isn't even a living mob.")
+		return COMPONENT_INCOMPATIBLE
 	START_PROCESSING(SSmood, src)
 	owner = parent
 	soundloop = new(list(owner), FALSE, TRUE)
@@ -68,7 +67,7 @@
 			var/datum/mood_event/event = mood_events[i]
 			msg += event.description
 	else
-		msg += "<span class='nicegreen'>Nothing special has happend to me lately!<span>\n"
+		msg += "<span class='nicegreen'>Nothing special has happened to me lately!<span>\n"
 	to_chat(owner, msg)
 
 /datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed

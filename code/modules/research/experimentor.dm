@@ -32,7 +32,6 @@
 	var/badThingCoeff = 0
 	var/resetTime = 15
 	var/cloneMode = FALSE
-	var/cloneCount = 0
 	var/list/item_reactions = list()
 	var/list/valid_items = list() //valid items for special reactions like transforming
 	var/list/critical_items = list() //items that can cause critical reactions
@@ -45,26 +44,23 @@
 
 
 /obj/machinery/rnd/experimentor/proc/SetTypeReactions()
-	var/probWeight = 0
 	for(var/I in typesof(/obj/item))
 		if(istype(I, /obj/item/relic))
 			item_reactions["[I]"] = SCANTYPE_DISCOVER
 		else
 			item_reactions["[I]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
+
 		if(ispath(I, /obj/item/stock_parts) || ispath(I, /obj/item/grenade/chem_grenade) || ispath(I, /obj/item/kitchen))
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
-				valid_items += 15
-				valid_items += I
-				probWeight++
+				valid_items["[I]"] += 15
 
 		if(ispath(I, /obj/item/reagent_containers/food))
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
-				valid_items += rand(1,max(2,35-probWeight))
-				valid_items += I
+				valid_items["[I]"] += rand(1,4)
 
-		if(ispath(I, /obj/item/construction/rcd) || ispath(I, /obj/item/grenade) || ispath(I, /obj/item/device/aicard) || ispath(I, /obj/item/storage/backpack/holding) || ispath(I, /obj/item/slime_extract) || ispath(I, /obj/item/device/onetankbomb) || ispath(I, /obj/item/device/transfer_valve))
+		if(ispath(I, /obj/item/construction/rcd) || ispath(I, /obj/item/grenade) || ispath(I, /obj/item/aicard) || ispath(I, /obj/item/storage/backpack/holding) || ispath(I, /obj/item/slime_extract) || ispath(I, /obj/item/onetankbomb) || ispath(I, /obj/item/transfer_valve))
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null)
 				critical_items += I
@@ -87,8 +83,8 @@
 
 /obj/machinery/rnd/experimentor/proc/checkCircumstances(obj/item/O)
 	//snowflake check to only take "made" bombs
-	if(istype(O, /obj/item/device/transfer_valve))
-		var/obj/item/device/transfer_valve/T = O
+	if(istype(O, /obj/item/transfer_valve))
+		var/obj/item/transfer_valve/T = O
 		if(!T.tank_one || !T.tank_two || !T.attached_device)
 			return FALSE
 	return TRUE
@@ -207,13 +203,11 @@
 
 /obj/machinery/rnd/experimentor/proc/ejectItem(delete=FALSE)
 	if(loaded_item)
-		if(cloneMode && cloneCount > 0)
+		if(cloneMode)
 			visible_message("<span class='notice'>A duplicate [loaded_item] pops out!</span>")
 			var/type_to_make = loaded_item.type
 			new type_to_make(get_turf(pick(oview(1,src))))
-			--cloneCount
-			if(cloneCount == 0)
-				cloneMode = FALSE
+			cloneMode = FALSE
 			return
 		var/turf/dropturf = get_turf(pick(view(1,src)))
 		if(!dropturf) //Failsafe to prevent the object being lost in the void forever.
@@ -228,18 +222,6 @@
 	smoke.set_up(0, where)
 	smoke.start()
 
-/obj/machinery/rnd/experimentor/proc/pickWeighted(list/from)
-	var/result = FALSE
-	var/counter = 1
-	while(!result)
-		var/probtocheck = from[counter]
-		if(prob(probtocheck))
-			result = TRUE
-			return from[counter+1]
-		if(counter + 2 < from.len)
-			counter = counter + 2
-		else
-			counter = 1
 
 /obj/machinery/rnd/experimentor/proc/experiment(exp,obj/item/exp_on)
 	recentlyExperimented = 1
@@ -276,7 +258,6 @@
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("[exp_on] has activated an unknown subroutine!")
 			cloneMode = TRUE
-			cloneCount = badThingCoeff
 			investigate_log("Experimentor has made a clone of [exp_on]", INVESTIGATE_EXPERIMENTOR)
 			ejectItem()
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
@@ -287,13 +268,13 @@
 			visible_message("<span class='warning'>[src] malfunctions, spewing toxic waste!</span>")
 			for(var/turf/T in oview(1, src))
 				if(!T.density)
-					if(prob(EFFECT_PROB_VERYHIGH))
+					if(prob(EFFECT_PROB_VERYHIGH) && !(locate(/obj/effect/decal/cleanable/greenglow) in T))
 						var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
 						reagentdecal.reagents.add_reagent("radium", 7)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
-			var/newPath = pickWeighted(valid_items)
+			var/newPath = text2path(pickweight(valid_items))
 			loaded_item = new newPath(src)
 			visible_message("<span class='warning'>[src] malfunctions, transforming [savedName] into [loaded_item]!</span>")
 			investigate_log("Experimentor has transformed [savedName] into [loaded_item]", INVESTIGATE_EXPERIMENTOR)

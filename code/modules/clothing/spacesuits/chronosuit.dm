@@ -67,6 +67,9 @@
 	return ..()
 
 /obj/item/clothing/suit/space/chronos/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	var/mob/living/carbon/human/user = src.loc
 	switch(severity)
 		if(1)
@@ -115,7 +118,7 @@
 
 		teleport_now.UpdateButtonIcon()
 
-		var/list/nonsafe_slots = list(slot_belt, slot_back)
+		var/list/nonsafe_slots = list(SLOT_BELT, SLOT_BACK)
 		var/list/exposed = list()
 		for(var/slot in nonsafe_slots)
 			var/obj/item/slot_item = user.get_item_by_slot(slot)

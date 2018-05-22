@@ -87,14 +87,14 @@
 	else
 		var/datum/gas_mixture/affected = location.air.remove_ratio(volume/location.air.volume)
 		affected.temperature = temperature
-		affected.react()
+		affected.react(src)
 		temperature = affected.temperature
 		volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
 		location.assume_air(affected)
 
 	for(var/A in location)
 		var/atom/AT = A
-		if(AT && AT != src) // It's possible that the item is deleted in temperature_expose
+		if(!QDELETED(AT) && AT != src) // It's possible that the item is deleted in temperature_expose
 			AT.fire_act(temperature, volume)
 	return
 

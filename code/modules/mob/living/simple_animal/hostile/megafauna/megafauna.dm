@@ -6,6 +6,7 @@
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
+	mob_biotypes = list(MOB_ORGANIC, MOB_EPIC)
 	obj_damage = 400
 	light_range = 3
 	faction = list("mining", "boss")
@@ -24,23 +25,12 @@
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
-	environment_target_typecache = list(
-	/obj/machinery/door/window,
-	/obj/structure/window,
-	/obj/structure/closet,
-	/obj/structure/table,
-	/obj/structure/grille,
-	/obj/structure/girder,
-	/obj/structure/rack,
-	/obj/structure/barricade,
-	/obj/machinery/field,
-	/obj/machinery/power/emitter)
 	var/list/crusher_loot
 	var/medal_type
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
 	var/anger_modifier = 0
-	var/obj/item/device/gps/internal
+	var/obj/item/gps/internal
 	var/recovery_time = 0
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
