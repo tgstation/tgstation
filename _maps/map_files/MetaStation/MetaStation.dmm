@@ -7384,11 +7384,11 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
 	},
-/obj/structure/closet/wardrobe/red,
 /obj/machinery/camera{
 	c_tag = "Security - Gear Room";
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "apR" = (
@@ -18727,10 +18727,10 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "aOr" = (
-/obj/structure/closet/lawcloset,
 /obj/machinery/light_switch{
 	pixel_y = -28
 	},
+/obj/machinery/vending/wardrobe/law_wardrobe,
 /turf/open/floor/wood,
 /area/lawoffice)
 "aOs" = (
@@ -21826,7 +21826,7 @@
 /area/crew_quarters/dorms)
 "aUY" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/closet/wardrobe/engineering_yellow,
+/obj/machinery/vending/wardrobe/engi_wardrobe,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aUZ" = (
@@ -24389,18 +24389,18 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bar" = (
-/obj/structure/closet/wardrobe/cargotech,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/machinery/vending/wardrobe/cargo_wardrobe,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bas" = (
-/obj/structure/closet/wardrobe/cargotech,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/vending/wardrobe/cargo_wardrobe,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bat" = (
@@ -25626,6 +25626,9 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
+/obj/machinery/light_switch{
+	pixel_y = 26
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -25693,6 +25696,10 @@
 	pixel_y = 30
 	},
 /obj/structure/closet/secure_closet/security,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
@@ -25922,10 +25929,10 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/janitor)
 "bdD" = (
-/obj/structure/closet/jcloset,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+/obj/machinery/vending/wardrobe/jani_wardrobe,
 /turf/open/floor/plasteel/floorgrime,
 /area/janitor)
 "bdE" = (
@@ -31279,6 +31286,9 @@
 	c_tag = "Bar - Backroom";
 	dir = 2
 	},
+/obj/structure/sink/kitchen{
+	pixel_y = 28
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "boS" = (
@@ -31493,11 +31503,7 @@
 /turf/open/floor/plasteel/dark,
 /area/aisat)
 "bpt" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/structure/closet/wardrobe/red,
+/obj/machinery/vending/wardrobe/sec_wardrobe,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -32433,7 +32439,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/vending_refill/cigarette,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "brh" = (
@@ -33640,7 +33645,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/obj/structure/closet/gmcloset,
 /obj/item/wrench,
 /obj/item/stack/sheet/glass{
 	amount = 30
@@ -33650,6 +33654,8 @@
 	},
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
+/obj/structure/closet,
+/obj/item/vending_refill/cigarette,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "btr" = (
@@ -43930,17 +43936,17 @@
 /area/library)
 "bPW" = (
 /obj/structure/chair/comfy/brown,
+/obj/effect/landmark/blobstart,
 /turf/open/floor/engine/cult,
 /area/library)
 "bPX" = (
-/obj/effect/landmark/blobstart,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 30
 	},
-/obj/structure/closet/wardrobe/curator,
+/obj/machinery/vending/wardrobe/curator_wardrobe,
 /turf/open/floor/engine/cult,
 /area/library)
 "bPY" = (
@@ -44309,7 +44315,7 @@
 	},
 /area/crew_quarters/kitchen)
 "bQI" = (
-/obj/structure/closet/chefcloset,
+/obj/machinery/vending/wardrobe/chef_wardrobe,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "bQJ" = (
@@ -45487,7 +45493,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bTi" = (
-/obj/structure/closet/wardrobe/atmospherics_yellow,
+/obj/machinery/vending/wardrobe/atmos_wardrobe,
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
 "bTj" = (
@@ -47285,10 +47291,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bWV" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
-/obj/structure/closet/wardrobe/botanist,
+/obj/machinery/vending/wardrobe/hydro_wardrobe,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "bWX" = (
@@ -47857,6 +47860,9 @@
 /area/hydroponics)
 "bYm" = (
 /obj/structure/closet/secure_closet/hydroponics,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "bYn" = (
@@ -48136,7 +48142,16 @@
 /obj/item/screwdriver{
 	pixel_y = 6
 	},
-/obj/structure/sign/warning/nosmoking{
+/obj/item/storage/belt/medical{
+	pixel_y = 2
+	},
+/obj/item/clothing/neck/stethoscope,
+/obj/item/radio/intercom{
+	broadcasting = 1;
+	freerange = 0;
+	frequency = 1485;
+	listening = 0;
+	name = "Station Intercom (Medbay)";
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/whiteblue/side{
@@ -48154,32 +48169,19 @@
 /obj/item/screwdriver{
 	pixel_y = 6
 	},
+/obj/item/storage/belt/medical{
+	pixel_y = 2
+	},
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
 /area/medical/storage)
 "bYV" = (
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	freerange = 0;
-	frequency = 1485;
-	listening = 0;
-	name = "Station Intercom (Medbay)";
+/obj/machinery/vending/wardrobe/medi_wardrobe,
+/obj/structure/sign/warning/nosmoking{
 	pixel_y = 30
 	},
-/obj/structure/closet/wardrobe/white/medical,
-/obj/item/clothing/suit/hooded/wintercoat/medical,
-/obj/item/storage/belt/medical{
-	pixel_y = 2
-	},
-/obj/item/storage/belt/medical{
-	pixel_y = 2
-	},
-/obj/item/storage/belt/medical{
-	pixel_y = 2
-	},
-/obj/item/clothing/neck/stethoscope,
-/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -55030,6 +55032,9 @@
 /obj/item/clothing/glasses/eyepatch,
 /obj/item/clothing/glasses/sunglasses/blindfold,
 /obj/item/clothing/ears/earmuffs,
+/obj/item/storage/belt/medical{
+	pixel_y = 2
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 2
 	},
@@ -55803,14 +55808,6 @@
 	},
 /area/crew_quarters/heads/cmo)
 "coT" = (
-/obj/structure/closet/wardrobe/chemistry_white{
-	pixel_x = -3
-	},
-/obj/item/storage/backpack/satchel/chem,
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
@@ -55818,6 +55815,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/vending/wardrobe/chem_wardrobe,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "coU" = (
@@ -56606,6 +56604,10 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -57425,10 +57427,10 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "crX" = (
-/obj/structure/closet/wardrobe/science_white,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/vending/wardrobe/science_wardrobe,
 /turf/open/floor/plasteel,
 /area/science/explab)
 "crY" = (
@@ -61357,7 +61359,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/structure/closet/wardrobe/genetics_white,
+/obj/machinery/vending/wardrobe/gene_wardrobe,
 /turf/open/floor/plasteel/vault,
 /area/medical/genetics)
 "cAb" = (
@@ -65669,8 +65671,6 @@
 /turf/closed/wall,
 /area/medical/virology)
 "cIt" = (
-/obj/structure/closet/wardrobe/virology_white,
-/obj/item/storage/backpack/satchel/vir,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
@@ -65678,6 +65678,7 @@
 	dir = 8;
 	pixel_x = -26
 	},
+/obj/machinery/vending/wardrobe/viro_wardrobe,
 /turf/open/floor/plasteel/vault,
 /area/medical/virology)
 "cIu" = (
@@ -66302,13 +66303,11 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cJM" = (
-/obj/structure/closet/wardrobe/robotics_black{
-	pixel_x = 2
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/vending/wardrobe/robo_wardrobe,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cJN" = (
@@ -67681,6 +67680,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/item/radio/intercom{
+	dir = 4;
+	name = "Station Intercom (General)";
+	pixel_x = -27
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cMD" = (
@@ -68131,11 +68135,6 @@
 	c_tag = "Chapel Office - Backroom";
 	dir = 8
 	},
-/obj/item/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 27
-	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cNv" = (
@@ -68144,6 +68143,10 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cNw" = (
@@ -68689,11 +68692,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cOG" = (
-/obj/structure/closet/wardrobe/chaplain_black,
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
-	},
+/obj/machinery/vending/wardrobe/chap_wardrobe,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cOH" = (
@@ -71487,9 +71486,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "dbd" = (
-/obj/structure/sink/kitchen{
-	pixel_y = 28
-	},
+/obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "dbe" = (
