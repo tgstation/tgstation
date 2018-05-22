@@ -2438,6 +2438,10 @@
 /obj/structure/fans/tiny,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/maint)
+"KX" = (
+/obj/effect/vr_clean_master,
+/turf/open/indestructible,
+/area/awaymission/centcomAway/general)
 "TP" = (
 /turf/open/space/basic,
 /area/space)
@@ -11344,7 +11348,7 @@ gW
 fv
 iW
 gG
-gW
+KX
 gW
 hl
 fv

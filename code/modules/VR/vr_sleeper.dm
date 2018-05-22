@@ -198,3 +198,25 @@
 
 /obj/effect/landmark/vr_spawn/syndicate // Multiple missions will use syndicate gear
 	vr_outfit = /datum/outfit/vr/syndicate
+
+/obj/effect/vr_clean_master // Will keep VR areas that have this relatively clean.
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "x2"
+	color = "#00FF00"
+	var/area/vr_area
+
+/obj/effect/vr_clean_master/Initialize()
+	. = ..()
+	vr_area = locate(/area/awaymission/vr)
+	addtimer(CALLBACK(src, .proc/clean_up), 3 MINUTES)
+
+/obj/effect/vr_clean_master/proc/clean_up()
+	if (vr_area)
+		for (var/obj/item/ammo_casing/casing in vr_area)
+			qdel(casing)
+		for(var/obj/effect/decal/cleanable/C in vr_area)
+			qdel(C)
+		for (var/mob/living/carbon/human/virtual_reality/H in vr_area)
+			if (H.stat == DEAD && !H.vr_sleeper && !H.real_mind)
+				qdel(H)
+		addtimer(CALLBACK(src, .proc/clean_up), 3 MINUTES)
