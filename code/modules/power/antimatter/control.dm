@@ -100,6 +100,9 @@
 
 
 /obj/machinery/power/am_control_unit/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	switch(severity)
 		if(1)
 			if(active)
@@ -109,9 +112,6 @@
 			if(active)
 				toggle_power()
 			stability -= rand(10,20)
-	..()
-	return 0
-
 
 /obj/machinery/power/am_control_unit/blob_act()
 	stability -= 20

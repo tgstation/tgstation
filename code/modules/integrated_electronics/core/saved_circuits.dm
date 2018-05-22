@@ -146,7 +146,7 @@
 	// Validate name and color
 	if(assembly_params["name"] && !reject_bad_name(assembly_params["name"], TRUE))
 		return "Bad assembly name."
-	if(assembly_params["desc"] && !reject_bad_text(assembly_params["desc"], TRUE))
+	if(assembly_params["desc"] && !reject_bad_text(assembly_params["desc"]))
 		return "Bad assembly description."
 	if(assembly_params["detail_color"] && !(assembly_params["detail_color"] in color_whitelist))
 		return "Bad assembly color."

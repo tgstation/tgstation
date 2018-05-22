@@ -91,6 +91,9 @@
 	stamp_names = sortList(stamp_names)
 
 /obj/item/stamp/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	change_to(pick(stamp_types))
 
 /obj/item/stamp/chameleon/proc/change_to(obj/item/stamp/stamp_type)

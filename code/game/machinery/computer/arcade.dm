@@ -85,9 +85,9 @@
 	prize.forceMove(get_turf(src))
 
 /obj/machinery/computer/arcade/emp_act(severity)
-	..(severity)
+	. = ..()
 
-	if(stat & (NOPOWER|BROKEN))
+	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 
 	var/empprize = null

@@ -56,22 +56,19 @@
 	return ..()
 
 /obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "hydrotray3", "hydrotray3", I))
-		return
-
-	if(default_pry_open(I))
-		return
-
-	if(default_unfasten_wrench(user, I))
-		return
-
-	if(istype(I, /obj/item/crowbar))
-		if(using_irrigation)
-			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
-		else if(default_deconstruction_crowbar(I, 1))
+	if (user.a_intent != INTENT_HARM)
+		// handle opening the panel
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 			return
-	else
-		return ..()
+
+		// handle deconstructing the machine, if permissible
+		if (I.tool_behaviour == TOOL_CROWBAR && using_irrigation)
+			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
+			return
+		else if(default_deconstruction_crowbar(I))
+			return
+
+	return ..()
 
 /obj/machinery/hydroponics/proc/FindConnected()
 	var/list/connected = list()
@@ -787,31 +784,13 @@
 		for(var/obj/item/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
 			O.SendSignal(COMSIG_TRY_STORAGE_INSERT, G, user, TRUE)
 
-	else if(istype(O, /obj/item/wrench) && unwrenchable)
-		if(using_irrigation)
-			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
-			return
-
-		if(!anchored && !isinspace())
-			user.visible_message("[user] begins to wrench [src] into place.", \
-								"<span class='notice'>You begin to wrench [src] in place...</span>")
-			if (O.use_tool(src, user, 20, volume=50))
-				if(anchored)
-					return
-				anchored = TRUE
-				user.visible_message("[user] wrenches [src] into place.", \
-									"<span class='notice'>You wrench [src] in place.</span>")
-		else if(anchored)
-			user.visible_message("[user] begins to unwrench [src].", \
-								"<span class='notice'>You begin to unwrench [src]...</span>")
-			if (O.use_tool(src, user, 20, volume=50))
-				if(!anchored)
-					return
-				anchored = FALSE
-				user.visible_message("[user] unwrenches [src].", \
-									"<span class='notice'>You unwrench [src].</span>")
+	else if(default_unfasten_wrench(user, O))
+		return
 
 	else if(istype(O, /obj/item/wirecutters) && unwrenchable)
+		if (!anchored)
+			to_chat(user, "<span class='warning'>Anchor the tray first!</span>")
+			return
 		using_irrigation = !using_irrigation
 		O.play_tool_sound(src)
 		user.visible_message("<span class='notice'>[user] [using_irrigation ? "" : "dis"]connects [src]'s irrigation hoses.</span>", \
@@ -839,6 +818,17 @@
 
 	else
 		return ..()
+
+/obj/machinery/hydroponics/can_be_unfasten_wrench(mob/user, silent)
+	if (!unwrenchable)  // case also covered by NODECONSTRUCT checks in default_unfasten_wrench
+		return CANT_UNFASTEN
+
+	if (using_irrigation)
+		if (!silent)
+			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
+		return FAILED_UNFASTEN
+
+	return ..()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
 	. = ..()
