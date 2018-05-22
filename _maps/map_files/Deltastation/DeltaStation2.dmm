@@ -33952,7 +33952,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/modular_computer/console/preset/engineering{
-	dir = 4
+	dir = 6
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 8
@@ -43442,7 +43442,7 @@
 	req_access_txt = "39; 19"
 	},
 /obj/machinery/modular_computer/console/preset/engineering{
-	dir = 4
+	dir = 6
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -100171,6 +100171,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/science/circuit)
+"gqA" = (
+/obj/machinery/modular_computer/console/preset/engineering{
+	dir = 8
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/ai_monitored/turret_protected/ai)
 "gKr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -110322,7 +110330,7 @@ btH
 btH
 btH
 bzc
-bAG
+gqA
 btH
 bEm
 btH
