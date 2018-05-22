@@ -41,7 +41,7 @@
 	if(!dead_cell)
 		cell.give(cell.maxcharge)
 	update_ammo_types()
-	recharge_newshot(1)
+	recharge_newshot(TRUE)
 	if(selfcharge)
 		START_PROCESSING(SSobj, src)
 	update_icon()
@@ -69,7 +69,7 @@
 		charge_tick = 0
 		cell.give(100)
 		if(!chambered) //if empty chamber we try to charge a new shot
-			recharge_newshot(1)
+			recharge_newshot(TRUE)
 		update_icon()
 
 /obj/item/gun/energy/attack_self(mob/living/user as mob)
@@ -125,16 +125,16 @@
 	if (shot.select_name)
 		to_chat(user, "<span class='notice'>[src] is now set to [shot.select_name].</span>")
 	chambered = null
-	recharge_newshot(1)
-	update_icon()
+	recharge_newshot(TRUE)
+	update_icon(TRUE)
 	return
 
-/obj/item/gun/energy/update_icon()
+/obj/item/gun/energy/update_icon(force_update)
 	..()
 	if(!automatic_charge_overlays)
 		return
 	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
-	if(ratio == old_ratio)
+	if(ratio == old_ratio && !force_update)
 		return
 	old_ratio = ratio
 	cut_overlays()
