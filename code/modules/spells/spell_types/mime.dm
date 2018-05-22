@@ -68,6 +68,8 @@
 /obj/effect/proc_holder/spell/targeted/forcewall/mime
 	name = "Invisible Blockade"
 	desc = "Form an invisible three tile wide blockade."
+	school = "mime"
+	panel = "Mime"
 	wall_type = /obj/effect/forcefield/mime/advanced
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='notice'>You form a blockade in front of yourself.</span>"
