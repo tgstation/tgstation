@@ -102,6 +102,10 @@
 
 /obj/item/areaeditor/blueprints/proc/get_images(turf/T, viewsize)
 	. = list()
+	if(!istype(T))
+		return
+	if(istext(viewsize))
+		viewsize = world.view
 	for(var/tt in RANGE_TURFS(viewsize, T))
 		var/turf/TT = tt
 		if(TT.blueprint_data)
