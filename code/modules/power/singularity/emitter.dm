@@ -60,6 +60,10 @@
 	sparks.attach(src)
 	sparks.set_up(5, TRUE, src)
 
+/obj/machinery/power/emitter/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+
 /obj/machinery/power/emitter/RefreshParts()
 	var/max_firedelay = 120
 	var/firedelay = 120
@@ -137,11 +141,6 @@
 		..()
 	if(!anchored)
 		step(src, get_dir(M, src))
-
-
-/obj/machinery/power/emitter/emp_act(severity)//Emitters are hardened but still might have issues
-	return 1
-
 
 /obj/machinery/power/emitter/process()
 	if(stat & (BROKEN))

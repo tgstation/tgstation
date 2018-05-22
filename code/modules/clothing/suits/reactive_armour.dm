@@ -52,11 +52,13 @@
 	return
 
 /obj/item/clothing/suit/armor/reactive/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	active = 0
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
 	reactivearmor_cooldown = world.time + 200
-	..()
 
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
 /obj/item/clothing/suit/armor/reactive/teleport
