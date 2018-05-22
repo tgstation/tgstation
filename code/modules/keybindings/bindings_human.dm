@@ -1,7 +1,7 @@
-/mob/living/carbon/human/key_down(_key, client/user)
-	if(client.keys_held["Shift"])
-		switch(_key)
-			if("E") // Put held thing in belt or take out most recent thing from belt
+/mob/living/carbon/human/key_down(datum/keyinfo/I, client/user)
+	if(user.prefs.bindings.isheld_key("Shift"))
+		switch(I.action)
+			if(ACTION_EQUIP) // Put held thing in belt or take out most recent thing from belt
 				var/obj/item/thing = get_active_held_item()
 				var/obj/item/storage/equipped_belt = get_item_by_slot(SLOT_BELT)
 				if(!equipped_belt) // We also let you equip a belt like this
@@ -29,7 +29,7 @@
 				stored.attack_hand(src) // take out thing from belt
 				return
 
-			if("B") // Put held thing in backpack or take out most recent thing from backpack
+			if(ACTION_RESIST) // Put held thing in backpack or take out most recent thing from backpack
 				var/obj/item/thing = get_active_held_item()
 				var/obj/item/storage/equipped_backpack = get_item_by_slot(SLOT_BACK)
 				if(!equipped_backpack) // We also let you equip a backpack like this
@@ -56,4 +56,5 @@
 					return
 				stored.attack_hand(src) // take out thing from backpack
 				return
+
 	return ..()

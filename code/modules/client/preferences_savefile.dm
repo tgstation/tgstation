@@ -103,6 +103,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["pda_style"]			>> pda_style
 	S["pda_color"]			>> pda_color
 
+	load_keybindings(S)
+
+
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_preferences(needs_update, S)		//needs_update = savefile_version if we need an update (positive integer)
@@ -128,7 +131,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special		= SANITIZE_LIST(be_special)
 	pda_style		= sanitize_inlist(MONO, VT, SHARE, ORBITRON)
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
-
+	
 	return 1
 
 /datum/preferences/proc/save_preferences()
@@ -170,6 +173,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["tip_delay"], tip_delay)
 	WRITE_FILE(S["pda_style"], pda_style)
 	WRITE_FILE(S["pda_color"], pda_color)
+	
+	save_keybindings(S)
 
 	return 1
 
@@ -394,6 +399,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["neutral_quirks"]		, neutral_quirks)
 
 	return 1
+
+/datum/preferences/proc/load_keybindings(var/savefile/S)
+	var/list/keybindings
+	S["keybindings"] >> keybindings
+	if(!islist(keybindings) || !keybindings.len)
+		keybindings = GLOB.keybinding_default
+
+	bindings.from_list(keybindings)
+	
+/datum/preferences/proc/save_keybindings(var/savefile/S)
+	WRITE_FILE(S["keybindings"], bindings.to_list())
 
 
 #undef SAVEFILE_VERSION_MAX

@@ -1,12 +1,19 @@
-/mob/living/silicon/robot/key_down(_key, client/user)
-	switch(_key)
-		if("1", "2", "3")
-			toggle_module(text2num(_key))
+/mob/living/silicon/robot/key_down(datum/keyinfo/I, client/user)
+	switch(I.action)
+		if(ACTION_INTENTHELP)
+			toggle_module(1)
 			return
-		if("4")
+		if(ACTION_INTENTDISARM)
+			toggle_module(2)
+			return
+		if(ACTION_INTENTGRAB)
+			toggle_module(3)
+			return
+		if(ACTION_INTENTLEFT)
 			a_intent_change(INTENT_HOTKEY_LEFT)
 			return
-		if("Q")
+		if(ACTION_DROP)
 			uneq_active()
 			return
+
 	return ..()

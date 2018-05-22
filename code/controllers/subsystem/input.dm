@@ -5,22 +5,19 @@ SUBSYSTEM_DEF(input)
 	flags = SS_TICKER
 	priority = FIRE_PRIORITY_INPUT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
-
+	
 	var/list/macro_sets
-	var/list/movement_keys
+	
+	var/list/movement_arrows
 
 /datum/controller/subsystem/input/Initialize()
 	setup_default_macro_sets()
-
 	setup_default_movement_keys()
-
+	
 	initialized = TRUE
-
-	refresh_client_macro_sets()
 
 	return ..()
 
-// This is for when macro sets are eventualy datumized
 /datum/controller/subsystem/input/proc/setup_default_macro_sets()
 	var/list/static/default_macro_sets
 	
@@ -30,10 +27,7 @@ SUBSYSTEM_DEF(input)
 
 	default_macro_sets = list(
 		"default" = list(
-			"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
-			"O" = "ooc",
-			"T" = "say",
-			"M" = "me",
+			"Tab" = "\".winset \\\"mainwindow.macro=old_default input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
 			"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
 			"Any" = "\"KeyDown \[\[*\]\]\"",
 			"Any+UP" = "\"KeyUp \[\[*\]\]\"",
@@ -45,9 +39,6 @@ SUBSYSTEM_DEF(input)
 			),
 		"old_hotkeys" = list(
 			"Tab" = "\".winset \\\"mainwindow.macro=old_default input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
-			"O" = "ooc",
-			"T" = "say",
-			"M" = "me",
 			"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"", // This makes it so backspace can remove default inputs
 			"Any" = "\"KeyDown \[\[*\]\]\"",
 			"Any+UP" = "\"KeyUp \[\[*\]\]\"",
@@ -92,21 +83,12 @@ SUBSYSTEM_DEF(input)
 
 	macro_sets = default_macro_sets
 
-// For initially setting up or resetting to default the movement keys
 /datum/controller/subsystem/input/proc/setup_default_movement_keys()
-	var/static/list/default_movement_keys = list(
-		"W" = NORTH, "A" = WEST, "S" = SOUTH, "D" = EAST,				// WASD
+	var/static/list/arrow_keys = list(
 		"North" = NORTH, "West" = WEST, "South" = SOUTH, "East" = EAST,	// Arrow keys & Numpad
-		)
+	)
 
-	movement_keys = default_movement_keys.Copy()
-
-// Badmins just wanna have fun ♪
-/datum/controller/subsystem/input/proc/refresh_client_macro_sets()
-	var/list/clients = GLOB.clients
-	for(var/i in 1 to clients.len)
-		var/client/user = clients[i]
-		user.set_macros()
+	movement_arrows = arrow_keys.Copy()
 
 /datum/controller/subsystem/input/fire()
 	var/list/clients = GLOB.clients // Let's sing the list cache song
