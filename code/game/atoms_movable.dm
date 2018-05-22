@@ -244,9 +244,9 @@
 	if (orbiting)
 		orbiting.Check()
 
-	var/datum/proximity_monitor/proximity_monitor = src.proximity_monitor
-	if(proximity_monitor)
-		proximity_monitor.HandleMove()
+	//var/datum/proximity_monitor/proximity_monitor = src.proximity_monitor
+	//if(proximity_monitor)
+	//	proximity_monitor.HandleMove()
 
 	return 1
 
