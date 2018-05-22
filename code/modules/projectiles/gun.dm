@@ -396,10 +396,10 @@
 		set_light(0)
 		cut_overlays(flashlight_overlay, TRUE)
 		flashlight_overlay = null
+	update_icon(TRUE)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
-
 
 /obj/item/gun/pickup(mob/user)
 	..()
