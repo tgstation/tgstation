@@ -87,6 +87,17 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/reagent_containers/food/snacks/store/cheesewheel(location)
 
+datum/chemical_reaction/fetacheesewheel
+	name = "Feta Cheesewheel"
+	id = "feta_cheesewheel"
+	required_reagents = list("goatmilk" = 40)
+	required_catalysts = list("enzyme" = 5)
+
+/datum/chemical_reaction/fetacheesewheel/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/reagent_containers/food/snacks/store/fetacheesewheel(location)
+
 /datum/chemical_reaction/synthmeat
 	name = "synthmeat"
 	id = "synthmeat"

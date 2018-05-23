@@ -14,13 +14,33 @@
 
 /obj/item/reagent_containers/food/snacks/cheesewedge
 	name = "cheese wedge"
-	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
+	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from couldn't have gone far."
 	icon_state = "cheesewedge"
 	filling_color = "#FFD700"
 	list_reagents = list("nutriment" = 3, "vitamin" = 1)
 	tastes = list("cheese" = 1)
 	foodtype = DAIRY
 
+/obj/item/reagent_containers/food/snacks/store/fetacheesewheel
+	name = "feta cheese wheel"
+	desc = "A big wheel of delcious feta."
+	icon_state = "fetacheesewheel"
+	slice_path = /obj/item/reagent_containers/food/snacks/fetacheesslice
+	slices_num = 5
+	list_reagents = list("nutriment" = 15, "vitamin" = 5)
+	w_class = WEIGHT_CLASS_NORMAL
+	tastes = list("tangy" = 1)
+	foodtype = DAIRY
+
+/obj/item/reagent_containers/food/snacks/fetacheesslice
+	name = "feta cheese slice"
+	desc = "A slice of delicious Feta. The cheese wheel it was cut from couldn't have gone far."
+	icon_state = "fetacheeseslice"
+	filling_color = "#CFD4DA"
+	list_reagents = list("nutriment" = 3, "vitamin" = 1)
+	tastes = list("tangy" = 1)
+	foodtype = DAIRY
+	
 /obj/item/reagent_containers/food/snacks/watermelonslice
 	name = "watermelon slice"
 	desc = "A slice of watery goodness."
@@ -569,3 +589,4 @@
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR
+

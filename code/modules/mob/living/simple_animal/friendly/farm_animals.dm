@@ -28,7 +28,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	stop_automated_movement_when_pulled = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
-	var/obj/item/udder/udder = null
+	var/obj/item/udder/goat/udder = null
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize()
 	udder = new()
@@ -317,16 +317,21 @@
 
 
 /obj/item/udder
-	name = "udder"
+        name = "udder"
+        var/milktype = "milk"
+
+/obj/item/udder/goat
+        name = "goat udder"
+        milktype = "goatmilk"
 
 /obj/item/udder/Initialize()
-	create_reagents(50)
-	reagents.add_reagent("milk", 20)
-	. = ..()
+        create_reagents(50)
+        reagents.add_reagent("[milktype]", 20)
+        . = ..()
 
 /obj/item/udder/proc/generateMilk()
-	if(prob(5))
-		reagents.add_reagent("milk", rand(5, 10))
+        if(prob(5))
+                reagents.add_reagent("[milktype]", rand(5, 10))
 
 /obj/item/udder/proc/milkAnimal(obj/O, mob/user)
 	var/obj/item/reagent_containers/glass/G = O
