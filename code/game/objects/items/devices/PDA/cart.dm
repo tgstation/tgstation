@@ -266,7 +266,7 @@ Code:
 					continue
 				if(pda_turf.z != pMon.z) //and that we're on the same zlevel as the computer (lore: limited signal strength)
 					continue
-				if(!is_station_level(pMon.z)) //and it isn't located on centcom / off in space, allowing people to metagame ruins
+				if(pMon.is_secret_monitor) //make sure it isn't a secret one (ie located on a ruin), allowing people to metagame ruins
 					continue
 				powercount++
 				powermonitors += pMon

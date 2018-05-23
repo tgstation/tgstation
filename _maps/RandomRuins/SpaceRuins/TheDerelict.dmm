@@ -328,7 +328,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/unpowered/no_grav)
 "aZ" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 4
 	},
 /obj/structure/cable{

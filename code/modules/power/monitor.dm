@@ -18,6 +18,10 @@
 	var/record_size = 60
 	var/record_interval = 50
 	var/next_record = 0
+	var/is_secret_monitor = FALSE
+
+/obj/machinery/computer/monitor/secret //Hides the power monitor (such as ones on ruins & CentCom) from PDA's to prevent metagaming.
+	is_secret_monitor = TRUE
 
 /obj/machinery/computer/monitor/Initialize()
 	. = ..()
