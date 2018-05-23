@@ -162,21 +162,26 @@
 			if(!(obj_flags & EMAGGED))
 				if(SO.pack.cost <= SSshuttle.points)
 					landingzone = locate(/area/quartermaster/storage) in GLOB.sortedAreas
+					if (!landingzone)
+						landingzone = get_area(src)
 					for(var/turf/open/floor/T in landingzone.contents)//uses default landing zone
 						if(is_blocked_turf(T))
 							continue
 						LAZYADD(empty_turfs, T)
 						CHECK_TICK
+					var/LZ
 					if(empty_turfs && empty_turfs.len)
-						var/LZ = empty_turfs[rand(empty_turfs.len-1)]
-						if (istype(beacon) && usingBeacon)
-							LZ = get_turf(beacon)
-							beacon.update_status(SP_LAUNCH)
-						SSshuttle.points -= SO.pack.cost
+						LZ = empty_turfs[rand(empty_turfs.len-1)]
+					else if (istype(beacon) && usingBeacon)
+						LZ = get_turf(beacon)
+						beacon.update_status(SP_LAUNCH)				
+					else 
+						return
 
-						new /obj/effect/DPtarget(LZ, SO, podID)
-						. = TRUE
-						update_icon()
+					SSshuttle.points -= SO.pack.cost
+					new /obj/effect/DPtarget(LZ, SO, podID)
+					. = TRUE
+					update_icon()
 			else
 				if(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS) <= SSshuttle.points) // bulk discount :^)
 					landingzone = locate(pick(GLOB.the_station_areas)) in GLOB.sortedAreas //override default landing zone
@@ -186,7 +191,7 @@
 						LAZYADD(empty_turfs, T)
 						CHECK_TICK
 					if(empty_turfs && empty_turfs.len)
-						SSshuttle.points -= SO.pack.cost * (1.2*MAX_EMAG_ROCKETS)
+						SSshuttle.points -= SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)
 						SO.generateRequisition(get_turf(src))
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = empty_turfs[rand(empty_turfs.len-1)]
