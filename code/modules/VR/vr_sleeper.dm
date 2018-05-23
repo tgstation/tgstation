@@ -17,6 +17,7 @@
 	var/static/list/available_vr_spawnpoints
 	var/vr_category = "default" //Specific category of spawn points to pick from
 	var/allow_creating_vr_humans = TRUE //So you can have vr_sleepers that always spawn you as a specific person or 1 life/chance vr games
+	var/only_current_user_can_interact = FALSE
 
 /obj/machinery/vr_sleeper/Initialize()
 	. = ..()
@@ -53,6 +54,7 @@
 /obj/machinery/vr_sleeper/hugbox
 	desc = "A sleeper modified to alter the subconscious state of the user, allowing them to visit virtual worlds. Seems slightly more secure."
 	flags_1 = NODECONSTRUCT_1
+	only_current_user_can_interact = TRUE
 
 /obj/machinery/vr_sleeper/hugbox/emag_act(mob/user)
 	return
@@ -121,7 +123,7 @@
 		if("toggle_open")
 			if(state_open)
 				close_machine()
-			else
+			else if ((!occupant || usr == occupant) || !only_current_user_can_interact)
 				open_machine()
 			. = TRUE
 
