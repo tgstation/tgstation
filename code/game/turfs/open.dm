@@ -74,13 +74,13 @@
 
 /turf/open/indestructible/binary
 	name = "tear in the fabric of reality"
-	blocks_air = TRUE
+	CanAtmosPass = ATMOS_PASS_NO
 	baseturfs = /turf/open/indestructible/binary
 	icon_state = "binary"
 
 /turf/open/indestructible/airblock
-	blocks_air = TRUE
 	icon_state = "bluespace"
+	CanAtmosPass = ATMOS_PASS_NO
 	baseturfs = /turf/open/indestructible/airblock
 
 /turf/open/indestructible/clock_spawn_room
