@@ -210,6 +210,7 @@
 	var/threshold = 500
 	var/static/list/approved_passengers = list()
 	var/static/list/check_times = list()
+	timeleft = 0
 
 /obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target)
 	if(mover in approved_passengers)
