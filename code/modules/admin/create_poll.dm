@@ -73,7 +73,7 @@
 			if(!option)
 				return
 			option = sanitizeSQL(option)
-			var/default_percentage_calc = 0
+			var/default_percentage_calc
 			if(polltype != POLLTYPE_IRV)
 				switch(alert("Should this option be included by default when poll result percentages are generated?",,"Yes","No","Cancel"))
 					if("Yes")
