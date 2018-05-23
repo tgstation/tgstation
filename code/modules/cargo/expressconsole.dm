@@ -1,12 +1,10 @@
 #define MAX_EMAG_ROCKETS 8
 #define BEACON_COST 5000
 #define SP_LINKED 1
-#define SP_READY 2 
+#define SP_READY 2
 #define SP_LAUNCH 3
-#define SP_UNLINK 4 
+#define SP_UNLINK 4
 #define SP_UNREADY 5
-#define POD_STANDARD 0
-#define POD_BLUESPACE 1
 
 /obj/machinery/computer/cargo/express
 	name = "express supply console"
@@ -30,7 +28,7 @@
 /obj/machinery/computer/cargo/express/Initialize()
 	. = ..()
 	packin_up()
-	
+
 /obj/machinery/computer/cargo/express/Destroy()
 	if(beacon)
 		beacon.unlink_console()
@@ -127,7 +125,7 @@
 
 /obj/machinery/computer/cargo/express/ui_act(action, params, datum/tgui/ui)
 	switch(action)
-		if("LZCargo")	
+		if("LZCargo")
 			usingBeacon = FALSE
 			if (beacon)
 				beacon.update_status(SP_UNREADY) //ready light on beacon will turn off
@@ -175,7 +173,7 @@
 							LZ = get_turf(beacon)
 							beacon.update_status(SP_LAUNCH)
 						SSshuttle.points -= SO.pack.cost
-						
+
 						new /obj/effect/DPtarget(LZ, SO, podID)
 						. = TRUE
 						update_icon()
