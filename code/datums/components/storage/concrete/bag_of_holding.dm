@@ -13,6 +13,8 @@
 		qdel(W)
 		playsound(loccheck,'sound/effects/supermatter.ogg', 200, 1)
 		for(var/turf/T in range(6,loccheck))
+			if(istype(T, /turf/open/space/transit))
+				continue
 			T.TerraformTurf(/turf/open/chasm/magic, /turf/open/chasm/magic)
 		message_admins("[key_name_admin(user)] detonated a bag of holding")
 		log_game("[key_name(user)] detonated a bag of holding")
