@@ -62084,6 +62084,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/item/analyzer,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cBw" = (

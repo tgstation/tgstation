@@ -567,6 +567,8 @@
 			return wirecutter_act(user, I)
 		if(TOOL_WELDER)
 			return welder_act(user, I)
+		if(TOOL_ANALYZER)
+			return analyzer_act(user, I)
 
 // Tool-specific behavior procs. To be overridden in subtypes.
 /atom/proc/crowbar_act(mob/living/user, obj/item/I)
@@ -585,6 +587,9 @@
 	return
 
 /atom/proc/welder_act(mob/living/user, obj/item/I)
+	return
+
+/atom/proc/analyzer_act(mob/living/user, obj/item/I)
 	return
 
 /atom/proc/GenerateTag()

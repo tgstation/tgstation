@@ -104,9 +104,7 @@
 			disconnect_from_network()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/analyzer) && loaded_tank)
-		atmosanalyzer_scan(loaded_tank.air_contents, user)
-	else if(istype(W, /obj/item/tank/internals/plasma))
+	if(istype(W, /obj/item/tank/internals/plasma))
 		if(!anchored)
 			to_chat(user, "<span class='warning'>[src] needs to be secured to the floor first!</span>")
 			return TRUE
@@ -169,6 +167,10 @@
 	bitcoinmining = !bitcoinmining
 	to_chat(user, "<span class='warning'>You [bitcoinmining ? "enable":"disable"] the research point production feature of [src].</span>")
 	return TRUE
+
+/obj/machinery/power/rad_collector/analyzer_act(mob/living/user, obj/item/I)
+	if(loaded_tank)
+		loaded_tank.analyzer_act(user, I)
 
 /obj/machinery/power/rad_collector/examine(mob/user)
 	. = ..()
