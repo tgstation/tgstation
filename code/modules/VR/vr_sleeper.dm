@@ -205,11 +205,12 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x2"
 	color = "#00FF00"
+	invisibility = INVISIBILITY_ABSTRACT
 	var/area/vr_area
 
 /obj/effect/vr_clean_master/Initialize()
 	. = ..()
-	vr_area = locate(/area/awaymission/vr)
+	vr_area = get_area(src)
 	addtimer(CALLBACK(src, .proc/clean_up), 3 MINUTES)
 
 /obj/effect/vr_clean_master/proc/clean_up()

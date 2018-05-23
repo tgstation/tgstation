@@ -12,7 +12,7 @@
 
 /obj/structure/barricade/security/murderdome
 	name = "respawnable barrier"
-	desc = "A barrier. Provides cover in fire fights."
+	desc = "A barrier. Provides cover in firefights."
 	deploy_time = 0
 	deploy_message = 0
 

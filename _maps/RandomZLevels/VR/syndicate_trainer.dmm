@@ -740,6 +740,10 @@
 /obj/structure/filingcabinet,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
+"eG" = (
+/obj/effect/vr_clean_master,
+/turf/open/indestructible,
+/area/awaymission/centcomAway/maint)
 "eH" = (
 /obj/machinery/sleeper{
 	dir = 8
@@ -2400,6 +2404,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/thunderdome)
 "nw" = (
+/obj/effect/vr_clean_master,
 /turf/open/floor/goonplaque,
 /area/awaymission/centcomAway/thunderdome)
 "nx" = (
@@ -2442,9 +2447,24 @@
 /obj/effect/vr_clean_master,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
+"Tc" = (
+/obj/effect/vr_clean_master,
+/turf/open/indestructible,
+/area/awaymission/centcomAway/hangar)
+"TG" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/vr_clean_master,
+/turf/open/indestructible,
+/area/awaymission/centcomAway/courtroom)
 "TP" = (
 /turf/open/space/basic,
 /area/space)
+"Um" = (
+/obj/effect/vr_clean_master,
+/turf/open/indestructible,
+/area/awaymission/centcomAway/cafe)
 "VC" = (
 /obj/effect/landmark/vr_spawn/syndicate,
 /turf/open/indestructible,
@@ -7728,7 +7748,7 @@ bd
 bd
 bd
 be
-bd
+Tc
 bd
 bd
 bd
@@ -9633,7 +9653,7 @@ ag
 ag
 ag
 ag
-ag
+eG
 ag
 ag
 ag
@@ -11368,7 +11388,7 @@ gW
 gW
 gW
 gW
-gW
+KX
 gW
 gW
 gW
@@ -11457,7 +11477,7 @@ aI
 aI
 ai
 ai
-ai
+Um
 ai
 ai
 aI
@@ -14854,7 +14874,7 @@ eY
 fm
 gH
 fH
-ga
+TG
 fm
 fm
 fm
