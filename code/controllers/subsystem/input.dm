@@ -5,22 +5,22 @@ SUBSYSTEM_DEF(input)
 	flags = SS_TICKER
 	priority = FIRE_PRIORITY_INPUT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
-	
+
 	var/list/macro_sets
-	
+
 	var/list/movement_arrows
 
 /datum/controller/subsystem/input/Initialize()
 	setup_default_macro_sets()
 	setup_default_movement_keys()
-	
+
 	initialized = TRUE
 
 	return ..()
 
 /datum/controller/subsystem/input/proc/setup_default_macro_sets()
 	var/list/static/default_macro_sets
-	
+
 	if(default_macro_sets)
 		macro_sets = default_macro_sets
 		return
