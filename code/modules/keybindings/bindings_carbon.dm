@@ -1,18 +1,19 @@
-/mob/living/carbon/key_down(_key, client/user)
-	switch(_key)
-		if("R", "Southwest") // Southwest is End
+/mob/living/carbon/key_down(datum/keyinfo/I, client/user)
+	switch(I.action)
+		if(ACTION_TOGGLETHROW)
 			toggle_throw_mode()
 			return
-		if("1")
+		if(ACTION_INTENTHELP)
 			a_intent_change("help")
 			return
-		if("2")
+		if(ACTION_INTENTDISARM)
 			a_intent_change("disarm")
 			return
-		if("3")
+		if(ACTION_INTENTGRAB)
 			a_intent_change("grab")
 			return
-		if("4")
+		if(ACTION_INTENTHARM)
 			a_intent_change("harm")
 			return
+
 	return ..()

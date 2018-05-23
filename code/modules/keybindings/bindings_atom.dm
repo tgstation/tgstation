@@ -2,10 +2,11 @@
 // Only way to do that is to tie the behavior into the focus's keyLoop().
 
 /atom/movable/keyLoop(client/user)
-	if(!user.keys_held["Ctrl"])
+	if(!user.prefs.bindings.isheld_key("Ctrl"))
 		var/movement_dir = NONE
-		for(var/_key in user.keys_held)
-			movement_dir = movement_dir | SSinput.movement_keys[_key]
+		var/list/keys = SSinput.movement_arrows + user.prefs.bindings.movement_keys
+		for(var/_key in user.prefs.bindings.keys_held)
+			movement_dir |= keys[_key]
 		if(user.next_move_dir_add)
 			movement_dir |= user.next_move_dir_add
 		if(user.next_move_dir_sub)

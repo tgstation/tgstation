@@ -2,64 +2,76 @@
 // All it takes is one badmin setting their focus to someone else's client to mess things up
 // Or we can have NPC's send actual keypresses and detect that by seeing no client
 
-/mob/key_down(_key, client/user)
-	switch(_key)
-		if("Delete", "H")
+/mob/key_down(datum/keyinfo/I, client/user)
+	switch(I.action)
+		if(ACTION_SAY)
+			get_say()
+			return
+		if(ACTION_ME)
+			me_verb()
+			return
+		if(ACTION_STOPPULLING)
 			if(!pulling)
 				to_chat(src, "<span class='notice'>You are not pulling anything.</span>")
 			else
 				stop_pulling()
 			return
-		if("Insert", "G")
+		if(ACTION_INTENTRIGHT)
 			a_intent_change(INTENT_HOTKEY_RIGHT)
 			return
-		if("F")
+		if(ACTION_INTENTLEFT)
 			a_intent_change(INTENT_HOTKEY_LEFT)
 			return
-		if("X", "Northeast") // Northeast is Page-up
+		if(ACTION_SWAPHAND)
 			swap_hand()
 			return
-		if("Y", "Z", "Southeast")	// Southeast is Page-down
+		if(ACTION_USESELF)
 			mode()					// attack_self(). No idea who came up with "mode()"
 			return
-		if("Q", "Northwest") // Northwest is Home
-			var/obj/item/I = get_active_held_item()
-			if(!I)
+		if(ACTION_DROP)
+			var/obj/item/T = get_active_held_item()
+			if(!T)
 				to_chat(src, "<span class='warning'>You have nothing to drop in your hand!</span>")
 			else
-				dropItemToGround(I)
+				dropItemToGround(T)
 			return
-		if("E")
+		if(ACTION_EQUIP)
 			quick_equip()
 			return
-		if("Alt")
-			toggle_move_intent()
-			return
+
 		//Bodypart selections
-		if("Numpad8")
+		if(ACTION_TARGETHEAD)
 			user.body_toggle_head()
 			return
-		if("Numpad4")
+		if(ACTION_TARGETRARM)
 			user.body_r_arm()
 			return
-		if("Numpad5")
+		if(ACTION_TARGETCHEST)
 			user.body_chest()
 			return
-		if("Numpad6")
+		if(ACTION_TARGETLARM)
 			user.body_l_arm()
 			return
-		if("Numpad1")
+		if(ACTION_TARGETRLEG)
 			user.body_r_leg()
 			return
-		if("Numpad2")
+		if(ACTION_TARGETGROIN)
 			user.body_groin()
 			return
-		if("Numpad3")
+		if(ACTION_TARGETLLEG)
 			user.body_l_leg()
 			return
 
-	if(client.keys_held["Ctrl"])
-		switch(SSinput.movement_keys[_key])
+	return ..()
+
+/mob/keyLoop(client/user)
+	if(user.prefs.bindings.isheld_key("Ctrl"))
+		var/list/keys = SSinput.movement_arrows + user.prefs.bindings.movement_keys
+		var/dir = NONE
+		for(var/_key in user.prefs.bindings.keys_held)
+			dir = keys[_key]
+
+		switch(dir)
 			if(NORTH)
 				northface()
 				return
@@ -72,11 +84,9 @@
 			if(EAST)
 				eastface()
 				return
+
 	return ..()
 
-/mob/key_up(_key, client/user)
-	switch(_key)
-		if("Alt")
-			toggle_move_intent()
-			return
-	return ..()
+/mob/proc/get_say()
+	var/msg = input(src, null, "say \"text\"") as text|null
+	say_verb(msg)
