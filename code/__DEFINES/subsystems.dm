@@ -1,7 +1,7 @@
 //Update this whenever the db schema changes
 //make sure you add an update to the schema_version stable in the db changelog
 #define DB_MAJOR_VERSION 4
-#define DB_MINOR_VERSION 2
+#define DB_MINOR_VERSION 4
 
 //Timing subsystem
 //Don't run if there is an identical unique timer active
@@ -56,7 +56,7 @@
 #define INIT_ORDER_RESEARCH 14
 #define INIT_ORDER_EVENTS 13
 #define INIT_ORDER_JOBS 12
-#define INIT_ORDER_TRAITS 11
+#define INIT_ORDER_QUIRKS 11
 #define INIT_ORDER_TICKER 10
 #define INIT_ORDER_MAPPING 9
 #define INIT_ORDER_NETWORKS 8
@@ -82,6 +82,7 @@
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
+#define FIRE_PRIORITY_PING			10
 #define FIRE_PRIORITY_IDLE_NPC		10
 #define FIRE_PRIORITY_SERVER_MAINT	10
 #define FIRE_PRIORITY_RESEARCH		10

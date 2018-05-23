@@ -3,10 +3,10 @@
 	desc = "Used for scanning and monitoring health."
 	icon_state = "health"
 	materials = list(MAT_METAL=800, MAT_GLASS=200)
-	attachable = 1
-	secured = 0
+	attachable = TRUE
+	secured = FALSE
 
-	var/scanning = 0
+	var/scanning = FALSE
 	var/health_scan
 	var/alarm_health = 0
 
@@ -16,31 +16,28 @@
 
 /obj/item/assembly/health/activate()
 	if(!..())
-		return 0//Cooldown check
+		return FALSE//Cooldown check
 	toggle_scan()
-	return 0
+	return TRUE
 
 /obj/item/assembly/health/toggle_secure()
 	secured = !secured
 	if(secured && scanning)
 		START_PROCESSING(SSobj, src)
 	else
-		scanning = 0
+		scanning = FALSE
 		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return secured
 
-/obj/item/assembly/health/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/multitool))
-		if(alarm_health == 0)
-			alarm_health = -90
-			user.show_message("You toggle [src] to \"detect death\" mode.")
-		else
-			alarm_health = 0
-			user.show_message("You toggle [src] to \"detect critical state\" mode.")
-		return
+/obj/item/assembly/health/multitool_act(mob/living/user, obj/item/I)
+	if(alarm_health == 0)
+		alarm_health = -90
+		to_chat(user, "<span class='notice'>You toggle [src] to \"detect death\" mode.</span>")
 	else
-		return ..()
+		alarm_health = 0
+		to_chat(user, "<span class='notice'>You toggle [src] to \"detect critical state\" mode.</span>")
+	return TRUE
 
 /obj/item/assembly/health/process()
 	if(!scanning || !secured)
@@ -58,7 +55,8 @@
 		health_scan = M.health
 		if(health_scan <= alarm_health)
 			pulse()
-			audible_message("[icon2html(src, hearers(src))] *beep* *beep*", "*beep* *beep*")
+			audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
+			playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 			toggle_scan()
 		return
 	return
@@ -77,8 +75,9 @@
 	. = ..()
 	if(!secured)
 		user.show_message("<span class='warning'>The [name] is unsecured!</span>")
-		return 0
-	var/dat = "<TT><B>Health Sensor</B> <A href='?src=[REF(src)];scanning=1'>[scanning?"On":"Off"]</A>"
+		return FALSE
+	var/dat = "<TT><B>Health Sensor</B></TT>"
+	dat += "<BR><A href='?src=[REF(src)];scanning=1'>[scanning?"On":"Off"]</A>"
 	if(scanning && health_scan)
 		dat += "<BR>Health: [health_scan]"
 	user << browse(dat, "window=hscan")

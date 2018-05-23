@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a runtime with the gulag teleporter that could cause the process to fail if you removed the ID."
+  - tweak: "Not setting the goal of a prisoner's ID when teleporting them will now set the ID's goal to the default value (200 points at the time of this change.)"

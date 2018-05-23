@@ -111,8 +111,8 @@
 			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
 			new /obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted(src) // 8 tc
 			new /obj/item/implanter/explosive(src) // 2 tc
-			new /obj/item/ammo_box/magazine/m12g/buckshot(src) // 2 tc
-			new /obj/item/ammo_box/magazine/m12g/buckshot(src) // 2 tc
+			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
+			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
 			new /obj/item/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/card/emag(src) // 6 tc
@@ -280,7 +280,7 @@
 	new /obj/item/radio/headset/chameleon(src)
 	new /obj/item/stamp/chameleon(src)
 	new /obj/item/pda/chameleon(src)
-	new /obj/item/gun/energy/laser/chameleon(src)
+	//new /obj/item/gun/energy/laser/chameleon(src) //crashes the server right now. please fix it!
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)

@@ -234,6 +234,7 @@
 			if(POLLTYPE_IRV)
 				if (!href_list["IRVdata"])
 					to_chat(src, "<span class='danger'>No ordering data found. Please try again or contact an administrator.</span>")
+					return
 				var/list/votelist = splittext(href_list["IRVdata"], ",")
 				if (!vote_on_irv_poll(pollid, votelist))
 					to_chat(src, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
@@ -394,7 +395,7 @@
 						SSticker.mode.make_antag_chance(humanc)
 
 	if(humanc && CONFIG_GET(flag/roundstart_traits))
-		SStraits.AssignTraits(humanc, humanc.client, TRUE)
+		SSquirks.AssignQuirks(humanc, humanc.client, TRUE)
 
 	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 

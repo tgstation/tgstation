@@ -195,6 +195,9 @@
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chambered = null
 	recharge_newshot()
 
@@ -436,7 +439,7 @@
 
 /obj/item/projectile/beam/beam_rifle
 	name = "particle beam"
-	icon = ""
+	icon = null
 	hitsound = 'sound/effects/explosion3.ogg'
 	damage = 0				//Handled manually.
 	damage_type = BURN

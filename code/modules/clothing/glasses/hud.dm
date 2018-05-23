@@ -17,7 +17,8 @@
 		H.remove_hud_from(user)
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
-	if(obj_flags & EMAGGED)
+	. = ..()
+	if(obj_flags & EMAGGED || . & EMP_PROTECT_SELF)
 		return
 	obj_flags |= EMAGGED
 	desc = "[desc] The display is flickering slightly."
@@ -96,6 +97,8 @@
 
 /obj/item/clothing/glasses/hud/security/chameleon/emp_act(severity)
 	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 
@@ -192,5 +195,7 @@
 	user.update_inv_glasses()
 
 /obj/item/clothing/glasses/hud/toggle/thermal/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	thermal_overload()
-	..()

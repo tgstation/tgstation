@@ -22,7 +22,7 @@
 	var/blood_type = null
 	var/list/features = null
 	var/factions = null
-	var/list/traits = null
+	var/list/quirks = null
 	var/contains_sample = 0
 
 /obj/item/seeds/replicapod/Initialize()
@@ -42,7 +42,7 @@
 				blood_type = B.data["blood_type"]
 				features = B.data["features"]
 				factions = B.data["factions"]
-				factions = B.data["traits"]
+				factions = B.data["quirks"]
 				contains_sample = TRUE
 				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
 			else
@@ -114,7 +114,7 @@
 		podman.faction |= factions
 		if(!features["mcolor"])
 			features["mcolor"] = "#59CE00"
-		for(var/V in traits)
+		for(var/V in quirks)
 			new V(podman)
 		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()

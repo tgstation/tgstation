@@ -19,7 +19,7 @@
 
 // Special AI/pAI PDAs that cannot explode.
 /obj/item/pda/ai
-	icon_state = "NONE"
+	icon = null
 	ttone = "data"
 	fon = FALSE
 	detonatable = FALSE

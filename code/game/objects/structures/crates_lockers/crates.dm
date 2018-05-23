@@ -148,3 +148,32 @@
 	name = "science crate"
 	desc = "A science crate."
 	icon_state = "scicrate"
+
+/obj/structure/closet/crate/solarpanel_small
+	name = "budget solar panel crate"
+	icon_state = "engi_e_crate"
+
+/obj/structure/closet/crate/solarpanel_small/PopulateContents()
+	..()
+	for(var/i in 1 to 13)
+		new /obj/item/solar_assembly(src)
+	new /obj/item/circuitboard/computer/solar_control(src)
+	new /obj/item/paper/guides/jobs/engi/solars(src)
+	new /obj/item/electronics/tracker(src)
+
+/obj/structure/closet/crate/goldcrate
+	name = "gold crate"
+
+/obj/structure/closet/crate/goldcrate/PopulateContents()
+	..()
+	for(var/i in 1 to 3)
+		new /obj/item/stack/sheet/mineral/gold(src, 1, FALSE)
+	new /obj/item/storage/belt/champion(src)
+
+/obj/structure/closet/crate/silvercrate
+	name = "silver crate"
+
+/obj/structure/closet/crate/silvercrate/PopulateContents()
+	..()
+	for(var/i in 1 to 5)
+		new /obj/item/coin/silver(src)

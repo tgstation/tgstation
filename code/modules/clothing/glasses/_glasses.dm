@@ -286,8 +286,10 @@
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	thermal_overload()
-	..()
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
 	name = "chameleon thermals"
@@ -305,7 +307,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/glasses/thermal/syndi/emp_act(severity)
-	..()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/glasses/thermal/monocle
@@ -365,6 +369,7 @@
 	scan_reagents = 1
 	flags_1 = NODROP_1
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /obj/item/clothing/glasses/godeye/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, src) && W != src && W.loc == user)

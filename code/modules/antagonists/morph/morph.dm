@@ -190,7 +190,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/morph/AttackingTarget()
-	if(!melee_damage_disguised)
+	if(morphed && !melee_damage_disguised)
 		to_chat(src, "<span class='warning'>You can not attack while disguised!</span>")
 		return
 	if(isliving(target)) //Eat Corpses to regen health

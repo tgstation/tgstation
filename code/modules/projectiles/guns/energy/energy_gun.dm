@@ -127,7 +127,9 @@
 				to_chat(M, "<span class='userdanger'>Your [name]'s reactor overloads!</span>")
 
 /obj/item/gun/energy/e_gun/nuclear/emp_act(severity)
-	..()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	fail_chance = min(fail_chance + round(15/severity), 100)
 
 /obj/item/gun/energy/e_gun/nuclear/update_icon()

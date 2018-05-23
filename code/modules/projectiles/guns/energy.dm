@@ -21,10 +21,12 @@
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
 
 /obj/item/gun/energy/emp_act(severity)
-	cell.use(round(cell.charge / severity))
-	chambered = null //we empty the chamber
-	recharge_newshot() //and try to charge a new shot
-	update_icon()
+	. = ..()
+	if(!(. & EMP_PROTECT_CONTENTS))
+		cell.use(round(cell.charge / severity))
+		chambered = null //we empty the chamber
+		recharge_newshot() //and try to charge a new shot
+		update_icon()
 
 /obj/item/gun/energy/get_cell()
 	return cell

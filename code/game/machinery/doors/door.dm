@@ -208,6 +208,9 @@
 			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/machinery/door/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		INVOKE_ASYNC(src, .proc/open)
 	if(prob(severity*10 - 20))
@@ -215,7 +218,6 @@
 			secondsElectrified = -1
 			shockedby += "\[[time_stamp()]\]EM Pulse"
 			addtimer(CALLBACK(src, .proc/unelectrify), 300)
-	..()
 
 /obj/machinery/door/proc/unelectrify()
 	secondsElectrified = 0
@@ -274,7 +276,7 @@
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				if(autoclose)
-					addtimer(CALLBACK(src, .proc/autoclose), 60)
+					autoclose_in(60)
 				return
 
 	operating = TRUE
@@ -325,6 +327,9 @@
 /obj/machinery/door/proc/autoclose()
 	if(!QDELETED(src) && !density && !operating && !locked && !welded && autoclose)
 		close()
+
+/obj/machinery/door/proc/autoclose_in(wait)
+	addtimer(CALLBACK(src, .proc/autoclose), wait, TIMER_UNIQUE | TIMER_NO_HASH_WAIT | TIMER_OVERRIDE)
 
 /obj/machinery/door/proc/requiresID()
 	return 1

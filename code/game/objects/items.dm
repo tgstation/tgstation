@@ -202,11 +202,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			research_msg += sep
 			research_msg += node.display_name
 			sep = ", "
-	var/points = techweb_item_point_check(src)
-	if (points)
-		research_msg += sep
-		research_msg += "[points] points"
+	var/list/points = techweb_item_point_check(src)
+	if (length(points))
 		sep = ", "
+		research_msg += techweb_point_display_generic(points)
 
 	if (!sep) // nothing was shown
 		research_msg += "None"
@@ -758,3 +757,18 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // Returns a numeric value for sorting items used as parts in machines, so they can be replaced by the rped
 /obj/item/proc/get_part_rating()
 	return 0
+
+/obj/item/doMove(atom/destination)
+	if (ismob(loc))
+		var/mob/M = loc
+		var/hand_index = M.get_held_index_of_item(src)
+		if(hand_index)
+			M.held_items[hand_index] = null
+			M.update_inv_hands()
+			if(M.client)
+				M.client.screen -= src
+			layer = initial(layer)
+			plane = initial(plane)
+			appearance_flags &= ~NO_CLIENT_COLOR
+			dropped(M)
+	return ..()

@@ -29,6 +29,9 @@
 
 /datum/radiation_wave/process()
 	master_turf = get_step(master_turf, move_dir)
+	if(!master_turf)
+		qdel(src)
+		return
 	steps++
 	var/list/atoms = get_rad_atoms()
 

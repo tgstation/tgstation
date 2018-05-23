@@ -469,6 +469,9 @@
 
 
 /mob/living/carbon/human/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
 	var/informed = FALSE
 	for(var/obj/item/bodypart/L in src.bodyparts)
 		if(L.status == BODYPART_ROBOTIC)
@@ -482,7 +485,6 @@
 				if(2)
 					L.receive_damage(0,5)
 					Stun(100)
-	..()
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	var/list/damaged = list()
@@ -708,7 +710,7 @@
 					if(toxloss > 10)
 						to_chat(src, "<span class='danger'>You feel sick.</span>")
 					else if(toxloss > 20)
-						to_chat(src, "<span class='danger'>You feel nauseous.</span>")
+						to_chat(src, "<span class='danger'>You feel nauseated.</span>")
 					else if(toxloss > 40)
 						to_chat(src, "<span class='danger'>You feel very unwell!</span>")
 				if(oxyloss)
@@ -733,8 +735,8 @@
 				if(0 to NUTRITION_LEVEL_STARVING)
 					to_chat(src, "<span class='danger'>You're starving!</span>")
 
-			if(roundstart_traits.len)
-				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
+			if(roundstart_quirks.len)
+				to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string()].</span>")
 		else
 			if(wear_suit)
 				wear_suit.add_fingerprint(M)

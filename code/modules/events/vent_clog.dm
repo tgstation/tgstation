@@ -14,8 +14,9 @@
 	var/randomProbability = 1
 	var/reagentsAmount = 100
 	var/list/saferChems = list("water","carbon","flour","cleaner","nutriment","condensedcapsaicin","mushroomhallucinogen","lube","pink_glitter",
-						 "plantbgone","blood","charcoal","space_drugs","morphine","holywater","ethanol","hot_coco","sacid","mindbreaker","rotatium","skewium",
-						 "pax","laughter","concentrated_barbers_aid","colorful_reagent","dizzysolution","tiresolution","salt","beer","hair_dye","sugar","white_glitter","growthserum")
+						 "plantbgone","blood","charcoal","space_drugs","morphine","holywater","ethanol","hot_coco","sacid","mindbreaker","rotatium",
+						 "pax","laughter","concentrated_barbers_aid","colorful_reagent","dizzysolution","tiresolution","sodiumchloride","beer","hair_dye","sugar","white_glitter","growthserum")
+	//needs to be chemid unit checked at some point
 
 /datum/round_event/vent_clog/announce()
 	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")

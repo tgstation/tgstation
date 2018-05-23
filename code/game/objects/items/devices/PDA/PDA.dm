@@ -178,20 +178,20 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	. = ..()
 
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
+	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/pda)
 	assets.send(user)
 
 	user.set_machine(src)
 
 	var/dat = "<!DOCTYPE html><html><head><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}a img{padding-right: 9px;}</style>"
+	dat += assets.css_tag()
 
-
-	dat += "<a href='byond://?src=[REF(src)];choice=Refresh'><img src=pda_refresh.png>Refresh</a>"
+	dat += "<a href='byond://?src=[REF(src)];choice=Refresh'>[PDAIMG(refresh)]Refresh</a>"
 
 	if ((!isnull(cartridge)) && (mode == 0))
-		dat += " | <a href='byond://?src=[REF(src)];choice=Eject'><img src=pda_eject.png>Eject [cartridge]</a>"
+		dat += " | <a href='byond://?src=[REF(src)];choice=Eject'>[PDAIMG(eject)]Eject [cartridge]</a>"
 	if (mode)
-		dat += " | <a href='byond://?src=[REF(src)];choice=Return'><img src=pda_menu.png>Return</a>"
+		dat += " | <a href='byond://?src=[REF(src)];choice=Return'>[PDAIMG(menu)]Return</a>"
 
 	if (mode == 0)
 		dat += "<div align=\"center\">"
@@ -205,7 +205,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if (!owner)
 		dat += "Warning: No owner information entered.  Please swipe card.<br><br>"
-		dat += "<a href='byond://?src=[REF(src)];choice=Refresh'><img src=pda_refresh.png>Retry</a>"
+		dat += "<a href='byond://?src=[REF(src)];choice=Refresh'>[PDAIMG(refresh)]Retry</a>"
 	else
 		switch (mode)
 			if (0)
@@ -221,38 +221,38 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 				dat += "<h4>General Functions</h4>"
 				dat += "<ul>"
-				dat += "<li><a href='byond://?src=[REF(src)];choice=1'><img src=pda_notes.png>Notekeeper</a></li>"
-				dat += "<li><a href='byond://?src=[REF(src)];choice=2'><img src=pda_mail.png>Messenger</a></li>"
+				dat += "<li><a href='byond://?src=[REF(src)];choice=1'>[PDAIMG(notes)]Notekeeper</a></li>"
+				dat += "<li><a href='byond://?src=[REF(src)];choice=2'>[PDAIMG(mail)]Messenger</a></li>"
 
 				if (cartridge)
 					if (cartridge.access & CART_CLOWN)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Honk'><img src=pda_honk.png>Honk Synthesizer</a></li>"
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Trombone'><img src=pda_honk.png>Sad Trombone</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Honk'>[PDAIMG(honk)]Honk Synthesizer</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Trombone'>[PDAIMG(honk)]Sad Trombone</a></li>"
 					if (cartridge.access & CART_MANIFEST)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=41'><img src=pda_notes.png>View Crew Manifest</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=41'>[PDAIMG(notes)]View Crew Manifest</a></li>"
 					if(cartridge.access & CART_STATUS_DISPLAY)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=42'><img src=pda_status.png>Set Status Display</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=42'>[PDAIMG(status)]Set Status Display</a></li>"
 					dat += "</ul>"
 					if (cartridge.access & CART_ENGINE)
 						dat += "<h4>Engineering Functions</h4>"
 						dat += "<ul>"
-						dat += "<li><a href='byond://?src=[REF(src)];choice=43'><img src=pda_power.png>Power Monitor</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=43'>[PDAIMG(power)]Power Monitor</a></li>"
 						dat += "</ul>"
 					if (cartridge.access & CART_MEDICAL)
 						dat += "<h4>Medical Functions</h4>"
 						dat += "<ul>"
-						dat += "<li><a href='byond://?src=[REF(src)];choice=44'><img src=pda_medical.png>Medical Records</a></li>"
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Medical Scan'><img src=pda_scanner.png>[scanmode == 1 ? "Disable" : "Enable"] Medical Scanner</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=44'>[PDAIMG(medical)]Medical Records</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Medical Scan'>[PDAIMG(scanner)][scanmode == 1 ? "Disable" : "Enable"] Medical Scanner</a></li>"
 						dat += "</ul>"
 					if (cartridge.access & CART_SECURITY)
 						dat += "<h4>Security Functions</h4>"
 						dat += "<ul>"
-						dat += "<li><a href='byond://?src=[REF(src)];choice=45'><img src=pda_cuffs.png>Security Records</A></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=45'>[PDAIMG(cuffs)]Security Records</A></li>"
 						dat += "</ul>"
 					if(cartridge.access & CART_QUARTERMASTER)
 						dat += "<h4>Quartermaster Functions:</h4>"
 						dat += "<ul>"
-						dat += "<li><a href='byond://?src=[REF(src)];choice=47'><img src=pda_crate.png>Supply Records</A></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=47'>[PDAIMG(crate)]Supply Records</A></li>"
 						dat += "</ul>"
 				dat += "</ul>"
 
@@ -260,25 +260,25 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "<ul>"
 				if (cartridge)
 					if(cartridge.bot_access_flags)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=54'><img src=pda_medbot.png>Bots Access</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=54'>[PDAIMG(medbot)]Bots Access</a></li>"
 					if (cartridge.access & CART_JANITOR)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=49'><img src=pda_bucket.png>Custodial Locator</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=49'>[PDAIMG(bucket)]Custodial Locator</a></li>"
 					if (istype(cartridge.radio))
-						dat += "<li><a href='byond://?src=[REF(src)];choice=40'><img src=pda_signaler.png>Signaler System</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=40'>[PDAIMG(signaler)]Signaler System</a></li>"
 					if (cartridge.access & CART_NEWSCASTER)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=53'><img src=pda_notes.png>Newscaster Access </a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=53'>[PDAIMG(notes)]Newscaster Access </a></li>"
 					if (cartridge.access & CART_REAGENT_SCANNER)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Reagent Scan'><img src=pda_reagent.png>[scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Reagent Scan'>[PDAIMG(reagent)][scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
 					if (cartridge.access & CART_ENGINE)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Halogen Counter'><img src=pda_reagent.png>[scanmode == 4 ? "Disable" : "Enable"] Halogen Counter</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Halogen Counter'>[PDAIMG(reagent)][scanmode == 4 ? "Disable" : "Enable"] Halogen Counter</a></li>"
 					if (cartridge.access & CART_ATMOS)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Gas Scan'><img src=pda_reagent.png>[scanmode == 5 ? "Disable" : "Enable"] Gas Scanner</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Gas Scan'>[PDAIMG(reagent)][scanmode == 5 ? "Disable" : "Enable"] Gas Scanner</a></li>"
 					if (cartridge.access & CART_REMOTE_DOOR)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Toggle Door'><img src=pda_rdoor.png>Toggle Remote Door</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Toggle Door'>[PDAIMG(rdoor)]Toggle Remote Door</a></li>"
 					if (cartridge.access & CART_DRONEPHONE)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Drone Phone'><img src=pda_dronephone.png>Drone Phone</a></li>"
-				dat += "<li><a href='byond://?src=[REF(src)];choice=3'><img src=pda_atmos.png>Atmospheric Scan</a></li>"
-				dat += "<li><a href='byond://?src=[REF(src)];choice=Light'><img src=pda_flashlight.png>[fon ? "Disable" : "Enable"] Flashlight</a></li>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Drone Phone'>[PDAIMG(dronephone)]Drone Phone</a></li>"
+				dat += "<li><a href='byond://?src=[REF(src)];choice=3'>[PDAIMG(atmos)]Atmospheric Scan</a></li>"
+				dat += "<li><a href='byond://?src=[REF(src)];choice=Light'>[PDAIMG(flashlight)][fon ? "Disable" : "Enable"] Flashlight</a></li>"
 				if (pai)
 					if(pai.loc != src)
 						pai = null
@@ -289,23 +289,23 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "</ul>"
 
 			if (1)
-				dat += "<h4><img src=pda_notes.png> Notekeeper V2.2</h4>"
+				dat += "<h4>[PDAIMG(notes)] Notekeeper V2.2</h4>"
 				dat += "<a href='byond://?src=[REF(src)];choice=Edit'>Edit</a><br>"
 				if(notescanned)
 					dat += "(This is a scanned image, editing it may cause some text formatting to change.)<br>"
 				dat += "<HR><font face=\"[PEN_FONT]\">[(!notehtml ? note : notehtml)]</font>"
 
 			if (2)
-				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.6</h4>"
-				dat += "<a href='byond://?src=[REF(src)];choice=Toggle Ringer'><img src=pda_bell.png>Ringer: [silent == 1 ? "Off" : "On"]</a> | "
-				dat += "<a href='byond://?src=[REF(src)];choice=Toggle Messenger'><img src=pda_mail.png>Send / Receive: [toff == 1 ? "Off" : "On"]</a> | "
-				dat += "<a href='byond://?src=[REF(src)];choice=Ringtone'><img src=pda_bell.png>Set Ringtone</a> | "
-				dat += "<a href='byond://?src=[REF(src)];choice=21'><img src=pda_mail.png>Messages</a><br>"
+				dat += "<h4>[PDAIMG(mail)] SpaceMessenger V3.9.6</h4>"
+				dat += "<a href='byond://?src=[REF(src)];choice=Toggle Ringer'>[PDAIMG(bell)]Ringer: [silent == 1 ? "Off" : "On"]</a> | "
+				dat += "<a href='byond://?src=[REF(src)];choice=Toggle Messenger'>[PDAIMG(mail)]Send / Receive: [toff == 1 ? "Off" : "On"]</a> | "
+				dat += "<a href='byond://?src=[REF(src)];choice=Ringtone'>[PDAIMG(bell)]Set Ringtone</a> | "
+				dat += "<a href='byond://?src=[REF(src)];choice=21'>[PDAIMG(mail)]Messages</a><br>"
 
 				if(cartridge)
 					dat += cartridge.message_header()
 
-				dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
+				dat += "<h4>[PDAIMG(menu)] Detected PDAs</h4>"
 
 				dat += "<ul>"
 				var/count = 0
@@ -326,16 +326,16 @@ GLOBAL_LIST_EMPTY(PDAs)
 					dat += "<a href='byond://?src=[REF(src)];choice=MessageAll'>Send To All</a>"
 
 			if(21)
-				dat += "<h4><img src=pda_mail.png> SpaceMessenger V3.9.6</h4>"
-				dat += "<a href='byond://?src=[REF(src)];choice=Clear'><img src=pda_blank.png>Clear Messages</a>"
+				dat += "<h4>[PDAIMG(mail)] SpaceMessenger V3.9.6</h4>"
+				dat += "<a href='byond://?src=[REF(src)];choice=Clear'>[PDAIMG(blank)]Clear Messages</a>"
 
-				dat += "<h4><img src=pda_mail.png> Messages</h4>"
+				dat += "<h4>[PDAIMG(mail)] Messages</h4>"
 
 				dat += tnote
 				dat += "<br>"
 
 			if (3)
-				dat += "<h4><img src=pda_atmos.png> Atmospheric Readings</h4>"
+				dat += "<h4>[PDAIMG(atmos)] Atmospheric Readings</h4>"
 
 				var/turf/T = user.loc
 				if (isnull(T))
@@ -617,7 +617,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return
 	if((last_text && world.time < last_text + 10) || (everyone && last_everyone && world.time < last_everyone + PDA_SPAM_DELAY))
 		return
-
+	if(prob(1))
+		message += "\nSent from my PDA"
 	// Send the signal
 	var/list/string_targets = list()
 	for (var/obj/item/pda/P in targets)
@@ -660,7 +661,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	to_chat(user, "<span class='info'>Message sent to [target_text]: \"[message]\"</span>")
 	// Reset the photo
 	photo = null
-	last_text = world.time 
+	last_text = world.time
 	if (everyone)
 		last_everyone = world.time
 
@@ -742,7 +743,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			var/mob/M = loc
 			M.put_in_hands(inserted_item)
 		else
-			inserted_item.forceMove(get_turf(src))
+			inserted_item.forceMove(drop_location())
 		to_chat(usr, "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>")
 		inserted_item = null
 		update_icon()
@@ -826,12 +827,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(istype(C))
 		switch(scanmode)
 
-			if(1)
+			if(PDA_SCANNER_MEDICAL)
 				C.visible_message("<span class='alert'>[user] has analyzed [C]'s vitals!</span>")
 				healthscan(user, C, 1)
 				add_fingerprint(user)
 
-			if(4)
+			if(PDA_SCANNER_HALOGEN)
 				C.visible_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>")
 
 				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
@@ -844,8 +845,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(!proximity)
 		return
 	switch(scanmode)
-
-		if(3)
+		if(PDA_SCANNER_REAGENT)
 			if(!isnull(A.reagents))
 				if(A.reagents.reagent_list.len > 0)
 					var/reagents_length = A.reagents.reagent_list.len
@@ -857,27 +857,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 			else
 				to_chat(user, "<span class='notice'>No significant chemical agents found in [A].</span>")
 
-		if(5)
-			if (istype(A, /obj/item/tank))
-				var/obj/item/tank/T = A
-				atmosanalyzer_scan(T.air_contents, user, T)
-			else if (istype(A, /obj/machinery/portable_atmospherics))
-				var/obj/machinery/portable_atmospherics/PA = A
-				atmosanalyzer_scan(PA.air_contents, user, PA)
-			else if (istype(A, /obj/machinery/atmospherics/pipe))
-				var/obj/machinery/atmospherics/pipe/P = A
-				atmosanalyzer_scan(P.parent.air, user, P)
-			else if (istype(A, /obj/machinery/atmospherics/components/unary))
-				var/obj/machinery/atmospherics/components/unary/U = A
-				atmosanalyzer_scan(U.airs[1], user, U)
-			else if (istype(A, /obj/machinery/power/rad_collector))
-				var/obj/machinery/power/rad_collector/RC = A
-				if(RC.loaded_tank)
-					atmosanalyzer_scan(RC.loaded_tank.air_contents, user, RC)
-			else if (istype(A, /obj/item/flamethrower))
-				var/obj/item/flamethrower/F = A
-				if(F.ptank)
-					atmosanalyzer_scan(F.ptank.air_contents, user, F)
+		if(PDA_SCANNER_GAS)
+			A.analyzer_act(user, src)
 
 	if (!scanmode && istype(A, /obj/item/paper) && owner)
 		var/obj/item/paper/PP = A
@@ -998,11 +979,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP
 /obj/item/pda/emp_act(severity)
-	for(var/atom/A in src)
-		A.emp_act(severity)
-	emped += 1
-	spawn(200 * severity)
-		emped -= 1
+	. = ..()
+	if (!(. & EMP_PROTECT_CONTENTS))
+		for(var/atom/A in src)
+			A.emp_act(severity)
+	if (!(. & EMP_PROTECT_SELF))
+		emped += 1
+		spawn(200 * severity)
+			emped -= 1
 
 /proc/get_viewable_pdas()
 	. = list()
@@ -1014,6 +998,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 #undef PDA_SCANNER_NONE
 #undef PDA_SCANNER_MEDICAL
+#undef PDA_SCANNER_FORENSICS
 #undef PDA_SCANNER_REAGENT
 #undef PDA_SCANNER_HALOGEN
 #undef PDA_SCANNER_GAS

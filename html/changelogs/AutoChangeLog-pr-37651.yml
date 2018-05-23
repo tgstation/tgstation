@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "The Donksoft vendor board got lost during the techwebs transition and has been re-added under the illegal technology node."

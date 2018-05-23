@@ -315,6 +315,9 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	return cell
 
 /obj/machinery/chem_dispenser/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	var/list/datum/reagents/R = list()
 	var/total = min(rand(7,15), FLOOR(cell.charge*powerefficiency, 1))
 	var/datum/reagents/Q = new(total*10)
@@ -330,7 +333,6 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	cell.emp_act(severity)
 	work_animation()
 	visible_message("<span class='danger'>[src] malfunctions, spraying chemicals everywhere!</span>")
-	..()
 
 
 /obj/machinery/chem_dispenser/RefreshParts()
@@ -468,7 +470,8 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"creme_de_menthe",
 		"creme_de_cacao",
 		"triple_sec",
-		"sake"
+		"sake",
+		"fernet"
 	)
 	emagged_reagents = list(
 		"ethanol",
@@ -502,3 +505,17 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"ammonia",
 		"ash",
 		"diethylamine")
+
+/obj/machinery/chem_dispenser/fullupgrade //fully upgraded stock parts
+	
+/obj/machinery/chem_dispenser/fullupgrade/Initialize()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
+	component_parts += new /obj/item/stack/sheet/glass(null)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	RefreshParts()

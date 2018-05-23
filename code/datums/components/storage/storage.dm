@@ -87,7 +87,8 @@
 	RegisterSignal(COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_hand)
 	RegisterSignal(COMSIG_ATOM_EMP_ACT, .proc/emp_act)
 	RegisterSignal(COMSIG_ATOM_ATTACK_GHOST, .proc/show_to_ghost)
-	RegisterSignal(COMSIG_ATOM_EXITED, .proc/_removal_reset)
+	RegisterSignal(COMSIG_ATOM_ENTERED, .proc/refresh_mob_views)
+	RegisterSignal(COMSIG_ATOM_EXITED, .proc/_remove_and_refresh)
 
 	RegisterSignal(COMSIG_ITEM_PRE_ATTACK, .proc/preattack_intercept)
 	RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/attack_self)
@@ -369,10 +370,10 @@
 		. = TRUE //returns TRUE if any mobs actually got a close(M) call
 
 /datum/component/storage/proc/emp_act(severity)
-	var/atom/A = parent
-	if(!isliving(A.loc) && !emp_shielded)
-		var/datum/component/storage/concrete/master = master()
-		master.emp_act(severity)
+	if(emp_shielded)
+		return
+	var/datum/component/storage/concrete/master = master()
+	master.emp_act(severity)
 
 //This proc draws out the inventory and places the items on it. tx and ty are the upper left tile and mx, my are the bottm right.
 //The numbers are calculated from the bottom-left The bottom-left slot being 1,1.
@@ -401,6 +402,10 @@
 	if(!istype(master))
 		return FALSE
 	return master._removal_reset(thing)
+
+/datum/component/storage/proc/_remove_and_refresh(atom/movable/thing)
+	_removal_reset(thing)
+	refresh_mob_views()
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the new_location target, if that is null it's being deleted
 /datum/component/storage/proc/remove_from_storage(atom/movable/AM, atom/new_location)
@@ -455,23 +460,24 @@
 		return FALSE
 	handle_item_insertion(I, FALSE, M)
 
-/datum/component/storage/proc/return_inv()
-	. = list()
-	. += contents()
-	for(var/i in contents())
-		var/atom/a = i
-		GET_COMPONENT_FROM(STR, /datum/component/storage, a)
-		if(STR)
-			. += STR.return_inv()
+/datum/component/storage/proc/return_inv(recursive)
+	var/list/ret = list()
+	ret |= contents()
+	if(recursive)
+		for(var/i in ret.Copy())
+			var/atom/A = i
+			A.SendSignal(COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret, TRUE)
+	return ret
 
 /datum/component/storage/proc/contents()			//ONLY USE IF YOU NEED TO COPY CONTENTS OF REAL LOCATION, COPYING IS NOT AS FAST AS DIRECT ACCESS!
 	var/atom/real_location = real_location()
 	return real_location.contents.Copy()
 
-/datum/component/storage/proc/signal_return_inv(list/interface)
+//Abuses the fact that lists are just references, or something like that.
+/datum/component/storage/proc/signal_return_inv(list/interface, recursive = TRUE)
 	if(!islist(interface))
 		return FALSE
-	interface |= return_inv()
+	interface |= return_inv(recursive)
 	return TRUE
 
 /datum/component/storage/proc/mousedrop_onto(atom/over_object, mob/M)
