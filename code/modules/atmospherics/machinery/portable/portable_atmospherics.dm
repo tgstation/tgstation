@@ -138,10 +138,11 @@
 					"<span class='notice'>You fasten [src] to the port.</span>", \
 					"<span class='italics'>You hear a ratchet.</span>")
 				update_icon()
-	else if(istype(W, /obj/item/analyzer) && Adjacent(user))
-		atmosanalyzer_scan(air_contents, user)
 	else
 		return ..()
+
+/obj/machinery/portable_atmospherics/analyzer_act(mob/living/user, obj/item/I)
+	atmosanalyzer_scan(air_contents, user, src)
 
 /obj/machinery/portable_atmospherics/attacked_by(obj/item/I, mob/user)
 	if(I.force < 10 && !(stat & BROKEN))

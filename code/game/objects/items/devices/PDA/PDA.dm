@@ -827,12 +827,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(istype(C))
 		switch(scanmode)
 
-			if(1)
+			if(PDA_SCANNER_MEDICAL)
 				C.visible_message("<span class='alert'>[user] has analyzed [C]'s vitals!</span>")
 				healthscan(user, C, 1)
 				add_fingerprint(user)
 
-			if(4)
+			if(PDA_SCANNER_HALOGEN)
 				C.visible_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>")
 
 				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
@@ -845,8 +845,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(!proximity)
 		return
 	switch(scanmode)
-
-		if(3)
+		if(PDA_SCANNER_REAGENT)
 			if(!isnull(A.reagents))
 				if(A.reagents.reagent_list.len > 0)
 					var/reagents_length = A.reagents.reagent_list.len
@@ -858,27 +857,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 			else
 				to_chat(user, "<span class='notice'>No significant chemical agents found in [A].</span>")
 
-		if(5)
-			if (istype(A, /obj/item/tank))
-				var/obj/item/tank/T = A
-				atmosanalyzer_scan(T.air_contents, user, T)
-			else if (istype(A, /obj/machinery/portable_atmospherics))
-				var/obj/machinery/portable_atmospherics/PA = A
-				atmosanalyzer_scan(PA.air_contents, user, PA)
-			else if (istype(A, /obj/machinery/atmospherics/pipe))
-				var/obj/machinery/atmospherics/pipe/P = A
-				atmosanalyzer_scan(P.parent.air, user, P)
-			else if (istype(A, /obj/machinery/atmospherics/components/unary))
-				var/obj/machinery/atmospherics/components/unary/U = A
-				atmosanalyzer_scan(U.airs[1], user, U)
-			else if (istype(A, /obj/machinery/power/rad_collector))
-				var/obj/machinery/power/rad_collector/RC = A
-				if(RC.loaded_tank)
-					atmosanalyzer_scan(RC.loaded_tank.air_contents, user, RC)
-			else if (istype(A, /obj/item/flamethrower))
-				var/obj/item/flamethrower/F = A
-				if(F.ptank)
-					atmosanalyzer_scan(F.ptank.air_contents, user, F)
+		if(PDA_SCANNER_GAS)
+			A.analyzer_act(user, src)
 
 	if (!scanmode && istype(A, /obj/item/paper) && owner)
 		var/obj/item/paper/PP = A
@@ -1018,6 +998,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 #undef PDA_SCANNER_NONE
 #undef PDA_SCANNER_MEDICAL
+#undef PDA_SCANNER_FORENSICS
 #undef PDA_SCANNER_REAGENT
 #undef PDA_SCANNER_HALOGEN
 #undef PDA_SCANNER_GAS
