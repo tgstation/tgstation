@@ -95,12 +95,28 @@
 	required_reagents = list("mindbreaker" = 1, "teslium" = 1, "fentanyl" = 1)
 	mix_message = "<span class='danger'>After sparks, fire, and the smell of mindbreaker, the mix is constantly spinning with no stop in sight.</span>"
 
+/*
 /datum/chemical_reaction/skewium
 	name = "Skewium"
 	id = "Skewium"
 	results = list("skewium" = 5)
 	required_reagents = list("rotatium" = 2, "plasma" = 2, "sacid" = 1)
 	mix_message = "<span class='danger'>Wow! it turns out if you mix rotatium with some plasma and sulphuric acid, it gets even worse!</span>"
+*/
+
+/datum/chemical_reaction/skewium_disabled //as of 2018/05/23, a placeholder for Skewium until the client crashing, system freezing bug is fixed
+	name = "Skewium (disabled)"
+	id = "Skewium"
+	required_reagents = list("rotatium" = 2, "plasma" = 2, "sacid" = 1)
+	mix_message = "<span class='danger'>A piece of paper comes flying out of the beaker!</span>"
+
+/datum/chemical_reaction/skewium_disabled/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/paper/guides/skewium_disabled(location)
+
+/obj/item/paper/guides/skewium_disabled
+	name = "Skewium safety notice"
+	info = "<center><b>Important safety notice</b></center><br><br><center>Due to safety concerns, the production of Skewium had to be put on halt temporarily. We apologize for the inconvenience.</center><br><br><i>Nanotrasen Anomalous Materials Division</i>"
 
 /datum/chemical_reaction/anacea
 	name = "Anacea"
