@@ -6,6 +6,8 @@
 			user.visible_message("<span class='warning'>An unseen force knocks [user] to the ground!</span>", "<span class='big_brass'>\"I think not!\"</span>")
 			user.Knockdown(60)
 			return
+		if(istype(loccheck.loc, /area/fabric_of_reality))
+			to_chat(user, "<span class='danger'>You can't do that here!</span>")
 		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [A.name]?", "Abort", "Proceed")
 		if(safety == "Abort" || !in_range(A, user) || !A || !W || user.incapacitated())
 			return
