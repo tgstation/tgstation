@@ -1,6 +1,4 @@
 #define MAX_EMAG_ROCKETS 8
-#define POD_STANDARD 0
-#define POD_BLUESPACE 1
 #define BEACON_COST 5000
 #define SP_LINKED 1
 #define SP_READY 2 
@@ -47,6 +45,10 @@
 		podID = POD_BLUESPACE//doesnt effect circuit board, making reversal possible
 		to_chat(user, "<span class='notice'>You insert the disk into [src], allowing for advanced supply delivery vehicles.</span>")
 		qdel(W)
+		return TRUE
+	else if(istype(W, /obj/item/supplypod_beacon))
+		var/obj/item/supplypod_beacon/sb = W
+		sb.link_console(src, user)
 		return TRUE
 	..()
 
@@ -133,7 +135,7 @@
 		if("printBeacon")
 			cooldown = 10//a ~ten second cooldown for printing beacons to prevent spam
 			var/obj/item/supplypod_beacon/C = new /obj/item/supplypod_beacon(drop_location())
-			C.link_console(src)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
+			C.link_console(src, usr)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
 			printed_beacons++//printed_beacons starts at 0, so the first one out will be called beacon # 1
 			beacon.name = "Supply Pod Beacon #[printed_beacons]"
 			SSshuttle.points -= BEACON_COST//check for this is under ui_data

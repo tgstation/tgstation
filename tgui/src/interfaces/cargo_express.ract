@@ -22,7 +22,7 @@
 {{#if !data.locked }}
   <ui-display title='Express Cargo Console'>
 
-    <ui-section label='Landing Location:'>
+    <ui-section label='Landing Location'>
       <ui-button state='{{data.usingBeacon ? null : "selected"}}' action='LZCargo'> Cargo Bay</ui-button>
       <ui-button state='{{data.hasBeacon ? data.usingBeacon ? "selected" : null : "disabled"}}' action='LZBeacon'> {{data.beaconzone}} ({{data.beaconName}})</ui-button>
       <ui-button state='{{data.canBuyBeacon ? null : "disabled"}}' action='printBeacon'> {{data.printMsg}}</ui-button>

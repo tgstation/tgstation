@@ -1,11 +1,3 @@
-#define SP_LINKED 1
-#define SP_READY 2 
-#define SP_LAUNCH 3
-#define SP_UNLINK 4 
-#define SP_UNREADY 5
-#define POD_STANDARD 0
-#define POD_BLUESPACE 1
-
 /obj/item/supplypod_beacon
 	name = "Supply Pod Beacon"
 	desc = "A device that can be linked to an Express Supply Console for precision supply pod deliveries. Alt-click to remove link."
@@ -68,9 +60,8 @@
 		express_console = null
 	update_status(SP_UNLINK)
 	update_status(SP_UNREADY) 
-	visible_message("<span class='notice'>[name] has been unlinked from [express_console].</span>")
 
-/obj/item/supplypod_beacon/proc/link_console(obj/machinery/computer/cargo/express/C)
+/obj/item/supplypod_beacon/proc/link_console(obj/machinery/computer/cargo/express/C, mob/living/user)
 	if (C.beacon)//if new console has a beacon, then...
 		C.beacon.unlink_console()//unlink the old beacon from new console
 	if (express_console)//if this beacon has an express console
@@ -80,14 +71,14 @@
 	update_status(SP_LINKED)
 	if (express_console.usingBeacon)
 		update_status(SP_READY)
-	visible_message("<span class='notice'>[name] linked to [C].</span>")
+	to_chat(user, "<span class='notice'>[src] linked to [C].</span>")
 
-/obj/item/supplypod_beacon/afterattack(obj/O, mob/user, proximity)
+/obj/item/supplypod_beacon/afterattack(obj/O, mob/living/user, proximity)
 	if(!istype(O) || !proximity)
 		return
 	if(istype(O, /obj/machinery/computer/cargo/express))
 		if (express_console != O)
-			link_console(O)
+			link_console(O, user)
 
 /obj/item/supplypod_beacon/AltClick(mob/user)
 	if (!user.canUseTopic(src, !issilicon(user)))
