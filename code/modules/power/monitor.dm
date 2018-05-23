@@ -21,7 +21,14 @@
 	var/is_secret_monitor = FALSE
 
 /obj/machinery/computer/monitor/secret //Hides the power monitor (such as ones on ruins & CentCom) from PDA's to prevent metagaming.
+	name = "outdated power monitoring console"
+	desc = "It monitors power levels across the local powernet."
+	circuit = /obj/item/circuitboard/computer/powermonitor/secret
 	is_secret_monitor = TRUE
+
+/obj/machinery/computer/monitor/secret/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>It's operating system seems quite outdated... It doesn't seem like it'd be compatible with the latest remote NTOS monitoring systems.</span>")
 
 /obj/machinery/computer/monitor/Initialize()
 	. = ..()
