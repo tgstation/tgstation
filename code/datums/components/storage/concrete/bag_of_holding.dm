@@ -9,14 +9,13 @@
 		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [A.name]?", "Abort", "Proceed")
 		if(safety == "Abort" || !in_range(A, user) || !A || !W || user.incapacitated())
 			return
-		A.investigate_log("has become a singularity. Caused by [user.key]", INVESTIGATE_SINGULO)
 		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		qdel(W)
-		var/obj/singularity/singulo = new /obj/singularity (get_turf(A))
-		singulo.energy = 300 //should make it a bit bigger~
+		playsound(loccheck,'sound/effects/supermatter.ogg', 200, 1)
+		for(var/turf/T in range(6,loccheck))
+			T.TerraformTurf(/turf/open/chasm/magic, /turf/open/chasm/magic)
 		message_admins("[key_name_admin(user)] detonated a bag of holding")
 		log_game("[key_name(user)] detonated a bag of holding")
 		qdel(A)
-		singulo.process()
 		return
 	. = ..()
