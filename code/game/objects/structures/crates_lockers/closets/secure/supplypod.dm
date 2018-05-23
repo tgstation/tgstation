@@ -1,6 +1,4 @@
 //The "BDPtarget" temp visual is created by the expressconsole, which in turn makes two things: a falling droppod animation, and the droppod itself.
-#define POD_STANDARD 0
-#define POD_BLUESPACE 1
 
 //------------------------------------SUPPLY POD-------------------------------------//
 /obj/structure/closet/supplypod
