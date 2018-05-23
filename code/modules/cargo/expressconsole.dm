@@ -163,6 +163,7 @@
 				if(SO.pack.cost <= SSshuttle.points)
 					landingzone = locate(/area/quartermaster/storage) in GLOB.sortedAreas
 					if (!landingzone)
+						WARNING("[src] couldnt find a Quartermaster/Storage area on the station, and as such has set the LZ to the area it resides in.")
 						landingzone = get_area(src)
 					for(var/turf/open/floor/T in landingzone.contents)//uses default landing zone
 						if(is_blocked_turf(T))
@@ -170,11 +171,11 @@
 						LAZYADD(empty_turfs, T)
 						CHECK_TICK
 					var/LZ
-					if(empty_turfs && empty_turfs.len)
-						LZ = empty_turfs[rand(empty_turfs.len-1)]
-					else if (istype(beacon) && usingBeacon)
+					if (istype(beacon) && usingBeacon)
 						LZ = get_turf(beacon)
-						beacon.update_status(SP_LAUNCH)				
+						beacon.update_status(SP_LAUNCH)		
+					else if(empty_turfs && empty_turfs.len)
+						LZ = empty_turfs[rand(empty_turfs.len-1)]	
 					else 
 						return
 
