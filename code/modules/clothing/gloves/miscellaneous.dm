@@ -57,7 +57,7 @@
 	armor = list("melee" = 15, "bullet" = 35, "laser" = 35, "energy" = 20, "bomb" = 35, "bio" = 35, "rad" = 35, "fire" = 0, "acid" = 0)
 
 /obj/item/clothing/gloves/rapid
-	name = "Gloves of the north star"
+	name = "Gloves of the north Star"
 	desc = "Just looking at these fills you with an urge to beat the shit out of people."
 	icon_state = "rapid"
 	item_state = "rapid"
