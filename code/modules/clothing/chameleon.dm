@@ -151,8 +151,6 @@
 	return 1
 
 /datum/action/item_action/chameleon/change/proc/emp_randomise(var/amount = EMP_RANDOMISE_TIME)
-	if(istype(target, /obj/item/gun/energy/laser/chameleon))
-		return	//Please no crash!
 	START_PROCESSING(SSprocessing, src)
 	random_look(owner)
 
