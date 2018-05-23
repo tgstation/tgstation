@@ -310,14 +310,14 @@
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
 
-		if(oldloc && !same_loc)
-			oldloc.Exited(src, destination)
-			if(old_area)
-				old_area.Exited(src, destination)
 
 		loc = destination
 
 		if(!same_loc)
+			if(oldloc)
+				oldloc.Exited(src, destination)
+				if(old_area)
+					old_area.Exited(src, destination)
 			var/turf/oldturf = get_turf(oldloc)
 			var/turf/destturf = get_turf(destination)
 			var/old_z = (oldturf ? oldturf.z : null)
@@ -332,6 +332,7 @@
 				if(AM == src)
 					continue
 				AM.Crossed(src, oldloc)
+
 		Moved(oldloc, NONE, TRUE)
 		. = TRUE
 
