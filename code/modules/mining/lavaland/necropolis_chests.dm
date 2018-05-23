@@ -968,6 +968,8 @@
 		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, H)
 	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
 	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(user)][ADMIN_FLW(user)] has activated a bottle of mayhem!</span>")
+	add_logs(user, null, "activated a bottle of mayhem", src)
 	qdel(src)
 
 /obj/item/blood_contract
