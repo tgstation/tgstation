@@ -1,0 +1,4 @@
+author: "imsxz"
+delete-after: True
+changes: 
+  - admin: "Using mayhem bottles and going under their effects is now logged."
