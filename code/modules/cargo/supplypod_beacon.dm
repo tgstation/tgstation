@@ -73,13 +73,6 @@
 		update_status(SP_READY)
 	to_chat(user, "<span class='notice'>[src] linked to [C].</span>")
 
-/obj/item/supplypod_beacon/afterattack(obj/O, mob/living/user, proximity)
-	if(!istype(O) || !proximity)
-		return
-	if(istype(O, /obj/machinery/computer/cargo/express))
-		if (express_console != O)
-			link_console(O, user)
-
 /obj/item/supplypod_beacon/AltClick(mob/user)
 	if (!user.canUseTopic(src, !issilicon(user)))
 		return

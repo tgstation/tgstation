@@ -48,8 +48,11 @@
 		return TRUE
 	else if(istype(W, /obj/item/supplypod_beacon))
 		var/obj/item/supplypod_beacon/sb = W
-		sb.link_console(src, user)
-		return TRUE
+		if (sb.express_console != src)
+			sb.link_console(src, user)
+			return TRUE
+		else
+			to_chat(user, "<span class='notice'>[src] is already linked to [sb].</span>")
 	..()
 
 /obj/machinery/computer/cargo/express/emag_act(mob/living/user)
