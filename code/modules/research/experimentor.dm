@@ -1,6 +1,6 @@
 //this is designed to replace the destructive analyzer
 
-GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item/grenade,/obj/item/aicard,/obj/item/storage/backpack/holding,/obj/item/slime_extract,/obj/item/onetankbomb,/obj/item/transfer_valve))
+GLOBAL_LIST_INIT(critical_items,typecacheof(list(/obj/item/construction/rcd,/obj/item/grenade,/obj/item/aicard,/obj/item/storage/backpack/holding,/obj/item/slime_extract,/obj/item/onetankbomb,/obj/item/transfer_valve)))
 
 /datum/experiment_type
 	var/name = "Adminhelp"
@@ -13,8 +13,8 @@ GLOBAL_LIST_INIT(critical_items,typecacheof(/obj/item/construction/rcd,/obj/item
 	for(var/datum/experiment/EX in experiments)
 		if(!EX.weight || !EX.can_perform(E,O))
 			continue
-		if(EX.is_bad && bad_things_coeff < EX.weight)
-			weighted_experiments[EX] = EX.weight - bad_things_coeff
+		if(EX.is_bad)
+			weighted_experiments[EX] = EX.weight / bad_things_coeff
 		else if(!EX.is_bad && !only_bad)
 			weighted_experiments[EX] = EX.weight
 	return weighted_experiments
