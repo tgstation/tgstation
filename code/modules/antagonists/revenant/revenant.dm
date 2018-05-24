@@ -112,9 +112,8 @@
 		if(staticOverlays.len)
 			for(var/mob/living/simple_animal/drone/D in GLOB.drones_list)
 				if(D && D.client && D.seeStatic)
-					for(var/image/I in staticOverlays)
-						D.staticOverlays.Remove(I)
-						D.client.images.Remove(I)
+					D.staticOverlays.Remove(staticOverlays)
+					D.client.images.Remove(staticOverlays)
 		to_chat(src, "<span class='revenboldnotice'>You are once more concealed.</span>")
 	if(unstun_time && world.time >= unstun_time)
 		unstun_time = 0
