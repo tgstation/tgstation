@@ -4,7 +4,7 @@
 /datum/experiment/destroy/flatten
 	weight = 20
 	experiment_type = /datum/experiment_type/destroy
-	base_points = 250
+	base_points = 1000
 	critical = TRUE
 
 /datum/experiment/destroy/flatten/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
@@ -14,7 +14,7 @@
 
 /datum/experiment/destroy/deconstruct
 	weight = 80
-	base_points = 50
+	base_points = 400
 	experiment_type = /datum/experiment_type/destroy
 	is_bad = TRUE
 	var/list/types_performed = list()

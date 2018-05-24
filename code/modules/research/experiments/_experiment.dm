@@ -5,7 +5,7 @@
 	var/experiment_type			//Path of the experiment type that should trigger this experiment, use /datum/experiment_type for any, null for none
 	var/valid_types 			//Which types of items this experiment works on
 	var/performed_times = 0 	//How often this experiment occured
-	var/base_points = 25 		//This value determines how many techweb points are generated from this reaction. It's divided by the number of times triggered squared, so (1, 1/4, 1/9, 1/16, ...)
+	var/base_points = 500 		//This value determines how many techweb points are generated from this reaction. It's divided by the number of times triggered squared, so (1, 1/4, 1/9, 1/16, ...)
 	var/allow_boost = TRUE     //Whether this experiment can boost techweb nodes (Whatever that means go away kevinz)
 	var/critical = FALSE		//Only allow critical items to trigger this reaction
 

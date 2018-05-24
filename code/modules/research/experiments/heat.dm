@@ -3,8 +3,8 @@
 
 /datum/experiment/coffee/heater_fail
 	weight = 20
-	experiment_type = /datum/experiment_type/destroy
-	base_points = 250
+	experiment_type = /datum/experiment_type/heat
+	base_points = 2500
 	critical = TRUE
 	valid_reagents = list("plasma","capsaicin","ethanol")
 

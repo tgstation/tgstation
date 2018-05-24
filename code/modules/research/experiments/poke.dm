@@ -88,7 +88,7 @@
 /datum/experiment/enable_improve
 	weight = 20
 	experiment_type = /datum/experiment_type/poke
-	base_points = 250
+	base_points = 2500
 	critical = TRUE
 
 /datum/experiment/enable_improve/can_perform(obj/machinery/rnd/experimentor/E,obj/item/O)

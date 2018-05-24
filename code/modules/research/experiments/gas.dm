@@ -4,7 +4,7 @@
 /datum/experiment/plasma_mix
 	weight = 20
 	experiment_type = /datum/experiment_type/gas
-	base_points = 250
+	base_points = 2500
 	critical = TRUE
 
 /datum/experiment/plasma_mix/perform(obj/machinery/rnd/experimentor/E,obj/item/O)

@@ -4,7 +4,7 @@
 /datum/experiment/coffee/coolant_fail
 	weight = 20
 	experiment_type = /datum/experiment_type/cool
-	base_points = 250
+	base_points = 2500
 	critical = TRUE
 	valid_reagents = list("uranium","frostoil","ephedrine")
 

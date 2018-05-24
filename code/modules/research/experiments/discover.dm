@@ -40,7 +40,7 @@
 	. = ..()
 	E.visible_message("[E] scans the [O].")
 	busy = TRUE
-	addtimer(CALLBACK(src, .proc/report, E, O), rand(30,300))
+	addtimer(CALLBACK(src, .proc/report, E, O), rand(20,100))
 
 /datum/experiment/analyse_relic/proc/report(obj/machinery/rnd/experimentor/E,obj/item/O)
 	if(!QDELETED(O) && !QDELETED(E))
@@ -62,7 +62,7 @@
 		var/datum/component/relic/comp = O.GetComponent(/datum/component/relic)
 		if(comp && comp.my_type)
 			for(var/datum/relic_effect/eff in comp.my_type.added_effects)
-				if(prob(60) && eff.hint)
+				if(eff.hint)
 					P.info += pick(eff.hint)
 
 		P.update_icon()
