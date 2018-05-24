@@ -33,8 +33,6 @@
 	set desc = "Relinquish your life and enter the land of the dead."
 	var/mob/living/real_me = real_mind.current
 	revert_to_reality(FALSE)
-	if(real_me)
-		real_me.ghost()
 
 /mob/living/carbon/human/virtual_reality/proc/revert_to_reality(deathchecks = TRUE)
 	if(real_mind && mind)
