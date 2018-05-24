@@ -58,7 +58,7 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	update_gravity(mob_has_gravity())
+	handle_gravity()
 
 	if(machine)
 		machine.check_eye(src)
@@ -137,3 +137,14 @@
 
 /mob/living/proc/update_damage_hud()
 	return
+
+/mob/living/proc/handle_gravity()
+	var/gravity = mob_has_gravity()
+	update_gravity(gravity)
+
+	if(gravity > STANDARD_GRAVITY)
+		handle_high_gravity(gravity)
+
+/mob/living/proc/handle_high_gravity(gravity)
+		var/grav_stregth = gravity - STANDARD_GRAVITY
+		adjustBruteLoss(min(grav_stregth,3))
