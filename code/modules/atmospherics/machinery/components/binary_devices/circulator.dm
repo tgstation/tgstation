@@ -57,11 +57,11 @@
 
 /obj/machinery/atmospherics/components/binary/circulator/update_icon()
 	if(!is_operational())
-		icon_state = "circ[side]-p"
+		icon_state = "circ-p"
 	else if(last_pressure_delta > 0)
 		if(last_pressure_delta > ONE_ATMOSPHERE)
-			icon_state = "circ[side]-run"
+			icon_state = "circ-run"
 		else
-			icon_state = "circ[side]-slow"
+			icon_state = "circ-slow"
 	else
-		icon_state = "circ[side]-off"
+		icon_state = "circ-off"
