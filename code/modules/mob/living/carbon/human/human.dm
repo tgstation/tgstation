@@ -576,6 +576,8 @@
 					threatcount += 4
 			if(weaponcheck.Invoke(belt))
 				threatcount += 2
+			if(weaponcheck.Invoke(back))
+				threatcount += 2
 
 	//Check for arrest warrant
 	if(judgement_criteria & JUDGE_RECORDCHECK)
