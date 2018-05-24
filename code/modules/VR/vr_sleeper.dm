@@ -148,6 +148,11 @@
 /obj/machinery/vr_sleeper/proc/get_vr_spawnpoint() //proc so it can be overriden for team games or something
 	return safepick(GLOB.vr_spawnpoints[vr_category])
 
+/obj/machinery/vr_sleeper/proc/build_spawnpoints() // used to rebuild the list for admins if need be
+	GLOB.vr_spawnpoints = list()
+	for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
+		GLOB.vr_spawnpoints[V.vr_category] = V
+
 /obj/machinery/vr_sleeper/proc/build_virtual_human(mob/living/carbon/human/H, location, var/datum/outfit/outfit, transfer = TRUE)
 	if(H)
 		cleanup_vr_human()
@@ -184,16 +189,11 @@
 
 /obj/effect/landmark/vr_spawn/Initialize()
 	. = ..()
-	build_spawnpoints()
+	LAZYADD(GLOB.vr_spawnpoints[vr_category], src)
 
 /obj/effect/landmark/vr_spawn/Destroy()
-	build_spawnpoints()
+	LAZYREMOVE(GLOB.vr_spawnpoints[vr_category], src)
 	return ..()
-
-/obj/effect/landmark/vr_spawn/proc/build_spawnpoints() 
-	GLOB.vr_spawnpoints = list()
-	for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
-		LAZYADD(GLOB.vr_spawnpoints[V.vr_category], V)
 
 /obj/effect/landmark/vr_spawn/team_1
 	vr_category = "team_1"
