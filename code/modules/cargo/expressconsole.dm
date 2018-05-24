@@ -166,7 +166,7 @@
 					if (istype(beacon) && usingBeacon)//prioritize beacons over landing in cargobay
 						LZ = get_turf(beacon)
 						beacon.update_status(SP_LAUNCH)	
-					else//find a suitable supplypod landing zone in cargobay
+					else if (!usingBeacon)//find a suitable supplypod landing zone in cargobay
 						landingzone = locate(/area/quartermaster/storage) in GLOB.sortedAreas
 						if (!landingzone)
 							WARNING("[src] couldnt find a Quartermaster/Storage (aka cargobay) area on the station, and as such it has set the supplypod landingzone to the area it resides in.")
