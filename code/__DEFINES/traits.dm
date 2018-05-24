@@ -59,6 +59,7 @@
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
+#define	TRAIT_DRUNK_HEALING		"alcohol_healing"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
