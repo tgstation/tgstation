@@ -50,7 +50,7 @@
 	. = ..()
 	E.visible_message("<span class='warning'>[E] malfunctions, spewing toxic waste!</span>")
 	for(var/turf/T in oview(1, E))
-		if(!T.density && prob(70))
+		if(!T.density && prob(70) && !(locate(/obj/effect/decal/cleanable/greenglow) in T))
 			var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
 			reagentdecal.reagents.add_reagent("radium", 7)
 
