@@ -196,7 +196,9 @@
 				screenmob.client.screen -= infodisplay
 
 	for(var/thing in plane_masters)
-		screenmob.client.screen += plane_masters[thing]
+		var/obj/screen/plane_master/PM = plane_masters[thing]
+		PM.backdrop(screenmob)
+		screenmob.client.screen += PM
 
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)

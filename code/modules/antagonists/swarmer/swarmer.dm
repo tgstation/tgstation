@@ -128,6 +128,9 @@
 	return ..() | SPAN_ROBOT
 
 /mob/living/simple_animal/hostile/swarmer/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(health > 1)
 		adjustHealth(health-1)
 	else
@@ -554,6 +557,9 @@
 			playsound(src, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/swarmer/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	qdel(src)
 
 /obj/structure/swarmer/trap

@@ -212,7 +212,7 @@ SUBSYSTEM_DEF(persistence)
 			continue
 		var/list/savable_obj = list()
 		for(var/obj/O in F)
-			if(is_type_in_typecache(O, satchel_blacklist) || O.admin_spawned)
+			if(is_type_in_typecache(O, satchel_blacklist) || (O.flags_1 & ADMIN_SPAWNED_1))
 				continue
 			if(O.persistence_replacement)
 				savable_obj += O.persistence_replacement
