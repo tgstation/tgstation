@@ -67,7 +67,7 @@
 /datum/experiment/burn_people
 	weight = 20
 	is_bad = TRUE
-	experiment_type = /datum/experiment_type/poke
+	experiment_type = /datum/experiment_type/heat
 
 /datum/experiment/burn_people/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	..()
