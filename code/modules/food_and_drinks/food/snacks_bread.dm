@@ -209,6 +209,7 @@
 		qdel(fried)
 	else
 		fried.forceMove(src)
+		fried.was_previously_fried = TRUE //prevent psuedo-infinite food generation by refrying the same item forever.
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/proc/fry(cook_time = 30)
 	switch(cook_time)
