@@ -375,7 +375,7 @@ There is also an undocumented keyword called `static` that has the same behaviou
 
 ## Whitelists vs Blacklists
 
-When trying to limit interactions your feature may have, a whitelist is preferable and more maintainable than a blacklist. Our game is constantly changing, and it is likely future contributors will not remember to add things to a blacklist for every obscure system, leading to various exploits and bugs.
+When trying to limit interactions your feature may have, a whitelist is preferable and more maintainable than a blacklist (for example, a list of items a bag is allowed to hold, rather than the bag being allowed to hold any item save for those you specified as blocked). Our game is constantly changing, and it is likely future contributors will not remember to add things to a blacklist for every obscure system, leading to various exploits and bugs.
 
 ## Pull Request Process
 
