@@ -49,7 +49,7 @@
 	var/exp_type_department = ""
 
 	//The amount of good boy points playing this role will earn you towards a higher chance to roll antagonist next round
-	var/antag_rep = 0
+	var/antag_rep = 10
 
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
