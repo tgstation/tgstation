@@ -17,7 +17,6 @@ Chief Engineer
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_ENGINEERING
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/ce
 
@@ -77,7 +76,6 @@ Station Engineer
 	selection_color = "#fff5cc"
 	exp_requirements = 60
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 17
 
 	outfit = /datum/outfit/job/engineer
 
@@ -134,7 +132,6 @@ Atmospheric Technician
 	selection_color = "#fff5cc"
 	exp_requirements = 60
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 17
 
 	outfit = /datum/outfit/job/atmos
 
