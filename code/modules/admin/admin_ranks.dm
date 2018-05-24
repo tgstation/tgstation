@@ -258,7 +258,7 @@ GLOBAL_PROTECT(protected_ranks)
 			for(var/A in GLOB.admin_datums + GLOB.deadmins)
 				if(A == "[J]") //this admin was already loaded from txt override
 					continue
-			new /datum/admins(ckeyEx(rank_names[json["admins"]["[J]"]]), ckey("[J]"))
+			new /datum/admins(rank_names[ckeyEx(json["admins"]["[J]"])], ckey("[J]"))
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
 	for(var/ckey in GLOB.admin_datums)
