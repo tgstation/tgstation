@@ -14,7 +14,6 @@
 	var/you_die_in_the_game_you_die_for_real = FALSE
 	var/datum/effect_system/spark_spread/sparks
 	var/mob/living/carbon/human/virtual_reality/vr_human
-	var/static/list/available_vr_spawnpoints
 	var/vr_category = "default" //Specific category of spawn points to pick from
 	var/allow_creating_vr_humans = TRUE //So you can have vr_sleepers that always spawn you as a specific person or 1 life/chance vr games
 	var/only_current_user_can_interact = FALSE
@@ -24,7 +23,6 @@
 	sparks = new /datum/effect_system/spark_spread()
 	sparks.set_up(2,0)
 	sparks.attach(src)
-	build_spawnpoints()
 	update_icon()
 
 /obj/machinery/vr_sleeper/attackby(obj/item/I, mob/user, params)
@@ -148,15 +146,7 @@
 	return data
 
 /obj/machinery/vr_sleeper/proc/get_vr_spawnpoint() //proc so it can be overriden for team games or something
-	return safepick(available_vr_spawnpoints[vr_category])
-
-/obj/machinery/vr_sleeper/proc/build_spawnpoints(rebuild = FALSE) 
-	if (rebuild)
-		available_vr_spawnpoints = null
-	if(!available_vr_spawnpoints || !available_vr_spawnpoints.len) //(re)build spawnpoint lists
-		available_vr_spawnpoints = list()
-		for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
-			LAZYADD(available_vr_spawnpoints[V.vr_category], V)
+	return safepick(GLOB.vr_spawnpoints[vr_category])
 
 /obj/machinery/vr_sleeper/proc/build_virtual_human(mob/living/carbon/human/H, location, var/datum/outfit/outfit, transfer = TRUE)
 	if(H)
@@ -192,11 +182,27 @@
 	var/vr_category = "default" //So we can have specific sleepers, eg: "Basketball VR Sleeper", etc.
 	var/vr_outfit = /datum/outfit/vr
 
+/obj/effect/landmark/vr_spawn/Initialize()
+	. = ..()
+	build_spawnpoints()
+
+/obj/effect/landmark/vr_spawn/Destroy()
+	build_spawnpoints()
+	return ..()
+
+/obj/effect/landmark/vr_spawn/proc/build_spawnpoints() 
+	GLOB.vr_spawnpoints = list()
+	for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
+		GLOB.vr_spawnpoints[V.vr_category] += V
+
 /obj/effect/landmark/vr_spawn/team_1
 	vr_category = "team_1"
 
 /obj/effect/landmark/vr_spawn/team_2
 	vr_category = "team_2"	
+
+/obj/effect/landmark/vr_spawn/admin
+	vr_category = "event"	
 
 /obj/effect/landmark/vr_spawn/syndicate // Multiple missions will use syndicate gear
 	vr_outfit = /datum/outfit/vr/syndicate
