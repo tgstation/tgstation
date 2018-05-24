@@ -47,7 +47,7 @@
 "ah" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -1189,7 +1189,7 @@
 	},
 /area/shuttle/pirate)
 "cI" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 8
 	},
 /obj/structure/cable/yellow{

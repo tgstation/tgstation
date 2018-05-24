@@ -7079,7 +7079,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "tE" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
