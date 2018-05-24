@@ -9095,13 +9095,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"atw" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
-/area/maintenance/port)
 "atx" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -44472,12 +44465,7 @@
 /turf/open/floor/engine/cult,
 /area/library)
 "bRm" = (
-/obj/item/taperecorder,
-/obj/item/camera,
-/obj/item/radio/intercom{
-	pixel_y = -25
-	},
-/obj/structure/table/wood,
+/obj/structure/chair/comfy/brown,
 /turf/open/floor/engine/cult,
 /area/library)
 "bRn" = (
@@ -45622,39 +45610,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/open/floor/wood,
-/area/library)
-"bTB" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Library Maintenance";
-	req_one_access_txt = "12;37"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
-"bTC" = (
+/obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
+/turf/open/floor/wood,
+/area/library)
 "bTD" = (
 /obj/machinery/vending/snack/random,
 /obj/machinery/newscaster{
@@ -46860,22 +46821,6 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
-"bWe" = (
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 4;
-	sortType = 16
-	},
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -76122,6 +76067,21 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"dOf" = (
+/obj/structure/table/wood,
+/obj/item/storage/photo_album,
+/turf/open/floor/engine/cult,
+/area/library)
+"dTg" = (
+/obj/item/taperecorder,
+/obj/item/camera,
+/obj/structure/table/wood,
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
+/turf/open/floor/engine/cult,
+/area/library)
 "dYu" = (
 /obj/machinery/door/airlock/external{
 	name = "Auxiliary Airlock"
@@ -76213,6 +76173,15 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"fGq" = (
+/obj/structure/rack{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "minibar";
+	name = "skeletal minibar"
+	},
+/obj/item/storage/fancy/candle_box,
+/turf/open/floor/engine/cult,
+/area/library)
 "gfh" = (
 /obj/machinery/libraryscanner,
 /turf/open/floor/plasteel/white,
@@ -76235,6 +76204,17 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"gDX" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Library Maintenance";
+	req_one_access_txt = "12;37"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/library)
 "gEk" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
@@ -76423,6 +76403,25 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"kMc" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 4;
+	sortType = 16
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "kOt" = (
 /obj/item/multitool,
 /obj/item/screwdriver,
@@ -76454,6 +76453,15 @@
 /obj/item/integrated_circuit_printer,
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"lmV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/open/floor/wood,
+/area/library)
 "lsv" = (
 /obj/machinery/power/apc{
 	areastring = "/area/science/circuit";
@@ -97527,7 +97535,7 @@ bue
 bzE
 bRj
 bSB
-bPR
+lmV
 bue
 div
 bXI
@@ -97785,8 +97793,8 @@ bPU
 bRk
 bSC
 bTA
-bue
-bWd
+gDX
+kMc
 alC
 dux
 dvq
@@ -98041,7 +98049,7 @@ bue
 bue
 bue
 bue
-bTB
+bue
 bue
 bWd
 aqK
@@ -98296,11 +98304,11 @@ bzE
 bMO
 bue
 bPV
+dOf
 bRl
 bue
-bTC
-atw
-bWe
+alC
+bWd
 bXJ
 dux
 bZV
@@ -98554,9 +98562,9 @@ cVi
 bOm
 bPW
 bRm
+dTg
 bue
 auF
-alC
 aXt
 aqO
 dux
@@ -98810,9 +98818,9 @@ bue
 bue
 bue
 bPX
+fGq
 bRn
 bue
-alK
 alK
 bWf
 bXK

@@ -22084,7 +22084,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/obj/structure/closet/crate/bin,
+/obj/machinery/libraryscanner,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -22808,9 +22808,13 @@
 /turf/open/space,
 /area/asteroid/nearstation)
 "aWA" = (
-/obj/machinery/libraryscanner,
 /obj/machinery/newscaster{
 	pixel_x = -32
+	},
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/light_switch{
+	pixel_y = -24
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -23078,28 +23082,9 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/asteroid/nearstation)
-"aXe" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/obj/machinery/light_switch{
-	pixel_y = -24
-	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
-	},
-/turf/open/floor/plasteel/dark,
-/area/library)
 "aXf" = (
-/obj/structure/table/wood,
-/obj/item/folder,
-/obj/item/pen/blue{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/pen/red,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/dark,
+/turf/closed/wall,
 /area/library)
 "aXg" = (
 /obj/structure/bookcase/random/nonfiction,
@@ -23117,6 +23102,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "aXj" = (
@@ -23410,19 +23396,18 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "aXL" = (
-/obj/machinery/door/morgue{
-	name = "Curator's Study";
-	req_access_txt = "37"
+/obj/effect/landmark/start/librarian,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 8
+/turf/open/floor/wood{
+	icon_state = "wood-broken2"
 	},
 /area/library)
 "aXM" = (
-/obj/machinery/status_display,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall,
+/obj/machinery/vending/wardrobe/curator_wardrobe,
+/turf/open/floor/wood,
 /area/library)
 "aXN" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -23811,37 +23796,30 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "aYw" = (
-/obj/structure/destructible/cult/tome,
-/obj/item/book/codex_gigas,
 /obj/machinery/light/small{
-	dir = 1
+	dir = 8
 	},
-/obj/machinery/light_switch{
-	pixel_y = 24
-	},
+/obj/structure/table/wood,
+/obj/item/taperecorder,
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
 	},
 /area/library)
 "aYx" = (
-/obj/effect/landmark/start/librarian,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
+/obj/structure/chair/comfy/brown,
 /turf/open/floor/wood,
 /area/library)
 "aYy" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/rack{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "minibar";
+	name = "skeletal minibar"
+	},
+/obj/item/storage/fancy/candle_box,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = 32
+	},
 /turf/open/floor/wood,
 /area/library)
 "aYz" = (
@@ -24207,7 +24185,9 @@
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
-/obj/machinery/vending/wardrobe/curator_wardrobe,
+/obj/structure/table/wood,
+/obj/item/storage/photo_album,
+/obj/item/camera,
 /turf/open/floor/wood,
 /area/library)
 "aZv" = (
@@ -24227,17 +24207,14 @@
 	},
 /area/library)
 "aZw" = (
-/obj/structure/table/wood,
-/obj/item/taperecorder,
-/obj/item/camera,
 /obj/machinery/ai_status_display{
 	pixel_y = -32
 	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/structure/bookcase{
+	name = "Forbidden Knowledge"
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -32238,6 +32215,14 @@
 /obj/item/paper/guides/jobs/hydroponics,
 /turf/open/floor/plasteel/neutral,
 /area/hydroponics)
+"mLL" = (
+/obj/machinery/light_switch{
+	pixel_y = 24
+	},
+/obj/structure/destructible/cult/tome,
+/obj/item/book/codex_gigas,
+/turf/open/floor/wood,
+/area/library)
 "mQi" = (
 /turf/closed/wall/rust,
 /area/maintenance/starboard/central)
@@ -32297,6 +32282,16 @@
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"nJb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/morgue{
+	name = "Curator's Study";
+	req_access_txt = "37"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/library)
 "nKi" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -35934,6 +35929,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"yde" = (
+/obj/machinery/status_display,
+/turf/closed/wall,
+/area/library)
 "yeE" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 4;
@@ -69786,7 +69785,7 @@ aQW
 aQW
 aQW
 aQW
-aQW
+sJI
 aQW
 sJI
 aQW
@@ -70042,8 +70041,8 @@ aUc
 aUV
 aVN
 aWA
-aXe
 aQW
+mLL
 aYw
 aZu
 aQW
@@ -70299,7 +70298,7 @@ aUd
 sKd
 aVO
 aWB
-aVO
+nJb
 aXL
 aYx
 aZv
@@ -70813,7 +70812,7 @@ aUf
 aUX
 aVQ
 aWD
-aVQ
+yde
 aQW
 aQW
 aQW
