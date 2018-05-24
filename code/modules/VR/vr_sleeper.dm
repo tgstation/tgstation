@@ -193,7 +193,7 @@
 /obj/effect/landmark/vr_spawn/proc/build_spawnpoints() 
 	GLOB.vr_spawnpoints = list()
 	for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
-		GLOB.vr_spawnpoints[V.vr_category] += V
+		LAZYADD(GLOB.vr_spawnpoints[V.vr_category], V)
 
 /obj/effect/landmark/vr_spawn/team_1
 	vr_category = "team_1"

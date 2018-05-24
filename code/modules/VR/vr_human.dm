@@ -31,7 +31,6 @@
 	set category = "OOC"
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
-	var/mob/living/real_me = real_mind.current
 	revert_to_reality(FALSE)
 
 /mob/living/carbon/human/virtual_reality/proc/revert_to_reality(deathchecks = TRUE)
