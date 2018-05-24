@@ -209,6 +209,7 @@
 		qdel(fried)
 	else
 		fried.forceMove(src)
+		trash = fried
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/proc/fry(cook_time = 30)
 	switch(cook_time)
