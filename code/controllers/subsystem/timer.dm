@@ -452,12 +452,12 @@ SUBSYSTEM_DEF(timer)
 		CRASH("addtimer called without a callback")
 
 	if (wait < 0)
-		stack_trace("addtimer called with a negative wait. Converting to 0")
+		stack_trace("addtimer called with a negative wait. Converting to [world.tick_lag]")
 
 	if (callback.object != GLOBAL_PROC && QDELETED(callback.object) && !QDESTROYING(callback.object))
 		stack_trace("addtimer called with a callback assigned to a qdeleted object. In the future such timers will not be supported and may refuse to run or run with a 0 wait")
 
-	wait = max(wait, 0)
+	wait = max(CEILING(wait, world.tick_lag), world.tick_lag)
 
 	if(wait >= INFINITY)
 		CRASH("Attempted to create timer with INFINITY delay")
