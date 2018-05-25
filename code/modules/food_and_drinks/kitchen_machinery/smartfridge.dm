@@ -183,8 +183,9 @@
 			if(desired == 1 && Adjacent(usr) && !issilicon(usr))
 				for(var/obj/item/O in src)
 					if(O.name == params["name"])
-						O.forceMove(drop_location())
-						usr.put_in_hands(src)
+						if(!usr.put_in_hands(O))
+							O.forceMove(drop_location())
+							adjust_item_drop_location(O)
 						break
 				return TRUE
 
