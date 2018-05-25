@@ -1,24 +1,27 @@
 //node2, air2, network2 correspond to input
 //node1, air1, network1 correspond to output
 
-
 /obj/machinery/atmospherics/components/binary/circulator
 	name = "circulator/heat exchanger"
 	desc = "A gas circulator pump and heat exchanger."
-	icon_state = "circ1-off"
+	icon_state = "circ-off"
 
-	var/side = CIRC_LEFT
-	var/status = 0
+	var/active = FALSE
 
 	var/last_pressure_delta = 0
 	pipe_flags = PIPING_ONE_PER_TURF
 
 	anchored = TRUE
 	density = TRUE
+	var/const/hot = 0
+	var/const/cold = 1
 
-	var/global/const/CIRC_LEFT = 1
-	var/global/const/CIRC_RIGHT = 2
+	var/mode = hot
+	var/obj/machinery/power/generator/generator
 
+//default cold circ for mappers
+/obj/machinery/atmospherics/components/binary/circulator/cold
+	mode = cold
 
 /obj/machinery/atmospherics/components/binary/circulator/proc/return_transfer_air()
 
@@ -65,3 +68,45 @@
 			icon_state = "circ-slow"
 	else
 		icon_state = "circ-off"
+
+/obj/machinery/atmospherics/components/binary/circulator/attackby(obj/item/O, mob/user, params)
+	if(panel_open)
+
+		if(istype(O, /obj/item/wrench))
+			anchored = !anchored
+			O.play_tool_sound(src)
+			if(generator)
+				disconnectFromGenerator()
+			to_chat(user, "<span class='notice'>You [anchored?"secure":"unsecure"] \the [src].</span>")
+			return
+
+		else if(istype(O, /obj/item/multitool))
+			if(generator)
+				disconnectFromGenerator()
+			mode = !mode
+			to_chat(user, "<span class='notice'>You set \the [src] to [mode?"cold":"hot"] mode.</span>")
+			return
+
+		else if(default_deconstruction_crowbar(O))
+			return
+
+	if(istype(O, /obj/item/screwdriver))
+		panel_open = !panel_open
+		O.play_tool_sound(src)
+		to_chat(user, "<span class='notice'>You [panel_open?"open":"close"] \the [src]'s panel.</span>")
+		return
+
+	else
+		return ..()
+
+/obj/machinery/atmospherics/components/binary/circulator/on_deconstruction()
+	if(generator)
+		disconnectFromGenerator()
+
+/obj/machinery/atmospherics/components/binary/circulator/proc/disconnectFromGenerator()
+	if(mode)
+		generator.cold_circ = null
+	else
+		generator.hot_circ = null
+	generator.update_icon()
+	generator = null
