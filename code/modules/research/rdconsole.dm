@@ -10,10 +10,8 @@ aren't already linked to another console. Any consoles it cannot link up with (e
 linked or there aren't any in range), you'll just not have access to that menu. In the settings menu, there are menu options that
 allow a player to attempt to re-sync with nearby consoles. You can also force it to disconnect from a specific console.
 
-The imprinting and construction menus do NOT require toxins access to access but all the other menus do. However, if you leave it
-on a menu, nothing is to stop the person from using the options on that menu (although they won't be able to change to a different
-one). You can also lock the console on the settings menu if you're feeling paranoid and you don't want anyone messing with it who
-doesn't have toxins access.
+The only thing that requires toxins access is locking and unlocking the console on the settings menu.
+Nothing else in the console has ID requirements.
 
 */
 /obj/machinery/computer/rdconsole

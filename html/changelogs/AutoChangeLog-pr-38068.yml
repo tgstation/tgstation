@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Navbeacon access requirements have been fixed: Now you need either Engineering or Robotics access, but not both at the same time."

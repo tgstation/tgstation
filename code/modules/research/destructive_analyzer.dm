@@ -75,7 +75,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 		use_power(250)
 		if(thing == loaded_item)
 			loaded_item = null
-		update_icon()
 		var/list/food = thing.GetDeconstructableContents()
 		for(var/obj/item/innerthing in food)
 			destroy_item(innerthing, TRUE)
@@ -86,10 +85,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/obj/item/stack/sheet/S = thing
 		if(S.amount > 1 && !innermode)
 			S.amount--
+			loaded_item = S
 		else
 			qdel(S)
 	else
 		qdel(thing)
+	if (!innermode)
+		update_icon()
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/proc/user_try_decon_id(id, mob/user)

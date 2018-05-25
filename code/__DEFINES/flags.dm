@@ -25,7 +25,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PREVENT_CLICK_UNDER_1		(1<<11)	//Prevent clicking things below it on the same turf eg. doors/ fulltile windows
 #define HOLOGRAM_1					(1<<12)
 #define TESLA_IGNORE_1				(1<<13) // TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
-
+#define INITIALIZED_1				(1<<14)  //Whether /atom/Initialize() has already run for the object
+#define ADMIN_SPAWNED_1			(1<<15) 	//was this spawned by an admin? used for stat tracking stuff.
 
 //turf-only flags
 #define NOJAUNT_1				(1<<0)
@@ -66,6 +67,17 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define INDESTRUCTIBLE	(1<<6) //doesn't take damage
 #define FREEZE_PROOF	(1<<7) //can't be frozen
 
+//tesla_zap
+#define TESLA_MACHINE_EXPLOSIVE		(1<<0)
+#define TESLA_ALLOW_DUPLICATES		(1<<1)
+#define TESLA_OBJ_DAMAGE			(1<<2)
+#define TESLA_MOB_DAMAGE			(1<<3)
+#define TESLA_MOB_STUN				(1<<4)
+
+#define TESLA_DEFAULT_FLAGS ALL
+
+//EMP protection
 #define EMP_PROTECT_SELF (1<<0)
 #define EMP_PROTECT_CONTENTS (1<<1)
 #define EMP_PROTECT_WIRES (1<<2)
+

@@ -32,11 +32,12 @@
 	if (admin_spawned)
 		for(var/item in contains)
 			var/atom/A = new item(C)
-			A.admin_spawned = TRUE
+			A.flags_1 |= ADMIN_SPAWNED_1
 	else
 		for(var/item in contains)
 			new item(C)
 
+// If you add something to this list, please group it by type and sort it alphabetically instead of just jamming it in like an animal
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Emergency ///////////////////////////////////////
@@ -1706,73 +1707,6 @@
 /datum/supply_pack/costumes_toys
 	group = "Costumes & Toys"
 
-/datum/supply_pack/costumes_toys/autodrobe
-	name = "Autodrobe Supply Crate"
-	desc = "Autodrobe missing your favorite dress? Solve that issue today with these two autodrobe refills."
-	cost = 1500
-	contains = list(/obj/item/vending_refill/autodrobe,
-					/obj/item/vending_refill/autodrobe)
-	crate_name = "autodrobe supply crate"
-
-/datum/supply_pack/costumes_toys/wardrobes/general
-	name = "General Wardrobes Supply Crate"
-	desc = "This crate contains refills for the CuraDrobe, BarDrobe, ChefDrobe, JaniDrobe, ChapDrobe."
-	cost = 3750
-	contains = list(/obj/item/vending_refill/wardrobe/curator_wardrobe,
-					/obj/item/vending_refill/wardrobe/bar_wardrobe,
-					/obj/item/vending_refill/wardrobe/chef_wardrobe,
-					/obj/item/vending_refill/wardrobe/jani_wardrobe,
-					/obj/item/vending_refill/wardrobe/chap_wardrobe)
-	crate_name = "general wardrobes vendor refills"
-
-/datum/supply_pack/costumes_toys/wardrobes/cargo
-	name = "Cargo Department Supply Crate"
-	desc = "This crate contains a refill for the CargoDrobe."
-	cost = 750
-	contains = list(/obj/item/vending_refill/wardrobe/cargo_wardrobe)
-	crate_name = "cargo department supply crate"
-
-/datum/supply_pack/costumes_toys/wardrobes/security
-	name = "Security Department Supply Crate"
-	desc = "This crate contains refills for the SecDrobe and LawDrobe."
-	cost = 1500
-	contains = list(/obj/item/vending_refill/wardrobe/sec_wardrobe,
-					/obj/item/vending_refill/wardrobe/law_wardrobe)
-	crate_name = "security department supply crate"
-
-/datum/supply_pack/costumes_toys/wardrobes/medical
-	name = "Medical Department Wardrobe Supply Crate"
-	desc = "This crate contains refills for the MediDrobe, ChemDrobe, GeneDrobe, and ViroDrobe."
-	cost = 3000
-	contains = list(/obj/item/vending_refill/wardrobe/medi_wardrobe,
-					/obj/item/vending_refill/wardrobe/chem_wardrobe,
-					/obj/item/vending_refill/wardrobe/gene_wardrobe,
-					/obj/item/vending_refill/wardrobe/viro_wardrobe)
-	crate_name = "medical department wardrobe supply crate"
-
-/datum/supply_pack/costumes_toys/wardrobes/engineering
-	name = "Engineering Department Wardrobe Supply Crate"
-	desc = "This crate contains refills for the EngiDrobe and AtmosDrobe."
-	cost = 1500
-	contains = list(/obj/item/vending_refill/wardrobe/engi_wardrobe,
-					/obj/item/vending_refill/wardrobe/atmos_wardrobe)
-	crate_name = "engineering department wardrobe supply crate"
-
-/datum/supply_pack/costumes_toys/wardrobes/science
-	name = "Science Department Wardrobe Supply Crate"
-	desc = "This crate contains refills for the SciDrobe and RoboDrobe."
-	cost = 1500
-	contains = list(/obj/item/vending_refill/wardrobe/robo_wardrobe,
-					/obj/item/vending_refill/wardrobe/science_wardrobe)
-	crate_name = "science department wardrobe supply crate"
-
-/datum/supply_pack/costumes_toys/wardrobes/hydroponics
-	name = "Hydrobe Supply Crate"
-	desc = "This crate contains a refill for the Hydrobe."
-	cost = 750
-	contains = list(/obj/item/vending_refill/wardrobe/hydro_wardrobe)
-	crate_name = "hydrobe supply crate"
-
 /datum/supply_pack/costumes_toys/randomised
 	name = "Collectable Hats Crate"
 	desc = "Flaunt your status with three unique, highly-collectable hats!"
@@ -2001,6 +1935,73 @@
 		var/item = pick_n_take(L)
 		new item(C)
 
+/datum/supply_pack/costumes_toys/wardrobes/autodrobe
+	name = "Autodrobe Supply Crate"
+	desc = "Autodrobe missing your favorite dress? Solve that issue today with these two autodrobe refills."
+	cost = 1500
+	contains = list(/obj/item/vending_refill/autodrobe,
+					/obj/item/vending_refill/autodrobe)
+	crate_name = "autodrobe supply crate"
+
+/datum/supply_pack/costumes_toys/wardrobes/cargo
+	name = "Cargo Department Supply Crate"
+	desc = "This crate contains a refill for the CargoDrobe."
+	cost = 750
+	contains = list(/obj/item/vending_refill/wardrobe/cargo_wardrobe)
+	crate_name = "cargo department supply crate"
+
+/datum/supply_pack/costumes_toys/wardrobes/engineering
+	name = "Engineering Department Wardrobe Supply Crate"
+	desc = "This crate contains refills for the EngiDrobe and AtmosDrobe."
+	cost = 1500
+	contains = list(/obj/item/vending_refill/wardrobe/engi_wardrobe,
+					/obj/item/vending_refill/wardrobe/atmos_wardrobe)
+	crate_name = "engineering department wardrobe supply crate"
+
+/datum/supply_pack/costumes_toys/wardrobes/general
+	name = "General Wardrobes Supply Crate"
+	desc = "This crate contains refills for the CuraDrobe, BarDrobe, ChefDrobe, JaniDrobe, ChapDrobe."
+	cost = 3750
+	contains = list(/obj/item/vending_refill/wardrobe/curator_wardrobe,
+					/obj/item/vending_refill/wardrobe/bar_wardrobe,
+					/obj/item/vending_refill/wardrobe/chef_wardrobe,
+					/obj/item/vending_refill/wardrobe/jani_wardrobe,
+					/obj/item/vending_refill/wardrobe/chap_wardrobe)
+	crate_name = "general wardrobes vendor refills"
+
+/datum/supply_pack/costumes_toys/wardrobes/hydroponics
+	name = "Hydrobe Supply Crate"
+	desc = "This crate contains a refill for the Hydrobe."
+	cost = 750
+	contains = list(/obj/item/vending_refill/wardrobe/hydro_wardrobe)
+	crate_name = "hydrobe supply crate"
+
+/datum/supply_pack/costumes_toys/wardrobes/medical
+	name = "Medical Department Wardrobe Supply Crate"
+	desc = "This crate contains refills for the MediDrobe, ChemDrobe, GeneDrobe, and ViroDrobe."
+	cost = 3000
+	contains = list(/obj/item/vending_refill/wardrobe/medi_wardrobe,
+					/obj/item/vending_refill/wardrobe/chem_wardrobe,
+					/obj/item/vending_refill/wardrobe/gene_wardrobe,
+					/obj/item/vending_refill/wardrobe/viro_wardrobe)
+	crate_name = "medical department wardrobe supply crate"
+
+/datum/supply_pack/costumes_toys/wardrobes/science
+	name = "Science Department Wardrobe Supply Crate"
+	desc = "This crate contains refills for the SciDrobe and RoboDrobe."
+	cost = 1500
+	contains = list(/obj/item/vending_refill/wardrobe/robo_wardrobe,
+					/obj/item/vending_refill/wardrobe/science_wardrobe)
+	crate_name = "science department wardrobe supply crate"
+
+/datum/supply_pack/costumes_toys/wardrobes/security
+	name = "Security Department Supply Crate"
+	desc = "This crate contains refills for the SecDrobe and LawDrobe."
+	cost = 1500
+	contains = list(/obj/item/vending_refill/wardrobe/sec_wardrobe,
+					/obj/item/vending_refill/wardrobe/law_wardrobe)
+	crate_name = "security department supply crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -2092,6 +2093,17 @@
 	contains = list(/obj/item/storage/box/fountainpens)
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/misc/funeral
+	name = "Funeral Supply crate"
+	desc = "At the end of the day, someone's gonna want someone dead. Give them a proper send-off with these funeral supplies! Contains a coffin with burial garmets and flowers."
+	cost = 600
+	contains = list(/obj/item/clothing/under/burial,
+					/obj/item/reagent_containers/food/snacks/grown/harebell,
+					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium
+					)
+	crate_name = "coffin"
+	crate_type = /obj/structure/closet/crate/coffin
+
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
@@ -2101,9 +2113,8 @@
 					/obj/item/storage/book/bible/booze,
 					/obj/item/storage/book/bible/booze,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie,
-					/obj/item/clothing/suit/hooded/chaplain_hoodie,
-					/obj/item/clothing/under/burial,
-					/obj/item/clothing/under/burial)
+					/obj/item/clothing/suit/hooded/chaplain_hoodie
+					)
 	crate_name = "religious supplies crate"
 
 /datum/supply_pack/misc/toner

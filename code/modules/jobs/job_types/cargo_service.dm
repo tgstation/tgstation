@@ -29,6 +29,8 @@ Quartermaster
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/clipboard
 
+	chameleon_extras = /obj/item/stamp/qm
+
 /*
 Cargo Technician
 */
@@ -99,6 +101,8 @@ Shaft Miner
 	satchel = /obj/item/storage/backpack/satchel/explorer
 	duffelbag = /obj/item/storage/backpack/duffelbag
 	box = /obj/item/storage/box/survival_mining
+
+	chameleon_extras = /obj/item/gun/energy/kinetic_accelerator
 
 /datum/outfit/job/miner/asteroid
 	name = "Shaft Miner (Asteroid)"

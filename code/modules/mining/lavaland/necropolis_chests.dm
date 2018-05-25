@@ -589,7 +589,7 @@
 	to_chat(user, "<span class='notice'>You unfold the ladder. It extends much farther than you were expecting.</span>")
 	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
-		if(is_centcom_level(i) || is_transit_level(i) || is_reebe(i))
+		if(is_centcom_level(i) || is_transit_level(i) || is_reebe(i) || is_away_level(i))
 			continue
 		var/turf/T2 = locate(ladder_x, ladder_y, i)
 		last_ladder = new /obj/structure/ladder/unbreakable/jacob(T2, null, last_ladder)
@@ -968,6 +968,8 @@
 		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, H)
 	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
 	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(user)][ADMIN_FLW(user)] has activated a bottle of mayhem!</span>")
+	add_logs(user, null, "activated a bottle of mayhem", src)
 	qdel(src)
 
 /obj/item/blood_contract

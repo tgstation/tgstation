@@ -671,7 +671,7 @@ Difficulty: Very Hard
 		for(var/i in T)
 			if(isitem(i) && !is_type_in_typecache(i, banned_items_typecache))
 				var/obj/item/W = i
-				if(!W.admin_spawned && !(W.flags_1 & HOLOGRAM_1) && !(W.flags_1 & ABSTRACT_1))
+				if(!(W.flags_1 & ADMIN_SPAWNED_1) && !(W.flags_1 & HOLOGRAM_1) && !(W.flags_1 & ABSTRACT_1))
 					L += W
 		if(L.len)
 			var/obj/item/CHOSEN = pick(L)

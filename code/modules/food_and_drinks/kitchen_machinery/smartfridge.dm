@@ -180,6 +180,15 @@
 			if(QDELETED(src) || QDELETED(usr) || !usr.Adjacent(src)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
 
+			if(desired == 1 && Adjacent(usr) && !issilicon(usr))
+				for(var/obj/item/O in src)
+					if(O.name == params["name"])
+						if(!usr.put_in_hands(O))
+							O.forceMove(drop_location())
+							adjust_item_drop_location(O)
+						break
+				return TRUE
+
 			for(var/obj/item/O in src)
 				if(desired <= 0)
 					break
