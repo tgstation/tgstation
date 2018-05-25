@@ -29,6 +29,8 @@ Quartermaster
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/clipboard
 
+	chameleon_extras = /obj/item/stamp/qm
+
 /*
 Cargo Technician
 */

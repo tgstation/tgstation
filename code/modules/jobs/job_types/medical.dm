@@ -47,7 +47,7 @@ Chief Medical Officer
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
-	chameleon_extras = /obj/item/gun/syringe
+	chameleon_extras = list(/obj/item/gun/syringe, /obj/item/stamp/cmo)
 
 /*
 Medical Doctor

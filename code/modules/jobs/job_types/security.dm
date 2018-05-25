@@ -61,7 +61,7 @@ Head of Security
 
 	implants = list(/obj/item/implant/mindshield)
 
-	chameleon_extras = /obj/item/gun/energy/e_gun/hos
+	chameleon_extras = list(/obj/item/gun/energy/e_gun/hos, /obj/item/stamp/hos)
 
 /*
 Warden
