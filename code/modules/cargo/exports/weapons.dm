@@ -32,7 +32,7 @@
 	export_types = list(/obj/item/gun/energy/disabler)
 
 /datum/export/weapon/energy_gun
-	cost = 900
+	cost = 700
 	unit_name = "energy gun"
 	export_types = list(/obj/item/gun/energy/e_gun)
 
