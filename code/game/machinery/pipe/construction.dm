@@ -165,6 +165,11 @@ Buildable meters
 
 	if(pipename)
 		A.name = pipename
+	if("on" in A.vars)
+		// Certain pre-mapped subtypes are on by default, we want to preserve
+		// every other aspect of these subtypes (name, pre-set filters, etc.)
+		// but they shouldn't turn on automatically when wrenched.
+		A.vars["on"] = FALSE
 
 /obj/item/pipe/trinary/flippable/build_pipe(obj/machinery/atmospherics/components/trinary/T)
 	..()
