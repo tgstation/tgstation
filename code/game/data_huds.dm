@@ -222,16 +222,16 @@
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size
 			holder.icon_state = "hud_imp_tracking"
-		else if(istype(I, /obj/item/implant/mindshield))
-			holder = hud_list[IMPLOYAL_HUD]
-			var/icon/IC = icon(icon, icon_state, dir)
-			holder.pixel_y = IC.Height() - world.icon_size
-			holder.icon_state = "hud_imp_loyal"
 		else if(istype(I, /obj/item/implant/chem))
 			holder = hud_list[IMPCHEM_HUD]
 			var/icon/IC = icon(icon, icon_state, dir)
 			holder.pixel_y = IC.Height() - world.icon_size
 			holder.icon_state = "hud_imp_chem"
+	if(has_trait(TRAIT_MINDSHIELD))
+		holder = hud_list[IMPLOYAL_HUD]
+		var/icon/IC = icon(icon, icon_state, dir)
+		holder.pixel_y = IC.Height() - world.icon_size
+		holder.icon_state = "hud_imp_loyal"
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]
@@ -259,6 +259,44 @@
 /***********************************************
  Diagnostic HUDs!
 ************************************************/
+
+/mob/living/proc/hud_set_nanite_indicator()
+	var/image/holder = hud_list[NANITE_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	holder.icon_state = null
+	if(src in SSnanites.nanite_monitored_mobs)
+		holder.icon_state = "nanite_ping"
+
+/mob/living/proc/diag_hud_set_nanite_bar()
+	var/image/holder = hud_list[DIAG_NANITE_FULL_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	holder.icon_state = null
+	GET_COMPONENT(nanites, /datum/component/nanites)
+	if(nanites)
+		var/nanite_percent = (nanites.nanite_volume / nanites.max_nanites) * 100
+		switch(nanite_percent)
+			if(0 to 10)
+				holder.icon_state = "nanites10"
+			if(10 to 20)
+				holder.icon_state = "nanites20"
+			if(20 to 30)
+				holder.icon_state = "nanites30"
+			if(30 to 40)
+				holder.icon_state = "nanites40"
+			if(40 to 50)
+				holder.icon_state = "nanites50"
+			if(50 to 60)
+				holder.icon_state = "nanites60"
+			if(60 to 70)
+				holder.icon_state = "nanites70"
+			if(70 to 80)
+				holder.icon_state = "nanites80"
+			if(80 to 90)
+				holder.icon_state = "nanites90"
+			if(90 to 100)
+				holder.icon_state = "nanites100"
 
 //For Diag health and cell bars!
 /proc/RoundDiagBar(value)

@@ -3,6 +3,7 @@
   <ui-notice>The interface is locked.</ui-notice>
 {{else}}
   <ui-button icon='lock' action='lock'>Lock Interface</ui-button>
+  <ui-button icon='save' action='save'>Save Current Setting</ui-button>
   <ui-section label='Signal Code'>
     <span>{{data.code}}</span>
   	<ui-button icon='pencil' action='set_code'>Set</ui-button>
@@ -23,3 +24,12 @@
     <ui-button action='select_mode' params='{"mode": "Relay"}'>Relay</ui-button>
   </ui-section>
 {{/if}}
+<ui-display label='Saved Settings'>
+	{{#each data.saved_settings}}
+		<ui-button icon='load' action='load' params='{"save_id": "{{id}}"}'>{{name}}</ui-button>
+		{{if !data.locked}}
+			<ui-button icon='remove' action='remove_save' params='{"save_id": "{{id}}"}'>Remove</ui-button>
+		}}
+		<br>
+	{{/each}}
+</ui-display>

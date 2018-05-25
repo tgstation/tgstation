@@ -1,0 +1,78 @@
+<ui-display title='Nanite Cloud Console'>
+{{#if data.has_disk}}
+	<ui-display label='Program Disk'>
+	<ui-button icon='eject' action='eject'>Eject Disk</ui-button><br>
+	<br>
+	<ui-section label='Program Name'>{{disk.name}}</ui-section>
+	<ui-section label='Description'>{{disk.desc}}</ui-section>
+	<ui-section label='Activation Status'>{{disk.activated ? "Active" : "Inactive" }}</ui-section>
+	{{#if disk.activation_delay}}
+		<ui-section label='Activation Delay'>{{disk.activation_delay}}</ui-section>
+	{{/if}}
+	{{#if disk.timer}}
+		<ui-section label='Timer'>{{disk.timer}}</ui-section>
+		<ui-section label='Timer Type '>{{disk.timer_type}}</ui-section>
+	{{/if}}
+	{{#if disk.activation_code}}
+		<ui-section label='Activation Code'>{{disk.activation_code}}</ui-section>
+	{{/if}}
+	{{#if disk.deactivation_code}}
+		<ui-section label='Deactivation Code'>{{disk.deactivation_code}}</ui-section>
+	{{/if}}
+	{{#if disk.kill_code}}
+		<ui-section label='Kill Code'>{{disk.kill_code}}</ui-section>
+	{{/if}}
+	{{#if disk.trigger_code}}
+		<ui-section label='Trigger Code'>{{disk.trigger_code}}</ui-section>
+	{{/if}}
+	{{#if disk.relay_code}}
+		<ui-section label='Relay Code'>{{disk.relay_code}}</ui-section>
+	{{/if}}
+	</ui-display>
+{{#else}}
+	<ui-notice>Insert disk.</ui-notice>
+{{/if}}
+<br>
+{{#if !data.cloud_copy}}
+	<ui-notice>ERROR: Cloud copy not found.</ui-notice>
+{{#else}}
+	<ui-display label='Cloud Template'>
+		{{#if data.has_disk}}
+			<ui-button icon=TODO action='upload_program'>Upload Program From Disk</ui-button><br>
+			<br>
+		{{/if}}
+		{{#each data.cloud_programs}}
+			<ui-button icon=TODO action='remove_program' params='{"program_id": "{{id}}"}'>Uninstall</ui-button><br>
+			<ui-section label='Name'>{{name}}</ui-section>
+			<ui-section label='Description'>{{desc}}</ui-section>
+			<ui-section label='Activation Status'>{{activated ? "Active" : "Inactive" }}</ui-section>
+			<ui-section label='Nanites Consumed'>{{use_rate}}/s</ui-section>
+			{{#if can_trigger}}
+				<ui-section label='Trigger Cost'>{{trigger_cost}}/s</ui-section>
+				<ui-section label='Trigger Cooldown'>{{trigger_cooldown}}/s</ui-section>
+			{{/if}}
+			{{#if activation_delay}}
+				<ui-section label='Activation Delay'>{{activation_delay}}</ui-section>
+			{{/if}}
+			{{#if timer}}
+				<ui-section label='Timer'>{{timer}}</ui-section>
+				<ui-section label='Timer Type '>{{timer_type}}</ui-section>
+			{{/if}}
+			{{#if activation_code}}
+				<ui-section label='Activation Code'>{{activation_code}}</ui-section>
+			{{/if}}
+			{{#if deactivation_code}}
+				<ui-section label='Deactivation Code'>{{deactivation_code}}</ui-section>
+			{{/if}}
+			{{#if kill_code}}
+				<ui-section label='Kill Code'>{{kill_code}}</ui-section>
+			{{/if}}
+			{{#if trigger_code}}
+				<ui-section label='Trigger Code'>{{trigger_code}}</ui-section>
+			{{/if}}
+			{{#if relay_code}}
+				<ui-section label='Relay Code'>{{relay_code}}</ui-section>
+			{{/if}}
+		{{/each}}
+	</ui-display>
+{{/if}}

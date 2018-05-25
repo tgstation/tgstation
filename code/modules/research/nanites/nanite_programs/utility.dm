@@ -81,4 +81,22 @@
 /datum/nanite_program/metabolic_synthesis/active_effect()
 	host_mob.nutrition--
 
+/datum/nanite_program/spreading
+	name = "Infective Exo-Locomotion"
+	desc = "The nanites gain the ability to survive for brief periods outside of the human body, as well as the ability to start new colonies without an integration process; \
+			resulting in an extremely infective strain of nanites."
+	use_rate = 1.50
+	rogue_types = list(/datum/nanite_program/aggressive_replication, /datum/nanite_program/necrotic)
 
+/datum/nanite_program/spreading/active_effect()
+	if(prob(10))
+		var/list/mob/living/target_hosts = list()
+		for(var/mob/living/L in oview(host_mob, 5))
+			target_hosts += L
+		var/mob/living/infectee = pick(target_hosts)
+		if(prob(infectee.get_permeability_protection() * 100))
+			//this will potentially take over existing nanites!
+			infectee.AddComponent(/datum/component/nanites, 10)
+			GET_COMPONENT_FROM(target_nanites, /datum/component/nanites, infectee)
+			if(target_nanites)
+				target_nanites.sync(nanites)

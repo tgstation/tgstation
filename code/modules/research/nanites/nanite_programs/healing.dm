@@ -132,3 +132,61 @@
 	else
 		host_mob.adjustBruteLoss(-1, TRUE)
 		host_mob.adjustFireLoss(-1, TRUE)
+
+/datum/nanite_program/purging_advanced
+	name = "Selective Blood Purification"
+	desc = "The nanites purge toxins and dangerous chemicals from the host's bloodstream, while ignoring beneficial chemicals. \
+			The added processing power required to analyze the chemicals severely increases the nanite consumption rate."
+	use_rate = 2
+	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
+
+/datum/nanite_program/purging_advanced/check_conditions()
+	var/foreign_reagent = FALSE
+	for(var/datum/reagent/toxin/R in host_mob.reagents.reagent_list)
+		foreign_reagent = TRUE
+		break
+	if(!host_mob.getToxLoss() && !foreign_reagent)
+		return FALSE
+	. = ..()
+
+/datum/nanite_program/purging_advanced/active_effect()
+	host_mob.adjustToxLoss(-1)
+	for(var/datum/reagent/toxin/R in host_mob.reagents.reagent_list)
+		host_mob.reagents.remove_reagent(R.id,1)
+
+/datum/nanite_program/regenerative_advanced
+	name = "Bio-Reconstruction"
+	desc = "The nanites manually repair and replace organic cells, acting much faster than normal regeneration. \
+			However, this program cannot detect the difference between harmed and unharmed, causing it to consume nanites even if it has no effect."
+	use_rate = 4.5
+	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
+
+/datum/nanite_program/regenerative_advanced/active_effect()
+	if(iscarbon(host_mob))
+		var/mob/living/carbon/C = host_mob
+		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = BODYPART_ORGANIC)
+		if(!parts.len)
+			return
+		for(var/obj/item/bodypart/L in parts)
+			if(L.heal_damage(3/parts.len, 3/parts.len))
+				host_mob.update_damage_overlays()
+	else
+		host_mob.adjustBruteLoss(-3, TRUE)
+		host_mob.adjustFireLoss(-3, TRUE)
+
+/datum/nanite_program/brain_heal_advanced
+	name = "Neural Reimaging"
+	desc = "The nanites are able to backup and restore the host's neural connections, potentially replacing entire chunks of missing or damaged brain matter."
+	use_rate = 3
+	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
+
+/datum/nanite_program/brain_heal_advanced/check_conditions()
+	if(!host_mob.getBrainLoss())
+		return FALSE
+	. = ..()
+
+/datum/nanite_program/brain_heal_advanced/active_effect()
+	host_mob.adjustBrainLoss(-2, TRUE)
+	if(iscarbon(host_mob) && prob(10))
+		var/mob/living/carbon/C = host_mob
+		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)

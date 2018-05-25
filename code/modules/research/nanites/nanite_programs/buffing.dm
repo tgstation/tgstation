@@ -11,7 +11,7 @@
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.stun_mod *= 0.5
-	
+
 /datum/nanite_program/nervous/disable_passive_effect()
 	..()
 	if(ishuman(host_mob))
@@ -25,7 +25,7 @@
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
 //TODO on_hit effect that turns skin grey for a moment
-	
+
 /datum/nanite_program/hardening/enable_passive_effect()
 	..()
 	if(ishuman(host_mob))
@@ -39,7 +39,7 @@
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.armor.melee -= 50
 		H.physiology.armor.bullet -= 35
-		
+
 /datum/nanite_program/refractive
 	name = "Dermal Refractive Surface"
 	desc = "The nanites form a membrane above the host's skin, reducing the effect of laser and energy impacts."
@@ -77,7 +77,7 @@
 	if(ishuman(host_mob))
 		var/mob/living/carbon/human/H = host_mob
 		H.physiology.bleed_mod *= 10
-		
+
 /datum/nanite_program/conductive
 	name = "Electric Conduction"
 	desc = "The nanites act as a grounding rod for electric shocks, protecting the host. Shocks can still damage the nanites themselves."
@@ -92,3 +92,17 @@
 /datum/nanite_program/conductive/disable_passive_effect()
 	..()
 	host_mob.remove_trait(TRAIT_SHOCKIMMUNE, "nanites")
+
+/datum/nanite_program/mindshield
+	name = "Mental Barrier"
+	desc = "The nanites form a protective membrane around the host's brain, shielding them from abnormal influences while they're active."
+	use_rate = 0.40
+	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
+
+/datum/nanite_program/mindshield/enable_passive_effect()
+	..()
+	host_mob.add_trait(TRAIT_MINDSHIELD, "nanites")
+
+/datum/nanite_program/mindshield/disable_passive_effect()
+	..()
+	host_mob.remove_trait(TRAIT_MINDSHIELD, "nanites")

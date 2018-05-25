@@ -19,6 +19,7 @@
 	//Nanites without hosts are non-interactive through normal means
 	if(isliving(parent))
 		host_mob = parent
+		host_mob.hud_set_nanite_indicator()
 		START_PROCESSING(SSprocessing, src)
 		RegisterSignal(COMSIG_ATOM_EMP_ACT, .proc/on_emp)
 		RegisterSignal(COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_shock)
@@ -27,6 +28,8 @@
 /datum/component/nanites/Destroy()
 	for(var/X in programs)
 		qdel(X)
+	if(host_mob)
+		host_mob.hud_set_nanite_indicator()
 	return ..()
 
 /datum/component/nanites/InheritComponent(datum/component/new_nanites, i_am_original, list/arguments)
@@ -40,6 +43,7 @@
 		for(var/X in programs)
 			var/datum/nanite_program/NP = X
 			NP.on_process()
+		host_mob.diag_hud_set_nanite_bar()
 
 /datum/component/nanites/proc/copy(amount)
 	var/datum/component/nanites/new_nanites = new type()

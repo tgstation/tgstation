@@ -19,6 +19,7 @@
 /obj/item/implant/mindshield/implant(mob/living/target, mob/user, silent = FALSE)
 	if(..())
 		if(!target.mind)
+			target.add_trait(TRAIT_MINDSHIELD, "implant")
 			return TRUE
 
 		if(target.mind.has_antag_datum(/datum/antagonist/brainwashed))
@@ -39,11 +40,15 @@
 				to_chat(target, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			else
 				to_chat(target, "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
+		target.add_trait(TRAIT_MINDSHIELD, "implant")
 		return TRUE
 	return FALSE
 
 /obj/item/implant/mindshield/removed(mob/target, silent = FALSE, special = 0)
 	if(..())
+		if(isliving(target))
+			var/mob/living/L = target
+			L.remove_trait(TRAIT_MINDSHIELD, "implant")
 		if(target.stat != DEAD && !silent)
 			to_chat(target, "<span class='boldnotice'>Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing.</span>")
 		return 1

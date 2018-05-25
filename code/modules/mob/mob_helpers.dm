@@ -1,13 +1,6 @@
 
 // see _DEFINES/is_helpers.dm for mob type checks
 
-/mob/proc/isloyal() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	return 0
-
-/mob/living/carbon/isloyal()
-	for(var/obj/item/implant/mindshield/L in implants)
-		return TRUE
-
 /mob/proc/lowest_buckled_mob()
 	. = src
 	if(buckled && ismob(buckled))

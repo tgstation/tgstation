@@ -832,6 +832,70 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
+/////////////////////////Nanites/////////////////////////
+/datum/techweb_node/nanite_base
+	id = "nanite_base"
+	display_name = "Basic Nanite Programming"
+	description = "Vanilla nanite programs, that require little complex interaction between nanites and body."
+	prereq_ids = list("base")
+	design_ids = list("relay_nanites", "monitoring_nanites", "glitch_nanites", "repair_nanites", "cloud_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/nanite_roam
+	id = "nanite_roam"
+	display_name = "Roaming Nanite Programming"
+	description = "Nanite programs that require nanites to act independently, roam or seek targets."
+	prereq_ids = list("nanite_base")
+	design_ids = list("purging_nanites", "necrotic_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/nanite_mesh
+	id = "nanite_mesh"
+	display_name = "Mesh Nanite Programming"
+	description = "Nanite programs that require static structures and membranes."
+	prereq_ids = list("nanite_base")
+	design_ids = list("hardening_nanites", "refractive_nanites", "cryo_nanites", "pyro_nanites", "shockproof_nanites", "shock_nanites", "emp_nanites", "temperature_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/nanite_bio
+	id = "nanite_bio"
+	display_name = "Biological Nanite Programming"
+	description = "Nanite programs that require complex biological interaction."
+	prereq_ids = list("nanite_base")
+	design_ids = list("regenerative_nanites", "bloodheal_nanites", "suffocating_nanites", "coagulating_nanites", "metabolic_nanites", "toxic_nanites", "skindecay_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/nanite_neural
+	id = "nanite_neural"
+	display_name = "Neural Nanite Programming"
+	description = "Nanite programs affecting brains and nerves."
+	prereq_ids = list("nanite_bio")
+	design_ids = list("nervous_nanites", "brainheal_nanites", "braindecay_nanites", "brainmisfire_nanites", "paralyzing_nanites", "pacifying_nanites", "sleepy_nanites", "stun_nanites", "nervedecay_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/nanite_bio_advanced
+	id = "nanite_bio_advanced"
+	display_name = "Harmonic Nanite Programming"
+	description = "Nanite programs that require seamless integration between nanites and biology."
+	prereq_ids = list("nanite_bio","nanite_roam","nanite_mesh")
+	design_ids = list("fakedeath_nanites", "aggressive_nanites","advpurging_nanites") //TODO heartstop?
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 10000
+
+/datum/techweb_node/nanite_combat
+	id = "nanite_combat"
+	display_name = "Weaponized Nanite Programming"
+	description = "Nanite programs that harness the full destructive power of nanites."
+	prereq_ids = list("nanite_bio_advanced", "syndicate_basic")
+	design_ids = list("explosive_nanites", "meltdown_nanites", "hacking_nanites")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	export_price = 12500
+
 ////////////////////////Alien technology////////////////////////
 /datum/techweb_node/alientech //AYYYYYYYYLMAOO tech
 	id = "alientech"

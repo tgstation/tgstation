@@ -13,7 +13,7 @@
 	icon_state = "nanite_remote"
 	var/locked = FALSE //Can be locked, so it can be given to users with a set code and mode
 	var/mode = REMOTE_MODE_OFF
-	var/list/saved_codes = list()
+	var/list/saved_settings = list()
 	var/code = 0
 	var/relay_code = 0
 
@@ -71,7 +71,7 @@
 			signal_relay(code, relay_code)
 
 /obj/item/nanite_remote/proc/signal_mob(mob/living/M, code)
-	M.SendSignal(COMSIG_NANITE_SIGNAL, code)
+	SendSignal(M, COMSIG_NANITE_SIGNAL, code)
 
 /obj/item/nanite_remote/proc/signal_relay(code, relay_code)
 	for(var/datum/nanite_program/relay/N in SSnanites.nanite_relays)
@@ -87,9 +87,10 @@
 	var/list/data = list()
 	data["code"] = code
 	data["relay_code"] = relay_code
-	data["saved_codes"] = saved_codes
 	data["mode"] = mode
 	data["locked"] = locked
+	data["saved_settings"] = saved_settings
+
 	return data
 
 /obj/item/nanite_remote/ui_act(action, params)
@@ -110,16 +111,29 @@
 				new_code = CLAMP(round(new_code, 1),0,9999)
 				relay_code = new_code
 			. = TRUE
-		if("save_code")
+		if("save")
 			var/code_name = stripped_input(/*TODO INPUT_STUFF*/)
 			if(!code_name)
 				return
+			var/new_save = list()
+			new_save["id"] = saved_settings.len + 1
+			new_save["name"] = code_name
+			new_save["code"] = code
+			new_save["mode"] = mode
+			new_save["relay_code"] = relay_code
 
-			saved_codes[code_name] = code
+			saved_settings[new_save["id"]] = new_save
 			. = TRUE
-		if("remove_code")
-			var/code_name = params["code_name"]
-			saved_codes[code_name] = null
+		if("load")
+			var/code_id = params["save_id"]
+			var/list/setting = saved_settings[code_id]
+			code = setting["code"]
+			mode = setting["mode"]
+			relay_code= setting["relay_code"]
+			. = TRUE
+		if("remove_save")
+			var/code_id = params["save_id"]
+			saved_settings[code_id] = null
 			. = TRUE
 		if("select_mode")
 			mode = params["mode"]
