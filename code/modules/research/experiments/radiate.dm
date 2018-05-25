@@ -93,7 +93,7 @@
 	. = ..()
 	E.visible_message("<span class='danger'>[O] begins to resonate uncontrollably!</span>")
 	var/datum/relic_type/holder
-	var/datum/relic_effect/supermatter/sm
+	var/datum/relic_effect/passive/supermatter/sm
 	sm.init()
 	holder.added_effects += sm
 	holder.hogged_signals += sm.hogged_signals
