@@ -51,6 +51,9 @@
 	qdel(src)
 
 /obj/item/wormhole_jaunter/emp_act(power)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	var/triggered = FALSE
 
 	if(usr.get_item_by_slot(SLOT_BELT) == src)

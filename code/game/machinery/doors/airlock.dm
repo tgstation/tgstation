@@ -1281,7 +1281,7 @@
 		bolt() //Bolt it!
 		set_electrified(ELECTRIFIED_PERMANENT)  //Shock it!
 		if(origin)
-			shockedby += "\[[time_stamp()]\][origin](ckey:[origin.ckey])"
+			LAZYADD(shockedby, "\[[time_stamp()]\][origin](ckey:[origin.ckey])")
 
 
 /obj/machinery/door/airlock/disable_lockdown()
@@ -1550,7 +1550,7 @@
 	if(wires.is_cut(WIRE_SHOCK))
 		to_chat(user, "The electrification wire has been cut")
 	else
-		shockedby += "\[[time_stamp()]\][user](ckey:[user.ckey])"
+		LAZYADD(shockedby, "\[[time_stamp()]\][user](ckey:[user.ckey])")
 		add_logs(user, src, "electrified")
 		set_electrified(AI_ELECTRIFY_DOOR_TIME)
 
@@ -1560,7 +1560,7 @@
 	if(wires.is_cut(WIRE_SHOCK))
 		to_chat(user, "The electrification wire has been cut")
 	else
-		shockedby += text("\[[time_stamp()]\][user](ckey:[user.ckey])")
+		LAZYADD(shockedby, text("\[[time_stamp()]\][user](ckey:[user.ckey])"))
 		add_logs(user, src, "electrified")
 		set_electrified(ELECTRIFIED_PERMANENT)
 

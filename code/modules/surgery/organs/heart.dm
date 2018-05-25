@@ -152,6 +152,9 @@
 	synthetic = TRUE
 
 /obj/item/organ/heart/cybernetic/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	Stop()
 
 /obj/item/organ/heart/freedom

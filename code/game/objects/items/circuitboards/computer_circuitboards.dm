@@ -135,6 +135,10 @@
 	name = "Power Monitor (Computer Board)"  //name fixed 250810
 	build_path = /obj/machinery/computer/monitor
 
+/obj/item/circuitboard/computer/powermonitor/secret
+	name = "Outdated Power Monitor (Computer Board)" //Variant used on ruins to prevent them from showing up on PDA's.
+	build_path = /obj/machinery/computer/monitor/secret
+
 /obj/item/circuitboard/computer/olddoor
 	name = "DoorMex (Computer Board)"
 	build_path = /obj/machinery/computer/pod/old
@@ -226,6 +230,10 @@
 
 /obj/item/circuitboard/computer/cargo/request
 	name = "Supply Request Console (Computer Board)"
+	build_path = /obj/machinery/computer/cargo/request
+
+/obj/item/circuitboard/computer/bounty
+	name = "Nanotrasen Bounty Console (Computer Board)"
 	build_path = /obj/machinery/computer/cargo/request
 
 /obj/item/circuitboard/computer/operating

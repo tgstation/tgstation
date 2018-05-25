@@ -153,11 +153,13 @@
 	to_chat(user, "<span class='danger'>[src] emits a blinding light!</span>")
 
 /obj/item/assembly/flash/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(!try_use_flash())
-		return FALSE
+		return
 	AOE_flash()
 	burn_out()
-	. = ..()
 
 /obj/item/assembly/flash/activate()//AOE flash on signal recieved
 	if(!..())

@@ -90,7 +90,7 @@
 	to_chat(src, "<b>You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.</b>")
 	to_chat(src, "<b>To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.</b>")
 	to_chat(src, "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>")
-	to_chat(src, "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant to learn more.</b>")
+	to_chat(src, "<b>Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.</b>")
 	if(!generated_objectives_and_spells)
 		generated_objectives_and_spells = TRUE
 		mind.assigned_role = ROLE_REVENANT
@@ -109,6 +109,11 @@
 		revealed = FALSE
 		incorporeal_move = INCORPOREAL_MOVE_JAUNT
 		invisibility = INVISIBILITY_REVENANT
+		if(staticOverlays.len)
+			for(var/mob/living/simple_animal/drone/D in GLOB.drones_list)
+				if(D && D.client && D.seeStatic)
+					D.staticOverlays.Remove(staticOverlays)
+					D.client.images.Remove(staticOverlays)
 		to_chat(src, "<span class='revenboldnotice'>You are once more concealed.</span>")
 	if(unstun_time && world.time >= unstun_time)
 		unstun_time = 0
@@ -245,6 +250,15 @@
 	else
 		to_chat(src, "<span class='revenwarning'>You have been revealed!</span>")
 		unreveal_time = unreveal_time + time
+	if(staticOverlays.len)
+		for(var/mob/living/simple_animal/drone/D in GLOB.drones_list)
+			if(D && D.client && D.seeStatic)
+				if(D.staticChoice in staticOverlays)
+					D.staticOverlays |= staticOverlays[D.staticChoice]
+					D.client.images |= staticOverlays[D.staticChoice]
+				else
+					D.staticOverlays |= staticOverlays["static"]
+					D.client.images |= staticOverlays["static"]
 	update_spooky_icon()
 
 /mob/living/simple_animal/revenant/proc/stun(time)

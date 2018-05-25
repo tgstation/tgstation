@@ -2058,7 +2058,7 @@
 					else
 						var/atom/O = new path(target)
 						if(!QDELETED(O))
-							O.admin_spawned = TRUE
+							O.flags_1 |= ADMIN_SPAWNED_1
 							if(obj_dir)
 								O.setDir(obj_dir)
 							if(obj_name)

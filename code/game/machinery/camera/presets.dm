@@ -75,6 +75,7 @@
 // UPGRADE PROCS
 
 /obj/machinery/camera/proc/upgradeEmpProof()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
 	assembly.upgrades.Add(new /obj/item/stack/sheet/mineral/plasma(assembly))
 	upgrades |= CAMERA_UPGRADE_EMP_PROOF
 

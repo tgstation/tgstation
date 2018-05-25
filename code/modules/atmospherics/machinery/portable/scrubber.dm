@@ -56,11 +56,13 @@
 		air_update_turf()
 
 /obj/machinery/portable_atmospherics/scrubber/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(is_operational())
 		if(prob(50 / severity))
 			on = !on
 		update_icon()
-	..()
 
 /obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)

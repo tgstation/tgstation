@@ -162,8 +162,10 @@
 	nerf(!(obj_flags & EMAGGED))
 
 /obj/machinery/computer/holodeck/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	emergency_shutdown()
-	return ..()
 
 /obj/machinery/computer/holodeck/ex_act(severity, target)
 	emergency_shutdown()
