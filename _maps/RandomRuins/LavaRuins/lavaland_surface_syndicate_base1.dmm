@@ -1294,6 +1294,7 @@
 /obj/item/circuitboard/machine/processor,
 /obj/item/circuitboard/machine/gibber,
 /obj/item/circuitboard/machine/deep_fryer,
+/obj/item/circuitboard/machine/cell_charger,
 /turf/open/floor/plasteel/dark,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "ft" = (
