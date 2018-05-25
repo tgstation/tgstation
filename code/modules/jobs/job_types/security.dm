@@ -23,7 +23,6 @@ Head of Security
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_SECURITY
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/hos
 
@@ -79,7 +78,6 @@ Warden
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/warden
 
@@ -133,7 +131,6 @@ Detective
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/detective
 
@@ -186,7 +183,6 @@ Security Officer
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/security
 

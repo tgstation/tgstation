@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - rscadd: "Departmental wardrobe vendors have been added to all maps."
-  - spellcheck: "Sorted cargo packs (wardrobe refills//alphabetically) and mining vendor items (by price), again."

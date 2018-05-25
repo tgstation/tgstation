@@ -329,10 +329,10 @@
 
 /datum/controller/configuration/proc/LoadAntagRep()
 	antag_rep_values = list()
-	var/list/data = file2list("[directory]/antag_rep.txt")
+	var/list/data = world.file2list("[directory]/antag_rep.txt")
 	for(var/I in data)
 		I = trim(I)
-		if(I[0] == '#')
+		if(I[0] == "#")
 			continue
 		var/lastindex = findlasttext(I, " ")
 		if(!lastindex)

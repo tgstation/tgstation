@@ -1,4 +1,0 @@
-author: "yorii"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the smartfridges to be in line with all other machines and puts the released item in your hand."

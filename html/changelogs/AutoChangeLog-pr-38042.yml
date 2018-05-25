@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - balance: "adjusted default antag rep points to grant every job the same amount of points per round, except for assistant which gets 30% less"

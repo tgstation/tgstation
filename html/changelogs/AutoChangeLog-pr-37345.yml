@@ -1,4 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - rscadd: "Cargo now has access to Supplypod Beacons! Use these to call down supplypods with frightening accuracy!"
