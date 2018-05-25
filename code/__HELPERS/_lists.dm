@@ -73,6 +73,8 @@
 	return FALSE
 
 //Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
+#define is_type_in_typecache(A, L) (length(L) && L[(ispath(A) ? A : A:type)])
+/*
 /proc/is_type_in_typecache(atom/A, list/L)
 	if(!LAZYLEN(L) || !A)
 
@@ -81,7 +83,7 @@
 		. = L[A]
 	else
 		. = L[A.type]
-
+*/
 //Checks for a string in a list
 /proc/is_string_in_list(string, list/L)
 	if(!LAZYLEN(L) || !string)
