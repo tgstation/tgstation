@@ -27,6 +27,10 @@
 	 "mayonnaise" = list("mayonnaise", "mayonnaise jar", "An oily condiment made from egg yolks."))
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 
+/obj/item/reagent_containers/food/condiment/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!</span>")
+	return OXYLOSS
+
 /obj/item/reagent_containers/food/condiment/attack(mob/M, mob/user, def_zone)
 
 	if(!reagents || !reagents.total_volume)

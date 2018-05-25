@@ -7,7 +7,7 @@
 	var/lock_override = NONE
 	var/mob/camera/aiEye/remote/eyeobj
 	var/mob/living/current_user = null
-	var/list/networks = list("SS13")
+	var/list/networks = list("ss13")
 	var/datum/action/innate/camera_off/off_action = new
 	var/datum/action/innate/camera_jump/jump_action = new
 	var/list/actions = list()
@@ -16,6 +16,9 @@
 
 /obj/machinery/computer/camera_advanced/Initialize()
 	. = ..()
+	for(var/i in networks)
+		networks -= i
+		networks += lowertext(i)
 	if(lock_override)
 		if(lock_override & CAMERA_LOCK_STATION)
 			z_lock |= SSmapping.levels_by_trait(ZTRAIT_STATION)
@@ -77,14 +80,25 @@
 	if(M == current_user)
 		remove_eye_control(M)
 
+/obj/machinery/computer/camera_advanced/proc/can_use(mob/living/user)
+	return TRUE
+
+/obj/machinery/computer/camera_advanced/abductor/can_use(mob/user)
+	if(!isabductor(user))
+		return FALSE
+	return ..()
+
 /obj/machinery/computer/camera_advanced/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(current_user)
 		to_chat(user, "The console is already in use!")
 		return
-	if(..())
-		return
 	var/mob/living/L = user
 
+	if(!can_use(user))
+		return
 	if(!eyeobj)
 		CreateEye()
 
@@ -122,7 +136,6 @@
 
 /obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	return //AIs would need to disable their own camera procs to use the console safely. Bugs happen otherwise.
-
 
 /obj/machinery/computer/camera_advanced/proc/give_eye_control(mob/user)
 	GrantActions(user)
@@ -261,7 +274,7 @@
 	name = "ratvarian camera observer"
 	desc = "A console used to snoop on the station's goings-on. A jet of steam occasionally whooshes out from slats on its sides."
 	use_power = FALSE
-	networks = list("SS13", "MiniSat") //:eye:
+	networks = list("ss13", "minisat") //:eye:
 	var/datum/action/innate/servant_warp/warp_action = new
 
 /obj/machinery/computer/camera_advanced/ratvar/Initialize()
@@ -286,7 +299,7 @@
 		warp_action.target = src
 		actions += warp_action
 
-/obj/machinery/computer/camera_advanced/ratvar/attack_hand(mob/living/user)
+/obj/machinery/computer/camera_advanced/ratvar/can_use(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>[src]'s keys are in a language foreign to you, and you don't understand anything on its screen.</span>")
 		return

@@ -11,7 +11,7 @@
 
 /obj/structure/closet/crate/wooden/toy/PopulateContents()
 	. = ..()
-	new	/obj/item/device/megaphone/clown(src)
+	new	/obj/item/megaphone/clown(src)
 	new	/obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter(src)
 	new /obj/item/pneumatic_cannon/pie(src)
 	new /obj/item/reagent_containers/food/snacks/pie/cream(src)

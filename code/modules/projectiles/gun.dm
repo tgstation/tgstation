@@ -8,15 +8,14 @@
 	icon_state = "detective"
 	item_state = "gun"
 	flags_1 =  CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	materials = list(MAT_METAL=2000)
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	force = 5
-	needs_permit = TRUE
-	unique_rename = FALSE
+	item_flags = NEEDS_PERMIT
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
@@ -28,7 +27,7 @@
 	var/obj/item/ammo_casing/chambered = null
 	trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
-	var/sawn_state = SAWN_INTACT
+	var/sawn_off = FALSE
 	var/burst_size = 1					//how large a burst is
 	var/fire_delay = 0					//rate of fire for burst firing and semi auto
 	var/firing_burst = 0				//Prevent the weapon from firing again while already firing
@@ -40,9 +39,9 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 
-	var/obj/item/device/firing_pin/pin = /obj/item/device/firing_pin //standard firing pin for most guns
+	var/obj/item/firing_pin/pin = /obj/item/firing_pin //standard firing pin for most guns
 
-	var/obj/item/device/flashlight/gun_light
+	var/obj/item/flashlight/gun_light
 	var/can_flashlight = 0
 	var/obj/item/kitchen/knife/bayonet
 	var/can_bayonet = FALSE
@@ -123,9 +122,10 @@
 				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 
 /obj/item/gun/emp_act(severity)
-	for(var/obj/O in contents)
-		O.emp_act(severity)
-
+	. = ..()
+	if(!(. & EMP_PROTECT_CONTENTS))
+		for(var/obj/O in contents)
+			O.emp_act(severity)
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
 	if(firing_burst)
@@ -135,7 +135,7 @@
 			return
 		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
 			return
-		if(target == user && user.zone_selected != "mouth") //so we can't shoot ourselves (unless mouth selected)
+		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
 			return
 
 	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
@@ -148,18 +148,18 @@
 		return
 
 	if(flag)
-		if(user.zone_selected == "mouth")
+		if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 			handle_suicide(user, target, params)
 			return
 
 
-	//Exclude lasertag guns from the DISABILITY_CLUMSY check.
+	//Exclude lasertag guns from the TRAIT_CLUMSY check.
 	if(clumsy_check)
 		if(istype(user))
-			if (user.has_disability(DISABILITY_CLUMSY) && prob(40))
+			if (user.has_trait(TRAIT_CLUMSY) && prob(40))
 				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
-				var/shot_leg = pick("l_leg", "r_leg")
-				process_fire(user,user,0,params, zone_override = shot_leg)
+				var/shot_leg = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+				process_fire(user, user, FALSE, params, shot_leg)
 				user.dropItemToGround(src, TRUE)
 				return
 
@@ -178,9 +178,9 @@
 			else if(G.can_trigger_gun(user))
 				bonus_spread += 24 * G.weapon_weight
 				loop_counter++
-				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, 1, params, null, bonus_spread), loop_counter)
+				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, TRUE, params, null, bonus_spread), loop_counter)
 
-	process_fire(target,user,1,params, null, bonus_spread)
+	process_fire(target, user, TRUE, params, null, bonus_spread)
 
 
 
@@ -191,7 +191,7 @@
 
 /obj/item/gun/proc/handle_pins(mob/living/user)
 	if(pin)
-		if(pin.pin_auth(user) || pin.emagged)
+		if(pin.pin_auth(user) || (pin.obj_flags & EMAGGED))
 			return TRUE
 		else
 			pin.auth_fail(user)
@@ -212,6 +212,10 @@
 			firing_burst = FALSE
 			return FALSE
 	if(chambered && chambered.BB)
+		if(user.has_trait(TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
+			if(chambered.harmful) // Is the bullet chambered harmful?
+				to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
+				return
 		if(randomspread)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 		else //Smart spread
@@ -247,6 +251,8 @@
 	var/rand_spr = rand()
 	if(spread)
 		randomized_gun_spread =	rand(0,spread)
+	if(user.has_trait(TRAIT_POOR_AIM)) //nice shootin' tex
+		bonus_spread += 25
 	var/randomized_bonus_spread = rand(0, bonus_spread)
 
 	if(burst_size > 1)
@@ -255,6 +261,10 @@
 			addtimer(CALLBACK(src, .proc/process_burst, user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i), fire_delay * (i - 1))
 	else
 		if(chambered)
+			if(user.has_trait(TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
+				if(chambered.harmful) // Is the bullet chambered harmful?
+					to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
+					return
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd))
 				shoot_with_empty_chamber(user)
@@ -319,10 +329,10 @@
 /obj/item/gun/attackby(obj/item/I, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
-	else if(istype(I, /obj/item/device/flashlight/seclite))
+	else if(istype(I, /obj/item/flashlight/seclite))
 		if(!can_flashlight)
 			return ..()
-		var/obj/item/device/flashlight/seclite/S = I
+		var/obj/item/flashlight/seclite/S = I
 		if(!gun_light)
 			if(!user.transferItemToLoc(I, src))
 				return
@@ -347,7 +357,7 @@
 			update_icon()
 	else if(istype(I, /obj/item/screwdriver))
 		if(gun_light)
-			var/obj/item/device/flashlight/seclite/S = gun_light
+			var/obj/item/flashlight/seclite/S = gun_light
 			to_chat(user, "<span class='notice'>You unscrew the seclite from \the [src].</span>")
 			gun_light = null
 			S.forceMove(get_turf(user))
@@ -421,7 +431,7 @@
 
 	semicd = TRUE
 
-	if(!do_mob(user, target, 120) || user.zone_selected != "mouth")
+	if(!do_mob(user, target, 120) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
 		if(user)
 			if(user == target)
 				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")
@@ -437,12 +447,12 @@
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5
 
-	process_fire(target, user, 1, params)
+	process_fire(target, user, TRUE, params)
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)
 		qdel(pin)
-	pin = new /obj/item/device/firing_pin
+	pin = new /obj/item/firing_pin
 
 /////////////
 // ZOOMING //

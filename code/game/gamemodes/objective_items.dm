@@ -41,7 +41,7 @@
 	name = "a hand teleporter."
 	targetitem = /obj/item/hand_tele
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Captain", "Research Director")
 
 /datum/objective_item/steal/jetpack
 	name = "the Captain's jetpack."
@@ -72,6 +72,9 @@
 	targetitem = /obj/item/disk/nuclear
 	difficulty = 5
 	excludefromjob = list("Captain")
+
+/datum/objective_item/steal/nukedisc/check_special_completion(obj/item/disk/nuclear/N)
+	return !N.fake
 
 /datum/objective_item/steal/reflector
 	name = "a reflector vest."
@@ -127,10 +130,10 @@
 
 /datum/objective_item/steal/functionalai
 	name = "a functional AI."
-	targetitem = /obj/item/device/aicard
+	targetitem = /obj/item/aicard
 	difficulty = 20 //beyond the impossible
 
-/datum/objective_item/steal/functionalai/check_special_completion(obj/item/device/aicard/C)
+/datum/objective_item/steal/functionalai/check_special_completion(obj/item/aicard/C)
 	for(var/mob/living/silicon/ai/A in C)
 		if(isAI(A) && A.stat != DEAD) //See if any AI's are alive inside that card.
 			return 1
@@ -213,7 +216,7 @@
 
 /datum/objective_item/special/laserpointer
 	name = "a laser pointer."
-	targetitem = /obj/item/device/laser_pointer
+	targetitem = /obj/item/laser_pointer
 	difficulty = 5
 
 /datum/objective_item/special/corgimeat

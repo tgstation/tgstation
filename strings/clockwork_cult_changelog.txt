@@ -1,6 +1,1 @@
-When revived by a vitality matrix, servants will gain a 1-minute debuff that prevents revival again.
-Vitality matrices must now be placed at least one tile apart.
-Servants are now teleported to and locked on Reebe once the Ark starts.
-Cyborgs are now damaged by brass skewers.
-Vitality matrices no longer work on buckled mobs (including skewered ones.)
-Pressure sensors have much less health.
+Stargazers have been removed. Integration cogs are now the primary way of creating power.

@@ -26,8 +26,11 @@
 /mob/living/proc/spread_bodyparts()
 	return
 
-/mob/living/dust(just_ash = FALSE)
-	death(1)
+/mob/living/dust(just_ash = FALSE, drop_items = FALSE)
+	death(TRUE)
+
+	if(drop_items)
+		unequip_everything()
 
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
@@ -47,7 +50,7 @@
 	stat = DEAD
 	unset_machine()
 	timeofdeath = world.time
-	tod = worldtime2text()
+	tod = station_time_timestamp()
 	var/turf/T = get_turf(src)
 	for(var/obj/item/I in contents)
 		I.on_mob_death(src, gibbed)
@@ -71,6 +74,7 @@
 	update_canmove()
 	med_hud_set_health()
 	med_hud_set_status()
+	stop_pulling()
 
 	if (client)
 		client.move_delay = initial(client.move_delay)

@@ -191,7 +191,7 @@
 		if (T && isturf(T))
 			if (!D.stat)
 				D.emote("scream")
-			D.throw_at(T, 10, 4, callback = CALLBACK(D, /mob/living/carbon/human/.Knockdown, 20))
+			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living/carbon/human/.Knockdown, 20))
 	add_logs(A, D, "has thrown with wrestling")
 	return 0
 
@@ -448,7 +448,7 @@
 /obj/item/storage/belt/champion/wrestling/equipped(mob/user, slot)
 	if(!ishuman(user))
 		return
-	if(slot == slot_belt)
+	if(slot == SLOT_BELT)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
 	return
@@ -457,6 +457,6 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(slot_belt) == src)
+	if(H.get_item_by_slot(SLOT_BELT) == src)
 		style.remove(H)
 	return

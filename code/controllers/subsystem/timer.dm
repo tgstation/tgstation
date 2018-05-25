@@ -452,11 +452,11 @@ SUBSYSTEM_DEF(timer)
 		CRASH("addtimer called without a callback")
 
 	if (wait < 0)
-		stack_trace("Addtimer called with a negitive wait. Converting to 0")
+		stack_trace("addtimer called with a negative wait. Converting to 0")
 
 	//alot of things add short timers on themselves in their destroy, we ignore those cases
 	if (wait >= 1 && callback && callback.object && callback.object != GLOBAL_PROC && QDELETED(callback.object))
-		stack_trace("Add timer called with a callback assigned to a qdeleted object")
+		stack_trace("addtimer called with a callback assigned to a qdeleted object")
 
 	wait = max(wait, 0)
 

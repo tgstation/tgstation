@@ -16,7 +16,7 @@
 
 /obj/machinery/mineral/mint/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_URANIUM, MAT_DIAMOND, MAT_BANANIUM), MINERAL_MATERIAL_AMOUNT * 50)
+	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_URANIUM, MAT_DIAMOND, MAT_BANANIUM), MINERAL_MATERIAL_AMOUNT * 50, FALSE, list(/obj/item/stack))
 
 /obj/machinery/mineral/mint/process()
 	var/turf/T = get_step(src, input_dir)
@@ -28,6 +28,9 @@
 		materials.insert_stack(O, O.amount)
 
 /obj/machinery/mineral/mint/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	var/dat = "<b>Coin Press</b><br>"
 
 	GET_COMPONENT(materials, /datum/component/material_container)

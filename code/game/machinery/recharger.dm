@@ -15,7 +15,7 @@
 		/obj/item/gun/energy,
 		/obj/item/melee/baton,
 		/obj/item/ammo_box/magazine/recharge,
-		/obj/item/device/modular_computer))
+		/obj/item/modular_computer))
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
@@ -29,7 +29,7 @@
 		anchored = !anchored
 		power_change()
 		to_chat(user, "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>")
-		playsound(loc, G.usesound, 75, 1)
+		G.play_tool_sound(src)
 		return
 
 	var/allowed = is_type_in_typecache(G, allowed_devices)
@@ -68,12 +68,11 @@
 			default_deconstruction_crowbar(G)
 			return
 
-		if(exchange_parts(user, G))
-			return
 	return ..()
 
 /obj/machinery/recharger/attack_hand(mob/user)
-	if(issilicon(user))
+	. = ..()
+	if(.)
 		return
 
 	add_fingerprint(user)
@@ -84,9 +83,6 @@
 		charging = null
 		use_power = IDLE_POWER_USE
 		update_icon()
-
-/obj/machinery/recharger/attack_paw(mob/user)
-	return attack_hand(user)
 
 /obj/machinery/recharger/attack_tk(mob/user)
 	if(charging)
@@ -124,6 +120,9 @@
 	update_icon()
 
 /obj/machinery/recharger/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_CONTENTS)
+		return
 	if(!(stat & (NOPOWER|BROKEN)) && anchored)
 		if(istype(charging,  /obj/item/gun/energy))
 			var/obj/item/gun/energy/E = charging
@@ -134,7 +133,6 @@
 			var/obj/item/melee/baton/B = charging
 			if(B.cell)
 				B.cell.charge = 0
-	..()
 
 
 /obj/machinery/recharger/update_icon(using_power = 0, scan)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.

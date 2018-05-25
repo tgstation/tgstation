@@ -1,6 +1,9 @@
 
 //the essential proc to call when an obj must receive damage of any kind.
 /obj/proc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0)
+	if(QDELETED(src))
+		stack_trace("[src] taking damage after deletion")
+		return
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(!(resistance_flags & INDESTRUCTIBLE) && obj_integrity > 0)
@@ -27,7 +30,7 @@
 			return 0
 	var/armor_protection = 0
 	if(damage_flag)
-		armor_protection = armor[damage_flag]
+		armor_protection = armor.getRating(damage_flag)
 	if(armor_protection)		//Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
 		armor_protection = CLAMP(armor_protection - armour_penetration, 0, 100)
 	return round(damage_amount * (100 - armor_protection)*0.01, 0.1)
@@ -178,7 +181,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!(resistance_flags & ACID_PROOF))
 		for(var/armour_value in armor)
 			if(armour_value != "acid" && armour_value != "fire")
-				armor[armour_value] = max(armor[armour_value] - round(sqrt(acid_level)*0.1), 0)
+				armor = armor.modifyAllRatings(0 - round(sqrt(acid_level)*0.1))
 		if(prob(33))
 			playsound(loc, 'sound/items/welder.ogg', 150, 1)
 		take_damage(min(1 + round(sqrt(acid_level)*0.3), 300), BURN, "acid", 0)
@@ -219,19 +222,26 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		cut_overlay(GLOB.fire_overlay, TRUE)
 		SSfire_burning.processing -= src
 
-
-
-/obj/proc/tesla_act(var/power)
-	being_shocked = TRUE
+/obj/proc/tesla_act(power, tesla_flags, shocked_targets)
+	obj_flags |= BEING_SHOCKED
 	var/power_bounced = power / 2
-	tesla_zap(src, 3, power_bounced)
+	tesla_zap(src, 3, power_bounced, tesla_flags, shocked_targets)
 	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 
+//The surgeon general warns that being buckled to certain objects recieving powerful shocks is greatly hazardous to your health
+//Only tesla coils and grounding rods currently call this because mobs are already targeted over all other objects, but this might be useful for more things later.
+/obj/proc/tesla_buckle_check(var/strength)
+	if(has_buckled_mobs())
+		for(var/m in buckled_mobs)
+			var/mob/living/buckled_mob = m
+			buckled_mob.electrocute_act((CLAMP(round(strength/400), 10, 90) + rand(-5, 5)), src, tesla_shock = 1)
+
 /obj/proc/reset_shocked()
-	being_shocked = FALSE
+	obj_flags &= ~BEING_SHOCKED
 
 //the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
 /obj/proc/deconstruct(disassembled = TRUE)
+	SendSignal(COMSIG_OBJ_DECONSTRUCT, disassembled)
 	qdel(src)
 
 //what happens when the obj's health is below integrity_failure level.

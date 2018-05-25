@@ -16,13 +16,15 @@
 		for(var/thing in data["viruses"])
 			var/datum/disease/D = thing
 
-			if((D.spread_flags & VIRUS_SPREAD_SPECIAL) || (D.spread_flags & VIRUS_SPREAD_NON_CONTAGIOUS))
+			if((D.spread_flags & DISEASE_SPREAD_SPECIAL) || (D.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
 
-			if((method == TOUCH || method == VAPOR) && (D.spread_flags & VIRUS_SPREAD_CONTACT_FLUIDS))
-				M.ContactContractDisease(D)
-			else //ingest, patch or inject
-				M.ForceContractDisease(D)
+			if(isliving(M))
+				var/mob/living/L = M
+				if((method == TOUCH || method == VAPOR) && (D.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
+					L.ContactContractDisease(D)
+				else //ingest, patch or inject
+					L.ForceContractDisease(D)
 
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
@@ -39,7 +41,8 @@
 
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
-		data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning, or else we won't know who's even getting cloned, etc
+		if(data["blood_DNA"] != mix_data["blood_DNA"])
+			data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning if the DNA sample doesn't match.
 		if(data["viruses"] || mix_data["viruses"])
 
 			var/list/mix1 = data["viruses"]
@@ -97,12 +100,15 @@
 	taste_description = "slime"
 
 /datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, reac_volume)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(islist(data) && (method == INGEST || method == INJECT))
-		for(var/thing in M.viruses)
+		for(var/thing in L.diseases)
 			var/datum/disease/D = thing
 			if(D.GetDiseaseID() in data)
 				D.cure()
-		M.resistances |= data
+		L.disease_resistances |= data
 
 /datum/reagent/vaccine/on_merge(list/data)
 	if(istype(data))
@@ -130,7 +136,7 @@
 	var/CT = cooling_temperature
 
 	if(reac_volume >= 5)
-		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = min(reac_volume*1.5, 60))
+		T.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
 
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
@@ -140,7 +146,7 @@
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
-			G.react()
+			G.react(src)
 			qdel(hotspot)
 	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
 	if(A)
@@ -165,8 +171,7 @@
 
 	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
 		var/obj/item/stack/sheet/hairlesshide/HH = O
-		var/obj/item/stack/sheet/wetleather/WL = new(get_turf(HH))
-		WL.amount = HH.amount
+		new /obj/item/stack/sheet/wetleather(get_turf(HH), HH.amount)
 		qdel(HH)
 
 /*
@@ -190,6 +195,18 @@
 	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
 
+/datum/reagent/water/holywater/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_HOLY, id)
+
+/datum/reagent/water/holywater/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_HOLY, id)
+	..()
+
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(is_servant_of_ratvar(M))
 		to_chat(M, "<span class='userdanger'>A darkness begins to spread its unholy tendrils through your mind, purging the Justiciar's influence!</span>")
@@ -200,13 +217,23 @@
 		data = 1
 	data++
 	M.jitteriness = min(M.jitteriness+4,10)
-	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
+	if(iscultist(M))
+		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
+			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
+			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
+				qdel(BS)
+	if(data >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering = min(M.stuttering+4, 10)
 		M.Dizzy(5)
-		if(iscultist(M) && prob(5))
+		if(iscultist(M) && prob(8))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
+			if(prob(20))
+				M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
+				M.Unconscious(120)
+				to_chat(M, "<span class='cultlarge'>[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
+				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
 		else if(is_servant_of_ratvar(M) && prob(8))
 			switch(pick("speech", "message", "emote"))
 				if("speech")
@@ -216,7 +243,7 @@
 					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>")
 				if("emote")
 					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
-	if(data >= 75)	// 30 units, 135 seconds
+	if(data >= 60)	// 30 units, 135 seconds
 		if(iscultist(M) || is_servant_of_ratvar(M))
 			if(iscultist(M))
 				SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
@@ -245,7 +272,7 @@
 
 /datum/reagent/fuel/unholywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		M.reagents.add_reagent("unholywater", (reac_volume/4))
+		M.reagents.add_reagent(id,reac_volume/4)
 		return
 	return ..()
 
@@ -255,17 +282,20 @@
 		M.AdjustUnconscious(-20, 0)
 		M.AdjustStun(-40, 0)
 		M.AdjustKnockdown(-40, 0)
+		M.adjustStaminaLoss(-10, 0)
 		M.adjustToxLoss(-2, 0)
 		M.adjustOxyLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
 		M.adjustFireLoss(-2, 0)
-	else
+		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume += 3
+	else  // Will deal about 90 damage when 50 units are thrown
 		M.adjustBrainLoss(3, 150)
-		M.adjustToxLoss(1, 0)
+		M.adjustToxLoss(2, 0)
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
 		M.adjustBruteLoss(2, 0)
-	holder.remove_reagent(src.id, 1)
+	holder.remove_reagent(id, 1)
 	. = 1
 
 /datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
@@ -299,7 +329,7 @@
 	if (!istype(T))
 		return
 	if(reac_volume >= 1)
-		T.MakeSlippery(TURF_WET_LUBE, 15, min(reac_volume * 2, 120))
+		T.MakeSlippery(TURF_WET_LUBE, 15 SECONDS, min(reac_volume * 2 SECONDS, 120))
 
 /datum/reagent/spraytan
 	name = "Spray Tan"
@@ -556,12 +586,12 @@
 	..()
 	if(!istype(H))
 		return
-	if(!H.dna || !H.dna.species || !(H.dna.species.species_traits & SPECIES_ORGANIC))
+	if(!H.dna || !H.dna.species || !(MOB_ORGANIC in H.mob_biotypes))
 		return
 
-	if(istype(H.dna.species, /datum/species/jelly/slime) || istype(H.dna.species, /datum/species/jelly/stargazer) || istype(H.dna.species, /datum/species/jelly/luminescent))
+	if(isjellyperson(H))
 		to_chat(H, "<span class='warning'>Your jelly shifts and morphs, turning you into another subspecies!</span>")
-		var/species_type = pick(/datum/species/jelly/slime,/datum/species/jelly/stargazer,/datum/species/jelly/luminescent)
+		var/species_type = pick(subtypesof(/datum/species/jelly))
 		H.set_species(species_type)
 		H.reagents.del_reagent(id)
 
@@ -576,7 +606,7 @@
 			if(prob(10))
 				to_chat(H, "<span class='warning'>[pick("You feel your internal organs turning into slime.", "You feel very slimelike.")]</span>")
 		if(20 to INFINITY)
-			var/species_type = pick(/datum/species/jelly/slime,/datum/species/jelly/stargazer,/datum/species/jelly/luminescent)
+			var/species_type = pick(subtypesof(/datum/species/jelly))
 			H.set_species(species_type)
 			H.reagents.del_reagent(id)
 			to_chat(H, "<span class='warning'>You've become \a jellyperson!</span>")
@@ -603,19 +633,25 @@
 	taste_description = "slime"
 
 /datum/reagent/aslimetoxin/reaction_mob(mob/M, method=TOUCH, reac_volume)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(method != TOUCH)
-		M.ForceContractDisease(new /datum/disease/transformation/slime(0))
+		L.ForceContractDisease(new /datum/disease/transformation/slime(), FALSE, TRUE)
 
 /datum/reagent/gluttonytoxin
 	name = "Gluttony's Blessing"
 	id = "gluttonytoxin"
 	description = "An advanced corruptive toxin produced by something terrible."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	can_synth = 0
+	can_synth = FALSE
 	taste_description = "decay"
 
 /datum/reagent/gluttonytoxin/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	M.ForceContractDisease(new /datum/disease/transformation/morph(0))
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
+	L.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"
@@ -642,11 +678,13 @@
 /datum/reagent/oxygen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air("o2=[reac_volume/2];TEMP=[T20C]")
+	var/temp = holder ? holder.chem_temp : T20C
+	O.atmos_spawn_air("o2=[reac_volume/2];TEMP=[temp]")
 
 /datum/reagent/oxygen/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air("o2=[reac_volume/2];TEMP=[T20C]")
+		var/temp = holder ? holder.chem_temp : T20C
+		T.atmos_spawn_air("o2=[reac_volume/2];TEMP=[temp]")
 	return
 
 /datum/reagent/copper
@@ -656,6 +694,13 @@
 	reagent_state = SOLID
 	color = "#6E3B08" // rgb: 110, 59, 8
 	taste_description = "metal"
+
+/datum/reagent/copper/reaction_obj(obj/O, reac_volume)
+	if(istype(O, /obj/item/stack/sheet/metal))
+		var/obj/item/stack/sheet/metal/M = O
+		reac_volume = min(reac_volume, M.amount)
+		new/obj/item/stack/tile/bronze(get_turf(M), reac_volume)
+		M.use(reac_volume)
 
 /datum/reagent/nitrogen
 	name = "Nitrogen"
@@ -668,11 +713,13 @@
 /datum/reagent/nitrogen/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air("n2=[reac_volume/2];TEMP=[T20C]")
+	var/temp = holder ? holder.chem_temp : T20C
+	O.atmos_spawn_air("n2=[reac_volume/2];TEMP=[temp]")
 
 /datum/reagent/nitrogen/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air("n2=[reac_volume/2];TEMP=[T20C]")
+		var/temp = holder ? holder.chem_temp : T20C
+		T.atmos_spawn_air("n2=[reac_volume/2];TEMP=[temp]")
 	return
 
 /datum/reagent/hydrogen
@@ -737,7 +784,7 @@
 	taste_description = "chlorine"
 
 /datum/reagent/chlorine/on_mob_life(mob/living/M)
-	M.take_bodypart_damage(1*REM, 0, 0)
+	M.take_bodypart_damage(1*REM, 0, 0, 0)
 	. = 1
 	..()
 
@@ -801,7 +848,7 @@
 	taste_description = "the colour blue and regret"
 
 /datum/reagent/radium/on_mob_life(mob/living/M)
-	M.apply_effect(2*REM/M.metabolism_efficiency,IRRADIATE,0)
+	M.apply_effect(2*REM/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
 	..()
 
 /datum/reagent/radium/reaction_turf(turf/T, reac_volume)
@@ -884,7 +931,7 @@
 	taste_description = "the inside of a reactor"
 
 /datum/reagent/uranium/on_mob_life(mob/living/M)
-	M.apply_effect(1/M.metabolism_efficiency,IRRADIATE,0)
+	M.apply_effect(1/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
 	..()
 
 /datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
@@ -1068,35 +1115,45 @@
 	id = "nanomachines"
 	description = "Microscopic construction robots."
 	color = "#535E66" // rgb: 83, 94, 102
-	can_synth = 0
+	can_synth = FALSE
 	taste_description = "sludge"
 
 /datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ForceContractDisease(new /datum/disease/transformation/robot(0))
+		L.ForceContractDisease(new /datum/disease/transformation/robot(), FALSE, TRUE)
 
 /datum/reagent/xenomicrobes
 	name = "Xenomicrobes"
 	id = "xenomicrobes"
 	description = "Microbes with an entirely alien cellular structure."
 	color = "#535E66" // rgb: 83, 94, 102
-	can_synth = 0
+	can_synth = FALSE
 	taste_description = "sludge"
 
 /datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ForceContractDisease(new /datum/disease/transformation/xeno(0))
+		L.ForceContractDisease(new /datum/disease/transformation/xeno(), FALSE, TRUE)
 
 /datum/reagent/fungalspores
 	name = "Tubercle bacillus Cosmosis microbes"
 	id = "fungalspores"
 	description = "Active fungal spores."
 	color = "#92D17D" // rgb: 146, 209, 125
+	can_synth = FALSE
 	taste_description = "slime"
 
 /datum/reagent/fungalspores/reaction_mob(mob/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(!isliving(M))
+		return
+	var/mob/living/L = M
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
-		M.ForceContractDisease(new /datum/disease/tuberculosis(0))
+		L.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)
 
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
@@ -1147,11 +1204,13 @@
 /datum/reagent/carbondioxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
+	var/temp = holder ? holder.chem_temp : T20C
+	O.atmos_spawn_air("co2=[reac_volume/5];TEMP=[temp]")
 
 /datum/reagent/carbondioxide/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[T20C]")
+		var/temp = holder ? holder.chem_temp : T20C
+		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[temp]")
 	return
 
 /datum/reagent/nitrous_oxide
@@ -1166,11 +1225,13 @@
 /datum/reagent/nitrous_oxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
-	O.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
+	var/temp = holder ? holder.chem_temp : T20C
+	O.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[temp]")
 
 /datum/reagent/nitrous_oxide/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
-		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
+		var/temp = holder ? holder.chem_temp : T20C
+		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[temp]")
 
 /datum/reagent/nitrous_oxide/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(method == VAPOR)
@@ -1195,8 +1256,19 @@
 	color = "E1A116"
 	taste_description = "sourness"
 
+/datum/reagent/stimulum/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_GOTTAGOFAST, id)
+
+/datum/reagent/stimulum/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	..()
+
 /datum/reagent/stimulum/on_mob_life(mob/living/M) // Has a speedup, and the anti-stun effects of nicotine.
-	M.status_flags |= GOTTAGOFAST
 	M.AdjustStun(-20, 0)
 	M.AdjustKnockdown(-20, 0)
 	M.AdjustUnconscious(-20, 0)
@@ -1214,8 +1286,16 @@
 	color = "90560B"
 	taste_description = "burning"
 
-/datum/reagent/nitryl/on_mob_life(mob/living/M) //Has just a speedup
-	M.status_flags |= GOTTAGOFAST
+/datum/reagent/nitryl/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_trait(TRAIT_GOTTAGOFAST, id)
+
+/datum/reagent/nitryl/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_trait(TRAIT_GOTTAGOFAST, id)
 	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
@@ -1391,7 +1471,7 @@
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
-		F.ChangeTurf(/turf/open/floor/carpet)
+		F.PlaceOnTop(/turf/open/floor/carpet)
 	..()
 	return
 
@@ -1533,9 +1613,8 @@
 	taste_description = "dryness"
 
 /datum/reagent/drying_agent/reaction_turf(turf/open/T, reac_volume)
-	if(istype(T) && T.wet)
-		T.wet_time = max(0, T.wet_time-reac_volume*5) // removes 5 seconds of wetness for every unit.
-		T.HandleWet()
+	if(istype(T))
+		T.MakeDry(ALL, TRUE, reac_volume * 5 SECONDS)		//50 deciseconds per unit
 
 /datum/reagent/drying_agent/reaction_obj(obj/O, reac_volume)
 	if(O.type == /obj/item/clothing/shoes/galoshes)
@@ -1622,10 +1701,10 @@
 		of the host body."
 	color = "#123524" // RGB (18, 53, 36)
 	metabolization_rate = INFINITY
-	can_synth = 0
+	can_synth = FALSE
 	taste_description = "brains"
 
-/datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
+/datum/reagent/romerol/reaction_mob(mob/living/carbon/human/H, method=TOUCH, reac_volume)
 	// Silently add the zombie infection organ to be activated upon death
 	if(!H.getorganslot(ORGAN_SLOT_ZOMBIE))
 		var/obj/item/organ/zombie_infection/ZI = new()
@@ -1729,10 +1808,70 @@
 	..()
 	if(isliving(M))
 		var/mob/living/L = M
-		L.add_disability(DISABILITY_PACIFISM, CHEMICAL_DISABILITY)
+		L.add_trait(TRAIT_PACIFISM, id)
 
 /datum/reagent/pax/on_mob_delete(mob/M)
 	if(isliving(M))
 		var/mob/living/L = M
-		L.remove_disability(DISABILITY_PACIFISM, CHEMICAL_DISABILITY)
+		L.remove_trait(TRAIT_PACIFISM, id)
+	..()
+
+/datum/reagent/bz_metabolites
+	name = "BZ metabolites"
+	id = "bz_metabolites"
+	description = "A harmless metabolite of BZ gas"
+	color = "#FAFF00"
+	taste_description = "acrid cinnamon"
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+
+/datum/reagent/bz_metabolites/on_mob_add(mob/living/L)
+	..()
+	L.add_trait(CHANGELING_HIVEMIND_MUTE, id)
+
+/datum/reagent/bz_metabolites/on_mob_delete(mob/living/L)
+	..()
+	L.remove_trait(CHANGELING_HIVEMIND_MUTE, id)
+
+/datum/reagent/bz_metabolites/on_mob_life(mob/living/L)
+	if(L.mind)
+		var/datum/antagonist/changeling/changeling = L.mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			changeling.chem_charges = max(changeling.chem_charges-2, 0)
+	return ..()
+
+/datum/reagent/pax/peaceborg
+	name = "synth-pax"
+	id = "synthpax"
+	description = "A colorless liquid that suppresses violence on the subjects. Cheaper to synthetize, but wears out faster than normal Pax."
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+
+/datum/reagent/peaceborg/confuse
+	name = "Dizzying Solution"
+	id = "dizzysolution"
+	description = "Makes the target off balance and dizzy"
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	taste_description = "dizziness"
+
+/datum/reagent/peaceborg/confuse/on_mob_life(mob/living/M)
+	if(M.confused < 6)
+		M.confused = CLAMP(M.confused + 3, 0, 5)
+	if(M.dizziness < 6)
+		M.dizziness = CLAMP(M.dizziness + 3, 0, 5)
+	if(prob(20))
+		to_chat(M, "You feel confused and disorientated.")
+	..()
+
+/datum/reagent/peaceborg/tire
+	name = "Tiring Solution"
+	id = "tiresolution"
+	description = "An extremely weak stamina-toxin that tires out the target. Completely harmless."
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	taste_description = "tiredness"
+
+/datum/reagent/peaceborg/tire/on_mob_life(mob/living/M)
+	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
+	if(M.getStaminaLoss() < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
+		M.adjustStaminaLoss(10)
+	if(prob(30))
+		to_chat(M, "You should sit down and take a rest...")
 	..()

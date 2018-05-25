@@ -4,7 +4,8 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
+	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
+	inherent_traits = list(TRAIT_TOXINLOVER)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	damage_overlay_type = ""
@@ -17,11 +18,14 @@
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
+	C.remove_language(/datum/language/slime)
+	C.faction -= "slime"
 	..()
 	C.faction -= "slime"
 
 /datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
+	C.grant_language(/datum/language/slime)
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
@@ -48,13 +52,13 @@
 		regenerate_limbs.UpdateButtonIcon()
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
-	var/list/limbs_to_consume = list("r_arm", "l_arm", "r_leg", "l_leg") - H.get_missing_limbs()
+	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
 	var/obj/item/bodypart/consumed_limb
 	if(!limbs_to_consume.len)
 		H.losebreath++
 		return
 	if(H.get_num_legs()) //Legs go before arms
-		limbs_to_consume -= list("r_arm", "l_arm")
+		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
 	to_chat(H, "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>")
@@ -108,7 +112,7 @@
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE, TOXINLOVER)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
@@ -143,16 +147,18 @@
 
 /datum/species/jelly/slime/spec_death(gibbed, mob/living/carbon/human/H)
 	if(slime_split)
-		var/datum/mind/M
-		for(var/mob/living/L in bodies)
-			if(L.mind && L.mind.active)
-				M = L.mind
-		if(!M || M != H.mind)
+		if(!H.mind || !H.mind.active)
 			return
+
 		var/list/available_bodies = (bodies - H)
+		for(var/mob/living/L in available_bodies)
+			if(!swap_body.can_swap(L))
+				available_bodies -= L
+
 		if(!LAZYLEN(available_bodies))
 			return
-		swap_body.swap_to_dupe(M, pick(available_bodies))
+
+		swap_body.swap_to_dupe(H.mind, pick(available_bodies))
 
 //If you're cloned you get your body pool back
 /datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
@@ -219,7 +225,7 @@
 	spare.domutcheck()
 	spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 
-	H.blood_volume = BLOOD_VOLUME_SAFE
+	H.blood_volume *= 0.45
 	H.notransform = 0
 
 	var/datum/species/jelly/slime/origin_datum = H.dna.species
@@ -228,9 +234,10 @@
 	var/datum/species/jelly/slime/spare_datum = spare.dna.species
 	spare_datum.bodies = origin_datum.bodies
 
+	H.transfer_trait_datums(spare)
 	H.mind.transfer_to(spare)
 	spare.visible_message("<span class='warning'>[H] distorts as a new body \
-		\"steps out\" of them.</span>",
+		\"steps out\" of [H.p_them()].</span>",
 		"<span class='notice'>...and after a moment of disorentation, \
 		you're besides yourself!</span>")
 
@@ -283,24 +290,31 @@
 				stat = "Unconscious"
 			if(DEAD)
 				stat = "Dead"
-		var/current = body.mind
-		var/is_conscious = (body.stat == CONSCIOUS)
+		var/occupied
+		if(body == H)
+			occupied = "owner"
+		else if(body.mind && body.mind.active)
+			occupied = "stranger"
+		else
+			occupied = "available"
 
 		L["status"] = stat
 		L["exoticblood"] = body.blood_volume
 		L["name"] = body.name
 		L["ref"] = "[REF(body)]"
-		L["is_current"] = current
+		L["occupied"] = occupied
 		var/button
-		if(current)
+		if(occupied == "owner")
 			button = "selected"
-		else if(is_conscious)
+		else if(occupied == "stranger")
+			button = "danger"
+		else if(can_swap(body))
 			button = null
 		else
 			button = "disabled"
 
 		L["swap_button_state"] = button
-		L["swappable"] = !current && is_conscious
+		L["swappable"] = (occupied == "available") && can_swap(body)
 
 		data["bodies"] += list(L)
 
@@ -312,38 +326,54 @@
 	var/mob/living/carbon/human/H = owner
 	if(!isslimeperson(owner))
 		return
-	var/datum/species/jelly/slime/SS = H.dna.species
-
-	var/datum/mind/M
-	for(var/mob/living/L in SS.bodies)
-		if(L.mind && L.mind.active)
-			M = L.mind
-	if(!M)
+	if(!H.mind || !H.mind.active)
 		return
-	if(!isslimeperson(M.current))
-		return
-
 	switch(action)
 		if("swap")
 			var/mob/living/carbon/human/selected = locate(params["ref"])
-			if(!(selected in SS.bodies))
+			if(!can_swap(selected))
 				return
-			if(!selected || QDELETED(selected) || !isslimeperson(selected))
-				SS.bodies -= selected
-				return
-			if(M.current == selected)
-				return
-			if(selected.stat != CONSCIOUS)
-				return
-			swap_to_dupe(M, selected)
+			SStgui.close_uis(src)
+			swap_to_dupe(H.mind, selected)
+
+/datum/action/innate/swap_body/proc/can_swap(mob/living/carbon/human/dupe)
+	var/mob/living/carbon/human/H = owner
+	if(!isslimeperson(H))
+		return FALSE
+	var/datum/species/jelly/slime/SS = H.dna.species
+
+	if(QDELETED(dupe)) 					//Is there a body?
+		SS.bodies -= dupe
+		return FALSE
+
+	if(!isslimeperson(dupe)) 			//Is it a slimeperson?
+		SS.bodies -= dupe
+		return FALSE
+
+	if(dupe.stat == DEAD) 				//Is it alive?
+		return FALSE
+
+	if(dupe.stat != CONSCIOUS) 			//Is it awake?
+		return FALSE
+
+	if(dupe.mind && dupe.mind.active) 	//Is it unoccupied?
+		return FALSE
+
+	if(!(dupe in SS.bodies))			//Do we actually own it?
+		return FALSE
+
+	return TRUE
 
 /datum/action/innate/swap_body/proc/swap_to_dupe(datum/mind/M, mob/living/carbon/human/dupe)
+	if(!can_swap(dupe)) //sanity check
+		return
 	if(M.current.stat == CONSCIOUS)
 		M.current.visible_message("<span class='notice'>[M.current] \
 			stops moving and starts staring vacantly into space.</span>",
 			"<span class='notice'>You stop moving this body...</span>")
 	else
 		to_chat(M.current, "<span class='notice'>You abandon this body...</span>")
+	M.current.transfer_trait_datums(dupe)
 	M.transfer_to(dupe)
 	dupe.visible_message("<span class='notice'>[dupe] blinks and looks \
 		around.</span>",
@@ -507,6 +537,7 @@
 	CHECK_DNA_AND_SPECIES(H)
 
 	if(species.current_extract)
+		species.extract_cooldown = world.time + 100
 		var/cooldown = species.current_extract.activate(H, species, activation_type)
 		species.extract_cooldown = world.time + cooldown
 

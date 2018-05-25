@@ -233,7 +233,7 @@
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
-	if(M.status_flags & FAKEDEATH)
+	if(M.has_trait(TRAIT_FAKEDEATH))
 		return power
 	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
 		return power * 0.9
@@ -249,7 +249,7 @@
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
 	if(deathgasp)
 		M.emote("deathgasp")
-	M.status_flags |= FAKEDEATH
+	M.fakedeath("regenerative_coma")
 	M.update_stat()
 	M.update_canmove()
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
@@ -258,7 +258,7 @@
 	if(!active_coma)
 		return
 	active_coma = FALSE
-	M.status_flags &= ~FAKEDEATH
+	M.cure_fakedeath("regenerative_coma")
 	M.update_stat()
 	M.update_canmove()
 
@@ -384,11 +384,11 @@
 		to_chat(M, "<span class='notice'>You feel yourself absorbing plasma inside and around you...</span>")
 
 	if(M.bodytemperature > BODYTEMP_NORMAL)
-		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT))
+		M.adjust_bodytemperature(-20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,BODYTEMP_NORMAL)
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel less hot.</span>")
 	else if(M.bodytemperature < (BODYTEMP_NORMAL + 1))
-		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT))
+		M.adjust_bodytemperature(20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,0,BODYTEMP_NORMAL)
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel warmer.</span>")
 

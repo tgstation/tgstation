@@ -42,7 +42,7 @@
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
-/turf/open/floor/mineral/plasma/attackby(obj/item/W as obj, mob/user as mob, params)
+/turf/open/floor/mineral/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma flooring was ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
 		log_game("Plasma flooring was ignited by [key_name(user)] in [COORD(src)]")
@@ -219,6 +219,7 @@
 	icon_state = "alienpod1"
 	floor_tile = /obj/item/stack/tile/mineral/abductor
 	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
+	baseturfs = /turf/open/floor/plating/abductor2
 
 /turf/open/floor/mineral/abductor/Initialize()
 	. = ..()
@@ -229,6 +230,3 @@
 
 /turf/open/floor/mineral/abductor/burn_tile()
 	return //unburnable
-
-/turf/open/floor/mineral/abductor/make_plating()
-	return ChangeTurf(/turf/open/floor/plating/abductor2)

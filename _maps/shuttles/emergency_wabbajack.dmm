@@ -154,7 +154,6 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	timid = 1;
 	name = "NT Lepton Violet"
 	},
 /turf/open/floor/plating,

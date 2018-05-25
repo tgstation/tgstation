@@ -13,6 +13,9 @@
 	desc = "They look like human remains. They have a strange aura about them."
 	icon_state = "remains"
 
+/obj/effect/decal/remains/plasma
+	icon_state = "remainsplasma"
+
 /obj/effect/decal/remains/xeno
 	desc = "They look like the remains of something... alien. They have a strange aura about them."
 	icon_state = "remainsxeno"

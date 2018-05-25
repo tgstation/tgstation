@@ -268,7 +268,6 @@
 	id = "smoke_powder_smoke"
 	required_reagents = list("smoke_powder" = 1)
 	required_temp = 374
-	secondary = 1
 	mob_react = FALSE
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, created_volume)
@@ -346,15 +345,17 @@
 	id = "cryostylane_oxygen"
 	results = list("cryostylane" = 1)
 	required_reagents = list("cryostylane" = 1, "oxygen" = 1)
+	mob_react = FALSE
 
 /datum/chemical_reaction/cryostylane_oxygen/on_reaction(datum/reagents/holder, created_volume)
-	holder.chem_temp -= 10*created_volume
+	holder.chem_temp = max(holder.chem_temp - 10*created_volume,0)
 
 /datum/chemical_reaction/pyrosium_oxygen
 	name = "ephemeral pyrosium reaction"
 	id = "pyrosium_oxygen"
 	results = list("pyrosium" = 1)
 	required_reagents = list("pyrosium" = 1, "oxygen" = 1)
+	mob_react = FALSE
 
 /datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp += 10*created_volume
@@ -377,6 +378,13 @@
 	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
 	required_temp = 400
 
+/datum/chemical_reaction/energized_jelly
+	name = "Energized Jelly"
+	id = "energized_jelly"
+	results = list("energized_jelly" = 2)
+	required_reagents = list("slimejelly" = 1, "teslium" = 1)
+	mix_message = "<span class='danger'>The slime jelly starts glowing intermittently.</span>"
+
 /datum/chemical_reaction/reagent_explosion/teslium_lightning
 	name = "Teslium Destabilization"
 	id = "teslium_lightning"
@@ -385,6 +393,7 @@
 	modifier = -100
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
 	mix_sound = 'sound/machines/defib_zap.ogg'
+	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, created_volume)
 	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
@@ -392,15 +401,15 @@
 	var/T3 = created_volume * 120
 	sleep(5)
 	if(created_volume >= 75)
-		tesla_zap(holder.my_atom, 7, T1)
+		tesla_zap(holder.my_atom, 7, T1, tesla_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 		sleep(15)
 	if(created_volume >= 40)
-		tesla_zap(holder.my_atom, 7, T2)
+		tesla_zap(holder.my_atom, 7, T2, tesla_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 		sleep(15)
 	if(created_volume >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
-		tesla_zap(holder.my_atom, 7, T3)
+		tesla_zap(holder.my_atom, 7, T3, tesla_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 	..()
 
@@ -416,3 +425,11 @@
 	strengthdiv = 7
 	required_temp = 575
 	modifier = 1
+
+/datum/chemical_reaction/firefighting_foam
+	name = "Firefighting Foam"
+	id = "firefighting_foam"
+	results = list("firefighting_foam" = 3)
+	required_reagents = list("stabilizing_agent" = 1,"fluorosurfactant" = 1,"carbon" = 1)
+	required_temp = 200
+	is_cold_recipe = 1

@@ -19,7 +19,7 @@
 	area_type = /area
 	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer,
 	/area/ai_monitored/turret_protected/ai, /area/storage/emergency/starboard, /area/storage/emergency/port, /area/shuttle)
-	target_z = ZLEVEL_STATION_PRIMARY
+	target_trait = ZTRAIT_STATION
 
 	immunity_type = "rad"
 
@@ -33,16 +33,15 @@
 	if(prob(40))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
-			if(H.dna && H.dna.species)
-				if(!(RADIMMUNE in H.dna.species.species_traits))
-					if(prob(max(0,100-resist)))
-						H.randmuti()
-						if(prob(50))
-							if(prob(90))
-								H.randmutb()
-							else
-								H.randmutg()
-							H.domutcheck()
+			if(H.dna && !H.has_trait(TRAIT_RADIMMUNE))
+				if(prob(max(0,100-resist)))
+					H.randmuti()
+					if(prob(50))
+						if(prob(90))
+							H.randmutb()
+						else
+							H.randmutg()
+						H.domutcheck()
 		L.rad_act(20)
 
 /datum/weather/rad_storm/end()

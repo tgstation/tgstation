@@ -3,7 +3,6 @@
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M)
 	..()
 	switch(M.a_intent)
-
 		if("help")
 			if (health > 0)
 				visible_message("<span class='notice'>[M] [response_help] [src].</span>")
@@ -13,6 +12,9 @@
 			grabbedby(M)
 
 		if("harm", "disarm")
+			if(M.has_trait(TRAIT_PACIFISM))
+				to_chat(M, "<span class='notice'>You don't want to hurt [src]!</span>")
+				return
 			M.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>",\
 			"<span class='userdanger'>[M] [response_harm] [src]!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -20,16 +22,19 @@
 			attack_threshold_check(harm_intent_damage)
 			add_logs(M, src, "attacked")
 			updatehealth()
-			return 1
+			return TRUE
 
 /mob/living/simple_animal/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)
+		if(user.has_trait(TRAIT_PACIFISM))
+			to_chat(user, "<span class='notice'>You don't want to hurt [src]!</span>")
+			return FALSE
 		..(user, 1)
 		playsound(loc, "punch", 25, 1, -1)
 		visible_message("<span class='danger'>[user] has punched [src]!</span>", \
 			"<span class='userdanger'>[user] has punched [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 		adjustBruteLoss(15)
-		return 1
+		return TRUE
 
 /mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)
 	if(..()) //successful monkey bite.
@@ -134,7 +139,7 @@
 	adjustBruteLoss(20)
 	return
 
-/mob/living/simple_animal/do_attack_animation(atom/A, visual_effect_icon, used_item, no_effect, end_pixel_y)
+/mob/living/simple_animal/do_attack_animation(atom/A, visual_effect_icon, used_item, no_effect)
 	if(!no_effect && !visual_effect_icon && melee_damage_upper)
 		if(melee_damage_upper < 10)
 			visual_effect_icon = ATTACK_EFFECT_PUNCH

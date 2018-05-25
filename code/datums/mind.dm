@@ -111,7 +111,7 @@
 	if(current)
 		current.transfer_observers_to(new_character)	//transfer anyone observing the old character to the new one
 	current = new_character								//associate ourself with our new body
-	new_character.mind = src							//and associate our new body with ourself		
+	new_character.mind = src							//and associate our new body with ourself
 	for(var/a in antag_datums)	//Makes sure all antag datums effects are applied in the new body
 		var/datum/antagonist/A = a
 		A.on_body_transfer(old_current, current)
@@ -196,12 +196,12 @@
 
 /datum/mind/proc/remove_traitor()
 	if(src in SSticker.mode.traitors)
-		remove_antag_datum(ANTAG_DATUM_TRAITOR)
+		remove_antag_datum(/datum/antagonist/traitor)
 	SSticker.mode.update_traitor_icons_removed(src)
 
 /datum/mind/proc/remove_brother()
 	if(src in SSticker.mode.brothers)
-		remove_antag_datum(ANTAG_DATUM_BROTHER)
+		remove_antag_datum(/datum/antagonist/brother)
 	SSticker.mode.update_brother_icons_removed(src)
 
 /datum/mind/proc/remove_nukeop()
@@ -230,12 +230,12 @@
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
 	for(var/obj/item/I in Mob_Contents)
-		if(istype(I, /obj/item/device/pda))
-			var/obj/item/device/pda/P = I
+		if(istype(I, /obj/item/pda))
+			var/obj/item/pda/P = I
 			P.lock_code = ""
 
-		else if(istype(I, /obj/item/device/radio))
-			var/obj/item/device/radio/R = I
+		else if(istype(I, /obj/item/radio))
+			var/obj/item/radio/R = I
 			R.traitor_frequency = 0
 
 /datum/mind/proc/remove_all_antag() //For the Lazy amongst us.
@@ -254,17 +254,25 @@
 	var/mob/living/carbon/human/traitor_mob = current
 	if (!istype(traitor_mob))
 		return
-	. = 1
+	. = TRUE
 
 	var/list/all_contents = traitor_mob.GetAllContents()
-	var/obj/item/device/pda/PDA = locate() in all_contents
-	var/obj/item/device/radio/R = locate() in all_contents
+	var/obj/item/pda/PDA = locate() in all_contents
+	var/obj/item/radio/R = locate() in all_contents
 	var/obj/item/pen/P
 
 	if (PDA) // Prioritize PDA pen, otherwise the pocket protector pens will be chosen, which causes numerous ahelps about missing uplink
 		P = locate() in PDA
 	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
 		P = locate() in all_contents
+		if(!P) // I do not have a pen.
+			var/obj/item/pen/inowhaveapen
+			if(istype(traitor_mob.back,/obj/item/storage)) //ok buddy you better have a backpack!
+				inowhaveapen = new /obj/item/pen(traitor_mob.back)
+			else
+				inowhaveapen = new /obj/item/pen(traitor_mob.loc)
+				traitor_mob.put_in_hands(inowhaveapen) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
+			P = inowhaveapen
 
 	var/obj/item/uplink_loc
 
@@ -296,7 +304,7 @@
 	else
 		uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
 		var/unlock_note
-		
+
 		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
 
@@ -316,7 +324,7 @@
 			if(!silent)
 				to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
 			unlock_note = "<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name])."
-		
+
 		if(uplink_owner)
 			uplink_owner.antag_memory += unlock_note + "<br>"
 		else
@@ -671,27 +679,27 @@
 	qdel(find_syndicate_uplink())
 
 /datum/mind/proc/make_Traitor()
-	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
+	if(!(has_antag_datum(/datum/antagonist/traitor)))
 		add_antag_datum(/datum/antagonist/traitor)
 
 /datum/mind/proc/make_Changling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
 	if(!C)
 		C = add_antag_datum(/datum/antagonist/changeling)
-		special_role = "Changeling"
+		special_role = ROLE_CHANGELING
 	return C
 
 /datum/mind/proc/make_Wizard()
 	if(!has_antag_datum(/datum/antagonist/wizard))
-		special_role = "Wizard"
-		assigned_role = "Wizard"
+		special_role = ROLE_WIZARD
+		assigned_role = ROLE_WIZARD
 		add_antag_datum(/datum/antagonist/wizard)
 
 
 /datum/mind/proc/make_Cultist()
 	if(!has_antag_datum(/datum/antagonist/cult,TRUE))
 		SSticker.mode.add_cultist(src,FALSE,equip=TRUE)
-		special_role = "Cultist"
+		special_role = ROLE_CULTIST
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy your world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new bretheren in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
 
@@ -700,7 +708,7 @@
 	head.give_flash = TRUE
 	head.give_hud = TRUE
 	add_antag_datum(head)
-	special_role = "Head Revolutionary"
+	special_role = ROLE_REV_HEAD
 
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S
@@ -766,6 +774,13 @@
 	if(G)
 		G.reenter_corpse()
 
+
+/datum/mind/proc/has_objective(objective_type)
+	for(var/datum/antagonist/A in antag_datums)
+		for(var/O in A.objectives)
+			if(istype(O,objective_type))
+				return TRUE
+
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
@@ -798,11 +813,6 @@
 	if(!mind.assigned_role)
 		mind.assigned_role = "Unassigned" //default
 
-//XENO
-/mob/living/carbon/alien/mind_initialize()
-	..()
-	mind.special_role = "Alien"
-
 //AI
 /mob/living/silicon/ai/mind_initialize()
 	..()
@@ -816,5 +826,5 @@
 //PAI
 /mob/living/silicon/pai/mind_initialize()
 	..()
-	mind.assigned_role = "pAI"
+	mind.assigned_role = ROLE_PAI
 	mind.special_role = ""

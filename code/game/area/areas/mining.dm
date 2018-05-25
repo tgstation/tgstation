@@ -65,12 +65,6 @@
 /area/mine/sleeper
 	name = "Mining Station Emergency Sleeper"
 
-/area/mine/north_outpost
-	name = "North Mining Outpost"
-
-/area/mine/west_outpost
-	name = "West Mining Outpost"
-
 /area/mine/laborcamp
 	name = "Labor Camp"
 

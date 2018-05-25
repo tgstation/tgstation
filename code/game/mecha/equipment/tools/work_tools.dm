@@ -10,6 +10,7 @@
 	energy_drain = 10
 	var/dam_force = 20
 	var/obj/mecha/working/ripley/cargo_holder
+	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/mecha/working/ripley/M as obj)
 	if(..())
@@ -127,11 +128,10 @@
 	energy_drain = 0
 	range = MELEE|RANGED
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/New()
+/obj/item/mecha_parts/mecha_equipment/extinguisher/Initialize()
+	. = ..()
 	create_reagents(1000)
 	reagents.add_reagent("water", 1000)
-	..()
-	return
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
 	if(!action_checks(target) || get_dist(chassis, target)>3)
@@ -194,12 +194,12 @@
 	equip_cooldown = 10
 	energy_drain = 250
 	range = MELEE|RANGED
-	flags_2 = NO_MAT_REDEMPTION_2
+	item_flags = NO_MAT_REDEMPTION
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 
-/obj/item/mecha_parts/mecha_equipment/rcd/New()
+/obj/item/mecha_parts/mecha_equipment/rcd/Initialize()
+	. = ..()
 	GLOB.rcd_list += src
-	..()
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
  	GLOB.rcd_list -= src
@@ -299,10 +299,9 @@
 	var/obj/item/stack/cable_coil/cable
 	var/max_cable = 1000
 
-/obj/item/mecha_parts/mecha_equipment/cable_layer/New()
-	cable = new(src)
-	cable.amount = 0
-	..()
+/obj/item/mecha_parts/mecha_equipment/cable_layer/Initialize()
+	. = ..()
+	cable = new(src, 0)
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/can_attach(obj/mecha/working/M)
 	if(..())
@@ -333,8 +332,7 @@
 		if(to_load)
 			to_load = min(target.amount, to_load)
 			if(!cable)
-				cable = new(src)
-				cable.amount = 0
+				cable = new(src, 0)
 			cable.amount += to_load
 			target.use(to_load)
 			occupant_message("<span class='notice'>[to_load] meters of cable successfully loaded.</span>")
@@ -358,8 +356,7 @@
 			m = min(m, cable.amount)
 			if(m)
 				use_cable(m)
-				var/obj/item/stack/cable_coil/CC = new (get_turf(chassis))
-				CC.amount = m
+				new /obj/item/stack/cable_coil(get_turf(chassis), m)
 		else
 			occupant_message("There's no more cable on the reel.")
 	return

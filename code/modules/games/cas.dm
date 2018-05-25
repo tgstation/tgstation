@@ -3,7 +3,11 @@
 // which is licensed under CC BY-NC-SA 2.0, the full text of which can be found at the following URL:
 // https://creativecommons.org/licenses/by-nc-sa/2.0/legalcode
 // Original code by Zuhayr, Polaris Station, ported with modifications
-
+/datum/playingcard
+	var/name = "playing card"
+	var/card_icon = "card_back"
+	var/suit
+	var/number
 
 /obj/item/toy/cards/deck/cas
 	name = "\improper CAS deck (white)"
@@ -55,6 +59,9 @@
 	shuffle_inplace(cards) // distribute blank cards throughout deck
 
 /obj/item/toy/cards/deck/cas/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(user.lying)
 		return
 	if(cards.len == 0)
@@ -117,7 +124,7 @@
 	set name = "Flip Card"
 	set category = "Object"
 	set src in range(1)
-	if(!usr.canUseTopic(src,1))
+	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
 		return
 	if(!flipped)
 		name = "CAS card"
@@ -127,7 +134,7 @@
 	update_icon()
 
 /obj/item/toy/cards/singlecard/cas/AltClick(mob/living/user)
-	if(!user.canUseTopic(src,1))
+	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	Flip()
 
@@ -139,11 +146,14 @@
 
 /obj/item/toy/cards/singlecard/cas/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/pen))
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
+			return
 		if(!blank)
 			to_chat(user, "You cannot write on that card.")
 			return
 		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
-		if(!cardtext)
+		if(!cardtext || !user.canUseTopic(src, BE_CLOSE))
 			return
 		name = cardtext
 		buffertext = cardtext

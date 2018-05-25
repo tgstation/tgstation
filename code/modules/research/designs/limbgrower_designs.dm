@@ -8,7 +8,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list("synthflesh" = 25)
 	build_path = /obj/item/bodypart/l_arm
-	category = list("initial","human","lizard","plasmaman")
+	category = list("initial","human","lizard","fly","moth","plasmaman")
 
 /datum/design/rightarm
 	name = "Right Arm"
@@ -16,7 +16,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list("synthflesh" = 25)
 	build_path = /obj/item/bodypart/r_arm
-	category = list("initial","human","lizard","plasmaman")
+	category = list("initial","human","lizard","fly","moth","plasmaman")
 
 /datum/design/leftleg
 	name = "Left Leg"
@@ -24,7 +24,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list("synthflesh" = 25)
 	build_path = /obj/item/bodypart/l_leg
-	category = list("initial","human","lizard","plasmaman")
+	category = list("initial","human","lizard","fly","moth","plasmaman")
 
 /datum/design/rightleg
 	name = "Right Leg"
@@ -32,7 +32,7 @@
 	build_type = LIMBGROWER
 	reagents_list = list("synthflesh" = 25)
 	build_path = /obj/item/bodypart/r_leg
-	category = list("initial","human","lizard","plasmaman")
+	category = list("initial","human","lizard","fly","moth","plasmaman")
 
 /datum/design/armblade
 	name = "Arm Blade"
@@ -40,4 +40,4 @@
 	build_type = LIMBGROWER
 	reagents_list = list("synthflesh" = 75)
 	build_path = /obj/item/melee/synthetic_arm_blade
-	category = list("special")
+	category = list("other","emagged")

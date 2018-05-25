@@ -85,11 +85,17 @@
 		return
 	var/turf/newLoc = get_step(src,direction)
 	setDir(direction)
-	if(!(newLoc.flags_1 & NOJAUNT_1))
-		forceMove(newLoc)
-	else
-		to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")
+
 	movedelay = world.time + movespeed
+
+	if(newLoc.flags_1 & NOJAUNT_1)
+		to_chat(user, "<span class='warning'>Some strange aura is blocking the way.</span>")
+		return
+	if (locate(/obj/effect/blessing, newLoc))
+		to_chat(user, "<span class='warning'>Holy energies block your path!</span>")
+		return
+
+	forceMove(newLoc)
 
 /obj/effect/dummy/spell_jaunt/ex_act(blah)
 	return

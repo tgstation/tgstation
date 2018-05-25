@@ -3,10 +3,9 @@
 	plane = GAME_PLANE
 	var/level = 2
 
-	var/flags_1 = 0
-	var/flags_2 = 0
+	var/flags_1 = NONE
+	var/interaction_flags_atom = NONE
 	var/container_type = NONE
-	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
 	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
@@ -19,20 +18,20 @@
 
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
-	var/initialized = FALSE
 
 	var/list/our_overlays	//our local copy of (non-priority) overlays without byond magic. Use procs in SSoverlays to manipulate
 	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
 
 	var/datum/proximity_monitor/proximity_monitor
 	var/buckle_message_cooldown = 0
+	var/fingerprintslast
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		GLOB._preloader.load(src)
 
-	if(use_tag)
+	if(datum_flags & DF_USE_TAG)
 		GenerateTag()
 
 	var/do_initialize = SSatoms.initialized
@@ -58,9 +57,9 @@
 // /turf/open/space/Initialize
 
 /atom/proc/Initialize(mapload, ...)
-	if(initialized)
+	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
+	flags_1 |= INITIALIZED_1
 
 	//atom color stuff
 	if(color)
@@ -220,9 +219,10 @@
 	return
 
 /atom/proc/emp_act(severity)
-	SendSignal(COMSIG_ATOM_EMP_ACT, severity)
-	if(istype(wires) && !(flags_2 & NO_EMP_WIRES_2))
+	var/protection = SendSignal(COMSIG_ATOM_EMP_ACT, severity)
+	if(!(protection & EMP_PROTECT_WIRES) && istype(wires))
 		wires.emp_pulse()
+	return protection // Pass the protection value collected here upwards
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
 	SendSignal(COMSIG_ATOM_BULLET_ACT, P, def_zone)
@@ -303,6 +303,9 @@
 	if(AM && isturf(AM.loc))
 		step(AM, turn(AM.dir, 180))
 
+/atom/proc/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
+	return
+
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
 	if(get_blood_id() != "blood")
@@ -353,9 +356,6 @@
 /atom/proc/handle_fall()
 	return
 
-/atom/proc/handle_slip()
-	return
-
 /atom/proc/singularity_act()
 	return
 
@@ -369,7 +369,7 @@
 	SendSignal(COMSIG_ATOM_EMAG_ACT)
 
 /atom/proc/rad_act(strength)
-	SendSignal(COMSIG_ATOM_RAD_ACT)
+	SendSignal(COMSIG_ATOM_RAD_ACT, strength)
 
 /atom/proc/narsie_act()
 	SendSignal(COMSIG_ATOM_NARSIE_ACT)
@@ -385,13 +385,31 @@
 	return FALSE
 
 /atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-	return 0
+	if(GetComponent(/datum/component/storage))
+		return component_storage_contents_dump_act(src_object, user)
+	return FALSE
+
+/atom/proc/component_storage_contents_dump_act(datum/component/storage/src_object, mob/user)
+	var/list/things = src_object.contents()
+	var/datum/progressbar/progress = new(user, things.len, src)
+	GET_COMPONENT(STR, /datum/component/storage)
+	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
+		stoplag(1)
+	qdel(progress)
+	to_chat(user, "<span class='notice'>You dump as much of [src_object.parent]'s contents into [STR.insert_preposition]to [src] as you can.</span>")
+	STR.orient2hud(user)
+	src_object.orient2hud(user)
+	if(user.active_storage) //refresh the HUD to show the transfered contents
+		user.active_storage.close(user)
+		user.active_storage.show_to(user)
+	return TRUE
 
 /atom/proc/get_dumping_location(obj/item/storage/source,mob/user)
 	return null
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
+	SendSignal(COMSIG_ATOM_CONTENTS_DEL, A)
 
 //called when the turf the atom resides on is ChangeTurfed
 /atom/proc/HandleTurfChange(turf/T)
@@ -498,7 +516,7 @@
 
 /atom/vv_edit_var(var_name, var_value)
 	if(!GLOB.Debug2)
-		admin_spawned = TRUE
+		flags_1 |= ADMIN_SPAWNED_1
 	. = ..()
 	switch(var_name)
 		if("color")
@@ -510,6 +528,7 @@
 	var/turf/curturf = get_turf(src)
 	if (curturf)
 		.["Jump to"] = "?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]"
+	.["Modify Transform"] = "?_src_=vars;[HrefToken()];modtransform=[REF(src)]"
 	.["Add reagent"] = "?_src_=vars;[HrefToken()];addreagent=[REF(src)]"
 	.["Trigger EM pulse"] = "?_src_=vars;[HrefToken()];emp=[REF(src)]"
 	.["Trigger explosion"] = "?_src_=vars;[HrefToken()];explode=[REF(src)]"
@@ -523,24 +542,52 @@
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SendSignal(COMSIG_ATOM_ENTERED, AM, oldLoc)
 
+/atom/Exited(atom/movable/AM, atom/newLoc)
+	SendSignal(COMSIG_ATOM_EXITED, AM, newLoc)
+
 /atom/proc/return_temperature()
 	return
 
-// Default tool behaviors proc
+// Tool behavior procedure. Redirects to tool-specific procs by default.
+// You can override it to catch all tool interactions, for use in complex deconstruction procs.
+// Just don't forget to return ..() in the end.
+/atom/proc/tool_act(mob/living/user, obj/item/I, tool_type)
+	switch(tool_type)
+		if(TOOL_CROWBAR)
+			return crowbar_act(user, I)
+		if(TOOL_MULTITOOL)
+			return multitool_act(user, I)
+		if(TOOL_SCREWDRIVER)
+			return screwdriver_act(user, I)
+		if(TOOL_WRENCH)
+			return wrench_act(user, I)
+		if(TOOL_WIRECUTTER)
+			return wirecutter_act(user, I)
+		if(TOOL_WELDER)
+			return welder_act(user, I)
+		if(TOOL_ANALYZER)
+			return analyzer_act(user, I)
 
-/atom/proc/crowbar_act(mob/user, obj/item/tool)
+// Tool-specific behavior procs. To be overridden in subtypes.
+/atom/proc/crowbar_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/multitool_act(mob/user, obj/item/tool)
+/atom/proc/multitool_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/screwdriver_act(mob/user, obj/item/tool)
+/atom/proc/screwdriver_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/wrench_act(mob/user, obj/item/tool)
+/atom/proc/wrench_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/wirecutter_act(mob/user, obj/item/tool)
+/atom/proc/wirecutter_act(mob/living/user, obj/item/I)
+	return
+
+/atom/proc/welder_act(mob/living/user, obj/item/I)
+	return
+
+/atom/proc/analyzer_act(mob/living/user, obj/item/I)
 	return
 
 /atom/proc/GenerateTag()

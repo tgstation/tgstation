@@ -15,7 +15,6 @@
 	bitesize = 4
 	w_class = WEIGHT_CLASS_SMALL
 	volume = 80
-	unique_rename = 1
 
 	var/ingMax = 12
 	var/list/ingredients = list()
@@ -159,7 +158,7 @@
 	desc = "A timeless classic."
 	ingredients_placement = INGREDIENTS_STACKPLUSTOP
 	icon = 'icons/obj/food/burgerbread.dmi'
-	icon_state = "bun"
+	icon_state = "custburg"
 	foodtype = GRAIN
 
 

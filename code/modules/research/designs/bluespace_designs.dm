@@ -9,7 +9,7 @@
 	id = "beacon"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 150, MAT_GLASS = 100)
-	build_path = /obj/item/device/radio/beacon
+	build_path = /obj/item/beacon
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY
 
@@ -30,7 +30,7 @@
 	id = "bluespace_crystal"
 	build_type = PROTOLATHE
 	materials = list(MAT_DIAMOND = 1500, MAT_PLASMA = 1500)
-	build_path = /obj/item/ore/bluespace_crystal/artificial
+	build_path = /obj/item/stack/ore/bluespace_crystal/artificial
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
@@ -40,7 +40,7 @@
 	id = "telesci_gps"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
-	build_path = /obj/item/device/gps
+	build_path = /obj/item/gps
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 

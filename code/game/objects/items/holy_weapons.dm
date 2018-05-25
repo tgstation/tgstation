@@ -10,8 +10,12 @@
 	throw_range = 4
 	throwforce = 10
 	w_class = WEIGHT_CLASS_TINY
-	unique_rename = TRUE
+	obj_flags = UNIQUE_RENAME
 	var/reskinned = FALSE
+
+/obj/item/nullrod/Initialize()
+	. = ..()
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE)
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!</span>")
@@ -71,7 +75,7 @@
 	desc = "It has a mysterious, protective aura."
 	w_class = WEIGHT_CLASS_HUGE
 	force = 5
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	block_chance = 50
 	var/shield_icon = "shield-red"
 
@@ -94,7 +98,7 @@
 	name = "holy claymore"
 	desc = "A weapon fit for a crusade!"
 	w_class = WEIGHT_CLASS_HUGE
-	slot_flags = SLOT_BACK|SLOT_BELT
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	block_chance = 30
 	sharpness = IS_SHARP
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -114,7 +118,7 @@
 	inhand_y_dimension = 64
 	name = "dark blade"
 	desc = "Spread the glory of the dark gods!"
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	hitsound = 'sound/hallucinations/growl1.ogg'
 
 /obj/item/nullrod/claymore/chainsaw_sword
@@ -122,7 +126,7 @@
 	item_state = "chainswordon"
 	name = "sacred chainsaw sword"
 	desc = "Suffer not a heretic to live."
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 
@@ -131,21 +135,21 @@
 	item_state = "swordon"
 	name = "force weapon"
 	desc = "The blade glows with the power of faith. Or possibly a battery."
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/nullrod/claymore/katana
 	name = "hanzo steel"
 	desc = "Capable of cutting clean through a holy claymore."
 	icon_state = "katana"
 	item_state = "katana"
-	slot_flags = SLOT_BELT | SLOT_BACK
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 
 /obj/item/nullrod/claymore/multiverse
 	name = "extradimensional blade"
 	desc = "Once the harbinger of an interdimensional war, its sharpness fluctuates wildly."
 	icon_state = "multiverse"
 	item_state = "multiverse"
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/nullrod/claymore/multiverse/attack(mob/living/carbon/M, mob/living/carbon/user)
 	force = rand(1, 30)
@@ -157,7 +161,7 @@
 	icon_state = "swordblue"
 	item_state = "swordblue"
 	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/nullrod/claymore/saber/red
 	name = "dark energy sword"
@@ -178,7 +182,7 @@
 	item_state = "sord"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 4.13
 	throwforce = 1
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -193,9 +197,13 @@
 	desc = "Ask not for whom the bell tolls..."
 	w_class = WEIGHT_CLASS_BULKY
 	armour_penetration = 35
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	sharpness = IS_SHARP
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
+
+/obj/item/nullrod/scythe/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 70, 110) //the harvest gives a high bonus chance
 
 /obj/item/nullrod/scythe/vibro
 	icon_state = "hfrequency0"
@@ -241,14 +249,13 @@
 	possessed = TRUE
 
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
-	var/mob/dead/observer/theghost = null
 
 	if(LAZYLEN(candidates))
-		theghost = pick(candidates)
+		var/mob/dead/observer/C = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name
 		S.name = name
-		S.ckey = theghost.ckey
+		S.ckey = C.ckey
 		S.status_flags |= GODMODE
 		S.language_holder = user.language_holder.copy(S)
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
@@ -267,6 +274,17 @@
 		qdel(S)
 	return ..()
 
+/obj/item/nullrod/scythe/talking/chainsword
+	icon_state = "chainswordon"
+	item_state = "chainswordon"
+	name = "possessed chainsaw sword"
+	desc = "Suffer not a heretic to live."
+	slot_flags = ITEM_SLOT_BELT
+	force = 30
+	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
+	hitsound = 'sound/weapons/chainsawhit.ogg'
+
+
 /obj/item/nullrod/hammmer
 	icon_state = "hammeron"
 	item_state = "hammeron"
@@ -274,7 +292,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "relic war hammer"
 	desc = "This war hammer cost the chaplain forty thousand space dollars."
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb = list("smashed", "bashed", "hammered", "crunched")
 
@@ -290,6 +308,10 @@
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+
+/obj/item/nullrod/chainsaw/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
 
 /obj/item/nullrod/clown
 	icon = 'icons/obj/wizard.dmi'
@@ -308,7 +330,7 @@
 	force = 16
 	throwforce = 15
 	w_class = 4
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	attack_verb = list("attacked", "smashed", "crushed", "splattered", "cracked")
 	hitsound = 'sound/weapons/blade1.ogg'
 
@@ -328,7 +350,7 @@
 	item_state = "chain"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("whipped", "lashed")
 	hitsound = 'sound/weapons/chainhit.ogg'
 
@@ -337,7 +359,7 @@
 	desc = "The brim of the hat is as sharp as your wit. The edge would hurt almost as much as disproving the existence of God."
 	icon_state = "fedora"
 	item_state = "fedora"
-	slot_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD
 	icon = 'icons/obj/clothing/hats.dmi'
 	force = 0
 	throw_speed = 4
@@ -356,6 +378,10 @@
 	flags_1 = ABSTRACT_1 | NODROP_1
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
+
+/obj/item/nullrod/armblade/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 80, 70)
 
 /obj/item/nullrod/armblade/tentacle
 	name = "unholy blessing"
@@ -388,7 +414,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 15
 	block_chance = 40
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	sharpness = IS_BLUNT
 	hitsound = "swing_hit"
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
@@ -410,12 +436,12 @@
 	slot_flags = null
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	flags_2 = SLOWS_WHILE_IN_HAND_2
+	item_flags = SLOWS_WHILE_IN_HAND
 
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-
+	AddComponent(/datum/component/butchering, 50, 100)
 
 /obj/item/nullrod/tribal_knife/Destroy()
 	STOP_PROCESSING(SSobj, src)

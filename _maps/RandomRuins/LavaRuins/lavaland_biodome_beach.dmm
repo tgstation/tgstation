@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
@@ -54,7 +54,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "an" = (
-/obj/item/device/flashlight/lantern,
+/obj/item/flashlight/lantern,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -146,7 +146,7 @@
 /area/ruin/powered/beach)
 "aF" = (
 /obj/machinery/vending/boozeomat{
-	emagged = 1;
+	set_obj_flags = "EMAGGED";
 	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
@@ -207,7 +207,7 @@
 /area/ruin/powered/beach)
 "aQ" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aR" = (
@@ -341,7 +341,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/obj/item/device/megaphone,
+/obj/item/megaphone,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "bH" = (
@@ -382,7 +382,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bO" = (
-/obj/item/device/camera,
+/obj/item/camera,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bP" = (
@@ -457,11 +457,6 @@
 "ct" = (
 /obj/machinery/light,
 /turf/open/floor/plating/beach/water,
-/area/ruin/powered/beach)
-"cz" = (
-/obj/effect/turf_decal/sand,
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "cR" = (
 /obj/structure/table/wood,
@@ -1029,7 +1024,7 @@ aK
 aK
 aK
 aK
-cz
+aA
 ar
 ar
 ar

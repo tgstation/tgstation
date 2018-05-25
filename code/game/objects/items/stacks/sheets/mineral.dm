@@ -19,9 +19,6 @@ Mineral Sheets
 		- Abductor
 */
 
-/obj/item/stack/sheet/mineral
-	icon = 'icons/obj/mining.dmi'
-
 /obj/item/stack/sheet/mineral/Initialize(mapload)
 	pixel_x = rand(-4, 4)
 	pixel_y = rand(-4, 4)
@@ -36,7 +33,7 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 2, 4, 20), \
 	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("Breakdown into sand", /obj/item/ore/glass, 1, one_per_turf = 0, on_floor = 1) \
+	new/datum/stack_recipe("Breakdown into sand", /obj/item/stack/ore/glass, 1, one_per_turf = 0, on_floor = 1) \
 	))
 
 /obj/item/stack/sheet/mineral/sandstone
@@ -44,6 +41,7 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	desc = "This appears to be a combination of both sand and stone."
 	singular_name = "sandstone brick"
 	icon_state = "sheet-sandstone"
+	item_state = "sheet-sandstone"
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
@@ -62,7 +60,6 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/sandbags
 	name = "sandbags"
-	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "sandbags"
 	singular_name = "sandbag"
 	layer = LOW_ITEM_LAYER
@@ -84,12 +81,13 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/emptysandbag/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/ore/glass))
+	if(istype(W, /obj/item/stack/ore/glass))
+		var/obj/item/stack/ore/glass/G = W
 		to_chat(user, "<span class='notice'>You fill the sandbag.</span>")
 		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
 		qdel(src)
 		user.put_in_hands(I)
-		qdel(W)
+		G.use(1)
 	else
 		return ..()
 
@@ -99,10 +97,12 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 /obj/item/stack/sheet/mineral/diamond
 	name = "diamond"
 	icon_state = "sheet-diamond"
+	item_state = "sheet-diamond"
 	singular_name = "diamond"
 	sheettype = "diamond"
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	novariants = TRUE
+	grind_results = list("carbon" = 20)
 
 GLOBAL_LIST_INIT(diamond_recipes, list ( \
 	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, one_per_turf = 1, on_floor = 1), \
@@ -122,6 +122,7 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 /obj/item/stack/sheet/mineral/uranium
 	name = "uranium"
 	icon_state = "sheet-uranium"
+	item_state = "sheet-uranium"
 	singular_name = "uranium sheet"
 	sheettype = "uranium"
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
@@ -145,12 +146,17 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 /obj/item/stack/sheet/mineral/plasma
 	name = "solid plasma"
 	icon_state = "sheet-plasma"
+	item_state = "sheet-plasma"
 	singular_name = "plasma sheet"
 	sheettype = "plasma"
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	grind_results = list("plasma" = 20)
+
+/obj/item/stack/sheet/mineral/plasma/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins licking \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return TOXLOSS//dont you kids know that stuff is toxic?
 
 GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10, one_per_turf = 1, on_floor = 1), \
@@ -181,6 +187,7 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 /obj/item/stack/sheet/mineral/gold
 	name = "gold"
 	icon_state = "sheet-gold"
+	item_state = "sheet-gold"
 	singular_name = "gold bar"
 	sheettype = "gold"
 	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
@@ -207,6 +214,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 /obj/item/stack/sheet/mineral/silver
 	name = "silver"
 	icon_state = "sheet-silver"
+	item_state = "sheet-silver"
 	singular_name = "silver bar"
 	sheettype = "silver"
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
@@ -232,6 +240,7 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 /obj/item/stack/sheet/mineral/bananium
 	name = "bananium"
 	icon_state = "sheet-bananium"
+	item_state = "sheet-bananium"
 	singular_name = "bananium sheet"
 	sheettype = "bananium"
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
@@ -253,6 +262,7 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 /obj/item/stack/sheet/mineral/titanium
 	name = "titanium"
 	icon_state = "sheet-titanium"
+	item_state = "sheet-titanium"
 	singular_name = "titanium sheet"
 	force = 5
 	throwforce = 5
@@ -280,6 +290,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 /obj/item/stack/sheet/mineral/plastitanium
 	name = "plastitanium"
 	icon_state = "sheet-plastitanium"
+	item_state = "sheet-plastitanium"
 	singular_name = "plastitanium sheet"
 	force = 5
 	throwforce = 5
@@ -287,7 +298,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	throw_speed = 1
 	throw_range = 3
 	sheettype = "plastitanium"
-	materials = list(MAT_TITANIUM=2000, MAT_PLASMA=2000)
+	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT, MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 
 GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	new/datum/stack_recipe("plas-titanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20), \
@@ -304,6 +315,7 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 /obj/item/stack/sheet/mineral/snow
 	name = "snow"
 	icon_state = "sheet-snow"
+	item_state = "sheet-snow"
 	singular_name = "snow block"
 	force = 1
 	throwforce = 2
@@ -322,15 +334,6 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 /****************************** Others ****************************/
 
 /*
- * Enriched Uranium
- */
-/obj/item/stack/sheet/mineral/enruranium
-	name = "enriched uranium"
-	icon_state = "sheet-enruranium"
-	singular_name = "enriched uranium sheet"
-	materials = list(MAT_URANIUM=3000)
-
-/*
  * Adamantine
  */
 GLOBAL_LIST_INIT(adamantine_recipes, list(
@@ -340,6 +343,7 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 /obj/item/stack/sheet/mineral/adamantine
 	name = "adamantine"
 	icon_state = "sheet-adamantine"
+	item_state = "sheet-adamantine"
 	singular_name = "adamantine sheet"
 
 /obj/item/stack/sheet/mineral/adamantine/Initialize(mapload, new_amount, merge = TRUE)
@@ -352,6 +356,7 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 /obj/item/stack/sheet/mineral/mythril
 	name = "mythril"
 	icon_state = "sheet-mythril"
+	item_state = "sheet-mythril"
 	singular_name = "mythril sheet"
 	novariants = TRUE
 
@@ -362,6 +367,7 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
 	name = "alien alloy"
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "sheet-abductor"
+	item_state = "sheet-abductor"
 	singular_name = "alien alloy sheet"
 	sheettype = "abductor"
 

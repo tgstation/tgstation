@@ -15,6 +15,7 @@
 //	use_power = NO_POWER_USE
 	max_integrity = 350
 	integrity_failure = 80
+	circuit = /obj/item/circuitboard/machine/rad_collector
 	var/obj/item/tank/internals/plasma/loaded_tank = null
 	var/last_power = 0
 	var/active = 0
@@ -44,7 +45,7 @@
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			eject()
 		else
-			var/gasdrained = powerproduction_drain*drainratio
+			var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES])
 			loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES] -= gasdrained
 			loaded_tank.air_contents.assert_gas(/datum/gas/tritium)
 			loaded_tank.air_contents.gases[/datum/gas/tritium][MOLES] += gasdrained
@@ -65,11 +66,12 @@
 			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide][MOLES] += gasdrained*2
 			loaded_tank.air_contents.garbage_collect()
 			var/bitcoins_mined = min(last_power, (last_power*RAD_COLLECTOR_STORED_OUT)+1000)
-			SSresearch.science_tech.research_points += bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE
+			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
 			last_power-=bitcoins_mined
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(anchored)
 		if(!src.locked)
@@ -93,7 +95,7 @@
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/machinery/power/rad_collector/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
+/obj/machinery/power/rad_collector/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
@@ -102,14 +104,15 @@
 			disconnect_from_network()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/analyzer) && loaded_tank)
-		atmosanalyzer_scan(loaded_tank.air_contents, user)
-	else if(istype(W, /obj/item/tank/internals/plasma))
+	if(istype(W, /obj/item/tank/internals/plasma))
 		if(!anchored)
 			to_chat(user, "<span class='warning'>[src] needs to be secured to the floor first!</span>")
 			return TRUE
 		if(loaded_tank)
 			to_chat(user, "<span class='warning'>There's already a plasma tank loaded!</span>")
+			return TRUE
+		if(panel_open)
+			to_chat(user, "<span class='warning'>Close the maintenance panel first!</span>")
 			return TRUE
 		if(!user.transferItemToLoc(W, src))
 			return
@@ -128,21 +131,30 @@
 	else
 		return ..()
 
-/obj/machinery/power/rad_collector/wrench_act(mob/living/user, obj/item/wrench)
-	default_unfasten_wrench(user, wrench, 0)
+/obj/machinery/power/rad_collector/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I)
 	return TRUE
 
-/obj/machinery/power/rad_collector/crowbar_act(mob/living/user, obj/item/crowbar)
+/obj/machinery/power/rad_collector/screwdriver_act(mob/living/user, obj/item/I)
+	if(loaded_tank)
+		to_chat(user, "<span class='warning'>Remove the plasma tank first!</span>")
+	else
+		default_deconstruction_screwdriver(user, icon_state, icon_state, I)
+	return TRUE
+
+/obj/machinery/power/rad_collector/crowbar_act(mob/living/user, obj/item/I)
 	if(loaded_tank)
 		if(locked)
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 			return TRUE
 		eject()
 		return TRUE
+	if(default_deconstruction_crowbar(I))
+		return TRUE
 	to_chat(user, "<span class='warning'>There isn't a tank loaded!</span>")
 	return TRUE
 
-/obj/machinery/power/rad_collector/multitool_act(mob/living/user, obj/item/multitool)
+/obj/machinery/power/rad_collector/multitool_act(mob/living/user, obj/item/I)
 	if(!is_station_level(z) && !SSresearch.science_tech)
 		to_chat(user, "<span class='warning'>[src] isn't linked to a research system!</span>")
 		return TRUE
@@ -155,6 +167,10 @@
 	bitcoinmining = !bitcoinmining
 	to_chat(user, "<span class='warning'>You [bitcoinmining ? "enable":"disable"] the research point production feature of [src].</span>")
 	return TRUE
+
+/obj/machinery/power/rad_collector/analyzer_act(mob/living/user, obj/item/I)
+	if(loaded_tank)
+		loaded_tank.analyzer_act(user, I)
 
 /obj/machinery/power/rad_collector/examine(mob/user)
 	. = ..()
@@ -189,6 +205,7 @@
 		update_icons()
 
 /obj/machinery/power/rad_collector/rad_act(pulse_strength)
+	. = ..()
 	if(loaded_tank && active && pulse_strength > RAD_COLLECTOR_EFFICIENCY)
 		last_power += (pulse_strength-RAD_COLLECTOR_EFFICIENCY)*RAD_COLLECTOR_COEFFICIENT
 

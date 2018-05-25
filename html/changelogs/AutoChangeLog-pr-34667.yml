@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug where slimes wouldn't eat neutral mobs."

@@ -5,7 +5,7 @@
 	item_state = "bl_suit"
 	item_color = "syndicate"
 	has_sensor = NO_SENSORS
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 40)
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 40)
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/syndicate/tacticool
@@ -14,7 +14,7 @@
 	icon_state = "tactifool"
 	item_state = "bl_suit"
 	item_color = "tactifool"
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 40)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 40)
 
 /obj/item/clothing/under/syndicate/sniper
 	name = "Tactical turtleneck suit"
@@ -22,6 +22,7 @@
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
 	item_color = "black_suit"
+	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/camo
 	name = "camouflage fatigues"
@@ -29,6 +30,7 @@
 	icon_state = "camogreen"
 	item_state = "g_suit"
 	item_color = "camogreen"
+	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/soviet
 	name = "Ratnik 5 tracksuit"
@@ -36,7 +38,7 @@
 	icon_state = "trackpants"
 	item_color = "trackpants"
 	can_adjust = FALSE
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	resistance_flags = NONE
 
 /obj/item/clothing/under/syndicate/combat

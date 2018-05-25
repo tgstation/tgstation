@@ -44,6 +44,7 @@
 	if(user.client.holder)
 		to_chat(user, "<b>Alt-click it to quickly activate it!</b>")
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/sound_emitter/attack_ghost(mob/user)
 	if(!check_rights_for(user.client, R_SOUNDS))
 		examine(user)

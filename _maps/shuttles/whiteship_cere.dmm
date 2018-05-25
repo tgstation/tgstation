@@ -23,8 +23,6 @@
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
 	preferred_direction = 1;
-	timid = 1;
-	roundstart_move = "whiteship_away";
 	width = 16
 	},
 /turf/open/floor/plating,
@@ -216,8 +214,7 @@
 	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
@@ -240,8 +237,7 @@
 	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /obj/item/pickaxe,
 /obj/item/pickaxe,
@@ -290,8 +286,7 @@
 	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /obj/item/storage/bag/ore,
 /obj/item/pickaxe,
@@ -412,8 +407,7 @@
 	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
-	name = "spare equipment crate";
-	opened = 1
+	name = "spare equipment crate"
 	},
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/yellow,
@@ -484,7 +478,7 @@
 /area/shuttle/abandoned)
 "aP" = (
 /obj/structure/table,
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "NTCONST1";
 	pixel_x = -1;
 	pixel_y = 2
@@ -584,9 +578,6 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
-"aY" = (
-/turf/template_noop,
-/area/template_noop)
 "aZ" = (
 /obj/structure/table,
 /obj/item/phone{
@@ -637,8 +628,8 @@ aa
 aa
 aa
 aa
-aY
-aY
+aa
+aa
 "}
 (2,1,1) = {"
 aa
@@ -656,7 +647,7 @@ ab
 ab
 aa
 aa
-aY
+aa
 "}
 (3,1,1) = {"
 ab

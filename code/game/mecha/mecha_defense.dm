@@ -55,6 +55,9 @@
 
 
 /obj/mecha/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
@@ -139,6 +142,9 @@
 		setDir(dir_in)
 
 /obj/mecha/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(get_charge())
 		use_power((cell.charge/3)/(severity*2))
 		take_damage(30 / severity, BURN, "energy", 1)
@@ -152,7 +158,7 @@
 
 /obj/mecha/attackby(obj/item/W as obj, mob/user as mob, params)
 
-	if(istype(W, /obj/item/device/mmi))
+	if(istype(W, /obj/item/mmi))
 		if(mmi_move_inside(W,user))
 			to_chat(user, "[src]-[W] interface initialized successfully.")
 		else
@@ -177,7 +183,7 @@
 				if(istype(W, /obj/item/card/id))
 					id_card = W
 				else
-					var/obj/item/device/pda/pda = W
+					var/obj/item/pda/pda = W
 					id_card = pda.id
 				output_maintenance_dialog(id_card, user)
 				return
@@ -240,9 +246,8 @@
 
 	else if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
 		user.changeNext_move(CLICK_CD_MELEE)
-		var/obj/item/weldingtool/WT = W
-		if(obj_integrity<max_integrity)
-			if(WT.remove_fuel(1, user))
+		if(obj_integrity < max_integrity)
+			if(W.use_tool(src, user, 0, volume=50, amount=1))
 				if (internal_damage & MECHA_INT_TANK_BREACH)
 					clearInternalDamage(MECHA_INT_TANK_BREACH)
 					to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
@@ -251,9 +256,7 @@
 					obj_integrity += min(10, max_integrity-obj_integrity)
 					if(obj_integrity == max_integrity)
 						to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
-			else
-				to_chat(user, "<span class='warning'>[WT] needs to be on for this task!</span>")
-				return 1
+			return 1
 		else
 			to_chat(user, "<span class='warning'>The [name] is at full integrity!</span>")
 		return 1
@@ -322,7 +325,7 @@
 			if(L)
 				L.ratvar_act()
 
-/obj/mecha/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+/obj/mecha/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect)
 		if(selected)
 			used_item = selected
@@ -333,4 +336,3 @@
 			else if(damtype == TOX)
 				visual_effect_icon = ATTACK_EFFECT_MECHTOXIN
 	..()
-

@@ -78,18 +78,20 @@
 		if(W)
 			var/mob/M = W.resolve()
 			if(M)
+				if (length(args))
+					return world.PushUsr(arglist(list(M, src) + args))
 				return world.PushUsr(M, src)
-		
+
 	if (!object)
 		return
-		
+
 	var/list/calling_arguments = arguments
 	if (length(args))
 		if (length(arguments))
 			calling_arguments = calling_arguments + args //not += so that it creates a new list so the arguments list stays clean
 		else
 			calling_arguments = args
-	if(var_edited)
+	if(datum_flags & DF_VAR_EDITED)
 		return WrapAdminProcCall(object, delegate, calling_arguments)
 	if (object == GLOBAL_PROC)
 		return call(delegate)(arglist(calling_arguments))
@@ -104,18 +106,20 @@
 		if(W)
 			var/mob/M = W.resolve()
 			if(M)
+				if (length(args))
+					return world.PushUsr(arglist(list(M, src) + args))
 				return world.PushUsr(M, src)
-	
+
 	if (!object)
 		return
-		
+
 	var/list/calling_arguments = arguments
 	if (length(args))
 		if (length(arguments))
 			calling_arguments = calling_arguments + args //not += so that it creates a new list so the arguments list stays clean
 		else
 			calling_arguments = args
-	if(var_edited)
+	if(datum_flags & DF_VAR_EDITED)
 		return WrapAdminProcCall(object, delegate, calling_arguments)
 	if (object == GLOBAL_PROC)
 		return call(delegate)(arglist(calling_arguments))
@@ -169,7 +173,7 @@
 	var/datum/callback_select/CS = new(count, savereturns)
 	for (var/i in 1 to count)
 		CS.invoke_callback(i, callbacks[i], callback_args[i], savereturns)
-	
+
 	while(CS.pendingcount)
 		sleep(resolution*world.tick_lag)
 	return CS.finished

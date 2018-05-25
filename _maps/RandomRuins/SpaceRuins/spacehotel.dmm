@@ -5,11 +5,11 @@
 "ab" = (
 /obj/structure/grille,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ac" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ad" = (
 /obj/machinery/power/solar,
 /obj/structure/cable/yellow{
@@ -1040,7 +1040,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/workroom)
 "dj" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Hotel Staff Storage"
 	},
 /obj/structure/cable{
@@ -2047,7 +2047,7 @@
 /turf/open/floor/plasteel/bar,
 /area/ruin/space/has_grav/hotel/bar)
 "gs" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Hotel Staff Room";
 	req_access_txt = "200"
 	},
@@ -2081,7 +2081,7 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/item/device/gps{
+/obj/item/gps{
 	gpstag = "Twin-Nexus Hotel Retreat";
 	name = "hotel gps"
 	},
@@ -2093,7 +2093,7 @@
 "gx" = (
 /obj/structure/table,
 /obj/item/screwdriver,
-/obj/item/device/multitool,
+/obj/item/multitool,
 /obj/item/wirecutters,
 /obj/machinery/light{
 	dir = 1
@@ -2375,7 +2375,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "hr" = (
-/obj/item/device/radio/beacon,
+/obj/item/beacon,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/dock)
 "hs" = (
@@ -2606,7 +2606,7 @@
 /area/ruin/space/has_grav/hotel/bar)
 "hV" = (
 /obj/structure/table/wood,
-/obj/item/device/instrument/guitar,
+/obj/item/instrument/guitar,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -2687,7 +2687,7 @@
 /area/ruin/space/has_grav/hotel/bar)
 "ig" = (
 /obj/structure/table/wood,
-/obj/item/device/instrument/violin,
+/obj/item/instrument/violin,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/hotel/bar)
 "ih" = (
@@ -3589,6 +3589,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "kK" = (
@@ -4096,7 +4097,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/device/lightreplacer,
+/obj/item/lightreplacer,
 /turf/open/floor/plasteel/neutral,
 /area/ruin/space/has_grav/hotel/custodial)
 "ml" = (
@@ -4296,7 +4297,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/workroom)
 "mQ" = (
-/obj/machinery/door/airlock/centcom{
+/obj/machinery/door/airlock/grunge{
 	name = "Hotel Staff Room";
 	req_access_txt = "200"
 	},
@@ -4345,6 +4346,16 @@
 /obj/effect/baseturf_helper/space,
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/pool)
+"sN" = (
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel/power)
 
 (1,1,1) = {"
 aa
@@ -4401,25 +4412,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 "}
@@ -4475,29 +4479,22 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+aa
+ac
 aa
 aa
+ac
 aa
 aa
+ac
 aa
 aa
+ac
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
 aa
 "}
 (3,1,1) = {"
@@ -4551,30 +4548,23 @@ aa
 aa
 aa
 aa
+ab
+aa
+ac
 aa
 aa
+lV
 aa
 aa
+lV
 aa
 aa
+lV
 aa
 aa
+lV
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
 aa
 "}
 (4,1,1) = {"
@@ -4604,36 +4594,9 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
+ab
 ab
 ab
 ab
@@ -4652,242 +4615,29 @@ aa
 aa
 aa
 aa
+aa
+aa
+ab
+aa
+aa
+ac
+aa
+aa
+lW
+aa
+aa
+lW
+aa
+aa
+lW
+aa
+aa
+lW
+aa
+ab
 aa
 "}
 (5,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-aa
-ac
-aa
-aa
-ac
-aa
-aa
-ac
-aa
-aa
-ac
-aa
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(6,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-aa
-ac
-aa
-aa
-lV
-aa
-aa
-lV
-aa
-aa
-lV
-aa
-aa
-lV
-aa
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(7,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-aa
-aa
-ac
-aa
-aa
-lW
-aa
-aa
-lW
-aa
-aa
-lW
-aa
-aa
-lW
-aa
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(8,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -4956,15 +4706,8 @@ lW
 aa
 ab
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(9,1,1) = {"
-aa
-aa
+(6,1,1) = {"
 aa
 aa
 aa
@@ -5033,15 +4776,8 @@ lW
 aa
 ab
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(10,1,1) = {"
-aa
-aa
+(7,1,1) = {"
 aa
 aa
 aa
@@ -5110,15 +4846,8 @@ lW
 aa
 aa
 ab
-aa
-aa
-aa
-aa
-aa
 "}
-(11,1,1) = {"
-aa
-aa
+(8,1,1) = {"
 aa
 aa
 aa
@@ -5187,15 +4916,8 @@ aj
 mO
 ac
 ab
-aa
-aa
-aa
-aa
-aa
 "}
-(12,1,1) = {"
-aa
-aa
+(9,1,1) = {"
 aa
 aa
 aa
@@ -5264,15 +4986,8 @@ lY
 aa
 aa
 ab
-aa
-aa
-aa
-aa
-aa
 "}
-(13,1,1) = {"
-aa
-aa
+(10,1,1) = {"
 aa
 aa
 aa
@@ -5341,15 +5056,8 @@ lY
 aa
 ab
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(14,1,1) = {"
-aa
-aa
+(11,1,1) = {"
 aa
 aa
 aa
@@ -5418,15 +5126,8 @@ lY
 aa
 ab
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(15,1,1) = {"
-aa
-aa
+(12,1,1) = {"
 aa
 aa
 aa
@@ -5495,15 +5196,8 @@ lY
 aa
 ab
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(16,1,1) = {"
-aa
-aa
+(13,1,1) = {"
 aa
 aa
 aa
@@ -5572,15 +5266,8 @@ lZ
 aa
 ab
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(17,1,1) = {"
-aa
-aa
+(14,1,1) = {"
 aa
 aa
 aa
@@ -5649,15 +5336,8 @@ ac
 aa
 ab
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(18,1,1) = {"
-aa
-aa
+(15,1,1) = {"
 aa
 aa
 aa
@@ -5707,7 +5387,7 @@ kg
 kw
 kJ
 la
-kJ
+sN
 aj
 aj
 al
@@ -5726,15 +5406,8 @@ ab
 ab
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(19,1,1) = {"
-aa
-aa
+(16,1,1) = {"
 aa
 aa
 aa
@@ -5803,15 +5476,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(20,1,1) = {"
-aa
-aa
+(17,1,1) = {"
 aa
 aa
 aa
@@ -5880,15 +5546,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(21,1,1) = {"
-aa
-aa
+(18,1,1) = {"
 aa
 aa
 aa
@@ -5957,15 +5616,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(22,1,1) = {"
-aa
-aa
+(19,1,1) = {"
 aa
 aa
 aa
@@ -6034,15 +5686,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(23,1,1) = {"
-aa
-aa
+(20,1,1) = {"
 aa
 aa
 aa
@@ -6111,15 +5756,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(24,1,1) = {"
-aa
-aa
+(21,1,1) = {"
 aa
 aa
 aa
@@ -6188,15 +5826,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(25,1,1) = {"
-aa
-aa
+(22,1,1) = {"
 aa
 aa
 aa
@@ -6265,15 +5896,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(26,1,1) = {"
-aa
-aa
+(23,1,1) = {"
 aa
 aa
 aa
@@ -6342,15 +5966,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(27,1,1) = {"
-aa
-aa
+(24,1,1) = {"
 aa
 aa
 aa
@@ -6419,15 +6036,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(28,1,1) = {"
-aa
-aa
+(25,1,1) = {"
 aa
 aa
 aa
@@ -6496,15 +6106,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(29,1,1) = {"
-aa
-aa
+(26,1,1) = {"
 aa
 aa
 aa
@@ -6573,15 +6176,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(30,1,1) = {"
-aa
-aa
+(27,1,1) = {"
 aa
 aa
 aa
@@ -6650,15 +6246,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(31,1,1) = {"
-aa
-aa
+(28,1,1) = {"
 aa
 aa
 aa
@@ -6727,15 +6316,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(32,1,1) = {"
-aa
-aa
+(29,1,1) = {"
 aa
 aa
 aa
@@ -6804,15 +6386,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(33,1,1) = {"
-aa
-aa
+(30,1,1) = {"
 aa
 aa
 aa
@@ -6881,15 +6456,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(34,1,1) = {"
-aa
-aa
+(31,1,1) = {"
 aa
 aa
 aa
@@ -6958,15 +6526,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(35,1,1) = {"
-aa
-aa
+(32,1,1) = {"
 aa
 aa
 aa
@@ -7035,15 +6596,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(36,1,1) = {"
-aa
-aa
+(33,1,1) = {"
 aa
 aa
 aa
@@ -7112,15 +6666,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(37,1,1) = {"
-aa
-aa
+(34,1,1) = {"
 aa
 aa
 aa
@@ -7189,15 +6736,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(38,1,1) = {"
-aa
-aa
+(35,1,1) = {"
 aa
 aa
 aa
@@ -7266,15 +6806,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(39,1,1) = {"
-aa
-aa
+(36,1,1) = {"
 aa
 aa
 aa
@@ -7343,15 +6876,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(40,1,1) = {"
-aa
-aa
+(37,1,1) = {"
 aa
 aa
 aa
@@ -7420,15 +6946,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(41,1,1) = {"
-aa
-aa
+(38,1,1) = {"
 aa
 aa
 aa
@@ -7497,15 +7016,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(42,1,1) = {"
-aa
-aa
+(39,1,1) = {"
 aa
 aa
 aa
@@ -7574,15 +7086,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(43,1,1) = {"
-aa
-aa
+(40,1,1) = {"
 aa
 aa
 aa
@@ -7651,15 +7156,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(44,1,1) = {"
-aa
-aa
+(41,1,1) = {"
 aa
 aa
 aa
@@ -7728,15 +7226,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(45,1,1) = {"
-aa
-aa
+(42,1,1) = {"
 aa
 aa
 aa
@@ -7805,15 +7296,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(46,1,1) = {"
-aa
-aa
+(43,1,1) = {"
 aa
 aa
 aa
@@ -7882,15 +7366,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(47,1,1) = {"
-aa
-aa
+(44,1,1) = {"
 aa
 aa
 aa
@@ -7959,15 +7436,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(48,1,1) = {"
-aa
-aa
+(45,1,1) = {"
 aa
 aa
 aa
@@ -8036,15 +7506,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(49,1,1) = {"
-aa
-aa
+(46,1,1) = {"
 aa
 aa
 aa
@@ -8113,15 +7576,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(50,1,1) = {"
-aa
-aa
+(47,1,1) = {"
 aa
 aa
 aa
@@ -8190,15 +7646,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(51,1,1) = {"
-aa
-aa
+(48,1,1) = {"
 aa
 aa
 aa
@@ -8267,15 +7716,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(52,1,1) = {"
-aa
-aa
+(49,1,1) = {"
 aa
 aa
 aa
@@ -8344,15 +7786,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(53,1,1) = {"
-aa
-aa
+(50,1,1) = {"
 aa
 aa
 aa
@@ -8421,15 +7856,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(54,1,1) = {"
-aa
-aa
+(51,1,1) = {"
 aa
 aa
 ab
@@ -8498,15 +7926,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(55,1,1) = {"
-aa
-aa
+(52,1,1) = {"
 aa
 ab
 aa
@@ -8575,15 +7996,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(56,1,1) = {"
-aa
-aa
+(53,1,1) = {"
 ab
 aa
 aa
@@ -8652,15 +8066,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(57,1,1) = {"
-aa
-aa
+(54,1,1) = {"
 ab
 ac
 ac
@@ -8729,15 +8136,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(58,1,1) = {"
-aa
-aa
+(55,1,1) = {"
 ab
 aa
 aa
@@ -8806,15 +8206,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(59,1,1) = {"
-aa
-aa
+(56,1,1) = {"
 ab
 aa
 aa
@@ -8883,15 +8276,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(60,1,1) = {"
-aa
-aa
+(57,1,1) = {"
 ab
 ac
 ac
@@ -8960,15 +8346,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(61,1,1) = {"
-aa
-aa
+(58,1,1) = {"
 ab
 aa
 aa
@@ -9037,15 +8416,8 @@ ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(62,1,1) = {"
-aa
-aa
+(59,1,1) = {"
 ab
 aa
 aa
@@ -9114,15 +8486,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(63,1,1) = {"
-aa
-aa
+(60,1,1) = {"
 ab
 ac
 ac
@@ -9172,6 +8537,211 @@ ab
 ab
 ab
 ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(61,1,1) = {"
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(62,1,1) = {"
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ag
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(63,1,1) = {"
+ab
+ac
+ac
+ad
+ae
+ae
+ae
+ae
+ah
+ak
+ak
+ak
+ak
+bd
+ac
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -9198,239 +8768,6 @@ aa
 aa
 "}
 (64,1,1) = {"
-aa
-aa
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ag
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(65,1,1) = {"
-aa
-aa
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ag
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(66,1,1) = {"
-aa
-aa
-ab
-ac
-ac
-ad
-ae
-ae
-ae
-ae
-ah
-ak
-ak
-ak
-ak
-bd
-ac
-ac
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(67,1,1) = {"
-aa
-aa
 ab
 aa
 aa
@@ -9499,15 +8836,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(68,1,1) = {"
-aa
-aa
+(65,1,1) = {"
 aa
 ab
 aa
@@ -9576,15 +8906,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(69,1,1) = {"
-aa
-aa
+(66,1,1) = {"
 aa
 aa
 ab
@@ -9653,15 +8976,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
 "}
-(70,1,1) = {"
-aa
-aa
+(67,1,1) = {"
 aa
 aa
 aa
@@ -9671,396 +8987,6 @@ aa
 aa
 aa
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(71,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(72,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(73,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(74,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(75,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa

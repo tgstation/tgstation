@@ -170,7 +170,7 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/killertomato
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/killertomato
 	tastes = list("tomato" = 1)
-	foodtype = VEGETABLES
+	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/snacks/meat/slab/bear
 	name = "bear meat"
@@ -281,7 +281,7 @@
 /obj/item/reagent_containers/food/snacks/meat/steak/killertomato
 	name = "killer tomato steak"
 	tastes = list("tomato" = 1)
-	foodtype = VEGETABLES
+	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/snacks/meat/steak/bear
 	name = "bear steak"
@@ -344,7 +344,7 @@
 	name = "raw killer tomato cutlet"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/killertomato
 	tastes = list("tomato" = 1)
-	foodtype = VEGETABLES
+	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/snacks/meat/rawcutlet/bear
 	name = "raw bear cutlet"
@@ -383,7 +383,7 @@
 /obj/item/reagent_containers/food/snacks/meat/cutlet/killertomato
 	name = "killer tomato cutlet"
 	tastes = list("tomato" = 1)
-	foodtype = VEGETABLES
+	foodtype = FRUIT
 
 /obj/item/reagent_containers/food/snacks/meat/cutlet/bear
 	name = "bear cutlet"
