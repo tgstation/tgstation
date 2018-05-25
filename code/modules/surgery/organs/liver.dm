@@ -78,6 +78,9 @@
 	toxLethality = 0.008 //20% less damage than a normal liver
 
 /obj/item/organ/liver/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	switch(severity)
 		if(1)
 			damage+=100

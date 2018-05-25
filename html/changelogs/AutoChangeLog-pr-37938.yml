@@ -1,4 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - bugfix: "Pacifists can now use harm intent for actions that require it (but still can't harm!)"

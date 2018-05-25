@@ -8236,7 +8236,7 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	name = "primary power monitoring console"
 	},
 /obj/structure/sign/warning/nosmoking{
@@ -11911,7 +11911,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "xk" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 1;
 	name = "primary power monitoring console"
 	},

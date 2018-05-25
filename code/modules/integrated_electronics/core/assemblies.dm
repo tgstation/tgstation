@@ -13,7 +13,7 @@
 	var/list/assembly_components = list()
 	var/max_components = IC_MAX_SIZE_BASE
 	var/max_complexity = IC_COMPLEXITY_BASE
-	var/opened = FALSE
+	var/opened = TRUE
 	var/obj/item/stock_parts/cell/battery // Internal cell which most circuits need to work.
 	var/cell_type = /obj/item/stock_parts/cell
 	var/can_charge = TRUE //Can it be charged in a recharger?
@@ -450,7 +450,8 @@
 	else
 		for(var/obj/item/integrated_circuit/input/S in assembly_components)
 			S.attackby_react(I,user,user.a_intent)
-		return ..()
+		if(user.a_intent != INTENT_HELP)
+			return ..()
 
 
 /obj/item/electronic_assembly/attack_self(mob/user)
@@ -489,9 +490,11 @@
 		choice.ask_for_input(user)
 
 /obj/item/electronic_assembly/emp_act(severity)
-	..()
-	for(var/i in 1 to contents.len)
-		var/atom/movable/AM = contents[i]
+	. = ..()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
+	for(var/I in src)
+		var/atom/movable/AM = I
 		AM.emp_act(severity)
 
 // Returns true if power was successfully drawn.

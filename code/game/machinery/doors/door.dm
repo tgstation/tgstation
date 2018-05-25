@@ -16,7 +16,7 @@
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 
 	var/secondsElectrified = 0
-	var/shockedby = list()
+	var/shockedby
 	var/visible = TRUE
 	var/operating = FALSE
 	var/glass = FALSE
@@ -208,14 +208,16 @@
 			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/machinery/door/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		INVOKE_ASYNC(src, .proc/open)
 	if(prob(severity*10 - 20))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
-			shockedby += "\[[time_stamp()]\]EM Pulse"
+			LAZYADD(shockedby, "\[[time_stamp()]\]EM Pulse")
 			addtimer(CALLBACK(src, .proc/unelectrify), 300)
-	..()
 
 /obj/machinery/door/proc/unelectrify()
 	secondsElectrified = 0

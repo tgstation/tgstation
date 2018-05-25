@@ -120,6 +120,8 @@
 	return 1
 
 /obj/machinery/sparker/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(!(stat & (BROKEN|NOPOWER)))
 		ignite()
-	..()

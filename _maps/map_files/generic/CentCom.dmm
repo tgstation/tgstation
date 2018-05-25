@@ -2028,14 +2028,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
-"fR" = (
-/obj/machinery/camera{
-	pixel_x = 10;
-	network = list("thunder");
-	c_tag = "Arena"
-	},
-/turf/open/floor/circuit/green,
-/area/tdome/arena_source)
 "fS" = (
 /turf/open/floor/plasteel/red/corner{
 	dir = 8
@@ -7087,7 +7079,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "tE" = (
-/obj/machinery/computer/monitor{
+/obj/machinery/computer/monitor/secret{
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -12245,10 +12237,11 @@
 /area/tdome/tdomeadmin)
 "Jg" = (
 /obj/machinery/camera{
+	c_tag = "Red Team";
+	network = list("thunder");
 	pixel_x = 11;
 	pixel_y = -9;
-	network = list("thunder");
-	c_tag = "Red Team"
+	resistance_flags = 64
 	},
 /obj/effect/landmark/thunderdome/two,
 /turf/open/floor/plasteel/neutral,
@@ -12277,10 +12270,11 @@
 /area/tdome/arena)
 "Jl" = (
 /obj/machinery/camera{
+	c_tag = "Green Team";
+	network = list("thunder");
 	pixel_x = 12;
 	pixel_y = -10;
-	network = list("thunder");
-	c_tag = "Green Team"
+	resistance_flags = 64
 	},
 /obj/effect/landmark/thunderdome/one,
 /turf/open/floor/plasteel/neutral,
@@ -12317,9 +12311,10 @@
 /area/tdome/tdomeadmin)
 "Jq" = (
 /obj/machinery/camera{
-	pixel_x = 10;
+	c_tag = "Arena";
 	network = list("thunder");
-	c_tag = "Arena"
+	pixel_x = 10;
+	resistance_flags = 64
 	},
 /turf/open/floor/circuit/green,
 /area/tdome/arena)
@@ -75364,7 +75359,7 @@ fz
 fH
 fH
 fP
-fR
+fO
 fH
 fH
 fz

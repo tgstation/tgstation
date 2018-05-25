@@ -6,9 +6,9 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 
 /mob/dead/Initialize()
-	if(initialized)
+	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
+	flags_1 |= INITIALIZED_1
 	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
 
@@ -72,7 +72,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	if(!pick)
 		return
-	
+
 	var/addr = csa[pick]
 
 	if(alert(src, "Jump to server [pick] ([addr])?", "Server Hop", "Yes", "No") != "Yes")
