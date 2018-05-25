@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
 /turf/open/space/basic,
 /area/space)
@@ -1365,9 +1365,23 @@
 /obj/effect/landmark/observer_start,
 /turf/open/floor/plating,
 /area/storage/primary)
+"mO" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/vr_sleeper,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "ny" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
+/turf/open/floor/plasteel,
+/area/storage/primary)
+"oj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "oV" = (
@@ -3123,7 +3137,7 @@ dA
 dl
 dD
 dc
-dc
+oj
 cS
 af
 bY
@@ -3555,7 +3569,7 @@ dC
 dl
 dF
 dk
-dk
+mO
 cS
 af
 ad

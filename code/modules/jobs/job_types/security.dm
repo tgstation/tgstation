@@ -23,7 +23,6 @@ Head of Security
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_SECURITY
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/hos
 
@@ -61,6 +60,8 @@ Head of Security
 
 	implants = list(/obj/item/implant/mindshield)
 
+	chameleon_extras = list(/obj/item/gun/energy/e_gun/hos, /obj/item/stamp/hos)
+
 /*
 Warden
 */
@@ -77,7 +78,6 @@ Warden
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/warden
 
@@ -113,6 +113,7 @@ Warden
 
 	implants = list(/obj/item/implant/mindshield)
 
+	chameleon_extras = /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 
 /*
 Detective
@@ -130,7 +131,6 @@ Detective
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/detective
 
@@ -157,6 +157,8 @@ Detective
 
 	implants = list(/obj/item/implant/mindshield)
 
+	chameleon_extras = list(/obj/item/gun/ballistic/revolver/detective, /obj/item/clothing/glasses/sunglasses)
+
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	var/obj/item/clothing/mask/cigarette/cig = H.wear_mask
@@ -181,7 +183,6 @@ Security Officer
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_type = EXP_TYPE_CREW
-	antag_rep = 20
 
 	outfit = /datum/outfit/job/security
 
@@ -296,6 +297,9 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	box = /obj/item/storage/box/security
 
 	implants = list(/obj/item/implant/mindshield)
+
+	chameleon_extras = list(/obj/item/gun/energy/e_gun/advtaser, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/clothing/head/helmet)
+	//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 
 
 /obj/item/radio/headset/headset_sec/alt/department/Initialize()

@@ -159,7 +159,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/proc/light(flavor_text = null)
 	if(lit)
 		return
-	if(!initialized)
+	if(!(flags_1 & INITIALIZED_1))
 		icon_state = icon_on
 		item_state = icon_on
 		return
@@ -315,7 +315,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	src.pixel_y = rand(-5, 5)
 
 /obj/item/clothing/mask/cigarette/rollie/nicotine
-	list_reagents = list("nicotine" = 15)	
+	list_reagents = list("nicotine" = 15)
 
 /obj/item/clothing/mask/cigarette/rollie/trippy
 	list_reagents = list("nicotine" = 15, "mushroomhallucinogen" = 35)

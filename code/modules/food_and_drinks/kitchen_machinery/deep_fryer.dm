@@ -30,6 +30,7 @@ God bless America.
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	container_type = OPENCONTAINER
+	layer = BELOW_OBJ_LAYER
 	var/obj/item/reagent_containers/food/snacks/deepfryholder/frying	//What's being fried RIGHT NOW?
 	var/cook_time = 0
 	var/oil_use = 0.05 //How much cooking oil is used per tick
@@ -127,7 +128,9 @@ God bless America.
 			to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
 			frying.fry(cook_time)
 			icon_state = "fryer_off"
-			user.put_in_hands(frying)
+			frying.forceMove(drop_location())
+			if(Adjacent(user) && !issilicon(user))
+				user.put_in_hands(frying)
 			frying = null
 			cook_time = 0
 			frying_fried = FALSE

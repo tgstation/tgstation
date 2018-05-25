@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/active = FALSE
 	var/lockable = TRUE
 	var/locked = TRUE
+	var/allow_restricted = TRUE
 	var/telecrystals
 	var/selected_cat
 	var/owner = null
@@ -25,7 +26,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	GLOB.uplinks += src
-	uplink_items = get_uplink_items(gamemode)
+	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
 	RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 	RegisterSignal(COMSIG_ITEM_ATTACK_SELF, .proc/interact)
 	owner = _owner
@@ -66,7 +67,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 /datum/component/uplink/proc/set_gamemode(_gamemode)
 	gamemode = _gamemode
-	uplink_items = get_uplink_items(gamemode)
+	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
 
 /datum/component/uplink/proc/OnAttackBy(obj/item/I, mob/user)
 	if(!active)

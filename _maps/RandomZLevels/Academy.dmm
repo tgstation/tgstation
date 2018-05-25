@@ -3688,7 +3688,7 @@
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "mm" = (
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "mn" = (

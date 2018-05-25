@@ -38,17 +38,13 @@
 
 /obj/item/storage/wallet/Exited(atom/movable/AM)
 	. = ..()
-	// The loc has not actually changed yet when this proc is called, so call
-	// refreshID and have it ignore the outgoing atom.
-	refreshID(AM)
+	refreshID()
 
-/obj/item/storage/wallet/proc/refreshID(atom/movable/removed)
+/obj/item/storage/wallet/proc/refreshID()
 	LAZYCLEARLIST(combined_access)
-	if(!(front_id in src) || front_id == removed)
+	if(!(front_id in src))
 		front_id = null
 	for(var/obj/item/card/id/I in contents)
-		if(I == removed)
-			continue
 		if(!front_id)
 			front_id = I
 		LAZYINITLIST(combined_access)

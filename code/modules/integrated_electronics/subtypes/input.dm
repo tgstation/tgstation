@@ -883,6 +883,7 @@
 			return FALSE
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
+	to_chat(user, "<span class='notice'>You scan [A] with [assembly].</span>")
 	activate_pin(1)
 	return TRUE
 
@@ -915,6 +916,7 @@
 			return FALSE
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
+	to_chat(user, "<span class='notice'>You scan [A] with [assembly].</span>")
 	activate_pin(1)
 	return TRUE
 
@@ -941,6 +943,7 @@
 		user.transferItemToLoc(A,drop_location())
 	set_pin_data(IC_OUTPUT, 1, WEAKREF(A))
 	push_data()
+	to_chat(user, "<span class='notice'>You let [assembly] scan [A].</span>")
 	activate_pin(1)
 	return TRUE
 

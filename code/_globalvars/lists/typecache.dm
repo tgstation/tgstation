@@ -12,3 +12,5 @@ GLOBAL_LIST_INIT(typecache_machine_or_structure, typecacheof(list(/obj/machinery
 GLOBAL_LIST_INIT(typecache_shuttle_area, typecacheof(/area/shuttle))
 
 GLOBAL_LIST_INIT(typecache_clothing, typecacheof(/obj/item/clothing))
+
+GLOBAL_LIST_INIT(typecache_effect, typecacheof(/obj/effect))
