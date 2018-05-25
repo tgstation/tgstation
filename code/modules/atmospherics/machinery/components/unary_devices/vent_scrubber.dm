@@ -14,7 +14,6 @@
 	layer = GAS_SCRUBBER_LAYER
 
 	var/id_tag = null
-	var/on = FALSE
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 
 	var/filter_types = list(/datum/gas/carbon_dioxide)
@@ -29,7 +28,7 @@
 	var/radio_filter_in
 
 	pipe_state = "scrubber"
-	
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
@@ -52,7 +51,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on
 	on = TRUE
 	icon_state = "scrub_map_on"
-	
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1
 	piping_layer = PIPING_LAYER_MIN
 	pixel_x = -PIPING_LAYER_P_X
