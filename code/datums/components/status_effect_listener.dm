@@ -14,16 +14,16 @@
 		effect.receiveSignal(sigtype)
 
 /datum/component/status_effect_listener/proc/explosion()
-	signal("explosion")
+	signal(STATUS_LISTENER_EXPLOSION)
 
 /datum/component/status_effect_listener/proc/movement()
-	signal("movement")
+	signal(STATUS_LISTENER_MOVEMENT)
 
 /datum/component/status_effect_listener/proc/resist()
-	signal("resist")
+	signal(STATUS_LISTENER_RESIST)
 
 /datum/component/status_effect_listener/proc/ignited()
-	signal("ignited")
+	signal(STATUS_LISTENER_IGNITED)
 
 /datum/component/status_effect_listener/proc/extinguished()
-	signal("extinguished")
+	signal(STATUS_LISTENER_EXTINGUISHED)

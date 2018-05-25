@@ -7,6 +7,14 @@
 
 #define STATUS_EFFECT_REPLACE 2 //if it allows only one, but new instances replace
 
+//These are the currently available signal types for status effects that listen.
+
+#define STATUS_LISTENER_EXPLOSION "explosion"
+#define STATUS_LISTENER_MOVEMENT "movement"
+#define STATUS_LISTENER_RESIST "resist"
+#define STATUS_LISTENER_IGNITED "ignited"
+#define STATUS_LISTENER_EXTINGUISHED "extinguished"
+
 ///////////
 // BUFFS //
 ///////////
