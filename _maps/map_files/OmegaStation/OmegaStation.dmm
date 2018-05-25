@@ -34355,9 +34355,9 @@
 /turf/open/floor/plasteel/vault/side,
 /area/ai_monitored/turret_protected/ai)
 "sMx" = (
-/obj/item/folder/blue,
-/obj/item/assembly/flash/handheld,
-/obj/structure/table,
+/obj/machinery/modular_computer/console/preset/engineering{
+	dir = 1
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
