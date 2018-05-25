@@ -229,3 +229,14 @@
 	if(cold_circ)
 		cold_circ.generator = null
 		cold_circ = null
+
+/obj/machinery/power/generator/AltClick(mob/user)
+	..()
+	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+
+	if(anchored)
+		to_chat(usr, "<span class='warning'>You must unwrench [src] before rotating it!</span>")
+		return
+
+	setDir(turn(dir, -90))
