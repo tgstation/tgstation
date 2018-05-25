@@ -365,8 +365,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
 			if(has_trait(TRAIT_DRUNK_HEALING))
-				adjustBruteLoss(-0.125, 0)
-				adjustFireLoss(-0.0875, 0)
+				adjustBruteLoss(-0.12, 0)
+				adjustFireLoss(-0.06, 0)
 
 		if(drunkenness >= 11 && slurring < 5)
 			slurring += 1.2
@@ -406,8 +406,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			if(prob(50))
 				blur_eyes(5)
 			if(has_trait(TRAIT_DRUNK_HEALING))
-				adjustBruteLoss(-0.525, 0)
-				adjustFireLoss(-0.35, 0)
+				adjustBruteLoss(-0.5, 0)
+				adjustFireLoss(-0.25, 0)
 
 		if(drunkenness >= 71)
 			blur_eyes(5)
