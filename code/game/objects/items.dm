@@ -223,6 +223,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		research_msg += "None"
 	research_msg += "."
 	to_chat(user, research_msg.Join())
+	if(was_previously_fried)
+		to_chat(user, "<span class='info'>[gender == PLURAL ? "They are" : "It's"] covered in an oily residue.</span>")
 
 /obj/item/proc/speechModification(message)			//for message modding by mask slot.
 	return message
