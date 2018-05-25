@@ -47,7 +47,6 @@ God bless America.
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/food/condiment,
 		/obj/item/storage/part_replacer,
-		/obj/item/disk/nuclear,
 		/obj/item/his_grace))
 	var/datum/looping_sound/deep_fryer/fry_loop
 
@@ -84,6 +83,9 @@ God bless America.
 		return
 	if(!reagents.has_reagent("cooking_oil"))
 		to_chat(user, "<span class='warning'>[src] has no cooking oil to fry with!</span>")
+		return
+	if(I.resistance_flags & INDESTRUCTIBLE)
+		to_chat(user, "<span class='warning'>You don't feel it would be wise to fry [I]...</span>")
 		return
 	if(istype(I, /obj/item/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
