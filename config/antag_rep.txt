@@ -1,0 +1,4 @@
+## List of job titles followed by antag rep value. See code/modules/jobs/job_types for titles
+## e.g. 
+## Captain 10
+
