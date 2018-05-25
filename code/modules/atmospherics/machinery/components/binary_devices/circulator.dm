@@ -1,5 +1,7 @@
 //node2, air2, network2 correspond to input
 //node1, air1, network1 correspond to output
+#define CIRCULATOR_COLD 0
+#define CIRCULATOR_HOT 1
 
 /obj/machinery/atmospherics/components/binary/circulator
 	name = "circulator/heat exchanger"
@@ -13,15 +15,14 @@
 
 	anchored = TRUE
 	density = TRUE
-	var/const/hot = 0
-	var/const/cold = 1
 
-	var/mode = hot
+
+	var/mode = CIRCULATOR_HOT
 	var/obj/machinery/power/generator/generator
 
 //default cold circ for mappers
 /obj/machinery/atmospherics/components/binary/circulator/cold
-	mode = cold
+	mode = CIRCULATOR_COLD
 
 /obj/machinery/atmospherics/components/binary/circulator/Initialize(mapload)
 	.=..()
@@ -74,35 +75,32 @@
 	else
 		icon_state = "circ-off"
 
-/obj/machinery/atmospherics/components/binary/circulator/attackby(obj/item/O, mob/user, params)
-	if(panel_open)
-
-		if(istype(O, /obj/item/wrench))
-			anchored = !anchored
-			O.play_tool_sound(src)
-			if(generator)
-				disconnectFromGenerator()
-			to_chat(user, "<span class='notice'>You [anchored?"secure":"unsecure"] \the [src].</span>")
-			return
-
-		else if(istype(O, /obj/item/multitool))
-			if(generator)
-				disconnectFromGenerator()
-			mode = !mode
-			to_chat(user, "<span class='notice'>You set \the [src] to [mode?"cold":"hot"] mode.</span>")
-			return
-
-		else if(default_deconstruction_crowbar(O))
-			return
-
-	if(istype(O, /obj/item/screwdriver))
-		panel_open = !panel_open
-		O.play_tool_sound(src)
-		to_chat(user, "<span class='notice'>You [panel_open?"open":"close"] \the [src]'s panel.</span>")
+/obj/machinery/atmospherics/components/binary/circulator/wrench_act(mob/living/user, obj/item/I)
+	if(!panel_open)
 		return
+	anchored = !anchored
+	I.play_tool_sound(src)
+	if(generator)
+		disconnectFromGenerator()
+	to_chat(user, "<span class='notice'>You [anchored?"secure":"unsecure"] [src].</span>")
+	return TRUE
 
-	else
-		return ..()
+/obj/machinery/atmospherics/components/binary/circulator/multitool_act(mob/living/user, obj/item/I)
+	if(generator)
+		disconnectFromGenerator()
+	mode = !mode
+	to_chat(user, "<span class='notice'>You set [src] to [mode?"cold":"hot"] mode.</span>")
+	return TRUE
+
+/obj/machinery/atmospherics/components/binary/circulator/screwdriver_act(mob/user, obj/item/I)
+	panel_open = !panel_open
+	I.play_tool_sound(src)
+	to_chat(user, "<span class='notice'>You [panel_open?"open":"close"] the panel on [src].</span>")
+	return TRUE
+
+/obj/machinery/atmospherics/components/binary/circulator/crowbar_act(mob/user, obj/item/I)
+	default_deconstruction_crowbar(I)
+	return TRUE
 
 /obj/machinery/atmospherics/components/binary/circulator/on_deconstruction()
 	if(generator)

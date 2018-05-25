@@ -24,6 +24,7 @@
 	component_parts += new /obj/item/circuitboard/machine/generator(null)
 
 /obj/machinery/power/generator/Destroy()
+	kill_circs()
 	SSair.atmos_machinery -= src
 	return ..()
 
@@ -182,42 +183,39 @@
 
 	if(circs.len)
 		for(C in circs)
-			if(C.mode == C.cold && !cold_circ)
+			if(C.mode == CIRCULATOR_COLD && !cold_circ)
 				cold_circ = C
 				C.generator = src
-			else if(C.mode == C.hot && !hot_circ)
+			else if(C.mode == CIRCULATOR_HOT && !hot_circ)
 				hot_circ = C
 				C.generator = src
 
-/obj/machinery/power/generator/attackby(obj/item/O, mob/user, params)
-	if(panel_open)
-
-		if(istype(O, /obj/item/wrench))
-			anchored = !anchored
-			O.play_tool_sound(src)
-			if(!anchored)
-				kill_circs()
-			to_chat(user, "<span class='notice'>You [anchored?"secure":"unsecure"] \the [src].</span>")
-			return
-
-		else if(istype(O, /obj/item/multitool))
-			if(!anchored)
-				return
-			find_circs()
-			to_chat(user, "<span class='notice'>You update \the [src]'s circulator links.</span>")
-			return
-
-		else if(default_deconstruction_crowbar(O))
-			return
-
-	if(istype(O, /obj/item/screwdriver))
-		panel_open = !panel_open
-		O.play_tool_sound(src)
-		to_chat(user, "<span class='notice'>You [panel_open?"open":"close"] \the [src]'s panel.</span>")
+/obj/machinery/power/generator/wrench_act(mob/living/user, obj/item/I)
+	if(!panel_open)
 		return
+	anchored = !anchored
+	I.play_tool_sound(src)
+	if(!anchored)
+		kill_circs()
+	to_chat(user, "<span class='notice'>You [anchored?"secure":"unsecure"] [src].</span>")
+	return TRUE
 
-	else
-		return ..()
+/obj/machinery/power/generator/multitool_act(mob/living/user, obj/item/I)
+	if(!anchored)
+		return
+	find_circs()
+	to_chat(user, "<span class='notice'>You update [src]'s circulator links.</span>")
+	return TRUE
+
+/obj/machinery/power/generator/screwdriver_act(mob/user, obj/item/I)
+	panel_open = !panel_open
+	I.play_tool_sound(src)
+	to_chat(user, "<span class='notice'>You [panel_open?"open":"close"] the panel on [src].</span>")
+	return TRUE
+
+/obj/machinery/power/generator/crowbar_act(mob/user, obj/item/I)
+	default_deconstruction_crowbar(I)
+	return TRUE
 
 /obj/machinery/power/generator/on_deconstruction()
 	kill_circs()
