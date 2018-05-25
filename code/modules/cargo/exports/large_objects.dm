@@ -58,22 +58,22 @@
 
 
 /datum/export/large/emitter
-	cost = 200
+	cost = 400
 	unit_name = "emitter"
 	export_types = list(/obj/machinery/power/emitter)
 
 /datum/export/large/field_generator
-	cost = 200
+	cost = 400
 	unit_name = "field generator"
 	export_types = list(/obj/machinery/field/generator)
 
 /datum/export/large/collector
-	cost = 200
+	cost = 400
 	unit_name = "collector"
 	export_types = list(/obj/machinery/power/rad_collector)
 
 /datum/export/large/collector/pa
-	cost = 300
+	cost = 600
 	unit_name = "particle accelerator part"
 	export_types = list(/obj/structure/particle_accelerator)
 
@@ -94,12 +94,12 @@
 
 
 /datum/export/large/iv
-	cost = 50
+	cost = 300
 	unit_name = "iv drip"
 	export_types = list(/obj/machinery/iv_drip)
 
 /datum/export/large/barrier
-	cost = 25
+	cost = 100
 	unit_name = "security barrier"
 	export_types = list(/obj/item/grenade/barrier, /obj/structure/barricade/security)
 
