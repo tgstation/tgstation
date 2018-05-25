@@ -69,7 +69,7 @@
 
 /obj/item/integrated_circuit/converter/refcode
 	name = "reference encoder"
-	desc = "This circuit can encode a reference into a string, which can then be read by an EPV2 circuit."
+	desc = "This circuit can encode a reference into a string, which can then be read by a reference decoder circuit."
 	icon_state = "ref-string"
 	inputs = list("input" = IC_PINTYPE_REF)
 	outputs = list("output" = IC_PINTYPE_STRING)
@@ -88,7 +88,7 @@
 
 /obj/item/integrated_circuit/converter/refdecode
 	name = "reference decoder"
-	desc = "This circuit can convert an encoded reference to actual reference."
+	desc = "This circuit can convert an encoded reference to an actual reference."
 	icon_state = "ref-string"
 	inputs = list("input" = IC_PINTYPE_STRING)
 	outputs = list("output" = IC_PINTYPE_REF)
@@ -180,8 +180,8 @@
 
 /obj/item/integrated_circuit/converter/separator
 	name = "separator"
-	desc = "This splits as single string into two at the relative split point."
-	extended_desc = "This circuits splits a given string into two, based on the string, and the index value. \
+	desc = "This splits a single string into two at the relative split point."
+	extended_desc = "This circuit splits a given string into two, based on the string and the index value. \
 	The index splits the string <b>after</b> the given index, including spaces. So 'a person' with an index of '3' \
 	will split into 'a p' and 'erson'."
 	icon_state = "split"
@@ -240,9 +240,10 @@
 
 /obj/item/integrated_circuit/converter/findstring
 	name = "find text"
-	desc = "This gives position of sample in the string. Or returns 0."
+	desc = "This outputs the position of the sample in the string, or returns 0."
 	extended_desc = "The first pin is the string to be examined. The second pin is the sample to be found. \
-	For example, 'eat this burger' will give you position 4. This circuit isn't case sensitive."
+	For example, inputting 'my wife has caught on fire' with 'has' as the sample will give you position 9. \
+	This circuit isn't case sensitive, and it does not ignore spaces."
 	complexity = 4
 	inputs = list(
 		"string" = IC_PINTYPE_STRING,
@@ -413,7 +414,7 @@
 /obj/item/integrated_circuit/converter/rgb2hex
 	name = "rgb to hexadecimal"
 	desc = "This circuit can convert a RGB (Red, Green, Blue) color to a Hexadecimal RGB color."
-	extended_desc = "The first pin controls red amount, the second pin controls green amount, and the third controls blue amount. All go from 0-255."
+	extended_desc = "The first pin controls red amount, the second pin controls green amount, and the third controls blue amount. They all go from 0-255."
 	icon_state = "rgb-hex"
 	inputs = list(
 		"red" = IC_PINTYPE_NUMBER,

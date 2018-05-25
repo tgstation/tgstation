@@ -163,8 +163,10 @@
 	for(var/obj/item/reagent_containers/glass/G in beakers)
 		reactants += G.reagents
 
-	if(!chem_splash(get_turf(src), affected_area, reactants, ignition_temp, threatscale) && !no_splash)
-		playsound(loc, 'sound/items/screwdriver2.ogg', 50, 1)
+	var/turf/detonation_turf = get_turf(src)
+
+	if(!chem_splash(detonation_turf, affected_area, reactants, ignition_temp, threatscale) && !no_splash)
+		playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 		if(beakers.len)
 			for(var/obj/O in beakers)
 				O.forceMove(drop_location())
@@ -172,17 +174,15 @@
 		stage_change(EMPTY)
 		return
 
+	var/areas_name = get_area_name(src, TRUE)
+
 	if(nadeassembly)
 		var/mob/M = get_mob_by_ckey(assemblyattacher)
 		var/mob/last = get_mob_by_ckey(nadeassembly.fingerprintslast)
-		var/turf/T = get_turf(src)
-		var/area/A = get_area(T)
-		message_admins("grenade primed by an assembly, attached by [ADMIN_LOOKUPFLW(M)] and last touched by [ADMIN_LOOKUPFLW(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] [ADMIN_JMP(T)]</a>.")
-		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] [COORD(T)]")
+		message_admins("grenade primed by an assembly, attached by [ADMIN_LOOKUPFLW(M)] and last touched by [ADMIN_LOOKUPFLW(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [areas_name] [ADMIN_JMP(detonation_turf)]</a>.")
+		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [areas_name] [COORD(detonation_turf)]")
 
-	var/turf/DT = get_turf(src)
-	var/area/DA = get_area(DT)
-	log_game("A grenade detonated at [DA.name] [COORD(DT)]")
+	log_game("A grenade detonated at [areas_name] [COORD(detonation_turf)]")
 
 	update_mob()
 

@@ -38,7 +38,7 @@
 //type and all subtypes should always call Initialize in New()
 #define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\
     ..();\
-    if(!initialized) {\
+    if(!(flags_1 & INITIALIZED_1)) {\
         args[1] = TRUE;\
         SSatoms.InitAtom(src, args);\
     }\
@@ -82,6 +82,7 @@
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
+#define FIRE_PRIORITY_PING			10
 #define FIRE_PRIORITY_IDLE_NPC		10
 #define FIRE_PRIORITY_SERVER_MAINT	10
 #define FIRE_PRIORITY_RESEARCH		10

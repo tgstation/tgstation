@@ -190,7 +190,10 @@
 	name = fried.name //We'll determine the other stuff when it's actually removed
 	icon = fried.icon
 	overlays = fried.copy_overlays()
+	lefthand_file = fried.lefthand_file
+	righthand_file = fried.righthand_file
 	icon_state = fried.icon_state
+	item_state = fried.item_state
 	desc = fried.desc
 	w_class = fried.w_class
 	slowdown = fried.slowdown

@@ -47,6 +47,8 @@ Chief Medical Officer
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
+	chameleon_extras = list(/obj/item/gun/syringe, /obj/item/stamp/cmo)
+
 /*
 Medical Doctor
 */
@@ -83,6 +85,8 @@ Medical Doctor
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
+	chameleon_extras = /obj/item/gun/syringe
+
 /*
 Chemist
 */
@@ -118,6 +122,8 @@ Chemist
 	backpack = /obj/item/storage/backpack/chemistry
 	satchel = /obj/item/storage/backpack/satchel/chem
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
+
+	chameleon_extras = /obj/item/gun/syringe
 
 /*
 Geneticist

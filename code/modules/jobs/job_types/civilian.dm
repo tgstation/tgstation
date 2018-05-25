@@ -45,6 +45,8 @@ Clown
 
 	box = /obj/item/storage/box/hug/survival
 
+	chameleon_extras = /obj/item/stamp/clown
+
 
 /datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -189,6 +191,8 @@ Lawyer
 	l_hand = /obj/item/storage/briefcase/lawyer
 	l_pocket = /obj/item/laser_pointer
 	r_pocket = /obj/item/clothing/accessory/lawyers_badge
+
+	chameleon_extras = /obj/item/stamp/law
 
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

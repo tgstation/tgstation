@@ -1,5 +1,3 @@
-<link rel='stylesheet' href='spritesheet_pipes.css'>
-
 <ui-display title='Direction'>
 	{{#each data.preview_rows}}
 		<ui-section>

@@ -68,6 +68,73 @@
 	return 1
 
 
+/datum/action/chameleon_outfit
+	name = "Select Chameleon Outfit"
+	button_icon_state = "chameleon_outfit"
+	var/list/outfit_options //By default, this list is shared between all instances. It is not static because if it were, subtypes would not be able to have their own. If you ever want to edit it, copy it first.
+
+/datum/action/chameleon_outfit/New()
+	..()
+	initialize_outfits()
+
+/datum/action/chameleon_outfit/proc/initialize_outfits()
+	var/static/list/standard_outfit_options
+	if(!standard_outfit_options)
+		standard_outfit_options = list()
+		for(var/path in subtypesof(/datum/outfit/job))
+			var/datum/outfit/O = path
+			if(initial(O.can_be_admin_equipped))
+				standard_outfit_options[initial(O.name)] = path
+		sortTim(standard_outfit_options, /proc/cmp_text_asc)
+	outfit_options = standard_outfit_options
+
+/datum/action/chameleon_outfit/Trigger()
+	return select_outfit(owner)
+
+/datum/action/chameleon_outfit/proc/select_outfit(mob/user)
+	if(!user || !IsAvailable())
+		return FALSE
+	var/selected = input("Select outfit to change into", "Chameleon Outfit") as null|anything in outfit_options
+	if(!IsAvailable() || QDELETED(src) || QDELETED(user))
+		return FALSE
+	var/outfit_type = outfit_options[selected]
+	if(!outfit_type)
+		return FALSE
+	var/datum/outfit/O = new outfit_type()
+	var/list/outfit_types = O.get_chameleon_disguise_info()
+
+	for(var/V in user.chameleon_item_actions)
+		var/datum/action/item_action/chameleon/change/A = V
+		var/done = FALSE
+		for(var/T in outfit_types)
+			for(var/name in A.chameleon_list)
+				if(A.chameleon_list[name] == T)
+					A.update_look(user, T)
+					outfit_types -= T
+					done = TRUE
+					break
+			if(done)
+				break
+	//hardsuit helmets/suit hoods
+	if(O.toggle_helmet && (ispath(O.suit, /obj/item/clothing/suit/space/hardsuit) || ispath(O.suit, /obj/item/clothing/suit/hooded)) && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		//make sure they are actually wearing the suit, not just holding it, and that they have a chameleon hat
+		if(istype(H.wear_suit, /obj/item/clothing/suit/chameleon) && istype(H.head, /obj/item/clothing/head/chameleon))
+			var/helmet_type
+			if(ispath(O.suit, /obj/item/clothing/suit/space/hardsuit))
+				var/obj/item/clothing/suit/space/hardsuit/hardsuit = O.suit
+				helmet_type = initial(hardsuit.helmettype)
+			else
+				var/obj/item/clothing/suit/hooded/hooded = O.suit
+				helmet_type = initial(hooded.hoodtype)
+
+			if(helmet_type)
+				var/obj/item/clothing/head/chameleon/hat = H.head
+				hat.chameleon_action.update_look(user, helmet_type)
+	qdel(O)
+	return TRUE
+
+
 /datum/action/item_action/chameleon/change
 	name = "Chameleon Change"
 	var/list/chameleon_blacklist = list() //This is a typecache
@@ -77,6 +144,24 @@
 
 	var/emp_timer
 
+/datum/action/item_action/chameleon/change/Grant(mob/M)
+	if(M && (owner != M))
+		if(!M.chameleon_item_actions)
+			M.chameleon_item_actions = list(src)
+			var/datum/action/chameleon_outfit/O = new /datum/action/chameleon_outfit()
+			O.Grant(M)
+		else
+			M.chameleon_item_actions |= src
+	..()
+
+/datum/action/item_action/chameleon/change/Remove(mob/M)
+	if(M && (M == owner))
+		LAZYREMOVE(M.chameleon_item_actions, src)
+		if(!LAZYLEN(M.chameleon_item_actions))
+			var/datum/action/chameleon_outfit/O = locate(/datum/action/chameleon_outfit) in M.actions
+			qdel(O)
+	..()
+
 /datum/action/item_action/chameleon/change/proc/initialize_disguises()
 	if(button)
 		button.name = "Change [chameleon_name] Appearance"
@@ -85,9 +170,7 @@
 	for(var/V in typesof(chameleon_type))
 		if(ispath(V) && ispath(V, /obj/item))
 			var/obj/item/I = V
-			if(chameleon_blacklist[V] || (initial(I.flags_1) & ABSTRACT_1))
-				continue
-			if(!initial(I.icon_state) || !initial(I.item_state))
+			if(chameleon_blacklist[V] || (initial(I.flags_1) & ABSTRACT_1) || !initial(I.icon_state))
 				continue
 			var/chameleon_item_name = "[initial(I.name)] ([initial(I.icon_state)])"
 			chameleon_list[chameleon_item_name] = I
@@ -200,6 +283,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/under/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/under/chameleon/broken/Initialize()
@@ -226,6 +312,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/suit/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/suit/chameleon/broken/Initialize()
@@ -251,6 +340,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/glasses/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/glasses/chameleon/broken/Initialize()
@@ -277,6 +369,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/gloves/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/gloves/chameleon/broken/Initialize()
@@ -303,6 +398,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/head/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/head/chameleon/broken/Initialize()
@@ -350,6 +448,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/mask/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/mask/chameleon/broken/Initialize()
@@ -400,6 +501,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/shoes/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/shoes/chameleon/noslip
@@ -569,6 +673,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/storage/backpack/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/storage/backpack/chameleon/broken/Initialize()
@@ -594,6 +701,9 @@
 	STR.silent = TRUE
 
 /obj/item/storage/belt/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/storage/belt/chameleon/broken/Initialize()
@@ -612,6 +722,9 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/radio/headset/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/radio/headset/chameleon/broken/Initialize()
@@ -631,8 +744,25 @@
 	chameleon_action.initialize_disguises()
 
 /obj/item/pda/chameleon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	chameleon_action.emp_randomise()
 
 /obj/item/pda/chameleon/broken/Initialize()
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)
+
+/obj/item/stamp/chameleon
+	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/obj/item/stamp/chameleon/Initialize()
+	. = ..()
+	chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/stamp
+	chameleon_action.chameleon_name = "Stamp"
+	chameleon_action.initialize_disguises()
+
+/obj/item/stamp/chameleon/broken/Initialize()
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)

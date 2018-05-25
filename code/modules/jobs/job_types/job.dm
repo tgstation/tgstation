@@ -198,3 +198,11 @@
 		PDA.owner = H.real_name
 		PDA.ownjob = J.title
 		PDA.update_label()
+
+/datum/outfit/job/get_chameleon_disguise_info()
+	var/list/types = ..()
+	types -= /obj/item/storage/backpack //otherwise this will override the actual backpacks
+	types += backpack
+	types += satchel
+	types += duffelbag
+	return types
