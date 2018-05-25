@@ -344,7 +344,7 @@
 
 /obj/item/borg/lollipop
 	name = "treat fabricator"
-	desc = "Eat the ice cream. Toggle in-module to switch between dispensing and high velocity ejection modes."
+	desc = "Reward humans with various treats. Toggle in-module to switch between dispensing and high velocity ejection modes."
 	icon_state = "lollipop"
 	var/candy = 30
 	var/candymax = 30
@@ -398,6 +398,7 @@
 			L = new /obj/item/reagent_containers/food/snacks/icecream(T)
 			var/obj/item/reagent_containers/food/snacks/icecream/I = L
 			I.add_ice_cream("vanilla")
+			I.desc = "Eat the ice cream."
 
 	var/into_hands = FALSE
 	if(ismob(A))
