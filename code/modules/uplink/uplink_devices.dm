@@ -12,6 +12,12 @@
 	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
 	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 
+/obj/item/radio/uplink/nuclear_restricted/Initialize()
+	. = ..()
+	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+	hidden_uplink.allow_restricted = FALSE
+	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
+
 /obj/item/radio/uplink/clownop/Initialize()
 	. = ..()
 	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
