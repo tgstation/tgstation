@@ -137,8 +137,8 @@
 		for(var/obj/item/I in held_items)
 			if(weaponcheck.Invoke(I))
 				threatcount += 4
-			if(weaponcheck.Invoke(back))
-				threatcount += 2
+		if(weaponcheck.Invoke(back))
+			threatcount += 2
 
 	//mindshield implants imply trustworthyness
 	if(isloyal())
