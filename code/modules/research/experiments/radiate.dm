@@ -81,7 +81,7 @@
 	var/datum/component/rad_insulation/insulation = O.GetComponent(/datum/component/rad_insulation)
 	if(insulation && insulation.contamination_proof) //Don't affect items that are immune to radiation-ish
 		return FALSE
-	
+	var/rad_strength = 0
 	var/datum/component/radioactive/radiation = O.GetComponent(/datum/component/radioactive)
 	if(radiation)
 		rad_strength = radiation.strength
