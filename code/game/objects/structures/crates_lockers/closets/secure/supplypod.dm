@@ -113,15 +113,15 @@
 	addtimer(CALLBACK(src, .proc/endLaunch, SO, podID), 3, TIMER_CLIENT_TIME)//fall 0.3seconds 
 
 /obj/effect/DPtarget/proc/endLaunch(var/SO, var/podID)
-	if (podID == POD_BLUESPACE)
-		new /obj/structure/closet/supplypod/bluespacepod(drop_location(), SO)//pod is created
-		explosion(src,0,0,2, flame_range = 1) //explosion and camshake (shoutout to @cyberboss)
-	else if (podID == POD_CENTCOM)
-		new /obj/structure/closet/supplypod/bluespacepod/centcompod(drop_location(), SO)
-		explosion(src,0,0,2, flame_range = 1) 
-	else
+	if (podID == POD_STANDARD)
 		new /obj/structure/closet/supplypod(drop_location(), SO)//pod is created
 		explosion(src,0,0,2, flame_range = 3) //less advanced equipment than bluespace pod, so larger explosion when landing
+	else if (podID == POD_BLUESPACE)
+		new /obj/structure/closet/supplypod/bluespacepod(drop_location(), SO)//pod is created
+		explosion(src,0,0,2, flame_range = 1) //explosion and camshake (shoutout to @cyberboss)
+	else
+		new /obj/structure/closet/supplypod/bluespacepod/centcompod(drop_location(), SO)
+		explosion(src,0,0,2, flame_range = 1) 
 	qdel(src)
 
 /obj/effect/DPtarget/Destroy()
