@@ -23,6 +23,11 @@
 /obj/machinery/atmospherics/components/binary/circulator/cold
 	mode = cold
 
+/obj/machinery/atmospherics/components/binary/circulator/Initialize(mapload)
+	.=..()
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/circulator(null)
+
 /obj/machinery/atmospherics/components/binary/circulator/proc/return_transfer_air()
 
 	var/datum/gas_mixture/air1 = airs[1]
@@ -110,3 +115,8 @@
 		generator.hot_circ = null
 	generator.update_icon()
 	generator = null
+
+/obj/machinery/atmospherics/components/binary/circulator/setPipingLayer(new_layer)
+	..()
+	pixel_x = 0
+	pixel_y = 0

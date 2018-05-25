@@ -20,6 +20,8 @@
 	connect_to_network()
 	SSair.atmos_machinery += src
 	update_icon()
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/generator(null)
 
 /obj/machinery/power/generator/Destroy()
 	SSair.atmos_machinery -= src
