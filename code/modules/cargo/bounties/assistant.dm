@@ -26,21 +26,21 @@
 /datum/bounty/item/assistant/soap
 	name = "Soap"
 	description = "Soap has gone missing from CentCom's bathrooms and nobody knows who took it. Replace it and be the hero CentCom needs."
-	reward = 2000
+	reward = 3000
 	required_count = 3
 	wanted_types = list(/obj/item/soap)
 
 /datum/bounty/item/assistant/spear
 	name = "Spears"
 	description = "CentCom's security forces are going through budget cuts. You will be paid if you ship a set of spears."
-	reward = 2000
+	reward = 1500
 	required_count = 5
 	wanted_types = list(/obj/item/twohanded/spear)
 
 /datum/bounty/item/assistant/toolbox
 	name = "Toolboxes"
 	description = "There's an absence of robustness at Central Command. Hurry up and ship some toolboxes as a solution."
-	reward = 2000
+	reward = 1000
 	required_count = 6
 	wanted_types = list(/obj/item/storage/toolbox)
 
@@ -59,7 +59,7 @@
 /datum/bounty/item/assistant/cheesiehonkers
 	name = "Cheesie Honkers"
 	description = "Apparently the company that makes Cheesie Honkers is going out of business soon. CentCom wants to stock up before it happens!"
-	reward = 1200
+	reward = 1000
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/cheesiehonkers)
 
@@ -107,7 +107,7 @@
 /datum/bounty/item/assistant/gondola_hide
 	name = "Gondola Hide"
 	description = "Central Command has recently learned of strange creatures called Gondolas. If you catch one, ship its hide back to CentCom."
-	reward = 5000
+	reward = 10000
 	wanted_types = list(/obj/item/stack/sheet/animalhide/gondola)
 
 /datum/bounty/item/assistant/monkey_hide
@@ -158,19 +158,19 @@
 /datum/bounty/item/assistant/revolver
 	name = "Revolver"
 	description = "Captain Johann of station 12 has challenged Captain Vic of station 11 to a duel. He's asked for help securing an appropriate revolver to use."
-	reward = 2000
+	reward = 6000
 	wanted_types = list(/obj/item/gun/ballistic/revolver)
 
 /datum/bounty/item/assistant/hand_tele
 	name = "Hand Tele"
 	description = "Central Command has come up with a genius idea: Why not teleport cargo rather than ship it? Send over a hand tele, receive payment, then wait 6-8 years while they deliberate."
-	reward = 2000
+	reward = 8000
 	wanted_types = list(/obj/item/hand_tele)
 
 /datum/bounty/item/assistant/geranium
 	name = "Geraniums"
 	description = "Commander Zot has the hots for Commander Zena. Send a shipment of geraniums - her favorite flower - and he'll happily reward you."
-	reward = 4000
+	reward = 3000
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/poppy/geranium)
 
@@ -185,7 +185,7 @@
 /datum/bounty/item/assistant/shadyjims
 	name = "Shady Jim's"
 	description = "There's an irate officer at CentCom demanding that he receive a box of Shady Jim's cigarettes. Please ship one. He's starting to make threats."
-	reward = 500
+	reward = 1000
 	wanted_types = list(/obj/item/storage/fancy/cigarettes/cigpack_shadyjims)
 
 /datum/bounty/item/assistant/potted_plants
@@ -198,7 +198,7 @@
 /datum/bounty/item/assistant/earmuffs
 	name = "Earmuffs"
 	description = "Central Command is getting tired of your station's messages. They've ordered that you ship some earmuffs to lessen the annoyance."
-	reward = 1000
+	reward = 500
 	wanted_types = list(/obj/item/clothing/ears/earmuffs)
 
 /datum/bounty/item/assistant/handcuffs
@@ -243,7 +243,7 @@
 /datum/bounty/item/assistant/plasma_tank
 	name = "Full Tank of Plasma"
 	description = "Station 12 has requested supplies to set up a singularity engine. In particular, they request 28 moles of plasma."
-	reward = 2500
+	reward = 2000
 	wanted_types = list(/obj/item/tank)
 	var/moles_required = 20 // A full tank is 28 moles, but CentCom ignores that fact.
 
