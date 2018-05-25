@@ -42,12 +42,12 @@
 
 
 /datum/export/gear/space/syndiehelmet
-	cost = 150
+	cost = 2000
 	unit_name = "Syndicate space helmet"
 	export_types = list(/obj/item/clothing/head/helmet/space/syndicate)
 
 /datum/export/gear/space/syndiesuit
-	cost = 300
+	cost = 3000
 	unit_name = "Syndicate space suit"
 	export_types = list(/obj/item/clothing/suit/space/syndicate)
 
@@ -58,26 +58,26 @@
 	export_types = list(/obj/item/clothing/head/radiation)
 
 /datum/export/gear/radsuit
-	cost = 100
+	cost = 50
 	unit_name = "radsuit"
 	export_types = list(/obj/item/clothing/suit/radiation)
 
 /datum/export/gear/biohood
-	cost = 50
+	cost = 150
 	unit_name = "biosuit hood"
 	export_types = list(/obj/item/clothing/head/bio_hood)
 
 /datum/export/gear/biosuit
-	cost = 100
+	cost = 200
 	unit_name = "biosuit"
 	export_types = list(/obj/item/clothing/suit/bio_suit)
 
 /datum/export/gear/bombhelmet
-	cost = 50
+	cost = 200
 	unit_name = "bomb suit hood"
 	export_types = list(/obj/item/clothing/head/bomb_hood)
 
 /datum/export/gear/bombsuit
-	cost = 100
+	cost = 400
 	unit_name = "bomb suit"
 	export_types = list(/obj/item/clothing/suit/bomb_suit)
