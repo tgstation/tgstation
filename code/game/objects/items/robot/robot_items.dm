@@ -456,7 +456,7 @@
 		if(R.emagged)
 			hitdamage = emaggedhitdamage
 	switch(mode)
-		if(DISPENSE_LOLLIPOP_MODE || DISPENSE_ICECREAM_MODE)
+		if(DISPENSE_LOLLIPOP_MODE, DISPENSE_ICECREAM_MODE)
 			if(!proximity)
 				return FALSE
 			dispense(target, user)
