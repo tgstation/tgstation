@@ -1347,6 +1347,7 @@
 #include "code\modules\cargo\expressconsole.dm"
 #include "code\modules\cargo\order.dm"
 #include "code\modules\cargo\packs.dm"
+#include "code\modules\cargo\supplypod_beacon.dm"
 #include "code\modules\cargo\bounties\assistant.dm"
 #include "code\modules\cargo\bounties\chef.dm"
 #include "code\modules\cargo\bounties\item.dm"

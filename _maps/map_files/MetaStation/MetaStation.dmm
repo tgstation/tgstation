@@ -69042,7 +69042,7 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "cPB" = (
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -69050,7 +69050,7 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "cPC" = (
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -69300,7 +69300,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cPZ" = (
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /turf/open/floor/plating,
 /area/chapel/main)
 "cQa" = (
@@ -69663,7 +69663,7 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cQT" = (
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/chapel/main)
@@ -74811,7 +74811,7 @@
 /turf/open/floor/wood,
 /area/security/vacantoffice)
 "djX" = (
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /obj/machinery/door/window/eastleft{
 	name = "Coffin Storage";
 	req_access_txt = "22"

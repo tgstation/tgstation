@@ -2092,6 +2092,17 @@
 	contains = list(/obj/item/storage/box/fountainpens)
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/misc/funeral
+	name = "Funeral Supply crate"
+	desc = "At the end of the day, someone's gonna want someone dead. Give them a proper send-off with these funeral supplies! Contains a coffin with burial garmets and flowers."
+	cost = 600
+	contains = list(/obj/item/clothing/under/burial,
+					/obj/item/reagent_containers/food/snacks/grown/harebell,
+					/obj/item/reagent_containers/food/snacks/grown/poppy/geranium
+					)
+	crate_name = "coffin"
+	crate_type = /obj/structure/closet/crate/coffin
+
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
@@ -2101,9 +2112,8 @@
 					/obj/item/storage/book/bible/booze,
 					/obj/item/storage/book/bible/booze,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie,
-					/obj/item/clothing/suit/hooded/chaplain_hoodie,
-					/obj/item/clothing/under/burial,
-					/obj/item/clothing/under/burial)
+					/obj/item/clothing/suit/hooded/chaplain_hoodie
+					)
 	crate_name = "religious supplies crate"
 
 /datum/supply_pack/misc/toner
