@@ -115,10 +115,16 @@
 			if(!ispath(p))
 				N.boost_item_paths -= p
 				node_boost_error(N.id, "[p] is not a valid path.")
-			var/num = N.boost_item_paths[p]
-			if(!isnum(num))
+			var/list/points = N.boost_item_paths[p]
+			if(!islist(points))
 				N.boost_item_paths -= p
-				node_boost_error(N.id, "[num] is not a valid number.")
+				node_boost_error(N.id, "No valid list.")
+			else
+				for(var/i in points)
+					if(!isnum(points[i]))
+						node_boost_error(N.id, "[points[i]] is not a valid number.")
+					else if(!SSresearch.point_types[i])
+						node_boost_error(N.id, "[i] is not a valid point type.")
 		CHECK_TICK
 
 /proc/verify_techweb_designs()
@@ -168,16 +174,30 @@
 			if(!ispath(path))
 				continue
 			if(length(SSresearch.techweb_boost_items[path]))
-				SSresearch.techweb_boost_items[path] += list(node.id = node.boost_item_paths[path])
+				SSresearch.techweb_boost_items[path][node.id] = node.boost_item_paths[path]
 			else
 				SSresearch.techweb_boost_items[path] = list(node.id = node.boost_item_paths[path])
 		CHECK_TICK
 
 /proc/techweb_item_boost_check(obj/item/I)			//Returns an associative list of techweb node datums with values of the boost it gives.	var/list/returned = list()
 	if(SSresearch.techweb_boost_items[I.type])
-		return SSresearch.techweb_boost_items[I.type]		//It should already be formatted in node datum = value.
+		return SSresearch.techweb_boost_items[I.type]		//It should already be formatted in node datum = list(point type = value)
 
 /proc/techweb_item_point_check(obj/item/I)
 	if(SSresearch.techweb_point_items[I.type])
 		return SSresearch.techweb_point_items[I.type]
-	return 0
+
+/proc/techweb_point_display_generic(pointlist)
+	var/list/ret = list()
+	for(var/i in pointlist)
+		if(SSresearch.point_types[i])
+			ret += "[SSresearch.point_types[i]]: [pointlist[i]]"
+		else
+			ret += "ERRORED POINT TYPE: [pointlist[i]]"
+	return ret.Join("<BR>")
+
+/proc/techweb_point_display_rdconsole(pointlist, last_pointlist)
+	var/list/ret = list()
+	for(var/i in pointlist)
+		ret += "[SSresearch.point_types[i] || "ERRORED POINT TYPE"]: [pointlist[i]] (+[(last_pointlist[i]) * ((SSresearch.flags & SS_TICKER)? (600 / (world.tick_lag * SSresearch.wait)) : (600 / SSresearch.wait))]/ minute)"
+	return ret.Join("<BR>")

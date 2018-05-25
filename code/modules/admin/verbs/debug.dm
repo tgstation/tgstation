@@ -115,7 +115,7 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 		to_chat(usr, "Calling Del() is not allowed")
 		return
 
-	if(!target.CanProcCall(procname))
+	if(target != GLOBAL_PROC && !target.CanProcCall(procname))
 		to_chat(usr, "Proccall on [target.type]/proc/[procname] is disallowed!")
 		return
 	var/current_caller = GLOB.AdminProcCaller

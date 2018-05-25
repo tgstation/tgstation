@@ -234,6 +234,7 @@
 			if(POLLTYPE_IRV)
 				if (!href_list["IRVdata"])
 					to_chat(src, "<span class='danger'>No ordering data found. Please try again or contact an administrator.</span>")
+					return
 				var/list/votelist = splittext(href_list["IRVdata"], ",")
 				if (!vote_on_irv_poll(pollid, votelist))
 					to_chat(src, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")

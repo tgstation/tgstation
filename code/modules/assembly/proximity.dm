@@ -34,26 +34,34 @@
 	update_icon()
 	return TRUE
 
+/obj/item/assembly/prox_sensor/on_detach()
+	. = ..()
+	if(!.)
+		return
+	else
+		proximity_monitor.SetHost(src,src)
+
+
 /obj/item/assembly/prox_sensor/toggle_secure()
 	secured = !secured
 	if(!secured)
 		if(scanning)
 			toggle_scan()
-			proximity_monitor.host = src
+			proximity_monitor.SetHost(src,src)
 		timing = FALSE
 		STOP_PROCESSING(SSobj, src)
 	else
 		START_PROCESSING(SSobj, src)
-		proximity_monitor.host = loc
+		proximity_monitor.SetHost(loc,src)
 	update_icon()
 	return secured
+
 
 
 /obj/item/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
 	if (istype(AM, /obj/effect/beam))
 		return
 	sense()
-
 
 /obj/item/assembly/prox_sensor/proc/sense()
 	if(!scanning || !secured || next_activate > world.time)

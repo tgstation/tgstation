@@ -346,6 +346,9 @@
 	synthetic = TRUE
 
 /obj/item/organ/lungs/cybernetic/emp_act()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	owner.losebreath = 20
 
 

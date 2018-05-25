@@ -474,7 +474,7 @@
 	update_canmove()
 	GET_COMPONENT(mood, /datum/component/mood)
 	if (mood)
-		QDEL_LIST(mood.mood_events)
+		QDEL_LIST_ASSOC_VAL(mood.mood_events)
 		mood.sanity = SANITY_GREAT
 		mood.update_mood()
 

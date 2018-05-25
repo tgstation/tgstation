@@ -17,8 +17,8 @@
 
 /obj/item/integrated_circuit/lists/pick
 	name = "pick circuit"
-	desc = "This circuit will pick a random element from the input list, and output said element."
-	extended_desc = "Input list is unmodified."
+	desc = "This circuit will pick a random element from the input list, and output that element."
+	extended_desc = "The input list is not modified."
 	icon_state = "addition"
 	outputs = list(
 		"result" = IC_PINTYPE_ANY
@@ -70,7 +70,7 @@
 /obj/item/integrated_circuit/lists/search
 	name = "search circuit"
 	desc = "This circuit will get the index location of the desired element in a list."
-	extended_desc = "Search will start at 1 position and will return first matching position."
+	extended_desc = "Search will start at position 1 and will return the first matching position."
 	inputs = list(
 		"list" = IC_PINTYPE_LIST,
 		"item" = IC_PINTYPE_ANY
@@ -104,8 +104,8 @@
 /obj/item/integrated_circuit/lists/filter
 	name = "filter circuit"
 	desc = "This circuit will search through a list for anything matching the desired element(s) and outputs two lists: \
-	one containing just matching elements, and one with matching elements filtered out."
-	extended_desc = "Sample accepts lists. If no match is found, original list is sent to output 1."
+	one containing only the matching elements, and one with the matching elements filtered out."
+	extended_desc = "Sample accepts lists. If no match is found, the original list is sent to output 1."
 	inputs = list(
 		"input list" = IC_PINTYPE_LIST,
 		"sample" = IC_PINTYPE_ANY
@@ -168,7 +168,7 @@
 /obj/item/integrated_circuit/lists/listset
 	name = "list set circuit"
 	desc = "This circuit will remove any duplicate entries from a list."
-	extended_desc = "If there are no duplicate entries, result list will be unchanged."
+	extended_desc = "If there are no duplicate entries, the output list will be unchanged."
 	inputs = list(
 		"list" = IC_PINTYPE_LIST
 		)
@@ -189,7 +189,7 @@
 /obj/item/integrated_circuit/lists/at
 	name = "at circuit"
 	desc = "This circuit will pick an element from a list by the input index."
-	extended_desc = "If there is no element with such index, result will be null."
+	extended_desc = "If there is no element at the given index, the result will be null."
 	inputs = list(
 		"list" = IC_PINTYPE_LIST,
 		"index" = IC_PINTYPE_INDEX
@@ -225,7 +225,7 @@
 /obj/item/integrated_circuit/lists/delete
 	name = "delete circuit"
 	desc = "This circuit will remove an element from a list by the index."
-	extended_desc = "If there is no element with such index, result list will be unchanged."
+	extended_desc = "If there is no element at the given index, the result list will be unchanged."
 	inputs = list(
 		"list" = IC_PINTYPE_LIST,
 		"index" = IC_PINTYPE_INDEX
@@ -254,7 +254,7 @@
 /obj/item/integrated_circuit/lists/write
 	name = "write circuit"
 	desc = "This circuit will write an element to a list at the given index location."
-	extended_desc = "If there is no element with such index, it will give the same list as before."
+	extended_desc = "If there is no element at the given index, it will output the same list as before."
 	inputs = list(
 		"list" = IC_PINTYPE_LIST,
 		"index" = IC_PINTYPE_INDEX,
@@ -313,7 +313,7 @@
 
 /obj/item/integrated_circuit/lists/jointext
 	name = "join text circuit"
-	desc = "This circuit will combine two lists into one and output it as a string."
+	desc = "This circuit will combine two lists into one, and output it as a string."
 	extended_desc = "Default settings will encode the entire list into a string."
 	icon_state = "join"
 	inputs = list(
@@ -351,7 +351,7 @@
 
 /obj/item/integrated_circuit/lists/constructor
 	name = "large list constructor"
-	desc = "This circuit will build a list out of sixteen input values."
+	desc = "This circuit will build a list out of up to sixteen input values."
 	icon_state = "constr8"
 	inputs = list()
 	outputs = list(
@@ -383,20 +383,20 @@
 
 /obj/item/integrated_circuit/lists/constructor/small
 	name = "list constructor"
-	desc = "This circuit will build a list out of four input values."
+	desc = "This circuit will build a list out of up to four input values."
 	icon_state = "constr"
 	number_of_pins = 4
 
 /obj/item/integrated_circuit/lists/constructor/medium
 	name = "medium list constructor"
-	desc = "This circuit will build a list out of eight input values."
+	desc = "This circuit will build a list out of up to eight input values."
 	icon_state = "constr8"
 	number_of_pins = 8
 
 
 /obj/item/integrated_circuit/lists/deconstructor
 	name = "large list deconstructor"
-	desc = "This circuit will write first sixteen entries of input list, starting with index, into the output values."
+	desc = "This circuit will write the first sixteen entries of its input list, starting with the index, into the output values."
 	icon_state = "deconstr8"
 	inputs = list(
 		"input" = IC_PINTYPE_LIST,
@@ -428,11 +428,11 @@
 
 /obj/item/integrated_circuit/lists/deconstructor/small
 	name = "list deconstructor"
-	desc = "This circuit will write first four entries of input list, starting with index, into the output values."
+	desc = "This circuit will write the first four entries of its input list, starting with the index, into the output values."
 	icon_state = "deconstr"
 	number_of_pins = 4
 
 /obj/item/integrated_circuit/lists/deconstructor/medium
 	name = "medium list deconstructor"
-	desc = "This circuit will write first eight entries of input list, starting with index, into the output values."
+	desc = "This circuit will write the first eight entries of its input list, starting with the index, into the output values."
 	number_of_pins = 8

@@ -1,6 +1,6 @@
 /obj/item/integrated_circuit/input/card_reader
 	name = "card reader"
-	desc = "A circuit that can read registred name, assignment and a PassKey string from an ID card."
+	desc = "A circuit that can read the registred name, assignment, and PassKey string from an ID card."
 	icon_state = "card_reader"
 
 	complexity = 4

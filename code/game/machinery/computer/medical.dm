@@ -553,7 +553,8 @@
 	return
 
 /obj/machinery/computer/med_data/emp_act(severity)
-	if(!(stat & (BROKEN|NOPOWER)))
+	. = ..()
+	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		for(var/datum/data/record/R in GLOB.data_core.medical)
 			if(prob(10/severity))
 				switch(rand(1,6))
@@ -577,7 +578,6 @@
 			else if(prob(1))
 				qdel(R)
 				continue
-	..()
 
 /obj/machinery/computer/med_data/proc/canUseMedicalRecordsConsole(mob/user, message = 1, record1, record2)
 	if(user)

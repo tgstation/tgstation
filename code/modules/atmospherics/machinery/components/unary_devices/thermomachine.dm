@@ -164,11 +164,11 @@
 	max_temperature = T20C
 	min_temperature = 170 //actual minimum temperature is defined by RefreshParts()
 	circuit = /obj/item/circuitboard/machine/thermomachine/freezer
-	
+
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
 	on = TRUE
 	icon_state = "freezer_1"
-	
+
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize()
 	. = ..()
 	if(target_temperature == initial(target_temperature))
@@ -193,7 +193,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on
 	on = TRUE
 	icon_state = "heater_1"
-	
+
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/RefreshParts()
 	..()
 	var/L
