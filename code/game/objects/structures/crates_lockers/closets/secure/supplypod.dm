@@ -28,7 +28,7 @@
 	icon_state = "bluespacepod"
 
 /obj/structure/closet/supplypod/bluespacepod/centcompod
-	name = "Centcom Drop Pod"
+	name = "CentCom Drop Pod"
 	desc = "A Nanotrasen Bluespace drop pod, this one has been marked with Central Command's designations. Teleports back to Centcom after delivery."
 	icon_state = "centcompod"
 
@@ -105,7 +105,15 @@
 
 /obj/effect/DPtarget/Initialize(mapload, var/SO, var/podID)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/beginLaunch, SO, podID), podID == POD_BLUESPACE ? 15 : 30)//standard pods take 3 seconds to come in, bluespace pods take 1.5
+	switch(podID)
+		if(POD_STANDARD)
+			delayTime = 30
+		if(POD_BLUESPACE)
+			delayTime = 15
+		if(POD_CENTCOM)
+			delayTime = 3
+
+	addtimer(CALLBACK(src, .proc/beginLaunch, SO, podID), delayTime)//standard pods take 3 seconds to come in, bluespace pods take 1.5
 
 /obj/effect/DPtarget/proc/beginLaunch(var/SO, var/podID)
 	fallingPod = new /obj/effect/temp_visual/DPfall(drop_location(), podID)
