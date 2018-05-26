@@ -1479,6 +1479,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! Please note that this kit did NOT pass quality control."
 	item = /obj/item/storage/box/syndie_kit/chameleon/broken
 
+/datum/uplink_item/badass/rapid
+	name = "Gloves of the North Star"
+	desc = "These gloves let the user punch people very fast. Does not improve weapon attack speed or the meaty fists of a hulk."
+	item = /obj/item/clothing/gloves/rapid
+	cost = 8
+
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
 	desc = "Syndicate Bundles are specialized groups of items that arrive in a plain box. \
