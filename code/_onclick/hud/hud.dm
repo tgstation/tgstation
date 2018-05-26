@@ -131,7 +131,7 @@
 		update_sight()
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
-/datum/hud/proc/show_hud(version = 0,mob/viewmob)
+/datum/hud/proc/show_hud(version = 0, mob/viewmob)
 	if(!ismob(mymob))
 		return FALSE
 	var/mob/screenmob = viewmob || mymob
@@ -195,18 +195,29 @@
 			if(infodisplay.len)
 				screenmob.client.screen -= infodisplay
 
-	for(var/thing in plane_masters)
-		var/obj/screen/plane_master/PM = plane_masters[thing]
-		PM.backdrop(screenmob)
-		screenmob.client.screen += PM
-
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
 	screenmob.update_action_buttons(1)
 	reorganize_alerts()
 	screenmob.reload_fullscreen()
 	update_parallax_pref(screenmob)
+
+	// ensure observers get an accurate and up-to-date view
+	if (!viewmob)
+		plane_masters_update()
+		for(var/M in mymob.observers)
+			show_hud(hud_version, M)
+	else if (viewmob.hud_used)
+		viewmob.hud_used.plane_masters_update()
+
 	return TRUE
+
+/datum/hud/proc/plane_masters_update()
+	// Plane masters are always shown to OUR mob, never to observers
+	for(var/thing in plane_masters)
+		var/obj/screen/plane_master/PM = plane_masters[thing]
+		PM.backdrop(mymob)
+		mymob.client.screen += PM
 
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
 	. = ..()
@@ -268,8 +279,9 @@
 		i++
 	for(var/obj/screen/human/equip/E in static_inventory)
 		E.screen_loc = ui_equip_position(mymob)
-	if(mymob.hud_used)
-		show_hud(HUD_STYLE_STANDARD,mymob)
+
+	if(ismob(mymob) && mymob.hud_used == src)
+		show_hud(hud_version)
 
 /datum/hud/proc/update_locked_slots()
 	return
