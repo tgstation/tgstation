@@ -52267,7 +52267,7 @@
 /obj/machinery/atmospherics/components/binary/valve/digital{
 	dir = 4;
 	name = "Output Release";
-	open = 1
+	on = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)

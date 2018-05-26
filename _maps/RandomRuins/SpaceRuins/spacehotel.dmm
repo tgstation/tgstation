@@ -3394,7 +3394,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/valve{
 	name = "Air Release Valve";
-	open = 1
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
