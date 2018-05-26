@@ -19,8 +19,9 @@
 				continue
 			T.TerraformTurf(/turf/open/chasm/magic, /turf/open/chasm/magic)
 		var/turf/Turf = get_turf(src)
-		message_admins("[key_name_admin(user)] detonated a bag of holding at [get_area(Turf)] [ADMIN_COORDJMP(Turf)].")
-		log_game("[key_name(user)] detonated a bag of holding")
+		var/area/Area = get_area(Turf)
+		message_admins("[key_name_admin(user)] detonated a bag of holding at [Area] [ADMIN_COORDJMP(Turf)].")
+		log_game("[key_name(user)] detonated a bag of holding at [Area] [COORD(Turf)].")
 		qdel(A)
 		return
 	. = ..()
