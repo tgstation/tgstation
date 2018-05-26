@@ -106,6 +106,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	//Grinder vars
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
+	var/was_previously_fried //Prevents the same item from being refried multiple times
 
 /obj/item/Initialize()
 	if (!materials)
@@ -222,6 +223,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		research_msg += "None"
 	research_msg += "."
 	to_chat(user, research_msg.Join())
+	if(was_previously_fried)
+		to_chat(user, "<span class='info'>[gender == PLURAL ? "They are" : "It's"] covered in an oily residue.</span>")
 
 /obj/item/proc/speechModification(message)			//for message modding by mask slot.
 	return message
