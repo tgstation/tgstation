@@ -51625,12 +51625,6 @@
 	dir = 8
 	},
 /area/hallway/secondary/exit/departure_lounge)
-"pvY" = (
-/obj/machinery/computer/bounty{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/heads/hop)
 "pwj" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -51690,6 +51684,12 @@
 	},
 /turf/open/floor/plasteel/neutral/side,
 /area/hallway/secondary/exit/departure_lounge)
+"pHo" = (
+/obj/machinery/computer/bounty{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/heads/hop)
 "pKd" = (
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
@@ -87471,7 +87471,7 @@ aAG
 aBA
 aCQ
 aDS
-pvY
+pHo
 aAH
 aGu
 aHh

@@ -14477,12 +14477,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "aKv" = (
-/obj/machinery/vending/wardrobe/bar_wardrobe,
-/turf/open/floor/plasteel/vault{
-	dir = 5
-	},
-/area/crew_quarters/bar)
-"aKw" = (
 /obj/item/wrench,
 /obj/item/stack/sheet/glass{
 	amount = 30
@@ -14495,6 +14489,12 @@
 /obj/machinery/light,
 /obj/structure/closet,
 /turf/open/floor/plasteel/dark,
+/area/crew_quarters/bar)
+"aKw" = (
+/obj/machinery/vending/wardrobe/bar_wardrobe,
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
 /area/crew_quarters/bar)
 "aKx" = (
 /obj/structure/table/wood,
@@ -79415,8 +79415,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/sheet/metal/fifty,
-/obj/item/stock_parts/cell/super,
-/obj/item/stock_parts/cell/super,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -81129,6 +81127,9 @@
 /obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/super,
+/obj/item/stock_parts/cell/super,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -99986,6 +99987,16 @@
 /obj/effect/landmark/xeno_spawn,
 /turf/open/space,
 /area/solar/port/aft)
+"ehb" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/computer/bounty{
+	dir = 8
+	},
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/heads/hop)
 "ehq" = (
 /obj/structure/cable{
 	icon_state = "0-2"
@@ -100558,16 +100569,6 @@
 	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/misc_lab)
-"uJX" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/computer/bounty{
-	dir = 8
-	},
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/heads/hop)
 "uYS" = (
 /obj/machinery/door/airlock/atmos/glass/critical{
 	heat_proof = 1;
@@ -135974,7 +135975,7 @@ aEP
 aGd
 aHu
 aIV
-aKw
+aKv
 aDL
 aNb
 aNd
@@ -136231,7 +136232,7 @@ aEQ
 aGe
 aHv
 aIW
-aKv
+aKw
 aDL
 aNc
 aOE
@@ -136789,7 +136790,7 @@ caP
 bZb
 caP
 cge
-uJX
+ehb
 cjB
 ckX
 cmA
