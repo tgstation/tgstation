@@ -1,0 +1,5 @@
+author: "Robustin with cat earrs"
+delete-after: True
+changes: 
+  - bugfix: "Gun overlays should be way less laggy now.
+remove: Chameleon guns are completely removed since they crash the server, were already made unavailable, and are the worst shitcode I've ever seen in my life."
