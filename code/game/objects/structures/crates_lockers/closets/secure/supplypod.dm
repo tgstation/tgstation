@@ -89,7 +89,7 @@
 		name = "Bluespace Drop Pod"
 	else if (podID == POD_CENTCOM)
 		icon_state = "centcompod_falling"
-		name = "Centcom Drop Pod"
+		name = "CentCom Drop Pod"
 	else
 		icon_state = "supplypod_falling"
 		name = "Supply Drop Pod"
