@@ -112,7 +112,7 @@
 		if(POD_BLUESPACE)
 			delayTime = 15
 		if(POD_CENTCOM)
-			delayTime = 3
+			delayTime = 1
 
 	addtimer(CALLBACK(src, .proc/beginLaunch, SO, podID), delayTime)//standard pods take 3 seconds to come in, bluespace pods take 1.5
 
