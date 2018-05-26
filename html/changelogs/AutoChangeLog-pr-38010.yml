@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "Bag of Holding detonations have been significantly reworked."
