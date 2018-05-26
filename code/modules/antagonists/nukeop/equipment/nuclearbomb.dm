@@ -12,7 +12,6 @@
 	var/maximum_timer_set = 3600
 	var/ui_style = "nanotrasen"
 
-	var/disabled = FALSE
 	var/numeric_input = ""
 	var/timing = FALSE
 	var/exploding = FALSE
