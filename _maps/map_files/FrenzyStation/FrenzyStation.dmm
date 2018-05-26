@@ -4277,7 +4277,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "kg" = (
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /obj/item/clothing/under/burial,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)

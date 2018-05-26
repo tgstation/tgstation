@@ -6,7 +6,7 @@
 /turf/closed/indestructible,
 /area/space)
 "c" = (
-/obj/machinery/message_server,
+/obj/machinery/telecomms/message_server,
 /turf/open/floor/circuit/green/telecomms,
 /area/tcommsat/server)
 "d" = (

@@ -8342,7 +8342,7 @@
 	dir = 1;
 	pixel_y = 1
 	},
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "atX" = (
@@ -11723,7 +11723,7 @@
 	name = "Warehouse Door Control";
 	pixel_x = -26;
 	pixel_y = -26;
-	req_access_txt = "48"
+	req_access_txt = "50"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -12702,7 +12702,7 @@
 	name = "Warehouse Door Control";
 	pixel_x = -26;
 	pixel_y = 26;
-	req_access_txt = "48"
+	req_access_txt = "50"
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 1
@@ -15570,16 +15570,6 @@
 /area/quartermaster/storage)
 "aKt" = (
 /turf/open/floor/plasteel/brown,
-/area/quartermaster/storage)
-"aKv" = (
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/table,
-/turf/open/floor/plasteel/brown{
-	dir = 4
-	},
 /area/quartermaster/storage)
 "aKw" = (
 /obj/structure/disposalpipe/segment{
@@ -24336,7 +24326,7 @@
 	dir = 4;
 	layer = 2.9
 	},
-/obj/structure/closet/coffin,
+/obj/structure/closet/crate/coffin,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "bff" = (
@@ -26832,6 +26822,19 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"svJ" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/computer/bounty{
+	icon_state = "computer";
+	dir = 8
+	},
+/turf/open/floor/plasteel/brown{
+	dir = 4
+	},
+/area/quartermaster/storage)
 "swP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -57348,8 +57351,8 @@ aGc
 aHh
 aIh
 aJn
-aKv
 aLr
+svJ
 aMb
 aMX
 aNK

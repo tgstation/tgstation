@@ -137,7 +137,7 @@
 /area/wizard_versus)
 "aD" = (
 /obj/structure/table/wood/fancy,
-/obj/item/device/camera/spooky,
+/obj/item/camera/spooky,
 /turf/open/floor/carpet,
 /area/wizard_versus)
 "aE" = (

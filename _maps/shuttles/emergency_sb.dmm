@@ -36,14 +36,14 @@
 /area/shuttle/escape)
 "i" = (
 /obj/structure/chair,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_y = 24
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "j" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26
 	},
@@ -175,7 +175,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "C" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_y = -26
 	},
