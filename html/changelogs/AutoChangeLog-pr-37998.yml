@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - admin: "Create Object will no longer force objects with special directional logic to be facing south by default."
