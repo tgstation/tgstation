@@ -46,7 +46,7 @@
 	message = "cm3 of plasma"
 
 /datum/export/material/uranium
-	cost = 150
+	cost = 225
 	material_id = MAT_URANIUM
 	message = "cm3 of uranium"
 
