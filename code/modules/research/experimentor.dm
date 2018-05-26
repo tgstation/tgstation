@@ -53,6 +53,8 @@
 		if(ispath(I, /obj/item/stock_parts) || ispath(I, /obj/item/grenade/chem_grenade) || ispath(I, /obj/item/kitchen))
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
+				if(istype(I, /obj/item/grenade/chem_grenade/tuberculosis))
+					continue
 				valid_items["[I]"] += 15
 
 		if(ispath(I, /obj/item/reagent_containers/food))
