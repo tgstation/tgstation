@@ -84,15 +84,15 @@
 	randomdir = FALSE
 
 /obj/effect/temp_visual/DPfall/Initialize(var/dropLocation, var/podID)
-	if (podID == POD_BLUESPACE)
-		icon_state = "bluespacepod_falling"
-		name = "Bluespace Drop Pod"
-	else if (podID == POD_CENTCOM)
-		icon_state = "centcompod_falling"
-		name = "CentCom Drop Pod"
-	else
+	if (podID == POD_STANDARD)
 		icon_state = "supplypod_falling"
 		name = "Supply Drop Pod"
+	else if (podID == POD_BLUESPACE)
+		icon_state = "bluespacepod_falling"
+		name = "Bluespace Drop Pod"
+	else
+		icon_state = "centcompod_falling"
+		name = "CentCom Drop Pod"
 	. = ..()
 
 //------------------------------------TEMPORARY_VISUAL-------------------------------------//
