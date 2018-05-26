@@ -18,7 +18,8 @@
 			if(istype(T, /turf/open/space/transit))
 				continue
 			T.TerraformTurf(/turf/open/chasm/magic, /turf/open/chasm/magic)
-		message_admins("[key_name_admin(user)] detonated a bag of holding")
+		var/turf/Turf = get_turf(src)
+		message_admins("[key_name_admin(user)] detonated a bag of holding at [get_area(Turf)] [ADMIN_COORDJMP(Turf)].")
 		log_game("[key_name(user)] detonated a bag of holding")
 		qdel(A)
 		return
