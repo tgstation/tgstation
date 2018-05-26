@@ -105,6 +105,7 @@
 
 /obj/effect/DPtarget/Initialize(mapload, var/SO, var/podID)
 	. = ..()
+	var/delayTime
 	switch(podID)
 		if(POD_STANDARD)
 			delayTime = 30
