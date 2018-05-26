@@ -70,7 +70,7 @@
 	E.visible_message("<span class='danger'>[E] malfunctions, irradiating [O]!</span>")
 	O.rad_act(300)
 	O.AddComponent(/datum/component/radioactive, 50, E)
-	
+
 /datum/experiment/supermatter 	//Gives an object the effects of a supermatter shard
 	weight = 30					//using the relic component (see /code/modules/research/relics/effects_passive.dm).
 	is_bad = TRUE				//It's incredibly dangerous but can only happen to already irridiated objects.
@@ -85,20 +85,20 @@
 	var/datum/component/radioactive/radiation = O.GetComponent(/datum/component/radioactive)
 	if(radiation)
 		rad_strength = radiation.strength
-	
+
 	if(!(rad_strength >= 200))
 		return FALSE
 
 /datum/experiment/supermatter/perform(obj/machinery/rnd/experimentor/E,obj/item/O)
 	. = ..()
 	E.visible_message("<span class='danger'>[O] begins to resonate uncontrollably!</span>")
-	var/datum/relic_type/holder
-	var/datum/relic_effect/passive/supermatter/sm
+	var/datum/relic_type/holder = new /datum/relic_type()
+	var/datum/relic_effect/passive/supermatter/sm = new /datum/relic_effect/passive/supermatter()
 	sm.init()
 	holder.added_effects += sm
 	holder.hogged_signals += sm.hogged_signals
 	holder.apply_effects(O)
-	
+
 	E.eject_item()
 
 /datum/experiment/neutron_layer
