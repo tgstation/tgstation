@@ -178,3 +178,32 @@
 				break  // break if both our connections are filled
 
 	update_icon()
+
+
+/obj/structure/ladder/unbreakable/binary
+	name = "mysterious ladder"
+	desc = "Where does it go?"
+	height = 0
+	id = "lavaland_binary"
+	var/area_to_place = /area/lavaland/surface/outdoors
+
+/obj/structure/ladder/unbreakable/binary/Initialize()
+	if(area_to_place)
+		var/turf/T = safepick(get_area_turfs(area_to_place))
+		if(T)
+			var/obj/structure/ladder/unbreakable/U = new (T)
+			U.id = id
+			U.height = height+1
+			for(var/turf/TT in range(2,U))
+				TT.TerraformTurf(/turf/open/indestructible/binary, /turf/open/indestructible/binary)
+	return ..()
+
+
+/obj/structure/ladder/unbreakable/binary/space
+	id = "space_binary"
+	area_to_place = /area/space
+
+
+/obj/structure/ladder/unbreakable/binary/unlinked //Crew gets to complete one
+	id = "unlinked_binary"
+	area_to_place = null

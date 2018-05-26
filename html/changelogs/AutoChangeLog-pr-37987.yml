@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Xeno weeds and floors under diagonal walls are now on the correct plane, fixing odd ambient occlusion appearances."

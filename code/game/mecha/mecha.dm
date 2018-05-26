@@ -927,9 +927,9 @@
 
 /obj/mecha/Exited(atom/movable/M, atom/newloc)
 	if(occupant && occupant == M) // The occupant exited the mech without calling go_out()
-		go_out(1, newloc)
+		go_out(TRUE, newloc)
 
-/obj/mecha/proc/go_out(var/forced, var/atom/newloc = loc)
+/obj/mecha/proc/go_out(forced, atom/newloc = loc)
 	if(!occupant)
 		return
 	var/atom/movable/mob_container
