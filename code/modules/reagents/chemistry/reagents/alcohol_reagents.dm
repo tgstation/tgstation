@@ -1630,37 +1630,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/kamikaze
 	name = "Kamikaze"
 	id = "kamikaze"
-	description = "Science has yet to understand the seemingly mystical properties of this drink. Not only does it damage the individual, but it also damages those nearby the individual can see."
+	description = "Divinely windy."
 	color = "#EEF191"
 	boozepwr = 60
 	taste_description = "divine windiness"
 	glass_icon_state = "kamikaze"
 	glass_name = "Kamikaze"
-	glass_desc = "A drink you don't exactly make friends with."
-	var/mutable_appearance/explosion_overlay
-
-/datum/reagent/consumable/ethanol/kamikaze/on_mob_add(mob/living/L)
-	explosion_overlay = mutable_appearance('icons/effects/effects.dmi', "explosion_indef")
-	explosion_overlay.alpha = 50
-	L.add_overlay(explosion_overlay)
-
-/datum/reagent/consumable/ethanol/kamikaze/on_mob_life(mob/living/L)
-	..()
-	var/victimnum = 0
-	explosion_overlay.alpha = CLAMP(explosion_overlay.alpha,0,100)
-	for(var/mob/living/victim in oview(1,L)) //every victim takes flat 1 damage, but the user takes 2 per individual affected.
-		victim.adjustFireLoss(1)
-		L.adjustFireLoss(2)
-		explosion_overlay.alpha += 1
-		victimnum++
-	if(!victimnum) //No one is nearby so you take decreased damage.
-		L.adjustFireLoss(1)
-		explosion_overlay.alpha -= 1
-		if(explosion_overlay.alpha <= 0) //can be -1 until next tick
-			metabolization_rate = (initial(metabolization_rate)*5) //The overlay is gone so the drink rapidly dissapates. Congrats, you defused the -explosive- i mean drink!
-
-/datum/reagent/consumable/ethanol/kamikaze/on_mob_delete(mob/living/L)
-	L.cut_overlay(explosion_overlay)
+	glass_desc = "Divinely windy."
 
 /datum/reagent/consumable/ethanol/mojito
 	name = "Mojito"
