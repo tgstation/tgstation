@@ -20,7 +20,7 @@
 /obj/item/drone_shell/Initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/drone_ghost_role))
-		Destroy()
+		qdel(src)
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
