@@ -51,10 +51,12 @@
 	var/turf/T = get_turf(parent)
 	if (!T)
 		return FALSE
+	var/area/A = T.loc
+	if(istype(A, /area/fabric_of_reality)) // Obviously terrible, just for test merging
+		return FALSE
 	if (is_station_level(T.z) || is_centcom_level(T.z))
 		return TRUE
 	if (is_transit_level(T.z))
-		var/area/A = T.loc
 		if (is_type_in_typecache(A, allowed_shuttles))
 			return TRUE
 
