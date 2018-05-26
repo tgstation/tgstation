@@ -144,6 +144,9 @@
 
 /obj/machinery/droneDispenser/process()
 	..()
+	if(!CONFIG_GET(flag/drone_ghost_role))
+		return
+	
 	if((stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 
