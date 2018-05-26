@@ -588,7 +588,6 @@ so as to remain in compliance with the most up-to-date laws."
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
 /datum/hud/proc/reorganize_alerts()
 	var/list/alerts = mymob.alerts
-	var/icon_pref
 	if(!hud_shown)
 		for(var/i = 1, i <= alerts.len, i++)
 			mymob.client.screen -= alerts[alerts[i]]
@@ -596,9 +595,7 @@ so as to remain in compliance with the most up-to-date laws."
 	for(var/i = 1, i <= alerts.len, i++)
 		var/obj/screen/alert/alert = alerts[alerts[i]]
 		if(alert.icon_state == "template")
-			if(!icon_pref)
-				icon_pref = ui_style2icon(mymob.client.prefs.UI_style)
-			alert.icon = icon_pref
+			alert.icon = ui_style
 		switch(i)
 			if(1)
 				. = ui_alert1

@@ -166,9 +166,9 @@
 
 
 /datum/hud/ai
-	ui_style_icon = 'icons/mob/screen_ai.dmi'
+	ui_style = 'icons/mob/screen_ai.dmi'
 
-/datum/hud/ai/New(mob/owner, ui_style = 'icons/mob/screen_ai.dmi')
+/datum/hud/ai/New(mob/owner)
 	..()
 	var/obj/screen/using
 
