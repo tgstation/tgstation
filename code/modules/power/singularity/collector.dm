@@ -69,6 +69,9 @@
 			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
 			last_power-=bitcoins_mined
 
+/obj/machinery/power/rad_collector/attack_ai(mob/user)
+	return attack_hand(user)
+
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
 	. = ..()
 	if(.)
