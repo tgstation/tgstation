@@ -660,7 +660,6 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "abP" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
@@ -677,11 +676,11 @@
 	},
 /area/ai_monitored/security/armory)
 "abR" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "abS" = (
@@ -870,11 +869,6 @@
 /area/security/main)
 "acp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/showroomfloor,
-/area/security/main)
-"acq" = (
-/obj/effect/landmark/secequipment,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "acr" = (
@@ -11368,8 +11362,8 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aCL" = (
-/obj/structure/closet/secure_closet/security,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/limited,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -14489,7 +14483,7 @@
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aKI" = (
-/obj/structure/closet/secure_closet/hydroponics,
+/obj/machinery/vending/wardrobe/hydro_wardrobe/gear,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aKJ" = (
@@ -14503,7 +14497,7 @@
 /area/crew_quarters/theatre)
 "aKK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/closet/secure_closet/hydroponics,
+/obj/machinery/vending/wardrobe/hydro_wardrobe,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aKL" = (
@@ -15224,7 +15218,6 @@
 /area/library)
 "aMI" = (
 /obj/machinery/light/small,
-/obj/machinery/vending/wardrobe/hydro_wardrobe,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aMJ" = (
@@ -25079,7 +25072,7 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint/medical)
 "bmO" = (
-/obj/structure/closet/secure_closet/security/med,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/medical,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -30160,10 +30153,10 @@
 	},
 /area/quartermaster/qm)
 "byD" = (
-/obj/structure/closet/secure_closet/quartermaster,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
+/obj/machinery/vending/wardrobe/cargo_wardrobe/master,
 /turf/open/floor/plasteel/brown{
 	dir = 5
 	},
@@ -30201,7 +30194,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/security/cargo,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/cargo,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -30551,7 +30544,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 25
 	},
-/obj/structure/closet/secure_closet/security/science,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/science,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -40627,10 +40620,10 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bXO" = (
-/obj/structure/filingcabinet,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/engineering,
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
@@ -40641,7 +40634,6 @@
 	departmentType = 5;
 	pixel_y = 30
 	},
-/obj/structure/closet/secure_closet/security/engine,
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
@@ -53798,6 +53790,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"neC" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear,
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/main)
 "noK" = (
 /obj/structure/girder,
 /turf/open/floor/plasteel/dark,
@@ -85388,10 +85385,10 @@ aaf
 aaa
 abp
 abO
-acq
-acq
-acq
-acq
+abP
+abP
+abP
+abP
 aew
 afe
 afS
@@ -85903,9 +85900,9 @@ aaf
 abp
 abR
 abP
+neC
 abP
-abP
-abP
+neC
 abp
 abp
 abp

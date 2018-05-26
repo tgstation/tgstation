@@ -2016,8 +2016,9 @@
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "ahd" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/delivery,
+/obj/structure/table,
+/obj/machinery/recharger,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "ahh" = (
@@ -15824,7 +15825,7 @@
 	name = "Security Post - Cargo APC";
 	pixel_x = -24
 	},
-/obj/structure/closet/secure_closet/security/cargo,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/cargo,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -16905,7 +16906,7 @@
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aSD" = (
-/obj/structure/closet/secure_closet/hydroponics,
+/obj/machinery/vending/wardrobe/hydro_wardrobe,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aSE" = (
@@ -16915,7 +16916,7 @@
 /obj/machinery/camera{
 	c_tag = "Hydroponics Storage"
 	},
-/obj/structure/closet/secure_closet/hydroponics,
+/obj/machinery/vending/wardrobe/hydro_wardrobe/gear,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aSF" = (
@@ -17891,7 +17892,6 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/vending/wardrobe/hydro_wardrobe,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aUU" = (
@@ -19411,11 +19411,11 @@
 	},
 /area/security/checkpoint/customs)
 "aYK" = (
-/obj/structure/closet/secure_closet/security,
 /obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 26
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/limited,
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
@@ -20876,13 +20876,12 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "bcA" = (
-/obj/structure/closet/secure_closet/quartermaster,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23
 	},
-/obj/item/storage/belt/fannypack/yellow,
+/obj/machinery/vending/wardrobe/cargo_wardrobe/master,
 /turf/open/floor/plasteel/brown{
 	dir = 9
 	},
@@ -22036,6 +22035,7 @@
 	},
 /obj/item/coin/silver,
 /obj/item/stamp/qm,
+/obj/item/storage/belt/fannypack/yellow,
 /turf/open/floor/plasteel/brown{
 	dir = 2
 	},
@@ -24404,7 +24404,7 @@
 	c_tag = "Medbay Security Post";
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/security/med,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/medical,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -32055,7 +32055,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/obj/structure/closet/secure_closet/security/science,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/science,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -39108,7 +39108,7 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
 	},
-/obj/structure/closet/secure_closet/security/engine,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/engineering,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -44230,7 +44230,6 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "cnN" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/machinery/camera{
 	c_tag = "Brig Equipment Room";
 	dir = 2
@@ -44240,6 +44239,7 @@
 	pixel_y = 29
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "cnP" = (
@@ -48719,6 +48719,16 @@
 	dir = 1
 	},
 /area/science/xenobiology)
+"gIS" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/table,
+/obj/item/folder/red{
+	layer = 2.9;
+	pixel_x = 8
+	},
+/obj/item/pen,
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/main)
 "gKz" = (
 /obj/structure/table/wood,
 /obj/item/twohanded/required/kirbyplants{
@@ -51588,6 +51598,11 @@
 /obj/structure/piano,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/crew_quarters/dorms)
+"plN" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear,
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/main)
 "pnU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 4;
@@ -53164,6 +53179,14 @@
 "uoS" = (
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
+"uqk" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box{
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/main)
 "uqJ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -78961,11 +78984,11 @@ aaa
 aby
 aaa
 agQ
-ahd
+plN
 ahq
 cnT
 ahq
-ahd
+uqk
 agP
 ajm
 ajW
@@ -79218,11 +79241,11 @@ afJ
 aby
 aaa
 agQ
-ahd
+uqk
 ahq
 ahq
 ahq
-ahd
+plN
 agP
 ajn
 ajW
@@ -79732,7 +79755,7 @@ aaa
 aby
 aaa
 agQ
-ahd
+gIS
 ahq
 ahq
 ahq

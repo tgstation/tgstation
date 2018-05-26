@@ -4340,19 +4340,19 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
 	},
-/obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ajz" = (
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ajA" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/machinery/airalarm{
 	pixel_y = 28
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ajB" = (
@@ -4377,13 +4377,11 @@
 /area/security/main)
 "ajE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault,
 /area/security/main)
 "ajF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault,
 /area/security/main)
@@ -4396,13 +4394,11 @@
 /area/security/main)
 "ajH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault,
 /area/security/main)
 "ajI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault,
 /area/security/main)
@@ -4877,7 +4873,6 @@
 /area/security/warden)
 "akH" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -4888,7 +4883,6 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "akJ" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -6746,8 +6740,8 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "aoA" = (
@@ -7942,7 +7936,6 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "arj" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -18445,11 +18438,11 @@
 /turf/open/floor/plating,
 /area/quartermaster/qm)
 "aNO" = (
-/obj/structure/closet/secure_closet/quartermaster,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/vending/wardrobe/cargo_wardrobe/master,
 /turf/open/floor/plasteel/brown{
 	dir = 9
 	},
@@ -21413,13 +21406,13 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aUj" = (
-/obj/structure/closet/secure_closet/security/cargo,
 /obj/machinery/light_switch{
 	pixel_x = -25
 	},
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/cargo,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -25688,11 +25681,11 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = 30
 	},
-/obj/structure/closet/secure_closet/security,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/limited,
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
@@ -26294,7 +26287,6 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint/engineering)
 "beo" = (
-/obj/structure/closet/secure_closet/security/engine,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -26302,6 +26294,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/engineering,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -47799,10 +47792,10 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bYm" = (
-/obj/structure/closet/secure_closet/hydroponics,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
+/obj/machinery/vending/wardrobe/hydro_wardrobe/gear,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "bYn" = (
@@ -48146,7 +48139,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/structure/closet/secure_closet/security/med,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/medical,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -48360,7 +48353,6 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bZw" = (
-/obj/structure/closet/secure_closet/hydroponics,
 /obj/machinery/light_switch{
 	pixel_x = -26
 	},
@@ -51704,7 +51696,7 @@
 	},
 /area/security/checkpoint/science/research)
 "cgk" = (
-/obj/structure/closet/secure_closet/security/science,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/science,
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint/science/research)
 "cgl" = (

@@ -8651,7 +8651,6 @@
 /turf/open/floor/plating/astplate,
 /area/maintenance/port/fore)
 "aqI" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/item/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26
@@ -9595,7 +9594,7 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = -32
 	},
-/obj/structure/closet/secure_closet/security/sec,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear,
 /turf/open/floor/plasteel/vault/corner{
 	dir = 4
 	},
@@ -9637,11 +9636,11 @@
 	},
 /area/security/brig)
 "asL" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -26
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear,
 /turf/open/floor/plasteel/vault/side{
 	dir = 1
 	},
@@ -16651,7 +16650,6 @@
 /obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
-/obj/structure/closet/secure_closet/hydroponics,
 /turf/open/floor/plasteel/vault/side,
 /area/hydroponics)
 "aIG" = (
@@ -17790,6 +17788,7 @@
 	},
 /obj/item/reagent_containers/glass/bucket,
 /obj/effect/turf_decal/delivery,
+/obj/item/storage/box/syringes,
 /turf/open/floor/plasteel/neutral,
 /area/hydroponics)
 "aKY" = (
@@ -18660,11 +18659,8 @@
 	},
 /area/janitor)
 "aNn" = (
-/obj/structure/table/glass,
-/obj/item/storage/box/syringes,
 /obj/effect/turf_decal/bot,
-/obj/item/storage/box/disks_plantgene,
-/obj/item/toy/figure/botanist,
+/obj/machinery/vending/wardrobe/hydro_wardrobe/gear,
 /turf/open/floor/plasteel/vault/side{
 	dir = 1
 	},
@@ -26828,7 +26824,6 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint)
 "beJ" = (
-/obj/structure/closet/secure_closet/security,
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
@@ -26841,6 +26836,7 @@
 	name = "Station Intercom";
 	pixel_y = -24
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/limited,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -32225,6 +32221,8 @@
 /obj/effect/turf_decal/delivery,
 /obj/item/book/manual/hydroponics_pod_people,
 /obj/item/paper/guides/jobs/hydroponics,
+/obj/item/storage/box/disks_plantgene,
+/obj/item/toy/figure/botanist,
 /turf/open/floor/plasteel/neutral,
 /area/hydroponics)
 "mQi" = (

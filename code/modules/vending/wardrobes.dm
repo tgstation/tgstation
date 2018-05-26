@@ -28,6 +28,79 @@
 	charges = list(10, 0, 3)
 	init_charges = list(10, 0, 3)
 
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear
+	name = "\improper SecGear"
+	desc = "A vending machine designed specifically for security armanents. Does not include actual arms."
+	icon_state = "secgear"
+	icon_deny = "secgear-deny"
+	req_access_txt = "1"
+	product_ads = "Our armour is now reinforced using 1% Plasteel!"
+	vend_reply = "Thank you for using the SecGear!"
+	products = list(/obj/item/clothing/suit/armor/vest = 3,
+					/obj/item/clothing/head/helmet/sec = 3,
+					/obj/item/radio/headset/headset_sec = 3,
+					/obj/item/radio/headset/headset_sec/alt =3,
+					/obj/item/clothing/glasses/hud/security/sunglasses = 3,
+					/obj/item/flashlight/seclite = 3,
+					/obj/item/storage/belt/security/full = 3)
+	premium = list()
+	refill_canister = null
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
+	resistance_flags = FIRE_PROOF
+
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/limited
+	name = "\improper SecGear Limited"
+	products = list(/obj/item/clothing/suit/armor/vest = 1,
+					/obj/item/clothing/head/helmet/sec = 1,
+					/obj/item/radio/headset/headset_sec = 1,
+					/obj/item/radio/headset/headset_sec/alt = 1,
+					/obj/item/clothing/glasses/hud/security/sunglasses = 1,
+					/obj/item/flashlight/seclite = 1)
+
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/cargo
+	name = "\improper SecGear Cargo Edition"
+	products = list(/obj/item/clothing/suit/armor/vest = 1,
+					/obj/item/clothing/head/helmet/sec = 1,
+					/obj/item/radio/headset/headset_sec = 1,
+					/obj/item/radio/headset/headset_sec/alt = 1,
+					/obj/item/clothing/glasses/hud/security/sunglasses = 1,
+					/obj/item/flashlight/seclite = 1,
+					/obj/item/clothing/accessory/armband/cargo = 2,
+					/obj/item/encryptionkey/headset_cargo = 1)
+
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/engineering
+	name = "\improper SecGear Engineering Version"
+	products = list(/obj/item/clothing/suit/armor/vest = 1,
+					/obj/item/clothing/head/helmet/sec = 1,
+					/obj/item/radio/headset/headset_sec = 1,
+					/obj/item/radio/headset/headset_sec/alt = 1,
+					/obj/item/clothing/glasses/hud/security/sunglasses = 1,
+					/obj/item/flashlight/seclite = 1,
+					/obj/item/clothing/accessory/armband/engine = 2,
+					/obj/item/encryptionkey/headset_eng)
+
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/science
+	name = "\improper SecGear Science Saga"
+	products = list(/obj/item/clothing/suit/armor/vest = 1,
+					/obj/item/clothing/head/helmet/sec = 1,
+					/obj/item/radio/headset/headset_sec = 1,
+					/obj/item/radio/headset/headset_sec/alt = 1,
+					/obj/item/clothing/glasses/hud/security/sunglasses = 1,
+					/obj/item/flashlight/seclite = 1,
+					/obj/item/clothing/accessory/armband/science = 2,
+					/obj/item/encryptionkey/headset_sci = 1)
+
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/medical
+	name = "\improper SecGear Medical Patch"
+	products = list(/obj/item/clothing/suit/armor/vest = 1,
+					/obj/item/clothing/head/helmet/sec = 1,
+					/obj/item/radio/headset/headset_sec = 1,
+					/obj/item/radio/headset/headset_sec/alt = 1,
+					/obj/item/clothing/glasses/hud/security/sunglasses = 1,
+					/obj/item/flashlight/seclite = 1,
+					/obj/item/clothing/accessory/armband/medblue = 2,
+					/obj/item/encryptionkey/headset_med = 1)
+
 /obj/machinery/vending/wardrobe/medi_wardrobe
 	name = "\improper MediDrobe"
 	desc = "A vending machine rumoured to be capable of dispensing clothing for medical personnel."
@@ -59,7 +132,7 @@
 	init_charges = list(10, 0, 0)
 
 /obj/machinery/vending/wardrobe/engi_wardrobe
-	name = "EngiDrobe"
+	name = "\improper EngiDrobe"
 	desc = "A vending machine renowned for vending industrial grade clothing."
 	icon_state = "engidrobe"
 	product_ads = "Guaranteed to protect your feet from industrial accidents!;Afraid of radiation? Then wear yellow!"
@@ -81,7 +154,7 @@
 	init_charges = list(7, 0, 0)
 
 /obj/machinery/vending/wardrobe/atmos_wardrobe
-	name = "AtmosDrobe"
+	name = "\improper AtmosDrobe"
 	desc = "This relatively unknown vending machine delivers clothing for Atmospherics Technicians, an equally unknown job."
 	icon_state = "atmosdrobe"
 	product_ads = "Get your inflammable clothing right here!!!"
@@ -101,7 +174,7 @@
 	init_charges = list(5, 0, 0)
 
 /obj/machinery/vending/wardrobe/cargo_wardrobe
-	name = "CargoDrobe"
+	name = "\improper CargoDrobe"
 	desc = "A highly advanced vending machine for buying cargo related clothing for free."
 	icon_state = "cargodrobe"
 	product_ads = "Upgraded Assistant Style! Pick yours today!;These shorts are comfy and easy to wear, get yours now!"
@@ -119,8 +192,32 @@
 	charges = list(5, 0, 0)
 	init_charges = list(5, 0, 0)
 
+/obj/machinery/vending/wardrobe/cargo_wardrobe/master
+	name = "\improper MasterDrobe"
+	desc = "The Master off all Drobes. Equally fitting, it vends clothing for the Quartermaster."
+	icon_state = "masterdrobe"
+	icon_deny = "masterdrobe-deny"
+	req_access_txt = "41"
+	product_ads = "The master of cargo is in the house, and he needs to dress like the master!"
+	vend_reply = "Thank you for using the CargoDrobe!"
+	products = list(/obj/item/clothing/neck/cloak/qm = 1,
+					/obj/item/storage/lockbox/medal/cargo = 1,
+					/obj/item/clothing/under/rank/cargo = 1,
+					/obj/item/clothing/shoes/sneakers/brown = 1,
+					/obj/item/radio/headset/headset_cargo = 1,
+					/obj/item/clothing/suit/fire/firefighter = 1,
+					/obj/item/clothing/gloves/fingerless = 1,
+					/obj/item/megaphone/cargo = 1,
+					/obj/item/tank/internals/emergency_oxygen = 1,
+					/obj/item/clothing/mask/gas = 1,
+					/obj/item/clothing/head/soft = 1,
+					/obj/item/export_scanner = 1,
+					/obj/item/door_remote/quartermaster = 1,
+					/obj/item/circuitboard/machine/techfab/department/cargo = 1)
+	refill_canister = null
+
 /obj/machinery/vending/wardrobe/robo_wardrobe
-	name = "RoboDrobe"
+	name = "\improper RoboDrobe"
 	desc = "A vending machine designed to dispense clothing known only to roboticists."
 	icon_state = "robodrobe"
 	product_ads = "You turn me TRUE, use defines!;0110001101101100011011110111010001101000011001010111001101101000011001010111001001100101"
@@ -140,7 +237,7 @@
 	init_charges = list(4, 0, 0)
 
 /obj/machinery/vending/wardrobe/science_wardrobe
-	name = "SciDrobe"
+	name = "\improper SciDrobe"
 	desc = "A simple vending machine suitable to dispense well tailored science clothing. Endorsed by Cubans."
 	icon_state = "scidrobe"
 	product_ads = "Longing for the smell of flesh plasma? Buy your science clothing now!;Made with 10% Auxetics, so you don't have to worry losing your arm!"
@@ -162,7 +259,7 @@
 	init_charges = list(8, 0, 0)
 
 /obj/machinery/vending/wardrobe/hydro_wardrobe
-	name = "Hydrobe"
+	name = "\improper Hydrobe"
 	desc = "A machine with a catchy name. It dispenses botany related clothing and gear."
 	icon_state = "hydrobe"
 	product_ads = "Do you love soil? Then buy our clothes!;Get outfits to match your green thumb here!"
@@ -176,13 +273,29 @@
 					/obj/item/clothing/mask/bandana = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/hydro_wardrobe
 
+/obj/machinery/vending/wardrobe/hydro_wardrobe/gear
+	name = "\improper HyGear" //We are going fast now.
+	desc = "This rapidly build vending machine dispenses essential botany gear."
+	req_access_txt = "35"
+	icon_state = "hygear"
+	icon_deny = "hygear-deny"
+	product_ads = "Our hatchets chops doors as well as they chop logs!"
+	vend_reply = "Thank you for using the HyGear!"
+	products = list(/obj/item/storage/bag/plants/portaseeder = 3,
+					/obj/item/plant_analyzer = 3,
+					/obj/item/radio/headset/headset_srv = 3,
+					/obj/item/cultivator = 3,
+					/obj/item/hatchet = 3,
+					/obj/item/storage/box/disks_plantgene = 3)
+	refill_canister = null
+
 /obj/item/vending_refill/wardrobe/hydro_wardrobe
 	machine_name = "HyDrobe"
 	charges = list(6, 0, 0)
 	init_charges = list(6, 0, 0)
 
 /obj/machinery/vending/wardrobe/curator_wardrobe
-	name = "CuraDrobe"
+	name = "\improper CuraDrobe"
 	desc = "A lowstock vendor only capable of vending clothing for curators and librarians."
 	icon_state = "curadrobe"
 	product_ads = "Our clothes are endorsed by treasure hunters everywhere!"
@@ -201,7 +314,7 @@
 	init_charges = list(3, 0, 0)
 
 /obj/machinery/vending/wardrobe/bar_wardrobe
-	name = "BarDrobe"
+	name = "\improper BarDrobe"
 	desc = "A stylish vendor to dispense the most stylish bar clothing!"
 	icon_state = "bardrobe"
 	product_ads = "Guaranteed to prevent stains from spilled drinks!"
@@ -230,7 +343,7 @@
 	init_charges = list(8, 0, 0)
 
 /obj/machinery/vending/wardrobe/chef_wardrobe
-	name = "ChefDrobe"
+	name = "\improper ChefDrobe"
 	desc = "This vending machine might not dispense meat, but it certainly dispenses chef related clothing."
 	icon_state = "chefdrobe"
 	product_ads = "Our clothes are guaranteed to protect you from food splatters!"
@@ -254,7 +367,7 @@
 	init_charges = list(6, 0, 0)
 
 /obj/machinery/vending/wardrobe/jani_wardrobe
-	name = "JaniDrobe"
+	name = "\improper JaniDrobe"
 	desc = "A self cleaning vending machine capable of dispensing clothing for janitors."
 	icon_state = "janidrobe"
 	product_ads = "Come and get your janitorial clothing, now endorsed by lizard janitors everywhere!"
@@ -282,7 +395,7 @@
 	init_charges = list(7, 0, 0)
 
 /obj/machinery/vending/wardrobe/law_wardrobe
-	name = "LawDrobe"
+	name = "\improper LawDrobe"
 	desc = "Objection! This wardrobe dispenses the rule of law... and lawyer clothing."
 	icon_state = "lawdrobe"
 	product_ads = "OBJECTION! Get the rule of law for yourself!"
@@ -306,7 +419,7 @@
 	init_charges = list(5, 0, 0)
 
 /obj/machinery/vending/wardrobe/chap_wardrobe
-	name = "ChapDrobe"
+	name = "\improper ChapDrobe"
 	desc = "This most blessed and holy machine vends clothing only suitable for chaplains to gaze upon."
 	icon_state = "chapdrobe"
 	product_ads = "Are you being bothered by cultists or pesky revenants? Then come and dress like the holy man!;Clothes for men of the cloth!"
@@ -334,7 +447,7 @@
 	init_charges = list(6, 0, 0)
 
 /obj/machinery/vending/wardrobe/chem_wardrobe
-	name = "ChemDrobe"
+	name = "\improper ChemDrobe"
 	desc = "A vending machine for dispensing chemistry related clothing."
 	icon_state = "chemdrobe"
 	product_ads = "Our clothes are 0.5% more resistant to acid spills! Get yours now!"
@@ -353,7 +466,7 @@
 	init_charges = list(4, 0, 0)
 
 /obj/machinery/vending/wardrobe/gene_wardrobe
-	name = "GeneDrobe"
+	name = "\improper GeneDrobe"
 	desc = "A machine for dispensing clothing related to genetics."
 	icon_state = "genedrobe"
 	product_ads = "Perfect for the mad scientist in you!"
@@ -371,7 +484,7 @@
 	init_charges = list(4, 0, 0)
 
 /obj/machinery/vending/wardrobe/viro_wardrobe
-	name = "ViroDrobe"
+	name = "\improper ViroDrobe"
 	desc = "An unsterilized machine for dispending virology related clothing."
 	icon_state = "virodrobe"
 	product_ads = " Viruses getting you down? Then upgrade to sterilized clothing today!"

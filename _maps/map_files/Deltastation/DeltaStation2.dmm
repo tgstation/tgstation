@@ -4882,11 +4882,11 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint)
 "aqt" = (
-/obj/structure/closet/secure_closet/security,
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/limited,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -12450,6 +12450,7 @@
 	pixel_x = 26;
 	pixel_y = 32
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/cargo,
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
@@ -20909,7 +20910,6 @@
 /turf/closed/wall,
 /area/quartermaster/qm)
 "aXF" = (
-/obj/structure/closet/secure_closet/quartermaster,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -20920,6 +20920,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/vending/wardrobe/cargo_wardrobe/master,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aXG" = (
@@ -22931,7 +22932,6 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bbU" = (
-/obj/structure/closet/secure_closet/hydroponics,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
 	},
@@ -22940,12 +22940,11 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bbV" = (
-/obj/structure/closet/secure_closet/hydroponics,
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/wardrobe/hydro_wardrobe/gear,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bbW" = (
-/obj/structure/closet/secure_closet/hydroponics,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -30089,7 +30088,6 @@
 	},
 /area/security/main)
 "brx" = (
-/obj/effect/landmark/secequipment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -31153,7 +31151,6 @@
 	},
 /area/security/main)
 "btw" = (
-/obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -31794,7 +31791,6 @@
 	},
 /area/security/main)
 "buS" = (
-/obj/effect/landmark/secequipment,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -32390,7 +32386,6 @@
 /obj/item/storage/pod{
 	pixel_x = 32
 	},
-/obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -44680,7 +44675,6 @@
 	},
 /area/security/checkpoint/engineering)
 "bUi" = (
-/obj/structure/closet/secure_closet/security/engine,
 /obj/machinery/door_timer{
 	id = "engcell";
 	name = "Engineering Cell";
@@ -44695,6 +44689,7 @@
 	c_tag = "Security Post - Engineering";
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/engineering,
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
@@ -50532,15 +50527,14 @@
 	},
 /area/security/brig)
 "cfq" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
 /area/security/brig)
 "cfr" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear,
 /turf/open/floor/plasteel/red,
 /area/security/brig)
 "cfs" = (
@@ -52203,7 +52197,6 @@
 	},
 /area/security/brig)
 "ciJ" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
@@ -52220,7 +52213,6 @@
 /turf/open/floor/plasteel/red,
 /area/security/brig)
 "ciL" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/machinery/status_display{
 	pixel_y = -32
 	},
@@ -52228,6 +52220,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -52263,7 +52256,6 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "ciP" = (
-/obj/structure/closet/secure_closet/security/sec,
 /obj/machinery/ai_status_display{
 	pixel_y = -32
 	},
@@ -68465,7 +68457,6 @@
 /turf/closed/wall,
 /area/security/checkpoint/science/research)
 "cQE" = (
-/obj/structure/closet/secure_closet/security/science,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -68477,6 +68468,7 @@
 	pixel_x = -26;
 	pixel_y = 32
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/science,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -69442,7 +69434,7 @@
 	pixel_x = 26;
 	pixel_y = 32
 	},
-/obj/structure/closet/secure_closet/security/med,
+/obj/machinery/vending/wardrobe/sec_wardrobe/gear/medical,
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
