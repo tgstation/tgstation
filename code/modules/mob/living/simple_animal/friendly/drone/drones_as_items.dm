@@ -19,6 +19,8 @@
 
 /obj/item/drone_shell/Initialize()
 	. = ..()
+	if(!CONFIG_GET(flag/drone_ghost_role))
+		Destroy()
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
@@ -41,6 +43,8 @@
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/item/drone_shell/attack_ghost(mob/user)
+	if(!CONFIG_GET(flag/drone_ghost_role))
+		return
 	if(jobban_isbanned(user,"drone"))
 		return
 	if(CONFIG_GET(flag/use_age_restriction_for_jobs))
