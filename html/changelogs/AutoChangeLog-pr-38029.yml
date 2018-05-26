@@ -1,0 +1,6 @@
+author: "Garen"
+delete-after: True
+changes: 
+  - rscadd: "Added a cell charger to the circuitry lab on all stations."
+  - rscadd: "Added a circuitry lab to the syndicate lavaland base."
+  - tweak: "Modified the meta station circuitry lab."
