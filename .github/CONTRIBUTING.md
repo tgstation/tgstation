@@ -373,6 +373,10 @@ Isn't that confusing?
 
 There is also an undocumented keyword called `static` that has the same behaviour as global but more correctly describes BYOND's behaviour. Therefore, we always use static instead of global where we need it, as it reduces suprise when reading BYOND code.
 
+## Whitelists vs Blacklists
+
+When trying to limit interactions your feature may have, a whitelist is preferable and more maintainable than a blacklist (for example, a list of items a bag is allowed to hold, rather than the bag being allowed to hold any item save for those you specified as blocked). Our game is constantly changing, and it is likely future contributors will not remember to add things to a blacklist for every obscure system, leading to various exploits and bugs.
+
 ## Pull Request Process
 
 There is no strict process when it comes to merging pull requests. Pull requests will sometimes take a while before they are looked at by a maintainer; the bigger the change, the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be courteous and respectful. Here are some helpful ways to make it easier for you and for the maintainers when making a pull request.
