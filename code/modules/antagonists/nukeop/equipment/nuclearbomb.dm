@@ -12,9 +12,11 @@
 	var/maximum_timer_set = 3600
 	var/ui_style = "nanotrasen"
 
+	var/disabled = FALSE
 	var/numeric_input = ""
 	var/timing = FALSE
 	var/exploding = FALSE
+	var/exploded = FALSE
 	var/detonation_timer = null
 	var/r_code = "ADMIN"
 	var/yes_code = FALSE
@@ -254,7 +256,7 @@
 			first_status = "Set"
 		else
 			first_status = "Auth S1."
-	var/second_status = safety ? "Safe" : "Engaged"
+	var/second_status = exploded ? "Warhead triggered, thanks for flying Nanotrasen" : (safety ? "Safe" : "Engaged")
 	data["status1"] = first_status
 	data["status2"] = second_status
 	data["anchored"] = anchored
@@ -331,13 +333,13 @@
 					timer_set = CLAMP(N,minimum_timer_set,maximum_timer_set)
 				. = TRUE
 		if("safety")
-			if(auth && yes_code)
+			if(auth && yes_code && !exploded)
 				set_safety()
 		if("anchor")
 			if(auth && yes_code)
 				set_anchor()
 		if("toggle_timer")
-			if(auth && yes_code && !safety)
+			if(auth && yes_code && !safety && !exploded)
 				set_active()
 
 
@@ -454,6 +456,50 @@
 		return CINEMATIC_SELFDESTRUCT
 	else
 		return CINEMATIC_SELFDESTRUCT_MISS
+
+/obj/machinery/nuclearbomb/beer
+	name = "Nanotrasen-brand nuclear fission explosive"
+	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back."
+	var/obj/structure/reagent_dispensers/beerkeg/keg
+
+/obj/machinery/nuclearbomb/beer/Initialize()
+	. = ..()
+	keg = new(src)
+	QDEL_NULL(core)
+
+/obj/machinery/nuclearbomb/beer/examine(mob/user)
+	. = ..()
+	if(keg.reagents.total_volume)
+		to_chat(user, "<span class='notice'>It has [keg.reagents.total_volume] unit\s left.</span>")
+	else
+		to_chat(user, "<span class='danger'>It's empty.</span>")
+
+/obj/machinery/nuclearbomb/beer/attackby(obj/item/W, mob/user, params)
+	if(W.is_refillable())
+		W.afterattack(keg, user, TRUE) 	// redirect refillable containers to the keg, allowing them to be filled
+		return TRUE 										// pretend we handled the attack, too.
+	if(istype(W, /obj/item/nuke_core_container))
+		to_chat(user, "<span class='notice'>[src] has had its plutonium core removed as a part of being decommissioned.</span>")
+		return TRUE
+	return ..()
+
+/obj/machinery/nuclearbomb/beer/actually_explode()
+	var/datum/round_event_control/E = locate(/datum/round_event_control/vent_clog/beer) in SSevents.control
+	if(E)
+		E.runEvent()
+	addtimer(CALLBACK(src, .proc/really_actually_explode), 100)
+
+/obj/machinery/nuclearbomb/really_actually_explode()
+	bomb_set = FALSE
+	detonation_timer = null
+	exploding = FALSE
+	exploded = TRUE
+	set_security_level(previous_level)
+	for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
+		S.switch_mode_to(initial(S.mode))
+		S.alert = FALSE
+	countdown.stop()
+	update_icon()
 
 /proc/KillEveryoneOnZLevel(z)
 	if(!z)
