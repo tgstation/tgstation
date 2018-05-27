@@ -23,18 +23,14 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-red"
 	item_state = "radio"
-	var/used = FALSE
 
 /obj/item/holybeacon/attack_self(mob/user)
-	if(user.mind && (user.mind.isholy) && !used)
+	if(user.mind && (user.mind.isholy) && !SSreligion.holy_armor_type)
 		beacon_armor(user)
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 60, 1)
 
 /obj/item/holybeacon/proc/beacon_armor(mob/M)
-	if(SSreligion.holy_armor_type)
-		return
-	var/obj/item/storage/box/holy/holy_armor_box
 	var/list/holy_armor_list = typesof(/obj/item/storage/box/holy)
 	var/list/display_names = list()
 	for(var/V in holy_armor_list)
@@ -42,21 +38,20 @@
 		display_names += list(initial(A.name) = A)
 
 	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || used)
+	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || SSreligion.holy_armor_type)
 		return
 
 	var/index = display_names.Find(choice)
 	var/A = holy_armor_list[index]
 
-	holy_armor_box = new A
-
-	SSreligion.holy_armor_type = holy_armor_box.type
+	SSreligion.holy_armor_type = A
+	var/holy_armor_box = new A
 
 	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
 
 	if(holy_armor_box)
-		used = TRUE
-		M.put_in_active_hand(holy_armor_box)
+		qdel(src)
+		M.put_in_active_hand(holy_armor_box)///YOU COMPILED
 
 /obj/item/storage/box/holy
 	name = "Templar Kit"
@@ -131,10 +126,10 @@
 	item_state = "witchhunterhat"
 	flags_cover = HEADCOVERSEYES
 
-/obj/item/storage/box/holy/partykit
+/obj/item/storage/box/holy/follower
 	name = "Followers of the Chaplain Kit"
 
-/obj/item/storage/box/holy/spellcaster/PopulateContents()
+/obj/item/storage/box/holy/follower/PopulateContents()
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie/leader(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
@@ -143,7 +138,7 @@
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie
 	name = "follower hoodie"
-	desc = "I'm ready to learn."
+	desc = "Hoodie made for acolytes of the chaplain."
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -152,21 +147,21 @@
 
 /obj/item/clothing/head/hooded/chaplain_hood
 	name = "follower hood"
-	desc = "I shall do as you say."
+	desc = "Hood made for acolytes of the chaplain."
 	icon_state = "chaplain_hood"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie/leader
 	name = "leader hoodie"
-	desc = "Pay attention, class!"
+	desc = "Now you're ready for some 50 dollar bling water."
 	icon_state = "chaplain_hoodie_leader"
 	item_state = "chaplain_hoodie_leader"
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood/leader
 
 /obj/item/clothing/head/hooded/chaplain_hood/leader
 	name = "leader hood"
-	desc = "Instruction begins!"
+	desc = "I mean, you don't /have/ to seek bling water. I just think you should."
 	icon_state = "chaplain_hood_leader"
 
 
