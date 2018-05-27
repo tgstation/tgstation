@@ -70,9 +70,6 @@
 			last_power-=bitcoins_mined
 
 /obj/machinery/power/rad_collector/interact(mob/user)
-	. = ..()
-	if(.)
-		return
 	if(anchored)
 		if(!src.locked)
 			toggle_power()
