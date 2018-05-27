@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - rscadd: "New trait: Drunken Resilience. You may be a drunken wreck but at least you're healthy. If alcohol poisoning doesn't get you, that is!"
