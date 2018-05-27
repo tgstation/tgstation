@@ -1,5 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - rscadd: "Adds better messaging"
-  - bugfix: "Fixes summons happening on away missions."
