@@ -889,7 +889,8 @@ Nothing else in the console has ID requirements.
 		if(QDELETED(linked_destroy))
 			say("No Deconstructive Analyzer Linked!")
 			return
-		linked_destroy.user_try_decon_id(ls["deconstruct"], usr)
+		if(!linked_destroy.user_try_decon_id(ls["deconstruct"], usr))
+			say("Destructive analysis failed!")
 	//Protolathe Materials
 	if(ls["disposeP"])  //Causes the protolathe to dispose of a single reagent (all of it)
 		if(QDELETED(linked_lathe))
