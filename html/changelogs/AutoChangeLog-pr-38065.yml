@@ -1,4 +1,0 @@
-author: "SpaceManiac"
-delete-after: True
-changes: 
-  - bugfix: "Unwrenching and re-wrenching pre-mapped atmos components no longer turns them on automatically."

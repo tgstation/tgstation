@@ -1,5 +1,0 @@
-author: "Dax Dupont"
-delete-after: True
-changes: 
-  - bugfix: "Did you know istype doesn't work on paths even though they are mostly the same? Yeah I didn't either. Experimentor shouldn't shit out TB nades anymore."
-  - bugfix: "Fixes item reactions for relics as well."
