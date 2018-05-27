@@ -4,7 +4,7 @@
 
 /obj/item/integrated_circuit/atmospherics
 	category_text = "Atmospherics"
-	cooldown_per_use = 10
+	cooldown_per_use = 2 SECONDS
 
 /obj/item/integrated_circuit/atmospherics/atmospheric_analyzer
 	name = "atmospheric analyzer"
@@ -67,9 +67,6 @@
 /obj/item/integrated_circuit/atmospherics/pump
 	name = "gas pump"
 	desc = "Somehow moves gases between two tanks, canisters, and other gas containers."
-	extended_desc = "Use negative pressures to suck gases out of the target instead. \
-					Note that only part of the gas is moved on each transfer, \
-					so multiple activations will be necessary to achieve target pressure."
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	inputs = list(
 			"source" = IC_PINTYPE_REF,
@@ -82,6 +79,13 @@
 			)
 	var/direction = SOURCE_TO_TARGET
 	var/target_pressure = ONE_ATMOSPHERE
+
+/obj/item/integrated_circuit/atmospherics/pump/Initialize()
+	extended_desc += " Use negative pressure to move air from target to source. \
+					Note that only part of the gas is moved on each transfer, \
+					so multiple activations will be necessary to achieve target pressure. \
+					The pressure limit for circuit pumps is 2500 kPa."
+	. = ..()
 
 /obj/item/integrated_circuit/atmospherics/pump/on_data_written()
 	var/amt = get_pin_data(IC_INPUT, 3)
@@ -101,6 +105,7 @@
 	var/obj/source = get_pin_data_as_type(IC_INPUT, 1, /obj)
 	var/obj/target = get_pin_data_as_type(IC_INPUT, 2, /obj)
 	perform_magic(source, target)
+	activate_pin(2)
 
 /obj/item/integrated_circuit/atmospherics/pump/proc/perform_magic(atom/source, atom/target)
 	if(!check_targets(source, target))
@@ -118,7 +123,6 @@
 		target_air = temp
 	move_gas(source_air, target_air)
 	air_update_turf()
-	activate_pin(2)
 
 /obj/item/integrated_circuit/atmospherics/pump/proc/check_targets(atom/source, atom/target)
 	var/atom/movable/acting_object = get_object()
@@ -143,9 +147,6 @@
 /obj/item/integrated_circuit/atmospherics/pump/vent
 	name = "gas vent"
 	desc = "Moves gases between the environment and adjacent gas containers."
-	extended_desc = "Use negative pressures to suck gases out of the air. \
-					Note that only part of the gas is moved on each transfer, \
-					so multiple activations will be necessary to achieve target pressure."
 	inputs = list(
 			"container" = IC_PINTYPE_REF,
 			"target pressure" = IC_PINTYPE_NUMBER
@@ -159,6 +160,7 @@
 	var/obj/source = get_pin_data_as_type(IC_INPUT, 1, /obj)
 	var/turf/target = get_turf(get_object())
 	perform_magic(source, target)
+	activate_pin(2)
 
 /obj/item/integrated_circuit/atmospherics/pump/vent/check_targets(atom/source, atom/target)
 	var/atom/movable/acting_object = get_object()
@@ -171,3 +173,54 @@
 	if(!istype(target, /turf))
 		return FALSE
 	return TRUE
+
+/obj/item/integrated_circuit/atmospherics/connector
+	name = "integrated connector"
+	desc = "Creates an airtight seal with standard connectors found on the floor, \
+		 	allowing the assembly to exchange gases with a pipe network."
+	extended_desc = "This circuit will automatically attempt to locate and connect to ports on the floor beneath it when activated. \
+					You <b>must</b> set a target before connecting."
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+	inputs = list(
+			"target" = IC_PINTYPE_REF
+			)
+	activators = list(
+			"toggle connection" = IC_PINTYPE_PULSE_IN,
+			"on connected" = IC_PINTYPE_PULSE_OUT,
+			"on connection failed" = IC_PINTYPE_PULSE_OUT,
+			"on disconnected" = IC_PINTYPE_PULSE_OUT
+			)
+	var/obj/machinery/atmospherics/components/unary/portables_connector/connector
+
+/obj/item/integrated_circuit/atmospherics/connector/ext_moved()
+	if(connector)
+		var/atom/movable/acting_object = get_object()
+		if(get_dist(acting_object, connector) > 0)
+			connector.connected_device = null
+			connector = null
+			activate_pin(4)
+
+/obj/item/integrated_circuit/atmospherics/connector/portableConnectorReturnAir()
+	var/obj/target = get_pin_data_as_type(IC_INPUT, 1, /obj)
+	if(target && istype(target, /obj/item/tank) || istype(target, /obj/machinery/portable_atmospherics))
+		return target.return_air()
+
+/obj/item/integrated_circuit/atmospherics/connector/do_work()
+	var/atom/movable/acting_object = get_object()
+	if(connector)
+		connector.connected_device = null
+		connector = null
+		activate_pin(4)
+		return
+	var/obj/machinery/atmospherics/components/unary/portables_connector/PC = locate() in get_turf(acting_object)
+	var/obj/target = get_pin_data_as_type(IC_INPUT, 1, /obj)
+	if(!PC || get_dist(acting_object, PC) > 0 || !target)
+		activate_pin(3)
+		return
+	connector = PC
+	connector.connected_device = src
+	activate_pin(2)
+
+#undef SOURCE_TO_TARGET
+#undef TARGET_TO_SOURCE
+#undef MAX_TARGET_PRESSURE
