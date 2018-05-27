@@ -69,10 +69,7 @@
 			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
 			last_power-=bitcoins_mined
 
-/obj/machinery/power/rad_collector/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/power/rad_collector/interact(mob/user)
 	if(anchored)
 		if(!src.locked)
 			toggle_power()
