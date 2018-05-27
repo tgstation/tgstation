@@ -1465,7 +1465,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cant_discount = TRUE
 
 /datum/uplink_item/badass/costumes/centcom_official
-	name = "Centcom Official Costume"
+	name = "CentCom Official Costume"
 	desc = "Ask the crew to \"inspect\" their nuclear disk and weapons system, and then when they decline, pull out a fully automatic rifle and gun down the Captain. Radio headset does not include key. No gun included."
 	item = /obj/item/storage/box/syndie_kit/centcom_costume
 
