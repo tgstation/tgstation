@@ -28,7 +28,7 @@
 	if(user.mind && (user.mind.isholy) && !SSreligion.holy_armor_type)
 		beacon_armor(user)
 	else
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 60, 1)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
 
 /obj/item/holybeacon/proc/beacon_armor(mob/M)
 	var/list/holy_armor_list = typesof(/obj/item/storage/box/holy)
