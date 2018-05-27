@@ -4,18 +4,18 @@
 	And the base of the send_speech() proc, which is the core of saycode.
 */
 GLOBAL_LIST_INIT(freqtospan, list(
-	"1351" = "sciradio",
-	"1355" = "medradio",
-	"1357" = "engradio",
-	"1347" = "suppradio",
-	"1349" = "servradio",
-	"1359" = "secradio",
-	"1353" = "comradio",
-	"1447" = "aiprivradio",
-	"1213" = "syndradio",
-	"1337" = "centcomradio",
-	"1215" = "redteamradio",
-	"1217" = "blueteamradio"
+	"[FREQ_SCIENCE]" = "sciradio",
+	"[FREQ_MEDICAL]" = "medradio",
+	"[FREQ_ENGINEERING]" = "engradio",
+	"[FREQ_SUPPLY]" = "suppradio",
+	"[FREQ_SERVICE]" = "servradio",
+	"[FREQ_SECURITY]" = "secradio",
+	"[FREQ_COMMAND]" = "comradio",
+	"[FREQ_AI_PRIVATE]" = "aiprivradio",
+	"[FREQ_SYNDICATE]" = "syndradio",
+	"[FREQ_CENTCOM]" = "centcomradio",
+	"[FREQ_CTF_RED]" = "redteamradio",
+	"[FREQ_CTF_BLUE]" = "blueteamradio"
 	))
 
 /atom/movable/proc/say(message, datum/language/language = null)
@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/get_spans()
 	return list()
 
-/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
@@ -54,6 +54,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
 	//Speaker name
 	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
+	if(face_name && ishuman(speaker))
+		var/mob/living/carbon/human/H = speaker
+		namepart = "[H.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
 	//End name span.
 	var/endspanpart = "</span>"
 
@@ -163,7 +166,42 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/virtualspeaker
 	var/job
 	var/atom/movable/source
-	var/obj/item/device/radio/radio
+	var/obj/item/radio/radio
+
+INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
+/atom/movable/virtualspeaker/Initialize(mapload, atom/movable/M, radio)
+	. = ..()
+	radio = radio
+	source = M
+	if (istype(M))
+		name = M.GetVoice()
+		verb_say = M.verb_say
+		verb_ask = M.verb_ask
+		verb_exclaim = M.verb_exclaim
+		verb_yell = M.verb_yell
+
+	// The mob's job identity
+	if(ishuman(M))
+		// Humans use their job as seen on the crew manifest. This is so the AI
+		// can know their job even if they don't carry an ID.
+		var/datum/data/record/findjob = find_record("name", name, GLOB.data_core.general)
+		if(findjob)
+			job = findjob.fields["rank"]
+		else
+			job = "Unknown"
+	else if(iscarbon(M))  // Carbon nonhuman
+		job = "No ID"
+	else if(isAI(M))  // AI
+		job = "AI"
+	else if(iscyborg(M))  // Cyborg
+		var/mob/living/silicon/robot/B = M
+		job = "[B.designation] Cyborg"
+	else if(istype(M, /mob/living/silicon/pai))  // Personal AI (pAI)
+		job = "Personal AI"
+	else if(isobj(M))  // Cold, emotionless machines
+		job = "Machine"
+	else  // Unidentifiable mob
+		job = "Unknown"
 
 /atom/movable/virtualspeaker/GetJob()
 	return job

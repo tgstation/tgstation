@@ -240,6 +240,10 @@
 	name = "Devil Lock"
 	icon_state = "hair_devilock"
 
+/datum/sprite_accessory/hair/drillhairextended
+	name = "Extended Drill Hair"
+	icon_state = "hair_drillhairextended"
+
 /datum/sprite_accessory/hair/dreadlocks
 	name = "Dreadlocks"
 	icon_state = "hair_dreads"
@@ -476,6 +480,10 @@
 	name = "Long Hair 2"
 	icon_state = "hair_long2"
 
+/datum/sprite_accessory/hair/long3
+	name = "Long Hair 3"
+	icon_state = "hair_long3"
+
 /datum/sprite_accessory/hair/pixie
 	name = "Pixie Cut"
 	icon_state = "hair_pixie"
@@ -499,6 +507,10 @@
 /datum/sprite_accessory/hair/sidecut
 	name = "Sidecut"
 	icon_state = "hair_sidecut"
+
+/datum/sprite_accessory/hair/largebun
+	name = "Large Bun"
+	icon_state = "hair_largebun"
 
 /////////////////////////////
 // Facial Hair Definitions //
@@ -1036,7 +1048,15 @@
 	icon_state = "shirt_alien"
 	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/sports_bra
+	name = "Sports Bra"
+	icon_state = "sports_bra"
+	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/sports_bra2
+	name = "Alt Sports Bra"
+	icon_state = "sports_bra_alt"
+	gender = NEUTER
 
 ///////////////////////
 // Socks Definitions //
@@ -1381,3 +1401,80 @@
 
 /datum/sprite_accessory/legs/digitigrade_lizard
 	name = "Digitigrade Legs"
+
+/datum/sprite_accessory/caps
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+	color_src = HAIR
+
+/datum/sprite_accessory/caps/round
+	name = "Round"
+	icon_state = "round"
+
+/datum/sprite_accessory/moth_wings
+	icon = 'icons/mob/wings.dmi'
+	color_src = null
+
+/datum/sprite_accessory/moth_wings/plain
+	name = "Plain"
+	icon_state = "plain"
+
+/datum/sprite_accessory/moth_wings/monarch
+	name = "Monarch"
+	icon_state = "monarch"
+
+/datum/sprite_accessory/moth_wings/luna
+	name = "Luna"
+	icon_state = "luna"
+
+/datum/sprite_accessory/moth_wings/atlas
+	name = "Atlas"
+	icon_state = "atlas"
+
+/datum/sprite_accessory/moth_wings/reddish
+	name = "Reddish"
+	icon_state = "redish"
+
+/datum/sprite_accessory/moth_wings/royal
+	name = "Royal"
+	icon_state = "royal"
+
+/datum/sprite_accessory/moth_wings/gothic
+	name = "Gothic"
+	icon_state = "gothic"
+
+/datum/sprite_accessory/moth_wings/lovers
+	name = "Lovers"
+	icon_state = "lovers"
+
+/datum/sprite_accessory/moth_wings/whitefly
+	name = "White Fly"
+	icon_state = "whitefly"
+
+/datum/sprite_accessory/moth_wings/punished
+	name = "Burnt Off"
+	icon_state = "punished"
+	locked = TRUE
+
+/datum/sprite_accessory/moth_wings/firewatch
+	name = "Firewatch"
+	icon_state = "firewatch"
+
+/datum/sprite_accessory/moth_wings/deathhead
+	name = "Deathshead"
+	icon_state = "deathhead"
+
+/datum/sprite_accessory/moth_wings/poison
+	name = "Poison"
+	icon_state = "poison"
+
+/datum/sprite_accessory/moth_wings/ragged
+	name = "Ragged"
+	icon_state = "ragged"
+
+/datum/sprite_accessory/moth_wings/moonfly
+	name = "Moon Fly"
+	icon_state = "moonfly"
+
+/datum/sprite_accessory/moth_wings/snow
+	name = "Snow"
+	icon_state = "snow"

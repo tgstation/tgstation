@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(VVlocked, list("vars", "var_edited", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "force_ending"))
+GLOBAL_LIST_INIT(VVlocked, list("vars", "datum_flags", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "force_ending"))
 GLOBAL_PROTECT(VVlocked)
 GLOBAL_LIST_INIT(VVicon_edit_lock, list("icon", "icon_state", "overlays", "underlays", "resize"))
 GLOBAL_PROTECT(VVicon_edit_lock)
@@ -8,12 +8,15 @@ GLOBAL_LIST_INIT(VVpixelmovement, list("step_x", "step_y", "bound_height", "boun
 GLOBAL_PROTECT(VVpixelmovement)
 
 
-/client/proc/vv_get_class(var/var_value)
+/client/proc/vv_get_class(var/var_name, var/var_value)
 	if(isnull(var_value))
 		. = VV_NULL
 
 	else if (isnum(var_value))
-		. = VV_NUM
+		if (var_name in GLOB.bitfields)
+			. = VV_BITFIELD
+		else
+			. = VV_NUM
 
 	else if (istext(var_value))
 		if (findtext(var_value, "\n"))
@@ -52,7 +55,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	else
 		. = VV_NULL
 
-/client/proc/vv_get_value(class, default_class, current_value, list/restricted_classes, list/extra_classes, list/classes)
+/client/proc/vv_get_value(class, default_class, current_value, list/restricted_classes, list/extra_classes, list/classes, var_name)
 	. = list("class" = class, "value" = null)
 	if (!class)
 		if (!classes)
@@ -109,6 +112,11 @@ GLOBAL_PROTECT(VVpixelmovement)
 				.["class"] = null
 				return
 
+		if (VV_BITFIELD)
+			.["value"] = input_bitfield(usr, "Editing bitfield: [var_name]", var_name, current_value)
+			if (.["value"] == null)
+				.["class"] = null
+				return
 
 		if (VV_ATOM_TYPE)
 			.["value"] = pick_closest_path(FALSE)
@@ -213,7 +221,9 @@ GLOBAL_PROTECT(VVpixelmovement)
 				.["class"] = null
 				return
 			.["type"] = type
-			.["value"] = new type()
+			var/atom/newguy = new type()
+			newguy.datum_flags |= DF_VAR_EDITED
+			.["value"] = newguy
 
 		if (VV_NEW_DATUM)
 			var/type = pick_closest_path(FALSE, get_fancy_list_of_datum_types())
@@ -221,7 +231,9 @@ GLOBAL_PROTECT(VVpixelmovement)
 				.["class"] = null
 				return
 			.["type"] = type
-			.["value"] = new type()
+			var/datum/newguy = new type()
+			newguy.datum_flags |= DF_VAR_EDITED
+			.["value"] = newguy
 
 		if (VV_NEW_TYPE)
 			var/type = current_value
@@ -237,7 +249,10 @@ GLOBAL_PROTECT(VVpixelmovement)
 				.["class"] = null
 				return
 			.["type"] = type
-			.["value"] = new type()
+			var/datum/newguy = new type()
+			if(istype(newguy))
+				newguy.datum_flags |= DF_VAR_EDITED
+			.["value"] = newguy
 
 
 		if (VV_NEW_LIST)
@@ -299,7 +314,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		if (!lentext(shorttype))
 			shorttype = "/"
 
-		.["[D]([shorttype])\ref[D]#[i]"] = D
+		.["[D]([shorttype])[REF(D)]#[i]"] = D
 
 /client/proc/mod_list_add_ass(atom/O) //hehe
 
@@ -416,7 +431,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if (index == null)
 		return
 	var/assoc = 0
-	var/prompt = alert(src, "Do you want to edit the key or it's assigned value?", "Associated List", "Key", "Assigned Value", "Cancel")
+	var/prompt = alert(src, "Do you want to edit the key or its assigned value?", "Associated List", "Key", "Assigned Value", "Cancel")
 	if (prompt == "Cancel")
 		return
 	if (prompt == "Assigned Value")
@@ -429,32 +444,30 @@ GLOBAL_PROTECT(VVpixelmovement)
 	else
 		variable = L[index]
 
-	default = vv_get_class(variable)
+	default = vv_get_class(objectvar, variable)
 
 	to_chat(src, "Variable appears to be <b>[uppertext(default)]</b>.")
 
-	to_chat(src, "Variable contains: [L[index]]")
+	to_chat(src, "Variable contains: [variable]")
 
 	if(default == VV_NUM)
 		var/dir_text = ""
-		if(dir < 0 && dir < 16)
-			if(dir & 1)
+		var/tdir = variable
+		if(tdir > 0 && tdir < 16)
+			if(tdir & 1)
 				dir_text += "NORTH"
-			if(dir & 2)
+			if(tdir & 2)
 				dir_text += "SOUTH"
-			if(dir & 4)
+			if(tdir & 4)
 				dir_text += "EAST"
-			if(dir & 8)
+			if(tdir & 8)
 				dir_text += "WEST"
 
 		if(dir_text)
 			to_chat(usr, "If a direction, direction is: [dir_text]")
 
-	var/original_var
-	if(assoc)
-		original_var = L[assoc_key]
-	else
-		original_var = L[index]
+	var/original_var = variable
+
 	if (O)
 		L = L.Copy()
 	var/class
@@ -543,6 +556,10 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if(variable in GLOB.VVicon_edit_lock)
 		if(!check_rights(R_FUN|R_DEBUG))
 			return
+	if(istype(O, /datum/armor))
+		var/prompt = alert(src, "Editing this var changes this value on potentially thousands of items that share the same combination of armor values. If you want to edit the armor of just one item, use the \"Modify armor values\" dropdown item", "DANGER", "ABORT ", "Continue", " ABORT")
+		if (prompt != "Continue")
+			return
 	if(variable in GLOB.VVpixelmovement)
 		if(!check_rights(R_DEBUG))
 			return
@@ -551,7 +568,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 			return
 
 
-	var/default = vv_get_class(var_value)
+	var/default = vv_get_class(variable, var_value)
 
 	if(isnull(default))
 		to_chat(src, "Unable to determine variable type.")
@@ -562,14 +579,14 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	if(default == VV_NUM)
 		var/dir_text = ""
-		if(dir < 0 && dir < 16)
-			if(dir & 1)
+		if(var_value > 0 && var_value < 16)
+			if(var_value & 1)
 				dir_text += "NORTH"
-			if(dir & 2)
+			if(var_value & 2)
 				dir_text += "SOUTH"
-			if(dir & 4)
+			if(var_value & 4)
 				dir_text += "EAST"
-			if(dir & 8)
+			if(var_value & 8)
 				dir_text += "WEST"
 
 		if(dir_text)
@@ -580,7 +597,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 			default = VV_MESSAGE
 		class = default
 
-	var/list/value = vv_get_value(class, default, var_value, extra_classes = list(VV_LIST))
+	var/list/value = vv_get_value(class, default, var_value, extra_classes = list(VV_LIST), var_name = variable)
 	class = value["class"]
 
 	if (!class)
@@ -612,8 +629,8 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if (O.vv_edit_var(variable, var_new) == FALSE)
 		to_chat(src, "Your edit was rejected by the object.")
 		return
-	log_world("### VarEdit by [src]: [O.type] [variable]=[html_encode("[var_new]")]")
-	log_admin("[key_name(src)] modified [original_name]'s [variable] to [var_new]")
-	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] to [var_new]"
+	log_world("### VarEdit by [key_name(src)]: [O.type] [variable]=[var_value] => [var_new]")
+	log_admin("[key_name(src)] modified [original_name]'s [variable] from [html_encode("[var_value]")] to [html_encode("[var_new]")]")
+	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] from [var_value] to [var_new]"
 	message_admins(msg)
 	admin_ticket_log(O, msg)

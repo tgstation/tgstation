@@ -33,7 +33,11 @@
 	if(cooldown < world.time - 60)
 		cooldown = world.time
 		flick(pulseicon, src)
-		radiation_pulse(get_turf(src), 1, 4, 40, 1)
+		radiation_pulse(src, 400, 2)
+		
+/obj/item/nuke_core/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is rubbing [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (TOXLOSS)
 
 //nuke core box, for carrying the core
 /obj/item/nuke_core_container
@@ -79,7 +83,7 @@
 		return ..()
 
 //snowflake screwdriver, works as a key to start nuke theft, traitor only
-/obj/item/weapon/screwdriver/nuke
+/obj/item/screwdriver/nuke
 	name = "screwdriver"
 	desc = "A screwdriver with an ultra thin tip."
 	icon = 'icons/obj/nuke_tools.dmi'
@@ -88,7 +92,7 @@
 	toolspeed = 0.5
 	random_color = FALSE
 
-/obj/item/weapon/paper/guides/antag/nuke_instructions
+/obj/item/paper/guides/antag/nuke_instructions
 	info = "How to break into a Nanotrasen self-destruct terminal and remove its plutonium core:<br>\
 	<ul>\
 	<li>Use a screwdriver with a very thin tip (provided) to unscrew the terminal's front panel</li>\
@@ -101,14 +105,14 @@
 
 // STEALING SUPERMATTER
 
-/obj/item/weapon/paper/guides/antag/supermatter_sliver
+/obj/item/paper/guides/antag/supermatter_sliver
 	info = "How to safely extract a supermatter sliver:<br>\
 	<ul>\
-	<li>Approach an active supermatter crystal with proper protective gear. DO NOT MAKE PHYSICAL CONTACT.</li>\
+	<li>Approach an active supermatter crystal with radiation shielded personal protective equipment. DO NOT MAKE PHYSICAL CONTACT.</li>\
 	<li>Use a supermatter scalpel (provided) to slice off a sliver of the crystal.</li>\
-	<li>Use supermatter extraction tongs (also provided) to safely remove the sliver.</li>\
+	<li>Use supermatter extraction tongs (also provided) to safely pick up the sliver you sliced off.</li>\
 	<li>Physical contact of any object with the sliver will dust the object, as well as yourself.</li>\
-	<li>Use the tongs to place the sliver into the provided container, which will take some time to seal</li>\
+	<li>Use the tongs to place the sliver into the provided container, which will take some time to seal.</li>\
 	<li>Get the hell out before the crystal delaminates.</li>\
 	<li>???</li>\
 	</ul>"
@@ -127,20 +131,20 @@
 	return FALSE
 
 /obj/item/nuke_core/supermatter_sliver/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/weapon/hemostat/supermatter))
-		var/obj/item/weapon/hemostat/supermatter/tongs = W
+	if(istype(W, /obj/item/hemostat/supermatter))
+		var/obj/item/hemostat/supermatter/tongs = W
 		if (tongs.sliver)
 			to_chat(user, "<span class='notice'>\The [tongs] is already holding a supermatter sliver!</span>")
 			return FALSE
 		forceMove(tongs)
 		tongs.sliver = src
-		tongs.icon_state = "supermatter_tongs_loaded"
+		tongs.update_icon()
 		to_chat(user, "<span class='notice'>You carefully pick up [src] with [tongs].</span>")
-	else if(istype(W, /obj/item/weapon/scalpel/supermatter) || istype(W, /obj/item/nuke_core_container/supermatter/)) // we don't want it to dust
+	else if(istype(W, /obj/item/scalpel/supermatter) || istype(W, /obj/item/nuke_core_container/supermatter/)) // we don't want it to dust
 		return
 	else
 		to_chat(user, "<span class='notice'>As it touches \the [src], both \the [src] and \the [W] burst into dust!</span>")
-		radiation_pulse(get_turf(user), 1, 2, 10, 1)
+		radiation_pulse(user, 100)
 		playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
 		qdel(W)
 		qdel(src)
@@ -151,20 +155,20 @@
 		return FALSE
 	var/mob/ded = user
 	to_chat(user, "<span class='warning'>You reach for the supermatter sliver with your hands. That was dumb.</span>")
-	radiation_pulse(get_turf(user), 2, 4, 50, 1)
+	radiation_pulse(user, 500, 2)
 	playsound(get_turf(user), 'sound/effects/supermatter.ogg', 50, 1)
 	ded.dust()
 
 /obj/item/nuke_core_container/supermatter
 	name = "supermatter bin"
-	desc = "A tiny receptacle that releases an inert freon mix upon sealing, allowing a sliver of a supermatter crystal to be safely stored.."
+	desc = "A tiny receptacle that releases an inert hyper-noblium mix upon sealing, allowing a sliver of a supermatter crystal to be safely stored.."
 	var/obj/item/nuke_core/supermatter_sliver/sliver
 
 /obj/item/nuke_core_container/supermatter/Destroy()
 	QDEL_NULL(sliver)
 	return ..()
 
-/obj/item/nuke_core_container/supermatter/load(obj/item/weapon/hemostat/supermatter/T, mob/user)
+/obj/item/nuke_core_container/supermatter/load(obj/item/hemostat/supermatter/T, mob/user)
 	if(!istype(T) || !T.sliver)
 		return FALSE
 	T.sliver.forceMove(src)
@@ -184,51 +188,61 @@
 		if(ismob(loc))
 			to_chat(loc, "<span class='warning'>[src] is permanently sealed, [sliver] is safely contained.</span>")
 
-/obj/item/nuke_core_container/supermatter/attackby(obj/item/weapon/hemostat/supermatter/tongs, mob/user)
+/obj/item/nuke_core_container/supermatter/attackby(obj/item/hemostat/supermatter/tongs, mob/user)
 	if(istype(tongs))
 		//try to load shard into core
 		load(tongs, user)
 	else
 		return ..()
 
-/obj/item/weapon/scalpel/supermatter
+/obj/item/scalpel/supermatter
 	name = "supermatter scalpel"
-	desc = "A scalpel with a tip of condensed freon gas, searingly cold to the touch, that can safely shave a sliver off a supermatter crystal."
+	desc = "A scalpel with a tip of condensed hyper-noblium gas, searingly cold to the touch, that can safely shave a sliver off a supermatter crystal."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "supermatter_scalpel"
 	toolspeed = 0.5
 	damtype = "fire"
 	usesound = 'sound/weapons/bladeslice.ogg'
+	var/usesLeft
 
-/obj/item/weapon/hemostat/supermatter
+/obj/item/scalpel/supermatter/Initialize()
+	. = ..()
+	usesLeft = rand(2, 4)
+
+/obj/item/hemostat/supermatter
 	name = "supermatter extraction tongs"
-	desc = "A pair of tongs made from condensed freon gas, searingly cold to the touch, that can safely grip a supermatter sliver."
+	desc = "A pair of tongs made from condensed hyper-noblium gas, searingly cold to the touch, that can safely grip a supermatter sliver."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "supermatter_tongs"
 	toolspeed = 0.75
 	damtype = "fire"
 	var/obj/item/nuke_core/supermatter_sliver/sliver
 
-/obj/item/weapon/hemostat/supermatter/Destroy()
+/obj/item/hemostat/supermatter/Destroy()
 	QDEL_NULL(sliver)
 	return ..()
 
-/obj/item/weapon/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
+/obj/item/hemostat/supermatter/update_icon()
+	if(sliver)
+		icon_state = "supermatter_tongs_loaded"
+	else
+		icon_state = "supermatter_tongs"
+
+/obj/item/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
 	if(!sliver)
 		return
 	if(ismovableatom(O) && O != sliver)
-		Consume(O)
-		to_chat(usr, "<span class='notice'>\The [sliver] is dusted along with \the [O]!</span>")
-		QDEL_NULL(sliver)
+		Consume(O, user)
 
-/obj/item/weapon/hemostat/supermatter/throw_impact(atom/hit_atom) // no instakill supermatter javelins
+/obj/item/hemostat/supermatter/throw_impact(atom/hit_atom) // no instakill supermatter javelins
 	if(sliver)
 		sliver.forceMove(loc)
 		to_chat(usr, "<span class='notice'>\The [sliver] falls out of \the [src] as you throw them.</span>")
 		sliver = null
+		update_icon()
 	..()
 
-/obj/item/weapon/hemostat/supermatter/proc/Consume(atom/movable/AM, mob/user)
+/obj/item/hemostat/supermatter/proc/Consume(atom/movable/AM, mob/user)
 	if(ismob(AM))
 		var/mob/victim = AM
 		victim.dust()
@@ -237,12 +251,12 @@
 	else
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)
-	user.visible_message("<span class='danger'>As [user] touches \the [AM] with \a [src], silence fills the room...</span>",\
-			"<span class='userdanger'>You touch \the [AM] with \the [src], and everything suddenly goes silent.</span>\n<span class='notice'>\The [AM] flashes into dust, and soon as you can register this, you do as well.</span>",\
+	if (user)
+		user.visible_message("<span class='danger'>As [user] touches [AM] with \a [src], silence fills the room...</span>",\
+			"<span class='userdanger'>You touch [AM] with [src], and everything suddenly goes silent.</span>\n<span class='notice'>[AM] and [sliver] flash into dust, and soon as you can register this, you do as well.</span>",\
 			"<span class='italics'>Everything suddenly goes silent.</span>")
-	radiation_pulse(get_turf(user), 2, 4, 50, 1)
+		user.dust()
+	radiation_pulse(src, 500, 2)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
-	user.dust()
-	icon_state = "supermatter_tongs"
 	QDEL_NULL(sliver)
-
+	update_icon()

@@ -18,6 +18,7 @@
 	name = "Asteroid 1"
 	description = "I-spy with my little eye, something beginning with R."
 
+
 /datum/map_template/ruin/space/asteroid2
 	id = "asteroid2"
 	suffix = "asteroid2.dmm"
@@ -147,7 +148,7 @@
 	id = "spacehotel"
 	suffix = "spacehotel.dmm"
 	name = "The Twin-Nexus Hotel"
-	description = "A interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
+	description = "An interstellar hotel, where the weary spaceman can rest their head and relax, assured that the residental staff will not murder them in their sleep. Probably."
 
 /datum/map_template/ruin/space/turreted_outpost
 	id = "turreted-outpost"
@@ -248,3 +249,35 @@
 	suffix = "miracle.dmm"
 	name = "Ordinary Space Tile"
 	description = "Absolutely nothing strange going on here please move along, plenty more space to see right this way!"
+
+/datum/map_template/ruin/space/gondoland
+	id = "gondolaasteroid"
+	suffix = "gondolaasteroid.dmm"
+	name = "Gondoland"
+	description = "Just an ordinary rock- wait, what's that thing?"
+
+/datum/map_template/ruin/space/whiteshipruin_box
+	id = "whiteshipruin_box"
+	suffix = "whiteshipruin_box.dmm"
+	name = "NT Medical Ship"
+	description = "An ancient ship, said to be among the first discovered derelicts near Space Station 13 that was still in working order. \
+	Aged and deprecated by time, this relic of a vessel is now broken beyond repair."
+
+/datum/map_template/ruin/space/whiteshipdock
+	id = "whiteshipdock"
+	suffix = "whiteshipdock.dmm"
+	name = "Whiteship Dock"
+	description = "An abandoned but functional vessel parked in deep space, ripe for the taking."
+
+/datum/map_template/ruin/space/cat_experiments
+	id = "meow"
+	suffix = "mrow_thats_right.dmm"
+	name = "Feline-Human Combination Den"
+	description = "With heated debates over the legality of the catperson and their status in the workforce, there's always a place for the blackmarket to slip in for some cash. Whether the results \
+	are morally sound or not is another issue entirely."
+
+/datum/map_template/ruin/space/cloning_facility
+	id = "cloning_facility"
+	suffix = "cloning_facility.dmm"
+	name = "Ancient Cloning Lab"
+	description = "An experimental cloning lab snapped off from an ancient ship. The cloner model inside lacks many modern functionalities and security measures."

@@ -9,8 +9,6 @@
 
 /mob/living/simple_animal/slime/Life()
 	set invisibility = 0
-	set background = BACKGROUND_ENABLED
-
 	if (notransform)
 		return
 	if(..())
@@ -112,10 +110,9 @@
 	if(!environment)
 		return
 
-	//var/environment_heat_capacity = environment.heat_capacity()
 	var/loc_temp = get_temperature(environment)
 
-	bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
+	adjust_bodytemperature(adjust_body_temperature(bodytemperature, loc_temp, 1))
 
 	//Account for massive pressure differences
 
@@ -134,8 +131,8 @@
 
 	if(stat != DEAD)
 		var/bz_percentage =0
-		if("bz" in environment.gases)
-			bz_percentage = environment.gases["bz"][MOLES] / environment.total_moles()
+		if(environment.gases[/datum/gas/bz])
+			bz_percentage = environment.gases[/datum/gas/bz][MOLES] / environment.total_moles()
 		var/stasis = (bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) || force_stasis
 
 		if(stat == CONSCIOUS && stasis)
@@ -184,7 +181,7 @@
 	var/mob/M = buckled
 
 	if(stat)
-		Feedstop(silent = 1)
+		Feedstop(silent = TRUE)
 
 	if(M.stat == DEAD) // our victim died
 		if(!client)
@@ -234,7 +231,7 @@
 		Feedstop(0, 0)
 		return
 
-	add_nutrition((rand(7,15) * config.damage_multiplier))
+	add_nutrition((rand(7, 15) * CONFIG_GET(number/damage_multiplier)))
 
 	//Heal yourself.
 	adjustBruteLoss(-3)
@@ -338,6 +335,16 @@
 						continue
 
 					if(L in Friends) // No eating friends!
+						continue
+
+					var/ally = FALSE
+					for(var/F in faction)
+						if(F == "neutral") //slimes are neutral so other mobs not target them, but they can target neutral mobs
+							continue
+						if(F in L.faction)
+							ally = TRUE
+							break
+					if(ally)
 						continue
 
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence

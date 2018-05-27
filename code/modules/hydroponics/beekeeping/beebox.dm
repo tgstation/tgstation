@@ -18,14 +18,17 @@
 /mob/living/carbon/human/bee_friendly()
 	if(dna && dna.species && dna.species.id == "pod") //bees pollinate plants, duh.
 		return 1
-	if((wear_suit && (wear_suit.flags & THICKMATERIAL)) && (head && (head.flags & THICKMATERIAL)))
-		return 1
+	if (wear_suit && head && is_type_in_typecache(wear_suit, GLOB.typecache_clothing) && is_type_in_typecache(wear_suit, GLOB.typecache_clothing))
+		var/obj/item/clothing/CS = wear_suit
+		var/obj/item/clothing/CH = head
+		if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
+			return 1
 	return 0
 
 
 /obj/structure/beebox
 	name = "apiary"
-	desc = "Dr Miles Manners is just your average wasp-themed super hero by day, but by night he becomes DR BEES!"
+	desc = "Dr. Miles Manners is just your average wasp-themed super hero by day, but by night he becomes DR. BEES!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "beebox"
 	anchored = TRUE
@@ -37,17 +40,15 @@
 	var/bee_resources = 0
 
 
-/obj/structure/beebox/New()
-	..()
+/obj/structure/beebox/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 
 /obj/structure/beebox/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	bees.Cut()
-	bees = null
 	honeycombs.Cut()
-	honeycombs = null
 	queen_bee = null
 	return ..()
 
@@ -57,9 +58,10 @@
 	var/random_reagent = FALSE
 
 
-/obj/structure/beebox/premade/New()
-	..()
+/obj/structure/beebox/premade/Initialize()
+	. = ..()
 
+	icon_state = "beebox"
 	var/datum/reagent/R = null
 	if(random_reagent)
 		R = pick(subtypesof(/datum/reagent))
@@ -82,6 +84,7 @@
 
 
 /obj/structure/beebox/premade/random
+	icon_state = "random_beebox"
 	random_reagent = TRUE
 
 
@@ -90,7 +93,7 @@
 		if(bee_resources >= BEE_RESOURCE_HONEYCOMB_COST)
 			if(honeycombs.len < get_max_honeycomb())
 				bee_resources = max(bee_resources-BEE_RESOURCE_HONEYCOMB_COST, 0)
-				var/obj/item/weapon/reagent_containers/honeycomb/HC = new(src)
+				var/obj/item/reagent_containers/honeycomb/HC = new(src)
 				if(queen_bee.beegent)
 					HC.set_reagent(queen_bee.beegent.id)
 				honeycombs += HC
@@ -102,7 +105,7 @@
 			if((bee_resources >= BEE_RESOURCE_NEW_BEE_COST && prob(BEE_PROB_NEW_BEE)) || freebee)
 				if(!freebee)
 					bee_resources = max(bee_resources - BEE_RESOURCE_NEW_BEE_COST, 0)
-				var/mob/living/simple_animal/hostile/poison/bees/B = new(src)
+				var/mob/living/simple_animal/hostile/poison/bees/B = new(get_turf(src))
 				B.beehome = src
 				B.assign_reagent(queen_bee.beegent)
 				bees += B
@@ -138,7 +141,7 @@
 		to_chat(user, "<span class='notice'>There [plural? "are" : "is"] [honeycombs.len] uncollected honeycomb[plural ? "s":""] in the apiary.</span>")
 
 	if(honeycombs.len >= get_max_honeycomb())
-		to_chat(user, "<span class='warning'>there's no room for more honeycomb!</span>")
+		to_chat(user, "<span class='warning'>There's no room for more honeycomb!</span>")
 
 
 /obj/structure/beebox/attackby(obj/item/I, mob/user, params)
@@ -151,8 +154,9 @@
 			honey_frames += HF
 		else
 			to_chat(user, "<span class='warning'>There's no room for any more frames in the apiary!</span>")
+		return
 
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/wrench))
 		if(default_unfasten_wrench(user, I, time = 20))
 			return
 
@@ -178,7 +182,7 @@
 					bees -= B
 					B.beehome = null
 					if(B.loc == src)
-						B.loc = get_turf(src)
+						B.forceMove(drop_location())
 					relocated++
 			if(relocated)
 				to_chat(user, "<span class='warning'>This queen has a different reagent to some of the bees who live here, those bees will not return to this apiary!</span>")
@@ -187,9 +191,12 @@
 			to_chat(user, "<span class='warning'>The queen bee disappeared! Disappearing bees have been in the news lately...</span>")
 
 		qdel(qb)
+		return
 
+	..()
 
-/obj/structure/beebox/attack_hand(mob/user)
+/obj/structure/beebox/interact(mob/user)
+	. = ..()
 	if(!user.bee_friendly())
 		//Time to get stung!
 		var/bees = FALSE
@@ -198,13 +205,15 @@
 			if(B.isqueen)
 				continue
 			if(B.loc == src)
-				B.loc = get_turf(src)
+				B.forceMove(drop_location())
 			B.target = user
 			bees = TRUE
 		if(bees)
 			visible_message("<span class='danger'>[user] disturbs the bees!</span>")
+		else
+			visible_message("<span class='danger'>[user] disturbs the [name] to no effect!</span>")
 	else
-		var/option = alert(user, "What action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee")
+		var/option = alert(user, "What action do you wish to perform?","Apiary","Remove a Honey Frame","Remove the Queen Bee", "Cancel")
 		if(!Adjacent(user))
 			return
 		switch(option)
@@ -216,15 +225,15 @@
 				var/obj/item/honey_frame/HF = pick_n_take(honey_frames)
 				if(HF)
 					if(!user.put_in_active_hand(HF))
-						HF.loc = get_turf(src)
+						HF.forceMove(drop_location())
 					visible_message("<span class='notice'>[user] removes a frame from the apiary.</span>")
 
 					var/amtH = HF.honeycomb_capacity
 					var/fallen = 0
 					while(honeycombs.len && amtH) //let's pretend you always grab the frame with the most honeycomb on it
-						var/obj/item/weapon/reagent_containers/honeycomb/HC = pick_n_take(honeycombs)
+						var/obj/item/reagent_containers/honeycomb/HC = pick_n_take(honeycombs)
 						if(HC)
-							HC.loc = get_turf(user)
+							HC.forceMove(drop_location())
 							amtH--
 							fallen++
 					if(fallen)
@@ -236,11 +245,21 @@
 					to_chat(user, "<span class='warning'>There is no queen bee to remove!</span>")
 					return
 				var/obj/item/queen_bee/QB = new()
-				queen_bee.loc = QB
+				queen_bee.forceMove(QB)
 				bees -= queen_bee
 				QB.queen = queen_bee
 				QB.name = queen_bee.name
 				if(!user.put_in_active_hand(QB))
-					QB.loc = get_turf(src)
+					QB.forceMove(drop_location())
 				visible_message("<span class='notice'>[user] removes the queen from the apiary.</span>")
 				queen_bee = null
+
+/obj/structure/beebox/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/mineral/wood (loc, 20)
+	for(var/mob/living/simple_animal/hostile/poison/bees/B in bees)
+		if(B.loc == src)
+			B.forceMove(drop_location())
+	for(var/obj/item/honey_frame/HF in honey_frames)
+		if(HF.loc == src)
+			HF.forceMove(drop_location())
+	qdel(src)

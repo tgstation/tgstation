@@ -13,6 +13,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/cookieSent   = FALSE // Has the client sent a cookie for analysis
 	var/broken       = FALSE
 	var/list/connectionHistory //Contains the connection history passed from chat cookie
+	var/adminMusicVolume = 25 //This is for the Play Global Sound verb
 
 /datum/chatOutput/New(client/C)
 	owner = C
@@ -45,8 +46,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if(!owner)
 		return
 
-	var/datum/asset/stuff = get_asset_datum(/datum/asset/simple/goonchat)
-	stuff.register()
+	var/datum/asset/stuff = get_asset_datum(/datum/asset/group/goonchat)
 	stuff.send(owner)
 
 	owner << browse(file('code/modules/goonchat/browserassets/html/browserOutput.html'), "window=browseroutput")
@@ -79,6 +79,9 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		if("analyzeClientData")
 			data = analyzeClientData(arglist(params))
 
+		if("setMusicVolume")
+			data = setMusicVolume(arglist(params))
+
 	if(data)
 		ehjax_send(data = data)
 
@@ -100,25 +103,31 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	sendClientData()
 
 	//do not convert to to_chat()
-	SEND_TEXT(owner, "<span class=\"userdanger\">If you can see this, update byond.</span>")
-
-	pingLoop()
+	SEND_TEXT(owner, "<span class=\"userdanger\">Failed to load fancy chat, reverting to old chat. Certain features won't work.</span>")
 
 /datum/chatOutput/proc/showChat()
 	winset(owner, "output", "is-visible=false")
 	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
 
-/datum/chatOutput/proc/pingLoop()
-	set waitfor = FALSE
-
-	while (owner)
-		ehjax_send(data = owner.is_afk(29) ? "softPang" : "pang") // SoftPang isn't handled anywhere but it'll always reset the opts.lastPang.
-		sleep(30)
-
 /datum/chatOutput/proc/ehjax_send(client/C = owner, window = "browseroutput", data)
 	if(islist(data))
 		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")
+
+/datum/chatOutput/proc/sendMusic(music, pitch)
+	if(!findtext(music, GLOB.is_http_protocol))
+		return
+	var/list/music_data = list("adminMusic" = url_encode(url_encode(music)))
+	if(pitch)
+		music_data["musicRate"] = pitch
+	ehjax_send(data = music_data)
+
+/datum/chatOutput/proc/stopMusic()
+	ehjax_send(data = "stopMusic")
+
+/datum/chatOutput/proc/setMusicVolume(volume = "")
+	if(volume)
+		adminMusicVolume = CLAMP(text2num(volume), 0, 100)
 
 //Sends client connection details to the chat to handle and save
 /datum/chatOutput/proc/sendClientData()
@@ -144,7 +153,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 				var/list/row = src.connectionHistory[i]
 				if (!row || row.len < 3 || (!row["ckey"] || !row["compid"] || !row["ip"])) //Passed malformed history object
 					return
-				if (world.IsBanned(row["ckey"], row["compid"], row["ip"]))
+				if (world.IsBanned(row["ckey"], row["compid"], row["ip"], real_bans_only=TRUE))
 					found = row
 					break
 
@@ -165,57 +174,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	log_world("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
 
 //Global chat procs
-
-//Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
-// exporting it as text, and then parsing the base64 from that.
-// (This relies on byond automatically storing icons in savefiles as base64)
-/proc/icon2base64(icon/icon, iconKey = "misc")
-	if (!isicon(icon))
-		return FALSE
-	WRITE_FILE(GLOB.iconCache[iconKey], icon)
-	var/iconData = GLOB.iconCache.ExportText(iconKey)
-	var/list/partial = splittext(iconData, "{")
-	return replacetext(copytext(partial[2], 3, -5), "\n", "")
-
-/proc/bicon(thing)
-	if (!thing)
-		return
-	var/static/list/bicon_cache = list()
-	if (isicon(thing))
-		var/icon/I = thing
-		var/icon_md5 = md5(I)
-		if (!bicon_cache[icon_md5]) // Doesn't exist yet, make it.
-			I = icon(I) //copy it
-			I.Scale(16,16) //scale it
-			bicon_cache[icon_md5] = icon2base64(thing) //base64 it
-		return "<img class='icon misc' src='data:image/png;base64,[bicon_cache[icon_md5]]'>"
-
-	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
-	var/atom/A = thing
-	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
-
-
-	if (!bicon_cache[key]) // Doesn't exist, make it.
-		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
-		I.Scale(16,16)
-		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
-			var/icon/temp = I
-			I = icon()
-			I.Insert(temp, dir = SOUTH)
-		bicon_cache[key] = icon2base64(I, key)
-
-	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
-
-//Costlier version of bicon() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
-/proc/costly_bicon(thing)
-	if (!thing)
-		return
-
-	if (isicon(thing))
-		return bicon(thing)
-
-	var/icon/I = getFlatIcon(thing)
-	return bicon(I)
 
 /proc/to_chat(target, message)
 	if(!target)

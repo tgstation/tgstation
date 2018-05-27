@@ -58,7 +58,9 @@
 		H.mind.miming=!H.mind.miming
 		if(H.mind.miming)
 			to_chat(H, "<span class='notice'>You make a vow of silence.</span>")
+			H.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "vow")
 		else
+			H.SendSignal(COMSIG_ADD_MOOD_EVENT, "vow", /datum/mood_event/broken_vow)
 			to_chat(H, "<span class='notice'>You break your vow of silence.</span>")
 
 // These spells can only be gotten from the "Guide for Advanced Mimery series" for Mime Traitors.
@@ -66,6 +68,8 @@
 /obj/effect/proc_holder/spell/targeted/forcewall/mime
 	name = "Invisible Blockade"
 	desc = "Form an invisible three tile wide blockade."
+	school = "mime"
+	panel = "Mime"
 	wall_type = /obj/effect/forcefield/mime/advanced
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='notice'>You form a blockade in front of yourself.</span>"
@@ -98,7 +102,7 @@
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
 	range = 20
-	projectile_type = /obj/item/projectile/bullet/weakbullet2
+	projectile_type = /obj/item/projectile/bullet/mime
 	projectile_amount = 3
 	sound = null
 	active_msg = "You draw your fingers!"
@@ -125,16 +129,19 @@
 	..()
 
 
-/obj/item/weapon/spellbook/oneuse/mimery_blockade
+/obj/item/book/granter/spell/mimery_blockade
 	spell = /obj/effect/proc_holder/spell/targeted/forcewall/mime
 	spellname = ""
 	name = "Guide to Advanced Mimery Vol 1"
 	desc = "The pages don't make any sound when turned."
 	icon_state ="bookmime"
+	remarks = list("...")
 
-/obj/item/weapon/spellbook/oneuse/mimery_guns
+
+/obj/item/book/granter/spell/mimery_guns
 	spell = /obj/effect/proc_holder/spell/aimed/finger_guns
 	spellname = ""
 	name = "Guide to Advanced Mimery Vol 2"
 	desc = "There aren't any words written..."
 	icon_state ="bookmime"
+	remarks = list("...")

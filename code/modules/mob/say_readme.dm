@@ -11,7 +11,7 @@ This rewrite was needed, but is far from perfect. Report any bugs you come acros
 Radio code, while very much related to saycode, is not something I wanted to touch, so the code related to that may be messy.
 
 If you came here to see how to use saycode, all you will ever really need to call is say(message).
-To have things react when other things speak around them, add the HEAR flag to their flags variable and
+To have things react when other things speak around them, add the HEAR_1 flag to their flags variable and
 override their Hear() proc.
 
 =======================PROCS & VARIABLES=======================
@@ -28,7 +28,7 @@ global procs
 
 	recursive_hear_check(atom/O)
 		Checks for hearers by looping through the contents of O and the contents of the contents of O and etc and checking
-		each object for the HEAR flag. Returns a list of objects with the HEAR flag.
+		each object for the HEAR_1 flag. Returns a list of objects with the HEAR_1 flag.
 
 	get_hear(range, atom/source)
 		Like view(), but ignores luminosity.
@@ -44,7 +44,7 @@ global procs
 
 /atom/movable
 	flags
-		The HEAR flag determines whether something is a hearer or not.
+		The HEAR_1 flag determines whether something is a hearer or not.
 		Hear() is only called on procs with this flag.
 
 	languages_spoken/languages_understood
@@ -66,7 +66,7 @@ global procs
 		IMPORTANT NOTE: If radio_freq is not null, the code will assume that the speaker is virtual! (more info on this in the Radios section below)
 
 	send_speech(message, range, source, bubble_type, spans)
-		This proc composes a list of hearers (things with the HEAR flag + dead people) and calls Hear() on them.
+		This proc composes a list of hearers (things with the HEAR_1 flag + dead people) and calls Hear() on them.
 		Message treatment or composition of output are not done by this proc, these are handled by the rest of
 		say() and the hearer respectively.
 

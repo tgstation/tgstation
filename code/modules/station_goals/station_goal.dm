@@ -26,11 +26,11 @@
 /datum/station_goal/proc/check_completion()
 	return completed
 
-/datum/station_goal/proc/print_result()
+/datum/station_goal/proc/get_result()
 	if(check_completion())
-		to_chat(world, "<b>Station Goal</b> : [name] :  <span class='greenannounce'>Completed!</span>")
+		return "<li>[name] :  <span class='greentext'>Completed!</span></li>"
 	else
-		to_chat(world, "<b>Station Goal</b> : [name] : <span class='boldannounce'>Failed!</span>")
+		return "<li>[name] : <span class='redtext'>Failed!</span></li>"
 
 /datum/station_goal/Destroy()
 	SSticker.mode.station_goals -= src
@@ -39,7 +39,7 @@
 /datum/station_goal/Topic(href, href_list)
 	..()
 
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_ADMIN) || !usr.client.holder.CheckAdminHref(href, href_list))
 		return
 
 	if(href_list["announce"])

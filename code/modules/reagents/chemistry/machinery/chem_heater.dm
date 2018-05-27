@@ -7,15 +7,39 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	circuit = /obj/item/weapon/circuitboard/machine/chem_heater
-	var/obj/item/weapon/reagent_containers/beaker = null
+	circuit = /obj/item/circuitboard/machine/chem_heater
+	var/obj/item/reagent_containers/beaker = null
 	var/target_temperature = 300
-	var/heater_coefficient = 0.10
+	var/heater_coefficient = 0.1
 	var/on = FALSE
 
+/obj/machinery/chem_heater/Destroy()
+	QDEL_NULL(beaker)
+	return ..()
+
+/obj/machinery/chem_heater/handle_atom_del(atom/A)
+	. = ..()
+	if(A == beaker)
+		beaker = null
+		update_icon()
+
+/obj/machinery/chem_heater/update_icon()
+	if(beaker)
+		icon_state = "mixer1b"
+	else
+		icon_state = "mixer0b"
+
+/obj/machinery/chem_heater/proc/eject_beaker(mob/user)
+	if(beaker)
+		beaker.forceMove(drop_location())
+		if(Adjacent(user) && !issilicon(user))
+			user.put_in_hands(beaker)
+		beaker = null
+		update_icon()
+
 /obj/machinery/chem_heater/RefreshParts()
-	heater_coefficient = 0.10
-	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+	heater_coefficient = 0.1
+	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		heater_coefficient *= M.rating
 
 /obj/machinery/chem_heater/process()
@@ -36,29 +60,26 @@
 	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_deconstruction_crowbar(I))
 		return
 
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
+	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
 		. = 1 //no afterattack
 		if(beaker)
-			to_chat(user, "<span class='warning'>A beaker is already loaded into the machine!</span>")
+			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
 			return
 
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
 		beaker = I
-		I.loc = src
-		to_chat(user, "<span class='notice'>You add the beaker to the machine.</span>")
-		icon_state = "mixer1b"
+		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
+		update_icon()
 		return
 	return ..()
 
 /obj/machinery/chem_heater/on_deconstruction()
 	eject_beaker()
+	return ..()
 
 /obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -104,15 +125,8 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_temperature = Clamp(target, 0, 1000)
+				target_temperature = CLAMP(target, 0, 1000)
 		if("eject")
 			on = FALSE
-			eject_beaker()
+			eject_beaker(usr)
 			. = TRUE
-
-/obj/machinery/chem_heater/proc/eject_beaker()
-	if(beaker)
-		beaker.loc = get_turf(src)
-		beaker.reagents.handle_reactions()
-		beaker = null
-		icon_state = "mixer0b"

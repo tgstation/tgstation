@@ -5,7 +5,7 @@
 	program_icon_state = "smmon_0"
 	extended_desc = "This program connects to specially calibrated supermatter sensors to provide information on the status of supermatter-based engines."
 	requires_ntnet = TRUE
-	transfer_access = ACCESS_ENGINE
+	transfer_access = ACCESS_CONSTRUCTION
 	network_destination = "supermatter monitoring system"
 	size = 5
 	tgui_id = "ntos_supermatter_monitor"
@@ -13,7 +13,7 @@
 	ui_y = 400
 	var/last_status = SUPERMATTER_INACTIVE
 	var/list/supermatters
-	var/obj/machinery/power/supermatter_shard/active		// Currently selected supermatter crystal.
+	var/obj/machinery/power/supermatter_crystal/active		// Currently selected supermatter crystal.
 
 
 /datum/computer_file/program/supermatter_monitor/process_tick()
@@ -41,10 +41,9 @@
 	var/turf/T = get_turf(ui_host())
 	if(!T)
 		return
-	//var/valid_z_levels = (GetConnectedZlevels(T.z) & using_map.station_levels)
-	for(var/obj/machinery/power/supermatter_shard/S in GLOB.machines)
+	for(var/obj/machinery/power/supermatter_crystal/S in GLOB.machines)
 		// Delaminating, not within coverage, not on a tile.
-		if(!(S.z == ZLEVEL_STATION || S.z == ZLEVEL_MINING || S.z == T.z) || !istype(S.loc, /turf/))
+		if (!isturf(S.loc) || !(is_station_level(S.z) || is_mining_level(S.z) || S.z == T.z))
 			continue
 		supermatters.Add(S)
 
@@ -53,7 +52,7 @@
 
 /datum/computer_file/program/supermatter_monitor/proc/get_status()
 	. = SUPERMATTER_INACTIVE
-	for(var/obj/machinery/power/supermatter_shard/S in supermatters)
+	for(var/obj/machinery/power/supermatter_crystal/S in supermatters)
 		. = max(., S.get_status())
 
 /datum/computer_file/program/supermatter_monitor/ui_data()
@@ -94,7 +93,7 @@
 		data["gases"] = gasdata
 	else
 		var/list/SMS = list()
-		for(var/obj/machinery/power/supermatter_shard/S in supermatters)
+		for(var/obj/machinery/power/supermatter_crystal/S in supermatters)
 			var/area/A = get_area(S)
 			if(A)
 				SMS.Add(list(list(
@@ -120,8 +119,8 @@
 			refresh()
 			return TRUE
 		if("PRG_set")
-			var/newuid = text2num(params["set"])
-			for(var/obj/machinery/power/supermatter_shard/S in supermatters)
+			var/newuid = text2num(params["target"])
+			for(var/obj/machinery/power/supermatter_crystal/S in supermatters)
 				if(S.uid == newuid)
 					active = S
 			return TRUE

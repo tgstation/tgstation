@@ -10,6 +10,7 @@
 	icon_living = "basic"
 	icon_dead = "basic"
 	gender = NEUTER
+	mob_biotypes = list(MOB_ROBOTIC)
 	health = 15
 	maxHealth = 15
 	healable = 0
@@ -24,7 +25,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speak_emote = list("states")
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 

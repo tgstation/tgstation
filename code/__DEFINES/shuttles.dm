@@ -31,11 +31,9 @@
 
 // Ripples, effects that signal a shuttle's arrival
 #define SHUTTLE_RIPPLE_TIME 100
-#define SHUTTLE_RIPPLE_FADEIN 50
 
 #define TRANSIT_REQUEST 1
 #define TRANSIT_READY 2
-#define TRANSIT_FULL 3
 
 #define SHUTTLE_TRANSIT_BORDER 8
 
@@ -54,8 +52,27 @@
 #define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
 
 //Docking error flags
-#define DOCKING_SUCCESS 0
-#define DOCKING_COMPLETE 1
-#define DOCKING_BLOCKED 2
-#define DOCKING_IMMOBILIZED 4
-#define DOCKING_AREA_EMPTY 8
+#define DOCKING_SUCCESS				0
+#define DOCKING_BLOCKED				(1<<0)
+#define DOCKING_IMMOBILIZED			(1<<1)
+#define DOCKING_AREA_EMPTY			(1<<2)
+#define DOCKING_NULL_DESTINATION	(1<<3)
+#define DOCKING_NULL_SOURCE			(1<<4)
+
+//Docking turf movements
+#define MOVE_TURF 1
+#define MOVE_AREA 2
+#define MOVE_CONTENTS 4
+
+//Rotation params
+#define ROTATE_DIR 		1
+#define ROTATE_SMOOTH 	2
+#define ROTATE_OFFSET	4
+
+#define SHUTTLE_DOCKER_LANDING_CLEAR 1
+#define SHUTTLE_DOCKER_BLOCKED_BY_HIDDEN_PORT 2
+#define SHUTTLE_DOCKER_BLOCKED 3
+
+//Shuttle defaults
+#define SHUTTLE_DEFAULT_SHUTTLE_AREA_TYPE /area/shuttle
+#define SHUTTLE_DEFAULT_UNDERLYING_AREA /area/space

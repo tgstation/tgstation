@@ -1,5 +1,5 @@
 /mob/living/silicon/ai/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] <EM>[src]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] <EM>[src]</EM>!\n"
 	if (stat == DEAD)
 		msg += "<span class='deadsay'>It appears to be powered-down.</span>\n"
 	else
@@ -22,5 +22,5 @@
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)
-
 	..()
+	return msg

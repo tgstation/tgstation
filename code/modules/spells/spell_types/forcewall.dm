@@ -29,9 +29,12 @@
 /obj/effect/forcefield/wizard/Initialize(mapload, mob/summoner)
 	. = ..()
 	wizard = summoner
-	QDEL_IN(src, 300)
 
 /obj/effect/forcefield/wizard/CanPass(atom/movable/mover, turf/target)
 	if(mover == wizard)
-		return 1
-	return 0
+		return TRUE
+	if(ismob(mover))
+		var/mob/M = mover
+		if(M.anti_magic_check())
+			return TRUE
+	return FALSE

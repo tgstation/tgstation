@@ -78,6 +78,8 @@
 
 /datum/datacore/proc/manifest()
 	for(var/mob/dead/new_player/N in GLOB.player_list)
+		if(N.new_character)
+			log_manifest(N.ckey,N.new_character.mind,N.new_character)
 		if(ishuman(N.new_character))
 			manifest_inject(N.new_character, N.client)
 		CHECK_TICK
@@ -196,6 +198,8 @@
 
 
 /datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
+	set waitfor = FALSE
+	var/static/list/show_directions = list(SOUTH, WEST)
 	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
 		var/assignment
 		if(H.mind.assigned_role)
@@ -209,11 +213,14 @@
 		var/id = num2hex(record_id_num++,6)
 		if(!C)
 			C = H.client
-		var/image = get_id_photo(H, C)
-		var/obj/item/weapon/photo/photo_front = new()
-		var/obj/item/weapon/photo/photo_side = new()
-		photo_front.photocreate(null, icon(image, dir = SOUTH))
-		photo_side.photocreate(null, icon(image, dir = WEST))
+		var/image = get_id_photo(H, C, show_directions)
+		var/obj/item/photo/photo_front = new()
+		var/obj/item/photo/photo_side = new()
+		for(var/D in show_directions) 
+			if(D == SOUTH)
+				photo_front.photocreate(null, icon(image, dir = D))
+			if(D == WEST || D == EAST)
+				photo_side.photocreate(null, icon(image, dir = D))
 
 		//These records should ~really~ be merged or something
 		//General Record
@@ -222,8 +229,7 @@
 		G.fields["name"]		= H.real_name
 		G.fields["rank"]		= assignment
 		G.fields["age"]			= H.age
-		if(config.mutant_races)
-			G.fields["species"]	= H.dna.species.name
+		G.fields["species"]	= H.dna.species.name
 		G.fields["fingerprint"]	= md5(H.dna.uni_identity)
 		G.fields["p_stat"]		= "Active"
 		G.fields["m_stat"]		= "Stable"
@@ -273,15 +279,15 @@
 		L.fields["species"]		= H.dna.species.type
 		L.fields["features"]	= H.dna.features
 		L.fields["image"]		= image
-		L.fields["reference"]	= H
+		L.fields["mindref"]		= H.mind
 		locked += L
 	return
 
-/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C)
+/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C, show_directions = list(SOUTH))
 	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 	var/datum/preferences/P
 	if(!C)
 		C = H.client
 	if(C)
 		P = C.prefs
-	return get_flat_human_icon(null, J, P)
+	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)

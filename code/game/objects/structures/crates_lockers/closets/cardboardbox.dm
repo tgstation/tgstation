@@ -8,25 +8,26 @@
 	max_integrity = 70
 	integrity_failure = 0
 	can_weld_shut = 0
-	cutting_tool = /obj/item/weapon/wirecutters
+	cutting_tool = /obj/item/wirecutters
 	open_sound = "rustle"
-	cutting_sound = 'sound/items/poster_ripped.ogg'
 	material_drop = /obj/item/stack/sheet/cardboard
 	delivery_icon = "deliverybox"
 	anchorable = FALSE
 	var/move_speed_multiplier = 1
-	var/move_delay = 0
+	var/move_delay = FALSE
 	var/egged = 0
 
 /obj/structure/closet/cardboard/relaymove(mob/user, direction)
 	if(opened || move_delay || user.stat || user.IsStun() || user.IsKnockdown() || user.IsUnconscious() || !isturf(loc) || !has_gravity(loc))
 		return
-	move_delay = 1
+	move_delay = TRUE
 	if(step(src, direction))
-		spawn(config.walk_speed*move_speed_multiplier)
-			move_delay = 0
+		addtimer(CALLBACK(src, .proc/ResetMoveDelay), CONFIG_GET(number/walk_delay) * move_speed_multiplier)
 	else
-		move_delay = 0
+		ResetMoveDelay()
+
+/obj/structure/closet/cardboard/proc/ResetMoveDelay()
+	move_delay = FALSE
 
 /obj/structure/closet/cardboard/open()
 	if(opened || !can_open())
@@ -62,10 +63,9 @@
 	icon_state = "metalbox"
 	max_integrity = 500
 	mob_storage_capacity = 5
-	resistance_flags = 0
+	resistance_flags = NONE
 	move_speed_multiplier = 2
-	cutting_tool = /obj/item/weapon/weldingtool
+	cutting_tool = /obj/item/weldingtool
 	open_sound = 'sound/machines/click.ogg'
-	cutting_sound = 'sound/items/welder.ogg'
 	material_drop = /obj/item/stack/sheet/plasteel
 #undef SNAKE_SPAM_TICKS

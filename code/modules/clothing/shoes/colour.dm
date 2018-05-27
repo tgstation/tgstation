@@ -90,24 +90,35 @@
 	if (src.chained)
 		src.chained = null
 		src.slowdown = SHOES_SLOWDOWN
-		new /obj/item/weapon/restraints/handcuffs( user.loc )
+		new /obj/item/restraints/handcuffs( user.loc )
 		src.icon_state = "orange"
 	return
 
 /obj/item/clothing/shoes/sneakers/orange/attackby(obj/H, loc, params)
 	..()
 	// Note: not using istype here because we want to ignore all subtypes
-	if (H.type == /obj/item/weapon/restraints/handcuffs && !chained)
+	if (H.type == /obj/item/restraints/handcuffs && !chained)
 		qdel(H)
 		src.chained = 1
 		src.slowdown = 15
 		src.icon_state = "orange1"
 	return
 
-/obj/item/clothing/shoes/sneakers/orange/attack_hand(mob/user)
+/obj/item/clothing/shoes/sneakers/orange/allow_attack_hand_drop(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/C = user
-		if(C.shoes == src && src.chained == 1)
+		if(C.shoes == src && chained == 1)
 			to_chat(user, "<span class='warning'>You need help taking these off!</span>")
+			return FALSE
+	return ..()
+
+/obj/item/clothing/shoes/sneakers/orange/MouseDrop(atom/over)
+	var/mob/m = usr
+	if(ishuman(m))
+		var/mob/living/carbon/human/c = m
+		if(c.shoes == src && chained == 1)
+			to_chat(c, "<span class='warning'>You need help taking these off!</span>")
 			return
-	..()
+	return ..()
+	
+	

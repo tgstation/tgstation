@@ -139,11 +139,11 @@
 /datum/chemical_reaction/reagent_explosion/methsplosion
 	name = "Meth explosion"
 	id = "methboom1"
-	results = list("methboom1" = 1)
 	required_temp = 380 //slightly above the meth mix time.
 	required_reagents = list("methamphetamine" = 1)
 	strengthdiv = 6
 	modifier = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -153,9 +153,9 @@
 	..()
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
+	id = "methboom2"
 	required_reagents = list("diethylamine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1) //diethylamine is often left over from mixing the ephedrine.
 	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion
-	results = list("methboom1" = 4) // this is ugly. Sorry goof.
 
 /datum/chemical_reaction/sorium
 	name = "Sorium"
@@ -168,7 +168,7 @@
 		return
 	holder.remove_reagent("sorium", created_volume*4)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = Clamp(sqrt(created_volume*4), 1, 6)
+	var/range = CLAMP(sqrt(created_volume*4), 1, 6)
 	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/sorium_vortex
@@ -179,7 +179,7 @@
 
 /datum/chemical_reaction/sorium_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = Clamp(sqrt(created_volume), 1, 6)
+	var/range = CLAMP(sqrt(created_volume), 1, 6)
 	goonchem_vortex(T, 1, range)
 
 /datum/chemical_reaction/liquid_dark_matter
@@ -193,7 +193,7 @@
 		return
 	holder.remove_reagent("liquid_dark_matter", created_volume*3)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = Clamp(sqrt(created_volume*3), 1, 6)
+	var/range = CLAMP(sqrt(created_volume*3), 1, 6)
 	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/ldm_vortex
@@ -204,7 +204,7 @@
 
 /datum/chemical_reaction/ldm_vortex/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
-	var/range = Clamp(sqrt(created_volume/2), 1, 6)
+	var/range = CLAMP(sqrt(created_volume/2), 1, 6)
 	goonchem_vortex(T, 0, range)
 
 /datum/chemical_reaction/flash_powder
@@ -268,8 +268,7 @@
 	id = "smoke_powder_smoke"
 	required_reagents = list("smoke_powder" = 1)
 	required_temp = 374
-	secondary = 1
-	mob_react = 1
+	mob_react = FALSE
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -341,6 +340,25 @@
 	holder.chem_temp = 20 // cools the fuck down
 	return
 
+/datum/chemical_reaction/cryostylane_oxygen
+	name = "ephemeral cryostylane reaction"
+	id = "cryostylane_oxygen"
+	results = list("cryostylane" = 1)
+	required_reagents = list("cryostylane" = 1, "oxygen" = 1)
+	mob_react = FALSE
+
+/datum/chemical_reaction/cryostylane_oxygen/on_reaction(datum/reagents/holder, created_volume)
+	holder.chem_temp = max(holder.chem_temp - 10*created_volume,0)
+
+/datum/chemical_reaction/pyrosium_oxygen
+	name = "ephemeral pyrosium reaction"
+	id = "pyrosium_oxygen"
+	results = list("pyrosium" = 1)
+	required_reagents = list("pyrosium" = 1, "oxygen" = 1)
+	mob_react = FALSE
+
+/datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/reagents/holder, created_volume)
+	holder.chem_temp += 10*created_volume
 
 /datum/chemical_reaction/pyrosium
 	name = "pyrosium"
@@ -360,15 +378,22 @@
 	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
 	required_temp = 400
 
+/datum/chemical_reaction/energized_jelly
+	name = "Energized Jelly"
+	id = "energized_jelly"
+	results = list("energized_jelly" = 2)
+	required_reagents = list("slimejelly" = 1, "teslium" = 1)
+	mix_message = "<span class='danger'>The slime jelly starts glowing intermittently.</span>"
+
 /datum/chemical_reaction/reagent_explosion/teslium_lightning
 	name = "Teslium Destabilization"
 	id = "teslium_lightning"
 	required_reagents = list("teslium" = 1, "water" = 1)
-	results = list("destabilized_teslium" = 1)
 	strengthdiv = 100
 	modifier = -100
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
 	mix_sound = 'sound/machines/defib_zap.ogg'
+	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/on_reaction(datum/reagents/holder, created_volume)
 	var/T1 = created_volume * 20		//100 units : Zap 3 times, with powers 2000/5000/12000. Tesla revolvers have a power of 10000 for comparison.
@@ -376,15 +401,15 @@
 	var/T3 = created_volume * 120
 	sleep(5)
 	if(created_volume >= 75)
-		tesla_zap(holder.my_atom, 7, T1)
+		tesla_zap(holder.my_atom, 7, T1, tesla_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 		sleep(15)
 	if(created_volume >= 40)
-		tesla_zap(holder.my_atom, 7, T2)
+		tesla_zap(holder.my_atom, 7, T2, tesla_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 		sleep(15)
 	if(created_volume >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
-		tesla_zap(holder.my_atom, 7, T3)
+		tesla_zap(holder.my_atom, 7, T3, tesla_flags)
 		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
 	..()
 
@@ -400,3 +425,11 @@
 	strengthdiv = 7
 	required_temp = 575
 	modifier = 1
+
+/datum/chemical_reaction/firefighting_foam
+	name = "Firefighting Foam"
+	id = "firefighting_foam"
+	results = list("firefighting_foam" = 3)
+	required_reagents = list("stabilizing_agent" = 1,"fluorosurfactant" = 1,"carbon" = 1)
+	required_temp = 200
+	is_cold_recipe = 1

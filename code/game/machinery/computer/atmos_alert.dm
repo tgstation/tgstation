@@ -1,18 +1,18 @@
 /obj/machinery/computer/atmos_alert
 	name = "atmospheric alert console"
 	desc = "Used to monitor the station's air alarms."
-	circuit = /obj/item/weapon/circuitboard/computer/atmos_alert
+	circuit = /obj/item/circuitboard/computer/atmos_alert
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
-	var/receive_frequency = 1437
+	var/receive_frequency = FREQ_ATMOS_ALARMS
 	var/datum/radio_frequency/radio_connection
 
 	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/computer/atmos_alert/Initialize()
-	..()
+	. = ..()
 	set_frequency(receive_frequency)
 
 /obj/machinery/computer/atmos_alert/Destroy()
@@ -57,15 +57,17 @@
 /obj/machinery/computer/atmos_alert/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, receive_frequency)
 	receive_frequency = new_frequency
-	radio_connection = SSradio.add_object(src, receive_frequency, GLOB.RADIO_ATMOSIA)
+	radio_connection = SSradio.add_object(src, receive_frequency, RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption) return
+	if(!signal)
+		return
 
 	var/zone = signal.data["zone"]
 	var/severity = signal.data["alert"]
 
-	if(!zone || !severity) return
+	if(!zone || !severity)
+		return
 
 	minor_alarms -= zone
 	priority_alarms -= zone

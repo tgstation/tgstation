@@ -14,16 +14,20 @@
 			organ = organs[organ]
 			organ = new organ
 			organ.Insert(C)
+			log_admin("[key_name(usr)] has added organ [organ.type] to [key_name(C)]")
+			message_admins("[key_name_admin(usr)] has added organ [organ.type] to [key_name(C)]")
 
 		if("add implant")
-			for(var/path in subtypesof(/obj/item/weapon/implant))
-				var/dat = replacetext("[path]", "/obj/item/weapon/implant/", ":")
+			for(var/path in subtypesof(/obj/item/implant))
+				var/dat = replacetext("[path]", "/obj/item/implant/", ":")
 				organs[dat] = path
 
-			var/obj/item/weapon/implant/organ = input("Select implant type:", "Organ Manipulation", null) in organs
+			var/obj/item/implant/organ = input("Select implant type:", "Organ Manipulation", null) in organs
 			organ = organs[organ]
 			organ = new organ
 			organ.implant(C)
+			log_admin("[key_name(usr)] has added implant [organ.type] to [key_name(C)]")
+			message_admins("[key_name_admin(usr)] has added implant [organ.type] to [key_name(C)]")
 
 		if("drop organ/implant", "remove organ/implant")
 			for(var/X in C.internal_organs)
@@ -31,14 +35,18 @@
 				organs["[I.name] ([I.type])"] = I
 
 			for(var/X in C.implants)
-				var/obj/item/weapon/implant/I = X
+				var/obj/item/implant/I = X
 				organs["[I.name] ([I.type])"] = I
 
 			var/obj/item/organ = input("Select organ/implant:", "Organ Manipulation", null) in organs
 			organ = organs[organ]
-			if(!organ) return
+			if(!organ)
+				return
 			var/obj/item/organ/O
-			var/obj/item/weapon/implant/I
+			var/obj/item/implant/I
+
+			log_admin("[key_name(usr)] has removed [organ.type] from [key_name(C)]")
+			message_admins("[key_name_admin(usr)] has removed [organ.type] from [key_name(C)]")
 
 			if(isorgan(organ))
 				O = organ
@@ -52,7 +60,7 @@
 			if(operation == "remove organ/implant")
 				qdel(organ)
 			else if(I) // Put the implant in case.
-				var/obj/item/weapon/implantcase/case = new(get_turf(C))
+				var/obj/item/implantcase/case = new(get_turf(C))
 				case.imp = I
-				I.loc = case
+				I.forceMove(case)
 				case.update_icon()

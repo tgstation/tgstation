@@ -36,9 +36,9 @@
 			var/atom/summoned_object = new summoned_object_type(spawn_place)
 
 			for(var/varName in newVars)
-				if(varName in summoned_object.vars)
-					summoned_object.vars[varName] = newVars[varName]
-			summoned_object.admin_spawned = TRUE
+				if(varName in newVars)
+					summoned_object.vv_edit_var(varName, newVars[varName])
+			summoned_object.flags_1 |= ADMIN_SPAWNED_1
 			if(summon_lifespan)
 				QDEL_IN(summoned_object, summon_lifespan)
 
@@ -56,6 +56,18 @@
 	range = 3
 	newVars = list("emagged" = 2, "remote_disabled" = 1,"shoot_sound" = 'sound/weapons/laser.ogg',"projectile" = /obj/item/projectile/beam/laser, "declare_arrests" = 0,"name" = "Wizard's Justicebot")
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/linkWorlds
+	name = "Link Worlds"
+	desc = "A whole new dimension for you to play with! They won't be happy about it, though."
+	invocation = "WTF"
+	clothes_req = FALSE
+	charge_max = 600
+	cooldown_min = 200
+	summon_type = list(/mob/living/simple_animal/hostile/spawner/nether)
+	summon_amt = 1
+	range = 1
+	cast_sound = 'sound/weapons/marauder.ogg'
+
 /obj/effect/proc_holder/spell/targeted/conjure_item
 	name = "Summon weapon"
 	desc = "A generic spell that should not exist.  This summons an instance of a specific type of item, or if one already exists, un-summons it.  Summons into hand if possible."
@@ -64,7 +76,7 @@
 	range = -1
 	clothes_req = 0
 	var/obj/item/item
-	var/item_type = /obj/item/weapon/banhammer
+	var/item_type = /obj/item/banhammer
 	school = "conjuration"
 	charge_max = 150
 	cooldown_min = 10
@@ -75,9 +87,8 @@
 		item = null
 	else
 		for(var/mob/living/carbon/C in targets)
-			if(C.drop_item())
-				item = make_item()
-				C.put_in_hands(item)
+			if(C.dropItemToGround(C.get_active_held_item()))
+				C.put_in_hands(make_item(), TRUE)
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/Destroy()
 	if(item)
@@ -85,4 +96,5 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/proc/make_item()
-	return new item_type
+	item = new item_type
+	return item

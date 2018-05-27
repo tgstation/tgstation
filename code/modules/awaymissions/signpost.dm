@@ -5,24 +5,27 @@
 	anchored = TRUE
 	density = TRUE
 	var/question = "Travel back?"
-	var/zlevels = list(ZLEVEL_STATION)
+	var/list/zlevels
 
 /obj/structure/signpost/New()
 	. = ..()
 	set_light(2)
+	zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
 
-/obj/structure/signpost/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/signpost/attackby(obj/item/W, mob/user, params)
 	return attack_hand(user)
 
 /obj/structure/signpost/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	switch(alert(question,name,"Yes","No"))
 		if("Yes")
 			var/turf/T = find_safe_turf(zlevels=zlevels)
 
 			if(T)
-				var/area/A = get_area(T)
 				user.forceMove(T)
-				to_chat(user, "<span class='notice'>You blink and find yourself in [A.name].</span>")
+				to_chat(user, "<span class='notice'>You blink and find yourself in [get_area_name(T)].</span>")
 			else
 				to_chat(user, "Nothing happens. You feel that this is a bad sign.")
 		if("No")
@@ -43,6 +46,6 @@
 	zlevels = list()
 	for(var/i in 1 to world.maxz)
 		zlevels += i
-	zlevels -= ZLEVEL_CENTCOM // no easy victory, even with meme signposts
+	zlevels -= SSmapping.levels_by_trait(ZTRAIT_CENTCOM) // no easy victory, even with meme signposts
 	// also, could you think of the horror if they ended up in a holodeck
 	// template or something

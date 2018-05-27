@@ -1,19 +1,19 @@
 // Powersink - used to drain station power
 
-/obj/item/device/powersink
+/obj/item/powersink
 	desc = "A nulling power sink which drains energy from electrical systems."
 	name = "power sink"
+	icon = 'icons/obj/device.dmi'
 	icon_state = "powersink0"
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
 	materials = list(MAT_METAL=750)
-	origin_tech = "powerstorage=5;syndicate=5"
 	var/drain_rate = 1600000	// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
 	var/max_power = 1e10		// maximum power that can be drained before exploding
@@ -26,10 +26,10 @@
 
 	var/obj/structure/cable/attached		// the attached cable
 
-/obj/item/device/powersink/update_icon()
+/obj/item/powersink/update_icon()
 	icon_state = "powersink[mode == OPERATING]"
 
-/obj/item/device/powersink/proc/set_mode(value)
+/obj/item/powersink/proc/set_mode(value)
 	if(value == mode)
 		return
 	switch(value)
@@ -56,8 +56,8 @@
 	update_icon()
 	set_light(0)
 
-/obj/item/device/powersink/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
+/obj/item/powersink/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/screwdriver))
 		if(mode == DISCONNECTED)
 			var/turf/T = loc
 			if(isturf(T) && !T.intact)
@@ -81,13 +81,16 @@
 	else
 		return ..()
 
-/obj/item/device/powersink/attack_paw()
+/obj/item/powersink/attack_paw()
 	return
 
-/obj/item/device/powersink/attack_ai()
+/obj/item/powersink/attack_ai()
 	return
 
-/obj/item/device/powersink/attack_hand(mob/user)
+/obj/item/powersink/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	switch(mode)
 		if(DISCONNECTED)
 			..()
@@ -108,7 +111,7 @@
 				"<span class='italics'>You hear a click.</span>")
 			set_mode(CLAMPED_OFF)
 
-/obj/item/device/powersink/process()
+/obj/item/powersink/process()
 	if(!attached)
 		set_mode(DISCONNECTED)
 		return
@@ -138,7 +141,7 @@
 	if(power_drained > max_power * 0.98)
 		if (!admins_warned)
 			admins_warned = TRUE
-			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) is 95% full. Explosion imminent.")
+			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) is 95% full. Explosion imminent.")
 		playsound(src, 'sound/effects/screech.ogg', 100, 1, 1)
 
 	if(power_drained >= max_power)

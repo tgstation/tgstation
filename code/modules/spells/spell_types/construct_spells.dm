@@ -33,7 +33,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/floor
 	name = "Summon Cult Floor"
-	desc = "This spell constructs a cult floor"
+	desc = "This spell constructs a cult floor."
 
 	school = "conjuration"
 	charge_max = 20
@@ -49,7 +49,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
 	name = "Summon Cult Wall"
-	desc = "This spell constructs a cult wall"
+	desc = "This spell constructs a cult wall."
 
 	school = "conjuration"
 	charge_max = 100
@@ -66,7 +66,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"
-	desc = "This spell constructs a reinforced metal wall"
+	desc = "This spell constructs a reinforced metal wall."
 
 	school = "conjuration"
 	charge_max = 300
@@ -79,10 +79,10 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
 	name = "Summon Soulstone"
-	desc = "This spell reaches into Nar-Sie's realm, summoning one of the legendary fragments across time and space"
+	desc = "This spell reaches into Nar-Sie's realm, summoning one of the legendary fragments across time and space."
 
 	school = "conjuration"
-	charge_max = 3000
+	charge_max = 2400
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"
@@ -91,37 +91,33 @@
 	action_icon_state = "summonsoulstone"
 	action_background_icon_state = "bg_demon"
 
-	summon_type = list(/obj/item/device/soulstone)
+	summon_type = list(/obj/item/soulstone)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult
 	cult_req = 1
-	charge_max = 4000
+	charge_max = 3600
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
-	summon_type = list(/obj/item/device/soulstone/anybody)
+	summon_type = list(/obj/item/soulstone/anybody)
 
-
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
+/obj/effect/proc_holder/spell/targeted/forcewall/cult
 	name = "Shield"
-	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire"
-
+	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
 	school = "transmutation"
-	charge_max = 300
-	clothes_req = 0
+	charge_max = 400
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
-	range = 0
-	summon_type = list(/obj/effect/forcefield/cult)
-	summon_lifespan = 200
+	wall_type = /obj/effect/forcefield/cult
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "cultforcewall"
 	action_background_icon_state = "bg_demon"
 
 
+
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift
 	name = "Phase Shift"
-	desc = "This spell allows you to pass through walls"
+	desc = "This spell allows you to pass through walls."
 
 	school = "transmutation"
 	charge_max = 250
@@ -206,15 +202,21 @@
 		revert_cast()
 		return
 
+	if(target.anti_magic_check(TRUE, TRUE))
+		to_chat(target, "<span class='warning'>You feel a freezing darkness closing in on you, but it rapidly dissipates.</span>")
+		return
+
 	to_chat(target, "<span class='userdanger'>A freezing darkness surrounds you...</span>")
 	target.playsound_local(get_turf(target), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
 	user.playsound_local(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
-	target.adjust_blindness(5)
+	target.become_blind(ABYSSAL_GAZE_BLIND)
 	addtimer(CALLBACK(src, .proc/cure_blindness, target), 40)
-	target.bodytemperature -= 200
+	target.adjust_bodytemperature(-200)
 
 /obj/effect/proc_holder/spell/targeted/abyssal_gaze/proc/cure_blindness(mob/target)
-	target.adjust_blindness(-5)
+	if(isliving(target))
+		var/mob/living/L = target
+		L.cure_blind(ABYSSAL_GAZE_BLIND)
 
 /obj/effect/proc_holder/spell/targeted/dominate
 	name = "Dominate"
@@ -278,3 +280,39 @@
 	charge_max = 800
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/cult/phase
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/cult/phase/out
+
+
+/obj/effect/proc_holder/spell/dumbfire/juggernaut
+	name = "Gauntlet Echo"
+	desc = "Channels energy into your gauntlet - firing its essence forward in a slow moving, yet devastating, attack."
+	proj_icon_state = "cultfist"
+	proj_name = "gauntlet echo"
+	proj_type = "/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut" //IMPORTANT use only subtypes of this
+	proj_lifespan = 15
+	proj_step_delay = 7
+	charge_max = 350
+	clothes_req = FALSE
+	action_icon = 'icons/mob/actions/actions_cult.dmi'
+	action_icon_state = "cultfist"
+	action_background_icon_state = "bg_demon"
+	sound = 'sound/weapons/resonator_blast.ogg'
+	proj_trigger_range = 0
+	ignore_factions = list("cult")
+	check_holy = TRUE
+
+/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut
+	name = "Gauntlet Echo"
+	alpha = 180
+	amt_dam_brute = 30
+	amt_knockdown = 50
+	sound = 'sound/weapons/punch3.ogg'
+
+/obj/effect/proc_holder/spell/targeted/inflict_handler/juggernaut/cast(list/targets,mob/user = usr)
+	var/turf/T = get_turf(src)
+	playsound(T, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
+	new /obj/effect/temp_visual/cult/sac(T)
+	for(var/obj/O in range(src,1))
+		if(O.density && !istype(O, /obj/structure/destructible/cult))
+			O.take_damage(90, BRUTE, "melee", 0)
+			new /obj/effect/temp_visual/cult/turf/floor
+	..()

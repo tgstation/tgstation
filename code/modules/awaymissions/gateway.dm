@@ -60,11 +60,10 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		return
 	icon_state = "off"
 
-//prevents shuttles attempting to rotate this since it messes up sprites
-/obj/machinery/gateway/shuttleRotate()
-	return
-
 /obj/machinery/gateway/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!detect())
 		return
 	if(!active)
@@ -75,12 +74,15 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/proc/toggleon(mob/user)
 	return FALSE
 
+/obj/machinery/gateway/safe_throw_at()
+	return
+
 /obj/machinery/gateway/centerstation/Initialize()
 	. = ..()
 	if(!GLOB.the_gateway)
 		GLOB.the_gateway = src
 	update_icon()
-	wait = world.time + config.gateway_delay	//+ thirty minutes default
+	wait = world.time + CONFIG_GET(number/gateway_delay)	//+ thirty minutes default
 	awaygate = locate(/obj/machinery/gateway/centeraway)
 
 /obj/machinery/gateway/centerstation/Destroy()
@@ -123,7 +125,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
 		return
 	if(world.time < wait)
-		to_chat(user, "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>")
+		to_chat(user, "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [DisplayTimeText(wait - world.time)].</span>")
 		return
 
 	for(var/obj/machinery/gateway/G in linked)
@@ -157,8 +159,8 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 			use_power(5000)
 		return
 
-/obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
+/obj/machinery/gateway/centeraway/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/multitool))
 		if(calibrated)
 			to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
 			return
@@ -174,7 +176,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	density = TRUE
 	icon_state = "offcenter"
 	use_power = NO_POWER_USE
-	var/obj/machinery/gateway/centeraway/stationgate = null
+	var/obj/machinery/gateway/centerstation/stationgate = null
 	can_link = TRUE
 
 
@@ -203,9 +205,9 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	active = 1
 	update_icon()
 
-/obj/machinery/gateway/centeraway/proc/check_exile_implant(mob/living/carbon/C)
-	for(var/obj/item/weapon/implant/exile/E in C.implants)//Checking that there is an exile implant
-		to_chat(C, "\black The station gate has detected your exile implant and is blocking your entry.")
+/obj/machinery/gateway/centeraway/proc/check_exile_implant(mob/living/L)
+	for(var/obj/item/implant/exile/E in L.implants)//Checking that there is an exile implant
+		to_chat(L, "\black The station gate has detected your exile implant and is blocking your entry.")
 		return TRUE
 	return FALSE
 
@@ -216,17 +218,17 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		return
 	if(!stationgate || QDELETED(stationgate))
 		return
-	if(istype(AM, /mob/living/carbon))
+	if(isliving(AM))
 		if(check_exile_implant(AM))
 			return
 	else
-		for(var/mob/living/carbon/C in AM.contents)
-			if(check_exile_implant(C))
+		for(var/mob/living/L in AM.contents)
+			if(check_exile_implant(L))
 				say("Rejecting [AM]: Exile implant detected in contained lifeform.")
 				return
 	if(AM.has_buckled_mobs())
-		for(var/mob/living/carbon/C in AM.buckled_mobs)
-			if(check_exile_implant(C))
+		for(var/mob/living/L in AM.buckled_mobs)
+			if(check_exile_implant(L))
 				say("Rejecting [AM]: Exile implant detected in close proximity lifeform.")
 				return
 	AM.forceMove(get_step(stationgate.loc, SOUTH))
@@ -237,6 +239,18 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 			M.client.move_delay = max(world.time + 5, M.client.move_delay)
 
 
-/obj/item/weapon/paper/fluff/gateway
+/obj/machinery/gateway/centeraway/admin
+	desc = "A mysterious gateway built by unknown hands, this one seems more compact."
+
+/obj/machinery/gateway/centeraway/admin/Initialize()
+	. = ..()
+	if(stationgate && !stationgate.awaygate)
+		stationgate.awaygate = src
+
+/obj/machinery/gateway/centeraway/admin/detect()
+	return TRUE
+
+
+/obj/item/paper/fluff/gateway
 	info = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Blue Space Research"
 	name = "Confidential Correspondence, Pg 1"

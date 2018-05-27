@@ -14,13 +14,13 @@
 	requires_ntnet = 0
 	tgui_id = "ntos_configuration"
 
-	var/obj/item/device/modular_computer/movable = null
+	var/obj/item/modular_computer/movable = null
 
 
 /datum/computer_file/program/computerconfig/ui_data(mob/user)
 	movable = computer
-	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = movable.all_components[MC_HDD]
-	var/obj/item/weapon/computer_hardware/battery/battery_module = movable.all_components[MC_CELL]
+	var/obj/item/computer_hardware/hard_drive/hard_drive = movable.all_components[MC_HDD]
+	var/obj/item/computer_hardware/battery/battery_module = movable.all_components[MC_CELL]
 	if(!istype(movable))
 		movable = null
 
@@ -43,7 +43,7 @@
 
 	var/list/all_entries[0]
 	for(var/I in movable.all_components)
-		var/obj/item/weapon/computer_hardware/H = movable.all_components[I]
+		var/obj/item/computer_hardware/H = movable.all_components[I]
 		all_entries.Add(list(list(
 		"name" = H.name,
 		"desc" = H.desc,
@@ -61,7 +61,7 @@
 		return
 	switch(action)
 		if("PC_toggle_component")
-			var/obj/item/weapon/computer_hardware/H = movable.find_hardware_by_name(params["name"])
+			var/obj/item/computer_hardware/H = movable.find_hardware_by_name(params["name"])
 			if(H && istype(H))
 				H.enabled = !H.enabled
 			. = TRUE

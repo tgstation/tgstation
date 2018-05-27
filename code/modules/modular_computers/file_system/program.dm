@@ -5,7 +5,7 @@
 	var/required_access = null				// List of required accesses to *run* the program.
 	var/transfer_access = null				// List of required access to download or file host the program
 	var/program_state = PROGRAM_STATE_KILLED// PROGRAM_STATE_KILLED or PROGRAM_STATE_BACKGROUND or PROGRAM_STATE_ACTIVE - specifies whether this program is running.
-	var/obj/item/device/modular_computer/computer	// Device that runs this program.
+	var/obj/item/modular_computer/computer	// Device that runs this program.
 	var/filedesc = "Unknown Program"		// User-friendly name of this program.
 	var/extended_desc = "N/A"				// Short description of this program's function.
 	var/program_icon_state = null			// Program-specific screen icon state
@@ -22,7 +22,7 @@
 	var/ui_y = 700
 	var/ui_header = null					// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
 
-/datum/computer_file/program/New(obj/item/device/modular_computer/comp = null)
+/datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
 	if(comp && istype(comp))
 		computer = comp
@@ -81,7 +81,7 @@
 	if(!access_to_check) // No required_access, allow it.
 		return 1
 
-	if(!transfer && computer && computer.emagged)	//emags can bypass the execution locks but not the download ones.
+	if(!transfer && computer && (computer.obj_flags & EMAGGED))	//emags can bypass the execution locks but not the download ones.
 		return 1
 
 	if(IsAdminGhost(user))
@@ -91,14 +91,14 @@
 		return 1
 
 	if(ishuman(user))
-		var/obj/item/weapon/card/id/D
-		var/obj/item/weapon/computer_hardware/card_slot/card_slot
+		var/obj/item/card/id/D
+		var/obj/item/computer_hardware/card_slot/card_slot
 		if(computer && card_slot)
 			card_slot = computer.all_components[MC_CARD]
 			D = card_slot.GetID()
 		var/mob/living/carbon/human/h = user
-		var/obj/item/weapon/card/id/I = h.get_idcard()
-		var/obj/item/weapon/card/id/C = h.get_active_held_item()
+		var/obj/item/card/id/I = h.get_idcard()
+		var/obj/item/card/id/C = h.get_active_held_item()
 		if(C)
 			C = C.GetID()
 		if(!(C && istype(C)))

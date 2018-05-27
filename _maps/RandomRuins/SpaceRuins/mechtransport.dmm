@@ -10,12 +10,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/mechtransport)
 "d" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
-/area/ruin/space/has_grav/powered/mechtransport)
-"e" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/powered/mechtransport)
 "f" = (
@@ -41,7 +35,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/powered/mechtransport)
 "j" = (
-/obj/machinery/computer/shuttle,
+/obj/machinery/computer/shuttle{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/powered/mechtransport)
 "k" = (
@@ -62,24 +58,12 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/powered/mechtransport)
-"o" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13";
-	dir = 2
-	},
-/area/ruin/space/has_grav/powered/mechtransport)
 "p" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Cockpit";
 	req_access_txt = "101"
 	},
 /turf/open/floor/mineral/titanium,
-/area/ruin/space/has_grav/powered/mechtransport)
-"q" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
 /area/ruin/space/has_grav/powered/mechtransport)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
@@ -153,9 +137,11 @@
 "I" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/ruin/space/has_grav/powered/mechtransport)
 "J" = (
-/obj/machinery/computer/mecha,
+/obj/machinery/computer/mecha{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/powered/mechtransport)
 "K" = (
@@ -169,7 +155,6 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "M" = (
 /turf/open/floor/plating/airless{
-	broken = 1;
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/has_grav/powered/mechtransport)
@@ -185,7 +170,7 @@
 "P" = (
 /obj/item/stack/sheet/metal,
 /turf/template_noop,
-/area/template_noop)
+/area/ruin/space/has_grav/powered/mechtransport)
 "Q" = (
 /obj/structure/mecha_wreckage/gygax,
 /turf/open/floor/mineral/titanium/airless,
@@ -194,32 +179,17 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/template_noop)
+/area/ruin/space/has_grav/powered/mechtransport)
 "S" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "T" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
-/area/ruin/space/has_grav/powered/mechtransport)
-"U" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
+/turf/template_noop,
 /area/ruin/space/has_grav/powered/mechtransport)
 "V" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
-"W" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall15";
-	dir = 2
-	},
 /area/ruin/space/has_grav/powered/mechtransport)
 "X" = (
 /obj/structure/shuttle/engine/propulsion,
@@ -231,23 +201,23 @@ a
 a
 a
 b
-e
-e
-e
-e
+d
+d
+d
+d
 G
 I
 M
 P
-a
-a
-a
+T
+T
+T
 "}
 (2,1,1) = {"
 b
-e
-e
-e
+d
+d
+d
 r
 v
 B
@@ -258,7 +228,7 @@ H
 I
 R
 V
-a
+T
 "}
 (3,1,1) = {"
 c
@@ -274,14 +244,14 @@ H
 N
 I
 I
-a
-a
+T
+T
 "}
 (4,1,1) = {"
 c
 g
 l
-e
+d
 t
 w
 C
@@ -291,14 +261,14 @@ w
 G
 H
 P
-a
-a
+T
+T
 "}
 (5,1,1) = {"
 c
 h
 m
-e
+d
 s
 x
 w
@@ -309,13 +279,13 @@ O
 s
 S
 I
-a
+T
 "}
 (6,1,1) = {"
 c
 i
 n
-e
+d
 t
 y
 z
@@ -325,14 +295,14 @@ L
 O
 H
 H
-a
-a
+T
+T
 "}
 (7,1,1) = {"
 c
 j
 J
-e
+d
 t
 z
 w
@@ -341,15 +311,15 @@ y
 w
 w
 Q
-e
+d
 b
 X
 "}
 (8,1,1) = {"
 b
-e
-e
-e
+d
+d
+d
 u
 A
 y
@@ -358,8 +328,8 @@ w
 B
 y
 s
-e
-e
+d
+d
 X
 "}
 (9,1,1) = {"
@@ -367,14 +337,14 @@ a
 a
 a
 b
-e
-e
+d
+d
 D
 D
 D
 D
 D
-e
+d
 b
 b
 X

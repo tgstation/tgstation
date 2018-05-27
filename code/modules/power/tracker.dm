@@ -6,7 +6,7 @@
 /obj/machinery/power/tracker
 	name = "solar tracker"
 	desc = "A solar directional tracker."
-	icon = 'icons/obj/power.dmi'
+	icon = 'goon/icons/obj/power.dmi'
 	icon_state = "tracker"
 	anchored = TRUE
 	density = TRUE
@@ -47,7 +47,7 @@
 		S.glass_type = /obj/item/stack/sheet/glass
 		S.tracker = 1
 		S.anchored = TRUE
-	S.loc = src
+	S.forceMove(src)
 	update_icon()
 
 //updates the tracker icon and the facing angle for the control computer
@@ -60,26 +60,23 @@
 	if(powernet && (powernet == control.powernet)) //update if we're still in the same powernet
 		control.currentdir = angle
 
-/obj/machinery/power/tracker/attackby(obj/item/weapon/W, mob/user, params)
-
-	if(istype(W, /obj/item/weapon/crowbar))
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		user.visible_message("[user] begins to take the glass off the solar tracker.", "<span class='notice'>You begin to take the glass off the solar tracker...</span>")
-		if(do_after(user, 50*W.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-			user.visible_message("[user] takes the glass off the tracker.", "<span class='notice'>You take the glass off the tracker.</span>")
-			deconstruct(TRUE)
-	else
-		return ..()
+/obj/machinery/power/tracker/crowbar_act(mob/user, obj/item/I)
+	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+	user.visible_message("[user] begins to take the glass off [src].", "<span class='notice'>You begin to take the glass off [src]...</span>")
+	if(I.use_tool(src, user, 50))
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+		user.visible_message("[user] takes the glass off [src].", "<span class='notice'>You take the glass off [src].</span>")
+		deconstruct(TRUE)
+	return TRUE
 
 /obj/machinery/power/tracker/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
 		stat |= BROKEN
 		unset_control()
 
 /obj/machinery/power/solar/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
@@ -87,11 +84,11 @@
 				S.give_glass(stat & BROKEN)
 		else
 			playsound(src, "shatter", 70, 1)
-			new /obj/item/weapon/shard(src.loc)
-			new /obj/item/weapon/shard(src.loc)
+			new /obj/item/shard(src.loc)
+			new /obj/item/shard(src.loc)
 	qdel(src)
 
 // Tracker Electronic
 
-/obj/item/weapon/electronics/tracker
+/obj/item/electronics/tracker
 	name = "tracker electronics"

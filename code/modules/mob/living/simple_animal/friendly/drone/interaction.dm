@@ -29,7 +29,7 @@
 				if("Nothing")
 					return
 
-
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/simple_animal/drone/attack_hand(mob/user)
 	if(ishuman(user))
 		if(stat == DEAD || status_flags & GODMODE || !can_be_held)
@@ -49,11 +49,8 @@
 			return
 		to_chat(user, "<span class='notice'>You pick [src] up.</span>")
 		drop_all_held_items()
-		var/obj/item/clothing/head/drone_holder/DH = new /obj/item/clothing/head/drone_holder(src)
-		DH.updateVisualAppearence(src)
-		DH.drone = src
+		var/obj/item/clothing/head/mob_holder/drone/DH = new(get_turf(src), src)
 		user.put_in_hands(DH)
-		forceMove(DH)
 
 /mob/living/simple_animal/drone/proc/try_reactivate(mob/living/user)
 	var/mob/dead/observer/G = get_ghost()
@@ -81,10 +78,10 @@
 
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver) && stat != DEAD)
+	if(istype(I, /obj/item/screwdriver) && stat != DEAD)
 		if(health < maxHealth)
 			to_chat(user, "<span class='notice'>You start to tighten loose screws on [src]...</span>")
-			if(do_after(user,80*I.toolspeed,target=user))
+			if(I.use_tool(src, user, 80))
 				adjustBruteLoss(-getBruteLoss())
 				visible_message("<span class='notice'>[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!</span>", "<span class='notice'>You tighten [src == user ? "your" : "[src]'s"] loose screws.</span>")
 			else
@@ -92,15 +89,13 @@
 		else
 			to_chat(user, "<span class='warning'>[src]'s screws can't get any tighter!</span>")
 		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
-	else if(istype(I, /obj/item/weapon/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
+	else if(istype(I, /obj/item/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
 							 "<span class='notice'>You press down on [src]'s factory reset control...</span>")
-		playsound(src, I.usesound, 50, 1)
-		if(!do_after(user, 50*I.toolspeed, target = src))
-			return
-		user.visible_message("<span class='notice'>[user] resets [src]!</span>", \
-							 "<span class='notice'>You reset [src]'s directives to factory defaults!</span>")
-		update_drone_hack(FALSE)
+		if(I.use_tool(src, user, 50, volume=50))
+			user.visible_message("<span class='notice'>[user] resets [src]!</span>", \
+								 "<span class='notice'>You reset [src]'s directives to factory defaults!</span>")
+			update_drone_hack(FALSE)
 		return
 	else
 		..()
@@ -109,7 +104,7 @@
 	var/armorval = 0
 
 	if(head)
-		armorval = head.armor[type]
+		armorval = head.armor.getRating(type)
 	return (armorval * get_armor_effectiveness()) //armor is reduced for tiny fragile drones
 
 /mob/living/simple_animal/drone/proc/get_armor_effectiveness()

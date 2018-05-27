@@ -13,7 +13,7 @@
 	..()
 
 /obj/structure/mopbucket/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/mop))
+	if(istype(I, /obj/item/mop))
 		if(reagents.total_volume < 1)
 			to_chat(user, "[src] is out of water!</span>")
 		else

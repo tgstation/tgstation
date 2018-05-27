@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -29,7 +29,7 @@
 /turf/open/floor/plasteel/darkgreen,
 /area/shuttle/escape)
 "ai" = (
-/obj/structure/sign/biohazard,
+/obj/structure/sign/warning/biohazard,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aj" = (
@@ -69,12 +69,12 @@
 /area/shuttle/escape)
 "ar" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "as" = (
@@ -120,24 +120,26 @@
 /area/shuttle/escape)
 "ay" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen{
+/obj/item/paper_bin,
+/obj/item/pen{
 	pixel_x = -2;
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "az" = (
-/obj/machinery/computer/emergency_shuttle,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aA" = (
 /obj/structure/table,
-/obj/item/weapon/coin/mythril,
+/obj/item/coin/mythril,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aB" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
@@ -152,7 +154,6 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	timid = 1;
 	name = "NT Lepton Violet"
 	},
 /turf/open/floor/plating,
@@ -169,11 +170,11 @@
 	pixel_x = 27
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/syringes{
+/obj/item/storage/box/syringes{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/beakers,
+/obj/item/storage/box/beakers,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aH" = (
@@ -214,12 +215,12 @@
 /area/shuttle/escape)
 "aN" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/firstaid/regular{
 	pixel_x = -1;
 	pixel_y = 1
 	},
-/obj/item/weapon/wrench/medical,
+/obj/item/wrench/medical,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aO" = (
@@ -245,15 +246,15 @@
 /area/shuttle/escape)
 "aT" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/charcoal,
+/obj/item/reagent_containers/glass/bottle/charcoal,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aU" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aV" = (
@@ -288,7 +289,7 @@
 /area/shuttle/escape)
 "ba" = (
 /obj/structure/destructible/cult/forge{
-	desc = "A engine used in powering the shuttle.";
+	desc = "An engine used in powering the shuttle.";
 	name = "magma engine"
 	},
 /turf/open/floor/plasteel/yellow,
@@ -307,14 +308,15 @@
 /area/shuttle/escape)
 "bd" = (
 /obj/structure/destructible/cult/forge{
-	desc = "A engine used in powering the shuttle.";
+	desc = "An engine used in powering the shuttle.";
 	name = "magma engine"
 	},
 /turf/open/floor/plasteel/whitered,
 /area/shuttle/escape)
 "be" = (
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 1;
+	resistance_flags = 33
 	},
 /turf/open/lava/smooth/airless,
 /area/shuttle/escape)
@@ -325,9 +327,6 @@
 "bg" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"bh" = (
-/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "bi" = (
 /obj/machinery/light,

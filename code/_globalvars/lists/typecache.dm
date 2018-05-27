@@ -3,7 +3,14 @@
 
 //Note: typecache can only replace istype if you know for sure the thing is at least a datum.
 
-GLOBAL_LIST_INIT(typecache_mob, typecacheof(list(/mob)))
+GLOBAL_LIST_INIT(typecache_mob, typecacheof(/mob))
 
+GLOBAL_LIST_INIT(typecache_living, typecacheof(/mob/living))
 
+GLOBAL_LIST_INIT(typecache_machine_or_structure, typecacheof(list(/obj/machinery, /obj/structure)))
 
+GLOBAL_LIST_INIT(typecache_shuttle_area, typecacheof(/area/shuttle))
+
+GLOBAL_LIST_INIT(typecache_clothing, typecacheof(/obj/item/clothing))
+
+GLOBAL_LIST_INIT(typecache_effect, typecacheof(/obj/effect))

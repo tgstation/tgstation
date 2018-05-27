@@ -3,7 +3,7 @@
 	icon_state = "intact"
 
 	name = "junction"
-	desc = "A one meter junction that connects regular and heat-exchanging pipe"
+	desc = "A one meter junction that connects regular and heat-exchanging pipe."
 
 	minimum_temperature_difference = 300
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
@@ -13,7 +13,20 @@
 	initialize_directions_he = SOUTH
 
 	device_type = BINARY
+	
+	construction_type = /obj/item/pipe/directional
+	pipe_state = "junction"
 
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction/layer1
+	piping_layer = PIPING_LAYER_MIN
+	pixel_x = -PIPING_LAYER_P_X
+	pixel_y = -PIPING_LAYER_P_Y
+
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction/layer3
+	piping_layer = PIPING_LAYER_MAX
+	pixel_x = PIPING_LAYER_P_X
+	pixel_y = PIPING_LAYER_P_Y
+	
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/SetInitDirections()
 	switch(dir)
 		if(SOUTH)

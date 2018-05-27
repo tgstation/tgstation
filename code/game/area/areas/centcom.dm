@@ -9,7 +9,7 @@
 	has_gravity = TRUE
 	noteleport = TRUE
 	blob_allowed = FALSE //Should go without saying, no blobs should take over centcom as a win condition.
-	flags = NONE
+	flags_1 = NONE
 
 /area/centcom/control
 	name = "CentCom Docks"
@@ -37,7 +37,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = TRUE
-	flags = NONE
+	flags_1 = NONE
 
 /area/tdome/arena
 	name = "Thunderdome Arena"
@@ -76,7 +76,7 @@
 	requires_power = FALSE
 	has_gravity = TRUE
 	noteleport = TRUE
-	flags = NONE
+	flags_1 = NONE
 
 //Abductors
 /area/abductor_ship
@@ -85,7 +85,7 @@
 	requires_power = FALSE
 	noteleport = TRUE
 	has_gravity = TRUE
-	flags = NONE
+	flags_1 = NONE
 
 //Syndicates
 /area/syndicate_mothership
@@ -95,7 +95,8 @@
 	has_gravity = TRUE
 	noteleport = TRUE
 	blob_allowed = FALSE //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
-	flags = NONE
+	flags_1 = NONE
+	ambientsounds = HIGHSEC
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
@@ -106,7 +107,12 @@
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
 
-
+/area/fabric_of_reality
+	name = "Tear in the Fabric of Reality"
+	requires_power = FALSE
+	has_gravity = TRUE
+	noteleport = TRUE
+	blob_allowed = FALSE
 
 //CAPTURE THE FLAG
 
@@ -115,7 +121,7 @@
 	icon_state = "yellow"
 	requires_power = FALSE
 	has_gravity = TRUE
-	flags = NO_DEATHRATTLE
+	flags_1 = NO_DEATHRATTLE_1
 
 /area/ctf/control_room
 	name = "Control Room A"
@@ -143,3 +149,19 @@
 
 /area/ctf/flag_room2
 	name = "Flag Room B"
+
+// REEBE
+
+/area/reebe
+	name = "Reebe"
+	icon_state = "yellow"
+	requires_power = FALSE
+	has_gravity = TRUE
+	noteleport = TRUE
+	hidden = TRUE
+	ambientsounds = REEBE
+
+/area/reebe/city_of_cogs
+	name = "City of Cogs"
+	icon_state = "purple"
+	hidden = FALSE

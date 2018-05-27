@@ -17,17 +17,19 @@ The console is located at computer/gulag_teleporter.dm
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
-	circuit = /obj/item/weapon/circuitboard/machine/gulag_teleporter
+	circuit = /obj/item/circuitboard/machine/gulag_teleporter
 	var/locked = FALSE
+	var/message_cooldown
+	var/breakout_time = 600
 	var/jumpsuit_type = /obj/item/clothing/under/rank/prisoner
 	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
 	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer
 	var/static/list/telegulag_required_items = typecacheof(list(
-		/obj/item/weapon/implant,
+		/obj/item/implant,
 		/obj/item/clothing/suit/space/eva/plasmaman,
 		/obj/item/clothing/under/plasmaman,
 		/obj/item/clothing/head/helmet/space/plasmaman,
-		/obj/item/weapon/tank/internals,
+		/obj/item/tank/internals,
 		/obj/item/clothing/mask/breath,
 		/obj/item/clothing/mask/gas))
 
@@ -45,8 +47,9 @@ The console is located at computer/gulag_teleporter.dm
 	update_icon()
 
 /obj/machinery/gulag_teleporter/interact(mob/user)
+	. = ..()
 	if(locked)
-		to_chat(user, "[src] is locked.")
+		to_chat(user, "<span class='warning'>[src] is locked!</span>")
 		return
 	toggle_open()
 
@@ -89,28 +92,27 @@ The console is located at computer/gulag_teleporter.dm
 	if(user.stat != CONSCIOUS)
 		return
 	if(locked)
-		to_chat(user, "[src] is locked!")
+		if(message_cooldown <= world.time)
+			message_cooldown = world.time + 50
+			to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 		return
 	open_machine()
 
 /obj/machinery/gulag_teleporter/container_resist(mob/living/user)
-	var/breakout_time = 600
 	if(!locked)
 		open_machine()
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about a minute.)</span>")
-	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
-
+	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
+		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
+		"<span class='italics'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
-
 		locked = FALSE
-		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
-		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
-
+		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
+			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
 /obj/machinery/gulag_teleporter/proc/locate_reclaimer()
@@ -136,7 +138,7 @@ The console is located at computer/gulag_teleporter.dm
 	var/mob/living/mob_occupant = occupant
 	for(var/obj/item/W in mob_occupant)
 		if(!is_type_in_typecache(W, telegulag_required_items) && mob_occupant.temporarilyRemoveItemFromInventory(W))
-			if(istype(W, /obj/item/weapon/restraints/handcuffs))
+			if(istype(W, /obj/item/restraints/handcuffs))
 				W.forceMove(get_turf(src))
 				continue
 			if(linked_reclaimer)
@@ -160,15 +162,14 @@ The console is located at computer/gulag_teleporter.dm
 	if(R)
 		R.fields["criminal"] = "Incarcerated"
 
-/obj/item/weapon/circuitboard/machine/gulag_teleporter
+/obj/item/circuitboard/machine/gulag_teleporter
 	name = "labor camp teleporter (Machine Board)"
 	build_path = /obj/machinery/gulag_teleporter
-	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
 	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 2,
-							/obj/item/weapon/stock_parts/scanning_module,
-							/obj/item/weapon/stock_parts/manipulator)
-	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
+							/obj/item/stack/ore/bluespace_crystal = 2,
+							/obj/item/stock_parts/scanning_module,
+							/obj/item/stock_parts/manipulator)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /*  beacon that receives the teleported prisoner */
 /obj/structure/gulag_beacon

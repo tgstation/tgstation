@@ -9,10 +9,10 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "d" = (
-/turf/closed/wall/mineral/clown,
+/turf/closed/wall/mineral/bananium,
 /area/ruin/unpowered)
 "e" = (
-/obj/machinery/door/airlock/clown,
+/obj/machinery/door/airlock/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "f" = (
@@ -27,19 +27,18 @@
 /area/ruin/unpowered)
 "i" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "j" = (
 /obj/structure/closet/crate{
-	icon_state = "crateopen";
-	opened = 1
+	icon_state = "crateopen"
 	},
-/obj/item/weapon/ore/bananium,
+/obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "k" = (
@@ -78,17 +77,17 @@
 /turf/closed/mineral/random,
 /area/ruin/unpowered)
 "o" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered)
 "p" = (
-/obj/item/weapon/ore/bananium,
+/obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "q" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /obj/structure/chair{
@@ -103,7 +102,7 @@
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "s" = (
-/obj/item/weapon/paper/fluff/ruins/crashedclownship/true_nation,
+/obj/item/paper/fluff/ruins/crashedclownship/true_nation,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "t" = (
@@ -126,36 +125,36 @@
 	},
 /area/ruin/unpowered)
 "u" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "v" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "w" = (
-/obj/item/weapon/storage/bag/ore,
+/obj/item/storage/bag/ore,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "x" = (
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "y" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
-/obj/item/weapon/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
+/obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "z" = (
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 

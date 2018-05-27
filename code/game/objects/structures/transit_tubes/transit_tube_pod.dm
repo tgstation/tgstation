@@ -9,11 +9,11 @@
 	var/datum/gas_mixture/air_contents = new()
 
 
-/obj/structure/transit_tube_pod/New(loc)
-	..()
-	air_contents.assert_gases("o2", "n2")
-	air_contents.gases["o2"][MOLES] = MOLES_O2STANDARD * 2
-	air_contents.gases["n2"][MOLES] = MOLES_N2STANDARD
+/obj/structure/transit_tube_pod/Initialize()
+	. = ..()
+	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
+	air_contents.gases[/datum/gas/oxygen][MOLES] = MOLES_O2STANDARD
+	air_contents.gases[/datum/gas/nitrogen][MOLES] = MOLES_N2STANDARD
 	air_contents.temperature = T20C
 
 
@@ -28,9 +28,9 @@
 		icon_state = "pod"
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/crowbar))
+	if(istype(I, /obj/item/crowbar))
 		if(!moving)
-			playsound(src.loc, I.usesound, 50, 1)
+			I.play_tool_sound(src)
 			if(contents.len)
 				user.visible_message("[user] empties \the [src].", "<span class='notice'>You empty \the [src].</span>")
 				empty_pod()
@@ -40,7 +40,7 @@
 		return ..()
 
 /obj/structure/transit_tube_pod/deconstruct(disassembled = TRUE, mob/user)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		var/atom/location = get_turf(src)
 		if(user)
 			location = user.loc
@@ -62,10 +62,14 @@
 		AM.ex_act(severity, target)
 
 /obj/structure/transit_tube_pod/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
 /obj/structure/transit_tube_pod/container_resist(mob/living/user)
+	if(!user.incapacitated())
+		empty_pod()
+		return
 	if(!moving)
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
@@ -84,7 +88,8 @@
 /obj/structure/transit_tube_pod/Process_Spacemove()
 	if(moving) //No drifting while moving in the tubes
 		return 1
-	else return ..()
+	else
+		return ..()
 
 /obj/structure/transit_tube_pod/proc/follow_tube()
 	set waitfor = 0
@@ -131,7 +136,7 @@
 		last_delay = current_tube.enter_delay(src, next_dir)
 		sleep(last_delay)
 		setDir(next_dir)
-		loc = next_loc // When moving from one tube to another, skip collision and such.
+		forceMove(next_loc) // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
 		if(current_tube && current_tube.should_stop_pod(src, next_dir))
@@ -176,3 +181,6 @@
 					if(TT.has_exit(direction))
 						setDir(direction)
 						return
+
+/obj/structure/transit_tube_pod/return_temperature()
+	return air_contents.temperature

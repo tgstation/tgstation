@@ -191,7 +191,7 @@
 		if (T && isturf(T))
 			if (!D.stat)
 				D.emote("scream")
-			D.throw_at(T, 10, 4, callback = CALLBACK(D, /mob/living/carbon/human/.Knockdown, 20))
+			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, /mob/living/carbon/human/.Knockdown, 20))
 	add_logs(A, D, "has thrown with wrestling")
 	return 0
 
@@ -199,7 +199,7 @@
 	set waitfor = FALSE
 	if (D)
 		animate(D, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
-	sleep (15)
+	sleep(15)
 	if (D)
 		animate(D, transform = null, time = 1, loop = 0)
 
@@ -258,7 +258,7 @@
 				D.pixel_y = 0
 			return 0
 
-		sleep (1)
+		sleep(1)
 
 	if (A && D)
 		A.pixel_x = 0
@@ -358,9 +358,12 @@
 
 	for (var/obj/O in oview(1, A))
 		if (O.density == 1)
-			if (O == A) continue
-			if (O == D) continue
-			if (O.opacity) continue
+			if (O == A)
+				continue
+			if (O == D)
+				continue
+			if (O.opacity)
+				continue
 			else
 				surface = O
 				ST = get_turf(O)
@@ -438,22 +441,22 @@
 	add_logs(A, D, "cinched")
 	return 1
 
-/obj/item/weapon/storage/belt/champion/wrestling
+/obj/item/storage/belt/champion/wrestling
 	name = "Wrestling Belt"
 	var/datum/martial_art/wrestling/style = new
 
-/obj/item/weapon/storage/belt/champion/wrestling/equipped(mob/user, slot)
+/obj/item/storage/belt/champion/wrestling/equipped(mob/user, slot)
 	if(!ishuman(user))
 		return
-	if(slot == slot_belt)
+	if(slot == SLOT_BELT)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
 	return
 
-/obj/item/weapon/storage/belt/champion/wrestling/dropped(mob/user)
+/obj/item/storage/belt/champion/wrestling/dropped(mob/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(slot_belt) == src)
+	if(H.get_item_by_slot(SLOT_BELT) == src)
 		style.remove(H)
 	return

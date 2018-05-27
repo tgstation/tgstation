@@ -1,10 +1,10 @@
 /obj/item/bodypart/head
-	name = "head"
+	name = BODY_ZONE_HEAD
 	desc = "Didn't make sense not to live for fun, your brain gets smart but your head gets dumb."
 	icon = 'icons/mob/human_parts.dmi'
 	icon_state = "default_human_head"
 	max_damage = 200
-	body_zone = "head"
+	body_zone = BODY_ZONE_HEAD
 	body_part = HEAD
 	w_class = WEIGHT_CLASS_BULKY //Quite a hefty load
 	slowdown = 1 //Balancing measure
@@ -41,14 +41,14 @@
 				user.visible_message("<span class='warning'>[user] saws [src] open and pulls out a brain!</span>", "<span class='notice'>You saw [src] open and pull out a brain.</span>")
 			if(brainmob)
 				brainmob.container = null
-				brainmob.loc = brain
+				brainmob.forceMove(brain)
 				brain.brainmob = brainmob
 				brainmob = null
-			brain.loc = T
+			brain.forceMove(T)
 			brain = null
 			update_icon_dropped()
 		else
-			if(istype(I, /obj/item/weapon/reagent_containers/pill))
+			if(istype(I, /obj/item/reagent_containers/pill))
 				for(var/datum/action/item_action/hands_free/activate_pill/AP in I.actions)
 					qdel(AP)
 			I.forceMove(T)
@@ -61,7 +61,7 @@
 		C = owner
 
 	real_name = C.real_name
-	if(C.disabilities & HUSK)
+	if(C.has_trait(TRAIT_HUSK))
 		real_name = "Unknown"
 		hair_style = "Bald"
 		facial_hair_style = "Shaved"
@@ -124,39 +124,37 @@
 	cut_overlays()
 	. = ..()
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.
-		var/datum/sprite_accessory/S
 
 		if(status != BODYPART_ROBOTIC) //having a robotic head hides certain features.
 			//facial hair
 			if(facial_hair_style)
-				S = GLOB.facial_hair_styles_list[facial_hair_style]
+				var/datum/sprite_accessory/S = GLOB.facial_hair_styles_list[facial_hair_style]
 				if(S)
 					var/image/facial_overlay = image(S.icon, "[S.icon_state]", -HAIR_LAYER, SOUTH)
 					facial_overlay.color = "#" + facial_hair_color
 					facial_overlay.alpha = hair_alpha
 					. += facial_overlay
 
-			var/image/hair_overlay = image(layer = -HAIR_LAYER, dir = SOUTH)
-			. += hair_overlay
 			//Applies the debrained overlay if there is no brain
 			if(!brain)
+				var/image/debrain_overlay = image(layer = -HAIR_LAYER, dir = SOUTH)
 				if(animal_origin == ALIEN_BODYPART)
-					hair_overlay.icon = 'icons/mob/animal_parts.dmi'
-					hair_overlay.icon_state = "debrained_alien"
+					debrain_overlay.icon = 'icons/mob/animal_parts.dmi'
+					debrain_overlay.icon_state = "debrained_alien"
 				else if(animal_origin == LARVA_BODYPART)
-					hair_overlay.icon = 'icons/mob/animal_parts.dmi'
-					hair_overlay.icon_state = "debrained_larva"
+					debrain_overlay.icon = 'icons/mob/animal_parts.dmi'
+					debrain_overlay.icon_state = "debrained_larva"
 				else if(!(NOBLOOD in species_flags_list))
-					hair_overlay.icon = 'icons/mob/human_face.dmi'
-					hair_overlay.icon_state = "debrained"
+					debrain_overlay.icon = 'icons/mob/human_face.dmi'
+					debrain_overlay.icon_state = "debrained"
+				. += debrain_overlay
 			else
-				if(hair_style)
-					S = GLOB.hair_styles_list[hair_style]
-					if(S)
-						hair_overlay.icon = icon
-						hair_overlay.icon_state = "[S.icon_state]"
-						hair_overlay.color = "#" + hair_color
-						hair_overlay.alpha = hair_alpha
+				var/datum/sprite_accessory/S2 = GLOB.hair_styles_list[hair_style]
+				if(S2)
+					var/image/hair_overlay = image(S2.icon, "[S2.icon_state]", -HAIR_LAYER, SOUTH)
+					hair_overlay.color = "#" + hair_color
+					hair_overlay.alpha = hair_alpha
+					. += hair_overlay
 
 
 		// lipstick

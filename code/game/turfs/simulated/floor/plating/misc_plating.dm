@@ -22,6 +22,8 @@
 /turf/open/floor/plating/abductor2/burn_tile()
 	return //unburnable
 
+/turf/open/floor/plating/abductor2/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
 
 /turf/open/floor/plating/astplate
 	icon_state = "asteroidplating"
@@ -37,9 +39,10 @@
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	var/smooth_icon = 'icons/turf/floors/ash.dmi'
 	desc = "The ground is covered in volcanic ash."
-	baseturf = /turf/open/floor/plating/ashplanet/wateryrock //I assume this will be a chasm eventually, once this becomes an actual surface
+	baseturfs = /turf/open/floor/plating/ashplanet/wateryrock //I assume this will be a chasm eventually, once this becomes an actual surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
+	attachment_holes = FALSE
 
 /turf/open/floor/plating/ashplanet/Initialize()
 	if(smooth)
@@ -47,6 +50,9 @@
 		pixel_x = -4
 		icon = smooth_icon
 	. = ..()
+
+/turf/open/floor/plating/ashplanet/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
 
 /turf/open/floor/plating/ashplanet/break_tile()
 	return
@@ -80,7 +86,12 @@
 /turf/open/floor/plating/beach
 	name = "beach"
 	icon = 'icons/misc/beach.dmi'
-	flags = NONE
+	flags_1 = NONE
+	attachment_holes = FALSE
+	bullet_bounce_sound = null
+
+/turf/open/floor/plating/beach/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
 
 /turf/open/floor/plating/beach/ex_act(severity, target)
 	contents_explosion(severity, target)
@@ -89,24 +100,24 @@
 	name = "sand"
 	desc = "Surf's up."
 	icon_state = "sand"
-	baseturf = /turf/open/floor/plating/beach/sand
+	baseturfs = /turf/open/floor/plating/beach/sand
 
 /turf/open/floor/plating/beach/coastline_t
 	name = "coastline"
 	desc = "Tide's high tonight. Charge your batons."
 	icon_state = "sandwater_t"
-	baseturf = /turf/open/floor/plating/beach/coastline_t
+	baseturfs = /turf/open/floor/plating/beach/coastline_t
 
 /turf/open/floor/plating/beach/coastline_b
 	name = "coastline"
 	icon_state = "sandwater_b"
-	baseturf = /turf/open/floor/plating/beach/coastline_b
+	baseturfs = /turf/open/floor/plating/beach/coastline_b
 
 /turf/open/floor/plating/beach/water
 	name = "water"
 	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
 	icon_state = "water"
-	baseturf = /turf/open/floor/plating/beach/water
+	baseturfs = /turf/open/floor/plating/beach/water
 
 
 /turf/open/floor/plating/ironsand
@@ -120,16 +131,34 @@
 /turf/open/floor/plating/ironsand/burn_tile()
 	return
 
+/turf/open/floor/plating/ironsand/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
 
 /turf/open/floor/plating/ice
 	name = "ice sheet"
 	desc = "A sheet of solid ice. Looks slippery."
-	icon = 'icons/turf/snow.dmi'
-	icon_state = "ice"
+	icon = 'icons/turf/floors/ice_turf.dmi'
+	icon_state = "unsmooth"
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	temperature = 180
-	baseturf = /turf/open/floor/plating/ice
+	planetary_atmos = TRUE
+	baseturfs = /turf/open/floor/plating/ice
 	slowdown = 1
-	wet = TURF_WET_PERMAFROST
+	attachment_holes = FALSE
+	bullet_sizzle = TRUE
+
+/turf/open/floor/plating/ice/Initialize()
+	. = ..()
+	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE)
+
+/turf/open/floor/plating/ice/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
+
+/turf/open/floor/plating/ice/smooth
+	icon_state = "smooth"
+	smooth = SMOOTH_MORE | SMOOTH_BORDER
+	canSmoothWith = list(/turf/open/floor/plating/ice/smooth, /turf/open/floor/plating/ice)
+	/turf/open/floor/plating/ice/colder
 
 /turf/open/floor/plating/ice/colder
 	temperature = 140
@@ -146,10 +175,23 @@
 
 /turf/open/floor/plating/snowed
 	name = "snowed-over plating"
-	desc = "A section of plating covered in a light layer of snow."
+	desc = "A section of heated plating, helps keep the snow from stacking up too high."
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snowplating"
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 	temperature = 180
+	attachment_holes = FALSE
+	planetary_atmos = TRUE
+
+/turf/open/floor/plating/snowed/cavern
+	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"
+
+/turf/open/floor/plating/snowed/smoothed
+	smooth = SMOOTH_MORE | SMOOTH_BORDER
+	canSmoothWith = list(/turf/open/floor/plating/snowed/smoothed, /turf/open/floor/plating/snowed)
+	planetary_atmos = TRUE
+	icon = 'icons/turf/floors/snow_turf.dmi'
+	icon_state = "smooth"
 
 /turf/open/floor/plating/snowed/colder
 	temperature = 140

@@ -6,12 +6,10 @@
 	width = 7
 	height = 15
 	dir = WEST
-	port_angle = 180
+	port_direction = SOUTH
 
 	callTime = INFINITY
 	ignitionTime = 50
-
-	roundstart_move = TRUE	//force a call to dockRoundstart
 
 	var/sound_played
 	var/damaged	//too damaged to undock?
@@ -22,15 +20,15 @@
 	var/perma_docked = FALSE	//highlander with RESPAWN??? OH GOD!!!
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
-	if(SSshuttle.arrivals)
-		WARNING("More than one arrivals docking_port placed on map!")
-		return INITIALIZE_HINT_QDEL
-	SSshuttle.arrivals = src
-
 	. = ..()
-
 	preferred_direction = dir
 	return INITIALIZE_HINT_LATELOAD	//for latejoin list
+
+/obj/docking_port/mobile/arrivals/register()
+	..()
+	if(SSshuttle.arrivals)
+		WARNING("More than one arrivals docking_port placed on map! Ignoring duplicates.")
+	SSshuttle.arrivals = src
 
 /obj/docking_port/mobile/arrivals/LateInitialize()
 	areas = list()
@@ -53,13 +51,6 @@
 		return
 
 	SSjob.latejoin_trackers = new_latejoin
-
-/obj/docking_port/mobile/arrivals/dockRoundstart()
-	SSshuttle.generate_transit_dock(src)
-	Launch()
-	timer = world.time
-	check()
-	return TRUE
 
 /obj/docking_port/mobile/arrivals/check()
 	. = ..()
@@ -117,27 +108,31 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/PersonCheck()
-	for(var/M in (GLOB.living_mob_list & GLOB.player_list))
-		var/mob/living/L = M
-		if((get_area(M) in areas) && L.stat != DEAD)
-			return TRUE
+	for(var/V in GLOB.player_list)
+		var/mob/M = V
+		if((get_area(M) in areas) && M.stat != DEAD)
+			if(!iscameramob(M))
+				return TRUE
+			var/mob/camera/C = M
+			if(C.move_on_shuttle)
+				return TRUE
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/NukeDiskCheck()
-	for (var/obj/item/weapon/disk/nuclear/N in GLOB.poi_list)
+	for (var/obj/item/disk/nuclear/N in GLOB.poi_list)
 		if (get_area(N) in areas)
 			return TRUE
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/SendToStation()
-	var/dockTime = config.arrivals_shuttle_dock_window
+	var/dockTime = CONFIG_GET(number/arrivals_shuttle_dock_window)
 	if(mode == SHUTTLE_CALL && timeLeft(1) > dockTime)
 		if(console)
 			console.say(damaged ? "Initiating emergency docking for repairs!" : "Now approaching: [station_name()].")
 		hyperspace_sound(HYPERSPACE_LAUNCH, areas)	//for the new guy
 		setTimer(dockTime)
 
-/obj/docking_port/mobile/arrivals/dock(obj/docking_port/stationary/S1, force=FALSE)
+/obj/docking_port/mobile/arrivals/initiate_docking(obj/docking_port/stationary/S1, force=FALSE)
 	var/docked = S1 == assigned_transit
 	sound_played = FALSE
 	if(docked)	//about to launch
@@ -200,5 +195,5 @@
 /obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if("perma_docked")
-			SSblackbox.add_details("admin_secrets_fun_used","ShA[var_value ? "s" : "g"]")
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("arrivals shuttle", "[var_value ? "stopped" : "started"]"))
 	return ..()

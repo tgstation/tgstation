@@ -12,8 +12,12 @@
 	var/can_modify_colour = TRUE
 
 
-/turf/open/floor/light/Initialize()
+/turf/open/floor/light/examine(mob/user)
 	..()
+	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
+
+/turf/open/floor/light/Initialize()
+	. = ..()
 	update_icon()
 
 /turf/open/floor/light/break_tile()
@@ -43,11 +47,14 @@
 		icon_state = "light_off"
 
 
-/turf/open/floor/light/ChangeTurf(turf/T)
+/turf/open/floor/light/ChangeTurf(path, new_baseturf, flags)
 	set_light(0)
 	return ..()
 
 /turf/open/floor/light/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!can_modify_colour)
 		return
 	if(!on)
@@ -59,16 +66,15 @@
 	if(currentcolor > coloredlights.len)
 		on = FALSE
 	update_icon()
-	..()  //I am not sure what the parent procs have for attack_hand, best to check later.
 
 /turf/open/floor/light/attack_ai(mob/user)
-	attack_hand(user)
+	return attack_hand(user)
 
 /turf/open/floor/light/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
-	if(istype(C, /obj/item/weapon/light/bulb)) //only for light tiles
-		if(state && user.drop_item())
+	if(istype(C, /obj/item/light/bulb)) //only for light tiles
+		if(state && user.temporarilyRemoveItemFromInventory(C))
 			qdel(C)
 			state = 0 //fixing it by bashing it with a light bulb, fun eh?
 			update_icon()

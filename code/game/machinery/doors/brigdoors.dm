@@ -33,15 +33,15 @@
 
 	var/timing = FALSE		// boolean, true/1 timer is on, false/0 means it's not timing
 	var/list/obj/machinery/targets = list()
-	var/obj/item/device/radio/Radio //needed to send messages to sec radio
+	var/obj/item/radio/Radio //needed to send messages to sec radio
 
 	maptext_height = 26
 	maptext_width = 32
 
-/obj/machinery/door_timer/New()
-	..()
+/obj/machinery/door_timer/Initialize()
+	. = ..()
 
-	Radio = new/obj/item/device/radio(src)
+	Radio = new/obj/item/radio(src)
 	Radio.listening = 0
 
 /obj/machinery/door_timer/Initialize()
@@ -112,8 +112,8 @@
 		return 0
 
 	if(!forced)
-		Radio.set_frequency(GLOB.SEC_FREQ)
-		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", GLOB.SEC_FREQ, get_default_language())
+		Radio.set_frequency(FREQ_SECURITY)
+		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", FREQ_SECURITY)
 
 	timing = FALSE
 	activation_time = null
@@ -142,7 +142,7 @@
 		. /= 10
 
 /obj/machinery/door_timer/proc/set_timer(value)
-	var/new_time = Clamp(value,0,MAX_TIMER)
+	var/new_time = CLAMP(value,0,MAX_TIMER)
 	. = new_time == timer_duration //return 1 on no change
 	timer_duration = new_time
 

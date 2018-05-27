@@ -16,8 +16,8 @@ Bonus
 */
 
 /datum/symptom/fever
-
 	name = "Fever"
+	desc = "The virus causes a febrile response from the host, raising its body temperature."
 	stealth = 0
 	resistance = 3
 	stage_speed = 3
@@ -28,9 +28,12 @@ Bonus
 	symptom_delay_min = 10
 	symptom_delay_max = 30
 	var/unsafe = FALSE //over the heat threshold
+	threshold_desc = "<b>Resistance 5:</b> Increases fever intensity, fever can overheat and harm the host.<br>\
+					  <b>Resistance 10:</b> Further increases fever intensity."
 
 /datum/symptom/fever/Start(datum/disease/advance/A)
-	..()
+	if(!..())
+		return
 	if(A.properties["resistance"] >= 5) //dangerous fever
 		power = 1.5
 		unsafe = TRUE
@@ -51,7 +54,7 @@ Bonus
 /datum/symptom/fever/proc/Heat(mob/living/M, datum/disease/advance/A)
 	var/get_heat = 6 * power
 	if(!unsafe)
-		M.bodytemperature = min(M.bodytemperature + (get_heat * A.stage), BODYTEMP_HEAT_DAMAGE_LIMIT - 1)
+		M.adjust_bodytemperature(get_heat * A.stage, 0, BODYTEMP_HEAT_DAMAGE_LIMIT - 1)
 	else
-		M.bodytemperature += (get_heat * A.stage)
+		M.adjust_bodytemperature(get_heat * A.stage)
 	return 1

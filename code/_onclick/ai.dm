@@ -10,45 +10,41 @@
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
 /mob/living/silicon/ai/DblClickOn(var/atom/A, params)
-	if(client.click_intercept)
-		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
-			return
+	if(check_click_intercept(params,A))
+		return
 
-	if(control_disabled || stat) return
+	if(control_disabled || incapacitated())
+		return
 
 	if(ismob(A))
 		ai_actual_track(A)
 	else
 		A.move_camera_by_click()
 
-
 /mob/living/silicon/ai/ClickOn(var/atom/A, params)
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
 
-	if(client.click_intercept)
-		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
-			return
+	if(check_click_intercept(params,A))
+		return
 
-	if(control_disabled || stat)
+	if(control_disabled || incapacitated())
 		return
 
 	var/turf/pixel_turf = get_turf_pixel(A)
-	var/turf_visible
-	if(pixel_turf)
-		turf_visible = GLOB.cameranet.checkTurfVis(pixel_turf)
-		if(!turf_visible)
-			if(istype(loc, /obj/item/device/aicard) && (pixel_turf in view(client.view, loc)))
-				turf_visible = TRUE
-			else
-				if (pixel_turf.obscured)
-					log_admin("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)])")
-					message_admins("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
-					if(REALTIMEOFDAY >= chnotify + 9000)
-						chnotify = REALTIMEOFDAY
-						send2irc_adminless_only("NOCHEAT", "[key_name(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)]))")
-				return
+	if(isnull(pixel_turf))
+		return
+	if(!can_see(A))
+		if(isturf(A)) //On unmodified clients clicking the static overlay clicks the turf underneath
+			return //So there's no point messaging admins
+		message_admins("[key_name_admin(src)] might be running a modified client! (failed can_see on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
+		var/message = "[key_name(src)] might be running a modified client! (failed can_see on AI click of [A]([COORD(pixel_turf)]))"
+		log_admin(message)
+		if(REALTIMEOFDAY >= chnotify + 9000)
+			chnotify = REALTIMEOFDAY
+			send2irc_adminless_only("NOCHEAT", message)
+		return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
@@ -73,7 +69,7 @@
 	if(world.time <= next_move)
 		return
 
-	if(aicamera.in_camera_mode && pixel_turf && turf_visible)
+	if(aicamera.in_camera_mode)
 		aicamera.camera_mode_off()
 		aicamera.captureimage(pixel_turf, usr)
 		return
@@ -82,12 +78,6 @@
 		set_waypoint(A)
 		return
 
-	/*
-		AI restrained() currently does nothing
-	if(restrained())
-		RestrainedClickOn(A)
-	else
-	*/
 	A.attack_ai(src)
 
 /*
@@ -138,38 +128,37 @@
 
 /* Airlocks */
 /obj/machinery/door/airlock/AICtrlClick() // Bolts doors
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
+
 	if(locked)
-		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window (consistency!)
+		bolt_raise(usr)
 	else
-		Topic("aiDisable=4", list("aiDisable"="4"), 1)
+		bolt_drop(usr)
 
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
+
 	if(!secondsElectrified)
-		// permenant shock
-		Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
+		shock_perm(usr)
 	else
-		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
-		Topic("aiDisable=5", list("aiDisable"="5"), 1)
+		shock_restore(usr)
 
 /obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	if(density)
-		Topic("aiEnable=7", list("aiEnable"="7"), 1) // 1 meaning no window (consistency!)
-	else
-		Topic("aiDisable=7", list("aiDisable"="7"), 1)
+
+	user_toggle_open(usr)
 
 /obj/machinery/door/airlock/AICtrlShiftClick()  // Sets/Unsets Emergency Access Override
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
+
 	if(!emergency)
-		Topic("aiEnable=11", list("aiEnable"="11"), 1) // 1 meaning no window (consistency!)
+		emergency_on(usr)
 	else
-		Topic("aiDisable=11", list("aiDisable"="11"), 1)
+		emergency_off(usr)
 
 /* APC */
 /obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
@@ -179,11 +168,20 @@
 
 /* AI Turrets */
 /obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
+	if(ailock)
+		return
 	toggle_lethal()
 	add_fingerprint(usr)
+
 /obj/machinery/turretid/AICtrlClick() //turns off/on Turrets
+	if(ailock)
+		return
 	toggle_on()
 	add_fingerprint(usr)
+
+/* Holopads */
+/obj/machinery/holopad/AIAltClick(mob/living/silicon/ai/user)
+	hangup_all_calls()
 
 //
 // Override TurfAdjacent for AltClicking

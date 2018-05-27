@@ -1,6 +1,6 @@
 /proc/emoji_parse(text)
 	. = text
-	if(!config.emojis)
+	if(!CONFIG_GET(flag/emojis))
 		return
 	var/static/list/emojis = icon_states(icon('icons/emoji.dmi'))
 	var/parsed = ""
@@ -15,8 +15,10 @@
 			search = findtext(text, ":", pos+1)
 			if(search)
 				emoji = lowertext(copytext(text, pos+1, search))
-				if(emoji in emojis)
-					parsed += bicon(icon('icons/emoji.dmi', emoji))
+				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/goonchat)
+				var/tag = sheet.icon_tag("emoji-[emoji]")
+				if(tag)
+					parsed += tag
 					pos = search + 1
 				else
 					parsed += copytext(text, pos, search)

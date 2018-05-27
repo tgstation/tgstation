@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
-/obj/item/weapon/extraction_pack
+/obj/item/extraction_pack
 	name = "fulton extraction pack"
 	desc = "A balloon that can be used to extract equipment or personnel to a Fulton Recovery Beacon. Anything not bolted down can be moved. Link the pack to a beacon by using the pack in hand."
 	icon = 'icons/obj/fulton.dmi'
@@ -12,11 +12,11 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/can_use_indoors
 	var/safe_for_living_creatures = 1
 
-/obj/item/weapon/extraction_pack/examine()
+/obj/item/extraction_pack/examine()
 	. = ..()
-	usr.show_message("It has [uses_left] uses remaining.", 1)
+	usr.show_message("It has [uses_left] use\s remaining.", 1)
 
-/obj/item/weapon/extraction_pack/attack_self(mob/user)
+/obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
 	for(var/B in GLOB.total_extraction_beacons)
 		var/obj/structure/extraction_point/EP = B
@@ -37,7 +37,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		beacon = A
 		to_chat(user, "You link the extraction pack to the beacon system.")
 
-/obj/item/weapon/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
+/obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
 	if(!beacon)
 		to_chat(user, "[src] is not linked to a beacon, and cannot be used.")
 		return
@@ -61,14 +61,12 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
 		if(do_after(user,50,target=A))
 			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
-			if(loc == user && istype(user.back, /obj/item/weapon/storage/backpack))
-				var/obj/item/weapon/storage/backpack/B = user.back
-				if(B.can_be_inserted(src,stop_messages = 1))
-					B.handle_item_insertion(src)
+			if(loc == user && istype(user.back, /obj/item/storage/backpack))
+				var/obj/item/storage/backpack/B = user.back
+				B.SendSignal(COMSIG_TRY_STORAGE_INSERT, src, user, FALSE, FALSE)
 			uses_left--
 			if(uses_left <= 0)
-				user.drop_item(src)
-				loc = A
+				user.transferItemToLoc(src, A, TRUE)
 			var/mutable_appearance/balloon
 			var/mutable_appearance/balloon2
 			var/mutable_appearance/balloon3
@@ -81,7 +79,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 				A.density = FALSE
 			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
 			holder_obj.appearance = A.appearance
-			A.loc = holder_obj
+			A.forceMove(holder_obj)
 			balloon2 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_expand")
 			balloon2.pixel_y = 10
 			balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
@@ -114,7 +112,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			var/list/flooring_near_beacon = list()
 			for(var/turf/open/floor in orange(1, beacon))
 				flooring_near_beacon += floor
-			holder_obj.loc = pick(flooring_near_beacon)
+			holder_obj.forceMove(pick(flooring_near_beacon))
 			animate(holder_obj, pixel_z = 10, time = 50)
 			sleep(50)
 			animate(holder_obj, pixel_z = 15, time = 10)
@@ -132,7 +130,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			A.density = initial(A.density)
 			animate(holder_obj, pixel_z = 0, time = 5)
 			sleep(5)
-			A.loc = holder_obj.loc
+			A.forceMove(holder_obj.loc)
 			qdel(holder_obj)
 			if(uses_left <= 0)
 				qdel(src)
@@ -160,8 +158,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/structure/extraction_point/Initialize()
 	. = ..()
-	var/area/area_name = get_area(src)
-	name += " ([rand(100,999)]) ([area_name.name])"
+	name += " ([rand(100,999)]) ([get_area_name(src, TRUE)])"
 	GLOB.total_extraction_beacons += src
 
 /obj/structure/extraction_point/Destroy()
@@ -173,7 +170,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	desc = "you shouldnt see this"
 	var/atom/movable/stored_obj
 
-/obj/item/weapon/extraction_pack/proc/check_for_living_mobs(atom/A)
+/obj/item/extraction_pack/proc/check_for_living_mobs(atom/A)
 	if(isliving(A))
 		var/mob/living/L = A
 		if(L.stat != DEAD)
@@ -184,3 +181,9 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			if(L.stat != DEAD)
 				return 1
 	return 0
+
+/obj/effect/extraction_holder/singularity_pull()
+	return
+
+/obj/effect/extraction_holder/singularity_pull()
+	return

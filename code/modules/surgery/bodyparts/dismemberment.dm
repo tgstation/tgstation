@@ -6,21 +6,20 @@
 //Dismember a limb
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE)
 	if(!owner)
-		return 0
+		return FALSE
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
-		return 0
+		return FALSE
 	if(C.status_flags & GODMODE)
-		return 0
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(NODISMEMBER in H.dna.species.species_traits) // species don't allow dismemberment
-			return 0
+		return FALSE
+	if(C.has_trait(TRAIT_NODISMEMBER))
+		return FALSE
 
-	var/obj/item/bodypart/affecting = C.get_bodypart("chest")
-	affecting.receive_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
+	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
+	affecting.receive_damage(CLAMP(brute_dam/2, 15, 50), CLAMP(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
 	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
 	C.emote("scream")
+	C.SendSignal(COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
 	drop_limb()
 
 	if(dam_type == BURN)
@@ -46,14 +45,12 @@
 
 /obj/item/bodypart/chest/dismember()
 	if(!owner)
-		return 0
+		return FALSE
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
-		return 0
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(NODISMEMBER in H.dna.species.species_traits) // species don't allow dismemberment
-			return 0
+		return FALSE
+	if(C.has_trait(TRAIT_NODISMEMBER))
+		return FALSE
 
 	var/organ_spilled = 0
 	var/turf/T = get_turf(C)
@@ -62,7 +59,7 @@
 	for(var/X in C.internal_organs)
 		var/obj/item/organ/O = X
 		var/org_zone = check_zone(O.zone)
-		if(org_zone != "chest")
+		if(org_zone != BODY_ZONE_CHEST)
 			continue
 		O.Remove(C)
 		O.forceMove(T)
@@ -82,7 +79,7 @@
 /obj/item/bodypart/proc/drop_limb(special)
 	if(!owner)
 		return
-	var/turf/T = get_turf(owner)
+	var/atom/Tsec = owner.drop_location()
 	var/mob/living/carbon/C = owner
 	update_limb(1)
 	C.bodyparts -= src
@@ -102,9 +99,10 @@
 
 	for(var/obj/item/I in embedded_objects)
 		embedded_objects -= I
-		I.loc = src
+		I.forceMove(src)
 	if(!C.has_embedded_objects())
 		C.clear_alert("embeddedobject")
+		C.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 	if(!special)
 		if(C.dna)
@@ -121,29 +119,37 @@
 			O.transfer_to_limb(src, C)
 
 	update_icon_dropped()
-	forceMove(T)
 	C.update_health_hud() //update the healthdoll
 	C.update_body()
 	C.update_hair()
 	C.update_canmove()
+
+	if(!Tsec)	// Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
+		qdel(src)
+		return
+
 	if(is_pseudopart)
 		drop_organs(C)	//Psuedoparts shouldn't have organs, but just in case
 		qdel(src)
+		return
+
+	forceMove(Tsec)
+
 
 
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
 /obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/LB, mob/living/carbon/C)
 	Remove(C)
-	loc = LB
+	forceMove(LB)
 
 /obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
 	Remove(C)	//Changeling brain concerns are now handled in Remove
-	loc = LB
+	forceMove(LB)
 	LB.brain = src
 	if(brainmob)
 		LB.brainmob = brainmob
 		brainmob = null
-		LB.brainmob.loc = LB
+		LB.brainmob.forceMove(LB)
 		LB.brainmob.container = LB
 		LB.brainmob.stat = DEAD
 
@@ -159,7 +165,7 @@
 	..()
 	if(C && !special)
 		if(C.handcuffed)
-			C.handcuffed.loc = C.loc
+			C.handcuffed.forceMove(drop_location())
 			C.handcuffed.dropped(C)
 			C.handcuffed = null
 			C.update_handcuffed()
@@ -177,7 +183,7 @@
 	..()
 	if(C && !special)
 		if(C.handcuffed)
-			C.handcuffed.loc = C.loc
+			C.handcuffed.forceMove(drop_location())
 			C.handcuffed.dropped(C)
 			C.handcuffed = null
 			C.update_handcuffed()
@@ -193,7 +199,7 @@
 /obj/item/bodypart/r_leg/drop_limb(special)
 	if(owner && !special)
 		if(owner.legcuffed)
-			owner.legcuffed.loc = owner.loc
+			owner.legcuffed.forceMove(drop_location())
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
 			owner.update_inv_legcuffed()
@@ -204,7 +210,7 @@
 /obj/item/bodypart/l_leg/drop_limb(special) //copypasta
 	if(owner && !special)
 		if(owner.legcuffed)
-			owner.legcuffed.loc = owner.loc
+			owner.legcuffed.forceMove(drop_location())
 			owner.legcuffed.dropped(owner)
 			owner.legcuffed = null
 			owner.update_inv_legcuffed()
@@ -219,12 +225,19 @@
 			var/obj/item/I = X
 			owner.dropItemToGround(I, TRUE)
 
+	owner.wash_cream() //clean creampie overlay
+
 	//Handle dental implants
 	for(var/datum/action/item_action/hands_free/activate_pill/AP in owner.actions)
 		AP.Remove(owner)
 		var/obj/pill = AP.target
 		if(pill)
 			pill.forceMove(src)
+
+	//Make sure de-zombification happens before organ removal instead of during it
+	var/obj/item/organ/zombie_infection/ooze = owner.getorganslot(ORGAN_SLOT_ZOMBIE)
+	if(istype(ooze))
+		ooze.transfer_to_limb(src, owner)
 
 	name = "[owner.real_name]'s head"
 	..()
@@ -255,7 +268,7 @@
 	attach_limb(C, special)
 
 /obj/item/bodypart/proc/attach_limb(mob/living/carbon/C, special)
-	loc = null
+	moveToNullspace()
 	owner = C
 	C.bodyparts += src
 	if(held_index)
@@ -296,7 +309,7 @@
 	if(brain)
 		if(brainmob)
 			brainmob.container = null //Reset brainmob head var.
-			brainmob.loc = brain //Throw mob into brain.
+			brainmob.forceMove(brain) //Throw mob into brain.
 			brain.brainmob = brainmob //Set the brain to use the brainmob
 			brainmob = null //Set head brainmob var to null
 		brain.Insert(C) //Now insert the brain proper
@@ -316,7 +329,7 @@
 	name = initial(name)
 
 	//Handle dental implants
-	for(var/obj/item/weapon/reagent_containers/pill/P in src)
+	for(var/obj/item/reagent_containers/pill/P in src)
 		for(var/datum/action/item_action/hands_free/activate_pill/AP in P.actions)
 			P.forceMove(C)
 			AP.Grant(C)
@@ -330,7 +343,7 @@
 	return 0
 
 /mob/living/carbon/regenerate_limbs(noheal, list/excluded_limbs)
-	var/list/limb_list = list("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg")
+	var/list/limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 	if(excluded_limbs)
 		limb_list -= excluded_limbs
 	for(var/Z in limb_list)

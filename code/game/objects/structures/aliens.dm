@@ -42,7 +42,7 @@
 	icon_state = "gelmound"
 
 /obj/structure/alien/gelpod/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new/obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
 	qdel(src)
 
@@ -53,7 +53,7 @@
 	name = "resin"
 	desc = "Looks like some kind of thick resin."
 	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
-	icon_state = "resin"
+	icon_state = "smooth"
 	density = TRUE
 	opacity = 1
 	anchored = TRUE
@@ -70,14 +70,14 @@
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	move_update_air(T)
 
 /obj/structure/alien/resin/wall
 	name = "resin wall"
 	desc = "Thick resin solidified into a wall."
 	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
-	icon_state = "wall0"	//same as resin, but consistency ho!
+	icon_state = "smooth"	//same as resin, but consistency ho!
 	resintype = "wall"
 	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
 
@@ -88,7 +88,7 @@
 	name = "resin membrane"
 	desc = "Resin just thin enough to let light pass through."
 	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
-	icon_state = "membrane0"
+	icon_state = "smooth"
 	opacity = 0
 	max_integrity = 160
 	resintype = "membrane"
@@ -115,6 +115,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = TURF_LAYER
+	plane = FLOOR_PLANE
 	icon_state = "weeds"
 	max_integrity = 15
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
@@ -127,7 +128,7 @@
 /obj/structure/alien/weeds/Initialize()
 	pixel_x = -4
 	pixel_y = -4 //so the sprites line up right in the map editor
-	..()
+	. = ..()
 
 	if(!blacklisted_turfs)
 		blacklisted_turfs = typecacheof(list(
@@ -178,7 +179,7 @@
 
 /obj/structure/alien/weeds/node/Initialize()
 	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
-	..()
+	. = ..()
 	set_light(lon_range)
 	var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds) in loc
 	if(W && W != src)
@@ -223,7 +224,7 @@
 	var/obj/item/clothing/mask/facehugger/child
 
 /obj/structure/alien/egg/Initialize(mapload)
-	..()
+	. = ..()
 	update_icon()
 	if(status == GROWING || status == GROWN)
 		child = new(src)
@@ -244,12 +245,15 @@
 			icon_state = "[base_icon]_hatched"
 
 /obj/structure/alien/egg/attack_paw(mob/living/user)
-	. = attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/alien/egg/attack_alien(mob/living/carbon/alien/user)
-	. = attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/alien/egg/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
 	if(user.getorgan(/obj/item/organ/alien/plasmavessel))
 		switch(status)
 			if(BURST)
@@ -297,7 +301,7 @@
 						break
 
 /obj/structure/alien/egg/obj_break(damage_flag)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(status != BURST)
 			Burst(kill=TRUE)
 

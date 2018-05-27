@@ -9,6 +9,18 @@
  * Misc
  */
 
+#define LAZYINITLIST(L) if (!L) L = list()
+#define UNSETEMPTY(L) if (L && !length(L)) L = null
+#define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
+#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+#define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
+#define LAZYFIND(L, V) L ? L.Find(V) : 0
+#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
+#define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
+#define LAZYLEN(L) length(L)
+#define LAZYCLEARLIST(L) if(L) L.Cut()
+#define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+
 //Returns a list in plain english as a string
 /proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
@@ -32,9 +44,9 @@
 
 //Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/L, index)
-	if(istype(L))
-		if(isnum(index) && IsInteger(index))
-			if(IsInRange(index,1,L.len))
+	if(LAZYLEN(L))
+		if(isnum(index) && ISINTEGER(index))
+			if(ISINRANGE(index,1,L.len))
 				return L[index]
 		else if(index in L)
 			return L[index]
@@ -42,7 +54,7 @@
 
 //Return either pick(list) or null if list is not of type /list or is empty
 /proc/safepick(list/L)
-	if(istype(L) && L.len)
+	if(LAZYLEN(L))
 		return pick(L)
 
 //Checks if the list is empty
@@ -53,7 +65,7 @@
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
-	if(!L || !L.len || !A)
+	if(!LAZYLEN(L) || !A)
 		return FALSE
 	for(var/type in L)
 		if(istype(A, type))
@@ -62,7 +74,7 @@
 
 //Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
 /proc/is_type_in_typecache(atom/A, list/L)
-	if(!L || !L.len || !A)
+	if(!LAZYLEN(L) || !A)
 
 		return FALSE
 	if(ispath(A))
@@ -72,7 +84,7 @@
 
 //Checks for a string in a list
 /proc/is_string_in_list(string, list/L)
-	if(!L || !L.len || !string)
+	if(!LAZYLEN(L) || !string)
 		return
 	for(var/V in L)
 		if(string == V)
@@ -81,7 +93,7 @@
 
 //Removes a string from a list
 /proc/remove_strings_from_list(string, list/L)
-	if(!L || !L.len || !string)
+	if(!LAZYLEN(L) || !string)
 		return
 	for(var/V in L)
 		if(V == string)
@@ -205,6 +217,22 @@
 
 	return null
 
+/proc/pickweightAllowZero(list/L) //The original pickweight proc will sometimes pick entries with zero weight.  I'm not sure if changing the original will break anything, so I left it be.
+	var/total = 0
+	var/item
+	for (item in L)
+		if (!L[item])
+			L[item] = 0
+		total += L[item]
+
+	total = rand(0, total)
+	for (item in L)
+		total -=L [item]
+		if (total <= 0 && L[item])
+			return item
+
+	return null
+
 //Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/L)
 	if(L.len)
@@ -320,7 +348,7 @@
 	return r
 
 // Returns the key based on the index
-#define KEYBYINDEX(L, index) (((index <= L:len) && (index > 0)) ? L[index] : null)
+#define KEYBYINDEX(L, index) (((index <= length(L)) && (index > 0)) ? L[index] : null)
 
 /proc/count_by_type(list/L, type)
 	var/i = 0
@@ -458,7 +486,7 @@
 #error Remie said that lummox was adding a way to get a lists
 #error contents via list.values, if that is true remove this
 #error otherwise, update the version and bug lummox
-#elseif
+#endif
 //Flattens a keyed list into a list of it's contents
 /proc/flatten_list(list/key_list)
 	if(!islist(key_list))
@@ -468,16 +496,7 @@
 		. |= key_list[key]
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
-#define DEFAULTPICK(L, default) ((islist(L) && L:len) ? pick(L) : default)
-#define LAZYINITLIST(L) if (!L) L = list()
-#define UNSETEMPTY(L) if (L && !L.len) L = null
-#define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
-#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
-#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
-#define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
-#define LAZYLEN(L) length(L)
-#define LAZYCLEARLIST(L) if(L) L.Cut()
-#define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+#define DEFAULTPICK(L, default) ((islist(L) && length(L)) ? pick(L) : default)
 
 /* Definining a counter as a series of key -> numeric value entries
 

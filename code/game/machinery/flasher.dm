@@ -8,7 +8,7 @@
 	max_integrity = 250
 	integrity_failure = 100
 	anchored = TRUE
-	var/obj/item/device/assembly/flash/handheld/bulb
+	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
@@ -49,34 +49,31 @@
 		icon_state = "[base_state]1-p"
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/flasher/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if (istype(W, /obj/item/weapon/wirecutters))
+	if (istype(W, /obj/item/wirecutters))
 		if (bulb)
 			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
-			playsound(src.loc, W.usesound, 100, 1)
-			if(do_after(user, 30*W.toolspeed, target = src) && bulb)
+			if(W.use_tool(src, user, 30, volume=50) && bulb)
 				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
 				bulb.forceMove(loc)
 				bulb = null
 				power_change()
 
-	else if (istype(W, /obj/item/device/assembly/flash/handheld))
+	else if (istype(W, /obj/item/assembly/flash/handheld))
 		if (!bulb)
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(W, src))
 				return
 			user.visible_message("[user] installs [W] into [src].", "<span class='notice'>You install [W] into [src].</span>")
-			W.forceMove(src)
 			bulb = W
 			power_change()
 		else
 			to_chat(user, "<span class='warning'>A flashbulb is already installed in [src]!</span>")
 
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (istype(W, /obj/item/wrench))
 		if(!bulb)
 			to_chat(user, "<span class='notice'>You start unsecuring the flasher frame...</span>")
-			playsound(loc, W.usesound, 50, 1)
-			if(do_after(user, 40*W.toolspeed, target = src))
+			if(W.use_tool(src, user, 40, volume=50))
 				to_chat(user, "<span class='notice'>You unsecure the flasher frame.</span>")
 				deconstruct(TRUE)
 		else
@@ -122,15 +119,15 @@
 
 
 /obj/machinery/flasher/emp_act(severity)
-	if(!(stat & (BROKEN|NOPOWER)))
+	. = ..()
+	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		if(bulb && prob(75/severity))
 			flash()
 			bulb.burn_out()
 			power_change()
-	..()
 
 /obj/machinery/flasher/obj_break(damage_flag)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
 			stat |= BROKEN
 			if(bulb)
@@ -138,7 +135,7 @@
 				power_change()
 
 /obj/machinery/flasher/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(bulb)
 			bulb.forceMove(loc)
 			bulb = null
@@ -164,9 +161,9 @@
 		if (M.m_intent != MOVE_INTENT_WALK && anchored)
 			flash()
 
-/obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench))
-		playsound(src.loc, W.usesound, 100, 1)
+/obj/machinery/flasher/portable/attackby(obj/item/W, mob/user, params)
+	if (istype(W, /obj/item/wrench))
+		W.play_tool_sound(src, 100)
 
 		if (!anchored && !isinspace())
 			to_chat(user, "<span class='notice'>[src] is now secured.</span>")

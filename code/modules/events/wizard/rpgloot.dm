@@ -3,7 +3,7 @@
 	weight = 3
 	typepath = /datum/round_event/wizard/rpgloot
 	max_occurrences = 1
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/rpgloot/start()
 	var/upgrade_scroll_chance = 0
@@ -11,11 +11,12 @@
 		if(!istype(I.rpg_loot))
 			I.rpg_loot = new(I)
 
-		if(istype(I, /obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = I
-			if(prob(upgrade_scroll_chance) && S.contents.len < S.storage_slots && !S.invisibility)
+		if(istype(I, /obj/item/storage))
+			var/obj/item/storage/S = I
+			GET_COMPONENT_FROM(STR, /datum/component/storage, S)
+			if(prob(upgrade_scroll_chance) && S.contents.len < STR.max_items && !S.invisibility)
 				var/obj/item/upgradescroll/scroll = new
-				S.handle_item_insertion(scroll,1)
+				S.SendSignal(COMSIG_TRY_STORAGE_INSERT, scroll, null, TRUE, TRUE)
 				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
 			upgrade_scroll_chance += 25
 
@@ -109,7 +110,6 @@
 	I.force = max(0,I.force + quality_mod)
 	I.throwforce = max(0,I.throwforce + quality_mod)
 
-	for(var/value in I.armor)
-		I.armor[value] += quality
+	I.armor = I.armor.modifyAllRatings(quality)
 
 	rename()

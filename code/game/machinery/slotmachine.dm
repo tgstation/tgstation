@@ -21,7 +21,7 @@
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
-	circuit = /obj/item/weapon/circuitboard/computer/slot_machine
+	circuit = /obj/item/circuitboard/computer/slot_machine
 	var/money = 3000 //How much money it has CONSUMED
 	var/plays = 0
 	var/working = 0
@@ -46,8 +46,8 @@
 
 	toggle_reel_spin(0)
 
-	for(var/cointype in typesof(/obj/item/weapon/coin))
-		var/obj/item/weapon/coin/C = cointype
+	for(var/cointype in typesof(/obj/item/coin))
+		var/obj/item/coin/C = cointype
 		coinvalues["[cointype]"] = initial(C.value)
 
 /obj/machinery/computer/slot_machine/Destroy()
@@ -80,19 +80,18 @@
 	update_icon()
 
 /obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/coin))
-		var/obj/item/weapon/coin/C = I
+	if(istype(I, /obj/item/coin))
+		var/obj/item/coin/C = I
 		if(prob(2))
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(C, drop_location()))
 				return
-			C.loc = loc
 			C.throw_at(user, 3, 10)
 			if(prob(10))
 				balance = max(balance - SPIN_PRICE, 0)
 			to_chat(user, "<span class='warning'>[src] spits your coin back out!</span>")
 
 		else
-			if(!user.drop_item())
+			if(!user.temporarilyRemoveItemFromInventory(C))
 				return
 			to_chat(user, "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>")
 			balance += C.value
@@ -101,22 +100,16 @@
 		return ..()
 
 /obj/machinery/computer/slot_machine/emag_act()
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	emagged = TRUE
+	obj_flags |= EMAGGED
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(4, 0, src.loc)
 	spark_system.start()
 	playsound(src, "sparks", 50, 1)
 
-/obj/machinery/computer/slot_machine/attack_hand(mob/living/user)
-	. = ..() //Sanity checks.
-	if(.)
-		return .
-
-	interact(user)
-
-/obj/machinery/computer/slot_machine/interact(mob/living/user)
+/obj/machinery/computer/slot_machine/ui_interact(mob/living/user)
+	. = ..()
 	var/reeltext = {"<center><font face=\"courier new\">
 	/*****^*****^*****^*****^*****\\<BR>
 	| \[[reels[1][1]]\] | \[[reels[2][1]]\] | \[[reels[3][1]]\] | \[[reels[4][1]]\] | \[[reels[5][1]]\] |<BR>
@@ -135,11 +128,11 @@
 		<B>Credit Remaining:</B> [balance]<BR>
 		[plays] players have tried their luck today, and [jackpots] have won a jackpot!<BR>
 		<HR><BR>
-		<A href='?src=\ref[src];spin=1'>Play!</A><BR>
+		<A href='?src=[REF(src)];spin=1'>Play!</A><BR>
 		<BR>
 		[reeltext]
 		<BR>
-		<font size='1'><A href='?src=\ref[src];refund=1'>Refund balance</A><BR>"}
+		<font size='1'><A href='?src=[REF(src)];refund=1'>Refund balance</A><BR>"}
 
 	var/datum/browser/popup = new(user, "slotmachine", "Slot Machine")
 	popup.set_content(dat)
@@ -159,12 +152,13 @@
 		balance = 0
 
 /obj/machinery/computer/slot_machine/emp_act(severity)
-	if(stat & (NOPOWER|BROKEN))
+	. = ..()
+	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 	if(prob(15 * severity))
 		return
 	if(prob(1)) // :^)
-		emagged = TRUE
+		obj_flags |= EMAGGED
 	var/severity_ascending = 4 - severity
 	money = max(rand(money - (200 * severity_ascending), money + (200 * severity_ascending)), 0)
 	balance = max(rand(balance - (50 * severity_ascending), balance + (50 * severity_ascending)), 0)
@@ -241,8 +235,8 @@
 		money = 0
 
 		for(var/i = 0, i < 5, i++)
-			var/cointype = pick(subtypesof(/obj/item/weapon/coin))
-			var/obj/item/weapon/coin/C = new cointype(loc)
+			var/cointype = pick(subtypesof(/obj/item/coin))
+			var/obj/item/coin/C = new cointype(loc)
 			random_step(C, 2, 50)
 
 	else if(linelength == 5)
@@ -287,9 +281,9 @@
 	balance += surplus
 
 /obj/machinery/computer/slot_machine/proc/give_coins(amount)
-	var/cointype = emagged ? /obj/item/weapon/coin/iron : /obj/item/weapon/coin/silver
+	var/cointype = obj_flags & EMAGGED ? /obj/item/coin/iron : /obj/item/coin/silver
 
-	if(!emagged)
+	if(!(obj_flags & EMAGGED))
 		amount = dispense(amount, cointype, null, 0)
 
 	else
@@ -299,12 +293,12 @@
 
 	return amount
 
-/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/weapon/coin/silver, mob/living/target, throwit = 0)
+/obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, mob/living/target, throwit = 0)
 	var/value = coinvalues["[cointype]"]
 
 
 	while(amount >= value)
-		var/obj/item/weapon/coin/C = new cointype(loc) //DOUBLE THE PAIN
+		var/obj/item/coin/C = new cointype(loc) //DOUBLE THE PAIN
 		amount -= value
 		if(throwit && target)
 			C.throw_at(target, 3, 10)

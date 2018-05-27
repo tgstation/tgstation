@@ -22,10 +22,13 @@
 
 /obj/structure/emergency_shield/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	move_update_air(T)
 
 /obj/structure/emergency_shield/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	switch(severity)
 		if(1)
 			qdel(src)
@@ -55,13 +58,15 @@
 
 /obj/structure/emergency_shield/invoker
 	name = "Invoker's Shield"
-	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals"
+	desc = "A weak shield summoned by cultists to protect them while they carry out delicate rituals."
 	color = "#FF0000"
 	max_integrity = 20
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = ABOVE_MOB_LAYER
 
 /obj/structure/emergency_shield/invoker/emp_act(severity)
 	return
+
 
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"
@@ -111,13 +116,16 @@
 
 
 /obj/machinery/shieldgen/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat && BROKEN))
 			stat |= BROKEN
 			locked = pick(0,1)
 			update_icon()
 
 /obj/machinery/shieldgen/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(locked)
 		to_chat(user, "<span class='warning'>The machine is locked, you are unable to use it!</span>")
 		return
@@ -140,9 +148,9 @@
 			to_chat(user, "<span class='warning'>The device must first be secured to the floor!</span>")
 	return
 
-/obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
-		playsound(src.loc, W.usesound, 100, 1)
+/obj/machinery/shieldgen/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver))
+		W.play_tool_sound(src, 100)
 		panel_open = !panel_open
 		if(panel_open)
 			to_chat(user, "<span class='notice'>You open the panel and expose the wiring.</span>")
@@ -163,16 +171,16 @@
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 			update_icon()
 
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/wrench))
 		if(locked)
 			to_chat(user, "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>")
 			return
 		if(!anchored && !isinspace())
-			playsound(src.loc, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			to_chat(user, "<span class='notice'>You secure \the [src] to the floor!</span>")
 			anchored = TRUE
 		else if(anchored)
-			playsound(src.loc, W.usesound, 100, 1)
+			W.play_tool_sound(src, 100)
 			to_chat(user, "<span class='notice'>You unsecure \the [src] from the floor!</span>")
 			if(active)
 				to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")
@@ -180,19 +188,25 @@
 			anchored = FALSE
 
 	else if(W.GetID())
-		if(allowed(user))
+		if(allowed(user) && !(obj_flags & EMAGGED))
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>")
+		else if(obj_flags & EMAGGED)
+			to_chat(user, "<span class='danger'>Error, access controller damaged!</span>")
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 
 	else
 		return ..()
 
-/obj/machinery/shieldgen/emag_act()
-	if(!(stat & BROKEN))
-		stat |= BROKEN
-		update_icon()
+/obj/machinery/shieldgen/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		to_chat(user, "<span class='warning'>The access controller is damaged!</span>")
+		return
+	obj_flags |= EMAGGED
+	locked = FALSE
+	playsound(src, "sparks", 100, 1)
+	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/shieldgen/update_icon()
 	if(active)
@@ -210,7 +224,7 @@
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_TELEPORTER)
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	use_power = NO_POWER_USE
 	max_integrity = 300
 	var/active = FALSE
@@ -256,7 +270,7 @@
 	use_stored_power(50)
 
 /obj/machinery/shieldwallgen/proc/use_stored_power(amount)
-	power = Clamp(power - amount, 0, maximum_stored_power)
+	power = CLAMP(power - amount, 0, maximum_stored_power)
 	update_activity()
 
 /obj/machinery/shieldwallgen/proc/update_activity()
@@ -333,13 +347,15 @@
 	return ..()
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/wrench))
 		default_unfasten_wrench(user, W, 0)
 
 	else if(W.GetID())
-		if(allowed(user))
+		if(allowed(user) && !(obj_flags & EMAGGED))
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
+		else if(obj_flags & EMAGGED)
+			to_chat(user, "<span class='danger'>Error, access controller damaged!</span>")
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 
@@ -348,6 +364,9 @@
 		return ..()
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!anchored)
 		to_chat(user, "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>")
 		return
@@ -372,6 +391,14 @@
 		update_activity()
 	add_fingerprint(user)
 
+/obj/machinery/shieldwallgen/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		to_chat(user, "<span class='warning'>The access controller is damaged!</span>")
+		return
+	obj_flags |= EMAGGED
+	locked = FALSE
+	playsound(src, "sparks", 100, 1)
+	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 //////////////Containment Field START
 /obj/machinery/shieldwall
@@ -403,9 +430,6 @@
 	gen_secondary = null
 	return ..()
 
-/obj/machinery/shieldwall/attack_hand(mob/user)
-	return
-
 /obj/machinery/shieldwall/process()
 	if(needs_power)
 		if(!gen_primary || !gen_primary.active || !gen_secondary || !gen_secondary.active)
@@ -434,7 +458,7 @@
 			gen_secondary.use_stored_power(drain_amount*0.5)
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return prob(20)
 	else
 		if(istype(mover, /obj/item/projectile))

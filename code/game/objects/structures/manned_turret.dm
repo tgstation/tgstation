@@ -12,7 +12,7 @@
 	layer = ABOVE_MOB_LAYER
 	var/view_range = 10
 	var/cooldown = 0
-	var/projectile_type = /obj/item/projectile/bullet/weakbullet3
+	var/projectile_type = /obj/item/projectile/bullet/manned_turret
 	var/rate_of_fire = 1
 	var/number_of_shots = 40
 	var/cooldown_duration = 90
@@ -37,7 +37,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(world.view)
+			buckled_mob.client.change_view(CONFIG_GET(string/default_view))
 	anchored = FALSE
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -68,14 +68,15 @@
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/manned_turret/process()
-	if(!LAZYLEN(buckled_mobs))
+	if (!update_positioning())
 		return PROCESS_KILL
-	update_positioning()
 
 /obj/machinery/manned_turret/proc/update_positioning()
+	if (!LAZYLEN(buckled_mobs))
+		return FALSE
 	var/mob/living/controller = buckled_mobs[1]
 	if(!istype(controller))
-		return
+		return FALSE
 	var/client/C = controller.client
 	if(C)
 		var/atom/A = C.mouseObject
@@ -85,7 +86,7 @@
 			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(controller, C.mouseParams)
 
 /obj/machinery/manned_turret/proc/direction_track(mob/user, atom/targeted)
-	if(user.stat != CONSCIOUS)
+	if(user.incapacitated())
 		return
 	setDir(get_dir(src,targeted))
 	user.setDir(dir)
@@ -125,7 +126,7 @@
 
 /obj/machinery/manned_turret/proc/checkfire(atom/targeted_atom, mob/user)
 	target = targeted_atom
-	if(target == user || target == get_turf(src))
+	if(target == user || user.incapacitated() || target == get_turf(src))
 		return
 	if(world.time < cooldown)
 		if(!warned && world.time > (cooldown - cooldown_duration + rate_of_fire*number_of_shots)) // To capture the window where one is done firing
@@ -143,12 +144,13 @@
 		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper, user), i*rate_of_fire)
 
 /obj/machinery/manned_turret/proc/fire_helper(mob/user)
+	if(user.incapacitated() || !(user in buckled_mobs))
+		return
 	update_positioning()						//REFRESH MOUSE TRACKING!!
 	var/turf/targets_from = get_turf(src)
 	if(QDELETED(target))
 		target = target_turf
 	var/obj/item/projectile/P = new projectile_type(targets_from)
-	P.current = targets_from
 	P.starting = targets_from
 	P.firer = user
 	P.original = target
@@ -163,7 +165,7 @@
 /obj/machinery/manned_turret/ultimate  // Admin-only proof of concept for autoclicker automatics
 	name = "Infinity Gun"
 	view_range = 12
-	projectile_type = /obj/item/projectile/bullet/weakbullet3
+	projectile_type = /obj/item/projectile/bullet/manned_turret
 
 /obj/machinery/manned_turret/ultimate/checkfire(atom/targeted_atom, mob/user)
 	target = targeted_atom
@@ -174,18 +176,18 @@
 
 /obj/item/gun_control
 	name = "turret controls"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | NODROP | NOBLUDGEON | DROPDEL
+	flags_1 = ABSTRACT_1 | NODROP_1 | NOBLUDGEON_1 | DROPDEL_1
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/manned_turret/turret
 
 /obj/item/gun_control/Initialize()
-    . = ..()
-    turret = loc
-    if(!istype(turret))
-        return INITIALIZE_HINT_QDEL
+	. = ..()
+	turret = loc
+	if(!istype(turret))
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/gun_control/Destroy()
 	turret = null
@@ -199,8 +201,8 @@
 	O.attacked_by(src, user)
 
 /obj/item/gun_control/attack(mob/living/M, mob/living/user)
-	user.lastattacked = M
-	M.lastattacker = user
+	M.lastattacker = user.real_name
+	M.lastattackerckey = user.ckey
 	M.attacked_by(src, user)
 	add_fingerprint(user)
 

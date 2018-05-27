@@ -29,10 +29,10 @@
 	var/turf/T0 = get_turf(neighbor)
 
 	if(T0 == src) //same turf
-		return 1
+		return TRUE
 
-	if(get_dist(src,T0) > 1) //too far
-		return 0
+	if(get_dist(src, T0) > 1 || z != T0.z) //too far
+		return FALSE
 
 	// Non diagonal case
 	if(T0.x == x || T0.y == y)
@@ -76,7 +76,8 @@
 
 // This is necessary for storage items not on your person.
 /obj/item/Adjacent(var/atom/neighbor, var/recurse = 1)
-	if(neighbor == loc) return 1
+	if(neighbor == loc)
+		return 1
 	if(isitem(loc))
 		if(recurse > 0)
 			return loc.Adjacent(neighbor,recurse - 1)
@@ -85,20 +86,19 @@
 
 /*
 	This checks if you there is uninterrupted airspace between that turf and this one.
-	This is defined as any dense ON_BORDER object, or any dense object without LETPASSTHROW.
+	This is defined as any dense ON_BORDER_1 object, or any dense object without LETPASSTHROW.
 	The border_only flag allows you to not objects (for source and destination squares)
 */
 /turf/proc/ClickCross(target_dir, border_only, target_atom = null, atom/movable/mover = null)
 	for(var/obj/O in src)
 		if((mover && O.CanPass(mover,get_step(src,target_dir))) || (!mover && !O.density))
 			continue
-		if(O == target_atom || (O.pass_flags & LETPASSTHROW)) //check if there's a dense object present on the turf
+		if(O == target_atom || O == mover || (O.pass_flags & LETPASSTHROW)) //check if there's a dense object present on the turf
 			continue // LETPASSTHROW is used for anything you can click through (or the firedoor special case, see above)
 
-		if( O.flags&ON_BORDER) // windows are on border, check them first
+		if( O.flags_1&ON_BORDER_1) // windows are on border, check them first
 			if( O.dir & target_dir || O.dir & (O.dir-1) ) // full tile windows are just diagonals mechanically
 				return 0								  //O.dir&(O.dir-1) is false for any cardinal direction, but true for diagonal ones
-
 		else if( !border_only ) // dense, not on border, cannot pass over
 			return 0
 	return 1

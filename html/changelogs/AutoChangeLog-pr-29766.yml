@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - imageadd: "Belligerent now has a visible indicator over the caster."

@@ -1,21 +1,17 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "c" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
-"d" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/transport)
 "e" = (
-/turf/open/floor/plasteel/freezer,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
 "f" = (
@@ -25,42 +21,44 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "g" = (
-/obj/machinery/computer/shuttle/ferry/request,
+/obj/machinery/computer/shuttle/ferry/request{
+	dir = 8
+	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "h" = (
 /obj/structure/closet/secure_closet/freezer/meat{
 	name = "\"meat\" fridge"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/killertomato,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human{
+/obj/item/reagent_containers/food/snacks/meat/slab/bear,
+/obj/item/reagent_containers/food/snacks/meat/slab/corgi,
+/obj/item/reagent_containers/food/snacks/meat/slab/goliath,
+/obj/item/reagent_containers/food/snacks/meat/slab/killertomato,
+/obj/item/reagent_containers/food/snacks/meat/slab/pug,
+/obj/item/reagent_containers/food/snacks/meat/slab/spider,
+/obj/item/reagent_containers/food/snacks/meat/slab/xeno,
+/obj/item/reagent_containers/food/snacks/meat/slab/human{
 	name = "human meat"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly{
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/fly{
 	name = "flyman meat"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine{
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine{
 	name = "golem meat"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard{
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard{
 	name = "lizard meat"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant{
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant{
 	name = "podperson meat"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow{
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow{
 	name = "shadowling meat"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime{
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime{
 	name = "slimeperson meat"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie{
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie{
 	name = "rotten meat"
 	},
 /turf/open/floor/plasteel/freezer,
@@ -112,27 +110,10 @@
 	height = 12;
 	id = "ferry";
 	name = "ferry shuttle";
-	roundstart_move = "ferry_away";
-	port_angle = 180;
-	width = 5;
-	timid = 1
+	port_direction = 2;
+	width = 5
 	},
 /turf/open/floor/plasteel/freezer,
-/area/shuttle/transport)
-"r" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
-/area/shuttle/transport)
-"s" = (
-/turf/open/floor/plasteel/freezer,
-/turf/closed/wall/mineral/titanium/interior{
-	icon_state = "swall_f10"
-	},
 /area/shuttle/transport)
 "t" = (
 /obj/structure/closet/chefcloset,
@@ -145,7 +126,7 @@
 "v" = (
 /obj/machinery/door/airlock/freezer{
 	name = "Meat Tradeship Backroom";
-	req_access = "28"
+	req_access_txt = "28"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
@@ -154,12 +135,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer,
-/area/shuttle/transport)
-"x" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
 /area/shuttle/transport)
 
 (1,1,1) = {"

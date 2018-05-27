@@ -14,7 +14,7 @@
 #define SUPPORT_LINES 1
 #define COVER 2
 #define CUT_COVER 3
-#define BOLTS 4
+#define ANCHOR_BOLTS 4
 #define SUPPORT_RODS 5
 #define SHEATH 6
 
@@ -22,6 +22,11 @@
 #define WINDOW_OUT_OF_FRAME 0
 #define WINDOW_IN_FRAME 1
 #define WINDOW_SCREWED_TO_FRAME 2
+
+//airlock assembly construction states
+#define AIRLOCK_ASSEMBLY_NEEDS_WIRES 0
+#define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1
+#define AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER 2
 
 //plastic flaps construction states
 #define PLASTIC_FLAPS_NORMAL 0
@@ -32,12 +37,6 @@
 #define FAILED_UNFASTEN 1
 #define SUCCESSFUL_UNFASTEN 2
 
-//disposal unit mode defines, which do double time as the construction defines
-#define PRESSURE_OFF 0
-#define PRESSURE_ON 1
-#define PRESSURE_MAXED 2
-#define SCREWS_OUT -1
-
 //ai core defines
 #define EMPTY_CORE 0
 #define CIRCUIT_CORE 1
@@ -45,11 +44,6 @@
 #define CABLED_CORE 3
 #define GLASS_CORE 4
 #define AI_READY_CORE 5
-
-//field generator construction defines
-#define FG_UNSECURED 0
-#define FG_SECURED 1
-#define FG_WELDED 2
 
 //emitter construction defines
 #define EM_UNSECURED 0
@@ -86,6 +80,7 @@
 #define MAT_BANANIUM	"$bananium"
 #define MAT_TITANIUM	"$titanium"
 #define MAT_BIOMASS		"$biomass"
+#define MAT_PLASTIC	"$plastic"
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The maximum size of a stack object.
@@ -101,6 +96,7 @@
 #define CAT_ROBOT	"Robots"
 #define CAT_MISC	"Misc"
 #define CAT_PRIMAL  "Tribal"
+#define CAT_CLOTHING	"Clothing"
 #define CAT_FOOD	"Foods"
 #define CAT_BREAD	"Breads"
 #define CAT_BURGER	"Burgers"

@@ -7,6 +7,7 @@
 /obj/structure/transit_tube/station
 	name = "station tube station"
 	icon_state = "closed_station0"
+	desc = "The lynchpin of the transit system."
 	exit_delay = 1
 	enter_delay = 2
 	tube_construction = /obj/structure/c_transit_tube/station
@@ -58,6 +59,9 @@
 
 
 /obj/structure/transit_tube/station/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!pod_moving)
 		if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 			if(open_status == STATION_TUBE_OPEN)
@@ -93,7 +97,7 @@
 
 
 /obj/structure/transit_tube/station/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/crowbar))
+	if(istype(W, /obj/item/crowbar))
 		for(var/obj/structure/transit_tube_pod/P in loc)
 			P.deconstruct(FALSE, user)
 	else
@@ -147,7 +151,11 @@
 		sleep(OPEN_DURATION + 2)
 		pod_moving = 0
 		if(!QDELETED(pod))
-			pod.air_contents.share(loc.return_air()) //mix the pod's gas mixture with the tile it's on
+			var/datum/gas_mixture/floor_mixture = loc.return_air()
+			floor_mixture.archive()
+			pod.air_contents.archive()
+			pod.air_contents.share(floor_mixture, 1) //mix the pod's gas mixture with the tile it's on
+			air_update_turf()
 
 /obj/structure/transit_tube/station/init_tube_dirs()
 	switch(dir)

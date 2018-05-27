@@ -56,9 +56,7 @@ SUBSYSTEM_DEF(events)
 //selects a random event based on whether it can occur and it's 'weight'(probability)
 /datum/controller/subsystem/events/proc/spawnEvent()
 	set waitfor = FALSE	//for the admin prompt
-	if(!config.allow_random_events)
-//		var/datum/round_event_control/E = locate(/datum/round_event_control/dust) in control
-//		if(E)	E.runEvent()
+	if(!CONFIG_GET(flag/allow_random_events))
 		return
 
 	var/gamemode = SSticker.mode.config_tag
@@ -116,6 +114,8 @@ SUBSYSTEM_DEF(events)
 
 //allows a client to trigger an event
 //aka Badmin Central
+// > Not in modules/admin
+// REEEEEEEEE
 /client/proc/forceEvent()
 	set name = "Trigger Event"
 	set category = "Fun"
@@ -131,7 +131,7 @@ SUBSYSTEM_DEF(events)
 	var/magic 	= ""
 	var/holiday = ""
 	for(var/datum/round_event_control/E in SSevents.control)
-		dat = "<BR><A href='?src=\ref[src];forceevent=\ref[E]'>[E]</A>"
+		dat = "<BR><A href='?src=[REF(src)];[HrefToken()];forceevent=[REF(E)]'>[E]</A>"
 		if(E.holidayID)
 			holiday	+= dat
 		else if(E.wizardevent)
@@ -169,13 +169,13 @@ SUBSYSTEM_DEF(events)
 
 //sets up the holidays and holidays list
 /datum/controller/subsystem/events/proc/getHoliday()
-	if(!config.allow_holidays)
+	if(!CONFIG_GET(flag/allow_holidays))
 		return		// Holiday stuff was not enabled in the config!
 
 	var/YY = text2num(time2text(world.timeofday, "YY")) 	// get the current year
 	var/MM = text2num(time2text(world.timeofday, "MM")) 	// get the current month
 	var/DD = text2num(time2text(world.timeofday, "DD")) 	// get the current day
-	var/DDD = text2num(time2text(world.timeofday, "DDD")) 	// get the current weekday
+	var/DDD = time2text(world.timeofday, "DDD")	// get the current weekday
 	var/W = weekdayofthemonth()	// is this the first monday? second? etc.
 
 	for(var/H in subtypesof(/datum/holiday))

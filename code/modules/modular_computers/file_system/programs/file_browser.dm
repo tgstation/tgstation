@@ -16,9 +16,9 @@
 	if(..())
 		return 1
 
-	var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
-	var/obj/item/weapon/computer_hardware/hard_drive/RHDD = computer.all_components[MC_SDD]
-	var/obj/item/weapon/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
+	var/obj/item/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
+	var/obj/item/computer_hardware/hard_drive/RHDD = computer.all_components[MC_SDD]
+	var/obj/item/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
 
 	switch(action)
 		if("PRG_openfile")
@@ -112,7 +112,7 @@
 			if(!printer)
 				error = "Missing Hardware: Your computer does not have required hardware to complete this operation."
 				return 1
-			if(!printer.print_text("<font face=\"[computer.emagged ? CRAYON_FONT : PRINTER_FONT]\">" + prepare_printjob(F.stored_data) + "</font>", open_file))
+			if(!printer.print_text("<font face=\"[(computer.obj_flags & EMAGGED) ? CRAYON_FONT : PRINTER_FONT]\">" + prepare_printjob(F.stored_data) + "</font>", open_file))
 				error = "Hardware error: Printer was unable to print the file. It may be out of paper."
 				return 1
 		if("PRG_copytousb")
@@ -145,7 +145,7 @@
 	t = replacetext(t, "\[/i\]", "</I>")
 	t = replacetext(t, "\[u\]", "<U>")
 	t = replacetext(t, "\[/u\]", "</U>")
-	t = replacetext(t, "\[time\]", "[worldtime2text()]")
+	t = replacetext(t, "\[time\]", "[station_time_timestamp()]")
 	t = replacetext(t, "\[date\]", "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer+540]")
 	t = replacetext(t, "\[large\]", "<font size=\"4\">")
 	t = replacetext(t, "\[/large\]", "</font>")
@@ -170,19 +170,26 @@
 	t = replacetext(t, "\[td\]", "<td>")
 	t = replacetext(t, "\[cell\]", "<td>")
 	t = replacetext(t, "\[tab\]", "&nbsp;&nbsp;&nbsp;&nbsp;")
+
+	t = parsemarkdown_basic(t)
+
 	return t
 
 /datum/computer_file/program/filemanager/proc/prepare_printjob(t) // Additional stuff to parse if we want to print it and make a happy Head of Personnel. Forms FTW.
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 	t = replacetext(t, "\[sign\]", "<span class=\"paper_field\"></span>")
+
 	t = parse_tags(t)
+
+	t = replacetext(t, regex("(?:%s(?:ign)|%f(?:ield))(?=\\s|$)", "ig"), "<span class=\"paper_field\"></span>")
+
 	return t
 
 /datum/computer_file/program/filemanager/ui_data(mob/user)
 	var/list/data = get_header_data()
 
-	var/obj/item/weapon/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
-	var/obj/item/weapon/computer_hardware/hard_drive/portable/RHDD = computer.all_components[MC_SDD]
+	var/obj/item/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]
+	var/obj/item/computer_hardware/hard_drive/portable/RHDD = computer.all_components[MC_SDD]
 	if(error)
 		data["error"] = error
 	if(open_file)

@@ -95,15 +95,7 @@
 				has_opaque_atom = TRUE
 				break
 
-// If an opaque movable atom moves around we need to potentially update visibility.
-/turf/Entered(var/atom/movable/Obj, var/atom/OldLoc)
-	. = ..()
-
-	if (Obj && Obj.opacity)
-		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
-		reconsider_lights()
-
-/turf/Exited(var/atom/movable/Obj, var/atom/newloc)
+/turf/Exited(atom/movable/Obj, atom/newloc)
 	. = ..()
 
 	if (Obj && Obj.opacity)
@@ -111,12 +103,12 @@
 		reconsider_lights()
 
 /turf/proc/change_area(var/area/old_area, var/area/new_area)
-	if (new_area.dynamic_lighting != old_area.dynamic_lighting)
-		if (new_area.dynamic_lighting)
-			lighting_build_overlay()
-
-		else
-			lighting_clear_overlay()
+	if(SSlighting.initialized)
+		if (new_area.dynamic_lighting != old_area.dynamic_lighting)
+			if (new_area.dynamic_lighting)
+				lighting_build_overlay()
+			else
+				lighting_clear_overlay()
 
 /turf/proc/get_corners()
 	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)

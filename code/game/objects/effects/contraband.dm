@@ -3,7 +3,7 @@
 
 // The poster item
 
-/obj/item/weapon/poster
+/obj/item/poster
 	name = "poorly coded poster"
 	desc = "You probably shouldn't be holding this."
 	icon = 'icons/obj/contraband.dmi'
@@ -12,7 +12,7 @@
 	var/poster_type
 	var/obj/structure/sign/poster/poster_structure
 
-/obj/item/weapon/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
+/obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
 	poster_structure = new_poster_structure
 	if(!new_poster_structure && poster_type)
@@ -27,17 +27,17 @@
 
 		name = "[name] - [poster_structure.original_name]"
 
-/obj/item/weapon/poster/Destroy()
+/obj/item/poster/Destroy()
 	poster_structure = null
 	. = ..()
 
 // These icon_states may be overriden, but are for mapper's convinence
-/obj/item/weapon/poster/random_contraband
+/obj/item/poster/random_contraband
 	name = "random contraband poster"
 	poster_type = /obj/structure/sign/poster/contraband/random
 	icon_state = "rolled_poster"
 
-/obj/item/weapon/poster/random_official
+/obj/item/poster/random_official
 	name = "random official poster"
 	poster_type = /obj/structure/sign/poster/official/random
 	icon_state = "rolled_legit"
@@ -60,6 +60,7 @@
 
 /obj/structure/sign/poster/Initialize()
 	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 75), 0)
 	if(random_basetype)
 		randomise(random_basetype)
 	if(!ruined)
@@ -87,8 +88,8 @@
 
 
 /obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wirecutters))
-		playsound(loc, I.usesound, 100, 1)
+	if(istype(I, /obj/item/wirecutters))
+		I.play_tool_sound(src, 100)
 		if(ruined)
 			to_chat(user, "<span class='notice'>You remove the remnants of the poster.</span>")
 			qdel(src)
@@ -97,6 +98,9 @@
 			roll_and_drop(user.loc)
 
 /obj/structure/sign/poster/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(ruined)
 		return
 	visible_message("[user] rips [src] in a single, decisive motion!" )
@@ -111,15 +115,22 @@
 /obj/structure/sign/poster/proc/roll_and_drop(loc)
 	pixel_x = 0
 	pixel_y = 0
-	var/obj/item/weapon/poster/P = new(loc, src)
+	var/obj/item/poster/P = new(loc, src)
 	forceMove(P)
 	return P
 
 //separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
-/turf/closed/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
+/turf/closed/wall/proc/place_poster(obj/item/poster/P, mob/user)
 	if(!P.poster_structure)
 		to_chat(user, "<span class='warning'>[P] has no poster... inside it? Inform a coder!</span>")
 		return
+
+	// Deny placing posters on currently-diagonal walls, although the wall may change in the future.
+	if (smooth & SMOOTH_DIAGONAL)
+		for (var/O in our_overlays)
+			var/image/I = O
+			if (copytext(I.icon_state, 1, 3) == "d-")
+				return
 
 	var/stuff_on_wall = 0
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff

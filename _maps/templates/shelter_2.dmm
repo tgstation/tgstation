@@ -8,9 +8,6 @@
 	},
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
-"c" = (
-/turf/closed/wall/mineral/titanium/survival,
-/area/survivalpod)
 "d" = (
 /obj/structure/sign/mining/survival{
 	dir = 8
@@ -26,12 +23,12 @@
 /turf/open/floor/pod,
 /area/survivalpod)
 "g" = (
-/obj/item/device/gps/computer,
+/obj/item/gps/computer,
 /turf/open/floor/pod,
 /area/survivalpod)
 "h" = (
 /obj/machinery/shower,
-/obj/item/weapon/soap/deluxe,
+/obj/item/soap/deluxe,
 /obj/structure/curtain{
 	alpha = 240;
 	color = "#454545";
@@ -42,7 +39,7 @@
 /area/survivalpod)
 "i" = (
 /obj/structure/toilet/secret{
-	secret_type = /obj/item/weapon/kitchen/knife/combat/survival
+	secret_type = /obj/item/kitchen/knife/combat/survival
 	},
 /turf/open/floor/pod,
 /area/survivalpod)
@@ -61,7 +58,7 @@
 /area/survivalpod)
 "m" = (
 /obj/structure/bed/pod,
-/obj/item/weapon/bedsheet/black,
+/obj/item/bedsheet/black,
 /turf/open/floor/pod,
 /area/survivalpod)
 "n" = (
@@ -91,15 +88,15 @@
 /area/survivalpod)
 "p" = (
 /obj/structure/table/survival_pod,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/brute{
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/brute{
 	pixel_x = 5
 	},
 /turf/open/floor/pod,
 /area/survivalpod)
 "q" = (
 /obj/structure/tubes,
-/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/pod,
 /area/survivalpod)
 "r" = (
@@ -115,11 +112,11 @@
 	light_color = "#DDFFD3"
 	},
 /obj/structure/table/wood/fancy/black,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 7;
 	pixel_y = 2
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
+/obj/item/reagent_containers/food/drinks/bottle/wine{
 	pixel_x = -6;
 	pixel_y = 10
 	},
@@ -154,7 +151,7 @@
 	alert = 0;
 	desc = "A display case containing an expensive forgery, probably.";
 	pixel_y = -4;
-	req_access = 48;
+	req_access_txt = "48";
 	start_showpiece_type = /obj/item/fakeartefact
 	},
 /turf/open/floor/carpet/black,
@@ -169,7 +166,7 @@
 /area/survivalpod)
 "x" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 7;
 	pixel_y = 2
 	},
@@ -203,7 +200,7 @@
 /area/survivalpod)
 "D" = (
 /obj/structure/fans/tiny,
-/obj/machinery/door/airlock/survival_pod,
+/obj/machinery/door/airlock/survival_pod/glass,
 /turf/open/floor/pod,
 /area/survivalpod)
 "E" = (
@@ -214,9 +211,9 @@
 (1,1,1) = {"
 a
 d
-c
+a
 d
-c
+a
 d
 a
 "}
@@ -230,13 +227,13 @@ y
 C
 "}
 (3,1,1) = {"
-c
+a
 f
 l
 l
 u
 z
-c
+a
 "}
 (4,1,1) = {"
 b
@@ -248,13 +245,13 @@ A
 D
 "}
 (5,1,1) = {"
-c
+a
 h
 n
 r
 w
 A
-c
+a
 "}
 (6,1,1) = {"
 b
@@ -268,9 +265,9 @@ E
 (7,1,1) = {"
 a
 j
-c
+a
 j
-c
+a
 j
 a
 "}

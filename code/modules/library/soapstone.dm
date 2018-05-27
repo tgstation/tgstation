@@ -1,7 +1,7 @@
 /obj/item/soapstone
 	name = "soapstone"
 	desc = "Leave informative messages for the crew, including the crew of future shifts!\nEven if out of uses, it can still be used to remove messages.\n(Not suitable for engraving on shuttles, off station or on cats. Side effects may include prompt beatings, psychotic clown incursions, and/or orbital bombardment.)"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "soapstone"
 	throw_speed = 3
 	throw_range = 5
@@ -136,13 +136,13 @@
 
 	if(!good_chisel_message_location(T))
 		persists = FALSE
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/structure/chisel_message/proc/register(mob/user, newmessage)
 	hidden_message = newmessage
 	creator_name = user.real_name
 	creator_key = user.ckey
-	realdate = world.timeofday
+	realdate = world.realtime
 	map = SSmapping.config.map_name
 	update_icon()
 
@@ -193,7 +193,7 @@
 
 /obj/structure/chisel_message/examine(mob/user)
 	..()
-	to_chat(user, "<span class='warning'>[hidden_message]</span>")
+	ui_interact(user)
 
 /obj/structure/chisel_message/Destroy()
 	if(persists)
@@ -201,8 +201,10 @@
 	SSpersistence.chisel_messages -= src
 	. = ..()
 
-/obj/structure/chisel_message/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
+/obj/structure/chisel_message/interact()
+	return
 
+/obj/structure/chisel_message/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "engraved_message", name, 600, 300, master_ui, state)

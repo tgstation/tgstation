@@ -1,6 +1,6 @@
 /obj/machinery/sleep_console
 	name = "sleeper console"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "console"
 	density = FALSE
 	anchored = TRUE
@@ -8,12 +8,12 @@
 /obj/machinery/sleeper
 	name = "sleeper"
 	desc = "An enclosed machine used to stabilize and heal patients."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	density = FALSE
 	anchored = TRUE
 	state_open = TRUE
-	circuit = /obj/item/weapon/circuitboard/machine/sleeper
+	circuit = /obj/item/circuitboard/machine/sleeper
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
@@ -26,6 +26,7 @@
 	)
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
+	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 
 /obj/machinery/sleeper/Initialize()
 	. = ..()
@@ -34,10 +35,10 @@
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		E += B.rating
 	var/I
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		I += M.rating
 
 	efficiency = initial(efficiency)* E
@@ -57,8 +58,13 @@
 		"<span class='notice'>You climb out of [src]!</span>")
 	open_machine()
 
+/obj/machinery/sleeper/Exited(atom/movable/user)
+	if (!state_open && user == occupant)
+		container_resist(user)
+
 /obj/machinery/sleeper/relaymove(mob/user)
-	container_resist(user)
+	if (!state_open)
+		container_resist(user)
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)
@@ -69,12 +75,14 @@
 		..(user)
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && mob_occupant.stat != DEAD)
-			to_chat(occupant, "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>")
+			to_chat(occupant, "[enter_message]")
 
 /obj/machinery/sleeper/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	if(is_operational() && occupant)
 		open_machine()
-	..(severity)
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -86,8 +94,6 @@
 		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 			return
 	if(default_change_direction_wrench(user, I))
-		return
-	if(exchange_parts(user, I))
 		return
 	if(default_pry_open(I))
 		return
@@ -120,7 +126,19 @@
 	var/mob/living/mob_occupant = occupant
 	if(mob_occupant)
 		data["occupant"]["name"] = mob_occupant.name
-		data["occupant"]["stat"] = mob_occupant.stat
+		switch(mob_occupant.stat)
+			if(CONSCIOUS)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "good"
+			if(SOFT_CRIT)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "average"
+			if(UNCONSCIOUS)
+				data["occupant"]["stat"] = "Unconscious"
+				data["occupant"]["statstate"] = "average"
+			if(DEAD)
+				data["occupant"]["stat"] = "Dead"
+				data["occupant"]["statstate"] = "bad"
 		data["occupant"]["health"] = mob_occupant.health
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
 		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
@@ -161,7 +179,7 @@
 
 /obj/machinery/sleeper/emag_act(mob/user)
 	scramble_chem_buttons()
-	to_chat(user, "<span class='warning'>You scramble the sleepers user interface!</span>")
+	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
 
 /obj/machinery/sleeper/proc/inject_chem(chem)
 	if((chem in available_chems) && chem_allowed(chem))
@@ -193,6 +211,21 @@
 	icon_state = "sleeper_s"
 	controls_inside = TRUE
 
+/obj/machinery/sleeper/clockwork
+	name = "soothing sleeper"
+	desc = "A large cryogenics unit built from brass. Its surface is pleasantly cool the touch."
+	icon_state = "sleeper_clockwork"
+	enter_message = "<span class='bold inathneq_small'>You hear the gentle hum and click of machinery, and are lulled into a sense of peace.</span>"
+	possible_chems = list(list("epinephrine", "salbutamol", "bicaridine", "kelotane", "oculine", "inacusiate", "mannitol"))
+
+/obj/machinery/sleeper/clockwork/process()
+	if(occupant && isliving(occupant))
+		var/mob/living/L = occupant
+		if(GLOB.clockwork_vitality) //If there's Vitality, the sleeper has passive healing
+			GLOB.clockwork_vitality = max(0, GLOB.clockwork_vitality - 1)
+			L.adjustBruteLoss(-1)
+			L.adjustFireLoss(-1)
+			L.adjustOxyLoss(-5)
 
 /obj/machinery/sleeper/old
 	icon_state = "oldpod"

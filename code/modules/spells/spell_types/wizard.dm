@@ -182,7 +182,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
 	name = "Artificer"
-	desc = "This spell conjures a construct which may be controlled by Shades"
+	desc = "This spell conjures a construct which may be controlled by Shades."
 
 	school = "conjuration"
 	charge_max = 600
@@ -199,7 +199,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
 	name = "Summon Creature Swarm"
-	desc = "This spell tears the fabric of reality, allowing horrific daemons to spill forth"
+	desc = "This spell tears the fabric of reality, allowing horrific daemons to spill forth."
 
 	school = "conjuration"
 	charge_max = 1200
@@ -209,7 +209,7 @@
 	summon_amt = 10
 	range = 3
 
-	summon_type = list(/mob/living/simple_animal/hostile/creature)
+	summon_type = list(/mob/living/simple_animal/hostile/netherworld)
 	cast_sound = 'sound/magic/summonitems_generic.ogg'
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
@@ -258,6 +258,7 @@
 	sound = 'sound/magic/repulse.ogg'
 	var/maxthrow = 5
 	var/sparkle_path = /obj/effect/temp_visual/gravpush
+	var/anti_magic_check = TRUE
 
 	action_icon_state = "repulse"
 
@@ -275,6 +276,11 @@
 		if(AM == user || AM.anchored)
 			continue
 
+		if(ismob(AM))
+			var/mob/M = AM
+			if(M.anti_magic_check(anti_magic_check, FALSE))
+				continue
+
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
 		if(distfromcaster == 0)
@@ -289,7 +295,7 @@
 				var/mob/living/M = AM
 				M.Knockdown(stun_amt)
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
-			AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
+			AM.throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
 	name = "Tail Sweep"
@@ -304,6 +310,7 @@
 	action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
+	anti_magic_check = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
 	if(iscarbon(user))
@@ -328,10 +335,13 @@
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
 	for(var/mob/living/L in targets)
+		if(L.anti_magic_check(TRUE, TRUE))
+			continue
 		L.adjust_fire_stacks(20)
 	if(isliving(user))
 		var/mob/living/U = user
-		U.IgniteMob()
+		if(!U.anti_magic_check(TRUE, TRUE))
+			U.IgniteMob()
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
 	name = "Thrown Lightning"
@@ -356,7 +366,8 @@
 	if(!..())
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom
-			M.electrocute_act(80, src, illusion = 1)
+			if(!M.anti_magic_check())
+				M.electrocute_act(80, src, illusion = 1)
 		qdel(src)
 
 /obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)

@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(tgui)
 	name = "tgui"
 	wait = 9
 	flags = SS_NO_INIT
-	priority = 110
+	priority = FIRE_PRIORITY_TGUI
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/list/currentrun = list()
@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(tgui)
 	var/basehtml // The HTML base used for all UIs.
 
 /datum/controller/subsystem/tgui/PreInit()
-	basehtml = file2text('tgui/tgui.html') // Read the HTML from disk.
+	basehtml = file2text("tgui/tgui.html")
 
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()

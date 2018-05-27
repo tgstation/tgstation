@@ -16,8 +16,9 @@
 	var/emote_type = EMOTE_VISIBLE //Whether the emote is visible or audible
 	var/restraint_check = FALSE //Checks if the mob is restrained before performing the emote
 	var/muzzle_ignore = FALSE //Will only work if the emote is EMOTE_AUDIBLE
-	var/list/mob_type_allowed_typecache //Types that are allowed to use that emote
+	var/list/mob_type_allowed_typecache = list(/mob) //Types that are allowed to use that emote
 	var/list/mob_type_blacklist_typecache //Types that are NOT allowed to use that emote
+	var/list/mob_type_ignore_stat_typecache
 	var/stat_allowed = CONSCIOUS
 	var/static/list/emote_list = list()
 
@@ -26,6 +27,7 @@
 		emote_list[key_third_person] = src
 	mob_type_allowed_typecache = typecacheof(mob_type_allowed_typecache)
 	mob_type_blacklist_typecache = typecacheof(mob_type_blacklist_typecache)
+	mob_type_ignore_stat_typecache = typecacheof(mob_type_ignore_stat_typecache)
 
 /datum/emote/proc/run_emote(mob/user, params, type_override)
 	. = TRUE
@@ -37,12 +39,13 @@
 
 	msg = replace_pronoun(user, msg)
 
-	var/mob/living/L = user
-	for(var/obj/item/weapon/implant/I in L.implants)
-		I.trigger(key, L)
+	if(isliving(user))
+		var/mob/living/L = user
+		for(var/obj/item/implant/I in L.implants)
+			I.trigger(key, L)
 
 	if(!msg)
-		return FALSE
+		return
 
 	user.log_message(msg, INDIVIDUAL_EMOTE_LOG)
 	msg = "<b>[user]</b> " + msg
@@ -50,7 +53,7 @@
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
 			continue
-		var/T = get_turf(src)
+		var/T = get_turf(user)
 		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
 			M.show_message(msg)
 
@@ -91,20 +94,24 @@
 /datum/emote/proc/select_param(mob/user, params)
 	return replacetext(message_param, "%t", params)
 
-/datum/emote/proc/can_run_emote(mob/user, help_check)
+/datum/emote/proc/can_run_emote(mob/user, status_check = TRUE)
 	. = TRUE
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		return FALSE
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
-	if(!help_check)
-		if(user.stat > stat_allowed  || (user.status_flags & FAKEDEATH))
+	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
+		if(user.stat > stat_allowed)
+			to_chat(user, "<span class='notice'>You cannot [key] while unconscious.</span>")
 			return FALSE
-		if(restraint_check && user.restrained())
-			return FALSE
-		if(user.reagents && user.reagents.has_reagent("mimesbane"))
+		if(restraint_check && (user.restrained() || user.buckled))
+			to_chat(user, "<span class='notice'>You cannot [key] while restrained.</span>")
 			return FALSE
 
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.has_trait(TRAIT_EMOTEMUTE))
+			return FALSE
 
 /datum/emote/sound
 	var/sound //Sound to play when emote is called

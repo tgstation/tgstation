@@ -10,10 +10,12 @@
 	By default, emulate the user's unarmed attack
 */
 
+#define TK_MAXRANGE 15
+
 /atom/proc/attack_tk(mob/user)
 	if(user.stat || !tkMaxRangeCheck(user, src))
 		return
-	new /obj/effect/temp_visual/telekinesis(loc)
+	new /obj/effect/temp_visual/telekinesis(get_turf(src))
 	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
 	add_hiddenprint(user)
 	return
@@ -68,7 +70,7 @@
 	desc = "Magic"
 	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
-	flags = NOBLUDGEON | ABSTRACT | DROPDEL
+	flags_1 = NOBLUDGEON_1 | ABSTRACT_1 | DROPDEL_1
 	//item_state = null
 	w_class = WEIGHT_CLASS_GIGANTIC
 	layer = ABOVE_HUD_LAYER
@@ -78,7 +80,7 @@
 	var/mob/living/carbon/tk_user = null
 
 /obj/item/tk_grab/Initialize()
-	..()
+	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/tk_grab/Destroy()
@@ -92,18 +94,21 @@
 /obj/item/tk_grab/dropped(mob/user)
 	if(focus && user && loc != user && loc != user.loc) // drop_item() gets called when you tk-attack a table/closet with an item
 		if(focus.Adjacent(loc))
-			focus.loc = loc
+			focus.forceMove(loc)
 	. = ..()
 
 //stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
-	if(slot == slot_hands)
+	if(slot == SLOT_HANDS)
 		return
 	qdel(src)
 	return
 
-/obj/item/tk_grab/attack_hand(mob/user)
-	return
+/obj/item/tk_grab/examine(user)
+	if (focus)
+		focus.examine(user)
+	else
+		..()
 
 /obj/item/tk_grab/attack_self(mob/user)
 	if(!focus)
@@ -188,3 +193,6 @@
 /obj/item/tk_grab/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is using [user.p_their()] telekinesis to choke [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (OXYLOSS)
+
+
+#undef TK_MAXRANGE

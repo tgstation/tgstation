@@ -11,8 +11,9 @@ GLOBAL_PROTECT(Banlist)
 
 	. = list()
 	var/appeal
-	if(config && config.banappeals)
-		appeal = "\nFor more information on your ban, or to appeal, head to <a href='[config.banappeals]'>[config.banappeals]</a>"
+	var/bran = CONFIG_GET(string/banappeals)
+	if(bran)
+		appeal = "\nFor more information on your ban, or to appeal, head to <a href='[bran]'>[bran]</a>"
 	GLOB.Banlist.cd = "/base"
 	if( "[ckey][id]" in GLOB.Banlist.dir )
 		GLOB.Banlist.cd = "[ckey][id]"
@@ -21,10 +22,10 @@ GLOBAL_PROTECT(Banlist)
 				ClearTempbans()
 				return 0
 			else
-				.["desc"] = "\nReason: [GLOB.Banlist["reason"]]\nExpires: [GetExp(GLOB.Banlist["minutes"])]\nBy: [GLOB.Banlist["bannedby"]][appeal]"
+				.["desc"] = "\nReason: [GLOB.Banlist["reason"]]\nExpires: [GetExp(GLOB.Banlist["minutes"])]\nBy: [GLOB.Banlist["bannedby"]] during round ID [GLOB.Banlist["roundid"]][appeal]"
 		else
 			GLOB.Banlist.cd	= "/base/[ckey][id]"
-			.["desc"]	= "\nReason: [GLOB.Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [GLOB.Banlist["bannedby"]][appeal]"
+			.["desc"]	= "\nReason: [GLOB.Banlist["reason"]]\nExpires: <B>PERMANENT</B>\nBy: [GLOB.Banlist["bannedby"]] during round ID [GLOB.Banlist["roundid"]][appeal]"
 		.["reason"]	= "ckey/id"
 		return .
 	else
@@ -48,9 +49,9 @@ GLOBAL_PROTECT(Banlist)
 						ClearTempbans()
 						return 0
 					else
-						.["desc"] = "\nReason: [GLOB.Banlist["reason"]]\nExpires: [GetExp(GLOB.Banlist["minutes"])]\nBy: [GLOB.Banlist["bannedby"]][appeal]"
+						.["desc"] = "\nReason: [GLOB.Banlist["reason"]]\nExpires: [GetExp(GLOB.Banlist["minutes"])]\nBy: [GLOB.Banlist["bannedby"]] during round ID [GLOB.Banlist["roundid"]][appeal]"
 				else
-					.["desc"] = "\nReason: [GLOB.Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [GLOB.Banlist["bannedby"]][appeal]"
+					.["desc"] = "\nReason: [GLOB.Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [GLOB.Banlist["bannedby"]] during round ID [GLOB.Banlist["roundid"]][appeal]"
 				.["reason"] = matches
 				return .
 	return 0
@@ -64,7 +65,8 @@ GLOBAL_PROTECT(Banlist)
 	GLOB.Banlist = new("data/banlist.bdb")
 	log_admin("Loading Banlist")
 
-	if (!length(GLOB.Banlist.dir)) log_admin("Banlist is empty.")
+	if (!length(GLOB.Banlist.dir))
+		log_admin("Banlist is empty.")
 
 	if (!GLOB.Banlist.dir.Find("base"))
 		log_admin("Banlist missing base dir.")
@@ -88,8 +90,10 @@ GLOBAL_PROTECT(Banlist)
 			message_admins("Invalid Ban.")
 			continue
 
-		if (!GLOB.Banlist["temp"]) continue
-		if (GLOB.CMinutes >= GLOB.Banlist["minutes"]) RemoveBan(A)
+		if (!GLOB.Banlist["temp"])
+			continue
+		if (GLOB.CMinutes >= GLOB.Banlist["minutes"])
+			RemoveBan(A)
 
 	return 1
 
@@ -115,6 +119,7 @@ GLOBAL_PROTECT(Banlist)
 		WRITE_FILE(GLOB.Banlist["reason"], reason)
 		WRITE_FILE(GLOB.Banlist["bannedby"], bannedby)
 		WRITE_FILE(GLOB.Banlist["temp"], temp)
+		WRITE_FILE(GLOB.Banlist["roundid"], GLOB.round_id)
 		if (temp)
 			WRITE_FILE(GLOB.Banlist["minutes"], bantimestamp)
 		if(!temp)
@@ -132,7 +137,8 @@ GLOBAL_PROTECT(Banlist)
 	GLOB.Banlist["id"] >> id
 	GLOB.Banlist.cd = "/base"
 
-	if (!GLOB.Banlist.dir.Remove(foldername)) return 0
+	if (!GLOB.Banlist.dir.Remove(foldername))
+		return 0
 
 	if(!usr)
 		log_admin_private("Ban Expired: [key]")
@@ -141,7 +147,6 @@ GLOBAL_PROTECT(Banlist)
 		ban_unban_log_save("[key_name(usr)] unbanned [key]")
 		log_admin_private("[key_name(usr)] unbanned [key]")
 		message_admins("[key_name_admin(usr)] unbanned: [key]")
-		SSblackbox.inc("ban_unban",1)
 		usr.client.holder.DB_ban_unban( ckey(key), BANTYPE_ANY_FULLBAN)
 	for (var/A in GLOB.Banlist.dir)
 		GLOB.Banlist.cd = "/base/[A]"
@@ -170,12 +175,11 @@ GLOBAL_PROTECT(Banlist)
 /datum/admins/proc/unbanpanel()
 	var/count = 0
 	var/dat
-	//var/dat = "<HR><B>Unban Player:</B> \blue(U) = Unban , (E) = Edit Ban\green (Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >"
 	GLOB.Banlist.cd = "/base"
 	for (var/A in GLOB.Banlist.dir)
 		count++
 		GLOB.Banlist.cd = "/base/[A]"
-		var/ref		= "\ref[src]"
+		var/ref		= "[REF(src)]"
 		var/key		= GLOB.Banlist["key"]
 		var/id		= GLOB.Banlist["id"]
 		var/ip		= GLOB.Banlist["ip"]
@@ -230,4 +234,3 @@ GLOBAL_PROTECT(Banlist)
 	GLOB.Banlist.cd = "/base"
 	for (var/A in GLOB.Banlist.dir)
 		RemoveBan(A)
-

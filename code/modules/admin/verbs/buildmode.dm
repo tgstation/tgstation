@@ -17,6 +17,11 @@
 	..()
 	src.bd = bd
 
+/obj/screen/buildmode/Destroy()
+	bd.buttons -= src
+	bd = null
+	return ..()
+
 /obj/screen/buildmode/mode
 	icon_state = "buildmode1"
 	name = "Toggle Mode"
@@ -82,6 +87,7 @@
 	var/valueholder = "derp"
 	var/objholder = /obj/structure/closet
 	var/atom/movable/stored = null
+	var/list/preview = list()
 
 /datum/buildmode/New(client/c)
 	create_buttons()
@@ -94,13 +100,19 @@
 	holder.screen -= buttons
 	holder.click_intercept = null
 	holder.show_popup_menus = 1
+	usr.client.images -= preview
+	preview.Cut()
 	qdel(src)
 	return
 
 /datum/buildmode/Destroy()
 	stored = null
-	for(var/button in buttons)
-		qdel(button)
+	QDEL_LIST(buttons)
+	throw_atom = null
+	holder = null
+	preview.Cut()
+	cornerA = null
+	cornerB = null
 	return ..()
 
 /datum/buildmode/proc/create_buttons()
@@ -130,6 +142,7 @@
 		if(ADV_BUILDMODE)
 			dat += "***********************************************************"
 			dat += "Right Mouse Button on buildmode button = Set object type"
+			dat += "Left Mouse Button + alt on turf/obj    = Copy object type"
 			dat += "Left Mouse Button on turf/obj          = Place objects"
 			dat += "Right Mouse Button                     = Delete objects"
 			dat += ""
@@ -150,6 +163,7 @@
 		if(AREA_BUILDMODE)
 			dat += "***********************************************************"
 			dat += "Left Mouse Button on turf/obj/mob      = Select corner"
+			dat += "Right Mouse Button on turf/obj/mob     = Reset corner selection"
 			dat += "Right Mouse Button on buildmode button = Select generator"
 			dat += "***********************************************************"
 		if(COPY_BUILDMODE)
@@ -181,7 +195,8 @@
 			if(varholder in locked && !check_rights(R_DEBUG,0))
 				return 1
 			var/thetype = input(user,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
-			if(!thetype) return 1
+			if(!thetype)
+				return 1
 			switch(thetype)
 				if("text")
 					valueholder = input(user,"Enter variable value:" ,"Value", "value") as text
@@ -200,7 +215,8 @@
 				var/datum/mapGenerator/MP = path
 				options[initial(MP.buildmode_name)] = path
 			var/type = input(user,"Select Generator Type","Type") as null|anything in options
-			if(!type) return
+			if(!type)
+				return
 
 			generator_path = options[type]
 			cornerA = null
@@ -245,30 +261,30 @@
 	var/alt_click = pa.Find("alt")
 	var/ctrl_click = pa.Find("ctrl")
 
-	. = 1
+	//Clicking on UI elements shouldn't try to build things in nullspace.
+	if(istype(object,/obj/screen))
+		return FALSE
+
+	. = TRUE
 	switch(mode)
 		if(BASIC_BUILDMODE)
 			if(isturf(object) && left_click && !alt_click && !ctrl_click)
 				var/turf/T = object
 				if(isspaceturf(object))
-					T.ChangeTurf(/turf/open/floor/plasteel)
+					T.PlaceOnTop(/turf/open/floor/plating)
+				else if(isplatingturf(object))
+					T.PlaceOnTop(/turf/open/floor/plasteel)
 				else if(isfloorturf(object))
-					T.ChangeTurf(/turf/closed/wall)
+					T.PlaceOnTop(/turf/closed/wall)
 				else if(iswallturf(object))
-					T.ChangeTurf(/turf/closed/wall/r_wall)
+					T.PlaceOnTop(/turf/closed/wall/r_wall)
 				log_admin("Build Mode: [key_name(user)] built [T] at ([T.x],[T.y],[T.z])")
 				return
 			else if(right_click)
 				log_admin("Build Mode: [key_name(user)] deleted [object] at ([object.x],[object.y],[object.z])")
-				if(iswallturf(object))
+				if(isturf(object))
 					var/turf/T = object
-					T.ChangeTurf(/turf/open/floor/plasteel)
-				else if(isfloorturf(object))
-					var/turf/T = object
-					T.ChangeTurf(/turf/open/space)
-				else if(istype(object, /turf/closed/wall/r_wall))
-					var/turf/T = object
-					T.ChangeTurf(/turf/closed/wall)
+					T.ScrapeAway()
 				else if(isobj(object))
 					qdel(object)
 				return
@@ -276,29 +292,22 @@
 				log_admin("Build Mode: [key_name(user)] built an airlock at ([object.x],[object.y],[object.z])")
 				new/obj/machinery/door/airlock(get_turf(object))
 			else if(isturf(object) && ctrl_click && left_click)
-				switch(build_dir)
-					if(NORTH)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.setDir(NORTH)
-					if(SOUTH)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.setDir(SOUTH)
-					if(EAST)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.setDir(EAST)
-					if(WEST)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.setDir(WEST)
-					if(NORTHWEST)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced/fulltile(get_turf(object))
-						WIN.setDir(NORTHWEST)
+				var/obj/structure/window/reinforced/window
+				if(build_dir == NORTHWEST)
+					window = new /obj/structure/window/reinforced/fulltile(get_turf(object))
+				else
+					window = new /obj/structure/window/reinforced(get_turf(object))
+				window.setDir(build_dir)
 				log_admin("Build Mode: [key_name(user)] built a window at ([object.x],[object.y],[object.z])")
 		if(ADV_BUILDMODE)
-			if(left_click)
+			if(left_click && alt_click)
+				objholder = object.type
+				to_chat(user, "<span class='notice'>[initial(object.name)] ([object.type]) selected.</span>")
+			else if(left_click)
 				if(ispath(objholder, /turf))
 					var/turf/T = get_turf(object)
 					log_admin("Build Mode: [key_name(user)] modified [T] ([T.x],[T.y],[T.z]) to [objholder]")
-					T.ChangeTurf(objholder)
+					T.PlaceOnTop(objholder)
 				else
 					var/obj/A = new objholder (get_turf(object))
 					A.setDir(build_dir)
@@ -336,13 +345,20 @@
 					throw_atom.throw_at(object, 10, 1,user)
 					log_admin("Build Mode: [key_name(user)] threw [throw_atom] at [object] ([object.x],[object.y],[object.z])")
 		if(AREA_BUILDMODE)
-			if(!cornerA)
-				cornerA = get_turf(object)
-				return
-			if(cornerA && !cornerB)
-				cornerB = get_turf(object)
-
 			if(left_click) //rectangular
+				if(!cornerA)
+					cornerA = get_turf(object)
+					preview += image('icons/turf/overlays.dmi',cornerA,"greenOverlay")
+					usr.client.images -= preview
+					usr.client.images += preview
+					return
+				if(cornerA && !cornerB)
+					cornerB = get_turf(object)
+					preview += image('icons/turf/overlays.dmi',cornerB,"blueOverlay")
+					usr.client.images -= preview
+					usr.client.images += preview
+					to_chat(user, "<span class='boldwarning'>Region selected, if you're happy with your selection left click again, otherwise right click.</span>")
+					return
 				if(cornerA && cornerB)
 					if(!generator_path)
 						to_chat(user, "<span class='warning'>Select generator type first.</span>")
@@ -352,10 +368,18 @@
 						if(GLOB.reloading_map)
 							to_chat(user, "<span class='boldwarning'>You are already reloading an area! Please wait for it to fully finish loading before trying to load another!</span>")
 							return
-					G.defineRegion(cornerA,cornerB,1)
-					G.generate()
+					G.defineRegion(cornerA, cornerB, 1)
+					for(var/t in G.map)
+						preview += image('icons/turf/overlays.dmi', t ,"redOverlay")
+					usr.client.images -= preview
+					usr.client.images += preview
+					var/confirm = alert("Are you sure you want run the map generator?", "Run generator", "Yes", "No")
+					if(confirm == "Yes")
+						G.generate()
 					cornerA = null
 					cornerB = null
+					usr.client.images -= preview
+					preview.Cut()
 					return
 			//Something wrong - Reset
 			cornerA = null

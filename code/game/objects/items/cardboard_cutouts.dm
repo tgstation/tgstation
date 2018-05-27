@@ -18,6 +18,7 @@
 
 	var/lastattacker = null
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
 	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()
@@ -48,7 +49,7 @@
 		change_appearance(I, user)
 		return
 	// Why yes, this does closely resemble mob and object attack code.
-	if(I.flags & NOBLUDGEON)
+	if(I.flags_1 & NOBLUDGEON_1)
 		return
 	if(!I.force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
@@ -67,6 +68,8 @@
 			push_over()
 
 /obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
+	if(istype(P, /obj/item/projectile/bullet/reusable))
+		P.on_hit(src, 0)
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
 	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
 	if(prob(P.damage))

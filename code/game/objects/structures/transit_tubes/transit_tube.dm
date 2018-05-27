@@ -3,6 +3,7 @@
 	name = "transit tube"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "straight"
+	desc = "A transit tube for moving things around."
 	density = TRUE
 	layer = LOW_ITEM_LAYER
 	anchored = TRUE
@@ -11,9 +12,10 @@
 	var/list/tube_dirs //list of directions this tube section can connect to.
 	var/exit_delay = 1
 	var/enter_delay = 0
+	var/const/time_to_unwrench = 2 SECONDS
 
 /obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
 	return !density
 
@@ -30,25 +32,25 @@
 	return ..()
 
 /obj/structure/transit_tube/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
 /obj/structure/transit_tube/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/wrench))
 		if(tube_construction)
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)
 				to_chat(user, "<span class='warning'>Remove the pod first!</span>")
 				return
 			user.visible_message("[user] starts to deattach \the [src].", "<span class='notice'>You start to deattach the [name]...</span>")
-			playsound(src.loc, W.usesound, 50, 1)
-			if(do_after(user, 35*W.toolspeed, target = src))
+			if(W.use_tool(src, user, time_to_unwrench, volume=50))
 				to_chat(user, "<span class='notice'>You deattach the [name].</span>")
 				var/obj/structure/c_transit_tube/R = new tube_construction(loc)
 				R.setDir(dir)
 				transfer_fingerprints_to(R)
 				R.add_fingerprint(user)
 				qdel(src)
-	else if(istype(W, /obj/item/weapon/crowbar))
+	else if(istype(W, /obj/item/crowbar))
 		for(var/obj/structure/transit_tube_pod/pod in src.loc)
 			pod.attackby(W, user)
 	else

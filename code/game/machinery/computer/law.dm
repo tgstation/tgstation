@@ -5,8 +5,8 @@
 	icon_screen = "command"
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/aiModule))
-		var/obj/item/weapon/aiModule/M = O
+	if(istype(O, /obj/item/aiModule))
+		var/obj/item/aiModule/M = O
 		if(src.stat & (NOPOWER|BROKEN|MAINT))
 			return
 		if(!current)
@@ -26,19 +26,16 @@
 		return ..()
 
 /obj/machinery/computer/upload/proc/can_upload_to(mob/living/silicon/S)
-	if(S.stat == DEAD || S.syndicate)
+	if(S.stat == DEAD)
 		return 0
 	return 1
 
 /obj/machinery/computer/upload/ai
 	name = "\improper AI upload console"
 	desc = "Used to upload laws to the AI."
-	circuit = /obj/item/weapon/circuitboard/computer/aiupload
+	circuit = /obj/item/circuitboard/computer/aiupload
 
-/obj/machinery/computer/upload/ai/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/computer/upload/ai/interact(mob/user)
 	src.current = select_active_ai(user)
 
 	if (!src.current)
@@ -57,12 +54,9 @@
 /obj/machinery/computer/upload/borg
 	name = "cyborg upload console"
 	desc = "Used to upload laws to Cyborgs."
-	circuit = /obj/item/weapon/circuitboard/computer/borgupload
+	circuit = /obj/item/circuitboard/computer/borgupload
 
-/obj/machinery/computer/upload/borg/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/computer/upload/borg/interact(mob/user)
 	src.current = select_active_free_borg(user)
 
 	if(!src.current)

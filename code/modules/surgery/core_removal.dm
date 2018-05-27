@@ -2,7 +2,7 @@
 	name = "core removal"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/extract_core)
 	species = list(/mob/living/simple_animal/slime)
-	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
+	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 
 /datum/surgery/core_removal/can_start(mob/user, mob/living/target)
 	if(target.stat == DEAD)
@@ -12,7 +12,7 @@
 //extract brain
 /datum/surgery_step/extract_core
 	name = "extract core"
-	implements = list(/obj/item/weapon/hemostat = 100, /obj/item/weapon/crowbar = 100)
+	implements = list(/obj/item/hemostat = 100, TOOL_CROWBAR = 100)
 	time = 16
 
 /datum/surgery_step/extract_core/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

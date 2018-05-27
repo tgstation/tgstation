@@ -1,21 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/supply)
 "b" = (
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/supply)
-"c" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
-/area/shuttle/supply)
-"d" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
 /area/shuttle/supply)
 "e" = (
 /turf/open/floor/mineral/titanium/blue,
@@ -64,14 +49,13 @@
 	},
 /obj/docking_port/mobile/supply{
 	dwidth = 5;
-	width = 12;
-	timid = 1
+	width = 12
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "j" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "QMLoad"
 	},
 /obj/machinery/door/poddoor{
@@ -80,39 +64,8 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
-"k" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7";
-	dir = 2
-	},
-/area/shuttle/supply)
 "l" = (
-/turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/supply)
-"m" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/mineral/titanium/interior{
-	icon_state = "swall_f6"
-	},
-/area/shuttle/supply)
-"n" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
-/area/shuttle/supply)
-"o" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
-/area/shuttle/supply)
-"p" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall15";
-	dir = 2
-	},
 /area/shuttle/supply)
 "q" = (
 /obj/structure/window/reinforced{
@@ -121,15 +74,9 @@
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"r" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
-/area/shuttle/supply)
 "s" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "t" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
 /turf/open/floor/plating/airless,

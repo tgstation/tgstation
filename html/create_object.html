@@ -26,7 +26,8 @@
 <body>
 	<form name="spawner" action="byond://?src=/* ref src */" method="get">
 		<input type="hidden" name="src" value="/* ref src */">
-		
+		/* hreftokenfield */
+
 		Type <input type="text" name="filter" value="" onkeypress="submitFirst(event)" style="width:280px;height:25"> <input type = "button" value = "Search" onclick = "updateSearch()" /><br>
 		Offset: <input type="text" name="offset" value="x,y,z" style="width:250px">
 		
@@ -34,7 +35,7 @@
 		R <input type="radio" name="offset_type" value="relative" checked="checked"><br>
 		
 		Number: <input type="text" name="object_count" value="1" style="width:30px">
-		Dir: <input type="text" name="object_dir" value="2" style="width:30px">
+		Dir: <input type="text" name="object_dir" value="" style="width:30px">
 		Name: <input type="text" name="object_name" value="" style="width:180px"><br>
 		Where: 
 			<select name='object_where' style="width:320px">

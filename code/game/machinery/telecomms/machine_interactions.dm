@@ -18,12 +18,8 @@
 
 	if(default_deconstruction_screwdriver(user, icon_open, icon_closed, P))
 		return
-
-	else if(exchange_parts(user, P))
-		return
-
 	// Using a multitool lets you access the receiver's interface
-	else if(istype(P, /obj/item/device/multitool))
+	else if(istype(P, /obj/item/multitool))
 		attack_hand(user)
 
 	else if(default_deconstruction_crowbar(P))
@@ -31,36 +27,27 @@
 	else
 		return ..()
 
-
-/obj/machinery/telecomms/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/telecomms/attack_hand(mob/user)
-
+/obj/machinery/telecomms/ui_interact(mob/user)
+	. = ..()
 	// You need a multitool to use this, or be silicon
 	if(!issilicon(user))
 		// istype returns false if the value is null
-		if(!istype(user.get_active_held_item(), /obj/item/device/multitool))
+		if(!istype(user.get_active_held_item(), /obj/item/multitool))
 			return
-
-	if(stat & (BROKEN|NOPOWER))
-		return
-
-	var/obj/item/device/multitool/P = get_multitool(user)
-
-	user.set_machine(src)
+	var/obj/item/multitool/P = get_multitool(user)
 	var/dat
 	dat = "<font face = \"Courier\"><HEAD><TITLE>[name]</TITLE></HEAD><center><H3>[name] Access</H3></center>"
 	dat += "<br>[temp]<br>"
-	dat += "<br>Power Status: <a href='?src=\ref[src];input=toggle'>[toggled ? "On" : "Off"]</a>"
+	dat += "<br>Power Status: <a href='?src=[REF(src)];input=toggle'>[toggled ? "On" : "Off"]</a>"
 	if(on && toggled)
 		if(id != "" && id)
-			dat += "<br>Identification String: <a href='?src=\ref[src];input=id'>[id]</a>"
+			dat += "<br>Identification String: <a href='?src=[REF(src)];input=id'>[id]</a>"
 		else
-			dat += "<br>Identification String: <a href='?src=\ref[src];input=id'>NULL</a>"
-		dat += "<br>Network: <a href='?src=\ref[src];input=network'>[network]</a>"
+			dat += "<br>Identification String: <a href='?src=[REF(src)];input=id'>NULL</a>"
+		dat += "<br>Network: <a href='?src=[REF(src)];input=network'>[network]</a>"
 		dat += "<br>Prefabrication: [autolinkers.len ? "TRUE" : "FALSE"]"
-		if(hide) dat += "<br>Shadow Link: ACTIVE</a>"
+		if(hide)
+			dat += "<br>Shadow Link: ACTIVE</a>"
 
 		//Show additional options for certain machines.
 		dat += Options_Menu()
@@ -72,7 +59,7 @@
 			i++
 			if(T.hide && !hide)
 				continue
-			dat += "<li>\ref[T] [T.name] ([T.id])  <a href='?src=\ref[src];unlink=[i]'>\[X\]</a></li>"
+			dat += "<li>[REF(T)] [T.name] ([T.id])  <a href='?src=[REF(src)];unlink=[i]'>\[X\]</a></li>"
 		dat += "</ol>"
 
 		dat += "<br>Filtering Frequencies: "
@@ -82,56 +69,41 @@
 			for(var/x in freq_listening)
 				i++
 				if(i < length(freq_listening))
-					dat += "[format_frequency(x)] GHz<a href='?src=\ref[src];delete=[x]'>\[X\]</a>; "
+					dat += "[format_frequency(x)] GHz<a href='?src=[REF(src)];delete=[x]'>\[X\]</a>; "
 				else
-					dat += "[format_frequency(x)] GHz<a href='?src=\ref[src];delete=[x]'>\[X\]</a>"
+					dat += "[format_frequency(x)] GHz<a href='?src=[REF(src)];delete=[x]'>\[X\]</a>"
 		else
 			dat += "NONE"
 
-		dat += "<br>  <a href='?src=\ref[src];input=freq'>\[Add Filter\]</a>"
+		dat += "<br>  <a href='?src=[REF(src)];input=freq'>\[Add Filter\]</a>"
 		dat += "<hr>"
 
 		if(P)
 			var/obj/machinery/telecomms/T = P.buffer
 			if(istype(T))
-				dat += "<br><br>MULTITOOL BUFFER: [T] ([T.id]) <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]"
+				dat += "<br><br>MULTITOOL BUFFER: [T] ([T.id]) <a href='?src=[REF(src)];link=1'>\[Link\]</a> <a href='?src=[REF(src)];flush=1'>\[Flush\]"
 			else
-				dat += "<br><br>MULTITOOL BUFFER: <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a>"
+				dat += "<br><br>MULTITOOL BUFFER: <a href='?src=[REF(src)];buffer=1'>\[Add Machine\]</a>"
 
 	dat += "</font>"
 	temp = ""
 	user << browse(dat, "window=tcommachine;size=520x500;can_resize=0")
-	onclose(user, "dormitory")
-
-
-// Off-Site Relays
-//
-// You are able to send/receive signals from the station's z level (changeable in the ZLEVEL_STATION #define) if
-
-
-/obj/machinery/telecomms/relay/proc/toggle_level()
-
-	var/turf/position = get_turf(src)
-
-	// Toggle on/off getting signals from the station or the current Z level
-	if(listening_level == ZLEVEL_STATION) // equals the station
-		listening_level = position.z
-		return TRUE
-	return FALSE
+	onclose(user, "tcommachine")
+	return TRUE
 
 // Returns a multitool from a user depending on their mobtype.
 
 /obj/machinery/telecomms/proc/get_multitool(mob/user)
 
-	var/obj/item/device/multitool/P = null
+	var/obj/item/multitool/P = null
 	// Let's double check
-	if(!issilicon(user) && istype(user.get_active_held_item(), /obj/item/device/multitool))
+	if(!issilicon(user) && istype(user.get_active_held_item(), /obj/item/multitool))
 		P = user.get_active_held_item()
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
 		P = U.aiMulti
 	else if(iscyborg(user) && in_range(user, src))
-		if(istype(user.get_active_held_item(), /obj/item/device/multitool))
+		if(istype(user.get_active_held_item(), /obj/item/multitool))
 			P = user.get_active_held_item()
 	return P
 
@@ -150,8 +122,8 @@
 
 /obj/machinery/telecomms/relay/Options_Menu()
 	var/dat = ""
-	dat += "<br>Broadcasting: <A href='?src=\ref[src];broadcast=1'>[broadcasting ? "YES" : "NO"]</a>"
-	dat += "<br>Receiving:    <A href='?src=\ref[src];receive=1'>[receiving ? "YES" : "NO"]</a>"
+	dat += "<br>Broadcasting: <A href='?src=[REF(src)];broadcast=1'>[broadcasting ? "YES" : "NO"]</a>"
+	dat += "<br>Receiving:    <A href='?src=[REF(src)];receive=1'>[receiving ? "YES" : "NO"]</a>"
 	return dat
 
 /obj/machinery/telecomms/relay/Options_Topic(href, href_list)
@@ -166,7 +138,7 @@
 // BUS
 
 /obj/machinery/telecomms/bus/Options_Menu()
-	var/dat = "<br>Change Signal Frequency: <A href='?src=\ref[src];change_freq=1'>[change_frequency ? "YES ([change_frequency])" : "NO"]</a>"
+	var/dat = "<br>Change Signal Frequency: <A href='?src=[REF(src)];change_freq=1'>[change_frequency ? "YES ([change_frequency])" : "NO"]</a>"
 	return dat
 
 /obj/machinery/telecomms/bus/Options_Topic(href, href_list)
@@ -191,10 +163,10 @@
 		return
 
 	if(!issilicon(usr))
-		if(!istype(usr.get_active_held_item(), /obj/item/device/multitool))
+		if(!istype(usr.get_active_held_item(), /obj/item/multitool))
 			return
 
-	var/obj/item/device/multitool/P = get_multitool(usr)
+	var/obj/item/multitool/P = get_multitool(usr)
 
 	if(href_list["input"])
 		switch(href_list["input"])
@@ -233,7 +205,7 @@
 				if(newfreq && canAccess(usr))
 					if(findtext(num2text(newfreq), "."))
 						newfreq *= 10 // shift the decimal one place
-					if(newfreq == GLOB.SYND_FREQ)
+					if(newfreq == FREQ_SYNDICATE)
 						temp = "<font color = #FF0000>-% Error: Interference preventing filtering frequency: \"[newfreq] GHz\" %-</font color>"
 					else
 						if(!(newfreq in freq_listening) && newfreq < 10000)
@@ -253,7 +225,7 @@
 		if(text2num(href_list["unlink"]) <= length(links))
 			var/obj/machinery/telecomms/T = links[text2num(href_list["unlink"])]
 			if(T)
-				temp = "<font color = #666633>-% Removed \ref[T] [T.name] from linked entities. %-</font color>"
+				temp = "<font color = #666633>-% Removed [REF(T)] [T.name] from linked entities. %-</font color>"
 
 				// Remove link entries from both T and src.
 
@@ -275,7 +247,7 @@
 				if(!(T in links))
 					links += T
 
-				temp = "<font color = #666633>-% Successfully linked with \ref[T] [T.name] %-</font color>"
+				temp = "<font color = #666633>-% Successfully linked with [REF(T)] [T.name] %-</font color>"
 
 			else
 				temp = "<font color = #666633>-% Unable to acquire buffer %-</font color>"
@@ -283,7 +255,7 @@
 	if(href_list["buffer"])
 
 		P.buffer = src
-		temp = "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
+		temp = "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>"
 
 
 	if(href_list["flush"])

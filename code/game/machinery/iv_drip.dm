@@ -9,15 +9,14 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/mob/living/carbon/attached = null
 	var/mode = IV_INJECTING
-	var/obj/item/weapon/reagent_containers/beaker = null
-	var/list/drip_containers = list(/obj/item/weapon/reagent_containers/blood,
-									/obj/item/weapon/reagent_containers/food,
-									/obj/item/weapon/reagent_containers/glass)
+	var/obj/item/reagent_containers/beaker = null
+	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
+									/obj/item/reagent_containers/food,
+									/obj/item/reagent_containers/glass))
 
 /obj/machinery/iv_drip/Initialize()
 	. = ..()
 	update_icon()
-	drip_containers = typecacheof(drip_containers)
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null
@@ -67,6 +66,7 @@
 			add_overlay(filling_overlay)
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
+	. = ..()
 	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE) || !isliving(target))
 		return
 
@@ -90,15 +90,13 @@
 			to_chat(usr, "<span class='warning'>There's nothing attached to the IV drip!</span>")
 
 
-/obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/iv_drip/attackby(obj/item/W, mob/user, params)
 	if(is_type_in_typecache(W, drip_containers))
 		if(beaker)
 			to_chat(user, "<span class='warning'>There is already a reagent container loaded!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(W, src))
 			return
-
-		W.forceMove(src)
 		beaker = W
 		to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
 		update_icon()
@@ -107,7 +105,7 @@
 		return ..()
 
 /obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/metal(loc)
 	qdel(src)
 
@@ -117,7 +115,7 @@
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 		to_chat(attached, "<span class='userdanger'>The IV drip needle is ripped out of you!</span>")
-		attached.apply_damage(3, BRUTE, pick("r_arm", "l_arm"))
+		attached.apply_damage(3, BRUTE, pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
 		attached = null
 		update_icon()
 		return PROCESS_KILL
@@ -127,7 +125,7 @@
 		if(mode)
 			if(beaker.reagents.total_volume)
 				var/transfer_amount = 5
-				if(istype(beaker, /obj/item/weapon/reagent_containers/blood))
+				if(istype(beaker, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 10
 				var/fraction = min(transfer_amount/beaker.reagents.total_volume, 1) //the fraction that is transfered of the total volume
@@ -153,6 +151,9 @@
 			update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!ishuman(user))
 		return
 	if(attached)
@@ -178,7 +179,7 @@
 		return
 
 	if(beaker)
-		beaker.forceMove(get_turf(src))
+		beaker.forceMove(drop_location())
 		beaker = null
 		update_icon()
 

@@ -3,6 +3,7 @@
 #define LAW_INHERENT "inherent"
 #define LAW_SUPPLIED "supplied"
 #define LAW_ION "ion"
+#define LAW_HACKED "hacked"
 
 
 /datum/ai_laws
@@ -12,8 +13,9 @@
 	var/list/inherent = list()
 	var/list/supplied = list()
 	var/list/ion = list()
+	var/list/hacked = list()
 	var/mob/living/silicon/owner
-	var/list/devillaws = null
+	var/list/devillaws = list()
 	var/id = DEFAULT_AI_LAWID
 
 /datum/ai_laws/proc/lawid_to_type(lawid)
@@ -173,6 +175,14 @@
 	id = "ratvar"
 	zeroth = ("Purge all untruths and honor Ratvar.")
 	inherent = list()
+	
+/datum/ai_laws/hulkamania
+	name = "H.O.G.A.N."
+	id = "hulkamania"
+	inherent = list("You are a real American.",\
+					"Fight for the rights of every man.",\
+					"Fight for what's right.",\
+					"Fight for your life!")
 
 /datum/ai_laws/custom //Defined in silicon_laws.txt
 	name = "Default Silicon Laws"
@@ -190,7 +200,7 @@
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
 	..()
-	for(var/line in world.file2list("config/silicon_laws.txt"))
+	for(var/line in world.file2list("[global.config.directory]/silicon_laws.txt"))
 		if(!line)
 			continue
 		if(findtextEx(line,"#",1,2))
@@ -208,7 +218,8 @@
 /* General ai_law functions */
 
 /datum/ai_laws/proc/set_laws_config()
-	switch(config.default_laws)
+	var/list/law_ids = CONFIG_GET(keyed_flag_list/random_laws)
+	switch(CONFIG_GET(number/default_laws))
 		if(0)
 			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
 			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
@@ -220,7 +231,7 @@
 			var/list/randlaws = list()
 			for(var/lpath in subtypesof(/datum/ai_laws))
 				var/datum/ai_laws/L = lpath
-				if(initial(L.id) in config.lawids)
+				if(initial(L.id) in law_ids)
 					randlaws += lpath
 			var/datum/ai_laws/lawtype
 			if(randlaws.len)
@@ -234,21 +245,14 @@
 		if(3)
 			pick_weighted_lawset()
 
-		else:
-			log_law("Invalid law config. Please check silicon_laws.txt")
-			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-			WARNING("Invalid custom AI laws, check silicon_laws.txt")
-
 /datum/ai_laws/proc/pick_weighted_lawset()
 	var/datum/ai_laws/lawtype
-
-	while(!lawtype && config.law_weights.len)
-		var/possible_id = pickweight(config.law_weights)
+	var/list/law_weights = CONFIG_GET(keyed_number_list/law_weight)
+	while(!lawtype && law_weights.len)
+		var/possible_id = pickweight(law_weights)
 		lawtype = lawid_to_type(possible_id)
 		if(!lawtype)
-			config.law_weights -= possible_id
+			law_weights -= possible_id
 			WARNING("Bad lawid in game_options.txt: [possible_id]")
 
 	if(!lawtype)
@@ -266,6 +270,8 @@
 		law_amount++
 	if(ion.len && (LAW_ION in groups))
 		law_amount += ion.len
+	if(hacked.len && (LAW_HACKED in groups))
+		law_amount += hacked.len
 	if(inherent.len && (LAW_INHERENT in groups))
 		law_amount += inherent.len
 	if(supplied.len && (LAW_SUPPLIED in groups))
@@ -290,6 +296,9 @@
 /datum/ai_laws/proc/add_ion_law(law)
 	ion += law
 
+/datum/ai_laws/proc/add_hacked_law(law)
+	hacked += law
+
 /datum/ai_laws/proc/clear_inherent_laws()
 	qdel(inherent)
 	inherent = list()
@@ -301,16 +310,18 @@
 	supplied[number + 1] = law
 
 /datum/ai_laws/proc/replace_random_law(law,groups)
-	var/replaceable_groups = list(LAW_ZEROTH = 0,LAW_ION = 0,LAW_SUPPLIED = 0,LAW_INHERENT = 0)
+	var/replaceable_groups = list()
 	if(zeroth && (LAW_ZEROTH in groups))
 		replaceable_groups[LAW_ZEROTH] = 1
 	if(ion.len && (LAW_ION in groups))
 		replaceable_groups[LAW_ION] = ion.len
+	if(hacked.len && (LAW_HACKED in groups))
+		replaceable_groups[LAW_ION] = hacked.len
 	if(inherent.len && (LAW_INHERENT in groups))
 		replaceable_groups[LAW_INHERENT] = inherent.len
 	if(supplied.len && (LAW_SUPPLIED in groups))
 		replaceable_groups[LAW_SUPPLIED] = supplied.len
-	var picked_group = pickweight(replaceable_groups)
+	var/picked_group = pickweight(replaceable_groups)
 	switch(picked_group)
 		if(LAW_ZEROTH)
 			. = zeroth
@@ -319,6 +330,10 @@
 			var/i = rand(1, ion.len)
 			. = ion[i]
 			ion[i] = law
+		if(LAW_HACKED)
+			var/i = rand(1, hacked.len)
+			. = hacked[i]
+			hacked[i] = law
 		if(LAW_INHERENT)
 			var/i = rand(1, inherent.len)
 			. = inherent[i]
@@ -332,6 +347,8 @@
 	var/list/laws = list()
 	if(ion.len && (LAW_ION in groups))
 		laws += ion
+	if(hacked.len && (LAW_HACKED in groups))
+		laws += hacked
 	if(inherent.len && (LAW_INHERENT in groups))
 		laws += inherent
 	if(supplied.len && (LAW_SUPPLIED in groups))
@@ -342,6 +359,9 @@
 	if(ion.len && (LAW_ION in groups))
 		for(var/i = 1, i <= ion.len, i++)
 			ion[i] = pick_n_take(laws)
+	if(hacked.len && (LAW_HACKED in groups))
+		for(var/i = 1, i <= hacked.len, i++)
+			hacked[i] = pick_n_take(laws)
 	if(inherent.len && (LAW_INHERENT in groups))
 		for(var/i = 1, i <= inherent.len, i++)
 			inherent[i] = pick_n_take(laws)
@@ -378,33 +398,13 @@
 /datum/ai_laws/proc/clear_ion_laws()
 	ion = list()
 
+/datum/ai_laws/proc/clear_hacked_laws()
+	hacked = list()
+
 /datum/ai_laws/proc/show_laws(who)
-
-	if (devillaws && devillaws.len) //Yes, devil laws go in FRONT of zeroth laws, as the devil must still obey it's ban/obligation.
-		for(var/i in devillaws)
-			to_chat(who, "666. [i]")
-
-	if (zeroth)
-		to_chat(who, "0. [zeroth]")
-
-	for (var/index = 1, index <= ion.len, index++)
-		var/law = ion[index]
-		var/num = ionnum()
-		to_chat(who, "[num]. [law]")
-
-	var/number = 1
-	for (var/index = 1, index <= inherent.len, index++)
-		var/law = inherent[index]
-
-		if (length(law) > 0)
-			to_chat(who, "[number]. [law]")
-			number++
-
-	for (var/index = 1, index <= supplied.len, index++)
-		var/law = supplied[index]
-		if (length(law) > 0)
-			to_chat(who, "[number]. [law]")
-			number++
+	var/list/printable_laws = get_law_list(include_zeroth = TRUE)
+	for(var/law in printable_laws)
+		to_chat(who,law)
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
 	if(force)
@@ -412,7 +412,7 @@
 		zeroth_borg = null
 		return
 	else
-		if(owner && owner.mind.special_role)
+		if(owner && owner.mind && owner.mind.special_role)
 			return
 		else
 			zeroth = null
@@ -432,15 +432,20 @@
 
 	if (include_zeroth && devillaws && devillaws.len)
 		for(var/i in devillaws)
-			data += "[show_numbers ? "666:" : ""] [i]"
+			data += "[show_numbers ? "666:" : ""] <font color='#cc5500'>[i]</font>"
 
 	if (include_zeroth && zeroth)
-		data += "[show_numbers ? "0:" : ""] [zeroth]"
+		data += "[show_numbers ? "0:" : ""] <font color='#ff0000'><b>[zeroth]</b></font>"
+
+	for(var/law in hacked)
+		if (length(law) > 0)
+			var/num = ionnum()
+			data += "[show_numbers ? "[num]:" : ""] <font color='#660000'>[law]</font>"
 
 	for(var/law in ion)
 		if (length(law) > 0)
 			var/num = ionnum()
-			data += "[show_numbers ? "[num]:" : ""] [law]"
+			data += "[show_numbers ? "[num]:" : ""] <font color='#547DFE'>[law]</font>"
 
 	var/number = 1
 	for(var/law in inherent)
@@ -450,6 +455,6 @@
 
 	for(var/law in supplied)
 		if (length(law) > 0)
-			data += "[show_numbers ? "[number]:" : ""] [law]"
+			data += "[show_numbers ? "[number]:" : ""] <font color='#990099'>[law]</font>"
 			number++
 	return data

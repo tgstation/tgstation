@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -10,12 +10,11 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
-/turf/open/floor/mineral/titanium,
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
 "ae" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "af" = (
@@ -30,15 +29,17 @@
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "ai" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aj" = (
@@ -58,11 +59,15 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "am" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/security{
+	dir = 8
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "an" = (
-/obj/machinery/computer/crew,
+/obj/machinery/computer/crew{
+	dir = 4
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "ao" = (
@@ -75,7 +80,7 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "ap" = (
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
@@ -88,13 +93,14 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "ar" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "as" = (
-/obj/machinery/door/airlock/glass{
-	name = "Emergency Shuttle Premium Lounge";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Premium Lounge"
 	},
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
@@ -103,7 +109,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "au" = (
-/turf/open/chasm/straight_down/lava_land_surface/normal_air,
+/turf/open/chasm,
 /area/shuttle/escape)
 "av" = (
 /obj/machinery/light{
@@ -121,24 +127,23 @@
 /area/shuttle/escape)
 "ay" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "az" = (
-/obj/item/weapon/greentext/quiet{
+/obj/item/greentext/quiet{
 	anchored = 1
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aA" = (
-/obj/machinery/door/airlock/glass{
-	name = "Emergency Shuttle Greentext";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/public/glass{
+	name = "Emergency Shuttle Greentext"
 	},
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
@@ -160,7 +165,7 @@
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/table,
-/obj/item/device/multitool/ai_detect,
+/obj/item/multitool/ai_detect,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aF" = (
@@ -184,8 +189,7 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Snappop(tm)!";
-	timid = 1
+	name = "Snappop(tm)!"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -216,7 +220,7 @@
 /area/shuttle/escape)
 "aM" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/random,
+/obj/item/bedsheet/random,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aN" = (
@@ -224,7 +228,7 @@
 	dir = 4
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/random,
+/obj/item/bedsheet/random,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aO" = (
@@ -232,12 +236,12 @@
 	dir = 8
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/random,
+/obj/item/bedsheet/random,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "aP" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/random,
+/obj/item/bedsheet/random,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -268,7 +272,7 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aU" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Infirmary"
 	},
 /turf/open/floor/bluespace,
@@ -310,12 +314,12 @@
 /area/shuttle/escape)
 "bb" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},

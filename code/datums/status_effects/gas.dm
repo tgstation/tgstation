@@ -4,6 +4,7 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /obj/screen/alert/status_effect/freon
 	var/icon/cube
+	var/can_melt = TRUE
 
 /obj/screen/alert/status_effect/freon
 	name = "Frozen Solid"
@@ -20,12 +21,16 @@
 
 /datum/status_effect/freon/tick()
 	owner.update_canmove()
-	if(owner && owner.bodytemperature >= 310.055)
+	if(can_melt && owner.bodytemperature >= BODYTEMP_NORMAL)
 		qdel(src)
 
 /datum/status_effect/freon/on_remove()
 	if(!owner.stat)
 		to_chat(owner, "The cube melts!")
 	owner.cut_overlay(cube)
-	owner.bodytemperature += 100
+	owner.adjust_bodytemperature(100)
 	owner.update_canmove()
+
+/datum/status_effect/freon/watcher
+	duration = 8
+	can_melt = FALSE

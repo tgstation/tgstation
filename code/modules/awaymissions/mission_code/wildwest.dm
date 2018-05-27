@@ -4,25 +4,52 @@
  *		Meat Grinder
  */
 
+//Areas
+
+/area/awaymission/wildwest/mines
+	name = "Wild West Mines"
+	icon_state = "away1"
+	requires_power = FALSE
+
+/area/awaymission/wildwest/gov
+	name = "Wild West Mansion"
+	icon_state = "away2"
+	requires_power = FALSE
+
+/area/awaymission/wildwest/refine
+	name = "Wild West Refinery"
+	icon_state = "away3"
+	requires_power = FALSE
+
+/area/awaymission/wildwest/vault
+	name = "Wild West Vault"
+	icon_state = "away3"
+
+/area/awaymission/wildwest/vaultdoors
+	name = "Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
+	icon_state = "away2"
+	requires_power = FALSE
+
+
  ////////// wildwest papers
- 
-/obj/item/weapon/paper/fluff/awaymissions/wildwest/grinder
+
+/obj/item/paper/fluff/awaymissions/wildwest/grinder
 	info = "meat grinder requires sacri"
 
 
-/obj/item/weapon/paper/fluff/awaymissions/wildwest/journal/page1
+/obj/item/paper/fluff/awaymissions/wildwest/journal/page1
 	name = "Planer Saul's Journal: Page 1"
 	info = "We've discovered something floating in space. We can't really tell how old it is, but it is scraped and bent to hell. There object is the size of about a room with double doors that we have yet to break into.   It is a lot sturdier than we could have imagined.  We have decided to call it 'The Vault' "
 
-/obj/item/weapon/paper/fluff/awaymissions/wildwest/journal/page4
+/obj/item/paper/fluff/awaymissions/wildwest/journal/page4
 	name = "Planer Saul's Journal: Page 4"
 	info = " The miners in the town have become sick and almost all production has stopped. They, in a fit of delusion, tossed all of their mining equipment into the furnaces.  They all claimed the same thing. A voice beckoning them to lay down their arms. Stupid miners."
 
-/obj/item/weapon/paper/fluff/awaymissions/wildwest/journal/page7
+/obj/item/paper/fluff/awaymissions/wildwest/journal/page7
 	name = "Planer Sauls' Journal: Page 7"
 	info = "The Vault...it just keeps growing and growing.  I went on my daily walk through the garden and now its just right outside the mansion... a few days ago it was only barely visible. But whatever is inside...its calling to me."
 
-/obj/item/weapon/paper/fluff/awaymissions/wildwest/journal/page8
+/obj/item/paper/fluff/awaymissions/wildwest/journal/page8
 	name = "Planer Saul's Journal: Page 8"
 	info = "The syndicate have invaded.  Their ships appeared out of nowhere and now they likely intend to kill us all and take everything.  On the off-chance that the Vault may grant us sanctuary, many of us have decided to force our way inside and bolt the door, taking as many provisions with us as we can carry.  In case you find this, send for help immediately and open the Vault. Find us inside."
 
@@ -43,9 +70,7 @@
 	var/chargesa = 1
 	var/insistinga = 0
 
-/obj/machinery/wish_granter_dark/attack_hand(mob/living/carbon/human/user)
-	usr.set_machine(src)
-
+/obj/machinery/wish_granter_dark/interact(mob/living/carbon/human/user)
 	if(chargesa <= 0)
 		to_chat(user, "The Wish Granter lies silent.")
 		return
@@ -86,18 +111,12 @@
 			if("To Kill")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 				to_chat(user, "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart.")
-				SSticker.mode.traitors += user.mind
-				user.mind.special_role = "traitor"
-				var/datum/objective/hijack/hijack = new
-				hijack.owner = user.mind
-				user.mind.objectives += hijack
-				to_chat(user, "<B>Your inhibitions are swept away, the bonds of loyalty broken, you are free to murder as you please!</B>")
-				user.mind.announce_objectives()
+				user.mind.add_antag_datum(/datum/antagonist/wishgranter)
 				user.set_species(/datum/species/shadow)
 			if("Peace")
 				to_chat(user, "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>")
 				to_chat(user, "You feel as if you just narrowly avoided a terrible fate...")
-				for(var/mob/living/simple_animal/hostile/faithless/F in GLOB.mob_list)
+				for(var/mob/living/simple_animal/hostile/faithless/F in GLOB.mob_living_list)
 					F.death()
 
 
@@ -126,7 +145,7 @@
 	var/mob/living/carbon/human/M = AM
 
 	if(M.stat != DEAD && M.ckey)
-		visible_message("<span class='warning'>[M] triggered the [src]!</span>")
+		visible_message("<span class='warning'>[M] triggered [src]!</span>")
 		triggered = 1
 
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread

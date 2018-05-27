@@ -10,7 +10,7 @@
 	name = "Shuttle Loan"
 	typepath = /datum/round_event/shuttle_loan
 	max_occurrences = 1
-	earliest_start = 4000
+	earliest_start = 7 MINUTES
 
 /datum/round_event/shuttle_loan
 	announceWhen = 1
@@ -20,18 +20,18 @@
 	var/bonus_points = 10000
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
 
-/datum/round_event/shuttle_loan/start()
+/datum/round_event/shuttle_loan/setup()
 	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY)
 
-/datum/round_event/shuttle_loan/announce()
+/datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)
 			priority_announce("Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache.","CentCom Counter Intelligence")
 		if(RUSKY_PARTY)
-			priority_announce("Cargo: A group of angry russians want to have a party, can you send them your cargo shuttle then make them disappear?","CentCom Russian Outreach Program")
+			priority_announce("Cargo: A group of angry Russians want to have a party. Can you send them your cargo shuttle then make them disappear?","CentCom Russian Outreach Program")
 		if(SPIDER_GIFT)
-			priority_announce("Cargo: The Spider Clan has sent us a mysterious gift, can we ship it to you to see what's inside?","CentCom Diplomatic Corps")
+			priority_announce("Cargo: The Spider Clan has sent us a mysterious gift. Can we ship it to you to see what's inside?","CentCom Diplomatic Corps")
 		if(DEPARTMENT_RESUPPLY)
 			priority_announce("Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","CentCom Supply Department")
 			thanks_msg = "The cargo shuttle should return in 5 minutes."
@@ -103,7 +103,7 @@
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/syndicate)
 
 			if(RUSKY_PARTY)
-				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/organic/party]
+				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/service/party]
 				pack.generate(pick_n_take(empty_shuttle_turfs))
 
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
@@ -139,16 +139,16 @@
 				var/turf/T
 				for(var/i=0, i<10, i++)
 					if(prob(15))
-						shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle)
+						shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle)
 					else if(prob(15))
-						shuttle_spawns.Add(/obj/item/weapon/reagent_containers/syringe)
+						shuttle_spawns.Add(/obj/item/reagent_containers/syringe)
 					else if(prob(25))
-						shuttle_spawns.Add(/obj/item/weapon/shard)
+						shuttle_spawns.Add(/obj/item/shard)
 					T = pick_n_take(empty_shuttle_turfs)
 					new infected_assistant(T)
 				shuttle_spawns.Add(/obj/structure/closet/crate)
-				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat)
-				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/magnitis)
+				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/pierrot_throat)
+				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/magnitis)
 
 			if(DEPARTMENT_RESUPPLY)
 				var/list/crate_types = list(

@@ -55,6 +55,7 @@
 /obj/structure/fluff/paper{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "ak" = (
@@ -106,7 +107,7 @@
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "as" = (
-/obj/item/weapon/paper/crumpled/ruins/originalcontent,
+/obj/item/paper/crumpled/ruins/originalcontent,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "at" = (
@@ -493,7 +494,7 @@
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bt" = (
-/obj/item/weapon/storage/crayons,
+/obj/item/storage/crayons,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bu" = (
@@ -536,17 +537,12 @@
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bA" = (
-/obj/item/device/toner,
+/obj/item/toner,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bB" = (
 /obj/structure/easel,
-/obj/item/weapon/paper/pamphlet{
-	icon = 'icons/obj/fluff.dmi';
-	icon_state = "painting4";
-	info = "<i>This picture depicts a crudely-drawn stickman firing a crudely-drawn gun.</i>";
-	name = "Painting - 'BANG' "
-	},
+/obj/item/paper/pamphlet/ruin/originalcontent/stickman,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bC" = (
@@ -596,10 +592,10 @@
 	dir = 9
 	},
 /obj/structure/closet/crate/bin,
-/obj/item/weapon/paper/crumpled/ruins/originalcontent,
-/obj/item/weapon/paper/crumpled/ruins/originalcontent,
-/obj/item/weapon/paper/crumpled/ruins/originalcontent,
-/obj/item/device/gps{
+/obj/item/paper/crumpled/ruins/originalcontent,
+/obj/item/paper/crumpled/ruins/originalcontent,
+/obj/item/paper/crumpled/ruins/originalcontent,
+/obj/item/gps{
 	gpstag = "Pulpy Signal"
 	},
 /turf/open/indestructible/paper,
@@ -609,12 +605,7 @@
 	dir = 1
 	},
 /obj/structure/easel,
-/obj/item/weapon/paper/pamphlet{
-	icon = 'icons/obj/fluff.dmi';
-	icon_state = "painting1";
-	info = "<i>This picture depicts a sunny day on a lush hillside, set under a shaded tree.</i>";
-	name = "Painting - 'Treeside' "
-	},
+/obj/item/paper/pamphlet/ruin/originalcontent/treeside,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bK" = (
@@ -622,7 +613,7 @@
 	dir = 5
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/storage/crayons,
+/obj/item/storage/crayons,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bL" = (
@@ -716,12 +707,7 @@
 	dir = 8
 	},
 /obj/structure/easel,
-/obj/item/weapon/paper/pamphlet{
-	icon = 'icons/obj/fluff.dmi';
-	icon_state = "painting3";
-	info = "<i>This picture depicts a smiling clown. Something doesn't feel right about this..</i>";
-	name = "Painting - 'Pennywise' "
-	},
+/obj/item/paper/pamphlet/ruin/originalcontent/pennywise,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "bX" = (
@@ -737,7 +723,7 @@
 	dir = 4
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/rainbow,
+/obj/item/bedsheet/rainbow,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "ca" = (
@@ -745,7 +731,7 @@
 	dir = 10
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/storage/crayons,
+/obj/item/storage/crayons,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "cb" = (
@@ -789,12 +775,12 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "ch" = (
 /obj/structure/fluff/paper,
-/obj/item/weapon/paper/crumpled/ruins/originalcontent,
+/obj/item/paper/crumpled/ruins/originalcontent,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "ci" = (
@@ -830,8 +816,8 @@
 "cm" = (
 /obj/structure/fluff/paper,
 /obj/structure/table/wood,
-/obj/item/weapon/storage/crayons,
-/obj/item/weapon/storage/crayons,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "cn" = (
@@ -839,9 +825,9 @@
 	dir = 6
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/canvas/twentythreeXtwentythree,
-/obj/item/weapon/canvas,
-/obj/item/weapon/canvas/nineteenXnineteen,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas,
+/obj/item/canvas/nineteenXnineteen,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "co" = (
@@ -862,19 +848,14 @@
 "cq" = (
 /obj/structure/fluff/paper,
 /obj/structure/table/wood,
-/obj/item/weapon/storage/crayons,
-/obj/item/weapon/pen/fourcolor,
+/obj/item/storage/crayons,
+/obj/item/pen/fourcolor,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "cr" = (
 /obj/structure/fluff/paper,
 /obj/structure/easel,
-/obj/item/weapon/paper/pamphlet{
-	icon = 'icons/obj/fluff.dmi';
-	icon_state = "painting2";
-	info = "<i>This picture depicts a man yelling on a bridge for no apparent reason.</i>";
-	name = "Painting - 'Hands-On-Face' "
-	},
+/obj/item/paper/pamphlet/ruin/originalcontent/yelling,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
 "cs" = (
@@ -915,10 +896,24 @@
 /mob/living/simple_animal/hostile/stickman/ranged,
 /turf/open/indestructible/paper,
 /area/ruin/powered)
+"wr" = (
+/obj/machinery/door/airlock/freezer{
+	name = "airlock";
+	opacity = 0
+	},
+/obj/structure/fluff/paper{
+	dir = 8
+	},
+/obj/structure/fluff/paper{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/indestructible/paper,
+/area/ruin/powered)
 
 (1,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -983,8 +978,6 @@ aa
 aa
 aa
 aa
-aa
-aa
 ac
 af
 af
@@ -1011,8 +1004,6 @@ aa
 aa
 "}
 (3,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -1076,8 +1067,6 @@ aa
 aa
 aa
 aa
-aa
-aa
 ac
 af
 af
@@ -1105,8 +1094,6 @@ aa
 aa
 "}
 (5,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -1167,8 +1154,6 @@ aa
 aa
 aa
 aa
-aa
-aa
 ac
 af
 af
@@ -1199,8 +1184,6 @@ aa
 aa
 "}
 (7,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -1256,8 +1239,6 @@ aa
 aa
 aa
 aa
-aa
-aa
 ab
 ae
 ae
@@ -1293,8 +1274,6 @@ aa
 aa
 "}
 (9,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -1348,8 +1327,6 @@ aa
 aa
 aa
 aa
-aa
-aa
 ab
 ae
 ai
@@ -1387,8 +1364,6 @@ aa
 aa
 "}
 (11,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -1441,8 +1416,6 @@ aa
 aa
 aa
 aa
-aa
-aa
 ab
 ai
 af
@@ -1481,8 +1454,6 @@ af
 bd
 "}
 (13,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -1535,8 +1506,6 @@ aa
 aa
 aa
 aa
-aa
-aa
 ac
 af
 af
@@ -1575,8 +1544,6 @@ aw
 be
 "}
 (15,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -1627,8 +1594,6 @@ aa
 aa
 aa
 aa
-aa
-aa
 ac
 af
 af
@@ -1669,8 +1634,6 @@ aa
 aa
 "}
 (17,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -1719,8 +1682,6 @@ aa
 aa
 aa
 aa
-aa
-aa
 ac
 af
 af
@@ -1763,8 +1724,6 @@ aa
 aa
 "}
 (19,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -1812,8 +1771,6 @@ aa
 (20,1,1) = {"
 aa
 aa
-aa
-aa
 ab
 ai
 af
@@ -1859,8 +1816,6 @@ aa
 (21,1,1) = {"
 aa
 aa
-aa
-aa
 ac
 af
 af
@@ -1904,8 +1859,6 @@ aa
 aa
 "}
 (22,1,1) = {"
-aa
-aa
 ab
 ae
 ai
@@ -1951,8 +1904,6 @@ aa
 aa
 "}
 (23,1,1) = {"
-aa
-aa
 ac
 af
 af
@@ -1998,8 +1949,6 @@ aa
 aa
 "}
 (24,1,1) = {"
-aa
-aa
 ac
 af
 af
@@ -2045,8 +1994,6 @@ aa
 aa
 "}
 (25,1,1) = {"
-aa
-aa
 ac
 af
 af
@@ -2092,8 +2039,6 @@ aa
 aa
 "}
 (26,1,1) = {"
-aa
-aa
 ac
 af
 af
@@ -2139,8 +2084,6 @@ aa
 aa
 "}
 (27,1,1) = {"
-aa
-aa
 ac
 af
 af
@@ -2186,8 +2129,6 @@ aa
 aa
 "}
 (28,1,1) = {"
-aa
-aa
 ac
 af
 af
@@ -2233,8 +2174,6 @@ aa
 aa
 "}
 (29,1,1) = {"
-aa
-aa
 ac
 af
 af
@@ -2280,8 +2219,6 @@ aa
 aa
 "}
 (30,1,1) = {"
-aa
-aa
 ac
 af
 af
@@ -2327,8 +2264,6 @@ aa
 aa
 "}
 (31,1,1) = {"
-aa
-aa
 ac
 af
 af
@@ -2374,8 +2309,6 @@ aa
 aa
 "}
 (32,1,1) = {"
-aa
-aa
 ad
 ag
 af
@@ -2422,8 +2355,6 @@ aa
 "}
 (33,1,1) = {"
 aa
-aa
-aa
 ac
 af
 al
@@ -2468,8 +2399,6 @@ aa
 aa
 "}
 (34,1,1) = {"
-aa
-aa
 aa
 ac
 af
@@ -2516,8 +2445,6 @@ aa
 "}
 (35,1,1) = {"
 aa
-aa
-aa
 ac
 af
 am
@@ -2562,8 +2489,6 @@ aa
 aa
 "}
 (36,1,1) = {"
-aa
-aa
 aa
 ac
 af
@@ -2610,12 +2535,10 @@ aa
 "}
 (37,1,1) = {"
 aa
-aa
-aa
 ah
 aj
 an
-aj
+wr
 av
 ap
 ap
@@ -2656,8 +2579,6 @@ aa
 aa
 "}
 (38,1,1) = {"
-aa
-aa
 aa
 ac
 af
@@ -2704,8 +2625,6 @@ aa
 "}
 (39,1,1) = {"
 aa
-aa
-aa
 ad
 ag
 af
@@ -2750,8 +2669,6 @@ aa
 aa
 "}
 (40,1,1) = {"
-aa
-aa
 aa
 aa
 ad
@@ -2800,8 +2717,6 @@ aa
 aa
 aa
 aa
-aa
-aa
 ad
 ag
 af
@@ -2844,8 +2759,6 @@ aa
 aa
 "}
 (42,1,1) = {"
-aa
-aa
 aa
 aa
 aa
@@ -2897,8 +2810,6 @@ aa
 aa
 aa
 aa
-aa
-aa
 ac
 af
 af
@@ -2944,8 +2855,6 @@ aa
 aa
 aa
 aa
-aa
-aa
 ad
 aw
 aw
@@ -2985,8 +2894,6 @@ aa
 aa
 "}
 (45,1,1) = {"
-aa
-aa
 aa
 aa
 aa

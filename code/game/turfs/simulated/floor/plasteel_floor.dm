@@ -4,6 +4,10 @@
 	broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	burnt_states = list("floorscorched1", "floorscorched2")
 
+/turf/open/floor/plasteel/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>")
+
 /turf/open/floor/plasteel/update_icon()
 	if(!..())
 		return 0
@@ -15,18 +19,24 @@
 	initial_gas_mix = "TEMP=2.7"
 
 
-/turf/open/floor/plasteel/black
-	icon_state = "dark"
-/turf/open/floor/plasteel/black/telecomms
+/turf/open/floor/plasteel/dark
+	icon_state = "darkfull"
+/turf/open/floor/plasteel/dark/airless
+	initial_gas_mix = "TEMP=2.7"
+/turf/open/floor/plasteel/dark/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
-/turf/open/floor/plasteel/black/telecomms/mainframe
+/turf/open/floor/plasteel/dark/telecomms/mainframe
 	name = "Mainframe Floor"
-/turf/open/floor/plasteel/airless/black
+/turf/open/floor/plasteel/dark/telecomms/server
+	name = "Server Base"
+/turf/open/floor/plasteel/dark/telecomms/server/walkway
+	name = "Server Walkway"
+/turf/open/floor/plasteel/airless/dark
+	icon_state = "darkfull"
+/turf/open/floor/plasteel/dark/side
 	icon_state = "dark"
-/turf/open/floor/plasteel/black/side
-	icon_state = "black" //NOTICE ME SEMPAI: floors.dmi contains two sprites named black, remove the incorrect one
-/turf/open/floor/plasteel/black/corner
-	icon_state = "blackcorner"
+/turf/open/floor/plasteel/dark/corner
+	icon_state = "darkcorner"
 
 
 
@@ -216,20 +226,16 @@
 /turf/open/floor/plasteel/arrival/corner
 	icon_state = "arrivalcorner"
 
-/turf/open/floor/plasteel/caution
-	icon_state = "caution"
-/turf/open/floor/plasteel/caution/corner
-	icon_state = "cautioncorner"
-
 /turf/open/floor/plasteel/escape
 	icon_state = "escape"
 /turf/open/floor/plasteel/escape/corner
 	icon_state = "escapecorner"
 
-/turf/open/floor/plasteel/whitebot
-	icon_state = "whitebot"
-/turf/open/floor/plasteel/whitebot/delivery
-	icon_state = "whitedelivery"
+
+/turf/open/floor/plasteel/caution
+	icon_state = "caution"
+/turf/open/floor/plasteel/caution/corner
+	icon_state = "cautioncorner"
 
 
 /turf/open/floor/plasteel/redyellow
@@ -276,19 +282,6 @@
 	icon_state = "yellowcornersiding"
 
 
-/turf/open/floor/plasteel/podhatch
-	icon_state = "podhatch"
-/turf/open/floor/plasteel/podhatch/corner
-	icon_state = "podhatchcorner"
-
-
-/turf/open/floor/plasteel/loadingarea
-	icon_state = "loadingarea"
-/turf/open/floor/plasteel/loadingarea/dirty
-	icon_state = "loadingareadirty1"
-/turf/open/floor/plasteel/loadingarea/dirtydirty
-	icon_state = "loadingareadirty2"
-
 /turf/open/floor/plasteel/asteroid
 	icon_state = "asteroidfloor"
 /turf/open/floor/plasteel/airless/asteroid
@@ -325,14 +318,10 @@
 /turf/open/floor/plasteel/hydrofloor
 	icon_state = "hydrofloor"
 
-/turf/open/floor/plasteel/delivery
-	icon_state = "delivery"
-
-/turf/open/floor/plasteel/bot
-	icon_state = "bot"
-
 /turf/open/floor/plasteel/freezer
 	icon_state = "freezerfloor"
+/turf/open/floor/plasteel/freezer/airless
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plasteel/bar
 	icon_state = "bar"
@@ -350,11 +339,20 @@
 	icon_state = "cafeteria"
 
 /turf/open/floor/plasteel/vault
+	icon_state = "vaultfull"
+/turf/open/floor/plasteel/vault/side
 	icon_state = "vault"
+/turf/open/floor/plasteel/vault/corner
+	icon_state = "vaultcorner"
+/turf/open/floor/plasteel/vault/airless
+	initial_gas_mix = "TEMP=2.7"
 /turf/open/floor/plasteel/vault/telecomms
 	initial_gas_mix = "n2=100;TEMP=80"
 /turf/open/floor/plasteel/vault/telecomms/mainframe
 	name = "Mainframe Floor"
+/turf/open/floor/plasteel/vault/killroom
+	name = "Killroom Floor"
+	initial_gas_mix = "n2=500;TEMP=80"
 
 /turf/open/floor/plasteel/cult
 	icon_state = "cult"

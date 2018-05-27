@@ -15,8 +15,8 @@
 	power_equip = FALSE
 	power_light = FALSE
 	outdoors = TRUE
-	ambientsounds = list('sound/ambience/ambimine.ogg')
-	flags = NONE
+	flags_1 = NONE
+	ambientsounds = MINING
 
 /area/mine/unexplored
 	name = "Mine"
@@ -29,8 +29,8 @@
 	power_equip = FALSE
 	power_light = FALSE
 	outdoors = TRUE
-	ambientsounds = list('sound/ambience/ambimine.ogg')
-	flags = NONE
+	flags_1 = NONE
+	ambientsounds = MINING
 
 /area/mine/lobby
 	name = "Mining Station"
@@ -65,18 +65,13 @@
 /area/mine/sleeper
 	name = "Mining Station Emergency Sleeper"
 
-/area/mine/north_outpost
-	name = "North Mining Outpost"
-
-/area/mine/west_outpost
-	name = "West Mining Outpost"
-
 /area/mine/laborcamp
 	name = "Labor Camp"
 
 /area/mine/laborcamp/security
 	name = "Labor Camp Security"
 	icon_state = "security"
+	ambientsounds = HIGHSEC
 
 
 
@@ -86,7 +81,7 @@
 /area/lavaland
 	icon_state = "mining"
 	has_gravity = TRUE
-	flags = NONE
+	flags_1 = NONE
 
 /area/lavaland/surface
 	name = "Lavaland"
@@ -98,7 +93,7 @@
 	power_equip = FALSE
 	power_light = FALSE
 	requires_power = TRUE
-	ambientsounds = list('sound/ambience/ambilava.ogg')
+	ambientsounds = MINING
 
 /area/lavaland/underground
 	name = "Lavaland Caves"
@@ -110,7 +105,7 @@
 	power_environ = FALSE
 	power_equip = FALSE
 	power_light = FALSE
-	ambientsounds = list('sound/ambience/ambilava.ogg')
+	ambientsounds = MINING
 
 
 /area/lavaland/surface/outdoors

@@ -3,9 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner{
-	icon_state = "corner";
 	dir = 8
 	},
 /area/ruin/powered)
@@ -13,39 +11,22 @@
 /turf/closed/indestructible/oldshuttle,
 /area/ruin/powered)
 "d" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "e" = (
-/turf/template_noop,
 /turf/closed/indestructible/oldshuttle/corner,
 /area/ruin/powered)
 "f" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
 /turf/closed/indestructible/oldshuttle/corner{
-	icon_state = "corner";
 	dir = 1
 	},
 /area/ruin/powered)
 "g" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "h" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
 /turf/closed/indestructible/oldshuttle/corner{
-	icon_state = "corner";
 	dir = 4
 	},
 /area/ruin/powered)
@@ -54,10 +35,7 @@
 	icon_state = "oldcloset";
 	name = "strange closet"
 	},
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "j" = (
 /obj/structure/shuttle/engine/propulsion/burst{
@@ -67,10 +45,7 @@
 /area/ruin/powered)
 "k" = (
 /mob/living/simple_animal/hostile/retaliate/spaceman,
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "l" = (
 /turf/closed/indestructible/oldshuttle{
@@ -82,25 +57,19 @@
 	icon_state = "chairold";
 	dir = 1
 	},
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "n" = (
 /obj/structure/chair/old{
 	icon_state = "chairold";
 	dir = 1
 	},
-/obj/item/weapon/crowbar/large{
+/obj/item/crowbar/large{
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy..";
 	force = 20;
 	name = "heavy crowbar"
 	},
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "o" = (
 /obj/structure/chair/old{
@@ -108,55 +77,15 @@
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/retaliate/spaceman,
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
-/area/ruin/powered)
-"p" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
-/turf/closed/indestructible/oldshuttle/corner{
-	icon_state = "corner";
-	dir = 8
-	},
-/area/ruin/powered)
-"q" = (
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
-/turf/closed/indestructible/oldshuttle/corner,
-/area/ruin/powered)
-"r" = (
-/turf/template_noop,
-/turf/closed/indestructible/oldshuttle/corner{
-	icon_state = "corner";
-	dir = 1
-	},
-/area/ruin/powered)
-"s" = (
-/turf/template_noop,
-/turf/closed/indestructible/oldshuttle/corner{
-	icon_state = "corner";
-	dir = 4
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "t" = (
 /obj/machinery/power/generator,
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "u" = (
 /obj/machinery/power/smes,
-/turf/open/floor/oldshuttle{
-	baseturf = /turf/open/space;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
-	},
+/turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "v" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
@@ -233,7 +162,7 @@ g
 g
 g
 g
-p
+b
 d
 l
 w
@@ -249,8 +178,8 @@ c
 g
 g
 g
-p
-r
+b
+f
 a
 a
 a
@@ -270,7 +199,7 @@ c
 c
 c
 c
-s
+h
 a
 "}
 (7,1,1) = {"
@@ -288,7 +217,7 @@ i
 c
 u
 c
-s
+h
 "}
 (8,1,1) = {"
 b
@@ -304,7 +233,7 @@ m
 m
 c
 g
-q
+e
 c
 "}
 (9,1,1) = {"
@@ -318,7 +247,7 @@ m
 m
 m
 m
-p
+b
 c
 g
 g
@@ -352,7 +281,7 @@ m
 m
 m
 m
-q
+e
 c
 g
 g
@@ -372,7 +301,7 @@ m
 m
 c
 g
-p
+b
 c
 "}
 (13,1,1) = {"
@@ -390,7 +319,7 @@ i
 c
 u
 c
-r
+f
 "}
 (14,1,1) = {"
 a
@@ -406,7 +335,7 @@ c
 c
 c
 c
-r
+f
 a
 "}
 (15,1,1) = {"
@@ -419,8 +348,8 @@ c
 g
 g
 g
-q
-s
+e
+h
 a
 a
 a
@@ -437,7 +366,7 @@ g
 g
 g
 g
-q
+e
 d
 l
 v

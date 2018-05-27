@@ -7,9 +7,9 @@
 /obj/item/stack/wrapping_paper
 	name = "wrapping paper"
 	desc = "Wrap packages with this festive paper to make gifts."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "wrap_paper"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	amount = 25
 	max_amount = 25
 	resistance_flags = FLAMMABLE
@@ -18,7 +18,7 @@
 	var/turf/T = get_turf(src)
 	. = ..()
 	if(QDELETED(src) && !transfer)
-		new /obj/item/weapon/c_tube(T)
+		new /obj/item/c_tube(T)
 
 
 /*
@@ -27,21 +27,34 @@
 
 /obj/item/stack/packageWrap
 	name = "package wrapper"
+	singular_name = "wrapping sheet"
 	desc = "You can use this to wrap items in."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "deliveryPaper"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	amount = 25
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 
+/obj/item/stack/packageWrap/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] begins wrapping [user.p_them()]self in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(use(3))
+		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(user.loc))
+		P.icon_state = "deliverypackage5"
+		user.forceMove(P)
+		P.add_fingerprint(user)
+		return OXYLOSS
+	else
+		to_chat(user, "<span class='warning'>You need more paper!</span>")
+		return SHAME
+
 /obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
 	return 1
 
-/obj/item/weapon/storage/can_be_package_wrapped()
+/obj/item/storage/can_be_package_wrapped()
 	return 0
 
-/obj/item/weapon/storage/box/can_be_package_wrapped()
+/obj/item/storage/box/can_be_package_wrapped()
 	return 1
 
 /obj/item/smallDelivery/can_be_package_wrapped()
@@ -104,12 +117,12 @@
 	var/turf/T = get_turf(src)
 	. = ..()
 	if(QDELETED(src) && !transfer)
-		new /obj/item/weapon/c_tube(T)
+		new /obj/item/c_tube(T)
 
-/obj/item/weapon/c_tube
+/obj/item/c_tube
 	name = "cardboard tube"
 	desc = "A tube... of cardboard."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "c_tube"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY

@@ -15,14 +15,14 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	faction = list("creature")
 	robust_searching = 1
-	stat_attack = 2
+	stat_attack = DEAD
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	speak_emote = list("squeaks")
 	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin
 	var/egg_lain = 0
-	gold_core_spawnable = 1 //are you sure about this??
+	gold_core_spawnable = HOSTILE_SPAWN //are you sure about this??
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
 	var/obj/item/organ/body_egg/changeling_egg/egg = new(victim)
@@ -32,7 +32,7 @@
 	else if(mind) // Let's make this a feature
 		egg.origin = mind
 	for(var/obj/item/organ/I in src)
-		I.loc = egg
+		I.forceMove(egg)
 	visible_message("<span class='warning'>[src] plants something in [victim]'s flesh!</span>", \
 					"<span class='danger'>We inject our egg into [victim]'s body!</span>")
 	egg_lain = 1
@@ -43,7 +43,7 @@
 		// Changeling egg can survive in aliens!
 		var/mob/living/carbon/C = target
 		if(C.stat == DEAD)
-			if(C.status_flags & XENO_HOST)
+			if(C.has_trait(TRAIT_XENO_HOST))
 				to_chat(src, "<span class='userdanger'>A foreign presence repels us from this body. Perhaps we should try to infest another?</span>")
 				return
 			Infect(target)
@@ -53,7 +53,6 @@
 /obj/item/organ/body_egg/changeling_egg
 	name = "changeling egg"
 	desc = "Twitching and disgusting."
-	origin_tech = "biotech=7" // You need to be really lucky to obtain it.
 	var/datum/mind/origin
 	var/time
 
@@ -72,14 +71,15 @@
 	for(var/obj/item/organ/I in src)
 		I.Insert(M, 1)
 
-	if(origin && origin.current && (origin.current.stat == DEAD))
+	if(origin && (origin.current ? (origin.current.stat == DEAD) : origin.get_ghost()))
 		origin.transfer_to(M)
-		if(!origin.changeling)
-			M.make_changeling()
-		if(origin.changeling.can_absorb_dna(M, owner))
-			origin.changeling.add_new_profile(owner, M)
+		var/datum/antagonist/changeling/C = origin.has_antag_datum(/datum/antagonist/changeling)
+		if(!C)
+			C = origin.add_antag_datum(/datum/antagonist/changeling/xenobio)
+		if(C.can_absorb_dna(owner))
+			C.add_new_profile(owner)
 
-		origin.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+		C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 		M.key = origin.key
 	owner.gib()
 

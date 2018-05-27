@@ -12,18 +12,30 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	typepath = /datum/round_event/immovable_rod
 	min_players = 15
 	max_occurrences = 5
+	var/atom/special_target
+
+
+/datum/round_event_control/immovable_rod/admin_setup()
+	if(!check_rights(R_FUN))
+		return
+
+	var/aimed = alert("Aimed at current location?","Sniperod", "Yes", "No")
+	if(aimed == "Yes")
+		special_target = get_turf(usr)
 
 /datum/round_event/immovable_rod
 	announceWhen = 5
 
-/datum/round_event/immovable_rod/announce()
+/datum/round_event/immovable_rod/announce(fake)
 	priority_announce("What the fuck was that?!", "General Alert")
 
 /datum/round_event/immovable_rod/start()
+	var/datum/round_event_control/immovable_rod/C = control
 	var/startside = pick(GLOB.cardinals)
-	var/turf/startT = spaceDebrisStartLoc(startside, ZLEVEL_STATION)
-	var/turf/endT = spaceDebrisFinishLoc(startside, ZLEVEL_STATION)
-	new /obj/effect/immovablerod(startT, endT)
+	var/z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
+	var/turf/startT = spaceDebrisStartLoc(startside, z)
+	var/turf/endT = spaceDebrisFinishLoc(startside, z)
+	new /obj/effect/immovablerod(startT, endT, C.special_target)
 
 /obj/effect/immovablerod
 	name = "immovable rod"
@@ -36,18 +48,28 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/z_original = 0
 	var/destination
 	var/notify = TRUE
+	var/atom/special_target
 
-/obj/effect/immovablerod/New(atom/start, atom/end)
+/obj/effect/immovablerod/New(atom/start, atom/end, aimed_at)
 	..()
 	SSaugury.register_doom(src, 2000)
 	z_original = z
 	destination = end
+	special_target = aimed_at
 	if(notify)
 		notify_ghosts("\A [src] is inbound!",
-			enter_link="<a href=?src=\ref[src];orbit=1>(Click to orbit)</a>",
+			enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>",
 			source=src, action=NOTIFY_ORBIT)
 	GLOB.poi_list += src
-	if(end && end.z==z_original)
+
+	var/special_target_valid = FALSE
+	if(special_target)
+		var/turf/T = get_turf(special_target)
+		if(T.z == z_original)
+			special_target_valid = TRUE
+	if(special_target_valid)
+		walk_towards(src, special_target, 1)
+	else if(end && end.z==z_original)
 		walk_towards(src, destination, 1)
 
 /obj/effect/immovablerod/Topic(href, href_list)
@@ -60,13 +82,28 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	GLOB.poi_list -= src
 	. = ..()
 
-/obj/effect/immovablerod/Move()
+/obj/effect/immovablerod/Moved()
 	if((z != z_original) || (loc == destination))
 		qdel(src)
+	if(special_target && loc == get_turf(special_target))
+		complete_trajectory()
 	return ..()
+
+/obj/effect/immovablerod/proc/complete_trajectory()
+	//We hit what we wanted to hit, time to go
+	special_target = null
+	destination = get_edge_target_turf(src, dir)
+	walk(src,0)
+	walk_towards(src, destination, 1)
 
 /obj/effect/immovablerod/ex_act(severity, target)
 	return 0
+
+/obj/effect/immovablerod/singularity_act()
+	return
+
+/obj/effect/immovablerod/singularity_pull()
+	return
 
 /obj/effect/immovablerod/Collide(atom/clong)
 	if(prob(10))
@@ -76,6 +113,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(clong && prob(25))
 		x = clong.x
 		y = clong.y
+
+	if(special_target && clong == special_target)
+		complete_trajectory()
 
 	if(isturf(clong) || isobj(clong))
 		if(clong.density)

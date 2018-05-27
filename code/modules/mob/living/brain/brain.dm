@@ -1,5 +1,5 @@
 /mob/living/brain
-	var/obj/item/device/mmi/container = null
+	var/obj/item/mmi/container = null
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
@@ -7,19 +7,19 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 
 /mob/living/brain/Initialize()
-	..()
+	. = ..()
 	create_dna(src)
 	stored_dna.initialize_dna(random_blood_type())
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
 		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
-		loc = OB
 		OB.brainmob = src
+		forceMove(OB)
 
 
 /mob/living/brain/proc/create_dna()
 	stored_dna = new /datum/dna/stored(src)
 	if(!stored_dna.species)
-		var/rando_race = pick(config.roundstart_races)
+		var/rando_race = pick(GLOB.roundstart_races)
 		stored_dna.species = new rando_race()
 
 /mob/living/brain/Destroy()
@@ -66,8 +66,21 @@
 
 /mob/living/brain/ClickOn(atom/A, params)
 	..()
-	if(istype(loc, /obj/item/device/mmi))
-		var/obj/item/device/mmi/MMI = loc
+	if(istype(loc, /obj/item/mmi))
+		var/obj/item/mmi/MMI = loc
 		var/obj/mecha/M = MMI.mecha
 		if((src == MMI.brainmob) && istype(M))
 			return M.click_action(A,src,params)
+
+/mob/living/brain/forceMove(atom/destination)
+	if(container)
+		return container.forceMove(destination)
+	else if (istype(loc, /obj/item/organ/brain))
+		var/obj/item/organ/brain/B = loc
+		B.forceMove(destination)
+	else if (istype(destination, /obj/item/organ/brain))
+		doMove(destination)
+	else if (istype(destination, /obj/item/mmi))
+		doMove(destination)
+	else
+		CRASH("Brainmob without a container [src] attempted to move to [destination].")

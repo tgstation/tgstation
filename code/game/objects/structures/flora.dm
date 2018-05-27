@@ -6,61 +6,88 @@
 //trees
 /obj/structure/flora/tree
 	name = "tree"
+	desc = "A large tree."
 	density = TRUE
 	pixel_x = -16
 	layer = FLY_LAYER
-	var/cut = FALSE
 	var/log_amount = 10
 
-/obj/structure/flora/tree/attackby(obj/item/weapon/W, mob/user, params)
-	if(!cut && log_amount && (!(NODECONSTRUCT in flags)))
+/obj/structure/flora/tree/attackby(obj/item/W, mob/user, params)
+	if(log_amount && (!(flags_1 & NODECONSTRUCT_1)))
 		if(W.sharpness && W.force > 0)
 			if(W.hitsound)
 				playsound(get_turf(src), W.hitsound, 100, 0, 0)
 			user.visible_message("<span class='notice'>[user] begins to cut down [src] with [W].</span>","<span class='notice'>You begin to cut down [src] with [W].</span>", "You hear the sound of sawing.")
-			if(do_after(user, 1000/W.force, target = user)) //5 seconds with 20 force, 8 seconds with a hatchet, 20 seconds with a shard.
-				if(cut)
-					return
+			if(do_after(user, 1000/W.force, target = src)) //5 seconds with 20 force, 8 seconds with a hatchet, 20 seconds with a shard.
 				user.visible_message("<span class='notice'>[user] fells [src] with the [W].</span>","<span class='notice'>You fell [src] with the [W].</span>", "You hear the sound of a tree falling.")
 				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , 0, 0)
-				icon = 'icons/obj/flora/pinetrees.dmi'
-				icon_state = "tree_stump"
-				density = FALSE
-				pixel_x = -16
-				name += " stump"
-				cut = TRUE
 				for(var/i=1 to log_amount)
-					new /obj/item/weapon/grown/log/tree(get_turf(src))
+					new /obj/item/grown/log/tree(get_turf(src))
+
+				var/obj/structure/flora/stump/S = new(loc)
+				S.name = "[name] stump"
+
+				qdel(src)
 
 	else
 		return ..()
 
-
-
+/obj/structure/flora/stump
+	name = "stump"
+	desc = "This represents our promise to the crew, and the station itself, to cut down as many trees as possible." //running naked through the trees
+	icon = 'icons/obj/flora/pinetrees.dmi'
+	icon_state = "tree_stump"
+	density = FALSE
+	pixel_x = -16
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"
+	desc = "A coniferous pine tree."
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_1"
+	var/list/icon_states = list("pine_1", "pine_2", "pine_3")
 
 /obj/structure/flora/tree/pine/Initialize()
-	icon_state = "pine_[rand(1, 3)]"
 	. = ..()
+
+	if(islist(icon_states && icon_states.len))
+		icon_state = pick(icon_states)
 
 /obj/structure/flora/tree/pine/xmas
 	name = "xmas tree"
+	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
+	icon_states = null
 
-/obj/structure/flora/tree/pine/xmas/Initialize()
+/obj/structure/flora/tree/pine/xmas/presents
+	icon_state = "pinepresents"
+	desc = "A wondrous decorated Christmas tree. It has presents!"
+	var/gift_type = /obj/item/a_gift/anything
+	var/list/ckeys_that_took = list()
+
+/obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user)
 	. = ..()
-	icon_state = "pine_c"
+	if(.)
+		return
+	if(!user.ckey)
+		return
+
+	if(ckeys_that_took[user.ckey])
+		to_chat(user, "<span class='warning'>There are no presents with your name on.</span>")
+		return
+	to_chat(user, "<span class='warning'>After a bit of rummaging, you locate a gift with your name on it!</span>")
+	ckeys_that_took[user.ckey] = TRUE
+	var/obj/item/G = new gift_type(src)
+	user.put_in_hands(G)
 
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
+	desc = "A dead tree. How it died, you know not."
 	icon_state = "tree_1"
 
 /obj/structure/flora/tree/palm
 	icon = 'icons/misc/beach2.dmi'
+	desc = "A tree straight from the tropics."
 	icon_state = "palm1"
 
 /obj/structure/flora/tree/palm/Initialize()
@@ -98,6 +125,7 @@
 //grass
 /obj/structure/flora/grass
 	name = "grass"
+	desc = "A patch of overgrown grass."
 	icon = 'icons/obj/flora/snowflora.dmi'
 	gender = PLURAL	//"this is grass" not "this is a grass"
 
@@ -127,6 +155,7 @@
 //bushes
 /obj/structure/flora/bush
 	name = "bush"
+	desc = "Some type of shrub."
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
 	anchored = TRUE
@@ -139,6 +168,7 @@
 
 /obj/structure/flora/ausbushes
 	name = "bush"
+	desc = "Some kind of plant."
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
 
@@ -252,10 +282,11 @@
 	icon_state = "fullgrass_[rand(1, 3)]"
 	. = ..()
 
-/obj/item/weapon/twohanded/required/kirbyplants
+/obj/item/twohanded/required/kirbyplants
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
+	desc = "A little bit of nature contained in a pot."
 	layer = ABOVE_MOB_LAYER
 	w_class = WEIGHT_CLASS_HUGE
 	force = 10
@@ -263,26 +294,35 @@
 	throw_speed = 2
 	throw_range = 4
 
-/obj/item/weapon/twohanded/required/kirbyplants/equipped(mob/living/user)
+/obj/item/twohanded/required/kirbyplants/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 750), 0)
+
+/obj/item/twohanded/required/kirbyplants/equipped(mob/living/user)
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
+	I.copy_overlays(src)
 	I.override = 1
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
+	I.layer = ABOVE_MOB_LAYER
 	..()
 
-/obj/item/weapon/twohanded/required/kirbyplants/dropped(mob/living/user)
+/obj/item/twohanded/required/kirbyplants/dropped(mob/living/user)
 	..()
 	user.remove_alt_appearance("sneaking_mission")
 
-/obj/item/weapon/twohanded/required/kirbyplants/random
+/obj/item/twohanded/required/kirbyplants/random
+	icon = 'icons/obj/flora/_flora.dmi'
+	icon_state = "random_plant"
 	var/list/static/states
 
-/obj/item/weapon/twohanded/required/kirbyplants/random/Initialize()
+/obj/item/twohanded/required/kirbyplants/random/Initialize()
 	. = ..()
+	icon = 'icons/obj/flora/plants.dmi'
 	if(!states)
 		generate_states()
 	icon_state = pick(states)
 
-/obj/item/weapon/twohanded/required/kirbyplants/random/proc/generate_states()
+/obj/item/twohanded/required/kirbyplants/random/proc/generate_states()
 	states = list()
 	for(var/i in 1 to 25)
 		var/number
@@ -294,10 +334,17 @@
 	states += "applebush"
 
 
-/obj/item/weapon/twohanded/required/kirbyplants/dead
+/obj/item/twohanded/required/kirbyplants/dead
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"
+
+/obj/item/twohanded/required/kirbyplants/photosynthetic
+	name = "photosynthetic potted plant"
+	desc = "A bioluminescent plant."
+	icon_state = "plant-09"
+	light_color = "#2cb2e8"
+	light_range = 3
 
 
 //a rock is flora according to where the icon file is
@@ -305,7 +352,7 @@
 
 /obj/structure/flora/rock
 	icon_state = "basalt"
-	desc = "A volcanic rock"
+	desc = "A volcanic rock. Pioneers used to ride these babies for miles."
 	icon = 'icons/obj/flora/rocks.dmi'
 	resistance_flags = FIRE_PROOF
 	density = TRUE
@@ -316,7 +363,7 @@
 
 /obj/structure/flora/rock/pile
 	icon_state = "lavarocks"
-	desc = "A pile of rocks"
+	desc = "A pile of rocks."
 
 /obj/structure/flora/rock/pile/Initialize()
 	. = ..()
@@ -356,6 +403,7 @@
 
 /obj/structure/flora/junglebush
 	name = "bush"
+	desc = "A wild plant that is found in jungles."
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "busha"
 

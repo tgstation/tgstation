@@ -1,4 +1,4 @@
-/obj/item/weapon/gun/blastcannon
+/obj/item/gun/blastcannon
 	name = "pipe gun"
 	desc = "A pipe welded onto a gun stock, with a mechanical trigger. The pipe has an opening near the top, and there seems to be a spring loaded wheel in the hole."
 	icon_state = "empty_blastcannon"
@@ -7,37 +7,31 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
 	fire_sound = 'sound/weapons/blastcannon.ogg'
-	needs_permit = FALSE
+	item_flags = NONE
 	clumsy_check = FALSE
 	randomspread = FALSE
 
-	var/obj/item/device/transfer_valve/bomb
-	var/datum/gas_mixture/air1
-	var/datum/gas_mixture/air2
+	var/obj/item/transfer_valve/bomb
 
-/obj/item/weapon/gun/blastcannon/New()
+/obj/item/gun/blastcannon/Initialize()
+	. = ..()
 	if(!pin)
 		pin = new
-	. = ..()
 
-/obj/item/weapon/gun/blastcannon/Destroy()
-	if(bomb)
-		qdel(bomb)
-		bomb = null
-	air1 = null
-	air2 = null
-	. = ..()
+/obj/item/gun/blastcannon/Destroy()
+	QDEL_NULL(bomb)
+	return ..()
 
-/obj/item/weapon/gun/blastcannon/attack_self(mob/user)
+/obj/item/gun/blastcannon/attack_self(mob/user)
 	if(bomb)
 		bomb.forceMove(user.loc)
 		user.put_in_hands(bomb)
-		user.visible_message("<span class='warning'>[user] detaches the [bomb] from the [src]</span>")
+		user.visible_message("<span class='warning'>[user] detaches [bomb] from [src].</span>")
 		bomb = null
 	update_icon()
-	. = ..(user)
+	return ..()
 
-/obj/item/weapon/gun/blastcannon/update_icon()
+/obj/item/gun/blastcannon/update_icon()
 	if(bomb)
 		icon_state = icon_state_loaded
 		name = "blast cannon"
@@ -46,57 +40,55 @@
 		icon_state = initial(icon_state)
 		name = initial(name)
 		desc = initial(desc)
-	. = ..()
 
-/obj/item/weapon/gun/blastcannon/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/device/transfer_valve))
-		var/obj/item/device/transfer_valve/T = O
+/obj/item/gun/blastcannon/attackby(obj/O, mob/user)
+	if(istype(O, /obj/item/transfer_valve))
+		var/obj/item/transfer_valve/T = O
 		if(!T.tank_one || !T.tank_two)
 			to_chat(user, "<span class='warning'>What good would an incomplete bomb do?</span>")
 			return FALSE
-		if(!user.drop_item(O))
-			to_chat(user, "<span class='warning'>The [O] seems to be stuck to your hand!</span>")
+		if(!user.transferItemToLoc(T, src))
+			to_chat(user, "<span class='warning'>[T] seems to be stuck to your hand!</span>")
 			return FALSE
-		user.visible_message("<span class='warning'>[user] attaches the [O] to the [src]!</span>")
-		bomb = O
-		O.loc = src
+		user.visible_message("<span class='warning'>[user] attaches [T] to [src]!</span>")
+		bomb = T
 		update_icon()
 		return TRUE
-	. = ..()
+	return ..()
 
-/obj/item/weapon/gun/blastcannon/proc/calculate_bomb()
-	if(!istype(bomb)||!istype(bomb.tank_one)||!istype(bomb.tank_two))
+/obj/item/gun/blastcannon/proc/calculate_bomb()
+	if(!istype(bomb) || !istype(bomb.tank_one) || !istype(bomb.tank_two))
 		return 0
-	air1 = bomb.tank_one.air_contents
-	air2 = bomb.tank_two.air_contents
-	var/datum/gas_mixture/temp
-	temp.volume = air1.volume + air2.volume
-	temp.merge(air1)
-	temp.merge(air2)
+	var/datum/gas_mixture/temp = new(60)	//directional buff.
+	temp.merge(bomb.tank_one.air_contents.remove_ratio(1))
+	temp.merge(bomb.tank_two.air_contents.remove_ratio(2))
 	for(var/i in 1 to 6)
-		temp.react()
+		temp.react(src)
 	var/pressure = temp.return_pressure()
 	qdel(temp)
 	if(pressure < TANK_FRAGMENT_PRESSURE)
 		return 0
-	return (pressure/TANK_FRAGMENT_SCALE)
+	return (pressure / TANK_FRAGMENT_SCALE)
 
-/obj/item/weapon/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
-	if((!bomb) || (target == user) || (target.loc == user) || (!target) || (target.loc == user.loc) || (target.loc in range(user, 2)) || (target in range(user, 2)))
+/obj/item/gun/blastcannon/afterattack(atom/target, mob/user, flag, params)
+	if((!bomb) || (!target) || (get_dist(get_turf(target), get_turf(user)) <= 2))
 		return ..()
 	var/power = calculate_bomb()
-	qdel(bomb)
+	QDEL_NULL(bomb)
 	update_icon()
 	var/heavy = power * 0.2
 	var/medium = power * 0.5
 	var/light = power
-	user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [src.name] and fires a blast wave at \the [target]!</span>","<span class='danger'>You open \the [bomb] on your [src.name] and fire a blast wave at \the [target]!</span>")
+	user.visible_message("<span class='danger'>[user] opens [bomb] on [user.p_their()] [name] and fires a blast wave at [target]!</span>","<span class='danger'>You open [bomb] on your [name] and fire a blast wave at [target]!</span>")
 	playsound(user, "explosion", 100, 1)
 	var/turf/starting = get_turf(user)
-	var/area/A = get_area(user)
-	var/log_str = "Blast wave fired at [ADMIN_COORDJMP(starting)] ([A.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
+	var/turf/targturf = get_turf(target)
+	var/log_str = "Blast wave fired from [ADMIN_COORDJMP(starting)] ([get_area_name(user, TRUE)]) at [ADMIN_COORDJMP(targturf)] ([target.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."
 	message_admins(log_str)
 	log_game(log_str)
+	var/obj/item/projectile/blastwave/BW = new(loc, heavy, medium, light)
+	BW.preparePixelProjectile(target, get_turf(target), user, params, 0)
+	BW.fire()
 
 /obj/item/projectile/blastwave
 	name = "blast wave"
@@ -109,19 +101,29 @@
 	var/lightr = 0
 	range = 150
 
+/obj/item/projectile/blastwave/Initialize(mapload, _h, _m, _l)
+	heavyr = _h
+	mediumr = _m
+	lightr = _l
+	return ..()
+
 /obj/item/projectile/blastwave/Range()
 	..()
+	var/amount_destruction = EXPLODE_NONE
 	if(heavyr)
-		loc.ex_act(EXPLODE_DEVASTATE)
+		amount_destruction = EXPLODE_DEVASTATE
 	else if(mediumr)
-		loc.ex_act(EXPLODE_HEAVY)
+		amount_destruction = EXPLODE_HEAVY
 	else if(lightr)
-		loc.ex_act(EXPLODE_LIGHT)
+		amount_destruction = EXPLODE_LIGHT
+	if(amount_destruction)
+		loc.ex_act(amount_destruction)
 	else
 		qdel(src)
-	heavyr--
-	mediumr--
-	lightr--
+
+	heavyr = max(heavyr - 1, 0)
+	mediumr = max(mediumr - 1, 0)
+	lightr = max(lightr - 1, 0)
 
 /obj/item/projectile/blastwave/ex_act()
 	return

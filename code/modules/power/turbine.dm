@@ -31,7 +31,7 @@
 	density = TRUE
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	circuit = /obj/item/weapon/circuitboard/machine/power_compressor
+	circuit = /obj/item/circuitboard/machine/power_compressor
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
 	var/turf/inturf
@@ -52,7 +52,7 @@
 	density = TRUE
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	circuit = /obj/item/weapon/circuitboard/machine/power_turbine
+	circuit = /obj/item/circuitboard/machine/power_turbine
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor
 	var/turf/outturf
@@ -64,7 +64,7 @@
 	desc = "A computer to remotely control a gas turbine."
 	icon_screen = "turbinecomp"
 	icon_keyboard = "tech_key"
-	circuit = /obj/item/weapon/circuitboard/computer/turbine_computer
+	circuit = /obj/item/circuitboard/computer/turbine_computer
 	var/obj/machinery/power/compressor/compressor
 	var/id = 0
 
@@ -75,20 +75,13 @@
 	// The inlet of the compressor is the direction it faces
 	gas_contained = new
 	inturf = get_step(src, dir)
-
 	locate_machinery()
 	if(!turbine)
 		stat |= BROKEN
 
 
 #define COMPFRICTION 5e5
-#define COMPSTARTERLOAD 2800
 
-
-// Crucial to make things work!!!!
-// OLD FIX - explanation given down below.
-// /obj/machinery/power/compressor/CanPass(atom/movable/mover, turf/target)
-// 		return !density
 
 /obj/machinery/power/compressor/locate_machinery()
 	if(turbine)
@@ -99,7 +92,7 @@
 
 /obj/machinery/power/compressor/RefreshParts()
 	var/E = 0
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	efficiency = E / 6
 
@@ -119,9 +112,6 @@
 			stat |= BROKEN
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	default_deconstruction_crowbar(I)
 
 /obj/machinery/power/compressor/process()
@@ -139,7 +129,6 @@
 	// It's a simplified version taking only 1/10 of the moles from the turf nearby. It should be later changed into a better version
 
 	var/transfer_moles = environment.total_moles()/10
-	//var/transfer_moles = rpm/10000*capacity
 	var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
 	gas_contained.merge(removed)
 
@@ -171,7 +160,6 @@
 // These are crucial to working of a turbine - the stats modify the power output. TurbGenQ modifies how much raw energy can you get from
 // rpms, TurbGenG modifies the shape of the curve - the lower the value the less straight the curve is.
 
-#define TURBPRES 9000000
 #define TURBGENQ 100000
 #define TURBGENG 0.5
 
@@ -182,10 +170,11 @@
 	locate_machinery()
 	if(!compressor)
 		stat |= BROKEN
+	connect_to_network()
 
 /obj/machinery/power/turbine/RefreshParts()
 	var/P = 0
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		P += C.rating
 	productivity = P / 6
 
@@ -235,13 +224,6 @@
 
 	updateDialog()
 
-/obj/machinery/power/turbine/attack_hand(mob/user)
-
-	if(..())
-		return
-
-	interact(user)
-
 /obj/machinery/power/turbine/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		return
@@ -258,12 +240,9 @@
 			stat |= BROKEN
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/turbine/interact(mob/user)
+/obj/machinery/power/turbine/ui_interact(mob/user)
 
 	if(!Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && !issilicon(user))
 		user.unset_machine(src)
@@ -272,13 +251,13 @@
 
 	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
-	t += "Generated power : [round(lastgen)] W<BR><BR>"
+	t += "Generated power : [DisplayPower(lastgen)]<BR><BR>"
 
 	t += "Turbine: [round(compressor.rpm)] RPM<BR>"
 
-	t += "Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]"
+	t += "Starter: [ compressor.starter ? "<A href='?src=[REF(src)];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=[REF(src)];str=1'>On</A>"]"
 
-	t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
+	t += "</PRE><HR><A href='?src=[REF(src)];close=1'>Close</A>"
 
 	t += "</TT>"
 	var/datum/browser/popup = new(user, "turbine", name)
@@ -315,60 +294,58 @@
 
 /obj/machinery/computer/turbine_computer/Initialize()
 	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/turbine_computer/LateInitialize()
 	locate_machinery()
 
 /obj/machinery/computer/turbine_computer/locate_machinery()
-	compressor = locate(/obj/machinery/power/compressor) in range(5, src)
-
-/obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
-	if(..())
-		return
-
-	interact(user)
-
-/obj/machinery/computer/turbine_computer/interact(mob/user)
-
-	var/dat
-	if(compressor && compressor.turbine)
-		dat += "<BR><B>Gas turbine remote control system</B><HR>"
-		if(compressor.stat || compressor.turbine.stat)
-			dat += "[compressor.stat ? "<B>Compressor is inoperable</B><BR>" : "<B>Turbine is inoperable</B>"]"
-		else
-			dat += {"Turbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
-			\n<BR>
-			\nTurbine speed: [src.compressor.rpm]rpm<BR>
-			\nPower currently being generated: [src.compressor.turbine.lastgen]W<BR>
-			\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
-			\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
-			\n<BR>
-			\n"}
+	if(id)
+		for(var/obj/machinery/power/compressor/C in GLOB.machines)
+			if(C.comp_id == id)
+				compressor = C
+				return
 	else
-		dat += "<B>There is [!compressor ? "no compressor" : " compressor[!compressor.turbine ? " but no turbine" : ""]"].</B><BR>"
-		if(!compressor)
-			dat += "<A href='?src=\ref[src];search=1'>Search for compressor</A>"
+		compressor = locate(/obj/machinery/power/compressor) in range(5, src)
 
-	var/datum/browser/popup = new(user, "turbinecomputer", name)
-	popup.set_content(dat)
-	popup.open()
-	return
+/obj/machinery/computer/turbine_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "turbine_computer", name, 350, 280, master_ui, state)
+		ui.open()
 
-/obj/machinery/computer/turbine_computer/Topic(href, href_list)
+/obj/machinery/computer/turbine_computer/ui_data(mob/user)
+	var/list/data = list()
+
+	data["connected"] = (compressor && compressor.turbine) ? TRUE : FALSE
+	data["compressor_broke"] = (!compressor || (compressor.stat & BROKEN)) ? TRUE : FALSE
+	data["turbine_broke"] = (!compressor || !compressor.turbine || (compressor.turbine.stat & BROKEN)) ? TRUE : FALSE
+	data["broken"] = (data["compressor_broke"] || data["turbine_broke"])
+	data["online"] = compressor.starter
+
+	data["power"] = DisplayPower(compressor.turbine.lastgen)
+	data["rpm"] = compressor.rpm
+	data["temp"] = compressor.gas_contained.temperature
+
+	return data
+
+/obj/machinery/computer/turbine_computer/ui_act(action, params)
 	if(..())
 		return
+	switch(action)
+		if("power-on")
+			if(compressor && compressor.turbine)
+				compressor.starter = TRUE
+				. = TRUE
+		if("power-off")
+			if(compressor && compressor.turbine)
+				compressor.starter = FALSE
+				. = TRUE
+		if("reconnect")
+			locate_machinery()
+			. = TRUE
 
-	else if( href_list["str"] )
-		if(compressor && compressor.turbine)
-			compressor.starter = !compressor.starter
-	else if( href_list["close"] )
-		usr << browse(null, "window=turbinecomputer")
-		usr.unset_machine(src)
-		return
-	else if(href_list["search"])
-		locate_machinery()
-
-	src.updateUsrDialog()
-	return
-
-/obj/machinery/computer/turbine_computer/process()
-	src.updateDialog()
-	return
+#undef COMPFRICTION
+#undef TURBGENQ
+#undef TURBGENG

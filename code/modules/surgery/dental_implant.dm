@@ -1,22 +1,21 @@
 /datum/surgery/dental_implant
 	name = "dental implant"
 	steps = list(/datum/surgery_step/drill, /datum/surgery_step/insert_pill)
-	possible_locs = list("mouth")
+	possible_locs = list(BODY_ZONE_PRECISE_MOUTH)
 
 /datum/surgery_step/insert_pill
 	name = "insert pill"
-	implements = list(/obj/item/weapon/reagent_containers/pill = 100)
+	implements = list(/obj/item/reagent_containers/pill = 100)
 	time = 16
 
 /datum/surgery_step/insert_pill/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] begins to wedge \the [tool] in [target]'s [parse_zone(target_zone)].", "<span class='notice'>You begin to wedge [tool] in [target]'s [parse_zone(target_zone)]...</span>")
 
-/datum/surgery_step/insert_pill/success(mob/user, mob/living/carbon/target, target_zone, var/obj/item/weapon/reagent_containers/pill/tool, datum/surgery/surgery)
+/datum/surgery_step/insert_pill/success(mob/user, mob/living/carbon/target, target_zone, var/obj/item/reagent_containers/pill/tool, datum/surgery/surgery)
 	if(!istype(tool))
 		return 0
 
-	user.drop_item()
-	tool.loc = target
+	user.transferItemToLoc(tool, target, TRUE)
 
 	var/datum/action/item_action/hands_free/activate_pill/P = new(tool)
 	P.button.name = "Activate [tool.name]"

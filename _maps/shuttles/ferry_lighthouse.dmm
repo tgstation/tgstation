@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/shuttle/transport)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /obj/structure/shuttle/engine/propulsion/left{
 	dir = 4
@@ -17,18 +17,11 @@
 "ad" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
-"ae" = (
-/turf/open/space,
-/area/space)
 "af" = (
 /turf/closed/wall/r_wall,
 /area/shuttle/transport)
 "ag" = (
 /turf/open/floor/plating/airless,
-/area/shuttle/transport)
-"ah" = (
-/obj/structure/foamedmetal,
-/turf/open/space,
 /area/shuttle/transport)
 "ai" = (
 /obj/machinery/vending/liberationstation,
@@ -42,14 +35,13 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "al" = (
-/obj/machinery/computer/shuttle/ferry/request,
+/obj/machinery/computer/shuttle/ferry/request{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "am" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "an" = (
@@ -98,12 +90,6 @@
 /obj/effect/spawner/structure/window/shuttle,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
-"ax" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
-/area/shuttle/transport)
 "ay" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
@@ -113,17 +99,8 @@
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
-"aA" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
-/area/shuttle/transport)
 "aB" = (
-/obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
-	},
+/obj/structure/grille/broken,
 /obj/structure/window/fulltile,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
@@ -156,7 +133,7 @@
 /area/shuttle/transport)
 "aI" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/wiz,
+/obj/item/bedsheet/wiz,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aJ" = (
@@ -165,7 +142,7 @@
 /area/shuttle/transport)
 "aK" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green,
+/obj/item/flashlight/lamp/green,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aL" = (
@@ -188,9 +165,7 @@
 	height = 27;
 	id = "ferry";
 	name = "The Lighthouse";
-	roundstart_move = "ferry_away";
-	timid = 1;
-	port_angle = 180;
+	port_direction = 2;
 	width = 16
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -216,12 +191,12 @@
 /area/shuttle/transport)
 "aT" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/centcom,
+/obj/item/bedsheet/centcom,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aU" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/rainbow,
+/obj/item/bedsheet/rainbow,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aV" = (
@@ -241,9 +216,6 @@
 "aY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"aZ" = (
-/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/transport)
 "ba" = (
 /obj/machinery/conveyor{
@@ -265,11 +237,11 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/vending_refill/snack,
+/obj/item/vending_refill/snack,
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "bd" = (
-/obj/item/weapon/twohanded/required/kirbyplants/dead{
+/obj/item/twohanded/required/kirbyplants/dead{
 	desc = "It doesn't look very healthy...";
 	name = "potted plant"
 	},
@@ -291,10 +263,9 @@
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "bg" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/inverted{
 	dir = 10;
-	id = "garbage";
-	verted = -1
+	id = "garbage"
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)
@@ -402,7 +373,7 @@ bi
 bj
 "}
 (6,1,1) = {"
-ae
+aa
 ad
 aM
 al
@@ -420,8 +391,8 @@ aM
 ad
 "}
 (7,1,1) = {"
-ae
-ae
+aa
+aa
 ad
 ad
 aM
@@ -435,13 +406,13 @@ aL
 bf
 aM
 ad
-ae
+aa
 "}
 (8,1,1) = {"
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
 ad
 ar
 au
@@ -452,14 +423,14 @@ au
 bb
 bg
 ad
-ae
-ae
+aa
+aa
 "}
 (9,1,1) = {"
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
 ap
 ap
 av
@@ -470,15 +441,15 @@ aC
 bc
 aM
 ad
-ae
-ae
+aa
+aa
 "}
 (10,1,1) = {"
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 ap
 au
 aD
@@ -487,16 +458,16 @@ aD
 aD
 bd
 ad
-ae
-ae
-ae
+aa
+aa
+aa
 "}
 (11,1,1) = {"
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 ap
 ap
 aD
@@ -505,295 +476,295 @@ aD
 aD
 aM
 ad
-ae
-ae
-ae
+aa
+aa
+aa
 "}
 (12,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 ap
 aD
 aD
 aD
 aD
 ad
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
 "}
 (13,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 ap
 aE
 aN
 aE
 aM
 ad
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
 "}
 (14,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 aw
 aE
 aN
 aE
 ad
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 "}
 (15,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 aw
 aE
 aE
 aE
 ad
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 "}
 (16,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 ad
 ak
 aE
 ak
 aY
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 "}
 (17,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 ad
 aF
 aE
 aT
 aw
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 "}
 (18,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 ad
 aG
 aE
 aU
 ad
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 "}
 (19,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 ad
 aH
 aE
 aV
 ad
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 "}
 (20,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 ay
 aI
 aE
 aW
 ay
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 "}
 (21,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 ad
 ak
 aE
 aW
 ad
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 "}
 (22,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 ad
 aJ
 aE
 aW
 ad
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 "}
 (23,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 ad
 aJ
 aE
 aW
 ad
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 "}
 (24,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 az
 aJ
 aE
 aW
 az
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 "}
 (25,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 ad
 aJ
 aE
 aW
 ad
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 "}
 (26,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 ad
 aK
 aE
 aW
 ad
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 "}
 (27,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
+aa
 ad
 ay
 aO
 ay
 ad
-ae
-ae
-ae
-ae
-ae
+aa
+aa
+aa
+aa
+aa
 "}

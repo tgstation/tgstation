@@ -28,16 +28,16 @@
 	for(var/obj/machinery/ai_status_display/O in GLOB.ai_status_displays) //change status
 		if(src.key)
 			O.mode = 2
-			if(istype(loc, /obj/item/device/aicard))
+			if(istype(loc, /obj/item/aicard))
 				loc.icon_state = "aicard-404"
 
 /mob/living/silicon/ai/proc/ShutOffDoomsdayDevice()
 	if(nuking)
 		set_security_level("red")
 		nuking = FALSE
-		for(var/obj/item/weapon/pinpointer/P in GLOB.pinpointer_list)
+		for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
 			P.switch_mode_to(TRACK_NUKE_DISK) //Party's over, back to work, everyone
-			P.nuke_warning = FALSE
+			P.alert = FALSE
 
 	if(doomsday_device)
 		doomsday_device.timing = FALSE

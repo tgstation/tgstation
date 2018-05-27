@@ -29,10 +29,19 @@
 /datum/status_effect/incapacitating/knockdown
 	id = "knockdown"
 
+/datum/status_effect/incapacitating/knockdown/tick()
+	if(owner.getStaminaLoss())
+		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
+
+
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
 	needs_update_stat = TRUE
+
+/datum/status_effect/incapacitating/unconscious/tick()
+	if(owner.getStaminaLoss())
+		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
 
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
@@ -56,8 +65,8 @@
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()
-	if(owner.staminaloss)
-		owner.adjustStaminaLoss(-0.35) //reduce stamina loss by 0.35 per tick, 7 per 2 seconds
+	if(owner.getStaminaLoss())
+		owner.adjustStaminaLoss(-0.5) //reduce stamina loss by 0.5 per tick, 10 per 2 seconds
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
 	if(prob(20))
@@ -85,7 +94,7 @@
 	alerttooltipstyle = "hisgrace"
 
 /datum/status_effect/his_wrath/tick()
-	for(var/obj/item/weapon/his_grace/HG in owner.held_items)
+	for(var/obj/item/his_grace/HG in owner.held_items)
 		qdel(src)
 		return
 	owner.adjustBruteLoss(0.1)
@@ -116,16 +125,16 @@
 
 /datum/status_effect/belligerent/proc/do_movement_toggle(force_damage)
 	var/number_legs = owner.get_num_legs()
-	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.null_rod_check() && number_legs)
+	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check() && number_legs)
 		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
 			if(GLOB.ratvar_awakens)
 				owner.Knockdown(20)
 			if(iscultist(owner))
-				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "l_leg")
-				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "r_leg")
+				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, BODY_ZONE_L_LEG)
+				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, BODY_ZONE_R_LEG)
 			else
-				owner.apply_damage(leg_damage_on_toggle * 0.5, BURN, "l_leg")
-				owner.apply_damage(leg_damage_on_toggle * 0.5, BURN, "r_leg")
+				owner.apply_damage(leg_damage_on_toggle * 0.5, BURN, BODY_ZONE_L_LEG)
+				owner.apply_damage(leg_damage_on_toggle * 0.5, BURN, BODY_ZONE_R_LEG)
 		if(owner.m_intent != MOVE_INTENT_WALK)
 			if(!iscultist(owner))
 				to_chat(owner, "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>")
@@ -138,7 +147,6 @@
 /datum/status_effect/belligerent/on_remove()
 	if(owner.m_intent == MOVE_INTENT_WALK)
 		owner.toggle_move_intent()
-
 
 /datum/status_effect/maniamotor
 	id = "maniamotor"
@@ -177,7 +185,7 @@
 		return
 	if(!motor.active) //it being off makes it fall off much faster
 		if(!is_servant && !warned_turnoff)
-			if(motor.total_accessable_power() > motor.mania_cost)
+			if(can_access_clockwork_power(motor, motor.mania_cost))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(turnoff_messages))]\"</span>")
 			else
 				var/pickedmessage = pick(powerloss_messages)
@@ -210,7 +218,7 @@
 		if(owner.confused)
 			owner.confused = 0
 		severity = 0
-	else if(!owner.null_rod_check() && owner.stat != DEAD && severity)
+	else if(!owner.anti_magic_check() && owner.stat != DEAD && severity)
 		var/static/hum = get_sfx('sound/effects/screech.ogg') //same sound for every proc call
 		if(owner.getToxLoss() > MANIA_DAMAGE_TO_CONVERT)
 			if(is_eligible_servant(owner))
@@ -222,7 +230,7 @@
 			if(prob(severity * 0.15))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(mania_messages))]\"</span>")
 			owner.playsound_local(get_turf(motor), hum, severity, 1)
-			owner.adjust_drugginess(Clamp(max(severity * 0.075, 1), 0, max(0, 50 - owner.druggy))) //7.5% of severity per second, minimum 1
+			owner.adjust_drugginess(CLAMP(max(severity * 0.075, 1), 0, max(0, 50 - owner.druggy))) //7.5% of severity per second, minimum 1
 			if(owner.hallucination < 50)
 				owner.hallucination = min(owner.hallucination + max(severity * 0.075, 1), 50) //7.5% of severity per second, minimum 1
 			if(owner.dizziness < 50)
@@ -237,15 +245,23 @@
 	duration = -1
 	alert_type = null
 
+/datum/status_effect/cultghost/on_apply()
+	owner.see_invisible = SEE_INVISIBLE_OBSERVER
+	owner.see_in_dark = 2
+
+/datum/status_effect/cultghost/tick()
+	if(owner.reagents)
+		owner.reagents.del_reagent("holywater") //can't be deconverted
+
 /datum/status_effect/crusher_mark
 	id = "crusher_mark"
 	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
-	var/obj/item/weapon/twohanded/required/kinetic_crusher/hammer_synced
+	var/obj/item/twohanded/required/kinetic_crusher/hammer_synced
 
-/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/weapon/twohanded/required/kinetic_crusher/new_hammer_synced)
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/twohanded/required/kinetic_crusher/new_hammer_synced)
 	. = ..()
 	if(.)
 		hammer_synced = new_hammer_synced
@@ -298,7 +314,7 @@
 	var/icon/I = icon(owner.icon, owner.icon_state, owner.dir)
 	var/icon_height = I.Height()
 	bleed_overlay.pixel_x = -owner.pixel_x
-	bleed_overlay.pixel_y = Floor(icon_height * 0.25)
+	bleed_overlay.pixel_y = FLOOR(icon_height * 0.25, 1)
 	bleed_overlay.transform = matrix() * (icon_height/world.icon_size) //scale the bleed overlay's size based on the target's icon size
 	bleed_underlay.pixel_x = -owner.pixel_x
 	bleed_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
@@ -421,11 +437,7 @@
 	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, 1, -1)
 	var/turf/ownerloc = get_turf(owner)
 	var/obj/item/projectile/curse_hand/C = new (spawn_turf)
-	C.current = spawn_turf
-	C.starting = spawn_turf
-	C.yo = ownerloc.y - spawn_turf.y
-	C.xo = ownerloc.x - spawn_turf.x
-	C.original = owner
+	C.preparePixelProjectile(ownerloc, spawn_turf)
 	C.fire()
 
 /obj/effect/temp_visual/curse
@@ -434,3 +446,64 @@
 /obj/effect/temp_visual/curse/Initialize()
 	. = ..()
 	deltimer(timerid)
+
+
+//Kindle: Used by servants of Ratvar. 10-second knockdown, reduced by 1 second per 5 damage taken while the effect is active.
+/datum/status_effect/kindle
+	id = "kindle"
+	status_type = STATUS_EFFECT_UNIQUE
+	tick_interval = 5
+	duration = 100
+	alert_type = /obj/screen/alert/status_effect/kindle
+	var/old_health
+
+/datum/status_effect/kindle/tick()
+	owner.Knockdown(15)
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		C.silent = max(2, C.silent)
+		C.stuttering = max(5, C.stuttering)
+	if(!old_health)
+		old_health = owner.health
+	var/health_difference = old_health - owner.health
+	if(!health_difference)
+		return
+	owner.visible_message("<span class='warning'>The light in [owner]'s eyes dims as they're harmed!</span>", \
+	"<span class='boldannounce'>The dazzling lights dim as you're harmed!</span>")
+	health_difference *= 2 //so 10 health difference translates to 20 deciseconds of stun reduction
+	duration -= health_difference
+	old_health = owner.health
+
+/datum/status_effect/kindle/on_remove()
+	owner.visible_message("<span class='warning'>The light in [owner]'s eyes fades!</span>", \
+	"<span class='boldannounce'>You snap out of your daze!</span>")
+
+/obj/screen/alert/status_effect/kindle
+	name = "Dazzling Lights"
+	desc = "Blinding light dances in your vision, stunning and silencing you. <i>Any damage taken will shorten the light's effects!</i>"
+	icon_state = "kindle"
+	alerttooltipstyle = "clockcult"
+
+
+//Ichorial Stain: Applied to servants revived by a vitality matrix. Prevents them from being revived by one again until the effect fades.
+/datum/status_effect/ichorial_stain
+	id = "ichorial_stain"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 600
+	examine_text = "<span class='warning'>SUBJECTPRONOUN is drenched in thick, blue ichor!</span>"
+	alert_type = /obj/screen/alert/status_effect/ichorial_stain
+
+/datum/status_effect/ichorial_stain/on_apply()
+	owner.visible_message("<span class='danger'>[owner] gets back up, [owner.p_their()] body dripping blue ichor!</span>", \
+	"<span class='userdanger'>Thick blue ichor covers your body; you can't be revived like this again until it dries!</span>")
+	return TRUE
+
+/datum/status_effect/ichorial_stain/on_remove()
+	owner.visible_message("<span class='danger'>The blue ichor on [owner]'s body dries out!</span>", \
+	"<span class='boldnotice'>The ichor on your body is dry - you can now be revived by vitality matrices again!</span>")
+
+/obj/screen/alert/status_effect/ichorial_stain
+	name = "Ichorial Stain"
+	desc = "Your body is covered in blue ichor! You can't be revived by vitality matrices."
+	icon_state = "ichorial_stain"
+	alerttooltipstyle = "clockcult"

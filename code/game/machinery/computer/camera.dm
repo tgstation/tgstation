@@ -3,13 +3,19 @@
 	desc = "Used to access the various cameras on the station."
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
-	circuit = /obj/item/weapon/circuitboard/computer/security
+	circuit = /obj/item/circuitboard/computer/security
 	var/last_pic = 1
-	var/list/network = list("SS13")
+	var/list/network = list("ss13")
 	var/mapping = 0//For the overview file, interesting bit of code.
 	var/list/watchers = list() //who's using the console, associated with the camera they're on.
 
 	light_color = LIGHT_COLOR_RED
+
+/obj/machinery/computer/security/Initialize()
+	. = ..()
+	for(var/i in network)
+		network -= i
+		network += lowertext(i)
 
 /obj/machinery/computer/security/check_eye(mob/user)
 	if( (stat & (NOPOWER|BROKEN)) || user.incapacitated() || user.eye_blind )
@@ -45,6 +51,9 @@
 	return ..()
 
 /obj/machinery/computer/security/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(stat)
 		return
 	if (!network)
@@ -124,7 +133,7 @@
 /obj/machinery/computer/security/proc/get_available_cameras()
 	var/list/L = list()
 	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
-		if((z > ZLEVEL_SPACEMAX || C.z > ZLEVEL_SPACEMAX) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
+		if((is_away_level(z) || is_away_level(C.z)) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
 			continue
 		L.Add(C)
 
@@ -185,5 +194,11 @@
 	desc = "Used to access the various cameras on the outpost."
 	icon_screen = "mining"
 	icon_keyboard = "mining_key"
-	network = list("MINE")
-	circuit = /obj/item/weapon/circuitboard/computer/mining
+	network = list("mine")
+	circuit = /obj/item/circuitboard/computer/mining
+	
+/obj/machinery/computer/security/research
+	name = "research camera console"
+	desc = "Used to access the various cameras in science."
+	network = list("rd")
+	circuit = /obj/item/circuitboard/computer/research

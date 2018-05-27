@@ -60,8 +60,8 @@
 	if(istype(L)) //this is probably more safety than actually needed
 		var/vanguard = L.stun_absorption["vanguard"]
 		desc = initial(desc)
-		desc += "<br><b>[Floor(vanguard["stuns_absorbed"] * 0.1)]</b> seconds of stuns held back.\
-		[GLOB.ratvar_awakens ? "":"<br><b>[Floor(min(vanguard["stuns_absorbed"] * 0.025, 20))]</b> seconds of stun will affect you."]"
+		desc += "<br><b>[FLOOR(vanguard["stuns_absorbed"] * 0.1, 1)]</b> seconds of stuns held back.\
+		[GLOB.ratvar_awakens ? "":"<br><b>[FLOOR(min(vanguard["stuns_absorbed"] * 0.025, 20), 1)]</b> seconds of stun will affect you."]"
 	..()
 
 /datum/status_effect/vanguard_shield/Destroy()
@@ -71,7 +71,7 @@
 
 /datum/status_effect/vanguard_shield/on_apply()
 	owner.log_message("gained Vanguard stun immunity", INDIVIDUAL_ATTACK_LOG)
-	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
+	owner.add_stun_absorption("vanguard", INFINITY, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
 	owner.SetStun(0, FALSE)
 	owner.SetKnockdown(0)
@@ -87,7 +87,8 @@
 	var/vanguard = owner.stun_absorption["vanguard"]
 	var/stuns_blocked = 0
 	if(vanguard)
-		stuns_blocked = round(min(vanguard["stuns_absorbed"] * 0.25, 20))
+		stuns_blocked = FLOOR(min(vanguard["stuns_absorbed"] * 0.25, 400), 1)
+		vanguard["end_time"] = 0 //so it doesn't absorb the stuns we're about to apply
 	if(owner.stat != DEAD)
 		var/message_to_owner = "<span class='warning'>You feel your Vanguard quietly fade...</span>"
 		var/otheractiveabsorptions = FALSE
@@ -95,7 +96,6 @@
 			if(owner.stun_absorption[i]["end_time"] > world.time && owner.stun_absorption[i]["priority"] > vanguard["priority"])
 				otheractiveabsorptions = TRUE
 		if(!GLOB.ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
-			vanguard["end_time"] = 0 //so it doesn't absorb the stuns we're about to apply
 			owner.Knockdown(stuns_blocked)
 			message_to_owner = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
 			if(stuns_blocked >= 300)
@@ -192,7 +192,7 @@
 /datum/status_effect/his_grace/tick()
 	bloodlust = 0
 	var/graces = 0
-	for(var/obj/item/weapon/his_grace/HG in owner.held_items)
+	for(var/obj/item/his_grace/HG in owner.held_items)
 		if(HG.bloodthirst > bloodlust)
 			bloodlust = HG.bloodthirst
 		if(HG.awakened)
@@ -384,3 +384,158 @@
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
+/datum/status_effect/sword_spin
+	id = "Bastard Sword Spin"
+	duration = 50
+	tick_interval = 8
+	alert_type = null
+
+
+/datum/status_effect/sword_spin/on_apply()
+	owner.visible_message("<span class='danger'>[owner] begins swinging the sword with inhuman strength!</span>")
+	var/oldcolor = owner.color
+	owner.color = "#ff0000"
+	owner.add_stun_absorption("bloody bastard sword", duration, 2, "doesn't even flinch as the sword's power courses through them!", "You shrug off the stun!", " glowing with a blazing red aura!")
+	owner.spin(duration,1)
+	animate(owner, color = oldcolor, time = duration, easing = EASE_IN)
+	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), duration)
+	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
+	return ..()
+
+
+/datum/status_effect/sword_spin/tick()
+	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
+	var/obj/item/slashy
+	slashy = owner.get_active_held_item()
+	for(var/mob/living/M in orange(1,owner))
+		slashy.attack(M, owner)
+
+/datum/status_effect/sword_spin/on_remove()
+	owner.visible_message("<span class='warning'>[owner]'s inhuman strength dissipates and the sword's runes grow cold!</span>")
+
+
+//Used by changelings to rapidly heal
+//Heals 10 brute and oxygen damage every second, and 5 fire
+//Being on fire will suppress this healing
+/datum/status_effect/fleshmend
+	id = "fleshmend"
+	duration = 100
+	alert_type = /obj/screen/alert/status_effect/fleshmend
+
+/datum/status_effect/fleshmend/tick()
+	if(owner.on_fire)
+		linked_alert.icon_state = "fleshmend_fire"
+		return
+	else
+		linked_alert.icon_state = "fleshmend"
+	owner.adjustBruteLoss(-10, FALSE)
+	owner.adjustFireLoss(-5, FALSE)
+	owner.adjustOxyLoss(-10)
+
+/obj/screen/alert/status_effect/fleshmend
+	name = "Fleshmend"
+	desc = "Our wounds are rapidly healing. <i>This effect is prevented if we are on fire.</i>"
+	icon_state = "fleshmend"
+
+/datum/status_effect/exercised
+	id = "Exercised"
+	duration = 1200
+	alert_type = null
+
+/datum/status_effect/exercised/on_creation(mob/living/new_owner, ...)
+	. = ..()
+	STOP_PROCESSING(SSfastprocess, src)
+	START_PROCESSING(SSprocessing, src) //this lasts 20 minutes, so SSfastprocess isn't needed.
+
+/datum/status_effect/exercised/Destroy()
+	. = ..()
+	STOP_PROCESSING(SSprocessing, src)
+
+//Hippocratic Oath: Applied when the Rod of Asclepius is activated.
+/datum/status_effect/hippocraticOath
+	id = "Hippocratic Oath"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = -1
+	tick_interval = 25
+	examine_text = "<span class='notice'>They seem to have an aura of healing and helpfulness about them.</span>"
+	alert_type = null
+	var/hand
+	var/deathTick = 0
+
+/datum/status_effect/hippocraticOath/on_apply()
+	//Makes the user passive, it's in their oath not to harm!
+	owner.add_trait(TRAIT_PACIFISM, "hippocraticOath")
+	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	H.add_hud_to(owner)
+	return ..()
+
+/datum/status_effect/hippocraticOath/on_remove()
+	owner.remove_trait(TRAIT_PACIFISM, "hippocraticOath")
+	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	H.remove_hud_from(owner)
+
+/datum/status_effect/hippocraticOath/tick()
+	if(owner.stat == DEAD)
+		if(deathTick < 4)
+			deathTick += 1
+		else
+			owner.visible_message("[owner]'s soul is absorbed into the rod, releaving the previous snake of it's duty.")
+			var/mob/living/simple_animal/hostile/retaliate/poison/snake/healSnake = new(owner.loc)
+			var/list/chems = list("bicaridine", "salbutamol", "kelotane", "antitoxin")
+			healSnake.poison_type = pick(chems)
+			healSnake.name = "Asclepius's Snake"
+			healSnake.real_name = "Asclepius's Snake"
+			healSnake.desc = "A mystical snake previously trapped upon the Rod of Asclepius, now freed of its burden. Unlike the average snake, its bites contain chemicals with minor healing properties."
+			new /obj/effect/decal/cleanable/ash(owner.loc)
+			new /obj/item/rod_of_asclepius(owner.loc)
+			qdel(owner)
+	else
+		if(iscarbon(owner))
+			var/mob/living/carbon/itemUser = owner
+			var/obj/item/heldItem = itemUser.get_item_for_held_index(hand)
+			if(heldItem == null || heldItem.type != /obj/item/rod_of_asclepius) //Checks to make sure the rod is still in their hand
+				var/obj/item/rod_of_asclepius/newRod = new(itemUser.loc)
+				newRod.activated()
+				if(!itemUser.has_hand_for_held_index(hand))
+					//If user does not have the corresponding hand anymore, give them one and return the rod to their hand
+					if(((hand % 2) == 0))
+						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_R_ARM, FALSE, FALSE)
+						L.attach_limb(itemUser)
+						itemUser.put_in_hand(newRod, hand, forced = TRUE)
+					else
+						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_L_ARM, FALSE, FALSE)
+						L.attach_limb(itemUser)
+						itemUser.put_in_hand(newRod, hand, forced = TRUE)
+					to_chat(itemUser, "<span class='notice'>Your arm suddenly grows back with the Rod of Asclepius still attached!</span>")
+				else
+					//Otherwise get rid of whatever else is in their hand and return the rod to said hand
+					itemUser.put_in_hand(newRod, hand, forced = TRUE)
+					to_chat(itemUser, "<span class='notice'>The Rod of Asclepius suddenly grows back out of your arm!</span>")
+			//Because a servant of medicines stops at nothing to help others, lets keep them on their toes and give them an additional boost.
+			if(itemUser.health < itemUser.maxHealth)
+				new /obj/effect/temp_visual/heal(get_turf(itemUser), "#375637")
+			itemUser.adjustBruteLoss(-1.5)
+			itemUser.adjustFireLoss(-1.5)
+			itemUser.adjustToxLoss(-1.5, forced = TRUE) //Because Slime People are people too
+			itemUser.adjustOxyLoss(-1.5)
+			itemUser.adjustStaminaLoss(-1.5)
+			itemUser.adjustBrainLoss(-1.5)
+			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
+		//Heal all those around you, unbiased
+		for(var/mob/living/L in view(7, owner))
+			if(L.health < L.maxHealth)
+				new /obj/effect/temp_visual/heal(get_turf(L), "#375637")
+			if(iscarbon(L))
+				L.adjustBruteLoss(-3.5)
+				L.adjustFireLoss(-3.5)
+				L.adjustToxLoss(-3.5, forced = TRUE) //Because Slime People are people too
+				L.adjustOxyLoss(-3.5)
+				L.adjustStaminaLoss(-3.5)
+				L.adjustBrainLoss(-3.5)
+				L.adjustCloneLoss(-1) //Becasue apparently clone damage is the bastion of all health
+			else if(issilicon(L))
+				L.adjustBruteLoss(-3.5)
+				L.adjustFireLoss(-3.5)
+			else if(isanimal(L))
+				var/mob/living/simple_animal/SM = L
+				SM.adjustHealth(-3.5, forced = TRUE)

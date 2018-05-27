@@ -2,6 +2,7 @@
 /mob/living/simple_animal/hostile/boss/paper_wizard
 	name = "Mjor the Creative"
 	desc = "A wizard with a taste for the arts."
+	mob_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
 	boss_abilities = list(/datum/action/boss/wizard_summon_minions, /datum/action/boss/wizard_mimic)
 	faction = list("hostile","stickman")
 	del_on_death = TRUE
@@ -87,7 +88,7 @@
 			boss.atb.refund(boss_cost)
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy
-	desc = "tis a ruse!"
+	desc = "'Tis a ruse!"
 	health = 1
 	maxHealth = 1
 	alpha = 200

@@ -5,20 +5,19 @@
 	icon_state = "doorctrl"
 	var/skin = "doorctrl"
 	power_channel = ENVIRON
-	var/obj/item/device/assembly/device
-	var/obj/item/weapon/electronics/airlock/board
+	var/obj/item/assembly/device
+	var/obj/item/electronics/airlock/board
 	var/device_type = null
 	var/id = null
 	var/initialized_button = 0
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 90, acid = 70)
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 70)
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-
-/obj/machinery/button/New(loc, ndir = 0, built = 0)
-	..()
+/obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
+	. = ..()
 	if(built)
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
@@ -57,7 +56,7 @@
 			icon_state = skin
 
 /obj/machinery/button/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		if(panel_open || allowed(user))
 			default_deconstruction_screwdriver(user, "button-open", "[skin]",W)
 			update_icon()
@@ -67,14 +66,14 @@
 		return
 
 	if(panel_open)
-		if(!device && istype(W, /obj/item/device/assembly))
+		if(!device && istype(W, /obj/item/assembly))
 			if(!user.transferItemToLoc(W, src))
 				to_chat(user, "<span class='warning'>\The [W] is stuck to you!</span>")
 				return
 			device = W
 			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
 
-		if(!board && istype(W, /obj/item/weapon/electronics/airlock))
+		if(!board && istype(W, /obj/item/electronics/airlock))
 			if(!user.transferItemToLoc(W, src))
 				to_chat(user, "<span class='warning'>\The [W] is stuck to you!</span>")
 				return
@@ -85,10 +84,10 @@
 				req_access = board.accesses
 			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
 
-		if(!device && !board && istype(W, /obj/item/weapon/wrench))
+		if(!device && !board && istype(W, /obj/item/wrench))
 			to_chat(user, "<span class='notice'>You start unsecuring the button frame...</span>")
-			playsound(loc, W.usesound, 50, 1)
-			if(do_after(user, 40*W.toolspeed, target = src))
+			W.play_tool_sound(src)
+			if(W.use_tool(src, user, 40))
 				to_chat(user, "<span class='notice'>You unsecure the button frame.</span>")
 				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
 				playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
@@ -97,40 +96,46 @@
 		update_icon()
 		return
 
-	if(user.a_intent != INTENT_HARM && !(W.flags & NOBLUDGEON))
-		return src.attack_hand(user)
+	if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
+		return attack_hand(user)
 	else
 		return ..()
 
 /obj/machinery/button/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	req_access = null
-	req_one_access = null
+	req_access = list()
+	req_one_access = list()
 	playsound(src, "sparks", 100, 1)
-	emagged = TRUE
+	obj_flags |= EMAGGED
 
 /obj/machinery/button/attack_ai(mob/user)
 	if(!panel_open)
 		return attack_hand(user)
 
+/obj/machinery/button/attack_robot(mob/user)
+	return attack_ai(user)
+
 /obj/machinery/button/proc/setup_device()
-	if(id && istype(device, /obj/item/device/assembly/control))
-		var/obj/item/device/assembly/control/A = device
+	if(id && istype(device, /obj/item/assembly/control))
+		var/obj/item/assembly/control/A = device
 		A.id = id
 	initialized_button = 1
 
 /obj/machinery/button/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!initialized_button)
 		setup_device()
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(panel_open)
 		if(device || board)
 			if(device)
-				device.loc = get_turf(src)
+				device.forceMove(drop_location())
 				device = null
 			if(board)
-				board.loc = get_turf(src)
+				board.forceMove(drop_location())
 				req_access = list()
 				req_one_access = list()
 				board = null
@@ -172,17 +177,17 @@
 /obj/machinery/button/door
 	name = "door button"
 	desc = "A door remote control switch."
-	var/normaldoorcontrol = 0
+	var/normaldoorcontrol = FALSE
 	var/specialfunctions = OPEN // Bitflag, see assembly file
 
 /obj/machinery/button/door/setup_device()
 	if(!device)
 		if(normaldoorcontrol)
-			var/obj/item/device/assembly/control/airlock/A = new(src)
+			var/obj/item/assembly/control/airlock/A = new(src)
 			device = A
 			A.specialfunctions = specialfunctions
 		else
-			device = new /obj/item/device/assembly/control(src)
+			device = new /obj/item/assembly/control(src)
 	..()
 
 /obj/machinery/button/massdriver
@@ -190,28 +195,28 @@
 	desc = "A remote control switch for a mass driver."
 	icon_state = "launcher"
 	skin = "launcher"
-	device_type = /obj/item/device/assembly/control/massdriver
+	device_type = /obj/item/assembly/control/massdriver
 
 /obj/machinery/button/ignition
 	name = "ignition switch"
 	desc = "A remote control switch for a mounted igniter."
 	icon_state = "launcher"
 	skin = "launcher"
-	device_type = /obj/item/device/assembly/control/igniter
+	device_type = /obj/item/assembly/control/igniter
 
 /obj/machinery/button/flasher
 	name = "flasher button"
 	desc = "A remote control switch for a mounted flasher."
 	icon_state = "launcher"
 	skin = "launcher"
-	device_type = /obj/item/device/assembly/control/flasher
+	device_type = /obj/item/assembly/control/flasher
 
 /obj/machinery/button/crematorium
 	name = "crematorium igniter"
 	desc = "Burn baby burn!"
 	icon_state = "launcher"
 	skin = "launcher"
-	device_type = /obj/item/device/assembly/control/crematorium
+	device_type = /obj/item/assembly/control/crematorium
 	req_access = list()
 	id = 1
 

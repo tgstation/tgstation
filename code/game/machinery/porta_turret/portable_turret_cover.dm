@@ -41,7 +41,7 @@
 
 
 /obj/machinery/porta_turret_cover/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench) && !parent_turret.on)
+	if(istype(I, /obj/item/wrench) && !parent_turret.on)
 		if(parent_turret.raised)
 			return
 
@@ -64,8 +64,8 @@
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
-	else if(istype(I, /obj/item/device/multitool) && !parent_turret.locked)
-		var/obj/item/device/multitool/M = I
+	else if(istype(I, /obj/item/multitool) && !parent_turret.locked)
+		var/obj/item/multitool/M = I
 		M.buffer = parent_turret
 		to_chat(user, "<span class='notice'>You add [parent_turret] to multitool buffer.</span>")
 	else
@@ -87,10 +87,10 @@
 	. = 0
 
 /obj/machinery/porta_turret_cover/emag_act(mob/user)
-	if(!parent_turret.emagged)
+	if(!(parent_turret.obj_flags & EMAGGED))
 		to_chat(user, "<span class='notice'>You short out [parent_turret]'s threat assessment circuits.</span>")
 		visible_message("[parent_turret] hums oddly...")
-		parent_turret.emagged = TRUE
+		parent_turret.obj_flags |= EMAGGED
 		parent_turret.on = 0
 		spawn(40)
 			parent_turret.on = 1

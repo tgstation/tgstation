@@ -16,7 +16,7 @@
 "ae" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "af" = (
 /turf/closed/wall,
 /area/ruin/space/djstation)
@@ -39,24 +39,23 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ak" = (
-/obj/item/device/multitool,
+/obj/item/multitool,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "al" = (
-/obj/item/weapon/storage/toolbox/mechanical{
+/obj/item/storage/toolbox/mechanical{
 	pixel_x = -2;
 	pixel_y = -1
 	},
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "am" = (
-/obj/item/weapon/extinguisher,
+/obj/item/extinguisher,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "an" = (
 /obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
+	icon_state = "0-2"
 	},
 /obj/machinery/power/smes/magical{
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
@@ -66,19 +65,15 @@
 /area/ruin/space/djstation)
 "ao" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ap" = (
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	dir = 0;
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
@@ -86,23 +81,16 @@
 /area/ruin/space/djstation)
 "aq" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/storage/box/lights/mixed,
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
+/obj/item/storage/box/lights/mixed,
+/obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ar" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
@@ -164,12 +152,12 @@
 /area/ruin/space/djstation)
 "aD" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/djstation)
 "aE" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/djstation)
 "aF" = (
@@ -180,14 +168,14 @@
 /turf/open/floor/plasteel/bar,
 /area/ruin/space/djstation)
 "aG" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Kitchen"
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/djstation)
 "aH" = (
 /obj/structure/table,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 0;
 	dir = 8;
 	freerange = 1;
@@ -201,7 +189,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/djstation)
 "aJ" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/airlock/public/glass{
 	name = "Rest Room"
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -237,7 +225,7 @@
 /area/ruin/space/djstation)
 "aQ" = (
 /obj/structure/table,
-/obj/item/device/radio/intercom{
+/obj/item/radio/intercom{
 	broadcasting = 1;
 	dir = 8;
 	freerange = 1;
@@ -248,7 +236,7 @@
 /area/ruin/space/djstation)
 "aR" = (
 /obj/structure/table,
-/obj/item/weapon/paper/fluff/ruins/djstation,
+/obj/item/paper/fluff/ruins/djstation,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/djstation)
 "aS" = (
@@ -290,7 +278,7 @@
 "aZ" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
 "ba" = (
 /turf/open/floor/plasteel/freezer,
 /area/ruin/space/djstation)
@@ -311,9 +299,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/rack{
-	dir = 4
-	},
+/obj/structure/rack,
 /obj/item/clothing/under/soviet,
 /obj/item/clothing/head/ushanka,
 /turf/open/floor/plasteel/cafeteria,
@@ -335,29 +321,24 @@
 /area/ruin/space/djstation)
 "bg" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/obj/item/weapon/pen,
+/obj/item/pen,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/djstation)
 "bh" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
+/obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/djstation)
 "bi" = (
 /obj/machinery/door/airlock/external{
-	name = "Ruskie DJ Station";
-	req_access = null;
-	req_access_txt = "0"
+	name = "Ruskie DJ Station"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "bj" = (
@@ -366,7 +347,16 @@
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
+"Co" = (
+/obj/machinery/door/airlock/external{
+	name = "Ruskie DJ Station"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/djstation)
 
 (1,1,1) = {"
 aa
@@ -641,7 +631,7 @@ bd
 aw
 bi
 ah
-bi
+Co
 "}
 (12,1,1) = {"
 ab

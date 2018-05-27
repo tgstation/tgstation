@@ -44,7 +44,7 @@
 	addtimer(CALLBACK(src, .proc/SetConfigCooldown), 0)
 
 /datum/computer_file/program/card_mod/proc/SetConfigCooldown()
-	change_position_cooldown = config.id_console_jobslot_delay
+	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
 
 /datum/computer_file/program/card_mod/event_idremoved(background, slot)
 	if(!slot || slot == 2)// slot being false means both are removed
@@ -83,8 +83,8 @@
 	return 0
 
 /datum/computer_file/program/card_mod/proc/format_jobs(list/jobs)
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
-	var/obj/item/weapon/card/id/id_card = card_slot.stored_card
+	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+	var/obj/item/card/id/id_card = card_slot.stored_card
 	var/list/formatted = list()
 	for(var/job in jobs)
 		formatted.Add(list(list(
@@ -98,19 +98,19 @@
 	if(..())
 		return 1
 
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot
-	var/obj/item/weapon/computer_hardware/printer/printer
+	var/obj/item/computer_hardware/card_slot/card_slot
+	var/obj/item/computer_hardware/printer/printer
 	if(computer)
 		card_slot = computer.all_components[MC_CARD]
 		printer = computer.all_components[MC_PRINT]
 		if(!card_slot)
 			return
 
-	var/obj/item/weapon/card/id/user_id_card = null
+	var/obj/item/card/id/user_id_card = null
 	var/mob/user = usr
 
-	var/obj/item/weapon/card/id/id_card = card_slot.stored_card
-	var/obj/item/weapon/card/id/auth_card = card_slot.stored_card2
+	var/obj/item/card/id/id_card = card_slot.stored_card
+	var/obj/item/card/id/auth_card = card_slot.stored_card2
 
 	if(auth_card)
 		user_id_card = auth_card
@@ -159,7 +159,7 @@
 									<br>
 									[GLOB.data_core ? GLOB.data_core.get_manifest(0) : ""]
 									"}
-					if(!printer.print_text(contents,text("crew manifest ([])", worldtime2text())))
+					if(!printer.print_text(contents,text("crew manifest ([])", station_time_timestamp())))
 						to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
 						return
 					else
@@ -174,10 +174,9 @@
 							card_slot.try_eject(1, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
-							if (istype(I, /obj/item/weapon/card/id))
-								if(!usr.drop_item())
+							if (istype(I, /obj/item/card/id))
+								if(!usr.transferItemToLoc(I, computer))
 									return
-								I.forceMove(computer)
 								card_slot.stored_card = I
 					if("auth")
 						if(auth_card)
@@ -190,10 +189,9 @@
 							card_slot.try_eject(2, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
-							if (istype(I, /obj/item/weapon/card/id))
-								if(!usr.drop_item())
+							if (istype(I, /obj/item/card/id))
+								if(!usr.transferItemToLoc(I, computer))
 									return
-								I.forceMove(computer)
 								card_slot.stored_card2 = I
 		if("PRG_terminate")
 			if(computer && ((id_card.assignment in head_subordinates) || id_card.assignment == "Assistant"))
@@ -285,19 +283,19 @@
 
 	return 1
 
-/datum/computer_file/program/card_mod/proc/remove_nt_access(obj/item/weapon/card/id/id_card)
+/datum/computer_file/program/card_mod/proc/remove_nt_access(obj/item/card/id/id_card)
 	id_card.access -= get_all_accesses()
 	id_card.access -= get_all_centcom_access()
 
-/datum/computer_file/program/card_mod/proc/apply_access(obj/item/weapon/card/id/id_card, list/accesses)
+/datum/computer_file/program/card_mod/proc/apply_access(obj/item/card/id/id_card, list/accesses)
 	id_card.access |= accesses
 
 /datum/computer_file/program/card_mod/ui_data(mob/user)
 
 	var/list/data = get_header_data()
 
-	var/obj/item/weapon/computer_hardware/card_slot/card_slot
-	var/obj/item/weapon/computer_hardware/printer/printer
+	var/obj/item/computer_hardware/card_slot/card_slot
+	var/obj/item/computer_hardware/printer/printer
 
 	if(computer)
 		card_slot = computer.all_components[MC_CARD]
@@ -308,7 +306,7 @@
 	var/authed = 0
 	if(computer)
 		if(card_slot)
-			var/obj/item/weapon/card/id/auth_card = card_slot.stored_card2
+			var/obj/item/card/id/auth_card = card_slot.stored_card2
 			data["auth_name"] = auth_card ? strip_html_simple(auth_card.name) : "-----"
 			authed = authorized()
 
@@ -333,7 +331,7 @@
 				"desc_close" = status_close["desc"])))
 		data["slots"] = pos
 
-	data["src"] = "\ref[src]"
+	data["src"] = "[REF(src)]"
 	data["station_name"] = station_name()
 
 
@@ -364,7 +362,7 @@
 
 	if(mod_mode == 1 && computer)
 		if(card_slot)
-			var/obj/item/weapon/card/id/id_card = card_slot.stored_card
+			var/obj/item/card/id/id_card = card_slot.stored_card
 
 			data["has_id"] = !!id_card
 			data["id_rank"] = id_card && id_card.assignment ? html_encode(id_card.assignment) : "Unassigned"
@@ -382,7 +380,7 @@
 
 
 		if(card_slot.stored_card)
-			var/obj/item/weapon/card/id/id_card = card_slot.stored_card
+			var/obj/item/card/id/id_card = card_slot.stored_card
 			if(is_centcom)
 				var/list/all_centcom_access = list()
 				for(var/access in get_all_centcom_access())
@@ -443,9 +441,9 @@
 
 /datum/computer_file/program/card_mod/proc/authorized()
 	if(!authenticated && computer)
-		var/obj/item/weapon/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+		var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 		if(card_slot)
-			var/obj/item/weapon/card/id/auth_card = card_slot.stored_card2
+			var/obj/item/card/id/auth_card = card_slot.stored_card2
 			if(auth_card)
 				region_access = list()
 				if(ACCESS_CHANGE_IDS in auth_card.GetAccess())

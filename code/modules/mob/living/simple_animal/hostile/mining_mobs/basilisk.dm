@@ -8,6 +8,7 @@
 	icon_aggro = "Basilisk_alert"
 	icon_dead = "Basilisk_dead"
 	icon_gib = "syndicate_gib"
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
 	move_to_delay = 20
 	projectiletype = /obj/item/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
@@ -27,11 +28,12 @@
 	a_intent = INTENT_HARM
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	vision_range = 2
 	aggro_vision_range = 9
-	idle_vision_range = 2
 	turns_per_move = 5
-	loot = list(/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER},
-				/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER})
+	gold_core_spawnable = HOSTILE_SPAWN
+	loot = list(/obj/item/stack/ore/diamond{layer = ABOVE_MOB_LAYER},
+				/obj/item/stack/ore/diamond{layer = ABOVE_MOB_LAYER})
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -78,7 +80,73 @@
 	robust_searching = 1
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
 	loot = list()
-	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
+	butcher_results = list(/obj/item/stack/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
+	. = ..()
+	if(prob(1))
+		if(prob(75))
+			new /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/magmawing(loc)
+		else
+			new /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/icewing(loc)
+		return INITIALIZE_HINT_QDEL
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/magmawing
+	name = "magmawing watcher"
+	desc = "When raised very close to lava, some watchers adapt to the extreme heat and use lava as both a weapon and wings."
+	icon_state = "watcher_magmawing"
+	icon_living = "watcher_magmawing"
+	icon_aggro = "watcher_magmawing"
+	icon_dead = "watcher_magmawing_dead"
+	maxHealth = 215 //Compensate for the lack of slowdown on projectiles with a bit of extra health
+	health = 215
+	light_range = 3
+	light_power = 2.5
+	light_color = LIGHT_COLOR_LAVA
+	projectiletype = /obj/item/projectile/temp/basilisk/magmawing
+	crusher_loot = /obj/item/crusher_trophy/blaster_tubes/magma_wing
+	crusher_drop_mod = 60
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/icewing
+	name = "icewing watcher"
+	desc = "Very rarely, some watchers will eke out an existence far from heat sources. In the absence of warmth, they become icy and fragile but fire much stronger freezing blasts."
+	icon_state = "watcher_icewing"
+	icon_living = "watcher_icewing"
+	icon_aggro = "watcher_icewing"
+	icon_dead = "watcher_icewing_dead"
+	maxHealth = 170
+	health = 170
+	projectiletype = /obj/item/projectile/temp/basilisk/icewing
+	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/bone = 1) //No sinew; the wings are too fragile to be usable
+	crusher_loot = /obj/item/crusher_trophy/watcher_wing/ice_wing
+	crusher_drop_mod = 30
+
+/obj/item/projectile/temp/basilisk/magmawing
+	name = "scorching blast"
+	icon_state = "lava"
+	damage = 5
+	damage_type = BURN
+	nodamage = FALSE
+	temperature = 500 //Heats you up!
+
+/obj/item/projectile/temp/basilisk/magmawing/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(.)
+		var/mob/living/L = target
+		if (istype(L))
+			L.adjust_fire_stacks(0.1)
+			L.IgniteMob()
+
+/obj/item/projectile/temp/basilisk/icewing
+	damage = 5
+	damage_type = BURN
+	nodamage = FALSE
+
+/obj/item/projectile/temp/basilisk/icewing/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(.)
+		var/mob/living/L = target
+		L.apply_status_effect(/datum/status_effect/freon/watcher)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril
 	fromtendril = TRUE

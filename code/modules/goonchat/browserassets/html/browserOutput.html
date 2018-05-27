@@ -6,6 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" href="font-awesome.css" />
 	<link rel="stylesheet" type="text/css" href="browserOutput.css" />
+	<link rel="stylesheet" type="text/css" href="spritesheet_chat.css" />
 	<script type="text/javascript" src="errorHandler.js"></script>
 	<script type="text/javascript" src="jquery.min.js"></script>
 	<script type="text/javascript" src="json2.min.js"></script>
@@ -27,18 +28,28 @@
 			<i class="icon-circle" id="pingDot"></i>
 			<span class="ms" id="pingMs">--ms</span>
 		</div>
+		<div id="audio">
+			<a href="#" class="subCell toggle" id="toggleAudio" title="Audio"><i class="icon-volume-up"></i></a>
+		</div>
 		<div id="options">
-			<a href="#" class="toggle" id="toggleOptions" title="Options"><i class="icon-cog"></i></a>
-			<div class="sub" id="subOptions">
-				<a href="#" class="decreaseFont" id="decreaseFont"><span>Decrease font size</span> <i class="icon-font">-</i></a>
-				<a href="#" class="increaseFont" id="increaseFont"><span>Increase font size</span> <i class="icon-font">+</i></a>
-				<a href="#" class="togglePing" id="togglePing"><span>Toggle ping display</span> <i class="icon-circle"></i></a>
-				<a href="#" class="highlightTerm" id="highlightTerm"><span>Highlight string</span> <i class="icon-tag"></i></a>
-				<a href="#" class="saveLog" id="saveLog"><span>Save chat log</span> <i class="icon-save"></i></a>
-				<a href="#" class="clearMessages" id="clearMessages"><span>Clear all messages</span> <i class="icon-eraser"></i></a>
-			</div>
+			<a href="#" class="subCell toggle" id="toggleOptions" title="Options"><i class="icon-cog"></i></a>
+		</div>
+		<div class="sub" id="subOptions">
+			<a href="#" class="subCell decreaseFont topCell" id="decreaseFont"><span>Decrease font size</span> <i class="icon-font">-</i></a>
+			<a href="#" class="subCell increaseFont" id="increaseFont"><span>Increase font size</span> <i class="icon-font">+</i></a>
+			<a href="#" class="subCell decreaseLineHeight" id="decreaseLineHeight"><span>Decrease line height</span> <i class="icon-text-height">-</i></a>
+			<a href="#" class="subCell increaseLineHeight" id="increaseLineHeight"><span>Increase line height</span> <i class="icon-text-height">+</i></a>
+			<a href="#" class="subCell togglePing" id="togglePing"><span>Toggle ping display</span> <i class="icon-circle"></i></a>
+			<a href="#" class="subCell highlightTerm" id="highlightTerm"><span>Highlight string</span> <i class="icon-tag"></i></a>
+			<a href="#" class="subCell saveLog" id="saveLog"><span>Save chat log</span> <i class="icon-save"></i></a>
+			<a href="#" class="subCell toggleCombine" id="toggleCombine"><span>Toggle line combining</span> <i class="icon-filter"></i></a>
+			<a href="#" class="subCell clearMessages" id="clearMessages"><span>Clear all messages</span> <i class="icon-eraser"></i></a>
+		</div>
+		<div class="sub" id="subAudio">
+			<span class="subCell topCell" id="musicVolumeSpan"><input type="range" class="hidden" id="musicVolume"><span id="musicVolumeText">Admin music volume</span><i class="icon-music"></i></span>
 		</div>
 	</div>
+	<audio class="hidden" id="adminMusic" autoplay></audio>
 	<script type="text/javascript" src="browserOutput.js"></script>
 </body>
 </html>

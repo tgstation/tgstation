@@ -15,13 +15,13 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 
-	var/freq = 1449		// radio frequency
+	var/freq = FREQ_MAGNETS		// radio frequency
 	var/electricity_level = 1 // intensity of the magnetic pull
 	var/magnetic_field = 1 // the range of magnetic attraction
 	var/code = 0 // frequency code, they should be different unless you have a group of magnets working together or something
 	var/turf/center // the center of magnetic attraction
 	var/on = FALSE
-	var/pulling = 0
+	var/magneting = FALSE
 
 	// x, y modifiers to the center turf; (0, 0) is centered on the magnet, whereas (1, -1) is one tile right, one tile down
 	var/center_x = 0
@@ -33,7 +33,7 @@
 	var/turf/T = loc
 	hide(T.intact)
 	center = T
-	SSradio.add_object(src, freq, GLOB.RADIO_MAGNETS)
+	SSradio.add_object(src, freq, RADIO_MAGNETS)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/magnetic_module/LateInitialize()
@@ -165,15 +165,16 @@
 	updateicon()
 
 
-/obj/machinery/magnetic_module/proc/magnetic_process() // proc that actually does the pulling
-	if(pulling) return
+/obj/machinery/magnetic_module/proc/magnetic_process() // proc that actually does the magneting
+	if(magneting)
+		return
 	while(on)
 
-		pulling = 1
+		magneting = TRUE
 		center = locate(x+center_x, y+center_y, z)
 		if(center)
 			for(var/obj/M in orange(magnetic_field, center))
-				if(!M.anchored && (M.flags & CONDUCT))
+				if(!M.anchored && (M.flags_1 & CONDUCT_1))
 					step_towards(M, center)
 
 			for(var/mob/living/silicon/S in orange(magnetic_field, center))
@@ -184,7 +185,7 @@
 		use_power(electricity_level * 5)
 		sleep(13 - electricity_level)
 
-	pulling = 0
+	magneting = FALSE
 
 
 
@@ -197,7 +198,7 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 45
-	var/frequency = 1449
+	var/frequency = FREQ_MAGNETS
 	var/code = 0
 	var/list/magnets = list()
 	var/title = "Magnetic Control Console"
@@ -215,7 +216,7 @@
 
 
 /obj/machinery/magnetic_controller/Initialize()
-	..()
+	. = ..()
 	if(autolink)
 		for(var/obj/machinery/magnetic_module/M in GLOB.machines)
 			if(M.freq == frequency && M.code == code)
@@ -223,7 +224,7 @@
 
 	if(path) // check for default path
 		filter_path() // renders rpath
-	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_MAGNETS)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_MAGNETS)
 
 /obj/machinery/magnetic_controller/Destroy()
 	SSradio.remove_object(src, frequency)
@@ -237,20 +238,14 @@
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
-
-/obj/machinery/magnetic_controller/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/magnetic_controller/attack_hand(mob/user)
-	if(stat & (BROKEN|NOPOWER))
-		return
-	user.set_machine(src)
+/obj/machinery/magnetic_controller/ui_interact(mob/user)
+	. = ..()
 	var/dat = "<B>Magnetic Control Console</B><BR><BR>"
 	if(!autolink)
 		dat += {"
-		Frequency: <a href='?src=\ref[src];operation=setfreq'>[frequency]</a><br>
-		Code: <a href='?src=\ref[src];operation=setfreq'>[code]</a><br>
-		<a href='?src=\ref[src];operation=probe'>Probe Generators</a><br>
+		Frequency: <a href='?src=[REF(src)];operation=setfreq'>[frequency]</a><br>
+		Code: <a href='?src=[REF(src)];operation=setfreq'>[code]</a><br>
+		<a href='?src=[REF(src)];operation=probe'>Probe Generators</a><br>
 		"}
 
 	if(magnets.len >= 1)
@@ -259,11 +254,11 @@
 		var/i = 0
 		for(var/obj/machinery/magnetic_module/M in magnets)
 			i++
-			dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;< \[[i]\] (<a href='?src=\ref[src];radio-op=togglepower'>[M.on ? "On":"Off"]</a>) | Electricity level: <a href='?src=\ref[src];radio-op=minuselec'>-</a> [M.electricity_level] <a href='?src=\ref[src];radio-op=pluselec'>+</a>; Magnetic field: <a href='?src=\ref[src];radio-op=minusmag'>-</a> [M.magnetic_field] <a href='?src=\ref[src];radio-op=plusmag'>+</a><br>"
+			dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;< \[[i]\] (<a href='?src=[REF(src)];radio-op=togglepower'>[M.on ? "On":"Off"]</a>) | Electricity level: <a href='?src=[REF(src)];radio-op=minuselec'>-</a> [M.electricity_level] <a href='?src=[REF(src)];radio-op=pluselec'>+</a>; Magnetic field: <a href='?src=[REF(src)];radio-op=minusmag'>-</a> [M.magnetic_field] <a href='?src=[REF(src)];radio-op=plusmag'>+</a><br>"
 
-	dat += "<br>Speed: <a href='?src=\ref[src];operation=minusspeed'>-</a> [speed] <a href='?src=\ref[src];operation=plusspeed'>+</a><br>"
-	dat += "Path: {<a href='?src=\ref[src];operation=setpath'>[path]</a>}<br>"
-	dat += "Moving: <a href='?src=\ref[src];operation=togglemoving'>[moving ? "Enabled":"Disabled"]</a>"
+	dat += "<br>Speed: <a href='?src=[REF(src)];operation=minusspeed'>-</a> [speed] <a href='?src=[REF(src)];operation=plusspeed'>+</a><br>"
+	dat += "Path: {<a href='?src=[REF(src)];operation=setpath'>[path]</a>}<br>"
+	dat += "Moving: <a href='?src=[REF(src)];operation=togglemoving'>[moving ? "Enabled":"Disabled"]</a>"
 
 
 	user << browse(dat, "window=magnet;size=400x500")
@@ -277,11 +272,7 @@
 	if(href_list["radio-op"])
 
 		// Prepare signal beforehand, because this is a radio operation
-		var/datum/signal/signal = new
-		signal.transmission_method = 1 // radio transmission
-		signal.source = src
-		signal.frequency = frequency
-		signal.data["code"] = code
+		var/datum/signal/signal = new(list("code" = code))
 
 		// Apply any necessary commands
 		switch(href_list["radio-op"])
@@ -301,7 +292,7 @@
 
 		// Broadcast the signal
 
-		radio_connection.post_signal(src, signal, filter = GLOB.RADIO_MAGNETS)
+		radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
 
 		spawn(1)
 			updateUsrDialog() // pretty sure this increases responsiveness
@@ -333,7 +324,8 @@
 	updateUsrDialog()
 
 /obj/machinery/magnetic_controller/proc/MagnetMove()
-	if(looping) return
+	if(looping)
+		return
 
 	while(moving && rpath.len >= 1)
 
@@ -343,11 +335,7 @@
 		looping = 1
 
 		// Prepare the radio signal
-		var/datum/signal/signal = new
-		signal.transmission_method = 1 // radio transmission
-		signal.source = src
-		signal.frequency = frequency
-		signal.data["code"] = code
+		var/datum/signal/signal = new(list("code" = code))
 
 		if(pathpos > rpath.len) // if the position is greater than the length, we just loop through the list!
 			pathpos = 1
@@ -368,7 +356,7 @@
 
 		// Broadcast the signal
 		spawn()
-			radio_connection.post_signal(src, signal, filter = GLOB.RADIO_MAGNETS)
+			radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
 
 		if(speed == 10)
 			sleep(1)

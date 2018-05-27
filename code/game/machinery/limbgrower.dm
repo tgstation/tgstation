@@ -15,29 +15,32 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
-	circuit = /obj/item/weapon/circuitboard/machine/limbgrower
+	circuit = /obj/item/circuitboard/machine/limbgrower
 
 	var/operating = FALSE
 	var/disabled = FALSE
 	var/busy = FALSE
 	var/prod_coeff = 1
 	var/datum/design/being_built
-	var/datum/research/files
+	var/datum/techweb/stored_research
 	var/selected_category
 	var/screen = 1
 	var/list/categories = list(
 							"human",
 							"lizard",
+							"fly",
+							"moth",
 							"plasmaman",
-							"special"
+							"other"
 							)
 
 /obj/machinery/limbgrower/Initialize()
+	create_reagents(100)
+	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
 	. = ..()
-	create_reagents(0)
-	files = new /datum/research/limbgrower(src)
 
-/obj/machinery/limbgrower/interact(mob/user)
+/obj/machinery/limbgrower/ui_interact(mob/user)
+	. = ..()
 	if(!is_operational())
 		return
 
@@ -56,7 +59,7 @@
 	popup.open()
 
 /obj/machinery/limbgrower/on_deconstruction()
-	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
 	..()
 
@@ -67,9 +70,6 @@
 
 	if(default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", O))
 		updateUsrDialog()
-		return
-
-	if(exchange_parts(user, O))
 		return
 
 	if(panel_open && default_deconstruction_crowbar(O))
@@ -95,7 +95,7 @@
 
 			/////////////////
 			//href protection
-			being_built = files.FindDesignByID(href_list["make"]) //check if it's a valid design
+			being_built = stored_research.isDesignResearchedID(href_list["make"]) //check if it's a valid design
 			if(!being_built)
 				return
 
@@ -136,39 +136,36 @@
 	//i need to create a body part manually using a set icon (otherwise it doesnt appear)
 	var/obj/item/bodypart/limb
 	limb = new buildpath(loc)
-	if(selected_category=="human" || selected_category=="lizard") // Doing this because plasmamen have their limbs in a different icon file
+	if(selected_category=="human" || selected_category=="lizard") //Species with greyscale parts should be included here
 		limb.icon = 'icons/mob/human_parts_greyscale.dmi'
+		limb.should_draw_greyscale = TRUE
 	else
 		limb.icon = 'icons/mob/human_parts.dmi'
 	// Set this limb up using the specias name and body zone
 	limb.icon_state = "[selected_category]_[limb.body_zone]"
-	limb.name = "Synthetic [selected_category] [parse_zone(limb.body_zone)]"
+	limb.name = "\improper synthetic [selected_category] [parse_zone(limb.body_zone)]"
 	limb.desc = "A synthetic [selected_category] limb that will morph on its first use in surgery. This one is for the [parse_zone(limb.body_zone)]"
 	limb.species_id = selected_category
-	limb.should_draw_greyscale = TRUE
 	limb.update_icon_dropped()
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0
-	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.maximum_volume += G.volume
 		G.reagents.trans_to(src, G.reagents.total_volume)
 	var/T=1.2
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		T -= M.rating*0.2
 	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
 
 /obj/machinery/limbgrower/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Limb Grower Menu:</h3><br>"
-	dat += "<A href='?src=\ref[src];menu=[LIMBGROWER_CHEMICAL_MENU]'>Chemical Storage</A>"
+	dat += "<A href='?src=[REF(src)];menu=[LIMBGROWER_CHEMICAL_MENU]'>Chemical Storage</A>"
 	dat += materials_printout()
 	dat += "<table style='width:100%' align='center'><tr>"
 
 	for(var/C in categories)
-		if(C=="special" && !emagged)	//Only want to show special when console is emagged
-			continue
-
-		dat += "<td><A href='?src=\ref[src];category=[C];menu=[LIMBGROWER_CATEGORY_MENU]'>[C]</A></td>"
+		dat += "<td><A href='?src=[REF(src)];category=[C];menu=[LIMBGROWER_CATEGORY_MENU]'>[C]</A></td>"
 		dat += "</tr><tr>"
 		//one category per line
 
@@ -176,18 +173,18 @@
 	return dat
 
 /obj/machinery/limbgrower/proc/category_win(mob/user,selected_category)
-	var/dat = "<A href='?src=\ref[src];menu=[LIMBGROWER_MAIN_MENU]'>Return to main menu</A>"
+	var/dat = "<A href='?src=[REF(src)];menu=[LIMBGROWER_MAIN_MENU]'>Return to main menu</A>"
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
 	dat += materials_printout()
 
-	for(var/v in files.known_designs)
-		var/datum/design/D = files.known_designs[v]
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category))
 			continue
 		if(disabled || !can_build(D))
 			dat += "<span class='linkOff'>[D.name]</span>"
 		else
-			dat += "<a href='?src=\ref[src];make=[D.id];multiplier=1'>[D.name]</a>"
+			dat += "<a href='?src=[REF(src)];make=[D.id];multiplier=1'>[D.name]</a>"
 		dat += "[get_design_cost(D)]<br>"
 
 	dat += "</div>"
@@ -195,13 +192,13 @@
 
 
 /obj/machinery/limbgrower/proc/chemical_win(mob/user)
-	var/dat = "<A href='?src=\ref[src];menu=[LIMBGROWER_MAIN_MENU]'>Return to main menu</A>"
+	var/dat = "<A href='?src=[REF(src)];menu=[LIMBGROWER_MAIN_MENU]'>Return to main menu</A>"
 	dat += "<div class='statusDisplay'><h3>Browsing Chemical Storage:</h3><br>"
 	dat += materials_printout()
 
 	for(var/datum/reagent/R in reagents.reagent_list)
 		dat += "[R.name]: [R.volume]"
-		dat += "<A href='?src=\ref[src];disposeI=[R.id]'>Purge</A><BR>"
+		dat += "<A href='?src=[REF(src)];disposeI=[R.id]'>Purge</A><BR>"
 
 	dat += "</div>"
 	return dat
@@ -220,10 +217,11 @@
 	return dat
 
 /obj/machinery/limbgrower/emag_act(mob/user)
-	if(emagged)
+	if(obj_flags & EMAGGED)
 		return
-	for(var/datum/design/D in files.possible_designs)
-		if((D.build_type & LIMBGROWER) && ("special" in D.category))
-			files.AddDesign2Known(D)
+	for(var/id in SSresearch.techweb_designs)
+		var/datum/design/D = SSresearch.techweb_designs[id]
+		if((D.build_type & LIMBGROWER) && ("emagged" in D.category))
+			stored_research.add_design(D)
 	to_chat(user, "<span class='warning'>A warning flashes onto the screen, stating that safety overrides have been deactivated!</span>")
-	emagged = TRUE
+	obj_flags |= EMAGGED

@@ -30,14 +30,14 @@
 
 	add_to_cache(input, .)
 
-/obj/item/weapon/codespeak_manual
+/obj/item/codespeak_manual
 	name = "codespeak manual"
 	desc = "The book's cover reads: \"Codespeak(tm) - Secure your communication with metaphors so elaborate, they seem randomly generated!\""
 	icon = 'icons/obj/library.dmi'
 	icon_state = "book2"
 	var/charges = 1
 
-/obj/item/weapon/codespeak_manual/attack_self(mob/living/user)
+/obj/item/codespeak_manual/attack_self(mob/living/user)
 	if(!isliving(user))
 		return
 
@@ -50,7 +50,7 @@
 
 	use_charge(user)
 
-/obj/item/weapon/codespeak_manual/attack(mob/living/M, mob/living/user)
+/obj/item/codespeak_manual/attack(mob/living/M, mob/living/user)
 	if(!istype(M) || !istype(user))
 		return
 	if(M == user)
@@ -64,20 +64,20 @@
 	else if(M.has_language(/datum/language/codespeak))
 		M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", "<span class='userdanger'>[user] beats you over the head with [src]!</span>", "<span class='italics'>You hear smacking.</span>")
 	else
-		M.visible_message("<span class='notice'>[user] teaches [M] by beating them over the head with [src]!</span>", "<span class='boldnotice'>As [user] hits you with [src], codewords and responses flow through your mind.</span>", "<span class='italics'>You hear smacking.</span>")
+		M.visible_message("<span class='notice'>[user] teaches [M] by beating [M.p_them()] over the head with [src]!</span>", "<span class='boldnotice'>As [user] hits you with [src], codewords and responses flow through your mind.</span>", "<span class='italics'>You hear smacking.</span>")
 		M.grant_language(/datum/language/codespeak)
 		use_charge(user)
 
-/obj/item/weapon/codespeak_manual/proc/use_charge(mob/user)
+/obj/item/codespeak_manual/proc/use_charge(mob/user)
 	charges--
 	if(!charges)
 		var/turf/T = get_turf(src)
 		T.visible_message("<span class='warning'>The cover and contents of [src] start shifting and changing!</span>")
 
 		qdel(src)
-		var/obj/item/weapon/book/manual/random/book = new(T)
+		var/obj/item/book/manual/random/book = new(T)
 		user.put_in_active_hand(book)
 
-/obj/item/weapon/codespeak_manual/unlimited
+/obj/item/codespeak_manual/unlimited
 	name = "deluxe codespeak manual"
 	charges = INFINITY

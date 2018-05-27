@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/sprite_number = 0
 
-/obj/machinery/gravity_generator/throw_at()
+/obj/machinery/gravity_generator/safe_throw_at()
 	return FALSE
 
 /obj/machinery/gravity_generator/ex_act(severity, target)
@@ -39,25 +39,21 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	if(prob(20))
 		set_broken()
 
-/obj/machinery/gravity_generator/tesla_act(power, explosive)
+/obj/machinery/gravity_generator/tesla_act(power, tesla_flags)
 	..()
-	if(explosive)
+	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
 		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 /obj/machinery/gravity_generator/update_icon()
 	..()
 	icon_state = "[get_status()]_[sprite_number]"
 
-//prevents shuttles attempting to rotate this since it messes up sprites
-/obj/machinery/gravity_generator/shuttleRotate()
-	return
-
 /obj/machinery/gravity_generator/proc/get_status()
 	return "off"
 
 // You aren't allowed to move.
 /obj/machinery/gravity_generator/Move()
-	..()
+	. = ..()
 	qdel(src)
 
 /obj/machinery/gravity_generator/proc/set_broken()
@@ -120,7 +116,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	power_channel = ENVIRON
 	sprite_number = 8
 	use_power = IDLE_POWER_USE
-	interact_offline = 1
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	var/on = TRUE
 	var/breaker = 1
 	var/list/parts = list()
@@ -190,22 +186,18 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/main/attackby(obj/item/I, mob/user, params)
 	switch(broken_state)
 		if(GRAV_NEEDS_SCREWDRIVER)
-			if(istype(I, /obj/item/weapon/screwdriver))
+			if(istype(I, /obj/item/screwdriver))
 				to_chat(user, "<span class='notice'>You secure the screws of the framework.</span>")
-				playsound(src.loc, I.usesound, 50, 1)
+				I.play_tool_sound(src)
 				broken_state++
 				update_icon()
 				return
 		if(GRAV_NEEDS_WELDING)
-			if(istype(I, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/WT = I
-				if(WT.remove_fuel(1, user))
+			if(istype(I, /obj/item/weldingtool))
+				if(I.use_tool(src, user, 0, volume=50, amount=1))
 					to_chat(user, "<span class='notice'>You mend the damaged framework.</span>")
-					playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 					broken_state++
 					update_icon()
-				else if(WT.isOn())
-					to_chat(user, "<span class='warning'>You don't have enough fuel to mend the damaged framework!</span>")
 				return
 		if(GRAV_NEEDS_PLASTEEL)
 			if(istype(I, /obj/item/stack/sheet/plasteel))
@@ -220,26 +212,21 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 					to_chat(user, "<span class='warning'>You need 10 sheets of plasteel!</span>")
 				return
 		if(GRAV_NEEDS_WRENCH)
-			if(istype(I, /obj/item/weapon/wrench))
+			if(istype(I, /obj/item/wrench))
 				to_chat(user, "<span class='notice'>You secure the plating to the framework.</span>")
-				playsound(src.loc, I.usesound, 75, 1)
+				I.play_tool_sound(src)
 				set_fix()
 				return
 	return ..()
 
-
-/obj/machinery/gravity_generator/main/attack_hand(mob/user)
-	if(!..())
-		return interact(user)
-
-/obj/machinery/gravity_generator/main/interact(mob/user)
+/obj/machinery/gravity_generator/main/ui_interact(mob/user)
 	if(stat & BROKEN)
 		return
 	var/dat = "Gravity Generator Breaker: "
 	if(breaker)
-		dat += "<span class='linkOn'>ON</span> <A href='?src=\ref[src];gentoggle=1'>OFF</A>"
+		dat += "<span class='linkOn'>ON</span> <A href='?src=[REF(src)];gentoggle=1'>OFF</A>"
 	else
-		dat += "<A href='?src=\ref[src];gentoggle=1'>ON</A> <span class='linkOn'>OFF</span> "
+		dat += "<A href='?src=[REF(src)];gentoggle=1'>ON</A> <span class='linkOn'>OFF</span> "
 
 	dat += "<br>Generator Status:<br><div class='statusDisplay'>"
 	if(charging_state != POWER_IDLE)
@@ -367,13 +354,14 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 
 /obj/machinery/gravity_generator/main/proc/pulse_radiation()
-	radiation_pulse(get_turf(src), 3, 7, 20)
+	radiation_pulse(src, 200)
 
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
 	var/turf/T = get_turf(src)
 	var/sound/alert_sound = sound('sound/effects/alert.ogg')
-	for(var/mob/M in GLOB.mob_list)
+	for(var/i in GLOB.mob_list)
+		var/mob/M = i
 		if(M.z != z)
 			continue
 		M.update_gravity(M.mob_has_gravity())
@@ -401,7 +389,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 // Misc
 
-/obj/item/weapon/paper/guides/jobs/engi/gravity_gen
+/obj/item/paper/guides/jobs/engi/gravity_gen
 	name = "paper- 'Generate your own gravity!'"
 	info = {"<h1>Gravity Generator Instructions For Dummies</h1>
 	<p>Surprisingly, gravity isn't that hard to make! All you have to do is inject deadly radioactive minerals into a ball of

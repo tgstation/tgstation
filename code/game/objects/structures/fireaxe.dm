@@ -1,19 +1,19 @@
 /obj/structure/fireaxecabinet
 	name = "fire axe cabinet"
 	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
-	var/obj/item/weapon/twohanded/fireaxe/fireaxe = new/obj/item/weapon/twohanded/fireaxe
+	var/obj/item/twohanded/fireaxe/fireaxe = new/obj/item/twohanded/fireaxe
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
-	armor = list(melee = 50, bullet = 20, laser = 0, energy = 100, bomb = 10, bio = 100, rad = 100, fire = 90, acid = 50)
+	armor = list("melee" = 50, "bullet" = 20, "laser" = 0, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 50)
 	var/locked = TRUE
 	var/open = FALSE
 	max_integrity = 150
 	integrity_failure = 50
 
-/obj/structure/fireaxecabinet/New()
-	..()
+/obj/structure/fireaxecabinet/Initialize()
+	. = ..()
 	update_icon()
 
 /obj/structure/fireaxecabinet/Destroy()
@@ -22,16 +22,16 @@
 	return ..()
 
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
-	if(iscyborg(user) || istype(I, /obj/item/device/multitool))
+	if(iscyborg(user) || istype(I, /obj/item/multitool))
 		toggle_lock(user)
-	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP && !broken)
-		var/obj/item/weapon/weldingtool/WT = I
-		if(obj_integrity < max_integrity && WT.remove_fuel(2, user))
+	else if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP && !broken)
+		if(obj_integrity < max_integrity)
+			if(!I.tool_start_check(user, amount=2))
+				return
+
 			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
-			playsound(loc, WT.usesound, 40, 1)
-			if(do_after(user, 40*I.toolspeed, target = src))
+			if(I.use_tool(src, user, 40, volume=50, amount=2))
 				obj_integrity = max_integrity
-				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 				update_icon()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
@@ -48,15 +48,14 @@
 			obj_integrity = max_integrity
 			update_icon()
 	else if(open || broken)
-		if(istype(I, /obj/item/weapon/twohanded/fireaxe) && !fireaxe)
-			var/obj/item/weapon/twohanded/fireaxe/F = I
+		if(istype(I, /obj/item/twohanded/fireaxe) && !fireaxe)
+			var/obj/item/twohanded/fireaxe/F = I
 			if(F.wielded)
 				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 				return
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(F, src))
 				return
 			fireaxe = F
-			F.forceMove(src)
 			to_chat(user, "<span class='caution'>You place the [F.name] back in the [name].</span>")
 			update_icon()
 			return
@@ -83,15 +82,15 @@
 		update_icon()
 
 /obj/structure/fireaxecabinet/obj_break(damage_flag)
-	if(!broken && !(flags & NODECONSTRUCT))
+	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		update_icon()
 		broken = TRUE
 		playsound(src, 'sound/effects/glassbr3.ogg', 100, 1)
-		new /obj/item/weapon/shard(loc)
-		new /obj/item/weapon/shard(loc)
+		new /obj/item/shard(loc)
+		new /obj/item/shard(loc)
 
 /obj/structure/fireaxecabinet/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(fireaxe && loc)
 			fireaxe.forceMove(loc)
 			fireaxe = null
@@ -105,6 +104,9 @@
 	qdel(src)
 
 /obj/structure/fireaxecabinet/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(open || broken)
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
@@ -122,7 +124,7 @@
 		return
 
 /obj/structure/fireaxecabinet/attack_paw(mob/living/user)
-	attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)

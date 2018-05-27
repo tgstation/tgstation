@@ -6,8 +6,8 @@
 /obj/item/organ/vocal_cords //organs that are activated through speech with the :x channel
 	name = "vocal cords"
 	icon_state = "appendix"
-	zone = "mouth"
-	slot = "vocal_cords"
+	zone = BODY_ZONE_PRECISE_MOUTH
+	slot = ORGAN_SLOT_VOICE
 	gender = PLURAL
 	var/list/spans = null
 
@@ -22,17 +22,15 @@
 
 /obj/item/organ/adamantine_resonator
 	name = "adamantine resonator"
-	desc = "Fragments of adamantine exists in all golems, stemming from their origins as purely magical constructs. These are used to \"hear\" messages from their leaders."
-	zone = "head"
-	slot = "adamantine_resonator"
+	desc = "Fragments of adamantine exist in all golems, stemming from their origins as purely magical constructs. These are used to \"hear\" messages from their leaders."
+	zone = BODY_ZONE_HEAD
+	slot = ORGAN_SLOT_ADAMANTINE_RESONATOR
 	icon_state = "adamantine_resonator"
 
 /obj/item/organ/vocal_cords/adamantine
 	name = "adamantine vocal cords"
 	desc = "When adamantine resonates, it causes all nearby pieces of adamantine to resonate as well. Adamantine golems use this to broadcast messages to nearby golems."
 	actions_types = list(/datum/action/item_action/organ_action/use/adamantine_vocal_cords)
-	zone = "mouth"
-	slot = "vocal_cords"
 	icon_state = "adamantine_cords"
 
 /datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger()
@@ -48,7 +46,7 @@
 	for(var/m in GLOB.player_list)
 		if(iscarbon(m))
 			var/mob/living/carbon/C = m
-			if(C.getorganslot("adamantine_resonator"))
+			if(C.getorganslot(ORGAN_SLOT_ADAMANTINE_RESONATOR))
 				to_chat(C, msg)
 		if(isobserver(m))
 			var/link = FOLLOW_LINK(m, owner)
@@ -59,8 +57,6 @@
 	name = "divine vocal cords"
 	desc = "They carry the voice of an ancient god."
 	icon_state = "voice_of_god"
-	zone = "mouth"
-	slot = "vocal_cords"
 	actions_types = list(/datum/action/item_action/organ_action/colossus)
 	var/next_command = 0
 	var/cooldown_mod = 1
@@ -91,7 +87,7 @@
 	. = ..()
 	if(!IsAvailable())
 		if(world.time < cords.next_command)
-			to_chat(owner, "<span class='notice'>You must wait [(cords.next_command - world.time)/10] seconds before Speaking again.</span>")
+			to_chat(owner, "<span class='notice'>You must wait [DisplayTimeText(cords.next_command - world.time)] before Speaking again.</span>")
 		return
 	var/command = input(owner, "Speak with the Voice of God", "Command")
 	if(QDELETED(src) || QDELETED(owner))
@@ -102,7 +98,7 @@
 
 /obj/item/organ/vocal_cords/colossus/can_speak_with()
 	if(world.time < next_command)
-		to_chat(owner, "<span class='notice'>You must wait [(next_command - world.time)/10] seconds before Speaking again.</span>")
+		to_chat(owner, "<span class='notice'>You must wait [DisplayTimeText(next_command - world.time)] before Speaking again.</span>")
 		return FALSE
 	if(!owner)
 		return FALSE
@@ -112,19 +108,18 @@
 	return TRUE
 
 /obj/item/organ/vocal_cords/colossus/handle_speech(message)
-	owner.say(uppertext(message), spans = spans, sanitize = FALSE)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 	return //voice of god speaks for us
 
 /obj/item/organ/vocal_cords/colossus/speak_with(message)
-	var/cooldown = voice_of_god(message, owner, spans, base_multiplier)
+	var/cooldown = voice_of_god(uppertext(message), owner, spans, base_multiplier)
 	next_command = world.time + (cooldown * cooldown_mod)
 
 //////////////////////////////////////
 ///////////VOICE OF GOD///////////////
 //////////////////////////////////////
 
-/proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1)
+/proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE)
 	var/cooldown = 0
 
 	if(!user || !user.can_speak() || user.stat)
@@ -139,10 +134,14 @@
 		else
 			span_list = list()
 
+	user.say(message, spans = span_list, sanitize = FALSE)
+
 	message = lowertext(message)
 	var/mob/living/list/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
-		if(L.can_hear() && !L.null_rod_check() && L != user && L.stat != DEAD)
+		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)
+			if(L == user && !include_speaker)
+				continue
 			if(ishuman(L))
 				var/mob/living/carbon/human/H = L
 				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
@@ -212,12 +211,12 @@
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown")
 	var/static/regex/sleep_words = regex("sleep|slumber|rest")
-	var/static/regex/vomit_words = regex("vomit|throw up")
-	var/static/regex/silence_words = regex("shut up|silence|ssh|quiet|hush")
+	var/static/regex/vomit_words = regex("vomit|throw up|sick")
+	var/static/regex/silence_words = regex("shut up|silence|be silent|ssh|quiet|hush")
 	var/static/regex/hallucinate_words = regex("see the truth|hallucinate")
 	var/static/regex/wakeup_words = regex("wake up|awaken")
-	var/static/regex/heal_words = regex("live|heal|survive|mend|heroes never die")
-	var/static/regex/hurt_words = regex("die|suffer|hurt|pain")
+	var/static/regex/heal_words = regex("live|heal|survive|mend|life|heroes never die")
+	var/static/regex/hurt_words = regex("die|suffer|hurt|pain|death")
 	var/static/regex/bleed_words = regex("bleed|there will be blood")
 	var/static/regex/burn_words = regex("burn|ignite")
 	var/static/regex/hot_words = regex("heat|hot|hell")
@@ -253,6 +252,7 @@
 	var/static/regex/honk_words = regex("ho+nk") //hooooooonk
 	var/static/regex/multispin_words = regex("like a record baby|right round")
 
+	var/i = 0
 	//STUN
 	if(findtext(message, stun_words))
 		cooldown = COOLDOWN_STUN
@@ -305,14 +305,14 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, 0)
+			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, FALSE, FALSE)
 
 	//BRUTE DAMAGE
 	else if((findtext(message, hurt_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.apply_damage(15 * power_multiplier, def_zone = "chest")
+			L.apply_damage(15 * power_multiplier, def_zone = BODY_ZONE_CHEST)
 
 	//BLEED
 	else if((findtext(message, bleed_words)))
@@ -333,14 +333,14 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.bodytemperature += (50 * power_multiplier)
+			L.adjust_bodytemperature(50 * power_multiplier)
 
 	//COLD
 	else if((findtext(message, cold_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.bodytemperature -= (50 * power_multiplier)
+			L.adjust_bodytemperature(-50 * power_multiplier)
 
 	//REPULSE
 	else if((findtext(message, repulse_words)))
@@ -362,28 +362,30 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
+			var/text = ""
 			if(is_devil(L))
 				var/datum/antagonist/devil/devilinfo = is_devil(L)
-				L.say("[devilinfo.truename]")
+				text = devilinfo.truename
 			else
-				L.say("[L.real_name]")
-			sleep(5) //So the chat flows more naturally
+				text = L.real_name
+			addtimer(CALLBACK(L, /atom/movable/proc/say, text), 5 * i)
+			i++
 
 	//SAY MY NAME
 	else if((findtext(message, saymyname_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.say("[user.name]!") //"Unknown!"
-			sleep(5) //So the chat flows more naturally
+			addtimer(CALLBACK(L, /atom/movable/proc/say, user.name), 5 * i)
+			i++
 
 	//KNOCK KNOCK
 	else if((findtext(message, knockknock_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.say("Who's there?")
-			sleep(5) //So the chat flows more naturally
+			addtimer(CALLBACK(L, /atom/movable/proc/say, "Who's there?"), 5 * i)
+			i++
 
 	//STATE LAWS
 	else if((findtext(message, statelaws_words)))
@@ -403,11 +405,10 @@
 			direction = WEST
 		else if(findtext(message, right_words))
 			direction = EAST
-		for(var/i=1, i<=(5*power_multiplier), i++)
+		for(var/iter in 1 to 5 * power_multiplier)
 			for(var/V in listeners)
 				var/mob/living/L = V
-				step(L, direction ? direction : pick(GLOB.cardinals))
-			sleep(10)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, L, direction? direction : pick(GLOB.cardinals)), 10 * (iter - 1))
 
 	//WALK
 	else if((findtext(message, walk_words)))
@@ -429,33 +430,33 @@
 	else if((findtext(message, helpintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			H.a_intent_change(INTENT_HELP)
-			H.click_random_mob()
-			sleep(2) //delay to make it feel more natural
+			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_HELP), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
+			i++
 
 	//DISARM INTENT
 	else if((findtext(message, disarmintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			H.a_intent_change(INTENT_DISARM)
-			H.click_random_mob()
-			sleep(2) //delay to make it feel more natural
+			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_DISARM), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
+			i++
 
 	//GRAB INTENT
 	else if((findtext(message, grabintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			H.a_intent_change(INTENT_GRAB)
-			H.click_random_mob()
-			sleep(2) //delay to make it feel more natural
+			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_GRAB), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
+			i++
 
 	//HARM INTENT
 	else if((findtext(message, harmintent_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/mob/living/carbon/human/H in listeners)
-			H.a_intent_change(INTENT_HARM)
-			H.click_random_mob()
-			sleep(2) //delay to make it feel more natural
+			addtimer(CALLBACK(H, /mob/verb/a_intent_change, INTENT_HARM), i * 2)
+			addtimer(CALLBACK(H, /mob/proc/click_random_mob), i * 2)
+			i++
 
 	//THROW/CATCH
 	else if((findtext(message, throwmode_words)))
@@ -475,8 +476,8 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
-			sleep(5) //So the chat flows more naturally
+			addtimer(CALLBACK(L, /atom/movable/proc/say, pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")), 5 * i)
+			i++
 
 	//GET UP
 	else if((findtext(message, getup_words)))
@@ -511,8 +512,8 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.emote("dance")
-			sleep(5) //So the chat flows more naturally
+			addtimer(CALLBACK(L, /mob/living/.proc/emote, "dance"), 5 * i)
+			i++
 
 	//JUMP
 	else if((findtext(message, jump_words)))
@@ -520,33 +521,33 @@
 		for(var/V in listeners)
 			var/mob/living/L = V
 			if(prob(25))
-				L.say("HOW HIGH?!!")
-			L.emote("jump")
-			sleep(5) //So the chat flows more naturally
+				addtimer(CALLBACK(L, /atom/movable/proc/say, "HOW HIGH?!!"), 5 * i)
+			addtimer(CALLBACK(L, /mob/living/.proc/emote, "jump"), 5 * i)
+			i++
 
 	//SALUTE
 	else if((findtext(message, salute_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.emote("salute")
-			sleep(5) //So the chat flows more naturally
+			addtimer(CALLBACK(L, /mob/living/.proc/emote, "salute"), 5 * i)
+			i++
 
 	//PLAY DEAD
 	else if((findtext(message, deathgasp_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.emote("deathgasp")
-			sleep(5) //So the chat flows more naturally
+			addtimer(CALLBACK(L, /mob/living/.proc/emote, "deathgasp"), 5 * i)
+			i++
 
 	//PLEASE CLAP
 	else if((findtext(message, clap_words)))
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.emote("clap")
-			sleep(5) //So the chat flows more naturally
+			addtimer(CALLBACK(L, /mob/living/.proc/emote, "clap"), 5 * i)
+			i++
 
 	//HONK
 	else if((findtext(message, honk_words)))
@@ -567,8 +568,10 @@
 	else
 		cooldown = COOLDOWN_NONE
 
-	message_admins("[key_name_admin(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+	if(message_admins)
+		message_admins("[key_name_admin(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	log_game("[key_name(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+	SSblackbox.record_feedback("tally", "voice_of_god", 1, log_message)
 
 	return cooldown
 

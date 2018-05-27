@@ -23,9 +23,9 @@
 		if(!marked_item) //linking item to the spell
 			message = "<span class='notice'>"
 			for(var/obj/item in hand_items)
-				if(ABSTRACT in item.flags)
+				if(item.flags_1 & ABSTRACT_1)
 					continue
-				if(NODROP in item.flags)
+				if(item.flags_1 & NODROP_1)
 					message += "Though it feels redundant, "
 				marked_item = 		item
 				message += "You mark [item] for recall.</span>"
@@ -66,7 +66,7 @@
 
 						if(issilicon(M)) //Items in silicons warp the whole silicon
 							M.loc.visible_message("<span class='warning'>[M] suddenly disappears!</span>")
-							M.loc = L.loc
+							M.forceMove(L.loc)
 							M.loc.visible_message("<span class='caution'>[M] suddenly appears!</span>")
 							item_to_retrieve = null
 							break
@@ -83,6 +83,7 @@
 									to_chat(C, "<span class='warning'>The [item_to_retrieve] that was embedded in your [L] has mysteriously vanished. How fortunate!</span>")
 									if(!C.has_embedded_objects())
 										C.clear_alert("embeddedobject")
+										C.SendSignal(COMSIG_CLEAR_MOOD_EVENT, "embedded")
 									break
 
 					else
@@ -101,7 +102,7 @@
 			if(item_to_retrieve.loc)
 				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly disappears!</span>")
 			if(!L.put_in_hands(item_to_retrieve))
-				item_to_retrieve.loc = L.loc
+				item_to_retrieve.forceMove(L.drop_location())
 				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears!</span>")
 				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, 1)
 			else

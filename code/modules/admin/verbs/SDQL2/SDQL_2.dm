@@ -10,7 +10,7 @@
 	-- Will change all the tube lights to green
 	UPDATE /obj/machinery/light IN world SET color = "#0F0" WHERE icon_state == "tube1"
 	-- Will delete all pickaxes. "IN world" is not required.
-	DELETE /obj/item/weapon/pickaxe
+	DELETE /obj/item/pickaxe
 	-- Will flicker the lights once, then turn all mobs green. The semicolon is important to separate the consecutive querys, but is not required for standard one-query use
 	CALL flicker(1) ON /obj/machinery/light; UPDATE /mob SET color = "#00cc00"
 
@@ -24,10 +24,14 @@
 		message_admins("<span class='danger'>ERROR: Non-admin [key_name(usr, usr.client)] attempted to execute a SDQL query!</span>")
 		log_admin("Non-admin [usr.ckey]([usr]) attempted to execute a SDQL query!")
 		return FALSE
+	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[usr.ckey]([usr])")
+	for(var/I in 1 to 3)
+		to_chat(usr, results[I])
 
+/world/proc/SDQL2_query(query_text, log_entry1, log_entry2)
 	var/query_log = "executed SDQL query: \"[query_text]\"."
-	message_admins("[key_name_admin(usr)] [query_log]")
-	query_log = "[usr.ckey]([usr]) [query_log]"
+	message_admins("[log_entry1] [query_log]")
+	query_log = "[log_entry2] [query_log]"
 	log_game(query_log)
 	NOTICE(query_log)
 	var/objs_all = 0
@@ -37,7 +41,6 @@
 	if(!query_text || length(query_text) < 1)
 		return
 
-	//to_chat(world, query_text)
 
 	var/list/query_list = SDQL2_tokenize(query_text)
 
@@ -50,6 +53,7 @@
 	if(!querys || querys.len < 1)
 		return
 
+	var/list/refs = list()
 	for(var/list/query_tree in querys)
 		var/list/from_objs = list()
 		var/list/select_types = list()
@@ -91,7 +95,7 @@
 				for(var/datum/d in objs)
 					world.SDQL_var(d, query_tree["call"][1], source = d)
 					CHECK_TICK
-					
+
 			if("delete")
 				for(var/datum/d in objs)
 					SDQL_qdel_datum(d)
@@ -101,6 +105,7 @@
 				var/text = ""
 				for(var/datum/t in objs)
 					text += SDQL_gen_vv_href(t)
+					refs[REF(t)] = TRUE
 					CHECK_TICK
 				usr << browse(text, "window=SDQL-result")
 
@@ -113,24 +118,24 @@
 
 	var/end_time = REALTIMEOFDAY
 	end_time -= start_time
-	to_chat(usr, "<span class='admin'>SDQL query results: [query_text]</span>")
-	to_chat(usr, "<span class='admin'>SDQL query completed: [objs_all] objects selected by path, and [objs_eligible] objects executed on after WHERE filtering if applicable.</span>")
-	to_chat(usr, "<span class='admin'>SDQL query took [end_time/10] seconds to complete.</span>")
+	return list("<span class='admin'>SDQL query results: [query_text]</span>",\
+		"<span class='admin'>SDQL query completed: [objs_all] objects selected by path, and [objs_eligible] objects executed on after WHERE filtering if applicable.</span>",\
+		"<span class='admin'>SDQL query took [DisplayTimeText(end_time)] to complete.</span>") + refs
 
 /proc/SDQL_qdel_datum(datum/d)
 	qdel(d)
 
 /proc/SDQL_gen_vv_href(t)
 	var/text = ""
-	text += "<A HREF='?_src_=vars;Vars=\ref[t]'>\ref[t]</A>"
+	text += "<A HREF='?_src_=vars;[HrefToken()];Vars=[REF(t)]'>[REF(t)]</A>"
 	if(istype(t, /atom))
 		var/atom/a = t
 		var/turf/T = a.loc
 		var/turf/actual = get_turf(a)
 		if(istype(T))
-			text += ": [t] at turf [T] [COORD(T)]<br>"
+			text += ": [t] <font color='gray'>at turf</font> [T] [ADMIN_COORDJMP(T)]<br>"
 		else if(a.loc && istype(actual))
-			text += ": [t] in [a.loc] at turf [actual] [COORD(actual)]<br>"
+			text += ": [t] <font color='gray'>in</font> [a.loc] <font color='gray'>at turf</font> [actual] [ADMIN_COORDJMP(actual)]<br>"
 		else
 			text += ": [t]<br>"
 	else
@@ -230,42 +235,42 @@
 
 	if(ispath(type, /mob))
 		for(var/mob/d in location)
-			if(typecache[d.type])
+			if(typecache[d.type] && d.can_vv_get())
 				out += d
 			CHECK_TICK
 
 	else if(ispath(type, /turf))
 		for(var/turf/d in location)
-			if(typecache[d.type])
+			if(typecache[d.type] && d.can_vv_get())
 				out += d
 			CHECK_TICK
 
 	else if(ispath(type, /obj))
 		for(var/obj/d in location)
-			if(typecache[d.type])
+			if(typecache[d.type] && d.can_vv_get())
 				out += d
 			CHECK_TICK
 
 	else if(ispath(type, /area))
 		for(var/area/d in location)
-			if(typecache[d.type])
+			if(typecache[d.type] && d.can_vv_get())
 				out += d
 			CHECK_TICK
 
 	else if(ispath(type, /atom))
 		for(var/atom/d in location)
-			if(typecache[d.type])
+			if(typecache[d.type] && d.can_vv_get())
 				out += d
 			CHECK_TICK
 	else if(ispath(type, /datum))
 		if(location == world) //snowflake for byond shortcut
 			for(var/datum/d) //stupid byond trick to have it not return atoms to make this less laggy
-				if(typecache[d.type])
+				if(typecache[d.type] && d.can_vv_get())
 					out += d
 				CHECK_TICK
 		else
 			for(var/datum/d in location)
-				if(typecache[d.type])
+				if(typecache[d.type] && d.can_vv_get())
 					out += d
 				CHECK_TICK
 
@@ -430,7 +435,7 @@
 		else if(expression[start + 1] == "\[" && islist(v))
 			var/list/L = v
 			var/index = SDQL_expression(source, expression[start + 2])
-			if(isnum(index) && (!IsInteger(index) || L.len < index))
+			if(isnum(index) && (!ISINTEGER(index) || L.len < index))
 				to_chat(usr, "<span class='danger'>Invalid list index: [index]</span>")
 				return null
 			return L[index]
