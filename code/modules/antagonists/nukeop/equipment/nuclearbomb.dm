@@ -483,12 +483,20 @@
 	return ..()
 
 /obj/machinery/nuclearbomb/beer/actually_explode()
-	var/datum/round_event_control/E = locate(/datum/round_event_control/vent_clog/beer) in SSevents.control
-	if(E)
-		E.runEvent()
-	addtimer(CALLBACK(src, .proc/really_actually_explode), 100)
+	var/turf/bomb_location = get_turf(src)
+	if(!bomb_location)
+		disarm()
+		return
+	if(is_station_level(bomb_location.z))
+		var/datum/round_event_control/E = locate(/datum/round_event_control/vent_clog/beer) in SSevents.control
+		if(E)
+			E.runEvent()
+		addtimer(CALLBACK(src, .proc/really_actually_explode), 110)
+	else
+		visible_message("<span class='notice'>[src] fizzes ominously.</span>")
+		addtimer(CALLBACK(src, .proc/fizzbuzz), 110)
 
-/obj/machinery/nuclearbomb/really_actually_explode()
+/obj/machinery/nuclearbomb/beer/proc/disarm()
 	bomb_set = FALSE
 	detonation_timer = null
 	exploding = FALSE
@@ -499,6 +507,19 @@
 		S.alert = FALSE
 	countdown.stop()
 	update_icon()
+
+/obj/machinery/nuclearbomb/beer/proc/fizzbuzz()
+	var/datum/reagents/R = new/datum/reagents(1000)
+	R.my_atom = src
+	R.add_reagent("beer", 100)
+
+	var/datum/effect_system/foam_spread/foam = new
+	foam.set_up(200, get_turf(src), R)
+	foam.start()
+	disarm()
+
+/obj/machinery/nuclearbomb/beer/really_actually_explode()
+	disarm()
 
 /proc/KillEveryoneOnZLevel(z)
 	if(!z)
