@@ -99849,7 +99849,7 @@
 /area/science/research)
 "ixL" = (
 /obj/structure/sign/warning/vacuum{
-	step_x = 32
+	pixel_x = 32
 	},
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
