@@ -13,7 +13,8 @@
 	var/automatic_charge_overlays = TRUE	//Do we handle overlays with base update_icon()?
 	var/charge_sections = 4
 	ammo_x_offset = 2
-	var/shaded_charge = 0 //if this gun uses a stateful charge bar for more detail
+	var/shaded_charge = FALSE //if this gun uses a stateful charge bar for more detail
+	var/old_ratio = 0 // stores the gun's previous ammo "ratio" to see if it needs an updated icon
 	var/selfcharge = 0
 	var/charge_tick = 0
 	var/charge_delay = 4
@@ -40,7 +41,7 @@
 	if(!dead_cell)
 		cell.give(cell.maxcharge)
 	update_ammo_types()
-	recharge_newshot(1)
+	recharge_newshot(TRUE)
 	if(selfcharge)
 		START_PROCESSING(SSobj, src)
 	update_icon()
@@ -61,16 +62,14 @@
 	return ..()
 
 /obj/item/gun/energy/process()
-	if(selfcharge)
+	if(selfcharge && cell && cell.percent() < 100)
 		charge_tick++
 		if(charge_tick < charge_delay)
 			return
 		charge_tick = 0
-		if(!cell)
-			return
 		cell.give(100)
 		if(!chambered) //if empty chamber we try to charge a new shot
-			recharge_newshot(1)
+			recharge_newshot(TRUE)
 		update_icon()
 
 /obj/item/gun/energy/attack_self(mob/living/user as mob)
@@ -126,15 +125,19 @@
 	if (shot.select_name)
 		to_chat(user, "<span class='notice'>[src] is now set to [shot.select_name].</span>")
 	chambered = null
-	recharge_newshot(1)
-	update_icon()
+	recharge_newshot(TRUE)
+	update_icon(TRUE)
 	return
 
-/obj/item/gun/energy/update_icon()
+/obj/item/gun/energy/update_icon(force_update)
 	..()
 	if(!automatic_charge_overlays)
 		return
 	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
+	if(ratio == old_ratio && !force_update)
+		return
+	old_ratio = ratio
+	cut_overlays()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/iconState = "[icon_state]_charge"
 	var/itemState = null

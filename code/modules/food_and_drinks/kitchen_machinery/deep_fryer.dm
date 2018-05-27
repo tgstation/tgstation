@@ -85,6 +85,9 @@ God bless America.
 	if(!reagents.has_reagent("cooking_oil"))
 		to_chat(user, "<span class='warning'>[src] has no cooking oil to fry with!</span>")
 		return
+	if(I.resistance_flags & INDESTRUCTIBLE)
+		to_chat(user, "<span class='warning'>You don't feel it would be wise to fry [I]...</span>")
+		return
 	if(istype(I, /obj/item/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
 		return

@@ -340,10 +340,11 @@
 #define DISPENSE_LOLLIPOP_MODE 1
 #define THROW_LOLLIPOP_MODE 2
 #define THROW_GUMBALL_MODE 3
+#define DISPENSE_ICECREAM_MODE 4
 
 /obj/item/borg/lollipop
-	name = "lollipop fabricator"
-	desc = "Reward good humans with this. Toggle in-module to switch between dispensing and high velocity ejection modes."
+	name = "treat fabricator"
+	desc = "Reward humans with various treats. Toggle in-module to switch between dispensing and high velocity ejection modes."
 	icon_state = "lollipop"
 	var/candy = 30
 	var/candymax = 30
@@ -379,7 +380,7 @@
 
 /obj/item/borg/lollipop/proc/dispense(atom/A, mob/user)
 	if(candy <= 0)
-		to_chat(user, "<span class='warning'>No lollipops left in storage!</span>")
+		to_chat(user, "<span class='warning'>No treats left in storage!</span>")
 		return FALSE
 	var/turf/T = get_turf(A)
 	if(!T || !istype(T) || !isopenturf(T))
@@ -389,7 +390,15 @@
 		if(O.density)
 			return FALSE
 
-	var/obj/item/reagent_containers/food/snacks/lollipop/L = new(T)
+	var/obj/item/reagent_containers/food/snacks/L
+	switch(mode)
+		if(DISPENSE_LOLLIPOP_MODE)
+			L = new /obj/item/reagent_containers/food/snacks/lollipop(T)
+		if(DISPENSE_ICECREAM_MODE)
+			L = new /obj/item/reagent_containers/food/snacks/icecream(T)
+			var/obj/item/reagent_containers/food/snacks/icecream/I = L
+			I.add_ice_cream("vanilla")
+			I.desc = "Eat the ice cream."
 
 	var/into_hands = FALSE
 	if(ismob(A))
@@ -400,9 +409,9 @@
 	check_amount()
 
 	if(into_hands)
-		user.visible_message("<span class='notice'>[user] dispenses a lollipop into the hands of [A].</span>", "<span class='notice'>You dispense a lollipop into the hands of [A].</span>", "<span class='italics'>You hear a click.</span>")
+		user.visible_message("<span class='notice'>[user] dispenses a treat into the hands of [A].</span>", "<span class='notice'>You dispense a treat into the hands of [A].</span>", "<span class='italics'>You hear a click.</span>")
 	else
-		user.visible_message("<span class='notice'>[user] dispenses a lollipop.</span>", "<span class='notice'>You dispense a lollipop.</span>", "<span class='italics'>You hear a click.</span>")
+		user.visible_message("<span class='notice'>[user] dispenses a treat.</span>", "<span class='notice'>You dispense a treat.</span>", "<span class='italics'>You hear a click.</span>")
 
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	return TRUE
@@ -448,7 +457,7 @@
 		if(R.emagged)
 			hitdamage = emaggedhitdamage
 	switch(mode)
-		if(DISPENSE_LOLLIPOP_MODE)
+		if(DISPENSE_LOLLIPOP_MODE, DISPENSE_ICECREAM_MODE)
 			if(!proximity)
 				return FALSE
 			dispense(target, user)
@@ -467,6 +476,9 @@
 			mode = THROW_GUMBALL_MODE
 			to_chat(user, "<span class='notice'>Module is now blasting gumballs.</span>")
 		if(THROW_GUMBALL_MODE)
+			mode = DISPENSE_ICECREAM_MODE
+			to_chat(user, "<span class='notice'>Module is now dispensing ice cream.</span>")
+		if(DISPENSE_ICECREAM_MODE)
 			mode = DISPENSE_LOLLIPOP_MODE
 			to_chat(user, "<span class='notice'>Module is now dispensing lollipops.</span>")
 	..()
@@ -474,6 +486,7 @@
 #undef DISPENSE_LOLLIPOP_MODE
 #undef THROW_LOLLIPOP_MODE
 #undef THROW_GUMBALL_MODE
+#undef DISPENSE_ICECREAM_MODE
 
 /obj/item/ammo_casing/caseless/gumball
 	name = "Gumball"
