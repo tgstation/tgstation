@@ -274,6 +274,15 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
+/datum/techweb_node/cyborg_upg_janitor
+	id = "cyborg_upg_janitor"
+	display_name = "Cyborg Upgrades: Janitorial"
+	description = "Janitorial upgrades for cyborgs."
+	prereq_ids = list("cyborg", "janitor")
+	design_ids = list("borg_upgrade_trashofholding", "borg_upgrade_advancedmop")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	export_price = 5000
+
 /datum/techweb_node/ai
 	id = "ai"
 	display_name = "Artificial Intelligence"
