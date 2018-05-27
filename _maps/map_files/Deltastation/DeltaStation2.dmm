@@ -99637,7 +99637,6 @@
 /area/science/research/abandoned)
 "eMJ" = (
 /obj/machinery/atmospherics/components/binary/valve{
-	icon_state = "mvalve_map";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
