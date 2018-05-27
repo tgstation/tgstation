@@ -21208,7 +21208,6 @@
 	},
 /area/maintenance/department/cargo)
 "bdA" = (
-/obj/machinery/droneDispenser,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "bdB" = (
