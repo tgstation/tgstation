@@ -31,7 +31,7 @@
 /datum/experiment/proc/gather_data(obj/machinery/rnd/experimentor/E,datum/techweb/T,success)
 	var/gained_points = round(base_points / (performed_times ** 2),1)
 	if(success && gained_points > 1) //This way we'll always be correct!
-		T.research_points += gained_points
+		T.research_points["General Research"] += gained_points
 		E.say("Experiment gathered [gained_points] points from dataset.")
 
 //This is just a subtype for experiments that should destroy the object and return the materials

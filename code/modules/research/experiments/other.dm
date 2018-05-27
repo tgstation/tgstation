@@ -77,8 +77,9 @@
 	for(var/mob/living/m in oview(4,E))
 		to_chat(m, "<span class='danger'>You feel your flesh being torn from you, mists of blood drifting to [E]!</span>")
 		m.apply_damage(50, BRUTE, "chest")
+		m.blood_volume = CLAMP(m.blood_volume - 100, 0, BLOOD_VOLUME_MAXIMUM)
 		E.investigate_log("Experimentor has taken 50 brute a blood sacrifice from [m]", INVESTIGATE_EXPERIMENTOR)
-		base_points += 50 * log(base_points) //Blood sacrifice used to vastly increase the tech level on an item, let's bring back nostalgic powergaming
+		base_points += 250 * log(base_points) //Blood sacrifice used to vastly increase the tech level on an item, let's bring back nostalgic powergaming
 		. = TRUE
 	if(!.)
 		E.visible_message("<span class='notice'>...but nothing happened.</span>")
