@@ -71,7 +71,6 @@
 			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
 				if(!has_trait(TRAIT_NODEATH))
 					death()
->>>>>>> upstream/master
 
 		var/temp_bleed = 0
 		//Bleeding out
