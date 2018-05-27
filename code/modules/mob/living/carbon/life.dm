@@ -439,7 +439,7 @@
 		return
 	adjustToxLoss(8, TRUE,  TRUE)
 	if(prob(30))
-		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
+		to_chat(src, "<span class='notice'>You feel confused and nauseated...</span>")//actual symptoms of liver failure
 
 
 ////////////////

@@ -606,6 +606,15 @@
 	id = /obj/item/card/id/syndicate
 	implants = list(/obj/item/implant/exile)
 
+/datum/outfit/vr/snowtide
+	name = "Snowdin Outfit"
+	shoes = /obj/item/clothing/shoes/winterboots
+	suit = /obj/item/clothing/suit/hooded/wintercoat
+	back = /obj/item/storage/backpack
+	mask = /obj/item/clothing/mask/breath
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
+	internals_slot = SLOT_R_STORE
+
 /obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
 	mob_gender = FEMALE
 
@@ -666,4 +675,5 @@
 /obj/effect/turf_decal/snowdin_station_sign/up/seven
 	icon_state = "AOPU7"
 
-
+/obj/effect/landmark/vr_spawn/snowdin
+	vr_outfit = /datum/outfit/vr/snowtide

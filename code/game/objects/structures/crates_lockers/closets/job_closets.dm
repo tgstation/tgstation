@@ -125,17 +125,6 @@
 	new /obj/item/storage/fancy/candle_box(src)
 	return
 
-/obj/structure/closet/coffin
-	name = "coffin"
-	desc = "It's a burial receptacle for the dearly departed."
-	icon_state = "coffin"
-	resistance_flags = FLAMMABLE
-	max_integrity = 70
-	horizontal = TRUE
-	delivery_icon = "deliverycrate"
-	material_drop = /obj/item/stack/sheet/mineral/wood
-	material_drop_amount = 5
-
 /obj/structure/closet/wardrobe/red
 	name = "security wardrobe"
 	icon_door = "red"

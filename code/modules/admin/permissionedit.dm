@@ -222,6 +222,7 @@
 			var/datum/DBQuery/query_add_rank_log = SSdbcore.NewQuery("INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log) VALUES ('[SQLtime()]', '[GLOB.round_id]', '[sanitizeSQL(usr.ckey)]', INET_ATON('[sanitizeSQL(usr.client.address)]'), 'remove admin', '[admin_ckey]', 'Admin removed: [admin_ckey]')")
 			if(!query_add_rank_log.warn_execute())
 				return
+			sync_lastadminrank(admin_ckey)
 		message_admins("[key_name_admin(usr)] removed [admin_ckey] from the admins list [use_db ? "permanently" : "temporarily"]")
 		log_admin("[key_name(usr)] removed [admin_ckey] from the admins list [use_db ? "permanently" : "temporarily"]")
 
@@ -386,7 +387,9 @@
 		log_admin("[key_name(usr)] removed rank [admin_rank] permanently")
 
 /datum/admins/proc/sync_lastadminrank(admin_ckey, datum/admins/D)
-	var/sqlrank = sanitizeSQL(D.rank.name)
+	var/sqlrank = "Player"
+	if (D)
+		sqlrank = sanitizeSQL(D.rank.name)
 	admin_ckey = sanitizeSQL(admin_ckey)
 	var/datum/DBQuery/query_sync_lastadminrank = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sqlrank]' WHERE ckey = '[admin_ckey]'")
 	if(!query_sync_lastadminrank.warn_execute())
