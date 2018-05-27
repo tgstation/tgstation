@@ -7,13 +7,13 @@
 /datum/bounty/item/security/securitybelt
 	name = "Security Belt"
 	description = "CentCom is having difficulties with their security belts. Ship one from the station to receive compensation."
-	reward = 800
+	reward = 1500
 	wanted_types = list(/obj/item/storage/belt/security)
 
 /datum/bounty/item/security/sechuds
 	name = "Security HUDSunglasses"
 	description = "CentCom screwed up and ordered the wrong type of security sunglasses. They request the station ship some of theirs."
-	reward = 800
+	reward = 2000
 	wanted_types = list(/obj/item/clothing/glasses/hud/security/sunglasses)
 
 /datum/bounty/item/security/riotshotgun
@@ -38,7 +38,7 @@
 /datum/bounty/item/security/hardsuit
 	name = "Security Hardsuit"
 	description = "Space pirates are heading towards CentCom! Quick! Ship a security hardsuit to aid the fight!"
-	reward = 2000
+	reward = 3000
 	wanted_types = list(/obj/item/clothing/suit/space/hardsuit/security)
 
 /datum/bounty/item/security/krav_maga
