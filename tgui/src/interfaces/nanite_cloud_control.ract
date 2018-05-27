@@ -29,13 +29,13 @@
 		<ui-section label='Relay Code'>{{disk.relay_code}}</ui-section>
 	{{/if}}
 	</ui-display>
-{{#else}}
+{{else}}
 	<ui-notice>Insert disk.</ui-notice>
 {{/if}}
 <br>
 {{#if !data.cloud_copy}}
 	<ui-notice>ERROR: Cloud copy not found.</ui-notice>
-{{#else}}
+{{else}}
 	<ui-display label='Cloud Template'>
 		{{#if data.has_disk}}
 			<ui-button icon=TODO action='upload_program'>Upload Program From Disk</ui-button><br>

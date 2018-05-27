@@ -11,6 +11,17 @@
 	. = ..()
 	find_chamber()
 
+/obj/machinery/computer/nanite_chamber_control/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/disk/nanite_program))
+		var/obj/item/disk/nanite_program/N = I
+		if(disk)
+			eject()
+		if(user.transferItemToLoc(N, src))
+			to_chat(user, "<span class='notice'>You insert [N] into [src]</span>")
+			disk = N
+	else
+		..()
+
 /obj/machinery/computer/nanite_chamber_control/proc/eject()
 	if(!disk)
 		return
@@ -25,6 +36,11 @@
 			chamber = NC
 			NC.console = src
 
+/obj/machinery/computer/nanite_chamber_control/interact()
+	if(!chamber)
+		find_chamber()
+	..()
+
 /obj/machinery/computer/nanite_chamber_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -34,16 +50,11 @@
 /obj/machinery/computer/nanite_chamber_control/ui_data()
 	var/list/data = list()
 	if(disk)
-		//TODO namespace this to disk
 		data["has_disk"] = TRUE
 		var/list/disk_data = list()
 		var/datum/nanite_program/P = disk.program
 		disk_data["name"] = P.name
 		disk_data["desc"] = P.desc
-		disk_data["use_rate"] = P.use_rate
-		disk_data["can_trigger"] = P.can_trigger
-		disk_data["trigger_cost"] = P.trigger_cost
-		disk_data["trigger_cooldown"] = P.trigger_cooldown / 10
 
 		disk_data["activated"] = P.activated
 		disk_data["activation_delay"] = P.activation_delay
@@ -56,19 +67,18 @@
 
 		if(istype(P, /datum/nanite_program/relay))
 			var/datum/nanite_program/relay/S = P
-			disk_data["is_relay"] = TRUE
 			disk_data["relay_code"] = S.relay_code
 		data["disk"] = disk_data
 
 	if(!chamber)
 		data["status_msg"] = "No chamber detected."
-		return
+		return data
 
 	data["scan_level"] = chamber.scan_level
 
 	if(!chamber.occupant)
 		data["status_msg"] = "No occupant detected."
-		return
+		return data
 
 	if(chamber.busy)
 		data["status_msg"] = chamber.busy_message
@@ -82,21 +92,21 @@
 		data["regen_rate"] = nanites.regen_rate
 		data["safety_threshold"] = nanites.safety_threshold
 		var/list/mob_programs = list()
-		//TODO: send the program list with data for each program
 		for(var/datum/nanite_program/P in nanites.programs)
 			var/list/mob_program = list()
 			var/id = 1
 			mob_program["name"] = P.name
 			mob_program["desc"] = P.desc
 			mob_program["id"] = id
+
 			if(chamber.scan_level >= 2)
+				mob_program["activated"] = P.activated
 				mob_program["use_rate"] = P.use_rate
 				mob_program["can_trigger"] = P.can_trigger
 				mob_program["trigger_cost"] = P.trigger_cost
 				mob_program["trigger_cooldown"] = P.trigger_cooldown / 10
 
 			if(chamber.scan_level >= 3)
-				mob_program["activated"] = P.activated
 				mob_program["activation_delay"] = P.activation_delay
 				mob_program["timer"] = P.timer
 				mob_program["timer_type"] = P.get_timer_type_text()
@@ -108,7 +118,6 @@
 				mob_program["trigger_code"] = P.trigger_code
 				if(istype(P, /datum/nanite_program/relay))
 					var/datum/nanite_program/relay/S = P
-					mob_program["is_relay"] = TRUE
 					mob_program["relay_code"] = S.relay_code
 			id++
 			mob_programs += mob_program
@@ -120,8 +129,16 @@
 	if(..())
 		return
 	switch(action)
+		if("toggle_lock")
+			chamber.locked = !chamber.locked
+			. = TRUE
 		if("eject")
 			eject()
+			. = TRUE
+		if("set_safety")
+			var/threshold = input("Set safety threshold (0-500):", name, null) as null|num
+			if(!isnull(threshold))
+				chamber.set_safety(threshold)
 			. = TRUE
 		if("connect_chamber")
 			find_chamber()

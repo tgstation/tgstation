@@ -24,12 +24,13 @@
     <ui-button action='select_mode' params='{"mode": "Relay"}'>Relay</ui-button>
   </ui-section>
 {{/if}}
-<ui-display label='Saved Settings'>
+</ui-display>
+<ui-display title='Saved Settings'>
 	{{#each data.saved_settings}}
 		<ui-button icon='load' action='load' params='{"save_id": "{{id}}"}'>{{name}}</ui-button>
-		{{if !data.locked}}
+		{{#if !data.locked}}
 			<ui-button icon='remove' action='remove_save' params='{"save_id": "{{id}}"}'>Remove</ui-button>
-		}}
+		{{/if}}
 		<br>
 	{{/each}}
 </ui-display>

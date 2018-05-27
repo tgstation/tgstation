@@ -29,13 +29,13 @@
 		<ui-section label='Relay Code'>{{disk.relay_code}}</ui-section>
 	{{/if}}
 	</ui-display>
-{{#else}}
+{{else}}
 	<ui-notice>Insert disk.</ui-notice>
 {{/if}}
 <br>
 {{#if data.status_msg}}
 	<ui-notice>{{data.status_msg}}</ui-notice>
-{{#else}}
+{{else}}
 	<ui-display label='Chamber'>
 	<ui-button icon=TODO action='toggle_lock'>{{data.locked ? "Unlock" : "Lock" }} Chamber</ui-button><br>
 	<ui-section label='Occupant'>{{data.occupant_name}}</ui-section>
@@ -43,7 +43,7 @@
 		<ui-notice>No nanites detected.</ui-notice>
 		<br>
 		<ui-button icon=TODO action='nanite_injection'>Inject Nanites</ui-button><br>
-	{{#else}}
+	{{else}}
 		<ui-display label='Nanites'>
 			{{#if data.has_disk}}
 				<ui-button icon=TODO action='add_program'>Install Program From Disk</ui-button><br>
@@ -52,7 +52,7 @@
 			<ui-section label='Nanite Volume'>{{data.nanite_volume}}</ui-section>
 			<ui-section label='Growth Rate'>{{data.regen_rate}}</ui-section>
 			<ui-section label='Safety Threshold'>{{data.safety_threshold}} <ui-button icon='pencil' action='set_safety'>Set</ui-button> </ui-section>
-			
+
 			<ui-display label='Programs'>
 				{{#each data.mob_programs}}
 					<ui-button icon=TODO action='remove_program' params='{"program_id": "{{id}}"}'>Uninstall</ui-button><br>

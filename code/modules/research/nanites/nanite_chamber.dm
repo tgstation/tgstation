@@ -17,8 +17,7 @@
 	var/scan_level
 	var/busy = FALSE
 	var/busy_message
-
-	var/message_cooldown //resist message cooldown
+	var/message_cooldown = 0
 
 /obj/machinery/nanite_chamber/RefreshParts()
 	scan_level = 0
@@ -28,6 +27,14 @@
 /obj/machinery/nanite_chamber/proc/set_busy(status, message)
 	busy = status
 	busy_message = message
+
+/obj/machinery/nanite_chamber/proc/set_safety(threshold)
+	if(!occupant)
+		return
+	GET_COMPONENT_FROM(nanites, /datum/component/nanites, occupant)
+	if(!nanites)
+		return
+	nanites.safety_threshold = threshold
 
 /obj/machinery/nanite_chamber/proc/inject_nanites()
 	if(stat & NOPOWER|BROKEN)
@@ -169,7 +176,6 @@
 		return FALSE
 
 	..(user)
-
 	return TRUE
 
 /obj/machinery/nanite_chamber/open_machine()

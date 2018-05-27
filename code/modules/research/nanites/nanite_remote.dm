@@ -14,6 +14,7 @@
 	var/locked = FALSE //Can be locked, so it can be given to users with a set code and mode
 	var/mode = REMOTE_MODE_OFF
 	var/list/saved_settings = list()
+	var/last_id = 0
 	var/code = 0
 	var/relay_code = 0
 
@@ -112,28 +113,37 @@
 				relay_code = new_code
 			. = TRUE
 		if("save")
-			var/code_name = stripped_input(/*TODO INPUT_STUFF*/)
+			var/code_name = stripped_input(usr, "Set the setting name", "Set Name", null , 15)
 			if(!code_name)
 				return
 			var/new_save = list()
-			new_save["id"] = saved_settings.len + 1
+			new_save["id"] = last_id + 1
+			last_id++
 			new_save["name"] = code_name
 			new_save["code"] = code
 			new_save["mode"] = mode
 			new_save["relay_code"] = relay_code
 
-			saved_settings[new_save["id"]] = new_save
+			saved_settings += list(new_save)
 			. = TRUE
 		if("load")
 			var/code_id = params["save_id"]
-			var/list/setting = saved_settings[code_id]
-			code = setting["code"]
-			mode = setting["mode"]
-			relay_code= setting["relay_code"]
+			var/list/setting
+			for(var/list/X in saved_settings)
+				if(X["id"] == text2num(code_id))
+					setting = X
+					break
+			if(setting)
+				code = setting["code"]
+				mode = setting["mode"]
+				relay_code = setting["relay_code"]
 			. = TRUE
 		if("remove_save")
 			var/code_id = params["save_id"]
-			saved_settings[code_id] = null
+			for(var/list/setting in saved_settings)
+				if(setting["id"] == text2num(code_id))
+					saved_settings -= list(setting)
+					break
 			. = TRUE
 		if("select_mode")
 			mode = params["mode"]

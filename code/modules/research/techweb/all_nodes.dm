@@ -838,7 +838,7 @@
 	display_name = "Basic Nanite Programming"
 	description = "Vanilla nanite programs, that require little complex interaction between nanites and body."
 	prereq_ids = list("base")
-	design_ids = list("relay_nanites", "monitoring_nanites", "glitch_nanites", "repair_nanites", "cloud_nanites")
+	design_ids = list("relay_nanites", "monitoring_nanites", "glitch_nanites", "repairing_nanites", "cloud_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
