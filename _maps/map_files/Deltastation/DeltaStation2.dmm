@@ -26910,6 +26910,10 @@
 /area/engine/atmos)
 "bkX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 4;
+	name = "SM Coolant Loop"
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -71327,6 +71331,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/department/electrical)
 "cWK" = (
@@ -99766,6 +99773,16 @@
 	dir = 1
 	},
 /area/science/circuit)
+"gXn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/valve{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/department/electrical)
 "hdH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/conveyor{
@@ -121534,7 +121551,7 @@ cQf
 cRA
 cTn
 cVp
-cVz
+gXn
 cYy
 cMO
 dbR
