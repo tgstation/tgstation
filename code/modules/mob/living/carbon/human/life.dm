@@ -365,8 +365,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
 			if(has_trait(TRAIT_DRUNK_HEALING))
-				adjustBruteLoss(-0.12, 0)
-				adjustFireLoss(-0.06, 0)
+				adjustBruteLoss(-0.12, FALSE)
+				adjustFireLoss(-0.06, FALSE)
 
 		if(drunkenness >= 11 && slurring < 5)
 			slurring += 1.2
@@ -393,8 +393,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				confused += 2
 			Dizzy(10)
 			if(has_trait(TRAIT_DRUNK_HEALING)) // effects stack with lower tiers
-				adjustBruteLoss(-0.3, 0)
-				adjustFireLoss(-0.15, 0)
+				adjustBruteLoss(-0.3, FALSE)
+				adjustFireLoss(-0.15, FALSE)
 
 		if(drunkenness >= 51)
 			if(prob(5))
@@ -406,8 +406,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			if(prob(50))
 				blur_eyes(5)
 			if(has_trait(TRAIT_DRUNK_HEALING))
-				adjustBruteLoss(-0.5, 0)
-				adjustFireLoss(-0.25, 0)
+				adjustBruteLoss(-0.4, FALSE)
+				adjustFireLoss(-0.2, FALSE)
 
 		if(drunkenness >= 71)
 			blur_eyes(5)
